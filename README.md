@@ -5,6 +5,8 @@ _Say it: die dull. Status page._
 A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.  
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.  
 
+_Streams when the bot is running._
+
 ## Why we are making it
 
 - We like Diablo II and we like idle games. This is what happens when you put them together: the game plays itself, and the fun is in the setup, the progress and watching it go.
@@ -73,14 +75,32 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
-- Building this public status page (working)
+- Goals, quests and levelling (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (45)</summary>
+<summary><b>2026-10-28</b> (59)</summary>
 
+- TV-style stream scene page and generator.
+- Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
+- Stream overlay, grid layouts, status --json.
+- Managed mode live, death/IsDead fixes, long-run test findings.
+- Kick OAuth login and set-title library.
+- Home Assistant package and dashboard for the stream.
+- Stream control service, scheduler, max-live guard.
+- LAN host/join over loopback, party driver, menu TCP/IP screens.
+
+<details>
+<summary>51 more</summary>
+
+- Live-now link on the public page, sanitizer extension.
+- Kick interface research for stream title.
+- Desktop tray app for the stream.
+- Task layer.
+- Pure mana/health resource policy package.
+- Quest state reader, NPC dialog primitive, act hops, Act 1 handlers.
 - Percent layout, grouped shipped feed, plain work titles, dark-mode check.
 - This status page, with a safety check that keeps private details out.
 - The roadmap: what alpha, beta and good-bot mean, and how far along each is.
@@ -89,10 +109,6 @@ The bot is paused right now, so there are no live numbers.
 - Fixed a crash in the part that presses keys; it now recovers by itself.
 - Management for several bots at once, and goals now show up live.
 - The bot now runs on the shared server and exposes its settings.
-
-<details>
-<summary>37 more</summary>
-
 - Run several bots at once and play together as a party.
 - The dashboard can show several running bots.
 - Counters and a rig for long unattended test runs.
@@ -137,7 +153,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-28 22:35 UTC
+Last updated: 2026-10-28 23:32 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

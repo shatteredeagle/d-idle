@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D.idle live scene</title>
+<style>
+@property --p{syntax:"<number>";inherits:false;initial-value:0}
+:root{--bg:#0b0807;--panel:#171110;--line:#33241f;--track:#4a3b38;--fg:#f8efe6;--mute:#d3c3b5;--dim:#a8968a;--ember:#ff8a3d;--amber:#ffc15a;--red:#ff6559;--ok:#5be08f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:calc(100vw / 80);background:var(--bg)}
+html.tile{font-size:calc(100vw / 45)}
+body{width:80rem;height:45rem;max-width:100vw;overflow:hidden;color:var(--fg);font-family:system-ui,"Segoe UI",Roboto,"DejaVu Sans",sans-serif;
+ background:radial-gradient(ellipse 60rem 30rem at 85% -10%,#2a1308 0,#0b0807 70%),var(--bg);
+ display:grid;grid-template-rows:auto 1fr auto auto;gap:1.3rem;padding:1.9rem 2.6rem 1.7rem}
+body.tile{width:45rem;height:25.3rem;padding:0.8rem 1.1rem 0.8rem;gap:0.65rem}
+.top{display:flex;align-items:center;gap:1.4rem}
+.brand{font-size:3.6rem;font-weight:900;letter-spacing:0.01em;color:var(--ember);line-height:1;text-shadow:0 0 1.6rem rgba(255,106,40,0.45)}
+.tag{font-size:1.5rem;color:var(--mute);font-weight:600;letter-spacing:0.04em;padding-left:1.4rem;border-left:0.2rem solid var(--ember)}
+.meta{margin-left:auto;display:flex;align-items:center;gap:1.6rem;font-size:1.35rem;color:var(--mute);font-weight:600}
+.clock{font-size:2.6rem;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums;letter-spacing:0.02em}
+.net{display:flex;align-items:center;gap:0.6rem;text-transform:uppercase;letter-spacing:0.12em;font-size:1.15rem}
+.dot{width:1.05rem;height:1.05rem;border-radius:50%;background:var(--ok);animation:pulse 3s ease-in-out infinite}
+.off .dot{background:var(--red);animation:none;box-shadow:none}
+.main{display:grid;grid-template-columns:1fr 26rem;gap:1.5rem;min-height:0}
+.panel{background:var(--panel);border:0.15rem solid var(--line);border-radius:1.3rem;padding:1.4rem 1.8rem;min-height:0;overflow:hidden}
+h2{font-size:1.3rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:0.8rem;font-weight:800}
+.row{display:flex;align-items:center;gap:1.4rem;padding:0.85rem 0;border-top:0.15rem solid var(--line);animation:fadein 1.4s ease-out both}
+.row:first-of-type{border-top:0}
+.row .t{font-size:2rem;font-weight:700;line-height:1.15}
+.chip{flex:none;width:8.8rem;text-align:center;font-size:1.1rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;padding:0.45rem 0.8rem;border-radius:0.6rem;color:#190c05;background:var(--ember)}
+.chip.blocked{background:#ff9f80}
+.chip.waiting{background:var(--amber)}
+.idle{font-size:2.1rem;color:var(--mute);padding:1.2rem 0;font-weight:600}
+.ladder{display:flex;flex-direction:column;justify-content:space-around;padding:1rem 1.5rem}
+.step{display:flex;align-items:center;gap:1.4rem}
+.ring{flex:none;width:6.6rem;height:6.6rem;border-radius:50%;position:relative;background:conic-gradient(var(--ember) calc(var(--p) * 1%),var(--track) 0);transition:--p 1.8s cubic-bezier(0.2,0.7,0.2,1);filter:drop-shadow(0 0 0.9rem rgba(255,120,50,0.35))}
+.ring::after{content:"";position:absolute;inset:0.9rem;border-radius:50%;background:var(--panel)}
+.ring b{position:absolute;inset:0;z-index:1;display:grid;place-items:center;font-size:1.8rem;font-weight:900;font-variant-numeric:tabular-nums}
+.step .n{font-size:2rem;font-weight:800}
+.step .s{font-size:1.2rem;color:var(--mute);line-height:1.25;margin-top:0.25rem;font-weight:500}
+.stats{display:flex;gap:1rem;min-height:4.2rem}
+.stat{flex:1;background:var(--panel);border:0.15rem solid var(--line);border-radius:1rem;padding:0.55rem 0.8rem;text-align:center}
+.stat b{display:block;font-size:2.2rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{font-size:1.05rem;color:var(--mute);letter-spacing:0.12em;text-transform:uppercase;font-weight:700}
+.warm{flex:1;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:600;color:var(--mute);background:var(--panel);border:0.15rem dashed #4a3329;border-radius:1rem}
+.ticker{display:flex;align-items:center;background:var(--panel);border-radius:1rem;overflow:hidden;height:4rem;border:0.15rem solid var(--line)}
+.ticker h2{margin:0;padding:0 1.5rem;white-space:nowrap;color:#190c05;background:var(--ember);align-self:stretch;display:flex;align-items:center}
+.win{flex:1;overflow:hidden;white-space:nowrap;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.track{display:inline-block;white-space:nowrap;padding-left:0;animation:tick var(--dur,60s) linear infinite;font-size:1.75rem;font-weight:600}
+.track i{font-style:normal;color:var(--ember);margin:0 1.5rem}
+body.tile .brand{font-size:2.3rem}
+body.tile .tag{font-size:1.05rem;padding-left:0.8rem}
+body.tile .meta{font-size:1rem;gap:0.8rem}
+body.tile .clock{font-size:1.6rem}
+body.tile .net{font-size:0.8rem}
+body.tile .dot{width:0.7rem;height:0.7rem}
+body.tile .stats,body.tile .sub,body.tile .upd{display:none}
+body.tile .main{grid-template-columns:1fr;grid-template-rows:1fr auto;gap:0.65rem}
+body.tile .panel{padding:0.6rem 1rem;border-radius:0.9rem}
+body.tile h2{font-size:0.9rem;margin-bottom:0.15rem}
+body.tile .row{padding:0.4rem 0;gap:0.8rem}
+body.tile .row .t{font-size:1.7rem}
+body.tile .chip{width:5.6rem;font-size:0.85rem;padding:0.25rem 0.4rem}
+body.tile .idle{font-size:1.5rem;padding:0.4rem 0}
+body.tile .ladder{flex-direction:row;justify-content:space-around;padding:0.55rem 0.8rem}
+body.tile .step{flex-direction:column;gap:0.25rem;text-align:center}
+body.tile .ring{width:5.2rem;height:5.2rem}
+body.tile .ring::after{inset:0.65rem}
+body.tile .ring b{font-size:1.5rem}
+body.tile .step .n{font-size:1.2rem}
+body.tile .ticker{height:2.5rem}
+body.tile .ticker h2{display:none}
+body.tile .track{font-size:1.4rem}
+@keyframes fadein{from{opacity:0;transform:translateY(0.6rem)}to{opacity:1;transform:none}}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(91,224,143,0.55)}50%{box-shadow:0 0 0 0.55rem rgba(91,224,143,0)}}
+@media (prefers-reduced-motion:reduce){.track{animation-duration:240s}.dot{animation:none}}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="brand">D.idle</div>
+<div class="tag">say it: die dull</div>
+<div class="meta"><span class="net"><i class="dot"></i><span id="net">online</span></span><span class="upd" id="upd"></span><span class="clock" id="clock">--:--</span></div>
+</div>
+<div class="main">
+<div class="panel"><h2>Working on now</h2><div id="work"></div></div>
+<div class="panel ladder" id="ladder"></div>
+</div>
+<div class="stats" id="stats"></div>
+<div class="ticker"><h2>Recently shipped</h2><div class="win"><div class="track" id="track"></div></div></div>
+<script id="d2-scene">
+(function () {
+  var U = "scene.json";
+  var tile = /[?&]tile=1(&|$)/.test(location.search);
+  var NS = {working: "Working", blocked: "Oopsie", waiting: "Waiting"};
+  var OOPS = ["Oopsie", "Facepalm", "Bonk", "Awkward", "Hmm...", "Whoops"];
+  function chipWord(it) {
+    if (it.state !== "blocked") { return NS[it.state] || "Working"; }
+    var h = 0, t = it.task || "", i;
+    for (i = 0; i < t.length; i++) { h = (h * 31 + t.charCodeAt(i)) | 0; }
+    return OOPS[Math.abs(h) % OOPS.length];
+  }
+    var $ = function (id) { return document.getElementById(id); };
+  var data = null, workSig = "", shipSig = "", statSig = "", rings = [];
+  if (tile) { document.body.className = "tile"; document.documentElement.className = "tile"; }
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (txt !== undefined) { e.textContent = txt; }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function two(n) { return (n < 10 ? "0" : "") + n; }
+  function clock() {
+    var d = new Date();
+    $("clock").textContent = two(d.getHours()) + ":" + two(d.getMinutes());
+    if (!data) { return; }
+    var m = Math.max(0, Math.floor((Date.now() / 1000 - data.ts) / 60));
+    $("upd").textContent = m < 1 ? "updated just now" : m < 120 ? "updated " + m + " min ago" : "updated " + Math.floor(m / 60) + " h ago";
+  }
+  function countTo(node, to) {
+    var from = parseInt(node.textContent, 10) || 0, t0 = null;
+    function step(t) {
+      if (t0 === null) { t0 = t; }
+      var k = Math.min(1, (t - t0) / 1800);
+      node.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - k, 3))) + "%";
+      if (k < 1) { requestAnimationFrame(step); }
+    }
+    requestAnimationFrame(step);
+  }
+  function ladder(items) {
+    var box = $("ladder");
+    if (rings.length !== items.length) {
+      clear(box); rings = [];
+      items.forEach(function (it, i) {
+        var step = el("div", "step"), ring = el("div", "ring"), num = el("b", "", "0%");
+        ring.appendChild(num);
+        var txt = el("div", ""), n = el("div", "n", it.name), s = el("div", "s sub", it.sub);
+        txt.appendChild(n); txt.appendChild(s);
+        step.appendChild(ring); step.appendChild(txt); box.appendChild(step);
+        rings.push({ring: ring, num: num, n: n, s: s, pct: 0});
+      });
+    }
+    items.forEach(function (it, i) {
+      var r = rings[i];
+      r.n.textContent = it.name; r.s.textContent = it.sub;
+      if (r.pct !== it.pct) { r.pct = it.pct; r.ring.style.setProperty("--p", it.pct); countTo(r.num, it.pct); }
+    });
+  }
+  function work(items) {
+    var sig = JSON.stringify(items);
+    if (sig === workSig) { return; }
+    workSig = sig;
+    var box = $("work");
+    clear(box);
+    items = items.slice(0, tile ? 2 : 4);
+    if (!items.length) { box.appendChild(el("div", "idle", "Between tasks, lining up the next step.")); return; }
+    items.forEach(function (it, i) {
+      var row = el("div", "row");
+      row.style.animationDelay = (i * 0.25) + "s";
+      row.appendChild(el("span", "chip " + it.state, chipWord(it)));
+      row.appendChild(el("span", "t", it.task));
+      box.appendChild(row);
+    });
+  }
+  function ticker(items) {
+    var sig = JSON.stringify(items);
+    if (sig === shipSig) { return; }
+    shipSig = sig;
+    if (tile) { items = items.slice(0, 6); }
+    if (!items.length) { items = ["New work lands here as soon as it is done."]; }
+    var track = $("track"), chars = 0;
+    clear(track);
+    for (var pass = 0; pass < 2; pass++) {
+      items.forEach(function (t) {
+        chars += t.length;
+        track.appendChild(el("i", "", "\u25C6"));
+        track.appendChild(el("span", "", t));
+      });
+    }
+    track.style.setProperty("--dur", Math.max(40, Math.round(chars * 0.16)) + "s");
+  }
+  function stats(s) {
+    var sig = JSON.stringify(s);
+    if (sig === statSig) { return; }
+    statSig = sig;
+    var box = $("stats");
+    clear(box);
+    if (!s.live || !s.items.length) {
+      box.appendChild(el("div", "warm", "Warming up: live numbers show here once the bot is running."));
+      return;
+    }
+    s.items.forEach(function (it) {
+      var c = el("div", "stat");
+      c.appendChild(el("b", "", it.value)); c.appendChild(el("span", "", it.label));
+      box.appendChild(c);
+    });
+  }
+  function show(d) {
+    data = d;
+    work(d.work || []); ladder(d.ladder || []); ticker(d.shipped || []); stats(d.stats || {live: false, items: []});
+    clock();
+  }
+  function setOk(ok) {
+    document.body.classList.toggle("off", !ok);
+    $("net").textContent = ok ? "online" : "offline";
+  }
+  function load() {
+    var ac = new AbortController();
+    var timer = setTimeout(function () { ac.abort(); }, 15000);
+    fetch(U + "?t=" + Date.now(), {cache: "no-store", signal: ac.signal})
+      .then(function (r) { if (!r.ok) { throw new Error("bad"); } return r.json(); })
+      .then(function (d) { clearTimeout(timer); show(d); setOk(true); })
+      .catch(function () { clearTimeout(timer); setOk(false); });
+  }
+  load();
+  setInterval(load, 60000);
+  setInterval(clock, 5000);
+  clock();
+})();
+</script>
+</body>
+</html>
