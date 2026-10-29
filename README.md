@@ -77,13 +77,13 @@ The bot is paused right now, so there are no live numbers.
 
 - Working on the bot (working)
 - Building this public status page (working)
-- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (129)</summary>
+<summary><b>2026-10-29</b> (130)</summary>
 
+- Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.
 - Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.
 - Periodic character point, planned games not counted as restarts.
 - Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
 - Pre-fix gate baseline numbers.
 - Jade/Onyx/Tower long-run test host evaluation.
-- Mark character-on-area-change claims UNVERIFIED, results plan.
 
 <details>
-<summary>121 more</summary>
+<summary>122 more</summary>
 
+- Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
 - SavedExp connected, long-run test --character, level table to 99.
 - Strategic review of work and plan.
@@ -314,7 +314,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 17:15 UTC
+Last updated: 2026-10-29 17:26 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
