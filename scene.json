@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "70 s stop grace, goals marker after enqueue, StopGame, slot instance env.",
   "Countess live results, bossrun --god/--nokite, unpinned input helper.",
   "Dashboard long-run test alert strip.",
   "Act 1 quest objects, Akara/Charsi rows.",
@@ -28,20 +29,19 @@
   "Act 4 and 5 quest data, tasks, boss scripts.",
   "Act 2/3 connected into tool.",
   "Fleet launches and supervises tool per slot.",
-  "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.",
-  "Long-run test report level, no-data verdict, status and alerts."
+  "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793282133,
- "updated": "2026-10-29T13:55Z",
+ "ts": 1793282440,
+ "updated": "2026-10-29T14:00Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Town chores: shopping, stashing and loot"
   },
   {
    "state": "working",
@@ -49,7 +49,7 @@
   },
   {
    "state": "working",
-   "task": "Playing in a party of bots"
+   "task": "Long unattended test runs"
   }
  ]
 }

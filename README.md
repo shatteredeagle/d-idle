@@ -75,15 +75,16 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
+- Town chores: shopping, stashing and loot (working)
 - Working on the bot (working)
-- Playing in a party of bots (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (74)</summary>
+<summary><b>2026-10-29</b> (75)</summary>
 
+- 70 s stop grace, goals marker after enqueue, StopGame, slot instance env.
 - Countess live results, bossrun --god/--nokite, unpinned input helper.
 - Dashboard long-run test alert strip.
 - Act 1 quest objects, Akara/Charsi rows.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.
 - Tool per-client stream writer, reconnect on load, hidden-tab pause.
 - Bot-owned game for fleet slots.
-- Act 4 and 5 quest data, tasks, boss scripts.
 
 <details>
-<summary>66 more</summary>
+<summary>67 more</summary>
 
+- Act 4 and 5 quest data, tasks, boss scripts.
 - Act 2/3 connected into tool.
 - Fleet launches and supervises tool per slot.
 - Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.
@@ -260,7 +261,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:55 UTC
+Last updated: 2026-10-29 14:00 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
