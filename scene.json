@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Poverty pack-danger limit, act-aware starveArea.",
+  "No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.",
   "Energy rows, cheap rest, poverty advice connected.",
   "LevelTo guard fix, waypoint activation in passing.",
   "Stall recoverer, GuardSave, NearTown, Frenzy pair, far NPC.",
@@ -27,17 +29,15 @@
   "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
   "Paladin live results.",
   "StaffTombLevel reader, a2env TombHinter and ProbeFar.",
-  "Waypoint icon column, tomb hint interface and far probe.",
-  "Act 2 live results 5.",
-  "Waypoints cheat opens act tabs via quest words, live verified."
+  "Waypoint icon column, tomb hint interface and far probe."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793278545,
- "updated": "2026-10-29T12:55Z",
+ "ts": 1793278825,
+ "updated": "2026-10-29T13:00Z",
  "work": [
   {
    "state": "working",
