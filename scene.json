@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Review H1-H3, M1, M2, M4.",
   "Poverty pack-danger limit, act-aware starveArea.",
   "No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.",
   "Energy rows, cheap rest, poverty advice connected.",
@@ -28,16 +29,15 @@
   "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
   "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
   "Paladin live results.",
-  "StaffTombLevel reader, a2env TombHinter and ProbeFar.",
-  "Waypoint icon column, tomb hint interface and far probe."
+  "StaffTombLevel reader, a2env TombHinter and ProbeFar."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793278825,
- "updated": "2026-10-29T13:00Z",
+ "ts": 1793279132,
+ "updated": "2026-10-29T13:05Z",
  "work": [
   {
    "state": "working",

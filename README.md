@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (46)</summary>
+<summary><b>2026-10-29</b> (47)</summary>
 
+- Review H1-H3, M1, M2, M4.
 - Poverty pack-danger limit, act-aware starveArea.
 - No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.
 - Energy rows, cheap rest, poverty advice connected.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Stall recoverer, GuardSave, NearTown, Frenzy pair, far NPC.
 - Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.
 - Barbarian build, profile manaReserve, live results.
-- All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.
 
 <details>
-<summary>38 more</summary>
+<summary>39 more</summary>
 
+- All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.
 - Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.
 - Paladin live results.
 - StaffTombLevel reader, a2env TombHinter and ProbeFar.
@@ -231,7 +232,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:00 UTC
+Last updated: 2026-10-29 13:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
