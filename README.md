@@ -75,15 +75,16 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Finding its way around the map (working)
+- Working on the bot (working)
 - Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (66)</summary>
+<summary><b>2026-10-28</b> (67)</summary>
 
+- Paladin smoke test findings and tool.
 - In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
-- TV-style stream scene page and generator.
 
 <details>
-<summary>58 more</summary>
+<summary>59 more</summary>
 
+- TV-style stream scene page and generator.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 - Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
@@ -161,7 +162,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 00:50 UTC
+Last updated: 2026-10-29 01:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

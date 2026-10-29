@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Paladin smoke test findings and tool.",
   "In-memory quest and waypoint source, live-verified.",
   "Act 1 boss script framework and scripts.",
   "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
@@ -28,24 +29,23 @@
   "TV-style stream scene page and generator.",
   "Shared stream selection, auto scheduler rule, StreamDesk and HA sync.",
   "Stream overlay, grid layouts, status --json.",
-  "Managed mode live, death/IsDead fixes, long-run test findings.",
-  "Kick OAuth login and set-title library."
+  "Managed mode live, death/IsDead fixes, long-run test findings."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793235056,
- "updated": "2026-10-29T00:50Z",
+ "ts": 1793235944,
+ "updated": "2026-10-29T01:05Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Finding its way around the map"
   },
   {
    "state": "working",
-   "task": "Finding its way around the map"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
