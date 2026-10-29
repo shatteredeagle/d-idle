@@ -77,14 +77,14 @@ The bot is paused right now, so there are no live numbers.
 
 - Working on the bot (working)
 - Finding its way around the map (working)
-- Building this public status page (working)
 - Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (64)</summary>
+<summary><b>2026-10-28</b> (65)</summary>
 
+- Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
@@ -92,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Fd study, game recycler, oog fd tools.
 - TV-style stream scene page and generator.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
-- Stream overlay, grid layouts, status --json.
 
 <details>
-<summary>56 more</summary>
+<summary>57 more</summary>
 
+- Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
 - Kick OAuth login and set-title library.
 - Home Assistant package and dashboard for the stream.
@@ -160,7 +160,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 00:36 UTC
+Last updated: 2026-10-29 00:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
