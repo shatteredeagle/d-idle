@@ -75,27 +75,28 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
-- Goals, quests and levelling (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (79)</summary>
+<summary><b>2026-10-29</b> (81)</summary>
 
+- Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.
+- Wineserver long-run test check by plateau/headroom, safe winedevice reaping.
 - Wineserver fd investigation.
 - New tests for unattended-run file locations, coverage notes.
 - Prebuilt live probe tools.
 - Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.
 - 70 s stop grace, goals marker after enqueue, StopGame, slot instance env.
 - Countess live results, bossrun --god/--nokite, unpinned input helper.
-- Dashboard long-run test alert strip.
-- Act 1 quest objects, Akara/Charsi rows.
 
 <details>
-<summary>71 more</summary>
+<summary>73 more</summary>
 
+- Dashboard long-run test alert strip.
+- Act 1 quest objects, Akara/Charsi rows.
 - Chain Nightmare/Hell campaign goals after completion.
 - Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.
 - Tool per-client stream writer, reconnect on load, hidden-tab pause.
@@ -265,7 +266,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 14:15 UTC
+Last updated: 2026-10-29 14:20 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.",
+  "Wineserver long-run test check by plateau/headroom, safe winedevice reaping.",
   "Wineserver fd investigation.",
   "New tests for unattended-run file locations, coverage notes.",
   "Prebuilt live probe tools.",
@@ -27,29 +29,23 @@
   "Dashboard long-run test alert strip.",
   "Act 1 quest objects, Akara/Charsi rows.",
   "Chain Nightmare/Hell campaign goals after completion.",
-  "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.",
-  "Tool per-client stream writer, reconnect on load, hidden-tab pause.",
-  "Bot-owned game for fleet slots."
+  "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793283334,
- "updated": "2026-10-29T14:15Z",
+ "ts": 1793283655,
+ "updated": "2026-10-29T14:20Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
-  },
-  {
-   "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Working on the bot"
   }
  ]
 }
