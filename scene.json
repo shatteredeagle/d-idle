@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Bot vs veteran audit.",
   "SME per-class knowledge base.",
   "SME mechanics knowledge base.",
   "Keep and wear found gear for empty slots.",
@@ -28,24 +29,23 @@
   "Slots in instances interface, bot proxy, viewport video.",
   "Tool Unraid template, Tower container deploy and first run results.",
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
-  "Gated character keeps its safe area, planning blocks never restart the game.",
-  "Bwrap mount-namespace allowlist for every Wine process."
+  "Gated character keeps its safe area, planning blocks never restart the game."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793309439,
- "updated": "2026-10-29T21:30Z",
+ "ts": 1793309739,
+ "updated": "2026-10-29T21:35Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
