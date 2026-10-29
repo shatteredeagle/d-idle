@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
   "Assassin live results.",
   "Druid and Assassin builds, profiles, pet and trap upkeep.",
   "Amazon live results, shop stock pages fix, ammo before shop.",
@@ -28,16 +29,15 @@
   "Countess live results, preset anchor fix, critical-life escape.",
   "Setup wizard connected into tool/tool, container user-test checklist.",
   "Live friendly results, owner-type fix, tool.",
-  "Setup interface mount in server, character-step hold.",
-  "Internal/gear weapon/ammo model and Necromancer/Amazon build tables."
+  "Setup interface mount in server, character-step hold."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793258456,
- "updated": "2026-10-29T07:20Z",
+ "ts": 1793258724,
+ "updated": "2026-10-29T07:25Z",
  "work": [
   {
    "state": "working",
@@ -50,10 +50,6 @@
   {
    "state": "working",
    "task": "Goals, quests and levelling"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }

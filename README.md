@@ -78,13 +78,13 @@ The bot is paused right now, so there are no live numbers.
 - Working on the bot (working)
 - Long unattended test runs (working)
 - Goals, quests and levelling (working)
-- Town chores: shopping, stashing and loot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (16)</summary>
+<summary><b>2026-10-29</b> (17)</summary>
 
+- Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.
 - Assassin live results.
 - Druid and Assassin builds, profiles, pet and trap upkeep.
 - Amazon live results, shop stock pages fix, ammo before shop.
@@ -92,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Nav Yield connected to bounded pack clear.
 - OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.
 - Act 2 live results, act2 nav hints, tool.
-- Countess live results, preset anchor fix, critical-life escape.
 
 <details>
-<summary>8 more</summary>
+<summary>9 more</summary>
 
+- Countess live results, preset anchor fix, critical-life escape.
 - Setup wizard connected into tool/tool, container user-test checklist.
 - Live friendly results, owner-type fix, tool.
 - Setup interface mount in server, character-step hold.
@@ -203,7 +203,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 07:20 UTC
+Last updated: 2026-10-29 07:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
