@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Dashboard long-run test alert strip.",
+  "Act 1 quest objects, Akara/Charsi rows.",
   "Chain Nightmare/Hell campaign goals after completion.",
   "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.",
   "Tool per-client stream writer, reconnect on load, hidden-tab pause.",
@@ -27,17 +29,15 @@
   "Fleet launches and supervises tool per slot.",
   "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.",
   "Long-run test report level, no-data verdict, status and alerts.",
-  "Missile and curse readers, dodge rule, fight telemetry.",
-  "Wizard goals picker.",
-  "Caster staff swing on weak packs, nearTown, Den kit floor."
+  "Missile and curse readers, dodge rule, fight telemetry."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793281556,
- "updated": "2026-10-29T13:45Z",
+ "ts": 1793281841,
+ "updated": "2026-10-29T13:50Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Playing in a party of bots"
   }
  ]
 }
