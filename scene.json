@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Akara Den claim fixed, full-pack purchase fix.",
+  "Include any in-game instance in auto mode, adopt running keepAlive stream after restart.",
   "Paladin smoke test findings and tool.",
   "In-memory quest and waypoint source, live-verified.",
   "Act 1 boss script framework and scripts.",
@@ -27,25 +29,27 @@
   "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
   "Fd study, game recycler, oog fd tools.",
   "TV-style stream scene page and generator.",
-  "Shared stream selection, auto scheduler rule, StreamDesk and HA sync.",
-  "Stream overlay, grid layouts, status --json.",
-  "Managed mode live, death/IsDead fixes, long-run test findings."
+  "Shared stream selection, auto scheduler rule, StreamDesk and HA sync."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793236234,
- "updated": "2026-10-29T01:10Z",
+ "ts": 1793236556,
+ "updated": "2026-10-29T01:15Z",
  "work": [
   {
    "state": "working",
-   "task": "Finding its way around the map"
+   "task": "Fighting and staying alive"
   },
   {
    "state": "working",
    "task": "Goals, quests and levelling"
+  },
+  {
+   "state": "working",
+   "task": "Finding its way around the map"
   }
  ]
 }
