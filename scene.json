@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "IsFriendly for every class.",
   "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
   "Amazon smoke test findings.",
   "Real game and bot run headless in the container.",
@@ -28,24 +29,23 @@
   "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
   "Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.",
   "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.",
-  "Akara Den claim fixed, full-pack purchase fix.",
-  "Include any in-game instance in auto mode, adopt running keepAlive stream after restart."
+  "Akara Den claim fixed, full-pack purchase fix."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793247334,
- "updated": "2026-10-29T04:15Z",
+ "ts": 1793247605,
+ "updated": "2026-10-29T04:20Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   }
  ]
 }
