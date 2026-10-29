@@ -75,26 +75,29 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
+- Goals, quests and levelling (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (60)</summary>
+<summary><b>2026-10-29</b> (62)</summary>
 
+- Missile and curse readers, dodge rule, fight telemetry.
+- Wizard goals picker.
 - Caster staff swing on weak packs, nearTown, Den kit floor.
 - Campaign templates, weapon equip, quest item pickup, World flags.
 - Act 3 quest data, task nodes, boss scripts, nav hints.
 - Merc chore, EntryGate in planner, NM Act 1 floor 36.
 - Leveler gear scorer uses resist/FCR/ethereal helpers.
 - Free heal trips from the Den, NearTownArea, caster starvation.
-- Runeword bases, gem keep, charm filter, gear score helpers.
-- Gate click fallback, waypoint load wait.
 
 <details>
-<summary>52 more</summary>
+<summary>54 more</summary>
 
+- Runeword bases, gem keep, charm filter, gear score helpers.
+- Gate click fallback, waypoint load wait.
 - Act 3-5 plan notes and work list.
 - Monster flag reader, affix resists, danger rules, entry gate.
 - Difficulty survival research.
@@ -245,7 +248,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:20 UTC
+Last updated: 2026-10-29 13:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

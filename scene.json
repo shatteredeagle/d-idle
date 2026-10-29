@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Missile and curse readers, dodge rule, fight telemetry.",
+  "Wizard goals picker.",
   "Caster staff swing on weak packs, nearTown, Den kit floor.",
   "Campaign templates, weapon equip, quest item pickup, World flags.",
   "Act 3 quest data, task nodes, boss scripts, nav hints.",
@@ -27,18 +29,20 @@
   "Runeword bases, gem keep, charm filter, gear score helpers.",
   "Gate click fallback, waypoint load wait.",
   "Act 3-5 plan notes and work list.",
-  "Monster flag reader, affix resists, danger rules, entry gate.",
-  "Difficulty survival research.",
-  "Recycler lock, no nested ladder escalation, clean -race sweep."
+  "Monster flag reader, affix resists, danger rules, entry gate."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793280049,
- "updated": "2026-10-29T13:20Z",
+ "ts": 1793280325,
+ "updated": "2026-10-29T13:25Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
+  },
   {
    "state": "working",
    "task": "Working on the bot"
