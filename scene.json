@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Teleport-aware explorer, InteractNPC hover fallback.",
   "God cheat restores on signal, undo marker, inflated-life guard.",
   "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
   "Blocked inserted steps dropped, fruitless explore gives up.",
@@ -28,28 +29,23 @@
   "Per-instance long-run test process matching.",
   "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
   "Assassin live results.",
-  "Druid and Assassin builds, profiles, pet and trap upkeep.",
-  "Amazon live results, shop stock pages fix, ammo before shop."
+  "Druid and Assassin builds, profiles, pet and trap upkeep."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793263556,
- "updated": "2026-10-29T08:45Z",
+ "ts": 1793263856,
+ "updated": "2026-10-29T08:50Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Long unattended test runs"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Finding its way around the map"
+   "task": "Long unattended test runs"
   }
  ]
 }
