@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.",
   "Re-scored milestone tracker, new S showcase milestone.",
   "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
   "Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.",
@@ -28,21 +29,16 @@
   "In-memory quest and waypoint source, live-verified.",
   "Act 1 boss script framework and scripts.",
   "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
-  "Tool warm-up and fd plateau, recycler policy hooks.",
-  "Resource policy, task layer and quests connected into the bot; live 31 min campaign."
+  "Tool warm-up and fd plateau, recycler policy hooks."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793239278,
- "updated": "2026-10-29T02:01Z",
+ "ts": 1793239836,
+ "updated": "2026-10-29T02:10Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Working on the bot"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
