@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Act 2 live results 5.",
   "Waypoints cheat opens act tabs via quest words, live verified.",
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
   "Island-hopping teleport planner, boss Teleporter.",
@@ -28,21 +29,16 @@
   "Teleport-aware explorer, InteractNPC hover fallback.",
   "God cheat restores on signal, undo marker, inflated-life guard.",
   "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
-  "Blocked inserted steps dropped, fruitless explore gives up.",
-  "Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung."
+  "Blocked inserted steps dropped, fruitless explore gives up."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793267156,
- "updated": "2026-10-29T09:45Z",
+ "ts": 1793269556,
+ "updated": "2026-10-29T10:25Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
