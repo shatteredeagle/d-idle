@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (40)</summary>
+<summary><b>2026-10-29</b> (41)</summary>
 
+- Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.
 - Barbarian build, profile manaReserve, live results.
 - All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.
 - Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - StaffTombLevel reader, a2env TombHinter and ProbeFar.
 - Waypoint icon column, tomb hint interface and far probe.
 - Act 2 live results 5.
-- Waypoints cheat opens act tabs via quest words, live verified.
 
 <details>
-<summary>32 more</summary>
+<summary>33 more</summary>
 
+- Waypoints cheat opens act tabs via quest words, live verified.
 - Heal-first gate in town, waypoint to town, re-entry loop pause.
 - Island-hopping teleport planner, boss Teleporter.
 - Act 2 live results 4, nav teleport in act2live rig, god restore on die.
@@ -225,7 +226,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 11:35 UTC
+Last updated: 2026-10-29 11:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

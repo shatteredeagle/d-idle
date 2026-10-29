@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.",
   "Barbarian build, profile manaReserve, live results.",
   "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
   "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
@@ -28,16 +29,15 @@
   "Waypoints cheat opens act tabs via quest words, live verified.",
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
   "Island-hopping teleport planner, boss Teleporter.",
-  "Act 2 live results 4, nav teleport in act2live rig, god restore on die.",
-  "A planned restart counts once against the failsafe budget."
+  "Act 2 live results 4, nav teleport in act2live rig, god restore on die."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793273725,
- "updated": "2026-10-29T11:35Z",
+ "ts": 1793274049,
+ "updated": "2026-10-29T11:40Z",
  "work": [
   {
    "state": "working",
