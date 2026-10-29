@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "In-memory quest and waypoint source, live-verified.",
   "Act 1 boss script framework and scripts.",
   "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
   "Tool warm-up and fd plateau, recycler policy hooks.",
@@ -28,16 +29,15 @@
   "Shared stream selection, auto scheduler rule, StreamDesk and HA sync.",
   "Stream overlay, grid layouts, status --json.",
   "Managed mode live, death/IsDead fixes, long-run test findings.",
-  "Kick OAuth login and set-title library.",
-  "Home Assistant package and dashboard for the stream."
+  "Kick OAuth login and set-title library."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793234440,
- "updated": "2026-10-29T00:40Z",
+ "ts": 1793235056,
+ "updated": "2026-10-29T00:50Z",
  "work": [
   {
    "state": "working",

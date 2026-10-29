@@ -82,8 +82,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (65)</summary>
+<summary><b>2026-10-28</b> (66)</summary>
 
+- In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
 - TV-style stream scene page and generator.
-- Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 
 <details>
-<summary>57 more</summary>
+<summary>58 more</summary>
 
+- Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 - Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
 - Kick OAuth login and set-title library.
@@ -160,7 +161,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 00:40 UTC
+Last updated: 2026-10-29 00:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
