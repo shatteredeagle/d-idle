@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Energy rows, cheap-rest/cheaper-spell fallback, poverty advice.",
   "Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.",
   "Barbarian build, profile manaReserve, live results.",
   "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
@@ -28,16 +29,15 @@
   "Act 2 live results 5.",
   "Waypoints cheat opens act tabs via quest words, live verified.",
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
-  "Island-hopping teleport planner, boss Teleporter.",
-  "Act 2 live results 4, nav teleport in act2live rig, god restore on die."
+  "Island-hopping teleport planner, boss Teleporter."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793277656,
- "updated": "2026-10-29T12:40Z",
+ "ts": 1793278235,
+ "updated": "2026-10-29T12:50Z",
  "work": [
   {
    "state": "working",
@@ -45,7 +45,15 @@
   },
   {
    "state": "working",
+   "task": "Town chores: shopping, stashing and loot"
+  },
+  {
+   "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Finding its way around the map"
   }
  ]
 }
