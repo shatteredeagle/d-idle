@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
   "Periodic character point, planned games not counted as restarts.",
   "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
   "Failsafe ownership table, soak24 watchdog/supervise preflight.",
@@ -28,24 +29,23 @@
   "Every build reports its commit, long-run test preflight refuses dev builds.",
   "SavedExp connected, long-run test --character, level table to 99.",
   "Strategic review of work and plan.",
-  "Unreliable bot tests made load-proof.",
-  "FieldGate connected into trip."
+  "Unreliable bot tests made load-proof."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793293242,
- "updated": "2026-10-29T17:00Z",
+ "ts": 1793293551,
+ "updated": "2026-10-29T17:05Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Building this public status page"
   }
  ]
 }
