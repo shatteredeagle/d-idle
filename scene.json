@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "A planned restart counts once against the failsafe budget.",
+  "Buy the town portal scroll before potions.",
   "Flee without potions, poverty mode, resource settings.",
   "Teleport-aware explorer, InteractNPC hover fallback.",
   "God cheat restores on signal, undo marker, inflated-life guard.",
@@ -27,17 +29,15 @@
   "Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.",
   "Druid live results, tool.",
   "Act 2 staff pieces and Transmute verified live.",
-  "Per-instance long-run test process matching.",
-  "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
-  "Assassin live results."
+  "Per-instance long-run test process matching."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793264426,
- "updated": "2026-10-29T09:00Z",
+ "ts": 1793264756,
+ "updated": "2026-10-29T09:05Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
