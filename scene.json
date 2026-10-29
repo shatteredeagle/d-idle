@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "SME mechanics knowledge base.",
+  "Keep and wear found gear for empty slots.",
   "SME play-patterns knowledge base.",
   "Rebuy bar fix, shop logging, quest skip reasons.",
   "SME builds and gear knowledge base.",
@@ -27,25 +29,23 @@
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
   "Gated character keeps its safe area, planning blocks never restart the game.",
   "Bwrap mount-namespace allowlist for every Wine process.",
-  "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.",
-  "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
-  "Periodic character point, planned games not counted as restarts."
+  "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793307632,
- "updated": "2026-10-29T21:00Z",
+ "ts": 1793308217,
+ "updated": "2026-10-29T21:10Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
