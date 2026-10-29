@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Boss readiness gates, Cold Plains kit floor, boss runs own the step.",
+  "Kit reserve, off-class weapons, per-slot equip memory.",
   "Single equip slot table, bounded equip backoff, off-centre retry, cursor return.",
   "Live run runbooks and d2-live briefs.",
   "Pruned goal seeds stay refused across restarts.",
@@ -27,33 +29,27 @@
   "Live check plan for Assassin/Druid.",
   "Single persisted hold record, cleared on every resume/pause/remove.",
   "Charsi imbue and Larzuk socket flows.",
-  "End-to-end telemetry chain tests.",
-  "Seal boss timeouts continue, resume from nearest node, death checks.",
-  "Settings reference and generator."
+  "End-to-end telemetry chain tests."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793287556,
- "updated": "2026-10-29T15:25Z",
+ "ts": 1793287817,
+ "updated": "2026-10-29T15:30Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Town chores: shopping, stashing and loot"
+  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
-  },
-  {
-   "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }

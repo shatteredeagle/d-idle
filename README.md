@@ -75,28 +75,29 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
-- Goals, quests and levelling (working)
-- Long unattended test runs (working)
 - Town chores: shopping, stashing and loot (working)
+- Working on the bot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (110)</summary>
+<summary><b>2026-10-29</b> (112)</summary>
 
+- Boss readiness gates, Cold Plains kit floor, boss runs own the step.
+- Kit reserve, off-class weapons, per-slot equip memory.
 - Single equip slot table, bounded equip backoff, off-centre retry, cursor return.
 - Live run runbooks and d2-live briefs.
 - Pruned goal seeds stay refused across restarts.
 - Manager and panic-recovery fixes.
 - Seeded idempotent --goals adds.
 - Release packaging, per-binary --version, dry run.
-- Live check plan for Assassin/Druid.
-- Single persisted hold record, cleared on every resume/pause/remove.
 
 <details>
-<summary>102 more</summary>
+<summary>104 more</summary>
 
+- Live check plan for Assassin/Druid.
+- Single persisted hold record, cleared on every resume/pause/remove.
 - Charsi imbue and Larzuk socket flows.
 - End-to-end telemetry chain tests.
 - Seal boss timeouts continue, resume from nearest node, death checks.
@@ -297,7 +298,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:25 UTC
+Last updated: 2026-10-29 15:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
