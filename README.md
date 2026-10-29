@@ -82,8 +82,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (26)</summary>
+<summary><b>2026-10-29</b> (27)</summary>
 
+- Flee without potions, poverty mode, resource settings.
 - Teleport-aware explorer, InteractNPC hover fallback.
 - God cheat restores on signal, undo marker, inflated-life guard.
 - Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.
 - Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.
 - Druid live results, tool.
-- Act 2 staff pieces and Transmute verified live.
 
 <details>
-<summary>18 more</summary>
+<summary>19 more</summary>
 
+- Act 2 staff pieces and Transmute verified live.
 - Per-instance long-run test process matching.
 - Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.
 - Assassin live results.
@@ -212,7 +213,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 08:55 UTC
+Last updated: 2026-10-29 09:00 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Flee without potions, poverty mode, resource settings.",
   "Teleport-aware explorer, InteractNPC hover fallback.",
   "God cheat restores on signal, undo marker, inflated-life guard.",
   "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
@@ -28,16 +29,15 @@
   "Act 2 staff pieces and Transmute verified live.",
   "Per-instance long-run test process matching.",
   "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
-  "Assassin live results.",
-  "Druid and Assassin builds, profiles, pet and trap upkeep."
+  "Assassin live results."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793264109,
- "updated": "2026-10-29T08:55Z",
+ "ts": 1793264426,
+ "updated": "2026-10-29T09:00Z",
  "work": [
   {
    "state": "working",
