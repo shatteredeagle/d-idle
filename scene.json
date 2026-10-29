@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Wineserver fd investigation.",
   "New tests for unattended-run file locations, coverage notes.",
   "Prebuilt live probe tools.",
   "Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.",
@@ -28,24 +29,27 @@
   "Chain Nightmare/Hell campaign goals after completion.",
   "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.",
   "Tool per-client stream writer, reconnect on load, hidden-tab pause.",
-  "Bot-owned game for fleet slots.",
-  "Act 4 and 5 quest data, tasks, boss scripts."
+  "Bot-owned game for fleet slots."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793283036,
- "updated": "2026-10-29T14:10Z",
+ "ts": 1793283334,
+ "updated": "2026-10-29T14:15Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Goals, quests and levelling"
+  },
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
   }
  ]
 }
