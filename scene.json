@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Rebuy rejection reasons, gate settles when blocked by stats.",
   "Bot vs veteran audit.",
   "SME per-class knowledge base.",
   "SME mechanics knowledge base.",
@@ -28,16 +29,15 @@
   "Gate refusals are planning blocks, route-aware targets, ban lift.",
   "Slots in instances interface, bot proxy, viewport video.",
   "Tool Unraid template, Tower container deploy and first run results.",
-  "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
-  "Gated character keeps its safe area, planning blocks never restart the game."
+  "Poor-mode pickup of sellable gear and small gold, per-fight loot summary."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793309739,
- "updated": "2026-10-29T21:35Z",
+ "ts": 1793310039,
+ "updated": "2026-10-29T21:40Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Fighting and staying alive"
   }
  ]
 }
