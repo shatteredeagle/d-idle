@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "SME per-class knowledge base.",
   "SME mechanics knowledge base.",
   "Keep and wear found gear for empty slots.",
   "SME play-patterns knowledge base.",
@@ -28,16 +29,15 @@
   "Tool Unraid template, Tower container deploy and first run results.",
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
   "Gated character keeps its safe area, planning blocks never restart the game.",
-  "Bwrap mount-namespace allowlist for every Wine process.",
-  "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop."
+  "Bwrap mount-namespace allowlist for every Wine process."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793308217,
- "updated": "2026-10-29T21:10Z",
+ "ts": 1793309141,
+ "updated": "2026-10-29T21:25Z",
  "work": [
   {
    "state": "working",
