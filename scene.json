@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
   "Paladin live results.",
   "StaffTombLevel reader, a2env TombHinter and ProbeFar.",
   "Waypoint icon column, tomb hint interface and far probe.",
@@ -28,24 +29,19 @@
   "Act 2 live results 4, nav teleport in act2live rig, god restore on die.",
   "A planned restart counts once against the failsafe budget.",
   "Buy the town portal scroll before potions.",
-  "Flee without potions, poverty mode, resource settings.",
-  "Teleport-aware explorer, InteractNPC hover fallback."
+  "Flee without potions, poverty mode, resource settings."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793272856,
- "updated": "2026-10-29T11:20Z",
+ "ts": 1793273156,
+ "updated": "2026-10-29T11:25Z",
  "work": [
   {
    "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
   },
   {
    "state": "working",

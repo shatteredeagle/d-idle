@@ -76,14 +76,14 @@ The bot is paused right now, so there are no live numbers.
 **Being worked on:**
 
 - Working on the bot (working)
-- Finding its way around the map (working)
 - Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (37)</summary>
+<summary><b>2026-10-29</b> (38)</summary>
 
+- Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.
 - Paladin live results.
 - StaffTombLevel reader, a2env TombHinter and ProbeFar.
 - Waypoint icon column, tomb hint interface and far probe.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Waypoints cheat opens act tabs via quest words, live verified.
 - Heal-first gate in town, waypoint to town, re-entry loop pause.
 - Island-hopping teleport planner, boss Teleporter.
-- Act 2 live results 4, nav teleport in act2live rig, god restore on die.
 
 <details>
-<summary>29 more</summary>
+<summary>30 more</summary>
 
+- Act 2 live results 4, nav teleport in act2live rig, god restore on die.
 - A planned restart counts once against the failsafe budget.
 - Buy the town portal scroll before potions.
 - Flee without potions, poverty mode, resource settings.
@@ -223,7 +223,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 11:20 UTC
+Last updated: 2026-10-29 11:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
