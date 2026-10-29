@@ -75,26 +75,28 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
 - Working on the bot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (121)</summary>
+<summary><b>2026-10-29</b> (123)</summary>
 
+- Jade/Onyx/Tower long-run test host evaluation.
+- Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
 - SavedExp connected, long-run test --character, level table to 99.
 - Strategic review of work and plan.
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
 - Xp lost/at-risk telemetry, long-run test XP from saved exp.
-- No character churn on repeat quest events, stale hold level resumes at once.
-- Thin-belt retreat and field gate, kit-safe PlanBuys.
 
 <details>
-<summary>113 more</summary>
+<summary>115 more</summary>
 
+- No character churn on repeat quest events, stale hold level resumes at once.
+- Thin-belt retreat and field gate, kit-safe PlanBuys.
 - Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.
 - Boss readiness gates, Cold Plains kit floor, boss runs own the step.
 - Kit reserve, off-class weapons, per-slot equip memory.
@@ -306,7 +308,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:55 UTC
+Last updated: 2026-10-29 16:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

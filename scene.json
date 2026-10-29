@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Jade/Onyx/Tower long-run test host evaluation.",
+  "Mark character-on-area-change claims UNVERIFIED, results plan.",
   "Every build reports its commit, long-run test preflight refuses dev builds.",
   "SavedExp connected, long-run test --character, level table to 99.",
   "Strategic review of work and plan.",
@@ -27,25 +29,23 @@
   "No character churn on repeat quest events, stale hold level resumes at once.",
   "Thin-belt retreat and field gate, kit-safe PlanBuys.",
   "Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.",
-  "Boss readiness gates, Cold Plains kit floor, boss runs own the step.",
-  "Kit reserve, off-class weapons, per-slot equip memory.",
-  "Single equip slot table, bounded equip backoff, off-centre retry, cursor return."
+  "Boss readiness gates, Cold Plains kit floor, boss runs own the step."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793289339,
- "updated": "2026-10-29T15:55Z",
+ "ts": 1793289923,
+ "updated": "2026-10-29T16:05Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   }
  ]
 }
