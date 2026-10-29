@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Chain Nightmare/Hell campaign goals after completion.",
+  "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.",
   "Tool per-client stream writer, reconnect on load, hidden-tab pause.",
   "Bot-owned game for fleet slots.",
   "Act 4 and 5 quest data, tasks, boss scripts.",
@@ -27,17 +29,15 @@
   "Long-run test report level, no-data verdict, status and alerts.",
   "Missile and curse readers, dodge rule, fight telemetry.",
   "Wizard goals picker.",
-  "Caster staff swing on weak packs, nearTown, Den kit floor.",
-  "Campaign templates, weapon equip, quest item pickup, World flags.",
-  "Act 3 quest data, task nodes, boss scripts, nav hints."
+  "Caster staff swing on weak packs, nearTown, Den kit floor."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793281207,
- "updated": "2026-10-29T13:40Z",
+ "ts": 1793281556,
+ "updated": "2026-10-29T13:45Z",
  "work": [
   {
    "state": "working",

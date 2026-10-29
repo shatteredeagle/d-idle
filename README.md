@@ -81,20 +81,22 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (69)</summary>
+<summary><b>2026-10-29</b> (71)</summary>
 
+- Chain Nightmare/Hell campaign goals after completion.
+- Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.
 - Tool per-client stream writer, reconnect on load, hidden-tab pause.
 - Bot-owned game for fleet slots.
 - Act 4 and 5 quest data, tasks, boss scripts.
 - Act 2/3 connected into tool.
 - Fleet launches and supervises tool per slot.
 - Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.
-- Long-run test report level, no-data verdict, status and alerts.
-- Missile and curse readers, dodge rule, fight telemetry.
 
 <details>
-<summary>61 more</summary>
+<summary>63 more</summary>
 
+- Long-run test report level, no-data verdict, status and alerts.
+- Missile and curse readers, dodge rule, fight telemetry.
 - Wizard goals picker.
 - Caster staff swing on weak packs, nearTown, Den kit floor.
 - Campaign templates, weapon equip, quest item pickup, World flags.
@@ -254,7 +256,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:40 UTC
+Last updated: 2026-10-29 13:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
