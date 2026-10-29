@@ -36,8 +36,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793285442,
- "updated": "2026-10-29T14:50Z",
+ "ts": 1793285712,
+ "updated": "2026-10-29T14:55Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,14 @@
   {
    "state": "working",
    "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
+  },
+  {
+   "state": "working",
+   "task": "Fighting and staying alive"
   }
  ]
 }
