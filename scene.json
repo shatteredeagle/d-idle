@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "FieldGate connected into trip.",
+  "Xp lost/at-risk telemetry, long-run test XP from saved exp.",
   "No character churn on repeat quest events, stale hold level resumes at once.",
   "Thin-belt retreat and field gate, kit-safe PlanBuys.",
   "Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.",
@@ -27,22 +29,16 @@
   "Live run runbooks and d2-live briefs.",
   "Pruned goal seeds stay refused across restarts.",
   "Manager and panic-recovery fixes.",
-  "Seeded idempotent --goals adds.",
-  "Release packaging, per-binary --version, dry run.",
-  "Live check plan for Assassin/Druid."
+  "Seeded idempotent --goals adds."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793288136,
- "updated": "2026-10-29T15:35Z",
+ "ts": 1793288424,
+ "updated": "2026-10-29T15:40Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
