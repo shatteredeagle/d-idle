@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.",
+  "Long-run test report level, no-data verdict, status and alerts.",
   "Missile and curse readers, dodge rule, fight telemetry.",
   "Wizard goals picker.",
   "Caster staff swing on weak packs, nearTown, Den kit floor.",
@@ -27,17 +29,15 @@
   "Leveler gear scorer uses resist/FCR/ethereal helpers.",
   "Free heal trips from the Den, NearTownArea, caster starvation.",
   "Runeword bases, gem keep, charm filter, gear score helpers.",
-  "Gate click fallback, waypoint load wait.",
-  "Act 3-5 plan notes and work list.",
-  "Monster flag reader, affix resists, danger rules, entry gate."
+  "Gate click fallback, waypoint load wait."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793280325,
- "updated": "2026-10-29T13:25Z",
+ "ts": 1793280609,
+ "updated": "2026-10-29T13:30Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Playing in a party of bots"
   },
   {
    "state": "working",
