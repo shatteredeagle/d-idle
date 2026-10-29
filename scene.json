@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Nav Yield connected to bounded pack clear.",
+  "OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.",
   "Act 2 live results, act2 nav hints, tool.",
   "Countess live results, preset anchor fix, critical-life escape.",
   "Setup wizard connected into tool/tool, container user-test checklist.",
@@ -27,17 +29,15 @@
   "Boss script robustness, potion gates, live-check procedure.",
   "Necromancer summon upkeep, curses, Bone Armor by state.",
   "Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.",
-  "IsFriendly for every class.",
-  "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
-  "Amazon smoke test findings."
+  "IsFriendly for every class."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793253928,
- "updated": "2026-10-29T06:05Z",
+ "ts": 1793254232,
+ "updated": "2026-10-29T06:10Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
   }
  ]
 }
