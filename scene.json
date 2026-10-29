@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Slots in instances interface, bot proxy, viewport video.",
   "Tool Unraid template, Tower container deploy and first run results.",
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
   "Gated character keeps its safe area, planning blocks never restart the game.",
@@ -28,16 +29,15 @@
   "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
   "Failsafe ownership table, soak24 watchdog/supervise preflight.",
   "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
-  "Pre-fix gate baseline numbers.",
-  "Jade/Onyx/Tower long-run test host evaluation."
+  "Pre-fix gate baseline numbers."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793301639,
- "updated": "2026-10-29T19:20Z",
+ "ts": 1793301933,
+ "updated": "2026-10-29T19:25Z",
  "work": [
   {
    "state": "working",
