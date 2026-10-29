@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Druid and Assassin builds, profiles, pet and trap upkeep.",
   "Amazon live results, shop stock pages fix, ammo before shop.",
   "Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.",
   "Nav Yield connected to bounded pack clear.",
@@ -28,16 +29,15 @@
   "Live friendly results, owner-type fix, tool.",
   "Setup interface mount in server, character-step hold.",
   "Internal/gear weapon/ammo model and Necromancer/Amazon build tables.",
-  "Boss script robustness, potion gates, live-check procedure.",
-  "Necromancer summon upkeep, curses, Bone Armor by state."
+  "Boss script robustness, potion gates, live-check procedure."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793256332,
- "updated": "2026-10-29T06:45Z",
+ "ts": 1793256956,
+ "updated": "2026-10-29T06:55Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
   }
  ]
 }
