@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Waypoints cheat opens act tabs via quest words, live verified.",
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
   "Island-hopping teleport planner, boss Teleporter.",
   "Act 2 live results 4, nav teleport in act2live rig, god restore on die.",
@@ -28,17 +29,20 @@
   "God cheat restores on signal, undo marker, inflated-life guard.",
   "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
   "Blocked inserted steps dropped, fruitless explore gives up.",
-  "Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.",
-  "Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery."
+  "Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793266820,
- "updated": "2026-10-29T09:40Z",
+ "ts": 1793267156,
+ "updated": "2026-10-29T09:45Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Finding its way around the map"
+  },
   {
    "state": "working",
    "task": "Long unattended test runs"
@@ -46,10 +50,6 @@
   {
    "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
   }
  ]
 }
