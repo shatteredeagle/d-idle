@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
   "Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.",
   "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.",
   "Akara Den claim fixed, full-pack purchase fix.",
@@ -28,20 +29,23 @@
   "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
   "Tool warm-up and fd plateau, recycler policy hooks.",
   "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
-  "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
-  "Fd study, game recycler, oog fd tools."
+  "Scene tile, grid3, keep-alive, StreamDesk and HA toggles."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793238639,
- "updated": "2026-10-29T01:50Z",
+ "ts": 1793238956,
+ "updated": "2026-10-29T01:55Z",
  "work": [
   {
    "state": "working",
-   "task": "Finding its way around the map"
+   "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
   }
  ]
 }

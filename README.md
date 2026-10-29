@@ -5,7 +5,7 @@ _Say it: die dull. Status page._
 A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.  
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.  
 
-_Streams when the bot is running._
+**[LIVE now on Kick](https://kick.com/brognak)**
 
 ## Why we are making it
 
@@ -75,13 +75,15 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Finding its way around the map (working)
+- Working on the bot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (71)</summary>
+<summary><b>2026-10-28</b> (72)</summary>
 
+- Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.
 - Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
 - Akara Den claim fixed, full-pack purchase fix.
@@ -89,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Paladin smoke test findings and tool.
 - In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
-- Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 
 <details>
-<summary>63 more</summary>
+<summary>64 more</summary>
 
+- Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
@@ -164,7 +166,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 01:50 UTC
+Last updated: 2026-10-29 01:55 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
