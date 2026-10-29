@@ -75,26 +75,28 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
 - Working on the bot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (118)</summary>
+<summary><b>2026-10-29</b> (120)</summary>
 
+- SavedExp connected, long-run test --character, level table to 99.
+- Strategic review of work and plan.
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
 - Xp lost/at-risk telemetry, long-run test XP from saved exp.
 - No character churn on repeat quest events, stale hold level resumes at once.
 - Thin-belt retreat and field gate, kit-safe PlanBuys.
 - Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.
-- Boss readiness gates, Cold Plains kit floor, boss runs own the step.
-- Kit reserve, off-class weapons, per-slot equip memory.
 
 <details>
-<summary>110 more</summary>
+<summary>112 more</summary>
 
+- Boss readiness gates, Cold Plains kit floor, boss runs own the step.
+- Kit reserve, off-class weapons, per-slot equip memory.
 - Single equip slot table, bounded equip backoff, off-centre retry, cursor return.
 - Live run runbooks and d2-live briefs.
 - Pruned goal seeds stay refused across restarts.
@@ -303,7 +305,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:45 UTC
+Last updated: 2026-10-29 15:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

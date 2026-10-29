@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "SavedExp connected, long-run test --character, level table to 99.",
+  "Strategic review of work and plan.",
   "Unreliable bot tests made load-proof.",
   "FieldGate connected into trip.",
   "Xp lost/at-risk telemetry, long-run test XP from saved exp.",
@@ -27,25 +29,23 @@
   "Boss readiness gates, Cold Plains kit floor, boss runs own the step.",
   "Kit reserve, off-class weapons, per-slot equip memory.",
   "Single equip slot table, bounded equip backoff, off-centre retry, cursor return.",
-  "Live run runbooks and d2-live briefs.",
-  "Pruned goal seeds stay refused across restarts.",
-  "Manager and panic-recovery fixes."
+  "Live run runbooks and d2-live briefs."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793288739,
- "updated": "2026-10-29T15:45Z",
+ "ts": 1793289030,
+ "updated": "2026-10-29T15:50Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   }
  ]
 }
