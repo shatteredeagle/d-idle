@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Barbarian build, profile manaReserve, live results.",
   "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
   "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
   "Paladin live results.",
@@ -28,16 +29,15 @@
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
   "Island-hopping teleport planner, boss Teleporter.",
   "Act 2 live results 4, nav teleport in act2live rig, god restore on die.",
-  "A planned restart counts once against the failsafe budget.",
-  "Buy the town portal scroll before potions."
+  "A planned restart counts once against the failsafe budget."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793273456,
- "updated": "2026-10-29T11:30Z",
+ "ts": 1793273725,
+ "updated": "2026-10-29T11:35Z",
  "work": [
   {
    "state": "working",
