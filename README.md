@@ -80,8 +80,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (70)</summary>
+<summary><b>2026-10-28</b> (71)</summary>
 
+- Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
 - Akara Den claim fixed, full-pack purchase fix.
 - Include any in-game instance in auto mode, adopt running keepAlive stream after restart.
@@ -89,11 +90,11 @@ The bot is paused right now, so there are no live numbers.
 - In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
-- Tool warm-up and fd plateau, recycler policy hooks.
 
 <details>
-<summary>62 more</summary>
+<summary>63 more</summary>
 
+- Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
@@ -163,7 +164,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 01:45 UTC
+Last updated: 2026-10-29 01:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
