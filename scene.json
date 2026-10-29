@@ -18,6 +18,10 @@
   }
  ],
  "shipped": [
+  "Full-campaign simulation tests, Act-aware planning fix, hop floors.",
+  "Endgame build research and tables.",
+  "Runs goals connected, Nightmare/Hell rules in fight loop.",
+  "Container image carries tool/tool, wizard default CMD.",
   "Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.",
   "Wineserver long-run test check by plateau/headroom, safe winedevice reaping.",
   "Wineserver fd investigation.",
@@ -25,31 +29,27 @@
   "Prebuilt live probe tools.",
   "Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.",
   "70 s stop grace, goals marker after enqueue, StopGame, slot instance env.",
-  "Countess live results, bossrun --god/--nokite, unpinned input helper.",
-  "Dashboard long-run test alert strip.",
-  "Act 1 quest objects, Akara/Charsi rows.",
-  "Chain Nightmare/Hell campaign goals after completion.",
-  "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5."
+  "Countess live results, bossrun --god/--nokite, unpinned input helper."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793283912,
- "updated": "2026-10-29T14:25Z",
+ "ts": 1793284239,
+ "updated": "2026-10-29T14:30Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Playing in a party of bots"
+   "task": "Building this public status page"
   },
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Working on the bot"
   }
  ]
 }
