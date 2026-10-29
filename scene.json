@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Hold locked runs, town belt by build, long-run test report fight/death summaries.",
+  "Go winedevice reaping at managed game stop.",
   "--long-run test-dir for tool/tool.",
   "Necro corpse skills, assassin trap planner.",
   "Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.",
@@ -27,17 +29,15 @@
   "Runs goals connected, Nightmare/Hell rules in fight loop.",
   "Container image carries tool/tool, wizard default CMD.",
   "Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.",
-  "Wineserver long-run test check by plateau/headroom, safe winedevice reaping.",
-  "Wineserver fd investigation.",
-  "New tests for unattended-run file locations, coverage notes."
+  "Wineserver long-run test check by plateau/headroom, safe winedevice reaping."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793285133,
- "updated": "2026-10-29T14:45Z",
+ "ts": 1793285442,
+ "updated": "2026-10-29T14:50Z",
  "work": [
   {
    "state": "working",
