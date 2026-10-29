@@ -81,20 +81,23 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (106)</summary>
+<summary><b>2026-10-29</b> (109)</summary>
 
+- Live run runbooks and d2-live briefs.
+- Pruned goal seeds stay refused across restarts.
+- Manager and panic-recovery fixes.
 - Seeded idempotent --goals adds.
 - Release packaging, per-binary --version, dry run.
 - Live check plan for Assassin/Druid.
 - Single persisted hold record, cleared on every resume/pause/remove.
 - Charsi imbue and Larzuk socket flows.
+
+<details>
+<summary>101 more</summary>
+
 - End-to-end telemetry chain tests.
 - Seal boss timeouts continue, resume from nearest node, death checks.
 - Settings reference and generator.
-
-<details>
-<summary>98 more</summary>
-
 - Long-run test fight/death parsers accept JSON logs.
 - INDEX and PLAN status refresh, reviews table.
 - Resist gate rechecked at campaign start, MaxDeaths auto-resume.
@@ -291,7 +294,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:15 UTC
+Last updated: 2026-10-29 15:20 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Live run runbooks and d2-live briefs.",
+  "Pruned goal seeds stay refused across restarts.",
+  "Manager and panic-recovery fixes.",
   "Seeded idempotent --goals adds.",
   "Release packaging, per-binary --version, dry run.",
   "Live check plan for Assassin/Druid.",
@@ -26,18 +29,15 @@
   "End-to-end telemetry chain tests.",
   "Seal boss timeouts continue, resume from nearest node, death checks.",
   "Settings reference and generator.",
-  "Long-run test fight/death parsers accept JSON logs.",
-  "INDEX and PLAN status refresh, reviews table.",
-  "Resist gate rechecked at campaign start, MaxDeaths auto-resume.",
-  "Full stash/pack handling, SetBuild forwards to judge."
+  "Long-run test fight/death parsers accept JSON logs."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793286934,
- "updated": "2026-10-29T15:15Z",
+ "ts": 1793287205,
+ "updated": "2026-10-29T15:20Z",
  "work": [
   {
    "state": "working",
