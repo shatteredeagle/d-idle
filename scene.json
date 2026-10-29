@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Countess live results, bossrun --god/--nokite, unpinned input helper.",
   "Dashboard long-run test alert strip.",
   "Act 1 quest objects, Akara/Charsi rows.",
   "Chain Nightmare/Hell campaign goals after completion.",
@@ -28,24 +29,23 @@
   "Act 2/3 connected into tool.",
   "Fleet launches and supervises tool per slot.",
   "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.",
-  "Long-run test report level, no-data verdict, status and alerts.",
-  "Missile and curse readers, dodge rule, fight telemetry."
+  "Long-run test report level, no-data verdict, status and alerts."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793281841,
- "updated": "2026-10-29T13:50Z",
+ "ts": 1793282133,
+ "updated": "2026-10-29T13:55Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
