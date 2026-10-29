@@ -82,8 +82,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (131)</summary>
+<summary><b>2026-10-29</b> (132)</summary>
 
+- Gated character keeps its safe area, planning blocks never restart the game.
 - Bwrap mount-namespace allowlist for every Wine process.
 - Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.
 - Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
 - Failsafe ownership table, soak24 watchdog/supervise preflight.
 - Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
-- Pre-fix gate baseline numbers.
 
 <details>
-<summary>123 more</summary>
+<summary>124 more</summary>
 
+- Pre-fix gate baseline numbers.
 - Jade/Onyx/Tower long-run test host evaluation.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
@@ -316,7 +317,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 18:00 UTC
+Last updated: 2026-10-29 18:10 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

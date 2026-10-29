@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Gated character keeps its safe area, planning blocks never restart the game.",
   "Bwrap mount-namespace allowlist for every Wine process.",
   "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.",
   "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
@@ -28,16 +29,15 @@
   "Pre-fix gate baseline numbers.",
   "Jade/Onyx/Tower long-run test host evaluation.",
   "Mark character-on-area-change claims UNVERIFIED, results plan.",
-  "Every build reports its commit, long-run test preflight refuses dev builds.",
-  "SavedExp connected, long-run test --character, level table to 99."
+  "Every build reports its commit, long-run test preflight refuses dev builds."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793296859,
- "updated": "2026-10-29T18:00Z",
+ "ts": 1793297459,
+ "updated": "2026-10-29T18:10Z",
  "work": [
   {
    "state": "working",
