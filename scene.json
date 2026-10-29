@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "SME builds and gear knowledge base.",
   "Gate refusals are planning blocks, route-aware targets, ban lift.",
   "Slots in instances interface, bot proxy, viewport video.",
   "Tool Unraid template, Tower container deploy and first run results.",
@@ -28,16 +29,15 @@
   "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
   "Periodic character point, planned games not counted as restarts.",
   "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
-  "Failsafe ownership table, soak24 watchdog/supervise preflight.",
-  "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table."
+  "Failsafe ownership table, soak24 watchdog/supervise preflight."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793306735,
- "updated": "2026-10-29T20:45Z",
+ "ts": 1793307356,
+ "updated": "2026-10-29T20:55Z",
  "work": [
   {
    "state": "working",
