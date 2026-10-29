@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Runeword bases, gem keep, charm filter, gear score helpers.",
+  "Gate click fallback, waypoint load wait.",
+  "Act 3-5 plan notes and work list.",
   "Monster flag reader, affix resists, danger rules, entry gate.",
   "Difficulty survival research.",
   "Recycler lock, no nested ladder escalation, clean -race sweep.",
@@ -26,19 +29,20 @@
   "Poverty pack-danger limit, act-aware starveArea.",
   "No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.",
   "Energy rows, cheap rest, poverty advice connected.",
-  "LevelTo guard fix, waypoint activation in passing.",
-  "Stall recoverer, GuardSave, NearTown, Frenzy pair, far NPC.",
-  "Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.",
-  "Barbarian build, profile manaReserve, live results."
+  "LevelTo guard fix, waypoint activation in passing."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793279413,
- "updated": "2026-10-29T13:10Z",
+ "ts": 1793279723,
+ "updated": "2026-10-29T13:15Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Finding its way around the map"
+  },
   {
    "state": "working",
    "task": "Working on the bot"
@@ -46,6 +50,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
   }
  ]
 }

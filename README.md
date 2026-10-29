@@ -75,26 +75,31 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
+- Finding its way around the map (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
+- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (51)</summary>
+<summary><b>2026-10-29</b> (54)</summary>
 
+- Runeword bases, gem keep, charm filter, gear score helpers.
+- Gate click fallback, waypoint load wait.
+- Act 3-5 plan notes and work list.
 - Monster flag reader, affix resists, danger rules, entry gate.
 - Difficulty survival research.
 - Recycler lock, no nested ladder escalation, clean -race sweep.
 - Merc and farming research.
 - Review H1-H3, M1, M2, M4.
+
+<details>
+<summary>46 more</summary>
+
 - Poverty pack-danger limit, act-aware starveArea.
 - No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.
 - Energy rows, cheap rest, poverty advice connected.
-
-<details>
-<summary>43 more</summary>
-
 - LevelTo guard fix, waypoint activation in passing.
 - Stall recoverer, GuardSave, NearTown, Frenzy pair, far NPC.
 - Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.
@@ -236,7 +241,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:10 UTC
+Last updated: 2026-10-29 13:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
