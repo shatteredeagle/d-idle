@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Gate refusals are planning blocks, route-aware targets, ban lift.",
   "Slots in instances interface, bot proxy, viewport video.",
   "Tool Unraid template, Tower container deploy and first run results.",
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
@@ -28,24 +29,23 @@
   "Periodic character point, planned games not counted as restarts.",
   "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
   "Failsafe ownership table, soak24 watchdog/supervise preflight.",
-  "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
-  "Pre-fix gate baseline numbers."
+  "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793305242,
- "updated": "2026-10-29T20:20Z",
+ "ts": 1793306156,
+ "updated": "2026-10-29T20:35Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
