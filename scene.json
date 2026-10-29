@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Setup wizard connected into tool/tool, container user-test checklist.",
   "Live friendly results, owner-type fix, tool.",
   "Setup interface mount in server, character-step hold.",
   "Internal/gear weapon/ammo model and Necromancer/Amazon build tables.",
@@ -28,16 +29,15 @@
   "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
   "Amazon smoke test findings.",
   "Real game and bot run headless in the container.",
-  "Necromancer smoke test findings.",
-  "Setup wizard front-end."
+  "Necromancer smoke test findings."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793248535,
- "updated": "2026-10-29T04:35Z",
+ "ts": 1793248819,
+ "updated": "2026-10-29T04:40Z",
  "work": [
   {
    "state": "working",
@@ -45,15 +45,11 @@
   },
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Working on the bot"
   }
  ]
 }
