@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Trip budget and gold floor.",
   "Stat floor for gear requirements, NeedStr from blocked rebuys.",
   "Rebuy rejection reasons, gate settles when blocked by stats.",
   "Bot vs veteran audit.",
@@ -28,16 +29,15 @@
   "Rebuy bar fix, shop logging, quest skip reasons.",
   "SME builds and gear knowledge base.",
   "Gate refusals are planning blocks, route-aware targets, ban lift.",
-  "Slots in instances interface, bot proxy, viewport video.",
-  "Tool Unraid template, Tower container deploy and first run results."
+  "Slots in instances interface, bot proxy, viewport video."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793312419,
- "updated": "2026-10-29T22:20Z",
+ "ts": 1793312756,
+ "updated": "2026-10-29T22:25Z",
  "work": [
   {
    "state": "working",
