@@ -75,26 +75,28 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (87)</summary>
+<summary><b>2026-10-29</b> (89)</summary>
 
+- --long-run test-dir for tool/tool.
+- Necro corpse skills, assassin trap planner.
 - Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.
 - Endgame tables registered, Smite weapon fix, ResistGate.
 - Full-campaign simulation tests, Act-aware planning fix, hop floors.
 - Endgame build research and tables.
 - Runs goals connected, Nightmare/Hell rules in fight loop.
 - Container image carries tool/tool, wizard default CMD.
-- Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.
-- Wineserver long-run test check by plateau/headroom, safe winedevice reaping.
 
 <details>
-<summary>79 more</summary>
+<summary>81 more</summary>
 
+- Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.
+- Wineserver long-run test check by plateau/headroom, safe winedevice reaping.
 - Wineserver fd investigation.
 - New tests for unattended-run file locations, coverage notes.
 - Prebuilt live probe tools.
@@ -272,7 +274,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 14:40 UTC
+Last updated: 2026-10-29 14:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
