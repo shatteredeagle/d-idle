@@ -75,16 +75,16 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Making the bot easy to set up (working)
 - Long unattended test runs (working)
-- Town chores: shopping, stashing and loot (working)
 - Working on the bot (working)
+- Making the bot easy to set up (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (132)</summary>
+<summary><b>2026-10-29</b> (133)</summary>
 
+- Poor-mode pickup of sellable gear and small gold, per-fight loot summary.
 - Gated character keeps its safe area, planning blocks never restart the game.
 - Bwrap mount-namespace allowlist for every Wine process.
 - Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.
@@ -92,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Periodic character point, planned games not counted as restarts.
 - Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
 - Failsafe ownership table, soak24 watchdog/supervise preflight.
-- Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
 
 <details>
-<summary>124 more</summary>
+<summary>125 more</summary>
 
+- Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
 - Pre-fix gate baseline numbers.
 - Jade/Onyx/Tower long-run test host evaluation.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
@@ -318,7 +318,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 18:35 UTC
+Last updated: 2026-10-29 18:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

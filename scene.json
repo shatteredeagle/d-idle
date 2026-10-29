@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
   "Gated character keeps its safe area, planning blocks never restart the game.",
   "Bwrap mount-namespace allowlist for every Wine process.",
   "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.",
@@ -28,32 +29,27 @@
   "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
   "Pre-fix gate baseline numbers.",
   "Jade/Onyx/Tower long-run test host evaluation.",
-  "Mark character-on-area-change claims UNVERIFIED, results plan.",
-  "Every build reports its commit, long-run test preflight refuses dev builds."
+  "Mark character-on-area-change claims UNVERIFIED, results plan."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793298932,
- "updated": "2026-10-29T18:35Z",
+ "ts": 1793299223,
+ "updated": "2026-10-29T18:40Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Making the bot easy to set up"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Making the bot easy to set up"
   }
  ]
 }
