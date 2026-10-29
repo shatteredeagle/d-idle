@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.",
   "Akara Den claim fixed, full-pack purchase fix.",
   "Include any in-game instance in auto mode, adopt running keepAlive stream after restart.",
   "Paladin smoke test findings and tool.",
@@ -28,25 +29,16 @@
   "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
   "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
   "Fd study, game recycler, oog fd tools.",
-  "TV-style stream scene page and generator.",
-  "Shared stream selection, auto scheduler rule, StreamDesk and HA sync."
+  "TV-style stream scene page and generator."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793236556,
- "updated": "2026-10-29T01:15Z",
+ "ts": 1793238345,
+ "updated": "2026-10-29T01:45Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Fighting and staying alive"
-  },
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
-  },
   {
    "state": "working",
    "task": "Finding its way around the map"

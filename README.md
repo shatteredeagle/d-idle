@@ -5,7 +5,7 @@ _Say it: die dull. Status page._
 A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.  
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.  
 
-**[LIVE now on Kick](https://kick.com/brognak)**
+_Streams when the bot is running._
 
 ## Why we are making it
 
@@ -75,15 +75,14 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Fighting and staying alive (working)
-- Goals, quests and levelling (working)
 - Finding its way around the map (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (69)</summary>
+<summary><b>2026-10-28</b> (70)</summary>
 
+- Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
 - Akara Den claim fixed, full-pack purchase fix.
 - Include any in-game instance in auto mode, adopt running keepAlive stream after restart.
 - Paladin smoke test findings and tool.
@@ -91,11 +90,11 @@ The bot is paused right now, so there are no live numbers.
 - Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
-- Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 
 <details>
-<summary>61 more</summary>
+<summary>62 more</summary>
 
+- Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
 - TV-style stream scene page and generator.
@@ -164,7 +163,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 01:15 UTC
+Last updated: 2026-10-29 01:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
