@@ -5,7 +5,7 @@ _Say it: die dull. Status page._
 A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.  
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.  
 
-_Streams when the bot is running._
+**[LIVE now on Kick](https://kick.com/brognak)**
 
 ## Why we are making it
 
@@ -170,7 +170,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 02:40 UTC
+Last updated: 2026-10-29 02:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
