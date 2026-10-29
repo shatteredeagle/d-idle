@@ -75,28 +75,32 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Finding its way around the map (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
-- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (54)</summary>
+<summary><b>2026-10-29</b> (60)</summary>
 
+- Caster staff swing on weak packs, nearTown, Den kit floor.
+- Campaign templates, weapon equip, quest item pickup, World flags.
+- Act 3 quest data, task nodes, boss scripts, nav hints.
+- Merc chore, EntryGate in planner, NM Act 1 floor 36.
+- Leveler gear scorer uses resist/FCR/ethereal helpers.
+- Free heal trips from the Den, NearTownArea, caster starvation.
 - Runeword bases, gem keep, charm filter, gear score helpers.
 - Gate click fallback, waypoint load wait.
+
+<details>
+<summary>52 more</summary>
+
 - Act 3-5 plan notes and work list.
 - Monster flag reader, affix resists, danger rules, entry gate.
 - Difficulty survival research.
 - Recycler lock, no nested ladder escalation, clean -race sweep.
 - Merc and farming research.
 - Review H1-H3, M1, M2, M4.
-
-<details>
-<summary>46 more</summary>
-
 - Poverty pack-danger limit, act-aware starveArea.
 - No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.
 - Energy rows, cheap rest, poverty advice connected.
@@ -241,7 +245,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 13:15 UTC
+Last updated: 2026-10-29 13:20 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

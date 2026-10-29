@@ -18,31 +18,27 @@
   }
  ],
  "shipped": [
+  "Caster staff swing on weak packs, nearTown, Den kit floor.",
+  "Campaign templates, weapon equip, quest item pickup, World flags.",
+  "Act 3 quest data, task nodes, boss scripts, nav hints.",
+  "Merc chore, EntryGate in planner, NM Act 1 floor 36.",
+  "Leveler gear scorer uses resist/FCR/ethereal helpers.",
+  "Free heal trips from the Den, NearTownArea, caster starvation.",
   "Runeword bases, gem keep, charm filter, gear score helpers.",
   "Gate click fallback, waypoint load wait.",
   "Act 3-5 plan notes and work list.",
   "Monster flag reader, affix resists, danger rules, entry gate.",
   "Difficulty survival research.",
-  "Recycler lock, no nested ladder escalation, clean -race sweep.",
-  "Merc and farming research.",
-  "Review H1-H3, M1, M2, M4.",
-  "Poverty pack-danger limit, act-aware starveArea.",
-  "No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.",
-  "Energy rows, cheap rest, poverty advice connected.",
-  "LevelTo guard fix, waypoint activation in passing."
+  "Recycler lock, no nested ladder escalation, clean -race sweep."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793279723,
- "updated": "2026-10-29T13:15Z",
+ "ts": 1793280049,
+ "updated": "2026-10-29T13:20Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
@@ -50,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
   }
  ]
 }
