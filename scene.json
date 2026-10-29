@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
   "Tool warm-up and fd plateau, recycler policy hooks.",
   "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
   "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
@@ -28,16 +29,15 @@
   "Managed mode live, death/IsDead fixes, long-run test findings.",
   "Kick OAuth login and set-title library.",
   "Home Assistant package and dashboard for the stream.",
-  "Stream control service, scheduler, max-live guard.",
-  "LAN host/join over loopback, party driver, menu TCP/IP screens."
+  "Stream control service, scheduler, max-live guard."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793234145,
- "updated": "2026-10-29T00:35Z",
+ "ts": 1793234204,
+ "updated": "2026-10-29T00:36Z",
  "work": [
   {
    "state": "working",
@@ -49,7 +49,11 @@
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Building this public status page"
+  },
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
   }
  ]
 }

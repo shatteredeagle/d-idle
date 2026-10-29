@@ -77,13 +77,15 @@ The bot is paused right now, so there are no live numbers.
 
 - Working on the bot (working)
 - Finding its way around the map (working)
-- Long unattended test runs (working)
+- Building this public status page (working)
+- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (63)</summary>
+<summary><b>2026-10-28</b> (64)</summary>
 
+- Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
@@ -91,11 +93,11 @@ The bot is paused right now, so there are no live numbers.
 - TV-style stream scene page and generator.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 - Stream overlay, grid layouts, status --json.
-- Managed mode live, death/IsDead fixes, long-run test findings.
 
 <details>
-<summary>55 more</summary>
+<summary>56 more</summary>
 
+- Managed mode live, death/IsDead fixes, long-run test findings.
 - Kick OAuth login and set-title library.
 - Home Assistant package and dashboard for the stream.
 - Stream control service, scheduler, max-live guard.
@@ -158,7 +160,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 00:35 UTC
+Last updated: 2026-10-29 00:36 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
