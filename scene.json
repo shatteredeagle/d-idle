@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "God cheat restores on signal, undo marker, inflated-life guard.",
+  "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
   "Blocked inserted steps dropped, fruitless explore gives up.",
   "Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.",
   "Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.",
@@ -27,25 +29,27 @@
   "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
   "Assassin live results.",
   "Druid and Assassin builds, profiles, pet and trap upkeep.",
-  "Amazon live results, shop stock pages fix, ammo before shop.",
-  "Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.",
-  "Nav Yield connected to bounded pack clear."
+  "Amazon live results, shop stock pages fix, ammo before shop."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793260852,
- "updated": "2026-10-29T08:00Z",
+ "ts": 1793263556,
+ "updated": "2026-10-29T08:45Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
+  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Finding its way around the map"
   }
  ]
 }

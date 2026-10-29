@@ -75,26 +75,29 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
+- Finding its way around the map (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (23)</summary>
+<summary><b>2026-10-29</b> (25)</summary>
 
+- God cheat restores on signal, undo marker, inflated-life guard.
+- Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.
 - Blocked inserted steps dropped, fruitless explore gives up.
 - Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.
 - Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.
 - Druid live results, tool.
 - Act 2 staff pieces and Transmute verified live.
 - Per-instance long-run test process matching.
-- Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.
-- Assassin live results.
 
 <details>
-<summary>15 more</summary>
+<summary>17 more</summary>
 
+- Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.
+- Assassin live results.
 - Druid and Assassin builds, profiles, pet and trap upkeep.
 - Amazon live results, shop stock pages fix, ammo before shop.
 - Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.
@@ -208,7 +211,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 08:00 UTC
+Last updated: 2026-10-29 08:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
