@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "New tests for unattended-run file locations, coverage notes.",
+  "Prebuilt live probe tools.",
   "Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.",
   "70 s stop grace, goals marker after enqueue, StopGame, slot instance env.",
   "Countess live results, bossrun --god/--nokite, unpinned input helper.",
@@ -27,25 +29,23 @@
   "Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.",
   "Tool per-client stream writer, reconnect on load, hidden-tab pause.",
   "Bot-owned game for fleet slots.",
-  "Act 4 and 5 quest data, tasks, boss scripts.",
-  "Act 2/3 connected into tool.",
-  "Fleet launches and supervises tool per slot."
+  "Act 4 and 5 quest data, tasks, boss scripts."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793282721,
- "updated": "2026-10-29T14:05Z",
+ "ts": 1793283036,
+ "updated": "2026-10-29T14:10Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
