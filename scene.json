@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Live friendly results, owner-type fix, tool.",
+  "Setup interface mount in server, character-step hold.",
+  "Internal/gear weapon/ammo model and Necromancer/Amazon build tables.",
   "Boss script robustness, potion gates, live-check procedure.",
   "Necromancer summon upkeep, curses, Bone Armor by state.",
   "Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.",
@@ -26,18 +29,15 @@
   "Amazon smoke test findings.",
   "Real game and bot run headless in the container.",
   "Necromancer smoke test findings.",
-  "Setup wizard front-end.",
-  "Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.",
-  "Re-scored milestone tracker, new S showcase milestone.",
-  "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix."
+  "Setup wizard front-end."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793248221,
- "updated": "2026-10-29T04:30Z",
+ "ts": 1793248535,
+ "updated": "2026-10-29T04:35Z",
  "work": [
   {
    "state": "working",
@@ -45,7 +45,7 @@
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Town chores: shopping, stashing and loot"
   },
   {
    "state": "working",
@@ -53,7 +53,7 @@
   },
   {
    "state": "working",
-   "task": "Making the bot easy to set up"
+   "task": "Working on the bot"
   }
  ]
 }

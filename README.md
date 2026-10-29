@@ -76,15 +76,19 @@ The bot is paused right now, so there are no live numbers.
 **Being worked on:**
 
 - Finding its way around the map (working)
-- Working on the bot (working)
+- Town chores: shopping, stashing and loot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
 - Making the bot easy to set up (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (4)</summary>
+<summary><b>2026-10-29</b> (7)</summary>
 
+- Live friendly results, owner-type fix, tool.
+- Setup interface mount in server, character-step hold.
+- Internal/gear weapon/ammo model and Necromancer/Amazon build tables.
 - Boss script robustness, potion gates, live-check procedure.
 - Necromancer summon upkeep, curses, Bone Armor by state.
 - Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.
@@ -185,7 +189,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 04:30 UTC
+Last updated: 2026-10-29 04:35 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
