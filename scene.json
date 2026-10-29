@@ -18,6 +18,10 @@
   }
  ],
  "shipped": [
+  "Monster flag reader, affix resists, danger rules, entry gate.",
+  "Difficulty survival research.",
+  "Recycler lock, no nested ladder escalation, clean -race sweep.",
+  "Merc and farming research.",
   "Review H1-H3, M1, M2, M4.",
   "Poverty pack-danger limit, act-aware starveArea.",
   "No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.",
@@ -25,19 +29,15 @@
   "LevelTo guard fix, waypoint activation in passing.",
   "Stall recoverer, GuardSave, NearTown, Frenzy pair, far NPC.",
   "Planner floor so Den/Blood Moor are not fallback farming at high level, fresh game for LevelTo.",
-  "Barbarian build, profile manaReserve, live results.",
-  "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
-  "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
-  "Paladin live results.",
-  "StaffTombLevel reader, a2env TombHinter and ProbeFar."
+  "Barbarian build, profile manaReserve, live results."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793279132,
- "updated": "2026-10-29T13:05Z",
+ "ts": 1793279413,
+ "updated": "2026-10-29T13:10Z",
  "work": [
   {
    "state": "working",
