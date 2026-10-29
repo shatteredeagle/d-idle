@@ -36,8 +36,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793234068,
- "updated": "2026-10-29T00:34Z",
+ "ts": 1793234145,
+ "updated": "2026-10-29T00:35Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Finding its way around the map"
-  },
-  {
-   "state": "working",
-   "task": "Building this public status page"
   },
   {
    "state": "working",
