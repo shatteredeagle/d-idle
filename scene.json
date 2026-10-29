@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Manager-level chain simulation, persisted hold level.",
+  "Tool health checks.",
   "Hold locked runs, town belt by build, long-run test report fight/death summaries.",
   "Go winedevice reaping at managed game stop.",
   "--long-run test-dir for tool/tool.",
@@ -27,17 +29,15 @@
   "Full-campaign simulation tests, Act-aware planning fix, hop floors.",
   "Endgame build research and tables.",
   "Runs goals connected, Nightmare/Hell rules in fight loop.",
-  "Container image carries tool/tool, wizard default CMD.",
-  "Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.",
-  "Wineserver long-run test check by plateau/headroom, safe winedevice reaping."
+  "Container image carries tool/tool, wizard default CMD."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793285712,
- "updated": "2026-10-29T14:55Z",
+ "ts": 1793286015,
+ "updated": "2026-10-29T15:00Z",
  "work": [
   {
    "state": "working",
@@ -49,11 +49,7 @@
   },
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
-  },
-  {
-   "state": "working",
-   "task": "Fighting and staying alive"
+   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }

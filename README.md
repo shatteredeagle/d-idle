@@ -77,26 +77,27 @@ The bot is paused right now, so there are no live numbers.
 
 - Long unattended test runs (working)
 - Working on the bot (working)
-- Goals, quests and levelling (working)
-- Fighting and staying alive (working)
+- Town chores: shopping, stashing and loot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (91)</summary>
+<summary><b>2026-10-29</b> (93)</summary>
 
+- Manager-level chain simulation, persisted hold level.
+- Tool health checks.
 - Hold locked runs, town belt by build, long-run test report fight/death summaries.
 - Go winedevice reaping at managed game stop.
 - --long-run test-dir for tool/tool.
 - Necro corpse skills, assassin trap planner.
 - Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.
 - Endgame tables registered, Smite weapon fix, ResistGate.
-- Full-campaign simulation tests, Act-aware planning fix, hop floors.
-- Endgame build research and tables.
 
 <details>
-<summary>83 more</summary>
+<summary>85 more</summary>
 
+- Full-campaign simulation tests, Act-aware planning fix, hop floors.
+- Endgame build research and tables.
 - Runs goals connected, Nightmare/Hell rules in fight loop.
 - Container image carries tool/tool, wizard default CMD.
 - Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.
@@ -278,7 +279,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 14:55 UTC
+Last updated: 2026-10-29 15:00 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
