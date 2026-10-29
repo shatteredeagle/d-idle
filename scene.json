@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "SME play-patterns knowledge base.",
+  "Rebuy bar fix, shop logging, quest skip reasons.",
   "SME builds and gear knowledge base.",
   "Gate refusals are planning blocks, route-aware targets, ban lift.",
   "Slots in instances interface, bot proxy, viewport video.",
@@ -27,29 +29,23 @@
   "Bwrap mount-namespace allowlist for every Wine process.",
   "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.",
   "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
-  "Periodic character point, planned games not counted as restarts.",
-  "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
-  "Failsafe ownership table, soak24 watchdog/supervise preflight."
+  "Periodic character point, planned games not counted as restarts."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793307356,
- "updated": "2026-10-29T20:55Z",
+ "ts": 1793307632,
+ "updated": "2026-10-29T21:00Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Long unattended test runs"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Long unattended test runs"
   }
  ]
 }
