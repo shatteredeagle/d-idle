@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool warm-up and fd plateau, recycler policy hooks.",
   "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
   "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
   "Fd study, game recycler, oog fd tools.",
@@ -28,15 +29,14 @@
   "Kick OAuth login and set-title library.",
   "Home Assistant package and dashboard for the stream.",
   "Stream control service, scheduler, max-live guard.",
-  "LAN host/join over loopback, party driver, menu TCP/IP screens.",
-  "Live-now link on the public page, sanitizer extension."
+  "LAN host/join over loopback, party driver, menu TCP/IP screens."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793234058,
+ "ts": 1793234068,
  "updated": "2026-10-29T00:34Z",
  "work": [
   {

@@ -83,8 +83,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (62)</summary>
+<summary><b>2026-10-28</b> (63)</summary>
 
+- Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
@@ -92,11 +93,11 @@ The bot is paused right now, so there are no live numbers.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 - Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
-- Kick OAuth login and set-title library.
 
 <details>
-<summary>54 more</summary>
+<summary>55 more</summary>
 
+- Kick OAuth login and set-title library.
 - Home Assistant package and dashboard for the stream.
 - Stream control service, scheduler, max-live guard.
 - LAN host/join over loopback, party driver, menu TCP/IP screens.
