@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Paladin live results.",
   "StaffTombLevel reader, a2env TombHinter and ProbeFar.",
   "Waypoint icon column, tomb hint interface and far probe.",
   "Act 2 live results 5.",
@@ -28,16 +29,15 @@
   "A planned restart counts once against the failsafe budget.",
   "Buy the town portal scroll before potions.",
   "Flee without potions, poverty mode, resource settings.",
-  "Teleport-aware explorer, InteractNPC hover fallback.",
-  "God cheat restores on signal, undo marker, inflated-life guard."
+  "Teleport-aware explorer, InteractNPC hover fallback."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793270139,
- "updated": "2026-10-29T10:35Z",
+ "ts": 1793272553,
+ "updated": "2026-10-29T11:15Z",
  "work": [
   {
    "state": "working",
