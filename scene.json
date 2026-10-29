@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Setup wizard front-end.",
   "Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.",
   "Re-scored milestone tracker, new S showcase milestone.",
   "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
@@ -28,16 +29,15 @@
   "Paladin smoke test findings and tool.",
   "In-memory quest and waypoint source, live-verified.",
   "Act 1 boss script framework and scripts.",
-  "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
-  "Tool warm-up and fd plateau, recycler policy hooks."
+  "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793241956,
- "updated": "2026-10-29T02:45Z",
+ "ts": 1793242216,
+ "updated": "2026-10-29T02:50Z",
  "work": [
   {
    "state": "working",
@@ -50,10 +50,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Improving the dashboard"
   }
  ]
 }
