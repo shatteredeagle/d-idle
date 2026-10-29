@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Real game and bot run headless in the container.",
   "Necromancer smoke test findings.",
   "Setup wizard front-end.",
   "Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.",
@@ -28,24 +29,19 @@
   "Akara Den claim fixed, full-pack purchase fix.",
   "Include any in-game instance in auto mode, adopt running keepAlive stream after restart.",
   "Paladin smoke test findings and tool.",
-  "In-memory quest and waypoint source, live-verified.",
-  "Act 1 boss script framework and scripts."
+  "In-memory quest and waypoint source, live-verified."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793243156,
- "updated": "2026-10-29T03:05Z",
+ "ts": 1793243432,
+ "updated": "2026-10-29T03:10Z",
  "work": [
   {
    "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Making the bot easy to set up"
   },
   {
    "state": "working",
