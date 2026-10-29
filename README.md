@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (86)</summary>
+<summary><b>2026-10-29</b> (87)</summary>
 
+- Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.
 - Endgame tables registered, Smite weapon fix, ResistGate.
 - Full-campaign simulation tests, Act-aware planning fix, hop floors.
 - Endgame build research and tables.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Container image carries tool/tool, wizard default CMD.
 - Tool shutdown order, log rotation, flee chicken, guard for allow-listed only.
 - Wineserver long-run test check by plateau/headroom, safe winedevice reaping.
-- Wineserver fd investigation.
 
 <details>
-<summary>78 more</summary>
+<summary>79 more</summary>
 
+- Wineserver fd investigation.
 - New tests for unattended-run file locations, coverage notes.
 - Prebuilt live probe tools.
 - Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.
@@ -271,7 +272,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 14:35 UTC
+Last updated: 2026-10-29 14:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
