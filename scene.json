@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool Unraid template, Tower container deploy and first run results.",
   "Poor-mode pickup of sellable gear and small gold, per-fight loot summary.",
   "Gated character keeps its safe area, planning blocks never restart the game.",
   "Bwrap mount-namespace allowlist for every Wine process.",
@@ -28,16 +29,15 @@
   "Failsafe ownership table, soak24 watchdog/supervise preflight.",
   "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
   "Pre-fix gate baseline numbers.",
-  "Jade/Onyx/Tower long-run test host evaluation.",
-  "Mark character-on-area-change claims UNVERIFIED, results plan."
+  "Jade/Onyx/Tower long-run test host evaluation."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793300102,
- "updated": "2026-10-29T18:55Z",
+ "ts": 1793300449,
+ "updated": "2026-10-29T19:00Z",
  "work": [
   {
    "state": "working",
