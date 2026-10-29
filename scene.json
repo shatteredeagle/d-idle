@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.",
   "Failsafe ownership table, soak24 watchdog/supervise preflight.",
   "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
   "Pre-fix gate baseline numbers.",
@@ -28,24 +29,27 @@
   "Strategic review of work and plan.",
   "Unreliable bot tests made load-proof.",
   "FieldGate connected into trip.",
-  "Xp lost/at-risk telemetry, long-run test XP from saved exp.",
-  "No character churn on repeat quest events, stale hold level resumes at once."
+  "Xp lost/at-risk telemetry, long-run test XP from saved exp."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793290254,
- "updated": "2026-10-29T16:10Z",
+ "ts": 1793291123,
+ "updated": "2026-10-29T16:25Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
+  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Goals, quests and levelling"
   }
  ]
 }

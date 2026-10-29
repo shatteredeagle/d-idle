@@ -75,14 +75,16 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
+- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (126)</summary>
+<summary><b>2026-10-29</b> (127)</summary>
 
+- Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
 - Failsafe ownership table, soak24 watchdog/supervise preflight.
 - Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
 - Pre-fix gate baseline numbers.
@@ -90,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
 - SavedExp connected, long-run test --character, level table to 99.
-- Strategic review of work and plan.
 
 <details>
-<summary>118 more</summary>
+<summary>119 more</summary>
 
+- Strategic review of work and plan.
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
 - Xp lost/at-risk telemetry, long-run test XP from saved exp.
@@ -310,7 +312,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 16:10 UTC
+Last updated: 2026-10-29 16:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
