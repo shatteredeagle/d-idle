@@ -82,8 +82,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (75)</summary>
+<summary><b>2026-10-28</b> (76)</summary>
 
+- Necromancer smoke test findings.
 - Setup wizard front-end.
 - Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.
 - Re-scored milestone tracker, new S showcase milestone.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
 - Akara Den claim fixed, full-pack purchase fix.
-- Include any in-game instance in auto mode, adopt running keepAlive stream after restart.
 
 <details>
-<summary>67 more</summary>
+<summary>68 more</summary>
 
+- Include any in-game instance in auto mode, adopt running keepAlive stream after restart.
 - Paladin smoke test findings and tool.
 - In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
@@ -170,7 +171,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 03:00 UTC
+Last updated: 2026-10-29 03:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
