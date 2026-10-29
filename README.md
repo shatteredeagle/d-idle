@@ -83,8 +83,10 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (2)</summary>
+<summary><b>2026-10-29</b> (4)</summary>
 
+- Boss script robustness, potion gates, live-check procedure.
+- Necromancer summon upkeep, curses, Bone Armor by state.
 - Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.
 - IsFriendly for every class.
 
@@ -183,7 +185,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 04:25 UTC
+Last updated: 2026-10-29 04:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

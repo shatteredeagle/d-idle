@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Boss script robustness, potion gates, live-check procedure.",
+  "Necromancer summon upkeep, curses, Bone Armor by state.",
   "Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.",
   "IsFriendly for every class.",
   "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
@@ -27,17 +29,15 @@
   "Setup wizard front-end.",
   "Normal Act 2 campaign, cube contract, Radament/Summoner/Duriel scripts.",
   "Re-scored milestone tracker, new S showcase milestone.",
-  "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
-  "Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.",
-  "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop."
+  "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793247924,
- "updated": "2026-10-29T04:25Z",
+ "ts": 1793248221,
+ "updated": "2026-10-29T04:30Z",
  "work": [
   {
    "state": "working",
