@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Blocked inserted steps dropped, fruitless explore gives up.",
+  "Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.",
   "Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.",
   "Druid live results, tool.",
   "Act 2 staff pieces and Transmute verified live.",
@@ -27,17 +29,15 @@
   "Druid and Assassin builds, profiles, pet and trap upkeep.",
   "Amazon live results, shop stock pages fix, ammo before shop.",
   "Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.",
-  "Nav Yield connected to bounded pack clear.",
-  "OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.",
-  "Act 2 live results, act2 nav hints, tool."
+  "Nav Yield connected to bounded pack clear."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793260256,
- "updated": "2026-10-29T07:50Z",
+ "ts": 1793260852,
+ "updated": "2026-10-29T08:00Z",
  "work": [
   {
    "state": "working",
