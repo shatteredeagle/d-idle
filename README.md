@@ -75,27 +75,30 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Goals, quests and levelling (working)
-- Long unattended test runs (working)
 - Working on the bot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (102)</summary>
+<summary><b>2026-10-29</b> (106)</summary>
 
+- Seeded idempotent --goals adds.
+- Release packaging, per-binary --version, dry run.
+- Live check plan for Assassin/Druid.
+- Single persisted hold record, cleared on every resume/pause/remove.
 - Charsi imbue and Larzuk socket flows.
 - End-to-end telemetry chain tests.
 - Seal boss timeouts continue, resume from nearest node, death checks.
 - Settings reference and generator.
+
+<details>
+<summary>98 more</summary>
+
 - Long-run test fight/death parsers accept JSON logs.
 - INDEX and PLAN status refresh, reviews table.
 - Resist gate rechecked at campaign start, MaxDeaths auto-resume.
 - Full stash/pack handling, SetBuild forwards to judge.
-
-<details>
-<summary>94 more</summary>
-
 - Log dedup, minute summary line.
 - Manager-level chain simulation, persisted hold level.
 - Tool health checks.
@@ -288,7 +291,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:10 UTC
+Last updated: 2026-10-29 15:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

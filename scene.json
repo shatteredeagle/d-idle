@@ -18,6 +18,10 @@
   }
  ],
  "shipped": [
+  "Seeded idempotent --goals adds.",
+  "Release packaging, per-binary --version, dry run.",
+  "Live check plan for Assassin/Druid.",
+  "Single persisted hold record, cleared on every resume/pause/remove.",
   "Charsi imbue and Larzuk socket flows.",
   "End-to-end telemetry chain tests.",
   "Seal boss timeouts continue, resume from nearest node, death checks.",
@@ -25,31 +29,23 @@
   "Long-run test fight/death parsers accept JSON logs.",
   "INDEX and PLAN status refresh, reviews table.",
   "Resist gate rechecked at campaign start, MaxDeaths auto-resume.",
-  "Full stash/pack handling, SetBuild forwards to judge.",
-  "Log dedup, minute summary line.",
-  "Manager-level chain simulation, persisted hold level.",
-  "Tool health checks.",
-  "Hold locked runs, town belt by build, long-run test report fight/death summaries."
+  "Full stash/pack handling, SetBuild forwards to judge."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793286621,
- "updated": "2026-10-29T15:10Z",
+ "ts": 1793286934,
+ "updated": "2026-10-29T15:15Z",
  "work": [
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Working on the bot"
   }
  ]
 }
