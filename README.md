@@ -77,13 +77,13 @@ The bot is paused right now, so there are no live numbers.
 
 - Long unattended test runs (working)
 - Working on the bot (working)
-- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (127)</summary>
+<summary><b>2026-10-29</b> (128)</summary>
 
+- Periodic character point, planned games not counted as restarts.
 - Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
 - Failsafe ownership table, soak24 watchdog/supervise preflight.
 - Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Jade/Onyx/Tower long-run test host evaluation.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
-- SavedExp connected, long-run test --character, level table to 99.
 
 <details>
-<summary>119 more</summary>
+<summary>120 more</summary>
 
+- SavedExp connected, long-run test --character, level table to 99.
 - Strategic review of work and plan.
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
@@ -312,7 +312,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 16:25 UTC
+Last updated: 2026-10-29 16:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
