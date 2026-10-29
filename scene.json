@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Act 2 live results, act2 nav hints, tool.",
   "Countess live results, preset anchor fix, critical-life escape.",
   "Setup wizard connected into tool/tool, container user-test checklist.",
   "Live friendly results, owner-type fix, tool.",
@@ -28,20 +29,19 @@
   "Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.",
   "IsFriendly for every class.",
   "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
-  "Amazon smoke test findings.",
-  "Real game and bot run headless in the container."
+  "Amazon smoke test findings."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793250646,
- "updated": "2026-10-29T05:10Z",
+ "ts": 1793253928,
+ "updated": "2026-10-29T06:05Z",
  "work": [
   {
    "state": "working",
-   "task": "Finding its way around the map"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
@@ -49,7 +49,7 @@
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Finding its way around the map"
   }
  ]
 }
