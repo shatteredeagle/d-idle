@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "No character churn on repeat quest events, stale hold level resumes at once.",
+  "Thin-belt retreat and field gate, kit-safe PlanBuys.",
+  "Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.",
   "Boss readiness gates, Cold Plains kit floor, boss runs own the step.",
   "Kit reserve, off-class weapons, per-slot equip memory.",
   "Single equip slot table, bounded equip backoff, off-centre retry, cursor return.",
@@ -26,22 +29,19 @@
   "Manager and panic-recovery fixes.",
   "Seeded idempotent --goals adds.",
   "Release packaging, per-binary --version, dry run.",
-  "Live check plan for Assassin/Druid.",
-  "Single persisted hold record, cleared on every resume/pause/remove.",
-  "Charsi imbue and Larzuk socket flows.",
-  "End-to-end telemetry chain tests."
+  "Live check plan for Assassin/Druid."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793287817,
- "updated": "2026-10-29T15:30Z",
+ "ts": 1793288136,
+ "updated": "2026-10-29T15:35Z",
  "work": [
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Goals, quests and levelling"
   },
   {
    "state": "working",
