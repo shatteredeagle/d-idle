@@ -18,38 +18,34 @@
   }
  ],
  "shipped": [
+  "Seal boss timeouts continue, resume from nearest node, death checks.",
+  "Settings reference and generator.",
+  "Long-run test fight/death parsers accept JSON logs.",
+  "INDEX and PLAN status refresh, reviews table.",
+  "Resist gate rechecked at campaign start, MaxDeaths auto-resume.",
+  "Full stash/pack handling, SetBuild forwards to judge.",
+  "Log dedup, minute summary line.",
   "Manager-level chain simulation, persisted hold level.",
   "Tool health checks.",
   "Hold locked runs, town belt by build, long-run test report fight/death summaries.",
   "Go winedevice reaping at managed game stop.",
-  "--long-run test-dir for tool/tool.",
-  "Necro corpse skills, assassin trap planner.",
-  "Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.",
-  "Endgame tables registered, Smite weapon fix, ResistGate.",
-  "Full-campaign simulation tests, Act-aware planning fix, hop floors.",
-  "Endgame build research and tables.",
-  "Runs goals connected, Nightmare/Hell rules in fight loop.",
-  "Container image carries tool/tool, wizard default CMD."
+  "--long-run test-dir for tool/tool."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793286015,
- "updated": "2026-10-29T15:00Z",
+ "ts": 1793286353,
+ "updated": "2026-10-29T15:05Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Long unattended test runs"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Long unattended test runs"
   }
  ]
 }

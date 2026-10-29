@@ -75,16 +75,26 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
 - Working on the bot (working)
-- Town chores: shopping, stashing and loot (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (93)</summary>
+<summary><b>2026-10-29</b> (100)</summary>
 
+- Seal boss timeouts continue, resume from nearest node, death checks.
+- Settings reference and generator.
+- Long-run test fight/death parsers accept JSON logs.
+- INDEX and PLAN status refresh, reviews table.
+- Resist gate rechecked at campaign start, MaxDeaths auto-resume.
+- Full stash/pack handling, SetBuild forwards to judge.
+- Log dedup, minute summary line.
 - Manager-level chain simulation, persisted hold level.
+
+<details>
+<summary>92 more</summary>
+
 - Tool health checks.
 - Hold locked runs, town belt by build, long-run test report fight/death summaries.
 - Go winedevice reaping at managed game stop.
@@ -92,10 +102,6 @@ The bot is paused right now, so there are no live numbers.
 - Necro corpse skills, assassin trap planner.
 - Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.
 - Endgame tables registered, Smite weapon fix, ResistGate.
-
-<details>
-<summary>85 more</summary>
-
 - Full-campaign simulation tests, Act-aware planning fix, hop floors.
 - Endgame build research and tables.
 - Runs goals connected, Nightmare/Hell rules in fight loop.
@@ -279,7 +285,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 15:00 UTC
+Last updated: 2026-10-29 15:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
