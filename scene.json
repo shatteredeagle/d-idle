@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Waypoint icon column, tomb hint interface and far probe.",
   "Act 2 live results 5.",
   "Waypoints cheat opens act tabs via quest words, live verified.",
   "Heal-first gate in town, waypoint to town, re-entry loop pause.",
@@ -28,16 +29,15 @@
   "Flee without potions, poverty mode, resource settings.",
   "Teleport-aware explorer, InteractNPC hover fallback.",
   "God cheat restores on signal, undo marker, inflated-life guard.",
-  "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.",
-  "Blocked inserted steps dropped, fruitless explore gives up."
+  "Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793269556,
- "updated": "2026-10-29T10:25Z",
+ "ts": 1793269856,
+ "updated": "2026-10-29T10:30Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Goals, quests and levelling"
   }
  ]
 }
