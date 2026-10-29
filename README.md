@@ -75,15 +75,15 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Town chores: shopping, stashing and loot (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (75)</summary>
+<summary><b>2026-10-29</b> (76)</summary>
 
+- Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.
 - 70 s stop grace, goals marker after enqueue, StopGame, slot instance env.
 - Countess live results, bossrun --god/--nokite, unpinned input helper.
 - Dashboard long-run test alert strip.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Chain Nightmare/Hell campaign goals after completion.
 - Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.
 - Tool per-client stream writer, reconnect on load, hidden-tab pause.
-- Bot-owned game for fleet slots.
 
 <details>
-<summary>67 more</summary>
+<summary>68 more</summary>
 
+- Bot-owned game for fleet slots.
 - Act 4 and 5 quest data, tasks, boss scripts.
 - Act 2/3 connected into tool.
 - Fleet launches and supervises tool per slot.
@@ -261,7 +261,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 14:00 UTC
+Last updated: 2026-10-29 14:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
