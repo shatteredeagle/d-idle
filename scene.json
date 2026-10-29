@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Act 4 and 5 quest data, tasks, boss scripts.",
+  "Act 2/3 connected into tool.",
+  "Fleet launches and supervises tool per slot.",
   "Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.",
   "Long-run test report level, no-data verdict, status and alerts.",
   "Missile and curse readers, dodge rule, fight telemetry.",
@@ -26,34 +29,27 @@
   "Campaign templates, weapon equip, quest item pickup, World flags.",
   "Act 3 quest data, task nodes, boss scripts, nav hints.",
   "Merc chore, EntryGate in planner, NM Act 1 floor 36.",
-  "Leveler gear scorer uses resist/FCR/ethereal helpers.",
-  "Free heal trips from the Den, NearTownArea, caster starvation.",
-  "Runeword bases, gem keep, charm filter, gear score helpers.",
-  "Gate click fallback, waypoint load wait."
+  "Leveler gear scorer uses resist/FCR/ethereal helpers."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793280609,
- "updated": "2026-10-29T13:30Z",
+ "ts": 1793280908,
+ "updated": "2026-10-29T13:35Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Playing in a party of bots"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Playing in a party of bots"
   }
  ]
 }
