@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
+  "Scene tile, grid3, keep-alive, StreamDesk and HA toggles.",
+  "Fd study, game recycler, oog fd tools.",
   "TV-style stream scene page and generator.",
   "Shared stream selection, auto scheduler rule, StreamDesk and HA sync.",
   "Stream overlay, grid layouts, status --json.",
@@ -26,26 +29,31 @@
   "Home Assistant package and dashboard for the stream.",
   "Stream control service, scheduler, max-live guard.",
   "LAN host/join over loopback, party driver, menu TCP/IP screens.",
-  "Live-now link on the public page, sanitizer extension.",
-  "Kick interface research for stream title.",
-  "Desktop tray app for the stream.",
-  "Task layer."
+  "Live-now link on the public page, sanitizer extension."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793230361,
- "updated": "2026-10-28T23:32Z",
+ "ts": 1793234058,
+ "updated": "2026-10-29T00:34Z",
  "work": [
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Finding its way around the map"
+  },
+  {
+   "state": "working",
+   "task": "Building this public status page"
+  },
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
   }
  ]
 }

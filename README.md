@@ -5,7 +5,7 @@ _Say it: die dull. Status page._
 A hobby project that turns Diablo II: Lord of Destruction into an idle game. A bot plays the real game by itself, offline, and a layer of goals, routines and progression is being built around it, the way an idle game gives you things to unlock and decisions to check in on.  
 It is early days. Right now the work is on the part underneath: a bot that plays reliably for hours with nobody watching.  
 
-_Streams when the bot is running._
+**[LIVE now on Kick](https://kick.com/brognak)**
 
 ## Why we are making it
 
@@ -75,26 +75,31 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Goals, quests and levelling (working)
 - Working on the bot (working)
+- Finding its way around the map (working)
+- Building this public status page (working)
+- Long unattended test runs (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (59)</summary>
+<summary><b>2026-10-28</b> (62)</summary>
 
+- Resource policy, task layer and quests connected into the bot; live 31 min campaign.
+- Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
+- Fd study, game recycler, oog fd tools.
 - TV-style stream scene page and generator.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
 - Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
 - Kick OAuth login and set-title library.
+
+<details>
+<summary>54 more</summary>
+
 - Home Assistant package and dashboard for the stream.
 - Stream control service, scheduler, max-live guard.
 - LAN host/join over loopback, party driver, menu TCP/IP screens.
-
-<details>
-<summary>51 more</summary>
-
 - Live-now link on the public page, sanitizer extension.
 - Kick interface research for stream title.
 - Desktop tray app for the stream.
@@ -153,7 +158,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-28 23:32 UTC
+Last updated: 2026-10-29 00:34 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
