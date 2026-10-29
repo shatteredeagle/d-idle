@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Countess live results, preset anchor fix, critical-life escape.",
   "Setup wizard connected into tool/tool, container user-test checklist.",
   "Live friendly results, owner-type fix, tool.",
   "Setup interface mount in server, character-step hold.",
@@ -28,16 +29,15 @@
   "IsFriendly for every class.",
   "Rebuilt HA stream dashboard, fixed sync loops and notifications.",
   "Amazon smoke test findings.",
-  "Real game and bot run headless in the container.",
-  "Necromancer smoke test findings."
+  "Real game and bot run headless in the container."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793248819,
- "updated": "2026-10-29T04:40Z",
+ "ts": 1793250646,
+ "updated": "2026-10-29T05:10Z",
  "work": [
   {
    "state": "working",
@@ -45,11 +45,11 @@
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
