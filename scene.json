@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Assassin live results.",
   "Druid and Assassin builds, profiles, pet and trap upkeep.",
   "Amazon live results, shop stock pages fix, ammo before shop.",
   "Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.",
@@ -28,16 +29,15 @@
   "Setup wizard connected into tool/tool, container user-test checklist.",
   "Live friendly results, owner-type fix, tool.",
   "Setup interface mount in server, character-step hold.",
-  "Internal/gear weapon/ammo model and Necromancer/Amazon build tables.",
-  "Boss script robustness, potion gates, live-check procedure."
+  "Internal/gear weapon/ammo model and Necromancer/Amazon build tables."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793256956,
- "updated": "2026-10-29T06:55Z",
+ "ts": 1793258456,
+ "updated": "2026-10-29T07:20Z",
  "work": [
   {
    "state": "working",
@@ -50,6 +50,10 @@
   {
    "state": "working",
    "task": "Goals, quests and levelling"
+  },
+  {
+   "state": "working",
+   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
