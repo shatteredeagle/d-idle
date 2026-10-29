@@ -78,12 +78,14 @@ The bot is paused right now, so there are no live numbers.
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Finding its way around the map (working)
+- Fighting and staying alive (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (30)</summary>
+<summary><b>2026-10-29</b> (31)</summary>
 
+- Island-hopping teleport planner, boss Teleporter.
 - Act 2 live results 4, nav teleport in act2live rig, god restore on die.
 - A planned restart counts once against the failsafe budget.
 - Buy the town portal scroll before potions.
@@ -91,11 +93,11 @@ The bot is paused right now, so there are no live numbers.
 - Teleport-aware explorer, InteractNPC hover fallback.
 - God cheat restores on signal, undo marker, inflated-life guard.
 - Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.
-- Blocked inserted steps dropped, fruitless explore gives up.
 
 <details>
-<summary>22 more</summary>
+<summary>23 more</summary>
 
+- Blocked inserted steps dropped, fruitless explore gives up.
 - Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.
 - Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.
 - Druid live results, tool.
@@ -216,7 +218,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 09:30 UTC
+Last updated: 2026-10-29 09:35 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
