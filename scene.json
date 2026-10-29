@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "All Win32 calls on one locked OS thread in the tool input helper, thread heartbeat.",
   "Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.",
   "Paladin live results.",
   "StaffTombLevel reader, a2env TombHinter and ProbeFar.",
@@ -28,16 +29,15 @@
   "Island-hopping teleport planner, boss Teleporter.",
   "Act 2 live results 4, nav teleport in act2live rig, god restore on die.",
   "A planned restart counts once against the failsafe budget.",
-  "Buy the town portal scroll before potions.",
-  "Flee without potions, poverty mode, resource settings."
+  "Buy the town portal scroll before potions."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793273156,
- "updated": "2026-10-29T11:25Z",
+ "ts": 1793273456,
+ "updated": "2026-10-29T11:30Z",
  "work": [
   {
    "state": "working",
