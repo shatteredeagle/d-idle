@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Bwrap mount-namespace allowlist for every Wine process.",
   "Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.",
   "Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.",
   "Periodic character point, planned games not counted as restarts.",
@@ -28,16 +29,15 @@
   "Jade/Onyx/Tower long-run test host evaluation.",
   "Mark character-on-area-change claims UNVERIFIED, results plan.",
   "Every build reports its commit, long-run test preflight refuses dev builds.",
-  "SavedExp connected, long-run test --character, level table to 99.",
-  "Strategic review of work and plan."
+  "SavedExp connected, long-run test --character, level table to 99."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793294762,
- "updated": "2026-10-29T17:26Z",
+ "ts": 1793296259,
+ "updated": "2026-10-29T17:50Z",
  "work": [
   {
    "state": "working",
