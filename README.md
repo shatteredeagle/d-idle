@@ -82,8 +82,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (17)</summary>
+<summary><b>2026-10-29</b> (18)</summary>
 
+- Per-instance long-run test process matching.
 - Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.
 - Assassin live results.
 - Druid and Assassin builds, profiles, pet and trap upkeep.
@@ -91,11 +92,11 @@ The bot is paused right now, so there are no live numbers.
 - Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.
 - Nav Yield connected to bounded pack clear.
 - OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.
-- Act 2 live results, act2 nav hints, tool.
 
 <details>
-<summary>9 more</summary>
+<summary>10 more</summary>
 
+- Act 2 live results, act2 nav hints, tool.
 - Countess live results, preset anchor fix, critical-life escape.
 - Setup wizard connected into tool/tool, container user-test checklist.
 - Live friendly results, owner-type fix, tool.
@@ -203,7 +204,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 07:25 UTC
+Last updated: 2026-10-29 07:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
