@@ -81,20 +81,22 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (12)</summary>
+<summary><b>2026-10-29</b> (14)</summary>
 
+- Amazon live results, shop stock pages fix, ammo before shop.
+- Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.
 - Nav Yield connected to bounded pack clear.
 - OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.
 - Act 2 live results, act2 nav hints, tool.
 - Countess live results, preset anchor fix, critical-life escape.
 - Setup wizard connected into tool/tool, container user-test checklist.
 - Live friendly results, owner-type fix, tool.
-- Setup interface mount in server, character-step hold.
-- Internal/gear weapon/ammo model and Necromancer/Amazon build tables.
 
 <details>
-<summary>4 more</summary>
+<summary>6 more</summary>
 
+- Setup interface mount in server, character-step hold.
+- Internal/gear weapon/ammo model and Necromancer/Amazon build tables.
 - Boss script robustness, potion gates, live-check procedure.
 - Necromancer summon upkeep, curses, Bone Armor by state.
 - Callers use IsFriendly, rest loop and hostileNear fixes, xp remainder.
@@ -197,7 +199,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 06:10 UTC
+Last updated: 2026-10-29 06:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
