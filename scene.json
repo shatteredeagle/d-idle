@@ -18,6 +18,9 @@
   }
  ],
  "shipped": [
+  "Failsafe ownership table, soak24 watchdog/supervise preflight.",
+  "Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.",
+  "Pre-fix gate baseline numbers.",
   "Jade/Onyx/Tower long-run test host evaluation.",
   "Mark character-on-area-change claims UNVERIFIED, results plan.",
   "Every build reports its commit, long-run test preflight refuses dev builds.",
@@ -26,18 +29,15 @@
   "Unreliable bot tests made load-proof.",
   "FieldGate connected into trip.",
   "Xp lost/at-risk telemetry, long-run test XP from saved exp.",
-  "No character churn on repeat quest events, stale hold level resumes at once.",
-  "Thin-belt retreat and field gate, kit-safe PlanBuys.",
-  "Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.",
-  "Boss readiness gates, Cold Plains kit floor, boss runs own the step."
+  "No character churn on repeat quest events, stale hold level resumes at once."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793289923,
- "updated": "2026-10-29T16:05Z",
+ "ts": 1793290254,
+ "updated": "2026-10-29T16:10Z",
  "work": [
   {
    "state": "working",

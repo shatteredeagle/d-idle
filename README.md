@@ -81,20 +81,23 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (123)</summary>
+<summary><b>2026-10-29</b> (126)</summary>
 
+- Failsafe ownership table, soak24 watchdog/supervise preflight.
+- Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
+- Pre-fix gate baseline numbers.
 - Jade/Onyx/Tower long-run test host evaluation.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
 - SavedExp connected, long-run test --character, level table to 99.
 - Strategic review of work and plan.
+
+<details>
+<summary>118 more</summary>
+
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
 - Xp lost/at-risk telemetry, long-run test XP from saved exp.
-
-<details>
-<summary>115 more</summary>
-
 - No character churn on repeat quest events, stale hold level resumes at once.
 - Thin-belt retreat and field gate, kit-safe PlanBuys.
 - Soak24 duration parsing, winedevice sampler, tick-age/restart alerts.
@@ -216,7 +219,7 @@ The bot is paused right now, so there are no live numbers.
 </details>
 
 <details>
-<summary><b>2026-10-28</b> (79)</summary>
+<summary><b>2026-10-28</b> (78)</summary>
 
 - Rebuilt HA stream dashboard, fixed sync loops and notifications.
 - Amazon smoke test findings.
@@ -228,7 +231,7 @@ The bot is paused right now, so there are no live numbers.
 - Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.
 
 <details>
-<summary>71 more</summary>
+<summary>70 more</summary>
 
 - Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
@@ -261,7 +264,6 @@ The bot is paused right now, so there are no live numbers.
 - The roadmap: what alpha, beta and good-bot mean, and how far along each is.
 - Checked in the real game that quests, waypoints, acts and difficulty are saved correctly.
 - Research on how other projects add goals and progression on top of a game.
-- Fixed a crash in the part that presses keys; it now recovers by itself.
 - Management for several bots at once, and goals now show up live.
 - The bot now runs on the shared server and exposes its settings.
 - Run several bots at once and play together as a party.
@@ -308,7 +310,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 16:05 UTC
+Last updated: 2026-10-29 16:10 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
