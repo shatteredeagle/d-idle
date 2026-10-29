@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Real Transmute, quest items stay in pack, TakeWaypoint walk, Act 2 stall recovery.",
+  "Druid live results, tool.",
   "Act 2 staff pieces and Transmute verified live.",
   "Per-instance long-run test process matching.",
   "Greeting stall, affordability-aware advice, futile-trip memory, jobs kill, ring retry.",
@@ -27,33 +29,23 @@
   "Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.",
   "Nav Yield connected to bounded pack clear.",
   "OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.",
-  "Act 2 live results, act2 nav hints, tool.",
-  "Countess live results, preset anchor fix, critical-life escape.",
-  "Setup wizard connected into tool/tool, container user-test checklist."
+  "Act 2 live results, act2 nav hints, tool."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793259929,
- "updated": "2026-10-29T07:45Z",
+ "ts": 1793260256,
+ "updated": "2026-10-29T07:50Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
-  },
-  {
-   "state": "working",
-   "task": "Long unattended test runs"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
+   "task": "Long unattended test runs"
   }
  ]
 }
