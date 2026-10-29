@@ -35,23 +35,23 @@ It is early days. Right now the work is on the part underneath: a bot that plays
 Each stage is a gate made of milestones. Open a stage to see its milestones.
 
 <details open>
-<summary><b>Alpha: a reliable Act 1 bot on the product path</b>: ██░░░░░░░░ 28%</summary>
+<summary><b>Alpha: a reliable Act 1 bot on the product path</b>: ████░░░░░░ 47%</summary>
 
 | Milestone | Progress | Checks verified |
 | --- | --- | --- |
-| M0 Foundations: the product path runs live | █████░░░░░ 50% | 1 of 7 |
-| A Act 1 self-leveler: clvl 1 to 15, 2 h unattended | ███░░░░░░░ 33% | 1 of 9 |
-| B Normal Act 1 complete: quests, Andariel, hop to Act 2 | █░░░░░░░░░ 12% | 0 of 8 |
-| G1 Day-long soak on the product path (24 h) | ██░░░░░░░░ 20% | 0 of 5 |
+| M0 Foundations: the product path runs live | ██████░░░░ 64% | 2 of 7 |
+| A Act 1 self-leveler: clvl 1 to 15, 2 h unattended | █████░░░░░ 50% | 2 of 11 |
+| B Normal Act 1 complete: quests, Andariel, hop to Act 2 | ████░░░░░░ 40% | 1 of 11 |
+| G1 Day-long soak on the product path (24 h) | ███░░░░░░░ 37% | 1 of 8 |
 
 </details>
 
 <details>
-<summary><b>Beta: Normal complete, installable by a friend</b>: █░░░░░░░░░ 19%</summary>
+<summary><b>Beta: Normal complete, installable by a friend</b>: ███░░░░░░░ 30%</summary>
 
 | Milestone | Progress | Checks verified |
 | --- | --- | --- |
-| C1 Normal Acts 2 and 3 | ░░░░░░░░░░ 0% | 0 of 6 |
+| C1 Normal Acts 2 and 3 | ░░░░░░░░░░ 8% | 0 of 6 |
 | C2 Normal Acts 4 and 5, Baal, hop to Nightmare | ░░░░░░░░░░ 0% | 0 of 5 |
 | F Headless container and setup wizard, usable by a friend | ████░░░░░░ 41% | 1 of 6 |
 | G2 Multi-day soak (72 h) | ░░░░░░░░░░ 0% | 0 of 4 |
@@ -59,13 +59,13 @@ Each stage is a gate made of milestones. Open a stage to see its milestones.
 </details>
 
 <details>
-<summary><b>Good-bot gate: the game layer may start</b>: █░░░░░░░░░ 17%</summary>
+<summary><b>Good-bot gate: the game layer may start</b>: ██░░░░░░░░ 26%</summary>
 
 | Milestone | Progress | Checks verified |
 | --- | --- | --- |
 | D1 Nightmare playthrough | ░░░░░░░░░░ 0% | 0 of 4 |
 | D2 Hell playthrough and farming runs | █░░░░░░░░░ 12% | 0 of 4 |
-| H Good-bot gate | ██░░░░░░░░ 25% | 1 of 6 |
+| H Good-bot gate | ████░░░░░░ 40% | 2 of 10 |
 
 </details>
 
@@ -77,13 +77,13 @@ The bot is paused right now, so there are no live numbers.
 
 - Working on the bot (working)
 - Long unattended test runs (working)
-- Goals, quests and levelling (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-28</b> (72)</summary>
+<summary><b>2026-10-28</b> (73)</summary>
 
+- Re-scored milestone tracker, new S showcase milestone.
 - Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.
 - Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Include any in-game instance in auto mode, adopt running keepAlive stream after restart.
 - Paladin smoke test findings and tool.
 - In-memory quest and waypoint source, live-verified.
-- Act 1 boss script framework and scripts.
 
 <details>
-<summary>64 more</summary>
+<summary>65 more</summary>
 
+- Act 1 boss script framework and scripts.
 - Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
 - Tool warm-up and fd plateau, recycler policy hooks.
 - Resource policy, task layer and quests connected into the bot; live 31 min campaign.
@@ -167,7 +167,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-29 02:00 UTC
+Last updated: 2026-10-29 02:01 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

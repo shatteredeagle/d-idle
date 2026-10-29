@@ -3,21 +3,22 @@
  "ladder": [
   {
    "name": "Alpha",
-   "pct": 28,
+   "pct": 47,
    "sub": "A reliable Act 1 bot on the product path"
   },
   {
    "name": "Beta",
-   "pct": 19,
+   "pct": 30,
    "sub": "Normal complete, installable by a friend"
   },
   {
    "name": "Good bot",
-   "pct": 17,
+   "pct": 26,
    "sub": "The game layer may start"
   }
  ],
  "shipped": [
+  "Re-scored milestone tracker, new S showcase milestone.",
   "Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.",
   "Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.",
   "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.",
@@ -28,16 +29,15 @@
   "Act 1 boss script framework and scripts.",
   "Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.",
   "Tool warm-up and fd plateau, recycler policy hooks.",
-  "Resource policy, task layer and quests connected into the bot; live 31 min campaign.",
-  "Scene tile, grid3, keep-alive, StreamDesk and HA toggles."
+  "Resource policy, task layer and quests connected into the bot; live 31 min campaign."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793239239,
- "updated": "2026-10-29T02:00Z",
+ "ts": 1793239278,
+ "updated": "2026-10-29T02:01Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Goals, quests and levelling"
   }
  ]
 }
