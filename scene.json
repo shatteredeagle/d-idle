@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Single equip slot table, bounded equip backoff, off-centre retry, cursor return.",
   "Live run runbooks and d2-live briefs.",
   "Pruned goal seeds stay refused across restarts.",
   "Manager and panic-recovery fixes.",
@@ -28,16 +29,15 @@
   "Charsi imbue and Larzuk socket flows.",
   "End-to-end telemetry chain tests.",
   "Seal boss timeouts continue, resume from nearest node, death checks.",
-  "Settings reference and generator.",
-  "Long-run test fight/death parsers accept JSON logs."
+  "Settings reference and generator."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793287205,
- "updated": "2026-10-29T15:20Z",
+ "ts": 1793287556,
+ "updated": "2026-10-29T15:25Z",
  "work": [
   {
    "state": "working",
@@ -45,7 +45,15 @@
   },
   {
    "state": "working",
+   "task": "Goals, quests and levelling"
+  },
+  {
+   "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
