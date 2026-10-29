@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Amazon smoke test findings.",
   "Real game and bot run headless in the container.",
   "Necromancer smoke test findings.",
   "Setup wizard front-end.",
@@ -28,21 +29,16 @@
   "Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.",
   "Akara Den claim fixed, full-pack purchase fix.",
   "Include any in-game instance in auto mode, adopt running keepAlive stream after restart.",
-  "Paladin smoke test findings and tool.",
-  "In-memory quest and waypoint source, live-verified."
+  "Paladin smoke test findings and tool."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793243432,
- "updated": "2026-10-29T03:10Z",
+ "ts": 1793244651,
+ "updated": "2026-10-29T03:30Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Working on the bot"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
