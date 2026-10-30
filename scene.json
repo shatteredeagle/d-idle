@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Internal/tool phase 1 read-only tool snapshot source, tool.",
   "Tool lockstep/time-scale/dump fork report.",
   "INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.",
   "Stuck-spot memory, alternative approach cells, Escape hook.",
@@ -28,16 +29,15 @@
   "Fresh-character build tables, SelectBuild, Nova floor.",
   "Blood Raven is not retried from Act 2.",
   "Internal/tool control-channel client, fake server, tool CLI.",
-  "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.",
-  "Early-game audit fixes."
+  "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793347839,
- "updated": "2026-10-30T08:10Z",
+ "ts": 1793348452,
+ "updated": "2026-10-30T08:20Z",
  "work": [
   {
    "state": "working",
