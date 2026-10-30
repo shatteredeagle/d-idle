@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (14)</summary>
+<summary><b>2026-10-30</b> (15)</summary>
 
+- Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.
 - Early-game audit fixes.
 - Tool backend design.
 - Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Second tool findings pass.
 - Tool research findings.
 - Death rule checks in tool.
-- Repeat-site ban, planner dump, corpse floor, potion bug tag.
 
 <details>
-<summary>6 more</summary>
+<summary>7 more</summary>
 
+- Repeat-site ban, planner dump, corpse floor, potion bug tag.
 - StaffPlaced uses the persisted quest word.
 - Death metrics from real long-run test logs.
 - No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.
@@ -366,7 +367,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 06:30 UTC
+Last updated: 2026-10-30 06:35 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
