@@ -78,6 +78,7 @@ The bot is paused right now, so there are no live numbers.
 - Finding its way around the map (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
+- Playing in a party of bots (working)
 
 ## What shipped
 
@@ -406,7 +407,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 16:45 UTC
+Last updated: 2026-10-30 16:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
