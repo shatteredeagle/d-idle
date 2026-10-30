@@ -27,13 +27,41 @@
    "kills": 298,
    "name": "Loopy",
    "potionsUsed": 11,
-   "running": true,
+   "running": false,
    "updated": "2026-10-30T20:48Z",
    "uptime_seconds": 137,
    "xp": 6933
+  },
+  {
+   "area": "Stony Field",
+   "backend": "original game",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 7100,
+   "name": "Soaky",
+   "potionsUsed": 203,
+   "running": false,
+   "updated": "2026-10-30T20:26Z",
+   "uptime_seconds": 29110,
+   "xp": 195140
+  },
+  {
+   "area": "Stony Field",
+   "backend": "original game",
+   "clvl": 11,
+   "deaths": 3,
+   "doing": "Levelling up toward level 20",
+   "kills": 2387,
+   "name": "Fresha",
+   "potionsUsed": 121,
+   "running": false,
+   "updated": "2026-10-30T20:12Z",
+   "uptime_seconds": 14681,
+   "xp": 75549
   }
  ],
- "runs_state": "running",
+ "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
@@ -49,17 +77,12 @@
   "OpenSpec SME reference and fit notes."
  ],
  "stats": {
-  "items": [
-   {
-    "label": "d2d, 298 kills, 0 deaths",
-    "value": "Loopy lvl 4"
-   }
-  ],
-  "live": true
+  "items": [],
+  "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793393413,
- "updated": "2026-10-30T20:50Z",
+ "ts": 1793393712,
+ "updated": "2026-10-30T20:55Z",
  "work": [
   {
    "state": "working",
