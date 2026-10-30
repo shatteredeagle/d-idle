@@ -19,49 +19,21 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Blood Moor",
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Heading back out from town",
-   "kills": 298,
+   "doing": "Levelling up toward level 5",
+   "kills": 218,
    "name": "Loopy",
-   "potionsUsed": 11,
-   "running": false,
-   "updated": "2026-10-30T20:48Z",
-   "uptime_seconds": 137,
-   "xp": 6933
-  },
-  {
-   "area": "Stony Field",
-   "backend": "d2lod (original game)",
-   "clvl": 15,
-   "deaths": 4,
-   "doing": "Levelling up toward level 22",
-   "kills": 7100,
-   "name": "Soaky",
-   "potionsUsed": 203,
-   "running": false,
-   "updated": "2026-10-30T20:26Z",
-   "uptime_seconds": 29110,
-   "xp": 195140
-  },
-  {
-   "area": "Stony Field",
-   "backend": "d2lod (original game)",
-   "clvl": 11,
-   "deaths": 3,
-   "doing": "Levelling up toward level 20",
-   "kills": 2387,
-   "name": "Fresha",
-   "potionsUsed": 121,
-   "running": false,
-   "updated": "2026-10-30T20:12Z",
-   "uptime_seconds": 14681,
-   "xp": 75549
+   "potionsUsed": 7,
+   "running": true,
+   "updated": "2026-10-30T22:40Z",
+   "uptime_seconds": 97,
+   "xp": 4881
   }
  ],
- "runs_state": "between",
+ "runs_state": "running",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
@@ -77,17 +49,18 @@
   "OpenSpec SME reference and fit notes."
  ],
  "stats": {
-  "items": [],
-  "live": false
+  "items": [
+   {
+    "label": "d2d, 218 kills, 0 deaths",
+    "value": "Loopy lvl 4"
+   }
+  ],
+  "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793399127,
- "updated": "2026-10-30T22:25Z",
+ "ts": 1793400024,
+ "updated": "2026-10-30T22:40Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Running the bot on the d2d engine"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
@@ -99,6 +72,10 @@
   {
    "state": "working",
    "task": "Playing in a party of bots"
+  },
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
   }
  ]
 }
