@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (52)</summary>
+<summary><b>2026-10-30</b> (53)</summary>
 
+- ADR for the tool primary backend decision.
 - Fixed tool hot loop in serveStream.
 - Survey of Diablo II reimplementation/decompilation projects.
 - Tool fit report.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.
 - Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
-- Tool lab notes.
 
 <details>
-<summary>44 more</summary>
+<summary>45 more</summary>
 
+- Tool lab notes.
 - Spec approach evaluation and notes audit.
 - OpenSpec SME reference and fit notes.
 - Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.
@@ -404,7 +405,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 16:04 UTC
+Last updated: 2026-10-30 16:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
