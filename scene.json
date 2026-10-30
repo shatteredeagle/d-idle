@@ -17,31 +17,107 @@
    "sub": "The game layer may start"
   }
  ],
+ "runs": [
+  {
+   "area": "Stony Field",
+   "backend": "original game",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 6596,
+   "name": "Soaky",
+   "potionsUsed": 171,
+   "running": true,
+   "updated": "2026-10-30T19:28Z",
+   "uptime_seconds": 25647,
+   "xp": 187770
+  },
+  {
+   "area": "Blood Moor",
+   "backend": "d2d",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Levelling up toward level 5",
+   "kills": 194,
+   "name": "Loopy",
+   "potionsUsed": 6,
+   "running": true,
+   "updated": "2026-10-30T19:29Z",
+   "uptime_seconds": 69,
+   "xp": 4185
+  },
+  {
+   "area": "Stony Field",
+   "backend": "original game",
+   "clvl": 10,
+   "deaths": 3,
+   "doing": "Recovering after trouble",
+   "kills": 2132,
+   "name": "Fresha",
+   "potionsUsed": 97,
+   "running": true,
+   "updated": "2026-10-30T19:28Z",
+   "uptime_seconds": 12040,
+   "xp": 66790
+  },
+  {
+   "area": "Blood Moor",
+   "backend": "d2d",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Levelling up toward level 5",
+   "kills": 289,
+   "name": "Loopy",
+   "potionsUsed": 6,
+   "running": true,
+   "updated": "2026-10-30T19:27Z",
+   "uptime_seconds": 131,
+   "xp": 6425
+  }
+ ],
+ "runs_state": "running",
  "shipped": [
-  "ADR for the tool primary backend decision.",
+  "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
+  "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
+  "ADR for the d2d primary backend decision.",
   "Fixed tool hot loop in serveStream.",
   "Survey of Diablo II reimplementation/decompilation projects.",
   "Tool fit report.",
   "Lab and lab2 sections.",
-  "Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.",
   "Sourced cast timing documentation.",
   "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
-  "Tool lab notes.",
+  "D2d lab notes.",
   "Spec approach evaluation and notes audit.",
-  "OpenSpec SME reference and fit notes.",
-  "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary."
+  "OpenSpec SME reference and fit notes."
  ],
  "stats": {
-  "items": [],
-  "live": false
+  "items": [
+   {
+    "label": "original game, 6,596 kills, 4 deaths",
+    "value": "Soaky lvl 15"
+   },
+   {
+    "label": "d2d, 194 kills, 0 deaths",
+    "value": "Loopy lvl 4"
+   },
+   {
+    "label": "original game, 2,132 kills, 3 deaths",
+    "value": "Fresha lvl 10"
+   },
+   {
+    "label": "d2d, 289 kills, 0 deaths",
+    "value": "Loopy lvl 4"
+   }
+  ],
+  "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793388311,
- "updated": "2026-10-30T19:25Z",
+ "ts": 1793388544,
+ "updated": "2026-10-30T19:29Z",
  "work": [
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
+   "task": "Running the bot on the d2d engine"
   },
   {
    "state": "working",
