@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (8)</summary>
+<summary><b>2026-10-30</b> (9)</summary>
 
+- Tool research findings.
 - Death rule checks in tool.
 - Repeat-site ban, planner dump, corpse floor, potion bug tag.
 - StaffPlaced uses the persisted quest word.
@@ -90,7 +91,13 @@ The bot is paused right now, so there are no live numbers.
 - No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.
 - Short nav skips, farm instead of idling, skip reason logging.
 - Planning-session input.
+
+<details>
+<summary>1 more</summary>
+
 - NPC menu re-observation, optional quest step skip, interaction logging.
+
+</details>
 
 </details>
 
@@ -354,7 +361,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 05:45 UTC
+Last updated: 2026-10-30 05:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
