@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool lockstep/time-scale/dump fork report.",
   "INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.",
   "Stuck-spot memory, alternative approach cells, Escape hook.",
   "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
@@ -28,16 +29,15 @@
   "Blood Raven is not retried from Act 2.",
   "Internal/tool control-channel client, fake server, tool CLI.",
   "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.",
-  "Early-game audit fixes.",
-  "Tool backend design."
+  "Early-game audit fixes."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793347539,
- "updated": "2026-10-30T08:05Z",
+ "ts": 1793347839,
+ "updated": "2026-10-30T08:10Z",
  "work": [
   {
    "state": "working",

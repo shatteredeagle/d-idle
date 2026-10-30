@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (24)</summary>
+<summary><b>2026-10-30</b> (25)</summary>
 
+- Tool lockstep/time-scale/dump fork report.
 - INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.
 - Stuck-spot memory, alternative approach cells, Escape hook.
 - Live alerts for progress and death rules, shared judge, alert hook, watch format.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Tool probe batch results.
 - Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
-- Blood Raven is not retried from Act 2.
 
 <details>
-<summary>16 more</summary>
+<summary>17 more</summary>
 
+- Blood Raven is not retried from Act 2.
 - Internal/tool control-channel client, fake server, tool CLI.
 - Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.
 - Early-game audit fixes.
@@ -376,7 +377,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 08:05 UTC
+Last updated: 2026-10-30 08:10 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
