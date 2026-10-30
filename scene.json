@@ -19,32 +19,32 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Mausoleum",
    "backend": "original game",
    "clvl": 15,
    "deaths": 4,
-   "doing": "Shopping and tidying up in town",
+   "doing": "Levelling up toward level 22",
    "kills": 6769,
    "name": "Soaky",
    "potionsUsed": 183,
    "running": true,
-   "updated": "2026-10-30T19:50Z",
-   "uptime_seconds": 26947,
+   "updated": "2026-10-30T19:54Z",
+   "uptime_seconds": 27187,
    "xp": 190562
   },
   {
-   "area": "Cave",
+   "area": "Cold Plains",
    "backend": "original game",
    "clvl": 10,
    "deaths": 3,
    "doing": "Levelling up toward level 20",
-   "kills": 2274,
+   "kills": 2287,
    "name": "Fresha",
-   "potionsUsed": 113,
+   "potionsUsed": 116,
    "running": true,
-   "updated": "2026-10-30T19:49Z",
-   "uptime_seconds": 13301,
-   "xp": 71756
+   "updated": "2026-10-30T19:54Z",
+   "uptime_seconds": 13601,
+   "xp": 71916
   }
  ],
  "runs_state": "running",
@@ -69,15 +69,15 @@
     "value": "Soaky lvl 15"
    },
    {
-    "label": "original game, 2,274 kills, 3 deaths",
+    "label": "original game, 2,287 kills, 3 deaths",
     "value": "Fresha lvl 10"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793389823,
- "updated": "2026-10-30T19:50Z",
+ "ts": 1793390111,
+ "updated": "2026-10-30T19:55Z",
  "work": [
   {
    "state": "working",
@@ -90,10 +90,6 @@
   {
    "state": "working",
    "task": "Playing in a party of bots"
-  },
-  {
-   "state": "working",
-   "task": "Running the bot on the d2d engine"
   }
  ]
 }
