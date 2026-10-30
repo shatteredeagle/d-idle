@@ -19,46 +19,60 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
-   "backend": "d2d",
-   "clvl": 5,
-   "deaths": 1,
-   "doing": "Playing through the early game",
-   "kills": 562,
-   "name": "Loopy",
-   "potionsUsed": 27,
+   "area": "Cave",
+   "backend": "original game",
+   "clvl": 10,
+   "deaths": 3,
+   "doing": "Levelling up toward level 20",
+   "kills": 2220,
+   "name": "Fresha",
+   "potionsUsed": 101,
    "running": true,
-   "updated": "2026-10-30T19:35Z",
-   "uptime_seconds": 434,
-   "xp": 14001
+   "updated": "2026-10-30T19:39Z",
+   "uptime_seconds": 12700,
+   "xp": 68034
   },
   {
-   "area": "Mausoleum",
-   "backend": "original game",
-   "clvl": 15,
-   "deaths": 4,
-   "doing": "Levelling up toward level 22",
-   "kills": 6654,
-   "name": "Soaky",
-   "potionsUsed": 177,
+   "area": "Blood Moor",
+   "backend": "d2d",
+   "clvl": 3,
+   "deaths": 0,
+   "doing": "Recovering after trouble",
+   "kills": 75,
+   "name": "Loopy",
+   "potionsUsed": 5,
    "running": true,
-   "updated": "2026-10-30T19:34Z",
-   "uptime_seconds": 26011,
-   "xp": 188380
+   "updated": "2026-10-30T19:40Z",
+   "uptime_seconds": 27,
+   "xp": 1626
   },
   {
    "area": "Cold Plains",
    "backend": "original game",
-   "clvl": 10,
-   "deaths": 3,
-   "doing": "Recovering after trouble",
-   "kills": 2201,
-   "name": "Fresha",
-   "potionsUsed": 101,
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 6689,
+   "name": "Soaky",
+   "potionsUsed": 179,
    "running": true,
-   "updated": "2026-10-30T19:34Z",
-   "uptime_seconds": 12400,
-   "xp": 67727
+   "updated": "2026-10-30T19:39Z",
+   "uptime_seconds": 26323,
+   "xp": 188479
+  },
+  {
+   "area": "Blood Moor",
+   "backend": "d2d",
+   "clvl": 6,
+   "deaths": 1,
+   "doing": "Recovering after trouble",
+   "kills": 762,
+   "name": "Loopy",
+   "potionsUsed": 43,
+   "running": true,
+   "updated": "2026-10-30T19:38Z",
+   "uptime_seconds": 621,
+   "xp": 19663
   }
  ],
  "runs_state": "running",
@@ -79,23 +93,27 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 562 kills, 1 deaths",
-    "value": "Loopy lvl 5"
+    "label": "original game, 2,220 kills, 3 deaths",
+    "value": "Fresha lvl 10"
    },
    {
-    "label": "original game, 6,654 kills, 4 deaths",
+    "label": "d2d, 75 kills, 0 deaths",
+    "value": "Loopy lvl 3"
+   },
+   {
+    "label": "original game, 6,689 kills, 4 deaths",
     "value": "Soaky lvl 15"
    },
    {
-    "label": "original game, 2,201 kills, 3 deaths",
-    "value": "Fresha lvl 10"
+    "label": "d2d, 762 kills, 1 deaths",
+    "value": "Loopy lvl 6"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793388910,
- "updated": "2026-10-30T19:35Z",
+ "ts": 1793389214,
+ "updated": "2026-10-30T19:40Z",
  "work": [
   {
    "state": "working",
