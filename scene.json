@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool container design, draft recipe, GPL notes.",
   "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
   "Forgotten Tower guard, guarded-area exit, corpse runs respect guards.",
   "Recovery farms the best XP-per-kill safe area.",
@@ -28,16 +29,15 @@
   "Tool lockstep/time-scale/dump fork report.",
   "INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.",
   "Stuck-spot memory, alternative approach cells, Escape hook.",
-  "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
-  "Den floor per class, Prayer resting aura."
+  "Live alerts for progress and death rules, shared judge, alert hook, watch format."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793365217,
- "updated": "2026-10-30T13:00Z",
+ "ts": 1793365539,
+ "updated": "2026-10-30T13:05Z",
  "work": [
   {
    "state": "working",
@@ -49,11 +49,11 @@
   },
   {
    "state": "working",
-   "task": "Making the bot easy to set up"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
