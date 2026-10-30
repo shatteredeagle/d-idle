@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Combat on tool, 51 kills 0 deaths live.",
   "Per-instance long-run test layout so two soaks run at once.",
   "Rejuv cap 3 across belt+pack, belt move, boss drink threshold.",
   "Cap rejuvenation potions, sell surplus, inventory contents log.",
@@ -28,25 +29,16 @@
   "Tool container design, draft recipe, GPL notes.",
   "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
   "Forgotten Tower guard, guarded-area exit, corpse runs respect guards.",
-  "Recovery farms the best XP-per-kill safe area.",
-  "Tool statistical fidelity results."
+  "Recovery farms the best XP-per-kill safe area."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793368231,
- "updated": "2026-10-30T13:50Z",
+ "ts": 1793368551,
+ "updated": "2026-10-30T13:55Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Fighting and staying alive"
-  },
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
