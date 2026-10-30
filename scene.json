@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cave",
+   "area": "Blood Moor",
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Doing chores in town",
-   "kills": 270,
+   "doing": "Recovering after trouble",
+   "kills": 243,
    "name": "Loopy",
-   "potionsUsed": 20,
+   "potionsUsed": 11,
    "running": true,
-   "updated": "2026-10-30T22:54Z",
-   "uptime_seconds": 132,
-   "xp": 6651
+   "updated": "2026-10-30T23:00Z",
+   "uptime_seconds": 114,
+   "xp": 5483
   }
  ],
  "runs_state": "running",
@@ -51,15 +51,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 270 kills, 0 deaths",
+    "label": "d2d, 243 kills, 0 deaths",
     "value": "Loopy lvl 4"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793400901,
- "updated": "2026-10-30T22:55Z",
+ "ts": 1793401232,
+ "updated": "2026-10-30T23:00Z",
  "work": [
   {
    "state": "working",
