@@ -75,28 +75,30 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Fighting and staying alive (working)
-- Long unattended test runs (working)
 - Town chores: shopping, stashing and loot (working)
+- Long unattended test runs (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (33)</summary>
+<summary><b>2026-10-30</b> (35)</summary>
 
+- Replicated tool long-run test test rig, stats, pass rule.
+- Tool --backend tool, internal/tool, seams for combat/town.
 - Tool container design, draft recipe, GPL notes.
 - Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.
 - Forgotten Tower guard, guarded-area exit, corpse runs respect guards.
 - Recovery farms the best XP-per-kill safe area.
 - Tool statistical fidelity results.
 - No_gain counts XP progress.
-- Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
-- Internal/tool phase 1 read-only tool snapshot source, tool.
 
 <details>
-<summary>25 more</summary>
+<summary>27 more</summary>
 
+- Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
+- Internal/tool phase 1 read-only tool snapshot source, tool.
 - Tool lockstep/time-scale/dump fork report.
 - INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.
 - Stuck-spot memory, alternative approach cells, Escape hook.
@@ -387,7 +389,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 13:05 UTC
+Last updated: 2026-10-30 13:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
