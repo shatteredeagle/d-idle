@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
   "Den floor per class, Prayer resting aura.",
   "Tool probe batch results.",
   "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.",
@@ -28,16 +29,15 @@
   "Early-game audit fixes.",
   "Tool backend design.",
   "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
-  "Tool build, headless run and probe results.",
-  "Second tool findings pass."
+  "Tool build, headless run and probe results."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793346056,
- "updated": "2026-10-30T07:40Z",
+ "ts": 1793346354,
+ "updated": "2026-10-30T07:45Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Finding its way around the map"
   }
  ]
 }
