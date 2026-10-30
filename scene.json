@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Fixed tool hot loop in serveStream.",
   "Survey of Diablo II reimplementation/decompilation projects.",
   "Tool fit report.",
   "Lab and lab2 sections.",
@@ -28,28 +29,19 @@
   "Spec approach evaluation and notes audit.",
   "OpenSpec SME reference and fit notes.",
   "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.",
-  "Combat on tool, 51 kills 0 deaths live.",
-  "Per-instance long-run test layout so two soaks run at once."
+  "Combat on tool, 51 kills 0 deaths live."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793375141,
- "updated": "2026-10-30T15:45Z",
+ "ts": 1793375456,
+ "updated": "2026-10-30T15:50Z",
  "work": [
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
-  },
-  {
-   "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Improving the dashboard"
   },
   {
    "state": "working",
