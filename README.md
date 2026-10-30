@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (29)</summary>
+<summary><b>2026-10-30</b> (30)</summary>
 
+- Recovery farms the best XP-per-kill safe area.
 - Tool statistical fidelity results.
 - No_gain counts XP progress.
 - Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Tool lockstep/time-scale/dump fork report.
 - INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.
 - Stuck-spot memory, alternative approach cells, Escape hook.
-- Live alerts for progress and death rules, shared judge, alert hook, watch format.
 
 <details>
-<summary>21 more</summary>
+<summary>22 more</summary>
 
+- Live alerts for progress and death rules, shared judge, alert hook, watch format.
 - Den floor per class, Prayer resting aura.
 - Tool probe batch results.
 - Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
@@ -381,7 +382,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 09:40 UTC
+Last updated: 2026-10-30 09:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

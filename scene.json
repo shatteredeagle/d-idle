@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Recovery farms the best XP-per-kill safe area.",
   "Tool statistical fidelity results.",
   "No_gain counts XP progress.",
   "Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.",
@@ -28,16 +29,15 @@
   "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
   "Den floor per class, Prayer resting aura.",
   "Tool probe batch results.",
-  "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.",
-  "Fresh-character build tables, SelectBuild, Nova floor."
+  "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793353239,
- "updated": "2026-10-30T09:40Z",
+ "ts": 1793353539,
+ "updated": "2026-10-30T09:45Z",
  "work": [
   {
    "state": "working",
