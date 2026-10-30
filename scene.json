@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "SME pace tables and proposed long-run test milestones.",
   "Pack potions move to the belt.",
   "Spare potions sold, recovery loot, potion floor.",
   "Recovery phase, Blood Raven attempt budget.",
@@ -28,16 +29,15 @@
   "Bot vs veteran audit.",
   "SME per-class knowledge base.",
   "SME mechanics knowledge base.",
-  "Keep and wear found gear for empty slots.",
-  "SME play-patterns knowledge base."
+  "Keep and wear found gear for empty slots."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793322633,
- "updated": "2026-10-30T01:10Z",
+ "ts": 1793322939,
+ "updated": "2026-10-30T01:15Z",
  "work": [
   {
    "state": "working",
