@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Stuck-spot memory, alternative approach cells, Escape hook.",
   "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
   "Den floor per class, Prayer resting aura.",
   "Tool probe batch results.",
@@ -28,16 +29,15 @@
   "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.",
   "Early-game audit fixes.",
   "Tool backend design.",
-  "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
-  "Tool build, headless run and probe results."
+  "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793346354,
- "updated": "2026-10-30T07:45Z",
+ "ts": 1793346926,
+ "updated": "2026-10-30T07:55Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Finding its way around the map"
   }
  ]
 }
