@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.",
   "Combat on tool, 51 kills 0 deaths live.",
   "Per-instance long-run test layout so two soaks run at once.",
   "Rejuv cap 3 across belt+pack, belt move, boss drink threshold.",
@@ -28,16 +29,15 @@
   "Tool --backend tool, internal/tool, seams for combat/town.",
   "Tool container design, draft recipe, GPL notes.",
   "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
-  "Forgotten Tower guard, guarded-area exit, corpse runs respect guards.",
-  "Recovery farms the best XP-per-kill safe area."
+  "Forgotten Tower guard, guarded-area exit, corpse runs respect guards."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793368551,
- "updated": "2026-10-30T13:55Z",
+ "ts": 1793368856,
+ "updated": "2026-10-30T14:00Z",
  "work": [
   {
    "state": "working",
