@@ -19,49 +19,21 @@
  ],
  "runs": [
   {
-   "area": "Stony Field",
-   "backend": "original game",
-   "clvl": 15,
-   "deaths": 4,
-   "doing": "Levelling up toward level 22",
-   "kills": 7100,
-   "name": "Soaky",
-   "potionsUsed": 203,
-   "running": false,
-   "updated": "2026-10-30T20:26Z",
-   "uptime_seconds": 29110,
-   "xp": 195140
-  },
-  {
-   "area": "Rogue Encampment",
+   "area": "Blood Moor",
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Heading back out from town",
-   "kills": 309,
+   "doing": "Levelling up toward level 5",
+   "kills": 296,
    "name": "Loopy",
-   "potionsUsed": 15,
-   "running": false,
-   "updated": "2026-10-30T20:18Z",
-   "uptime_seconds": 148,
-   "xp": 7822
-  },
-  {
-   "area": "Stony Field",
-   "backend": "original game",
-   "clvl": 11,
-   "deaths": 3,
-   "doing": "Levelling up toward level 20",
-   "kills": 2387,
-   "name": "Fresha",
-   "potionsUsed": 121,
-   "running": false,
-   "updated": "2026-10-30T20:12Z",
-   "uptime_seconds": 14681,
-   "xp": 75549
+   "potionsUsed": 2,
+   "running": true,
+   "updated": "2026-10-30T20:35Z",
+   "uptime_seconds": 113,
+   "xp": 6330
   }
  ],
- "runs_state": "between",
+ "runs_state": "running",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
@@ -77,12 +49,17 @@
   "OpenSpec SME reference and fit notes."
  ],
  "stats": {
-  "items": [],
-  "live": false
+  "items": [
+   {
+    "label": "d2d, 296 kills, 0 deaths",
+    "value": "Loopy lvl 4"
+   }
+  ],
+  "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793392221,
- "updated": "2026-10-30T20:30Z",
+ "ts": 1793392531,
+ "updated": "2026-10-30T20:35Z",
  "work": [
   {
    "state": "working",
