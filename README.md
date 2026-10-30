@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (18)</summary>
+<summary><b>2026-10-30</b> (19)</summary>
 
+- Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
 - Blood Raven is not retried from Act 2.
 - Internal/tool control-channel client, fake server, tool CLI.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Early-game audit fixes.
 - Tool backend design.
 - Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.
-- Tool build, headless run and probe results.
 
 <details>
-<summary>10 more</summary>
+<summary>11 more</summary>
 
+- Tool build, headless run and probe results.
 - Second tool findings pass.
 - Tool research findings.
 - Death rule checks in tool.
@@ -370,7 +371,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 06:50 UTC
+Last updated: 2026-10-30 07:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
