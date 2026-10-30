@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Den floor per class, Prayer resting aura.",
   "Tool probe batch results.",
   "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.",
   "Fresh-character build tables, SelectBuild, Nova floor.",
@@ -28,16 +29,15 @@
   "Tool backend design.",
   "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
   "Tool build, headless run and probe results.",
-  "Second tool findings pass.",
-  "Tool research findings."
+  "Second tool findings pass."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793345756,
- "updated": "2026-10-30T07:35Z",
+ "ts": 1793346056,
+ "updated": "2026-10-30T07:40Z",
  "work": [
   {
    "state": "working",

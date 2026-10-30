@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (20)</summary>
+<summary><b>2026-10-30</b> (21)</summary>
 
+- Den floor per class, Prayer resting aura.
 - Tool probe batch results.
 - Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Internal/tool control-channel client, fake server, tool CLI.
 - Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.
 - Early-game audit fixes.
-- Tool backend design.
 
 <details>
-<summary>12 more</summary>
+<summary>13 more</summary>
 
+- Tool backend design.
 - Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.
 - Tool build, headless run and probe results.
 - Second tool findings pass.
@@ -372,7 +373,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 07:35 UTC
+Last updated: 2026-10-30 07:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
