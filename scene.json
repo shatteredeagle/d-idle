@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "One NPC visit per trip, interact within 4 cells, no needless game screens close.",
+  "Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.",
   "Replicated tool long-run test test rig, stats, pass rule.",
   "Tool --backend tool, internal/tool, seams for combat/town.",
   "Tool container design, draft recipe, GPL notes.",
@@ -27,17 +29,15 @@
   "Tool statistical fidelity results.",
   "No_gain counts XP progress.",
   "Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.",
-  "Internal/tool phase 1 read-only tool snapshot source, tool.",
-  "Tool lockstep/time-scale/dump fork report.",
-  "INDEX start-here section, STATUS.md, SME README, backlog and strategy notes."
+  "Internal/tool phase 1 read-only tool snapshot source, tool."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793366420,
- "updated": "2026-10-30T13:20Z",
+ "ts": 1793366727,
+ "updated": "2026-10-30T13:25Z",
  "work": [
   {
    "state": "working",
@@ -49,11 +49,11 @@
   },
   {
    "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
