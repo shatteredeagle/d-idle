@@ -79,6 +79,7 @@ The bot is paused right now, so there are no live numbers.
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
+- Building this public status page (working)
 
 ## What shipped
 
@@ -407,7 +408,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 19:05 UTC
+Last updated: 2026-10-30 19:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
