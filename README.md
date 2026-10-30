@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (146)</summary>
+<summary><b>2026-10-29</b> (147)</summary>
 
+- SME economy data and Blood Raven caster notes.
 - Trip budget and gold floor.
 - Stat floor for gear requirements, NeedStr from blocked rebuys.
 - Rebuy rejection reasons, gate settles when blocked by stats.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - SME per-class knowledge base.
 - SME mechanics knowledge base.
 - Keep and wear found gear for empty slots.
-- SME play-patterns knowledge base.
 
 <details>
-<summary>138 more</summary>
+<summary>139 more</summary>
 
+- SME play-patterns knowledge base.
 - Rebuy bar fix, shop logging, quest skip reasons.
 - SME builds and gear knowledge base.
 - Gate refusals are planning blocks, route-aware targets, ban lift.
@@ -330,7 +331,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 00:15 UTC
+Last updated: 2026-10-30 00:20 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

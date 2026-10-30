@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "SME economy data and Blood Raven caster notes.",
   "Trip budget and gold floor.",
   "Stat floor for gear requirements, NeedStr from blocked rebuys.",
   "Rebuy rejection reasons, gate settles when blocked by stats.",
@@ -28,16 +29,15 @@
   "SME play-patterns knowledge base.",
   "Rebuy bar fix, shop logging, quest skip reasons.",
   "SME builds and gear knowledge base.",
-  "Gate refusals are planning blocks, route-aware targets, ban lift.",
-  "Slots in instances interface, bot proxy, viewport video."
+  "Gate refusals are planning blocks, route-aware targets, ban lift."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793319339,
- "updated": "2026-10-30T00:15Z",
+ "ts": 1793319624,
+ "updated": "2026-10-30T00:20Z",
  "work": [
   {
    "state": "working",
