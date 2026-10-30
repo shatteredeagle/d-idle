@@ -9,10 +9,9 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Fresha**, Sorceress, original game: level 10, 68,034 XP, 2,220 kills, 3 deaths, 101 potions drunk, run time 3h 31m. Now: levelling up toward level 20 in Cave, running. Last update 2026-10-30 19:39 UTC.
-- **Loopy**, Sorceress, d2d: level 3, 1,626 XP, 75 kills, 0 deaths, 5 potions drunk, run time 0h 00m. Now: recovering after trouble in Blood Moor, running. Last update 2026-10-30 19:40 UTC.
-- **Soaky**, Sorceress, original game: level 15, 188,479 XP, 6,689 kills, 4 deaths, 179 potions drunk, run time 7h 18m. Now: levelling up toward level 22 in Cold Plains, running. Last update 2026-10-30 19:39 UTC.
-- **Loopy**, Sorceress, d2d: level 6, 19,663 XP, 762 kills, 1 deaths, 43 potions drunk, run time 0h 10m. Now: recovering after trouble in Blood Moor, running. Last update 2026-10-30 19:38 UTC.
+- **Soaky**, Sorceress, original game: level 15, 189,357 XP, 6,739 kills, 4 deaths, 182 potions drunk, run time 7h 23m. Now: levelling up toward level 22 in Stony Field, running. Last update 2026-10-30 19:44 UTC.
+- **Fresha**, Sorceress, original game: level 10, 70,070 XP, 2,255 kills, 3 deaths, 109 potions drunk, run time 3h 36m. Now: levelling up toward level 20 in Cave, running. Last update 2026-10-30 19:44 UTC.
+- **Loopy**, Sorceress, d2d: level 5, 11,369 XP, 437 kills, 0 deaths, 26 potions drunk, run time 0h 03m. Now: recovering after trouble in Cold Plains, running. Last update 2026-10-30 19:42 UTC.
 
 ## Now building on d2d
 
@@ -91,10 +90,10 @@ Between runs.
 
 **Being worked on:**
 
-- Running the bot on the d2d engine (working)
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
+- Running the bot on the d2d engine (working)
 
 ## What shipped
 
@@ -395,7 +394,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-30 19:40 UTC
+Last updated: 2026-10-30 19:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
