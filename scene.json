@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Fresh-character build tables, SelectBuild, Nova floor.",
   "Blood Raven is not retried from Act 2.",
   "Internal/tool control-channel client, fake server, tool CLI.",
   "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.",
@@ -28,16 +29,15 @@
   "Second tool findings pass.",
   "Tool research findings.",
   "Death rule checks in tool.",
-  "Repeat-site ban, planner dump, corpse floor, potion bug tag.",
-  "StaffPlaced uses the persisted quest word."
+  "Repeat-site ban, planner dump, corpse floor, potion bug tag."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793342421,
- "updated": "2026-10-30T06:40Z",
+ "ts": 1793343054,
+ "updated": "2026-10-30T06:50Z",
  "work": [
   {
    "state": "working",
