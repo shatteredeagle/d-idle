@@ -36,8 +36,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793344522,
- "updated": "2026-10-30T07:15Z",
+ "ts": 1793345139,
+ "updated": "2026-10-30T07:25Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   },
   {
    "state": "working",
