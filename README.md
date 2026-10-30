@@ -75,14 +75,15 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (152)</summary>
+<summary><b>2026-10-29</b> (153)</summary>
 
+- Early gear policy.
 - No-area is a planning block, death streak forces recovery.
 - SME pace tables and proposed long-run test milestones.
 - Pack potions move to the belt.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Recovery phase, Blood Raven attempt budget.
 - SME economy data and Blood Raven caster notes.
 - Trip budget and gold floor.
-- Stat floor for gear requirements, NeedStr from blocked rebuys.
 
 <details>
-<summary>144 more</summary>
+<summary>145 more</summary>
 
+- Stat floor for gear requirements, NeedStr from blocked rebuys.
 - Rebuy rejection reasons, gate settles when blocked by stats.
 - Bot vs veteran audit.
 - SME per-class knowledge base.
@@ -336,7 +337,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 02:25 UTC
+Last updated: 2026-10-30 02:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
