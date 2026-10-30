@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Blood Raven is not retried from Act 2.",
+  "Internal/tool control-channel client, fake server, tool CLI.",
   "Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.",
   "Early-game audit fixes.",
   "Tool backend design.",
@@ -27,17 +29,15 @@
   "Tool research findings.",
   "Death rule checks in tool.",
   "Repeat-site ban, planner dump, corpse floor, potion bug tag.",
-  "StaffPlaced uses the persisted quest word.",
-  "Death metrics from real long-run test logs.",
-  "No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report."
+  "StaffPlaced uses the persisted quest word."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793342133,
- "updated": "2026-10-30T06:35Z",
+ "ts": 1793342421,
+ "updated": "2026-10-30T06:40Z",
  "work": [
   {
    "state": "working",
