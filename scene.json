@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Death rule checks in tool.",
   "Repeat-site ban, planner dump, corpse floor, potion bug tag.",
   "StaffPlaced uses the persisted quest word.",
   "Death metrics from real long-run test logs.",
@@ -28,16 +29,15 @@
   "Cast-first combat loop, watchdog, Barracks kit gate.",
   "Quest-walk safety interrupts carried out, no pack kiting, death post-mortems.",
   "Retreat counts pack spares, belt purchase chore, mana pays casts.",
-  "Early gear policy.",
-  "No-area is a planning block, death streak forces recovery."
+  "Early gear policy."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793338856,
- "updated": "2026-10-30T05:40Z",
+ "ts": 1793339139,
+ "updated": "2026-10-30T05:45Z",
  "work": [
   {
    "state": "working",
