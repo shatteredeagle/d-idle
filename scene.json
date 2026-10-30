@@ -23,14 +23,14 @@
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Levelling up toward level 5",
-   "kills": 296,
+   "doing": "Recovering after trouble",
+   "kills": 197,
    "name": "Loopy",
-   "potionsUsed": 2,
+   "potionsUsed": 7,
    "running": true,
-   "updated": "2026-10-30T20:35Z",
-   "uptime_seconds": 113,
-   "xp": 6330
+   "updated": "2026-10-30T20:40Z",
+   "uptime_seconds": 76,
+   "xp": 4437
   }
  ],
  "runs_state": "running",
@@ -51,15 +51,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 296 kills, 0 deaths",
+    "label": "d2d, 197 kills, 0 deaths",
     "value": "Loopy lvl 4"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793392531,
- "updated": "2026-10-30T20:35Z",
+ "ts": 1793392804,
+ "updated": "2026-10-30T20:40Z",
  "work": [
   {
    "state": "working",
