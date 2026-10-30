@@ -19,32 +19,32 @@
  ],
  "runs": [
   {
-   "area": "Mausoleum",
+   "area": "Rogue Encampment",
+   "backend": "original game",
+   "clvl": 11,
+   "deaths": 3,
+   "doing": "Shopping and tidying up in town",
+   "kills": 2313,
+   "name": "Fresha",
+   "potionsUsed": 117,
+   "running": true,
+   "updated": "2026-10-30T20:00Z",
+   "uptime_seconds": 13961,
+   "xp": 72147
+  },
+  {
+   "area": "Stony Field",
    "backend": "original game",
    "clvl": 15,
    "deaths": 4,
    "doing": "Levelling up toward level 22",
-   "kills": 6769,
+   "kills": 6803,
    "name": "Soaky",
    "potionsUsed": 183,
    "running": true,
-   "updated": "2026-10-30T19:54Z",
-   "uptime_seconds": 27187,
-   "xp": 190562
-  },
-  {
-   "area": "Cold Plains",
-   "backend": "original game",
-   "clvl": 10,
-   "deaths": 3,
-   "doing": "Levelling up toward level 20",
-   "kills": 2287,
-   "name": "Fresha",
-   "potionsUsed": 116,
-   "running": true,
-   "updated": "2026-10-30T19:54Z",
-   "uptime_seconds": 13601,
-   "xp": 71916
+   "updated": "2026-10-30T20:00Z",
+   "uptime_seconds": 27547,
+   "xp": 190695
   }
  ],
  "runs_state": "running",
@@ -65,20 +65,24 @@
  "stats": {
   "items": [
    {
-    "label": "original game, 6,769 kills, 4 deaths",
-    "value": "Soaky lvl 15"
+    "label": "original game, 2,313 kills, 3 deaths",
+    "value": "Fresha lvl 11"
    },
    {
-    "label": "original game, 2,287 kills, 3 deaths",
-    "value": "Fresha lvl 10"
+    "label": "original game, 6,803 kills, 4 deaths",
+    "value": "Soaky lvl 15"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793390111,
- "updated": "2026-10-30T19:55Z",
+ "ts": 1793390431,
+ "updated": "2026-10-30T20:00Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
+  },
   {
    "state": "working",
    "task": "Long unattended test runs"

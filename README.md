@@ -9,8 +9,8 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Soaky**, Sorceress, original game: level 15, 190,562 XP, 6,769 kills, 4 deaths, 183 potions drunk, run time 7h 33m. Now: levelling up toward level 22 in Mausoleum, running. Last update 2026-10-30 19:54 UTC.
-- **Fresha**, Sorceress, original game: level 10, 71,916 XP, 2,287 kills, 3 deaths, 116 potions drunk, run time 3h 46m. Now: levelling up toward level 20 in Cold Plains, running. Last update 2026-10-30 19:54 UTC.
+- **Fresha**, Sorceress, original game: level 11, 72,147 XP, 2,313 kills, 3 deaths, 117 potions drunk, run time 3h 52m. Now: shopping and tidying up in town in Rogue Encampment, running. Last update 2026-10-30 20:00 UTC.
+- **Soaky**, Sorceress, original game: level 15, 190,695 XP, 6,803 kills, 4 deaths, 183 potions drunk, run time 7h 39m. Now: levelling up toward level 22 in Stony Field, running. Last update 2026-10-30 20:00 UTC.
 
 ## Now building on d2d
 
@@ -89,6 +89,7 @@ Between runs.
 
 **Being worked on:**
 
+- Running the bot on the d2d engine (working)
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
@@ -392,7 +393,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-30 19:55 UTC
+Last updated: 2026-10-30 20:00 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
