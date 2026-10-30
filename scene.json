@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
   "Forgotten Tower guard, guarded-area exit, corpse runs respect guards.",
   "Recovery farms the best XP-per-kill safe area.",
   "Tool statistical fidelity results.",
@@ -28,16 +29,15 @@
   "INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.",
   "Stuck-spot memory, alternative approach cells, Escape hook.",
   "Live alerts for progress and death rules, shared judge, alert hook, watch format.",
-  "Den floor per class, Prayer resting aura.",
-  "Tool probe batch results."
+  "Den floor per class, Prayer resting aura."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793364957,
- "updated": "2026-10-30T12:55Z",
+ "ts": 1793365217,
+ "updated": "2026-10-30T13:00Z",
  "work": [
   {
    "state": "working",
