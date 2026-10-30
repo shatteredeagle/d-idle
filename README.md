@@ -81,8 +81,10 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (3)</summary>
+<summary><b>2026-10-30</b> (5)</summary>
 
+- Death metrics from real long-run test logs.
+- No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.
 - Short nav skips, farm instead of idling, skip reason logging.
 - Planning-session input.
 - NPC menu re-observation, optional quest step skip, interaction logging.
@@ -349,7 +351,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 05:10 UTC
+Last updated: 2026-10-30 05:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

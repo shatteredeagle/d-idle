@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Death metrics from real long-run test logs.",
+  "No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.",
   "Short nav skips, farm instead of idling, skip reason logging.",
   "Planning-session input.",
   "NPC menu re-observation, optional quest step skip, interaction logging.",
@@ -27,17 +29,15 @@
   "Early gear policy.",
   "No-area is a planning block, death streak forces recovery.",
   "SME pace tables and proposed long-run test milestones.",
-  "Pack potions move to the belt.",
-  "Spare potions sold, recovery loot, potion floor.",
-  "Recovery phase, Blood Raven attempt budget."
+  "Pack potions move to the belt."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793337035,
- "updated": "2026-10-30T05:10Z",
+ "ts": 1793337325,
+ "updated": "2026-10-30T05:15Z",
  "work": [
   {
    "state": "working",
