@@ -81,9 +81,13 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793398812,
- "updated": "2026-10-30T22:20Z",
+ "ts": 1793399127,
+ "updated": "2026-10-30T22:25Z",
  "work": [
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
+  },
   {
    "state": "working",
    "task": "Long unattended test runs"
