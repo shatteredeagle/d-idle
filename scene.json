@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "No-area is a planning block, death streak forces recovery.",
   "SME pace tables and proposed long-run test milestones.",
   "Pack potions move to the belt.",
   "Spare potions sold, recovery loot, potion floor.",
@@ -28,24 +29,23 @@
   "Rebuy rejection reasons, gate settles when blocked by stats.",
   "Bot vs veteran audit.",
   "SME per-class knowledge base.",
-  "SME mechanics knowledge base.",
-  "Keep and wear found gear for empty slots."
+  "SME mechanics knowledge base."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793326539,
- "updated": "2026-10-30T02:15Z",
+ "ts": 1793327128,
+ "updated": "2026-10-30T02:25Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   }
  ]
 }
