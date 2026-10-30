@@ -36,16 +36,24 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793364656,
- "updated": "2026-10-30T12:50Z",
+ "ts": 1793364957,
+ "updated": "2026-10-30T12:55Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Fighting and staying alive"
+  },
+  {
+   "state": "working",
+   "task": "Making the bot easy to set up"
+  },
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
   }
  ]
 }
