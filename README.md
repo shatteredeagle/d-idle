@@ -81,20 +81,22 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (46)</summary>
+<summary><b>2026-10-30</b> (48)</summary>
 
+- Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.
+- Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
 - Tool lab notes.
 - Spec approach evaluation and notes audit.
 - OpenSpec SME reference and fit notes.
 - Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.
 - Combat on tool, 51 kills 0 deaths live.
-- Per-instance long-run test layout so two soaks run at once.
-- Rejuv cap 3 across belt+pack, belt move, boss drink threshold.
 
 <details>
-<summary>38 more</summary>
+<summary>40 more</summary>
 
+- Per-instance long-run test layout so two soaks run at once.
+- Rejuv cap 3 across belt+pack, belt move, boss drink threshold.
 - Cap rejuvenation potions, sell surplus, inventory contents log.
 - One NPC visit per trip, interact within 4 cells, no needless game screens close.
 - Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.
@@ -398,7 +400,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 14:20 UTC
+Last updated: 2026-10-30 14:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

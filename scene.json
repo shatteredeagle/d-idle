@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.",
+  "Sourced cast timing documentation.",
   "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
   "Tool lab notes.",
   "Spec approach evaluation and notes audit.",
@@ -27,17 +29,15 @@
   "Per-instance long-run test layout so two soaks run at once.",
   "Rejuv cap 3 across belt+pack, belt move, boss drink threshold.",
   "Cap rejuvenation potions, sell surplus, inventory contents log.",
-  "One NPC visit per trip, interact within 4 cells, no needless game screens close.",
-  "Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.",
-  "Replicated tool long-run test test rig, stats, pass rule."
+  "One NPC visit per trip, interact within 4 cells, no needless game screens close."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793370018,
- "updated": "2026-10-30T14:20Z",
+ "ts": 1793370318,
+ "updated": "2026-10-30T14:25Z",
  "work": [
   {
    "state": "working",
