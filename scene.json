@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool probe batch results.",
   "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.",
   "Fresh-character build tables, SelectBuild, Nova floor.",
   "Blood Raven is not retried from Act 2.",
@@ -28,16 +29,15 @@
   "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
   "Tool build, headless run and probe results.",
   "Second tool findings pass.",
-  "Tool research findings.",
-  "Death rule checks in tool."
+  "Tool research findings."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793345439,
- "updated": "2026-10-30T07:30Z",
+ "ts": 1793345756,
+ "updated": "2026-10-30T07:35Z",
  "work": [
   {
    "state": "working",
