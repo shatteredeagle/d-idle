@@ -9,10 +9,8 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Loopy**, Sorceress, d2d: level 2, 1,377 XP, 63 kills, 0 deaths, 3 potions drunk, run time 0h 00m. Now: recovering after trouble in Blood Moor, running. Last update 2026-10-30 20:05 UTC.
-- **Fresha**, Sorceress, original game: level 11, 72,147 XP, 2,314 kills, 3 deaths, 117 potions drunk, run time 3h 56m. Now: levelling up toward level 20 in Stony Field, running. Last update 2026-10-30 20:04 UTC.
-- **Soaky**, Sorceress, original game: level 15, 191,854 XP, 6,849 kills, 4 deaths, 185 potions drunk, run time 7h 43m. Now: doing chores in town in Stony Field, running. Last update 2026-10-30 20:04 UTC.
-- **Loopy**, Sorceress, d2d: level 4, 5,785 XP, 257 kills, 0 deaths, 8 potions drunk, run time 0h 02m. Now: doing chores in town in Blood Moor, running. Last update 2026-10-30 20:04 UTC.
+- **Soaky**, Sorceress, original game: level 15, 191,958 XP, 6,940 kills, 4 deaths, 190 potions drunk, run time 7h 48m. Now: levelling up toward level 22 in Stony Field, running. Last update 2026-10-30 20:09 UTC.
+- **Fresha**, Sorceress, original game: level 11, 73,748 XP, 2,368 kills, 3 deaths, 120 potions drunk, run time 4h 01m. Now: levelling up toward level 20 in Stony Field, running. Last update 2026-10-30 20:09 UTC.
 
 ## Now building on d2d
 
@@ -395,7 +393,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-30 20:05 UTC
+Last updated: 2026-10-30 20:10 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

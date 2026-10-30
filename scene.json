@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
-   "backend": "d2d",
-   "clvl": 2,
-   "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 63,
-   "name": "Loopy",
-   "potionsUsed": 3,
+   "area": "Stony Field",
+   "backend": "original game",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 6940,
+   "name": "Soaky",
+   "potionsUsed": 190,
    "running": true,
-   "updated": "2026-10-30T20:05Z",
-   "uptime_seconds": 27,
-   "xp": 1377
+   "updated": "2026-10-30T20:09Z",
+   "uptime_seconds": 28090,
+   "xp": 191958
   },
   {
    "area": "Stony Field",
@@ -38,41 +38,13 @@
    "clvl": 11,
    "deaths": 3,
    "doing": "Levelling up toward level 20",
-   "kills": 2314,
+   "kills": 2368,
    "name": "Fresha",
-   "potionsUsed": 117,
+   "potionsUsed": 120,
    "running": true,
-   "updated": "2026-10-30T20:04Z",
-   "uptime_seconds": 14201,
-   "xp": 72147
-  },
-  {
-   "area": "Stony Field",
-   "backend": "original game",
-   "clvl": 15,
-   "deaths": 4,
-   "doing": "Doing chores in town",
-   "kills": 6849,
-   "name": "Soaky",
-   "potionsUsed": 185,
-   "running": true,
-   "updated": "2026-10-30T20:04Z",
-   "uptime_seconds": 27787,
-   "xp": 191854
-  },
-  {
-   "area": "Blood Moor",
-   "backend": "d2d",
-   "clvl": 4,
-   "deaths": 0,
-   "doing": "Doing chores in town",
-   "kills": 257,
-   "name": "Loopy",
-   "potionsUsed": 8,
-   "running": true,
-   "updated": "2026-10-30T20:04Z",
-   "uptime_seconds": 135,
-   "xp": 5785
+   "updated": "2026-10-30T20:09Z",
+   "uptime_seconds": 14501,
+   "xp": 73748
   }
  ],
  "runs_state": "running",
@@ -93,27 +65,19 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 63 kills, 0 deaths",
-    "value": "Loopy lvl 2"
-   },
-   {
-    "label": "original game, 2,314 kills, 3 deaths",
-    "value": "Fresha lvl 11"
-   },
-   {
-    "label": "original game, 6,849 kills, 4 deaths",
+    "label": "original game, 6,940 kills, 4 deaths",
     "value": "Soaky lvl 15"
    },
    {
-    "label": "d2d, 257 kills, 0 deaths",
-    "value": "Loopy lvl 4"
+    "label": "original game, 2,368 kills, 3 deaths",
+    "value": "Fresha lvl 11"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793390720,
- "updated": "2026-10-30T20:05Z",
+ "ts": 1793391019,
+ "updated": "2026-10-30T20:10Z",
  "work": [
   {
    "state": "working",
