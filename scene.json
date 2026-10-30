@@ -18,7 +18,6 @@
   }
  ],
  "shipped": [
-  "ADR for the tool primary backend decision.",
   "Fixed tool hot loop in serveStream.",
   "Survey of Diablo II reimplementation/decompilation projects.",
   "Tool fit report.",
@@ -29,15 +28,16 @@
   "Tool lab notes.",
   "Spec approach evaluation and notes audit.",
   "OpenSpec SME reference and fit notes.",
-  "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary."
+  "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.",
+  "Combat on tool, 51 kills 0 deaths live."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793376939,
- "updated": "2026-10-30T16:15Z",
+ "ts": 1793377805,
+ "updated": "2026-10-30T16:30Z",
  "work": [
   {
    "state": "working",
