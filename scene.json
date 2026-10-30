@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
+  "Tool build, headless run and probe results.",
   "Second tool findings pass.",
   "Tool research findings.",
   "Death rule checks in tool.",
@@ -27,17 +29,15 @@
   "No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.",
   "Short nav skips, farm instead of idling, skip reason logging.",
   "Planning-session input.",
-  "NPC menu re-observation, optional quest step skip, interaction logging.",
-  "Cast-first combat loop, watchdog, Barracks kit gate.",
-  "Quest-walk safety interrupts carried out, no pack kiting, death post-mortems."
+  "NPC menu re-observation, optional quest step skip, interaction logging."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793341232,
- "updated": "2026-10-30T06:20Z",
+ "ts": 1793341556,
+ "updated": "2026-10-30T06:25Z",
  "work": [
   {
    "state": "working",
