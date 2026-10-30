@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Rogue Encampment",
    "backend": "d2d",
-   "clvl": 3,
+   "clvl": 4,
    "deaths": 0,
-   "doing": "Levelling up toward level 5",
-   "kills": 170,
+   "doing": "Heading back out from town",
+   "kills": 298,
    "name": "Loopy",
-   "potionsUsed": 7,
+   "potionsUsed": 11,
    "running": true,
-   "updated": "2026-10-30T20:45Z",
-   "uptime_seconds": 72,
-   "xp": 3606
+   "updated": "2026-10-30T20:48Z",
+   "uptime_seconds": 137,
+   "xp": 6933
   }
  ],
  "runs_state": "running",
@@ -51,20 +51,16 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 170 kills, 0 deaths",
-    "value": "Loopy lvl 3"
+    "label": "d2d, 298 kills, 0 deaths",
+    "value": "Loopy lvl 4"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793393119,
- "updated": "2026-10-30T20:45Z",
+ "ts": 1793393413,
+ "updated": "2026-10-30T20:50Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Running the bot on the d2d engine"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
@@ -76,6 +72,10 @@
   {
    "state": "working",
    "task": "Playing in a party of bots"
+  },
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
   }
  ]
 }
