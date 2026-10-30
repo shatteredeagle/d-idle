@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (26)</summary>
+<summary><b>2026-10-30</b> (27)</summary>
 
+- Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
 - Internal/tool phase 1 read-only tool snapshot source, tool.
 - Tool lockstep/time-scale/dump fork report.
 - INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Live alerts for progress and death rules, shared judge, alert hook, watch format.
 - Den floor per class, Prayer resting aura.
 - Tool probe batch results.
-- Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 
 <details>
-<summary>18 more</summary>
+<summary>19 more</summary>
 
+- Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
 - Blood Raven is not retried from Act 2.
 - Internal/tool control-channel client, fake server, tool CLI.
@@ -378,7 +379,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 08:20 UTC
+Last updated: 2026-10-30 09:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
