@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Spec approach evaluation and notes audit.",
+  "OpenSpec SME reference and fit notes.",
   "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.",
   "Combat on tool, 51 kills 0 deaths live.",
   "Per-instance long-run test layout so two soaks run at once.",
@@ -27,17 +29,15 @@
   "Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.",
   "Replicated tool long-run test test rig, stats, pass rule.",
   "Tool --backend tool, internal/tool, seams for combat/town.",
-  "Tool container design, draft recipe, GPL notes.",
-  "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
-  "Forgotten Tower guard, guarded-area exit, corpse runs respect guards."
+  "Tool container design, draft recipe, GPL notes."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793368856,
- "updated": "2026-10-30T14:00Z",
+ "ts": 1793369418,
+ "updated": "2026-10-30T14:10Z",
  "work": [
   {
    "state": "working",
