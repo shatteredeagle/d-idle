@@ -81,8 +81,9 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (27)</summary>
+<summary><b>2026-10-30</b> (28)</summary>
 
+- No_gain counts XP progress.
 - Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
 - Internal/tool phase 1 read-only tool snapshot source, tool.
 - Tool lockstep/time-scale/dump fork report.
@@ -90,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Stuck-spot memory, alternative approach cells, Escape hook.
 - Live alerts for progress and death rules, shared judge, alert hook, watch format.
 - Den floor per class, Prayer resting aura.
-- Tool probe batch results.
 
 <details>
-<summary>19 more</summary>
+<summary>20 more</summary>
 
+- Tool probe batch results.
 - Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
 - Blood Raven is not retried from Act 2.
@@ -379,7 +380,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 09:15 UTC
+Last updated: 2026-10-30 09:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

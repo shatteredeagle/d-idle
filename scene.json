@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "No_gain counts XP progress.",
   "Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.",
   "Internal/tool phase 1 read-only tool snapshot source, tool.",
   "Tool lockstep/time-scale/dump fork report.",
@@ -28,16 +29,15 @@
   "Tool probe batch results.",
   "Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.",
   "Fresh-character build tables, SelectBuild, Nova floor.",
-  "Blood Raven is not retried from Act 2.",
-  "Internal/tool control-channel client, fake server, tool CLI."
+  "Blood Raven is not retried from Act 2."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793351705,
- "updated": "2026-10-30T09:15Z",
+ "ts": 1793352356,
+ "updated": "2026-10-30T09:25Z",
  "work": [
   {
    "state": "working",
