@@ -75,26 +75,28 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Working on the bot (working)
 - Long unattended test runs (working)
+- Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (49)</summary>
+<summary><b>2026-10-30</b> (51)</summary>
 
+- Survey of Diablo II reimplementation/decompilation projects.
+- Tool fit report.
 - Lab and lab2 sections.
 - Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.
 - Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
 - Tool lab notes.
 - Spec approach evaluation and notes audit.
-- OpenSpec SME reference and fit notes.
-- Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.
 
 <details>
-<summary>41 more</summary>
+<summary>43 more</summary>
 
+- OpenSpec SME reference and fit notes.
+- Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.
 - Combat on tool, 51 kills 0 deaths live.
 - Per-instance long-run test layout so two soaks run at once.
 - Rejuv cap 3 across belt+pack, belt move, boss drink threshold.
@@ -401,7 +403,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 14:40 UTC
+Last updated: 2026-10-30 14:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
