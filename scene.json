@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Tool lab notes.",
   "Spec approach evaluation and notes audit.",
   "OpenSpec SME reference and fit notes.",
   "Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.",
@@ -28,16 +29,15 @@
   "One NPC visit per trip, interact within 4 cells, no needless game screens close.",
   "Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.",
   "Replicated tool long-run test test rig, stats, pass rule.",
-  "Tool --backend tool, internal/tool, seams for combat/town.",
-  "Tool container design, draft recipe, GPL notes."
+  "Tool --backend tool, internal/tool, seams for combat/town."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793369418,
- "updated": "2026-10-30T14:10Z",
+ "ts": 1793369717,
+ "updated": "2026-10-30T14:15Z",
  "work": [
   {
    "state": "working",
