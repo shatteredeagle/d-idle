@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Lab and lab2 sections.",
   "Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.",
   "Sourced cast timing documentation.",
   "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
@@ -28,16 +29,15 @@
   "Combat on tool, 51 kills 0 deaths live.",
   "Per-instance long-run test layout so two soaks run at once.",
   "Rejuv cap 3 across belt+pack, belt move, boss drink threshold.",
-  "Cap rejuvenation potions, sell surplus, inventory contents log.",
-  "One NPC visit per trip, interact within 4 cells, no needless game screens close."
+  "Cap rejuvenation potions, sell surplus, inventory contents log."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793370318,
- "updated": "2026-10-30T14:25Z",
+ "ts": 1793370617,
+ "updated": "2026-10-30T14:30Z",
  "work": [
   {
    "state": "working",
