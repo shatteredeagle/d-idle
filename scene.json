@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Per-instance long-run test layout so two soaks run at once.",
+  "Rejuv cap 3 across belt+pack, belt move, boss drink threshold.",
   "Cap rejuvenation potions, sell surplus, inventory contents log.",
   "One NPC visit per trip, interact within 4 cells, no needless game screens close.",
   "Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.",
@@ -27,17 +29,15 @@
   "Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.",
   "Forgotten Tower guard, guarded-area exit, corpse runs respect guards.",
   "Recovery farms the best XP-per-kill safe area.",
-  "Tool statistical fidelity results.",
-  "No_gain counts XP progress.",
-  "Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation."
+  "Tool statistical fidelity results."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793367334,
- "updated": "2026-10-30T13:35Z",
+ "ts": 1793368231,
+ "updated": "2026-10-30T13:50Z",
  "work": [
   {
    "state": "working",

@@ -83,20 +83,22 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (38)</summary>
+<summary><b>2026-10-30</b> (40)</summary>
 
+- Per-instance long-run test layout so two soaks run at once.
+- Rejuv cap 3 across belt+pack, belt move, boss drink threshold.
 - Cap rejuvenation potions, sell surplus, inventory contents log.
 - One NPC visit per trip, interact within 4 cells, no needless game screens close.
 - Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.
 - Replicated tool long-run test test rig, stats, pass rule.
 - Tool --backend tool, internal/tool, seams for combat/town.
 - Tool container design, draft recipe, GPL notes.
-- Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.
-- Forgotten Tower guard, guarded-area exit, corpse runs respect guards.
 
 <details>
-<summary>30 more</summary>
+<summary>32 more</summary>
 
+- Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.
+- Forgotten Tower guard, guarded-area exit, corpse runs respect guards.
 - Recovery farms the best XP-per-kill safe area.
 - Tool statistical fidelity results.
 - No_gain counts XP progress.
@@ -392,7 +394,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 13:35 UTC
+Last updated: 2026-10-30 13:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
