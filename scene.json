@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Rogue Encampment",
    "backend": "d2d",
-   "clvl": 2,
+   "clvl": 3,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 66,
+   "kills": 105,
    "name": "Loopy",
-   "potionsUsed": 5,
+   "potionsUsed": 8,
    "running": true,
-   "updated": "2026-10-30T23:49Z",
-   "uptime_seconds": 65,
-   "xp": 1437
+   "updated": "2026-10-30T23:50Z",
+   "uptime_seconds": 114,
+   "xp": 2430
   }
  ],
  "runs_state": "running",
@@ -51,15 +51,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 66 kills, 0 deaths",
-    "value": "Loopy lvl 2"
+    "label": "d2d, 105 kills, 0 deaths",
+    "value": "Loopy lvl 3"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793404209,
- "updated": "2026-10-30T23:50Z",
+ "ts": 1793404514,
+ "updated": "2026-10-30T23:55Z",
  "work": [
   {
    "state": "working",
