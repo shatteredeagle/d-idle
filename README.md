@@ -77,13 +77,13 @@ The bot is paused right now, so there are no live numbers.
 
 - Long unattended test runs (working)
 - Working on the bot (working)
-- Town chores: shopping, stashing and loot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (148)</summary>
+<summary><b>2026-10-29</b> (149)</summary>
 
+- Spare potions sold, recovery loot, potion floor.
 - Recovery phase, Blood Raven attempt budget.
 - SME economy data and Blood Raven caster notes.
 - Trip budget and gold floor.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Rebuy rejection reasons, gate settles when blocked by stats.
 - Bot vs veteran audit.
 - SME per-class knowledge base.
-- SME mechanics knowledge base.
 
 <details>
-<summary>140 more</summary>
+<summary>141 more</summary>
 
+- SME mechanics knowledge base.
 - Keep and wear found gear for empty slots.
 - SME play-patterns knowledge base.
 - Rebuy bar fix, shop logging, quest skip reasons.
@@ -333,7 +333,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 00:45 UTC
+Last updated: 2026-10-30 01:00 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

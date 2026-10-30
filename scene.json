@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Spare potions sold, recovery loot, potion floor.",
   "Recovery phase, Blood Raven attempt budget.",
   "SME economy data and Blood Raven caster notes.",
   "Trip budget and gold floor.",
@@ -28,16 +29,15 @@
   "SME mechanics knowledge base.",
   "Keep and wear found gear for empty slots.",
   "SME play-patterns knowledge base.",
-  "Rebuy bar fix, shop logging, quest skip reasons.",
-  "SME builds and gear knowledge base."
+  "Rebuy bar fix, shop logging, quest skip reasons."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793321139,
- "updated": "2026-10-30T00:45Z",
+ "ts": 1793322039,
+ "updated": "2026-10-30T01:00Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
