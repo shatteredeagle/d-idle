@@ -18,6 +18,8 @@
   }
  ],
  "shipped": [
+  "Early-game audit fixes.",
+  "Tool backend design.",
   "Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.",
   "Tool build, headless run and probe results.",
   "Second tool findings pass.",
@@ -27,17 +29,15 @@
   "StaffPlaced uses the persisted quest word.",
   "Death metrics from real long-run test logs.",
   "No_gain, loop_no_gain, idle_in_town, below_floor_clvl, time-in-state report.",
-  "Short nav skips, farm instead of idling, skip reason logging.",
-  "Planning-session input.",
-  "NPC menu re-observation, optional quest step skip, interaction logging."
+  "Short nav skips, farm instead of idling, skip reason logging."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793341556,
- "updated": "2026-10-30T06:25Z",
+ "ts": 1793341808,
+ "updated": "2026-10-30T06:30Z",
  "work": [
   {
    "state": "working",
