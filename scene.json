@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Recovery phase, Blood Raven attempt budget.",
   "SME economy data and Blood Raven caster notes.",
   "Trip budget and gold floor.",
   "Stat floor for gear requirements, NeedStr from blocked rebuys.",
@@ -28,24 +29,23 @@
   "Keep and wear found gear for empty slots.",
   "SME play-patterns knowledge base.",
   "Rebuy bar fix, shop logging, quest skip reasons.",
-  "SME builds and gear knowledge base.",
-  "Gate refusals are planning blocks, route-aware targets, ban lift."
+  "SME builds and gear knowledge base."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793319624,
- "updated": "2026-10-30T00:20Z",
+ "ts": 1793320223,
+ "updated": "2026-10-30T00:30Z",
  "work": [
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   }
  ]
 }
