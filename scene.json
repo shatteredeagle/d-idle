@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Second tool findings pass.",
   "Tool research findings.",
   "Death rule checks in tool.",
   "Repeat-site ban, planner dump, corpse floor, potion bug tag.",
@@ -28,16 +29,15 @@
   "Planning-session input.",
   "NPC menu re-observation, optional quest step skip, interaction logging.",
   "Cast-first combat loop, watchdog, Barracks kit gate.",
-  "Quest-walk safety interrupts carried out, no pack kiting, death post-mortems.",
-  "Retreat counts pack spares, belt purchase chore, mana pays casts."
+  "Quest-walk safety interrupts carried out, no pack kiting, death post-mortems."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793339439,
- "updated": "2026-10-30T05:50Z",
+ "ts": 1793341232,
+ "updated": "2026-10-30T06:20Z",
  "work": [
   {
    "state": "working",
