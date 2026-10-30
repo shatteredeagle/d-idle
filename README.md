@@ -81,6 +81,13 @@ The bot is paused right now, so there are no live numbers.
 ## What shipped
 
 <details open>
+<summary><b>2026-10-30</b> (1)</summary>
+
+- NPC menu re-observation, optional quest step skip, interaction logging.
+
+</details>
+
+<details>
 <summary><b>2026-10-29</b> (156)</summary>
 
 - Cast-first combat loop, watchdog, Barracks kit gate.
@@ -340,7 +347,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 03:55 UTC
+Last updated: 2026-10-30 04:40 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
