@@ -34,7 +34,7 @@
   },
   {
    "area": "Stony Field",
-   "backend": "original game",
+   "backend": "d2lod (original game)",
    "clvl": 15,
    "deaths": 4,
    "doing": "Levelling up toward level 22",
@@ -48,7 +48,7 @@
   },
   {
    "area": "Stony Field",
-   "backend": "original game",
+   "backend": "d2lod (original game)",
    "clvl": 11,
    "deaths": 3,
    "doing": "Levelling up toward level 20",
@@ -81,8 +81,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793397332,
- "updated": "2026-10-30T21:55Z",
+ "ts": 1793398529,
+ "updated": "2026-10-30T22:15Z",
  "work": [
   {
    "state": "working",
