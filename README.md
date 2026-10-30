@@ -7,6 +7,21 @@ It is early days. Right now the work is on the part underneath: a bot that plays
 
 _Streams when the bot is running._
 
+## Live now
+
+- **Loopy**, Sorceress, d2d: level 5, 14,001 XP, 562 kills, 1 deaths, 27 potions drunk, run time 0h 07m. Now: playing through the early game in Blood Moor, running. Last update 2026-10-30 19:35 UTC.
+- **Soaky**, Sorceress, original game: level 15, 188,380 XP, 6,654 kills, 4 deaths, 177 potions drunk, run time 7h 13m. Now: levelling up toward level 22 in Mausoleum, running. Last update 2026-10-30 19:34 UTC.
+- **Fresha**, Sorceress, original game: level 10, 67,727 XP, 2,201 kills, 3 deaths, 101 potions drunk, run time 3h 26m. Now: recovering after trouble in Cold Plains, running. Last update 2026-10-30 19:34 UTC.
+
+## Now building on d2d
+
+- d2d is an open-source reimplementation of the Diablo II engine. It lets the bot run headless (no screen) and far faster than real time. Measured with the bot attached: 22 to 33 times faster.
+- On 2026-10-30 we decided to make d2d the main way the bot runs. The original-game path is frozen: it keeps working, and it stays as the reference we compare against.
+- Progress so far: a fresh Sorceress reaches level 5 in about 3 to 4 hours of game time, which takes minutes of real time. The bot's loop on d2d is still being tuned.
+- Goal, not built yet: the bot and d2d packaged in one container, so a friend can start it with a single command.
+
+d2d is the work of the d2decomped project (GPL-3.0). Our fixes to it go upstream as open pull requests. [d2decomped](https://github.com/psi29a/d2decomped), pull requests [#127](https://github.com/psi29a/d2decomped/pull/127) and [#128](https://github.com/psi29a/d2decomped/pull/128).
+
 ## Why we are making it
 
 - We like Diablo II and we like idle games. This is what happens when you put them together: the game plays itself, and the fun is in the setup, the progress and watching it go.
@@ -71,68 +86,61 @@ Each stage is a gate made of milestones. Open a stage to see its milestones.
 
 ## Right now
 
-The bot is paused right now, so there are no live numbers.
+Between runs.
 
 **Being worked on:**
 
-- Goals, quests and levelling (working)
+- Running the bot on the d2d engine (working)
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
-- Building this public status page (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (53)</summary>
+<summary><b>2026-10-30</b> (47)</summary>
 
-- ADR for the tool primary backend decision.
+- The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.
+- ADR for the d2d primary backend decision.
 - Fixed tool hot loop in serveStream.
 - Survey of Diablo II reimplementation/decompilation projects.
 - Tool fit report.
 - Lab and lab2 sections.
-- Openspec-style change cards, 7 specs, changecheck, ADRs, notes fixes, spec-sme agent.
 - Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
 
 <details>
-<summary>45 more</summary>
+<summary>39 more</summary>
 
-- Tool lab notes.
+- D2d lab notes.
 - Spec approach evaluation and notes audit.
 - OpenSpec SME reference and fit notes.
-- Link-wait bound fix, arrival diagnostics, tool liveness Beat, one-line unknown-field summary.
-- Combat on tool, 51 kills 0 deaths live.
+- Link-wait bound fix, arrival diagnostics, d2d liveness Beat, one-line unknown-field summary.
+- Combat on d2d, 51 kills 0 deaths live.
 - Per-instance long-run test layout so two soaks run at once.
 - Rejuv cap 3 across belt+pack, belt move, boss drink threshold.
 - Cap rejuvenation potions, sell surplus, inventory contents log.
 - One NPC visit per trip, interact within 4 cells, no needless game screens close.
-- Tool town verbs, tool adapter, tool smoke tool, Akara trade verified live.
-- Replicated tool long-run test test rig, stats, pass rule.
-- Tool --backend tool, internal/tool, seams for combat/town.
-- Tool container design, draft recipe, GPL notes.
-- Autoloot/autoparty off by default in tool launches, death-gold recheck, tool-gaps.
-- Forgotten Tower guard, guarded-area exit, corpse runs respect guards.
+- D2d town verbs, tool adapter, tool smoke tool, Akara trade verified live.
+- Replicated d2d long-run test test rig, stats, pass rule.
+- Tool --backend d2d, internal/tool, seams for combat/town.
+- D2d container design, draft recipe, GPL notes.
+- Autoloot/autoparty off by default in d2d launches, death-gold recheck, d2d-gaps.
+- Internal/tool nav world source from d2d verbs, tool.
 - Recovery farms the best XP-per-kill safe area.
-- Tool statistical fidelity results.
+- D2d statistical fidelity results.
 - No_gain counts XP progress.
 - Bounded nav field/search, heap guard, heap_runaway alert, memory cgroup recommendation.
-- Internal/tool phase 1 read-only tool snapshot source, tool.
-- Tool lockstep/time-scale/dump fork report.
-- INDEX start-here section, STATUS.md, SME README, backlog and strategy notes.
-- Stuck-spot memory, alternative approach cells, Escape hook.
-- Live alerts for progress and death rules, shared judge, alert hook, watch format.
+- Internal/tool phase 1 read-only d2d snapshot source, tool.
 - Den floor per class, Prayer resting aura.
-- Tool probe batch results.
 - Skip Imbue, Monastery route guard, escalating repeat-site bans, crowd panic rule, autopsy and potion counter fixes.
 - Fresh-character build tables, SelectBuild, Nova floor.
 - Blood Raven is not retried from Act 2.
 - Internal/tool control-channel client, fake server, tool CLI.
 - Blood Raven kit gate, attempts gated on kit and gold, claim-step stub, no Act 1 paid hire.
 - Early-game audit fixes.
-- Tool backend design.
+- D2d backend design.
 - Sweep the death-spot gold pile, count it in the corpse decision, bank-trip gap fix.
-- Tool build, headless run and probe results.
 - Second tool findings pass.
 - Tool research findings.
 - Death rule checks in tool.
@@ -149,7 +157,7 @@ The bot is paused right now, so there are no live numbers.
 </details>
 
 <details>
-<summary><b>2026-10-29</b> (156)</summary>
+<summary><b>2026-10-29</b> (139)</summary>
 
 - Cast-first combat loop, watchdog, Barracks kit gate.
 - Quest-walk safety interrupts carried out, no pack kiting, death post-mortems.
@@ -161,7 +169,7 @@ The bot is paused right now, so there are no live numbers.
 - Spare potions sold, recovery loot, potion floor.
 
 <details>
-<summary>148 more</summary>
+<summary>131 more</summary>
 
 - Recovery phase, Blood Raven attempt budget.
 - SME economy data and Blood Raven caster notes.
@@ -177,22 +185,18 @@ The bot is paused right now, so there are no live numbers.
 - SME builds and gear knowledge base.
 - Gate refusals are planning blocks, route-aware targets, ban lift.
 - Slots in instances interface, bot proxy, viewport video.
-- Tool Unraid template, Tower container deploy and first run results.
 - Poor-mode pickup of sellable gear and small gold, per-fight loot summary.
 - Gated character keeps its safe area, planning blocks never restart the game.
 - Bwrap mount-namespace allowlist for every Wine process.
-- Orphan-aware reaping, prefix clean before managed launch, hung-mount guard, clean soak24 stop.
 - Gear gate, repeated-death area ban, older-corpse retrieval, rebuy weapon/armor first.
 - Periodic character point, planned games not counted as restarts.
 - Heartbeat in recovery, instance lock guard, exit 3 final, GameWait 6 min, Den test race.
 - Failsafe ownership table, soak24 watchdog/supervise preflight.
 - Prune tool, rigs to tools/rigs, archive stale notes, open-findings table.
 - Pre-fix gate baseline numbers.
-- Jade/Onyx/Tower long-run test host evaluation.
 - Mark character-on-area-change claims UNVERIFIED, results plan.
 - Every build reports its commit, long-run test preflight refuses dev builds.
 - SavedExp connected, long-run test --character, level table to 99.
-- Strategic review of work and plan.
 - Unreliable bot tests made load-proof.
 - FieldGate connected into trip.
 - Xp lost/at-risk telemetry, long-run test XP from saved exp.
@@ -214,7 +218,6 @@ The bot is paused right now, so there are no live numbers.
 - Seal boss timeouts continue, resume from nearest node, death checks.
 - Settings reference and generator.
 - Long-run test fight/death parsers accept JSON logs.
-- INDEX and PLAN status refresh, reviews table.
 - Resist gate rechecked at campaign start, MaxDeaths auto-resume.
 - Full stash/pack handling, SetBuild forwards to judge.
 - Log dedup, minute summary line.
@@ -224,7 +227,6 @@ The bot is paused right now, so there are no live numbers.
 - Go winedevice reaping at managed game stop.
 - --long-run test-dir for tool/tool.
 - Necro corpse skills, assassin trap planner.
-- Winereap prefix layouts, instance lock, per-kill recheck, reap-all dry run.
 - Endgame tables registered, Smite weapon fix, ResistGate.
 - Full-campaign simulation tests, Act-aware planning fix, hop floors.
 - Endgame build research and tables.
@@ -234,7 +236,6 @@ The bot is paused right now, so there are no live numbers.
 - Wineserver long-run test check by plateau/headroom, safe winedevice reaping.
 - Wineserver fd investigation.
 - New tests for unattended-run file locations, coverage notes.
-- Prebuilt live probe tools.
 - Pinned kite fix, cursed retreat, weak-pack strictness, Smith preset anchor, belt-aware potion floor.
 - 70 s stop grace, goals marker after enqueue, StopGame, slot instance env.
 - Countess live results, bossrun --god/--nokite, unpinned input helper.
@@ -244,16 +245,11 @@ The bot is paused right now, so there are no live numbers.
 - Acts 4 and 5 connected into tool, normal_all covers Acts 1-5.
 - Tool per-client stream writer, reconnect on load, hidden-tab pause.
 - Bot-owned game for fleet slots.
-- Act 4 and 5 quest data, tasks, boss scripts.
-- Act 2/3 connected into tool.
 - Fleet launches and supervises tool per slot.
-- Curse danger/retreat, missile sidestep hook, fight telemetry, long-run test fight-line parser.
-- Long-run test report level, no-data verdict, status and alerts.
 - Missile and curse readers, dodge rule, fight telemetry.
 - Wizard goals picker.
 - Caster staff swing on weak packs, nearTown, Den kit floor.
 - Campaign templates, weapon equip, quest item pickup, World flags.
-- Act 3 quest data, task nodes, boss scripts, nav hints.
 - Merc chore, EntryGate in planner, NM Act 1 floor 36.
 - Leveler gear scorer uses resist/FCR/ethereal helpers.
 - Free heal trips from the Den, NearTownArea, caster starvation.
@@ -264,7 +260,6 @@ The bot is paused right now, so there are no live numbers.
 - Difficulty survival research.
 - Recycler lock, no nested ladder escalation, clean -race sweep.
 - Merc and farming research.
-- Review H1-H3, M1, M2, M4.
 - Poverty pack-danger limit, act-aware starveArea.
 - No self-pause on low life, failsafe auto-resume, planner no far-ahead pick.
 - Energy rows, cheap rest, poverty advice connected.
@@ -276,9 +271,7 @@ The bot is paused right now, so there are no live numbers.
 - Den quest word gating, walk-home without scroll, Akara greeting, area hysteresis.
 - Paladin live results.
 - StaffTombLevel reader, a2env TombHinter and ProbeFar.
-- Waypoint icon column, tomb hint interface and far probe.
 - Act 2 live results 5.
-- Waypoints cheat opens act tabs via quest words, live verified.
 - Heal-first gate in town, waypoint to town, re-entry loop pause.
 - Island-hopping teleport planner, boss Teleporter.
 - Act 2 live results 4, nav teleport in act2live rig, god restore on die.
@@ -286,7 +279,6 @@ The bot is paused right now, so there are no live numbers.
 - Buy the town portal scroll before potions.
 - Flee without potions, poverty mode, resource settings.
 - Teleport-aware explorer, InteractNPC hover fallback.
-- God cheat restores on signal, undo marker, inflated-life guard.
 - Act 2 live results 3, StallRecoverer rig, Arcane portal and waypoint verified.
 - Blocked inserted steps dropped, fruitless explore gives up.
 - Rung-4 restart is not fatal, clearing idle limit, skipTarget on first rung.
@@ -300,7 +292,6 @@ The bot is paused right now, so there are no live numbers.
 - Amazon live results, shop stock pages fix, ammo before shop.
 - Necromancer live results, mage hotkey, army skips rest, curse dedupe, tool.
 - Nav Yield connected to bounded pack clear.
-- OpenPortal rebuilt on class-aware grid, exit-tile cost, nav Yield hook.
 - Act 2 live results, act2 nav hints, tool.
 - Countess live results, preset anchor fix, critical-life escape.
 - Setup wizard connected into tool/tool, container user-test checklist.
@@ -317,7 +308,7 @@ The bot is paused right now, so there are no live numbers.
 </details>
 
 <details>
-<summary><b>2026-10-28</b> (78)</summary>
+<summary><b>2026-10-28</b> (73)</summary>
 
 - Rebuilt HA stream dashboard, fixed sync loops and notifications.
 - Amazon smoke test findings.
@@ -329,7 +320,7 @@ The bot is paused right now, so there are no live numbers.
 - Dungeon transitions verified, ErrLevelChanged re-plan, hint corrections, waypoint walk fix.
 
 <details>
-<summary>70 more</summary>
+<summary>65 more</summary>
 
 - Class builds, skill-id read-back, gear score, weapon swap, allow-lists, merc hire interface.
 - Data-driven class combat, left/right skill binder, aura upkeep, Paladin melee loop.
@@ -338,14 +329,10 @@ The bot is paused right now, so there are no live numbers.
 - Paladin smoke test findings and tool.
 - In-memory quest and waypoint source, live-verified.
 - Act 1 boss script framework and scripts.
-- Board/hub/milestones on Tower, CLI remote mode, 5 min publish timer.
-- Tool warm-up and fd plateau, recycler policy hooks.
-- Resource policy, task layer and quests connected into the bot; live 31 min campaign.
 - Scene tile, grid3, keep-alive, StreamDesk and HA toggles.
 - Fd study, game recycler, oog fd tools.
 - TV-style stream scene page and generator.
 - Shared stream selection, auto scheduler rule, StreamDesk and HA sync.
-- Stream overlay, grid layouts, status --json.
 - Managed mode live, death/IsDead fixes, long-run test findings.
 - Kick OAuth login and set-title library.
 - Home Assistant package and dashboard for the stream.
@@ -354,7 +341,6 @@ The bot is paused right now, so there are no live numbers.
 - Live-now link on the public page, sanitizer extension.
 - Kick interface research for stream title.
 - Desktop tray app for the stream.
-- Task layer.
 - Pure mana/health resource policy package.
 - Quest state reader, NPC dialog primitive, act hops, Act 1 handlers.
 - Percent layout, grouped shipped feed, plain work titles, dark-mode check.
@@ -408,7 +394,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 19:30 UTC
+Last updated: 2026-10-30 19:35 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
