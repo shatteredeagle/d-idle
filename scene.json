@@ -36,8 +36,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793327429,
- "updated": "2026-10-30T02:30Z",
+ "ts": 1793328056,
+ "updated": "2026-10-30T02:40Z",
  "work": [
   {
    "state": "working",
@@ -46,6 +46,10 @@
   {
    "state": "working",
    "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
