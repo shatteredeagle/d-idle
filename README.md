@@ -77,13 +77,13 @@ The bot is paused right now, so there are no live numbers.
 
 - Long unattended test runs (working)
 - Working on the bot (working)
-- Town chores: shopping, stashing and loot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (153)</summary>
+<summary><b>2026-10-29</b> (154)</summary>
 
+- Retreat counts pack spares, belt purchase chore, mana pays casts.
 - Early gear policy.
 - No-area is a planning block, death streak forces recovery.
 - SME pace tables and proposed long-run test milestones.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - Spare potions sold, recovery loot, potion floor.
 - Recovery phase, Blood Raven attempt budget.
 - SME economy data and Blood Raven caster notes.
-- Trip budget and gold floor.
 
 <details>
-<summary>145 more</summary>
+<summary>146 more</summary>
 
+- Trip budget and gold floor.
 - Stat floor for gear requirements, NeedStr from blocked rebuys.
 - Rebuy rejection reasons, gate settles when blocked by stats.
 - Bot vs veteran audit.
@@ -338,7 +338,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 02:40 UTC
+Last updated: 2026-10-30 02:50 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
