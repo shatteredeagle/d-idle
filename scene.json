@@ -18,6 +18,7 @@
   }
  ],
  "shipped": [
+  "Short nav skips, farm instead of idling, skip reason logging.",
   "Planning-session input.",
   "NPC menu re-observation, optional quest step skip, interaction logging.",
   "Cast-first combat loop, watchdog, Barracks kit gate.",
@@ -28,16 +29,15 @@
   "SME pace tables and proposed long-run test milestones.",
   "Pack potions move to the belt.",
   "Spare potions sold, recovery loot, potion floor.",
-  "Recovery phase, Blood Raven attempt budget.",
-  "SME economy data and Blood Raven caster notes."
+  "Recovery phase, Blood Raven attempt budget."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793336430,
- "updated": "2026-10-30T05:00Z",
+ "ts": 1793337035,
+ "updated": "2026-10-30T05:10Z",
  "work": [
   {
    "state": "working",
@@ -46,10 +46,6 @@
   {
    "state": "working",
    "task": "Working on the bot"
-  },
-  {
-   "state": "working",
-   "task": "Town chores: shopping, stashing and loot"
   }
  ]
 }
