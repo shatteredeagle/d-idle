@@ -23,14 +23,14 @@
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Doing chores in town",
-   "kills": 342,
+   "doing": "Recovering after trouble",
+   "kills": 240,
    "name": "Loopy",
-   "potionsUsed": 10,
+   "potionsUsed": 4,
    "running": true,
-   "updated": "2026-10-30T23:12Z",
-   "uptime_seconds": 144,
-   "xp": 7505
+   "updated": "2026-10-30T23:20Z",
+   "uptime_seconds": 145,
+   "xp": 4933
   }
  ],
  "runs_state": "running",
@@ -51,20 +51,16 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 342 kills, 0 deaths",
+    "label": "d2d, 240 kills, 0 deaths",
     "value": "Loopy lvl 4"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793402129,
- "updated": "2026-10-30T23:15Z",
+ "ts": 1793402402,
+ "updated": "2026-10-30T23:20Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Running the bot on the d2d engine"
-  },
   {
    "state": "working",
    "task": "Working on the bot"
@@ -72,6 +68,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
   },
   {
    "state": "working",
