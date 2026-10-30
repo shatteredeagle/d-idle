@@ -75,15 +75,15 @@ The bot is paused right now, so there are no live numbers.
 
 **Being worked on:**
 
-- Improving the dashboard (working)
 - Long unattended test runs (working)
 - Working on the bot (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-29</b> (155)</summary>
+<summary><b>2026-10-29</b> (156)</summary>
 
+- Cast-first combat loop, watchdog, Barracks kit gate.
 - Quest-walk safety interrupts carried out, no pack kiting, death post-mortems.
 - Retreat counts pack spares, belt purchase chore, mana pays casts.
 - Early gear policy.
@@ -91,11 +91,11 @@ The bot is paused right now, so there are no live numbers.
 - SME pace tables and proposed long-run test milestones.
 - Pack potions move to the belt.
 - Spare potions sold, recovery loot, potion floor.
-- Recovery phase, Blood Raven attempt budget.
 
 <details>
-<summary>147 more</summary>
+<summary>148 more</summary>
 
+- Recovery phase, Blood Raven attempt budget.
 - SME economy data and Blood Raven caster notes.
 - Trip budget and gold floor.
 - Stat floor for gear requirements, NeedStr from blocked rebuys.
@@ -340,7 +340,7 @@ The bot is paused right now, so there are no live numbers.
 
 ---
 
-Last updated: 2026-10-30 03:45 UTC
+Last updated: 2026-10-30 03:55 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
