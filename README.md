@@ -9,7 +9,7 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Loopy**, Sorceress, d2d: level 4, 4,933 XP, 240 kills, 0 deaths, 4 potions drunk, run time 0h 02m. Now: recovering after trouble in Blood Moor, running. Last update 2026-10-30 23:20 UTC.
+- **Loopy**, Sorceress, d2d: level 4, 5,504 XP, 243 kills, 0 deaths, 14 potions drunk, run time 0h 02m. Now: recovering after trouble in Blood Moor, running. Last update 2026-10-30 23:25 UTC.
 
 ## Now building on d2d
 
@@ -88,9 +88,9 @@ Between runs.
 
 **Being worked on:**
 
+- Running the bot on the d2d engine (working)
 - Working on the bot (working)
 - Long unattended test runs (working)
-- Running the bot on the d2d engine (working)
 - Playing in a party of bots (working)
 
 ## What shipped
@@ -392,7 +392,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-30 23:20 UTC
+Last updated: 2026-10-30 23:25 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
