@@ -8,7 +8,7 @@ What an unattended Normal Act 1 run on the d2d backend must achieve for a fresh 
 ### Requirement: Act 1 quest order
 A fresh character SHALL do the Den of Evil first (early-game-policy), Blood Raven at the kit gate and claim the free Rogue (merc-policy), MAY skip the Search for Cain and the Forgotten Tower, and MUST kill Andariel and talk to Warriv to enter Act 2; no other quest is required for the hop. Source: d2-sme 2026-10-31 (SRC docs/sme/play-act-route.md: Cain skippable, Andariel then Warriv); card m3-act1chain.
 
-#### Scenario: Tower blocked by the guard
+#### Scenario: Forgotten Tower blocked by the guard
 - **WHEN** the route guard blocks the tower and Cain is not done
 - **THEN** the campaign still proceeds to Andariel when the floor and kit hold
 

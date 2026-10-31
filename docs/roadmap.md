@@ -65,7 +65,7 @@ Launch order; one agent, <= 2 h each. `proposed` = launchable now (OWNERS lines 
 | 11 | m1-liveproof | deferred | m1-audittests, m1-stashcap, m1-trips | the 10 live checks and 2 unknowns; closes the coverage table (M1 exit) |
 | 12 | d2d-replicated-soak (= m2-gaterun) | proposed (exists) | m2-roam, m2-tripwp | the closing run of M2: 8 seeds x 3 h, PASS, exit 0 |
 | 13 | m3-merc | deferred | grill 0003 | free Rogue claimed, kept alive, revived on d2d for hours; merc on by default on d2d |
-| 14 | m3-routeguard | deferred | grill 0003, xpgap | Monastery, tower and Andariel floors set to the decided numbers; MODIFIED deltas written at launch |
+| 14 | m3-routeguard | deferred | grill 0003, xpgap | Monastery, Forgotten Tower and Andariel floors set to the decided numbers; MODIFIED deltas written at launch |
 | 15 | m3-act1chain | deferred | m3-merc, m3-routeguard | Act 1 quest order and quest evidence on d2d up to the Andariel approach |
 | 16 | m3-act1run | deferred | m3-andariel, m3-act1chain, M2 | the closing run of M3: 3 fresh seeds (M3 exit) |
 
