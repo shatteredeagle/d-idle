@@ -45,7 +45,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
-| [roadmap](../../openspec/changes/roadmap/) | in-progress | roadmap | `docs/roadmap.md`<br>`docs/process/dispatcher-brief-proposed.md`<br>`docs/BACKLOG.md`<br>`openspec/changes/m1-audittests/**`<br>`openspec/changes/m1-stashcap/**`<br>`openspec/changes/m1-trips/**`<br>`openspec/changes/m1-liveproof/**`<br>`openspec/changes/m2-roam/**`<br>`openspec/changes/m2-tripwp/**`<br>`openspec/changes/m2-abdesign/**`<br>`openspec/changes/m3-andariel/**`<br>`openspec/changes/m3-merc/**`<br>`openspec/changes/m3-routeguard/**`<br>`openspec/changes/m3-act1chain/**`<br>`openspec/changes/m3-act1run/**`<br>`openspec/changes/m1-loot/**`<br>`openspec/changes/m2-soakexit/**`<br>`openspec/changes/m2-earlybase/**` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
@@ -82,12 +81,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m2-soakexit: go test ./cmd/d2dsoak passes including TestVerdictExitCodes (PASS 0, INCONCLUSIVE 2, FAIL 3, NO-DATA 3) for run and compare
 - change m2-soakexit: go test ./cmd/d2dsoak passes including TestExcludedSeedsAreNotExposure (a seed with 0 minute lines adds 0 h and appears under excluded seeds)
 - change m2-soakexit: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change roadmap: go run ./cmd/changecheck -cli has 0 warnings after `changecheck status -write`
-- change roadmap: go run ./cmd/leakcheck -mode fail finds 0
-- change roadmap: tools/openspec.sh validate --all --strict passes including every new card and delta
-- change roadmap: docs/roadmap.md is at most 150 lines and has an Alignment section naming every SME disagreement
 
 ### Recent merges
+- 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
+- 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
 - 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
 - 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
@@ -96,6 +93,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
 - c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
 - 1481f63 10-31 00:40 `Merge agent/doctrim: doc trim` (doctrim)
-- e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
-- 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 <!-- statusgen:end -->

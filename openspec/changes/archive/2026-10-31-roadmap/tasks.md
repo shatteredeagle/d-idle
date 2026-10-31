@@ -2,7 +2,7 @@
 
 ```yaml
 change: roadmap
-status: in-progress
+status: archived
 agent: roadmap
 branch: agent/roadmap
 worktree: ~/code/d2lod-wt/roadmap
@@ -31,7 +31,7 @@ gates:
   - "go run ./cmd/leakcheck -mode fail finds 0"
   - "tools/openspec.sh validate --all --strict passes including every new card and delta"
   - "docs/roadmap.md is at most 150 lines and has an Alignment section naming every SME disagreement"
-merge:
+merge: 51cad66
 result: "Docs and cards only, nothing run live: docs/roadmap.md, 14 milestone cards (4 proposed, 10 deferred) with deltas on town-basics, act1-campaign, fidelity-gate, early-game-policy, merc-policy; dispatcher brief proposal; SME alignment recorded."
 ```
 
