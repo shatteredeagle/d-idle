@@ -2,7 +2,7 @@
 
 ```yaml
 change: navstall
-status: done
+status: in-progress
 agent: navstall
 branch: agent/navstall
 worktree: ~/code/d2lod-wt/navstall
