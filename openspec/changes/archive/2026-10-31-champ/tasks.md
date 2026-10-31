@@ -2,7 +2,7 @@
 
 ```yaml
 change: champ
-status: in-progress
+status: archived
 agent: champ
 branch: agent/champ
 worktree: ~/code/d2lod-wt/champ
@@ -27,8 +27,8 @@ exclusive: []
 gates:
   - "go vet ./..., go test -short -count=1 -p 4 ./... and go test -race ./internal/combat ./internal/bot ./internal/d2 pass on the worker host"
   - "changecheck, leakcheck -mode fail, tools/openspec.sh validate --all --strict pass"
-merge: ""
-result: ""
+merge: 5b6f98f
+result: "Offline only, not verified live: champions are Elite not Boss (Target.Champion, killerChampion autopsy label), group avoid under clvl 8, knob combat.championEarlyPct default 10 pp. G1/G2 check still open."
 ```
 
 - [x] 1 Read what Boss gates (docs/champions.md)

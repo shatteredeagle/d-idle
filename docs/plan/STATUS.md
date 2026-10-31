@@ -38,7 +38,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [champ](../../openspec/changes/champ/) | in-progress | champ | `openspec/changes/champ/**`<br>`docs/champions.md`<br>`docs/knobs.md`<br>`internal/combat/target.go`<br>`internal/combat/death.go`<br>`internal/combat/resource.go`<br>`internal/combat/champion_test.go`<br>`internal/resource/potion.go`<br>`internal/resource/tuning.go`<br>`internal/resource/types.go`<br>`internal/resource/policy_test.go`<br>`internal/env/tuning_combat.go`<br>`internal/bot/observe.go`<br>`internal/bot/deathlog.go`<br>`internal/bot/death.go`<br>`internal/bot/champion_test.go` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -59,8 +58,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
-- change champ: go vet ./..., go test -short -count=1 -p 4 ./... and go test -race ./internal/combat ./internal/bot ./internal/d2 pass on the worker host
-- change champ: changecheck, leakcheck -mode fail, tools/openspec.sh validate --all --strict pass
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -77,6 +74,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
 - c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
 - 1481f63 10-31 00:40 `Merge agent/doctrim: doc trim` (doctrim)
 - e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
