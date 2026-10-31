@@ -12,6 +12,11 @@ owns:
   - internal/bot/routeguard.go
   - internal/bot/routeguard_test.go
   - docs/knobs.md
+  - internal/task
+  - internal/bot
+  - internal/plandata
+  - cmd/bossrun
+  - cmd/d2bot
 exclusive: []
 gates:
   - "knob defaults equal the decided numbers (docs/knobs.md regenerated; go test ./internal/env -run EveryKnob passes)"
