@@ -24,6 +24,7 @@ body.tile .opt{display:none}
 <div id="root">
  <div id="bar">
   <span id="badge">d2d (reimplementation)</span>
+  <span id="engine"></span>
   <span id="speed"></span>
   <span id="area"></span>
   <span id="stats"></span>
@@ -42,12 +43,30 @@ const q=location.search.match(/[?&]t=([^&]*)/);const tq=q?'?t='+q[1]:'';
 const cv=$('map'),cx=cv.getContext('2d');
 let P=null,mapImg=new Image(),mapKey='',mapReady=false,trail=[],trailLevel=-1;
 mapImg.onload=()=>{mapReady=true};
-$('shot').src='/stream.mjpg'+tq;
+// The multipart image never fires a per-frame event and a browser cancels it in a background tab or when the first
+// request lands before a frame exists (503): reconnect on error, on a stuck (never loaded) image, and when the tab returns.
+let shotGen=0,shotTimer=0;
+function shotURL(){return'/stream.mjpg'+(tq?tq+'&':'?')+'c='+Date.now()+'.'+(++shotGen)}
+function connectShot(){
+ clearTimeout(shotTimer);
+ const old=$('shot'),n=new Image();n.alt='';
+ let done=false;
+ n.onload=()=>{if(done)return;done=true;n.id='shot';old.replaceWith(n);wire(n)}; // swap in on the first frame: no flicker
+ n.onerror=()=>{if(done)return;done=true;shotTimer=setTimeout(connectShot,1500)};
+ n.src=shotURL();
+ shotTimer=setTimeout(()=>{if(!done){done=true;n.src='';connectShot()}},5000); // no frame within 5 s
+}
+function wire(img){img.onerror=()=>{clearTimeout(shotTimer);shotTimer=setTimeout(connectShot,1500)}}
+wire($('shot'));$('shot').src=shotURL();
+setInterval(()=>{const i=$('shot');if(i.complete&&i.naturalWidth===0)connectShot()},5000);
+function revive(){if(document.visibilityState!=='hidden')connectShot()}
+document.addEventListener('visibilitychange',revive);addEventListener('focus',revive);addEventListener('pageshow',revive);
 function fit(){const r=cv.getBoundingClientRect();cv.width=Math.max(2,r.width|0);cv.height=Math.max(2,r.height|0);draw()}
 addEventListener('resize',fit);
 function upd(p){
  P=p;
  $('badge').textContent=p.backend;
+ $('engine').innerHTML=p.engine?'engine <b>'+p.engine.replace(/[^\w .-]/g,'')+'</b>':'';
  $('speed').innerHTML=p.live&&p.speed?'<b>'+p.speed.toFixed(1)+'x</b> real time':'';
  $('area').textContent=p.area||'';
  $('stats').innerHTML=p.live?'<span class="dim">'+(p.name?p.name+' ':'')+'</span>lvl <b>'+p.clvl+'</b> &nbsp;xp <b>'+p.xp+'</b> &nbsp;kills <b>'+p.kills+'</b> &nbsp;deaths <b>'+p.deaths+'</b>':'';

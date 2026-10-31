@@ -7,6 +7,8 @@
 # client dials the tap (--d2d-dial), a fresh Sorceress, no cheats; it SAVES (inside the demo dir, wiped each start): --no-save loses the character at every save point (chicken, docs/d2d-loop.md). When the time is up, or on `stop`, it quits the
 # bot (which saves nothing and quits d2d), then the viewer, and releases the lock.
 #   --watch     start in watch mode (every frame rendered, paced ~8x) instead of fast mode (sampled frames)
+#   --jpeg      pass -jpeg to d2dview (frames re-encoded as JPEG, ~10x smaller; env D2DVIEW_JPEG=1)
+#   --badge TEXT  header badge text of the stream page (d2dview -badge; default unchanged)
 #   --clients   hold two background clients (SSE + MJPEG) from the start: measures the cost of "a page open"
 set -eu
 repo="$(cd "$(dirname "$0")/.." && pwd)"
@@ -18,9 +20,9 @@ ssh_() { ssh -o BatchMode=yes "$WORKER" "$@"; }
 if [ "${1:-}" = "--remote" ]; then
   # ---- runs on the worker, inside flock ----
   shift
-  MIN=15; WATCH=0; SEED=5; CLIENTS=0
+  MIN=15; WATCH=0; SEED=5; CLIENTS=0; BADGE=${D2DVIEW_BADGE:-}; JPEG=${D2DVIEW_JPEG:-0}
   while [ $# -gt 0 ]; do case "$1" in
-    --minutes) MIN=$2; shift;; --watch) WATCH=1;; --seed) SEED=$2; shift;; --clients) CLIENTS=1;; esac; shift; done
+    --minutes) MIN=$2; shift;; --watch) WATCH=1;; --seed) SEED=$2; shift;; --badge) BADGE=$2; shift;; --jpeg) JPEG=1;; --clients) CLIENTS=1;; esac; shift; done
   D=$HOME/d2d-lab/view/demo; R=$D/run; F=$HOME/d2d-lab/fork/bin; SH=/tmp/d2dview-shots-demo
   rm -rf "$R" "$SH" "$D/xdg/data" "$D/botdata"; mkdir -p "$R" "$D/xdg/config" "$D/xdg/data" "$D/botdata" "$SH"
   export XDG_CONFIG_HOME=$D/xdg/config XDG_DATA_HOME=$D/xdg/data D2BOT_INSTANCE=view
@@ -33,7 +35,8 @@ if [ "${1:-}" = "--remote" ]; then
     echo "STOPPED $(date +%H:%M:%S)" >> "$D/status"
   }
   trap cleanup EXIT INT TERM
-  $D/d2dview -addr :8891 -open -token-file /dev/null -upstream $R/d2d.sock -bot-sock $R/bot.sock -shots $SH -fps 6 \
+  BA=(); [ "$JPEG" = 1 ] && BA+=(-jpeg); [ -n "$BADGE" ] && BA+=(-badge "$BADGE")
+  ${DVBIN:-$D/d2dview} "${BA[@]}" -addr :8891 -open -token-file /dev/null -upstream $R/d2d.sock -bot-sock $R/bot.sock -shots $SH -fps 6 \
     -bot-api http://127.0.0.1:8471 > $D/view.log 2>&1 &
   VP=$!
   for i in $(seq 40); do curl -s -o /dev/null localhost:8891/api/state && break; sleep 0.25; done
@@ -65,12 +68,15 @@ start|--*)
     out=/tmp/d2dview-demo-build; mkdir -p $out
     (cd "$repo" && GOOS=linux GOARCH=amd64 go build -o $out/d2dview ./cmd/d2dview && GOOS=linux GOARCH=amd64 go build -o $out/d2bot ./cmd/d2bot)
     ssh_ "mkdir -p $V"
-    scp -q -o BatchMode=yes $out/d2dview $out/d2bot "$WORKER:d2d-lab/view/demo/"
+    # ship under temp names and rename (atomic): never overwrite a binary a running soak executes
+    scp -q -o BatchMode=yes $out/d2dview "$WORKER:d2d-lab/view/demo/d2dview.new"
+    scp -q -o BatchMode=yes $out/d2bot "$WORKER:d2d-lab/view/demo/d2bot.new"
+    ssh_ "cd $V && mv -f d2dview.new d2dview && mv -f d2bot.new d2bot"
   fi
   scp -q -o BatchMode=yes "$repo/tools/d2dview-demo.sh" "$repo/tools/agentrun.sh" "$repo/tools/agentreap.sh" "$WORKER:d2d-lab/view/demo/"
   # agentrun: own process group + registry (agent "view", 4 h TTL), so `stop` and the TTL take the viewer, bot and d2d down together
   ssh_ "rm -f $V/status; cd $V && chmod +x d2dview d2bot d2dview-demo.sh agentrun.sh agentreap.sh
-    nohup $V/agentrun.sh view --ttl 14400 -- flock -w 3000 /tmp/d2d-lab.lock bash $V/d2dview-demo.sh --remote ${args[*]:-} > $V/demo.out 2>&1 < /dev/null &"
+    nohup $V/agentrun.sh view --ttl 14400 -- flock -w 3000 /tmp/d2d-lab.lock bash $V/d2dview-demo.sh --remote $(printf '%q ' "${args[@]:-}") > $V/demo.out 2>&1 < /dev/null &"
   for i in $(seq 30); do
     s=$(ssh_ "cat $V/status 2>/dev/null" || true)
     [ -n "$s" ] && { echo "$s"; exit 0; }

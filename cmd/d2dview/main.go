@@ -41,7 +41,12 @@ func main() {
 	botAPI := flag.String("bot-api", "", "bot API base URL (read-only GET /api/v1/status), e.g. http://localhost:8080")
 	watchSpeed := flag.Float64("watch-speed", 8, "watch mode: max virtual seconds per wall second (0: render every step, no limit)")
 	jpegOut := flag.Bool("jpeg", false, "re-encode frames as JPEG (less bandwidth, about 25 ms CPU per frame); default passes d2d's PNG through")
+	badgeFlag := flag.String("badge", envOr("D2DVIEW_BADGE", Backend), "header badge text of the stream page and the /api/pub backend field (env D2DVIEW_BADGE)")
 	flag.Parse()
+	badge = safeText(*badgeFlag, 40)
+	if badge == "" {
+		badge = Backend
+	}
 	if *upstream == "" {
 		log.Fatal("d2dview: need -upstream or $D2D_SOCK")
 	}
@@ -98,6 +103,13 @@ func main() {
 	if err := srv.ListenAndServe(); err != nil && ctx.Err() == nil {
 		log.Fatal(err)
 	}
+}
+
+func envOr(k, def string) string {
+	if v := os.Getenv(k); v != "" {
+		return v
+	}
+	return def
 }
 
 func loopback(addr string) bool {

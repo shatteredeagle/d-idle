@@ -26,3 +26,9 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+openspec/changes/streamfix/**  streamfix  streamfix
+cmd/d2dview/main.go  streamfix  streamfix
+cmd/d2dview/pub.go  streamfix  streamfix
+cmd/d2dview/view_test.go  streamfix  streamfix
+cmd/d2dview/web/stream.html  streamfix  streamfix
+tools/d2dview-demo.sh  streamfix  streamfix
