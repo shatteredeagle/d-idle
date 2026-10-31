@@ -51,6 +51,7 @@ type fightState struct {
 	seen      map[uint32]seenUnit
 	blacklist map[uint32]bool
 	avoided   map[uint32]bool
+	stalled   bool // the no-progress watchdog already logged in this fight
 	ignored   []Ignored
 	lastExp   uint32
 	haveExp   bool
@@ -152,6 +153,9 @@ func (f *Fighter) Kill(ctx context.Context, unitID uint32) error {
 	return nil
 }
 
+// noProgressMax is how many fight-loop iterations may pass without the clock moving before the loop forces a sleep.
+const noProgressMax = 40
+
 func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (res ClearResult, err error) {
 	start := f.now()
 	var ft FightTelemetry
@@ -169,9 +173,28 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	st = newFightState()
 	st.t0, st.lastCastAt = start, start
 	t := f.tune()
+	var lastTick time.Time
+	still := 0
 	for {
 		if err = ctx.Err(); err != nil {
 			return
+		}
+		// watchdog: under a lockstep clock time only moves on sleeps and steps, so an iteration chain that never
+		// sleeps (failed walks, instant actions) would loop forever; force one poll sleep and say so once
+		if n := f.now(); n.Equal(lastTick) {
+			if still++; still >= noProgressMax {
+				if !st.stalled {
+					st.stalled = true
+					f.info("no progress, holding", "iterations", still)
+				}
+				if err = f.sleep(ctx, ms(t.PollMs)); err != nil {
+					return
+				}
+				still = 0
+				snap = nil
+			}
+		} else {
+			lastTick, still = n, 0
 		}
 		if f.now().After(sp.deadline) {
 			res.TimedOut = true
@@ -763,7 +786,9 @@ func (f *Fighter) move(ctx context.Context, p input.Point) error {
 	err := f.mv.GoTo(ctx, p)
 	if err != nil && ctx.Err() == nil {
 		f.info("move failed", "to", p, "err", err)
-		return nil
+		// a failed walk must still cost a tick: under a lockstep clock time only moves on sleeps and steps, and
+		// "no path: empty path" returns at once (live: soakfull seed 11 and runab seed 42 spun here with time frozen)
+		return f.sleep(ctx, ms(f.tune().PollMs))
 	}
 	return err
 }

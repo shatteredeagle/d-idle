@@ -93,8 +93,8 @@ func crowdPoints(hs []Target) []input.Point {
 
 // canRetreat reports whether a step away from the crowd exists (so Decide never asks for a retreat that cannot happen).
 func (f *Fighter) canRetreat(snap *d2.Snapshot, hs []Target) bool {
-	if f.mv == nil {
-		return false
+	if f.mv == nil || !f.mayEvade() {
+		return false // pinned: a step away goes nowhere, so the crowd is fought in place (no lockstep tick passes in a failed walk)
 	}
 	p := snap.Player
 	_, ok := awayPoint(input.Point{X: p.X, Y: p.Y}, crowdPoints(hs), hostileMissiles(snap), f.tune().KiteRetreat, f.valid)
