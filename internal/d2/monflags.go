@@ -20,18 +20,20 @@ func (k MonKind) String() string {
 const maxMonumod = 40
 
 // Kind classifies the monster from MonsterData+0x16. This and EnchantIDs are the ONLY place that interprets the
-// flag bits and the enchant array: the offsets (+0x16 flags, +0x1C enchants) and bit meanings (2 normal, 4 champion,
-// 8 unique/boss, 16 minion) come from D2BS and are UNVERIFIED live (only town NPCs, all zero, were read). Until a
-// live census confirms them, a result of MonKindUnknown means "do not conclude anything", never "normal".
+// flag bits and the enchant array. Bits, VERIFIED LIVE by the original-game spawn census (docs/orig-spawns.md, 60+
+// flagged units): 0x04 champion (a champion reads 0x0c, so test it before 0x08), 0x08 rare/unique (0x0a superunique),
+// 0x10 pack follower (minion). The "normal" bit 0x02 is NOT set on ordinary monsters (they read 0x00, the same as
+// town NPCs and unreadable data), so only a bare 0x02 yields MonKindNormal and 0x00 stays MonKindUnknown: "do not
+// conclude anything", never "normal". The +0x1C enchant offset is UNVERIFIED beyond the d2d census.
 func (m *MonsterInfo) Kind() MonKind {
 	if m == nil {
 		return MonKindUnknown
 	}
 	switch f := m.Flags; {
+	case f&monFlagChamp != 0: // before the boss bit: a champion reads 0x0c
+		return MonKindChampion
 	case f&monFlagBoss != 0:
 		return MonKindUnique
-	case f&monFlagChamp != 0:
-		return MonKindChampion
 	case f&monFlagMinion != 0:
 		return MonKindMinion
 	case f&monFlagNormal != 0:

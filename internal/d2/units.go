@@ -54,8 +54,11 @@ func (m *MonsterInfo) HasState(n int) bool {
 }
 
 func (m *MonsterInfo) IsChampion() bool { return m.Flags&monFlagChamp != 0 }
-func (m *MonsterInfo) IsUnique() bool   { return m.Flags&monFlagBoss != 0 }
-func (m *MonsterInfo) IsMinion() bool   { return m.Flags&monFlagMinion != 0 }
+
+// IsUnique is a rare or superunique: the boss bit without the champion bit. A champion reads 0x0c (both bits, V-orig
+// census, docs/orig-spawns.md), so the boss bit alone would call every champion unique.
+func (m *MonsterInfo) IsUnique() bool { return m.Flags&monFlagBoss != 0 && m.Flags&monFlagChamp == 0 }
+func (m *MonsterInfo) IsMinion() bool { return m.Flags&monFlagMinion != 0 }
 
 // Unit is one entry of the unit tables.
 type Unit struct {

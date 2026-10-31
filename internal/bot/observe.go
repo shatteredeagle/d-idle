@@ -587,7 +587,7 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 				if u.Monster.Name != "" {
 					name = u.Monster.Name
 				}
-				boss = boss || u.Monster.IsUnique()
+				boss = boss || u.Monster.IsUnique() || u.Monster.IsChampion()
 			}
 			if name == "" {
 				name = fmt.Sprintf("monster %d", u.Class)
@@ -793,7 +793,7 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 			if mi.Name != "" {
 				a.killerName = mi.Name
 			}
-			a.killerBoss = a.killerBoss || mi.IsUnique()
+			a.killerBoss = a.killerBoss || mi.IsUnique() || mi.IsChampion()
 			a.killerAffix = combat.MonsterAffixes(mi)
 		}
 		if a.killerName == "" {
