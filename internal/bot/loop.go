@@ -87,6 +87,9 @@ func (r *Runner) step(ctx context.Context) bool {
 	if isDead(p) {
 		return r.deathWait(c)
 	}
+	if r.campaignStall(ctx, snap, c.goal != nil && !c.paused) {
+		return true
+	}
 	if r.loop.rec != nil {
 		return r.finishRecovery(ctx, snap, c)
 	}

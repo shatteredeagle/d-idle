@@ -347,6 +347,8 @@ func haltError(err error) error {
 		return &exitError{exitStorm, errors.New("bot halted without a reason")}
 	case errors.As(err, &ee):
 		return err
+	case errors.Is(err, bot.ErrCampaignStalled):
+		return &exitError{exitStalled, fmt.Errorf("bot halted: %w", err)}
 	case errors.Is(err, bot.ErrPanicStorm):
 		return &exitError{exitStorm, fmt.Errorf("bot halted: %w", err)}
 	}

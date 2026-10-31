@@ -24,6 +24,8 @@ type BotTuning struct {
 	SpiralMinutes       int // window of the spiral breaker
 	DangerBanMin        int // minutes the breaker keeps the character out of an area (a Config.DangerBanSec above 0 overrides)
 	NavSkipSec          int // seconds a nav fault (stuck, no exit) keeps the planner out of an area
+	StallWarnMin        int // campaign stall ladder (internal/bot/stall.go): virtual minutes without campaign progress before the WARN and a fresh game (0 = ladder off)
+	StallExitMin        int // virtual minutes still without progress after the fresh game before the bot exits for a supervisor restart
 	AreaIdleSec         int // longest wait in town for area bans that are not a death streak before the least bad area is farmed anyway
 	StarterBanMin       int // longest ban of the first field of an act once the character stands in town because of it
 	RepeatSiteBanMin    int // minutes a repeat-site death keeps the character out of the area (0 = rule off)
@@ -69,7 +71,7 @@ func DefaultBotTuning() BotTuning {
 	return BotTuning{
 		TickMs: 100, WatchMs: 50, ReactionMs: 0, ResupplyPotions: 2, InvFullPct: 85,
 		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 1, PortalSettleMs: 600, ClearRadius: 30,
-		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
+		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
@@ -120,6 +122,10 @@ func botKnobs() []Knob {
 			Desc: "How long a navigation fault (stuck, no exit to the area) keeps the planner out of an area. Short on purpose: it is a bot fault, not danger."},
 		{Key: "bot.areaIdleSec", Label: "Longest wait for area bans", Unit: "s", Default: 60, Min: 15, Max: 600,
 			Desc: "When every candidate area is skipped or banned, the bot waits this long in town at most, then farms the least bad area anyway (a death streak waits at least the starter ban cap)."},
+		{Key: "bot.stallWarnMin", Label: "Campaign stall: warn and fresh game", Unit: "min", Default: 30, Min: 0, Max: 240,
+			Desc: "Virtual minutes without campaign progress (no kill or xp, no non-town area entered, no purchase, no quest step) before the bot logs 'campaign stalled' and starts a fresh game. 0 turns the stall ladder off. Longest legitimate stretch in the navsoak logs: 19 min."},
+		{Key: "bot.stallExitMin", Label: "Campaign stall: exit window", Unit: "min", Default: 30, Min: 5, Max: 240,
+			Desc: "Virtual minutes still without campaign progress after the fresh game before the bot exits (status 5) so the supervisor restarts the whole process."},
 		{Key: "bot.spiralMinutes", Label: "Spiral breaker window", Unit: "min", Default: 15, Min: 5, Max: 15, HigherIsBetter: true,
 			Desc: "Window in which the deaths are counted. Shorter forgets sooner."},
 		{Key: "bot.pauseDeathsPerHour", Label: "Pause after deaths per hour", Unit: "deaths", Default: 8, Min: 8, Max: 20,

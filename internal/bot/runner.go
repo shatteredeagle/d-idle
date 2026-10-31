@@ -210,6 +210,8 @@ type loopState struct {
 	emptyArea  int
 	emptyKills int
 	emptySince time.Time
+	stallStage int       // campaign stall ladder (stall.go): 0 quiet, 1 warned and fresh game tried
+	stallAt    time.Time // when stage 1 was reached
 	emptyLast  time.Time // last call: a longer pause (town trip, new game) restarts the count
 	task       taskState
 	wp         wpState

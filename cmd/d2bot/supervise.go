@@ -104,6 +104,8 @@ func (s *supervisor) loop(ctx context.Context) int {
 const (
 	exitFatal = 3
 	exitStorm = 4
+	// exitStalled: the campaign made no progress through a warning and a fresh game (bot.ErrCampaignStalled); restarted like exitStorm.
+	exitStalled = 5
 )
 
 // exitError makes main exit with a specific code.
