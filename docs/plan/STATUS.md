@@ -81,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 3b94ad7 10-31 09:31 `Merge agent/goldfloor: gold ledger analysis, proposed card` (goldfloor)
 - 13bb410 10-31 09:27 `Merge agent/geninv: gen-invariants` (gen-invariants)
 - d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
 - 8bf3829 10-31 09:03 `Merge agent/m2early: early d2d baseline` (m2-earlybase)
@@ -90,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - a9a788a 10-31 06:41 `Merge agent/soakcompare` (soakcompare)
 - 5001721 10-31 06:41 `Merge agent/navsoak2` (navsoak2)
 - 8f4cf7b 10-31 06:41 `Merge agent/navsoak` (navsoak)
-- 72a7e60 10-31 03:23 `Merge agent/upsync: upstream sync, #135 and #136 merged` (rendergh)
 <!-- statusgen:end -->
