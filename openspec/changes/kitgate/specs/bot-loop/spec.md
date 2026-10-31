@@ -1,7 +1,7 @@
 ## ADDED Requirements
 
 ### Requirement: Recovery without the kit stays near town
-While the recovery phase runs and the character has no healing potion in the belt or no town portal scroll (Normal, act 1), the bot SHALL farm only Blood Moor (2) and Cold Plains (3), MUST NOT fall through to the quest ladder when neither is open (it waits at home), and MUST ask the navigator to avoid the Den of Evil (8), Cave Levels 1 and 2 (9, 13), Burial Grounds (17), the Crypt (18) and the Mausoleum (19) as transit levels. The knob `recoveryKitGate` (default 1) set to 0 SHALL restore the old area choice. A character with both kit parts SHALL get the same area as before.
+While recovery runs and the character has no healing potion in the belt or no town portal scroll (Normal act 1), the bot SHALL farm only Blood Moor (2) and Cold Plains (3), wait at home when neither is open, and MUST keep its walks out of the dungeon areas (8, 9, 13, 17, 18, 19). The knob `recoveryKitGate` (default 1) at 0 SHALL restore the old choice.
 
 #### Scenario: Recovery area without the kit
 - **WHEN** a recovering character has an empty belt or no portal scroll at clvl 7 or 14
