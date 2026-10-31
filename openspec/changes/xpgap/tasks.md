@@ -2,7 +2,7 @@
 
 ```yaml
 change: xpgap
-status: done
+status: in-progress
 agent: xpgap
 branch: agent/xpgap
 worktree: ~/code/d2lod-wt/xpgap
