@@ -2,7 +2,7 @@
 
 ```yaml
 change: nowall
-status: in-progress
+status: archived
 agent: nowall
 branch: agent/nowall
 worktree: ~/code/d2lod-wt/nowall
@@ -21,8 +21,8 @@ exclusive: []
 gates:
   - "go test -p 1 -run 'Stall|HaltErrorCampaignStalled' ./internal/bot ./cmd/d2bot passes; go test ./internal/env -run EveryKnob passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
-result:
+merge: 950a153
+result: "campaign stall ladder on the virtual clock (warn + fresh game after 30 min, exit status 5 after 30 more; knobs bot.stallWarnMin, bot.stallExitMin, 0 = off); offline tests with a fake clock, not verified live"
 ```
 
 ## 1. Work

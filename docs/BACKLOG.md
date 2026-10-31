@@ -50,7 +50,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 15. **Windows worker WSL2 d2d worker** for fidelity seeds in parallel ([process/d2d-worker-host.md](process/d2d-worker-host.md)); needs d2dslot on a Windows worker. Idea only.
 16. **slotnits tail** (L): `capacity.sh` numeric validation, hpfields reset on a new game, killtime zero-line note. Unverified.
 17. **townwedge** (card `townwedge`: in progress): permanent town-exit wedge seen in both nav soaks ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
-18. **nowall** (card `nowall`: in progress): wall-state guard when "no eligible reachable leveling area" repeats with no "Entered" ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
+18. **nowall** (merged, card `nowall`): campaign stall ladder 30/30 virtual min, exit status 5, knobs bot.stallWarnMin / bot.stallExitMin ([nowall.md](nowall.md)).
 19. **goldfloor** (no card yet): gold stays under the 500 kit line and the belt is empty 33 percent of minutes; options: earlier loot selling, lower kit target at low clvl, drop recovery trips that cost more than they earn ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
 20. m2-earlybase is on hold until townwedge is merged: runs would hit the same wedge.
 

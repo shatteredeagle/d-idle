@@ -31,13 +31,3 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
-internal/bot/stall.go  nowall  nowall
-internal/bot/stall_test.go  nowall  nowall
-internal/bot/observe.go  nowall  nowall
-internal/bot/runner.go  nowall  nowall
-internal/bot/loop.go  nowall  nowall
-cmd/d2bot/live.go  nowall  nowall
-cmd/d2bot/supervise.go  nowall  nowall
-cmd/d2bot/stall_test.go  nowall  nowall
-internal/env/tuning_bot.go  nowall  nowall
-docs/nowall.md  nowall  nowall
