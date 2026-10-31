@@ -26,3 +26,10 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+docs/README.md  doctrim  doctrim
+docs/BACKLOG.md  doctrim  doctrim
+docs/research/**  doctrim  doctrim
+docs/archive/**  doctrim  doctrim
+docs/merc-farm.md  doctrim  doctrim
+docs/sandbox.md  doctrim  doctrim
+openspec/changes/doctrim/**  doctrim  doctrim
