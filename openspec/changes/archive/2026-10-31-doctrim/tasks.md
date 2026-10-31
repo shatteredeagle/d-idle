@@ -2,7 +2,7 @@
 
 ```yaml
 change: doctrim
-status: in-progress
+status: archived
 agent: doctrim
 branch: agent/doctrim
 worktree: ~/code/d2lod-wt/doctrim
@@ -13,12 +13,11 @@ owns:
   - docs/archive/**
   - docs/merc-farm.md
   - docs/sandbox.md
-  - openspec/changes/doctrim/**
 exclusive: []
 gates:
   - "changecheck -cli 0 warnings; leakcheck fail 0; openspec validate --all --strict; broken relative md links after <= before"
   - "nothing deleted: every moved doc leaves a stub with a status banner"
-merge:
+merge: 1481f63
 result: 'docs trim: 10 docs archived with stubs, research and docs indexes, BACKLOG 61 -> 32 lines (old text archived); offline docs only, not verified live'
 ```
 

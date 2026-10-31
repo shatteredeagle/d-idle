@@ -42,7 +42,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [d2dmesh](../../openspec/changes/d2dmesh/) | in-progress | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md`<br>`openspec/changes/d2dmesh/**` | - |
-| [doctrim](../../openspec/changes/doctrim/) | in-progress | doctrim | `docs/README.md`<br>`docs/BACKLOG.md`<br>`docs/research/**`<br>`docs/archive/**`<br>`docs/merc-farm.md`<br>`docs/sandbox.md`<br>`openspec/changes/doctrim/**` | - |
 | [stream-grid](../../openspec/changes/stream-grid/) | in-progress | streambuild | `openspec/changes/stream-grid/**`<br>`tools/publish/**`<br>`docs/streamctl-grid.md` | - |
 
 ### Gates
@@ -69,14 +68,13 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2dmesh: go test -race ./internal/d2dmesh ./cmd/d2dnode passes on the worker host
 - change d2dmesh: tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
 - change d2dmesh: no real hostname, IP or person in any committed file of this change
-- change doctrim: changecheck -cli 0 warnings; leakcheck fail 0; openspec validate --all --strict; broken relative md links after <= before
-- change doctrim: nothing deleted: every moved doc leaves a stub with a status banner
 - change stream-grid: tools/openspec.sh validate --all --strict passes
 - change stream-grid: python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
 - change stream-grid: ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- 1481f63 10-31 00:40 `Merge agent/doctrim: doc trim` (doctrim)
 - e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 - 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
