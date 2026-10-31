@@ -55,3 +55,6 @@ One line per doc: what it shows, status, PR. Status: current = still the best so
 
 ## Decompiled-source discipline
 Every doc here tags claims V (run or read by the author), D (data table read), S (secondary), U (unverified). No claim without a tag may be relied on; an upstream PR needs zero U in its causal chain. Reading the real 1.14d tables: [../process/mpq-data-reading.md](../process/mpq-data-reading.md). The oracle scripts are `tools/emu/*.py`; raw captures stay on the worker host.
+
+## Generality / architecture
+- [bot-generality.md](bot-generality.md) framework vs stencil: what is fitted to class, act, clvl, difficulty and engine, a vocabulary for generality, target layers, ranked experiments and a card plan. current.
