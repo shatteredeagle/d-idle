@@ -100,8 +100,9 @@ Between runs.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (50)</summary>
+<summary><b>2026-10-30</b> (51)</summary>
 
+- Public scrub package C.
 - Public scrub package A; cutover executed.
 - Lut Gholein trace.
 - FreshGameToLevel reset after NewGame, run A/B.
@@ -109,11 +110,11 @@ Between runs.
 - ADR for the d2d primary backend decision.
 - Fixed tool hot loop in serveStream.
 - Survey of Diablo II reimplementation/decompilation projects.
-- Tool fit report.
 
 <details>
-<summary>42 more</summary>
+<summary>43 more</summary>
 
+- Tool fit report.
 - Lab and lab2 sections.
 - Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
@@ -399,7 +400,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-31 01:38 UTC
+Last updated: 2026-10-31 02:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
