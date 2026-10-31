@@ -180,6 +180,22 @@ Evidence tags: verified (say how), secondary source, unverified. V-d2d means obs
 **EXP / SRC**:
 Tags in the SME knowledge base: veteran judgment versus a user or SME statement needing a live check. `docs/sme/README.md`.
 
+**milestone exit criterion**:
+The measurable condition that closes one of the milestones M1 to M6 of `docs/roadmap.md`; it is owned by a spec and by the milestone's closing card, and progress is counted in these exits, not in merges. ADR 0012.
+_Not to be confused with_: the plan-v2 items M0 to M11 above.
+
+**deferred card**:
+A change card queued behind a named dependency or user decision: status `deferred`, `owns:` and `exclusive:` intended but not claimed, no `docs/OWNERS` line. The dispatcher sets it `proposed` and adds the lines when the dependency merges. `openspec/README.md`, `docs/roadmap.md` section 4.
+
+**paired A/B**:
+A same-seed comparison of two settings run on matched seeds, so the difference is not seed noise. Protocol and tool: card m2-abdesign (`docs/ab-design.md`, `tools/ab`).
+
+**power / danger / readiness**:
+The rule of ADR 0011. Power is a character's survival (life, resists, potions, portal, merc), offense (kill speed against the area's real monsters) and clvl as a minor input; danger is the zone's monster level, real HP and damage, crowd, build-specific threats and our own death record there; ready means power >= danger x a safety margin. Until the model exists (card m3-readiness-model) clvl floors in merc-policy are the rule.
+
+**keeper merc / throwaway merc**:
+ADR 0011: a keeper is a merc that is a build's target merc or wears its target gear (always revived, never replaced to save gold); any other merc is a throwaway (re-hired when the hire price is below the revive price).
+
 ### Agents and process
 
 **SME**:

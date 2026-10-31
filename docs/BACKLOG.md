@@ -53,3 +53,10 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
 - Kick stream stays OFF until asked. The container installer viewer needs a second port. The NAS autostart for d2-board.
+
+## Parked by grill 0003 (ADR 0011, 2026-10-31)
+- Build merc targets (each build's target merc and gear): needed before the keeper rule has keepers (card m3-merc).
+- Desert merc in Normal (M4): buy or not, at what gold, survival in Act 2.
+- Max-life floor for Andariel: waits for m3-andariel's life-per-phase numbers (cards m3-routeguard, m3-readiness-model).
+- Live probes: dead-merc forfeit of the free Rogue, one revive quote, 2 to 3 hire windows, merc Str and Dex own-stats rule, merc state after quit and reload (card m3-merc).
+- Readiness model weights and safety margin (card m3-readiness-model, deferred until m3-andariel has won once).
