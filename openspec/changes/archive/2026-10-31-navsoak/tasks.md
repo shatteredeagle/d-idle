@@ -2,7 +2,7 @@
 
 ```yaml
 change: navsoak
-status: in-progress
+status: archived
 agent: navsoak
 branch: agent/navsoak
 worktree: ~/code/d2lod-wt/navsoak
@@ -13,8 +13,8 @@ exclusive:
 gates:
   - "soak started from origin/main 279a163 (contains 85b429d), healthy for 20 minutes, registry entry navsoak present"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
-result:
+merge: 8f4cf7b
+result: docs only, merged; see docs/probes/navsoak/README.md (verified live by the soak itself)
 ```
 
 ## 1. Work

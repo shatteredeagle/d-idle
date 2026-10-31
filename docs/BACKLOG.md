@@ -49,6 +49,10 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 14. **Replay as video**: `d2dreplay render` exists; a public "best death of the day" clip needs the sanitizer applied to frames. Idea only.
 15. **Windows worker WSL2 d2d worker** for fidelity seeds in parallel ([process/d2d-worker-host.md](process/d2d-worker-host.md)); needs d2dslot on a Windows worker. Idea only.
 16. **slotnits tail** (L): `capacity.sh` numeric validation, hpfields reset on a new game, killtime zero-line note. Unverified.
+17. **townwedge** (card `townwedge`: in progress): permanent town-exit wedge seen in both nav soaks ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
+18. **nowall** (card `nowall`: in progress): wall-state guard when "no eligible reachable leveling area" repeats with no "Entered" ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
+19. **goldfloor** (no card yet): gold stays under the 500 kit line and the belt is empty 33 percent of minutes; options: earlier loot selling, lower kit target at low clvl, drop recovery trips that cost more than they earn ([probes/navsoak-compare.md](probes/navsoak-compare.md)).
+20. m2-earlybase is on hold until townwedge is merged: runs would hit the same wedge.
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

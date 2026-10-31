@@ -44,7 +44,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
-| [navsoak](../../openspec/changes/navsoak/) | in-progress | navsoak | `docs/probes/navsoak/**` | `soak-slot:0` |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements
@@ -80,10 +79,11 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go test -p 1 ./internal/bot ./internal/task passes including TestPickNeverEmptyInAct1 and the route guard tests at the new floors
 - change m3-routeguard: merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change navsoak: soak started from origin/main 279a163 (contains 85b429d), healthy for 20 minutes, registry entry navsoak present
-- change navsoak: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- a9a788a 10-31 06:41 `Merge agent/soakcompare` (soakcompare)
+- 5001721 10-31 06:41 `Merge agent/navsoak2` (navsoak2)
+- 8f4cf7b 10-31 06:41 `Merge agent/navsoak` (navsoak)
 - 72a7e60 10-31 03:23 `Merge agent/upsync: upstream sync, #135 and #136 merged` (rendergh)
 - c14f9c7 10-31 02:57 `Merge agent/specback: spec backfill for six d2d cards` (spec-backfill-d2dcombat)
 - 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
@@ -91,7 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
 - 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
 - ee0205e 10-31 02:30 `Merge agent/m1loot: town buy order, gem sale, charm keep rules` (m1-audittests)
-- e57bbc2 10-31 02:24 `Merge agent/andychain: Andariel chain needs research` (m3-andariel)
-- a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
-- fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
 <!-- statusgen:end -->

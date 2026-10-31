@@ -2,17 +2,17 @@
 
 ```yaml
 change: navsoak2
-status: in-progress
+status: archived
 agent: navsoak2
 branch: agent/navsoak2
 worktree: ~/code/d2lod-wt/navsoak2
 owns:
   - docs/probes/navsoak2/**
-  - openspec/changes/navsoak2/**
+  - openspec/changes/archive/2026-10-31-navsoak2/**
 exclusive: []
 gates:
   - "soak started on the worker host and healthy for the first 20 minutes"
-merge:
+merge: 5001721
 result: soak started 2026-10-31 02:58:35 (worker host clock) in slot 1, verified live; see docs/probes/navsoak2/README.md
 ```
 

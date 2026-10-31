@@ -2,18 +2,18 @@
 
 ```yaml
 change: soakcompare
-status: in-progress
+status: archived
 agent: soakcompare
 branch: agent/soakcompare
 worktree: ~/code/d2lod-wt/soakcompare
 owns:
   - docs/probes/navsoak-compare.md
-  - openspec/changes/soakcompare/**
+  - openspec/changes/archive/2026-10-31-soakcompare/**
 exclusive: []
 gates:
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
-result:
+merge: a9a788a
+result: docs only, merged; analysis in docs/probes/navsoak-compare.md (offline, from soak logs)
 ```
 
 ## 1. Work

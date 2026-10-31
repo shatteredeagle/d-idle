@@ -15,7 +15,7 @@
 | kills per virtual h before wedge | 190 | 185 |
 | deaths | 1 (clvl 4, Cave Level 1, wall min 3.4) | 0 |
 | quests | Den progress, Blood Raven (sisters_burial) done at wall 68, search_for_cain started | same, Blood Raven done at wall 23 |
-VERIFIED. Quest names are the log's: Dark Wood/Inifuss (13 and 7 area entries of Dark Wood and Black Marsh in navsoak, none in navsoak2) and the Tower were never done; route guard kept the tower blocked (no merc below clvl 20, or fewer than 2 mana or 4 healing potions).
+VERIFIED. Quest names are the log's: Dark Wood/Inifuss (13 and 7 area entries of Dark Wood and Black Marsh in navsoak, none in navsoak2) and the Forgotten Tower were never done; route guard kept the tower blocked (no merc below clvl 20, or fewer than 2 mana or 4 healing potions).
 
 ## The combat livelock is gone
 VERIFIED: "combat no progress, holding" 0 in both. "stepping away" 791 (navsoak) and 139 (navsoak2), "combat move failed" 6513 / 59 of which "nav: no path" 6455 / 43. The virtual clock never froze: 0 pace intervals without advance (240 and 211 pace lines). No supervisor restart in either. Answer: yes, gone as a hang. Residue: in navsoak the nav-no-path count is large (about 170 per virtual h against 6 in navsoak2); it did not stop progress (INFERRED: it comes from Burial Grounds and Mausoleum visits, navsoak entered Burial Grounds 338 times, navsoak2 31).
