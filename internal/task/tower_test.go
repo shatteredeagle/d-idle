@@ -53,8 +53,8 @@ func TestTowerOpenWithMercOrLevel(t *testing.T) {
 	if why := task.TowerSkipWhy(soaky(func(w *task.World) { w.Level = 20 })); why != "" {
 		t.Errorf("clvl 20: %q", why)
 	}
-	// needsMerc off: the level alone decides, a merc does not open it
-	if why := task.TowerSkipWhy(soaky(func(w *task.World) { w.TowerNeedsMerc, w.HasMerc = false, true })); why != "clvl 14 < 20" {
+	// needsMerc off and no merc floor set: the level alone decides, a merc does not open it
+	if why := task.TowerSkipWhy(soaky(func(w *task.World) { w.TowerNeedsMerc, w.HasMerc = false, true })); why != "clvl 14 < 20 (with merc)" {
 		t.Errorf("needsMerc off: %q", why)
 	}
 	if why := task.TowerWhy(soaky(func(w *task.World) { w.TowerMinLevel = 0 })); why != "" {
