@@ -102,7 +102,7 @@ func (t *Town) bank(ctx context.Context, a *Act) error {
 	}
 	var first error
 	if keep := t.bankKeep(s.Player.Level); s.Player.Gold > keep {
-		first = t.depositGold(ctx, s.Player.Gold-keep)
+		first = t.depositCapped(ctx, s, s.Player.Gold-keep)
 	}
 	if err := t.h.CloseAll(ctx); err != nil && first == nil {
 		first = err

@@ -90,6 +90,7 @@ type World struct {
 
 	talk       uint32
 	idMode     bool
+	StashCap   int // >0: a gold deposit that would take the stash above this is refused (the game's stash cap)
 	goldDialog bool
 	goldBuf    string // digits in the deposit dialog; "" with goldTyped=false means the full amount
 	goldTyped  bool

@@ -28,7 +28,7 @@ Verdicts: C covered, P partial, G gap. Severity: S1 death or stuck, S2 gold drai
 | E1 | walk to each Act 1 NPC, open its window | `town/acts.go:41` table, `npc.go:164` openNPC, `:522` openShop | Works offline; d2d needed ApproachNPC (V d2d, Gaps closed 1) | TestChoresAct1, TestChoresAtOtherSeedOrigins, npcmenu tests | V d2d: Akara, Charsi, Gheed, Kashya; Warriv listed but not re-run | greeting skip is bounded (`skip.go`) | P S3 |
 | E2 | belt layout, refill order | `resource/potion.go:102` PlanFor (Sorceress hp,hp,mp,mp), `town/belt/plan.json` (tiers), `shop.go:215` order HP, MP, RV after pack potions | AGREES with docs/sme potion policy as far as read (V code); two plan sources (plan.json cols are overridden by resource.PlanFor) | TestChoresAct1, TestPotionFloor*, beltfill tests | kit buys in d2d runs | n/a | P S4 |
 | E3 | waypoint and TP discipline | `town/trip.go:57` ToTown (reuses an open portal), `:113` walkToTown, `bot/waypoints.go:22` (10 min failed-trip latch, 3 touch tries) | Portal and no-scroll walk fine offline. Choosing a waypoint row is U on d2d | TestToTownAndBack, TestFailedWaypointTripIsNotRepeated, TestLeavingTownUsesActivatedWaypoint | portal V d2d (d2d-town.md Gaps closed 5); waypoint panel opens, row U | yes (waypoints.go) | P S1 |
-| E4 | stash gold cap | none: `stash.go:138` depositGold has no cap logic | GAP (V grep). A full stash makes the deposit "not confirmed" and the stash step fail on each visit. The cap value is U | none | none | none | **G S4** |
+| E4 | stash gold cap | `stash.go` bankAmount/depositCapped clamp to StashGoldCap (2,500,000, UNVERIFIED) and learn a refusal | CLOSED M1-STASHCAP (offline; TestStashGoldCapDeposit). Cap value U until m1-liveproof | none | none | none | S4 |
 | E5 | gambling never when poor | none: Gamble NPC class listed in `acts.go` only, no buy code (V grep) | trivially safe; a future gamble feature needs a gold floor | none | none | n/a | C S4 |
 | E6 | death with carried gold | `stash.go:117` keep line; `bot/death.go:447` bank swept gold | Keep line AGREES; but no trip trigger exists for gold above the keep line, so gold earned between visits is carried (V code: `choresDue` has no gold reason) | TestGoldBankedAtClvl11 | death gold rule V d2d (d2d-fidelity.md row 8) | n/a | P S2 |
 
@@ -49,7 +49,7 @@ Buy ammo is n/a for the Sorceress (`town/ammo.go` is a no-op without a launcher,
 7. **G7 plain magic charm sold, low gems sold** (CLOSED M1LOOT, D4; row 6; S3). Fix: SME decides which charms to keep; pickit rule. Owner: new card (loot).
 8. **G8 no gold trip trigger** (E6; S2 on death). Fix: a NeedsTrip reason when carried gold exceeds the keep line by a margin. Owner: new card.
 9. **G9 pack-full thresholds 80 and 85 percent** (row 14; S3). Fix: one knob, aligned to 4 free cells. Owner: XPGAP knob.
-10. **G10 stash gold cap unhandled** (E4; S4). Fix: read the cap, deposit the difference. Owner: new card, after the cap is measured.
+10. **G10 stash gold cap** (CLOSED M1-STASHCAP, offline; E4; S4). Fix: read the cap, deposit the difference. Owner: new card, after the cap is measured.
 
 ## Unknowns
 - Starting gold of a new offline 1.14d character: U. Measure on d2d with a hidden slot: new throwaway character, no cheats, `state` right after the first town spawn; repeat on 2 classes. Not recorded in this repo (docs/earlygame.md:69 lists it as open).
