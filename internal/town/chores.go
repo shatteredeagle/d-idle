@@ -84,7 +84,7 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 	if t.needWeaponFound(s) {
 		add(false, "wear", "found weapon to wear")
 	}
-	if n, _ := t.scrollCount(s, "tsc", "tbk"); n == 0 && !t.tpTooPoor(s) {
+	if n, _ := t.scrollCount(s, "tsc", "tbk"); n == 0 && !t.tpTooPoor(s) && t.tpAllowed(s) {
 		add(true, "tsc", "no town portal scroll")
 	}
 	if e, ok := t.gearOf(s); ok && e.Launcher() && len(gear.Restock(e)) > 0 {

@@ -524,3 +524,32 @@ func TestTPMinGoldPotionsFirst(t *testing.T) {
 		t.Fatalf("scroll bought below tpMinGold: %v", rep.Bought)
 	}
 }
+
+// BASICSFIX/XPGAP: "no town portal scroll" is a trip reason only where the shop would sell one (potionsFirst).
+func TestNoScrollTripRespectsPotionsFirst(t *testing.T) {
+	geartest.Need(t)
+	for _, c := range []struct {
+		name         string
+		level, first int
+		want         bool
+	}{
+		{"below first-scroll level", 2, 1, false},
+		{"at first-scroll level", 4, 1, true},
+		{"potionsFirst off", 2, 0, true},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			r := newRig(t)
+			r.W.Player.Level = c.level
+			r.Env.Tune.Town.PotionsFirst = c.first
+			for i := 0; i < 3; i++ {
+				r.W.Add("hp1", d2.ContBelt, i, 0)
+			}
+			r.W.Add("mp1", d2.ContBelt, 3, 0)
+			s, _ := r.W.Snapshot()
+			ok, why := r.T.NeedsTrip(s)
+			if got := ok && why == "no town portal scroll"; got != c.want {
+				t.Fatalf("trip %v %q, want scroll reason %v", ok, why, c.want)
+			}
+		})
+	}
+}
