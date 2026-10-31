@@ -29,3 +29,8 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
+internal/nav/scenario_test.go  gencorpus  gen-corpus
+internal/bot/scenario_test.go  gencorpus  gen-corpus
+internal/town/scenario_test.go  gencorpus  gen-corpus
+internal/combat/scenario_test.go  gencorpus  gen-corpus
+docs/scenarios.md  gencorpus  gen-corpus
