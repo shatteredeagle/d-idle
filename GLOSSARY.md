@@ -114,6 +114,32 @@ Bounds on nav search memory and a soak alert at 8 GB RSS or +1 GB in 5 min, adde
 **kill injection**:
 Deliberately killing Game.exe to test recovery (G1 criteria 6 and 7); needs the user's permission rule. ADR 0008, `docs/adr/0008-no-kill-injection-without-permission.md`.
 
+### Generality and evidence
+
+**coverage**:
+The axes a claim was proven on: seeds (count, holdout or not), class or build, act, difficulty, engine, start state, horizon. Outside them the claim is UNPROVEN, not PASS. `docs/research/bot-generality.md` section 3.
+
+**transfer / transfer gap**:
+How far a result survives a change of axis (a new seed, class or start state) with no policy code change, and how much each metric drops against the trained case (the gap). See **coverage**, **holdout seed**, **fidelity**.
+
+**knowledge vs behaviour**:
+Facts about the game (areas, monsters, builds, floors) belong in data tables loaded from game data; code only combines them. Raw area ids and class if-chains in policy code are the debt. `docs/research/bot-generality.md`.
+
+**constant provenance**:
+The tag on each number saying where it came from: measured (our logs), derived (formula from game data), judged (SME rule of thumb), fitted or arbitrary. See **knob**, **fitted constant**.
+
+**fitted constant**:
+A number picked so that one observed run passes. It widens the overfit surface; re-check it on holdout seeds or replace it with a measured one. One of the **constant provenance** tags.
+
+**invariant**:
+A property that must hold on every run whatever the axes: no hang past the stall ladder, no unrecoverable state, deaths bounded per 1000 kills, the character ends in town. Reported apart from **competence**.
+
+**competence**:
+How well a sound run plays: XP/h, kills/h, time to a boss. Judged only on runs that kept the **invariants**. Not the same as **power / danger / readiness** (the in-game risk model).
+
+**holdout seed**:
+A seed never used for tuning, fitting or diagnosis (seeds 16 to 23), reported as its own group. See **paired A/B** for how tuning runs are compared.
+
 ### Bot behaviour and guards
 
 **NOIDLE**:
