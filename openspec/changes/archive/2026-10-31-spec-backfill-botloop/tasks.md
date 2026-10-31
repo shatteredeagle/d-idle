@@ -12,8 +12,8 @@ exclusive: []
 gates:
   - "tools/openspec.sh validate --all --strict passes"
   - "go run ./cmd/changecheck -cli prints 0 warnings"
-merge: 30ddfab
-result: "Delta spec for capability bot-loop written from the code and tests of card botsmall; docs and specs only, nothing run live."
+merge: c14f9c7
+result: ADDED deltas applied to openspec/specs by archive; offline, spec text only, not verified live
 ```
 
 ## 1. Work

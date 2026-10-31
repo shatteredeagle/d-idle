@@ -2,7 +2,7 @@
 
 ```yaml
 change: spec-backfill-equiplive
-status: in-progress
+status: archived
 agent: specback
 branch: agent/specback
 worktree: ~/code/d2lod-wt/specback
@@ -12,8 +12,8 @@ exclusive: []
 gates:
   - "tools/openspec.sh validate --all --strict passes"
   - "go run ./cmd/changecheck -cli prints 0 warnings"
-merge:
-result:
+merge: c14f9c7
+result: ADDED deltas applied to openspec/specs by archive; offline, spec text only, not verified live
 ```
 
 ## 1. Work

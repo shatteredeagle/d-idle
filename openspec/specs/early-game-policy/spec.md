@@ -102,3 +102,64 @@ With town.potionsFirst 1 (default) the shop SHALL buy the kit potions before the
 #### Scenario: Old order
 - **WHEN** town.potionsFirst is 0 and gold is 120
 - **THEN** one portal scroll is bought first (TestShopBuysTownPortalBeforePotionsWhenPotionsFirstIsOff)
+
+### Requirement: The Den floor does not yield far below the floor
+In Normal, when the level planner finds no step and the character is below its Den of Evil floor (knobs campaign.denMinLevelCaster 5, campaign.denMinLevelMelee 3), the floor SHALL NOT be waived for a character more than one level below it (denYieldGap 1): a clvl 1 caster whose Blood Moor is cleared waits instead of entering the Den. Source: card d2dlevel; internal/bot/goal.go (denYieldGap); test TestDenFloorDoesNotYieldFarBelowFloor; docs/d2d-pace.md (a clvl 1 caster drank 4 potions in 12 s).
+
+#### Scenario: Clvl 1 Sorceress, Blood Moor cleared
+- **WHEN** a clvl 1 Sorceress with floor 5 has only Blood Moor in reach and it is marked cleared
+- **THEN** the planner does not pick the Den of Evil
+
+### Requirement: The Den floor yields only one level below with a kit
+The Den floor SHALL be waived, with the log line `den: floor waived, nothing else to level in`, only when no other step fits, the character is at most one level below its floor, the Den is neither cleared nor banned, and the belt holds at least 2 healing potions (or its contents are unknown). Source: card d2dlevel; internal/bot/goal.go (the waive branch after pick). UNVERIFIED by test: only the far-below case is tested.
+
+#### Scenario: One level below with potions
+- **WHEN** a clvl 4 caster (floor 5) has Blood Moor cleared, nothing else fits and 2 healing potions are in the belt
+- **THEN** the Den is allowed and the waive line is logged (UNVERIFIED, no test)
+
+#### Scenario: Thin belt
+- **WHEN** the same character holds fewer than 2 healing potions
+- **THEN** the Den stays excluded (UNVERIFIED, no test)
+
+### Requirement: Every equip slot click is logged
+Each slot click of a town equip SHALL log `equip: slot click at (x,y)` with the slot name, the cursor item id, the try number and the slot rectangle, and the equip SHALL click at most 3 times (equipClicks) at different points of the slot box, repeating only while the item is still on the cursor. Source: card equiplive; internal/town/rebuy.go; test TestEquipSurvivesIgnoredSlotClicks (log text read from code, not asserted).
+
+#### Scenario: First click ignored
+- **WHEN** the game ignores the first slot click and takes the second
+- **THEN** the item is worn after two logged clicks and the cursor is empty
+
+### Requirement: A refused item is skipped until the character changes
+An item still on the cursor after all slot clicks MUST be remembered with the character's level, Strength and Dexterity and SHALL NOT be offered or tried again (log `equip: skip <item> reason=refused`) until one of the three changes. Source: card equiplive; internal/town/rebuy.go (isRefused); tests TestRefusedGearUntilLevelUp, TestRefusedLiftedByStat. The code also lifts on a stat point, not only a level-up.
+
+#### Scenario: Same level, then level-up
+- **WHEN** an item is refused at clvl 7 and the check repeats at clvl 7 and at clvl 8
+- **THEN** it is refused at clvl 7 and offered again at clvl 8
+
+#### Scenario: Strength point
+- **WHEN** the item was refused at Strength 10 and the character now has 11
+- **THEN** it is offered again
+
+### Requirement: A failed equip returns the item and says why
+After a failed equip the item SHALL go back to a free pack cell and never stay held, the error MUST name the cause (`item still on the cursor (the game refused the slot click)` when it never left the cursor), and no right-click retry is made (equipRightClickFallback is false: 1.14d equips by click). Source: card equiplive; internal/town/rebuy.go; test TestEquipSurvivesIgnoredSlotClicks.
+
+#### Scenario: Every click ignored
+- **WHEN** the game ignores all slot clicks
+- **THEN** nothing is worn, the cursor is empty and the error contains `still on the cursor`
+
+### Requirement: Full Rejuvenation is preferred at the cap
+Below knob loot.rejuvSpare (default 3, range 0 to 6) rejuvenation potions held in belt plus pack any one SHALL be picked up; at the cap only a Full Rejuvenation is still wanted while a regular one sits in the pack, and the town sale drops regular ones first. With 0 none is wanted. The cap itself is in Rejuvenation potion cap. Source: card rejuvuse; internal/loot/loot.go (wantRejuv); tests TestRejuvIsCapped, TestFullPackOfRejuvsIsSoldDown.
+
+#### Scenario: At the cap
+- **WHEN** the belt holds 1 Full and the pack 2 regular rejuvenation potions
+- **THEN** another regular one is not wanted and a Full is
+
+#### Scenario: Pack full of both
+- **WHEN** the pack holds regular and Full rejuvenation potions alternately and a sell visit runs
+- **THEN** 3 remain, all Full
+
+### Requirement: A pack rejuvenation is belted without a rejuvenation column
+FillBelt SHALL move a rejuvenation potion from the pack to a free belt slot even when the plan has no rejuvenation column (below clvl 31), so the belt hotkey can drink it. Source: card rejuvuse; internal/town/beltfill.go; test TestPackRejuvIsBelted.
+
+#### Scenario: Clvl 14 with one in the pack
+- **WHEN** a clvl 14 character carries one rejuvenation potion in the pack and the belt has room
+- **THEN** after FillBelt the pack holds none and the belt holds it

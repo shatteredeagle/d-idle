@@ -46,13 +46,13 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
 ### Gates
-- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
+- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements
 - spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 4 requirements
-- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 6 requirements
+- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 7 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
-- spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 10 requirements
+- spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 11 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
@@ -81,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- c14f9c7 10-31 02:57 `Merge agent/specback: spec backfill for six d2d cards` (spec-backfill-d2dcombat)
 - 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 - d82bd47 10-31 02:46 `Merge agent/rebase136r: get-hit render rebase onto #136 (docs only)` (rendergh)
 - ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
@@ -90,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
 - fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
-- 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
 <!-- statusgen:end -->
