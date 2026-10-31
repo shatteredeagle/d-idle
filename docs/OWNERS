@@ -26,3 +26,6 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+docs/research/lutgholein-proof.md  lutproof  lutproof
+docs/research/pr-lut-gholein-*.md  lutproof  lutproof
+tools/emu/lut_*.py  lutproof  lutproof
