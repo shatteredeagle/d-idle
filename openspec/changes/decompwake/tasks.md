@@ -24,4 +24,4 @@ result: "clean negative: game.exe's wake chain (target search under aidist 0x23 
 - [x] 1.3 d2d: search_target, think()'s no-target branch, idle / set_off / set_mode, the Fallen rally, near_players, make_monster (V-d2d, file:line)
 - [x] 1.4 Oracle `tools/emu/wake_cadence.py`: stand 85,820 / 0, aidel 55,268 / 0; broken model 704 (the check bites)
 - [x] 1.5 Independent adversarial verifier (Fable, read-only), verdict quoted in the doc
-- [ ] 1.6 Trace doc <= 120 lines, card, OWNERS, changecheck 0 warnings, leakcheck fail 0, openspec validate --all --strict; cleanup on the worker host (agentreap list empty)
+- [x] 1.6 Trace doc <= 120 lines, card, OWNERS, changecheck 0 warnings, leakcheck fail 0, openspec validate --all --strict; cleanup on the worker host (agentreap list empty)
