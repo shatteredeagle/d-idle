@@ -22,12 +22,12 @@ gates:
   - "`! grep -n PinsCurrent internal/town/basicsaudit_test.go` (no pinned gap remains)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
 merge:
-result:
+result: implemented offline (sim rig, not verified live); see proposal Result and docs/loot-charms.md
 ```
 
 ## 1. Work
 
-- [ ] 1.1 Read the archived basicsfix card and docs/basics-audit.md rows 2, 3, 7, 10, 11; list what basicsfix left open
-- [ ] 1.2 Flip TestAuditS2, S3, S7, S10, S11 to the SME end state; fix residues in shop.go or chores.go
-- [ ] 1.3 Change the merged scroll rule (`town.tpFirstLevel` 4, scroll at clvl >= 4 with >= 100 gold left) to the D3 order: potions first up to 3, scroll only when gold >= scroll price plus 2 potions; test at gold 100 to 190; write the four town-basics requirements from the merged code (numbers from docs/knobs.md)
-- [ ] 1.4 changecheck, leakcheck, validate; report which audit rows flip to C (m1-liveproof edits the table)
+- [x] 1.1 Read the archived basicsfix card and docs/basics-audit.md rows 2, 3, 7, 10, 11; list what basicsfix left open
+- [x] 1.2 Flip TestAuditS2, S3, S7, S10, S11 to the SME end state; fix residues in shop.go or chores.go
+- [x] 1.3 Change the merged scroll rule (`town.tpFirstLevel` 4, scroll at clvl >= 4 with >= 100 gold left) to the D3 order: potions first up to 3, scroll only when gold >= scroll price plus 2 potions; test at gold 100 to 190; write the four town-basics requirements from the merged code (numbers from docs/knobs.md)
+- [x] 1.4 changecheck, leakcheck, validate; report which audit rows flip to C (m1-liveproof edits the table)
