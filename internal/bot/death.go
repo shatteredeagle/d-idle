@@ -160,7 +160,7 @@ func (r *Runner) deathPolicy(now time.Time, rec *recovery) {
 	if spiral {
 		r.skipAreaLocked(rec.area, r.banLength(), whyDeath)
 		r.setReaction(rec.rec.Time, fmt.Sprintf("area banned for %d min (death spiral)", int(r.banLength().Minutes())))
-		if rec.rec.Killer != "" {
+		if rec.rec.Killer != "" && !rec.rec.KillerChampion { // a champion is not its base monster: no weight for the plain kind
 			r.dlog.Danger[rec.rec.Killer]++
 		}
 		if err := r.dlog.save(r.cfg.DeathLogPath); err != nil {

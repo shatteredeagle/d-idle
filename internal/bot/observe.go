@@ -136,7 +136,8 @@ type aliveInfo struct {
 	merc                    *bool // nil: no merc unit listed (unknown)
 	killer                  *d2.Unit
 	killerName              string
-	killerBoss              bool
+	killerBoss              bool // named boss or superunique, never a champion
+	killerChampion          bool
 	killerLevel             int // monstats level in the current difficulty, 0 unknown
 	killerAffix             combat.Affix
 	level                   int
@@ -766,6 +767,7 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 				a.killerName = mi.Name
 			}
 			a.killerBoss = a.killerBoss || mi.IsUnique()
+			a.killerChampion = mi.IsChampion() && !mi.IsUnique() && !a.killerBoss
 			a.killerAffix = combat.MonsterAffixes(mi)
 		}
 		if a.killerName == "" {
@@ -783,7 +785,7 @@ func (r *Runner) recordDeath(p *d2.Player, now time.Time) {
 	a := o.alive
 	rec := DeathRecord{
 		Time: now, Area: o.lastGood.area, Pos: o.lastGood.pos, Level: p.Level, Difficulty: difficultyName(p.Difficulty),
-		Killer: a.killerName, KillerBoss: a.killerBoss, CorpseValue: a.equipValue,
+		Killer: a.killerName, KillerBoss: a.killerBoss, KillerChampion: a.killerChampion, CorpseValue: a.equipValue,
 	}
 	if rec.Area == 0 {
 		rec.Area = p.Area
@@ -816,7 +818,7 @@ func (r *Runner) recordDeath(p *d2.Player, now time.Time) {
 	r.e.Log.Warn("death autopsy: "+rec.Autopsy.Summary, "area", rec.AreaName, "killer", rec.Killer, "killerType", rec.Autopsy.KillerType, "killerLevel", rec.Autopsy.KillerLevel, "hostiles", rec.Autopsy.HostilesNear, "lastSafety", rec.Autopsy.LastSafety, "bug", rec.Autopsy.Bug, "beltHP", rec.Autopsy.BeltHP)
 	r.e.Log.Warn("character died", "area", rec.Area, "killer", rec.Killer, "x", rec.Pos.X, "y", rec.Pos.Y, "corpseValue", rec.CorpseValue)
 	di := combat.DeathInfo{Area: rec.Area, Difficulty: p.Difficulty, CharLevel: p.Level, MonsterName: a.killerName, MonsterClass: rec.KillerClass,
-		Boss: a.killerBoss, MonsterLevel: a.killerLevel, Affixes: a.killerAffix}
+		Boss: a.killerBoss, Champion: a.killerChampion, MonsterLevel: a.killerLevel, Affixes: a.killerAffix}
 	if a.killer != nil {
 		di.Distance = float64(max(abs(a.killer.X-p.X), abs(a.killer.Y-p.Y)))
 	}

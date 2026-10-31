@@ -453,3 +453,34 @@ func TestBackoffCapFallsBackToMelee(t *testing.T) {
 		t.Errorf("cap off: %v, want retreat", d)
 	}
 }
+
+func TestChampionEarlyTightensDrinkLines(t *testing.T) {
+	tu := DefaultTuning()
+	champ := func(lvl int, diff d2.Difficulty, life int, rv int) Input {
+		return with(func(i *Input) {
+			i.Hostiles, i.PackDanger, i.ChampionPack, i.Level, i.Diff = 2, 1, true, lvl, diff
+			i.Life, i.MaxLife, i.Belt.RV = life, 100, rv
+		})
+	}
+	// healing line 55 -> 65 against a champion in early Normal
+	if got := PotionPolicy(champ(10, d2.Normal, 62, 0), tu); got.Drink != PotionLife {
+		t.Fatalf("clvl 10 champion at 62%%: %v", got)
+	}
+	// rejuv line 50 -> 60
+	if got := PotionPolicy(champ(10, d2.Normal, 58, 1), tu); got.Drink != PotionRejuv {
+		t.Fatalf("clvl 10 champion at 58%% with rejuv: %v", got)
+	}
+	for name, in := range map[string]Input{
+		"clvl 15":     champ(15, d2.Normal, 62, 0),
+		"nightmare":   champ(10, d2.Nightmare, 62, 0),
+		"no champion": with(func(i *Input) { i.Hostiles, i.Level, i.Life, i.MaxLife = 2, 10, 62, 100 }),
+	} {
+		if got := PotionPolicy(in, tu); got.Drink != PotionNone {
+			t.Errorf("%s: unchanged line expected, drank %v", name, got.Drink)
+		}
+	}
+	tu.ChampionEarlyPct = 0
+	if got := PotionPolicy(champ(10, d2.Normal, 62, 0), tu); got.Drink != PotionNone {
+		t.Fatalf("knob 0 = off: %v", got)
+	}
+}

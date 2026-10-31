@@ -23,26 +23,27 @@ type LifeSample struct {
 
 // DeathRecord is one entry of the death log.
 type DeathRecord struct {
-	Time         time.Time    `json:"time"`
-	Area         int          `json:"area"`
-	AreaName     string       `json:"areaName"`
-	Pos          input.Point  `json:"pos"` // where the corpse lies
-	Level        int          `json:"level"`
-	Difficulty   string       `json:"difficulty"`
-	Killer       string       `json:"killer,omitempty"` // nearest hostile at the last living snapshot; best effort, UNVERIFIED
-	KillerClass  int          `json:"killerClass,omitempty"`
-	KillerBoss   bool         `json:"killerBoss,omitempty"`
-	Enchants     []uint8      `json:"enchants,omitempty"` // raw monster enchant ids of the killer
-	LifeCurve    []LifeSample `json:"lifeCurve,omitempty"`
-	CorpseValue  int          `json:"corpseValue"` // estimated gold value of the equipped gear left on the corpse
-	Retrieved    bool         `json:"retrieved,omitempty"`
-	Abandoned    bool         `json:"abandoned,omitempty"`
-	CostGold     int          `json:"costGold"`  // gold lost to the death itself
-	CostItems    int          `json:"costItems"` // equipped items that did not come back
-	CostSeconds  int          `json:"costSeconds"`
-	Why          string       `json:"why,omitempty"`          // policy decision text
-	RepeatBanMin int          `json:"repeatBanMin,omitempty"` // minutes of the repeat-site ban this death triggered (escalation counts these)
-	Autopsy      *Autopsy     `json:"autopsy,omitempty"`
+	Time           time.Time    `json:"time"`
+	Area           int          `json:"area"`
+	AreaName       string       `json:"areaName"`
+	Pos            input.Point  `json:"pos"` // where the corpse lies
+	Level          int          `json:"level"`
+	Difficulty     string       `json:"difficulty"`
+	Killer         string       `json:"killer,omitempty"` // nearest hostile at the last living snapshot; best effort, UNVERIFIED
+	KillerClass    int          `json:"killerClass,omitempty"`
+	KillerBoss     bool         `json:"killerBoss,omitempty"`
+	KillerChampion bool         `json:"killerChampion,omitempty"` // a champion pack member killed us: not a boss, not a danger-table lesson
+	Enchants       []uint8      `json:"enchants,omitempty"`       // raw monster enchant ids of the killer
+	LifeCurve      []LifeSample `json:"lifeCurve,omitempty"`
+	CorpseValue    int          `json:"corpseValue"` // estimated gold value of the equipped gear left on the corpse
+	Retrieved      bool         `json:"retrieved,omitempty"`
+	Abandoned      bool         `json:"abandoned,omitempty"`
+	CostGold       int          `json:"costGold"`  // gold lost to the death itself
+	CostItems      int          `json:"costItems"` // equipped items that did not come back
+	CostSeconds    int          `json:"costSeconds"`
+	Why            string       `json:"why,omitempty"`          // policy decision text
+	RepeatBanMin   int          `json:"repeatBanMin,omitempty"` // minutes of the repeat-site ban this death triggered (escalation counts these)
+	Autopsy        *Autopsy     `json:"autopsy,omitempty"`
 }
 
 // HeatPoint is one cell of the death heat map.

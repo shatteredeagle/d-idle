@@ -26,3 +26,19 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+openspec/changes/champ/**  champ  champ
+docs/champions.md  champ  champ
+docs/knobs.md  champ  champ
+internal/combat/target.go  champ  champ
+internal/combat/death.go  champ  champ
+internal/combat/resource.go  champ  champ
+internal/combat/champion_test.go  champ  champ
+internal/resource/potion.go  champ  champ
+internal/resource/tuning.go  champ  champ
+internal/resource/types.go  champ  champ
+internal/resource/policy_test.go  champ  champ
+internal/env/tuning_combat.go  champ  champ
+internal/bot/observe.go  champ  champ
+internal/bot/deathlog.go  champ  champ
+internal/bot/death.go  champ  champ
+internal/bot/champion_test.go  champ  champ

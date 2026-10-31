@@ -20,8 +20,9 @@ type DeathInfo struct {
 	MonsterID    uint32      // nearest hostile at the last live snapshot, 0 if none
 	MonsterClass int
 	MonsterName  string
-	MonsterLevel int // monstats level for the difficulty; the area level is the caller's
-	Boss         bool
+	MonsterLevel int  // monstats level for the difficulty; the area level is the caller's
+	Boss         bool // named boss or superunique only; a champion is Champion, never Boss
+	Champion     bool
 	Affixes      Affix
 	Distance     float64 // killer distance at the last live snapshot
 	LastLife     int
@@ -75,7 +76,7 @@ func Died(prev, cur *d2.Snapshot, cat Catalog) (DeathInfo, bool) {
 		}
 	}
 	di.MonsterID, di.MonsterClass, di.MonsterName = best.Unit.ID, best.Unit.Class, best.Name
-	di.Boss, di.Affixes, di.Distance = best.Boss, best.Affixes, best.Dist
+	di.Boss, di.Champion, di.Affixes, di.Distance = best.Boss, best.Champion, best.Affixes, best.Dist
 	if best.Mon != nil {
 		di.MonsterLevel = best.Mon.Level[cp.Difficulty]
 	}

@@ -86,7 +86,8 @@ type Target struct {
 	Dist     float64 // subtiles from the player
 	Affixes  Affix
 	Elite    bool // unique, champion or minion of a unique
-	Boss     bool // unique with a name, or a monstats boss
+	Boss     bool // unique with a name, or a monstats boss; never a champion (docs/champions.md)
+	Champion bool // flag byte 0x0c champion (no minions): Elite, not Boss; selects the tightened early potion lines
 	LifePct  int  // 0-100, 100 when unknown
 	KillFast bool // support monster or kill-first affix
 	Explodes bool
@@ -124,6 +125,34 @@ type HostileCtx struct {
 
 func dist(ax, ay, bx, by int) float64 { return math.Hypot(float64(ax-bx), float64(ay-by)) }
 
+// Champions spawn in groups of 3-5 and have about 3x life and +50% damage: a group of this many in view is too much for
+// a character under championGroupLevel (SME rule of thumb, EXP). Only stricter than before: the targets are ignored like
+// any Avoid target and the Kill target path is unaffected.
+const (
+	championGroupMin   = 3
+	championGroupLevel = 8
+)
+
+func avoidChampionGroup(ts []Target, clvl int) {
+	if clvl <= 0 || clvl >= championGroupLevel {
+		return
+	}
+	n := 0
+	for _, t := range ts {
+		if t.Champion && !t.Boss {
+			n++
+		}
+	}
+	if n < championGroupMin {
+		return
+	}
+	for i := range ts {
+		if ts[i].Champion && !ts[i].Boss {
+			ts[i].Avoid = true
+		}
+	}
+}
+
 // Hostiles picks the monsters in the snapshot that should be fought: alive, not friendly (IsFriendly: town NPCs,
 // mercenaries, minions, pets, summons), not non-killable. Nothing is hostile in town.
 // Sorted nearest first; use Rank for the fight order.
@@ -147,6 +176,7 @@ func Hostiles(snap *d2.Snapshot, hc HostileCtx) []Target {
 		if u.Monster != nil {
 			t.Affixes = affixesOf(u.Monster)
 			t.Elite = u.Monster.IsUnique() || u.Monster.IsChampion() || u.Monster.IsMinion()
+			t.Champion = u.Monster.IsChampion() && !u.Monster.IsUnique()
 			if u.Monster.IsUnique() && u.Monster.Name != "" {
 				t.Boss = true
 				t.Name = u.Monster.Name
@@ -189,6 +219,7 @@ func Hostiles(snap *d2.Snapshot, hc HostileCtx) []Target {
 		t.Res, t.HasRes = resistsOf(u, mon, hc)
 		out = append(out, t)
 	}
+	avoidChampionGroup(out, hc.ClassLvl)
 	sort.SliceStable(out, func(i, j int) bool {
 		if out[i].Dist != out[j].Dist {
 			return out[i].Dist < out[j].Dist
