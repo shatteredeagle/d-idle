@@ -2,7 +2,7 @@
 
 ```yaml
 change: basicsaudit
-status: in-progress
+status: archived
 agent: basicsaudit
 branch: agent/basicsaudit
 worktree: ~/code/d2lod-wt/basicsaudit
@@ -14,8 +14,8 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/town passes on the worker host"
   - "go run ./cmd/changecheck -cli has 0 warnings; leakcheck -mode fail finds 0"
-merge:
-result:
+merge: 46f0fda
+result: "Offline only, not verified live: basics audit doc docs/basics-audit.md and internal/town test."
 ```
 
 ## 1. Work
