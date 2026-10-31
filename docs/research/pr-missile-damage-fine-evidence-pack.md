@@ -49,3 +49,5 @@ cd ../.. && build/tests/test_game --life-apply 1 100000 | grep -E '^[BMR][0-9]* 
 - posted: 2026-10-31 comment-only commit 8a3cb678 pushed to PR #135 (04:08Z) https://github.com/psi29a/d2decomped/pull/135/commits/8a3cb6789d8954031267442fc44f5a2e976f2cbc go: user, ref not recorded
 - posted: 2026-10-31 reply on PR #135 (04:09Z) https://github.com/psi29a/d2decomped/pull/135#issuecomment-6538822940 go: user, ref not recorded
 - Verified 2026-10-31 by read-only `gh api` GET (pulls/135, pulls/135/commits, issues/135/comments, issues/135/events).
+- merged: 2026-10-31 maintainer review APPROVED on PR #135 at 07:07:57Z ("Lgtm, thanks"); PR #135 merged by the maintainer at 07:08:13Z as upstream 62282965 https://github.com/psi29a/d2decomped/pull/135 (read-only GET 2026-10-31 ~07:10Z)
+- Note: `merged:` lines record the maintainer's actions, not our pushes; the upstream-pr spec's `posted:` format is for our own pushes and posts.

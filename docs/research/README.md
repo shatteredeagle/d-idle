@@ -19,19 +19,19 @@ One line per doc: what it shows, status, PR. Status: current = still the best so
 ## Get-hit and recovery
 - [movement-and-recovery-trace.md](movement-and-recovery-trace.md) walk/run speed and hit recovery traced in game.exe. current.
 - [pr-get-hit-rule-proof.md](pr-get-hit-rule-proof.md) the get-hit decision matches game.exe. current. PR #134 (open); evidence: [pr-get-hit-rule-evidence-pack.md](pr-get-hit-rule-evidence-pack.md). Body and review replies: archived ([draft](../archive/research/pr-get-hit-rule-draft.md), [review 1](../archive/research/pr-get-hit-rule-review-draft.md), [review 2](../archive/research/pr-get-hit-rule-review2-draft.md)).
-- [pr-get-hit-length-proof.md](pr-get-hit-length-proof.md) the get-hit length (AnimData speed x (50 + FHR)) matches game.exe. current. PR #136 (open); evidence: [pr-get-hit-length-evidence-pack.md](pr-get-hit-length-evidence-pack.md). Body: [archived draft](../archive/research/pr-get-hit-length-draft.md).
-- [pr-get-hit-render-proof.md](pr-get-hit-render-proof.md) the get-hit frame rule (step once, stand on the last frame) matches game.exe. candidate; evidence: [pr-get-hit-render-evidence-pack.md](pr-get-hit-render-evidence-pack.md), body: [pr-get-hit-render-draft.md](pr-get-hit-render-draft.md). Nothing pushed or posted.
+- [pr-get-hit-length-proof.md](pr-get-hit-length-proof.md) the get-hit length (AnimData speed x (50 + FHR)) matches game.exe. current. PR #136 (merged by the maintainer 2026-10-31, upstream 4778a47c); evidence: [pr-get-hit-length-evidence-pack.md](pr-get-hit-length-evidence-pack.md). Body: [archived draft](../archive/research/pr-get-hit-length-draft.md).
+- [pr-get-hit-render-proof.md](pr-get-hit-render-proof.md) the get-hit frame rule (step once, stand on the last frame) matches game.exe. candidate, rebased onto upstream main 4778a47c, ready to open on the user's go; evidence: [pr-get-hit-render-evidence-pack.md](pr-get-hit-render-evidence-pack.md), body: [pr-get-hit-render-draft.md](pr-get-hit-render-draft.md). Nothing pushed or posted.
 - [upstream-pr-candidates-movement.md](upstream-pr-candidates-movement.md) stub: findings that became #134 and #136. archived.
 
 ## Missile damage
-- [pr-missile-damage-fine-proof.md](pr-missile-damage-fine-proof.md) a missile's element damage keeps its 256ths. current. PR #135 (open); evidence: [pr-missile-damage-fine-evidence-pack.md](pr-missile-damage-fine-evidence-pack.md). Bodies: archived ([v2](../archive/research/pr-missile-damage-fine-draft-v2.md), [v1](../archive/research/pr-missile-damage-fine-draft.md)).
+- [pr-missile-damage-fine-proof.md](pr-missile-damage-fine-proof.md) a missile's element damage keeps its 256ths. current. PR #135 (merged by the maintainer 2026-10-31, upstream 62282965); evidence: [pr-missile-damage-fine-evidence-pack.md](pr-missile-damage-fine-evidence-pack.md). Bodies: archived ([v2](../archive/research/pr-missile-damage-fine-draft-v2.md), [v1](../archive/research/pr-missile-damage-fine-draft.md)).
 - [pr-missile-damage-fine-measured.md](pr-missile-damage-fine-measured.md) measured effect of the fix on casts per kill. current.
 - [monster-attack-trace.md](monster-attack-trace.md) monster damage to the player, game.exe vs d2d. current. Candidates: [upstream-pr-candidates-monster.md](upstream-pr-candidates-monster.md).
 
 ## Lut Gholein and level generation (DRGL)
 - [lutgholein-trace.md](lutgholein-trace.md) why whisper `town` and d2d `drlg-dump` disagree. historical (the cause is in the proof).
 - [lutgholein-proof.md](lutgholein-proof.md) the two missing level-seed steps, traced, fixed, proven. current.
-- [pr-lut-gholein-draft.md](pr-lut-gholein-draft.md) and [pr-lut-gholein-evidence-pack.md](pr-lut-gholein-evidence-pack.md) the tool fix, NOT posted yet (waits for the user's go). current.
+- [pr-lut-gholein-draft.md](pr-lut-gholein-draft.md) and [pr-lut-gholein-evidence-pack.md](pr-lut-gholein-evidence-pack.md) the tool fix, NOT posted yet (waits for the user's go); rebased onto upstream main 4778a47c, 20/20 after. current.
 
 ## Upstream PRs: candidates, scan, posted record
 - [upstream-prs.md](upstream-prs.md) table of posted PRs (#127 and #128 merged). current.

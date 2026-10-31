@@ -42,3 +42,5 @@ Rebuild the proof after a rebase: the lines under "Differential" in pr-get-hit-l
 
 - posted: 2026-10-31 PR #136 opened (head eb89646e; created 04:31Z) https://github.com/psi29a/d2decomped/pull/136 go: user, ref not recorded
 - Verified 2026-10-31 by read-only `gh api` GET (pulls/136, pulls/136/commits). The status banner above ("Nothing pushed") predates the push.
+- merged: 2026-10-31 PR #136 merged by the maintainer at 07:09:32Z as upstream 4778a47c (the squash of eb89646e's work lands as 453b1014 "Get-hit length by AnimData speed x (50 + FHR)" and 4778a47c "#136 follow-up: renderer-gap ponytail + length oracle") https://github.com/psi29a/d2decomped/pull/136 (read-only GET 2026-10-31 ~07:10Z)
+- Note: `merged:` lines record the maintainer's actions, not our pushes; the upstream-pr spec's `posted:` format is for our own pushes and posts.

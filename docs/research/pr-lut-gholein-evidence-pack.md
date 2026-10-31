@@ -1,6 +1,6 @@
 # Evidence pack: drlg-dump opens the folder's 1.14d patch (Lut Gholein two-room seed lag)
 
-> status: for the user's go / no-go (agent LUTPROOF, 2026-10-31). Standard: docs/process/upstream-pr-standard.md. Proof: docs/research/lutgholein-proof.md. Draft body: docs/research/pr-lut-gholein-draft.md. Nothing pushed, posted or filed.
+> status: for the user's go / no-go (agent LUTPROOF, 2026-10-31). Standard: docs/process/upstream-pr-standard.md. Proof: docs/research/lutgholein-proof.md. Draft body: docs/research/pr-lut-gholein-draft.md. Rebased on upstream main 4778a47c (UPSYNC section at the end). Nothing pushed, posted or filed.
 
 **Claim (one sentence).** `tools/drlg-dump` never opened the MPQ folder's `patch_d2.mpq` (only `$D2_PATCH_INSTALLER`), so without the installer it had no `monpreset.bin`, mapped no DS1 monster id, skipped the Scan / Pops "roll to stay" steps game.exe takes in `FUN_00667620`, and seeded Lut Gholein's rooms two level-seed steps late; opening the MPQs as the game's `open_game_data` does makes its dumps equal game.exe's.
 
@@ -75,4 +75,18 @@ gh pr create --repo psi29a/d2decomped --base main --head shatteredeagle:fix/lut-
   --title "drlg-dump: open the folder's 1.14d patch like the game does" \
   --body-file ~/code/d2lod-bot/docs/research/pr-lut-gholein-draft.md     # body = the part under the --- line
 # then attach tools/emu/lut_trace.py to the PR conversation (not committed), and watch: gh pr checks <n> --watch
+```
+
+## Rebased onto upstream main (UPSYNC, 2026-10-31, local only)
+
+- Base: upstream/main **4778a47c**. New head: **4bbf7f37** on `fix/lut-gholein-preset-rng` (`~/d2d-lab/pr/lut`), one commit (was 632d5cc2 on 32768ddb; backup branch `fix/lut-gholein-preset-rng-pre-upstream-merge`). No conflicts. Not superseded: upstream's `drlg-dump` still opens only `$D2_PATCH_INSTALLER` (grep of upstream/main), never the folder's patch. Nothing pushed.
+- Differential re-run with both binaries rebuilt (before = upstream/main, after = the patch; both under the `unset D2_PATCH_INSTALLER` wrapper, `D2_MPQ_DIR=/tmp/ug-emu`): level 40 seeds 1-20 tiles / units / seeds: before 0/20 each, **after 20/20 each**. Regression levels seeds 1-10 tiles / units, before -> after: level 1 10/10, 0/10 -> 10/10, 10/10; level 2 10/10, 6/10 -> 10/10, 10/10; level 75 10/10, 0/10 -> 10/10, 10/10; level 103 10/10, 0/10 -> 10/10, 10/10; level 109 0/10, 0/10 -> 10/10, 10/10.
+- Does upstream's own gate still fail on current upstream main, unpatched? It depends on the installer. With no installer at `diff_drlg.py`'s default path (this worker host: absent), the gate fails outright (`drlg-dump tiles failed (1)`, MPQ open failed). With `D2_PATCH_INSTALLER` pointing at the installer (which is what the maintainer's default path does on his box), unpatched upstream main passes 20/20 on tiles, units and seeds. So the claim stands as the verifier worded it: the fix helps everyone without the installer env, and is a no-op for a box that has it; the PR body must not say the maintainer's gate fails.
+- Checks: `pr_guard.py upstream/main` 0 FAIL 0 WARN; `presubmit.py --quick` 0 FAIL, 3 WARN (the `fs::exists` error-path ones, answered in the body).
+
+Commands to open (NOT RUN; need the user's explicit go; base main):
+
+```sh
+ssh worker.example 'cd ~/d2d-lab/pr/lut && git push origin fix/lut-gholein-preset-rng'
+ssh worker.example 'cd ~/d2d-lab/pr/lut && gh pr create --repo psi29a/d2decomped --base main --head shatteredeagle:fix/lut-gholein-preset-rng --title "drlg-dump: open the folder'"'"'s 1.14d patch like the game does" --body-file PR_DESCRIPTION.md'   # body = the part of pr-lut-gholein-draft.md under the --- line
 ```
