@@ -21,7 +21,7 @@ gates:
   - "go test -short -count=1 ./... and go test -race ./internal/nav ./internal/env pass on the worker; changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict"
   - "live verify: one hidden slot re-runs the navsoak2 recipe (seed 5): at least 60 wall minutes of area entries, no 'no route from level 1' storm"
 merge:
-result: "verified live on hidden d2d (seed 5, Navy3, 74 wall min): the navsoak2 wedge state recurred at the same cell and was left by the pocket unstick; 0 bad edges, 0 no-route lines, 1582 area entries, clvl 11, 0 deaths; offline tests and whole-repo vet/short tests/race clean on Orion"
+result: "verified live on hidden d2d (seed 5, Navy3, 74 wall min): the navsoak2 wedge state recurred at the same cell and was left by the pocket unstick; 0 bad edges, 0 no-route lines, 1582 area entries, clvl 11, 0 deaths; offline tests and whole-repo vet, short tests and race clean on the worker host"
 ```
 
 ## 1. Work
