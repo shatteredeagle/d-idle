@@ -84,29 +84,31 @@ func BRLine(w World) string {
 // Akara; U: price not read from the install here). Below it the gate passes without them.
 const antidoteGold = 150
 
-// mercLowGold is "gold is low" for the soft merc rule: a dead merc with less gold than this raises the Andariel floor
-// by mercDeadExtra levels (docs/plan/plan-v2.md M2). U: both numbers are judgment.
-const (
-	mercLowGold   = 1000
-	mercDeadExtra = 2
-)
-
 // MercAlive is the optional merc state reader hook (M3 fills it): alive is meaningful only when known. The default,
 // nil, means unknown and the merc rule passes. Set it once at start-up, before the bot runs.
 var MercAlive func() (alive bool, known bool)
 
-// andarielFloor is the clvl the campaign wants before it tries Andariel: the knob (World.AndarielMinLevel, default
-// env.DefaultAndarielMinLevel), plus mercDeadExtra when the merc reader says it is dead and gold is low.
+// andarielFloor is the clvl the campaign wants before it tries Andariel: the no-merc knob (World.AndarielMinLevel,
+// default env.DefaultAndarielMinLevel), or with a living merc the lower World.AndarielMinLevelMerc (0 = the no-merc
+// floor). A dead or unknown merc counts as none: the old +2 for a dead merc is replaced by the no-merc floor (ADR 0011).
 func andarielFloor(w World) int {
 	f := w.AndarielMinLevel
 	if f <= 0 {
 		f = env.DefaultAndarielMinLevel
 	}
-	if w.MercKnown && !w.MercAlive && w.Gold < mercLowGold {
-		f += mercDeadExtra
+	if routeMercOK(w) && w.AndarielMinLevelMerc > 0 {
+		f = min(f, w.AndarielMinLevelMerc)
 	}
 	return f
 }
+
+// andarielHeld reports the unattended hold: the campaign may not enter Andariel while the knob is on, the fight has not
+// been won once (ADR 0011 gate 3) and she is not dead.
+func andarielHeld(w World) bool {
+	return w.AndarielHold && normalDiff(w) && !w.Killed[BossAndy] && !QuestDone(w, QAndariel)
+}
+
+const andarielHeldWhy = "unattended hold: the throwaway fight has not won yet (boss.andarielHold)"
 
 // normalDiff: the knob is a Normal rule; Nightmare and Hell keep their static floors (nightmare.go).
 func normalDiff(w World) bool { return w.Difficulty == "" || w.Difficulty == "normal" }
@@ -124,6 +126,9 @@ func (g BossGate) baseFloor(w World) int {
 		return brFloor(w)
 	}
 	if g.Andy && normalDiff(w) {
+		if andarielHeld(w) {
+			return max(andarielFloor(w), w.Level+1)
+		}
 		return andarielFloor(w)
 	}
 	return g.MinLevel
@@ -134,6 +139,9 @@ func (g BossGate) baseFloor(w World) int {
 func AndarielLine(w World) string {
 	g := bossGates[QAndariel]
 	f := g.floor(w)
+	if andarielHeld(w) {
+		return "boss: held for andariel (" + andarielHeldWhy + ")"
+	}
 	if w.Level < f {
 		return fmt.Sprintf("boss: held for andariel (clvl %d < floor %d)", w.Level, f)
 	}
@@ -161,6 +169,9 @@ var bossGates = map[string]BossGate{
 
 // NotReady says why w may not start the boss quest q ("" = ready or no gate for q).
 func (g BossGate) NotReady(w World) string {
+	if g.Andy && andarielHeld(w) {
+		return "andariel " + andarielHeldWhy
+	}
 	if g.Route && w.Level < routeFloor(w) {
 		return "route guard: blocked monastery (" + RouteLevelWhy(w) + ")"
 	}

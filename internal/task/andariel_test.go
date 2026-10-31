@@ -84,33 +84,35 @@ func TestAndarielMercHook(t *testing.T) {
 		t.Fatal("hook must default to unknown")
 	}
 	c := task.NormalAct1(task.Act1Options{})
-	dead := func(w *task.World) { w.MercKnown, w.MercAlive, w.Gold = true, false, 100 }
-	if p := c.Plan(andyWorld(d, dead), nil); p.Group == task.QAndariel {
-		t.Errorf("dead merc, low gold, floor %d: %q", d, p.ID)
-	}
-	if p := c.Plan(andyWorld(d+2, dead), nil); p.Group != task.QAndariel {
-		t.Errorf("dead merc floor +2: %q", p.ID)
-	}
-	rich := func(w *task.World) { w.MercKnown, w.MercAlive, w.Gold = true, false, 5000 }
-	if p := c.Plan(andyWorld(d, rich), nil); p.Group != task.QAndariel {
-		t.Errorf("dead merc but rich: %q", p.ID)
+	// ADR 0011: a dead merc counts as none, whatever the gold: the no-merc floor, no +2
+	for _, gold := range []int{100, 5000} {
+		dead := func(w *task.World) { w.MercKnown, w.MercAlive, w.Gold = true, false, gold }
+		if p := c.Plan(andyWorld(d-1, dead), nil); p.Group == task.QAndariel {
+			t.Errorf("dead merc gold %d clvl %d: %q", gold, d-1, p.ID)
+		}
+		if p := c.Plan(andyWorld(d, dead), nil); p.Group != task.QAndariel {
+			t.Errorf("dead merc gold %d: floor is the no-merc %d, got %q", gold, d, p.ID)
+		}
 	}
 	unknown := func(w *task.World) { w.MercKnown, w.MercAlive, w.Gold = false, false, 100 }
 	if p := c.Plan(andyWorld(d, unknown), nil); p.Group != task.QAndariel {
-		t.Errorf("unknown merc must pass: %q", p.ID)
+		t.Errorf("unknown merc is none, at the floor it passes: %q", p.ID)
+	}
+	if p := c.Plan(andyWorld(d-1, unknown), nil); p.Group == task.QAndariel {
+		t.Errorf("unknown merc below the no-merc floor: %q", p.ID)
 	}
 }
 
 func TestAndarielLines(t *testing.T) {
 	d := env.DefaultAndarielMinLevel
-	if got := task.AndarielLine(andyWorld(d-3, nil)); got != "boss: held for andariel (clvl 12 < floor 15)" {
+	if got := task.AndarielLine(andyWorld(d-3, nil)); got != "boss: held for andariel (clvl 14 < floor 17)" {
 		t.Errorf("held line %q", got)
 	}
-	if got := task.AndarielLine(andyWorld(d, nil)); got != "boss: andariel gate pass clvl=15 kit=ok" {
+	if got := task.AndarielLine(andyWorld(d, nil)); got != "boss: andariel gate pass clvl=17 kit=ok" {
 		t.Errorf("pass line %q", got)
 	}
 	got := task.AndarielLine(andyWorld(d+1, func(w *task.World) { w.HasTP = false }))
-	if !strings.HasPrefix(got, "boss: andariel gate pass clvl=16 kit=short(") || !strings.Contains(got, "no town portal") {
+	if !strings.HasPrefix(got, "boss: andariel gate pass clvl=18 kit=short(") || !strings.Contains(got, "no town portal") {
 		t.Errorf("short line %q", got)
 	}
 }

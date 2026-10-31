@@ -127,7 +127,7 @@
    "name": "Catacombs 4",
    "enter_clvl": 14,
    "leave_clvl": 18,
-   "purpose": "Catacombs 4: Andariel (boss.andarielMinLevel, default 15; humans kill her at clvl 14 to 18)"
+   "purpose": "Catacombs 4: Andariel (boss.andarielMinLevel, default 17 without a merc, 15 with; humans kill her at clvl 14 to 18)"
   },
   {
    "area": 40,

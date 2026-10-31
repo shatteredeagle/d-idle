@@ -46,6 +46,9 @@ func (e Entry) baseFloor(w World) int {
 		return max(w.DenMinLevel, e.MinLevel, e.noKitFloor(w))
 	}
 	if e.Andy && normalDiff(w) {
+		if andarielHeld(w) {
+			return max(andarielFloor(w), w.Level+1) // held: level instead (the walk stays closed until the fight has won once)
+		}
 		return andarielFloor(w)
 	}
 	if e.BR && normalDiff(w) {
@@ -92,7 +95,7 @@ type Act1Options struct {
 	SkipTower bool
 }
 
-// NormalAct1 is the Normal Act 1 campaign: Den, Blood Raven, Smith (clvl 8), Countess (clvl 14), Andariel (Tuning.Boss.AndarielMinLevel, default 15),
+// NormalAct1 is the Normal Act 1 campaign: Den, Blood Raven, Smith (clvl 8), Countess (clvl 14), Andariel (Tuning.Boss.AndarielMinLevel, default 17 without a merc, 15 with),
 // Warriv hop. Floors are from catalog.md / runs.json (U for 6 and 14).
 func NormalAct1(o Act1Options) *Campaign {
 	c := &Campaign{Name: "normal_act1"}

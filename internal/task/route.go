@@ -35,19 +35,65 @@ func TowerGuarded(a Area) bool { return a >= towerFirstArea && a <= towerLastAre
 // AreaGuarded reports whether a is under the Monastery or the tower guard.
 func AreaGuarded(a Area) bool { return RouteGuarded(a) || TowerGuarded(a) }
 
-// TowerLevelWhy says why the tower is closed on level grounds ("" = open). Open: guard off (TowerMinLevel 0), not Normal,
-// clvl at the floor, or (TowerNeedsMerc) a living merc. With TowerNeedsMerc off only the level counts.
+// towerFloor is the clvl the tower needs: 0 when the guard is off or the difficulty is not Normal. A living merc opens
+// it at any level with TowerNeedsMerc (the old rule), else lowers the floor to TowerMinLevelMerc (0 = no lowering).
+func towerFloor(w World) int {
+	if w.TowerMinLevel <= 0 || !normalDiff(w) {
+		return 0
+	}
+	if routeMercOK(w) {
+		if w.TowerNeedsMerc {
+			return 0
+		}
+		if w.TowerMinLevelMerc > 0 {
+			return min(w.TowerMinLevelMerc, w.TowerMinLevel)
+		}
+	}
+	return w.TowerMinLevel
+}
+
+// TowerLevelWhy says why the tower is closed on level grounds ("" = open): clvl below towerFloor.
 func TowerLevelWhy(w World) string {
-	if w.TowerMinLevel <= 0 || !normalDiff(w) || w.Level >= w.TowerMinLevel {
+	f := towerFloor(w)
+	if w.Level >= f {
 		return ""
 	}
-	if w.TowerNeedsMerc {
-		if routeMercOK(w) {
-			return ""
-		}
-		return fmt.Sprintf("no merc, clvl %d < %d", w.Level, w.TowerMinLevel)
+	return levelWhy(w, f)
+}
+
+// levelWhy words a level verdict: `no merc, clvl 14 < 16` or, with a living merc, `clvl 13 < 14 (with merc)`.
+func levelWhy(w World, f int) string {
+	if routeMercOK(w) {
+		return fmt.Sprintf("clvl %d < %d (with merc)", w.Level, f)
 	}
-	return fmt.Sprintf("clvl %d < %d", w.Level, w.TowerMinLevel)
+	return fmt.Sprintf("no merc, clvl %d < %d", w.Level, f)
+}
+
+// MercState is the merc word of the floor log lines: alive, dead (the reader knows it died) or none (no merc, unknown).
+func MercState(w World) string {
+	switch {
+	case routeMercOK(w):
+		return "alive"
+	case w.MercKnown:
+		return "dead"
+	}
+	return "none"
+}
+
+// FloorLine is the log line of the effective floor of one guard: `route guard: monastery floor=16 (merc=none)`.
+func FloorLine(gate string, floor int, w World) string {
+	return fmt.Sprintf("route guard: %s floor=%d (merc=%s)", gate, floor, MercState(w))
+}
+
+// MonasteryFloor, TowerFloor and AndarielFloor are the effective floors of the three guards for w (0 = guard off or
+// not Normal); the bot logs them with FloorLine.
+func MonasteryFloor(w World) int { return routeFloor(w) }
+func TowerFloor(w World) int     { return towerFloor(w) }
+func AndarielFloor(w World) int {
+	if !normalDiff(w) {
+		return 0
+	}
+	return max(andarielFloor(w), routeFloor(w))
 }
 
 // TowerKitWhy is the supply the tower needs on top (same kit as the Monastery road); "" = complete or guard off.
@@ -87,18 +133,22 @@ const (
 
 func routeMercOK(w World) bool { return w.HasMerc || (w.MercKnown && w.MercAlive) }
 
-// routeFloor is the clvl the road needs: 0 when the guard is off, a merc is alive or the difficulty is not Normal.
+// routeFloor is the clvl the road needs: 0 when the guard is off or the difficulty is not Normal; with a living merc
+// RouteMinLevelMerc (0 = any level, the old rule), else RouteMinLevel.
 func routeFloor(w World) int {
-	if w.RouteMinLevel <= 0 || !normalDiff(w) || routeMercOK(w) {
+	if w.RouteMinLevel <= 0 || !normalDiff(w) {
 		return 0
+	}
+	if routeMercOK(w) {
+		return min(w.RouteMinLevelMerc, w.RouteMinLevel)
 	}
 	return w.RouteMinLevel
 }
 
-// RouteLevelWhy says why the road is closed on level grounds ("" = open): no living merc and clvl below the floor.
+// RouteLevelWhy says why the road is closed on level grounds ("" = open): clvl below routeFloor.
 func RouteLevelWhy(w World) string {
 	if f := routeFloor(w); w.Level < f {
-		return fmt.Sprintf("no merc, clvl %d < %d", w.Level, f)
+		return levelWhy(w, f)
 	}
 	return ""
 }

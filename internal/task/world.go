@@ -124,7 +124,11 @@ type World struct {
 
 	// AndarielMinLevel is the Andariel clvl floor (Tuning.Boss.AndarielMinLevel); 0 = env.DefaultAndarielMinLevel.
 	AndarielMinLevel int
-	Antidotes        int // antidote potions in belt and pack
+	// AndarielMinLevelMerc is the floor with a living merc (Tuning.Boss.AndarielMinLevelMerc); 0 = the no-merc floor.
+	AndarielMinLevelMerc int
+	// AndarielHold: no unattended Andariel attempt before the throwaway fight has won once (Tuning.Boss.AndarielHold); false = off.
+	AndarielHold bool
+	Antidotes    int // antidote potions in belt and pack
 	// MercKnown and MercAlive come from the optional MercAlive hook (gate.go); MercKnown false = no reader, the gate passes.
 	MercKnown, MercAlive bool
 
@@ -132,14 +136,17 @@ type World struct {
 	// merc. ImbueMinLevel: clvl floor of the optional Imbue quest; ImbueUseful: the class is melee; ImbueNeedsMerc: also
 	// needs a living merc.
 	RouteMinLevel, ImbueMinLevel int
-	ImbueUseful, ImbueNeedsMerc  bool
+	// RouteMinLevelMerc is the road floor with a living merc; 0 = a living merc opens the road at any level.
+	RouteMinLevelMerc           int
+	ImbueUseful, ImbueNeedsMerc bool
 	// RouteBlocked is RouteWhy(w) filled by the bot ("" = open): fieldReady keeps every step into a guarded area waiting.
 	RouteBlocked string
 	// TowerMinLevel (0 = tower guard off) and TowerNeedsMerc are the Forgotten Tower knobs (route.go); TowerBlocked is
 	// TowerWhy(w) filled by the bot, kept out of areas 20-25 by fieldReady.
-	TowerMinLevel  int
-	TowerNeedsMerc bool
-	TowerBlocked   string
+	TowerMinLevel     int
+	TowerMinLevelMerc int  // the Forgotten Tower floor with a living merc while TowerNeedsMerc is false; 0 = the no-merc floor
+	TowerNeedsMerc    bool // true: a living merc opens the tower at any level
+	TowerBlocked      string
 	// DenMinLevel is the Normal clvl floor of Den of Evil for this class (caster or melee knob, bot fills it); 0 = no class floor.
 	DenMinLevel int
 

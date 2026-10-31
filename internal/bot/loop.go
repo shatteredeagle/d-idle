@@ -819,7 +819,7 @@ func (r *Runner) fullChores(reason string) ChorePlan {
 // her floor in Normal and has not killed her (the gate itself re-checks the stock, task.BossGate).
 func (r *Runner) antidotesWanted() int {
 	s := r.latest()
-	if s == nil || s.Player == nil || s.Player.Difficulty != d2.Normal || s.Player.Level < r.e.Tune.Boss.AndarielMinLevel-2 || r.killedBoss(task.BossAndy) {
+	if s == nil || s.Player == nil || s.Player.Difficulty != d2.Normal || s.Player.Level < r.e.Tune.Boss.AndarielLowFloor()-2 || r.killedBoss(task.BossAndy) {
 		return 0
 	}
 	return 2

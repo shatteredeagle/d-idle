@@ -69,7 +69,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.potionGapMs | 1000 | 900..3000 | ms | 3000 | 4 | Minimum time between healing or mana potions. |
 | combat.rejuvGapMs | 300 | 250..1500 | ms | 1500 | 1 | Minimum time between rejuvenation potions. |
 | combat.reactionMs | 120 | 40..700 | ms | 700 | 1 | Delay before the bot acts on a survival event. |
-| combat.pollMs | 60 | 30..400 | ms | 400 | 6 | How often the fight loop looks at the game. |
+| combat.pollMs | 60 | 30..400 | ms | 400 | 7 | How often the fight loop looks at the game. |
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
@@ -223,7 +223,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| boss.andarielMinLevel | 15 | 12..22 | levels | 15 | 9 | Character level at which the Normal campaign attempts Andariel; the kit gate (potions, town portal, antidotes) applies on top. Lower hits the XP wall of Act 1 later, higher is safer for the fight. 22 is the old hold. |
+| boss.andarielMinLevel | 17 | 12..22 | levels | 17 | 7 | Character level at which the Normal campaign attempts Andariel without a living merc (a dead or unknown merc counts as none; this replaces the old +2 for a dead merc); the kit gate (potions, town portal, at least 2 antidotes) applies on top. Interim (ADR 0011): 17. 22 is the old hold, 17 equals the old 15 plus 2 for a dead merc. |
+| boss.andarielMinLevelMerc | 15 | 12..22 | levels | 15 | 3 | The same floor with a living merc. Interim (ADR 0011): 15 (the old floor). |
+| boss.andarielHold | 1 | 0..1 | bool | 1 | 2 | 1: the campaign does not enter Andariel unattended (log: boss: held for andariel (unattended hold ...)) until the throwaway fight of card m3-andariel has won once; the level farms instead. Set 0 after that win. Attended runs (bossrun) are not affected. ADR 0011 gate 3. |
 | boss.brCasterLevel | 9 | 6..14 | levels | 9 | 0 | Character level a Sorceress, Druid or Amazon needs before the campaign attempts Blood Raven (the free Rogue). SME: below 8 it is a death trap, 9 with the kit is the first clean try. |
 | boss.brMeleeLevel | 8 | 6..14 | levels | 8 | 0 | Same floor for the Necromancer (skeletons and Clay Golem do physical damage, her 0 percent resist) and the melee classes. |
 | boss.brPotions | 4 | 2..8 | count | 4 | 0 | Healing potions (belt and pack) the kit needs before each Blood Raven attempt. |
@@ -261,9 +263,11 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| route.monasteryMinLevel | 20 | 10..40 | levels | 20 | 2 | The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered only with a living merc or from this clvl, and with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. |
-| route.towerMinLevel | 20 | 0..40 | levels | 20 | 7 | The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered only with a living merc or from this clvl, and with the supply kit (4 healing, a portal, mana for casters). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 20)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. 0 turns the tower guard off. |
-| route.towerNeedsMerc | 1 | 0..1 | bool | 1 | 3 | 1: a living mercenary opens the Forgotten Tower below the level floor (an unknown merc counts as none). 0: only the level floor opens it. |
+| route.monasteryMinLevel | 16 | 10..40 | levels | 16 | 2 | The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003): 16, was 20; if road deaths fail the death rule at 16 in the act1run soak raise it to 18 and re-grill, if none try 14. 20 restores the old number. |
+| route.monasteryMinLevelMerc | 14 | 0..40 | levels | 14 | 2 | The same floor with a living merc (unknown counts as none). Interim (ADR 0011): 14. 0 restores the old rule: a living merc opens the road at any level. |
+| route.towerMinLevel | 16 | 0..40 | levels | 16 | 6 | The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl, and with the supply kit (4 healing, a portal, mana for casters). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 16)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. Interim (ADR 0011): 16, was 20. 0 turns the tower guard off. |
+| route.towerMinLevelMerc | 14 | 0..40 | levels | 14 | 4 | The Forgotten Tower floor with a living merc while route.towerNeedsMerc is 0. Interim (ADR 0011): 14. 0 means the no-merc floor applies to a merc too. |
+| route.towerNeedsMerc | 0 | 0..1 | bool | 0 | 3 | 0: a living mercenary only lowers the Forgotten Tower floor to route.towerMinLevelMerc (an unknown merc counts as none). 1: a living merc opens the tower at any level (the old rule). |
 
 ### resource.*
 

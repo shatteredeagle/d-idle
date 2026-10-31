@@ -106,7 +106,7 @@ func TestRouteGuardBlocksAndarielAndLevelsInstead(t *testing.T) {
 		}
 	}
 	// clvl 16 is above the Andariel floor 15, but with no merc the road is closed: a level step, not the quest
-	w := routeWorld(16, done)
+	w := routeWorld(16, func(w *task.World) { done(w); w.AndarielMinLevel = 15 }) // the old numbers: 20 / any merc / 15
 	p := c.Plan(w, nil)
 	if p.Group == task.QAndariel || p.Group == task.QAct1Done || !strings.HasPrefix(p.ID, "level.") {
 		t.Fatalf("clvl 16 no merc: plan %q group %q", p.ID, p.Group)
@@ -114,14 +114,14 @@ func TestRouteGuardBlocksAndarielAndLevelsInstead(t *testing.T) {
 	if p.ID != "level.20" {
 		t.Errorf("level target %q, want level.20", p.ID)
 	}
-	if p := c.Plan(routeWorld(16, func(w *task.World) { done(w); w.HasMerc = true }), nil); p.Group != task.QAndariel {
+	if p := c.Plan(routeWorld(16, func(w *task.World) { done(w); w.HasMerc = true; w.AndarielMinLevel = 15 }), nil); p.Group != task.QAndariel {
 		t.Errorf("merc alive: %q", p.ID)
 	}
 	if p := c.Plan(routeWorld(20, done), nil); p.Group != task.QAndariel {
 		t.Errorf("clvl 20: %q", p.ID)
 	}
 	g, _ := task.GateFor(task.QAndariel)
-	if why := g.NotReady(routeWorld(16, done)); !strings.Contains(why, "route guard") {
+	if why := g.NotReady(routeWorld(16, func(w *task.World) { done(w); w.AndarielMinLevel = 15 })); !strings.Contains(why, "route guard") {
 		t.Errorf("andariel gate: %q", why)
 	}
 }

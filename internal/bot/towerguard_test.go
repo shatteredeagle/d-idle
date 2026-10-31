@@ -14,7 +14,7 @@ func TestTowerGuardClosesAreas20To25(t *testing.T) {
 	g := campaignRig(t, &fakeQuests{}, 14)
 	g.r.poll()
 	s := g.r.latest()
-	if why := g.r.towerGuardWhy(s); !strings.Contains(why, "no merc, clvl 14 < 20") {
+	if why := g.r.towerGuardWhy(s); !strings.Contains(why, "no merc, clvl 14 < 16") {
 		t.Fatalf("tower verdict %q", why)
 	}
 	for a := 20; a <= 25; a++ {
@@ -55,7 +55,7 @@ func TestTowerWorldFillsSkipAndLogs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if w.TowerMinLevel != 20 || !w.TowerNeedsMerc || !strings.HasPrefix(w.TowerBlocked, "no merc, clvl 14 < 20") {
+	if w.TowerMinLevel != 16 || w.TowerNeedsMerc || !strings.HasPrefix(w.TowerBlocked, "no merc, clvl 14 < 16") {
 		t.Fatalf("world %+v", w)
 	}
 	if task.TowerSkipWhy(w) == "" {

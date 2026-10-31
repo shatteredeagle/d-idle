@@ -3,6 +3,7 @@ package bot
 import (
 	"context"
 	"fmt"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -15,10 +16,10 @@ import (
 // rule; the knob 0 turns it off.
 func (r *Runner) fillRoute(w *task.World, class d2.Class) {
 	t := r.e.Tune
-	w.RouteMinLevel = t.Route.MonasteryMinLevel
+	w.RouteMinLevel, w.RouteMinLevelMerc = t.Route.MonasteryMinLevel, t.Route.MonasteryMinLevelMerc
 	w.ImbueMinLevel, w.ImbueNeedsMerc = t.Campaign.ImbueMinLevel, t.Campaign.ImbueNeedsMerc != 0
 	w.ImbueUseful = class == d2.Barbarian || class == d2.Paladin || class == d2.Assassin
-	w.TowerMinLevel, w.TowerNeedsMerc = t.Route.TowerMinLevel, t.Route.TowerNeedsMerc != 0
+	w.TowerMinLevel, w.TowerMinLevelMerc, w.TowerNeedsMerc = t.Route.TowerMinLevel, t.Route.TowerMinLevelMerc, t.Route.TowerNeedsMerc != 0
 	w.RouteBlocked = task.RouteWhy(*w)
 	w.TowerBlocked = task.TowerWhy(*w)
 	line := task.RouteLine(*w)
@@ -37,6 +38,35 @@ func (r *Runner) fillRoute(w *task.World, class d2.Class) {
 	if changed {
 		r.e.Log.Info(line)
 	}
+	r.noteFloors(*w)
+}
+
+// noteFloors logs the effective floor of each guard once per change (`route guard: monastery floor=16 (merc=none)`), so
+// a grep shows which number a decision used and whether the merc state moved it. Normal only; a guard that is off is silent.
+func (r *Runner) noteFloors(w task.World) {
+	if w.Difficulty != "" && w.Difficulty != "normal" {
+		return
+	}
+	w.AndarielMinLevel, w.AndarielMinLevelMerc = r.e.Tune.Boss.AndarielMinLevel, r.e.Tune.Boss.AndarielMinLevelMerc
+	var lines []string
+	for _, g := range []struct {
+		name  string
+		floor int
+	}{{"monastery", task.MonasteryFloor(w)}, {"forgotten tower", task.TowerFloor(w)}, {"andariel", task.AndarielFloor(w)}} {
+		if g.floor > 0 {
+			lines = append(lines, task.FloorLine(g.name, g.floor, w))
+		}
+	}
+	key := strings.Join(lines, "\n")
+	r.obMu.Lock()
+	changed := r.loop.floorNote != key
+	r.loop.floorNote = key
+	r.obMu.Unlock()
+	if changed {
+		for _, l := range lines {
+			r.e.Log.Info(l)
+		}
+	}
 }
 
 // guardWorld is the slice of the World the guards read, built from a snapshot (nil when there is no player).
@@ -45,8 +75,8 @@ func (r *Runner) guardWorld(s *d2.Snapshot) *task.World {
 		return nil
 	}
 	w := task.World{Difficulty: difficultyName(s.Player.Difficulty), Level: s.Player.Level, HasMerc: d2.FindMerc(s).Alive}
-	w.RouteMinLevel = r.e.Tune.Route.MonasteryMinLevel
-	w.TowerMinLevel, w.TowerNeedsMerc = r.e.Tune.Route.TowerMinLevel, r.e.Tune.Route.TowerNeedsMerc != 0
+	w.RouteMinLevel, w.RouteMinLevelMerc = r.e.Tune.Route.MonasteryMinLevel, r.e.Tune.Route.MonasteryMinLevelMerc
+	w.TowerMinLevel, w.TowerMinLevelMerc, w.TowerNeedsMerc = r.e.Tune.Route.TowerMinLevel, r.e.Tune.Route.TowerMinLevelMerc, r.e.Tune.Route.TowerNeedsMerc != 0
 	if task.MercAlive != nil {
 		w.MercAlive, w.MercKnown = task.MercAlive()
 	}
