@@ -26,3 +26,13 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+docs/d2d-xp-gap.md  xpgap  xpgap
+docs/knobs.md  xpgap  xpgap
+internal/bot/goal.go  xpgap  xpgap
+internal/env/tuning_resource.go  xpgap  xpgap
+internal/resource/tuning.go  xpgap  xpgap
+internal/bot/recoveryxp.go  xpgap  xpgap
+internal/bot/recoveryxp_test.go  xpgap  xpgap
+internal/bot/povertysell_test.go  xpgap  xpgap
+tools/xpgap/**  xpgap  xpgap
+openspec/changes/xpgap/**  xpgap  xpgap

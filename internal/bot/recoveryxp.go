@@ -64,12 +64,13 @@ func (r *Runner) recoveryXPArea(s *d2.Snapshot, ex map[int]bool) (int, bool) {
 	t := r.e.Tune.Bot
 	acts := r.allowedActs(s)
 	melee, full := MeleeTank(s.Player.Class), r.fullKit(s)
+	early := r.e.Tune.Resource.RecoveryXPEarly // XPGAP knob: enter this many levels before the plan says
 	best, bestML, bestXP := 0, 0, -1.0
 	for _, st := range r.d.Plan.Steps[diff] {
 		if !recoveryXPTier[st.Area] || ex[st.Area] || r.d.Plan.IsTown(st.Area) {
 			continue
 		}
-		if (acts != nil && !acts[r.d.Plan.Act(st.Area)]) || (st.KitLvl > clvl && !full) || st.enter(melee)+t.LevelMargin > clvl {
+		if (acts != nil && !acts[r.d.Plan.Act(st.Area)]) || (st.KitLvl-early > clvl && !full) || st.enter(melee)+t.LevelMargin-early > clvl {
 			continue
 		}
 		ml := r.recoveryMLvl(st.Area, s.Player.Difficulty)

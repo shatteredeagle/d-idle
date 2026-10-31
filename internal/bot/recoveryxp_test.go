@@ -90,3 +90,18 @@ func TestRecoveryAreaUsesXPPick(t *testing.T) {
 		t.Fatalf("clvl 14 recovery area %d %v", a, ok)
 	}
 }
+
+// XPGAP: the early-entry knob lets a recovering clvl 3 character farm Cold Plains (plan enter 5), 0 keeps the plan levels.
+func TestRecoveryXPEarlyEntry(t *testing.T) {
+	g := newRig(t)
+	if a, ok := xpPick(g, 3, nil); !ok || a != 2 {
+		t.Fatalf("knob 0, clvl 3 picked %d %v, want Blood Moor", a, ok)
+	}
+	g.e.Tune.Resource.RecoveryXPEarly = 2
+	if a, ok := xpPick(g, 3, nil); !ok || a != 3 {
+		t.Fatalf("knob 2, clvl 3 picked %d %v, want Cold Plains", a, ok)
+	}
+	if a, ok := xpPick(g, 2, nil); !ok || a != 2 {
+		t.Fatalf("knob 2, clvl 2 picked %d %v, want Blood Moor", a, ok)
+	}
+}
