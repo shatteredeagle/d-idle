@@ -1,0 +1,11 @@
+metric                     d2d mean        sd      n |     baseline (min .. max)          |      gap       tol  verdict
+xp_per_hour                    4767       651      8 |         9172 (6600 .. 11743)       |   -48.0%      1834  FAIL
+kills_per_hour                  192      21.1      8 |          398 (389 .. 408)          |   -51.9%      79.7  FAIL
+deaths_per_hour               0.125         0      8 |        0.405 (0.29 .. 0.52)        |      n/a      0.15  PASS [3 deaths in 24.0 h (budget 4, Poisson p=0.993)]
+deaths_per_1000_kills         0.652         0      8 |         1.02 (0.7 .. 1.34)         |      n/a      0.92  PASS
+potions_per_100_kills             0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+min_life_fraction                 0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+damage_per_kill                   0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+WARNING: only 2 baseline run(s): the baseline itself is uncertain
+seeds counted: 8
+OVERALL: FAIL (exit 3)

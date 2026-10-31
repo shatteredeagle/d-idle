@@ -20,6 +20,7 @@ docs/d2d-replicated-soak.md          d2d-replicated-soak   d2d-replicated-soak
 docs/d2d-container-soak.md           d2d-container-soak    d2d-container-soak
 tools/d2dsoak/baselines-early.json  m2-earlybase  m2-earlybase
 docs/d2d-baselines-early.md  m2-earlybase  m2-earlybase
+docs/probes/m2early/**  m2-earlybase  m2-earlybase
 internal/env/tuning_route.go  m3-routeguard  m3-routeguard
 internal/env/tuning_boss.go  m3-routeguard  m3-routeguard
 internal/bot/routeguard.go  m3-routeguard  m3-routeguard

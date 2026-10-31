@@ -39,7 +39,9 @@
     "deaths_per_hour": 0.29,
     "kills_per_hour": 408,
     "deaths_per_1000_kills": 0.7
-   }
+   },
+   "kills": 1427,
+   "deaths": 1
   },
   {
    "name": "fresha-fresh-1-7",
@@ -52,7 +54,9 @@
     "kills_per_hour": 389,
     "deaths_per_hour": 0.52,
     "deaths_per_1000_kills": 1.34
-   }
+   },
+   "kills": 746,
+   "deaths": 1
   }
  ]
 }
