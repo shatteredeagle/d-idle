@@ -400,6 +400,10 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 				j.target = min(j.target, 2)
 			}
 		}
+		// BASICSFIX: identify scrolls only for a likely valuable; the first portal scroll waits for potionsFirst
+		if j.scroll == "isc" && !t.idScrollWanted(cur) || j.scroll == "tsc" && have == 0 && !hasTome && !t.tpAllowed(cur) {
+			continue
+		}
 		su, ok := find(j.scroll)
 		if !ok {
 			continue
@@ -492,7 +496,7 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) []d2.Unit {
 		if v.NeedID && !u.Item.Identified() {
 			// The identify step ran before this and could not read it (no scroll, no gold): a full pack must not hold
 			// it for ever. Unidentified jewelry sells as is (SME: no ID tome early); charms are stashed instead.
-			if !(full && v.Prio < t.e.Tune.Loot.ValuableMinPrio) {
+			if !((full || t.sellUnidentified(s, u)) && v.Prio < t.e.Tune.Loot.ValuableMinPrio) {
 				continue
 			}
 			out = append(out, u)

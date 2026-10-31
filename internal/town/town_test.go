@@ -68,6 +68,7 @@ func TestChoresAct1(t *testing.T) {
 	w := r.W
 	dressed(w)
 	w.Player.Life = 12
+	w.Player.Level = 10                  // keep line 800: bankFirst leaves the shop enough
 	w.Add("r07", d2.ContInventory, 0, 0) // rune: stash
 	sword := w.Add("ssd", d2.ContInventory, 1, 0)
 	sword.Item.Quality = 4 // magic: sell
@@ -334,7 +335,7 @@ func TestIdentifyWithScroll(t *testing.T) {
 	// Without a scroll one is bought first.
 	r2 := newRig(t)
 	r2.W.Add("rin", d2.ContInventory, 0, 0)
-	r2.W.Items[0].Item.Quality, r2.W.Items[0].Item.Flags = 4, 0
+	r2.W.Items[0].Item.Quality, r2.W.Items[0].Item.Flags = 6, 0 // BASICSFIX: a plain magic ring is sold as it is; a rare is worth a scroll
 	rep, err = r2.T.Chores(context.Background(), town.ChorePlan{Identify: true})
 	if err != nil || rep.Identified != 1 || rep.Bought["Scroll of Identify"] != 1 {
 		t.Fatalf("%v %+v", err, rep)
@@ -403,10 +404,12 @@ func TestRebuyNeverBuysIntoSwappedSet(t *testing.T) {
 	}
 }
 
-func TestShopBuysTownPortalBeforePotions(t *testing.T) {
+// BASICSFIX: with potionsFirst 0 (the old order) the first portal scroll comes before the potions.
+func TestShopBuysTownPortalBeforePotionsWhenPotionsFirstIsOff(t *testing.T) {
 	geartest.Need(t)
 	r := newRig(t)
 	r.W.Player.Gold = 120
+	r.Env.Tune.Town.PotionsFirst = 0
 	rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Scrolls: true})
 	if err != nil {
 		t.Fatal(err)

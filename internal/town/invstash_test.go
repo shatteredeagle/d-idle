@@ -48,7 +48,7 @@ func TestUnidentifiedJewelryWaitsWhileThePackHasRoom(t *testing.T) {
 	dressed(r.W)
 	r.W.Player.Gold = 0
 	for x := 0; x < 3; x++ {
-		u := r.W.NewItem("rin", 4)
+		u := r.W.NewItem("rin", 6) // rare: a plain magic ring is sold as it is (BASICSFIX idScrollNeed)
 		u.Item.Flags &^= d2.FlagIdentified
 		r.W.Put(u, d2.ContInventory, x, 0)
 	}

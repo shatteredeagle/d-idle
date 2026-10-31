@@ -116,7 +116,11 @@ func (t *Town) stashItems(ctx context.Context, rep *ChoreReport, insure bool) er
 // goldKeep is the gold the pack keeps: StashGoldBase plus level*StashGoldPerLvl.
 func (t *Town) goldKeep(level int) int {
 	tu := t.tune()
-	return tu.StashGoldBase + level*tu.StashGoldPerLvl
+	keep := tu.StashGoldBase + level*tu.StashGoldPerLvl
+	if tu.BankFirst != 0 {
+		keep = max(keep, t.kitGold()) // BASICSFIX: banking never cuts into the minimal kit
+	}
+	return keep
 }
 
 // stashGold deposits the inventory gold above goldKeep (all of it when that is 0). The stash must
