@@ -26,3 +26,7 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
+internal/combat/fight.go  navstall  navstall
+internal/combat/crowd.go  navstall  navstall
+internal/combat/navstall_test.go  navstall  navstall
+openspec/changes/navstall/**  navstall  navstall
