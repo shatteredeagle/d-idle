@@ -124,12 +124,20 @@ func (r *Runner) syncGames() {
 	r.obMu.Unlock()
 	if n != r.loop.clearedGen {
 		r.loop.clearedGen = n
-		r.loop.cleared = map[int]bool{}
-		r.loop.sweepKills = nil
-		r.loop.needBuff = true
-		r.loop.stepArea = 0
-		r.loop.waitNote = false
+		r.forgetGame()
 	}
+}
+
+// forgetGame drops the loop's per-game memory (cleared areas, sweep kills, buff and step state). One helper for both
+// ways a new game is noticed: the observer's menu poll (syncGames) and a bot-started fresh game on a backend with no
+// menu poll (freshGameToLevel, d2d).
+func (r *Runner) forgetGame() {
+	l := &r.loop
+	l.cleared = map[int]bool{}
+	l.sweepKills = nil
+	l.needBuff = true
+	l.stepArea = 0
+	l.waitNote = false
 }
 
 // ---- town trips ----------------------------------------------------------------------------------
@@ -798,7 +806,7 @@ func (r *Runner) ensureDifficulty(ctx context.Context, s *d2.Snapshot, c control
 	}
 	l.diffTries++
 	l.diffNext = now.Add(min(time.Duration(1<<min(l.diffTries, 5))*time.Minute, 30*time.Minute))
-	ok := r.do(ctx, c, StateInTown, "Starting a "+want+" game", sec(r.cfg.TownTimeoutSec), "new game", r.oogRun(func(ctx context.Context) error {
+	ok := r.do(ctx, c, StateInTown, "Starting a "+want+" game", sec(r.cfg.TownTimeoutSec), "new game", r.newGameRun(func(ctx context.Context) error {
 		return r.d.Cycler.NewGame(ctx, want)
 	}))
 	if ok {
@@ -834,7 +842,7 @@ func (r *Runner) noTarget(ctx context.Context, s *d2.Snapshot, c control) bool {
 	}
 	if r.d.Cycler != nil && len(l.cleared) > 0 {
 		diff := c.spec.difficulty
-		return r.do(ctx, c, StateInTown, "Starting a fresh game", sec(r.cfg.TownTimeoutSec), "new game", r.oogRun(func(ctx context.Context) error {
+		return r.do(ctx, c, StateInTown, "Starting a fresh game", sec(r.cfg.TownTimeoutSec), "new game", r.newGameRun(func(ctx context.Context) error {
 			return r.d.Cycler.NewGame(ctx, diff)
 		}))
 	}

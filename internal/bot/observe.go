@@ -113,6 +113,7 @@ type observer struct {
 	errSince     time.Time // first of a run of failed snapshots
 	plannedGames int       // newGames entries that were planned save points (not restarts)
 	newGames     int       // incremented whenever the menus were left for a game
+	recycles     int       // unplanned games the bot started itself (newGameRun, Recycle): counted even when no menu poll sees them (d2d)
 	alive        aliveInfo
 	curve        []lifeStamp
 	trail        []trailStamp // one sample per second for the last minute (autopsy.go)
@@ -210,6 +211,33 @@ func (r *Runner) oogRun(f func(context.Context) error) func(context.Context) err
 		r.Beat()
 		return f(ctx)
 	}
+}
+
+// newGameRun is oogRun for an unplanned new game (farm, difficulty switch, fresh game, failsafe): a success also counts
+// as a restart on the minute line, because the d2d backend restarts the process without a menu poll and the observer's
+// newGames never moves there. Save points are planned and use oogRun directly.
+func (r *Runner) newGameRun(f func(context.Context) error) func(context.Context) error {
+	run := r.oogRun(f)
+	return func(ctx context.Context) error {
+		err := run(ctx)
+		if err == nil {
+			r.noteRecycle()
+		}
+		return err
+	}
+}
+
+func (r *Runner) noteRecycle() {
+	r.obMu.Lock()
+	r.ob.recycles++
+	r.obMu.Unlock()
+}
+
+// restartCount is the minute line's restarts: game entries after the first that were not planned save points, as the
+// menu observer saw them (Game.exe: also catches crash re-entries), or the games the bot started itself, whichever is
+// larger (d2d never shows the menus, so only the second is non-zero there).
+func restartCount(newGames, planned, recycles int) int {
+	return max(0, newGames-1-planned, recycles)
 }
 
 func (r *Runner) expectGameExit(on bool) {
@@ -904,7 +932,7 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 	group, _ := stepgroup.Of(step)
 	r.e.Log.Info("minute", "area", p.Area, "clvl", p.Level, "xp", p.Exp, "kills", r.lifetimeKills(p.Name), "killsGame", o.kills, "deaths", o.deaths,
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "potionsUsed", int(r.drank.Load()),
-		"gold", p.Gold, "restarts", max(0, o.newGames-1-o.plannedGames), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
+		"gold", p.Gold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
 		"state", group, "rstate", rstate, "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin())
 	r.noteGoldNextMinute(p.Gold, now)
 }
