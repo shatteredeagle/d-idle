@@ -49,6 +49,17 @@ Conflicts (5 files), both sides kept:
 
 Re-run on the merged tree (worker host, `/tmp/hitrec-build`): `ninja test_combat test_game` ok; `test_combat` rc 0; `test_game` (D2_MPQ_DIR = the lab data folder, D2_PATCH_INSTALLER = the 1.14d installer) rc 0, 27 OK lines. Get-hit decision differential, oracle `tools/emu/hit_rule.py` vs `test_combat --get-hit` on the saved round-2 cases (cases2 `27625643`, game2 `e7e49d38`): **0 differ of 73,694 frames** (21,532 multi-record; player 0 of 36,904, monster 0 of 36,790), output md5 `4fdb5ced` identical to the pre-merge after2. The BEFORE numbers (13,935 upstream main, 702 for the summed version) are unchanged: they quote lines this merge does not touch. The decision harness calls `rules::get_hit`, so the plumbing (`blow_fine`, per-blow `struck_big`, two blows in one tick) is checked by reading: `struck_big` is unchanged and still loops `foe.blows` with each blow's class and mark; monsters take one `hurt` per landed blow. `pr_guard` upstream/main: 0 FAIL, 0 WARN. `presubmit --quick`: 0 FAIL, 3 WARN (the same sibling / skipped-build answers as before). The claim did not change.
 
+## Mark derivation (merge-resolution check, agent MARKPROOF, 2026-10-31)
+
+The question: the merge made `missile_blow` set `Blow::elemental` from the fine value (`fine > 0`), and the decision differential takes `marked` as an input, so how the mark is DERIVED from the damage record was never checked against game.exe 1.14d. Full detail: docs/research/pr-get-hit-rule-proof.md, section "Mark derivation".
+
+- **game.exe's rule (V).** `FUN_0057c6c0` -> `FUN_0057c1e0` -> `FUN_0057bf80` resists each element field of the record IN PLACE (the resisted value is written back, a field at or under 0 becomes 0); then `FUN_0057cee0` -> `FUN_0057ce30` (0x57ce30) marks the class from the fields fire +0x10, lightning +0x1c, cold +0x24, poison +0x28 (table 0x6e16d8): any one over 0 (signed, 256ths, so one 256th counts; no 0x100 threshold, no whole-point test; magic +0x20 and physical +0x08 are not in it). Per record, i.e. per blow. With several fields it takes the first from a start index that rotates with a global counter (0x88cad0): the class bits vary, the mark does not.
+- **Differential (V).** `tools/emu/hit_mark.py` + `hit_mark_harness.cpp` (the harness includes the real merged `combat.hpp` and calls `missile_blow`): 111,200 cases (11,200 boundary + 100,000 random, seed 7; every element, rolls 0, 1, 2, 127, 128, 255..257, 511..513, the 0x100000 MulDiv edge, 0x7fffffff, min < max rolls with a physical part, resistance -100..150, pierce 0..60 vs a non-immune). Merged tree as resolved (6fc9451e): fire, lightning, cold, magic, stun 0 differ over 81,000+ cases; **poison 3,923 differ**: the merge kept `blow.poison > 0`, the whole-point total `roll * length >> 8`, while the record's poison field (per tick, 256ths) is tested like the others. Fix, one line (`resisted_fine(roll, res) > 0`): **0 of 111,200 differ**. Also `multi` (20,000 records with several fields set, game.exe vs the any-of-four model): 0 differ.
+- **Was the merge right.** The line quoted in the question (`fine > 0 && etype != 4` for fire, lightning, cold; magic excluded) is exactly game.exe's rule. The poison line was not; fixed.
+- **Unit asserts (test_combat).** A fractional element (128/256), 1/256 and 0x10000 mark; an empty record and magic do not; resisted to nothing (immune; 1/256 at 50 %) does not, 2/256 at 50 % does; poison per tick of 1/256 marks although its total is under a point.
+- **New local head** `5466cd17` (one commit on 6fc9451e, 2 files +16 -1, authored as the user, no trailer, `Agent: Claude Code`). `ninja test_combat test_game` ok; `test_combat` rc 0; `test_game` rc 0, 27 OK; decision differential on the saved round-2 cases: 0 differ of 73,694 frames, output md5 `4fdb5ced` identical to pre-merge; `pr_guard` upstream/main 0 FAIL 0 WARN; `presubmit --quick` 0 FAIL 3 WARN (same answers). The oracle is not shipped upstream: #134 does not ship `hit_rule.py` either (the clone keeps it untracked).
+- **Limits.** UNVERIFIED: how the missile hit fills the poison field (taken as the roll per tick; `FUN_005a89a0` rolls it, the fill code is not traced). Domain as the #135 pack: a plain monster, magic damage reduction and absorb 0, physical resistance 0, pierce against a non-immune only (pierce through an immunity is the existing ponytail in `missile_blow`).
+
 Push command NOT RUN (needs the user's go; plain, no force):
 
 ```sh
@@ -58,8 +69,8 @@ ssh worker.example 'cd ~/d2d-lab/pr/hitrec && git push origin fix/get-hit-rule'
 Draft reply for the thread (not posted):
 
 ```text
-@psi29a merged upstream/main into the branch (6fc9451e), no history rewrite; the conflicts were the fine-damage carry in hurt (#135), the get-hit length block (#136) and combat.md.
-The decision runs on each blow's own size in 256ths; test_combat, test_game and the oracle differential (0 of 73,694 frames) re-run clean on the merge.
+@psi29a the conflicts are resolved by merging upstream main into the branch (no history rewrite); the decision runs on each blow's own size in 256ths, and the element mark is now checked against game.exe (111,200 cases, 0 differ) with one extra commit for the poison field.
+test_combat, test_game and the get-hit differential (0 of 73,694 frames) re-run clean on the result.
 
 Agent: Claude Code
 ```
