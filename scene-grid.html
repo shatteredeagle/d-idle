@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D.idle live grid</title>
+<style>:root{--bg:#0b0807;--panel:#171110;--line:#33241f;--fg:#f8efe6;--mute:#d3c3b5;--dim:#a8968a;--ember:#ff8a3d;--amber:#ffc15a;--red:#ff6559;--ok:#5be08f}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:calc(100vw / 80);background:var(--bg)}
+body{width:80rem;height:45rem;max-width:100vw;overflow:hidden;color:var(--fg);font-family:system-ui,"Segoe UI",Roboto,"DejaVu Sans",sans-serif;position:relative;
+ background:radial-gradient(ellipse 60rem 30rem at 85% -10%,#2a1308 0,#0b0807 70%),var(--bg)}
+body.kiosk{cursor:none}
+.top{position:absolute;left:1rem;right:1rem;top:0.5rem;height:3.4rem;display:flex;align-items:center;gap:1.2rem}
+.brand{font-size:2.8rem;font-weight:900;color:var(--ember);line-height:1;text-shadow:0 0 1.4rem rgba(255,106,40,0.45)}
+.tag{font-size:1.3rem;color:var(--mute);font-weight:600;padding-left:1.2rem;border-left:0.2rem solid var(--ember)}
+.meta{margin-left:auto;display:flex;align-items:center;gap:1.4rem;font-size:1.2rem;color:var(--mute);font-weight:600}
+.clock{font-size:2.2rem;font-weight:800;color:var(--fg);font-variant-numeric:tabular-nums}
+.net{display:flex;align-items:center;gap:0.5rem;text-transform:uppercase;letter-spacing:0.12em;font-size:1rem}
+.kiosk .net{display:none}
+.dot{width:0.9rem;height:0.9rem;border-radius:50%;background:var(--ok)}
+.off .dot{background:var(--red)}
+#stage{position:absolute;left:0;top:0;width:80rem;height:45rem}
+.hold .col{position:absolute;left:1rem;top:4.2rem;width:36rem;bottom:1rem;display:flex;flex-direction:column;gap:1rem}
+.hold .info{position:absolute;left:38rem;top:4.2rem;right:1rem;bottom:1rem}
+.panel,.tile{background:var(--panel);border:0.15rem solid var(--line);border-radius:1.2rem;padding:1.2rem 1.6rem;overflow:hidden}
+.hold .panel:first-child{flex:1}
+h2{font-size:1.2rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--amber);margin-bottom:0.8rem;font-weight:800}
+.row{display:flex;align-items:center;gap:1.2rem;padding:0.7rem 0;border-top:0.15rem solid var(--line)}
+.row .t{font-size:1.7rem;font-weight:700;line-height:1.15}
+.chip{flex:none;width:8rem;text-align:center;font-size:1rem;font-weight:900;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.6rem;border-radius:0.6rem;color:#190c05;background:var(--ember)}
+.chip.blocked{background:#ff9f80}
+.chip.waiting{background:var(--amber)}
+.idle{font-size:1.8rem;color:var(--mute);padding:1rem 0;font-weight:600}
+.eta{font-size:2rem;font-weight:800;color:var(--fg)}
+.since{font-size:1.5rem;font-weight:600;color:var(--mute);margin-top:0.5rem}
+.info .ln{font-size:1.8rem;font-weight:600;line-height:1.3;margin-top:0.7rem}
+.empty .ln{font-size:1.2rem}
+.mini{display:flex;flex-wrap:wrap;gap:0.6rem;margin-top:1rem}
+.m{font-size:1.3rem;font-weight:800;color:#190c05;background:var(--amber);border-radius:0.6rem;padding:0.3rem 0.8rem}
+.dots{position:absolute;left:1.6rem;bottom:1rem;display:flex;gap:0.5rem}
+.dots i{width:0.9rem;height:0.9rem;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--ember)}
+.info{position:relative}
+.tile{position:absolute;display:flex;flex-direction:column;gap:0.4rem;justify-content:center}
+.th{display:flex;gap:0.6rem;flex-wrap:wrap}
+.badge{font-size:1rem;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;padding:0.25rem 0.7rem;border-radius:0.5rem;color:#190c05}
+.bd2d{background:var(--ok)}
+.borig{background:var(--amber)}
+.btest{background:var(--red)}
+.nm{font-size:2.4rem;font-weight:900}
+.cl{font-size:1.5rem;font-weight:700;color:var(--mute)}
+.st{font-size:1.2rem;color:var(--dim);font-weight:600}
+.tile.stalled{opacity:0.55}
+.recon{font-size:1.5rem;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:0.1em}
+.tile.anim .badge.bd2d{animation:pulse 3s ease-in-out infinite}
+.grid .tile.wide .nm{font-size:3.2rem}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+@media (prefers-reduced-motion:reduce){.tile.anim .badge.bd2d{animation:none}}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="brand">D.idle</div>
+<div class="tag">say it: die dull</div>
+<div class="meta"><span class="net"><i class="dot"></i><span id="net">online</span></span><span class="clock" id="clock">--:--</span></div>
+</div>
+<div id="stage"></div>
+<script id="d2-scene">(function (root) {
+  var MAXT = 9;
+  var TIMING = {rotate_s: 15, join_s: 10, poll_s: 10, stall_s: 8, drop_s: 60, eta_refresh_s: 30, fps_cap: 10, animate_max: 4, wide_px: 640};
+  var FW = 80, FH = 45, TOP = 4.2, MARGIN = 0.6, GAP = 0.6;
+
+  function dims(n) {
+    n = Math.max(0, Math.min(Math.floor(n), MAXT));
+    if (n === 0) { return [0, 0]; }
+    if (n === 1) { return [1, 1]; }
+    if (n === 2) { return [2, 1]; }
+    if (n <= 4) { return [2, 2]; }
+    return n <= 6 ? [3, 2] : [3, 3];
+  }
+  function r3(x) { return Math.round(x * 1000) / 1000; }
+  function geometry(n, framePx, widePx) {
+    var d = dims(n), cols = d[0], rows = d[1], cells = [], r, c;
+    if (!cols) { return cells; }
+    var w = (FW - 2 * MARGIN - GAP * (cols - 1)) / cols, h = (FH - TOP - MARGIN - GAP * (rows - 1)) / rows;
+    for (r = 0; r < rows; r++) {
+      for (c = 0; c < cols; c++) {
+        cells.push({x: r3(MARGIN + c * (w + GAP)), y: r3(TOP + r * (h + GAP)), w: r3(w), h: r3(h), wide: w * framePx / FW >= widePx});
+      }
+    }
+    return cells;
+  }
+  function health(age, t) { return age >= t.drop_s ? "dropped" : age > t.stall_s ? "stalled" : "live"; }
+  function startOf(s) { return s.started === undefined ? s.last_seen : s.started; }
+  function plan(sources, now, t) {
+    var tiles = [];
+    sources.forEach(function (s) {
+      var h = health(now - s.last_seen, t);
+      if (h !== "dropped") { var c = {}; Object.keys(s).forEach(function (k) { c[k] = s[k]; }); c.health = h; tiles.push(c); }
+    });
+    tiles.sort(function (a, b) { return startOf(b) - startOf(a); });
+    tiles = tiles.slice(0, MAXT);
+    tiles.sort(function (a, b) { return startOf(a) - startOf(b); });
+    return tiles;
+  }
+  function span(sec) {
+    var m = Math.floor(sec / 60);
+    return m < 1 ? "under a minute" : m < 120 ? m + " min" : Math.floor(m / 60) + " h";
+  }
+  function eta(next, now) {
+    var t = next && next.next_start ? Date.parse(next.next_start) / 1000 : NaN;
+    if (!(t > now)) { return {state: "none", seconds: 0, text: "Next gameplay: not scheduled"}; }
+    var label = next.label ? ": " + next.label : "";
+    return {state: "scheduled", seconds: Math.floor(t - now), text: "Next gameplay in " + span(t - now) + label};
+  }
+  function since(lastEnd, now) {
+    if (lastEnd === null || lastEnd === undefined) { return "No gameplay yet today"; }
+    return "Last gameplay " + span(Math.max(0, now - lastEnd)) + " ago";
+  }
+  function pairs(list) {
+    var out = [];
+    list.forEach(function (f) { out.push(f.label + ": " + f.value); });
+    return out;
+  }
+  function deck(d) {
+    var c = d.cards || {}, out = [], lad = d.ladder || [];
+    if (c.goal) { out.push({title: "The goal", lines: [c.goal], ladder: lad}); }
+    if ((d.shipped || []).length) { out.push({title: "Recently shipped", lines: d.shipped.slice(0, 4)}); }
+    if ((c.fidelity || []).length) {
+      out.push({title: c.fidelity_title || "Fidelity", lines: pairs(c.fidelity)});
+    }
+    if ((c.d2d || []).length) { out.push({title: c.d2d_title || "What is d2d?", lines: c.d2d}); }
+    if ((c.coming || []).length) { out.push({title: c.coming_title || "Coming later", lines: c.coming}); }
+    if (c.credit) { out.push({title: c.credit_title || "Credit", lines: [c.credit]}); }
+    if ((c.how || []).length) { out.push({title: c.how_title || "How it works", lines: c.how}); }
+    return out;
+  }
+  function demoSources(n, now) {
+    var names = ["Soaky", "Fresha", "Loopy", "Testy", "Navi", "Combi", "Towni", "Booti", "Multi"], out = [], i;
+    for (i = 0; i < n; i++) {
+      out.push({id: "demo-" + i, name: names[i], "class": "Sorceress", backend: i % 2 ? "d2d" : "d2lod (original game)", testing: true,
+        last_seen: now, started: now - 600 + i, running: true, clvl: 5 + i, kills: 100 * (i + 1), deaths: i % 3, area: "Blood Moor", doing: "Fighting monsters"});
+    }
+    return out;
+  }
+  var api = {dims: dims, geometry: geometry, health: health, plan: plan, eta: eta, since: since, span: span, deck: deck, demoSources: demoSources, TIMING: TIMING};
+  if (typeof module !== "undefined" && module.exports) { module.exports = api; }
+  if (typeof document === "undefined") { return; }
+
+  var U = "scene-grid.json";
+  var q = location.search;
+  var flag = function (k) { return new RegExp("[?&]" + k + "=1(&|$)").test(q); };
+  var demo = flag("demo"), kiosk = flag("kiosk");
+  var nm = /[?&]n=(\d)(&|$)/.exec(q);
+  var demoN = nm ? parseInt(nm[1], 10) : 3;
+  var $ = function (id) { return document.getElementById(id); };
+  var data = null, fetchedAt = 0, stageSig = "", cardIdx = 0, cardAt = 0, seenEnd = null, prevIds = {};
+  if (kiosk) { document.body.classList.add("kiosk"); }
+
+  function el(tag, cls, txt) {
+    var e = document.createElement(tag);
+    if (cls) { e.className = cls; }
+    if (txt !== undefined) { e.textContent = txt; }
+    return e;
+  }
+  function clear(n) { while (n.firstChild) { n.removeChild(n.firstChild); } }
+  function two(n) { return (n < 10 ? "0" : "") + n; }
+  function now() { return data ? data.ts + (Date.now() - fetchedAt) / 1000 : Date.now() / 1000; }
+  function timing() { return (data && data.timing) || TIMING; }
+  function sources() { return demo ? demoSources(demoN, Math.floor(Date.now() / 1000)) : (data && data.sources) || []; }
+
+  function infoCard(node, cards, withDots) {
+    clear(node);
+    if (!cards.length) { return; }
+    var c = cards[cardIdx % cards.length], i;
+    node.appendChild(el("h2", "", c.title));
+    c.lines.forEach(function (l) { node.appendChild(el("p", "ln", l)); });
+    if (c.ladder) {
+      var lad = el("div", "mini");
+      c.ladder.forEach(function (s) { lad.appendChild(el("span", "m", s.name + " " + s.pct + "%")); });
+      node.appendChild(lad);
+    }
+    if (withDots) {
+      var dots = el("div", "dots");
+      for (i = 0; i < cards.length; i++) { dots.appendChild(el("i", i === cardIdx % cards.length ? "on" : "")); }
+      node.appendChild(dots);
+    }
+  }
+
+  function tileNode(t, cell, idx) {
+    var n = el("div", "tile " + t.health + (idx < timing().animate_max ? " anim" : "") + (cell.wide ? " wide" : ""));
+    var head = el("div", "th");
+    head.appendChild(el("span", "badge " + (t.backend === "d2d" ? "bd2d" : "borig"), t.backend));
+    if (t.testing) { head.appendChild(el("span", "badge btest", "TESTING")); }
+    n.appendChild(head);
+    n.appendChild(el("div", "nm", t.name));
+    n.appendChild(el("div", "cl", (t["class"] || "") + (t.clvl === undefined ? "" : (t["class"] ? ", " : "") + "level " + t.clvl)));
+    if (t.kills !== undefined) { n.appendChild(el("div", "st", t.kills + " kills, " + (t.deaths || 0) + " deaths")); }
+    if (t.area) { n.appendChild(el("div", "st", t.area)); }
+    if (t.doing) { n.appendChild(el("div", "st", t.doing)); }
+    if (t.health === "stalled") { n.appendChild(el("div", "recon", "reconnecting")); }
+    n.style.left = cell.x + "rem"; n.style.top = cell.y + "rem"; n.style.width = cell.w + "rem"; n.style.height = cell.h + "rem";
+    return n;
+  }
+
+  function holding(stage, d) {
+    var left = el("div", "col"), work = el("div", "panel"), card = el("div", "panel info"), when = el("div", "panel when");
+    work.appendChild(el("h2", "", "Working on now"));
+    var items = (d.work || []).slice(0, 4);
+    if (!items.length) { work.appendChild(el("div", "idle", "Between tasks, lining up the next step.")); }
+    items.forEach(function (it) {
+      var row = el("div", "row");
+      row.appendChild(el("span", "chip " + it.state, it.state === "blocked" ? "Oopsie" : it.state === "waiting" ? "Waiting" : "Working"));
+      row.appendChild(el("span", "t", it.task));
+      work.appendChild(row);
+    });
+    when.appendChild(el("div", "eta", ""));
+    when.appendChild(el("div", "since", ""));
+    card.id = "deck";
+    left.appendChild(work); left.appendChild(when);
+    stage.appendChild(left); stage.appendChild(card);
+  }
+
+  function build(tiles, d) {
+    var stage = $("stage");
+    clear(stage);
+    stage.className = tiles.length ? "grid" : "hold";
+    if (!tiles.length) { holding(stage, d || {}); return; }
+    var cells = geometry(tiles.length, window.innerWidth || 1280, timing().wide_px || 640);
+    tiles.forEach(function (t, i) { stage.appendChild(tileNode(t, cells[i], i)); });
+    if (cells.length > tiles.length) {
+      var c = cells[tiles.length], e = el("div", "tile info empty");
+      e.id = "deck";
+      e.style.left = c.x + "rem"; e.style.top = c.y + "rem"; e.style.width = c.w + "rem"; e.style.height = c.h + "rem";
+      stage.appendChild(e);
+    }
+  }
+
+  function tick() {
+    var d = data || {work: [], ladder: [], shipped: [], cards: {}, sources: [], next_run: null, last_end: null};
+    var t = now(), tl = timing(), tiles = plan(sources(), t, tl), cur = {}, sig;
+    tiles.forEach(function (x) { cur[x.id] = x.last_seen; });
+    Object.keys(prevIds).forEach(function (id) { if (!(id in cur)) { seenEnd = Math.max(seenEnd || 0, prevIds[id]); } });
+    prevIds = cur;
+    sig = (tiles.length ? "" : JSON.stringify(d.work));
+    tiles.forEach(function (x) { sig += "," + x.id + ":" + x.health; });
+    if (sig !== stageSig) { stageSig = sig; build(tiles, d); }
+    var dk = deck(d);
+    if (t - cardAt >= tl.rotate_s) { cardAt = t; cardIdx += 1; var n = $("deck"); if (n) { infoCard(n, dk, !tiles.length); } }
+    var node = $("deck");
+    if (node && !node.firstChild) { infoCard(node, dk, !tiles.length); }
+    var e = document.querySelector(".eta"), s = document.querySelector(".since");
+    if (e) { e.textContent = eta(d.next_run, t).text; }
+    if (s) { s.textContent = since(d.last_end === null || d.last_end === undefined ? seenEnd : Math.max(d.last_end, seenEnd || 0), t); }
+    var dt = new Date();
+    $("clock").textContent = two(dt.getHours()) + ":" + two(dt.getMinutes());
+  }
+
+  function setOk(ok) {
+    document.body.classList.toggle("off", !ok);
+    $("net").textContent = ok ? "online" : "offline";
+  }
+  function load() {
+    var ac = new AbortController();
+    var timer = setTimeout(function () { ac.abort(); }, 8000);
+    fetch(U + "?t=" + Date.now(), {cache: "no-store", signal: ac.signal})
+      .then(function (r) { if (!r.ok) { throw new Error("bad"); } return r.json(); })
+      .then(function (d) { clearTimeout(timer); data = d; fetchedAt = Date.now(); setOk(true); tick(); })
+      .catch(function () { clearTimeout(timer); setOk(false); });
+  }
+  load();
+  if (!demo) { setInterval(load, 1000 * TIMING.poll_s); }
+  setInterval(tick, 1000);
+  tick();
+})(this);
+</script>
+</body>
+</html>

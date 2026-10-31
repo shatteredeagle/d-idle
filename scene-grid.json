@@ -1,0 +1,211 @@
+{
+ "brand": "D.idle",
+ "cards": {
+  "coming": [
+   "Replay: watch a past run again, sped up.",
+   "LAN play: bots and friends in one game on a home network."
+  ],
+  "coming_title": "Coming later",
+  "credit": "d2d is the work of the d2decomped project by psi29a (GPL-3.0-or-later). Our fixes go upstream as open pull requests.",
+  "credit_title": "Built on open source",
+  "credit_url": "https://github.com/psi29a/d2decomped",
+  "d2d": [
+   "An open-source reimplementation of the Diablo II engine.",
+   "It runs the bot without a screen and far faster than real time.",
+   "The original game stays as the reference we compare against."
+  ],
+  "d2d_title": "What is d2d?",
+  "fidelity": [
+   {
+    "label": "Speed",
+    "value": "22 to 33x faster than the game clock"
+   },
+   {
+    "label": "Matches so far",
+    "value": "mana and stamina regeneration, XP penalty table, resist penalties, death rules"
+   },
+   {
+    "label": "Known differences",
+    "value": "some spell cast speeds, one potion bonus, a few vendor prices"
+   },
+   {
+    "label": "Our bar",
+    "value": "key numbers within 20 percent of the original game"
+   }
+  ],
+  "fidelity_title": "How close is d2d to the original game?",
+  "goal": "A bot that plays Diablo II: Lord of Destruction by itself, offline, for hours, with a game of goals and progress built around it.",
+  "how": [
+   "The bot looks at the game: health, position, items.",
+   "It presses keys and moves the mouse like a person.",
+   "A watchdog steps in when it is stuck or in danger.",
+   "The goal layer decides what to work toward."
+  ],
+  "how_title": "How it works"
+ },
+ "ladder": [
+  {
+   "name": "Alpha",
+   "pct": 47,
+   "sub": "A reliable Act 1 bot on the product path"
+  },
+  {
+   "name": "Beta",
+   "pct": 30,
+   "sub": "Normal complete, installable by a friend"
+  },
+  {
+   "name": "Good bot",
+   "pct": 26,
+   "sub": "The game layer may start"
+  }
+ ],
+ "last_end": 1793405400,
+ "next_run": {
+  "label": "soakfull d2d runs started (4 registered ",
+  "next_start": "2026-10-31T00:44:14Z",
+  "source": "d2d"
+ },
+ "runs": [
+  {
+   "area": "Rogue Encampment",
+   "backend": "d2d",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Playing through the early game",
+   "kills": 334,
+   "name": "Loopy",
+   "potionsUsed": 13,
+   "running": false,
+   "updated": "2026-10-31T00:10Z",
+   "uptime_seconds": 321,
+   "xp": 7700
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 7100,
+   "name": "Soaky",
+   "potionsUsed": 203,
+   "running": false,
+   "updated": "2026-10-30T20:26Z",
+   "uptime_seconds": 29110,
+   "xp": 195140
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 11,
+   "deaths": 3,
+   "doing": "Levelling up toward level 20",
+   "kills": 2387,
+   "name": "Fresha",
+   "potionsUsed": 121,
+   "running": false,
+   "updated": "2026-10-30T20:12Z",
+   "uptime_seconds": 14681,
+   "xp": 75549
+  }
+ ],
+ "runs_state": "between",
+ "shipped": [
+  "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
+  "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
+  "ADR for the d2d primary backend decision.",
+  "Fixed tool hot loop in serveStream.",
+  "Survey of Diablo II reimplementation/decompilation projects.",
+  "Tool fit report.",
+  "Lab and lab2 sections.",
+  "Sourced cast timing documentation.",
+  "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
+  "D2d lab notes.",
+  "Spec approach evaluation and notes audit.",
+  "OpenSpec SME reference and fit notes."
+ ],
+ "sources": [
+  {
+   "area": "Rogue Encampment",
+   "backend": "d2d",
+   "class": "Sorceress",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Playing through the early game",
+   "id": "loopy-d2d",
+   "kills": 334,
+   "last_seen": 1793405400,
+   "name": "Loopy",
+   "running": false,
+   "started": 1793405079,
+   "testing": false
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "class": "Sorceress",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "id": "soaky-orig",
+   "kills": 7100,
+   "last_seen": 1793391960,
+   "name": "Soaky",
+   "running": false,
+   "started": 1793362850,
+   "testing": false
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "class": "Sorceress",
+   "clvl": 11,
+   "deaths": 3,
+   "doing": "Levelling up toward level 20",
+   "id": "fresha-orig",
+   "kills": 2387,
+   "last_seen": 1793391120,
+   "name": "Fresha",
+   "running": false,
+   "started": 1793376439,
+   "testing": false
+  }
+ ],
+ "stats": {
+  "items": [],
+  "live": false
+ },
+ "tagline": "say it: die dull",
+ "timing": {
+  "animate_max": 4,
+  "drop_s": 600,
+  "eta_refresh_s": 30,
+  "fps_cap": 10,
+  "join_s": 10,
+  "poll_s": 10,
+  "rotate_s": 15,
+  "stall_s": 150,
+  "wide_px": 640
+ },
+ "ts": 1793408410,
+ "updated": "2026-10-31T01:00Z",
+ "work": [
+  {
+   "state": "working",
+   "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Running the bot on the d2d engine"
+  },
+  {
+   "state": "working",
+   "task": "Working on the bot"
+  },
+  {
+   "state": "working",
+   "task": "Playing in a party of bots"
+  }
+ ]
+}
