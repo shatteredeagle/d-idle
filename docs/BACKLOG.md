@@ -19,10 +19,11 @@ The next milestone is making the bot itself better: the town and inventory basic
 13. Vendor armor needs more Strength than the character has: not bought, not bought again after a restart.
 14. Pack full (4 or fewer free cells): one sell visit, fresh loot ends in the pack.
 15. Blood Raven done, clvl 8 or later: Kashya's reward claimed once, no second hire attempt.
-Why this first: the SME read the poverty loop (about 54 % of time farming gold) as a spending-policy problem, so closing these basics is also expected to close most of the fidelity-gate gap (card `xpgap`, section 1). Open unknowns: the starting gold of a new offline 1.14d character, real unidentified-item sell prices.
+Why this first: the SME read the poverty loop (about 54 % of time farming gold) as a spending-policy problem, so closing these basics is also expected to close most of the fidelity-gate gap (card `xpgap`, archived, section 1). Open unknowns: the starting gold of a new offline 1.14d character, real unidentified-item sell prices.
 
 ## 1. Cards that exist (the queue, in `openspec/changes/`)
-- **Fidelity gate** (XP/h and kills/h below the original; cause: search/stall, poverty recovery, chicken restarts): card `xpgap` (in progress, agent/xpgap) and `d2d-replicated-soak`; analysis in [research/per-kill-time-split.md](research/per-kill-time-split.md) and [d2d-loop.md](d2d-loop.md). One card per further cause, each gated on the per-kill split improving on 3 seeds (not written yet).
+- **Fidelity gate** (XP/h and kills/h below the original; cause: search/stall, poverty recovery, chicken restarts): card `xpgap` (archived) and `d2d-replicated-soak`; analysis in [research/per-kill-time-split.md](research/per-kill-time-split.md) and [d2d-loop.md](d2d-loop.md). One card per further cause, each gated on the per-kill split improving on 3 seeds (not written yet).
+  - XPGAP result 2026-10-31: gap not closed; none of the three knobs beats noise (see [d2d-xp-gap.md](d2d-xp-gap.md)); next suspects: shorten the town trip (waypoint out of town, LEVELWP), leave emptied Blood Moor sooner, chicken restarts, border ping-pong.
 - **d2d container**: card `d2d-container-soak` (the 24 h retirement soak); build and bot cards are archived. Blocked on the licence/GPL review (STATUS decision 1). Remaining from the archived cards: 1 h one-slot bot gate in the container, realtime mode, read-only root filesystem, d2fleet wizard for d2d, viewer source via the screenshot verb, soak driver sidecar.
 - **Default backend flip**: card `d2d-default-backend` (small; after the container bot runs once).
 - **Mesh and stream**: cards `d2dmesh`, `stream-grid` (in progress).

@@ -77,6 +77,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
 - 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
@@ -86,5 +87,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 - 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
 - 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
-- 4a6634e 10-30 23:58 `Merge agent/smallfixes` (smallfixes)
 <!-- statusgen:end -->

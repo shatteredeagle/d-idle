@@ -2,7 +2,7 @@
 
 ```yaml
 change: xpgap
-status: in-progress
+status: archived
 agent: xpgap
 branch: agent/xpgap
 worktree: ~/code/d2lod-wt/xpgap
@@ -27,7 +27,7 @@ exclusive:
 gates:
   - "go test -p 1 for the touched packages and whole-repo vet/test on the worker host"
   - "before/after on one binary, 4 seeds x 2 virtual hours per arm, interleaved"
-merge:
+merge: f62a9f5
 result: "verified live on hidden d2d: diagnosis from 12 soak logs; 3 knobs (default off) and recoveryOn=0 tested, none beats noise (4 runs per arm, SE 7-9 %), recoveryOn=0 is -15 %; vet and short tests clean on the worker; not run on Game.exe"
 ```
 
