@@ -763,8 +763,17 @@ func (f *Fighter) valid(p input.Point) bool {
 	if f.mv == nil {
 		return true
 	}
+	if f.nearMouth(p) {
+		return false // a step-away/flee point there would be skipped by move; pick another
+	}
 	_, err := f.mv.PathTo(p)
 	return err == nil
+}
+
+// nearMouth: the mover guards cave-mouth trigger areas (d2d only) and p lies in one.
+func (f *Fighter) nearMouth(p input.Point) bool {
+	g, ok := f.mv.(interface{ NearMouth(input.Point) bool })
+	return ok && g.NearMouth(p)
 }
 
 func anyDanger(ts []Target) bool {
@@ -779,9 +788,11 @@ func anyDanger(ts []Target) bool {
 // move walks through the Mover. A failed walk (no path, stuck) is not fatal to the fight: the approach counter
 // gives up on the target after a few of them.
 func (f *Fighter) move(ctx context.Context, p input.Point) error {
-	if g, ok := f.mv.(interface{ NearMouth(input.Point) bool }); ok && g.NearMouth(p) {
+	if f.nearMouth(p) {
 		f.info("move skipped: the point is in a cave mouth", "to", p) // the fight goes on from here; the monsters come
-		return nil
+		// a skipped move must still cost a tick: abortFight returns handled after it, so without time passing the
+		// loop re-picked the same flee point (live: m2early seed 2, 40 iterations on one point, watchdog fired)
+		return f.sleep(ctx, ms(f.tune().PollMs))
 	}
 	err := f.mv.GoTo(ctx, p)
 	if err != nil && ctx.Err() == nil {

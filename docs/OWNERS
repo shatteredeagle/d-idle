@@ -29,3 +29,6 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
+internal/combat/fight.go  combatspin  combatspin
+internal/combat/combatspin_test.go  combatspin  combatspin
+docs/combatspin.md  combatspin  combatspin
