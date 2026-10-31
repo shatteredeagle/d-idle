@@ -82,3 +82,30 @@ U, judgment of the agent that ran the SME-grill, not a fact. Read this only afte
 - Pick D then B: run probes 1-5 of section 5 (all cheap, throwaway character), then apply the SME's kit-and-life guard and floor 18 without a merc, 15 with. Keep the Rogue policy; add the 3-attempt/clvl-12 bailout only if probe 2 shows a dead Rogue still forfeits (then a paid Rogue is the only way to get a merc when BR is stuck).
 - Do not lower ROUTEGUARD on SME opinion alone: the evidence is monster levels from a table against 3 real deaths at clvl ~14; get the killer's name from the logs first.
 - Do not spend effort on Iron Wolf, merc runewords or NM aura swaps now.
+
+## 10. Route guard, Andariel floor and revive budget (added 2026-10-31 by the roadmap follow-up)
+
+The user decided on 2026-10-31 (docs/roadmap.md decision D6) to run this grill now on the numbers below. It is the user's interactive session; nothing here is decided. Cards m3-routeguard and m3-merc wait for it (m3-routeguard writes no delta until the answers exist). Tags as above; EXP = d2-sme experience, U = unverified.
+
+### 10.1 The open numbers, side by side
+
+| number | plan / code today (source) | d2-sme view (source) |
+|---|---|---|
+| Monastery road floor, no merc | clvl 20 (`route.monasteryMinLevel`, docs/knobs.md; plan-v2 11.2; merc-policy `Route guard`) | clvl 18 (docs/roadmap.md section 6; EXP) |
+| Monastery road floor, living merc | merc alone opens it (any clvl; plan-v2 11.2) | clvl 14 with the merc (docs/roadmap.md section 6; EXP) |
+| Forgotten Tower floor | clvl 20, `route.towerNeedsMerc` 1 (`route.towerMinLevel`, docs/knobs.md) | clvl 16 without a merc, 12 with (docs/roadmap.md section 6; EXP) |
+| Andariel floor | clvl 15, +2 if the merc is dead and gold < 1000 (`boss.andarielMinLevel`, merc-policy `Andariel floor`; docs/bossgate.md) | clvl 15 only with a living merc, 18 without (section 3 option B; EXP); the SME audit A1 puts the XP cliff at clvl 17 to 18 in Act 1 (docs/sme/audit-bot-vs-human.md A1, V table math: 5 % XP at clvl 22 vs monster level 12, 62 % at -7) |
+| Revive budget | revive only with gold >= `merc.reviveGoldMult` (2) x price, at most `merc.reviveMaxPerHour` (2); stop bar `merc.stopGoldMult` (5) x price after `merc.stopDeathsPerHour` (3) deaths (docs/knobs.md; merc-policy `Revive and stop rule`); price level^2/2*15 (S, never observed) | cost <= half of gold on hand plus the kit, stop after 2 deaths per hour or when Andariel is dead (docs/roadmap.md section 8 as first proposed; EXP) |
+
+Evidence both sides rest on: the Soaky deaths on the Monastery road at clvl ~14 without a merc and with a thin kit (V, our logs, plan-v2 11.2), monster level 8 to 10 there (S table), and the XP total to clvl 15 of 176,132 (act1-campaign spec, V table). The SME numbers are experience (section 8); the plan's 20 rests on three deaths at clvl 14 in a run with an empty belt, which says more about the kit than the level.
+
+### 10.2 Questions the grill should settle
+
+1. Monastery road without a merc: floor 20 (plan), 18 (SME) or a kit-and-life rule instead of a clvl (option B of section 3)? Recommended default: 18, with the kit gate unchanged, and reopen if deaths per 1000 minutes on the road exceed the soak-gates death rule at that floor.
+2. Monastery road and Forgotten Tower with a living merc: allow from 14 (road) and 12 (Forgotten Tower) as the SME says, or keep "any clvl with a merc"? Recommended default: 14 and 12 (a merc is not a license for clvl 8); this adds a `withMerc` floor per guard.
+3. Forgotten Tower floor: 20 (plan) or 16 without a merc? It is a no-reward quest in Normal (plan-v2 10.5). Recommended default: 16, and skip the Forgotten Tower unless the Countess is wanted (runes are not a v1 goal).
+4. Andariel floor: 15 with a living merc and 18 without (SME), 15 flat (today) or 18 always (option C, plus a live attempt first)? Recommended default: 15 with a living merc, 18 without, the dead-merc +2 rule dropped in favour of the 18; the m3-andariel throwaway fight confirms or moves it.
+5. Revive budget and stop rule: keep 2 x price and 5 x price after 3 deaths, or the SME's budget (cost at most half of the gold on hand plus the kit, stop after 2 deaths per hour or when Andariel is dead)? Recommended default: the SME budget, since price is unobserved (S): one live revive price probe (section 5 item 3) before the numbers are fixed, then the knobs follow.
+
+If the user wants probes first (option D), the answer to 1 to 5 is "the defaults above, provisional" and probes 1 to 5 of section 5 run before m3-routeguard launches.
+

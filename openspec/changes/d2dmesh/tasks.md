@@ -2,7 +2,7 @@
 
 ```yaml
 change: d2dmesh
-status: in-progress
+status: deferred
 agent: meshdesign
 branch: agent/meshdesign
 worktree: ~/code/d2lod-wt/meshdesign
