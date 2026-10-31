@@ -84,7 +84,7 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 	if t.needWeaponFound(s) {
 		add(false, "wear", "found weapon to wear")
 	}
-	if n, _ := t.scrollCount(s, "tsc", "tbk"); n == 0 {
+	if n, _ := t.scrollCount(s, "tsc", "tbk"); n == 0 && !t.tpTooPoor(s) {
 		add(true, "tsc", "no town portal scroll")
 	}
 	if e, ok := t.gearOf(s); ok && e.Launcher() && len(gear.Restock(e)) > 0 {
@@ -531,4 +531,10 @@ func (t *Town) noteFutile(s *d2.Snapshot) {
 			delete(t.futile, k)
 		}
 	}
+}
+
+// tpTooPoor is the tpMinGold knob: a character under that gold buys potions before its first portal scroll.
+func (t *Town) tpTooPoor(s *d2.Snapshot) bool {
+	m := t.tune().TPMinGold
+	return m > 0 && s.Player.Gold < m
 }

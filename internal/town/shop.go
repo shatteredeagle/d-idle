@@ -289,7 +289,7 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 	if err != nil {
 		return err
 	}
-	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome {
+	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome || t.tpTooPoor(s) {
 		return nil
 	}
 	stock, err := t.Stock(npc)

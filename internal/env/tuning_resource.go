@@ -65,6 +65,8 @@ type ResourceTuning struct {
 	RecoveryManaFloor    int // mana potions a recovering caster may buy (belt plus pack); 0 = none, the old behaviour
 	RecoveryXPPick       int // 1: the recovery area is the safe area with the best XP per kill for the level; 0 = the plan area of a character PovertyLevels lower
 	RecoveryMaxAreaAbove int // XP pick only: area monster level may be at most clvl plus this
+	RecoveryXPEarly      int // XP pick only: the area may be entered this many levels below its enter and kit level (0 = the plan levels, the old behaviour)
+	PovertySellMin       int // poor character: pack junk items needed for a sell trip (0 = the built-in 4 on foot, 6 with a portal scroll)
 	BRAttempts           int // Blood Raven attempts before waiting for more levels; 0 = unlimited
 	BRLevelGap           int // levels to gain after the last attempt before the budget is renewed
 }

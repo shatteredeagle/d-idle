@@ -51,7 +51,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
+- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 3 requirements
+- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 6 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 6 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 7 requirements
@@ -62,7 +65,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
-- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
+- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -95,6 +98,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
+- 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
 - 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
 - c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
@@ -103,5 +108,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 - 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
 - 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
-- 4a6634e 10-30 23:58 `Merge agent/smallfixes` (smallfixes)
 <!-- statusgen:end -->

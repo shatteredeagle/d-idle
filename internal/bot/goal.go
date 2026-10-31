@@ -312,12 +312,13 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	}
 	// Without a town portal scroll the trip is a walk of about a minute each way: one junk item is not worth it (D2DLOOP r22,
 	// V live: a trip every 6 virtual minutes, about 40 % of the farming time, for 1 to 2 items and 2 to 30 gold).
+	sellMin := r.e.Tune.Resource.PovertySellMin // XPGAP knob, 0 = the built-in minimums
 	if sell, left := r.sellable(s), r.povertySellLeft(); !p.InTown() && r.inPoverty() && sell > left &&
-		povertySellWorth(sell, r.resInput(s).HasTP) {
+		povertySellOK(sell, r.resInput(s).HasTP, sellMin) {
 		// poor: junk is the quickest gold, sell it before anything else (one item is enough, the pack need not be full)
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("poverty: %d items to sell, %d gold", sell, p.Gold))
-	} else if !p.InTown() && p.Gold < t.GearMinGold && r.sellable(s) >= t.SellMinItems {
+	} else if !p.InTown() && p.Gold < t.GearMinGold && r.sellable(s) >= max(t.SellMinItems, sellMin) {
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("%d items to sell, %d gold", r.sellable(s), p.Gold))
 	}
@@ -470,6 +471,11 @@ func povertySellWorth(sell int, hasTP bool) bool {
 		return sell >= povertyPortalMinItems
 	}
 	return sell >= povertyWalkMinItems
+}
+
+// povertySellOK is povertySellWorth with the povertySellMin knob (XPGAP) on top: min 0 keeps the built-in rule.
+func povertySellOK(sell int, hasTP bool, min int) bool {
+	return povertySellWorth(sell, hasTP) && sell >= min
 }
 
 // ---- target selection ----------------------------------------------------------------------------

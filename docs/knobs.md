@@ -112,6 +112,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.tripRepairPct | 20 | 0..60 | % | 0 | 1 | Go to town when an equipped item is below this durability. |
 | town.beltFillPct | 100 | 25..100 | % | 25 | 2 | Refill each potion type to this share of its planned columns. |
 | town.tpScrollTarget | 2 | 1..20 | count | 1 | 3 | Scrolls to hold when no tome is owned. |
+| town.tpMinGold | 0 | 0..1000 | gold | 1000 | 1 | Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price. |
 | town.tpTomeMinGold | 450 | 0..5000 | gold | 5000 | 2 | Buy a Tome of Town Portal when gold is at least this. |
 | town.idScrollTarget | 2 | 0..20 | count | 0 | 4 | Scrolls to hold when no tome is owned. |
 | town.minGoldReserve | 100 | 0..1e+04 | gold | 1e+04 | 4 | Optional purchases never spend below this. |
@@ -307,6 +308,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryPotionFloor | 2 | 0..6 | count | 6 | 1 | While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan. |
 | resource.recoveryXPPick | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower. |
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |
+| resource.recoveryXPEarly | 0 | 0..3 | levels | 0 | 1 | XP pick: a recovering character may enter an area this many levels below its plan enter and kit level (XPGAP: Cold Plains pays 1.5x the XP per kill of Blood Moor at the same kill rate). 0 = the plan levels. |
+| resource.povertySellMin | 0 | 0..16 | items | 0 | 1 | A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll. |
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
