@@ -25,15 +25,3 @@ openspec/changes/d2dmesh/**  meshdesign  d2dmesh
 openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
-internal/bot/observe.go  botsmall  botsmall
-internal/bot/farm.go  botsmall  botsmall
-internal/bot/goal.go  botsmall  botsmall
-internal/bot/loop.go  botsmall  botsmall
-internal/bot/task.go  botsmall  botsmall
-internal/bot/botsmall_test.go  botsmall  botsmall
-internal/d2/units.go  botsmall  botsmall
-internal/d2/monflags.go  botsmall  botsmall
-internal/d2/monflags_test.go  botsmall  botsmall
-internal/combat/target.go  botsmall  botsmall
-docs/bot-small.md  botsmall  botsmall
-openspec/changes/botsmall/**  botsmall  botsmall

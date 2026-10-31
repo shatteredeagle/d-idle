@@ -2,7 +2,7 @@
 
 ```yaml
 change: botsmall
-status: in-progress
+status: archived
 agent: botsmall
 branch: agent/botsmall
 worktree: ~/code/d2lod-wt/botsmall
@@ -22,7 +22,7 @@ owns:
 exclusive: []
 gates:
   - "go test of internal/bot, internal/d2, internal/combat passes; whole-repo vet and short tests pass on the worker host"
-merge:
+merge: c5b4ecc
 result: "offline only, not verified live; item 4 skipped (see docs/bot-small.md)"
 ```
 

@@ -38,7 +38,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [botsmall](../../openspec/changes/botsmall/) | in-progress | botsmall | `internal/bot/observe.go`<br>`internal/bot/farm.go`<br>`internal/bot/goal.go`<br>`internal/bot/loop.go`<br>`internal/bot/task.go`<br>`internal/bot/botsmall_test.go`<br>`internal/d2/units.go`<br>`internal/d2/monflags.go`<br>`internal/d2/monflags_test.go`<br>`internal/combat/target.go`<br>`docs/bot-small.md`<br>`openspec/changes/botsmall/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -59,7 +58,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
-- change botsmall: go test of internal/bot, internal/d2, internal/combat passes; whole-repo vet and short tests pass on the worker host
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -76,6 +74,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
 - 1481f63 10-31 00:40 `Merge agent/doctrim: doc trim` (doctrim)
 - e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
