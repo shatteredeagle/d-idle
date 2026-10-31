@@ -41,6 +41,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
+| [decompskill](../../openspec/changes/decompskill/) | in-progress | decompskill | `docs/research/skill-damage-trace.md`<br>`docs/research/pr-skill-damage-proof.md`<br>`docs/research/pr-skill-damage-draft.md`<br>`docs/research/pr-skill-damage-evidence-pack.md`<br>`tools/emu/skill_*.py` | `fork-branch:fix/skill-damage` |
 | [goldfloor](../../openspec/changes/goldfloor/) | proposed | goldfloor | `internal/bot/goal.go`<br>`internal/bot/goldfloor_test.go`<br>`internal/town/shop.go`<br>`internal/town/beltbuy.go`<br>`internal/town/goldfloor_test.go`<br>`internal/env/tuning_town.go`<br>`internal/env/tuning_loot.go`<br>`docs/goldfloor.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
@@ -69,6 +70,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
+- change decompskill: every address cited is read in game.exe 1.14d or run in the oracle (V) or tagged S/U; no U in a claim's causal chain
+- change decompskill: each deviation claimed has a differential against game.exe's own code: mismatches before > 0, after = 0, over >= 100k cases or exhaustive
+- change decompskill: independent adversarial verifier report attached verbatim
+- change decompskill: nothing pushed, posted or filed on GitHub; our repo not pushed
 - change goldfloor: go test -p 1 ./internal/bot ./internal/town ./internal/env passes including TestTripFloor (a [2 healing potions] trip with a 30-gold plan and a held scroll is not raised, a belt at 0 healing is), TestNoTPRebuyWhenPoor (gold 209, 1 healing potion: one potion plan, no scroll), TestManaCapBelowClvl10
 - change goldfloor: paired A/B 8 seeds x 2 virtual h per arm, same binary: trips under 30 gold at most 35 percent (was 65 to 83), TP spend at most 250 gold/h in bands 5-10 (was 156 to 760), healing belt empty share not above baseline, deaths not above baseline
 - change goldfloor: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes

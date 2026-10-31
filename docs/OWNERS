@@ -37,3 +37,8 @@ internal/town/goldfloor_test.go  goldfloor  goldfloor
 internal/env/tuning_town.go  goldfloor  goldfloor
 internal/env/tuning_loot.go  goldfloor  goldfloor
 docs/goldfloor.md  goldfloor  goldfloor
+docs/research/skill-damage-trace.md  decompskill  decompskill
+docs/research/pr-skill-damage-proof.md  decompskill  decompskill
+docs/research/pr-skill-damage-draft.md  decompskill  decompskill
+docs/research/pr-skill-damage-evidence-pack.md  decompskill  decompskill
+tools/emu/skill_*.py  decompskill  decompskill
