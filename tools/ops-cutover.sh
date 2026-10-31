@@ -1,4 +1,5 @@
 #!/bin/sh
+# HISTORICAL (cut done 2026-10-31; GitHub main is primary): kept for the record, the ops repo push below is for the private ops repo only.
 # Quiet-master cutover for work package A (docs/process/public-split.md section 8). READ-ONLY: it prints the ordered steps
 # and verifies state; it never pushes, merges, deletes or edits. Run from the master checkout: tools/ops-cutover.sh [check|steps]
 ops=${D2_OPS_DIR:-$HOME/code/d2lod-ops}
@@ -46,7 +47,7 @@ cat <<EOS
 == steps, in order (quiet master: no agent is working)
 1. Preconditions: tools/ops-cutover.sh check shows no dirty or unmerged worktree (record abandoned ones in docs/needs-you.md).
 2. Create the private repo <owner>/d2lod-ops on the forge (web UI or API; needs the maintainer's credentials), then, from $ops:
-     git remote add origin <ssh url of <owner>/d2lod-ops> && git push -u origin master
+     git remote add origin <ssh url of <owner>/d2lod-ops> && git push -u origin HEAD   # current branch of the ops repo
    (history was extracted with git filter-repo from a clone of master 57dd902; later changes to moved files on master since then
    must be replayed: git log 57dd902..master -- <moved paths>; the board file docs/needs-you.md is edited in ops from now on.)
 3. Merge $branch into master (git merge --no-ff $branch). Run: tools/ops.sh status ; sh tools/ci/check.sh --hygiene-only ;

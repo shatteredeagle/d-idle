@@ -1,5 +1,7 @@
 # Public split: rules going forward (change `pubsplit`)
 
+> status: cut done 2026-10-31: GitHub `main` is primary; the Forgejo steps below are the historical plan.
+>
 > Decision (user, 2026-10-30): scrub once, keep the repo public-clean by construction. The working repo (Forgejo `jesse/d2lod-bot`)
 > goes public after ONE scrub and a one-time fresh-history cut, and is then worked in directly: no per-push sanitising, no recurring
 > export. Private ops material moves to a private repo `d2lod-ops`. This doc is private-class (it names the lab) and moves to

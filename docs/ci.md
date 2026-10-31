@@ -1,6 +1,8 @@
-# CI (forge Actions)
+# CI (GitHub Actions)
 
-Workflow: `.forgejo/workflows/ci.yml` (the forge at forge.example), served by the worker host runner (label `linux`, host executor as
+> status: CI is `.github/workflows/ci.yml` on GitHub (`shatteredeagle/d-idle`, branch `main`). The earlier self-hosted workflow and its runner moved to the private ops repo; the text below describes that earlier setup and its failure history.
+
+Earlier workflow (self-hosted forge, now private): `.forgejo/workflows/ci.yml` (the forge at forge.example), served by the worker host runner (label `linux`, host executor as
 the worker user, systemd user unit `forge-runner`, Nice=10, capacity 2). Status: V runs on the worker host since late October; the first ~390 runs
 failed or were cancelled (see "Why it failed" below), reworked 2026-10-30 by CIFIX; the first run of the reworked file is U.
 
