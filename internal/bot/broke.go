@@ -28,6 +28,7 @@ type brokeState struct {
 	loot      [3]int // looter totals at the last progress line
 	cycles    int
 	areaNote  int
+	kitGate   bool // KITGATE active (kitgate.go)
 }
 
 // safeTier is the Normal act 1 farm list of a broke character (SME docs/sme/play-economy.md): Blood Moor, Cold Plains,
@@ -93,6 +94,7 @@ func (r *Runner) updateRecovery(s *d2.Snapshot) bool {
 		gain := s.Player.Gold - b.startGold
 		r.e.Log.Info(fmt.Sprintf("recovery: gold %+d in %d min", gain, mins), "gold", s.Player.Gold, "goldPerHour", gain*60/mins, "sellable", in.Sellable, "area", s.Player.Area)
 	}
+	r.syncKitGate(s)
 	if rl, ok := r.d.Loot.(recoveryLooter); ok {
 		rl.SetRecovering(b.on)
 	}
@@ -126,8 +128,12 @@ func (r *Runner) recoveryActive() bool { return r.loop.broke.on }
 // to the safe tier in Normal act 1. Without a town portal only the first field qualifies (the walk home works there).
 func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 	diff := difficultyName(s.Player.Difficulty)
+	gate := r.kitGateActive(s)
 	if !r.resInput(s).HasTP {
-		return r.starveStep(s, diff)
+		if a, ok := r.starveStep(s, diff); ok && (!gate || kitSafeTier[a]) {
+			return a, true
+		}
+		return 0, false
 	}
 	ex := map[int]bool{}
 	for a := range r.loop.cleared {
@@ -140,6 +146,13 @@ func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 	if diff == "normal" && s.Player.Act == 0 {
 		for _, st := range r.d.Plan.Steps[diff] {
 			if !safeTier[st.Area] {
+				ex[st.Area] = true
+			}
+		}
+	}
+	if gate {
+		for _, st := range r.d.Plan.Steps[diff] {
+			if !kitSafeTier[st.Area] {
 				ex[st.Area] = true
 			}
 		}

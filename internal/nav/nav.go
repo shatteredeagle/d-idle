@@ -11,6 +11,7 @@ import (
 	"math"
 	"math/rand"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -110,6 +111,7 @@ type Navigator struct {
 	exploreFn func(ctx context.Context, done func() bool, hint *input.Point) error // test seam, nil: explore
 	seen      map[edgeKey]bool                                                     // level crossings made (Route)
 	bad       map[edgeKey]bool                                                     // guessed edges that turned out not to exist
+	avoid     atomic.Pointer[map[int]bool]                                         // levels a walk should not pass through (SetAvoidLevels)
 }
 
 type fieldKey struct {
