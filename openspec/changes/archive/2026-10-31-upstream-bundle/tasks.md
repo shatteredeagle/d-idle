@@ -2,7 +2,7 @@
 
 ```yaml
 change: upstream-bundle
-status: in-progress
+status: archived
 agent: bundlepr
 branch: agent/bundlepr
 worktree: ~/code/d2lod-wt/bundlepr
@@ -16,7 +16,7 @@ owns:
 exclusive: []
 gates:
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: 67d622b
 result: "docs and spec only; bundle branch prepared locally on the worker host, nothing pushed or posted"
 ```
 

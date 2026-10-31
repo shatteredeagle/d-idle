@@ -46,11 +46,19 @@ Probe statistics (casts per kill, XP per hour, kills per run) SHALL NOT carry a 
 - **THEN** the pack is `PROOF: incomplete` and the recommendation is no-go or narrow the claim
 
 ### Requirement: One claim per PR
-A PR SHALL change one behaviour; a second gap found on the way becomes a note under limits and a candidate issue, not a second change. Source: docs/process/upstream-pr-standard.md section 4; upstream CONTRIBUTING.
+A change to the upstream project SHALL carry one claim per commit; a PR MAY bundle several claims when the maintainer prefers it, and each claim keeps its own differential proof, verifier verdict, ponytails and commit. A second gap found on the way is a limit note or its own commit, never folded into a claim. Source: docs/process/upstream-pr-standard.md section 4; maintainer (psi29a) 2026-10-31.
+
+#### Scenario: Two proven claims
+- **WHEN** two claims each have a complete proof and a verifier verdict
+- **THEN** they MAY go in one PR as two commits, the body has one section per claim, and each section has its own numbers and limits
 
 #### Scenario: Second gap found
 - **WHEN** the work reveals another disagreement with game.exe
-- **THEN** it is written under limits as a candidate issue and the PR keeps one claim
+- **THEN** it is written under limits as a candidate, or becomes its own commit with its own proof, and no claim grows
+
+#### Scenario: Claim without proof
+- **WHEN** a candidate has no complete proof or verifier verdict
+- **THEN** it stays out of the bundle and the pack lists why
 
 ### Requirement: Nothing else moved
 Upstream's own tests, `tools/presubmit.py --quick` warnings and the scripted state hashes (`tools/d2ddet`) MUST be unchanged apart from the claimed field, and every caller of a changed function SHALL be listed with what it now does differently. Source: docs/process/upstream-pr-standard.md section 4.
@@ -111,11 +119,11 @@ No agent SHALL push, post, comment on or label anything on the upstream GitHub p
 - **THEN** it stops and reports; the commands stay unrun in the pack
 
 ### Requirement: PR spacing and bundled follow-ups
-Our PRs to the upstream project SHALL be at least 1 hour apart and follow-up commits SHALL be bundled into one push, after `gh pr checks` is green. Source: docs/process/upstream-pr-standard.md section 8.
+Our upstream work SHALL have at most one open PR per topic bundle unless the maintainer says otherwise; review fixes SHALL go out as one push after `gh pr checks` is green. The fixed one-hour spacing no longer applies. Source: docs/process/upstream-pr-standard.md section 8; maintainer 2026-10-31.
 
 #### Scenario: Second PR too soon
-- **WHEN** less than 1 hour has passed since our last upstream PR
-- **THEN** the next PR waits
+- **WHEN** a bundle for a topic is still open
+- **THEN** new proven claims for that topic join it as commits or wait; no second PR is opened
 
 #### Scenario: Review fixes
 - **WHEN** a PR needs three small fixes after review

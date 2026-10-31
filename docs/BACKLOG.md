@@ -25,6 +25,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 
 ## 1. Cards that exist (the queue, in `openspec/changes/`)
 - **Fidelity gate** (XP/h and kills/h below the original; cause: search/stall, poverty recovery, chicken restarts): card `xpgap` (archived) and `d2d-replicated-soak`; analysis in [research/per-kill-time-split.md](research/per-kill-time-split.md) and [d2d-loop.md](d2d-loop.md). One card per further cause, each gated on the per-kill split improving on 3 seeds (not written yet).
+  - m2-earlybase measured 2026-10-31: current d2d bot XP/h 4767 +- 230, kills/h 192 +- 7.5 (8 seeds x 3 virtual h, 0 exclusions) vs Game.exe baseline 9172 XP/h / 398 kills/h (weak: two runs): gate FAIL (-48 % / -52 %); deaths PASS; see [d2d-baselines-early.md](d2d-baselines-early.md)
   - XPGAP result 2026-10-31: gap not closed; none of the three knobs beats noise (see [d2d-xp-gap.md](d2d-xp-gap.md)); next suspects: shorten the town trip (waypoint out of town, LEVELWP), leave emptied Blood Moor sooner, chicken restarts, border ping-pong.
 - **d2d container**: card `d2d-container-soak` (the 24 h retirement soak); build and bot cards are archived. Blocked on the licence/GPL review (STATUS decision 1). Remaining from the archived cards: 1 h one-slot bot gate in the container, realtime mode, read-only root filesystem, d2fleet wizard for d2d, viewer source via the screenshot verb, soak driver sidecar.
 - **Default backend flip**: card `d2d-default-backend` (small; after the container bot runs once).
