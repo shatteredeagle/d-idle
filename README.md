@@ -92,6 +92,7 @@ Between runs.
 
 **Being worked on:**
 
+- Running the bot on the d2d engine (working)
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
@@ -102,7 +103,7 @@ Between runs.
 Nothing merged in this window.
 ---
 
-Last updated: 2026-10-31 14:00 UTC
+Last updated: 2026-10-31 14:05 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
