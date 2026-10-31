@@ -18,9 +18,9 @@ gates:
   - "go test -p 1 ./cmd/d2dview passes"
   - "tools/openspec.sh validate --all --strict passes"
 merge: ""
-result: ""
+result: "Built and verified live on the stream kiosk (:120): badge, engine, jpeg feed 0.4 MB/s, pane non-black for 10 min after swap. Not unit-tested in a browser."
 ```
 
 - [x] 1 badge flag, engine field, reconnect logic, tests
 - [x] 2 demo --badge
-- [ ] 3 live swap and verify (not verified live yet)
+- [x] 3 live swap and verify (not verified live yet)
