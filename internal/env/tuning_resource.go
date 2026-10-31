@@ -65,6 +65,7 @@ type ResourceTuning struct {
 	RecoveryManaFloor    int // mana potions a recovering caster may buy (belt plus pack); 0 = none, the old behaviour
 	RecoveryXPPick       int // 1: the recovery area is the safe area with the best XP per kill for the level; 0 = the plan area of a character PovertyLevels lower
 	RecoveryMaxAreaAbove int // XP pick only: area monster level may be at most clvl plus this
+	RecoveryKitGate      int // 1 (default): a recovering character without a healing potion in the belt or without a town portal scroll farms only Blood Moor and Cold Plains and never routes through a dungeon area; 0 = the old choice
 	RecoveryXPEarly      int // XP pick only: the area may be entered this many levels below its enter and kit level (0 = the plan levels, the old behaviour)
 	PovertySellMin       int // poor character: pack junk items needed for a sell trip (0 = the built-in 4 on foot, 6 with a portal scroll)
 	BRAttempts           int // Blood Raven attempts before waiting for more levels; 0 = unlimited
@@ -82,7 +83,7 @@ func DefaultResourceTuning() ResourceTuning {
 		RetreatBelt: 0, RetreatCountPack: 1, ManaPaysCasts: 3, MinFieldBeltPct: 0,
 		GearGateMode: 1, GearRiskMedium: 3, GearRiskHigh: 6, GearDeathsHigh: 4, EarlyGearMax: 15,
 		TripBudget: 3, TripWindowMin: 10, TripGoldFloor: 300,
-		RecoveryOn: 1, RecoveryKitGold: 500, RecoveryTargetGold: 900, RecoveryMaxMin: 45, RecoveryCooldownMin: 15, RecoveryPotionFloor: 2, RecoveryManaFloor: 2, RecoveryXPPick: 1, RecoveryMaxAreaAbove: 1, BRAttempts: 3, BRLevelGap: 2,
+		RecoveryOn: 1, RecoveryKitGold: 500, RecoveryTargetGold: 900, RecoveryMaxMin: 45, RecoveryCooldownMin: 15, RecoveryPotionFloor: 2, RecoveryManaFloor: 2, RecoveryXPPick: 1, RecoveryKitGate: 1, RecoveryMaxAreaAbove: 1, BRAttempts: 3, BRLevelGap: 2,
 	}
 }
 

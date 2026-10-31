@@ -434,3 +434,25 @@ func TestTakeWaypointWaitsThroughLongLoad(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+// KITGATE: levels named by SetAvoidLevels cost a detour, never a wall; a destination inside the set stays reachable.
+func TestRouteAvoidLevels(t *testing.T) {
+	n := &Navigator{}
+	n.defaults()
+	n.learn(3, 9) // seen crossings: Cold Plains - Cave 1 - Stony Field is two cheap edges, the hint 3-4 costs 3
+	n.learn(9, 4)
+	if r, _ := n.Route(3, 4); len(r) != 2 || r[0] != 9 {
+		t.Fatalf("without the set the seen cave shortcut wins: %v", r)
+	}
+	n.SetAvoidLevels(map[int]bool{9: true, 17: true})
+	if r, _ := n.Route(3, 4); len(r) != 1 || r[0] != 4 {
+		t.Fatalf("avoided cave: want the direct exit, got %v", r)
+	}
+	if r, err := n.Route(3, 9); err != nil || len(r) != 1 || r[0] != 9 {
+		t.Fatalf("an avoided destination is still routable: %v %v", r, err)
+	}
+	n.SetAvoidLevels(nil)
+	if r, _ := n.Route(3, 4); len(r) != 2 {
+		t.Fatalf("cleared set restores the old route: %v", r)
+	}
+}

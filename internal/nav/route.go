@@ -143,6 +143,32 @@ func (n *Navigator) edges() map[int]map[int]int {
 	return adj
 }
 
+// avoidCost is the extra cost of passing through a level SetAvoidLevels named: a detour of up to this many seen edges
+// is taken to stay out, but a destination behind it stays reachable (a cost, not a wall).
+const avoidCost = 30
+
+// SetAvoidLevels names levels (dungeon mouths) a walk should not pass through: Route prices entering them at avoidCost
+// and NearMouth answers for tile exits while the set is non-empty. nil or empty clears it. KITGATE: a recovering
+// character without the kit keeps out of the Den, caves and Burial Grounds.
+func (n *Navigator) SetAvoidLevels(m map[int]bool) {
+	if len(m) == 0 {
+		n.avoid.Store(nil)
+		return
+	}
+	c := make(map[int]bool, len(m))
+	for k, v := range m {
+		c[k] = v
+	}
+	n.avoid.Store(&c)
+}
+
+func (n *Navigator) avoiding() bool { p := n.avoid.Load(); return p != nil && len(*p) > 0 }
+
+func (n *Navigator) avoided(level int) bool {
+	p := n.avoid.Load()
+	return p != nil && (*p)[level]
+}
+
 // Route lists the levels to enter, in order, to get from one level to another over the exits this game has
 // shown (tile exits, border gaps, crossings already made), then levels.txt neighbours, then the static Act 1
 // fallback. Cheapest total wins (a seen edge costs 1, a hint up to 3). Acts are not connected (quest doors and
@@ -172,6 +198,9 @@ func (n *Navigator) Route(from, to int) ([]int, error) {
 		}
 		done[cur] = true
 		for nx, c := range adj[cur] {
+			if nx != to && n.avoided(nx) {
+				c += avoidCost
+			}
 			if d, ok := dist[nx]; !ok || best+c < d {
 				dist[nx], prev[nx] = best+c, cur
 			}

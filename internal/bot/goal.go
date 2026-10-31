@@ -679,6 +679,9 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				l.stepArea = 0
 				return a, true
 			}
+			if r.kitGateActive(s) {
+				return 0, false
+			}
 		}
 		if p.InTown() {
 			if v := r.fieldVerdict(s); v.BloodMoor {

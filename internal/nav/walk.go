@@ -538,7 +538,7 @@ func (n *Navigator) SetMouthGuard(on bool) { n.mouthGuard = on }
 // the bounce put the character back inside the trigger and the fight became a border shuttle (KILLFIX: Fallen packs
 // at the Den mouth, 8 ms between "approach" and "Entered Den of Evil"; penalizeExits skips exits near the goal).
 func (n *Navigator) NearMouth(p input.Point) bool {
-	if !n.mouthGuard || n.w == nil {
+	if !(n.mouthGuard || n.avoiding()) || n.w == nil {
 		return false
 	}
 	lm := n.w.Current()

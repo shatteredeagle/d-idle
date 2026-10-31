@@ -41,6 +41,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
+| [kitgate](../../openspec/changes/kitgate/) | in-progress | kitgate | `internal/bot/kitgate.go`<br>`internal/bot/kitgate_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/goal.go`<br>`internal/bot/recoveryxp_test.go`<br>`internal/bot/leveling_test.go`<br>`cmd/d2bot/resource_test.go`<br>`internal/nav/nav.go`<br>`internal/nav/route.go`<br>`internal/nav/walk.go`<br>`internal/nav/exit_test.go`<br>`internal/env/tuning_resource.go`<br>`internal/resource/tuning.go`<br>`docs/knobs.md`<br>`docs/kitgate.md` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
@@ -71,6 +72,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
+- change kitgate: go test -p 1 ./internal/bot -run 'KitGate|Recovery' and ./internal/nav -run RouteAvoid pass
+- change kitgate: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-abdesign: python3 -m unittest discover tools/ab passes (paired statistic on a fixture of 8 seeds x 2 arms; the required-runs formula)
 - change m2-abdesign: docs/ab-design.md re-analyses the xpgap A/B (docs/probes/xpgap) with the paired statistic and states the runs per arm for a 10 percent effect
 - change m2-abdesign: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
