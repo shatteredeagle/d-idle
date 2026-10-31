@@ -61,11 +61,7 @@
   }
  ],
  "last_end": 1793405400,
- "next_run": {
-  "label": "soakfull d2d runs started (4 registered ",
-  "next_start": "2026-10-31T00:44:14Z",
-  "source": "d2d"
- },
+ "next_run": null,
  "runs": [
   {
    "area": "Rogue Encampment",
@@ -188,8 +184,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793408410,
- "updated": "2026-10-31T01:00Z",
+ "ts": 1793408724,
+ "updated": "2026-10-31T01:05Z",
  "work": [
   {
    "state": "working",
