@@ -4,7 +4,7 @@
 //
 //	d2dsoak run     -seeds 1-8 -hours 2 -out DIR [-cmd 'bot --backend d2d ...'] [-clock runner|bot] [-fake]
 //	d2dsoak extract [-hours H] LOG...                  metrics of minute-line logs (original-game soak logs too)
-//	d2dsoak compare [-baselines FILE] [-json] RUN...   RUN = run.json, seed dir, or minute log
+//	d2dsoak compare [-baselines FILE] [-json] [-holdout 16-23] RUN...   RUN = run.json, seed dir, or minute log (invariants: docs/geninv.md)
 //	d2dsoak baseline NAME|LOG|SOURCE|NOTE...           print baseline runs as JSON (build baselines.json)
 package main
 

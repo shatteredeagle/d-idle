@@ -41,6 +41,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
+| [gen-invariants](../../openspec/changes/gen-invariants/) | in-progress | geninv | `cmd/d2dsoak/**`<br>`internal/d2dsoakstat/**`<br>`docs/d2d-soak.md`<br>`docs/geninv.md`<br>`docs/probes/geninv/**`<br>`openspec/changes/gen-invariants/**` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
@@ -68,6 +69,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
+- change gen-invariants: go test -p 1 ./cmd/d2dsoak ./internal/d2dsoakstat passes: fixture tests for clean, hung, wedged, stall-ladder and early-exit runs, a golden report and the holdout grouping
+- change gen-invariants: offline on the real logs: navsoak and navsoak2 report VIOLATED(WEDGE,PROGRESS), the 8 m2early runs and the navsoak3 prefix report their real counters (raw output in docs/probes/geninv)
+- change gen-invariants: whole-repo vet and short tests plus race on cmd/d2dsoak and internal/d2dsoakstat pass on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change m3-merc: 2 seeds x 4 virtual hours from clvl 9 after Blood Raven on hidden d2d: the Rogue claimed exactly once per seed, 0 paid Act 1 hires, merc alive at least 70 percent of field time, every revive logged with price and gold delta within the revive rule (raw in docs/probes/merc)
 - change m3-merc: go test -p 1 ./internal/merc ./internal/bot -run 'Merc|Claim' passes; go test ./internal/env -run EveryKnob passes with the d2d default
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
@@ -77,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
 - 8bf3829 10-31 09:03 `Merge agent/m2early: early d2d baseline` (m2-earlybase)
 - 67d622b 10-31 09:03 `Merge agent/bundlepr: upstream PR bundle draft` (upstream-bundle)
 - 5be7cc7 10-31 08:13 `Merge agent/townwedge: bad-edge TTL and pocket unstick` (townwedge)
@@ -86,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 8f4cf7b 10-31 06:41 `Merge agent/navsoak` (navsoak)
 - 72a7e60 10-31 03:23 `Merge agent/upsync: upstream sync, #135 and #136 merged` (rendergh)
 - c14f9c7 10-31 02:57 `Merge agent/specback: spec backfill for six d2d cards` (spec-backfill-d2dcombat)
-- 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 <!-- statusgen:end -->
