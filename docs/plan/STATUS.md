@@ -76,6 +76,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
 
 ### Recent merges
+- b3e9d71 10-31 10:33 `Merge agent/decompskill: skill damage trace` (decompskill)
 - ea13c89 10-31 10:18 `Merge agent/decompwake: monster wake trace (clean negative)` (decompwake)
 - a403585 10-31 10:07 `Merge agent/goldfloor-impl: goldfloor levers A and B` (goldfloor)
 - db3a462 10-31 10:00 `Merge agent/routeguard-impl: route guard floors` (m3-routeguard)
@@ -85,5 +86,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 933c213 10-31 09:38 `Merge agent/gencorpus: gen-corpus scenario tests` (gen-corpus)
 - 7d8fe06 10-31 09:33 `Merge agent/combatspin: skipped move costs a poll tick` (combatspin)
 - 3b94ad7 10-31 09:31 `Merge agent/goldfloor: gold ledger analysis, proposed card` (goldfloor)
-- 13bb410 10-31 09:27 `Merge agent/geninv: gen-invariants` (gen-invariants)
 <!-- statusgen:end -->

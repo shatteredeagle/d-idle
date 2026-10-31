@@ -2,7 +2,7 @@
 
 ```yaml
 change: decompskill
-status: in-progress
+status: archived
 skip_specs: true
 agent: decompskill
 branch: agent/decompskill
@@ -20,7 +20,7 @@ gates:
   - "each deviation claimed has a differential against game.exe's own code: mismatches before > 0, after = 0, over >= 100k cases or exhaustive"
   - "independent adversarial verifier report attached verbatim"
   - "nothing pushed, posted or filed on GitHub; our repo not pushed"
-merge:
+merge: b3e9d71
 result: "two deviations proven (min-damage synergy gate FUN_00644d50; MulDiv shares), 116,000 cases 4,549 -> 0; Static Field three rules found by reading (candidate, not in the PR); branch fix/skill-damage c6be9247 ready pending the user's go; verified offline only (no game, no d2d slot)"
 ```
 
