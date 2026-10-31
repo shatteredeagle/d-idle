@@ -1,6 +1,6 @@
 # Evidence pack: PR "Draw a get-hit once at its rate, held on the last frame" (agent RENDERGH, 2026-10-31)
 
-> status: current (card rendergh). One page for the user's go / no-go. Full proof: docs/research/pr-get-hit-render-proof.md; body: docs/research/pr-get-hit-render-draft.md. Nothing pushed, posted or filed. Stacked on PR #136: it must wait for #136 to merge (then rebase onto main) or be retargeted at `fix/get-hit-length`.
+> status: current (card rendergh). One page for the user's go / no-go. Full proof: docs/research/pr-get-hit-render-proof.md; body: docs/research/pr-get-hit-render-draft.md. Nothing pushed, posted or filed. Stacked on PR #136: base = 9006a688 (#136 head); PR must wait for #136 to merge or be opened against fix/get-hit-length.
 
 ## PROOF: complete for monsters and the merc (with disclosed limits; verifier verdict below)
 
@@ -12,7 +12,7 @@ The claim in one sentence: while a monster or the merc is in its get-hit, d2d no
 | Mismatches before the patch | **1,488,667 ticks in 49,641 of 55,089 monster cases** | d2d's old lines (town.cpp:195..203, world_view.cpp:440, world_view.hpp:164..165) in `tools/emu/hit_render_harness.cpp` |
 | Mismatches after the patch | **0 of 1,747,580 ticks** | upstream's `tests/test_combat --get-hit-frames` on the patched worktree |
 | No U link in the causal chain | closed for the claim | the tick dispatcher, the row lookup and its data, the over test, the step, the frame getter and its draw caller, the client's mode start, the server's hold: read or run. U outside the claim: `FUN_00463720` (after the hold), the player's +0x154 end path |
-| Upstream tests + guards | green | test_combat ok; test_game 23 OK rc 0; pr_guard 0 FAIL 0 WARN (against upstream/main and fix/get-hit-length); presubmit --quick 1 FAIL (`doc-paths`: #136's `tools/emu/hit_len.py` line, shipped by the base's new commit 9006a688) + 4 WARN answered in the draft |
+| Upstream tests + guards | green | test_combat ok; test_game 23 OK rc 0; pr_guard 0 FAIL 0 WARN (against upstream/main and fix/get-hit-length); presubmit --quick --base fix/get-hit-length 0 FAIL + 4 WARN answered in the draft (against upstream/main it shows 1 FAIL, `short-names` at `tools/emu/hit_len_harness.cpp:33`, a file #136 ships, not this patch's) |
 | Unchanged state apart from the claimed field | by construction + tests | `get_hit_rate` is set only for mode "GH" (two lines); `get_hit_elapsed` returns the old value otherwise; the 23 `test_game` scenarios and `test_combat` pass; `tools/d2ddet` NOT run |
 | Statistical corroboration | absent | none needed; the claim is per-tick exact |
 | Independent adversarial verification | HOLDS WITH LIMITS | general-purpose, Fable, read-only; hand re-read of the chain + 5,544 adversarial cases (6,273,036 ticks at FHR >= 0: 0 differ); its findings are limits 7 and 8 in the proof (negative FHR, frozen monster), nothing to fix |
@@ -28,11 +28,16 @@ A Zombie flinching on a Charged Bolt: its 5-frame stagger plays once over the 17
 
 Go for the PR after #136 lands (rebase onto main: the base's commit 9006a688 added an ai.cpp ponytail this patch supersedes and reworded combat.md's "Ported" bullet; resolve, delete the note, re-run the AFTER differential and the checks). Or, if the maintainer wants it sooner, push `fix/get-hit-render` and open the PR with base `fix/get-hit-length` (GitHub then retargets to main when #136 merges). The player's frames are a clean follow-up candidate (the oracle already measures them).
 
+## Rebased onto 9006a688 (REBASE136R, 2026-10-31, local only)
+
+- New head: **e2c4359c** on `fix/get-hit-render` (`~/d2d-lab/pr/render`), one commit on 9006a688 (author shatteredeagle, no trailer, body `Agent: Claude Code`). Backup of the old head: local branch `fix/get-hit-render-pre-rebase` = 57bd4b56. `fix/get-hit-length` and its checkout untouched; nothing pushed.
+- Conflicts: `docs/research/re/combat.md` only: kept both bullets (9006a688's reworded "Ported:" and this patch's "Drawn frame"). `components/game/ai.cpp` merged clean; the FOLLOW136 ponytail note about the renderer replaying the animation (8 lines in `set_mode`) deleted by hand (superseded; the open gaps, the player's frames and a joined game's merc, stay as ponytails in the patch's own code and in combat.md). `tools/emu/hit_len.py` and `hit_len_harness.cpp` come from the base.
+- Re-run: `ninja test_combat test_game` ok; `test_combat` ok; `test_game` (D2_MPQ_DIR + D2_PATCH_INSTALLER set) 23 OK, rc 0; AFTER differential `test_combat --get-hit-frames` on the saved 110,836 cases (cases.tsv, game.tsv in /tmp/render-emu): `55089 cases, 1747580 ticks compared: 0 ticks in 0 cases differ` (after.tsv byte-identical to the pre-rebase run); `tools/pr_guard.py` 0 FAIL 0 WARN against upstream/main and against fix/get-hit-length; `tools/presubmit.py --quick` against upstream/main 1 FAIL (the base's `hit_len_harness.cpp:33` short name, not in this patch's diff), `--base fix/get-hit-length` 0 FAIL, 4 WARN.
+
 ## Commands (NOT RUN; each needs the user's go)
 
 ```sh
-# the worker host: rebase onto the moved base, re-check
-ssh worker.example 'cd ~/d2d-lab/pr/render && git rebase 9006a688'            # conflicts: docs/research/re/combat.md (keep both bullets); then delete the 8-line ponytail 9006a688 added in components/game/ai.cpp set_mode
+# the rebase and re-checks are DONE (section above); remaining, in order:
 ssh worker.example 'cd ~/d2d-lab/pr/render && ninja -C /tmp/render-build test_combat test_game && /tmp/render-build/tests/test_combat && python3 tools/pr_guard.py upstream/main && python3 tools/presubmit.py --quick'
 ssh worker.example 'cd /tmp/render-emu && /tmp/render-build/tests/test_combat --get-hit-frames < cases.tsv > after.tsv && source /tmp/casttrace-venv/bin/activate && PYTHONPATH=~/d2d-lab/pr/hitlen/tools/emu D2_MPQ_DIR=~/d2d-lab/data python hit_render.py compare game.tsv after.tsv cases.tsv 1'
 ssh worker.example 'cd ~/d2d-lab/pr/render && git push origin fix/get-hit-render'
@@ -44,3 +49,5 @@ ssh worker.example 'cd ~/d2d-lab/pr/render && gh pr create --repo psi29a/d2decom
 ## Posted log
 
 - nothing posted.
+
+posted:
