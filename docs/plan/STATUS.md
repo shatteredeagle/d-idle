@@ -45,6 +45,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
+| [rendergh](../../openspec/changes/rendergh/) | in-progress | rendergh | `docs/research/pr-get-hit-render-*.md`<br>`tools/emu/hit_render*`<br>`openspec/changes/rendergh/**` | `upstream-pr:get-hit-render` |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
@@ -81,6 +82,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m2-soakexit: go test ./cmd/d2dsoak passes including TestVerdictExitCodes (PASS 0, INCONCLUSIVE 2, FAIL 3, NO-DATA 3) for run and compare
 - change m2-soakexit: go test ./cmd/d2dsoak passes including TestExcludedSeedsAreNotExposure (a seed with 0 minute lines adds 0 h and appears under excluded seeds)
 - change m2-soakexit: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
+- change rendergh: differential vs game.exe's client step and draw (FUN_004b1280, FUN_00621810): >= 100000 random + boundary cases, mismatches before > 0, 0 after the patch
+- change rendergh: upstream tests green on the patched worktree; pr_guard 0 FAIL 0 WARN
+- change rendergh: one independent adversarial verifier report attached
+- change rendergh: nothing pushed or posted to GitHub
 
 ### Recent merges
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
