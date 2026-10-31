@@ -44,11 +44,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
-| [townwedge](../../openspec/changes/townwedge/) | in-progress | townwedge | `internal/nav/route.go`<br>`internal/nav/exit.go`<br>`internal/nav/exit_test.go`<br>`internal/nav/nav.go`<br>`internal/nav/townwedge_test.go`<br>`internal/env/tuning_nav.go`<br>`docs/townwedge.md`<br>`openspec/changes/townwedge/**` | `d2d-lab-binary` |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements
-- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 5 requirements
+- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
 - spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 7 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
@@ -80,10 +79,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go test -p 1 ./internal/bot ./internal/task passes including TestPickNeverEmptyInAct1 and the route guard tests at the new floors
 - change m3-routeguard: merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change townwedge: go test -short -count=1 ./... and go test -race ./internal/nav ./internal/env pass on the worker; changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
-- change townwedge: live verify: one hidden slot re-runs the navsoak2 recipe (seed 5): at least 60 wall minutes of area entries, no 'no route from level 1' storm
 
 ### Recent merges
+- 5be7cc7 10-31 08:13 `Merge agent/townwedge: bad-edge TTL and pocket unstick` (townwedge)
 - 950a153 10-31 06:49 `Merge agent/nowall: campaign stall escalation` (nowall)
 - a9a788a 10-31 06:41 `Merge agent/soakcompare` (soakcompare)
 - 5001721 10-31 06:41 `Merge agent/navsoak2` (navsoak2)
@@ -93,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 - d82bd47 10-31 02:46 `Merge agent/rebase136r: get-hit render rebase onto #136 (docs only)` (rendergh)
 - ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
-- 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
 <!-- statusgen:end -->
