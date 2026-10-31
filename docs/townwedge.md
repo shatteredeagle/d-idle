@@ -17,4 +17,8 @@
 Pocket left and edge unmarked; unleavable pocket gives a non-ErrNoExit error and the route survives; knob 0 reproduces the wedge (Route stays "no route" 24 h later); expiry after 5 min; clearing on re-entry (new level map object).
 
 ## Live verify
-(pending)
+One hidden slot, build 46c9b0a (hash prefix 36db4828627c), navsoak2 recipe, character Navy3, seed 5, 75 wall min limit, stopped at 74 min by `agentreap townwedge` (list empty after). VERIFIED (log of the run, host-side `~/d2d-lab/townwedge/logs/bot-0.log`):
+- The lab is deterministic: at 07:35:57 (xp 50219, kills 1784, clvl 9, the same state as navsoak2's wedge) the same "portal did not lead", the same "roam leg failed {138 66} unreachable from {145 68}" appeared. With the fix: "nav: cut off from the gate, stepping to the nearest connected cell" (cell {147 67}), Blood Moor and Cold Plains entered within 2 s, 0 "marked bad" lines. This also VERIFIES the pocket: the start cell was cut off from the gate on the known grid.
+- A second episode (07:49, Blood Moor, cell {69 134}, target 2 subtiles away) could not be left (4 tries, "no way out found", ErrNoPath, nothing marked); the bot's own escape took it to town and play went on.
+- Whole run: clvl 11 (xp 84.4k), 3673 kills, 0 deaths, 1582 area entries, 52 "portal did not lead" (all recovered), 0 "no route from level 1" lines, 0 edges marked bad, 7 "no eligible reachable area" lines (navsoak2 had 7 before its wedge), 74 wall min of continuous entries; 6 save-point re-entries.
+- Not verified: the failure mode with the knob at 0 on the live game (offline test only).
