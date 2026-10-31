@@ -45,6 +45,7 @@ type TownTuning struct {
 	PotionsFirst    int // 1: kit potions before the first town portal scroll, which needs gold for the scroll plus TPScrollPotions potions (d2-sme order, D3); 0 = scroll first
 	TPFirstLevel    int // PotionsFirst: extra floor, no first town portal scroll below this clvl (0 = none; the old rule was 4)
 	TPScrollPotions int // PotionsFirst: the first scroll needs gold for the scroll plus this many healing potions (SME: 2; 0 with TPFirstLevel 4 = the old rule)
+	SellLowGems     int // 1: chipped and flawed gems are sold while no Horadric Cube is held (decision D4); 0 = keep them for the cube as before
 	IDScrollNeed    int // 1: buy identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always up to IDScrollTarget
 	BankFirst       int // 1: deposit the gold above the keep line (never below the minimal kit) before the shop; 0 = after it
 	RepairLatch     int // 1: a repair that changed nothing is not retried until durability changed or gold grew by FutileGoldStep; 0 = retry every visit
@@ -59,7 +60,7 @@ func DefaultTownTuning() TownTuning {
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40,
-		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
+		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
 	}
 }
 
@@ -107,6 +108,7 @@ func townKnobs() []Knob {
 		townK("spareKeep", "Spare supplies kept", "count", "A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted).", d.SpareKeep, 0, 30, true),
 		townK("sellMaxS", "Sell chore cap", "s", "Time the sell chore alone may take before it is cut off.", d.SellMaxS, 15, 300, true),
 		townK("potionsFirst", "Potions before first scroll", "bool", "1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old).", d.PotionsFirst, 0, 1, true),
+		townK("sellLowGems", "Sell chipped and flawed gems", "bool", "1 sells chipped and flawed gems until the Horadric Cube is in the pack or stash (decision D4, SME: the Cube recipe comes in Act 2); better gems, runes and charms stay. 0 keeps low gems for cube upgrades (old).", d.SellLowGems, 0, 1, true),
 		townK("tpFirstLevel", "First scroll from clvl", "clvl", "potionsFirst: extra floor, no first town portal scroll below this level. 0 = none (default, the SME gold rule decides); 4 with tpScrollPotions 0 restores the old BASICSFIX rule.", d.TPFirstLevel, 0, 30, false),
 		townK("tpScrollPotions", "Potions kept for the first scroll", "potions", "potionsFirst: the first town portal scroll is bought only when the gold left after the kit potions covers the scroll plus this many healing potions (d2-sme order, decision D3). 0 = no gold margin.", d.TPScrollPotions, 0, 10, false),
 		townK("idScrollNeed", "Identify scroll only if valuable", "bool", "1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old).", d.IDScrollNeed, 0, 1, true),

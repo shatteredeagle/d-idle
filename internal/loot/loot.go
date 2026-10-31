@@ -6,6 +6,7 @@ import (
 	"context"
 	"fmt"
 	"path"
+	"strings"
 	"sync/atomic"
 
 	"d2lod-bot/internal/d2"
@@ -432,6 +433,35 @@ func (n needsOf) wantRejuv(b *data.ItemBase, st belt.State) bool {
 	return false
 }
 
+// lowGem reports a chipped or flawed gem or skull (codes gc*, gf*, skc, skf).
+func lowGem(code string) bool {
+	return strings.HasPrefix(code, "gc") || strings.HasPrefix(code, "gf") || code == "skc" || code == "skf"
+}
+
+// haveCube reports whether the Horadric Cube (code box) is in the pack or the stash: the Cube recipe is available from
+// then on. UNVERIFIED that no earlier state (the quest chain) should count; the Cube item is the only existing helper.
+func (n needsOf) haveCube() bool {
+	for _, c := range []d2.Container{d2.ContInventory, d2.ContStash} {
+		for _, u := range n.s.Inventory.Container(c) {
+			if bb := n.l.base(u.Class); bb != nil && bb.Code == "box" {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// freeCells counts the unused cells of the pack grid (items' width times height against the grid size).
+func (n needsOf) freeCells() int {
+	cells := 40 // the classic 10 x 4 pack
+	for _, u := range n.s.Inventory.Container(d2.ContInventory) {
+		if bb := n.l.base(u.Class); bb != nil {
+			cells -= bb.Width * bb.Height
+		}
+	}
+	return cells
+}
+
 type needsOf struct {
 	l *Looter
 	s *d2.Snapshot
@@ -504,6 +534,10 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 		if b == nil {
 			return false
 		}
+		// D4: chipped and flawed gems are only worth keeping once the Cube can upgrade them; until then they sell.
+		if n.l.e.Tune.Town.SellLowGems != 0 && lowGem(b.Code) && !n.haveCube() {
+			return false
+		}
 		have := 0
 		for _, c := range []d2.Container{d2.ContInventory, d2.ContStash, d2.ContCube} {
 			for _, u := range inv.Container(c) {
@@ -513,6 +547,8 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 			}
 		}
 		return have < GemKeep
+	case "charmroom":
+		return n.freeCells() >= 3
 	case "gold":
 		return p.Gold < p.Level*10000
 	}

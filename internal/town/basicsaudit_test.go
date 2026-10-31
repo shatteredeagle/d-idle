@@ -99,15 +99,24 @@ func TestAuditS5OneVisitSellsAllScrollCountUnchanged(t *testing.T) {
 	}
 }
 
-// S6 (rune and gem part) agrees: neither is sold; both go to the stash. The magic charm part depends on its stats
-// (pickit rule "charms"): an identified magic charm without life, resist, FHR or skills is sold (code reading only).
-func TestAuditS6RuneAndGemAreKept(t *testing.T) {
+// S6 (gap G7 closed by M1LOOT, flipped on purpose; decision D4): a rune, a charm with life and the better gems are held
+// (stash), chipped and flawed gems are sold while no Horadric Cube is held, a plain identified charm is sold.
+func TestAuditS6RuneCharmAndGems(t *testing.T) {
 	r := audit(t, 30, 1, true)
 	r.W.Add("r07", d2.ContInventory, 3, 0)
-	r.W.Add("gcv", d2.ContInventory, 4, 0)
+	r.W.Add("gzv", d2.ContInventory, 4, 0)
+	r.W.Add("gsv", d2.ContInventory, 5, 0)
+	r.W.Add("gcv", d2.ContInventory, 6, 0)
+	r.W.Add("gfv", d2.ContInventory, 7, 0)
+	life := r.W.Add("cm1", d2.ContInventory, 0, 1)
+	r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+	r.W.Stats[life.Addr] = d2.Stats{7: 20 << 8}
+	plain := r.W.Add("cm1", d2.ContInventory, 1, 1)
+	r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+	r.W.Stats[plain.Addr] = d2.Stats{21: 3}
 	rep := run(t, r)
-	if rep.Sold != 0 || count(r.W, d2.ContStash) != 2 {
-		t.Fatalf("sold %d stash %d", rep.Sold, count(r.W, d2.ContStash))
+	if rep.Sold != 3 || count(r.W, d2.ContStash) != 4 {
+		t.Fatalf("sold %d stash %d (want chipped, flawed and the plain charm sold; rune, 2 gems and the life charm kept)", rep.Sold, count(r.W, d2.ContStash))
 	}
 }
 
