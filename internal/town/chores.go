@@ -70,11 +70,12 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 	if band.Capacity(belt.HP, st.Slots) > 0 && st.Count[belt.HP]+belt.PackCount(t.e.Data, inv, belt.HP) < tn.TripMinHPPotions {
 		add(true, "hp", "low on healing potions")
 	}
-	if band.Capacity(belt.MP, st.Slots) > 0 && tn.TripMinMPPotions > 0 && st.Count[belt.MP]+belt.PackCount(t.e.Data, inv, belt.MP) < tn.TripMinMPPotions {
+	mpTrips := !t.mpCapped(p) // goldfloor: below MPCapLevel mana potions never raise a trip
+	if mpTrips && band.Capacity(belt.MP, st.Slots) > 0 && tn.TripMinMPPotions > 0 && st.Count[belt.MP]+belt.PackCount(t.e.Data, inv, belt.MP) < tn.TripMinMPPotions {
 		add(true, "mp", "low on mana potions")
 	}
 	for _, k := range []belt.Kind{belt.HP, belt.MP} {
-		if band.Capacity(k, st.Slots) > 0 && band.FillPct(st, k) < tn.TripBeltColumnPct && belt.PackCount(t.e.Data, inv, k) == 0 {
+		if (mpTrips || k != belt.MP) && band.Capacity(k, st.Slots) > 0 && band.FillPct(st, k) < tn.TripBeltColumnPct && belt.PackCount(t.e.Data, inv, k) == 0 {
 			add(true, "belt"+k.String(), "%s belt columns below %d%%", k, tn.TripBeltColumnPct)
 		}
 	}

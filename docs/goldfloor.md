@@ -39,3 +39,9 @@ Agrees: skip early TP buys (walk), sorceress buys few mana potions, gate Blood R
 
 ## Order
 1. Lever A (trip floor plus no TP rebuy when poor), 2. lever B, 3. lever C; leave the BR gate and kit line alone (no gold effect, I). Measure with the paired tooling, 8 seeds x 2 h, on gold/h net, `bought` kinds and trips under 30 gold.
+
+## Implementation (levers A and B, offline; the A/B is the remaining gate)
+- A: `town.tripMinSpend` 60 (0 = old). `bot.choresDue` drops a pure restock plan (healing potions below the resupply line, a potion-only resource trip, the Townsman's potion/belt/scroll reasons) when `Town.PlannedSpend` is under the floor and the belt holds a healing potion. Survival trips (free heal), sell, pack, merc and the other reasons are not floored. A character under the kit line (`recovery.kitGold`) with under 2 healing potions carried buys no portal scroll (`tpAllowedAt`), so the potions come first.
+- B: `town.mpCapLevel` 10 and `town.mpCapEarly` 1: below clvl 10 a visit buys at most 1 mana potion and a low mana belt raises no trip (0 level = old).
+- C (loot bar) is not changed: it waits for the A/B.
+- Tests: `TestTripFloor`, `TestScenario_TripFloorPoorLoop` (bot), `TestNoTPRebuyWhenPoor`, `TestManaCapBelowClvl10`, `TestPlannedSpendCappedByGold` (town; need the extracted tables).
