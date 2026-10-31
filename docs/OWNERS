@@ -29,3 +29,9 @@ docs/streamctl-grid.md  streambuild  stream-grid
 docs/research/lutgholein-proof.md  lutproof  lutproof
 docs/research/pr-lut-gholein-*.md  lutproof  lutproof
 tools/emu/lut_*.py  lutproof  lutproof
+openspec/changes/streamfix/**  streamfix  streamfix
+cmd/d2dview/main.go  streamfix  streamfix
+cmd/d2dview/pub.go  streamfix  streamfix
+cmd/d2dview/view_test.go  streamfix  streamfix
+cmd/d2dview/web/stream.html  streamfix  streamfix
+tools/d2dview-demo.sh  streamfix  streamfix

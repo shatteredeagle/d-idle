@@ -175,7 +175,7 @@ func TestStreamPageIsStreamSafe(t *testing.T) {
 		s.routes().ServeHTTP(rec, httptest.NewRequest("GET", path, nil))
 		b := rec.Body.String()
 		if rec.Code != 200 || !strings.Contains(b, "d2d (reimplementation)") || !strings.Contains(b, "/stream.mjpg") ||
-			!strings.Contains(b, "/api/pub") || !strings.Contains(b, "tile=1") {
+			!strings.Contains(b, "/api/pub") || !strings.Contains(b, "visibilitychange") || !strings.Contains(b, "id=\"engine\"") || !strings.Contains(b, "tile=1") {
 			t.Errorf("%s: code %d, page lacks badge, frames, pub feed or tile variant", path, rec.Code)
 		}
 		for _, bad := range []string{"/api/state", "/events", "/api/mode", ".lan", "worker.example", "127.0.0.1", "localhost", "/home/", "/tmp/", "Authorization"} {
@@ -197,6 +197,14 @@ func TestPubIsSanitized(t *testing.T) {
 			t.Errorf("pub json leaks %q: %s", bad, b)
 		}
 	}
+	if p.Engine != "d2d" {
+		t.Errorf("engine = %q", p.Engine)
+	}
+	badge = "d.idle testing stream"
+	if q := pubOf(sn); q.Backend != "d.idle testing stream" {
+		t.Errorf("badge flag not used: %q", q.Backend)
+	}
+	badge = Backend
 	if p.Backend != "d2d (reimplementation)" || p.Kills != 40 || p.Deaths != 2 || p.Goal != "Level up in Blood Moor: Fighting" {
 		t.Errorf("pub = %+v", p)
 	}
