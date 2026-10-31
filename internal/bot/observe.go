@@ -65,6 +65,7 @@ type observer struct {
 	questSeen map[string]task.Stage // "diff/quest" -> last stage emitted
 
 	lastProgress  time.Time
+	campaignAt    time.Time // last campaign progress (stall.go): kill or xp, non-town area entered, purchase, quest step
 	rearmAt       time.Time
 	real          uint64 // progress that resets the failsafe ladder
 	progress      uint64 // monotonic progress counter (health endpoint)
@@ -285,6 +286,7 @@ func (o *observer) bump(now time.Time) {
 // not refill the restart budgets.
 func (o *observer) bumpReal(now time.Time) {
 	o.bump(now)
+	o.campaignAt = now
 	o.real++
 }
 
@@ -418,6 +420,9 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 		o.noteRoute(p.Area)
 		o.mons = map[uint32]monTrack{}
 		o.bump(now)
+		if !r.d.Plan.IsTown(p.Area) {
+			o.campaignAt = now
+		}
 		r.emit(goals.Event{Type: goals.EvAreaChange, Area: r.areaName(p.Area), AreaID: p.Area})
 	}
 
@@ -558,6 +563,9 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 		r.e.Log.Warn("xp lost", "lost", -dx, "before", prev, "after", p.Exp, "totalLost", o.xpLost, "games", o.newGames)
 	}
 	if p.Gold != o.gold {
+		if p.Gold < o.gold && o.gold > 0 {
+			o.campaignAt = now // gold went down: a purchase (a death also costs gold, and a death is no stall either)
+		}
 		o.gold = p.Gold
 		o.bump(now) // shopping is not progress that may refill the restart budgets
 	}
@@ -903,6 +911,7 @@ func (r *Runner) pollQuests(p *d2.Player, now time.Time) {
 			continue
 		}
 		o.questSeen[key] = st
+		o.campaignAt = now
 		done := st >= task.StageDone
 		ev := goals.Event{Type: goals.EvQuest, Quest: id, Stage: int(st), Done: done, Diff: diff}
 		if done {
