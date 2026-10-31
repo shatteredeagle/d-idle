@@ -64,6 +64,7 @@
  "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
+  "Go-live prep.",
   "Public scrub package C.",
   "Public scrub package A; cutover executed.",
   "Lut Gholein trace.",
@@ -73,16 +74,15 @@
   "Fixed tool hot loop in serveStream.",
   "Survey of Diablo II reimplementation/decompilation projects.",
   "Tool fit report.",
-  "Lab and lab2 sections.",
-  "Sourced cast timing documentation."
+  "Lab and lab2 sections."
  ],
  "stats": {
   "items": [],
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793412930,
- "updated": "2026-10-31T02:15Z",
+ "ts": 1793414722,
+ "updated": "2026-10-31T02:45Z",
  "work": [
   {
    "state": "working",

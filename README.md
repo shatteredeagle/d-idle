@@ -100,8 +100,9 @@ Between runs.
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (51)</summary>
+<summary><b>2026-10-30</b> (52)</summary>
 
+- Go-live prep.
 - Public scrub package C.
 - Public scrub package A; cutover executed.
 - Lut Gholein trace.
@@ -109,11 +110,11 @@ Between runs.
 - The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.
 - ADR for the d2d primary backend decision.
 - Fixed tool hot loop in serveStream.
-- Survey of Diablo II reimplementation/decompilation projects.
 
 <details>
-<summary>43 more</summary>
+<summary>44 more</summary>
 
+- Survey of Diablo II reimplementation/decompilation projects.
 - Tool fit report.
 - Lab and lab2 sections.
 - Sourced cast timing documentation.
@@ -400,7 +401,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-31 02:15 UTC
+Last updated: 2026-10-31 02:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
