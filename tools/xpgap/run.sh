@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage (ON THE WORKER): run.sh TAG ARM(off|on|sell|tp) SEED HOURS   one managed d2d run in a slot (change xpgap).
+# usage (ON THE WORKER): run.sh TAG ARM(off|on|sell|tp|norec) SEED HOURS   one managed d2d run in a slot (change xpgap).
 # Fresh uncheated Sorceress, lab6, lockstep, run policy ON, killtime always on. ARM on writes (sell = povertySellMin only) tuning.json overrides
 # for the xpgap knobs (resource.recoveryXPEarly, resource.povertySellMin) into the instance state dir; off leaves the defaults.
 # Ship bin/ (d2bot.xpgap, d2dslot.sh, agentrun.sh) to ~/d2d-lab/xpgap/bin first. Wrap the driver in agentrun.sh xpgap.
@@ -14,6 +14,7 @@ if [ '$ARM' != off ]; then
    on)   ov="\"resource.recoveryXPEarly\":${XG_EARLY:-2},\"resource.povertySellMin\":${XG_SELL:-10}" ;;
    sell) ov="\"resource.povertySellMin\":${XG_SELL:-10}" ;;
    tp)   ov="\"town.tpMinGold\":${XG_TP:-150}" ;;
+   norec) ov="\"resource.recoveryOn\":0" ;;
    *)    ov="" ;;
   esac
   st=data-'$T'/instances/xg-'$T'/state; mkdir -p $st
