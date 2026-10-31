@@ -24,7 +24,7 @@ gates:
   - "merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
 merge: db3a462
-result: implemented offline (no live run); floors, hold, floor log, tests green on Orion; d2d-only behaviour unchanged elsewhere (shared bot logic)
+result: implemented offline (no live run); floors, hold, floor log, tests green on the worker host; d2d-only behaviour unchanged elsewhere (shared bot logic)
 ```
 
 ## 1. Work
