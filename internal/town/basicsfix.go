@@ -121,10 +121,8 @@ func (t *Town) tpAllowed(s *d2.Snapshot) bool {
 // tpAllowedAt is tpAllowed with the scroll and cheapest healing potion prices of the vendor in front of us.
 func (t *Town) tpAllowedAt(s *d2.Snapshot, scroll, potion int) bool {
 	tu := t.tune()
-	if t.poorKit(s) {
-		return false // goldfloor: potions first, the scroll waits until 2 healing potions are carried
-	}
-	return tu.PotionsFirst == 0 || s.Player.Level >= tu.TPFirstLevel && s.Player.Gold >= scroll+tu.TPScrollPotions*potion
+	// goldfloor: potions first, the scroll waits until 2 healing potions are carried (not with potionsFirst 0, the old order)
+	return tu.PotionsFirst == 0 || !t.poorKit(s) && s.Player.Level >= tu.TPFirstLevel && s.Player.Gold >= scroll+tu.TPScrollPotions*potion
 }
 
 // kitPotions is the healing potion count of the kit pass (resource HPFirst, at most a recovery floor).

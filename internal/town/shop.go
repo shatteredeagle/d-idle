@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strings"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
@@ -240,9 +241,14 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 		want[belt.RV] = 0
 	}
 	if t.mpCapped(s.Player) {
-		if c := t.tune().MPCapEarly; want[belt.MP] > c {
-			want[belt.MP] = c
+		// per visit: the kit pass and the fill pass both come through here, so count what this visit bought already
+		left := t.tune().MPCapEarly
+		for name, n := range rep.Bought {
+			if strings.Contains(name, "Mana Potion") {
+				left -= n
+			}
 		}
+		want[belt.MP] = max(min(want[belt.MP], left), 0)
 	}
 	t.e.Log.Info("shop: potion plan", "wantHP", want[belt.HP], "wantMP", want[belt.MP], "wantRV", want[belt.RV], "beltHP", bs.Count[belt.HP],
 		"beltMP", bs.Count[belt.MP], "packHP", belt.PackCount(t.e.Data, s.Inventory, belt.HP), "packMP", belt.PackCount(t.e.Data, s.Inventory, belt.MP), "beltOther", bs.Other, "slots", bs.Slots, "gold", s.Player.Gold)

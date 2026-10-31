@@ -57,7 +57,7 @@ func TestPotionsFirstThenScrollAtKitLevel(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if rep.Bought["Scroll of Town Portal"] != 1 || len(rep.Bought) < 2 {
+	if rep.Bought["Scroll of Town Portal"] < 1 || len(rep.Bought) < 2 { // goldfloor: the mana cap leaves gold for a second scroll
 		t.Fatalf("bought %v gold %d", rep.Bought, rep.GoldAfter)
 	}
 }

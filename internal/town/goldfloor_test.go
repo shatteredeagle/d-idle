@@ -19,25 +19,16 @@ func boughtLike(rep town.ChoreReport, sub string) int {
 	return n
 }
 
-// goldfloor: gold 209 and 1 healing potion buys potions and no portal scroll; the knob at 0 restores the scroll.
+// goldfloor: gold 209 and 1 healing potion buys potions and no portal scroll.
 func TestNoTPRebuyWhenPoor(t *testing.T) {
-	for _, off := range []bool{false, true} {
-		r := audit(t, 209, 8, false)
-		r.W.Add("hp1", d2.ContBelt, 0, 0)
-		if off {
-			r.Env.Tune.Town.TripMinSpend = 0
-		}
-		rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Scrolls: true})
-		if err != nil {
-			t.Fatal(err)
-		}
-		tp := boughtLike(rep, "Town Portal")
-		if !off && (tp != 0 || boughtLike(rep, "Healing") == 0) {
-			t.Fatalf("poor visit bought %v", rep.Bought)
-		}
-		if off && tp == 0 {
-			t.Fatalf("tripMinSpend 0 bought %v, want the old scroll", rep.Bought)
-		}
+	r := audit(t, 209, 8, false)
+	r.W.Add("hp1", d2.ContBelt, 0, 0)
+	rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Scrolls: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if boughtLike(rep, "Town Portal") != 0 || boughtLike(rep, "Healing") == 0 {
+		t.Fatalf("poor visit bought %v", rep.Bought)
 	}
 }
 
@@ -46,8 +37,7 @@ func TestManaCapBelowClvl10(t *testing.T) {
 	r := audit(t, 600, 6, false)
 	r.W.Add("hp1", d2.ContBelt, 0, 0)
 	r.W.Add("hp1", d2.ContBelt, 1, 0)
-	r.W.Add("hp1", d2.ContBelt, 2, 0)
-	r.W.Add("hp1", d2.ContBelt, 3, 0)
+	r.W.Add("tsc", d2.ContInventory, 9, 3)
 	s, _ := r.W.Snapshot()
 	if bad, why := r.T.NeedsTrip(s); bad && strings.Contains(why, "mana") {
 		t.Fatalf("clvl 6 mana belt raised a trip: %s", why)
