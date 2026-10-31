@@ -18,7 +18,7 @@ d2dsoak run -seeds 1-8 -hours 2 -out DIR -baselines tools/d2dsoak/baselines.json
 d2dsoak run -seeds 1 -hours 0.05 -out DIR                              # dry run: steps the clock only
 d2dsoak run -fake -seeds 1-8 -hours 2 -out DIR -baselines ...         # pipeline test, synthetic lines, no d2d
 d2dsoak extract [-hours H] LOG...                  # metrics of minute-line logs (also original-game soak logs)
-d2dsoak compare [-baselines F] [-json] RUN...      # RUN = run.json, seed dir or minute log; exit codes: section 3c
+d2dsoak compare [-baselines F] [-json] [-holdout 16-23] RUN...   # RUN = run.json, seed dir or minute log; exit codes: section 3c; invariants: 3d
 d2dsoak baseline 'NAME|LOG|SOURCE|NOTE' ...        # print baseline runs as JSON (how baselines.json was built)
 ```
 
@@ -93,6 +93,10 @@ Minimum sample for a meaningful verdict (the tool warns below these; numbers fro
 `tools/d2dsoak/run.sh` passes the code through (its `ssh` returns it).
 
 A run is **invalid** (field `invalid` in run.json, reason printed as a WARNING) and excluded from hours, deaths and kills when: fewer than 2 minute lines (crashed at start: the d2d clock alone is not exposure, `hours` stays 0), the command failed (`cmdErr`), `cmd exited`/`wall limit` more than 5 % short of `-hours` (`hours` keeps the real covered virtual time), more than 2 % of the minute lines fail to parse (bad time, xp or counter; `dropped` counts them), NaN/Inf/non-positive hours or negative counters. Excluded seeds are listed under `excluded seeds` in the report and in `-json` (`excludedSeeds`, with `seeds` = the number counted), add 0 h and 0 kills, and do not count toward `minSeeds`; any excluded run makes the verdict at best INCONCLUSIVE. Duplicate seeds in `-seeds` and the same path twice in `extract`/`compare` are rejected. Fewer than `minSeeds` valid seeds, any seed under `minHoursPerSeed` or fewer than `minTotalHours` in total are INCONCLUSIVE (fidelity-gate "Minimum sample"; before this change they only warned). v2 `deaths_per_1000_kills` is INCONCLUSIVE below 200 kills (**U**, a floor of about 0.4 h) or with a zero-exposure baseline. `repeatSites` expands at most 1000 deaths per minute line.
+
+## 3d. Invariants and holdout seeds (change gen-invariants)
+
+Every report (`run`, `extract`, `compare`; text, `-json`, `verdict.txt`) carries a block before `OVERALL`: per seed HANG, STALL, WEDGE, PROGRESS, DEATHS, RESTARTS, EXIT counters and a verdict `PASS` / `VIOLATED(list)` / `NO-DATA`, a group line each for `tuning` and `holdout` seeds (`-holdout`, default 16-23), a `COVERAGE (proven on)` line and `INVARIANTS: ...`. The invariants verdict never changes the exit code (section 3c stays the only exit rule). `run.json` stores the counters (`invariants`) and the setup (`cover`); an older run.json is rescanned from the `bot.log` next to it, and a `supervisor.log` next to a log adds launches and the bot's exit. Definitions, thresholds and provenance: docs/geninv.md; contract: soak-gates delta of the card.
 
 ## 4. What d2d cannot validate
 

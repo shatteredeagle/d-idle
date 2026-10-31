@@ -55,36 +55,7 @@ func ParseMinutesCount(r io.Reader) ([]Minute, int, error) {
 		if kv == nil || kv["msg"] != "minute" {
 			continue
 		}
-		m := Minute{Goal: kv["goal"], Step: kv["step"], State: kv["state"], RState: kv["rstate"]}
-		var terr error
-		m.At, terr = time.Parse(time.RFC3339Nano, kv["time"])
-		ok := terr == nil
-		for k, p := range map[string]*int{"area": &m.Area, "clvl": &m.Clvl, "kills": &m.Kills, "deaths": &m.Deaths,
-			"gold": &m.Gold, "restarts": &m.Restarts} {
-			n, err := strconv.Atoi(kv[k])
-			if err != nil {
-				ok = false
-			}
-			*p = n
-		}
-		if v, has := kv["potionsUsed"]; has {
-			m.PotionsUsed, _ = strconv.Atoi(v)
-		} else {
-			m.PotionsUsed, _ = strconv.Atoi(kv["potions"])
-		}
-		if a, ok1 := kv["dmgTaken"]; ok1 {
-			if b, ok2 := kv["hpMinPct"]; ok2 {
-				m.DmgTaken, _ = strconv.Atoi(a)
-				m.HPMinPct, _ = strconv.Atoi(b)
-				m.HasHP = true
-			}
-		}
-		if x, has := kv["xp"]; has {
-			var xerr error
-			if m.XP, xerr = strconv.ParseUint(x, 10, 64); xerr != nil {
-				ok = false
-			}
-		}
+		m, ok := minuteFromKV(kv)
 		if ok {
 			out = append(out, m)
 		} else {
@@ -92,6 +63,41 @@ func ParseMinutesCount(r io.Reader) ([]Minute, int, error) {
 		}
 	}
 	return out, dropped, sc.Err()
+}
+
+// minuteFromKV builds a Minute from the key/values of a `msg=minute` line; ok is false when time, xp or a counter did not parse.
+func minuteFromKV(kv map[string]string) (Minute, bool) {
+	m := Minute{Goal: kv["goal"], Step: kv["step"], State: kv["state"], RState: kv["rstate"]}
+	var terr error
+	m.At, terr = time.Parse(time.RFC3339Nano, kv["time"])
+	ok := terr == nil
+	for k, p := range map[string]*int{"area": &m.Area, "clvl": &m.Clvl, "kills": &m.Kills, "deaths": &m.Deaths,
+		"gold": &m.Gold, "restarts": &m.Restarts} {
+		n, err := strconv.Atoi(kv[k])
+		if err != nil {
+			ok = false
+		}
+		*p = n
+	}
+	if v, has := kv["potionsUsed"]; has {
+		m.PotionsUsed, _ = strconv.Atoi(v)
+	} else {
+		m.PotionsUsed, _ = strconv.Atoi(kv["potions"])
+	}
+	if a, ok1 := kv["dmgTaken"]; ok1 {
+		if b, ok2 := kv["hpMinPct"]; ok2 {
+			m.DmgTaken, _ = strconv.Atoi(a)
+			m.HPMinPct, _ = strconv.Atoi(b)
+			m.HasHP = true
+		}
+	}
+	if x, has := kv["xp"]; has {
+		var xerr error
+		if m.XP, xerr = strconv.ParseUint(x, 10, 64); xerr != nil {
+			ok = false
+		}
+	}
+	return m, ok
 }
 
 func jsonKV(line string) map[string]string {

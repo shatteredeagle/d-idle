@@ -115,6 +115,9 @@ type Verdict struct {
 	// Seeds is the number of seeds that count; Excluded lists the others as "name: reason" (zero exposure, zero kills).
 	Seeds    int      `json:"seeds"`
 	Excluded []string `json:"excludedSeeds,omitempty"`
+	// Inv is the invariants report (counters per seed, groups, coverage, INVARIANTS verdict): separate from Overall and
+	// without effect on the exit code (fidelity-gate "Verdict exit codes").
+	Inv *InvReport `json:"invariants,omitempty"`
 }
 
 // Compare judges the d2d runs against the baselines.
@@ -285,6 +288,9 @@ func (v Verdict) Text() string {
 		for _, e := range v.Excluded {
 			fmt.Fprintf(&b, "  %s\n", e)
 		}
+	}
+	if v.Inv != nil {
+		b.WriteString(v.Inv.Text())
 	}
 	fmt.Fprintf(&b, "OVERALL: %s (exit %d)\n", v.Overall, ExitCode(v.Overall))
 	return b.String()

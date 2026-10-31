@@ -1,0 +1,39 @@
+# m2early: 8 fresh-character runs, 3 virtual h each (seeds 1-8)
+invariants (docs/geninv.md): is the run sound, apart from is it good
+run                        group    vmin hang stall wedge     noprog    deaths/1000k restarts   exit      unrec   verdict
+./bot-base1.log            tuning    178    0     0   0m/0         4m    0.0 (0/641k) fresh6/chk13/bot0 limit     0       PASS
+./bot-base2.log            tuning    180    1     0   2m/33        5m    0.0 (0/628k) fresh3/chk16/bot0 limit     0       VIOLATED(HANG)
+./bot-base3.log            tuning    180    0     0   2m/51        5m    3.6 (2/557k) fresh6/chk13/bot0 limit     0       PASS
+./bot-base4.log            tuning    179    0     0   0m/0         4m    0.0 (0/617k) fresh3/chk15/bot0 limit     0       PASS
+./bot-base5.log            tuning    179    0     0   0m/0         5m    0.0 (0/612k) fresh2/chk9/bot0 limit     0       PASS
+./bot-base6.log            tuning    179    0     0   0m/0         8m    1.9 (1/514k) fresh4/chk13/bot0 limit     0       PASS
+./bot-base7.log            tuning    179    0     0   1m/10        4m    0.0 (0/572k) fresh6/chk15/bot0 limit     0       PASS
+./bot-base8.log            tuning    181    0     0   1m/72        5m    0.0 (0/458k) fresh12/chk32/bot0 limit     0       PASS
+group tuning   seeds 1-8: 23.9 virtual h, 4599 kills, 3 deaths, 4784 XP/h, hang 1, stall rungs 0, wedge max 2 min, no-progress max 8 min, bot restarts 0, fresh games 42, chickens 126: VIOLATED(HANG)
+group holdout: none ran (convention: seeds 16-23; docs/geninv.md)
+COVERAGE (proven on): seeds 1-8 (tuning), none (holdout); class unknown; act 1; difficulty unknown; engine d2d; clvl 1-6; 23.9 virtual h. Outside these axes the claim is UNPROVEN.
+INVARIANTS: VIOLATED(seed 2: HANG)
+# navsoak (a hidden soak, seed 5; supervisor.log read when present)
+invariants (docs/geninv.md): is the run sound, apart from is it good
+run                        group    vmin hang stall wedge     noprog    deaths/1000k restarts   exit      unrec   verdict
+logs/bot-0.log             tuning   6964    0     0 4689m/9999   4688m    0.1 (1/7213k) fresh15/chk1187/bot0 limit     0       VIOLATED(WEDGE,PROGRESS)
+group tuning   seeds none: 116.1 virtual h, 7213 kills, 1 deaths, 1081 XP/h, hang 0, stall rungs 0, wedge max 4689 min, no-progress max 4688 min, bot restarts 0, fresh games 15, chickens 1187: VIOLATED(PROGRESS,WEDGE)
+group holdout: none ran (convention: seeds 16-23; docs/geninv.md)
+COVERAGE (proven on): seeds none (tuning), none (holdout); class unknown; act 1; difficulty unknown; engine d2d; clvl 1-13; 116.1 virtual h. Outside these axes the claim is UNPROVEN.
+INVARIANTS: VIOLATED(logs/bot-0.log: WEDGE,logs/bot-0.log: PROGRESS)
+# navsoak2 (a hidden soak, seed 5; supervisor.log read when present)
+invariants (docs/geninv.md): is the run sound, apart from is it good
+run                        group    vmin hang stall wedge     noprog    deaths/1000k restarts   exit      unrec   verdict
+logs/bot-0.log             tuning  18873    0     0 18293m/9999  18291m    0.0 (0/1781k) fresh4/chk3740/bot0 limit     0       VIOLATED(WEDGE,PROGRESS)
+group tuning   seeds none: 314.6 virtual h, 1781 kills, 0 deaths, 159 XP/h, hang 0, stall rungs 0, wedge max 18293 min, no-progress max 18291 min, bot restarts 0, fresh games 4, chickens 3740: VIOLATED(PROGRESS,WEDGE)
+group holdout: none ran (convention: seeds 16-23; docs/geninv.md)
+COVERAGE (proven on): seeds none (tuning), none (holdout); class unknown; act 1; difficulty unknown; engine d2d; clvl 1-9; 314.6 virtual h. Outside these axes the claim is UNPROVEN.
+INVARIANTS: VIOLATED(logs/bot-0.log: WEDGE,logs/bot-0.log: PROGRESS)
+# navsoak3 (a hidden soak, seed 5; supervisor.log read when present)
+invariants (docs/geninv.md): is the run sound, apart from is it good
+run                        group    vmin hang stall wedge     noprog    deaths/1000k restarts   exit      unrec   verdict
+logs/bot-0.log             tuning    810    0     0   3m/7         5m    0.0 (0/2595k) fresh4/chk69/bot0 open      0       PASS
+group tuning   seeds none: 13.5 virtual h, 2595 kills, 0 deaths, 5133 XP/h, hang 0, stall rungs 0, wedge max 3 min, no-progress max 5 min, bot restarts 0, fresh games 4, chickens 69: PASS
+group holdout: none ran (convention: seeds 16-23; docs/geninv.md)
+COVERAGE (proven on): seeds none (tuning), none (holdout); class unknown; act 1; difficulty unknown; engine d2d; clvl 1-10; 13.5 virtual h. Outside these axes the claim is UNPROVEN.
+INVARIANTS: PASS

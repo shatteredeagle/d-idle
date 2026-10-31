@@ -1,0 +1,12 @@
+invariants (docs/geninv.md): is the run sound, apart from is it good
+run                        group    vmin hang stall wedge     noprog    deaths/1000k restarts   exit      unrec   verdict
+seed-1                     tuning    121    0     0   0m/20        2m    0.0 (0/119k) fresh1/chk1/bot0 limit     0       PASS
+seed-2                     tuning     12    1     0   0m/0         1m    0.0 (0/12k) fresh0/chk0/bot0 open      0       VIOLATED(HANG)
+seed-3                     tuning      9    0     1   0m/0         1m    0.0 (0/9k) fresh0/chk0/bot0 open      0       VIOLATED(STALL)
+seed-16                    holdout    59    0     0   0m/0         1m    0.0 (0/59k) fresh0/chk0/bot0 early     0       VIOLATED(EXIT)
+    exit: cmd exited
+seed-17                    holdout    44    0     0  39m/40       40m    0.0 (0/4k) fresh0/chk0/bot0 open      0       VIOLATED(WEDGE,PROGRESS)
+group tuning   seeds 1-3: 2.4 virtual h, 140 kills, 0 deaths, 1268 XP/h, hang 1, stall rungs 1, wedge max 0 min, no-progress max 2 min, bot restarts 0, fresh games 1, chickens 1: VIOLATED(HANG,STALL)
+group holdout  seeds 16-17: 1.7 virtual h, 63 kills, 0 deaths, 1165 XP/h, hang 0, stall rungs 0, wedge max 39 min, no-progress max 40 min, bot restarts 0, fresh games 0, chickens 0: VIOLATED(EXIT,PROGRESS,WEDGE)
+COVERAGE (proven on): seeds 1-3 (tuning), 16-17 (holdout); class sorceress; act 1; difficulty normal; engine d2d; clvl 1-1; 4.1 virtual h. Outside these axes the claim is UNPROVEN.
+INVARIANTS: VIOLATED(seed 2: HANG,seed 3: STALL,seed 16: EXIT,seed 17: WEDGE,seed 17: PROGRESS)

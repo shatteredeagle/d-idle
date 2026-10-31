@@ -5,6 +5,7 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,6 +14,7 @@ import (
 
 	"d2lod-bot/internal/d2dctl/fake"
 	"d2lod-bot/internal/d2dsoakstat"
+	"d2lod-bot/internal/env"
 )
 
 // fakeLab stands in for the d2d process: the d2dctl fake server answers step and clock (virtual clock = ticks * 40 ms).
@@ -160,7 +162,7 @@ func TestCompareGateExitCodesJSON(t *testing.T) {
 		want int
 	}{{mk(5, 1000), 0}, {mk(5, 300), 3}, {mk(2, 1000), 2}} {
 		for _, js := range []bool{false, true} {
-			if got := code(compareGate(c.runs, bl, js, save, "v1", false)); got != c.want {
+			if got := code(compareGate(c.runs, bl, js, save, "v1", false, nil)); got != c.want {
 				t.Errorf("json=%v want %d got %d", js, c.want, got)
 			}
 		}
@@ -168,7 +170,7 @@ func TestCompareGateExitCodesJSON(t *testing.T) {
 	if _, err := os.Stat(save); err != nil {
 		t.Error("verdict.txt must be saved with -json too")
 	}
-	if err := compareGate(mk(5, 300), bl, true, "", "v1", true); err != nil {
+	if err := compareGate(mk(5, 300), bl, true, "", "v1", true, nil); err != nil {
 		t.Errorf("-exit-zero: %v", err)
 	}
 }
@@ -192,7 +194,7 @@ func TestEarlyEndAndEmptySeedAreInvalid(t *testing.T) {
 	// crashed at start: no minute lines, the d2d clock says 2 h, still no exposure
 	log := filepath.Join(t.TempDir(), "bot.log")
 	os.WriteFile(log, []byte("panic\n"), 0o644)
-	res, err := finish(runResult{}, log, 2)
+	res, err := finish(runResult{}, log, 2, 2)
 	if err != nil || res.Hours != 0 || res.Invalid == "" {
 		t.Errorf("empty seed: %v %+v", err, res.Run)
 	}
@@ -220,7 +222,7 @@ func TestVerdictExitCodes(t *testing.T) {
 	os.WriteFile(bl, []byte(`{"rules":{"xp_per_hour":{"gate":true,"rel":0.2}},"minSeeds":2,"minHoursPerSeed":2,"minTotalHours":0,
 	"runs":[{"name":"a","hours":2,"metrics":{"xp_per_hour":1000}},{"name":"b","hours":2,"metrics":{"xp_per_hour":1000}},{"name":"c","hours":2,"metrics":{"xp_per_hour":1000}}]}`), 0o644)
 	var ee exitError
-	err := compareGate([]d2dsoakstat.Run{{Name: "dead", Hours: 0, Invalid: "no minute lines"}}, bl, true, "", "v1", false)
+	err := compareGate([]d2dsoakstat.Run{{Name: "dead", Hours: 0, Invalid: "no minute lines"}}, bl, true, "", "v1", false, nil)
 	if !errors.As(err, &ee) || ee.Code != 3 {
 		t.Errorf("only an excluded seed: %v, want exit 3 (NO-DATA)", err)
 	}
@@ -231,5 +233,81 @@ func TestVerdictExitCodes(t *testing.T) {
 	err = cmdCompare([]string{"-baselines", bl, seed})
 	if !errors.As(err, &ee) || ee.Code != 3 {
 		t.Errorf("compare on an empty seed: %v, want exit 3", err)
+	}
+}
+
+// seedDir writes seed-N/bot.log (fake minute lines) and, when wedge is set, a 30 minute storm of the town wedge signature.
+func seedDir(t *testing.T, root string, seed int, wedge bool) string {
+	t.Helper()
+	dir := filepath.Join(root, fmt.Sprintf("seed-%d", seed))
+	os.MkdirAll(dir, 0o755)
+	p := filepath.Join(dir, "bot.log")
+	if err := fakeMinutes(p, seed, 2, 1); err != nil {
+		t.Fatal(err)
+	}
+	if wedge {
+		f, _ := os.OpenFile(p, os.O_APPEND|os.O_WRONLY, 0o644)
+		at := time.Date(2026, 1, 1, 0, 10, 30, 0, time.UTC)
+		for i := 0; i < 20; i++ {
+			fmt.Fprintf(f, `{"time":%q,"level":"INFO","msg":"area gate refused the walk","err":"area not allowed now: no eligible reachable leveling area for level 8"}`+"\n",
+				at.Add(time.Duration(i)*90*time.Second).Format(time.RFC3339Nano))
+		}
+		f.Close()
+	}
+	return dir
+}
+
+func TestInvariantsReportAndHoldoutGroups(t *testing.T) {
+	root := t.TempDir()
+	dirs := []string{seedDir(t, root, 3, false), seedDir(t, root, 16, true), seedDir(t, root, 17, false)}
+	runs, err := loadRuns(dirs, 2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	hs, _ := d2dsoakstat.ParseSeedSet(d2dsoakstat.DefaultHoldout)
+	rep := d2dsoakstat.BuildInvReport(runs, hs)
+	if rep.Verdict != d2dsoakstat.InvViolated || len(rep.Groups) != 2 || rep.Groups[0].Verdict != d2dsoakstat.InvPass ||
+		rep.Groups[1].Verdict != d2dsoakstat.InvViolated || rep.Groups[1].Seeds[0] != 16 {
+		t.Fatalf("%+v", rep)
+	}
+	if !strings.Contains(rep.Text(), "INVARIANTS: VIOLATED(seed 16: WEDGE)") {
+		t.Errorf("report:\n%s", rep.Text())
+	}
+	// the invariant verdict is a separate field: the exit code stays the fidelity verdict's (here PASS: 0)
+	bl := filepath.Join(root, "bl.json")
+	os.WriteFile(bl, []byte(`{"rules":{"xp_per_hour":{"gate":false,"rel":0.2}},"minSeeds":1,"minHoursPerSeed":0,"minTotalHours":0,"runs":[{"name":"a","hours":2,"metrics":{"xp_per_hour":1000}}]}`), 0o644)
+	if err := compareGate(runs, bl, true, filepath.Join(root, "v.txt"), "v1", false, hs); err != nil {
+		var ee exitError
+		if errors.As(err, &ee) && ee.Code != 0 {
+			t.Errorf("exit %d: an invariant violation must not change the fidelity exit code", ee.Code)
+		}
+	}
+	b, _ := os.ReadFile(filepath.Join(root, "v.txt"))
+	if !strings.Contains(string(b), "COVERAGE (proven on)") || !strings.Contains(string(b), "INVARIANTS: VIOLATED") ||
+		!strings.HasSuffix(strings.TrimSpace(string(b)), ")") || !strings.Contains(string(b), "OVERALL:") {
+		t.Errorf("verdict.txt:\n%s", b)
+	}
+	if i := strings.Index(string(b), "OVERALL:"); strings.Contains(string(b)[i:], "INVARIANTS") {
+		t.Error("OVERALL must stay the last line")
+	}
+}
+
+func TestFakeRunWritesInvariants(t *testing.T) {
+	cfg := testCfg(t, 2, "")
+	res, err := runFake(cfg, 1, 5)
+	if err != nil || res.Inv == nil || res.Inv.Verdict != d2dsoakstat.InvPass || res.Inv.Exit != "limit" {
+		t.Fatalf("%v %+v", err, res.Inv)
+	}
+	runs, err := loadRuns([]string{filepath.Join(cfg.Out, "seed-5")}, 0)
+	if err != nil || runs[0].Inv == nil || runs[0].Seed != 5 || runs[0].Inv.Kills != res.Kills {
+		t.Fatalf("round trip: %v %+v", err, runs)
+	}
+}
+
+// The invariant thresholds that restate a bot knob must follow it (the knob owns the number).
+func TestInvLimitsFollowStallLadder(t *testing.T) {
+	l := d2dsoakstat.DefaultInvLimits()
+	if k := env.DefaultBotTuning().StallWarnMin; l.StallWarnMin != k || l.ProgressMin != float64(k) {
+		t.Errorf("limits %+v vs bot.stallWarnMin %d", l, k)
 	}
 }
