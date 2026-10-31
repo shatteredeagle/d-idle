@@ -2,7 +2,7 @@
 
 ```yaml
 change: m2-soakexit
-status: in-progress
+status: archived
 agent: m2-soakexit
 branch: agent/m2-soakexit
 worktree: ~/code/d2lod-wt/m2-soakexit
@@ -15,7 +15,7 @@ gates:
   - "go test ./cmd/d2dsoak passes including TestVerdictExitCodes (PASS 0, INCONCLUSIVE 2, FAIL 3, NO-DATA 3) for run and compare"
   - "go test ./cmd/d2dsoak passes including TestExcludedSeedsAreNotExposure (a seed with 0 minute lines adds 0 h and appears under excluded seeds)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: 63382df
 result: 'Much of this had merged earlier (soakfix: exit codes 0/2/3 for run and compare incl. -json, early/empty seeds invalid and excluded from hours, duplicate seeds rejected, min-sample INCONCLUSIVE, NaN/negative guards). Delta here: NO-DATA verdict and exit 3 (no usable seed; unknown verdicts fail closed), run with all seeds dead is NO-DATA not an I/O error, excluded seeds section + excludedSeeds/seeds in JSON, seed count excludes them, last line names the code. Tests TestVerdictExitCodes, TestExcludedSeedsAreNotExposure, TestNoUsableSeedIsNoData. Offline only, not verified live (d2d-only tool, no game needed).'
 ```
 

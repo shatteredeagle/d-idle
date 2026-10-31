@@ -41,9 +41,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [m2-abdesign](../../openspec/changes/m2-abdesign/) | in-progress | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
-| [m2-soakexit](../../openspec/changes/m2-soakexit/) | in-progress | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md`<br>`internal/d2dsoakstat/**` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
@@ -55,7 +53,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 10 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 7 requirements
+- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 11 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
 - spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 7 requirements
@@ -71,15 +69,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
-- change m2-abdesign: python3 -m unittest discover tools/ab passes (paired statistic on a fixture of 8 seeds x 2 arms; the required-runs formula)
-- change m2-abdesign: docs/ab-design.md re-analyses the xpgap A/B (docs/probes/xpgap) with the paired statistic and states the runs per arm for a 10 percent effect
-- change m2-abdesign: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-earlybase: tools/d2dsoak/baselines-early.json has at least 2 runs, each with xp_per_hour, kills_per_hour, deaths_per_hour, deaths_per_1000_kills and a source line; rules gate kills_per_hour (rel 0.2) and deaths_per_1000_kills (rel 0.2, abs 1.0)
 - change m2-earlybase: go test ./cmd/d2dsoak passes (the baseline file loads) and `d2dsoak compare -base tools/d2dsoak/baselines-early.json` on the soakfull runs in docs/probes/soakfull prints a verdict for all four metrics
 - change m2-earlybase: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change m2-soakexit: go test ./cmd/d2dsoak passes including TestVerdictExitCodes (PASS 0, INCONCLUSIVE 2, FAIL 3, NO-DATA 3) for run and compare
-- change m2-soakexit: go test ./cmd/d2dsoak passes including TestExcludedSeedsAreNotExposure (a seed with 0 minute lines adds 0 h and appears under excluded seeds)
-- change m2-soakexit: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m3-merc: 2 seeds x 4 virtual hours from clvl 9 after Blood Raven on hidden d2d: the Rogue claimed exactly once per seed, 0 paid Act 1 hires, merc alive at least 70 percent of field time, every revive logged with price and gold delta within the revive rule (raw in docs/probes/merc)
 - change m3-merc: go test -p 1 ./internal/merc ./internal/bot -run 'Merc|Claim' passes; go test ./internal/env -run EveryKnob passes with the d2d default
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
@@ -89,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 - d82bd47 10-31 02:46 `Merge agent/rebase136r: get-hit render rebase onto #136 (docs only)` (rendergh)
 - ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
 - 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
@@ -98,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
 - 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
-- 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
 <!-- statusgen:end -->
