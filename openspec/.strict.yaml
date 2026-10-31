@@ -5,3 +5,4 @@ cards_overlap_fatal_from: 2026-10-30   # card, overlap, spec, owners, status fin
 merges_diff_fatal_from: 2026-10-30     # merge, diff findings
 allow_merges:
   - 0226219   # basicsfix branch: merge origin/main commit, no Change trailer (history, not rewritten)
+  - 9720f1b   # cardboard: coordinator-style doc plus stub, no card

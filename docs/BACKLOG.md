@@ -72,3 +72,4 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - Max-life floor for Andariel: waits for m3-andariel's life-per-phase numbers (cards m3-routeguard, m3-readiness-model).
 - Live probes: dead-merc forfeit of the free Rogue, one revive quote, 2 to 3 hire windows, merc Str and Dex own-stats rule, merc state after quit and reload (card m3-merc).
 - Readiness model weights and safety margin (card m3-readiness-model, deferred until m3-andariel has won once).
+- Card board deployed: /cards on the status board (phone friendly, approve/defer/reject, decisions read with tools/cards-decisions.sh pending); see docs/process/card-board.md
