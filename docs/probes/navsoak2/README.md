@@ -1,5 +1,7 @@
 # navsoak2: second hidden soak, same seed, on current main (2026-10-31)
 
+> status: soak finished (240 min); results in [navsoak-compare.md](../navsoak-compare.md)
+
 > status: handoff for the analysis agent. Soak started 2026-10-31 02:58:35 local (worker host clock), hard end 06:58:35 (240 wall minutes; registry TTL 15000 s), slot 1, agent `navsoak2`.
 
 ## Built from

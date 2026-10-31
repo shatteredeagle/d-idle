@@ -1,5 +1,7 @@
 # navsoak: long hidden soak on main with the NAVSTALL fix (2026-10-31)
 
+> status: soak finished (240 min); results in [navsoak-compare.md](../navsoak-compare.md)
+
 > status: handoff for the analysis agent. Soak started 2026-10-31 02:29:33 local (worker host clock), hard end 06:29:33 (240 wall minutes; registry TTL 15000 s).
 
 ## What it is
