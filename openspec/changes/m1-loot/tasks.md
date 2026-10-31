@@ -2,14 +2,17 @@
 
 ```yaml
 change: m1-loot
-status: proposed
-agent: m1-loot
-branch: agent/m1-loot
-worktree: ~/code/d2lod-wt/m1-loot
+status: in-progress
+agent: m1loot
+branch: agent/m1loot
+worktree: ~/code/d2lod-wt/m1loot
 owns:
   - internal/loot/pickit_starter.json
   - internal/loot/charms_test.go
   - docs/loot-charms.md
+  - internal/loot/loot.go
+  - internal/loot/rules.go
+  - internal/loot/loot_test.go
 exclusive: []
 gates:
   - "go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)"

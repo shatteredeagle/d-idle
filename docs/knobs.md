@@ -21,6 +21,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -138,8 +139,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.futileMinutes | 10 | 0..120 | min | 120 | 2 | A trip reason a visit left unfixed is not raised again for this long. |
 | town.spareKeep | 4 | 0..30 | count | 0 | 1 | A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted). |
 | town.sellMaxS | 60 | 15..300 | s | 15 | 2 | Time the sell chore alone may take before it is cut off. |
-| town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs tpFirstLevel and gold for one scroll (SME EXP rule of thumb, U on d2d). 0 = scroll first (old). |
-| town.tpFirstLevel | 4 | 1..30 | clvl | 30 | 1 | potionsFirst: no first town portal scroll below this level (Cold Plains kit level). SME EXP rule of thumb. |
+| town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old). |
+| town.sellLowGems | 1 | 0..1 | bool | 0 | 1 | 1 sells chipped and flawed gems until the Horadric Cube is in the pack or stash (decision D4, SME: the Cube recipe comes in Act 2); better gems, runes and charms stay. 0 keeps low gems for cube upgrades (old). |
+| town.tpFirstLevel | 0 | 0..30 | clvl | 30 | 1 | potionsFirst: extra floor, no first town portal scroll below this level. 0 = none (default, the SME gold rule decides); 4 with tpScrollPotions 0 restores the old BASICSFIX rule. |
+| town.tpScrollPotions | 2 | 0..10 | potions | 10 | 1 | potionsFirst: the first town portal scroll is bought only when the gold left after the kit potions covers the scroll plus this many healing potions (d2-sme order, decision D3). 0 = no gold margin. |
 | town.idScrollNeed | 1 | 0..1 | bool | 0 | 2 | 1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old). |
 | town.bankFirst | 1 | 0..1 | bool | 0 | 2 | 1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old). |
 | town.repairLatch | 1 | 0..1 | bool | 0 | 1 | 1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old). |
@@ -290,8 +293,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripHealPct | 50 | 25..80 | % | 25 | 1 | Life percent below which a character that cannot regenerate goes to town for free healing. |
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
-| resource.kitTPGold | 100 | 50..200 | gold | 50 | 8 | Price of one town portal scroll, for the minimal-kit cost. |
-| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 7 | Price of the cheapest healing potion, for the minimal-kit cost. |
+| resource.kitTPGold | 100 | 50..200 | gold | 50 | 7 | Price of one town portal scroll, for the minimal-kit cost. |
+| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 8 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |

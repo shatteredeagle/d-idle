@@ -2,14 +2,19 @@
 
 ```yaml
 change: m1-audittests
-status: deferred
-agent: m1-audittests
-branch: agent/m1-audittests
-worktree: ~/code/d2lod-wt/m1-audittests
+status: in-progress
+agent: m1loot
+branch: agent/m1loot
+worktree: ~/code/d2lod-wt/m1loot
 owns:
   - internal/town/shop.go
   - internal/town/chores.go
   - internal/town/basicsaudit_test.go
+  - internal/town/basicsfix.go
+  - internal/town/town_test.go
+  - internal/env/tuning_town.go
+  - docs/knobs.md
+  - docs/basics-audit.md
 exclusive: []
 gates:
   - "go test -p 1 ./internal/town passes; TestAuditS2 asserts no shop visit at gold 120 with a scroll and a full belt; TestAuditS3 asserts 1 portal scroll and at least 150 gold kept at gold 300; TestAuditS7 asserts the unidentified ring under 100 is sold as is; TestAuditS10 asserts one repair attempt per (gold bucket, lowest durability); TestAuditS11 asserts 950 banked at gold 1500 clvl 5"
