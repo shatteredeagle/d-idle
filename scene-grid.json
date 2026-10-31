@@ -109,6 +109,7 @@
  "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
+  "FreshGameToLevel reset after NewGame, run A/B.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
   "ADR for the d2d primary backend decision.",
   "Fixed tool hot loop in serveStream.",
@@ -118,8 +119,7 @@
   "Sourced cast timing documentation.",
   "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
   "D2d lab notes.",
-  "Spec approach evaluation and notes audit.",
-  "OpenSpec SME reference and fit notes."
+  "Spec approach evaluation and notes audit."
  ],
  "sources": [
   {
@@ -184,8 +184,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793409328,
- "updated": "2026-10-31T01:15Z",
+ "ts": 1793409622,
+ "updated": "2026-10-31T01:20Z",
  "work": [
   {
    "state": "working",
