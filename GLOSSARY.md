@@ -114,6 +114,21 @@ Bounds on nav search memory and a soak alert at 8 GB RSS or +1 GB in 5 min, adde
 **kill injection**:
 Deliberately killing Game.exe to test recovery (G1 criteria 6 and 7); needs the user's permission rule. ADR 0008, `docs/adr/0008-no-kill-injection-without-permission.md`.
 
+**early baseline / late baseline**:
+The reference XP/h and kills/h rates from the original game that the fidelity gate compares d2d against: the early one from fresh characters (clvl 1 to 7, `tools/d2dsoak/baselines-early.json`, `docs/d2d-baselines-early.md`), the late one from a cheat-levelled clvl 12 throwaway with the kit (card m2-latebase, `docs/d2d-baselines-late.md`). Spec `fidelity-gate`.
+
+**paired seed**:
+The same seed run under both arms of an A/B, so the analysis unit is the per-seed difference and seed noise cancels. Floor of 8 seeds. See **paired A/B**; `docs/ab-design.md`, `tools/ab/paired.py`.
+
+**wedge**:
+A permanent nav failure: a failed walk marked a route edge bad for good, so every route from that level read "no route" and the bot sat in town (navsoak runs lost 60 to 167 wall min). Fixed by expiring bad edges (`nav.badEdgeTTLSec`). `docs/townwedge.md`, `docs/probes/navsoak-compare.md`, spec `bot-loop`.
+
+**pocket**:
+A cell cut off from the gate on the known map grid; the usual cause of a **wedge**. The bot steps to the nearest connected cell and returns ErrNoPath, not ErrNoExit, so nothing is marked. `docs/townwedge.md`.
+
+**stall ladder**:
+Escalation when the campaign makes no progress on the virtual clock: WARN and a **fresh game** at `bot.stallWarnMin` (30 min), exit status 5 after `bot.stallExitMin` (30 more) so the supervisor restarts. Spec `bot-loop`, `docs/nowall.md`.
+
 ### Generality and evidence
 
 **coverage**:
@@ -139,6 +154,21 @@ How well a sound run plays: XP/h, kills/h, time to a boss. Judged only on runs t
 
 **holdout seed**:
 A seed never used for tuning, fitting or diagnosis (seeds 16 to 23), reported as its own group. See **paired A/B** for how tuning runs are compared.
+
+**differential proof**:
+The primary proof of an upstream claim: the same inputs run through game.exe's own code under the emulator and through d2d's code, outputs diffed. Mismatches are counted before the patch (more than 0) and must be zero after. `docs/process/upstream-pr-standard.md` section 1.
+
+**oracle**:
+The emulator-driven harness that runs game.exe's real instructions on generated inputs and prints the lines d2d's test binary must match (hooks only on what is not the claim). Scripts in `tools/emu/*.py`. See **differential proof**.
+
+**evidence pack**:
+The one-page record of an upstream PR for the user's go: claim, proof summary, case counts and mismatches before and after, commands, residual risks, verifier verdict, `PROOF: complete|incomplete`, recommendation. `docs/research/pr-<topic>-evidence-pack.md`, standard section 7.
+
+**bundle PR**:
+One upstream PR carrying several proven claims, one claim and one commit each, each with its own differential proof, verifier verdict and ponytails; allowed at the maintainer's request (2026-10-31). Spec `upstream-pr`, standard section 4.
+
+**ponytail**:
+Upstream d2decomped's `// ponytail:` code note: a known gap or shortcut recorded where it lives. Every gap we know about in a patch gets one; a gap with no such note upstream is "silent" (`docs/d2d-gaps.md`). See **evidence pack**.
 
 ### Bot behaviour and guards
 
@@ -168,7 +198,7 @@ The post-death phase (restock, corpse retrieval, broke-phase) and its states cou
 Area ban after repeated deaths in one area (30 min, escalating x4 and x12). Spec `death-rule`.
 
 **kit**:
-The supply set required before a field trip or boss (healing potions, mana for casters, town portal tome). Specs `early-game-policy`, `merc-policy`.
+The supply set required before a field trip or boss (healing potions, mana for casters, town portal tome). See **kit gate**. Specs `early-game-policy`, `merc-policy`.
 
 **Den first**:
 Policy that a fresh character does the Den of Evil before anything else and takes the skill point. ADR 0004, spec `early-game-policy`.
@@ -184,6 +214,24 @@ The quest-driven goal sequence through the acts (templates `normal_act2`, `night
 
 **goal**:
 A unit of bot work held by the goal manager (level to N, quest, runs). `internal/goals`. UNSURE: exact term boundaries with "task".
+
+**kit gate**:
+`resource.recoveryKitGate`: while recovery runs with no healing potion or no town portal scroll, recovery farms only the near-town fields (Blood Moor, Cold Plains) and the navigator prices dungeon mouths. See **kit**. `docs/kitgate.md`.
+
+**chicken exit**:
+Leaving the game when life falls to `combat.chickenPct` (25 percent, Normal and Nightmare). Not the same as the flee of `resource.fleeLifePct`, which only breaks away from hostiles when there is no potion and no portal. `docs/knobs.md`.
+
+**fresh game**:
+A game the bot starts itself (`newGameRun`, e.g. `freshGameToLevel`, the **stall ladder**); per-game memory (cleared areas, sweep kills, buff need, step area) is dropped through `forgetGame`, as for any new game. Spec `bot-loop`, `docs/bot-small.md`.
+
+**poverty loop**:
+Recovery farming gold for a kit it cannot afford: poverty sell trips and portal scrolls bought, burned on the next emergency and bought again (62 percent of spending in the measured run). `docs/d2d-xp-gap.md`, `docs/recovery.md`, `docs/basics-audit.md`.
+
+**champion / elite / boss**:
+Kind classification: a champion (flag bit 2, no minions) is Elite plus a Champion label, never a Boss; Boss is a named unique or monstats boss. Boss alone gets pack danger 2. `docs/champions.md`, `docs/bot-small.md`.
+
+**buy order**:
+The shop's purchase sequence when poor: healing potions to the kit target (up to 3) first, then a Town Portal scroll only when the gold left covers it plus `town.tpScrollPotions` (2) potions. Specs `town-basics`, `early-game-policy`; `docs/basics-audit.md`.
 
 ### Milestones and decisions
 
@@ -214,7 +262,7 @@ _Not to be confused with_: the plan-v2 items M0 to M11 above.
 A change card queued behind a named dependency or user decision: status `deferred`, `owns:` and `exclusive:` intended but not claimed, no `docs/OWNERS` line. The dispatcher sets it `proposed` and adds the lines when the dependency merges. `openspec/README.md`, `docs/roadmap.md` section 4.
 
 **paired A/B**:
-A same-seed comparison of two settings run on matched seeds, so the difference is not seed noise. Protocol and tool: card m2-abdesign (`docs/ab-design.md`, `tools/ab`).
+A same-seed comparison of two settings run on matched seeds (see **paired seed**), so the difference is not seed noise. Protocol and tool: card m2-abdesign (`docs/ab-design.md`, `tools/ab`).
 
 **power / danger / readiness**:
 The rule of ADR 0011. Power is a character's survival (life, resists, potions, portal, merc), offense (kill speed against the area's real monsters) and clvl as a minor input; danger is the zone's monster level, real HP and damage, crowd, build-specific threats and our own death record there; ready means power >= danger x a safety margin. Until the model exists (card m3-readiness-model) clvl floors in merc-policy are the rule.
@@ -276,6 +324,9 @@ The preconfigured Opus main agent `.claude/agents/grill.md`, started by `tools/g
 
 **grill session**:
 A dedicated user-run session of the grilling skills; the only place ADRs and the glossary are written. `docs/process/matt-pocock-skills-fit.md`.
+
+**slot**:
+One parallel hidden d2d instance from the pool of 4 (slot 0 is the legacy lock), taken with `tools/d2dslot.sh run`, each with its own socket and ports; a run holds exactly one, and a fifth waits or exits 75. Spec `lab-rules`.
 
 ### Instances and characters
 
