@@ -37,3 +37,8 @@ internal/town/goldfloor_test.go  goldfloor  goldfloor
 internal/env/tuning_town.go  goldfloor  goldfloor
 internal/env/tuning_loot.go  goldfloor  goldfloor
 docs/goldfloor.md  goldfloor  goldfloor
+
+# decompwake (research: monster wake trace)
+docs/research/mon-wake-trace.md  decompwake  decompwake
+tools/emu/wake_*.py  decompwake  decompwake
+openspec/changes/decompwake/**  decompwake  decompwake
