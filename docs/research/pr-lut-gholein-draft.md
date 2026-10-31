@@ -34,6 +34,8 @@ build/tools/mpq-cat/mpq-cat "$D2_MPQ_DIR" 'data\global\excel\monpreset.bin' | wc
 uv run python lut_trace.py 161464580 40
 ```
 
+The claim is conditional, not that the gate fails in general: `drlg-dump` opens only `$D2_PATCH_INSTALLER`, while the game's loader opens the data folder's patch; without the installer env the differential gate fails or mismatches (level 40 seeds 1-20: 0/20 before, 20/20 after), and with `D2_PATCH_INSTALLER` pointing at the installer it already passes 20/20 on unpatched upstream main. The patch makes `drlg-dump` open the folder's patch like the game.
+
 (`diff_drlg.py` sets `D2_PATCH_INSTALLER` to a Downloads path when it is unset; an empty value means "the folder's patch" after this change, and was "MPQ open failed" before.)
 
 ## Screenshots

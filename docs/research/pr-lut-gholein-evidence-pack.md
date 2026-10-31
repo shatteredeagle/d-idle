@@ -90,3 +90,5 @@ Commands to open (NOT RUN; need the user's explicit go; base main):
 ssh worker.example 'cd ~/d2d-lab/pr/lut && git push origin fix/lut-gholein-preset-rng'
 ssh worker.example 'cd ~/d2d-lab/pr/lut && gh pr create --repo psi29a/d2decomped --base main --head shatteredeagle:fix/lut-gholein-preset-rng --title "drlg-dump: open the folder'"'"'s 1.14d patch like the game does" --body-file PR_DESCRIPTION.md'   # body = the part of pr-lut-gholein-draft.md under the --- line
 ```
+
+> Wording note (2026-10-31): the PR text must not claim upstream's gate fails in general; it fails or mismatches only with no installer env, and passes 20/20 unpatched with `D2_PATCH_INSTALLER` set. The draft body now says so.
