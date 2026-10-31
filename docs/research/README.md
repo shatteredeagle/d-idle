@@ -6,6 +6,7 @@ One line per doc: what it shows, status, PR. Status: current = still the best so
 - [d2d-fidelity-riskmap.md](d2d-fidelity-riskmap.md) ranks the places d2d can move our four gated metrics; script `tools/riskmap/`. current.
 - [per-kill-time-split.md](per-kill-time-split.md) per-kill time, original vs d2d, and where it goes. current.
 - [d2d-whisper-lan-oracle.md](d2d-whisper-lan-oracle.md) a packet-level oracle idea for town layout and spawns. current (card d2d-lan-oracle-demo).
+- [mon-wake-trace.md](mon-wake-trace.md) monster wake-up radius and think cadence equal game.exe (oracle, 0 differ). current; result: clean negative, no PR.
 - [upstream-gaps/](upstream-gaps/) item traces behind the first PR candidates (charged-bolt hit, act 1 monster HP, monster density) with the oracle scripts. historical.
 
 ## XP and kill time

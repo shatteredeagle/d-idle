@@ -116,6 +116,7 @@ Gap references are `file:line` in the upstream repo at `2a04c18e` (V in `gaps.js
 - Upstream: target search `005dd0b0` and `005ddc30` verified; `005dc380` verified. AI is the best-covered module. Listed: `ai.cpp:853` (rooms as 80 subtiles), `ai.cpp:1215` (nearest, not list order), `gamedata.cpp:460`, `world.hpp:657` (aip1 range check skipped), `ai.cpp:1203`, `monsters.hpp:1568`, `monsters.hpp:2579`.
 - Ours (V-d2d): wake inside 7 to 8 cells, 0 of 771 beyond 9; d2d simulates monsters 30 cells out; a hit does not wake. Original not measured. The radius itself comes from data; the uncertain parts are which rooms tick and wake-on-hit (S, `d2d-gaps.md` (c)).
 - Method: live probe on the original, plan-v2 already lists it; plus the active-room rule via callers of `005dc380`.
+- DECOMPWAKE 2026-10-31: radius (aidist 35 subtiles) and cadence verified against game.exe (stand 85,820 cases and aidel 55,268 cases: 0 differ); no deviation; open U: which rooms think, first think after spawn, a think due during get-hit; see mon-wake-trace.md
 
 ### 6. mon_ranged (1.20, 6 h)
 - Listed: `fight.cpp:4597` (monster missiles, poison, Mana Burn reach only a subset), `fight.cpp:2717`, `ai.cpp:2164`, `ai.cpp:2202` (aimed off by up to a quarter turn on the game's seed), `ai.cpp:2128`. Rests on the missile area.
