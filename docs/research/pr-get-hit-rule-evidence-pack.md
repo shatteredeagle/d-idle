@@ -36,3 +36,10 @@ ssh worker.example 'cd ~/d2d-lab/pr/hitrec && gh pr create --repo psi29a/d2decom
 ```
 
 Rebuild the proof after a rebase: the four `hit_rule.py` / `test_combat --get-hit` lines in pr-get-hit-rule-proof.md "Differential" (`/tmp/hitrec-build` on the worker host; `ninja test_combat test_game` first).
+
+## Posted log
+
+- posted: 2026-10-31 PR #134 opened (head d55973e1 at 00:10Z, opened 00:16Z) https://github.com/psi29a/d2decomped/pull/134 go: user, ref not recorded
+- posted: 2026-10-31 follow-up commit e3c1e535 pushed to PR #134 (00:43Z) https://github.com/psi29a/d2decomped/pull/134/commits/e3c1e535b9fa371b4327905035b27f78ca4afc9e go: user, ref not recorded
+- posted: 2026-10-31 review replies on PR #134 (00:45Z, 02:08Z) https://github.com/psi29a/d2decomped/pull/134#discussion_r4429655638 , https://github.com/psi29a/d2decomped/pull/134#discussion_r4429655757 , https://github.com/psi29a/d2decomped/pull/134#discussion_r4429926697 go: user, ref not recorded
+- Verified 2026-10-31 by read-only `gh api` GET (pulls/134, pulls/134/commits, pulls/134/comments).

@@ -37,3 +37,8 @@ ssh worker.example 'cd ~/d2d-lab/pr/hitlen && gh pr create --repo psi29a/d2decom
 ```
 
 Rebuild the proof after a rebase: the lines under "Differential" in pr-get-hit-length-proof.md (`/tmp/hitlen-build` on the worker host; `ninja test_combat test_game` first).
+
+## Posted log
+
+- posted: 2026-10-31 PR #136 opened (head eb89646e; created 04:31Z) https://github.com/psi29a/d2decomped/pull/136 go: user, ref not recorded
+- Verified 2026-10-31 by read-only `gh api` GET (pulls/136, pulls/136/commits). The status banner above ("Nothing pushed") predates the push.

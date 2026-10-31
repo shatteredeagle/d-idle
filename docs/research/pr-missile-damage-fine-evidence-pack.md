@@ -42,3 +42,10 @@ cd ../.. && build/tests/test_game --life-apply 1 100000 | grep -E '^[BMR][0-9]* 
 **PROOF: complete** for the claim as stated (differential zero over exhaustive boundaries and 500k random events, chain fully V/S, their checks green, verifier report attached), with the residual risks above disclosed in the body.
 
 **Recommendation.** Go, in this order and each with the user's go: (1) fetch, rebase if main moved again, rebuild, rerun the commands (expect READY); (2) push `fix/missile-damage-fine-v2`; (3) open the PR with the v2 body; at least one hour after our last PR (#128 cast-ticks). If the verifier's verdict is "broken", stop and send the finding back to a worker first.
+
+## Posted log
+
+- posted: 2026-10-31 PR #135 opened (head e8dd9efd at open; created 03:37Z) https://github.com/psi29a/d2decomped/pull/135 go: user, ref not recorded
+- posted: 2026-10-31 comment-only commit 8a3cb678 pushed to PR #135 (04:08Z) https://github.com/psi29a/d2decomped/pull/135/commits/8a3cb6789d8954031267442fc44f5a2e976f2cbc go: user, ref not recorded
+- posted: 2026-10-31 reply on PR #135 (04:09Z) https://github.com/psi29a/d2decomped/pull/135#issuecomment-6538822940 go: user, ref not recorded
+- Verified 2026-10-31 by read-only `gh api` GET (pulls/135, pulls/135/commits, issues/135/comments, issues/135/events).
