@@ -200,8 +200,8 @@ func TestPubIsSanitized(t *testing.T) {
 	if p.Engine != "d2d" {
 		t.Errorf("engine = %q", p.Engine)
 	}
-	badge = "D.idle testing stream"
-	if q := pubOf(sn); q.Backend != "D.idle testing stream" {
+	badge = "d.idle testing stream"
+	if q := pubOf(sn); q.Backend != "d.idle testing stream" {
 		t.Errorf("badge flag not used: %q", q.Backend)
 	}
 	badge = Backend

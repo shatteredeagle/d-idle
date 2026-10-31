@@ -1,6 +1,6 @@
 ## Why
 
-The user asked (2026-10-31) for the stream page header to read "D.idle testing stream", for the engine to appear in the status row, and the gameplay pane went black twice: the page sets the MJPEG image once, so a first request before the first frame (503) or a background-tab cancel never recovers.
+The user asked (2026-10-31) for the stream page header to read "d.idle testing stream", for the engine to appear in the status row, and the gameplay pane went black twice: the page sets the MJPEG image once, so a first request before the first frame (503) or a background-tab cancel never recovers.
 
 ## What Changes
 
