@@ -951,6 +951,10 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 		// d2d restarts the process without a menu poll, so the observer's newGames never moves (live: restarts 0
 		// after 38 fresh games) and syncGames cannot forget: the cleared set belongs to the old game.
 		r.loop.cleared = map[int]bool{}
+		// Same reason (soakfull hotfix): the per-game sweep, buff and step state is the old game's too.
+		r.loop.sweepKills = nil
+		r.loop.needBuff = true
+		r.loop.stepArea = 0
 	}
 	return true, err
 }
