@@ -430,7 +430,8 @@ func andarielFloor(e *env.Env) int {
 	if e == nil {
 		return 0
 	}
-	return e.Tune.Boss.AndarielMinLevel
+	// the script check cannot see the merc: it takes the lower floor, the campaign gate (internal/task) decides
+	return e.Tune.Boss.AndarielLowFloor()
 }
 
 // brMaxRetreats is the boss.brMaxRetreats knob (0 = the script's own number, also without an env).

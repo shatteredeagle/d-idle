@@ -305,7 +305,8 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 	in := r.resInput(s)
 	w.Potions += in.Belt.PackHP + in.Belt.PackRV // World.Potions says belt and pack
 	w.HasTP, w.ManaPotions = in.HasTP, in.Belt.MP
-	w.AndarielMinLevel, w.Antidotes = r.e.Tune.Boss.AndarielMinLevel, r.antidotes(s)
+	w.AndarielMinLevel, w.AndarielMinLevelMerc, w.AndarielHold = r.e.Tune.Boss.AndarielMinLevel, r.e.Tune.Boss.AndarielMinLevelMerc, r.e.Tune.Boss.AndarielHold != 0
+	w.Antidotes = r.antidotes(s)
 	if task.MercAlive != nil {
 		w.MercAlive, w.MercKnown = task.MercAlive()
 	}

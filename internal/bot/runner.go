@@ -190,6 +190,7 @@ type loopState struct {
 	starveNote       bool
 	rebuyBar         int    // gold needed before the next gear rebuy trip
 	gearNote         bool   // the gear gate was logged for this spell
+	floorNote        string // last effective-floor lines logged (noteFloors)
 	routeNote        string // last route guard / imbue verdict logged (one line per change)
 	run              *LevelRun
 	questPending     map[string]bool
