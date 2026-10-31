@@ -19,21 +19,49 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Rogue Encampment",
    "backend": "d2d",
    "clvl": 4,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 296,
+   "doing": "Playing through the early game",
+   "kills": 334,
    "name": "Loopy",
-   "potionsUsed": 8,
-   "running": true,
+   "potionsUsed": 13,
+   "running": false,
    "updated": "2026-10-31T00:10Z",
-   "uptime_seconds": 283,
-   "xp": 6342
+   "uptime_seconds": 321,
+   "xp": 7700
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 7100,
+   "name": "Soaky",
+   "potionsUsed": 203,
+   "running": false,
+   "updated": "2026-10-30T20:26Z",
+   "uptime_seconds": 29110,
+   "xp": 195140
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 11,
+   "deaths": 3,
+   "doing": "Levelling up toward level 20",
+   "kills": 2387,
+   "name": "Fresha",
+   "potionsUsed": 121,
+   "running": false,
+   "updated": "2026-10-30T20:12Z",
+   "uptime_seconds": 14681,
+   "xp": 75549
   }
  ],
- "runs_state": "running",
+ "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
@@ -49,17 +77,12 @@
   "OpenSpec SME reference and fit notes."
  ],
  "stats": {
-  "items": [
-   {
-    "label": "d2d, 296 kills, 0 deaths",
-    "value": "Loopy lvl 4"
-   }
-  ],
-  "live": true
+  "items": [],
+  "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793405407,
- "updated": "2026-10-31T00:10Z",
+ "ts": 1793405707,
+ "updated": "2026-10-31T00:15Z",
  "work": [
   {
    "state": "working",
@@ -67,11 +90,11 @@
   },
   {
    "state": "working",
-   "task": "Working on the bot"
+   "task": "Long unattended test runs"
   },
   {
    "state": "working",
-   "task": "Long unattended test runs"
+   "task": "Working on the bot"
   },
   {
    "state": "working",
