@@ -43,7 +43,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [d2dmesh](../../openspec/changes/d2dmesh/) | in-progress | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md`<br>`openspec/changes/d2dmesh/**` | - |
 | [stream-grid](../../openspec/changes/stream-grid/) | in-progress | streambuild | `openspec/changes/stream-grid/**`<br>`tools/publish/**`<br>`docs/streamctl-grid.md` | - |
-| [streamfix](../../openspec/changes/streamfix/) | in-progress | streamfix | `openspec/changes/streamfix/**`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`tools/d2dview-demo.sh` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
@@ -73,10 +72,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
 - change stream-grid: ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
-- change streamfix: go test -p 1 ./cmd/d2dview passes
-- change streamfix: tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
+- 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
 - 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
 - 4a6634e 10-30 23:58 `Merge agent/smallfixes` (smallfixes)
 <!-- statusgen:end -->

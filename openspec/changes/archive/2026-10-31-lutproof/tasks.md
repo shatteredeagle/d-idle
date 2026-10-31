@@ -2,7 +2,7 @@
 
 ```yaml
 change: lutproof
-status: in-progress
+status: archived
 agent: lutproof
 branch: agent/lutproof
 worktree: ~/code/d2lod-wt/lutproof
@@ -16,7 +16,7 @@ gates:
   - "the two extra level-seed steps located in game.exe by address (emulator hook log), and the d2d code that skips them named"
   - "differential drlg.py vs drlg-dump, level 40, >= 20 seeds: mismatches before > 0, after 0; other towns and the act 1 Scan/Pops levels unchanged or improved"
   - "independent adversarial verifier report attached; PROOF complete or incomplete stated with the missing piece"
-merge:
+merge: 4d9c86e
 result: "Traced: game.exe steps Lut Gholein's level seed twice in FUN_00667620 (write 0x667744, the %3 roll to stay for MonStats 204/205 = DS1 monsters 25/26 via monpreset.bin) through FUN_00667970 before the 49 room allocations (FUN_0066b3e0). NOT a d2d generator bug: tools/drlg-dump never opened the folder's patch_d2.mpq (only $D2_PATCH_INSTALLER), so monpreset.bin was missing, no id mapped, no roll, two-room seed lag. Fix on the upstream clone branch fix/lut-gholein-preset-rng (632d5cc2, author the user, tools/drlg-dump only): open the MPQs as open_game_data does. diff_drlg.py level 40 seeds 1-20 tiles/units/seeds 0/20 -> 20/20; levels 1,2,75,103 tiles 10/10 both, units 0,6,0,0 -> 10/10; 109 tiles+units 0/10 -> 10/10; pr_guard 0/0; tests ok. Verifier: HOLDS WITH LIMITS (no-op for a setup with the installer). PROOF complete for the narrowed claim. Nothing pushed; no instance started. Verified in the emulator, not live."
 ```
 

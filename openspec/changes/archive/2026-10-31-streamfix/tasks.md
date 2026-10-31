@@ -2,7 +2,7 @@
 
 ```yaml
 change: streamfix
-status: in-progress
+status: archived
 agent: streamfix
 branch: agent/streamfix
 worktree: ~/code/d2lod-wt/streamfix
@@ -17,7 +17,7 @@ exclusive: []
 gates:
   - "go test -p 1 ./cmd/d2dview passes"
   - "tools/openspec.sh validate --all --strict passes"
-merge: ""
+merge: 87096d0
 result: "Built and verified live on the stream kiosk (:120): badge, engine, jpeg feed 0.4 MB/s, pane non-black for 10 min after swap. Not unit-tested in a browser."
 ```
 
