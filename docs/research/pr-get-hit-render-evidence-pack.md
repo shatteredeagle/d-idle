@@ -15,7 +15,7 @@ The claim in one sentence: while a monster or the merc is in its get-hit, d2d no
 | Upstream tests + guards | green | test_combat ok; test_game 23 OK rc 0; pr_guard 0 FAIL 0 WARN (against upstream/main and fix/get-hit-length); presubmit --quick 1 FAIL (`doc-paths`: #136's `tools/emu/hit_len.py` line, shipped by the base's new commit 9006a688) + 4 WARN answered in the draft |
 | Unchanged state apart from the claimed field | by construction + tests | `get_hit_rate` is set only for mode "GH" (two lines); `get_hit_elapsed` returns the old value otherwise; the 23 `test_game` scenarios and `test_combat` pass; `tools/d2ddet` NOT run |
 | Statistical corroboration | absent | none needed; the claim is per-tick exact |
-| Independent adversarial verification | see below | general-purpose, Fable, read-only; given the code and the oracle, not the conclusion |
+| Independent adversarial verification | HOLDS WITH LIMITS | general-purpose, Fable, read-only; hand re-read of the chain + 5,544 adversarial cases (6,273,036 ticks at FHR >= 0: 0 differ); its findings are limits 7 and 8 in the proof (negative FHR, frozen monster), nothing to fix |
 | One claim per PR | yes | the drawn frame of monsters and the merc; the player's frames are a listed gap, the hold is #136 |
 | Their rules | yes | worktree of the user's fork clone, author / committer shatteredeagle, no trailer, body `Agent: Claude Code`, no tools/ or CI file in the commit, template filled, every known gap a `// ponytail:` |
 | Spacing | one candidate | after #136 (and #134 / #135 if open); push >= 1 h after the last |
