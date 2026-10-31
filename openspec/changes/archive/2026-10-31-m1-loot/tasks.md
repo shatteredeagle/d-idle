@@ -2,7 +2,7 @@
 
 ```yaml
 change: m1-loot
-status: in-progress
+status: archived
 agent: m1loot
 branch: agent/m1loot
 worktree: ~/code/d2lod-wt/m1loot
@@ -18,7 +18,7 @@ gates:
   - "go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)"
   - "go test -p 1 ./internal/town -run TestAuditS6 passes after the audit row 6 test is updated to the D4 rule (chipped and flawed gem sold, flawless gem, charm and rune held)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: ee0205e
 result: implemented offline (sim rig, not verified live); see proposal Result and docs/loot-charms.md
 ```
 

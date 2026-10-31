@@ -41,8 +41,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [m1-audittests](../../openspec/changes/m1-audittests/) | in-progress | m1loot | `internal/town/shop.go`<br>`internal/town/chores.go`<br>`internal/town/basicsaudit_test.go`<br>`internal/town/basicsfix.go`<br>`internal/town/town_test.go`<br>`internal/env/tuning_town.go`<br>`docs/knobs.md`<br>`docs/basics-audit.md` | - |
-| [m1-loot](../../openspec/changes/m1-loot/) | in-progress | m1loot | `internal/loot/pickit_starter.json`<br>`internal/loot/charms_test.go`<br>`docs/loot-charms.md`<br>`internal/loot/loot.go`<br>`internal/loot/rules.go`<br>`internal/loot/loot_test.go` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
@@ -65,6 +63,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
+- spec [town-basics](../../openspec/specs/town-basics/spec.md): 5 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
@@ -72,13 +71,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
-- change m1-audittests: go test -p 1 ./internal/town passes; TestAuditS2 asserts no shop visit at gold 120 with a scroll and a full belt; TestAuditS3 asserts 1 portal scroll and at least 150 gold kept at gold 300; TestAuditS7 asserts the unidentified ring under 100 is sold as is; TestAuditS10 asserts one repair attempt per (gold bucket, lowest durability); TestAuditS11 asserts 950 banked at gold 1500 clvl 5
-- change m1-audittests: TestAuditPurchaseOrder (new): at gold 100 to 190 with an empty belt and no scroll, potions are bought first up to 3 and a scroll only when gold >= scroll price plus 2 potions; the clvl >= 4 with >= 100 gold rule no longer buys a scroll ahead of potions
-- change m1-audittests: `! grep -n PinsCurrent internal/town/basicsaudit_test.go` (no pinned gap remains)
-- change m1-audittests: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change m1-loot: go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)
-- change m1-loot: go test -p 1 ./internal/town -run TestAuditS6 passes after the audit row 6 test is updated to the D4 rule (chipped and flawed gem sold, flawless gem, charm and rune held)
-- change m1-loot: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-abdesign: python3 -m unittest discover tools/ab passes (paired statistic on a fixture of 8 seeds x 2 arms; the required-runs formula)
 - change m2-abdesign: docs/ab-design.md re-analyses the xpgap A/B (docs/probes/xpgap) with the paired statistic and states the runs per arm for a 10 percent effect
 - change m2-abdesign: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
@@ -97,6 +89,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- ee0205e 10-31 02:30 `Merge agent/m1loot: town buy order, gem sale, charm keep rules` (m1-audittests)
+- e57bbc2 10-31 02:24 `Merge agent/andychain: Andariel chain needs research` (m3-andariel)
 - a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
 - fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
@@ -105,6 +99,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
-- 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
-- 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
 <!-- statusgen:end -->

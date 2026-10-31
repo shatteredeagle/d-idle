@@ -2,7 +2,7 @@
 
 ```yaml
 change: m1-audittests
-status: in-progress
+status: archived
 agent: m1loot
 branch: agent/m1loot
 worktree: ~/code/d2lod-wt/m1loot
@@ -21,7 +21,7 @@ gates:
   - "TestAuditPurchaseOrder (new): at gold 100 to 190 with an empty belt and no scroll, potions are bought first up to 3 and a scroll only when gold >= scroll price plus 2 potions; the clvl >= 4 with >= 100 gold rule no longer buys a scroll ahead of potions"
   - "`! grep -n PinsCurrent internal/town/basicsaudit_test.go` (no pinned gap remains)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: ee0205e
 result: implemented offline (sim rig, not verified live); see proposal Result and docs/loot-charms.md
 ```
 

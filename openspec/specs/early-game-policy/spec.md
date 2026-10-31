@@ -81,7 +81,7 @@ With town.bankFirst 1 (default) a town visit SHALL deposit the gold above the ke
 - **THEN** at least the minimal kit gold stays in the pack (TestBankFirstKeepsTheKit)
 
 ### Requirement: Potions before the first town portal scroll
-With town.potionsFirst 1 (default) the shop SHALL buy the kit potions before the first town portal scroll, and that scroll only at clvl >= town.tpFirstLevel (default 4) with the scroll price (100) left. The numbers are the d2-sme's EXP rule of thumb (UNVERIFIED on d2d); town.potionsFirst 0 buys the scroll first. Source: user decision 2026-10-31.
+With town.potionsFirst 1 (default) the shop SHALL buy the kit potions before the first town portal scroll, and that scroll only when the gold left covers the scroll price plus town.tpScrollPotions (default 2) healing potions. town.potionsFirst 0 buys the scroll first; town.tpScrollPotions 0 with town.tpFirstLevel 4 restores the old clvl 4 rule. Source: decision D3 2026-10-31; d2-sme order (UNVERIFIED on d2d prices).
 
 #### Scenario: Poor at clvl 1
 - **WHEN** a clvl 1 character with 120 gold and no scroll visits town
@@ -94,6 +94,10 @@ With town.potionsFirst 1 (default) the shop SHALL buy the kit potions before the
 #### Scenario: Kit level, little gold left
 - **WHEN** a clvl 4 character has 130 gold
 - **THEN** no portal scroll is bought (TestPotionsFirstSkipsScrollWhenPoor)
+
+#### Scenario: Gold 100 to 190
+- **WHEN** a character with 190 gold, an empty belt and no scroll visits town at any level
+- **THEN** potions are bought first (at most 3) and no scroll (TestAuditPurchaseOrder)
 
 #### Scenario: Old order
 - **WHEN** town.potionsFirst is 0 and gold is 120
