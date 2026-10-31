@@ -41,7 +41,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [kitgate](../../openspec/changes/kitgate/) | in-progress | kitgate | `internal/bot/kitgate.go`<br>`internal/bot/kitgate_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/goal.go`<br>`internal/bot/recoveryxp_test.go`<br>`internal/bot/leveling_test.go`<br>`cmd/d2bot/resource_test.go`<br>`internal/nav/nav.go`<br>`internal/nav/route.go`<br>`internal/nav/walk.go`<br>`internal/nav/exit_test.go`<br>`internal/env/tuning_resource.go`<br>`internal/resource/tuning.go`<br>`docs/knobs.md`<br>`docs/kitgate.md` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
@@ -50,7 +49,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
-- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 3 requirements
+- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 4 requirements
 - spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 6 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
@@ -72,8 +71,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
-- change kitgate: go test -p 1 ./internal/bot -run 'KitGate|Recovery' and ./internal/nav -run RouteAvoid pass
-- change kitgate: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-abdesign: python3 -m unittest discover tools/ab passes (paired statistic on a fixture of 8 seeds x 2 arms; the required-runs formula)
 - change m2-abdesign: docs/ab-design.md re-analyses the xpgap A/B (docs/probes/xpgap) with the paired statistic and states the runs per arm for a 10 percent effect
 - change m2-abdesign: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
@@ -92,6 +89,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
 - ee0205e 10-31 02:30 `Merge agent/m1loot: town buy order, gem sale, charm keep rules` (m1-audittests)
 - e57bbc2 10-31 02:24 `Merge agent/andychain: Andariel chain needs research` (m3-andariel)
 - a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
@@ -101,5 +99,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
 - 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
-- 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 <!-- statusgen:end -->

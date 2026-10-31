@@ -27,7 +27,7 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/bot -run 'KitGate|Recovery' and ./internal/nav -run RouteAvoid pass"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: 9f5bacf
 result:
 ```
 
