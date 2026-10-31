@@ -37,5 +37,5 @@ internal/nav/exit_test.go            townwedge   townwedge
 internal/nav/nav.go                  townwedge   townwedge
 internal/nav/townwedge_test.go       townwedge   townwedge
 internal/env/tuning_nav.go           townwedge   townwedge
-docs/knobs.md                        townwedge   townwedge
 docs/townwedge.md                    townwedge   townwedge
+openspec/changes/townwedge/**         townwedge   townwedge

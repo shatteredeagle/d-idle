@@ -13,7 +13,6 @@ owns:
   - internal/nav/nav.go
   - internal/nav/townwedge_test.go
   - internal/env/tuning_nav.go
-  - docs/knobs.md
   - docs/townwedge.md
   - openspec/changes/townwedge/**
 exclusive:
