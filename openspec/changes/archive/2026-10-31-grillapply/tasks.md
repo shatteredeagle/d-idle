@@ -2,7 +2,7 @@
 
 ```yaml
 change: grillapply
-status: in-progress
+status: archived
 agent: grillapply
 branch: agent/grillapply
 worktree: ~/code/d2lod-wt/grillapply
@@ -11,8 +11,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/openspec.sh validate --all --strict passes; go build ./..."
-merge:
-result:
+merge: a1728bb
+result: docs and cards only (not live); ADR 0012, m3 deltas, m3-readiness-model
 ```
 
 ## 1. Work

@@ -41,7 +41,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [grillapply](../../openspec/changes/grillapply/) | in-progress | grillapply | `docs/adr/0012-milestones-and-wip-limit.md` | - |
 | [m1-loot](../../openspec/changes/m1-loot/) | proposed | m1-loot | `internal/loot/pickit_starter.json`<br>`internal/loot/charms_test.go`<br>`docs/loot-charms.md` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
@@ -72,7 +71,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
-- change grillapply: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/openspec.sh validate --all --strict passes; go build ./...
 - change m1-loot: go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)
 - change m1-loot: go test -p 1 ./internal/town -run TestAuditS6 passes after the audit row 6 test is updated to the D4 rule (chipped and flawed gem sold, flawless gem, charm and rune held)
 - change m1-loot: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
@@ -94,6 +92,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
 - fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
 - 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
@@ -103,5 +102,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
 - 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
-- c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
 <!-- statusgen:end -->
