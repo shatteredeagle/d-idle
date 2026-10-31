@@ -17,7 +17,7 @@ The bot SHALL buy an identify scroll only when a pack item needs identifying and
 - **THEN** the ring is sold unidentified and no identify scroll is bought
 
 ### Requirement: Purchase order when poor
-Below `town.tpMinGold` gold the bot SHALL buy healing potions first (up to 3) and the portal scroll only once gold covers the scroll plus 2 potions; at or above the knob the portal scroll comes first. The order is the user's decision D3 (2026-10-31: the SME order); the knob defaults are read from docs/knobs.md. The rule merged by basicsfix (a scroll at clvl 4 or more with 100 gold left) does not override it. Source: d2-sme 2026-10-31 (EXP: potions are the life at gold 100 to 190, the walk back from the first field is short); docs/basics-audit.md G5.
+Below `town.tpMinGold` gold the bot SHALL buy healing potions first (up to 3) and the portal scroll only once gold covers the scroll plus 2 potions; at or above the knob the scroll comes first. Source: user decision D3 2026-10-31 (docs/roadmap.md); d2-sme EXP; docs/basics-audit.md G5.
 
 #### Scenario: Gold 150, empty belt, no scroll
 - **WHEN** a clvl 4 character enters town with 150 gold, an empty belt and no portal scroll

@@ -102,8 +102,8 @@ Evidence both sides rest on: the Soaky deaths on the Monastery road at clvl ~14 
 ### 10.2 Questions the grill should settle
 
 1. Monastery road without a merc: floor 20 (plan), 18 (SME) or a kit-and-life rule instead of a clvl (option B of section 3)? Recommended default: 18, with the kit gate unchanged, and reopen if deaths per 1000 minutes on the road exceed the soak-gates death rule at that floor.
-2. Monastery road and tower with a living merc: allow from 14 (road) and 12 (tower) as the SME says, or keep "any clvl with a merc"? Recommended default: 14 and 12 (a merc is not a license for clvl 8); this adds a `withMerc` floor per guard.
-3. Tower floor: 20 (plan) or 16 without a merc? The tower is a no-reward quest in Normal (plan-v2 10.5). Recommended default: 16, and skip the tower unless the Countess is wanted (runes are not a v1 goal).
+2. Monastery road and Forgotten Tower with a living merc: allow from 14 (road) and 12 (Forgotten Tower) as the SME says, or keep "any clvl with a merc"? Recommended default: 14 and 12 (a merc is not a license for clvl 8); this adds a `withMerc` floor per guard.
+3. Forgotten Tower floor: 20 (plan) or 16 without a merc? It is a no-reward quest in Normal (plan-v2 10.5). Recommended default: 16, and skip the Forgotten Tower unless the Countess is wanted (runes are not a v1 goal).
 4. Andariel floor: 15 with a living merc and 18 without (SME), 15 flat (today) or 18 always (option C, plus a live attempt first)? Recommended default: 15 with a living merc, 18 without, the dead-merc +2 rule dropped in favour of the 18; the m3-andariel throwaway fight confirms or moves it.
 5. Revive budget and stop rule: keep 2 x price and 5 x price after 3 deaths, or the SME's budget (cost at most half of the gold on hand plus the kit, stop after 2 deaths per hour or when Andariel is dead)? Recommended default: the SME budget, since price is unobserved (S): one live revive price probe (section 5 item 3) before the numbers are fixed, then the knobs follow.
 

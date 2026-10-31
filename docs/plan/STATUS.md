@@ -41,13 +41,11 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [d2dmesh](../../openspec/changes/d2dmesh/) | in-progress | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md`<br>`openspec/changes/d2dmesh/**` | - |
 | [m1-loot](../../openspec/changes/m1-loot/) | proposed | m1-loot | `internal/loot/pickit_starter.json`<br>`internal/loot/charms_test.go`<br>`docs/loot-charms.md` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
 | [roadmap](../../openspec/changes/roadmap/) | in-progress | roadmap | `docs/roadmap.md`<br>`docs/process/dispatcher-brief-proposed.md`<br>`docs/BACKLOG.md`<br>`openspec/changes/m1-audittests/**`<br>`openspec/changes/m1-stashcap/**`<br>`openspec/changes/m1-trips/**`<br>`openspec/changes/m1-liveproof/**`<br>`openspec/changes/m2-roam/**`<br>`openspec/changes/m2-tripwp/**`<br>`openspec/changes/m2-abdesign/**`<br>`openspec/changes/m3-andariel/**`<br>`openspec/changes/m3-merc/**`<br>`openspec/changes/m3-routeguard/**`<br>`openspec/changes/m3-act1chain/**`<br>`openspec/changes/m3-act1run/**`<br>`openspec/changes/m1-loot/**`<br>`openspec/changes/m2-soakexit/**`<br>`openspec/changes/m2-earlybase/**` | - |
-| [stream-grid](../../openspec/changes/stream-grid/) | in-progress | streambuild | `openspec/changes/stream-grid/**`<br>`tools/publish/**`<br>`docs/streamctl-grid.md` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
@@ -72,12 +70,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
-- change d2dmesh: go test ./internal/d2dmesh ./cmd/d2dnode passes (3-node loopback cluster: join, convergence, cross-node claim, lease re-queue after a node dies, partition heal, pause/drain, token rejection, recipe rejection)
-- change d2dmesh: go test -race ./internal/d2dmesh ./cmd/d2dnode passes on the worker host
-- change d2dmesh: tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
-- change d2dmesh: no real hostname, IP or person in any committed file of this change
 - change m1-loot: go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)
-- change m1-loot: go test -p 1 ./internal/town -run TestAuditS6 still passes
+- change m1-loot: go test -p 1 ./internal/town -run TestAuditS6 passes after the audit row 6 test is updated to the D4 rule (chipped and flawed gem sold, flawless gem, charm and rune held)
 - change m1-loot: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-abdesign: python3 -m unittest discover tools/ab passes (paired statistic on a fixture of 8 seeds x 2 arms; the required-runs formula)
 - change m2-abdesign: docs/ab-design.md re-analyses the xpgap A/B (docs/probes/xpgap) with the paired statistic and states the runs per arm for a 10 percent effect
@@ -92,12 +86,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change roadmap: go run ./cmd/leakcheck -mode fail finds 0
 - change roadmap: tools/openspec.sh validate --all --strict passes including every new card and delta
 - change roadmap: docs/roadmap.md is at most 150 lines and has an Alignment section naming every SME disagreement
-- change stream-grid: tools/openspec.sh validate --all --strict passes
-- change stream-grid: python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
-- change stream-grid: ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
-- change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- 4b6e70a 10-31 01:29 `Merge origin/main into agent/roadmap` (-)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
@@ -107,5 +98,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 - 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
-- 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
 <!-- statusgen:end -->
