@@ -2,7 +2,7 @@
 
 ```yaml
 change: spec-backfill-botloop
-status: in-progress
+status: archived
 agent: specfix
 branch: agent/specfix
 worktree: ~/code/d2lod-wt/specfix
@@ -12,7 +12,7 @@ exclusive: []
 gates:
   - "tools/openspec.sh validate --all --strict passes"
   - "go run ./cmd/changecheck -cli prints 0 warnings"
-merge:
+merge: 30ddfab
 result: "Delta spec for capability bot-loop written from the code and tests of card botsmall; docs and specs only, nothing run live."
 ```
 

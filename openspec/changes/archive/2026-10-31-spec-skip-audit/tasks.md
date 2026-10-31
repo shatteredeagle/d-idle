@@ -2,7 +2,7 @@
 
 ```yaml
 change: spec-skip-audit
-status: in-progress
+status: archived
 agent: specfix
 branch: agent/specfix
 worktree: ~/code/d2lod-wt/specfix
@@ -12,7 +12,7 @@ owns:
 exclusive: []
 gates:
   - "docs/spec-skip-audit.md is at most 80 lines and lists all 14 cards"
-merge:
+merge: 30ddfab
 result: "Audit of 14 earlier behavioural skip_specs cards, read from git log --stat of their merges; no specs written. Docs only."
 ```
 

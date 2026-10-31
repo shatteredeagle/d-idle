@@ -2,7 +2,7 @@
 
 ```yaml
 change: spec-process
-status: in-progress
+status: archived
 agent: specfix
 branch: agent/specfix
 worktree: ~/code/d2lod-wt/specfix
@@ -18,7 +18,7 @@ gates:
   - "tools/openspec.sh validate --all --strict passes"
   - "go run ./cmd/changecheck -cli prints 0 warnings"
   - "every posted: line was checked with a read-only gh api GET"
-merge:
+merge: 30ddfab
 result: "README rules for skip_specs, unchecked non-merge commits, archive prefix and propose-time deltas; upstream-pr delta for the posted: log; three posted: backfills; hitlen .openspec.yaml. Docs only."
 ```
 

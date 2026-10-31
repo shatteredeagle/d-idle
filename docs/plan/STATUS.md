@@ -42,16 +42,14 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [d2dmesh](../../openspec/changes/d2dmesh/) | in-progress | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md`<br>`openspec/changes/d2dmesh/**` | - |
-| [spec-backfill-botloop](../../openspec/changes/spec-backfill-botloop/) | in-progress | specfix | `openspec/changes/spec-backfill-botloop/**` | - |
-| [spec-backfill-combat](../../openspec/changes/spec-backfill-combat/) | in-progress | specfix | `openspec/changes/spec-backfill-combat/**` | - |
-| [spec-backfill-viewer](../../openspec/changes/spec-backfill-viewer/) | in-progress | specfix | `openspec/changes/spec-backfill-viewer/**` | - |
-| [spec-process](../../openspec/changes/spec-process/) | in-progress | specfix | `openspec/changes/spec-process/**`<br>`openspec/README.md`<br>`docs/research/pr-get-hit-rule-evidence-pack.md`<br>`docs/research/pr-missile-damage-fine-evidence-pack.md`<br>`docs/research/pr-get-hit-length-evidence-pack.md`<br>`openspec/changes/archive/2026-10-31-hitlen/.openspec.yaml` | - |
-| [spec-skip-audit](../../openspec/changes/spec-skip-audit/) | in-progress | specfix | `openspec/changes/spec-skip-audit/**`<br>`docs/spec-skip-audit.md` | - |
 | [stream-grid](../../openspec/changes/stream-grid/) | in-progress | streambuild | `openspec/changes/stream-grid/**`<br>`tools/publish/**`<br>`docs/streamctl-grid.md` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
+- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 3 requirements
+- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 6 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 6 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 7 requirements
@@ -62,7 +60,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
-- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
+- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -73,22 +71,13 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2dmesh: go test -race ./internal/d2dmesh ./cmd/d2dnode passes on the worker host
 - change d2dmesh: tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
 - change d2dmesh: no real hostname, IP or person in any committed file of this change
-- change spec-backfill-botloop: tools/openspec.sh validate --all --strict passes
-- change spec-backfill-botloop: go run ./cmd/changecheck -cli prints 0 warnings
-- change spec-backfill-combat: tools/openspec.sh validate --all --strict passes
-- change spec-backfill-combat: go run ./cmd/changecheck -cli prints 0 warnings
-- change spec-backfill-viewer: tools/openspec.sh validate --all --strict passes
-- change spec-backfill-viewer: go run ./cmd/changecheck -cli prints 0 warnings
-- change spec-process: tools/openspec.sh validate --all --strict passes
-- change spec-process: go run ./cmd/changecheck -cli prints 0 warnings
-- change spec-process: every posted: line was checked with a read-only gh api GET
-- change spec-skip-audit: docs/spec-skip-audit.md is at most 80 lines and lists all 14 cards
 - change stream-grid: tools/openspec.sh validate --all --strict passes
 - change stream-grid: python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
 - change stream-grid: ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
 - 5b6f98f 10-31 00:56 `Merge agent/champ: champions as elite, not boss` (champ)
 - c5b4ecc 10-31 00:44 `Merge agent/botsmall` (botsmall)
