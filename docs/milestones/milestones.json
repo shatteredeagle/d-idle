@@ -1,0 +1,1008 @@
+{
+ "schema": 1,
+ "updated": "2026-10-28",
+ "basis": "master abf1195. Re-scored by agent MILESTONES2 from the repo docs, git log and an offline go test run (internal/task, boss, quest, questmem: ok); nothing here was run live by MILESTONES2. A criterion is done only with a doc that names a live run (instance, date) or a CI/offline-by-nature check.",
+ "statuses": {
+  "todo": "not started, or code exists but nothing about it is verified",
+  "partial": "code exists and is tested offline, or verified live only in part (a tool, a probe, a short run), or a live run is in progress but not recorded in a doc",
+  "done": "verified live (doc names the run, instance and date) or by CI; offline tests alone never make a criterion done unless the criterion itself is an offline one"
+ },
+ "rollup": {
+  "weights": {
+   "done": 1.0,
+   "partial": 0.5,
+   "todo": 0.0
+  },
+  "percent": "sum of weights of the milestone's criteria / number of criteria, rounded down",
+  "milestone_status": "done if every criterion is done; todo if every criterion is todo; partial otherwise",
+  "gate_status": "a gate covers its own milestones plus those of the gates it includes (beta includes alpha, goodbot includes beta); it is passed when all of them are done; its percent is the mean of their percents",
+  "evidence_rule": "a criterion may only move to done in the same commit that adds the evidence note (doc path + run/instance/date, soak report path, or CI run)"
+ },
+ "gates": [
+  {
+   "id": "alpha",
+   "title": "Alpha: a reliable Act 1 bot on the product path",
+   "milestones": [
+    "M0",
+    "A",
+    "B",
+    "G1"
+   ],
+   "summary": "A fresh level-1 character, started through the product path (one d2bot --managed per host, no setcap, sentinel in the product topology), levels in Normal Act 1, completes Act 1 including Andariel, hops to Act 2, and the same setup survives 24 h unattended with <= 1 death per hour and 0 human interventions."
+  },
+  {
+   "id": "beta",
+   "includes": [
+    "alpha"
+   ],
+   "title": "Beta: Normal complete, installable by a friend",
+   "milestones": [
+    "C1",
+    "C2",
+    "F",
+    "G2"
+   ],
+   "summary": "Alpha plus: Normal Acts 2-5 and the hop to Nightmare unattended; a headless container plus setup wizard that someone other than the user and the agents can install with their own game files; 72 h soak with 0 manual restarts."
+  },
+  {
+   "id": "goodbot",
+   "includes": [
+    "beta"
+   ],
+   "title": "Good-bot gate: the game layer may start",
+   "milestones": [
+    "D1",
+    "D2",
+    "H"
+   ],
+   "summary": "Beta plus: Nightmare and Hell playthroughs, farming runs at a sane rate, a 7-day soak, handicap profiles proven live, and the second class. Only then are upgrades, prestige, cheats-as-rewards and parties-as-feature built."
+  }
+ ],
+ "milestones": [
+  {
+   "id": "M0",
+   "title": "Foundations: the product path runs live",
+   "phase": "alpha",
+   "why": "Every live result so far used --attach with a setcap'd tool (findings F1). Alpha must be measured on the path we ship, with CI catching regressions and saves protected, or every later number is measured on the wrong thing.",
+   "depends_on": [],
+   "effort_days": "1.5 remaining (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "M0.memfd",
+     "text": "Game memory readable without CAP_SYS_PTRACE: subreaper reads its descendant, other processes get the fd via SCM_RIGHTS",
+     "measure": "probe run without caps",
+     "command": "go test ./internal/memfd (offline) ; deploy/container spike #3 and #6",
+     "status": "done",
+     "evidence": "V docs/memfd.md (the head box, CapEff=0, Yama 1) and deploy/container/README.md results #3, #6 (the worker host docker, uid 1000, --network none). Probe exe, not the game; the game read is M0.managed."
+    },
+    {
+     "id": "M0.managed",
+     "text": "d2bot --managed launches the game, logs in through OOG and reads memory with no setcap, on one instance, then plays a 10-minute goal",
+     "measure": "live run, log shows managed start + in-game snapshot + kills",
+     "command": "tools/live.sh --nocap bot d2bot --managed --goals reach:5 --run-for 10m",
+     "status": "done",
+     "evidence": "V docs/launch.md section 9 (LIVEBOT, i4 Booti, 2026-10-28): d2bot --managed --nocap, CapEff/CapPrm 0, no getcap, Wine children re-parented to d2bot; attach, memory reads, input and the whole leveling loop ran 90+ minutes. Repeated by the 31 minute campaign run (docs/bot.md 'Integration', managed, --stop-game)."
+    },
+    {
+     "id": "M0.lifecycle",
+     "text": "Start, stop, helper and restart of a game go through internal/launch (no bash/ssh in the product path); sentinel uses it",
+     "measure": "one live start/stop/helper cycle through d2game; sentinel restart drill through Life",
+     "command": "d2game start i5 ; d2game helper i5 ; d2game stop i5",
+     "status": "partial",
+     "evidence": "Game start, helper, login, Save and Exit and stop ran through internal/launch inside the managed runs (V docs/launch.md section 9; SIGTERM + --stop-game stops the game in about 2 s). Missing: a restart drill through Life (ladder rung 4 is not wired, cmd/d2bot has no Deps.Restart), the sentinel using Life, and docs/lifecycle.md still says UNVERIFIED for the standalone cycle."
+    },
+    {
+     "id": "M0.helper",
+     "text": "d2input helper survives a 2 h bot run at bot command rates with 0 deaths",
+     "measure": "helper pid unchanged across a 2 h soak (d2soak processRestarts for helper = 0)",
+     "command": "tools/soak/soak.sh start i4 --for 2h --profile m1",
+     "status": "partial",
+     "evidence": "Root cause (NewCallback table overflow) fixed; 20 minute soak on i5 with 0 helper deaths (V docs/input.md 'Helper reliability'). The 90+ minute managed run and the 31 minute campaign (docs/launch.md 9, docs/bot.md) report no helper death either, but no d2soak report counts processRestarts for the helper over 2 h."
+    },
+    {
+     "id": "M0.ci",
+     "text": "CI runs on every push and is green on master 20 runs in a row (gofmt, vet, race tests x3, cross-build of d2input.exe)",
+     "measure": "forge Actions history",
+     "command": ".forgejo/workflows/ci.yml ; tools/ci/check.sh",
+     "status": "partial",
+     "evidence": "Workflow, tools/ci/check.sh and an empty flaky list exist; ci.yml header still says 'Not yet run: no runner is registered' (V .forgejo/workflows/ci.yml). Master has had 300 commits without a CI run. Needs a forge admin token for the runner."
+    },
+    {
+     "id": "M0.saves",
+     "text": "Save snapshot before every game start and after every Save and Exit, checksum verify on load, restore tested once live",
+     "measure": "snapshot dirs appear per start; a deliberately corrupted copy is refused; restore loads",
+     "command": "saves.Snapshot via launch.Life (to be wired) ; saves 10-minute checklist in docs/saves.md",
+     "status": "partial",
+     "evidence": "internal/saves is done offline on real .d2s copies and decodes quests/waypoints (V docs/saves.md, docs/progression/results.md O-1). Shutdown now walks home and saves through the Cycler before the game stops (docs/launch.md 9 follow-ups). Still not wired: saves.Snapshot/Verify in launch.Life start or after Save and Exit (V grep: only internal/cheat and the quest reader import saves); restore never tested."
+    },
+    {
+     "id": "M0.loss",
+     "text": "Measured: what a kill -9 loses, and whether the map id is stable across Save and Exit (F3, F10)",
+     "measure": "saves checklist items 1-2",
+     "command": "docs/saves.md '10-minute live checklist' steps 1-2",
+     "status": "partial",
+     "evidence": "Map id 0x69794381 and the status/difficulty bytes of Multi read at a menu and unchanged across leave-and-start (V docs/progression/results.md V-02, i5, 2026-10-28). Not measured: what a kill -9 loses between saves (F3)."
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "title": "Act 1 self-leveler: clvl 1 to 15, 2 h unattended",
+   "phase": "alpha",
+   "why": "The smallest loop that exercises everything at once: nav, combat, town economy, death, points, gear, failsafes. Every failure seen so far (helper death, death overlay, 0 gold) only showed up in runs longer than a few minutes, so the exit is a measured soak, not a demo.",
+   "depends_on": [
+    "M0"
+   ],
+   "effort_days": "4 (U)",
+   "detail": "A.md",
+   "criteria": [
+    {
+     "id": "A.level12",
+     "text": "Fresh clvl 1 Sorceress reaches clvl 12 within 2 h, and clvl 15 in Act 1 within a further 2 h, unattended",
+     "measure": "d2soak report level and XP/h",
+     "command": "tools/live.sh --bg --max 7200 bot d2bot --managed --goals reach:15 ; tools/soak/soak.sh start i4 --for 2h --profile m1",
+     "status": "partial",
+     "evidence": "Best live numbers: 31 minute campaign run, XP 2,186 -> about 6,100, 7,600 XP/h overall and about 10,000 XP/h while fighting (V docs/bot.md 'Integration', i4, 2026-10-28), plus a 90+ minute managed leveling loop (docs/launch.md 9). At 7,600 XP/h a 2 h run lands near clvl 12 only if nothing stalls. Missing: one recorded run from clvl 1 to 12 inside 2 h, and clvl 15."
+    },
+    {
+     "id": "A.soak2h",
+     "text": "Two 2 h runs on two characters (different seeds) pass the m1 soak profile",
+     "measure": "d2soak exit 0, report.json saved",
+     "command": "tools/soak/soak.sh start i4 --for 2h --profile m1 (twice)",
+     "status": "todo",
+     "evidence": "No d2soak m1 report from a 2 h run exists (only a 45 minute soak whose fd numbers are in docs/leakhunt.md, and the 20 minute helper soak in docs/input.md). Harness judging is verified offline (V docs/soak.md: warm-up, fd plateau)."
+    },
+    {
+     "id": "A.deaths",
+     "text": "<= 1 death per hour; no death with an unused healing potion in the belt and life above the chicken threshold 1 s before",
+     "measure": "d2soak deaths/h; death log life curves in deaths.json",
+     "command": "d2soak report ; GET /api/v1/bot/deaths",
+     "status": "todo",
+     "evidence": "Measured once: 1 death in the 31 minute campaign run (about 1.9/h, Dark Hunter in Cold Plains, corpse retrieved) and 1 chicken exit (V docs/bot.md 'Integration'). Over the bound and one run only; no check of 'unused potion and life above the chicken line' exists."
+    },
+    {
+     "id": "A.death_loop",
+     "text": "Death inside a bot run: overlay dismissed, respawn, corpse policy decided, back to the goal, 3 times without help",
+     "measure": "death records with decision text and a following kill event",
+     "command": "d2bot run logs ; deaths.json",
+     "status": "partial",
+     "evidence": "Death mechanics VERIFIED LIVE: mode 17 about 1 s after the fall, Esc respawn 0.1-0.3 s, corpse and gold-pile rules, walk-on-corpse pickup (3 real deaths, i2, V docs/combat.md 'Death: VERIFIED LIVE'); Paladin death loop works the same (V docs/classes/smoke-paladin.md finding 10). Inside d2bot: one death, respawn and corpse retrieval then back to the goal (docs/bot.md 'Integration'). Missing: 3 deaths in bot runs without help and the stale-dead wait fix confirmed over a long run."
+    },
+    {
+     "id": "A.economy",
+     "text": "Town loop with earned money inside a bot run: buys potions and TP scrolls, sells, stashes gold, repairs; 0-gold start recovers through the starvation rule",
+     "measure": "town events in a soak; gold curve; no abandoned trips after the first 20 min",
+     "command": "soak report + bot event log",
+     "status": "partial",
+     "evidence": "Chores VERIFIED LIVE (docs/town.md round 2); full-pack purchase fix live (sold 4 spare items +403 gold then bought the armor, V docs/progression/results.md TOWNFIX-2); the 31 minute run did 5 town trips by portal and 12 potions with one 500 gold cheat (V docs/bot.md). Still missing: an earned-gold run (the cheat was used), repair effect, starvation rule seen live."
+    },
+    {
+     "id": "A.points",
+     "text": "Stat and skill points spent per the build plan within one game of gaining them; new skill bound to a hotkey",
+     "measure": "statLeft/skillLeft = 0 after level-up",
+     "command": "levelerlive state ; d2bot log",
+     "status": "done",
+     "evidence": "VERIFIED LIVE in d2bot run B on i4: 5 vitality + Charged Bolt 0.4 s after level 3, bound to F4 (docs/bot.md, docs/leveler.md)."
+    },
+    {
+     "id": "A.gear",
+     "text": "Gear pass buys or equips a better item inside the bot loop at least once per 2 h run",
+     "measure": "gear events in the run log",
+     "command": "d2bot log 'gear'",
+     "status": "partial",
+     "evidence": "Equip and shop VERIFIED LIVE through levelerlive and the pack-full fix (docs/leveler.md, results.md TOWNFIX-2); Paladin start gear rated and equipped correctly (V smoke-paladin finding 9). In the bot loop the 31 minute run bought nothing from earned gold."
+    },
+    {
+     "id": "A.failsafe",
+     "text": "Ladder rungs >= 3 at most 1 per hour, longest no-progress window < 5 min, sentinel actions <= 2 per hour",
+     "measure": "d2soak ladder/sentinel rates and no-progress window",
+     "command": "soak profile m1",
+     "status": "partial",
+     "evidence": "Ladder rungs 1-5 ran live (docs/bot.md run 10). The 31 minute campaign run had 13 rung-3 events, all from one cause (nav: no exit to that level, V docs/bot.md); nav was fixed afterwards (V docs/nav.md: 20 consecutive transitions, ExitTo ending in a third level re-plans). The rate over a long run with the fix is not measured."
+    },
+    {
+     "id": "A.leaks",
+     "text": "Bot and game RSS growth < 5 %/h after 15 min; fds, threads, goroutines flat",
+     "measure": "d2soak slopes",
+     "command": "soak profile m1",
+     "status": "partial",
+     "evidence": "fd study VERIFIED LIVE (docs/leakhunt.md, i3): 0 fds per leave/re-enter cycle, about +70 fds per first visit of an area then a plateau, limit 524288, Xvfb flat; d2soak judges warm-up and plateau (V docs/soak.md tests). Missing: RSS, thread and goroutine slopes over a 2 h run."
+    },
+    {
+     "id": "A.run90",
+     "text": "A managed, unattended run of 60+ minutes with no human input and no capability on the product path",
+     "measure": "run log with start, kills, XP, shutdown",
+     "command": "tools/live.sh --bg --max 6600 --nocap livebot d2bot --managed --instance i4 --run-for 100m",
+     "evidence": "V docs/launch.md section 9 (i4 Booti, 2026-10-28): 90+ minutes of the leveling loop (fight, chores, shopping, points, hotkeys) with CapEff 0; 31 minute campaign run on the same path (docs/bot.md). Short of the 2 h soak, which stays in A.soak2h.",
+     "status": "done"
+    },
+    {
+     "id": "A.seeds",
+     "text": "Navigation and town work on more than one map seed and character without absolute coordinates",
+     "measure": "nav/town live chains on two characters",
+     "command": "navlive chain / townlive on Navi and Testy and Booti",
+     "evidence": "V docs/nav.md 'Seed independence' (Navi, i1) and 'NAVFIX2': town walking within 1.4-5.7 subtiles, 20 consecutive area transitions through Den, Caves, Burial Grounds, Crypt, Mausoleum, Exit accumulation bug fixed. Booti's different town layout is handled (docs/bot.md). Not covered: Catacombs/Barracks/Pit route (packs block a non-fighting character, docs/nav.md), a bot run on a second character.",
+     "status": "partial"
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "title": "Normal Act 1 complete: quests, Andariel, hop to Act 2",
+   "phase": "alpha",
+   "why": "Quests, dialog, boss scripts and act travel are the first things a leveling loop cannot do, and the task layer (Step/Plan) is designed around them. Putting the Act 2 hop inside B proves the whole progression machinery once on the cheapest act before it is copied to four more.",
+   "depends_on": [
+    "A"
+   ],
+   "effort_days": "7 (U)",
+   "detail": "B.md",
+   "criteria": [
+    {
+     "id": "B.quest_state",
+     "text": "Quest and waypoint state known: from the .d2s at menus and from memory in game, bit meanings for Act 1 verified (V-01, V-05)",
+     "measure": "saves.Progress and the memory reader agree on 9 Act 1 states",
+     "command": "docs/progression/verification.md V-01, V-05",
+     "status": "partial",
+     "evidence": "In-memory quest and waypoint reader VERIFIED LIVE (V docs/questmem.md, i5 Multi, 2026-10-28): server player unit found by scan in 40-55 ms, memory equals the save for all three difficulties, started/left-town/waypoint bits change at once, memory before Save and Exit equals the saved file. Word values written by cheats and the cleared 0x001e -> 0x8001 claim seen (docs/progression/results.md TOWNFIX-1). Missing: done/clear/reward words after a REAL completion, and the source is not wired into the bot (it still reads the save, docs/task.md)."
+    },
+    {
+     "id": "B.tasklayer",
+     "text": "Step/Plan executor (internal/task) with sim fakes; quest handlers are data plus shared primitives",
+     "measure": "offline tests for Den, Blood Raven, Andariel handlers",
+     "command": "go test ./internal/bot/steps/...",
+     "status": "done",
+     "evidence": "Offline by nature. internal/task (step graph, Act 1 planner, executor, sim) wired into the bot as the campaign goal (docs/task.md 'Integration status'); `go test -p 1 -count=1 ./internal/task/... ./internal/boss ./internal/quest ./internal/questmem` ok on the head box (MILESTONES2, 2026-10-28). The package is internal/task, not internal/bot/steps. Used live in the 31 minute run (Den step, escape policy, blocked steps)."
+    },
+    {
+     "id": "B.dialog",
+     "text": "NPC dialog rows for Act 1 quest NPCs (Akara, Kashya, Charsi, Warriv, Cain) picked by recorded index and verified by effect",
+     "measure": "dialog table + live pick with effect check",
+     "command": "verification.md V-04",
+     "status": "partial",
+     "evidence": "Akara Den row and reward claim VERIFIED LIVE (V docs/progression/results.md TOWNFIX-1, i4: skill point 1 -> 2 on the first Talk with Den word 0x001e; Save and Exit wrote 0x8001; talk menus differ per quest word; the cleared state was set by a logged cheat). The Burial Grounds row is verified by screenshot. Kashya, Warriv, Charsi, Cain rows are still U (docs/task.md)."
+    },
+    {
+     "id": "B.den",
+     "text": "Den of Evil cleared and reward claimed unattended",
+     "measure": "quest word reward bit + skill point +1",
+     "command": "d2bot --goals quest:den_of_evil",
+     "status": "partial",
+     "evidence": "Den walk, 14 minute clear with leftover hunting and portal home worked live in the 31 minute run (V docs/bot.md 'Integration', 2026-10-28); claim path verified live on a cheated state. Missing: one run that clears the Den and gets the real reward end to end (the reward claim failed in that run, fixed afterwards)."
+    },
+    {
+     "id": "B.bosses",
+     "text": "Blood Raven and the Countess killed unattended with boss scripts; Andariel killed unattended",
+     "measure": "kill events with boss flag; quest bits",
+     "command": "d2bot --goals kill:andariel (cheated level allowed, flagged)",
+     "status": "partial",
+     "evidence": "Boss scripts for Blood Raven, Countess, Smith, Andariel exist, 16 offline tests pass (V docs/boss.md, MILESTONES2 re-ran go test ./internal/boss). Every live behaviour in docs/boss.md is U (its section 5 lists 7 live checks, none run). Live: the Blood Raven fight at clvl 6 ended in a chicken exit (docs/bot.md). The bot does not call the scripts yet (boss.Runner is not wired into task.Actions.KillBoss)."
+    },
+    {
+     "id": "B.hop",
+     "text": "Act 1 to Act 2 through Warriv; Lut Gholein waypoint taken; bot runs in Act 2 town",
+     "measure": "area id 40 + waypoint bit",
+     "command": "verification.md V-07",
+     "status": "partial",
+     "evidence": "Act-hop steps exist in the task layer (offline, commit 2e0bdc4); act arrival by cheat is VERIFIED LIVE for acts 2-5 (V docs/progression/results.md V-03) but the Warriv dialog row and the Lut Gholein waypoint were never taken by the bot. The bot's `acts` default is still [1] (docs/task.md 'Not done: Acts 2+')."
+    },
+    {
+     "id": "B.corpse",
+     "text": "Corpse retrieval succeeds in >= 80 % of deaths where the policy retrieves (>= 5 sampled)",
+     "measure": "death log decisions and outcomes",
+     "command": "deaths.json",
+     "status": "partial",
+     "evidence": "Corpse walk-on pickup and gold pile VERIFIED LIVE in 3 real deaths (docs/combat.md) and once inside the 31 minute bot run (corpse retrieved, docs/bot.md). Samples needed: 5 retrieval attempts with outcomes in deaths.json."
+    },
+    {
+     "id": "B.unattended",
+     "text": "Fresh character from clvl 1 to standing in Lut Gholein with all Act 1 required quests, one run, 0 human input",
+     "measure": "one soak report covering the whole run",
+     "command": "d2bot --managed --goals campaign:normal_act1 + soak profile m1",
+     "status": "todo",
+     "evidence": "No campaign run past Blood Raven. Longest campaign run 31 minutes, clvl 6 (V docs/bot.md)."
+    },
+    {
+     "id": "B.nav",
+     "text": "Every Act 1 quest route (Den, Burial Grounds, Tower, Monastery to Catacombs 4) is walkable by the bot, in more than one seed",
+     "measure": "navlive route/chain per area",
+     "command": "navlive chain 2 8 2 3 ...",
+     "evidence": "V docs/nav.md NAVFIX2: 20 consecutive transitions Den/Caves/Burial Grounds/Crypt/Mausoleum with zero ErrNoExit, hint graph corrected from levels.txt, waypoint approach fixes. NOT walked: Black Marsh to Tower Cellar 5, Monastery Gate to Catacombs 4 (monster packs block a character that does not fight, docs/nav.md).",
+     "status": "partial"
+    },
+    {
+     "id": "B.questmem_wired",
+     "text": "The in-memory quest source is the first source of the bot quest reader and the campaign verifies steps by memory, not by save at menus",
+     "measure": "campaign Report Verified=true during a live run",
+     "command": "questmem.New(reader) before quest.SaveSource in cmd/d2bot/task.go",
+     "evidence": "Source and probe verified live (docs/questmem.md) but unwired: docs/questmem.md 'Requests for INTEGRATE'; the bot still uses saves.ProgressFile (cmd/d2bot/task.go).",
+     "status": "todo"
+    },
+    {
+     "id": "B.boss_live",
+     "text": "Boss scripts verified live: the 7 checks of docs/boss.md section 5 (area ids, class ids, Blood Raven, Countess chest preset, Smith, Andariel poison, escape paths)",
+     "measure": "a results table in docs/boss.md with V/U per check",
+     "command": "boss.Runner via task.Actions.KillBoss on i1 with cheated levels (flagged)",
+     "evidence": "None run. Prerequisite: wire boss.Runner into the bot (docs/boss.md section 3).",
+     "status": "todo"
+    }
+   ]
+  },
+  {
+   "id": "G1",
+   "title": "Day-long soak on the product path (24 h)",
+   "phase": "alpha",
+   "why": "Moved up from the interim G: the user wants a reliable bot first, and reliability is only learned by running long. A 24 h run with the sentinel in the product topology is the cheapest proof that restarts, saves and failsafes compose; it also calibrates every later effort estimate.",
+   "depends_on": [
+    "A",
+    "M0"
+   ],
+   "effort_days": "4 (U), plus wall time",
+   "detail": "G.md",
+   "criteria": [
+    {
+     "id": "G1.soak24",
+     "text": "24 h soak on one instance in managed mode (Act 1 leveling then Countess/Andariel runs), m3 profile passes",
+     "measure": "d2soak exit 0",
+     "command": "tools/soak/soak.sh start i4 --for 24h --profile m3",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "G1.sentinel",
+     "text": "Sentinel runs in the product topology (in-process or fd-passing, no setcap) and passes the drill table plus a real death and a forced Wine crash",
+     "measure": "drill table with detection/recovery times",
+     "command": "docs/sentinel.md drills, rerun under --managed",
+     "status": "partial",
+     "evidence": "All drills except death VERIFIED LIVE on i5 in the setcap topology (docs/sentinel.md); memfd path verified with a probe only; sentinel character per instance now read from tools/instances.conf (commit e4f729e, offline). The managed topology and a forced Wine crash are not rerun."
+    },
+    {
+     "id": "G1.restart",
+     "text": "Bot ladder rung 4 (game restart) wired; a hang or crash loses <= 1 save cycle; save cycle knob (leave and re-enter every N min) active",
+     "measure": "inject kill -9 and SIGSTOP during a soak, compare .d2s exp before/after",
+     "command": "fault drill during soak",
+     "status": "todo",
+     "evidence": "Deps.Restart not wired in cmd/d2bot (V docs/bot.md Failsafes)."
+    },
+    {
+     "id": "G1.visible",
+     "text": "Every failsafe action, death and pause is visible on the dashboard and the event log; a self-paused bot shows why",
+     "measure": "dashboard check during the soak",
+     "command": "d2dash /live",
+     "status": "partial",
+     "evidence": "Health endpoint, events, dashboard, SSE merged (docs/bot.md Failsafes); the live scene and board show state during runs (docs/streamctl.md, docs/publish.md). Pause reason shown (Runner Status message, docs/bot.md). Not observed deliberately over a long run."
+    },
+    {
+     "id": "G1.zero_touch",
+     "text": "0 human or agent interventions during the 24 h (operator log)",
+     "measure": "operator log reconciled with processRestarts",
+     "command": "soak report + notes",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "G1.judge",
+     "text": "The soak judge discounts the Game.exe warm-up and area-load fd steps and judges slopes on a plateau",
+     "measure": "offline tests with the leakhunt shape",
+     "command": "go test ./cmd/d2soak",
+     "evidence": "Offline by nature. V docs/soak.md: TestWarmUpDropsEarlyGrowthOfOtherSeries, TestPlateauAfterWarmUpPasses, TestGenuineLeakStillFails, TestPlateauWithoutHandlingWouldFail; profile thresholds U until a 24 h run calibrates them.",
+     "status": "done"
+    },
+    {
+     "id": "G1.recycler",
+     "text": "Scheduled game recycle (Save and Exit, stop, start, login) wired between goals; the soak labels it and the sentinel does not count it as a manual restart",
+     "measure": "recycle event + one game restart in the soak report, no leak flag",
+     "command": "D2BOT_RECYCLE_CYCLES=3 d2bot --managed ...",
+     "evidence": "Policy and hooks offline (V docs/soak.md, internal/launch/recycle_test.go); a manual recycle took 22 s on i3 (V docs/leakhunt.md, Game.exe fds 126 -> 57). Not wired into cmd/d2bot or the fleet (docs/soak.md 'Requests for the owners'). Safety net only: the fd growth is a plateau, not a leak.",
+     "status": "partial"
+    },
+    {
+     "id": "G1.rungs",
+     "text": "Recovery rungs (ladder rung >= 3, sentinel actions, chicken exits) per hour recorded in every soak report and falling between soaks",
+     "measure": "rate table in the soak report",
+     "command": "d2soak report",
+     "evidence": "Baseline recorded once: 13 rung-3 events in 31 minutes (about 25/h), all from one nav cause that is fixed since (V docs/bot.md 'Integration', docs/nav.md NAVFIX2). No soak report carries the rate yet; the trend needs 2+ soaks.",
+     "status": "partial"
+    }
+   ]
+  },
+  {
+   "id": "C1",
+   "title": "Normal Acts 2 and 3",
+   "phase": "beta",
+   "why": "Split from the interim C: Acts 2-3 bring the mercenary, the Horadric Cube, multi-part quest chains and the first item-assembly bosses (Duriel, Mephisto). That is a different set of mechanisms from Acts 4-5 (seals, waves, Ancients), and a checkpoint halfway through Normal keeps the ladder honest.",
+   "depends_on": [
+    "B"
+   ],
+   "effort_days": "14 (U)",
+   "detail": "C.md",
+   "criteria": [
+    {
+     "id": "C1.merc",
+     "text": "Act 2 mercenary hired, revived after a forced death, equipped; merc treated as friendly by combat",
+     "measure": "merc unit owned by player; revive cost paid",
+     "command": "verification.md V-09",
+     "status": "partial",
+     "evidence": "Hire flow live-probed: Kashya/Greiz dialog and hire window rows (commit 3c020b1, tools townlive talk/hire; merc hire interface in the Paladin leveler merge f73dfef). Missing: reading the merc unit, revive after death, equip, and combat treating it as friendly (docs/progression/merc.md is design)."
+    },
+    {
+     "id": "C1.waypoints",
+     "text": "Waypoint tabs for acts 2-5 and cross-act travel work",
+     "measure": "area change through each tab",
+     "command": "verification.md V-06",
+     "status": "todo",
+     "evidence": "Act 1 tab VERIFIED LIVE (docs/nav.md); acts 2-5 UNVERIFIED."
+    },
+    {
+     "id": "C1.cube",
+     "text": "Horadric Cube found and used (staff assembly, Khalim's Will)",
+     "measure": "item codes in inventory before/after transmute",
+     "command": "cube spike (packages.md)",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C1.duriel",
+     "text": "Horadric Staff, Tal Rasha's Tomb (correct tomb), Duriel killed, hop to Act 3 via Meshif",
+     "measure": "quest bits + area 75",
+     "command": "d2bot --goals campaign:normal_act2",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C1.mephisto",
+     "text": "Khalim's relics, Council, Mephisto killed, red portal to Act 4",
+     "measure": "quest bits + area 103",
+     "command": "d2bot --goals campaign:normal_act3",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C1.unattended",
+     "text": "Acts 2-3 in one unattended run, deaths <= 1 per hour",
+     "measure": "soak report",
+     "command": "soak profile m1 limits over the run",
+     "status": "todo",
+     "evidence": ""
+    }
+   ]
+  },
+  {
+   "id": "C2",
+   "title": "Normal Acts 4 and 5, Baal, hop to Nightmare",
+   "phase": "beta",
+   "why": "The rest of Normal: Diablo's seals, the Ancients (no town portal) and Baal's waves are the largest scripts. Ends with the difficulty screen, which is the first OOG step that changes the character's world.",
+   "depends_on": [
+    "C1"
+   ],
+   "effort_days": "15 (U)",
+   "detail": "C.md",
+   "criteria": [
+    {
+     "id": "C2.diablo",
+     "text": "Chaos Sanctuary seals opened, seal bosses and Diablo killed, hop to Act 5",
+     "measure": "quest bits + area 109",
+     "command": "d2bot --goals campaign:normal_act4",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C2.baal",
+     "text": "Ancients (no-portal constraint), Worldstone Keep, Baal waves and Baal killed",
+     "measure": "quest bits",
+     "command": "d2bot --goals campaign:normal_act5",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C2.difficulty",
+     "text": "Difficulty screen used; character enters Nightmare Act 1",
+     "measure": "difficulty byte + area 1 in Nightmare",
+     "command": "verification.md V-08",
+     "status": "todo",
+     "evidence": "Cheat can set difficulty/progression bytes (merged, unverified live)."
+    },
+    {
+     "id": "C2.normal40h",
+     "text": "Fresh clvl 1 to Nightmare entry unattended within 40 h wall time, <= 1 death per hour averaged, 0 human input after start",
+     "measure": "one campaign with soak reports stitched",
+     "command": "campaign:normal_playthrough",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "C2.fixtures",
+     "text": "Each act's required quests and hops are Steps with offline tests and one recorded arena fixture per boss",
+     "measure": "go test ./internal/bot/... + fixtures in testdata",
+     "command": "d2rec record per arena",
+     "status": "todo",
+     "evidence": "Fixture envelope, recorder and canary exist (docs/replay.md); d2rec record UNVERIFIED live."
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "title": "Headless container and setup wizard, usable by a friend",
+   "phase": "beta",
+   "why": "Kept in beta, not alpha: it does not make the bot play better, but it fixes the process topology and file layout everything else runs on, so it runs in parallel to C with different owners. The bar is a real second person, because a wizard only the authors can use is not one.",
+   "depends_on": [
+    "M0"
+   ],
+   "effort_days": "10 (U)",
+   "detail": "F.md",
+   "criteria": [
+    {
+     "id": "F.image",
+     "text": "Container image without Blizzard bytes builds; Wine, Xvfb, subreaper, memfd work inside with no caps and no network",
+     "measure": "spike results table",
+     "command": "docker build deploy/container",
+     "status": "done",
+     "evidence": "VERIFIED on the worker host docker 29.9.2 with a probe exe (deploy/container/README.md results 1-12). Unchanged by the later merges (deploy/container/README.md results 1-12 still the latest)."
+    },
+    {
+     "id": "F.game",
+     "text": "D2 1.14d runs in the container (plain Wine or pinned Proton), renders on Xvfb, the bot reads memory and sends input, one goal runs 30 min",
+     "measure": "bot log + d2watch frame from inside the container",
+     "command": "docker compose -f deploy/container/compose.example.yml up",
+     "status": "todo",
+     "evidence": "Real game never run in the image (README 'Not verified')."
+    },
+    {
+     "id": "F.wizard",
+     "text": "Wizard path on an empty volume: game files (installers or existing dir) -> CD keys typed in the installer via the browser viewport -> patch -> data extract -> character created -> first goal, no shell",
+     "measure": "screen recording or log of one full pass",
+     "command": "d2bot setup UI",
+     "status": "partial",
+     "evidence": "Backend, nine resumable steps and the /api/setup HTTP API are tested offline (docs/setup.md); live checks 2-5 not run; no installer viewport input."
+    },
+    {
+     "id": "F.doctor",
+     "text": "d2doctor passes on two hosts (the worker host desktop and a container) and prints an actionable fix for each detectable failure",
+     "measure": "doctor output on both",
+     "command": "d2doctor",
+     "status": "partial",
+     "evidence": "cmd/d2doctor merged; offline tests, and its subreaper probe ran for real on the head box (Yama 1, V docs/setup.md header). No run on a second host and a container (docs/setup.md 'Live checks' 1 and 6 not run)."
+    },
+    {
+     "id": "F.friend",
+     "text": "Someone other than the user and the agents installs it from the docs on their own host and reaches a running goal",
+     "measure": "their notes; issues filed",
+     "command": "docs/setup.md",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "F.upgrade",
+     "text": "Binary upgrade keeps state (versioned state files with migrations); runner/Proton version pinned and checked at start",
+     "measure": "upgrade test from previous release tarball",
+     "command": "packaging/release.sh + start of new binary on old data dir",
+     "status": "partial",
+     "evidence": "paths/store merged with legacy fallbacks (docs/bot.md 'Data paths'); canary build check exists (docs/replay.md); no release-to-release test."
+    }
+   ]
+  },
+  {
+   "id": "G2",
+   "title": "Multi-day soak (72 h)",
+   "phase": "beta",
+   "why": "The interim G split in two: G1 (24 h) gates alpha, G2 (72 h, 0 manual restarts) gates beta. Multi-day runs find log growth, disk, fd and memory leaks and rare game states that a day does not.",
+   "depends_on": [
+    "G1",
+    "C1"
+   ],
+   "effort_days": "5 (U), plus wall time",
+   "detail": "G.md",
+   "criteria": [
+    {
+     "id": "G2.soak72",
+     "text": "72 h soak, v1 profile passes, 0 manual restarts, report produced",
+     "measure": "d2soak exit 0",
+     "command": "tools/soak/soak.sh start i4 --for 72h --profile v1",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "G2.disk",
+     "text": "Log rotation and a disk guard (pause before the data dir runs out); measured in the soak",
+     "measure": "log size and df gauges flat or bounded",
+     "command": "bot /metrics GaugeFunc for df and log size",
+     "status": "todo",
+     "evidence": "Not covered by the harness (V tools/soak/CHECKLIST.md 'Not covered')."
+    },
+    {
+     "id": "G2.notify",
+     "text": "Human-needed state (self-pause, crash loop) sends a notification to the phone",
+     "measure": "one test notification during the soak",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "G2.mixed",
+     "text": "Soak mixes goals (leveling, farm runs, idle windows, a difficulty or act change) through the goal manager",
+     "measure": "goal events in the report",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    }
+   ]
+  },
+  {
+   "id": "D1",
+   "title": "Nightmare playthrough",
+   "phase": "goodbot",
+   "why": "Same scripts as Normal with harder numbers: resist penalty, immunities, merc gear, poverty after deaths. It shows whether the Normal scripts were general or tuned to easy monsters.",
+   "depends_on": [
+    "C2"
+   ],
+   "effort_days": "10 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "D1.playthrough",
+     "text": "Nightmare Acts 1-5 unattended, deaths <= 2 per hour (XP loss counted)",
+     "measure": "campaign soak reports",
+     "command": "campaign:nightmare_playthrough",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "D1.teleport",
+     "text": "Teleport-based navigation (clvl 18+) with walk fallback",
+     "measure": "seconds per area vs walking",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "D1.immune",
+     "text": "Cold-immune packs handled (Static Field, merc, skip rules) without death spirals",
+     "measure": "spiral breaker events per hour",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "D1.gate",
+     "text": "Difficulty gate (clvl floor, resist after penalty, gold) decides the hop; resist read from stats",
+     "measure": "planner decision log",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    }
+   ]
+  },
+  {
+   "id": "D2",
+   "title": "Hell playthrough and farming runs",
+   "phase": "goodbot",
+   "why": "Farming (Mephisto, Pindleskin, Countess, Andariel, Baal) is what an idle player actually leaves running, and Hell is where the bot's limits show. Rates are compared with a human baseline so 'good' has a number.",
+   "depends_on": [
+    "D1"
+   ],
+   "effort_days": "20 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "D2.hell",
+     "text": "Hell playthrough to Baal unattended",
+     "measure": "campaign soak reports",
+     "command": "campaign:hell_playthrough",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "D2.runs",
+     "text": "Farming goals (Countess, Andariel, Mephisto, Pindleskin, Baal) with per-run timing and drop logs; runs per hour within 2x of a scripted human baseline",
+     "measure": "run timer per goal vs baseline table",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "D2.loot",
+     "text": "Loot filter keeps runes, uniques, sets and bases per rules; stash management never fills the stash",
+     "measure": "drop log + stash occupancy over 24 h",
+     "command": "",
+     "status": "todo",
+     "evidence": "Pickit and valuables VERIFIED LIVE in Act 1 (docs/town.md)."
+    },
+    {
+     "id": "D2.runewords",
+     "text": "Gear plan uses only runewords available offline (ladder flags checked)",
+     "measure": "plan validation test",
+     "command": "",
+     "status": "partial",
+     "evidence": "Ladder runeword flags extracted (DATA2 merge 02a7bef); plan not validated against them."
+    }
+   ]
+  },
+  {
+   "id": "H",
+   "title": "Good-bot gate",
+   "phase": "goodbot",
+   "why": "The handover point the user asked for: a good, reliable bot first, then the game. The gate checks the things the game layer is built from (handicap knobs, telemetry, a second class for rebirth variety) and reliability over a week.",
+   "depends_on": [
+    "D2",
+    "G2",
+    "F"
+   ],
+   "effort_days": "10 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "H.soak7d",
+     "text": "7-day unattended soak across mixed goals with at most 1 human intervention",
+     "measure": "d2soak 168 h report",
+     "command": "tools/soak/soak.sh start i4 --for 168h --profile v1",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "H.knobs",
+     "text": "Every Tuning knob has metadata (label, unit, range, direction); every profile stays in range and never beats the default",
+     "measure": "offline tests",
+     "command": "go test ./internal/env ./internal/bot -run 'Profile|Knob|Tuning'",
+     "status": "done",
+     "evidence": "Offline criterion. Ran by MILESTONES on the head box 2026-10-28: ok (internal/bot, internal/env); knob metadata fields in internal/env/tuning.go."
+    },
+    {
+     "id": "H.handicap_live",
+     "text": "Handicap profiles measured live: each built-in profile is slower (XP/h, seconds per run) and stays within the death bound",
+     "measure": "2 h soak per profile, table of rates",
+     "command": "d2bot --profile casual + soak",
+     "status": "todo",
+     "evidence": "Monotonic offline only."
+    },
+    {
+     "id": "H.telemetry",
+     "text": "Per-character telemetry the game layer can price: XP/h, seconds per run, deaths/h, gold/h, drops per run, from measurements not constants",
+     "measure": "API endpoint + dashboard view",
+     "command": "",
+     "status": "partial",
+     "evidence": "metrics registry, death log, stats and dashboard merged; per-run timing not recorded."
+    },
+    {
+     "id": "H.second_class",
+     "text": "Second class (Paladin, docs/classes/ranking.md) passes milestone A criteria",
+     "measure": "A soak profile on the new class",
+     "command": "",
+     "status": "todo",
+     "evidence": "Paladin plays a combat loop live (below) but no Paladin passes any A criterion: no level run, no campaign, no soak, leveler builds offline only."
+    },
+    {
+     "id": "H.review",
+     "text": "Opus review of the gate finds no blocker",
+     "measure": "docs/review update",
+     "command": "d2-reviewer",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "H.class_combat",
+     "text": "Combat is class-agnostic: a data-driven profile fights a second class live (left/right hands, aura upkeep, melee)",
+     "measure": "live farm numbers on the second class",
+     "command": "tools/rigs/combatclass farm",
+     "evidence": "V docs/combat.md 'Class profiles and the Paladin loop' (Palli clvl 13, i1, 2026-10-28): Blood Moor 63 kills in 2m46s = 22.8/min, Cold Plains 91 kills in 3m53s = 23.4/min, 0 deaths, left-skill switch 1.1 s verified through LeftSkill, aura switch 161-229 ms. Smoke test findings in docs/classes/smoke-paladin.md. Other five profiles are U.",
+     "status": "done"
+    },
+    {
+     "id": "H.class_leveler",
+     "text": "Leveler builds and gear scoring for the second class, with skill-ID read-back, run live in the bot loop",
+     "measure": "levelerlive plan/spend then a bot run",
+     "command": "levelerlive spend on Palli",
+     "evidence": "Class builds (Paladin Normal to 30), skill-ID read-back, weapon swap awareness and class weapon prefs merged (commit e4f729e, f73dfef) with offline tests; the smoke test showed the old Sorceress-only leveler learning wrong skills (V smoke-paladin finding 3). No live pass after the fix recorded.",
+     "status": "partial"
+    },
+    {
+     "id": "H.class_merc",
+     "text": "A mercenary is hired, revived and equipped by the bot",
+     "measure": "live hire + revive",
+     "command": "townlive hire",
+     "evidence": "Hire dialog and window rows live-probed (commit 3c020b1); revive, equip and merc awareness in combat are not built (same as C1.merc).",
+     "status": "partial"
+    },
+    {
+     "id": "H.class_infra",
+     "text": "Cheat allow-list and sentinel character map come from config, so a second class can be created, restarted and cheated without code edits",
+     "measure": "sentinel restart logs in the right character",
+     "command": "tools/instances.conf",
+     "evidence": "Done offline in commit e4f729e (V docs/classes/smoke-paladin.md finding 12 was the problem); not exercised live.",
+     "status": "partial"
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "title": "Party of 2-4 bots on one host",
+   "phase": "layer",
+   "why": "Fleet and party code exist offline and the loopback join is proven live (docs/net/multiplayer.md section 9); invite/party formation, roles and four bots are not. Multiplies every reliability problem, so it waits for a reliable single bot.",
+   "depends_on": [
+    "B",
+    "G1"
+   ],
+   "effort_days": "10 (U)",
+   "detail": "E.md",
+   "criteria": [
+    {
+     "id": "E.spike",
+     "text": "Two instances join one TCP/IP game over loopback (host + join), both readable and controllable",
+     "measure": "two players in one game from memory",
+     "command": "docs/fleet.md 'Live checks'",
+     "status": "done",
+     "evidence": "V docs/net/multiplayer.md section 9 (PARTYLIVE, i1 Navi host, i2 Combi joiner, 2026-10-28): two Wine prefixes join one TCP/IP game over 127.0.0.1, both characters in both unit hash tables and rosters, join takes about 5 s (one of about 8 took over 2 minutes). Joining does NOT form a party (partyid 65535). XP split on a kill not measured."
+    },
+    {
+     "id": "E.fleet",
+     "text": "Fleet supervisor adds and removes slots at runtime on a live host (launch.Life), admission refuses past capacity",
+     "measure": "d2fleet add/remove on the worker host",
+     "command": "d2fleet serve",
+     "status": "partial",
+     "evidence": "internal/fleet + party with a fake runtime (docs/fleet.md); party.FlowDriver host/join is live on i1+i2 (multiplayer.md 9). Missing: fleet add/remove on a live host and admission by capacity."
+    },
+    {
+     "id": "E.roles",
+     "text": "Leader/follower: followers follow, fight, share portals and town trips; a follower death does not stop the party",
+     "measure": "1 h party run",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    },
+    {
+     "id": "E.four",
+     "text": "4 bots on one host for 2 h within the CPU budget (per-instance CPU cap tested)",
+     "measure": "soak per instance + host load",
+     "command": "",
+     "status": "todo",
+     "evidence": "About 1 core per idle instance (V docs/multi.md)."
+    }
+   ]
+  },
+  {
+   "id": "L1",
+   "title": "Game layer: upgrades and progression UI",
+   "phase": "layer",
+   "why": "The idle game itself: the bot starts handicapped and the player buys upgrades (Tuning knobs) with currency earned from measured play. Parked by the user until the gate; the data contract (knob metadata, goals.Upgrade) already exists so the UI can iterate freely.",
+   "depends_on": [
+    "H"
+   ],
+   "effort_days": "15 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "L1.design",
+     "text": "Design doc grounded in measured telemetry (what a knob is worth in XP/h)",
+     "measure": "doc",
+     "command": "",
+     "status": "todo",
+     "evidence": "Prior art collected (docs/archive/prior-art/meta)."
+    },
+    {
+     "id": "L1.ui",
+     "text": "Upgrade tree UI rendered from data; buying an upgrade changes a knob live",
+     "measure": "live demo",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    }
+   ]
+  },
+  {
+   "id": "L2",
+   "title": "Game layer: hardcore as prestige (rebirth)",
+   "phase": "layer",
+   "why": "Hardcore death resets the run and pays permanent bonuses. Kept possible since day one (character mode lives in bot.Policy, PLAN 'Decisions'); built only after the softcore bot is good.",
+   "depends_on": [
+    "L1"
+   ],
+   "effort_days": "10 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "L2.rebirth",
+     "text": "Hardcore run ends on death, prestige currency paid, new character created by the OOG flow",
+     "measure": "live demo",
+     "command": "",
+     "status": "todo",
+     "evidence": ""
+    }
+   ]
+  },
+  {
+   "id": "L3",
+   "title": "Game layer: cheats as rewards",
+   "phase": "layer",
+   "why": "The logged cheat mechanism (internal/cheat, ledger) becomes an earned reward; statistics must exclude cheated sessions.",
+   "depends_on": [
+    "L1"
+   ],
+   "effort_days": "8 (U)",
+   "detail": "",
+   "criteria": [
+    {
+     "id": "L3.rewards",
+     "text": "Cheats granted as rewards through internal/cheat, shown as active, excluded from stats",
+     "measure": "live demo + stats test",
+     "command": "",
+     "status": "todo",
+     "evidence": "Cheat tool and ledger merged (docs/cheats.md)."
+    }
+   ]
+  },
+  {
+   "id": "S",
+   "title": "Showcase: stream, scene and public status",
+   "phase": "layer",
+   "why": "Not part of bot quality, so it gates nothing and is not in a gate rollup. It is how the project is watched: Kick stream of live games, a scene page, a public status page. Most of it is Python/shell tooling verified by mock tests; the live pieces are thin. Kept on the board so it does not pretend to be bot progress.",
+   "depends_on": [],
+   "effort_days": "3 (U)",
+   "detail": "S.md",
+   "criteria": [
+    {
+     "id": "S.stream",
+     "text": "One game display streams to Kick through stream.sh (h264_vaapi, keyring secrets) with the overlay and layouts single/grid2/grid3/grid4",
+     "measure": "a live stream seen on the channel",
+     "command": "tools/stream/stream.sh start --layout single i4",
+     "evidence": "Code and dry test mode (stream.sh test, tools/stream/test_stream.py); commit 2bd2b6b says the ingest URL fix was 'verified live', but no doc records a run. Layout and overlay checks are dry-run mp4s (docs/streamctl.md).",
+     "status": "partial"
+    },
+    {
+     "id": "S.streamctl",
+     "text": "Stream control service on the worker host: API, scheduler, max-live guard (default 4 h), keep-alive, sentinel-based include=games",
+     "measure": "status/start/stop via the API, a limit_stop event",
+     "command": "tools/streamctl (python3 -m unittest)",
+     "evidence": "Python stdlib service with offline tests (docs/streamctl.md); the installed unit defaults to dry mode, so going live is a user switch (install.sh --live). The sentinel include=games rule is described, not recorded live.",
+     "status": "partial"
+    },
+    {
+     "id": "S.scene",
+     "text": "Scene page (status TV page) rendered by a kiosk browser and used as a stream tile",
+     "measure": "screenshots 1280 and tile, scene tile in a grid layout",
+     "command": "tools/stream/scene.sh start",
+     "evidence": "Screenshots docs/publish/scene-1280.png and scene-tile.png exist (S, committed); generator tests in tools/publish. Not seen on air in any doc.",
+     "status": "partial"
+    },
+    {
+     "id": "S.public_gen",
+     "text": "Public status generator writes sanitised status.md, stats.json, scene.html with an allow-list and a sanitizer",
+     "measure": "python unit tests",
+     "command": "PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tools/publish",
+     "evidence": "Offline by nature. Reads milestones.json fields id, title, phase, criteria[].text/status and gates[]; unit tests run by MILESTONES2 2026-10-28 (see commit).",
+     "status": "done"
+    },
+    {
+     "id": "S.public_live",
+     "text": "The public page is published automatically and a friend can open it",
+     "measure": "the published URL, refresh interval",
+     "command": "publish timer on the NAS",
+     "evidence": "Timer wrapper and 'skip the commit when only timestamps changed' merged (commits 7040a37, d5563b1); the scene URL is https://shatteredeagle.github.io/d-idle/scene.html (docs/streamctl.md). No doc records the check of the published page.",
+     "status": "partial"
+    },
+    {
+     "id": "S.ha",
+     "text": "Home Assistant package and dashboard control the stream and show state",
+     "measure": "HA entities respond",
+     "command": "tools/ha-stream/d2idle_stream.yaml",
+     "evidence": "Files merged (commit 45ab244, tools/ha-stream/README.md); deployment to the HA instance is not recorded.",
+     "status": "partial"
+    },
+    {
+     "id": "S.desk",
+     "text": "StreamDesk tray app starts and stops the stream with a Show dropdown",
+     "measure": "mock streamctl tests, then a live click",
+     "command": "tools/streamdesk (PySide6)",
+     "evidence": "Mock tests only (commit 65fb89e, efd5a10).",
+     "status": "partial"
+    },
+    {
+     "id": "S.title",
+     "text": "Kick title/category updater with OAuth login and a public-safe title builder",
+     "measure": "mock-server tests, then one live title change",
+     "command": "tools/kick",
+     "evidence": "Offline, mock-server tested (commit b214303; research docs/stream/kick-api.md); the live OAuth flow and title change are not recorded.",
+     "status": "partial"
+    }
+   ]
+  }
+ ]
+}

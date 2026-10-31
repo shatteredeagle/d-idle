@@ -1,0 +1,855 @@
+{
+ "schema": "area id -> name, act; tag R (levels.txt recollection). Verify at setup via DATA agent.",
+ "areas": [
+  {
+   "id": 1,
+   "name": "Rogue Encampment",
+   "act": 1,
+   "town": true
+  },
+  {
+   "id": 2,
+   "name": "Blood Moor",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 3,
+   "name": "Cold Plains",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 4,
+   "name": "Stony Field",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 5,
+   "name": "Dark Wood",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 6,
+   "name": "Black Marsh",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 7,
+   "name": "Tamoe Highland",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 8,
+   "name": "Den of Evil",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 9,
+   "name": "Cave Level 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 10,
+   "name": "Underground Passage 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 11,
+   "name": "Hole 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 12,
+   "name": "Pit 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 13,
+   "name": "Cave 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 14,
+   "name": "Underground Passage 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 15,
+   "name": "Hole 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 16,
+   "name": "Pit 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 17,
+   "name": "Burial Grounds",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 18,
+   "name": "Crypt",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 19,
+   "name": "Mausoleum",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 20,
+   "name": "Forgotten Tower",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 21,
+   "name": "Tower Cellar 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 22,
+   "name": "Tower Cellar 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 23,
+   "name": "Tower Cellar 3",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 24,
+   "name": "Tower Cellar 4",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 25,
+   "name": "Tower Cellar 5",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 26,
+   "name": "Monastery Gate",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 27,
+   "name": "Outer Cloister",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 28,
+   "name": "Barracks",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 29,
+   "name": "Jail 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 30,
+   "name": "Jail 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 31,
+   "name": "Jail 3",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 32,
+   "name": "Inner Cloister",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 33,
+   "name": "Cathedral",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 34,
+   "name": "Catacombs 1",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 35,
+   "name": "Catacombs 2",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 36,
+   "name": "Catacombs 3",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 37,
+   "name": "Catacombs 4",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 38,
+   "name": "Tristram",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 39,
+   "name": "Moo Moo Farm",
+   "act": 1,
+   "town": false
+  },
+  {
+   "id": 40,
+   "name": "Lut Gholein",
+   "act": 2,
+   "town": true
+  },
+  {
+   "id": 41,
+   "name": "Rocky Waste",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 42,
+   "name": "Dry Hills",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 43,
+   "name": "Far Oasis",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 44,
+   "name": "Lost City",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 45,
+   "name": "Valley of Snakes",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 46,
+   "name": "Canyon of the Magi",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 47,
+   "name": "Sewers 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 48,
+   "name": "Sewers 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 49,
+   "name": "Sewers 3",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 50,
+   "name": "Harem 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 51,
+   "name": "Harem 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 52,
+   "name": "Palace Cellar 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 53,
+   "name": "Palace Cellar 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 54,
+   "name": "Palace Cellar 3",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 55,
+   "name": "Stony Tomb 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 56,
+   "name": "Halls of the Dead 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 57,
+   "name": "Halls of the Dead 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 58,
+   "name": "Claw Viper Temple 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 59,
+   "name": "Stony Tomb 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 60,
+   "name": "Halls of the Dead 3",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 61,
+   "name": "Claw Viper Temple 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 62,
+   "name": "Maggot Lair 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 63,
+   "name": "Maggot Lair 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 64,
+   "name": "Maggot Lair 3",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 65,
+   "name": "Ancient Tunnels",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 66,
+   "name": "Tal Rasha Tomb 1",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 67,
+   "name": "Tal Rasha Tomb 2",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 68,
+   "name": "Tal Rasha Tomb 3",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 69,
+   "name": "Tal Rasha Tomb 4",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 70,
+   "name": "Tal Rasha Tomb 5",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 71,
+   "name": "Tal Rasha Tomb 6",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 72,
+   "name": "Tal Rasha Tomb 7",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 73,
+   "name": "Duriel's Lair",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 74,
+   "name": "Arcane Sanctuary",
+   "act": 2,
+   "town": false
+  },
+  {
+   "id": 75,
+   "name": "Kurast Docks",
+   "act": 3,
+   "town": true
+  },
+  {
+   "id": 76,
+   "name": "Spider Forest",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 77,
+   "name": "Great Marsh",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 78,
+   "name": "Flayer Jungle",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 79,
+   "name": "Lower Kurast",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 80,
+   "name": "Kurast Bazaar",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 81,
+   "name": "Upper Kurast",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 82,
+   "name": "Kurast Causeway",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 83,
+   "name": "Travincal",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 84,
+   "name": "Spider Cave",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 85,
+   "name": "Spider Cavern",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 86,
+   "name": "Swampy Pit 1",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 87,
+   "name": "Flayer Dungeon 1",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 88,
+   "name": "Swampy Pit 2",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 89,
+   "name": "Flayer Dungeon 2",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 90,
+   "name": "Swampy Pit 3",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 91,
+   "name": "Flayer Dungeon 3",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 92,
+   "name": "Sewers 1 (A3)",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 93,
+   "name": "Sewers 2 (A3)",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 94,
+   "name": "Ruined Temple",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 95,
+   "name": "Disused Fane",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 96,
+   "name": "Forgotten Reliquary",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 97,
+   "name": "Forgotten Temple",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 98,
+   "name": "Ruined Fane",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 99,
+   "name": "Disused Reliquary",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 100,
+   "name": "Durance of Hate 1",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 101,
+   "name": "Durance of Hate 2",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 102,
+   "name": "Durance of Hate 3",
+   "act": 3,
+   "town": false
+  },
+  {
+   "id": 103,
+   "name": "Pandemonium Fortress",
+   "act": 4,
+   "town": true
+  },
+  {
+   "id": 104,
+   "name": "Outer Steppes",
+   "act": 4,
+   "town": false
+  },
+  {
+   "id": 105,
+   "name": "Plains of Despair",
+   "act": 4,
+   "town": false
+  },
+  {
+   "id": 106,
+   "name": "City of the Damned",
+   "act": 4,
+   "town": false
+  },
+  {
+   "id": 107,
+   "name": "River of Flame",
+   "act": 4,
+   "town": false
+  },
+  {
+   "id": 108,
+   "name": "Chaos Sanctuary",
+   "act": 4,
+   "town": false
+  },
+  {
+   "id": 109,
+   "name": "Harrogath",
+   "act": 5,
+   "town": true
+  },
+  {
+   "id": 110,
+   "name": "Bloody Foothills",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 111,
+   "name": "Frigid Highlands",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 112,
+   "name": "Arreat Plateau",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 113,
+   "name": "Crystalline Passage",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 114,
+   "name": "Frozen River",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 115,
+   "name": "Glacial Trail",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 116,
+   "name": "Drifter Cavern",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 117,
+   "name": "Frozen Tundra",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 118,
+   "name": "Ancients' Way",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 119,
+   "name": "Icy Cellar",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 120,
+   "name": "Arreat Summit",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 121,
+   "name": "Nihlathak's Temple",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 122,
+   "name": "Halls of Anguish",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 123,
+   "name": "Halls of Pain",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 124,
+   "name": "Halls of Vaught",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 125,
+   "name": "Abaddon",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 126,
+   "name": "Pit of Acheron",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 127,
+   "name": "Infernal Pit",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 128,
+   "name": "Worldstone Keep 1",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 129,
+   "name": "Worldstone Keep 2",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 130,
+   "name": "Worldstone Keep 3",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 131,
+   "name": "Throne of Destruction",
+   "act": 5,
+   "town": false
+  },
+  {
+   "id": 132,
+   "name": "Worldstone Chamber",
+   "act": 5,
+   "town": false
+  }
+ ],
+ "town_by_act": {
+  "1": 1,
+  "2": 40,
+  "3": 75,
+  "4": 103,
+  "5": 109
+ },
+ "waypoints_by_act": {
+  "1": [
+   1,
+   3,
+   4,
+   5,
+   6,
+   27,
+   29,
+   32,
+   35
+  ],
+  "2": [
+   40,
+   48,
+   42,
+   57,
+   43,
+   44,
+   52,
+   74,
+   46
+  ],
+  "3": [
+   75,
+   76,
+   78,
+   79,
+   80,
+   81,
+   83,
+   101
+  ],
+  "4": [
+   103,
+   106,
+   107
+  ],
+  "5": [
+   109,
+   111,
+   112,
+   113,
+   115,
+   117,
+   118,
+   123,
+   129
+  ]
+ },
+ "wp_note": "waypoint area ids, tag R. Waypoint object unit class ids to be read from objects (WP types: 119 Act1, 145 Act2, 156 Act2?, 237 Act3?, 288/323 Act5 ?). Do not hard-code; detect by object txt name 'Waypoint*'."
+}

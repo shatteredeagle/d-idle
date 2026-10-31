@@ -1,0 +1,4 @@
+# d2dfarm node registry (example; real names go in D2_FARM_HOSTS or a gitignored tools/d2dfarm.hosts, see docs/process/d2dfarm.md)
+# NAME      TYPE         SSH-TARGET        MAX HOURS  [labels=a,b] [lab=DIR] [distro= user= nice= prio= build= d2d= d2dbin=]
+worker-a    lab-slots  worker-a.example  1   any    labels=fast
+worker-b    wsl          worker-b.example  1   22-7   labels=idle-only distro=Debian user=d2

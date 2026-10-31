@@ -1,0 +1,40 @@
+#!/bin/sh
+# Pre-push: a push to refs/heads/main or refs/heads/master must pass changecheck (strict for the groups whose date in
+# openspec/.strict.yaml has passed) and, when node exists, the OpenSpec validator. No tests here (the head box has 4 GB).
+# Bypass: D2_SKIP_HOOKS=1 git push ... (loud note). See docs/process/hooks.md.
+root=$(git rev-parse --show-toplevel) || exit 0
+master=0
+range=
+while read -r _lref lsha rref rsha; do
+	if [ "$rref" = refs/heads/master ] || [ "$rref" = refs/heads/main ]; then
+		master=1
+		range="$rsha..$lsha"
+	fi
+done
+[ "$master" = 1 ] || exit 0
+if [ "${D2_SKIP_HOOKS:-}" = 1 ]; then
+	echo "!!! D2_SKIP_HOOKS=1: pre-push checks SKIPPED for a main/master push !!!" >&2
+	exit 0
+fi
+cd "$root" || exit 1
+# Leak scan of the pushed files: warn only until go-live, then change `warn` to `fail` (docs/process/public-split.md).
+go run ./cmd/leakcheck -mode warn -staged -range "$range" >&2 || echo "pre-push: leakcheck could not run (warn only)" >&2
+out=$(go run ./cmd/changecheck -cli 2>&1)
+rc=$?
+printf '%s\n' "$out" >&2
+w=$(printf '%s\n' "$out" | sed -n 's/.* \([0-9][0-9]*\) warnings$/\1/p' | tail -1)
+printf '%s %s warnings rc=%s\n' "$(date +%F)" "${w:-?}" "$rc" >openspec/.last-check 2>/dev/null
+if [ "$rc" -ne 0 ]; then
+	echo "pre-push: changecheck failed (rc=$rc); push to the default branch blocked. Fix it, or D2_SKIP_HOOKS=1 to bypass." >&2
+	exit 1
+fi
+if ! command -v node >/dev/null 2>&1; then
+	echo "pre-push: node not found, skipping tools/openspec.sh validate (changecheck passed)" >&2
+	exit 0
+fi
+if ! v=$(sh tools/openspec.sh validate --all --strict 2>&1); then
+	printf '%s\n' "$v" >&2
+	echo "pre-push: openspec validate failed; push to the default branch blocked (D2_SKIP_HOOKS=1 to bypass)." >&2
+	exit 1
+fi
+exit 0

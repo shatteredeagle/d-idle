@@ -1,0 +1,10 @@
+#!/bin/sh
+# Stand-in for the Proton `proton` script, so internal/launch (ProtonCmd, env PROTON) drives plain Wine
+# unchanged. Called as: proton run EXE ARGS... with STEAM_COMPAT_DATA_PATH=<prefix dir> (prefix = <dir>/pfx).
+verb=$1; shift
+export WINEPREFIX="$STEAM_COMPAT_DATA_PATH/pfx"
+export WINEDEBUG="${WINEDEBUG:--all}"
+case "$verb" in
+  run) exec wine "$@" ;;
+  *) echo "proton shim: unsupported verb $verb" >&2; exit 2 ;;
+esac

@@ -1,0 +1,1250 @@
+{
+ "build": "sorceress_blizzard_endgame90",
+ "class": "sorceress",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "tags": "Skills: V end state from Maxroll Blizzard Sorceress (fetched 2026-10-29). U ordering/no-respec adaptation: Ice Bolt, Ice Blast and Glacial Spike are all maxed in the endgame, so the early attack skills are never wasted; Blizzard from 24 (V skills.txt reqlevel), Cold Mastery from 30, Static Field 1 early for cold immunes (the existing combat fallback). Stats: Str 43 by clvl 24 (Spirit Crystal Sword, V data.json), Str 55 by 55 (Enigma in a Mage Plate, V armor.txt; item choice U), derived from internal/gear/milestones.json, rest Vitality, no Energy. Prerequisites and reqlevels checked against skills.txt (V data.json).",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Ice Bolt",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F2",
+   "skill": "Static Field",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F3",
+   "skill": "Frozen Armor",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F4",
+   "skill": "Teleport",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F5",
+   "skill": "Glacial Spike",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F6",
+   "skill": "Blizzard",
+   "hand": "right",
+   "from_clvl": 24
+  },
+  {
+   "key": "F7",
+   "skill": "Ice Blast",
+   "hand": "right",
+   "from_clvl": 8
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 7,
+   "skill": "Ice Bolt",
+   "weapon": "any",
+   "note": "Fire Bolt (start skill) / staff melee as fallback"
+  },
+  {
+   "from_clvl": 8,
+   "until_clvl": 17,
+   "skill": "Ice Blast",
+   "weapon": "any",
+   "note": "Ice Bolt when mana is low"
+  },
+  {
+   "from_clvl": 18,
+   "until_clvl": 23,
+   "skill": "Glacial Spike",
+   "weapon": "any",
+   "note": "Ice Blast single target"
+  },
+  {
+   "from_clvl": 24,
+   "until_clvl": 90,
+   "skill": "Blizzard",
+   "weapon": "any",
+   "note": "ground-targeted, has a cast delay; Glacial Spike/Ice Blast during the delay; Static Field on cold immunes and bosses (Hell floor 50% life)"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 3,
+   "dexterity": 0,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frozen Armor",
+     "points": 1
+    },
+    {
+     "skill": "Telekinesis",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Static Field",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frost Nova",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Warmth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teleport",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 31,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 32,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 33,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 34,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 35,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 36,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 37,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 38,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 39,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 40,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 41,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 42,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 43,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 44,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 45,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blizzard",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 46,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 47,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 48,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 49,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 50,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 51,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 52,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 53,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 54,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 55,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 56,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 57,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 58,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 59,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 60,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 61,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 62,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 63,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 64,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 65,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 66,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 67,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 68,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 69,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 70,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 71,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 72,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 73,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 74,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 75,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Glacial Spike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 76,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 77,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 78,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 79,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 80,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 81,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 82,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Blast",
+     "points": 2
+    },
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 83,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 84,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 85,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 86,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 87,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 88,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 89,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 90,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Ice Bolt",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

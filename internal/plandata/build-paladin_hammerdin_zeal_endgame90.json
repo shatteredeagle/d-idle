@@ -1,0 +1,1243 @@
+{
+ "build": "paladin_hammerdin_zeal_endgame90",
+ "class": "paladin",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "tags": "Skills: V end state Maxroll Blessed Hammer Paladin (fetched 2026-10-29), same as paladin_hammerdin_endgame90. U variant for a stronger clvl 2-17: Smite to 9 before clvl 12, Sacrifice 1 then Zeal 5 from clvl 12 (Zeal reqlevel 12, needs Sacrifice, V skills.txt); the 14 extra points are taken from the last fillers (Blessed Aim and Defiance) at clvl 65+. U whether this clears Normal Act 1-2 better than 1 Smite point (needs a live run); Smite needs a shield.",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Smite",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F7",
+   "skill": "Zeal",
+   "hand": "right",
+   "from_clvl": 12
+  },
+  {
+   "key": "F2",
+   "skill": "Blessed Hammer",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F3",
+   "skill": "Holy Shield",
+   "hand": "right",
+   "from_clvl": 24
+  },
+  {
+   "key": "F4",
+   "skill": "Concentration",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F5",
+   "skill": "Vigor",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F6",
+   "skill": "Fanaticism",
+   "hand": "right",
+   "from_clvl": 30
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 11,
+   "skill": "Smite",
+   "weapon": "any",
+   "note": "melee; needs a shield; Might aura"
+  },
+  {
+   "from_clvl": 12,
+   "until_clvl": 17,
+   "skill": "Zeal",
+   "weapon": "any",
+   "note": "melee, 5 quick hits; needs Sacrifice"
+  },
+  {
+   "from_clvl": 18,
+   "until_clvl": 90,
+   "skill": "Blessed Hammer",
+   "weapon": "any",
+   "note": "magic damage, hits all around; stand still in the pack; Concentration aura; Holy Shield up"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 3,
+   "dexterity": 0,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charge",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Sacrifice",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 31,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 32,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 33,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 34,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 35,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 36,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Shield",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 37,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Prayer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 38,
+   "strength": 0,
+   "dexterity": 3,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Defiance",
+     "points": 1
+    },
+    {
+     "skill": "Cleansing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 39,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 40,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 41,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 42,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 43,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 44,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    },
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 45,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 46,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 47,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 48,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 49,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 50,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 51,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 52,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 53,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 54,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 55,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 56,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 57,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 58,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 59,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 60,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 61,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 62,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 63,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 64,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 65,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 66,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 67,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 68,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 69,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 70,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 71,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 72,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 73,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 74,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Vigor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 75,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Redemption",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 76,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fanaticism",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 77,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 78,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 79,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 80,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 81,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 82,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 83,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 84,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 85,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 86,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 87,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 88,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 89,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 90,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

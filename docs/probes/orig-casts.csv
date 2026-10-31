@@ -1,0 +1,250 @@
+area,visit,cb_level,clvl,monster,boss,xp,cast_cmds,clicks
+2,,1,2,"Fallen",false,18,1,6
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,0,0,0
+2,,1,2,"Fallen",false,54,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,2,0
+2,,1,2,"Quill Rat",false,39,1,0
+2,,1,2,"Fallen",false,0,0,0
+2,,1,2,"Fallen",false,36,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,0,0
+2,,1,2,"Quill Rat",false,18,1,0
+2,,1,2,"Quill Rat",false,21,1,0
+2,,1,2,"Zombie",false,54,2,0
+2,,1,2,"Zombie",false,0,3,0
+2,,1,2,"Fallen",false,51,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,36,0,0
+2,,1,2,"Zombie",false,0,2,0
+2,,1,2,"Zombie",false,66,4,0
+2,,1,2,"Zombie",false,0,48,0
+2,,1,2,"Quill Rat",false,54,2,0
+2,,1,2,"Fallen",false,18,0,0
+2,,1,2,"Fallen",false,18,0,0
+2,,1,2,"Zombie",false,33,3,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,0,0,0
+2,,1,2,"Fallen",false,34,3,0
+2,,1,2,"Zombie",false,34,0,0
+2,,1,2,"Quill Rat",false,19,1,0
+2,,1,2,"Quill Rat",false,42,2,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,36,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,36,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,0,3,0
+2,,1,2,"Fallen",false,36,0,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,2,0
+2,,1,2,"Zombie",false,18,3,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,18,2,0
+2,,1,2,"Fallen",false,18,3,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,0,0,0
+2,,1,2,"Quill Rat",false,57,3,0
+2,,1,2,"Quill Rat",false,0,2,0
+2,,1,2,"Quill Rat",false,42,1,0
+2,,1,2,"Quill Rat",false,21,1,0
+2,,1,2,"Zombie",false,33,2,0
+2,,1,2,"Zombie",false,0,2,0
+2,,1,2,"Quill Rat",false,33,5,0
+2,,1,2,"Zombie",false,21,2,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,36,2,0
+2,,1,2,"Fallen",false,18,0,0
+2,,1,2,"Quill Rat",false,0,2,0
+2,,1,2,"Zombie",false,21,1,0
+2,,1,2,"Zombie",false,33,4,0
+2,,1,2,"Zombie",false,66,1,0
+2,,1,2,"Zombie",false,33,3,0
+2,,1,2,"Quill Rat",false,21,2,0
+2,,1,2,"Zombie",false,0,1,0
+2,,1,2,"Quill Rat",false,33,1,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,18,0,0
+2,,1,2,"Zombie",false,51,6,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,0,0,0
+2,,1,2,"Fallen",false,0,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,36,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,1,2,"Fallen",false,18,1,0
+2,,4,5,"Quill Rat",false,21,0,2
+2,,4,5,"Zombie",false,0,2,0
+2,,4,5,"Zombie",false,0,1,0
+2,,4,5,"Zombie",false,66,5,0
+2,,4,5,"Quill Rat",false,21,1,0
+2,,4,5,"Quill Rat",false,0,2,0
+2,,4,5,"Zombie",false,54,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Zombie",false,33,1,0
+2,,4,5,"Fallen",false,18,2,0
+2,,4,5,"Fallen",false,18,0,0
+2,,4,5,"Fallen",false,0,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,0,0,0
+2,,4,5,"Fallen",false,54,2,0
+2,,4,5,"Quill Rat",false,0,0,0
+2,,4,5,"Quill Rat",false,42,2,0
+2,,4,5,"Quill Rat",false,0,2,0
+2,,4,5,"Quill Rat",false,21,1,0
+2,,4,5,"Fallen",false,39,2,0
+2,,4,5,"Fallen",false,0,0,0
+2,,4,5,"Fallen",false,36,2,0
+2,,4,5,"Quill Rat",false,0,2,0
+2,,4,5,"Fallen",false,21,2,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,0,0,0
+2,,4,5,"Fallen",false,36,1,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Quill Rat",false,0,1,0
+2,,4,5,"Fallen",false,39,1,0
+2,,4,5,"Fallen",false,0,1,0
+2,,4,5,"Quill Rat",false,0,0,0
+2,,4,5,"Quill Rat",false,21,3,0
+2,,4,5,"Fallen",false,28,1,0
+2,,4,5,"Fallen",false,28,0,0
+2,,4,5,"Fallen",false,19,1,0
+2,,4,5,"Fallen",false,0,1,0
+2,,4,5,"Fallen",false,36,1,0
+2,,4,5,"Fallen",false,0,0,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,36,1,0
+2,,4,5,"Quill Rat",false,19,1,0
+2,,4,5,"Fallen",false,19,0,0
+2,,4,5,"Fallen",false,18,2,0
+2,,4,5,"Fallen",false,18,0,0
+2,,4,5,"Quill Rat",false,0,2,0
+2,,4,5,"Zombie",false,21,1,0
+2,,4,5,"Fallen",false,33,0,0
+2,,4,5,"Fallen",false,36,2,0
+2,,4,5,"Fallen",false,18,1,0
+2,,4,5,"Fallen",false,0,1,0
+2,,4,5,"Fallen",false,36,0,0
+2,,4,5,"Fallen",false,0,2,0
+2,,4,5,"Quill Rat",false,28,0,0
+2,,4,5,"Fallen",false,28,0,0
+2,,4,5,"Quill Rat",false,22,2,0
+2,,4,5,"Quill Rat",false,0,0,0
+2,,4,5,"Quill Rat",false,42,3,0
+2,,4,5,"Fallen",false,18,0,0
+2,,8,9,"Zombie",false,0,3,2
+2,,8,9,"Fallen",false,9,2,0
+2,,8,9,"Quill Rat",false,9,0,0
+2,,8,9,"Fallen",false,9,0,0
+2,,8,9,"Quill Rat",false,13,1,0
+2,,8,9,"Fallen",false,13,0,0
+2,,8,9,"Fallen",false,0,2,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,10,1,0
+2,,8,9,"Fallen",false,10,0,0
+2,,8,9,"Zombie",false,1,1,0
+2,,8,9,"Zombie",false,28,2,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Quill Rat",false,7,3,0
+2,,8,9,"Fallen",false,5,2,0
+2,,8,9,"Quill Rat",false,5,0,0
+2,,8,9,"Zombie",false,5,0,0
+2,,8,9,"Fallen",false,30,0,0
+2,,8,9,"Quill Rat",false,9,2,0
+2,,8,9,"Quill Rat",false,9,0,0
+2,,8,9,"Quill Rat",false,9,0,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Quill Rat",false,16,1,0
+2,,8,9,"Zombie",false,14,0,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,14,1,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,21,1,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,21,0,0
+2,,8,9,"Quill Rat",false,9,2,0
+2,,8,9,"Quill Rat",false,9,1,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,14,0,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,3,2,0
+2,,8,9,"Fallen",false,3,0,0
+2,,8,9,"Quill Rat",false,15,1,0
+2,,8,9,"Zombie",false,23,2,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Fallen",false,0,2,0
+2,,8,9,"Quill Rat",false,16,1,0
+2,,8,9,"Fallen",false,8,1,0
+2,,8,9,"Fallen",false,8,0,0
+2,,8,9,"Fallen",false,8,0,0
+2,,8,9,"Quill Rat",false,8,0,0
+2,,8,9,"Zombie",false,8,0,0
+2,,8,9,"Zombie",false,4,1,0
+2,,8,9,"Zombie",false,14,1,0
+2,,8,9,"Zombie",false,28,2,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Zombie",false,7,0,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,14,0,0
+2,,8,9,"Fallen",false,0,2,0
+2,,8,9,"Quill Rat",false,7,2,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,28,2,0
+2,,8,9,"Quill Rat",false,0,2,0
+2,,8,9,"Quill Rat",false,18,1,0
+2,,8,9,"Zombie",false,0,1,0
+2,,8,9,"Zombie",false,0,0,0
+2,,8,9,"Zombie",false,14,2,0
+2,,8,9,"Zombie",false,14,0,0
+2,,8,9,"Zombie",false,28,0,0
+2,,8,9,"Zombie",false,14,1,0
+2,,8,9,"Zombie",false,0,1,0
+2,,8,9,"Zombie",false,14,1,0
+2,,8,9,"Quill Rat",false,23,2,0
+2,,8,9,"Quill Rat",false,0,1,0
+2,,8,9,"Fallen",false,7,2,0
+2,,8,9,"Fallen Shaman",false,0,0,0
+2,,8,9,"Fallen",false,16,0,0
+2,,8,9,"Fallen",false,16,0,0
+2,,8,9,"Fallen",false,8,1,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Fallen",false,0,1,0
+2,,8,9,"Fallen",false,7,0,0
+2,,8,9,"Fallen Shaman",false,19,1,0
+2,,8,9,"Fallen Shaman",false,0,2,0
+2,,8,9,"Fallen",false,16,0,0
+2,,8,9,"Fallen",false,16,0,0
+2,,8,9,"Fallen",false,1,1,0
+2,,8,9,"Fallen",false,7,2,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,13,1,0
+2,,8,9,"Fallen Shaman",false,13,0,0
+2,,8,9,"Fallen",false,7,1,0
+2,,8,9,"Fallen",false,0,0,0
+2,,8,9,"Fallen",false,0,2,0
+2,,8,9,"Zombie",false,14,2,0
+2,,8,9,"Zombie",false,0,0,0
+2,,8,9,"Fallen",false,14,1,0

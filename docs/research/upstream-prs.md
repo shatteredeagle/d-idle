@@ -1,0 +1,8 @@
+# Upstream PRs (psi29a/d2decomped)
+
+| Topic | PR | Number | Date | Commit | Status | Verified | Maintainer may ask |
+|---|---|---|---|---|---|---|---|
+| Price tomes and arrow quivers by quantity (FUN_0062efb0) | https://github.com/psi29a/d2decomped/pull/127 | 127 | 2026-10-30 | 7ae861d (fork shatteredeagle/d2decomped, branch fix/vendor-prices, based on upstream 507e3c0) | open, guard check started; reply posted 2026-10-30 (https://github.com/psi29a/d2decomped/pull/127#issuecomment-6528895218) after the maintainer comment of 17:08Z "check coderabbit comments please"; CodeRabbit finding (use Item::tome) answered: not a bug, no code change | Static reading of game.exe (0062efb0, 0062f2a2, 0062e740, 0062fc59); live on the original: tbk at Akara 450, 350 arrows at Charsi 81; test_rules covers tome, sale, quiver | An emu oracle run; keys/javelins (every other stackable x quantity) left as a ponytail; the doc-claims WARN on "every other item" is answered in the body |
+| Cast speed and length from game.exe: the 175 cap, a tick less per plain cast (cast-ticks) | https://github.com/psi29a/d2decomped/pull/128 | 128 | 2026-10-30 | 1edc5f20 (fork shatteredeagle/d2decomped, branch fix/cast-ticks, based on upstream 507e3c0) | open, guard check queued, mergeable, no conflict with #125 | game.exe traced (621740, 623fcb..624012, 6217c0, 62129a); unicorn oracle tools/emu/cast_rates.py, diff vs d2d empty (stubs unit memory, hooks 625500 and 621210) | Druid row unit, Inferno/Arctic Blast timing, Lightning missile event timing; held follow-ups (not posted, wait for maintainer response): fix/lightning-sequence, fix/skills-doc-cast |
+
+The cast PR is not submitted (being split and traced).

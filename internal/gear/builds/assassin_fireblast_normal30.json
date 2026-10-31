@@ -1,0 +1,428 @@
+{
+ "build": "assassin_fireblast_normal30",
+ "class": "assassin",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
+ "tags": "Skills: V Maxroll Assassin leveling https://maxroll.gg/d2/guides/assassin-leveling (docs/classes/assassin.md): Fire Blast 2-5, Claw Mastery from the Den of Evil point, Burst of Speed at 6, Fire Blast to 11, Wake of Fire from 12; Radament and Izual points folded into rows 15 and 21 (Wake of Fire). U: exact split of 6-11 (the guide text is ambiguous) and the last point (clvl 30) into Fire Blast once Wake of Fire is at 20; the respec to Lightning Sentry traps at 36-38 is not used. Stats: V Maxroll (2-3 Energy, 4-10 Vit, 11 Str, then Vit; 22-25 add 18 Str); the 3/2 split in row 25 and Vit 26-30 are U. No weapon is required (Fire Blast and traps are skill attacks, claws only add Claw Mastery, V skills.txt itypea empty); martial arts is not used (needs two-step timing, docs/classes/assassin.md). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq).",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Fire Trauma",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F2",
+   "skill": "Quickness",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F3",
+   "skill": "Wake of Fire Sentry",
+   "hand": "right",
+   "from_clvl": 12
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 11,
+   "skill": "Fire Trauma",
+   "weapon": "any",
+   "note": "Fire Blast; melee Attack is the fallback"
+  },
+  {
+   "from_clvl": 12,
+   "until_clvl": 30,
+   "skill": "Wake of Fire Sentry",
+   "weapon": "any",
+   "note": "trap laid at the pack; Fire Blast for bosses and while the trap stands"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    },
+    {
+     "skill": "Claw Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Quickness",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 3,
+   "dexterity": 0,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Wake of Fire Sentry",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Fire Trauma",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

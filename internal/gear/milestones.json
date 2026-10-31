@@ -1,0 +1,41 @@
+{
+ "comment": "Gear each endgame build must be able to wear by a character level. Base codes are V (armor.json, data.json); which base carries which runeword and the deadlines are U (docs/builds-endgame.md section 7, docs/gear.md). gen_endgame.py derives the Str/Dex stat targets from this file; TestMilestoneStats checks the build tables against it.",
+ "builds": {
+  "sorceress_blizzard_endgame90": [
+   {"clvl": 24, "items": ["crs", "lrg"], "note": "Spirit Crystal Sword (Str 43), Ancients' Pledge on a Large Shield (3 sockets)"},
+   {"clvl": 55, "items": ["xtp", "6ws"], "note": "Enigma in a Mage Plate (3 sockets), Heart of the Oak in an Archon Staff"}
+  ],
+  "druid_tornado_endgame90": [
+   {"clvl": 24, "items": ["crs", "lrg"], "note": "Spirit Crystal Sword, Ancients' Pledge on a Large Shield"},
+   {"clvl": 55, "items": ["xtp", "6ws"], "note": "Enigma in a Mage Plate, Heart of the Oak in an Archon Staff"}
+  ],
+  "necromancer_summoner_endgame90": [
+   {"clvl": 24, "items": ["crs", "lrg"], "note": "Spirit Crystal Sword, Ancients' Pledge on a Large Shield"},
+   {"clvl": 55, "items": ["xtp", "6ws"], "note": "Enigma in a Mage Plate, Heart of the Oak in an Archon Staff"}
+  ],
+  "assassin_sentry_endgame90": [
+   {"clvl": 43, "items": ["xtp"], "note": "Treachery (clvl 43) or later Enigma in a Mage Plate"},
+   {"clvl": 50, "items": ["9ar"], "note": "Chaos in Quhab claws (Str and Dex 57, 3 sockets); claws need Dex as well as Str"}
+  ],
+  "barbarian_warcry_endgame90": [
+   {"clvl": 24, "items": ["crs", "msk"], "note": "dual Spirit Crystal Swords (Str 43), Nadir in a Mask"},
+   {"clvl": 50, "items": ["uui"], "note": "Fortitude in a Dusk Shroud (4 sockets); Archon Plate (Str 103) would be the upgrade"}
+  ],
+  "paladin_hammerdin_endgame90": [
+   {"clvl": 25, "items": ["crs", "pa3"], "note": "Spirit Crystal Sword + Spirit Heraldic Shield (4 sockets)"},
+   {"clvl": 45, "items": ["pab"], "note": "Spirit Sacred Targe (Str 86, level 47)"},
+   {"clvl": 55, "items": ["uui"], "note": "Fortitude in a Dusk Shroud"}
+  ],
+  "paladin_hammerdin_zeal_endgame90": [
+   {"clvl": 25, "items": ["crs", "pa3"], "note": "Spirit Crystal Sword + Spirit Heraldic Shield (4 sockets)"},
+   {"clvl": 45, "items": ["pab"], "note": "Spirit Sacred Targe (Str 86, level 47)"},
+   {"clvl": 55, "items": ["uui"], "note": "Fortitude in a Dusk Shroud"}
+  ],
+  "amazon_multishot_endgame90": [
+   {"clvl": 18, "items": ["am1"], "note": "Stag Bow (Str 30, Dex 45)"},
+   {"clvl": 35, "items": ["am7"], "note": "Ceremonial Bow (Str 73, Dex 110)"},
+   {"clvl": 43, "items": ["xtp"], "note": "Treachery in a Mage Plate"},
+   {"clvl": 58, "items": ["amc"], "note": "Grand Matron Bow (Str 108, Dex 152)"}
+  ]
+ }
+}

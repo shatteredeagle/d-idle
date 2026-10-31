@@ -1,0 +1,7 @@
+address	size	status	module	file	callers	callees	ported_callers	frontier	library	dead	gaps	refs
+00401000	10	verified	AI	AI/?	0	0	0	false	false	false		components/game/ai.cpp:1
+00401010	10	ported	AI	AI/?	0	0	0	false	false	false		components/game/ai.cpp:2 docs/x.md:3
+00401020	10	untouched	AI	AI/?	0	0	0	false	false	false		
+00401030	10	cited	AI	AI/?	0	0	0	false	false	false		
+00401040	10	untouched	AI	AI/?	0	0	0	false	true	false		
+00402000	10	verified			0	0	0	false	false	false		components/rules/drops.hpp:9

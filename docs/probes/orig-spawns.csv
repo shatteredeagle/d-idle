@@ -1,0 +1,21 @@
+area,visit,normal,minion,champion,unique,superunique,total,names,boss_names,coverage_pct,known_cells,explore_s,end
+2,v1,112,0,0,0,0,112,Fallen x80;Quill Rat x22;Zombie x10,,98.8,132800,108,nav: nothing left to explore
+8,v1,59,0,0,0,0,59,Fallen Shaman x7;Fallen x28;Gargantuan Beast x4;Zombie x20,,4.3,43200,66,nav: nothing left to explore
+3,v1,108,2,0,0,1,111,Dark Hunter x46;Dark Spearwoman x13;Fallen Shaman x3;Fallen x38;Gargantuan Beast x10,superunique:Bishibosh,95.0,152000,96,nav: nothing left to explore
+4,v1,99,14,0,2,1,116,Carver x15;Dark Hunter x1;Dark Ranger x3;Dark Spearwoman x1;Fallen Shaman x3;Fallen x13;Foul Crow Nest x1;Foul Crow x36;Hungry Dead x34;Moon Clan x6,superunique:Rakanishu;unique:Ooze Horn the Unholy;unique:Puke Maw,91.0,145600,137,nav: nothing left to explore
+5,v1,0,0,0,0,0,0,,,0.0,0,275,toarea:nav: no exit to that level: no route from level 10 to 5
+2,v2,78,0,0,0,0,78,Fallen x57;Quill Rat x8;Zombie x13,,98.8,132800,98,nav: nothing left to explore
+8,v2,62,0,0,0,0,62,Fallen Shaman x7;Fallen x30;Gargantuan Beast x6;Zombie x19,,4.3,43200,72,nav: nothing left to explore
+3,v2,120,2,0,0,1,123,Dark Hunter x57;Dark Spearwoman x14;Fallen Shaman x3;Fallen x39;Gargantuan Beast x7;Zombie x2,superunique:Bishibosh,95.0,152000,98,nav: nothing left to explore
+4,v2,142,8,4,0,1,155,Carver x16;Dark Hunter x9;Dark Ranger x14;Dark Spearwoman x1;Fallen Shaman x3;Fallen x13;Foul Crow Nest x2;Foul Crow x72;Skeleton x20,champion:Champion Dark Ranger;champion:Champion Dark Ranger;champion:Champion Dark Ranger;champion:Champion Dark Ranger;superunique:Rakanishu,91.0,145600,139,nav: nothing left to explore
+5,v2,190,5,0,1,1,197,Brute x2;Carver Shaman x4;Carver x116;Spike Fiend x36;Vile Hunter x37,superunique:Treehead WoodFist;unique:Star Thirst,95.0,152000,124,nav: nothing left to explore
+2,v3,57,0,0,0,0,57,Fallen x29;Quill Rat x19;Zombie x9,,98.8,132800,95,nav: nothing left to explore
+8,v3,49,0,0,0,0,49,Fallen Shaman x7;Fallen x31;Gargantuan Beast x2;Zombie x9,,4.3,43200,66,nav: nothing left to explore
+3,v3,198,2,0,0,1,201,Dark Spearwoman x18;Fallen Shaman x29;Fallen x131;Gargantuan Beast x20;Zombie x2,superunique:Bishibosh,95.0,152000,111,nav: nothing left to explore
+4,v3,95,12,4,1,1,113,Carver x15;Dark Ranger x22;Dark Spearwoman x1;Fallen Shaman x3;Fallen x15;Gargantuan Beast x1;Hungry Dead x41;Moon Clan x9,champion:Champion Skeleton;champion:Champion Skeleton;champion:Champion Skeleton;champion:Champion Skeleton;superunique:Rakanishu;unique:Vile Kill,91.0,145600,120,nav: nothing left to explore
+5,v3,149,2,0,1,1,153,Brute x2;Carver Shaman x4;Carver x49;Skeleton Archer x25;Spike Fiend x22;Vile Hunter x49,superunique:Treehead WoodFist;unique:Blight Crawler,95.0,152000,125,nav: nothing left to explore
+2,v4,113,0,0,0,0,113,Fallen x62;Quill Rat x23;Zombie x28,,98.8,132800,102,nav: nothing left to explore
+8,v4,54,0,0,0,0,54,Fallen Shaman x7;Fallen x30;Gargantuan Beast x3;Zombie x14,,4.3,43200,72,nav: nothing left to explore
+3,v4,255,2,0,0,1,258,Dark Hunter x75;Dark Spearwoman x11;Fallen Shaman x28;Fallen x141;Quill Rat x2,superunique:Bishibosh,95.0,152000,106,nav: nothing left to explore
+4,v4,122,13,3,1,1,140,Carver x17;Dark Hunter x4;Dark Ranger x5;Fallen Shaman x3;Fallen x14;Foul Crow Nest x4;Foul Crow x31;Hungry Dead x26;Skeleton x31,champion:Champion Skeleton;champion:Champion Skeleton;champion:Ghostly Skeleton;superunique:Rakanishu;unique:Dragon Grumble the Hungry,91.0,145600,121,nav: nothing left to explore
+5,v4,0,0,0,0,0,0,,,0.0,0,193,toarea:nav: no exit to that level: no route from level 10 to 5

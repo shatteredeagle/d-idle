@@ -1,0 +1,23 @@
+# scripted walk + fight: det.py FIGHT scenario (docs/d2d-fork.md section 5) plus one walk leg
+sleep 2s
+debug stat 12 8
+debug goto 2
+sleep 3s
+step 10
+click 400 500
+step 5
+cmd move 36 36
+step 100
+debug stat 12 30
+debug warp 36.0 36.0
+click 400 500
+step 5
+step 250
+step 250
+step 250
+step 250
+step 250
+step 250
+step 250
+step 250
+quit

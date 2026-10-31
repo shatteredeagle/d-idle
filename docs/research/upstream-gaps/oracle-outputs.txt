@@ -1,0 +1,16 @@
+Outputs of upstream tools/emu on the worker host (commit af825eda, game.exe 1.14d md5 2b3600c1..., patched MPQ stack), 2026-10-30.
+$ python monstats.py
+2202/2202 rows x difficulties match
+$ python diff_drlg.py 1-20 {2,3,4,5} monsters
+monsters level 2: 577/577 populated rooms match game.exe ; 20/20 seeds match game.exe
+monsters level 3: 787/787 populated rooms match game.exe ; 20/20 seeds match game.exe
+monsters level 4: 710/710 populated rooms match game.exe ; 20/20 seeds match game.exe
+monsters level 5: 703/703 populated rooms match game.exe ; 20/20 seeds match game.exe
+$ python monsters.py <seed> <level>   (game.exe's own room population, every room up; count of monster entries per seed 1..20)
+level 2 (Blood Moor) mean 97.8 min 71 max 132: 95 100 72 109 107 95 88 119 71 113 88 109 83 101 93 132 111 94 97 80
+level 3 (Cold Plains) mean 197.4 min 115 max 270: 205 115 226 248 243 122 205 270 178 222 142 201 149 234 142 268 140 209 217 212
+level 4 (Stony Field) mean 153.2 min 100 max 205: 100 203 161 168 159 132 136 153 140 170 175 136 128 170 173 205 149 133 125 149
+level 5 (Dark Wood) mean 218.8 min 161 max 290: 192 203 226 248 239 161 290 228 190 285 271 244 169 212 229 230 170 211 213 165
+level 8 (Den of Evil) mean 76.0 min 56 max 97: 73 60 64 83 68 80 93 63 82 97 72 86 56 88 87 74 68 69 87 69
+$ drlg-dump <mpq dir> 1-20 2 <out> monsters   (d2d's generator, same count per seed)
+level 2: 95 100 72 109 107 95 88 119 71 113 88 109 83 101 93 132 111 94 97 80   (identical, mean 97.85)

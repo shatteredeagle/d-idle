@@ -1,0 +1,65 @@
+{
+ "schema": "hireling plan; tag R. hireling.txt via UI must be read at the hire screen; match 'aura' text",
+ "tags": "R",
+ "plan": [
+  {
+   "act": 1,
+   "diff": "normal",
+   "merc": "Rogue Archer (cold arrows) from Kashya",
+   "aura": "none",
+   "use": "clvl 1-18 only; cheap",
+   "gear": "buy best bow, helm, light armor",
+   "hire_cost": "~100-300g (R)"
+  },
+  {
+   "act": 2,
+   "diff": "normal",
+   "merc": "Desert Mercenary (Spearwoman) from Greiz",
+   "aura": "Defensive: Prayer (heals) or Defiance (Normal) [R]",
+   "gear": "Insight polearm at clvl 27, Stealth? no; helm+armor from drops",
+   "note": "hire ASAP at Act 2 (clvl ~17), keep through Normal"
+  },
+  {
+   "act": 2,
+   "diff": "nightmare",
+   "merc": "Desert Mercenary",
+   "aura": "Might (Offensive) is the pick, hired at the first Lut Gholein visit in Nightmare: Might exists ONLY in Nightmare rows (V hireling.tsv). Holy Freeze is the caster alternative",
+   "gear": "Insight polearm, Fortitude/ Chain Mail; Lore helm if shared",
+   "note": "Offensive Act 2 merc is the default for the Blizzard build"
+  },
+  {
+   "act": 2,
+   "diff": "hell",
+   "merc": "Desert Mercenary (keep the Nightmare hire; revive it)",
+   "aura": "Might (hired in Nightmare). Hell rows only offer Prayer / Defiance / Blessed Aim (V real 1.14d hireling.tsv): never expect Might from a Hell hire",
+   "gear": "Infinity (clvl 63) polearm; Andariel's Visage/ Fortitude armor",
+   "note": "If no merc lives in Hell, hire Defiance. Revive in any act's hireling NPC, Act 4 via Tyrael (S, U live). Revive price min(int(lvl^2/2)*15, 50000)"
+  },
+  {
+   "act": 3,
+   "diff": "nightmare",
+   "merc": "Iron Wolf (sorceress mercenary) fire/cold/lightning",
+   "aura": "none (spells)",
+   "note": "not recommended for bot: dies from missiles; use Act 2"
+  },
+  {
+   "act": 5,
+   "diff": "hell",
+   "merc": "Barbarian Warrior",
+   "aura": "Battle Orders etc.",
+   "note": "Optional later; Act 2 Might merc is default for simplicity"
+  }
+ ],
+ "hiring": [
+  "Talk to the hireling NPC; list shows aura per hireling; pick lowest cost for the wanted aura/ level",
+  "Replace when dead and Cost<=gold*0.5",
+  "Give merc gear via UI: inventory panel (open character screen at hireling slot)"
+ ],
+ "reviving": [
+  "Dead merc: talk to ANY act's hireling NPC (Kashya, Greiz, Asheara, Qual-Kehk; Act 4 via Tyrael, S/U) and pick the resurrect line (U dialog); revive after every player death too; price min(int(lvl^2/2)*15,50000) (S); if gold is short, farm gold first"
+ ],
+ "merc_gear_rules": [
+  "Wear: best helm, armor, weapon by sockets; don't swap runewords unless runes available",
+  "Merc potion belt: none; merc heals with player's healing potion (shift-click) in 1.14: R"
+ ]
+}

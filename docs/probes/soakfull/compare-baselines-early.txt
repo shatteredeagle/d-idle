@@ -1,0 +1,10 @@
+metric                     d2d mean        sd      n |     baseline (min .. max)          |      gap       tol  verdict
+xp_per_hour                    4985       502     12 |         6600 (6600 .. 6600)        |   -24.5%      1320  INCONCLUSIVE (about 2 seeds would settle it at this spread) [95% interval +-309 straddles the tolerance 1.32e+03]
+deaths_per_hour                   0         0     12 |         0.29 (0.29 .. 0.29)        |      n/a      0.15  PASS [0 deaths in 24.0 h (budget 4, Poisson p=1.000)]
+deaths_per_1000_kills             0         0     12 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [baseline has no kill exposure]
+potions_per_100_kills             0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+min_life_fraction                 0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+damage_per_kill                   0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+WARNING: 12 of 12 seeds ran under the 3.0 h minimum: XP/h of a short run is dominated by the opening (travel, first shop)
+WARNING: only 1 baseline run(s): the baseline itself is uncertain
+OVERALL: INCONCLUSIVE

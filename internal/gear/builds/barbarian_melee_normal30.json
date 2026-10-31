@@ -1,0 +1,430 @@
+{
+ "build": "barbarian_melee_normal30",
+ "class": "barbarian",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
+ "tags": "Skills: V Maxroll Barbarian leveling https://maxroll.gg/d2/guides/barbarian-leveling (docs/classes/barbarian.md): Bash then Double Swing, Howl/Shout/Battle Orders, masteries, Double Throw only as the prerequisite of Frenzy (reqlevel 24). U: the exact row order is this agent's reading of the guide (BARBLIVE), Axe Mastery instead of the guide's Mace Mastery because the starting weapon is an axe (U, check live), the Whirlwind/War Cry respec at 30+ is not used (needs a physical-immune answer, docs/classes/barbarian.md section 1). Quest points (Den, Radament, Izual) folded into rows 5, 15, 21. Stats: V Maxroll (mostly Vitality, Dexterity then Strength early); the 5-point rows are U. Weapon: any melee weapon (Bash/Double Swing/Frenzy itypea mele, V skills.txt). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq).",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Battle Orders",
+   "hand": "right",
+   "from_clvl": 26
+  },
+  {
+   "key": "F2",
+   "skill": "Shout",
+   "hand": "right",
+   "from_clvl": 8
+  },
+  {
+   "key": "F3",
+   "skill": "Iron Skin",
+   "hand": "right",
+   "from_clvl": 18
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 5,
+   "skill": "Bash",
+   "weapon": "any"
+  },
+  {
+   "from_clvl": 6,
+   "until_clvl": 23,
+   "skill": "Double Swing",
+   "weapon": "any",
+   "note": "Bash is the fallback"
+  },
+  {
+   "from_clvl": 24,
+   "until_clvl": 30,
+   "skill": "Frenzy",
+   "weapon": "any",
+   "note": "Double Swing and Bash are the fallbacks"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Axe Mastery",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Swing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Howl",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Shout",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Swing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Swing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Axe Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Throw",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Axe Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Axe Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Increased Stamina",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Iron Skin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Iron Skin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Axe Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bash",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Swing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Double Swing",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frenzy",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frenzy",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Battle Orders",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Battle Orders",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frenzy",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frenzy",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frenzy",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

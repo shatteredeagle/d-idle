@@ -1,0 +1,407 @@
+{
+ "build": "amazon_javelin_normal30",
+ "class": "amazon",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
+ "tags": "Skills: U (own design; V only that Poison Javelin is Maxroll's clvl 6-10 skill in the Act 1 leveling guide https://maxroll.gg/d2/guides/amazon-leveling-guide, fetched 2026-10-29, and Lightning Bolt requires Poison Javelin at clvl 12, V skills.txt). Rows 2-5 are empty (points saved) and row 6 spends 5 points, because Poison Javelin unlocks at clvl 6 (V reqlevel). No weapon swap needed: javelins only. Javelins are a stack with tiny durability (V smoke-amazon: start Javelin max stack 60, durability 2) so restock is part of the plan (docs/gear.md). Stats: U (Vit, then 3 Str 2 Dex per level 12-16; this does NOT reach Maiden Javelin str 33 / dex 47, V weapons.txt, so plain Javelin/Pilum stacks are used in Normal). Prerequisites checked against skills.txt (V Patch_D2.mpq).",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Poison Javelin",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F2",
+   "skill": "Lightning Bolt",
+   "hand": "right",
+   "from_clvl": 14
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 5,
+   "skill": "Throw",
+   "weapon": "jave",
+   "ammo": "self",
+   "note": "plain Throw until Poison Javelin at clvl 6"
+  },
+  {
+   "from_clvl": 6,
+   "until_clvl": 13,
+   "skill": "Poison Javelin",
+   "weapon": "jave",
+   "ammo": "self"
+  },
+  {
+   "from_clvl": 14,
+   "until_clvl": 30,
+   "skill": "Lightning Bolt",
+   "weapon": "jave",
+   "ammo": "self",
+   "note": "Poison Javelin when the target is lightning immune"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": []
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": []
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": []
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": []
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 5
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Poison Javelin",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning Bolt",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

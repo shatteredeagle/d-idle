@@ -1,0 +1,367 @@
+{
+ "profiles": [
+  {
+   "class": "sorceress",
+   "build": "blizzard",
+   "bands": [
+    {
+     "minLevel": 26,
+     "requires": "Blizzard",
+     "attack": [
+      "Blizzard",
+      "Glacial Spike",
+      "Ice Blast",
+      "Ice Bolt",
+      "Charged Bolt",
+      "Fire Bolt"
+     ]
+    },
+    {
+     "attack": [
+      "Charged Bolt",
+      "Fire Bolt",
+      "Ice Bolt"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Frozen Armor",
+     "Shiver Armor",
+     "Chilling Armor"
+    ]
+   ],
+   "layout": {
+    "Static Field": "f1",
+    "Teleport": "f2",
+    "Frozen Armor": "f3",
+    "Charged Bolt": "f4",
+    "Blizzard": "f5",
+    "Glacial Spike": "f6",
+    "Ice Blast": "f7",
+    "Fire Bolt": "f8"
+   }
+  },
+  {
+   "class": "sorceress",
+   "build": "lightning",
+   "bands": [
+    {
+     "minLevel": 26,
+     "attack": [
+      "Chain Lightning",
+      "Lightning",
+      "Charged Bolt",
+      "Fire Bolt"
+     ]
+    },
+    {
+     "attack": [
+      "Charged Bolt",
+      "Fire Bolt",
+      "Ice Bolt"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Frozen Armor",
+     "Shiver Armor",
+     "Chilling Armor"
+    ],
+    [
+     "Energy Shield"
+    ]
+   ],
+   "layout": {
+    "Static Field": "f1",
+    "Teleport": "f2",
+    "Frozen Armor": "f3",
+    "Charged Bolt": "f4",
+    "Chain Lightning": "f5",
+    "Lightning": "f6",
+    "Fire Bolt": "f7",
+    "Frost Nova": "f8"
+   }
+  },
+  {
+   "class": "paladin",
+   "bands": [
+    {
+     "minLevel": 24,
+     "requires": "Blessed Hammer",
+     "attack": [
+      "Blessed Hammer",
+      "Zeal",
+      "Smite",
+      "Attack"
+     ],
+     "aura": [
+      {
+       "name": "Prayer",
+       "restLifePct": 70
+      },
+      {
+       "name": "Concentration"
+      },
+      {
+       "name": "Holy Fire",
+       "elem": "fire"
+      },
+      {
+       "name": "Might"
+      }
+     ]
+    },
+    {
+     "minLevel": 12,
+     "requires": "Zeal",
+     "attack": [
+      "Zeal",
+      "Smite",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Smite",
+      "Attack"
+     ]
+    }
+   ],
+   "aura": [
+    {
+     "name": "Prayer",
+     "restLifePct": 70
+    },
+    {
+     "name": "Holy Fire",
+     "elem": "fire"
+    },
+    {
+     "name": "Might"
+    },
+    {
+     "name": "Thorns"
+    }
+   ],
+   "buffs": [
+    [
+     "Holy Shield"
+    ]
+   ],
+   "layout": {
+    "Might": "f1",
+    "Holy Fire": "f2",
+    "Concentration": "f3",
+    "Vigor": "f4",
+    "Holy Shield": "f5",
+    "Thorns": "f6",
+    "Resist Fire": "f7",
+    "Prayer": "f8"
+   },
+   "melee": {
+    "reach": 4,
+    "holdMs": 600,
+    "retreatLifePct": 40,
+    "surround": 4,
+    "surroundLifePct": 65,
+    "manaReserve": 4
+   }
+  },
+  {
+   "class": "amazon",
+   "bands": [
+    {
+     "minLevel": 18,
+     "requires": "Multiple Shot",
+     "attack": [
+      "Multiple Shot",
+      "Exploding Arrow",
+      "Fire Arrow",
+      "Magic Arrow",
+      "Jab",
+      "Attack"
+     ]
+    },
+    {
+     "minLevel": 12,
+     "requires": "Exploding Arrow",
+     "attack": [
+      "Exploding Arrow",
+      "Fire Arrow",
+      "Magic Arrow",
+      "Jab",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Magic Arrow",
+      "Fire Arrow",
+      "Jab",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Valkyrie"
+    ]
+   ],
+   "layout": {
+    "Magic Arrow": "f1",
+    "Fire Arrow": "f2",
+    "Multiple Shot": "f3",
+    "Valkyrie": "f4",
+    "Inner Sight": "f5",
+    "Exploding Arrow": "f6"
+   }
+  },
+  {
+   "class": "necromancer",
+   "bands": [
+    {
+     "minLevel": 18,
+     "requires": "Bone Spear",
+     "attack": [
+      "Bone Spear",
+      "Teeth",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Teeth",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Bone Armor"
+    ]
+   ],
+   "layout": {
+    "Teeth": "f1",
+    "Bone Spear": "f2",
+    "Bone Armor": "f3",
+    "Amplify Damage": "f4",
+    "Raise Skeleton": "f5",
+    "Raise Skeletal Mage": "f6",
+    "Lower Resist": "f7",
+    "Clay Golem": "f8"
+   }
+  },
+  {
+   "class": "barbarian",
+   "bands": [
+    {
+     "minLevel": 18,
+     "requires": "Frenzy",
+     "attack": [
+      "Frenzy",
+      "Bash",
+      "Double Swing",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Bash",
+      "Double Swing",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Battle Orders"
+    ],
+    [
+     "Shout"
+    ],
+    [
+     "Iron Skin"
+    ]
+   ],
+   "layout": {
+    "Battle Orders": "f1",
+    "Shout": "f2",
+    "Iron Skin": "f3",
+    "Battle Command": "f4"
+   },
+   "melee": {
+    "reach": 4,
+    "holdMs": 500,
+    "retreatLifePct": 40,
+    "surround": 4,
+    "surroundLifePct": 65,
+    "manaReserve": 4
+   }
+  },
+  {
+   "class": "druid",
+   "bands": [
+    {
+     "minLevel": 12,
+     "requires": "Eruption",
+     "attack": [
+      "Eruption",
+      "Molten Boulder",
+      "Firestorm",
+      "Attack"
+     ]
+    },
+    {
+     "attack": [
+      "Firestorm",
+      "Molten Boulder",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Cyclone Armor"
+    ]
+   ],
+   "layout": {
+    "Firestorm": "f1",
+    "Molten Boulder": "f2",
+    "Eruption": "f3",
+    "Cyclone Armor": "f4",
+    "Oak Sage": "f5",
+    "Raven": "f6",
+    "Summon Spirit Wolf": "f7",
+    "Summon Fenris": "f8"
+   }
+  },
+  {
+   "class": "assassin",
+   "bands": [
+    {
+     "attack": [
+      "Fire Trauma",
+      "Attack"
+     ]
+    }
+   ],
+   "buffs": [
+    [
+     "Quickness",
+     "Fade"
+    ]
+   ],
+   "layout": {
+    "Fire Trauma": "f1",
+    "Wake of Fire Sentry": "f2",
+    "Quickness": "f3",
+    "Fade": "f4",
+    "Shadow Warrior": "f5",
+    "Lightning Sentry": "f6",
+    "Charged Bolt Sentry": "f7"
+   }
+  }
+ ]
+}

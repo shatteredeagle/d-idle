@@ -1,0 +1,23 @@
+# DRAFT, for tests on a lab worker (the worker host) only. NAS is deployed through its template (my-d2dbot.xml.draft), not compose.
+services:
+  d2dbot:
+    image: d2dbot:dev
+    init: true
+    stop_grace_period: 45s
+    ports:
+      - "127.0.0.1:8431:8431"      # dashboard; loopback for tests
+      # - "127.0.0.1:8432:8432"    # optional separate viewer
+    cpus: 2
+    mem_limit: 3g
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    environment:
+      D2D_MODE: realtime            # or lockstep for a soak container
+      D2FLEET_MAX_LOAD_FACTOR: "-1"
+    volumes:
+      - d2dbot-data:/data           # uid 1000; a named volume is chowned on first use
+      - /path/to/mpqs:/game:ro      # YOUR MPQs; never in the image
+    tmpfs:
+      - /run/d2d:mode=0700,uid=1000
+volumes:
+  d2dbot-data: {}

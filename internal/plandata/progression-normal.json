@@ -1,0 +1,315 @@
+{
+ "schema": "per-difficulty ordered steps. Each: area_id, min_clvl to enter, target clvl to leave, purpose. Entries are suggestions; the bot must not enter an area below min_clvl and must move on above leave_clvl. All levels tag R unless noted; XP/levels cross-checked against Maxroll V (Normal reach 26 at Act 5; Nightmare enter ~clvl 27-38). Normal area levels (V): Blood Moor 1, Cold Plains 2, Stony 4, Dark Wood 5, Black Marsh 6; NM/Hell Blood Moor 36/67 V; Black Marsh 38/69 V; Worldstone Keep 2 40/65/85 V. Fill alvl from levels.txt MonLvl.",
+ "normal": [
+  {
+   "area": 2,
+   "name": "Blood Moor",
+   "enter_clvl": 1,
+   "leave_clvl": 6,
+   "purpose": "Blood Moor"
+  },
+  {
+   "area": 8,
+   "name": "Den of Evil",
+   "enter_clvl": 2,
+   "leave_clvl": 6,
+   "purpose": "Den of Evil quest (Akara): all monsters; quest => 1 skill pt"
+  },
+  {
+   "area": 3,
+   "name": "Cold Plains",
+   "enter_clvl": 5,
+   "kit_clvl": 4,
+   "leave_clvl": 10,
+   "purpose": "Cold Plains WP; Burial Grounds 17 for Blood Raven"
+  },
+  {
+   "area": 17,
+   "name": "Burial Grounds",
+   "enter_clvl": 6,
+   "leave_clvl": 10,
+   "purpose": "Burial Grounds: Blood Raven (Rogue quest, good XP)"
+  },
+  {
+   "area": 9,
+   "name": "Cave Level 1",
+   "enter_clvl": 6,
+   "leave_clvl": 10,
+   "purpose": "Cave 1 (+Cave2 13, WP not needed)"
+  },
+  {
+   "area": 4,
+   "name": "Stony Field",
+   "enter_clvl": 8,
+   "melee_enter_clvl": 7,
+   "leave_clvl": 12,
+   "purpose": "Stony Field WP; Cairn Stones (Tristram quest, optional later)"
+  },
+  {
+   "area": 5,
+   "name": "Dark Wood",
+   "enter_clvl": 9,
+   "leave_clvl": 13,
+   "purpose": "Dark Wood: Inifuss tree (quest)"
+  },
+  {
+   "area": 6,
+   "name": "Black Marsh",
+   "enter_clvl": 10,
+   "leave_clvl": 14,
+   "purpose": "Black Marsh WP"
+  },
+  {
+   "area": 20,
+   "name": "Forgotten Tower",
+   "enter_clvl": 10,
+   "leave_clvl": 14,
+   "purpose": "Forgotten Tower to Tower Cellars 21-25: Countess rune drops"
+  },
+  {
+   "area": 13,
+   "name": "Cave 2",
+   "enter_clvl": 10,
+   "leave_clvl": 15,
+   "purpose": "Cave Level 2 (via Cave 1): off the Monastery road, a level-up area while the route guard is closed (docs/sme/play-safety.md)"
+  },
+  {
+   "area": 18,
+   "name": "Crypt",
+   "enter_clvl": 10,
+   "leave_clvl": 17,
+   "purpose": "Crypt (Burial Grounds): short dead-end dungeon, off the Monastery road; veteran clear before Andariel (route guard fallback)"
+  },
+  {
+   "area": 19,
+   "name": "Mausoleum",
+   "enter_clvl": 11,
+   "leave_clvl": 18,
+   "purpose": "Mausoleum (Burial Grounds): off the Monastery road; route guard fallback XP"
+  },
+  {
+   "area": 7,
+   "name": "Tamoe Highland",
+   "enter_clvl": 10,
+   "leave_clvl": 14,
+   "purpose": "Tamoe Highland (Normal monster level 8, V levels.txt MonLvl1Ex): open field XP between Black Marsh and the Monastery"
+  },
+  {
+   "area": 27,
+   "name": "Outer Cloister",
+   "enter_clvl": 12,
+   "leave_clvl": 16,
+   "purpose": "Outer Cloister WP (Monastery)"
+  },
+  {
+   "area": 29,
+   "name": "Jail 1",
+   "enter_clvl": 13,
+   "leave_clvl": 16,
+   "purpose": "Jail Level 1 (Normal monster level 10, V levels.txt): Jail WP; fallback XP area while Andariel waits for her kit"
+  },
+  {
+   "area": 35,
+   "name": "Catacombs 2",
+   "enter_clvl": 13,
+   "leave_clvl": 17,
+   "purpose": "Catacombs 2 WP"
+  },
+  {
+   "area": 36,
+   "name": "Catacombs 3",
+   "enter_clvl": 14,
+   "leave_clvl": 18,
+   "purpose": "Catacombs 3 (Normal monster level 12, V levels.txt): same XP as Catacombs 4, fallback when Catacombs 4 is cleared"
+  },
+  {
+   "area": 37,
+   "name": "Catacombs 4",
+   "enter_clvl": 14,
+   "leave_clvl": 18,
+   "purpose": "Catacombs 4: Andariel (boss.andarielMinLevel, default 15; humans kill her at clvl 14 to 18)"
+  },
+  {
+   "area": 40,
+   "name": "Lut Gholein",
+   "enter_clvl": 18,
+   "leave_clvl": 20,
+   "purpose": "Act 2: Lut Gholein; Radament in Sewers 2 (48); Cube in Halls of the Dead 3 (60)"
+  },
+  {
+   "area": 48,
+   "name": "Sewers 2",
+   "enter_clvl": 18,
+   "leave_clvl": 22,
+   "purpose": "Radament quest: skill book"
+  },
+  {
+   "area": 42,
+   "name": "Dry Hills",
+   "enter_clvl": 19,
+   "leave_clvl": 23,
+   "purpose": "Dry Hills WP"
+  },
+  {
+   "area": 57,
+   "name": "Halls of the Dead 2",
+   "enter_clvl": 20,
+   "leave_clvl": 24,
+   "purpose": "Halls of the Dead 2 WP: Horadric Cube (HotD 3)"
+  },
+  {
+   "area": 43,
+   "name": "Far Oasis",
+   "enter_clvl": 21,
+   "leave_clvl": 24,
+   "purpose": "Far Oasis WP"
+  },
+  {
+   "area": 44,
+   "name": "Lost City",
+   "enter_clvl": 21,
+   "leave_clvl": 25,
+   "purpose": "Lost City; Valley of Snakes (45) to Claw Viper Temple 61 for Amulet"
+  },
+  {
+   "area": 74,
+   "name": "Arcane Sanctuary",
+   "enter_clvl": 22,
+   "leave_clvl": 26,
+   "purpose": "Arcane Sanctuary: Summoner (Horadric staff chain)"
+  },
+  {
+   "area": 66,
+   "name": "Tal Rasha Tomb 1",
+   "enter_clvl": 24,
+   "leave_clvl": 26,
+   "purpose": "Tal Rasha's Tomb real: Duriel (min clvl 26)"
+  },
+  {
+   "area": 73,
+   "name": "Duriel's Lair",
+   "enter_clvl": 26,
+   "leave_clvl": 27,
+   "purpose": "Duriel"
+  },
+  {
+   "area": 75,
+   "name": "Kurast Docks",
+   "enter_clvl": 25,
+   "leave_clvl": 26,
+   "purpose": "Act 3 Kurast Docks"
+  },
+  {
+   "area": 94,
+   "name": "Ruined Temple",
+   "enter_clvl": 26,
+   "leave_clvl": 27,
+   "purpose": "Lam Esen's Tome (altar, Lam Esen quest, +5 stat pts) [R]; enter via Kurast Bazaar 80 (R)"
+  },
+  {
+   "area": 80,
+   "name": "Kurast Bazaar",
+   "enter_clvl": 26,
+   "leave_clvl": 28,
+   "purpose": "Kurast Bazaar WP"
+  },
+  {
+   "area": 83,
+   "name": "Travincal",
+   "enter_clvl": 27,
+   "leave_clvl": 30,
+   "purpose": "Travincal: Council. Khalim's Will chain"
+  },
+  {
+   "area": 101,
+   "name": "Durance of Hate 2",
+   "enter_clvl": 28,
+   "leave_clvl": 32,
+   "purpose": "Durance of Hate 2 WP: Mephisto"
+  },
+  {
+   "area": 103,
+   "name": "Pandemonium Fortress",
+   "enter_clvl": 30,
+   "leave_clvl": 31,
+   "purpose": "Pandemonium Fortress; Izual in Plains of Despair (105) +2 skill pts"
+  },
+  {
+   "area": 105,
+   "name": "Plains of Despair",
+   "enter_clvl": 30,
+   "leave_clvl": 32,
+   "purpose": "Izual"
+  },
+  {
+   "area": 107,
+   "name": "River of Flame",
+   "enter_clvl": 31,
+   "leave_clvl": 34,
+   "purpose": "River of Flame WP; Hephasto"
+  },
+  {
+   "area": 108,
+   "name": "Chaos Sanctuary",
+   "enter_clvl": 31,
+   "leave_clvl": 34,
+   "purpose": "Chaos Sanctuary: Diablo"
+  },
+  {
+   "area": 109,
+   "name": "Harrogath",
+   "enter_clvl": 32,
+   "leave_clvl": 34,
+   "purpose": "Harrogath; Larzuk sockets (Siege quest), Anya scroll"
+  },
+  {
+   "area": 111,
+   "name": "Frigid Highlands",
+   "enter_clvl": 32,
+   "leave_clvl": 35,
+   "purpose": "Frigid Highlands WP"
+  },
+  {
+   "area": 115,
+   "name": "Glacial Trail",
+   "enter_clvl": 33,
+   "leave_clvl": 36,
+   "purpose": "Glacial Trail WP"
+  },
+  {
+   "area": 113,
+   "name": "Crystalline Passage",
+   "enter_clvl": 33,
+   "leave_clvl": 37,
+   "purpose": "Crystalline Passage"
+  },
+  {
+   "area": 118,
+   "name": "Ancients' Way",
+   "enter_clvl": 35,
+   "leave_clvl": 38,
+   "purpose": "Ancients' Way WP"
+  },
+  {
+   "area": 120,
+   "name": "Arreat Summit",
+   "enter_clvl": 36,
+   "leave_clvl": 40,
+   "purpose": "Arreat Summit: Ancients (skip until clvl>=28 for N)"
+  },
+  {
+   "area": 129,
+   "name": "Worldstone Keep 2",
+   "enter_clvl": 38,
+   "leave_clvl": 40,
+   "purpose": "Worldstone Keep 2 WP"
+  },
+  {
+   "area": 131,
+   "name": "Throne of Destruction",
+   "enter_clvl": 38,
+   "leave_clvl": 41,
+   "purpose": "Throne of Destruction: waves + Baal"
+  }
+ ]
+}

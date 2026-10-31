@@ -1,0 +1,50 @@
+{
+ "schema": "bonus points from quests; apply immediately on turn-in",
+ "evidence": "R unless noted",
+ "quests": [
+  {
+   "id": "den_of_evil",
+   "act": 1,
+   "difficulty": "normal",
+   "reward": "1 skill point",
+   "tag": "V (Maxroll: Den gives CB point at lvl 2-4)"
+  },
+  {
+   "id": "radament",
+   "act": 2,
+   "difficulty": "all",
+   "reward": "book of skill: +1 skill point on use",
+   "tag": "V (Maxroll lists Radament/Izual points in NM/Hell)"
+  },
+  {
+   "id": "lam_esen",
+   "act": 3,
+   "difficulty": "normal",
+   "reward": "+5 stat points (Lam Esen's Tome)",
+   "tag": "R"
+  },
+  {
+   "id": "izual",
+   "act": 4,
+   "difficulty": "all",
+   "reward": "+2 skill points",
+   "tag": "V"
+  },
+  {
+   "id": "golden_bird",
+   "act": 3,
+   "difficulty": "normal",
+   "reward": "potion of life (+20 life) from Alkor",
+   "tag": "R"
+  },
+  {
+   "id": "scroll_of_resistance",
+   "act": 5,
+   "difficulty": "all",
+   "reward": "+10 all res (Malah/Anya reward)",
+   "tag": "R: Anya scroll Normal/NM/Hell",
+   "skip_in_hell_note": "Den of Evil in Hell rewards respec/scroll per Maxroll text 'skip Den in Hell' V"
+  }
+ ],
+ "quest_point_policy": "spend skill points by following the next unspent entry of the build table; quest points do not shift the table, they pull future entries forward."
+}

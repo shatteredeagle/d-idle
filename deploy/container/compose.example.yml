@@ -1,0 +1,24 @@
+# Example only (not deployed anywhere). Run on a lab worker; deploy to the NAS only through its UI/Compose Manager, after asking.
+# First run: the setup wizard (docs/container.md "User test checklist"). Token: docker compose exec d2bot cat /data/token
+services:
+  d2bot:
+    image: d2idle:dev                  # tools/container-build.sh; default command serves the wizard on 8431
+    stop_grace_period: 90s             # d2bot --stop-game needs about 50 s to save and leave (docs/container.md)
+    ports: ["127.0.0.1:8431:8431"]     # the only port; loopback only, put a reverse proxy in front for anything else
+    # init: true                       # optional (tini); not needed, d2container reaps and handles SIGTERM
+    # cap_add: [SYS_PTRACE]            # NOT needed: the app is the subreaper (V docs/container.md)
+    shm_size: 256m
+    cpus: 3
+    mem_limit: 6g
+    # environment: {D2FLEET_MAX_LOAD_FACTOR: "-1"}   # a container sees the HOST load1; needed on a busy host (docs/container.md first run)
+    volumes:
+      - d2data:/data                   # wizard state, token, Wine prefix, saves (uid 1000; a named volume is chowned on first use)
+      - /path/to/Diablo II:/src:ro     # YOUR install folder; the wizard copies it into /data
+      - /path/to/patch:/patch:ro       # folder with LODPatch_114d.exe
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    # Proven direct run without the wizard (after d2init.sh and mkchar, with /game instead of /src), offline:
+    # command: ["run", "--", "d2bot", "--managed", "--char", "Contai", "--autostart", "--goals", "reach:8", "--stop-game"]
+    # network_mode: none               # only for that direct run; the wizard UI needs the published port
+volumes:
+  d2data: {}

@@ -1,0 +1,139 @@
+{
+ "schema": "belt layout and potion thresholds by clvl",
+ "tags": "R design decisions",
+ "belt_rule": "4 columns. Buy highest tier whose clvl_req<=clvl at Akara/Malah/Lysander; Rejuv from Anya/Malah only if sold, else drops.",
+ "by_clvl": [
+  {
+   "clvl": [
+    1,
+    12
+   ],
+   "belt_cols": [
+    "hp",
+    "hp",
+    "mp",
+    "hp"
+   ],
+   "hp_potion": "minor/light healing",
+   "mp_potion": "minor mana",
+   "note": "Buy 4 small belts first (Leather/Sash)"
+  },
+  {
+   "clvl": [
+    13,
+    30
+   ],
+   "belt_cols": [
+    "hp",
+    "hp",
+    "mp",
+    "hp"
+   ],
+   "hp_potion": "healing->greater healing",
+   "mp_potion": "mana->greater mana"
+  },
+  {
+   "clvl": [
+    31,
+    60
+   ],
+   "belt_cols": [
+    "hp",
+    "hp",
+    "mp",
+    "rejuv"
+   ],
+   "hp_potion": "greater->super healing",
+   "mp_potion": "greater->super mana",
+   "note": "Mesh belt upgrade (4 cols x 4 rows) when Str allows"
+  },
+  {
+   "clvl": [
+    61,
+    99
+   ],
+   "belt_cols": [
+    "hp",
+    "rejuv",
+    "mp",
+    "rejuv"
+   ],
+   "hp_potion": "super healing",
+   "mp_potion": "super mana",
+   "note": "keep >=4 rejuv for Hell bosses"
+  }
+ ],
+ "thresholds": {
+  "drink_health_below_pct": 55,
+  "drink_rejuv_below_pct": 35,
+  "chicken_below_pct": 25,
+  "hell_chicken_below_pct": 30,
+  "drink_mana_below_pct": 25,
+  "merc_potion_health_below_pct": 40,
+  "note": "rejuv threshold for hp potion cooldown is 2-3 s frames; poll at >=10 Hz"
+ },
+ "restock_rule": "after each run or when any belt column < 50%: go to town, refill all columns; never start a run with <2 hp and <1 mp potion per column",
+ "mana_heavy_builds": {
+  "tags": "U design (W7 of docs/builds-endgame.md): the single mp column runs dry in War Cry/Blizzard packs; needs a live Hell check. V: unchanged rows above stay the default for every other build.",
+  "builds": [
+   "barbarian_warcry_endgame90",
+   "sorceress_blizzard_endgame90",
+   "druid_tornado_endgame90",
+   "necromancer_summoner_endgame90"
+  ],
+  "by_clvl": [
+   {
+    "clvl": [
+     1,
+     12
+    ],
+    "belt_cols": [
+     "hp",
+     "mp",
+     "mp",
+     "hp"
+    ],
+    "note": "two mana columns from the start (small belt: 4 columns)"
+   },
+   {
+    "clvl": [
+     13,
+     30
+    ],
+    "belt_cols": [
+     "hp",
+     "mp",
+     "mp",
+     "hp"
+    ]
+   },
+   {
+    "clvl": [
+     31,
+     60
+    ],
+    "belt_cols": [
+     "hp",
+     "mp",
+     "mp",
+     "rejuv"
+    ]
+   },
+   {
+    "clvl": [
+     61,
+     99
+    ],
+    "belt_cols": [
+     "rejuv",
+     "mp",
+     "mp",
+     "rejuv"
+    ],
+    "note": "two mana columns; hp comes from rejuv and the merc"
+   }
+  ],
+  "drink_mana_below_pct": 35,
+  "restock_rule": "go to town when either mana column is below 50% (not only a hp column)"
+ }
+}

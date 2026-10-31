@@ -1,0 +1,3241 @@
+tag,area,seed,cb_level,clvl,monster,boss,xp,cast_cmds,mana_spent,castgap_ms,t_ms,dt_ms
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,6000,6000
+before,2,1,1,2,"Zombie",false,33,7,12,450,10720,4720
+before,2,1,1,2,"Quill Rat",false,21,5,12,450,14320,3600
+before,2,1,1,2,"Zombie",false,33,1,0,450,14480,160
+before,2,1,1,2,"Quill Rat",false,21,4,5,450,29880,15400
+before,2,1,1,2,"Quill Rat",false,21,5,6,450,33440,3560
+before,2,1,1,2,"Fallen",false,18,0,0,450,35200,1760
+before,2,1,1,2,"Fallen",false,18,2,3,450,37840,2640
+before,2,1,1,2,"Fallen",false,18,4,9,450,41960,4120
+before,2,1,1,2,"Fallen",false,18,0,0,450,43720,1760
+before,2,1,1,2,"Fallen",false,18,3,5,450,47040,3320
+before,2,1,1,2,"Fallen",false,18,1,0,450,47520,480
+before,2,1,1,2,"Zombie",false,33,7,12,450,62480,14960
+before,2,1,1,2,"Quill Rat",false,21,4,9,450,70520,8040
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,71640,1120
+before,2,1,1,2,"Quill Rat",false,21,3,6,450,73720,2080
+before,2,1,1,2,"Zombie",false,33,8,12,450,82040,8320
+before,2,1,1,2,"Zombie",false,33,4,6,450,84120,2080
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,92720,8600
+before,2,1,1,2,"Quill Rat",false,21,16,24,450,100560,7840
+before,2,1,1,2,"Fallen",false,18,2,3,450,114000,13440
+before,2,1,1,2,"Fallen",false,18,0,0,450,114080,80
+before,2,1,1,2,"Quill Rat",false,21,5,8,450,117760,3680
+before,2,1,1,2,"Fallen",false,18,2,5,450,120080,2320
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,122200,2120
+before,2,1,1,2,"Fallen",false,18,2,3,450,130560,8360
+before,2,1,1,2,"Fallen",false,18,0,0,450,130720,160
+before,2,1,1,2,"Fallen",false,18,4,9,450,133560,2840
+before,2,1,1,2,"Fallen",false,18,0,0,450,136600,3040
+before,2,1,1,2,"Fallen",false,18,0,0,450,136600,0
+before,2,1,1,2,"Fallen",false,18,0,0,450,136600,0
+before,2,1,1,2,"Fallen",false,18,3,6,450,139840,3240
+before,2,1,1,2,"Zombie",false,33,6,9,450,147800,7960
+before,2,1,1,2,"Zombie",false,33,4,6,450,149800,2000
+before,2,1,1,2,"Quill Rat",false,21,1,3,450,152280,2480
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,156320,4040
+before,2,1,1,2,"Quill Rat",false,21,3,6,450,158120,1800
+before,2,1,1,2,"Zombie",false,33,3,6,450,161240,3120
+before,2,1,1,2,"Fallen",false,18,1,3,450,245200,83960
+before,2,1,1,2,"Fallen",false,18,0,0,450,245200,0
+before,2,1,1,2,"Fallen",false,18,4,6,450,247120,1920
+before,2,1,1,2,"Fallen",false,18,1,3,450,249240,2120
+before,2,1,1,2,"Zombie",false,33,6,9,450,252840,3600
+before,2,1,1,2,"Zombie",false,33,5,9,450,255560,2720
+before,2,1,1,2,"Fallen",false,18,2,3,450,257680,2120
+before,2,1,1,2,"Fallen",false,18,1,3,450,258960,1280
+before,2,1,1,2,"Fallen",false,18,1,0,450,259360,400
+before,2,1,1,2,"Fallen",false,18,4,5,450,263280,3920
+before,2,1,1,2,"Fallen",false,18,0,0,450,263440,160
+before,2,1,1,2,"Fallen",false,18,2,3,450,264240,800
+before,2,1,1,2,"Zombie",false,33,8,12,450,271520,7280
+before,2,1,1,2,"Fallen",false,18,3,6,450,274360,2840
+before,2,1,1,2,"Fallen",false,18,1,3,450,277320,2960
+before,2,1,1,2,"Fallen",false,18,4,6,450,280000,2680
+before,2,1,1,2,"Fallen",false,18,2,3,450,282680,2680
+before,2,1,1,2,"Fallen",false,18,2,3,450,292560,9880
+before,2,1,1,2,"Fallen",false,18,2,3,450,293520,960
+before,2,1,1,2,"Fallen",false,18,1,3,450,294440,920
+before,2,1,1,2,"Fallen",false,18,2,3,450,295240,800
+before,2,1,1,2,"Zombie",false,33,2,3,450,296360,1120
+before,2,1,1,2,"Fallen",false,18,5,8,450,299880,3520
+before,2,1,1,2,"Quill Rat",false,21,0,0,450,299960,80
+before,2,1,1,2,"Fallen",false,18,2,3,450,303400,3440
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,307600,4200
+before,2,1,1,2,"Quill Rat",false,21,0,0,450,308400,800
+before,2,1,1,2,"Zombie",false,33,4,6,450,312440,4040
+before,2,1,1,2,"Fallen",false,18,1,3,450,363640,51200
+before,2,1,1,2,"Fallen",false,18,4,6,450,365160,1520
+before,2,1,1,2,"Fallen",false,18,1,0,450,365960,800
+before,2,1,1,2,"Zombie",false,33,4,6,450,370480,4520
+before,2,1,1,2,"Zombie",false,33,9,15,450,378480,8000
+before,2,1,1,2,"Fallen",false,18,1,3,450,381240,2760
+before,2,1,1,2,"Zombie",false,33,9,15,450,393880,12640
+before,2,1,1,2,"Quill Rat",false,21,3,6,450,403640,9760
+before,2,1,1,2,"Quill Rat",false,21,3,5,450,407080,3440
+before,2,1,1,2,"Zombie",false,33,9,15,450,496920,89840
+before,2,1,1,2,"Zombie",false,33,4,5,450,499640,2720
+before,2,1,1,2,"Quill Rat",false,21,2,6,450,502200,2560
+before,2,1,1,2,"Quill Rat",false,21,2,3,450,504840,2640
+before,2,1,1,2,"Fallen",false,18,2,3,450,508880,4040
+before,2,1,1,2,"Fallen",false,18,2,3,450,510440,1560
+before,2,1,1,2,"Fallen",false,18,1,3,450,512440,2000
+before,2,1,1,2,"Fallen",false,18,1,3,450,515160,2720
+before,2,1,1,2,"Fallen",false,18,4,6,450,518280,3120
+before,2,1,1,2,"Fallen",false,18,2,3,450,519080,800
+before,2,1,1,2,"Fallen",false,18,4,6,450,522040,2960
+before,2,1,1,2,"Zombie",false,33,2,3,450,528720,6680
+before,2,2,1,2,"Fallen",false,18,1,0,450,480,480
+before,2,2,1,2,"Zombie",false,33,3,6,450,5120,4640
+before,2,2,1,2,"Zombie",false,33,3,3,450,6480,1360
+before,2,2,1,2,"Quill Rat",false,21,1,3,450,13280,6800
+before,2,2,1,2,"Fallen",false,18,3,6,450,16000,2720
+before,2,2,1,2,"Fallen",false,18,2,3,450,17960,1960
+before,2,2,1,2,"Fallen",false,18,2,3,450,19320,1360
+before,2,2,1,2,"Fallen",false,18,2,3,450,23760,4440
+before,2,2,1,2,"Fallen",false,18,4,6,450,26560,2800
+before,2,2,1,2,"Fallen",false,18,2,0,450,43640,17080
+before,2,2,1,2,"Zombie",false,33,4,6,450,45480,1840
+before,2,2,1,2,"Zombie",false,33,4,6,450,49360,3880
+before,2,2,1,2,"Fallen",false,18,1,3,450,51760,2400
+before,2,2,1,2,"Fallen",false,18,4,6,450,53960,2200
+before,2,2,1,2,"Fallen",false,18,2,3,450,56800,2840
+before,2,2,1,2,"Fallen",false,18,2,2,450,59200,2400
+before,2,2,1,2,"Fallen",false,18,1,3,450,59360,160
+before,2,2,1,2,"Fallen",false,18,2,3,450,60400,1040
+before,2,2,1,2,"Quill Rat",false,21,4,9,450,70280,9880
+before,2,2,1,2,"Quill Rat",false,21,8,12,450,74320,4040
+before,2,2,1,2,"Quill Rat",false,21,1,3,450,76720,2400
+before,2,2,1,2,"Quill Rat",false,21,3,6,450,86600,9880
+before,2,2,1,2,"Quill Rat",false,21,6,9,450,92200,5600
+before,2,2,1,2,"Zombie",false,33,4,6,450,104240,12040
+before,2,2,1,2,"Zombie",false,33,3,6,450,108560,4320
+before,2,2,1,2,"Zombie",false,33,4,6,450,111160,2600
+before,2,2,1,2,"Fallen",false,18,2,3,450,114480,3320
+before,2,2,1,2,"Fallen",false,18,3,6,450,115840,1360
+before,2,2,1,2,"Fallen",false,18,3,6,450,117760,1920
+before,2,2,1,2,"Fallen",false,18,1,3,450,120520,2760
+before,2,2,1,2,"Fallen",false,18,1,3,450,121840,1320
+before,2,2,1,2,"Fallen",false,18,3,3,450,122960,1120
+before,2,2,1,2,"Fallen",false,18,2,3,450,123920,960
+before,2,2,1,2,"Fallen",false,18,1,3,450,127240,3320
+before,2,2,1,2,"Zombie",false,33,3,6,450,165600,38360
+before,2,2,1,2,"Zombie",false,33,2,3,450,169960,4360
+before,2,2,1,2,"Fallen",false,18,6,9,450,184920,14960
+before,2,2,1,2,"Zombie",false,33,2,3,450,185880,960
+before,2,2,1,2,"Zombie",false,33,3,6,450,187560,1680
+before,2,2,1,2,"Fallen",false,18,0,0,450,189080,1520
+before,2,2,1,2,"Fallen",false,18,3,6,450,192480,3400
+before,2,2,1,2,"Fallen",false,18,3,6,450,195800,3320
+before,2,2,1,2,"Fallen",false,18,2,3,450,201000,5200
+before,2,2,1,2,"Fallen",false,18,2,2,450,202120,1120
+before,2,2,1,2,"Fallen",false,18,1,3,450,202680,560
+before,2,2,1,2,"Quill Rat",false,21,4,5,450,206960,4280
+before,2,2,1,2,"Quill Rat",false,21,6,12,450,210320,3360
+before,2,2,1,2,"Quill Rat",false,21,25,39,450,225600,15280
+before,2,2,1,2,"Fallen",false,18,1,3,450,396280,170680
+before,2,2,1,2,"Fallen",false,18,2,3,450,397240,960
+before,2,2,1,2,"Fallen",false,18,2,3,450,398280,1040
+before,2,2,1,2,"Quill Rat",false,21,10,18,450,407040,8760
+before,2,2,1,2,"Quill Rat",false,21,2,3,450,409240,2200
+before,2,2,1,2,"Quill Rat",false,21,2,3,450,411600,2360
+before,2,2,1,2,"Zombie",false,33,7,12,450,417200,5600
+before,2,2,1,2,"Quill Rat",false,21,8,13,450,424560,7360
+before,2,2,1,2,"Quill Rat",false,21,3,2,450,426400,1840
+before,2,2,1,2,"Fallen",false,18,1,3,450,428040,1640
+before,2,2,1,2,"Fallen",false,18,3,6,450,431640,3600
+before,2,2,1,2,"Fallen",false,18,1,3,450,433280,1640
+before,2,2,1,2,"Fallen",false,18,2,3,450,437640,4360
+before,2,2,1,2,"Fallen",false,18,5,9,450,440360,2720
+before,2,2,1,2,"Fallen",false,18,0,0,450,440440,80
+before,2,2,1,2,"Fallen",false,18,3,3,450,441480,1040
+before,2,2,1,2,"Fallen",false,18,1,3,450,443360,1880
+before,2,2,1,2,"Fallen",false,18,2,3,450,443920,560
+before,2,2,1,2,"Fallen",false,18,1,3,450,447640,3720
+before,2,2,1,2,"Fallen",false,18,2,3,450,449960,2320
+before,2,2,1,2,"Fallen",false,18,2,3,450,452960,3000
+before,2,2,1,2,"Quill Rat",false,21,1,3,450,453440,480
+before,2,2,1,2,"Fallen",false,18,6,9,450,457120,3680
+before,2,2,1,2,"Zombie",false,33,6,9,450,461160,4040
+before,2,2,1,2,"Quill Rat",false,21,7,12,450,465640,4480
+before,2,2,1,2,"Quill Rat",false,21,3,6,450,466680,1040
+before,2,2,1,2,"Quill Rat",false,21,2,3,450,472520,5840
+before,2,2,1,2,"Quill Rat",false,21,12,20,450,481080,8560
+before,2,2,1,2,"Quill Rat",false,21,2,2,450,483320,2240
+before,2,2,1,2,"Quill Rat",false,21,5,12,450,489880,6560
+before,2,2,1,2,"Quill Rat",false,21,7,12,450,494520,4640
+before,2,2,1,2,"Fallen",false,18,1,3,450,497000,2480
+before,2,2,1,2,"Fallen",false,18,2,3,450,499280,2280
+before,2,2,1,2,"Fallen",false,18,1,3,450,499840,560
+before,2,2,1,2,"Fallen",false,18,1,3,450,506160,6320
+before,2,2,1,2,"Fallen",false,18,3,3,450,507360,1200
+before,2,2,1,2,"Fallen",false,18,2,3,450,510240,2880
+before,2,2,1,2,"Quill Rat",false,21,2,6,450,512880,2640
+before,2,2,1,2,"Fallen",false,18,2,3,450,515760,2880
+before,2,2,1,2,"Fallen",false,18,5,9,450,518480,2720
+before,2,2,1,2,"Zombie",false,33,2,3,450,519440,960
+before,2,2,1,2,"Quill Rat",false,21,8,11,450,526680,7240
+before,2,2,1,2,"Fallen",false,18,4,6,450,533600,6920
+before,2,2,1,2,"Zombie",false,33,4,5,450,535840,2240
+before,2,2,1,2,"Zombie",false,33,4,6,450,537840,2000
+before,2,2,1,2,"Zombie",false,33,8,9,450,668600,130760
+before,2,2,1,2,"Zombie",false,33,8,12,450,673120,4520
+before,2,3,1,2,"Fallen",false,18,1,3,450,56000,56000
+before,2,3,1,2,"Fallen",false,18,6,9,450,60360,4360
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,65720,5360
+before,2,3,1,2,"Quill Rat",false,21,0,0,450,67120,1400
+before,2,3,1,2,"Fallen",false,18,4,5,450,71240,4120
+before,2,3,1,2,"Fallen",false,18,2,3,450,73040,1800
+before,2,3,1,2,"Quill Rat",false,21,1,3,450,74200,1160
+before,2,3,1,2,"Fallen",false,18,1,0,450,81760,7560
+before,2,3,1,2,"Fallen",false,18,2,3,450,82720,960
+before,2,3,1,2,"Quill Rat",false,21,2,3,450,83760,1040
+before,2,3,1,2,"Fallen",false,18,2,3,450,85480,1720
+before,2,3,1,2,"Fallen",false,18,1,3,450,88120,2640
+before,2,3,1,2,"Fallen",false,18,1,3,450,89520,1400
+before,2,3,1,2,"Fallen",false,18,2,3,450,91320,1800
+before,2,3,1,2,"Fallen",false,18,0,0,450,92360,1040
+before,2,3,1,2,"Fallen",false,18,0,0,450,92360,0
+before,2,3,1,2,"Fallen",false,18,0,0,450,92360,0
+before,2,3,1,2,"Fallen",false,18,3,6,450,97880,5520
+before,2,3,1,2,"Fallen",false,18,2,3,450,99720,1840
+before,2,3,1,2,"Fallen",false,18,3,6,450,102000,2280
+before,2,3,1,2,"Zombie",false,33,8,9,450,115520,13520
+before,2,3,1,2,"Zombie",false,33,4,6,450,117440,1920
+before,2,3,1,2,"Fallen",false,18,1,3,450,121040,3600
+before,2,3,1,2,"Fallen",false,18,4,6,450,122640,1600
+before,2,3,1,2,"Zombie",false,33,1,0,450,123360,720
+before,2,3,1,2,"Fallen",false,18,2,3,450,126080,2720
+before,2,3,1,2,"Fallen",false,18,2,3,450,128400,2320
+before,2,3,1,2,"Fallen",false,18,1,0,450,203520,75120
+before,2,3,1,2,"Fallen",false,18,3,3,450,204640,1120
+before,2,3,1,2,"Fallen",false,18,1,3,450,206360,1720
+before,2,3,1,2,"Fallen",false,18,2,3,450,207840,1480
+before,2,3,1,2,"Fallen",false,18,2,3,450,211160,3320
+before,2,3,1,2,"Fallen",false,18,4,6,450,217120,5960
+before,2,3,1,2,"Fallen",false,18,3,6,450,221880,4760
+before,2,3,1,2,"Fallen",false,18,2,3,450,222840,960
+before,2,3,1,2,"Fallen",false,18,3,6,450,225880,3040
+before,2,3,1,2,"Zombie",false,33,6,9,450,245840,19960
+before,2,3,1,2,"Zombie",false,33,3,6,450,248040,2200
+before,2,3,1,2,"Zombie",false,33,2,3,450,248680,640
+before,2,3,1,2,"Fallen",false,18,1,3,450,249160,480
+before,2,3,1,2,"Zombie",false,33,3,3,450,250680,1520
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,252800,2120
+before,2,3,1,2,"Zombie",false,33,3,3,450,254320,1520
+before,2,3,1,2,"Quill Rat",false,21,2,3,450,255960,1640
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,259200,3240
+before,2,3,1,2,"Fallen",false,18,1,3,450,262640,3440
+before,2,3,1,2,"Fallen",false,18,1,3,450,265680,3040
+before,2,3,1,2,"Fallen",false,18,0,0,450,266720,1040
+before,2,3,1,2,"Quill Rat",false,21,2,6,450,296360,29640
+before,2,3,1,2,"Fallen",false,18,2,2,450,297480,1120
+before,2,3,1,2,"Fallen",false,18,1,3,450,299040,1560
+before,2,3,1,2,"Fallen",false,18,0,0,450,299920,880
+before,2,3,1,2,"Quill Rat",false,21,5,9,450,302240,2320
+before,2,3,1,2,"Quill Rat",false,21,1,3,450,303760,1520
+before,2,3,1,2,"Fallen",false,18,1,3,450,307080,3320
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,311400,4320
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,318200,6800
+before,2,3,1,2,"Fallen",false,18,3,6,450,336400,18200
+before,2,3,1,2,"Fallen",false,18,3,6,450,340560,4160
+before,2,3,1,2,"Zombie",false,33,9,12,450,344560,4000
+before,2,3,1,2,"Quill Rat",false,21,3,6,450,348320,3760
+before,2,3,1,2,"Quill Rat",false,21,9,15,450,355080,6760
+before,2,3,1,2,"Fallen",false,18,1,3,450,485080,130000
+before,2,3,1,2,"Fallen",false,18,0,0,450,486600,1520
+before,2,3,1,2,"Fallen",false,18,2,3,450,503920,17320
+before,2,3,1,2,"Fallen",false,18,1,3,450,505600,1680
+before,2,3,1,2,"Fallen",false,18,2,3,450,508800,3200
+before,2,3,1,2,"Fallen",false,18,1,3,450,509600,800
+before,2,3,1,2,"Fallen",false,18,2,3,450,512040,2440
+before,2,3,1,2,"Fallen",false,18,2,3,450,515840,3800
+before,2,3,1,2,"Fallen",false,18,0,0,450,516000,160
+before,2,4,1,2,"Fallen",false,18,1,3,450,4160,4160
+before,2,4,1,2,"Fallen",false,18,2,3,450,6960,2800
+before,2,4,1,2,"Fallen",false,18,1,3,450,10560,3600
+before,2,4,1,2,"Quill Rat",false,21,3,6,450,15240,4680
+before,2,4,1,2,"Fallen",false,18,1,3,450,17240,2000
+before,2,4,1,2,"Fallen",false,18,2,2,450,18200,960
+before,2,4,1,2,"Quill Rat",false,21,3,3,450,19560,1360
+before,2,4,1,2,"Quill Rat",false,21,0,0,450,20080,520
+before,2,4,1,2,"Fallen",false,18,5,9,450,22880,2800
+before,2,4,1,2,"Fallen",false,18,0,0,450,23200,320
+before,2,4,1,2,"Quill Rat",false,21,6,9,450,26320,3120
+before,2,4,1,2,"Zombie",false,33,2,3,450,27120,800
+before,2,4,1,2,"Quill Rat",false,21,7,9,450,31520,4400
+before,2,4,1,2,"Zombie",false,33,1,0,450,31760,240
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,34600,2840
+before,2,4,1,2,"Fallen",false,18,2,3,450,37320,2720
+before,2,4,1,2,"Fallen",false,18,1,3,450,37480,160
+before,2,4,1,2,"Fallen",false,18,3,3,450,38840,1360
+before,2,4,1,2,"Zombie",false,33,7,12,450,43480,4640
+before,2,4,1,2,"Zombie",false,33,6,9,450,51280,7800
+before,2,4,1,2,"Zombie",false,33,3,6,450,53520,2240
+before,2,4,1,2,"Zombie",false,33,2,3,450,54080,560
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,72640,18560
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,73520,880
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,78040,4520
+before,2,4,1,2,"Zombie",false,33,4,6,450,100240,22200
+before,2,4,1,2,"Zombie",false,33,5,9,450,102960,2720
+before,2,4,1,2,"Zombie",false,33,6,8,450,106480,3520
+before,2,4,1,2,"Quill Rat",false,21,2,2,450,109720,3240
+before,2,4,1,2,"Quill Rat",false,21,0,0,450,110400,680
+before,2,4,1,2,"Quill Rat",false,21,6,9,450,115960,5560
+before,2,4,1,2,"Fallen",false,18,1,3,450,117160,1200
+before,2,4,1,2,"Fallen",false,18,5,9,450,122400,5240
+before,2,4,1,2,"Fallen",false,18,7,12,450,126920,4520
+before,2,4,1,2,"Zombie",false,33,2,3,450,128040,1120
+before,2,4,1,2,"Fallen",false,18,3,6,450,131520,3480
+before,2,4,1,2,"Fallen",false,18,0,0,450,132680,1160
+before,2,4,1,2,"Fallen",false,18,3,6,450,135000,2320
+before,2,4,1,2,"Fallen",false,18,0,0,450,141000,6000
+before,2,4,1,2,"Fallen",false,18,5,9,450,143400,2400
+before,2,4,1,2,"Fallen",false,18,1,0,450,143640,240
+before,2,4,1,2,"Fallen",false,18,2,3,450,146080,2440
+before,2,4,1,2,"Fallen",false,18,2,3,450,149800,3720
+before,2,4,1,2,"Quill Rat",false,21,3,6,450,153440,3640
+before,2,4,1,2,"Quill Rat",false,21,0,0,450,153600,160
+before,2,4,1,2,"Fallen",false,18,2,3,450,155320,1720
+before,2,4,1,2,"Quill Rat",false,21,6,8,450,161120,5800
+before,2,4,1,2,"Quill Rat",false,21,5,9,450,165760,4640
+before,2,4,1,2,"Fallen",false,18,6,12,450,169680,3920
+before,2,4,1,2,"Fallen",false,18,0,0,450,169920,240
+before,2,4,1,2,"Fallen",false,18,3,6,450,172840,2920
+before,2,4,1,2,"Zombie",false,33,5,9,450,177120,4280
+before,2,4,1,2,"Zombie",false,33,3,3,450,178240,1120
+before,2,4,1,2,"Fallen",false,18,2,3,450,182240,4000
+before,2,4,1,2,"Fallen",false,18,1,3,450,182880,640
+before,2,4,1,2,"Fallen",false,18,1,3,450,184160,1280
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,186720,2560
+before,2,4,1,2,"Zombie",false,33,5,9,450,189560,2840
+before,2,4,1,2,"Fallen",false,18,6,12,450,196120,6560
+before,2,4,1,2,"Fallen",false,18,1,3,450,198000,1880
+before,2,4,1,2,"Quill Rat",false,21,3,5,450,200280,2280
+before,2,4,1,2,"Fallen",false,18,2,3,450,203120,2840
+before,2,4,1,2,"Fallen",false,18,3,6,450,206920,3800
+before,2,4,1,2,"Fallen",false,18,2,3,450,211520,4600
+before,2,4,1,2,"Fallen",false,18,3,6,450,213360,1840
+before,2,4,1,2,"Fallen",false,18,4,5,450,214880,1520
+before,2,4,1,2,"Fallen",false,18,1,3,450,217760,2880
+before,2,4,1,2,"Fallen",false,18,1,3,450,222800,5040
+before,2,4,1,2,"Fallen",false,18,5,9,450,226640,3840
+before,2,4,1,2,"Zombie",false,33,5,9,450,231120,4480
+before,2,4,1,2,"Zombie",false,33,2,3,450,233040,1920
+before,2,4,1,2,"Fallen",false,18,1,3,450,237600,4560
+before,2,4,1,2,"Zombie",false,33,14,21,450,249560,11960
+before,2,4,1,2,"Quill Rat",false,21,63,96,450,351280,101720
+before,2,4,1,2,"Zombie",false,33,8,12,450,428600,77320
+before,2,4,1,2,"Quill Rat",false,21,3,6,450,433960,5360
+before,2,4,1,2,"Zombie",false,33,7,9,450,437240,3280
+before,2,4,1,2,"Quill Rat",false,21,4,6,450,439280,2040
+before,2,4,1,2,"Zombie",false,33,1,3,450,440160,880
+before,2,4,1,2,"Fallen",false,18,3,6,450,443520,3360
+before,2,4,1,2,"Fallen",false,18,2,3,450,445200,1680
+before,2,4,1,2,"Fallen",false,18,0,0,450,445360,160
+before,2,4,1,2,"Quill Rat",false,21,5,9,450,449000,3640
+before,2,4,1,2,"Quill Rat",false,21,2,3,450,450560,1560
+before,2,4,1,2,"Fallen",false,18,3,6,450,454360,3800
+before,2,4,1,2,"Quill Rat",false,21,3,6,450,462680,8320
+before,2,4,1,2,"Quill Rat",false,21,5,9,450,466480,3800
+before,2,4,1,2,"Fallen",false,18,1,3,450,470200,3720
+before,2,4,1,2,"Fallen",false,18,4,6,450,473960,3760
+before,2,4,1,2,"Fallen",false,18,3,6,450,476640,2680
+before,2,4,1,2,"Fallen",false,18,0,0,450,479000,2360
+before,2,4,1,2,"Fallen",false,18,4,6,450,480720,1720
+before,2,4,1,2,"Fallen",false,18,2,3,450,482760,2040
+before,2,4,1,2,"Fallen",false,18,5,9,450,487320,4560
+before,2,4,1,2,"Zombie",false,33,3,6,450,493400,6080
+before,2,4,1,2,"Zombie",false,33,5,9,450,496600,3200
+before,2,1,4,5,"Quill Rat",false,21,2,5,450,6000,6000
+before,2,1,4,5,"Quill Rat",false,21,1,4,450,7040,1040
+before,2,1,4,5,"Zombie",false,33,1,5,450,8560,1520
+before,2,1,4,5,"Zombie",false,33,7,13,450,11760,3200
+before,2,1,4,5,"Fallen",false,18,1,5,450,26440,14680
+before,2,1,4,5,"Fallen",false,18,1,0,450,26680,240
+before,2,1,4,5,"Fallen",false,18,0,0,450,26680,0
+before,2,1,4,5,"Fallen",false,18,0,0,450,26920,240
+before,2,1,4,5,"Fallen",false,18,1,5,450,30000,3080
+before,2,1,4,5,"Fallen",false,18,2,0,450,31640,1640
+before,2,1,4,5,"Zombie",false,33,1,5,450,31880,240
+before,2,1,4,5,"Zombie",false,33,2,4,450,33080,1200
+before,2,1,4,5,"Fallen",false,18,1,4,450,35240,2160
+before,2,1,4,5,"Fallen",false,18,9,23,450,40080,4840
+before,2,1,4,5,"Fallen",false,18,2,4,450,41440,1360
+before,2,1,4,5,"Fallen",false,18,6,14,450,44160,2720
+before,2,1,4,5,"Fallen",false,18,3,10,450,49160,5000
+before,2,1,4,5,"Fallen",false,18,0,0,450,49480,320
+before,2,1,4,5,"Fallen",false,18,0,0,450,51720,2240
+before,2,1,4,5,"Fallen",false,18,2,5,450,66200,14480
+before,2,1,4,5,"Zombie",false,33,5,14,450,73760,7560
+before,2,1,4,5,"Quill Rat",false,21,6,17,450,82720,8960
+before,2,1,4,5,"Quill Rat",false,21,0,0,450,84360,1640
+before,2,1,4,5,"Quill Rat",false,21,5,14,450,90160,5800
+before,2,1,4,5,"Quill Rat",false,21,3,4,450,92200,2040
+before,2,1,4,5,"Zombie",false,33,3,10,450,94680,2480
+before,2,1,4,5,"Fallen",false,18,1,5,450,163280,68600
+before,2,1,4,5,"Fallen",false,18,3,5,450,164480,1200
+before,2,1,4,5,"Fallen",false,18,2,4,450,166880,2400
+before,2,1,4,5,"Quill Rat",false,21,2,4,450,174280,7400
+before,2,1,4,5,"Zombie",false,33,2,4,450,180640,6360
+before,2,1,4,5,"Zombie",false,33,1,5,450,182560,1920
+before,2,1,4,5,"Quill Rat",false,21,1,5,450,186000,3440
+before,2,1,4,5,"Fallen",false,18,2,5,450,190440,4440
+before,2,1,4,5,"Fallen",false,18,0,0,450,190680,240
+before,2,1,4,5,"Fallen",false,18,3,9,450,193920,3240
+before,2,1,4,5,"Fallen",false,18,1,5,450,196120,2200
+before,2,1,4,5,"Fallen",false,18,0,0,450,196120,0
+before,2,1,4,5,"Fallen",false,18,1,4,450,197080,960
+before,2,1,4,5,"Quill Rat",false,21,0,0,450,202200,5120
+before,2,1,4,5,"Quill Rat",false,21,2,5,450,203960,1760
+before,2,1,4,5,"Quill Rat",false,21,2,5,450,204840,880
+before,2,1,4,5,"Zombie",false,33,1,5,450,213440,8600
+before,2,1,4,5,"Quill Rat",false,21,2,5,450,219560,6120
+before,2,1,4,5,"Zombie",false,33,5,14,450,227400,7840
+before,2,1,4,5,"Fallen",false,18,1,5,450,251080,23680
+before,2,1,4,5,"Fallen",false,18,1,0,450,251400,320
+before,2,1,4,5,"Fallen",false,18,1,5,450,251800,400
+before,2,1,4,5,"Fallen",false,18,1,0,450,252520,720
+before,2,1,4,5,"Quill Rat",false,21,4,14,450,327720,75200
+before,2,1,4,5,"Zombie",false,33,8,18,450,334080,6360
+before,2,1,4,5,"Zombie",false,33,2,5,450,358160,24080
+before,2,1,4,5,"Quill Rat",false,21,1,5,450,358480,320
+before,2,1,4,5,"Zombie",false,33,4,9,450,366440,7960
+before,2,1,4,5,"Quill Rat",false,21,0,0,450,366840,400
+before,2,1,4,5,"Quill Rat",false,21,0,0,450,368720,1880
+before,2,1,4,5,"Quill Rat",false,21,1,5,450,369120,400
+before,2,1,4,5,"Quill Rat",false,21,2,10,450,378720,9600
+before,2,1,4,5,"Fallen",false,18,2,5,450,383520,4800
+before,2,1,4,5,"Fallen",false,18,0,0,450,383600,80
+before,2,1,4,5,"Fallen",false,18,1,5,450,384320,720
+before,2,1,4,5,"Fallen",false,18,0,0,450,384320,0
+before,2,1,4,5,"Fallen",false,18,2,4,450,385280,960
+before,2,1,4,5,"Fallen",false,18,2,4,450,387680,2400
+before,2,1,4,5,"Quill Rat",false,21,2,9,450,402600,14920
+before,2,1,4,5,"Zombie",false,33,2,4,450,406680,4080
+before,2,1,4,5,"Quill Rat",false,21,2,5,450,409400,2720
+before,2,1,4,5,"Zombie",false,33,2,5,450,411000,1600
+before,2,1,4,5,"Zombie",false,33,1,5,450,413520,2520
+before,2,1,4,5,"Fallen",false,18,1,4,450,415840,2320
+before,2,1,4,5,"Fallen",false,18,0,0,450,416160,320
+before,2,1,4,5,"Fallen",false,18,4,9,450,418160,2000
+before,2,1,4,5,"Fallen",false,18,2,4,450,419840,1680
+before,2,1,4,5,"Quill Rat",false,21,7,18,450,426400,6560
+before,2,1,4,5,"Quill Rat",false,21,1,4,450,427440,1040
+before,2,1,4,5,"Fallen",false,18,0,0,450,428960,1520
+before,2,1,4,5,"Fallen",false,18,2,4,450,429600,640
+before,2,1,4,5,"Fallen",false,18,1,5,450,431240,1640
+before,2,1,4,5,"Fallen",false,18,1,5,450,454720,23480
+before,2,1,4,5,"Fallen",false,18,1,0,450,455040,320
+before,2,1,4,5,"Fallen",false,18,2,4,450,456280,1240
+before,2,1,4,5,"Fallen",false,18,0,0,450,458560,2280
+before,2,1,4,5,"Fallen",false,18,3,8,450,460200,1640
+before,2,1,4,5,"Fallen",false,18,2,5,450,553000,92800
+before,2,1,4,5,"Fallen",false,18,1,5,450,553520,520
+before,2,1,4,5,"Fallen",false,18,0,0,450,554720,1200
+before,2,2,4,5,"Fallen",false,18,1,0,450,480,480
+before,2,2,4,5,"Zombie",false,33,2,5,450,4400,3920
+before,2,2,4,5,"Zombie",false,33,1,4,450,4960,560
+before,2,2,4,5,"Quill Rat",false,21,2,4,450,12280,7320
+before,2,2,4,5,"Fallen",false,18,2,5,450,13760,1480
+before,2,2,4,5,"Fallen",false,18,2,4,450,16080,2320
+before,2,2,4,5,"Fallen",false,18,0,0,450,19880,3800
+before,2,2,4,5,"Fallen",false,18,4,8,450,21400,1520
+before,2,2,4,5,"Fallen",false,18,1,4,450,22400,1000
+before,2,2,4,5,"Quill Rat",false,21,3,5,450,42200,19800
+before,2,2,4,5,"Zombie",false,33,3,8,450,44920,2720
+before,2,2,4,5,"Fallen",false,18,2,4,450,54840,9920
+before,2,2,4,5,"Fallen",false,18,2,4,450,56680,1840
+before,2,2,4,5,"Fallen",false,18,1,4,450,58120,1440
+before,2,2,4,5,"Fallen",false,18,2,5,450,61240,3120
+before,2,2,4,5,"Fallen",false,18,3,8,450,64680,3440
+before,2,2,4,5,"Fallen",false,18,1,5,450,67920,3240
+before,2,2,4,5,"Fallen",false,18,2,0,450,71200,3280
+before,2,2,4,5,"Zombie",false,33,4,9,450,76840,5640
+before,2,2,4,5,"Zombie",false,33,3,10,450,83520,6680
+before,2,2,4,5,"Fallen",false,18,2,5,450,85800,2280
+before,2,2,4,5,"Fallen",false,18,2,4,450,87480,1680
+before,2,2,4,5,"Fallen",false,18,0,0,450,87640,160
+before,2,2,4,5,"Fallen",false,18,0,0,450,87640,0
+before,2,2,4,5,"Fallen",false,18,2,4,450,88280,640
+before,2,2,4,5,"Zombie",false,33,2,5,450,89560,1280
+before,2,2,4,5,"Zombie",false,33,6,12,450,92120,2560
+before,2,2,4,5,"Fallen",false,18,2,5,450,93400,1280
+before,2,2,4,5,"Quill Rat",false,21,0,0,450,96960,3560
+before,2,2,4,5,"Fallen",false,18,2,5,450,97520,560
+before,2,2,4,5,"Quill Rat",false,21,2,4,450,100480,2960
+before,2,2,4,5,"Zombie",false,33,4,10,450,126720,26240
+before,2,2,4,5,"Zombie",false,33,2,5,450,130240,3520
+before,2,2,4,5,"Zombie",false,33,4,10,450,144440,14200
+before,2,2,4,5,"Fallen",false,18,2,9,450,147440,3000
+before,2,2,4,5,"Fallen",false,18,1,0,450,148000,560
+before,2,2,4,5,"Fallen",false,18,2,5,450,149120,1120
+before,2,2,4,5,"Fallen",false,18,0,0,450,149920,800
+before,2,2,4,5,"Fallen",false,18,1,5,450,193120,43200
+before,2,2,4,5,"Quill Rat",false,21,6,17,450,198920,5800
+before,2,2,4,5,"Fallen",false,18,2,4,450,201320,2400
+before,2,2,4,5,"Fallen",false,18,0,0,450,201640,320
+before,2,2,4,5,"Fallen",false,18,1,4,450,202120,480
+before,2,2,4,5,"Quill Rat",false,21,5,13,450,206840,4720
+before,2,2,4,5,"Quill Rat",false,21,1,4,450,208120,1280
+before,2,2,4,5,"Zombie",false,33,3,10,450,215200,7080
+before,2,2,4,5,"Fallen",false,18,1,4,450,217120,1920
+before,2,2,4,5,"Fallen",false,18,1,0,450,217680,560
+before,2,2,4,5,"Fallen",false,18,1,5,450,217840,160
+before,2,2,4,5,"Zombie",false,33,2,5,450,270800,52960
+before,2,2,4,5,"Fallen",false,18,4,13,450,273320,2520
+before,2,2,4,5,"Fallen",false,18,0,0,450,273400,80
+before,2,2,4,5,"Zombie",false,33,1,0,450,273880,480
+before,2,2,4,5,"Fallen",false,18,0,0,450,275040,1160
+before,2,2,4,5,"Fallen",false,18,3,9,450,277720,2680
+before,2,2,4,5,"Fallen",false,18,1,5,450,277800,80
+before,2,2,4,5,"Fallen",false,18,0,0,450,279080,1280
+before,2,2,4,5,"Fallen",false,18,0,0,450,279080,0
+before,2,2,4,5,"Fallen",false,18,2,4,450,279640,560
+before,2,2,4,5,"Fallen",false,18,2,4,450,280600,960
+before,2,2,4,5,"Fallen",false,18,2,5,450,282840,2240
+before,2,2,4,5,"Fallen",false,18,2,5,450,286240,3400
+before,2,2,4,5,"Fallen",false,18,1,4,450,287680,1440
+before,2,2,4,5,"Quill Rat",false,21,2,4,450,293600,5920
+before,2,2,4,5,"Quill Rat",false,21,1,5,450,295000,1400
+before,2,2,4,5,"Fallen",false,18,1,5,450,315320,20320
+before,2,2,4,5,"Fallen",false,18,2,4,450,317280,1960
+before,2,2,4,5,"Fallen",false,18,0,0,450,317680,400
+before,2,2,4,5,"Fallen",false,18,1,5,450,318000,320
+before,2,2,4,5,"Fallen",false,18,2,4,450,321960,3960
+before,2,2,4,5,"Fallen",false,18,0,0,450,322120,160
+before,2,2,4,5,"Fallen",false,18,0,0,450,322360,240
+before,2,2,4,5,"Fallen",false,18,2,4,450,322920,560
+before,2,2,4,5,"Zombie",false,33,6,13,450,339200,16280
+before,2,2,4,5,"Fallen",false,18,1,0,450,346240,7040
+before,2,2,4,5,"Fallen",false,18,1,0,450,346560,320
+before,2,2,4,5,"Fallen",false,18,1,5,450,346880,320
+before,2,2,4,5,"Fallen",false,18,3,9,450,350600,3720
+before,2,2,4,5,"Zombie",false,33,6,12,450,356600,6000
+before,2,2,4,5,"Zombie",false,33,1,5,450,357320,720
+before,2,2,4,5,"Fallen",false,18,1,5,450,359080,1760
+before,2,2,4,5,"Fallen",false,18,4,9,450,360760,1680
+before,2,2,4,5,"Fallen",false,18,2,4,450,363760,3000
+before,2,2,4,5,"Zombie",false,33,3,10,450,379360,15600
+before,2,2,4,5,"Fallen",false,18,3,10,450,397360,18000
+before,2,2,4,5,"Fallen",false,18,0,0,450,397440,80
+before,2,2,4,5,"Zombie",false,33,4,8,450,399360,1920
+before,2,2,4,5,"Fallen",false,18,0,0,450,401240,1880
+before,2,2,4,5,"Fallen",false,18,2,5,450,401800,560
+before,2,2,4,5,"Fallen",false,19,2,4,450,404120,2320
+before,2,2,4,5,"Quill Rat",false,19,0,0,450,404120,0
+before,2,2,4,5,"Fallen",false,18,3,10,450,407320,3200
+before,2,2,4,5,"Zombie",false,33,0,0,450,409440,2120
+before,2,2,4,5,"Zombie",false,33,2,4,450,410320,880
+before,2,2,4,5,"Quill Rat",false,21,1,4,450,412000,1680
+before,2,2,4,5,"Quill Rat",false,21,2,5,450,417240,5240
+before,2,2,4,5,"Quill Rat",false,21,3,9,450,418360,1120
+before,2,2,4,5,"Quill Rat",false,21,3,10,450,423640,5280
+before,2,2,4,5,"Quill Rat",false,21,2,4,450,425440,1800
+before,2,2,4,5,"Zombie",false,33,3,9,450,426800,1360
+before,2,2,4,5,"Quill Rat",false,21,3,10,450,432200,5400
+before,2,2,4,5,"Fallen",false,18,0,0,450,434680,2480
+before,2,2,4,5,"Fallen",false,18,0,0,450,434680,0
+before,2,2,4,5,"Fallen",false,18,0,0,450,434680,0
+before,2,3,4,5,"Fallen",false,18,1,5,450,33880,33880
+before,2,3,4,5,"Fallen",false,18,1,0,450,34040,160
+before,2,3,4,5,"Fallen",false,18,0,0,450,34040,0
+before,2,3,4,5,"Fallen",false,18,3,9,450,36760,2720
+before,2,3,4,5,"Quill Rat",false,21,7,17,450,62680,25920
+before,2,3,4,5,"Quill Rat",false,21,2,9,450,65880,3200
+before,2,3,4,5,"Quill Rat",false,21,2,4,450,72640,6760
+before,2,3,4,5,"Fallen",false,18,2,5,450,75920,3280
+before,2,3,4,5,"Fallen",false,18,2,5,450,76880,960
+before,2,3,4,5,"Fallen",false,18,1,4,450,79040,2160
+before,2,3,4,5,"Fallen",false,18,1,5,450,85560,6520
+before,2,3,4,5,"Fallen",false,18,0,0,450,85560,0
+before,2,3,4,5,"Fallen",false,18,4,9,450,88520,2960
+before,2,3,4,5,"Fallen",false,18,0,0,450,88520,0
+before,2,3,4,5,"Fallen",false,18,2,4,450,91040,2520
+before,2,3,4,5,"Fallen",false,18,1,5,450,92040,1000
+before,2,3,4,5,"Zombie",false,33,7,17,450,99560,7520
+before,2,3,4,5,"Quill Rat",false,21,4,8,450,108920,9360
+before,2,3,4,5,"Quill Rat",false,21,3,10,450,110520,1600
+before,2,3,4,5,"Zombie",false,33,5,13,450,115160,4640
+before,2,3,4,5,"Fallen",false,18,2,5,450,117000,1840
+before,2,3,4,5,"Fallen",false,18,1,4,450,118400,1400
+before,2,3,4,5,"Fallen",false,18,0,0,450,122960,4560
+before,2,3,4,5,"Fallen",false,18,0,0,450,122960,0
+before,2,3,4,5,"Zombie",false,33,2,5,450,124800,1840
+before,2,3,4,5,"Zombie",false,33,4,9,450,132720,7920
+before,2,3,4,5,"Fallen",false,18,0,0,450,133640,920
+before,2,3,4,5,"Fallen",false,18,0,0,450,133640,0
+before,2,3,4,5,"Zombie",false,23,3,10,450,136280,2640
+before,2,3,4,5,"Fallen",false,23,0,0,450,136280,0
+before,2,3,4,5,"Fallen",false,23,0,0,450,136280,0
+before,2,3,4,5,"Fallen",false,18,0,0,450,137560,1280
+before,2,3,4,5,"Quill Rat",false,21,3,10,450,138840,1280
+before,2,3,4,5,"Fallen",false,18,2,4,450,141640,2800
+before,2,3,4,5,"Quill Rat",false,21,1,4,450,142840,1200
+before,2,3,4,5,"Quill Rat",false,21,5,14,450,146240,3400
+before,2,3,4,5,"Fallen",false,18,1,0,450,146720,480
+before,2,3,4,5,"Fallen",false,18,3,9,450,150160,3440
+before,2,3,4,5,"Quill Rat",false,21,1,5,450,151480,1320
+before,2,3,4,5,"Fallen",false,18,2,4,450,159720,8240
+before,2,3,4,5,"Fallen",false,18,1,4,450,162840,3120
+before,2,3,4,5,"Fallen",false,18,1,0,450,163160,320
+before,2,3,4,5,"Fallen",false,18,1,5,450,167720,4560
+before,2,3,4,5,"Fallen",false,18,2,0,450,202360,34640
+before,2,3,4,5,"Quill Rat",false,21,2,4,450,204080,1720
+before,2,3,4,5,"Fallen",false,18,1,4,450,204560,480
+before,2,3,4,5,"Fallen",false,18,1,5,450,207080,2520
+before,2,3,4,5,"Fallen",false,18,1,0,450,244640,37560
+before,2,3,4,5,"Fallen",false,18,3,5,450,245680,1040
+before,2,3,4,5,"Fallen",false,18,0,0,450,245760,80
+before,2,3,4,5,"Fallen",false,18,1,5,450,247000,1240
+before,2,3,4,5,"Zombie",false,33,1,5,450,250800,3800
+before,2,3,4,5,"Fallen",false,18,2,0,450,330320,79520
+before,2,3,4,5,"Fallen",false,18,0,0,450,330720,400
+before,2,3,4,5,"Fallen",false,18,1,5,450,330880,160
+before,2,3,4,5,"Fallen",false,18,1,4,450,332760,1880
+before,2,3,4,5,"Fallen",false,18,1,0,450,333000,240
+before,2,3,4,5,"Fallen",false,18,2,5,450,334040,1040
+before,2,3,4,5,"Fallen",false,18,1,4,450,334440,400
+before,2,3,4,5,"Fallen",false,18,0,0,450,335600,1160
+before,2,3,4,5,"Fallen",false,18,0,0,450,336400,800
+before,2,3,4,5,"Fallen",false,18,2,4,450,337680,1280
+before,2,3,4,5,"Fallen",false,18,1,5,450,344600,6920
+before,2,3,4,5,"Fallen",false,18,2,4,450,345480,880
+before,2,3,4,5,"Fallen",false,18,2,5,450,347080,1600
+before,2,3,4,5,"Zombie",false,33,6,14,450,351920,4840
+before,2,3,4,5,"Fallen",false,18,1,5,450,368760,16840
+before,2,3,4,5,"Fallen",false,18,2,4,450,370360,1600
+before,2,3,4,5,"Fallen",false,18,0,0,450,370600,240
+before,2,3,4,5,"Fallen",false,18,2,9,450,372000,1400
+before,2,3,4,5,"Fallen",false,18,0,0,450,372800,800
+before,2,3,4,5,"Fallen",false,18,0,0,450,372800,0
+before,2,3,4,5,"Fallen",false,18,0,0,450,372800,0
+before,2,3,4,5,"Fallen",false,18,0,0,450,372800,0
+before,2,3,4,5,"Zombie",false,66,5,9,450,394880,22080
+before,2,3,4,5,"Quill Rat",false,21,4,8,450,399920,5040
+before,2,3,4,5,"Quill Rat",false,21,1,5,450,403080,3160
+before,2,3,4,5,"Quill Rat",false,21,0,0,450,403640,560
+before,2,3,4,5,"Fallen",false,18,3,5,450,422720,19080
+before,2,3,4,5,"Fallen",false,18,1,0,450,422800,80
+before,2,3,4,5,"Fallen",false,18,0,0,450,423200,400
+before,2,3,4,5,"Fallen",false,18,2,4,450,424160,960
+before,2,3,4,5,"Fallen",false,18,2,4,450,432400,8240
+before,2,3,4,5,"Fallen",false,18,0,0,450,432560,160
+before,2,3,4,5,"Fallen",false,18,0,0,450,432800,240
+before,2,3,4,5,"Fallen",false,18,1,5,450,432960,160
+before,2,3,4,5,"Quill Rat",false,21,2,5,450,435600,2640
+before,2,3,4,5,"Quill Rat",false,21,0,0,450,435680,80
+before,2,3,4,5,"Quill Rat",false,21,4,14,450,440160,4480
+before,2,3,4,5,"Quill Rat",false,21,2,8,450,447040,6880
+before,2,3,4,5,"Fallen",false,18,1,5,450,522680,75640
+before,2,3,4,5,"Fallen",false,18,2,5,450,615680,93000
+before,2,3,4,5,"Fallen",false,18,2,5,450,618480,2800
+before,2,3,4,5,"Fallen",false,18,1,4,450,619360,880
+before,2,3,4,5,"Fallen",false,18,3,10,450,623040,3680
+before,2,3,4,5,"Fallen",false,18,0,0,450,623120,80
+before,2,3,4,5,"Fallen",false,18,1,0,450,623520,400
+before,2,3,4,5,"Fallen",false,18,0,0,450,623680,160
+before,2,4,4,5,"Fallen",false,18,1,5,450,4680,4680
+before,2,4,4,5,"Fallen",false,18,1,5,450,7160,2480
+before,2,4,4,5,"Fallen",false,18,2,9,450,9800,2640
+before,2,4,4,5,"Quill Rat",false,21,1,5,450,12400,2600
+before,2,4,4,5,"Fallen",false,18,2,4,450,12960,560
+before,2,4,4,5,"Quill Rat",false,21,2,4,450,16400,3440
+before,2,4,4,5,"Quill Rat",false,21,0,0,450,16840,440
+before,2,4,4,5,"Zombie",false,33,3,9,450,18680,1840
+before,2,4,4,5,"Fallen",false,18,1,5,450,20400,1720
+before,2,4,4,5,"Zombie",false,33,1,0,450,21200,800
+before,2,4,4,5,"Fallen",false,18,0,0,450,22720,1520
+before,2,4,4,5,"Zombie",false,33,2,0,450,33320,10600
+before,2,4,4,5,"Zombie",false,33,3,9,450,34600,1280
+before,2,4,4,5,"Zombie",false,33,4,9,450,36520,1920
+before,2,4,4,5,"Fallen",false,18,2,5,450,41800,5280
+before,2,4,4,5,"Fallen",false,18,2,5,450,43880,2080
+before,2,4,4,5,"Fallen",false,18,0,0,450,46800,2920
+before,2,4,4,5,"Fallen",false,18,0,0,450,46800,0
+before,2,4,4,5,"Quill Rat",false,21,3,10,450,48240,1440
+before,2,4,4,5,"Zombie",false,33,3,4,450,49600,1360
+before,2,4,4,5,"Fallen",false,18,1,4,450,51280,1680
+before,2,4,4,5,"Fallen",false,18,3,10,450,53120,1840
+before,2,4,4,5,"Fallen",false,18,0,0,450,53280,160
+before,2,4,4,5,"Fallen",false,18,0,0,450,54800,1520
+before,2,4,4,5,"Fallen",false,18,0,0,450,54800,0
+before,2,4,4,5,"Fallen",false,18,1,4,450,55600,800
+before,2,4,4,5,"Quill Rat",false,21,3,5,450,57080,1480
+before,2,4,4,5,"Quill Rat",false,21,0,0,450,57480,400
+before,2,4,4,5,"Zombie",false,33,2,5,450,59640,2160
+before,2,4,4,5,"Zombie",false,33,3,8,450,61240,1600
+before,2,4,4,5,"Fallen",false,18,2,5,450,65280,4040
+before,2,4,4,5,"Zombie",false,33,2,4,450,69320,4040
+before,2,4,4,5,"Zombie",false,33,3,9,450,71360,2040
+before,2,4,4,5,"Zombie",false,27,1,4,450,73960,2600
+before,2,4,4,5,"Fallen",false,27,0,0,450,73960,0
+before,2,4,4,5,"Fallen",false,27,0,0,450,73960,0
+before,2,4,4,5,"Zombie",false,27,0,0,450,73960,0
+before,2,4,4,5,"Zombie",false,27,0,0,450,73960,0
+before,2,4,4,5,"Zombie",false,33,6,13,450,77920,3960
+before,2,4,4,5,"Zombie",false,33,3,9,450,80160,2240
+before,2,4,4,5,"Quill Rat",false,21,3,10,450,84880,4720
+before,2,4,4,5,"Quill Rat",false,21,3,8,450,87160,2280
+before,2,4,4,5,"Zombie",false,33,1,5,450,88200,1040
+before,2,4,4,5,"Zombie",false,33,4,8,450,90960,2760
+before,2,4,4,5,"Fallen",false,18,1,5,450,96680,5720
+before,2,4,4,5,"Fallen",false,18,1,0,450,96760,80
+before,2,4,4,5,"Fallen",false,18,0,0,450,96920,160
+before,2,4,4,5,"Fallen",false,18,3,9,450,99800,2880
+before,2,4,4,5,"Quill Rat",false,21,2,5,450,105760,5960
+before,2,4,4,5,"Quill Rat",false,21,6,18,450,109840,4080
+before,2,4,4,5,"Fallen",false,18,1,5,450,112800,2960
+before,2,4,4,5,"Fallen",false,18,1,0,450,112880,80
+before,2,4,4,5,"Fallen",false,18,2,5,450,116040,3160
+before,2,4,4,5,"Zombie",false,33,5,14,450,122120,6080
+before,2,4,4,5,"Zombie",false,33,1,5,450,125680,3560
+before,2,4,4,5,"Zombie",false,33,1,4,450,127120,1440
+before,2,4,4,5,"Quill Rat",false,21,3,9,450,131920,4800
+before,2,4,4,5,"Zombie",false,33,0,0,450,136160,4240
+before,2,4,4,5,"Quill Rat",false,21,3,9,450,137840,1680
+before,2,4,4,5,"Zombie",false,33,3,10,450,144760,6920
+before,2,4,4,5,"Zombie",false,33,2,5,450,237840,93080
+before,2,4,4,5,"Zombie",false,33,2,5,450,239080,1240
+before,2,4,4,5,"Quill Rat",false,21,2,4,450,243760,4680
+before,2,4,4,5,"Quill Rat",false,21,1,5,450,244680,920
+before,2,4,4,5,"Quill Rat",false,18,0,0,450,245720,1040
+before,2,4,4,5,"Fallen",false,18,0,0,450,245720,0
+before,2,4,4,5,"Fallen",false,18,0,0,450,245720,0
+before,2,4,4,5,"Fallen",false,18,0,0,450,245720,0
+before,2,4,4,5,"Fallen",false,21,2,4,450,246280,560
+before,2,4,4,5,"Quill Rat",false,21,2,5,450,247800,1520
+before,2,4,4,5,"Fallen",false,18,1,5,450,253240,5440
+before,2,4,4,5,"Fallen",false,18,1,4,450,254400,1160
+before,2,4,4,5,"Fallen",false,18,1,0,450,254800,400
+before,2,4,4,5,"Quill Rat",false,21,0,0,450,255600,800
+before,2,4,4,5,"Fallen",false,18,2,5,450,258520,2920
+before,2,4,4,5,"Fallen",false,18,0,0,450,258600,80
+before,2,4,4,5,"Fallen",false,18,5,14,450,261840,3240
+before,2,4,4,5,"Fallen",false,18,2,5,450,267000,5160
+before,2,4,4,5,"Fallen",false,18,0,0,450,267400,400
+before,2,4,4,5,"Fallen",false,18,2,5,450,267960,560
+before,2,4,4,5,"Fallen",false,18,1,4,450,268760,800
+before,2,4,4,5,"Fallen",false,18,1,0,450,269400,640
+before,2,4,4,5,"Fallen",false,18,1,4,450,270320,920
+before,2,4,4,5,"Fallen",false,18,1,5,450,270800,480
+before,2,4,4,5,"Quill Rat",false,21,4,9,450,274200,3400
+before,2,4,4,5,"Zombie",false,33,6,13,450,279360,5160
+before,2,4,4,5,"Quill Rat",false,21,6,12,450,282680,3320
+before,2,4,4,5,"Zombie",false,33,1,5,450,282760,80
+before,2,4,4,5,"Zombie",false,33,1,5,450,287640,4880
+before,2,4,4,5,"Quill Rat",false,21,6,19,450,297920,10280
+before,2,4,4,5,"Fallen",false,18,1,5,450,331360,33440
+before,2,4,4,5,"Fallen",false,18,1,0,450,331600,240
+before,2,4,4,5,"Fallen",false,18,1,5,450,333400,1800
+before,2,4,4,5,"Quill Rat",false,21,3,10,450,338440,5040
+before,2,4,4,5,"Quill Rat",false,21,2,5,450,467480,129040
+before,2,1,8,9,"Quill Rat",false,9,2,14,450,7240,7240
+before,2,1,8,9,"Quill Rat",false,9,3,13,450,9840,2600
+before,2,1,8,9,"Zombie",false,14,1,6,450,11280,1440
+before,2,1,8,9,"Zombie",false,14,1,7,450,12480,1200
+before,2,1,8,9,"Zombie",false,14,2,6,450,16600,4120
+before,2,1,8,9,"Zombie",false,14,1,6,450,16680,80
+before,2,1,8,9,"Quill Rat",false,9,2,7,450,23560,6880
+before,2,1,8,9,"Quill Rat",false,9,2,7,450,25840,2280
+before,2,1,8,9,"Fallen",false,7,1,6,450,27800,1960
+before,2,1,8,9,"Fallen",false,7,4,14,450,31720,3920
+before,2,1,8,9,"Fallen",false,7,1,6,450,33280,1560
+before,2,1,8,9,"Quill Rat",false,9,3,12,450,39200,5920
+before,2,1,8,9,"Quill Rat",false,9,1,7,450,40720,1520
+before,2,1,8,9,"Zombie",false,14,1,7,450,49680,8960
+before,2,1,8,9,"Zombie",false,28,2,6,450,52520,2840
+before,2,1,8,9,"Zombie",false,14,1,6,450,53040,520
+before,2,1,8,9,"Fallen",false,7,1,7,450,84040,31000
+before,2,1,8,9,"Fallen",false,7,0,0,450,84840,800
+before,2,1,8,9,"Fallen",false,7,1,6,450,85880,1040
+before,2,1,8,9,"Zombie",false,14,3,13,450,88840,2960
+before,2,1,8,9,"Zombie",false,14,0,0,450,90000,1160
+before,2,1,8,9,"Zombie",false,14,4,14,450,91920,1920
+before,2,1,8,9,"Zombie",false,14,2,6,450,98320,6400
+before,2,1,8,9,"Fallen",false,7,1,6,450,103200,4880
+before,2,1,8,9,"Fallen",false,7,1,7,450,105680,2480
+before,2,1,8,9,"Fallen",false,7,0,0,450,106960,1280
+before,2,1,8,9,"Fallen",false,7,0,0,450,106960,0
+before,2,1,8,9,"Quill Rat",false,9,3,13,450,110960,4000
+before,2,1,8,9,"Quill Rat",false,9,0,0,450,112120,1160
+before,2,1,8,9,"Quill Rat",false,9,2,6,450,120480,8360
+before,2,1,8,9,"Fallen",false,7,0,0,450,121880,1400
+before,2,1,8,9,"Fallen",false,7,0,0,450,121880,0
+before,2,1,8,9,"Fallen",false,7,1,7,450,123120,1240
+before,2,1,8,9,"Zombie",false,14,3,14,450,126520,3400
+before,2,1,8,9,"Zombie",false,14,0,0,450,127440,920
+before,2,1,8,9,"Zombie",false,14,2,7,450,132640,5200
+before,2,1,8,9,"Zombie",false,14,6,19,450,135280,2640
+before,2,1,8,9,"Quill Rat",false,9,0,0,450,143760,8480
+before,2,1,8,9,"Quill Rat",false,9,2,6,450,144400,640
+before,2,1,8,9,"Zombie",false,14,4,20,450,164600,20200
+before,2,1,8,9,"Quill Rat",false,9,2,14,450,170680,6080
+before,2,1,8,9,"Zombie",false,14,2,7,450,174160,3480
+before,2,1,8,9,"Quill Rat",false,9,1,6,450,174640,480
+before,2,1,8,9,"Quill Rat",false,9,3,12,450,177720,3080
+before,2,1,8,9,"Fallen",false,7,2,7,450,336280,158560
+before,2,1,8,9,"Fallen",false,7,0,0,450,336360,80
+before,2,1,8,9,"Fallen",false,7,3,13,450,339240,2880
+before,2,1,8,9,"Quill Rat",false,9,3,13,450,343640,4400
+before,2,2,8,9,"Fallen",false,7,1,0,450,480,480
+before,2,2,8,9,"Zombie",false,14,2,7,450,4400,3920
+before,2,2,8,9,"Zombie",false,14,1,6,450,4880,480
+before,2,2,8,9,"Quill Rat",false,9,1,7,450,17760,12880
+before,2,2,8,9,"Fallen",false,7,1,6,450,20480,2720
+before,2,2,8,9,"Fallen",false,7,1,6,450,22280,1800
+before,2,2,8,9,"Fallen",false,7,3,13,450,26600,4320
+before,2,2,8,9,"Fallen",false,7,2,0,450,31960,5360
+before,2,2,8,9,"Fallen",false,7,2,7,450,33800,1840
+before,2,2,8,9,"Zombie",false,14,1,7,450,47360,13560
+before,2,2,8,9,"Fallen",false,7,4,12,450,51320,3960
+before,2,2,8,9,"Zombie",false,14,0,0,450,51640,320
+before,2,2,8,9,"Fallen",false,7,0,0,450,52680,1040
+before,2,2,8,9,"Fallen",false,7,2,6,450,53400,720
+before,2,2,8,9,"Quill Rat",false,9,3,13,450,58960,5560
+before,2,2,8,9,"Quill Rat",false,9,0,0,450,59200,240
+before,2,2,8,9,"Zombie",false,14,5,20,450,89160,29960
+before,2,2,8,9,"Quill Rat",false,9,3,14,450,93640,4480
+before,2,2,8,9,"Fallen",false,7,2,7,450,100040,6400
+before,2,2,8,9,"Fallen",false,7,1,6,450,102680,2640
+before,2,2,8,9,"Fallen",false,7,2,6,450,103480,800
+before,2,2,8,9,"Fallen",false,7,1,6,450,103800,320
+before,2,2,8,9,"Fallen",false,7,7,25,450,117680,13880
+before,2,2,8,9,"Quill Rat",false,9,47,155,450,150560,32880
+before,2,2,8,9,"Quill Rat",false,9,0,0,450,152520,1960
+before,2,2,8,9,"Fallen",false,7,1,7,450,154600,2080
+before,2,2,8,9,"Fallen",false,7,4,13,450,157640,3040
+before,2,2,8,9,"Quill Rat",false,9,2,7,450,162200,4560
+before,2,2,8,9,"Quill Rat",false,9,2,7,450,170400,8200
+before,2,2,8,9,"Quill Rat",false,9,0,0,450,171200,800
+before,2,2,8,9,"Quill Rat",false,9,4,14,450,174400,3200
+before,2,2,8,9,"Zombie",false,14,2,7,450,179280,4880
+before,2,2,8,9,"Zombie",false,14,1,7,450,179520,240
+before,2,2,8,9,"Zombie",false,14,3,13,450,186360,6840
+before,2,2,8,9,"Quill Rat",false,9,3,14,450,195920,9560
+before,2,2,8,9,"Fallen",false,7,0,0,450,196000,80
+before,2,2,8,9,"Quill Rat",false,7,0,0,450,196920,920
+before,2,2,8,9,"Fallen",false,7,0,0,450,196920,0
+before,2,2,8,9,"Fallen",false,7,0,0,450,196920,0
+before,2,2,8,9,"Fallen",false,9,2,7,450,199560,2640
+before,2,2,8,9,"Fallen",false,7,0,0,450,199640,80
+before,2,2,8,9,"Fallen",false,7,2,6,450,201000,1360
+before,2,2,8,9,"Fallen",false,7,1,6,450,204400,3400
+before,2,2,8,9,"Fallen",false,7,0,0,450,204400,0
+before,2,2,8,9,"Zombie",false,14,2,7,450,279840,75440
+before,2,2,8,9,"Zombie",false,14,2,7,450,283080,3240
+before,2,2,8,9,"Fallen",false,7,2,7,450,310880,27800
+before,2,2,8,9,"Fallen",false,7,0,0,450,310960,80
+before,2,2,8,9,"Fallen",false,7,1,7,450,311280,320
+before,2,2,8,9,"Fallen",false,7,1,6,450,314120,2840
+before,2,2,8,9,"Fallen",false,7,1,0,450,314200,80
+before,2,2,8,9,"Fallen",false,7,1,7,450,314880,680
+before,2,2,8,9,"Fallen",false,7,0,0,450,314960,80
+before,2,2,8,9,"Quill Rat",false,9,2,7,450,320040,5080
+before,2,2,8,9,"Zombie",false,14,4,13,450,325560,5520
+before,2,2,8,9,"Zombie",false,14,3,12,450,326840,1280
+before,2,2,8,9,"Zombie",false,14,2,6,450,329480,2640
+before,2,2,8,9,"Zombie",false,14,0,0,450,329560,80
+before,2,2,8,9,"Zombie",false,14,0,0,450,330240,680
+before,2,2,8,9,"Zombie",false,14,2,7,450,331480,1240
+before,2,2,8,9,"Zombie",false,14,4,14,450,337200,5720
+before,2,2,8,9,"Fallen",false,8,2,0,450,372720,35520
+before,2,2,8,9,"Quill Rat",false,8,0,0,450,372720,0
+before,2,2,8,9,"Zombie",false,14,2,6,450,374280,1560
+before,2,2,8,9,"Zombie",false,14,1,7,450,374880,600
+before,2,2,8,9,"Zombie",false,14,2,6,450,376680,1800
+before,2,2,8,9,"Quill Rat",false,9,2,7,450,383640,6960
+before,2,2,8,9,"Fallen",false,7,2,7,450,386400,2760
+before,2,2,8,9,"Fallen",false,7,0,0,450,386560,160
+before,2,2,8,9,"Zombie",false,14,1,6,450,387240,680
+before,2,2,8,9,"Quill Rat",false,9,4,21,450,395120,7880
+before,2,2,8,9,"Quill Rat",false,9,2,6,450,396920,1800
+before,2,2,8,9,"Zombie",false,14,2,7,450,398200,1280
+before,2,2,8,9,"Quill Rat",false,9,2,13,450,405680,7480
+before,2,2,8,9,"Quill Rat",false,9,2,6,450,407320,1640
+before,2,2,8,9,"Fallen",false,7,2,12,450,409240,1920
+before,2,2,8,9,"Fallen",false,7,1,6,450,410400,1160
+before,2,2,8,9,"Fallen",false,7,0,0,450,410480,80
+before,2,2,8,9,"Fallen",false,7,0,0,450,410640,160
+before,2,2,8,9,"Fallen",false,7,1,0,450,410720,80
+before,2,2,8,9,"Fallen",false,7,1,7,450,411600,880
+before,2,2,8,9,"Fallen",false,7,0,0,450,412520,920
+before,2,2,8,9,"Fallen",false,7,1,7,450,436240,23720
+before,2,2,8,9,"Fallen",false,7,0,0,450,436240,0
+before,2,2,8,9,"Fallen",false,7,2,12,450,439760,3520
+before,2,2,8,9,"Quill Rat",false,9,4,12,450,442800,3040
+before,2,2,8,9,"Quill Rat",false,9,1,7,450,443120,320
+before,2,2,8,9,"Fallen",false,7,0,0,450,448480,5360
+before,2,2,8,9,"Fallen",false,7,1,6,450,448960,480
+before,2,2,8,9,"Fallen",false,7,3,7,450,450160,1200
+before,2,2,8,9,"Fallen",false,7,0,0,450,450320,160
+before,2,2,8,9,"Fallen",false,7,1,6,450,452240,1920
+before,2,2,8,9,"Fallen",false,7,2,7,450,473640,21400
+before,2,2,8,9,"Fallen",false,7,0,0,450,473800,160
+before,2,2,8,9,"Fallen",false,7,1,7,450,476520,2720
+before,2,2,8,9,"Fallen",false,7,2,6,450,477160,640
+before,2,2,8,9,"Fallen",false,7,2,7,450,481640,4480
+before,2,2,8,9,"Fallen",false,7,1,6,450,482240,600
+before,2,2,8,9,"Zombie",false,14,1,0,450,482800,560
+before,2,2,8,9,"Quill Rat",false,9,2,7,450,643320,160520
+before,2,2,8,9,"Fallen",false,7,1,7,450,673400,30080
+before,2,3,8,9,"Fallen",false,7,1,7,450,33880,33880
+before,2,3,8,9,"Fallen",false,7,1,0,450,34040,160
+before,2,3,8,9,"Fallen",false,7,0,0,450,34040,0
+before,2,3,8,9,"Fallen",false,7,3,13,450,36760,2720
+before,2,3,8,9,"Quill Rat",false,9,5,19,450,61720,24960
+before,2,3,8,9,"Quill Rat",false,9,2,6,450,64240,2520
+before,2,3,8,9,"Quill Rat",false,9,2,7,450,78120,13880
+before,2,3,8,9,"Fallen",false,7,1,7,450,81320,3200
+before,2,3,8,9,"Fallen",false,7,2,6,450,82280,960
+before,2,3,8,9,"Fallen",false,7,2,7,450,84920,2640
+before,2,3,8,9,"Fallen",false,7,1,7,450,90800,5880
+before,2,3,8,9,"Fallen",false,7,0,0,450,90800,0
+before,2,3,8,9,"Fallen",false,7,1,6,450,93360,2560
+before,2,3,8,9,"Fallen",false,7,0,0,450,93920,560
+before,2,3,8,9,"Fallen",false,7,0,0,450,94480,560
+before,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+before,2,3,8,9,"Fallen",false,7,2,7,450,96880,2400
+before,2,3,8,9,"Fallen",false,7,1,6,450,97280,400
+before,2,3,8,9,"Fallen",false,7,3,12,450,100120,2840
+before,2,3,8,9,"Zombie",false,14,3,12,450,105080,4960
+before,2,3,8,9,"Quill Rat",false,9,3,12,450,114920,9840
+before,2,3,8,9,"Quill Rat",false,9,2,0,450,116600,1680
+before,2,3,8,9,"Zombie",false,14,1,7,450,119880,3280
+before,2,3,8,9,"Zombie",false,14,0,0,450,120560,680
+before,2,3,8,9,"Fallen",false,7,1,7,450,123200,2640
+before,2,3,8,9,"Fallen",false,7,2,12,450,125960,2760
+before,2,3,8,9,"Fallen",false,7,0,0,450,126280,320
+before,2,3,8,9,"Fallen",false,7,0,0,450,127080,800
+before,2,3,8,9,"Fallen",false,7,0,0,450,128360,1280
+before,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+before,2,3,8,9,"Zombie",false,14,2,7,450,129080,720
+before,2,3,8,9,"Quill Rat",false,9,0,0,450,131560,2480
+before,2,3,8,9,"Zombie",false,14,3,13,450,132680,1120
+before,2,3,8,9,"Fallen",false,7,0,0,450,134680,2000
+before,2,3,8,9,"Fallen",false,7,1,7,450,134760,80
+before,2,3,8,9,"Fallen",false,7,0,0,450,135640,880
+before,2,3,8,9,"Quill Rat",false,8,2,6,450,137480,1840
+before,2,3,8,9,"Fallen",false,8,0,0,450,137480,0
+before,2,3,8,9,"Quill Rat",false,9,3,14,450,139680,2200
+before,2,3,8,9,"Quill Rat",false,9,0,0,450,142720,3040
+before,2,3,8,9,"Fallen",false,7,1,7,450,146760,4040
+before,2,3,8,9,"Fallen",false,7,1,0,450,146840,80
+before,2,3,8,9,"Fallen",false,7,1,6,450,151960,5120
+before,2,3,8,9,"Fallen",false,7,2,7,450,156560,4600
+before,2,3,8,9,"Fallen",false,7,0,0,450,156560,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,156800,240
+before,2,3,8,9,"Fallen",false,7,2,0,450,189120,32320
+before,2,3,8,9,"Fallen",false,7,0,0,450,189120,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,189120,0
+before,2,3,8,9,"Quill Rat",false,9,3,13,450,190560,1440
+before,2,3,8,9,"Fallen",false,7,1,0,450,228600,38040
+before,2,3,8,9,"Fallen",false,7,0,0,450,228600,0
+before,2,3,8,9,"Fallen",false,7,1,0,450,228760,160
+before,2,3,8,9,"Fallen",false,7,0,0,450,228760,0
+before,2,3,8,9,"Zombie",false,14,1,7,450,232080,3320
+before,2,3,8,9,"Fallen",false,7,1,0,450,311760,79680
+before,2,3,8,9,"Fallen",false,7,0,0,450,311760,0
+before,2,3,8,9,"Fallen",false,7,1,0,450,312160,400
+before,2,3,8,9,"Fallen",false,7,0,0,450,312240,80
+before,2,3,8,9,"Fallen",false,7,1,7,450,315080,2840
+before,2,3,8,9,"Fallen",false,7,2,6,450,320640,5560
+before,2,3,8,9,"Fallen",false,7,0,0,450,321320,680
+before,2,3,8,9,"Zombie",false,10,3,13,450,323920,2600
+before,2,3,8,9,"Fallen",false,10,0,0,450,323920,0
+before,2,3,8,9,"Fallen",false,7,1,0,450,344560,20640
+before,2,3,8,9,"Fallen",false,7,2,6,450,346120,1560
+before,2,3,8,9,"Fallen",false,7,1,6,450,352000,5880
+before,2,3,8,9,"Fallen",false,7,2,7,450,353680,1680
+before,2,3,8,9,"Fallen",false,7,1,6,450,354080,400
+before,2,3,8,9,"Fallen",false,7,0,0,450,355120,1040
+before,2,3,8,9,"Fallen",false,7,0,0,450,355120,0
+before,2,3,8,9,"Fallen",false,7,0,0,450,355120,0
+before,2,3,8,9,"Fallen",false,7,1,6,450,356040,920
+before,2,3,8,9,"Fallen",false,7,1,0,450,356520,480
+before,2,3,8,9,"Zombie",false,14,3,13,450,359040,2520
+before,2,3,8,9,"Zombie",false,14,5,20,450,373920,14880
+before,2,3,8,9,"Quill Rat",false,9,2,13,450,376680,2760
+before,2,3,8,9,"Quill Rat",false,9,0,0,450,377840,1160
+before,2,3,8,9,"Quill Rat",false,9,0,0,450,377840,0
+before,2,3,8,9,"Fallen",false,7,1,7,450,379840,2000
+before,2,3,8,9,"Fallen",false,7,3,6,450,380960,1120
+before,2,3,8,9,"Fallen",false,7,2,7,450,382320,1360
+before,2,3,8,9,"Fallen",false,7,2,6,450,383680,1360
+before,2,3,8,9,"Quill Rat",false,9,2,7,450,386440,2760
+before,2,3,8,9,"Fallen",false,7,2,7,450,392280,5840
+before,2,3,8,9,"Fallen",false,7,0,0,450,392440,160
+before,2,3,8,9,"Quill Rat",false,9,1,6,450,393840,1400
+before,2,3,8,9,"Fallen",false,7,0,0,450,394840,1000
+before,2,3,8,9,"Fallen",false,7,0,0,450,394840,0
+before,2,3,8,9,"Quill Rat",false,9,2,6,450,396880,2040
+before,2,3,8,9,"Quill Rat",false,9,2,7,450,400160,3280
+before,2,3,8,9,"Zombie",false,14,1,7,450,460280,60120
+before,2,3,8,9,"Quill Rat",false,9,8,26,450,467880,7600
+before,2,3,8,9,"Quill Rat",false,9,2,7,450,469960,2080
+before,2,3,8,9,"Fallen",false,7,1,7,450,495200,25240
+before,2,3,8,9,"Fallen",false,7,0,0,450,495880,680
+before,2,3,8,9,"Fallen",false,7,1,0,450,508160,12280
+before,2,3,8,9,"Fallen",false,7,1,0,450,508400,240
+before,2,3,8,9,"Fallen",false,7,2,7,450,510480,2080
+before,2,3,8,9,"Fallen",false,7,3,14,450,513160,2680
+before,2,3,8,9,"Fallen",false,7,0,0,450,514800,1640
+before,2,3,8,9,"Fallen",false,7,2,6,450,515520,720
+before,2,3,8,9,"Fallen",false,7,2,6,450,517720,2200
+before,2,4,8,9,"Fallen",false,7,1,7,450,4560,4560
+before,2,4,8,9,"Fallen",false,7,1,6,450,6960,2400
+before,2,4,8,9,"Fallen",false,7,1,0,450,7360,400
+before,2,4,8,9,"Fallen",false,7,2,12,450,10040,2680
+before,2,4,8,9,"Quill Rat",false,9,1,7,450,25560,15520
+before,2,4,8,9,"Quill Rat",false,9,2,6,450,27200,1640
+before,2,4,8,9,"Quill Rat",false,9,3,14,450,28960,1760
+before,2,4,8,9,"Zombie",false,14,3,7,450,33000,4040
+before,2,4,8,9,"Zombie",false,14,1,0,450,33400,400
+before,2,4,8,9,"Zombie",false,14,1,6,450,33960,560
+before,2,4,8,9,"Zombie",false,14,2,6,450,45520,11560
+before,2,4,8,9,"Fallen",false,7,0,0,450,45760,240
+before,2,4,8,9,"Fallen",false,7,2,7,450,47760,2000
+before,2,4,8,9,"Fallen",false,7,2,6,450,49400,1640
+before,2,4,8,9,"Fallen",false,7,0,0,450,49400,0
+before,2,4,8,9,"Fallen",false,7,0,0,450,50800,1400
+before,2,4,8,9,"Fallen",false,7,2,7,450,53240,2440
+before,2,4,8,9,"Fallen",false,7,0,0,450,53240,0
+before,2,4,8,9,"Zombie",false,14,2,7,450,59000,5760
+before,2,4,8,9,"Fallen",false,7,1,6,450,61200,2200
+before,2,4,8,9,"Quill Rat",false,9,1,0,450,61280,80
+before,2,4,8,9,"Fallen",false,7,0,0,450,61600,320
+before,2,4,8,9,"Fallen",false,7,1,6,450,61760,160
+before,2,4,8,9,"Fallen",false,7,0,0,450,61920,160
+before,2,4,8,9,"Fallen",false,7,0,0,450,62080,160
+before,2,4,8,9,"Fallen",false,7,1,0,450,62240,160
+before,2,4,8,9,"Fallen",false,7,2,13,450,64160,1920
+before,2,4,8,9,"Fallen",false,7,0,0,450,65200,1040
+before,2,4,8,9,"Fallen",false,7,1,6,450,65280,80
+before,2,4,8,9,"Fallen",false,7,0,0,450,65360,80
+before,2,4,8,9,"Fallen",false,7,2,7,450,66240,880
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,68960,2720
+before,2,4,8,9,"Zombie",false,14,3,13,450,70000,1040
+before,2,4,8,9,"Zombie",false,14,1,7,450,73000,3000
+before,2,4,8,9,"Zombie",false,14,2,7,450,73880,880
+before,2,4,8,9,"Zombie",false,14,1,0,450,74600,720
+before,2,4,8,9,"Zombie",false,14,1,7,450,78520,3920
+before,2,4,8,9,"Zombie",false,14,2,7,450,84000,5480
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,84080,80
+before,2,4,8,9,"Zombie",false,14,3,13,450,85280,1200
+before,2,4,8,9,"Quill Rat",false,9,3,12,450,87240,1960
+before,2,4,8,9,"Zombie",false,14,3,13,450,108880,21640
+before,2,4,8,9,"Zombie",false,14,2,6,450,110840,1960
+before,2,4,8,9,"Fallen",false,7,0,0,450,113880,3040
+before,2,4,8,9,"Fallen",false,7,1,6,450,120360,6480
+before,2,4,8,9,"Fallen",false,7,2,6,450,122520,2160
+before,2,4,8,9,"Fallen",false,7,0,0,450,122600,80
+before,2,4,8,9,"Fallen",false,7,0,0,450,122600,0
+before,2,4,8,9,"Fallen",false,7,0,0,450,123400,800
+before,2,4,8,9,"Fallen",false,7,2,6,450,125480,2080
+before,2,4,8,9,"Fallen",false,7,1,6,450,128320,2840
+before,2,4,8,9,"Quill Rat",false,9,3,13,450,130200,1880
+before,2,4,8,9,"Quill Rat",false,9,2,6,450,138160,7960
+before,2,4,8,9,"Quill Rat",false,9,2,0,450,139480,1320
+before,2,4,8,9,"Zombie",false,14,3,12,450,146080,6600
+before,2,4,8,9,"Zombie",false,14,2,6,450,147680,1600
+before,2,4,8,9,"Zombie",false,14,3,14,450,155200,7520
+before,2,4,8,9,"Quill Rat",false,9,3,14,450,157840,2640
+before,2,4,8,9,"Zombie",false,14,0,0,450,159960,2120
+before,2,4,8,9,"Zombie",false,14,4,14,450,166320,6360
+before,2,4,8,9,"Quill Rat",false,9,3,14,450,220760,54440
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,221800,1040
+before,2,4,8,9,"Quill Rat",false,9,3,14,450,225680,3880
+before,2,4,8,9,"Fallen",false,7,2,7,450,246520,20840
+before,2,4,8,9,"Fallen",false,7,0,0,450,246680,160
+before,2,4,8,9,"Fallen",false,7,1,7,450,248000,1320
+before,2,4,8,9,"Fallen",false,7,0,0,450,249600,1600
+before,2,4,8,9,"Fallen",false,7,2,6,450,250240,640
+before,2,4,8,9,"Zombie",false,14,0,0,450,250400,160
+before,2,4,8,9,"Quill Rat",false,9,1,7,450,250960,560
+before,2,4,8,9,"Fallen",false,7,1,0,450,251280,320
+before,2,4,8,9,"Fallen",false,7,1,6,450,252240,960
+before,2,4,8,9,"Quill Rat",false,9,3,12,450,264720,12480
+before,2,4,8,9,"Quill Rat",false,9,2,7,450,266920,2200
+before,2,4,8,9,"Quill Rat",false,9,2,13,450,273600,6680
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,274400,800
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,275200,800
+before,2,4,8,9,"Zombie",false,14,4,14,450,280440,5240
+before,2,4,8,9,"Fallen",false,7,1,7,450,285120,4680
+before,2,4,8,9,"Fallen",false,7,3,7,450,286480,1360
+before,2,4,8,9,"Fallen",false,7,2,6,450,288920,2440
+before,2,4,8,9,"Fallen",false,7,1,7,450,318160,29240
+before,2,4,8,9,"Fallen",false,7,2,7,450,320480,2320
+before,2,4,8,9,"Fallen",false,7,0,0,450,321280,800
+before,2,4,8,9,"Fallen",false,7,0,0,450,321280,0
+before,2,4,8,9,"Fallen",false,7,0,0,450,321280,0
+before,2,4,8,9,"Fallen",false,7,0,0,450,325880,4600
+before,2,4,8,9,"Quill Rat",false,9,2,6,450,327160,1280
+before,2,4,8,9,"Fallen",false,7,2,7,450,336000,8840
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,336080,80
+before,2,4,8,9,"Fallen",false,7,0,0,450,336160,80
+before,2,4,8,9,"Quill Rat",false,9,0,0,450,336400,240
+before,2,4,8,9,"Fallen",false,8,0,0,450,337200,800
+before,2,4,8,9,"Quill Rat",false,8,0,0,450,337200,0
+before,2,4,8,9,"Quill Rat",false,9,1,6,450,338160,960
+before,2,4,8,9,"Fallen",false,7,1,0,450,338400,240
+before,2,4,8,9,"Zombie",false,14,4,14,450,344400,6000
+before,2,4,8,9,"Zombie",false,14,1,6,450,344800,400
+after,2,1,1,2,"Quill Rat",false,21,2,3,450,6000,6000
+after,2,1,1,2,"Quill Rat",false,21,2,2,450,7560,1560
+after,2,1,1,2,"Zombie",false,33,2,3,450,8960,1400
+after,2,1,1,2,"Zombie",false,33,8,12,450,12640,3680
+after,2,1,1,2,"Fallen",false,18,1,3,450,22760,10120
+after,2,1,1,2,"Fallen",false,18,5,8,450,26520,3760
+after,2,1,1,2,"Fallen",false,18,1,3,450,27800,1280
+after,2,1,1,2,"Fallen",false,18,0,0,450,27800,0
+after,2,1,1,2,"Fallen",false,18,0,0,450,28040,240
+after,2,1,1,2,"Zombie",false,33,3,6,450,30240,2200
+after,2,1,1,2,"Zombie",false,33,0,0,450,31280,1040
+after,2,1,1,2,"Fallen",false,18,1,3,450,33040,1760
+after,2,1,1,2,"Fallen",false,18,2,3,450,35560,2520
+after,2,1,1,2,"Fallen",false,18,3,6,450,37280,1720
+after,2,1,1,2,"Fallen",false,18,0,0,450,37440,160
+after,2,1,1,2,"Fallen",false,18,1,3,450,39320,1880
+after,2,1,1,2,"Fallen",false,18,3,6,450,42360,3040
+after,2,1,1,2,"Fallen",false,18,0,0,450,42440,80
+after,2,1,1,2,"Fallen",false,18,9,14,450,56800,14360
+after,2,1,1,2,"Quill Rat",false,21,74,104,450,100200,43400
+after,2,1,1,2,"Fallen",false,18,1,3,450,100920,720
+after,2,1,1,2,"Fallen",false,18,0,0,450,102080,1160
+after,2,1,1,2,"Fallen",false,18,0,0,450,102080,0
+after,2,1,1,2,"Quill Rat",false,21,2,3,450,103040,960
+after,2,1,1,2,"Fallen",false,18,1,3,450,106680,3640
+after,2,1,1,2,"Zombie",false,33,4,6,450,109360,2680
+after,2,1,1,2,"Zombie",false,33,2,3,450,110480,1120
+after,2,1,1,2,"Zombie",false,33,6,9,450,123400,12920
+after,2,1,1,2,"Fallen",false,18,1,3,450,126480,3080
+after,2,1,1,2,"Fallen",false,18,1,3,450,127360,880
+after,2,1,1,2,"Fallen",false,18,0,0,450,127600,240
+after,2,1,1,2,"Zombie",false,33,2,3,450,150160,22560
+after,2,1,1,2,"Quill Rat",false,21,1,0,450,188440,38280
+after,2,1,1,2,"Quill Rat",false,21,6,9,450,191000,2560
+after,2,1,1,2,"Zombie",false,33,11,18,450,199360,8360
+after,2,1,1,2,"Zombie",false,33,5,6,450,201440,2080
+after,2,1,1,2,"Quill Rat",false,21,6,12,450,210440,9000
+after,2,1,1,2,"Quill Rat",false,21,3,6,450,217080,6640
+after,2,1,1,2,"Quill Rat",false,21,7,9,450,221240,4160
+after,2,1,1,2,"Fallen",false,18,2,3,450,228440,7200
+after,2,1,1,2,"Fallen",false,18,2,3,450,229400,960
+after,2,1,1,2,"Fallen",false,18,2,3,450,232000,2600
+after,2,1,1,2,"Quill Rat",false,21,2,3,450,233760,1760
+after,2,1,1,2,"Quill Rat",false,21,0,0,450,234680,920
+after,2,1,1,2,"Zombie",false,33,7,9,450,253400,18720
+after,2,1,1,2,"Quill Rat",false,21,5,9,450,260920,7520
+after,2,1,1,2,"Quill Rat",false,21,4,6,450,263720,2800
+after,2,1,1,2,"Quill Rat",false,21,3,6,450,268520,4800
+after,2,1,1,2,"Zombie",false,33,3,6,450,269960,1440
+after,2,1,1,2,"Quill Rat",false,21,6,9,450,393520,123560
+after,2,1,1,2,"Quill Rat",false,21,5,9,450,396000,2480
+after,2,1,1,2,"Zombie",false,33,4,6,450,403760,7760
+after,2,1,1,2,"Fallen",false,18,2,3,450,409240,5480
+after,2,1,1,2,"Fallen",false,18,1,3,450,411080,1840
+after,2,1,1,2,"Fallen",false,18,2,3,450,412960,1880
+after,2,2,1,2,"Fallen",false,18,1,0,450,480,480
+after,2,2,1,2,"Zombie",false,33,3,6,450,4800,4320
+after,2,2,1,2,"Zombie",false,33,1,0,450,5280,480
+after,2,2,1,2,"Quill Rat",false,21,1,3,450,12080,6800
+after,2,2,1,2,"Fallen",false,18,1,3,450,14640,2560
+after,2,2,1,2,"Fallen",false,18,2,3,450,16480,1840
+after,2,2,1,2,"Fallen",false,18,4,9,450,20240,3760
+after,2,2,1,2,"Fallen",false,18,3,5,450,27040,6800
+after,2,2,1,2,"Fallen",false,18,4,6,450,29960,2920
+after,2,2,1,2,"Quill Rat",false,21,3,6,450,48880,18920
+after,2,2,1,2,"Zombie",false,33,7,12,450,53760,4880
+after,2,2,1,2,"Fallen",false,18,1,3,450,57560,3800
+after,2,2,1,2,"Fallen",false,18,5,9,450,60120,2560
+after,2,2,1,2,"Fallen",false,18,4,6,450,64520,4400
+after,2,2,1,2,"Fallen",false,18,2,3,450,67080,2560
+after,2,2,1,2,"Fallen",false,18,0,0,450,67480,400
+after,2,2,1,2,"Fallen",false,18,1,3,450,68240,760
+after,2,2,1,2,"Fallen",false,18,0,0,450,68400,160
+after,2,2,1,2,"Fallen",false,18,1,3,450,71760,3360
+after,2,2,1,2,"Fallen",false,18,5,9,450,75400,3640
+after,2,2,1,2,"Fallen",false,18,1,0,450,75640,240
+after,2,2,1,2,"Fallen",false,18,3,6,450,78920,3280
+after,2,2,1,2,"Quill Rat",false,21,3,6,450,83600,4680
+after,2,2,1,2,"Quill Rat",false,21,3,5,450,86480,2880
+after,2,2,1,2,"Zombie",false,33,2,3,450,90800,4320
+after,2,2,1,2,"Quill Rat",false,21,5,9,450,93400,2600
+after,2,2,1,2,"Quill Rat",false,21,4,6,450,95320,1920
+after,2,2,1,2,"Fallen",false,18,1,0,450,132080,36760
+after,2,2,1,2,"Quill Rat",false,21,97,147,450,178640,46560
+after,2,2,1,2,"Fallen",false,18,90,132,450,234640,56000
+after,2,2,1,2,"Fallen",false,18,1,0,450,234720,80
+after,2,2,1,2,"Fallen",false,18,3,6,450,236560,1840
+after,2,2,1,2,"Fallen",false,18,2,3,450,237520,960
+after,2,2,1,2,"Fallen",false,18,2,3,450,238480,960
+after,2,2,1,2,"Fallen",false,18,2,3,450,239960,1480
+after,2,2,1,2,"Fallen",false,18,0,0,450,240120,160
+after,2,2,1,2,"Fallen",false,18,3,6,450,244440,4320
+after,2,2,1,2,"Fallen",false,18,2,2,450,247480,3040
+after,2,2,1,2,"Fallen",false,18,3,6,450,250360,2880
+after,2,2,1,2,"Fallen",false,18,3,6,450,254120,3760
+after,2,2,1,2,"Fallen",false,18,0,0,450,255000,880
+after,2,2,1,2,"Quill Rat",false,21,2,3,450,262200,7200
+after,2,2,1,2,"Quill Rat",false,21,6,12,450,268000,5800
+after,2,2,1,2,"Zombie",false,33,4,6,450,272880,4880
+after,2,2,1,2,"Fallen",false,18,3,6,450,298680,25800
+after,2,2,1,2,"Fallen",false,18,0,0,450,299000,320
+after,2,2,1,2,"Fallen",false,18,5,6,450,301960,2960
+after,2,2,1,2,"Fallen",false,18,2,3,450,302680,720
+after,2,2,1,2,"Zombie",false,33,15,22,450,310680,8000
+after,2,2,1,2,"Fallen",false,18,1,3,450,315800,5120
+after,2,2,1,2,"Fallen",false,18,4,6,450,317720,1920
+after,2,2,1,2,"Fallen",false,18,3,6,450,320240,2520
+after,2,2,1,2,"Quill Rat",false,21,5,9,450,330320,10080
+after,2,2,1,2,"Quill Rat",false,21,6,6,450,345480,15160
+after,2,2,1,2,"Quill Rat",false,21,2,3,450,348080,2600
+after,2,2,1,2,"Quill Rat",false,21,6,9,450,352720,4640
+after,2,2,1,2,"Quill Rat",false,21,5,9,450,356760,4040
+after,2,2,1,2,"Zombie",false,33,4,6,450,362000,5240
+after,2,2,1,2,"Fallen",false,18,2,6,450,364200,2200
+after,2,2,1,2,"Fallen",false,18,1,0,450,364600,400
+after,2,2,1,2,"Fallen",false,18,0,0,450,364680,80
+after,2,2,1,2,"Fallen",false,18,1,3,450,367000,2320
+after,2,2,1,2,"Fallen",false,18,1,3,450,368800,1800
+after,2,2,1,2,"Fallen",false,18,2,3,450,370480,1680
+after,2,2,1,2,"Fallen",false,18,0,0,450,370720,240
+after,2,2,1,2,"Fallen",false,18,3,6,450,373680,2960
+after,2,2,1,2,"Zombie",false,33,6,9,450,417240,43560
+after,2,2,1,2,"Fallen",false,18,2,3,450,419800,2560
+after,2,2,1,2,"Fallen",false,18,1,3,450,420840,1040
+after,2,2,1,2,"Fallen",false,18,4,6,450,422760,1920
+after,2,2,1,2,"Zombie",false,33,4,6,450,425960,3200
+after,2,2,1,2,"Zombie",false,33,5,9,450,532240,106280
+after,2,2,1,2,"Zombie",false,33,5,8,450,538560,6320
+after,2,2,1,2,"Quill Rat",false,21,4,9,450,669280,130720
+after,2,2,1,2,"Quill Rat",false,21,2,3,450,670640,1360
+after,2,2,1,2,"Quill Rat",false,21,3,6,450,672760,2120
+after,2,2,1,2,"Quill Rat",false,21,0,0,450,688840,16080
+after,2,2,1,2,"Zombie",false,33,4,6,450,691040,2200
+after,2,2,1,2,"Zombie",false,33,7,12,450,694960,3920
+after,2,2,1,2,"Fallen",false,18,1,3,450,708960,14000
+after,2,2,1,2,"Zombie",false,33,7,9,450,712160,3200
+after,2,2,1,2,"Quill Rat",false,21,4,6,450,714880,2720
+after,2,2,1,2,"Fallen",false,18,0,0,450,716000,1120
+after,2,2,1,2,"Quill Rat",false,21,1,3,450,717160,1160
+after,2,2,1,2,"Quill Rat",false,21,1,3,450,717480,320
+after,2,2,1,2,"Fallen",false,18,0,0,450,717640,160
+after,2,2,1,2,"Fallen",false,18,2,2,450,720760,3120
+after,2,2,1,2,"Zombie",false,33,2,6,450,723960,3200
+after,2,2,1,2,"Fallen",false,18,2,3,450,725560,1600
+after,2,2,1,2,"Fallen",false,18,2,0,450,795360,69800
+after,2,2,1,2,"Fallen",false,18,3,6,450,798320,2960
+after,2,2,1,2,"Fallen",false,18,1,2,450,798560,240
+after,2,2,1,2,"Zombie",false,33,6,9,450,806440,7880
+after,2,2,1,2,"Fallen",false,18,3,6,450,808400,1960
+after,2,2,1,2,"Fallen",false,18,0,0,450,810800,2400
+after,2,2,1,2,"Quill Rat",false,21,8,12,450,816280,5480
+after,2,2,1,2,"Fallen",false,18,2,3,450,818480,2200
+after,2,2,1,2,"Quill Rat",false,21,3,6,450,825240,6760
+after,2,2,1,2,"Fallen",false,18,2,3,450,829360,4120
+after,2,2,1,2,"Fallen",false,18,2,3,450,830680,1320
+after,2,2,1,2,"Fallen",false,18,0,0,450,830760,80
+after,2,2,1,2,"Fallen",false,18,0,0,450,830760,0
+after,2,3,1,2,"Fallen",false,18,1,3,450,33880,33880
+after,2,3,1,2,"Fallen",false,18,1,0,450,34040,160
+after,2,3,1,2,"Fallen",false,18,0,0,450,34200,160
+after,2,3,1,2,"Fallen",false,18,3,6,450,37320,3120
+after,2,3,1,2,"Quill Rat",false,21,8,15,450,64880,27560
+after,2,3,1,2,"Quill Rat",false,21,3,6,450,67520,2640
+after,2,3,1,2,"Quill Rat",false,21,6,9,450,76760,9240
+after,2,3,1,2,"Fallen",false,18,2,3,450,79840,3080
+after,2,3,1,2,"Fallen",false,18,3,6,450,81800,1960
+after,2,3,1,2,"Fallen",false,18,1,0,450,82040,240
+after,2,3,1,2,"Zombie",false,33,6,9,450,89280,7240
+after,2,3,1,2,"Fallen",false,18,2,3,450,92280,3000
+after,2,3,1,2,"Fallen",false,18,3,6,450,93960,1680
+after,2,3,1,2,"Fallen",false,18,1,3,450,97120,3160
+after,2,3,1,2,"Fallen",false,18,2,3,450,98720,1600
+after,2,3,1,2,"Zombie",false,33,4,8,450,101480,2760
+after,2,3,1,2,"Fallen",false,18,4,6,450,105160,3680
+after,2,3,1,2,"Fallen",false,18,3,6,450,107640,2480
+after,2,3,1,2,"Fallen",false,18,5,5,450,109720,2080
+after,2,3,1,2,"Fallen",false,18,0,0,450,110720,1000
+after,2,3,1,2,"Fallen",false,18,1,3,450,111840,1120
+after,2,3,1,2,"Fallen",false,18,1,3,450,112920,1080
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,115880,2960
+after,2,3,1,2,"Quill Rat",false,21,3,6,450,117080,1200
+after,2,3,1,2,"Zombie",false,33,5,9,450,123520,6440
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,135520,12000
+after,2,3,1,2,"Fallen",false,18,2,3,450,136160,640
+after,2,3,1,2,"Fallen",false,18,1,3,450,137040,880
+after,2,3,1,2,"Fallen",false,18,3,6,450,139840,2800
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,177400,37560
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,179440,2040
+after,2,3,1,2,"Zombie",false,33,4,6,450,184800,5360
+after,2,3,1,2,"Fallen",false,18,1,3,450,201560,16760
+after,2,3,1,2,"Fallen",false,18,2,3,450,204240,2680
+after,2,3,1,2,"Fallen",false,18,1,3,450,204880,640
+after,2,3,1,2,"Fallen",false,18,0,0,450,206760,1880
+after,2,3,1,2,"Fallen",false,18,1,3,450,209240,2480
+after,2,3,1,2,"Fallen",false,18,3,6,450,212160,2920
+after,2,3,1,2,"Fallen",false,18,3,6,450,214680,2520
+after,2,3,1,2,"Fallen",false,18,2,3,450,220520,5840
+after,2,3,1,2,"Fallen",false,18,1,0,450,368600,148080
+after,2,3,1,2,"Fallen",false,18,0,0,450,368600,0
+after,2,3,1,2,"Fallen",false,18,4,6,450,370520,1920
+after,2,3,1,2,"Fallen",false,18,2,3,450,372920,2400
+after,2,3,1,2,"Fallen",false,18,2,6,450,376080,3160
+after,2,3,1,2,"Fallen",false,18,1,3,450,381640,5560
+after,2,3,1,2,"Fallen",false,18,2,3,450,383920,2280
+after,2,3,1,2,"Fallen",false,18,1,3,450,384400,480
+after,2,3,1,2,"Fallen",false,18,1,0,450,386480,2080
+after,2,3,1,2,"Fallen",false,18,2,0,450,398680,12200
+after,2,3,1,2,"Fallen",false,18,1,3,450,399560,880
+after,2,3,1,2,"Zombie",false,33,20,30,450,409160,9600
+after,2,3,1,2,"Fallen",false,18,105,156,450,472320,63160
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,488240,15920
+after,2,3,1,2,"Fallen",false,18,1,3,450,489400,1160
+after,2,3,1,2,"Fallen",false,18,1,3,450,491400,2000
+after,2,3,1,2,"Fallen",false,18,0,0,450,491480,80
+after,2,3,1,2,"Fallen",false,18,1,3,450,493520,2040
+after,2,3,1,2,"Quill Rat",false,21,3,6,450,494640,1120
+after,2,3,1,2,"Quill Rat",false,21,3,6,450,496600,1960
+after,2,3,1,2,"Quill Rat",false,21,1,3,450,505240,8640
+after,2,3,1,2,"Quill Rat",false,21,0,0,450,505920,680
+after,2,3,1,2,"Quill Rat",false,21,10,18,450,517360,11440
+after,2,3,1,2,"Quill Rat",false,21,2,3,450,520760,3400
+after,2,3,1,2,"Zombie",false,33,4,3,450,689280,168520
+after,2,3,1,2,"Fallen",false,18,2,2,450,693440,4160
+after,2,3,1,2,"Fallen",false,18,1,3,450,694160,720
+after,2,3,1,2,"Fallen",false,18,3,5,450,696760,2600
+after,2,3,1,2,"Fallen",false,18,1,3,450,700320,3560
+after,2,4,1,2,"Fallen",false,18,3,6,450,5600,5600
+after,2,4,1,2,"Fallen",false,18,1,3,450,7960,2360
+after,2,4,1,2,"Fallen",false,18,1,3,450,9360,1400
+after,2,4,1,2,"Quill Rat",false,21,1,3,450,12200,2840
+after,2,4,1,2,"Fallen",false,18,1,0,450,12680,480
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,15120,2440
+after,2,4,1,2,"Zombie",false,33,8,12,450,19120,4000
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,20600,1480
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,23840,3240
+after,2,4,1,2,"Zombie",false,33,4,6,450,26440,2600
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,28120,1680
+after,2,4,1,2,"Fallen",false,18,0,0,450,29160,1040
+after,2,4,1,2,"Fallen",false,18,1,3,450,32560,3400
+after,2,4,1,2,"Fallen",false,18,3,6,450,36040,3480
+after,2,4,1,2,"Fallen",false,18,0,0,450,36040,0
+after,2,4,1,2,"Fallen",false,18,0,0,450,36120,80
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,37080,960
+after,2,4,1,2,"Fallen",false,18,7,12,450,40760,3680
+after,2,4,1,2,"Fallen",false,18,1,0,450,40840,80
+after,2,4,1,2,"Fallen",false,18,0,0,450,40840,0
+after,2,4,1,2,"Fallen",false,18,3,6,450,42680,1840
+after,2,4,1,2,"Zombie",false,33,5,6,450,44760,2080
+after,2,4,1,2,"Fallen",false,18,3,6,450,47280,2520
+after,2,4,1,2,"Fallen",false,18,0,0,450,48200,920
+after,2,4,1,2,"Fallen",false,18,2,3,450,48760,560
+after,2,4,1,2,"Fallen",false,18,1,3,450,49800,1040
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,52080,2280
+after,2,4,1,2,"Quill Rat",false,21,0,0,450,52160,80
+after,2,4,1,2,"Fallen",false,18,1,0,450,52800,640
+after,2,4,1,2,"Fallen",false,18,3,6,450,55640,2840
+after,2,4,1,2,"Zombie",false,33,8,12,450,59240,3600
+after,2,4,1,2,"Zombie",false,33,4,6,450,61880,2640
+after,2,4,1,2,"Fallen",false,18,1,3,450,63720,1840
+after,2,4,1,2,"Fallen",false,18,2,3,450,64840,1120
+after,2,4,1,2,"Fallen",false,18,5,6,450,67080,2240
+after,2,4,1,2,"Zombie",false,33,1,3,450,67960,880
+after,2,4,1,2,"Zombie",false,33,8,12,450,74280,6320
+after,2,4,1,2,"Zombie",false,33,4,6,450,76480,2200
+after,2,4,1,2,"Zombie",false,33,5,8,450,79040,2560
+after,2,4,1,2,"Zombie",false,33,6,9,450,82800,3760
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,87200,4400
+after,2,4,1,2,"Quill Rat",false,21,5,9,450,90320,3120
+after,2,4,1,2,"Quill Rat",false,21,1,3,450,92760,2440
+after,2,4,1,2,"Quill Rat",false,21,3,3,450,94480,1720
+after,2,4,1,2,"Zombie",false,33,9,15,450,117200,22720
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,121840,4640
+after,2,4,1,2,"Zombie",false,33,2,3,450,126000,4160
+after,2,4,1,2,"Zombie",false,33,6,8,450,128880,2880
+after,2,4,1,2,"Zombie",false,33,5,8,450,142520,13640
+after,2,4,1,2,"Zombie",false,33,8,12,450,146360,3840
+after,2,4,1,2,"Zombie",false,33,7,12,450,150520,4160
+after,2,4,1,2,"Zombie",false,33,8,12,450,173160,22640
+after,2,4,1,2,"Zombie",false,33,4,6,450,175080,1920
+after,2,4,1,2,"Fallen",false,18,1,3,450,179000,3920
+after,2,4,1,2,"Fallen",false,18,0,0,450,179000,0
+after,2,4,1,2,"Fallen",false,18,4,5,450,181960,2960
+after,2,4,1,2,"Fallen",false,18,1,3,450,185160,3200
+after,2,4,1,2,"Fallen",false,18,2,3,450,187960,2800
+after,2,4,1,2,"Fallen",false,18,2,3,450,193240,5280
+after,2,4,1,2,"Quill Rat",false,21,0,0,450,195480,2240
+after,2,4,1,2,"Quill Rat",false,21,5,9,450,198160,2680
+after,2,4,1,2,"Fallen",false,18,1,3,450,199560,1400
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,201920,2360
+after,2,4,1,2,"Fallen",false,18,1,3,450,203440,1520
+after,2,4,1,2,"Fallen",false,18,3,3,450,204480,1040
+after,2,4,1,2,"Fallen",false,18,1,3,450,209720,5240
+after,2,4,1,2,"Fallen",false,18,3,3,450,210920,1200
+after,2,4,1,2,"Fallen",false,18,1,3,450,213400,2480
+after,2,4,1,2,"Zombie",false,33,8,11,450,216840,3440
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,229920,13080
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,235360,5440
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,236400,1040
+after,2,4,1,2,"Quill Rat",false,21,1,3,450,237240,840
+after,2,4,1,2,"Quill Rat",false,21,5,6,450,239560,2320
+after,2,4,1,2,"Zombie",false,33,7,12,450,243360,3800
+after,2,4,1,2,"Fallen",false,18,1,3,450,301760,58400
+after,2,4,1,2,"Fallen",false,18,1,0,450,301840,80
+after,2,4,1,2,"Fallen",false,18,3,5,450,304880,3040
+after,2,4,1,2,"Fallen",false,18,2,3,450,307520,2640
+after,2,4,1,2,"Quill Rat",false,21,7,15,450,315880,8360
+after,2,4,1,2,"Quill Rat",false,21,6,12,450,321160,5280
+after,2,4,1,2,"Quill Rat",false,21,5,9,450,335120,13960
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,415280,80160
+after,2,4,1,2,"Fallen",false,18,1,3,450,418600,3320
+after,2,4,1,2,"Fallen",false,18,2,3,450,420560,1960
+after,2,4,1,2,"Fallen",false,18,0,0,450,420560,0
+after,2,4,1,2,"Zombie",false,33,4,6,450,464040,43480
+after,2,4,1,2,"Zombie",false,33,7,12,450,470200,6160
+after,2,4,1,2,"Quill Rat",false,21,1,0,450,471080,880
+after,2,4,1,2,"Quill Rat",false,21,112,168,450,553760,82680
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,555120,1360
+after,2,4,1,2,"Fallen",false,18,5,6,450,557520,2400
+after,2,4,1,2,"Quill Rat",false,21,1,3,450,557760,240
+after,2,4,1,2,"Fallen",false,18,2,3,450,559120,1360
+after,2,4,1,2,"Fallen",false,18,1,3,450,560160,1040
+after,2,4,1,2,"Fallen",false,18,1,3,450,561800,1640
+after,2,4,1,2,"Quill Rat",false,21,3,6,450,564600,2800
+after,2,4,1,2,"Zombie",false,33,2,3,450,714400,149800
+after,2,4,1,2,"Quill Rat",false,21,2,3,450,717920,3520
+after,2,1,4,5,"Quill Rat",false,21,3,10,450,6600,6600
+after,2,1,4,5,"Zombie",false,33,3,9,450,9640,3040
+after,2,1,4,5,"Quill Rat",false,21,0,0,450,9880,240
+after,2,1,4,5,"Zombie",false,33,1,0,450,10200,320
+after,2,1,4,5,"Fallen",false,18,1,5,450,20080,9880
+after,2,1,4,5,"Fallen",false,18,1,0,450,20320,240
+after,2,1,4,5,"Fallen",false,18,0,0,450,20400,80
+after,2,1,4,5,"Fallen",false,18,1,5,450,20640,240
+after,2,1,4,5,"Fallen",false,18,1,4,450,24560,3920
+after,2,1,4,5,"Zombie",false,33,4,9,450,26240,1680
+after,2,1,4,5,"Fallen",false,18,1,0,450,26640,400
+after,2,1,4,5,"Zombie",false,33,4,9,450,28640,2000
+after,2,1,4,5,"Fallen",false,18,0,0,450,29440,800
+after,2,1,4,5,"Quill Rat",false,21,2,0,450,40360,10920
+after,2,1,4,5,"Quill Rat",false,21,4,14,450,43080,2720
+after,2,1,4,5,"Fallen",false,18,0,0,450,45800,2720
+after,2,1,4,5,"Fallen",false,18,1,4,450,48680,2880
+after,2,1,4,5,"Fallen",false,18,1,5,450,49680,1000
+after,2,1,4,5,"Zombie",false,33,2,5,450,58600,8920
+after,2,1,4,5,"Zombie",false,33,2,5,450,64000,5400
+after,2,1,4,5,"Zombie",false,33,4,9,450,65840,1840
+after,2,1,4,5,"Quill Rat",false,21,3,9,450,69920,4080
+after,2,1,4,5,"Quill Rat",false,21,0,0,450,71560,1640
+after,2,1,4,5,"Quill Rat",false,21,0,0,450,71560,0
+after,2,1,4,5,"Fallen",false,18,1,5,450,91200,19640
+after,2,1,4,5,"Fallen",false,18,4,9,450,94120,2920
+after,2,1,4,5,"Quill Rat",false,21,2,4,450,107400,13280
+after,2,1,4,5,"Quill Rat",false,21,1,4,450,108040,640
+after,2,1,4,5,"Quill Rat",false,21,7,17,450,117920,9880
+after,2,1,4,5,"Quill Rat",false,21,2,9,450,122640,4720
+after,2,1,4,5,"Zombie",false,33,2,4,450,129280,6640
+after,2,1,4,5,"Quill Rat",false,21,4,5,450,142160,12880
+after,2,1,4,5,"Quill Rat",false,21,2,4,450,143640,1480
+after,2,1,4,5,"Zombie",false,33,4,10,450,148080,4440
+after,2,1,4,5,"Zombie",false,33,3,10,450,164800,16720
+after,2,1,4,5,"Fallen",false,18,1,5,450,169680,4880
+after,2,1,4,5,"Fallen",false,18,3,5,450,170720,1040
+after,2,1,4,5,"Fallen",false,18,4,8,450,172920,2200
+after,2,1,4,5,"Zombie",false,33,4,10,450,180680,7760
+after,2,1,4,5,"Zombie",false,33,2,4,450,181840,1160
+after,2,1,4,5,"Zombie",false,33,1,4,450,183240,1400
+after,2,1,4,5,"Zombie",false,33,3,4,450,184440,1200
+after,2,1,4,5,"Fallen",false,18,2,5,450,213400,28960
+after,2,1,4,5,"Fallen",false,18,0,0,450,213560,160
+after,2,1,4,5,"Fallen",false,18,1,5,450,213720,160
+after,2,1,4,5,"Fallen",false,18,1,4,450,216280,2560
+after,2,1,4,5,"Fallen",false,18,1,0,450,216440,160
+after,2,1,4,5,"Fallen",false,18,0,0,450,216640,200
+after,2,1,4,5,"Fallen",false,18,0,0,450,216640,0
+after,2,1,4,5,"Zombie",false,33,4,9,450,225520,8880
+after,2,1,4,5,"Quill Rat",false,21,3,8,450,234200,8680
+after,2,1,4,5,"Quill Rat",false,21,3,10,450,237080,2880
+after,2,1,4,5,"Fallen",false,18,1,5,450,243240,6160
+after,2,1,4,5,"Fallen",false,18,0,0,450,244160,920
+after,2,1,4,5,"Fallen",false,18,1,5,450,245560,1400
+after,2,1,4,5,"Quill Rat",false,21,0,0,450,246480,920
+after,2,1,4,5,"Fallen",false,18,1,5,450,247520,1040
+after,2,1,4,5,"Fallen",false,18,1,4,450,248920,1400
+after,2,1,4,5,"Quill Rat",false,21,0,0,450,251240,2320
+after,2,1,4,5,"Fallen",false,18,2,4,450,253640,2400
+after,2,1,4,5,"Zombie",false,33,4,8,450,256480,2840
+after,2,1,4,5,"Fallen",false,18,2,5,450,307200,50720
+after,2,1,4,5,"Zombie",false,33,3,10,450,311000,3800
+after,2,1,4,5,"Fallen",false,18,2,5,450,314440,3440
+after,2,1,4,5,"Fallen",false,18,2,4,450,318040,3600
+after,2,1,4,5,"Fallen",false,18,0,0,450,318280,240
+after,2,1,4,5,"Fallen",false,18,1,4,450,318440,160
+after,2,1,4,5,"Fallen",false,18,1,4,450,320880,2440
+after,2,1,4,5,"Fallen",false,18,2,5,450,323560,2680
+after,2,1,4,5,"Fallen",false,18,2,5,450,325600,2040
+after,2,2,4,5,"Fallen",false,18,1,0,450,480,480
+after,2,2,4,5,"Zombie",false,33,2,5,450,4280,3800
+after,2,2,4,5,"Zombie",false,33,1,4,450,5480,1200
+after,2,2,4,5,"Quill Rat",false,21,6,13,450,15200,9720
+after,2,2,4,5,"Fallen",false,18,0,0,450,15880,680
+after,2,2,4,5,"Fallen",false,18,2,5,450,16680,800
+after,2,2,4,5,"Fallen",false,18,1,5,450,19240,2560
+after,2,2,4,5,"Fallen",false,18,2,5,450,24240,5000
+after,2,2,4,5,"Fallen",false,18,1,5,450,26920,2680
+after,2,2,4,5,"Fallen",false,18,0,0,450,27480,560
+after,2,2,4,5,"Zombie",false,25,2,0,450,45000,17520
+after,2,2,4,5,"Fallen",false,25,0,0,450,45000,0
+after,2,2,4,5,"Fallen",false,19,0,0,450,45240,240
+after,2,2,4,5,"Fallen",false,18,1,5,450,45720,480
+after,2,2,4,5,"Fallen",false,18,3,9,450,47760,2040
+after,2,2,4,5,"Zombie",false,33,2,5,450,49040,1280
+after,2,2,4,5,"Quill Rat",false,21,2,4,450,61640,12600
+after,2,2,4,5,"Quill Rat",false,21,4,10,450,64400,2760
+after,2,2,4,5,"Quill Rat",false,21,0,0,450,64400,0
+after,2,2,4,5,"Fallen",false,18,1,5,450,71920,7520
+after,2,2,4,5,"Fallen",false,18,4,8,450,73840,1920
+after,2,2,4,5,"Fallen",false,18,4,4,450,77920,4080
+after,2,2,4,5,"Fallen",false,18,2,0,450,95840,17920
+after,2,2,4,5,"Fallen",false,18,1,5,450,96320,480
+after,2,2,4,5,"Fallen",false,18,2,5,450,98480,2160
+after,2,2,4,5,"Quill Rat",false,21,2,4,450,102880,4400
+after,2,2,4,5,"Zombie",false,33,2,5,450,104080,1200
+after,2,2,4,5,"Zombie",false,33,1,4,450,105280,1200
+after,2,2,4,5,"Quill Rat",false,21,1,5,450,109360,4080
+after,2,2,4,5,"Quill Rat",false,21,5,14,450,116720,7360
+after,2,2,4,5,"Fallen",false,18,1,0,450,167240,50520
+after,2,2,4,5,"Fallen",false,18,2,5,450,168200,960
+after,2,2,4,5,"Fallen",false,18,1,0,450,168360,160
+after,2,2,4,5,"Fallen",false,18,2,5,450,171680,3320
+after,2,2,4,5,"Fallen",false,18,3,9,450,175080,3400
+after,2,2,4,5,"Fallen",false,18,0,0,450,175080,0
+after,2,2,4,5,"Fallen",false,18,0,0,450,175160,80
+after,2,2,4,5,"Fallen",false,18,0,0,450,175480,320
+after,2,2,4,5,"Zombie",false,33,2,5,450,180400,4920
+after,2,2,4,5,"Zombie",false,33,4,8,450,182320,1920
+after,2,2,4,5,"Quill Rat",false,21,2,5,450,185480,3160
+after,2,2,4,5,"Quill Rat",false,21,4,8,450,187040,1560
+after,2,2,4,5,"Fallen",false,18,1,4,450,188600,1560
+after,2,2,4,5,"Fallen",false,18,1,0,450,189000,400
+after,2,2,4,5,"Fallen",false,18,0,0,450,189160,160
+after,2,2,4,5,"Fallen",false,18,2,9,450,193000,3840
+after,2,2,4,5,"Zombie",false,33,2,4,450,201120,8120
+after,2,2,4,5,"Zombie",false,33,6,14,450,253040,51920
+after,2,2,4,5,"Zombie",false,33,5,14,450,259240,6200
+after,2,2,4,5,"Quill Rat",false,21,3,10,450,301240,42000
+after,2,2,4,5,"Quill Rat",false,21,1,4,450,302600,1360
+after,2,2,4,5,"Zombie",false,33,2,5,450,306120,3520
+after,2,2,4,5,"Quill Rat",false,21,2,5,450,308040,1920
+after,2,2,4,5,"Zombie",false,33,4,10,450,327720,19680
+after,2,2,4,5,"Fallen",false,18,2,5,450,331800,4080
+after,2,2,4,5,"Fallen",false,18,0,0,450,331960,160
+after,2,2,4,5,"Fallen",false,18,3,9,450,335560,3600
+after,2,2,4,5,"Fallen",false,18,1,4,450,344880,9320
+after,2,2,4,5,"Fallen",false,18,1,5,450,347560,2680
+after,2,2,4,5,"Fallen",false,18,1,0,450,347800,240
+after,2,2,4,5,"Fallen",false,18,2,4,450,350080,2280
+after,2,2,4,5,"Quill Rat",false,21,2,8,450,352600,2520
+after,2,2,4,5,"Fallen",false,18,1,4,450,354480,1880
+after,2,2,4,5,"Zombie",false,33,2,0,450,367560,13080
+after,2,2,4,5,"Zombie",false,33,4,8,450,369920,2360
+after,2,2,4,5,"Zombie",false,33,2,5,450,423920,54000
+after,2,2,4,5,"Quill Rat",false,21,2,5,450,459400,35480
+after,2,2,4,5,"Quill Rat",false,21,2,4,450,461800,2400
+after,2,2,4,5,"Quill Rat",false,21,4,9,450,465480,3680
+after,2,2,4,5,"Zombie",false,33,2,4,450,466040,560
+after,2,2,4,5,"Quill Rat",false,21,6,14,450,469840,3800
+after,2,2,4,5,"Fallen",false,18,1,0,450,491400,21560
+after,2,2,4,5,"Zombie",false,33,3,5,450,492840,1440
+after,2,2,4,5,"Fallen",false,18,1,4,450,493000,160
+after,2,2,4,5,"Fallen",false,18,0,0,450,495000,2000
+after,2,2,4,5,"Fallen",false,18,0,0,450,495000,0
+after,2,2,4,5,"Fallen",false,18,2,4,450,497080,2080
+after,2,2,4,5,"Quill Rat",false,21,3,10,450,498640,1560
+after,2,2,4,5,"Fallen",false,18,1,4,450,500400,1760
+after,2,2,4,5,"Fallen",false,18,0,0,450,501440,1040
+after,2,2,4,5,"Fallen",false,18,2,4,450,502080,640
+after,2,2,4,5,"Zombie",false,33,4,9,450,514560,12480
+after,2,2,4,5,"Fallen",false,18,1,5,450,527600,13040
+after,2,2,4,5,"Fallen",false,18,4,9,450,529480,1880
+after,2,2,4,5,"Fallen",false,18,0,0,450,530960,1480
+after,2,2,4,5,"Fallen",false,18,1,5,450,532120,1160
+after,2,2,4,5,"Fallen",false,18,0,0,450,532120,0
+after,2,2,4,5,"Fallen",false,18,4,9,450,533800,1680
+after,2,3,4,5,"Fallen",false,18,1,5,450,33880,33880
+after,2,3,4,5,"Fallen",false,18,1,0,450,34040,160
+after,2,3,4,5,"Fallen",false,18,0,0,450,34040,0
+after,2,3,4,5,"Fallen",false,18,3,9,450,36760,2720
+after,2,3,4,5,"Quill Rat",false,21,5,13,450,61720,24960
+after,2,3,4,5,"Quill Rat",false,21,2,4,450,64240,2520
+after,2,3,4,5,"Quill Rat",false,21,2,5,450,70520,6280
+after,2,3,4,5,"Fallen",false,18,1,5,450,73720,3200
+after,2,3,4,5,"Fallen",false,18,0,0,450,73720,0
+after,2,3,4,5,"Fallen",false,18,4,8,450,76520,2800
+after,2,3,4,5,"Zombie",false,33,4,10,450,82960,6440
+after,2,3,4,5,"Fallen",false,18,1,5,450,85840,2880
+after,2,3,4,5,"Fallen",false,18,1,0,450,86240,400
+after,2,3,4,5,"Fallen",false,18,0,0,450,86320,80
+after,2,3,4,5,"Fallen",false,18,1,5,450,89040,2720
+after,2,3,4,5,"Fallen",false,18,1,0,450,89200,160
+after,2,3,4,5,"Fallen",false,18,2,4,450,90440,1240
+after,2,3,4,5,"Fallen",false,23,1,4,450,91960,1520
+after,2,3,4,5,"Zombie",false,23,0,0,450,91960,0
+after,2,3,4,5,"Fallen",false,23,0,0,450,91960,0
+after,2,3,4,5,"Fallen",false,18,0,0,450,92760,800
+after,2,3,4,5,"Fallen",false,18,1,5,450,92920,160
+after,2,3,4,5,"Quill Rat",false,21,2,4,450,96040,3120
+after,2,3,4,5,"Quill Rat",false,21,3,10,450,97720,1680
+after,2,3,4,5,"Zombie",false,33,0,0,450,100200,2480
+after,2,3,4,5,"Zombie",false,33,3,10,450,103720,3520
+after,2,3,4,5,"Fallen",false,18,1,5,450,106720,3000
+after,2,3,4,5,"Fallen",false,18,0,0,450,106960,240
+after,2,3,4,5,"Fallen",false,18,2,5,450,109320,2360
+after,2,3,4,5,"Quill Rat",false,21,1,4,450,110000,680
+after,2,3,4,5,"Quill Rat",false,21,4,8,450,113800,3800
+after,2,3,4,5,"Fallen",false,18,1,4,450,115920,2120
+after,2,3,4,5,"Fallen",false,18,2,5,450,121280,5360
+after,2,3,4,5,"Fallen",false,18,2,4,450,124320,3040
+after,2,3,4,5,"Quill Rat",false,21,1,4,450,125280,960
+after,2,3,4,5,"Fallen",false,18,1,5,450,127320,2040
+after,2,3,4,5,"Fallen",false,18,1,5,450,133040,5720
+after,2,3,4,5,"Fallen",false,18,1,0,450,133360,320
+after,2,3,4,5,"Fallen",false,18,2,5,450,136800,3440
+after,2,3,4,5,"Quill Rat",false,21,3,10,450,143160,6360
+after,2,3,4,5,"Fallen",false,18,1,5,450,187400,44240
+after,2,3,4,5,"Fallen",false,18,1,0,450,187640,240
+after,2,3,4,5,"Fallen",false,18,1,5,450,188040,400
+after,2,3,4,5,"Fallen",false,18,2,4,450,190920,2880
+after,2,3,4,5,"Fallen",false,18,0,0,450,191600,680
+after,2,3,4,5,"Fallen",false,18,0,0,450,191600,0
+after,2,3,4,5,"Fallen",false,18,2,5,450,192240,640
+after,2,3,4,5,"Fallen",false,18,0,0,450,193040,800
+after,2,3,4,5,"Zombie",false,33,4,10,450,287280,94240
+after,2,3,4,5,"Fallen",false,18,6,14,450,292360,5080
+after,2,3,4,5,"Fallen",false,18,2,5,450,294080,1720
+after,2,3,4,5,"Fallen",false,18,1,4,450,295320,1240
+after,2,3,4,5,"Fallen",false,18,0,0,450,296480,1160
+after,2,3,4,5,"Fallen",false,18,1,5,450,300640,4160
+after,2,3,4,5,"Fallen",false,18,1,0,450,300800,160
+after,2,3,4,5,"Fallen",false,18,1,4,450,301520,720
+after,2,3,4,5,"Fallen",false,18,2,5,450,303640,2120
+after,2,3,4,5,"Fallen",false,18,0,0,450,305440,1800
+after,2,3,4,5,"Fallen",false,18,1,4,450,306840,1400
+after,2,3,4,5,"Fallen",false,18,1,5,450,308880,2040
+after,2,3,4,5,"Fallen",false,18,1,0,450,309120,240
+after,2,3,4,5,"Fallen",false,18,0,0,450,309440,320
+after,2,3,4,5,"Fallen",false,18,3,9,450,313160,3720
+after,2,3,4,5,"Fallen",false,18,0,0,450,313320,160
+after,2,3,4,5,"Fallen",false,18,1,0,450,313560,240
+after,2,3,4,5,"Fallen",false,18,2,5,450,315040,1480
+after,2,3,4,5,"Zombie",false,33,4,9,450,317640,2600
+after,2,3,4,5,"Zombie",false,33,2,5,450,318440,800
+after,2,3,4,5,"Fallen",false,18,2,4,450,334040,15600
+after,2,3,4,5,"Fallen",false,18,2,5,450,334840,800
+after,2,3,4,5,"Quill Rat",false,19,1,5,450,336600,1760
+after,2,3,4,5,"Fallen",false,19,0,0,450,336600,0
+after,2,3,4,5,"Quill Rat",false,21,1,0,450,338360,1760
+after,2,3,4,5,"Zombie",false,33,5,9,450,341200,2840
+after,2,3,4,5,"Zombie",false,33,2,4,450,342840,1640
+after,2,3,4,5,"Zombie",false,33,2,4,450,348760,5920
+after,2,3,4,5,"Fallen",false,18,2,4,450,353920,5160
+after,2,3,4,5,"Fallen",false,18,1,5,450,358960,5040
+after,2,3,4,5,"Quill Rat",false,21,4,9,450,361080,2120
+after,2,3,4,5,"Fallen",false,18,0,0,450,362880,1800
+after,2,3,4,5,"Fallen",false,18,1,5,450,364520,1640
+after,2,3,4,5,"Fallen",false,18,1,0,450,364600,80
+after,2,3,4,5,"Quill Rat",false,21,3,9,450,366920,2320
+after,2,3,4,5,"Zombie",false,33,3,10,450,469560,102640
+after,2,3,4,5,"Fallen",false,18,1,4,450,473600,4040
+after,2,3,4,5,"Fallen",false,18,1,0,450,473920,320
+after,2,3,4,5,"Fallen",false,18,1,5,450,474560,640
+after,2,3,4,5,"Fallen",false,18,1,4,450,477560,3000
+after,2,3,4,5,"Quill Rat",false,21,2,4,450,489680,12120
+after,2,3,4,5,"Fallen",false,18,1,4,450,489840,160
+after,2,3,4,5,"Fallen",false,18,1,0,450,490400,560
+after,2,3,4,5,"Fallen",false,18,1,5,450,491160,760
+after,2,3,4,5,"Zombie",false,33,1,5,450,863480,372320
+after,2,3,4,5,"Quill Rat",false,21,3,10,450,870920,7440
+after,2,3,4,5,"Quill Rat",false,21,0,0,450,872680,1760
+after,2,4,4,5,"Fallen",false,18,1,5,450,5120,5120
+after,2,4,4,5,"Fallen",false,18,1,5,450,7480,2360
+after,2,4,4,5,"Fallen",false,18,2,5,450,10800,3320
+after,2,4,4,5,"Fallen",false,18,1,5,450,15080,4280
+after,2,4,4,5,"Quill Rat",false,21,0,0,450,16240,1160
+after,2,4,4,5,"Quill Rat",false,21,3,9,450,18200,1960
+after,2,4,4,5,"Quill Rat",false,21,1,0,450,18920,720
+after,2,4,4,5,"Zombie",false,33,3,9,450,23080,4160
+after,2,4,4,5,"Zombie",false,33,1,0,450,23560,480
+after,2,4,4,5,"Zombie",false,33,4,9,450,25240,1680
+after,2,4,4,5,"Quill Rat",false,21,2,0,450,36680,11440
+after,2,4,4,5,"Fallen",false,18,0,0,450,39240,2560
+after,2,4,4,5,"Fallen",false,18,0,0,450,39240,0
+after,2,4,4,5,"Fallen",false,18,0,0,450,39240,0
+after,2,4,4,5,"Quill Rat",false,21,2,5,450,40200,960
+after,2,4,4,5,"Fallen",false,18,1,4,450,41120,920
+after,2,4,4,5,"Quill Rat",false,21,1,5,450,42240,1120
+after,2,4,4,5,"Quill Rat",false,21,1,0,450,42560,320
+after,2,4,4,5,"Zombie",false,33,1,4,450,43600,1040
+after,2,4,4,5,"Zombie",false,33,2,5,450,44640,1040
+after,2,4,4,5,"Quill Rat",false,21,1,5,450,59640,15000
+after,2,4,4,5,"Quill Rat",false,21,2,5,450,62680,3040
+after,2,4,4,5,"Quill Rat",false,21,0,0,450,65000,2320
+after,2,4,4,5,"Quill Rat",false,21,0,0,450,65000,0
+after,2,4,4,5,"Zombie",false,33,2,5,450,66400,1400
+after,2,4,4,5,"Fallen",false,18,2,5,450,68840,2440
+after,2,4,4,5,"Fallen",false,18,1,5,450,69320,480
+after,2,4,4,5,"Fallen",false,18,1,0,450,69560,240
+after,2,4,4,5,"Fallen",false,18,1,4,450,72040,2480
+after,2,4,4,5,"Fallen",false,18,0,0,450,73760,1720
+after,2,4,4,5,"Fallen",false,18,1,4,450,75240,1480
+after,2,4,4,5,"Fallen",false,18,2,4,450,82520,7280
+after,2,4,4,5,"Fallen",false,18,3,10,450,85120,2600
+after,2,4,4,5,"Fallen",false,18,0,0,450,85920,800
+after,2,4,4,5,"Fallen",false,18,1,4,450,86000,80
+after,2,4,4,5,"Fallen",false,18,3,4,450,87520,1520
+after,2,4,4,5,"Zombie",false,33,2,5,450,88720,1200
+after,2,4,4,5,"Fallen",false,18,1,0,450,96920,8200
+after,2,4,4,5,"Fallen",false,18,2,5,450,99280,2360
+after,2,4,4,5,"Fallen",false,18,1,4,450,101760,2480
+after,2,4,4,5,"Quill Rat",false,19,2,5,450,110960,9200
+after,2,4,4,5,"Fallen",false,19,0,0,450,110960,0
+after,2,4,4,5,"Quill Rat",false,22,0,0,450,111880,920
+after,2,4,4,5,"Fallen",false,18,2,4,450,113680,1800
+after,2,4,4,5,"Zombie",false,33,1,5,450,117120,3440
+after,2,4,4,5,"Zombie",false,33,2,5,450,121320,4200
+after,2,4,4,5,"Zombie",false,33,0,0,450,121400,80
+after,2,4,4,5,"Quill Rat",false,21,2,4,450,127120,5720
+after,2,4,4,5,"Quill Rat",false,21,0,0,450,127200,80
+after,2,4,4,5,"Zombie",false,33,4,10,450,134200,7000
+after,2,4,4,5,"Zombie",false,33,1,4,450,134840,640
+after,2,4,4,5,"Quill Rat",false,21,4,9,450,138400,3560
+after,2,4,4,5,"Quill Rat",false,21,3,10,450,141080,2680
+after,2,4,4,5,"Zombie",false,33,1,4,450,142360,1280
+after,2,4,4,5,"Zombie",false,33,0,0,450,144000,1640
+after,2,4,4,5,"Zombie",false,33,2,5,450,171720,27720
+after,2,4,4,5,"Zombie",false,33,4,9,450,173560,1840
+after,2,4,4,5,"Quill Rat",false,21,1,5,450,190800,17240
+after,2,4,4,5,"Quill Rat",false,21,1,0,450,190880,80
+after,2,4,4,5,"Quill Rat",false,21,3,8,450,194000,3120
+after,2,4,4,5,"Quill Rat",false,21,3,8,450,196760,2760
+after,2,4,4,5,"Zombie",false,33,4,10,450,233080,36320
+after,2,4,4,5,"Quill Rat",false,21,2,4,450,237160,4080
+after,2,4,4,5,"Quill Rat",false,21,2,4,450,243840,6680
+after,2,4,4,5,"Quill Rat",false,21,2,4,450,245640,1800
+after,2,4,4,5,"Quill Rat",false,21,1,4,450,245960,320
+after,2,4,4,5,"Fallen",false,18,0,0,450,246880,920
+after,2,4,4,5,"Fallen",false,18,0,0,450,246880,0
+after,2,4,4,5,"Fallen",false,18,0,0,450,248160,1280
+after,2,4,4,5,"Fallen",false,18,3,10,450,251800,3640
+after,2,4,4,5,"Fallen",false,18,0,0,450,253880,2080
+after,2,4,4,5,"Fallen",false,18,1,4,450,254360,480
+after,2,4,4,5,"Fallen",false,18,1,0,450,254440,80
+after,2,4,4,5,"Fallen",false,18,0,0,450,254600,160
+after,2,4,4,5,"Fallen",false,18,0,0,450,254840,240
+after,2,4,4,5,"Fallen",false,18,1,5,450,258160,3320
+after,2,4,4,5,"Fallen",false,18,1,4,450,260760,2600
+after,2,4,4,5,"Zombie",false,33,4,8,450,262440,1680
+after,2,4,4,5,"Fallen",false,18,1,5,450,264120,1680
+after,2,4,4,5,"Fallen",false,18,1,4,450,267040,2920
+after,2,4,4,5,"Fallen",false,18,8,18,450,273600,6560
+after,2,4,4,5,"Fallen",false,18,2,4,450,280280,6680
+after,2,4,4,5,"Fallen",false,18,1,5,450,293920,13640
+after,2,4,4,5,"Fallen",false,18,1,0,450,294320,400
+after,2,4,4,5,"Fallen",false,18,1,5,450,294560,240
+after,2,4,4,5,"Fallen",false,18,2,4,450,297000,2440
+after,2,4,4,5,"Fallen",false,18,1,4,450,297600,600
+after,2,4,4,5,"Fallen",false,18,0,0,450,297760,160
+after,2,4,4,5,"Fallen",false,18,3,9,450,300040,2280
+after,2,4,4,5,"Zombie",false,33,2,5,450,303720,3680
+after,2,4,4,5,"Zombie",false,33,3,10,450,305560,1840
+after,2,4,4,5,"Fallen",false,18,3,10,450,309920,4360
+after,2,4,4,5,"Quill Rat",false,21,2,4,450,314920,5000
+after,2,4,4,5,"Fallen",false,18,2,4,450,317840,2920
+after,2,4,4,5,"Fallen",false,18,3,9,450,321480,3640
+after,2,4,4,5,"Quill Rat",false,21,0,0,450,322760,1280
+after,2,4,4,5,"Zombie",false,33,2,5,450,341920,19160
+after,2,4,4,5,"Zombie",false,33,6,13,450,346360,4440
+after,2,4,4,5,"Quill Rat",false,21,3,9,450,352080,5720
+after,2,4,4,5,"Quill Rat",false,21,1,5,450,355640,3560
+after,2,4,4,5,"Zombie",false,33,4,10,450,362760,7120
+after,2,1,8,9,"Quill Rat",false,9,3,14,450,5480,5480
+after,2,1,8,9,"Quill Rat",false,9,0,0,450,6280,800
+after,2,1,8,9,"Zombie",false,14,3,12,450,8880,2600
+after,2,1,8,9,"Zombie",false,14,1,6,450,9760,880
+after,2,1,8,9,"Zombie",false,14,0,0,450,11280,1520
+after,2,1,8,9,"Zombie",false,14,2,7,450,22640,11360
+after,2,1,8,9,"Fallen",false,7,0,0,450,28120,5480
+after,2,1,8,9,"Quill Rat",false,9,1,6,450,28600,480
+after,2,1,8,9,"Quill Rat",false,9,2,0,450,31080,2480
+after,2,1,8,9,"Fallen",false,7,2,6,450,33640,2560
+after,2,1,8,9,"Fallen",false,7,1,7,450,34120,480
+after,2,1,8,9,"Fallen",false,7,0,0,450,34120,0
+after,2,1,8,9,"Quill Rat",false,9,3,14,450,42520,8400
+after,2,1,8,9,"Quill Rat",false,9,0,0,450,42520,0
+after,2,1,8,9,"Zombie",false,14,2,7,450,51560,9040
+after,2,1,8,9,"Zombie",false,14,4,14,450,58760,7200
+after,2,1,8,9,"Zombie",false,14,0,0,450,59080,320
+after,2,1,8,9,"Quill Rat",false,9,1,7,450,64680,5600
+after,2,1,8,9,"Zombie",false,14,3,12,450,69480,4800
+after,2,1,8,9,"Zombie",false,14,1,0,450,70200,720
+after,2,1,8,9,"Fallen",false,7,1,7,450,82400,12200
+after,2,1,8,9,"Zombie",false,14,1,0,450,82560,160
+after,2,1,8,9,"Fallen",false,7,0,0,450,82800,240
+after,2,1,8,9,"Zombie",false,14,1,6,450,83360,560
+after,2,1,8,9,"Fallen",false,7,3,13,450,86760,3400
+after,2,1,8,9,"Zombie",false,14,3,14,450,134240,47480
+after,2,1,8,9,"Quill Rat",false,9,2,6,450,139960,5720
+after,2,1,8,9,"Quill Rat",false,9,0,0,450,141360,1400
+after,2,1,8,9,"Zombie",false,14,3,13,450,143560,2200
+after,2,1,8,9,"Zombie",false,14,1,0,450,144040,480
+after,2,1,8,9,"Quill Rat",false,9,2,7,450,146920,2880
+after,2,1,8,9,"Quill Rat",false,9,3,12,450,148920,2000
+after,2,1,8,9,"Zombie",false,14,3,14,450,174880,25960
+after,2,1,8,9,"Quill Rat",false,9,1,7,450,204560,29680
+after,2,1,8,9,"Zombie",false,14,2,7,450,211080,6520
+after,2,1,8,9,"Zombie",false,14,2,7,450,217280,6200
+after,2,1,8,9,"Fallen",false,7,1,7,450,221920,4640
+after,2,1,8,9,"Fallen",false,7,1,0,450,222080,160
+after,2,1,8,9,"Fallen",false,7,3,12,450,224040,1960
+after,2,1,8,9,"Fallen",false,7,0,0,450,225800,1760
+after,2,1,8,9,"Fallen",false,7,0,0,450,225800,0
+after,2,1,8,9,"Fallen",false,7,2,7,450,228560,2760
+after,2,1,8,9,"Zombie",false,14,2,7,450,229920,1360
+after,2,1,8,9,"Quill Rat",false,9,3,13,450,231520,1600
+after,2,1,8,9,"Fallen",false,7,0,0,450,232680,1160
+after,2,1,8,9,"Zombie",false,14,3,13,450,235400,2720
+after,2,1,8,9,"Zombie",false,14,2,7,450,238360,2960
+after,2,1,8,9,"Quill Rat",false,9,4,12,450,243480,5120
+after,2,1,8,9,"Quill Rat",false,9,1,7,450,243640,160
+after,2,1,8,9,"Fallen",false,7,0,0,450,245760,2120
+after,2,1,8,9,"Fallen",false,7,3,14,450,249640,3880
+after,2,1,8,9,"Fallen",false,7,0,0,450,249720,80
+after,2,1,8,9,"Zombie",false,14,2,7,450,252520,2800
+after,2,1,8,9,"Quill Rat",false,9,3,14,450,322880,70360
+after,2,1,8,9,"Quill Rat",false,9,1,0,450,323920,1040
+after,2,1,8,9,"Fallen",false,7,0,0,450,327440,3520
+after,2,1,8,9,"Fallen",false,7,2,6,450,328440,1000
+after,2,1,8,9,"Zombie",false,14,2,6,450,336360,7920
+after,2,1,8,9,"Fallen",false,7,1,7,450,370280,33920
+after,2,1,8,9,"Fallen",false,7,3,7,450,371320,1040
+after,2,1,8,9,"Zombie",false,14,3,14,450,397960,26640
+after,2,1,8,9,"Zombie",false,14,2,6,450,407240,9280
+after,2,1,8,9,"Zombie",false,14,2,6,450,408200,960
+after,2,1,8,9,"Fallen",false,7,1,7,450,408840,640
+after,2,1,8,9,"Zombie",false,14,0,0,450,409000,160
+after,2,1,8,9,"Fallen",false,7,1,6,450,411320,2320
+after,2,1,8,9,"Fallen",false,7,2,6,450,414000,2680
+after,2,1,8,9,"Fallen",false,7,1,7,450,415480,1480
+after,2,1,8,9,"Fallen",false,7,1,7,450,420080,4600
+after,2,1,8,9,"Quill Rat",false,9,3,12,450,422400,2320
+after,2,1,8,9,"Zombie",false,14,1,0,450,422640,240
+after,2,1,8,9,"Quill Rat",false,9,2,6,450,424400,1760
+after,2,1,8,9,"Fallen",false,7,1,7,450,882680,458280
+after,2,2,8,9,"Fallen",false,7,1,0,450,480,480
+after,2,2,8,9,"Zombie",false,14,2,7,450,4400,3920
+after,2,2,8,9,"Zombie",false,14,2,6,450,5600,1200
+after,2,2,8,9,"Quill Rat",false,9,1,6,450,18480,12880
+after,2,2,8,9,"Fallen",false,7,2,7,450,21200,2720
+after,2,2,8,9,"Fallen",false,7,2,6,450,22800,1600
+after,2,2,8,9,"Fallen",false,7,0,0,450,23840,1040
+after,2,2,8,9,"Fallen",false,7,2,6,450,28520,4680
+after,2,2,8,9,"Fallen",false,7,1,7,450,29560,1040
+after,2,2,8,9,"Fallen",false,7,2,0,450,47880,18320
+after,2,2,8,9,"Fallen",false,7,1,7,450,48120,240
+after,2,2,8,9,"Zombie",false,14,1,0,450,48680,560
+after,2,2,8,9,"Fallen",false,7,1,6,450,49600,920
+after,2,2,8,9,"Zombie",false,14,3,13,450,57080,7480
+after,2,2,8,9,"Fallen",false,10,0,0,450,58120,1040
+after,2,2,8,9,"Zombie",false,10,0,0,450,58120,0
+after,2,2,8,9,"Quill Rat",false,10,2,7,450,74440,16320
+after,2,2,8,9,"Quill Rat",false,9,4,12,450,76920,2480
+after,2,2,8,9,"Quill Rat",false,9,2,0,450,78680,1760
+after,2,2,8,9,"Quill Rat",false,9,2,7,450,86600,7920
+after,2,2,8,9,"Zombie",false,14,2,6,450,90160,3560
+after,2,2,8,9,"Zombie",false,14,0,0,450,90600,440
+after,2,2,8,9,"Quill Rat",false,9,3,13,450,92520,1920
+after,2,2,8,9,"Fallen",false,7,1,6,450,96560,4040
+after,2,2,8,9,"Fallen",false,7,1,7,450,99120,2560
+after,2,2,8,9,"Fallen",false,7,2,7,450,100960,1840
+after,2,2,8,9,"Quill Rat",false,9,3,14,450,114240,13280
+after,2,2,8,9,"Quill Rat",false,9,3,7,450,130360,16120
+after,2,2,8,9,"Fallen",false,7,0,0,450,130440,80
+after,2,2,8,9,"Fallen",false,7,1,0,450,130520,80
+after,2,2,8,9,"Fallen",false,7,0,0,450,130760,240
+after,2,2,8,9,"Fallen",false,7,0,0,450,131200,440
+after,2,2,8,9,"Quill Rat",false,9,3,13,450,134000,2800
+after,2,2,8,9,"Zombie",false,14,2,6,450,134880,880
+after,2,2,8,9,"Zombie",false,14,1,6,450,140960,6080
+after,2,2,8,9,"Fallen",false,7,1,0,450,161120,20160
+after,2,2,8,9,"Fallen",false,7,1,6,450,162240,1120
+after,2,2,8,9,"Fallen",false,7,0,0,450,165120,2880
+after,2,2,8,9,"Fallen",false,7,0,0,450,165120,0
+after,2,2,8,9,"Fallen",false,7,2,6,450,168720,3600
+after,2,2,8,9,"Fallen",false,7,0,0,450,168880,160
+after,2,2,8,9,"Fallen",false,7,0,0,450,169040,160
+after,2,2,8,9,"Fallen",false,7,1,7,450,169200,160
+after,2,2,8,9,"Zombie",false,14,2,13,450,177080,7880
+after,2,2,8,9,"Fallen",false,7,1,7,450,201040,23960
+after,2,2,8,9,"Fallen",false,7,2,7,450,203600,2560
+after,2,2,8,9,"Fallen",false,7,0,0,450,203600,0
+after,2,2,8,9,"Fallen",false,7,1,0,450,253280,49680
+after,2,2,8,9,"Fallen",false,7,2,6,450,254800,1520
+after,2,2,8,9,"Fallen",false,7,1,6,450,255400,600
+after,2,2,8,9,"Fallen",false,7,0,0,450,256680,1280
+after,2,2,8,9,"Fallen",false,7,1,6,450,257720,1040
+after,2,2,8,9,"Fallen",false,7,1,6,450,260480,2760
+after,2,2,8,9,"Fallen",false,7,2,6,450,262800,2320
+after,2,2,8,9,"Fallen",false,7,3,12,450,265240,2440
+after,2,2,8,9,"Quill Rat",false,9,2,6,450,270920,5680
+after,2,2,8,9,"Zombie",false,14,3,13,450,273000,2080
+after,2,2,8,9,"Quill Rat",false,9,2,7,450,276240,3240
+after,2,2,8,9,"Quill Rat",false,9,2,6,450,277560,1320
+after,2,2,8,9,"Zombie",false,14,2,7,450,296720,19160
+after,2,2,8,9,"Zombie",false,14,2,7,450,297680,960
+after,2,2,8,9,"Zombie",false,14,2,6,450,299240,1560
+after,2,2,8,9,"Zombie",false,14,2,6,450,310280,11040
+after,2,2,8,9,"Zombie",false,14,4,14,450,315280,5000
+after,2,2,8,9,"Zombie",false,14,2,7,450,402680,87400
+after,2,2,8,9,"Zombie",false,14,1,7,450,403560,880
+after,2,2,8,9,"Zombie",false,14,3,6,450,405000,1440
+after,2,2,8,9,"Zombie",false,14,3,12,450,407040,2040
+after,2,2,8,9,"Fallen",false,7,1,7,450,645600,238560
+after,2,2,8,9,"Fallen",false,7,1,0,450,645760,160
+after,2,2,8,9,"Fallen",false,7,0,0,450,645760,0
+after,2,2,8,9,"Fallen",false,7,0,0,450,646080,320
+after,2,2,8,9,"Fallen",false,7,0,0,450,646080,0
+after,2,2,8,9,"Fallen",false,7,0,0,450,646080,0
+after,2,2,8,9,"Quill Rat",false,9,3,13,450,650440,4360
+after,2,2,8,9,"Quill Rat",false,9,2,6,450,652640,2200
+after,2,2,8,9,"Quill Rat",false,9,2,7,450,655040,2400
+after,2,2,8,9,"Zombie",false,14,2,6,450,668280,13240
+after,2,2,8,9,"Quill Rat",false,9,1,7,450,668440,160
+after,2,2,8,9,"Fallen",false,7,1,7,450,675680,7240
+after,2,2,8,9,"Fallen",false,7,1,0,450,675840,160
+after,2,2,8,9,"Fallen",false,7,0,0,450,676000,160
+after,2,2,8,9,"Fallen",false,7,0,0,450,678320,2320
+after,2,2,8,9,"Fallen",false,7,2,7,450,680600,2280
+after,2,2,8,9,"Fallen",false,7,3,13,450,682520,1920
+after,2,2,8,9,"Fallen",false,7,0,0,450,682600,80
+after,2,2,8,9,"Quill Rat",false,9,1,6,450,683960,1360
+after,2,2,8,9,"Quill Rat",false,9,0,0,450,685240,1280
+after,2,2,8,9,"Zombie",false,14,2,7,450,699160,13920
+after,2,2,8,9,"Zombie",false,14,2,6,450,701600,2440
+after,2,2,8,9,"Zombie",false,14,1,7,450,702080,480
+after,2,2,8,9,"Fallen",false,7,2,7,450,706920,4840
+after,2,2,8,9,"Fallen",false,7,0,0,450,707000,80
+after,2,2,8,9,"Fallen",false,7,0,0,450,707240,240
+after,2,3,8,9,"Fallen",false,7,1,7,450,33880,33880
+after,2,3,8,9,"Fallen",false,7,1,0,450,34040,160
+after,2,3,8,9,"Fallen",false,7,0,0,450,34040,0
+after,2,3,8,9,"Fallen",false,7,3,13,450,36760,2720
+after,2,3,8,9,"Quill Rat",false,9,5,19,450,61720,24960
+after,2,3,8,9,"Quill Rat",false,9,2,6,450,64240,2520
+after,2,3,8,9,"Quill Rat",false,9,2,7,450,78120,13880
+after,2,3,8,9,"Fallen",false,7,1,7,450,81320,3200
+after,2,3,8,9,"Fallen",false,7,2,6,450,82280,960
+after,2,3,8,9,"Fallen",false,7,2,7,450,84920,2640
+after,2,3,8,9,"Fallen",false,7,1,7,450,90800,5880
+after,2,3,8,9,"Fallen",false,7,0,0,450,90800,0
+after,2,3,8,9,"Fallen",false,7,1,6,450,93360,2560
+after,2,3,8,9,"Fallen",false,7,0,0,450,93920,560
+after,2,3,8,9,"Fallen",false,7,0,0,450,94480,560
+after,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+after,2,3,8,9,"Fallen",false,7,2,7,450,96880,2400
+after,2,3,8,9,"Fallen",false,7,1,6,450,97280,400
+after,2,3,8,9,"Fallen",false,7,3,12,450,100120,2840
+after,2,3,8,9,"Zombie",false,14,3,12,450,105080,4960
+after,2,3,8,9,"Quill Rat",false,9,3,12,450,114920,9840
+after,2,3,8,9,"Quill Rat",false,9,2,0,450,116600,1680
+after,2,3,8,9,"Zombie",false,14,1,7,450,119880,3280
+after,2,3,8,9,"Zombie",false,14,0,0,450,120560,680
+after,2,3,8,9,"Fallen",false,7,1,7,450,123200,2640
+after,2,3,8,9,"Fallen",false,7,2,12,450,125960,2760
+after,2,3,8,9,"Fallen",false,7,0,0,450,126280,320
+after,2,3,8,9,"Fallen",false,7,0,0,450,127080,800
+after,2,3,8,9,"Fallen",false,7,0,0,450,128360,1280
+after,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+after,2,3,8,9,"Zombie",false,14,2,7,450,129080,720
+after,2,3,8,9,"Quill Rat",false,9,0,0,450,131560,2480
+after,2,3,8,9,"Zombie",false,14,3,13,450,132680,1120
+after,2,3,8,9,"Fallen",false,7,0,0,450,134680,2000
+after,2,3,8,9,"Fallen",false,7,1,7,450,134760,80
+after,2,3,8,9,"Fallen",false,7,0,0,450,135640,880
+after,2,3,8,9,"Quill Rat",false,8,2,6,450,137480,1840
+after,2,3,8,9,"Fallen",false,8,0,0,450,137480,0
+after,2,3,8,9,"Quill Rat",false,9,3,14,450,139680,2200
+after,2,3,8,9,"Quill Rat",false,9,0,0,450,142720,3040
+after,2,3,8,9,"Fallen",false,7,1,7,450,146760,4040
+after,2,3,8,9,"Fallen",false,7,1,0,450,146840,80
+after,2,3,8,9,"Fallen",false,7,1,6,450,151960,5120
+after,2,3,8,9,"Fallen",false,7,2,7,450,156560,4600
+after,2,3,8,9,"Fallen",false,7,0,0,450,156560,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,156800,240
+after,2,3,8,9,"Fallen",false,7,2,0,450,189120,32320
+after,2,3,8,9,"Fallen",false,7,0,0,450,189120,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,189120,0
+after,2,3,8,9,"Quill Rat",false,9,3,13,450,190560,1440
+after,2,3,8,9,"Fallen",false,7,1,0,450,228600,38040
+after,2,3,8,9,"Fallen",false,7,0,0,450,228600,0
+after,2,3,8,9,"Fallen",false,7,1,0,450,228760,160
+after,2,3,8,9,"Fallen",false,7,0,0,450,228760,0
+after,2,3,8,9,"Zombie",false,14,1,7,450,232080,3320
+after,2,3,8,9,"Fallen",false,7,1,0,450,311760,79680
+after,2,3,8,9,"Fallen",false,7,0,0,450,311760,0
+after,2,3,8,9,"Fallen",false,7,1,0,450,312160,400
+after,2,3,8,9,"Fallen",false,7,0,0,450,312240,80
+after,2,3,8,9,"Fallen",false,7,1,7,450,315080,2840
+after,2,3,8,9,"Fallen",false,7,2,6,450,320640,5560
+after,2,3,8,9,"Fallen",false,7,0,0,450,321320,680
+after,2,3,8,9,"Fallen",false,10,3,13,450,323920,2600
+after,2,3,8,9,"Zombie",false,10,0,0,450,323920,0
+after,2,3,8,9,"Fallen",false,7,1,0,450,344560,20640
+after,2,3,8,9,"Fallen",false,7,2,6,450,346120,1560
+after,2,3,8,9,"Fallen",false,7,1,6,450,352000,5880
+after,2,3,8,9,"Fallen",false,7,2,7,450,353680,1680
+after,2,3,8,9,"Fallen",false,7,1,6,450,354080,400
+after,2,3,8,9,"Fallen",false,7,0,0,450,355120,1040
+after,2,3,8,9,"Fallen",false,7,0,0,450,355120,0
+after,2,3,8,9,"Fallen",false,7,0,0,450,355120,0
+after,2,3,8,9,"Fallen",false,7,1,6,450,356040,920
+after,2,3,8,9,"Fallen",false,7,1,0,450,356520,480
+after,2,3,8,9,"Zombie",false,14,3,13,450,359040,2520
+after,2,3,8,9,"Zombie",false,14,3,14,450,373120,14080
+after,2,3,8,9,"Quill Rat",false,9,3,14,450,375720,2600
+after,2,3,8,9,"Quill Rat",false,9,0,0,450,377480,1760
+after,2,3,8,9,"Quill Rat",false,9,0,0,450,377480,0
+after,2,3,8,9,"Fallen",false,7,2,7,450,379080,1600
+after,2,3,8,9,"Fallen",false,7,2,12,450,381600,2520
+after,2,3,8,9,"Fallen",false,7,0,0,450,381680,80
+after,2,3,8,9,"Fallen",false,7,1,0,450,382400,720
+after,2,3,8,9,"Quill Rat",false,9,5,19,450,391680,9280
+after,2,3,8,9,"Quill Rat",false,9,3,13,450,398440,6760
+after,2,3,8,9,"Fallen",false,7,1,0,450,398920,480
+after,2,3,8,9,"Fallen",false,7,0,0,450,398920,0
+after,2,3,8,9,"Quill Rat",false,9,3,7,450,401640,2720
+after,2,3,8,9,"Fallen",false,7,0,0,450,402560,920
+after,2,3,8,9,"Fallen",false,7,0,0,450,402560,0
+after,2,3,8,9,"Quill Rat",false,9,2,6,450,407280,4720
+after,2,3,8,9,"Quill Rat",false,9,2,7,450,425320,18040
+after,2,3,8,9,"Quill Rat",false,9,0,0,450,427080,1760
+after,2,3,8,9,"Zombie",false,14,3,14,450,431560,4480
+after,2,3,8,9,"Fallen",false,7,1,7,450,460040,28480
+after,2,3,8,9,"Fallen",false,7,0,0,450,460960,920
+after,2,3,8,9,"Fallen",false,7,1,0,450,472960,12000
+after,2,3,8,9,"Fallen",false,7,0,0,450,474840,1880
+after,2,3,8,9,"Fallen",false,7,2,6,450,478480,3640
+after,2,3,8,9,"Fallen",false,7,2,6,450,480640,2160
+after,2,3,8,9,"Fallen",false,7,3,13,450,482920,2280
+after,2,3,8,9,"Fallen",false,7,1,7,450,486480,3560
+after,2,3,8,9,"Fallen",false,7,1,0,450,486720,240
+after,2,4,8,9,"Fallen",false,7,1,7,450,4560,4560
+after,2,4,8,9,"Fallen",false,7,1,6,450,6960,2400
+after,2,4,8,9,"Fallen",false,7,1,0,450,7360,400
+after,2,4,8,9,"Fallen",false,7,2,12,450,10040,2680
+after,2,4,8,9,"Quill Rat",false,9,1,7,450,25560,15520
+after,2,4,8,9,"Quill Rat",false,9,2,6,450,27200,1640
+after,2,4,8,9,"Quill Rat",false,9,3,14,450,28960,1760
+after,2,4,8,9,"Zombie",false,14,2,0,450,32360,3400
+after,2,4,8,9,"Zombie",false,14,2,7,450,33400,1040
+after,2,4,8,9,"Zombie",false,14,1,6,450,33960,560
+after,2,4,8,9,"Zombie",false,14,2,6,450,45520,11560
+after,2,4,8,9,"Fallen",false,7,0,0,450,45760,240
+after,2,4,8,9,"Fallen",false,7,2,7,450,47760,2000
+after,2,4,8,9,"Fallen",false,7,2,6,450,49400,1640
+after,2,4,8,9,"Fallen",false,7,0,0,450,49400,0
+after,2,4,8,9,"Fallen",false,7,0,0,450,50800,1400
+after,2,4,8,9,"Fallen",false,7,2,7,450,53240,2440
+after,2,4,8,9,"Fallen",false,7,0,0,450,53240,0
+after,2,4,8,9,"Zombie",false,14,2,7,450,59000,5760
+after,2,4,8,9,"Fallen",false,7,1,6,450,61200,2200
+after,2,4,8,9,"Quill Rat",false,9,1,0,450,61280,80
+after,2,4,8,9,"Fallen",false,7,0,0,450,61600,320
+after,2,4,8,9,"Fallen",false,7,1,6,450,61760,160
+after,2,4,8,9,"Fallen",false,7,0,0,450,61920,160
+after,2,4,8,9,"Fallen",false,7,0,0,450,62080,160
+after,2,4,8,9,"Fallen",false,7,1,0,450,62240,160
+after,2,4,8,9,"Fallen",false,7,2,13,450,64160,1920
+after,2,4,8,9,"Fallen",false,7,0,0,450,65200,1040
+after,2,4,8,9,"Fallen",false,7,1,6,450,65280,80
+after,2,4,8,9,"Fallen",false,7,0,0,450,65360,80
+after,2,4,8,9,"Fallen",false,7,2,7,450,66240,880
+after,2,4,8,9,"Quill Rat",false,9,0,0,450,68960,2720
+after,2,4,8,9,"Zombie",false,14,2,6,450,69760,800
+after,2,4,8,9,"Zombie",false,14,1,7,450,73880,4120
+after,2,4,8,9,"Zombie",false,14,2,7,450,74440,560
+after,2,4,8,9,"Zombie",false,14,1,0,450,75080,640
+after,2,4,8,9,"Zombie",false,14,1,7,450,79000,3920
+after,2,4,8,9,"Zombie",false,14,2,7,450,84480,5480
+after,2,4,8,9,"Quill Rat",false,9,0,0,450,84560,80
+after,2,4,8,9,"Zombie",false,14,3,13,450,85760,1200
+after,2,4,8,9,"Quill Rat",false,9,3,12,450,87720,1960
+after,2,4,8,9,"Zombie",false,14,2,6,450,109200,21480
+after,2,4,8,9,"Zombie",false,14,1,7,450,110040,840
+after,2,4,8,9,"Fallen",false,7,0,0,450,112640,2600
+after,2,4,8,9,"Fallen",false,7,2,6,450,113200,560
+after,2,4,8,9,"Fallen",false,7,1,6,450,115560,2360
+after,2,4,8,9,"Fallen",false,7,0,0,450,115560,0
+after,2,4,8,9,"Fallen",false,7,0,0,450,117800,2240
+after,2,4,8,9,"Fallen",false,7,0,0,450,117800,0
+after,2,4,8,9,"Fallen",false,7,2,6,450,120360,2560
+after,2,4,8,9,"Fallen",false,7,2,7,450,121160,800
+after,2,4,8,9,"Quill Rat",false,9,2,13,450,126360,5200
+after,2,4,8,9,"Quill Rat",false,9,5,13,450,128520,2160
+after,2,4,8,9,"Quill Rat",false,9,3,14,450,165000,36480
+after,2,4,8,9,"Fallen",false,7,0,0,450,166280,1280
+after,2,4,8,9,"Fallen",false,7,0,0,450,166280,0
+after,2,4,8,9,"Quill Rat",false,9,1,6,450,166520,240
+after,2,4,8,9,"Fallen",false,7,0,0,450,167320,800
+after,2,4,8,9,"Fallen",false,7,2,7,450,167880,560
+after,2,4,8,9,"Quill Rat",false,9,2,6,450,169400,1520
+after,2,4,8,9,"Quill Rat",false,9,3,14,450,170960,1560
+after,2,4,8,9,"Zombie",false,14,2,7,450,177040,6080
+after,2,4,8,9,"Zombie",false,14,1,7,450,177360,320
+after,2,4,8,9,"Fallen",false,7,2,7,450,183400,6040
+after,2,4,8,9,"Fallen",false,7,0,0,450,183560,160
+after,2,4,8,9,"Fallen",false,7,0,0,450,183800,240
+after,2,4,8,9,"Fallen",false,7,1,7,450,185720,1920
+after,2,4,8,9,"Fallen",false,7,3,13,450,188560,2840
+after,2,4,8,9,"Fallen",false,7,0,0,450,189840,1280
+after,2,4,8,9,"Fallen",false,7,1,6,450,191480,1640
+after,2,4,8,9,"Zombie",false,14,4,13,450,203760,12280
+after,2,4,8,9,"Fallen",false,7,1,6,450,205640,1880
+after,2,4,8,9,"Fallen",false,7,1,0,450,205800,160
+after,2,4,8,9,"Zombie",false,14,2,6,450,207280,1480
+after,2,4,8,9,"Fallen",false,7,1,7,450,208520,1240
+after,2,4,8,9,"Quill Rat",false,9,3,14,450,214240,5720
+after,2,4,8,9,"Quill Rat",false,9,1,0,450,214720,480
+after,2,4,8,9,"Fallen",false,7,0,0,450,216240,1520
+after,2,4,8,9,"Zombie",false,14,2,7,450,221400,5160
+after,2,4,8,9,"Zombie",false,14,0,0,450,222440,1040
+after,2,4,8,9,"Fallen",false,7,0,0,450,223480,1040
+after,2,4,8,9,"Zombie",false,14,2,7,450,226400,2920
+after,2,4,8,9,"Fallen",false,7,0,0,450,227080,680
+after,2,4,8,9,"Quill Rat",false,9,2,6,450,231600,4520
+after,2,4,8,9,"Fallen",false,7,1,7,450,303640,72040
+after,2,4,8,9,"Fallen",false,7,0,0,450,303640,0
+after,2,4,8,9,"Fallen",false,7,1,0,450,303800,160
+after,2,4,8,9,"Fallen",false,7,0,0,450,304040,240
+after,2,4,8,9,"Fallen",false,7,0,0,450,304240,200
+after,2,4,8,9,"Fallen",false,7,0,0,450,304240,0
+after,2,4,8,9,"Fallen",false,7,0,0,450,304240,0
+after,2,4,8,9,"Fallen",false,7,0,0,450,304240,0
+after,2,4,8,9,"Quill Rat",false,9,2,7,450,321280,17040
+after,2,4,8,9,"Quill Rat",false,9,1,7,450,323440,2160
+after,2,4,8,9,"Quill Rat",false,9,2,7,450,338200,14760
+after,2,4,8,9,"Quill Rat",false,9,7,26,450,357040,18840
+after,2,4,8,9,"Zombie",false,14,2,7,450,396440,39400
+after,2,4,8,9,"Zombie",false,14,2,6,450,399640,3200
+after,2,4,8,9,"Quill Rat",false,18,2,7,450,402120,2480
+after,2,4,8,9,"Zombie",false,14,2,7,450,404200,2080
+after,2,4,8,9,"Quill Rat",false,9,2,6,450,407720,3520
+after,2,4,8,9,"Zombie",false,14,2,6,450,411400,3680
+after,2,4,8,9,"Zombie",false,14,0,0,450,412080,680
+control,2,1,1,2,"Quill Rat",false,21,2,3,450,6000,6000
+control,2,1,1,2,"Quill Rat",false,21,2,2,450,7640,1640
+control,2,1,1,2,"Zombie",false,33,2,3,450,9200,1560
+control,2,1,1,2,"Zombie",false,33,8,12,450,12720,3520
+control,2,1,1,2,"Fallen",false,18,2,3,450,23000,10280
+control,2,1,1,2,"Fallen",false,18,1,3,450,23400,400
+control,2,1,1,2,"Fallen",false,18,2,3,450,24680,1280
+control,2,1,1,2,"Fallen",false,18,2,3,450,27520,2840
+control,2,1,1,2,"Fallen",false,18,2,3,450,28640,1120
+control,2,1,1,2,"Fallen",false,18,1,3,450,29120,480
+control,2,1,1,2,"Fallen",false,18,0,0,450,30520,1400
+control,2,1,1,2,"Zombie",false,33,9,15,450,37920,7400
+control,2,1,1,2,"Fallen",false,18,1,3,450,42080,4160
+control,2,1,1,2,"Fallen",false,18,1,3,450,43360,1280
+control,2,1,1,2,"Fallen",false,18,1,0,450,43840,480
+control,2,1,1,2,"Zombie",false,33,6,9,450,47760,3920
+control,2,1,1,2,"Zombie",false,33,4,6,450,49360,1600
+control,2,1,1,2,"Fallen",false,18,4,9,450,53280,3920
+control,2,1,1,2,"Fallen",false,18,22,33,450,68560,15280
+control,2,1,1,2,"Fallen",false,18,2,3,450,69440,880
+control,2,1,1,2,"Fallen",false,18,2,6,450,71880,2440
+control,2,1,1,2,"Fallen",false,18,2,3,450,72840,960
+control,2,1,1,2,"Fallen",false,18,2,6,450,75480,2640
+control,2,1,1,2,"Fallen",false,18,1,3,450,78800,3320
+control,2,1,1,2,"Quill Rat",false,21,4,6,450,97200,18400
+control,2,1,1,2,"Quill Rat",false,21,3,6,450,99520,2320
+control,2,1,1,2,"Fallen",false,18,2,2,450,105320,5800
+control,2,1,1,2,"Fallen",false,18,3,6,450,107000,1680
+control,2,1,1,2,"Fallen",false,18,4,6,450,110360,3360
+control,2,1,1,2,"Quill Rat",false,21,9,15,450,117520,7160
+control,2,1,1,2,"Quill Rat",false,21,8,12,450,121600,4080
+control,2,1,1,2,"Zombie",false,33,5,9,450,128400,6800
+control,2,1,1,2,"Zombie",false,33,7,12,450,152600,24200
+control,2,1,1,2,"Zombie",false,33,2,3,450,153560,960
+control,2,1,1,2,"Zombie",false,33,6,9,450,161000,7440
+control,2,1,1,2,"Zombie",false,33,1,3,450,161560,560
+control,2,1,1,2,"Quill Rat",false,21,4,6,450,172720,11160
+control,2,1,1,2,"Zombie",false,33,8,12,450,182720,10000
+control,2,1,1,2,"Quill Rat",false,21,3,6,450,187280,4560
+control,2,1,1,2,"Zombie",false,33,4,6,450,190600,3320
+control,2,1,1,2,"Fallen",false,18,2,3,450,194840,4240
+control,2,1,1,2,"Fallen",false,18,3,6,450,196680,1840
+control,2,1,1,2,"Fallen",false,18,2,3,450,198960,2280
+control,2,1,1,2,"Fallen",false,18,2,5,450,202120,3160
+control,2,1,1,2,"Quill Rat",false,21,6,9,450,230000,27880
+control,2,1,1,2,"Quill Rat",false,21,3,6,450,233720,3720
+control,2,1,1,2,"Fallen",false,18,0,0,450,234880,1160
+control,2,1,1,2,"Fallen",false,18,3,6,450,236320,1440
+control,2,1,1,2,"Fallen",false,18,2,3,450,237280,960
+control,2,1,1,2,"Zombie",false,33,11,18,450,244640,7360
+control,2,1,1,2,"Zombie",false,33,8,12,450,254960,10320
+control,2,1,1,2,"Fallen",false,18,3,6,450,261760,6800
+control,2,1,1,2,"Fallen",false,18,2,3,450,262720,960
+control,2,1,1,2,"Fallen",false,18,3,6,450,264480,1760
+control,2,1,1,2,"Fallen",false,18,0,0,450,264480,0
+control,2,1,1,2,"Zombie",false,33,1,3,450,265600,1120
+control,2,1,1,2,"Quill Rat",false,21,7,9,450,269520,3920
+control,2,1,1,2,"Fallen",false,18,3,6,450,273560,4040
+control,2,1,1,2,"Fallen",false,18,4,6,450,275160,1600
+control,2,1,1,2,"Fallen",false,18,2,3,450,277200,2040
+control,2,1,1,2,"Zombie",false,33,8,12,450,332000,54800
+control,2,1,1,2,"Quill Rat",false,21,5,9,450,341000,9000
+control,2,1,1,2,"Quill Rat",false,21,3,6,450,343360,2360
+control,2,1,1,2,"Fallen",false,25,6,9,450,348360,5000
+control,2,1,1,2,"Zombie",false,25,0,0,450,348360,0
+control,2,1,1,2,"Fallen",false,19,2,6,450,351520,3160
+control,2,1,1,2,"Fallen",false,18,2,3,450,354920,3400
+control,2,1,1,2,"Fallen",false,18,3,6,450,358520,3600
+control,2,1,1,2,"Zombie",false,33,6,9,450,366120,7600
+control,2,1,1,2,"Quill Rat",false,21,2,3,450,407920,41800
+control,2,1,1,2,"Quill Rat",false,21,3,6,450,414200,6280
+control,2,1,1,2,"Quill Rat",false,21,2,3,450,421120,6920
+control,2,1,1,2,"Quill Rat",false,21,2,3,450,422240,1120
+control,2,1,1,2,"Fallen",false,18,1,3,450,437080,14840
+control,2,1,1,2,"Fallen",false,18,5,6,450,439320,2240
+control,2,1,1,2,"Fallen",false,18,2,3,450,440040,720
+control,2,1,1,2,"Fallen",false,18,5,9,450,445120,5080
+control,2,1,1,2,"Fallen",false,18,0,0,450,445280,160
+control,2,1,1,2,"Fallen",false,18,3,3,450,446560,1280
+control,2,1,1,2,"Fallen",false,18,0,0,450,447200,640
+control,2,1,1,2,"Fallen",false,18,0,0,450,447200,0
+control,2,1,1,2,"Fallen",false,18,0,0,450,447200,0
+control,2,1,1,2,"Fallen",false,18,0,0,450,447200,0
+control,2,1,1,2,"Fallen",false,18,2,3,450,447920,720
+control,2,1,1,2,"Fallen",false,18,2,3,450,450320,2400
+control,2,1,1,2,"Fallen",false,18,4,6,450,455440,5120
+control,2,1,1,2,"Zombie",false,33,8,12,450,564680,109240
+control,2,1,1,2,"Fallen",false,18,2,3,450,569600,4920
+control,2,1,1,2,"Fallen",false,18,3,5,450,571960,2360
+control,2,1,1,2,"Fallen",false,18,1,3,450,572120,160
+control,2,1,1,2,"Fallen",false,18,0,0,450,574720,2600
+control,2,2,1,2,"Fallen",false,18,1,0,450,480,480
+control,2,2,1,2,"Zombie",false,33,4,6,450,5200,4720
+control,2,2,1,2,"Zombie",false,33,4,6,450,7120,1920
+control,2,2,1,2,"Quill Rat",false,21,1,3,450,13920,6800
+control,2,2,1,2,"Fallen",false,18,1,3,450,16480,2560
+control,2,2,1,2,"Fallen",false,18,2,3,450,18320,1840
+control,2,2,1,2,"Fallen",false,18,4,9,450,22160,3840
+control,2,2,1,2,"Fallen",false,18,3,6,450,28960,6800
+control,2,2,1,2,"Fallen",false,18,1,0,450,31080,2120
+control,2,2,1,2,"Zombie",false,33,9,15,450,48840,17760
+control,2,2,1,2,"Zombie",false,33,7,11,450,54920,6080
+control,2,2,1,2,"Fallen",false,18,2,3,450,55880,960
+control,2,2,1,2,"Fallen",false,18,2,3,450,56840,960
+control,2,2,1,2,"Fallen",false,18,5,9,450,60760,3920
+control,2,2,1,2,"Quill Rat",false,21,2,3,450,66480,5720
+control,2,2,1,2,"Quill Rat",false,21,1,3,450,66640,160
+control,2,2,1,2,"Fallen",false,18,49,72,450,136920,70280
+control,2,2,1,2,"Fallen",false,18,2,3,450,138080,1160
+control,2,2,1,2,"Fallen",false,18,0,0,450,138160,80
+control,2,2,1,2,"Fallen",false,18,4,6,450,140080,1920
+control,2,2,1,2,"Fallen",false,18,2,3,450,141040,960
+control,2,2,1,2,"Zombie",false,33,6,9,450,145480,4440
+control,2,2,1,2,"Quill Rat",false,21,3,6,450,152440,6960
+control,2,2,1,2,"Quill Rat",false,21,0,0,450,153120,680
+control,2,2,1,2,"Fallen",false,18,1,3,450,155000,1880
+control,2,2,1,2,"Fallen",false,18,4,6,450,158120,3120
+control,2,2,1,2,"Fallen",false,18,4,6,450,159640,1520
+control,2,2,1,2,"Fallen",false,18,1,3,450,160520,880
+control,2,2,1,2,"Fallen",false,18,0,0,450,162040,1520
+control,2,2,1,2,"Quill Rat",false,21,4,9,450,172080,10040
+control,2,2,1,2,"Fallen",false,18,2,2,450,172960,880
+control,2,2,1,2,"Fallen",false,18,0,0,450,173200,240
+control,2,2,1,2,"Fallen",false,18,14,20,450,179680,6480
+control,2,2,1,2,"Fallen",false,18,6,7,450,184320,4640
+control,2,2,1,2,"Fallen",false,18,1,2,450,186480,2160
+control,2,2,1,2,"Fallen",false,18,1,3,450,190080,3600
+control,2,2,1,2,"Fallen",false,18,6,9,450,193760,3680
+control,2,2,1,2,"Zombie",false,33,7,11,450,205120,11360
+control,2,2,1,2,"Quill Rat",false,21,3,6,450,221640,16520
+control,2,2,1,2,"Zombie",false,33,2,3,450,224760,3120
+control,2,2,1,2,"Fallen",false,18,3,6,450,228640,3880
+control,2,2,1,2,"Fallen",false,18,4,6,450,231800,3160
+control,2,2,1,2,"Fallen",false,18,4,5,450,233320,1520
+control,2,2,1,2,"Fallen",false,18,1,3,450,236920,3600
+control,2,2,1,2,"Fallen",false,18,2,3,450,237960,1040
+control,2,2,1,2,"Fallen",false,18,3,6,450,240320,2360
+control,2,2,1,2,"Fallen",false,18,0,0,450,242200,1880
+control,2,2,1,2,"Fallen",false,18,1,3,450,244440,2240
+control,2,2,1,2,"Fallen",false,18,1,0,450,244920,480
+control,2,2,1,2,"Fallen",false,18,3,6,450,247160,2240
+control,2,2,1,2,"Fallen",false,18,2,3,450,248760,1600
+control,2,2,1,2,"Zombie",false,33,7,12,450,257800,9040
+control,2,2,1,2,"Quill Rat",false,21,3,6,450,263760,5960
+control,2,2,1,2,"Zombie",false,33,4,5,450,268160,4400
+control,2,2,1,2,"Zombie",false,33,9,15,450,274000,5840
+control,2,2,1,2,"Zombie",false,33,4,6,450,276800,2800
+control,2,2,1,2,"Zombie",false,33,4,6,450,278760,1960
+control,2,2,1,2,"Zombie",false,33,5,9,450,281560,2800
+control,2,2,1,2,"Fallen",false,18,1,3,450,319080,37520
+control,2,2,1,2,"Fallen",false,18,1,0,450,319160,80
+control,2,2,1,2,"Fallen",false,18,3,6,450,322680,3520
+control,2,2,1,2,"Zombie",false,33,10,15,450,330080,7400
+control,2,2,1,2,"Zombie",false,33,5,9,450,332920,2840
+control,2,2,1,2,"Fallen",false,18,2,3,450,336160,3240
+control,2,2,1,2,"Fallen",false,18,2,2,450,337440,1280
+control,2,2,1,2,"Zombie",false,33,10,14,450,342000,4560
+control,2,2,1,2,"Fallen",false,18,0,0,450,343400,1400
+control,2,2,1,2,"Fallen",false,18,2,3,450,345880,2480
+control,2,2,1,2,"Fallen",false,18,2,3,450,346440,560
+control,2,2,1,2,"Fallen",false,18,6,11,450,350360,3920
+control,2,2,1,2,"Quill Rat",false,21,2,3,450,354000,3640
+control,2,2,1,2,"Fallen",false,18,4,6,450,359520,5520
+control,2,2,1,2,"Fallen",false,18,2,3,450,360560,1040
+control,2,2,1,2,"Fallen",false,18,2,3,450,361360,800
+control,2,2,1,2,"Fallen",false,18,2,3,450,364320,2960
+control,2,2,1,2,"Zombie",false,33,10,14,450,374840,10520
+control,2,2,1,2,"Quill Rat",false,21,3,6,450,391240,16400
+control,2,2,1,2,"Quill Rat",false,21,5,8,450,394720,3480
+control,2,2,1,2,"Quill Rat",false,21,3,5,450,397280,2560
+control,2,2,1,2,"Quill Rat",false,21,0,0,450,399160,1880
+control,2,2,1,2,"Zombie",false,33,4,6,450,401160,2000
+control,2,2,1,2,"Quill Rat",false,21,2,3,450,403880,2720
+control,2,2,1,2,"Zombie",false,33,7,11,450,412720,8840
+control,2,2,1,2,"Fallen",false,18,1,3,450,415320,2600
+control,2,2,1,2,"Fallen",false,18,2,3,450,416920,1600
+control,2,2,1,2,"Fallen",false,18,4,6,450,419120,2200
+control,2,2,1,2,"Quill Rat",false,21,3,6,450,421400,2280
+control,2,2,1,2,"Zombie",false,33,7,9,450,440000,18600
+control,2,2,1,2,"Zombie",false,33,1,0,450,440080,80
+control,2,2,1,2,"Quill Rat",false,21,1,3,450,443200,3120
+control,2,2,1,2,"Zombie",false,33,5,9,450,493400,50200
+control,2,2,1,2,"Zombie",false,33,16,22,450,504280,10880
+control,2,2,1,2,"Quill Rat",false,21,2,6,450,539240,34960
+control,2,2,1,2,"Quill Rat",false,21,7,12,450,617120,77880
+control,2,2,1,2,"Fallen",false,18,1,3,450,632680,15560
+control,2,2,1,2,"Fallen",false,18,1,0,450,633000,320
+control,2,2,1,2,"Fallen",false,18,1,3,450,636200,3200
+control,2,2,1,2,"Fallen",false,18,2,5,450,638760,2560
+control,2,3,1,2,"Fallen",false,18,1,3,450,33880,33880
+control,2,3,1,2,"Fallen",false,18,1,0,450,34040,160
+control,2,3,1,2,"Quill Rat",false,21,11,21,450,64920,30880
+control,2,3,1,2,"Quill Rat",false,21,5,9,450,68520,3600
+control,2,3,1,2,"Quill Rat",false,21,4,6,450,76800,8280
+control,2,3,1,2,"Fallen",false,18,1,3,450,80320,3520
+control,2,3,1,2,"Fallen",false,18,4,5,450,83040,2720
+control,2,3,1,2,"Fallen",false,18,0,0,450,83240,200
+control,2,3,1,2,"Fallen",false,18,0,0,450,83240,0
+control,2,3,1,2,"Fallen",false,18,1,3,450,85840,2600
+control,2,3,1,2,"Fallen",false,18,2,3,450,94240,8400
+control,2,3,1,2,"Fallen",false,18,3,6,450,96160,1920
+control,2,3,1,2,"Quill Rat",false,21,2,3,450,98520,2360
+control,2,3,1,2,"Quill Rat",false,21,7,12,450,101720,3200
+control,2,3,1,2,"Fallen",false,18,2,3,450,106280,4560
+control,2,3,1,2,"Fallen",false,18,1,3,450,108080,1800
+control,2,3,1,2,"Fallen",false,18,2,3,450,110120,2040
+control,2,3,1,2,"Fallen",false,18,0,0,450,110520,400
+control,2,3,1,2,"Zombie",false,33,7,12,450,115520,5000
+control,2,3,1,2,"Fallen",false,18,2,3,450,119680,4160
+control,2,3,1,2,"Fallen",false,18,1,3,450,120400,720
+control,2,3,1,2,"Quill Rat",false,21,4,6,450,121920,1520
+control,2,3,1,2,"Fallen",false,18,0,0,450,124040,2120
+control,2,3,1,2,"Zombie",false,33,6,12,450,135200,11160
+control,2,3,1,2,"Fallen",false,18,2,3,450,139480,4280
+control,2,3,1,2,"Fallen",false,18,1,3,450,140200,720
+control,2,3,1,2,"Fallen",false,18,3,6,450,142840,2640
+control,2,3,1,2,"Fallen",false,18,2,3,450,145240,2400
+control,2,3,1,2,"Fallen",false,18,3,3,450,253680,108440
+control,2,3,1,2,"Fallen",false,18,2,3,450,254640,960
+control,2,3,1,2,"Fallen",false,18,2,3,450,255680,1040
+control,2,3,1,2,"Fallen",false,18,3,6,450,258960,3280
+control,2,3,1,2,"Fallen",false,18,3,6,450,265440,6480
+control,2,3,1,2,"Fallen",false,18,1,0,450,266320,880
+control,2,3,1,2,"Fallen",false,18,2,6,450,268840,2520
+control,2,3,1,2,"Fallen",false,18,2,3,450,270600,1760
+control,2,3,1,2,"Fallen",false,18,2,2,450,271400,800
+control,2,3,1,2,"Fallen",false,18,2,6,450,273240,1840
+control,2,3,1,2,"Fallen",false,18,1,3,450,279520,6280
+control,2,3,1,2,"Fallen",false,18,2,3,450,280560,1040
+control,2,3,1,2,"Fallen",false,18,2,3,450,281440,880
+control,2,3,1,2,"Fallen",false,18,0,0,450,282000,560
+control,2,3,1,2,"Fallen",false,18,0,0,450,282000,0
+control,2,3,1,2,"Fallen",false,18,0,0,450,282000,0
+control,2,3,1,2,"Zombie",false,33,11,17,450,288960,6960
+control,2,3,1,2,"Fallen",false,18,2,3,450,319160,30200
+control,2,3,1,2,"Fallen",false,18,0,0,450,319240,80
+control,2,3,1,2,"Quill Rat",false,21,4,9,450,323040,3800
+control,2,3,1,2,"Fallen",false,18,3,3,450,324480,1440
+control,2,3,1,2,"Fallen",false,18,1,3,450,326880,2400
+control,2,3,1,2,"Quill Rat",false,21,4,9,450,330680,3800
+control,2,3,1,2,"Quill Rat",false,21,4,6,450,332520,1840
+control,2,3,1,2,"Quill Rat",false,21,3,6,450,341560,9040
+control,2,3,1,2,"Quill Rat",false,21,5,6,450,343800,2240
+control,2,3,1,2,"Quill Rat",false,21,1,3,450,345160,1360
+control,2,3,1,2,"Quill Rat",false,21,0,0,450,345480,320
+control,2,3,1,2,"Quill Rat",false,21,0,0,450,345480,0
+control,2,3,1,2,"Quill Rat",false,21,0,0,450,345480,0
+control,2,3,1,2,"Quill Rat",false,21,5,9,450,351120,5640
+control,2,3,1,2,"Quill Rat",false,21,0,0,450,352160,1040
+control,2,3,1,2,"Zombie",false,33,7,12,450,357760,5600
+control,2,3,1,2,"Quill Rat",false,21,4,6,450,360400,2640
+control,2,3,1,2,"Quill Rat",false,21,3,6,450,361840,1440
+control,2,3,1,2,"Quill Rat",false,21,5,9,450,366120,4280
+control,2,3,1,2,"Fallen",false,18,3,6,450,387920,21800
+control,2,3,1,2,"Quill Rat",false,21,3,5,450,390360,2440
+control,2,3,1,2,"Quill Rat",false,21,5,9,450,396080,5720
+control,2,3,1,2,"Zombie",false,33,13,21,450,406440,10360
+control,2,4,1,2,"Fallen",false,18,1,3,450,4320,4320
+control,2,4,1,2,"Fallen",false,18,2,3,450,7360,3040
+control,2,4,1,2,"Fallen",false,18,3,6,450,9840,2480
+control,2,4,1,2,"Fallen",false,18,3,5,450,13000,3160
+control,2,4,1,2,"Quill Rat",false,21,9,15,450,18560,5560
+control,2,4,1,2,"Quill Rat",false,21,2,3,450,20400,1840
+control,2,4,1,2,"Quill Rat",false,21,9,15,450,25600,5200
+control,2,4,1,2,"Quill Rat",false,21,6,9,450,28560,2960
+control,2,4,1,2,"Zombie",false,33,4,6,450,30640,2080
+control,2,4,1,2,"Quill Rat",false,21,5,8,450,33840,3200
+control,2,4,1,2,"Fallen",false,18,116,177,450,104400,70560
+control,2,4,1,2,"Fallen",false,18,1,0,450,104720,320
+control,2,4,1,2,"Fallen",false,18,123,183,450,183800,79080
+control,2,4,1,2,"Zombie",false,33,6,9,450,192600,8800
+control,2,4,1,2,"Zombie",false,33,0,0,450,193520,920
+control,2,4,1,2,"Zombie",false,33,6,12,450,197320,3800
+control,2,4,1,2,"Fallen",false,18,2,3,450,201000,3680
+control,2,4,1,2,"Fallen",false,18,2,3,450,204320,3320
+control,2,4,1,2,"Fallen",false,18,0,0,450,204400,80
+control,2,4,1,2,"Fallen",false,18,2,3,450,204960,560
+control,2,4,1,2,"Zombie",false,33,3,6,450,208200,3240
+control,2,4,1,2,"Zombie",false,33,4,6,450,214760,6560
+control,2,4,1,2,"Fallen",false,18,2,3,450,216800,2040
+control,2,4,1,2,"Fallen",false,18,2,3,450,217840,1040
+control,2,4,1,2,"Fallen",false,18,1,2,450,218560,720
+control,2,4,1,2,"Fallen",false,18,0,0,450,218640,80
+control,2,4,1,2,"Fallen",false,18,0,0,450,218640,0
+control,2,4,1,2,"Fallen",false,18,1,0,450,218880,240
+control,2,4,1,2,"Fallen",false,18,1,3,450,219600,720
+control,2,4,1,2,"Quill Rat",false,21,3,6,450,221320,1720
+control,2,4,1,2,"Fallen",false,18,0,0,450,223080,1760
+control,2,4,1,2,"Fallen",false,18,1,3,450,236640,13560
+control,2,4,1,2,"Quill Rat",false,21,2,3,450,237440,800
+control,2,4,1,2,"Fallen",false,18,2,3,450,239800,2360
+control,2,4,1,2,"Quill Rat",false,21,4,6,450,242000,2200
+control,2,4,1,2,"Fallen",false,18,1,3,450,243880,1880
+control,2,4,1,2,"Zombie",false,33,8,12,450,249080,5200
+control,2,4,1,2,"Zombie",false,33,7,12,450,252840,3760
+control,2,4,1,2,"Fallen",false,18,4,6,450,257440,4600
+control,2,4,1,2,"Zombie",false,33,7,12,450,268200,10760
+control,2,4,1,2,"Fallen",false,18,2,3,450,269880,1680
+control,2,4,1,2,"Fallen",false,18,2,3,450,272440,2560
+control,2,4,1,2,"Fallen",false,18,1,3,450,273720,1280
+control,2,4,1,2,"Fallen",false,18,2,3,450,274960,1240
+control,2,4,1,2,"Fallen",false,18,3,6,450,276560,1600
+control,2,4,1,2,"Fallen",false,18,3,3,450,277680,1120
+control,2,4,1,2,"Fallen",false,18,2,3,450,278560,880
+control,2,4,1,2,"Zombie",false,33,6,9,450,281560,3000
+control,2,4,1,2,"Fallen",false,18,2,3,450,283640,2080
+control,2,4,1,2,"Fallen",false,18,2,3,450,285400,1760
+control,2,4,1,2,"Fallen",false,18,4,6,450,287800,2400
+control,2,4,1,2,"Quill Rat",false,21,2,3,450,292640,4840
+control,2,4,1,2,"Quill Rat",false,21,7,14,450,301440,8800
+control,2,4,1,2,"Zombie",false,33,4,6,450,309080,7640
+control,2,4,1,2,"Zombie",false,33,6,9,450,313760,4680
+control,2,4,1,2,"Zombie",false,33,4,6,450,315760,2000
+control,2,4,1,2,"Zombie",false,33,7,12,450,322680,6920
+control,2,4,1,2,"Quill Rat",false,21,5,9,450,376800,54120
+control,2,4,1,2,"Quill Rat",false,21,2,6,450,384320,7520
+control,2,4,1,2,"Fallen",false,18,1,3,450,390960,6640
+control,2,4,1,2,"Fallen",false,18,1,0,450,391360,400
+control,2,4,1,2,"Fallen",false,18,4,6,450,393600,2240
+control,2,4,1,2,"Fallen",false,18,1,3,450,396280,2680
+control,2,4,1,2,"Fallen",false,18,0,0,450,396280,0
+control,2,4,1,2,"Fallen",false,18,0,0,450,396280,0
+control,2,4,1,2,"Fallen",false,18,0,0,450,396280,0
+control,2,4,1,2,"Fallen",false,18,0,0,450,397320,1040
+control,2,4,1,2,"Zombie",false,33,3,6,450,398760,1440
+control,2,4,1,2,"Quill Rat",false,21,2,3,450,399560,800
+control,2,4,1,2,"Fallen",false,18,1,3,450,403360,3800
+control,2,4,1,2,"Fallen",false,18,1,0,450,403520,160
+control,2,4,1,2,"Fallen",false,18,2,3,450,405920,2400
+control,2,4,1,2,"Fallen",false,18,2,3,450,407320,1400
+control,2,4,1,2,"Zombie",false,33,6,9,450,411400,4080
+control,2,4,1,2,"Zombie",false,33,2,3,450,412200,800
+control,2,4,1,2,"Fallen",false,18,1,3,450,414080,1880
+control,2,4,1,2,"Quill Rat",false,21,3,6,450,418080,4000
+control,2,4,1,2,"Fallen",false,18,3,3,450,420440,2360
+control,2,4,1,2,"Fallen",false,18,5,9,450,423600,3160
+control,2,4,1,2,"Zombie",false,33,4,6,450,426280,2680
+control,2,4,1,2,"Fallen",false,18,4,6,450,428200,1920
+control,2,4,1,2,"Zombie",false,33,3,6,450,429800,1600
+control,2,4,1,2,"Quill Rat",false,21,7,12,450,435920,6120
+control,2,4,1,2,"Quill Rat",false,21,4,6,450,442600,6680
+control,2,4,1,2,"Zombie",false,33,7,12,450,450480,7880
+control,2,4,1,2,"Zombie",false,33,7,9,450,453600,3120
+control,2,4,1,2,"Quill Rat",false,21,1,3,450,456320,2720
+control,2,4,1,2,"Quill Rat",false,21,2,3,450,459040,2720
+control,2,4,1,2,"Fallen",false,18,4,6,450,461000,1960
+control,2,4,1,2,"Quill Rat",false,21,4,6,450,462840,1840
+control,2,4,1,2,"Fallen",false,18,2,3,450,464360,1520
+control,2,4,1,2,"Fallen",false,18,2,3,450,465680,1320
+control,2,4,1,2,"Fallen",false,18,2,3,450,466720,1040
+control,2,4,1,2,"Quill Rat",false,21,1,3,450,466800,80
+control,2,4,1,2,"Quill Rat",false,21,1,3,450,471920,5120
+control,2,4,1,2,"Fallen",false,18,2,3,450,472960,1040
+control,2,4,1,2,"Quill Rat",false,21,6,9,450,475600,2640
+control,2,4,1,2,"Fallen",false,18,0,0,450,476600,1000
+control,2,4,1,2,"Quill Rat",false,21,2,2,450,477160,560
+control,2,4,1,2,"Quill Rat",false,21,0,0,450,477400,240
+control,2,4,1,2,"Fallen",false,18,0,0,450,477560,160
+control,2,4,1,2,"Fallen",false,18,2,3,450,478280,720
+control,2,4,1,2,"Zombie",false,33,4,6,450,484240,5960
+control,2,4,1,2,"Zombie",false,33,7,12,450,487840,3600
+control,2,4,1,2,"Zombie",false,33,4,6,450,600080,112240
+control,2,1,4,5,"Quill Rat",false,21,2,5,450,5800,5800
+control,2,1,4,5,"Quill Rat",false,21,1,4,450,7200,1400
+control,2,1,4,5,"Zombie",false,33,1,4,450,8240,1040
+control,2,1,4,5,"Zombie",false,33,3,4,450,9680,1440
+control,2,1,4,5,"Fallen",false,18,1,5,450,19720,10040
+control,2,1,4,5,"Fallen",false,18,1,0,450,20040,320
+control,2,1,4,5,"Fallen",false,18,0,0,450,20040,0
+control,2,1,4,5,"Fallen",false,18,1,4,450,21440,1400
+control,2,1,4,5,"Fallen",false,18,2,5,450,23920,2480
+control,2,1,4,5,"Fallen",false,18,3,9,450,26000,2080
+control,2,1,4,5,"Fallen",false,18,0,0,450,26080,80
+control,2,1,4,5,"Fallen",false,18,2,4,450,27200,1120
+control,2,1,4,5,"Zombie",false,33,0,0,450,27360,160
+control,2,1,4,5,"Zombie",false,33,3,4,450,28480,1120
+control,2,1,4,5,"Fallen",false,18,3,10,450,36680,8200
+control,2,1,4,5,"Fallen",false,18,2,4,450,37800,1120
+control,2,1,4,5,"Fallen",false,18,0,0,450,40040,2240
+control,2,1,4,5,"Fallen",false,18,1,4,450,40960,920
+control,2,1,4,5,"Fallen",false,18,1,4,450,50960,10000
+control,2,1,4,5,"Fallen",false,18,0,0,450,52840,1880
+control,2,1,4,5,"Zombie",false,33,10,23,450,61560,8720
+control,2,1,4,5,"Fallen",false,18,1,5,450,66680,5120
+control,2,1,4,5,"Fallen",false,18,3,8,450,68640,1960
+control,2,1,4,5,"Quill Rat",false,21,2,10,450,79600,10960
+control,2,1,4,5,"Quill Rat",false,21,0,0,450,80640,1040
+control,2,1,4,5,"Fallen",false,18,1,5,450,83920,3280
+control,2,1,4,5,"Fallen",false,18,0,0,450,84960,1040
+control,2,1,4,5,"Quill Rat",false,21,2,5,450,93560,8600
+control,2,1,4,5,"Quill Rat",false,21,3,9,450,95240,1680
+control,2,1,4,5,"Zombie",false,33,3,10,450,98360,3120
+control,2,1,4,5,"Quill Rat",false,21,1,5,450,136160,37800
+control,2,1,4,5,"Fallen",false,18,1,5,450,138640,2480
+control,2,1,4,5,"Fallen",false,18,2,8,450,141280,2640
+control,2,1,4,5,"Zombie",false,33,0,0,450,142560,1280
+control,2,1,4,5,"Zombie",false,33,4,9,450,151680,9120
+control,2,1,4,5,"Quill Rat",false,21,2,10,450,155440,3760
+control,2,1,4,5,"Quill Rat",false,21,0,0,450,156720,1280
+control,2,1,4,5,"Fallen",false,18,1,5,450,159480,2760
+control,2,1,4,5,"Fallen",false,18,4,9,450,161240,1760
+control,2,1,4,5,"Fallen",false,18,3,10,450,166520,5280
+control,2,1,4,5,"Quill Rat",false,21,3,9,450,169280,2760
+control,2,1,4,5,"Fallen",false,18,0,0,450,169440,160
+control,2,1,4,5,"Fallen",false,18,1,0,450,169680,240
+control,2,1,4,5,"Quill Rat",false,21,0,0,450,170920,1240
+control,2,1,4,5,"Fallen",false,18,1,4,450,172880,1960
+control,2,1,4,5,"Fallen",false,18,0,0,450,173880,1000
+control,2,1,4,5,"Quill Rat",false,21,3,8,450,183680,9800
+control,2,1,4,5,"Quill Rat",false,21,0,0,450,183680,0
+control,2,1,4,5,"Zombie",false,33,5,14,450,193840,10160
+control,2,1,4,5,"Zombie",false,33,3,10,450,198560,4720
+control,2,1,4,5,"Fallen",false,18,1,4,450,201080,2520
+control,2,1,4,5,"Fallen",false,18,2,5,450,202120,1040
+control,2,1,4,5,"Fallen",false,18,0,0,450,204920,2800
+control,2,1,4,5,"Fallen",false,18,1,4,450,207040,2120
+control,2,1,4,5,"Fallen",false,18,1,5,450,208720,1680
+control,2,1,4,5,"Fallen",false,18,1,5,450,211640,2920
+control,2,1,4,5,"Fallen",false,18,3,9,450,213920,2280
+control,2,1,4,5,"Zombie",false,33,2,4,450,218600,4680
+control,2,1,4,5,"Quill Rat",false,21,2,5,450,219720,1120
+control,2,1,4,5,"Fallen",false,18,2,5,450,223440,3720
+control,2,1,4,5,"Fallen",false,18,2,9,450,226240,2800
+control,2,1,4,5,"Fallen",false,18,0,0,450,227360,1120
+control,2,1,4,5,"Zombie",false,33,4,10,450,233840,6480
+control,2,1,4,5,"Zombie",false,33,3,10,450,239040,5200
+control,2,1,4,5,"Fallen",false,18,1,4,450,241440,2400
+control,2,1,4,5,"Fallen",false,18,4,8,450,245840,4400
+control,2,1,4,5,"Fallen",false,18,2,5,450,248120,2280
+control,2,1,4,5,"Fallen",false,18,1,5,450,260960,12840
+control,2,1,4,5,"Fallen",false,18,1,4,450,263400,2440
+control,2,1,4,5,"Fallen",false,18,1,0,450,264280,880
+control,2,1,4,5,"Fallen",false,18,1,4,450,264520,240
+control,2,2,4,5,"Fallen",false,18,1,0,450,480,480
+control,2,2,4,5,"Zombie",false,33,3,9,450,5120,4640
+control,2,2,4,5,"Zombie",false,33,1,0,450,5280,160
+control,2,2,4,5,"Quill Rat",false,21,1,4,450,12080,6800
+control,2,2,4,5,"Fallen",false,18,2,5,450,14840,2760
+control,2,2,4,5,"Fallen",false,18,2,5,450,18000,3160
+control,2,2,4,5,"Fallen",false,18,1,4,450,18880,880
+control,2,2,4,5,"Fallen",false,18,2,4,450,24280,5400
+control,2,2,4,5,"Fallen",false,18,2,4,450,26360,2080
+control,2,2,4,5,"Fallen",false,18,2,0,450,44320,17960
+control,2,2,4,5,"Fallen",false,18,1,5,450,44720,400
+control,2,2,4,5,"Zombie",false,33,3,4,450,46080,1360
+control,2,2,4,5,"Zombie",false,33,2,4,450,47520,1440
+control,2,2,4,5,"Fallen",false,18,2,4,450,54280,6760
+control,2,2,4,5,"Fallen",false,18,3,8,450,57800,3520
+control,2,2,4,5,"Fallen",false,18,0,0,450,59200,1400
+control,2,2,4,5,"Fallen",false,18,1,5,450,60600,1400
+control,2,2,4,5,"Fallen",false,18,3,8,450,63640,3040
+control,2,2,4,5,"Quill Rat",false,21,3,8,450,72080,8440
+control,2,2,4,5,"Quill Rat",false,21,4,10,450,75720,3640
+control,2,2,4,5,"Quill Rat",false,21,0,0,450,77920,2200
+control,2,2,4,5,"Fallen",false,18,2,5,450,82160,4240
+control,2,2,4,5,"Fallen",false,18,1,4,450,85000,2840
+control,2,2,4,5,"Quill Rat",false,21,4,9,450,87440,2440
+control,2,2,4,5,"Quill Rat",false,21,4,10,450,92200,4760
+control,2,2,4,5,"Fallen",false,18,1,5,450,93720,1520
+control,2,2,4,5,"Fallen",false,18,2,5,450,98200,4480
+control,2,2,4,5,"Fallen",false,18,0,0,450,98360,160
+control,2,2,4,5,"Fallen",false,18,2,9,450,101120,2760
+control,2,2,4,5,"Quill Rat",false,21,3,8,450,103920,2800
+control,2,2,4,5,"Quill Rat",false,21,5,14,450,107600,3680
+control,2,2,4,5,"Quill Rat",false,21,4,10,450,111080,3480
+control,2,2,4,5,"Zombie",false,33,2,5,450,148720,37640
+control,2,2,4,5,"Zombie",false,33,2,5,450,153240,4520
+control,2,2,4,5,"Fallen",false,18,2,0,450,240920,87680
+control,2,2,4,5,"Fallen",false,18,1,5,450,241800,880
+control,2,2,4,5,"Fallen",false,18,1,0,450,241880,80
+control,2,2,4,5,"Fallen",false,18,1,4,450,242600,720
+control,2,2,4,5,"Quill Rat",false,21,2,4,450,243560,960
+control,2,2,4,5,"Quill Rat",false,21,1,0,450,244120,560
+control,2,2,4,5,"Zombie",false,33,3,8,450,247840,3720
+control,2,2,4,5,"Zombie",false,33,4,9,450,250000,2160
+control,2,2,4,5,"Fallen",false,18,1,5,450,252840,2840
+control,2,2,4,5,"Fallen",false,18,4,9,450,255680,2840
+control,2,2,4,5,"Fallen",false,18,2,5,450,257600,1920
+control,2,2,4,5,"Fallen",false,18,2,5,450,261000,3400
+control,2,2,4,5,"Fallen",false,18,1,5,450,262880,1880
+control,2,2,4,5,"Fallen",false,18,1,0,450,262960,80
+control,2,2,4,5,"Fallen",false,18,1,4,450,263840,880
+control,2,2,4,5,"Fallen",false,18,1,0,450,264320,480
+control,2,2,4,5,"Quill Rat",false,21,5,14,450,280760,16440
+control,2,2,4,5,"Zombie",false,33,0,0,450,281920,1160
+control,2,2,4,5,"Fallen",false,18,1,0,450,300920,19000
+control,2,2,4,5,"Fallen",false,18,2,5,450,301960,1040
+control,2,2,4,5,"Fallen",false,18,0,0,450,301960,0
+control,2,2,4,5,"Fallen",false,18,4,8,450,304520,2560
+control,2,2,4,5,"Fallen",false,18,1,4,450,305440,920
+control,2,2,4,5,"Fallen",false,18,0,0,450,306360,920
+control,2,2,4,5,"Fallen",false,18,1,5,450,306600,240
+control,2,2,4,5,"Fallen",false,18,0,0,450,306760,160
+control,2,2,4,5,"Zombie",false,25,1,4,450,308160,1400
+control,2,2,4,5,"Fallen",false,25,0,0,450,308160,0
+control,2,2,4,5,"Fallen",false,18,0,0,450,309200,1040
+control,2,2,4,5,"Fallen",false,18,0,0,450,309200,0
+control,2,2,4,5,"Zombie",false,34,2,4,450,312040,2840
+control,2,2,4,5,"Quill Rat",false,21,3,9,450,316240,4200
+control,2,2,4,5,"Quill Rat",false,21,0,0,450,317040,800
+control,2,2,4,5,"Fallen",false,18,1,5,450,321720,4680
+control,2,2,4,5,"Fallen",false,18,0,0,450,322280,560
+control,2,2,4,5,"Fallen",false,18,1,4,450,326840,4560
+control,2,2,4,5,"Fallen",false,18,2,5,450,327880,1040
+control,2,2,4,5,"Fallen",false,18,1,0,450,328120,240
+control,2,2,4,5,"Fallen",false,18,1,5,450,328520,400
+control,2,2,4,5,"Quill Rat",false,21,2,5,450,333440,4920
+control,2,2,4,5,"Zombie",false,33,3,9,450,334880,1440
+control,2,2,4,5,"Quill Rat",false,21,0,0,450,336160,1280
+control,2,2,4,5,"Quill Rat",false,21,2,5,450,342280,6120
+control,2,2,4,5,"Quill Rat",false,21,5,12,450,344440,2160
+control,2,2,4,5,"Quill Rat",false,21,4,9,450,349520,5080
+control,2,2,4,5,"Quill Rat",false,21,2,5,450,354880,5360
+control,2,2,4,5,"Fallen",false,18,1,5,450,356920,2040
+control,2,2,4,5,"Fallen",false,18,1,0,450,357080,160
+control,2,2,4,5,"Fallen",false,18,0,0,450,357160,80
+control,2,2,4,5,"Fallen",false,18,0,0,450,357320,160
+control,2,2,4,5,"Quill Rat",false,21,3,10,450,359440,2120
+control,2,2,4,5,"Fallen",false,18,0,0,450,360960,1520
+control,2,2,4,5,"Fallen",false,18,0,0,450,360960,0
+control,2,2,4,5,"Fallen",false,18,2,5,450,361520,560
+control,2,2,4,5,"Fallen",false,18,0,0,450,362440,920
+control,2,2,4,5,"Fallen",false,18,0,0,450,362440,0
+control,2,2,4,5,"Fallen",false,18,2,5,450,363520,1080
+control,2,2,4,5,"Fallen",false,18,1,4,450,364080,560
+control,2,2,4,5,"Fallen",false,18,1,4,450,369320,5240
+control,2,2,4,5,"Fallen",false,18,1,0,450,369800,480
+control,2,2,4,5,"Fallen",false,18,0,0,450,370000,200
+control,2,2,4,5,"Fallen",false,18,1,5,450,374320,4320
+control,2,2,4,5,"Fallen",false,18,2,5,450,375360,1040
+control,2,2,4,5,"Fallen",false,18,4,8,450,379320,3960
+control,2,2,4,5,"Quill Rat",false,21,5,14,450,382000,2680
+control,2,2,4,5,"Fallen",false,18,0,0,450,386160,4160
+control,2,2,4,5,"Fallen",false,18,0,0,450,386160,0
+control,2,2,4,5,"Quill Rat",false,21,2,5,450,386800,640
+control,2,2,4,5,"Quill Rat",false,21,0,0,450,387040,240
+control,2,2,4,5,"Quill Rat",false,21,2,5,450,393480,6440
+control,2,2,4,5,"Zombie",false,33,3,10,450,398760,5280
+control,2,2,4,5,"Fallen",false,18,1,5,450,401280,2520
+control,2,2,4,5,"Zombie",false,33,4,8,450,404240,2960
+control,2,2,4,5,"Zombie",false,33,2,4,450,405560,1320
+control,2,3,4,5,"Fallen",false,18,1,5,450,33880,33880
+control,2,3,4,5,"Fallen",false,18,1,0,450,34040,160
+control,2,3,4,5,"Fallen",false,18,0,0,450,34040,0
+control,2,3,4,5,"Fallen",false,18,3,9,450,36760,2720
+control,2,3,4,5,"Quill Rat",false,21,5,13,450,61720,24960
+control,2,3,4,5,"Quill Rat",false,21,3,9,450,64800,3080
+control,2,3,4,5,"Quill Rat",false,21,2,5,450,71520,6720
+control,2,3,4,5,"Fallen",false,18,1,4,450,74720,3200
+control,2,3,4,5,"Fallen",false,18,0,0,450,74720,0
+control,2,3,4,5,"Fallen",false,18,4,9,450,77520,2800
+control,2,3,4,5,"Zombie",false,33,4,10,450,83960,6440
+control,2,3,4,5,"Fallen",false,18,1,5,450,86840,2880
+control,2,3,4,5,"Fallen",false,18,1,0,450,87240,400
+control,2,3,4,5,"Fallen",false,18,0,0,450,87320,80
+control,2,3,4,5,"Fallen",false,18,1,5,450,90040,2720
+control,2,3,4,5,"Fallen",false,18,1,0,450,90200,160
+control,2,3,4,5,"Fallen",false,18,2,4,450,91440,1240
+control,2,3,4,5,"Fallen",false,18,1,4,450,92960,1520
+control,2,3,4,5,"Fallen",false,18,0,0,450,92960,0
+control,2,3,4,5,"Fallen",false,18,2,4,450,93760,800
+control,2,3,4,5,"Zombie",false,33,0,0,450,93920,160
+control,2,3,4,5,"Fallen",false,18,0,0,450,94960,1040
+control,2,3,4,5,"Quill Rat",false,21,3,9,450,97920,2960
+control,2,3,4,5,"Quill Rat",false,21,2,4,450,99480,1560
+control,2,3,4,5,"Zombie",false,33,2,5,450,102400,2920
+control,2,3,4,5,"Zombie",false,33,6,14,450,107600,5200
+control,2,3,4,5,"Fallen",false,18,0,0,450,109120,1520
+control,2,3,4,5,"Fallen",false,18,1,5,450,112880,3760
+control,2,3,4,5,"Fallen",false,18,3,5,450,113920,1040
+control,2,3,4,5,"Quill Rat",false,21,2,4,450,114960,1040
+control,2,3,4,5,"Quill Rat",false,21,1,4,450,115360,400
+control,2,3,4,5,"Fallen",false,18,2,4,450,117680,2320
+control,2,3,4,5,"Fallen",false,18,2,4,450,120080,2400
+control,2,3,4,5,"Fallen",false,18,1,5,450,120400,320
+control,2,3,4,5,"Fallen",false,18,5,8,450,122800,2400
+control,2,3,4,5,"Quill Rat",false,21,1,4,450,123440,640
+control,2,3,4,5,"Fallen",false,18,1,5,450,128440,5000
+control,2,3,4,5,"Fallen",false,18,4,9,450,129960,1520
+control,2,3,4,5,"Fallen",false,18,0,0,450,130040,80
+control,2,3,4,5,"Quill Rat",false,21,4,9,450,137840,7800
+control,2,3,4,5,"Fallen",false,18,1,5,450,160600,22760
+control,2,3,4,5,"Fallen",false,18,1,0,450,160760,160
+control,2,3,4,5,"Fallen",false,18,2,4,450,161880,1120
+control,2,3,4,5,"Fallen",false,18,1,4,450,163720,1840
+control,2,3,4,5,"Zombie",false,33,1,5,450,166560,2840
+control,2,3,4,5,"Zombie",false,33,2,5,450,242440,75880
+control,2,3,4,5,"Fallen",false,18,1,5,450,261480,19040
+control,2,3,4,5,"Fallen",false,18,2,5,450,262200,720
+control,2,3,4,5,"Fallen",false,18,1,0,450,262520,320
+control,2,3,4,5,"Quill Rat",false,21,1,4,450,263240,720
+control,2,3,4,5,"Quill Rat",false,21,3,9,450,265080,1840
+control,2,3,4,5,"Quill Rat",false,21,3,10,450,268080,3000
+control,2,3,4,5,"Fallen",false,18,1,4,450,271760,3680
+control,2,3,4,5,"Fallen",false,18,1,5,450,278400,6640
+control,2,3,4,5,"Fallen",false,18,5,8,450,281000,2600
+control,2,3,4,5,"Fallen",false,18,1,5,450,281080,80
+control,2,3,4,5,"Quill Rat",false,21,3,10,450,299360,18280
+control,2,3,4,5,"Quill Rat",false,21,4,9,450,305200,5840
+control,2,3,4,5,"Zombie",false,33,1,0,450,318520,13320
+control,2,3,4,5,"Quill Rat",false,21,5,13,450,324600,6080
+control,2,3,4,5,"Quill Rat",false,21,3,8,450,329040,4440
+control,2,3,4,5,"Fallen",false,18,1,5,450,358200,29160
+control,2,3,4,5,"Fallen",false,18,1,0,450,358520,320
+control,2,3,4,5,"Fallen",false,18,2,5,450,362240,3720
+control,2,3,4,5,"Fallen",false,18,1,5,450,364360,2120
+control,2,3,4,5,"Fallen",false,18,4,8,450,366720,2360
+control,2,3,4,5,"Fallen",false,18,3,8,450,368560,1840
+control,2,3,4,5,"Fallen",false,18,2,4,450,372080,3520
+control,2,3,4,5,"Fallen",false,18,1,4,450,372880,800
+control,2,3,4,5,"Fallen",false,18,1,0,450,373440,560
+control,2,3,4,5,"Fallen",false,18,1,0,450,451800,78360
+control,2,3,4,5,"Fallen",false,18,1,0,450,451960,160
+control,2,3,4,5,"Fallen",false,18,5,13,450,455000,3040
+control,2,3,4,5,"Quill Rat",false,21,1,5,450,455480,480
+control,2,3,4,5,"Fallen",false,18,2,0,450,501240,45760
+control,2,3,4,5,"Fallen",false,18,0,0,450,501320,80
+control,2,3,4,5,"Fallen",false,18,0,0,450,501480,160
+control,2,3,4,5,"Fallen",false,18,0,0,450,501560,80
+control,2,3,4,5,"Fallen",false,18,2,5,450,504640,3080
+control,2,3,4,5,"Fallen",false,18,0,0,450,504720,80
+control,2,3,4,5,"Fallen",false,18,3,9,450,507560,2840
+control,2,3,4,5,"Fallen",false,18,2,5,450,608840,101280
+control,2,4,4,5,"Fallen",false,18,1,5,450,4440,4440
+control,2,4,4,5,"Fallen",false,18,1,4,450,7320,2880
+control,2,4,4,5,"Fallen",false,18,1,0,450,7800,480
+control,2,4,4,5,"Fallen",false,18,3,9,450,10480,2680
+control,2,4,4,5,"Quill Rat",false,21,3,8,450,16200,5720
+control,2,4,4,5,"Quill Rat",false,21,0,0,450,18200,2000
+control,2,4,4,5,"Quill Rat",false,21,3,10,450,20320,2120
+control,2,4,4,5,"Quill Rat",false,21,3,8,450,22560,2240
+control,2,4,4,5,"Zombie",false,33,1,0,450,23200,640
+control,2,4,4,5,"Zombie",false,33,2,5,450,24000,800
+control,2,4,4,5,"Quill Rat",false,21,3,9,450,25440,1440
+control,2,4,4,5,"Zombie",false,33,2,9,450,29760,4320
+control,2,4,4,5,"Zombie",false,33,0,0,450,31040,1280
+control,2,4,4,5,"Zombie",false,33,2,0,450,31920,880
+control,2,4,4,5,"Fallen",false,18,1,5,450,35000,3080
+control,2,4,4,5,"Fallen",false,18,2,5,450,37280,2280
+control,2,4,4,5,"Fallen",false,18,0,0,450,37600,320
+control,2,4,4,5,"Fallen",false,18,2,8,450,40000,2400
+control,2,4,4,5,"Fallen",false,18,1,0,450,40560,560
+control,2,4,4,5,"Fallen",false,18,0,0,450,42200,1640
+control,2,4,4,5,"Fallen",false,18,1,5,450,42680,480
+control,2,4,4,5,"Fallen",false,18,2,5,450,43240,560
+control,2,4,4,5,"Quill Rat",false,21,0,0,450,45240,2000
+control,2,4,4,5,"Quill Rat",false,21,1,5,450,45720,480
+control,2,4,4,5,"Fallen",false,18,1,5,450,49960,4240
+control,2,4,4,5,"Fallen",false,18,1,0,450,50040,80
+control,2,4,4,5,"Quill Rat",false,19,2,4,450,51720,1680
+control,2,4,4,5,"Fallen",false,19,0,0,450,51720,0
+control,2,4,4,5,"Quill Rat",false,22,6,13,450,55160,3440
+control,2,4,4,5,"Zombie",false,33,1,5,450,56480,1320
+control,2,4,4,5,"Zombie",false,33,3,5,450,58080,1600
+control,2,4,4,5,"Zombie",false,33,2,5,450,60000,1920
+control,2,4,4,5,"Zombie",false,33,3,10,450,65520,5520
+control,2,4,4,5,"Zombie",false,33,4,10,450,70800,5280
+control,2,4,4,5,"Zombie",false,33,1,4,450,71440,640
+control,2,4,4,5,"Quill Rat",false,21,2,4,450,72080,640
+control,2,4,4,5,"Quill Rat",false,21,1,0,450,72880,800
+control,2,4,4,5,"Fallen",false,18,1,5,450,76440,3560
+control,2,4,4,5,"Fallen",false,18,1,0,450,76760,320
+control,2,4,4,5,"Fallen",false,18,1,4,450,79600,2840
+control,2,4,4,5,"Fallen",false,18,1,5,450,80080,480
+control,2,4,4,5,"Zombie",false,33,5,9,450,99880,19800
+control,2,4,4,5,"Zombie",false,33,1,0,450,100040,160
+control,2,4,4,5,"Zombie",false,33,2,4,450,101080,1040
+control,2,4,4,5,"Zombie",false,33,2,4,450,102960,1880
+control,2,4,4,5,"Quill Rat",false,21,1,5,450,103920,960
+control,2,4,4,5,"Zombie",false,33,0,0,450,105680,1760
+control,2,4,4,5,"Zombie",false,33,2,4,450,107080,1400
+control,2,4,4,5,"Zombie",false,33,4,8,450,110600,3520
+control,2,4,4,5,"Zombie",false,33,0,0,450,110800,200
+control,2,4,4,5,"Fallen",false,18,2,5,450,115520,4720
+control,2,4,4,5,"Fallen",false,18,2,4,450,116720,1200
+control,2,4,4,5,"Zombie",false,33,2,4,450,120440,3720
+control,2,4,4,5,"Zombie",false,33,2,5,450,126440,6000
+control,2,4,4,5,"Zombie",false,33,3,9,450,128360,1920
+control,2,4,4,5,"Fallen",false,18,3,9,450,132440,4080
+control,2,4,4,5,"Quill Rat",false,21,1,4,450,136280,3840
+control,2,4,4,5,"Quill Rat",false,21,5,14,450,140800,4520
+control,2,4,4,5,"Quill Rat",false,21,2,5,450,147960,7160
+control,2,4,4,5,"Fallen",false,18,1,5,450,184400,36440
+control,2,4,4,5,"Fallen",false,18,0,0,450,184400,0
+control,2,4,4,5,"Fallen",false,18,1,0,450,184480,80
+control,2,4,4,5,"Quill Rat",false,21,5,13,450,190760,6280
+control,2,4,4,5,"Quill Rat",false,21,4,8,450,197920,7160
+control,2,4,4,5,"Zombie",false,33,1,5,450,266120,68200
+control,2,4,4,5,"Zombie",false,33,6,13,450,268760,2640
+control,2,4,4,5,"Fallen",false,18,2,5,450,275160,6400
+control,2,4,4,5,"Quill Rat",false,21,1,5,450,275640,480
+control,2,4,4,5,"Quill Rat",false,19,3,4,450,276680,1040
+control,2,4,4,5,"Fallen",false,19,0,0,450,276680,0
+control,2,4,4,5,"Fallen",false,19,0,0,450,277000,320
+control,2,4,4,5,"Quill Rat",false,21,5,14,450,280240,3240
+control,2,4,4,5,"Quill Rat",false,21,1,5,450,281240,1000
+control,2,4,4,5,"Fallen",false,18,1,0,450,281560,320
+control,2,4,4,5,"Fallen",false,18,1,5,450,285840,4280
+control,2,4,4,5,"Fallen",false,18,1,4,450,286960,1120
+control,2,4,4,5,"Fallen",false,18,2,4,450,288080,1120
+control,2,4,4,5,"Zombie",false,33,3,10,450,294440,6360
+control,2,4,4,5,"Zombie",false,33,3,9,450,298400,3960
+control,2,4,4,5,"Zombie",false,33,1,0,450,298720,320
+control,2,4,4,5,"Zombie",false,33,2,4,450,299840,1120
+control,2,4,4,5,"Quill Rat",false,21,1,4,450,300560,720
+control,2,4,4,5,"Zombie",false,33,5,9,450,302720,2160
+control,2,4,4,5,"Fallen",false,18,1,4,450,306200,3480
+control,2,4,4,5,"Fallen",false,18,1,0,450,306360,160
+control,2,4,4,5,"Fallen",false,18,1,5,450,306840,480
+control,2,4,4,5,"Fallen",false,18,3,9,450,309720,2880
+control,2,1,8,9,"Quill Rat",false,9,2,7,450,6000,6000
+control,2,1,8,9,"Quill Rat",false,9,1,6,450,7040,1040
+control,2,1,8,9,"Zombie",false,14,0,0,450,8320,1280
+control,2,1,8,9,"Zombie",false,14,1,7,450,8720,400
+control,2,1,8,9,"Fallen",false,7,2,6,450,20400,11680
+control,2,1,8,9,"Fallen",false,7,0,0,450,20480,80
+control,2,1,8,9,"Fallen",false,7,0,0,450,20480,0
+control,2,1,8,9,"Fallen",false,7,1,7,450,20800,320
+control,2,1,8,9,"Fallen",false,7,1,7,450,24720,3920
+control,2,1,8,9,"Zombie",false,14,4,12,450,26640,1920
+control,2,1,8,9,"Zombie",false,14,1,0,450,27040,400
+control,2,1,8,9,"Fallen",false,7,1,6,450,28480,1440
+control,2,1,8,9,"Fallen",false,7,3,7,450,29600,1120
+control,2,1,8,9,"Fallen",false,7,0,0,450,29840,240
+control,2,1,8,9,"Fallen",false,7,0,0,450,42880,13040
+control,2,1,8,9,"Quill Rat",false,9,2,0,450,43760,880
+control,2,1,8,9,"Quill Rat",false,9,1,6,450,44280,520
+control,2,1,8,9,"Fallen",false,7,2,7,450,53040,8760
+control,2,1,8,9,"Fallen",false,7,2,6,450,54240,1200
+control,2,1,8,9,"Fallen",false,7,2,6,450,55840,1600
+control,2,1,8,9,"Quill Rat",false,9,4,13,450,63800,7960
+control,2,1,8,9,"Quill Rat",false,9,0,0,450,70960,7160
+control,2,1,8,9,"Zombie",false,14,2,6,450,71920,960
+control,2,1,8,9,"Zombie",false,14,1,6,450,72080,160
+control,2,1,8,9,"Quill Rat",false,9,2,0,450,74360,2280
+control,2,1,8,9,"Fallen",false,7,1,6,450,76760,2400
+control,2,1,8,9,"Fallen",false,7,2,6,450,79240,2480
+control,2,1,8,9,"Fallen",false,7,1,6,450,80880,1640
+control,2,1,8,9,"Fallen",false,7,4,14,450,84200,3320
+control,2,1,8,9,"Quill Rat",false,9,3,13,450,96480,12280
+control,2,1,8,9,"Quill Rat",false,9,1,0,450,96640,160
+control,2,1,8,9,"Quill Rat",false,9,6,27,450,120480,23840
+control,2,1,8,9,"Fallen",false,7,0,0,450,122240,1760
+control,2,1,8,9,"Fallen",false,7,0,0,450,122240,0
+control,2,1,8,9,"Fallen",false,7,0,0,450,123160,920
+control,2,1,8,9,"Quill Rat",false,9,2,6,450,128840,5680
+control,2,1,8,9,"Zombie",false,14,3,13,450,133000,4160
+control,2,1,8,9,"Zombie",false,14,2,0,450,166320,33320
+control,2,1,8,9,"Zombie",false,14,2,13,450,167960,1640
+control,2,1,8,9,"Quill Rat",false,9,4,13,450,169560,1600
+control,2,1,8,9,"Zombie",false,14,1,7,450,185680,16120
+control,2,1,8,9,"Zombie",false,14,0,0,450,186240,560
+control,2,1,8,9,"Zombie",false,14,3,13,450,189320,3080
+control,2,1,8,9,"Fallen",false,7,2,7,450,193040,3720
+control,2,1,8,9,"Fallen",false,7,0,0,450,193200,160
+control,2,1,8,9,"Fallen",false,7,2,7,450,194880,1680
+control,2,1,8,9,"Fallen",false,7,0,0,450,195040,160
+control,2,1,8,9,"Quill Rat",false,9,0,0,450,198200,3160
+control,2,1,8,9,"Quill Rat",false,9,3,13,450,200360,2160
+control,2,1,8,9,"Zombie",false,14,6,20,450,203160,2800
+control,2,1,8,9,"Quill Rat",false,9,3,12,450,207640,4480
+control,2,1,8,9,"Fallen",false,7,1,7,450,217320,9680
+control,2,1,8,9,"Fallen",false,7,0,0,450,217320,0
+control,2,1,8,9,"Fallen",false,7,4,13,450,220120,2800
+control,2,1,8,9,"Fallen",false,7,0,0,450,220800,680
+control,2,1,8,9,"Fallen",false,7,1,7,450,264280,43480
+control,2,1,8,9,"Fallen",false,7,1,6,450,265800,1520
+control,2,1,8,9,"Fallen",false,7,4,13,450,268520,2720
+control,2,1,8,9,"Zombie",false,14,2,7,450,276320,7800
+control,2,1,8,9,"Fallen",false,7,1,0,450,388440,112120
+control,2,1,8,9,"Fallen",false,7,1,6,450,389840,1400
+control,2,1,8,9,"Fallen",false,7,2,7,450,391520,1680
+control,2,1,8,9,"Fallen",false,7,1,6,450,392000,480
+control,2,1,8,9,"Fallen",false,7,0,0,450,393520,1520
+control,2,1,8,9,"Zombie",false,14,2,7,450,408320,14800
+control,2,1,8,9,"Quill Rat",false,9,1,7,450,409720,1400
+control,2,1,8,9,"Zombie",false,14,1,0,450,410120,400
+control,2,1,8,9,"Quill Rat",false,9,3,13,450,414520,4400
+control,2,1,8,9,"Zombie",false,14,2,0,450,423200,8680
+control,2,1,8,9,"Fallen",false,7,2,6,450,426960,3760
+control,2,1,8,9,"Fallen",false,7,0,0,450,427120,160
+control,2,1,8,9,"Fallen",false,7,0,0,450,427560,440
+control,2,1,8,9,"Zombie",false,14,2,7,450,428440,880
+control,2,1,8,9,"Fallen",false,7,1,7,450,444000,15560
+control,2,1,8,9,"Fallen",false,7,1,0,450,444240,240
+control,2,1,8,9,"Fallen",false,7,2,13,450,447120,2880
+control,2,1,8,9,"Zombie",false,14,2,7,450,461480,14360
+control,2,1,8,9,"Quill Rat",false,9,3,7,450,475960,14480
+control,2,1,8,9,"Quill Rat",false,9,2,6,450,481640,5680
+control,2,1,8,9,"Zombie",false,14,3,14,450,485440,3800
+control,2,1,8,9,"Zombie",false,14,0,0,450,486600,1160
+control,2,1,8,9,"Zombie",false,14,2,7,450,507720,21120
+control,2,2,8,9,"Fallen",false,7,1,0,450,480,480
+control,2,2,8,9,"Zombie",false,14,2,7,450,4400,3920
+control,2,2,8,9,"Zombie",false,14,1,6,450,4880,480
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,17920,13040
+control,2,2,8,9,"Fallen",false,7,2,6,450,19480,1560
+control,2,2,8,9,"Fallen",false,7,2,7,450,21840,2360
+control,2,2,8,9,"Fallen",false,7,2,6,450,23520,1680
+control,2,2,8,9,"Fallen",false,7,3,13,450,29120,5600
+control,2,2,8,9,"Fallen",false,7,1,6,450,30120,1000
+control,2,2,8,9,"Zombie",false,14,1,7,450,44000,13880
+control,2,2,8,9,"Fallen",false,7,4,13,450,48080,4080
+control,2,2,8,9,"Zombie",false,14,0,0,450,48400,320
+control,2,2,8,9,"Fallen",false,7,0,0,450,49440,1040
+control,2,2,8,9,"Fallen",false,7,2,7,450,50160,720
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,54800,4640
+control,2,2,8,9,"Quill Rat",false,9,2,6,450,55800,1000
+control,2,2,8,9,"Zombie",false,14,2,7,450,83960,28160
+control,2,2,8,9,"Quill Rat",false,9,3,12,450,88840,4880
+control,2,2,8,9,"Fallen",false,7,2,7,450,95400,6560
+control,2,2,8,9,"Fallen",false,7,0,0,450,95480,80
+control,2,2,8,9,"Fallen",false,7,1,7,450,95640,160
+control,2,2,8,9,"Fallen",false,7,4,13,450,106440,10800
+control,2,2,8,9,"Fallen",false,7,2,7,450,107240,800
+control,2,2,8,9,"Fallen",false,7,0,0,450,107480,240
+control,2,2,8,9,"Fallen",false,7,1,7,450,113560,6080
+control,2,2,8,9,"Quill Rat",false,9,1,0,450,113960,400
+control,2,2,8,9,"Quill Rat",false,9,2,14,450,120400,6440
+control,2,2,8,9,"Quill Rat",false,9,0,0,450,121320,920
+control,2,2,8,9,"Zombie",false,14,4,13,450,130760,9440
+control,2,2,8,9,"Fallen",false,7,1,7,450,132760,2000
+control,2,2,8,9,"Fallen",false,7,1,7,450,134840,2080
+control,2,2,8,9,"Fallen",false,7,0,0,450,136120,1280
+control,2,2,8,9,"Fallen",false,7,1,6,450,139080,2960
+control,2,2,8,9,"Zombie",false,14,1,0,450,139160,80
+control,2,2,8,9,"Fallen",false,7,0,0,450,139320,160
+control,2,2,8,9,"Fallen",false,7,0,0,450,139760,440
+control,2,2,8,9,"Fallen",false,7,2,7,450,140400,640
+control,2,2,8,9,"Zombie",false,14,0,0,450,140720,320
+control,2,2,8,9,"Quill Rat",false,9,2,12,450,141840,1120
+control,2,2,8,9,"Quill Rat",false,9,3,13,450,144400,2560
+control,2,2,8,9,"Zombie",false,14,0,0,450,147000,2600
+control,2,2,8,9,"Fallen",false,7,1,7,450,152960,5960
+control,2,2,8,9,"Fallen",false,7,1,0,450,153280,320
+control,2,2,8,9,"Fallen",false,7,1,7,450,153520,240
+control,2,2,8,9,"Fallen",false,7,0,0,450,154680,1160
+control,2,2,8,9,"Zombie",false,14,3,14,450,167920,13240
+control,2,2,8,9,"Zombie",false,14,2,7,450,175760,7840
+control,2,2,8,9,"Zombie",false,14,3,13,450,177240,1480
+control,2,2,8,9,"Zombie",false,14,0,0,450,178400,1160
+control,2,2,8,9,"Zombie",false,14,0,0,450,178400,0
+control,2,2,8,9,"Zombie",false,14,1,6,450,178720,320
+control,2,2,8,9,"Zombie",false,14,3,6,450,180240,1520
+control,2,2,8,9,"Quill Rat",false,9,7,33,450,189960,9720
+control,2,2,8,9,"Fallen",false,7,2,7,450,195840,5880
+control,2,2,8,9,"Fallen",false,7,1,7,450,196160,320
+control,2,2,8,9,"Fallen",false,7,1,0,450,196800,640
+control,2,2,8,9,"Fallen",false,7,1,6,450,198600,1800
+control,2,2,8,9,"Zombie",false,14,2,7,450,219040,20440
+control,2,2,8,9,"Zombie",false,14,4,14,450,224400,5360
+control,2,2,8,9,"Fallen",false,7,1,7,450,298480,74080
+control,2,2,8,9,"Fallen",false,7,0,0,450,298560,80
+control,2,2,8,9,"Fallen",false,7,0,0,450,298560,0
+control,2,2,8,9,"Fallen",false,7,1,0,450,298640,80
+control,2,2,8,9,"Fallen",false,7,0,0,450,299200,560
+control,2,2,8,9,"Fallen",false,7,0,0,450,299200,0
+control,2,2,8,9,"Fallen",false,7,0,0,450,299200,0
+control,2,2,8,9,"Fallen",false,7,0,0,450,299200,0
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,330360,31160
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,333760,3400
+control,2,2,8,9,"Fallen",false,7,2,0,450,543920,210160
+control,2,2,8,9,"Fallen",false,7,2,6,450,546360,2440
+control,2,2,8,9,"Fallen",false,7,0,0,450,546600,240
+control,2,2,8,9,"Fallen",false,7,1,7,450,550520,3920
+control,2,2,8,9,"Fallen",false,7,1,0,450,550840,320
+control,2,2,8,9,"Fallen",false,7,2,6,450,552760,1920
+control,2,2,8,9,"Fallen",false,7,1,7,450,554640,1880
+control,2,2,8,9,"Fallen",false,7,2,6,450,556240,1600
+control,2,2,8,9,"Fallen",false,7,0,0,450,556480,240
+control,2,2,8,9,"Zombie",false,14,2,6,450,558160,1680
+control,2,2,8,9,"Zombie",false,14,0,0,450,558240,80
+control,2,2,8,9,"Quill Rat",false,9,2,6,450,569560,11320
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,574120,4560
+control,2,2,8,9,"Fallen",false,7,1,6,450,579000,4880
+control,2,2,8,9,"Fallen",false,7,0,0,450,579920,920
+control,2,2,8,9,"Fallen",false,7,0,0,450,580360,440
+control,2,2,8,9,"Fallen",false,7,2,7,450,582000,1640
+control,2,2,8,9,"Zombie",false,14,2,0,450,585880,3880
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,587240,1360
+control,2,2,8,9,"Zombie",false,14,2,6,450,588240,1000
+control,2,2,8,9,"Zombie",false,14,3,14,450,610200,21960
+control,2,2,8,9,"Zombie",false,14,3,13,450,612400,2200
+control,2,2,8,9,"Fallen",false,7,1,7,450,633000,20600
+control,2,2,8,9,"Fallen",false,7,0,0,450,633000,0
+control,2,2,8,9,"Fallen",false,7,2,7,450,636640,3640
+control,2,2,8,9,"Quill Rat",false,9,1,7,450,638000,1360
+control,2,2,8,9,"Fallen",false,7,2,7,450,648360,10360
+control,2,2,8,9,"Fallen",false,7,0,0,450,648600,240
+control,2,2,8,9,"Fallen",false,7,1,6,450,648680,80
+control,2,2,8,9,"Fallen",false,7,0,0,450,648840,160
+control,2,2,8,9,"Quill Rat",false,9,1,7,450,651480,2640
+control,2,2,8,9,"Zombie",false,14,3,14,450,656200,4720
+control,2,2,8,9,"Quill Rat",false,9,0,0,450,658200,2000
+control,2,2,8,9,"Zombie",false,14,2,7,450,658920,720
+control,2,2,8,9,"Quill Rat",false,9,2,7,450,664440,5520
+control,2,3,8,9,"Fallen",false,7,1,7,450,33880,33880
+control,2,3,8,9,"Fallen",false,7,1,0,450,34040,160
+control,2,3,8,9,"Fallen",false,7,0,0,450,34040,0
+control,2,3,8,9,"Fallen",false,7,3,13,450,36760,2720
+control,2,3,8,9,"Quill Rat",false,9,5,19,450,61720,24960
+control,2,3,8,9,"Quill Rat",false,9,2,6,450,64240,2520
+control,2,3,8,9,"Quill Rat",false,9,2,7,450,78120,13880
+control,2,3,8,9,"Fallen",false,7,1,7,450,81320,3200
+control,2,3,8,9,"Fallen",false,7,2,6,450,82280,960
+control,2,3,8,9,"Fallen",false,7,2,7,450,84920,2640
+control,2,3,8,9,"Fallen",false,7,1,7,450,90800,5880
+control,2,3,8,9,"Fallen",false,7,0,0,450,90800,0
+control,2,3,8,9,"Fallen",false,7,1,6,450,93360,2560
+control,2,3,8,9,"Fallen",false,7,0,0,450,93920,560
+control,2,3,8,9,"Fallen",false,7,0,0,450,94480,560
+control,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,94480,0
+control,2,3,8,9,"Fallen",false,7,2,7,450,96880,2400
+control,2,3,8,9,"Fallen",false,7,1,6,450,97280,400
+control,2,3,8,9,"Fallen",false,7,3,12,450,100120,2840
+control,2,3,8,9,"Zombie",false,14,3,12,450,105080,4960
+control,2,3,8,9,"Quill Rat",false,9,3,12,450,114920,9840
+control,2,3,8,9,"Quill Rat",false,9,2,0,450,116600,1680
+control,2,3,8,9,"Zombie",false,14,1,7,450,119880,3280
+control,2,3,8,9,"Zombie",false,14,0,0,450,120560,680
+control,2,3,8,9,"Fallen",false,7,1,7,450,123200,2640
+control,2,3,8,9,"Fallen",false,7,2,12,450,125960,2760
+control,2,3,8,9,"Fallen",false,7,0,0,450,126280,320
+control,2,3,8,9,"Fallen",false,7,0,0,450,127080,800
+control,2,3,8,9,"Fallen",false,7,0,0,450,128360,1280
+control,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,128360,0
+control,2,3,8,9,"Zombie",false,14,2,7,450,129080,720
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,131560,2480
+control,2,3,8,9,"Zombie",false,14,3,13,450,132680,1120
+control,2,3,8,9,"Fallen",false,7,0,0,450,134680,2000
+control,2,3,8,9,"Fallen",false,7,1,7,450,134760,80
+control,2,3,8,9,"Fallen",false,7,0,0,450,135640,880
+control,2,3,8,9,"Quill Rat",false,8,2,6,450,137480,1840
+control,2,3,8,9,"Fallen",false,8,0,0,450,137480,0
+control,2,3,8,9,"Quill Rat",false,9,3,14,450,139680,2200
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,142720,3040
+control,2,3,8,9,"Fallen",false,7,1,7,450,146760,4040
+control,2,3,8,9,"Fallen",false,7,1,0,450,146840,80
+control,2,3,8,9,"Fallen",false,7,1,6,450,151960,5120
+control,2,3,8,9,"Fallen",false,7,2,7,450,156560,4600
+control,2,3,8,9,"Fallen",false,7,0,0,450,156560,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,156800,240
+control,2,3,8,9,"Fallen",false,7,1,0,450,192600,35800
+control,2,3,8,9,"Fallen",false,7,1,0,450,192680,80
+control,2,3,8,9,"Fallen",false,7,2,7,450,193960,1280
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,194400,440
+control,2,3,8,9,"Fallen",false,7,2,0,450,236280,41880
+control,2,3,8,9,"Fallen",false,7,0,0,450,236360,80
+control,2,3,8,9,"Fallen",false,7,0,0,450,236360,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,236520,160
+control,2,3,8,9,"Zombie",false,14,1,6,450,240560,4040
+control,2,3,8,9,"Fallen",false,7,1,0,450,320240,79680
+control,2,3,8,9,"Fallen",false,7,0,0,450,320240,0
+control,2,3,8,9,"Fallen",false,7,1,0,450,320640,400
+control,2,3,8,9,"Fallen",false,7,0,0,450,320720,80
+control,2,3,8,9,"Fallen",false,7,1,7,450,323560,2840
+control,2,3,8,9,"Fallen",false,7,2,6,450,329120,5560
+control,2,3,8,9,"Fallen",false,7,0,0,450,329800,680
+control,2,3,8,9,"Zombie",false,10,3,13,450,332400,2600
+control,2,3,8,9,"Fallen",false,10,0,0,450,332400,0
+control,2,3,8,9,"Fallen",false,7,1,0,450,353040,20640
+control,2,3,8,9,"Fallen",false,7,2,6,450,354600,1560
+control,2,3,8,9,"Fallen",false,7,1,6,450,360480,5880
+control,2,3,8,9,"Fallen",false,7,2,7,450,362160,1680
+control,2,3,8,9,"Fallen",false,7,1,6,450,362560,400
+control,2,3,8,9,"Fallen",false,7,0,0,450,363600,1040
+control,2,3,8,9,"Fallen",false,7,0,0,450,363600,0
+control,2,3,8,9,"Fallen",false,7,0,0,450,363600,0
+control,2,3,8,9,"Fallen",false,7,1,6,450,364520,920
+control,2,3,8,9,"Fallen",false,7,1,0,450,365000,480
+control,2,3,8,9,"Zombie",false,14,3,13,450,367600,2600
+control,2,3,8,9,"Zombie",false,14,5,20,450,382480,14880
+control,2,3,8,9,"Quill Rat",false,9,2,13,450,385240,2760
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,386400,1160
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,386400,0
+control,2,3,8,9,"Fallen",false,7,1,7,450,388400,2000
+control,2,3,8,9,"Fallen",false,7,3,6,450,389520,1120
+control,2,3,8,9,"Fallen",false,7,2,7,450,390880,1360
+control,2,3,8,9,"Fallen",false,7,2,6,450,392240,1360
+control,2,3,8,9,"Quill Rat",false,9,2,7,450,395000,2760
+control,2,3,8,9,"Fallen",false,7,2,7,450,400840,5840
+control,2,3,8,9,"Fallen",false,7,0,0,450,401000,160
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,402240,1240
+control,2,3,8,9,"Quill Rat",false,9,3,13,450,403560,1320
+control,2,3,8,9,"Fallen",false,7,0,0,450,404720,1160
+control,2,3,8,9,"Quill Rat",false,9,5,19,450,409040,4320
+control,2,3,8,9,"Fallen",false,7,1,7,450,415200,6160
+control,2,3,8,9,"Fallen",false,7,0,0,450,416000,800
+control,2,3,8,9,"Quill Rat",false,9,4,20,450,442320,26320
+control,2,3,8,9,"Quill Rat",false,9,0,0,450,445760,3440
+control,2,3,8,9,"Zombie",false,28,2,6,450,446640,880
+control,2,3,8,9,"Fallen",false,7,2,7,450,457360,10720
+control,2,3,8,9,"Fallen",false,7,1,6,450,458400,1040
+control,2,3,8,9,"Fallen",false,7,2,13,450,461680,3280
+control,2,3,8,9,"Fallen",false,7,1,6,450,463200,1520
+control,2,3,8,9,"Fallen",false,7,3,6,450,465080,1880
+control,2,3,8,9,"Fallen",false,7,0,0,450,465520,440
+control,2,3,8,9,"Fallen",false,7,2,7,450,468640,3120
+control,2,3,8,9,"Fallen",false,7,2,6,450,470160,1520
+control,2,4,8,9,"Fallen",false,7,1,7,450,4560,4560
+control,2,4,8,9,"Fallen",false,7,1,7,450,6920,2360
+control,2,4,8,9,"Fallen",false,7,2,6,450,7880,960
+control,2,4,8,9,"Fallen",false,7,2,6,450,10360,2480
+control,2,4,8,9,"Quill Rat",false,9,2,7,450,25560,15200
+control,2,4,8,9,"Quill Rat",false,9,2,6,450,26600,1040
+control,2,4,8,9,"Quill Rat",false,9,0,0,450,26840,240
+control,2,4,8,9,"Zombie",false,14,3,6,450,31400,4560
+control,2,4,8,9,"Zombie",false,14,1,0,450,32120,720
+control,2,4,8,9,"Zombie",false,14,1,6,450,32520,400
+control,2,4,8,9,"Zombie",false,14,2,7,450,44240,11720
+control,2,4,8,9,"Fallen",false,7,1,7,450,46720,2480
+control,2,4,8,9,"Fallen",false,7,0,0,450,46720,0
+control,2,4,8,9,"Fallen",false,7,0,0,450,47520,800
+control,2,4,8,9,"Fallen",false,7,2,7,450,50920,3400
+control,2,4,8,9,"Fallen",false,7,1,6,450,52440,1520
+control,2,4,8,9,"Fallen",false,7,1,7,450,52920,480
+control,2,4,8,9,"Fallen",false,7,3,14,450,59320,6400
+control,2,4,8,9,"Zombie",false,14,1,6,450,60840,1520
+control,2,4,8,9,"Fallen",false,7,1,6,450,62360,1520
+control,2,4,8,9,"Fallen",false,7,0,0,450,62360,0
+control,2,4,8,9,"Fallen",false,7,0,0,450,62360,0
+control,2,4,8,9,"Fallen",false,7,1,0,450,62520,160
+control,2,4,8,9,"Fallen",false,7,0,0,450,62680,160
+control,2,4,8,9,"Fallen",false,7,1,6,450,63240,560
+control,2,4,8,9,"Fallen",false,7,1,0,450,63560,320
+control,2,4,8,9,"Quill Rat",false,9,0,0,450,64160,600
+control,2,4,8,9,"Fallen",false,7,2,7,450,65120,960
+control,2,4,8,9,"Fallen",false,7,0,0,450,68200,3080
+control,2,4,8,9,"Zombie",false,14,2,7,450,68840,640
+control,2,4,8,9,"Quill Rat",false,9,2,6,450,70280,1440
+control,2,4,8,9,"Fallen",false,7,0,0,450,70960,680
+control,2,4,8,9,"Fallen",false,7,2,6,450,71960,1000
+control,2,4,8,9,"Quill Rat",false,9,2,6,450,73320,1360
+control,2,4,8,9,"Zombie",false,14,3,14,450,75720,2400
+control,2,4,8,9,"Zombie",false,14,2,7,450,78440,2720
+control,2,4,8,9,"Zombie",false,14,2,7,450,82320,3880
+control,2,4,8,9,"Quill Rat",false,9,3,14,450,87840,5520
+control,2,4,8,9,"Quill Rat",false,9,3,12,450,90320,2480
+control,2,4,8,9,"Quill Rat",false,9,0,0,450,91840,1520
+control,2,4,8,9,"Quill Rat",false,9,3,14,450,99400,7560
+control,2,4,8,9,"Zombie",false,14,2,7,450,118240,18840
+control,2,4,8,9,"Zombie",false,14,1,6,450,119160,920
+control,2,4,8,9,"Fallen",false,7,0,0,450,124000,4840
+control,2,4,8,9,"Fallen",false,7,0,0,450,124000,0
+control,2,4,8,9,"Fallen",false,7,0,0,450,124000,0
+control,2,4,8,9,"Fallen",false,7,2,7,450,126400,2400
+control,2,4,8,9,"Fallen",false,7,0,0,450,126480,80
+control,2,4,8,9,"Fallen",false,7,0,0,450,126560,80
+control,2,4,8,9,"Fallen",false,7,0,0,450,126720,160
+control,2,4,8,9,"Fallen",false,7,1,7,450,127040,320
+control,2,4,8,9,"Quill Rat",false,9,2,13,450,132080,5040
+control,2,4,8,9,"Quill Rat",false,9,2,6,450,133720,1640
+control,2,4,8,9,"Zombie",false,14,2,7,450,154200,20480
+control,2,4,8,9,"Zombie",false,14,1,6,450,157800,3600
+control,2,4,8,9,"Quill Rat",false,9,0,0,450,159800,2000
+control,2,4,8,9,"Zombie",false,14,3,14,450,162000,2200
+control,2,4,8,9,"Quill Rat",false,9,2,7,450,166520,4520
+control,2,4,8,9,"Zombie",false,14,1,6,450,169360,2840
+control,2,4,8,9,"Zombie",false,14,2,7,450,171200,1840
+control,2,4,8,9,"Quill Rat",false,9,3,14,450,355200,184000
+control,2,4,8,9,"Quill Rat",false,9,2,6,450,358680,3480
+control,2,4,8,9,"Quill Rat",false,9,3,14,450,359800,1120
+control,2,4,8,9,"Fallen",false,7,1,0,450,375640,15840
+control,2,4,8,9,"Fallen",false,7,1,0,450,375880,240
+control,2,4,8,9,"Fallen",false,7,0,0,450,375880,0
+control,2,4,8,9,"Quill Rat",false,9,3,12,450,378320,2440
+control,2,4,8,9,"Fallen",false,7,1,7,450,378800,480
+control,2,4,8,9,"Quill Rat",false,9,3,12,450,380800,2000
+control,2,4,8,9,"Quill Rat",false,9,3,13,450,383480,2680
+control,2,4,8,9,"Quill Rat",false,9,2,7,450,386480,3000
+control,2,4,8,9,"Fallen",false,7,1,6,450,389920,3440
+control,2,4,8,9,"Fallen",false,7,1,0,450,390400,480
+control,2,4,8,9,"Fallen",false,7,1,6,450,390640,240
+control,2,4,8,9,"Zombie",false,14,1,7,450,400640,10000
+control,2,4,8,9,"Zombie",false,14,7,19,450,404680,4040
+control,2,4,8,9,"Zombie",false,14,0,0,450,404680,0
+control,2,4,8,9,"Fallen",false,7,1,7,450,411160,6480
+control,2,4,8,9,"Fallen",false,7,1,0,450,411480,320
+control,2,4,8,9,"Fallen",false,7,2,6,450,414520,3040
+control,2,4,8,9,"Fallen",false,7,2,7,450,419200,4680
+control,2,4,8,9,"Zombie",false,14,2,6,450,421000,1800
+control,2,4,8,9,"Zombie",false,14,2,6,450,421640,640
+control,2,4,8,9,"Zombie",false,11,0,0,450,422800,1160
+control,2,4,8,9,"Quill Rat",false,11,0,0,450,422800,0
+control,2,4,8,9,"Zombie",false,15,2,6,450,423360,560
+control,2,4,8,9,"Zombie",false,14,2,6,450,425360,2000
+control,2,4,8,9,"Zombie",false,14,3,14,450,478320,52960
+control,2,4,8,9,"Quill Rat",false,9,0,0,450,479720,1400
+control,2,4,8,9,"Quill Rat",false,9,3,13,450,480760,1040
+control,2,4,8,9,"Zombie",false,14,0,0,450,481160,400
+control,2,4,8,9,"Fallen",false,7,3,12,450,485640,4480
+control,2,4,8,9,"Fallen",false,7,2,7,450,487480,1840
+control,2,4,8,9,"Fallen",false,7,0,0,450,487480,0
+control,2,4,8,9,"Fallen",false,7,1,7,450,491240,3760
+control,2,4,8,9,"Fallen",false,7,1,6,450,493000,1760
+control,2,4,8,9,"Fallen",false,7,1,6,450,494760,1760
+control,2,4,8,9,"Zombie",false,14,3,14,450,513880,19120

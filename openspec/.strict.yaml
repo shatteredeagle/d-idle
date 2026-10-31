@@ -1,0 +1,5 @@
+# Real dates from which changecheck -cli (and so the pre-push hook) exits non-zero for a check group.
+# Trial started 2026-10-30 (docs/process/trial-notes.md): cards ~day 4, merges ~day 7.
+# 2026-10-30 (user): both groups flipped to fatal today (was 2026-11-03 and 2026-11-06); master has held 0 warnings.
+cards_overlap_fatal_from: 2026-10-30   # card, overlap, spec, owners, status findings
+merges_diff_fatal_from: 2026-10-30     # merge, diff findings

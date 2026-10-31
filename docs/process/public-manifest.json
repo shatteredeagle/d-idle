@@ -1,0 +1,24 @@
+{
+ "rules": [
+  {
+   "glob": "docs/process/public-split.md",
+   "class": "private",
+   "note": "go-live material, mentions the lab; moved to d2lod-ops and deleted from the public tree at the cut (public-split.md section 5)"
+  },
+  {
+   "glob": "docs/research/public-readiness-audit.md",
+   "class": "private",
+   "note": "go-live material, mentions the lab; moved to d2lod-ops and deleted from the public tree at the cut (public-split.md section 5)"
+  },
+  {
+   "glob": "docs/research/README-public-draft.md",
+   "class": "private",
+   "note": "go-live material, mentions the lab; moved to d2lod-ops and deleted from the public tree at the cut (public-split.md section 5)"
+  },
+  {
+   "glob": "**",
+   "class": "public",
+   "note": "default: code, specs, research, README, public rules"
+  }
+ ]
+}

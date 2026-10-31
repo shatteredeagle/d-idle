@@ -1,0 +1,32 @@
+{
+ "description": "EARLY profile: fresh Sorceress clvl 1-7, Game.exe, 3.5 h wall, one run (docs/soak-analysis.md, Soaky 2026-10-29, old builds, no minute lines). One baseline run only: the verdict is always weak. Use when the d2d replica starts from a fresh clvl 1 character.",
+ "minSeeds": 5,
+ "minHoursPerSeed": 3,
+ "minTotalHours": 15,
+ "rules": {
+  "xp_per_hour": {
+   "gate": true,
+   "rel": 0.2,
+   "why": "the plan's fidelity gate (plan-v2 11, d2d-backend 7)"
+  },
+  "deaths_per_hour": {
+   "gate": true,
+   "rel": 0.2,
+   "abs": 0.5,
+   "why": "baseline is 0 to 0.5 deaths/h; one extra death per 2 h is noise"
+  }
+ },
+ "runs": [
+  {
+   "name": "soaky-fresh-1-7",
+   "hours": 3.5,
+   "minutes": 0,
+   "source": "V: docs/soak-analysis.md sections 2 and 6 (true XP 23.3k in 211 min wall; 1 death 10:00:39; 13 chicken exits)",
+   "note": "deaths 1 in 3.5 h; XP/h is wall time including a 25 min pause flap and 3 bot restarts, so the true rate while playing is higher (about 8.7k XP/h by the counter, which over-counts 24 %)",
+   "metrics": {
+    "xp_per_hour": 6600,
+    "deaths_per_hour": 0.29
+   }
+  }
+ ]
+}

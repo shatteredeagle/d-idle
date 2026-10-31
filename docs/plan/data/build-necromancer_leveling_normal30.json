@@ -1,0 +1,458 @@
+{
+ "build": "necromancer_leveling_normal30",
+ "class": "necromancer",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
+ "tags": "Skills 2-26: V (Maxroll Necromancer leveling https://maxroll.gg/d2/guides/necromancer-leveling, fetched 2026-10-29; guide says Amplify Damage/Iron Maiden points go into Teeth if you hold a Wand, kept as the guide's default). Quest points folded into rows 5, 15, 21 (Den of Evil, Radament, Izual). Skills 27-30: U (own choice: Corpse Explosion, the guide's main damage after its clvl 27 respec; the respec itself is NOT used). Stats 2-26: V Maxroll (2-3 Energy, 4-11 Vit, 12-13 Str, 14-16 Vit, 17-21 22 Str + 3 Vit, 22-26 Vit); 27-30: U (all Vit, Maxroll says Str only for gear). Prerequisites and reqlevels checked by gen_builds.py against skills.txt (V Patch_D2.mpq). Start values 15 str 25 dex 15 vit 25 ene.",
+ "respec": {
+  "at_clvl": 27,
+  "enabled": false,
+  "require": "Maxroll respecs at 27 to Corpse Explosion 10, Bone Spear 9, Bone Prison 3; NOT implemented, rows do not depend on it",
+  "refund_all": true,
+  "respend_pool": [
+   {
+    "skill": "Corpse Explosion",
+    "points": 10
+   },
+   {
+    "skill": "Bone Spear",
+    "points": 9
+   },
+   {
+    "skill": "Bone Prison",
+    "points": 3
+   }
+  ]
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Teeth",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F2",
+   "skill": "Clay Golem",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F3",
+   "skill": "Amplify Damage",
+   "hand": "right",
+   "from_clvl": 11
+  },
+  {
+   "key": "F4",
+   "skill": "Bone Armor",
+   "hand": "right",
+   "from_clvl": 14
+  },
+  {
+   "key": "F5",
+   "skill": "Corpse Explosion",
+   "hand": "right",
+   "from_clvl": 17
+  },
+  {
+   "key": "F6",
+   "skill": "Bone Spear",
+   "hand": "right",
+   "from_clvl": 18
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 17,
+   "skill": "Teeth",
+   "weapon": "any"
+  },
+  {
+   "from_clvl": 18,
+   "until_clvl": 30,
+   "skill": "Bone Spear",
+   "weapon": "any",
+   "note": "Teeth stays the fallback when mana is low; Corpse Explosion needs a corpse target"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Clay Golem",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Amplify Damage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Iron Maiden",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Armor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Wall",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Wall",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Spear",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Spear",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Spear",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

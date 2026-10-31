@@ -1,0 +1,8 @@
+{"v":1,"items":[
+{"id":9,"code":"wnd","loc":"body","slot":4,"x":0,"y":0,"w":1,"h":2,"quality":7,"ilvl":3,"sockets":0,"qty":1,"dur":[20,20],"unique":4,"set":0,"flags":{"identified":true,"ethereal":false,"socketed":false,"runeword":false},"name":"Wand"},
+{"id":10,"code":"hp1","loc":"belt","slot":0,"x":0,"y":0,"w":1,"h":1,"quality":2,"ilvl":1,"sockets":0,"qty":1,"dur":[0,0],"unique":0,"set":0,"flags":{"identified":true,"ethereal":false,"socketed":false,"runeword":false},"name":"Minor Healing Potion"},
+{"id":11,"code":"tsc","loc":"inventory","slot":0,"x":9,"y":2,"w":1,"h":1,"quality":2,"ilvl":1,"sockets":0,"qty":20,"dur":[0,0],"unique":0,"set":0,"flags":{"identified":true,"ethereal":false,"socketed":false,"runeword":false},"name":"Scroll of Town Portal"},
+{"id":12,"code":"cap","loc":"stash","slot":0,"x":3,"y":1,"w":2,"h":2,"quality":6,"ilvl":30,"sockets":2,"qty":1,"dur":[12,12],"unique":0,"set":0,"flags":{"identified":false,"ethereal":true,"socketed":true,"runeword":false},"name":"Cap"},
+{"id":13,"code":"jav","loc":"cursor","slot":0,"x":0,"y":0,"w":1,"h":3,"quality":3,"ilvl":5,"sockets":0,"qty":1,"dur":[0,0],"unique":0,"set":0,"flags":{"identified":true,"ethereal":false,"socketed":false,"runeword":false},"name":"Javelin"},
+{"id":14,"code":"r01","loc":"socketed","slot":0,"x":0,"y":0,"w":1,"h":1,"quality":2,"ilvl":1,"sockets":0,"qty":1,"dur":[0,0],"unique":0,"set":0,"flags":{},"name":"El Rune"}
+]}

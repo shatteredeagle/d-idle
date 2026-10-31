@@ -1,0 +1,145 @@
+{
+ "schema": "same as progression-normal.json; tag R except noted",
+ "nightmare": [
+  {
+   "area": 2,
+   "name": "Blood Moor",
+   "enter_clvl": 36,
+   "leave_clvl": 36,
+   "purpose": "Nightmare Act 1 start (alvl 36 V); shop Rogue (gear)"
+  },
+  {
+   "area": 3,
+   "name": "Cold Plains",
+   "enter_clvl": 35,
+   "leave_clvl": 38,
+   "purpose": "WP; Burial Grounds 17"
+  },
+  {
+   "area": 35,
+   "name": "Catacombs 2 (WP)",
+   "enter_clvl": 36,
+   "leave_clvl": 40,
+   "purpose": "WP then Catacombs 4 (37) Andariel min clvl 45"
+  },
+  {
+   "area": 25,
+   "name": "Tower Cellar 5",
+   "enter_clvl": 38,
+   "leave_clvl": 42,
+   "purpose": "Countess runes (Tal/Ral/Ort/Thul)"
+  },
+  {
+   "area": 40,
+   "name": "Lut Gholein",
+   "enter_clvl": 40,
+   "leave_clvl": 44,
+   "purpose": "Act 2 NM (alvl 43+); Radament (48) +1 sp; Cube/staff already done"
+  },
+  {
+   "area": 74,
+   "name": "Arcane Sanctuary",
+   "enter_clvl": 45,
+   "leave_clvl": 50,
+   "purpose": "Summoner min 50"
+  },
+  {
+   "area": 65,
+   "name": "Ancient Tunnels",
+   "enter_clvl": 44,
+   "leave_clvl": 50,
+   "purpose": "good XP, WP at HotD 2 (57) route"
+  },
+  {
+   "area": 73,
+   "name": "Duriel's Lair",
+   "enter_clvl": 50,
+   "leave_clvl": 52,
+   "purpose": "Duriel min 50"
+  },
+  {
+   "area": 75,
+   "name": "Kurast Docks",
+   "enter_clvl": 50,
+   "leave_clvl": 52,
+   "purpose": "Act 3 NM (alvl 49+)"
+  },
+  {
+   "area": 83,
+   "name": "Travincal",
+   "enter_clvl": 52,
+   "leave_clvl": 56,
+   "purpose": "council from range; Khalim's Will already done"
+  },
+  {
+   "area": 101,
+   "name": "Durance 2 (WP)",
+   "enter_clvl": 54,
+   "leave_clvl": 56,
+   "purpose": "Mephisto min 55"
+  },
+  {
+   "area": 103,
+   "name": "Pandemonium Fortress",
+   "enter_clvl": 56,
+   "leave_clvl": 57,
+   "purpose": "Act 4 NM (alvl 56-58)"
+  },
+  {
+   "area": 105,
+   "name": "Plains of Despair",
+   "enter_clvl": 56,
+   "leave_clvl": 58,
+   "purpose": "Izual +2 sp"
+  },
+  {
+   "area": 107,
+   "name": "River of Flame",
+   "enter_clvl": 56,
+   "leave_clvl": 58,
+   "purpose": "WP"
+  },
+  {
+   "area": 108,
+   "name": "Chaos Sanctuary",
+   "enter_clvl": 57,
+   "leave_clvl": 60,
+   "purpose": "Seals; Diablo min 55; Vizier/ de Seis cold immune: reroll"
+  },
+  {
+   "area": 109,
+   "name": "Harrogath",
+   "enter_clvl": 58,
+   "leave_clvl": 59,
+   "purpose": "Act 5 NM (alvl 59-65)"
+  },
+  {
+   "area": 110,
+   "name": "Bloody Foothills",
+   "enter_clvl": 58,
+   "leave_clvl": 60,
+   "purpose": "Shenk/Eldritch, low risk"
+  },
+  {
+   "area": 113,
+   "name": "Crystalline Passage",
+   "enter_clvl": 59,
+   "leave_clvl": 61,
+   "purpose": "WP"
+  },
+  {
+   "area": 120,
+   "name": "Arreat Summit",
+   "enter_clvl": 60,
+   "leave_clvl": 62,
+   "purpose": "Ancients: skip unless clvl>=55 and merc Might"
+  },
+  {
+   "area": 131,
+   "name": "Throne of Destruction",
+   "enter_clvl": 60,
+   "leave_clvl": 64,
+   "purpose": "Baal min 58, Hell entry at clvl 65"
+  }
+ ]
+}

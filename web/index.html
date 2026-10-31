@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>D2 Idle</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#goals-title">Skip to goals</a>
+<header class="top">
+  <div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>D2 Idle</h1></div>
+  <label class="inst-pick" id="inst-pick" hidden>Instance <select id="inst-select" aria-label="Instance"></select></label>
+  <div class="mode" id="mode" role="status" aria-live="polite"><span class="dot" id="mode-dot"></span><span id="mode-text">Connecting</span></div>
+  <div class="controls" id="controls" role="group" aria-label="Bot controls"></div>
+  <div class="tools">
+    <button class="btn ghost" id="btn-settings" type="button">Settings</button>
+    <button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: auto</button>
+  </div>
+</header>
+
+<div id="failsafe" class="failsafe" hidden role="alert"><strong id="failsafe-title">Failsafe</strong><span id="failsafe-text"></span><a href="#v=safety" id="failsafe-link">Details</a></div>
+<nav id="fleet" class="fleet" aria-label="Fleet" hidden></nav>
+<nav class="views" id="views" aria-label="Pages">
+  <button type="button" data-view="overview" aria-current="page">Overview</button>
+  <button type="button" data-view="safety">Safety and deaths <span class="count" id="safety-count"></span></button>
+  <button type="button" data-view="tuning">Tuning</button>
+</nav>
+<div id="banner" class="banner" hidden role="alert"><span id="banner-text"></span><button class="btn ghost small" id="banner-close" type="button">Dismiss</button></div>
+
+<section id="strip" class="strip" aria-label="Soak status and goal notes" hidden>
+  <div class="strip-row" id="strip-soak" hidden><span class="badge" id="strip-level"></span><span id="strip-status"></span><span class="muted" id="strip-age"></span></div>
+  <ul class="strip-alerts" id="strip-alerts"></ul>
+  <ul class="strip-notes" id="strip-notes"></ul>
+</section>
+
+<main id="view-overview">
+  <section class="card now" aria-labelledby="now-title">
+    <h2 id="now-title">Right now</h2>
+    <div id="now"></div>
+  </section>
+
+  <section class="card goals" aria-labelledby="goals-title">
+    <div class="card-head">
+      <h2 id="goals-title">Goals</h2>
+      <div class="seg" role="tablist" aria-label="Goal list">
+        <button role="tab" id="tab-queue" aria-selected="true" aria-controls="goal-list" type="button">Queue <span class="count" id="count-queue"></span></button>
+        <button role="tab" id="tab-done" aria-selected="false" aria-controls="goal-list" type="button">Finished <span class="count" id="count-done"></span></button>
+      </div>
+      <button class="btn primary" id="btn-add" type="button">Add goal</button>
+    </div>
+    <ol class="goal-list" id="goal-list"></ol>
+  </section>
+
+  <section class="card viewport" id="vp-card" aria-labelledby="vp-title" hidden>
+    <div class="card-head"><h2 id="vp-title">Game view</h2><span class="muted" id="vp-meta"></span></div>
+    <div class="vp-box" id="vp-box"><img id="vp-img" alt="Live view of the game window" decoding="async"><svg id="vp-overlay" class="vp-overlay" aria-hidden="true"></svg></div>
+  </section>
+
+  <section class="card stats" aria-label="Totals">
+    <div class="tiles" id="tiles"></div>
+  </section>
+
+  <section class="card chart" aria-labelledby="xp-title">
+    <div class="card-head">
+      <h2 id="xp-title">Experience per hour</h2>
+      <label class="select-label">Range
+        <select id="xp-window">
+          <option value="1h">Last hour</option>
+          <option value="6h" selected>Last 6 hours</option>
+          <option value="24h">Last 24 hours</option>
+          <option value="7d">Last 7 days</option>
+        </select>
+      </label>
+    </div>
+    <div class="chart-wrap" id="xp-chart"></div>
+    <details class="table-view"><summary>Show as table</summary><div id="xp-table"></div></details>
+  </section>
+
+  <section class="card drops" aria-labelledby="drops-title">
+    <h2 id="drops-title">Drops</h2>
+    <div id="drops-bars"></div>
+    <h3>Latest finds</h3>
+    <ul class="drop-list" id="drop-list"></ul>
+  </section>
+
+  <section class="card log" aria-labelledby="log-title">
+    <div class="card-head">
+      <h2 id="log-title">Activity log</h2>
+      <label class="check"><input type="checkbox" id="log-hide-kills" checked> Hide kills</label>
+    </div>
+    <ol class="log-list" id="log-list" aria-live="off"></ol>
+  </section>
+
+  <section class="card areas" aria-labelledby="areas-title">
+    <h2 id="areas-title">Where it has been</h2>
+    <ol class="area-list" id="area-list"></ol>
+  </section>
+</main>
+
+<main id="view-safety" class="view" hidden>
+  <section class="card sentinel" aria-labelledby="sen-title">
+    <div class="card-head"><h2 id="sen-title">Failsafe and sentinel</h2><span class="muted" id="sen-mode"></span></div>
+    <div id="sen-health"></div>
+    <div id="sen-list"></div>
+    <h3>Recent sentinel actions</h3>
+    <ol class="log-list" id="sen-recent"></ol>
+  </section>
+  <section class="card deaths" aria-labelledby="death-title">
+    <div class="card-head"><h2 id="death-title">Deaths and recovery</h2><span class="muted" id="death-meta"></span></div>
+    <div class="tiles" id="death-tiles"></div>
+    <div class="card-head"><h3>Heat map</h3><label class="select-label">Area <select id="heat-area"></select></label></div>
+    <div id="heat"></div>
+    <h3>By area</h3><div id="death-areas"></div>
+    <h3>Death log</h3><ol class="death-list" id="death-list"></ol>
+  </section>
+</main>
+
+<main id="view-tuning" class="view" hidden>
+  <section class="card tuning" aria-labelledby="tune-title">
+    <div class="card-head">
+      <h2 id="tune-title">Knobs</h2>
+      <label class="select-label" id="profile-wrap" hidden>Profile <select id="profile-select"></select></label>
+      <button class="btn primary" id="knob-apply" type="button" disabled>Apply changes</button>
+      <button class="btn ghost" id="knob-revert" type="button" disabled>Revert</button>
+    </div>
+    <p class="hint" id="knob-note"></p>
+    <div id="knobs"></div>
+  </section>
+  <section class="card upgrades" aria-labelledby="upg-title">
+    <h2 id="upg-title">Upgrades</h2>
+    <div id="upgrades"></div>
+  </section>
+</main>
+
+<dialog id="goal-dialog" aria-labelledby="goal-dialog-title">
+  <form id="goal-form" method="dialog" novalidate>
+    <h2 id="goal-dialog-title">What do you want to achieve?</h2>
+    <fieldset class="types" id="type-pick">
+      <legend class="sr">Goal type</legend>
+    </fieldset>
+    <div id="type-fields"></div>
+    <p class="preview" id="goal-preview" aria-live="polite"></p>
+    <details id="advanced" class="advanced">
+      <summary>When and how (optional)</summary>
+      <div class="grid2">
+        <label>Priority
+          <select id="f-priority"><option value="1">High: before everything else</option><option value="0" selected>Normal: in queue order</option><option value="-1">Low: only when nothing else is queued</option></select>
+        </label>
+        <label>Difficulty
+          <select id="f-difficulty"><option value="">Let the bot decide</option><option value="normal">Normal</option><option value="nightmare">Nightmare</option><option value="hell">Hell</option></select>
+        </label>
+      </div>
+      <label>Name (optional)<input id="f-title" type="text" maxlength="120" placeholder="Filled in automatically"></label>
+      <label class="check"><input type="checkbox" id="f-win-on"> Only during a time window</label>
+      <div id="win-fields" hidden>
+        <div class="grid2">
+          <label>From<input type="time" id="f-win-start" value="22:00"></label>
+          <label>Until<input type="time" id="f-win-end" value="06:00"></label>
+        </div>
+        <fieldset class="days"><legend>Days (none ticked = every day)</legend><div id="f-days"></div></fieldset>
+        <p class="hint">Times use this computer's clock. A window that ends before it starts runs overnight.</p>
+      </div>
+    </details>
+    <p class="form-error" id="goal-error" role="alert" hidden></p>
+    <div class="dialog-actions">
+      <button class="btn ghost" id="goal-cancel" type="button">Cancel</button>
+      <button class="btn primary" id="goal-save" type="submit">Add to queue</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="settings-dialog" aria-labelledby="settings-title">
+  <form id="settings-form" method="dialog" novalidate>
+    <h2 id="settings-title">Settings</h2>
+    <label class="check"><input type="checkbox" id="s-auto"> Start playing automatically when the app starts</label>
+    <label>Pause a goal after this many deaths in it (0 = never)<input id="s-deaths" type="number" min="0" max="1000"></label>
+    <div class="grid2">
+      <label>Leave the game below this life %<input id="s-chicken" type="number" min="0" max="90"></label>
+      <label>Drink a potion below this life %<input id="s-potion" type="number" min="0" max="95"></label>
+    </div>
+    <label>Difficulty
+      <select id="s-diff"><option value="auto">Automatic progression</option><option value="normal">Normal</option><option value="nightmare">Nightmare</option><option value="hell">Hell</option></select>
+    </label>
+    <p class="form-error" id="settings-error" role="alert" hidden></p>
+    <div class="dialog-actions">
+      <button class="btn ghost" id="settings-cancel" type="button">Cancel</button>
+      <button class="btn primary" type="submit">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<datalist id="dl-areas"></datalist>
+<datalist id="dl-bosses"></datalist>
+<datalist id="dl-itemtypes"></datalist>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<script src="app.js"></script>
+<script src="panels.js"></script>
+</body>
+</html>

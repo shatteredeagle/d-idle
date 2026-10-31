@@ -1,0 +1,18 @@
+metric                     d2d mean        sd      n |     baseline (min .. max)          |      gap       tol  verdict
+xp_per_hour                    4985       502     12 |        10901 (9240 .. 12236)       |   -54.3%      2180  FAIL
+kills_per_hour                  195      18.6     12 |          500 (421 .. 620)          |   -61.1%       100  FAIL
+deaths_per_hour                   0         0     12 |            0 (0 .. 0)              |      n/a      0.15  PASS [0 deaths in 24.0 h (budget 4, Poisson p=1.000)]
+deaths_per_1000_kills             0         0     12 |            0 (0 .. 0)              |      n/a     0.192  PASS
+potions_per_hour               13.6      3.28     12 |         20.5 (0 .. 34.1)           |   -33.5%       4.1  info [outside the info tolerance]
+gold_per_hour                  24.3      43.5     12 |         67.9 (-191 .. 571)         |   -64.2%      13.6  info [outside the info tolerance]
+recovery_share                0.542       0.1     12 |       0.0586 (0 .. 0.117)          |  +824.8%      0.05  info [outside the info tolerance]
+farming_share                 0.153    0.0458     12 |        0.701 (0.613 .. 0.79)       |   -78.3%       0.1  info [outside the info tolerance]
+town_share                    0.282     0.116     12 |        0.217 (0.21 .. 0.225)       |   +29.5%       0.1  info
+repeat_sites                      0         0     12 |            0 (0 .. 0)              |      n/a         1  info
+clvl_gain                      3.92     0.289     12 |        0.667 (0 .. 1)              |  +487.5%     0.133  info [outside the info tolerance]
+clvl_1h                        3.92     0.289     12 |           13 (12 .. 14)            |   -69.9%         1  info [outside the info tolerance]
+clvl_2h                        4.92     0.289     12 |           14 (14 .. 14)            |   -64.9%         1  info [outside the info tolerance]
+potions_per_100_kills             0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+min_life_fraction                 0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+damage_per_kill                   0         0      0 |            0 (0 .. 0)              |      n/a         0  INCONCLUSIVE [not in the d2d runs or the baselines (U: minute line lacks it)]
+OVERALL: FAIL

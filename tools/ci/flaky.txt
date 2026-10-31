@@ -1,0 +1,5 @@
+# TestName<TAB>package<TAB>owner<TAB>measured flake rate / note
+# Quarantine list is empty: the five bot failsafe tests (TestFailsafeClearingWithNoProgress, TestWatchdogEscalates,
+# TestFailsafeDeathOverlayNeverDismissed, TestFailsafeTravelWithNoProgress, TestFailsafeTownTripThatNeverReturns) were fixed by CORE
+# (agent/core, 2026-10-28): the flake was a test-side race (the paused state flips before the event collector goroutine has
+# seen the error event), they wait for the event now. go test -race -count=20 of all five: ok. input.Game also has Clock and Ctx.

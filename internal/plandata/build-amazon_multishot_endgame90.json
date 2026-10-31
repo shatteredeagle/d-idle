@@ -1,0 +1,1231 @@
+{
+ "build": "amazon_multishot_endgame90",
+ "class": "amazon",
+ "schema": "per-clvl allocation, same shape as internal/gear/builds/*.json (leveler.ParseBuild) plus main_attack; rows clvl 2..90, NO respec. A row with no skills means the point is saved (no unlocked plan skill); the planner spends it in the row where the skill unlocks. Quest points (Den, Radament, Izual in each difficulty) are folded into rows 8, 15, 26, 38, 44, 56, 68, 72, 82 (U timing; planner pulls rows forward).",
+ "tags": "Skills: V end state direction Maxroll Multiple Shot Amazon (fetched 2026-10-29): 1 each Dodge, Evade, Avoid, Valkyrie; max Pierce, Multiple Shot, Critical Strike, Penetrate, Guided Arrow, Magic Arrow, Strafe (Strafe for a D2R unique, not taken). U: Pierce 10 (the guide's 'until 69%' is D2R Buriza-less math, not recomputed), Guided Arrow from 18, Critical Strike/Penetrate 12 for attack rating (U). Valkyrie needs Decoy (Dopplezon) <- Slow Missiles <- Inner Sight and Evade <- Avoid <- Dodge (V skills.txt). Stats: Dex 152 and Str 108 (Grand Matron Bow, V data.json, clvl 58; Treachery in a Mage Plate needs 55, V), computed from internal/gear/milestones.json, staged for Ceremonial Bow (73/110, clvl 35) first, rest Vitality.",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Magic Arrow",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F2",
+   "skill": "Multiple Shot",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F3",
+   "skill": "Guided Arrow",
+   "hand": "right",
+   "from_clvl": 18
+  },
+  {
+   "key": "F4",
+   "skill": "Valkyrie",
+   "hand": "right",
+   "from_clvl": 30
+  },
+  {
+   "key": "F5",
+   "skill": "Dopplezon",
+   "hand": "right",
+   "from_clvl": 24
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 5,
+   "skill": "Magic Arrow",
+   "weapon": "bow",
+   "note": "Short/Stag Bow + Arrows (docs/gear.md); Magic Arrow costs no ammo"
+  },
+  {
+   "from_clvl": 6,
+   "until_clvl": 17,
+   "skill": "Multiple Shot",
+   "weapon": "bow",
+   "note": "ammo restock chore"
+  },
+  {
+   "from_clvl": 18,
+   "until_clvl": 90,
+   "skill": "Multiple Shot",
+   "weapon": "bow",
+   "note": "Guided Arrow for single targets/bosses; Magic Arrow for physical immunes and ammo-free stragglers; Valkyrie upkeep"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Inner Sight",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 3,
+   "dexterity": 0,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Dodge",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Avoid",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Slow Missiles",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Cold Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Evade",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Dopplezon",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Valkyrie",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 31,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 32,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 33,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 34,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 35,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 36,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 37,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 38,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 39,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 40,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 41,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 42,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 43,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 44,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 45,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 46,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 47,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 48,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 49,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Multiple Shot",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 50,
+   "strength": 3,
+   "dexterity": 2,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 51,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 52,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 53,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 54,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 55,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 56,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 3
+    }
+   ]
+  },
+  {
+   "clvl": 57,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Critical Strike",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 58,
+   "strength": 0,
+   "dexterity": 5,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 59,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 60,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 61,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 62,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 63,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 64,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 65,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 66,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 67,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 68,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Penetrate",
+     "points": 1
+    },
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 69,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 70,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 71,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 72,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 73,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 74,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Guided Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 75,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 76,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 77,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 78,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 79,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 80,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 81,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 82,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Magic Arrow",
+     "points": 2
+    },
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 83,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 84,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 85,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 86,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 87,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 88,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 89,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 90,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Pierce",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "schema": "slot -> action. Mouse: left_click/right_click skill selection by hotkey. Keys are D2 default key names. Bot rebinds via the skill hotkey UI once at character creation.",
+ "layout": {
+  "primary_blizzard": {
+   "left_skill": "main_attack (switches per phase, see main_attack_switches)",
+   "right_skill": "Teleport (clvl>=18) else Static Field",
+   "F1": "Static Field",
+   "F2": "Frost Nova (optional, 1 pt) / Glacial Spike",
+   "F3": "Frozen Armor",
+   "F4": "Telekinesis (pick up/ use waypoint at range)",
+   "F5": "Blizzard",
+   "F6": "Glacial Spike",
+   "F7": "Ice Blast",
+   "F8": "Warmth/none",
+   "belt_1_to_4": "keys 1,2,3,4 = columns of belt (health,health,mana,rejuv)",
+   "tab": "toggle automap off; keep it open for debug only"
+  },
+  "fallback_lightning": {
+   "left_skill": "Chain Lightning (or Charged Bolt pre-23)",
+   "right_skill": "Teleport",
+   "F1": "Static Field",
+   "F2": "Lightning",
+   "F3": "Frozen Armor",
+   "F4": "Telekinesis",
+   "F5": "Energy Shield (optional)"
+  }
+ },
+ "main_attack_switches": [
+  {
+   "clvl_from": 1,
+   "skill": "Charged Bolt",
+   "note": "auto-target, no aim needed; use Static Field on elites first when clvl>=6"
+  },
+  {
+   "clvl_from": 26,
+   "skill": "Blizzard",
+   "note": "primary build; fallback uses Chain Lightning from 26"
+  },
+  {
+   "clvl_from": 42,
+   "skill": "Blizzard + Glacial Spike opener",
+   "note": "Glacial Spike freezes melee threats"
+  },
+  {
+   "vs_cold_immune": "Static Field + merc (Might/ Infinity) + Telekinesis; if boss: skip. Optional Meteor/Fire only if player bought fire skills (not in this plan).",
+   "tag": "R"
+  }
+ ],
+ "resist_swap_note": "No weapon swap needed in this plan; swapping adds input risk."
+}

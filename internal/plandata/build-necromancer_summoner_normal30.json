@@ -1,0 +1,460 @@
+{
+ "build": "necromancer_summoner_normal30",
+ "class": "necromancer",
+ "schema": "per-clvl allocation, same shape as build-paladin-normal30.json (leveler.ParseBuild). main_attack: extra, for combat: skill to use as main attack per clvl range, weapon says which equipped weapon type it needs ('any' = none). Quest points (Den, Radament, Izual) are folded into the row where the guide spends them; the planner pulls rows forward when more points are unspent than the level grants.",
+ "tags": "Skills: U (own order for a bot with no weapon swap and no positioning micro: warriors first, Clay Golem at 6, mages from 12, Bone Armor 14 as Maxroll leveling, Corpse Explosion from 15; end state direction V from Maxroll Summoner Necromancer https://maxroll.gg/d2/guides/summoner-necromancer-guide fetched 2026-10-29: maxed Raise Skeleton, Skeleton Mastery, Corpse Explosion; 1-point Iron Golem, Summon Resist, Decrepify, Dim Vision, Lower Resist, Revive come after clvl 30 and are not in these rows). Quest points folded into rows 5, 15, 21. Stats: same table as necromancer_leveling_normal30 (V Maxroll leveling; guide says summoner Str 25 for gear, rest Vit). Prerequisites and reqlevels checked against skills.txt (V Patch_D2.mpq). Teeth gets one point only (Corpse Explosion prerequisite and the wand attack).",
+ "respec": {
+  "enabled": false
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Teeth",
+   "hand": "right",
+   "from_clvl": 5
+  },
+  {
+   "key": "F2",
+   "skill": "Raise Skeleton",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F3",
+   "skill": "Clay Golem",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F4",
+   "skill": "Amplify Damage",
+   "hand": "right",
+   "from_clvl": 11
+  },
+  {
+   "key": "F5",
+   "skill": "Raise Skeletal Mage",
+   "hand": "right",
+   "from_clvl": 12
+  },
+  {
+   "key": "F6",
+   "skill": "Bone Armor",
+   "hand": "right",
+   "from_clvl": 14
+  },
+  {
+   "key": "F7",
+   "skill": "Corpse Explosion",
+   "hand": "right",
+   "from_clvl": 15
+  }
+ ],
+ "main_attack": [
+  {
+   "from_clvl": 1,
+   "until_clvl": 14,
+   "skill": "Raise Skeleton",
+   "weapon": "any",
+   "note": "attack skill is Teeth (1 point) or the wand/melee; the army does the killing: recast Raise Skeleton to the cap"
+  },
+  {
+   "from_clvl": 15,
+   "until_clvl": 30,
+   "skill": "Corpse Explosion",
+   "weapon": "any",
+   "note": "needs a corpse; Teeth as the corpse-free fallback"
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 5,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teeth",
+     "points": 1
+    },
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Clay Golem",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Amplify Damage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Bone Armor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    },
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Skeleton Mastery",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeletal Mage",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Corpse Explosion",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Raise Skeleton",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

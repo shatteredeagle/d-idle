@@ -1,0 +1,451 @@
+{"time":"2026-10-29T23:57:20.341101803-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T23:57:23.629540483-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T23:57:24.421412824-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"in_town","activity":"Binding hotkeys"}
+{"time":"2026-10-29T23:57:38.327983356-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Chores in town ([2 healing potions heal])"}
+{"time":"2026-10-29T23:58:15.09028316-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"in_town","activity":"Gear: equip and shop"}
+{"time":"2026-10-29T23:58:23.580737299-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":208,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Gear: equip and shop"}
+{"time":"2026-10-29T23:59:20.745288478-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T23:59:23.59452222-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":208,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T23:59:48.296918819-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:00:23.608379487-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:01:23.615906605-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:01:29.052874705-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:01:37.982347035-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:01:43.849097205-04:00","level":"INFO","msg":"Entered Forgotten Tower","inst":"i4","type":"area_change","goal":"g5","area":"Forgotten Tower"}
+{"time":"2026-10-30T00:01:44.65487472-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:02:26.410831558-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-30T00:02:27.888101102-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Re-entering the game"}
+{"time":"2026-10-30T00:02:27.953788741-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:02:53.4571358-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([2 healing potions heal])"}
+{"time":"2026-10-30T00:03:27.899924022-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-30T00:03:58.218354497-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:04:47.648771505-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:05:37.526118858-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:05:46.882141697-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:05:47.632558891-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":85446,"kills":0,"deaths":0,"potions":0,"gold":233,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:05:52.948932716-04:00","level":"INFO","msg":"Entered Forgotten Tower","inst":"i4","type":"area_change","goal":"g5","area":"Forgotten Tower"}
+{"time":"2026-10-30T00:06:18.548765693-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:06:47.668748577-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":85677,"kills":4,"deaths":0,"potions":0,"gold":233,"restarts":1,"xpRisk":231,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:07:47.721941823-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":86598,"kills":29,"deaths":0,"potions":0,"gold":265,"restarts":1,"xpRisk":1152,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:07:51.717928155-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([1 healing potions])"}
+{"time":"2026-10-30T00:07:53.127295905-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:08:16.4260826-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:08:16.433605933-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:08:47.757449525-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":87305,"kills":47,"deaths":0,"potions":0,"gold":175,"restarts":1,"xpRisk":546,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:09:47.762085801-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":87701,"kills":57,"deaths":0,"potions":0,"gold":251,"restarts":1,"xpRisk":942,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:10:47.822746572-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":88275,"kills":69,"deaths":0,"potions":0,"gold":258,"restarts":1,"xpRisk":1516,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:11:04.735859246-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-30T00:11:09.319083853-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:11:10.068808212-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-30T00:11:47.859303899-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":88653,"kills":77,"deaths":0,"potions":0,"gold":282,"restarts":1,"xpRisk":1894,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:12:08.555634949-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([mp belt columns below 50%])"}
+{"time":"2026-10-30T00:12:09.881278052-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:12:47.912315737-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":88874,"kills":83,"deaths":0,"potions":0,"gold":558,"restarts":1,"xpRisk":2115,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([mp belt columns below 50%])"}
+{"time":"2026-10-30T00:13:22.838649338-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-30T00:13:22.895683009-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:13:47.866679608-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":89515,"kills":100,"deaths":0,"potions":0,"gold":148,"restarts":1,"xpRisk":641,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:14:47.907227778-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":90058,"kills":115,"deaths":0,"potions":0,"gold":218,"restarts":1,"xpRisk":1184,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:14:57.964340792-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Spending stat and skill points"}
+{"time":"2026-10-30T00:15:03.088101909-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:15:47.944627283-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":12,"xp":90570,"kills":131,"deaths":0,"potions":0,"gold":225,"restarts":1,"xpRisk":1696,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:16:47.998210041-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":12,"xp":91061,"kills":148,"deaths":0,"potions":0,"gold":263,"restarts":1,"xpRisk":2187,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:17:13.466772601-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([low on mana potions])"}
+{"time":"2026-10-30T00:17:14.76087174-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:17:48.045587115-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":91139,"kills":151,"deaths":0,"potions":0,"gold":1193,"restarts":1,"xpRisk":2265,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([low on mana potions])"}
+{"time":"2026-10-30T00:18:16.492907414-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-30T00:18:16.559763619-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:18:48.080271826-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":12,"xp":91243,"kills":155,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":2369,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:18:57.929535689-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-30T00:19:48.10506683-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":12,"xp":91321,"kills":158,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":78,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:20:48.13869967-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":12,"xp":91929,"kills":180,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":686,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:21:40.464042714-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T00:21:48.238148815-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":92361,"kills":197,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":1118,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:22:48.257318738-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":92522,"kills":211,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":1279,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:23:22.229479189-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([1 healing potions low on healing potions])"}
+{"time":"2026-10-30T00:23:24.19196213-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:23:48.292473437-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":92907,"kills":219,"deaths":0,"potions":0,"gold":900,"restarts":1,"xpRisk":1664,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([1 healing potions low on healing potions])"}
+{"time":"2026-10-30T00:24:13.202768773-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T00:24:13.258513676-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:24:32.776104483-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-30T00:24:33.073101307-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:24:48.358351242-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":94613,"kills":228,"deaths":0,"potions":0,"gold":590,"restarts":1,"xpRisk":840,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-30T00:25:21.32110977-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T00:25:21.431571833-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:25:48.331458749-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":94686,"kills":233,"deaths":0,"potions":0,"gold":460,"restarts":1,"xpRisk":913,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:26:48.428434136-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":94798,"kills":247,"deaths":0,"potions":0,"gold":470,"restarts":1,"xpRisk":1025,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:27:48.440287293-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":94881,"kills":257,"deaths":0,"potions":0,"gold":481,"restarts":1,"xpRisk":1108,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:28:48.489274664-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":95029,"kills":279,"deaths":0,"potions":0,"gold":539,"restarts":1,"xpRisk":1256,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:29:14.213740265-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([mp belt columns below 50%])"}
+{"time":"2026-10-30T00:29:16.722068414-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:29:48.535480059-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":95108,"kills":283,"deaths":0,"potions":0,"gold":590,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([mp belt columns below 50%])"}
+{"time":"2026-10-30T00:30:48.60128142-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":95108,"kills":283,"deaths":0,"potions":0,"gold":410,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([mp belt columns below 50%])"}
+{"time":"2026-10-30T00:31:11.478108843-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T00:31:11.536023912-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:31:22.401790892-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T00:31:42.493934627-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-30T00:31:48.602092355-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":95108,"kills":283,"deaths":0,"potions":0,"gold":410,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:32:48.611172877-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":96568,"kills":318,"deaths":0,"potions":0,"gold":420,"restarts":1,"xpRisk":1460,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:33:48.636512835-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":96601,"kills":335,"deaths":0,"potions":0,"gold":420,"restarts":1,"xpRisk":1493,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:34:26.043792663-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T00:34:48.646850269-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":12,"xp":96601,"kills":335,"deaths":0,"potions":0,"gold":420,"restarts":1,"xpRisk":1493,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:35:01.261238774-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-30T00:35:06.400957851-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([inventory 90% full mp belt columns below 50%])"}
+{"time":"2026-10-30T00:35:07.64623784-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:35:48.730278116-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96609,"kills":343,"deaths":0,"potions":0,"gold":487,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([inventory 90% full mp belt columns below 50%])"}
+{"time":"2026-10-30T00:36:12.045270073-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-30T00:36:12.101623562-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:36:48.703092983-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":12,"xp":96628,"kills":355,"deaths":0,"potions":0,"gold":312,"restarts":1,"xpRisk":19,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:37:48.740487096-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":12,"xp":96630,"kills":356,"deaths":0,"potions":0,"gold":312,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:38:48.794731997-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":12,"xp":96630,"kills":356,"deaths":0,"potions":0,"gold":312,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:38:50.356274676-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:38:50.513915295-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Save point: saving the game"}
+{"time":"2026-10-30T00:38:53.771193628-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:38:54.512243079-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"in_town","activity":"Gear: equip and shop"}
+{"time":"2026-10-30T00:39:18.077834664-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-30T00:39:46.263821882-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-30T00:39:46.584118384-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:39:48.836668364-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96630,"kills":356,"deaths":0,"potions":0,"gold":249,"restarts":1,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:40:05.268132255-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-30T00:40:06.306696265-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([inventory 92% full pack 92% full])"}
+{"time":"2026-10-30T00:40:07.536757803-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:40:48.860980428-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96630,"kills":356,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Returning to the field"}
+{"time":"2026-10-30T00:40:52.477880321-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-30T00:40:52.840799921-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:41:06.738159893-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-30T00:41:06.793275037-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:41:22.763631366-04:00","level":"INFO","msg":"Entered Den of Evil","inst":"i4","type":"area_change","goal":"g5","area":"Den of Evil"}
+{"time":"2026-10-30T00:41:48.862912764-04:00","level":"INFO","msg":"minute","inst":"i4","area":8,"clvl":12,"xp":96631,"kills":362,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":1,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:42:48.885193977-04:00","level":"INFO","msg":"minute","inst":"i4","area":8,"clvl":12,"xp":96640,"kills":384,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":10,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:43:10.423899249-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-30T00:43:48.905850628-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":12,"xp":96641,"kills":391,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":11,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:44:48.932099978-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":12,"xp":96653,"kills":406,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":5,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:45:48.961889729-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":12,"xp":96656,"kills":426,"deaths":0,"potions":0,"gold":302,"restarts":1,"xpRisk":8,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:46:31.795506358-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:46:31.955285859-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-30T00:46:42.920921399-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:46:46.078084335-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T00:46:49.039469171-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:46:52.067607436-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:46:57.295565871-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:46:57.29858794-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:02.534855885-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:02.537947044-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:07.727774686-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:07.730517919-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:12.928878296-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:12.931774172-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:18.137464325-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:18.140517293-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:23.345008957-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:23.348172537-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:28.583193336-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:28.586061362-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:33.785657418-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:33.788103487-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:39.033298189-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:39.036071703-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:44.236377373-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:44.239586854-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:49.08243591-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:49.452163201-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:49.455182819-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:47:54.687126986-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:54.690219845-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:47:59.84875131-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:47:59.851813769-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:05.016832991-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:05.021025858-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:10.188605265-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:10.191177666-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:15.354984949-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:15.357393477-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:20.493494078-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:20.495989107-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:25.670310299-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:25.675967918-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:30.858535867-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:30.86187737-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:36.04982181-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:36.053055161-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:41.202148244-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:41.204510691-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:46.379108796-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:46.382718893-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:49.104091315-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:48:51.562987145-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:51.565140158-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 13 more min"}
+{"time":"2026-10-30T00:48:56.752679233-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:48:56.756079377-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 13 more min"}
+{"time":"2026-10-30T00:49:01.908391916-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:01.91245838-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 13 more min"}
+{"time":"2026-10-30T00:49:07.104950601-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:07.109456102-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:12.258127062-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:12.260952797-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:17.492935889-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:17.496290102-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:22.650635253-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:22.652756006-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:27.813657402-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:27.816839422-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:32.974496048-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:32.978283727-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:38.166997043-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:38.169838098-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:43.393305511-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:43.395990933-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:48.541772159-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:48.545044491-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:49.120980939-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 13 more min"}
+{"time":"2026-10-30T00:49:53.701098071-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:53.704479394-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:49:58.882187408-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:49:58.884491654-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:04.060914091-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:04.063251218-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:09.220763543-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:09.224047355-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:14.394358004-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:14.397424942-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:19.55767647-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:19.560813369-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:24.703003479-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:24.706366752-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:29.902911018-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:29.906052377-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:35.053611813-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:35.055582893-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:40.224786154-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:40.22842375-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:45.371221035-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:45.376506828-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:49.141897582-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 12 more min"}
+{"time":"2026-10-30T00:50:50.604729103-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:50.607557537-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:50:55.748614289-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:50:55.751276991-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:00.946691498-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:00.950085101-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:06.140035411-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:06.143360663-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:11.382436646-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:11.385586796-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:16.603611489-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:16.607308716-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:21.751864104-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:21.754236751-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:26.901759014-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:26.904671029-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:32.05720624-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:32.060813336-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:37.215437299-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:37.218038169-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:42.361075762-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:42.364527706-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:47.550271564-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:47.552469488-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:49.171217783-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 11 more min"}
+{"time":"2026-10-30T00:51:52.706338171-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:52.709967467-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 10 more min"}
+{"time":"2026-10-30T00:51:57.853150345-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:51:57.855557913-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 10 more min"}
+{"time":"2026-10-30T00:52:03.050556367-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:03.054716622-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 10 more min"}
+{"time":"2026-10-30T00:52:08.196655894-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:11.967063321-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:17.196133927-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:17.199660401-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:22.419634948-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:22.422124066-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:27.651574431-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:27.654950014-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:32.859991103-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:32.862566773-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:38.06602005-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:38.069545345-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:43.279394734-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:43.282557493-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:48.484453123-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:48.489762435-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:49.173318159-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:53.708410678-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:53.711960873-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:52:58.913933781-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:52:58.917530907-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:53:04.158455182-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:04.160802098-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:53:09.405654248-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:09.408823197-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 15 more min"}
+{"time":"2026-10-30T00:53:14.64067347-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:14.644338477-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:19.791000278-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:19.795153432-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:24.979494702-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:24.98134781-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:30.185217397-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:30.187745996-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:35.331855725-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:35.334882852-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:40.484274979-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:40.486429372-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:45.63734898-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:45.640529749-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:49.222729842-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Blood Moor banned for 14 more min"}
+{"time":"2026-10-30T00:53:50.806202061-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:50.822847778-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:53:55.968863534-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:53:55.976136006-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:01.150914383-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:01.180273495-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:06.348947055-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:06.350767373-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:11.495825777-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:11.498301255-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:16.642345961-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:16.645138514-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:21.80288676-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:21.805803305-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:26.959930273-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:26.961937494-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:32.122784854-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:32.128640624-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:37.317769448-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:37.319891721-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:42.480257642-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:42.482149861-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:47.674479252-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:47.677353306-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:49.266085191-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 8 more min"}
+{"time":"2026-10-30T00:54:52.831034533-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:52.83285114-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:54:57.9938936-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:54:57.996860315-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:03.15955965-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:03.161937036-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:08.306913539-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:08.310177479-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:13.481174101-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:13.484277679-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:18.638699107-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:18.641683933-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:23.796330635-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:23.800915686-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:28.951503747-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:28.954752047-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:34.094223518-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:34.098450813-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:39.287932373-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:39.290124637-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:44.43475045-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:44.43668606-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:49.315003451-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:49.632114654-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:49.635318273-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 7 more min"}
+{"time":"2026-10-30T00:55:54.790919058-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:55:54.794224398-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:00.005113483-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:00.00817257-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:05.21600294-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:05.218321695-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:10.413574674-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:10.416143563-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:15.615841723-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:15.61764027-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:20.765776102-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:20.767938265-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:25.908796969-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:25.910499275-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:31.055332822-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:31.057437785-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:36.205970162-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:36.208262557-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:41.35561155-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:41.357352797-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:46.191322509-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:46.193062655-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:49.348279384-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Waiting: Den of Evil banned for 6 more min"}
+{"time":"2026-10-30T00:56:51.332751359-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:56:56.304718523-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-30T00:57:49.369125105-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:58:17.070325155-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-30T00:58:49.408172463-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:59:42.389342363-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-30T00:59:46.591887751-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-30T00:59:49.509030137-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":12,"xp":96656,"kills":433,"deaths":0,"potions":0,"gold":242,"restarts":2,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-30T00:59:58.347450176-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-30T01:00:13.291453785-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-30T01:00:14.834971778-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:00:15.785749594-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([inventory 87% full pack 87% full])"}
+{"time":"2026-10-30T01:00:19.85642174-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:00:25.229105777-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:00:49.527321202-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":97031,"kills":439,"deaths":0,"potions":0,"gold":6,"restarts":3,"xpRisk":375,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:01:30.919765906-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-30T01:01:32.515813721-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:01:34.316969834-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-30T01:01:49.606930336-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":98382,"kills":445,"deaths":0,"potions":0,"gold":6,"restarts":4,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-30T01:01:57.241420537-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:02:03.620769779-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:02:37.599653282-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-30T01:02:37.931952784-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:02:49.629516395-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":98899,"kills":458,"deaths":0,"potions":0,"gold":13,"restarts":4,"xpRisk":517,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-30T01:03:10.13805072-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:03:10.82858886-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:03:49.667449812-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":99243,"kills":479,"deaths":0,"potions":0,"gold":239,"restarts":4,"xpRisk":861,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:04:49.768326676-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":99800,"kills":492,"deaths":0,"potions":0,"gold":305,"restarts":4,"xpRisk":1418,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:05:49.75452801-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":99990,"kills":506,"deaths":0,"potions":0,"gold":305,"restarts":4,"xpRisk":1608,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:06:49.759913802-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":100048,"kills":520,"deaths":0,"potions":0,"gold":317,"restarts":4,"xpRisk":1666,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:07:14.683174875-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([low on mana potions])"}
+{"time":"2026-10-30T01:07:15.902144795-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:07:49.808144163-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":100097,"kills":525,"deaths":0,"potions":0,"gold":567,"restarts":4,"xpRisk":2,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town ([low on mana potions])"}
+{"time":"2026-10-30T01:08:07.670775576-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:08:07.820883438-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:08:49.846318188-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":100102,"kills":530,"deaths":0,"potions":0,"gold":178,"restarts":4,"xpRisk":7,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:09:49.900414868-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":100248,"kills":550,"deaths":0,"potions":0,"gold":202,"restarts":4,"xpRisk":153,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:10:04.42009987-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-30T01:10:05.9634493-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:10:06.929578252-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-30T01:10:30.67817092-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"in_town","activity":"Gear: equip and shop"}
+{"time":"2026-10-30T01:10:32.798439517-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:10:39.059738307-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:10:49.940796503-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":100424,"kills":557,"deaths":0,"potions":0,"gold":202,"restarts":5,"xpRisk":176,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:11:43.01413384-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-30T01:11:43.312442107-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:11:50.0513494-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":103150,"kills":578,"deaths":0,"potions":0,"gold":217,"restarts":5,"xpRisk":2902,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-30T01:12:46.067995872-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-30T01:12:46.182996951-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:12:50.012230049-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":103173,"kills":579,"deaths":0,"potions":0,"gold":223,"restarts":5,"xpRisk":2925,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:13:50.013696174-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":103402,"kills":583,"deaths":0,"potions":0,"gold":256,"restarts":5,"xpRisk":3154,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:14:50.017945342-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":103579,"kills":607,"deaths":0,"potions":0,"gold":265,"restarts":5,"xpRisk":3331,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:15:50.061275755-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":12,"xp":103660,"kills":612,"deaths":0,"potions":0,"gold":265,"restarts":5,"xpRisk":0,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:16:31.255072703-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T01:16:37.732228156-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([poverty: 1 items to sell, 265 gold])"}
+{"time":"2026-10-30T01:16:45.791753366-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:16:50.074671938-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":103788,"kills":619,"deaths":0,"potions":0,"gold":265,"restarts":5,"xpRisk":128,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town ([poverty: 1 items to sell, 265 gold])"}
+{"time":"2026-10-30T01:17:09.109738608-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T01:17:09.698584471-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:17:42.158184634-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-30T01:17:50.075639661-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":103790,"kills":622,"deaths":0,"potions":0,"gold":377,"restarts":5,"xpRisk":130,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:18:42.70940469-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-30T01:18:42.977843227-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:18:50.086558741-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":104468,"kills":634,"deaths":0,"potions":0,"gold":384,"restarts":5,"xpRisk":808,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-30T01:19:14.197803799-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-30T01:19:14.253371496-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:19:50.10585617-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":104541,"kills":642,"deaths":0,"potions":0,"gold":160,"restarts":5,"xpRisk":881,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:20:39.992801801-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-30T01:20:40.204191776-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:20:50.150091516-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":12,"xp":105918,"kills":661,"deaths":0,"potions":0,"gold":196,"restarts":5,"xpRisk":2258,"xpLost":0,"rung":1,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-30T01:21:10.047829357-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-30T01:21:10.104151543-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:21:50.225555902-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":105920,"kills":668,"deaths":0,"potions":0,"gold":202,"restarts":5,"xpRisk":2,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:22:50.230381706-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":12,"xp":105929,"kills":681,"deaths":0,"potions":0,"gold":204,"restarts":5,"xpRisk":11,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:22:53.282666445-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T01:22:53.336343399-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-30T01:22:54.22671474-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T01:23:50.241521945-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":12,"xp":105938,"kills":700,"deaths":0,"potions":0,"gold":205,"restarts":5,"xpRisk":20,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:24:50.329387238-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":12,"xp":105942,"kills":710,"deaths":0,"potions":0,"gold":205,"restarts":5,"xpRisk":24,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:25:01.808105362-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([inventory 95% full poverty: 2 items to sell, 205 gold pack 95% full])"}
+{"time":"2026-10-30T01:25:03.320964589-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-30T01:25:31.920362816-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-30T01:25:32.144766557-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-30T01:25:50.305098722-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":12,"xp":105951,"kills":731,"deaths":0,"potions":0,"gold":309,"restarts":5,"xpRisk":33,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-30T01:26:50.355306551-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":12,"xp":106133,"kills":763,"deaths":0,"potions":0,"gold":309,"restarts":5,"xpRisk":38,"xpLost":0,"rung":1,"goal":"campaign","step":"Recovery: farming gold"}

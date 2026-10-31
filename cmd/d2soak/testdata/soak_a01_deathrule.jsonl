@@ -1,0 +1,58 @@
+{"time":"2026-10-29T12:32:31.080403384-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T12:32:35.11267267-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T12:32:35.899574043-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"in_town","activity":"Binding hotkeys"}
+{"time":"2026-10-29T12:32:37.109171555-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T12:32:37.818881347-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T12:32:38.081379808-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T12:32:59.244586082-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:33:08.262921889-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T12:33:35.061472518-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":8,"xp":33303,"kills":0,"deaths":0,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:33:57.089555369-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T12:34:25.825002026-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T12:34:35.095105928-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":8,"xp":33303,"kills":0,"deaths":0,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:35:07.963098186-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Vile Hunter","x":7678,"y":8230,"corpseValue":0}
+{"time":"2026-10-29T12:35:07.96339856-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T12:35:08.384057697-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T12:35:35.164920273-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":8,"xp":33303,"kills":0,"deaths":1,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Restocking after death"}
+{"time":"2026-10-29T12:35:42.907161309-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:35:51.662658743-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T12:36:30.103952482-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T12:36:35.214806362-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":8,"xp":33303,"kills":0,"deaths":1,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:36:56.570299512-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T12:37:35.2344707-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":8,"xp":33303,"kills":0,"deaths":1,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:37:47.542002521-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Vile Hunter","x":7678,"y":8215,"corpseValue":0}
+{"time":"2026-10-29T12:37:47.711467719-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T12:37:48.708151615-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T12:37:48.761665367-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T12:37:49.020313687-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T12:38:10.410136418-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:38:19.125712202-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T12:38:35.347552338-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":8,"xp":33303,"kills":0,"deaths":2,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:38:59.881763087-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g6","area":"Stony Field"}
+{"time":"2026-10-29T12:39:29.427398454-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g6","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T12:39:35.364409588-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":8,"xp":33303,"kills":0,"deaths":2,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:40:08.939829639-04:00","level":"INFO","msg":"combat fight area=10 diff=0 danger=2 kills=0 damage=0 minlife=55 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T12:40:08.942822645-04:00","level":"INFO","msg":"combat fight area=10 diff=0 danger=2 kills=0 damage=0 minlife=55 potions=0 dodges=0 sec=2","inst":"i4"}
+{"time":"2026-10-29T12:40:08.945387104-04:00","level":"INFO","msg":"combat fight area=10 diff=0 danger=2 kills=0 damage=5 minlife=55 potions=0 dodges=0 sec=7","inst":"i4"}
+{"time":"2026-10-29T12:40:17.4404262-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Vile Hunter","x":7720,"y":8223,"corpseValue":0}
+{"time":"2026-10-29T12:40:17.738601929-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T12:40:18.703918507-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T12:40:18.758735478-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:40:23.330991167-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T12:40:35.393557464-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":8,"xp":33314,"kills":1,"deaths":3,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:41:07.969770307-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g6","area":"Stony Field"}
+{"time":"2026-10-29T12:41:35.421307612-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":8,"xp":33417,"kills":5,"deaths":3,"potions":0,"gold":0,"restarts":0,"xpRisk":103,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:41:37.386911057-04:00","level":"INFO","msg":"combat fight area=4 diff=0 danger=1 kills=7 damage=16 minlife=73 potions=0 dodges=0 sec=4","inst":"i4"}
+{"time":"2026-10-29T12:41:43.436032251-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g6","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T12:42:14.624621701-04:00","level":"INFO","msg":"combat fight area=10 diff=0 danger=2 kills=0 damage=0 minlife=55 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T12:42:18.309719431-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Carver","x":7692,"y":8209,"corpseValue":0}
+{"time":"2026-10-29T12:42:18.310514373-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T12:42:19.359440697-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T12:42:19.411456705-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:42:24.241192729-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T12:42:35.43267793-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":8,"xp":33821,"kills":13,"deaths":4,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:43:10.451999459-04:00","level":"INFO","msg":"combat fight area=3 diff=0 danger=1 kills=1 damage=4 minlife=95 potions=0 dodges=0 sec=4","inst":"i4"}
+{"time":"2026-10-29T12:43:12.068114937-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g6","area":"Stony Field"}
+{"time":"2026-10-29T12:43:35.472233669-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":8,"xp":33843,"kills":15,"deaths":4,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T12:43:38.01847487-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"resupplying","activity":"Returning to town"}
+{"time":"2026-10-29T12:43:39.547192043-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"","area":"Rogue Encampment"}

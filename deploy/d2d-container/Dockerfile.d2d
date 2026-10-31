@@ -1,0 +1,76 @@
+# d2d container (docs/d2d-container/README.md). Build context from deploy/d2d-container/context.sh, never from the repo root.
+# The d2d binary is the private GPL fork: local build artifact only, never pushed to a registry (licensing.md).
+# Game data (MPQs) is NEVER in an image: mount it read-only at /game.
+ARG UBUNTU=ubuntu:26.04
+ARG D2D_SRC=build
+
+# stage 1a: build the fork from the supplied context (src/, vendor/); no network needed after apt
+FROM ${UBUNTU} AS d2d-build
+ARG BUILD_JOBS=4
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential pkg-config cmake ninja-build git ca-certificates nasm \
+      libcurl4-openssl-dev libsdl3-dev libopenal-dev zlib1g-dev libbz2-dev libstorm-dev \
+      qt6-base-dev libgl1-mesa-dev \
+ && rm -rf /var/lib/apt/lists/*
+COPY src /build/src
+COPY vendor /vendor
+# Qt only because configure always looks for the launcher; only the d2d target is built.
+RUN cmake -S /build/src -B /build/out -G Ninja \
+      -DCMAKE_BUILD_TYPE=Release -DD2D_WERROR=OFF \
+      -DD2D_BUILD_TESTS=OFF -DD2D_BUILD_TOOLS=OFF -DD2D_CHECK_HEADERS=OFF \
+      -DD2D_SENTRY_DSN= \
+      -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+      -DFETCHCONTENT_SOURCE_DIR_CLI11=/vendor/cli11 \
+      -DFETCHCONTENT_SOURCE_DIR_SENTRY_NATIVE=/vendor/sentry-native \
+      -DD2D_FFMPEG_SOURCE_DIR=/vendor/ffmpeg-9.0.2 \
+ && cmake --build /build/out --target d2d -j "${BUILD_JOBS}" \
+ && install -D /build/out/apps/d2d/d2d /out/d2d \
+ && (test -x /build/out/apps/d2d/crashpad_handler && install -D /build/out/apps/d2d/crashpad_handler /out/crashpad_handler || true)
+
+# stage 1b: a binary built elsewhere (same libc/libstdc++ as the runtime, or it will not start). With the legacy
+# builder every stage runs, so the copy is guarded; use BuildKit with --build-arg D2D_SRC=prebuilt to skip stage 1a.
+FROM ${UBUNTU} AS d2d-prebuilt
+COPY bin/ /prebuilt/
+RUN mkdir -p /out && if [ -f /prebuilt/d2d ]; then cp /prebuilt/d2d /out/d2d; fi
+
+FROM d2d-${D2D_SRC} AS d2d
+
+# stage 2: runtime
+FROM ${UBUNTU}
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libsdl3-0 libopenal1 libcurl4t64 libstorm9 zlib1g libbz2-1.0 tini ca-certificates \
+ && rm -rf /var/lib/apt/lists/* \
+ && (id ubuntu >/dev/null 2>&1 && userdel -r ubuntu || true) \
+ && useradd -m -u 1000 d2 \
+ && mkdir -p /data /game /run/d2d && chown d2 /data /run/d2d && chmod 700 /run/d2d
+
+# GPL part: binary + notices + source pointer, own directory and layer
+COPY --from=d2d /out/ /opt/d2d/
+COPY licenses/ /usr/share/licenses/d2d/
+# our part (separate program, separate layer)
+COPY bin/d2bot bin/d2dsoak bin/d2dview bin/d2dping /opt/d2lod/
+COPY entrypoint.sh /opt/d2lod/entrypoint.sh
+
+ENV D2D_BIN=/opt/d2d/d2d \
+    D2D_DATA=/game \
+    D2D_SOCK=/run/d2d/d2d.sock \
+    D2D_MODE=lockstep \
+    D2BOT_DATA=/data \
+    HOME=/data \
+    XDG_CONFIG_HOME=/data/config \
+    XDG_DATA_HOME=/data/share \
+    SDL_VIDEODRIVER=dummy \
+    ALSOFT_DRIVERS=null \
+    SENTRY_DSN= \
+    PATH=/opt/d2lod:/opt/d2d:/usr/local/bin:/usr/bin:/bin
+
+USER d2
+VOLUME /data
+# /game: the user's own MPQs, mounted read-only at run time. No port is exposed by default: the viewer tap listens on
+# 127.0.0.1:8891 and the bot API on 127.0.0.1:8420 inside the container (publish with -p only if wanted).
+# The healthcheck dials the read-only tap socket (a bare d2d takes one client, the bot's).
+HEALTHCHECK --interval=30s --timeout=6s --start-period=90s --retries=3 CMD ["/opt/d2lod/d2dping", "ping"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/opt/d2lod/entrypoint.sh"]
+CMD ["bot"]

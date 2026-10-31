@@ -1,0 +1,186 @@
+{
+ "schema": "offline-reachable runewords the bot can aim for. runes: El1 Eld2 Tir3 Nef4 Eth5 Ith6 Tal7 Ral8 Ort9 Thul10 Amn11 Sol12 Shael13 Dol14 Hel15 Io16 Lum17 Ko18 Fal19 Lem20 Pul21 Um22 Mal23 Ist24 Gul25 Vex26 Ohm27 Lo28 Sur29 Ber30 Jah31 Cham32 Zod33. Cube: 3 identical -> next (to Pul=21 for Lem=3 Fal; above Pul needs a gem too).",
+ "tag": "R for recipes (standard 1.14 recipes); verify with Runeword.txt of the install",
+ "runewords": [
+  {
+   "name": "Spirit",
+   "runes": [
+    "Tal",
+    "Thul",
+    "Ort",
+    "Amn"
+   ],
+   "bases": [
+    "sword (4os)",
+    "shield (4os)"
+   ],
+   "sorc_use": "1H sword + paladin shield (4os)",
+   "benefit": "+2 skills, FCR 25-35, FHR, mana",
+   "clvl_req": 25
+  },
+  {
+   "name": "Insight",
+   "runes": [
+    "Ral",
+    "Tir",
+    "Tal",
+    "Sol"
+   ],
+   "bases": [
+    "polearm/staff/ bow (4os)"
+   ],
+   "use": "merc weapon (Act 2 mercs use polearm? Desert merc uses spear)",
+   "benefit": "Meditation aura, mana regen for merc and player",
+   "clvl_req": 27
+  },
+  {
+   "name": "Stealth",
+   "runes": [
+    "Tal",
+    "Eth"
+   ],
+   "bases": [
+    "body armor (2os)"
+   ],
+   "use": "early body armor: faster cast/ run",
+   "clvl_req": 17
+  },
+  {
+   "name": "Lore",
+   "runes": [
+    "Ort",
+    "Sol"
+   ],
+   "bases": [
+    "helm (2os)"
+   ],
+   "use": "helm +1 light sorc skills",
+   "clvl_req": 27
+  },
+  {
+   "name": "Ancients' Pledge",
+   "runes": [
+    "Ral",
+    "Ort",
+    "Tal"
+   ],
+   "bases": [
+    "shield (3os)"
+   ],
+   "use": "resists",
+   "clvl_req": 19
+  },
+  {
+   "name": "Enigma",
+   "runes": [
+    "Jah",
+    "Ith",
+    "Ber"
+   ],
+   "bases": [
+    "body armor (3os)"
+   ],
+   "use": "Teleport +1, +skills",
+   "clvl_req": 65,
+   "offline_note": "Jah/Ber need farming Hell bosses/ Cows; plan it as the end goal"
+  },
+  {
+   "name": "Infinity",
+   "runes": [
+    "Ber",
+    "Mal",
+    "Ber",
+    "Ist"
+   ],
+   "bases": [
+    "polearm (4os)"
+   ],
+   "use": "merc Conviction/ cold breaker",
+   "clvl_req": 63
+  },
+  {
+   "name": "Fortitude",
+   "runes": [
+    "El",
+    "Sol",
+    "Dol",
+    "Lo"
+   ],
+   "bases": [
+    "body armor (4os)"
+   ],
+   "use": "merc armor",
+   "clvl_req": 59
+  },
+  {
+   "name": "Call to Arms",
+   "runes": [
+    "Amn",
+    "Ral",
+    "Mal",
+    "Ist",
+    "Ohm"
+   ],
+   "bases": [
+    "weapon (5os)"
+   ],
+   "use": "BO and +skills",
+   "clvl_req": 57
+  },
+  {
+   "name": "Heart of the Oak",
+   "runes": [
+    "Ko",
+    "Vex",
+    "Pul",
+    "Thul"
+   ],
+   "bases": [
+    "staff (4os)"
+   ],
+   "use": "+3 skills, FCR 40",
+   "clvl_req": 55
+  },
+  {
+   "name": "Hand of Justice",
+   "runes": [
+    "Sur",
+    "Cham",
+    "Amn",
+    "Lo"
+   ],
+   "bases": [
+    "sword"
+   ],
+   "use": "n/a for this plan",
+   "clvl_req": 67
+  }
+ ],
+ "base_rules": [
+  "Sockets: Larzuk quest (Act 5 Normal) adds sockets to a non-socketed normal base; Act 5 sockets: shield 4, armor up to 3 or 4; helm 3? Use whatever the item max sockets (see itemtypes.txt/ armor.txt)",
+  "For early Spirit: buy a Crystal Sword/ Broad Sword and a Monarch (Hell) shield; normal-quality, 4 sockets; rare/magic won't work",
+  "Stealth needs armor with 2 sockets: Hell armors, Studded Leather etc.; Larzuk can add 2 in Normal on armor with max sockets 2+"
+ ],
+ "progression": [
+  {
+   "clvl": 17,
+   "goal": "Stealth in 2-socket body armor (Tal+Eth)"
+  },
+  {
+   "clvl": 25,
+   "goal": "Spirit in sword and crystal sword; Lore for helm (needs Ort, Sol)"
+  },
+  {
+   "clvl": 27,
+   "goal": "Insight for merc polearm (Ral,Tir,Tal,Sol)"
+  },
+  {
+   "clvl": 57,
+   "goal": "Heart of the Oak"
+  },
+  {
+   "clvl": 65,
+   "goal": "Enigma (Jah Ith Ber in heavy armor), then Infinity for merc"
+  }
+ ]
+}

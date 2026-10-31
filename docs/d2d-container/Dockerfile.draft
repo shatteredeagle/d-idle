@@ -1,0 +1,82 @@
+# DRAFT, never built (docs/d2d-container/design.md). Not named Dockerfile on purpose.
+# Build context layout (assembled by a script, not committed):
+#   src/      git archive of <owner>/d2d-fork at the pinned commit (+ VERSION file)
+#   vendor/   cli11/  sentry-native/ (submodules populated, recursive)  ffmpeg-9.0.2/ (verified sha256)
+#   bin/      our Go binaries (or use the go-build stage below)
+#   licenses/ GPL-3.0 text, NOTICE, SOURCE.txt
+# NEVER put *.mpq or any Blizzard file in the context (.dockerignore).
+
+ARG UBUNTU=ubuntu:26.04
+
+# ---- d2d (GPL-3.0 fork) ------------------------------------------------------------------
+FROM ${UBUNTU} AS d2d-build
+ARG BUILD_JOBS=4
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential pkg-config cmake ninja-build git ca-certificates \
+      libcurl4-openssl-dev libsdl3-dev libopenal-dev zlib1g-dev libbz2-dev libstorm-dev \
+      qt6-base-dev libgl1-mesa-dev \
+ && rm -rf /var/lib/apt/lists/*
+COPY src /build/src
+COPY vendor /vendor
+# Qt is only needed because configure always looks for the launcher; only the d2d target is built.
+# D2D_SENTRY_DSN is blanked and crash reporting is opt-in anyway (--send-crash-reports, never passed).
+RUN cmake -S /build/src -B /build/out -G Ninja \
+      -DCMAKE_BUILD_TYPE=Release -DD2D_WERROR=OFF \
+      -DD2D_BUILD_TESTS=OFF -DD2D_BUILD_TOOLS=OFF -DD2D_CHECK_HEADERS=OFF \
+      -DD2D_SENTRY_DSN= \
+      -DFETCHCONTENT_FULLY_DISCONNECTED=ON \
+      -DFETCHCONTENT_SOURCE_DIR_CLI11=/vendor/cli11 \
+      -DFETCHCONTENT_SOURCE_DIR_SENTRY_NATIVE=/vendor/sentry-native \
+      -DD2D_FFMPEG_SOURCE_DIR=/vendor/ffmpeg-9.0.2 \
+ && cmake --build /build/out --target d2d -j "${BUILD_JOBS}" \
+ && install -D /build/out/apps/d2d/d2d /out/d2d \
+ && (test -x /build/out/apps/d2d/crashpad_handler && install -D /build/out/apps/d2d/crashpad_handler /out/crashpad_handler || true)
+
+# ---- our Go side (separate program, separate layer; license decision open, gpl.md) -------
+# GO_IMAGE tag is UNVERIFIED (AGENTS.md says Go 1.27.3). Alternative: COPY prebuilt bin/ from the host.
+FROM golang:1.27 AS go-build
+WORKDIR /w
+COPY go.mod ./
+COPY cmd ./cmd
+COPY internal ./internal
+COPY web ./web
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -o /out/ \
+      ./cmd/d2bot ./cmd/d2fleet ./cmd/d2doctor ./cmd/d2soak
+
+# ---- runtime -----------------------------------------------------------------------------
+FROM ${UBUNTU}
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      libsdl3-0 libopenal1 libcurl4t64 libstorm9 zlib1g libbz2-1.0 tini curl ca-certificates \
+ && rm -rf /var/lib/apt/lists/* \
+ && (id ubuntu >/dev/null 2>&1 && userdel -r ubuntu || true) \
+ && useradd -m -u 1000 d2 \
+ && mkdir -p /data /game /run/d2d && chown d2 /data /run/d2d && chmod 700 /run/d2d
+
+# GPL part: binary + notices + source pointer. Keep the source offer next to the binary.
+COPY --from=d2d-build /out/ /opt/d2d/
+COPY licenses/ /usr/share/licenses/d2d/
+# Our part, separate directory and layer.
+COPY --from=go-build /out/ /opt/d2lod/
+
+ENV D2D_BIN=/opt/d2d/d2d \
+    D2D_DATA=/game \
+    D2D_MODE=realtime \
+    D2BOT_DATA=/data \
+    SDL_VIDEODRIVER=dummy \
+    ALSOFT_DRIVERS=null \
+    SENTRY_DSN= \
+    PATH=/opt/d2lod:/opt/d2d:/usr/local/bin:/usr/bin:/bin
+
+USER d2
+VOLUME /data
+# /game is mounted read-only by the user (their own MPQs). Never baked in.
+# Ports: dashboard (and viewer proxy) 8431; optional separate viewer 8432. LAN only; see design.md section 7.
+EXPOSE 8431 8432
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8431/ | grep -Eq '^(200|401)$'
+
+# TODO (not written): a start script like deploy/container/d2start.sh without Wine/Xvfb; d2fleet wizard d2d steps.
+ENTRYPOINT ["/usr/bin/tini", "--"]
+CMD ["/opt/d2lod/d2fleet", "serve", "-setup", "-addr", "0.0.0.0:8431", "-data", "/data", "-token-file", "/data/token"]

@@ -1,0 +1,70 @@
+{
+ "schema": "ordered rules; first match wins. tiers: S=always keep, A=keep if bag space, B=sell, C=ignore. quality: low|normal|superior|magic|set|rare|unique|crafted. identify at Deckard Cain or Cain scroll.",
+ "pickup_always": [
+  "gold>=200",
+  "runes (all)",
+  "gems (flawless+)",
+  "keys? no",
+  "Horadric items",
+  "quest items",
+  "potions: rejuv, full rejuv",
+  "scroll of town portal/identify",
+  "charms: small/large/grand with life>=15 or all res",
+  "jewels (all, ID later)",
+  "unique/ set (ID later)",
+  "rare rings amulets",
+  "magic circlets/rare circlets",
+  "cube items (gems for upgrade) "
+ ],
+ "keep_rules": [
+  {
+   "item": "runes",
+   "tier": "S",
+   "rule": "keep all; cube-upgrade low runes at 3->1 up to Pul (cube recipe); r1 to r33 (El..Zod)"
+  },
+  {
+   "item": "perfect gems",
+   "tier": "A",
+   "rule": "keep skulls and topazes; sell chipped/flawed amethyst"
+  },
+  {
+   "item": "ethereal sockets bases for runewords",
+   "tier": "A",
+   "rule": "see runewords.json base_rules"
+  },
+  {
+   "item": "rare/magic jewelry",
+   "tier": "A",
+   "rule": "keep rings with FCR>=10 or +skills>=1 or life>=20 or all res>=10; amulets +2 sorc skills or +all res"
+  },
+  {
+   "item": "unique/set",
+   "tier": "A",
+   "rule": "keep wearable upgrade list; sell the rest; always keep Stone of Jordan, Raven Frost, Nagelring, Skin of the Vipermagi, Spirit Ward, Tal Rasha's parts"
+  },
+  {
+   "item": "rare armor/weapons",
+   "tier": "B",
+   "rule": "sell unless runeword base"
+  },
+  {
+   "item": "charms",
+   "tier": "S",
+   "rule": "life, MF? no. Grand Charm of Vita (+life>=25), Small Charm of Vita/ resist; all res small charm"
+  },
+  {
+   "item": "low quality/gray",
+   "tier": "C",
+   "rule": "ignore unless socketed base wanted"
+  }
+ ],
+ "ignore": [
+  "gold<50 (clvl>40)",
+  "arrows",
+  "scrolls (Identify when pack is full)",
+  "keys",
+  "potions below tier",
+  "Broken items"
+ ],
+ "keys_note": "Horadric Cube is needed (Act 2 Horazon, normal); Keys are for Hell Uber quest, skip in this plan"
+}

@@ -1,0 +1,294 @@
+{
+ "schema": "rules the bot enforces. kind: affix|monster|aura|boss. action: avoid|kill_first|chicken|skip_area|use_x. difficulty: n=Normal nm=Nightmare h=Hell. Names match monstats/ uniqueaffix names; numeric ids to be filled from data tables (monstats.txt 'hcIdx' / mod ids from UnitAny.mods[9]).",
+ "tag": "R unless noted V",
+ "affixes": [
+  {
+   "name": "Mana Burn",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "avoid_and_prefer_ranged_kill",
+   "reason": "drains mana; sorc dependent on mana; fight at range, drink mana pots, leave if mana<10% twice"
+  },
+  {
+   "name": "Cursed",
+   "kind": "affix",
+   "diff": [
+    "n",
+    "nm",
+    "h"
+   ],
+   "action": "kill_first_at_range_or_skip",
+   "reason": "Amplify Damage / Lower Resist curse on player; Lower Resist elite = skip in Hell"
+  },
+  {
+   "name": "Fire Enchanted",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "kill_from_range_never_melee",
+   "reason": "explode on death for fire damage; kill at range"
+  },
+  {
+   "name": "Lightning Enchanted",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "avoid_if_clvl<70_hell",
+   "reason": "charged lightning + death nova; deadly with low LR"
+  },
+  {
+   "name": "Extra Fast",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "teleport_away_then_static_blizzard",
+   "reason": "fast closers; do not stand still"
+  },
+  {
+   "name": "Stone Skin / Extra Strong / Spectral Hit",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "avoid_spectral_hit_in_hell_without_res",
+   "reason": "Spectral Hit random elemental; Extra Strong high damage"
+  },
+  {
+   "name": "Teleportation",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "static_field_then_avoid",
+   "reason": "teleports onto the bot; do not trade melee"
+  },
+  {
+   "name": "Multiple Shots",
+   "kind": "affix",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "kill_first_or_avoid_line",
+   "reason": "arrow spreads kill low-life sorc"
+  },
+  {
+   "name": "Aura Enchanted: Conviction",
+   "kind": "aura",
+   "diff": [
+    "h"
+   ],
+   "action": "skip_if_no_pierce",
+   "reason": "removes resists on player (-lowers to immune-ish); skip pack unless cold pierce"
+  },
+  {
+   "name": "Aura Enchanted: Fanaticism",
+   "kind": "aura",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "kill_first_ranged",
+   "reason": "high IAS/ED melee"
+  },
+  {
+   "name": "Aura Enchanted: Might/Holy Fire/Holy Freeze/Thorns",
+   "kind": "aura",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "thorns_avoid_melee_merc",
+   "reason": "Thorns kills merc and sorc; avoid reflection pack"
+  }
+ ],
+ "monsters": [
+  {
+   "name": "Fallen Shaman / Carver Shaman",
+   "kind": "monster",
+   "diff": [
+    "n",
+    "nm",
+    "h"
+   ],
+   "action": "kill_first",
+   "reason": "resurrect and haste pack"
+  },
+  {
+   "name": "Dolls (Soul Killer/ Doll)",
+   "kind": "monster",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "avoid_corpse_explosion",
+   "reason": "explode on death for large damage; do not melee, kill at range >=8 tiles"
+  },
+  {
+   "name": "Stranglers/ Desert Mummies / Mummy Warriors",
+   "kind": "monster",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "kill_from_range",
+   "reason": "poison+hp drain; Stranglers hit hard"
+  },
+  {
+   "name": "Frenzytaur / Gargoyle / Willowisp",
+   "kind": "monster",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "cast_before_contact",
+   "reason": "frenzy lowers hp"
+  },
+  {
+   "name": "Souls (Black Soul / Burning Soul)",
+   "kind": "monster",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "ranged_only",
+   "reason": "drain mana (Black Soul) and fire; kill at range"
+  },
+  {
+   "name": "Poison / Venom Lords, Oblivion Knights",
+   "kind": "monster",
+   "diff": [
+    "h"
+   ],
+   "action": "skip_if_hp_low",
+   "reason": "Oblivion Knight casts Iron Maiden/ Amp Damage / Life Tap; Venom lords poison nova"
+  },
+  {
+   "name": "Blood Hawk / Blood Wing",
+   "kind": "monster",
+   "diff": [
+    "n"
+   ],
+   "action": "normal",
+   "reason": "fast flyers in Normal Act 2; Static helps"
+  },
+  {
+   "name": "Sand Maggot Queen / Maggot Lair",
+   "kind": "monster",
+   "diff": [
+    "nm",
+    "h"
+   ],
+   "action": "skip_area_until_clvl_55",
+   "reason": "queens poison and swarm"
+  },
+  {
+   "name": "Council Member / Mephisto aura lunges",
+   "kind": "boss",
+   "diff": [
+    "h"
+   ],
+   "action": "teleport_ranged_blizzard",
+   "reason": "Travincal council: kill from edge; Mephisto: use moat with Static+Blizzard"
+  }
+ ],
+ "bosses_skip_until": [
+  {
+   "boss": "Duriel",
+   "min_clvl": {
+    "n": 26,
+    "nm": 50,
+    "h": 70
+   },
+   "note": "cold immune is not an issue; Duriel hits very hard in melee",
+   "tag": "R"
+  },
+  {
+   "boss": "Andariel",
+   "min_clvl": {
+    "n": 22,
+    "nm": 45,
+    "h": 65
+   }
+  },
+  {
+   "boss": "Mephisto",
+   "min_clvl": {
+    "n": 28,
+    "nm": 50,
+    "h": 75
+   }
+  },
+  {
+   "boss": "Diablo",
+   "min_clvl": {
+    "n": 30,
+    "nm": 55,
+    "h": 80
+   }
+  },
+  {
+   "boss": "Baal",
+   "min_clvl": {
+    "n": 32,
+    "nm": 58,
+    "h": 82
+   }
+  },
+  {
+   "boss": "Nihlathak",
+   "min_clvl": {
+    "n": 32,
+    "nm": 58,
+    "h": 80
+   }
+  },
+  {
+   "boss": "Ancients",
+   "min_clvl": {
+    "n": 28,
+    "nm": 55,
+    "h": 78
+   }
+  }
+ ],
+ "immunities": {
+  "detect": "read monster resistances from stat list (stat ids 39 fire,41 lightning,43 cold,45 poison, 36 physical, 37 magic) via UnitAny.StatList; value>=100 = immune. Re-check after Lower Resist/curse.",
+  "choose_damage": [
+   {
+    "build": "blizzard_static",
+    "if_immune": "cold",
+    "use": [
+     "Static Field + merc",
+     "Telekinesis stun",
+     "skip unless boss"
+    ],
+    "never": "infinite loop on immune target"
+   },
+   {
+    "build": "lightning_chain",
+    "if_immune": "lightning",
+    "use": [
+     "Frost Nova/ Glacial Spike if invested",
+     "skip"
+    ]
+   },
+   {
+    "if_immune_to_both": "teleport past / abandon pack; cap per-pack time to 40 s"
+   }
+  ],
+  "max_time_per_target_s": 45,
+  "giveup_action": "skip_pack_and_continue_route"
+ }
+}

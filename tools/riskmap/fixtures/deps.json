@@ -1,0 +1,4 @@
+{"areas":[
+ {"id":"wake","name":"wake","impact":3,"confidence":0.5,"d2d_files":["components/game/ai.cpp"],"exe_files":[],"exe_modules":["AI"],"addresses":["00401000","00999999"],"gap_src":["ai.cpp:20"],"first_step":"x","cost_h":4,"covered_by":"none"},
+ {"id":"drops","name":"drops","impact":1,"confidence":0.9,"d2d_files":["components/rules/drops.hpp"],"exe_files":[],"exe_modules":[],"addresses":[],"gap_src":[],"first_step":"y","cost_h":1,"covered_by":"none"}
+]}

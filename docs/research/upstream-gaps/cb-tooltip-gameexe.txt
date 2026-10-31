@@ -1,0 +1,8 @@
+38 1 1: 1 3 bolts|
+38 1 4: 1 6 bolts|
+38 1 8: 1 10 bolts|
+38 1 20: 1 22 bolts|
+38 2 1: 1 Lightning Damage: 2-4|
+38 2 4: 1 Lightning Damage: 3-5|
+38 2 8: 1 Lightning Damage: 5-7|
+38 2 20: 1 Lightning Damage: 13-15|

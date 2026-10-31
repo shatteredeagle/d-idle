@@ -1,0 +1,4 @@
+#!/bin/bash
+# run d2p.py on the worker: c "cmd1" "cmd2" ...
+. "$(dirname "$0")/../../tools/env.sh"
+exec ssh "$D2_WORKER_USER@$D2_WORKER_HOST" "cd ~/d2d-lab && python3 d2p.py $(printf '%q ' "$@")"

@@ -1,0 +1,13 @@
+# Item 3: monster counts per area (agent UPSTREAMGAPS, 2026-10-30)
+
+Tags: V = run by this agent, S = our probe docs (docs/orig-spawns.md and docs/d2d-spawns.md on agent/origprobes), U = unverified. Classic 1.14d, Normal.
+
+## Verdict: d2d's GENERATOR matches game.exe; the 25 to 40 % deficit is downstream of it (unknown where)
+
+- V: upstream's oracle `diff_drlg.py 1-20 <level> monsters` compares d2d's `drlg-dump ... monsters` with game.exe's own room population (every room brought up, FUN_0052d0f0 per room): Blood Moor 577/577 populated rooms, Cold Plains 787/787, Stony Field 710/710, Dark Wood 703/703, 20/20 seeds each (`oracle-outputs.txt`).
+- V: whole-level monster entries per seed from game.exe's own code (`monsters.py <seed> <level>`) and from d2d's generator are IDENTICAL seed by seed: Blood Moor mean 97.8 (71..132), Cold Plains 197.4, Stony Field 153.2, Dark Wood 218.8, Den of Evil 76.0 (seeds 1..20).
+- S: our measured columns: original game live census (4 visits each; walking subset, lower bound) 90 / 173 / 131 / 175 (Blood Moor / Cold Plains / Stony Field / Dark Wood), d2d lab sweep 69 / 127 / 91 / 126. Against the generator's whole-level means above: original 92 / 88 / 86 / 80 %, d2d lab 71 / 64 / 59 / 58 %. So the original is what game.exe's generator predicts for a partly explored level (consistent), while the d2d lab count is well below its own generator.
+- Per seed: d2d lab seed 1 Blood Moor 54 vs the generator's 95 (seeds 1 to 5: 54 81 48 82 63 vs 95 100 72 109 107). Whether the lab probe's seed is the map seed is U.
+- Levels.txt (V, patched): outdoor areas MonDen 520 (Den 600) in all three difficulties, MonWndr 1; MonUMin/MonUMax (Normal) blank for Blood Moor, 1/1 Cold Plains, 1/2 Stony Field and Dark Wood; the (N)/(H) columns are Nightmare/Hell. Placement rules in the generator already equal game.exe's, so no rule in these columns explains the deficit.
+- Where the missing 30 to 40 % can come from (U, ranked): (1) d2d's runtime drops or never activates rooms the probe did not stand near (the d2d probe claims the list only grows, but room activation by player distance is the usual cause); (2) the d2d probe de-duplicates or filters monsters (dead, converted, `gone`); (3) the fork differs from upstream main. Cheapest next test: run upstream d2d with `--seed 1`, devctl `debug level` / monster list at several points, count after a full sweep against `drlg-dump 1 2 monsters` (95). A match would clear d2d and point at our probe; a deficit is a PR-able bug with an exact seed.
+- Not a PR candidate: nothing differs in upstream code that I could show.

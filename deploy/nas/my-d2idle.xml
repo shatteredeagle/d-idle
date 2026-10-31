@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>d2idle</Name>
+  <Repository>d2idle:dev</Repository>
+  <Registry/>
+  <Network>bridge</Network>
+  <MyIP/>
+  <MyMAC/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support/>
+  <Project/>
+  <ReadMe/>
+  <Overview>D.idle: idle bot for classic Diablo II LoD 1.14d under Wine (offline, single player). Web UI = setup wizard and fleet dashboard; the token is in /data/token.</Overview>
+  <Category>Other:</Category>
+  <WebUI>http://[IP]:[PORT:8431]/</WebUI>
+  <TemplateURL/>
+  <Icon/>
+  <ExtraParams>--memory=4g --cpus=3 --shm-size=256m --stop-timeout 90 --cap-drop=ALL --security-opt=no-new-privileges:true</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>Built locally (image d2idle:dev, loaded from the worker), so the NAS "check for updates" shows "not available". The game files in /src are the user's own install, mounted read-only.</Requires>
+  <Config Name="Web UI" Target="8431" Default="8431" Mode="tcp" Description="Wizard and dashboard (token required)" Type="Port" Display="always" Required="false" Mask="false">8431</Config>
+  <Config Name="Data" Target="/data" Default="/mnt/user/appdata/d2idle/data" Mode="rw" Description="Prefix, saves, state, token" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/d2idle/data</Config>
+  <Config Name="Game install (read-only)" Target="/src" Default="/mnt/user/appdata/d2idle/game" Mode="ro" Description="Your own Diablo II LoD 1.14d install folder" Type="Path" Display="always" Required="false" Mask="false">/mnt/user/appdata/d2idle/game</Config>
+  <Config Name="D2FLEET_MAX_LOAD_FACTOR" Target="D2FLEET_MAX_LOAD_FACTOR" Default="-1" Mode="" Description="-1 = ignore host load (the container sees the host's load average)" Type="Variable" Display="always" Required="false" Mask="false">-1</Config>
+  <!-- D2FLEET_SOAK=1 starts the d2soak sidecar per slot (runs in /data/soak, verdict on the dashboard strip and GET /api/v1/soak). 0/empty = off. -->
+  <Config Name="D2FLEET_SOAK" Target="D2FLEET_SOAK" Default="1" Mode="" Description="1 = judge every slot with the m24 soak profile (docs/nas-container.md)" Type="Variable" Display="always" Required="false" Mask="false">1</Config>
+</Container>

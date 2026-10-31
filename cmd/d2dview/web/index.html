@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d2dview (d2d)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{color-scheme:dark}
+body{margin:0;background:#0d1016;color:#d6dbe6;font:13px/1.4 system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding:8px 12px;background:#151a24;border-bottom:1px solid #263042}
+header b{font-size:15px}
+.bar{display:inline-block;width:120px;height:12px;background:#222a38;border-radius:3px;vertical-align:middle;position:relative;overflow:hidden}
+.bar i{position:absolute;left:0;top:0;bottom:0}
+.bar span{position:absolute;inset:0;text-align:center;font-size:10px;line-height:12px;color:#fff;text-shadow:0 0 2px #000}
+#life i{background:#b8323a}#mana i{background:#3a63c8}
+main{display:flex;flex-wrap:wrap;gap:10px;padding:10px}
+.pane{background:#111620;border:1px solid #263042;border-radius:4px;padding:6px}
+.pane h2{margin:0 0 4px;font-size:12px;font-weight:600;color:#8d99b0}
+#map{background:#0a0d13;display:block}
+#shot{display:block;width:640px;max-width:100%;image-rendering:auto;background:#000}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;background:#3b2f10;color:#ffd166;font-weight:600}
+.err{color:#ff7b7b}
+button{background:#222a38;color:#d6dbe6;border:1px solid #33405a;border-radius:3px;padding:3px 9px;cursor:pointer}
+button.on{background:#1f4d3a;border-color:#2f7d5c}
+#goal{color:#9fd3ff}
+</style></head><body>
+<header>
+ <span class="tag" style="background:#1f6f8a;color:#fff" title="the reimplementation backend, not the original Game.exe (d2lod)">d2d (reimplementation)</span>
+ <b id="who">d2dview</b>
+ <span id="area"></span>
+ <span>HP <span class="bar" id="life"><i></i><span></span></span></span>
+ <span>MP <span class="bar" id="mana"><i></i><span></span></span></span>
+ <span id="vt"></span>
+ <span id="speed"></span>
+ <span id="stats"></span>
+ <span id="goal"></span>
+ <span class="err" id="err"></span>
+</header>
+<main>
+ <div class="pane"><h2>Game <span id="ftag" class="tag"></span> <button id="bfast" class="on">fast (sampled)</button> <button id="bwatch">watch (every frame, paced)</button></h2>
+  <img id="shot" alt="no frame (d2d not running, or frames off)"></div>
+ <div class="pane"><h2>Map <button id="bfollow" class="on">follow</button> <button id="bfit">fit level</button></h2>
+  <canvas id="map" width="720" height="620"></canvas></div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const cv=$('map'),cx=cv.getContext('2d');
+let S=null,mapImg=new Image(),mapVer=-1,mapLevel=-1,trail=[],trailLevel=-1,follow=true,mapReady=false;
+const q=location.search.match(/[?&]t=([^&]*)/);const tq=q?'?t='+q[1]:'';
+$('shot').src='/stream.mjpg'+tq;
+mapImg.onload=()=>{mapReady=true};
+function bar(el,p){const w=p[1]>0?Math.max(0,Math.min(1,p[0]/p[1])):0;el.querySelector('i').style.width=(w*100)+'%';el.querySelector('span').textContent=p[0]+'/'+p[1]}
+function fmtT(ms){let s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor(s%3600/60);s%=60;return h+'h'+String(m).padStart(2,'0')+'m'+String(s).padStart(2,'0')+'s'}
+function upd(s){
+ S=s;
+ $('who').textContent=(s.name||'d2d')+(s.class&&isNaN(s.class)?' the '+s.class:'')+(s.clvl?' (clvl '+s.clvl+')':'');
+ $('area').textContent=s.area?s.area+' (level '+s.level+')':'';
+ bar($('life'),s.life);bar($('mana'),s.mana);
+ $('vt').textContent='virtual '+fmtT(s.gameMs);
+ $('speed').innerHTML='speed <b>'+(s.speed?s.speed.toFixed(1):'?')+'x</b> real time';
+ $('stats').textContent='xp '+s.xp+'  gold '+s.gold+'  kills seen '+s.deadSeen;
+ let g='';if(s.bot){try{const b=s.bot;const a=b.activeGoal;g=(a&&a.title?'goal: '+a.title:'')+(a&&a.note?' ('+a.note+')':'')+(b.runner&&b.runner.step?' step: '+b.runner.step:'')}catch(e){}}
+ $('goal').textContent=g;
+ $('err').textContent=s.err||'';
+ const md=s.mode||{};
+ $('bfast').className=md.Watch?'':'on';$('bwatch').className=md.Watch?'on':'';
+ $('ftag').textContent=md.Watch?'WATCH: every stepped frame rendered, paced to '+(md.Speed||'max')+'x':(s.frameTicks?'SAMPLED 1 frame per '+s.frameTicks+' virtual ticks':'SAMPLED');
+ if(s.level!==trailLevel){trail=[];trailLevel=s.level}
+ if(s.ok){const l=trail[trail.length-1];if(!l||l[0]!==s.x||l[1]!==s.y){trail.push([s.x,s.y]);if(trail.length>900)trail.shift()}}
+ if(s.mapVer!==mapVer||s.level!==mapLevel){mapVer=s.mapVer;mapLevel=s.level;mapReady=false;mapImg.src='/map.png?v='+s.mapVer+'&l='+s.level+(tq?'&t='+q[1]:'')}
+ draw();
+}
+function draw(){
+ const W=cv.width,H=cv.height;cx.fillStyle='#0a0d13';cx.fillRect(0,0,W,H);
+ if(!S||!S.ok)return;
+ const r=S.mapRect;let sc,ox,oy; // sc px per subtile; world subtile -> screen
+ const px=S.x*5,py=S.y*5;
+ if(follow){sc=3;ox=W/2-px*sc;oy=H/2-py*sc}
+ else{sc=Math.min(W/r[2],H/r[3]);ox=(W-r[2]*sc)/2-r[0]*sc;oy=(H-r[3]*sc)/2-r[1]*sc}
+ if(mapReady){cx.imageSmoothingEnabled=false;cx.drawImage(mapImg,ox+r[0]*sc,oy+r[1]*sc,r[2]*sc,r[3]*sc)}
+ const X=c=>ox+c*5*sc,Y=c=>oy+c*5*sc;
+ (S.exits||[]).forEach(e=>{cx.fillStyle='#5fd38d';cx.fillRect(X(e[1])-3,Y(e[2])-3,6,6)});
+ if(trail.length>1){cx.lineWidth=2;for(let i=1;i<trail.length;i++){cx.strokeStyle='rgba(255,214,102,'+(0.15+0.85*i/trail.length)+')';cx.beginPath();cx.moveTo(X(trail[i-1][0]),Y(trail[i-1][1]));cx.lineTo(X(trail[i][0]),Y(trail[i][1]));cx.stroke()}}
+ (S.mons||[]).forEach(m=>{const x=X(m.X),y=Y(m.Y);
+  if(m.Dead){cx.strokeStyle='#666';cx.beginPath();cx.moveTo(x-3,y-3);cx.lineTo(x+3,y+3);cx.moveTo(x+3,y-3);cx.lineTo(x-3,y+3);cx.stroke();return}
+  cx.fillStyle=m.Friend?'#4ade80':(m.Boss?'#ffb020':'#e5484d');cx.beginPath();cx.arc(x,y,m.Boss?5:3.5,0,7);cx.fill();
+  if(m.Mx>0){const w=18,f=Math.max(0,m.HP/m.Mx);cx.fillStyle='#222';cx.fillRect(x-w/2,y-9,w,3);cx.fillStyle='#e5484d';cx.fillRect(x-w/2,y-9,w*f,3)}
+  if(follow||m.Boss){cx.fillStyle='#c9d1e0';cx.font='10px sans-serif';cx.fillText(m.Name,x+6,y-4)}});
+ cx.fillStyle='#fff';cx.beginPath();cx.arc(X(S.x),Y(S.y),5,0,7);cx.fill();cx.strokeStyle='#4aa3ff';cx.lineWidth=2;cx.stroke();
+}
+$('bfollow').onclick=()=>{follow=true;$('bfollow').className='on';$('bfit').className='';draw()};
+$('bfit').onclick=()=>{follow=false;$('bfit').className='on';$('bfollow').className='';draw()};
+function mode(m){fetch('/api/mode?m='+m+(tq?'&t='+q[1]:''),{method:'POST'})}
+$('bfast').onclick=()=>mode('fast');$('bwatch').onclick=()=>mode('watch');
+const es=new EventSource('/events'+tq);es.onmessage=e=>upd(JSON.parse(e.data));
+</script></body></html>

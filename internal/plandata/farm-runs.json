@@ -1,0 +1,298 @@
+{
+ "schema": "post-campaign farm runs, scored by the run scheduler (internal/boss/farm_sched.go). name = key of runs.json (floors and act come from there unless min_clvl is given here). steps = boss names run in order inside one game (KillBoss names). secs = U estimate of one full run from town to town, replace with telemetry. xp = per difficulty (n, nm, h) points [clvl, xp per kill] interpolated linearly; below the first point the run is not offered for XP, above the last the last value holds (docs/merc-farm.md 2.1, V arithmetic on 1.14d tables, U on the second digit; Eldritch+Shenk is the sum of both). drops = unitless weight per goal (runes, uniques), U judgement from docs/merc-farm.md 2.3. tp_mult scales the speed when the character cannot teleport (U). class_mult per class and difficulty (U). needs = unlock flags the caller sets in FarmChar.Has.",
+ "tag": "U: every number here except the xp points (V arithmetic) is an unverified estimate",
+ "runs": [
+  {
+   "name": "Countess",
+   "steps": [
+    "The Countess"
+   ],
+   "secs": 240,
+   "tp_mult": 0.6,
+   "xp": {
+    "n": [
+     [
+      14,
+      1500
+     ],
+     [
+      30,
+      4000
+     ]
+    ],
+    "nm": [
+     [
+      42,
+      40000
+     ],
+     [
+      60,
+      60000
+     ]
+    ],
+    "h": [
+     [
+      67,
+      150000
+     ],
+     [
+      85,
+      80000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 10,
+    "uniques": 1
+   }
+  },
+  {
+   "name": "Andariel",
+   "steps": [
+    "Andariel"
+   ],
+   "secs": 150,
+   "tp_mult": 0.8,
+   "xp": {
+    "n": [
+     [
+      22,
+      9000
+     ],
+     [
+      30,
+      12000
+     ]
+    ],
+    "nm": [
+     [
+      45,
+      80000
+     ],
+     [
+      60,
+      90000
+     ]
+    ],
+    "h": [
+     [
+      65,
+      535000
+     ],
+     [
+      70,
+      535000
+     ],
+     [
+      75,
+      403000
+     ],
+     [
+      80,
+      272000
+     ],
+     [
+      85,
+      140000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 3,
+    "uniques": 4
+   },
+   "class_mult": {
+    "Necromancer": {
+     "h": 0.6
+    }
+   }
+  },
+  {
+   "name": "Mephisto",
+   "steps": [
+    "Mephisto"
+   ],
+   "secs": 180,
+   "tp_mult": 0.5,
+   "xp": {
+    "n": [
+     [
+      28,
+      10700
+     ],
+     [
+      30,
+      10700
+     ]
+    ],
+    "nm": [
+     [
+      45,
+      183000
+     ],
+     [
+      55,
+      224000
+     ],
+     [
+      65,
+      241000
+     ]
+    ],
+    "h": [
+     [
+      75,
+      826000
+     ],
+     [
+      80,
+      556000
+     ],
+     [
+      85,
+      287000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 4,
+    "uniques": 6
+   }
+  },
+  {
+   "name": "Pindleskin",
+   "steps": [
+    "Pindleskin"
+   ],
+   "secs": 80,
+   "tp_mult": 0.9,
+   "needs": [
+    "anya_portal"
+   ],
+   "min_clvl": {
+    "n": 25,
+    "nm": 50,
+    "h": 70
+   },
+   "xp": {
+    "h": [
+     [
+      70,
+      277000
+     ],
+     [
+      75,
+      209000
+     ],
+     [
+      80,
+      141000
+     ],
+     [
+      85,
+      73000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 3,
+    "uniques": 8
+   }
+  },
+  {
+   "name": "Eldritch+Shenk",
+   "steps": [
+    "Eldritch the Rectifier",
+    "Shenk the Overseer"
+   ],
+   "secs": 150,
+   "tp_mult": 0.7,
+   "xp": {
+    "h": [
+     [
+      70,
+      469000
+     ],
+     [
+      75,
+      353000
+     ],
+     [
+      80,
+      238000
+     ],
+     [
+      85,
+      123000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 2,
+    "uniques": 5
+   }
+  },
+  {
+   "name": "Baal",
+   "steps": [
+    "Baal"
+   ],
+   "secs": 600,
+   "tp_mult": 0.5,
+   "xp": {
+    "n": [
+     [
+      32,
+      108000
+     ],
+     [
+      40,
+      200000
+     ]
+    ],
+    "nm": [
+     [
+      45,
+      972000
+     ],
+     [
+      55,
+      1190000
+     ],
+     [
+      65,
+      1400000
+     ]
+    ],
+    "h": [
+     [
+      70,
+      4320000
+     ],
+     [
+      75,
+      3260000
+     ],
+     [
+      80,
+      2200000
+     ],
+     [
+      85,
+      1130000
+     ]
+    ]
+   },
+   "drops": {
+    "runes": 4,
+    "uniques": 6
+   },
+   "class_mult": {
+    "Sorceress": {
+     "nm": 0.9,
+     "h": 0.9
+    }
+   }
+  }
+ ]
+}

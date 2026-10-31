@@ -1,0 +1,139 @@
+{
+ "schema": "same; Hell.",
+ "hell": [
+  {
+   "area": 2,
+   "name": "Blood Moor",
+   "enter_clvl": 64,
+   "leave_clvl": 67,
+   "purpose": "Hell Act 1 (alvl 67 V); cap resists 75 before entering [V Maxroll]"
+  },
+  {
+   "area": 3,
+   "name": "Cold Plains",
+   "enter_clvl": 65,
+   "leave_clvl": 68,
+   "purpose": "WP"
+  },
+  {
+   "area": 6,
+   "name": "Black Marsh",
+   "enter_clvl": 66,
+   "leave_clvl": 69,
+   "purpose": "Countess min 67"
+  },
+  {
+   "area": 35,
+   "name": "Catacombs 2",
+   "enter_clvl": 67,
+   "leave_clvl": 70,
+   "purpose": "Andariel min 65"
+  },
+  {
+   "area": 16,
+   "name": "Pit 2",
+   "enter_clvl": 67,
+   "leave_clvl": 75,
+   "purpose": "Pit run (xp 70-80)"
+  },
+  {
+   "area": 39,
+   "name": "Moo Moo Farm",
+   "enter_clvl": 70,
+   "leave_clvl": 80,
+   "purpose": "Cows alvl 81 [R]"
+  },
+  {
+   "area": 40,
+   "name": "Lut Gholein",
+   "enter_clvl": 72,
+   "leave_clvl": 75,
+   "purpose": "Act 2 Hell (alvl 74-79)"
+  },
+  {
+   "area": 74,
+   "name": "Arcane Sanctuary",
+   "enter_clvl": 72,
+   "leave_clvl": 80,
+   "purpose": "Summoner min 70"
+  },
+  {
+   "area": 65,
+   "name": "Ancient Tunnels",
+   "enter_clvl": 74,
+   "leave_clvl": 85,
+   "purpose": "alvl 85 zone [V DiabloBytes] \u2014 Mephisto-run alternative"
+  },
+  {
+   "area": 75,
+   "name": "Kurast Docks",
+   "enter_clvl": 74,
+   "leave_clvl": 78,
+   "purpose": "Act 3 Hell"
+  },
+  {
+   "area": 83,
+   "name": "Travincal",
+   "enter_clvl": 75,
+   "leave_clvl": 85,
+   "purpose": "Council ~ level 80"
+  },
+  {
+   "area": 101,
+   "name": "Durance 2",
+   "enter_clvl": 77,
+   "leave_clvl": 85,
+   "purpose": "Mephisto min 75"
+  },
+  {
+   "area": 103,
+   "name": "Pandemonium Fortress",
+   "enter_clvl": 80,
+   "leave_clvl": 82,
+   "purpose": "Act 4 Hell"
+  },
+  {
+   "area": 107,
+   "name": "River of Flame",
+   "enter_clvl": 80,
+   "leave_clvl": 83,
+   "purpose": "WP"
+  },
+  {
+   "area": 108,
+   "name": "Chaos Sanctuary",
+   "enter_clvl": 80,
+   "leave_clvl": 87,
+   "purpose": "alvl 85 [V]; Diablo min 80"
+  },
+  {
+   "area": 109,
+   "name": "Harrogath",
+   "enter_clvl": 82,
+   "leave_clvl": 83,
+   "purpose": "Act 5 Hell"
+  },
+  {
+   "area": 121,
+   "name": "Nihlathak's Temple",
+   "enter_clvl": 82,
+   "leave_clvl": 90,
+   "purpose": "Pindleskin loop"
+  },
+  {
+   "area": 131,
+   "name": "Throne of Destruction",
+   "enter_clvl": 82,
+   "leave_clvl": 90,
+   "purpose": "Baal min 82 (alvl 87+ summit)"
+  },
+  {
+   "area": 120,
+   "name": "Arreat Summit",
+   "enter_clvl": 85,
+   "leave_clvl": 99,
+   "purpose": "Ancients Hell skip until 85"
+  }
+ ],
+ "nightmare_hell_rules": "Never enter Hell below clvl 65 and all-res < 40 each (cap 75 desired) [V cap-75 rule Maxroll]. In NM and Hell, regular mlvl = area level, champions +2, uniques +3 [V DiabloBytes]."
+}

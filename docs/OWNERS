@@ -1,0 +1,28 @@
+# docs/OWNERS: who may edit what right now (CODEOWNERS-style, read by cmd/changecheck).
+# Columns: path-glob  owner  change-id|-   (owner = agent name or "main" for the coordinating session / user)
+# A line with change "-" is a standing default; a line with a change id must match an ACTIVE card's owns: in openspec/changes/.
+# More specific lines win over defaults. Default owner of everything not listed: main.
+# Edit rule: an agent edits only paths its card owns; anything else goes in its report. Archive a change = delete its lines.
+
+# standing defaults (coordinator)
+internal/**           main  -
+cmd/**                main  -
+tools/**              main  -
+deploy/**             main  -
+docs/**               main  -
+openspec/specs/**     main  -
+docs/decisions.md     main  -
+.claude/agents/**     main  -
+
+# active changes
+cmd/d2bot/d2dbackend.go              d2d-default-backend   d2d-default-backend
+docs/d2d-replicated-soak.md          d2d-replicated-soak   d2d-replicated-soak
+docs/d2d-container-soak.md           d2d-container-soak    d2d-container-soak
+cmd/d2dnode/**  meshdesign  d2dmesh
+internal/d2dmesh/**  meshdesign  d2dmesh
+docs/d2d-mesh.md  meshdesign  d2dmesh
+openspec/changes/d2dmesh/**  meshdesign  d2dmesh
+openspec/changes/stream-grid/**  streambuild  stream-grid
+tools/publish/**  streambuild  stream-grid
+docs/streamctl-grid.md  streambuild  stream-grid
+

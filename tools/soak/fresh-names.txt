@@ -1,0 +1,10 @@
+# Throwaway names tools/soak/fresh.sh may create (one per line, '#' comments). Letters only (launch.ValidCharName).
+# NOT on the internal/cheat allow-list on purpose: a cheat on one of these needs D2CHEAT_ALLOW=<name> and the
+# character then never counts toward a gate (docs/fresh-character.md). Never add Soaky or any character with history.
+Fresha
+Freshb
+Freshc
+Freshd
+Freshe
+Freshf
+Freshg

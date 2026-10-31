@@ -1,0 +1,457 @@
+{
+ "build": "paladin_normal30_v2",
+ "class": "paladin",
+ "schema": "per-clvl allocation, same shape as build-primary-blizzard.json. class: the character class this table is for (leveler refuses a mismatch). hotkeys: plan for the combat agent (key, skill, hand), not executed by the leveler. respec: documented option, NOT used by the rows (rows 20-30 assume no respec).",
+ "tags": "Skills 2-19: S (Maxroll Paladin leveling https://maxroll.gg/d2/guides/paladin-leveling, fetched 2026-10-28, covers up to clvl 13 explicitly, 14-19 'Holy Fire' from docs/classes/paladin.md section 3 which cites the same guide). Row 11 left empty = Maxroll 'save the point' (the planner pulls the next table skill that the game allows, so a saved point may be spent early on Holy Fire: harmless). Charge is Maxroll's mobility skill; the bot does not use it yet. Skills 20-30: U (own choice: Holy Bolt -> Blessed Hammer -> Blessed Aim -> Concentration needs no respec; prerequisites V from skills.txt on the real install: Blessed Hammer needs Holy Bolt and clvl 18, Concentration needs Blessed Aim and clvl 18). Stats: U. Maxroll says all Vitality (Energy at 12-13); this table follows the bot brief instead: Strength for gear (scepter 55, shields 25-75), Vitality, 1 Dexterity at clvl 6 as Maxroll, Dexterity later for block. Start values 25 str / 20 dex / 25 vit / 15 ene.",
+ "respec": {
+  "at_clvl": 19,
+  "enabled": false,
+  "require": "Maxroll respecs at clvl 19 to Blessed Hammer; NOT implemented in the bot, rows do not depend on it",
+  "refund_all": true,
+  "respend_pool": [
+   {
+    "skill": "Holy Bolt",
+    "points": 1
+   },
+   {
+    "skill": "Blessed Hammer",
+    "points": 8
+   },
+   {
+    "skill": "Blessed Aim",
+    "points": 8
+   },
+   {
+    "skill": "Concentration",
+    "points": 1
+   },
+   {
+    "skill": "Charge",
+    "points": 1
+   }
+  ],
+  "pool_tag": "U (Maxroll post-respec list from docs/classes/paladin.md section 3 is only partly legible: 'Blessed Hammer (2), Charge (1), Concentration (1), Blessed Aim (8), Vigor (2)')"
+ },
+ "hotkeys": [
+  {
+   "key": "F1",
+   "skill": "Might",
+   "hand": "right",
+   "from_clvl": 2
+  },
+  {
+   "key": "F2",
+   "skill": "Holy Fire",
+   "hand": "right",
+   "from_clvl": 6
+  },
+  {
+   "key": "F4",
+   "skill": "Zeal",
+   "hand": "left",
+   "from_clvl": 12
+  },
+  {
+   "key": "F6",
+   "skill": "Blessed Hammer",
+   "hand": "left",
+   "from_clvl": 21
+  },
+  {
+   "key": "F7",
+   "skill": "Concentration",
+   "hand": "right",
+   "from_clvl": 23
+  },
+  {
+   "key": "F5",
+   "skill": "Charge",
+   "hand": "left",
+   "from_clvl": 16
+  }
+ ],
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Sacrifice",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Prayer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 2
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 1,
+   "dexterity": 1,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Smite",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Might",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 2,
+   "dexterity": 0,
+   "vitality": 3,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Zeal",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Fire",
+     "points": 1
+    },
+    {
+     "skill": "Charge",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Fire",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Fire",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 1,
+   "dexterity": 0,
+   "vitality": 4,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Fire",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Holy Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Aim",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Concentration",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 1,
+   "dexterity": 2,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Blessed Hammer",
+     "points": 1
+    }
+   ]
+  }
+ ],
+ "note": "BUILDV2 (SME decision, fresh Paladins only; build-paladin-normal30.json stays for existing characters, selected by leveler.SelectBuild). Sacrifice only 1 point at clvl 3 as the Zeal prerequisite (V skills.txt: Zeal needs Sacrifice, req_level 12) and is never cast before Zeal (combat profile); Prayer 1 point at clvl 4 (aura for the low-life early game); Might takes the free points clvl 5-9 and 11 (clvl 1-9 attack is plain Attack with Might on); clvl 10 Smite; clvl 12-15 Zeal 4 points (with Charge at 12 as in the legacy table); Resist Fire and Holy Fire are dropped from clvl 4-9 and 13-15. Stats and rows 16+ are the legacy rows. U: Might 6 vs Holy Fire for the clvl 5-9 points. Row 5 has Might 2 because the Den of Evil reward point (one extra point before clvl 6 in a normal game) lands there, so that Smite (clvl 10) and Zeal (clvl 12-15) come at the SME levels; Charge moved from clvl 12 to 16 for the same count."
+}

@@ -1,0 +1,6 @@
+{"generated":{"commit":"deadbeef","date":"2026-01-01 00:00 UTC"},
+ "gaps":[
+  {"id":"ponytail:aaaa0001","kind":"ponytail","gap":true,"title":"a shortcut in ai","section":"components/game/ai.cpp","source":"components/game/ai.cpp:10","functions":[]},
+  {"id":"ponytail:aaaa0002","kind":"ponytail","gap":true,"title":"another in ai","section":"components/game/ai.cpp","source":"components/game/ai.cpp:20","functions":[]},
+  {"id":"ponytail:bbbb0001","kind":"ponytail","gap":true,"title":"in drops","section":"components/rules/drops.hpp","source":"components/rules/drops.hpp:5","functions":[]}
+ ]}

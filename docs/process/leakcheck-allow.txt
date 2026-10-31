@@ -1,0 +1,58 @@
+# leakcheck allow list (cmd/leakcheck). One entry per line, `#` comments.
+#   path <glob>   file is not scanned (it must name private strings to work)
+#   str <text>    exact text is blanked before scanning
+# Keep this short: every entry is a deliberate exception, reviewed like code.
+
+# the scanners and their rule tables name the strings they look for
+path cmd/leakcheck/**
+path docs/process/leakcheck-allow.txt
+path tools/publish/sanitize.py
+path tools/publish/tests/**
+
+# public identity: the GitHub handle and the commit identities
+str shatteredeagle
+str noreply@anthropic.com
+str users.noreply.github.com
+
+# public placeholders and tool names that look like private strings
+str /home/you/
+str openspec@1.15.0
+str .forgejo/ISSUE
+# code that handles tokens by reference (HTTP header names in clients, servers and tests; no token value is in the repo)
+str Authorization
+str authorization keys
+str Bearer "+
+str Bearer realm=
+# fake test token (the literal word "s3cret" in fixtures)
+str Bearer s3cret
+
+# docs scrub (package C): false positives, one reason per group
+# the real CI workflow directory of the forge
+str .forgejo/
+# game terms: the Forgotten Tower areas, its guard task and the item/monster names (not the host)
+str TOWERGUARD
+str Tower guard
+str tower areas
+str tower half
+str tower levels
+str Tower 2
+str the tower
+str (tower or Monastery road)
+str tower and Monastery
+str road and tower
+# d2d-lab keeps its config under a directory named home/ (matches the home-path shape)
+str d2d-lab/home/
+# systemd unit path of the form user@<uid>.service (matches the e-mail shape)
+str user@1000.service
+# placeholder token in prose: "Authorization: Bearer <token>"
+str Bearer <token>
+# long identifiers that look like tokens: a MIME type, a D2MOO function and a source path
+str application/x-www-form-urlencoded
+str D2GAME_10029_SAVE_WriteFileInterface
+str source/D2Game/src/SKILLS/SkillSor
+str SKILLS_SrvDo017_ChargedBolt_BoltSentry
+str Dread Jade the Quick
+str Jade/Garnet
+str tower-area half
+# OAuth grant type name
+str grant_type=authorization_code

@@ -1,0 +1,3 @@
+#!/bin/sh
+# launch.Config.WineserverKill runs <dir of proton>/files/bin/wineserver -k with WINEPREFIX set.
+exec /usr/bin/wineserver "$@"

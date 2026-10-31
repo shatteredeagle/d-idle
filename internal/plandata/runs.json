@@ -1,0 +1,223 @@
+{
+ "schema": "golden-path runs. area ids: levels.txt order. wp_area = the waypoint area to teleport/ travel from. stops: ordered area ids to reach (use waypoint then Teleport/path). kill: unique ids/names. loot_tier minimum to pick up. min_clvl per difficulty n/nm/h. Immunity/ danger rules apply.",
+ "area_ids_tag": "R recollection of levels.txt Id column; engineers MUST verify against levels.txt at setup",
+ "runs": [
+  {
+   "name": "Countess",
+   "act": 1,
+   "wp_area": 6,
+   "stops": [
+    6,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+   ],
+   "final_area": 25,
+   "kill": [
+    "The Countess"
+   ],
+   "min_clvl": {
+    "n": 14,
+    "nm": 42,
+    "h": 67
+   },
+   "loot": "runes,rare,unique",
+   "note": "Tower Cellar L1->L5; Countess rune drops (El..Ral normal, higher in Hell)"
+  },
+  {
+   "name": "Andariel",
+   "act": 1,
+   "wp_area": 35,
+   "stops": [
+    35,
+    36,
+    37
+   ],
+   "final_area": 37,
+   "kill": [
+    "Andariel"
+   ],
+   "min_clvl": {
+    "n": 15,
+    "nm": 45,
+    "h": 65
+   },
+   "note": "Poison: carry antidotes (Normal)/ be wary, bring antidote potions"
+  },
+  {
+   "name": "Summoner",
+   "act": 2,
+   "wp_area": 74,
+   "stops": [
+    74
+   ],
+   "final_area": 74,
+   "kill": [
+    "The Summoner"
+   ],
+   "min_clvl": {
+    "n": 24,
+    "nm": 50,
+    "h": 70
+   },
+   "note": "Arcane Sanctuary; use Teleport; map is a maze of platforms"
+  },
+  {
+   "name": "Mephisto",
+   "act": 3,
+   "wp_area": 101,
+   "stops": [
+    101,
+    102
+   ],
+   "final_area": 102,
+   "kill": [
+    "Mephisto"
+   ],
+   "min_clvl": {
+    "n": 28,
+    "nm": 55,
+    "h": 75
+   },
+   "note": "Durance 2 wp; moat trick optional; high Mana burn risk from minions"
+  },
+  {
+   "name": "Pindleskin",
+   "act": 5,
+   "wp_area": 109,
+   "stops": [
+    109,
+    121
+   ],
+   "final_area": 121,
+   "kill": [
+    "Pindleskin"
+   ],
+   "loot": "runes,sets,uniques",
+   "note": "Harrogath: Anya's Red Portal (needs Nihlathak quest... open by Anya's scroll quest, Act 5 'Prison of Ice' reward: portal to Nihlathak's Temple). Pindleskin stands beside the portal arrival in area 121. Kill, loot, leave. Do not enter Halls of Anguish (122)."
+  },
+  {
+   "name": "Eldritch+Shenk",
+   "act": 5,
+   "wp_area": 111,
+   "stops": [
+    111,
+    110
+   ],
+   "final_area": 110,
+   "kill": [
+    "Eldritch the Rectifier",
+    "Shenk the Overseer"
+   ],
+   "note": "R: Eldritch and Shenk are superuniques; resolve their area from superuniques.txt at runtime. Typical route: WP Frigid Highlands(111)/Bloody Foothills(110). Do not hard-code positions.",
+   "min_clvl": {
+    "n": 25,
+    "nm": 50,
+    "h": 70
+   }
+  },
+  {
+   "name": "Cows",
+   "act": 1,
+   "wp_area": 1,
+   "stops": [
+    39
+   ],
+   "final_area": 39,
+   "kill": [
+    "Hell Bovine pack",
+    "The Cow King"
+   ],
+   "min_clvl": {
+    "n": 26,
+    "nm": 50,
+    "h": 70
+   },
+   "note": "Requires Wirt's Leg (Tristram, area 38, cairn stones) + Tome of Town Portal in the Horadric Cube in Rogue Encampment; red portal leads to Moo Moo Farm (39). Kill Cow King only after the player requests it (stops further cow portal in that difficulty)."
+  },
+  {
+   "name": "Baal",
+   "act": 5,
+   "wp_area": 129,
+   "stops": [
+    129,
+    130,
+    131,
+    132
+   ],
+   "final_area": 132,
+   "kill": [
+    "Baal waves",
+    "Baal"
+   ],
+   "min_clvl": {
+    "n": 32,
+    "nm": 58,
+    "h": 82
+   },
+   "note": "Throne waves first; Wave 3 and 5 fastest; cold immune waves require Might merc"
+  },
+  {
+   "name": "Diablo",
+   "act": 4,
+   "wp_area": 107,
+   "stops": [
+    107,
+    108
+   ],
+   "final_area": 108,
+   "kill": [
+    "Lord de Seis",
+    "Infector of Souls",
+    "Grand Vizier",
+    "Diablo"
+   ],
+   "min_clvl": {
+    "n": 30,
+    "nm": 55,
+    "h": 80
+   },
+   "note": "Seals order per Chaos Sanctuary layout; Lord de Seis may spawn Cold immune: use Static Field/merc or reroll the game."
+  },
+  {
+   "name": "Travincal",
+   "act": 3,
+   "wp_area": 83,
+   "stops": [
+    83
+   ],
+   "final_area": 83,
+   "kill": [
+    "Council Members"
+   ],
+   "min_clvl": {
+    "n": 24,
+    "nm": 48,
+    "h": 70
+   },
+   "note": "Stay at range; Hell: use Static Field, skip if cursed councillors"
+  },
+  {
+   "name": "Pit",
+   "act": 1,
+   "wp_area": 6,
+   "stops": [
+    6,
+    7,
+    12,
+    16
+   ],
+   "final_area": 16,
+   "kill": [
+    "Pit L2 packs"
+   ],
+   "min_clvl": {
+    "nm": 42,
+    "h": 67
+   }
+  }
+ ]
+}

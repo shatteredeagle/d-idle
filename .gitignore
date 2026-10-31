@@ -1,0 +1,39 @@
+# binaries
+/spike
+/d2bot
+/d2snap
+*.exe
+/bin/
+/tmp/
+# local data
+*.log
+/data-cache/
+/fixtures/*.snap.big
+/d2dash
+/dist/
+/levelerlive
+/combatlive
+/navlive
+/townlive
+/inputcal
+/d2*
+!/d2*/
+/d2bot
+__pycache__/
+*.pyc
+/act2live
+
+/cmd/d2soak/d2soak
+openspec/.last-check
+# gear tables extracted from the user's own MPQs (cmd/d2tables); the default cache is outside the repo, these catch a local D2_TABLES_DIR
+/d2tables-cache/
+internal/gear/gear.json
+internal/gear/armor.json
+internal/gear/stamp.json
+
+# private overlay links (tools/ops.sh link)
+/local.env
+/CLAUDE.local.md
+/.claude/
+/docs/needs-you.md
+/tools/d2dfarm.hosts

@@ -1,0 +1,32 @@
+run                         hours     min   kills      xp/h   deaths  kills/h  clvl+
+logs/bot-s1.log              2.00     120     387      4721        0      194      4
+logs/bot-s2.log              2.00     121     415      5606        0      208      4
+logs/bot-s3.log              2.00     120     400      5438        0      200      4
+logs/bot-s4.log              2.00     120     405      5114        0      202      4
+logs/bot-s5.log              2.00     120     456      5196        0      228      4
+logs/bot-s6.log              2.00     120     361      5162        0      180      4
+logs/bot-s7.log              2.00     120     399      5136        0      200      4
+logs/bot-s8.log              2.00     122     301      3628        0      150      3
+logs/bot-s12.log             2.00     120     412      4637        0      206      4
+logs/bot-s13.log             2.00     120     370      5173        0      185      4
+logs/bot-s14.log             2.00     120     391      5034        0      196      4
+logs/bot-s15.log             2.00     120     376      4980        0      188      4
+
+metric (all runs)              mean         sd          min          max     n
+xp_per_hour                    4985      502.4         3628         5606    12  XP/h
+kills_per_hour                194.7      18.61        150.5          228    12  kills/h
+deaths_per_hour                   0          0            0            0    12  deaths/h
+deaths_per_1000_kills             0          0            0            0    12  deaths/1000 kills
+potions_per_hour              13.62      3.276            8         19.5    12  potions/h
+gold_per_hour                 24.33      43.53            0        124.5    12  gold/h (net)
+potions_per_100_kills         6.993      1.588          4.5        10.08    12  potions/100 kills
+min_life_fraction            0.7048    0.04362       0.6489       0.8227    12  life fraction
+damage_per_kill               3.074     0.7088        2.106          4.1    12  life/kill
+recovery_share               0.5416        0.1       0.2705       0.6417    12  share of time
+farming_share                0.1525    0.04581      0.06667          0.2    12  share of time
+town_share                   0.2816     0.1155         0.15       0.6148    12  share of time
+repeat_sites                      0          0            0            0    12  count
+clvl_gain                     3.917     0.2887            3            4    12  levels
+clvl_1h                       3.917     0.2887            3            4    12  clvl
+clvl_2h                       4.917     0.2887            4            5    12  clvl
+time in state (mean over runs): recovery 54% town chores 28% farming 15% quest fight 1% quest travel 1% waiting 0% other 0%

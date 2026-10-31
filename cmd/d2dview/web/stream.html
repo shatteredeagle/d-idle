@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d2d live</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{color-scheme:dark}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0d1016;color:#e3e8f2;font:1.9vh/1.25 system-ui,sans-serif}
+#root{display:grid;grid-template-rows:11vh 1fr;width:100vw;height:100vh}
+#bar{display:flex;align-items:center;gap:1.6vw;padding:0 1vw;background:#151a24;border-bottom:1px solid #263042;white-space:nowrap;overflow:hidden}
+#badge{font-weight:800;font-size:3.2vh;padding:.4vh 1.2vh;border-radius:.8vh;background:#1f6f8a;color:#fff}
+#bar b{color:#fff}
+.dim{color:#8d99b0}
+#goal{color:#9fd3ff;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+#panes{display:grid;grid-template-columns:1fr 1fr;min-height:0}
+.pane{position:relative;min-width:0;min-height:0;background:#000;display:flex;align-items:center;justify-content:center}
+.pane+.pane{border-left:1px solid #263042;background:#0a0d13}
+#shot{max-width:100%;max-height:100%;object-fit:contain}
+#map{width:100%;height:100%;display:block}
+.cap{position:absolute;left:.8vh;top:.6vh;font-size:1.6vh;color:#8d99b0;text-shadow:0 0 3px #000}
+#wait{position:absolute;inset:0;display:none;align-items:center;justify-content:center;font-size:3vh;color:#8d99b0;background:#0d1016cc}
+body.tile #bar{gap:1vw;font-size:2.4vh}
+body.tile #badge{font-size:3.4vh}
+body.tile .opt{display:none}
+</style></head><body>
+<div id="root">
+ <div id="bar">
+  <span id="badge">d2d (reimplementation)</span>
+  <span id="speed"></span>
+  <span id="area"></span>
+  <span id="stats"></span>
+  <span id="goal" class="opt"></span>
+ </div>
+ <div id="panes">
+  <div class="pane"><img id="shot" alt=""><span class="cap">gameplay</span></div>
+  <div class="pane"><canvas id="map"></canvas><span class="cap">map</span></div>
+ </div>
+ <div id="wait">waiting for a d2d run</div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+if(/[?&]tile=1/.test(location.search))document.body.classList.add('tile');
+const q=location.search.match(/[?&]t=([^&]*)/);const tq=q?'?t='+q[1]:'';
+const cv=$('map'),cx=cv.getContext('2d');
+let P=null,mapImg=new Image(),mapKey='',mapReady=false,trail=[],trailLevel=-1;
+mapImg.onload=()=>{mapReady=true};
+$('shot').src='/stream.mjpg'+tq;
+function fit(){const r=cv.getBoundingClientRect();cv.width=Math.max(2,r.width|0);cv.height=Math.max(2,r.height|0);draw()}
+addEventListener('resize',fit);
+function upd(p){
+ P=p;
+ $('badge').textContent=p.backend;
+ $('speed').innerHTML=p.live&&p.speed?'<b>'+p.speed.toFixed(1)+'x</b> real time':'';
+ $('area').textContent=p.area||'';
+ $('stats').innerHTML=p.live?'<span class="dim">'+(p.name?p.name+' ':'')+'</span>lvl <b>'+p.clvl+'</b> &nbsp;xp <b>'+p.xp+'</b> &nbsp;kills <b>'+p.kills+'</b> &nbsp;deaths <b>'+p.deaths+'</b>':'';
+ $('goal').textContent=p.goal||'';
+ $('wait').style.display=p.live?'none':'flex';
+ if(p.level!==trailLevel){trail=[];trailLevel=p.level}
+ if(p.live){const l=trail[trail.length-1];if(!l||l[0]!==p.X||l[1]!==p.Y){trail.push([p.X,p.Y]);if(trail.length>600)trail.shift()}}
+ const k=p.mapVer+':'+p.level;
+ if(k!==mapKey){mapKey=k;mapReady=false;mapImg.src='/map.png?v='+p.mapVer+'&l='+p.level+(q?'&t='+q[1]:'')}
+ draw();
+}
+function draw(){
+ const W=cv.width,H=cv.height;cx.fillStyle='#0a0d13';cx.fillRect(0,0,W,H);
+ if(!P||!P.live)return;
+ const r=P.MapRect,sc=H/130; // about 26 cells of height visible, follows the player
+ const ox=W/2-P.X*5*sc,oy=H/2-P.Y*5*sc,X=c=>ox+c*5*sc,Y=c=>oy+c*5*sc;
+ if(mapReady){cx.imageSmoothingEnabled=false;cx.drawImage(mapImg,ox+r[0]*sc,oy+r[1]*sc,r[2]*sc,r[3]*sc)}
+ const u=Math.max(1,H/220);
+ if(trail.length>1){cx.lineWidth=2*u;for(let i=1;i<trail.length;i++){cx.strokeStyle='rgba(255,214,102,'+(0.15+0.85*i/trail.length)+')';cx.beginPath();cx.moveTo(X(trail[i-1][0]),Y(trail[i-1][1]));cx.lineTo(X(trail[i][0]),Y(trail[i][1]));cx.stroke()}}
+ (P.mons||[]).forEach(m=>{if(m.Dead)return;cx.fillStyle=m.Friend?'#4ade80':(m.Boss?'#ffb020':'#e5484d');cx.beginPath();cx.arc(X(m.X),Y(m.Y),(m.Boss?4:2.8)*u,0,7);cx.fill()});
+ cx.fillStyle='#fff';cx.beginPath();cx.arc(X(P.X),Y(P.Y),4*u,0,7);cx.fill();cx.strokeStyle='#4aa3ff';cx.lineWidth=2*u;cx.stroke();
+}
+fit();
+async function tick(){try{const r=await fetch('/api/pub'+tq,{cache:'no-store'});upd(await r.json())}catch(e){upd({backend:'d2d (reimplementation)',live:false})}setTimeout(tick,200)}
+tick();
+</script></body></html>

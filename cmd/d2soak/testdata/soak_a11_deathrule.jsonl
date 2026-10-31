@@ -1,0 +1,252 @@
+{"time":"2026-10-29T21:10:34.384056318-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T21:10:38.375382835-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:10:39.163491238-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"in_town","activity":"Binding hotkeys"}
+{"time":"2026-10-29T21:10:42.010221589-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Chores in town ([inventory 92% full heal pack 92% full])"}
+{"time":"2026-10-29T21:11:38.310597843-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":70403,"kills":0,"deaths":0,"potions":0,"gold":231,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([inventory 92% full heal pack 92% full])"}
+{"time":"2026-10-29T21:11:45.143936095-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:11:50.829959706-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T21:12:23.542888767-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g6","area":"Cave Level 1"}
+{"time":"2026-10-29T21:12:38.346403449-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":70459,"kills":4,"deaths":0,"potions":0,"gold":131,"restarts":0,"xpRisk":56,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:13:38.379344453-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":70622,"kills":26,"deaths":0,"potions":0,"gold":131,"restarts":0,"xpRisk":219,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:14:38.387764481-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":70658,"kills":30,"deaths":0,"potions":0,"gold":135,"restarts":0,"xpRisk":255,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:15:13.61899954-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T21:15:38.402118846-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":70749,"kills":37,"deaths":0,"potions":0,"gold":145,"restarts":0,"xpRisk":346,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:15:44.695417073-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([poverty: 1 items to sell, 145 gold])"}
+{"time":"2026-10-29T21:15:52.839780577-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:16:38.425165598-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":70753,"kills":38,"deaths":0,"potions":0,"gold":53,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Returning to the field"}
+{"time":"2026-10-29T21:16:40.467759782-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T21:16:40.584372992-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:17:38.454185498-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":70964,"kills":54,"deaths":0,"potions":0,"gold":53,"restarts":0,"xpRisk":211,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:18:38.500802689-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":71086,"kills":62,"deaths":0,"potions":0,"gold":62,"restarts":0,"xpRisk":333,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:19:13.045065579-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g6","area":"Blood Moor"}
+{"time":"2026-10-29T21:19:38.520001373-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":71086,"kills":62,"deaths":0,"potions":0,"gold":62,"restarts":0,"xpRisk":333,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:20:01.173295908-04:00","level":"INFO","msg":"Entered Den of Evil","inst":"i4","type":"area_change","goal":"g6","area":"Den of Evil"}
+{"time":"2026-10-29T21:20:31.986939426-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([poverty: 1 items to sell, 72 gold])"}
+{"time":"2026-10-29T21:20:33.930692425-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:20:38.533667727-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":71151,"kills":72,"deaths":0,"potions":0,"gold":72,"restarts":0,"xpRisk":398,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([poverty: 1 items to sell, 72 gold])"}
+{"time":"2026-10-29T21:21:19.200179808-04:00","level":"INFO","msg":"Entered Den of Evil","inst":"i4","type":"area_change","goal":"g6","area":"Den of Evil"}
+{"time":"2026-10-29T21:21:19.25277641-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:21:38.598027771-04:00","level":"INFO","msg":"minute","inst":"i4","area":8,"clvl":10,"xp":71164,"kills":75,"deaths":0,"potions":0,"gold":176,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:22:39.296775743-04:00","level":"INFO","msg":"minute","inst":"i4","area":8,"clvl":10,"xp":71288,"kills":93,"deaths":0,"potions":0,"gold":183,"restarts":0,"xpRisk":124,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:23:04.269775517-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g6","area":"Blood Moor"}
+{"time":"2026-10-29T21:23:39.25873773-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":71330,"kills":102,"deaths":0,"potions":0,"gold":183,"restarts":0,"xpRisk":166,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:24:39.287940326-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":71387,"kills":115,"deaths":0,"potions":0,"gold":192,"restarts":0,"xpRisk":223,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:25:02.353695829-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g6","area":"Cold Plains"}
+{"time":"2026-10-29T21:25:39.309732187-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":71387,"kills":115,"deaths":0,"potions":0,"gold":192,"restarts":0,"xpRisk":223,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:25:43.045472733-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g6","area":"Stony Field"}
+{"time":"2026-10-29T21:25:44.025412267-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (gear rebuy: no body armor +1 (192 gold covers a rebuy))"}
+{"time":"2026-10-29T21:25:45.257903724-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:26:39.34926659-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":71387,"kills":115,"deaths":0,"potions":0,"gold":76,"restarts":0,"xpRisk":223,"xpLost":0,"rung":0,"goal":"campaign","step":"Returning to the field"}
+{"time":"2026-10-29T21:27:18.482995683-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g6","area":"Stony Field"}
+{"time":"2026-10-29T21:27:18.590181334-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:27:39.404122756-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":10,"xp":71527,"kills":121,"deaths":0,"potions":0,"gold":80,"restarts":0,"xpRisk":140,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:28:39.433132457-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":10,"xp":71896,"kills":135,"deaths":0,"potions":0,"gold":122,"restarts":0,"xpRisk":509,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:29:23.891805735-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"in_town","activity":"Spending stat and skill points"}
+{"time":"2026-10-29T21:29:29.018458625-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:29:39.451850197-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":11,"xp":72194,"kills":142,"deaths":0,"potions":0,"gold":122,"restarts":0,"xpRisk":807,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:30:37.085376007-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([poverty: 1 items to sell, 122 gold])"}
+{"time":"2026-10-29T21:30:38.25293968-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:30:39.503515477-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":72328,"kills":153,"deaths":0,"potions":0,"gold":122,"restarts":0,"xpRisk":941,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([poverty: 1 items to sell, 122 gold])"}
+{"time":"2026-10-29T21:31:39.475151217-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":72328,"kills":153,"deaths":0,"potions":0,"gold":462,"restarts":0,"xpRisk":941,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([poverty: 1 items to sell, 122 gold])"}
+{"time":"2026-10-29T21:31:52.646026299-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T21:31:52.909924137-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:32:39.487063032-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":11,"xp":72553,"kills":170,"deaths":0,"potions":0,"gold":483,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:32:52.239511023-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T21:33:39.52264668-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":11,"xp":72553,"kills":170,"deaths":0,"potions":0,"gold":483,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:34:30.79061683-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-29T21:34:39.547835633-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":72553,"kills":170,"deaths":0,"potions":0,"gold":483,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:35:39.63107197-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":72553,"kills":170,"deaths":0,"potions":0,"gold":483,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:35:45.893405591-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:35:46.783898374-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (gear rebuy: no body armor +1 (483 gold covers a rebuy))"}
+{"time":"2026-10-29T21:35:47.963974602-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:36:39.6405605-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":72553,"kills":170,"deaths":0,"potions":0,"gold":183,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (gear rebuy: no body armor +1 (483 gold covers a rebuy))"}
+{"time":"2026-10-29T21:37:24.644048507-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:37:24.757603581-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:37:39.649948918-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":73323,"kills":185,"deaths":0,"potions":0,"gold":222,"restarts":0,"xpRisk":770,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:38:39.688460804-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":73888,"kills":198,"deaths":0,"potions":0,"gold":222,"restarts":0,"xpRisk":466,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:39:39.728083524-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":74779,"kills":219,"deaths":0,"potions":0,"gold":273,"restarts":0,"xpRisk":1357,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:40:22.903168655-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T21:40:23.714386628-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:40:39.76852541-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":74876,"kills":221,"deaths":0,"potions":0,"gold":273,"restarts":0,"xpRisk":1454,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T21:41:28.669365072-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:41:28.779774494-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:41:39.816068773-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":74940,"kills":222,"deaths":0,"potions":0,"gold":357,"restarts":0,"xpRisk":1518,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:42:39.833444501-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":76225,"kills":248,"deaths":0,"potions":0,"gold":357,"restarts":0,"xpRisk":2803,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:43:16.846425311-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T21:43:17.444619434-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:43:39.880910146-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":76668,"kills":254,"deaths":0,"potions":0,"gold":157,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T21:44:24.023250762-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:44:24.024082625-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:44:39.89040204-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":76668,"kills":254,"deaths":0,"potions":0,"gold":155,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:44:56.86507288-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-29T21:45:00.522529507-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:45:01.254456963-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-29T21:45:03.517672714-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:45:04.89072714-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-29T21:45:39.946016728-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":77026,"kills":262,"deaths":0,"potions":0,"gold":155,"restarts":0,"xpRisk":358,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:46:03.912363712-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:46:39.969782342-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":77026,"kills":262,"deaths":0,"potions":0,"gold":155,"restarts":0,"xpRisk":358,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:47:39.979628071-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":77853,"kills":281,"deaths":0,"potions":0,"gold":177,"restarts":0,"xpRisk":1185,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:47:41.722419073-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([poverty: 3 items to sell, 177 gold low on healing potions])"}
+{"time":"2026-10-29T21:47:43.165361135-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:48:40.012087662-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":77853,"kills":281,"deaths":0,"potions":0,"gold":397,"restarts":0,"xpRisk":1185,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([poverty: 3 items to sell, 177 gold low on healing potions])"}
+{"time":"2026-10-29T21:49:05.084636459-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:49:05.193815286-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:49:40.040150229-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":78047,"kills":285,"deaths":0,"potions":0,"gold":397,"restarts":0,"xpRisk":194,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:49:52.500664618-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T21:49:52.713205594-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:50:25.454668821-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:50:25.508375133-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:50:40.084124926-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":78412,"kills":295,"deaths":0,"potions":0,"gold":137,"restarts":0,"xpRisk":559,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:51:31.465231481-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T21:51:36.783701918-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:51:40.110204881-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":78478,"kills":297,"deaths":0,"potions":0,"gold":137,"restarts":0,"xpRisk":625,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T21:52:23.570860628-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:52:23.678089278-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:52:40.126452946-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":78478,"kills":298,"deaths":0,"potions":0,"gold":177,"restarts":0,"xpRisk":625,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:53:40.184624772-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":79111,"kills":310,"deaths":0,"potions":0,"gold":177,"restarts":0,"xpRisk":1258,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:53:42.061293137-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T21:53:56.326402336-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:54:18.028615544-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T21:54:18.08556497-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T21:54:40.19900053-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":79711,"kills":323,"deaths":0,"potions":0,"gold":17,"restarts":0,"xpRisk":404,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:55:40.200766581-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":701,"xpLost":0,"rung":0,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T21:55:42.646696505-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T21:55:43.970706733-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:55:44.130077647-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"recovering","activity":"Save point: saving the game"}
+{"time":"2026-10-29T21:55:47.298948495-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T21:55:48.319519271-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T21:56:09.699558765-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T21:56:19.145217834-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T21:56:40.253380117-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T21:57:05.274404246-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T21:57:36.168915526-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T21:57:40.278000056-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T21:58:10.466512994-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"resupplying","activity":"Going to town ([no town portal scroll])"}
+{"time":"2026-10-29T21:58:11.178198154-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T21:58:40.308560746-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T21:59:23.612367928-04:00","level":"INFO","msg":"Entered Dark Wood","inst":"i4","type":"area_change","goal":"g5","area":"Dark Wood"}
+{"time":"2026-10-29T21:59:40.345949084-04:00","level":"INFO","msg":"minute","inst":"i4","area":5,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:00:04.942760343-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T22:00:40.405951122-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:01:36.741403382-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:01:40.443395847-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":11,"xp":80008,"kills":333,"deaths":0,"potions":0,"gold":86,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:02:10.575375893-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"resupplying","activity":"Going to town ([no town portal scroll])"}
+{"time":"2026-10-29T22:02:11.261985013-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:02:13.934898465-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-29T22:02:18.573003311-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:02:23.21337939-04:00","level":"WARN","msg":"character died","inst":"i4","area":7,"killer":"Dark Stalker","x":15176,"y":5096,"corpseValue":778}
+{"time":"2026-10-29T22:02:23.215725805-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:02:24.436113355-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:02:40.439722021-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80008,"kills":333,"deaths":1,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Restocking after death"}
+{"time":"2026-10-29T22:03:06.746746238-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (poverty rebuild after failed retrieval)"}
+{"time":"2026-10-29T22:03:35.475525961-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"in_town","activity":"Gear: equip and shop"}
+{"time":"2026-10-29T22:03:40.473088604-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80008,"kills":333,"deaths":1,"potions":0,"gold":403,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Gear: equip and shop"}
+{"time":"2026-10-29T22:03:56.062071311-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:04:01.189338659-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T22:04:24.78892073-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:04:40.510863175-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":11,"xp":80008,"kills":333,"deaths":1,"potions":0,"gold":293,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:04:58.792752316-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-29T22:05:01.722831996-04:00","level":"INFO","msg":"combat fight area=26 diff=0 danger=2 kills=0 damage=0 minlife=61 potions=0 dodges=1 sec=0","inst":"i4"}
+{"time":"2026-10-29T22:05:02.922002978-04:00","level":"WARN","msg":"character died","inst":"i4","area":26,"killer":"Steel Grumble","x":15186,"y":5085,"corpseValue":352}
+{"time":"2026-10-29T22:05:02.922304933-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:05:04.066951004-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:05:40.511596506-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80008,"kills":333,"deaths":2,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Restocking after death"}
+{"time":"2026-10-29T22:05:42.863846742-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:05:51.822360278-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T22:06:11.060491258-04:00","level":"INFO","msg":"combat fight area=6 diff=0 danger=0 kills=8 damage=10 minlife=81 potions=0 dodges=0 sec=4","inst":"i4"}
+{"time":"2026-10-29T22:06:19.986886822-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:06:40.51414082-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":11,"xp":80462,"kills":343,"deaths":2,"potions":0,"gold":0,"restarts":0,"xpRisk":454,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:06:59.677498323-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-29T22:07:02.956421803-04:00","level":"WARN","msg":"character died","inst":"i4","area":26,"killer":"Steel Grumble","x":15185,"y":5087,"corpseValue":0}
+{"time":"2026-10-29T22:07:02.956964391-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:07:04.156043761-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:07:04.262378848-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:07:14.821144258-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T22:07:37.791326843-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:07:40.551938113-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":11,"xp":80462,"kills":343,"deaths":3,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:08:24.871836018-04:00","level":"WARN","msg":"character died","inst":"i4","area":7,"killer":"Dark Stalker","x":15163,"y":5108,"corpseValue":0}
+{"time":"2026-10-29T22:08:25.205083746-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:08:26.166374996-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:08:26.274650083-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:08:31.030071642-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g5","area":"Black Marsh"}
+{"time":"2026-10-29T22:08:40.577859576-04:00","level":"INFO","msg":"minute","inst":"i4","area":6,"clvl":11,"xp":80462,"kills":343,"deaths":4,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:08:55.807498142-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:09:33.413193316-04:00","level":"INFO","msg":"Entered Monastery Gate","inst":"i4","type":"area_change","goal":"g5","area":"Monastery Gate"}
+{"time":"2026-10-29T22:09:36.038947964-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g5","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:09:38.920190542-04:00","level":"WARN","msg":"character died","inst":"i4","area":7,"killer":"Dark Stalker","x":15172,"y":5090,"corpseValue":0}
+{"time":"2026-10-29T22:09:38.921790936-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:09:39.086970146-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T22:09:40.233733042-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:09:40.342442188-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T22:09:40.601821796-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T22:10:01.391682933-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:10:09.604051649-04:00","level":"INFO","msg":"Entered Black Marsh","inst":"i4","type":"area_change","goal":"g6","area":"Black Marsh"}
+{"time":"2026-10-29T22:10:32.54255307-04:00","level":"INFO","msg":"Entered Tamoe Highland","inst":"i4","type":"area_change","goal":"g6","area":"Tamoe Highland"}
+{"time":"2026-10-29T22:10:40.62006658-04:00","level":"INFO","msg":"minute","inst":"i4","area":7,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T22:11:09.836188382-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:11:19.952465082-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T22:11:21.558945488-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:11:22.451376786-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T22:11:40.626590437-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T22:11:45.635658588-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:11:57.446955328-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: leaving and re-entering the game"}
+{"time":"2026-10-29T22:12:00.559870248-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:12:01.652036342-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:12:07.50145963-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: restarting the game"}
+{"time":"2026-10-29T22:12:42.196229475-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":3,"xpRisk":0,"xpLost":0,"rung":4,"goal":"campaign","step":"Failsafe: restarting the game"}
+{"time":"2026-10-29T22:12:42.272407476-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:12:43.215895939-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:12:55.041939667-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: leaving and re-entering the game"}
+{"time":"2026-10-29T22:12:58.17494196-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:12:59.176839909-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:13:05.053873663-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: restarting the game"}
+{"time":"2026-10-29T22:13:39.920611185-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:13:40.810032123-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:13:42.676813387-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":5,"xpRisk":0,"xpLost":0,"rung":4,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:13:52.64820165-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: leaving and re-entering the game"}
+{"time":"2026-10-29T22:13:55.836702066-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:13:56.788247337-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:14:02.633657114-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Failsafe: restarting the game"}
+{"time":"2026-10-29T22:14:36.123755643-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:14:37.079357888-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:14:42.895775635-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":4,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:14:43.049149465-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"paused","activity":"Paused"}
+{"time":"2026-10-29T22:15:42.848871366-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Paused"}
+{"time":"2026-10-29T22:16:42.866538785-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Paused"}
+{"time":"2026-10-29T22:17:42.936571486-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Paused"}
+{"time":"2026-10-29T22:18:42.950764413-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Paused"}
+{"time":"2026-10-29T22:19:42.980240498-04:00","level":"INFO","msg":"state","inst":"i4","from":"paused","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:19:43.033521118-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80462,"kills":343,"deaths":5,"potions":0,"gold":0,"restarts":7,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:19:57.826798676-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g6","area":"Blood Moor"}
+{"time":"2026-10-29T22:20:43.0452542-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":11,"xp":80466,"kills":347,"deaths":5,"potions":0,"gold":1,"restarts":7,"xpRisk":4,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:21:33.518662846-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:21:33.626407595-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T22:21:34.287154848-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:21:37.462057893-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g6","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:21:43.069153418-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80468,"kills":349,"deaths":5,"potions":0,"gold":5,"restarts":8,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:21:52.526762188-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g6","area":"Blood Moor"}
+{"time":"2026-10-29T22:22:43.178637604-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":11,"xp":80476,"kills":360,"deaths":5,"potions":0,"gold":7,"restarts":8,"xpRisk":8,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:23:43.213569576-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":11,"xp":80481,"kills":374,"deaths":5,"potions":0,"gold":11,"restarts":8,"xpRisk":13,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:24:39.707768186-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:24:41.383638236-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:24:44.691229427-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":11,"xp":80485,"kills":384,"deaths":5,"potions":0,"gold":22,"restarts":9,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:24:44.691343588-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:24:59.804588187-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T22:25:44.740151316-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":11,"xp":80491,"kills":394,"deaths":5,"potions":0,"gold":22,"restarts":9,"xpRisk":6,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:26:44.773638798-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":11,"xp":80495,"kills":409,"deaths":5,"potions":0,"gold":26,"restarts":9,"xpRisk":10,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:27:18.755747952-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T22:27:44.80613763-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":11,"xp":80495,"kills":409,"deaths":5,"potions":0,"gold":26,"restarts":9,"xpRisk":10,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:27:53.614577145-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T22:28:44.897705169-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":11,"xp":80557,"kills":421,"deaths":5,"potions":0,"gold":37,"restarts":9,"xpRisk":72,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:28:55.483805433-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T22:28:57.093427115-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T22:28:58.792883339-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T22:29:21.201987712-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Recovery: farming gold"}
+{"time":"2026-10-29T22:29:26.258724262-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T22:29:44.939204713-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":11,"xp":80557,"kills":422,"deaths":5,"potions":0,"gold":37,"restarts":10,"xpRisk":0,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:29:59.9742173-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T22:30:44.911781757-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":11,"xp":81317,"kills":436,"deaths":5,"potions":0,"gold":78,"restarts":10,"xpRisk":760,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:31:44.948718399-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":11,"xp":81498,"kills":464,"deaths":5,"potions":0,"gold":78,"restarts":10,"xpRisk":941,"xpLost":0,"rung":5,"goal":"campaign","step":"Recovery: farming gold"}
+{"time":"2026-10-29T22:32:28.183563784-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"resupplying","activity":"Returning to town"}
+{"time":"2026-10-29T22:32:29.478713871-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"","area":"Rogue Encampment"}

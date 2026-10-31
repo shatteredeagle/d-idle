@@ -1,0 +1,9 @@
+{
+ "comment": "Belt column layout and potion tiers by character level. Derived from docs/plan/data/potions-belt.json (design decisions, tag R). Tiers: 1 minor, 2 light, 3 normal, 4 greater, 5 super.",
+ "bands": [
+  {"clvlMin": 1,  "clvlMax": 12, "cols": ["hp","hp","mp","hp"],    "maxHPTier": 2, "maxMPTier": 2},
+  {"clvlMin": 13, "clvlMax": 30, "cols": ["hp","hp","mp","hp"],    "maxHPTier": 4, "maxMPTier": 4},
+  {"clvlMin": 31, "clvlMax": 60, "cols": ["hp","hp","mp","rv"],    "maxHPTier": 5, "maxMPTier": 5},
+  {"clvlMin": 61, "clvlMax": 99, "cols": ["hp","rv","mp","rv"],    "maxHPTier": 5, "maxMPTier": 5}
+ ]
+}

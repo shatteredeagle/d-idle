@@ -1,0 +1,147 @@
+{
+ "description": "Original-game (Game.exe 1.14d under Wine, i4, Soaky Sorceress, offline, honest play) m1-profile soaks, metrics recomputed from the bot's minute lines by d2dsoak extract so both sides use one definition. G2 (8 h, m24, started 2026-10-30 08:23) is NOT included until it ends and its log is copied.",
+ "minSeeds": 5,
+ "minHoursPerSeed": 2,
+ "minTotalHours": 10,
+ "rules": {
+  "xp_per_hour": {
+   "gate": true,
+   "rel": 0.2,
+   "why": "the plan's fidelity gate (plan-v2 11, d2d-backend 7)"
+  },
+  "kills_per_hour": {
+   "gate": true,
+   "rel": 0.2
+  },
+  "deaths_per_hour": {
+   "gate": true,
+   "rel": 0.2,
+   "abs": 0.5,
+   "why": "baseline is 0 to 0.5 deaths/h; one extra death per 2 h is noise"
+  },
+  "deaths_per_1000_kills": {
+   "gate": true,
+   "rel": 0.2,
+   "abs": 1.0,
+   "why": "baseline about 0 to 1"
+  },
+  "potions_per_hour": {
+   "rel": 0.2,
+   "why": "info: vendor prices differ on d2d (docs/d2d-fidelity.md 5)"
+  },
+  "gold_per_hour": {
+   "rel": 0.2,
+   "why": "info: net balance, stash banking and vendor prices differ"
+  },
+  "recovery_share": {
+   "abs": 0.05,
+   "why": "info"
+  },
+  "farming_share": {
+   "abs": 0.1,
+   "why": "info"
+  },
+  "town_share": {
+   "abs": 0.1,
+   "why": "info"
+  },
+  "repeat_sites": {
+   "abs": 1,
+   "why": "info"
+  },
+  "clvl_gain": {
+   "rel": 0.2,
+   "why": "info: depends on the start level"
+  },
+  "clvl_1h": {
+   "abs": 1,
+   "why": "info: only comparable with the same start clvl"
+  },
+  "clvl_2h": {
+   "abs": 1,
+   "why": "info: only comparable with the same start clvl"
+  }
+ },
+ "runs": [
+  {
+   "name": "a14",
+   "hours": 1.0572294980658334,
+   "minutes": 64,
+   "deaths": 0,
+   "kills": 445,
+   "xp": 12936,
+   "metrics": {
+    "clvl_1h": 12,
+    "clvl_gain": 1,
+    "deaths_per_1000_kills": 0,
+    "deaths_per_hour": 0,
+    "gold_per_hour": -191.0654218119645,
+    "kills_per_hour": 420.911449041209,
+    "potions_per_hour": 0,
+    "repeat_sites": 0,
+    "xp_per_hour": 12235.753943364223
+   },
+   "source": "V: docs/g1-log.md attempt 14 (bot de9b597, Soaky clvl 11-12, Game.exe); first 64 minute lines only, old build, no state field",
+   "note": "PARTIAL: 1 h of the 2 h; a14 had 1 death in the full run"
+  },
+  {
+   "name": "a16",
+   "hours": 1.9365678034675,
+   "minutes": 111,
+   "deaths": 0,
+   "kills": 889,
+   "xp": 21740,
+   "metrics": {
+    "clvl_1h": 13,
+    "clvl_gain": 1,
+    "deaths_per_1000_kills": 0,
+    "deaths_per_hour": 0,
+    "farming_share": 0.6126126126126126,
+    "gold_per_hour": -176.60109777082718,
+    "kills_per_hour": 459.05957870837824,
+    "potions_per_hour": 27.368006379689593,
+    "recovery_share": 0.11711711711711711,
+    "repeat_sites": 0,
+    "town_share": 0.22522522522522523,
+    "xp_per_hour": 11226.046390461353
+   },
+   "states": {
+    "farming": 0.6126126126126126,
+    "recovery": 0.11711711711711711,
+    "town chores": 0.22522522522522523,
+    "waiting": 0.04504504504504504
+   },
+   "source": "V: docs/g1-log.md attempt 16 verdict (bot b2e010c, Soaky clvl 13-14, Game.exe); minute lines of the 2 h run",
+   "note": "an OOM restart at 04:45 lost unsaved XP/gold (counted); potions_per_hour here is the minute-line counter, which reset at the restart"
+  },
+  {
+   "name": "a18",
+   "hours": 2.052509714393611,
+   "minutes": 124,
+   "deaths": 0,
+   "kills": 1272,
+   "xp": 18965,
+   "metrics": {
+    "clvl_1h": 14,
+    "clvl_2h": 14,
+    "clvl_gain": 0,
+    "deaths_per_1000_kills": 0,
+    "deaths_per_hour": 0,
+    "farming_share": 0.7903225806451613,
+    "gold_per_hour": 571.4954680965047,
+    "kills_per_hour": 619.7291009537545,
+    "potions_per_hour": 34.10458888896448,
+    "recovery_share": 0,
+    "repeat_sites": 0,
+    "town_share": 0.20967741935483872,
+    "xp_per_hour": 9239.907546845876
+   },
+   "states": {
+    "farming": 0.7903225806451613,
+    "town chores": 0.20967741935483872
+   },
+   "source": "V: docs/g1-log.md attempt 18 verdict (bot b478bd9, Soaky clvl 14, Game.exe); minute lines of the 2 h run",
+   "note": "d2soak report: 9,103 XP/h, 688 kills/h from its samples; stash banking keeps gold near 1,000"
+  }
+ ]
+}

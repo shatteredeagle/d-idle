@@ -1,0 +1,45 @@
+# den_of_evil
+quest.den_of_evil/talk-akara
+quest.den_of_evil/claim-probe
+quest.den_of_evil/wp-cold-plains
+quest.den_of_evil/to-den
+quest.den_of_evil/clear <- quest.den_of_evil/to-den
+quest.den_of_evil/home
+quest.den_of_evil/reward
+# sisters_burial
+quest.sisters_burial/wp-cold-plains
+quest.sisters_burial/to-burial
+quest.sisters_burial/kill <- quest.sisters_burial/to-burial
+quest.sisters_burial/home
+quest.sisters_burial/reward
+# search_for_cain
+quest.search_for_cain/wp-dark-wood
+quest.search_for_cain/to-wood
+quest.search_for_cain/tree <- quest.search_for_cain/to-wood
+quest.search_for_cain/read
+quest.search_for_cain/to-stony
+quest.search_for_cain/stones <- quest.search_for_cain/to-stony
+quest.search_for_cain/to-tristram
+quest.search_for_cain/clear
+quest.search_for_cain/cage
+quest.search_for_cain/home
+# tools_of_the_trade
+quest.tools_of_the_trade/talk-charsi
+quest.tools_of_the_trade/wp-cold-plains
+quest.tools_of_the_trade/to-barracks
+quest.tools_of_the_trade/kill <- quest.tools_of_the_trade/to-barracks
+quest.tools_of_the_trade/malus
+quest.tools_of_the_trade/home
+quest.tools_of_the_trade/reward
+# forgotten_tower
+quest.forgotten_tower/wp-black-marsh
+quest.forgotten_tower/to-cellar
+quest.forgotten_tower/kill <- quest.forgotten_tower/to-cellar
+quest.forgotten_tower/home
+# sisters_to_slaughter
+quest.sisters_to_slaughter/wp-cold-plains
+quest.sisters_to_slaughter/to-catacombs
+quest.sisters_to_slaughter/kill <- quest.sisters_to_slaughter/to-catacombs
+quest.sisters_to_slaughter/home
+# act1_complete
+quest.act1_complete/warriv

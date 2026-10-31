@@ -1,0 +1,37 @@
+{"time":"2026-10-29T11:05:44.350852222-04:00","level":"INFO","msg":"bot runner started","inst":"i0","profile":""}
+{"time":"2026-10-29T11:05:44.3510476-04:00","level":"INFO","msg":"status","inst":"i0","state":"idle","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":9223372036854775807}
+{"time":"2026-10-29T11:05:44.351132851-04:00","level":"INFO","msg":"state","inst":"i0","from":"idle","to":"clearing","activity":"Fighting in Blood Moor"}
+{"time":"2026-10-29T11:05:44.356794701-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=1 kills=3 damage=0 minlife=100 potions=1 dodges=0 sec=7","inst":"i0"}
+{"time":"2026-10-29T11:05:44.359014851-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=1 kills=3 damage=0 minlife=100 potions=1 dodges=0 sec=7","inst":"i0"}
+{"time":"2026-10-29T11:05:44.362508892-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=1 kills=3 damage=0 minlife=100 potions=1 dodges=0 sec=7","inst":"i0"}
+{"time":"2026-10-29T11:05:44.364798151-04:00","level":"INFO","msg":"nav exit","inst":"i0","to":3,"gate":"10,10","push":2,"border":false}
+{"time":"2026-10-29T11:05:44.365345556-04:00","level":"INFO","msg":"last line repeated","inst":"i0","line":"nav exit","times":499,"in":0}
+{"time":"2026-10-29T11:05:44.365336543-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":30000000000}
+{"time":"2026-10-29T11:05:44.365976874-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=1 kills=3 damage=0 minlife=100 potions=1 dodges=0 sec=7","inst":"i0"}
+{"time":"2026-10-29T11:05:44.36708613-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":60000000000}
+{"time":"2026-10-29T11:05:44.36711844-04:00","level":"INFO","msg":"minute","inst":"i0","area":2,"clvl":3,"xp":40,"kills":4,"deaths":0,"potions":0,"gold":500,"restarts":0,"rung":0,"goal":"farm_area","step":"Fighting in Blood Moor"}
+{"time":"2026-10-29T11:05:44.368253945-04:00","level":"WARN","msg":"failsafe ladder","inst":"i0","step":1,"what":"sweep Blood Moor","err":"bot: no progress"}
+{"time":"2026-10-29T11:05:44.369307293-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":90000000000}
+{"time":"2026-10-29T11:05:44.370449156-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":120000000000}
+{"time":"2026-10-29T11:05:44.370470437-04:00","level":"INFO","msg":"minute","inst":"i0","area":2,"clvl":3,"xp":40,"kills":4,"deaths":0,"potions":0,"gold":500,"restarts":0,"rung":1,"goal":"farm_area","step":"Fighting in Blood Moor"}
+{"time":"2026-10-29T11:05:44.371517423-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":300,"y":310,"life":100,"level":3,"hostileNear":0,"stuckFor":150000000000}
+{"time":"2026-10-29T11:05:44.372632282-04:00","level":"WARN","msg":"failsafe ladder","inst":"i0","step":2,"what":"sweep Blood Moor","err":"bot: no progress"}
+{"time":"2026-10-29T11:05:44.37265441-04:00","level":"INFO","msg":"state","inst":"i0","from":"clearing","to":"resupplying","activity":"Failsafe: resetting in town"}
+{"time":"2026-10-29T11:05:44.374884767-04:00","level":"WARN","msg":"character died","inst":"i0","area":2,"killer":"","x":300,"y":310,"corpseValue":0}
+{"time":"2026-10-29T11:05:44.374905157-04:00","level":"WARN","msg":"death diff=Normal area=2 clvl=3 mlvl=0 gap=0 killer=- class=0 boss=false affixes=- dist=0 build=fallback","inst":"i0"}
+{"time":"2026-10-29T11:05:44.37492439-04:00","level":"INFO","msg":"state","inst":"i0","from":"resupplying","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T11:05:44.374936326-04:00","level":"INFO","msg":"dead","inst":"i0","sinceMs":0,"mode":17,"life":0,"area":1,"x":300,"y":310,"uiFlags":null,"escPresses":0}
+{"time":"2026-10-29T11:05:44.374948151-04:00","level":"INFO","msg":"death overlay: pressed Esc to continue","inst":"i0","n":1,"sinceMs":0}
+{"time":"2026-10-29T11:05:44.376070791-04:00","level":"INFO","msg":"corpse decision","inst":"i0","retrieve":false,"why":"corpse worth about 0 gold, threshold 1000"}
+{"time":"2026-10-29T11:05:44.377160049-04:00","level":"INFO","msg":"status","inst":"i0","state":"recovering","area":1,"x":50,"y":50,"life":100,"level":3,"hostileNear":0,"stuckFor":30000000000}
+{"time":"2026-10-29T11:05:44.377189229-04:00","level":"INFO","msg":"minute","inst":"i0","area":1,"clvl":3,"xp":40,"kills":4,"deaths":1,"potions":0,"gold":500,"restarts":0,"rung":2,"goal":"farm_area","step":"Restocking after death"}
+{"time":"2026-10-29T11:05:44.377210998-04:00","level":"INFO","msg":"state","inst":"i0","from":"recovering","to":"traveling","activity":"Walking to Blood Moor"}
+{"time":"2026-10-29T11:05:44.378401499-04:00","level":"INFO","msg":"status","inst":"i0","state":"traveling","area":2,"x":100,"y":50,"life":100,"level":3,"hostileNear":0,"stuckFor":30000000000}
+{"time":"2026-10-29T11:05:44.378455866-04:00","level":"INFO","msg":"state","inst":"i0","from":"traveling","to":"clearing","activity":"Fighting in Blood Moor"}
+{"time":"2026-10-29T11:05:44.380555334-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":100,"y":50,"life":100,"level":3,"hostileNear":0,"stuckFor":60000000000}
+{"time":"2026-10-29T11:05:44.380615732-04:00","level":"INFO","msg":"minute","inst":"i0","area":2,"clvl":3,"xp":40,"kills":4,"deaths":1,"potions":0,"gold":500,"restarts":0,"rung":2,"goal":"farm_area","step":"Fighting in Blood Moor"}
+{"time":"2026-10-29T11:05:44.381676907-04:00","level":"INFO","msg":"status","inst":"i0","state":"clearing","area":2,"x":100,"y":50,"life":100,"level":3,"hostileNear":0,"stuckFor":90000000000}
+{"time":"2026-10-29T11:05:44.381755438-04:00","level":"WARN","msg":"failsafe ladder","inst":"i0","step":3,"what":"sweep Blood Moor","err":"bot: no progress"}
+{"time":"2026-10-29T11:05:44.3817647-04:00","level":"WARN","msg":"failsafe ladder","inst":"i0","step":4,"what":"sweep Blood Moor","err":"bot: no progress"}
+{"time":"2026-10-29T11:05:44.381770555-04:00","level":"WARN","msg":"failsafe ladder","inst":"i0","step":5,"what":"sweep Blood Moor","err":"bot: no progress"}
+{"time":"2026-10-29T11:05:44.381792273-04:00","level":"ERROR","msg":"failsafe: paused","inst":"i0","msg":"Failsafe: sweep Blood Moor (bot: no progress). Esc, town, re-entry and restart did not help; paused itself, retrying in 5m0s. Look at the game, or Resume now."}

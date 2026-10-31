@@ -1,0 +1,450 @@
+{"time":"2026-10-29T17:47:10.111573026-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T17:47:11.820530256-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:47:12.665958851-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"in_town","activity":"Binding hotkeys"}
+{"time":"2026-10-29T17:47:13.92879531-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"resupplying","activity":"Chores in town (gear rebuy: no body armor (3932 gold covers a rebuy))"}
+{"time":"2026-10-29T17:48:11.696565569-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":55797,"kills":0,"deaths":0,"potions":0,"gold":3670,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (gear rebuy: no body armor (3932 gold covers a rebuy))"}
+{"time":"2026-10-29T17:48:35.139826062-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"in_town","activity":"Gear: equip and shop"}
+{"time":"2026-10-29T17:48:58.160972458-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"traveling","activity":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:49:04.948741088-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T17:49:11.71470136-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":55797,"kills":0,"deaths":0,"potions":0,"gold":3172,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:49:49.649076906-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:49:50.631170485-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:50:11.745796855-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":55923,"kills":6,"deaths":0,"potions":0,"gold":3172,"restarts":0,"xpRisk":126,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:51:11.79930251-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56106,"kills":15,"deaths":0,"potions":0,"gold":3172,"restarts":0,"xpRisk":309,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:51:32.694897682-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions inventory 87% full pack 87% full])"}
+{"time":"2026-10-29T17:51:37.960997293-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:51:41.065370639-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:51:51.159251011-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T17:51:52.820757324-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:51:53.715350065-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([0 healing potions inventory 87% full pack 87% full])"}
+{"time":"2026-10-29T17:52:11.819297619-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":56196,"kills":20,"deaths":0,"potions":0,"gold":3244,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([0 healing potions inventory 87% full pack 87% full])"}
+{"time":"2026-10-29T17:52:34.18646999-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:52:41.26604649-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T17:53:11.871289607-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":56196,"kills":20,"deaths":0,"potions":0,"gold":2804,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:54:11.915210116-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":56516,"kills":38,"deaths":0,"potions":0,"gold":2804,"restarts":1,"xpRisk":320,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:54:50.394876239-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:54:51.313015187-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:55:11.930321505-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56573,"kills":41,"deaths":0,"potions":0,"gold":2804,"restarts":1,"xpRisk":377,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:55:33.572846531-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions])"}
+{"time":"2026-10-29T17:55:34.73680214-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:56:11.055812181-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:56:11.112755706-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:56:11.939346677-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56573,"kills":41,"deaths":0,"potions":0,"gold":2484,"restarts":1,"xpRisk":377,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:56:32.444729484-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T17:56:32.729228634-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:56:54.878222128-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:56:54.989460477-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:57:11.940852348-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56621,"kills":44,"deaths":0,"potions":0,"gold":2324,"restarts":1,"xpRisk":425,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:57:20.772256301-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T17:57:21.064236195-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:57:46.939053375-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:57:46.941787488-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:58:01.904057091-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T17:58:02.252729285-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:58:11.966971679-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":56648,"kills":46,"deaths":0,"potions":0,"gold":2164,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T17:58:23.733322574-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:58:23.791829381-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T17:58:50.769131979-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T17:58:50.92869509-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"traveling","activity":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:59:08.009831353-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T17:59:12.077399618-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":56675,"kills":49,"deaths":0,"potions":0,"gold":1844,"restarts":1,"xpRisk":27,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Burial Grounds)"}
+{"time":"2026-10-29T17:59:47.338878173-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T17:59:48.278700489-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:00:12.033157162-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56675,"kills":49,"deaths":0,"potions":0,"gold":1844,"restarts":1,"xpRisk":27,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:00:29.38220329-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:00:35.486501459-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:01:07.73992905-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:01:07.802796473-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:01:12.061125219-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":56744,"kills":53,"deaths":0,"potions":0,"gold":1324,"restarts":1,"xpRisk":96,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:02:12.140221623-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57201,"kills":78,"deaths":0,"potions":0,"gold":1324,"restarts":1,"xpRisk":553,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:02:52.819963089-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:02:53.136021145-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:03:12.072643333-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57201,"kills":78,"deaths":0,"potions":0,"gold":1324,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:03:27.320865521-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:03:27.326680431-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:03:55.663362381-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:03:59.127875165-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:04:12.122766663-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57249,"kills":83,"deaths":0,"potions":0,"gold":1104,"restarts":1,"xpRisk":48,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:04:22.228175383-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:04:22.285304665-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:05:12.22114259-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57399,"kills":105,"deaths":0,"potions":0,"gold":883,"restarts":1,"xpRisk":198,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:06:06.356177477-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:06:06.975104965-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:06:12.27139507-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57399,"kills":105,"deaths":0,"potions":0,"gold":883,"restarts":1,"xpRisk":198,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:06:35.708748441-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:06:35.766936475-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:07:12.312329197-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57399,"kills":105,"deaths":0,"potions":0,"gold":693,"restarts":1,"xpRisk":198,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:07:55.238381552-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:07:55.672530313-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:08:12.314156917-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57399,"kills":106,"deaths":0,"potions":0,"gold":693,"restarts":1,"xpRisk":198,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:09:12.339655008-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57399,"kills":106,"deaths":0,"potions":0,"gold":503,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Returning to the field"}
+{"time":"2026-10-29T18:09:15.404256697-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:09:15.514460731-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:10:12.356759248-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57420,"kills":109,"deaths":0,"potions":0,"gold":514,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:10:29.872498978-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:10:31.047085794-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:10:57.204571933-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:10:57.258281352-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:11:12.381923049-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57420,"kills":110,"deaths":0,"potions":0,"gold":354,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:11:37.657490468-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:11:38.369056065-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:12:06.886142106-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:12:06.942286351-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:12:12.531031776-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57420,"kills":110,"deaths":0,"potions":0,"gold":164,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:12:50.698320536-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:12:51.014045848-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:13:12.439097225-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57420,"kills":110,"deaths":0,"potions":0,"gold":138,"restarts":1,"xpRisk":21,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:13:21.243416967-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:13:21.355020714-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:14:12.482792661-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57420,"kills":117,"deaths":0,"potions":0,"gold":108,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:14:41.915314341-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:14:42.227361728-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:15:01.796695671-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T18:15:01.909144128-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:15:12.489708126-04:00","level":"INFO","msg":"minute","inst":"i4","area":17,"clvl":9,"xp":57420,"kills":124,"deaths":0,"potions":0,"gold":54,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Kill Blood Raven)"}
+{"time":"2026-10-29T18:15:26.350734991-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"traveling","activity":"Quest: travelling (Return to camp)"}
+{"time":"2026-10-29T18:15:27.529407274-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:15:27.745897778-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Save point: saving the game"}
+{"time":"2026-10-29T18:15:30.973914901-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:15:31.954553058-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T18:15:52.52224245-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:16:00.691402811-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:16:12.493543576-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":57601,"kills":125,"deaths":0,"potions":0,"gold":324,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:16:50.014967675-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T18:17:12.533999739-04:00","level":"INFO","msg":"minute","inst":"i4","area":4,"clvl":9,"xp":57601,"kills":125,"deaths":0,"potions":0,"gold":324,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:17:20.546102094-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T18:17:58.171209582-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Vile Hunter","x":7693,"y":8180,"corpseValue":728}
+{"time":"2026-10-29T18:17:58.171511467-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T18:17:58.788224707-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:18:02.634560098-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (poverty rebuild after failed retrieval)"}
+{"time":"2026-10-29T18:18:12.536782471-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57601,"kills":125,"deaths":1,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (poverty rebuild after failed retrieval)"}
+{"time":"2026-10-29T18:19:12.554875873-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":9,"xp":57601,"kills":125,"deaths":1,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (poverty rebuild after failed retrieval)"}
+{"time":"2026-10-29T18:19:26.869871628-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:19:35.740302205-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:20:12.559480457-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":9,"xp":57601,"kills":125,"deaths":1,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:20:14.330110161-04:00","level":"INFO","msg":"Entered Stony Field","inst":"i4","type":"area_change","goal":"g5","area":"Stony Field"}
+{"time":"2026-10-29T18:20:46.313600628-04:00","level":"INFO","msg":"Entered Underground Passage Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Underground Passage Level 1"}
+{"time":"2026-10-29T18:21:12.569998959-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":9,"xp":57623,"kills":126,"deaths":1,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:22:12.571900157-04:00","level":"INFO","msg":"minute","inst":"i4","area":10,"clvl":9,"xp":57623,"kills":126,"deaths":1,"potions":0,"gold":0,"restarts":1,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:22:24.343775326-04:00","level":"WARN","msg":"character died","inst":"i4","area":10,"killer":"Vile Hunter","x":7555,"y":8657,"corpseValue":0}
+{"time":"2026-10-29T18:22:24.404715017-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T18:22:25.267641278-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:22:25.442132105-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:22:25.653354868-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:22:30.603929886-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:22:32.70646026-04:00","level":"INFO","msg":"combat fight area=3 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:22:54.134130588-04:00","level":"INFO","msg":"combat fight area=3 diff=0 danger=0 kills=2 damage=0 minlife=100 potions=0 dodges=0 sec=1","inst":"i4"}
+{"time":"2026-10-29T18:22:56.295303045-04:00","level":"INFO","msg":"combat fight area=3 diff=0 danger=0 kills=10 damage=5 minlife=94 potions=0 dodges=3 sec=18","inst":"i4"}
+{"time":"2026-10-29T18:22:56.299467248-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"in_town","activity":"Spending stat and skill points"}
+{"time":"2026-10-29T18:23:01.250017883-04:00","level":"INFO","msg":"state","inst":"i4","from":"in_town","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:23:12.596949721-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":57736,"kills":137,"deaths":2,"potions":0,"gold":0,"restarts":1,"xpRisk":113,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:23:16.412551081-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:23:25.664278201-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:23:34.638138596-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=2 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:23:38.838857147-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=0 sec=4","inst":"i4"}
+{"time":"2026-10-29T18:23:44.661909805-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:24:08.762977179-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=10 damage=0 minlife=100 potions=0 dodges=0 sec=9","inst":"i4"}
+{"time":"2026-10-29T18:24:12.6002761-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":57810,"kills":153,"deaths":2,"potions":0,"gold":9,"restarts":1,"xpRisk":187,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:24:19.728193093-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=6 damage=0 minlife=100 potions=0 dodges=0 sec=7","inst":"i4"}
+{"time":"2026-10-29T18:24:28.729213721-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:24:45.002033867-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=7 damage=0 minlife=100 potions=0 dodges=0 sec=11","inst":"i4"}
+{"time":"2026-10-29T18:24:58.676292222-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=1 sec=7","inst":"i4"}
+{"time":"2026-10-29T18:25:12.627386876-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":57898,"kills":172,"deaths":2,"potions":0,"gold":18,"restarts":1,"xpRisk":275,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:25:25.782864539-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=9 damage=0 minlife=100 potions=0 dodges=1 sec=24","inst":"i4"}
+{"time":"2026-10-29T18:25:39.423416497-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:25:45.756501596-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=1 sec=6","inst":"i4"}
+{"time":"2026-10-29T18:25:54.035683608-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:25:55.961306545-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:26:05.880550824-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=4 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:26:05.912913874-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:26:11.629820388-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:26:12.646860686-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":57946,"kills":182,"deaths":2,"potions":0,"gold":23,"restarts":1,"xpRisk":323,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:26:19.956659205-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:26:28.124527622-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:26:28.282612163-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T18:26:50.967551978-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:26:54.067569427-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:26:55.081868962-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T18:26:55.244471269-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:26:55.512437204-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:27:10.045873157-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:27:12.672733897-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":57946,"kills":182,"deaths":2,"potions":0,"gold":23,"restarts":2,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:27:15.038144204-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:27:38.777368406-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=6 damage=0 minlife=100 potions=0 dodges=1 sec=18","inst":"i4"}
+{"time":"2026-10-29T18:27:44.823426141-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=2 damage=0 minlife=100 potions=0 dodges=1 sec=2","inst":"i4"}
+{"time":"2026-10-29T18:27:48.58124625-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=4 damage=0 minlife=100 potions=0 dodges=1 sec=9","inst":"i4"}
+{"time":"2026-10-29T18:27:58.303452167-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=0 sec=9","inst":"i4"}
+{"time":"2026-10-29T18:28:08.939052107-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:28:12.713852792-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58007,"kills":195,"deaths":2,"potions":0,"gold":23,"restarts":2,"xpRisk":61,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:28:25.829895918-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=5 damage=0 minlife=100 potions=0 dodges=1 sec=12","inst":"i4"}
+{"time":"2026-10-29T18:28:33.046335566-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:28:45.563548091-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=5 damage=0 minlife=100 potions=0 dodges=0 sec=7","inst":"i4"}
+{"time":"2026-10-29T18:28:55.167051008-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=0 sec=6","inst":"i4"}
+{"time":"2026-10-29T18:28:58.835166726-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:29:12.720689629-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58081,"kills":212,"deaths":2,"potions":0,"gold":28,"restarts":2,"xpRisk":135,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:29:14.740649265-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=5 damage=0 minlife=100 potions=0 dodges=1 sec=10","inst":"i4"}
+{"time":"2026-10-29T18:29:22.641214189-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:29:39.107773662-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=9 damage=0 minlife=100 potions=0 dodges=0 sec=11","inst":"i4"}
+{"time":"2026-10-29T18:29:44.952309354-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:29:54.634312919-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:29:56.693925951-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:30:12.754631225-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58153,"kills":226,"deaths":2,"potions":0,"gold":36,"restarts":2,"xpRisk":207,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:30:25.905995919-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=7 damage=0 minlife=100 potions=0 dodges=2 sec=21","inst":"i4"}
+{"time":"2026-10-29T18:30:37.031943209-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=2 damage=0 minlife=100 potions=0 dodges=1 sec=5","inst":"i4"}
+{"time":"2026-10-29T18:30:37.468289164-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:30:40.218392369-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:30:43.735937851-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:30:44.534240141-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T18:30:44.786991644-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:30:45.052762989-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:30:59.328567553-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:31:00.392912911-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([inventory 92% full pack 92% full])"}
+{"time":"2026-10-29T18:31:01.620177205-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:31:12.799133594-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":58182,"kills":232,"deaths":2,"potions":0,"gold":161,"restarts":3,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town ([inventory 92% full pack 92% full])"}
+{"time":"2026-10-29T18:31:45.926000019-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:31:45.926220843-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:31:47.18455776-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:32:08.725601026-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=7 damage=0 minlife=100 potions=0 dodges=0 sec=15","inst":"i4"}
+{"time":"2026-10-29T18:32:12.81865547-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58215,"kills":239,"deaths":2,"potions":0,"gold":164,"restarts":3,"xpRisk":33,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:32:18.46392476-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:33:12.857865817-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58284,"kills":252,"deaths":2,"potions":0,"gold":165,"restarts":3,"xpRisk":102,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:34:12.900643297-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58335,"kills":264,"deaths":2,"potions":0,"gold":165,"restarts":3,"xpRisk":153,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:34:44.71958368-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:34:47.737002135-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:34:48.725938226-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Quest: in town (Talk to Charsi)"}
+{"time":"2026-10-29T18:34:48.891791727-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:34:49.156737702-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:35:03.60018042-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:35:12.945700096-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58375,"kills":269,"deaths":2,"potions":0,"gold":168,"restarts":4,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:35:38.038503256-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (gear rebuy: no body armor (168 gold covers a rebuy))"}
+{"time":"2026-10-29T18:35:59.200333357-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:36:12.972366805-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":58441,"kills":283,"deaths":2,"potions":0,"gold":68,"restarts":4,"xpRisk":66,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (gear rebuy: no body armor (168 gold covers a rebuy))"}
+{"time":"2026-10-29T18:36:56.717177624-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:36:57.730693362-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:37:13.00943118-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":58441,"kills":283,"deaths":2,"potions":0,"gold":66,"restarts":4,"xpRisk":66,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:38:00.116222463-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:38:13.115959252-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":58441,"kills":283,"deaths":2,"potions":0,"gold":66,"restarts":4,"xpRisk":66,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:38:55.27891908-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:39:13.10582132-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":58535,"kills":287,"deaths":2,"potions":0,"gold":66,"restarts":4,"xpRisk":160,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:40:13.128033202-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":58922,"kills":320,"deaths":2,"potions":0,"gold":90,"restarts":4,"xpRisk":547,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:41:13.129392123-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":58939,"kills":322,"deaths":2,"potions":0,"gold":114,"restarts":4,"xpRisk":17,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:41:37.868527284-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([pack 87% full])"}
+{"time":"2026-10-29T18:41:39.257083087-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:41:43.899372294-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:41:43.971682857-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:41:45.648449065-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T18:41:59.209293883-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:42:13.13366931-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":58955,"kills":326,"deaths":2,"potions":0,"gold":84,"restarts":4,"xpRisk":33,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T18:42:24.434500681-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:42:24.709161449-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:43:13.134185885-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59340,"kills":342,"deaths":2,"potions":0,"gold":84,"restarts":4,"xpRisk":418,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:44:13.162506494-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59366,"kills":345,"deaths":2,"potions":0,"gold":84,"restarts":4,"xpRisk":444,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:44:13.164994222-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions])"}
+{"time":"2026-10-29T18:44:20.138040748-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:44:58.087270263-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T18:44:59.660659503-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:45:00.554081453-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T18:45:13.20998729-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":59366,"kills":346,"deaths":2,"potions":0,"gold":84,"restarts":5,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T18:45:57.119301209-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"traveling","activity":"Quest: travelling (Go to the Barracks)"}
+{"time":"2026-10-29T18:45:57.385961076-04:00","level":"INFO","msg":"state","inst":"i4","from":"traveling","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:46:05.985103565-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:46:13.263670756-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":59366,"kills":346,"deaths":2,"potions":0,"gold":24,"restarts":5,"xpRisk":0,"xpLost":0,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:46:38.956585569-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:47:06.688867932-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Game lost: restarting it"}
+{"time":"2026-10-29T18:47:42.064453861-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":59366,"kills":353,"deaths":2,"potions":0,"gold":84,"restarts":5,"xpRisk":68,"xpLost":0,"rung":0,"goal":"campaign","step":"Game lost: restarting it"}
+{"time":"2026-10-29T18:47:42.124218739-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:47:42.124333851-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T18:47:56.374574581-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:48:01.991735481-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:48:35.095379971-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:48:42.105117745-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59380,"kills":354,"deaths":2,"potions":0,"gold":24,"restarts":5,"xpRisk":14,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:49:42.162098742-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59556,"kills":364,"deaths":2,"potions":0,"gold":24,"restarts":5,"xpRisk":190,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:50:12.391538086-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions])"}
+{"time":"2026-10-29T18:50:22.008825013-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:50:22.062193774-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:50:22.811709049-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:50:42.179495267-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":59756,"kills":370,"deaths":2,"potions":0,"gold":34,"restarts":5,"xpRisk":390,"xpLost":68,"rung":0,"goal":"campaign","step":"Going to town ([0 healing potions])"}
+{"time":"2026-10-29T18:50:59.73597102-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:51:17.923419895-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:51:24.559769983-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:51:42.200485097-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":59756,"kills":370,"deaths":2,"potions":0,"gold":4,"restarts":5,"xpRisk":390,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:52:06.271065317-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T18:52:42.228860007-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59898,"kills":378,"deaths":2,"potions":0,"gold":4,"restarts":5,"xpRisk":532,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:53:42.233072013-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":59962,"kills":382,"deaths":2,"potions":0,"gold":4,"restarts":5,"xpRisk":46,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:54:44.211482872-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":60257,"kills":399,"deaths":2,"potions":0,"gold":23,"restarts":5,"xpRisk":341,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:54:49.149945483-04:00","level":"WARN","msg":"character died","inst":"i4","area":9,"killer":"Fallen","x":7653,"y":6701,"corpseValue":0}
+{"time":"2026-10-29T18:54:49.150325748-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Recovering after death"}
+{"time":"2026-10-29T18:54:49.431903691-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T18:55:44.180585559-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":60257,"kills":399,"deaths":3,"potions":0,"gold":0,"restarts":5,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Restocking after death"}
+{"time":"2026-10-29T18:56:43.806848497-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:56:44.27311399-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":60257,"kills":399,"deaths":3,"potions":0,"gold":0,"restarts":5,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:57:02.481585885-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T18:57:04.393912814-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:57:11.923054838-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=0 sec=2","inst":"i4"}
+{"time":"2026-10-29T18:57:12.407425906-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:57:18.711018198-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:57:37.022482753-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=6 damage=0 minlife=100 potions=0 dodges=0 sec=11","inst":"i4"}
+{"time":"2026-10-29T18:57:44.319753113-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60306,"kills":409,"deaths":3,"potions":0,"gold":9,"restarts":5,"xpRisk":49,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:57:51.301376603-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:58:07.882893201-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=8 damage=0 minlife=100 potions=0 dodges=0 sec=10","inst":"i4"}
+{"time":"2026-10-29T18:58:09.5646917-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:58:21.57582405-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T18:58:44.358048299-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60371,"kills":425,"deaths":3,"potions":0,"gold":14,"restarts":5,"xpRisk":21,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T18:58:51.209386281-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=14 damage=0 minlife=100 potions=0 dodges=2 sec=17","inst":"i4"}
+{"time":"2026-10-29T18:58:57.58918097-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=0 dodges=0 sec=3","inst":"i4"}
+{"time":"2026-10-29T18:59:11.228492647-04:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=2 sec=13","inst":"i4"}
+{"time":"2026-10-29T18:59:39.459400186-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T18:59:44.388674785-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":60419,"kills":437,"deaths":3,"potions":0,"gold":14,"restarts":5,"xpRisk":69,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:00:15.928301633-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:00:20.907755921-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T19:00:28.782442416-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=2 damage=2 minlife=98 potions=0 dodges=0 sec=1","inst":"i4"}
+{"time":"2026-10-29T19:00:36.724223003-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=98 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T19:00:44.148418878-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=98 potions=0 dodges=0 sec=2","inst":"i4"}
+{"time":"2026-10-29T19:00:44.417049428-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":60419,"kills":440,"deaths":3,"potions":0,"gold":100,"restarts":5,"xpRisk":69,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:00:47.525171632-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=98 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T19:00:48.720147589-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([1 healing potions])"}
+{"time":"2026-10-29T19:01:08.84211951-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:01:44.46018057-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":60437,"kills":440,"deaths":3,"potions":0,"gold":100,"restarts":5,"xpRisk":87,"xpLost":68,"rung":0,"goal":"campaign","step":"Going to town ([1 healing potions])"}
+{"time":"2026-10-29T19:01:45.149474681-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:02:13.667703683-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:02:22.62006142-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:02:44.472889385-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":60437,"kills":440,"deaths":3,"potions":0,"gold":0,"restarts":5,"xpRisk":87,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:02:55.614845894-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:03:08.706447542-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=98 potions=0 dodges=0 sec=0","inst":"i4"}
+{"time":"2026-10-29T19:03:35.311681258-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=2 minlife=84 potions=0 dodges=3 sec=4","inst":"i4"}
+{"time":"2026-10-29T19:03:39.727969547-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=0 damage=0 minlife=86 potions=0 dodges=0 sec=10","inst":"i4"}
+{"time":"2026-10-29T19:03:39.794677351-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=1 damage=1 minlife=86 potions=0 dodges=1 sec=13","inst":"i4"}
+{"time":"2026-10-29T19:03:39.864048113-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=1 damage=0 minlife=91 potions=0 dodges=0 sec=15","inst":"i4"}
+{"time":"2026-10-29T19:03:44.505416932-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":60515,"kills":449,"deaths":3,"potions":0,"gold":2,"restarts":5,"xpRisk":165,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:03:56.658128873-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=8 damage=2 minlife=63 potions=0 dodges=0 sec=4","inst":"i4"}
+{"time":"2026-10-29T19:04:23.48630558-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=0 kills=22 damage=36 minlife=63 potions=0 dodges=3 sec=70","inst":"i4"}
+{"time":"2026-10-29T19:04:24.783527099-04:00","level":"INFO","msg":"combat fight area=9 diff=0 danger=2 kills=0 damage=0 minlife=63 potions=0 dodges=0 sec=1","inst":"i4"}
+{"time":"2026-10-29T19:04:24.944887944-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town (emergency town portal)"}
+{"time":"2026-10-29T19:04:25.21525892-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:04:44.523323011-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":60548,"kills":455,"deaths":3,"potions":0,"gold":2,"restarts":5,"xpRisk":4,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T19:05:10.518362041-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"recovering","activity":"Save point: saving the game"}
+{"time":"2026-10-29T19:05:13.705804171-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:05:14.693518119-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:05:25.831341357-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:05:44.546783935-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":60548,"kills":455,"deaths":3,"potions":0,"gold":2,"restarts":5,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:05:59.167269168-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:06:44.581712538-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":60568,"kills":460,"deaths":3,"potions":0,"gold":2,"restarts":5,"xpRisk":20,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:07:14.457167522-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:07:16.091164975-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:07:16.924217445-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T19:07:40.91195722-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:07:44.623772672-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":60568,"kills":460,"deaths":3,"potions":0,"gold":2,"restarts":6,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:07:50.383517519-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:08:44.624770774-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60619,"kills":472,"deaths":3,"potions":0,"gold":4,"restarts":6,"xpRisk":51,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:09:44.627080694-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60726,"kills":495,"deaths":3,"potions":0,"gold":4,"restarts":6,"xpRisk":158,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:10:44.657565577-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60783,"kills":507,"deaths":3,"potions":0,"gold":4,"restarts":6,"xpRisk":215,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:11:44.696924776-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":60806,"kills":512,"deaths":3,"potions":0,"gold":15,"restarts":6,"xpRisk":238,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:11:45.796535139-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:12:20.652093748-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:12:44.778827013-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":60860,"kills":517,"deaths":3,"potions":0,"gold":15,"restarts":6,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:13:26.085687457-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:13:27.65097561-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:13:28.603530803-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T19:13:44.753242292-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":61204,"kills":520,"deaths":3,"potions":0,"gold":15,"restarts":7,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town ([heal])"}
+{"time":"2026-10-29T19:14:05.681629233-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:14:10.084612819-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:14:42.921980496-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:14:43.032960934-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:14:44.057293031-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:14:44.760941855-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":61204,"kills":520,"deaths":3,"potions":0,"gold":15,"restarts":7,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:15:44.769114972-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":61382,"kills":528,"deaths":3,"potions":0,"gold":18,"restarts":7,"xpRisk":178,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:16:32.792141469-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:16:34.415101431-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:16:35.255612503-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T19:16:45.355746475-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":61386,"kills":529,"deaths":3,"potions":0,"gold":18,"restarts":8,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Settling in town"}
+{"time":"2026-10-29T19:16:45.357985018-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:16:55.228972882-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:17:45.384945858-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61446,"kills":542,"deaths":3,"potions":0,"gold":29,"restarts":8,"xpRisk":60,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:18:07.050636637-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions pack 95% full])"}
+{"time":"2026-10-29T19:18:26.553368171-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:18:45.447246406-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":61509,"kills":552,"deaths":3,"potions":0,"gold":6,"restarts":8,"xpRisk":123,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town ([0 healing potions pack 95% full])"}
+{"time":"2026-10-29T19:19:15.688581469-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:19:16.728444042-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:19:45.496709163-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61524,"kills":555,"deaths":3,"potions":0,"gold":7,"restarts":8,"xpRisk":138,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:20:29.556750698-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:20:45.467504348-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":61524,"kills":555,"deaths":3,"potions":0,"gold":7,"restarts":8,"xpRisk":138,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:21:04.087594168-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:21:45.476006332-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":61532,"kills":557,"deaths":3,"potions":0,"gold":7,"restarts":8,"xpRisk":146,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:22:30.552527217-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:22:31.92712192-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:22:32.990788052-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T19:22:45.482442667-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":61540,"kills":559,"deaths":3,"potions":0,"gold":7,"restarts":9,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T19:22:56.46663493-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:23:05.44648322-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:23:45.482845076-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61569,"kills":565,"deaths":3,"potions":0,"gold":13,"restarts":9,"xpRisk":29,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:24:45.512594017-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61632,"kills":576,"deaths":3,"potions":0,"gold":20,"restarts":9,"xpRisk":92,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:25:45.537236416-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61705,"kills":591,"deaths":3,"potions":0,"gold":20,"restarts":9,"xpRisk":165,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:26:45.544668897-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":61785,"kills":607,"deaths":3,"potions":0,"gold":20,"restarts":9,"xpRisk":245,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:27:02.809423175-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:27:37.999627831-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:27:38.107056436-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:27:39.072788049-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:27:45.557118533-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":61816,"kills":609,"deaths":3,"potions":0,"gold":21,"restarts":9,"xpRisk":276,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:28:45.603658076-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":62833,"kills":614,"deaths":3,"potions":0,"gold":21,"restarts":9,"xpRisk":1017,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:28:56.750327714-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([pack 100% full])"}
+{"time":"2026-10-29T19:29:09.115081523-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:29:42.595346331-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:29:45.64032426-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":62833,"kills":614,"deaths":3,"potions":0,"gold":21,"restarts":9,"xpRisk":1017,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town ([pack 100% full])"}
+{"time":"2026-10-29T19:30:45.658420692-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":62833,"kills":614,"deaths":3,"potions":0,"gold":171,"restarts":9,"xpRisk":1017,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town ([pack 100% full])"}
+{"time":"2026-10-29T19:30:59.716121053-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:31:08.584585888-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:31:44.401002753-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:31:45.712907081-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":62833,"kills":614,"deaths":3,"potions":0,"gold":27,"restarts":9,"xpRisk":1017,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:32:45.799524498-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":63389,"kills":622,"deaths":3,"potions":0,"gold":29,"restarts":9,"xpRisk":1573,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:33:45.78323824-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":63751,"kills":637,"deaths":3,"potions":0,"gold":29,"restarts":9,"xpRisk":94,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:34:45.790203254-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":63910,"kills":653,"deaths":3,"potions":0,"gold":29,"restarts":9,"xpRisk":253,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:35:45.792880677-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":63960,"kills":659,"deaths":3,"potions":0,"gold":29,"restarts":9,"xpRisk":303,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:36:35.858137011-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([1 healing potions])"}
+{"time":"2026-10-29T19:36:37.202723162-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:36:45.833424273-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":64014,"kills":663,"deaths":3,"potions":0,"gold":35,"restarts":9,"xpRisk":357,"xpLost":68,"rung":0,"goal":"campaign","step":"Chores in town ([1 healing potions])"}
+{"time":"2026-10-29T19:36:54.704763168-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:36:54.974198864-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:37:20.080077656-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:37:20.248548373-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:37:21.236831916-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:37:45.853469059-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":64014,"kills":663,"deaths":3,"potions":0,"gold":35,"restarts":9,"xpRisk":357,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:38:23.259400417-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town ([0 healing potions])"}
+{"time":"2026-10-29T19:38:52.538841131-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:38:54.062130143-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":64174,"kills":680,"deaths":3,"potions":0,"gold":35,"restarts":10,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Re-entering the game"}
+{"time":"2026-10-29T19:38:54.139162257-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:38:55.028141656-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (emergency town portal)"}
+{"time":"2026-10-29T19:39:14.177661181-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:39:14.860728977-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:39:54.094189405-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":64174,"kills":680,"deaths":3,"potions":0,"gold":5,"restarts":10,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:40:28.308009193-04:00","level":"INFO","msg":"Entered Burial Grounds","inst":"i4","type":"area_change","goal":"g5","area":"Burial Grounds"}
+{"time":"2026-10-29T19:40:34.879126735-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:40:54.111474293-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":64453,"kills":700,"deaths":3,"potions":0,"gold":5,"restarts":10,"xpRisk":279,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:41:13.665458941-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:41:54.117209808-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":64497,"kills":704,"deaths":3,"potions":0,"gold":5,"restarts":10,"xpRisk":323,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:42:21.39332813-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"resupplying","activity":"Going to town to heal (life 58%)"}
+{"time":"2026-10-29T19:42:29.062940007-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:42:36.158421718-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:42:54.13292309-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":65525,"kills":712,"deaths":3,"potions":0,"gold":5,"restarts":10,"xpRisk":1351,"xpLost":68,"rung":0,"goal":"campaign","step":"Going to town to heal (life 58%)"}
+{"time":"2026-10-29T19:43:33.674601935-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:43:58.58003891-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:44:00.142737207-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":65525,"kills":712,"deaths":3,"potions":0,"gold":5,"restarts":11,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Re-entering the game"}
+{"time":"2026-10-29T19:44:00.207029999-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:44:00.994228706-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town (heal below the resume line)"}
+{"time":"2026-10-29T19:44:11.885395312-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:44:22.111296509-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:45:00.157259903-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":65553,"kills":718,"deaths":3,"potions":0,"gold":7,"restarts":11,"xpRisk":28,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:46:00.210128222-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":65615,"kills":731,"deaths":3,"potions":0,"gold":13,"restarts":11,"xpRisk":90,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:47:00.241065016-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":65705,"kills":750,"deaths":3,"potions":0,"gold":13,"restarts":11,"xpRisk":180,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:47:14.622225258-04:00","level":"INFO","msg":"Entered Cold Plains","inst":"i4","type":"area_change","goal":"g5","area":"Cold Plains"}
+{"time":"2026-10-29T19:48:00.285216692-04:00","level":"INFO","msg":"minute","inst":"i4","area":3,"clvl":10,"xp":65712,"kills":751,"deaths":3,"potions":0,"gold":13,"restarts":11,"xpRisk":187,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:48:09.551185247-04:00","level":"INFO","msg":"Entered Cave Level 1","inst":"i4","type":"area_change","goal":"g5","area":"Cave Level 1"}
+{"time":"2026-10-29T19:49:00.300739171-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":65712,"kills":751,"deaths":3,"potions":0,"gold":13,"restarts":11,"xpRisk":187,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:50:00.328485411-04:00","level":"INFO","msg":"minute","inst":"i4","area":9,"clvl":10,"xp":66662,"kills":769,"deaths":3,"potions":0,"gold":15,"restarts":11,"xpRisk":230,"xpLost":68,"rung":0,"goal":"campaign","step":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:51:01.074638309-04:00","level":"INFO","msg":"state","inst":"i4","from":"clearing","to":"recovering","activity":"Re-entering the game"}
+{"time":"2026-10-29T19:51:02.548204811-04:00","level":"INFO","msg":"minute","inst":"i4","area":1,"clvl":10,"xp":66662,"kills":769,"deaths":3,"potions":0,"gold":15,"restarts":12,"xpRisk":0,"xpLost":68,"rung":0,"goal":"campaign","step":"Re-entering the game"}
+{"time":"2026-10-29T19:51:02.605524624-04:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"i4","type":"area_change","goal":"g5","area":"Rogue Encampment"}
+{"time":"2026-10-29T19:51:03.546115662-04:00","level":"INFO","msg":"state","inst":"i4","from":"recovering","to":"resupplying","activity":"Chores in town ([heal])"}
+{"time":"2026-10-29T19:51:27.170277707-04:00","level":"INFO","msg":"state","inst":"i4","from":"resupplying","to":"clearing","activity":"Quest: fighting (Level up to 14)"}
+{"time":"2026-10-29T19:51:37.388111606-04:00","level":"INFO","msg":"Entered Blood Moor","inst":"i4","type":"area_change","goal":"g5","area":"Blood Moor"}
+{"time":"2026-10-29T19:52:02.122493704-04:00","level":"INFO","msg":"state","inst":"i4","from":"idle","to":"resupplying","activity":"Returning to town"}
+{"time":"2026-10-29T19:52:02.551720041-04:00","level":"INFO","msg":"minute","inst":"i4","area":2,"clvl":10,"xp":66684,"kills":774,"deaths":3,"potions":0,"gold":15,"restarts":12,"xpRisk":22,"xpLost":68,"rung":0,"goal":"","step":"Returning to town"}
