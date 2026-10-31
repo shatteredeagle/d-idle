@@ -24,13 +24,13 @@
    "clvl": 2,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 109,
+   "kills": 67,
    "name": "Loopy",
-   "potionsUsed": 9,
+   "potionsUsed": 6,
    "running": true,
-   "updated": "2026-10-30T23:59Z",
-   "uptime_seconds": 73,
-   "xp": 510
+   "updated": "2026-10-31T00:05Z",
+   "uptime_seconds": 42,
+   "xp": 1308
   }
  ],
  "runs_state": "running",
@@ -51,23 +51,19 @@
  "stats": {
   "items": [
    {
-    "label": "d2d, 109 kills, 0 deaths",
+    "label": "d2d, 67 kills, 0 deaths",
     "value": "Loopy lvl 2"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793404808,
- "updated": "2026-10-31T00:00Z",
+ "ts": 1793405103,
+ "updated": "2026-10-31T00:05Z",
  "work": [
   {
    "state": "working",
    "task": "Running the bot on the d2d engine"
-  },
-  {
-   "state": "working",
-   "task": "Making the bot easy to set up"
   },
   {
    "state": "working",
@@ -76,6 +72,10 @@
   {
    "state": "working",
    "task": "Long unattended test runs"
+  },
+  {
+   "state": "working",
+   "task": "Playing in a party of bots"
   }
  ]
 }
