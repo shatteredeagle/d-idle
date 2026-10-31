@@ -2,7 +2,7 @@
 
 ```yaml
 change: m3-routeguard
-status: in-progress
+status: archived
 agent: m3-routeguard
 branch: agent/m3-routeguard
 worktree: ~/code/d2lod-wt/m3-routeguard
@@ -23,7 +23,7 @@ gates:
   - "go test -p 1 ./internal/bot ./internal/task passes including TestPickNeverEmptyInAct1 and the route guard tests at the new floors"
   - "merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: db3a462
 result: implemented offline (no live run); floors, hold, floor log, tests green on Orion; d2d-only behaviour unchanged elsewhere (shared bot logic)
 ```
 

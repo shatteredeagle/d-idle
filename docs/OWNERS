@@ -18,11 +18,6 @@ docs/decisions.md     main  -
 cmd/d2bot/d2dbackend.go              d2d-default-backend   d2d-default-backend
 docs/d2d-replicated-soak.md          d2d-replicated-soak   d2d-replicated-soak
 docs/d2d-container-soak.md           d2d-container-soak    d2d-container-soak
-internal/env/tuning_route.go  m3-routeguard  m3-routeguard
-internal/env/tuning_boss.go  m3-routeguard  m3-routeguard
-internal/bot/routeguard.go  m3-routeguard  m3-routeguard
-internal/bot/routeguard_test.go  m3-routeguard  m3-routeguard
-docs/knobs.md  m3-routeguard  m3-routeguard
 internal/merc/**  m3-merc  m3-merc
 internal/bot/resource.go  m3-merc  m3-merc
 internal/bot/merc_test.go  m3-merc  m3-merc

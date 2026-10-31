@@ -74,3 +74,4 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - Readiness model weights and safety margin (card m3-readiness-model, deferred until m3-andariel has won once).
 - Card board deployed: /cards on the status board (phone friendly, approve/defer/reject, decisions read with tools/cards-decisions.sh pending); see docs/process/card-board.md
 - m1-stashcap merged: stash gold cap (2,500,000, unverified until m1-liveproof), partial deposits, learned from a refused deposit; no knob
+- m3-routeguard merged: interim floors per ADR 0011 (road and Forgotten Tower 16 / 14 with a merc, Andariel 17 / 15) with knobs restoring the old numbers; unattended Andariel is HELD (boss.andarielHold 1) until m3-andariel has won once; not verified live

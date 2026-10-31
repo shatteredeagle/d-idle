@@ -43,7 +43,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [goldfloor](../../openspec/changes/goldfloor/) | proposed | goldfloor | `internal/bot/goal.go`<br>`internal/bot/goldfloor_test.go`<br>`internal/town/shop.go`<br>`internal/town/beltbuy.go`<br>`internal/town/goldfloor_test.go`<br>`internal/env/tuning_town.go`<br>`internal/env/tuning_loot.go`<br>`docs/goldfloor.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
-| [m3-routeguard](../../openspec/changes/m3-routeguard/) | in-progress | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements
@@ -75,12 +74,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-merc: 2 seeds x 4 virtual hours from clvl 9 after Blood Raven on hidden d2d: the Rogue claimed exactly once per seed, 0 paid Act 1 hires, merc alive at least 70 percent of field time, every revive logged with price and gold delta within the revive rule (raw in docs/probes/merc)
 - change m3-merc: go test -p 1 ./internal/merc ./internal/bot -run 'Merc|Claim' passes; go test ./internal/env -run EveryKnob passes with the d2d default
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
-- change m3-routeguard: knob defaults equal the decided numbers (docs/knobs.md regenerated; go test ./internal/env -run EveryKnob passes)
-- change m3-routeguard: go test -p 1 ./internal/bot ./internal/task passes including TestPickNeverEmptyInAct1 and the route guard tests at the new floors
-- change m3-routeguard: merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes
-- change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- db3a462 10-31 10:00 `Merge agent/routeguard-impl: route guard floors` (m3-routeguard)
 - 4d26ed1 10-31 09:53 `Merge agent/stashcap-impl: m1-stashcap stash gold cap` (m1-stashcap)
 - 9720f1b 10-31 09:46 `Merge agent/cardboard: card board doc and decisions stub` (cardboard)
 - db86af5 10-31 09:46 `Merge agent/cr143: PR #143 posted evidence` (upstream-bundle)
@@ -90,5 +86,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 13bb410 10-31 09:27 `Merge agent/geninv: gen-invariants` (gen-invariants)
 - d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
 - 8bf3829 10-31 09:03 `Merge agent/m2early: early d2d baseline` (m2-earlybase)
-- 67d622b 10-31 09:03 `Merge agent/bundlepr: upstream PR bundle draft` (upstream-bundle)
 <!-- statusgen:end -->
