@@ -1,6 +1,6 @@
 # Draft PR body: "Draw a get-hit once at its rate, held on the last frame" (agent RENDERGH, 2026-10-31)
 
-> status: draft, current (card rendergh). Not posted. Branch `fix/get-hit-render` in the private clone (commit 57bd4b56, stacked on PR #136's eb89646e; the base has since moved to 9006a688: rebase first, see the evidence pack). Upstream template `.github/pull_request_template.md`; one claim; the oracle attached to the PR conversation, never game data. Title: `Draw a get-hit once at its rate, held on the last frame`.
+> status: draft, current (card rendergh). Not posted. Branch `fix/get-hit-render` in the private clone (commit e2c4359c, rebased onto PR #136's head 9006a688; the pre-rebase 57bd4b56 is kept as local ref `fix/get-hit-render-pre-rebase`; the PR must wait for #136 to merge or be opened against `fix/get-hit-length`, see the evidence pack). Upstream template `.github/pull_request_template.md`; one claim; the oracle attached to the PR conversation, never game data. Title: `Draw a get-hit once at its rate, held on the last frame`.
 
 ````markdown
 ## What changes
