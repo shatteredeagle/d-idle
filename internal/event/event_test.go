@@ -228,7 +228,7 @@ func TestGoalsRoundTrip(t *testing.T) {
 		{Type: goals.EvGoalDone, GoalID: "g1"},
 	}
 	for _, g := range cases {
-		g.Seq, g.Time = 5, time.Unix(50, 0)
+		g.Seq, g.Time = 5, time.Unix(50, 0).UTC() // UTC: a JSON round trip yields UTC, and DeepEqual tells time.Local from UTC even when TZ=UTC
 		e := FromGoals(g, SrcManager)
 		b, _ := json.Marshal(e) // through the wire too
 		var d Event
