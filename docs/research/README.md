@@ -34,6 +34,7 @@ One line per doc: what it shows, status, PR. Status: current = still the best so
 - [pr-lut-gholein-draft.md](pr-lut-gholein-draft.md) and [pr-lut-gholein-evidence-pack.md](pr-lut-gholein-evidence-pack.md) the tool fix, NOT posted yet (waits for the user's go); rebased onto upstream main 4778a47c, 20/20 after. current.
 
 ## Upstream PRs: candidates, scan, posted record
+- [pr-bundle-draft.md](pr-bundle-draft.md) and [pr-bundle-evidence-pack.md](pr-bundle-evidence-pack.md) the combined PR (renderer get-hit frames + Lut Gholein tool fix, two commits), prepared on upstream afa0cdae, NOT opened. current.
 - [upstream-prs.md](upstream-prs.md) table of posted PRs (#127 and #128 merged). current.
 - [upstream-pr-scan.md](upstream-pr-scan.md) how upstream works, open PRs and maintainers. historical (2026-10-30).
 - [upstream-pr-candidates.md](upstream-pr-candidates.md) first candidate drafts (price, cast, missile). historical.
