@@ -1,6 +1,6 @@
 # Draft PR: drlg-dump: open the folder's 1.14d patch like the game does
 
-> status: draft, NOT filed (agent LUTPROOF, 2026-10-31). Branch `fix/lut-gholein-preset-rng` in the upstream clone `~/d2d-lab/pr/lut` on the worker host, commit d59c3e5f on upstream/main 32768ddb. Nothing pushed. Body below follows upstream's `.github/pull_request_template.md`; commands and paths are the reviewer's (their own copy), not ours. Proof: docs/research/lutgholein-proof.md; go / no-go: docs/research/pr-lut-gholein-evidence-pack.md.
+> status: draft, NOT filed (agent LUTPROOF, 2026-10-31). Branch `fix/lut-gholein-preset-rng` in the upstream clone `~/d2d-lab/pr/lut` on the worker host, commit 632d5cc2 on upstream/main 32768ddb. Nothing pushed. Body below follows upstream's `.github/pull_request_template.md`; commands and paths are the reviewer's (their own copy), not ours. Proof: docs/research/lutgholein-proof.md; go / no-go: docs/research/pr-lut-gholein-evidence-pack.md.
 
 ---
 
@@ -46,7 +46,7 @@ None: nothing visible changes in the game; the dumps do.
 - [ ] `docs/research/re/drlg.md` fidelity rows for Lut Gholein and the towns' units were only true with the installer in `$D2_PATCH_INSTALLER`; no row moved. A `tools/drlg-dump/README.md` line on the patch lookup can follow if wanted.
 - [x] `python3 tools/pr_guard.py` passes (0 FAIL, 0 WARN against upstream/main)
 
-Limits: one tool, two call sites (the plain / tiles / units / seeds dump and `layout`); the other modes already went through `load_game_data`. The in-game generator was not re-measured here (its loader opens the folder's patch). The trace is one map seed; the differential 20 seeds for level 40 and 10 each for the other four towns and Cold Plains. `presubmit.py --quick` warns about the throwing `fs::exists` overloads: the same call the existing d2exp / d2data line makes; a missing path is `false`, not a throw.
+Limits: with `$D2_PATCH_INSTALLER` set and present the stack is the one it was (a no-op for a setup with the installer); with it set to a missing file the tool used to exit ("MPQ open failed") and now notes it and falls back. One tool, two call sites (the plain / tiles / units / seeds dump and `layout`); the other modes already went through `load_game_data`. The in-game generator was not re-measured here (its loader opens the folder's patch). The trace is one map seed; the differential 20 seeds for level 40 and 10 each for the other four towns and Cold Plains. `presubmit.py --quick` warns about the throwing `fs::exists` overloads: the same call the existing d2exp / d2data line makes; a missing path is `false`, not a throw.
 
 ---
 

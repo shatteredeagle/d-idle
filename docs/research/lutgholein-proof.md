@@ -36,7 +36,7 @@ So 2 + 49 steps; the room list's seeds (list order) end the output and equal `dr
 - `components/game/gamedata_load.cpp open_game_data`: `$patch`, else `find("patch_d2.mpq")` (case-insensitive, `d2d::install::find_file`), else `LODPatch_114d.exe`, then the base MPQs. The game and drlg-dump's `monsters` / `objgroups` / `game` / `npcs` modes go through it; the plain / tiles / units / seeds dump and `layout` did not. S
 - `diff_drlg.py` sets `D2_PATCH_INSTALLER` to `~/Downloads/Diablo II + LoD/patch/LODPatch_114d.exe` by default; with that file (the maintainer's setup) the tool had the patch and upstream's 20/20 rows hold; without it `push_installer` fails ("MPQ open failed") and the tool prints nothing; with the variable unset the tool silently ran on CD-era data. V (before binary run three ways)
 
-## 4. The fix (clone `~/d2d-lab/pr/lut`, branch `fix/lut-gholein-preset-rng`, commit d59c3e5f, author shatteredeagle, no trailer)
+## 4. The fix (clone `~/d2d-lab/pr/lut`, branch `fix/lut-gholein-preset-rng`, commit 632d5cc2, author shatteredeagle, no trailer)
 
 `static d2d::mpq::Stack open_mpqs(const fs::path& dir)` in drlg-dump.cpp: `$D2_PATCH_INSTALLER` when set and present (a stderr note when set but missing, as the game warns), else the folder's `patch_d2.mpq`, else `LODPatch_114d.exe` (both via `d2d::install::find_file`), `.mpq` pushed as an archive, `.exe` as an installer, then d2exp and d2data; both hand-built stacks call it. `#include <install.hpp>`, `<cctype>`. 27 insertions, 6 deletions; `pr_guard.py upstream/main HEAD`: 0 FAIL 0 WARN; `presubmit.py --quick`: 0 FAIL, 3 WARN error-path (throwing `fs::exists` overloads, the same call the pre-existing d2exp / d2data line makes) + the skipped build. V
 
@@ -60,8 +60,8 @@ Plain dumps (`drlg-dump DATA a-b LEVEL DIR` vs `drlg.py a-b LEVEL DIR`, `cmp`): 
 - One tool (`drlg-dump`), two call sites; the d2d game's generation of Lut Gholein was not measured by this agent (its loader reads the patch, S; LUTGHOLEIN's live comparison was game.exe vs drlg-dump). U for the in-game result, outside the claim.
 - The trace is one map seed (161464580); the 20-seed differential covers the rest. The call chain above `FUN_00667970` is from a heuristic backtrace.
 - A user with the installer at diff_drlg.py's default path saw no difference before; the change reaches users whose folder has `patch_d2.mpq` (every installed 1.14d game) and no installer, and makes a set-but-missing `$D2_PATCH_INSTALLER` fall back with a note instead of failing.
-- `tools/` needs the maintainer's CODEOWNERS review.
+- `tools/` needs the maintainer's CODEOWNERS review. The maintainer's own gate had the installer (`diff_drlg.py`'s default path), so for them the change is a no-op; without that file their default run failed outright before. mpq-cat / MpqCache still look for a case-sensitive `patch_d2.mpq` (follow-up candidate, not this claim).
 
 ## Verifier
 
-See docs/research/pr-lut-gholein-evidence-pack.md (the independent verifier's report is quoted there verbatim).
+Independent adversarial read-only verifier: HOLDS WITH LIMITS (report verbatim and what was acted on in docs/research/pr-lut-gholein-evidence-pack.md).
