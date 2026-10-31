@@ -1,5 +1,7 @@
 # Backlog: open items only (the work to launch is the cards in `openspec/changes/`)
 
+> Milestones, launch order and the operating rhythm: [roadmap.md](roadmap.md) (proposal, 2026-10-31); the cards are `openspec/changes/m1-*`, `m2-*`, `m3-*`.
+
 Trimmed 2026-10-31 (doctrim); each item was checked against the code and `git log` that day. The full old list, with the items that have since merged, is [archive/BACKLOG-2026-10-30.md](archive/BACKLOG-2026-10-30.md). Where we are: [plan/STATUS.md](plan/STATUS.md). Live items need a free instance or d2d slot (`tools/d2dslot.sh status`) and a non-NO `tools/capacity.sh --add <cores>` ([process/worker-capacity.md](process/worker-capacity.md)). When a report says "not done", add a line here; when an item gets a card, replace the line with the card id.
 
 ## 0. Next milestone: solid bot basics, then the fidelity gate (user, 2026-10-31)
