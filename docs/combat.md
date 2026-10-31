@@ -199,3 +199,10 @@ Trigger: Soaky died at one spot three times (G1 attempts 11, 12, 15; 22 hostiles
 - crowd >= `crowdAbandonN` (15) on a travel or quest walk (`Fighter.SetWalking`, set by the bot around StateTraveling), or at life <= 70 anywhere: `CrowdAbandon` = retreat up to 8 steps until 20+ subtiles from the start, then open the portal; no scroll degrades to `CrowdRetreat`. The bot then plans no walk back into that area for 4 x `bot.navSkipSec` and runs a chores trip.
 - Chicken (25) still wins; at <= 25 with a rejuvenation potion it drinks first. Tests: `crowd_test.go` (pure table, snapshot, abandon walk). The retreat goes straight away from the crowd (U: no bias toward the entry yet, the Fighter does not know it).
 - Autopsy facts and the potion counter fix: docs/deathautopsy.md "Route guard fields".
+
+## Lockstep spin guard (change navstall, 2026-10-30)
+Under a lockstep d2d the clock (`d2dinput.Pacer`) only moves on sleeps and steps. Soakfull seed 11 (virtual minute 109) and runab seed 42 (walk-only, about 90 s) froze there: Safety chose `CrowdRetreat`, `retreatStep` walked, the walk failed at once (`nav: no path: empty path`), `Fighter.move` swallowed the error without a sleep, and the pin rule (`noEvadeUntil`, a clock deadline) could never expire because time was frozen. Hundreds of thousands of iterations per second, no tick. Fixes (V offline, see `navstall_test.go`; live result in the change card):
+- `move`: a failed walk costs one poll tick (covers every caller: step-away, flee, out-of-mana back-off, kite).
+- `canRetreat` is false while pinned: no step-away is offered when it cannot work; the crowd is fought or the abort rules decide.
+- Fight-loop watchdog: `noProgressMax` (40) iterations without the clock moving force one poll sleep and log `combat no progress, holding` once per fight.
+- Audit: the other `for {` loops in nav, town, loot and bot sleep, are bounded by tries/hops, or end on a deadline; only the combat loop could iterate without sleeping. Shared combat code: needs a G1/G2 (Game.exe) check before it counts as verified there.
