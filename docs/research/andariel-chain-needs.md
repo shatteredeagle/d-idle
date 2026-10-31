@@ -4,7 +4,7 @@
 
 ## 1. The chain as the code has it (V: internal/task/campaign.go NormalAct1, gate.go, route.go, act1.go, plandata progression-normal.json)
 
-Order: Den, Blood Raven, [Tools, Tower: optional], Andariel, Warriv hop; a free-Rogue claim step is added (`WithRogueClaim`). The Cain chain exists (`cainNodes`) but is off (`Act1Options.Cain`, not needed for Act 2). The planner takes the first unsatisfied entry whose floor is met, else levels.
+Order: Den, Blood Raven, [Tools, Twr: optional], Andariel, Warriv hop; a free-Rogue claim step is added (`WithRogueClaim`). The Cain chain exists (`cainNodes`) but is off (`Act1Options.Cain`, not needed for Act 2). The planner takes the first unsatisfied entry whose floor is met, else levels.
 
 | step | requirement in code today | on d2d today |
 |---|---|---|
@@ -12,7 +12,7 @@ Order: Den, Blood Raven, [Tools, Tower: optional], Andariel, Warriv hop; a free-
 | Blood Raven | clvl 9 caster (`boss.brCasterLevel`), 4 healing, 2 mana, tome >= 2 charges, GOLD >= 250 (`brGold`), 3 attempts then wait +1 to +2 clvl | kill + Kashya grant V on d2d via debug kill (docs/d2d-probes.md); never fought by the bot: Viewy had 15-100 gold, so the gold gate holds her for ever |
 | free Rogue | claim after BR dead; merc policy off by default (`merc.enabled` 0, tuning_merc.go); revive price never observed | UNVERIFIED end to end; revive S only |
 | Tools (Smith) | optional; skipped for a Sorceress (`ImbueSkipWhy`: class has no use) | n/a, skipped |
-| Forgotten Tower / Countess | optional; clvl 14 (gate) and tower guard clvl 20 unless a living merc (`route.towerMinLevel` 20, `towerNeedsMerc` 1) | blocked (Viewy: "no merc, clvl 10 < 20") |
+| Forgotten Twr / Countess | optional; clvl 14 (gate) and tower guard clvl 20 unless a living merc (`route.towerMinLevel` 20, `towerNeedsMerc` 1) | blocked (Viewy: "no merc, clvl 10 < 20") |
 | Cain / Inifuss / Cairn Stones | off (`Cain` false); would need the tree (class U), stone order (brute force, U), `cmd interact` on objects | Dark Wood "unreachable/nav-stuck" in Viewy (nav, not quest); not needed |
 | Monastery road | areas 7 and 26-37: clvl 20 without a living merc, nothing with a merc (`route.monasteryMinLevel` 20) plus kit (4 healing, 2 portal charges, 2 mana) | blocked (Viewy) |
 | Andariel | knob floor 15 (+2 dead merc and gold < 1000); gate has `Route: true`, so the effective floor is `max(15, route floor)` = 20 for a character with no merc; kit 4 healing (`minPotions`), TP, 3 mana, 2 antidotes; script in internal/boss/act1.go | never fought on either backend (STATUS); Catacombs 4 reached only by the road |
@@ -27,12 +27,12 @@ Chain deadlock (V by reading the code, U live): the Rogue needs Blood Raven, Blo
 | Den | clvl 6, 4+ minor healing, 2 mana, TP; ~100 gold |
 | Blood Raven | clvl 11-12 (EXP), Frozen Armor 1 point, 6 healing, 3 mana, tome; merc preferred; ~300-400 gold (U) |
 | Cain, Inifuss, Cairns, Cow | skip all (Act 2 needs only Andariel dead) |
-| Tower / Countess | skip (runes not needed); if kept: clvl 18 and a merc |
+| Forgotten Twr / Countess | skip (runes not needed); if kept: clvl 18 and a merc |
 | Smith | only if met on the road |
 | Monastery road | clvl 16-18, vitality, 8+ potions, antidotes, merc alive, ~800 gold |
 | Andariel | clvl 18, life >= 250 (U), 8 healing, 3-4 mana, 3 antidotes, merc alive, ~600 gold |
 
-Other SME points: XP cliff at clvl 14-16 (Act 1 mlvl tops at 10-12, Andariel 12; consistent with docs/sme/audit-bot-vs-human.md A1: clvl 17-18); killers: Countess archers and fire arrows at 0 mana, Tower ghosts/hawks in corridors, Catacombs stalkers, gargoyles and archers at 0 mana, Andariel poison nova plus melee; the Rogue is not needed to survive but for an unattended bot effectively required (a dead one stays dead; revive roughly 100-500 gold, U); Static Field leaves Andariel at about 1/4-1/3 life (U), lightning is her weakest resist. Build: add 1 point each Frozen Armor and Warmth, rest into Fire Bolt, Static Field, Vitality; Teleport waits for clvl 18. Gold: 15-100 at clvl 10 means the bot is not selling drops (a human has 1-2k); gate Blood Raven on potions rather than a gold figure.
+Other SME points: XP cliff at clvl 14-16 (Act 1 mlvl tops at 10-12, Andariel 12; consistent with docs/sme/audit-bot-vs-human.md A1: clvl 17-18); killers: Countess archers and fire arrows at 0 mana, Twr ghosts/hawks in corridors, Catacombs stalkers, gargoyles and archers at 0 mana, Andariel poison nova plus melee; the Rogue is not needed to survive but for an unattended bot effectively required (a dead one stays dead; revive roughly 100-500 gold, U); Static Field leaves Andariel at about 1/4-1/3 life (U), lightning is her weakest resist. Build: add 1 point each Frozen Armor and Warmth, rest into Fire Bolt, Static Field, Vitality; Teleport waits for clvl 18. Gold: 15-100 at clvl 10 means the bot is not selling drops (a human has 1-2k); gate Blood Raven on potions rather than a gold figure.
 
 Caution: this SME answer is one pass from memory; its numbers are EXP/U, and its BR floor of 11-12 contradicts our merged 9 (docs/sme/blood-raven-caster.md, brkill 1477431, which the repo tags U too).
 
@@ -42,7 +42,7 @@ Caution: this SME answer is one pass from memory; its numbers are EXP/U, and its
 |---|---|---|---|
 | Monastery road, no merc | 20 | 20 (SME earlier in the roadmap: 18) | agree (this pass); the roadmap row says 18: SME is not stable, the grill decides |
 | Monastery road, merc alive | any clvl | 18 | DISAGREE: no floor with a merc is too loose (prebrief 10: 14) |
-| Tower | 20 or merc | skip; else 18 + merc | disagree on merc-only; agree it should be skipped for a Sorceress |
+| Twr | 20 or merc | skip; else 18 + merc | disagree on merc-only; agree it should be skipped for a Sorceress |
 | Andariel | 15 (+2) | 18 with merc, 21 without, life >= 250 | DISAGREE, and the effective no-merc floor in code is already 20 |
 | Blood Raven | clvl 9 + 250 gold | clvl 11-12, gate on potions not gold | DISAGREE on level (U) and on a gold gate; the gold gate is what blocks M3 today |
 | Andariel kit | 4 healing, 3 mana, 2 antidotes | 8, 3-4, 3 | disagree (kit thin) |
@@ -54,7 +54,7 @@ Caution: this SME answer is one pass from memory; its numbers are EXP/U, and its
 |---|---|---|---|---|
 | Den | clvl 1-5, kit | clvl 6, kit | nothing | none |
 | Blood Raven + Rogue | clvl 9, kit, 250 gold | clvl 11-12, kit, ~300 gold | no gold (items not sold or piles not taken), gold gate, merc policy off | gold income card; BR gate on kit with gold as soft rule |
-| Tower | 20 or merc | skip | guard (fine) | skip by default for non-melee: no card needed |
+| Twr | 20 or merc | skip | guard (fine) | skip by default for non-melee: no card needed |
 | Monastery road | 20 or any merc | 18 with merc | no merc, so 20 | m3-routeguard (after grill) |
 | Andariel | 15 +2, effective 20 | 18 / 21, life 250 | road guard, never fought | m3-andariel on a throwaway |
 | hop | act >= 2 | - | unexercised | m3-act1chain |
@@ -63,7 +63,7 @@ Five smallest cards, in order (one agent each, not written):
 1. Gold income: sell every non-junk drop on each town trip and take gold piles, with a log of gold and items sold per trip (SME gold point; audit M1 area; unblocks the BR gold gate, Viewy 15-100 gold).
 2. Blood Raven gate: make gold a restock-trip trigger rather than a hard gate, level and potion count from the grill (m3-merc input), so the Rogue is actually reached.
 3. Merc on by default on d2d (`merc.enabled`), claim, revive budget with the probed price (m3-merc).
-4. Route guard numbers with a `withMerc` floor per guard, Tower skipped for a Sorceress, effective Andariel floor shown in one log line (m3-routeguard, after grill 0003).
+4. Route guard numbers with a `withMerc` floor per guard, Twr skipped for a Sorceress, effective Andariel floor shown in one log line (m3-routeguard, after grill 0003).
 5. Andariel fight on a cheat-levelled throwaway, 3 with a Rogue, 1 without, antidote on poison (m3-andariel, unchanged), then Act 1 order and Warriv hop evidence (m3-act1chain).
 
 ## 5. Unknowns for a hidden d2d probe (U; each is half a slot-hour at most)
