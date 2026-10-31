@@ -223,7 +223,7 @@ func TestNeedsTrip(t *testing.T) {
 			w.Items = append(w.Items[:i], w.Items[i+1:]...)
 		}
 	}
-	w.Player.Level = 10 // potionsFirst: below tpFirstLevel a missing scroll is no trip reason (own test below)
+	w.Player.Level = 10 // potionsFirst: under scroll plus 2 potions of gold a missing scroll is no trip reason (own test below)
 	s, _ = w.Snapshot()
 	if ok, why := r.T.NeedsTrip(s); !ok || why != "no town portal scroll" {
 		t.Fatalf("%v %q", ok, why)
@@ -526,21 +526,21 @@ func TestTPMinGoldPotionsFirst(t *testing.T) {
 	}
 }
 
-// BASICSFIX/XPGAP: "no town portal scroll" is a trip reason only where the shop would sell one (potionsFirst).
+// D3: "no town portal scroll" is a trip reason only where the shop would sell one: gold for the scroll plus 2 potions.
 func TestNoScrollTripRespectsPotionsFirst(t *testing.T) {
 	geartest.Need(t)
 	for _, c := range []struct {
-		name         string
-		level, first int
-		want         bool
+		name        string
+		gold, first int
+		want        bool
 	}{
-		{"below first-scroll level", 2, 1, false},
-		{"at first-scroll level", 4, 1, true},
-		{"potionsFirst off", 2, 0, true},
+		{"gold under scroll plus 2 potions", 150, 1, false},
+		{"gold for scroll plus 2 potions", 160, 1, true},
+		{"potionsFirst off", 100, 0, true},
 	} {
 		t.Run(c.name, func(t *testing.T) {
 			r := newRig(t)
-			r.W.Player.Level = c.level
+			r.W.Player.Gold = c.gold
 			r.Env.Tune.Town.PotionsFirst = c.first
 			for i := 0; i < 3; i++ {
 				r.W.Add("hp1", d2.ContBelt, i, 0)

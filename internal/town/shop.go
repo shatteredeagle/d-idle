@@ -289,7 +289,7 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 	if err != nil {
 		return err
 	}
-	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome || t.tpTooPoor(s) || !t.tpAllowed(s) {
+	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome || t.tpTooPoor(s) {
 		return nil
 	}
 	stock, err := t.Stock(npc)
@@ -297,12 +297,24 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 		return err
 	}
 	var su d2.Unit
-	var price int
+	var price, potion int
 	for _, u := range stock {
-		if b := t.base(u); b != nil && b.Code == "tsc" {
-			su, price = u, b.Cost
-			break
+		b := t.base(u)
+		if b == nil {
+			continue
 		}
+		if b.Code == "tsc" && price == 0 {
+			su, price = u, b.Cost
+		}
+		if belt.PotionKind(b) == belt.HP && b.Cost > 0 && (potion == 0 || b.Cost < potion) {
+			potion = b.Cost
+		}
+	}
+	if potion == 0 {
+		potion = t.e.Tune.Resource.KitPotionGold
+	}
+	if !t.tpAllowedAt(s, price, potion) {
+		return nil
 	}
 	if price <= 0 || !resource.BuyKit(resource.Input{Gold: s.Player.Gold}, resource.Tuning{KitTPGold: price}).TP {
 		return nil
