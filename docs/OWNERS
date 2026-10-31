@@ -32,3 +32,4 @@ docs/research/andariel-chain-needs.md  andychain  -
 internal/combat/fight.go  combatspin  combatspin
 internal/combat/combatspin_test.go  combatspin  combatspin
 docs/combatspin.md  combatspin  combatspin
+openspec/changes/combatspin/**  combatspin  combatspin
