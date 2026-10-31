@@ -56,10 +56,10 @@ func main() {
 
 // Exit codes (docs/d2d-soak.md "Exit codes"). Only PASS is 0.
 const (
-	ExitPass         = 0
+	ExitPass         = d2dsoakstat.ExitPass
 	ExitError        = 1 // I/O, bad input, seeds that failed to run
-	ExitInconclusive = 2
-	ExitFail         = 3
+	ExitInconclusive = d2dsoakstat.ExitInconclusive
+	ExitFail         = d2dsoakstat.ExitFail // FAIL and NO-DATA
 	ExitUsage        = 64
 )
 
@@ -73,15 +73,10 @@ func (e exitError) Error() string { return fmt.Sprintf("exit %d: %s", e.Code, e.
 
 // verdictExit maps a verdict to its exit code; zero is -exit-zero (old behaviour: always 0 after printing).
 func verdictExit(overall string, zero bool) int {
-	switch {
-	case zero:
+	if zero {
 		return ExitPass
-	case overall == d2dsoakstat.Pass:
-		return ExitPass
-	case overall == d2dsoakstat.Fail:
-		return ExitFail
 	}
-	return ExitInconclusive
+	return d2dsoakstat.ExitCode(overall)
 }
 
 func usage() {
@@ -152,6 +147,9 @@ func cmdRun(args []string) error {
 		runs = append(runs, res.Run)
 	}
 	if len(runs) == 0 {
+		if *baselines != "" { // NO-DATA is a verdict (exit 3), not an I/O error
+			return compareGate(nil, *baselines, false, filepath.Join(cfg.Out, "verdict.txt"), "v1", *exitZero)
+		}
 		return fmt.Errorf("no seed completed")
 	}
 	agg := d2dsoakstat.Aggregate(runs)
