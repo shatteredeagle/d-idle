@@ -12,7 +12,7 @@ exclusive: []
 gates:
   - "docs/research/bot-generality.md <= 140 lines with evidence table, vocabulary, layer table, experiments, plan, SME notes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge: MERGEHASH
+merge: d348529
 result: "docs only, not verified live (no game run): study written, SMEs consulted"
 ```
 
