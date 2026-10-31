@@ -3,8 +3,11 @@ package nav
 import (
 	"fmt"
 	"sort"
+	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/d2map"
+	"d2lod-bot/internal/env"
 )
 
 // Edge sources for Route, cheapest first.
@@ -76,12 +79,56 @@ func (n *Navigator) learn(from, to int) {
 	delete(n.bad, edgeKey{to, from})
 }
 
+// badEdge is a guessed edge a walk failed on. Unless the knob BadEdgeTTLSec is 0 it expires: after the TTL (game
+// time), or when the game was re-entered (the level map of from is another object then: d2dworld forgets its levels).
+// TOWNWEDGE (soak logs navsoak, navsoak2): one failed roam out of a cut-off town spot marked 1->2 bad for good, every
+// later route from the town failed, and 950 save-and-exit re-entries did not clear it.
+type badEdge struct {
+	until time.Time // zero: for the rest of the run
+	lm    *d2map.LevelMap
+}
+
+func (n *Navigator) badTTL() time.Duration {
+	if n.tune == nil {
+		return time.Duration(env.DefaultNavTuning().BadEdgeTTLSec * float64(time.Second))
+	}
+	return time.Duration(n.tune().BadEdgeTTLSec * float64(time.Second))
+}
+
 func (n *Navigator) markBad(from, to int) {
 	if n.bad == nil {
-		n.bad = map[edgeKey]bool{}
+		n.bad = map[edgeKey]badEdge{}
 	}
-	n.bad[edgeKey{from, to}] = true
-	n.log.Info("nav edge marked bad", "from", from, "to", to)
+	b := badEdge{}
+	if ttl := n.badTTL(); ttl > 0 {
+		b = badEdge{until: n.clk.Now().Add(ttl), lm: n.lvl(from)}
+	}
+	n.bad[edgeKey{from, to}] = b
+	n.log.Info("nav edge marked bad", "from", from, "to", to, "ttlSec", int(n.badTTL().Seconds()))
+}
+
+// isBad reports a live bad mark. It never writes the map (Route may run beside the walking goroutine).
+func (n *Navigator) isBad(from, to int) bool {
+	b, ok := n.bad[edgeKey{from, to}]
+	if !ok {
+		return false
+	}
+	if b.until.IsZero() {
+		return true
+	}
+	if !n.clk.Now().Before(b.until) {
+		return false
+	}
+	return b.lm == nil || n.lvl(from) == b.lm
+}
+
+// edgeShown reports that the level map of from itself shows a way to level to (tile exit, or border cells of a
+// neighbour d2dworld linked): such an edge exists whatever one walk did, so a failed walk is not a reason to mark it.
+func (n *Navigator) edgeShown(from, to int) bool {
+	if lm := n.lvl(from); lm != nil && lm.Grid != nil && hasGate(lm, to) {
+		return true
+	}
+	return n.seen[edgeKey{from, to}]
 }
 
 func (n *Navigator) levelNow() int {
@@ -99,7 +146,7 @@ func (n *Navigator) levelNow() int {
 func (n *Navigator) edges() map[int]map[int]int {
 	adj := map[int]map[int]int{}
 	add := func(a, b, src int) {
-		if a == b || b == 0 || n.bad[edgeKey{a, b}] {
+		if a == b || b == 0 || n.isBad(a, b) {
 			return
 		}
 		if adj[a] == nil {
@@ -217,4 +264,12 @@ func (n *Navigator) Route(from, to int) ([]int, error) {
 		rev[l], rev[r] = rev[r], rev[l]
 	}
 	return rev, nil
+}
+
+// lvl is the level map of this game for a level number, nil when there is no world source or the level is unseen.
+func (n *Navigator) lvl(no int) *d2map.LevelMap {
+	if n.w == nil {
+		return nil
+	}
+	return n.w.Level(no)
 }

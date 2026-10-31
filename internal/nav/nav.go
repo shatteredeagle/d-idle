@@ -110,7 +110,7 @@ type Navigator struct {
 	noExit    []noExitMark                                                         // ExitTo gave up exploring for an exit: see exitCooldown
 	exploreFn func(ctx context.Context, done func() bool, hint *input.Point) error // test seam, nil: explore
 	seen      map[edgeKey]bool                                                     // level crossings made (Route)
-	bad       map[edgeKey]bool                                                     // guessed edges that turned out not to exist
+	bad       map[edgeKey]badEdge                                                  // guessed edges that turned out not to exist
 	avoid     atomic.Pointer[map[int]bool]                                         // levels a walk should not pass through (SetAvoidLevels)
 }
 

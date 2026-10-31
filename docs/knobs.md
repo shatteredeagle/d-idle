@@ -48,6 +48,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | nav.useWaypoints | 1 | 0..1 | bool | 1 | 4 | 1: travel, the corpse run and the way back from town take an activated waypoint instead of walking (saves minutes and walking deaths; the route guard still applies to every area on the way). 0 walks everything. |
 | nav.wpMinDistance | 2 | 2..8 | levels | 2 | 2 | A waypoint trip is taken only when it skips at least this many level hops; shorter routes walk. 2 is the shortest trip that saves a level. |
 | nav.wpCooldownSec | 10 | 10..20 | s | 10 | 2 | game.exe silently refuses a waypoint travel for 10 s after any level change; the bot waits this long since arriving before clicking a row. Lower is not useful. |
+| nav.badEdgeTTLSec | 300 | 0..3600 | s | 300 | 2 | A level link or gate that a walk failed on is routed around for this long (game time), and forgotten at once when the game is re-entered; a link the level map itself shows is never marked. 0 restores the old behaviour: marks last for the rest of the run, and a character cut off from a gate it can see is not walked out of its pocket (townwedge). |
 | nav.cautionRadius | 20 | 8..40 | subtiles | 8 | 1 | A corpse run stops and reports when a living monster comes this close; its paths avoid monsters at twice the usual radius. |
 
 ### combat.*
