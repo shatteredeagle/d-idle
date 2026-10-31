@@ -25,3 +25,6 @@ openspec/changes/d2dmesh/**  meshdesign  d2dmesh
 openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
+docs/basics-audit.md  basicsaudit  basicsaudit
+internal/town/basicsaudit_test.go  basicsaudit  basicsaudit
+openspec/changes/basicsaudit/**  basicsaudit  basicsaudit

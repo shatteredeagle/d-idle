@@ -38,6 +38,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
+| [basicsaudit](../../openspec/changes/basicsaudit/) | in-progress | basicsaudit | `docs/basics-audit.md`<br>`internal/town/basicsaudit_test.go`<br>`openspec/changes/basicsaudit/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -58,6 +59,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
+- change basicsaudit: go test -p 1 ./internal/town passes on the worker host
+- change basicsaudit: go run ./cmd/changecheck -cli has 0 warnings; leakcheck -mode fail finds 0
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
