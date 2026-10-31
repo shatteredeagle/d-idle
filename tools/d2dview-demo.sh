@@ -70,7 +70,7 @@ start|--*)
   scp -q -o BatchMode=yes "$repo/tools/d2dview-demo.sh" "$repo/tools/agentrun.sh" "$repo/tools/agentreap.sh" "$WORKER:d2d-lab/view/demo/"
   # agentrun: own process group + registry (agent "view", 4 h TTL), so `stop` and the TTL take the viewer, bot and d2d down together
   ssh_ "rm -f $V/status; cd $V && chmod +x d2dview d2bot d2dview-demo.sh agentrun.sh agentreap.sh
-    nohup $V/agentrun.sh view --ttl 14400 -- flock -w 3000 /tmp/d2d-lab.lock bash $V/d2dview-demo.sh --remote ${args[*]:-} > $V/demo.out 2>&1 < /dev/null &"
+    $(d2_role_env) nohup $V/agentrun.sh view --ttl 14400 -- flock -w 3000 /tmp/d2d-lab.lock bash $V/d2dview-demo.sh --remote ${args[*]:-} > $V/demo.out 2>&1 < /dev/null &"
   for i in $(seq 30); do
     s=$(ssh_ "cat $V/status 2>/dev/null" || true)
     [ -n "$s" ] && { echo "$s"; exit 0; }
