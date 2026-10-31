@@ -318,7 +318,7 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 		// poor: junk is the quickest gold, sell it before anything else (one item is enough, the pack need not be full)
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("poverty: %d items to sell, %d gold", sell, p.Gold))
-	} else if !p.InTown() && p.Gold < t.GearMinGold && r.sellable(s) >= max(t.SellMinItems, sellMin) {
+	} else if !p.InTown() && p.Gold < t.GearMinGold && lowGoldSellOK(r.sellable(s), r.resInput(s).HasTP, t.SellMinItems, sellMin) {
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("%d items to sell, %d gold", r.sellable(s), p.Gold))
 	}
@@ -476,6 +476,12 @@ func povertySellWorth(sell int, hasTP bool) bool {
 // povertySellOK is povertySellWorth with the povertySellMin knob (XPGAP) on top: min 0 keeps the built-in rule.
 func povertySellOK(sell int, hasTP bool, min int) bool {
 	return povertySellWorth(sell, hasTP) && sell >= min
+}
+
+// lowGoldSellOK is the second sell-trip door (gold under GearMinGold): the item minimum, and with the povertySellMin
+// knob set the poor-character rule of povertySellOK too. Knob 0 keeps the old rule.
+func lowGoldSellOK(sell int, hasTP bool, minItems, min int) bool {
+	return sell >= max(minItems, min) && (min == 0 || povertySellOK(sell, hasTP, min))
 }
 
 // ---- target selection ----------------------------------------------------------------------------
