@@ -12,4 +12,11 @@ fi
 : "${D2_WORKER_HOST:=worker.example}" "${D2_WORKER_USER:=${USER:-$(id -un)}}" "${D2_NAS_HOST:=nas.example}"
 : "${D2_BOARD_URL:=http://board.example:8897}" "${D2_FORGE_URL:=https://forge.example}" "${D2_COLD_DIR:=/mnt/cold}"
 export D2_WORKER_HOST D2_WORKER_USER D2_NAS_HOST D2_BOARD_URL D2_FORGE_URL D2_COLD_DIR
+# Go processes do not read local.env: scripts that start one on another host put this in front of its command
+# (`ssh host "$(d2_role_env) cmd"`), so D2_COLD_DIR and the d2dview host words reach it. Prints NAME='value' pairs,
+# each with the optional prefix $1 (`d2_role_env --setenv=` for systemd-run).
+d2_role_env() {
+	for _v in D2_COLD_DIR D2_WORKER_HOST D2_NAS_HOST; do eval "_x=\${$_v}"; printf "%s%s='%s' " "${1:-}" "$_v" "$_x"; done
+	unset _v _x
+}
 unset _d2_root k v

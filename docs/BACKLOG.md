@@ -56,6 +56,6 @@ Rule: keep 5 to 8 agents running (coordinator practice 2026-10-30). When one fin
 - d2d XP/h gap now (soakfull, 12 runs, 24 h pooled, lab6, run policy on): 4985 +- 145 vs 6600 early baseline (-24.5 %, INCONCLUSIVE); kills/h 195 vs 500 late; deaths 0 PASS; 18.0 s per kill (walk 13.8, cast 0.9, wait 3.3); recovery 54 % of time; next suspects: walk 77 % of kill time (border ping-pong, nav stuck), poverty/recovery 54 %, casts per kill, spawn density/XP award, crowd step-away stall
 
 - d2d container remaining tasks (from archived cards d2d-container-build and d2d-container-bot): 1 h one-slot bot gate in the container, realtime mode, read-only root filesystem, d2fleet wizard for d2d, viewer source via the screenshot verb, soak driver sidecar, optional Sentry fork patch (not needed so far)
-- tools/d2dfarm-test.sh has 7 failures on master (they passed on the agent branch): investigate after the scrub
-- live runner could forward D2_COLD_DIR and the d2dview host words (Go processes do not read local.env)
-- docs/nas-container.md heading rename (package C): "Running a soak on the NAS" (code comments quote it)
+- the public tools/capacity.sh is an ops stub that cannot run over `sh -s`; d2dfarm now resolves the real file through ops.sh (D2_FARM_CAPACITY overrides). A CI-visible capacity.sh test fixture would need the script in the public tree
+- other launchers that start Go processes on the worker (tools/d2dloop/*, tools/d2dsoak/run.sh, tools/soak/fresh.sh) do not yet forward d2_role_env; only d2dview-demo, soak start and the ops live.sh do
+- the soakfull and runab livelock resets now live in freshGameToLevel only; a reset on the other fresh-game paths (goal.go:128) is a separate copy to fold into one helper (needs a G1/G2 check)

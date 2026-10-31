@@ -89,6 +89,13 @@ tx_ssh_stop() { tx_ssh_rexec "$1" stop "$2"; }
 tx_ssh_collect() { tx_ssh_install "$1"; tx_ssh_rexec "$1" tarb64 "$2" | tr -d "\r\n" | base64 -d | tar -x -C "$3" && tx_ssh_rexec "$1" rm "$2"; } # NODE JOB DESTDIR
 tx_ssh_collect_keep() { tx_ssh_install "$1"; tx_ssh_rexec "$1" tarb64 "$2" | tr -d "\r\n" | base64 -d | tar -x -C "$3"; }
 tx_ssh_shutdown() { [ "${NT[$1]}" = wsl ] && ssh "${SSHO[@]}" "${NS[$1]}" "wsl --shutdown"; return 0; }
+# The public capacity.sh is a stub that bridges to the ops repo and cannot run over `sh -s`: use the real file.
+# D2_FARM_CAPACITY overrides (tests).
+capacity_script() {
+	local c=${D2_FARM_CAPACITY:-$here/capacity.sh} o
+	if grep -q 'ops\.sh' "$c" 2>/dev/null; then o=$("$here/ops.sh" path 2>/dev/null)/tools/capacity.sh; [ -f "$o" ] && c=$o; fi
+	printf '%s\n' "$c"
+}
 tx_ssh_probe() { # NODE -> "VERDICT reason"
 	local n=$1 out rc
 	if [ "${NT[$n]}" = wsl ]; then
@@ -101,7 +108,7 @@ $o=Get-CimInstance Win32_OperatingSystem
 		out=$(timeout $((PROBE_WINDOW + 30)) ssh "${SSHO[@]}" "${NS[$n]}" "powershell -NoProfile -EncodedCommand $(printf %s "$ps" | iconv -f utf-8 -t utf-16le | base64 -w0)" 2>&1 | tr -d '\r'); rc=$?
 		probe_wsl_verdict "$out"
 	else
-		out=$(timeout $((PROBE_WINDOW + 10)) ssh "${SSHO[@]}" "${NS[$n]}" "sh -s -- --add 1 --window $PROBE_WINDOW --samples 4" <"$here/capacity.sh" 2>/dev/null); rc=$?
+		out=$(timeout $((PROBE_WINDOW + 10)) ssh "${SSHO[@]}" "${NS[$n]}" "sh -s -- --add 1 --window $PROBE_WINDOW --samples 4" <"$(capacity_script)" 2>/dev/null); rc=$?
 		local why; why=$(printf '%s\n' "$out" | grep -E '^(add=|psi|iowait)' | tr '\n' ' ')
 		case $rc in 0) echo "OK $why" ;; 1) echo "WARN $why" ;; 2) echo "NO $why" ;; *) echo "NO unreachable or probe failed (rc $rc)" ;; esac
 	fi

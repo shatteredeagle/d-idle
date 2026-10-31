@@ -73,7 +73,7 @@ start)
   ssh_ "$(cat "$(dirname "$0")/../lib-paths.sh")
 $(savefile_snip "$inst")
 systemctl --user reset-failed d2soak-$inst.service 2>/dev/null || true
-    systemd-run --user --unit=d2soak-$inst --description='d2soak $inst' --collect -p Nice=10 -p MemoryMax=256M \
+    systemd-run --user $(d2_role_env --setenv=) --unit=d2soak-$inst --description='d2soak $inst' --collect -p Nice=10 -p MemoryMax=256M \
       $dest/d2soak run --target http://127.0.0.1:$port $sel --out $dest/$run \
       --sentinel-log \$(d2_sentinel_log) \
       --wine-prefix \"\$(d2_game_root $inst)/proton/pfx\" --wine-prefix \"\$(d2_data_dir)/prefixes/$inst/proton/pfx\" \

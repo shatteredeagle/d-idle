@@ -187,3 +187,29 @@ func TestFreshGameDoesNotRetriggerBeforeANewClear(t *testing.T) {
 		t.Fatalf("%d fresh games, calls: %v", n, g.w.log())
 	}
 }
+
+// Same, but the observer never saw the menus (d2d restarts faster than a poll): the fresh game itself must forget the
+// cleared set and the other per-game loop state (soakfull: hundreds of fresh games a minute at clvl 3).
+func TestFreshGameForgetsClearedWithoutObserver(t *testing.T) {
+	g := soakyRig(t, 2)
+	g.r.d.Cycler = fakeCycler{g.w}
+	g.r.syncGames()
+	g.r.loop.cleared = map[int]bool{2: true}
+	g.r.loop.sweepKills = map[int]int{2: 5}
+	g.r.loop.stepArea = 7
+	g.w.set(func(w *world) { w.area = 1 })
+	g.r.poll()
+	acts := taskActs{r: g.r, c: control{goal: &goals.Goal{}}}
+	if _, err := acts.r.freshGameToLevel(context.Background(), g.r.latest()); err != nil {
+		t.Fatal(err)
+	}
+	if len(g.r.loop.cleared) != 0 || g.r.loop.sweepKills != nil || g.r.loop.stepArea != 0 || !g.r.loop.needBuff {
+		t.Fatalf("per-game state survived the fresh game: cleared %v sweepKills %v stepArea %d needBuff %v", g.r.loop.cleared, g.r.loop.sweepKills, g.r.loop.stepArea, g.r.loop.needBuff)
+	}
+	for i := 0; i < 4; i++ {
+		acts.LevelTo(context.Background(), 14)
+	}
+	if n := g.w.count("newgame normal"); n != 1 {
+		t.Fatalf("%d fresh games, calls: %v", n, g.w.log())
+	}
+}
