@@ -3,3 +3,5 @@
 # 2026-10-30 (user): both groups flipped to fatal today (was 2026-11-03 and 2026-11-06); master has held 0 warnings.
 cards_overlap_fatal_from: 2026-10-30   # card, overlap, spec, owners, status findings
 merges_diff_fatal_from: 2026-10-30     # merge, diff findings
+allow_merges:
+  - 0226219   # basicsfix branch: merge origin/main commit, no Change trailer (history, not rewritten)

@@ -2,7 +2,7 @@
 
 ```yaml
 change: basicsfix
-status: in-progress
+status: archived
 agent: basicsfix
 branch: agent/basicsfix
 worktree: ~/code/d2lod-wt/basicsfix
@@ -20,7 +20,8 @@ exclusive: []
 gates:
   - "go test -short -p 4 ./... and go test -race ./internal/town ./internal/bot pass on the worker host"
   - "tools/openspec.sh validate --all --strict passes"
-result: "Offline only (sim rig), not verified live. Follow-ups applied at merge.
+result: "Offline only (sim rig), not verified live. XPGAP follow-ups (sell door, no-scroll trip reason) applied at merge (c50a7a1, 6b9f52f)."
+merge: 478499f
 ```
 
 - [x] 1 ID scrolls only for likely valuables (idScrollNeed)
@@ -28,4 +29,3 @@ result: "Offline only (sim rig), not verified live. Follow-ups applied at merge.
 - [x] 3 failed repair latch (repairLatch)
 - [x] 4 bank before shop (bankFirst)
 - [x] 5 potions first (potionsFirst, tpFirstLevel)
-merge: 478499f (follow-ups c50a7a1 sell door, 6b9f52f no-scroll trip reason)
