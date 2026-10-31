@@ -22,9 +22,9 @@ result:
 
 ## 1. Work
 
-- [ ] 1.1 TestScenario_KitlessClvl7PackDeath (bot)
-- [ ] 1.2 TestScenario_WedgePocket (nav)
-- [ ] 1.3 TestScenario_PovertyLoop (town + bot)
-- [ ] 1.4 TestScenario_CampaignStall (bot)
-- [ ] 1.5 optional: combat pin and champion group scenarios
-- [ ] 1.6 docs/scenarios.md index; changecheck, leakcheck, validate
+- [x] 1.1 TestScenario_KitlessClvl7PackDeath (bot)
+- [x] 1.2 TestScenario_WedgePocket (nav)
+- [x] 1.3 TestScenario_PovertyLoop (town + bot)
+- [x] 1.4 TestScenario_CampaignStall (bot)
+- [x] 1.5 optional: combat pin and champion group scenarios
+- [x] 1.6 docs/scenarios.md index; changecheck, leakcheck, validate
