@@ -111,6 +111,7 @@ Gap references are `file:line` in the upstream repo at `2a04c18e` (V in `gaps.js
 - Upstream SKILLS 41/265/55/326; `rules/skills.hpp` 19/153. Listed: `fight.hpp:705` (fire mastery not summed), `fight.hpp:1001` (aurastats and passives skipped), `fight.cpp:1287` (toht not added), `fight.cpp:1290` (FUN_0056c600 skill to-hit and damage %), `fight.hpp:624`, `skills.hpp:871`, `combat.hpp:297`. Todo: "every class skill works, fidelity varies by skill".
 - Ours: damage never compared; mana cost never compared. U.
 - Method: 12 data points (3 bolts x 4 skill levels) by static read; cheap.
+- DECOMPSKILL 2026-10-31: two deviations proven in elem_damage (min synergy gate on 13 one-x lightning skills; MulDiv shares); Charged Bolt, Fire Bolt, Ice Bolt, Frost Nova clean; Static Field differs by reading only; PR candidate ready (docs/research/pr-skill-damage-draft.md)
 
 ### 5. mon_wake (1.20, 4 h)
 - Upstream: target search `005dd0b0` and `005ddc30` verified; `005dc380` verified. AI is the best-covered module. Listed: `ai.cpp:853` (rooms as 80 subtiles), `ai.cpp:1215` (nearest, not list order), `gamedata.cpp:460`, `world.hpp:657` (aip1 range check skipped), `ai.cpp:1203`, `monsters.hpp:1568`, `monsters.hpp:2579`.
