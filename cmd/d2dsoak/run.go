@@ -29,6 +29,7 @@ type runCfg struct {
 	Chunk   int     // runner clock: world ticks per step call (1500 = one virtual minute)
 	Setup   string  // optional devctl script (d2dctl script syntax) run before the command: character spec
 	MaxWall time.Duration
+	Class   int // d2d --start-class index (UI order, docs/d2d-fidelity.md): the coverage line names it
 	Log     func(string, ...any)
 }
 
@@ -204,7 +205,8 @@ func runSeed(ctx context.Context, cfg runCfg, lab Lab, seed int) (runResult, err
 	if res.WallS > 0 {
 		res.Speedup = float64(ci.GameMS) / 1000 / res.WallS
 	}
-	res, err = finish(res, filepath.Join(dir, "bot.log"), float64(ci.GameMS)/3.6e6)
+	res, err = finish(res, filepath.Join(dir, "bot.log"), float64(ci.GameMS)/3.6e6, cfg.Hours)
+	res.Cover = &d2dsoakstat.Cover{Class: className(cfg.Class), Difficulty: "normal"} // a fresh d2d start character is Normal
 	if err != nil {
 		return res, err
 	}
@@ -214,7 +216,7 @@ func runSeed(ctx context.Context, cfg runCfg, lab Lab, seed int) (runResult, err
 
 // finish extracts the metrics from a bot log. hours is the d2d virtual clock (0 = unknown: the minute lines are then
 // counted as one virtual minute each, which only holds if the backend paces the bot's minute ticker by the d2d clock, U).
-func finish(res runResult, logPath string, hours float64) (runResult, error) {
+func finish(res runResult, logPath string, hours, want float64) (runResult, error) {
 	f, err := os.Open(logPath)
 	if err != nil {
 		return res, err
@@ -229,6 +231,10 @@ func finish(res runResult, logPath string, hours float64) (runResult, error) {
 	}
 	res.Run = d2dsoakstat.Extract("seed-"+strconv.Itoa(res.Seed), ms, d2dsoakstat.Options{Hours: hours})
 	res.NoteDropped(dropped)
+	res.Run.Seed = res.Seed
+	if res.Inv, err = scanInvariants(logPath, d2dsoakstat.ExitInfo{WantHours: want, End: res.End, CmdErr: res.CmdErr}); err != nil {
+		return res, err
+	}
 	// An empty or crashed seed has no exposure: Hours stays 0 and Invalid says why (the d2d clock alone is not exposure).
 	if res.Hours == 0 && res.Invalid == "" {
 		res.Hours = hours
@@ -248,6 +254,31 @@ func markEarlyEnd(res *runResult, want float64) {
 	case res.End != "hours reached" && float64(res.GameMS)/3.6e6 < 0.95*want:
 		res.Invalid = fmt.Sprintf("%s after %.2f of %.2f h", res.End, float64(res.GameMS)/3.6e6, want)
 	}
+}
+
+// scanInvariants streams a bot log through the invariant scanner; a supervisor.log next to it (hidden soaks) adds the
+// supervisor's launches and how the bot ended.
+func scanInvariants(logPath string, x d2dsoakstat.ExitInfo) (*d2dsoakstat.Invariants, error) {
+	if f, err := os.Open(filepath.Join(filepath.Dir(logPath), "supervisor.log")); err == nil {
+		d2dsoakstat.ScanSupervisor(f, &x)
+		f.Close()
+	}
+	f, err := os.Open(logPath)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+	inv, err := d2dsoakstat.ScanInvariants(f, x, d2dsoakstat.DefaultInvLimits())
+	return &inv, err
+}
+
+var classNames = map[int]string{0: "barbarian", 1: "necromancer", 2: "paladin", 3: "amazon", 4: "sorceress", 5: "druid", 6: "assassin"}
+
+func className(i int) string {
+	if n, ok := classNames[i]; ok {
+		return n
+	}
+	return fmt.Sprintf("class#%d", i)
 }
 
 func writeJSON(path string, v any) error {

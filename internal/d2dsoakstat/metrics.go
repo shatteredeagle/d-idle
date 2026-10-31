@@ -36,6 +36,17 @@ type Run struct {
 	// excludes it and cannot be PASS. Dropped is the number of minute lines that failed to parse.
 	Invalid string `json:"invalid,omitempty"`
 	Dropped int    `json:"dropped,omitempty"`
+	// Seed is the run's seed (0 = unknown: SeedOf then reads it from the name). Inv is the invariant counter block
+	// (nil when the run was loaded without its bot log); Cover is what the run's setup says about class and difficulty.
+	Seed  int         `json:"seed,omitempty"`
+	Inv   *Invariants `json:"invariants,omitempty"`
+	Cover *Cover      `json:"cover,omitempty"`
+}
+
+// Cover is the setup axes of a d2d run that the log does not carry.
+type Cover struct {
+	Class      string `json:"class"`
+	Difficulty string `json:"difficulty"`
 }
 
 // MaxDropFrac is the share of unparseable minute lines above which a run is invalid.

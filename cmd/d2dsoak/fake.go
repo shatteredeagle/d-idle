@@ -57,7 +57,7 @@ func runFake(cfg runCfg, scale float64, seed int) (runResult, error) {
 	if err := fakeMinutes(p, seed, cfg.Hours, scale); err != nil {
 		return runResult{}, err
 	}
-	res, err := finish(runResult{Seed: seed, Clock: "fake", End: "fake"}, p, cfg.Hours)
+	res, err := finish(runResult{Seed: seed, Clock: "fake", End: "fake"}, p, cfg.Hours, cfg.Hours)
 	if err != nil {
 		return res, err
 	}

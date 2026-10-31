@@ -106,6 +106,7 @@ func cmdRun(args []string) error {
 	maxLoad := fs.Float64("max-load", 45, "refuse to start above this 1-minute load average (0 = off)")
 	baselines := fs.String("baselines", "", "baselines.json: compare after the run")
 	exitZero := fs.Bool("exit-zero", false, "exit 0 whatever the verdict (old behaviour for scripts that read verdict.txt)")
+	holdout := fs.String("holdout", d2dsoakstat.DefaultHoldout, "holdout seeds, reported as their own group (docs/geninv.md); empty = no holdout group")
 	fake := fs.Bool("fake", false, "synthetic minute lines, no d2d (pipeline test, numbers mean nothing)")
 	fakeScale := fs.Float64("fake-scale", 1, "fake mode: rate factor versus attempt 18")
 	fs.Parse(args)
@@ -119,6 +120,11 @@ func cmdRun(args []string) error {
 	if err != nil {
 		return err
 	}
+	hs, err := d2dsoakstat.ParseSeedSet(*holdout)
+	if err != nil {
+		return err
+	}
+	cfg.Class = *class
 	cfg.Log = func(f string, a ...any) { fmt.Fprintf(os.Stderr, time.Now().Format("15:04:05 ")+f+"\n", a...) }
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
@@ -148,7 +154,7 @@ func cmdRun(args []string) error {
 	}
 	if len(runs) == 0 {
 		if *baselines != "" { // NO-DATA is a verdict (exit 3), not an I/O error
-			return compareGate(nil, *baselines, false, filepath.Join(cfg.Out, "verdict.txt"), "v1", *exitZero)
+			return compareGate(nil, *baselines, false, filepath.Join(cfg.Out, "verdict.txt"), "v1", *exitZero, hs)
 		}
 		return fmt.Errorf("no seed completed")
 	}
@@ -157,9 +163,12 @@ func cmdRun(args []string) error {
 		return err
 	}
 	fmt.Print(aggText(runs, agg))
+	if *baselines == "" { // with baselines the verdict report carries the invariants
+		fmt.Print(d2dsoakstat.BuildInvReport(runs, hs).Text())
+	}
 	var verr error
 	if *baselines != "" {
-		verr = compareGate(runs, *baselines, false, filepath.Join(cfg.Out, "verdict.txt"), "v1", *exitZero)
+		verr = compareGate(runs, *baselines, false, filepath.Join(cfg.Out, "verdict.txt"), "v1", *exitZero, hs)
 	}
 	if failed > 0 && !*exitZero {
 		var ee exitError
@@ -174,15 +183,22 @@ func cmdExtract(args []string) error {
 	fs := flag.NewFlagSet("extract", flag.ExitOnError)
 	hours := fs.Float64("hours", 0, "fixed run length in hours (0 = from the minute timestamps)")
 	asJSON := fs.Bool("json", false, "print JSON")
+	holdout := fs.String("holdout", d2dsoakstat.DefaultHoldout, "holdout seeds, reported as their own group (docs/geninv.md); empty = no holdout group")
 	fs.Parse(args)
+	hs, err := d2dsoakstat.ParseSeedSet(*holdout)
+	if err != nil {
+		return err
+	}
 	runs, err := loadRuns(fs.Args(), *hours)
 	if err != nil {
 		return err
 	}
+	inv := d2dsoakstat.BuildInvReport(runs, hs)
 	if *asJSON {
-		return json.NewEncoder(os.Stdout).Encode(map[string]any{"runs": runs, "aggregate": d2dsoakstat.Aggregate(runs)})
+		return json.NewEncoder(os.Stdout).Encode(map[string]any{"runs": runs, "aggregate": d2dsoakstat.Aggregate(runs), "invariants": inv})
 	}
 	fmt.Print(aggText(runs, d2dsoakstat.Aggregate(runs)))
+	fmt.Print(inv.Text())
 	printKillTimes(fs.Args(), 5)
 	return nil
 }
@@ -193,6 +209,7 @@ func cmdCompare(args []string) error {
 	asJSON := fs.Bool("json", false, "print JSON")
 	hours := fs.Float64("hours", 0, "fixed run length for raw minute logs")
 	exitZero := fs.Bool("exit-zero", false, "exit 0 whatever the verdict")
+	holdout := fs.String("holdout", d2dsoakstat.DefaultHoldout, "holdout seeds, reported as their own group (docs/geninv.md); empty = no holdout group")
 	gate := fs.String("gate", "v1", "gate: v1 (20 % on four metrics) or v2 (Poisson deaths + proxies, docs/d2d-fidelity.md)")
 	fs.Parse(args)
 	if *gate != "v1" && *gate != "v2" {
@@ -202,12 +219,16 @@ func cmdCompare(args []string) error {
 	if err != nil {
 		return err
 	}
-	return compareGate(runs, *bl, *asJSON, "", *gate, *exitZero)
+	hs, err := d2dsoakstat.ParseSeedSet(*holdout)
+	if err != nil {
+		return err
+	}
+	return compareGate(runs, *bl, *asJSON, "", *gate, *exitZero, hs)
 }
 
 // compareGate prints the verdict (text or JSON), saves the text when save is set and returns the exit code as an
 // exitError (nil for PASS or exitZero), the same for text and JSON output.
-func compareGate(runs []d2dsoakstat.Run, blPath string, asJSON bool, save, gate string, exitZero bool) error {
+func compareGate(runs []d2dsoakstat.Run, blPath string, asJSON bool, save, gate string, exitZero bool, holdout map[int]bool) error {
 	f, err := os.Open(blPath)
 	if err != nil {
 		return err
@@ -221,6 +242,8 @@ func compareGate(runs []d2dsoakstat.Run, blPath string, asJSON bool, save, gate 
 	if gate == "v2" {
 		v = d2dsoakstat.CompareV2(runs, b)
 	}
+	inv := d2dsoakstat.BuildInvReport(runs, holdout)
+	v.Inv = &inv
 	if save != "" {
 		os.WriteFile(save, []byte(v.Text()), 0o644)
 	}
@@ -249,6 +272,7 @@ func cmdBaseline(args []string) error {
 			return err
 		}
 		r := rs[0]
+		r.Inv = nil // baselines carry metrics only
 		r.Name = p[0]
 		br := d2dsoakstat.BaselineRun{Run: r, Source: p[2]}
 		if len(p) == 4 {
@@ -291,6 +315,12 @@ func loadRuns(paths []string, hours float64) ([]d2dsoakstat.Run, error) {
 			if r.Minutes < 2 && r.Invalid == "" {
 				r.Invalid = fmt.Sprintf("%d minute line(s), need 2", r.Minutes)
 			}
+			r.Run.Seed = r.Seed
+			if r.Inv == nil { // an older run.json: read the counters from the bot.log next to it
+				if inv, err := scanInvariants(filepath.Join(filepath.Dir(p), "bot.log"), d2dsoakstat.ExitInfo{WantHours: hours, End: r.End, CmdErr: r.CmdErr}); err == nil {
+					r.Inv = inv
+				}
+			}
 			runs = append(runs, r.Run)
 			continue
 		}
@@ -305,6 +335,9 @@ func loadRuns(paths []string, hours float64) ([]d2dsoakstat.Run, error) {
 		}
 		r := d2dsoakstat.Extract(filepath.Base(filepath.Dir(p))+"/"+filepath.Base(p), ms, d2dsoakstat.Options{Hours: hours})
 		r.NoteDropped(dropped)
+		if inv, err := scanInvariants(p, d2dsoakstat.ExitInfo{WantHours: hours}); err == nil {
+			r.Inv = inv
+		}
 		runs = append(runs, r)
 	}
 	return runs, nil
