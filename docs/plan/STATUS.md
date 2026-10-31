@@ -88,7 +88,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change roadmap: docs/roadmap.md is at most 150 lines and has an Alignment section naming every SME disagreement
 
 ### Recent merges
-- 4b6e70a 10-31 01:29 `Merge origin/main into agent/roadmap` (-)
+- 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
