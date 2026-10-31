@@ -31,3 +31,11 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
+internal/nav/route.go                townwedge   townwedge
+internal/nav/exit.go                 townwedge   townwedge
+internal/nav/exit_test.go            townwedge   townwedge
+internal/nav/nav.go                  townwedge   townwedge
+internal/nav/townwedge_test.go       townwedge   townwedge
+internal/env/tuning_nav.go           townwedge   townwedge
+docs/townwedge.md                    townwedge   townwedge
+openspec/changes/townwedge/**         townwedge   townwedge

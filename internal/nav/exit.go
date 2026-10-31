@@ -58,6 +58,19 @@ func (n *Navigator) ExitTo(ctx context.Context, levelNo int) error {
 			return fmt.Errorf("%w: left level %d for %d but ended in %d", ErrLevelChanged, start, levelNo, o.level)
 		}
 		g, ok := n.findGate(o, levelNo)
+		if !ok && n.badTTL() > 0 && n.fullyKnown() {
+			// The map shows a way to levelNo (d2dworld hands out the whole level and its neighbours) but no plan reaches it
+			// from here: the character stands in a pocket of the walkable grid. Exploring cannot find anything on a map
+			// that is fully known, and an ErrNoExit would condemn the link for everyone (TOWNWEDGE). Walk to the nearest
+			// cell that connects to the gate instead.
+			if target, pocket := n.pocketTarget(o, levelNo); pocket {
+				n.log.Info("nav: cut off from the gate, stepping to the nearest connected cell", "to", levelNo, "from", o.pos, "cell", target)
+				if n.leavePocket(ctx, o, target) {
+					continue
+				}
+				return fmt.Errorf("%w: gate to level %d is on the map but not reachable from %v (cut off, no way out found)", ErrNoPath, levelNo, o.pos)
+			}
+		}
 		if !ok {
 			n.log.Info("nav no exit known yet, exploring", "from", o.level, "to", levelNo)
 			known := o.lm.Grid.KnownCount()
@@ -197,6 +210,17 @@ func hasGate(lm *d2map.LevelMap, levelNo int) bool {
 
 // findGate picks the nearest reachable gate to levelNo.
 func (n *Navigator) findGate(o *obs, levelNo int) (gate, bool) {
+	for _, c := range n.gateCands(o, levelNo) {
+		res, err := n.plan(o.lm, o.pos, c.at, 3, o.snap.Monsters, 0)
+		if err == nil && !res.partial && !res.optimistic {
+			return c, true
+		}
+	}
+	return gate{}, false
+}
+
+// gateCands lists the usable (not marked bad) gates to levelNo on the current map, nearest first.
+func (n *Navigator) gateCands(o *obs, levelNo int) []gate {
 	var cands []gate
 	for _, e := range o.lm.Exits {
 		if e.Dest == levelNo {
@@ -205,16 +229,13 @@ func (n *Navigator) findGate(o *obs, levelNo int) (gate, bool) {
 	}
 	cands = append(cands, n.borderGates(o.lm, levelNo)...)
 	sort.Slice(cands, func(i, j int) bool { return dist(o.pos, cands[i].at) < dist(o.pos, cands[j].at) })
+	out := cands[:0:0]
 	for _, c := range cands {
-		if n.gateIsBad(o.level, levelNo, c.at) {
-			continue
-		}
-		res, err := n.plan(o.lm, o.pos, c.at, 3, o.snap.Monsters, 0)
-		if err == nil && !res.partial && !res.optimistic {
-			return c, true
+		if !n.gateIsBad(o.level, levelNo, c.at) {
+			out = append(out, c)
 		}
 	}
-	return gate{}, false
+	return out
 }
 
 // borderGates groups the border cells toward levelNo into gaps and returns the middle of each.
@@ -372,7 +393,7 @@ func (n *Navigator) ToArea(ctx context.Context, levelNo int) error {
 						break
 					}
 				}
-				if errors.Is(err, ErrNoExit) && from != 0 && n.levelNow() == from {
+				if errors.Is(err, ErrNoExit) && from != 0 && n.levelNow() == from && !(n.badTTL() > 0 && n.edgeShown(from, next)) {
 					n.markBad(from, next) // the edge was a guess (hint or levels.txt) and does not exist: route around it
 					cur, ok = from, false
 					break
@@ -429,22 +450,29 @@ type badGate struct {
 	from, to int
 	at       input.Point
 	until    time.Time // zero: for the rest of the game
+	lm       *d2map.LevelMap
 }
 
+// markBadGate: a gap that did not lead out. It expires like a bad edge (BadEdgeTTLSec, and when the game is
+// re-entered); with the knob at 0 it lasts for the rest of the run.
 func (n *Navigator) markBadGate(from, to int, at input.Point) {
-	n.badGates = append(n.badGates, badGate{from, to, at, time.Time{}})
+	b := badGate{from: from, to: to, at: at}
+	if ttl := n.badTTL(); ttl > 0 {
+		b.until, b.lm = n.clk.Now().Add(ttl), n.lvl(from)
+	}
+	n.badGates = append(n.badGates, b)
 }
 
 // markStalledGate is a bad gate for stalledGateTTL only: a walk that stalled on the way to it (a pack, a ghost
 // obstacle) says nothing about whether the gap leads out.
 func (n *Navigator) markStalledGate(from, to int, at input.Point) {
-	n.badGates = append(n.badGates, badGate{from, to, at, n.clk.Now().Add(stalledGateTTL)})
+	n.badGates = append(n.badGates, badGate{from: from, to: to, at: at, until: n.clk.Now().Add(stalledGateTTL)})
 }
 
 // gateIsBad: a gate within 6 subtiles of one that already failed.
 func (n *Navigator) gateIsBad(from, to int, at input.Point) bool {
 	for _, b := range n.badGates {
-		if b.from == from && b.to == to && dist(b.at, at) <= 6 && (b.until.IsZero() || n.clk.Now().Before(b.until)) {
+		if b.from == from && b.to == to && dist(b.at, at) <= 6 && (b.until.IsZero() || n.clk.Now().Before(b.until) && (b.lm == nil || n.lvl(from) == b.lm)) {
 			return true
 		}
 	}
@@ -467,6 +495,69 @@ func (n *Navigator) mapGrows(ctx context.Context, d time.Duration) bool {
 		if cur := n.w.Current(); cur != nil && cur.Grid.KnownCount() != start {
 			return true
 		}
+	}
+	return false
+}
+
+// pocketTarget decides whether the character is cut off from every usable gate to levelNo on the known grid, and if
+// so returns the connected cell nearest to it. pocket is false when the start connects to a gate (the plan failed
+// for another reason) or when there is no gate or no start cell to reason about.
+func (n *Navigator) pocketTarget(o *obs, levelNo int) (input.Point, bool) {
+	cands := n.gateCands(o, levelNo)
+	if len(cands) == 0 {
+		return input.Point{}, false
+	}
+	n.planMu.Lock()
+	defer n.planMu.Unlock()
+	f := n.fieldFor(o.lm)
+	f.ClearDyn()
+	sx, sy, ok := f.nearestWalkable(o.pos.X, o.pos.Y, 8)
+	if !ok {
+		return input.Point{}, false
+	}
+	si := f.idx(sx, sy)
+	best, bestD, found := input.Point{}, math.MaxFloat64, false
+	for _, c := range cands {
+		gx, gy, ok := f.nearestWalkable(c.at.X, c.at.Y, 3)
+		if !ok {
+			continue
+		}
+		hops := floodHops(f, gx, gy)
+		if hops[si] >= 0 {
+			return input.Point{}, false
+		}
+		for i, h := range hops {
+			if h < 0 {
+				continue
+			}
+			x, y := f.pt(int32(i))
+			if f.Clearance(x, y) < 1.5 { // a cell off the wall: the character is not pushed back into it
+				continue
+			}
+			if d := dist(o.pos, input.Point{X: x, Y: y}); d < bestD {
+				best, bestD, found = input.Point{X: x, Y: y}, d, true
+			}
+		}
+	}
+	return best, found
+}
+
+// leavePocket clicks toward target in steps of at most 10 subtiles (a click on a far cell the game cannot path to
+// goes nowhere) until the character is within 1.5 of it or the level changed. It reports whether it got there.
+func (n *Navigator) leavePocket(ctx context.Context, o *obs, target input.Point) bool {
+	t := n.tune()
+	for i := 0; i < 8; i++ {
+		cur, err := n.observeWait(ctx)
+		if err != nil || cur.level != o.level {
+			return err == nil
+		}
+		d := dist(cur.pos, target)
+		if d <= 1.5 {
+			return true
+		}
+		k := math.Min(d, 10) / d
+		_ = n.in.ClickWorld(input.Point{X: cur.pos.X + int(math.Round(float64(target.X-cur.pos.X)*k)), Y: cur.pos.Y + int(math.Round(float64(target.Y-cur.pos.Y)*k))})
+		n.clk.Sleep(8 * t.Poll())
 	}
 	return false
 }

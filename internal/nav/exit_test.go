@@ -241,7 +241,7 @@ func TestExitToEndingInThirdLevelIsNotNoExit(t *testing.T) {
 	if !errors.Is(err, ErrLevelChanged) || errors.Is(err, ErrNoExit) {
 		t.Fatalf("err = %v, want ErrLevelChanged", err)
 	}
-	if n.bad[edgeKey{26, 27}] {
+	if n.isBad(26, 27) {
 		t.Fatal("edge marked bad")
 	}
 }

@@ -32,6 +32,7 @@ type NavTuning struct {
 	UseWaypoints      bool    // travel, the corpse run and town returns take activated waypoints (docs/waypoints.md)
 	WpMinDistance     float64 // a waypoint hop must skip at least this many levels, otherwise the bot walks
 	WpCooldownSec     float64 // game.exe refuses a waypoint travel this long after a level change (D2D-V: 10 s)
+	BadEdgeTTLSec     float64 // a nav edge or gate marked bad is forgotten after this long (0: never, the old behaviour; also switches the cut-off-pocket unstick off)
 	CautionRadius     float64 // CorpseApproach stops when a living monster is this close (subtiles); its paths avoid monsters at twice the usual radius
 }
 
@@ -41,7 +42,7 @@ func DefaultNavTuning() NavTuning {
 		StuckMs: 1200, MaxRecoveries: 6, WallClearance: 3, WallWeight: 0.75, MonsterRadius: 8, MonsterPenalty: 6,
 		ExploreInformed: true, ExploreBucket: 10, WalkTimeoutSec: 120, ExploreTimeoutSec: 300, ExitPush: 8,
 		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20,
-		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 10,
+		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 10, BadEdgeTTLSec: 300,
 	}
 }
 
@@ -117,6 +118,8 @@ func navKnobs() []Knob {
 			Desc: "A waypoint trip is taken only when it skips at least this many level hops; shorter routes walk. 2 is the shortest trip that saves a level."},
 		{Key: "nav.wpCooldownSec", Label: "Waypoint cooldown", Unit: "s", Default: d.WpCooldownSec, Min: 10, Max: 20, HigherIsBetter: false, NoHandicap: true,
 			Desc: "game.exe silently refuses a waypoint travel for 10 s after any level change; the bot waits this long since arriving before clicking a row. Lower is not useful."},
+		{Key: "nav.badEdgeTTLSec", Label: "Bad route edge lifetime", Unit: "s", Default: d.BadEdgeTTLSec, Min: 0, Max: 3600, HigherIsBetter: false, NoHandicap: true,
+			Desc: "A level link or gate that a walk failed on is routed around for this long (game time), and forgotten at once when the game is re-entered; a link the level map itself shows is never marked. 0 restores the old behaviour: marks last for the rest of the run, and a character cut off from a gate it can see is not walked out of its pocket (townwedge)."},
 		{Key: "nav.cautionRadius", Label: "Corpse approach caution", Unit: "subtiles", Default: d.CautionRadius, Min: 8, Max: 40, HigherIsBetter: true,
 			Desc: "A corpse run stops and reports when a living monster comes this close; its paths avoid monsters at twice the usual radius."},
 	}
