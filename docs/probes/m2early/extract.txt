@@ -1,0 +1,183 @@
+run                         hours     min   kills      xp/h   deaths  kills/h  clvl+
+./bot-base1.log              3.00     179     641      5421        0      214      5
+./bot-base2.log              3.00     181     628      5177        0      209      5
+./bot-base3.log              3.00     181     557      4180        2      186      4
+./bot-base4.log              3.00     180     617      5202        0      206      5
+./bot-base5.log              3.00     180     612      5205        0      204      5
+./bot-base6.log              3.00     180     514      4974        1      171      5
+./bot-base7.log              3.00     180     572      4435        0      191      4
+./bot-base8.log              3.00     182     458      3544        0      153      4
+
+metric (all runs)              mean         sd          min          max     n
+xp_per_hour                    4767      651.3         3544         5421     8  XP/h
+kills_per_hour                191.6       21.1        152.7        213.7     8  kills/h
+deaths_per_hour               0.125      0.248            0       0.6667     8  deaths/h
+deaths_per_1000_kills         0.692      1.355            0        3.591     8  deaths/1000 kills
+potions_per_hour              14.29      5.205        5.667           20     8  potions/h
+gold_per_hour                 40.46      26.22        3.333        88.67     8  gold/h (net)
+potions_per_100_kills         7.322      2.292        3.712        9.804     8  potions/100 kills
+min_life_fraction            0.7837    0.03918       0.7101       0.8492     8  life fraction
+damage_per_kill               2.029     0.4281        1.498         2.66     8  life/kill
+recovery_share               0.5081    0.07355       0.3516       0.5691     8  share of time
+farming_share                0.1282    0.07375      0.03846         0.25     8  share of time
+town_share                   0.3346      0.122       0.2044       0.5604     8  share of time
+repeat_sites                      0          0            0            0     8  count
+clvl_gain                     4.625     0.5175            4            5     8  levels
+clvl_1h                       3.875     0.3536            3            4     8  clvl
+clvl_2h                       4.875     0.3536            4            5     8  clvl
+time in state (mean over runs): recovery 50% town chores 33% farming 13% quest fight 1% other 1% waiting 1% quest travel 1%
+killtime bot-base1.log: 642 kills, s/kill walk 12.8 cast 0.8 wait 3.1 out-of-game 0.0 (total 16.7)
+  wait share of in-game time 19 %, of wait seconds in gaps over 30 s 55 %
+  gap <=4s       366 kills    0.8 s per kill overall
+  gap 4-10s       82 kills    0.9 s per kill overall
+  gap 10-30s     114 kills    3.1 s per kill overall
+  gap 30-120s     64 kills    5.8 s per kill overall
+  gap >120s       16 kills    6.2 s per kill overall
+  step "Recovery: farming gold"            404 kills   15.9 s gap per kill (wait 3.1), 60 % of all gap seconds
+  step "Quest: fighting"                   116 kills   20.5 s gap per kill (wait 3.5), 22 % of all gap seconds
+  step "Returning to the field"             55 kills   24.4 s gap per kill (wait 4.5), 12 % of all gap seconds
+  step "Quest: travelling"                  21 kills   10.2 s gap per kill (wait 1.5), 2 % of all gap seconds
+  step "Going to town"                      25 kills    7.6 s gap per kill (wait 2.0), 2 % of all gap seconds
+  step "Chores in town"                     11 kills   10.5 s gap per kill (wait 1.6), 1 % of all gap seconds
+  step ""                                   10 kills    5.7 s gap per kill (wait 1.6), 1 % of all gap seconds
+  top1 gap 479s (walk 418 cast 2 wait 59) Dark Spearwoman area 3, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x15, nav stuck x8, nav exit x4, clear killed nothing; moving on x3, combat fight area=3 diff=0 danger=2 kills=0 damage=0 minlife=97 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00 x3, nav: stuck recovered x3
+  top2 gap 402s (walk 344 cast 4 wait 54) Fallen area 3, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x13, nav stuck x6, nav exit x4, nav: stuck recovered x3, recovery: loot +0 items, +0 gold in piles, 0 left for lack of room x3, Entered Blood Moor x2
+  top3 gap 358s (walk 310 cast 1 wait 47) Fallen area 3, runner clearing, last minute goal="campaign" step="Quest: fighting (Level up to 9)" rstate=clearing; between kills: status x12, nav exit x4, shop: bought x4, Entered Blood Moor x2, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2, nav stuck x2
+  top4 gap 348s (walk 282 cast 0 wait 66) Fallen area 3, runner clearing, last minute goal="campaign" step="Quest: fighting (Level up to 9)" rstate=clearing; between kills: status x11, nav stuck x9, shop: bought x6, nav exit x4, nav: stuck recovered x3, Entered Blood Moor x2
+  top5 gap 347s (walk 298 cast 2 wait 48) Gargantuan Beast area 8, runner clearing, last minute goal="campaign" step="Quest: fighting (Clear the Den of Evil)" rstate=clearing; between kills: status x12, nav exit x6, nav stuck x6, Entered Blood Moor x3, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x3, roam: coverage points x3
+killtime bot-base2.log: 631 kills, s/kill walk 12.7 cast 0.9 wait 3.5 out-of-game 0.0 (total 17.1)
+  wait share of in-game time 21 %, of wait seconds in gaps over 30 s 59 %
+  gap <=4s       299 kills    0.7 s per kill overall
+  gap 4-10s      116 kills    1.3 s per kill overall
+  gap 10-30s     134 kills    3.7 s per kill overall
+  gap 30-120s     66 kills    5.9 s per kill overall
+  gap >120s       16 kills    5.5 s per kill overall
+  step "Recovery: farming gold"            408 kills   17.1 s gap per kill (wait 3.3), 65 % of all gap seconds
+  step "Quest: fighting"                   153 kills   13.8 s gap per kill (wait 3.0), 20 % of all gap seconds
+  step "Returning to the field"             30 kills   26.0 s gap per kill (wait 4.0), 7 % of all gap seconds
+  step "Waiting: Blood Moor banned for 2 more min"   16 kills   24.8 s gap per kill (wait 9.4), 4 % of all gap seconds
+  step "Quest: travelling"                   8 kills   21.4 s gap per kill (wait 4.2), 2 % of all gap seconds
+  step "Chores in town"                      4 kills   42.4 s gap per kill (wait 11.8), 2 % of all gap seconds
+  step "Going to town"                       9 kills   15.8 s gap per kill (wait 6.0), 1 % of all gap seconds
+  step ""                                    3 kills   14.0 s gap per kill (wait 3.3), 0 % of all gap seconds
+  top1 gap 357s (walk 292 cast 2 wait 63) Dark Spearwoman area 3, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x12, nav stuck x10, nav exit x4, nav: stuck recovered x3, recovery: loot +0 items, +0 gold in piles, 0 left for lack of room x3, shop: bought x3
+  top2 gap 320s (walk 284 cast 1 wait 36) Zombie area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: combat kill x11, status x11, nav exit x5, Entered Blood Moor x3, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x3, recovery: loot +0 items, +0 gold in piles, 0 left for lack of room x3
+  top3 gap 299s (walk 247 cast 2 wait 50) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: nav stuck x12, status x10, combat crowd: stepping away x7, no town portal and no waypoint: walking back via the neighbour x7, no town portal: taking the waypoint to town x7, nav exit x5
+  top4 gap 286s (walk 253 cast 1 wait 32) Fallen area 2, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x9, nav exit x5, nav stuck x4, Entered Blood Moor x3, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2, nav: blacklisted cell x2
+  top5 gap 273s (walk 248 cast 1 wait 23) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: combat abort fight: flee x88, combat move skipped: the point is in a cave mouth x40, last line repeated x31, potion: not drinking because no healing potion in the belt life=31% belt=hp=0 mp=1 rv=0 x19, potion: not drinking because no healing potion in the belt life=27% belt=hp=0 mp=1 rv=0 x16, potion: not drinking because no healing potion in the belt life=36% belt=hp=0 mp=1 rv=0 x14
+killtime bot-base3.log: 561 kills, s/kill walk 15.0 cast 0.8 wait 3.5 out-of-game 0.0 (total 19.2)
+  wait share of in-game time 18 %, of wait seconds in gaps over 30 s 64 %
+  gap <=4s       284 kills    0.7 s per kill overall
+  gap 4-10s       98 kills    1.3 s per kill overall
+  gap 10-30s      95 kills    3.0 s per kill overall
+  gap 30-120s     66 kills    7.1 s per kill overall
+  gap >120s       18 kills    7.0 s per kill overall
+  step "Recovery: farming gold"            361 kills   17.7 s gap per kill (wait 3.0), 59 % of all gap seconds
+  step "Quest: fighting"                   123 kills   16.9 s gap per kill (wait 2.5), 19 % of all gap seconds
+  step "Returning to the field"             38 kills   39.7 s gap per kill (wait 9.3), 14 % of all gap seconds
+  step "Chores in town"                      9 kills   20.9 s gap per kill (wait 3.5), 2 % of all gap seconds
+  step "Waiting: Stony Field banned for 13 more min"    3 kills   55.9 s gap per kill (wait 11.9), 2 % of all gap seconds
+  step "Failsafe: resetting in town"         3 kills   52.8 s gap per kill (wait 35.7), 1 % of all gap seconds
+  step "Spending stat and skill points"      7 kills   18.1 s gap per kill (wait 1.9), 1 % of all gap seconds
+  step "Going to town"                       2 kills   29.8 s gap per kill (wait 3.2), 1 % of all gap seconds
+  step "Quest: travelling"                  11 kills    5.3 s gap per kill (wait 1.1), 1 % of all gap seconds
+  step ""                                    4 kills   14.2 s gap per kill (wait 0.8), 1 % of all gap seconds
+  top1 gap 422s (walk 359 cast 1 wait 61) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: no town portal: taking the waypoint to town x21, action failed x18, recovery: leaving Stony Field first x15, status x14, state x8, area ban lifted x7
+  top2 gap 385s (walk 315 cast 1 wait 69) Fallen area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x12, nav stuck x8, combat ignoring target x6, nav exit x4, Entered Blood Moor x2, combat kill x2
+  top3 gap 364s (walk 305 cast 1 wait 58) Zombie area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x12, nav exit x5, nav stuck x4, Entered Blood Moor x3, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x3, npc visit: vendor window open x2
+  top4 gap 280s (walk 242 cast 1 wait 37) Fallen area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x10, nav stuck x7, combat kill x4, combat crowd: stepping away x3, combat potion x3, d2d town portal attempt failed x3
+  top5 gap 260s (walk 154 cast 1 wait 106) Zombie area 2, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: task step x42, nav exit x40, state x35, Entered Blood Moor x24, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x24, Entered Den of Evil x23
+killtime bot-base4.log: 620 kills, s/kill walk 13.0 cast 0.8 wait 3.6 out-of-game 0.0 (total 17.4)
+  wait share of in-game time 21 %, of wait seconds in gaps over 30 s 60 %
+  gap <=4s       331 kills    0.8 s per kill overall
+  gap 4-10s      105 kills    1.3 s per kill overall
+  gap 10-30s     101 kills    2.9 s per kill overall
+  gap 30-120s     64 kills    5.5 s per kill overall
+  gap >120s       19 kills    6.9 s per kill overall
+  step "Recovery: farming gold"            343 kills   16.8 s gap per kill (wait 4.0), 53 % of all gap seconds
+  step "Quest: fighting"                   181 kills   14.5 s gap per kill (wait 1.5), 24 % of all gap seconds
+  step "Returning to the field"             57 kills   34.5 s gap per kill (wait 7.4), 18 % of all gap seconds
+  step "Going to town"                      19 kills    9.0 s gap per kill (wait 3.9), 2 % of all gap seconds
+  step "Quest: travelling"                  11 kills   13.8 s gap per kill (wait 3.3), 1 % of all gap seconds
+  step "Chores in town"                      5 kills   16.9 s gap per kill (wait 3.1), 1 % of all gap seconds
+  step ""                                    4 kills    9.5 s gap per kill (wait 0.8), 0 % of all gap seconds
+  top1 gap 367s (walk 314 cast 1 wait 51) Fallen Shaman area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x13, d2d town portal attempt failed x6, nav exit x4, nav stuck x4, clear killed nothing; moving on x3, shop: bought x3
+  top2 gap 360s (walk 294 cast 5 wait 61) Skeleton area 9, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x12, nav stuck x6, combat potion x5, nav exit x5, shop: bought x4, Entered Cold Plains x2
+  top3 gap 357s (walk 323 cast 1 wait 34) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x12, nav exit x7, Entered Blood Moor x4, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x4, nav stuck x4, no town portal and no waypoint: walking back via the neighbour x4
+  top4 gap 347s (walk 255 cast 4 wait 88) Dark Spearwoman area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: nav stuck x26, combat crowd: stepping away x14, nav stalled by monsters, yielding x14, status x12, combat move failed x11, combat kill x4
+  top5 gap 332s (walk 281 cast 1 wait 50) Dark Spearwoman area 3, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x11, nav stuck x10, nav exit x6, nav: stuck recovered x5, shop: bought x5, Entered Blood Moor x3
+killtime bot-base5.log: 600 kills, s/kill walk 13.7 cast 0.7 wait 3.2 out-of-game 0.0 (total 17.6)
+  wait share of in-game time 18 %, of wait seconds in gaps over 30 s 56 %
+  gap <=4s       337 kills    0.7 s per kill overall
+  gap 4-10s      107 kills    1.4 s per kill overall
+  gap 10-30s      99 kills    2.9 s per kill overall
+  gap 30-120s     43 kills    4.6 s per kill overall
+  gap >120s       14 kills    8.1 s per kill overall
+  step "Recovery: farming gold"            473 kills   13.3 s gap per kill (wait 2.4), 60 % of all gap seconds
+  step "Quest: fighting"                    82 kills   21.4 s gap per kill (wait 3.0), 17 % of all gap seconds
+  step "Returning to the field"             11 kills  120.2 s gap per kill (wait 18.6), 13 % of all gap seconds
+  step "Quest: travelling"                   2 kills  236.8 s gap per kill (wait 38.0), 4 % of all gap seconds
+  step "Chores in town"                     11 kills   40.0 s gap per kill (wait 6.7), 4 % of all gap seconds
+  step "Going to town"                      18 kills   12.8 s gap per kill (wait 8.6), 2 % of all gap seconds
+  step ""                                    3 kills   17.8 s gap per kill (wait 1.0), 1 % of all gap seconds
+  top1 gap 474s (walk 428 cast 2 wait 45) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x16, nav stuck x14, nav exit x10, nav: stuck recovered x6, Entered Blood Moor x4, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x4
+  top2 gap 473s (walk 396 cast 1 wait 76) Fallen area 3, runner clearing, last minute goal="campaign" step="Quest: travelling (Go to the Den of Evil)" rstate=traveling; between kills: state x22, nav exit x18, status x16, task step x15, Entered Blood Moor x14, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x14
+  top3 gap 432s (walk 371 cast 1 wait 60) Fallen area 3, runner clearing, last minute goal="campaign" step="Quest: fighting (Level up to 9)" rstate=clearing; between kills: status x15, nav exit x5, nav stuck x5, task step x3, Entered Blood Moor x2, Entered Cold Plains x2
+  top4 gap 418s (walk 382 cast 0 wait 35) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x14, nav stuck x8, nav exit x7, Entered Blood Moor x4, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x4, state x3
+  top5 gap 398s (walk 341 cast 0 wait 57) Fallen area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x13, shop: bought x6, nav exit x4, nav stuck x4, d2d town portal attempt failed x3, Entered Blood Moor x2
+killtime bot-base6.log: 513 kills, s/kill walk 16.6 cast 0.9 wait 3.6 out-of-game 0.0 (total 21.0)
+  wait share of in-game time 17 %, of wait seconds in gaps over 30 s 60 %
+  gap <=4s       277 kills    0.7 s per kill overall
+  gap 4-10s       77 kills    1.1 s per kill overall
+  gap 10-30s      94 kills    3.5 s per kill overall
+  gap 30-120s     48 kills    5.1 s per kill overall
+  gap >120s       17 kills   10.6 s per kill overall
+  step "Recovery: farming gold"            371 kills   20.4 s gap per kill (wait 3.5), 70 % of all gap seconds
+  step "Returning to the field"             60 kills   36.7 s gap per kill (wait 5.1), 20 % of all gap seconds
+  step "Quest: fighting"                    56 kills    9.9 s gap per kill (wait 2.2), 5 % of all gap seconds
+  step "Chores in town"                     17 kills   20.6 s gap per kill (wait 5.1), 3 % of all gap seconds
+  step "Quest: travelling"                   8 kills   11.2 s gap per kill (wait 0.9), 1 % of all gap seconds
+  step "Going to town"                       1 kills   21.4 s gap per kill (wait 19.2), 0 % of all gap seconds
+  top1 gap 689s (walk 638 cast 2 wait 49) Zombie area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x23, state x22, nav exit x14, Entered Blood Moor x13, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x13, task step x13
+  top2 gap 470s (walk 365 cast 3 wait 102) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: action failed x19, no town portal: taking the waypoint to town x19, recovery: leaving Stony Field first x17, status x16, state x8, nav exit x4
+  top3 gap 391s (walk 333 cast 1 wait 57) Dark Hunter area 3, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x13, nav stuck x7, nav exit x4, nav: blacklisted cell x3, nav: stuck again at the same spot x3, recovery: loot +0 items, +0 gold in piles, 0 left for lack of room x3
+  top4 gap 382s (walk 333 cast 0 wait 49) Foul Crow area 4, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: nav exit x17, status x13, Entered Cold Plains x12, d2dworld: arrived in level 3: 3 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x12, Entered Cave Level 1 x11, d2dworld: arrived in level 9: 0 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x11
+  top5 gap 368s (walk 311 cast 4 wait 53) Zombie area 2, runner traveling, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x13, nav stuck x7, nav exit x6, shop: bought x4, Entered Blood Moor x3, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x3
+killtime bot-base7.log: 575 kills, s/kill walk 14.2 cast 0.9 wait 3.3 out-of-game 0.0 (total 18.5)
+  wait share of in-game time 18 %, of wait seconds in gaps over 30 s 54 %
+  gap <=4s       262 kills    0.7 s per kill overall
+  gap 4-10s      100 kills    1.3 s per kill overall
+  gap 10-30s     123 kills    3.7 s per kill overall
+  gap 30-120s     76 kills    6.7 s per kill overall
+  gap >120s       14 kills    6.1 s per kill overall
+  step "Recovery: farming gold"            401 kills   15.8 s gap per kill (wait 2.8), 60 % of all gap seconds
+  step "Returning to the field"             48 kills   44.9 s gap per kill (wait 6.9), 20 % of all gap seconds
+  step "Quest: fighting"                    95 kills   14.0 s gap per kill (wait 3.1), 13 % of all gap seconds
+  step "Chores in town"                     24 kills   21.3 s gap per kill (wait 3.7), 5 % of all gap seconds
+  step "Going to town"                       4 kills   63.1 s gap per kill (wait 19.7), 2 % of all gap seconds
+  step ""                                    3 kills   12.3 s gap per kill (wait 2.3), 0 % of all gap seconds
+  top1 gap 406s (walk 322 cast 1 wait 82) Quill Rat area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x13, nav exit x6, Entered Blood Moor x4, nav stuck x4, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x3, potion: not drinking because no healing potion in the belt life=36% belt=hp=0 mp=2 rv=0 x3
+  top2 gap 374s (walk 335 cast 1 wait 39) Fallen area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x12, nav exit x7, recovery: loot +0 items, +0 gold in piles, 0 left for lack of room x3, Entered Blood Moor x2, Entered Cold Plains x2, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2
+  top3 gap 350s (walk 316 cast 3 wait 32) Quill Rat area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x11, nav exit x7, Entered Blood Moor x4, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x4, nav stuck x4, state x4
+  top4 gap 324s (walk 280 cast 4 wait 40) Fallen area 3, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x11, nav stuck x8, nav exit x4, nav: stuck recovered x3, Entered Blood Moor x2, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2
+  top5 gap 303s (walk 247 cast 5 wait 51) Fallen area 8, runner clearing, last minute goal="campaign" step="Returning to the field" rstate=resupplying; between kills: status x10, nav stuck x8, combat potion x5, nav exit x4, combat out of mana: backing off x3, nav: stuck recovered x3
+killtime bot-base8.log: 474 kills, s/kill walk 19.4 cast 0.7 wait 3.1 out-of-game 0.0 (total 23.2)
+  wait share of in-game time 13 %, of wait seconds in gaps over 30 s 66 %
+  gap <=4s       303 kills    0.8 s per kill overall
+  gap 4-10s       47 kills    0.7 s per kill overall
+  gap 10-30s      39 kills    1.6 s per kill overall
+  gap 30-120s     58 kills    7.4 s per kill overall
+  gap >120s       27 kills   12.6 s per kill overall
+  step "Going to town"                     189 kills   26.4 s gap per kill (wait 1.8), 45 % of all gap seconds
+  step "Recovery: farming gold"            188 kills   23.1 s gap per kill (wait 3.9), 40 % of all gap seconds
+  step "Quest: fighting"                    38 kills   10.6 s gap per kill (wait 3.6), 4 % of all gap seconds
+  step "Waiting: Blood Moor banned for 2 more min"   15 kills   26.7 s gap per kill (wait 7.6), 4 % of all gap seconds
+  step "Quest: travelling"                  23 kills   16.6 s gap per kill (wait 1.2), 3 % of all gap seconds
+  step "Returning to town"                  15 kills   21.0 s gap per kill (wait 3.8), 3 % of all gap seconds
+  step "Waiting: Blood Moor banned for 3 more min"    2 kills   64.7 s gap per kill (wait 32.4), 1 % of all gap seconds
+  step ""                                    4 kills    7.5 s gap per kill (wait 1.5), 0 % of all gap seconds
+  top1 gap 492s (walk 456 cast 1 wait 36) Fallen area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: status x16, last line repeated x14, combat out of mana: backing off x7, combat move failed x6, nav stuck x5, potion: not drinking because no healing potion in the belt life=44% belt=hp=0 mp=0 rv=0 x5
+  top2 gap 369s (walk 355 cast 2 wait 12) Zombie area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: potion: not drinking because no healing potion in the belt life=29% belt=hp=0 mp=0 rv=0 x28, last line repeated x22, combat abort fight: flee x19, status x13, nav stuck x5, potion: not drinking because no healing potion in the belt life=31% belt=hp=0 mp=0 rv=0 x4
+  top3 gap 346s (walk 342 cast 0 wait 4) Fallen area 2, runner clearing, last minute goal="campaign" step="Going to town ([1 healing potions 4 items to sell, 54 gold])" rstate=resupplying; between kills: status x11, Entered Blood Moor x2, Entered Den of Evil x2, action failed x2, d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2, d2dworld: arrived in level 8: 0 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m0s) x2
+  top4 gap 334s (walk 330 cast 1 wait 3) Fallen area 2, runner resupplying, last minute goal="campaign" step="Going to town ([poverty: 6 items to sell, 77 gold low on healing potions])" rstate=resupplying; between kills: status x11, nav no exit known yet, exploring x2, no town portal: walking back to town x2, Entered Blood Moor x1, Entered Den of Evil x1, action failed x1
+  top5 gap 301s (walk 291 cast 2 wait 9) Zombie area 2, runner clearing, last minute goal="campaign" step="Recovery: farming gold" rstate=clearing; between kills: combat abort fight: flee x24, last line repeated x23, potion: not drinking because no healing potion in the belt life=27% belt=hp=0 mp=1 rv=0 x16, status x10, potion: not drinking because no healing potion in the belt life=32% belt=hp=0 mp=1 rv=0 x8, Entered Blood Moor x6
