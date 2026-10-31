@@ -38,7 +38,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [combatspin](../../openspec/changes/combatspin/) | in-progress | combatspin | `internal/combat/fight.go`<br>`internal/combat/combatspin_test.go`<br>`docs/combatspin.md`<br>`openspec/changes/combatspin/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -49,7 +48,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements
 - spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
-- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 7 requirements
+- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 8 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
@@ -64,8 +63,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 14 requirements
 - spec [town-basics](../../openspec/specs/town-basics/spec.md): 5 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
-- change combatspin: go test -p 1 ./internal/combat passes; the offline repro does not trip the watchdog
-- change combatspin: whole-repo go vet and go test -short pass; go test -race ./internal/combat
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -84,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 7d8fe06 10-31 09:33 `Merge agent/combatspin: skipped move costs a poll tick` (combatspin)
 - 3b94ad7 10-31 09:31 `Merge agent/goldfloor: gold ledger analysis, proposed card` (goldfloor)
 - 13bb410 10-31 09:27 `Merge agent/geninv: gen-invariants` (gen-invariants)
 - d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
@@ -93,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 950a153 10-31 06:49 `Merge agent/nowall: campaign stall escalation` (nowall)
 - a9a788a 10-31 06:41 `Merge agent/soakcompare` (soakcompare)
 - 5001721 10-31 06:41 `Merge agent/navsoak2` (navsoak2)
-- 8f4cf7b 10-31 06:41 `Merge agent/navsoak` (navsoak)
 <!-- statusgen:end -->

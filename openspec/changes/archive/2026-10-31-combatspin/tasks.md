@@ -2,7 +2,7 @@
 
 ```yaml
 change: combatspin
-status: in-progress
+status: archived
 agent: combatspin
 branch: agent/combatspin
 worktree: ~/code/d2lod-wt/combatspin
@@ -16,6 +16,7 @@ gates:
   - "go test -p 1 ./internal/combat passes; the offline repro does not trip the watchdog"
   - "whole-repo go vet and go test -short pass; go test -race ./internal/combat"
 result: "NOT verified live (seed 2 replay skipped: the fix changes flee decisions near mouths so the run diverges anyway); offline repro fails before the fix and passes after; vet, short tests and race for internal/combat pass on Orion; Game.exe-affecting (shared combat code)"
+merge: 7d8fe06
 ```
 
 ## 1. Fix
