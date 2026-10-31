@@ -22,9 +22,9 @@ result:
 
 ## 1. Work
 
-- [ ] 1.1 Trace every level-seed write for level 40 in the emulator (lut_trace.py); name the two extra steps
-- [ ] 1.2 Find why d2d skips them; fix on a fresh branch off upstream/main in the clone; pr_guard, presubmit, tests
-- [ ] 1.3 Differential before/after with upstream's diff_drlg.py: level 40 seeds/tiles/units 1-20; levels 1, 2, 75, 103, 109 1-10
+- [x] 1.1 Trace every level-seed write for level 40 in the emulator (lut_trace.py); name the two extra steps
+- [x] 1.2 Find why d2d skips them; fix on a fresh branch off upstream/main in the clone; pr_guard, presubmit, tests
+- [x] 1.3 Differential before/after with upstream's diff_drlg.py: level 40 seeds/tiles/units 1-20; levels 1, 2, 75, 103, 109 1-10
 - [ ] 1.4 Independent adversarial verifier (Agent, general-purpose, read-only)
 - [ ] 1.5 Docs: lutgholein-proof.md, pr-lut-gholein-draft.md, pr-lut-gholein-evidence-pack.md
 - [ ] 1.6 Cleanup: no instance started, no pids left; report
