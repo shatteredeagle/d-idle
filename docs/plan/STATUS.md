@@ -41,6 +41,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
+| [generality](../../openspec/changes/generality/) | in-progress | generality | `docs/research/bot-generality.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
@@ -69,6 +70,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
+- change generality: docs/research/bot-generality.md <= 140 lines with evidence table, vocabulary, layer table, experiments, plan, SME notes
+- change generality: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m2-earlybase: tools/d2dsoak/baselines-early.json has at least 2 runs, each with xp_per_hour, kills_per_hour, deaths_per_hour, deaths_per_1000_kills and a source line; rules gate kills_per_hour (rel 0.2) and deaths_per_1000_kills (rel 0.2, abs 1.0)
 - change m2-earlybase: go test ./cmd/d2dsoak passes (the baseline file loads) and `d2dsoak compare -base tools/d2dsoak/baselines-early.json` on the soakfull runs in docs/probes/soakfull prints a verdict for all four metrics
 - change m2-earlybase: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
