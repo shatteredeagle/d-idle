@@ -7,6 +7,10 @@
 - **WHEN** 3 seeds ran and the verdict is INCONCLUSIVE
 - **THEN** the process exits 2 and the last line names the verdict and the code
 
+#### Scenario: No usable seed
+- **WHEN** every seed is excluded (no minute lines)
+- **THEN** the verdict is NO-DATA and the process exits 3, never 0 or 2
+
 #### Scenario: Failed metric
 - **WHEN** any gated metric is FAIL
 - **THEN** the process exits 3

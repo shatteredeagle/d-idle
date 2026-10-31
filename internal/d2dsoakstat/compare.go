@@ -73,7 +73,27 @@ const (
 	Fail         = "FAIL"
 	Inconclusive = "INCONCLUSIVE"
 	Info         = "info"
+	// NoData is the overall verdict when no seed was usable: nothing was judged, so it is never a pass.
+	NoData = "NO-DATA"
 )
+
+// Exit codes of the verdict (docs/d2d-soak.md "Exit codes"): only PASS is 0, so a script cannot read a non-pass as a pass.
+const (
+	ExitPass         = 0
+	ExitInconclusive = 2
+	ExitFail         = 3
+)
+
+// ExitCode maps an overall verdict to its process exit code; FAIL, NO-DATA and anything unknown are 3 (fail closed).
+func ExitCode(overall string) int {
+	switch overall {
+	case Pass:
+		return ExitPass
+	case Inconclusive:
+		return ExitInconclusive
+	}
+	return ExitFail
+}
 
 // Row is one line of the comparison.
 type Row struct {
@@ -92,6 +112,9 @@ type Verdict struct {
 	Overall  string   `json:"overall"`
 	Rows     []Row    `json:"rows"`
 	Warnings []string `json:"warnings,omitempty"`
+	// Seeds is the number of seeds that count; Excluded lists the others as "name: reason" (zero exposure, zero kills).
+	Seeds    int      `json:"seeds"`
+	Excluded []string `json:"excludedSeeds,omitempty"`
 }
 
 // Compare judges the d2d runs against the baselines.
@@ -110,7 +133,7 @@ func Compare(d2d []Run, b Baselines) Verdict {
 func splitValid(rs []Run) (valid []Run, bad []string) {
 	for _, r := range rs {
 		if p := r.Problem(); p != "" {
-			bad = append(bad, fmt.Sprintf("%s excluded: %s", r.Name, p))
+			bad = append(bad, fmt.Sprintf("%s: %s", r.Name, p))
 		} else {
 			valid = append(valid, r)
 		}
@@ -122,7 +145,8 @@ func splitValid(rs []Run) (valid []Run, bad []string) {
 // is below the minimums of fidelity-gate "Minimum sample" (seeds, hours per seed, total hours); a FAIL stays a FAIL.
 func applySample(v Verdict, valid []Run, bad []string, b Baselines) Verdict {
 	var why []string
-	v.Warnings = append(v.Warnings, bad...)
+	v.Excluded = append(v.Excluded, bad...)
+	v.Seeds = len(valid)
 	if len(bad) > 0 {
 		why = append(why, "excluded runs")
 	}
@@ -142,6 +166,11 @@ func applySample(v Verdict, valid []Run, bad []string, b Baselines) Verdict {
 	}
 	if b.MinTotalHours > 0 && hours < b.MinTotalHours {
 		why = append(why, "too few total hours")
+	}
+	if len(valid) == 0 {
+		v.Overall = NoData
+		v.Warnings = append(v.Warnings, "NO-DATA: no usable seed, nothing was judged")
+		return v
 	}
 	if len(why) > 0 && v.Overall == Pass {
 		v.Overall = Inconclusive
@@ -250,7 +279,14 @@ func (v Verdict) Text() string {
 	for _, w := range v.Warnings {
 		fmt.Fprintf(&b, "WARNING: %s\n", w)
 	}
-	fmt.Fprintf(&b, "OVERALL: %s\n", v.Overall)
+	fmt.Fprintf(&b, "seeds counted: %d\n", v.Seeds)
+	if len(v.Excluded) > 0 {
+		fmt.Fprintf(&b, "excluded seeds (%d, no exposure hours, no kills, not counted toward the minimum seeds):\n", len(v.Excluded))
+		for _, e := range v.Excluded {
+			fmt.Fprintf(&b, "  %s\n", e)
+		}
+	}
+	fmt.Fprintf(&b, "OVERALL: %s (exit %d)\n", v.Overall, ExitCode(v.Overall))
 	return b.String()
 }
 

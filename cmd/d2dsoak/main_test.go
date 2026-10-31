@@ -204,3 +204,32 @@ func TestLoadRunsRejectsDuplicatePaths(t *testing.T) {
 		t.Error("duplicate path must be rejected")
 	}
 }
+
+// Every verdict class has its own code, for run (compareGate with the fake pipeline's runs) and compare alike.
+func TestVerdictExitCodes(t *testing.T) {
+	for _, c := range []struct {
+		overall string
+		want    int
+	}{{"PASS", 0}, {"INCONCLUSIVE", 2}, {"FAIL", 3}, {"NO-DATA", 3}, {"", 3}, {"garbage", 3}} {
+		if got := verdictExit(c.overall, false); got != c.want {
+			t.Errorf("%q: %d, want %d", c.overall, got, c.want)
+		}
+	}
+	dir := t.TempDir()
+	bl := filepath.Join(dir, "bl.json")
+	os.WriteFile(bl, []byte(`{"rules":{"xp_per_hour":{"gate":true,"rel":0.2}},"minSeeds":2,"minHoursPerSeed":2,"minTotalHours":0,
+	"runs":[{"name":"a","hours":2,"metrics":{"xp_per_hour":1000}},{"name":"b","hours":2,"metrics":{"xp_per_hour":1000}},{"name":"c","hours":2,"metrics":{"xp_per_hour":1000}}]}`), 0o644)
+	var ee exitError
+	err := compareGate([]d2dsoakstat.Run{{Name: "dead", Hours: 0, Invalid: "no minute lines"}}, bl, true, "", "v1", false)
+	if !errors.As(err, &ee) || ee.Code != 3 {
+		t.Errorf("only an excluded seed: %v, want exit 3 (NO-DATA)", err)
+	}
+	// the same through the compare subcommand on a seed directory without minute lines
+	seed := filepath.Join(dir, "seed-1")
+	os.MkdirAll(seed, 0o755)
+	os.WriteFile(filepath.Join(seed, "bot.log"), []byte("panic\n"), 0o644)
+	err = cmdCompare([]string{"-baselines", bl, seed})
+	if !errors.As(err, &ee) || ee.Code != 3 {
+		t.Errorf("compare on an empty seed: %v, want exit 3", err)
+	}
+}

@@ -84,3 +84,36 @@ func TestRepeatSitesCapsJump(t *testing.T) {
 		t.Errorf("repeatSites = %d", n)
 	}
 }
+
+func TestExcludedSeedsAreNotExposure(t *testing.T) {
+	b := baselines(t)
+	empty := Extract("seed-11", nil, Options{Hours: 2})
+	rs := append(d2dRuns(10000, 500, 0.1, 0.02, 5), empty)
+	v := Compare(rs, b)
+	if v.Seeds != 5 || len(v.Excluded) != 1 || !strings.Contains(v.Excluded[0], "seed-11") {
+		t.Fatalf("seeds %d excluded %v", v.Seeds, v.Excluded)
+	}
+	if v.Overall == Pass || !strings.Contains(v.Text(), "excluded seeds") {
+		t.Errorf("an excluded seed must stop PASS and be listed:\n%s", v.Text())
+	}
+	// the exposure is the other seeds' hours only: the death row uses 5 x 2 h
+	rows := CompareV2(append(runsWith(7, 2, 0), empty), b)
+	for _, r := range rows.Rows {
+		if r.Metric == "deaths_per_hour" && r.D2D.N != 7 {
+			t.Errorf("death exposure counted %d seeds, want 7", r.D2D.N)
+		}
+	}
+	if rows.Seeds != 7 {
+		t.Errorf("seed count %d, want 7", rows.Seeds)
+	}
+}
+
+func TestNoUsableSeedIsNoData(t *testing.T) {
+	b := baselines(t)
+	empty := Extract("seed-1", nil, Options{Hours: 2})
+	for _, v := range []Verdict{Compare([]Run{empty, empty}, b), CompareV2(nil, b)} {
+		if v.Overall != NoData || ExitCode(v.Overall) != 3 || !strings.Contains(v.Text(), "OVERALL: NO-DATA (exit 3)") {
+			t.Errorf("%s\n%s", v.Overall, v.Text())
+		}
+	}
+}
