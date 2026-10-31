@@ -506,3 +506,18 @@ func TestRebuyBlockedByStrength(t *testing.T) {
 		t.Fatalf("%v %+v", err, rep2)
 	}
 }
+
+// XPGAP: with tpMinGold set a poor character spends on potions and a missing scroll is no trip reason.
+func TestTPMinGoldPotionsFirst(t *testing.T) {
+	geartest.Need(t)
+	r := newRig(t)
+	r.W.Player.Gold = 120
+	r.Env.Tune.Town.TPMinGold = 250
+	rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Scrolls: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if rep.Bought["Scroll of Town Portal"] != 0 {
+		t.Fatalf("scroll bought below tpMinGold: %v", rep.Bought)
+	}
+}

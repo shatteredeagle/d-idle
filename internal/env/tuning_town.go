@@ -14,6 +14,7 @@ type TownTuning struct {
 	// Restocking.
 	BeltFillPct     int // refill each potion type up to this percent of its planned columns
 	TPScrollTarget  int // town portal scrolls to hold when there is no tome
+	TPMinGold       int // below this gold the first town portal scroll is not bought and its absence is no trip reason (0 = off): potions first
 	TPTomeMinGold   int // buy a Tome of Town Portal when gold is at least this and none is owned
 	IDScrollTarget  int // identify scrolls to hold when there is no tome
 	MinGoldReserve  int // never spend below this on optional buys (scroll top-up, extra potions)
@@ -72,6 +73,7 @@ func townKnobs() []Knob {
 		townK("tripRepairPct", "Trip: durability", "%", "Go to town when an equipped item is below this durability.", d.TripRepairPct, 0, 60, true),
 		townK("beltFillPct", "Belt fill target", "%", "Refill each potion type to this share of its planned columns.", d.BeltFillPct, 25, 100, true),
 		townK("tpScrollTarget", "Town portal scrolls", "count", "Scrolls to hold when no tome is owned.", d.TPScrollTarget, 1, 20, true),
+		townK("tpMinGold", "TP scroll min gold", "gold", "Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price.", d.TPMinGold, 0, 1000, false),
 		townK("tpTomeMinGold", "TP tome min gold", "gold", "Buy a Tome of Town Portal when gold is at least this.", d.TPTomeMinGold, 0, 5000, false),
 		townK("idScrollTarget", "Identify scrolls", "count", "Scrolls to hold when no tome is owned.", d.IDScrollTarget, 0, 20, true),
 		townK("minGoldReserve", "Gold reserve", "gold", "Optional purchases never spend below this.", d.MinGoldReserve, 0, 10000, false),

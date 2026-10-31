@@ -12,6 +12,10 @@ owns:
   - internal/bot/goal.go
   - internal/env/tuning_resource.go
   - internal/resource/tuning.go
+  - internal/env/tuning_town.go
+  - internal/town/chores.go
+  - internal/town/shop.go
+  - internal/town/town_test.go
   - internal/bot/recoveryxp.go
   - internal/bot/recoveryxp_test.go
   - internal/bot/povertysell_test.go

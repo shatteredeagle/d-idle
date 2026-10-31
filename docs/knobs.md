@@ -111,6 +111,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.tripRepairPct | 20 | 0..60 | % | 0 | 1 | Go to town when an equipped item is below this durability. |
 | town.beltFillPct | 100 | 25..100 | % | 25 | 2 | Refill each potion type to this share of its planned columns. |
 | town.tpScrollTarget | 2 | 1..20 | count | 1 | 3 | Scrolls to hold when no tome is owned. |
+| town.tpMinGold | 0 | 0..1000 | gold | 1000 | 1 | Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price. |
 | town.tpTomeMinGold | 450 | 0..5000 | gold | 5000 | 2 | Buy a Tome of Town Portal when gold is at least this. |
 | town.idScrollTarget | 2 | 0..20 | count | 0 | 4 | Scrolls to hold when no tome is owned. |
 | town.minGoldReserve | 100 | 0..1e+04 | gold | 1e+04 | 4 | Optional purchases never spend below this. |
