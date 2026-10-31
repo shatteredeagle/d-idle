@@ -13,6 +13,8 @@ owns:
   - internal/bot/broke.go
   - internal/bot/goal.go
   - internal/bot/recoveryxp_test.go
+  - internal/bot/leveling_test.go
+  - cmd/d2bot/resource_test.go
   - internal/nav/nav.go
   - internal/nav/route.go
   - internal/nav/walk.go

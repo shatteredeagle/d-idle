@@ -40,3 +40,5 @@ internal/env/tuning_resource.go  kitgate  kitgate
 internal/resource/tuning.go  kitgate  kitgate
 docs/knobs.md  kitgate  kitgate
 docs/kitgate.md  kitgate  kitgate
+internal/bot/leveling_test.go  kitgate  kitgate
+cmd/d2bot/resource_test.go  kitgate  kitgate

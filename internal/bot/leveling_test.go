@@ -157,7 +157,18 @@ func TestGearPassDoesNotShopBelowEarlyGearMax(t *testing.T) {
 }
 
 func TestStarvingCharacterFarmsGoldInTheEasyArea(t *testing.T) {
+	starvingFarm(t, 0)
+}
+
+// KITGATE: with the gate on the character without the kit never walks on to the quest ladder once Blood Moor is spent;
+// it stays in the safe fields or at home.
+func TestStarvingCharacterStaysNearTownWithKitGate(t *testing.T) {
+	starvingFarm(t, 1)
+}
+
+func starvingFarm(t *testing.T, gate int) {
 	g := newRig(t)
+	g.e.Tune.Resource.RecoveryKitGate = gate
 	g.mover.exploreFn = blockExplore
 	g.w.set(func(w *world) { w.level = 8; w.gold0 = 0 })
 	g.w.belt() // no potions
@@ -169,7 +180,17 @@ func TestStarvingCharacterFarmsGoldInTheEasyArea(t *testing.T) {
 	g.waitFor("farming Blood Moor", func() bool { return g.r.Status().Character.AreaID == 2 && g.w.count("explore") > 0 })
 	// enough gold: back to the plan area
 	g.w.set(func(w *world) { w.gold0 = 400 })
-	g.waitFor("back to the plan", func() bool { a := g.r.Status().Character.AreaID; return a == 3 || a == 17 || a == 9 || a == 4 })
+	if gate == 0 {
+		g.waitFor("back to the plan", func() bool { a := g.r.Status().Character.AreaID; return a == 3 || a == 17 || a == 9 || a == 4 })
+		return
+	}
+	deadline := time.Now().Add(2 * time.Second)
+	for time.Now().Before(deadline) {
+		if a := g.r.Status().Character.AreaID; a == 17 || a == 9 || a == 4 || a == 8 || a == 13 {
+			t.Fatalf("kit gate on: walked to area %d", a)
+		}
+		time.Sleep(20 * time.Millisecond)
+	}
 }
 
 func TestNoPotionTripWithoutGold(t *testing.T) {

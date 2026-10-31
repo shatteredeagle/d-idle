@@ -680,7 +680,7 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				return a, true
 			}
 			if r.kitGateActive(s) {
-				return 0, false // no safe field is open: wait at home, never fall through to the quest ladder (KITGATE)
+				return 0, false
 			}
 		}
 		if p.InTown() {
