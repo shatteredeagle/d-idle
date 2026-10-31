@@ -144,7 +144,7 @@ type World struct {
 	// TowerMinLevel (0 = tower guard off) and TowerNeedsMerc are the Forgotten Tower knobs (route.go); TowerBlocked is
 	// TowerWhy(w) filled by the bot, kept out of areas 20-25 by fieldReady.
 	TowerMinLevel     int
-	TowerMinLevelMerc int  // the tower floor with a living merc while TowerNeedsMerc is false; 0 = the no-merc floor
+	TowerMinLevelMerc int  // the Forgotten Tower floor with a living merc while TowerNeedsMerc is false; 0 = the no-merc floor
 	TowerNeedsMerc    bool // true: a living merc opens the tower at any level
 	TowerBlocked      string
 	// DenMinLevel is the Normal clvl floor of Den of Evil for this class (caster or melee knob, bot fills it); 0 = no class floor.

@@ -1,7 +1,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Route guard
-The Monastery road (areas 7, 26 to 37, so Andariel too) and the Forgotten Tower (areas 20 to 25) MUST be entered only at clvl 16 or higher with no merc, or 14 or higher with a living merc (`route.monasteryMinLevel`, `route.monasteryMinLevelMerc`, `route.towerMinLevel`, `route.towerMinLevelMerc`, `route.towerNeedsMerc` 0); the effective floor of each guard is logged as `route guard: <gate> floor=<n> (merc=<alive|dead|none>)`, plus the supply kit on every guard; a no-merc knob at 0 turns its guard off; unknown merc counts as none. Interim. Source: ADR 0011, docs/knobs.md.
+The Monastery road (areas 7, 26 to 37, so Andariel too) and the Forgotten Tower (areas 20 to 25) MUST be entered only at clvl 16 or higher with no merc, or 14 or higher with a living merc (`route.monasteryMinLevel*`, `route.towerMinLevel*`, `route.towerNeedsMerc` 0), plus the supply kit on every guard. Each effective floor is logged as `route guard: <gate> floor=<n> (merc=<alive|dead|none>)`. A no-merc knob at 0 turns a guard off; unknown merc is none. Interim. ADR 0011.
 
 #### Scenario: No merc at clvl 14
 - **WHEN** a clvl 14 caster without a merc picks a leveling area
@@ -24,7 +24,7 @@ The Monastery road (areas 7, 26 to 37, so Andariel too) and the Forgotten Tower 
 - **THEN** the floor is raised to 18 and the decision goes back to a grill, and if the soak shows no road deaths 14 is tried
 
 ### Requirement: Andariel floor
-The Normal campaign SHALL attempt Andariel from clvl `boss.andarielMinLevel` 17 with no merc and clvl 15 with a living merc, with the kit gate on top plus at least 2 antidote potions; the former +2 for a dead merc is replaced by the no-merc floor. The with-merc floor is `boss.andarielMinLevelMerc`. No unattended attempt before the throwaway fight of card m3-andariel has won once: `boss.andarielHold` 1 (default) makes the campaign level instead; 0 lifts it after the win. Source: ADR 0011 (grill 0003, 2026-10-31), docs/knobs.md, internal/merc `MercAliveGate`.
+The Normal campaign SHALL attempt Andariel from clvl `boss.andarielMinLevel` 17 with no merc and `boss.andarielMinLevelMerc` 15 with a living merc, with the kit gate on top plus at least 2 antidote potions; the former +2 for a dead merc is replaced by the no-merc floor. No unattended attempt before the throwaway fight of card m3-andariel has won once: `boss.andarielHold` 1 makes the campaign level instead, 0 lifts it. Source: ADR 0011, docs/knobs.md.
 
 #### Scenario: Floor read from the knob
 - **WHEN** an agent needs the Andariel level

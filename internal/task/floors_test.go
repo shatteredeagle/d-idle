@@ -47,7 +47,7 @@ func TestGuardFloorTable(t *testing.T) {
 			t.Errorf("road merc=%s clvl %d: open=%v (%q)", c.merc, c.lvl, got, task.RouteWhy(w))
 		}
 		if got := task.TowerWhy(w) == ""; got != c.tw {
-			t.Errorf("tower merc=%s clvl %d: open=%v (%q)", c.merc, c.lvl, got, task.TowerWhy(w))
+			t.Errorf("forgotten tower merc=%s clvl %d: open=%v (%q)", c.merc, c.lvl, got, task.TowerWhy(w))
 		}
 		w.AndarielHold = false
 		if got := andyGate.NotReady(w) == ""; got != c.ady {
@@ -62,7 +62,7 @@ func TestGuardKitStaysOnEveryGuard(t *testing.T) {
 		t.Errorf("road kit: %q", why)
 	}
 	if why := task.TowerWhy(floorWorld(15, "alive", thin)); !strings.Contains(why, "healing potions") {
-		t.Errorf("tower kit: %q", why)
+		t.Errorf("forgotten tower kit: %q", why)
 	}
 	g, _ := task.GateFor(task.QAndariel)
 	if why := g.NotReady(floorWorld(17, "none", func(w *task.World) { thin(w); w.AndarielHold = false })); why == "" {
@@ -139,7 +139,7 @@ func TestEffectiveFloorLine(t *testing.T) {
 	if got := task.FloorLine("andariel", task.AndarielFloor(floorWorld(10, "alive", nil)), floorWorld(10, "alive", nil)); got != "route guard: andariel floor=15 (merc=alive)" {
 		t.Errorf("andariel %q", got)
 	}
-	if got := task.FloorLine("tower", task.TowerFloor(floorWorld(10, "none", nil)), floorWorld(10, "none", nil)); got != "route guard: tower floor=16 (merc=none)" {
+	if got := task.FloorLine("forgotten tower", task.TowerFloor(floorWorld(10, "none", nil)), floorWorld(10, "none", nil)); got != "route guard: forgotten tower floor=16 (merc=none)" {
 		t.Errorf("tower %q", got)
 	}
 }
@@ -159,10 +159,10 @@ func TestOldNumbersByKnobs(t *testing.T) {
 		t.Errorf("merc any level: %q", why)
 	}
 	if why := task.TowerWhy(floorWorld(5, "alive", old)); why != "" {
-		t.Errorf("tower merc any level: %q", why)
+		t.Errorf("forgotten tower merc any level: %q", why)
 	}
 	if why := task.TowerWhy(floorWorld(19, "none", old)); why == "" {
-		t.Error("tower no merc 19")
+		t.Error("forgotten tower no merc 19")
 	}
 	g, _ := task.GateFor(task.QAndariel)
 	if why := g.NotReady(floorWorld(20, "none", old)); why != "" {

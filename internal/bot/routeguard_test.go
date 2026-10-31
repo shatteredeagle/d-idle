@@ -157,7 +157,7 @@ func TestEffectiveFloorLinesLoggedOncePerChange(t *testing.T) {
 		}
 	}
 	out := buf.String()
-	for _, want := range []string{"route guard: monastery floor=16 (merc=none)", "route guard: tower floor=16 (merc=none)", "route guard: andariel floor=17 (merc=none)"} {
+	for _, want := range []string{"route guard: monastery floor=16 (merc=none)", "route guard: forgotten tower floor=16 (merc=none)", "route guard: andariel floor=17 (merc=none)"} {
 		if n := strings.Count(out, want); n != 1 {
 			t.Errorf("%q logged %d times:\n%s", want, n, out)
 		}

@@ -52,7 +52,7 @@ func (r *Runner) noteFloors(w task.World) {
 	for _, g := range []struct {
 		name  string
 		floor int
-	}{{"monastery", task.MonasteryFloor(w)}, {"tower", task.TowerFloor(w)}, {"andariel", task.AndarielFloor(w)}} {
+	}{{"monastery", task.MonasteryFloor(w)}, {"forgotten tower", task.TowerFloor(w)}, {"andariel", task.AndarielFloor(w)}} {
 		if g.floor > 0 {
 			lines = append(lines, task.FloorLine(g.name, g.floor, w))
 		}

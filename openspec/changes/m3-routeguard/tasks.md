@@ -19,11 +19,11 @@ gates:
   - "merc-policy MODIFIED blocks for Route guard and Andariel floor are complete (all scenarios) and validate --strict passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
 merge:
-result:
+result: implemented offline (no live run); floors, hold, floor log, tests green on Orion; d2d-only behaviour unchanged elsewhere (shared bot logic)
 ```
 
 ## 1. Work
 
 - [x] 1.1 Read ADR 0011 and the delta in specs/merc-policy; failing floor tests first (16/14 road and Forgotten Tower, 17/15 Andariel, antidotes in the kit, no +2 rule)
 - [x] 1.2 Knob defaults (with-merc knobs, `route.towerNeedsMerc` 0) and tests; docs/knobs.md regenerated; the Andariel attempt stays blocked until m3-andariel has won once (ADR 0011 gate 3)
-- [ ] 1.3 changecheck, leakcheck, validate
+- [x] 1.3 changecheck, leakcheck, validate
