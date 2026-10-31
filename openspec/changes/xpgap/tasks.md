@@ -2,7 +2,7 @@
 
 ```yaml
 change: xpgap
-status: in-progress
+status: done
 agent: xpgap
 branch: agent/xpgap
 worktree: ~/code/d2lod-wt/xpgap
@@ -28,12 +28,12 @@ gates:
   - "go test -p 1 for the touched packages and whole-repo vet/test on the worker host"
   - "before/after on one binary, 4 seeds x 2 virtual hours per arm, interleaved"
 merge:
-result:
+result: "verified live on hidden d2d: diagnosis from 12 soak logs; 3 knobs (default off) and recoveryOn=0 tested, none beats noise (4 runs per arm, SE 7-9 %), recoveryOn=0 is -15 %; vet and short tests clean on the worker; not run on Game.exe"
 ```
 
 ## 1. Work
 
 - [x] 1.1 diagnose from the soakfull logs
 - [x] 1.2 knobs recoveryXPEarly and povertySellMin with offline tests
-- [ ] 1.3 A/B on hidden d2d
-- [ ] 1.4 docs/d2d-xp-gap.md
+- [x] 1.3 A/B on hidden d2d (off, on, sell, tp, norec arms; 24 runs)
+- [x] 1.4 docs/d2d-xp-gap.md
