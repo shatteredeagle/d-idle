@@ -25,11 +25,3 @@ openspec/changes/d2dmesh/**  meshdesign  d2dmesh
 openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
-docs/basics-audit.md  basicsfix  basicsfix
-internal/town/basicsfix.go  basicsfix  basicsfix
-internal/town/basicsfix_test.go  basicsfix  basicsfix
-internal/town/basicsaudit_test.go  basicsfix  basicsfix
-internal/town/stash.go  basicsfix  basicsfix
-internal/town/invstash_test.go  basicsfix  basicsfix
-internal/town/seed_test.go  basicsfix  basicsfix
-openspec/changes/basicsfix/**  basicsfix  basicsfix

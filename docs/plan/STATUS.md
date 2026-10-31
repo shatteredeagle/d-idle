@@ -38,7 +38,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [basicsfix](../../openspec/changes/basicsfix/) | in-progress | basicsfix | `openspec/changes/basicsfix/**`<br>`internal/town/basicsfix.go`<br>`internal/town/basicsfix_test.go`<br>`internal/town/basicsaudit_test.go`<br>`internal/town/stash.go`<br>`internal/town/invstash_test.go`<br>`internal/town/seed_test.go`<br>`docs/basics-audit.md` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -52,7 +51,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
-- spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 6 requirements
+- spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 10 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 7 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
@@ -62,8 +61,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
-- change basicsfix: go test -short -p 4 ./... and go test -race ./internal/town ./internal/bot pass on the worker host
-- change basicsfix: tools/openspec.sh validate --all --strict passes
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -80,6 +77,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
+- 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
 - f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 - 30ddfab 10-31 01:05 `Merge agent/specfix` (spec-backfill-combat)
 - 46f0fda 10-31 01:00 `Merge agent/basicsaudit` (basicsaudit)
@@ -88,6 +87,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 1481f63 10-31 00:40 `Merge agent/doctrim: doc trim` (doctrim)
 - e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
-- 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
-- 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
 <!-- statusgen:end -->

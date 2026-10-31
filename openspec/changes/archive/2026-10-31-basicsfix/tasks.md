@@ -20,11 +20,12 @@ exclusive: []
 gates:
   - "go test -short -p 4 ./... and go test -race ./internal/town ./internal/bot pass on the worker host"
   - "tools/openspec.sh validate --all --strict passes"
-result: "Offline only (sim rig), not verified live. Follow-ups after XPGAP merges: (1) bot/goal.go:320 else-if: apply povertySellOK (or default povertySellMin 6); (2) town tripReasons: no-portal-scroll reason should also consult tpAllowed."
+result: "Offline only (sim rig), not verified live. Follow-ups applied at merge.
 ```
 
 - [x] 1 ID scrolls only for likely valuables (idScrollNeed)
-- [ ] 2 second sell-trip door in bot/goal.go: SKIPPED, same line as XPGAP's edit; after it merges apply povertySellOK to the else-if
+- [x] 2 second sell-trip door in bot/goal.go: applied at merge (lowGoldSellOK, povertySellMin)
 - [x] 3 failed repair latch (repairLatch)
 - [x] 4 bank before shop (bankFirst)
 - [x] 5 potions first (potionsFirst, tpFirstLevel)
+merge: 478499f (follow-ups c50a7a1 sell door, 6b9f52f no-scroll trip reason)
