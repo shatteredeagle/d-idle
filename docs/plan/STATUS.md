@@ -41,9 +41,9 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
+| [m2-abdesign](../../openspec/changes/m2-abdesign/) | in-progress | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
-| [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
+| [m2-soakexit](../../openspec/changes/m2-soakexit/) | in-progress | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md`<br>`internal/d2dsoakstat/**` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
@@ -89,6 +89,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- d82bd47 10-31 02:46 `Merge agent/rebase136r: get-hit render rebase onto #136 (docs only)` (rendergh)
 - ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
 - 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
 - ee0205e 10-31 02:30 `Merge agent/m1loot: town buy order, gem sale, charm keep rules` (m1-audittests)
@@ -98,5 +99,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
 - 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
 - 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
-- 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
 <!-- statusgen:end -->
