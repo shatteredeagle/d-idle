@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -266,12 +267,46 @@ func (r *Runner) noteRebuyTrip(plan ChorePlan, gold int) {
 	}
 }
 
+// restockReason says a Townsman trip reason is a plain potion or portal scroll restock (the trip floor applies to it).
+func restockReason(reason string) bool {
+	for _, k := range []string{"healing potions", "mana potions", "belt columns", "no town portal scroll"} {
+		if strings.Contains(reason, k) {
+			return true
+		}
+	}
+	return false
+}
+
+// spendPlanner is the optional Townsman half of the trip floor: what the shop would spend on a visit now.
+type spendPlanner interface {
+	PlannedSpend(s *d2.Snapshot) int
+}
+
+// tripWorthIt is the trip floor (goldfloor, docs/goldfloor.md finding 2: 83 percent of the trips spent under 30 gold, each
+// burning a portal scroll): a pure restock trip with a healing potion still in the belt needs a planned purchase of
+// Town.TripMinSpend gold. Without a planner, or with the knob at 0, every trip is worth it (the old behaviour).
+func (r *Runner) tripWorthIt(s *d2.Snapshot) bool {
+	floor := r.e.Tune.Town.TripMinSpend
+	sp, ok := r.d.Town.(spendPlanner)
+	if floor <= 0 || !ok {
+		return true
+	}
+	spend := sp.PlannedSpend(s)
+	if spend >= floor {
+		return true
+	}
+	r.e.Log.Debug("trip floor: purchase too small, no trip", "planned", spend, "floor", floor, "gold", s.Player.Gold)
+	return false
+}
+
 // choresDue is the pure part of needChores (the guard calls it from its own goroutine).
 func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) {
 	p := s.Player
 	t := r.e.Tune.Bot
 	healing, full, known := r.beltAndInv(s)
 	var why []string
+	// hard marks a reason that is no potion/scroll restock (survival trip, sell, pack, merc, ...): the trip floor leaves it alone.
+	hard := false
 	trip := resource.Trip{}
 	if known && !p.InTown() {
 		trip = r.tripVerdict(s)
@@ -282,7 +317,8 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	}
 	if trip.Go {
 		plan.Potions = true
-		plan.Heal = true // the policy's reasons include the free heal, which only runs when asked for
+		plan.Heal = true                                  // the policy's reasons include the free heal, which only runs when asked for
+		hard = strings.Contains(trip.Reason, "free heal") // a potion-only resource trip is floorable
 		why = append(why, "resource: "+trip.Reason)
 		emergency = r.resInput(s).Belt.HP == 0
 	}
@@ -297,6 +333,7 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 			emergency = healing == 0 && !p.InTown()
 		}
 		if full >= t.InvFullPct && !r.packFullQuiet() {
+			hard = true
 			plan.Sell, plan.Stash, plan.Identify = true, true, true
 			why = append(why, fmt.Sprintf("inventory %d%% full", full))
 		}
@@ -306,6 +343,7 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	// rides the same gates as every routine trip (boss run, no-portal step, cooldown) in tripDue.
 	if lb, ok := r.d.Loot.(leftBehinder); ok && known && !p.InTown() && full >= leftBehindPackPct && !r.packFullQuiet() {
 		if n := lb.LeftBehind(); n > 0 {
+			hard = true
 			plan.Sell, plan.Stash, plan.Identify = true, true, true
 			why = append(why, fmt.Sprintf("loot: pack full, %d valuable item(s) left on the ground", n))
 		}
@@ -316,13 +354,16 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	if sell, left := r.sellable(s), r.povertySellLeft(); !p.InTown() && r.inPoverty() && sell > left &&
 		povertySellOK(sell, r.resInput(s).HasTP, sellMin) {
 		// poor: junk is the quickest gold, sell it before anything else (one item is enough, the pack need not be full)
+		hard = true
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("poverty: %d items to sell, %d gold", sell, p.Gold))
 	} else if !p.InTown() && p.Gold < t.GearMinGold && lowGoldSellOK(r.sellable(s), r.resInput(s).HasTP, t.SellMinItems, sellMin) {
+		hard = true
 		plan.Sell, plan.Potions = true, p.Gold >= minPotionPrice
 		why = append(why, fmt.Sprintf("%d items to sell, %d gold", r.sellable(s), p.Gold))
 	}
 	if p.InTown() && (p.LifePct() < 100 || p.ManaPct() < 100) {
+		hard = true
 		plan.Heal = true
 		why = append(why, "heal")
 	}
@@ -330,13 +371,18 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 		if bad, reason := r.d.Town.NeedsTrip(s); bad {
 			plan.Potions, plan.Sell, plan.Stash, plan.Identify = true, true, true, true
 			why = append(why, reason)
+			hard = hard || !restockReason(reason)
 		}
 	}
 	if w := r.mercWanted(s); w != "" {
+		hard = true
 		why = append(why, "merc: "+w)
 	}
 	if len(why) == 0 {
 		return plan, false, false
+	}
+	if !hard && !emergency && !p.InTown() && healing > 0 && !r.tripWorthIt(s) {
+		return ChorePlan{}, false, false
 	}
 	plan.Repair = plan.Potions || plan.Sell
 	plan.Reason = fmt.Sprint(why)

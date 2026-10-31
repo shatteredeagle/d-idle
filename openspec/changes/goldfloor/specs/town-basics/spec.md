@@ -24,7 +24,7 @@ A character with gold under the kit line and fewer than 2 healing potions SHALL 
 - **THEN** healing potions are bought and no town portal scroll is
 
 ### Requirement: Early mana cap
-Below clvl 10 a visit SHALL buy at most 1 mana potion and a low mana belt SHALL NOT raise a trip. Source: docs/goldfloor.md finding 3 (mana 74 to 305 gold/h at 60 gold each).
+Below clvl 10 a visit SHALL buy at most `town.mpCapEarly` (1) mana potion and, with `town.mpCapLevel` 10, a low mana belt SHALL NOT raise a trip. Source: docs/goldfloor.md finding 3 (mana 74 to 305 gold/h at 60 gold each).
 
 #### Scenario: Clvl 6
 - **WHEN** a clvl 6 character has an empty mana belt and 400 gold

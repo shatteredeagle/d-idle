@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strings"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
@@ -238,6 +239,16 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 		mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)
 		want[belt.MP] = max(min(want[belt.MP], t.e.Tune.Resource.RecoveryManaFloor-mpHave), 0)
 		want[belt.RV] = 0
+	}
+	if t.mpCapped(s.Player) {
+		// per visit: the kit pass and the fill pass both come through here, so count what this visit bought already
+		left := t.tune().MPCapEarly
+		for name, n := range rep.Bought {
+			if strings.Contains(name, "Mana Potion") {
+				left -= n
+			}
+		}
+		want[belt.MP] = max(min(want[belt.MP], left), 0)
 	}
 	t.e.Log.Info("shop: potion plan", "wantHP", want[belt.HP], "wantMP", want[belt.MP], "wantRV", want[belt.RV], "beltHP", bs.Count[belt.HP],
 		"beltMP", bs.Count[belt.MP], "packHP", belt.PackCount(t.e.Data, s.Inventory, belt.HP), "packMP", belt.PackCount(t.e.Data, s.Inventory, belt.MP), "beltOther", bs.Other, "slots", bs.Slots, "gold", s.Player.Gold)
@@ -727,4 +738,39 @@ func (t *Town) buyAntidotes(ctx context.Context, npc d2.Unit, target int, rep *C
 		rep.Spent += price
 		rep.Bought[t.nameOf(it)]++
 	}
+}
+
+// mpCapped says the early mana cap applies to this character (goldfloor lever B).
+func (t *Town) mpCapped(p *d2.Player) bool {
+	return p != nil && p.Level < t.tune().MPCapLevel
+}
+
+// mpPriceEstimate is the minor mana potion price used to size a planned purchase (V: about 60 gold, docs/goldfloor.md).
+const mpPriceEstimate = 60
+
+// PlannedSpend estimates what a shop visit would spend now: the belt plan's missing potions (mana capped early) and the
+// first portal scroll when one is allowed, never more than the gold. It is the trip floor's purchase size (goldfloor).
+func (t *Town) PlannedSpend(s *d2.Snapshot) int {
+	if s == nil || s.Player == nil || s.Inventory == nil {
+		return 0
+	}
+	r := t.e.Tune.Resource
+	want := t.potionsWanted(s)
+	if t.mpCapped(s.Player) {
+		want[belt.MP] = min(want[belt.MP], t.tune().MPCapEarly)
+	}
+	spend := (want[belt.HP]+want[belt.RV])*r.KitPotionGold + want[belt.MP]*mpPriceEstimate
+	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n == 0 && !hasTome && t.tpAllowed(s) {
+		spend += r.KitTPGold
+	}
+	return min(spend, s.Player.Gold)
+}
+
+// poorKit is goldfloor's "poor" test: gold under the kit line and fewer than 2 healing potions carried.
+func (t *Town) poorKit(s *d2.Snapshot) bool {
+	if t.tune().TripMinSpend <= 0 || s.Player.Gold >= t.e.Tune.Resource.RecoveryKitGold {
+		return false
+	}
+	bs := belt.Read(t.e.Data, s.Inventory)
+	return bs.Count[belt.HP]+bs.Count[belt.RV]+belt.PackCount(t.e.Data, s.Inventory, belt.HP) < 2
 }

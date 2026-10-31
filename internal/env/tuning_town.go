@@ -49,6 +49,9 @@ type TownTuning struct {
 	IDScrollNeed    int // 1: buy identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always up to IDScrollTarget
 	BankFirst       int // 1: deposit the gold above the keep line (never below the minimal kit) before the shop; 0 = after it
 	RepairLatch     int // 1: a repair that changed nothing is not retried until durability changed or gold grew by FutileGoldStep; 0 = retry every visit
+	TripMinSpend    int // goldfloor: a pure restock trip with a healing potion in the belt needs a planned purchase of at least this gold; a poor character (gold under the kit line, under 2 healing potions) buys no portal scroll (0 = off, old behaviour)
+	MPCapEarly      int // goldfloor: mana potions bought per visit below MPCapLevel
+	MPCapLevel      int // goldfloor: clvl below which MPCapEarly applies and a low mana belt raises no trip (0 = off, old behaviour)
 	FutileGoldStep  int // after a visit that could not fix a trip reason (cannot afford, not sold), NeedsTrip stays quiet about it until gold grew by this
 }
 
@@ -59,7 +62,7 @@ func DefaultTownTuning() TownTuning {
 		BeltFillPct: 100, TPScrollTarget: 2, TPTomeMinGold: 450, IDScrollTarget: 2, MinGoldReserve: 100, KeyTarget: 0,
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3,
-		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40,
+		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 60, MPCapEarly: 1, MPCapLevel: 10, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40,
 		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
 	}
 }
@@ -114,6 +117,9 @@ func townKnobs() []Knob {
 		townK("idScrollNeed", "Identify scroll only if valuable", "bool", "1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old).", d.IDScrollNeed, 0, 1, true),
 		townK("bankFirst", "Bank before shop", "bool", "1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old).", d.BankFirst, 0, 1, true),
 		townK("repairLatch", "Failed repair latch", "bool", "1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old).", d.RepairLatch, 0, 1, true),
+		townK("tripMinSpend", "Trip floor: min purchase", "gold", "A pure restock trip (healing potions below the resupply line, mana, belt columns, portal scroll) with a healing potion still in the belt starts only when the planned purchase is worth this much; a character with gold under the kit line and under 2 healing potions also buys no portal scroll (potions first). docs/goldfloor.md: 83% of NAVSOAK trips bought under 30 gold. 0 = off (old).", d.TripMinSpend, 0, 500, false),
+		townK("mpCapEarly", "Early mana potions per visit", "count", "Mana potions one visit buys below mpCapLevel (docs/goldfloor.md finding 3: mana was 74 to 305 gold/h at clvl 1-10).", d.MPCapEarly, 0, 8, true),
+		townK("mpCapLevel", "Early mana cap below clvl", "clvl", "Below this level mpCapEarly caps the mana purchase and a low mana belt raises no town trip. 0 = off (old).", d.MPCapLevel, 0, 40, false),
 		townK("choreBudgetS", "Chore budget", "s", "Time one Chores call may take before it gives up.", d.ChoreBudgetS, 30, 600, true),
 	}
 }

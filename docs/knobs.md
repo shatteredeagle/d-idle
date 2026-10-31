@@ -21,6 +21,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -146,6 +147,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.idScrollNeed | 1 | 0..1 | bool | 0 | 2 | 1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old). |
 | town.bankFirst | 1 | 0..1 | bool | 0 | 2 | 1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old). |
 | town.repairLatch | 1 | 0..1 | bool | 0 | 1 | 1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old). |
+| town.tripMinSpend | 60 | 0..500 | gold | 500 | 2 | A pure restock trip (healing potions below the resupply line, mana, belt columns, portal scroll) with a healing potion still in the belt starts only when the planned purchase is worth this much; a character with gold under the kit line and under 2 healing potions also buys no portal scroll (potions first). docs/goldfloor.md: 83% of NAVSOAK trips bought under 30 gold. 0 = off (old). |
+| town.mpCapEarly | 1 | 0..8 | count | 0 | 2 | Mana potions one visit buys below mpCapLevel (docs/goldfloor.md finding 3: mana was 74 to 305 gold/h at clvl 1-10). |
+| town.mpCapLevel | 10 | 0..40 | clvl | 40 | 1 | Below this level mpCapEarly caps the mana purchase and a low mana belt raises no town trip. 0 = off (old). |
 | town.choreBudgetS | 150 | 30..600 | s | 30 | 1 | Time one Chores call may take before it gives up. |
 
 ### loot.*
@@ -315,7 +319,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripWindowMin | 10 | 1..60 | min | 1 | 3 | Minutes the trip budget looks back. |
 | resource.tripGoldFloor | 300 | 0..1000 | gold | 0 | 4 | Below this gold a thin belt does not trigger a retreat and town buys only one portal scroll. 0 = off. |
 | resource.recoveryOn | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a broke character pauses its quest step, farms gold and sellable loot in a safe area and returns at the target (docs/recovery.md). 0 = old behaviour. |
-| resource.recoveryKitGold | 500 | 200..1000 | gold | 1000 | 5 | Recovery starts when gold is below this and the missing kit (portal, potions) costs more than the gold. SME: about 400-600. |
+| resource.recoveryKitGold | 500 | 200..1000 | gold | 1000 | 6 | Recovery starts when gold is below this and the missing kit (portal, potions) costs more than the gold. SME: about 400-600. |
 | resource.recoveryTargetGold | 900 | 400..2000 | gold | 400 | 2 | Recovery ends at this gold once the loot is sold. SME: 800-1000. |
 | resource.recoveryMaxMin | 45 | 10..120 | min | 10 | 3 | Longest recovery cycle; it ends at the cap even when the target is not reached. SME: 30-60. |
 | resource.recoveryCooldownMin | 15 | 0..120 | min | 0 | 1 | Minutes after a recovery before the next one may start. |
@@ -328,6 +332,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
+
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)

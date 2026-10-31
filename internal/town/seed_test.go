@@ -111,7 +111,8 @@ func TestNoManaAdviceForBarbarianAndAfterFutileVisit(t *testing.T) {
 	// when gold grows, for FutileMinutes; after that only once gold grew by the step.
 	r2 := newRig(t)
 	r2.W.Player.Gold = 200
-	r2.W.Stock(r2.Akara) // nothing on sale
+	r2.W.Player.Level = 12 // goldfloor: below clvl 10 a low mana belt raises no trip
+	r2.W.Stock(r2.Akara)   // nothing on sale
 	r2.W.Add("tsc", d2.ContInventory, 9, 3)
 	for i := 0; i < 3; i++ {
 		r2.W.Add("hp1", d2.ContBelt, i, 0)
