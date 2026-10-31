@@ -37,6 +37,33 @@ ssh worker.example 'cd ~/d2d-lab/pr/hitrec && gh pr create --repo psi29a/d2decom
 
 Rebuild the proof after a rebase: the four `hit_rule.py` / `test_combat --get-hit` lines in pr-get-hit-rule-proof.md "Differential" (`/tmp/hitrec-build` on the worker host; `ninja test_combat test_game` first).
 
+## merged: upstream conflict round (agent REBASE134, 2026-10-31)
+
+The maintainer commented on PR #134 (https://github.com/psi29a/d2decomped/pull/134#issuecomment-6544321745, GET-verified 13:58Z): another round of conflicts to resolve; `mergeable_state` was `dirty` (upstream main moved: #135 fine damage, #136 get-hit length, #143 renderer / merc FHR). Resolved LOCALLY by merging upstream/main into `fix/get-hit-rule` (no rewrite; backup ref `fix/get-hit-rule-pre-merge` = e3c1e535). Merge commit **6fc9451e** (local, NOT pushed), net diff vs upstream/main 7 files +163 -15.
+
+Conflicts (5 files), both sides kept:
+- `components/game/ai.cpp` / `ai.hpp`: `hurt(.., int fraction = 0, int hit_class = 0, bool marked = false)`: #135's 256ths carry (`life_frac`, dead-at-under-a-point) and our get-hit in one function. The decision takes THIS blow's own size in 256ths, `(damage << 8) + fraction` taken before the carried part joins (the old `damage << 8` would have dropped the fine part); the fine damage still reaches the monster's life as upstream wrote it. `heal` kept.
+- `components/game/fight.cpp` (`Fight::land`): one call with `taken == blow.damage ? blow.frac : 0` (#135's soak rule, its ponytail kept) plus `blow.hit_class, blow.elemental || blow.deadly`. The player / merc side (`hurt_side`, `struck_big`, `Foe::blows`) merged without conflict and is untouched by #135 (it works on whole points); #143's merc `get_hit_ms` call coexists.
+- `components/rules/combat.hpp`: `get_hit` / `get_hit_divisor` kept next to #136's `get_hit_rate` / `get_hit_ticks` / `get_hit_frame`; `Blow::frac` and `Blow::elemental` both; `missile_blow` keeps #135's `resisted_fine` and now sets `elemental` from the fine value (`fine > 0 && etype != 4`: the record's element is in 256ths, so an element under one point still marks the blow; before it needed a whole point). One semantic change, not covered by the differential (the oracle takes `marked` as an input).
+- `docs/research/re/combat.md`: our section kept; the "FHR and FBR" and "monster hit recovery at an eighth" non-modelled lines dropped (both now modelled), #143's FBR line kept.
+
+Re-run on the merged tree (worker host, `/tmp/hitrec-build`): `ninja test_combat test_game` ok; `test_combat` rc 0; `test_game` (D2_MPQ_DIR = the lab data folder, D2_PATCH_INSTALLER = the 1.14d installer) rc 0, 27 OK lines. Get-hit decision differential, oracle `tools/emu/hit_rule.py` vs `test_combat --get-hit` on the saved round-2 cases (cases2 `27625643`, game2 `e7e49d38`): **0 differ of 73,694 frames** (21,532 multi-record; player 0 of 36,904, monster 0 of 36,790), output md5 `4fdb5ced` identical to the pre-merge after2. The BEFORE numbers (13,935 upstream main, 702 for the summed version) are unchanged: they quote lines this merge does not touch. The decision harness calls `rules::get_hit`, so the plumbing (`blow_fine`, per-blow `struck_big`, two blows in one tick) is checked by reading: `struck_big` is unchanged and still loops `foe.blows` with each blow's class and mark; monsters take one `hurt` per landed blow. `pr_guard` upstream/main: 0 FAIL, 0 WARN. `presubmit --quick`: 0 FAIL, 3 WARN (the same sibling / skipped-build answers as before). The claim did not change.
+
+Push command NOT RUN (needs the user's go; plain, no force):
+
+```sh
+ssh worker.example 'cd ~/d2d-lab/pr/hitrec && git push origin fix/get-hit-rule'
+```
+
+Draft reply for the thread (not posted):
+
+```text
+@psi29a merged upstream/main into the branch (6fc9451e), no history rewrite; the conflicts were the fine-damage carry in hurt (#135), the get-hit length block (#136) and combat.md.
+The decision runs on each blow's own size in 256ths; test_combat, test_game and the oracle differential (0 of 73,694 frames) re-run clean on the merge.
+
+Agent: Claude Code
+```
+
 ## Posted log
 
 - posted: 2026-10-31 PR #134 opened (head d55973e1 at 00:10Z, opened 00:16Z) https://github.com/psi29a/d2decomped/pull/134 go: user, ref not recorded
