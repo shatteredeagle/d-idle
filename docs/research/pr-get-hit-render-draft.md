@@ -42,7 +42,7 @@ cmake --build build && ctest --test-dir build --output-on-failure
 - A rate at or above frames x 256 (no vanilla record): the client ends at tick 1 where the server holds 2; d2d draws the stepped frame on that tick.
 - The merc's FHR is its items' (`merc_fighter`); a joined game's merc has no FHR on the wire (drawn at 0; ponytail); a party member's merc and pets in GH keep the plain loop (ponytail).
 - The COF's frames per direction are taken as AnimData's (the renderer's `composite_frames` divides by the same `ms_per_frame`).
-- Not traced: the sub-tick order of the server's mode packet and the client's first step (both count tick 0 at the set); `FUN_00463720` (the gate before NU at `004af833`; after the hold).
+- Not traced: the sub-tick order of the server's mode packet and the client's first step (both count tick 0 at the set); what sets the unit flag +0xc8 bit 0x2000 that `FUN_00463720` tests before the local NU at `004af833` (after the hold).
 - presubmit: siblings (merc, monster, not player / pet / co-op: the player is listed above as a gap, pets have no GH in d2d, a co-op partner's merc is a pet here); net roles (client, not host: the hold is the host's, #136); doc-claims "never loops" (the differential).
 
 ## Checklist
