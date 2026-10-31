@@ -3,7 +3,7 @@
 ```yaml
 change: hitlen
 status: in-progress
-result: 'get-hit length PR candidate: differential vs game.exe FUN_00623f50 + FUN_005539b0: 102,980/110,836 differ before, 0 after; verifier HOLDS WITH LIMITS; patch a2f4a647 in the clone, nothing pushed; not verified live'
+result: 'get-hit length PR candidate: differential vs game.exe FUN_00623f50 + FUN_005539b0: 102,980/110,836 differ before, 0 after; verifier HOLDS WITH LIMITS; patch eb89646e in the clone, nothing pushed; not verified live'
 agent: hitlen
 branch: agent/hitlen
 worktree: ~/code/d2lod-wt/hitlen
@@ -32,7 +32,7 @@ gates:
 
 ## 3. Patch and regression
 
-- [x] 3.1 ~/d2d-lab/pr/hitlen fresh branch fix/get-hit-length a2f4a647, author shatteredeagle, no trailer, pr_guard 0/0
+- [x] 3.1 ~/d2d-lab/pr/hitlen fresh branch fix/get-hit-length eb89646e, author shatteredeagle, no trailer, pr_guard 0/0
 - [x] 3.2 upstream tests green (test_combat ok, test_game 23 OK, pr_guard 0/0, presubmit 0 FAIL); scripted-scenario hashes NOT run (pair.sh runs the lab fork, not before/after upstream trees)
 - [ ] 3.3 corroboration on one hidden d2d slot: NOT run (cmd/d2dcasts2 needs the lab fork's debug verbs on the patched tree; time box)
 

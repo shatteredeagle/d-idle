@@ -24,7 +24,7 @@ A Sorceress hit by a Carver and staggered: 16 ticks (0.64 s) instead of 8 (0.32 
 
 ## Recommendation
 
-Go for the push and the PR (commit `a2f4a647`; the verifier's findings are fixed or listed) after #134's review settles if the maintainer prefers one combat PR at a time: the claim is narrow, the differential is against game.exe's own code with zero mismatches, the limits are in the body.
+Go for the push and the PR (commit `eb89646e`; the verifier's findings are fixed or listed, every code-visible gap carries a `// ponytail:` note) after #134's review settles if the maintainer prefers one combat PR at a time: the claim is narrow, the differential is against game.exe's own code with zero mismatches, the limits are in the body.
 
 ## Commands (NOT RUN; each needs the user's go)
 

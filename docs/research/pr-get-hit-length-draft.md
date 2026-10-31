@@ -1,6 +1,6 @@
 # Draft PR body: get-hit length by AnimData speed x (50 + FHR) (agent HITLEN, 2026-10-31)
 
-> status: draft, NOT posted (card hitlen). Proof: docs/research/pr-get-hit-length-proof.md; go / no-go: docs/research/pr-get-hit-length-evidence-pack.md. Branch `fix/get-hit-length` in `~/d2d-lab/pr/hitlen` on the worker host, commit `a2f4a647`. Spacing: PR #134 (decision) and #135 (missile damage) are open; this is the one new candidate, at least one hour after the last push. Wait for #134's outcome first if the maintainer asks for a bundle.
+> status: draft, NOT posted (card hitlen). Proof: docs/research/pr-get-hit-length-proof.md; go / no-go: docs/research/pr-get-hit-length-evidence-pack.md. Branch `fix/get-hit-length` in `~/d2d-lab/pr/hitlen` on the worker host, commit `eb89646e`. Spacing: PR #134 (decision) and #135 (missile damage) are open; this is the one new candidate, at least one hour after the last push. Wait for #134's outcome first if the maintainer asks for a bundle.
 
 The body (their template, comments removed), inside the fence:
 
@@ -35,7 +35,7 @@ uv run python tools/emu/hit_len.py compare /tmp/game.tsv /tmp/after.tsv /tmp/cas
 
 ## Limits
 
-The FHR range checked is 0..1000 (negative FHR: game.exe divides, d2d keeps v; no vanilla item has one). A monster's FHR is its MonProp's; a state's stat 99 is not read. The block length (50 + FBR) and the drawn frame count stay as they were. presubmit's siblings line: the player (`set_pmode`), the merc and monsters all take the new rule; pets have no get-hit set in d2d; a co-op partner is a player.
+The FHR range checked is 0..1000 (negative FHR: game.exe divides, d2d keeps v; no vanilla item has one; `// ponytail:` at `get_hit_rate`). A monster's FHR is its MonProp's and the merc's its items'; a state's stat 99 is not read (ponytails at `set_mode` and the merc's set). The record's own event frames and the client's one-frame-fewer drawing are ponytails at `get_hit_ticks` and `set_pmode`. The block length (50 + FBR) and the drawn frame count stay as they were. presubmit's siblings line: the player (`set_pmode`), the merc and monsters all take the new rule; pets have no get-hit set in d2d; a co-op partner is a player.
 
 ## Checklist
 
