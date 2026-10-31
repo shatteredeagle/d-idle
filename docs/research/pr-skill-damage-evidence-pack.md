@@ -13,7 +13,7 @@
 | Grid: every elemental skill x levels 1..40 x {alone, neighbours at 20, + masteries 100, + masteries 37 at clvl 99} | 16,000 | in the total | | 0 |
 | Random: levels 1..60 (bracket edges), clvl 1..99, masteries 0..600, 0..6 other skills at 0..40, seed 1 | 100,000 | in the total | | 0 |
 | Total | 116,000 | 4,549 (min 4,509 / max 340 / len 0) | 344 | 0 (md5 equal) |
-| Verifier's own runs | | | | see below |
+| Verifier's own runs (seed 77: 36,000; adversarial: 104,000) | 140,000 | | | 0 |
 
 Their checks: `ninja test_combat test_game` (D2D_WERROR off), `test_combat` ok, `test_game` rc 0 (27 OK, MPQs + LODPatch_114d.exe), `pr_guard.py upstream/main` 0 FAIL 0 WARN, `presubmit.py --quick` 0 FAIL 4 WARN (ruff absent; siblings and doc-claims answered in the body; build by hand). Three commits authored by the user, bodies one line `Agent: Claude Code`, no trailer.
 
@@ -36,9 +36,9 @@ cd tools/emu && uv run python skill_damage.py gen 100000 1 > cases.tsv && uv run
 - `tools/emu/skill_damage.py` and the test mode are a `tools/` / `tests/` change (CODEOWNERS); the fix commits stand without them.
 - The branch is on upstream/main f8aab0e8 (today's tip); fetch again right before the push.
 
-**Verifier.** VERIFIER_VERDICT_PLACEHOLDER
+**Verifier.** Independent second agent (Fable, read-only): **VERDICT: holds (with limits noted).** Fresh seed 36,000 cases 0 diffs; its own adversarial set of 104,000 cases (levels -7..5000, clvl 0..120, masteries -200..700000 through every MulDiv branch, synergy pairs over ALL 357 skill ids) 0 diffs; the author's counts reproduced; the gate, MulDiv, the flag-1 calls and the missile's stat set re-read in the listings. No mismatch. Limits it adds: EType 12 (freeze) takes the cold mastery in game.exe (no stock row has it; d2d has no freeze bucket); the `blvl` / `lvl` split and the level cap are not exercised by the cases; other callers of `elem_damage` take the gate (right for every FUN_00644d50 caller, their game paths not traced). Full report in the proof doc.
 
-**PROOF: PROOF_STATUS_PLACEHOLDER**
+**PROOF: complete** for the two claims as stated (differential zero over 116,000 author cases and 140,000 verifier cases, chain fully V/D, their checks green, verifier report attached), with the residual risks above disclosed in the body.****
 
 **Recommendation.** Go, with the user's go for each step: (1) fetch, rebase if main moved, rebuild, rerun the commands (expect READY); (2) push `fix/skill-damage`; (3) open the PR with the draft body (a bundle of two claims in one PR, as the maintainer prefers). If the verifier's verdict is "broken", stop and send the finding back to a worker first.
 

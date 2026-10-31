@@ -54,4 +54,29 @@ Outputs on the worker host: /tmp/decompskill/{cases,g,d-before,d-gate,d-final}.t
 
 ## Verifier (independent, second agent, Fable; report verbatim)
 
-VERIFIER_REPORT_PLACEHOLDER
+VERDICT: holds (with limits noted).
+
+What I ran (all on the worker host, read-only; my files under /tmp/decompskill-verify/):
+- Read the diff (`git diff upstream/main`), skill_damage.py, listings 644d50/644e40/644c90/64b860/59f900/5a89a0/5a8910/6442a0/646c00/646460, disassembled 0x483360 (MulDiv) and dumped the raw bytes of 644c90's tables from game.exe.
+- Fresh seed: `gen 20000 77` -> 36,000 cases; game vs `test_game --skill-damage`: 0 diffs (36,000 lines each).
+- Adversarial set (adv.py, 104,000 cases, 0 diffs): every elemental skill at lvl 0/-1/-7/41/60/99/100/255/1000/5000, clvl 0/99/120, masteries -50/-200/1/99/70000/700000 (exercises every MulDiv branch; outputs reach 32-bit wrap, both sides agree), synergy pairs = ALL 357 skill ids at 0/20/99 (cross-class, outside the +-15 window), plus a lvl 1..40 sweep with every skill at 1/2/3/7/13.
+- Author's counts reproduced: d-before 4549 (min 4500, max 1893, len 0), d-gate 344, d-final 0, md5 of g.tsv == d-final.tsv.
+- `pr_guard.py upstream/main`: 0 FAIL 0 WARN. `presubmit.py --quick`: 0 FAIL, 4 WARN (ruff absent, siblings, doc-claims "always" at skills.md:95, build skipped). `test_combat`: ok.
+
+Claim checks:
+1. Gate verified in 644d50: `cmp esi,0x100; jg` (signed) then `cmp [edi+0x1e8],0; je skip`; +0x1e8 is the pointer handed to 644b70 (lea edx,[edi+0x1e8]) so it is EMinLev1; 644e40 has no such test. 13 stock rows hit the skip (ids 14,20,24,34,35,49,53,118,269,271,276 emin 1<<8; 256,261 emin 2<<7 = exactly 0x100). Fix matches.
+2. MulDiv: 0x483360 matches d2d's mul_div branch for branch (>0x100000 divide-first, times>0x10000 path, 32-bit imul wrap, lldiv path). Mastery 644c90 also MulDiv on the post-synergy esi. Match.
+3. 64b860 pushes literal 1 as the flag to all three (0x64ba1b/38/4b); 646c00 uses 6442a0 flag 1, 646460 has one flag-0 call (blvl). Oracle as described.
+4. 64ac60 sets missile stats 0xc,0x15,0x16,0x19,0x30..0x42,0x67,0x68,0x6a,0x78..0x7a,0x8d,0xb4,0x13b..0x13d,0x146: no 0x149..0x14c. 5a89a0 reads 0x30.. AND 0x149.. from the same unit arg, so on a missile the roll-time mastery is 0. Holds for this creation path.
+
+Mismatches found: none.
+
+Limits (true, outside the claims):
+- 644c90's index table is `00 01 04 02 03 04 04 04 04 04 04 02`: EType 12 (freeze) takes COLD mastery 0x14b. No stock row has etype 12 (rows: 1,2,3,4,5,9 only) and d2d has no freeze bucket; a mod with EType=frze and damage would mismatch.
+- The 6442a0 hook ignores the flag and test_game sets base_level==level, so no case distinguishes blvl from lvl; d2d's split is untested here.
+- The hook bypasses 6442a0's cap (611830), so lvl>cap cases are synthetic.
+- Other d2d callers now take the gate (tooltips 17/18/38/39, charge bonus skills.hpp:863, aura paths fight.cpp:3597/5010): correct iff those game paths go through 644d50 (the gate precedes the flag test, so any 644d50 caller has it); I did not trace those callers.
+- Claim 4 covers only 64ac60; other missile creators/stat-list copies not checked.
+Nothing started, nothing left running.
+
+**Author's response (V):** no finding needs a code change. The freeze (EType 12 -> cold mastery) limit is data no stock row uses; the `blvl` / `lvl` split, the level cap and the other callers' game paths are listed under residual risks and in the body.
