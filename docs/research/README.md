@@ -20,6 +20,7 @@ One line per doc: what it shows, status, PR. Status: current = still the best so
 - [movement-and-recovery-trace.md](movement-and-recovery-trace.md) walk/run speed and hit recovery traced in game.exe. current.
 - [pr-get-hit-rule-proof.md](pr-get-hit-rule-proof.md) the get-hit decision matches game.exe. current. PR #134 (open); evidence: [pr-get-hit-rule-evidence-pack.md](pr-get-hit-rule-evidence-pack.md). Body and review replies: archived ([draft](../archive/research/pr-get-hit-rule-draft.md), [review 1](../archive/research/pr-get-hit-rule-review-draft.md), [review 2](../archive/research/pr-get-hit-rule-review2-draft.md)).
 - [pr-get-hit-length-proof.md](pr-get-hit-length-proof.md) the get-hit length (AnimData speed x (50 + FHR)) matches game.exe. current. PR #136 (open); evidence: [pr-get-hit-length-evidence-pack.md](pr-get-hit-length-evidence-pack.md). Body: [archived draft](../archive/research/pr-get-hit-length-draft.md).
+- [pr-get-hit-render-proof.md](pr-get-hit-render-proof.md) the get-hit frame rule (step once, stand on the last frame) matches game.exe. candidate; evidence: [pr-get-hit-render-evidence-pack.md](pr-get-hit-render-evidence-pack.md), body: [pr-get-hit-render-draft.md](pr-get-hit-render-draft.md). Nothing pushed or posted.
 - [upstream-pr-candidates-movement.md](upstream-pr-candidates-movement.md) stub: findings that became #134 and #136. archived.
 
 ## Missile damage
