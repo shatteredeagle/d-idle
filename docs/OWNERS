@@ -29,3 +29,11 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
+internal/bot/goal.go  goldfloor  goldfloor
+internal/bot/goldfloor_test.go  goldfloor  goldfloor
+internal/town/shop.go  goldfloor  goldfloor
+internal/town/beltbuy.go  goldfloor  goldfloor
+internal/town/goldfloor_test.go  goldfloor  goldfloor
+internal/env/tuning_town.go  goldfloor  goldfloor
+internal/env/tuning_loot.go  goldfloor  goldfloor
+docs/goldfloor.md  goldfloor  goldfloor
