@@ -2,7 +2,7 @@
 
 ```yaml
 change: kitgate
-status: in-progress
+status: archived
 agent: kitgate
 branch: agent/kitgate
 worktree: ~/code/d2lod-wt/kitgate
@@ -28,7 +28,7 @@ gates:
   - "go test -p 1 ./internal/bot -run 'KitGate|Recovery' and ./internal/nav -run RouteAvoid pass"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
 merge: 9f5bacf
-result:
+result: "recovery without a kit stays in Blood Moor and Cold Plains; offline tests only (mem.Fake, nav table tests), not verified live"
 ```
 
 ## 1. Work
