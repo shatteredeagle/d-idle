@@ -1,5 +1,5 @@
 {
- "description": "EARLY profile: fresh Sorceress clvl 1-7, Game.exe, 3.5 h wall, one run (docs/soak-analysis.md, Soaky 2026-10-29, old builds, no minute lines). One baseline run only: the verdict is always weak. Use when the d2d replica starts from a fresh clvl 1 character.",
+ "description": "EARLY profile: fresh Sorceress clvl 1-7, Game.exe, two runs (Soaky 2026-10-29 old builds, S quality; Fresha 2026-10-30 minute lines, V). Weak until 5 runs (Game.exe is frozen, so it stays weak: docs/d2d-baselines-early.md). Use when the d2d replica starts from a fresh clvl 1 character.",
  "minSeeds": 5,
  "minHoursPerSeed": 3,
  "minTotalHours": 15,
@@ -14,6 +14,17 @@
    "rel": 0.2,
    "abs": 0.5,
    "why": "baseline is 0 to 0.5 deaths/h; one extra death per 2 h is noise"
+  },
+  "kills_per_hour": {
+   "gate": true,
+   "rel": 0.2,
+   "why": "fidelity gate: kills/h beside XP/h (card m2-earlybase)"
+  },
+  "deaths_per_1000_kills": {
+   "gate": true,
+   "rel": 0.2,
+   "abs": 1.0,
+   "why": "deaths per 1000 kills, abs 1.0 because the baseline is near 0 (fidelity-gate)"
   }
  },
  "runs": [
@@ -21,11 +32,26 @@
    "name": "soaky-fresh-1-7",
    "hours": 3.5,
    "minutes": 0,
-   "source": "V: docs/soak-analysis.md sections 2 and 6 (true XP 23.3k in 211 min wall; 1 death 10:00:39; 13 chicken exits)",
+   "source": "V: docs/soak-analysis.md sections 2 and 6 (true XP 23.3k in 211 min wall; 1 death 10:00:39; 13 chicken exits); kills S: sum of the kills column of docs/soak-analysis.md section 2 (1427, a lower bound: the counters undercount 16 to 37 percent before the restart fix), over the same 3.5 h wall",
    "note": "deaths 1 in 3.5 h; XP/h is wall time including a 25 min pause flap and 3 bot restarts, so the true rate while playing is higher (about 8.7k XP/h by the counter, which over-counts 24 %)",
    "metrics": {
     "xp_per_hour": 6600,
-    "deaths_per_hour": 0.29
+    "deaths_per_hour": 0.29,
+    "kills_per_hour": 408,
+    "deaths_per_1000_kills": 0.7
+   }
+  },
+  {
+   "name": "fresha-fresh-1-7",
+   "hours": 1.92,
+   "minutes": 115,
+   "source": "V: d2dsoak extract on the original-game minute lines of the Fresha soak (i5, 2026-10-30, logs 095519 and 105216 whole, 120747 first 6 minute lines up to the first clvl 7 line), hours = 115 minute lines / 60 (restart gaps excluded); recipe in docs/d2d-baselines-early.md",
+   "note": "1 death (clvl 4, 746 kills); the minute-line kill counter is the persistent total, so the restart undercount does not apply; 56 percent of the minutes are state recovery (a clvl 1-4 character that keeps drinking and resting), which the d2d fresh runs should show too",
+   "metrics": {
+    "xp_per_hour": 11743,
+    "kills_per_hour": 389,
+    "deaths_per_hour": 0.52,
+    "deaths_per_1000_kills": 1.34
    }
   }
  ]
