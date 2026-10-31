@@ -17,7 +17,7 @@ exclusive: []
 gates:
   - "go test -short -count=1 ./internal/nav ./internal/bot ./internal/town ./internal/combat -run TestScenario passes, each knob-off subtest reproduces the old failure"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
+merge: 933c213
 result: "6 scenarios as TestScenario_* tests + docs/scenarios.md; offline only, not verified live; knob-off subtests reproduce the old failures"
 ```
 
