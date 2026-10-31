@@ -2,7 +2,12 @@
 
 > status: current (agent BUNDLEPR, 2026-10-31, card upstream-bundle). For the user's go / no-go. Body: pr-bundle-draft.md. Per-claim packs: pr-get-hit-render-evidence-pack.md (proof: pr-get-hit-render-proof.md), pr-lut-gholein-evidence-pack.md (proof: lutgholein-proof.md). Nothing pushed, posted or filed; the maintainer's bundle preference (psi29a, 2026-10-31) is in docs/process/upstream-pr-standard.md section 4.
 
-posted:
+posted: 2026-10-31T13:05Z opened PR #143 https://github.com/psi29a/d2decomped/pull/143 head e0731ebd user: open it
+posted: 2026-10-31 UTC pushed follow-up commit 2c151686 (patch open fallback, case-insensitive base archives, local merc FHR restore) to fix/bundle-get-hit-render-lut user: fix all three, 2026-10-31
+posted: 2026-10-31 UTC reply https://github.com/psi29a/d2decomped/pull/143#discussion_r4431883236 (patch fallback) user: fix all three, 2026-10-31
+posted: 2026-10-31 UTC reply https://github.com/psi29a/d2decomped/pull/143#discussion_r4431883308 (case-insensitive base archives) user: fix all three, 2026-10-31
+posted: 2026-10-31 UTC PR comment https://github.com/psi29a/d2decomped/pull/143#issuecomment-6544097808 (merc FHR, outside-diff finding had no inline thread) user: fix all three, 2026-10-31
+posted: 2026-10-31 UTC edited the PR description (merc FHR limit, Claim 2 patch/case limit, presubmit line numbers) user: fix all three, 2026-10-31
 
 ## The bundle
 
