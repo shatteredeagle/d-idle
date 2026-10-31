@@ -31,3 +31,9 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
+docs/process/upstream-pr-standard.md  bundlepr  upstream-bundle
+docs/research/pr-bundle-draft.md  bundlepr  upstream-bundle
+docs/research/pr-bundle-evidence-pack.md  bundlepr  upstream-bundle
+docs/research/README.md  bundlepr  upstream-bundle
+docs/BACKLOG.md  bundlepr  upstream-bundle
+openspec/changes/upstream-bundle/**  bundlepr  upstream-bundle

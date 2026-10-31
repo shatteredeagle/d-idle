@@ -1,8 +1,8 @@
 # Upstream PR standard: what a d2decomped PR of ours must prove first
 
-> status: current (agent PRPROOF, 2026-10-30). User rule 2026-10-30: "I want PRs to be as close to absolutely sure with verifiable proof that the change pushes towards 1:1." Applies to every candidate for psi29a/d2decomped before the coordinator may ask the user for a go. First applied to fix/missile-damage-fine: docs/research/pr-missile-damage-fine-proof.md.
+> status: current (agent PRPROOF, 2026-10-30; bundling allowed 2026-10-31, card upstream-bundle). User rule 2026-10-30: "I want PRs to be as close to absolutely sure with verifiable proof that the change pushes towards 1:1." Applies to every candidate for psi29a/d2decomped before the coordinator may ask the user for a go. First applied to fix/missile-damage-fine: docs/research/pr-missile-damage-fine-proof.md.
 
-Their rules come first and are read every time: upstream `CONTRIBUTING.md`, `AGENTS.md` (sections 2, 5, 6), `.github/pull_request_template.md`, `tools/pr_guard.py`, `.github/CODEOWNERS`. In short: one claim per PR, game.exe 1.14d is the ground truth, evidence a reviewer re-runs on their own copy, no game data or decompiled code in the repo, `FUN_` only for an entry (`LAB_` inside a function), commits authored by the user, `Agent: <name>` in the body, nothing posted without the user's go.
+Their rules come first and are read every time: upstream `CONTRIBUTING.md`, `AGENTS.md` (sections 2, 5, 6), `.github/pull_request_template.md`, `tools/pr_guard.py`, `.github/CODEOWNERS`. In short: one claim per commit (a PR may bundle several, see section 8), game.exe 1.14d is the ground truth, evidence a reviewer re-runs on their own copy, no game data or decompiled code in the repo, `FUN_` only for an entry (`LAB_` inside a function), commits authored by the user, `Agent: <name>` in the body, nothing posted without the user's go.
 
 ## 1. Primary proof: a differential test against game.exe's own code
 
@@ -22,7 +22,7 @@ Numbers from probes (casts per kill, XP/h, kills per run) never carry the claim:
 
 ## 4. Scope: one claim, and nothing else changes
 
-- One behaviour per PR. A second gap found on the way (game.exe disagrees with d2d elsewhere) becomes a note under limits and a candidate issue, not a second change.
+- One behaviour per commit. A PR may bundle several proven claims when the maintainer prefers it (psi29a, 2026-10-31); each claim keeps its own differential proof, verifier verdict, ponytails and its own commit, and the body has one section per claim. A second gap found on the way (game.exe disagrees with d2d elsewhere) becomes a note under limits and a candidate, or its own commit with its own proof, never part of a claim. A candidate without a complete proof stays out of the bundle.
 - Prove nothing else moved: upstream's own tests green (`ninja test_combat test_game`, `ctest`), `tools/presubmit.py --quick` with its warnings answered, `pr_guard.py` clean, and the state hashes of our scripted scenarios (`tools/d2ddet`, `det.py`) unchanged apart from the claimed field. Every caller of a changed function is listed with what it now does differently (nothing, or the claimed thing).
 
 ## 5. Independent adversarial verification
@@ -40,16 +40,16 @@ The PR body says plainly what the proof does not cover (the domain of the genera
 | 1 | Differential | boundary cases exhaustive, >= 100k random, mismatches before > 0, after = 0, commands in the body |
 | 2 | Addresses | every link V or S, none U, pr_guard 0 FAIL 0 WARN |
 | 3 | Statistics | labelled corroboration, or absent |
-| 4 | Scope | one claim; their tests green; presubmit answered; scenario hashes unchanged apart from the claim; callers listed |
+| 4 | Scope | one claim per commit; their tests green; presubmit answered; scenario hashes unchanged apart from the claim; callers listed |
 | 5 | Verifier | independent report attached, findings fixed or listed as limits |
 | 6 | Limits | written in the body |
 | 7 | Their rules | template filled, `Agent: Claude Code`, author the user, no Claude trailer, commit body <= 3 lines, no game data |
-| 8 | Spacing | at least one hour since our last PR, follow-ups bundled in one push, user's go for each push and the PR |
+| 8 | Spacing | at most one open bundle at a time (unless the maintainer says otherwise), review fixes in one push, user's go for each push and the PR |
 
 The evidence pack for the user is one page, `docs/research/pr-<topic>-evidence-pack.md`: the claim in one sentence; the proof summary (what ran against what); the numbers (cases, mismatches before/after per scenario); the commands; residual risks; the verifier's verdict; `PROOF: complete` or `PROOF: incomplete` with the reason; a recommendation (go / no-go / narrow the claim); the push and PR commands, not run.
 
 ## 8. Spacing and disclosure
 
-- At least one hour between our PRs (CodeRabbit limits reviews per author, docs.coderabbit.ai rate limits); bundle follow-up commits into one push; wait for `gh pr checks --watch` and answer threads before the next push, each with the user's go.
+- No fixed spacing since 2026-10-31 (the maintainer prefers bundles; the old one-hour rule came from CodeRabbit's review limits). At most one open PR per topic bundle: new proven claims join it as commits or wait. Review fixes go out as one push; wait for `gh pr checks --watch` and answer threads before the next push, each with the user's go.
 - `Agent: Claude Code` in the PR body. Commits are the user's: author and committer `shatteredeagle <26069301+shatteredeagle@users.noreply.github.com>`, no `Co-Authored-By` or other trailer, subject short, body at most three lines.
 - Nothing is pushed, posted, commented or labelled by an agent. The coordinator presents the evidence pack; the user runs or approves each command.
