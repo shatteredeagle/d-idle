@@ -944,17 +944,13 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 		return true, r.d.Town.ToTown(ctx)
 	}
 	r.e.Log.Info("leveling: everything worth farming is cleared, starting a fresh game", "level", s.Player.Level, "cleared", len(r.loop.cleared))
-	err = r.oogRun(func(ctx context.Context) error {
+	err = r.newGameRun(func(ctx context.Context) error {
 		return r.d.Cycler.NewGame(ctx, difficultyName(s.Player.Difficulty))
 	})(ctx)
 	if err == nil {
 		// d2d restarts the process without a menu poll, so the observer's newGames never moves (live: restarts 0
 		// after 38 fresh games) and syncGames cannot forget: the cleared set belongs to the old game.
-		r.loop.cleared = map[int]bool{}
-		// Same reason (soakfull hotfix): the per-game sweep, buff and step state is the old game's too.
-		r.loop.sweepKills = nil
-		r.loop.needBuff = true
-		r.loop.stepArea = 0
+		r.forgetGame()
 	}
 	return true, err
 }

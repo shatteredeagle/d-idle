@@ -147,7 +147,8 @@ func Hostiles(snap *d2.Snapshot, hc HostileCtx) []Target {
 		if u.Monster != nil {
 			t.Affixes = affixesOf(u.Monster)
 			t.Elite = u.Monster.IsUnique() || u.Monster.IsChampion() || u.Monster.IsMinion()
-			if u.Monster.IsUnique() && u.Monster.Name != "" {
+			// champions keep the old boss treatment (they read 0x0c, so IsUnique alone no longer covers them)
+			if (u.Monster.IsUnique() || u.Monster.IsChampion()) && u.Monster.Name != "" {
 				t.Boss = true
 				t.Name = u.Monster.Name
 			}

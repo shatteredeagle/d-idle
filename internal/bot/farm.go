@@ -113,7 +113,7 @@ func (o farmOps) NewGame(ctx context.Context) error {
 	o.r.farmMu.Lock()
 	o.r.farm.ended = false
 	o.r.farmMu.Unlock()
-	err := o.r.oogRun(func(ctx context.Context) error { return o.r.d.Cycler.NewGame(ctx, diff) })(ctx)
+	err := o.r.newGameRun(func(ctx context.Context) error { return o.r.d.Cycler.NewGame(ctx, diff) })(ctx)
 	if err == nil {
 		o.r.syncTaskGame()
 	}

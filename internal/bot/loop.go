@@ -142,6 +142,9 @@ func (r *Runner) betweenGoals(ctx context.Context, snap *d2.Snapshot) bool {
 	r.ob.gone, r.ob.errSince = nil, time.Time{} // the old process exiting is the plan, not a crash
 	r.obMu.Unlock()
 	state := "recycle"
+	if err == nil {
+		r.noteRecycle()
+	}
 	if err != nil {
 		state = "recycle_failed"
 		r.e.Log.Error("game recycle failed", "reason", why, "err", err)
@@ -562,7 +565,7 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 				applied = true
 				stage := l.stuckStage
 				r.do(ctx, c, StateRecovering, "Failsafe: leaving and re-entering the game", sec(r.cfg.TownTimeoutSec), "new game", func(ctx context.Context) error {
-					return r.oogRun(func(ctx context.Context) error { return r.d.Cycler.NewGame(ctx, c.spec.difficulty) })(ctx)
+					return r.newGameRun(func(ctx context.Context) error { return r.d.Cycler.NewGame(ctx, c.spec.difficulty) })(ctx)
 				})
 				l.stuckStage = stage
 			}
