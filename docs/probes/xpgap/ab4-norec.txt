@@ -1,0 +1,20 @@
+logs/bot-off5.log      off clvl=5 kills=459 (230/h) xp/h=5224 deaths=0 fresh=2 restarts=0 rec%=60 town%=19 trips/h=3.0 s/kill total=15.6 walk=11.2 cast=0.8 wait=3.7 (n=459)
+logs/bot-off6.log      off clvl=5 kills=361 (180/h) xp/h=5162 deaths=0 fresh=1 restarts=0 rec%=56 town%=25 trips/h=2.0 s/kill total=19.2 walk=14.3 cast=1.0 wait=3.9 (n=361)
+logs/bot-off7.log      off clvl=5 kills=402 (201/h) xp/h=5168 deaths=0 fresh=1 restarts=0 rec%=56 town%=26 trips/h=3.0 s/kill total=17.9 walk=13.9 cast=0.9 wait=3.1 (n=402)
+logs/bot-off8.log      off clvl=4 kills=305 (152/h) xp/h=3694 deaths=0 fresh=0 restarts=0 rec%=27 town%=61 trips/h=8.5 s/kill total=23.8 walk=20.2 cast=0.8 wait=2.9 (n=305)
+logs/bot-norec5.log    norec clvl=5 kills=378 (189/h) xp/h=4240 deaths=0 fresh=2 restarts=0 rec%=0 town%=31 trips/h=4.5 s/kill total=15.5 walk=11.8 cast=0.7 wait=3.0 (n=378)
+logs/bot-norec6.log    norec clvl=5 kills=325 (162/h) xp/h=4223 deaths=0 fresh=2 restarts=0 rec%=0 town%=38 trips/h=4.5 s/kill total=22.0 walk=16.7 cast=0.9 wait=4.4 (n=325)
+logs/bot-norec7.log    norec clvl=5 kills=361 (180/h) xp/h=4602 deaths=0 fresh=2 restarts=0 rec%=0 town%=37 trips/h=3.5 s/kill total=19.5 walk=15.2 cast=0.9 wait=3.5 (n=361)
+logs/bot-norec8.log    norec clvl=4 kills=281 (140/h) xp/h=3270 deaths=0 fresh=2 restarts=0 rec%=0 town%=60 trips/h=7.5 s/kill total=23.1 walk=18.2 cast=0.8 wait=4.1 (n=281)
+
+s_walk   off 14.90 +- 1.90 (n=4)   norec 15.44 +- 1.37 (n=4)   t=0.23 p=0.824
+s_total  off 19.13 +- 1.73 (n=4)   norec 20.01 +- 1.68 (n=4)   t=0.36 p=0.730
+s_cast   off 0.85 +- 0.05 (n=4)   norec 0.84 +- 0.05 (n=4)   t=-0.20 p=0.845
+s_wait   off 3.39 +- 0.23 (n=4)   norec 3.73 +- 0.31 (n=4)   t=0.88 p=0.413
+kills_h  off 190.88 +- 16.27 (n=4)   norec 168.12 +- 10.74 (n=4)   t=-1.17 p=0.294
+xp_h     off 4811.62 +- 372.80 (n=4)   norec 4084.00 +- 285.08 (n=4)   t=-1.55 p=0.175
+rec_pct  off 49.73 +- 7.55 (n=4)   norec 0.00 +- 0.00 (n=4)   t=-6.59 p=0.007
+town_pct off 32.79 +- 9.57 (n=4)   norec 41.18 +- 6.36 (n=4)   t=0.73 p=0.497
+farm_pct off 15.81 +- 2.30 (n=4)   norec 52.17 +- 6.89 (n=4)   t=5.01 p=0.009
+trips_h  off 4.12 +- 1.48 (n=4)   norec 5.00 +- 0.87 (n=4)   t=0.51 p=0.632
+deaths   off 0.00 +- 0.00 (n=4)   norec 0.00 +- 0.00 (n=4)   t=0.00 p=1.000
