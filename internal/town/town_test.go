@@ -223,6 +223,7 @@ func TestNeedsTrip(t *testing.T) {
 			w.Items = append(w.Items[:i], w.Items[i+1:]...)
 		}
 	}
+	w.Player.Level = 10 // potionsFirst: below tpFirstLevel a missing scroll is no trip reason (own test below)
 	s, _ = w.Snapshot()
 	if ok, why := r.T.NeedsTrip(s); !ok || why != "no town portal scroll" {
 		t.Fatalf("%v %q", ok, why)
