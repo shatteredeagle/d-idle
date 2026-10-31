@@ -1,6 +1,6 @@
 # Evidence pack: PR "Draw a get-hit once at its rate, held on the last frame" (agent RENDERGH, 2026-10-31)
 
-> status: current (card rendergh). One page for the user's go / no-go. Full proof: docs/research/pr-get-hit-render-proof.md; body: docs/research/pr-get-hit-render-draft.md. Nothing pushed, posted or filed. Stacked on PR #136: base = 9006a688 (#136 head); PR must wait for #136 to merge or be opened against fix/get-hit-length.
+> status: current (card rendergh). One page for the user's go / no-go. Full proof: docs/research/pr-get-hit-render-proof.md; body: docs/research/pr-get-hit-render-draft.md. Nothing pushed, posted or filed. #136 is merged upstream (2026-10-31): the candidate is rebased onto upstream/main 4778a47c and is no longer stacked; ready to open against main on the user's go (see the UPSYNC section).
 
 ## PROOF: complete for monsters and the merc (with disclosed limits; verifier verdict below)
 
@@ -51,3 +51,19 @@ ssh worker.example 'cd ~/d2d-lab/pr/render && gh pr create --repo psi29a/d2decom
 - nothing posted.
 
 posted:
+
+## Rebased onto upstream main (UPSYNC, 2026-10-31, local only)
+
+- Base: upstream/main **4778a47c** (the maintainer merged #135 and #136; our commits live there as 62282965, 453b1014, 4778a47c). New head: **56fd98a7** on `fix/get-hit-render` (`~/d2d-lab/pr/render`), one commit on 4778a47c (author shatteredeagle, no trailer, body `Agent: Claude Code`). Backups: `fix/get-hit-render-pre-upstream-merge` = e2c4359c (the head on 9006a688), `fix/get-hit-render-pre-rebase` = 57bd4b56. `fix/get-hit-length` and `pr/gaps` untouched; nothing pushed.
+- Conflicts: none to resolve. Upstream's combat.md and ai.cpp match what the patch expected; the patch still deletes the 8-line renderer-gap ponytail in `set_mode` (its claim) and keeps the "Drawn frame" bullet; the diff is the renderer claim only (11 files: town.cpp, world_view.cpp/.hpp, replication.hpp, world.cpp/.hpp, fight.cpp comment, ai.cpp note, combat.hpp `get_hit_frame`, combat.md, test_combat.cpp).
+- AFTER (`test_combat --get-hit-frames` on the saved 110,836 cases in /tmp/render-emu, `hit_render.py compare game.tsv after.tsv cases.tsv 1`): `55089 cases, 1747580 ticks compared: 0 ticks in 0 cases differ` (after.tsv byte-identical to the earlier runs).
+- BEFORE on the new base (`hit_render_harness.cpp` rebuilt, run on cases.tsv, before.tsv byte-identical): `1488667 ticks in 49641 cases differ`. The renderer lines it quotes (town.cpp:195..203, world_view.cpp:440, world_view.hpp:164..165) are unchanged on upstream/main.
+- Checks: `ninja test_combat test_game` ok; `test_combat` ok; `test_game` (D2_MPQ_DIR + D2_PATCH_INSTALLER set) 23 OK rc 0; `tools/pr_guard.py upstream/main` 0 FAIL 0 WARN; `tools/presubmit.py --quick` 0 FAIL, 4 WARN (the same answered ones: siblings merc/monster, net roles, doc-claims "never loops").
+
+Commands to open (NOT RUN; need the user's explicit go; base is now main):
+
+```sh
+ssh worker.example 'cd ~/d2d-lab/pr/render && git push origin fix/get-hit-render'
+# save the body (inside the four-backtick fence of pr-get-hit-render-draft.md) to ~/d2d-lab/pr/render/PR_DESCRIPTION.md, then:
+ssh worker.example 'cd ~/d2d-lab/pr/render && gh pr create --repo psi29a/d2decomped --base main --head shatteredeagle:fix/get-hit-render --title "Draw a get-hit once at its rate, held on the last frame" --body-file PR_DESCRIPTION.md'
+```
