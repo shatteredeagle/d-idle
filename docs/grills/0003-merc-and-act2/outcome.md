@@ -1,6 +1,6 @@
 # Outcome of grill 0003 (merc and Act 2 entry)
 
-2026-10-31, user interviewed by the grill agent. Result: [ADR 0011](../../adr/0011-readiness-power-vs-danger.md) (status proposed). Facts cited from prebrief.md and verified-claims.md (the verified claims replaced several prebrief numbers: road deaths at clvl 11-12 by melee packs, Andariel 1024 HP in game).
+2026-10-31, user interviewed by the grill agent. Result: [ADR 0011](../../adr/0011-readiness-power-vs-danger.md) (status accepted by the user 2026-10-31). Facts cited from prebrief.md and verified-claims.md (the verified claims replaced several prebrief numbers: road deaths at clvl 11-12 by melee packs, Andariel 1024 HP in game).
 
 Format note: the user asked for the questions one at a time after the first batch (the session has no popup tool).
 
