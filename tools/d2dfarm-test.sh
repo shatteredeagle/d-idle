@@ -1,5 +1,5 @@
 #!/bin/bash
-# Offline test of d2dfarm with a fake ssh on PATH (no network, no game). Run: bash tools/d2dfarm-test.sh
+# Offline test of d2dfarm with a fake ssh and capacity.sh (no network, no game). Run: bash tools/d2dfarm-test.sh
 set -u
 here=$(cd "$(dirname "$0")" && pwd)
 T=$(mktemp -d); trap 'rm -rf "$T"' EXIT
@@ -20,7 +20,9 @@ cmd=$(printf %s "$cmd" | sed -E 's/^wsl -d [A-Za-z]+ -u [a-z0-9]+ -e //')
 exec sh -c "$cmd"
 SH
 chmod +x "$T/bin/ssh"
-export PATH="$T/bin:$PATH" FAKE_HOME_A="$T/home-a" FAKE_HOME_B="$T/home-b" FAKE_LOG="$T/log" FAKE_CAP="$here/capacity.stub"
+# Fake capacity.sh (the real one is private/ops): psi 45 => WARN, exit 1
+printf '#!/bin/sh\necho "add=1 psi 45"\nexit 1\n' >"$T/capacity-fake.sh"; export D2_FARM_CAPACITY="$T/capacity-fake.sh"
+export PATH="$T/bin:$PATH" FAKE_HOME_A="$T/home-a" FAKE_HOME_B="$T/home-b" FAKE_LOG="$T/log" FAKE_CAP=unused
 export FAKE_PS="load=10 freemb=20000 user= explorer=0 encoder=0"
 export D2_FARM_DIR="$T/state" D2_FARM_PROBE_WINDOW=1 D2_FARM_PROBE_TTL=0
 export D2_FARM_HOSTS="node-a lab-slots fake-a 1 any lab=$T/home-a/lab labels=fast;node-b wsl fake-b 1 22-7 lab=$T/home-b/lab labels=idle-only"
@@ -36,7 +38,7 @@ chk off-hours-shown "ready/off-hours" "$(D2_FARM_NOW_HOUR=12 bash "$F" nodes)"
 chk in-hours "node-b       wsl          0/1    ready " "$(D2_FARM_NOW_HOUR=23 bash "$F" nodes)"
 
 # probe verdicts
-chk probe-a-warn "WARN" "$(bash "$F" probe node-a)"          # capacity.stub: psi 45 => WARN
+chk probe-a-warn "WARN" "$(bash "$F" probe node-a)"          # fake capacity.sh: psi 45 => WARN
 chk probe-b-ok "OK" "$(bash "$F" probe node-b)"
 FAKE_PS="load=10 freemb=20000 user=someone explorer=1 encoder=0" chk probe-b-user-no "NO user active" "$(FAKE_PS='load=10 freemb=20000 user=someone explorer=1' bash "$F" probe node-b)"
 chk probe-b-load-no "NO host busy" "$(FAKE_PS='load=90 freemb=20000 user= explorer=0' bash "$F" probe node-b)"
