@@ -77,6 +77,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
 - 8bf3829 10-31 09:03 `Merge agent/m2early: early d2d baseline` (m2-earlybase)
 - 67d622b 10-31 09:03 `Merge agent/bundlepr: upstream PR bundle draft` (upstream-bundle)
 - 5be7cc7 10-31 08:13 `Merge agent/townwedge: bad-edge TTL and pocket unstick` (townwedge)
@@ -86,5 +87,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 8f4cf7b 10-31 06:41 `Merge agent/navsoak` (navsoak)
 - 72a7e60 10-31 03:23 `Merge agent/upsync: upstream sync, #135 and #136 merged` (rendergh)
 - c14f9c7 10-31 02:57 `Merge agent/specback: spec backfill for six d2d cards` (spec-backfill-d2dcombat)
-- 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 <!-- statusgen:end -->
