@@ -10,4 +10,6 @@ The route guard (merc-policy spec) blocks the Monastery road and the tower below
 
 ## Dependencies
 
-After grill 0003 (docs/roadmap.md decision 4) and after xpgap is archived (it owns docs/knobs.md). skip_specs is true until the deltas are written at launch; the card must not launch without them.
+After grill 0003 (docs/roadmap.md decision D6) and after xpgap is archived (it owns docs/knobs.md). skip_specs is true until the deltas are written at launch; the card must not launch without them.
+
+WAITING ON GRILL 0003 (user decision D6, 2026-10-31): the user runs the grill on route guard numbers, the Andariel floor and the revive budget (docs/grills/0003-merc-and-act2/prebrief.md section 10). No delta is written until the answers are in docs/decisions.md; the card does not launch before.

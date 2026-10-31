@@ -11,4 +11,6 @@ The free Rogue is coded (merc-policy spec, docs/merc-wire.md) behind `merc.enabl
 
 ## Dependencies
 
-After grill 0003 (docs/roadmap.md decision 4: revive budget and stop rule) and after soak-slot:3 is free.
+After grill 0003 (docs/roadmap.md decision D6: revive budget and stop rule) and after soak-slot:3 is free.
+
+Waits on grill 0003 (user decision D6, 2026-10-31) for the revive budget and stop rule (prebrief section 10, question 5).

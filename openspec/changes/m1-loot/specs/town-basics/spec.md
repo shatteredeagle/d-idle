@@ -6,11 +6,11 @@ What the bot does in town with gold, scrolls, potions, repairs, the stash and th
 ## ADDED Requirements
 
 ### Requirement: Charms, runes and gems on a sell visit
-A sell visit SHALL keep every rune, every unidentified small charm until it is identified, every identified charm with life, a resist, faster cast rate, faster hit recovery or magic find, and the gems the gem rule keeps (chipped and flawed gems are sold until the Horadric Cube is owned, unless the user decides to keep them); large and grand charms are picked up only with 3 or more free cells. Source: d2-sme 2026-10-31 (EXP); docs/basics-audit.md row 6 and G7; docs/roadmap.md decision 6.
+A sell visit SHALL keep every rune, every unidentified small charm until it is identified, every identified charm with life, a resist, faster cast rate, faster hit recovery or magic find, and every gem better than flawed (chipped and flawed gems are sold until the Horadric Cube recipe is available, user decision D4, 2026-10-31); large and grand charms are picked up only with 3 or more free cells. Source: d2-sme 2026-10-31 (EXP); docs/basics-audit.md row 6 and G7; docs/roadmap.md decision D4 (docs/basics-audit.md row 6 changes from gem kept to chipped and flawed gems sold).
 
 #### Scenario: Plain charm and rune in the pack
 - **WHEN** the pack holds an unidentified small charm, a rune and a chipped gem and the bot sells junk at Akara before owning the Cube
-- **THEN** the charm and the rune are still in the pack after the visit and the chipped gem is sold (or kept if the user chose to keep gems)
+- **THEN** the charm and the rune are still in the pack after the visit and the chipped gem is sold (a flawless gem would stay)
 
 #### Scenario: Identified charm without a kept stat
 - **WHEN** a small charm is identified and shows only a damage bonus

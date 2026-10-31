@@ -18,13 +18,6 @@ docs/decisions.md     main  -
 cmd/d2bot/d2dbackend.go              d2d-default-backend   d2d-default-backend
 docs/d2d-replicated-soak.md          d2d-replicated-soak   d2d-replicated-soak
 docs/d2d-container-soak.md           d2d-container-soak    d2d-container-soak
-cmd/d2dnode/**  meshdesign  d2dmesh
-internal/d2dmesh/**  meshdesign  d2dmesh
-docs/d2d-mesh.md  meshdesign  d2dmesh
-openspec/changes/d2dmesh/**  meshdesign  d2dmesh
-openspec/changes/stream-grid/**  streambuild  stream-grid
-tools/publish/**  streambuild  stream-grid
-docs/streamctl-grid.md  streambuild  stream-grid
 docs/roadmap.md  roadmap  roadmap
 docs/process/dispatcher-brief-proposed.md  roadmap  roadmap
 docs/BACKLOG.md  roadmap  roadmap

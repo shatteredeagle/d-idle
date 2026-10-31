@@ -9,3 +9,7 @@ The user wants every d2d container to be able to act as the farm server: nodes a
 - `internal/d2dmesh`: state table + merge, lease logic, mutual-TLS HTTP transport with token-derived identity, join, anti-entropy loop, recipe allow-list, claim/heartbeat/expiry, dry-run runner.
 - `cmd/d2dnode`: the node daemon (flags `-listen -seed -token-file -name -labels -capacity -dry-run`), embedded status page and JSON API on the same port.
 - Tests: 3-node loopback cluster (join, convergence, cross-node claim, node death mid-job, partition heal, pause/drain, token rejection, recipe rejection) and a fuzz seed for the gossip decoder. No real d2d runs.
+
+## Dependencies
+
+PARKED until milestone M3 is done (user decision D2, 2026-10-31, docs/roadmap.md). Status `deferred`: the text, `owns:` and `exclusive:` are kept as intended, not claimed (no docs/OWNERS line). The dispatcher sets `proposed` and restores the OWNERS lines when M3 is archived.

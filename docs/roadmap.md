@@ -1,6 +1,6 @@
 # Roadmap: milestones, work breakdown, operating rhythm (agent ROADMAP, 2026-10-31)
 
-> status: PROPOSAL for the user (card `roadmap`); nothing here is decided until the user says so (section 8). Reviewed by d2-sme and spec-sme (section 6). Tags: V = checked in the repo or by a command named here, S = read in a doc, U = judgment. Numbers that have an owner (gates, knob defaults) are cited from their spec or docs/knobs.md, not copied. The cards are `openspec/changes/m1-*`, `m2-*`, `m3-*`.
+> status: ADOPTED by the user on 2026-10-31: decisions D1 to D6 in section 8 are DECIDED. Card `roadmap`. Reviewed by d2-sme and spec-sme (section 6). Tags: V = checked in the repo or by a command named here, S = read in a doc, U = judgment. Numbers that have an owner (gates, knob defaults) are cited from their spec or docs/knobs.md, not copied. The cards are `openspec/changes/m1-*`, `m2-*`, `m3-*`.
 
 ## 1. Diagnosis: where the effort goes and why it feels like flailing
 
@@ -44,7 +44,7 @@ Sizes are agent-hours, rough (U). Exit criteria cite the spec requirement that o
 
 Dependency graph (text): `xpgap, basicsfix (merging) -> M1 -> M2 -> M3 -> M4 -> M5 -> M6`; `m2-soakexit, m2-earlybase, m2-abdesign, m1-loot` have no upstream dependency (start now); `m3-andariel` depends only on a free slot and runs in parallel with M1 and M2 (d2-sme); grill 0003 gates `m3-merc`, `m3-routeguard`; the licence review gates M5 only.
 
-Out of scope until M3 is done: d2dmesh (park: nothing needs more than the 4-slot pool), stream-grid beyond what is merged, container work beyond the licence decision, new upstream PR candidates (replies to #134 to #136 and the Lut Gholein post stay: one PR lane), Game.exe anything, Nightmare and Hell, the idle layer.
+Out of scope until M3 is done (DECIDED D2, 2026-10-31): d2dmesh and stream-grid are PARKED (cards set `deferred`, OWNERS lines removed, text kept; the livestream keeps running as is), container work beyond the licence decision, new upstream PR candidates (replies to #134 to #136 and the Lut Gholein post stay: one PR lane), Game.exe anything, Nightmare and Hell, the idle layer.
 
 ## 4. Work breakdown: the cards
 
@@ -55,17 +55,18 @@ Launch order; one agent, <= 2 h each. `proposed` = launchable now (OWNERS lines 
 | 1 | m2-soakexit | proposed | - | d2dsoak exit codes and excluded seeds (review H1) |
 | 2 | m2-earlybase | proposed | - | kills/h and deaths per 1000 kills for the early baseline from the Game.exe logs |
 | 3 | m2-abdesign | proposed | - | paired same-seed A/B protocol and tool; re-analysis of xpgap's 24 runs |
-| 4 | m1-loot | proposed | decision 6 | charms, runes, gems on a sell visit (audit G7) |
+| 4 | m1-loot | proposed | - | charms and runes kept, chipped and flawed gems sold before the Cube (D4, audit G7) |
 | 5 | m3-andariel | deferred | soak-slot:3 free | the Andariel fight on a cheat-levelled throwaway (the biggest unknown; parallel to M1, M2) |
-| 6 | m1-audittests | deferred | xpgap, basicsfix | flip the pinned audit tests; spec backfill for basicsfix (ID scrolls, purchase order, bank first, repair latch) |
+| 6 | m1-audittests | deferred | xpgap, basicsfix | flip the pinned audit tests; spec backfill for basicsfix (ID scrolls, purchase order, bank first, repair latch); follow-up of the merged scroll rule (D3) |
 | 7 | m1-stashcap | deferred | basicsfix | stash gold cap (E4) |
 | 8 | m1-trips | deferred | xpgap, basicsfix | second sell door, gold trip above the keep line, pack-full in free cells |
 | 9 | m2-tripwp | deferred | basicsfix, m2-abdesign | leave town by waypoint, portal return, chicken by portal (14 % + 21 % of the loss) |
 | 10 | m2-roam | deferred | m1-trips | empty-area exit on, no border ping-pong (walk 77 % of kill time) |
 | 11 | m1-liveproof | deferred | m1-audittests, m1-stashcap, m1-trips | the 10 live checks and 2 unknowns; closes the coverage table (M1 exit) |
-| 12 | d2d-replicated-soak (= m2-gaterun) | proposed (exists) | m2-roam, m2-tripwp | the closing run of M2: 8 seeds x 3 h, PASS, exit 0 |
-| 13 | m3-merc | deferred | grill 0003 | free Rogue claimed, kept alive, revived on d2d for hours; merc on by default on d2d |
-| 14 | m3-routeguard | deferred | grill 0003, xpgap | Monastery, Forgotten Tower and Andariel floors set to the decided numbers; MODIFIED deltas written at launch |
+| 11a | m2-latebase | deferred | m1-liveproof | late baseline for XP/h and kills/h from a cheat-levelled clvl 12 throwaway with the M1 kit (D5) |
+| 12 | d2d-replicated-soak (= m2-gaterun) | proposed (exists) | m2-roam, m2-tripwp, m2-latebase | the closing run of M2: 8 seeds x 3 h, PASS, exit 0 |
+| 13 | m3-merc | deferred | grill 0003 (waiting, prebrief section 10) | free Rogue claimed, kept alive, revived on d2d for hours; merc on by default on d2d |
+| 14 | m3-routeguard | deferred, WAITING ON GRILL 0003 (no delta until then) | grill 0003, xpgap | Monastery, Forgotten Tower and Andariel floors set to the decided numbers; MODIFIED deltas written at launch |
 | 15 | m3-act1chain | deferred | m3-merc, m3-routeguard | Act 1 quest order and quest evidence on d2d up to the Andariel approach |
 | 16 | m3-act1run | deferred | m3-andariel, m3-act1chain, M2 | the closing run of M3: 3 fresh seeds (M3 exit) |
 
@@ -83,10 +84,10 @@ Launch order; one agent, <= 2 h each. `proposed` = launchable now (OWNERS lines 
 | point | d2-sme / spec-sme | ROADMAP | resolution |
 |---|---|---|---|
 | Milestone order M1 -> M2 -> M3 | d2-sme: sensible; DISAGREE mildly with serializing the Andariel fight behind M2 | agreed | m3-andariel decoupled: only a free slot, runs in parallel (card 5) |
-| Route guard 20 / Andariel floor | d2-sme DISAGREE with 20 (537k XP; Act 1 is under-level from clvl 17 to 18): Monastery 18 no merc (14 with), tower 16 (12 with), Andariel 15 with the merc (+2 dead merc) | plan-v2 says 20 | UNRESOLVED for the user: decision 4 (grill 0003); card m3-routeguard waits |
+| Route guard 20 / Andariel floor | d2-sme DISAGREE with 20 (537k XP; Act 1 is under-level from clvl 17 to 18): Monastery 18 no merc (14 with), tower 16 (12 with), Andariel 15 with the merc (+2 dead merc) | plan-v2 says 20 | UNRESOLVED: D6, the user runs grill 0003 (prebrief section 10 lists the numbers and questions); card m3-routeguard waits, no delta until then |
 | 24 virtual hour cap for M3 | d2-sme: not realistic at today's rate (clvl 15 = 176,132 XP; 35 h at 5k/h, 18 h at 10k/h); derive it | fixed 24 h | changed: cap = 1.3 x 176,132 / M2 XP/h (act1-campaign `Unattended Act 1 clear`, U) |
-| Gems on a sell visit | d2-sme: sell chipped and flawed gems before the Cube; the user's checklist row 6 says gem kept | followed the checklist | UNRESOLVED for the user: decision 6; m1-loot implements either |
-| Cheat-levelled clvl 12 for the late baseline | d2-sme: fair for XP/h and kills/h with XP set to the table threshold, points spent by the leveler, the baseline kit; not for deaths or gold | wanted a decision | decision 3 recommended yes |
+| Gems on a sell visit | d2-sme: sell chipped and flawed gems before the Cube; the user's checklist row 6 says gem kept | followed the checklist | DECIDED D4: sell chipped and flawed gems before the Cube, keep better gems; m1-loot implements it |
+| Cheat-levelled clvl 12 for the late baseline | d2-sme: fair for XP/h and kills/h with XP set to the table threshold, points spent by the leveler, the baseline kit; not for deaths or gold | wanted a decision | DECIDED D5: yes, ledgered, card m2-latebase |
 | A `milestones` capability spec | spec-sme DISAGREE: process state, not behaviour; MODIFIED on every re-plan | wanted one | changed: exit criteria live here and in the closing cards' gates; behaviour in `town-basics`, `act1-campaign`, deltas on fidelity-gate, early-game-policy, merc-policy |
 | `deferred` as the queue status | spec-sme AGREE, with a README line (proposed in the report; README is owned by specfix) | same | agreed; convention stated in section 4 |
 | Purpose in a new capability's delta | spec-sme: required, else archive writes a TBD Purpose that changecheck flags | same | every new-capability delta carries title and Purpose |
@@ -97,14 +98,14 @@ Launch order; one agent, <= 2 h each. `proposed` = launchable now (OWNERS lines 
 1. The M3 cap is derived from M2's XP/h: if M2 stalls at 6600 the first Act 1 run costs 35 virtual hours per seed (about 1.5 wall hours at lockstep speed), fine for compute but slow to iterate.
 2. The route guard and the Andariel floor are in dispute (SME 18/14/15 vs plan 20); M3's policy cards cannot launch before grill 0003.
 3. basicsfix's scope is only known from the coordinator's note; m1-audittests re-reads the merged tree and strikes closed gaps in the launch brief.
-4. The early baseline stays weak (2 runs) until 5 Game.exe runs exist, which cannot happen (frozen); a clean PASS against the late baseline needs decision 3.
+4. The early baseline stays weak (2 runs) until 5 Game.exe runs exist, which cannot happen (frozen); the late baseline is built by m2-latebase (D5 decided yes).
 5. Deferred cards can silently overlap a running one: the dispatcher must run changecheck right after the flip.
 
-## 8. Decisions needed from the user
+## 8. Decisions (the user, 2026-10-31)
 
-1. Adopt the milestone order M1 to M6 and the WIP limit of 3 (section 5).
-2. Park d2dmesh and stream-grid until M3 (or keep one side lane for them).
-3. May the late-baseline fidelity run use a cheat-levelled clvl 12 Sorceress with the m1 kit (ledgered)? d2-sme: yes for XP/h and kills/h.
-4. Grill 0003 now: route guard (Monastery 20 vs 18 without a merc, 14 with), tower 16/12, Andariel floor 15 with the merc; the revive budget (cost <= half of gold on hand plus kit) and stop rule (2 deaths per hour or Andariel dead).
-5. Purchase order at gold 100 to 190: potions first up to 3 (d2-sme), the scroll once gold covers scroll plus 2 potions. Confirm the basicsfix default.
-6. Gems: keep every gem (your checklist row 6) or sell chipped and flawed before the Cube (d2-sme)?
+1. **D1 DECIDED (2026-10-31): ADOPTED.** Milestones M1 to M6 and the WIP limit of 3 implementation agents (read-only agents unlimited); every job maps to a milestone card or is a bug fix with a finding.
+2. **D2 DECIDED (2026-10-31): PARKED.** d2dmesh and stream-grid wait until M3: both cards are `deferred`, their docs/OWNERS lines removed, their text kept. The livestream keeps running as is.
+3. **D3 DECIDED (2026-10-31): purchase order at gold 100 to 190 is the SME order**: healing potions first up to 3, then a Town Portal scroll only when gold >= scroll price plus 2 potions. basicsfix merged "scroll at clvl >= 4 with >= 100 gold left" (`town.tpFirstLevel` 4): changing that rule is work of card m1-audittests (code, not in this change).
+4. **D4 DECIDED (2026-10-31): gems.** Sell chipped and flawed gems before the Horadric Cube recipe is available; keep better gems (and every rune). Card m1-loot.
+5. **D5 (late baseline) DECIDED (2026-10-31): YES.** XP/h and kills/h late baseline from a cheat-levelled clvl 12 throwaway with the M1 kit on hidden d2d, every cheat recorded in the ledger (internal/cheat, cmd/d2cheat, docs/cheats.md); card m2-latebase. Not used for deaths or gold.
+6. **D6 (grill 0003) DECIDED (2026-10-31): run the grill now**, on the route guard numbers (SME 18/14 vs plan 20), the Andariel floor and the revive budget. The user starts it; docs/grills/0003-merc-and-act2/prebrief.md section 10 holds the numbers and questions. m3-routeguard and m3-merc wait.

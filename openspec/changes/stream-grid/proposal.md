@@ -23,3 +23,7 @@ The user asked on 2026-10-30 that the public stream work the way it did before: 
 3. The holding card MAY name recently merged changes and current work in plain words (same sanitizer: no internal names, people or machines).
 4. Test and demo runs MAY appear as tiles, labelled "TESTING". The page's `?demo=1` mode is called fixture mode to avoid confusion.
 5. Timing defaults kept: 15 s rotation, appear or leave within 10 s, stall 8 s, drop 60 s.
+
+## Dependencies
+
+PARKED until milestone M3 is done (user decision D2, 2026-10-31, docs/roadmap.md). Status `deferred`: the text, `owns:` and `exclusive:` are kept as intended, not claimed (no docs/OWNERS line). The dispatcher sets `proposed` and restores the OWNERS lines when M3 is archived.

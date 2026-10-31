@@ -17,11 +17,11 @@ The bot SHALL buy an identify scroll only when a pack item needs identifying and
 - **THEN** the ring is sold unidentified and no identify scroll is bought
 
 ### Requirement: Purchase order when poor
-Below `town.tpMinGold` gold the bot SHALL buy healing potions first (up to 3) and the portal scroll only once gold covers the scroll plus 2 potions; at or above the knob the portal scroll comes first. The knob default is the user's decision (docs/roadmap.md decision 5) and is read from docs/knobs.md. Source: d2-sme 2026-10-31 (EXP: potions are the life at gold 100 to 190, the walk back from the first field is short); docs/basics-audit.md G5.
+Below `town.tpMinGold` gold the bot SHALL buy healing potions first (up to 3) and the portal scroll only once gold covers the scroll plus 2 potions; at or above the knob the portal scroll comes first. The order is the user's decision D3 (2026-10-31: the SME order); the knob defaults are read from docs/knobs.md. The rule merged by basicsfix (a scroll at clvl 4 or more with 100 gold left) does not override it. Source: d2-sme 2026-10-31 (EXP: potions are the life at gold 100 to 190, the walk back from the first field is short); docs/basics-audit.md G5.
 
 #### Scenario: Gold 150, empty belt, no scroll
-- **WHEN** a clvl 4 character enters town with 150 gold, an empty belt and no portal scroll and the knob is above 150
-- **THEN** healing potions are bought first and the scroll only if gold after 3 potions still covers scroll plus 2 potions
+- **WHEN** a clvl 4 character enters town with 150 gold, an empty belt and no portal scroll
+- **THEN** healing potions are bought first (up to 3) and the scroll only if the gold left still covers scroll plus 2 potions
 
 ### Requirement: Bank before the shop
 When carried gold exceeds the keep line (300 + 50 x clvl, death-rule spec) the stash deposit SHALL run before the shop, so the shop spends only from the kit budget and the surplus is banked. Source: docs/basics-audit.md row 11 and G6.

@@ -2,7 +2,7 @@
 
 ```yaml
 change: stream-grid
-status: in-progress
+status: deferred
 agent: streambuild
 branch: agent/streambuild
 worktree: ~/code/d2lod-wt/streambuild

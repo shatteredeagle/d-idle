@@ -8,3 +8,4 @@ The early baseline (tools/d2dsoak/baselines-early.json) holds one Game.exe run w
 - docs/d2d-baselines-early.md: how each number was extracted (`d2dsoak extract` on the original-game logs), what is V and what is U, and the known undercount of kills (death-rule spec: 16 to 37 percent).
 - Delta: fidelity-gate ADDED `Early baseline fields`.
 - Read-only on the worker host: no game, no d2d slot, no cheat.
+- The late baseline (clvl 12, cheat-levelled, user decision D5) is a separate card, m2-latebase; this card stays read-only with no cheat.
