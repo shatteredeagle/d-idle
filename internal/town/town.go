@@ -73,6 +73,8 @@ type Town struct {
 	reviveUnverified bool                                     // Revive may click the unverified resurrect dialog
 	mercKnown        bool                                     // a merc was hired this run
 	build            string                                   // leveler build name, picks the mana-heavy belt columns (SetBuild)
+	stashFull        bool                                     // stash gold is at the cap (one log line per fill)
+	stashCapSeen     int                                      // stash gold at the last refused deposit (0 = none seen)
 	stashLeft        []d2.Unit                                // pack items the last stashItems could not fit
 	stashRefused     map[uint32]bool                          // pack items a full stash refused and relieveStash could not place
 	cubeBlocked      string                                   // state signature after a cube chore found no pack room

@@ -58,6 +58,9 @@ func (c *Input) Key(name string) error {
 				n, _ := strconv.Atoi(w.goldBuf)
 				amt = min(n, w.Player.Gold)
 			}
+			if w.StashCap > 0 && w.Player.StashGold+amt > w.StashCap {
+				return nil // the game refuses a deposit that does not fit under the cap
+			}
 			w.Player.StashGold += amt
 			w.Player.Gold -= amt
 		}

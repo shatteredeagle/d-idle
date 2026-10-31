@@ -123,6 +123,33 @@ func (t *Town) goldKeep(level int) int {
 	return keep
 }
 
+// StashGoldCap is the most gold the stash holds (classic LoD 1.14d: 2,500,000). UNVERIFIED on the lab: the value
+// is from game knowledge and card m1-liveproof measures it. A refused deposit into a stash holding at least
+// stashCapFloor gold lowers the cap the bot assumes to the stash gold seen then (stashCapSeen), so a wrong constant
+// costs one failed deposit, not one per visit.
+const (
+	StashGoldCap  = 2_500_000
+	stashCapFloor = 100_000
+)
+
+// bankAmount clamps a deposit to the room left in the stash and logs once while the stash is full. 0 = nothing to do.
+func (t *Town) bankAmount(s *d2.Snapshot, want int) int {
+	limit := StashGoldCap
+	if t.stashCapSeen > 0 {
+		limit = min(limit, t.stashCapSeen)
+	}
+	room := limit - s.Player.StashGold
+	if room <= 0 {
+		if !t.stashFull {
+			t.stashFull = true
+			t.e.Log.Info("town: stash gold is full, deposit skipped", "stash", s.Player.StashGold, "cap", limit, "pack", s.Player.Gold)
+		}
+		return 0
+	}
+	t.stashFull = false
+	return min(want, room)
+}
+
 // stashGold deposits the inventory gold above goldKeep (all of it when that is 0). The stash must
 // be open. The dialog opens with the full amount; a smaller amount is typed: backspaces clear the field, digits
 // go in as WM_CHAR, Enter confirms.
@@ -135,7 +162,26 @@ func (t *Town) stashGold(ctx context.Context, rep *ChoreReport) error {
 	if s.Player.Gold <= keep || s.Player.Gold == 0 {
 		return nil
 	}
-	return t.depositGold(ctx, s.Player.Gold-keep)
+	return t.depositCapped(ctx, s, s.Player.Gold-keep)
+}
+
+// depositCapped deposits want gold limited by the stash cap. A deposit the game refuses while the stash holds
+// a lot of gold is taken as the cap: it is remembered and logged once and is not an error.
+func (t *Town) depositCapped(ctx context.Context, s *d2.Snapshot, want int) error {
+	amount := t.bankAmount(s, want)
+	if amount <= 0 {
+		return nil
+	}
+	err := t.depositGold(ctx, amount)
+	if err != nil && s.Player.StashGold >= stashCapFloor {
+		if cur, cerr := t.current(); cerr == nil && cur.Player.StashGold == s.Player.StashGold && cur.Player.Gold == s.Player.Gold {
+			t.stashCapSeen = cur.Player.StashGold
+			t.stashFull = true
+			t.e.Log.Info("town: stash refused the deposit, taking its gold as the cap", "stash", t.stashCapSeen, "wanted", amount)
+			return nil
+		}
+	}
+	return err
 }
 
 // depositGold moves amount gold from the pack into the stash and confirms it in memory.
