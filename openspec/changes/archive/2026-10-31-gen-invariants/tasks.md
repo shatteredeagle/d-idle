@@ -2,7 +2,7 @@
 
 ```yaml
 change: gen-invariants
-status: in-progress
+status: archived
 agent: geninv
 branch: agent/geninv
 worktree: ~/code/d2lod-wt/geninv
@@ -18,8 +18,8 @@ gates:
   - "go test -p 1 ./cmd/d2dsoak ./internal/d2dsoakstat passes: fixture tests for clean, hung, wedged, stall-ladder and early-exit runs, a golden report and the holdout grouping"
   - "offline on the real logs: navsoak and navsoak2 report VIOLATED(WEDGE,PROGRESS), the 8 m2early runs and the navsoak3 prefix report their real counters (raw output in docs/probes/geninv)"
   - "whole-repo vet and short tests plus race on cmd/d2dsoak and internal/d2dsoakstat pass on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict"
-merge:
-result:
+merge: 13bb410
+result: d2dsoak reports per-seed invariants and a holdout group; validated offline on the overnight logs (not live).
 ```
 
 ## 1. Work

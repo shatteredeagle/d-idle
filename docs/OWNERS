@@ -29,9 +29,3 @@ internal/bot/merc_test.go  m3-merc  m3-merc
 docs/merc-d2d.md  m3-merc  m3-merc
 docs/probes/merc/**  m3-merc  m3-merc
 docs/research/andariel-chain-needs.md  andychain  -
-cmd/d2dsoak/**  geninv  gen-invariants
-internal/d2dsoakstat/**  geninv  gen-invariants
-docs/d2d-soak.md  geninv  gen-invariants
-docs/geninv.md  geninv  gen-invariants
-docs/probes/geninv/**  geninv  gen-invariants
-openspec/changes/gen-invariants/**  geninv  gen-invariants
