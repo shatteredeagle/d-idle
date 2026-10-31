@@ -2,6 +2,7 @@ package town_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"d2lod-bot/internal/d2"
@@ -98,15 +99,24 @@ func TestAuditS5OneVisitSellsAllScrollCountUnchanged(t *testing.T) {
 	}
 }
 
-// S6 (rune and gem part) agrees: neither is sold; both go to the stash. The magic charm part depends on its stats
-// (pickit rule "charms"): an identified magic charm without life, resist, FHR or skills is sold (code reading only).
-func TestAuditS6RuneAndGemAreKept(t *testing.T) {
+// S6 (gap G7 closed by M1LOOT, flipped on purpose; decision D4): a rune, a charm with life and the better gems are held
+// (stash), chipped and flawed gems are sold while no Horadric Cube is held, a plain identified charm is sold.
+func TestAuditS6RuneCharmAndGems(t *testing.T) {
 	r := audit(t, 30, 1, true)
 	r.W.Add("r07", d2.ContInventory, 3, 0)
-	r.W.Add("gcv", d2.ContInventory, 4, 0)
+	r.W.Add("gzv", d2.ContInventory, 4, 0)
+	r.W.Add("gsv", d2.ContInventory, 5, 0)
+	r.W.Add("gcv", d2.ContInventory, 6, 0)
+	r.W.Add("gfv", d2.ContInventory, 7, 0)
+	life := r.W.Add("cm1", d2.ContInventory, 0, 1)
+	r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+	r.W.Stats[life.Addr] = d2.Stats{7: 20 << 8}
+	plain := r.W.Add("cm1", d2.ContInventory, 1, 1)
+	r.W.Items[len(r.W.Items)-1].Item.Quality = 4
+	r.W.Stats[plain.Addr] = d2.Stats{21: 3}
 	rep := run(t, r)
-	if rep.Sold != 0 || count(r.W, d2.ContStash) != 2 {
-		t.Fatalf("sold %d stash %d", rep.Sold, count(r.W, d2.ContStash))
+	if rep.Sold != 3 || count(r.W, d2.ContStash) != 4 {
+		t.Fatalf("sold %d stash %d (want chipped, flawed and the plain charm sold; rune, 2 gems and the life charm kept)", rep.Sold, count(r.W, d2.ContStash))
 	}
 }
 
@@ -167,7 +177,8 @@ func TestAuditS12SpareGoesToTheBelt(t *testing.T) {
 // S10 (gap G4 closed by BASICSFIX, flipped on purpose): a repair that does not confirm is attempted once; the next
 // visit does not retry until durability changed or gold grew (repairLatch 0 restores the retry on every visit).
 func TestAuditS10FailedRepairIsLatched(t *testing.T) {
-	r := audit(t, 200, 1, true) // the sim button is not at town.RepairAll: the click changes nothing, as a failed repair
+	r := audit(t, 200, 1, true)            // the sim button is not at town.RepairAll: the click changes nothing, as a failed repair
+	r.W.Add("tsc", d2.ContInventory, 9, 3) // a held scroll: the D3 order would otherwise buy one at gold 200
 	for _, u := range r.W.Items {
 		if u.Item.Where == d2.ContEquipment {
 			r.W.Stats[u.Addr] = d2.Stats{72: 28, 73: 100}
@@ -186,6 +197,57 @@ func TestAuditS10FailedRepairIsLatched(t *testing.T) {
 		}
 		if tried != (visit != 2) {
 			t.Fatalf("visit %d: repair attempted %v: %+v", visit, tried, rep.Steps)
+		}
+	}
+}
+
+// D3 (user decision 2026-10-31, replaces BASICSFIX's "scroll at clvl >= 4 with 100 left"): at gold 100 to 190 with an
+// empty belt and no scroll, potions come first (up to 3) and the scroll only when the gold left covers it plus 2
+// potions. The sim sells a healing potion for 75, so the rule needs 250 left after the kit potions.
+func TestAuditPurchaseOrder(t *testing.T) {
+	for _, c := range []struct {
+		name       string
+		gold, clvl int
+		wantScroll bool
+	}{
+		{"gold 100 buys potions, no scroll", 100, 4, false},
+		{"gold 190 clvl 4 buys potions, scroll skipped", 190, 4, false},
+		{"gold 190 clvl 1: no level rule either", 190, 1, false},
+		{"rich enough buys both", 900, 1, true},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			r := audit(t, c.gold, c.clvl, false)
+			r.Env.Tune.Town.BankFirst = 0 // the keep line would bank the surplus at clvl 1
+			rep := run(t, r)
+			hp := 0
+			for k, n := range rep.Bought {
+				if strings.Contains(k, "Healing") {
+					hp += n
+				}
+			}
+			if got := rep.Bought["Scroll of Town Portal"] > 0; got != c.wantScroll || hp == 0 || hp > 3 {
+				t.Fatalf("bought %v gold %d", rep.Bought, rep.GoldAfter)
+			}
+		})
+	}
+}
+
+// The old rule comes back with tpScrollPotions 0 (and tpFirstLevel 4): at gold 150 and clvl 4 the trip reason is on.
+func TestAuditPurchaseOrderOldRuleKnobs(t *testing.T) {
+	for _, c := range []struct {
+		potions int
+		want    bool
+	}{{2, false}, {0, true}} {
+		r := audit(t, 150, 4, false)
+		r.Env.Tune.Town.TPScrollPotions, r.Env.Tune.Town.TPFirstLevel = c.potions, 4
+		for i := 0; i < 3; i++ {
+			r.W.Add("hp1", d2.ContBelt, i, 0)
+		}
+		r.W.Add("mp1", d2.ContBelt, 3, 0)
+		s, _ := r.W.Snapshot()
+		ok, why := r.T.NeedsTrip(s)
+		if got := ok && why == "no town portal scroll"; got != c.want {
+			t.Fatalf("tpScrollPotions %d: trip %v %q", c.potions, ok, why)
 		}
 	}
 }

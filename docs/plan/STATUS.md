@@ -41,7 +41,8 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
-| [m1-loot](../../openspec/changes/m1-loot/) | proposed | m1-loot | `internal/loot/pickit_starter.json`<br>`internal/loot/charms_test.go`<br>`docs/loot-charms.md` | - |
+| [m1-audittests](../../openspec/changes/m1-audittests/) | in-progress | m1loot | `internal/town/shop.go`<br>`internal/town/chores.go`<br>`internal/town/basicsaudit_test.go`<br>`internal/town/basicsfix.go`<br>`internal/town/town_test.go`<br>`internal/env/tuning_town.go`<br>`docs/knobs.md`<br>`docs/basics-audit.md` | - |
+| [m1-loot](../../openspec/changes/m1-loot/) | in-progress | m1loot | `internal/loot/pickit_starter.json`<br>`internal/loot/charms_test.go`<br>`docs/loot-charms.md`<br>`internal/loot/loot.go`<br>`internal/loot/rules.go`<br>`internal/loot/loot_test.go` | - |
 | [m2-abdesign](../../openspec/changes/m2-abdesign/) | proposed | m2-abdesign | `tools/ab/**`<br>`docs/ab-design.md` | - |
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m2-soakexit](../../openspec/changes/m2-soakexit/) | proposed | m2-soakexit | `cmd/d2dsoak/**`<br>`docs/d2d-soak.md` | - |
@@ -71,6 +72,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2d-default-backend: bot started with no flag uses d2d
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
+- change m1-audittests: go test -p 1 ./internal/town passes; TestAuditS2 asserts no shop visit at gold 120 with a scroll and a full belt; TestAuditS3 asserts 1 portal scroll and at least 150 gold kept at gold 300; TestAuditS7 asserts the unidentified ring under 100 is sold as is; TestAuditS10 asserts one repair attempt per (gold bucket, lowest durability); TestAuditS11 asserts 950 banked at gold 1500 clvl 5
+- change m1-audittests: TestAuditPurchaseOrder (new): at gold 100 to 190 with an empty belt and no scroll, potions are bought first up to 3 and a scroll only when gold >= scroll price plus 2 potions; the clvl >= 4 with >= 100 gold rule no longer buys a scroll ahead of potions
+- change m1-audittests: `! grep -n PinsCurrent internal/town/basicsaudit_test.go` (no pinned gap remains)
+- change m1-audittests: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m1-loot: go test -p 1 ./internal/loot passes including TestCharmsRunesGemsOnSellVisit (every rune, every identified charm with a kept stat and every gem the rule keeps survive; the plain charm is sold only after identification)
 - change m1-loot: go test -p 1 ./internal/town -run TestAuditS6 passes after the audit row 6 test is updated to the D4 rule (chipped and flawed gem sold, flawless gem, charm and rune held)
 - change m1-loot: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes

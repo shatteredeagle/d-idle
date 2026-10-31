@@ -32,7 +32,7 @@ import (
 //	stats      all must hold; anyStats at least one must hold. {stat, min, max, shift}: value>>shift in [min,max].
 //	           Stat conditions need the item's stat list; a rule with stat conditions does not match an item whose
 //	           stats are unreadable (the reader failed or the item is unidentified and the stat is hidden).
-//	needed     "potion"|"scroll"|"tome"|"key"|"gold"|"gem"|"runeword": only matches while the looter's needs say we want more of it.
+//	needed     "potion"|"scroll"|"tome"|"key"|"gold"|"gem"|"runeword"|"charmroom": only matches while the looter's needs say we want more of it.
 
 // Match is the condition part of a Rule.
 type Match struct {
@@ -120,7 +120,7 @@ func ParsePickit(r io.Reader) (*Pickit, error) {
 			}
 		}
 		switch r.Match.Needed {
-		case "", "potion", "scroll", "tome", "key", "gold", "gem", "runeword":
+		case "", "potion", "scroll", "tome", "key", "gold", "gem", "runeword", "charmroom":
 		default:
 			return fmt.Errorf("pickit rule %q: bad needed %q", r.Name, r.Match.Needed)
 		}

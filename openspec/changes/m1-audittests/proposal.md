@@ -12,3 +12,7 @@ Card basicsfix (merging 2026-10-31) implements potions-first, ID scrolls on dema
 ## Dependencies
 
 After cards xpgap and basicsfix are archived (both own internal/town/shop.go and chores.go). Decision D3 is made (SME order); the card must change basicsfix's scroll rule to it.
+
+## Result (agent m1loot)
+
+Implemented: `town.tpScrollPotions` (default 2) and `town.tpFirstLevel` default 0 (extra floor only); shared town code. BASICSFIX had already flipped S2, S3, S7, S10 and S11; S10 now holds a scroll so the D3 order does not mask the repair latch. Delta: MODIFIED early-game-policy `Potions before the first town portal scroll`; town-basics ADDED backfill. The stash cap, trips and pack-full requirements stay with their own cards.

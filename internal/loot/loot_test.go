@@ -68,7 +68,7 @@ func TestEvaluate(t *testing.T) {
 	}{
 		{"rune", unit("r07", 2, d2.FlagIdentified), loot.Stash, "runes"},
 		{"perfect gem", unit("gpv", 2, d2.FlagIdentified), loot.Stash, "top gems"},
-		{"chipped gem kept for cube", unit("gcv", 2, d2.FlagIdentified), loot.Stash, "cube gems"},
+		{"standard gem kept", unit("gsv", 2, d2.FlagIdentified), loot.Stash, "mid gems"},
 		{"unique sword", unit("ssd", 7, d2.FlagIdentified), loot.Stash, "unique and set"},
 		{"rejuv", unit("rvs", 2, d2.FlagIdentified), loot.Keep, "rejuvenation"},
 		{"unid ring", unit("rin", 4, 0), loot.Keep, "jewelry to id"},
@@ -334,7 +334,9 @@ func TestCharmStatFilter(t *testing.T) {
 	check("life 20", d2.Stats{7: 20 << 8}, "charms")
 	check("life 10", d2.Stats{7: 10 << 8}, "magic and rare")
 	check("fire res 5", d2.Stats{39: 5}, "charms")
-	check("mf only", d2.Stats{80: 7}, "magic and rare")
+	check("mf only", d2.Stats{80: 7}, "charms")
+	check("fcr", d2.Stats{105: 3}, "charms")
+	check("damage only", d2.Stats{21: 3}, "magic and rare")
 	u.Item.Flags = 0
 	if v := l.EvaluateWith(u, loot.Ctx{CLvl: 10, Gold: 5000}); v.Rule != "charms to id" || !v.NeedID {
 		t.Errorf("unidentified: %v", v)
@@ -344,6 +346,7 @@ func TestCharmStatFilter(t *testing.T) {
 func TestGemsKeptForCube(t *testing.T) {
 	l, r := newLooter(t)
 	w := r.W
+	w.Add("box", d2.ContStash, 9, 0) // the Cube is held: low gems are kept for upgrades (D4)
 	chipped := w.NewItem("gcv", 2)
 	if v := l.EvaluateUnit(chipped); v.Action != loot.Stash || v.Rule != "cube gems" {
 		t.Fatalf("first chipped: %v", v)

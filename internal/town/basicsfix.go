@@ -110,11 +110,18 @@ func (t *Town) bank(ctx context.Context, a *Act) error {
 	return first
 }
 
-// tpAllowed is the potionsFirst knob: the first town portal scroll waits for the kit potions, a character that has
-// reached the Cold Plains kit level (TPFirstLevel) and gold for one scroll. A held scroll or tome is never affected.
+// tpAllowed is the potionsFirst knob (d2-sme order, user decision D3): the first town portal scroll waits for the kit
+// potions and is bought only when the gold left covers the scroll plus TPScrollPotions potions. TPFirstLevel stays
+// an extra clvl floor (default 0 = none). A held scroll or tome is never affected. Prices are the kit tuning's.
 func (t *Town) tpAllowed(s *d2.Snapshot) bool {
+	r := t.e.Tune.Resource
+	return t.tpAllowedAt(s, r.KitTPGold, r.KitPotionGold)
+}
+
+// tpAllowedAt is tpAllowed with the scroll and cheapest healing potion prices of the vendor in front of us.
+func (t *Town) tpAllowedAt(s *d2.Snapshot, scroll, potion int) bool {
 	tu := t.tune()
-	return tu.PotionsFirst == 0 || s.Player.Level >= tu.TPFirstLevel && s.Player.Gold >= t.e.Tune.Resource.KitTPGold
+	return tu.PotionsFirst == 0 || s.Player.Level >= tu.TPFirstLevel && s.Player.Gold >= scroll+tu.TPScrollPotions*potion
 }
 
 // kitPotions is the healing potion count of the kit pass (resource HPFirst, at most a recovery floor).
