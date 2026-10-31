@@ -2,7 +2,7 @@
 
 ```yaml
 change: smallfixes
-status: in-progress
+status: archived
 agent: smallfixes
 branch: agent/smallfixes
 worktree: ~/code/d2lod-wt/smallfixes
@@ -24,7 +24,7 @@ gates:
   - "bash tools/d2dfarm-test.sh prints ALL OK; sh tools/env-test.sh prints ALL OK"
   - "go test ./internal/bot passes; the fresh-game reset change needs a G1/G2 check"
   - "go run ./cmd/changecheck -cli 0 warnings; go run ./cmd/leakcheck -mode fail 0"
-merge:
+merge: 85b429d
 result: "d2dfarm-test and env-test ALL OK, bot tests pass; whole-repo vet/test on the worker; not verified live; fresh-game reset needs a G1/G2 check"
 ```
 

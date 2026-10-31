@@ -26,19 +26,3 @@ openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
 
-tools/d2dfarm.sh  smallfixes  smallfixes
-tools/d2dfarm-test.sh  smallfixes  smallfixes
-tools/env.sh  smallfixes  smallfixes
-tools/env-test.sh  smallfixes  smallfixes
-tools/d2dview-demo.sh  smallfixes  smallfixes
-tools/soak/soak.sh  smallfixes  smallfixes
-tools/hooks/test-pre-push.sh  smallfixes  smallfixes
-internal/bot/task.go  smallfixes  smallfixes
-internal/bot/gate_plan_test.go  smallfixes  smallfixes
-docs/nas-container.md  smallfixes  smallfixes
-docs/BACKLOG.md  smallfixes  smallfixes
-openspec/changes/smallfixes/**  smallfixes  smallfixes
-internal/combat/fight.go  navstall  navstall
-internal/combat/crowd.go  navstall  navstall
-internal/combat/navstall_test.go  navstall  navstall
-openspec/changes/navstall/**  navstall  navstall

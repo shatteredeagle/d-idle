@@ -42,8 +42,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [d2dmesh](../../openspec/changes/d2dmesh/) | in-progress | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md`<br>`openspec/changes/d2dmesh/**` | - |
-| [smallfixes](../../openspec/changes/smallfixes/) | in-progress | smallfixes | `tools/d2dfarm.sh`<br>`tools/d2dfarm-test.sh`<br>`tools/env.sh`<br>`tools/env-test.sh`<br>`tools/d2dview-demo.sh`<br>`tools/soak/soak.sh`<br>`tools/hooks/test-pre-push.sh`<br>`internal/bot/task.go`<br>`internal/bot/gate_plan_test.go`<br>`docs/nas-container.md`<br>`docs/BACKLOG.md`<br>`openspec/changes/smallfixes/**` | - |
-| [navstall](../../openspec/changes/navstall/) | in-progress | navstall | `internal/combat/fight.go`<br>`internal/combat/crowd.go`<br>`internal/combat/navstall_test.go`<br>`openspec/changes/navstall/**` | - |
 | [stream-grid](../../openspec/changes/stream-grid/) | in-progress | streambuild | `openspec/changes/stream-grid/**`<br>`tools/publish/**`<br>`docs/streamctl-grid.md` | - |
 
 ### Gates
@@ -70,17 +68,12 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change d2dmesh: go test -race ./internal/d2dmesh ./cmd/d2dnode passes on the worker host
 - change d2dmesh: tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
 - change d2dmesh: no real hostname, IP or person in any committed file of this change
-- change smallfixes: bash tools/d2dfarm-test.sh prints ALL OK; sh tools/env-test.sh prints ALL OK
-- change smallfixes: go test ./internal/bot passes; the fresh-game reset change needs a G1/G2 check
-- change smallfixes: go run ./cmd/changecheck -cli 0 warnings; go run ./cmd/leakcheck -mode fail 0
-- change navstall: go test -p 1 ./internal/combat ./internal/nav ./internal/d2dinput passes; the offline repro terminates
-- change navstall: whole-repo go vet and go test -short pass on the worker host; go test -race ./internal/combat
-- change navstall: soakfull seed 11 and runab seed 42 (walk-only) pass the former hang point on hidden d2d
 - change stream-grid: tools/openspec.sh validate --all --strict passes
 - change stream-grid: python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
 - change stream-grid: ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
-none
+- 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
+- 4a6634e 10-30 23:58 `Merge agent/smallfixes` (smallfixes)
 <!-- statusgen:end -->
