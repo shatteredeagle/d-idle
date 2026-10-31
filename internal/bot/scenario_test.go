@@ -5,8 +5,13 @@ package bot
 // subtest that EXPECTS the old failure, so the corpus proves it can see the bug it pins.
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"testing"
+	"time"
+
+	"d2lod-bot/internal/goals"
 )
 
 // visited lists the areas the fake mover was sent to (exits and waypoints) in call order.
@@ -82,5 +87,84 @@ func TestScenario_KitlessClvl7PackDeath(t *testing.T) {
 		defer g.finish()
 		g.r.Start(reach(15))
 		g.waitFor("old behaviour walks into a dungeon area", func() bool { return len(mouths(g)) > 0 })
+	})
+}
+
+// Situation: a kit-less clvl 7 recovery character at home, both safe fields banned for hours (a frozen ban set) and
+// the virtual clock advancing: target0 answers "no eligible area" every minute, the wall. Evidence
+// (docs/probes/navsoak-compare.md, VERIFIED from the logs of two soaks): 51.9k and 173k "no eligible reachable
+// leveling area" lines after the town wedge, 0 "Entered" lines, the clock advanced so the loop watchdog never fired;
+// 60 and 167 wall minutes lost. End state: after bot.stallWarnMin virtual minutes without progress a fresh game
+// starts, after bot.stallExitMin more Run would return ErrCampaignStalled (exit status 5, supervisor restart).
+// Driven step by step (one virtual minute per step: the planner verdict, then the loop's stall hook) because the real
+// loop farms a banned area anyway after its idle cap (areaskip.go), so the live wall needs the nav wedge that
+// TestScenario_WedgePocket pins in the nav package; this test pins the safety net behind it.
+func TestScenario_CampaignStall(t *testing.T) {
+	setup := func(warn int) *rig {
+		g := newRig(t)
+		g.r.d.Cycler = fakeCycler{g.w}
+		g.e.Tune.Bot.StallWarnMin, g.e.Tune.Bot.StallExitMin = warn, 30
+		g.w.set(func(w *world) { w.level = 7; w.area = 1; w.gold0 = 35 })
+		g.w.belt()
+		g.r.loop.broke.on = true
+		for _, a := range []int{2, 3} {
+			g.r.avoid[a] = g.clock.Now().Add(1000 * time.Hour)
+		}
+		g.r.poll()
+		g.r.campaignStall(context.Background(), g.r.latest(), true) // arms the window at now
+		return g
+	}
+	// minute advances one virtual minute and reports the wall and whether the ladder acted.
+	minute := func(g *rig) (wall, acted bool) {
+		g.clock.Sleep(time.Minute)
+		g.r.poll()
+		s := g.r.latest()
+		_, ok := g.r.target0(s, control{spec: goalSpec{kind: goals.ReachLevel}})
+		return !ok, g.r.campaignStall(context.Background(), s, true)
+	}
+
+	t.Run("ladder on: warns, fresh game, exit 5", func(t *testing.T) {
+		g := setup(30)
+		warnedAt, exitAt := 0, 0
+		for m := 1; m <= 90 && exitAt == 0; m++ {
+			wall, acted := minute(g)
+			if !wall {
+				t.Fatalf("minute %d: the planner found an area, the wall is gone", m)
+			}
+			switch {
+			case acted && warnedAt == 0:
+				warnedAt = m
+			case acted && g.stalled() != nil:
+				exitAt = m
+			}
+		}
+		if warnedAt < 30 || warnedAt > 32 {
+			t.Fatalf("first window at minute %d, want 30", warnedAt)
+		}
+		if exitAt < 60 || exitAt > 63 || !errors.Is(g.stalled(), ErrCampaignStalled) {
+			t.Fatalf("exit at minute %d with %v, want ErrCampaignStalled at 60", exitAt, g.stalled())
+		}
+		g.r.obMu.Lock()
+		rec := g.r.ob.recycles
+		g.r.obMu.Unlock()
+		if rec != 1 {
+			t.Fatalf("fresh games %d, want exactly 1 before the exit", rec)
+		}
+	})
+
+	// Knob off (bot.stallWarnMin 0): the old wall reproduces, 5 virtual hours pass with no fresh game and no exit.
+	t.Run("ladder off: old wall reproduces", func(t *testing.T) {
+		g := setup(0)
+		for m := 1; m <= 300; m++ {
+			if wall, acted := minute(g); !wall || acted {
+				t.Fatalf("minute %d: wall %v acted %v", m, wall, acted)
+			}
+		}
+		g.r.obMu.Lock()
+		rec := g.r.ob.recycles
+		g.r.obMu.Unlock()
+		if rec != 0 || g.stalled() != nil {
+			t.Fatalf("ladder off but recycles %d crash %v", rec, g.stalled())
+		}
 	})
 }
