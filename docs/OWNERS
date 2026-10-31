@@ -25,3 +25,14 @@ openspec/changes/d2dmesh/**  meshdesign  d2dmesh
 openspec/changes/stream-grid/**  streambuild  stream-grid
 tools/publish/**  streambuild  stream-grid
 docs/streamctl-grid.md  streambuild  stream-grid
+openspec/changes/spec-backfill-combat/**  specfix  spec-backfill-combat
+openspec/changes/spec-backfill-botloop/**  specfix  spec-backfill-botloop
+openspec/changes/spec-backfill-viewer/**  specfix  spec-backfill-viewer
+openspec/changes/spec-process/**  specfix  spec-process
+openspec/README.md  specfix  spec-process
+docs/research/pr-get-hit-rule-evidence-pack.md  specfix  spec-process
+docs/research/pr-missile-damage-fine-evidence-pack.md  specfix  spec-process
+docs/research/pr-get-hit-length-evidence-pack.md  specfix  spec-process
+openspec/changes/archive/2026-10-31-hitlen/.openspec.yaml  specfix  spec-process
+openspec/changes/spec-skip-audit/**  specfix  spec-skip-audit
+docs/spec-skip-audit.md  specfix  spec-skip-audit
