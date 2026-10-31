@@ -1,0 +1,69 @@
+# Basics audit: town and inventory scenarios against the code (agent BASICSAUDIT, 2026-10-31)
+
+> status: current. Offline audit for the milestone in [BACKLOG.md](BACKLOG.md) section 0. Read-only on production code; no game, no d2d slot.
+
+Tags: **V** = verified (read the code, or ran the test named), **U** = unverified. Paths are under `internal/`. Pinned tests: `go test -p 1 ./internal/town -run TestAudit` (sim rig: Sorceress, real item tables, a sale pays Cost/4, so prices are U on d2d). Policy knobs are in `env/tuning_town.go:48-54` (defaults: TPScrollTarget 2, IDScrollTarget 2, TPTomeMinGold 450, MinGoldReserve 100, RepairBelowPct 30, StashGoldBase 300 + 50 per level, FutileMinutes 10, FutileGoldStep 100) and `env/tuning_resource.go:77-82` (KitTPGold 100, KitPotionGold 30, TripGoldFloor 300). Latch = does the chore avoid a retry when nothing changed.
+
+## Coverage table
+
+Verdicts: C covered, P partial, G gap. Severity: S1 death or stuck, S2 gold drain, S3 time drain, S4 cosmetic. T-n = test `TestAuditSn...` in `town/basicsaudit_test.go` (added here).
+
+| # | scenario | implementation | behaviour vs SME | offline test | live d2d proof | latch | verdict |
+|---|---|---|---|---|---|---|---|
+| 1 | gold 50, belt empty: 1 potion, no scroll | `town/shop.go:287` buyFirstTP (needs price), `:215` buyPotions | AGREE (V: T-1: 1 Minor HP, gold 20) | T-1, TestBrokeIsACleanOutcome | economy runs buy kits (d2d-economy.md Diagnosis 2) | trip level only: `chores.go:517` noteFutile; each visit reopens the shop | C S3 |
+| 2 | gold 120, 1 scroll, belt full: no buy, no shop visit | `chores.go:162` needScrolls, `shop.go:344` buyScrolls | DIFFERS (V: T-2: shop opens, ID scroll bought, 40 gold left). IDScrollTarget 2 is not capped by the poverty rule, which covers only the portal scroll (`shop.go:395`) | T-2 pins current | none | none | **G S2** |
+| 3 | gold 300, no scroll, belt full, clvl 9: 1 scroll, keep 150 | same | PARTLY (V: T-3: 1 portal scroll as wanted, plus 1 ID scroll, 120 left) | T-3, TestShopBuysTownPortalBeforePotions, TestShopCapsSpareScrollsWhenNotRich | none | none | P S2 |
+| 4 | 1 junk item worth 20, 0 scrolls: no sell trip | `bot/goal.go:315` poverty branch, `:468` povertySellWorth (4 without a scroll, 6 with) | AGREES for 1 item (V code). LEAK: the `else if` at `goal.go:320` (gold < GearMinGold 150 and sellable >= SellMinItems 4) re-opens the trip at 4 or 5 items WITH a scroll, bypassing the 6-item fix (V code, no test) | TestPovertySellWorth (function only) | economy fix measured (d2d-economy.md Fixes) | `povertySellLeft` (`goal.go:447`) stops repeats of the same pile | P S2 |
+| 5 | 7 sellable items: one visit sells all, scroll count unchanged | `town/chores.go:417` sell, `shop.go:483` sellableIf | AGREES on sale and scrolls (V: T-5 sold 7, scroll 1); an ID scroll is bought with the proceeds (gap, row 2) | T-5, TestChoresNeedsTownAndVendorRefusal, TestSellChoreIsCapped | economy: 4 to 8 sell visits per run succeed | `chores.go:417` capped by SellMaxS 60 s; "left unsold" logged | P S3 |
+| 6 | charm, rune, gem all held after a sell | `loot/pickit_starter.json` rules "runes", "charms", "cube gems", "low gems" | rune and gem kept (V: T-6). Charm held only if stats match rule "charms" (life, resist, FHR, skills); a plain magic charm falls to "magic and rare" and is SOLD (V code). Surplus low gems sell by design | T-6, TestFullStashOfRunesKeepsEverything | none | none | P S3 |
+| 7 | unidentified magic item under 100: sold unidentified, no ID scroll | `chores.go:129` needIdentify, `identify.go:31`, `shop.go:483` | DIFFERS (V: T-7: ID scroll bought, item identified, then sold). Unidentified items are sold as is only when the pack is full | T-7 pins current; TestFullPackOfUnidentifiedJewelryIsSold, TestUnidentifiedJewelryWaitsWhileThePackHasRoom | none | none | **G S2** |
+| 8 | durability 28 %, gold 200: repaired in the visit | `chores.go:177` needRepair (below 30 %), `:482` repair | AGREES (V: T-8, sim button set to the real one) | T-8; sim covers `town.RepairAll` | repair worked in 3 of 4 runs (d2d-economy.md item 2); button geometry V (d2d-town.md Gaps closed 4) | n/a | C S2 |
+| 9 | durability 90 %: no repair | same | AGREES (V: T-9) | T-8/9 | none | n/a | C S4 |
+| 10 | repair fails: log once, no retry until gold or durability changes | `chores.go:482`; trip level `chores.go:33-52` isFutile | DIFFERS (V: T-10: the chore reruns and fails on EVERY visit; only the trip trigger is quiet, via noteFutile) | T-10 pins current | V d2d: "repair not confirmed" 5 times in one run (d2d-economy.md item 2; d2d-loop.md Open 4) | trip level only | **G S3** |
+| 11 | gold 1500 at clvl 5: bank surplus, pack keeps 300 + 50 x clvl | `town/stash.go:117` goldKeep, `:125` stashGold, `chores.go:307` needStash | keep line AGREES (V: T-11 ends at 550). The shop spends first (tome 250, 5 scrolls, 2 ID scrolls = 910), so only 40 is banked | T-11, TestPartialGoldDeposit, TestGoldBankedAtClvl11 | deposit geometry V (d2d-town.md Gaps closed 3) | needStash false at or under keep | P S2 |
+| 12 | 2 free belt slots + 1 spare potion in pack: belted before leaving | `town/beltfill.go:29,80`, step "belt" runs before "shop" | AGREES (V: T-12; no purchase) | T-12, TestBeltFilledFromPackNoPurchase, TestPackRejuvIsBelted, TestShopCountsPackPotions | `cmd belt put` V in lab3 (d2d-fork.md:208); few runs used it (d2d-loop.md Open 3) | `beltFullAt` signature stops drags until the belt changes | C S3 |
+| 13 | vendor armor needs more Strength: not bought, not after restart | `town/rebuy.go:96` reject (str, dex, level) filters stock; Blocked feeds NeedStats | AGREES (V code): stateless filter, so a restart changes nothing. The in-memory `refused` map (`rebuy.go:420`, found-gear refusals) is lost on restart: one retry | TestRebuyBlockedByStrength, TestRefusedGearUntilLevelUp | none | stateless | C S3 |
+| 14 | pack full (4 or fewer free cells): one sell visit, loot ends in the pack | `bot/goal.go:299` (InvFullPct 85), `town/chores.go:94` (TripPackUsedPct 80), `town/room.go:29` MakeRoom, `loot` LeftBehind trip | Works, but thresholds differ from the SME's 4 free cells: 80 and 85 percent of 40 cells = 8 and 6 free (V code) | TestMakeRoomSellsJunkUntilTheItemFits, TestFullPackOfSparesIsSoldDown, TestLeftBehindValuablesRaiseATripFromEightyPercent | d2d-loot.md wires it; no soak shows it | `goal.go:402` quietPackFull (FutileMinutes) | P S3 |
+| 15 | Blood Raven done, clvl 8+: Kashya reward once, no second hire | `merc/policy.go:65` ShouldClaimFreeRogue, `task/claim.go:28` ClaimNeeded, `bot/resource.go:222` mercWanted (hire only in Act 2 town) | AGREES (V code). No clvl gate in the claim; Blood Raven's own gate is the kit (BRKILL) | TestShouldClaimFreeRogue, TestClaimNeeded, TestClaimDep | V d2d: reward on menu open, owned merc forfeits it, no second merc (d2d-probes.md section 1; d2d-town.md smoke) | yes: owned (even dead) blocks the claim; MercRetryMin backoff | C S3 |
+| E1 | walk to each Act 1 NPC, open its window | `town/acts.go:41` table, `npc.go:164` openNPC, `:522` openShop | Works offline; d2d needed ApproachNPC (V d2d, Gaps closed 1) | TestChoresAct1, TestChoresAtOtherSeedOrigins, npcmenu tests | V d2d: Akara, Charsi, Gheed, Kashya; Warriv listed but not re-run | greeting skip is bounded (`skip.go`) | P S3 |
+| E2 | belt layout, refill order | `resource/potion.go:102` PlanFor (Sorceress hp,hp,mp,mp), `town/belt/plan.json` (tiers), `shop.go:215` order HP, MP, RV after pack potions | AGREES with docs/sme potion policy as far as read (V code); two plan sources (plan.json cols are overridden by resource.PlanFor) | TestChoresAct1, TestPotionFloor*, beltfill tests | kit buys in d2d runs | n/a | P S4 |
+| E3 | waypoint and TP discipline | `town/trip.go:57` ToTown (reuses an open portal), `:113` walkToTown, `bot/waypoints.go:22` (10 min failed-trip latch, 3 touch tries) | Portal and no-scroll walk fine offline. Choosing a waypoint row is U on d2d | TestToTownAndBack, TestFailedWaypointTripIsNotRepeated, TestLeavingTownUsesActivatedWaypoint | portal V d2d (d2d-town.md Gaps closed 5); waypoint panel opens, row U | yes (waypoints.go) | P S1 |
+| E4 | stash gold cap | none: `stash.go:138` depositGold has no cap logic | GAP (V grep). A full stash makes the deposit "not confirmed" and the stash step fail on each visit. The cap value is U | none | none | none | **G S4** |
+| E5 | gambling never when poor | none: Gamble NPC class listed in `acts.go` only, no buy code (V grep) | trivially safe; a future gamble feature needs a gold floor | none | none | n/a | C S4 |
+| E6 | death with carried gold | `stash.go:117` keep line; `bot/death.go:447` bank swept gold | Keep line AGREES; but no trip trigger exists for gold above the keep line, so gold earned between visits is carried (V code: `choresDue` has no gold reason) | TestGoldBankedAtClvl11 | death gold rule V d2d (d2d-fidelity.md row 8) | n/a | P S2 |
+
+Buy ammo is n/a for the Sorceress (`town/ammo.go` is a no-op without a launcher, V code). Counts: 7 C, 10 P, 4 G (21 rows).
+
+## Quiet leaks cross-checked
+1. **One-item sell trips burning a scroll**: fixed for the poverty branch (`povertySellWorth`, d2d-economy.md Fixes, +28 % XP/h), but the `else if` at `bot/goal.go:320` is a second door at 4 or 5 items with a scroll (V code). Needs a `bot` test and one line.
+2. **TP before the potion kit**: confirmed by design, V: `shop.go:287` runs first and TestShopBuysTownPortalBeforePotions pins it (gold 120 buys the scroll, 20 left, no potion). The SME's order (potions first at low gold) conflicts with `resource.BuyKit` (TP first). A policy decision, not a bug; needs the user or SME.
+3. **Recovery roaming a cleared area**: confirmed, U on size: `bot.Config.EmptyAreaSec` (`goal.go:1066`) exists but defaults to 0 = off (V: no default set; docs/killfix.md:43). d2d-economy.md item 5 measured 30 to 50 % of recovery minutes with 0 kills.
+
+## Gaps ranked (severity x frequency)
+1. **G1 ID scrolls bought while poor** (rows 2, 3, 5, 7; S2, every visit). Fix: IDScrollTarget 0 until a pack item needs identifying, or gate `buyScrolls` on `needIdentify`. Owner: XPGAP knob (`town.idScrollTarget` is a registered knob) then a new card for the gate.
+2. **G2 second sell-trip door** (row 4; S2). Fix: apply `povertySellWorth` in the `else if` at `goal.go:320`. Owner: new card (bot, with a choresDue test).
+3. **G3 recovery roams cleared areas** (leak 3; S3, 30 to 50 % of recovery time). Fix: default `emptyAreaSec` on for recovery. Owner: XPGAP knob.
+4. **G4 repair retried every visit** (row 10; S3, seen live). Fix: remember (gold bucket, lowest durability) after a failed repair and skip until it changes. Owner: new card (town).
+5. **G5 TP-first purchase at gold 100 to 190** (leak 2; S2). Fix: decide the order; if potions first, use `resource.BuyKit` with HP before TP under KitCost. Owner: SME and user decision, then XPGAP.
+6. **G6 shop spends the surplus before the bank** (row 11; S2). Fix: bank the surplus before the shop, or cap tome and scroll buys to the kit line. Owner: new card.
+7. **G7 plain magic charm sold, low gems sold** (row 6; S3). Fix: SME decides which charms to keep; pickit rule. Owner: new card (loot).
+8. **G8 no gold trip trigger** (E6; S2 on death). Fix: a NeedsTrip reason when carried gold exceeds the keep line by a margin. Owner: new card.
+9. **G9 pack-full thresholds 80 and 85 percent** (row 14; S3). Fix: one knob, aligned to 4 free cells. Owner: XPGAP knob.
+10. **G10 stash gold cap unhandled** (E4; S4). Fix: read the cap, deposit the difference. Owner: new card, after the cap is measured.
+
+## Unknowns
+- Starting gold of a new offline 1.14d character: U. Measure on d2d with a hidden slot: new throwaway character, no cheats, `state` right after the first town spawn; repeat on 2 classes. Not recorded in this repo (docs/earlygame.md:69 lists it as open).
+- Unidentified-item sell prices: U. d2d sells scrolls, tomes and potions at exactly 50 % of the buy price (V d2d, d2d-fidelity.md:196); lore says a quarter (U). Measure: drop one unidentified and one identified magic ring and amulet of known base into a vendor, read the gold delta both ways. The sim's Cost/4 is only a placeholder.
+- Tome price 250 on d2d against 450 in `TPTomeMinGold` (d2d-fidelity.md:197): the bot's tome rule may fire earlier on d2d than on the original.
+
+## Proposed live checks (hidden d2d slot, after XPGAP frees the slots; cheats only via `internal/cheat` / `cmd/d2cheat`, throwaway characters, each logged)
+1. **Poor kit**: gold set to 50 (cheat: gold), empty belt, no scroll. Expect: 1 healing potion, no scroll, no ID scroll, leaves in one shop visit (rows 1, 2).
+2. **Scroll held, gold 120 and 300**: cheat gold, give one scroll via a vendor buy. Expect no ID scroll bought and at least 150 kept at 300 (rows 2, 3).
+3. **Failed repair**: lower worn durability (cheat: stat) on a character that has no gold for repair, enter town twice. Expect one log line and no second attempt (row 10; today fails every visit).
+4. **Four junk items with a scroll, gold under 150**: fixture: fill the pack from a recorded loot snapshot. Expect no trip (leak 1).
+5. **Unidentified ring**: put one in the pack, gold 80. Expect sold as is (row 7).
+6. **Gold 1500 at clvl 5**: expect bank surplus, keep 550 (row 11); read the shop spend.
+7. **Pack at 34 of 40 cells**: expect one sell visit then fresh loot picked (row 14).
+8. **Strength gate**: clvl 9, Strength 10, 3000 gold, naked body slot: expect no armor bought, restart the bot, same (row 13).
+9. **Warriv and Kashya walk**: from the stash corner, open each window (E1, closes the U).
+10. **Waypoint row choice** with an activated target (E3, closes the U).
