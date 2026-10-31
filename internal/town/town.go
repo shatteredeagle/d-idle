@@ -66,6 +66,7 @@ type Town struct {
 	skipLogged       map[string]bool                          // equip skips already logged, by item/level/reason
 	planFn           func(class d2.Class, clvl int) belt.Band // belt plan override (SetPlan)
 	beltBuyGold      int                                      // gold at the last belt purchase attempt that bought nothing; 0 = none
+	repairFail       repairLatch                              // BASICSFIX: last failed repair
 	futile           map[string]futileMark                    // trip reason -> when and with how much gold a visit left it unfixed
 	presetsFn        func() []d2map.Preset                    // test seam: preset units of the current level
 	ammoPath         string                                   // "bow" or "javelin" for an Amazon (SetAmmoPath)

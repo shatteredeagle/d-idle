@@ -21,6 +21,7 @@ func TestChoresAtOtherSeedOrigins(t *testing.T) {
 		r := newRigAt(t, o[0], o[1])
 		w := r.W
 		w.Player.Life = 10
+		w.Player.Level = 10
 		w.Add("r07", d2.ContInventory, 0, 0)
 		rep, err := r.T.Chores(context.Background(), town.FullPlan())
 		if err != nil || rep.Errors != 0 || !rep.Healed || rep.Stashed != 1 || count(w, d2.ContBelt) != 4 {

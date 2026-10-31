@@ -166,7 +166,7 @@ func (t *Town) needScrolls(s *d2.Snapshot) bool {
 	if t.tune().KeyTarget > 0 && t.keyCount(s) < t.tune().KeyTarget {
 		return true
 	}
-	if t.tune().IDScrollTarget > 0 {
+	if t.tune().IDScrollTarget > 0 && t.idScrollWanted(s) {
 		if n, _ := t.scrollCount(s, "isc", "ibk"); n < t.tune().IDScrollTarget {
 			return true
 		}
@@ -176,7 +176,7 @@ func (t *Town) needScrolls(s *d2.Snapshot) bool {
 
 func (t *Town) needRepair(s *d2.Snapshot) bool {
 	pct, ok := t.lowestDurability(s)
-	return ok && pct < t.tune().RepairBelowPct
+	return ok && pct < t.tune().RepairBelowPct && !t.repairLatched(s, pct)
 }
 
 // vendorStep names the chores that work inside a vendor's trade window. One window serves consecutive chores of the
@@ -252,7 +252,7 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		need    func(*d2.Snapshot) bool
 		run     func() error
 	}{
-		{"identify", plan.Identify, func(s *d2.Snapshot) bool { return len(t.needIdentify(s)) > 0 }, func() error { return t.identify(ctx, a, &rep) }},
+		{"identify", plan.Identify, t.identifyNeeded, func() error { return t.identify(ctx, a, &rep) }},
 		// before sell: a naked character wears what it found instead of selling it (G1 attempt 6)
 		{"equip", true, t.needEquipFound, func() error { _, err := t.EquipFound(ctx); return err }},
 		{"sell", plan.Sell && t.tune().SellJunk != 0, t.needSell, func() error { return t.sell(ctx, a, &rep) }},
@@ -264,6 +264,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"repair", plan.Repair, t.needRepair, func() error { return t.repair(ctx, a, &rep) }},
 		// before shop: potions already in the pack go to the belt first, so the shop buys only the shortfall
 		{"belt", plan.Potions, t.NeedsBeltFill, func() error { _, err := t.FillBelt(ctx); return err }},
+		// before shop: the surplus is banked first, so the shop cannot spend it (BASICSFIX bankFirst)
+		{"bank", plan.Gold, func(s *d2.Snapshot) bool { return t.needBank(s, plan) }, func() error { return t.bank(ctx, a) }},
 		{"shop", plan.Potions || plan.Scrolls || plan.Antidotes > 0, func(s *d2.Snapshot) bool {
 			return plan.Potions && t.needPotions(s) || plan.Scrolls && t.needScrolls(s) || t.needAntidotes(plan, s)
 		}, func() error { return t.shopVisit(ctx, a, plan, &rep) }},
@@ -377,8 +379,21 @@ func (t *Town) shopVisit(ctx context.Context, a *Act, plan ChorePlan, rep *Chore
 	if err != nil {
 		return err
 	}
-	// town portal scroll first: without one, potions eat the scroll money and the character stays portal-less
-	first := t.buyFirstTP(ctx, npc, rep)
+	// potionsFirst (default): the kit potions, then the first scroll when allowed (tpAllowed), then the rest of the belt.
+	// potionsFirst 0: the scroll first, as before (without one, potions eat the scroll money and the character stays portal-less).
+	var first error
+	if t.tune().PotionsFirst != 0 && plan.Potions {
+		if err := t.buyPotions(ctx, npc, t.kitPotions(plan), rep); err != nil {
+			first = err
+		}
+		if s, err := t.current(); err == nil && t.tpAllowed(s) {
+			if err := t.buyFirstTP(ctx, npc, rep); err != nil && first == nil {
+				first = err
+			}
+		}
+	} else {
+		first = t.buyFirstTP(ctx, npc, rep)
+	}
 	if plan.Potions {
 		if err := t.buyPotions(ctx, npc, plan.PotionFloor, rep); err != nil && first == nil {
 			first = err
@@ -502,9 +517,11 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	}
 	if !ok {
 		t.logDurability("repair: not confirmed", s1, g0)
+		t.repairFail = repairLatch{set: true, gold: s1.Player.Gold, low: low0}
 		return fmt.Errorf("town: repair not confirmed (durability %d%% unchanged)", low0)
 	}
 	rep.Repaired = true
+	t.repairFail = repairLatch{}
 	rep.Spent += g0 - s1.Player.Gold
 	return nil
 }

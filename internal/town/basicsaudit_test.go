@@ -63,24 +63,24 @@ func TestAuditS1PoorBuysOnePotion(t *testing.T) {
 	}
 }
 
-// S2 differs (gap G1): with a scroll and a full belt the SME expects no shop visit and 120 gold kept. IDScrollTarget
-// is 2 with no tome, so needScrolls opens the shop and buys an identify scroll.
-func TestAuditS2ScrollHeldBeltFullBuysIDScroll(t *testing.T) {
+// S2 (gap G1 closed by BASICSFIX, flipped on purpose): with a scroll and a full belt nothing is bought and 120 gold are
+// kept; before, IDScrollTarget 2 bought an identify scroll (idScrollNeed 0 restores that).
+func TestAuditS2ScrollHeldBeltFullBuysNothing(t *testing.T) {
 	r := audit(t, 120, 1, true)
 	r.W.Add("tsc", d2.ContInventory, 9, 3)
 	rep := run(t, r)
-	if rep.Bought["Scroll of Town Portal"] != 0 || rep.Bought["Scroll of Identify"] != 1 || rep.GoldAfter != 40 {
-		t.Fatalf("pinned current behaviour changed: bought %v gold %d (SME: nothing bought, 120 kept)", rep.Bought, rep.GoldAfter)
+	if len(rep.Bought) != 0 || rep.GoldAfter != 120 {
+		t.Fatalf("bought %v gold %d (SME: nothing bought, 120 kept)", rep.Bought, rep.GoldAfter)
 	}
 }
 
-// S3 differs (gap G1): gold 300, no scroll, clvl 9: the portal scroll is bought (as the SME wants) and so is an identify
-// scroll, leaving 120 where the SME wants at least 150.
-func TestAuditS3OneScrollButAlsoAnIDScroll(t *testing.T) {
+// S3 (gap G1 closed by BASICSFIX, flipped on purpose): gold 300, no scroll, clvl 9: one portal scroll and no identify
+// scroll, 200 kept (the SME wants at least 150).
+func TestAuditS3OneScrollOnly(t *testing.T) {
 	r := audit(t, 300, 9, true)
 	rep := run(t, r)
-	if rep.Bought["Scroll of Town Portal"] != 1 || rep.Bought["Scroll of Identify"] != 1 || rep.GoldAfter != 120 {
-		t.Fatalf("pinned current behaviour changed: bought %v gold %d (SME: 1 scroll, keep 150)", rep.Bought, rep.GoldAfter)
+	if rep.Bought["Scroll of Town Portal"] != 1 || rep.Bought["Scroll of Identify"] != 0 || rep.GoldAfter != 200 {
+		t.Fatalf("bought %v gold %d (SME: 1 scroll, keep 150)", rep.Bought, rep.GoldAfter)
 	}
 }
 
@@ -110,15 +110,15 @@ func TestAuditS6RuneAndGemAreKept(t *testing.T) {
 	}
 }
 
-// S7 differs (gap G2): an unidentified magic ring is identified (an identify scroll is bought) and then sold; the SME
-// wants it sold unidentified with no scroll bought.
-func TestAuditS7UnidentifiedRingIsIdentifiedFirst(t *testing.T) {
+// S7 (gap G1 closed by BASICSFIX, flipped on purpose): an unidentified plain magic ring is sold as it is and no identify
+// scroll is bought (idScrollNeed 0 restores the old identify-then-sell).
+func TestAuditS7UnidentifiedRingIsSoldAsIs(t *testing.T) {
 	r := audit(t, 200, 1, true)
 	addMagic(r, "rin", 0, 0)
 	r.W.Items[len(r.W.Items)-1].Item.Flags = 0
 	rep := run(t, r)
-	if rep.Identified != 1 || rep.Bought["Scroll of Identify"] == 0 {
-		t.Fatalf("pinned current behaviour changed: identified %d bought %v", rep.Identified, rep.Bought)
+	if rep.Identified != 0 || rep.Sold != 1 || rep.Bought["Scroll of Identify"] != 0 {
+		t.Fatalf("identified %d sold %d bought %v", rep.Identified, rep.Sold, rep.Bought)
 	}
 }
 
@@ -142,12 +142,12 @@ func TestAuditS8S9RepairThreshold(t *testing.T) {
 	}
 }
 
-// S11 agrees on the keep line (300 + 50 x clvl = 550 at clvl 5) but the shop spends the surplus first: the stash step
-// banks only what is left (gap G3, a policy question: a tome and five scrolls come before the bank).
+// S11 (gap G6 closed by BASICSFIX, flipped on purpose): the surplus above the keep line (300 + 50 x clvl = 550 at
+// clvl 5) is banked BEFORE the shop: 950 banked (was 40), the shop spends from the 550 left.
 func TestAuditS11KeepLineAtClvl5(t *testing.T) {
 	r := audit(t, 1500, 5, true)
 	rep := run(t, r)
-	if rep.GoldAfter != 550 || r.W.Player.StashGold != 40 {
+	if r.W.Player.StashGold != 950 {
 		t.Fatalf("gold %d bank %d bought %v", rep.GoldAfter, r.W.Player.StashGold, rep.Bought)
 	}
 }
@@ -164,16 +164,19 @@ func TestAuditS12SpareGoesToTheBelt(t *testing.T) {
 	}
 }
 
-// S10 differs (gap G4): a repair that does not confirm is retried on every visit (no latch inside the chore; only the
-// trip-level NeedsTrip memory is quiet). The SME wants one log line and no retry until gold or durability changes.
-func TestAuditS10FailedRepairIsRetriedEveryVisit(t *testing.T) {
+// S10 (gap G4 closed by BASICSFIX, flipped on purpose): a repair that does not confirm is attempted once; the next
+// visit does not retry until durability changed or gold grew (repairLatch 0 restores the retry on every visit).
+func TestAuditS10FailedRepairIsLatched(t *testing.T) {
 	r := audit(t, 200, 1, true) // the sim button is not at town.RepairAll: the click changes nothing, as a failed repair
 	for _, u := range r.W.Items {
 		if u.Item.Where == d2.ContEquipment {
 			r.W.Stats[u.Addr] = d2.Stats{72: 28, 73: 100}
 		}
 	}
-	for visit := 1; visit <= 2; visit++ {
+	for visit := 1; visit <= 3; visit++ {
+		if visit == 3 {
+			r.W.Player.Gold += 100 // gold grew by futileGoldStep: one more try
+		}
 		rep := run(t, r)
 		tried := false
 		for _, st := range rep.Steps {
@@ -181,8 +184,8 @@ func TestAuditS10FailedRepairIsRetriedEveryVisit(t *testing.T) {
 				tried = true
 			}
 		}
-		if !tried {
-			t.Fatalf("visit %d: repair was not attempted again: %+v", visit, rep.Steps)
+		if tried != (visit != 2) {
+			t.Fatalf("visit %d: repair attempted %v: %+v", visit, tried, rep.Steps)
 		}
 	}
 }

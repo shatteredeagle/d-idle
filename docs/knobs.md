@@ -134,10 +134,15 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.portalReuseDist | 40 | 0..100 | subtiles | 0 | 1 | ToTown walks into an open portal this close instead of reading a scroll. |
 | town.greetingWaitS | 90 | 0..180 | s | 180 | 1 | Wait for an NPC menu after a click (first contact plays a long speech). |
 | town.greetingSkip | 0 | 0..3 | mode | 3 | 2 | How the first-contact greeting is skipped when the menu is not open 1 s after the click: 0 wait it out (greetingWaitS), 1 click the NPC again, 2 Esc then click again, 3 left click on the NPC tile without hover. docs/npc-skip.md. |
-| town.futileGoldStep | 100 | 0..5000 | gold | 5000 | 3 | After a town visit could not fix a trip reason, do not ask again until gold grew by this. |
+| town.futileGoldStep | 100 | 0..5000 | gold | 5000 | 4 | After a town visit could not fix a trip reason, do not ask again until gold grew by this. |
 | town.futileMinutes | 10 | 0..120 | min | 120 | 2 | A trip reason a visit left unfixed is not raised again for this long. |
 | town.spareKeep | 4 | 0..30 | count | 0 | 1 | A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted). |
 | town.sellMaxS | 60 | 15..300 | s | 15 | 2 | Time the sell chore alone may take before it is cut off. |
+| town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs tpFirstLevel and gold for one scroll (SME EXP rule of thumb, U on d2d). 0 = scroll first (old). |
+| town.tpFirstLevel | 4 | 1..30 | clvl | 30 | 1 | potionsFirst: no first town portal scroll below this level (Cold Plains kit level). SME EXP rule of thumb. |
+| town.idScrollNeed | 1 | 0..1 | bool | 0 | 2 | 1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old). |
+| town.bankFirst | 1 | 0..1 | bool | 0 | 2 | 1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old). |
+| town.repairLatch | 1 | 0..1 | bool | 0 | 1 | 1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old). |
 | town.choreBudgetS | 150 | 30..600 | s | 30 | 1 | Time one Chores call may take before it gives up. |
 
 ### loot.*
@@ -276,7 +281,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.poorGold | 150 | 50..500 | gold | 50 | 1 | Below this gold life potions come before mana potions. |
 | resource.reserveGold | 30 | 0..200 | gold | 0 | 2 | Never spend below this on potions. |
 | resource.potionGoldPct | 80 | 30..100 | % | 30 | 1 | Share of spendable gold potions may take when not poor. |
-| resource.hpFirst | 3 | 1..6 | count | 1 | 7 | Healing potions bought before any mana potion. |
+| resource.hpFirst | 3 | 1..6 | count | 1 | 8 | Healing potions bought before any mana potion. |
 | resource.mpFirst | 2 | 0..6 | count | 0 | 2 | Mana potions bought for casters after the first healing potions. |
 | resource.tripHPMin | 1 | 0..4 | count | 0 | 2 | Town trip when healing potions are at or below this. |
 | resource.tripMPMin | 0 | 0..4 | count | 0 | 1 | Town trip (casters) when mana potions are at or below this. |
@@ -285,7 +290,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripHealPct | 50 | 25..80 | % | 25 | 1 | Life percent below which a character that cannot regenerate goes to town for free healing. |
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
-| resource.kitTPGold | 100 | 50..200 | gold | 50 | 7 | Price of one town portal scroll, for the minimal-kit cost. |
+| resource.kitTPGold | 100 | 50..200 | gold | 50 | 8 | Price of one town portal scroll, for the minimal-kit cost. |
 | resource.kitPotionGold | 30 | 20..100 | gold | 20 | 7 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
