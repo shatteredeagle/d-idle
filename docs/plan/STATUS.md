@@ -81,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 72a7e60 10-31 03:23 `Merge agent/upsync: upstream sync, #135 and #136 merged` (rendergh)
 - c14f9c7 10-31 02:57 `Merge agent/specback: spec backfill for six d2d cards` (spec-backfill-d2dcombat)
 - 63382df 10-31 02:53 `Merge agent/m2a: soak NO-DATA verdict and paired A/B design` (m2-soakexit)
 - d82bd47 10-31 02:46 `Merge agent/rebase136r: get-hit render rebase onto #136 (docs only)` (rendergh)
@@ -90,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - e57bbc2 10-31 02:24 `Merge agent/andychain: Andariel chain needs research` (m3-andariel)
 - a1728bb 10-31 02:22 `Merge agent/grillapply: apply grill 0003, ADR 0012` (grillapply)
 - fc92154 10-31 02:19 `Merge grill 0003 (merc and Act 2 entry)` (grillapply)
-- 51cad66 10-31 01:34 `Merge agent/roadmap: milestone roadmap, 15 cards, decisions D1-D6` (roadmap)
 <!-- statusgen:end -->
