@@ -173,13 +173,9 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793455515,
- "updated": "2026-10-31T14:05Z",
+ "ts": 1793456433,
+ "updated": "2026-10-31T14:20Z",
  "work": [
-  {
-   "state": "working",
-   "task": "Running the bot on the d2d engine"
-  },
   {
    "state": "working",
    "task": "Long unattended test runs"
@@ -191,6 +187,10 @@
   {
    "state": "working",
    "task": "Playing in a party of bots"
+  },
+  {
+   "state": "blocked",
+   "task": "Running the bot on the d2d engine"
   }
  ]
 }
