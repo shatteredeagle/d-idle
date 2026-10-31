@@ -27,3 +27,4 @@ internal/loot/charms_test.go  m1-loot  m1-loot
 docs/loot-charms.md  m1-loot  m1-loot
 tools/ab/**  m2-abdesign  m2-abdesign
 docs/ab-design.md  m2-abdesign  m2-abdesign
+docs/research/andariel-chain-needs.md  andychain  -
