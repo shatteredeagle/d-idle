@@ -37,8 +37,3 @@ internal/town/goldfloor_test.go  goldfloor  goldfloor
 internal/env/tuning_town.go  goldfloor  goldfloor
 internal/env/tuning_loot.go  goldfloor  goldfloor
 docs/goldfloor.md  goldfloor  goldfloor
-internal/town/stash.go  m1-stashcap  m1-stashcap
-internal/town/town.go  m1-stashcap  m1-stashcap
-internal/town/basicsfix.go  m1-stashcap  m1-stashcap
-internal/town/sim/**  m1-stashcap  m1-stashcap
-internal/town/stashcap_test.go  m1-stashcap  m1-stashcap

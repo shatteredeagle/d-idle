@@ -42,7 +42,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [goldfloor](../../openspec/changes/goldfloor/) | proposed | goldfloor | `internal/bot/goal.go`<br>`internal/bot/goldfloor_test.go`<br>`internal/town/shop.go`<br>`internal/town/beltbuy.go`<br>`internal/town/goldfloor_test.go`<br>`internal/env/tuning_town.go`<br>`internal/env/tuning_loot.go`<br>`docs/goldfloor.md` | - |
-| [m1-stashcap](../../openspec/changes/m1-stashcap/) | in-progress | m1-stashcap | `internal/town/stash.go`<br>`internal/town/town.go`<br>`internal/town/basicsfix.go`<br>`internal/town/sim/**`<br>`internal/town/stashcap_test.go` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
 
@@ -62,7 +61,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 14 requirements
-- spec [town-basics](../../openspec/specs/town-basics/spec.md): 5 requirements
+- spec [town-basics](../../openspec/specs/town-basics/spec.md): 6 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
@@ -73,8 +72,6 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change goldfloor: go test -p 1 ./internal/bot ./internal/town ./internal/env passes including TestTripFloor (a [2 healing potions] trip with a 30-gold plan and a held scroll is not raised, a belt at 0 healing is), TestNoTPRebuyWhenPoor (gold 209, 1 healing potion: one potion plan, no scroll), TestManaCapBelowClvl10
 - change goldfloor: paired A/B 8 seeds x 2 virtual h per arm, same binary: trips under 30 gold at most 35 percent (was 65 to 83), TP spend at most 250 gold/h in bands 5-10 (was 156 to 760), healing belt empty share not above baseline, deaths not above baseline
 - change goldfloor: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change m1-stashcap: go test -p 1 ./internal/town passes including TestStashGoldCapDeposit (partial deposit to the cap, one log line, no retry on the next visit while full)
-- change m1-stashcap: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change m3-merc: 2 seeds x 4 virtual hours from clvl 9 after Blood Raven on hidden d2d: the Rogue claimed exactly once per seed, 0 paid Act 1 hires, merc alive at least 70 percent of field time, every revive logged with price and gold delta within the revive rule (raw in docs/probes/merc)
 - change m3-merc: go test -p 1 ./internal/merc ./internal/bot -run 'Merc|Claim' passes; go test ./internal/env -run EveryKnob passes with the d2d default
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
@@ -84,6 +81,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- 4d26ed1 10-31 09:53 `Merge agent/stashcap-impl: m1-stashcap stash gold cap` (m1-stashcap)
 - 9720f1b 10-31 09:46 `Merge agent/cardboard: card board doc and decisions stub` (cardboard)
 - db86af5 10-31 09:46 `Merge agent/cr143: PR #143 posted evidence` (upstream-bundle)
 - 933c213 10-31 09:38 `Merge agent/gencorpus: gen-corpus scenario tests` (gen-corpus)
@@ -93,5 +91,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - d348529 10-31 09:09 `Merge agent/generality: bot generality study` (generality)
 - 8bf3829 10-31 09:03 `Merge agent/m2early: early d2d baseline` (m2-earlybase)
 - 67d622b 10-31 09:03 `Merge agent/bundlepr: upstream PR bundle draft` (upstream-bundle)
-- 5be7cc7 10-31 08:13 `Merge agent/townwedge: bad-edge TTL and pocket unstick` (townwedge)
 <!-- statusgen:end -->
