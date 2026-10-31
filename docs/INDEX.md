@@ -1,5 +1,7 @@
 # docs/INDEX.md: one-page map of docs/
 
+Entry page: [README.md](README.md); research index: [research/README.md](research/README.md).
+
 Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; the first doc of each group is the one to read. d2d is the primary backend ([adr/0009](adr/0009-d2d-primary-backend.md)); the Game.exe path is frozen and stays the acceptance reference. A `> status:` line under a doc's title says when it is superseded or partly true; those docs are marked (banner) here. Counts that change are never copied into docs: `git log`, [g1-log.md](g1-log.md) and the generated block of [plan/STATUS.md](plan/STATUS.md) own them. The older per-act and per-class "where am I" tables and the ranked live-check list that this file used to carry are in git history (`git show 8086145:docs/INDEX.md`); they describe the frozen Game.exe path.
 
 ## 0. Start here

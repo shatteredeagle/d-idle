@@ -9,3 +9,6 @@ Their internal facts were tagged V/S/U when written and are not re-verified. Pat
 - `wave2.md` : consumer-side interface contracts between agents (the contracts are in code now).
 - `goals-catalog.md` : 127-objective goal catalogue (research; was `docs/goals/catalog.md`).
 - `prior-art/meta/` : prior-art survey of other game bots and agents (Alas, MAA, playerbots, AutoExile, Screeps, Pokemon/Voyager agents).
+- `BACKLOG-2026-10-30.md` : the backlog before the 2026-10-31 trim (current list: [../BACKLOG.md](../BACKLOG.md)).
+- `research/` : finished upstream PR drafts (posted PRs #134, #135, #136; executed review replies; superseded draft v1). Index with status: [../research/README.md](../research/README.md).
+- `merc-farm.md`, `sandbox.md` : superseded or paused-path docs (doctrim, 2026-10-31); the old path keeps a stub.
