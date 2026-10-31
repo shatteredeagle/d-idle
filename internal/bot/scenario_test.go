@@ -11,6 +11,7 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
 )
 
@@ -167,4 +168,49 @@ func TestScenario_CampaignStall(t *testing.T) {
 			t.Fatalf("ladder off but recycles %d crash %v", rec, g.stalled())
 		}
 	})
+}
+
+// junkLoot says every pack item is worth selling.
+type junkLoot struct{ fakeLoot }
+
+func (junkLoot) Evaluate(d2.Item) Verdict { return VerdictSell }
+
+// Situation (bot half of the seed-8 poverty loop): a poor clvl 4 character in Blood Moor, gold 150, no potions, no
+// portal scroll, a few junk items in the pack, the clock running. Evidence (docs/d2d-xp-gap.md, VERIFIED from the
+// 24 h baseline: 34 poverty sell trips in 24 h at a mean net +23.5 gold for about 4 minutes, 20 to 28 % of the time
+// walking; D2DLOOP r22: a trip every 6 virtual minutes for 1 to 2 items). End state over 120 virtual minutes of steps:
+// 1 to 3 junk items on foot never raise a sell trip (zero trips), a full load of junk raises one.
+func TestScenario_PovertyLoop(t *testing.T) {
+	trips := func(junk int) int {
+		g := newRig(t)
+		g.r.d.Loot = junkLoot{fakeLoot{w: g.w}}
+		g.w.set(func(w *world) {
+			w.level = 4
+			w.area = 2
+			w.gold0 = 150
+			for i := 0; i < junk; i++ {
+				w.items = append(w.items, d2.Unit{ID: uint32(700 + i), Type: d2.TypeItem, Class: 7, Item: &d2.Item{Where: d2.ContInventory}})
+			}
+		})
+		g.w.belt()
+		n := 0
+		for m := 0; m < 120; m++ {
+			g.clock.Sleep(time.Minute)
+			g.r.poll()
+			s := g.r.latest()
+			g.r.updateStarvation(s)
+			if plan, _, ok := g.r.choresDue(s); ok && plan.Sell {
+				n++
+			}
+		}
+		return n
+	}
+	for _, junk := range []int{1, 2, 3} {
+		if n := trips(junk); n != 0 {
+			t.Fatalf("%d junk items: %d sell trips in 120 min, want 0", junk, n)
+		}
+	}
+	if n := trips(10); n == 0 {
+		t.Fatal("10 junk items raised no sell trip: the scenario cannot detect the old loop")
+	}
 }
