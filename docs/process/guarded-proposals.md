@@ -1,6 +1,6 @@
 # Guarded-file proposals from the roadmap decisions (2026-10-31)
 
-> status: for the user to apply. Agents never edit `docs/decisions.md`, `docs/adr/*` or `GLOSSARY.md` (AGENTS.md guard rule). Decision date for every entry: 2026-10-31 (the user, via pop-ups). Note: the ROADMAP agent's report with its own proposed ADR text is not in the repo; the text below is drafted from docs/roadmap.md section 8 and is a proposal, not a copy.
+> status: APPLIED 2026-10-31 by card grillapply: the decisions index has the lines, the milestones/WIP ADR is [ADR 0012](../adr/0012-milestones-and-wip-limit.md) (number 0011 went to grill 0003), the glossary terms `milestone exit criterion`, `deferred card`, `paired A/B` are in GLOSSARY.md (`late baseline` was not added). Original text follows: for the user to apply. Agents never edit `docs/decisions.md`, `docs/adr/*` or `GLOSSARY.md` (AGENTS.md guard rule). Decision date for every entry: 2026-10-31 (the user, via pop-ups). Note: the ROADMAP agent's report with its own proposed ADR text is not in the repo; the text below is drafted from docs/roadmap.md section 8 and is a proposal, not a copy.
 
 ## docs/decisions.md (one-line index entries)
 

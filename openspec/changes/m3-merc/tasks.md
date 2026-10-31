@@ -2,7 +2,7 @@
 
 ```yaml
 change: m3-merc
-status: deferred
+status: proposed
 agent: m3-merc
 branch: agent/m3-merc
 worktree: ~/code/d2lod-wt/m3-merc
@@ -24,6 +24,7 @@ result:
 
 ## 1. Work
 
-- [ ] 1.1 Read docs/merc-wire.md, docs/merc.md, merc-policy spec and the grill 0003 outcome; failing tests first (claim once, revive rule, stop rule)
-- [ ] 1.2 Revive, stop rule and merc potions wired for d2d; knob default per backend
+- [ ] 1.1 Read docs/merc-wire.md, docs/merc.md, merc-policy spec, ADR 0011 and the grill 0003 outcome; failing tests first (claim once, revive rule with kit reserve, stop rule, Blood Raven bailout at 3 failures or clvl 12, keeper versus throwaway)
+- [ ] 1.2 Revive, stop rule and merc potions wired for d2d; bailout and keeper/throwaway rule (always revive until a build names a target merc); knob default per backend
 - [ ] 1.3 2 x 4 virtual hour runs; docs/merc-d2d.md; changecheck, leakcheck, validate; reap
+- [ ] 1.4 Open questions kept in the proposal: build merc targets and the live probes (dead-merc forfeit, revive quote, hire windows, merc Str/Dex, merc state after reload); note which the 2 x 4 hour runs answered

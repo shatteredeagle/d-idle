@@ -2,7 +2,7 @@
 
 ```yaml
 change: m3-routeguard
-status: deferred
+status: proposed
 agent: m3-routeguard
 branch: agent/m3-routeguard
 worktree: ~/code/d2lod-wt/m3-routeguard
@@ -24,6 +24,6 @@ result:
 
 ## 1. Work
 
-- [ ] 1.1 Take the decided numbers from docs/decisions.md (grill 0003); write the MODIFIED deltas first (complete requirements, no Previously notes)
-- [ ] 1.2 Knob defaults and tests; docs/knobs.md regenerated
+- [ ] 1.1 Read ADR 0011 and the delta in specs/merc-policy; failing floor tests first (16/14 road and Forgotten Tower, 17/15 Andariel, antidotes in the kit, no +2 rule)
+- [ ] 1.2 Knob defaults (with-merc knobs, `route.towerNeedsMerc` 0) and tests; docs/knobs.md regenerated; the Andariel attempt stays blocked until m3-andariel has won once (ADR 0011 gate 3)
 - [ ] 1.3 changecheck, leakcheck, validate

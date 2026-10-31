@@ -11,6 +11,8 @@ Index of the decision records in [adr/](adr/README.md) (the dated entries below 
 - [ADR 0007](adr/0007-freeze-lift-and-verification-phases.md) (2026-10-30, accepted): Lift the feature freeze for M0 to M9; G2 is a stability and economy soak
 - [ADR 0008](adr/0008-no-kill-injection-without-permission.md) (2026-10-30, accepted): Agents do not kill the soak game process unless a permission rule allows it
 - [ADR 0009](adr/0009-d2d-primary-backend.md) (2026-10-30, accepted, grill 0001): d2d is the primary backend now; Game.exe is frozen, stays the acceptance reference, retires at the d2d container's 24 h soak; exit from d2d is break glass only
+- [ADR 0011](adr/0011-readiness-power-vs-danger.md) (2026-10-31, accepted, grill 0003): Readiness is character power against zone danger; interim floors Monastery/Tower 16 (14 with merc), Andariel 17 (15 with merc); revive above the kit reserve; Blood Raven bailout; keeper mercs always revived
+- [ADR 0012](adr/0012-milestones-and-wip-limit.md) (2026-10-31, accepted): Work is organised by milestones M1 to M6 with a WIP limit of 3 implementation agents; every job maps to a milestone card or a bug fix with a finding; d2dmesh and stream-grid parked until M3
 - Licence: GPL (same as d2d, GPL-3.0-or-later) - user, 2026-10-30 ([ADR 0010](adr/0010-licence-same-as-d2d.md))
 - Repo going public soon; lockstep patches stay in the downstream fork until upstream wants them - user, 2026-10-30 ([ADR 0010 addendum](adr/0010-licence-same-as-d2d.md))
 
