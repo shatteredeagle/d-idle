@@ -1,0 +1,20 @@
+res1/bot-off1.log      off clvl=5 kills=397 (198/h) xp/h=4836 deaths=0 fresh=2 restarts=0 rec%=50 town%=28 trips/h=5.0 s/kill total=18.1 walk=13.5 cast=0.9 wait=3.7 (n=398)
+res1/bot-off2.log      off clvl=5 kills=418 (209/h) xp/h=5634 deaths=0 fresh=1 restarts=0 rec%=60 town%=22 trips/h=5.0 s/kill total=17.2 walk=13.1 cast=0.9 wait=3.2 (n=418)
+res1/bot-off3.log      off clvl=5 kills=404 (202/h) xp/h=5474 deaths=0 fresh=2 restarts=0 rec%=64 town%=15 trips/h=2.5 s/kill total=17.7 walk=14.3 cast=0.9 wait=2.5 (n=404)
+res1/bot-off4.log      off clvl=5 kills=409 (204/h) xp/h=5150 deaths=0 fresh=2 restarts=0 rec%=52 town%=29 trips/h=3.0 s/kill total=16.6 walk=12.4 cast=0.9 wait=3.3 (n=409)
+res1/bot-on1.log       on clvl=5 kills=378 (189/h) xp/h=4881 deaths=0 fresh=1 restarts=0 rec%=57 town%=26 trips/h=4.0 s/kill total=18.7 walk=14.0 cast=0.9 wait=3.8 (n=378)
+res1/bot-on2.log       on clvl=5 kills=379 (190/h) xp/h=5891 deaths=0 fresh=0 restarts=0 rec%=52 town%=32 trips/h=4.5 s/kill total=18.7 walk=14.0 cast=1.0 wait=3.7 (n=379)
+res1/bot-on3.log       on clvl=5 kills=370 (185/h) xp/h=4047 deaths=0 fresh=2 restarts=0 rec%=67 town%=20 trips/h=1.5 s/kill total=19.6 walk=16.1 cast=0.8 wait=2.7 (n=370)
+res1/bot-on4.log       on clvl=5 kills=438 (219/h) xp/h=6252 deaths=0 fresh=0 restarts=0 rec%=56 town%=26 trips/h=1.0 s/kill total=16.5 walk=12.5 cast=0.8 wait=3.1 (n=438)
+
+s_walk   off 13.34 +- 0.40 (n=4)   on 14.15 +- 0.73 (n=4)   t=0.97 p=0.379
+s_total  off 17.39 +- 0.33 (n=4)   on 18.37 +- 0.67 (n=4)   t=1.31 p=0.254
+s_cast   off 0.88 +- 0.01 (n=4)   on 0.90 +- 0.04 (n=4)   t=0.51 p=0.645
+s_wait   off 3.18 +- 0.25 (n=4)   on 3.33 +- 0.25 (n=4)   t=0.42 p=0.689
+kills_h  off 203.50 +- 2.21 (n=4)   on 195.62 +- 7.86 (n=4)   t=-0.96 p=0.397
+xp_h     off 5273.88 +- 177.12 (n=4)   on 5267.75 +- 499.75 (n=4)   t=-0.01 p=0.991
+rec_pct  off 56.54 +- 3.40 (n=4)   on 57.99 +- 3.12 (n=4)   t=0.31 p=0.765
+town_pct off 23.70 +- 3.28 (n=4)   on 25.79 +- 2.42 (n=4)   t=0.51 p=0.628
+farm_pct off 19.13 +- 0.71 (n=4)   on 15.60 +- 1.27 (n=4)   t=-2.43 p=0.062
+trips_h  off 3.88 +- 0.66 (n=4)   on 2.75 +- 0.88 (n=4)   t=-1.03 p=0.348
+deaths   off 0.00 +- 0.00 (n=4)   on 0.00 +- 0.00 (n=4)   t=0.00 p=1.000
