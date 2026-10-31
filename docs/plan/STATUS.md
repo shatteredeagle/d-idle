@@ -89,6 +89,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change m3-routeguard: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 
 ### Recent merges
+- ccd653f 10-31 02:44 `Merge agent/rendergh: get-hit render proof, draft, evidence pack` (rendergh)
 - 9f5bacf 10-31 02:36 `Merge agent/kitgate: recovery kit gate` (kitgate)
 - ee0205e 10-31 02:30 `Merge agent/m1loot: town buy order, gem sale, charm keep rules` (m1-audittests)
 - e57bbc2 10-31 02:24 `Merge agent/andychain: Andariel chain needs research` (m3-andariel)
@@ -98,5 +99,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 895b17c 10-31 01:33 `Merge origin/main into agent/roadmap` (roadmap)
 - 478499f 10-31 01:24 `Merge agent/basicsfix: town-basics fixes` (basicsfix)
 - 0226219 10-31 01:15 `basicsfix: merge origin/main, delta spec early-game-policy, skip_specs false` (-)
-- f62a9f5 10-31 01:15 `Merge agent/xpgap: XP gap A/B knobs and probes` (xpgap)
 <!-- statusgen:end -->

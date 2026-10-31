@@ -2,7 +2,7 @@
 
 ```yaml
 change: rendergh
-status: in-progress
+status: archived
 skip_specs: true
 agent: rendergh
 branch: agent/rendergh
@@ -18,7 +18,7 @@ gates:
   - "upstream tests green on the patched worktree; pr_guard 0 FAIL 0 WARN"
   - "one independent adversarial verifier report attached"
   - "nothing pushed or posted to GitHub"
-merge:
+merge: ccd653f
 result: 'get-hit drawn-frame PR candidate (monsters + merc): differential vs game.exe FUN_004b1280 + FUN_00621810 over 55,089 kind-1 cases / 1,747,580 ticks: 1,488,667 ticks differ before, 0 after; the player path measured (136,651 ticks differ) and left as a limit; patch 57bd4b56 on fix/get-hit-render stacked on eb89646e (base moved to 9006a688: rebase listed); nothing pushed; not verified live'
 ```
 
