@@ -103,6 +103,9 @@ func (f *Fighter) resInput(snap *d2.Snapshot, hs []Target, pack int, skills []re
 	for _, h := range hs {
 		if h.Dist <= fr {
 			in.Hostiles++
+			if h.Champion && !h.Boss {
+				in.ChampionPack = true
+			}
 		}
 	}
 	in.PackDanger = f.packDanger(p, hs)

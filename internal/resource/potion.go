@@ -35,7 +35,20 @@ func Poor(in Input, t Tuning) bool { return in.Gold < t.PoorGold }
 // bossRejuv is the earlier rejuvenation line against a champion/unique/boss pack once committed (SME advice, EXP): a
 // rejuvenation is instant and also restores mana, healing potions are for trash.
 func bossRejuv(in Input, t Tuning, lp int) bool {
-	return in.Hostiles > 0 && in.PackDanger >= 1 && in.Belt.RV > 0 && t.DrinkRejuvBossPct > 0 && lp < t.DrinkRejuvBossPct
+	return in.Hostiles > 0 && in.PackDanger >= 1 && in.Belt.RV > 0 && t.DrinkRejuvBossPct > 0 && lp < t.DrinkRejuvBossPct+championBonus(in, t)
+}
+
+// championEarlyLevel is the character level from which champions stop getting the tightened lines (SME, EXP).
+const championEarlyLevel = 15
+
+// championBonus is the extra life percentage points a champion pack adds to the drink lines: champions have about 3x
+// life and +50% damage and a low-level Normal character has little margin (SME rule of thumb, EXP; knob
+// combat.championEarlyPct). Zero outside Normal, at clvl 15+, without a champion in range, or with Level unknown.
+func championBonus(in Input, t Tuning) int {
+	if !in.ChampionPack || in.Hostiles == 0 || in.Diff != d2.Normal || in.Level <= 0 || in.Level >= championEarlyLevel {
+		return 0
+	}
+	return max(t.ChampionEarlyPct, 0)
 }
 
 // PotionPolicy decides at most one drink. Gap timing (PotionGapMs) is the caller's.
@@ -61,7 +74,7 @@ func PotionPolicy(in Input, t Tuning) PotionDecision {
 		if b.HP > 0 {
 			return PotionDecision{Drink: PotionLife, Best: true, Reason: "life critical, healing"}
 		}
-	case lp < t.DrinkLifePct:
+	case lp < t.DrinkLifePct+championBonus(in, t):
 		if !fight && lp >= t.MinEngageLifePct {
 			break // out of a fight PreEngage/TownTripTrigger decide
 		}

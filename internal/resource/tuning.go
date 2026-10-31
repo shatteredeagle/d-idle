@@ -25,6 +25,7 @@ type Tuning struct {
 	DrinkLifePct      int
 	DrinkRejuvPct     int
 	DrinkRejuvBossPct int
+	ChampionEarlyPct  int // percentage points added to DrinkLifePct and DrinkRejuvBossPct against champions in Normal below championEarlyLevel; 0 = off
 	ChickenPct        int
 	ChickenHell       int
 	DrinkManaPct      int
@@ -139,7 +140,7 @@ func FromEnv(t env.Tuning) Tuning {
 		EngageLifePct: r.EngageLifePct, MinEngageLifePct: r.MinEngageLifePct, RetreatDanger: r.RetreatDanger, HPReserve: r.HPReserve,
 		EconomyManaPct: r.EconomyManaPct, MeleeMinLifePct: r.MeleeMinLifePct, MeleeMaxPack: r.MeleeMaxPack,
 		LowManaWaitMs: r.LowManaWaitMs, WaitMaxSec: r.WaitMaxSec, BackoffMaxSteps: r.BackoffMaxSteps,
-		DrinkLifePct: c.DrinkLifePct, DrinkRejuvPct: c.DrinkRejuvPct, DrinkRejuvBossPct: c.DrinkRejuvBossPct, ChickenPct: c.ChickenPct, ChickenHell: c.ChickenHellPct, DrinkManaPct: c.DrinkManaPct,
+		DrinkLifePct: c.DrinkLifePct, DrinkRejuvPct: c.DrinkRejuvPct, DrinkRejuvBossPct: c.DrinkRejuvBossPct, ChampionEarlyPct: c.ChampionEarlyPct, ChickenPct: c.ChickenPct, ChickenHell: c.ChickenHellPct, DrinkManaPct: c.DrinkManaPct,
 		PoorGold: r.PoorGold, ReserveGold: r.ReserveGold, PotionGoldPct: r.PotionGoldPct, HPFirst: r.HPFirst, MPFirst: r.MPFirst,
 		TripHPMin: r.TripHPMin, TripMPMin: r.TripMPMin, TripMinGold: r.TripMinGold, FutileStep: r.FutileStep, TripHealPct: r.TripHealPct,
 		MercDeadPack: r.MercDeadPack,

@@ -8,6 +8,7 @@ type CombatTuning struct {
 	DrinkLifePct      int // drink a healing potion below this life %
 	DrinkRejuvPct     int // drink a rejuvenation potion below this life %
 	DrinkRejuvBossPct int // same against a champion/boss pack once the fight is on (0 = off)
+	ChampionEarlyPct  int // extra life percentage points on the drink lines against champions in Normal below clvl 15 (0 = off)
 	ChickenPct        int // leave the game at or below this life % (Normal, Nightmare)
 	ChickenHellPct    int // same in Hell
 	DrinkManaPct      int // drink a mana potion below this mana %
@@ -65,7 +66,7 @@ type CombatTuning struct {
 
 func DefaultCombatTuning() CombatTuning {
 	return CombatTuning{
-		DrinkLifePct: 55, DrinkRejuvPct: 35, DrinkRejuvBossPct: 50, ChickenPct: 25, ChickenHellPct: 30, DrinkManaPct: 25, TownPotionMin: 2,
+		DrinkLifePct: 55, DrinkRejuvPct: 35, DrinkRejuvBossPct: 50, ChampionEarlyPct: 10, ChickenPct: 25, ChickenHellPct: 30, DrinkManaPct: 25, TownPotionMin: 2,
 		CrowdN: 8, CrowdPortalPct: 70, CrowdDrinkPct: 65, CrowdAbandonN: 15,
 		PotionGapMs: 1000, RejuvGapMs: 300, ReactionMs: 120, PollMs: 60,
 		TargetQuality: 100, RangeMargin: 3, ClearRadius: 40, FightRadius: 22, MaxTargetSec: 45, NoProgressSec: 12, ClearMaxSec: 180,
@@ -84,6 +85,7 @@ func combatKnobs() []Knob {
 		k("drinkLifePct", "Drink healing potion below", "%", "Life percent that triggers a healing potion.", float64(d.DrinkLifePct), 35, 80, true),
 		k("drinkRejuvPct", "Drink rejuvenation below", "%", "Life percent that triggers a rejuvenation potion.", float64(d.DrinkRejuvPct), 20, 60, true),
 		k("drinkRejuvBossPct", "Drink rejuvenation below (boss)", "%", "Life percent that triggers a rejuvenation potion in a fight against champions, uniques or bosses (danger 1+); 0 = off. SME advice, EXP.", float64(d.DrinkRejuvBossPct), 0, 70, true),
+		k("championEarlyPct", "Champion early extra", "pp", "Percentage points added to the healing potion line and the rejuvenation (boss) line while champions (not bosses) are in range, in Normal below character level 15. Champions have about 3x life and +50% damage. 0 = off. SME rule of thumb, EXP.", float64(d.ChampionEarlyPct), 0, 25, true),
 		k("chickenPct", "Leave game at", "%", "Life percent at or below which the bot leaves the game (Normal, Nightmare).", float64(d.ChickenPct), 15, 45, true),
 		k("chickenHellPct", "Leave game at (Hell)", "%", "Same as chicken, in Hell.", float64(d.ChickenHellPct), 20, 50, true),
 		k("drinkManaPct", "Drink mana potion below", "%", "Mana percent that triggers a mana potion.", float64(d.DrinkManaPct), 5, 60, true),
