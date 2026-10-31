@@ -2,7 +2,7 @@
 
 ```yaml
 change: hitlen
-status: in-progress
+status: archived
 result: 'get-hit length PR candidate: differential vs game.exe FUN_00623f50 + FUN_005539b0: 102,980/110,836 differ before, 0 after; verifier HOLDS WITH LIMITS; patch eb89646e in the clone, nothing pushed; not verified live'
 agent: hitlen
 branch: agent/hitlen
@@ -17,6 +17,7 @@ gates:
   - "upstream tests green on the patched clone; pr_guard 0 FAIL 0 WARN"
   - "one independent adversarial verifier report attached"
   - "nothing pushed or posted to GitHub"
+merge: e1e5ab5
 ```
 
 ## 1. Trace (game.exe 1.14d, addresses only)

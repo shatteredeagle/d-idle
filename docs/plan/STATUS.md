@@ -74,6 +74,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change stream-grid: go test ./cmd/d2dview passes (pub feed fields sanitized)
 
 ### Recent merges
+- e1e5ab5 10-31 00:16 `Merge agent/hitlen` (hitlen)
 - 87096d0 10-31 00:13 `Merge agent/streamfix` (streamfix)
 - 4d9c86e 10-31 00:13 `Merge agent/lutproof` (lutproof)
 - 85b429d 10-30 23:59 `Merge agent/navstall` (navstall)
