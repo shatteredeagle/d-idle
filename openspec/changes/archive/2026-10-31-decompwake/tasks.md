@@ -9,7 +9,7 @@ exclusive: []
 gates:
   - "every rule in the trace doc is tagged V (game.exe read or run under unicorn), V-up, V-d2d, D, S or U with an address or file:line"
   - "the differential runs from upstream's tools/emu and ends with ok (0 differ on monster modes 0..0xf and on the unstunned schedule)"
-merge: PENDING
+merge: ea13c89
 result: "clean negative: game.exe's wake chain (target search under aidist 0x23 = 35, no row sets aidist; no-target cadence 10 / nearest - 10 / 25 or wander 5 when hit or on a door word; scheduler aidel 0 -> 15, +0x2d stunned, skip when an event is pending later; the rally copies a command only) equals d2d's; oracle 85,820 + 55,268 cases, 0 differ; verifier verdict in the doc. Open U: which rooms think, the first think after spawn, a think due during GH. Not verified live; nothing pushed or posted."
 ```
 
