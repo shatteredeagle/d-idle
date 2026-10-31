@@ -47,6 +47,19 @@ Rules: `SHALL` or `MUST` in every requirement (upper case); at least one `#### S
 - `specs/<capability>/spec.md`: delta spec with `## ADDED|MODIFIED|REMOVED|RENAMED Requirements` (a MODIFIED block is the COMPLETE new requirement incl. all scenarios). Only when the job changes a contract.
 - `design.md`: optional, cross-cutting work only.
 
+### When skip_specs is allowed
+
+- Allowed for docs-only changes, tooling and pure refactors.
+- NOT allowed when code under `internal/**` or `cmd/**` changes an observable output: a log line, a counter, an HTTP field, a decision or a timeout. Such a card carries a delta spec.
+- Each `skip_specs: true` proposal states one line `no observable behaviour change: <reason>` in its `## Why`.
+- New behavioural cards carry their delta spec from the propose step, not after the code is written. A delta for a new capability starts with `# <Capability> specification` and a `## Purpose` of at least 50 characters, then `## ADDED Requirements`.
+
+### Commits and archive names
+
+- Non-merge commits on main without a card (coordinator BACKLOG, STATUS and archive edits, mode-only changes) are allowed; changecheck does not check them.
+- A merge MUST name its card: `Merge agent/<id>` or a `Change: <id>` trailer.
+- The archive prefix `YYYY-MM-DD` is the date of the merge commit.
+
 ### The header block (ours; OpenSpec ignores it, V)
 
 First fenced block of tasks.md, language tag `yaml`:

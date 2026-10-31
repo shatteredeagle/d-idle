@@ -47,7 +47,10 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 7 requirements
+- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 3 requirements
+- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 6 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 6 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 7 requirements
@@ -58,7 +61,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 10 requirements
-- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 13 requirements
+- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change basicsfix: go test -short -p 4 ./... and go test -race ./internal/town ./internal/bot pass on the worker host
 - change basicsfix: tools/openspec.sh validate --all --strict passes
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0

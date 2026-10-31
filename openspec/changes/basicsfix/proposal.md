@@ -10,6 +10,6 @@ BASICSAUDIT (docs/basics-audit.md) found town-basics gaps; the user (2026-10-31)
 - `town.potionsFirst` (1) and `town.tpFirstLevel` (4): kit potions (healing to hpFirst, mana to the recovery floor) come first, then the first town portal scroll only at clvl >= 4 and with gold for one left. 0 buys the scroll first.
 - Skipped, left for after XPGAP merges: the second sell-trip door at `bot/goal.go` (same line as XPGAP's povertySellMin edit) and the "no town portal scroll" trip reason under potionsFirst (XPGAP's tpMinGold edit in `tripReasons`).
 
-No gate number of a spec changes: no delta spec (the numbers here are knobs, not contract values in early-game-policy).
+Delta spec: ADDED requirements under early-game-policy (no numeric gate there changes).
 
 Shared code (`internal/town` also serves the Game.exe path): every change is a G1/G2 check item; each has a knob whose 0 restores the old behaviour.

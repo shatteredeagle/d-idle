@@ -6,7 +6,7 @@ status: in-progress
 agent: basicsfix
 branch: agent/basicsfix
 worktree: ~/code/d2lod-wt/basicsfix
-skip_specs: true
+skip_specs: false
 owns:
   - openspec/changes/basicsfix/**
   - internal/town/basicsfix.go
@@ -20,7 +20,7 @@ exclusive: []
 gates:
   - "go test -short -p 4 ./... and go test -race ./internal/town ./internal/bot pass on the worker host"
   - "tools/openspec.sh validate --all --strict passes"
-result: ""
+result: "Offline only (sim rig), not verified live. Follow-ups after XPGAP merges: (1) bot/goal.go:320 else-if: apply povertySellOK (or default povertySellMin 6); (2) town tripReasons: no-portal-scroll reason should also consult tpAllowed."
 ```
 
 - [x] 1 ID scrolls only for likely valuables (idScrollNeed)
