@@ -109,6 +109,7 @@
  "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time.",
+  "Public scrub package A; cutover executed.",
   "Lut Gholein trace.",
   "FreshGameToLevel reset after NewGame, run A/B.",
   "The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.",
@@ -118,8 +119,7 @@
   "Tool fit report.",
   "Lab and lab2 sections.",
   "Sourced cast timing documentation.",
-  "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.",
-  "D2d lab notes."
+  "First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget."
  ],
  "sources": [
   {
@@ -184,8 +184,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793410220,
- "updated": "2026-10-31T01:30Z",
+ "ts": 1793410705,
+ "updated": "2026-10-31T01:38Z",
  "work": [
   {
    "state": "working",
