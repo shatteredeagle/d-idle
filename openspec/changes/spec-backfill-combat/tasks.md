@@ -18,5 +18,5 @@ result: "Delta spec for capability combat-loop written from internal/combat code
 
 ## 1. Work
 
-- [x] 1.1 Delta ADDED Requirements for combat-loop: failed walk tick, no retreat while pinned, no-progress watchdog, each checked against code and test
+- [x] 1.1 Delta ADDED Requirements for combat-loop: failed walk tick, no retreat while pinned, no-progress watchdog, champion caution (card champ, merged), each checked against code and test
 - [x] 1.2 validate --all --strict and changecheck pass

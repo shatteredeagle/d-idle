@@ -4,5 +4,5 @@ Card navstall (2026-10-30) fixed a lockstep hang in the combat loop and carried 
 
 ## What Changes
 
-- New capability `combat-loop` (delta ADDED, applied to openspec/specs/combat-loop/spec.md at merge): failed walk costs a poll tick, no retreat while pinned, fight-loop watchdog.
+- New capability `combat-loop` (delta ADDED, applied to openspec/specs/combat-loop/spec.md at merge): failed walk costs a poll tick, no retreat while pinned, fight-loop watchdog, and the champion caution rules of card champ (group avoid below clvl 8, potion lines +combat.championEarlyPct, champion death label).
 - Specs only; no code is touched.
