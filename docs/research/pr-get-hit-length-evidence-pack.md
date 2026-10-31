@@ -13,7 +13,7 @@
 | Upstream tests + guards | green | test_combat ok; test_game 23 OK rc 0; pr_guard 0 FAIL 0 WARN; presubmit 0 FAIL 2 WARN (answered in the draft) |
 | Unchanged state apart from the claimed field | partial | the 23 scripted `test_game` scenarios and `test_combat` pass unchanged; `tools/d2ddet/pair.sh` NOT run (it runs the lab fork's binary, not before / after upstream trees) |
 | Statistical corroboration | not run | `cmd/d2dcasts2` needs the lab fork's debug verbs on the patched tree; time box. Corroboration only, never the claim |
-| Independent adversarial verification | see below | fresh seed, adversarial cases, hand re-read of `FUN_005539b0` / `FUN_005416b0` and the callers |
+| Independent adversarial verification | HOLDS WITH LIMITS | 25 adversarial cases (negative / huge FHR and speed, frames 0 and 100000, frame edges) + hand re-read of the whole chain; one comment fix amended in, the negative-FHR range stays a disclosed limit (proof doc, verifier section) |
 | One claim per PR | yes | the length only; the decision is PR #134; the block length is listed, not changed |
 | Their rules | yes | fresh clone, branch off upstream/main 32768ddb, author / committer shatteredeagle, no Claude trailer, commit body 3 lines, no tools/ or CI file, template filled, `Agent: Claude Code` |
 | Spacing | one candidate | #134 and #135 open; this is the only new one; push >= 1 h after the last |
@@ -24,7 +24,7 @@ A Sorceress hit by a Carver and staggered: 16 ticks (0.64 s) instead of 8 (0.32 
 
 ## Recommendation
 
-Go for the push and the PR (commit `2648d0be`) once the verifier's findings are fixed or listed, and after #134's review settles if the maintainer prefers one combat PR at a time: the claim is narrow, the differential is against game.exe's own code with zero mismatches, the limits are in the body.
+Go for the push and the PR (commit `a2f4a647`; the verifier's findings are fixed or listed) after #134's review settles if the maintainer prefers one combat PR at a time: the claim is narrow, the differential is against game.exe's own code with zero mismatches, the limits are in the body.
 
 ## Commands (NOT RUN; each needs the user's go)
 

@@ -1,6 +1,6 @@
 # Draft PR body: get-hit length by AnimData speed x (50 + FHR) (agent HITLEN, 2026-10-31)
 
-> status: draft, NOT posted (card hitlen). Proof: docs/research/pr-get-hit-length-proof.md; go / no-go: docs/research/pr-get-hit-length-evidence-pack.md. Branch `fix/get-hit-length` in `~/d2d-lab/pr/hitlen` on the worker host, commit `2648d0be`. Spacing: PR #134 (decision) and #135 (missile damage) are open; this is the one new candidate, at least one hour after the last push. Wait for #134's outcome first if the maintainer asks for a bundle.
+> status: draft, NOT posted (card hitlen). Proof: docs/research/pr-get-hit-length-proof.md; go / no-go: docs/research/pr-get-hit-length-evidence-pack.md. Branch `fix/get-hit-length` in `~/d2d-lab/pr/hitlen` on the worker host, commit `a2f4a647`. Spacing: PR #134 (decision) and #135 (missile damage) are open; this is the one new candidate, at least one hour after the last push. Wait for #134's outcome first if the maintainer asks for a bundle.
 
 The body (their template, comments removed), inside the fence:
 
