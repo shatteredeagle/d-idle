@@ -26,8 +26,8 @@ func TestResourceKnobsRegistered(t *testing.T) {
 			t.Errorf("%s: field default %v, knob default %v", k.Key, v, k.Default)
 		}
 	}
-	if n != 52 {
-		t.Fatalf("%d resource knobs registered, want 52", n)
+	if n != 54 {
+		t.Fatalf("%d resource knobs registered, want 54", n)
 	}
 }
 

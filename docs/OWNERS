@@ -40,3 +40,4 @@ internal/env/tuning_town.go  xpgap  xpgap
 internal/town/chores.go  xpgap  xpgap
 internal/town/shop.go  xpgap  xpgap
 internal/town/town_test.go  xpgap  xpgap
+cmd/d2bot/resource_test.go  xpgap  xpgap

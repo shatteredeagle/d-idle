@@ -16,6 +16,7 @@ owns:
   - internal/town/chores.go
   - internal/town/shop.go
   - internal/town/town_test.go
+  - cmd/d2bot/resource_test.go
   - internal/bot/recoveryxp.go
   - internal/bot/recoveryxp_test.go
   - internal/bot/povertysell_test.go
