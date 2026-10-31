@@ -96,13 +96,13 @@ Between runs.
 - Working on the bot (working)
 - Playing in a party of bots (working)
 - Running the bot on the d2d engine (blocked)
-- Running the bot on the d2d engine (working)
 
 ## What shipped
 
 <details open>
-<summary><b>2026-10-30</b> (48)</summary>
+<summary><b>2026-10-30</b> (49)</summary>
 
+- Lut Gholein trace.
 - FreshGameToLevel reset after NewGame, run A/B.
 - The bot drinks potions between town-portal tries and no longer sweeps into a camped spot.
 - ADR for the d2d primary backend decision.
@@ -110,11 +110,11 @@ Between runs.
 - Survey of Diablo II reimplementation/decompilation projects.
 - Tool fit report.
 - Lab and lab2 sections.
-- Sourced cast timing documentation.
 
 <details>
-<summary>40 more</summary>
+<summary>41 more</summary>
 
+- Sourced cast timing documentation.
 - First-contact greeting no longer burns hover tries, fresh position per click, 3 s interact budget.
 - D2d lab notes.
 - Spec approach evaluation and notes audit.
@@ -398,7 +398,7 @@ Between runs.
 
 ---
 
-Last updated: 2026-10-31 01:20 UTC
+Last updated: 2026-10-31 01:30 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
