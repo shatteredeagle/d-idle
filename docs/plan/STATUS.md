@@ -44,7 +44,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 | [m2-earlybase](../../openspec/changes/m2-earlybase/) | proposed | m2-earlybase | `tools/d2dsoak/baselines-early.json`<br>`docs/d2d-baselines-early.md` | - |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/resource.go`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [m3-routeguard](../../openspec/changes/m3-routeguard/) | proposed | m3-routeguard | `internal/env/tuning_route.go`<br>`internal/env/tuning_boss.go`<br>`internal/bot/routeguard.go`<br>`internal/bot/routeguard_test.go`<br>`docs/knobs.md` | - |
-| [nowall](../../openspec/changes/nowall/) | in-progress | nowall | `internal/bot/stall.go`<br>`internal/bot/stall_test.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/loop.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/supervise.go`<br>`cmd/d2bot/stall_test.go`<br>`internal/env/tuning_bot.go`<br>`docs/knobs.md`<br>`docs/nowall.md` | - |
+| [nowall](../../openspec/changes/nowall/) | in-progress | nowall | `internal/bot/stall.go`<br>`internal/bot/stall_test.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/loop.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/supervise.go`<br>`cmd/d2bot/stall_test.go`<br>`internal/env/tuning_bot.go`<br>`docs/nowall.md` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 26 requirements

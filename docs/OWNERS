@@ -40,5 +40,4 @@ cmd/d2bot/live.go  nowall  nowall
 cmd/d2bot/supervise.go  nowall  nowall
 cmd/d2bot/stall_test.go  nowall  nowall
 internal/env/tuning_bot.go  nowall  nowall
-docs/knobs.md  nowall  nowall
 docs/nowall.md  nowall  nowall

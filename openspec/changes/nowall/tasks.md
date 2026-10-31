@@ -16,7 +16,6 @@ owns:
   - cmd/d2bot/supervise.go
   - cmd/d2bot/stall_test.go
   - internal/env/tuning_bot.go
-  - docs/knobs.md
   - docs/nowall.md
 exclusive: []
 gates:
