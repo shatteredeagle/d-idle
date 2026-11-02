@@ -7,9 +7,13 @@ It is early days. Right now the work is on the part underneath: a bot that plays
 
 _Streams when the bot is running._
 
-## Live now
+## Between runs
 
-- **Fresha**, Sorceress, d2lod (original game): level 12, 111,139 XP, 1,796 kills, 0 deaths, 77 potions drunk, run time 1h 46m. Now: recovering after trouble in Cold Plains, running. Last update 2026-11-02 14:20 UTC.
+No bot is running right now. The last run of each:
+
+- **Fresha**, Sorceress, d2lod (original game): level 13, 113,590 XP, 1,951 kills, 0 deaths, 90 potions drunk, run time 2h 04m. Now: levelling up toward level 17 in Mausoleum, ended. Last update 2026-11-02 14:38 UTC.
+- **Loopy**, Sorceress, d2d: level 4, 7,700 XP, 334 kills, 0 deaths, 13 potions drunk, run time 0h 05m. Now: playing through the early game in Rogue Encampment, ended. Last update 2026-10-31 00:10 UTC.
+- **Soaky**, Sorceress, d2lod (original game): level 15, 195,140 XP, 7,100 kills, 4 deaths, 203 potions drunk, run time 8h 05m. Now: levelling up toward level 22 in Stony Field, ended. Last update 2026-10-30 20:26 UTC.
 
 ## Now building on d2d
 
@@ -88,11 +92,9 @@ Between runs.
 
 **Being worked on:**
 
-- Long unattended test runs (working)
 - Working on the bot (working)
-- Playing in a party of bots (working)
-- Working on the bot (blocked)
-- Running the bot on the d2d engine (blocked)
+- Making the bot easy to set up (working)
+- Building this public status page (working)
 
 ## What shipped
 
@@ -101,7 +103,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-02 14:20 UTC
+Last updated: 2026-11-02 14:45 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

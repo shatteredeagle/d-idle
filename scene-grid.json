@@ -60,53 +60,106 @@
    "sub": "The game layer may start"
   }
  ],
- "last_end": null,
+ "last_end": 1793630280,
  "next_run": null,
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Mausoleum",
    "backend": "d2lod (original game)",
-   "clvl": 12,
+   "clvl": 13,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 1796,
+   "doing": "Levelling up toward level 17",
+   "kills": 1951,
    "name": "Fresha",
-   "potionsUsed": 77,
-   "running": true,
-   "updated": "2026-11-02T14:20Z",
-   "uptime_seconds": 6382,
-   "xp": 111139
+   "potionsUsed": 90,
+   "running": false,
+   "updated": "2026-11-02T14:38Z",
+   "uptime_seconds": 7463,
+   "xp": 113590
+  },
+  {
+   "area": "Rogue Encampment",
+   "backend": "d2d",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Playing through the early game",
+   "kills": 334,
+   "name": "Loopy",
+   "potionsUsed": 13,
+   "running": false,
+   "updated": "2026-10-31T00:10Z",
+   "uptime_seconds": 321,
+   "xp": 7700
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 7100,
+   "name": "Soaky",
+   "potionsUsed": 203,
+   "running": false,
+   "updated": "2026-10-30T20:26Z",
+   "uptime_seconds": 29110,
+   "xp": 195140
   }
  ],
- "runs_state": "running",
+ "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time."
  ],
  "sources": [
   {
-   "area": "Cold Plains",
+   "area": "Mausoleum",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
-   "clvl": 12,
+   "clvl": 13,
    "deaths": 0,
-   "doing": "Recovering after trouble",
+   "doing": "Levelling up toward level 17",
    "id": "fresha-orig",
-   "kills": 1796,
-   "last_seen": 1793629200,
+   "kills": 1951,
+   "last_seen": 1793630280,
    "name": "Fresha",
-   "running": true,
-   "started": 1793622818,
+   "running": false,
+   "started": 1793622817,
+   "testing": false
+  },
+  {
+   "area": "Rogue Encampment",
+   "backend": "d2d",
+   "class": "Sorceress",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Playing through the early game",
+   "id": "loopy-d2d",
+   "kills": 334,
+   "last_seen": 1793405400,
+   "name": "Loopy",
+   "running": false,
+   "started": 1793405079,
+   "testing": false
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "class": "Sorceress",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "id": "soaky-orig",
+   "kills": 7100,
+   "last_seen": 1793391960,
+   "name": "Soaky",
+   "running": false,
+   "started": 1793362850,
    "testing": false
   }
  ],
  "stats": {
-  "items": [
-   {
-    "label": "d2lod (original game), 1,796 kills, 0 deaths",
-    "value": "Fresha lvl 12"
-   }
-  ],
-  "live": true
+  "items": [],
+  "live": false
  },
  "tagline": "say it: die dull",
  "timing": {
@@ -120,24 +173,20 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793629237,
- "updated": "2026-11-02T14:20Z",
+ "ts": 1793630705,
+ "updated": "2026-11-02T14:45Z",
  "work": [
   {
    "state": "working",
-   "task": "Long unattended test runs"
-  },
-  {
-   "state": "working",
    "task": "Working on the bot"
   },
   {
    "state": "working",
-   "task": "Playing in a party of bots"
+   "task": "Making the bot easy to set up"
   },
   {
-   "state": "blocked",
-   "task": "Working on the bot"
+   "state": "working",
+   "task": "Building this public status page"
   }
  ]
 }
