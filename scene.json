@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
    "clvl": 5,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 366,
+   "doing": "Clearing the Den of Evil",
+   "kills": 419,
    "name": "Freshb",
-   "potionsUsed": 22,
+   "potionsUsed": 24,
    "running": true,
-   "updated": "2026-11-02T08:05Z",
-   "uptime_seconds": 3565,
-   "xp": 10300
+   "updated": "2026-11-02T08:10Z",
+   "uptime_seconds": 3865,
+   "xp": 11560
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 366 kills, 0 deaths",
+    "label": "d2lod (original game), 419 kills, 0 deaths",
     "value": "Freshb lvl 5"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793606765,
- "updated": "2026-11-02T08:06Z",
+ "ts": 1793607065,
+ "updated": "2026-11-02T08:11Z",
  "work": [
   {
    "state": "working",
