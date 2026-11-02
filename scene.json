@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cave",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
-   "clvl": 6,
+   "clvl": 7,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 743,
+   "kills": 784,
    "name": "Freshb",
-   "potionsUsed": 50,
+   "potionsUsed": 54,
    "running": true,
-   "updated": "2026-11-02T08:49Z",
-   "uptime_seconds": 6206,
-   "xp": 21558
+   "updated": "2026-11-02T08:54Z",
+   "uptime_seconds": 6506,
+   "xp": 22906
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 743 kills, 0 deaths",
-    "value": "Freshb lvl 6"
+    "label": "d2lod (original game), 784 kills, 0 deaths",
+    "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793609405,
- "updated": "2026-11-02T08:50Z",
+ "ts": 1793609705,
+ "updated": "2026-11-02T08:55Z",
  "work": [
   {
    "state": "working",
