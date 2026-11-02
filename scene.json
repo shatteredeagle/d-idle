@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Crypt",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Shopping and tidying up in town",
-   "kills": 316,
+   "doing": "Levelling up toward level 17",
+   "kills": 338,
    "name": "Fresha",
    "potionsUsed": 3,
    "running": true,
-   "updated": "2026-11-02T11:20Z",
-   "uptime_seconds": 3140,
-   "xp": 95904
+   "updated": "2026-11-02T11:25Z",
+   "uptime_seconds": 3441,
+   "xp": 95929
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 316 kills, 0 deaths",
+    "label": "d2lod (original game), 338 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793618432,
- "updated": "2026-11-02T11:20Z",
+ "ts": 1793618748,
+ "updated": "2026-11-02T11:25Z",
  "work": [
   {
    "state": "working",
