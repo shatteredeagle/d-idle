@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- bundlefinal2: final bundle rebased onto upstream PR 176, Smite component added, CodeRabbit ground-roll comment folded in
 - verifyzerohit: independent verification of the zero-damage hit trace; game side V run, d2d read only, no PR candidate
 - Barbarian skill trace (docs/research/skbarb-trace.md) and emulator runs tools/emu/skbarb_*; coverage skills.bar 0 of 30 to 30 of 30 (calc and physical aspect).
 - Amazon skill trace (docs/research/skamazon-trace.md) and emulator tools tools/emu/ama_*; coverage skills.ama 0 of 30 to 30 of 30 (calc aspect, 8 rows with the roll deviation), missiles 12, 28, 40, 41, 85, 87, 205, 206.
