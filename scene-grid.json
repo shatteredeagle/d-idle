@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Den of Evil",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "clvl": 5,
    "deaths": 0,
-   "doing": "Clearing the Den of Evil",
-   "kills": 419,
+   "doing": "Recovering after trouble",
+   "kills": 459,
    "name": "Freshb",
-   "potionsUsed": 24,
+   "potionsUsed": 30,
    "running": true,
-   "updated": "2026-11-02T08:10Z",
-   "uptime_seconds": 3865,
-   "xp": 11560
+   "updated": "2026-11-02T08:14Z",
+   "uptime_seconds": 4105,
+   "xp": 12957
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Den of Evil",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 5,
    "deaths": 0,
-   "doing": "Clearing the Den of Evil",
+   "doing": "Recovering after trouble",
    "id": "freshb-orig",
-   "kills": 419,
-   "last_seen": 1793607000,
+   "kills": 459,
+   "last_seen": 1793607240,
    "name": "Freshb",
    "running": true,
    "started": 1793603135,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 419 kills, 0 deaths",
+    "label": "d2lod (original game), 459 kills, 0 deaths",
     "value": "Freshb lvl 5"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793607065,
- "updated": "2026-11-02T08:11Z",
+ "ts": 1793607305,
+ "updated": "2026-11-02T08:15Z",
  "work": [
   {
    "state": "working",
