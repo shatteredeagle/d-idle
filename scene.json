@@ -24,13 +24,13 @@
    "clvl": 6,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 670,
+   "kills": 729,
    "name": "Freshb",
-   "potionsUsed": 43,
+   "potionsUsed": 49,
    "running": true,
-   "updated": "2026-11-02T08:39Z",
-   "uptime_seconds": 5606,
-   "xp": 19252
+   "updated": "2026-11-02T08:44Z",
+   "uptime_seconds": 5906,
+   "xp": 21076
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 670 kills, 0 deaths",
+    "label": "d2lod (original game), 729 kills, 0 deaths",
     "value": "Freshb lvl 6"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793608812,
- "updated": "2026-11-02T08:40Z",
+ "ts": 1793609127,
+ "updated": "2026-11-02T08:45Z",
  "work": [
   {
    "state": "working",
