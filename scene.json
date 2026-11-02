@@ -19,59 +19,36 @@
  ],
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Blood Moor",
    "backend": "d2lod (original game)",
-   "clvl": 12,
+   "clvl": 2,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
-   "kills": 3366,
-   "name": "Fresha",
-   "potionsUsed": 70,
-   "running": false,
-   "updated": "2026-11-02T05:13Z",
-   "uptime_seconds": 7474,
-   "xp": 93771
-  },
-  {
-   "area": "Rogue Encampment",
-   "backend": "d2d",
-   "clvl": 4,
-   "deaths": 0,
-   "doing": "Playing through the early game",
-   "kills": 334,
-   "name": "Loopy",
-   "potionsUsed": 13,
-   "running": false,
-   "updated": "2026-10-31T00:10Z",
-   "uptime_seconds": 321,
-   "xp": 7700
-  },
-  {
-   "area": "Stony Field",
-   "backend": "d2lod (original game)",
-   "clvl": 15,
-   "deaths": 4,
-   "doing": "Levelling up toward level 22",
-   "kills": 7100,
-   "name": "Soaky",
-   "potionsUsed": 203,
-   "running": false,
-   "updated": "2026-10-30T20:26Z",
-   "uptime_seconds": 29110,
-   "xp": 195140
+   "doing": "Recovering after trouble",
+   "kills": 35,
+   "name": "Freshb",
+   "potionsUsed": 0,
+   "running": true,
+   "updated": "2026-11-02T07:10Z",
+   "uptime_seconds": 261,
+   "xp": 756
   }
  ],
- "runs_state": "between",
+ "runs_state": "running",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time."
  ],
  "stats": {
-  "items": [],
-  "live": false
+  "items": [
+   {
+    "label": "d2lod (original game), 35 kills, 0 deaths",
+    "value": "Freshb lvl 2"
+   }
+  ],
+  "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793603161,
- "updated": "2026-11-02T07:06Z",
+ "ts": 1793603448,
+ "updated": "2026-11-02T07:10Z",
  "work": [
   {
    "state": "working",
