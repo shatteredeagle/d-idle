@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Stony Field",
+   "area": "Cave",
    "backend": "d2lod (original game)",
    "clvl": 6,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 729,
+   "kills": 743,
    "name": "Freshb",
-   "potionsUsed": 49,
+   "potionsUsed": 50,
    "running": true,
-   "updated": "2026-11-02T08:44Z",
-   "uptime_seconds": 5906,
-   "xp": 21076
+   "updated": "2026-11-02T08:49Z",
+   "uptime_seconds": 6206,
+   "xp": 21558
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Stony Field",
+   "area": "Cave",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 6,
    "deaths": 0,
    "doing": "Recovering after trouble",
    "id": "freshb-orig",
-   "kills": 729,
-   "last_seen": 1793609040,
+   "kills": 743,
+   "last_seen": 1793609340,
    "name": "Freshb",
    "running": true,
    "started": 1793603134,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 729 kills, 0 deaths",
+    "label": "d2lod (original game), 743 kills, 0 deaths",
     "value": "Freshb lvl 6"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793609127,
- "updated": "2026-11-02T08:45Z",
+ "ts": 1793609405,
+ "updated": "2026-11-02T08:50Z",
  "work": [
   {
    "state": "working",
