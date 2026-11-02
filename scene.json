@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Mausoleum",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
    "doing": "Levelling up toward level 17",
-   "kills": 1271,
+   "kills": 1293,
    "name": "Fresha",
-   "potionsUsed": 28,
+   "potionsUsed": 33,
    "running": true,
-   "updated": "2026-11-02T13:25Z",
-   "uptime_seconds": 3081,
-   "xp": 101884
+   "updated": "2026-11-02T13:29Z",
+   "uptime_seconds": 3321,
+   "xp": 102972
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,271 kills, 0 deaths",
+    "label": "d2lod (original game), 1,293 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793625941,
- "updated": "2026-11-02T13:25Z",
+ "ts": 1793626205,
+ "updated": "2026-11-02T13:30Z",
  "work": [
   {
    "state": "working",
