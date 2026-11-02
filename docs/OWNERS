@@ -1,5 +1,7 @@
 
 internal/**           main  -
+docs/research/covarmor.md  covarmor  covarmor
+openspec/changes/covarmor/**  covarmor  covarmor
 cmd/**                main  -
 tools/**              main  -
 deploy/**             main  -
