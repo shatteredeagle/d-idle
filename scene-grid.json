@@ -173,8 +173,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793598948,
- "updated": "2026-11-02T05:55Z",
+ "ts": 1793600136,
+ "updated": "2026-11-02T06:15Z",
  "work": [
   {
    "state": "working",
@@ -190,7 +190,7 @@
   },
   {
    "state": "working",
-   "task": "Goals, quests and levelling"
+   "task": "Fighting and staying alive"
   }
  ]
 }
