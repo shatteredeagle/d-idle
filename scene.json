@@ -27,28 +27,51 @@
    "kills": 1369,
    "name": "Freshb",
    "potionsUsed": 89,
-   "running": true,
+   "running": false,
    "updated": "2026-11-02T10:10Z",
    "uptime_seconds": 11069,
    "xp": 40707
+  },
+  {
+   "area": "Rogue Encampment",
+   "backend": "d2d",
+   "clvl": 4,
+   "deaths": 0,
+   "doing": "Playing through the early game",
+   "kills": 334,
+   "name": "Loopy",
+   "potionsUsed": 13,
+   "running": false,
+   "updated": "2026-10-31T00:10Z",
+   "uptime_seconds": 321,
+   "xp": 7700
+  },
+  {
+   "area": "Stony Field",
+   "backend": "d2lod (original game)",
+   "clvl": 15,
+   "deaths": 4,
+   "doing": "Levelling up toward level 22",
+   "kills": 7100,
+   "name": "Soaky",
+   "potionsUsed": 203,
+   "running": false,
+   "updated": "2026-10-30T20:26Z",
+   "uptime_seconds": 29110,
+   "xp": 195140
   }
  ],
- "runs_state": "running",
+ "runs_state": "between",
  "shipped": [
   "Now building on d2d: an open-source engine, running the bot headless at 22 to 33x real time."
  ],
  "stats": {
-  "items": [
-   {
-    "label": "d2lod (original game), 1,369 kills, 0 deaths",
-    "value": "Freshb lvl 8"
-   }
-  ],
-  "live": true
+  "items": [],
+  "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793614256,
- "updated": "2026-11-02T10:10Z",
+ "ts": 1793614548,
+ "updated": "2026-11-02T10:15Z",
  "work": [
   {
    "state": "working",
