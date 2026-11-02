@@ -69,13 +69,13 @@
    "clvl": 12,
    "deaths": 0,
    "doing": "Levelling up toward level 17",
-   "kills": 916,
+   "kills": 941,
    "name": "Fresha",
    "potionsUsed": 0,
    "running": true,
-   "updated": "2026-11-02T12:35Z",
-   "uptime_seconds": 79,
-   "xp": 93773
+   "updated": "2026-11-02T12:40Z",
+   "uptime_seconds": 379,
+   "xp": 94222
   }
  ],
  "runs_state": "running",
@@ -91,8 +91,8 @@
    "deaths": 0,
    "doing": "Levelling up toward level 17",
    "id": "fresha-orig",
-   "kills": 916,
-   "last_seen": 1793622900,
+   "kills": 941,
+   "last_seen": 1793623200,
    "name": "Fresha",
    "running": true,
    "started": 1793622821,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 916 kills, 0 deaths",
+    "label": "d2lod (original game), 941 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793622948,
- "updated": "2026-11-02T12:35Z",
+ "ts": 1793623248,
+ "updated": "2026-11-02T12:40Z",
  "work": [
   {
    "state": "working",
