@@ -130,6 +130,7 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - change wpcooldown: go test -p 1 ./internal/nav ./internal/env; changecheck -cli 0 warnings; leakcheck -mode fail 0
 
 ### Recent merges
+- 4290f37f 11-02 16:28 `merge origin/main into crfixbundle2` (crfixbundle2)
 - 873fd1a6 11-02 16:21 `Merge agent/verifyzerohit: verifyzerohit: coverage-gap or verification result (docs and emulator tools only)` (verifyzerohit)
 - 3f184c0d 11-02 16:21 `merge origin/main into verifyzerohit` (verifyzerohit)
 - 0f4feb76 11-02 16:14 `Merge agent/skbarb: skbarb: coverage-gap or verification result (docs and emulator tools only)` (skbarb)
@@ -139,5 +140,4 @@ One page for the user. Decisions: [../decisions.md](../decisions.md) and [../adr
 - 2f99299e 11-02 15:58 `Merge agent/levelsareas: levelsareas: coverage-gap or verification result (docs and emulator tools only)` (levelsareas)
 - f75f9c72 11-02 15:58 `merge origin/main into levelsareas` (levelsareas)
 - 5c44a788 11-02 15:55 `Merge agent/itemweapons: itemweapons: coverage-gap or verification result (docs and emulator tools only)` (itemweapons)
-- 02e57da8 11-02 15:54 `merge origin/main into itemweapons` (itemweapons)
 <!-- statusgen:end -->
