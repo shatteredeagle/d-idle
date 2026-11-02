@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Stony Field",
    "backend": "d2lod (original game)",
    "clvl": 6,
    "deaths": 0,
-   "doing": "Shopping and tidying up in town",
-   "kills": 643,
+   "doing": "Recovering after trouble",
+   "kills": 670,
    "name": "Freshb",
-   "potionsUsed": 40,
+   "potionsUsed": 43,
    "running": true,
-   "updated": "2026-11-02T08:35Z",
-   "uptime_seconds": 5366,
-   "xp": 18239
+   "updated": "2026-11-02T08:39Z",
+   "uptime_seconds": 5606,
+   "xp": 19252
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 643 kills, 0 deaths",
+    "label": "d2lod (original game), 670 kills, 0 deaths",
     "value": "Freshb lvl 6"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793608548,
- "updated": "2026-11-02T08:35Z",
+ "ts": 1793608812,
+ "updated": "2026-11-02T08:40Z",
  "work": [
   {
    "state": "working",
