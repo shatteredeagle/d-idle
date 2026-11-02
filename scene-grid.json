@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
-   "clvl": 3,
+   "clvl": 6,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 159,
+   "doing": "Playing through the early game",
+   "kills": 595,
    "name": "Freshc",
-   "potionsUsed": 0,
+   "potionsUsed": 44,
    "running": true,
-   "updated": "2026-11-02T16:40Z",
-   "uptime_seconds": 1283,
-   "xp": 3613
+   "updated": "2026-11-02T17:59Z",
+   "uptime_seconds": 6028,
+   "xp": 16508
   }
  ],
  "runs_state": "running",
@@ -84,26 +84,26 @@
  ],
  "sources": [
   {
-   "area": "Blood Moor",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
-   "clvl": 3,
+   "clvl": 6,
    "deaths": 0,
-   "doing": "Recovering after trouble",
+   "doing": "Playing through the early game",
    "id": "freshc-orig",
-   "kills": 159,
-   "last_seen": 1793637600,
+   "kills": 595,
+   "last_seen": 1793642340,
    "name": "Freshc",
    "running": true,
-   "started": 1793636317,
+   "started": 1793636312,
    "testing": false
   }
  ],
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 159 kills, 0 deaths",
-    "value": "Freshc lvl 3"
+    "label": "d2lod (original game), 595 kills, 0 deaths",
+    "value": "Freshc lvl 6"
    }
   ],
   "live": true
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793637622,
- "updated": "2026-11-02T16:40Z",
+ "ts": 1793642408,
+ "updated": "2026-11-02T18:00Z",
  "work": [
   {
    "state": "working",
