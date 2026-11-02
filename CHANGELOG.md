@@ -8,6 +8,14 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- verifyzerohit: independent verification of the zero-damage hit trace; game side V run, d2d read only, no PR candidate
+- Barbarian skill trace (docs/research/skbarb-trace.md) and emulator runs tools/emu/skbarb_*; coverage skills.bar 0 of 30 to 30 of 30 (calc and physical aspect).
+- Amazon skill trace (docs/research/skamazon-trace.md) and emulator tools tools/emu/ama_*; coverage skills.ama 0 of 30 to 30 of 30 (calc aspect, 8 rows with the roll deviation), missiles 12, 28, 40, 41, 85, 87, 205, 206.
+- levelsareas: area-level rows of Levels.txt compared with game.exe (1,088 cases, 0 differences); trace docs/research/levelsareas-trace.md
+- docs: itemweapons first-pass trace (docs/research/itemweapons-trace.md).
+- Assassin skills first-pass trace (table-derived, no ledger rows)
+- skdruid: docs/research/skdruid-trace.md, Druid calc differential 0 of 27,800 cases (tools/emu/skdruid_*)
+- Docs: branch triage of the 15 unmerged local agent branches (docs/research/branch-triage-20261102.md).
 - crfixbundle: bundle 3 (CodeRabbit review fixes: charge-repair base, confidence tags, ground-roll comparison) and the judged comments
 - Added docs/research/pr-smite-block-draft.md and tools/emu/sbp_*: the Smite-block upstream candidate built on the private fork with a counted differential against game.exe.
 - Independent verification of the Teleport room rule (docs/research/verify-teleport-room.md, tools/emu/vt_*)

@@ -1,0 +1,3 @@
+BACKLOG: verifyzerohit: SKZEROHIT verified with an own harness (game.exe FUN_0057cee0 / FUN_0057cb00 / enchant walk / FUN_005a29a0 run, 3 seeds, 0 differences): zero-damage hit keeps knockback, no get-hit unless stunned, Lightning Enchanted bolts on a no-recovery hit; first pass wrong on 0x5c and d2d bolts, both passes miss the state 0x36 gate, special classes and the bit 0x100 clear; event 2 = dispatch entry 7 of 0x6e2490; ledger row missiles 195 READ-ONLY earned with a note; docs/research/verifyzerohit.md
+INDEX: docs/research/verifyzerohit.md: independent verifier of SKZEROHIT (both passes, own emulator harness, claim verdicts)
+CHANGELOG: verifyzerohit: independent verification of the zero-damage hit trace; game side V run, d2d read only, no PR candidate

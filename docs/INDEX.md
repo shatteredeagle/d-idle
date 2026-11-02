@@ -261,3 +261,11 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/verify-teleport-room.md - independent check of the Teleport room rule (card verifytele)
 - docs/research/pr-smite-block-draft.md - draft PR text, a block no longer stops Smite (private, on hold)
 - docs/research/crfix-bundle-20261102.md: CodeRabbit comments on staging PR 2, verdicts, reply texts, #176 merge probe (card crfixbundle)
+- docs/research/branch-triage-20261102.md | Triage of the local agent branches not on main: verdict, reason and merge or delete command per branch
+- docs/research/skdruid-trace.md | Druid skills 221..250 calc cells by game.exe vs d2d, summon caps (skdruid)
+- docs/research/skassassin-trace.md - Assassin skills table decomposition, first pass
+- docs/research/itemweapons-trace.md: weapon base table facts (306 rows), plan for damage and speed differential
+- docs/research/levelsareas-trace.md - Levels.txt area level: game.exe FUN_0061dca0 vs d2d columns, 1,088 cases equal, census, drill recipe
+- docs/research/skamazon-trace.md: Amazon skills (Jab, Strafe, Fend, Multiple Shot, arrows, javelins, passives, Decoy, Valkyrie): game.exe vs d2d vs bot; calc differential 27,800 cases 0 differ, elemental arrow roll D1 118,000 cases, Pierce D2 (card skamazon)
+- docs/research/skbarb-trace.md: Barbarian skills (Bash family, Whirlwind, Frenzy, Howl, war cries, masteries): game.exe vs d2d vs bot; calc and physical differential 27,800 cases 0 differ, deviations D1-D7 (card skbarb)
+- docs/research/verifyzerohit.md: independent verifier of SKZEROHIT (both passes, own emulator harness, claim verdicts)
