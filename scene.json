@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 784,
+   "doing": "Clearing the Den of Evil",
+   "kills": 827,
    "name": "Freshb",
-   "potionsUsed": 54,
+   "potionsUsed": 57,
    "running": true,
-   "updated": "2026-11-02T08:54Z",
-   "uptime_seconds": 6506,
-   "xp": 22906
+   "updated": "2026-11-02T09:00Z",
+   "uptime_seconds": 6867,
+   "xp": 23796
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 784 kills, 0 deaths",
+    "label": "d2lod (original game), 827 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793609705,
- "updated": "2026-11-02T08:55Z",
+ "ts": 1793610065,
+ "updated": "2026-11-02T09:01Z",
  "work": [
   {
    "state": "working",
