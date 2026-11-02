@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Stony Field",
+   "area": "Cave",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
    "doing": "Levelling up toward level 17",
-   "kills": 1167,
+   "kills": 1171,
    "name": "Fresha",
-   "potionsUsed": 21,
+   "potionsUsed": 22,
    "running": true,
-   "updated": "2026-11-02T13:10Z",
-   "uptime_seconds": 2180,
-   "xp": 101593
+   "updated": "2026-11-02T13:15Z",
+   "uptime_seconds": 2480,
+   "xp": 101685
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,167 kills, 0 deaths",
+    "label": "d2lod (original game), 1,171 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793625065,
- "updated": "2026-11-02T13:11Z",
+ "ts": 1793625340,
+ "updated": "2026-11-02T13:15Z",
  "work": [
   {
    "state": "working",
