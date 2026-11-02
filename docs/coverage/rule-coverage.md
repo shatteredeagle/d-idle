@@ -20,16 +20,16 @@ Each subsystem is a fixed set of rows taken from the game's own data tables (`de
 | monster.stats (monster base stats per class (life, defence, damage, exp, resists)) | 734 | 0 | 734 | 0 | 0 | 0 | 100% | 100% | 242,220 |
 | monster.flags (undead and demon bits per class (one aspect of the flags)) | 734 | 734 | 0 | 0 | 0 | 0 | 100% | 100% | 734 |
 | monster.ai (monster AI types) | 146 | 11 | 9 | 5 | 0 | 121 | 14% | 17% | 139,830 |
-| states (states and auras) | 185 | 0 | 6 | 4 | 0 | 175 | 3% | 5% | 558,147 |
+| states (states and auras) | 185 | 1 | 7 | 4 | 0 | 173 | 4% | 6% | 656,743 |
 | itemtypes (item types) | 98 | 0 | 0 | 0 | 0 | 98 | 0% | 0% | 0 |
 | items.armor (armor bases) | 202 | 0 | 0 | 0 | 0 | 202 | 0% | 0% | 0 |
 | items.weapons (weapon bases) | 306 | 0 | 0 | 0 | 0 | 306 | 0% | 0% | 0 |
 | treasure (drops: treasure classes) | 852 | 850 | 0 | 0 | 0 | 2 | 100% | 100% | 100,000 |
 | levels (areas) | 137 | 136 | 0 | 0 | 0 | 1 | 99% | 99% | 1,088 |
 | formulas (damage, resist and rate formulas (hand-listed rule set)) | 18 | 3 | 12 | 2 | 0 | 1 | 83% | 94% | 2,410,944 |
-| **total** | **4910** | **2227** | **936** | **53** | **0** | **1694** | **64%** | **65%** | **5,717,511** |
+| **total** | **4910** | **2228** | **937** | **53** | **0** | **1692** | **64%** | **66%** | **5,816,107** |
 
-Excluding the single-aspect subsystems (`skillfx.*`, `monster.flags`), which test one property across many rows and so reach 100% easily: 3719 rows, run-tested 1972 (53%), compared 2025 (54%), read-only 53, untested 1694.
+Excluding the single-aspect subsystems (`skillfx.*`, `monster.flags`), which test one property across many rows and so reach 100% easily: 3719 rows, run-tested 1974 (53%), compared 2027 (55%), read-only 53, untested 1692.
 
 Case counts add the cases of every ledger line; one differential that covers many rows counts once per line that cites it, so the column is an effort figure, not a unique-case total.
 
@@ -91,6 +91,8 @@ Case counts add the cases of every ledger line; one differential that covers man
 | states | 20,30,88 | READ-ONLY | `docs/research/sk-armor-trace.md` | - | 2026-11-01 | chillingarmor, energyshield, shiverarmor read |
 | states | 61,28 | TESTED-DEVIATION | `docs/research/sk-resist-trace.md` | 147,628 | 2026-11-01 | lowerresist and conviction on an immune D1 (negative change / 5) |
 | states | 86 | READ-ONLY | `docs/research/sk-lightning-trace.md` | - | 2026-11-01 | justhit (NextHit) read; D1 model only |
+| states | 21 | TESTED-0-DIFF | `docs/research/verifycovstates-trace.md` | 38,596 | 2026-11-02 | stunned FUN_0057aae0 monster path vs the real d2d Fight::land, own harness and real MonStats rows, seeds 9001 and 77 (25567 + 13029 cases, 0 differ in the stun end; seed use D2 differs); offsets +0xc / +0x32 of the MonStats row are S not re-derived; VERIFYCOVSTATES |
+| states | 2 | TESTED-DEVIATION | `docs/research/verifycovstates-trace.md` | 60,000 | 2026-11-02 | poison FUN_0057ac50 replacement vs the real d2d Fight::land D1 both directions (5417 of 39994 and 2726 of 19998; whole-point rates 0 differ); VERIFYCOVSTATES |
 | treasure | #850 | TESTED-0-DIFF | `docs/research/treasure-trace.md` | 100,000 | 2026-11-01 | class entries (1,012 of 1,012) and rolls (picks, NoDrop by players, item and quality, gold) game.exe vs the real d2d drop code; Act 1 and 2 monster and chest classes in detail; ROP (N) and ROP (H) unique item entries not compared |
 | levels | 1-136 | TESTED-0-DIFF | `docs/research/levelsareas-trace.md` | 1,088 | 2026-11-02 | area monster level only: game.exe FUN_0061dca0 run natively equals the Levels columns d2d holds, ids 1..136 x difficulty 0..3 x expansion 0/1; density, uniques, spawn counts untested; LEVELSAREAS |
 | formulas | F01 | TESTED-0-DIFF | `docs/research/sk-melee2-trace.md` | 100,000 | 2026-11-01 | melee to-hit, real build, two seeds |
@@ -122,7 +124,7 @@ Hand-ranked in `gaps.tsv` from the class plans (`docs/classes`) and the work boa
 | 4 | levels | untested (1 of 137) | Area spawn density, teleport and layout rules gate every act; risk map ranks 2 and 11; spawn density was compared for 4 levels upstream, not entered per row | `docs/research/spawn-density-trace.md` |
 | 6 | skills.pal | untested (15 of 30) | Paladin is the second-ranked class (Hammerdin): Holy Shield, Zeal, Charge, Vengeance and the resist auras are untouched | `docs/classes/ranking.md` |
 | 8 | skills.ass | untested (30 of 30) | Assassin plan (Lightning Sentry traps): trap and sentry pipeline untouched | `docs/classes/ranking.md` |
-| 9 | states | untested (175 of 185) | Remaining states and auras (curses, shrines, poison, stun) alter damage taken | `docs/research/sorc-skill-matrix.md` |
+| 9 | states | untested (173 of 185) | Remaining states and auras (curses, shrines, poison, stun) alter damage taken | `docs/research/sorc-skill-matrix.md` |
 | 10 | itemtypes | untested (98 of 98) | Item type rules (repair, stack, belt, socket) feed vendor and pickit; only the price and repair gate were differenced | `docs/research/price-trace.md` |
 
 ## Limits of this measure

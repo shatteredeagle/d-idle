@@ -26,6 +26,8 @@ states	10	TESTED-DEVIATION	docs/research/sk-armor-trace.md	184771	2026-11-01	fro
 states	20,30,88	READ-ONLY	docs/research/sk-armor-trace.md		2026-11-01	chillingarmor, energyshield, shiverarmor read
 states	61,28	TESTED-DEVIATION	docs/research/sk-resist-trace.md	147628	2026-11-01	lowerresist and conviction on an immune D1 (negative change / 5)
 states	86	READ-ONLY	docs/research/sk-lightning-trace.md		2026-11-01	justhit (NextHit) read; D1 model only
+states	21	TESTED-0-DIFF	docs/research/verifycovstates-trace.md	38596	2026-11-02	stunned FUN_0057aae0 monster path vs the real d2d Fight::land, own harness and real MonStats rows, seeds 9001 and 77 (25567 + 13029 cases, 0 differ in the stun end; seed use D2 differs); offsets +0xc / +0x32 of the MonStats row are S not re-derived; VERIFYCOVSTATES
+states	2	TESTED-DEVIATION	docs/research/verifycovstates-trace.md	60000	2026-11-02	poison FUN_0057ac50 replacement vs the real d2d Fight::land D1 both directions (5417 of 39994 and 2726 of 19998; whole-point rates 0 differ); VERIFYCOVSTATES
 formulas	F01	TESTED-0-DIFF	docs/research/sk-melee2-trace.md	100000	2026-11-01	melee to-hit, real build, two seeds
 formulas	F03	TESTED-DEVIATION	docs/research/sk-melee2-trace.md	100000	2026-11-01	physical kept in 256ths D1 (and missile physical, docs/research/skabrecheck.md)
 formulas	F04	TESTED-DEVIATION	docs/research/sk-resist-trace.md	147628	2026-11-01	resist, pierce, immunity: D1 curse on an immune; pierce under 100, floor -100 equal; defender side (player, hireling) docs/research/skdefenders-trace.md: 222,464 cases rule check on game.exe 0 mismatches, penalty and cap equal d2d, D1 flat order D2 no magic resistance D3 no absorb
