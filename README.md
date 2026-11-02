@@ -9,7 +9,7 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Freshb**, Sorceress, d2lod (original game): level 7, 29,939 XP, 1,021 kills, 0 deaths, 64 potions drunk, run time 2h 24m. Now: recovering after trouble in Blood Moor, running. Last update 2026-11-02 09:30 UTC.
+- **Freshb**, Sorceress, d2lod (original game): level 7, 31,084 XP, 1,074 kills, 0 deaths, 69 potions drunk, run time 2h 29m. Now: recovering after trouble in Cold Plains, running. Last update 2026-11-02 09:35 UTC.
 
 ## Now building on d2d
 
@@ -101,7 +101,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-02 09:31 UTC
+Last updated: 2026-11-02 09:35 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

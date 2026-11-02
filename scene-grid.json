@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 1021,
+   "kills": 1074,
    "name": "Freshb",
-   "potionsUsed": 64,
+   "potionsUsed": 69,
    "running": true,
-   "updated": "2026-11-02T09:30Z",
-   "uptime_seconds": 8667,
-   "xp": 29939
+   "updated": "2026-11-02T09:35Z",
+   "uptime_seconds": 8968,
+   "xp": 31084
   }
  ],
  "runs_state": "running",
@@ -84,25 +84,25 @@
  ],
  "sources": [
   {
-   "area": "Blood Moor",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 7,
    "deaths": 0,
    "doing": "Recovering after trouble",
    "id": "freshb-orig",
-   "kills": 1021,
-   "last_seen": 1793611800,
+   "kills": 1074,
+   "last_seen": 1793612100,
    "name": "Freshb",
    "running": true,
-   "started": 1793603133,
+   "started": 1793603132,
    "testing": false
   }
  ],
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,021 kills, 0 deaths",
+    "label": "d2lod (original game), 1,074 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793611865,
- "updated": "2026-11-02T09:31Z",
+ "ts": 1793612148,
+ "updated": "2026-11-02T09:35Z",
  "work": [
   {
    "state": "working",
