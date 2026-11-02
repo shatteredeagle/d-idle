@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Blood Moor",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Playing through the early game",
-   "kills": 845,
+   "doing": "Levelling up toward level 9",
+   "kills": 867,
    "name": "Freshb",
    "potionsUsed": 61,
    "running": true,
-   "updated": "2026-11-02T09:04Z",
-   "uptime_seconds": 7107,
-   "xp": 25050
+   "updated": "2026-11-02T09:09Z",
+   "uptime_seconds": 7407,
+   "xp": 25456
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 845 kills, 0 deaths",
+    "label": "d2lod (original game), 867 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793610325,
- "updated": "2026-11-02T09:05Z",
+ "ts": 1793610641,
+ "updated": "2026-11-02T09:10Z",
  "work": [
   {
    "state": "working",
