@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 794,
+   "kills": 839,
    "name": "Fresha",
-   "potionsUsed": 44,
+   "potionsUsed": 46,
    "running": true,
-   "updated": "2026-11-02T12:19Z",
-   "uptime_seconds": 6682,
-   "xp": 106293
+   "updated": "2026-11-02T12:25Z",
+   "uptime_seconds": 7042,
+   "xp": 106325
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Cold Plains",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 12,
    "deaths": 0,
    "doing": "Recovering after trouble",
    "id": "fresha-orig",
-   "kills": 794,
-   "last_seen": 1793621940,
+   "kills": 839,
+   "last_seen": 1793622300,
    "name": "Fresha",
    "running": true,
    "started": 1793615258,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 794 kills, 0 deaths",
+    "label": "d2lod (original game), 839 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793622005,
- "updated": "2026-11-02T12:20Z",
+ "ts": 1793622348,
+ "updated": "2026-11-02T12:25Z",
  "work": [
   {
    "state": "working",
@@ -136,8 +136,8 @@
    "task": "Playing in a party of bots"
   },
   {
-   "state": "working",
-   "task": "Goals, quests and levelling"
+   "state": "blocked",
+   "task": "Running the bot on the d2d engine"
   }
  ]
 }
