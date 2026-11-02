@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Den of Evil",
+   "area": "Blood Moor",
    "backend": "d2lod (original game)",
-   "clvl": 7,
+   "clvl": 3,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 791,
+   "kills": 1324,
    "name": "Freshc",
-   "potionsUsed": 56,
+   "potionsUsed": 1,
    "running": true,
-   "updated": "2026-11-02T18:25Z",
-   "uptime_seconds": 7599,
-   "xp": 23965
+   "updated": "2026-11-02T19:35Z",
+   "uptime_seconds": 377,
+   "xp": 1962
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 791 kills, 0 deaths",
-    "value": "Freshc lvl 7"
+    "label": "d2lod (original game), 1,324 kills, 0 deaths",
+    "value": "Freshc lvl 3"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793643924,
- "updated": "2026-11-02T18:25Z",
+ "ts": 1793648108,
+ "updated": "2026-11-02T19:35Z",
  "work": [
   {
    "state": "working",
