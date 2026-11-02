@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Den of Evil",
+   "area": "Stony Field",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 839,
+   "kills": 896,
    "name": "Fresha",
-   "potionsUsed": 46,
+   "potionsUsed": 51,
    "running": true,
-   "updated": "2026-11-02T12:25Z",
-   "uptime_seconds": 7042,
-   "xp": 106325
+   "updated": "2026-11-02T12:30Z",
+   "uptime_seconds": 7342,
+   "xp": 107120
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 839 kills, 0 deaths",
+    "label": "d2lod (original game), 896 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793622348,
- "updated": "2026-11-02T12:25Z",
+ "ts": 1793622665,
+ "updated": "2026-11-02T12:31Z",
  "work": [
   {
    "state": "working",
