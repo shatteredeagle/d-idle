@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Blood Moor",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Shopping and tidying up in town",
-   "kills": 969,
+   "doing": "Recovering after trouble",
+   "kills": 1021,
    "name": "Freshb",
    "potionsUsed": 64,
    "running": true,
-   "updated": "2026-11-02T09:24Z",
-   "uptime_seconds": 8307,
-   "xp": 28588
+   "updated": "2026-11-02T09:30Z",
+   "uptime_seconds": 8667,
+   "xp": 29939
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 969 kills, 0 deaths",
+    "label": "d2lod (original game), 1,021 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793611505,
- "updated": "2026-11-02T09:25Z",
+ "ts": 1793611865,
+ "updated": "2026-11-02T09:31Z",
  "work": [
   {
    "state": "working",
