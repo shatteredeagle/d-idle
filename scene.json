@@ -23,14 +23,14 @@
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Doing chores in town",
-   "kills": 952,
+   "doing": "Shopping and tidying up in town",
+   "kills": 969,
    "name": "Freshb",
    "potionsUsed": 64,
    "running": true,
-   "updated": "2026-11-02T09:20Z",
-   "uptime_seconds": 8067,
-   "xp": 28282
+   "updated": "2026-11-02T09:24Z",
+   "uptime_seconds": 8307,
+   "xp": 28588
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 952 kills, 0 deaths",
+    "label": "d2lod (original game), 969 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793611248,
- "updated": "2026-11-02T09:20Z",
+ "ts": 1793611505,
+ "updated": "2026-11-02T09:25Z",
  "work": [
   {
    "state": "working",
