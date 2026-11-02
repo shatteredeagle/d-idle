@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 1074,
+   "doing": "Shopping and tidying up in town",
+   "kills": 1114,
    "name": "Freshb",
-   "potionsUsed": 69,
+   "potionsUsed": 71,
    "running": true,
-   "updated": "2026-11-02T09:35Z",
-   "uptime_seconds": 8968,
-   "xp": 31084
+   "updated": "2026-11-02T09:39Z",
+   "uptime_seconds": 9208,
+   "xp": 32177
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Cold Plains",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Recovering after trouble",
+   "doing": "Shopping and tidying up in town",
    "id": "freshb-orig",
-   "kills": 1074,
-   "last_seen": 1793612100,
+   "kills": 1114,
+   "last_seen": 1793612340,
    "name": "Freshb",
    "running": true,
    "started": 1793603132,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,074 kills, 0 deaths",
+    "label": "d2lod (original game), 1,114 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793612148,
- "updated": "2026-11-02T09:35Z",
+ "ts": 1793612443,
+ "updated": "2026-11-02T09:40Z",
  "work": [
   {
    "state": "working",
