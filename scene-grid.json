@@ -173,8 +173,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793601938,
- "updated": "2026-11-02T06:45Z",
+ "ts": 1793603161,
+ "updated": "2026-11-02T07:06Z",
  "work": [
   {
    "state": "working",
@@ -189,8 +189,8 @@
    "task": "Playing in a party of bots"
   },
   {
-   "state": "working",
-   "task": "Goals, quests and levelling"
+   "state": "blocked",
+   "task": "Running the bot on the d2d engine"
   }
  ]
 }
