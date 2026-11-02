@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Stony Field",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
-   "kills": 464,
+   "doing": "Recovering after trouble",
+   "kills": 770,
    "name": "Fresha",
-   "potionsUsed": 14,
+   "potionsUsed": 43,
    "running": true,
-   "updated": "2026-11-02T11:39Z",
-   "uptime_seconds": 4281,
-   "xp": 98619
+   "updated": "2026-11-02T12:15Z",
+   "uptime_seconds": 6442,
+   "xp": 106198
   }
  ],
  "runs_state": "running",
@@ -84,25 +84,25 @@
  ],
  "sources": [
   {
-   "area": "Cold Plains",
+   "area": "Stony Field",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
+   "doing": "Recovering after trouble",
    "id": "fresha-orig",
-   "kills": 464,
-   "last_seen": 1793619540,
+   "kills": 770,
+   "last_seen": 1793621700,
    "name": "Fresha",
    "running": true,
-   "started": 1793615259,
+   "started": 1793615258,
    "testing": false
   }
  ],
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 464 kills, 0 deaths",
+    "label": "d2lod (original game), 770 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793619605,
- "updated": "2026-11-02T11:40Z",
+ "ts": 1793621765,
+ "updated": "2026-11-02T12:16Z",
  "work": [
   {
    "state": "working",
