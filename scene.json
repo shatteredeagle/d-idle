@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Dark Wood",
+   "area": "Underground Passage",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
-   "kills": 1442,
+   "doing": "Recovering after trouble",
+   "kills": 1491,
    "name": "Fresha",
-   "potionsUsed": 48,
+   "potionsUsed": 53,
    "running": true,
-   "updated": "2026-11-02T13:49Z",
-   "uptime_seconds": 4521,
-   "xp": 105671
+   "updated": "2026-11-02T13:54Z",
+   "uptime_seconds": 4822,
+   "xp": 107237
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,442 kills, 0 deaths",
+    "label": "d2lod (original game), 1,491 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793627424,
- "updated": "2026-11-02T13:50Z",
+ "ts": 1793627729,
+ "updated": "2026-11-02T13:55Z",
  "work": [
   {
    "state": "working",
