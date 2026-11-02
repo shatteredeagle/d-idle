@@ -69,13 +69,13 @@
    "clvl": 3,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 1324,
+   "kills": 1380,
    "name": "Freshc",
-   "potionsUsed": 1,
+   "potionsUsed": 4,
    "running": true,
-   "updated": "2026-11-02T19:35Z",
-   "uptime_seconds": 377,
-   "xp": 1962
+   "updated": "2026-11-02T19:40Z",
+   "uptime_seconds": 677,
+   "xp": 3252
   }
  ],
  "runs_state": "running",
@@ -91,8 +91,8 @@
    "deaths": 0,
    "doing": "Recovering after trouble",
    "id": "freshc-orig",
-   "kills": 1324,
-   "last_seen": 1793648100,
+   "kills": 1380,
+   "last_seen": 1793648400,
    "name": "Freshc",
    "running": true,
    "started": 1793647723,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,324 kills, 0 deaths",
+    "label": "d2lod (original game), 1,380 kills, 0 deaths",
     "value": "Freshc lvl 3"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793648108,
- "updated": "2026-11-02T19:35Z",
+ "ts": 1793648426,
+ "updated": "2026-11-02T19:40Z",
  "work": [
   {
    "state": "working",
