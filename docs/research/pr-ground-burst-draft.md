@@ -1,6 +1,6 @@
 # PR draft: standing missiles hit by their footprint, and a burst rolls once (ground and burst pipeline)
 
-> status: READY FOR THE INDEPENDENT VERIFIER, held (nothing pushed to the public fork, opened or posted). Local bundle: branch `local/ground-burst-v1` in the private fork on the worker host, three commits on upstream main 48908176 (the merge of #174): **b04d6d0f** tests and oracles, **42b1c9e0** burst roll, **73ca62cf** standing footprint. Evidence: [sk-ground2-trace.md](sk-ground2-trace.md), [sor-rest-trace.md](sor-rest-trace.md), [sk-ground-trace.md](sk-ground-trace.md); candidate list: [pr-candidates-20261102.md](pr-candidates-20261102.md) (C4). Card prbuildground (2026-11-02), run offline on the worker host, no game.
+> status: READY FOR THE INDEPENDENT VERIFIER (differentials re-run on the final head), held (nothing pushed to the public fork, opened or posted). Local bundle: branch `local/ground-burst-v1` in the private fork on the worker host, three commits on upstream main 48908176 (the merge of #174): **b04d6d0f** tests and oracles, **42b1c9e0** burst roll, **73ca62cf** standing footprint. Evidence: [sk-ground2-trace.md](sk-ground2-trace.md), [sor-rest-trace.md](sor-rest-trace.md), [sk-ground-trace.md](sk-ground-trace.md); candidate list: [pr-candidates-20261102.md](pr-candidates-20261102.md) (C4). Card prbuildground (2026-11-02), run offline on the worker host, no game.
 
 Tags: **V** run or read in this card (how is said); **S** from an earlier trace of ours; **U** not verified.
 
@@ -36,10 +36,10 @@ game.exe natively (the emulator) against the real d2d build, base = the tests co
 
 | part | cases | base (differ) | head (differ) |
 |---|---|---|---|
-| standing Blizzard shard, Size 2, every offset -7..7, every MonStats class both sides can run | HITB | HITB_BASE | HITB_HEAD |
-| standing Fire Wall flame, Size 1, same | HITF | HITF_BASE | HITF_HEAD |
-| Fire Ball burst, three monsters, one record | ROLLF | ROLLF_BASE | ROLLF_HEAD |
-| Glacial Spike burst, three monsters, one record | ROLLG | ROLLG_BASE | ROLLG_HEAD |
+| standing Blizzard shard, Size 2, every offset -7..7, every MonStats class both sides can run | 123,750 | 2,920 differ | 0 |
+| standing Fire Wall flame, Size 1, same | 125,325 | 8,148 differ | 0 |
+| Fire Ball burst, three monsters, one record | 100,000 | 100,000 differ (0 equal) | 0 |
+| Glacial Spike burst, three monsters, one record | 100,000 | 100,000 differ (0 equal) | 0 |
 
 A hit-area case is one (class, offset): game.exe's hit or no hit against d2d's over 9 frames. 658 classes ran on both sides; the comparison skips 69 (blizzard row) / 62 (firewall row) that d2d never hits (hidden or untargetable rows), 33 that walk off their subtile in d2d whatever the test says, and 6 that game.exe never hits. A roll case is one burst: game.exe's three copied records byte-equal (every trial), d2d's three monsters (one class, same resistance) losing the same life.
 
