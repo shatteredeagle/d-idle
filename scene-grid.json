@@ -69,13 +69,13 @@
    "clvl": 8,
    "deaths": 0,
    "doing": "Recovering after trouble",
-   "kills": 1254,
+   "kills": 1295,
    "name": "Freshb",
    "potionsUsed": 81,
    "running": true,
-   "updated": "2026-11-02T09:54Z",
-   "uptime_seconds": 10108,
-   "xp": 36996
+   "updated": "2026-11-02T09:59Z",
+   "uptime_seconds": 10408,
+   "xp": 38119
   }
  ],
  "runs_state": "running",
@@ -91,8 +91,8 @@
    "deaths": 0,
    "doing": "Recovering after trouble",
    "id": "freshb-orig",
-   "kills": 1254,
-   "last_seen": 1793613240,
+   "kills": 1295,
+   "last_seen": 1793613540,
    "name": "Freshb",
    "running": true,
    "started": 1793603132,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,254 kills, 0 deaths",
+    "label": "d2lod (original game), 1,295 kills, 0 deaths",
     "value": "Freshb lvl 8"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793613320,
- "updated": "2026-11-02T09:55Z",
+ "ts": 1793613630,
+ "updated": "2026-11-02T10:00Z",
  "work": [
   {
    "state": "working",
