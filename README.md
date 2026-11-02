@@ -9,7 +9,7 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Fresha**, Sorceress, d2lod (original game): level 12, 95,839 XP, 166 kills, 0 deaths, 3 potions drunk, run time 0h 36m. Now: levelling up toward level 17 in Cold Plains, running. Last update 2026-11-02 11:04 UTC.
+- **Fresha**, Sorceress, d2lod (original game): level 12, 95,872 XP, 208 kills, 0 deaths, 3 potions drunk, run time 0h 41m. Now: levelling up toward level 17 in Cold Plains, running. Last update 2026-11-02 11:09 UTC.
 
 ## Now building on d2d
 
@@ -101,7 +101,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-02 11:05 UTC
+Last updated: 2026-11-02 11:10 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  

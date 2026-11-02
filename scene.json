@@ -24,13 +24,13 @@
    "clvl": 12,
    "deaths": 0,
    "doing": "Levelling up toward level 17",
-   "kills": 166,
+   "kills": 208,
    "name": "Fresha",
    "potionsUsed": 3,
    "running": true,
-   "updated": "2026-11-02T11:04Z",
-   "uptime_seconds": 2180,
-   "xp": 95839
+   "updated": "2026-11-02T11:09Z",
+   "uptime_seconds": 2480,
+   "xp": 95872
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 166 kills, 0 deaths",
+    "label": "d2lod (original game), 208 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793617518,
- "updated": "2026-11-02T11:05Z",
+ "ts": 1793617820,
+ "updated": "2026-11-02T11:10Z",
  "work": [
   {
    "state": "working",
