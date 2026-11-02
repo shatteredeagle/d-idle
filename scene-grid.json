@@ -68,14 +68,14 @@
    "backend": "d2lod (original game)",
    "clvl": 6,
    "deaths": 0,
-   "doing": "Heading back out from town",
-   "kills": 495,
+   "doing": "Shopping and tidying up in town",
+   "kills": 533,
    "name": "Freshb",
-   "potionsUsed": 30,
+   "potionsUsed": 32,
    "running": true,
-   "updated": "2026-11-02T08:20Z",
-   "uptime_seconds": 4465,
-   "xp": 14183
+   "updated": "2026-11-02T08:24Z",
+   "uptime_seconds": 4705,
+   "xp": 15655
   }
  ],
  "runs_state": "running",
@@ -89,10 +89,10 @@
    "class": "Sorceress",
    "clvl": 6,
    "deaths": 0,
-   "doing": "Heading back out from town",
+   "doing": "Shopping and tidying up in town",
    "id": "freshb-orig",
-   "kills": 495,
-   "last_seen": 1793607600,
+   "kills": 533,
+   "last_seen": 1793607840,
    "name": "Freshb",
    "running": true,
    "started": 1793603135,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 495 kills, 0 deaths",
+    "label": "d2lod (original game), 533 kills, 0 deaths",
     "value": "Freshb lvl 6"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793607651,
- "updated": "2026-11-02T08:20Z",
+ "ts": 1793607925,
+ "updated": "2026-11-02T08:25Z",
  "work": [
   {
    "state": "working",
