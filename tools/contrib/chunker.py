@@ -385,7 +385,9 @@ def mechanical_flags(items, issues):
                 flags.append((it["id"], "deliverable `%s` already exists on main" % p, [p]))
         for ln in backlog:  # candidate only: a maintainer line names the item with a finished word
             if re.search(r"\b%s\b" % re.escape(it["id"]), ln) and COVERED_RE.search(ln):
-                flags.append((it["id"], "BACKLOG line says covered: " + plain(ln.strip("- "), 90), ["docs/BACKLOG.md"]))
+                # No excerpt: free maintainer prose can look like a CD key to the fail-closed privacy scan (five short words in a row)
+                # and would make the whole proposal unwritable. The reviewer opens the cited file instead.
+                flags.append((it["id"], "a BACKLOG line names it with a finished word (candidate only, read the line)", ["docs/BACKLOG.md"]))
                 break
         m = re.fullmatch(r"queue:(\d+)", it.get("source", ""))
         if m and it["kind"] == "decomp" and rows.get(int(m.group(1)), "").startswith("done"):

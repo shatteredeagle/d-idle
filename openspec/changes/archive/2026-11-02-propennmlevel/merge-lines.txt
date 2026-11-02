@@ -1,0 +1,3 @@
+BACKLOG: upstream #170 (Nightmare and Hell monster start level at the area MonLvl; 2 commits) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card).
+INDEX: docs/research/openpr-log.md: posted log now also covers #170.
+CHANGELOG: Docs: opened upstream PR #170 (Nightmare and Hell monster start level); posted log in docs/research/openpr-log.md.

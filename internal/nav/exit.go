@@ -234,6 +234,14 @@ func (n *Navigator) gateCands(o *obs, levelNo int) []gate {
 			out = append(out, c)
 		}
 	}
+	if len(out) == 0 {
+		// Only dead gates are left: trying one beats exploring a level whose map is known.
+		for _, c := range cands {
+			if !n.gateBad(o.level, levelNo, c.at, false) {
+				out = append(out, c)
+			}
+		}
+	}
 	return out
 }
 
@@ -450,6 +458,7 @@ type badGate struct {
 	at       input.Point
 	until    time.Time // zero: for the rest of the game
 	lm       *d2map.LevelMap
+	dead     bool // survives learn() and a re-entered game, see markDeadGate
 }
 
 // markBadGate: a gap that did not lead out. It expires like a bad edge (BadEdgeTTLSec, and when the game is
@@ -468,9 +477,26 @@ func (n *Navigator) markStalledGate(from, to int, at input.Point) {
 	n.badGates = append(n.badGates, badGate{from: from, to: to, at: at, until: n.clk.Now().Add(stalledGateTTL)})
 }
 
+// deadGateTTL: how long a gate that stalled every approach and forced the escape stays out of the plans.
+const deadGateTTL = 30 * time.Minute
+
+// markDeadGate: a gate whose every approach stalled until the escape hook fired. Unlike a stalled gate it is not
+// forgotten after stalledGateTTL, after a crossing elsewhere (learn) or after a re-entered game, because the town
+// walk then picked it again every time (soak kit i2: 5342,6280 in the Rogue Encampment, three escapes in 10 min).
+func (n *Navigator) markDeadGate(from, to int, at input.Point) {
+	n.badGates = append(n.badGates, badGate{from: from, to: to, at: at, until: n.clk.Now().Add(deadGateTTL), dead: true})
+}
+
 // gateIsBad: a gate within 6 subtiles of one that already failed.
 func (n *Navigator) gateIsBad(from, to int, at input.Point) bool {
+	return n.gateBad(from, to, at, true)
+}
+
+func (n *Navigator) gateBad(from, to int, at input.Point, withDead bool) bool {
 	for _, b := range n.badGates {
+		if b.dead && !withDead {
+			continue
+		}
 		if b.from == from && b.to == to && dist(b.at, at) <= 6 && (b.until.IsZero() || n.clk.Now().Before(b.until) && (b.lm == nil || n.lvl(from) == b.lm)) {
 			return true
 		}

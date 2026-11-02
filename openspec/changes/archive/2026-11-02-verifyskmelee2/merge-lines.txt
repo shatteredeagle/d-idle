@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-SKMELEE2 done: D1 and D4 hold, D2 / D5 / D6 hold with limits on the real build (own harness, seeds 11 and 3): docs/research/verify-skmelee2.md
+INDEX: docs/research/verify-skmelee2.md - independent re-check of the SKMELEE2 melee deviations (own harness tools/emu/vm2_*)
+CHANGELOG: Added docs/research/verify-skmelee2.md and tools/emu/vm2_*: independent check of the player-blow deviations D1, D2, D4, D5, D6.

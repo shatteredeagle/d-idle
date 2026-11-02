@@ -1,0 +1,3 @@
+BACKLOG: - VERIFY-TELEPORT-ROOM (docs/research/verifyteleroom-trace.md): room rule HOLDS (150,225 emulator cases, 0 violations); landing may leave the caster's near zone, a map-edge target lands one cell inward (candidate extra deviation, needs d2d side); real near lists of real levels still unverified.
+INDEX: - [verifyteleroom-trace.md](research/verifyteleroom-trace.md): independent re-check of the Teleport room rule (game.exe FUN_005ca360 / FUN_00554ea0 / FUN_00463740), verdicts per claim.
+CHANGELOG: - Teleport room rule re-checked independently (verifyteleroom): holds on 150,225 emulator cases; limits and extra findings in docs/research/verifyteleroom-trace.md.

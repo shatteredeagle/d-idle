@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-SKMELEE3 done (provisional READY WITH CHANGES, split D1/D2): D1 holds on own cases; D2 merc/Shadow exclusion contradicts FUN_006259b0 gate: docs/research/pr-skmelee3-verifier.md
+INDEX: docs/research/pr-skmelee3-verifier.md - independent verification of the SKMELEE3 PR candidate (own harness vs3_*)
+CHANGELOG: Added docs/research/pr-skmelee3-verifier.md: independent check of the SKMELEE3 fork candidate (fine physical, undead/Blunt bonus).

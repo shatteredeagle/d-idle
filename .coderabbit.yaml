@@ -1,6 +1,6 @@
 # CodeRabbit configuration for outside pull requests (proposal: docs/process/outside-prs.md).
-# S: key names follow CodeRabbit's published schema as remembered by the author; U: not validated against the
-# schema URL below. Nothing runs until the maintainer installs the app for the repository.
+# V (card crsetup, 2026-11-02): every key checked against the published schema (docs/process/coderabbit-prescan.md, section 0).
+# Nothing runs until the owner installs the app for the repository. reviews.* has no commit-message check.
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 language: en-US
 tone_instructions: "Terse. Findings first, no praise, no poems. Flag untagged claims, unreproducible numbers, pasted game code, hidden characters and secrets."
@@ -22,19 +22,40 @@ reviews:
     - "!docs/plan/STATUS.md"
     - "!docs/knobs.md"
     - "!docs/community/work-board.md"
+    - "!**/go.sum"
+    - "!**/*.lock"
+    - "!**/package-lock.json"
+    - "!**/*.bin"
+    - "!**/*.dat"
+    - "!**/*.mpq"
+    - "!**/*.d2s"
+    - "!**/*.snap"
+    - "!**/*.json.gz"
     - "!web/**"
     - "!assets/**"
   path_instructions:
     - path: "docs/research/**"
       instructions: >
         These documents are the contributions. Check: every claim carries a tag (V read, V run, D, S, I, U) and V says how;
-        every number has a command that reproduces it (case count, seed); deviations (D) and bot findings (B) are listed apart;
-        limits are stated; NO pasted disassembly, decompiled code, hex dumps or game data tables (function address tags like
-        FUN_xxxxxxxx and short formulas only); no secrets, hostnames or home paths. Do not rewrite style.
+        every "V run" number has a script path, a seed and a case count in the PR body or the document; a self-check that was
+        not compared with d2d is labelled "self-check, not compared with d2d"; deviations (D) and bot findings (B) are listed
+        apart; limits are stated; the header has an "Author:" line; the scope fits the board item it claims; NO pasted
+        disassembly, decompiled code, hex dumps or game data tables (function address tags like FUN_xxxxxxxx and short formulas
+        only); no machine names, home paths, emails, CD keys or other secrets. Do not rewrite style.
     - path: "tools/**"
       instructions: >
-        Treat any new or changed script as untrusted code: report network calls, eval or exec, encoded blobs, environment
-        reads, writes outside the repo and changes to hooks or CI scripts.
+        Standard library only (no new dependency; no go.mod or go.sum edits). Every new or changed script has a test or a
+        stated reason it has none. Treat any new or changed script as untrusted code: report network calls, eval or exec,
+        encoded blobs, environment reads, writes outside the repo and changes to hooks or CI scripts.
+    - path: "internal/**/*.go"
+      instructions: >
+        Idiomatic Go, standard library only, gofmt-clean. New behaviour has a test (mem.Fake or a fixture, no live game).
+        Comments only where the reason is not obvious. Offsets or layouts tagged VERIFIED LIVE (say how) or UNVERIFIED; flag
+        a guess presented as fact. No Battle.net access.
+    - path: "cmd/**/*.go"
+      instructions: >
+        Idiomatic Go, standard library only, gofmt-clean, tests for new behaviour. No writes to game memory outside
+        internal/cheat.
     - path: ".github/**"
       instructions: "Outside PRs must not change workflows, templates or CODEOWNERS. Report any such change as blocking."
   auto_review:

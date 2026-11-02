@@ -131,3 +131,37 @@ func TestExitToStuckEscapesByHook(t *testing.T) {
 		t.Fatalf("without a hook: %v, want ErrStuck", err)
 	}
 }
+
+// KITSTALL: a gate that forced the escape stays dead after the stalled-gate TTL and after a crossing elsewhere
+// (learn), so the next walk from the town does not pick it again; with nothing else left it is still tried.
+func TestDeadGateSurvivesTTLAndLearn(t *testing.T) {
+	s, g := gateWorld()
+	truth := g.Clone()
+	blockRect(truth, d2map.Rect{X: 2995, Y: 3040, W: 12, H: 40})
+	s.truth, s.knownSrc = truth, g
+	s.px, s.py = 2900.5, 3057.5
+	n := s.navigator()
+	n.Escape = func(ctx context.Context) error { s.px, s.py = 3100.5, 3090.5; return nil }
+	if err := n.ExitTo(ctxT(t), 1); !errors.Is(err, ErrLevelChanged) {
+		t.Fatal(err)
+	}
+	o, err := n.observeWait(context.Background())
+	if err != nil {
+		t.Fatal(err)
+	}
+	s.now = s.now.Add(stalledGateTTL + 1)
+	n.learn(o.level, 1)
+	dead := 0
+	for _, b := range n.badGates {
+		if b.dead {
+			dead++
+		}
+	}
+	if dead == 0 {
+		t.Fatal("no dead gate kept after the TTL and learn")
+	}
+	s.now = s.now.Add(deadGateTTL + 1)
+	if n.gateIsBad(o.level, 1, input.Point{X: 2999, Y: 3057}) {
+		t.Fatal("dead gate never expires")
+	}
+}

@@ -141,6 +141,7 @@ func (n *Navigator) altGates(o *obs, levelNo int, g gate) []gate {
 // another approach cell of the same gap, then the Escape hook (town portal), after which the caller re-plans
 // from wherever that led (ErrLevelChanged).
 func (n *Navigator) exitUnstick(ctx context.Context, o *obs, levelNo int, g gate) (done bool, err error) {
+	tried := []input.Point{g.at}
 	{
 		n.markStalledGate(o.level, levelNo, g.at)
 		for _, a := range n.altGates(o, levelNo, g) {
@@ -162,9 +163,13 @@ func (n *Navigator) exitUnstick(ctx context.Context, o *obs, levelNo int, g gate
 				return false, werr
 			}
 			n.markStalledGate(o.level, levelNo, a.at)
+			tried = append(tried, a.at)
 		}
 	}
 	if n.Escape != nil && !n.escaping {
+		for _, at := range tried {
+			n.markDeadGate(o.level, levelNo, at)
+		}
 		n.escaping = true
 		defer func() { n.escaping = false }()
 		n.log.Warn("nav: stuck at the exit twice, escaping by town portal", "level", o.level, "to", levelNo)

@@ -2,6 +2,7 @@ package town
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"fmt"
 	"time"
 
@@ -474,7 +475,7 @@ func (t *Town) logKit(rep *ChoreReport, err error) {
 func (t *Town) sell(parent context.Context, a *Act, rep *ChoreReport) error {
 	// One sell chore never takes longer than SellMaxS (a vendor click loop that does not converge must not eat the
 	// whole chore budget); the panels are closed with the caller's context.
-	ctx, cancel := context.WithTimeout(parent, t.sellCap())
+	ctx, cancel := gclock.WithTimeout(parent, t.sellCap())
 	defer cancel()
 	var first error
 	tried := map[int]bool{}

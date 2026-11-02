@@ -18,6 +18,7 @@ python3 -m unittest discover -s tools/discord/tests -t tools/discord -p "test_bo
 python3 -m unittest discover -s tools/discord/tests -t tools/discord -p "test_work_channels.py" || { echo "FAIL: work_channels tests"; fail=1; }
 python3 -m unittest discover -s tools/contrib/tests -t tools/contrib || { echo "FAIL: tools/contrib python tests"; fail=1; }
 python3 tools/contrib/board.py --check || { echo "FAIL: work-board.md is stale or open-work.md is malformed"; fail=1; }
+python3 -m unittest discover -s tools/credit -t tools/credit -p "test_credit.py" || { echo "FAIL: tools/credit python tests"; fail=1; }
 python3 -m unittest discover -s tools/coverage/tests -t tools/coverage || { echo "FAIL: tools/coverage python tests"; fail=1; }
 python3 tools/coverage/coverage.py --check || { echo "FAIL: docs/coverage inputs invalid or rule-coverage.md is stale (python3 tools/coverage/coverage.py --write)"; fail=1; }
 exit $fail

@@ -1,0 +1,4 @@
+BACKLOG: PRBUILDSKMELEE3B built (private fork branches local/skmelee3-d1-final 46ced89a and local/skmelee3-d2-final 283c7bce on upstream main cb716f10; PRs on hold): D1 fine physical and D2 undead / Blunt bonus as two independent PRs, verifier findings applied (merc and Shadow no longer excluded, missile-path tests, comment); counts 0 vs game on both heads; PR 174 merge resolution prepared; det hashes and an Opus re-check owed: docs/research/pr-skmelee3-d1-draft.md, pr-skmelee3-d2-draft.md
+INDEX: docs/research/pr-skmelee3-d1-draft.md - draft PR text, melee fine physical (on hold)
+INDEX: docs/research/pr-skmelee3-d2-draft.md - draft PR text, undead / Blunt bonus with the corrected gate (on hold)
+CHANGELOG: Added docs/research/pr-skmelee3-d1-draft.md and pr-skmelee3-d2-draft.md: the SKMELEE3 candidate split in two upstream-ready branches with counted differentials.

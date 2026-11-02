@@ -1,0 +1,3 @@
+BACKLOG: boardclean: board closed 8 finished items (VERIFY-SKMANA, VERIFY-WAYPOINT, VERIFY-SKMELEE2, VERIFY-SKRESIST, SKGEARAR, SKSHIELD, SKCURSEVAL, SKDEFENDERS); VERIFY-AIDEL and SKIAS narrowed
+INDEX: openspec/changes/boardclean - board cleanup, closed finished work items
+CHANGELOG: boardclean: contributor board cleanup, finished items closed and archived (docs/community only)

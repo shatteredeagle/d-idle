@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-SKRESIST done (docs/research/verify-skresist.md): Q4, Q5, Q6, Q8 HOLD, Q1, Q2, Q10 HOLD WITH LIMITS, 0 mismatches in 70,000 cases per part (seeds 11, 2025)
+INDEX: docs/research/verify-skresist.md: independent re-check of the monster resistance rules (own emulator harness, game.exe 1.14d)
+CHANGELOG: Independent verification of the resistance rules (verify-skresist.md, tools/emu/vr_resist.py): no rule fails

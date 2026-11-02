@@ -1,0 +1,3 @@
+BACKLOG: lockstepp4 DONE: scaled bot clock at k=2/k=4 restores chores and kills per real minute (154 and 271 combat-kill events, 142 and 204 observed, in 10 min), 50 to 77 percent of k=1 per game minute; noise band and character reset still open (docs/research/lockstep-p4.md)
+INDEX: docs/research/lockstep-p4.md: lockstep hook re-measured at k=2 and k=4 with the scaled bot clock
+CHANGELOG: Lockstep P4 live measurement: with the bot clock scaled the time hook at k=2 and k=4 no longer breaks shop chores or kill rate (docs only)

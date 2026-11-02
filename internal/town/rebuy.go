@@ -537,9 +537,11 @@ func (t *Town) foundGear(s *d2.Snapshot) (slots []gearSlot, units []d2.Unit) {
 			continue
 		}
 		var best *d2.Unit
-		bestScore := 0
+		bestScore, bestStart := 0, false
 		for _, u := range s.Inventory.Container(d2.ContInventory) {
-			if u.Item == nil || u.Item.Flags&d2.FlagStartItem != 0 || isRefused(u.ID, stampOf(s.Player)) || !t.viable(s, g, t.base(u)) {
+			start := u.Item != nil && u.Item.Flags&d2.FlagStartItem != 0
+			// The start kit stays in the pack, except the class weapon: taken off by a bad pickup, it goes back on.
+			if u.Item == nil || start && !weapon || isRefused(u.ID, stampOf(s.Player)) || !t.viable(s, g, t.base(u)) {
 				continue
 			}
 			if why, need, have := t.unitReject(s.Player, u); why != "" {
@@ -547,6 +549,14 @@ func (t *Town) foundGear(s *d2.Snapshot) (slots []gearSlot, units []d2.Unit) {
 				continue
 			}
 			if weapon {
+				if bestStart {
+					continue
+				}
+				if start {
+					c := u
+					best, bestStart = &c, true
+					continue
+				}
 				if best == nil || u.Item.Quality > best.Item.Quality ||
 					u.Item.Quality == best.Item.Quality && t.base(u).Cost > t.base(*best).Cost {
 					c := u

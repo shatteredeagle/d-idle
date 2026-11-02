@@ -1,0 +1,3 @@
+BACKLOG: SKGEARAR second pass done (card geararmore, docs/research/geararmore.md): stat 179 and stat 120 run natively, 0 differ in 100,032 and 100,648 cases; 179 is on no item table row; bot finding B1 (fork gear sums omit stat 119 and the monster-specific stats); no PR candidate
+INDEX: docs/research/geararmore.md - gear attack rating, second pass: stats 179 and 120 vs game.exe (V run), table census, bot finding B1
+CHANGELOG: docs/research/geararmore.md: second pass of gear attack rating terms (stats 179, 120 run on game.exe, 0 differ), tools/emu/gar_run.py gar_census.sh

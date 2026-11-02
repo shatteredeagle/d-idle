@@ -1,0 +1,3 @@
+BACKLOG: verifysmite: SMITEBLOCK verified on the game side (own end-to-end FUN_005ce9f0 run, 20,000 of 20,000 land, unforced 1,552, Smite the only forcing site); d2d side read only; candidate NEEDS CHANGES (stale line refs, block animation half, d2d run), docs/research/verify-smiteblock.md
+INDEX: docs/research/verify-smiteblock.md: independent verifier of the Smite-vs-block trace (own oracle, other skills, proposed d2d diff)
+CHANGELOG: verifysmite: independent verification of SMITEBLOCK; block does not stop Smite in game.exe (V run), d2d fix proposed, docs only

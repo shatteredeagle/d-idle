@@ -20,6 +20,12 @@ gates:
 merge: 90101b4
 result: "Formula V (emulator, model 100000/100000); d2d deviations D1-D7 proven by differential; bot findings B1-B6; PR candidate not built (time box). Not verified live on the original game; drill D3.r (d2d) price agrees."
 live: ""
+credit:
+  component: Vendor repair gate (trace)
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifyprices, independent run)"]
+  consent: none
 ```
 
 - [x] 1.1 trace FUN_0062efb0 (buy, sell, repair) and the gold caps

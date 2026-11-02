@@ -1,0 +1,3 @@
+BACKLOG: - PALDUR: done (decomp), durability loss per landed hit traced in game.exe: armor 10 %, weapon 4 %, weighted slot pick, blocked or dodged blow wears nothing; d2d equal on 34,939 armor and 15,253 weapon cases (0 differ), deviations D1 monster missiles wear armor on d2d (I), D2 javelin gate +0x70 (V run, live value U); no PR candidate; drill R1..R7 remains (docs/research/paldur-trace.md)
+INDEX: - docs/research/paldur-trace.md: durability loss per hit and per block, game.exe 1.14d vs d2d vs the bot, differential tools/emu/pal_wear.py
+CHANGELOG: - docs: paldur-trace, durability loss per hit and per block traced in game.exe and compared with d2d (docs/research/paldur-trace.md).

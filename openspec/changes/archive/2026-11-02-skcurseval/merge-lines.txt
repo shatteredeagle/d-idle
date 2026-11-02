@@ -1,0 +1,3 @@
+BACKLOG: SKCURSEVAL done (docs/research/skcurseval-trace.md): curse calc cells of 11 rows at levels 1..99 equal d2d, 0 of 46,136 (seed 1) and 0 of 66,136 (seed 7) differ; no calc deviation; bot B1 Lower Resist chosen for magic resistance but lowers none (necro.go:358); no PR candidate
+INDEX: docs/research/skcurseval-trace.md: curse value calcs (Lower Resist, Conviction cap, Amplify, Decrepify, Weaken) game.exe vs d2d at levels 1..99, curse do level and length divisor read
+CHANGELOG: Curse value calcs traced and differentialled (skcurseval-trace.md, tools/emu/sk_curseval*.py): equal d2d at every level 1..99; bot finding on Lower Resist vs magic

@@ -1,0 +1,3 @@
+BACKLOG: verifypalaura: independent re-run of palaura roll (min..max-1) and area disc VERIFIED; filter, Prayer, regen, resist re-runs still open (docs/research/verifypalaura.md)
+INDEX: docs/research/verifypalaura.md: independent verification of palaura-trace (roll and disc verified, rest not re-run)
+CHANGELOG: verifypalaura: independent check of PALAURA (docs/research/verifypalaura.md, tools/emu/vp_check.py)

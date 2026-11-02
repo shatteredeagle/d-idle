@@ -73,6 +73,9 @@ func TestWeaponProblem(t *testing.T) {
 		{"Amazon", Equipped{Weapon: "am1", Offhand: "aqv", OffhandQty: 5}, ""},
 		{"Sorceress", Equipped{Weapon: "sst"}, ""},
 		{"Sorceress", Equipped{}, ""},
+		{"Sorceress", Equipped{Weapon: "sbw"}, ""}, // KITSTALL: spells need no ammo, a stray bow must not stop the casting
+		{"Necromancer", Equipped{Weapon: "sbw"}, ""},
+		{"Paladin", Equipped{Weapon: "sbw"}, "without quiver"},
 		{"Necromancer", Equipped{Weapon: "wnd", Offhand: "buc"}, ""},
 		{"Necromancer", Equipped{Weapon: "am1", Offhand: "aqv", OffhandQty: 5}, "restricted"},
 		{"Paladin", Equipped{Weapon: "ssd", Offhand: "buc"}, ""},

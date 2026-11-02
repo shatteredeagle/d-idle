@@ -283,6 +283,11 @@ func WeaponProblem(class string, e Equipped) string {
 			return fmt.Sprintf("%s is restricted to class %s", code, c)
 		}
 	}
+	if cc == "sor" || cc == "nec" {
+		// Spells need no ammo (S: game rules; U live for the bot's own casts): a bow picked up by mistake made a
+		// Sorceress refuse every attack (soak kit i2, weapon sbw, "launcher without quiver").
+		return ""
+	}
 	return ammoProblem(e)
 }
 

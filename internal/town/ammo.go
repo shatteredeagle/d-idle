@@ -60,7 +60,12 @@ func (t *Town) packCodes(s *d2.Snapshot) map[string]d2.Unit {
 // dropped (equip it instead). Needs no game data beyond gear's tables.
 func AmmoPlan(class, path string, e gear.Equipped, pack map[string]bool) []gear.Purchase {
 	var want []gear.Purchase
-	if gear.ClassCode(class) == "ama" && path == "bow" && !e.Launcher() {
+	if gear.ClassCode(class) != "ama" {
+		// Only the Amazon fights with launcher or thrown ammo. A stray bow on a Sorceress made this chore spend the last
+		// 250 and then 170 gold on Arrows, so the kit gate never cleared (soak kit i2, KITSTALL).
+		return nil
+	}
+	if path == "bow" && !e.Launcher() {
 		// The bow-path Amazon wears a launcher: one already bought (still in the pack) only needs a quiver.
 		launcher := ""
 		for code := range pack {

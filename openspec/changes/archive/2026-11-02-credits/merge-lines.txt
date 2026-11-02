@@ -1,0 +1,2 @@
+INDEX: Credit: [../CONTRIBUTORS.md](../CONTRIBUTORS.md) contributor table (who traced or built what, PR status, upstream); rules in [process/chunker.md](process/chunker.md) section "Credit".
+CHANGELOG: CONTRIBUTORS.md added; Credit section in docs/process/chunker.md

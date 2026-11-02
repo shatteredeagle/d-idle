@@ -1,0 +1,4 @@
+BACKLOG: SKGROUND M1: d2d Fight::area finds units by float hypot, game.exe by the disc dx^2 + dy^2 <= r^2 on integer subtile words (FUN_0056bad0 / FUN_0056b7e0): 9.1 percent of 80,000 rim cases differ, no bias; differential tools/emu/skg_diff.sh; not a PR candidate until the other callers of FUN_0056bad0 are traced (docs/research/skground-trace.md)
+BACKLOG: SKGROUND M2: game.exe's blast searches the caster's room and its near list only (0 of 168 far pairs found, 34 within the 100-subtile cap); d2d scans every monster (docs/research/skground-trace.md)
+BACKLOG: SKGROUND open: Hydra AI and HydraMissile, Frozen Orb and Thunder Storm native runs, skill-delay refusal, names of the unit flag bits 0x4 / 0x8 in FUN_0056b3e0
+INDEX: docs/research/skground-trace.md: Meteor's blast shape (FUN_0056bad0 / FUN_0056b7e0 run natively, disc on integer subtiles, radius 6, caster-room search, filter) vs the real d2d Fight::area

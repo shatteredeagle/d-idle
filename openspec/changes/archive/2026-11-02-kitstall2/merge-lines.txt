@@ -1,0 +1,3 @@
+BACKLOG: kitstall2 - worn items lost / bow on a Sorceress (loot unwear, sell guard, start weapon rewear); probe: read the new "sell: worn before/after" and "sell: sold" lines on the next baseline run
+INDEX: openspec/changes/kitstall2 - lane i2 lost weapon and gloves, bow worn by the game; fixes and open question
+CHANGELOG: A looted bow is taken off a non-Amazon the game wore it on, the sell chore never offers worn or start items, and a removed start weapon is worn again.

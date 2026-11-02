@@ -1,0 +1,3 @@
+BACKLOG: PRCANDIDATES (2026-11-02): inventory and ranking of upstream PR candidates for the next five slots: docs/research/pr-candidates-20261102.md; no branch pushed, no PR opened.
+INDEX: docs/research/pr-candidates-20261102.md: ranked list of upstream PR candidates (fork branches, drafts, verifier status, next action).
+CHANGELOG: Docs: upstream PR candidate inventory and ranking for the next five slots (docs/research/pr-candidates-20261102.md).

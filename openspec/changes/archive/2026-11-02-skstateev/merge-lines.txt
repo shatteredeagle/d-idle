@@ -1,0 +1,3 @@
+BACKLOG: SKSTATEEV done (static, V read): FUN_005d3ac0 is an attacker hit bonus not the dispatcher; dispatcher FUN_005c0c30; event 3 fires on miss too after damage (FUN_0057d4f0); event 11 in FUN_0057c1e0 before the resistance pass. docs/research/sk-state-events-trace.md. Open: dump Skills +0x44 and the 0x732980 rows, order of absorb nodes, a native run.
+INDEX: docs/research/sk-state-events-trace.md - state events on hit and miss (Shiver Armor on a miss, Energy Shield before resistances)
+CHANGELOG: SKSTATEEV state-event decomposition: docs/research/sk-state-events-trace.md (static; nothing run)

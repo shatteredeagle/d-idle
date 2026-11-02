@@ -1,0 +1,3 @@
+BACKLOG: upstream #171 (monster base velocity 75; 2 commits) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card). The authorised four PRs are used up.
+INDEX: docs/research/openpr-log.md: posted log now also covers #171.
+CHANGELOG: Docs: opened upstream PR #171 (monster base velocity 75 percent); posted log in docs/research/openpr-log.md.

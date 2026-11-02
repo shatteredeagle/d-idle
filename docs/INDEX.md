@@ -188,3 +188,70 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - no change
 - docs/research/openpr-log.md: posted log now also covers #166.
 - no change
+- docs/research/pr-nmlevel-verifier.md - independent check of local/nmlevel (Nightmare / Hell area monster level), own harness in docs/research/pr-nmlevel-verifier/
+- docs/research/sk-gearar-trace.md - attack rating from gear (stats 115, 116, 120, 123, 124, 179) in game.exe vs d2d (SKGEARAR)
+- docs/research/verify-aidel.md: independent re-check of the monster think period aidel (VERIFY-AIDEL)
+- docs/research/verify-skmelee2.md - independent re-check of the SKMELEE2 melee deviations (own harness tools/emu/vm2_*)
+- docs/research/verify-skresist.md: independent re-check of the monster resistance rules (own emulator harness, game.exe 1.14d)
+- docs/research/verify-skmana.md: independent re-check of the mana check and payment (FUN_0056c160, FUN_0056bfe0), own harness tools/emu/vsm_diff.py
+- docs/research/verifyresistq.md - second pass on the resistance rules Q3 / Q7 / Q9 (FUN_005a1370, FUN_0057cb00 run natively), harness tools/emu/vq_*.py
+- docs/research/geararmore.md - gear attack rating, second pass: stats 179 and 120 vs game.exe (V run), table census, bot finding B1
+- docs/research/sk-ias-trace.md - swing speed / IAS / WSM, d2d side read, game.exe side open (partial)
+- docs/research/openpr-log.md: posted log now also covers #167.
+- docs/probes/baseline-runs/20261102/record.md: original-game baseline set 20261102, per-run quality flags and rows
+- docs/research/skcurseval-trace.md: curse value calcs (Lower Resist, Conviction cap, Amplify, Decrepify, Weaken) game.exe vs d2d at levels 1..99, curse do level and length divisor read
+- docs/research/skdefenders-trace.md: hireling and player as defenders against resistances (penalty, cap, floor, flat reduction, absorb, poison fields), game.exe vs d2d (real monster_blow) vs bot; V run 111,232 cases x 2 seeds
+- , [research/skshield-trace.md](research/skshield-trace.md) (does a shield's damage reach the player's stats)
+- docs/research/openpr-log.md: posted log now also covers #170.
+- no change
+- docs/research/openpr-log.md: posted log now also covers #171.
+- openspec/changes/boardclean - board cleanup, closed finished work items
+- docs/research/lockstep-p1p2.md - lockstep probes P1/P2: preparation state, run plan, blockers
+- docs/research/lockstep-p1p2.md - lockstep probes P1/P2 live: frame counter fps, time-hook k=1 control and k=2 results, failures, next steps
+- docs/research/openpr-log.md: posted log for #159 and #160 (now also the conflict rebase of #159, #160, #163).
+- docs/probes/baseline-runs/20261102/record.md: original-game baseline set 20261102, per-run quality flags and rows
+- docs/research/paldur-trace.md: durability loss per hit and per block, game.exe 1.14d vs d2d vs the bot, differential tools/emu/pal_wear.py
+- docs/research/skiasgame2-trace.md | SKIAS second pass: game.exe attack animation rate (IAS, WSM, skill speed) run under the emulator vs d2d attack_speed / attack_ticks; sequence mode -30 deviation
+- docs/research/verifyfreezeend2-trace.md: think due during a get-hit and freeze during a get-hit, game.exe vs d2d (VERIFY-AIDEL second pass)
+- docs/research/palaura-trace.md: how an aura applies in game.exe 1.14d (target filter, area search, enemy hit per pulse, Prayer mana and state 85) vs d2d vs the bot; tools/emu/palaura_*
+- docs/research/palskill-trace.md - Smite, Zeal and Sacrifice in game.exe vs d2d vs the bot (own harness tools/emu/pal2*)
+- docs/research/verify-cursedef.md: independent verifier of skcurseval / skdefenders / skshield traces (verdicts per claim, own oracle tools/emu/vcd_*)
+- docs/research/pr-candidates-20261102.md: ranked list of upstream PR candidates (fork branches, drafts, verifier status, next action).
+- docs/research/skground-trace.md: Meteor's blast shape (FUN_0056bad0 / FUN_0056b7e0 run natively, disc on integer subtiles, radius 6, caster-room search, filter) vs the real d2d Fight::area
+- [verifyteleroom-trace.md](research/verifyteleroom-trace.md): independent re-check of the Teleport room rule (game.exe FUN_005ca360 / FUN_00554ea0 / FUN_00463740), verdicts per claim.
+- docs/research/verifywaypoint2-trace.md | second independent check of the waypoint refusal window: writers/readers of pcdata+0x160, game.exe vs d2d's own binary on 232,964 cases, D1.. B1.. | research
+- docs/research/sk-state-events-trace.md - state events on hit and miss (Shiver Armor on a miss, Energy Shield before resistances)
+- docs/research/verifypalaura.md: independent verification of palaura-trace (roll and disc verified, rest not re-run)
+- docs/research/sk-zero-hit-trace.md - what a zero-damage hit still triggers (SKZEROHIT, static)
+- docs/research/verifypaldur.md: independent verification of the PALDUR durability trace (claims, limits, one prose error)
+- docs/research/pr-prices-verifier.md - Opus verifier of the vendor prices follow-on (repair gate holds; divide-first already upstream; rebase needed)
+- docs/research/pr-skmelee3-verifier.md - independent verification of the SKMELEE3 PR candidate (own harness vs3_*)
+- docs/research/verifypalskill2.md - independent re-check of the PALSKILL trace (Smite, Zeal, Sacrifice; own harness tools/emu/vp2*)
+- docs/research/pr-freeze-rules-draft.md: PR body draft for the freeze rules branch (local/freeze-rules-v3), order versus #159, CI parity notes.
+- docs/research/pr-skmelee3-draft.md - draft PR text for the melee fine physical and undead / Blunt bonus (on hold)
+- docs/research/pr-vendor-repair-gate-draft.md - PR draft: vendor repair gate alone, rebased on upstream main, counts and CI parity
+- docs/kitstall.md - kit lane i2 stall analysis and fixes
+- Credit: [../CONTRIBUTORS.md](../CONTRIBUTORS.md) contributor table (who traced or built what, PR status, upstream); rules in [process/chunker.md](process/chunker.md) section "Credit".
+- openspec/changes/kitstall2 - lane i2 lost weapon and gloves, bow worn by the game; fixes and open question
+- docs/research/pr-skmelee3-d1-draft.md - draft PR text, melee fine physical (on hold)
+- docs/research/pr-skmelee3-d2-draft.md - draft PR text, undead / Blunt bonus with the corrected gate (on hold)
+- docs/research/lockstep-p3.md - lockstep probe P3: unhooked control and k=1/2/4 runs, frame rate, kills per real and per game minute, why the bot breaks under k, what Tier A supports
+- docs/timescale.md | how to run the bot with D2BOT_TIMESCALE=k next to the clock hook; game-clock vs host-clock wait classification | ops
+- docs/research/smiteblock-trace.md | Smite vs the block check: game.exe 1.14d lands every blow (V run, 96,000 cases), d2d lets a block stop it; bot findings, drill recipe
+- docs/research/alignment2-trace.md - alignment (stat 0xac) per unit kind and the undead-blow gate of FUN_0057b7d0, game.exe 1.14d (card alignment2)
+- CodeRabbit limits and bundle budget: [research/coderabbit-limits-20261102.md](research/coderabbit-limits-20261102.md)
+- docs/process/credit.md: how credit is written for upstream PRs (author, Traced-by, Reported-by, Agent), tools/credit usage; docs/community/credits-ledger.md: contributor names and consent
+- docs/process/coderabbit-prescan.md - CodeRabbit pre-scan runbook: install, fork config, quota test, bundle workflow, CLI
+- docs/research/lockstep-p4.md: lockstep hook re-measured at k=2 and k=4 with the scaled bot clock
+- docs/research/rebase174-20261102.md - re-rebase of the PR candidates onto upstream main after PR 174: old and new heads, conflicts, counts, parity
+- docs/research/pr-bundle-1-draft.md - draft body of the combined PR (bundle 1), size and checks
+- docs/process/baseline-runs.md | section 10: hooked lanes (--timescale K), game-time conversion, regime flag, watchdog | process
+- docs/research/pr-bundle-1-verifier.md: independent verifier of PR bundle 1 (ground own harness, integration, CI parity, hygiene, verdict)
+- docs/research/pr-bundle-1-body.md: final PR body of bundle 1 (card bundlefinal)
+- docs/research/pr-monsterpace-a-draft.md: PR A draft (Act 1 think paces, Blood Raven, shaman corpse reach): counts, det, CI parity, limits.
+- docs/research/pr-monsterpace-b-draft.md: PR B draft (monster base velocity 75): oracle, reach, det, CI parity, limits.
+- docs/research/pr-nmlevel-draft.md: PR draft for the Nightmare / Hell monster level rule (candidate local/nmlevel-v5).
+- docs/research/pr-playerroll-draft.md: PR draft for the player-side missile roll bundle (element roll top, physical roll in 256ths, -100 floor), counts, reach, side effect.
+- docs/research/verify-smiteblock.md: independent verifier of the Smite-vs-block trace (own oracle, other skills, proposed d2d diff)
+- docs/research/review-community-prs-20261102.md - review of community PRs 19, 22, 23 (verdicts, spot checks, draft comments for the user)
+- docs/research/sorcrest2-trace.md | Sorceress rest of skills part 2: Inferno, Blaze, Enchant do functions run in game.exe, burst rim on the real d2d build (D2, D4, D5, D7)

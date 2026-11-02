@@ -7,6 +7,7 @@ import (
 
 	"d2lod-bot/internal/cubejobs"
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/town/panel"
 )
@@ -203,6 +204,11 @@ func (c *Input) Interact(t input.Target) error {
 			g.Mode = d2.ItemModeStored
 			if body, ok := map[string]int{"msf": d2.BodyRHand, "vip": d2.BodyNeck}[w.base(g).Code]; ok && w.AutoEquipQuest {
 				g.Item.Where, g.Item.Body, g.Mode = d2.ContEquipment, body, d2.ItemModeEquipped
+				w.Items = append(w.Items, g)
+				return nil
+			}
+			if w.AutoWearWeapon && w.base(g).Kind == data.KindWeapon && w.noneWorn(d2.BodyRHand) {
+				g.Item.Where, g.Item.Body, g.Mode = d2.ContEquipment, d2.BodyRHand, d2.ItemModeEquipped
 				w.Items = append(w.Items, g)
 				return nil
 			}
@@ -651,4 +657,14 @@ func (w *World) rightEquip(i int) bool {
 		return true
 	}
 	return false
+}
+
+// noneWorn reports whether nothing is worn at the body location.
+func (w *World) noneWorn(body int) bool {
+	for _, u := range w.Items {
+		if u.Item.Where == d2.ContEquipment && u.Item.Body == body {
+			return false
+		}
+	}
+	return true
 }

@@ -1,0 +1,3 @@
+BACKLOG: - VERIFYFREEZEEND2 done (docs/research/verifyfreezeend2-trace.md): a think due during a get-hit runs the AI driver at its frame on game.exe, d2d holds it to the GH end (D1, V run 1,133 of 1,133 differ, 0 of 1,371 after the GH); a freeze during GH drops the GH end event (V run 3,000); open: run the attack start out of GH (V read only), decide whether d2d should stop holding the think, D2 d2d run
+INDEX: - docs/research/verifyfreezeend2-trace.md: think due during a get-hit and freeze during a get-hit, game.exe vs d2d (VERIFY-AIDEL second pass)
+CHANGELOG: - VERIFYFREEZEEND2: docs/research/verifyfreezeend2-trace.md, own emulator harness tools/emu/vfe2_*; game.exe runs the AI think during a get-hit, d2d holds it (D1)

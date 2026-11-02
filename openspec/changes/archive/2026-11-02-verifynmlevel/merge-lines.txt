@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-NMLEVEL done: READY WITH CHANGES (rule holds, head 0 start-level mismatches on 88,951 units and the full grid; add 3 includes to test_game_missiles.cpp; name the sample): docs/research/pr-nmlevel-verifier.md
+INDEX: docs/research/pr-nmlevel-verifier.md - independent check of local/nmlevel (Nightmare / Hell area monster level), own harness in docs/research/pr-nmlevel-verifier/
+CHANGELOG: Added docs/research/pr-nmlevel-verifier.md and its harness: independent verification of the nmlevel candidate.

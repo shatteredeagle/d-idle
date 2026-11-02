@@ -1,0 +1,3 @@
+BACKLOG: #8 VERIFY-WAYPOINT (second pass) done: claim holds (writer FUN_0055b720 only; refusal = field + 10000 > tick, unsigned); 59,309 of 132,964 reproduced with game.exe code vs d2d's own pre-fix binary; new: tick-wrap quirk, hostile reachable by C->S 0x5d (I); no PR candidate, no ledger row; docs/research/verifywaypoint2-trace.md
+INDEX: docs/research/verifywaypoint2-trace.md | second independent check of the waypoint refusal window: writers/readers of pcdata+0x160, game.exe vs d2d's own binary on 232,964 cases, D1.. B1.. | research
+CHANGELOG: verifywaypoint2: docs/research/verifywaypoint2-trace.md and tools/emu/vw2_*: waypoint refusal claim re-verified against d2d's own test binary (docs and emulator scripts only)

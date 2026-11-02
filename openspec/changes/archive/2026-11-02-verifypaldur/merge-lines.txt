@@ -1,0 +1,3 @@
+BACKLOG: - VERIFYPALDUR: independent re-check of paldur-trace.md, durability rules VERIFIED with own model (docs/research/verifypaldur.md)
+INDEX: - docs/research/verifypaldur.md: independent verification of the PALDUR durability trace (claims, limits, one prose error)
+CHANGELOG: - docs: verifypaldur independent check of the durability-loss trace (docs/research/verifypaldur.md).

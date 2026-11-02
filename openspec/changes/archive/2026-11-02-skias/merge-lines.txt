@@ -1,0 +1,3 @@
+BACKLOG: SKIAS partial: docs/research/sk-ias-trace.md (d2d formula and breakpoints; game.exe attack branch of 00623f50 still to run under the emulator)
+INDEX: docs/research/sk-ias-trace.md - swing speed / IAS / WSM, d2d side read, game.exe side open (partial)
+CHANGELOG: SKIAS partial desk trace of the swing frame count (docs/research/sk-ias-trace.md, tools/emu/skias_bp.py)

@@ -5,7 +5,7 @@ Runs next to upstream's harness (psi29a/d2decomped tools/emu: emu.py) with sk_me
 (card skmelee) beside it; the d2d side is tools/emu/sk_melee2_test.cpp built on the upstream
 tree as tests/game/test_melee.cpp.
 
-    python sk_melee2.py gen 100000 7 > c7.tsv          # the cases (the C++ side only reads them)
+    python sk_melee2.py gen 100000 7 [UREPS] > c7.tsv   # the cases (the C++ side only reads them); UREPS cases per undead cell (default 25)
     python sk_melee2.py game c7.tsv > g7.tsv           # game.exe's own code under unicorn
     <build>/tests/test_melee --melee c7.tsv > d7.tsv   # d2d's make_fighter + player_blow
     python sk_melee2.py cmp c7.tsv g7.tsv d7.tsv
@@ -72,7 +72,7 @@ def dline(tag, i, f, extra=()):
     return " ".join(str(v) for v in (tag, i, f["s0"], f["s1"], *(f[k] for k in DKEYS), g0, g1, *extra))
 
 
-def gen(cases, seed):
+def gen(cases, seed, ureps=25):
     rng = random.Random(seed & M32)
     out = []
     edges = [(ar, pct, d) for ar in (-40, -1, 0, 1, 7, 99, 100, 101) for pct in (-90, -33, -1, 0, 1, 33) for d in (-10, 0, 1, 50, 100)]
@@ -94,7 +94,7 @@ def gen(cases, seed):
         for weapon, blunt in ((0, 0), (1, 0), (1, 1)):
             for s122 in (-60, -1, 0, 1, 50):
                 for ed0 in (0, 35):
-                    for _ in range(25):
+                    for _ in range(ureps):
                         f = dmg_fields(rng, weapon); f["eskill"] = ed0
                         out.append(dline("U", i, f, (undead, blunt, s122))); i += 1
     i = 0
@@ -199,15 +199,16 @@ def cmp(cpath, gpath, dpath):
         if int(dl[2]) == 0:
             r["miss"] += 1
             continue
-        got, phys = int(gl[2]), int(dl[3])
+        got = int(gl[2])
+        mine = int(dl[4]) * 256 + int(dl[5]) if len(dl) > 5 else int(dl[3]) * 256     # d2d's physical in 256ths: damage x 256 + frac
         if tag == "M": k = "weapon" if f["weapon"] else "barehanded"
         elif tag == "U": k = f"undead{f['undead']} {'blunt' if f['blunt'] else 'weapon' if f['weapon'] else 'bare'} 122{'+' if f['s122'] > 0 else '0' if f['s122'] == 0 else '-'}"
         elif tag == "F": k = f"dp{f['dp']} e{f['eskill']}"
         else: k = f"off{f['off']} {'weapon' if f['weapon'] else 'bare'}"
         c = r["cat"].setdefault(k, [0, 0, 0, 0])
-        c[0] += 1; r["sum"] += got - (phys << 8); c[3] += got - (phys << 8)
-        if max(got >> 8, 1) != phys: r["whole"] += 1; c[1] += 1
-        if got != phys << 8: r["fine"] += 1; c[2] += 1
+        c[0] += 1; r["sum"] += got - mine; c[3] += got - mine
+        if got >> 8 != mine >> 8: r["whole"] += 1; c[1] += 1
+        if got != mine: r["fine"] += 1; c[2] += 1
     for tag, r in rep.items():
         if tag == "H":
             print(f"H to-hit: {r['n']} cases, {r['whole']} differ {r['cat']}")
@@ -224,6 +225,6 @@ if __name__ == "__main__":
     if "--exe" in argv:
         k = argv.index("--exe"); exe = argv[k + 1]; del argv[k:k + 2]
     what = argv[0]
-    if what == "gen": print("\n".join(gen(int(argv[1]), int(argv[2]))))
+    if what == "gen": print("\n".join(gen(int(argv[1]), int(argv[2]), int(argv[3]) if len(argv) > 3 else 25)))
     elif what == "game": game(argv[1], exe)
     elif what == "cmp": cmp(argv[1], argv[2], argv[3])

@@ -602,6 +602,8 @@ func (t *Town) sellTo(ctx context.Context, list []d2.Unit, rep *ChoreReport) (re
 	if err != nil {
 		return nil, err
 	}
+	t.logWorn("sell: worn before")
+	defer t.logWorn("sell: worn after")
 	for _, u := range list {
 		cur, err := t.current()
 		if err != nil {
@@ -609,6 +611,12 @@ func (t *Town) sellTo(ctx context.Context, list []d2.Unit, rep *ChoreReport) (re
 		}
 		fresh, ok := findIn(cur.Inventory, u.ID)
 		if !ok {
+			continue
+		}
+		// Only pack items are sold. A worn item (or the start kit) never reaches the vendor from here: findIn looks at
+		// every unit, so a stale list or a reused id must not turn into a click on a worn slot (KITSTALL2).
+		if fresh.Item == nil || fresh.Item.Where != d2.ContInventory || fresh.Item.Flags&d2.FlagStartItem != 0 {
+			t.e.Log.Warn("sell: refused, not a sellable pack item", "item", t.nameOf(fresh))
 			continue
 		}
 		g0 := cur.Player.Gold
@@ -647,6 +655,7 @@ func (t *Town) sellTo(ctx context.Context, list []d2.Unit, rep *ChoreReport) (re
 		}
 		rep.Sold++
 		rep.Earned += after.Player.Gold - g0
+		t.e.Log.Info("sell: sold", "item", t.nameOf(fresh), "gold", after.Player.Gold-g0)
 	}
 	return refused, nil
 }
@@ -776,4 +785,18 @@ func (t *Town) poorKit(s *d2.Snapshot) bool {
 	}
 	bs := belt.Read(t.e.Data, s.Inventory)
 	return bs.Count[belt.HP]+bs.Count[belt.RV]+belt.PackCount(t.e.Data, s.Inventory, belt.HP) < 2
+}
+
+// logWorn names every worn item. sellTo logs it before and after each vendor so a lost weapon or glove (KITSTALL2, U:
+// how it left the body is not in the logs) shows which vendor step took it.
+func (t *Town) logWorn(msg string) {
+	s, err := t.current()
+	if err != nil || s.Inventory == nil {
+		return
+	}
+	var names []string
+	for _, u := range s.Inventory.Container(d2.ContEquipment) {
+		names = append(names, fmt.Sprintf("%d:%s", u.Item.Body, t.nameOf(u)))
+	}
+	t.e.Log.Info(msg, "worn", names, "gold", s.Player.Gold)
 }

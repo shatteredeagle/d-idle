@@ -555,3 +555,33 @@ func TestRejuvIsCapped(t *testing.T) {
 		t.Errorf("at the cap a Full replaces a regular: %v", v)
 	}
 }
+
+// KITSTALL2: the game wears a looted weapon into an empty weapon slot. A bow on a Sorceress must go back to the pack,
+// on the Amazon it stays.
+func TestPickUpTakesOffBowWornByTheGame(t *testing.T) {
+	for _, tc := range []struct {
+		class    d2.Class
+		wantWorn bool
+	}{{d2.Sorceress, false}, {d2.Barbarian, false}, {d2.Amazon, true}} {
+		l, r := newLooter(t)
+		w := r.W
+		w.AutoWearWeapon = true
+		w.Player.Class = tc.class
+		bow := w.AddGround("sbw", 2, 6021, 4931)
+		rep, err := l.PickUp(context.Background(), loot.PickOpts{Names: []string{"Short Bow"}})
+		if err != nil || len(rep.Picked) != 1 {
+			t.Fatalf("%v: %+v %v", tc.class, rep, err)
+		}
+		s, _ := w.Snapshot()
+		u, ok := findID(s, bow.ID)
+		if !ok {
+			t.Fatalf("%v: bow gone", tc.class)
+		}
+		if worn := u.Item.Where == d2.ContEquipment; worn != tc.wantWorn {
+			t.Fatalf("%v: worn %v, want %v", tc.class, worn, tc.wantWorn)
+		}
+		if w.UI[d2.UIInventory] != 0 || w.Cursor != nil {
+			t.Fatalf("%v: panel open or cursor held", tc.class)
+		}
+	}
+}

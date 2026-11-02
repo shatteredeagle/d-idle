@@ -1,0 +1,3 @@
+BACKLOG: - PALAURA: done offline (docs/research/palaura-trace.md): aura filter 0x12003 / 0xa783 / 0x4a283 and area search decoded and run in game.exe, enemy hit and Prayer mana / state 85 run; deviations D1..D9 vs d2d, drills P1..P4 pending (live half is maintainer-only), no PR candidate
+INDEX: - docs/research/palaura-trace.md: how an aura applies in game.exe 1.14d (target filter, area search, enemy hit per pulse, Prayer mana and state 85) vs d2d vs the bot; tools/emu/palaura_*
+CHANGELOG: - docs: palaura-trace, the Paladin aura apply decomposed (area search disc, aurafilter bits, enemy roll and resist, Prayer mana and state 85) with game.exe run under the emulator (docs/research/palaura-trace.md).

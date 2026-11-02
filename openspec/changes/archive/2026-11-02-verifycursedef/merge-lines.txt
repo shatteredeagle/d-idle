@@ -1,0 +1,3 @@
+BACKLOG: verifycursedef (2026-11-02): independent check of SKCURSEVAL (CONFIRMED WITH CAVEATS: real game.exe calc machine, 0 diff on 8,810 own cases, but only lvl is ever an input; ledger count inflated), SKDEFENDERS (Q4 rule V read holds; d2d effres is a line copy), SKSHIELD (attach rule V read holds; 382-scenario run is self-consistency); docs/research/verify-cursedef.md
+INDEX: docs/research/verify-cursedef.md: independent verifier of skcurseval / skdefenders / skshield traces (verdicts per claim, own oracle tools/emu/vcd_*)
+CHANGELOG: docs: verifier report for the curse-value, defender and shield first-pass traces (verify-cursedef.md)

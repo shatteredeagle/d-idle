@@ -6,3 +6,11 @@ date	item	issue	action	detail
 2026-11-01	VERIFY-SKRESIST	13	partly	comment of what is covered; item text narrowed in open-work.md
 2026-11-01	SKSHIELD	15	partly	comment of what is covered; item text narrowed in open-work.md
 2026-11-01	SKCURSEVAL	16	partly	comment of what is covered; item text narrowed in open-work.md
+2026-11-02	VERIFY-SKMANA	7	done	docs/research/verify-skmana.md
+2026-11-02	VERIFY-WAYPOINT	8	done	docs/research/verify-waypoint.md
+2026-11-02	VERIFY-SKMELEE2	12	done	docs/research/verify-skmelee2.md
+2026-11-02	VERIFY-SKRESIST	13	done	docs/research/verify-skresist.md
+2026-11-02	SKGEARAR	14	done	docs/research/sk-gearar-trace.md
+2026-11-02	SKSHIELD	15	done	docs/research/skshield-trace.md
+2026-11-02	SKCURSEVAL	16	done	docs/research/skcurseval-trace.md
+2026-11-02	SKDEFENDERS	17	done	docs/research/skdefenders-trace.md

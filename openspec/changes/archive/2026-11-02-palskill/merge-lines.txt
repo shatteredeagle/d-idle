@@ -1,0 +1,3 @@
+BACKLOG: PALSKILL done: d2d builds Smite, Zeal and Sacrifice (no plain-attack fallback); calc slots and to-hit 0 differ in 40,720 cases; Smite damage D1 (stat 111) and D2 (min = max) small deviations; Sacrifice price and Zeal reach U: docs/research/palskill-trace.md
+INDEX: docs/research/palskill-trace.md - Smite, Zeal and Sacrifice in game.exe vs d2d vs the bot (own harness tools/emu/pal2*)
+CHANGELOG: Added docs/research/palskill-trace.md and tools/emu/pal2*: dispatch of Smite, Zeal and Sacrifice, calc and Smite damage differentials, deviations D1 to D9, bot findings B1 to B5.

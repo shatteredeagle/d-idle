@@ -1,0 +1,1 @@
+CHANGELOG: - ci: fix board archive research paths and chunker groom privacy-scan false positive (Scripts job).

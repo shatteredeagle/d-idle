@@ -2,6 +2,7 @@ package input
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"math"
@@ -82,8 +83,8 @@ type Clock interface {
 
 type wallClock struct{}
 
-func (wallClock) Now() time.Time        { return time.Now() }
-func (wallClock) Sleep(d time.Duration) { time.Sleep(d) }
+func (wallClock) Now() time.Time        { return gclock.Now() }
+func (wallClock) Sleep(d time.Duration) { gclock.Sleep(d) }
 
 // Game drives the real game through the helper.
 type Game struct {

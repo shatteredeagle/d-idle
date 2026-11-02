@@ -3,6 +3,7 @@ package input
 import (
 	"bufio"
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -403,7 +404,7 @@ func Bind(ctrl Controller, src mem.Source) error {
 		return err
 	}
 	for i := 0; i < 8; i++ {
-		time.Sleep(40 * time.Millisecond)
+		gclock.Sleep(40 * time.Millisecond)
 		if mx, my, err := r.Mouse(); err == nil && mx == x && my == y {
 			return nil
 		}
@@ -506,20 +507,20 @@ func (o *OOG) Click(x, y int) error {
 		"sleep "+ms(o.T.Press()),
 		fmt.Sprintf("up l %d %d", x, y),
 	)
-	time.Sleep(o.T.Gap())
+	gclock.Sleep(o.T.Gap())
 	return err
 }
 
 func (o *OOG) Key(name string) error {
 	err := o.C.Seq(fmt.Sprintf("key press %s hold=%s", name, ms(o.T.Press())))
-	time.Sleep(o.T.Gap())
+	gclock.Sleep(o.T.Gap())
 	return err
 }
 
 // TypeChar lets OOG satisfy launch.Typer (character names are typed with WM_CHAR).
 func (o *OOG) TypeChar(r rune) error {
 	err := o.C.TypeChar(r)
-	time.Sleep(o.T.Gap())
+	gclock.Sleep(o.T.Gap())
 	return err
 }
 

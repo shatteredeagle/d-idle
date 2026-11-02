@@ -1,0 +1,3 @@
+BACKLOG: SKZEROHIT done (static, V read): docs/research/sk-zero-hit-trace.md; zero-damage hit keeps knockback, no get-hit, no wake; Lightning Enchanted bolts on a no-recovery hit; differentials D1/D2 open
+INDEX: docs/research/sk-zero-hit-trace.md - what a zero-damage hit still triggers (SKZEROHIT, static)
+CHANGELOG: Added docs/research/sk-zero-hit-trace.md (SKZEROHIT: zero-damage hit effects in game.exe vs d2d, static)

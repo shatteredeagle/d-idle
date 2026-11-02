@@ -5,6 +5,7 @@ package town
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"math"
@@ -434,7 +435,7 @@ func (t *Town) UseWeapon(ctx context.Context, code string, fn func(context.Conte
 	rctx := ctx
 	if ctx.Err() != nil { // a cancelled run still restores the weapon
 		var cancel context.CancelFunc
-		rctx, cancel = context.WithTimeout(context.WithoutCancel(ctx), 20*time.Second)
+		rctx, cancel = gclock.WithTimeout(context.WithoutCancel(ctx), 20*time.Second)
 		defer cancel()
 	}
 	var rerr error

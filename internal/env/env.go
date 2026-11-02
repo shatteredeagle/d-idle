@@ -4,6 +4,7 @@
 package env
 
 import (
+	"d2lod-bot/internal/gclock"
 	"log/slog"
 	"time"
 
@@ -27,8 +28,9 @@ type Clock interface {
 // RealClock is the wall clock.
 type RealClock struct{}
 
-func (RealClock) Now() time.Time        { return time.Now() }
-func (RealClock) Sleep(d time.Duration) { time.Sleep(d) }
+// Now and Sleep run on game time (internal/gclock): identical to the wall clock unless D2BOT_TIMESCALE is set.
+func (RealClock) Now() time.Time        { return gclock.Now() }
+func (RealClock) Sleep(d time.Duration) { gclock.Sleep(d) }
 
 // Env is everything a behavior needs. Construct it once per instance and pass it down; never reach for globals.
 type Env struct {

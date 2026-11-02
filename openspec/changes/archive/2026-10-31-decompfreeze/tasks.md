@@ -24,6 +24,12 @@ gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict"
 merge: 2adbd6b
 result: "Local upstream candidate fix/freeze-rules on #155 head ddc8281d (C5 9ec91600, C3 39ef104e, C4 61620d08, tooling bbf506c6): real d2d builds 225,748 cases, 185,746 -> 0 (per claim C5 48,946, C3 78,501, C4 58,299 -> 0); C3 wording corrected (champions carry flag 8); CI-class checks clean. Offline, nothing verified live, nothing pushed; verifier and det hashes open."
+credit:
+  component: Freeze rules (trace)
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifyfreeze, independent run)"]
+  consent: none
 ```
 
 ## 1. Work

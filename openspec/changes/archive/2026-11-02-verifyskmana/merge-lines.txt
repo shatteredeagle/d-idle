@@ -1,0 +1,3 @@
+BACKLOG: - VERIFY-SKMANA: done, claims C1 C2 C3 C5 C6 hold (20,000 cases, own harness), C4 untested (docs/research/verify-skmana.md)
+INDEX: - docs/research/verify-skmana.md: independent re-check of the mana check and payment (FUN_0056c160, FUN_0056bfe0), own harness tools/emu/vsm_diff.py
+CHANGELOG: - docs: verify-skmana, independent re-check of the skill mana check and payment against game.exe (docs/research/verify-skmana.md).

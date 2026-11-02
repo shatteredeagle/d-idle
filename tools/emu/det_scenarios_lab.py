@@ -20,6 +20,8 @@ Scenarios (V = run, see docs/research/det-hashes-2026-11-01b.md):
                                          Ice Bolt 39, Ice Blast 45, Frost Nova 44, Glacial Spike 55, one after the
                                          other on a freshly spawned target of the class, cast point blank; the log
                                          has the hp, chill and stun of the target per block
+    hit_phys                             druid: Twister, Shock Wave, Tornado (physical missile skills, card playerroll),
+                                         one after the other on a freshly spawned plain zombie, cast point blank
     merc                                 hired merc (type 0) and three zombies
     pet                                  druid with a Spirit Wolf and a Raven and two zombies
     follow                               druid with a wolf and a merc, the player walks about, zombies chase
@@ -37,11 +39,13 @@ SOCK = os.environ.get("D2D_SOCK", "d2d.sock")
 OLD = {"passive", "fight", "cold", "static", "cold2"}
 OLD_SKILL = {"cold": 39, "static": 42, "cold2": 64}  # Ice Bolt, Static Field, Frozen Orb
 HIT_SKILLS = (39, 45, 44, 55)  # Ice Bolt, Ice Blast, Frost Nova, Glacial Spike
+HIT_SKILLS_PHYS = (240, 243, 245)  # Twister, Shock Wave, Tornado: Skills.txt MinDam / MaxDam, no element
 HIT_CLASS = {
     "plain": "zombie4 1",  # Drowned Carcass, a plain zombie with 147 life: one point of a cold skill does not kill it
     "champion": "zombie4 1 near champion",
     "unique": "zombie4 1 near unique",
     "boss": "bloodraven 1",  # a MonStats boss-column monster, not a unique
+    "phys": "zombie4 1",  # the plain target again, hit by the druid's physical missiles
     "immune": "zombie1 1",  # in Hell (MonStats ColdResist(H) 100) the plain zombie is cold immune: a cold blow deals 0 damage
     "minion": None,  # Hell Blood Moor has a unique pack: its minions (boss column "minion") are the targets, no spawn verb makes one
 }
@@ -165,15 +169,16 @@ def old_scenario(run, mode):
 
 
 def hit_scenario(run, cls):
+    skills = HIT_SKILLS_PHYS if cls == "phys" else HIT_SKILLS
     setup(run, 30, life=9000 if cls in HELL else 900)
     if cls != "minion":
         run.do("debug kill")
     run.do("step 5")
-    for skill in HIT_SKILLS:
+    for skill in skills:
         run.do(f"debug points {skill} 1")
     run.do("step 3")
     used = set()
-    for skill in HIT_SKILLS:
+    for skill in skills:
         if cls != "minion":
             run.do("debug kill")
         run.do("step 3")
@@ -241,7 +246,9 @@ def main(argv):
     mode, tag = argv[1], argv[2]
     outdir = argv[3] if len(argv) > 3 else "out"
     os.makedirs(outdir, exist_ok=True)
-    if mode in OLD_SKILL or mode.startswith("hit_"):
+    if mode == "hit_phys":
+        cls = "5"  # druid
+    elif mode in OLD_SKILL or mode.startswith("hit_"):
         cls = "4"
     else:
         cls = CLASS_OF[mode]

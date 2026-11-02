@@ -1,0 +1,3 @@
+BACKLOG: VERIFYPRICES done (card verifyprices): Opus verify of fix/vendor-prices-followon-v2: both rules HOLD (head 0 mismatches on 60,000 own mult cases and 4,664 gate cases), but NOT READY as is: 3 rules.hpp conflicts with upstream main, whose a9548d38 already has divide-first; send only the repair gate, rebased (docs/research/pr-prices-verifier.md)
+INDEX: docs/research/pr-prices-verifier.md - Opus verifier of the vendor prices follow-on (repair gate holds; divide-first already upstream; rebase needed)
+CHANGELOG: verifyprices: independent Opus verification of the vendor prices follow-on (docs and tools/emu/vpr_* only)

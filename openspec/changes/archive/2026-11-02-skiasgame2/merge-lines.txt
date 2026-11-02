@@ -1,0 +1,3 @@
+BACKLOG: SKIAS second pass done (card skiasgame2): game.exe attack rate FUN_00623f50 run under the emulator; plain A1/A2/TH/KK rate equals d2d attack_speed (198,988 cases, 0 mismatches); open: sequence mode -30 (D1), shapeshift and skill record flag unproven, see docs/research/skiasgame2-trace.md
+INDEX: docs/research/skiasgame2-trace.md | SKIAS second pass: game.exe attack animation rate (IAS, WSM, skill speed) run under the emulator vs d2d attack_speed / attack_ticks; sequence mode -30 deviation
+CHANGELOG: skiasgame2: docs/research/skiasgame2-trace.md, tools/emu/skiasgame2_rate.py: game.exe attack rate equals d2d over 198,988 cases; sequence-mode -30 and dual-wield rule listed as deviations; ledger F07 updated

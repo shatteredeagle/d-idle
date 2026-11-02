@@ -8,6 +8,71 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- sorcrest2: trace of Inferno, Blaze and Enchant run in game.exe (one flame per do call, Enchant picks the ally else the caster, Blaze's cast makes only the state) and the Fire Ball burst rim on the real d2d build (549 of 16,875 cases differ); docs and emulator scripts only
+- reviewprs: review of community PRs 19, 22 and 23 with emulator spot checks and draft comments (docs only)
+- verifysmite: independent verification of SMITEBLOCK; block does not stop Smite in game.exe (V run), d2d fix proposed, docs only
+- Docs: PR draft for the player-side missile damage roll bundle; det scenario hit_phys.
+- Docs: PR draft and population comparison tool for the Nightmare / Hell monster level rule (docs/research/pr-nmlevel-draft.md, tools/emu/nm_pop.py).
+- Docs: the monster movement pace PR draft split into two (think paces + Blood Raven + shaman corpse reach; base velocity 75), rebased on current upstream main.
+- bundlefinal: final PR body for bundle 1 and credit blocks on its cards
+- verifybundle: independent verification of PR bundle 1; ground footprint and burst roll confirmed (base 476 of 3,726 hit cases differ, head 0), docs only
+- lockstepbase: d2bot logs `gclock: timescale K` at start when the clock scale is not 1; runbook section 10 for hooked baseline lanes (tooling in the ops repo, not run live).
+- Added docs/research/rebase174-20261102.md and pr-bundle-1-draft.md: the four PR candidates rebased onto upstream main after PR 174 and assembled into one bundle branch with counted differentials.
+- Lockstep P4 live measurement: with the bot clock scaled the time hook at k=2 and k=4 no longer breaks shop chores or kill rate (docs only)
+- crsetup: .coderabbit.yaml revised and schema-validated; CodeRabbit pre-scan runbook (docs and config only)
+- docs: credit kit for upstream PRs (credit: card block, tools/credit/credit.py, credits ledger, GPL carry-over sentence in the contributor docs).
+- docs/research/coderabbit-limits-20261102.md added (CodeRabbit review limits, upstream batch sizes, bundle budget)
+- Research: alignment2-trace.md, game.exe gives alignment 2 to mercs, Shadows and all player-side units, so the undead / Blunt blow bonus gate (player or alignment 2) covers them; tools/emu/al2_run.py native runs.
+- Added docs/research/smiteblock-trace.md and tools/emu/sb_* (SMITEBLOCK): a block does not stop Smite in game.exe 1.14d, d2d deviates (V run, no PR candidate).
+- botclock: internal/gclock time-scale facility (D2BOT_TIMESCALE, default 1 = unchanged); env.RealClock and the game-clock timeouts use it; guard test for new direct time calls
+- Research: the original-game clock hook scales the frame rate exactly up to 4x (100 fps), but the bot's own real-time waits make k=2 yield half the work per game minute and k=4 unusable
+- contribid: AGENTS.md no longer tells community contributors to commit as Claude; reproducibility rule and PR template checkboxes
+- Added docs/research/pr-skmelee3-d1-draft.md and pr-skmelee3-d2-draft.md: the SKMELEE3 candidate split in two upstream-ready branches with counted differentials.
+- A looted bow is taken off a non-Amazon the game wore it on, the sell chore never offers worn or start items, and a removed start weapon is worn again.
+- CONTRIBUTORS.md added; Credit section in docs/process/chunker.md
+- Fixed: town walk no longer loops on a gate that stalled every approach; a Sorceress with a stray bow keeps casting and no longer spends her gold on Arrows.
+- prbuildprices2: repair-gate PR draft and branch (docs only)
+- Added docs/research/pr-skmelee3-draft.md and sm3_run.sh / sm3_probe.py: the SKMELEE3 candidate built in the private fork with a counted differential.
+- Docs: freeze rules PR draft and prep notes (docs/research/pr-freeze-rules-draft.md).
+- Added docs/research/verifypalskill2.md and tools/emu/vp2*: independent check of the Smite, Zeal and Sacrifice deviations.
+- Added docs/research/pr-skmelee3-verifier.md: independent check of the SKMELEE3 fork candidate (fine physical, undead/Blunt bonus).
+- verifyprices: independent Opus verification of the vendor prices follow-on (docs and tools/emu/vpr_* only)
+- docs: verifypaldur independent check of the durability-loss trace (docs/research/verifypaldur.md).
+- Added docs/research/sk-zero-hit-trace.md (SKZEROHIT: zero-damage hit effects in game.exe vs d2d, static)
+- verifypalaura: independent check of PALAURA (docs/research/verifypalaura.md, tools/emu/vp_check.py)
+- SKSTATEEV state-event decomposition: docs/research/sk-state-events-trace.md (static; nothing run)
+- verifywaypoint2: docs/research/verifywaypoint2-trace.md and tools/emu/vw2_*: waypoint refusal claim re-verified against d2d's own test binary (docs and emulator scripts only)
+- Teleport room rule re-checked independently (verifyteleroom): holds on 150,225 emulator cases; limits and extra findings in docs/research/verifyteleroom-trace.md.
+- Docs: upstream PR candidate inventory and ranking for the next five slots (docs/research/pr-candidates-20261102.md).
+- docs: verifier report for the curse-value, defender and shield first-pass traces (verify-cursedef.md)
+- Added docs/research/palskill-trace.md and tools/emu/pal2*: dispatch of Smite, Zeal and Sacrifice, calc and Smite damage differentials, deviations D1 to D9, bot findings B1 to B5.
+- ci: fix board archive research paths and chunker groom privacy-scan false positive (Scripts job).
+- docs: palaura-trace, the Paladin aura apply decomposed (area search disc, aurafilter bits, enemy roll and resist, Prayer mana and state 85) with game.exe run under the emulator (docs/research/palaura-trace.md).
+- VERIFYFREEZEEND2: docs/research/verifyfreezeend2-trace.md, own emulator harness tools/emu/vfe2_*; game.exe runs the AI think during a get-hit, d2d holds it (D1)
+- skiasgame2: docs/research/skiasgame2-trace.md, tools/emu/skiasgame2_rate.py: game.exe attack rate equals d2d over 198,988 cases; sequence-mode -30 and dual-wield rule listed as deviations; ledger F07 updated
+- docs: paldur-trace, durability loss per hit and per block traced in game.exe and compared with d2d (docs/research/paldur-trace.md).
+- docs: original-game baseline runs 20261102 (4 rows, docs/probes/baseline-runs/20261102/record.md).
+- Docs: rebased the three open upstream PRs (#159, #160, #163) on current upstream main, held for a force-push decision; log in docs/research/openpr-log.md.
+- Research: lockstep probes P1 and P2 run on a hidden instance: the game frame counter runs at 25.00 fps, a null time hook changes nothing measurable and k=2 doubles the frame rate
+- Research: lockstep probes P1/P2 prepared (time-hook proxy builds against the game's own DLL and passes the offline tests); live runs pending
+- boardclean: contributor board cleanup, finished items closed and archived (docs/community only)
+- Docs: opened upstream PR #171 (monster base velocity 75 percent); posted log in docs/research/openpr-log.md.
+- no change
+- Docs: opened upstream PR #170 (Nightmare and Hell monster start level); posted log in docs/research/openpr-log.md.
+- Decomp item 15 (SKSHIELD): shield and off-weapon gear in the player's stat list traced and run (docs/research/skshield-trace.md, tools/emu/skshield_run.py, skshield_base.py); SKMELEE2's D7 settled, D8 given its game-side input.
+- docs: SKDEFENDERS trace (docs/research/skdefenders-trace.md) and emulator oracle tools/emu/skdef_*; docs/coverage ledger row F04 (defender side) and regenerated rule-coverage.md
+- Curse value calcs traced and differentialled (skcurseval-trace.md, tools/emu/sk_curseval*.py): equal d2d at every level 1..99; bot finding on Lower Resist vs magic
+- docs: original-game baseline runs 20261102 (1 rows, docs/probes/baseline-runs/20261102/record.md).
+- Docs: opened upstream PR #167 (monster think paces); posted log in docs/research/openpr-log.md.
+- SKIAS partial desk trace of the swing frame count (docs/research/sk-ias-trace.md, tools/emu/skias_bp.py)
+- docs/research/geararmore.md: second pass of gear attack rating terms (stats 179, 120 run on game.exe, 0 differ), tools/emu/gar_run.py gar_census.sh
+- Added docs/research/verifyresistq.md and tools/emu/vq_*.py: second-pass check of the monster modifier resist adds, curse values and the no-get-hit rule.
+- docs: verify-skmana, independent re-check of the skill mana check and payment against game.exe (docs/research/verify-skmana.md).
+- Independent verification of the resistance rules (verify-skresist.md, tools/emu/vr_resist.py): no rule fails
+- Added docs/research/verify-skmelee2.md and tools/emu/vm2_*: independent check of the player-blow deviations D1, D2, D4, D5, D6.
+- docs: VERIFY-AIDEL independent check of aidel and FUN_005a73e0 (0 differ in 352,800 cases)
+- SKGEARAR: trace of the gear attack-rating terms, FUN_0057d8a0 run natively (docs/research/sk-gearar-trace.md, tools/emu/sk_gearar.py)
+- Added docs/research/pr-nmlevel-verifier.md and its harness: independent verification of the nmlevel candidate.
 - no change
 - Docs: opened upstream PR #166 (player-side missile damage roll); posted log in docs/research/openpr-log.md.
 - bot logs: countable lines explore-giveup, tp-debounce-hold, tp-debounce-flip, kitgate-trip (docs/botlogs.md)

@@ -1,0 +1,49 @@
+group(deftype+mode, tohit, defense) | forced: (lands, resist, flags) x n | unforced
+dt0m1 hit0 def  0x0 | L/Y/0x0001x251 | x/-/-x251
+dt0m1 hit0 def  0x1 | L/Y/0x0001x474 | x/-/-x474
+dt0m1 hit0 def 0x10 | L/Y/0x0001x261 | x/-/-x261
+dt0m1 hit0 def  0x2 | L/Y/0x0001x255 | x/-/-x255
+dt0m1 hit0 def  0x3 | L/Y/0x0001x248 | x/-/-x248
+dt0m1 hit0 def  0x4 | L/Y/0x0001x251 | x/-/-x251
+dt0m1 hit1 def  0x0 | L/Y/0x0005x237 | L/Y/0x0005x237
+dt0m1 hit1 def  0x1 | L/Y/0x0011x469 | x/-/-x469
+dt0m1 hit1 def 0x10 | L/N/0x8001x248 | x/-/-x248
+dt0m1 hit1 def  0x2 | L/N/0x0101x236 | x/-/-x236
+dt0m1 hit1 def  0x3 | L/N/0x0111x241 | x/-/-x241
+dt0m1 hit1 def  0x4 | L/N/0x0081x268 | x/-/-x268
+dt0m3 hit0 def  0x0 | L/Y/0x0005x118 | L/Y/0x0005x118
+dt0m3 hit0 def  0x1 | L/Y/0x0011x205 | x/-/-x205
+dt0m3 hit0 def 0x10 | L/N/0x8001x119 | x/-/-x119
+dt0m3 hit0 def  0x2 | L/N/0x0101x106 | x/-/-x106
+dt0m3 hit0 def  0x3 | L/N/0x0111x103 | x/-/-x103
+dt0m3 hit0 def  0x4 | L/N/0x0081x115 | x/-/-x115
+dt0m3 hit1 def  0x0 | L/Y/0x0005x104 | L/Y/0x0005x104
+dt0m3 hit1 def  0x1 | L/Y/0x0011x226 | x/-/-x226
+dt0m3 hit1 def 0x10 | L/N/0x8001x99 | x/-/-x99
+dt0m3 hit1 def  0x2 | L/N/0x0101x116 | x/-/-x116
+dt0m3 hit1 def  0x3 | L/N/0x0111x121 | x/-/-x121
+dt0m3 hit1 def  0x4 | L/N/0x0081x102 | x/-/-x102
+dt1m1 hit0 def  0x0 | L/Y/0x0001x1098 | x/-/-x1098
+dt1m1 hit0 def  0x1 | L/Y/0x0001x2160 | x/-/-x2160
+dt1m1 hit0 def 0x10 | L/Y/0x0001x1069 | x/-/-x1069
+dt1m1 hit0 def  0x2 | L/Y/0x0001x1082 | x/-/-x1082
+dt1m1 hit0 def  0x3 | L/Y/0x0001x1090 | x/-/-x1090
+dt1m1 hit0 def  0x4 | L/Y/0x0001x1064 | x/-/-x1064
+dt1m1 hit1 def  0x0 | L/Y/0x0005x1093 | L/Y/0x0005x1093
+dt1m1 hit1 def  0x1 | L/Y/0x0011x2132 | x/-/-x2132
+dt1m1 hit1 def 0x10 | L/N/0x8001x1039 | x/-/-x1039
+dt1m1 hit1 def  0x2 | L/N/0x0101x1030 | x/-/-x1030
+dt1m1 hit1 def  0x3 | L/N/0x0111x1083 | x/-/-x1083
+dt1m1 hit1 def  0x4 | L/N/0x0081x1087 | x/-/-x1087
+cases 20000; land forced 20000, unforced 1552; damage out of [lo,hi]: forced 0 unforced 0 first []
+D smin 10 smax 10 ed 0 sb 0 str 0 lo 2560 hi 2814 n 400 distinct 203
+D smin 1 smax 1 ed 0 sb 0 str 0 lo 256 hi 511 n 400 distinct 206
+D smin 10 smax 20 ed 0 sb 0 str 0 lo 2562 hi 5119 n 400 distinct 366
+D smin 10 smax 10 ed 100 sb 0 str 0 lo 5120 hi 5629 n 400 distinct 285
+D smin 10 smax 10 ed 0 sb 100 str 0 lo 2560 hi 2814 n 400 distinct 194
+D smin 10 smax 10 ed 0 sb 0 str 100 lo 2560 hi 2815 n 400 distinct 198
+D smin 10 smax 10 ed 100 sb 100 str 0 lo 5121 hi 5631 n 400 distinct 275
+D smin 1 smax 24 ed 0 sb 130 str 0 lo 258 hi 6138 n 400 distinct 389
+D smin 18 smax 40 ed 0 sb 142 str 0 lo 4616 hi 10220 n 400 distinct 390
+D smin 10 smax 10 ed 50 sb 50 str 77 lo 4816 hi 5293 n 400 distinct 271
+cases with the undead query FUN_0063e990 called: 0

@@ -1,0 +1,3 @@
+BACKLOG: lockstep P1/P2 prepared (proxy DLL built and passes its offline suite); live runs wait for a hidden instance started by the main agent path, see docs/research/lockstep-p1p2.md
+INDEX: docs/research/lockstep-p1p2.md - lockstep probes P1/P2: preparation state, run plan, blockers
+CHANGELOG: Research: lockstep probes P1/P2 prepared (time-hook proxy builds against the game's own DLL and passes the offline tests); live runs pending

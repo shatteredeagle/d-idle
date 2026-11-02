@@ -1,0 +1,3 @@
+BACKLOG: - BASELINERUNS: original-game baseline set late1, 1 runs with rows (docs/probes/baseline-runs/20261102/record.md)
+INDEX: - docs/probes/baseline-runs/20261102/record.md: original-game baseline set 20261102, per-run quality flags and rows
+CHANGELOG: - docs: original-game baseline runs 20261102 (1 rows, docs/probes/baseline-runs/20261102/record.md).

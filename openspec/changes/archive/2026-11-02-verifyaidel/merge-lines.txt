@@ -1,0 +1,3 @@
+BACKLOG: - VERIFY-AIDEL done (docs/research/verify-aidel.md): FUN_005a73e0 holds over 352,800 cases on real MonStats rows; open: FUN_005a7c20 / freeze-end path and game type 3
+INDEX: - docs/research/verify-aidel.md: independent re-check of the monster think period aidel (VERIFY-AIDEL)
+CHANGELOG: - docs: VERIFY-AIDEL independent check of aidel and FUN_005a73e0 (0 differ in 352,800 cases)

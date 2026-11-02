@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"log/slog"
 	"sync/atomic"
@@ -118,7 +119,7 @@ func buildBehaviors(ctx context.Context, e *env.Env, o options, gameDir string, 
 	if !cfg.NoLeveler {
 		// New attack skills need a hotkey: the fighter binds what it knows after every spend that learned a skill.
 		lv := leveler.New(e, leveler.Options{Build: cfg.LevelerBuild, PlanDir: cfg.PlanDir, Pause: ref.pause, Rebind: func(ctx context.Context) error {
-			bctx, cancel := context.WithTimeout(ctx, 2*time.Minute)
+			bctx, cancel := gclock.WithTimeout(ctx, 2*time.Minute)
 			defer cancel()
 			return cb.EnsureHotkeys(bctx)
 		}})

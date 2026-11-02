@@ -107,6 +107,8 @@ Chat and help: the [d.idle Discord](https://discord.gg/U2v9q4h5UH). Rules and FA
 
 Want to help with decomps and verifications (with your own copy of the game and your own agent)? See [docs/contributing/agent-work.md](docs/contributing/agent-work.md).
 
+Who has contributed what: [CONTRIBUTORS.md](CONTRIBUTORS.md).
+
 This repository is the working repository: pull requests are merged here directly. Its history starts at an initial snapshot; the working history before it is kept privately.
 Read the rules in `AGENTS.md` (agents first, upstream style: small changes, tagged facts, no game data) before you open a pull request.
 How CI works, in one line: every push to `main` and every pull request runs `.github/workflows/ci.yml` (changecheck, leakcheck, hygiene, gofmt/vet, then the short tests); a `v*` tag also builds and publishes the release tarball.

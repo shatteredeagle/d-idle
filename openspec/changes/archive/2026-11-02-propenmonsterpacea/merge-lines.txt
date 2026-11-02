@@ -1,0 +1,3 @@
+BACKLOG: upstream #167 (monster think paces: Act 1 paces, Blood Raven home rule, unique Fallen Shaman corpse reach; 13 commits) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card). The velocity change (branch b) waits for it.
+INDEX: docs/research/openpr-log.md: posted log now also covers #167.
+CHANGELOG: Docs: opened upstream PR #167 (monster think paces); posted log in docs/research/openpr-log.md.
