@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
-   "clvl": 6,
+   "clvl": 7,
    "deaths": 0,
-   "doing": "Playing through the early game",
-   "kills": 595,
+   "doing": "Recovering after trouble",
+   "kills": 791,
    "name": "Freshc",
-   "potionsUsed": 44,
+   "potionsUsed": 56,
    "running": true,
-   "updated": "2026-11-02T17:59Z",
-   "uptime_seconds": 6028,
-   "xp": 16508
+   "updated": "2026-11-02T18:25Z",
+   "uptime_seconds": 7599,
+   "xp": 23965
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 595 kills, 0 deaths",
-    "value": "Freshc lvl 6"
+    "label": "d2lod (original game), 791 kills, 0 deaths",
+    "value": "Freshc lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793642408,
- "updated": "2026-11-02T18:00Z",
+ "ts": 1793643924,
+ "updated": "2026-11-02T18:25Z",
  "work": [
   {
    "state": "working",
