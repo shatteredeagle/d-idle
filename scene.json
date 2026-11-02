@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
-   "clvl": 4,
+   "clvl": 5,
    "deaths": 0,
-   "doing": "Recovering after trouble",
-   "kills": 1529,
+   "doing": "Doing chores in town",
+   "kills": 1613,
    "name": "Freshc",
-   "potionsUsed": 8,
+   "potionsUsed": 14,
    "running": true,
-   "updated": "2026-11-02T19:50Z",
-   "uptime_seconds": 1278,
-   "xp": 6495
+   "updated": "2026-11-02T19:55Z",
+   "uptime_seconds": 1578,
+   "xp": 9691
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,529 kills, 0 deaths",
-    "value": "Freshc lvl 4"
+    "label": "d2lod (original game), 1,613 kills, 0 deaths",
+    "value": "Freshc lvl 5"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793649030,
- "updated": "2026-11-02T19:50Z",
+ "ts": 1793649325,
+ "updated": "2026-11-02T19:55Z",
  "work": [
   {
    "state": "working",
