@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "clvl": 5,
    "deaths": 0,
-   "doing": "Doing chores in town",
-   "kills": 1613,
+   "doing": "Levelling up toward level 9",
+   "kills": 1695,
    "name": "Freshc",
-   "potionsUsed": 14,
+   "potionsUsed": 18,
    "running": true,
-   "updated": "2026-11-02T19:55Z",
-   "uptime_seconds": 1578,
-   "xp": 9691
+   "updated": "2026-11-02T20:00Z",
+   "uptime_seconds": 1908,
+   "xp": 11786
   }
  ],
  "runs_state": "running",
@@ -84,25 +84,25 @@
  ],
  "sources": [
   {
-   "area": "Rogue Encampment",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 5,
    "deaths": 0,
-   "doing": "Doing chores in town",
+   "doing": "Levelling up toward level 9",
    "id": "freshc-orig",
-   "kills": 1613,
-   "last_seen": 1793649300,
+   "kills": 1695,
+   "last_seen": 1793649600,
    "name": "Freshc",
    "running": true,
-   "started": 1793647722,
+   "started": 1793647692,
    "testing": false
   }
  ],
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,613 kills, 0 deaths",
+    "label": "d2lod (original game), 1,695 kills, 0 deaths",
     "value": "Freshc lvl 5"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793649325,
- "updated": "2026-11-02T19:55Z",
+ "ts": 1793649663,
+ "updated": "2026-11-02T20:01Z",
  "work": [
   {
    "state": "working",
