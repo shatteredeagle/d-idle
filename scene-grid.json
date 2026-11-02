@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Rogue Encampment",
+   "area": "Blood Moor",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Shopping and tidying up in town",
-   "kills": 1565,
+   "doing": "Recovering after trouble",
+   "kills": 1628,
    "name": "Fresha",
-   "potionsUsed": 60,
+   "potionsUsed": 63,
    "running": true,
-   "updated": "2026-11-02T14:00Z",
-   "uptime_seconds": 5182,
-   "xp": 109680
+   "updated": "2026-11-02T14:05Z",
+   "uptime_seconds": 5482,
+   "xp": 109882
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Rogue Encampment",
+   "area": "Blood Moor",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Shopping and tidying up in town",
+   "doing": "Recovering after trouble",
    "id": "fresha-orig",
-   "kills": 1565,
-   "last_seen": 1793628000,
+   "kills": 1628,
+   "last_seen": 1793628300,
    "name": "Fresha",
    "running": true,
    "started": 1793622818,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,565 kills, 0 deaths",
+    "label": "d2lod (original game), 1,628 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793628045,
- "updated": "2026-11-02T14:00Z",
+ "ts": 1793628347,
+ "updated": "2026-11-02T14:05Z",
  "work": [
   {
    "state": "working",
