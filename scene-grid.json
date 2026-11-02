@@ -69,13 +69,13 @@
    "clvl": 12,
    "deaths": 0,
    "doing": "Shopping and tidying up in town",
-   "kills": 275,
+   "kills": 316,
    "name": "Fresha",
    "potionsUsed": 3,
    "running": true,
-   "updated": "2026-11-02T11:15Z",
-   "uptime_seconds": 2840,
-   "xp": 95889
+   "updated": "2026-11-02T11:20Z",
+   "uptime_seconds": 3140,
+   "xp": 95904
   }
  ],
  "runs_state": "running",
@@ -91,8 +91,8 @@
    "deaths": 0,
    "doing": "Shopping and tidying up in town",
    "id": "fresha-orig",
-   "kills": 275,
-   "last_seen": 1793618100,
+   "kills": 316,
+   "last_seen": 1793618400,
    "name": "Fresha",
    "running": true,
    "started": 1793615260,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 275 kills, 0 deaths",
+    "label": "d2lod (original game), 316 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793618165,
- "updated": "2026-11-02T11:16Z",
+ "ts": 1793618432,
+ "updated": "2026-11-02T11:20Z",
  "work": [
   {
    "state": "working",
