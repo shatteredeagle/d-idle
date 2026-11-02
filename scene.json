@@ -19,18 +19,18 @@
  ],
  "runs": [
   {
-   "area": "Cold Plains",
+   "area": "Den of Evil",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Levelling up toward level 9",
-   "kills": 867,
+   "doing": "Clearing the Den of Evil",
+   "kills": 909,
    "name": "Freshb",
-   "potionsUsed": 61,
+   "potionsUsed": 62,
    "running": true,
-   "updated": "2026-11-02T09:09Z",
-   "uptime_seconds": 7407,
-   "xp": 25456
+   "updated": "2026-11-02T09:15Z",
+   "uptime_seconds": 7767,
+   "xp": 26474
   }
  ],
  "runs_state": "running",
@@ -40,15 +40,15 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 867 kills, 0 deaths",
+    "label": "d2lod (original game), 909 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
   "live": true
  },
  "tagline": "say it: die dull",
- "ts": 1793610641,
- "updated": "2026-11-02T09:10Z",
+ "ts": 1793610948,
+ "updated": "2026-11-02T09:15Z",
  "work": [
   {
    "state": "working",
@@ -63,8 +63,8 @@
    "task": "Playing in a party of bots"
   },
   {
-   "state": "blocked",
-   "task": "Running the bot on the d2d engine"
+   "state": "working",
+   "task": "Goals, quests and levelling"
   }
  ]
 }

@@ -9,7 +9,7 @@ _Streams when the bot is running._
 
 ## Live now
 
-- **Freshb**, Sorceress, d2lod (original game): level 7, 25,456 XP, 867 kills, 0 deaths, 61 potions drunk, run time 2h 03m. Now: levelling up toward level 9 in Cold Plains, running. Last update 2026-11-02 09:09 UTC.
+- **Freshb**, Sorceress, d2lod (original game): level 7, 26,474 XP, 909 kills, 0 deaths, 62 potions drunk, run time 2h 09m. Now: clearing the den of evil in Den of Evil, running. Last update 2026-11-02 09:15 UTC.
 
 ## Now building on d2d
 
@@ -91,8 +91,8 @@ Between runs.
 - Long unattended test runs (working)
 - Working on the bot (working)
 - Playing in a party of bots (working)
-- Running the bot on the d2d engine (blocked)
 - Goals, quests and levelling (working)
+- Running the bot on the d2d engine (blocked)
 
 ## What shipped
 
@@ -101,7 +101,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-02 09:10 UTC
+Last updated: 2026-11-02 09:15 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
