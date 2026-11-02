@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Den of Evil",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Clearing the Den of Evil",
-   "kills": 909,
+   "doing": "Doing chores in town",
+   "kills": 952,
    "name": "Freshb",
-   "potionsUsed": 62,
+   "potionsUsed": 64,
    "running": true,
-   "updated": "2026-11-02T09:15Z",
-   "uptime_seconds": 7767,
-   "xp": 26474
+   "updated": "2026-11-02T09:20Z",
+   "uptime_seconds": 8067,
+   "xp": 28282
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Den of Evil",
+   "area": "Rogue Encampment",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 7,
    "deaths": 0,
-   "doing": "Clearing the Den of Evil",
+   "doing": "Doing chores in town",
    "id": "freshb-orig",
-   "kills": 909,
-   "last_seen": 1793610900,
+   "kills": 952,
+   "last_seen": 1793611200,
    "name": "Freshb",
    "running": true,
    "started": 1793603133,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 909 kills, 0 deaths",
+    "label": "d2lod (original game), 952 kills, 0 deaths",
     "value": "Freshb lvl 7"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793610948,
- "updated": "2026-11-02T09:15Z",
+ "ts": 1793611248,
+ "updated": "2026-11-02T09:20Z",
  "work": [
   {
    "state": "working",
