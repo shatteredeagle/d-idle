@@ -64,18 +64,18 @@
  "next_run": null,
  "runs": [
   {
-   "area": "Cave",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
-   "kills": 1171,
+   "doing": "Doing chores in town",
+   "kills": 1206,
    "name": "Fresha",
-   "potionsUsed": 22,
+   "potionsUsed": 25,
    "running": true,
-   "updated": "2026-11-02T13:15Z",
-   "uptime_seconds": 2480,
-   "xp": 101685
+   "updated": "2026-11-02T13:19Z",
+   "uptime_seconds": 2720,
+   "xp": 101698
   }
  ],
  "runs_state": "running",
@@ -84,15 +84,15 @@
  ],
  "sources": [
   {
-   "area": "Cave",
+   "area": "Cold Plains",
    "backend": "d2lod (original game)",
    "class": "Sorceress",
    "clvl": 12,
    "deaths": 0,
-   "doing": "Levelling up toward level 17",
+   "doing": "Doing chores in town",
    "id": "fresha-orig",
-   "kills": 1171,
-   "last_seen": 1793625300,
+   "kills": 1206,
+   "last_seen": 1793625540,
    "name": "Fresha",
    "running": true,
    "started": 1793622820,
@@ -102,7 +102,7 @@
  "stats": {
   "items": [
    {
-    "label": "d2lod (original game), 1,171 kills, 0 deaths",
+    "label": "d2lod (original game), 1,206 kills, 0 deaths",
     "value": "Fresha lvl 12"
    }
   ],
@@ -120,8 +120,8 @@
   "stall_s": 150,
   "wide_px": 640
  },
- "ts": 1793625340,
- "updated": "2026-11-02T13:15Z",
+ "ts": 1793625616,
+ "updated": "2026-11-02T13:20Z",
  "work": [
   {
    "state": "working",
