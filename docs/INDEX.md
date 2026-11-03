@@ -344,3 +344,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/gate2-analysis-20261102.md: Gate 2 run 20261102 failure analysis: per-criterion cause (bot defect, CPU starvation, gate-rule), 41 restarts explained, Gate 1 comparison, ranked fixes, re-run plan
 - docs/research/verifycovmissiles-trace.md - independent verification of the missiles coverage first pass: own runs (48,624 flight, 77,560 hit-roll cases), pierce rule read and run (verifycovmissiles)
 - docs/research/covarmor.md - armor bases and item types, first pass (data only, no ledger rows)
+- docs/research/verifycovstates-trace.md: independent verification of covstates-trace.md: own game.exe / d2d harness for stun and poison, verdict per claim, poison deviation both directions (card verifycovstates)
