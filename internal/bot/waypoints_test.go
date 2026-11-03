@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/goals"
 )
@@ -129,4 +130,47 @@ func (m *exitSpy) ExitTo(ctx context.Context, l int) error {
 	*m.seen = append(*m.seen, m.r.ob.targetArea)
 	m.r.obMu.Unlock()
 	return m.fakeMover.ExitTo(ctx, l)
+}
+
+// R2: a walk that fails with a nav timeout (not "no exit") must skip the target, and a repeat must skip it for longer,
+// so the planner cannot hand the same bad exit to the next slice. Checked at two character levels.
+func TestLevelToSkipsTargetAfterNavTimeout(t *testing.T) {
+	for _, lvl := range []int{12, 20} {
+		g := campaignRig(t, &fakeQuests{}, lvl)
+		g.mover.exitErr = errors.New("leaving for level 3: nav timeout")
+		g.w.set(func(w *world) { w.area = 1 })
+		g.r.poll()
+		acts := taskActs{r: g.r, c: control{goal: &goals.Goal{}}}
+		if err := acts.LevelTo(context.Background(), 14); err == nil {
+			t.Fatalf("clvl %d: the walk should fail", lvl)
+		}
+		if len(g.r.targetFails) != 1 {
+			t.Fatalf("clvl %d: want exactly the failed target counted, got %v", lvl, g.r.targetFails)
+		}
+		var target int
+		for a := range g.r.targetFails {
+			target = a
+		}
+		first := map[int]time.Time{target: g.r.avoid[target]}
+		now := g.r.e.Clock.Now()
+		if d := first[target].Sub(now); d < g.r.navSkip()-time.Second {
+			t.Errorf("clvl %d: skip %v shorter than navSkip %v", lvl, d, g.r.navSkip())
+		}
+		if g.r.targetFails[target] != 1 {
+			t.Errorf("clvl %d: fail count %d", lvl, g.r.targetFails[target])
+		}
+		if d2 := g.r.targetFailSkip(target); d2 != 2*g.r.navSkip() {
+			t.Errorf("clvl %d: second skip %v, want doubled %v", lvl, d2, 2*g.r.navSkip())
+		}
+		for i := 0; i < 10; i++ {
+			g.r.targetFailSkip(target)
+		}
+		if d := g.r.targetFailSkip(target); d != 8*g.r.navSkip() {
+			t.Errorf("clvl %d: skip must cap at 8x navSkip, got %v", lvl, d)
+		}
+		g.r.clearTargetFails(target)
+		if d := g.r.targetFailSkip(target); d != g.r.navSkip() {
+			t.Errorf("clvl %d: a good walk resets the count, got %v", lvl, d)
+		}
+	}
 }

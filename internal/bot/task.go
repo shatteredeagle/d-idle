@@ -917,11 +917,15 @@ func (a taskActs) LevelTo(ctx context.Context, n int) error {
 		// waypoint try, never reached nav, stalled 65 s each time).
 		r.setTargetArea(0)
 		err := r.travelTo(ctx, target)
-		if err != nil && ctx.Err() == nil && strings.Contains(err.Error(), "no exit to that level") {
-			// nav cannot enter this area (a dungeon entrance it has not seen, LIVE: Cold Plains to Cave Level 1): let the
-			// planner pick another area for a while instead of failing the same walk over and over
-			r.skipArea(target, r.navSkip(), whyUnreachable)
-			r.e.Log.Warn("leveling area unreachable", "area", target, "name", r.areaName(target), "err", err)
+		if err != nil && ctx.Err() == nil && !errors.Is(err, errAreaGated) && !r.deadNow() {
+			// Any travel fault (no exit, nav timeout, "did not arrive") skips the target for a cool-down that doubles
+			// with each repeat, so the next slice picks another area instead of walking the same bad exit again
+			// (codereview2 R2; Gate 1 seed 17 minutes 299-315).
+			d := r.targetFailSkip(target)
+			r.skipArea(target, d, whyUnreachable)
+			r.e.Log.Warn("leveling area unreachable", "area", target, "name", r.areaName(target), "err", err, "skipSec", int(d/time.Second))
+		} else if err == nil {
+			r.clearTargetFails(target)
 		}
 		return a.tag(err)
 	}
@@ -971,19 +975,24 @@ const walkableHops = 5
 
 // longestWalk is the longest run of hops the character must walk to get from cur to the end of hops, using every
 // activated waypoint the way travelTo does: walk to the first waypoint on the path (cur counts), jump to the last one,
-// walk the rest. wp says whether a waypoint (or town) is usable at an area. Pure, for tests.
-func longestWalk(cur int, hops []int, wp func(int) bool) int {
+// walk the rest. wp says whether a waypoint (or town) is activated at an area. A jump is only taken when its target
+// passes jumpOK (not failed lately, waypoints on) and it skips at least minJump hops; with no such jump the whole route
+// is walked, so a failed or too short waypoint trip does not lift the limit (codereview2 R1). The two walked stretches
+// are compared one at a time, not added. Pure, for tests.
+func longestWalk(cur int, hops []int, wp, jumpOK func(int) bool, minJump int) int {
 	path := append([]int{cur}, hops...)
 	first, last := -1, -1
 	for i, a := range path {
-		if wp(a) {
-			if first < 0 {
-				first = i
-			}
+		if !wp(a) {
+			continue
+		}
+		if first < 0 {
+			first = i
+		} else if jumpOK(a) && i-first >= minJump {
 			last = i
 		}
 	}
-	if first < 0 {
+	if first < 0 || last < 0 {
 		return len(hops)
 	}
 	return max(first, len(path)-1-last)
@@ -1015,7 +1024,12 @@ func (r *Runner) unreachable(ctx context.Context, s *d2.Snapshot, target int) st
 		return ""
 	}
 	wp := func(a int) bool { return w.WPs[task.Area(a)] || r.d.Plan.IsTown(a) }
-	if n := longestWalk(cur, hops, wp); n > walkableHops {
+	jumpOK := func(a int) bool {
+		r.loop.wp.init()
+		return r.e.Tune.Nav.UseWaypoints && !r.e.Clock.Now().Before(r.loop.wp.failed[wpKey{diffOf(s), a}])
+	}
+	minJump := max(2, int(r.e.Tune.Nav.WpMinDistance)) // as travelTo
+	if n := longestWalk(cur, hops, wp, jumpOK, minJump); n > walkableHops {
 		return fmt.Sprintf("%d hops and no activated waypoint on the way (%d to walk)", len(hops), n)
 	}
 	return ""
