@@ -55,6 +55,7 @@ type Town struct {
 	// Seam for tests (the snapshot seam is t.h.Snap).
 	owner            func(it d2.Unit) (uint32, error)         // unit address of the container owner of an item
 	itemsFn          func() ([]d2.Unit, error)                // all item units (default: Reader.Units)
+	withdrew         bool                                     // this Chores round took gold out of the stash (lifts the recovery potion floor)
 	potionCap        int                                      // when > 0, buyPotions spends at most this much in total (poverty mode)
 	arrived          time.Time                                // when ToTown last arrived
 	pages            []int                                    // stock pages of the open vendor, sorted (tab layout)

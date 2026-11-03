@@ -1,0 +1,3 @@
+BACKLOG: B2REBASE2: batch 2 bundle carried onto upstream main 005c7cab (PRs 179, 180, new AGENTS.md rules): `local/batch2-bundle-r3` plus a split proposal (`local/batch2-mana-teleport`, `local/batch2-monsterdmg-pr`), private remote only; bodies on the new template; the user decides one PR or two and the opening
+INDEX: docs/research/pr-upstream-rules-20261103.md: upstream AGENTS.md / CONTRIBUTING / PR template rules after commit 549da358 as they apply to a code batch (one subsystem, commit rule, Claims table, presubmit, CodeRabbit)
+CHANGELOG: b2rebase2: batch 2 bundle rebased onto upstream main 005c7cab, split proposal, bodies on the new PR template; nothing pushed upstream

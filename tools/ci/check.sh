@@ -26,6 +26,9 @@ while IFS= read -r -d '' f; do
   esac
 done < <(files)
 
+# --- merge-lines.txt of the cards this branch touches must parse (tools/merge_lines_check.py) ---
+python3 tools/merge_lines_check.py --changed || fail=1
+
 # --- no decompiled game code or game data tables (docs/process/gamecode-guard.md) ---
 tools/ci/gamecode_guard.sh || fail=1
 

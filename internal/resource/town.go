@@ -12,13 +12,21 @@ const (
 func (m TripMethod) String() string { return [...]string{"none", "portal", "walk"}[m] }
 
 // walkableHome are the act 1 fields from which ToTown can walk back without a scroll: Blood Moor (next to the camp),
-// the Den of Evil (a dead end off Blood Moor) and Cold Plains (waypoint, or via Blood Moor); town.walkToTown handles
-// exactly these hops. V live for Blood Moor; the Den and Cold Plains hops are U (found offline 2026-10-29: a poor
-// clvl 4 Soaky fought 25 minutes in the Den because the policy thought town was too far).
+// the Den of Evil (a dead end off Blood Moor) and Cold Plains (waypoint, or via Blood Moor). This is Input.NearTown,
+// which the trip policy, the fight abort and the pre-engage check read, so it stays the short list (codefix F1).
+// V live for Blood Moor; U for the others (found offline 2026-10-29: a poor clvl 4 Soaky fought 25 minutes in the Den).
 var walkableHome = map[int]bool{2: true, 8: true, 3: true}
+
+// chainHome adds the fields of the quest route (Stony Field, Dark Wood, Black Marsh, Burial Grounds, the caves) that
+// town.walkChainToTown reaches by walking the level chain (BELTFIX3, Gate 1 20261102: 37 virtual minutes without
+// potions in Dark Wood). Only the no-healing emergency trip may use it (ChainHome); U: the walk from each area.
+var chainHome = map[int]bool{4: true, 5: true, 6: true, 9: true, 10: true, 17: true}
 
 // NearTownArea reports whether a character without a scroll can still walk home from area (Input.NearTown).
 func NearTownArea(area int) bool { return walkableHome[area] }
+
+// ChainHomeArea reports whether area is walkable home through the level chain (NearTownArea fields included).
+func ChainHomeArea(area int) bool { return walkableHome[area] || chainHome[area] }
 
 // Trip is the TownTripTrigger result.
 type Trip struct {
@@ -46,6 +54,8 @@ func TownTripTrigger(in Input, t Tuning) Trip {
 		method = ByPortal
 	case in.NearTown:
 		method = ByWalk
+	case in.ChainHome && in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV == 0:
+		method = ByWalk // no healing potion at all: the long walk beats fighting on (Gate 1 20261102)
 	}
 	var potion, heal string
 	if in.Belt.HP <= t.TripHPMin {

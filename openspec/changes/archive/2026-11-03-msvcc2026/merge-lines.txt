@@ -1,0 +1,3 @@
+BACKLOG: MSVC2026 follow-up: apply the split of tests/pet_ais_cases.inc and tests/shadow_master_cases.inc (docs/research/msvcc2026-trace.md), create local/batch2-msvc2026 in a throwaway worktree and rebuild on the Windows worker (gate allowing); upstream CI status still U
+INDEX: docs/research/msvcc2026-trace.md: MSVC C2026 in test_monster_ai (raw strings over 16380 bytes), real latent upstream problem, byte-identical split proven with g++ (branch and MSVC rebuild not done)
+CHANGELOG: MSVC2026 trace: test_monster_ai fails MSVC C2026 because four raw-string literals (62345, 59449, 59285, 16762 bytes) exceed 16380; fix by splitting into adjacent literals, same bytes (g++ probe, 4 constants, 0 mismatches); docs only

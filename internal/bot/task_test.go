@@ -213,6 +213,74 @@ func TestUnreachableLevelingTargetIsRefused(t *testing.T) {
 	}
 }
 
+// Gate 1 0628: Dark Wood was refused for the whole run whenever the bot stood in a field or dungeon without a waypoint
+// (Den of Evil, Crypt, Cave Level 2) and from town with only Cold Plains active. The level chain is walkable and the
+// walk activates the waypoints it passes, so the pick must stand.
+func TestDarkWoodReachableByWalkingTheChain(t *testing.T) {
+	q := &fakeQuests{}
+	g := campaignRig(t, q, 12)
+	g.mover.routeFn = func(from, to int) ([]int, error) {
+		if to == 5 && from == 8 {
+			return []int{2, 3, 4, 5}, nil
+		}
+		if to == 5 && from == 1 {
+			return []int{2, 3, 4, 5}, nil
+		}
+		if to == 6 && from == 1 {
+			return []int{2, 3, 4, 5, 6}, nil
+		}
+		return nil, errors.New("no route")
+	}
+	for _, c := range []struct {
+		name string
+		area int
+		wps  map[int]bool
+		to   int
+	}{
+		{"den of evil, Cold Plains active", 8, map[int]bool{3: true}, 5},
+		{"den of evil, nothing active", 8, nil, 5},
+		{"town, nothing active", 1, nil, 5},
+		{"town, nothing active, Black Marsh", 1, nil, 6},
+	} {
+		q.v.WPs = c.wps
+		g.w.set(func(w *world) { w.area = c.area })
+		snap, _ := g.w.snapshot()
+		if why := g.r.unreachable(context.Background(), snap, c.to); why != "" {
+			t.Errorf("%s: %s", c.name, why)
+		}
+	}
+}
+
+func TestLongestWalk(t *testing.T) {
+	wp := func(act ...int) func(int) bool {
+		return func(a int) bool {
+			for _, x := range act {
+				if x == a {
+					return true
+				}
+			}
+			return false
+		}
+	}
+	for _, c := range []struct {
+		cur  int
+		hops []int
+		wp   func(int) bool
+		want int
+	}{
+		{1, []int{2, 3, 4, 5}, wp(1), 4},
+		{1, []int{2, 3, 4, 5}, wp(1, 3), 2},
+		{8, []int{2, 3, 4, 5}, wp(3), 2},         // walk to Cold Plains, then two hops
+		{8, []int{2, 3, 4, 5}, wp(), 4},          // nothing active: the whole chain
+		{18, []int{17, 3, 4, 5, 6}, wp(3, 4), 2}, // lead 2, tail 2
+		{1, []int{2, 3, 4, 5}, wp(1, 5), 0},      // target waypoint active
+	} {
+		if got := longestWalk(c.cur, c.hops, c.wp); got != c.want {
+			t.Errorf("longestWalk(%d, %v) = %d, want %d", c.cur, c.hops, got, c.want)
+		}
+	}
+}
+
 // Every area worth farming at clvl 12 is cleared: the leveling slice starts a fresh game instead of farming Den of
 // Evil or Blood Moor for next to no experience (LIVE i4 soak, 2026-10-29).
 func TestLevelToStartsFreshGameWhenWorthyAreasAreCleared(t *testing.T) {

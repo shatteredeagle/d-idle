@@ -1,0 +1,3 @@
+BACKLOG: beltfix4: recovery keeps the in-town emergency potion restock (3-minute Gate 1 window at clvl 6 fixed); the 7-minute BELT window of gate1-20261103-0053 is poverty at clvl 1-2; XP/h gap analysed; Gate 1 needs a multi-seed re-run; docs/research/beltfix4.md
+INDEX: docs/research/beltfix4.md: Gate 1 20261103-0053 BELT and XP/h analysis, one recovery fix
+CHANGELOG: beltfix4: a character in recovery mode with no healing potion and gold for one now shops on arrival in town instead of walking back out

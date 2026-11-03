@@ -295,8 +295,11 @@ func (rep InvReport) Text() string {
 			r.Run, r.Group, r.VirtMin, r.PaceFrozen+r.CombatHolding, r.StallWarns+r.StallExits, r.WedgeMin, min(r.WedgeLines, 9999),
 			r.NoProgressMin, r.DeathsPer1000, r.Deaths, r.Kills, r.FreshGames, r.Chickens, r.BotRestarts, r.Exit, r.Unrecovered, verdictText(r.Verdict, r.Violated))
 		lim := DefaultInvLimits()
-		fmt.Fprintf(&b, "    gate 1 (virtual minutes): longest no kill and no xp %d (limit %d), longest belt window without healing outside town %d (limit %d)\n",
-			r.NoKillXPMin, lim.NoKillMin, r.BeltWindowMin, lim.BeltMin)
+		fmt.Fprintf(&b, "    gate 1 (virtual minutes): longest no kill and no xp %d (limit %d), longest belt window without healing outside town %d (limit %d; funded windows only, longest including poverty windows %d)\n",
+			r.NoKillXPMin, lim.NoKillMin, r.BeltFundedMin, lim.BeltMin, r.BeltWindowMin)
+		for _, w := range r.BeltWindows {
+			fmt.Fprintf(&b, "    belt window %d min (%s): pack gold %d..%d, pack+stash gold %d..%d: %s\n", w.Minutes, w.verdict(), w.PackMin, w.PackMax, w.TotMin, w.TotMax, w.Tag())
+		}
 		if r.ExitNote != "" && (r.Exit == "early" || r.Exit == "crash") {
 			fmt.Fprintf(&b, "    exit: %s\n", r.ExitNote)
 		}

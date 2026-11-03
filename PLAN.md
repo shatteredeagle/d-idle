@@ -1,5 +1,6 @@
 # d2lod-bot: plan
 
+> **STATUS (2026-11-03, project review): goals replaced.** The goals G-A..G-F of [ADR 0015](docs/adr/0015-goals-acceptance-on-game-exe.md) replace the milestone ladder below; the done state is a 24 h unattended game.exe run that clears Act 1, with d2d as the development lab and stability gate ladder. Current truth: [docs/plan/STATUS.md](docs/plan/STATUS.md), plan [docs/plan/plan-20261103.md](docs/plan/plan-20261103.md), review [docs/research/project-review-20261103.md](docs/research/project-review-20261103.md). The bot plays Act 1 Normal unattended for 2 h on d2d (lockstep fork), Gate 1 passed once and under review, Gate 2 not yet passed, nothing past Act 1 live, game.exe frozen except for Gate A fixes.
 > **STATUS (2026-10-30): historical plan, partly superseded.** This file is the 2026-10-28 founding plan and describes a Wine/Proton-only architecture; keep it for the goal, layers and history, do not rewrite it. Current truth lives elsewhere:
 > - what is true now: [docs/plan/STATUS.md](docs/plan/STATUS.md) (generated block at the bottom), plan: [docs/plan/plan-v2.md](docs/plan/plan-v2.md);
 > - decisions (d2d is the likely primary backend, Wine container work paused): [docs/decisions.md](docs/decisions.md) and [docs/adr/](docs/adr/README.md);

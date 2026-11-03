@@ -1,0 +1,3 @@
+BACKLOG: projreview: owner review of goals and plan; 6 rewritten goals and a 3-day/2-4 week/2-3 month plan await the owner's approval (docs/research/project-review-20261103.md, appendix F)
+INDEX: docs/research/project-review-20261103.md: project review 2026-11-03 (goals, done vs verified, effort by area, evaluation, rewritten goals, plan, proposed ADR/decisions text)
+CHANGELOG: Docs: project review 2026-11-03 (goals evaluated and rewritten, plan short/medium/long)
