@@ -70,8 +70,8 @@
   "live": false
  },
  "tagline": "say it: die dull",
- "ts": 1793710568,
- "updated": "2026-11-03T12:56Z",
+ "ts": 1793715351,
+ "updated": "2026-11-03T14:15Z",
  "work": [
   {
    "state": "working",
@@ -84,6 +84,10 @@
   {
    "state": "working",
    "task": "Building this public status page"
+  },
+  {
+   "state": "working",
+   "task": "Fighting and staying alive"
   }
  ]
 }
