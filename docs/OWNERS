@@ -120,11 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/soaks/gate1-multiseed-20261103-1650-ms3.md  gaterun  gate1multi-20261103-1650-ms3
-docs/soaks/gate1-s17-20261103-1356-ms3.md  gaterun  gate1multi-20261103-1650-ms3
-docs/probes/soak-logs/gate1-s17-20261103-1356-ms3-minutes.jsonl.gz  gaterun  gate1multi-20261103-1650-ms3
-docs/soaks/gate1-s19-20261103-1448-ms3.md  gaterun  gate1multi-20261103-1650-ms3
-docs/probes/soak-logs/gate1-s19-20261103-1448-ms3-minutes.jsonl.gz  gaterun  gate1multi-20261103-1650-ms3
-docs/soaks/gate1-s21-20261103-1425-ms3.md  gaterun  gate1multi-20261103-1650-ms3
-docs/probes/soak-logs/gate1-s21-20261103-1425-ms3-minutes.jsonl.gz  gaterun  gate1multi-20261103-1650-ms3
-openspec/changes/gate1multi-20261103-1650-ms3/**  gaterun  gate1multi-20261103-1650-ms3
