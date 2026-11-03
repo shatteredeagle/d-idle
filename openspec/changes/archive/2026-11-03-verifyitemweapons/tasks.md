@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifyitemweapons
-status: in-progress
+status: archived
 agent: verifyitemweapons
 branch: agent/verifyitemweapons
 worktree: d2lod-wt/verifyitemweapons
@@ -18,6 +18,7 @@ result: "docs and a table recount only; two wrong statements found in the first 
 credit:
   author: owner
   agents: [Claude Code]
+merge: f4ae491
 ```
 
 - [x] recount weapons.txt facts with an own script
