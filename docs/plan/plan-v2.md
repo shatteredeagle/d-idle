@@ -1,6 +1,6 @@
 # Plan v2: enabling features and redesigned soak gates (planning session, 2026-10-30)
 
-> status: section 1 and the M-item order are from the morning of 2026-10-30; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md), G1/G2/Fresha are judged (docs/g1-log.md), current state is docs/plan/STATUS.md. Sections 10 and 11 (user decisions) stay authoritative until an ADR replaces them.
+> status: section 1 and the M-item order are from the morning of 2026-10-30; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md), G1/G2/Fresha are judged (docs/g1-log.md), current state is docs/plan/STATUS.md. Sections 10 and 11 (user decisions) stay authoritative until an ADR replaces them. PARTLY SUPERSEDED 2026-11-03: the goals, the gate ladder framing and the milestone order are replaced by the goals G-A..G-F of [ADR 0015](../adr/0015-goals-acceptance-on-game-exe.md) and [plan-20261103.md](plan-20261103.md); XP/h is judged on a seed set, not per run.
 
 Inputs: docs/plan/code-reality.md (what the code really does), docs/sme/mercenary.md (guides + hireling data),
 the d2-sme proposals (feature-set verdict, plan proposal, merc gearing), docs/g1-log.md (14 G1 attempts),
