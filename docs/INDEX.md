@@ -340,3 +340,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/gate3gaps.md - Gate 3 gaps: sampling design, primitives invariant answer, Gate 0.5 smoke, work packages
 - docs/research/branch-cleanup-plan.md: classification of the 36 unmerged agent branches (LAND 20, FOLD 6, TAG-AND-DELETE 5, KEEP 5), commands, rules, effort and a branch hygiene rule
 - docs/research/verifyskassassin.md: independent verifier of SKASSASSIN (own emulator harness, game.exe vs d2d mana differential, claim verdicts)
+- docs/research/verifyskdruid.md: independent verifier of SKDRUID (Druid calc cells, own emulator harness, claim verdicts)

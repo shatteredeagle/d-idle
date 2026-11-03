@@ -127,14 +127,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 7ce0bd95 11-02 16:30 `Merge agent/bundlefinal2: bundlefinal2: final upstream bundle records and body (docs, cards)` (bundlefinal2)
-- 43b85457 11-02 16:29 `merge origin/main into bundlefinal2` (bundlefinal2)
-- 873fd1a6 11-02 16:21 `Merge agent/verifyzerohit: verifyzerohit: coverage-gap or verification result (docs and emulator tools only)` (verifyzerohit)
-- 3f184c0d 11-02 16:21 `merge origin/main into verifyzerohit` (verifyzerohit)
-- 0f4feb76 11-02 16:14 `Merge agent/skbarb: skbarb: coverage-gap or verification result (docs and emulator tools only)` (skbarb)
-- 452b11ea 11-02 16:13 `merge origin/main into skbarb` (skbarb)
-- 36ac3a39 11-02 16:06 `Merge agent/skamazon: skamazon: coverage-gap or verification result (docs and emulator tools only)` (skamazon)
-- e81ab739 11-02 16:05 `merge origin/main into skamazon` (skamazon)
-- 2f99299e 11-02 15:58 `Merge agent/levelsareas: levelsareas: coverage-gap or verification result (docs and emulator tools only)` (levelsareas)
-- f75f9c72 11-02 15:58 `merge origin/main into levelsareas` (levelsareas)
+- 5b384cc0 11-03 15:50 `merge origin/main into gate2analysis` (gate2analysis)
+- f329c33e 11-03 15:43 `Merge agent/verifyskassassin: branchclean LAND: verifyskassassin` (verifyskassassin)
+- 3154c992 11-03 15:43 `merge origin/main into verifyskassassin` (verifyskassassin)
+- 28360dab 11-03 15:18 `Merge agent/branchclean: branch cleanup plan` (branchclean)
+- 5c536c50 11-03 15:17 `merge origin/main into branchclean` (branchclean)
+- 3f127d9d 11-03 15:14 `Merge agent/gate3gaps: Gate 3 requirement gaps delta spec` (gate3gaps)
+- 7f3a8b71 11-03 15:14 `merge origin/main into gate3gaps` (gate3gaps)
+- 22e8f09d 11-03 15:04 `Merge agent/ccmergecommit: changecheck skips GitHub synthetic Merge commits` (ccmergecommit)
+- 6357a5db 11-03 15:04 `merge origin/main into ccmergecommit` (ccmergecommit)
+- 4102351b 11-03 15:01 `Merge agent/codereview2: independent review of AREAREACH/CODEFIX/SPECDELTA, findings R1-R9` (codereview2)
 <!-- statusgen:end -->
