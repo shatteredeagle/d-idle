@@ -1,0 +1,3 @@
+BACKLOG: gate3prep: Gate 2 tick checklist and Gate 3 requirements table; first gap to close is d2d resource sampling (fds, threads, bot RSS) in gate-sup.sh and the judge (docs/research/gate3-prep-20261103.md)
+INDEX: docs/research/gate3-prep-20261103.md: Gate 2 watch checklist, Gate 3 requirements table (what the judge evaluates), 24 h host risks, Gate 3 after the A:B pilot
+CHANGELOG: Docs: Gate 3 prep (Gate 2 watch checklist, Gate 3 requirements table, risks)

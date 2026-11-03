@@ -116,14 +116,28 @@ func (r *Runner) kitTrip(s *d2.Snapshot) (string, bool) {
 		}
 		return "", false
 	}
+	// The cheapest thing the visit can buy: a missing portal scroll is bought first only when it is affordable
+	// (Town.buyFirstTP), so a character short of healing potions needs one potion's gold to make the walk home worth
+	// it. Pricing the scroll kept a 37-gold clvl 12 Sorceress without potions in the field for 12 virtual minutes
+	// (Gate 1 20261102, docs/research/beltfix-analysis.md).
 	price := rt.KitPotionGold
-	if !k.TP {
+	if !k.TP && k.HP >= k.minHP {
 		price = rt.KitTPGold
 	}
-	if s.Player.Gold < price || !(k.TP || resource.NearTownArea(s.Player.Area)) {
+	if s.Player.Gold < price || !(k.TP || resource.NearTownArea(s.Player.Area) || k.HP == 0 && resource.ChainHomeArea(s.Player.Area) || r.wpActive(s)) {
 		return "", false
 	}
 	return "kit: " + strings.Join(miss, ", "), true
+}
+
+// wpActive reports an activated waypoint in the current area: Town.ToTown without a scroll takes it to the town
+// (waypointToTown), so the way home works from fields beyond the walkable ones (Stony Field, Gate 1 20261102 BELT window).
+func (r *Runner) wpActive(s *d2.Snapshot) bool {
+	if r.d.Task == nil || r.d.Task.Quests == nil {
+		return false
+	}
+	v, ok := r.d.Task.Quests.Read(int(s.Player.Difficulty))
+	return ok && v.WPs[s.Player.Area]
 }
 
 // kitAvoider is the part of a Mover that keeps walks out of levels (nav.Navigator.SetAvoidLevels).

@@ -32,6 +32,9 @@ type Minute struct {
 	PackHP    int
 	BeltBoxes string
 	HasBelt   bool
+	// StashGold is the stash gold (additive minute field; 0 in older logs, see docs/research/stashfield.md).
+	StashGold int
+	HasStash  bool
 }
 
 // ParseMinutes reads slog JSON or text lines and returns the minute summaries in file order; other and
@@ -102,6 +105,10 @@ func minuteFromKV(kv map[string]string) (Minute, bool) {
 			m.BeltBoxes = b
 			m.HasBelt = true
 		}
+	}
+	if v, has := kv["stashGold"]; has {
+		m.StashGold, _ = strconv.Atoi(v)
+		m.HasStash = true
 	}
 	if x, has := kv["xp"]; has {
 		var xerr error

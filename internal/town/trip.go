@@ -9,6 +9,7 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/resource"
 )
 
 // waitArea waits until the player stands in level (any level when level < 0 and the area is a town).
@@ -137,8 +138,11 @@ func (t *Town) walkToTown(ctx context.Context, s *d2.Snapshot, noPortal error) e
 	if !ok {
 		err := t.waypointToTown(ctx, s, noPortal)
 		hop, hok := hopToNeighbour[s.Player.Area]
-		if err == nil || !hok {
-			return err
+		if err == nil {
+			return nil
+		}
+		if !hok {
+			return t.walkChainToTown(ctx, s, noPortal)
 		}
 		t.e.Log.Info("no town portal and no waypoint: walking back via the neighbour", "from", s.Player.Area, "via", hop)
 		if err := t.mv.ExitTo(ctx, hop); err != nil {
@@ -152,6 +156,28 @@ func (t *Town) walkToTown(ctx context.Context, s *d2.Snapshot, noPortal error) e
 	}
 	t.e.Log.Info("no town portal: walking back to town", "from", s.Player.Area, "to", town)
 	if err := t.mv.ExitTo(ctx, town); err != nil {
+		return fmt.Errorf("%w (walk to town failed: %v)", noPortal, err)
+	}
+	if _, err := t.waitArea(ctx, town, 15*time.Second); err != nil {
+		return fmt.Errorf("%w (walk to town failed: %v)", noPortal, err)
+	}
+	t.arrived = t.e.Clock.Now()
+	return nil
+}
+
+// walkChainToTown is the last way home from an act 1 field with no scroll and no active waypoint (Dark Wood, Stony
+// Field, the caves: Gate 1 20261102, 37 virtual minutes without potions): the navigator walks the level chain, the call
+// BackToField makes for the opposite way (V live: Rogue Encampment to Black Marsh in 14 s). U: the walk home from each area.
+func (t *Town) walkChainToTown(ctx context.Context, s *d2.Snapshot, noPortal error) error {
+	ta, ok := t.mv.(interface {
+		ToArea(context.Context, int) error
+	})
+	if !ok || !resource.ChainHomeArea(s.Player.Area) {
+		return noPortal
+	}
+	town := data.Town(0)
+	t.e.Log.Info("no town portal and no waypoint: walking the level chain to town", "from", s.Player.Area)
+	if err := ta.ToArea(ctx, town); err != nil {
 		return fmt.Errorf("%w (walk to town failed: %v)", noPortal, err)
 	}
 	if _, err := t.waitArea(ctx, town, 15*time.Second); err != nil {
@@ -278,8 +304,23 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 	if wait := time.Duration(t.tune().PortalSettle)*time.Millisecond - t.e.Clock.Now().Sub(t.arrived); !t.arrived.IsZero() && wait > 0 {
 		t.e.Clock.Sleep(wait)
 	}
-	if portal, ok := findObject(s, ObjPortal); ok {
-		t.e.Log.Info("back to field: portal in town", "id", portal.ID, "x", portal.X, "y", portal.Y, "player_x", s.Player.X, "player_y", s.Player.Y)
+	// One retry of the portal before the waypoint and the long walk: a dropped click (d2dctl: "did not change the level")
+	// cost 14 wall seconds of walking and a roam over cleared ground (Gate 1 20261102, NOKILL B).
+	for attempt := 0; attempt < 2; attempt++ {
+		if attempt > 0 {
+			if s, err = t.current(); err != nil {
+				return err
+			}
+			if !data.IsTown(s.Player.Area) {
+				break
+			}
+		}
+		portal, ok := findObject(s, ObjPortal)
+		if !ok {
+			t.e.Log.Info("back to field: no portal in the unit table")
+			break
+		}
+		t.e.Log.Info("back to field: portal in town", "id", portal.ID, "x", portal.X, "y", portal.Y, "player_x", s.Player.X, "player_y", s.Player.Y, "attempt", attempt+1)
 		if err := t.enterPortal(ctx, portal); err != nil {
 			t.e.Log.Warn("back to field: portal click failed", "err", err)
 			if err := t.wrongLevel(levelNo); err != nil {
@@ -293,8 +334,9 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 				return err
 			}
 		}
-	} else {
-		t.e.Log.Info("back to field: no portal in the unit table")
+		if cerr := ctx.Err(); cerr != nil {
+			return cerr
+		}
 	}
 	if lvl := t.e.Data.AreaByID(levelNo); lvl != nil && lvl.Waypoint != 255 && lvl.Waypoint != 0 && t.e.Tune.Nav.UseWaypoints {
 		if err := t.mv.TakeWaypoint(ctx, levelNo); err == nil {

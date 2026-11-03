@@ -384,11 +384,16 @@ func (b *builder) merc(m obj) {
 		return
 	}
 	rp.have("merc.present")
+	dead, _ := m.bool("dead")
 	if !present {
+		// d2d drops the unit about 120 steps after the death but keeps header.merc_dead: the merc is still owned and
+		// can be revived (V read devctl_dump.hpp, hirereader B2). There is no unit to add.
+		if dead {
+			b.res.Extras.Merc = &MercExtra{Dead: true}
+		}
 		return
 	}
 	code, _ := m.str("code")
-	dead, _ := m.bool("dead")
 	u := d2.Unit{Type: d2.TypeMonster, ID: MercID, Class: -1, Mode: d2.MonModeStand, Monster: &d2.MonsterInfo{}}
 	if cls, ok := mercClass[code]; ok {
 		u.Class = cls
