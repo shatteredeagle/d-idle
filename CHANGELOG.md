@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Docs: second independent code review of the 2026-11-03 bot changes (walk limit, walk loop, XP fallback rank).
 - docs: upstream guard-fix PR text and the final batch A PR text (private fork branches local/guardfix-3, local/batch2-A-r9).
 - fix: nav border gates compare the neighbour's grid in the neighbour's own frame; the Blood Moor keeps its gate to the Rogue Encampment on seeds where the camp lies east of it (docs/navexit22.md).
 - cport: batch C (mana paid on the action frame, action-frame tick, armor state group) prepared as commits on the batch A branch with Claims rows, counted differentials on the exact head; nothing pushed upstream
