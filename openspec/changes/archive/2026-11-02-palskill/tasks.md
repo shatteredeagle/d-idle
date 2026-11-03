@@ -16,6 +16,11 @@ gates:
   - game.exe side run on the worker host (seeds 7 and 1) before the trace states a number
 result: "docs only; first or second pass, not yet independently verified"
 merge: 900ac2e
+credit:
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifypalskill2, independent run)"]
+  consent: none
 ```
 
 - [x] 1 Read the five dispatch functions in the disassembly and the upstream notes

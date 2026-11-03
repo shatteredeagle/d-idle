@@ -1,0 +1,4 @@
+BACKLOG: BOTAB (done, docs and offline scripts): bot-level d2d vs game.exe table from committed records; XP/h INCONCLUSIVE everywhere, kills/h d2d about 0.76 of game.exe (interval 0.63 to 0.92, different bot eras); the 15 percent XP/h claim needs about 15 clean runs per arm at the late band or a same-commit 5 plus 5 pilot first (docs/research/botab-20261102.md section 5)
+INDEX: docs/research/botab-20261102.md | Bot-level d2d vs game.exe from existing records: XP/h, kills, deaths, potions, town trips, areas; comparability, gaps, minimum new runs (card botab)
+INDEX: docs/research/botab-trace.md | BOTAB trace: questions, deviations D1.., bot findings B1.., limits, matrix proposals
+CHANGELOG: BOTAB: docs/research/botab-20261102.md and botab-trace.md compare d2d and game.exe at bot level from committed minute lines (tools/baseline/botab_extract.py, botab_run.py on ab_compare); no verdict is EQUIVALENT, kills per hour of d2d is lower than game.exe (offline, no game run)

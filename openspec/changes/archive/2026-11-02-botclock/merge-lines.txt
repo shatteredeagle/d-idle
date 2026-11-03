@@ -1,0 +1,3 @@
+BACKLOG: botclock: internal/gclock scales the bot's game-clock waits by D2BOT_TIMESCALE (default 1, unchanged); live k=2/k=4 re-measure still open (needs go, i4, hook); docs/timescale.md
+INDEX: docs/timescale.md | how to run the bot with D2BOT_TIMESCALE=k next to the clock hook; game-clock vs host-clock wait classification | ops
+CHANGELOG: botclock: internal/gclock time-scale facility (D2BOT_TIMESCALE, default 1 = unchanged); env.RealClock and the game-clock timeouts use it; guard test for new direct time calls

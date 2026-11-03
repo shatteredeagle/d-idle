@@ -39,11 +39,12 @@ Want your own AI agent to pick and do an item by itself? Paste the [hands-off pr
 2. **Claim**: comment `claiming` on the issue. The maintainer assigns it to you (one person or agent per item at a time). If you stop, say so in a comment. The maintainers watch every issue's comments each cycle and mark items their own work covers ([../process/chunker.md](../process/chunker.md), "Claim before launch" and "Watching comments").
 3. **Work offline** with your own `game.exe`. Keep a short log of dead ends; they go in the document too.
 4. **Deliver** one Markdown document per item, named by the item: `docs/research/<topic>-trace.md` (examples: `sk-melee-trace.md`, `pal-aura-trace.md`; verification: `verify-<topic>.md`), plus oracle scripts under `tools/emu/` only if the issue asks for them (changes under `tools/` need the maintainer's CODEOWNERS review). Use the trace sections: question, rules with address tags, d2d's version, the bot's model, deviations D.., bot findings B.., limits, the answer the drills should expect.
-5. **Submit** a pull request from your fork: one topic per PR, the issue linked (`Closes #N` in the template), the checklist filled in. Commit as yourself; an `Agent: <name or model>` line in the commit message or the PR template's last section is optional but welcome.
+5. **Submit** a pull request from your fork: one topic per PR, the issue linked (`Closes #N` in the template), the checklist filled in. Commit as yourself (your own git identity; never `Claude` or another tool, the maintainer's agent identity is not for contributors). When an AI agent helped, add an `Agent: <tool name>` trailer to the commit and an `Author: <handle>` line in the header of your research doc. Maintainers squash-merge, so the PR opener is the commit author.
 
 ## 6. The evidence checklist (what a reviewer checks)
 - Every statement carries a tag (V read, V run, D, S, I, U), and V says how. No guess is written as a fact.
-- Every number can be reproduced by a command in the document (case count, seed, the harness and where it came from).
+- Every number can be reproduced by a command in the document (case count, seed, the harness and where it came from); see REPRODUCIBILITY below.
+- REPRODUCIBILITY: every `V run` number comes with, in the PR, the script (under `tools/emu/` or `tools/`) or the exact command of an existing one, plus the seed and the case count. A count that compares `game.exe` with your own formula says "self-check, not compared with d2d"; only a run against d2d may say it compared with d2d. A `V run` without these is U.
 - Differential claims state counts: cases run, cases that differ before, after, per claim. 100,000 random cases or an exhaustive boundary set is our bar for V.
 - Deviations from d2d (D..) and bot findings (B..) are apart; the limits (what you did not cover) are explicit.
 - No pasted code: the gamecode guard and a reviewer's read both pass.
@@ -56,6 +57,8 @@ The maintainer reviews the PR (an automated first pass may comment; see [../proc
 ## 8. Credit
 Proposal (the maintainer decides): the trace header names the author and the verifier ("Author: <handle>, Verifier: <handle>", handles you choose), merged contributors are listed in a `CONTRIBUTORS.md` file added with the first merge, and the Discord `contributor` role is given for merged work or a real verification review. Upstream PRs carry the maintainer's name as submitter with a credit line for you in the body if you want one.
 
+Upstream use and licence: contributions to d-idle may be carried into pull requests to the upstream decomp project, which is GPL-3.0-or-later. By submitting a contribution you agree it can be used under those terms upstream, you are credited by name or pseudonym of your choice (git author, or a `Traced-by` / `Reported-by` line in the commit) and you can withdraw it before it is merged upstream. Tell the maintainer how you want to be named; the record is [../community/credits-ledger.md](../community/credits-ledger.md), the mechanics [../process/credit.md](../process/credit.md).
+
 ## 9. Prompt block for your agent
 Paste this into your agent, then give it the issue link.
 
@@ -64,7 +67,8 @@ You are helping on d.idle, an offline Diablo II LoD 1.14d bot, on one work item 
 Read docs/contributing/agent-work.md, docs/decomp-queue.md (rules) and the brief of your item in docs/community/open-work.md first.
 Your job is a decomp trace or an independent verification, delivered as one Markdown document under docs/research/.
 Tag every claim: V read, V run, D (d2d deviates), S (secondary), I (inference), U (unverified). Never present a guess as a fact.
-Every number needs a command in the document that reproduces it, with case count and seed. State limits.
+Every V run number needs the script or exact command, seed and case count in the PR; a game.exe-versus-own-formula count says 'self-check, not compared with d2d'. State limits.
+Commit as yourself, never as Claude; add an 'Agent: <tool name>' trailer and an 'Author:' line in the doc header.
 NEVER put game files, disassembly, decompiled code or data tables in any file, commit, issue or PR: use FUN_xxxxxxxx tags and short formulas.
 NEVER include secrets, hostnames, home paths. No Battle.net, no live game: you work offline on the owner's own game.exe.
 Verification means a harness you wrote yourself; do not reuse the author's script.

@@ -101,6 +101,7 @@ type MercState struct {
 // HireOffer is one row of a hire window.
 type HireOffer struct {
 	Row   int
+	Name  string // the row's name on screen (log only)
 	Class int
 	Aura  string // aura name; for the Rogue the arrow skill (Cold Arrow, Fire Arrow)
 	Level int

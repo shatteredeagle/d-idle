@@ -1,0 +1,3 @@
+BACKLOG: bundlefinal2: final upstream bundle (11 commits on bdc1eb02, Smite included) on private branch local/bundle-final; PR body in docs/research/pr-bundle-final-body.md; the coordinator opens the PR
+INDEX: docs/research/pr-bundle-final-body.md: final PR body of the upstream bundle (repair gate, melee, freeze, standing missiles, Smite block), counts and limits (card bundlefinal2)
+CHANGELOG: bundlefinal2: final bundle rebased onto upstream PR 176, Smite component added, CodeRabbit ground-roll comment folded in

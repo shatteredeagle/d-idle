@@ -18,6 +18,12 @@ gates:
 result: "Fire Wall matched game.exe subtiles on the real build (80 of 80), Hydra read only, shard hit area and offset deviations measured on the real build; local PR candidate for the offsets awaits an independent verifier; not verified live"
 live: "docs only, nothing run live"
 merge: 6e7b133
+credit:
+  component: Standing missile footprint and burst roll (ground)
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifybundle, own harness)"]
+  consent: none
 ```
 
 - [x] Fire Wall (do 24, maker do 6, hits) read and run against a real d2d build

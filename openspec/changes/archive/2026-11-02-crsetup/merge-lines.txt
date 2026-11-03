@@ -1,0 +1,3 @@
+BACKLOG: CRSETUP done (card crsetup): CodeRabbit pre-scan config and runbook; the owner installs the app, then the coordinator runs the quota test (docs/process/coderabbit-prescan.md)
+INDEX: docs/process/coderabbit-prescan.md - CodeRabbit pre-scan runbook: install, fork config, quota test, bundle workflow, CLI
+CHANGELOG: crsetup: .coderabbit.yaml revised and schema-validated; CodeRabbit pre-scan runbook (docs and config only)

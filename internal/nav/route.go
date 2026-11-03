@@ -70,7 +70,7 @@ func (n *Navigator) learn(from, to int) {
 	n.seen[edgeKey{to, from}] = true
 	kept := n.badGates[:0]
 	for _, b := range n.badGates {
-		if !(b.from == from && b.to == to) {
+		if b.dead || !(b.from == from && b.to == to) {
 			kept = append(kept, b)
 		}
 	}

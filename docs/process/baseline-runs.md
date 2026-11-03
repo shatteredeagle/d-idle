@@ -138,3 +138,24 @@ Unverifiable until a live preflight (U, none of these was run):
 - `soak24.sh` from a fresh head-box checkout (`go build` of d2bot and the 386 helper on a 4 GB box) and its helper-hash check.
 - The kit's gear and gold (not recorded in the repo).
 - The `weak` thresholds (95 percent of hours, 1.5 h fresh band) are my choice (I), derived from the a14 and Fresha precedents; the coordinator may tighten them.
+
+## 10. Hooked lanes: `--timescale K` (the paired experiment k=K against k=1)
+
+> status: tooling prepared offline (card `lockstepbase`); not run live. Tags: V = by the offline tests of `tools/tests/test_baseline_run.sh` (ops repo, fake game folders), U = unverified. Background: `docs/timescale.md` (the bot clock), `docs/research/lockstep-p4.md` (the hook at k=2 and k=4 with a scaled bot clock). The hook itself is a private tool; nothing of it is in this repository.
+
+What it is: a lane whose game runs K times faster than real time (K = 1, 2 or 4; default 1 is the unchanged behaviour) with the bot's clock scaled the same (`D2BOT_TIMESCALE=K`). Hours are always GAME hours: a 3 h lane at K=2 is 90 real minutes. `baseline-run.sh plan --timescale 2 ...` prints the regime line, the real and game lengths, the capacity verdict (cores taken as K times the k=1 figure, U) and the full list of commands `start` would run.
+
+| topic | rule |
+|---|---|
+| one minute line | one GAME minute at K != 1 (S: the observer takes its time from `env.Clock`, which delegates to `internal/gclock`; the pacing check below is the live test, U). `hours = lines / 60` is therefore game hours and `d2dsoak extract -hours` gives XP per game hour as before |
+| pacing check | the quality script compares the wall span of the minute lines with `(lines - 1) x 60 / K` seconds; more than 15 percent off marks the lane weak ("minute lines are not paced as game minutes", the sign of an unscaled bot clock) |
+| series | `runs/<name>/series.tsv` (driver host only): per minute line the game minute, the real minute (log time), clvl, xp, kills, deaths, XP per game minute and XP per real minute; `quality.env` has `gamemin`, `realmin`, `xp_game_h`, `xp_real_h` |
+| `--for` / `--run-for` | soak24's `--for` and the bot's `--run-for` are host timers (real seconds): the driver passes `--for <game hours x 3600 / K>s` (2 h at k=2: 3600 s; the bot runs 5 real minutes longer, the extra lines are cut). Farm duration and goal ActiveSeconds stay real time (docs/timescale.md) |
+| env forwarding | `D2BOT_TIMESCALE` is set on the `soak24.sh start` call and forwarded by `tools/live.sh` (ops repo) to the bot, only when set. The bot logs `gclock: timescale K` at start (`gclock.StartNote`); the driver waits for that line AND the hook's first STAT line (5 min), else it stops the instance (`soak24.sh stop`, `game.sh stop`) and retries once |
+| bot commit | the pin must contain `internal/gclock` and the log line: preflight refuses otherwise. `b023979a` (set `kit`) does not (V: `git cat-file`, 2026-11-02), so a pair needs a newer pin and the pair then differs by that bot diff, not only by K |
+| per lane | `game.sh stop` first, kit restore, hook install (the game's `ijl11.dll` is renamed to `ijl11_real.dll`, never written, the proxy is copied as a new file, `d2hook.cfg` with `offline=1`, `k=K`, `stat=10`), helper, start. At the end and on every failure or abort: stop, hook log archived as `runs/<name>/hook-stat.log.gz` (driver host; path only in the record), original restored and compared by sha256 (a mismatch is a loud error) |
+| watchdog | every 3rd poll the driver reads the hook STAT lines: scaled/real time ratio more than 2 percent off K for 5 minutes, or no new STAT line for 3 minutes, marks the lane weak with the reason; it never restarts anything |
+| record | `plan.env`, each lane's state file, `quality.env`, the `collect` rows (note starts `REGIME k=K`) and `record.md` carry K and the sentence `regime: scaled clock k=K, not comparable to k=1 without the pair`. Rows of a K != 1 set must not be merged into the k=1 baseline files |
+| fresh characters for the pair | `--fresh-from-set SET` takes the clvl-1 files from the snapshots of set SET (`baseline-kits/SET/<char>`, taken at that set's start) instead of the kit instance, so the pair uses the same characters (same `.map` seed, U whether that pins the layout) without touching the kit instance or creating anything |
+
+Unverified (U): that a hooked lane reaches the first STAT line within 5 min from a cold start; the CPU share at K=2 (taken as 2x); that the bot's farm and goal timers (real time) distort nothing at K=2; that soak24's harness alerts (xp stagnation windows) use game or real time; whether the `.map` seed pins dungeon layouts across copies.

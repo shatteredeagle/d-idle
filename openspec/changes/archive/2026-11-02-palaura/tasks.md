@@ -17,6 +17,11 @@ gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict"
 result: "docs only; first or second pass, not yet independently verified"
 merge: fcd78e5
+credit:
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifypalaura, independent run)"]
+  consent: none
 ```
 
 ## 1. Work

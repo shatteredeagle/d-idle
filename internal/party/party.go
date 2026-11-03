@@ -2,6 +2,7 @@ package party
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"sort"
@@ -120,7 +121,7 @@ func New(cfg Config, members []Member) (*Party, error) {
 	}
 	if cfg.Sleep == nil {
 		cfg.Sleep = func(ctx context.Context, d time.Duration) error {
-			t := time.NewTimer(d)
+			t := gclock.NewTimer(d)
 			defer t.Stop()
 			select {
 			case <-t.C:

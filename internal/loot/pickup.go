@@ -212,9 +212,13 @@ func init() {
 	}
 }
 
-// unwear moves a just-picked quest item from the body to the pack when the game wore it.
+// unwear moves a just-picked item from the body to the pack when the game wore it and the character must not wear it:
+// a quest item (noWear) or a weapon the class cannot use well. The game wears a picked weapon into a free weapon slot
+// (V live for quest items, docs/act2.md P1; KITSTALL2: the same happened to a Sorceress whose weapon slot was empty,
+// a looted Short Bow went on and her spells stopped, S from the bot log).
 func (l *Looter) unwear(ctx context.Context, u d2.Unit) error {
-	if b := l.base(u.Class); b == nil || !noWear[b.Code] {
+	b := l.base(u.Class)
+	if b == nil || !noWear[b.Code] && !(b.Kind == data.KindWeapon && casterNoLauncher(l.e.Data, b)) {
 		return nil
 	}
 	s, err := l.hand.Fresh()
@@ -224,10 +228,25 @@ func (l *Looter) unwear(ctx context.Context, u d2.Unit) error {
 	if w, ok := hand.Find(s.Inventory, u.ID); !ok || w.Item == nil || w.Item.Where != d2.ContEquipment {
 		return nil
 	}
+	if !noWear[b.Code] && !LauncherUnwanted(l.e.Data, b, s.Player.Class) {
+		return nil
+	}
 	if err := l.hand.Unequip(ctx, u.ID); err != nil {
 		return fmt.Errorf("loot: %s was worn on pickup and could not be taken off: %w", l.itemName(u), err)
 	}
 	return l.hand.CloseAll(ctx)
+}
+
+// casterNoLauncher is the class-free half of LauncherUnwanted: a bow, crossbow or throwing weapon.
+func casterNoLauncher(db *data.DB, b *data.ItemBase) bool {
+	return db.IsA(b.Type, "miss") || db.IsA(b.Type, "thro")
+}
+
+// LauncherUnwanted reports whether a missile or throwing weapon is no weapon for the class. Only the Amazon builds on
+// them; every other class loses its own weapon skills and bonuses (a Sorceress gets nothing from a bow, S: early-gear
+// policy, docs/sme/early-gear-policy.md) and the combat code refuses to attack with a launcher it has no ammo for.
+func LauncherUnwanted(db *data.DB, b *data.ItemBase, c d2.Class) bool {
+	return b != nil && b.Kind == data.KindWeapon && c != d2.Amazon && casterNoLauncher(db, b)
 }
 
 var errAborted = errors.New("loot: aborted")

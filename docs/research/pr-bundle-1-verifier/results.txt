@@ -1,0 +1,128 @@
+== base row 159
+cls 2 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 5 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 38 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 58 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 104 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1/1 game 5 d2d 21 only_game 0 only_d2d 16
+cls 191 size 1/1 game 5 d2d 21 only_game 0 only_d2d 16
+TOTAL cases 648 differ 72
+== base row 69
+cls 2 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 5 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 38 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 58 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 104 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 156 size 3/3 game 9 d2d 21 only_game 0 only_d2d 12
+cls 190 size 1/1 game 1 d2d 21 only_game 0 only_d2d 20
+cls 191 size 1/1 game 1 d2d 21 only_game 0 only_d2d 20
+TOTAL cases 648 differ 132
+== base row 240
+cls 2 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 5 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 38 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 58 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 104 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1/1 game 5 d2d 21 only_game 0 only_d2d 16
+cls 191 size 1/1 game 5 d2d 21 only_game 0 only_d2d 16
+TOTAL cases 648 differ 72
+== base row 67
+cls 2 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 5 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 38 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 58 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 104 size 2/2 game 5 d2d 21 only_game 0 only_d2d 16
+cls 156 size 3/3 game 9 d2d 21 only_game 0 only_d2d 12
+cls 190 size 1/1 game 1 d2d 21 only_game 0 only_d2d 20
+cls 191 size 1/1 game 1 d2d 21 only_game 0 only_d2d 20
+TOTAL cases 648 differ 132
+== base row 462
+cls 2 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 5 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 38 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 58 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 104 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 156 size 3/3 game 25 d2d 21 only_game 4 only_d2d 0
+cls 190 size 1/1 game 9 d2d 21 only_game 0 only_d2d 12
+cls 191 size 1/1 game 9 d2d 21 only_game 0 only_d2d 12
+TOTAL cases 648 differ 28
+== base row 217
+cls 2 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 5 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 38 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 58 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 104 size 2/2 game 13 d2d 21 only_game 0 only_d2d 8
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1 NOGAME d2d 21
+cls 191 size 1 NOGAME d2d 21
+TOTAL cases 486 differ 40
+== base burst fb: equal 2 unequal 398
+== base burst gs: equal 2 unequal 398
+== head row 159
+cls 2 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 5 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 38 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 58 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 104 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1/1 game 5 d2d 5 only_game 0 only_d2d 0
+cls 191 size 1/1 game 5 d2d 5 only_game 0 only_d2d 0
+TOTAL cases 648 differ 0
+== head row 69
+cls 2 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 5 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 38 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 58 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 104 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 156 size 3/3 game 9 d2d 9 only_game 0 only_d2d 0
+cls 190 size 1/1 game 1 d2d 1 only_game 0 only_d2d 0
+cls 191 size 1/1 game 1 d2d 1 only_game 0 only_d2d 0
+TOTAL cases 648 differ 0
+== head row 240
+cls 2 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 5 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 38 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 58 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 104 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1/1 game 5 d2d 5 only_game 0 only_d2d 0
+cls 191 size 1/1 game 5 d2d 5 only_game 0 only_d2d 0
+TOTAL cases 648 differ 0
+== head row 67
+cls 2 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 5 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 38 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 58 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 104 size 2/2 game 5 d2d 5 only_game 0 only_d2d 0
+cls 156 size 3/3 game 9 d2d 9 only_game 0 only_d2d 0
+cls 190 size 1/1 game 1 d2d 1 only_game 0 only_d2d 0
+cls 191 size 1/1 game 1 d2d 1 only_game 0 only_d2d 0
+TOTAL cases 648 differ 0
+== head row 462
+cls 2 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 5 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 38 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 58 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 104 size 2/2 game 21 d2d 21 only_game 0 only_d2d 0
+cls 156 size 3/3 game 25 d2d 25 only_game 0 only_d2d 0
+cls 190 size 1/1 game 9 d2d 9 only_game 0 only_d2d 0
+cls 191 size 1/1 game 9 d2d 9 only_game 0 only_d2d 0
+TOTAL cases 648 differ 0
+== head row 217
+cls 2 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 5 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 38 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 58 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 104 size 2/2 game 13 d2d 13 only_game 0 only_d2d 0
+cls 156 size 3/3 game 21 d2d 21 only_game 0 only_d2d 0
+cls 190 size 1 NOGAME d2d 5
+cls 191 size 1 NOGAME d2d 5
+TOTAL cases 486 differ 0
+== head burst fb: equal 400 unequal 0
+== head burst gs: equal 400 unequal 0
+== game burst row 62
+     60 units 3 hitfunc1 1 hitfunc13 0 rolls 1 phys 0 elem 1 apply 3
+== game burst row 96
+     60 units 3 hitfunc1 0 hitfunc13 1 rolls 1 phys 0 elem 1 apply 2

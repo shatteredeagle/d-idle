@@ -74,7 +74,7 @@ func (s *Source) Enrich(res *d2dsrc.Result) {
 		if u.X < 0 && snap.Player != nil {
 			u.X, u.Y = snap.Player.X, snap.Player.Y
 		}
-		ex := res.Extras.Items[u.ID]
+		ex := res.Extras.Ground[u.ID]
 		if n, ok := GoldAmount(ex.Label); ok && ex.Code == "gld" {
 			gold[u.ID] = int32(n)
 			continue

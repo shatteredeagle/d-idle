@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"strings"
@@ -201,7 +202,7 @@ func (a bossActs) GoTo(ctx context.Context, p boss.Pt) error {
 // Explore reveals the level for at most budget and stops as soon as stop() is true. Nothing left to explore and the
 // budget running out are both a normal end.
 func (a bossActs) Explore(ctx context.Context, budget time.Duration, stop func() bool) error {
-	ectx, cancel := context.WithTimeout(ctx, budget)
+	ectx, cancel := gclock.WithTimeout(ctx, budget)
 	defer cancel()
 	err := a.g.nv.Explore(ectx, stop)
 	if errors.Is(err, nav.ErrExplored) || ctx.Err() == nil && errors.Is(err, context.DeadlineExceeded) {
@@ -212,7 +213,7 @@ func (a bossActs) Explore(ctx context.Context, budget time.Duration, stop func()
 
 // Attack is Fighter.Kill for one slice. Combat's escapes become the package's errors; the slice ending is not one.
 func (a bossActs) Attack(ctx context.Context, id uint32, slice time.Duration) error {
-	sctx, cancel := context.WithTimeout(ctx, slice)
+	sctx, cancel := gclock.WithTimeout(ctx, slice)
 	defer cancel()
 	// V live (i2, Combi, 2026-10-29): pinned in the escort crowd, combat's kite and missile dodge moved nowhere for 10 minutes
 	// and never cast (Countess stayed at 75%); with both off she died in 10 s. See unpinned.
@@ -240,7 +241,7 @@ func mapKillErr(parent, slice context.Context, err error) error {
 
 func (a bossActs) ClearAround(ctx context.Context, p boss.Pt, radius int, budget time.Duration) error {
 	origin := input.Point{X: p.X, Y: p.Y}
-	sctx, cancel := context.WithTimeout(ctx, budget)
+	sctx, cancel := gclock.WithTimeout(ctx, budget)
 	defer cancel()
 	_, err := a.g.f.Clear(sctx, combat.ClearOpts{Radius: radius, Origin: &origin, Timeout: budget})
 	return mapKillErr(ctx, sctx, err)

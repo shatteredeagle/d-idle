@@ -82,6 +82,22 @@ result:                      # filled at merge: one line, say verified live or n
 
 Exclusive resource names (use these exact strings so the checker can compare): `instance:iN`, `d2d-control-socket`, `d2d-lab-binary`, `d2d-lab-lock` (/tmp/d2d-lab.lock), `bot-binary:<path>`, `fork-branch:<name>`, `upstream-pr:<topic>` (anything posted to GitHub: only with the user's go), `soak-slot:<n>`.
 
+### The credit block (optional)
+
+A card may end its yaml header with a `credit:` block (indented keys, flat; the Go checker ignores it, so cards without it pass). It records who gets credit when the work is carried upstream; `tools/credit/credit.py` reads it (trailers, the PR "Credits" section, a `check` mode; see [../docs/process/credit.md](../docs/process/credit.md)).
+
+```yaml
+credit:
+  component: PALAURA            # optional name for the PR line, default = card id
+  author: owner                 # `owner` (our agents' work is authored by the owner) or a contributor handle
+  traced_by: [chuckado]         # people who traced it -> `Traced-by:` trailer
+  reported_by: []               # people who reported it -> `Reported-by:` trailer
+  verified_by: [somebody]       # independent verifiers: named in the PR body and CONTRIBUTORS.md only
+  agents: [Claude Code]         # AI agents: only the `Agent:` line of the PR body, never a commit trailer
+  consent: {chuckado: asked}    # none | asked | yes | withdrawn; one word = for everybody
+  credited_name: {chuckado: "Chosen Name"}   # name or pseudonym the person chose; default = handle
+```
+
 ## Life cycle
 
 1. **propose** (coordinator): `go run ./cmd/changecheck new -id X -agent X -owns 'dir/**' -exclusive 'res'` writes the folder (status `proposed`), the coordinator fills Why, tasks, gates and runs `go run ./cmd/changecheck` (no overlap, no clash). Add a line to `docs/OWNERS`.

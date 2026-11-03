@@ -1,0 +1,3 @@
+BACKLOG: kitstall: dead-gate memory, caster bow not a weapon problem, ammo chore Amazon-only (kit lane i2 stall)
+INDEX: docs/kitstall.md - kit lane i2 stall analysis and fixes
+CHANGELOG: Fixed: town walk no longer loops on a gate that stalled every approach; a Sorceress with a stray bow keeps casting and no longer spends her gold on Arrows.

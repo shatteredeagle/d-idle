@@ -1,0 +1,3 @@
+BACKLOG: credit177: upstream PR #177 merged; CONTRIBUTORS.md and credits ledger updated
+INDEX: openspec/changes/credit177: credit bookkeeping for upstream PR #177
+CHANGELOG: Upstream PR #177 merged: five d2d fidelity fixes (vendor repair gate, melee 256ths and undead bonus, freeze rules, standing missile footprint and burst roll, Smite on a block) with game.exe differentials

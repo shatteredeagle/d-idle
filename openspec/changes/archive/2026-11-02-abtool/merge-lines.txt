@@ -1,0 +1,3 @@
+BACKLOG: - ABTOOL: cross-backend A:B tool tools/baseline/ab_compare.py (ratio, equivalence interval, Poisson deaths, k regimes) + fidelity-gate delta spec (openspec/changes/abtool)
+INDEX: - tools/baseline/ab_compare.py: d2d vs game.exe A:B comparison (card abtool)
+CHANGELOG: - tools: A:B comparison tool for d2d against game.exe records (equivalence interval, per-k regimes).

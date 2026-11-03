@@ -1,0 +1,3 @@
+BACKLOG: - CREDITKIT: credit: block on cards, tools/credit/credit.py (trailers, PR Credits, check), credits ledger, upstream-use sentence (docs/process/credit.md)
+INDEX: - docs/process/credit.md: how credit is written for upstream PRs (author, Traced-by, Reported-by, Agent), tools/credit usage; docs/community/credits-ledger.md: contributor names and consent
+CHANGELOG: - docs: credit kit for upstream PRs (credit: card block, tools/credit/credit.py, credits ledger, GPL carry-over sentence in the contributor docs).

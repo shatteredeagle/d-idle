@@ -1,0 +1,1 @@
+CHANGELOG: contribid: AGENTS.md no longer tells community contributors to commit as Claude; reproducibility rule and PR template checkboxes

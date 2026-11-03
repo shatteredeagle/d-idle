@@ -1,0 +1,3 @@
+BACKLOG: - LOCKSTEPBASE: hooked baseline lanes (`baseline-run.sh --timescale K`: hook install/restore, D2BOT_TIMESCALE forwarding, game-time series, regime flag, watchdog; ops repo) plus the bot's `gclock: timescale K` start line; pair set kitk2 needs a pin with gclock (docs/process/baseline-runs.md section 10)
+INDEX: docs/process/baseline-runs.md | section 10: hooked lanes (--timescale K), game-time conversion, regime flag, watchdog | process
+CHANGELOG: lockstepbase: d2bot logs `gclock: timescale K` at start when the clock scale is not 1; runbook section 10 for hooked baseline lanes (tooling in the ops repo, not run live).

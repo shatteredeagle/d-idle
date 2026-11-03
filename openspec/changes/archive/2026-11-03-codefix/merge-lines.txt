@@ -1,0 +1,3 @@
+BACKLOG: codefix - fixes for the independent review of the belt fixes (F1 NearTown split, F2 futile guard with stash gold, F3 mana reserve, F4 chain walk limit, F5 recovery floor, F8); live check = Gate 1 re-run
+INDEX: docs/research/codefix.md - what changed per review finding, tests, what a Gate 1 re-run should show
+CHANGELOG: Bot: the chain walk home is now only for a character with no healing potion; stash gold no longer defeats the futile-trip guard; the mana reserve applies only while the kit is incomplete.

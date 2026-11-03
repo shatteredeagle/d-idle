@@ -2,6 +2,7 @@ package party
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"net"
@@ -45,7 +46,7 @@ func (d *FlowDriver) bound(ctx context.Context) (context.Context, context.Cancel
 	if t == 0 {
 		t = 3 * time.Minute
 	}
-	return context.WithTimeout(ctx, t)
+	return gclock.WithTimeout(ctx, t)
 }
 
 func (d *FlowDriver) leaveTimeout() time.Duration {

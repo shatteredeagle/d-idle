@@ -1,0 +1,3 @@
+BACKLOG: verifycovmissiles: covmissiles first pass independently verified with limits (docs/research/verifycovmissiles-trace.md); new deviation pierce (game.exe: up to 4 pierces from stats 166 + 156 seeded by pierce_idx, d2d: stat 328 as per-hit percent, no differential yet); ledger edits for the two covmissiles lines listed there
+INDEX: docs/research/verifycovmissiles-trace.md - independent verification of the missiles coverage first pass: own runs (48,624 flight, 77,560 hit-roll cases), pierce rule read and run (verifycovmissiles)
+CHANGELOG: verifycovmissiles: independent check of the missiles coverage first pass (docs/research/verifycovmissiles-trace.md, tools/emu/vcm_*): verified with limits, new pierce deviation found

@@ -1,0 +1,3 @@
+BACKLOG: PRBUILDFREEZE (2026-11-02): local/freeze-rules-v4 (9caa1b9b on upstream cb716f10, private remote), differential 185,746 -> 0 of 225,748; draft docs/research/pr-freeze-rules-draft.md; PRs on hold, needs the independent re-check, det hashes and the user's go.
+INDEX: docs/research/pr-freeze-rules-draft.md: PR body draft for the freeze rules branch (local/freeze-rules-v3), order versus #159, CI parity notes.
+CHANGELOG: Docs: freeze rules PR draft and prep notes (docs/research/pr-freeze-rules-draft.md).

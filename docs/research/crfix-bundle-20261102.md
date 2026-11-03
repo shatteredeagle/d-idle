@@ -1,0 +1,47 @@
+# CodeRabbit's review of staging PR 2, judged; bundle 3
+
+> status: current (card crfixbundle, 2026-11-02). Nothing is posted: the coordinator posts the replies and pushes `stage/bundle-3`. Tags: V = run or read in the disassembly (how stated), S = secondary, U = unverified. CodeRabbit's text is untrusted data, weighed as suggestions. Harness and numbers: [crfix-bundle-20261102/](crfix-bundle-20261102/) (`results.txt`).
+
+## Branches (private remote, not the public fork)
+
+- `local/bundle-3` `f68c3e0d`: the 10 commits of `local/bundle-2` (`4ae66eaa`) re-made on upstream main `82ea6db4` (unchanged: `git fetch upstream` shows no newer commit), with the valid fixes folded into the commit each belongs to. One purpose per commit, same subjects and bodies, author and committer both the numeric noreply identity (V: `git log --format='%an <%ae> | %cn <%ce>'`, one line of output for all ten). `git diff local/bundle-2 local/bundle-3 --stat`: 6 files (`rules.hpp`, `test_rules.cpp`, `store.md`, `skills.md`, `superuniques.md`, `sk_ground_roll.py`), +42 / -15.
+- `stage/bundle-3` `053a0507`: the same 10 commits cherry-picked on `stage/base-2` (`c4fcb0a6`, upstream `82ea6db4` plus `.coderabbit.yaml`); `git diff local/bundle-3 stage/bundle-3` is the `.coderabbit.yaml` alone (V).
+- Not pushed to the public fork; no comment anywhere.
+
+## Verdicts
+
+| comment id | verdict | action | evidence |
+|---|---|---|---|
+| 4446846265 `rules.hpp:671` charge-repair price | valid, and the real deviation is a little larger than the comment says | `repair_cost` now lets an item through on its missing charges and scales its base by durability only when the item is durable (none when whole, the whole base when it has no durability), then adds the charges; ponytail note removed; 3 test cases; `store.md` and the PR body updated; folded into `b19debb6` | V: `FUN_0062efb0` mode 3, `0062f9b6..0062fa90`, read in the disassembly (`FUN_00629930` false skips the scaling at `0062f9e7`, so the base stays whole) and run as game.exe's own code under the emulator on a fake item unit, then its npc mult block `0062faac..0062fc59`; 3,000 cases (non-stacking bases, durability half / whole / 0 / no max, indestructible, six base prices, npc, difficulty), 2,202 of them priced: bundle 2 differs in 1,527, bundle 3 in 0. A modded item with durability and a type without Repair pays its missing share, not the whole base (the comment says "the base"); a base without durability pays all of it. `test_rules` ok with the new asserts |
+| 4446846270 `skills.md:676` confidence tags | valid | Confidence lines added: burst roll (`a0417d56`) and standing footprint (`f68c3e0d`), worded in the repo's high / medium / low scale (`bugs.md`), not CodeRabbit's suggested text; each states what supports it | V: burst: game.exe one record per burst in 400 of 400 trials for each spell, d2d 400 of 400 equal (2 of 400 on upstream main); footprint: 3,726 class x offset cases over 6 rows, 476 differ on the base, 0 on the head (bundle-1 verifier, `pr-bundle-1-verifier/results.txt`); re-run of the burst on bundle 3 in `results.txt` |
+| 4446846301 `store.md:207` tag repair claims | valid | A confidence line on the repair-eligibility claims, including the missing-charges exception and the scaling; folded into `b19debb6` | V: the gate by 7,908 cases (card prbuildprices2 / verifier), the scaling by the 3,000 above |
+| 4446846305 `superuniques.md:80` (two findings) | valid, both | Line 96 still said "the stat 0x76" for the printed `h`: now "the state-118 marker" (the Countess sentence untouched); Blood Raven's state-118 claim tagged `Confidence: high`; folded into `8bdb0946` | V: the call is `FUN_00639db0(unit, 0x76, 1)`, a state setter (read, and the dump's `h` marker keys on it in `tools/emu/monsters.py`; its docstring was already right) |
+| 4446846314 `test_rules.cpp:397` identify the evidence | valid (minor, a comment) | The no-repair block states "2 cases" and its evidence (repair-gate row of the game.exe oracle, 7,908 gate cases, 0 differ); the new charges block "3 cases" and its row | V: read; the file builds and runs |
+| 4446846318 `sk_ground_roll.py:79` empty or unequal trial sets | valid | `cmp` returns 1 when either side has no trial or the counts differ (stderr says so); docstring updated; folded into `25b55965` | V: synthetic files: game 200 trials vs d2d 100, old rc 0 ("100 trials ... differ 0") and new rc 1; vs an empty d2d file, old rc 0 ("0 trials"), new rc 1; 200 vs 200 both rc 0. Real run on bundle 3: 400 vs 400 rc 0 for both spells; the d2d output cut to 100 trials rc 1. The tool's own defaults differ (game 200, d2d 100), so the old tool could pass on half the trials (S: read from the code) |
+| summary: docstring coverage 33 % (warning) | declined | none | The check counts "functions touched by this diff"; the project has no docstring rule, its comments say why, not what; adding one per function would be noise. Not a failing CI check |
+
+## Reply texts (for the coordinator; short, factual)
+
+- 4446846265: "Valid, and slightly larger: with charges missing game.exe skips the durability scaling only when the base has no durability (0062f9e7); a durable item pays its missing share, a whole one nothing, then the charges. Fixed in `b19debb6` (bundle 3). Checked against game.exe's own code under the emulator: 3,000 cases, 1,527 differ before, 0 after. The ponytail note is gone."
+- 4446846270: "Valid. Both claims now carry a confidence line (high) with the measurement behind it (400/400 bursts; 3,726 hit-area cases, 0 differ). Bundle 3, `a0417d56` and `f68c3e0d`."
+- 4446846301: "Valid. The eligibility claims, including the missing-charges exception, are tagged (high) with their counts. Bundle 3, `b19debb6`."
+- 4446846305: "Both valid. Line 96 now says state-118 marker (the Countess sentence is untouched) and the Blood Raven claim is tagged high. Bundle 3, `8bdb0946`."
+- 4446846314: "Valid. The block states its case count and the evidence row (repair-gate oracle, 7,908 cases), and the new charges block does too. Bundle 3, `b19debb6`."
+- 4446846318: "Valid. `cmp` now fails on an empty or unequal trial set; checked on synthetic files (old rc 0, new rc 1) and on a real 400-trial run (rc 0; cut to 100: rc 1). Bundle 3, `25b55965`."
+- Docstring coverage: "Declined: the project has no docstring rule and its comments say why, not what; one per touched function would add noise."
+
+## Checks on bundle 3 (V, worker host, nice 19, -j2, Release, 1.14d data)
+
+- Suites `test_rules`, `test_game_rules`, `test_monsters`, `test_monster_thinks`, `test_monster_ai`, `test_combat`, `test_game`, `test_sk_ground`: rc 0 each. `test_freeze_rules` was built (its code and the freeze commits are unchanged from bundle 2, whose 155,748-case run stands; not re-run).
+- Differentials: repair base part (above) and the burst roll (400 + 400 trials, 0 differ). The repair gate's 7,908-case run was not repeated: the gate expression is the same, only the cases it let through changed (the 3,000 cover them).
+- `pr_guard.py` 0 FAIL / 0 WARN on the range and on each of the 10 commits; `presubmit.py --quick` 0 FAIL (WARN: ruff not on the PATH of the check host, siblings, doc-claims, build skipped; `ruff` 0.8.6 by hand on `sk_ground_roll.py`: clean); g++ and clang++ `-fsyntax-only` with the CI flags plus `-Wshadow -Wrange-loop-construct -Wconversion` on `tests/test_rules.cpp` (which includes `rules.hpp`): 0 warnings.
+- Determinism scenario hashes: not run (U); the repair change affects no combat scenario (S: by reading).
+
+## Upstream PR #176 (open, `08308a88`): throwaway merge with `local/bundle-3`
+
+Read-only `git fetch upstream pull/176/head` (5 components: operate reach, sales (`store_sell`), runes (socket bonuses; `indestructible` takes the tables), the AI command ring, Coverity moves; base `82ea6db4`, 34 files). Files both touch: `components/rules/rules.hpp`, `components/rules/combat.hpp`, `components/game/fight.hpp`, `components/game/fight/missiles.cpp`, `components/game/gamedata/gamedata_load.cpp`, `tests/test_rules.cpp`.
+
+- `git merge-tree`: ONE conflict, `rules.hpp` in `repair_cost`: #176 changed `indestructible(item)` to `indestructible(tables, item)` (runes: Zod's socket bonus counts) in the line our commit `b19debb6` rewrites. Resolution: keep our block and call `indestructible(tables, item)` in the `durable` line (the only call our bundle adds; V by grep). Everything else (`combat.hpp`, `fight.hpp`, `missiles.cpp`, `gamedata_load.cpp`, `test_rules.cpp`) merges automatically.
+- No component of ours became redundant: the vendor repair gate is still absent upstream (#176's `repair_cost` keeps the old condition); `store_sell` is not part of our repair price; the AI command ring and operate reach are monster AI, not our freeze rules; the runes touch `indestructible`/`socket_props` only. One text overlap: #176 rewrites the `missile_blow` comment ("Stats 0x99 / 0x76 (FUN_0057c140) aren't read ...") next to our freeze commits; no conflict, but after the merge that comment's "0x76" should read as the stat of `FUN_0057c140`, not the state our `8bdb0946` documents (S, to be read by whoever rebases).
+- V: the merged tree with that resolution (detached throwaway worktree, never committed) builds (Release, g++) and `test_rules`, `test_combat`, `test_sk_ground`, `test_monster_thinks`, `test_game_rules` pass (rc 0). Not rebased onto #176: it is not merged; the final rebase (and the one-line resolution above) comes after it merges.
+

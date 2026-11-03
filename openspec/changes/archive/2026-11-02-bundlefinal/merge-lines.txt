@@ -1,0 +1,3 @@
+BACKLOG: bundlefinal: final PR body for bundle 1 (docs/research/pr-bundle-1-body.md) and private branches local/bundle-2 / stage/bundle-2; waits for the user's go to push or open a PR
+INDEX: docs/research/pr-bundle-1-body.md: final PR body of bundle 1 (card bundlefinal)
+CHANGELOG: bundlefinal: final PR body for bundle 1 and credit blocks on its cards

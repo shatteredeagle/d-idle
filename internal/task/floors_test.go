@@ -36,9 +36,9 @@ func TestGuardFloorTable(t *testing.T) {
 		lvl           int
 		road, tw, ady bool // open?
 	}{
-		{"none", 13, false, false, false}, {"none", 14, false, false, false}, {"none", 15, false, false, false},
+		{"none", 13, false, false, false}, {"none", 14, true, false, false}, {"none", 15, true, false, false},
 		{"none", 16, true, true, false}, {"none", 17, true, true, true},
-		{"dead", 15, false, false, false}, {"dead", 16, true, true, false}, {"dead", 17, true, true, true},
+		{"dead", 13, false, false, false}, {"dead", 14, true, false, false}, {"dead", 16, true, true, false}, {"dead", 17, true, true, true},
 		{"alive", 13, false, false, false}, {"alive", 14, true, true, false}, {"alive", 15, true, true, true}, {"alive", 16, true, true, true},
 	}
 	for _, c := range cases {
@@ -128,9 +128,9 @@ func TestEffectiveFloorLine(t *testing.T) {
 		merc, want string
 		w          task.World
 	}{
-		{"none", "route guard: monastery floor=16 (merc=none)", floorWorld(10, "none", nil)},
+		{"none", "route guard: monastery floor=14 (merc=none)", floorWorld(10, "none", nil)},
 		{"alive", "route guard: monastery floor=14 (merc=alive)", floorWorld(10, "alive", nil)},
-		{"dead", "route guard: monastery floor=16 (merc=dead)", floorWorld(10, "dead", nil)},
+		{"dead", "route guard: monastery floor=14 (merc=dead)", floorWorld(10, "dead", nil)},
 	} {
 		if got := task.FloorLine("monastery", task.MonasteryFloor(c.w), c.w); got != c.want {
 			t.Errorf("%s: %q want %q", c.merc, got, c.want)

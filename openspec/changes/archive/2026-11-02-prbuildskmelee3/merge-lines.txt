@@ -1,0 +1,3 @@
+BACKLOG: PRBUILDSKMELEE3 built (private fork branch local/skmelee3-v1, head 81b7a0a0; upstream PRs on hold): D1 and D2 differential 290,847 weapon cases base 289,857 differ, head 0; Opus verification and det hashes owed: docs/research/pr-skmelee3-draft.md
+INDEX: docs/research/pr-skmelee3-draft.md - draft PR text for the melee fine physical and undead / Blunt bonus (on hold)
+CHANGELOG: Added docs/research/pr-skmelee3-draft.md and sm3_run.sh / sm3_probe.py: the SKMELEE3 candidate built in the private fork with a counted differential.

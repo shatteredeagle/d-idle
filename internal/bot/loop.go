@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/gclock"
 	"errors"
 	"fmt"
 	"runtime/debug"
@@ -276,7 +277,7 @@ func (r *Runner) pausedFight(ctx context.Context, snap *d2.Snapshot) {
 		r.carryOut(ctx, a)
 		return
 	}
-	fctx, cancel := context.WithTimeout(ctx, 15*time.Second)
+	fctx, cancel := gclock.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	if _, err := r.d.Fighter.Clear(fctx, ClearOpts{Radius: r.e.Tune.Bot.ClearRadius}); err != nil && fctx.Err() == nil {
 		r.e.Log.Warn("paused: fight failed", "err", err)
@@ -294,7 +295,7 @@ func (r *Runner) hazard(ctx context.Context, snap *d2.Snapshot) {
 }
 
 func (r *Runner) carryOut(ctx context.Context, a SafetyAction) error {
-	sctx, cancel := context.WithTimeout(ctx, 15*time.Second)
+	sctx, cancel := gclock.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	err := r.d.Fighter.Act(sctx, a)
 	if err != nil {
@@ -333,7 +334,7 @@ func (r *Runner) runAction(parent context.Context, gen uint64, st State, activit
 	tctx := actx
 	if timeout > 0 {
 		var tc context.CancelFunc
-		tctx, tc = context.WithTimeoutCause(actx, timeout, errStepTimeout)
+		tctx, tc = gclock.WithTimeoutCause(actx, timeout, errStepTimeout)
 		defer tc()
 	}
 	done, gdone := make(chan struct{}), make(chan struct{})

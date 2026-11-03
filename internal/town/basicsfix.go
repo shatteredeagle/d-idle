@@ -2,8 +2,10 @@ package town
 
 import (
 	"context"
+	"fmt"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/town/belt"
 )
 
 // BASICSFIX (docs/basics-audit.md). Policy numbers below are the d2-sme's EXP rule of thumb (docs/sme/play-economy.md),
@@ -132,4 +134,51 @@ func (t *Town) kitPotions(plan ChorePlan) int {
 		n = min(n, plan.PotionFloor)
 	}
 	return max(n, 1)
+}
+
+// healingCarried is the healing and rejuvenation potions in belt and pack.
+func (t *Town) healingCarried(s *d2.Snapshot) int {
+	bs := belt.Read(t.e.Data, s.Inventory)
+	return bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
+}
+
+// needWithdraw is the BELTFIX5 knob-free rule: a character with no healing potion anywhere and less gold in the pack
+// than the keep line, with gold in the stash, takes the difference out before the shop. Banking keeps the pack at
+// the keep line, so the line is also where a withdrawal stops. Gate 1 20261103-0338: 1418 gold in the stash, 6 in the
+// pack, 0 potions at clvl 11; the town package had no withdraw chore.
+func (t *Town) needWithdraw(s *d2.Snapshot) bool {
+	_, can := t.e.In.(goldMover)
+	return can && s.Player.StashGold > 0 && s.Player.Gold < t.bankKeep(s.Player.Level) && t.healingCarried(s) == 0
+}
+
+func (t *Town) withdraw(ctx context.Context, a *Act) error {
+	s, err := t.current()
+	if err != nil {
+		return err
+	}
+	amount := min(t.bankKeep(s.Player.Level)-s.Player.Gold, s.Player.StashGold)
+	if amount <= 0 {
+		return nil
+	}
+	if err := t.openStash(ctx, a); err != nil {
+		return err
+	}
+	first := t.e.In.(goldMover).MoveGold(amount, false)
+	if first == nil {
+		g0 := s.Player.Gold
+		_, ok, werr := t.h.Wait(ctx, t.uiTimeout(), func(s *d2.Snapshot) bool { return s.Player.Gold >= g0+amount })
+		if werr != nil || !ok {
+			first = fmt.Errorf("town: gold withdrawal of %d not confirmed (%v)", amount, werr)
+		}
+	} else {
+		_ = t.e.In.Key("esc")
+	}
+	if first == nil {
+		t.withdrew = true
+		t.e.Log.Info("town: withdrew gold for the kit", "amount", amount, "stash", s.Player.StashGold-amount)
+	}
+	if err := t.h.CloseAll(ctx); err != nil && first == nil {
+		first = err
+	}
+	return first
 }

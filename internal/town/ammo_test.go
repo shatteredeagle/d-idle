@@ -35,6 +35,10 @@ func TestAmmoPlan(t *testing.T) {
 	if got := town.AmmoPlan("Necromancer", "", gear.Equipped{Weapon: "wnd"}, nil); len(got) != 0 {
 		t.Fatalf("necro: %v", got)
 	}
+	// KITSTALL: a Sorceress wearing a bow buys nothing
+	if got := town.AmmoPlan("Sorceress", "", gear.Equipped{Weapon: "sbw"}, nil); len(got) != 0 {
+		t.Fatalf("sorceress with a bow: %v", got)
+	}
 	// worn bow, low arrows: restock
 	low := gear.Equipped{Weapon: "sbw", Offhand: "aqv", OffhandQty: 10}
 	if got := codesOf(town.AmmoPlan("Amazon", "bow", low, nil)); len(got) != 1 || got[0] != "aqv" {

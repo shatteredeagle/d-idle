@@ -18,7 +18,7 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 	p := s.Player
 	in := resource.Input{
 		Life: p.Life, MaxLife: p.MaxLife, Mana: p.Mana, MaxMana: p.MaxMana, InTown: p.InTown(), Gold: p.Gold,
-		Level: p.Level, Class: p.Class, Diff: p.Difficulty, Area: p.Area, LastTripGold: -1, NearTown: resource.NearTownArea(p.Area),
+		Level: p.Level, Class: p.Class, Diff: p.Difficulty, Area: p.Area, LastTripGold: -1, NearTown: resource.NearTownArea(p.Area), ChainHome: resource.ChainHomeArea(p.Area),
 		Hostiles: r.hostileNear(s, r.e.Tune.Combat.FightRadius),
 		Build:    leveler.ResolveBuild(r.cfg.LevelerBuild, p.Class.String()),
 	}
@@ -64,6 +64,12 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 			}
 		}
 	}
+	// BELTFIX5: with no healing potion anywhere the town visit withdraws the stash gold for the kit (Town.withdraw), so
+	// every purse test of the policy (poor, futile, trip floor, recovery) sees purse plus bank. Gate 1 20261103-0338:
+	// 6 gold in the pack, 1418 in the stash, 7 virtual minutes without a potion.
+	if in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV == 0 {
+		in.Gold += p.StashGold
+	}
 	return in
 }
 
@@ -74,6 +80,10 @@ func (r *Runner) tripVerdict(s *d2.Snapshot) resource.Trip {
 
 // idleTripGold is the gold growth below which a finished chore counts as an idle trip.
 const idleTripGold = 10
+
+// noteTripEnd records the gold a finished trip left on the basis of the policy's Gold (codefix F2): the stash counts
+// while no healing potion is carried, so a visit that could not turn it into a potion is futile the next time too.
+func (r *Runner) noteTripEnd(s *d2.Snapshot) { r.noteTripGold(r.resInput(s).Gold) }
 
 // noteTripGold remembers the gold a finished chore left, so a trip that could not fix a need is not repeated until
 // gold has grown (TownTripTrigger.Futile).

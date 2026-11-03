@@ -1,0 +1,4 @@
+BACKLOG: monsterpace: split into PR A (local/monsterpace-a: Act 1 think paces, Blood Raven home rule, shaman corpse reach) and PR B (local/monsterpace-b-velocity: monster base velocity 75) on upstream main 3be426d3, verifier changes applied; ready for the PR-open step on the user's go.
+INDEX: docs/research/pr-monsterpace-a-draft.md: PR A draft (Act 1 think paces, Blood Raven, shaman corpse reach): counts, det, CI parity, limits.
+INDEX: docs/research/pr-monsterpace-b-draft.md: PR B draft (monster base velocity 75): oracle, reach, det, CI parity, limits.
+CHANGELOG: Docs: the monster movement pace PR draft split into two (think paces + Blood Raven + shaman corpse reach; base velocity 75), rebased on current upstream main.

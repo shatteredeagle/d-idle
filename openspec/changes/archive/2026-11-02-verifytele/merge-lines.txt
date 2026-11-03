@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-TELEPORT-ROOM done: the Teleport room rule holds (20000 cases, seed 4242); Teleport 2 line test read only (docs/research/verify-teleport-room.md)
+INDEX: docs/research/verify-teleport-room.md - independent check of the Teleport room rule (card verifytele)
+CHANGELOG: Independent verification of the Teleport room rule (docs/research/verify-teleport-room.md, tools/emu/vt_*)

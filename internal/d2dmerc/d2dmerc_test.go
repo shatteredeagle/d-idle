@@ -181,3 +181,44 @@ func TestActsAgainstFake(t *testing.T) {
 		t.Errorf("claim: %v %v", g, err)
 	}
 }
+
+// hirefix B2: d2d keeps header.merc_dead after the corpse is gone, so the dump says present:false,dead:true.
+// The merc is still owned and dead (revivable), not "no merc".
+func TestDeadAndGoneIsOwnedDead(t *testing.T) {
+	gone := strings.Replace(fixture(t, "dump_head_necro.json"), `"merc":{"present":false,"dead":false}`, `"merc":{"present":false,"dead":true}`, 1)
+	if !strings.Contains(gone, `"dead":true`) {
+		t.Fatal("fixture edit missed")
+	}
+	st := state(t, gone, nil)
+	if !st.Known || !st.Owned || st.Alive || st.LifePct != 0 {
+		t.Errorf("dead and gone: %+v", st)
+	}
+}
+
+// hirefix B1: every hireling code maps to its monstats class, so alive-and-following is observable for all four.
+func TestHirelingCodesMapToClasses(t *testing.T) {
+	for code, want := range map[string]int{"RG": merc.ClassRogue, "GU": merc.ClassDesert, "IW": merc.ClassIronWolf, "0A": merc.ClassBarb} {
+		odd := strings.Replace(fixture(t, "dump_head_late.json"), `"code":"RG"`, `"code":"`+code+`"`, 1)
+		st := state(t, odd, nil)
+		if !st.Owned || !st.Alive || st.Class != want {
+			t.Errorf("%s: %+v want class %d", code, st, want)
+		}
+	}
+}
+
+func TestParseQuote(t *testing.T) {
+	for _, c := range []struct {
+		in   string
+		want int
+		ok   bool
+	}{
+		{"Resurrect Rimeraven: 256", 256, true},
+		{"Resurrect Aldur: 12,345", 12345, true},
+		{"Resurrect Aldur", 0, false},
+		{"Resurrect Aldur: gold", 0, false},
+	} {
+		if got, ok := ParseQuote(c.in); got != c.want || ok != c.ok {
+			t.Errorf("%q: %d %v", c.in, got, ok)
+		}
+	}
+}

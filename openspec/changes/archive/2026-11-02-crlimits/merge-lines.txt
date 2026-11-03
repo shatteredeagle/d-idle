@@ -1,0 +1,3 @@
+BACKLOG: CodeRabbit limits research done; bundle budget in docs/research/coderabbit-limits-20261102.md
+INDEX: CodeRabbit limits and bundle budget: [research/coderabbit-limits-20261102.md](research/coderabbit-limits-20261102.md)
+CHANGELOG: docs/research/coderabbit-limits-20261102.md added (CodeRabbit review limits, upstream batch sizes, bundle budget)

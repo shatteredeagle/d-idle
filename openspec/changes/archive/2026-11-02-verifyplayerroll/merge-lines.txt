@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-PLAYERROLL done (card verifyplayerroll): pr/player-roll 28c0540a READY WITH CHANGES (docs/research/pr-playerroll-verifier.md): head 0 of 110,000 physical (incl. res -101..-300) and 0 of 60,000 element rolls vs game.exe; required: three missing includes in tests/game/test_game_missiles.cpp or CI's clang-tidy step fails; PR text: lo == hi overclaim, element reach list, current numbers
+INDEX: docs/research/pr-playerroll-verifier.md - independent verifier of pr/player-roll (element roll top, physical in 256ths, -100 floor): own oracles, caller audit, det, CI flags and clang-tidy step
+CHANGELOG: verifyplayerroll: independent verification of the player-roll PR candidate (docs only)

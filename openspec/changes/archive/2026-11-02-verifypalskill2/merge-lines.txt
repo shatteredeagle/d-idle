@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-PALSKILL2 done: calc slots and Smite D1 / D2 verified on 16,000 + 16,000 own cases, D6 / D7 / D8 read only (U for live): docs/research/verifypalskill2.md
+INDEX: docs/research/verifypalskill2.md - independent re-check of the PALSKILL trace (Smite, Zeal, Sacrifice; own harness tools/emu/vp2*)
+CHANGELOG: Added docs/research/verifypalskill2.md and tools/emu/vp2*: independent check of the Smite, Zeal and Sacrifice deviations.

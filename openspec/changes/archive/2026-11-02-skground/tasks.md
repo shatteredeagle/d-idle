@@ -19,6 +19,12 @@ gates:
 result: "docs only; first pass, not yet independently verified"
 live: "docs only, nothing run live"
 merge: 650c59b
+credit:
+  component: Standing missile footprint and burst roll (ground), trace
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifybundle, own harness)"]
+  consent: none
 ```
 
 - [x] Meteor blast read (FUN_005aabb0, FUN_0056bad0, FUN_0056b7e0, FUN_0056b3e0, FUN_006492a0)

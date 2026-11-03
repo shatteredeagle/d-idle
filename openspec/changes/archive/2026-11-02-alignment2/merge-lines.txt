@@ -1,0 +1,3 @@
+BACKLOG: - ALIGNMENT2 done (offline): FUN_006259b0 returns 2 for the player's side (merc, Shadows, skeletons, golems, Revive, Valkyrie, Hydra, druid summons, sentries, converted): the undead block of FUN_0057b7d0 applies to them, so not_player on merc / Shadow is wrong; V run 734 rows + 18 + 168 + 288 cases 0 differ; no PR candidate: docs/research/alignment2-trace.md
+INDEX: docs/research/alignment2-trace.md - alignment (stat 0xac) per unit kind and the undead-blow gate of FUN_0057b7d0, game.exe 1.14d (card alignment2)
+CHANGELOG: Research: alignment2-trace.md, game.exe gives alignment 2 to mercs, Shadows and all player-side units, so the undead / Blunt blow bonus gate (player or alignment 2) covers them; tools/emu/al2_run.py native runs.

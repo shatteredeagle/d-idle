@@ -51,6 +51,9 @@ type World struct {
 	PickupToCursor bool
 	// AutoEquipQuest: a ground click on a Shaft (msf) or Top of the Staff (vip) wears it (V live, docs/act2.md P1).
 	AutoEquipQuest bool
+	// AutoWearWeapon: a ground click on any weapon wears it when the right hand is empty (S: KITSTALL2, the bot log of a
+	// Sorceress whose looted Short Bow ended in the weapon slot; the game does it for quest items, V live).
+	AutoWearWeapon bool
 	// ShiftFails and DragFails make that many shift-clicks on a pack potion / drops of a potion on the belt slot do nothing.
 	ShiftFails, DragFails int
 	// NoHover makes Interact fail with ErrNotHovered this many times first.

@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/buildinfo"
+	"d2lod-bot/internal/gclock"
 	"d2lod-bot/internal/logx"
 	"d2lod-bot/internal/paths"
 )
@@ -173,6 +174,9 @@ func main() {
 		os.Exit(2)
 	}
 	log.Info("d2bot start", "version", version)
+	if m := gclock.StartNote(gclock.Default.K); m != "" {
+		log.Info(m)
+	}
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
 	if os.Getenv(superviseMarker) != "" {

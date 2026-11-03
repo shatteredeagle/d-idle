@@ -1,0 +1,48 @@
+C: 734 MonStats rows (record count 734), 0 where the +0x4c byte differs from the Align column
+C class roguehire (row 271): +0x4c 1 -> spawn alignment 2
+C class act2hire (row 338): +0x4c 1 -> spawn alignment 2
+C class act3hire (row 359): +0x4c 1 -> spawn alignment 2
+C class act5hire1 (row 560): +0x4c 1 -> spawn alignment 2
+C class act5hire2 (row 561): +0x4c 1 -> spawn alignment 2
+C class necroskeleton (row 363): +0x4c 1 -> spawn alignment 2
+C class necromage (row 364): +0x4c 1 -> spawn alignment 2
+C class claygolem (row 289): +0x4c 1 -> spawn alignment 2
+C class bloodgolem (row 290): +0x4c 1 -> spawn alignment 2
+C class irongolem (row 291): +0x4c 1 -> spawn alignment 2
+C class firegolem (row 292): +0x4c 1 -> spawn alignment 2
+C class valkyrie (row 357): +0x4c 1 -> spawn alignment 2
+C class hydra1 (row 351): +0x4c 1 -> spawn alignment 2
+C class shadowwarrior (row 417): +0x4c 1 -> spawn alignment 2
+C class shadowmaster (row 418): +0x4c 1 -> spawn alignment 2
+C class wolf (row 430): +0x4c 1 -> spawn alignment 2
+C class spiritwolf (row 420): +0x4c 1 -> spawn alignment 2
+C class fenris (row 421): +0x4c 1 -> spawn alignment 2
+C class druidbear (row 428): +0x4c 1 -> spawn alignment 2
+C class druidhawk (row 419): +0x4c 1 -> spawn alignment 2
+C class plaguepoppy (row 425): +0x4c 1 -> spawn alignment 2
+C class vinecreature (row 427): +0x4c 1 -> spawn alignment 2
+C class cycleoflife (row 426): +0x4c 1 -> spawn alignment 2
+C class oaksage (row 424): +0x4c 1 -> spawn alignment 2
+C class heartofwolverine (row 423): +0x4c 1 -> spawn alignment 2
+C class spiritofbarbs (row 422): +0x4c 1 -> spawn alignment 2
+C class dopplezon (row 356): +0x4c 1 -> spawn alignment 2
+C class bladecreeper (row 413): +0x4c 1 -> spawn alignment 2
+C class chargeboltsentry (row 411): +0x4c 1 -> spawn alignment 2
+C class wakeofdestruction (row 410): +0x4c 1 -> spawn alignment 2
+C class lightningspire (row 371): +0x4c 0 -> spawn alignment 0
+C class infernosentry (row 415): +0x4c 1 -> spawn alignment 2
+C class deathsentry (row 416): +0x4c 1 -> spawn alignment 2
+C class bonewall (row 344): +0x4c 1 -> spawn alignment 2
+C class skeleton1 (row 0): +0x4c 0 -> spawn alignment 0
+C class zombie1 (row 5): +0x4c 0 -> spawn alignment 0
+C class fallen1 (row 19): +0x4c 0 -> spawn alignment 0
+C class cow (row 179): +0x4c 2 -> spawn alignment 1
+C class camel (row 185): +0x4c 2 -> spawn alignment 1
+C class act2guard5 (row 378): +0x4c 1 -> spawn alignment 2
+C class rogue2 (row 270): +0x4c 1 -> spawn alignment 2
+C class akara (row 148): +0x4c 1 -> spawn alignment 2
+C: spawn alignment over all rows: {0: 619, 2: 113, 1: 2}
+D: 18 setter/getter round trips (real FUN_005543b0 then FUN_006259b0), 0 differ
+A: 168 cases (unit type 0..5 x 7 stat-list shapes x stat 0..3), 0 differ from the reading
+B: 288 cases (attacker type 0..5 x stat list x alignment x defender type 0..2), 0 differ from the reading
+D ran

@@ -1,0 +1,3 @@
+BACKLOG: - ITEMWEAPONS: first-pass weapons.txt table trace, no run yet (docs/research/itemweapons-trace.md)
+INDEX: - docs/research/itemweapons-trace.md: weapon base table facts (306 rows), plan for damage and speed differential
+CHANGELOG: - docs: itemweapons first-pass trace (docs/research/itemweapons-trace.md).

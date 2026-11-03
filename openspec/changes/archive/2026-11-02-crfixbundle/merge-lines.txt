@@ -1,0 +1,3 @@
+BACKLOG: crfixbundle: CodeRabbit review of staging PR 2 judged and fixed on private branches local/bundle-3 / stage/bundle-3 (docs/research/crfix-bundle-20261102.md); coordinator posts the replies and pushes the staging branch
+INDEX: docs/research/crfix-bundle-20261102.md: CodeRabbit comments on staging PR 2, verdicts, reply texts, #176 merge probe (card crfixbundle)
+CHANGELOG: crfixbundle: bundle 3 (CodeRabbit review fixes: charge-repair base, confidence tags, ground-roll comparison) and the judged comments

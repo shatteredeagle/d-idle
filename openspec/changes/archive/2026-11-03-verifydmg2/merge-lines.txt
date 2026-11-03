@@ -1,0 +1,3 @@
+BACKLOG: DMGROLL r2 second verification: NOT READY FOR PR (b9ecb415): both findings fixed (roll/reduce/absorb 0 of 240,000), but the clamp now also hits the fixed-record callers (Corpse Explosion, Diablo's cold touch) and the absorb-after-reduction order leaves the pool 3 % worse than base; see docs/research/verify-dmgroll2.md
+INDEX: docs/research/verify-dmgroll2.md: second verifier report on DMGROLL r2 (b9ecb415), own differential in verify-dmgroll2-run.txt
+CHANGELOG: verifydmg2: second verification of the monster damage roll r2 (tools/emu/v2_*, docs/research/verify-dmgroll2.md)

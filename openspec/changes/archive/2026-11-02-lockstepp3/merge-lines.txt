@@ -1,0 +1,3 @@
+BACKLOG: lockstep P3 done live: time hook exact at k=1,2,4 (25/50/100 fps town), but the bot (real-time timers) halves its work per game minute at k=2 and breaks at k=4 (9 kills, chores fail); next: scaled bot clock then repeat k=2/k=4, noise band (docs/research/lockstep-p3.md)
+INDEX: docs/research/lockstep-p3.md - lockstep probe P3: unhooked control and k=1/2/4 runs, frame rate, kills per real and per game minute, why the bot breaks under k, what Tier A supports
+CHANGELOG: Research: the original-game clock hook scales the frame rate exactly up to 4x (100 fps), but the bot's own real-time waits make k=2 yield half the work per game minute and k=4 unusable

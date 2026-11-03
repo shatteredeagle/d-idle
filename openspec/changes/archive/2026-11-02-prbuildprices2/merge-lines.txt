@@ -1,0 +1,3 @@
+BACKLOG: PRBUILDPRICES2 done (card prbuildprices2): repair-gate-only PR branch local/vendor-repair-gate-v3 (f0360487) on upstream main cb716f10, verified (gate 143+17 wrong on base, 0 on head; 7 suites green; clean merge with #174), draft docs/research/pr-vendor-repair-gate-draft.md; not posted (PR hold)
+INDEX: docs/research/pr-vendor-repair-gate-draft.md - PR draft: vendor repair gate alone, rebased on upstream main, counts and CI parity
+CHANGELOG: prbuildprices2: repair-gate PR draft and branch (docs only)

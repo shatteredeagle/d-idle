@@ -1,0 +1,21 @@
+# crfixbundle results (worker host, 2026-11-02)
+
+## repair base part, game.exe oracle vs d2d (cr_repair_game.py gen 2026 3000; cr_cmp.py)
+d-before.txt {('no-dur', 'differ'): 1527, ('no-dur', 'same'): 436, ('scaled', 'same'): 1037}
+  example r798 92h 0 44 1 5000 nihlathak game 625 d2d 0
+  example r4503 wsp 0 0 1 70000 alkor game 8704 d2d 0
+  example r2182 gfr 0 0 1 70000 alkor game 8704 d2d 0
+  example r1735 chn 0 0 1 77 drognan game 9 d2d 0
+  example r4811 xui 0 0 0 5000 asheara game 625 d2d 0
+d-fix2.txt {('no-dur', 'same'): 1963, ('scaled', 'same'): 1037}
+
+    798 0    2202 1 (game base part 0 / >0)
+
+## ground roll, 400 trials each (sk_ground_roll.py game NAME 400 vs test_sk_ground --burst-roll NAME 400)
+fireball: 400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0, rc 0
+glacialspike: 400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0, rc 0
+d2d output cut to 100 trials (either): 'trial count mismatch: game.exe 400, d2d 100: not compared', rc 1 (the old cmp on synthetic files of that shape: rc 0)
+
+## cmp on synthetic files (old vs new sk_ground_roll.py): game 200 trials vs d2d 100: old rc 0, new rc 1; vs empty d2d: old rc 0 ('0 trials'), new rc 1; 200 vs 200: both rc 0
+
+## suites on local/bundle-3 f68c3e0d (Release, 1.14d data): test_rules test_game_rules test_monsters test_monster_thinks test_monster_ai test_combat test_game test_sk_ground: rc 0 each

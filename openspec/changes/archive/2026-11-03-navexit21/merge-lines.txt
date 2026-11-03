@@ -1,0 +1,3 @@
+BACKLOG: - NAVEXIT21: Blood Moor kept no town border after an empty probe round; empty tome now buys the first scroll before the kit potions; Gate 1 seed 17 re-run pending (docs/navexit21.md)
+INDEX: - docs/navexit21.md: Blood Moor to town exit lost (border kept), empty-tome scroll priority, live checklist
+CHANGELOG: - fix: d2dworld keeps a level border once seen; an empty tome buys the first town portal scroll before the kit potions (docs/navexit21.md).

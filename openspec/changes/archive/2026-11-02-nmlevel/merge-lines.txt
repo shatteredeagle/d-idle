@@ -1,0 +1,3 @@
+BACKLOG: upstream PR candidate local/nmlevel-v5 (head 94562869, base 3be426d3; Nightmare / Hell monster level = area MonLvl) drafted in docs/research/pr-nmlevel-draft.md, independently verified (READY WITH CHANGES, done); waits for the go.
+INDEX: docs/research/pr-nmlevel-draft.md: PR draft for the Nightmare / Hell monster level rule (candidate local/nmlevel-v5).
+CHANGELOG: Docs: PR draft and population comparison tool for the Nightmare / Hell monster level rule (docs/research/pr-nmlevel-draft.md, tools/emu/nm_pop.py).

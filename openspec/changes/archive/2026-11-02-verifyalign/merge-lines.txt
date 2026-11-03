@@ -1,0 +1,3 @@
+BACKLOG: verifyalign: independent re-check of alignment2-trace.md (docs/research/verify-alignment2.md): gate and spawn alignment VERIFIED by own emulator runs, no claim WRONG; live drill for merc/Shadow stat 0xac still open
+INDEX: docs/research/verify-alignment2.md - independent verification of the alignment (stat 0xac) and undead-blow gate trace
+CHANGELOG: verifyalign: docs/research/verify-alignment2.md and tools/emu/vfal_run.py (own harness: gate 1200 runs, spawn map 734 MonStats rows, 0 differ)

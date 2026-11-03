@@ -21,6 +21,11 @@ gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict"
 result: "docs only; first or second pass, not yet independently verified"
 merge: b415aef
+credit:
+  author: owner
+  agents: [Claude Code]
+  verified_by: ["Claude Code (card verifypaldur, independent run)"]
+  consent: none
 ```
 
 - [x] trace the call chain (FUN_0057d4f0 -> FUN_0057d3d0 -> FUN_00559e30)

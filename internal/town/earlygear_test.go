@@ -156,3 +156,51 @@ func TestEquipSurvivesIgnoredSlotClicks(t *testing.T) {
 		})
 	}
 }
+
+// KITSTALL2: a worn item never goes to the vendor, even when a stale list names it.
+func TestSellNeverTouchesWornItems(t *testing.T) {
+	r := earlyRig(t, d2.Sorceress, 3)
+	w := r.W
+	staff := w.Add("sst", d2.ContEquipment, 0, 0)
+	staff.Item.Body = d2.BodyRHand
+	w.Items[len(w.Items)-1] = staff
+	gloves := w.Add("lgl", d2.ContEquipment, 0, 0)
+	gloves.Item.Body = d2.BodyGloves
+	w.Items[len(w.Items)-1] = gloves
+	ctx := context.Background()
+	if _, err := r.T.OpenForTest(ctx, 154); err != nil {
+		t.Fatal(err)
+	}
+	g0 := w.Player.Gold
+	for _, u := range []d2.Unit{staff, gloves} {
+		if n, err := r.T.SellForTest(ctx, u); err != nil || n != 0 {
+			t.Fatalf("worn item sold: %d %v", n, err)
+		}
+	}
+	s, _ := w.Snapshot()
+	if s.Inventory.Equipped(d2.BodyRHand) == nil || s.Inventory.Equipped(d2.BodyGloves) == nil || w.Player.Gold != g0 {
+		t.Fatalf("worn items lost or gold changed (%d -> %d)", g0, w.Player.Gold)
+	}
+}
+
+// KITSTALL2: the start weapon taken off the body (by a bad pickup) is worn again, a bow is not.
+func TestEquipFoundRewearsStartWeaponNotBow(t *testing.T) {
+	geartest.Need(t)
+	r := earlyRig(t, d2.Sorceress, 3)
+	w := r.W
+	w.Add("sbw", d2.ContInventory, 0, 0)
+	if done, err := r.T.EquipFound(context.Background()); err != nil || len(done) != 0 {
+		t.Fatalf("bow worn by a Sorceress: %v %v", done, err)
+	}
+	staff := w.Add("sst", d2.ContInventory, 3, 0)
+	staff.Item.Flags |= d2.FlagStartItem
+	w.Items[len(w.Items)-1] = staff
+	done, err := r.T.EquipFound(context.Background())
+	if err != nil || len(done) != 1 {
+		t.Fatalf("start staff not worn: %v %v", done, err)
+	}
+	s, _ := w.Snapshot()
+	if u := s.Inventory.Equipped(d2.BodyRHand); u == nil || u.ID != staff.ID {
+		t.Fatalf("worn %+v", u)
+	}
+}

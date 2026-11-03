@@ -20,6 +20,11 @@ gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
 result: "docs only; see the doc for tags, holds and limits"
 merge: 7571907
+credit:
+  component: Verifier: vendor repair gate
+  author: owner
+  agents: [Claude Code]
+  consent: none
 ```
 
 ## 1. Work
