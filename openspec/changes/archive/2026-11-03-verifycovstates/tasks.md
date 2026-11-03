@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifycovstates
-status: in-progress
+status: archived
 agent: verifycovstates
 branch: agent/verifycovstates
 worktree: ~/code/d2lod-wt/verifycovstates
@@ -22,6 +22,7 @@ gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
   - "ledger rows only with a V run case count that appears in the trace doc"
 result: "Offline, nothing verified live, no d2d slot, no Go change. Own harness: stun 25,567 + 13,029 monster cases on real MonStats rows vs the real d2d Fight::land, 0 differ; seed use D2 confirmed (2,316 of 2,316); poison 60,000 cases, deviation confirmed and larger than first reported (both directions, plus blows under one point); state bits 185 of 185; B1 and B2 confirmed. No PR candidate. Ledger rows states 21 and 2."
+merge: e29a501
 ```
 
 ## 1. Work
