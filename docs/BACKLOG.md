@@ -402,6 +402,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - codereview2 - second independent review (AREAREACH, CODEFIX, SPECDELTA): fix R1 walk limit vs failed waypoint jumps, R2 target-walk-timeout loop, R3 no exposure gate on long walks, R5 Burial Grounds in the XP fallback, R6 missing monster levels in stepXP
 - gate3gaps work packages (resource sampling and slopes first, smoke rung, inventory and recycle rules): docs/research/gate3gaps.md
 - BRANCHCLEAN: triage every unmerged agent/* branch (land the valuable docs, fold single useful files into a digest, tag then delete the superseded ones, keep in-flight work), plan in docs/research/branch-cleanup-plan.md
+- verifyskassassin: SKASSASSIN verified with an own harness (game.exe FUN_0056c160 / FUN_0056bfe0 natively on ids 251..280, levels 1..99, 39,305 cases: 0 model mismatches, 0 differences against d2d's mana_cost); first pass right on all 30 srvdofunc, wrong on srvstartfunc (23 for all six charge-ups) and on calling d2d's floored rule game.exe's; second pass not found; charge-ups, traps, shadows still U; docs/research/verifyskassassin.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

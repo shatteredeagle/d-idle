@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- verifyskassassin: independent verification of the Assassin skills first pass; mana check and payment V run on both sides, no deviation, no PR candidate
 - branchclean: a plan to triage and clean up the unmerged agent branches, with a proposed branch hygiene rule
 - Design for the Gate 3 requirement gaps with a delta spec for soak-gates (docs only)
 - changecheck: ignore GitHub's synthetic "Merge <sha> into <sha>" commit in the merge check.
