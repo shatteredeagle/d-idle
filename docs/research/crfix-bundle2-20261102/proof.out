@@ -1,0 +1,18 @@
+== comment 1: second monster fails to spawn (3 -> 2 units), 30 trials, then cmp vs the 30-trial d2d file
+old game rc 0 stdout-lines 30 stderr: # units 2
+S 0 2 f5080000/00000000 f5080000/00000000 1
+30 trials: game.exe one record in 30, d2d three equal losses in 30, differ 0
+old cmp rc 0
+new game rc 1 stdout-lines 0 stderr: setup failed: 2 of 3 monsters and 1 of 1 shooter spawned
+trial count mismatch: game.exe 0, d2d 30: not compared
+new cmp rc 1
+== comment 2: game side with no equal trial (every S line ends 0), 30 trials vs d2d with 30 unequal trials
+30 trials: game.exe one record in 0, d2d three equal losses in 0, differ 0
+old cmp rc 0
+game.exe made no equal-record trial in 30: nothing to compare
+new cmp rc 1
+== control: real 400 vs 400 (fireball, glacialspike) from the bundle-3 run files, new cmp
+400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0
+fireball new cmp rc 0
+400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0
+glacialspike new cmp rc 0
