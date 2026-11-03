@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- a45f8981 11-03 17:37 `merge origin/main into plandocs` (plandocs)
 - 75c9ef5b 11-03 17:26 `Merge agent/xpfallback: xpfallback: R5 kit gate for Burial Grounds/Crypt/Mausoleum fallback, R6 no silent mlvl proxy, R7 deterministic ties` (xpfallback)
 - 1a31a1ea 11-03 17:25 `merge origin/main into xpfallback` (xpfallback)
 - fd48c320 11-03 17:14 `Merge agent/recoverykit: recoverykit: minimal potion kit trip in recovery when gold >= KitPotionGold and no potions (Gate 1 seed 19 belt window)` (recoverykit)
@@ -136,5 +137,4 @@
 - 83fa8d22 11-03 16:54 `Merge agent/palaura: PALAURA trace of Paladin aura filter, pulse damage, Prayer mana/state 85 (chuckado PR #19; checks fixed)` (palauratrace)
 - 69c7060b 11-03 16:52 `Merge agent/palaura: merge origin/main into chuckado's PALAURA trace (PR #19)` (palaura)
 - 45fa51c9 11-03 16:40 `Merge agent/prbuildground: branchclean LAND: prbuildground` (prbuildground)
-- a087b078 11-03 16:40 `merge origin/main into prbuildground` (prbuildground)
 <!-- statusgen:end -->
