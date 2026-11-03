@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifyskassassin
-status: in-progress
+status: archived
 agent: verifyskassassin
 branch: agent/verifyskassassin
 worktree: d2lod-wt/verifyskassassin
@@ -24,6 +24,7 @@ credit:
   verified_by: []
   agents: [Claude Code]
   consent: none
+merge: f329c33
 ```
 
 - [x] 1 Own disassembly reading of FUN_0056c160 and FUN_0056bfe0 (tools/emu/vsa_dis.py)
