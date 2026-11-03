@@ -2,7 +2,7 @@
 
 ```yaml
 change: plandocs
-status: in-progress
+status: archived
 agent: pa-plandocs
 branch: agent/plandocs
 worktree: d2lod-wt/plandocs
@@ -16,6 +16,7 @@ gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; merge_lines_check --changed"
 result: "docs only; not verified live"
 live: "not verified"
+merge: fe3b2eb
 ```
 
 - [x] BACKLOG goal line and plan-v2 banner
