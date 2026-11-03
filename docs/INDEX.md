@@ -336,3 +336,15 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/navexit22.md: seed 17 town exit root cause (border gate frames), recorded replies, live checklist
 - docs/research/pr-guardfix-body.md: PR text for the upstream pr_guard fix (cited tool checked in the PR head), evidence, tests, results
 - docs/research/pr-batch2-A-final-body.md: final PR text for batch A (r9): Claims, counts, dependency on the guard fix, CodeRabbit's 10 findings, size, MSVC
+- docs/research/codereview2.md - review of the multi-hop walk rule, the XP fallback rank and the codefix and specdelta changes, ranked findings with smallest fixes
+- docs/research/gate3gaps.md - Gate 3 gaps: sampling design, primitives invariant answer, Gate 0.5 smoke, work packages
+- docs/research/branch-cleanup-plan.md: classification of the 36 unmerged agent branches (LAND 20, FOLD 6, TAG-AND-DELETE 5, KEEP 5), commands, rules, effort and a branch hygiene rule
+- docs/research/verifyskassassin.md: independent verifier of SKASSASSIN (own emulator harness, game.exe vs d2d mana differential, claim verdicts)
+- docs/research/verifyskdruid.md: independent verifier of SKDRUID (Druid calc cells, own emulator harness, claim verdicts)
+- docs/research/gate2-analysis-20261102.md: Gate 2 run 20261102 failure analysis: per-criterion cause (bot defect, CPU starvation, gate-rule), 41 restarts explained, Gate 1 comparison, ranked fixes, re-run plan
+- docs/research/verifycovmissiles-trace.md - independent verification of the missiles coverage first pass: own runs (48,624 flight, 77,560 hit-roll cases), pierce rule read and run (verifycovmissiles)
+- docs/research/covarmor.md - armor bases and item types, first pass (data only, no ledger rows)
+- docs/research/verifycovstates-trace.md: independent verification of covstates-trace.md: own game.exe / d2d harness for stun and poison, verdict per claim, poison deviation both directions (card verifycovstates)
+- docs/research/verifyitemweapons.md: independent recount of the weapons.txt first pass: counts hold, two statements wrong, no game.exe claim to verify (card verifyitemweapons)
+- docs/research/verifylevelsareas.md: independent check of the level areas pass: FUN_0061dca0 re-run 1,128 cases, 6 id-0 diffs only; oracle is the table so d2d equality is a source read, not a d2d run (card verifylevelsareas)
+- docs/research/pr-ground-burst-draft.md | PR draft: standing missiles hit by their footprint and a burst rolls once (candidate C4 bundle, card prbuildground)

@@ -1,0 +1,3 @@
+BACKLOG: verifylevelsareas follow-ups (docs/research/verifylevelsareas.md): differential for the other d2d users of area_level (NPC trap level gamedata.cpp:560/568, top level gamedata.cpp:351) against the game's functions; keep the levels ledger rows labelled game=table, d2d=copy (read).
+INDEX: docs/research/verifylevelsareas.md: independent check of the level areas pass: FUN_0061dca0 re-run 1,128 cases, 6 id-0 diffs only; oracle is the table so d2d equality is a source read, not a d2d run (card verifylevelsareas)
+CHANGELOG: Independent verification of the level areas trace (docs/research/verifylevelsareas.md); no tool or ledger change.

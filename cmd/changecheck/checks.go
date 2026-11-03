@@ -116,7 +116,9 @@ type Merge struct{ Hash, Date, Subject, Body string }
 
 var (
 	mergeBranchRe = regexp.MustCompile(`Merge (?:branch )?'?agent/([a-z0-9-]+)`)
-	trailerRe     = regexp.MustCompile(`(?m)^Change:\s*([a-z0-9-]+)`)
+	// GitHub's synthetic PR-check commit: "Merge <head sha> into <base sha>".
+	syntheticMergeRe = regexp.MustCompile(`^Merge [0-9a-f]{40} into [0-9a-f]{40}$`)
+	trailerRe        = regexp.MustCompile(`(?m)^Change:\s*([a-z0-9-]+)`)
 )
 
 // changeID extracts the change a merge names, from its subject or a Change: trailer.
@@ -212,6 +214,9 @@ func checkMerges(root string, cards []*Card, since string, n int) []Finding {
 		}
 		low := strings.ToLower(m.Subject)
 		if strings.HasPrefix(low, "merge master") || strings.HasPrefix(low, "merge branch 'master'") || strings.HasPrefix(low, "merge branch 'main'") {
+			continue
+		}
+		if syntheticMergeRe.MatchString(m.Subject) {
 			continue
 		}
 		id := changeID(m)

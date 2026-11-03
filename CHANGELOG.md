@@ -8,6 +8,19 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Research: PR draft for the ground and burst bundle (standing-missile hit area, one roll per Fire Ball / Glacial Spike burst), proven on the real d2d build against game.exe; local branch only, no PR.
+- Independent verification of the level areas trace (docs/research/verifylevelsareas.md); no tool or ledger change.
+- Independent verification of the weapon-bases first pass (docs/research/verifyitemweapons.md) and tools/emu/viw_count.py; no ledger change.
+- VERIFYCOVSTATES: docs/research/verifycovstates-trace.md and tools/emu/vcs_*: own differential of game.exe FUN_0057aae0 / FUN_0057ac50 against the real d2d Fight::land (38,596 stun and 60,000 poison cases), state-bit probe, ledger rows states 21 and 2; no code change
+- covarmor: first-pass trace of armor.txt and itemtypes.txt (docs/research/covarmor.md)
+- verifycovmissiles: independent check of the missiles coverage first pass (docs/research/verifycovmissiles-trace.md, tools/emu/vcm_*): verified with limits, new pierce deviation found
+- docs: Gate 2 20261102 failure analysis (docs/research/gate2-analysis-20261102.md).
+- verifyskdruid: independent verification of the Druid skill calc trace; game side V run against d2d eval_calc, no deviation, no PR candidate
+- verifyskassassin: independent verification of the Assassin skills first pass; mana check and payment V run on both sides, no deviation, no PR candidate
+- branchclean: a plan to triage and clean up the unmerged agent branches, with a proposed branch hygiene rule
+- Design for the Gate 3 requirement gaps with a delta spec for soak-gates (docs only)
+- changecheck: ignore GitHub's synthetic "Merge <sha> into <sha>" commit in the merge check.
+- Docs: second independent code review of the 2026-11-03 bot changes (walk limit, walk loop, XP fallback rank).
 - docs: upstream guard-fix PR text and the final batch A PR text (private fork branches local/guardfix-3, local/batch2-A-r9).
 - fix: nav border gates compare the neighbour's grid in the neighbour's own frame; the Blood Moor keeps its gate to the Rogue Encampment on seeds where the camp lies east of it (docs/navexit22.md).
 - cport: batch C (mana paid on the action frame, action-frame tick, armor state group) prepared as commits on the batch A branch with Claims rows, counted differentials on the exact head; nothing pushed upstream
