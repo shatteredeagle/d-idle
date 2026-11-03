@@ -2,7 +2,7 @@
 
 ```yaml
 change: branchclean
-status: in-progress
+status: archived
 agent: branchclean
 branch: agent/branchclean
 worktree: d2lod-wt/branchclean
@@ -17,6 +17,7 @@ credit:
   author: owner
   agents: [Claude Code]
   consent: none
+merge: 28360da
 ```
 
 - [x] 1. Inventory of agent/* branches (ahead/behind, merged state)
