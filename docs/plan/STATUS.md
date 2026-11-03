@@ -64,6 +64,7 @@
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
+| [verifyitemweapons](../../openspec/changes/verifyitemweapons/) | in-progress | verifyitemweapons | `docs/research/verifyitemweapons.md`<br>`tools/emu/viw_*`<br>`openspec/changes/verifyitemweapons/**` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
@@ -123,16 +124,17 @@
 - change skmiss: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change skresistfix: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
+- change verifyitemweapons: changecheck -cli 0 warnings; leakcheck -mode fail 0
 
 ### Recent merges
-- e29a501c 11-03 16:19 `Merge agent/verifycovstates: branchclean LAND: verifycovstates` (verifycovstates)
-- 88abddfd 11-03 16:19 `merge origin/main into verifycovstates` (verifycovstates)
-- 90b645af 11-03 16:16 `Merge agent/covarmor: branchclean LAND: covarmor` (covarmor)
-- 8bbad5c1 11-03 16:15 `merge origin/main into covarmor` (covarmor)
-- c75a7be2 11-03 16:06 `Merge agent/verifycovmissiles: branchclean LAND: verifycovmissiles` (verifycovmissiles)
-- d8699e15 11-03 16:05 `merge origin/main into verifycovmissiles` (verifycovmissiles)
-- 7a3ece11 11-03 16:05 `merge origin/main into covarmor` (covarmor)
-- c422e2e6 11-03 16:02 `Merge agent/gate2analysis: branchclean LAND: gate2analysis` (gate2analysis)
-- c07b111b 11-03 16:01 `merge origin/main into gate2analysis` (gate2analysis)
-- d454194e 11-03 15:52 `Merge agent/verifyskdruid: branchclean LAND: verifyskdruid` (verifyskdruid)
+- 0489b0f3 11-02 18:07 `Merge agent/verifyskamazon: verifyskamazon: coverage-gap or verification result (docs and emulator tools only)` (verifyskamazon)
+- 3922d8ee 11-02 18:07 `merge origin/main into verifyskamazon` (verifyskamazon)
+- 975bfbdf 11-02 18:00 `Merge agent/covmissiles: covmissiles: coverage-gap or verification result (docs and emulator tools only)` (covmissiles)
+- a46d241c 11-02 17:59 `merge origin/main into covmissiles` (covmissiles)
+- d09e28fe 11-02 17:50 `Merge agent/tomestat: TOMESTAT: carried and ground items no longer share one map in d2dsrc (ground ids collided with the tome's), so the field dump keeps the tome's charge stat 70 (Gate 2 trip loop root cause; offline tests)` (tomestat)
+- cda4be88 11-02 17:49 `merge origin/main into tomestat` (tomestat)
+- a788442f 11-02 17:42 `Merge agent/townshop: TOWNSHOP: resupply budget inside the buy loops and a 2-scroll proof after a portal-empty report with a readable tome (Gate 2 trip loop; offline tests)` (townshop)
+- 85fd1005 11-02 17:41 `merge origin/main into townshop` (townshop)
+- 597e972f 11-02 17:29 `Merge agent/mercwire: MERCWIRE: wait for the Rogue after portal or waypoint, leave when the crowd rule fires with her down, healing potion to the merc below 50 percent, persisted Lut Gholein first-visit flag (offline tests)` (mercwire)
+- ce30a061 11-02 17:29 `merge origin/main into mercwire` (mercwire)
 <!-- statusgen:end -->
