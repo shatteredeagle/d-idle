@@ -2,7 +2,7 @@
 
 ```yaml
 change: prbuildground
-status: in-progress
+status: archived
 agent: prbuildground
 branch: agent/prbuildground
 worktree: d2lod-wt/prbuildground
@@ -15,7 +15,7 @@ gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict"
 result: "draft only; bundle local/ground-burst-v1 built and measured offline in the private fork, not verified live (no game)"
 live: "no game, offline"
-merge: ""
+merge: 45fa51c
 ```
 
 - [x] inventory proven versus read-only ground and burst deviations
