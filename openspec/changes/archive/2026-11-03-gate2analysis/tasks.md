@@ -2,7 +2,7 @@
 
 ```yaml
 change: gate2analysis
-status: in-progress
+status: archived
 agent: gate2analysis
 branch: agent/gate2analysis
 worktree: d2lod-wt/gate2analysis
@@ -21,6 +21,7 @@ credit:
   agents: [Claude Code]
   verified_by: ["Claude Code (card gate2analysis, own reading of the run logs)"]
   consent: none
+merge: c422e2e
 ```
 
 - [x] Collect the run record (branch agent/gate2run-20261102)
