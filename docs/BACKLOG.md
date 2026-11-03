@@ -409,6 +409,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - covarmor follow-up: run game.exe defence (ethereal, superior) and required-strength code under the emulator against d2d for 202 armor rows
 - VERIFYCOVSTATES (card verifycovstates, done): independent check of covstates; stun equals game.exe (38,596 own monster cases on real MonStats rows, 0 differ), poison replacement deviation confirmed and larger (D1a..D1c, both directions, 60,000 cases; the first pass's "same skill equal" is wrong for rolled rates), seed use D2 confirmed, state bits and bot B1 B2 confirmed; no PR candidate (docs/research/verifycovstates-trace.md)
 - verifyitemweapons follow-up (docs/research/verifyitemweapons.md): repair two statements in the itemweapons trace (18 one-or-two-handed swords carry both damage pairs; bow, xbow, claw and other classes have dex or mixed bonuses); game.exe weapon loader and damage differential still open.
+- verifylevelsareas follow-ups (docs/research/verifylevelsareas.md): differential for the other d2d users of area_level (NPC trap level gamedata.cpp:560/568, top level gamedata.cpp:351) against the game's functions; keep the levels ledger rows labelled game=table, d2d=copy (read).
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
