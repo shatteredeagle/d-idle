@@ -61,7 +61,6 @@
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
-| [recoverykit](../../openspec/changes/recoverykit/) | in-progress | recoverykit | `openspec/changes/recoverykit/**`<br>`internal/resource/recovery.go`<br>`internal/resource/recoverykit_test.go`<br>`internal/bot/goal.go` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
@@ -118,7 +117,6 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
-- change recoverykit: changecheck 0 warnings for this card
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- fd48c320 11-03 17:14 `Merge agent/recoverykit: recoverykit: minimal potion kit trip in recovery when gold >= KitPotionGold and no potions (Gate 1 seed 19 belt window)` (recoverykit)
 - e8061c5f 11-03 17:13 `merge origin/main into recoverykit` (recoverykit)
 - 29910a4e 11-03 17:02 `Merge agent/gate1fix: gate1fix: R1 walk limit with failed/skipped waypoint jumps, R2 skip a target after nav failure (cool-down 1,2,4,8)` (gate1fix)
 - 14d98c52 11-03 17:01 `merge origin/main into gate1fix` (gate1fix)
@@ -136,5 +135,4 @@
 - a087b078 11-03 16:40 `merge origin/main into prbuildground` (prbuildground)
 - c00999eb 11-03 16:37 `Merge agent/verifylevelsareas: branchclean LAND: verifylevelsareas` (verifylevelsareas)
 - a3ca6b1e 11-03 16:36 `merge origin/main into verifylevelsareas` (verifylevelsareas)
-- f4ae491b 11-03 16:29 `Merge agent/verifyitemweapons: branchclean LAND: verifyitemweapons` (verifyitemweapons)
 <!-- statusgen:end -->

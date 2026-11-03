@@ -2,7 +2,7 @@
 
 ```yaml
 change: recoverykit
-status: in-progress
+status: archived
 agent: recoverykit
 branch: agent/recoverykit
 worktree: ~/code/d2lod-wt/recoverykit
@@ -16,6 +16,7 @@ exclusive: []
 gates:
   - "changecheck 0 warnings for this card"
 result: "Offline only, not verified live or in a gate."
+merge: fd48c32
 ```
 
 ## 1. Work
