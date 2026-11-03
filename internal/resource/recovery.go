@@ -67,3 +67,27 @@ func RecoveryCheck(in RecoveryInput, t Tuning) RecoveryVerdict {
 	}
 	return RecoveryVerdict{On: true}
 }
+
+// RecoveryKitReason prefixes the chore reason of the recovery kit trip (bot counts those trips by it).
+const RecoveryKitReason = "recovery restock: no healing potion,"
+
+// RecoveryKitInput is what RecoveryKitTrip reads.
+type RecoveryKitInput struct {
+	Recovering bool
+	InTown     bool
+	Healing    int  // healing and rejuvenation potions in belt and pack
+	Gold       int  // purse (plus the stash when no potion is left, as choresDue counts it)
+	Capped     bool // KitTripCap restock trips already made without a potion to show for it
+	WayHome    bool // a portal source, a walkable home area or an activated waypoint
+}
+
+// RecoveryKitTrip decides the short town trip of a recovering character with no healing potion: once the gold covers one
+// potion (KitPotionGold) it buys the minimal kit (the visit is capped at RecoveryPotionFloor potions, bot.potionFloor)
+// and goes back to farming for RecoveryTargetGold. Gate 1 seed 19 farmed 18 virtual minutes at 54..73 gold unprotected.
+func RecoveryKitTrip(in RecoveryKitInput, t Tuning) (bool, string) {
+	if t.RecoveryOn <= 0 || !in.Recovering || in.InTown || in.Healing > 0 || !in.WayHome || in.Capped ||
+		t.KitPotionGold <= 0 || in.Gold < t.KitPotionGold {
+		return false, ""
+	}
+	return true, fmt.Sprintf("%s gold %d", RecoveryKitReason, in.Gold)
+}
