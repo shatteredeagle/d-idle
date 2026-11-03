@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifylevelsareas
-status: in-progress
+status: archived
 agent: verifylevelsareas
 branch: agent/verifylevelsareas
 worktree: d2lod-wt/verifylevelsareas
@@ -17,6 +17,7 @@ result: "docs only; lv_area.py re-run (1,128 cases, 6 id-0 diffs); oracle is the
 credit:
   author: owner
   agents: [Claude Code]
+merge: c00999e
 ```
 
 - [x] re-run lv_area.py on the worker host
