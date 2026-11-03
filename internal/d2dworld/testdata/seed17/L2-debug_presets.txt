@@ -1,0 +1,56 @@
+0	174	25.9	54.1	0	Loose Rock
+1	140	21.1	49.1	0	Chest
+2	139	16.9	53.3	0	Chest
+3	2	19.5	43.5	0	Shrine
+4	175	17.7	44.3	0	Loose Boulder
+5	240	18.1	36.1	0	Chest
+6	37	20.1	36.3	0	
+room	9	12	4
+room	6	20	4
+room	6	28	4
+room	6	36	4
+room	6	44	4
+room	10	52	4
+room	5	12	12
+room	29	20	12
+room	14	52	12
+room	9	4	20
+room	13	12	20
+room	52	28	20
+room	5	4	28
+room	8	4	36
+room	12	12	36
+room	30	20	36
+room	9	4	44
+room	13	12	44
+room	15	28	44
+room	12	36	44
+room	15	52	44
+room	5	4	52
+room	14	28	52
+room	13	36	52
+room	7	52	52
+room	5	4	60
+room	15	20	60
+room	12	28	60
+room	7	52	60
+room	5	4	68
+room	14	20	68
+room	13	28	68
+room	15	44	68
+room	11	52	68
+room	5	4	76
+room	14	44	76
+room	10	52	76
+room	8	4	84
+room	12	12	84
+room	47	28	84
+room	46	44	84
+room	7	52	84
+room	8	12	92
+room	4	20	92
+room	4	28	92
+room	4	36	92
+room	4	44	92
+room	11	52	92
+ok

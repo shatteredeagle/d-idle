@@ -438,16 +438,19 @@ func (t *Town) shopVisit(ctx context.Context, a *Act, plan ChorePlan, rep *Chore
 	// potionsFirst 0: the scroll first, as before (without one, potions eat the scroll money and the character stays portal-less).
 	var first error
 	if t.tune().PotionsFirst != 0 && plan.Potions {
+		if err := t.buyFirstTP(ctx, npc, rep, true); err != nil {
+			first = err
+		}
 		if err := t.buyPotions(ctx, npc, t.kitPotions(plan), rep); err != nil {
 			first = err
 		}
 		if s, err := t.current(); err == nil && t.tpAllowed(s) {
-			if err := t.buyFirstTP(ctx, npc, rep); err != nil && first == nil {
+			if err := t.buyFirstTP(ctx, npc, rep, false); err != nil && first == nil {
 				first = err
 			}
 		}
 	} else {
-		first = t.buyFirstTP(ctx, npc, rep)
+		first = t.buyFirstTP(ctx, npc, rep, false)
 	}
 	if plan.Potions {
 		if err := t.buyPotions(ctx, npc, plan.PotionFloor, rep); err != nil && first == nil {

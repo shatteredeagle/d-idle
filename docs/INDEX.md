@@ -327,3 +327,14 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/pr-batch2-A-body.md: PR body of upstream batch A (mana floor, Teleport) to the maintainer template, Claims table, re-check commands, counts on the head
 - docs/research/pr-batch2-B-body.md: PR body of upstream batch B (monster damage roll with its oracle monster_damage.py), limits (Energy Shield), counts on the head
 - docs/research/gate3-prep-20261103.md: Gate 2 watch checklist, Gate 3 requirements table (what the judge evaluates), 24 h host risks, Gate 3 after the A:B pilot
+- docs/soaks/gate1-20261103-0338.md: Gate 1 run 20261103-0338 (NOT PASSED (True XP/h at or above the d2d baseline; Belt)), criteria table, fault recovery
+- docs/research/b2-on181.md: batch 2 on top of PR 181, one conflict resolved, CI and counted differentials re-run
+- docs/research/sorcdiff2.md: mana payment timing, Frozen Armor group and the Charged Bolt do as counted differentials on the real d2d build, with private fix branches
+- docs/soaks/gate1-multiseed-20261103-1226-ms1.md: Gate 1 multi-seed run 20261103-1226-ms1 (NOT PASSED), per-seed criteria, d2dsoak output
+- docs/navexit21.md: Blood Moor to town exit lost (border kept), empty-tome scroll priority, live checklist
+- docs/research/pr-batch2-C-rows.md: batch C rows (mana payment on the action frame, action-frame tick, armor group) to add to the open batch A pull request, conflict resolutions, counts on the exact head, limits, size
+- docs/navexit22.md: seed 17 town exit root cause (border gate frames), recorded replies, live checklist
+- docs/research/pr-guardfix-body.md: PR text for the upstream pr_guard fix (cited tool checked in the PR head), evidence, tests, results
+- docs/research/pr-batch2-A-final-body.md: final PR text for batch A (r9): Claims, counts, dependency on the guard fix, CodeRabbit's 10 findings, size, MSVC
+- docs/research/codereview2.md - review of the multi-hop walk rule, the XP fallback rank and the codefix and specdelta changes, ranked findings with smallest fixes
+- docs/research/gate3gaps.md - Gate 3 gaps: sampling design, primitives invariant answer, Gate 0.5 smoke, work packages
