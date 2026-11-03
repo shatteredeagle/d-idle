@@ -20,7 +20,7 @@ Each subsystem is a fixed set of rows taken from the game's own data tables (`de
 | monster.stats (monster base stats per class (life, defence, damage, exp, resists)) | 734 | 0 | 734 | 0 | 0 | 0 | 100% | 100% | 242,220 |
 | monster.flags (undead and demon bits per class (one aspect of the flags)) | 734 | 734 | 0 | 0 | 0 | 0 | 100% | 100% | 734 |
 | monster.ai (monster AI types) | 146 | 89 | 12 | 5 | 0 | 40 | 69% | 73% | 276,330 |
-| states (states and auras) | 185 | 0 | 21 | 13 | 0 | 151 | 11% | 18% | 758,147 |
+| states (states and auras) | 185 | 1 | 22 | 13 | 0 | 149 | 12% | 19% | 856,743 |
 | itemtypes (item types) | 98 | 98 | 0 | 0 | 0 | 0 | 100% | 100% | 553,647 |
 | items.armor (armor bases) | 202 | 0 | 0 | 0 | 0 | 202 | 0% | 0% | 0 |
 | items.weapons (weapon bases) | 306 | 0 | 0 | 0 | 0 | 306 | 0% | 0% | 0 |
@@ -28,9 +28,9 @@ Each subsystem is a fixed set of rows taken from the game's own data tables (`de
 | levels (areas) | 137 | 136 | 0 | 0 | 0 | 1 | 99% | 99% | 1,088 |
 | formulas (damage, resist and rate formulas (hand-listed rule set)) | 18 | 4 | 12 | 2 | 0 | 0 | 89% | 100% | 2,770,944 |
 | levels.layout (Act 1 areas: layout, preset units, room seeds, spawn list (Rogue Encampment, Blood Moor, Cold Plains, Stony Field, Den of Evil)) | 5 | 5 | 0 | 0 | 0 | 0 | 100% | 100% | 1,116 |
-| **total** | **4915** | **2652** | **961** | **55** | **0** | **1247** | **74%** | **75%** | **7,105,433** |
+| **total** | **4915** | **2653** | **962** | **55** | **0** | **1245** | **74%** | **75%** | **7,204,029** |
 
-Excluding the single-aspect subsystems (`skillfx.*`, `monster.flags`), which test one property across many rows and so reach 100% easily: 3724 rows, run-tested 2422 (65%), compared 2477 (67%), read-only 55, untested 1247.
+Excluding the single-aspect subsystems (`skillfx.*`, `monster.flags`), which test one property across many rows and so reach 100% easily: 3724 rows, run-tested 2424 (65%), compared 2479 (67%), read-only 55, untested 1245.
 
 Case counts add the cases of every ledger line; one differential that covers many rows counts once per line that cites it, so the column is an effort figure, not a unique-case total.
 
@@ -106,6 +106,8 @@ Case counts add the cases of every ledger line; one differential that covers man
 | states | 20,30,88 | READ-ONLY | `docs/research/sk-armor-trace.md` | - | 2026-11-01 | chillingarmor, energyshield, shiverarmor read |
 | states | 61,28 | TESTED-DEVIATION | `docs/research/sk-resist-trace.md` | 147,628 | 2026-11-01 | lowerresist and conviction on an immune D1 (negative change / 5) |
 | states | 86 | READ-ONLY | `docs/research/sk-lightning-trace.md` | - | 2026-11-01 | justhit (NextHit) read; D1 model only |
+| states | 21 | TESTED-0-DIFF | `docs/research/verifycovstates-trace.md` | 38,596 | 2026-11-02 | stunned FUN_0057aae0 monster path vs the real d2d Fight::land, own harness and real MonStats rows, seeds 9001 and 77 (25567 + 13029 cases, 0 differ in the stun end; seed use D2 differs); offsets +0xc / +0x32 of the MonStats row are S not re-derived; VERIFYCOVSTATES |
+| states | 2 | TESTED-DEVIATION | `docs/research/verifycovstates-trace.md` | 60,000 | 2026-11-02 | poison FUN_0057ac50 replacement vs the real d2d Fight::land D1 both directions (5417 of 39994 and 2726 of 19998; whole-point rates 0 differ); VERIFYCOVSTATES |
 | states | 9,17,19,23,27,55,56,57,58,59,60,87,89,113,114 | TESTED-DEVIATION | `docs/research/covstates2-trace.md` | 200,000 | 2026-11-02 | timed put rule (curse slot, refuse, refresh, length): game.exe FUN_0056e970 vs real d2d put_state, 100,000 per seed (20261102, 7); D1 D2 D3 D4 D5; effects of the states not run |
 | states | 14,117,120,139,140,157,159,176,177 | READ-ONLY | `docs/research/covstates2-trace.md` | - | 2026-11-02 | state group removal FUN_0056c740 run natively (370 cases) but d2d start_state read only, no d2d run: D7 |
 | itemtypes | all | TESTED-0-DIFF | `docs/research/covitemtypes-trace.md` | 553,647 | 2026-11-02 | Equiv chain 9,604 pairs, item membership 64,582 cells, own-row flags, equip slot, two-hands 393,132, socket cap 73,149 all equal d2d (exhaustive grids, no seed); latent D1-D5 and bot B1-B3 in the doc; stack/AutoStack/store reader not run |
@@ -142,7 +144,7 @@ Hand-ranked in `gaps.tsv` from the class plans (`docs/classes`) and the work boa
 | 2 | monster.ai | untested (40 of 146) | Wake, chase, flee and ranged behaviour per AI type moves kills per hour and deaths; risk map rank 5; mon-wake traced for a few types only | `docs/research/d2d-fidelity-riskmap.md` |
 | 4 | levels | untested (1 of 137) | Area spawn density, teleport and layout rules gate every act; risk map ranks 2 and 11; spawn density was compared for 4 levels upstream, not entered per row | `docs/research/spawn-density-trace.md` |
 | 8 | skills.ass | untested (30 of 30) | Assassin plan (Lightning Sentry traps): trap and sentry pipeline untouched | `docs/classes/ranking.md` |
-| 9 | states | untested (151 of 185) | Remaining states and auras (curses, shrines, poison, stun) alter damage taken | `docs/research/sorc-skill-matrix.md` |
+| 9 | states | untested (149 of 185) | Remaining states and auras (curses, shrines, poison, stun) alter damage taken | `docs/research/sorc-skill-matrix.md` |
 
 ## Limits of this measure
 
