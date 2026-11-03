@@ -42,6 +42,7 @@
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
 | [armorhit](../../openspec/changes/armorhit/) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
+| [branchclean](../../openspec/changes/branchclean/) | in-progress | branchclean | `docs/research/branch-cleanup-plan.md`<br>`openspec/changes/branchclean/**` | - |
 | [buildv3](../../openspec/changes/buildv3/) | in-progress | buildv3 | `internal/plandata/build-fallback-lightning-v3.json`<br>`internal/plandata/build-fallback-lightning-v2.json`<br>`docs/plan/data/build-fallback-lightning-v3.json`<br>`docs/plan/data/build-fallback-lightning-v2.json`<br>`internal/plandata/plandata_test.go`<br>`internal/leveler/build.go`<br>`internal/leveler/buildv3_test.go`<br>`internal/combat/classdata/profiles.json`<br>`internal/combat/class_test.go`<br>`internal/combat/pure_test.go`<br>`cmd/d2bot/class.go`<br>`cmd/d2bot/class_test.go`<br>`docs/buildv3.md`<br>`openspec/changes/buildv3/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend_default_test.go` | - |
@@ -85,6 +86,7 @@
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
+- change branchclean: merge_lines_check --changed; changecheck 0 new warnings; leakcheck -mode fail 0 hits
 - change buildv3: gofmt, go vet, go test -p 1 per touched package, whole repo on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
@@ -125,14 +127,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 3f127d9d 11-03 15:14 `Merge agent/gate3gaps: Gate 3 requirement gaps delta spec` (gate3gaps)
-- 7f3a8b71 11-03 15:14 `merge origin/main into gate3gaps` (gate3gaps)
-- 22e8f09d 11-03 15:04 `Merge agent/ccmergecommit: changecheck skips GitHub synthetic Merge commits` (ccmergecommit)
-- 6357a5db 11-03 15:04 `merge origin/main into ccmergecommit` (ccmergecommit)
-- 4102351b 11-03 15:01 `Merge agent/codereview2: independent review of AREAREACH/CODEFIX/SPECDELTA, findings R1-R9` (codereview2)
-- e53b91c5 11-03 15:00 `merge origin/main into codereview2` (codereview2)
-- 0ba9a03c 11-03 14:13 `Merge agent/finala: merge origin/main into finala` (finala)
-- cdb7a79b 11-03 14:12 `merge origin/main into finala` (finala)
-- a1401fd3 11-03 13:45 `Merge agent/navexit22: navexit22: border gate frames (seed 17 Blood Moor to camp), recorded replay fixture, card` (navexit22)
-- a7a493b3 11-03 13:26 `Merge agent/reviewbatch2c: reviewbatch2c: independent Opus review of batch C (head 4ed8b651)` (reviewbatch2c)
+- d61c680e 11-03 11:34 `Merge agent/gate3prep: GATE3PREP: Gate 2 watch checklist and Gate 3 requirements` (gate3prep)
+- cffbe1e7 11-03 11:34 `merge origin/main into gate3prep` (gate3prep)
+- eda9c72f 11-03 11:28 `Merge agent/oracleport: ORACLEPORT: batch 2 split into A (mana floor, Teleport D1/D2 with two oracles) and B (monster damage roll with its oracle), PR bodies in the maintainer's template, rule list; counts on the exact heads` (oracleport)
+- 8d4880a3 11-03 11:27 `merge origin/main into oracleport` (oracleport)
+- 62e4ffab 11-03 11:22 `Merge agent/lockstepplan: LOCKSTEPPLAN: lockstep and A:B plan (clvl 1-6 cell, k=1, hidden i2 i3 i5; no native Windows lane for now)` (lockstepplan)
+- 2a7b26b7 11-03 11:21 `merge origin/main into lockstepplan` (lockstepplan)
+- 013512a3 11-03 11:13 `Merge agent/sorcdiff: SORCDIFF: Sorceress skill differentials for the lightning build: the gate character casts only Charged Bolt, Frozen Armor, Frost Nova and Fire Bolt (never past clvl 15); 0 differences in skill_damage 116,000, static_field 229,664, chill_length, next_hit, armor_hit 109,604, freeze_rules 145,748; one proven deviation (Lightning and Chain Lightning cast length 19 vs 13 ticks), private fix branch` (sorcdiff)
+- 94b3dde9 11-03 11:13 `merge origin/main into sorcdiff` (sorcdiff)
+- b5e670aa 11-03 11:11 `merge origin/main into gate3prep` (gate3prep)
+- 0ad342c1 11-03 11:11 `merge origin/main into lockstepplan` (lockstepplan)
 <!-- statusgen:end -->
