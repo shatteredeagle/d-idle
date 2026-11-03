@@ -5,7 +5,7 @@ change: gate1multi-20261103-1650-ms3
 status: in-progress
 agent: gaterun
 branch: agent/gate1multi-20261103-1650-ms3
-worktree: /home/jesse/code/d2lod-wt/gate1multi-20261103-1650-ms3
+worktree: d2lod-wt/gate1multi-20261103-1650-ms3
 skip_specs: true
 owns:
   - docs/soaks/gate1-multiseed-20261103-1650-ms3.md
