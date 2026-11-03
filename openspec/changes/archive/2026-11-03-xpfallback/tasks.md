@@ -2,7 +2,7 @@
 
 ```yaml
 change: xpfallback
-status: in-progress
+status: archived
 agent: xpfallback
 branch: agent/xpfallback
 worktree: ~/code/d2lod-wt/xpfallback
@@ -13,6 +13,7 @@ exclusive: []
 gates:
   - "go test -p 1 -short ./internal/bot ./internal/plandata; changecheck 0 warnings"
 result: "Offline, not verified live. XP fallback skips kit-gated steps (17, 18, 19) without a full kit, unknown monster level ranks last instead of the EnterLvl-3 proxy, ties are the later plan step. Seed 17 cause unconfirmed (no bot-0.log)."
+merge: 75c9ef5
 ```
 
 ## 1. Work
