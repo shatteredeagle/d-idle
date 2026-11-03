@@ -283,3 +283,76 @@ func TestPickFallbackByXP(t *testing.T) {
 		t.Errorf("no exclusion: got %d", s.Area)
 	}
 }
+
+// codereview2 R5: the XP fallback keeps FallbackKit steps (Burial Grounds) out without a full kit, for a caster and a
+// melee character; the shipped plan marks 17, 18, 19.
+func TestPickFallbackKitGate(t *testing.T) {
+	p, err := LoadPlan("")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, id := range []int{17, 18, 19} {
+		var found bool
+		for _, s := range p.Steps["normal"] {
+			if s.Area == id {
+				found = true
+				if !s.FallbackKit {
+					t.Errorf("area %d: plan data lacks xp_fallback_full_kit", id)
+				}
+			}
+		}
+		if !found {
+			t.Errorf("area %d missing from the normal plan", id)
+		}
+	}
+	xp := func(st Step) float64 { return areaXP(11, st.Area, normalMLvl[st.Area], d2.Normal) }
+	for _, melee := range []bool{false, true} {
+		o := PickOptions{Margin: 0, Slack: 1, Melee: melee, XP: xp, Exclude: map[int]bool{4: true, 5: true, 6: true, 7: true, 20: true}}
+		if st, ok := p.Pick("normal", 11, o); !ok || st.FallbackKit {
+			t.Errorf("melee %v thin kit: picked %d (kit-gated)", melee, st.Area)
+		}
+	}
+}
+
+// codereview2 R6/R7: an area without a monster level ranks last; with no known level anywhere the plan order stands.
+// Same on Nightmare, where there is no fallback table.
+func TestPickByXPUnknownLevel(t *testing.T) {
+	step := func(a, enter, leave int) Step { return Step{Area: a, Name: "a", EnterLvl: enter, LeaveLvl: leave} }
+	steps := []Step{step(5, 9, 14), step(6, 10, 14), step(19, 11, 18)}
+	for _, diff := range []string{"normal", "nightmare"} {
+		p := &Plan{Areas: map[int]AreaInfo{}, Steps: map[string][]Step{diff: steps}}
+		known := func(st Step) float64 {
+			if st.Area == 6 {
+				return -1
+			}
+			return float64(st.Area)
+		}
+		o := PickOptions{Slack: 1, Exclude: map[int]bool{19: true}, XP: known}
+		if st, ok := p.Pick(diff, 13, o); !ok || st.Area != 5 {
+			t.Errorf("%s: got %d, want the known area 5 over the unknown 6", diff, st.Area)
+		}
+		o.XP = func(Step) float64 { return -1 }
+		if st, ok := p.Pick(diff, 13, o); !ok || st.Area != 6 {
+			t.Errorf("%s: all unknown: got %d, want plan order (last open in window, 6)", diff, st.Area)
+		}
+		// ties: the later step of the plan wins, every time
+		o.XP = func(Step) float64 { return 50 }
+		for i := 0; i < 5; i++ {
+			if st, _ := p.Pick(diff, 13, o); st.Area != 6 {
+				t.Fatalf("%s tie: got %d, want the later step 6", diff, st.Area)
+			}
+		}
+	}
+}
+
+// codereview2 R6: no install data at clvl 13 with Mausoleum in the plan must not pick Mausoleum over Black Marsh.
+func TestFallbackTableLevels(t *testing.T) {
+	for _, a := range []int{7, 18, 19} {
+		if normalMLvl[a] == 0 {
+			t.Errorf("area %d has no fallback monster level", a)
+		}
+	}
+	if m, b := areaXP(13, 19, normalMLvl[19], d2.Normal), areaXP(13, 6, normalMLvl[6], d2.Normal); m >= b {
+		t.Errorf("Mausoleum %.1f must rank under Black Marsh %.1f at clvl 13", m, b)
+	}
+}
