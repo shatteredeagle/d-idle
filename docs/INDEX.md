@@ -337,3 +337,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/pr-guardfix-body.md: PR text for the upstream pr_guard fix (cited tool checked in the PR head), evidence, tests, results
 - docs/research/pr-batch2-A-final-body.md: final PR text for batch A (r9): Claims, counts, dependency on the guard fix, CodeRabbit's 10 findings, size, MSVC
 - docs/research/codereview2.md - review of the multi-hop walk rule, the XP fallback rank and the codefix and specdelta changes, ranked findings with smallest fixes
+- docs/research/gate3gaps.md - Gate 3 gaps: sampling design, primitives invariant answer, Gate 0.5 smoke, work packages
