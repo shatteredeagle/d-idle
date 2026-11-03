@@ -9,6 +9,7 @@ Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `t
 - Tick `tasks.md`, fill `result:` (say verified live or not) at the end. The coordinator archives the card at merge.
 - Contracts and numeric gates are in `openspec/specs/<capability>/spec.md` (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). If your work changes a number there, put a delta spec in your change instead of editing the spec.
 - `go run ./cmd/changecheck` (warn-only for now) checks all of this; run it before you finish. Questions about how to write a requirement, scenario or card: the `spec-sme` agent.
+- Before reporting done, run `python3 tools/merge_lines_check.py --changed` (`tools/ci/check.sh` does it): `merge-lines.txt` holds only lines of the form `BACKLOG: text`, `INDEX: text` or `CHANGELOG: text`, no bullets, no OWNERS lines (those go in `docs/OWNERS`).
 
 ## The private d2d fork
 - Anything that touches the private d2d fork or the lab patch set (the fork checkout, its branches, the lab binary) MUST be committed and pushed to the fork's private remote THE SAME DAY, and a doc may only cite a commit that is on that remote. Patches never go into this repo (GPL, docs/decisions.md). Nothing is posted to GitHub (issues, PRs, comments) without the user's go; drafts stay in the repo.

@@ -55,6 +55,7 @@ type world struct {
 	skillPts   int
 	snapErr    error
 	gold0      int
+	stash0     int // banked gold
 	ground     []d2.Unit
 	bossImmune bool
 }
@@ -108,7 +109,7 @@ func (w *world) snapshot() (*d2.Snapshot, error) {
 		return s, nil
 	}
 	s.Player = &d2.Player{ID: 1, Name: "Testy", Class: d2.Sorceress, Area: w.area, X: w.x, Y: w.y, Life: w.life, MaxLife: w.maxL,
-		Mana: 50, MaxMana: 50, Level: w.level, Exp: w.exp, Mode: w.mode, Difficulty: w.diff, Act: w.act, StatPoints: w.statPts, SkillPoints: w.skillPts, Gold: w.gold0,
+		Mana: 50, MaxMana: 50, Level: w.level, Exp: w.exp, Mode: w.mode, Difficulty: w.diff, Act: w.act, StatPoints: w.statPts, SkillPoints: w.skillPts, Gold: w.gold0, StashGold: w.stash0,
 		Resist: d2.Resists{Fire: 75, Cold: 75, Lightning: 75, Poison: 75}}
 	s.Inventory = &d2.Inventory{Items: append([]d2.Unit(nil), w.items...)}
 	s.Monsters = append([]d2.Unit(nil), w.mons...)
