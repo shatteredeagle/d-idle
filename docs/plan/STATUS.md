@@ -125,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
+- 952b3944 11-03 17:56 `merge origin/main into verifymonsterpace` (verifymonsterpace)
+- 360ba010 11-03 17:53 `Merge agent/crfixbundle2: branchclean LAND: crfixbundle2` (crfixbundle2)
 - 553354e7 11-03 17:46 `merge origin/main into verifymonsterpace` (verifymonsterpace)
+- 49446cfd 11-03 17:45 `merge origin/main into crfixbundle2` (crfixbundle2)
 - fe3b2ebd 11-03 17:42 `Merge agent/plandocs: plandocs: apply project review goals G-A..G-F to plan docs; mark covered open-work items done` (plandocs)
 - e57c2a1f 11-03 17:41 `merge origin/main into plandocs` (plandocs)
 - 775f767c 11-03 17:38 `Merge agent/gate1multi-20261103-1650-ms3: Gate 1 ms3 multiseed record: NOT PASSED (17 stall, 19 belt, 21 ok)` (gate1multi-20261103-1650-ms3)
 - 11aa1479 11-03 17:37 `merge origin/main into gate1multi-20261103-1650-ms3` (gate1multi-20261103-1650-ms3)
 - a45f8981 11-03 17:37 `merge origin/main into plandocs` (plandocs)
-- 75c9ef5b 11-03 17:26 `Merge agent/xpfallback: xpfallback: R5 kit gate for Burial Grounds/Crypt/Mausoleum fallback, R6 no silent mlvl proxy, R7 deterministic ties` (xpfallback)
-- 1a31a1ea 11-03 17:25 `merge origin/main into xpfallback` (xpfallback)
-- fd48c320 11-03 17:14 `Merge agent/recoverykit: recoverykit: minimal potion kit trip in recovery when gold >= KitPotionGold and no potions (Gate 1 seed 19 belt window)` (recoverykit)
-- e8061c5f 11-03 17:13 `merge origin/main into recoverykit` (recoverykit)
 <!-- statusgen:end -->

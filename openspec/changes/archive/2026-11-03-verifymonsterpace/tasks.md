@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifymonsterpace
-status: done
+status: archived
 agent: verifymonsterpace
 branch: agent/verifymonsterpace
 worktree: ~/code/d2lod-wt/verifymonsterpace
@@ -15,6 +15,7 @@ exclusive: []
 gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
 result: "docs only, not live (no game.exe instance); READY WITH CHANGES: rebase onto current upstream main (CI clang-tidy fails on test_game_missiles.cpp at 6935cf64), PR-text fixes, split velocity vs paces recommended; see docs/research/pr-monsterpace-verifier.md"
+merge: e1364ce
 ```
 
 ## 1. Work
