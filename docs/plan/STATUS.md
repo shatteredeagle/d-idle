@@ -127,14 +127,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 75c9ef5b 11-03 17:26 `Merge agent/xpfallback: xpfallback: R5 kit gate for Burial Grounds/Crypt/Mausoleum fallback, R6 no silent mlvl proxy, R7 deterministic ties` (xpfallback)
+- 1a31a1ea 11-03 17:25 `merge origin/main into xpfallback` (xpfallback)
+- fd48c320 11-03 17:14 `Merge agent/recoverykit: recoverykit: minimal potion kit trip in recovery when gold >= KitPotionGold and no potions (Gate 1 seed 19 belt window)` (recoverykit)
+- e8061c5f 11-03 17:13 `merge origin/main into recoverykit` (recoverykit)
 - 29910a4e 11-03 17:02 `Merge agent/gate1fix: gate1fix: R1 walk limit with failed/skipped waypoint jumps, R2 skip a target after nav failure (cool-down 1,2,4,8)` (gate1fix)
 - 14d98c52 11-03 17:01 `merge origin/main into gate1fix` (gate1fix)
 - 83fa8d22 11-03 16:54 `Merge agent/palaura: PALAURA trace of Paladin aura filter, pulse damage, Prayer mana/state 85 (chuckado PR #19; checks fixed)` (palauratrace)
 - 69c7060b 11-03 16:52 `Merge agent/palaura: merge origin/main into chuckado's PALAURA trace (PR #19)` (palaura)
 - 45fa51c9 11-03 16:40 `Merge agent/prbuildground: branchclean LAND: prbuildground` (prbuildground)
 - a087b078 11-03 16:40 `merge origin/main into prbuildground` (prbuildground)
-- c00999eb 11-03 16:37 `Merge agent/verifylevelsareas: branchclean LAND: verifylevelsareas` (verifylevelsareas)
-- a3ca6b1e 11-03 16:36 `merge origin/main into verifylevelsareas` (verifylevelsareas)
-- f4ae491b 11-03 16:29 `Merge agent/verifyitemweapons: branchclean LAND: verifyitemweapons` (verifyitemweapons)
-- 552da13b 11-03 16:29 `merge origin/main into verifyitemweapons` (verifyitemweapons)
 <!-- statusgen:end -->

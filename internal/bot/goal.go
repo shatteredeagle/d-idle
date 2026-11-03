@@ -333,6 +333,23 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	if broke {
 		trip = resource.Trip{} // recovery: a potion trip with an empty purse buys nothing (G1 attempt 9: 90 min of walking)
 	}
+	if known && !p.InTown() {
+		// recovery: the purse reached one potion with none left; buy the minimal kit now, farm on for the rest of the target
+		r.obMu.Lock()
+		if healing > 0 {
+			r.ob.recKitTrips = 0
+		}
+		capped := r.ob.recKitTrips >= r.e.Tune.Resource.KitTripCap // failing chores must not repeat the trip
+		r.obMu.Unlock()
+		if go2, why2 := resource.RecoveryKitTrip(resource.RecoveryKitInput{
+			Recovering: r.recoveryActive(), InTown: false, Healing: healing, Gold: kitGold, Capped: capped,
+			WayHome: r.resInput(s).HasTP || resource.ChainHomeArea(p.Area) || r.wpActive(s),
+		}, resource.FromEnv(*r.e.Tune)); go2 {
+			hard, emergency = true, true
+			plan.Potions = true
+			why = append(why, why2)
+		}
+	}
 	if trip.Go {
 		plan.Potions = true
 		plan.Heal = true                                  // the policy's reasons include the free heal, which only runs when asked for
@@ -459,6 +476,11 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			}
 			return err
 		})
+		if !ok && strings.Contains(t.plan.Reason, resource.RecoveryKitReason) && r.State() == StateResupplying {
+			r.obMu.Lock()
+			r.ob.recKitTrips++
+			r.obMu.Unlock()
+		}
 		if !ok && strings.Contains(t.plan.Reason, "kit: ") && r.State() == StateResupplying {
 			// a kit trip whose chores keep failing counts like a finished one, else it repeats until the failsafe ladder
 			// skips the field and pauses the character far from the safe area (KITGATELEVEL)
