@@ -2,7 +2,7 @@
 
 ```yaml
 change: codereview2
-status: in-progress
+status: archived
 agent: codereview2
 branch: agent/codereview2
 worktree: d2lod-wt/codereview2
@@ -17,6 +17,7 @@ result: "review doc written offline (code read, levels.txt read on the worker ho
 credit:
   author: owner
   agents: [Claude Code]
+merge: 4102351
 ```
 
 - [x] 1 read the diffs a45b9af4..origin/main in internal and cmd, and the four docs

@@ -43,7 +43,6 @@
 |---|---|---|---|---|
 | [armorhit](../../openspec/changes/armorhit/) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
 | [buildv3](../../openspec/changes/buildv3/) | in-progress | buildv3 | `internal/plandata/build-fallback-lightning-v3.json`<br>`internal/plandata/build-fallback-lightning-v2.json`<br>`docs/plan/data/build-fallback-lightning-v3.json`<br>`docs/plan/data/build-fallback-lightning-v2.json`<br>`internal/plandata/plandata_test.go`<br>`internal/leveler/build.go`<br>`internal/leveler/buildv3_test.go`<br>`internal/combat/classdata/profiles.json`<br>`internal/combat/class_test.go`<br>`internal/combat/pure_test.go`<br>`cmd/d2bot/class.go`<br>`cmd/d2bot/class_test.go`<br>`docs/buildv3.md`<br>`openspec/changes/buildv3/**` | - |
-| [codereview2](../../openspec/changes/codereview2/) | in-progress | codereview2 | `docs/research/codereview2.md`<br>`openspec/changes/codereview2/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend_default_test.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -87,7 +86,6 @@
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
 - change buildv3: gofmt, go vet, go test -p 1 per touched package, whole repo on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
-- change codereview2: changecheck -cli 0 new warnings; leakcheck -mode fail 0; merge_lines_check --changed
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -127,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 013512a3 11-03 11:13 `Merge agent/sorcdiff: SORCDIFF: Sorceress skill differentials for the lightning build: the gate character casts only Charged Bolt, Frozen Armor, Frost Nova and Fire Bolt (never past clvl 15); 0 differences in skill_damage 116,000, static_field 229,664, chill_length, next_hit, armor_hit 109,604, freeze_rules 145,748; one proven deviation (Lightning and Chain Lightning cast length 19 vs 13 ticks), private fix branch` (sorcdiff)
-- 94b3dde9 11-03 11:13 `merge origin/main into sorcdiff` (sorcdiff)
-- 54ee48a6 11-03 11:07 `Merge agent/b2winworker: b2winworker: batch 2 r3 re-run on the Windows build worker (MSVC 14.51 0 warnings, ctest, WSL parity, damage-roll sets 0 differences; partial)` (b2winworker)
-- 72456d2e 11-03 11:06 `merge origin/main into b2winworker` (b2winworker)
-- f498e13e 11-03 10:59 `Merge agent/b2rebase2: b2rebase2: docs and emulator tools (analysis, verification, coverage; docs only)` (b2rebase2)
-- 6b31dec1 11-03 10:58 `merge origin/main into b2rebase2` (b2rebase2)
-- 9c7bf265 11-03 10:49 `Merge agent/verifydmg4: verifydmg4: docs and emulator tools (analysis, verification, coverage; docs only)` (verifydmg4)
-- 33798808 11-03 10:48 `merge origin/main into verifydmg4` (verifydmg4)
-- 158ac610 11-03 10:41 `Merge agent/verifydmg2: verifydmg2: docs and emulator tools (analysis, verification, coverage; docs only)` (verifydmg2)
-- 4015541d 11-03 10:40 `merge origin/main into verifydmg2` (verifydmg2)
+- 4102351b 11-03 15:01 `Merge agent/codereview2: independent review of AREAREACH/CODEFIX/SPECDELTA, findings R1-R9` (codereview2)
+- e53b91c5 11-03 15:00 `merge origin/main into codereview2` (codereview2)
+- 0ba9a03c 11-03 14:13 `Merge agent/finala: merge origin/main into finala` (finala)
+- cdb7a79b 11-03 14:12 `merge origin/main into finala` (finala)
+- a1401fd3 11-03 13:45 `Merge agent/navexit22: navexit22: border gate frames (seed 17 Blood Moor to camp), recorded replay fixture, card` (navexit22)
+- a7a493b3 11-03 13:26 `Merge agent/reviewbatch2c: reviewbatch2c: independent Opus review of batch C (head 4ed8b651)` (reviewbatch2c)
+- 99328d5c 11-03 13:13 `Merge agent/cport: merge origin/main into cport` (cport)
+- 23e68453 11-03 13:13 `merge origin/main into cport` (cport)
+- bf29e35d 11-03 12:37 `Merge agent/navexit21: merge origin/main into navexit21` (navexit21)
+- e149fb2b 11-03 12:37 `merge origin/main into navexit21` (navexit21)
 <!-- statusgen:end -->
