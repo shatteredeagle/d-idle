@@ -349,3 +349,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/verifylevelsareas.md: independent check of the level areas pass: FUN_0061dca0 re-run 1,128 cases, 6 id-0 diffs only; oracle is the table so d2d equality is a source read, not a d2d run (card verifylevelsareas)
 - docs/research/pr-ground-burst-draft.md | PR draft: standing missiles hit by their footprint and a burst rolls once (candidate C4 bundle, card prbuildground)
 - docs/soaks/gate1-multiseed-20261103-1650-ms3.md: Gate 1 multi-seed run 20261103-1650-ms3 (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/research/crfix-bundle2-20261102.md: CodeRabbit round 2 on staging PR 2, verdicts, reply texts (card crfixbundle2)
