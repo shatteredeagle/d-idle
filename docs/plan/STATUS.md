@@ -52,7 +52,6 @@
 | [fixmanamodel](../../openspec/changes/fixmanamodel/) | in-progress | fixmanamodel | `docs/fixmanamodel.md`<br>`internal/resource/manamodel.go`<br>`internal/resource/manamodel_test.go` | - |
 | [fixprogress](../../openspec/changes/fixprogress/) | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go`<br>`openspec/changes/fixprogress/**` | - |
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
-| [gate1fix](../../openspec/changes/gate1fix/) | in-progress | gate1fix | `openspec/changes/gate1fix/**`<br>`internal/bot/task.go`<br>`internal/bot/task_test.go`<br>`internal/bot/areaskip.go`<br>`internal/bot/runner.go`<br>`internal/bot/fakes_test.go`<br>`internal/bot/waypoints_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
@@ -102,7 +101,6 @@
 - change fixprogress: go test -p 1 ./internal/town ./internal/bot passes; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change fixskilllvl: go test -p 1 ./internal/d2 ./internal/combat passes; whole-repo go vet and go test -short on the worker host pass
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change gate1fix: go test -p 1 ./internal/bot passes; changecheck 0 warnings
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 29910a4e 11-03 17:02 `Merge agent/gate1fix: gate1fix: R1 walk limit with failed/skipped waypoint jumps, R2 skip a target after nav failure (cool-down 1,2,4,8)` (gate1fix)
 - 14d98c52 11-03 17:01 `merge origin/main into gate1fix` (gate1fix)
 - 83fa8d22 11-03 16:54 `Merge agent/palaura: PALAURA trace of Paladin aura filter, pulse damage, Prayer mana/state 85 (chuckado PR #19; checks fixed)` (palauratrace)
 - 69c7060b 11-03 16:52 `Merge agent/palaura: merge origin/main into chuckado's PALAURA trace (PR #19)` (palaura)
@@ -136,5 +135,4 @@
 - a3ca6b1e 11-03 16:36 `merge origin/main into verifylevelsareas` (verifylevelsareas)
 - f4ae491b 11-03 16:29 `Merge agent/verifyitemweapons: branchclean LAND: verifyitemweapons` (verifyitemweapons)
 - 552da13b 11-03 16:29 `merge origin/main into verifyitemweapons` (verifyitemweapons)
-- e29a501c 11-03 16:19 `Merge agent/verifycovstates: branchclean LAND: verifycovstates` (verifycovstates)
 <!-- statusgen:end -->

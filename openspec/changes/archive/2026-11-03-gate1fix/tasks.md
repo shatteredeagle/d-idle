@@ -2,7 +2,7 @@
 
 ```yaml
 change: gate1fix
-status: in-progress
+status: archived
 agent: gate1fix
 branch: agent/gate1fix
 worktree: ~/code/d2lod-wt/gate1fix
@@ -19,6 +19,7 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/bot passes; changecheck 0 warnings"
 result: "Offline only, not verified live. R1 and R2 fixed with table tests at two character levels."
+merge: 29910a4
 ```
 
 ## 1. Work
