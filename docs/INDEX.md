@@ -350,3 +350,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/pr-ground-burst-draft.md | PR draft: standing missiles hit by their footprint and a burst rolls once (candidate C4 bundle, card prbuildground)
 - docs/soaks/gate1-multiseed-20261103-1650-ms3.md: Gate 1 multi-seed run 20261103-1650-ms3 (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/research/crfix-bundle2-20261102.md: CodeRabbit round 2 on staging PR 2, verdicts, reply texts (card crfixbundle2)
+- docs/research/pr-monsterpace-verifier.md - independent verifier of the monster pace PR candidate (base velocity 75, think paces, Blood Raven home rule, shaman corpse reach): disassembly, own probes, readers, det, CI parity, split advice
