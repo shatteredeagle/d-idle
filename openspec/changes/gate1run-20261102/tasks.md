@@ -9,7 +9,7 @@ worktree: ~/code/d2lod-wt/gate1run-20261102
 skip_specs: true
 owns:
   - docs/soaks/gate1-20261102.md
-  - docs/probes/soak-logs/gate1-20261102-*
+  - docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz
   - openspec/changes/gate1run-20261102/**
 exclusive: []
 gates: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)

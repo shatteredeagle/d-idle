@@ -1,0 +1,3 @@
+BACKLOG: MERGEQ: tools/merge_lines_check.py lints merge-lines.txt (run by tools/ci/check.sh for the cards a branch touches); ops side: tools/mergeq.sh queue and docs-only merge fast path.
+INDEX: tools/merge_lines_check.py: merge-lines.txt grammar linter (stdlib, tests in tools/ci/tests).
+CHANGELOG: - tools: merge_lines_check.py catches bad merge-lines.txt files (OWNERS lines, markdown bullets, missing prefixes) in tools/ci/check.sh before the merge preflight.

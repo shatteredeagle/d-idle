@@ -1,0 +1,3 @@
+BACKLOG: stashfield: minute line gets stashGold; d2dsoak prints a report-only gold line per belt window over 5 vmin (poverty or funded); BELT semantics await the user's spec decision; docs/research/stashfield.md
+INDEX: docs/research/stashfield.md: the stashGold minute field and the belt window gold report line
+CHANGELOG: stashfield: the soak minute line now carries the stash gold, and the soak report tells a poor belt window from a funded one

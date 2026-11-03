@@ -1,0 +1,3 @@
+BACKLOG: b2on181: batch 2 rebased onto PR 181 in the private fork (local/batch2-on181); see docs/research/b2-on181.md before the A/B split decision
+INDEX: docs/research/b2-on181.md: batch 2 on top of PR 181, one conflict resolved, CI and counted differentials re-run
+CHANGELOG: b2on181: batch 2 re-based on PR 181 in the private fork, results in docs/research/b2-on181.md

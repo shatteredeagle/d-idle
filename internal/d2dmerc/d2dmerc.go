@@ -66,7 +66,7 @@ func FromResult(res *d2dsrc.Result) merc.MercState {
 	out.Known = true
 	x := res.Extras.Merc
 	if x == nil {
-		return out // present=false: no merc
+		return out // present=false and not dead: no merc
 	}
 	out.Owned = true
 	out.Alive = !x.Dead
