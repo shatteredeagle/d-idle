@@ -1,0 +1,3 @@
+BACKLOG: applyreview: cards to cut per docs/research/card-triage-20261103.md (lead applies the ARCHIVE, MERGE-INTO and DROP rows); plan S1 class check next
+INDEX: docs/adr/0015-goals-acceptance-on-game-exe.md: goals G-A..G-F, acceptance on game.exe; docs/plan/plan-20261103.md: plan; docs/research/card-triage-20261103.md: open card triage
+CHANGELOG: Docs: ADR 0015 (acceptance on game.exe, six goals), plan 2026-11-03, STATUS rewritten, card triage

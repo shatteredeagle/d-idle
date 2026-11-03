@@ -1,0 +1,3 @@
+BACKLOG: DMGROLL done (private): monster physical damage rolled in 256ths with the top excluded (game.exe FUN_0057b420), fork branch local/batch2-monsterdmg head 6f9ded7c; 8 Act 1 classes x 20,000 cases base differs 19,904 to 19,994, head 0; see docs/research/dmgroll-draft.md
+INDEX: docs/research/dmgroll-draft.md: DMGROLL, the monster physical damage roll fix on a private branch (step 1 check, differential, parity, commit text)
+CHANGELOG: DMGROLL: docs/research/dmgroll-draft.md and tools/emu/mdmg* (differential of a monster's physical roll against game.exe)

@@ -177,3 +177,45 @@ func TestD2DPortalEmptyAfterRereadNoRetry(t *testing.T) {
 		t.Fatalf("clicks %v, want exactly one", w.clicks)
 	}
 }
+
+// BELTFIX3 (3), Gate 1 20261102 BELT A: a safety drink cancelled the cast after the click. The error says the source may
+// be spent (not "nothing clicked"), and the next call looks for the portal of the cut cast before it reads another charge.
+func TestPortalCutAfterClickReportsSpent(t *testing.T) {
+	w, _, run := newPortalWorld(7, 8)
+	ctx, cancel := context.WithCancelCause(t.Context())
+	w.onClick = func(w *portalWorld, id uint32) { w.spend(id); cancel(errors.New("bot: safety drink-life")) }
+	err := run(ctx)
+	if err == nil || !strings.Contains(err.Error(), "source maybe spent") || strings.Contains(err.Error(), "nothing clicked") {
+		t.Fatalf("err %v, want a cut-cast error", err)
+	}
+	if len(w.clicks) != 1 {
+		t.Fatalf("clicks %v, want one", w.clicks)
+	}
+	w.onClick = nil
+	w.portal = true // the cut cast's portal opens after all
+	if err := run(t.Context()); err != nil {
+		t.Fatalf("second call: %v", err)
+	}
+	if len(w.clicks) != 1 || len(w.scrolls) != 1 {
+		t.Fatalf("clicks %v scrolls %v: the second call must reuse the open portal, not cast again", w.clicks, w.scrolls)
+	}
+}
+
+// codefix F8: a call with an already dead context must not forget the cut cast; the next live call still finds its portal.
+func TestPortalCutMemorySurvivesDeadContext(t *testing.T) {
+	w, _, run := newPortalWorld(7, 8)
+	ctx, cancel := context.WithCancelCause(t.Context())
+	w.onClick = func(w *portalWorld, id uint32) { w.spend(id); cancel(errors.New("bot: safety drink-life")) }
+	_ = run(ctx)
+	w.onClick = nil
+	dead, stop := context.WithCancel(t.Context())
+	stop()
+	_ = run(dead)
+	w.portal = true
+	if err := run(t.Context()); err != nil {
+		t.Fatalf("live call: %v", err)
+	}
+	if len(w.clicks) != 1 {
+		t.Fatalf("clicks %v: the live call cast again", w.clicks)
+	}
+}

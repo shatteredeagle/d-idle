@@ -1,0 +1,3 @@
+BACKLOG: GATE1: three Gate 1 runs of 2026-11-02/03 all NOT PASSED (Belt in each; NOKILL in run 2; True XP/h in run 3), records under unique run-id names (docs/soaks/gate1-index-20261103.md)
+INDEX: docs/soaks/gate1-index-20261103.md: index of the three Gate 1 runs of 2026-11-02/03 with the records gate1-20261102-1939, gate1-20261102-2210, gate1-20261103-0053
+CHANGELOG: docs: restore the three Gate 1 soak records of 2026-11-02/03 under unique run-id names, add an index (docs/soaks/gate1-index-20261103.md).

@@ -1,0 +1,3 @@
+BACKLOG: hirefix: bot side of HIREREADER (dead-and-gone merc owned, GU/IW/0A mapped, revive quote parsed and logged); B3 Hirer and d2d dump keys still open; docs/research/hirefix.md
+INDEX: docs/research/hirefix.md: what the Gate 2 hire-the-merc check can and cannot confirm after the bot-side fixes
+CHANGELOG: hirefix: the bot now sees a dead merc after its corpse is gone, maps all four hireling codes, and reads the revive price before paying

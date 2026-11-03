@@ -588,6 +588,9 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 	w.revives = append(w.revives, w.now())
 	w.curAt = time.Time{} // re-read: the merc should be alive now
 	w.mu.Unlock()
+	if q, ok := w.rev.(interface{ Quote() int }); ok && q.Quote() > 0 {
+		est = q.Quote() // the exact quoted price replaces the level estimate in the log
+	}
 	w.log.Info(merc.LogRevived(paid, st.Level, est))
 	return "merc revived"
 }

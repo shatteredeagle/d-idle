@@ -87,6 +87,7 @@ func ActOf(area int) int {
 	return 0
 }
 
-// mercClass maps d2d's merc code (the "state merc=" suffix and dump merc.code) to a monstats class. V only
-// RG (Rogue, V docs/d2d-probes.md section 1); the other codes are not known, so they stay unknown.
-var mercClass = map[string]int{"RG": d2.MercClasses[0]}
+// mercClass maps d2d's merc code (the "state merc=" suffix and dump merc.code) to a monstats class. RG is V live
+// (docs/d2d-probes.md section 1); GU is S live (docs/forkcheats.md, debug merc hire 12); IW and 0A come from
+// monstats.txt (hirereader B1, U live). Both Barbarian rows (560, 561) carry 0A; 561 is the hireling class.
+var mercClass = map[string]int{"RG": d2.MercClasses[0], "GU": d2.MercClasses[1], "IW": d2.MercClasses[2], "0A": d2.MercClasses[3]}
