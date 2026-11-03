@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- verifycovmissiles: independent check of the missiles coverage first pass (docs/research/verifycovmissiles-trace.md, tools/emu/vcm_*): verified with limits, new pierce deviation found
 - docs: Gate 2 20261102 failure analysis (docs/research/gate2-analysis-20261102.md).
 - verifyskdruid: independent verification of the Druid skill calc trace; game side V run against d2d eval_calc, no deviation, no PR candidate
 - verifyskassassin: independent verification of the Assassin skills first pass; mana check and payment V run on both sides, no deviation, no PR candidate
