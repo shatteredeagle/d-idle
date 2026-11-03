@@ -59,6 +59,7 @@
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [mapitem](../../openspec/changes/mapitem/) | in-progress | mapitem | `docs/stream/map-contiguity.md`<br>`cmd/d2dview/stitch.go`<br>`cmd/d2dview/stitch_test.go`<br>`cmd/d2dview/feed.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`cmd/d2dview/web/index.html` | - |
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
+| [palauratrace](../../openspec/changes/palauratrace/) | in-progress | chuckado | `docs/research/pal-aura-trace.md`<br>`tools/emu/verify_palaura.py`<br>`openspec/changes/palauratrace/**` | - |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
@@ -115,6 +116,7 @@
 - change mapitem: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change nexthit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
+- change palauratrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
@@ -125,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 69c7060b 11-03 16:52 `Merge agent/palaura: merge origin/main into chuckado's PALAURA trace (PR #19)` (palaura)
 - 45fa51c9 11-03 16:40 `Merge agent/prbuildground: branchclean LAND: prbuildground` (prbuildground)
 - a087b078 11-03 16:40 `merge origin/main into prbuildground` (prbuildground)
 - c00999eb 11-03 16:37 `Merge agent/verifylevelsareas: branchclean LAND: verifylevelsareas` (verifylevelsareas)
@@ -134,5 +137,4 @@
 - e29a501c 11-03 16:19 `Merge agent/verifycovstates: branchclean LAND: verifycovstates` (verifycovstates)
 - 88abddfd 11-03 16:19 `merge origin/main into verifycovstates` (verifycovstates)
 - 90b645af 11-03 16:16 `Merge agent/covarmor: branchclean LAND: covarmor` (covarmor)
-- 8bbad5c1 11-03 16:15 `merge origin/main into covarmor` (covarmor)
 <!-- statusgen:end -->
