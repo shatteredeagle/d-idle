@@ -52,6 +52,7 @@
 | [fixmanamodel](../../openspec/changes/fixmanamodel/) | in-progress | fixmanamodel | `docs/fixmanamodel.md`<br>`internal/resource/manamodel.go`<br>`internal/resource/manamodel_test.go` | - |
 | [fixprogress](../../openspec/changes/fixprogress/) | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go`<br>`openspec/changes/fixprogress/**` | - |
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
+| [gate1multi-20261103-1650-ms3](../../openspec/changes/gate1multi-20261103-1650-ms3/) | in-progress | gaterun | `docs/soaks/gate1-multiseed-20261103-1650-ms3.md`<br>`docs/soaks/gate1-s17-20261103-1356-ms3.md`<br>`docs/probes/soak-logs/gate1-s17-20261103-1356-ms3-minutes.jsonl.gz`<br>`docs/soaks/gate1-s19-20261103-1448-ms3.md`<br>`docs/probes/soak-logs/gate1-s19-20261103-1448-ms3-minutes.jsonl.gz`<br>`docs/soaks/gate1-s21-20261103-1425-ms3.md`<br>`docs/probes/soak-logs/gate1-s21-20261103-1425-ms3-minutes.jsonl.gz`<br>`openspec/changes/gate1multi-20261103-1650-ms3/**` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
@@ -101,6 +102,7 @@
 - change fixprogress: go test -p 1 ./internal/town ./internal/bot passes; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change fixskilllvl: go test -p 1 ./internal/d2 ./internal/combat passes; whole-repo go vet and go test -short on the worker host pass
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
+- change gate1multi-20261103-1650-ms3: Gate 1 criteria of the soak-gates spec over seeds 17,19,21, judged by d2dsoak compare (numbers in docs/soaks/gate1-multiseed-20261103-1650-ms3.md)
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
