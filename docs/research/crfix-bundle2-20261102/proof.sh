@@ -3,7 +3,7 @@ O=~/d2d-lab/crfix2; C=~/d2d-lab/crfix
 export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe PYTHONSAFEPATH=1
 cat > $O/spawnfail.py <<'PY'
 import importlib.util, sys
-sys.path.insert(0, sys.argv[1] and "/home/jesse/d2d-lab/src/tools/emu")
+sys.path.insert(0, sys.argv[1] and os.path.expanduser("~/d2d-lab/src/tools/emu"))
 import missiles
 orig = missiles.Game.unit; n = [0]
 def unit(self, cls, *a):

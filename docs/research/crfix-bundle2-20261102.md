@@ -5,7 +5,7 @@
 ## Branches (private remote, not the public fork)
 
 - `local/bundle-4` `9ea8af57`: the 10 commits of `local/bundle-3` (`f68c3e0d`) re-made on upstream main `82ea6db4` (V: `git fetch upstream` shows main unchanged; only unrelated upstream branches moved). The valid fixes are folded into the commit they belong to, `616c2f6e` "tests: standing-missile hit area and burst roll against game.exe" (the only commit that has `sk_ground_roll.py`). `git diff local/bundle-3 local/bundle-4 --stat`: that file alone, +8 / -3 (V). Author and committer both the numeric noreply identity on all ten (V: `git log --format='%an <%ae> | %cn <%ce>'`, one distinct line); subjects and bodies unchanged, last line `Agent: Claude Code`.
-- `stage/bundle-4` `d5eda66d`: the same 10 commits on `stage/base-2` (`c4fcb0a6`); `git diff local/bundle-4 stage/bundle-4` is `.coderabbit.yaml` alone (V). Both pushed to the private remote `forgejo` only (V: `git ls-remote forgejo`). Nothing to the public fork, no comment anywhere.
+- `stage/bundle-4` `d5eda66d`: the same 10 commits on `stage/base-2` (`c4fcb0a6`); `git diff local/bundle-4 stage/bundle-4` is `.coderabbit.yaml` alone (V). Both pushed to the private remote `the private remote` only (V: `git ls-remote the private remote`). Nothing to the public fork, no comment anywhere.
 
 ## Verdicts
 

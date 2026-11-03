@@ -1,5 +1,5 @@
 import importlib.util, sys
-sys.path.insert(0, sys.argv[1] and "/home/jesse/d2d-lab/src/tools/emu")
+sys.path.insert(0, sys.argv[1] and "~/d2d-lab/src/tools/emu")
 import missiles
 orig = missiles.Game.unit; n = [0]
 def unit(self, cls, *a):
