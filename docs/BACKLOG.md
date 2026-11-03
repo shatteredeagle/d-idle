@@ -1,5 +1,7 @@
 # Backlog: open items only (the work to launch is the cards in `openspec/changes/`)
 
+> Goals (ADR 0015, 2026-11-03): rank items by G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability on d2d (multi-seed, XP/h only on a seed set), G-D transfer measured by the A:B, G-E upstream fixes on the bot's path (one batch at a time), G-F one page of truth. DROPPED or DEFERRED (review, appendix D): single-seed Gate 1 reruns, open-ended coverage rows, Barbarian deviation work (unless the class check shows a Barbarian gate character); deferred or parked: the d2d container, the fallback-lightning-v3 default switch, Tier B, idle layer, stream-grid, d2dmesh. Items below that serve only a dropped or deferred goal stay listed for history. Plan: [plan/plan-20261103.md](plan/plan-20261103.md).
+
 > Milestones, launch order and the operating rhythm: [roadmap.md](roadmap.md) (proposal, 2026-10-31); the cards are `openspec/changes/m1-*`, `m2-*`, `m3-*`.
 
 > ROAMLEG (merged, live proof passed in DRILLS23): a roam leg held by the mouth gate ends the episode with ErrRoamHeld (wraps ErrExplored) and no longer marks its target failed; DW.m3 x3: 0 bounces, `roam leg failed` 50 to 0, step-aways 62 to 11, plan lines 559-664 to 425, D3 12/12, D2 11/11. Sweep completeness unverified (the drill character kills nothing).

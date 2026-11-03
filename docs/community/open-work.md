@@ -8,7 +8,7 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 
 ## PALSKILL: Smite, Zeal and Sacrifice dispatch in game.exe
 - size: M
-- status: proposed
+- status: done
 - kind: decomp
 - source: backlog:SKMELEE+
 - question: How does game.exe dispatch Smite, Zeal and Sacrifice (hit count, AR and damage bonus, mana and life cost, knockback and stun, what a held button repeats), and which of these does d2d's `skill_built` branch implement versus falling back to a plain attack?
@@ -18,7 +18,7 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 
 ## PALAURA: how an aura applies in game.exe
 - size: M
-- status: proposed
+- status: done
 - kind: decomp
 - source: backlog:PALAURA
 - question: Prior work (do not redo): docs/research/pal-skill-trace.md section 3 already has the pulse period (50 frames), the ranges (16 + 2 per level for Might, Prayer, Defiance and Concentration; 6 + 1 per level for Holy Fire) and every calc slot (21,760 cases, 0 differ against d2d). Open: (1) the aura target filter (aurafilter 0x12003 for the friendly auras, 0xa783 for Holy Fire) and the shape of the area search FUN_0056b7e0 (who is passed: self, merc, pets, party, enemies; the exact radius test); (2) the damage an aura does to enemies per pulse (Holy Fire, Shock, Freeze: roll, resist, which units), read and then run; (3) Prayer's per-pulse mana and state 85 (`nomanaregen`): does the regeneration code really stop while it is set. Also useful: the D5 Might mana floor and aura reach to merc and party on d2d (the trace's D1 to D7).
@@ -28,7 +28,7 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 
 ## PALDUR: durability loss per hit and per block
 - size: S
-- status: proposed
+- status: done
 - kind: decomp
 - source: backlog:PALDUR
 - question: In game.exe 1.14d, what is the chance and the slot choice for durability loss when the player hits and when the player is hit or blocks, and does d2d implement the same rule (it has `debug wear` verbs but the loss rule is unknown)?
@@ -41,14 +41,14 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 - status: proposed
 - kind: decomp
 - source: queue:22
-- question: Blizzard, Meteor and Fire Wall are already traced and run against game.exe (docs/research/sk-ground-trace.md, sk-ground2-trace.md), including the skill delay. Left open: Hydra (read to the spawn only: its AI and missile are not run), Frozen Orb and Thunder Storm (read depth equals d2d, nothing run natively), and the shape of Meteor's blast. Pick ONE of these and trace it fully with a native run; the others are separate PRs.
+- question: Blizzard, Meteor and Fire Wall are already traced and run against game.exe (docs/research/sk-ground-trace.md, sk-ground2-trace.md, skground-trace.md), including the skill delay and the shape of Meteor's blast. Left open: Hydra (read to the spawn only: its AI and HydraMissile are not run), Frozen Orb and Thunder Storm (read depth equals d2d, nothing run natively), the skill-delay refusal and the unit flag bits 0x4 / 0x8 in FUN_0056b3e0. Pick ONE of these and trace it fully with a native run; the others are separate PRs.
 - start: docs/research/sk-ground-trace.md and sk-ground2-trace.md (what is done, their section of U lines); docs/research/sk-missile-trace.md and sk-nova-trace.md for the sub-missile timeline style (FUN_0056d400 is the Frost Nova ring spawn).
 - deliverable: docs/research/sk-ground-<skill>-trace.md; advanced item, claim it only if you have done a decomp before.
 - needs: your own game.exe 1.14d, upstream d2decomped checkout, Python 3 with unicorn.
 
 ## VERIFY-TELEPORT-ROOM: independent re-check of the Teleport room rule
 - size: S
-- status: ready
+- status: done
 - kind: verify
 - source: backlog:SKTELE
 - question: Our claim: game.exe refuses a Teleport hop whose target lies outside the caster's room and the rooms in that room's near list (FUN_00554ea0 with FUN_00463740 over FUN_00619790), so the range is a room rule and not a distance; a per-level Teleport value of 0 refuses and 2 adds a line test (FUN_006229f0). Re-derive the destination rule yourself on a grid of caster positions and targets, class-generic, and compare with the claim.
@@ -58,10 +58,10 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 
 ## VERIFY-AIDEL: independent re-check of the monster think period
 - size: S
-- status: ready
+- status: done
 - kind: verify
 - source: backlog:FREEZERESUME
-- question: Done (docs/research/verify-aidel.md): the aidel column per difficulty and the think scheduling FUN_005a73e0 (352,800 cases, 0 differ) and the 55,268 equal cases claim (holds with limits); the resume at freeze end + aidel was also re-checked in docs/research/pr-freezeresume-verifier.md. Left open: drive FUN_005a7c20 and the freeze-end callback (FUN_0057b170) with your own harness (the verify-aidel doc marks that claim NOT CHECKED), and a think event due during a get-hit (U). Re-derive those with your own harness.
+- question: Done, both passes (docs/research/verify-aidel.md and docs/research/verifyfreezeend2-trace.md: a think due during a get-hit is a deviation, d2d holds it). Earlier: the aidel column per difficulty and the think scheduling FUN_005a73e0 (352,800 cases, 0 differ) and the 55,268 equal cases claim (holds with limits); the resume at freeze end + aidel was also re-checked in docs/research/pr-freezeresume-verifier.md. Nothing required is left; a third independent harness is optional.
 - start: docs/research/mon-wake-trace.md (the aidel rows, read AFTER your own look at the two functions); docs/research/pr-freezeresume-proof.md for the freeze-end claim.
 - deliverable: docs/research/verify-aidel.md: HOLDS / HOLDS WITH LIMITS / FAILS per claim, your case count and seed, the command, differences from the author's numbers.
 - needs: your own game.exe 1.14d install (the monster table read only, never shared), upstream d2decomped checkout, Python 3 with unicorn.
@@ -81,17 +81,17 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 - status: proposed
 - kind: decomp
 - source: backlog:SKRESIST
-- question: A hit that deals no damage (an immune target, a full block, a rounded-down roll) may still wake or alert the monster, fire on-hit effects of enchanted monsters and apply knockback. Which of these does game.exe do, in which function, with which condition, and does d2d match?
+- question: Static answer done (docs/research/sk-zero-hit-trace.md, V read; independently checked in docs/research/verifyzerohit.md): a zero-damage hit keeps knockback, gives no get-hit and no wake; Lightning Enchanted bolts fire on a no-recovery hit. Left open: the native run of the differentials D1 and D2 against d2d (the second-pass run doc is not on main), and whether d2d matches on each point. Re-derive those with your own harness.
 - start: docs/research/sk-resist-trace.md section 10 (first bullet) and Q9; FUN_0057cb00 (the get-hit gate, S: docs/research/pr-get-hit-rule-proof.md); docs/research/mon-wake-trace.md for the wake rules.
 - deliverable: docs/research/sk-zero-hit-trace.md; a static answer (tagged V read) is a valid first PR, a native run (V run) is better.
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
 
 ## SKSTATEEV: the state events fired on a hit (FUN_005d3ac0)
 - size: L
-- status: proposed
+- status: done
 - kind: decomp
 - source: backlog:SKARMOR
-- question: FUN_005d3ac0 walks a unit's states and fires the events their stat lists name (attacked in melee, absorb damage, on-hit effects). Which events fire on a hit and on a miss, in which order against resistances and other absorbs, and where are events 3 and 11 fired? This settles Shiver Armor on a miss and the place of Energy Shield against resistances; advanced item, claim it only if you have done a decomp before.
+- question: Done: docs/research/sk-state-events-trace.md (static) and stateevrun-trace.md (native runs), independently checked in docs/research/verifystateev2.md. FUN_005d3ac0 is an attacker-side hit bonus, the dispatcher is FUN_005c0c30; event 3 fires on a miss too, event 11 fires before the resistance pass. Optional follow-up: dump the Skills +0x44 rows and the order of absorb nodes.
 - start: docs/research/sk-armor-trace.md section 11 (Not traced) and Q3, Q5; docs/research/sk-melee-trace.md Q1 (the pre-events row); docs/research/sk-melee2-trace.md (Not covered).
 - deliverable: docs/research/sk-state-events-trace.md in the trace style, plus an oracle script under tools/emu/ if you ran game code.
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
