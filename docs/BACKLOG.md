@@ -413,6 +413,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - verifyitemweapons follow-up (docs/research/verifyitemweapons.md): repair two statements in the itemweapons trace (18 one-or-two-handed swords carry both damage pairs; bow, xbow, claw and other classes have dex or mixed bonuses); game.exe weapon loader and damage differential still open.
 - verifylevelsareas follow-ups (docs/research/verifylevelsareas.md): differential for the other d2d users of area_level (NPC trap level gamedata.cpp:560/568, top level gamedata.cpp:351) against the game's functions; keep the levels ledger rows labelled game=table, d2d=copy (read).
 - PRBUILDGROUND (card prbuildground, 2026-11-02): candidate C4 built as local bundle local/ground-burst-v1 (standing-missile footprint D4 + one roll per Fire Ball / Glacial Spike burst) on upstream main 48908176; counted differentials base vs head, draft docs/research/pr-ground-burst-draft.md; next: independent Opus verifier, then the user's go; Meteor D5, Fire Wall D9/D10, Hydra stay out (no d2d-side run)
+- GATE1: Gate 1 multi-seed run 20261103-1650-ms3 (seeds 17,19,21) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate1-multiseed-20261103-1650-ms3.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
