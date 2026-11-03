@@ -2,7 +2,7 @@
 
 ```yaml
 change: covarmor
-status: in-progress
+status: archived
 agent: covarmor
 branch: agent/covarmor
 worktree: d2lod-wt/covarmor
@@ -18,6 +18,7 @@ credit:
   author: owner
   agents: [Claude Code]
   consent: none
+merge: 90b645a
 ```
 
 ## 1. Work
