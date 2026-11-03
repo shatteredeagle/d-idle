@@ -128,14 +128,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 4cff3ed9 11-02 16:33 `merge origin/main into crfixbundle2` (crfixbundle2)
-- 7ce0bd95 11-02 16:30 `Merge agent/bundlefinal2: bundlefinal2: final upstream bundle records and body (docs, cards)` (bundlefinal2)
-- 43b85457 11-02 16:29 `merge origin/main into bundlefinal2` (bundlefinal2)
-- 4290f37f 11-02 16:28 `merge origin/main into crfixbundle2` (crfixbundle2)
-- 873fd1a6 11-02 16:21 `Merge agent/verifyzerohit: verifyzerohit: coverage-gap or verification result (docs and emulator tools only)` (verifyzerohit)
-- 3f184c0d 11-02 16:21 `merge origin/main into verifyzerohit` (verifyzerohit)
-- 0f4feb76 11-02 16:14 `Merge agent/skbarb: skbarb: coverage-gap or verification result (docs and emulator tools only)` (skbarb)
-- 452b11ea 11-02 16:13 `merge origin/main into skbarb` (skbarb)
-- 36ac3a39 11-02 16:06 `Merge agent/skamazon: skamazon: coverage-gap or verification result (docs and emulator tools only)` (skamazon)
-- e81ab739 11-02 16:05 `merge origin/main into skamazon` (skamazon)
+- 49446cfd 11-03 17:45 `merge origin/main into crfixbundle2` (crfixbundle2)
+- fe3b2ebd 11-03 17:42 `Merge agent/plandocs: plandocs: apply project review goals G-A..G-F to plan docs; mark covered open-work items done` (plandocs)
+- e57c2a1f 11-03 17:41 `merge origin/main into plandocs` (plandocs)
+- 775f767c 11-03 17:38 `Merge agent/gate1multi-20261103-1650-ms3: Gate 1 ms3 multiseed record: NOT PASSED (17 stall, 19 belt, 21 ok)` (gate1multi-20261103-1650-ms3)
+- 11aa1479 11-03 17:37 `merge origin/main into gate1multi-20261103-1650-ms3` (gate1multi-20261103-1650-ms3)
+- a45f8981 11-03 17:37 `merge origin/main into plandocs` (plandocs)
+- 75c9ef5b 11-03 17:26 `Merge agent/xpfallback: xpfallback: R5 kit gate for Burial Grounds/Crypt/Mausoleum fallback, R6 no silent mlvl proxy, R7 deterministic ties` (xpfallback)
+- 1a31a1ea 11-03 17:25 `merge origin/main into xpfallback` (xpfallback)
+- fd48c320 11-03 17:14 `Merge agent/recoverykit: recoverykit: minimal potion kit trip in recovery when gold >= KitPotionGold and no potions (Gate 1 seed 19 belt window)` (recoverykit)
+- e8061c5f 11-03 17:13 `merge origin/main into recoverykit` (recoverykit)
 <!-- statusgen:end -->
