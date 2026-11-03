@@ -17,7 +17,7 @@ func TestRouteGuardBlocksTheMonasteryRoad(t *testing.T) {
 	g := campaignRig(t, &fakeQuests{}, 12)
 	g.r.poll()
 	s := g.r.latest()
-	if why := g.r.routeGuardWhy(s); !strings.Contains(why, "no merc, clvl 12 < 16") {
+	if why := g.r.routeGuardWhy(s); !strings.Contains(why, "no merc, clvl 12 < 14") {
 		t.Fatalf("guard verdict %q", why)
 	}
 	for _, a := range []int{7, 26, 27, 28, 29, 30, 33, 37} {
@@ -80,11 +80,11 @@ func TestFillRouteLogsOncePerChange(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		if !strings.HasPrefix(w.RouteBlocked, "no merc, clvl 12 < 16") || w.RouteMinLevel != 16 || w.ImbueMinLevel != 20 || !w.ImbueNeedsMerc {
+		if !strings.HasPrefix(w.RouteBlocked, "no merc, clvl 12 < 14") || w.RouteMinLevel != 14 || w.ImbueMinLevel != 20 || !w.ImbueNeedsMerc {
 			t.Fatalf("world %+v", w)
 		}
 	}
-	if n := strings.Count(buf.String(), "route guard: blocked monastery (no merc, clvl 12 < 16)"); n != 1 {
+	if n := strings.Count(buf.String(), "route guard: blocked monastery (no merc, clvl 12 < 14)"); n != 1 {
 		t.Fatalf("%d log lines:\n%s", n, buf.String())
 	}
 }
@@ -157,7 +157,7 @@ func TestEffectiveFloorLinesLoggedOncePerChange(t *testing.T) {
 		}
 	}
 	out := buf.String()
-	for _, want := range []string{"route guard: monastery floor=16 (merc=none)", "route guard: forgotten tower floor=16 (merc=none)", "route guard: andariel floor=17 (merc=none)"} {
+	for _, want := range []string{"route guard: monastery floor=14 (merc=none)", "route guard: forgotten tower floor=16 (merc=none)", "route guard: andariel floor=17 (merc=none)"} {
 		if n := strings.Count(out, want); n != 1 {
 			t.Errorf("%q logged %d times:\n%s", want, n, out)
 		}

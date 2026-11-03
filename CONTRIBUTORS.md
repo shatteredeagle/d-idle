@@ -13,4 +13,7 @@ Credit follows git authorship plus this file. AI agents are credited by the `Co-
 
 ## Upstream
 
-This work builds on the decomp of [psi29a/d2decomped](https://github.com/psi29a/d2decomped) (d2d). Our pull requests merged there: 23.
+This work builds on the decomp of [psi29a/d2decomped](https://github.com/psi29a/d2decomped) (d2d). Our pull requests merged there: 24.
+
+- [psi29a/d2decomped #177](https://github.com/psi29a/d2decomped/pull/177), merged 2026-11-02 (merge commit 3e073888; 11 commits, 21 files): vendor repair gate, melee fine physical D1 and undead/Blunt D2, freeze rules, standing missile footprint and burst roll, Smite lands on a block, each with game.exe differentials.
+- chuckado: credited with a `Traced-by:` trailer on the Smite commit of #177 (upstream merge commit 3e073888) for the finding in [PR #23](https://github.com/shatteredeagle/d-idle/pull/23) (PALSKILL). Consent: the owner approved this credit personally.

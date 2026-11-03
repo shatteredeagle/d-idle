@@ -189,7 +189,7 @@ func bootOnFake(t *testing.T, tables bool) {
 		if out := lb.String(); strings.Contains(out, "not yet") || strings.Contains(out, "no game tables") {
 			t.Fatalf("stub behaviours still in use with tables:\n%s", out)
 		}
-		if c, b := get(t, base+"/api/v1/instances/t/merc/"); c != 200 || !strings.Contains(b, `"enabled":false`) {
+		if c, b := get(t, base+"/api/v1/instances/t/merc/"); c != 200 || !strings.Contains(b, `"enabled":true`) {
 			t.Fatalf("merc mount %d %s", c, b)
 		}
 	} else if !strings.Contains(lb.String(), "no game tables") {

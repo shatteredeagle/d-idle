@@ -3,7 +3,5 @@ rank	subsystem	rows	impact	source
 1	missiles	untested	Monster and other-class missiles (arrows, bolts, breath) decide most damage taken; risk map rank 1 and 6; only 8 player bolts, Blizzard and a few reads are covered	docs/research/d2d-fidelity-riskmap.md
 2	monster.ai	untested	Wake, chase, flee and ranged behaviour per AI type moves kills per hour and deaths; risk map rank 5; mon-wake traced for a few types only	docs/research/d2d-fidelity-riskmap.md
 4	levels	untested	Area spawn density, teleport and layout rules gate every act; risk map ranks 2 and 11; spawn density was compared for 4 levels upstream, not entered per row	docs/research/spawn-density-trace.md
-6	skills.pal	untested	Paladin is the second-ranked class (Hammerdin): Holy Shield, Zeal, Charge, Vengeance and the resist auras are untouched	docs/classes/ranking.md
 8	skills.ass	untested	Assassin plan (Lightning Sentry traps): trap and sentry pipeline untouched	docs/classes/ranking.md
 9	states	untested	Remaining states and auras (curses, shrines, poison, stun) alter damage taken	docs/research/sorc-skill-matrix.md
-10	itemtypes	untested	Item type rules (repair, stack, belt, socket) feed vendor and pickit; only the price and repair gate were differenced	docs/research/price-trace.md

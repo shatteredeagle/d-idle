@@ -1,0 +1,3 @@
+BACKLOG: covmonai2: monster AI third pass done (docs/research/covmonai2-trace.md): 78 of the 121 untested AIs run 0 differ (Duriel, Summoner, Mephisto, Izual and the Act 2 to 5 thinks), 3 deviate; open: D1 Fetish back-off pace, D2 Arach charge as run, D3 Arach lay unit, D4 D5 Diablo cast units, B1 caster bosses are melee to the bot's step-back (rangedtype empty), 40 AIs still untested
+INDEX: docs/research/covmonai2-trace.md - monster AI third pass: Act 2 to 5 thinks and the bosses, game.exe vs d2d mon_think on 139,500 cases (covmonai2)
+CHANGELOG: covmonai2: monster AI third pass (docs/research/covmonai2-trace.md, tools/emu/mai3_*): 139,500 think cases run against game.exe, monster.ai run-tested 14 to 69 percent

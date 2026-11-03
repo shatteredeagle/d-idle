@@ -160,7 +160,7 @@ func TestShouldGiveHealing(t *testing.T) {
 		c    PotionCtx
 		want bool
 	}{
-		{"39", at(39), fight, true}, {"40", at(40), fight, false}, {"1", at(1), fight, true},
+		{"49", at(49), fight, true}, {"50", at(50), fight, false}, {"1", at(1), fight, true},
 		{"dead", func() MercState { s := at(10); s.Alive = false; return s }(), fight, false},
 		{"zero life unread", at(0), fight, false},
 		{"trivial fight", at(10), PotionCtx{FightTrivial: true, HealingPotions: 3}, false},

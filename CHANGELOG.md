@@ -8,6 +8,73 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- verifyskassassin: independent verification of the Assassin skills first pass; mana check and payment V run on both sides, no deviation, no PR candidate
+- branchclean: a plan to triage and clean up the unmerged agent branches, with a proposed branch hygiene rule
+- Design for the Gate 3 requirement gaps with a delta spec for soak-gates (docs only)
+- changecheck: ignore GitHub's synthetic "Merge <sha> into <sha>" commit in the merge check.
+- Docs: second independent code review of the 2026-11-03 bot changes (walk limit, walk loop, XP fallback rank).
+- docs: upstream guard-fix PR text and the final batch A PR text (private fork branches local/guardfix-3, local/batch2-A-r9).
+- fix: nav border gates compare the neighbour's grid in the neighbour's own frame; the Blood Moor keeps its gate to the Rogue Encampment on seeds where the camp lies east of it (docs/navexit22.md).
+- cport: batch C (mana paid on the action frame, action-frame tick, armor state group) prepared as commits on the batch A branch with Claims rows, counted differentials on the exact head; nothing pushed upstream
+- fix: d2dworld keeps a level border once seen; an empty tome buys the first town portal scroll before the kit potions (docs/navexit21.md).
+- docs: Gate 1 multi-seed soak run 20261103-1226-ms1: NOT PASSED (docs/soaks/gate1-multiseed-20261103-1226-ms1.md).
+- sorcdiff2: counted differentials for Charged Bolt, Frost Nova, Fire Bolt and Frozen Armor on the real d2d build (mana payment timing, action-frame tick, armor group) and private fix branches; nothing pushed upstream
+- b2on181: batch 2 re-based on PR 181 in the private fork, results in docs/research/b2-on181.md
+- docs: Gate 1 soak run 20261103-0338: NOT PASSED (True XP/h at or above the d2d baseline; Belt) (docs/soaks/gate1-20261103-0338.md).
+- Docs: Gate 3 prep (Gate 2 watch checklist, Gate 3 requirements table, risks)
+- docs: upstream batch 2 PR bodies A and B with the oracles ported to the maintainer rules (private fork branches local/batch2-A-r5, local/batch2-B-r2).
+- lockstepplan: a written plan for the real d2d against game.exe comparison, with lane counts, host sharing with the long gate runs, and the decisions needed
+- sorcdiff: Sorceress skills the bot uses vs rule coverage; Lightning and Chain Lightning cast-length differential on the real d2d build and a private fix branch; nothing pushed upstream
+- b2winworker: batch 2 r3 re-run on the Windows build worker, numbers recorded
+- b2rebase2: batch 2 bundle rebased onto upstream main 005c7cab, split proposal, bodies on the new PR template; nothing pushed upstream
+- verifydmg4: fourth verification of the monster damage roll r4 (tools/emu/v4_*, docs/research/verify-dmgroll4.md)
+- verifydmg2: second verification of the monster damage roll r2 (tools/emu/v2_*, docs/research/verify-dmgroll2.md)
+- review180: private review of upstream PR 180 and its effect on batch 2; nothing posted upstream
+- housekeep: archived the stale soak-minutes-virtual card and applied its virtual-minute spec delta
+- codereview1: review of the Gate 1 belt fixes with ranked findings (docs only)
+- Docs: ADR 0015 (acceptance on game.exe, six goals), plan 2026-11-03, STATUS rewritten, card triage
+- Docs: project review 2026-11-03 (goals evaluated and rewritten, plan short/medium/long)
+- gatetriage: a Gate 1 triage script prints the verdict, the belt and no-kill windows, the XP by area and the likely cause on one screen
+- docs: XP/h time-budget tool (tools/baseline/xph_budget.py) and the Gate 1 XP/h analysis (docs/research/xphshort.md).
+- tools: merge_lines_check.py catches bad merge-lines.txt files (OWNERS lines, markdown bullets, missing prefixes) in tools/ci/check.sh before the merge preflight.
+- Bot: the chain walk home is now only for a character with no healing potion; stash gold no longer defeats the futile-trip guard; the mana reserve applies only while the kit is incomplete.
+- verifyb2: independent verifier of upstream batch 2; one deviation found (Teleport ring 50)
+- covpal: Paladin coverage first pass (docs/research/covpal-trace.md, tools/emu/covpal*): skills.pal now fully in the ledger (15 rows, 14,400 cases per aspect, 0 differ); Redemption callback and Vengeance read; no PR candidate
+- areareach: the leveling planner no longer refuses Dark Wood or Black Marsh when it stands in a field without a waypoint, and a fallback area is chosen by XP per kill
+- MSVC2026 trace: test_monster_ai fails MSVC C2026 because four raw-string literals (62345, 59449, 59285, 16762 bytes) exceed 16380; fix by splitting into adjacent literals, same bytes (g++ probe, 4 constants, 0 mismatches); docs only
+- specdelta: Gate 1 now excuses belt windows where the character could not afford a potion (pack plus stash gold under 30) and lets a single seed inside the XP tolerance pass with a note
+- stashfield: the soak minute line now carries the stash gold, and the soak report tells a poor belt window from a funded one
+- Bot: a character with no healing potion and gold in the stash now withdraws it and shops, instead of farming gold with a full bank.
+- b2rebase: batch 2 bundle rebased onto upstream main 552acc9a, PR body and run record refreshed; nothing pushed upstream
+- beltfix4: a character in recovery mode with no healing potion and gold for one now shops on arrival in town instead of walking back out
+- docs: restore the three Gate 1 soak records of 2026-11-02/03 under unique run-id names, add an index (docs/soaks/gate1-index-20261103.md).
+- b2bundle: batch 2 bundle branch on upstream main and its PR body (docs/research/pr-batch2-body.md); nothing pushed upstream
+- Bot: a character in town with no healing potion now shops at once, can walk home from the act 1 fields without scroll or waypoint, no longer burns charges on a cut portal cast, and retries the town portal once on the way back.
+- verifydmg3: third verification of the monster damage roll r3 (tools/emu/w3_*, docs/research/verify-dmgroll3.md)
+- beltfix2: analysis of the Gate 1 20261103 belt and no-kill failures with a ranked fix plan (docs)
+- hirefix: the bot now sees a dead merc after its corpse is gone, maps all four hireling codes, and reads the revive price before paying
+- HIREREADER: design and trace of the d2d merc reader (docs/research/hirereader-*.md) plus a purse differential of game.exe FUN_00576d90 and the revive chain against d2d's rules::hire and resurrect_merc, 200,000 cases, 0 differ (tools/emu/hrd_*); five bot findings, no PR candidate; offline, nothing run live
+- BOTAB: docs/research/botab-20261102.md and botab-trace.md compare d2d and game.exe at bot level from committed minute lines (tools/baseline/botab_extract.py, botab_run.py on ab_compare); no verdict is EQUIVALENT, kills per hour of d2d is lower than game.exe (offline, no game run)
+- beltfix: a poor character without a portal scroll and without healing potions now walks home for a potion instead of staying in the field (Gate 1 BELT failure)
+- DMGROLL: docs/research/dmgroll-draft.md and tools/emu/mdmg* (differential of a monster's physical roll against game.exe)
+- Added docs/research/pr-batch2-draft.md and the pb2_mana / pb2_tele worker helpers: two private upstream-PR branches (mana check floor, Teleport room limit and landing spot) with counted differentials against game.exe.
+- covmissiles2: trace of the skill-sourced monster missiles of Acts 1 and 2 (17 rows, 21,926 compared cases, tools/emu/cm2_*), ledger rows 22, 24, 32, 77, 130, 346, 653 upgraded from READ-ONLY; deviations D1 to D3, no PR candidate
+- covstates2: curse and state put rule traced (game.exe run natively vs real d2d put_state, 200,000 sequences); five d2d deviations proven, no PR candidate; states coverage 3 to 11 percent
+- covmonai2: monster AI third pass (docs/research/covmonai2-trace.md, tools/emu/mai3_*): 139,500 think cases run against game.exe, monster.ai run-tested 14 to 69 percent
+- covitemtypes: docs/research/covitemtypes-trace.md and tools/emu/cit_*: ItemTypes decomposed (game.exe type walk, closure matrix, slot, hands, socket cap vs d2d, 0 mismatches on 553,647 cases); bot findings B1-B3; coverage ledger itemtypes 98/98 TESTED-0-DIFF (docs and emulator tools only)
+- tools: A:B comparison tool for d2d against game.exe records (equivalence interval, per-k regimes).
+- docs: SEEDSPAWN trace of layout, spawn list and RNG draws, d2d against game.exe, and levels.layout coverage rows (seedspawn)
+- SEEDDIST: docs/research/seeddist-trace.md (distribution check of d2d vs game.exe RNG outcomes)
+- docs: Tier B design and cross-backend A:B protocol (tierbdesign)
+- verifystateev2: independent verification of the state-event trace; game side V run, d2d read only, no PR candidate
+- Independent verification of the Amazon skills trace (docs/research/verifyskamazon-trace.md) and emulator tools tools/emu/vam_*; no ledger change, repair text proposed.
+- covmissiles: missiles coverage first pass (docs/research/covmissiles-trace.md, tools/emu/cm_*): 138,000 hit cases and 13,680 table and flight cases run against game.exe, missiles run-tested 9 to 42 percent
+- Fixed: the bot no longer loses the Tome of Town Portal's charge count in the field when a ground item shares its unit id.
+- fix: town resupply stops at its time budget inside the buy loops, and a portal-empty report with a readable tome buys 2 scrolls, not a refill (docs/townshop.md).
+- bot: with the merc policy on, the character waits briefly for the Rogue after a portal or waypoint, leaves a crowd when she is down, gives her a healing potion below 50 percent life, and remembers the Lut Gholein hire decision across restarts.
+- bot: the merc policy is on by default: dead Rogue revived when gold covers the price plus a potion reserve, Desert Mercenary swap at Lut Gholein (needs a window reader), no-merc Monastery floor 14 with a full kit, gold farm in the early areas while the merc is missing.
+- Upstream PR #177 merged: five d2d fidelity fixes (vendor repair gate, melee 256ths and undead bonus, freeze rules, standing missile footprint and burst roll, Smite on a block) with game.exe differentials
+- bot: route guards read the merc from the d2d dump even with the merc policy off; the free Rogue claim is verified (merc: claim verified / claim not seen).
 - bundlefinal2: final bundle rebased onto upstream PR 176, Smite component added, CodeRabbit ground-roll comment folded in
 - verifyzerohit: independent verification of the zero-damage hit trace; game side V run, d2d read only, no PR candidate
 - Barbarian skill trace (docs/research/skbarb-trace.md) and emulator runs tools/emu/skbarb_*; coverage skills.bar 0 of 30 to 30 of 30 (calc and physical aspect).

@@ -1,0 +1,3 @@
+BACKLOG: DMGROLL r4 fourth verification: READY FOR PR yes (9ea2afe9): roll, reduce, absorb, both, negpct, exact 0 differences through the REAL Fight::absorb (354,000 frames, real = glue = hurt_side); never worse than base except Bone Armor and Energy Shield together with the shield cast last (pool mean +2 %); PR text and one ponytail sentence to fix; see docs/research/verify-dmgroll4.md
+INDEX: docs/research/verify-dmgroll4.md: fourth verifier report on DMGROLL r4 (9ea2afe9), own differential in verify-dmgroll4-run.txt
+CHANGELOG: verifydmg4: fourth verification of the monster damage roll r4 (tools/emu/v4_*, docs/research/verify-dmgroll4.md)

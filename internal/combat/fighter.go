@@ -18,6 +18,7 @@ import (
 	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town/panel"
 )
@@ -35,6 +36,10 @@ type Fighter struct {
 	// Portal opens a town portal. The default right-clicks the scroll or tome in the inventory panel
 	// (UNVERIFIED geometry); the town agent can install a better one.
 	Portal func(ctx context.Context) error
+	// MercState reads the merc for the field rules (mercfield.go). Nil, the default, leaves them off.
+	MercState func() (merc.MercState, error)
+
+	mercSt mercFieldState
 
 	e   *env.Env
 	mv  Mover
@@ -250,6 +255,9 @@ func (f *Fighter) Safety(snap *d2.Snapshot) SafetyAction {
 	}
 	if a != SafetyNone {
 		return a
+	}
+	if b := f.mercDownLeave(snap, in); b != SafetyNone {
+		return b
 	}
 	// Amplify Damage / Iron Maiden on us: drink early, or leave when nothing is left to drink
 	if in.InFight && CurseRetreat(p, t.CurseRetreatPct) {

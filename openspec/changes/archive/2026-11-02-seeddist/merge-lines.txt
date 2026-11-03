@@ -1,0 +1,3 @@
+BACKLOG: SEEDDIST done: d2d vs game.exe outcome distributions (life, damage, hit, first drop) for Act 1 classes; see docs/research/seeddist-trace.md
+INDEX: docs/research/seeddist-trace.md: SEEDDIST distribution check, d2d stream vs game.exe unit seeds (statistical equivalence per quantity)
+CHANGELOG: SEEDDIST: docs/research/seeddist-trace.md (distribution check of d2d vs game.exe RNG outcomes)

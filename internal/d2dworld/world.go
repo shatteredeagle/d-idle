@@ -362,7 +362,8 @@ func (w *World) borders(ctx context.Context, l *lvl) {
 		}
 	}
 	lr := d2map.Rect{X: l.m.Rect.X, Y: l.m.Rect.Y, W: 5 * own.W, H: 5 * own.H}
-	l.m.Adjacent, l.pending, l.unlinked = adjacent(own, lr, places, linked, l.m.Grid, across)
+	adj, pending, unlinked := adjacent(own, lr, places, linked, l.m.Grid, across)
+	l.m.Adjacent, l.pending, l.unlinked = keepBorders(l.m.Adjacent, adj), pending, unlinked
 	if l.pending == 0 {
 		l.tries = 0
 	}
@@ -372,6 +373,24 @@ func (w *World) borders(ctx context.Context, l *lvl) {
 	}
 	sort.Ints(w.LastLinked)
 	w.LastBorderNote = fmt.Sprintf("%d adjacent entries, %d levels not linked yet", len(l.m.Adjacent), l.pending)
+}
+
+// keepBorders carries over the contacts of a neighbour that the new probe round found nothing for. A border is
+// layout geometry and never closes again; a later round can still lose it (d2d drops the neighbour from its linked
+// list, or one "debug blocked" probe errors and counts as closed). Replacing the list then left the Blood Moor
+// without its town gate for the rest of the visit: "nav: no exit to that level: level 1 from 2" (Gate 1 ms1 seed 17,
+// 193 times; the reason a round came back empty is U, the replacement is V by TestBordersSurviveAnEmptyProbeRound).
+func keepBorders(old, fresh []d2map.Adjacent) []d2map.Adjacent {
+	have := map[int]bool{}
+	for _, a := range fresh {
+		have[a.LevelNo] = true
+	}
+	for _, a := range old {
+		if !have[a.LevelNo] {
+			fresh = append(fresh, a)
+		}
+	}
+	return fresh
 }
 
 func sameGrid(a, b *d2map.Grid) bool {

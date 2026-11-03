@@ -1,0 +1,3 @@
+BACKLOG: tomestat: the tome's stat 70 lost in the field was a unit-id collision between ground and carried items in d2dsrc extras; fixed bot side, live check pending (docs/tomestat.md)
+INDEX: docs/tomestat.md: why the field read lost the Tome of Town Portal's stat 70 (ground/carried id collision) and the fix
+CHANGELOG: Fixed: the bot no longer loses the Tome of Town Portal's charge count in the field when a ground item shares its unit id.

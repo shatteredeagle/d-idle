@@ -26,7 +26,7 @@ func result() *d2dsrc.Result {
 	snap := &d2.Snapshot{Player: &d2.Player{X: 100, Y: 200}}
 	snap.Ground = []d2.Unit{ground(1, 0, 90, 190), ground(2, 1, -1, -1), ground(3, 1, 5, 5), ground(4, 1, 6, 6), ground(5, 1, 7, 7), ground(6, 2, 8, 8)}
 	r := &d2dsrc.Result{Snap: snap}
-	r.Extras.Items = map[uint32]d2dsrc.ItemExtra{
+	r.Extras.Ground = map[uint32]d2dsrc.ItemExtra{
 		1: {Code: "gld", Label: "8800 Gold"},
 		2: {Code: "ssd", Label: "Short Sword"},
 		3: {Code: "ssd", Label: "Superior Short Sword"},

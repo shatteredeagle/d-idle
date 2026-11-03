@@ -401,7 +401,7 @@ func TestHealOnlyTripSuppressedAfterIdleTrips(t *testing.T) {
 }
 
 func TestNearTownArea(t *testing.T) {
-	for area, want := range map[int]bool{2: true, 8: true, 3: true, 1: false, 17: false, 5: false} {
+	for area, want := range map[int]bool{2: true, 8: true, 3: true, 4: false, 5: false, 6: false, 9: false, 10: false, 17: false, 1: false, 7: false, 40: false} {
 		if NearTownArea(area) != want {
 			t.Errorf("area %d: want %v", area, want)
 		}
@@ -502,5 +502,51 @@ func TestPoorMeleeRestsRichDrinksMana(t *testing.T) {
 	}
 	if d := fight(0, 2); d.Drink != PotionMana {
 		t.Fatalf("gold 0, dangerous pack: %+v", d)
+	}
+}
+
+// codefix F1: the quest-route fields are walkable home only for the no-healing emergency (ChainHomeArea), never the
+// NearTown of the fight abort, the pre-engage check or the ordinary potion-low trip.
+func TestChainHomeIsNotNearTown(t *testing.T) {
+	for _, area := range []int{4, 5, 6, 9, 10, 17} {
+		if NearTownArea(area) || !ChainHomeArea(area) {
+			t.Errorf("area %d: near %v chain %v, want false/true", area, NearTownArea(area), ChainHomeArea(area))
+		}
+	}
+	for _, area := range []int{2, 3, 8} {
+		if !ChainHomeArea(area) {
+			t.Errorf("area %d: chain home must include the near fields", area)
+		}
+	}
+	for _, area := range []int{1, 7, 37, 40} {
+		if ChainHomeArea(area) {
+			t.Errorf("area %d is no chain home", area)
+		}
+	}
+}
+
+func TestChainHomeTripOnlyWithoutHealing(t *testing.T) {
+	tu := DefaultTuning()
+	in := Input{Belt: Belt{HP: 1, Slots: 4}, ChainHome: true, Gold: 500, LastTripGold: -1, Level: 11, Area: 6, Class: d2.Sorceress, MaxLife: 100, Life: 100}
+	if tr := TownTripTrigger(in, tu); tr.Go {
+		t.Errorf("1 potion in Black Marsh, no scroll: the trip would be an 8 minute walk: %+v", tr)
+	}
+	in.Belt.HP = 0
+	if tr := TownTripTrigger(in, tu); !tr.Go || tr.Method != ByWalk {
+		t.Errorf("no healing potion at all: want a walk, got %+v", tr)
+	}
+	in.Belt.PackRV = 1
+	if tr := TownTripTrigger(in, tu); tr.Go {
+		t.Errorf("a pack rejuvenation is healing: %+v", tr)
+	}
+}
+
+// codefix F1: the chain walk is not a retreat target of the fight abort; without NearTown it leaves the game.
+func TestEscapeInChainFieldLeavesGame(t *testing.T) {
+	if k := escape(Input{ChainHome: true, Area: 6}, "life and mana gone").Kind; k != LeaveGame {
+		t.Errorf("area 6, no portal: %v, want LeaveGame", k)
+	}
+	if k := escape(Input{NearTown: true, Area: 2}, "life and mana gone").Kind; k != RetreatOut {
+		t.Errorf("Blood Moor: %v, want RetreatOut", k)
 	}
 }
