@@ -1,0 +1,3 @@
+BACKLOG: VERIFY-MONSTERPACE done (card verifymonsterpace): local/monsterpace-clean eeebb4b6 READY WITH CHANGES (docs/research/pr-monsterpace-verifier.md): addresses and paces confirmed, head 0 of 700,000 pace and 200,000 corpse cases (own model); required: rebase onto current upstream main (clang-tidy step fails on test_game_missiles.cpp at 6935cf64), PR-text fixes; split velocity vs paces recommended
+INDEX: docs/research/pr-monsterpace-verifier.md - independent verifier of the monster pace PR candidate (base velocity 75, think paces, Blood Raven home rule, shaman corpse reach): disassembly, own probes, readers, det, CI parity, split advice
+CHANGELOG: verifymonsterpace: independent verification of the monster pace PR candidate (docs only)
