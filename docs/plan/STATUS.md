@@ -61,6 +61,7 @@
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
+| [prbuildground](../../openspec/changes/prbuildground/) | in-progress | prbuildground | `docs/research/pr-ground-burst-draft.md`<br>`openspec/changes/prbuildground/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
@@ -117,6 +118,7 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
+- change prbuildground: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
@@ -125,14 +127,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- c00999eb 11-03 16:37 `Merge agent/verifylevelsareas: branchclean LAND: verifylevelsareas` (verifylevelsareas)
-- a3ca6b1e 11-03 16:36 `merge origin/main into verifylevelsareas` (verifylevelsareas)
-- f4ae491b 11-03 16:29 `Merge agent/verifyitemweapons: branchclean LAND: verifyitemweapons` (verifyitemweapons)
-- 552da13b 11-03 16:29 `merge origin/main into verifyitemweapons` (verifyitemweapons)
-- e29a501c 11-03 16:19 `Merge agent/verifycovstates: branchclean LAND: verifycovstates` (verifycovstates)
-- 88abddfd 11-03 16:19 `merge origin/main into verifycovstates` (verifycovstates)
-- 90b645af 11-03 16:16 `Merge agent/covarmor: branchclean LAND: covarmor` (covarmor)
-- 8bbad5c1 11-03 16:15 `merge origin/main into covarmor` (covarmor)
-- c75a7be2 11-03 16:06 `Merge agent/verifycovmissiles: branchclean LAND: verifycovmissiles` (verifycovmissiles)
-- d8699e15 11-03 16:05 `merge origin/main into verifycovmissiles` (verifycovmissiles)
+- 75719073 11-02 11:49 `Merge agent/verifyprices: verifyprices: result (docs and emulator tools only)` (verifyprices)
+- 4e48d30d 11-02 11:49 `merge origin/main into verifyprices` (verifyprices)
+- 76452305 11-02 11:42 `Merge agent/verifypaldur: verifypaldur: Pro-account job result (docs and emulator tools only)` (verifypaldur)
+- b3a654fa 11-02 11:42 `merge origin/main into verifypaldur` (verifypaldur)
+- 518f87bb 11-02 11:37 `Merge agent/skzerohit: skzerohit: result (docs and emulator tools only)` (skzerohit)
+- 0c7e7ec5 11-02 11:30 `Merge agent/verifypalaura: verifypalaura: Pro-account job result (docs and emulator tools only)` (verifypalaura)
+- 075a8650 11-02 11:29 `merge origin/main into skzerohit` (skzerohit)
+- 94bb76e6 11-02 11:29 `merge origin/main into verifypalaura` (verifypalaura)
+- 34d019b7 11-02 11:24 `Merge agent/skstateev: skstateev: Pro-account job result (docs and emulator tools only)` (skstateev)
+- d7b062ed 11-02 11:23 `merge origin/main into skstateev` (skstateev)
 <!-- statusgen:end -->
