@@ -118,6 +118,7 @@ type Runner struct {
 	ob            observer
 	dlog          *deathLog         // guarded by obMu
 	avoid         map[int]time.Time // areas out of play (death spiral, nav faults), guarded by obMu
+	noMLvlSeen    map[int]bool      // xp rank warnings already logged (area*4+difficulty), guarded by obMu
 	decMu         sync.Mutex        // decisions
 	decisions     []decisionNote    // last planner/runner decisions for the planner dump (deathrule.go)
 	avoidWhy      map[int]string    // producer of each avoid entry (areaskip.go), guarded by obMu

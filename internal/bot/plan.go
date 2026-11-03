@@ -33,6 +33,10 @@ type Step struct {
 	// MeleeEnter (progression "melee_enter_clvl") is a lower entry level for the strong melee classes (Barbarian,
 	// Paladin: PickOptions.Melee); 0 = same as EnterLvl. BUILDV2, SME: Stony Field at 7 for them, 8 for casters (U).
 	MeleeEnter int
+	// FallbackKit (progression "xp_fallback_full_kit") keeps the step out of the XP fallback of Pick unless the character
+	// has a full kit: Burial Grounds (Blood Raven) and its dead-end dungeons are no place for a thin kit (codereview2 R5).
+	// The plan's own order is not affected.
+	FallbackKit bool
 }
 
 // enter is the entry level of the step for the character kind.
@@ -249,6 +253,7 @@ func (p *Plan) parseSteps(diff string, b []byte) error {
 		s.EnterLvl, _ = e.num("enter_clvl", "min_clvl", "enter")
 		s.KitLvl, _ = e.num("kit_clvl")
 		s.MeleeEnter, _ = e.num("melee_enter_clvl")
+		s.FallbackKit = e.boolean("xp_fallback_full_kit")
 		s.LeaveLvl, ok = e.num("leave_clvl", "target_clvl", "leave")
 		if !ok || s.LeaveLvl < s.EnterLvl {
 			p.warn("progression-%s: step %d has no usable leave level", diff, id)
@@ -373,7 +378,8 @@ type PickOptions struct {
 	// XP estimates the experience of one kill in a step for this character. When set and the area the plan would
 	// prefer is excluded (unreachable, cleared, guarded), the fallback is the eligible step with the best XP per kill
 	// instead of the last one in progression order (Gate 1 0628: Cold Plains at 3.4 XP per kill at clvl 13 while Crypt
-	// and Cave Level 1 were open).
+	// and Cave Level 1 were open). A negative value means the estimate is unknown (no monster level for the area): such a
+	// step ranks after every known one, and when no step is known the plan order stands. Ties go to the later step.
 	XP func(Step) float64
 }
 
@@ -382,10 +388,12 @@ type PickOptions struct {
 // (the most advanced area that is still worth it); if the character is past every window, the last eligible step; if
 // below every entry level, the first eligible step. ok is false when nothing is eligible.
 func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
+	xpFallback := false // the preferred step is excluded: the fallback runs, thin-kit steps stay out of it
 	if o.XP != nil && len(o.Exclude) > 0 {
 		free := o
 		free.Exclude, free.Cleared, free.Floor, free.XP = nil, nil, 0, nil
 		if pref, ok := p.Pick(diff, level, free); ok && o.Exclude[pref.Area] {
+			xpFallback = true
 			if st, ok := p.pickByXP(diff, level, o); ok {
 				return st, true
 			}
@@ -396,7 +404,7 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 		if p.IsTown(s.Area) || o.Exclude[s.Area] {
 			continue
 		}
-		if s.KitLvl > level && !o.FullKit {
+		if (s.KitLvl > level || xpFallback && s.FallbackKit) && !o.FullKit {
 			continue
 		}
 		if o.Acts != nil && !o.Acts[p.Act(s.Area)] {
@@ -443,7 +451,7 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 func (p *Plan) pickByXP(diff string, level int, o PickOptions) (Step, bool) {
 	var inWin, entered []Step
 	for _, s := range p.Steps[diff] {
-		if p.IsTown(s.Area) || o.Exclude[s.Area] || (s.KitLvl > level && !o.FullKit) || (o.Acts != nil && !o.Acts[p.Act(s.Area)]) || s.enter(o.Melee)+o.Margin > level {
+		if p.IsTown(s.Area) || o.Exclude[s.Area] || (s.KitLvl > level && !o.FullKit) || (s.FallbackKit && !o.FullKit) || (o.Acts != nil && !o.Acts[p.Act(s.Area)]) || s.enter(o.Melee)+o.Margin > level {
 			continue
 		}
 		entered = append(entered, s)
@@ -458,11 +466,14 @@ func (p *Plan) pickByXP(diff string, level int, o PickOptions) (Step, bool) {
 	if len(pool) == 0 {
 		return Step{}, false
 	}
-	best, bestXP := pool[0], o.XP(pool[0])
-	for _, s := range pool[1:] {
-		if x := o.XP(s); x >= bestXP {
+	best, bestXP := Step{}, -1.0
+	for _, s := range pool {
+		if x := o.XP(s); x >= 0 && x >= bestXP {
 			best, bestXP = s, x
 		}
+	}
+	if bestXP < 0 {
+		return Step{}, false // no estimate for any step: the caller keeps the plan order
 	}
 	if len(inWin) == 0 && o.Floor > 0 && level-best.LeaveLvl > o.Floor && p.windowExcluded(diff, level, o) {
 		return Step{}, false
