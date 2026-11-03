@@ -1,6 +1,8 @@
 # Roadmap: milestones, work breakdown, operating rhythm (agent ROADMAP, 2026-10-31)
 
 > status: ADOPTED by the user on 2026-10-31: decisions D1 to D6 in section 8 are DECIDED. Card `roadmap`. Reviewed by d2-sme and spec-sme (section 6). Tags: V = checked in the repo or by a command named here, S = read in a doc, U = judgment. Numbers that have an owner (gates, knob defaults) are cited from their spec or docs/knobs.md, not copied. The cards are `openspec/changes/m1-*`, `m2-*`, `m3-*`.
+> status: milestones M1 to M6 are mapped to the goals G-A..G-F of [ADR 0015](adr/0015-goals-acceptance-on-game-exe.md) (2026-11-03): M1 basics and M2 early gate are inputs to G-C and G-D; M3 Act 1 clear is G-B; M4 Act 2 and M5 ship follow G-A (container deferred); M6 idle layer stays parked. Plan: [plan/plan-20261103.md](plan/plan-20261103.md). The history below is kept.
+
 
 ## 1. Diagnosis: where the effort goes and why it feels like flailing
 
@@ -41,6 +43,20 @@ Sizes are agent-hours, rough (U). Exit criteria cite the spec requirement that o
 | M4 Act 2 | The Act 2 chain runs on d2d through Duriel with the Desert merc | 1 seed: Duriel dead within 24 virtual hours after the Act 2 hop (U); G2 floors on the way (soak-gates `G2 meaning and floors`: clvl 16 at 8 h) | docs/act2-run.md | 25 h |
 | M5 ship | The d2d container is the product: default backend, 24 h soak, Game.exe retired | licence decision recorded (ADR); cards d2d-default-backend and d2d-container-soak PASS (soak-gates `Verdict`: report.txt PASS, exit 0) | the two cards' results | 15 h + user |
 | M6 idle layer | The idle-game layer the user parked | defined by a grill after M5; out of scope until then | ADR | ? |
+
+Mapping to the goals of ADR 0015 (2026-11-03, history of this table kept):
+
+| milestone | goal | note |
+|---|---|---|
+| M1 basics | G-C (input) | exit not met (13 of 15 C rows); only what the gate needs |
+| M2 early gate | G-D | single-seed baseline dropped; statistical A:B instead |
+| M3 Act 1 clear | G-B | headline progress goal, milestone time per seed |
+| M4 Act 2 | after G-A | Desert merc on d2d, then game.exe |
+| M5 ship | deferred | container only after Gate A (G-A) and the licence route |
+| M6 idle layer | parked | grill after G-A |
+| (new) game.exe acceptance | G-A | Gate A: 2 h, 8 h, 24 h |
+| (new) upstream, one batch at a time | G-E | |
+| (new) one page of truth | G-F | |
 
 Dependency graph (text): `xpgap, basicsfix (merging) -> M1 -> M2 -> M3 -> M4 -> M5 -> M6`; `m2-soakexit, m2-earlybase, m2-abdesign, m1-loot` have no upstream dependency (start now); `m3-andariel` depends only on a free slot and runs in parallel with M1 and M2 (d2-sme); grill 0003 gates `m3-merc`, `m3-routeguard`; the licence review gates M5 only.
 

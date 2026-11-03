@@ -1,0 +1,3 @@
+BACKLOG: levelsareas D3: density / umin / umax / spawn-count differential of d2d vs game.exe (ms_spawn.py plus a d2d probe), see docs/research/levelsareas-trace.md
+INDEX: docs/research/levelsareas-trace.md - Levels.txt area level: game.exe FUN_0061dca0 vs d2d columns, 1,088 cases equal, census, drill recipe
+CHANGELOG: levelsareas: area-level rows of Levels.txt compared with game.exe (1,088 cases, 0 differences); trace docs/research/levelsareas-trace.md

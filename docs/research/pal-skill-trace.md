@@ -171,3 +171,5 @@ In `openspec/changes/palskill/merge-lines.txt` (BACKLOG, INDEX, CHANGELOG, and t
 Decomp-queue row (proposed, number assigned by the merger): `- NN Paladin skills (PALSKILL, 2026-11-01): Holy Bolt hits only undead (others passed, FUN_005a9fb0), heals the caster's pets / merc / party (d2d not); Blessed Hammer spirals out of the caster (radius 13 subtiles at 120 frames, aim moves phase only), gains half of Concentration's damage % and +50 % vs undead / demon (d2d has neither, its path is a model); undead / demon flags (734 ids), element damage (8,640) and aura calcs (21,760) equal d2d, 0 differ; no PR candidate; bot B1-B5`.
 
 Glossary: no new term needed ("aura pulse", "orbit crossing" are used in plain senses).
+
+See also: [pal-smite-zeal-sacrifice-trace.md](pal-smite-zeal-sacrifice-trace.md) for the Paladin melee combat skills (Smite, Zeal, Sacrifice; Issue #3).

@@ -1,0 +1,3 @@
+BACKLOG: PRBUILDSMITE built (private fork branch local/smite-block-v1-final 887b502a on upstream main 82ea6db4; no PR): a block no longer stops Smite, two lines plus tests; 30,035 monster cases against game.exe: base differs in 6,435, head 0; 7 suites green; animation stated as a limit; det hashes not run: docs/research/pr-smite-block-draft.md
+INDEX: docs/research/pr-smite-block-draft.md - draft PR text, a block no longer stops Smite (private, on hold)
+CHANGELOG: Added docs/research/pr-smite-block-draft.md and tools/emu/sbp_*: the Smite-block upstream candidate built on the private fork with a counted differential against game.exe.

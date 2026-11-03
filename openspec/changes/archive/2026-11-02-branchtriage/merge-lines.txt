@@ -1,0 +1,3 @@
+BACKLOG: BRANCHTRIAGE (card branchtriage, 2026-11-02): 15 unmerged local agent branches sorted into MERGE / ALREADY ON MAIN / SUPERSEDED / KEEP / DROP with the exact commands (docs/research/branch-triage-20261102.md)
+INDEX: docs/research/branch-triage-20261102.md | Triage of the local agent branches not on main: verdict, reason and merge or delete command per branch
+CHANGELOG: Docs: branch triage of the 15 unmerged local agent branches (docs/research/branch-triage-20261102.md).

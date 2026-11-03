@@ -95,8 +95,8 @@ func TestShouldHire(t *testing.T) {
 	}{
 		{"rogue before skip", rogue, none, ctx(), false, ReasonFreePending},
 		{"rogue fallback", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true }), true, ReasonOK},
-		{"rogue fallback poor", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true; c.Gold = 1400 }), false, ReasonGold},
-		{"rogue exact 3x", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true; c.Gold = 1500 }), true, ReasonOK},
+		{"rogue fallback poor", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true; c.Gold = 849 }), false, ReasonGold},
+		{"rogue exact price plus reserve", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true; c.Gold = 850 }), true, ReasonOK},
 		{"rogue fire arrow", HireOffer{Class: ClassRogue, Aura: "Fire Arrow", Price: 100}, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true }), false, ReasonAura},
 		{"rogue free only knob", rogue, none, mut(func(c *Ctx) { c.BloodRavenSkipped = true; c.Knobs.FreeRogueOnly = true }), false, ReasonFreeOnly},
 		{"owned", desert, MercState{Known: true, Owned: true}, ctx(), false, ReasonOwned},
@@ -106,7 +106,7 @@ func TestShouldHire(t *testing.T) {
 		{"desert might nightmare caster ok? no", HireOffer{Class: ClassDesert, Aura: "Might", Price: 100}, none, mut(func(c *Ctx) { c.Difficulty = Nightmare }), false, ReasonAura},
 		{"blessed aim sorc", HireOffer{Class: ClassDesert, Aura: "Blessed Aim", Price: 100}, none, ctx(), false, ReasonAura},
 		{"blessed aim bow amazon", HireOffer{Class: ClassDesert, Aura: "Blessed Aim", Price: 100}, none, mut(func(c *Ctx) { c.PlayerClass = "Amazon"; c.BowOrJavelin = true }), true, ReasonOK},
-		{"kit eats gold", desert, none, mut(func(c *Ctx) { c.Gold = 2000; c.Kit = 300 }), false, ReasonGold},
+		{"kit eats gold", desert, none, mut(func(c *Ctx) { c.Gold = 1049; c.Kit = 300 }), false, ReasonGold},
 		{"zero price", HireOffer{Class: ClassDesert, Aura: "Defiance"}, none, ctx(), false, ReasonGold},
 		{"iron wolf", HireOffer{Class: ClassIronWolf, Aura: "Defiance", Price: 10}, none, ctx(), false, ReasonClass},
 	} {
@@ -153,8 +153,8 @@ func TestShouldReplace(t *testing.T) {
 		{"knob off", rogue, offer, mut(func(c *Ctx) { c.Knobs.ReplaceAtAct2 = false }), false, ReasonKnobOff, false},
 		{"act 1", rogue, offer, mut(func(c *Ctx) { c.Act = 1 }), false, ReasonNotAct2, false},
 		{"second visit", rogue, offer, mut(func(c *Ctx) { c.FirstLutVisit = false }), false, ReasonNotFirstVisit, false},
-		{"gold 3x after kit", rogue, offer, mut(func(c *Ctx) { c.Gold = 2099 }), false, ReasonGold, false},
-		{"gold exactly 3x after kit", rogue, offer, mut(func(c *Ctx) { c.Gold = 2100 }), true, ReasonOK, false},
+		{"gold below price plus reserve", rogue, offer, mut(func(c *Ctx) { c.Gold = 1049 }), false, ReasonGold, false},
+		{"gold exactly price plus reserve", rogue, offer, mut(func(c *Ctx) { c.Gold = 1050 }), true, ReasonOK, false},
 		{"rogue offer", rogue, HireOffer{Class: ClassRogue, Aura: "Cold Arrow", Price: 1}, ctx(), false, ReasonClass, false},
 		{"bad aura", rogue, HireOffer{Class: ClassDesert, Aura: "Might", Price: 1}, ctx(), false, ReasonAura, false},
 		{"nightmare might upgrades defiance", desertDef, HireOffer{Class: ClassDesert, Aura: "Might", Price: 900},
@@ -179,22 +179,22 @@ func TestShouldRevive(t *testing.T) {
 		why   string
 		cost  int
 	}{
-		{"ok", dead, mut(func(c *Ctx) { c.Gold = 1500 }), 0, true, ReasonOK, 750},
-		{"gold short", dead, mut(func(c *Ctx) { c.Gold = 1499 }), 0, false, ReasonGold, 750},
-		{"quote overrides formula", dead, mut(func(c *Ctx) { c.Gold = 1500 }), 800, false, ReasonGold, 800},
+		{"ok", dead, mut(func(c *Ctx) { c.Gold = 1200 }), 0, true, ReasonOK, 750},
+		{"gold short", dead, mut(func(c *Ctx) { c.Gold = 1199 }), 0, false, ReasonGold, 750},
+		{"quote overrides formula", dead, mut(func(c *Ctx) { c.Gold = 1249 }), 800, false, ReasonGold, 800},
 		{"cap", dead, mut(func(c *Ctx) { c.RevivesLastHour = 2 }), 0, false, ReasonCap, 750},
 		{"one more allowed", dead, mut(func(c *Ctx) { c.RevivesLastHour = 1 }), 0, true, ReasonOK, 750},
 		{"no tp", dead, mut(func(c *Ctx) { c.HaveTP = false }), 0, false, ReasonKit, 750},
 		{"no potions", dead, mut(func(c *Ctx) { c.HavePotions = false }), 0, false, ReasonKit, 750},
-		{"3 deaths still normal", dead, mut(func(c *Ctx) { c.DeathsLastHour = 3; c.Gold = 1500 }), 0, true, ReasonOK, 750},
-		{"4 deaths need 5x", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 3749 }), 0, false, ReasonStopped, 750},
-		{"4 deaths 5x ok", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 3750 }), 0, true, ReasonOK, 750},
+		{"3 deaths still normal", dead, mut(func(c *Ctx) { c.DeathsLastHour = 3; c.Gold = 1200 }), 0, true, ReasonOK, 750},
+		{"4 deaths need 5x", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 4199 }), 0, false, ReasonStopped, 750},
+		{"4 deaths 5x ok", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 4200 }), 0, true, ReasonOK, 750},
 		{"alive", MercState{Known: true, Owned: true, Alive: true, Level: 10}, ctx(), 0, false, ReasonAlive, 0},
 		{"not owned", MercState{Known: true}, ctx(), 0, false, ReasonNotOwned, 0},
 		{"unknown", MercState{}, ctx(), 0, false, ReasonUnknown, 0},
 		{"level unknown", MercState{Known: true, Owned: true}, ctx(), 0, false, ReasonNoLevel, 0},
 		{"level unknown but quoted", MercState{Known: true, Owned: true}, ctx(), 600, true, ReasonOK, 600},
-		{"huge price", MercState{Known: true, Owned: true, Level: 200}, mut(func(c *Ctx) { c.Gold = 99999 }), 0, false, ReasonGold, 50000},
+		{"huge price", MercState{Known: true, Owned: true, Level: 200}, mut(func(c *Ctx) { c.Gold = 50449 }), 0, false, ReasonGold, 50000},
 	} {
 		d, cost := ShouldRevive(c.s, c.c, c.price)
 		if d.Do != c.do || d.Reason != c.why || cost != c.cost {

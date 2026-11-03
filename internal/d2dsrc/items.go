@@ -431,7 +431,9 @@ func (b *builder) ground(g d2dctl.GroundItem) {
 	u.Item = &d2.Item{Where: d2.ContGround}
 	rp.unknown("ground.quality", "only the label text (name prefixes) shows quality; Quality = 0")
 	rp.unknown("ground.ilvl", "not in the ground line")
-	b.res.Extras.Items[u.ID] = ItemExtra{Code: g.Code, Label: g.Label, Sockets: -1}
+	// Ground ids come from the loot table's own counter, carried ids from the character's: both start at 1, so one
+	// map let a ground item overwrite the tome's quantity (docs/tomestat.md).
+	b.res.Extras.Ground[u.ID] = ItemExtra{Code: g.Code, Label: g.Label, Sockets: -1}
 	if g.IsGold() {
 		b.res.Extras.Gold = append(b.res.Extras.Gold, u.ID)
 	}

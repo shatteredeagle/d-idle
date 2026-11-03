@@ -21,7 +21,7 @@ func DefaultCampaignTuning() CampaignTuning {
 	return CampaignTuning{ImbueMinLevel: 20, ImbueNeedsMerc: 1, DenMinLevelCaster: 5, DenMinLevelMelee: 3}
 }
 func DefaultRouteTuning() RouteTuning {
-	return RouteTuning{MonasteryMinLevel: 16, MonasteryMinLevelMerc: 14, TowerMinLevel: 16, TowerMinLevelMerc: 14, TowerNeedsMerc: 0}
+	return RouteTuning{MonasteryMinLevel: 14, MonasteryMinLevelMerc: 14, TowerMinLevel: 16, TowerMinLevelMerc: 14, TowerNeedsMerc: 0}
 }
 
 func routeKnobs() []Knob {
@@ -34,8 +34,8 @@ func routeKnobs() []Knob {
 			Desc: "Sorceress, Necromancer, Druid and a bow-less Amazon enter the Den of Evil (always the first quest) only from this clvl; below it they level in Blood Moor (log: den: waiting for clvl N in Blood Moor). SME: a ~40 life caster dies to Fallen packs on floor 1; 5 is the safe end of clvl 4-5."},
 		{Key: "campaign.denMinLevelMelee", Label: "Den of Evil level floor (melee)", Unit: "levels", Default: 3, Min: 1, Max: 12, HigherIsBetter: true, NoHandicap: true,
 			Desc: "Same for Barbarian, Paladin, Assassin and a bowed Amazon."},
-		{Key: "route.monasteryMinLevel", Label: "Monastery road level floor (no merc)", Unit: "levels", Default: 16, Min: 10, Max: 40, HigherIsBetter: true, NoHandicap: true,
-			Desc: "The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003): 16, was 20; if road deaths fail the death rule at 16 in the act1run soak raise it to 18 and re-grill, if none try 14. 20 restores the old number."},
+		{Key: "route.monasteryMinLevel", Label: "Monastery road level floor (no merc)", Unit: "levels", Default: 14, Min: 10, Max: 40, HigherIsBetter: true, NoHandicap: true,
+			Desc: "The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003; merc decision 2026-11-02): 14 with a full kit, was 16 and 20, so a dead or missing merc does not block the road (the living-merc floors rate a 140-HP Rogue too high). If road deaths fail the death rule at 14 in the act1run soak raise it to 16 or 18 and re-grill. 20 restores the old number."},
 		{Key: "route.monasteryMinLevelMerc", Label: "Monastery road level floor (living merc)", Unit: "levels", Default: 14, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
 			Desc: "The same floor with a living merc (unknown counts as none). Interim (ADR 0011): 14. 0 restores the old rule: a living merc opens the road at any level."},
 		{Key: "route.towerMinLevel", Label: "Forgotten Tower level floor (no merc)", Unit: "levels", Default: 16, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,

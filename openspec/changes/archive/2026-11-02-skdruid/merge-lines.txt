@@ -1,0 +1,3 @@
+BACKLOG: skdruid first pass done (calc aspect of skills.dru 0 differ of 27,800); effects of the Druid skills (forms, Twister, Tornado, Hurricane, Armageddon, summon spawn) still untested; docs/research/skdruid-trace.md
+INDEX: docs/research/skdruid-trace.md | Druid skills 221..250 calc cells by game.exe vs d2d, summon caps (skdruid)
+CHANGELOG: skdruid: docs/research/skdruid-trace.md, Druid calc differential 0 of 27,800 cases (tools/emu/skdruid_*)

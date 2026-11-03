@@ -1,0 +1,3 @@
+BACKLOG: - MERCFIX: Gate 2 merc=none fixed offline (agent/mercfix): route guards read the dump merc with the policy off, free-rogue claim read back; live probe on a d2d slot still open; a dead Rogue needs merc.enabled=1 revive or a paid hire (user choice)
+INDEX: - openspec/changes/mercfix: guard merc from the dump and claim read-back after the Gate 2 merc=none defect
+CHANGELOG: - bot: route guards read the merc from the d2d dump even with the merc policy off; the free Rogue claim is verified (merc: claim verified / claim not seen).

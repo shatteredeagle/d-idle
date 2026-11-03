@@ -41,7 +41,9 @@ func TestScenario_KitlessClvl7PackDeath(t *testing.T) {
 		g := newRig(t)
 		g.e.Tune.Resource.RecoveryKitGate = gate
 		g.mover.exploreFn = blockExplore
-		g.w.set(func(w *world) { w.level = 7; w.gold0 = 35; w.area = 1 })
+		// 29 gold: the log had 35, but since BELTFIX4 a recovering character in town with gold for one potion (30) shops
+		// first (TestRecoveryTownArrivalRestocksHealing); this scenario is the one with nothing to buy.
+		g.w.set(func(w *world) { w.level = 7; w.gold0 = 29; w.area = 1 })
 		g.w.belt() // 0 healing potions; the fake pack holds no town portal scroll
 		g.town.choresErr = errBoom
 		g.r.loop.cleared = map[int]bool{2: true, 3: true} // Blood Moor and Cold Plains spent in this game

@@ -1,0 +1,3 @@
+BACKLOG: - XPHSHORT: Gate 1 XP/h drop (10042 to 7060) is area choice at clvl 13+, not the belt/shop fixes (town time 8.8 percent, 141 XP/h); remedies and 5-seed Gate 1 plan (docs/research/xphshort.md)
+INDEX: - docs/research/xphshort.md: Gate 1 XP/h budget and split, remedies, multi-seed Gate 1 plan; tools/baseline/xph_budget.py
+CHANGELOG: - docs: XP/h time-budget tool (tools/baseline/xph_budget.py) and the Gate 1 XP/h analysis (docs/research/xphshort.md).

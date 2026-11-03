@@ -1,0 +1,3 @@
+BACKLOG: housekeep: soak-minutes-virtual archived (soak-gates delta applied); branch and worktree inventory awaits the lead's cleanup go; docs/research/housekeep-20261103.md
+INDEX: docs/research/housekeep-20261103.md: read-only inventory of agent worktrees, branches and ops repo leftovers (2026-11-03)
+CHANGELOG: housekeep: archived the stale soak-minutes-virtual card and applied its virtual-minute spec delta

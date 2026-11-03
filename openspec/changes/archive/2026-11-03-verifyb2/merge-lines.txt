@@ -1,0 +1,3 @@
+BACKLOG: verifyb2 done: batch 2 minmana ready with text changes; Teleport needs `ring < 50` in warp_spot (game.exe stops at ring 49) before the PR (docs/research/verify-batch2.md)
+INDEX: docs/research/verify-batch2.md: independent check of upstream batch 2 (minmana floor, Teleport D1 + D2)
+CHANGELOG: verifyb2: independent verifier of upstream batch 2; one deviation found (Teleport ring 50)

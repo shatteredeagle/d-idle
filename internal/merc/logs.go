@@ -18,6 +18,8 @@ const (
 	LineEquip         = "equip"
 	LineStrip         = "strip"
 	LineReqcheck      = "reqcheck"
+	LineHireWindow    = "hire window"
+	LineGoldFarm      = "gold farm"
 )
 
 func tok(s string) string {
@@ -37,9 +39,25 @@ func LogSeen(s MercState) string {
 	return fmt.Sprintf("%sseen class=%d alive=%t life=%d level=%d aura=%s", Prefix, s.Class, s.Alive, s.LifePct, s.Level, tok(s.Aura))
 }
 
-// LogRevived: `merc: revived price=600 level=9`.
-func LogRevived(price, level int) string {
-	return fmt.Sprintf("%srevived price=%d level=%d", Prefix, price, level)
+// LogRevived: `merc: revived price=600 level=9 estimate=675`. price is the gold actually taken (the read price);
+// estimate is the formula pre-check (S, never observed on 1.14d), logged so the next live run compares the two.
+func LogRevived(price, level, estimate int) string {
+	return fmt.Sprintf("%srevived price=%d level=%d estimate=%d", Prefix, price, level, estimate)
+}
+
+// LogHireWindow is the one-shot read-only line per hire window row: `merc: hire window row=0 name=Aliza class=338
+// level=9 aura=Defiance price=360 gold=1500 clvl=12`. It answers what the SME has no formula for.
+func LogHireWindow(o HireOffer, gold, clvl int) string {
+	return fmt.Sprintf("%shire window row=%d name=%s class=%d level=%d aura=%s price=%d gold=%d clvl=%d", Prefix, o.Row, tok(o.Name), o.Class, o.Level, tok(o.Aura), o.Price, gold, clvl)
+}
+
+// LogGoldFarm: `merc: gold farm on need=1200 gold=300 clvl=11` (or off), once per change.
+func LogGoldFarm(on bool, need, gold, clvl int) string {
+	w := "off"
+	if on {
+		w = "on"
+	}
+	return fmt.Sprintf("%sgold farm %s need=%d gold=%d clvl=%d", Prefix, w, need, gold, clvl)
 }
 
 // LogReviveSkipped: `merc: revive skipped (gold) price=600 gold=900`.
@@ -73,7 +91,7 @@ func KindOf(line string) string {
 	if !ok {
 		return ""
 	}
-	for _, k := range []string{LineHired, LineSeen, LineRevived, LineReviveSkipped, LineEquip, LineStrip, LineReqcheck} {
+	for _, k := range []string{LineHired, LineSeen, LineRevived, LineReviveSkipped, LineEquip, LineStrip, LineReqcheck, LineHireWindow, LineGoldFarm} {
 		if strings.HasPrefix(rest, k+" ") {
 			return k
 		}

@@ -1,0 +1,3 @@
+BACKLOG: SKASSASSIN first pass done (docs/research/skassassin-trace.md); next: feed ids 251-280 to the mana and calc harnesses
+INDEX: docs/research/skassassin-trace.md - Assassin skills table decomposition, first pass
+CHANGELOG: Assassin skills first-pass trace (table-derived, no ledger rows)

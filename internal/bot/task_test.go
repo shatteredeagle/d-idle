@@ -213,6 +213,117 @@ func TestUnreachableLevelingTargetIsRefused(t *testing.T) {
 	}
 }
 
+// Gate 1 0628: Dark Wood was refused for the whole run whenever the bot stood in a field or dungeon without a waypoint
+// (Den of Evil, Crypt, Cave Level 2) and from town with only Cold Plains active. The level chain is walkable and the
+// walk activates the waypoints it passes, so the pick must stand.
+func TestDarkWoodReachableByWalkingTheChain(t *testing.T) {
+	q := &fakeQuests{}
+	g := campaignRig(t, q, 12)
+	g.mover.routeFn = func(from, to int) ([]int, error) {
+		if to == 5 && from == 8 {
+			return []int{2, 3, 4, 5}, nil
+		}
+		if to == 5 && from == 1 {
+			return []int{2, 3, 4, 5}, nil
+		}
+		if to == 6 && from == 1 {
+			return []int{2, 3, 4, 5, 6}, nil
+		}
+		return nil, errors.New("no route")
+	}
+	for _, c := range []struct {
+		name string
+		area int
+		wps  map[int]bool
+		to   int
+	}{
+		{"den of evil, Cold Plains active", 8, map[int]bool{3: true}, 5},
+		{"den of evil, nothing active", 8, nil, 5},
+		{"town, nothing active", 1, nil, 5},
+		{"town, nothing active, Black Marsh", 1, nil, 6},
+	} {
+		q.v.WPs = c.wps
+		g.w.set(func(w *world) { w.area = c.area })
+		snap, _ := g.w.snapshot()
+		if why := g.r.unreachable(context.Background(), snap, c.to); why != "" {
+			t.Errorf("%s: %s", c.name, why)
+		}
+	}
+}
+
+func TestLongestWalk(t *testing.T) {
+	wp := func(act ...int) func(int) bool {
+		return func(a int) bool {
+			for _, x := range act {
+				if x == a {
+					return true
+				}
+			}
+			return false
+		}
+	}
+	all := func(int) bool { return true }
+	for _, c := range []struct {
+		name    string
+		cur     int
+		hops    []int
+		wp      func(int) bool
+		jumpOK  func(int) bool
+		minJump int
+		want    int
+	}{
+		{"town only", 1, []int{2, 3, 4, 5}, wp(1), all, 2, 4},
+		{"jump from town to Cold Plains", 1, []int{2, 3, 4, 5}, wp(1, 3), all, 2, 2},
+		{"lone waypoint, no jump", 8, []int{2, 3, 4, 5}, wp(3), all, 2, 4},
+		{"nothing active", 8, []int{2, 3, 4, 5}, wp(), all, 2, 4},
+		{"lead 2, tail 2", 18, []int{17, 3, 4, 5, 6}, wp(3, 6), all, 2, 2},
+		{"target waypoint active", 1, []int{2, 3, 4, 5}, wp(1, 5), all, 2, 0},
+		// R1: the jump is not taken, so the 7 hop route is walked in full
+		{"jump target failed lately", 1, []int{2, 3, 4, 5, 6, 7, 27}, wp(1, 6), func(a int) bool { return a != 6 }, 2, 7},
+		{"jump shorter than wpMinDistance", 1, []int{2, 3, 4, 5, 6, 7}, wp(1, 4), all, 4, 6},
+		{"jump long enough for wpMinDistance", 1, []int{2, 3, 4, 5, 6, 7}, wp(1, 5), all, 4, 2},
+		{"waypoints off", 1, []int{2, 3, 4, 5, 6, 7}, wp(1, 6), func(int) bool { return false }, 2, 6},
+	} {
+		if got := longestWalk(c.cur, c.hops, c.wp, c.jumpOK, c.minJump); got != c.want {
+			t.Errorf("%s: longestWalk(%d, %v) = %d, want %d", c.name, c.cur, c.hops, got, c.want)
+		}
+	}
+}
+
+// R1 through the runner: the same 7 hop pick is accepted with a working waypoint and refused once the waypoint trip
+// failed, with UseWaypoints off or with a wpMinDistance the jump does not reach. Two builds (class plans) share the
+// route table, so the rule is checked for the default and for a second character level too.
+func TestUnreachableHonoursWaypointFailure(t *testing.T) {
+	for _, lvl := range []int{12, 20} {
+		q := &fakeQuests{}
+		g := campaignRig(t, q, lvl)
+		g.r.e.Tune.Route.MonasteryMinLevel = 0
+		g.w.set(func(w *world) { w.area = 1 })
+		snap, _ := g.w.snapshot()
+		g.mover.routeFn = func(from, to int) ([]int, error) { return []int{2, 3, 4, 5, 6, 7, 27}, nil }
+		q.v.WPs = map[int]bool{1: true, 6: true}
+		ctx := context.Background()
+		if why := g.r.unreachable(ctx, snap, 27); why != "" {
+			t.Fatalf("clvl %d: working waypoint: %s", lvl, why)
+		}
+		g.r.loop.wp.init()
+		g.r.loop.wp.failed[wpKey{diffOf(snap), 6}] = g.r.e.Clock.Now().Add(wpFailedFor)
+		if why := g.r.unreachable(ctx, snap, 27); why == "" {
+			t.Errorf("clvl %d: failed waypoint must not lift the walk limit", lvl)
+		}
+		g.r.loop.wp.failed = map[wpKey]time.Time{}
+		g.r.e.Tune.Nav.UseWaypoints = false
+		if why := g.r.unreachable(ctx, snap, 27); why == "" {
+			t.Errorf("clvl %d: UseWaypoints off must not lift the walk limit", lvl)
+		}
+		g.r.e.Tune.Nav.UseWaypoints = true
+		g.r.e.Tune.Nav.WpMinDistance = 6
+		if why := g.r.unreachable(ctx, snap, 27); why == "" {
+			t.Errorf("clvl %d: a 5 hop jump with wpMinDistance 6 must not lift the limit", lvl)
+		}
+	}
+}
+
 // Every area worth farming at clvl 12 is cleared: the leveling slice starts a fresh game instead of farming Den of
 // Evil or Blood Moor for next to no experience (LIVE i4 soak, 2026-10-29).
 func TestLevelToStartsFreshGameWhenWorthyAreasAreCleared(t *testing.T) {
