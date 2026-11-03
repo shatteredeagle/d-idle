@@ -120,3 +120,10 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
+internal/bot/areaskip.go  gate1fix  gate1fix
+internal/bot/fakes_test.go  gate1fix  gate1fix
+internal/bot/runner.go  gate1fix  gate1fix
+internal/bot/task.go  gate1fix  gate1fix
+internal/bot/task_test.go  gate1fix  gate1fix
+internal/bot/waypoints_test.go  gate1fix  gate1fix
+openspec/changes/gate1fix/**  gate1fix  gate1fix
