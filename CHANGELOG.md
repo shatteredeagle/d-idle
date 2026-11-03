@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Independent verification of the weapon-bases first pass (docs/research/verifyitemweapons.md) and tools/emu/viw_count.py; no ledger change.
 - VERIFYCOVSTATES: docs/research/verifycovstates-trace.md and tools/emu/vcs_*: own differential of game.exe FUN_0057aae0 / FUN_0057ac50 against the real d2d Fight::land (38,596 stun and 60,000 poison cases), state-bit probe, ledger rows states 21 and 2; no code change
 - covarmor: first-pass trace of armor.txt and itemtypes.txt (docs/research/covarmor.md)
 - verifycovmissiles: independent check of the missiles coverage first pass (docs/research/verifycovmissiles-trace.md, tools/emu/vcm_*): verified with limits, new pierce deviation found
