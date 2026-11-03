@@ -6,10 +6,10 @@ Tags: D = derived from the patched MPQ tables (`tools/emu/run-on-worker.sh mpq-t
 
 ## Q1. What does armor.txt hold? (D)
 - 202 data rows plus one separator row with blank cells (the tool prints 203 lines). 202 matches `docs/coverage/denominators.tsv` items.armor.
-- Defence: `minac`/`maxac`. 0 rows have minac > maxac. Examples: Buckler 4..6, Quilted Armor 8..11, Tower Shield 22..25, Gothic Plate 128..135, Sacred Targe 126..158.
-- Required strength `reqstr`: 0 to 232. Examples: Buckler 12, Tower Shield 75, Gothic Plate 70.
-- `block` (base block chance, shields only): 149 rows 0; non-zero values 3 to 30 on the shield types. Tower Shield 24, Sacred Targe 30.
-- `speed` (armor speed penalty): 0 on 166 rows, 5 on 24 rows, 10 on 12 rows (Gothic Plate 5, Tower Shield 10).
+- Defence: `minac`/`maxac`. 0 rows have minac > maxac. Examples: Buckler 4..6, Quilted Armor 8..11, the tow-code shield 22..25, Gothic Plate 128..135, Sacred Targe 126..158.
+- Required strength `reqstr`: 0 to 232. Examples: Buckler 12, the tow-code shield 75, Gothic Plate 70.
+- `block` (base block chance, shields only): 149 rows 0; non-zero values 3 to 30 on the shield types. the tow-code shield 24, Sacred Targe 30.
+- `speed` (armor speed penalty): 0 on 166 rows, 5 on 24 rows, 10 on 12 rows (Gothic Plate 5, the tow-code shield 10).
 - `durability`: one row has 0; `nodurability` is set on 0 rows.
 - `gemsockets` (max sockets): 0 on 45 rows, 1 on 2, 2 on 52, 3 on 64, 4 on 39.
 - Item class chain: `normcode`/`ubercode`/`ultracode` give the normal, exceptional and elite version. 69 rows are their own normal base, 68 their own exceptional and 68 their own elite (Buckler buc/xuc/uuc). Sacred Targe (`pab`) is its own elite and points back to `pa1` normal.
