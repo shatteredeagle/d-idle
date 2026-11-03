@@ -16,6 +16,12 @@
 | SKSHIELD | does a shield's damage reach the player's stats | decomp | S | [issue](https://github.com/shatteredeagle/d-idle/issues/15) | [docs/research/skshield-trace.md](../research/skshield-trace.md) | 2026-11-02 | maintainer agents |
 | SKCURSEVAL | the curse value calculations on game.exe against d2d | decomp | S | [issue](https://github.com/shatteredeagle/d-idle/issues/16) | [docs/research/skcurseval-trace.md](../research/skcurseval-trace.md) | 2026-11-02 | maintainer agents |
 | SKDEFENDERS | hirelings and players as defenders against resistances | decomp | M | [issue](https://github.com/shatteredeagle/d-idle/issues/17) | [docs/research/skdefenders-trace.md](../research/skdefenders-trace.md) | 2026-11-02 | maintainer agents |
+| PALSKILL | Smite, Zeal and Sacrifice dispatch in game.exe | decomp | M | [issue](https://github.com/shatteredeagle/d-idle/issues/3) | [docs/research/pal-skill-trace.md](../research/pal-skill-trace.md) | 2026-11-03 | maintainer agents |
+| PALAURA | how an aura applies in game.exe | decomp | M | [issue](https://github.com/shatteredeagle/d-idle/issues/1) | [docs/research/pal-aura-trace.md](../research/pal-aura-trace.md) | 2026-11-03 | maintainer agents |
+| PALDUR | durability loss per hit and per block | decomp | S | [issue](https://github.com/shatteredeagle/d-idle/issues/2) | [docs/research/durability-trace.md](../research/durability-trace.md) | 2026-11-03 | maintainer agents |
+| VERIFY-TELEPORT-ROOM | independent re-check of the Teleport room rule | verify | S | [issue](https://github.com/shatteredeagle/d-idle/issues/10) | [docs/research/verify-teleport-room.md](../research/verify-teleport-room.md) | 2026-11-03 | maintainer agents |
+| VERIFY-AIDEL | independent re-check of the monster think period | verify | S | [issue](https://github.com/shatteredeagle/d-idle/issues/11) | [docs/research/verify-aidel.md](../research/verify-aidel.md) | 2026-11-03 | maintainer agents |
+| SKSTATEEV | the state events fired on a hit (FUN_005d3ac0) | decomp | L | [issue](https://github.com/shatteredeagle/d-idle/issues/21) | [docs/research/sk-state-events-trace.md](../research/sk-state-events-trace.md) | 2026-11-03 | maintainer agents |
 <!-- archive-table:end -->
 
 ## SKMELEE: the player's own blow (staff or weapon swing)
@@ -160,3 +166,81 @@
 - done: 2026-11-02
 - by: maintainer agents
 - result: docs/research/skdefenders-trace.md
+
+## PALSKILL: Smite, Zeal and Sacrifice dispatch in game.exe
+- size: M
+- status: done
+- kind: decomp
+- source: backlog:SKMELEE+
+- question: How does game.exe dispatch Smite, Zeal and Sacrifice (hit count, AR and damage bonus, mana and life cost, knockback and stun, what a held button repeats), and which of these does d2d's `skill_built` branch implement versus falling back to a plain attack?
+- start: docs/research/paladin-act1-recon.md section 6 rows 1 and 5; the skill bind trace docs/research/skill-bind-trace.md for the packet side (FUN_0054be70, FUN_00647960); upstream d2decomped fight code (public) for what d2d does.
+- deliverable: docs/research/pal-skill-trace.md; a static result (which skills fall back in d2d, read from upstream source, tagged S) is a valid first PR on its own.
+- needs: your own game.exe 1.14d, upstream d2decomped checkout, Python 3 with unicorn if you run code.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/pal-skill-trace.md
+
+## PALAURA: how an aura applies in game.exe
+- size: M
+- status: done
+- kind: decomp
+- source: backlog:PALAURA
+- question: Prior work (do not redo): docs/research/pal-skill-trace.md section 3 already has the pulse period (50 frames), the ranges (16 + 2 per level for Might, Prayer, Defiance and Concentration; 6 + 1 per level for Holy Fire) and every calc slot (21,760 cases, 0 differ against d2d). Open: (1) the aura target filter (aurafilter 0x12003 for the friendly auras, 0xa783 for Holy Fire) and the shape of the area search FUN_0056b7e0 (who is passed: self, merc, pets, party, enemies; the exact radius test); (2) the damage an aura does to enemies per pulse (Holy Fire, Shock, Freeze: roll, resist, which units), read and then run; (3) Prayer's per-pulse mana and state 85 (`nomanaregen`): does the regeneration code really stop while it is set. Also useful: the D5 Might mana floor and aura reach to merc and party on d2d (the trace's D1 to D7).
+- start: docs/research/pal-skill-trace.md sections 3, 6 (D5, D6) and 8 (drills A2, A3); FUN_005cf010 (friendly aura do), FUN_005cf3a0 / FUN_005d0920 (Holy Fire, Shock, Freeze do), FUN_0056b7e0 (area apply), FUN_005cedc0 (callback), FUN_00644b10 and FUN_0056c110 (mana); the emulator style of tools/emu/pal_aura.py; docs/research/paladin-act1-recon.md section 6 rows 3 and 11; docs/research/d2d-fidelity-riskmap.md.
+- deliverable: docs/research/pal-aura-trace.md covering only the open parts above, each claim tagged V (run in the emulator), V read, S or U; for each part end with the exact probe the maintainer should run on d2d (the live half is maintainer-only) and the number you expect. Done when: the filter bits are decoded and the area search shape is stated with a V run on a fake player, merc and monster set; the enemy hit of one aura is run against the trace's element tables; Prayer's mana and state 85 effect are read to the regeneration code; the trace's D5 and D6 rows can be updated from it.
+- needs: your own game.exe 1.14d, upstream d2decomped checkout, Python 3 with unicorn.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/pal-aura-trace.md
+
+## PALDUR: durability loss per hit and per block
+- size: S
+- status: done
+- kind: decomp
+- source: backlog:PALDUR
+- question: In game.exe 1.14d, what is the chance and the slot choice for durability loss when the player hits and when the player is hit or blocks, and does d2d implement the same rule (it has `debug wear` verbs but the loss rule is unknown)?
+- start: docs/research/price-trace.md (the repair gate and price are done: FUN_0062e660, FUN_00629930, use them as the "durability" anchor); docs/research/paladin-act1-recon.md section 6 row 7.
+- deliverable: docs/research/durability-trace.md, small; rule with tags, d2d comparison from upstream source (S) or a differential (V) if you build one.
+- needs: your own game.exe 1.14d, upstream d2decomped checkout, Python 3 with unicorn.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/durability-trace.md
+
+## VERIFY-TELEPORT-ROOM: independent re-check of the Teleport room rule
+- size: S
+- status: done
+- kind: verify
+- source: backlog:SKTELE
+- question: Our claim: game.exe refuses a Teleport hop whose target lies outside the caster's room and the rooms in that room's near list (FUN_00554ea0 with FUN_00463740 over FUN_00619790), so the range is a room rule and not a distance; a per-level Teleport value of 0 refuses and 2 adds a line test (FUN_006229f0). Re-derive the destination rule yourself on a grid of caster positions and targets, class-generic, and compare with the claim.
+- start: docs/research/sk-teleport-trace.md (read AFTER your own look at FUN_005ca360 and FUN_00554ea0); tools/emu/sk_tele_spot.py only to compare numbers at the end.
+- deliverable: docs/research/verify-teleport-room.md: per claim HOLDS / HOLDS WITH LIMITS / FAILS (accepted and refused counts, grid, seed), the reproduction command, differences from the author's numbers.
+- needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/verify-teleport-room.md
+
+## VERIFY-AIDEL: independent re-check of the monster think period
+- size: S
+- status: done
+- kind: verify
+- source: backlog:FREEZERESUME
+- question: Done, both passes (docs/research/verify-aidel.md and docs/research/verifyfreezeend2-trace.md: a think due during a get-hit is a deviation, d2d holds it). Earlier: the aidel column per difficulty and the think scheduling FUN_005a73e0 (352,800 cases, 0 differ) and the 55,268 equal cases claim (holds with limits); the resume at freeze end + aidel was also re-checked in docs/research/pr-freezeresume-verifier.md. Nothing required is left; a third independent harness is optional.
+- start: docs/research/mon-wake-trace.md (the aidel rows, read AFTER your own look at the two functions); docs/research/pr-freezeresume-proof.md for the freeze-end claim.
+- deliverable: docs/research/verify-aidel.md: HOLDS / HOLDS WITH LIMITS / FAILS per claim, your case count and seed, the command, differences from the author's numbers.
+- needs: your own game.exe 1.14d install (the monster table read only, never shared), upstream d2decomped checkout, Python 3 with unicorn.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/verify-aidel.md
+
+## SKSTATEEV: the state events fired on a hit (FUN_005d3ac0)
+- size: L
+- status: done
+- kind: decomp
+- source: backlog:SKARMOR
+- question: Done: docs/research/sk-state-events-trace.md (static) and stateevrun-trace.md (native runs), independently checked in docs/research/verifystateev2.md. FUN_005d3ac0 is an attacker-side hit bonus, the dispatcher is FUN_005c0c30; event 3 fires on a miss too, event 11 fires before the resistance pass. Optional follow-up: dump the Skills +0x44 rows and the order of absorb nodes.
+- start: docs/research/sk-armor-trace.md section 11 (Not traced) and Q3, Q5; docs/research/sk-melee-trace.md Q1 (the pre-events row); docs/research/sk-melee2-trace.md (Not covered).
+- deliverable: docs/research/sk-state-events-trace.md in the trace style, plus an oracle script under tools/emu/ if you ran game code.
+- needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
+- done: 2026-11-03
+- by: maintainer agents
+- result: docs/research/sk-state-events-trace.md
