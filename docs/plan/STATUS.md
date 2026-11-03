@@ -54,6 +54,7 @@
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
+| [gate2analysis](../../openspec/changes/gate2analysis/) | in-progress | gate2analysis | `docs/research/gate2-analysis-20261102.md`<br>`openspec/changes/gate2analysis/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -103,6 +104,7 @@
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
+- change gate2analysis: changecheck -cli 0 warnings; leakcheck -mode fail 0 hits
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
@@ -125,8 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- d454194e 11-03 15:52 `Merge agent/verifyskdruid: branchclean LAND: verifyskdruid` (verifyskdruid)
-- c790f34a 11-03 15:51 `merge origin/main into verifyskdruid` (verifyskdruid)
+- 5b384cc0 11-03 15:50 `merge origin/main into gate2analysis` (gate2analysis)
 - f329c33e 11-03 15:43 `Merge agent/verifyskassassin: branchclean LAND: verifyskassassin` (verifyskassassin)
 - 3154c992 11-03 15:43 `merge origin/main into verifyskassassin` (verifyskassassin)
 - 28360dab 11-03 15:18 `Merge agent/branchclean: branch cleanup plan` (branchclean)
@@ -135,4 +136,5 @@
 - 7f3a8b71 11-03 15:14 `merge origin/main into gate3gaps` (gate3gaps)
 - 22e8f09d 11-03 15:04 `Merge agent/ccmergecommit: changecheck skips GitHub synthetic Merge commits` (ccmergecommit)
 - 6357a5db 11-03 15:04 `merge origin/main into ccmergecommit` (ccmergecommit)
+- 4102351b 11-03 15:01 `Merge agent/codereview2: independent review of AREAREACH/CODEFIX/SPECDELTA, findings R1-R9` (codereview2)
 <!-- statusgen:end -->
