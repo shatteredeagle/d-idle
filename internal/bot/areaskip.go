@@ -41,6 +41,28 @@ func (r *Runner) navSkip() time.Duration {
 	return time.Duration(max(r.e.Tune.Bot.NavSkipSec, 10)) * time.Second
 }
 
+// targetSkipDoublings caps the growth of the skip after repeated failed walks to one target (navSkip x 1, 2, 4, 8).
+const targetSkipDoublings = 3
+
+// targetFailSkip counts one more failed walk to target and returns how long to keep the planner away from it.
+func (r *Runner) targetFailSkip(target int) time.Duration {
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	if r.targetFails == nil {
+		r.targetFails = map[int]int{}
+	}
+	n := r.targetFails[target]
+	r.targetFails[target] = n + 1
+	return r.navSkip() << min(n, targetSkipDoublings)
+}
+
+// clearTargetFails forgets the failed walks to target after one that worked.
+func (r *Runner) clearTargetFails(target int) {
+	r.obMu.Lock()
+	delete(r.targetFails, target)
+	r.obMu.Unlock()
+}
+
 // areaIdleMax is the longest the bot waits in town for bans that are not a death streak.
 func (r *Runner) areaIdleMax() time.Duration {
 	return time.Duration(max(r.e.Tune.Bot.AreaIdleSec, 10)) * time.Second
@@ -109,4 +131,11 @@ func (r *Runner) idleBreak(force bool) bool {
 	r.e.Log.Warn(fmt.Sprintf("area wait: all areas banned/skipped, farming %s anyway (remaining %ds)", r.areaName(best.area), int(best.left/time.Second)),
 		"area", best.area, "reason", why, "forced", force)
 	return true
+}
+
+// deadNow says the latest snapshot shows a dead character: a walk that failed for that reason is the death handler's,
+// not the target's fault.
+func (r *Runner) deadNow() bool {
+	s := r.latest()
+	return s != nil && isDead(s.Player)
 }

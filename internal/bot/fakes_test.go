@@ -198,7 +198,8 @@ type fakeMover struct {
 	exitDelay time.Duration
 	w         *world
 	wpErr     error
-	exitBlock bool // ExitTo never arrives
+	exitBlock bool  // ExitTo never arrives
+	exitErr   error // ExitTo fails with this (a nav timeout)
 	exploreFn func(ctx context.Context, done func() bool) error
 	routeFn   func(from, to int) ([]int, error) // overrides the graph search
 }
@@ -249,6 +250,9 @@ func (m *fakeMover) GoToUnit(ctx context.Context, id uint32) error {
 }
 func (m *fakeMover) ExitTo(ctx context.Context, l int) error {
 	m.w.call("exit %d", l)
+	if m.exitErr != nil {
+		return m.exitErr
+	}
 	if m.exitBlock {
 		<-ctx.Done()
 		return ctx.Err()

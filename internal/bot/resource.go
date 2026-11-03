@@ -107,6 +107,9 @@ func (r *Runner) logTrip(t *trip, gold int) {
 	n := len(r.ob.tripTimes)
 	kitN, level := 0, r.ob.level
 	_, kitReason, isKit := strings.Cut(t.plan.Reason, "kit: ")
+	if strings.Contains(t.plan.Reason, resource.RecoveryKitReason) {
+		r.ob.recKitTrips++
+	}
 	if isKit {
 		r.ob.kitTrips++
 		kitN = r.ob.kitTrips
