@@ -61,7 +61,7 @@ Possible rule delta, for the user (U that it is wanted): soak-gates "No single s
 
 ## 7. Re-run plan
 
-1. Land fixes 1 and 2 (and 3 or the rule delta), and the three judge fixes; merge to public main; a pre-run check that the CPU is free: no niced agent builds on the worker host during the run (`labrun orion -- top -bn2 -d1`, idle plus nice at least 25 percent at start and the slot reserved; the run loses its 10x speed otherwise, section 4).
+1. Land fixes 1 and 2 (and 3 or the rule delta), and the three judge fixes; merge to public main; a pre-run check that the CPU is free: no niced agent builds on the worker host during the run (`labrun the worker host -- top -bn2 -d1`, idle plus nice at least 25 percent at start and the slot reserved; the run loses its 10x speed otherwise, section 4).
 2. Re-run Gate 1 first on the new bot commit (spec: Gate 2 on a build whose Gate 1 did not pass does not count, S: soak-gates "Skipping a rung"): seed 11 again for comparability and one new seed for coverage; 2 h each.
 3. Then Gate 2 with seed 11 and a second seed, 8 h, fault at 60 min. Success shape: merc readable after the claim in the first 300 virtual minutes, BELT at most 5, NOKILL at most 10, no plateau over 90 minutes at clvl 15.
 4. Live check for fix 1 (checklist, nothing run by this note): on one slot with a character that has killed Blood Raven, run the claim step with `merc` wiring on, read `merc.name` and `merc.level` through the d2d reader before and after, and confirm the Rogue follows through a town portal. U until done.
