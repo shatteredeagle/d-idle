@@ -1,0 +1,3 @@
+BACKLOG: specdelta - Gate 1 belt rule (funded windows only, pack plus stash gold >= 30) and XP rule (single seed inside tolerance passes with a note) as soak-gates delta, d2dsoak BeltFundedMin, gate-judge xp_gate1, re-judge docs/research/specdelta-rejudge.md; ops gate-judge commit 979b83d
+INDEX: docs/research/specdelta-rejudge.md: the 2026-11-03 Gate 1 belt and XP rules and the re-judge of the recorded runs
+CHANGELOG: specdelta: Gate 1 now excuses belt windows where the character could not afford a potion (pack plus stash gold under 30) and lets a single seed inside the XP tolerance pass with a note

@@ -226,6 +226,7 @@ var vendorStep = map[string]bool{"sell": true, "ammo": true, "shop": true, "belt
 // game" and context errors abort. Every panel is closed at the end.
 func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ error) {
 	rep = ChoreReport{Bought: map[string]int{}}
+	t.withdrew = false
 	s, err := t.current()
 	if err != nil {
 		return rep, err
@@ -238,6 +239,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 	wasEmpty := t.portalEmpty
 	lowAtStart := plan.Heal && t.needHeal(s)
 	deadline := t.e.Clock.Now().Add(time.Duration(t.tune().ChoreBudgetS) * time.Second)
+	t.choreDeadline, t.budgetLogged = deadline, false
+	defer func() { t.choreDeadline = time.Time{} }()
 	defer func() {
 		if s, err := t.current(); err == nil {
 			rep.GoldAfter = s.Player.Gold
@@ -304,6 +307,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"belt", plan.Potions, t.NeedsBeltFill, func() error { _, err := t.FillBelt(ctx); return err }},
 		// before shop: the surplus is banked first, so the shop cannot spend it (BASICSFIX bankFirst)
 		{"bank", plan.Gold, func(s *d2.Snapshot) bool { return t.needBank(s, plan) }, func() error { return t.bank(ctx, a) }},
+		// BELTFIX5: the bank is not out of reach when the belt is empty and the purse is thin (Gate 1 20261103-0338)
+		{"withdraw", plan.Potions && plan.Gold, t.needWithdraw, func() error { return t.withdraw(ctx, a) }},
 		{"shop", plan.Potions || plan.Scrolls || plan.Antidotes > 0, func(s *d2.Snapshot) bool {
 			return plan.Potions && t.needPotions(s) || plan.Scrolls && t.needScrolls(s) || t.needAntidotes(plan, s)
 		}, func() error { return t.shopVisit(ctx, a, plan, &rep) }},
@@ -422,20 +427,30 @@ func (t *Town) shopVisit(ctx context.Context, a *Act, plan ChorePlan, rep *Chore
 	if err != nil {
 		return err
 	}
+	// Recovery caps the visit by the purse of the trip start; a withdrawal that already lifted the purse to the kit
+	// money lifts the cap too (codefix F5: Gate 1 0338, 6 gold in the pack and 1418 in the stash).
+	if plan.PotionFloor > 0 && t.withdrew {
+		if cs, err := t.current(); err == nil && cs.Player.Gold >= t.e.Tune.Resource.RecoveryKitGold {
+			plan.PotionFloor = 0
+		}
+	}
 	// potionsFirst (default): the kit potions, then the first scroll when allowed (tpAllowed), then the rest of the belt.
 	// potionsFirst 0: the scroll first, as before (without one, potions eat the scroll money and the character stays portal-less).
 	var first error
 	if t.tune().PotionsFirst != 0 && plan.Potions {
+		if err := t.buyFirstTP(ctx, npc, rep, true); err != nil {
+			first = err
+		}
 		if err := t.buyPotions(ctx, npc, t.kitPotions(plan), rep); err != nil {
 			first = err
 		}
 		if s, err := t.current(); err == nil && t.tpAllowed(s) {
-			if err := t.buyFirstTP(ctx, npc, rep); err != nil && first == nil {
+			if err := t.buyFirstTP(ctx, npc, rep, false); err != nil && first == nil {
 				first = err
 			}
 		}
 	} else {
-		first = t.buyFirstTP(ctx, npc, rep)
+		first = t.buyFirstTP(ctx, npc, rep, false)
 	}
 	if plan.Potions {
 		if err := t.buyPotions(ctx, npc, plan.PotionFloor, rep); err != nil && first == nil {
@@ -631,3 +646,24 @@ func (t *Town) afterEmptyVisit() {
 // NotePortalEmpty records that a portal cast found no usable source (an empty tome, no scroll). The next town visit
 // restocks against that fact instead of the pack's stat read.
 func (t *Town) NotePortalEmpty() { t.portalEmpty = true }
+
+// emptyRestock is how many portal scrolls a visit buys when the game said "empty" but the tome's stat read still shows
+// scrolls: enough to prove the source works, not a full refill. Gate 2 (docs/townshop.md) read 13 scrolls, bought 7
+// more (700 gold) and was empty again two minutes later because the field read drops stat 70, not the scrolls.
+const (
+	emptyRestock = 2
+	tomeCap      = 20 // a tome of town portal holds 20 scrolls (S: D2 rules)
+)
+
+// budgetHit reports whether the current Chores call is out of time. Called inside the buy loops, which the
+// between-steps check cannot interrupt. The line is written once per Chores call.
+func (t *Town) budgetHit(rep *ChoreReport) bool {
+	if t.choreDeadline.IsZero() || t.e.Clock.Now().Before(t.choreDeadline) {
+		return false
+	}
+	if !t.budgetLogged {
+		t.budgetLogged = true
+		t.e.Log.Warn("town: resupply budget hit", "budgetS", t.tune().ChoreBudgetS, "spent", rep.Spent, "bought", rep.Bought)
+	}
+	return true
+}

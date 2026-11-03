@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"sync"
@@ -62,6 +63,14 @@ const (
 	hireQuoteNormal = 400 // Normal Desert Mercenary quote used only to size the gold farm (V docs/town.md: 360 at merc level 9)
 )
 
+// latestMercState is combat.Fighter.MercState: the state of the running wiring, an error while there is none.
+func latestMercState() (merc.MercState, error) {
+	if m := latestMerc.Load(); m != nil {
+		return m.State()
+	}
+	return merc.MercState{}, errors.New("merc wiring not running")
+}
+
 // latestMerc is the wiring of the running bot, for the API mount. nil: merc policy not running.
 var latestMerc atomic.Pointer[mercWire]
 
@@ -80,6 +89,15 @@ func mercMount() http.Handler {
 
 // installMercSeam wraps s.Town. The wrapper decides at construction (knob read from the env) whether to do anything.
 func installMercSeam(s *d2denv.Seams) {
+	if f := s.Fighter; f != nil {
+		s.Fighter = func(e *env.Env, nv *nav.Navigator) bot.Fighter {
+			ft := f(e, nv)
+			if a, ok := ft.(fighterAdapter); ok && a.f != nil && e.Tune != nil && e.Tune.Merc.Enabled != 0 {
+				a.f.MercState = latestMercState // reads the wiring the Town seam builds, whichever seam runs first
+			}
+			return ft
+		}
+	}
 	inner := s.Town
 	s.Town = func(e *env.Env, nv *nav.Navigator) bot.Townsman {
 		var t bot.Townsman
@@ -119,6 +137,7 @@ func newMercWireD2D(e *env.Env) *mercWire {
 	w := newMercWire(e, rd, rev, cat)
 	task.MercAlive = w.AliveHook()
 	bot.MercGoldFarm = w.GoldFarm
+	bot.MercWait = w.WaitForMerc
 	latestMerc.Store(w)
 	e.Log.Info("merc policy on (merc.enabled=1)", "reviver", rev != nil)
 	return w
@@ -155,14 +174,16 @@ type mercWire struct {
 	lastLine time.Time
 	lastDec  string
 
-	lutDone   map[merc.Difficulty]bool // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
+	lutDone   map[lutKey]bool          // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
+	statePath string                   // where lutDone is kept across restarts ("" = memory only); mercStatePath at construction
+	loaded    map[string]bool          // characters whose entry was read from statePath
 	winLogged map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
 	farmOn    bool
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
 	return &mercWire{e: e, log: e.Log, knobs: merc.KnobsFrom(e.Tune.Merc), rd: rd, rev: rev, cat: cat, now: time.Now,
-		lutDone: map[merc.Difficulty]bool{}, winLogged: map[merc.Difficulty]bool{}}
+		lutDone: map[lutKey]bool{}, loaded: map[string]bool{}, statePath: mercStatePath, winLogged: map[merc.Difficulty]bool{}}
 }
 
 // State is the merc state of at most mercStateTTL ago. A death while the player is away from town is logged once.
@@ -321,6 +342,72 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	return on
 }
 
+// lutKey is one first-visit decision: per character and difficulty.
+type lutKey struct {
+	name string
+	d    merc.Difficulty
+}
+
+// mercStatePath is the file of the first-visit flags, next to the other bot state of the instance (the counters file
+// follows the same one-small-JSON-per-instance pattern, internal/bot/counters.go). Set by runD2D; "" keeps them in memory.
+var mercStatePath string
+
+// mercFile maps a character name to the difficulties whose Lut Gholein decision is final.
+type mercFile struct {
+	LutDone map[string][]int `json:"lutDone"`
+}
+
+func (w *mercWire) readFile() mercFile {
+	var f mercFile
+	if b, err := os.ReadFile(w.statePath); err == nil {
+		json.Unmarshal(b, &f)
+	}
+	if f.LutDone == nil {
+		f.LutDone = map[string][]int{}
+	}
+	return f
+}
+
+// lutIsDone reports the first-visit decision for the character, reading the file once per character per run.
+func (w *mercWire) lutIsDone(name string, d merc.Difficulty) bool {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	if w.statePath != "" && name != "" && !w.loaded[name] {
+		w.loaded[name] = true
+		for _, di := range w.readFile().LutDone[name] {
+			w.lutDone[lutKey{name, merc.Difficulty(di)}] = true
+		}
+	}
+	return w.lutDone[lutKey{name, d}]
+}
+
+// lutMark makes the decision final and writes it (a failed write is logged and costs only a repeat visit after a restart).
+func (w *mercWire) lutMark(name string, d merc.Difficulty) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	w.lutDone[lutKey{name, d}] = true
+	if w.statePath == "" || name == "" {
+		return
+	}
+	f := w.readFile()
+	for _, di := range f.LutDone[name] {
+		if merc.Difficulty(di) == d {
+			return
+		}
+	}
+	f.LutDone[name] = append(f.LutDone[name], int(d))
+	b, _ := json.Marshal(f)
+	tmp := w.statePath + ".tmp"
+	if err := os.WriteFile(tmp, b, 0o644); err == nil {
+		err = os.Rename(tmp, w.statePath)
+		if err != nil {
+			w.log.Info(merc.Prefix + "first-visit flag not saved (" + err.Error() + ")")
+		}
+	} else {
+		w.log.Info(merc.Prefix + "first-visit flag not saved (" + err.Error() + ")")
+	}
+}
+
 // HireStep is the Act 2 town step: on the first Lut Gholein visit per difficulty read the hire window (one
 // `merc: hire window` line per row), and swap to the best Desert Mercenary the policy allows: strip the Rogue's gear
 // first (the hire destroys it), pay the read price. A decline for gold or an unreadable window keeps the visit open;
@@ -334,10 +421,8 @@ func (w *mercWire) HireStep(ctx context.Context, s *d2.Snapshot) string {
 		return ""
 	}
 	c := mercCtx(w, s)
-	w.mu.Lock()
-	done := w.lutDone[c.Difficulty]
-	w.mu.Unlock()
-	if done {
+	name := s.Player.Name
+	if w.lutIsDone(name, c.Difficulty) {
 		return ""
 	}
 	c.FirstLutVisit = true
@@ -394,9 +479,7 @@ func (w *mercWire) HireStep(ctx context.Context, s *d2.Snapshot) string {
 	if best < 0 {
 		w.log.Info(merc.Prefix + "hire skipped (" + why + ")")
 		if why != merc.ReasonGold {
-			w.mu.Lock()
-			w.lutDone[c.Difficulty] = true
-			w.mu.Unlock()
+			w.lutMark(name, c.Difficulty)
 		}
 		return "merc hire skipped: " + why
 	}
@@ -420,12 +503,55 @@ func (w *mercWire) HireStep(ctx context.Context, s *d2.Snapshot) string {
 		w.log.Info(merc.Prefix + "hire failed (" + err.Error() + ")")
 		return "merc hire failed"
 	}
+	w.lutMark(name, c.Difficulty)
 	w.mu.Lock()
-	w.lutDone[c.Difficulty] = true
 	w.curAt = time.Time{}
 	w.mu.Unlock()
 	w.log.Info(merc.LogHired(o.Class, o.Aura, paid, c.Gold, c.Gold-paid))
 	return "merc hired"
+}
+
+// Waiting for the merc after a portal or waypoint (merc.ShouldWaitForMerc).
+const (
+	mercWaitMax  = 6 * time.Second // the longest wait for her to catch up
+	mercWaitStep = 500 * time.Millisecond
+	mercNearDist = 12 // subtiles: nearer than this counts as arrived (U: judgment; the unit table lists her within the view)
+)
+
+// WaitForMerc is bot.MercWait: after a town portal (why "portal") or a waypoint, hold still until a living merc is near
+// or mercWaitMax has passed, then go on. Bounded; nothing for a missing, dead or unknown merc. Writes
+// `merc: waiting (<why>)` when it waits at all and `merc: wait over ...` when it ends.
+func (w *mercWire) WaitForMerc(ctx context.Context, why string) {
+	waited := 0
+	maxMs := int(mercWaitMax / time.Millisecond)
+	logged := false
+	for {
+		st, err := w.rd.State() // fresh: the cached State could be 5 s old
+		if err != nil {
+			return
+		}
+		s, serr := w.e.Snapshot()
+		if serr != nil || s == nil || s.Player == nil || s.Player.InTown() {
+			return
+		}
+		m := d2.FindMerc(s)
+		near := m.Alive && max(abs(m.X-s.Player.X), abs(m.Y-s.Player.Y)) <= mercNearDist
+		if !merc.ShouldWaitForMerc(st, near, waited, maxMs) {
+			if logged {
+				w.log.Info(merc.Prefix + "wait over waited_ms=" + strconv.Itoa(waited) + " near=" + strconv.FormatBool(near))
+			}
+			return
+		}
+		if !logged {
+			logged = true
+			w.log.Info(merc.Prefix + "waiting for the merc why=" + why)
+		}
+		w.e.Clock.Sleep(mercWaitStep)
+		waited += int(mercWaitStep / time.Millisecond)
+		if ctx.Err() != nil {
+			return
+		}
+	}
 }
 
 // ReviveStep is the town-visit step: if the merc is known dead and the policy says so, revive. Returns what happened
@@ -462,6 +588,9 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 	w.revives = append(w.revives, w.now())
 	w.curAt = time.Time{} // re-read: the merc should be alive now
 	w.mu.Unlock()
+	if q, ok := w.rev.(interface{ Quote() int }); ok && q.Quote() > 0 {
+		est = q.Quote() // the exact quoted price replaces the level estimate in the log
+	}
 	w.log.Info(merc.LogRevived(paid, st.Level, est))
 	return "merc revived"
 }

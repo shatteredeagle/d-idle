@@ -1,0 +1,3 @@
+BACKLOG: - MERCWIRE: merc field rules wired (wait after portal/waypoint, leave with merc down in a crowd, healing potion for her via cmd belt N merc) and the Lut Gholein first-visit flag persisted per character (agent/mercwire); open: live check of the potion verb, arrival wait and leave
+INDEX: - openspec/changes/mercwire: merc field rules wired into the bot, first-visit flag persisted
+CHANGELOG: - bot: with the merc policy on, the character waits briefly for the Rogue after a portal or waypoint, leaves a crowd when she is down, gives her a healing potion below 50 percent life, and remembers the Lut Gholein hire decision across restarts.

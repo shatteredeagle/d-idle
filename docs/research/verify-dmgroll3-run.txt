@@ -1,0 +1,88 @@
+# w3_run.py N=6000 seed=314159; per tree: life / pool / mana / seed differ, mean |err| hp of life, pool, mana
+# diag roll w3_d2d_r3: differing 0, of them reduced-alone hit 0: 0
+# diag reduce w3_d2d_r3: differing 0, of them reduced-alone hit 0: 0
+# diag absorb w3_d2d_r3: differing 0, of them reduced-alone hit 0: 0
+# diag both w3_d2d_r3: differing 25442, of them reduced-alone hit 0: 25442
+#   min 1 max 2 roll 467 pct -47 flat 2 pool 989 es 0 0 mana 0 | game (0, 522, 2982892755, 1309467743, 0) | d2d (0, 989, 2982892755, 1309467743, 0)
+#   min 1 max 2 roll 368 pct -47 flat 2 pool 512 es 0 0 mana 0 | game (0, 144, 3638813040, 12389619, 0) | d2d (0, 512, 3638813040, 12389619, 0)
+#   min 1 max 2 roll 367 pct 0 flat 3 pool 1024 es 0 0 mana 0 | game (0, 657, 4080178287, 1542905053, 0) | d2d (0, 1024, 4080178287, 1542905053, 0)
+# diag negpct w3_d2d_r3: differing 12692, of them reduced-alone hit 0: 12692
+#   min 1 max 2 roll 296 pct -94 flat 4 pool 256 es 0 0 mana 0 | game (0, 0, 2801722920, 332052784, 0) | d2d (0, 256, 2801722920, 332052784, 0)
+#   min 1 max 2 roll 263 pct -83 flat 2 pool 256 es 0 0 mana 0 | game (0, 0, 3359310599, 899990937, 0) | d2d (0, 256, 3359310599, 899990937, 0)
+#   min 1 max 2 roll 287 pct -21 flat 4 pool 139 es 0 0 mana 0 | game (0, 0, 2892777759, 1169966569, 0) | d2d (0, 139, 2892777759, 1169966569, 0)
+# diag eshield w3_d2d_r3: differing 12861, of them reduced-alone hit 0: 12861
+#   min 1 max 2 roll 261 pct 0 flat 2 pool 0 es 62 24 mana 3123 | game (0, 0, 3194214405, 1515640856, 2882) | d2d (0, 0, 3194214405, 1515640856, 3123)
+#   min 1 max 2 roll 386 pct 45 flat 4 pool 0 es 18 23 mana 9955 | game (0, 0, 272287362, 1737185514, 9856) | d2d (0, 0, 272287362, 1737185514, 9955)
+#   min 1 max 2 roll 394 pct -14 flat 4 pool 0 es 53 16 mana 9699 | game (0, 0, 3050429066, 65774643, 9491) | d2d (0, 0, 3050429066, 65774643, 9699)
+# diag esbone w3_d2d_r3: differing 12750, of them reduced-alone hit 0: 12750
+#   min 1 max 2 roll 345 pct -28 flat 2 pool 632 es 12 9 mana 10049 | game (0, 287, 2472943193, 506173450, 10049) | d2d (0, 632, 2472943193, 506173450, 10049)
+#   min 1 max 2 roll 366 pct 0 flat 4 pool 1280 es 92 6 mana 8759 | game (0, 914, 949340526, 543420927, 8759) | d2d (0, 1280, 949340526, 543420927, 8759)
+#   min 1 max 2 roll 386 pct 0 flat 2 pool 1280 es 44 24 mana 10071 | game (0, 894, 4278125186, 1339485869, 10071) | d2d (0, 1280, 4278125186, 1339485869, 10071)
+# diag exact w3_d2d_r3: differing 0, of them reduced-alone hit 0: 0
+# diag exactred w3_d2d_r3: differing 1334, of them reduced-alone hit 0: 1334
+#   min 1 max 1 roll 256 pct 40 flat 2 pool 512 es 0 0 mana 0 | game (0, 256, 170474305, 2940007571, 0) | d2d (0, 512, 170474305, 2940007571, 0)
+#   min 3 max 3 roll 768 pct 0 flat 5 pool 256 es 0 0 mana 0 | game (0, 0, 3418074863, 1990773313, 0) | d2d (0, 256, 3418074863, 1990773313, 0)
+#   min 8 max 8 roll 2048 pct 0 flat 9 pool 2737 es 91 29 mana 5848 | game (0, 689, 3582749899, 713105225, 5848) | d2d (0, 2737, 3582749899, 713105225, 5848)
+# roll w3_d2d_base: frames 48000 life 47915 pool 0 mana 0 seed 0 mean|life| 1.1556 mean|pool| 0.0000 mean|mana| 0.0000
+# roll w3_d2d_r2: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# roll w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# roll w3_d2d_r3: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base roll w3_d2d_r2: none
+# worse-than-base roll w3_d2d_r3ng: none
+# worse-than-base roll w3_d2d_r3: none
+# reduce w3_d2d_base: frames 48000 life 23665 pool 0 mana 0 seed 0 mean|life| 0.6431 mean|pool| 0.0000 mean|mana| 0.0000
+# reduce w3_d2d_r2: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# reduce w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# reduce w3_d2d_r3: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base reduce w3_d2d_r2: none
+# worse-than-base reduce w3_d2d_r3ng: none
+# worse-than-base reduce w3_d2d_r3: none
+# absorb w3_d2d_base: frames 48000 life 16290 pool 33728 mana 0 seed 0 mean|life| 0.4006 mean|pool| 0.8336 mean|mana| 0.0000
+# absorb w3_d2d_r2: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# absorb w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# absorb w3_d2d_r3: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base absorb w3_d2d_r2: none
+# worse-than-base absorb w3_d2d_r3ng: none
+# worse-than-base absorb w3_d2d_r3: none
+# both w3_d2d_base: frames 48000 life 4158 pool 41936 mana 0 seed 0 mean|life| 0.1198 mean|pool| 2.0986 mean|mana| 0.0000
+# both w3_d2d_r2: frames 48000 life 2277 pool 44655 mana 0 seed 0 mean|life| 0.0189 mean|pool| 2.1460 mean|mana| 0.0000
+# both w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# both w3_d2d_r3: frames 48000 life 0 pool 25442 mana 0 seed 0 mean|life| 0.0000 mean|pool| 1.3541 mean|mana| 0.0000
+# worse-than-base both w3_d2d_r2: pool,epool
+# worse-than-base both w3_d2d_r3ng: none
+# worse-than-base both w3_d2d_r3: none
+# negpct w3_d2d_base: frames 48000 life 17469 pool 19853 mana 0 seed 0 mean|life| 0.8120 mean|pool| 0.8834 mean|mana| 0.0000
+# negpct w3_d2d_r2: frames 48000 life 3093 pool 21426 mana 0 seed 0 mean|life| 0.0619 mean|pool| 1.0009 mean|mana| 0.0000
+# negpct w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# negpct w3_d2d_r3: frames 48000 life 0 pool 12692 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.6812 mean|mana| 0.0000
+# worse-than-base negpct w3_d2d_r2: pool,epool
+# worse-than-base negpct w3_d2d_r3ng: none
+# worse-than-base negpct w3_d2d_r3: none
+# eshield w3_d2d_base: frames 48000 life 33235 pool 0 mana 47967 seed 0 mean|life| 0.7002 mean|pool| 0.0000 mean|mana| 1.3623
+# eshield w3_d2d_r2: frames 48000 life 10011 pool 0 mana 23715 seed 0 mean|life| 0.0833 mean|pool| 0.0000 mean|mana| 0.7103
+# eshield w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# eshield w3_d2d_r3: frames 48000 life 0 pool 0 mana 12861 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.4458
+# worse-than-base eshield w3_d2d_r2: none
+# worse-than-base eshield w3_d2d_r3ng: none
+# worse-than-base eshield w3_d2d_r3: none
+# esbone w3_d2d_base: frames 48000 life 9854 pool 37861 mana 14764 seed 0 mean|life| 0.1964 mean|pool| 1.4596 mean|mana| 0.2651
+# esbone w3_d2d_r2: frames 48000 life 1761 pool 22338 mana 7291 seed 0 mean|life| 0.0135 mean|pool| 1.0713 mean|mana| 0.1349
+# esbone w3_d2d_r3ng: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# esbone w3_d2d_r3: frames 48000 life 0 pool 12750 mana 3666 seed 0 mean|life| 0.0000 mean|pool| 0.6772 mean|mana| 0.0637
+# worse-than-base esbone w3_d2d_r2: none
+# worse-than-base esbone w3_d2d_r3ng: none
+# worse-than-base esbone w3_d2d_r3: none
+# exact w3_d2d_base: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# exact w3_d2d_r2: frames 9000 life 8980 pool 0 mana 0 seed 9000 mean|life| 0.6682 mean|pool| 0.0000 mean|mana| 0.0000
+# exact w3_d2d_r3ng: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# exact w3_d2d_r3: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base exact w3_d2d_r2: life,seed,elife
+# worse-than-base exact w3_d2d_r3ng: none
+# worse-than-base exact w3_d2d_r3: none
+# exactred w3_d2d_base: frames 9000 life 2377 pool 5100 mana 1331 seed 0 mean|life| 0.6511 mean|pool| 5.5762 mean|mana| 0.6261
+# exactred w3_d2d_r2: frames 9000 life 3475 pool 5228 mana 1234 seed 9000 mean|life| 0.4082 mean|pool| 5.5183 mean|mana| 0.5393
+# exactred w3_d2d_r3ng: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# exactred w3_d2d_r3: frames 9000 life 0 pool 1239 mana 235 seed 0 mean|life| 0.0000 mean|pool| 1.3053 mean|mana| 0.1039
+# worse-than-base exactred w3_d2d_r2: life,pool,seed
+# worse-than-base exactred w3_d2d_r3ng: none
+# worse-than-base exactred w3_d2d_r3: none

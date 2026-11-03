@@ -171,6 +171,29 @@ func TestMerges(t *testing.T) {
 	}
 }
 
+func TestSyntheticMergeSubject(t *testing.T) {
+	root := t.TempDir()
+	old := gitMerges
+	defer func() { gitMerges = old }()
+	a, b := strings.Repeat("a", 40), strings.Repeat("b", 40)
+	for _, c := range []struct {
+		subject string
+		flagged bool
+	}{
+		{"Merge " + a + " into " + b, false},
+		{"Merge " + a[:39] + " into " + b, true},
+		{"Merge " + a + " into " + b + " extra", true},
+		{"Merge things", true},
+	} {
+		gitMerges = func(string, string, int) ([]Merge, error) {
+			return []Merge{{"h1", "10-30 09:00", c.subject, ""}}, nil
+		}
+		if fs := checkMerges(root, nil, "", 10); (len(fs) == 1) != c.flagged || len(fs) > 1 {
+			t.Errorf("%q: flagged=%v want %v (%v)", c.subject, len(fs) == 1, c.flagged, fs)
+		}
+	}
+}
+
 func TestStatusBlockRoundTrip(t *testing.T) {
 	root := t.TempDir()
 	addCard(t, root, "alpha", "in-progress", "\n  - a/**", "\n  - r1")

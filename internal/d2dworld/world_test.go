@@ -538,3 +538,19 @@ func TestLinkedButNothingOpenIsPending(t *testing.T) {
 		t.Fatalf("pending %d adjacent %+v", w.cur.pending, w.Current().Adjacent)
 	}
 }
+
+// Gate 1 ms1 seed 17: a probe round that finds nothing open (neighbour dropped from the linked list, or a failed
+// probe) must not erase a border seen before.
+func TestBordersSurviveAnEmptyProbeRound(t *testing.T) {
+	b := newBorderStub()
+	w := New(b, Options{})
+	w.Update()
+	if len(w.Current().BorderCells(2)) != 5 {
+		t.Fatalf("setup: %+v", w.Current().Adjacent)
+	}
+	b.near = nil // level 2 no longer listed
+	w.borders(context.Background(), w.cur)
+	if got := w.Current().BorderCells(2); len(got) != 5 {
+		t.Fatalf("border to level 2 lost: %d cells, adjacent %+v", len(got), w.Current().Adjacent)
+	}
+}

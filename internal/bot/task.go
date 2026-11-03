@@ -965,9 +965,35 @@ var _ task.MercHirer = taskActs{}
 var _ task.OrbSmasher = taskActs{}
 var _ task.Env = taskEnv{}
 
+// walkableHops is the longest stretch of areas the character walks without a waypoint jump: the whole level chain from
+// Rogue Encampment to Black Marsh is 5 hops, and every hop of it is an area the quest route walks anyway.
+const walkableHops = 5
+
+// longestWalk is the longest run of hops the character must walk to get from cur to the end of hops, using every
+// activated waypoint the way travelTo does: walk to the first waypoint on the path (cur counts), jump to the last one,
+// walk the rest. wp says whether a waypoint (or town) is usable at an area. Pure, for tests.
+func longestWalk(cur int, hops []int, wp func(int) bool) int {
+	path := append([]int{cur}, hops...)
+	first, last := -1, -1
+	for i, a := range path {
+		if wp(a) {
+			if first < 0 {
+				first = i
+			}
+			last = i
+		}
+	}
+	if first < 0 {
+		return len(hops)
+	}
+	return max(first, len(path)-1-last)
+}
+
 // unreachable says why the character cannot get to the area now ("" = it can): there must be a route from where it
-// stands, and a route longer than a few hops needs an activated waypoint on the way (the walk would be a long trek
-// through areas it has never seen, which stalls on missing exits).
+// stands, and the walk it needs between waypoints must be a level chain of at most walkableHops areas (travelTo
+// activates every waypoint it passes). It used to demand that the character stood at a waypoint or in town, so from
+// a dungeon or Blood Moor a Dark Wood pick was "unreachable" for the whole run (Gate 1 0628: Dark Wood, Black Marsh
+// and Cave Level 2 refused 28 times, the fallback farmed Cold Plains at 3 XP per kill).
 func (r *Runner) unreachable(ctx context.Context, s *d2.Snapshot, target int) string {
 	cur := s.Player.Area
 	if cur == target {
@@ -988,14 +1014,11 @@ func (r *Runner) unreachable(ctx context.Context, s *d2.Snapshot, target int) st
 	if werr != nil {
 		return ""
 	}
-	if w.WPs[task.Area(cur)] || s.Player.InTown() {
-		for _, h := range hops {
-			if w.WPs[task.Area(h)] {
-				return ""
-			}
-		}
+	wp := func(a int) bool { return w.WPs[task.Area(a)] || r.d.Plan.IsTown(a) }
+	if n := longestWalk(cur, hops, wp); n > walkableHops {
+		return fmt.Sprintf("%d hops and no activated waypoint on the way (%d to walk)", len(hops), n)
 	}
-	return fmt.Sprintf("%d hops and no activated waypoint on the way", len(hops))
+	return ""
 }
 
 // UseWeapon implements task.WeaponUser over the town's hand (town.Town.UseWeapon); a Townsman without it is a prereq fault.

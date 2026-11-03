@@ -114,7 +114,8 @@ type Clock struct {
 // Extras are things d2d provided that the d2.Snapshot types cannot hold, keyed by what they describe.
 type Extras struct {
 	Clock   Clock
-	Items   map[uint32]ItemExtra // by Unit.ID of an item (carried and ground)
+	Items   map[uint32]ItemExtra // by Unit.ID of a CARRIED item (inventory, belt, body, stash, cube, cursor)
+	Ground  map[uint32]ItemExtra // by Unit.ID of a ground item: its own id space, see docs/tomestat.md
 	Names   map[uint32]string    // display names of NPCs/objects by Unit.ID
 	Menu    []d2dctl.MenuLine    // open NPC menu lines (only fetched while a menu is open)
 	Level   *d2dctl.LevelInfo    // only when Options.AddOrigin
@@ -202,7 +203,7 @@ var readBatch = []string{"state", "debug players", "dump " + headDump, "dump ite
 func (s *Source) Read(ctx context.Context) (*Result, error) {
 	rp := newRep(&s.trk)
 	defer s.trk.flush()
-	res := &Result{Extras: Extras{Items: map[uint32]ItemExtra{}, Names: map[uint32]string{}, Coords: "relative"}}
+	res := &Result{Extras: Extras{Items: map[uint32]ItemExtra{}, Ground: map[uint32]ItemExtra{}, Names: map[uint32]string{}, Coords: "relative"}}
 	snap := &d2.Snapshot{}
 	res.Snap = snap
 

@@ -80,6 +80,19 @@ func areaXP(clvl, area, mlvl int, d d2.Difficulty) float64 {
 	return areaXPPerKill(clvl, mlvl)
 }
 
+// stepXP is the XP estimate of one kill in a plan step for a character of level clvl (PickOptions.XP). An area without
+// a monster level in the install data or the fallback table is rated as if its monsters were 3 levels under the entry
+// level (U: only the order between areas matters).
+func (r *Runner) stepXP(clvl int, d d2.Difficulty) func(Step) float64 {
+	return func(st Step) float64 {
+		ml := r.recoveryMLvl(st.Area, d)
+		if ml == 0 {
+			ml = max(1, st.EnterLvl-3)
+		}
+		return areaXP(clvl, st.Area, ml, d)
+	}
+}
+
 // recoveryXPArea picks the safe area with the best XP per kill for a recovering character, among the plan steps the
 // level picker would allow (entry level, acts, exclusions) whose monster level is at most clvl+recoveryMaxAreaAbove.
 // ties go to the lower monster level. ok is false when nothing qualifies or the data has no area levels.

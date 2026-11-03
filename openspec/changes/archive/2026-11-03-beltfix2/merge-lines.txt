@@ -1,0 +1,3 @@
+BACKLOG: beltfix2: Gate 1 20261103 BELT 37 vmin and NOKILL 11 explained: town arrivals did not restock (in-town potion plan hit the 240 s cooldown) and no way home from Dark Wood; first fix: in-town restock without cooldown (goal.go choresDue), then walk chain home (town/trip.go walkToTown); plan in docs/research/beltfix2-analysis.md
+INDEX: docs/research/beltfix2-analysis.md: Gate 1 20261103 BELT and NOKILL windows, causes and ranked fix plan
+CHANGELOG: beltfix2: analysis of the Gate 1 20261103 belt and no-kill failures with a ranked fix plan (docs)
