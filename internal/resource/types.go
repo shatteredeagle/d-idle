@@ -45,6 +45,7 @@ type Input struct {
 	Belt          Belt
 	HasTP         bool // town portal scroll or tome in the pack
 	NearTown      bool // the town is a short walk away (an early area of act 1)
+	ChainHome     bool // ChainHomeArea: the level-chain walk home works, for the no-healing emergency trip only
 	InTown        bool
 	Gold          int
 	LastTripGold  int // gold when the last town trip ended; -1 when none yet

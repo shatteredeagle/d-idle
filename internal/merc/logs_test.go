@@ -7,7 +7,9 @@ func TestLogLines(t *testing.T) {
 	for _, c := range []struct{ got, want, kind string }{
 		{LogHired(338, "Holy Freeze", 360, 1500, 1140), "merc: hired class=338 aura=Holy_Freeze price=360 gold_before=1500 gold_after=1140", LineHired},
 		{LogSeen(m), "merc: seen class=271 alive=true life=87 level=9 aura=-", LineSeen},
-		{LogRevived(600, 9), "merc: revived price=600 level=9", LineRevived},
+		{LogRevived(600, 9, 675), "merc: revived price=600 level=9 estimate=675", LineRevived},
+		{LogHireWindow(HireOffer{Row: 2, Name: "Greiz Aide", Class: 338, Level: 9, Aura: "Defiance", Price: 360}, 1500, 12), "merc: hire window row=2 name=Greiz_Aide class=338 level=9 aura=Defiance price=360 gold=1500 clvl=12", LineHireWindow},
+		{LogGoldFarm(true, 1200, 300, 11), "merc: gold farm on need=1200 gold=300 clvl=11", LineGoldFarm},
 		{LogReviveSkipped(ReasonGold, 600, 900), "merc: revive skipped (gold) price=600 gold=900", LineReviveSkipped},
 		{LogReviveSkipped(ReasonStopped, 600, 900), "merc: revive skipped (stopped by deaths) price=600 gold=900", LineReviveSkipped},
 		{LogEquip(SlotHelm, "Skull Cap", "empty slot"), "merc: equip slot=helm item=Skull_Cap reason=empty_slot", LineEquip},
@@ -31,7 +33,7 @@ func TestLogLines(t *testing.T) {
 
 func TestKnobsFromDefaults(t *testing.T) {
 	k := DefaultKnobs()
-	want := Knobs{2, 2, 3, 5, 3, false, true, 10, true, 40}
+	want := Knobs{2, 1, 3, 5, 1, false, true, 10, true, 50, 150, 16}
 	if k != want {
 		t.Errorf("%+v", k)
 	}

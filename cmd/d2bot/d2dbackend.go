@@ -280,6 +280,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	} else {
 		log.Warn("no game tables (--gamedir): combat, town and campaign goals stay off on d2d")
 	}
+	mercStatePath = filepath.Join(ip.State(), "merc.json")
 	installMercSeam(&seams)
 	fighter, town, loot := be.Behaviors(seams, nv)
 	deps.Fighter, deps.Town = fighter, town

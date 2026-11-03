@@ -1,0 +1,3 @@
+BACKLOG: REVIEW180: private review of upstream PR 180 (merged 7d999228): no behaviour change in components or tests; the bundle is already on top of it; open PR 181 is the real conflict for batch 2 (combat.hpp monster_blow), see docs/research/review-pr180-20261103.md
+INDEX: docs/research/review-pr180-20261103.md: private review of upstream PR 180 (re-pipeline: Ghidra names, structs.tsv, presubmit GCC and tidy, sorted lists) with consequences for batch 2
+CHANGELOG: review180: private review of upstream PR 180 and its effect on batch 2; nothing posted upstream

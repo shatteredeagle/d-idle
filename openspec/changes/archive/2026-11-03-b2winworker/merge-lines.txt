@@ -1,0 +1,3 @@
+BACKLOG: B2WINWORKER: batch 2 r3 re-run on the Windows build worker (MSVC 14.51, WSL stages, damage-roll sets, Teleport seed 9): numbers in docs/research/b2-winworker-rerun.md
+INDEX: docs/research/b2-winworker-rerun.md: batch 2 r3 on the Windows build worker (MSVC 14.51 warnings and ctest, WSL stages, damage-roll sets, Teleport seed 9)
+CHANGELOG: b2winworker: batch 2 r3 re-run on the Windows build worker, numbers recorded

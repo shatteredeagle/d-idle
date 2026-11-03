@@ -1,0 +1,4 @@
+BACKLOG: - FINALA: upstream guard fix as its own PR (`local/guardfix-3` 93851bef, fork `guardfix-3`) then batch A (`local/batch2-A-r9` 57d7c39b, fork `batch2-A-r9`) on upstream main 9785632c; texts in docs/research/pr-guardfix-body.md and pr-batch2-A-final-body.md; the lead opens both, guard fix first
+INDEX: - docs/research/pr-guardfix-body.md: PR text for the upstream pr_guard fix (cited tool checked in the PR head), evidence, tests, results
+INDEX: - docs/research/pr-batch2-A-final-body.md: final PR text for batch A (r9): Claims, counts, dependency on the guard fix, CodeRabbit's 10 findings, size, MSVC
+CHANGELOG: - docs: upstream guard-fix PR text and the final batch A PR text (private fork branches local/guardfix-3, local/batch2-A-r9).

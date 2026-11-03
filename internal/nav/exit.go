@@ -271,10 +271,14 @@ func (n *Navigator) borderGates(lm *d2map.LevelMap, levelNo int) []gate {
 	}
 	// A border cell is a gate only if the cell across is walkable too: a wide level can touch a narrow gap
 	// (Blood Moor side of the Rogue Encampment gate: the wall cells beside the gap also touch the town).
-	if nb := n.w.Level(levelNo); nb != nil && nb.Grid != nil && (dx != 0 || dy != 0) {
+	// The cell across is looked up in the neighbour's own grid, so it is moved from this level's frame to the
+	// neighbour's: adj.Rect is where the neighbour lies in our frame, nb.Rect its own frame (zero origin without
+	// d2dworld's OriginTiles). Seed 17 (docs/navexit22.md): the Blood Moor's gate cells were tested against the
+	// camp's wall column, every cell was dropped and the walk to town failed for good.
+	if nb := n.w.Level(levelNo); nb != nil && nb.Grid != nil && adj != nil && (dx != 0 || dy != 0) {
 		kept := cells[:0:0]
 		for _, c := range cells {
-			ax, ay := c.X+int(dx), c.Y+int(dy)
+			ax, ay := c.X+int(dx)-adj.Rect.X+nb.Rect.X, c.Y+int(dy)-adj.Rect.Y+nb.Rect.Y
 			if nb.Grid.Known(ax, ay) && !nb.Grid.Walkable(ax, ay) {
 				continue
 			}

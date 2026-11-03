@@ -28,6 +28,7 @@ import (
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/nav"
+	"d2lod-bot/internal/task"
 	"d2lod-bot/internal/town"
 )
 
@@ -79,7 +80,9 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 	oo := o
 	oo.managed = false // saveDirOf would load the Game.exe managed config; there is no save dir to find for d2d
 	s.task = newTaskDeps(ctx, oo, tw, nv, e, charName)
-	s.task.ClaimMerc = claimDep(d2dmerc.Claimer{C: be.Client}, &d2dmerc.Reader{Read: be.Reader.Read, LevelEstimate: levelEstimate},
+	mercRd := &d2dmerc.Reader{Read: be.Reader.Read, LevelEstimate: levelEstimate}
+	task.MercAlive = guardMercHook(mercRd, time.Now) // the policy wiring (merc.enabled=1) replaces it with its own
+	s.task.ClaimMerc = claimDep(d2dmerc.Claimer{C: be.Client}, mercRd,
 		func() merc.Difficulty { return merc.Normal }, log) // d2d starts Normal only (Spec.Difficulty)
 	ta := s.town
 	bg := newBossGame(e, db, cb, nv, lt, ta.ToTown)
@@ -236,6 +239,17 @@ func portalDead(ctx context.Context) error {
 	return fmt.Errorf("d2d portal: cancelled, nothing clicked (%v)", context.Cause(ctx))
 }
 
+// portalCut is the error of a cast whose context died after the click: d2d may have spent the charge (Gate 1 20261102
+// BELT window: two casts in one second, a safety drink cancelling each, the last two charges gone for no portal).
+func portalCut(ctx context.Context) error {
+	return fmt.Errorf("d2d portal: cast cut after the click, source maybe spent (%v)", context.Cause(ctx))
+}
+
+const (
+	portalCutMemory = 8 * time.Second // a cut cast's portal may still open this long after the click
+	portalCutWait   = 3 * time.Second
+)
+
 func d2dPortalWith(e *env.Env, itemAt func(context.Context, int) (int, int, error), cat combat.Catalog) func(context.Context) error {
 	stats := func() combat.Stats {
 		if e.Read != nil {
@@ -271,8 +285,38 @@ func d2dPortalWith(e *env.Env, itemAt func(context.Context, int) (int, int, erro
 			e.Clock.Sleep(portalIdlePoll)
 		}
 	}
+	var cutMu sync.Mutex
+	var cutAt time.Time
+	// afterCut looks for the portal of the last cut cast before another charge is read: it reports true when it is open.
+	afterCut := func(ctx context.Context) bool {
+		cutMu.Lock()
+		at := cutAt
+		cutMu.Unlock()
+		if at.IsZero() || e.Clock.Now().Sub(at) > portalCutMemory {
+			return false
+		}
+		if ctx.Err() != nil {
+			return false // a dead context never polled: keep the memory for the next call (codefix F8)
+		}
+		for waited := time.Duration(0); waited <= portalCutWait && ctx.Err() == nil; waited += portalIdlePoll {
+			if ns, err := e.Snapshot(); err == nil && ns.Player != nil {
+				if n, _ := portals(ns); n > 0 {
+					e.Log.Info("d2d portal: the cut cast opened its portal, not casting again")
+					return true
+				}
+			}
+			e.Clock.Sleep(portalIdlePoll)
+		}
+		cutMu.Lock()
+		cutAt = time.Time{}
+		cutMu.Unlock()
+		return false
+	}
 	return func(ctx context.Context) error {
 		var last error
+		if afterCut(ctx) {
+			return nil
+		}
 		for try := 0; try < 3; try++ {
 			if ctx.Err() != nil { // the action's context died (guard, step deadline, stop): the tries cannot work
 				e.Log.Info("d2d portal: context dead, not clicking", "try", try+1, "cause", context.Cause(ctx))
@@ -327,7 +371,10 @@ func d2dPortalWith(e *env.Env, itemAt func(context.Context, int) (int, int, erro
 						return nil // only the object counts: a scroll that left the pack may be a cut cast
 					}
 					if ctx.Err() != nil {
-						return portalDead(ctx)
+						cutMu.Lock()
+						cutAt = e.Clock.Now()
+						cutMu.Unlock()
+						return portalCut(ctx)
 					}
 				}
 				// diagnostic for the unexplained failures (docs/fixportal.md): what was clicked and what the world showed

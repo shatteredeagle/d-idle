@@ -1,0 +1,3 @@
+BACKLOG: SORCDIFF: the lightning Sorceress build crossed with rule coverage; one proven deviation left on upstream main 005c7cab for the bot's skills (Lightning and Chain Lightning cast length, `local/sorc-lightning-seq` on the private remote, base 802 of 3,609 differ, head 0); Energy Shield and Thunder Storm are not used by the build; ready-for-Opus list in the doc
+INDEX: docs/research/sorcdiff.md: the Sorceress skills the lightning build uses, their proof status, cast counts, and the counted differentials on the real d2d build
+CHANGELOG: sorcdiff: Sorceress skills the bot uses vs rule coverage; Lightning and Chain Lightning cast-length differential on the real d2d build and a private fix branch; nothing pushed upstream

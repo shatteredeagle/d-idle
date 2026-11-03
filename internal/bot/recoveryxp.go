@@ -15,9 +15,9 @@ var recoveryXPTier = map[int]bool{2: true, 3: true, 4: true, 5: true, 6: true, 9
 
 // normalMLvl is the Normal monster level of the act 1 farm areas for a run without install data (offline tests, a missing
 // MPQ cache). V: Blood Moor 1, Cold Plains 2, Stony Field 4, Dark Wood 5, Black Marsh 6 (plandata progression-normal.json);
-// Levels.txt MonLvl1Ex (D, docs/research/monster-stats-trace.md B2): Den 1, Cave 1 2, Cave 2 2, Burial Grounds 3
+// Levels.txt MonLvl1Ex (D, docs/research/monster-stats-trace.md B2): Den 1, Cave 1 2, Cave 2 2, Burial Grounds 3, Crypt 3, Mausoleum 3, Tamoe Highland 8
 // (the earlier wiki recollection of Den 2 and Cave 2 3 was wrong).
-var normalMLvl = map[int]int{2: 1, 3: 2, 4: 4, 5: 5, 6: 6, 8: 1, 9: 2, 13: 2, 17: 3}
+var normalMLvl = map[int]int{2: 1, 3: 2, 4: 4, 5: 5, 6: 6, 7: 8, 8: 1, 9: 2, 13: 2, 17: 3, 18: 3, 19: 3}
 
 // recoveryMLvl is the area's monster level from the install data, else the fallback table (Normal only).
 func (r *Runner) recoveryMLvl(area int, d d2.Difficulty) int {
@@ -78,6 +78,35 @@ func areaXP(clvl, area, mlvl int, d d2.Difficulty) float64 {
 		return row.exp * xpLevelPct(clvl, row.mlvl) / 100
 	}
 	return areaXPPerKill(clvl, mlvl)
+}
+
+// stepXP is the XP estimate of one kill in a plan step for a character of level clvl (PickOptions.XP). An area with no
+// monster level in the install data or the fallback table has no estimate: it returns -1 (ranked last, warned once by
+// name) instead of guessing from the entry level, which is on another scale (codereview2 R6).
+func (r *Runner) stepXP(clvl int, d d2.Difficulty) func(Step) float64 {
+	return func(st Step) float64 {
+		ml := r.recoveryMLvl(st.Area, d)
+		if ml == 0 {
+			r.noteNoMLvl(st.Area, d)
+			return -1
+		}
+		return areaXP(clvl, st.Area, ml, d)
+	}
+}
+
+// noteNoMLvl warns once per area and difficulty that the XP rank has no monster level for it.
+func (r *Runner) noteNoMLvl(area int, d d2.Difficulty) {
+	key := area*4 + int(d)
+	r.obMu.Lock()
+	seen := r.noMLvlSeen[key]
+	if r.noMLvlSeen == nil {
+		r.noMLvlSeen = map[int]bool{}
+	}
+	r.noMLvlSeen[key] = true
+	r.obMu.Unlock()
+	if !seen {
+		r.e.Log.Warn("xp rank: no monster level for area, ranked last", "area", area, "name", r.areaName(area), "difficulty", int(d))
+	}
 }
 
 // recoveryXPArea picks the safe area with the best XP per kill for a recovering character, among the plan steps the

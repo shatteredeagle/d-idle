@@ -261,6 +261,12 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			continue
 		}
 
+		// 1.5 a healing potion for a hurt merc (after survival: the player's own potions come first)
+		if f.mercPotion(snap, hs) {
+			snap = nil
+			continue
+		}
+
 		// 1a. Nightmare/Hell rules (antidote, mana burn); after survival so a flee never skips a potion
 		if herr := f.hardTick(ctx, snap, hs, st); herr != nil {
 			if herr == errHardActed {

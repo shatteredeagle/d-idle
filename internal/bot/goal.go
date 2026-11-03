@@ -52,6 +52,12 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		gap := sec(r.cfg.ResupplyCooldownSec)
 		if emergency {
 			gap /= 4
+			if inTown {
+				// A visit in town costs no scroll and lastTrip was stamped by the failed field attempt seconds ago: the
+				// full gap sent the character back out with no potion six times (Gate 1 20261102, BELT A). Only a
+				// short pause keeps a shop that cannot sell from being retried every tick.
+				gap = townShopGap
+			}
 		}
 		if now.Sub(r.getLastTrip()) >= gap {
 			l.trip = &trip{plan: plan, returnTo: fieldArea(p), emergency: emergency}
@@ -303,6 +309,9 @@ func (r *Runner) tripWorthIt(s *d2.Snapshot) bool {
 	return false
 }
 
+// townShopGap is the pause between two shopping rounds in town while the character has no healing potion.
+const townShopGap = 5 * time.Second
+
 // choresDue is the pure part of needChores (the guard calls it from its own goroutine).
 func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) {
 	p := s.Player
@@ -315,9 +324,31 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 	if known && !p.InTown() {
 		trip = r.tripVerdict(s)
 	}
-	broke := r.recoveryActive() && p.Gold < r.e.Tune.Resource.RecoveryKitGold
+	// BELTFIX5: banked gold counts when no healing potion is left; the town visit withdraws it (Town.withdraw)
+	kitGold := p.Gold
+	if healing == 0 {
+		kitGold += p.StashGold
+	}
+	broke := r.recoveryActive() && kitGold < r.e.Tune.Resource.RecoveryKitGold
 	if broke {
 		trip = resource.Trip{} // recovery: a potion trip with an empty purse buys nothing (G1 attempt 9: 90 min of walking)
+	}
+	if known && !p.InTown() {
+		// recovery: the purse reached one potion with none left; buy the minimal kit now, farm on for the rest of the target
+		r.obMu.Lock()
+		if healing > 0 {
+			r.ob.recKitTrips = 0
+		}
+		capped := r.ob.recKitTrips >= r.e.Tune.Resource.KitTripCap // failing chores must not repeat the trip
+		r.obMu.Unlock()
+		if go2, why2 := resource.RecoveryKitTrip(resource.RecoveryKitInput{
+			Recovering: r.recoveryActive(), InTown: false, Healing: healing, Gold: kitGold, Capped: capped,
+			WayHome: r.resInput(s).HasTP || resource.ChainHomeArea(p.Area) || r.wpActive(s),
+		}, resource.FromEnv(*r.e.Tune)); go2 {
+			hard, emergency = true, true
+			plan.Potions = true
+			why = append(why, why2)
+		}
 	}
 	if trip.Go {
 		plan.Potions = true
@@ -330,16 +361,23 @@ func (r *Runner) choresDue(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool) 
 		hard = true // not floorable: the kit is the survival need (KITGATELEVEL)
 		plan.Potions = true
 		why = append(why, why2)
+		// no healing potion anywhere is the Gate 1 BELT window: the short emergency cooldown applies (tripDue)
+		if k, kn := r.kitRead(s); kn && k.HP == 0 {
+			emergency = true
+		}
 	}
 	if known {
 		threshold := t.ResupplyPotions
 		if p.InTown() {
 			threshold = t.ResupplyPotions * 2
 		}
-		if healing < threshold && p.Gold >= minPotionPrice && !trip.Futile && !broke {
+		// Recovery suppresses potion trips from the field (an empty purse buys nothing), not the visit already under way:
+		// in town with no healing potion and gold for one the shop opens (potionFloor caps it, the kit gold stays).
+		// Gate 1 20261103: left Rogue Encampment with 185 gold and 0 potions, 3 virtual minutes outside town unhealed.
+		if healing < threshold && kitGold >= minPotionPrice && !trip.Futile && (!broke || (p.InTown() && healing == 0)) {
 			plan.Potions = true
 			why = append(why, fmt.Sprintf("%d healing potions", healing))
-			emergency = healing == 0 && !p.InTown()
+			emergency = healing == 0
 		}
 		if full >= t.InvFullPct && !r.packFullQuiet() {
 			hard = true
@@ -438,6 +476,11 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			}
 			return err
 		})
+		if !ok && strings.Contains(t.plan.Reason, resource.RecoveryKitReason) && r.State() == StateResupplying {
+			r.obMu.Lock()
+			r.ob.recKitTrips++
+			r.obMu.Unlock()
+		}
 		if !ok && strings.Contains(t.plan.Reason, "kit: ") && r.State() == StateResupplying {
 			// a kit trip whose chores keep failing counts like a finished one, else it repeats until the failsafe ladder
 			// skips the field and pauses the character far from the safe area (KITGATELEVEL)
@@ -457,7 +500,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			}
 			r.setLastTrip(r.e.Clock.Now())
 			if s := r.latest(); s != nil {
-				r.noteTripGold(s.Player.Gold)
+				r.noteTripEnd(s)
 				r.logTrip(t, s.Player.Gold)
 				if lb, ok := r.d.Loot.(leftBehinder); ok {
 					lb.ClearLeftBehind()
@@ -487,7 +530,11 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			return true
 		}
 		ok := r.do(ctx, c, StateResupplying, "Returning to the field", sec(r.cfg.TravelTimeoutSec), "back to field", func(ctx context.Context) error {
-			return r.d.Town.BackToField(ctx, t.returnTo)
+			err := r.d.Town.BackToField(ctx, t.returnTo)
+			if err == nil {
+				r.waitForMerc(ctx, "portal")
+			}
+			return err
 		})
 		if ok || l.failures > 1 {
 			l.trip = nil // on repeated failure travel() walks back by itself
@@ -807,7 +854,7 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
 		pick := func() (Step, bool) {
-			return r.d.Plan.Pick(diff, p.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class)})
+			return r.d.Plan.Pick(diff, p.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class), XP: r.stepXP(p.Level, p.Difficulty)})
 		}
 		step, ok := pick()
 		if !ok && r.denGated(s) && p.Level >= r.denFloor(s)-denYieldGap && !cleared[areaDenOfEvil] && !r.banned(areaDenOfEvil) {
@@ -1022,6 +1069,7 @@ func (r *Runner) travelTo(ctx context.Context, target int) error {
 				if err := r.waitArea(ctx, w, 30*time.Second); err != nil {
 					return err
 				}
+				r.waitForMerc(ctx, "waypoint")
 				r.markTouched(snap, cur, w)
 				moved = true
 			}

@@ -1,0 +1,57 @@
+# v4_run.py N=6000 seed=161803 frames=354000
+# real Fight::absorb vs my r4 glue: frames differing 0
+# real Fight::absorb vs real Fight::hurt_side (life lost, pool, mana): frames differing 0
+# Energy Shield params used: calc1 range 0..85, calc2 range 0..32, calc1 at 95 cap 0
+roll base: frames 48000 life 47908 pool 0 mana 0 seed 0 mean|life| 1.1724 mean|pool| 0.0000 mean|mana| 0.0000
+roll r4real: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+roll r4glue: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base roll r4real: none
+# roll: frames without Energy Shield 48000, r4real differing among them 0
+reduce base: frames 48000 life 23606 pool 0 mana 0 seed 0 mean|life| 0.6399 mean|pool| 0.0000 mean|mana| 0.0000
+reduce r4real: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+reduce r4glue: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base reduce r4real: none
+# reduce: frames without Energy Shield 48000, r4real differing among them 0
+absorb base: frames 48000 life 16083 pool 33876 mana 0 seed 0 mean|life| 0.3891 mean|pool| 0.8333 mean|mana| 0.0000
+absorb r4real: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+absorb r4glue: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base absorb r4real: none
+# absorb: frames without Energy Shield 48000, r4real differing among them 0
+both base: frames 48000 life 4223 pool 41984 mana 0 seed 0 mean|life| 0.1228 mean|pool| 2.0857 mean|mana| 0.0000
+both r4real: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+both r4glue: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base both r4real: none
+# both: frames without Energy Shield 48000, r4real differing among them 0
+negpct base: frames 48000 life 17720 pool 19699 mana 0 seed 0 mean|life| 0.8195 mean|pool| 0.8759 mean|mana| 0.0000
+negpct r4real: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+negpct r4glue: frames 48000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base negpct r4real: none
+# negpct: frames without Energy Shield 48000, r4real differing among them 0
+eshield base: frames 48000 life 32729 pool 0 mana 47940 seed 0 mean|life| 0.6677 mean|pool| 0.0000 mean|mana| 2.4546
+eshield r4real: frames 48000 life 9923 pool 0 mana 23266 seed 0 mean|life| 0.0850 mean|pool| 0.0000 mean|mana| 1.4435
+eshield r4glue: frames 48000 life 9923 pool 0 mana 23266 seed 0 mean|life| 0.0850 mean|pool| 0.0000 mean|mana| 1.4435
+# worse-than-base eshield r4real: none
+# eshield: frames without Energy Shield 0, r4real differing among them 0
+esbone base: frames 48000 life 9754 pool 37804 mana 14896 seed 0 mean|life| 0.1825 mean|pool| 1.4445 mean|mana| 0.5344
+esbone r4real: frames 48000 life 1358 pool 0 mana 7251 seed 0 mean|life| 0.0093 mean|pool| 0.0000 mean|mana| 0.2759
+esbone r4glue: frames 48000 life 1358 pool 0 mana 7251 seed 0 mean|life| 0.0093 mean|pool| 0.0000 mean|mana| 0.2759
+# worse-than-base esbone r4real: none
+esbone base vs es-first order: life 7968 pool 43960 mana 47990 seed 0 mean|life| 0.2097 mean|pool| 1.5220 mean|mana| 3.7350
+esbone r4real vs es-first order: life 8620 pool 43007 mana 47457 seed 0 mean|life| 0.0679 mean|pool| 1.5550 mean|mana| 3.5970
+esbone r4glue vs es-first order: life 8620 pool 43007 mana 47457 seed 0 mean|life| 0.0679 mean|pool| 1.5550 mean|mana| 3.5970
+# worse-than-base (es-first) esbone r4real: life,epool
+# esbone: frames without Energy Shield 0, r4real differing among them 0
+exact base: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+exact r4real: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+exact r4glue: frames 9000 life 0 pool 0 mana 0 seed 0 mean|life| 0.0000 mean|pool| 0.0000 mean|mana| 0.0000
+# worse-than-base exact r4real: none
+# exact: frames without Energy Shield 9000, r4real differing among them 0
+exactred base: frames 9000 life 2305 pool 5210 mana 1310 seed 0 mean|life| 0.6015 mean|pool| 5.6649 mean|mana| 0.9685
+exactred r4real: frames 9000 life 626 pool 0 mana 1055 seed 0 mean|life| 0.0946 mean|pool| 0.0000 mean|mana| 0.9041
+exactred r4glue: frames 9000 life 626 pool 0 mana 1055 seed 0 mean|life| 0.0946 mean|pool| 0.0000 mean|mana| 0.9041
+# worse-than-base exactred r4real: none
+exactred base vs es-first order: life 2297 pool 5314 mana 2185 seed 0 mean|life| 0.6104 mean|pool| 5.2801 mean|mana| 2.7371
+exactred r4real vs es-first order: life 632 pool 1170 mana 1930 seed 0 mean|life| 0.1056 mean|pool| 0.8136 mean|mana| 2.6787
+exactred r4glue vs es-first order: life 632 pool 1170 mana 1930 seed 0 mean|life| 0.1056 mean|pool| 0.8136 mean|mana| 2.6787
+# worse-than-base (es-first) exactred r4real: none
+# exactred: frames without Energy Shield 6753, r4real differing among them 0

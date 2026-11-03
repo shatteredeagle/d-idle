@@ -55,6 +55,7 @@ type Town struct {
 	// Seam for tests (the snapshot seam is t.h.Snap).
 	owner            func(it d2.Unit) (uint32, error)         // unit address of the container owner of an item
 	itemsFn          func() ([]d2.Unit, error)                // all item units (default: Reader.Units)
+	withdrew         bool                                     // this Chores round took gold out of the stash (lifts the recovery potion floor)
 	potionCap        int                                      // when > 0, buyPotions spends at most this much in total (poverty mode)
 	arrived          time.Time                                // when ToTown last arrived
 	pages            []int                                    // stock pages of the open vendor, sorted (tab layout)
@@ -71,6 +72,8 @@ type Town struct {
 	portalEmpty      bool                                     // the last ToTown found no usable portal source: the game says empty whatever the stat read says (FIXPROGRESS)
 	emptyStreak      int                                      // town visits in a row that began with portalEmpty (FIXPROGRESS watchdog)
 	tscQuietUntil    time.Time                                // no "no town portal scroll" trip before this (FIXPROGRESS watchdog)
+	choreDeadline    time.Time                                // end of the current Chores call's time budget (zero outside Chores)
+	budgetLogged     bool                                     // "resupply budget hit" already logged for this Chores call
 	futile           map[string]futileMark                    // trip reason -> when and with how much gold a visit left it unfixed
 	presetsFn        func() []d2map.Preset                    // test seam: preset units of the current level
 	ammoPath         string                                   // "bow" or "javelin" for an Amazon (SetAmmoPath)

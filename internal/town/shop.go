@@ -213,6 +213,23 @@ func (t *Town) pickPotion(stock []d2.Unit, k belt.Kind, maxTier, budget int) (d2
 	return c[0], true
 }
 
+// manaReserve is the gold a mana purchase must leave: one healing potion and one portal scroll (Gate 1 20261102: 180 of
+// 300 gold went into mana potions and the next trips found the purse empty).
+//
+// Only the part of the kit still missing is reserved (codefix F3): with the scroll and the potions in the pack every
+// coin may become mana, which the mana-bound Sorceress needs.
+func (t *Town) manaReserve(s *d2.Snapshot) int {
+	r := t.e.Tune.Resource
+	res := 0
+	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n == 0 && !hasTome {
+		res += r.KitTPGold
+	}
+	if t.healingCarried(s) < max(r.KitMinHP, 1) {
+		res += r.KitPotionGold
+	}
+	return res
+}
+
 // buyPotions fills the belt to the plan. The shop window of the potion vendor must be open.
 func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *ChoreReport) error {
 	s, err := t.current()
@@ -257,6 +274,9 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 	for _, k := range order {
 		src := k
 		for want[k] > 0 {
+			if t.budgetHit(rep) {
+				return nil
+			}
 			// Rejuvenation the shop does not sell becomes healing.
 			if _, ok := t.pickPotion(stock, src, band.MaxTier(src), 1<<30); !ok && src == belt.RV {
 				want[belt.HP] += want[belt.RV]
@@ -272,6 +292,9 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 				budget = min(budget, t.potionCap-rep.Spent)
 			}
 			it, ok := t.pickPotion(stock, src, band.MaxTier(src), budget)
+			if ok && k == belt.MP && cur.Player.Gold-t.base(it).Cost < t.manaReserve(cur) {
+				break // mana never eats the gold of one healing potion and one portal scroll
+			}
 			if !ok {
 				if _, sold := t.pickPotion(stock, src, band.MaxTier(src), 1<<30); sold {
 					rep.Broke = true // sold, but not affordable
@@ -296,12 +319,20 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 
 // buyFirstTP buys one town portal scroll when the pack holds none and the gold allows (resource.BuyKit, priced from
 // the vendor's actual stock), so the potions bought next only get what is left.
-func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) error {
+//
+// beforeKit is the pass ahead of the kit potions, for a character that carries a tome with nothing in it (the poor
+// character without a tome keeps the potions-first rule): the scroll goes first
+// as long as the gold still covers it plus TPScrollPotions healing potions (NAVEXIT21: after the kit potions the
+// 284 gold of Gate 1 ms1 seed 17 no longer covered the scroll, and the trip home had to be walked).
+func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport, beforeKit bool) error {
 	s, err := t.current()
 	if err != nil {
 		return err
 	}
-	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome || t.tpTooPoor(s) {
+	// An empty tome is no portal source (NAVEXIT21, Gate 1 ms1 seed 17: clvl 9, empty tome, 284 gold, no scroll bought,
+	// the next trip had to walk): only a tome or scrolls that count above zero make the first scroll unnecessary.
+	n, hasTome := t.scrollCount(s, "tsc", "tbk")
+	if n > 0 || t.tomeQty(s) > 0 || t.tpTooPoor(s) || beforeKit && !hasTome {
 		return nil
 	}
 	stock, err := t.Stock(npc)
@@ -325,7 +356,11 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 	if potion == 0 {
 		potion = t.e.Tune.Resource.KitPotionGold
 	}
-	if !t.tpAllowedAt(s, price, potion) {
+	if beforeKit {
+		if s.Player.Gold < price+t.tune().TPScrollPotions*potion {
+			return nil
+		}
+	} else if !t.tpAllowedAt(s, price, potion) {
 		return nil
 	}
 	if price <= 0 || !resource.BuyKit(resource.Input{Gold: s.Player.Gold}, resource.Tuning{KitTPGold: price}).TP {
@@ -364,6 +399,16 @@ func (t *Town) scrollCount(s *d2.Snapshot, scroll, tome string) (have int, hasTo
 		}
 	}
 	return have, hasTome
+}
+
+// tomeQty is the town portal tome's stat-read quantity, ignoring portalEmpty.
+func (t *Town) tomeQty(s *d2.Snapshot) int {
+	for _, u := range s.Inventory.Container(d2.ContInventory) {
+		if b := t.base(u); b != nil && b.Code == "tbk" {
+			return t.qty(u)
+		}
+	}
+	return 0
 }
 
 // buyScrolls tops up town portal and identify scrolls (and buys a tome when affordable).
@@ -434,7 +479,17 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 		if !ok {
 			continue
 		}
+		if j.scroll == "tsc" && t.portalEmpty && hasTome && t.tomeQty(cur) > 0 {
+			q := t.tomeQty(cur) // the stat read counts; only prove the source works
+			have, j.target = q, q+emptyRestock
+			if q >= tomeCap {
+				j.target = have
+			}
+		}
 		for have < j.target {
+			if t.budgetHit(rep) {
+				return nil
+			}
 			cur, err := t.current()
 			if err != nil {
 				return err

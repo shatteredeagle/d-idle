@@ -1,0 +1,3 @@
+BACKLOG: - MERCPOLICY: merc policy of 2026-11-02 offline (agent/mercpolicy): merc.enabled default on, revive/hire need price + 150 percent kit, Act 2 swap (Hirer, dormant until a d2d window reader exists), no-merc Monastery floor 14, early-area gold farm; open: live revive price read, hire window read, wiring of wait/leave helpers
+INDEX: - openspec/changes/mercpolicy: merc policy (revive, Act 2 hire, spending order, floors, gold farm)
+CHANGELOG: - bot: the merc policy is on by default: dead Rogue revived when gold covers the price plus a potion reserve, Desert Mercenary swap at Lut Gholein (needs a window reader), no-merc Monastery floor 14 with a full kit, gold farm in the early areas while the merc is missing.

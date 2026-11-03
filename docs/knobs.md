@@ -257,16 +257,18 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | merc.reviveMaxPerHour | 2 | 0..12 | count | 2 | 2 | Most merc revives in one hour; a merc that keeps dying costs more than it saves. |
-| merc.reviveGoldMult | 2 | 1..10 | x | 2 | 2 | Revive only with gold of at least this many times the price (and the town portal and potions kit). |
+| merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the price plus merc.kitReservePct of the full kit refill (potions come first). |
 | merc.stopDeathsPerHour | 3 | 1..12 | count | 3 | 2 | More merc deaths than this in an hour stop reviving until gold reaches the stop multiple. |
 | merc.stopGoldMult | 5 | 1..20 | x | 5 | 2 | While reviving is stopped by deaths, revive only with gold of at least this many times the price. |
-| merc.hireGoldMult | 3 | 1..10 | x | 3 | 2 | Hire or replace only when gold after the kit is at least this many times the quote. |
+| merc.hireGoldMult | 1 | 1..10 | x | 1 | 2 | Hire or replace only when gold is at least this many times the quote plus merc.kitReservePct of the full kit refill. |
 | merc.freeRogueOnly | 0 | 0..1 | bool | 0 | 2 | 1 never pays for the Act 1 Rogue, even once Blood Raven is skipped for good; 0 allows that fallback. |
 | merc.replaceAtAct2 | 1 | 0..1 | bool | 1 | 2 | 1 swaps the Rogue for a Desert Mercenary with the class aura at the first Lut Gholein visit per difficulty. |
 | merc.swapGainPct | 10 | 0..100 | % | 10 | 4 | A merc item is swapped only when its score is this much better. Lower swaps more often. |
 | merc.reqStrDex | 1 | 0..1 | bool | 1 | 2 | 1 checks the merc's own Strength and Dexterity against gear (d2decomped finding, UNVERIFIED live); 0 checks only level. |
-| merc.potionLifePct | 40 | 10..80 | % | 40 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
-| merc.enabled | 0 | 0..1 | bool | 0 | 1 | 1 runs the mercenary policy in the bot (revive decision, merc state for the route guards, status line); 0 leaves the bot exactly as it was. Off until the merc reader is verified live (docs/merc-wire.md). |
+| merc.potionLifePct | 50 | 10..80 | % | 50 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
+| merc.kitReservePct | 150 | 0..500 | % | 150 | 2 | A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
+| merc.goldFarmMaxLevel | 16 | 0..40 | levels | 16 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 0 turns it off. |
+| merc.enabled | 1 | 0..1 | bool | 1 | 1 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
 
 ### campaign.*
 
@@ -281,7 +283,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| route.monasteryMinLevel | 16 | 10..40 | levels | 16 | 2 | The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003): 16, was 20; if road deaths fail the death rule at 16 in the act1run soak raise it to 18 and re-grill, if none try 14. 20 restores the old number. |
+| route.monasteryMinLevel | 14 | 10..40 | levels | 14 | 2 | The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003; merc decision 2026-11-02): 14 with a full kit, was 16 and 20, so a dead or missing merc does not block the road (the living-merc floors rate a 140-HP Rogue too high). If road deaths fail the death rule at 14 in the act1run soak raise it to 16 or 18 and re-grill. 20 restores the old number. |
 | route.monasteryMinLevelMerc | 14 | 0..40 | levels | 14 | 2 | The same floor with a living merc (unknown counts as none). Interim (ADR 0011): 14. 0 restores the old rule: a living merc opens the road at any level. |
 | route.towerMinLevel | 16 | 0..40 | levels | 16 | 6 | The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl, and with the supply kit (4 healing, a portal, mana for casters). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 16)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. Interim (ADR 0011): 16, was 20. 0 turns the tower guard off. |
 | route.towerMinLevelMerc | 14 | 0..40 | levels | 14 | 4 | The Forgotten Tower floor with a living merc while route.towerNeedsMerc is 0. Interim (ADR 0011): 14. 0 means the no-merc floor applies to a merc too. |
@@ -345,7 +347,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.kitGateLevel | 8 | 0..20 | level | 20 | 1 | KITGATELEVEL: below this character level an incomplete kit holds a recovering character in Blood Moor and Cold Plains; from it the gate holds only a character with no portal and no healing potion, any other incomplete kit makes a town trip and the area progression goes on. 0 = the gate holds at every level. |
 | resource.kitMinHP | 4 | 1..6 | count | 1 | 0 | Minimum kit from kitGateLevel: healing potions (belt, pack, rejuvenation). Advisor range 4-6. |
 | resource.kitMinMP | 3 | 0..4 | count | 0 | 0 | Minimum kit from kitGateLevel: mana potions in the belt. Advisor range 3-4. Casters only (a build that needs no mana is not asked). |
-| resource.kitTripCap | 2 | 1..5 | trips | 5 | 0 | Kit town trips with the kit still incomplete before the bot proceeds anyway and logs kitgate-skip. |
+| resource.kitTripCap | 2 | 1..5 | trips | 5 | 1 | Kit town trips with the kit still incomplete before the bot proceeds anyway and logs kitgate-skip. |
 | resource.povertySellMin | 0 | 0..16 | items | 0 | 1 | A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll. |
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |

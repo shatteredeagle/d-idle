@@ -28,7 +28,7 @@ const (
 )
 
 // Ctx is the player side of a decision. Gold is carried plus stash (revive pays carried first, then stash, S);
-// Kit is the gold the town portal, potions and antidotes need first.
+// Kit is the full kit refill cost in gold (KitRefill); KitReservePct of it is kept back from any merc payment.
 type Ctx struct {
 	Gold, Kit    int
 	Difficulty   Difficulty
@@ -46,7 +46,11 @@ type Ctx struct {
 	Knobs                           Knobs
 }
 
-func (c Ctx) spendable() int { return c.Gold - c.Kit }
+// need is the gold a merc payment takes: price x mult, plus KitReservePct of the full kit refill (Kit). Potions come
+// first: the kit reserve stays in the purse when the merc is paid.
+func (c Ctx) need(price, mult int) int {
+	return price*mult + c.Kit*c.Knobs.KitReservePct/100
+}
 
 func no(why string) Decision { return Decision{Reason: why} }
 func yes() Decision          { return Decision{Do: true, Reason: ReasonOK} }
@@ -123,7 +127,7 @@ func offerOK(o HireOffer, c Ctx) Decision {
 	default:
 		return no(ReasonClass)
 	}
-	if o.Price <= 0 || c.spendable() < o.Price*c.Knobs.HireGoldMult {
+	if o.Price <= 0 || c.Gold < c.need(o.Price, c.Knobs.HireGoldMult) {
 		return no(ReasonGold)
 	}
 	return yes()
@@ -190,7 +194,7 @@ func hasGear(s MercState) bool {
 	return false
 }
 
-// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the TP and potions kit,
+// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the kit reserve, with a TP and potions,
 // at most reviveMaxPerHour times an hour; more than stopDeathsPerHour merc deaths in the hour raises the gold bar to
 // stopGoldMult x price. price is the quote read from the dialog, or 0 to use the formula (needs the merc level).
 func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
@@ -218,7 +222,7 @@ func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
 	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
 		mult, why = c.Knobs.StopGoldMult, ReasonStopped
 	}
-	if c.Gold < mult*price {
+	if c.Gold < c.need(price, mult) {
 		return no(why), price
 	}
 	return yes(), price

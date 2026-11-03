@@ -8,6 +8,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/gear"
+	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/task"
 )
 
@@ -115,8 +116,20 @@ func (r *Runner) areaGuardWhy(s *d2.Snapshot, a int) string {
 	return ""
 }
 
+// MercGoldFarm is set by the merc wiring (cmd/d2bot/mercwire.go): true while the merc is missing, gold cannot pay the
+// next merc action and the character is below merc.goldFarmMaxLevel. nil = never.
+var MercGoldFarm func(s *d2.Snapshot) bool
+
 // guardedAreas adds the Monastery road and the tower to ex while their guards are closed, so the level picker never offers it.
+// While the gold farm is on (Normal act 1) every area outside merc.FarmAreas is added too.
 func (r *Runner) guardedAreas(s *d2.Snapshot, ex map[int]bool) {
+	if f := MercGoldFarm; f != nil && s != nil && s.Player != nil && s.Player.Difficulty == d2.Normal && s.Player.Act == 0 && f(s) {
+		for a := 2; a <= 132; a++ {
+			if !merc.FarmAreas[a] {
+				ex[a] = true
+			}
+		}
+	}
 	if r.denGated(s) {
 		ex[areaDenOfEvil] = true // the Den waits for its class floor (campaign.denMinLevel*): level in Blood Moor
 	}

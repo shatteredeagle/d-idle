@@ -1,0 +1,67 @@
+# batch 2 bundle head 824da884 (local/batch2-bundle-r3) on upstream main 005c7cab: raw results (worker host; sanitized). Card b2rebase2, 2026-11-03.
+# Run at normal priority before Gate 1 (5th run) started; the damage-roll differentials, Teleport seed 9, the split-branch builds, the WSL lane and MSVC 14.51 were NOT re-run (see the body, section 'Not re-run').
+
+## parity.sh --tree fork/wt-b2r3 --branch local/batch2-bundle-r3 --extra-tests 'test_sk_mana test_tele_spot' --gate no
+stage      rc      wall_s  note
+guard      0            1  
+g-cfg      0            3  
+g-suites   0          161  
+g-all      1          441  info only: every g++ target, known unrelated failures do not count
+c-cfg      0            4  
+c-suites   0          122  
+run        0            4  
+extra      0           78  
+tidy       0          180  
+TOTAL      0          785  phase A 605s, phase B 180s
+g-all rc 1 is info only: GCC 16 -Werror=maybe-uninitialized / array-bounds in apps/d2d (ui.cpp, town/walk.cpp) and tests/test_protocol.cpp, files this branch does not touch.
+suites run on the g++ build (rc 0 each): test_rules test_game_rules test_monsters test_monster_thinks test_monster_ai test_combat test_game test_sk_ground test_sk_mana test_tele_spot; clang++ build: same suites build.
+
+## pr_guard per commit and range (parity guard stage)
+pr_guard: 0 FAIL, 0 WARN against upstream/main
+pr_guard: 0 FAIL, 0 WARN against 486e8ff1b7dc1b112a8a2e8127200ef1121329ee~1
+pr_guard: 0 FAIL, 0 WARN against 4fd9b356a62052ade031b3ef70b46d4b91a058ed~1
+pr_guard: 0 FAIL, 0 WARN against 9dda101266f5717c86ff76e48b10b510abd0f623~1
+pr_guard: 0 FAIL, 0 WARN against 824da8841e7f889be2bcd3664ea2d12a5e21e92b~1
+tidy stage: rc 0 (findings only on lines this branch did not add: components/drlg/outdoor.hpp, rules/merc.hpp, rules/pets.hpp binding names x y)
+
+## presubmit.py --quick --base upstream/main --build <gcc build dir> (the #180 form: GCC + clang-tidy on the changed files)
+presubmit: local/batch2-bundle-r3 in <fork worktree>, against upstream/main
+ok    attribution: no co-author or AI lines in the commit messages
+ok    whitespace: 17 files
+WARN  siblings: unit kinds: the diff touches player, merc, pet, monster, not co-op partner. Same rule there? Say so in the PR if not.
+WARN  siblings: hit paths: the diff touches missile, skill, not melee. Same rule there? Say so in the PR if not.
+WARN  docs-sync: code changed, no .md changed: todo.md row, the system's doc, README?
+ok    short-names: no 1-2 letter names added
+ok    sorted: includes, source lists and address tables in order
+WARN  build: skipped (--quick): no build or ctest
+ok    gcc: 230 TUs, g++ -Wshadow -Wconversion -Wno-sign-conversion -Werror
+ok    clang-tidy: 230 TUs (453 findings on lines this branch didn't add; CI's older tidy may not flag them)
+presubmit: 0 FAIL, 4 WARN. Answer each WARN (fix, or one line in the PR body), then read the diff against tools/review-checklist.md.
+
+## differentials (b2r3_diff.sh; Teleport seed 9 was stopped when Gate 1 started)
+== mana gen 100000 7
+cases 190840 game answers 190840
+base: compared 105978 of 190840 (no cast path: 84862), equal 105697, different 281
+  by kind {'game casts, d2d refuses': 281}
+  by skill {'54': 74, '28': 72, '22': 68, '88': 67}
+head: compared 105978 of 190840 (no cast path: 84862), equal 105978, different 0
+  by kind {}
+  by skill {}
+== tele gen 100000 1
+cases 100000 {'free target': 52539, 'target room not near': 40974, 'Teleport 0': 5026, 'target blocked': 1461}
+game lands 54000
+build 0: equal 73419 of 100000; equal by class {'free target': 52539, 'target room not near': 15854, 'Teleport 0': 5026}
+  different {'target blocked / game lands, d2d refuses': 1461, 'target room not near / game refuses, d2d lands': 25120}
+build 1: equal 98539 of 100000; equal by class {'free target': 52539, 'target room not near': 40974, 'Teleport 0': 5026}
+  different {'target blocked / game lands, d2d refuses': 1461}
+build 2: equal 100000 of 100000; equal by class {'free target': 52539, 'target room not near': 40974, 'Teleport 0': 5026, 'target blocked': 1461}
+  different {}
+== tele gen 100000 9
+EXIT 143
+
+## NOT run (ready-to-run checklist; heavy stages go to the build machine, whose gate allows weekdays only 21:00 to 06:00)
+1. Bundle from the fork: on the worker host, in the fork worktree of the r3 branch: git bundle create ~/d2d-lab/b2r3.bundle local/batch2-bundle-r3 refs/remotes/upstream/main (already made); scp it to the build machine host.
+2. WSL lane: the ops repo build-machine parity script --linux --labels "base bundle-r3" --bundle b2r3.bundle   (label bundle-r3 maps to ref local/batch2-bundle-r3; base = upstream/main)
+3. MSVC 14.51: add the ops repo job file b18-b2r3.cmd (copy b18-b2r2.cmd with "b2r3 local/batch2-bundle-r3") and b18-b2r3base.cmd (ref 005c7cab), then the ops repo build-machine parity script --msvc18 --bundle b2r3.bundle --labels "b2r3base b2r3"
+4. Teleport seed 9 and the damage sets, one at a time, after the gate run ends (about 08:30) or on the build machine: bash tools/emu/b2r3_diff.sh (seed 9 is its last block); bash tools/emu/b2r3_dmg.sh (needs v3_*, v4_*, mdmg2* harness files beside it; they are untracked copies from the b2bundle worktree)
+5. Split heads: tools/parity.sh --tree d2d-lab/fork/wt-b2r3-A --branch local/batch2-mana-teleport --tag b2r3A and --tree d2d-lab/fork/wt-b2r3-B --branch local/batch2-monsterdmg-pr --tag b2r3B
