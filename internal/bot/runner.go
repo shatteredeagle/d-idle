@@ -121,6 +121,7 @@ type Runner struct {
 	decMu         sync.Mutex        // decisions
 	decisions     []decisionNote    // last planner/runner decisions for the planner dump (deathrule.go)
 	avoidWhy      map[int]string    // producer of each avoid entry (areaskip.go), guarded by obMu
+	targetFails   map[int]int       // consecutive failed walks to a leveling target (areaskip.go), guarded by obMu
 	crossLog      []time.Time       // recent "walked over an area border" re-plans (noteCrossing), guarded by obMu
 	hmu           sync.Mutex        // lastError and ladderStep
 	lastError     string
@@ -261,6 +262,7 @@ func New(e *env.Env, d Deps, cfg Config) (*Runner, error) {
 	r.loop.cleared = map[int]bool{}
 	r.avoid = map[int]time.Time{}
 	r.avoidWhy = map[int]string{}
+	r.targetFails = map[int]int{}
 	dl, err := loadDeathLog(r.cfg.DeathLogPath)
 	if err != nil {
 		e.Log.Warn("death log not loaded, starting empty", "err", err)
