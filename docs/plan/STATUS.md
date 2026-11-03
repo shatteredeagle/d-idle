@@ -64,6 +64,7 @@
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
+| [verifycovmissiles](../../openspec/changes/verifycovmissiles/) | in-progress | verifycovmissiles | `docs/research/verifycovmissiles-trace.md`<br>`tools/emu/vcm_*`<br>`openspec/changes/verifycovmissiles/**` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
@@ -123,16 +124,17 @@
 - change skmiss: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change skresistfix: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
+- change verifycovmissiles: changecheck -cli 0 warnings; leakcheck -mode fail 0; coverage.py --check; tools/ci/check.sh; openspec validate --all --strict
 
 ### Recent merges
-- c422e2e6 11-03 16:02 `Merge agent/gate2analysis: branchclean LAND: gate2analysis` (gate2analysis)
-- c07b111b 11-03 16:01 `merge origin/main into gate2analysis` (gate2analysis)
-- d454194e 11-03 15:52 `Merge agent/verifyskdruid: branchclean LAND: verifyskdruid` (verifyskdruid)
-- c790f34a 11-03 15:51 `merge origin/main into verifyskdruid` (verifyskdruid)
-- 5b384cc0 11-03 15:50 `merge origin/main into gate2analysis` (gate2analysis)
-- f329c33e 11-03 15:43 `Merge agent/verifyskassassin: branchclean LAND: verifyskassassin` (verifyskassassin)
-- 3154c992 11-03 15:43 `merge origin/main into verifyskassassin` (verifyskassassin)
-- 28360dab 11-03 15:18 `Merge agent/branchclean: branch cleanup plan` (branchclean)
-- 5c536c50 11-03 15:17 `merge origin/main into branchclean` (branchclean)
-- 3f127d9d 11-03 15:14 `Merge agent/gate3gaps: Gate 3 requirement gaps delta spec` (gate3gaps)
+- d09e28fe 11-02 17:50 `Merge agent/tomestat: TOMESTAT: carried and ground items no longer share one map in d2dsrc (ground ids collided with the tome's), so the field dump keeps the tome's charge stat 70 (Gate 2 trip loop root cause; offline tests)` (tomestat)
+- cda4be88 11-02 17:49 `merge origin/main into tomestat` (tomestat)
+- a788442f 11-02 17:42 `Merge agent/townshop: TOWNSHOP: resupply budget inside the buy loops and a 2-scroll proof after a portal-empty report with a readable tome (Gate 2 trip loop; offline tests)` (townshop)
+- 85fd1005 11-02 17:41 `merge origin/main into townshop` (townshop)
+- 597e972f 11-02 17:29 `Merge agent/mercwire: MERCWIRE: wait for the Rogue after portal or waypoint, leave when the crowd rule fires with her down, healing potion to the merc below 50 percent, persisted Lut Gholein first-visit flag (offline tests)` (mercwire)
+- ce30a061 11-02 17:29 `merge origin/main into mercwire` (mercwire)
+- fdbc3340 11-02 17:17 `Merge agent/mercpolicy: MERCPOLICY: merc.enabled default on, revive and Act 2 hire spending order, no-merc Monastery floor 14, gold farm while missing; delta specs; offline tests (hire reader and field rules not wired yet)` (mercpolicy)
+- 99aa1c20 11-02 17:17 `merge origin/main into mercpolicy` (mercpolicy)
+- b6d21b1b 11-02 17:12 `Merge agent/credit177: CREDIT177: upstream PR 177 merged; CONTRIBUTORS, credits ledger, changelog (docs only)` (credit177)
+- cde0413e 11-02 16:51 `Merge agent/mercfix: MERCFIX: route guards read the dump merc when the policy is off; claim verified after the grant with bounded retries (Gate 2 root cause; offline tests)` (mercfix)
 <!-- statusgen:end -->
