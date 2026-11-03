@@ -1,6 +1,7 @@
 package bot
 
 import (
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
 	"os"
 	"path/filepath"
@@ -249,5 +250,36 @@ func TestPickStonyFieldMeleeEnter(t *testing.T) {
 		if !ok || (st.Area == 4) != c.stony {
 			t.Errorf("clvl %d melee %v: area %d ok %v, want Stony Field %v", c.lvl, c.melee, st.Area, ok, c.stony)
 		}
+	}
+}
+
+// Gate 1 0628: with Dark Wood and Black Marsh out of reach the fallback farmed Cold Plains (3.4 XP per kill at clvl 13)
+// while better areas were open. The old fallback is the last step in progression order; with an XP estimate it is the
+// eligible step with the best XP per kill.
+func TestPickFallbackByXP(t *testing.T) {
+	step := func(a, enter, leave int) Step { return Step{Area: a, Name: "a", EnterLvl: enter, LeaveLvl: leave} }
+	p := &Plan{Areas: map[int]AreaInfo{}, Steps: map[string][]Step{"normal": {
+		step(17, 6, 10), step(9, 6, 10), step(3, 5, 10), step(4, 8, 12), step(5, 9, 13), step(6, 10, 14),
+	}}}
+	xp := func(st Step) float64 { return areaXP(11, st.Area, normalMLvl[st.Area], d2.Normal) }
+	o := PickOptions{Exclude: map[int]bool{4: true, 5: true, 6: true}, Slack: 1}
+	old, _ := p.Pick("normal", 11, o)
+	if old.Area != 3 {
+		t.Fatalf("setup: the old fallback should be the poor last step, got %d", old.Area)
+	}
+	o.XP = xp
+	got, ok := p.Pick("normal", 11, o)
+	if !ok || got.Area == 3 || xp(got) <= xp(old) {
+		t.Fatalf("by XP: got %d (%.1f), old %d (%.1f)", got.Area, xp(got), old.Area, xp(old))
+	}
+	// the preferred step is open: the plan order stands even with an estimate
+	o.Exclude = map[int]bool{17: true}
+	if s, _ := p.Pick("normal", 11, o); s.Area != 6 {
+		t.Errorf("preferred area open: got %d", s.Area)
+	}
+	// nothing excluded: no change either
+	o.Exclude = nil
+	if s, _ := p.Pick("normal", 11, o); s.Area != 6 {
+		t.Errorf("no exclusion: got %d", s.Area)
 	}
 }

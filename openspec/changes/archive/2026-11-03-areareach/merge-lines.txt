@@ -1,0 +1,3 @@
+BACKLOG: areareach: unreachable() walks the level chain between waypoints from any area; Pick fallback ranked by XP per kill; fixes the Gate 1 0628 area choice; docs/research/areareach.md
+INDEX: docs/research/areareach.md: why Dark Wood and Black Marsh were unreachable in Gate 1 run 0628
+CHANGELOG: areareach: the leveling planner no longer refuses Dark Wood or Black Marsh when it stands in a field without a waypoint, and a fallback area is chosen by XP per kill

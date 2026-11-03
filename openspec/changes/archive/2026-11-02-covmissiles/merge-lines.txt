@@ -1,0 +1,3 @@
+BACKLOG: covmissiles: missiles first pass done (docs/research/covmissiles-trace.md): D1 hit roll proven on 8 more skills, table and flight values of all 684 rows run; open: D2 d2d loads 302 of 684 rows, D3 CollideFriend and CollideType unread by d2d, D4 pierce rule, B1 RangeAt off by one LevRange, B2 threat speed ignores Accel and VelLev, B3 derived skill kind
+INDEX: docs/research/covmissiles-trace.md - missiles coverage first pass: table values, flight formulas and hit roll of the Sorceress and Paladin rows (covmissiles)
+CHANGELOG: covmissiles: missiles coverage first pass (docs/research/covmissiles-trace.md, tools/emu/cm_*): 138,000 hit cases and 13,680 table and flight cases run against game.exe, missiles run-tested 9 to 42 percent

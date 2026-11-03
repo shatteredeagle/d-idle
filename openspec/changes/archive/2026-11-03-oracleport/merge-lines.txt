@@ -1,0 +1,4 @@
+BACKLOG: - ORACLEPORT: upstream batch 2 as two PRs with the oracles in the tree: A `local/batch2-A-r5` (41afdc6a: mana floor, Teleport room rule, nearest spot) then B `local/batch2-B-r2` (0399e357: monster damage roll), on upstream main e1eea02a; bodies in docs/research/pr-batch2-A-body.md and pr-batch2-B-body.md; the user decides when to open
+INDEX: - docs/research/pr-batch2-A-body.md: PR body of upstream batch A (mana floor, Teleport) to the maintainer template, Claims table, re-check commands, counts on the head
+INDEX: - docs/research/pr-batch2-B-body.md: PR body of upstream batch B (monster damage roll with its oracle monster_damage.py), limits (Energy Shield), counts on the head
+CHANGELOG: - docs: upstream batch 2 PR bodies A and B with the oracles ported to the maintainer rules (private fork branches local/batch2-A-r5, local/batch2-B-r2).

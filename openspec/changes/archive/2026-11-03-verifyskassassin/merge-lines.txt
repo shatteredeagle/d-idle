@@ -1,0 +1,3 @@
+BACKLOG: verifyskassassin: SKASSASSIN verified with an own harness (game.exe FUN_0056c160 / FUN_0056bfe0 natively on ids 251..280, levels 1..99, 39,305 cases: 0 model mismatches, 0 differences against d2d's mana_cost); first pass right on all 30 srvdofunc, wrong on srvstartfunc (23 for all six charge-ups) and on calling d2d's floored rule game.exe's; second pass not found; charge-ups, traps, shadows still U; docs/research/verifyskassassin.md
+INDEX: docs/research/verifyskassassin.md: independent verifier of SKASSASSIN (own emulator harness, game.exe vs d2d mana differential, claim verdicts)
+CHANGELOG: verifyskassassin: independent verification of the Assassin skills first pass; mana check and payment V run on both sides, no deviation, no PR candidate

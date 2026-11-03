@@ -88,7 +88,7 @@ func TestNearTownCoversEveryAct(t *testing.T) {
 			t.Errorf("area %d must be near town", a)
 		}
 	}
-	for _, a := range []int{0, 1, 4, 40, 42, 109} {
+	for _, a := range []int{0, 1, 4, 5, 6, 7, 9, 10, 17, 40, 42, 109} { // 4-17: chain walk only (codefix F1)
 		if nearTown(a) {
 			t.Errorf("area %d must not be near town", a)
 		}

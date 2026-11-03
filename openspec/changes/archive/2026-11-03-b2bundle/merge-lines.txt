@@ -1,0 +1,3 @@
+BACKLOG: B2BUNDLE: batch 2 bundle `local/batch2-bundle` on upstream main 3e073888 (4 commits, private remote); PR body drafted in docs/research/pr-batch2-body.md; the user decides staging and opening
+INDEX: docs/research/pr-batch2-body.md: PR title and body for the batch 2 bundle (minmana floor, Teleport, monster damage roll), counts on the bundle head
+CHANGELOG: b2bundle: batch 2 bundle branch on upstream main and its PR body (docs/research/pr-batch2-body.md); nothing pushed upstream

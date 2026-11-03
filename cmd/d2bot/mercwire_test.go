@@ -6,12 +6,15 @@ import (
 	"errors"
 	"log/slog"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"testing"
 	"time"
 
 	"d2lod-bot/internal/bot"
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/d2denv"
 	"d2lod-bot/internal/env"
@@ -509,5 +512,190 @@ func TestGoldFarmFollowsMerc(t *testing.T) {
 	w.curAt = time.Time{}
 	if w.GoldFarm(field(300, 11)) {
 		t.Error("living merc: no farm")
+	}
+}
+
+// ---- card mercwire: wait, first-visit flag on disk, field hooks ----
+
+type snapReader struct {
+	d2.StateReader
+	snaps []*d2.Snapshot // one per call, the last one repeats
+	n     int
+}
+
+func (r *snapReader) Snapshot() (*d2.Snapshot, error) {
+	s := r.snaps[min(r.n, len(r.snaps)-1)]
+	r.n++
+	return s, nil
+}
+
+type mwClock struct{ slept time.Duration }
+
+func (c *mwClock) Now() time.Time        { return time.Unix(5000, 0).Add(c.slept) }
+func (c *mwClock) Sleep(d time.Duration) { c.slept += d }
+
+func fieldSnap(mercAt *d2.Unit) *d2.Snapshot {
+	s := &d2.Snapshot{Player: &d2.Player{Area: 3, Act: 0, X: 100, Y: 100, Level: 10}}
+	if mercAt != nil {
+		s.Monsters = []d2.Unit{*mercAt}
+	}
+	return s
+}
+
+func waitWire(t *testing.T, st merc.MercState, snaps ...*d2.Snapshot) (*mercWire, *bytes.Buffer, *mwClock) {
+	t.Helper()
+	w, buf, _ := testWire(t, &fakeReader{st: st}, nil)
+	ck := &mwClock{}
+	w.e.Clock = ck
+	w.e.Read = &snapReader{snaps: snaps}
+	return w, buf, ck
+}
+
+var aliveRogue = merc.MercState{Known: true, Owned: true, Alive: true, Class: merc.ClassRogue}
+
+func TestWaitForMercEndsWhenSheArrives(t *testing.T) {
+	far := &d2.Unit{Class: merc.ClassRogue, X: 130, Y: 100, Mode: d2.MonModeStand}
+	near := &d2.Unit{Class: merc.ClassRogue, X: 104, Y: 101, Mode: d2.MonModeStand}
+	w, buf, ck := waitWire(t, aliveRogue, fieldSnap(nil), fieldSnap(far), fieldSnap(near))
+	w.WaitForMerc(context.Background(), "portal")
+	if ck.slept != 2*mercWaitStep {
+		t.Errorf("waited %v, want two steps", ck.slept)
+	}
+	out := buf.String()
+	if !strings.Contains(out, "merc: waiting for the merc why=portal") || !strings.Contains(out, "merc: wait over waited_ms=1000 near=true") {
+		t.Errorf("log:\n%s", out)
+	}
+}
+
+func TestWaitForMercIsBounded(t *testing.T) {
+	w, buf, ck := waitWire(t, aliveRogue, fieldSnap(nil))
+	w.WaitForMerc(context.Background(), "waypoint")
+	if ck.slept != mercWaitMax {
+		t.Errorf("waited %v, want the bound %v", ck.slept, mercWaitMax)
+	}
+	if !strings.Contains(buf.String(), "wait over waited_ms=6000 near=false") {
+		t.Errorf("log:\n%s", buf)
+	}
+}
+
+func TestWaitForMercSkips(t *testing.T) {
+	town := fieldSnap(nil)
+	town.Player.Area = 1
+	for name, c := range map[string]struct {
+		st   merc.MercState
+		snap *d2.Snapshot
+	}{
+		"dead":    {merc.MercState{Known: true, Owned: true}, fieldSnap(nil)},
+		"none":    {merc.MercState{Known: true}, fieldSnap(nil)},
+		"unknown": {merc.MercState{}, fieldSnap(nil)},
+		"town":    {aliveRogue, town},
+	} {
+		w, buf, ck := waitWire(t, c.st, c.snap)
+		w.WaitForMerc(context.Background(), "portal")
+		if ck.slept != 0 || buf.Len() != 0 {
+			t.Errorf("%s: waited %v, log %q", name, ck.slept, buf)
+		}
+	}
+}
+
+func TestWaitHookOnlyWithTheWiring(t *testing.T) {
+	old := bot.MercWait
+	defer func() { bot.MercWait = old }()
+	bot.MercWait = nil
+	var s d2denv.Seams
+	installMercSeam(&s)
+	if bot.MercWait != nil {
+		t.Error("hook set by the seam installer alone (knob off path)")
+	}
+}
+
+func TestFirstVisitFlagSurvivesRestart(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "merc.json")
+	old := mercStatePath
+	mercStatePath = path
+	defer func() { mercStatePath = old }()
+	snap := func(name string) *d2.Snapshot { s := lutSnap(5000); s.Player.Name = name; return s }
+
+	rd := &fakeReader{st: rogueWithGear()}
+	w, _, _ := testWire(t, rd, nil)
+	h := &fakeHirer{rows: desertRows, paid: 400}
+	w.hirer = h
+	if got := w.HireStep(context.Background(), snap("Fresha")); got != "merc hired" {
+		t.Fatalf("first visit: %q", got)
+	}
+	// a new bot process: new wiring, same file
+	w2, _, _ := testWire(t, &fakeReader{st: rogueWithGear()}, nil)
+	h2 := &fakeHirer{rows: desertRows, paid: 400}
+	w2.hirer = h2
+	if got := w2.HireStep(context.Background(), snap("Fresha")); got != "" || h2.closed != 0 || len(h2.hired) != 0 {
+		t.Errorf("after a restart the visit was repeated: %q hired %v", got, h2.hired)
+	}
+	// per character: another name still has its first visit
+	if got := w2.HireStep(context.Background(), snap("Soaky")); got != "merc hired" {
+		t.Errorf("other character: %q", got)
+	}
+	// per difficulty: Nightmare is a new first visit
+	nm := snap("Fresha")
+	nm.Player.Difficulty = d2.Nightmare
+	if got := w2.HireStep(context.Background(), nm); got != "merc hired" {
+		t.Errorf("nightmare: %q", got)
+	}
+	b, err := os.ReadFile(path)
+	if err != nil || !strings.Contains(string(b), `"Fresha":[0,1]`) {
+		t.Errorf("file %q err %v", b, err)
+	}
+}
+
+func TestFirstVisitDeclineIsPersistedButGoldDeclineIsNot(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "merc.json")
+	old := mercStatePath
+	mercStatePath = path
+	defer func() { mercStatePath = old }()
+	w, _, _ := testWire(t, &fakeReader{st: rogueWithGear()}, nil)
+	h := &fakeHirer{rows: desertRows, paid: 400}
+	w.hirer = h
+	poor := lutSnap(100)
+	poor.Player.Name = "Fresha"
+	w.HireStep(context.Background(), poor)
+	if _, err := os.Stat(path); err == nil {
+		t.Error("a decline for gold left the visit open, it must not be written")
+	}
+	// a corrupt file is no reason to stop
+	os.WriteFile(path, []byte("{nope"), 0o644)
+	w2, _, _ := testWire(t, &fakeReader{st: rogueWithGear()}, nil)
+	w2.hirer = &fakeHirer{rows: desertRows, paid: 400}
+	rich := lutSnap(5000)
+	rich.Player.Name = "Fresha"
+	if got := w2.HireStep(context.Background(), rich); got != "merc hired" {
+		t.Errorf("corrupt state file: %q", got)
+	}
+}
+
+func TestFighterSeamGetsTheMercStateOnlyWithTheKnob(t *testing.T) {
+	cb := &combat.Fighter{}
+	s := d2denv.Seams{Fighter: func(*env.Env, *nav.Navigator) bot.Fighter { return fighterAdapter{cb} }}
+	installMercSeam(&s)
+	dt := env.DefaultTuning()
+	tune := &dt
+	e := &env.Env{Tune: tune, Log: slog.Default()}
+	tune.Merc.Enabled = 0
+	s.Fighter(e, nil)
+	if cb.MercState != nil {
+		t.Error("field rules installed with the knob off")
+	}
+	tune.Merc.Enabled = 1
+	latestMerc.Store(nil)
+	s.Fighter(e, nil)
+	if cb.MercState == nil {
+		t.Fatal("field rules not installed with the knob on")
+	}
+	if _, err := cb.MercState(); err == nil {
+		t.Error("state answered without a running wiring")
+	}
+	w, _, _ := testWire(t, &fakeReader{st: aliveRogue}, nil)
+	latestMerc.Store(w)
+	defer latestMerc.Store(nil)
+	if st, err := cb.MercState(); err != nil || !st.Alive {
+		t.Errorf("state %+v err %v", st, err)
 	}
 }

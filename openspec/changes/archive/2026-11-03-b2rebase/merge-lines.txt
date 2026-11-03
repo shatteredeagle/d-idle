@@ -1,0 +1,3 @@
+BACKLOG: B2REBASE: batch 2 bundle rebased onto upstream main 552acc9a (PR 178 merged): `local/batch2-bundle-r2` head 6f036a40, private remote; all checks and differentials re-run, numbers unchanged; PR body updated, the user decides staging and opening
+INDEX: docs/research/pr-batch2-run.txt: raw results of the batch 2 bundle on upstream main 552acc9a (suites, CI checks, differentials, MSVC 14.51, WSL lane)
+CHANGELOG: b2rebase: batch 2 bundle rebased onto upstream main 552acc9a, PR body and run record refreshed; nothing pushed upstream

@@ -155,6 +155,26 @@ A property that must hold on every run whatever the axes: no hang past the stall
 **competence**:
 How well a sound run plays: XP/h, kills/h, time to a boss. Judged only on runs that kept the **invariants**. Not the same as **power / danger / readiness** (the in-game risk model).
 
+**Gate A**:
+The game.exe acceptance rung after the d2d gate ladder: 2 h, then 8 h, then 24 h on a hidden game.exe lane, fresh uncheated character, `writes after start: 0`. Passing it is the project's done (G-A). ADR 0015.
+_Not to be confused with_: Gate 0 to 3, which run on d2d and judge stability.
+
+**acceptance run**:
+A Gate A run, or the 24 h run that closes G-A. Counts only when the character is fresh and `writes after start` is 0. ADR 0015.
+
+**seed set**:
+The seeds of one gate verdict: at least 5, of which at least 2 are holdout seeds (16 to 23). XP/h is judged on the set, never as a per-run pass or fail. Spec `soak-gates`, ADR 0015.
+
+**milestone time**:
+Virtual hours from a fresh character to a named milestone (Andariel dead, Act 2 entered, Duriel dead), per seed, with deaths. The headline progress metric; XP/h is a diagnostic. ADR 0015.
+
+**poverty window**:
+A stretch over 5 minutes without a healing potion outside town while pack plus stash gold never reaches the price of one Minor Healing Potion (30). Reported, not failing. Spec `soak-gates` (belt rule, delta of 2026-11-03).
+_Not to be confused with_: funded window, poverty loop.
+
+**funded window**:
+The same stretch when pack plus stash gold covers one Minor Healing Potion at some minute. This one fails Gate 1 (the bot could have bought and drunk). Spec `soak-gates`.
+
 **holdout seed**:
 A seed never used for tuning, fitting or diagnosis (seeds 16 to 23), reported as its own group. See **paired A/B** for how tuning runs are compared.
 

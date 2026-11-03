@@ -1,0 +1,3 @@
+BACKLOG: - TOWNSHOP: Gate 2 NOKILL 15 root cause is a false-empty portal trip loop (stat 70 dropped in the field), not single buy clicks; chore budget inside buy loops and a 2-scroll proof top-up (docs/townshop.md); awaits a live check
+INDEX: docs/townshop.md - Gate 2 town resupply analysis and fix
+CHANGELOG: - fix: town resupply stops at its time budget inside the buy loops, and a portal-empty report with a readable tome buys 2 scrolls, not a refill (docs/townshop.md).
