@@ -319,12 +319,20 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 
 // buyFirstTP buys one town portal scroll when the pack holds none and the gold allows (resource.BuyKit, priced from
 // the vendor's actual stock), so the potions bought next only get what is left.
-func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) error {
+//
+// beforeKit is the pass ahead of the kit potions, for a character that carries a tome with nothing in it (the poor
+// character without a tome keeps the potions-first rule): the scroll goes first
+// as long as the gold still covers it plus TPScrollPotions healing potions (NAVEXIT21: after the kit potions the
+// 284 gold of Gate 1 ms1 seed 17 no longer covered the scroll, and the trip home had to be walked).
+func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport, beforeKit bool) error {
 	s, err := t.current()
 	if err != nil {
 		return err
 	}
-	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n > 0 || hasTome || t.tpTooPoor(s) {
+	// An empty tome is no portal source (NAVEXIT21, Gate 1 ms1 seed 17: clvl 9, empty tome, 284 gold, no scroll bought,
+	// the next trip had to walk): only a tome or scrolls that count above zero make the first scroll unnecessary.
+	n, hasTome := t.scrollCount(s, "tsc", "tbk")
+	if n > 0 || t.tomeQty(s) > 0 || t.tpTooPoor(s) || beforeKit && !hasTome {
 		return nil
 	}
 	stock, err := t.Stock(npc)
@@ -348,7 +356,11 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 	if potion == 0 {
 		potion = t.e.Tune.Resource.KitPotionGold
 	}
-	if !t.tpAllowedAt(s, price, potion) {
+	if beforeKit {
+		if s.Player.Gold < price+t.tune().TPScrollPotions*potion {
+			return nil
+		}
+	} else if !t.tpAllowedAt(s, price, potion) {
 		return nil
 	}
 	if price <= 0 || !resource.BuyKit(resource.Input{Gold: s.Player.Gold}, resource.Tuning{KitTPGold: price}).TP {

@@ -1,0 +1,3 @@
+BACKLOG: - NAVEXIT22: Blood Moor town gate dropped by a frame mix-up in nav borderGates (seed 17, camp east of the Blood Moor); fixed offline with a recorded replay; Gate 1 seed 17 re-run pending (docs/navexit22.md)
+INDEX: - docs/navexit22.md: seed 17 town exit root cause (border gate frames), recorded replies, live checklist
+CHANGELOG: - fix: nav border gates compare the neighbour's grid in the neighbour's own frame; the Blood Moor keeps its gate to the Rogue Encampment on seeds where the camp lies east of it (docs/navexit22.md).
