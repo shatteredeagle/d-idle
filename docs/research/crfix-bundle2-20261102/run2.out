@@ -1,0 +1,17 @@
+game fireball rc 0
+d2d fireball rc 0
+400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0
+cmp fireball rc 0
+game glacialspike rc 0
+d2d glacialspike rc 0
+400 trials: game.exe one record in 400, d2d three equal losses in 400, differ 0
+cmp glacialspike rc 0
+test_rules rc 0 test_rules: ok
+test_game_rules rc 0 OK: the Cursed umod's hit hook
+test_monsters rc 0 ok
+test_monster_thinks rc 0 ok
+test_monster_ai rc 0 ok
+test_combat rc 0 ok
+test_game rc 0 OK: two players: their own orders, the other in the View, the party arrives toge
+test_sk_ground rc 0 OK: a Fire Ball and a Glacial Spike burst roll once for every monster in it
+ALLDONE
