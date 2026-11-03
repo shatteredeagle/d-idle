@@ -2,7 +2,7 @@
 
 ```yaml
 change: gate3gaps
-status: in-progress
+status: archived
 agent: gate3gaps
 branch: agent/gate3gaps
 worktree: d2lod-wt/gate3gaps
@@ -16,6 +16,7 @@ result: "Design and delta spec written; docs only, not verified live (no run, no
 credit:
   author: owner
   agents: [Claude Code]
+merge: 3f127d9
 ```
 
 ## 1. Work

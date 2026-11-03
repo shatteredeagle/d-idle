@@ -54,7 +54,6 @@
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
-| [gate3gaps](../../openspec/changes/gate3gaps/) | in-progress | gate3gaps | `docs/research/gate3gaps.md`<br>`openspec/changes/gate3gaps/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -104,7 +103,6 @@
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
-- change gate3gaps: changecheck 0 new warnings, leakcheck 0 hits, merge_lines_check passes
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
@@ -127,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 013512a3 11-03 11:13 `Merge agent/sorcdiff: SORCDIFF: Sorceress skill differentials for the lightning build: the gate character casts only Charged Bolt, Frozen Armor, Frost Nova and Fire Bolt (never past clvl 15); 0 differences in skill_damage 116,000, static_field 229,664, chill_length, next_hit, armor_hit 109,604, freeze_rules 145,748; one proven deviation (Lightning and Chain Lightning cast length 19 vs 13 ticks), private fix branch` (sorcdiff)
-- 94b3dde9 11-03 11:13 `merge origin/main into sorcdiff` (sorcdiff)
-- 54ee48a6 11-03 11:07 `Merge agent/b2winworker: b2winworker: batch 2 r3 re-run on the Windows build worker (MSVC 14.51 0 warnings, ctest, WSL parity, damage-roll sets 0 differences; partial)` (b2winworker)
-- 72456d2e 11-03 11:06 `merge origin/main into b2winworker` (b2winworker)
-- f498e13e 11-03 10:59 `Merge agent/b2rebase2: b2rebase2: docs and emulator tools (analysis, verification, coverage; docs only)` (b2rebase2)
-- 6b31dec1 11-03 10:58 `merge origin/main into b2rebase2` (b2rebase2)
-- 9c7bf265 11-03 10:49 `Merge agent/verifydmg4: verifydmg4: docs and emulator tools (analysis, verification, coverage; docs only)` (verifydmg4)
-- 33798808 11-03 10:48 `merge origin/main into verifydmg4` (verifydmg4)
-- 158ac610 11-03 10:41 `Merge agent/verifydmg2: verifydmg2: docs and emulator tools (analysis, verification, coverage; docs only)` (verifydmg2)
-- 4015541d 11-03 10:40 `merge origin/main into verifydmg2` (verifydmg2)
+- 3f127d9d 11-03 15:14 `Merge agent/gate3gaps: Gate 3 requirement gaps delta spec` (gate3gaps)
+- 7f3a8b71 11-03 15:14 `merge origin/main into gate3gaps` (gate3gaps)
+- 22e8f09d 11-03 15:04 `Merge agent/ccmergecommit: changecheck skips GitHub synthetic Merge commits` (ccmergecommit)
+- 6357a5db 11-03 15:04 `merge origin/main into ccmergecommit` (ccmergecommit)
+- 4102351b 11-03 15:01 `Merge agent/codereview2: independent review of AREAREACH/CODEFIX/SPECDELTA, findings R1-R9` (codereview2)
+- e53b91c5 11-03 15:00 `merge origin/main into codereview2` (codereview2)
+- 0ba9a03c 11-03 14:13 `Merge agent/finala: merge origin/main into finala` (finala)
+- cdb7a79b 11-03 14:12 `merge origin/main into finala` (finala)
+- a1401fd3 11-03 13:45 `Merge agent/navexit22: navexit22: border gate frames (seed 17 Blood Moor to camp), recorded replay fixture, card` (navexit22)
+- a7a493b3 11-03 13:26 `Merge agent/reviewbatch2c: reviewbatch2c: independent Opus review of batch C (head 4ed8b651)` (reviewbatch2c)
 <!-- statusgen:end -->
