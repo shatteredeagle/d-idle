@@ -2,7 +2,7 @@
 
 ```yaml
 change: crfixbundle2
-status: in-progress
+status: archived
 agent: crfixbundle2
 branch: agent/crfixbundle2
 worktree: d2lod-wt/crfixbundle2
@@ -24,6 +24,7 @@ credit:
   agents: [Claude Code]
   verified_by: []
   consent: none
+merge: 360ba01
 ```
 
 - [x] 1 comments read and judged
