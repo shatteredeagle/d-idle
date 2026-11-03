@@ -2,7 +2,7 @@
 
 ```yaml
 change: ccmergecommit
-status: done
+status: archived
 agent: ccmergecommit
 branch: agent/ccmergecommit
 worktree: d2lod-wt/ccmergecommit
@@ -17,6 +17,7 @@ credit:
   author: owner
   agents: [Claude Code]
   consent: none
+merge: 22e8f09
 ```
 
 - [x] 1. Skip the synthetic merge commit subject
