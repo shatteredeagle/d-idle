@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 14d98c52 11-03 17:01 `merge origin/main into gate1fix` (gate1fix)
 - 83fa8d22 11-03 16:54 `Merge agent/palaura: PALAURA trace of Paladin aura filter, pulse damage, Prayer mana/state 85 (chuckado PR #19; checks fixed)` (palauratrace)
 - 69c7060b 11-03 16:52 `Merge agent/palaura: merge origin/main into chuckado's PALAURA trace (PR #19)` (palaura)
 - 45fa51c9 11-03 16:40 `Merge agent/prbuildground: branchclean LAND: prbuildground` (prbuildground)
@@ -136,5 +137,4 @@
 - f4ae491b 11-03 16:29 `Merge agent/verifyitemweapons: branchclean LAND: verifyitemweapons` (verifyitemweapons)
 - 552da13b 11-03 16:29 `merge origin/main into verifyitemweapons` (verifyitemweapons)
 - e29a501c 11-03 16:19 `Merge agent/verifycovstates: branchclean LAND: verifycovstates` (verifycovstates)
-- 88abddfd 11-03 16:19 `merge origin/main into verifycovstates` (verifycovstates)
 <!-- statusgen:end -->
