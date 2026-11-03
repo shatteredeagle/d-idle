@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Research: PR draft for the ground and burst bundle (standing-missile hit area, one roll per Fire Ball / Glacial Spike burst), proven on the real d2d build against game.exe; local branch only, no PR.
 - Independent verification of the level areas trace (docs/research/verifylevelsareas.md); no tool or ledger change.
 - Independent verification of the weapon-bases first pass (docs/research/verifyitemweapons.md) and tools/emu/viw_count.py; no ledger change.
 - VERIFYCOVSTATES: docs/research/verifycovstates-trace.md and tools/emu/vcs_*: own differential of game.exe FUN_0057aae0 / FUN_0057ac50 against the real d2d Fight::land (38,596 stun and 60,000 poison cases), state-bit probe, ledger rows states 21 and 2; no code change
