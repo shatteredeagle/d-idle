@@ -10,3 +10,7 @@ Gate 1 seed 19: a death at minute 155 left gold 0; minutes 158-175 the character
 ## Impact
 
 Recovery characters with 0 potions and one potion's gold restock early. U: not run live or in a gate.
+
+## Overlap (declared)
+
+fixbelt also lists internal/resource/recovery.go; this card only appends RecoveryKitTrip at the end of the file.

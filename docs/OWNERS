@@ -122,3 +122,5 @@ tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
 openspec/changes/recoverykit/**  recoverykit  recoverykit
 internal/resource/recoverykit_test.go  recoverykit  recoverykit
+internal/resource/recovery.go  recoverykit  recoverykit
+internal/bot/goal.go  recoverykit  recoverykit
