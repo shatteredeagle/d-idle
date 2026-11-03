@@ -2,7 +2,7 @@
 
 ```yaml
 change: verifyskdruid
-status: in-progress
+status: archived
 agent: verifyskdruid
 branch: agent/verifyskdruid
 worktree: d2lod-wt/verifyskdruid
@@ -24,6 +24,7 @@ credit:
   verified_by: []
   agents: [Claude Code]
   consent: none
+merge: d454194
 ```
 
 - [x] 1 Own disassembly reading of FUN_00646ca0, 0x646be0, FUN_00646460, FUN_00646c00, FUN_006442a0
