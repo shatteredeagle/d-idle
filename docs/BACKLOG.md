@@ -401,6 +401,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - FINALA: upstream guard fix as its own PR (`local/guardfix-3` 93851bef, fork `guardfix-3`) then batch A (`local/batch2-A-r9` 57d7c39b, fork `batch2-A-r9`) on upstream main 9785632c; texts in docs/research/pr-guardfix-body.md and pr-batch2-A-final-body.md; the lead opens both, guard fix first
 - codereview2 - second independent review (AREAREACH, CODEFIX, SPECDELTA): fix R1 walk limit vs failed waypoint jumps, R2 target-walk-timeout loop, R3 no exposure gate on long walks, R5 Burial Grounds in the XP fallback, R6 missing monster levels in stepXP
 - gate3gaps work packages (resource sampling and slopes first, smoke rung, inventory and recycle rules): docs/research/gate3gaps.md
+- BRANCHCLEAN: triage every unmerged agent/* branch (land the valuable docs, fold single useful files into a digest, tag then delete the superseded ones, keep in-flight work), plan in docs/research/branch-cleanup-plan.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
