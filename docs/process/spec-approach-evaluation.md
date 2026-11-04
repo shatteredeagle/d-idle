@@ -1,5 +1,7 @@
 # Spec / documentation / alignment approach: evaluation for d2lod-bot (2026-10-30)
 
+> status: 2026-10-30 evaluation; its OpenSpec-shaped change-card adoption is superseded: OpenSpec is retired for new work (user, 2026-11-04). Current truth: docs/decisions.md.
+
 Agent SPECRESEARCH-B, docs only. Tags: **V** = I fetched the primary page (URL given), **S** = secondary (snippet, blog, search summary), **U** = unverified / from memory or my judgement. Target is this repo as of master 6a6ff58. Web facts were fetched 2026-10-30 with a small-model summariser (WebFetch), so wording is paraphrased; treat exact numbers (stars, versions) as approximate.
 
 ## Recommendation in one paragraph

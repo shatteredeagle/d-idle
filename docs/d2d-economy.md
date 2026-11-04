@@ -1,5 +1,7 @@
 # Economy of a fresh character on d2d (agent ECONOMY, 2026-10-30)
 
+> status: the "Needs a G1/G2 check" section is retired (ADR 0013, amended by ADR 0015); verify on d2d through the gate ladder or say U. Current truth: docs/decisions.md.
+
 Tags: V = verified on d2d (how stated), U = unverified. Card: `openspec/changes/economy`. Evidence: the bot logs of the D2DLOOP replicated runs
 (seeds 11 to 14, 2 virtual hours, `~/d2d-lab/loop/bot-m1*.log` on the worker host) and the runs of this card (`bot-g*`, `bot-h*`). Scripts: `tools/d2dloop/`
 (`econ.sh build|run`, `seeds.sh`, `m.sh`, `idle.py` time shares, `flow.py` gold flows).

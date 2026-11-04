@@ -1,5 +1,7 @@
 # d2d replicated soak: harness, metrics, pass rule (agent D2DSOAK, 2026-10-30)
 
+> status: the Game.exe G1/G2 soaks are retired (ADR 0013); the d2d gate ladder (Gate 0 to 3) and the acceptance rule (ADR 0015; docs/decisions.md Current truth) apply instead.
+
 The decisive d2d acceptance test (plan-v2 11, docs/d2d-backend.md 7): the same character and the same bot, N seeds x H virtual
 hours on the private lockstep d2d, compared with our original-game soaks. A gap above 20 % on a gated metric is a fidelity bug.
 Tags: **V** = verified (how stated), **S** = secondary, **U** = unverified.

@@ -1,5 +1,7 @@
 # CI checks for the forge job (for the CI agent; no runner exists yet)
 
+> status: OpenSpec cards are no longer required for new work (user, 2026-11-04); changecheck stays for existing cards and its strict dates still apply. Current truth: docs/decisions.md.
+
 Run from the repo root on a checkout with full history (`fetch-depth: 0`, the merge check reads `git log --merges`). All offline except the first `npx` fetch.
 
 ```sh
