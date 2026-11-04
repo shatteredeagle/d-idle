@@ -160,7 +160,7 @@ At the first Lut Gholein visit per difficulty the bot SHALL read the hire window
 - **THEN** nothing is hired and nothing is stripped
 
 ### Requirement: Gold farm while the merc is missing
-While the merc is dead or missing, gold is below the next merc payment (revive estimate or Normal hire quote of 400, plus the kit reserve) and clvl is below `merc.goldFarmMaxLevel` (16, 0 = off), a Normal Act 1 character SHALL level only in Blood Moor, Cold Plains, Stony Field, the Den of Evil, Caves 1 and 2, the Burial Grounds and the Crypt, and log `merc: gold farm on|off` once per change. Source: user decision 2026-11-02. Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
+While the merc is dead or missing, gold is below the next merc payment (revive estimate or Normal hire quote of 400, plus the kit reserve) and clvl is below `merc.goldFarmMaxLevel` (17, 0 = off), a Normal Act 1 character SHALL level only in Blood Moor, Cold Plains, Stony Field, the Den of Evil, Caves 1 and 2, the Burial Grounds and the Crypt, and log `merc: gold farm on|off` once per change. Source: user decision 2026-11-02; cap raised from 16 to 17 by commit 8f4b8e3f (mercrevive2), docs/knobs.md is the owner. Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
 
 #### Scenario: Dead merc, thin purse
 - **WHEN** a clvl 11 character has a dead merc and 300 gold

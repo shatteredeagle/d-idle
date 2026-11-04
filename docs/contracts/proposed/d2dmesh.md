@@ -1,3 +1,9 @@
+---
+id: d2dmesh
+goal: G-C
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: d2dmesh (d2d-mesh)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `d2dmesh` (git tag `openspec-final`, path `openspec/changes/d2dmesh/specs/d2d-mesh/spec.md`). When the work lands, the branch that implements it folds this text into a NEW contract `docs/contracts/d2d-mesh.md` (no main file yet) and deletes this file. Backlog task: title starts with `d2dmesh:`.
