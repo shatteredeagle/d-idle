@@ -2,7 +2,7 @@
 
 ```yaml
 change: merchire
-status: in-progress
+status: archived
 agent: merchire
 branch: agent/merchire
 worktree: ~/code/d2lod-wt/merchire
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "D8.h and D8.h2 built with fakes and tests; lab step over d2dctl; not verified live (quote location in the menu is U)"
+result: "offline; live d2-live run pending"
 live: "not verified live"
+merge: 8dbbe1f
 ```
 
 - [x] work done (drill, lab step, tests, docs/merchire.md)
