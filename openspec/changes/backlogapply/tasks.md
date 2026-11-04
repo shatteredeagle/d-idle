@@ -13,7 +13,7 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: ""
+result: "17 of 25 STALE groups confirmed as dated superseding BACKLOG lines, 8 dropped; docs/research/backlog-apply-20261104.md"
 live: "not verified live (docs only)"
 ```
 
