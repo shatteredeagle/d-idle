@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 8754456b 11-04 14:05 `Merge branch 'main' into shimregister` (-)
 - 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
 - 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
 - e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
@@ -102,5 +103,4 @@
 - 4a6ce6e6 11-04 13:59 `Merge branch 'main' into adramend` (-)
 - 5953f1ee 11-04 13:59 `Merge branch 'main' into specapplya` (-)
 - 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
-- 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
 <!-- statusgen:end -->
