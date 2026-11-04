@@ -120,6 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/soaks/gate2-s11-20261103-1954-g2a.md  gaterun  gate2run-s11-20261103-1954-g2a
-docs/probes/soak-logs/gate2-s11-20261103-1954-g2a-*  gaterun  gate2run-s11-20261103-1954-g2a
-openspec/changes/gate2run-s11-20261103-1954-g2a/**  gaterun  gate2run-s11-20261103-1954-g2a
