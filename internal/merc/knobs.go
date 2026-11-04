@@ -16,12 +16,15 @@ type Knobs struct {
 	PotionLifePct     int
 	KitReservePct     int
 	GoldFarmMaxLevel  int
+
+	KitReservePctFullKit, GoldFarmBudgetMin, GoldFarmCooldownMin int
 }
 
 // KnobsFrom converts the env tuning group.
 func KnobsFrom(t env.MercTuning) Knobs {
 	return Knobs{t.ReviveMaxPerHour, t.ReviveGoldMult, t.StopDeathsPerHour, t.StopGoldMult, t.HireGoldMult,
-		t.FreeRogueOnly != 0, t.ReplaceAtAct2 != 0, t.SwapGainPct, t.ReqStrDex != 0, t.PotionLifePct, t.KitReservePct, t.GoldFarmMaxLevel}
+		t.FreeRogueOnly != 0, t.ReplaceAtAct2 != 0, t.SwapGainPct, t.ReqStrDex != 0, t.PotionLifePct, t.KitReservePct, t.GoldFarmMaxLevel,
+		t.KitReservePctFullKit, t.GoldFarmBudgetMin, t.GoldFarmCooldownMin}
 }
 
 // DefaultKnobs are the defaults of env.DefaultMercTuning.

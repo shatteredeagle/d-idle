@@ -37,6 +37,8 @@ type Step struct {
 	// has a full kit: Burial Grounds (Blood Raven) and its dead-end dungeons are no place for a thin kit (codereview2 R5).
 	// The plan's own order is not affected.
 	FallbackKit bool
+	// Farm (progression "farm") marks an area the gold farm prefers while the merc is missing (merc.GoldFarm). Missing = false.
+	Farm bool
 }
 
 // enter is the entry level of the step for the character kind.
@@ -254,6 +256,7 @@ func (p *Plan) parseSteps(diff string, b []byte) error {
 		s.KitLvl, _ = e.num("kit_clvl")
 		s.MeleeEnter, _ = e.num("melee_enter_clvl")
 		s.FallbackKit = e.boolean("xp_fallback_full_kit")
+		s.Farm = e.boolean("farm")
 		s.LeaveLvl, ok = e.num("leave_clvl", "target_clvl", "leave")
 		if !ok || s.LeaveLvl < s.EnterLvl {
 			p.warn("progression-%s: step %d has no usable leave level", diff, id)
@@ -511,6 +514,21 @@ func (p *Plan) DifficultyFor(level, margin int, res *d2.Resists) string {
 		}
 	}
 	return best
+}
+
+// FarmAreas is the set of areas whose step carries the farm flag in diff. A missing table (nil plan, or no steps for
+// diff) is an error, never an empty or a built-in set.
+func (p *Plan) FarmAreas(diff string) (map[int]bool, error) {
+	if p == nil || len(p.Steps[diff]) == 0 {
+		return nil, fmt.Errorf("plan: no progression table for %q", diff)
+	}
+	out := map[int]bool{}
+	for _, s := range p.Steps[diff] {
+		if s.Farm {
+			out[s.Area] = true
+		}
+	}
+	return out, nil
 }
 
 // StepAreas lists the ids of all steps of a difficulty (for tests and docs).

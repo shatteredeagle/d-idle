@@ -12,7 +12,7 @@ Written 2026-10-29 from master `6b920b0`. Regenerate the tables between the `kno
 - The "worst" column is the end of the range a profile moves toward (the end the bot is least efficient at). Knobs where the default already sits on that end do not change under any profile (list in section 7).
 - Verified live: the key -> field -> clamp plumbing is tested offline (`go test ./internal/env ./internal/bot -run EveryKnob`). The EFFECT of an individual knob on a live game is mostly NOT verified: only the behaviours the domain docs mark VERIFIED LIVE are (combat death/rest/potions: docs/combat.md; town/nav walking: docs/town.md, docs/nav.md; leveler points: docs/leveler.md; resting before packs: docs/resource.md). No knob has a recorded live A/B test of its range. Ranges are offline-simulation windows (Sorceress, Normal Act 1), tagged U for anything else.
 - The doc each group is explained in: merc -> docs/merc.md; nav -> docs/nav.md; combat -> docs/combat.md; town and loot -> docs/town.md, docs/items.md; bot -> docs/bot.md, docs/leveler.md, docs/merc-farm.md; resource -> docs/resource.md.
-- Counts: nav 20 knobs, combat 38, boss 1, merc 10, resource 28 (fixed in docs/nav.md, docs/combat.md, docs/resource.md, docs/bot.md on 2026-10-29).
+- Counts: nav 20 knobs, combat 38, boss 1, merc 13 (was 10; +3 in mercrevive2), resource 28 (fixed in docs/nav.md, docs/combat.md, docs/resource.md, docs/bot.md on 2026-10-29).
 
 ## 2. Tuning knobs (V: defaults, ranges, readers from the code)
 
@@ -267,7 +267,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.reqStrDex | 1 | 0..1 | bool | 1 | 2 | 1 checks the merc's own Strength and Dexterity against gear (d2decomped finding, UNVERIFIED live); 0 checks only level. |
 | merc.potionLifePct | 50 | 10..80 | % | 50 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
 | merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
-| merc.goldFarmMaxLevel | 18 | 0..40 | levels | 18 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 0 turns it off. |
+| merc.kitReservePctFullKit | 50 | 0..500 | % | 50 | 2 | The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon). |
+| merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
+| merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
+| merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |
 | merc.enabled | 1 | 0..1 | bool | 1 | 1 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
 
 ### campaign.*
