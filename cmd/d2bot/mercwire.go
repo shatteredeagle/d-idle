@@ -179,7 +179,8 @@ type mercWire struct {
 	loaded    map[string]bool          // characters whose entry was read from statePath
 	winLogged map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
 	farmOn    bool
-	waitNeed  int // need of the last logged `merc: gold wait`; 0 = none pending
+	budget    merc.FarmBudget // time budget and cooldown of the gold farm
+	waitNeed  int             // need of the last logged `merc: gold wait`; 0 = none pending
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
@@ -295,6 +296,36 @@ func (w *mercWire) kit(s *d2.Snapshot) (tp, potions bool) {
 	return tp, potions
 }
 
+// kitFull: a town portal and at least resource.kitMinHP healing (or rejuvenation) and kitMinMP mana potions are
+// carried, so the kit was just filled and the next refill is not due.
+func (w *mercWire) kitFull(s *d2.Snapshot) bool {
+	if w.cat == nil || s == nil || s.Inventory == nil {
+		return false
+	}
+	var tp bool
+	var hp, mp int
+	for i := range s.Inventory.Items {
+		u := &s.Inventory.Items[i]
+		if u.Item == nil || (u.Item.Where != d2.ContBelt && u.Item.Where != d2.ContInventory) {
+			continue
+		}
+		m, ok := w.cat.Item(u.Class)
+		if !ok {
+			continue
+		}
+		switch {
+		case strings.Contains(m.Name, "Town Portal"):
+			tp = true
+		case m.Potion == bot.PotionHealing || m.Potion == bot.PotionRejuv:
+			hp++
+		case m.Potion == bot.PotionMana:
+			mp++
+		}
+	}
+	rt := w.e.Tune.Resource
+	return tp && hp >= rt.KitMinHP && mp >= rt.KitMinMP
+}
+
 func mercCtx(w *mercWire, s *d2.Snapshot) merc.Ctx {
 	now := w.now()
 	w.mu.Lock()
@@ -306,6 +337,7 @@ func mercCtx(w *mercWire, s *d2.Snapshot) merc.Ctx {
 	c.PlayerClass = s.Player.Class.String()
 	c.HaveTP, c.HavePotions = w.kit(s)
 	c.Kit = kitRefill(w.e)
+	c.KitFull = w.kitFull(s)
 	return c
 }
 
@@ -332,13 +364,27 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 		missing, price = true, merc.ReviveCost(max(st.Level, 1))
 	}
 	need := merc.GoldNeed(c, price)
-	on := missing && merc.GoldFarm(true, c.Gold, need, s.Player.Level, w.knobs)
+	// The budget sees the merc and level part alone (GoldFarm with gold 0, need 1) so it can tell the early end at the bar.
+	eligible := missing && merc.GoldFarm(true, 0, 1, s.Player.Level, w.knobs)
 	w.mu.Lock()
+	on, ended := w.budget.Step(w.now(), eligible, c.Gold, need, w.knobs)
 	changed := on != w.farmOn
 	w.farmOn = on
 	w.mu.Unlock()
+	if ended == merc.FarmEndBudget {
+		w.log.Info(merc.LogFarmBudget(w.knobs, need, c.Gold))
+	}
 	if changed {
-		w.log.Info(merc.LogGoldFarm(on, need, c.Gold, s.Player.Level))
+		reason := ""
+		switch {
+		case !missing:
+			reason = "merc-back"
+		case c.Gold >= need:
+			reason = "gold-reached"
+		default:
+			reason = "other"
+		}
+		w.log.Info(merc.LogGoldFarmReason(on, need, c.Gold, s.Player.Level, reason))
 	}
 	return on
 }

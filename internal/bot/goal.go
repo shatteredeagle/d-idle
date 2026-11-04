@@ -877,14 +877,26 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 			}
 		}
 		r.obMu.Unlock()
-		r.guardedAreas(s, ex)
+		farmed := r.farmExclude(s, ex)
+		r.guardedAreasNoFarm(s, ex)
 		t := r.e.Tune.Bot
 		diff := difficultyName(p.Difficulty)
 		if healing, _, known := r.beltAndInv(s); known && healing < 2 && diff == "normal" {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
 		pick := func() (Step, bool) {
-			return r.d.Plan.Pick(diff, p.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class), XP: r.stepXP(p.Level, p.Difficulty)})
+			opts := PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, Cleared: cleared, Floor: worthFloor, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class), XP: r.stepXP(p.Level, p.Difficulty)}
+			st, ok := r.d.Plan.Pick(diff, p.Level, opts)
+			if !ok && len(farmed) > 0 {
+				// the farm is a preference: every farm area is banned or excluded, so pick among all areas again
+				r.e.Log.Info("farm: restricted pick empty, falling back")
+				for _, a := range farmed {
+					delete(ex, a)
+				}
+				farmed = nil
+				return r.d.Plan.Pick(diff, p.Level, opts)
+			}
+			return st, ok
 		}
 		step, ok := pick()
 		if !ok && r.denGated(s) && p.Level >= r.denFloor(s)-denYieldGap && !cleared[areaDenOfEvil] && !r.banned(areaDenOfEvil) {
