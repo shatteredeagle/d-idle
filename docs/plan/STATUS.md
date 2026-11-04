@@ -55,7 +55,6 @@
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
-| [logfields](../../openspec/changes/logfields/) | in-progress | logfields | `docs/logfields.md`<br>`internal/d2dsoakstat/skills.go`<br>`internal/d2dsoakstat/skills_test.go`<br>`internal/combat/castlog.go`<br>`internal/combat/castlog_test.go` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [mapitem](../../openspec/changes/mapitem/) | in-progress | mapitem | `docs/stream/map-contiguity.md`<br>`cmd/d2dview/stitch.go`<br>`cmd/d2dview/stitch_test.go`<br>`cmd/d2dview/feed.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`cmd/d2dview/web/index.html` | - |
@@ -105,8 +104,6 @@
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
-- change logfields: go test -p 1 ./internal/combat ./internal/d2dsoakstat ./cmd/d2dsoak passes
-- change logfields: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
 - change m1-liveproof: starting gold and unidentified sell prices recorded V in docs/basics-live.md with cheat ledger ids
@@ -128,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- f1d14cb0 11-03 23:44 `Merge agent/logfields: logfields: bot logs cast result, last skill, armor sample, build line; d2dsoak report prints them` (logfields)
 - 892ed2f0 11-03 23:08 `Merge agent/sksmoke: sksmoke-a1: d2cheat skilllevel, combatlive sk, Fire Bolt per-hit damage on d2d matches the table at levels 1/4/8/13/20; game.exe run blocked` (sksmoke-a1)
 - 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
 - d0deb956 11-03 21:50 `merge origin/main into soakskills` (soakskills)
@@ -137,5 +135,4 @@
 - 143bbf3a 11-03 19:39 `Merge agent/gate1multi-20261103-1938-ms4: Gate 1 ms4 multiseed record: PASSED indicative (3 seeds 17,19,21; XP/h +1.2% vs baseline)` (gate1multi-20261103-1938-ms4)
 - 9fba0832 11-03 19:34 `Merge agent/codereview3: codereview3: independent review of gate1fix, recoverykit, xpfallback (C1-C4)` (codereview3)
 - e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
-- 952b3944 11-03 17:56 `merge origin/main into verifymonsterpace` (verifymonsterpace)
 <!-- statusgen:end -->

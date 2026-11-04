@@ -2,7 +2,7 @@
 
 ```yaml
 change: logfields
-status: in-progress
+status: archived
 agent: logfields
 branch: agent/logfields
 worktree: ~/code/d2lod-wt/logfields
@@ -17,8 +17,9 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/combat ./internal/d2dsoakstat ./cmd/d2dsoak passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0"
-result: "logging added and parsed, offline tests only; not verified live"
+result: "offline, logging only (action-sequence test); not verified live"
 live: "not verified live"
+merge: f1d14cb
 ```
 
 - [x] audit where each missing line can be emitted
