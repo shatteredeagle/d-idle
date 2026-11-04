@@ -1,3 +1,0 @@
-BACKLOG: BOARDCLAIM (2026-11-02): board audit and claim rule: #9 closed (done, VERIFY-FREEZE-KINDS), #4 #11 #13 #15 #16 narrowed, #12 claimed (queued verifier after SKMELEE3); coordinator rule: claim before launch with tools/contrib/claim.py (docs/process/chunker.md); comments are watched each tick with claim.py watch
-INDEX: - tools/contrib/claim.py: maintainer claim, done and watch commands for work-item issues (dry run default, docs/process/chunker.md)
-CHANGELOG: Contributor board: the maintainers now claim items their own work covers, close finished ones with a citation, and watch issue comments each cycle (tools/contrib/claim.py).

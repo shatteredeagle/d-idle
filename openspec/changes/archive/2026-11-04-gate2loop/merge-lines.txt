@@ -1,1 +1,0 @@
-BACKLOG: gate2loop: save point after town chores and only when XP is at risk (Gate 2 seed 13 re-entry loop); needs a seed 13 soak rerun, and the recovery "item stuck on the cursor" fault is still open

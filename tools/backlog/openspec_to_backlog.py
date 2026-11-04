@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Copy the active and parked OpenSpec cards listed in docs/cards.md into backlog/tasks.
+"""HISTORY (needs the openspec/ tree; since OpenSpec removal stage 3 run it only in a checkout of git tag openspec-final). Copy the active and parked OpenSpec cards listed in docs/cards.md into backlog/tasks.
 
 Stage 1 of docs/process/openspec-removal-plan.md: a COPY. Nothing under openspec/ is
 changed. Dry run by default; --apply writes the task files. Idempotent: a card that

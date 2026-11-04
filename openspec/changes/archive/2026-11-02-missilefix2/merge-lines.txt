@@ -1,3 +1,0 @@
-BACKLOG: MISSILEFIX2: re-verifier's changes done on the missile PR candidates (owner poison follows FUN_0064a930 in local/missilediff-record-up 1824870b; trap poison fixed in local/missilepoison-skillrows 71f98145; his differentials re-run, 0 differ); drafts docs/research/pr-missilerecord-draft.md and pr-missilepoison-draft.md updated, a narrow third check owed before the user's go.
-INDEX: docs/research/pr-missilepoison-draft.md: PR draft for the skill-sourced and trap monster missile poison units (Andariel x 62), narrow third check owed
-CHANGELOG: docs: monster-missile PR drafts updated after the re-verifier (owner poison rule, trap sibling, merge order), poison-units PR draft added

@@ -1,3 +1,0 @@
-BACKLOG: upstream #166 (player missile damage roll: element top, physical in 256ths, -100 floor; 5 commits) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card).
-INDEX: docs/research/openpr-log.md: posted log now also covers #166.
-CHANGELOG: Docs: opened upstream PR #166 (player-side missile damage roll); posted log in docs/research/openpr-log.md.

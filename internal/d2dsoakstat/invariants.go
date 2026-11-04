@@ -13,7 +13,7 @@ import (
 // Invariants answer "is the run sound", apart from "is the run good" (the metrics and the fidelity verdict). They are
 // counters read from the bot log of one seed (minute lines plus the warn lines of the loops that guard the run) with a
 // threshold each, so a hang, a wedge, a firing stall ladder, an unrecovered death or an early end is found by the
-// tool and not by someone reading the log. Definitions and thresholds: docs/geninv.md; contract: openspec/specs/soak-gates.
+// tool and not by someone reading the log. Definitions and thresholds: docs/geninv.md; contract: docs/contracts/soak-gates.md.
 //
 // Clock: the minute lines (one per virtual minute on d2d, one per real minute on the original game) are the time axis;
 // an event's virtual time is interpolated between the minute lines around its wall timestamp. Pace lines are used only

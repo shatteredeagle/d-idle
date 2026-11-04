@@ -1,2 +1,0 @@
-BACKLOG: upstream #163 (Blizzard / Eruption shard offsets, 2 commits, fork branch fix/blizzard-shard-offsets-v2) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card).
-CHANGELOG: docs: Blizzard shard-offset PR opened upstream (#163); posted log and queue row.

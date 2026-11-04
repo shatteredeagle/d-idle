@@ -1,3 +1,0 @@
-BACKLOG: BRANCHCLEAN: triage every unmerged agent/* branch (land the valuable docs, fold single useful files into a digest, tag then delete the superseded ones, keep in-flight work), plan in docs/research/branch-cleanup-plan.md
-INDEX: docs/research/branch-cleanup-plan.md: classification of the 36 unmerged agent branches (LAND 20, FOLD 6, TAG-AND-DELETE 5, KEEP 5), commands, rules, effort and a branch hygiene rule
-CHANGELOG: branchclean: a plan to triage and clean up the unmerged agent branches, with a proposed branch hygiene rule

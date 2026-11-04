@@ -25,7 +25,7 @@ func TestBrandIconsServedAndLinked(t *testing.T) {
 		s.routes().ServeHTTP(rec, httptest.NewRequest("GET", path, nil))
 		b := rec.Body.String()
 		if !strings.Contains(b, "/icon.svg") {
-			t.Skip("head links not applied yet (mapitem owns the two pages): git apply openspec/changes/archive/2026-11-01-brandapply/head-links.patch")
+			t.Skip("head links not applied yet (mapitem owns the two pages): git show openspec-final:openspec/changes/archive/2026-11-01-brandapply/head-links.patch | git apply")
 		}
 		for _, want := range []string{`href="/icon.svg"`, `href="/favicon.ico"`, `href="/apple-touch-icon.png"`} {
 			if !strings.Contains(b, want) {

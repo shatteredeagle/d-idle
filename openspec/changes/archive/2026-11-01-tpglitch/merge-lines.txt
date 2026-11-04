@@ -1,1 +1,0 @@
-CHANGELOG: tpglitch: town-portal verdict debounced at its single source (kit gate and poverty check); pingpongrate: ping-pong guard resets on XP progress, not on any kill

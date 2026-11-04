@@ -1,3 +1,0 @@
-BACKLOG: - LICENSECHECK: licences of lockstep sources read (docs/research/lockstep-licences.md): d2d/whisper GPL-3.0, D2MOO MIT, libTAS GPL-3.0, speedhack-rs unlicensed; MIT hook workable if clean-room; lawyer questions listed
-INDEX: - docs/research/lockstep-licences.md: licences and Blizzard terms for a releasable 1.14d time/lockstep hook; clean-room and PROVENANCE proposal, offline notice (card licensecheck)
-CHANGELOG: - docs: licence research for a standalone Game.exe time hook (not legal advice); nothing run

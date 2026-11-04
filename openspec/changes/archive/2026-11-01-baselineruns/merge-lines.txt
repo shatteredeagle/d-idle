@@ -1,3 +1,0 @@
-BACKLOG: - BASELINERUNS: prepared the extra original-game baseline runs (5 late clvl 11-14 m1, 3 fresh): runbook docs/process/baseline-runs.md and the ops launcher tools/baseline-run.sh; waiting on the user's go, the kit decision and free instances
-INDEX: - docs/process/baseline-runs.md: recipe, kit restore, schedule, flags and prerequisites for the extra original-game baseline runs
-CHANGELOG: - docs: runbook for the extra original-game baseline runs (docs/process/baseline-runs.md).

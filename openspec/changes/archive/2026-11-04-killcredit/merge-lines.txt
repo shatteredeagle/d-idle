@@ -1,1 +1,0 @@
-INDEX: docs/killcredit.md - kill credit per cast window and nova targets per cast, what stays n/a (offline)

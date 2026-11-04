@@ -30,13 +30,13 @@ Status words (S, upstream's own definitions as the page shows them): verified = 
 
 ## 2. What the gate measures and why that sets the priorities
 
-Gate (S, `openspec/specs/fidelity-gate/spec.md`): d2d mean within `max(20 % of baseline, abs)` for XP/h, kills/h, deaths/h, deaths per 1000 kills (abs 0.5 deaths/h, 1.0 per 1000 kills). Baseline (S, `docs/d2d-soak.md` section 3): Sorceress clvl 11 to 14, XP/h 10.9k, kills/h about 500, deaths 0/h.
+Gate (S, `docs/contracts/fidelity-gate.md`): d2d mean within `max(20 % of baseline, abs)` for XP/h, kills/h, deaths/h, deaths per 1000 kills (abs 0.5 deaths/h, 1.0 per 1000 kills). Baseline (S, `docs/d2d-soak.md` section 3): Sorceress clvl 11 to 14, XP/h 10.9k, kills/h about 500, deaths 0/h.
 
 I (inference): the two death metrics are the loosest. With a baseline of 0 deaths/h the tolerance is 0.5 deaths/h and 1 per 1000 kills, so d2d only fails them if it is MUCH deadlier; an easier d2d passes them silently. The tight metrics are XP/h and kills/h (plus or minus 20 %). Both are rates per wall-clock hour of the bot, so anything that changes monsters met per minute, time to kill per monster or time spent walking and in town moves them proportionally. Hence the ranking weights spawn density, missile hit behaviour, damage per cast and XP per kill above monster damage.
 
 Death consequences still matter for sustained runs (a death costs minutes and gold), but their rate is the loosest gate. Impact scores: 3 = moves XP/h or kills/h by itself, 2 = moves them through a second step (deaths, potions, route), 1 = not a gated rate.
 
-Dependency inputs used (V, read in this repo): `docs/d2d-gaps.md`, `docs/d2d-fidelity.md` (checks 1 to 9 and the ranked deviations in section 10), `docs/d2d-probes.md`, `docs/sme/*`, `docs/plan/death-data.md`, `openspec/specs/fidelity-gate`, `docs/soak-analysis.md`, `docs/d2d-soak.md`, `docs/research/cast-trace-gameexe.md`, `docs/research/upstream-prs.md`, and the loop results in `~/code/d2lod-wt/d2dloop/docs/d2d-loop.md` (r1 to r17: harness and nav bugs only; no fidelity numbers yet, no completed replicated-soak verdict exists in the repo at this date, U).
+Dependency inputs used (V, read in this repo): `docs/d2d-gaps.md`, `docs/d2d-fidelity.md` (checks 1 to 9 and the ranked deviations in section 10), `docs/d2d-probes.md`, `docs/sme/*`, `docs/plan/death-data.md`, `docs/contracts/fidelity-gate.md`, `docs/soak-analysis.md`, `docs/d2d-soak.md`, `docs/research/cast-trace-gameexe.md`, `docs/research/upstream-prs.md`, and the loop results in `~/code/d2lod-wt/d2dloop/docs/d2d-loop.md` (r1 to r17: harness and nav bugs only; no fidelity numbers yet, no completed replicated-soak verdict exists in the repo at this date, U).
 
 ## 3. Upstream coverage of the engine parts we depend on (V)
 

@@ -1,3 +1,0 @@
-BACKLOG: #164 (monster missile record + poison units) got a tooling follow-up (cd01212f) for CodeRabbit; watch for the maintainer.
-INDEX: no change
-CHANGELOG: no change

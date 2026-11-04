@@ -99,7 +99,7 @@ Method as docs/forkdbg.md and docs/forkcheats.md: `D2D_AGENT=<name> tools/agentr
 ## Dead ends
 
 - The read-only `fork/src` checkout is a stock tree without the `dump` verb; the dump source is in the lab worktrees (cited with their file and line); the line numbers belong to the checkout I read and must be re-read against the lab branch before an edit.
-- `docs/research/gate2-analysis-20261102.md` named in the brief does not exist in this worktree: the Gate 2 text used here is `openspec/specs/soak-gates/spec.md:9` ("hire the merc") and `openspec/specs/merc-policy/spec.md`.
+- `docs/research/gate2-analysis-20261102.md` named in the brief does not exist in this worktree: the Gate 2 text used here is `docs/contracts/soak-gates.md:9` ("hire the merc") and `docs/contracts/merc-policy.md`.
 - The hire handler's address was not found (no cross-reference tool on the worker host; only the claim neighbourhood is known from `mercstats-trace.md`).
 - The `monsters` verb listing the merc is unknown (U); the bot builds its merc unit from the dump.
 - A first try to read the aura from the window row failed: Ids 6, 7, 8 are identical in every number the row shows (D above).

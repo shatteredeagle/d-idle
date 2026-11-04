@@ -17,7 +17,6 @@ owns:
   - "internal/resource/recovery_test.go"
   - "internal/bot/broke.go"
   - "internal/bot/area_ban_test.go"
-  - "openspec/changes/fixbelt/**"
 exclusive: []
 branch: "agent/fixbelt"
 agent: "fixbelt"
@@ -25,8 +24,7 @@ result: "Unit tests only (mem.Fake bot rig); NOT verified live: needs a Gate 1 s
 live: "not run; recipe in docs/fixbelt.md"
 merge_hash: ""
 overlap: "Overlap (declared): FIXPROGRESS owns the town portal scroll and walk-to-town logic; this card does not touch them."
-skip_specs: true
-source: "openspec/changes/fixbelt"
+source: "openspec-final:openspec/changes/fixbelt"
 ---
 
 ## Description
@@ -44,7 +42,7 @@ Next step: live proof in a seed-set record
 Gates (from the card):
 - go test -p 1 internal/resource internal/bot; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 
-Source: openspec/changes/fixbelt/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

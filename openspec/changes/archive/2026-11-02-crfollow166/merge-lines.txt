@@ -1,3 +1,0 @@
-BACKLOG: #166 (player missile damage roll) got a follow-up (7d4f6f0e) for CodeRabbit; watch for the maintainer.
-INDEX: no change
-CHANGELOG: no change

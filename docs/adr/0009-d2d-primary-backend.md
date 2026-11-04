@@ -54,7 +54,7 @@ Attribution rule: a replicated-soak FAIL counts against d2d only when the same b
 
 ## Sources
 
-docs/grills/0001-d2d-primary-backend/prebrief.md and outcome.md; ADR 0001, 0002, 0003; openspec/specs/fidelity-gate/spec.md; docs/d2d-soak.md; docs/d2d-container/risks.md; docs/d2d-fidelity.md; docs/d2d-fork.md
+docs/grills/0001-d2d-primary-backend/prebrief.md and outcome.md; ADR 0001, 0002, 0003; docs/contracts/fidelity-gate.md; docs/d2d-soak.md; docs/d2d-container/risks.md; docs/d2d-fidelity.md; docs/d2d-fork.md
 
 ## Addendum (2026-10-30, user)
 

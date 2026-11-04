@@ -18,7 +18,6 @@ owns:
   - "tools/emu/next_hit.py"
   - "tools/emu/next_hit_mode.inc"
   - "tools/emu/next_hit_summary.py"
-  - "openspec/changes/nexthit/**"
 exclusive:
   - "fork-branch:fix/nexthit"
 branch: "agent/nexthit"
@@ -27,8 +26,7 @@ result: "Offline, nothing verified live, no d2d slot used. Local upstream candid
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: true
-source: "openspec/changes/nexthit"
+source: "openspec-final:openspec/changes/nexthit"
 ---
 
 ## Description
@@ -47,7 +45,7 @@ Gates (from the card):
 - changecheck 0 warnings for this card; leakcheck -mode fail 0
 - PR claim only with a differential on real builds: before > 0, after 0
 
-Source: openspec/changes/nexthit/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/nexthit/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

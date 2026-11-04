@@ -1,3 +1,0 @@
-- docs/BACKLOG.md: `- GATE1: Gate 1 run 20261102 on d2d.lab2-freezeresume ee5e06d8ef99 + bot 050a509 PASSED (docs/soaks/gate1-20261102.md)`
-- docs/INDEX.md: `- docs/soaks/gate1-20261102.md: Gate 1 run 20261102 (PASSED), criteria table, fault recovery`
-- CHANGELOG.md (unreleased, docs): `- docs: Gate 1 soak run 20261102: PASSED (docs/soaks/gate1-20261102.md).`

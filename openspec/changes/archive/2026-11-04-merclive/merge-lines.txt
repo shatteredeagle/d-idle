@@ -1,1 +1,0 @@
-BACKLOG: - MERCLIVE: P18 live on d2d slot 3: free Rogue claim PASS (merc RG present), revive of a cheat-killed merc PASS at price 0 (U for real mercs), paid hire BLOCKED (no drill, design in docs/merclive.md) (docs/merclive.md)

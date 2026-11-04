@@ -1,3 +1,0 @@
-BACKLOG: GATE1 review (card gate1review): the 6495 vs 9172 XP/h gap is 71 percent stall time (two windows, 61 and 312 virtual min), 11 restarts are 10 fresh games plus the injected kill; 25918ea would not clear the run area (guard `l.run.Area == area` also holds for clear runs): cards soakgiveup and povertyflip proposed (docs/soaks/gate1-20261101.md)
-INDEX: docs/soaks/gate1-20261101.md: Gate 1 run 20261101 review section: stall windows, restart causes, SOAKSTALL gap, rerun recipe
-CHANGELOG: docs: Gate 1 run 20261101 review (stall windows, gap analysis, rerun recipe), cards soakgiveup and povertyflip proposed.

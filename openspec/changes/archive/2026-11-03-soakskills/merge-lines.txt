@@ -1,1 +1,0 @@
-CHANGELOG: soakskills: per-skill soak fields parser and report text (d2dsoakstat), docs/soakskills.md

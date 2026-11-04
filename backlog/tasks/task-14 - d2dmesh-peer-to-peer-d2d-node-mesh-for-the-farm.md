@@ -15,7 +15,6 @@ owns:
   - "cmd/d2dnode/**"
   - "internal/d2dmesh/**"
   - "docs/d2d-mesh.md"
-  - "openspec/changes/d2dmesh/**"
 exclusive: []
 branch: "agent/meshdesign"
 agent: "meshdesign"
@@ -23,8 +22,8 @@ result: "prototype verified offline on loopback (go test, -race x3 on the worker
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/d2dmesh"
+source: "openspec-final:openspec/changes/d2dmesh"
+contracts: ["proposed/d2dmesh"]
 ---
 
 ## Description
@@ -47,7 +46,7 @@ Gates (from the card):
 - tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
 - no real hostname, IP or person in any committed file of this change
 
-Source: openspec/changes/d2dmesh/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/d2dmesh/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

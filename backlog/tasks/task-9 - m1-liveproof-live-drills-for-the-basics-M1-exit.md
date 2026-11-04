@@ -28,8 +28,8 @@ result: "D0+D1 live 2026-10-31 (docs/probes/drills): P7a PASS (engine auto-belts
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/m1-liveproof"
+source: "openspec-final:openspec/changes/m1-liveproof"
+contracts: ["proposed/m1-liveproof"]
 ---
 
 ## Description
@@ -53,7 +53,7 @@ Gates (from the card):
 - starting gold and unidentified sell prices recorded V in docs/basics-live.md with cheat ledger ids
 - tools/agentreap.sh m1-liveproof leaves nothing; changecheck -cli 0 warnings; leakcheck 0
 
-Source: openspec/changes/m1-liveproof/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/m1-liveproof/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

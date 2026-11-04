@@ -25,8 +25,8 @@ result: "research note only (agent andychain, no fight run): docs/research/andar
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/m3-andariel"
+source: "openspec-final:openspec/changes/m3-andariel"
+contracts: ["proposed/m3-andariel"]
 ---
 
 ## Description
@@ -48,7 +48,7 @@ Gates (from the card):
 - go test -p 1 ./internal/boss passes including TestAndarielFightOrder (antidote, then Charged Bolt; Static Field only if a measured drill shows it helps) and TestAndarielScriptHasNoStaticFieldOpener unchanged
 - go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; cheat ledger has one entry per cheat with a reason; tools/agentreap.sh m3-andariel leaves nothing
 
-Source: openspec/changes/m3-andariel/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/m3-andariel/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

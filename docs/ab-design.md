@@ -1,6 +1,6 @@
 # A/B protocol for bot changes on d2d (change m2-abdesign)
 
-> status: current. Tags: V = computed from committed data with `tools/ab/paired.py`, U = inference. Contract: openspec/specs/fidelity-gate "A/B protocol for bot changes" (delta in openspec/changes/m2-abdesign until merged). Evidence base: docs/d2d-xp-gap.md (xpgap, 2026-10-31) and its raw output `docs/probes/xpgap/ab*.txt`. Nothing here was run on Game.exe; shared-code effects are d2d-only until a Game.exe soak says otherwise.
+> status: current. Tags: V = computed from committed data with `tools/ab/paired.py`, U = inference. Contract: docs/contracts/fidelity-gate.md "A/B protocol for bot changes" (delta in openspec/changes/m2-abdesign until merged). Evidence base: docs/d2d-xp-gap.md (xpgap, 2026-10-31) and its raw output `docs/probes/xpgap/ab*.txt`. Nothing here was run on Game.exe; shared-code effects are d2d-only until a Game.exe soak says otherwise.
 
 ## Why a protocol
 xpgap compared three knobs with 4 seeds per arm and 2 virtual hours per run and found nothing beyond noise: SE is 7 to 9 % of the mean, so only effects of 15 % or more were visible. Two flaws of that recipe are fixed here: it compared arm means as if the arms were independent (the seeds are shared and the fork is lockstep-deterministic, so the per-seed difference is the unit), and it never stated how many seeds a claim needs.

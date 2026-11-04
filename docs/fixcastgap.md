@@ -45,7 +45,7 @@ Needs the lab binary, the fork verbs of docs/forkdbg.md / forkcheats.md, hidden 
 
 ## 6. Shared-file lines (for the merger; this card does not own them)
 
-- docs/BACKLOG.md: fixcastgap (card [fixcastgap](../openspec/changes/fixcastgap/proposal.md), offline): per-skill cast gap, `combat.castPerSkill` / `castMarginMs` / `castFCR`, Lightning and Chain Lightning 890 ms on game.exe (760 ms sequence) and 650 ms on d2d (plain SC), the other plan skills 650 on both; tests pin the oracle lengths; live proof recipe in docs/fixcastgap.md, open (needs the live slot and the lab binary with `fix/lightning-sequence`).
+- docs/BACKLOG.md: fixcastgap (card [fixcastgap](archive/openspec-index.md#fixcastgap), offline): per-skill cast gap, `combat.castPerSkill` / `castMarginMs` / `castFCR`, Lightning and Chain Lightning 890 ms on game.exe (760 ms sequence) and 650 ms on d2d (plain SC), the other plan skills 650 on both; tests pin the oracle lengths; live proof recipe in docs/fixcastgap.md, open (needs the live slot and the lab binary with `fix/lightning-sequence`).
 - docs/INDEX.md: `fixcastgap.md` - per-skill cast gap, cast lengths per skill and backend, live proof recipe.
 - CHANGELOG: "The bot waits one cast length per skill between casts: Lightning and Chain Lightning 890 ms on Game.exe (650 ms on d2d) instead of the flat 650 ms (new knobs combat.castPerSkill, castMarginMs, castFCR)."
 - docs/d2d-combat.md and docs/fixmissile.md still describe the flat knob (not owned here).

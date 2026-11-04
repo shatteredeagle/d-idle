@@ -43,6 +43,11 @@ func main() {
 		}
 		*root = strings.TrimSpace(string(out))
 	}
+	if _, err := os.Stat(*root + "/openspec/changes"); err != nil {
+		// OpenSpec removal stage 3: no cards exist any more, so there is nothing to check (the tool goes in stage 5).
+		fmt.Println("changecheck: openspec/ was removed (stage 3, tag openspec-final); nothing to check. STATUS: python3 -I tools/backlog/status.py; contracts: docs/contracts/README.md")
+		return
+	}
 	split := func(s string) (v []string) {
 		for _, p := range strings.Split(s, ",") {
 			if p = strings.TrimSpace(p); p != "" {

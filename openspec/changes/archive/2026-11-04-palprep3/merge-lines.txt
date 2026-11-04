@@ -1,1 +1,0 @@
-BACKLOG: palprep3: PALSKILL D2/D3 PR re-prepared on upstream 7591a92e (local/pal-d2d3-r3 head 1f91a216, verifier caveats applied, body docs/research/pr-palskill-body-r3.md); awaits the user's go to open

@@ -1,1 +1,0 @@
-BACKLOG: - RTLEAVE: RT.leave unblocked offline (Fighter.Leave wired in d2drill: Save and Exit, rejoin), live run on a hidden slot pending (docs/rtleave.md)

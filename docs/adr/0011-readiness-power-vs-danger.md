@@ -76,4 +76,4 @@ Merc rules:
 
 ## Sources
 
-docs/grills/0003-merc-and-act2/prebrief.md, verified-claims.md, sme-grill.md, outcome.md; ADR 0005, ADR 0006; openspec/specs/merc-policy/spec.md; plan-v2 11.2; docs/roadmap.md sections 6 and 8 (D6); docs/knobs.md
+docs/grills/0003-merc-and-act2/prebrief.md, verified-claims.md, sme-grill.md, outcome.md; ADR 0005, ADR 0006; docs/contracts/merc-policy.md; plan-v2 11.2; docs/roadmap.md sections 6 and 8 (D6); docs/knobs.md

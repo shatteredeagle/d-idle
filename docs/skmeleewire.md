@@ -55,4 +55,4 @@ Reading: the model changes decisions in exactly the two directions SKMELEEBOT de
 
 ## Shared-file lines for the merger
 
-- docs/BACKLOG.md: `- skmeleewire (card [skmeleewire](../openspec/changes/skmeleewire/proposal.md), offline): Input.Blow / Input.Foe are now filled by combat.resInput from the snapshot and the tables (weapon StrBonus / DexBonus loaded, schema 3); nil on any missing input; fed-vs-blind replay in docs/skmeleewire.md; open: live early-game soak, drill R1.`
+- docs/BACKLOG.md: `- skmeleewire (card [skmeleewire](archive/openspec-index.md#skmeleewire), offline): Input.Blow / Input.Foe are now filled by combat.resInput from the snapshot and the tables (weapon StrBonus / DexBonus loaded, schema 3); nil on any missing input; fed-vs-blind replay in docs/skmeleewire.md; open: live early-game soak, drill R1.`

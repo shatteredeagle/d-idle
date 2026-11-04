@@ -1,1 +1,0 @@
-BACKLOG: noareacards: docs/noareacards.md holds three picker card drafts (idleBreak best-XP lift, nav-fault soft ranking with a per-hour cap, gold-for-kit recovery on a closed kit guard) with order of work and open questions for the user; design only, nothing verified live.

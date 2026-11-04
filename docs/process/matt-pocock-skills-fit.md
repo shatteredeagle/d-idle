@@ -133,7 +133,7 @@ It never creates GLOSSARY.md or `docs/adr/` (lazy, by `domain-modeling`) and nev
 
 | question | answer |
 |---|---|
-| A. tracker | "Other." Paragraph: "No issue tracker. Work items are openspec change cards: `openspec/changes/<id>/` (proposal.md, tasks.md with a yaml header: status/owns/exclusive/gates), created with `go run ./cmd/changecheck new`, checked with `go run ./cmd/changecheck`, archived to `openspec/changes/archive/` at merge. Contracts are `openspec/specs/`. User decisions are ADRs in `docs/adr/` with a one-line index in `docs/decisions.md`. The forge (the NAS) is a git remote only; do not use `gh`, GitHub issues, labels or `.scratch/`. Skills that say 'publish to the issue tracker' must stop and ask the user instead." |
+| A. tracker | "Other." Paragraph: "No issue tracker. Work items are openspec change cards: `openspec/changes/<id>/` (proposal.md, tasks.md with a yaml header: status/owns/exclusive/gates), created with `go run ./cmd/changecheck new`, checked with `go run ./cmd/changecheck`, archived to `openspec/changes/archive/` at merge. Contracts are `docs/contracts/`. User decisions are ADRs in `docs/adr/` with a one-line index in `docs/decisions.md`. The forge (the NAS) is a git remote only; do not use `gh`, GitHub issues, labels or `.scratch/`. Skills that say 'publish to the issue tracker' must stop and ask the user instead." |
 | B. triage labels | Decline: "we do not use `triage`; omit Section B and the triage-labels file". If it insists, accept defaults and delete `docs/agents/triage-labels.md` and the `### Triage labels` sub-block afterwards. |
 | C. domain docs | single-context (default). |
 | which file | AGENTS.md (the only one). |
@@ -169,7 +169,7 @@ It never creates GLOSSARY.md or `docs/adr/` (lazy, by `domain-modeling`) and nev
 
 | their step | ours | decision |
 |---|---|---|
-| to-spec (spec as issue) | `openspec/specs/<cap>/spec.md` + delta in a change | keep ours |
+| to-spec (spec as issue) | `docs/contracts/<cap>/spec.md` + delta in a change | keep ours |
 | to-tickets (tickets with blocking edges) | change card per job; disjointness via `owns:`/`exclusive:`, `changecheck` | keep ours. Idea to borrow: a `blocked-by:` line in the header (U, not needed yet) |
 | implement / implement-spec (build, merge, review) | agent definitions + brief "implement change X" + dispatcher merge + changecheck | keep ours |
 | triage / labels | card header `status: proposed|in-progress|done|archived` | keep ours |

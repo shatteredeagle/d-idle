@@ -1,3 +1,0 @@
-BACKLOG: PALSKILL follow-ups (from palskill): d2d-side test modes for D2 (Concentration x Blessed Hammer) and D3 (+50 % vs undead / demon) in docs/research/pal-skill-trace.md section 6, then a local PR candidate; lab drills H0-H4, A1-A3 (needs `debug merc`, `debug party` verbs)
-INDEX: - docs/research/pal-skill-trace.md: Paladin skills (Holy Bolt hit rule and heal, Blessed Hammer path / Concentration / undead bonus, aura pulse / stats / mana), game.exe vs d2d vs bot, deviations D1-D7, findings B1-B5, drill recipe (PALSKILL)
-CHANGELOG: palskill: docs/research/pal-skill-trace.md and tools/emu/pal_* (Paladin skill decomposition; undead / demon flags, element damage and aura calcs equal d2d on 734 / 8,640 / 21,760 cases)

@@ -1,2 +1,0 @@
-BACKLOG: andarielplan: docs/andarielplan.md plans the m3-andariel throwaway fight (9 steps, hold lift, merc revive-gold stall cause and fix); next: user answers in its section 6, then steps 2 and 3 offline
-INDEX: docs/andarielplan.md: plan for card m3-andariel (throwaway Andariel fight, lifting boss.andarielHold, revive-gold stall)

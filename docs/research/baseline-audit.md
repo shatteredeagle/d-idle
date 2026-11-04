@@ -1,6 +1,6 @@
 # Baseline audit: can the original-game baselines gate d2d? (card baselineaudit, 2026-11-01)
 
-> status: current. Docs only; nothing was run on the game host or the worker host. Tags: V = read or recomputed in this audit from committed files (named), D = derived by arithmetic from V numbers (formula given), S = secondary (a doc's own number, not re-derived), I = inference, U = unverified. Inputs: `openspec/specs/fidelity-gate/spec.md`, `openspec/specs/soak-gates/spec.md`, `tools/d2dsoak/baselines.json`, `tools/d2dsoak/baselines-early.json`, `docs/d2d-soak.md`, `docs/d2d-baselines-early.md`, `docs/g1-log.md`, `docs/soaks/gate1-rerun.md`, `docs/d2d-xp-gap.md`, `docs/ab-design.md`, `docs/d2d-fidelity.md`, `docs/coverage/rule-coverage.md`, `docs/probes/soakfull/compare-baselines*.txt`.
+> status: current. Docs only; nothing was run on the game host or the worker host. Tags: V = read or recomputed in this audit from committed files (named), D = derived by arithmetic from V numbers (formula given), S = secondary (a doc's own number, not re-derived), I = inference, U = unverified. Inputs: `docs/contracts/fidelity-gate.md`, `docs/contracts/soak-gates.md`, `tools/d2dsoak/baselines.json`, `tools/d2dsoak/baselines-early.json`, `docs/d2d-soak.md`, `docs/d2d-baselines-early.md`, `docs/g1-log.md`, `docs/soaks/gate1-rerun.md`, `docs/d2d-xp-gap.md`, `docs/ab-design.md`, `docs/d2d-fidelity.md`, `docs/coverage/rule-coverage.md`, `docs/probes/soakfull/compare-baselines*.txt`.
 
 ## 0. Bottom line
 

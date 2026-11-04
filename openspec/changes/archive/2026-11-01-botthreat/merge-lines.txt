@@ -1,2 +1,0 @@
-INDEX: docs/botthreat.md - missile threat table, shooter kill-first, runner retreat guard, standing Fallen (card botthreat)
-CHANGELOG: combat: missile threat model, kill-first for unblockable shooters, no walk-away retreat from runners (knobs combat.threatDodge, shooterKillMin, runnerGuard, standOK)

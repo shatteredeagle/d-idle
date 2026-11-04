@@ -1,3 +1,0 @@
-BACKLOG: MISSILEFIX: missile-record candidate fixed after the verifier's NOT READY (poison per frame in MonStats::poison_*, presubmit/ruff/tidy clean, D5 out); fork local/missilediff-record c301eaef and local/missilediff-record-up ec09c73f (clean rebase on upstream main), Andariel poison split to local/missilepoison-skillrows 70fa479d; draft docs/research/pr-missilerecord-draft.md held for the independent re-verifier and the user's go.
-INDEX: docs/research/pr-missilerecord-draft.md: PR draft for the monster missile launch record (brackets, HitShift, row element), fixed head, re-verification owed
-CHANGELOG: docs: monster-missile record PR candidate fixed after the independent verifier (poison units), rebased candidate and Andariel sibling named, PR draft added

@@ -1,1 +1,0 @@
-BACKLOG: retreatlive2: RT.drink PASS and RT.portal PASS live on d2d after retreatfix (drink-life, belt 4 to 3; portal 1 tick under the 10 bound); RT.leave still blocked

@@ -14,7 +14,7 @@ clvl 4, maximum life about 40, Burial Grounds, 3 to 5 undead adjacent. The belt 
 With `resource.CastAdjacentMax` (3, the crowd rule's existing `crowdAdjacentMax`, now defined once in internal/resource) or more hostiles within 3 subtiles in a fight, a cast that melee can interrupt is not an escape:
 1. a potion that is ready (rejuvenation first, then healing): drink it;
 2. else leave the game (chicken). `AbortFight` goes straight to `LeaveGame`.
-A step away is deliberately not offered: melee monsters follow and keep hitting (INFERRED, UNVERIFIED live), and a retreat that fails leaves the character with neither cast nor chicken; the crowd rule keeps its own retreat. Unchanged: fewer than 3 adjacent, a quiet town trip (no fight), no scroll, and every numeric default. No knob was added; the death rule (openspec/specs/death-rule) only judges deaths, a chicken is not one.
+A step away is deliberately not offered: melee monsters follow and keep hitting (INFERRED, UNVERIFIED live), and a retreat that fails leaves the character with neither cast nor chicken; the crowd rule keeps its own retreat. Unchanged: fewer than 3 adjacent, a quiet town trip (no fight), no scroll, and every numeric default. No knob was added; the death rule (docs/contracts/death-rule.md) only judges deaths, a chicken is not one.
 Code: `meleeCastGuard` wraps `Decide`; `castCut` in AbortFight; `Adjacent` is now always filled in `Fighter.Safety` and `resInput`.
 
 ## Verified offline

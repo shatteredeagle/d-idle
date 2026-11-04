@@ -1,6 +1,6 @@
 # Gate 2 run 20261102: failure analysis
 
-> status: current analysis of run gate2-20261102-0823 (record: docs/soaks/gate2-20261102.md on branch agent/gate2run-20261102). Numbers are owned by openspec/specs/soak-gates/spec.md; this note proposes no spec edit, only a possible delta (section 6). Tags: V = counted from the run's logs on the worker host (read-only), S = from code or a doc, I = inference, U = unverified.
+> status: current analysis of run gate2-20261102-0823 (record: docs/soaks/gate2-20261102.md on branch agent/gate2run-20261102). Numbers are owned by docs/contracts/soak-gates.md; this note proposes no spec edit, only a possible delta (section 6). Tags: V = counted from the run's logs on the worker host (read-only), S = from code or a doc, I = inference, U = unverified.
 
 ## 1. The run in one paragraph
 

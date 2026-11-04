@@ -1,3 +1,0 @@
-INDEX: - docs/research/pr-missilerecord-draft.md and pr-missilepoison-draft.md: the two private-fork PR drafts (monster missile record, poison units), revised after the third check; held for the user's go
-BACKLOG: - MISSILEFIX3: both missile PR drafts ready for the user's go (record head 59d319c8, skill-rows head f52df8d4 on the private fork, clean on upstream main 6935cf64); ask the user before any upstream PR
-CHANGELOG: - Private fork: a monster missile's owner poison reads SrcDamage as game.exe's unsigned byte; the two missile PR drafts follow the third check.

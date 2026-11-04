@@ -22,8 +22,8 @@ result: ""
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/d2d-container-soak"
+source: "openspec-final:openspec/changes/d2d-container-soak"
+contracts: ["proposed/d2d-container-soak"]
 ---
 
 ## Description
@@ -42,7 +42,7 @@ Gates (from the card):
 - 24 h soak report.txt says PASS with exit 0
 - memory curve and periodic d2d restart interval recorded
 
-Source: openspec/changes/d2d-container-soak/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/d2d-container-soak/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

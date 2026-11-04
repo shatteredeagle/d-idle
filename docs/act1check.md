@@ -1,7 +1,7 @@
 # Act 1 check: log lines and report section
 
 Logging and reporting only; no behaviour change (a test compares the reader's view with and without a logger).
-Contract: `openspec/specs/act1-campaign/spec.md` ("Act 1 cleared record", 14 rows, tiers T1 save file, T2 memory, T3 proxy).
+Contract: `docs/contracts/act1-campaign.md` ("Act 1 cleared record", 14 rows, tiers T1 save file, T2 memory, T3 proxy).
 
 ## Log lines (writer: cmd/d2bot/milestone.go, called from the quest reader in cmd/d2bot/task.go)
 

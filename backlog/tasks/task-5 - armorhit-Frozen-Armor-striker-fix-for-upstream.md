@@ -13,7 +13,6 @@ priority: medium
 ordinal: 5000
 card: "armorhit"
 owns:
-  - "openspec/changes/armorhit/**"
   - "docs/research/pr-armorhit-proof.md"
   - "docs/research/pr-armorhit-draft.md"
   - "docs/research/pr-bundle-queue.md"
@@ -27,8 +26,7 @@ result: "Offline, nothing verified live, no d2d slot, no game window. Local upst
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: true
-source: "openspec/changes/armorhit"
+source: "openspec-final:openspec/changes/armorhit"
 ---
 
 ## Description
@@ -47,7 +45,7 @@ Gates (from the card):
 - changecheck 0 warnings for this card; leakcheck -mode fail 0
 - PR claim only with a differential on real builds: before > 0, after 0
 
-Source: openspec/changes/armorhit/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/armorhit/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

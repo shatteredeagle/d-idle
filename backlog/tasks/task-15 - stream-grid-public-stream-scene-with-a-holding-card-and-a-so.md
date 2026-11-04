@@ -12,7 +12,6 @@ priority: low
 ordinal: 15000
 card: "stream-grid"
 owns:
-  - "openspec/changes/stream-grid/**"
   - "tools/publish/**"
   - "docs/streamctl-grid.md"
 exclusive: []
@@ -22,8 +21,8 @@ result: "Built offline as a NEW page scene-grid.html + scene-grid.json (tools/pu
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/stream-grid"
+source: "openspec-final:openspec/changes/stream-grid"
+contracts: ["proposed/stream-grid"]
 ---
 
 ## Description
@@ -46,7 +45,7 @@ Gates (from the card):
 - ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - go test ./cmd/d2dview passes (pub feed fields sanitized)
 
-Source: openspec/changes/stream-grid/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/stream-grid/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

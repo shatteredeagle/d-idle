@@ -1,1 +1,0 @@
-BACKLOG: prbopen: batch B PR opened upstream as psi29a/d2decomped #189 (head 7e1f8fc4 on upstream main 002ffab4), oracle rerun 560,000 frames 0 differ; log in docs/research/openpr-log.md

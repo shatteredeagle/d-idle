@@ -53,7 +53,7 @@ install and a d2d binary; steps, flags and troubleshooting: [docs/running.md](do
   and the one the container uses (`deploy/container/`, `docs/d2d-container/`; ADR 0009 in `docs/adr/`).
 - **Original Game.exe under Wine (reference).** The path the bot grew up on. It is frozen as a reference: no new features, and
   the old 2 h and 8 h Game.exe gate soaks are retired in favour of the same gates on d2d (ADR 0013, spec
-  `openspec/specs/soak-gates/spec.md`, "d2d gate ladder" in `docs/review-strategy.md`).
+  `docs/contracts/soak-gates.md`, "d2d gate ladder" in `docs/review-strategy.md`).
 
 This repo contains no game files: no Blizzard binaries, MPQ archives, saves or data tables; you need your own legitimate install of Diablo II: Lord of Destruction 1.14d.
 
@@ -87,14 +87,14 @@ edges; the guides say what has been verified on a stranger's machine and what ha
 | `internal/` | packages: memory reading, input, navigation, combat, town, leveling, gear, merc, API; `internal/drill` holds the drills |
 | `web/` | dashboard front end (embedded) |
 | `deploy/`, `packaging/` | container files and a NAS app template |
-| `openspec/` | contracts (`specs/`) and the change cards every piece of work is briefed and tracked with |
+| `backlog/` | the work items (Backlog.md tasks) every piece of work is briefed and tracked with; the contracts are in `docs/contracts/` |
 | `docs/` | design, evidence and research notes; `docs/INDEX.md` is the map; `docs/research/` and `docs/probes/` hold traces, drill and soak reports |
 | `tools/` | developer and maintainer scripts (some assume the maintainer's lab and are documented as such); `tools/emu` is the emulator harness |
 
 ## Contributing: agents first
 
 This repo is developed mostly by AI coding agents working from written briefs. Every job is a change card in
-`openspec/changes/<id>/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
+a task in `backlog/tasks/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
 humans) follow, and `GLOSSARY.md` the vocabulary. If you want to contribute:
 
 - open an issue or a pull request against `main`; describe what you verified and how (live run, unit test, or neither);

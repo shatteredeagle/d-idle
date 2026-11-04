@@ -1,2 +1,0 @@
-BACKLOG: noareameasure (done, docs only): docs/noareameasure.md measures per-area XP/h at clvl 13+ for Gate 2 seeds 11-13, the picker exclude set at the seed 13 no-eligible lines (the merc gold farm rule, not bans, kept Dark Wood and Black Marsh out), the kit at 23:35 and a Catacombs 2 comparison; feeds the noarea policy decision
-INDEX: docs/noareameasure.md - Gate 2 noarea measurements: XP per area at clvl 13+, exclude set with reasons, kit at 23:35 (seed 13)

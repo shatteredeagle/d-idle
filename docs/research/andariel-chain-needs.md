@@ -1,6 +1,6 @@
 # Act 1 chain to Andariel: what each step needs, code vs d2-sme (ANDYCHAIN, 2026-10-31)
 
-> status: research input for grill 0003 and cards m3-merc, m3-routeguard, m3-act1chain, m3-andariel. Decides nothing. Tags: V = repo code, docs or logs; SME = d2-sme 2026-10-31 (from memory, did not read our docs; EXP/U inside it); U = unverified. Numbers with an owner (knobs, gates) are cited, not owned here: docs/knobs.md, openspec/specs/merc-policy, soak-gates.
+> status: research input for grill 0003 and cards m3-merc, m3-routeguard, m3-act1chain, m3-andariel. Decides nothing. Tags: V = repo code, docs or logs; SME = d2-sme 2026-10-31 (from memory, did not read our docs; EXP/U inside it); U = unverified. Numbers with an owner (knobs, gates) are cited, not owned here: docs/knobs.md, docs/contracts/merc-policy.md, soak-gates.
 
 ## 1. The chain as the code has it (V: internal/task/campaign.go NormalAct1, gate.go, route.go, act1.go, plandata progression-normal.json)
 

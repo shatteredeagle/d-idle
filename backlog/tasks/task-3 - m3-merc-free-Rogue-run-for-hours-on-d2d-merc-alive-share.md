@@ -25,8 +25,8 @@ result: ""
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/m3-merc"
+source: "openspec-final:openspec/changes/m3-merc"
+contracts: ["proposed/m3-merc"]
 ---
 
 ## Description
@@ -49,7 +49,7 @@ Gates (from the card):
 - go test -p 1 ./internal/merc ./internal/bot -run 'Merc|Claim' passes; go test ./internal/env -run EveryKnob passes with the d2d default
 - go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
 
-Source: openspec/changes/m3-merc/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/m3-merc/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

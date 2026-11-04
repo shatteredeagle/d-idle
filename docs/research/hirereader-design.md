@@ -4,7 +4,7 @@
 
 ## The criterion
 
-Gate 2 asks the 8 h run to "hire the merc" (`openspec/specs/soak-gates/spec.md:9`; the policy is `openspec/specs/merc-policy/spec.md`; the brief's `gate2-analysis-20261102.md` is not in the tree, trace dead ends). On d2d the merc is the free Rogue (claim) or a paid hire. A confirmation the memory reader can give has three parts, each a pure function of dump and state reads the bot already makes:
+Gate 2 asks the 8 h run to "hire the merc" (`docs/contracts/soak-gates.md:9`; the policy is `docs/contracts/merc-policy.md`; the brief's `gate2-analysis-20261102.md` is not in the tree, trace dead ends). On d2d the merc is the free Rogue (claim) or a paid hire. A confirmation the memory reader can give has three parts, each a pure function of dump and state reads the bot already makes:
 
 | Part | Observable | Today | After the fixes |
 |---|---|---|---|

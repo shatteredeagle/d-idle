@@ -208,7 +208,7 @@ policy doc, compare time spent in town and XP/hour.
    (areaskip.go, goal.go, plan.go). After it, `idleBreak` mostly has death bans left, which is the shape card 1 assumed.
 3. Card 3 last (M): its farm area uses the soft penalty of card 2 (a faulty area must not be the recovery farm) and the XP rank of card 1. It touches
    internal/resource (another owner) and routeguard.go read-only, so it needs its own card with `owns:` and a spec delta for the new recovery start
-   reason in `openspec/specs/` (the death-rule or soak-gates numbers do not change; check `docs/process` for whether recovery has a spec).
+   reason in `docs/contracts/` (the death-rule or soak-gates numbers do not change; check `docs/process` for whether recovery has a spec).
 Cards 1 and 3 can be developed in parallel only if the ranker is a separate file (plan_rank.go); card 2 is the serial one.
 
 ## Questions for the user

@@ -1,2 +1,0 @@
-BACKLOG: kitgatelevel: kit gate by clvl (town trip from clvl 8, cap 2, kitgate-skip); needs the gate 1 rerun to verify live
-CHANGELOG: kit gate by character level: from clvl 8 an incomplete kit makes a town trip instead of holding the character in Blood Moor and Cold Plains

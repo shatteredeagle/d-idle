@@ -1,1 +1,0 @@
-BACKLOG: chargedbolt (done): Charged Bolt per-bolt PASS on d2d at levels 1/4/8/13/20 (compared to table, not game.exe), docs/chargedbolt.md, evidence docs/probes/sksmoke/2026-11-04-SK-cb.txt

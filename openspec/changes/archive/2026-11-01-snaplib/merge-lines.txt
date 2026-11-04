@@ -1,3 +1,0 @@
-BACKLOG: snaplib: cmd/d2restore snapshot library (manifest, verify, place into another prefix with preflight and a setup-copy ledger line), offline only; first live restore pending (docs/snaplib.md)
-INDEX: docs/snaplib.md: snapshot library and d2restore usage, live preflight checklist
-CHANGELOG: tools: d2restore snapshot library (snapshot, verify, list, place) and a prefix-keyed cheat ledger (docs/snaplib.md).

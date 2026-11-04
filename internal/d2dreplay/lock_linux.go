@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-// LabLock is the shared lock every d2d run on the worker takes (openspec/specs/lab-rules: one d2d at a time).
+// LabLock is the shared lock every d2d run on the worker takes (docs/contracts/lab-rules.md: one d2d at a time).
 const LabLock = "/tmp/d2d-lab.lock"
 
 // SlotLocks are the lock files of the 4-slot d2d pool, the same paths tools/d2dslot.sh uses (slot 0 is the legacy

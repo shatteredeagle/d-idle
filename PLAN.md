@@ -4,7 +4,7 @@
 > **STATUS (2026-10-30): historical plan, partly superseded.** This file is the 2026-10-28 founding plan and describes a Wine/Proton-only architecture; keep it for the goal, layers and history, do not rewrite it. Current truth lives elsewhere:
 > - what is true now: [docs/plan/STATUS.md](docs/plan/STATUS.md) (generated block at the bottom), plan: [docs/plan/plan-v2.md](docs/plan/plan-v2.md);
 > - decisions (d2d is the likely primary backend, Wine container work paused): [docs/decisions.md](docs/decisions.md) and [docs/adr/](docs/adr/README.md);
-> - contracts and numeric gates: [openspec/specs/](openspec/README.md); running jobs: `openspec/changes/`; ownership: [docs/OWNERS](docs/OWNERS).
+> - contracts and numeric gates: [docs/contracts/](docs/contracts/README.md); running jobs: `backlog/tasks/`; ownership: [docs/OWNERS](docs/OWNERS).
 
 
 Goal: a self-contained, native-Linux app that turns classic Diablo II: Lord of Destruction 1.14d into an idle game.

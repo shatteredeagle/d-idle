@@ -1,3 +1,0 @@
-INDEX: docs/research/missilediff.md | monster missiles Acts 1 and 2 real-build differential: 120,000 cases game.exe vs the real d2d build, D1 brackets / D2 HitShift / D3 row element CONFIRMED (44,456 differ before, 0 after the local fix); 21 rows 0-diff | card missilediff
-BACKLOG: missilediff follow-up: independent verifier (d2-reviewer, own harness) for local/missilediff-record in the fork (docs/research/missilediff.md); run test_game, test_combat, pr_guard, presubmit; then the upstream PR draft (roll D5 and skill-sourced rows as sibling answers)
-CHANGELOG: docs: missilediff (monster missile record, real d2d build vs game.exe, 120,000 cases), tools/emu/mm_diff.py, ledger rows for 22 missile rows

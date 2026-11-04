@@ -1,1 +1,0 @@
-CHANGELOG: memory rule (ADR 0014): memory writes allowed for setup, instrumentation, diagnosis, fixtures; crutch rule; d2cheat runstart and ledger --since-run

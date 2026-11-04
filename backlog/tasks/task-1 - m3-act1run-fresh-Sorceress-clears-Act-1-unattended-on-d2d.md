@@ -24,8 +24,8 @@ result: ""
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/m3-act1run"
+source: "openspec-final:openspec/changes/m3-act1run"
+contracts: ["proposed/m3-act1run"]
 ---
 
 ## Description
@@ -45,7 +45,7 @@ Gates (from the card):
 - merc alive at least 70 percent of field time after the claim on every seed (minute lines)
 - tools/agentreap.sh m3-act1run leaves nothing; changecheck -cli 0 warnings; leakcheck 0; validate --strict passes
 
-Source: openspec/changes/m3-act1run/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/m3-act1run/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

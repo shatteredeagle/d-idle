@@ -1,3 +1,0 @@
-INDEX: docs/research/covarmor.md - armor bases and item types, first pass (data only, no ledger rows)
-CHANGELOG: covarmor: first-pass trace of armor.txt and itemtypes.txt (docs/research/covarmor.md)
-BACKLOG: covarmor follow-up: run game.exe defence (ethereal, superior) and required-strength code under the emulator against d2d for 202 armor rows

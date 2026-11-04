@@ -1,3 +1,0 @@
-BACKLOG: claudeguide: guide for Claude users on tracing claims and the agent setup (docs/agents/claude-tracing-guide.md); model advice rests on one blind item, other models untested
-INDEX: docs/agents/claude-tracing-guide.md: guide for Claude users (evidence tags, trace steps, verifier rules, model per role, brief templates)
-CHANGELOG: Added docs/agents/claude-tracing-guide.md, a guide for Claude users on tracing claims and the agent setup.

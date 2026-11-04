@@ -1,9 +1,9 @@
 #!/usr/bin/env python3 -I
-"""Read-only spec ledger scan (stdlib). Run from the repo root:
+"""HISTORY (needs the openspec/ tree; since OpenSpec removal stage 3 run it only in a checkout of git tag openspec-final). Read-only spec ledger scan (stdlib). Run from the repo root:
 
     python3 -I tools/spec/ledger_scan.py > /tmp/ledger-raw.md
 
-Parses openspec/specs/*/spec.md (base) and every delta under
+Parses docs/contracts/*/spec.md (base) and every delta under
 openspec/changes/archive/*/specs/*/spec.md and openspec/changes/*/specs/*/spec.md,
 then prints: ledger rows with a heuristic verdict, base-spec flags
 (stale terms, dead references, duplicate names/text) and a numbers table.
@@ -125,7 +125,7 @@ OVERRIDES = {
 
 def main():
     base = {}  # cap -> {name: (line, body)}
-    for p in sorted(glob.glob("openspec/specs/*/spec.md")):
+    for p in sorted(glob.glob("docs/contracts/*/spec.md")):
         cap = p.split("/")[2]
         base[cap] = {}
         for o, n, l, b in parse(p):

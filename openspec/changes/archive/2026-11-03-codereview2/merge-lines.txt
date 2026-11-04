@@ -1,3 +1,0 @@
-BACKLOG: codereview2 - second independent review (AREAREACH, CODEFIX, SPECDELTA): fix R1 walk limit vs failed waypoint jumps, R2 target-walk-timeout loop, R3 no exposure gate on long walks, R5 Burial Grounds in the XP fallback, R6 missing monster levels in stepXP
-INDEX: docs/research/codereview2.md - review of the multi-hop walk rule, the XP fallback rank and the codefix and specdelta changes, ranked findings with smallest fixes
-CHANGELOG: Docs: second independent code review of the 2026-11-03 bot changes (walk limit, walk loop, XP fallback rank).

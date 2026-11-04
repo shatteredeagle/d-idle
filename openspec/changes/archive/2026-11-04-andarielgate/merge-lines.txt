@@ -1,1 +1,0 @@
-BACKLOG: andarielgate: Gate 2 seed 11 never attempted Andariel because boss.andarielHold=1 (ADR 0011 gate 3, m3-andariel deferred) holds the floor at clvl+1; merc was dead from clvl 14 (revive 1920 gold vs about 1800); no code change, question for the user in docs/andarielgate.md (reword criterion, lift hold for the profile, or run m3-andariel first); not verified live

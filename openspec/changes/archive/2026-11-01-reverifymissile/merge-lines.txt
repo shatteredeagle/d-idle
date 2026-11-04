@@ -1,2 +1,0 @@
-INDEX: - docs/research/pr-missilerecord-reverify.md: independent Opus re-verification of the fixed monster missile record candidate and the Andariel poison split (READY WITH CHANGES)
-BACKLOG: - MISSILEFIX2: owner-poison add removed on poison rows in the record candidate, PR drafts revised (docs/research/pr-missilerecord-reverify.md); re-verify narrowly, then ask the user before any upstream PR

@@ -1,6 +1,6 @@
 # fixemptyplan: a goal that snaps onto the player's cell
 
-> status: offline fix, live proof pending. Card: [fixemptyplan](../openspec/changes/fixemptyplan/proposal.md). Evidence: docs/probes/postfix-soak2-analysis.md F4.
+> status: offline fix, live proof pending. Card: [fixemptyplan](archive/openspec-index.md#fixemptyplan). Evidence: docs/probes/postfix-soak2-analysis.md F4.
 
 ## Cause
 

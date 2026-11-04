@@ -20,8 +20,7 @@ result: ""
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/gameexe-retire-soak"
+source: "openspec-final:openspec/changes/gameexe-retire-soak"
 ---
 
 ## Description
@@ -38,7 +37,7 @@ Next step: rewrite the text for ADR 0015 (acceptance, not retirement)
 Gates (from the card):
 - Game.exe G1/G2 criteria re-verified once work resumes
 
-Source: openspec/changes/gameexe-retire-soak/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/gameexe-retire-soak/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

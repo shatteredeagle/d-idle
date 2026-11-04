@@ -1,3 +1,0 @@
-BACKLOG: - SEEDSTUDY: same-seed lockstep of d2d vs Game.exe studied (docs/research/seed-study.md): the seed is pinnable by the .d2s map id (0xAB, active difficulty byte) on both sides, layout and spawn placement should match; frame-level lockstep is blocked by Tier B stepping and by d2d not modelling the game-seed stream (every unit made steps it); cards ranked
-INDEX: - docs/research/seed-study.md: seed choice and use on Game.exe and d2d, pinning via the save map id, observation and input parity, determinism plan P3, verdict, first-divergence expectations, ranked cards (card seedstudy)
-CHANGELOG: - docs: research on running d2d and Game.exe from one seed in lockstep (seed pin by save map id, RNG stream, parity, plan P3, verdict); nothing run

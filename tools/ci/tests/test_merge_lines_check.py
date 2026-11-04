@@ -38,7 +38,10 @@ class LintTest(unittest.TestCase):
             os.makedirs(os.path.join(d, "openspec", "changes", "c1"))
             with open(os.path.join(d, "openspec", "changes", "c1", "merge-lines.txt"), "w") as f:
                 f.write("BACKLOG: ok\n")
-            self.assertEqual(len(m.default_files(d)), 1)
+            os.makedirs(os.path.join(d, "backlog", "merge-lines"))
+            with open(os.path.join(d, "backlog", "merge-lines", "c2.txt"), "w") as f:
+                f.write("BACKLOG: ok\n")
+            self.assertEqual(len(m.default_files(d)), 2)
 
 
 if __name__ == "__main__":

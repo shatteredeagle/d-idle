@@ -1,3 +1,0 @@
-BACKLOG: #164 got a second CodeRabbit tooling follow-up (11bc2c4d, empty game.tsv fails cmp); watch for the maintainer.
-INDEX: no change
-CHANGELOG: no change

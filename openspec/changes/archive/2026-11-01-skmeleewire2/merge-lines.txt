@@ -1,1 +1,0 @@
-BACKLOG: - skmeleewire2 (card [skmeleewire2](../openspec/changes/skmeleewire2/proposal.md), offline): d2d dump stats gear/weapons (lab2-stats) now fill player stats 19/21/22/25 so the melee model is fed on d2d; open: live read with lab2-stats binary.

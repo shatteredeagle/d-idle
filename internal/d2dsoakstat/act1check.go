@@ -11,7 +11,7 @@ import (
 	"d2lod-bot/internal/quest"
 )
 
-// Act 1 checklist rows (openspec/specs/act1-campaign/spec.md, "Act 1 cleared record"); docs/act1check.md says which
+// Act 1 checklist rows (docs/contracts/act1-campaign.md, "Act 1 cleared record"); docs/act1check.md says which
 // ones the log can decide. Verdicts: PASS and FAIL need a log line that proves it; everything else is UNKNOWN; a log
 // with none of the new lines is n/a. A quest is never marked done from proxy evidence (area, kill event, item).
 

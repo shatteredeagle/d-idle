@@ -1,6 +1,6 @@
 # Soaky soak analysis (SOAKANALYSIS, 2026-10-29)
 
-> status: SUPERSEDED in part: pre-fix baseline; the approved death rule is plan-v2 section 10.2 and openspec/specs/death-rule/spec.md.
+> status: SUPERSEDED in part: pre-fix baseline; the approved death rule is plan-v2 section 10.2 and docs/contracts/death-rule.md.
 
 Where the time of a fresh no-cheat Sorceress went over 3.5 hours, what it cost, and what to fix first. Offline analysis of
 the bot logs and soak samples; no game, no service touched. Tags: **V** = counted or read by me from the files named (method

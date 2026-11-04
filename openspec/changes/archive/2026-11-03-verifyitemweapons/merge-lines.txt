@@ -1,3 +1,0 @@
-BACKLOG: verifyitemweapons follow-up (docs/research/verifyitemweapons.md): repair two statements in the itemweapons trace (18 one-or-two-handed swords carry both damage pairs; bow, xbow, claw and other classes have dex or mixed bonuses); game.exe weapon loader and damage differential still open.
-INDEX: docs/research/verifyitemweapons.md: independent recount of the weapons.txt first pass: counts hold, two statements wrong, no game.exe claim to verify (card verifyitemweapons)
-CHANGELOG: Independent verification of the weapon-bases first pass (docs/research/verifyitemweapons.md) and tools/emu/viw_count.py; no ledger change.
