@@ -2,7 +2,7 @@
 
 ```yaml
 change: codereview3
-status: in-progress
+status: archived
 agent: codereview3
 branch: agent/codereview3
 worktree: d2lod-wt/codereview3
@@ -17,6 +17,7 @@ result: "review doc written offline (code read, plandata test run); not verified
 credit:
   author: owner
   agents: [Claude Code]
+merge: 9fba083
 ```
 
 - [x] 1 read the three merges (gate1fix, recoverykit, xpfallback) and codereview2
