@@ -5,7 +5,7 @@ change: gate2run-s12-20261103-2210-g2v
 status: in-progress
 agent: gaterun
 branch: agent/gate2run-s12-20261103-2210-g2v
-worktree: /home/jesse/code/d2lod-wt/gate2run-s12-20261103-2210-g2v
+worktree: ~/code/d2lod-wt/gate2run-s12-20261103-2210-g2v
 skip_specs: true
 owns:
   - docs/soaks/gate2-s12-20261103-2210-g2v.md
