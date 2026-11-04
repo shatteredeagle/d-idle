@@ -1,0 +1,1 @@
+INDEX: docs/research/primitives-open-20261104.md: P1..P36 open-item snapshot at 2026-11-04 (latest verdict, evidence, what changed since, ranked open S/A, BLOCKED blockers, never-drilled list)
