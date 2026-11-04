@@ -2,7 +2,7 @@
 
 ```yaml
 change: gate2loop
-status: in-progress
+status: archived
 agent: gate2loop
 branch: agent/gate2loop
 worktree: ~/code/d2lod-wt/gate2loop
@@ -16,8 +16,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "save point now runs after the town chores and only when XP was earned since the last entry; fake tests added; not verified live (needs a Gate 2 seed 13 rerun)"
+result: "offline; partial: cursor fault and clvl 15-16 no-area block still open; needs a Gate 2 rerun"
 live: "not verified live"
+merge: fdbf1b9
 ```
 
 - [x] work done
