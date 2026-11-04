@@ -1,11 +1,11 @@
 #!/bin/bash
 # esverify (the worker host): configure and build d2d's game library of one verifier worktree (base or head, mirrored by
-# labrun under ~/labrun/herdr/code/d2lod-wt/verifier-es<tag>), then compile tools/emu/esv_probe.cpp against it.
+# labrun next to this worktree as ../verifier-es<tag>), then compile tools/emu/esv_probe.cpp against it.
 #   bash tools/emu/esv_build.sh base|head [extra ninja targets...]  -> $D2_SCRATCH/<tag>/esv_probe
 set -e
 tag=$1; shift
 here=$(cd "$(dirname "$0")" && pwd)
-SRC=$HOME/labrun/herdr/code/d2lod-wt/verifier-es$tag
+SRC=$(cd "$here/../../.." && pwd)/verifier-es$tag
 OUT=${D2_SCRATCH:-/tmp/d2agent-esverify}/$tag
 B=$OUT/build3
 mkdir -p "$B"

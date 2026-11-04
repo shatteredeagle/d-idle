@@ -1,7 +1,7 @@
 #!/bin/bash
 # esverify (the worker host): clang-tidy (the repo's .clang-tidy) on the files the head commit adds or changes, and the
 # head's own test_energy_shield run. bash tools/emu/esv_tidy.sh
-SRC=$HOME/labrun/herdr/code/d2lod-wt/verifier-eshead
+SRC=$(cd "$(dirname "$0")/../../.." && pwd)/verifier-eshead
 B=${D2_SCRATCH:-/tmp/d2agent-esverify}/head/build3
 nice cmake -S "$SRC" -B "$B" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON > /dev/null 2>&1 || echo "reconfigure failed"
 nice ninja -C "$B" -j3 test_energy_shield test_combat > "$B/../tidy-ninja.log" 2>&1 || { tail -20 "$B/../tidy-ninja.log"; }
