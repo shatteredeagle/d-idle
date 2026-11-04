@@ -1,6 +1,6 @@
 # Contracts
 
-> status: current since OpenSpec removal stage 3 (`docs/process/openspec-removal-plan.md`); format work follows in stage 3b (`docs/process/contracts-after-openspec.md`).
+> status: current since OpenSpec removal stage 3b (`docs/process/openspec-removal-plan.md`, design in `docs/process/contracts-after-openspec.md`).
 
 A contract is a promise the bot, a judge or the lab keeps: rules and the numbers that decide a gate or a policy. It is not evidence (that is `docs/*.md` with V/S/U tags), not a decision record (`docs/adr/`) and not a work item (`backlog/`).
 
@@ -13,6 +13,12 @@ One file per capability, `docs/contracts/<capability>.md`. Gates: `soak-gates`, 
 ## Form
 
 `### Requirement: <name>` with SHALL/MUST text, then `#### Scenario: <name>` with WHEN/THEN lines. Every number carries a `Source:` (user decision with date, ADR, doc, or measurement). Never copy a number that has an owner (a knob default lives in `docs/knobs.md`): cite it.
+
+## Header and checks
+
+Every contract starts with a YAML header: `id` (the file name), `goal` (G-A..G-F of ADR 0015, or `rule`), `status` (`in-force`, or `proposed` under `proposed/`), `enforced_by` (repo paths that implement or judge it, or `prose`), and optionally `judged_by_ops` (an ops-repo path, not checked) and `adr`. `python3 tools/contracts/check.py` (run by `tools/ci/check.sh`) fails on a missing header key, an `enforced_by` path that does not exist, a requirement without SHALL/MUST or without a scenario, a duplicate key in a Numbers table, and a knob citation whose value differs from `docs/knobs.md`. Cite a knob as `` `group.key` (N) `` so it can be checked. It warns about a requirement without `Source:`, a `contracts:` task id with no file, and two In Progress tasks whose `owns:` paths overlap.
+
+`soak-gates`, `death-rule` and `fidelity-gate` end with a `## Numbers` table (key, value, unit, enforced in). The contract owns those values; `contract_test.go` in `cmd/d2soak` and `internal/d2dsoakstat` reads the table and compares it with the code defaults. Changing a row needs the user's go and the code change in the same branch.
 
 ## Changing a contract
 

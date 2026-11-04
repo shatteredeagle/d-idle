@@ -170,3 +170,19 @@ The early baseline (`baselines-early.json`) SHALL carry, for at least 2 original
 - **WHEN** `baselines-early.json` is read after card m2-earlybase
 - **THEN** it holds Fresha (V: 11743 XP/h, 389 kills/h, 0.52 deaths/h, 1.34 deaths per 1000 kills, 115 play minutes, 746 kills) and Soaky (S: 6600 XP/h, 408 kills/h, 0.29 deaths/h, 0.70 per 1000 kills) with mean 9172 XP/h and 398 kills/h
 - **AND** the 8-seed x 3-virtual-hour d2d set of 2026-10-31 on the current bot (V, docs/d2d-baselines-early.md) measures 4767 +- 230 XP/h and 192 +- 7.5 kills/h (mean +- SE), 3 deaths in 24 h, no excluded seed, and `d2dsoak compare` gives FAIL on xp_per_hour (-48 %) and kills_per_hour (-52 %)
+
+## Numbers
+
+Owner of these values is this contract (the user approves them); the tests named in `enforced in` (`contract_test.go` in `cmd/d2soak` and `internal/d2dsoakstat`) read this table and compare it with the code. Change a row only with the user's go, cited in the `Source:` of the requirement that states it, and change the code in the same branch.
+
+| key | value | unit | enforced in |
+|---|---|---|---|
+| fidelity.relTol | 0.20 | share of baseline mean | internal/d2dsoakstat DefaultRules (the four gated metrics) Rule.Rel |
+| fidelity.deathsPerHourAbs | 0.5 | deaths per hour | internal/d2dsoakstat DefaultRules deaths_per_hour Rule.Abs |
+| fidelity.deathsPer1000Abs | 1.0 | deaths per 1000 kills | internal/d2dsoakstat DefaultRules deaths_per_1000_kills Rule.Abs |
+| fidelity.minSeeds | 5 | seeds | tools/d2dsoak/baselines.json minSeeds (also baselines-early.json) |
+| fidelity.minHoursPerSeed | 2 | virtual h | tools/d2dsoak/baselines.json minHoursPerSeed |
+| fidelity.minTotalHours | 10 | virtual h | tools/d2dsoak/baselines.json minTotalHours |
+| band.minHours | 0.5 | h | internal/d2dsoakstat BandMinHours |
+| band.hardRuns | 3 | baseline runs | internal/d2dsoakstat BandHardRuns |
+| band.cvFloor | 0.14 | share | internal/d2dsoakstat BandCVFloor |

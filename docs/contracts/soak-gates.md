@@ -331,6 +331,33 @@ Every minute of the Gate 1 criteria (and of Gates 2 and 3 over their length) SHA
 - **WHEN** the same log has area changes, quest steps or gold spent inside that 26 minute stretch so the longest stretch without any progress event is 16 virtual minutes
 - **THEN** the PROGRESS invariant (limit 30) still passes and the Gate 1 NOKILL criterion still FAILS
 
+## Numbers
+
+Owner of these values is this contract (the user approves them); the tests named in `enforced in` (`contract_test.go` in `cmd/d2soak` and `internal/d2dsoakstat`) read this table and compare it with the code. Change a row only with the user's go, cited in the `Source:` of the requirement that states it, and change the code in the same branch.
+
+| key | value | unit | enforced in |
+|---|---|---|---|
+| gate1.beltMin | 5 | virtual min | internal/d2dsoakstat DefaultInvLimits.BeltMin |
+| gate1.noKillMin | 10 | virtual min | internal/d2dsoakstat DefaultInvLimits.NoKillMin |
+| inv.wedgeMin | 15 | virtual min | internal/d2dsoakstat DefaultInvLimits.WedgeMin |
+| inv.progressMin | 30 | min | internal/d2dsoakstat DefaultInvLimits.ProgressMin |
+| inv.stallWarnMin | 30 | min | internal/d2dsoakstat DefaultInvLimits.StallWarnMin |
+| inv.recoverMin | 10 | virtual min | internal/d2dsoakstat DefaultInvLimits.RecoverMin |
+| inv.earlyFrac | 0.95 | share of requested hours | internal/d2dsoakstat DefaultInvLimits.EarlyFrac |
+| m24.stallMin | 10 | min | cmd/d2soak profile m24 Limits.MaxNoProgress; DefaultAlertRules.StallXP |
+| m24.noGainMin | 90 | min | cmd/d2soak DefaultProgressLimits.NoGain (profile m24 keeps it) |
+| m24.unhealthyMin | 3 | min | cmd/d2soak DefaultLimits.MaxUnhealthy |
+| m24.warmUpMin | 10 | min | cmd/d2soak DefaultLimits.WarmUp |
+| m24.rssMBPerHour | 40 | MB per hour | cmd/d2soak profile m24 Limits.MaxRSSMBPerHour |
+| m24.fdsPerHour | 5 | fds per hour | cmd/d2soak profile m24 Limits.MaxFDsPerHour |
+| m24.threadsPerHour | 5 | threads per hour | cmd/d2soak profile m24 Limits.MaxThreadsPerHour |
+| m24.goroutinesPerHour | 5 | goroutines per hour | cmd/d2soak profile m24 Limits.MaxGoroutinesPerH |
+| m24.ladderPerHour | 2 | rungs per hour | cmd/d2soak profile m24 Limits.MaxLadderPerHour |
+| m24.sentinelPerHour | 2 | actions per hour | cmd/d2soak profile m24 Limits.MaxSentinelPerHr |
+| heap.runawayMB | 8192 | MB | cmd/d2soak DefaultAlertRules.HeapRunawayMB |
+| heap.growthMB | 1024 | MB | cmd/d2soak DefaultAlertRules.HeapGrowthMB |
+| heap.growthWindowMin | 5 | min | cmd/d2soak DefaultAlertRules.HeapGrowthWindow |
+
 ## Pending deltas (not in force)
 
 - d2d-container-soak (open, proposed): ADDED "d2d container one-slot 24 h soak". Superseded by ADR 0015 item 5 (container deferred until Gate A passes); stays on its card.

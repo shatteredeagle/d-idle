@@ -72,3 +72,24 @@ The bot SHALL carry at most about 50 x clvl + 300 gold (850 at clvl 11) and bank
 #### Scenario: Big purse
 - **WHEN** the character dies with 1100 gold at clvl 12
 - **THEN** the pile at the death spot is swept before a corpse trip is judged
+
+## Numbers
+
+Owner of these values is this contract (the user approves them); the tests named in `enforced in` (`contract_test.go` in `cmd/d2soak` and `internal/d2dsoakstat`) read this table and compare it with the code. Change a row only with the user's go, cited in the `Source:` of the requirement that states it, and change the code in the same branch.
+
+| key | value | unit | enforced in |
+|---|---|---|---|
+| death.streakDeaths | 3 | deaths | cmd/d2soak DefaultDeathLimits.StreakDeaths; internal/d2dsoakstat DefaultInvLimits.StreakDeaths |
+| death.streakWindowMin | 30 | min | cmd/d2soak DefaultDeathLimits.StreakWindow; internal/d2dsoakstat DefaultInvLimits.StreakMinutes |
+| death.hourDeathsMax | 4 | deaths (more than this in the hour fails) | cmd/d2soak DefaultDeathLimits.HourDeaths; internal/d2dsoakstat DefaultInvLimits.StreakAny is this plus 1 |
+| death.hourWindowMin | 60 | min | internal/d2dsoakstat DefaultInvLimits.StreakAnyMinutes |
+| death.warnDeaths | 2 | deaths in 60 min | cmd/d2soak DefaultDeathLimits.WarnDeaths |
+| death.recoveryFailShare | 0.10 | share of rolling 60 min | cmd/d2soak DefaultDeathLimits.RecoveryFail |
+| death.recoveryWarnShare | 0.05 | share of rolling 60 min | cmd/d2soak DefaultDeathLimits.RecoveryWarn |
+| death.maxBackMin | 5 | min | cmd/d2soak DefaultDeathLimits.MaxBack |
+| death.minRunMin | 30 | min | cmd/d2soak DefaultDeathLimits.MinRun |
+| death.ratePerK | 15 | deaths per 1000 kills | cmd/d2soak DefaultDeathLimits.RatePerK; internal/d2dsoakstat DefaultInvLimits.DeathsPer1000 |
+| death.rateWarnPerK | 5 | deaths per 1000 kills | cmd/d2soak DefaultDeathLimits.RateWarnPerK |
+| death.minKills | 150 | kills | cmd/d2soak DefaultDeathLimits.MinKills; internal/d2dsoakstat DefaultInvLimits.DeathsMinKills |
+| death.repeatWindowMin | 30 | min | cmd/d2soak DefaultDeathLimits.RepeatWindow |
+| death.repeatGapSec | 180 | s | cmd/d2soak DefaultDeathLimits.RepeatGap |
