@@ -366,3 +366,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/andarielplan.md: plan for card m3-andariel (throwaway Andariel fight, lifting boss.andarielHold, revive-gold stall)
 - docs/noareameasure.md - Gate 2 noarea measurements: XP per area at clvl 13+, exclude set with reasons, kit at 23:35 (seed 13)
 - docs/contracts/README.md: the contracts (gates, policies, interfaces, rules), how to change one; docs/archive/openspec-index.md: one line per old OpenSpec change card.
+- docs/contracts/README.md header and checks section; tools/contracts/check.py
