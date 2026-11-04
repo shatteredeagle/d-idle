@@ -53,6 +53,9 @@ int main(int argc, char** argv) try {
         for (const auto& [name, info] : data->missiles)
             if (info.dmg_func != 0) { ++dmg_rows; std::printf("# dmg row %s func %d par %d %d\n", name.c_str(), info.dmg_func, info.dmg_par1, info.dmg_par2); }
 #endif
+        int identity = 0;
+        for (std::size_t i = 0; i < data->mon_bin.size(); ++i) identity += data->mon_bin[i] == i;
+        std::printf("# mon_bin %zu entries, %d identity, types %zu\n", data->mon_bin.size(), identity, data->monsters.types.size());
         std::printf("# dmg rows %d, hammer id %d par0 %d etype %d\n", dmg_rows, hammer_id, hammer->par[0], hammer->etype);
         for (std::size_t i = 0; i < data->monsters.types.size(); ++i) {
             const auto& t = data->monsters.types[i];
@@ -79,6 +82,7 @@ int main(int argc, char** argv) try {
     std::ifstream cases(argv[2]);
     std::string line;
     int skipped = 0;
+    const bool both = std::getenv("PV_BOTH") && std::string_view(std::getenv("PV_BOTH")) == "1";
     const bool predraw = std::getenv("PV_PREDRAW") && std::string_view(std::getenv("PV_PREDRAW")) == "1";
     while (std::getline(cases, line)) {
         std::istringstream in(line);
@@ -100,6 +104,11 @@ int main(int argc, char** argv) try {
         monster.stats.hit_points = monster.hit_points = int(life);
         monster.life_frac = 0;
         auto target = monster.target(*data);
+#ifdef PV_HEAD
+        if (both) target.undead = target.demon = true;      // PV_BOTH=1: the break attempt hammer_game.py makes too
+#else
+        if (both) target.undead = true;                     // base's Target has no demon flag
+#endif
         for (auto& r : target.res) r = 0;
         target.res[1] = int(res);                                   // magic (kRes[4])
         std::array<int, 4> pierces{};

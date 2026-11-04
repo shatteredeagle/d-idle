@@ -18,3 +18,11 @@ echo "== full hit path: game.exe FUN_005a89a0 + dmg func vs d2d with the first d
 $PY $R/h/cmp.py $O/cases.tsv $O/game.tsv $O/base-predraw.tsv $O/head-predraw.tsv >> $O/cmp.txt
 echo "== full hit path vs d2d one draw (as d2d runs)" >> $O/cmp.txt
 $PY $R/h/cmp.py $O/cases.tsv $O/game.tsv $O/base.tsv $O/head.tsv >> $O/cmp.txt
+# break attempt: PV_BOTH=1 (every row undead and demon), direct mode, the same cases' first 6000
+if [ -n "$BOTHN" ]; then
+  head -n $BOTHN $O/cases.tsv > $O/both-cases.tsv
+  PV_BOTH=1 PV_DIRECT=1 nice $PY $R/h/hammer_game.py game $O/both-cases.tsv > $O/both-game.tsv 2> /dev/null || exit 1
+  for w in base head; do PV_BOTH=1 $R/build-$w/tests/test_palprobe --hammer $O/both-cases.tsv 2> /dev/null | grep -E '^[0-9]+ ' > $O/both-$w.tsv || exit 1; done
+  echo "== PV_BOTH (every row undead and demon), direct" >> $O/cmp.txt
+  $PY $R/h/cmp.py $O/both-cases.tsv $O/both-game.tsv $O/both-base.tsv $O/both-head.tsv >> $O/cmp.txt
+fi

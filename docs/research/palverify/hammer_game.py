@@ -47,6 +47,7 @@ HAMMER, AIM, VIGOR = 112, 108, 115
 FAKE = 0x30000000
 STATLIST = 0x31000000
 DIRECT = os.environ.get("PV_DIRECT") == "1"
+BOTH = os.environ.get("PV_BOTH") == "1"      # break attempt: every row made undead AND demon (MonStats flags byte +0xd)
 
 
 def s32(v):
@@ -89,6 +90,12 @@ class Game:
                    0x5347e0: 3, 0x61ab00: 1, 0x5541b0: 0, 0x621d50: 2, 0x57aa60: 0, 0x57aaa0: 0,
                    0x57aae0: 2, 0x57af80: 2, 0x57b230: 2, 0x57ac50: 3, 0x57add0: 3, 0x5d6410: 0})
         e.stub(1, {0x554200: 1, 0x620bb0: 1, 0x457490: 0})
+        if BOTH:
+            bits = e.read(0x6ce274, 1)[0] | e.read(0x6ce27c, 1)[0]
+            mon = e.r32(t + 0xa78)
+            for m in range(self.nmon):
+                a = mon + m * 0x1a8 + 0xd
+                e.mu.mem_write(a, bytes([e.read(a, 1)[0] | bits]))
         rows = [r for r in self.dmg_rows() if r[1] == 5]
         assert len(rows) == 1, rows                      # one row with pSrvDmgFunc 5 (the claim)
         self.hammer_missile = rows[0][0]
