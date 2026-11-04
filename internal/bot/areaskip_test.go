@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/resource"
 	"testing"
 	"time"
 )
@@ -109,5 +110,24 @@ func TestTargetFailsDecay(t *testing.T) {
 	g.r.clearTargetFails(target)
 	if len(g.r.targetFailLast) != 0 || len(g.r.targetFails) != 0 {
 		t.Fatal("clear left state")
+	}
+}
+
+// codereview3 C3: a failed way to town of a recovery kit trip counts toward KitTripCap like failed chores.
+func TestFailedToTownCountsRecoveryKitTrip(t *testing.T) {
+	for _, capN := range []int{2, 3} {
+		g := newRig(t)
+		g.e.Tune.Resource.KitTripCap = capN
+		g.town.toTownErr = errBoom
+		g.w.set(func(w *world) { w.area = 3; w.level = 7; w.gold0 = 40 })
+		g.r.poll()
+		for i := 0; i < capN; i++ {
+			s := g.r.latest()
+			g.r.loop.trip = &trip{plan: ChorePlan{Potions: true, Reason: resource.RecoveryKitReason}, returnTo: s.Player.Area, emergency: true}
+			g.r.advanceTrip(context.Background(), s, control{})
+		}
+		if got := g.r.ob.recKitTrips; got < capN {
+			t.Fatalf("cap %d: recKitTrips %d after %d failed trips", capN, got, capN)
+		}
 	}
 }

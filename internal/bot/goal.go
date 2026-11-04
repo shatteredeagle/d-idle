@@ -451,6 +451,12 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			t.stage = 0
 		}
 		ok := r.do(ctx, c, StateResupplying, "Going to town ("+t.plan.Reason+")", town, "to town", r.d.Town.ToTown)
+		if !ok && strings.Contains(t.plan.Reason, resource.RecoveryKitReason) && r.State() == StateResupplying {
+			// a failed way home counts like failed chores: without it the same trip is due again on the next tick
+			r.obMu.Lock()
+			r.ob.recKitTrips++
+			r.obMu.Unlock()
+		}
 		if !ok && r.State() == StateResupplying {
 			// no portal, no scroll, no luck: give the trip up (the cooldown keeps it from being retried at once)
 			if l.failures >= 1 {
