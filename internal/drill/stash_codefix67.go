@@ -14,12 +14,16 @@ const (
 	stashStock = 1400
 )
 
+// stashPlan: the chore step `withdraw` runs only with plan.Potions && plan.Gold (internal/town/chores.go), `stash` with Stash or Gold.
+const stashPlan = "potions gold stash"
+
 // StashLab is the optional part of the lab for the stash recheck. All numbers come from the bot's tuning, not from here.
 type StashLab interface {
 	TownLab
-	KeepGold() int     // the purse the withdrawal tops up to (town keep line)
-	KitCost() int      // resource.Tuning kit cost: KitTPGold + max(HPFirst,1)*KitPotionGold
-	RejuvCode() string // item code of the smallest rejuvenation potion (from the class tables)
+	KeepGold() int                                           // the purse the withdrawal tops up to (town keep line)
+	KitCost() int                                            // resource.Tuning kit cost: KitTPGold + max(HPFirst,1)*KitPotionGold
+	RejuvCode() string                                       // item code of the smallest rejuvenation potion (from the class tables)
+	GivePack(ctx context.Context, r *Run, code string) error // cheat `debug give <code> pack`: the item lands in the pack, never the belt
 }
 
 // TripLab is what scenario 3 needs and no lab has yet: run the bot's own Runner loop in town for a few rounds and
@@ -71,7 +75,7 @@ func stashRun(ctx context.Context, l StashLab) (g0, g1 TownView, ci ChoreInfo, e
 	if g0, err = l.TView(ctx); err != nil {
 		return
 	}
-	ci = l.Chores(ctx, "potions stash")
+	ci = l.Chores(ctx, stashPlan)
 	g1, err = l.TView(ctx)
 	return
 }
@@ -157,10 +161,8 @@ func ds4(ctx context.Context, r *Run, l StashLab) Outcome {
 	if err := stashSetup(ctx, r, l, stashPoor, stashStock); err != nil {
 		return setupFail(err)
 	}
-	if err := l.GiveGround(ctx, r, code); err != nil {
-		return setupFail(err)
-	}
-	if _, err := l.PickupRaw(ctx); err != nil {
+	// `debug give <code>` on the ground and a pickup put a potion into the belt (live DS.4 left the pack empty)
+	if err := l.GivePack(ctx, r, code); err != nil {
 		return setupFail(err)
 	}
 	g0, g1, ci, err := stashRun(ctx, l)
