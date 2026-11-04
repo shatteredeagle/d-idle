@@ -1,5 +1,7 @@
 # Combat: internal/combat (agent COMBAT)
 
+> status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d through the gate ladder or say U. Current truth: docs/decisions.md.
+
 ## API summary (package `d2lod-bot/internal/combat`)
 
 ```go

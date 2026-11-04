@@ -93,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 50e66119 11-04 14:18 `Merge agent/floormeasure2: floormeasure2: route-floor measurement from the Gate 2 logs; seed 13 -1370 XP is the injected kill -9, not a death; no max-life field in any log` (floormeasure2)
-- 155f4d59 11-04 14:17 `Merge branch 'main' into floormeasure2` (-)
-- ce58271b 11-04 14:09 `Merge agent/livecheckdrills: livecheckdrills: drill groups DS (P5 stash recheck) and the tome stat-70 drill with fake-lab tests; live runs pending` (livecheckdrills)
-- 6312a99f 11-04 14:08 `Merge branch 'main' into livecheckdrills` (-)
-- 0ab90a8a 11-04 14:06 `Merge agent/shimregister: shimregister: see branch` (shimregister)
-- 8754456b 11-04 14:05 `Merge branch 'main' into shimregister` (-)
-- 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
-- 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
-- e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
-- d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
+- 0b1b54ae 11-04 16:56 `Merge agent/gate2runbook: gate2runbook: Gate 2 rerun runbook (docs only)` (gate2runbook)
+- d8c44516 11-04 16:56 `Merge agent/esfixbody: esfix: Energy Shield PR body updated for the native verification and the flat/mdr fix` (esfixbody)
+- d7f1c6a3 11-04 16:55 `Merge branch 'main' into gate2runbook` (-)
+- 0982d903 11-04 16:55 `Merge branch 'main' into esfixbody` (-)
+- a378bd69 11-04 16:49 `Merge agent/lifelog: life/maxLife in minute line, zone entry and safety decision log lines, soak report table` (lifelog)
+- b7d61733 11-04 16:48 `Merge branch 'main' into lifelog` (-)
+- 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
+- 2d3c0d81 11-04 16:47 `Merge branch 'main' into shimcheckci` (-)
+- a1be2f40 11-04 16:46 `Merge agent/retiredterms: status banners on 20 docs for retired terms` (retiredterms)
+- 03d0bcb0 11-04 16:46 `Merge agent/ledgerleft: spec ledger resolutions for 8 rows (needs user decisions)` (ledgerleft)
 <!-- statusgen:end -->
