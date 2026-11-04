@@ -2,7 +2,7 @@
 
 ```yaml
 change: prbopen
-status: in-progress
+status: archived
 agent: prbopen
 branch: agent/prbopen
 worktree: ~/code/d2lod-wt/prbopen
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits"
-result: "PR 189 opened on psi29a/d2decomped; oracle rerun 560,000 frames 0 differ; log lines written; not a live-game job"
+result: "PR #189 opened 2026-11-04; oracle 560,000 frames 0 differ on the rebased head"
 live: "not verified live (offline oracle on the worker host)"
+merge: 87972cf
 ```
 
 - [x] rerun the oracle on the head
