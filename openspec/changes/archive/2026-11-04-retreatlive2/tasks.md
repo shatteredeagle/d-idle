@@ -2,7 +2,7 @@
 
 ```yaml
 change: retreatlive2
-status: in-progress
+status: archived
 agent: retreatlive2
 branch: agent/retreatlive2
 worktree: ~/code/d2lod-wt/retreatlive2
@@ -14,7 +14,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits"
-result: "verified live on d2d (lab binary cheats3, slot 3): RT.drink PASS (drink-life, belt 4 to 3, 4 ticks to effect), RT.portal PASS (1 tick, bound 10); both identical in 2 runs"
+result: "d2d live: both PASS, runs identical; RT.leave blocked; not game.exe"
+merge: 5569f16
 ```
 
 - [x] Capacity check OK

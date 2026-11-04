@@ -61,7 +61,6 @@
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
-| [retreatlive2](../../openspec/changes/retreatlive2/) | in-progress | retreatlive2 | `docs/probes/retreat/2026-11-04-RT2*`<br>`docs/retreatlive2.md`<br>`openspec/changes/retreatlive2/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
@@ -118,7 +117,6 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
-- change retreatlive2: changecheck 0 warnings; leakcheck 0 hits
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 - 3d601e79 11-04 02:24 `Merge agent/retreatfix: retreatfix: RT.drink setup life derived from the chicken/drink knobs, RT.portal bound 10 ticks` (retreatfix)
 - 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
 - cb2af00e 11-04 02:20 `Merge agent/retreatlive: retreatlive: P29 RT.portal PASS on d2d; RT.drink FAIL on a bound question (setup 20 percent life is below chickenPct 25)` (retreatlive)
@@ -136,5 +135,4 @@
 - e9f01cdc 11-04 01:54 `merge origin/main into tomefix` (tomefix)
 - 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
 - 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
-- eb6f32e6 11-04 01:17 `merge origin/main into primcheck` (primcheck)
 <!-- statusgen:end -->
