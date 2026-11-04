@@ -1,0 +1,23 @@
+SKSMOKE-A1 SK d2d run, 2026-11-03. Tag: compared to table. This is d2d (lab fork binary d2d.lab-debug-skills, slot 3, lockstep, fresh throwaway Sorceress --no-save) against the skills.txt oracle table of 2026-11-03-SK-design.txt; it is NOT a game.exe run and says nothing about game.exe.
+Method (V, ran): per level a fresh invocation: debug goto 2, debug kill, debug stat 1 800 (energy), debug stat 6/7 256000 (life), debug stat 9 400000 (max mana), debug points 36|38 <level>, debug mana full, debug spawn zombie1 1 near (#17), debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire/light/cold/phys/magic 0. All of that is SETUP before the first cast; after it only `debug cast <skill> unit 17` (test action, ledgered, no state write), `step`, and the `monsters` read (exact life points). Each cast: step 45 (Charged Bolt 70), then read life; hit = positive drop from the previous read; a zero drop is a miss (the zombie walks, bolts miss by position), discarded. 120 casts per Fire Bolt level, 60 per Charged Bolt level.
+writes after start: 0 gameplay-state writes after the first cast (by construction: the probe order; only `debug goto 1` after the last read to return to town). Not from `d2cheat ledger --since-run`: the d2d probe ledger (actor drills:probe) has no runstart marker (U).
+Life resolution: monsters prints whole points, so a hit reads with truncation +-1 (hits at the edge of the range appear one point out; the PASS rule allows +-0.5 of the table range and the 256ths truncation note of the design). Total drop over the run is exact in points.
+
+FIRE BOLT (skill 36), synergies 0 (Fire Ball, Meteor at 0 points), zero resists (V: mon set reply)
+  lvl  1: table 3.0-6.0 mean 4.5 | measured hits 81 (misses 39 of 120 casts) mean 4.53 (+0.7%) min 3 max 6, out of range 0, total 367 -> PASS
+  lvl  4: table 7.5-10.5 mean 9.0 | measured hits 81 (misses 39 of 120 casts) mean 9.04 (+0.4%) min 7 max 11, out of range 0, total 732 -> PASS
+  lvl  8: table 13.5-16.5 mean 15.0 | measured hits 81 (misses 39 of 120 casts) mean 15.04 (+0.3%) min 13 max 17, out of range 0, total 1218 -> PASS
+  lvl 13: table 23.5-31.5 mean 27.5 | measured hits 81 (misses 39 of 120 casts) mean 27.00 (-1.8%) min 23 max 32, out of range 0, total 2187 -> PASS
+  lvl 20: table 45.5-60.5 mean 53.0 | measured hits 81 (misses 39 of 120 casts) mean 53.58 (+1.1%) min 45 max 61, out of range 0, total 4340 -> PASS
+VERDICT Fire Bolt (d2d vs table): PASS at levels 1, 4, 8, 13, 20 (>= 40 hits each, mean within 10 percent, every hit inside the table range +-0.5) [V: ran, S for the table]
+
+CHARGED BOLT (skill 38): NOT JUDGED per bolt. A cast fires 3,6,10,15,22 bolts at once and the `monsters` read gives only the sum of the bolts that hit, so the per-bolt hit damage cannot be separated (a `debug missiles` per-bolt hit trace would be needed). Per cast total, 60 casts per level:
+  lvl  1: bolts 3, casts with damage 19 of 60, mean total per cast 4.21, smallest 2 (a one-bolt hit: table 2.0-4.0, inside +-0.5), largest 9, all-bolts-hit ceiling 9.0
+  lvl  4: bolts 6, casts with damage 29 of 60, mean total per cast 8.72, smallest 4 (a one-bolt hit: table 3.5-5.5, inside +-0.5), largest 23, all-bolts-hit ceiling 27.0
+  lvl  8: bolts 10, casts with damage 36 of 60, mean total per cast 17.39, smallest 5 (a one-bolt hit: table 5.5-7.5, inside +-0.5), largest 48, all-bolts-hit ceiling 65.0
+  lvl 13: bolts 15, casts with damage 40 of 60, mean total per cast 32.92, smallest 8 (a one-bolt hit: table 8.0-10.0, inside +-0.5), largest 92, all-bolts-hit ceiling 135.0
+  lvl 20: bolts 22, casts with damage 52 of 60, mean total per cast 60.67, smallest 13 (a one-bolt hit: table 13.5-15.5, inside +-0.5), largest 192, all-bolts-hit ceiling 319.0
+Observation (S): the smallest single-cast drop at each level lies in the one-bolt table range, so the per-bolt roll is consistent with the table, but that is the minimum of a sum, not a mean: no verdict (U).
+Not in scope, not done: Frost Nova ring, pack kills per cast.
+
+Raw filtered logs (setup verb replies, every cast line and the #17 life read per cast): 2026-11-03-SK-d2d-raw.txt. Helper: 2026-11-03-SK-d2d.sh (runs on the worker host).

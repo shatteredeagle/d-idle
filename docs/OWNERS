@@ -120,3 +120,11 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
+docs/probes/sksmoke/2026-11-03-SK-design.txt  sksmoke  sksmoke-a1
+docs/probes/sksmoke/2026-11-03-SK-d2d*  sksmoke  sksmoke-a1
+docs/sksmoke-tools.md  sksmoke  sksmoke-a1
+cmd/d2cheat/skilllevel.go  sksmoke  sksmoke-a1
+cmd/d2cheat/skilllevel_test.go  sksmoke  sksmoke-a1
+internal/combat/cmd/combatlive/sk.go  sksmoke  sksmoke-a1
+internal/combat/cmd/combatlive/sk_test.go  sksmoke  sksmoke-a1
+openspec/changes/sksmoke-a1/**  sksmoke  sksmoke-a1

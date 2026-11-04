@@ -1,0 +1,13 @@
+SKSMOKE-A1 live attempt, 2026-11-03, instance i2, Combi (lvl 30), branch tip 13bacd41 plus trace field. Verdict: BLOCKED (method invalid), not FAIL.
+Start: Rogue Encampment, life 969/969, mana 313/313. Fire Bolt hard points = 3 (V: combatlive state skills list {36 3 0}); Charged Bolt 4, Fire Ball 1 (synergy source), so the table levels 1/4/8/13/20 were NOT run (level 3 has no row). Skill levels need the game stopped (d2cheat skilllevel): not done, agents may not restart.
+Setup actions (no memory writes): combatlive bindkey "Fire Bolt" f1 (V: map[36:f1]); navlive exit 2; navlive goto near the fallen at Blood Moor (V, positions printed). writes after start: 0 (no runstart, no cheat used).
+Runs (all combatlive sk --skill "Fire Bolt" --key f1 --level 3, hits 40):
+ 1. bg --max 180, target out of view: no output (killed at max, the tool prints only at the end). Lesson: use --timeout below --max.
+ 2. casts 6, monster 50+ units away: 6 misses, mana unchanged: the click lands offscreen (V screenshot, mana 313/313).
+ 3. after goto near the monsters, casts 25: 5 kills, 19 misses, 1 "hit" of 114.
+V raw trace (new Trace field of SKResult): every monster class (5, 19, 63) reads life 128.00 before the first hit; after hits 14.00 or 0.00 (e.g. "c5 id20 128.00 14.00", then "14.00 0.00"). So stat 6 of a client monster unit is a 0..128 percent scale, not points and not 256ths. The 114 "hit" is 114/128 of the monster's life, not 114 damage.
+Consequence (S): damage in points = delta/128 * (that unit's rolled max life). Max life is unknown per unit (monstats HPMin..HPMax rolled, scaled by the area/difficulty), granularity is maxlife/128 per step and weak Blood Moor monsters die in 1-2 bolts at skill level 3 (kill samples are discarded). The design PASS (mean within 10 percent, each hit within range +-0.5 points) cannot be judged from this read. Fire Bolt level 3 expected, by hand (S): 6.0-9.0 points per hit (mean 7.5), before synergy.
+Charged Bolt: not run; combatlive sk gives no valid per-bolt verdict (delta is the whole cast, and the life scale above).
+Frost Nova, pack kills per cast: not done (no harness).
+Ways forward (U): (a) read the true life from the server-side unit (needs the server player/monster table, not the client packet percent), (b) kill-count method: bolts to kill a monster of known fixed life (e.g. an unmodified unit with a known HP cap), (c) instrument via the game's damage trace (docs/research/skill-damage-trace.md) instead of life deltas.
+Character end state: in town (area 1), life 969/969, no panels, Fire Bolt bound to F1 (changed from before: right skill was 36 already). Exp +7 from fallen kills.

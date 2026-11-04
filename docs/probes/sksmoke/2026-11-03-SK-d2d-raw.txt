@@ -1,0 +1,2870 @@
+=== fb1 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 36 1
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.71	48.68	528	484	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.71,48.68 unit=17 mana=1562 err=<nil>
+zombie1	31.25	48.70	570	507	999997/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.25,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.47	48.20	627	496	999997/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.47,48.20 unit=17 mana=1562 err=<nil>
+zombie1	31.50	48.56	601	511	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.50,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.92	48.56	634	528	999989/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.92,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.79	48.71	612	529	999984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.79,48.71 unit=17 mana=1562 err=<nil>
+zombie1	31.43	48.69	585	514	999980/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.43,48.69 unit=17 mana=1562 err=<nil>
+zombie1	31.21	48.16	609	484	999980/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.21,48.16 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.71	621	453	999976/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.90,47.71 unit=17 mana=1562 err=<nil>
+zombie1	30.90	48.29	575	476	999976/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.90,48.29 unit=17 mana=1562 err=<nil>
+zombie1	31.46	48.30	619	499	999972/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.46,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.33	48.81	567	514	999972/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.33,48.81 unit=17 mana=1562 err=<nil>
+zombie1	31.15	48.45	582	493	999968/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.15,48.45 unit=17 mana=1562 err=<nil>
+zombie1	30.76	48.53	544	480	999963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.76,48.53 unit=17 mana=1562 err=<nil>
+zombie1	30.35	48.48	516	462	999959/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.35,48.48 unit=17 mana=1562 err=<nil>
+zombie1	30.10	47.99	535	432	999953/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.10,47.99 unit=17 mana=1562 err=<nil>
+zombie1	30.15	47.57	572	418	999948/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.15,47.57 unit=17 mana=1562 err=<nil>
+zombie1	30.47	48.05	559	450	999948/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.47,48.05 unit=17 mana=1562 err=<nil>
+zombie1	30.66	47.61	610	440	999943/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.66,47.61 unit=17 mana=1562 err=<nil>
+zombie1	31.07	47.25	672	442	999943/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.07,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.47	46.85	735	442	999938/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.47,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.84	46.55	789	444	999938/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.84,46.55 unit=17 mana=1562 err=<nil>
+zombie1	32.25	46.77	804	470	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.25,46.77 unit=17 mana=1562 err=<nil>
+zombie1	31.93	47.25	740	476	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.93,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.62	46.87	745	448	999931/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.62,46.87 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.34	779	422	999931/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.50,46.34 unit=17 mana=1562 err=<nil>
+zombie1	31.39	46.42	764	421	999926/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.39,46.42 unit=17 mana=1562 err=<nil>
+zombie1	31.45	46.47	764	426	999921/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.45,46.47 unit=17 mana=1562 err=<nil>
+zombie1	31.82	46.06	827	424	999921/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.82,46.06 unit=17 mana=1562 err=<nil>
+zombie1	32.33	45.95	876	440	999915/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.33,45.95 unit=17 mana=1562 err=<nil>
+zombie1	32.65	46.43	864	472	999915/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.65,46.43 unit=17 mana=1562 err=<nil>
+zombie1	32.21	46.50	823	457	999909/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.21,46.50 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.65	837	476	999903/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.54,46.65 unit=17 mana=1562 err=<nil>
+zombie1	32.37	46.92	801	480	999899/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.37,46.92 unit=17 mana=1562 err=<nil>
+zombie1	31.96	47.31	738	480	999895/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.96,47.31 unit=17 mana=1562 err=<nil>
+zombie1	31.70	47.60	694	481	999895/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.70,47.60 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.04	742	460	999892/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.74,47.04 unit=17 mana=1562 err=<nil>
+zombie1	32.06	46.56	806	454	999892/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.06,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.57	46.66	839	478	999887/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.57,46.66 unit=17 mana=1562 err=<nil>
+zombie1	32.56	46.28	868	463	999882/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.56,46.28 unit=17 mana=1562 err=<nil>
+zombie1	32.19	46.31	836	449	999877/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.19,46.31 unit=17 mana=1562 err=<nil>
+zombie1	31.83	46.29	809	434	999872/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.83,46.29 unit=17 mana=1562 err=<nil>
+zombie1	31.61	45.76	833	404	999872/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.61,45.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	45.29	847	373	999872/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.30,45.29 unit=17 mana=1562 err=<nil>
+zombie1	31.49	44.74	905	358	999868/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.49,44.74 unit=17 mana=1562 err=<nil>
+zombie1	31.13	44.33	910	327	999864/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.13,44.33 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999860/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.65	44.50	858	315	999856/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.65,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	44.93	812	326	999853/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.50,44.93 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.10	830	349	999853/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.90,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.72	45.10	816	342	999849/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.72,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.45	770	347	999843/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.50,45.45 unit=17 mana=1562 err=<nil>
+zombie1	30.68	45.43	786	353	999839/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.68,45.43 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.25	810	351	999839/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.80,45.25 unit=17 mana=1562 err=<nil>
+zombie1	30.49	45.68	750	356	999834/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.49,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.17	45.20	763	324	999828/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.17,45.20 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.55	730	335	999824/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.10,45.55 unit=17 mana=1562 err=<nil>
+zombie1	30.04	45.50	729	330	999819/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.04,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.39	775	344	999813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.50,45.39 unit=17 mana=1562 err=<nil>
+zombie1	30.42	44.93	805	323	999808/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.42,44.93 unit=17 mana=1562 err=<nil>
+zombie1	29.88	45.12	747	309	999802/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.88,45.12 unit=17 mana=1562 err=<nil>
+zombie1	29.40	45.30	694	297	999799/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.40,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.14	45.06	692	277	999795/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.14,45.06 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.56	713	247	999795/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.90,44.56 unit=17 mana=1562 err=<nil>
+zombie1	28.94	43.99	761	226	999790/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.94,43.99 unit=17 mana=1562 err=<nil>
+zombie1	29.08	43.45	816	210	999787/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.08,43.45 unit=17 mana=1562 err=<nil>
+zombie1	28.90	42.91	845	181	999787/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.90,42.91 unit=17 mana=1562 err=<nil>
+zombie1	28.72	43.43	789	195	999782/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.72,43.43 unit=17 mana=1562 err=<nil>
+zombie1	28.70	44.00	742	217	999776/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.70,44.00 unit=17 mana=1562 err=<nil>
+zombie1	28.85	43.65	782	209	999771/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=28.85,43.65 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999765/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.57	43.63	841	237	999765/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.57,43.63 unit=17 mana=1562 err=<nil>
+zombie1	29.44	43.96	804	245	999761/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.44,43.96 unit=17 mana=1562 err=<nil>
+zombie1	29.40	44.45	762	263	999758/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.40,44.45 unit=17 mana=1562 err=<nil>
+zombie1	29.71	44.92	749	294	999758/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.71,44.92 unit=17 mana=1562 err=<nil>
+zombie1	29.89	45.47	720	323	999752/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.89,45.47 unit=17 mana=1562 err=<nil>
+zombie1	30.44	45.50	761	346	999749/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.44,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.07	45.22	754	320	999749/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.07,45.22 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.74	779	294	999749/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=29.90,44.74 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.50	825	298	999745/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.24,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999740/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999736/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.35	44.72	817	312	999730/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.35,44.72 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.21	757	321	999725/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.10,45.21 unit=17 mana=1562 err=<nil>
+zombie1	30.16	45.76	718	346	999719/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.16,45.76 unit=17 mana=1562 err=<nil>
+zombie1	30.45	46.20	706	375	999719/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.45,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.90	46.47	720	404	999715/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.90,46.47 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.90	766	381	999715/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.90,45.90 unit=17 mana=1562 err=<nil>
+zombie1	30.35	45.72	737	352	999715/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.35,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.79	45.86	760	375	999710/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.79,45.86 unit=17 mana=1562 err=<nil>
+zombie1	31.27	45.65	816	386	999707/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.27,45.65 unit=17 mana=1562 err=<nil>
+zombie1	31.50	45.80	822	401	999702/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.50,45.80 unit=17 mana=1562 err=<nil>
+zombie1	31.65	46.33	792	428	999699/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.65,46.33 unit=17 mana=1562 err=<nil>
+zombie1	31.90	46.83	772	458	999699/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.90,46.83 unit=17 mana=1562 err=<nil>
+zombie1	31.84	47.22	736	471	999699/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.84,47.22 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.74	749	439	999699/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.53,46.74 unit=17 mana=1562 err=<nil>
+zombie1	31.06	46.99	692	431	999696/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.06,46.99 unit=17 mana=1562 err=<nil>
+zombie1	30.78	46.74	689	410	999692/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.78,46.74 unit=17 mana=1562 err=<nil>
+zombie1	30.80	46.20	733	389	999688/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.80,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.98	46.14	753	394	999688/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.98,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.29	46.50	749	420	999688/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.29,46.50 unit=17 mana=1562 err=<nil>
+zombie1	31.79	46.36	800	435	999682/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.79,46.36 unit=17 mana=1562 err=<nil>
+zombie1	32.09	45.90	861	429	999678/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.09,45.90 unit=17 mana=1562 err=<nil>
+zombie1	31.54	46.09	802	414	999674/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.54,46.09 unit=17 mana=1562 err=<nil>
+zombie1	31.33	46.60	745	426	999674/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.33,46.60 unit=17 mana=1562 err=<nil>
+zombie1	31.56	46.32	785	424	999670/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.56,46.32 unit=17 mana=1562 err=<nil>
+zombie1	32.01	46.10	839	433	999665/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.01,46.10 unit=17 mana=1562 err=<nil>
+zombie1	32.06	45.94	855	429	999659/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.06,45.94 unit=17 mana=1562 err=<nil>
+zombie1	31.57	45.74	832	401	999659/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.57,45.74 unit=17 mana=1562 err=<nil>
+zombie1	31.03	45.88	778	385	999656/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.03,45.88 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.70	751	357	999656/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.51,45.70 unit=17 mana=1562 err=<nil>
+zombie1	31.09	45.70	797	380	999651/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.09,45.70 unit=17 mana=1562 err=<nil>
+zombie1	30.92	46.23	741	395	999645/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=30.92,46.23 unit=17 mana=1562 err=<nil>
+zombie1	31.37	46.14	784	410	999640/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.37,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.74	46.46	788	437	999636/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.74,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.99	46.97	767	467	999636/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.99,46.97 unit=17 mana=1562 err=<nil>
+zombie1	31.98	47.49	725	487	999636/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.98,47.49 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.96	668	497	999633/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=31.74,47.96 unit=17 mana=1562 err=<nil>
+zombie1	32.06	48.44	655	529	999633/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=1 at=32.06,48.44 unit=17 mana=1562 err=<nil>
+zombie1	32.38	48.92	643	561	999633/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,438,0,0]}}
+> debug goto 1
+=== fb4 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 36 4
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.71	48.68	528	484	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.71,48.68 unit=17 mana=1562 err=<nil>
+zombie1	31.25	48.70	570	507	999992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.25,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.47	48.20	627	496	999992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.47,48.20 unit=17 mana=1562 err=<nil>
+zombie1	31.50	48.56	601	511	999984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.50,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.92	48.56	634	528	999975/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.92,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.79	48.71	612	529	999966/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.79,48.71 unit=17 mana=1562 err=<nil>
+zombie1	31.43	48.69	585	514	999958/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.43,48.69 unit=17 mana=1562 err=<nil>
+zombie1	31.21	48.16	609	484	999958/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.21,48.16 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.71	621	453	999949/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.90,47.71 unit=17 mana=1562 err=<nil>
+zombie1	30.90	48.29	575	476	999949/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.90,48.29 unit=17 mana=1562 err=<nil>
+zombie1	31.46	48.30	619	499	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.46,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.33	48.81	567	514	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.33,48.81 unit=17 mana=1562 err=<nil>
+zombie1	31.15	48.45	582	493	999932/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.15,48.45 unit=17 mana=1562 err=<nil>
+zombie1	30.76	48.53	544	480	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.76,48.53 unit=17 mana=1562 err=<nil>
+zombie1	30.35	48.48	516	462	999914/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.35,48.48 unit=17 mana=1562 err=<nil>
+zombie1	30.10	47.99	535	432	999904/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.10,47.99 unit=17 mana=1562 err=<nil>
+zombie1	30.15	47.57	572	418	999894/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.15,47.57 unit=17 mana=1562 err=<nil>
+zombie1	30.47	48.05	559	450	999894/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.47,48.05 unit=17 mana=1562 err=<nil>
+zombie1	30.66	47.61	610	440	999885/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.66,47.61 unit=17 mana=1562 err=<nil>
+zombie1	31.07	47.25	672	442	999885/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.07,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.47	46.85	735	442	999875/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.47,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.84	46.55	789	444	999875/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.84,46.55 unit=17 mana=1562 err=<nil>
+zombie1	32.25	46.77	804	470	999867/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.25,46.77 unit=17 mana=1562 err=<nil>
+zombie1	31.93	47.25	740	476	999867/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.93,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.62	46.87	745	448	999859/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.62,46.87 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.34	779	422	999859/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.50,46.34 unit=17 mana=1562 err=<nil>
+zombie1	31.39	46.42	764	421	999850/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.39,46.42 unit=17 mana=1562 err=<nil>
+zombie1	31.45	46.47	764	426	999840/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.45,46.47 unit=17 mana=1562 err=<nil>
+zombie1	31.82	46.06	827	424	999840/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.82,46.06 unit=17 mana=1562 err=<nil>
+zombie1	32.33	45.95	876	440	999829/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.33,45.95 unit=17 mana=1562 err=<nil>
+zombie1	32.65	46.43	864	472	999829/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.65,46.43 unit=17 mana=1562 err=<nil>
+zombie1	32.21	46.50	823	457	999819/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.21,46.50 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.65	837	476	999809/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.54,46.65 unit=17 mana=1562 err=<nil>
+zombie1	32.37	46.92	801	480	999800/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.37,46.92 unit=17 mana=1562 err=<nil>
+zombie1	31.96	47.31	738	480	999792/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.96,47.31 unit=17 mana=1562 err=<nil>
+zombie1	31.70	47.60	694	481	999792/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.70,47.60 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.04	742	460	999784/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.74,47.04 unit=17 mana=1562 err=<nil>
+zombie1	32.06	46.56	806	454	999784/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.06,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.57	46.66	839	478	999775/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.57,46.66 unit=17 mana=1562 err=<nil>
+zombie1	32.56	46.28	868	463	999765/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.56,46.28 unit=17 mana=1562 err=<nil>
+zombie1	32.19	46.31	836	449	999756/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.19,46.31 unit=17 mana=1562 err=<nil>
+zombie1	31.83	46.29	809	434	999746/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.83,46.29 unit=17 mana=1562 err=<nil>
+zombie1	31.61	45.76	833	404	999746/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.61,45.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	45.29	847	373	999746/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.30,45.29 unit=17 mana=1562 err=<nil>
+zombie1	31.49	44.74	905	358	999738/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.49,44.74 unit=17 mana=1562 err=<nil>
+zombie1	31.13	44.33	910	327	999729/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.13,44.33 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999721/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.65	44.50	858	315	999712/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.65,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	44.93	812	326	999704/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.50,44.93 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.10	830	349	999704/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.90,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.72	45.10	816	342	999696/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.72,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.45	770	347	999685/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.50,45.45 unit=17 mana=1562 err=<nil>
+zombie1	30.68	45.43	786	353	999677/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.68,45.43 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.25	810	351	999677/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.80,45.25 unit=17 mana=1562 err=<nil>
+zombie1	30.49	45.68	750	356	999667/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.49,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.17	45.20	763	324	999657/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.17,45.20 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.55	730	335	999648/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.10,45.55 unit=17 mana=1562 err=<nil>
+zombie1	30.04	45.50	729	330	999639/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.04,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.39	775	344	999629/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.50,45.39 unit=17 mana=1562 err=<nil>
+zombie1	30.42	44.93	805	323	999619/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.42,44.93 unit=17 mana=1562 err=<nil>
+zombie1	29.88	45.12	747	309	999609/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.88,45.12 unit=17 mana=1562 err=<nil>
+zombie1	29.40	45.30	694	297	999601/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.40,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.14	45.06	692	277	999592/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.14,45.06 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.56	713	247	999592/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.90,44.56 unit=17 mana=1562 err=<nil>
+zombie1	28.94	43.99	761	226	999583/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.94,43.99 unit=17 mana=1562 err=<nil>
+zombie1	29.08	43.45	816	210	999575/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.08,43.45 unit=17 mana=1562 err=<nil>
+zombie1	28.90	42.91	845	181	999575/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.90,42.91 unit=17 mana=1562 err=<nil>
+zombie1	28.72	43.43	789	195	999566/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.72,43.43 unit=17 mana=1562 err=<nil>
+zombie1	28.70	44.00	742	217	999556/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.70,44.00 unit=17 mana=1562 err=<nil>
+zombie1	28.85	43.65	782	209	999546/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=28.85,43.65 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999536/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.57	43.63	841	237	999536/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.57,43.63 unit=17 mana=1562 err=<nil>
+zombie1	29.44	43.96	804	245	999527/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.44,43.96 unit=17 mana=1562 err=<nil>
+zombie1	29.40	44.45	762	263	999519/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.40,44.45 unit=17 mana=1562 err=<nil>
+zombie1	29.71	44.92	749	294	999519/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.71,44.92 unit=17 mana=1562 err=<nil>
+zombie1	29.89	45.47	720	323	999509/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.89,45.47 unit=17 mana=1562 err=<nil>
+zombie1	30.44	45.50	761	346	999501/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.44,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.07	45.22	754	320	999501/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.07,45.22 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.74	779	294	999501/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=29.90,44.74 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.50	825	298	999493/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.24,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999483/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999475/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.35	44.72	817	312	999465/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.35,44.72 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.21	757	321	999455/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.10,45.21 unit=17 mana=1562 err=<nil>
+zombie1	30.16	45.76	718	346	999444/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.16,45.76 unit=17 mana=1562 err=<nil>
+zombie1	30.45	46.20	706	375	999444/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.45,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.90	46.47	720	404	999436/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.90,46.47 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.90	766	381	999436/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.90,45.90 unit=17 mana=1562 err=<nil>
+zombie1	30.35	45.72	737	352	999436/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.35,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.79	45.86	760	375	999426/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.79,45.86 unit=17 mana=1562 err=<nil>
+zombie1	31.27	45.65	816	386	999419/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.27,45.65 unit=17 mana=1562 err=<nil>
+zombie1	31.50	45.80	822	401	999410/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.50,45.80 unit=17 mana=1562 err=<nil>
+zombie1	31.65	46.33	792	428	999402/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.65,46.33 unit=17 mana=1562 err=<nil>
+zombie1	31.90	46.83	772	458	999402/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.90,46.83 unit=17 mana=1562 err=<nil>
+zombie1	31.84	47.22	736	471	999402/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.84,47.22 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.74	749	439	999402/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.53,46.74 unit=17 mana=1562 err=<nil>
+zombie1	31.06	46.99	692	431	999394/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.06,46.99 unit=17 mana=1562 err=<nil>
+zombie1	30.78	46.74	689	410	999386/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.78,46.74 unit=17 mana=1562 err=<nil>
+zombie1	30.80	46.20	733	389	999377/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.80,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.98	46.14	753	394	999377/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.98,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.29	46.50	749	420	999377/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.29,46.50 unit=17 mana=1562 err=<nil>
+zombie1	31.79	46.36	800	435	999367/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.79,46.36 unit=17 mana=1562 err=<nil>
+zombie1	32.09	45.90	861	429	999359/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.09,45.90 unit=17 mana=1562 err=<nil>
+zombie1	31.54	46.09	802	414	999350/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.54,46.09 unit=17 mana=1562 err=<nil>
+zombie1	31.33	46.60	745	426	999350/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.33,46.60 unit=17 mana=1562 err=<nil>
+zombie1	31.56	46.32	785	424	999341/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.56,46.32 unit=17 mana=1562 err=<nil>
+zombie1	32.01	46.10	839	433	999332/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.01,46.10 unit=17 mana=1562 err=<nil>
+zombie1	32.06	45.94	855	429	999322/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.06,45.94 unit=17 mana=1562 err=<nil>
+zombie1	31.57	45.74	832	401	999322/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.57,45.74 unit=17 mana=1562 err=<nil>
+zombie1	31.03	45.88	778	385	999314/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.03,45.88 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.70	751	357	999314/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.51,45.70 unit=17 mana=1562 err=<nil>
+zombie1	31.09	45.70	797	380	999304/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.09,45.70 unit=17 mana=1562 err=<nil>
+zombie1	30.92	46.23	741	395	999294/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=30.92,46.23 unit=17 mana=1562 err=<nil>
+zombie1	31.37	46.14	784	410	999285/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.37,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.74	46.46	788	437	999276/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.74,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.99	46.97	767	467	999276/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.99,46.97 unit=17 mana=1562 err=<nil>
+zombie1	31.98	47.49	725	487	999276/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.98,47.49 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.96	668	497	999268/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=31.74,47.96 unit=17 mana=1562 err=<nil>
+zombie1	32.06	48.44	655	529	999268/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=4 at=32.06,48.44 unit=17 mana=1562 err=<nil>
+zombie1	32.38	48.92	643	561	999268/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,438,0,0]}}
+> debug goto 1
+=== fb8 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 36 8
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.71	48.68	528	484	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.71,48.68 unit=17 mana=1562 err=<nil>
+zombie1	31.25	48.70	570	507	999986/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.25,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.47	48.20	627	496	999986/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.47,48.20 unit=17 mana=1562 err=<nil>
+zombie1	31.50	48.56	601	511	999972/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.50,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.92	48.56	634	528	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.92,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.79	48.71	612	529	999942/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.79,48.71 unit=17 mana=1562 err=<nil>
+zombie1	31.43	48.69	585	514	999928/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.43,48.69 unit=17 mana=1562 err=<nil>
+zombie1	31.21	48.16	609	484	999928/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.21,48.16 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.71	621	453	999913/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.90,47.71 unit=17 mana=1562 err=<nil>
+zombie1	30.90	48.29	575	476	999913/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.90,48.29 unit=17 mana=1562 err=<nil>
+zombie1	31.46	48.30	619	499	999899/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.46,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.33	48.81	567	514	999899/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.33,48.81 unit=17 mana=1562 err=<nil>
+zombie1	31.15	48.45	582	493	999884/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.15,48.45 unit=17 mana=1562 err=<nil>
+zombie1	30.76	48.53	544	480	999869/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.76,48.53 unit=17 mana=1562 err=<nil>
+zombie1	30.35	48.48	516	462	999854/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.35,48.48 unit=17 mana=1562 err=<nil>
+zombie1	30.10	47.99	535	432	999838/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.10,47.99 unit=17 mana=1562 err=<nil>
+zombie1	30.15	47.57	572	418	999822/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.15,47.57 unit=17 mana=1562 err=<nil>
+zombie1	30.47	48.05	559	450	999822/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.47,48.05 unit=17 mana=1562 err=<nil>
+zombie1	30.66	47.61	610	440	999807/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.66,47.61 unit=17 mana=1562 err=<nil>
+zombie1	31.07	47.25	672	442	999807/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.07,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.47	46.85	735	442	999791/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.47,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.84	46.55	789	444	999791/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.84,46.55 unit=17 mana=1562 err=<nil>
+zombie1	32.25	46.77	804	470	999777/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.25,46.77 unit=17 mana=1562 err=<nil>
+zombie1	31.93	47.25	740	476	999777/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.93,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.62	46.87	745	448	999763/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.62,46.87 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.34	779	422	999763/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.50,46.34 unit=17 mana=1562 err=<nil>
+zombie1	31.39	46.42	764	421	999748/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.39,46.42 unit=17 mana=1562 err=<nil>
+zombie1	31.45	46.47	764	426	999732/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.45,46.47 unit=17 mana=1562 err=<nil>
+zombie1	31.82	46.06	827	424	999732/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.82,46.06 unit=17 mana=1562 err=<nil>
+zombie1	32.33	45.95	876	440	999715/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.33,45.95 unit=17 mana=1562 err=<nil>
+zombie1	32.65	46.43	864	472	999715/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.65,46.43 unit=17 mana=1562 err=<nil>
+zombie1	32.21	46.50	823	457	999699/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.21,46.50 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.65	837	476	999683/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.54,46.65 unit=17 mana=1562 err=<nil>
+zombie1	32.37	46.92	801	480	999668/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.37,46.92 unit=17 mana=1562 err=<nil>
+zombie1	31.96	47.31	738	480	999654/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.96,47.31 unit=17 mana=1562 err=<nil>
+zombie1	31.70	47.60	694	481	999654/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.70,47.60 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.04	742	460	999640/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.74,47.04 unit=17 mana=1562 err=<nil>
+zombie1	32.06	46.56	806	454	999640/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.06,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.57	46.66	839	478	999625/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.57,46.66 unit=17 mana=1562 err=<nil>
+zombie1	32.56	46.28	868	463	999609/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.56,46.28 unit=17 mana=1562 err=<nil>
+zombie1	32.19	46.31	836	449	999594/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.19,46.31 unit=17 mana=1562 err=<nil>
+zombie1	31.83	46.29	809	434	999578/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.83,46.29 unit=17 mana=1562 err=<nil>
+zombie1	31.61	45.76	833	404	999578/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.61,45.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	45.29	847	373	999578/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.30,45.29 unit=17 mana=1562 err=<nil>
+zombie1	31.49	44.74	905	358	999564/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.49,44.74 unit=17 mana=1562 err=<nil>
+zombie1	31.13	44.33	910	327	999549/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.13,44.33 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999535/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.65	44.50	858	315	999520/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.65,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	44.93	812	326	999506/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.50,44.93 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.10	830	349	999506/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.90,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.72	45.10	816	342	999492/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.72,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.45	770	347	999475/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.50,45.45 unit=17 mana=1562 err=<nil>
+zombie1	30.68	45.43	786	353	999461/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.68,45.43 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.25	810	351	999461/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.80,45.25 unit=17 mana=1562 err=<nil>
+zombie1	30.49	45.68	750	356	999445/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.49,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.17	45.20	763	324	999429/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.17,45.20 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.55	730	335	999414/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.10,45.55 unit=17 mana=1562 err=<nil>
+zombie1	30.04	45.50	729	330	999399/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.04,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.39	775	344	999383/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.50,45.39 unit=17 mana=1562 err=<nil>
+zombie1	30.42	44.93	805	323	999367/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.42,44.93 unit=17 mana=1562 err=<nil>
+zombie1	29.88	45.12	747	309	999351/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.88,45.12 unit=17 mana=1562 err=<nil>
+zombie1	29.40	45.30	694	297	999337/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.40,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.14	45.06	692	277	999322/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.14,45.06 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.56	713	247	999322/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.90,44.56 unit=17 mana=1562 err=<nil>
+zombie1	28.94	43.99	761	226	999307/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.94,43.99 unit=17 mana=1562 err=<nil>
+zombie1	29.08	43.45	816	210	999293/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.08,43.45 unit=17 mana=1562 err=<nil>
+zombie1	28.90	42.91	845	181	999293/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.90,42.91 unit=17 mana=1562 err=<nil>
+zombie1	28.72	43.43	789	195	999278/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.72,43.43 unit=17 mana=1562 err=<nil>
+zombie1	28.70	44.00	742	217	999262/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.70,44.00 unit=17 mana=1562 err=<nil>
+zombie1	28.85	43.65	782	209	999246/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=28.85,43.65 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999230/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.57	43.63	841	237	999230/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.57,43.63 unit=17 mana=1562 err=<nil>
+zombie1	29.44	43.96	804	245	999215/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.44,43.96 unit=17 mana=1562 err=<nil>
+zombie1	29.40	44.45	762	263	999201/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.40,44.45 unit=17 mana=1562 err=<nil>
+zombie1	29.71	44.92	749	294	999201/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.71,44.92 unit=17 mana=1562 err=<nil>
+zombie1	29.89	45.47	720	323	999185/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.89,45.47 unit=17 mana=1562 err=<nil>
+zombie1	30.44	45.50	761	346	999171/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.44,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.07	45.22	754	320	999171/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.07,45.22 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.74	779	294	999171/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=29.90,44.74 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.50	825	298	999157/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.24,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999141/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	999127/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.35	44.72	817	312	999111/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.35,44.72 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.21	757	321	999095/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.10,45.21 unit=17 mana=1562 err=<nil>
+zombie1	30.16	45.76	718	346	999078/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.16,45.76 unit=17 mana=1562 err=<nil>
+zombie1	30.45	46.20	706	375	999078/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.45,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.90	46.47	720	404	999064/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.90,46.47 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.90	766	381	999064/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.90,45.90 unit=17 mana=1562 err=<nil>
+zombie1	30.35	45.72	737	352	999064/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.35,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.79	45.86	760	375	999048/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.79,45.86 unit=17 mana=1562 err=<nil>
+zombie1	31.27	45.65	816	386	999035/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.27,45.65 unit=17 mana=1562 err=<nil>
+zombie1	31.50	45.80	822	401	999020/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.50,45.80 unit=17 mana=1562 err=<nil>
+zombie1	31.65	46.33	792	428	999006/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.65,46.33 unit=17 mana=1562 err=<nil>
+zombie1	31.90	46.83	772	458	999006/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.90,46.83 unit=17 mana=1562 err=<nil>
+zombie1	31.84	47.22	736	471	999006/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.84,47.22 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.74	749	439	999006/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.53,46.74 unit=17 mana=1562 err=<nil>
+zombie1	31.06	46.99	692	431	998992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.06,46.99 unit=17 mana=1562 err=<nil>
+zombie1	30.78	46.74	689	410	998978/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.78,46.74 unit=17 mana=1562 err=<nil>
+zombie1	30.80	46.20	733	389	998963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.80,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.98	46.14	753	394	998963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.98,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.29	46.50	749	420	998963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.29,46.50 unit=17 mana=1562 err=<nil>
+zombie1	31.79	46.36	800	435	998947/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.79,46.36 unit=17 mana=1562 err=<nil>
+zombie1	32.09	45.90	861	429	998933/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.09,45.90 unit=17 mana=1562 err=<nil>
+zombie1	31.54	46.09	802	414	998918/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.54,46.09 unit=17 mana=1562 err=<nil>
+zombie1	31.33	46.60	745	426	998918/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.33,46.60 unit=17 mana=1562 err=<nil>
+zombie1	31.56	46.32	785	424	998903/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.56,46.32 unit=17 mana=1562 err=<nil>
+zombie1	32.01	46.10	839	433	998888/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.01,46.10 unit=17 mana=1562 err=<nil>
+zombie1	32.06	45.94	855	429	998872/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.06,45.94 unit=17 mana=1562 err=<nil>
+zombie1	31.57	45.74	832	401	998872/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.57,45.74 unit=17 mana=1562 err=<nil>
+zombie1	31.03	45.88	778	385	998858/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.03,45.88 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.70	751	357	998858/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.51,45.70 unit=17 mana=1562 err=<nil>
+zombie1	31.09	45.70	797	380	998842/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.09,45.70 unit=17 mana=1562 err=<nil>
+zombie1	30.92	46.23	741	395	998826/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=30.92,46.23 unit=17 mana=1562 err=<nil>
+zombie1	31.37	46.14	784	410	998811/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.37,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.74	46.46	788	437	998796/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.74,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.99	46.97	767	467	998796/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.99,46.97 unit=17 mana=1562 err=<nil>
+zombie1	31.98	47.49	725	487	998796/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.98,47.49 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.96	668	497	998782/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=31.74,47.96 unit=17 mana=1562 err=<nil>
+zombie1	32.06	48.44	655	529	998782/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=8 at=32.06,48.44 unit=17 mana=1562 err=<nil>
+zombie1	32.38	48.92	643	561	998782/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,438,0,0]}}
+> debug goto 1
+=== fb13 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 36 13
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.71	48.68	528	484	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.71,48.68 unit=17 mana=1562 err=<nil>
+zombie1	31.25	48.70	570	507	999977/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.25,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.47	48.20	627	496	999977/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.47,48.20 unit=17 mana=1562 err=<nil>
+zombie1	31.50	48.56	601	511	999947/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.50,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.92	48.56	634	528	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.92,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.79	48.71	612	529	999895/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.79,48.71 unit=17 mana=1562 err=<nil>
+zombie1	31.43	48.69	585	514	999867/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.43,48.69 unit=17 mana=1562 err=<nil>
+zombie1	31.21	48.16	609	484	999867/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.21,48.16 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.71	621	453	999838/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.90,47.71 unit=17 mana=1562 err=<nil>
+zombie1	30.90	48.29	575	476	999838/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.90,48.29 unit=17 mana=1562 err=<nil>
+zombie1	31.46	48.30	619	499	999815/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.46,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.33	48.81	567	514	999815/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.33,48.81 unit=17 mana=1562 err=<nil>
+zombie1	31.15	48.45	582	493	999785/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.15,48.45 unit=17 mana=1562 err=<nil>
+zombie1	30.76	48.53	544	480	999760/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.76,48.53 unit=17 mana=1562 err=<nil>
+zombie1	30.35	48.48	516	462	999733/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.35,48.48 unit=17 mana=1562 err=<nil>
+zombie1	30.10	47.99	535	432	999702/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.10,47.99 unit=17 mana=1562 err=<nil>
+zombie1	30.15	47.57	572	418	999672/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.15,47.57 unit=17 mana=1562 err=<nil>
+zombie1	30.47	48.05	559	450	999672/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.47,48.05 unit=17 mana=1562 err=<nil>
+zombie1	30.66	47.61	610	440	999648/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.66,47.61 unit=17 mana=1562 err=<nil>
+zombie1	31.07	47.25	672	442	999648/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.07,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.47	46.85	735	442	999619/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.47,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.84	46.55	789	444	999619/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.84,46.55 unit=17 mana=1562 err=<nil>
+zombie1	32.25	46.77	804	470	999593/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.25,46.77 unit=17 mana=1562 err=<nil>
+zombie1	31.93	47.25	740	476	999593/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.93,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.62	46.87	745	448	999569/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.62,46.87 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.34	779	422	999569/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.50,46.34 unit=17 mana=1562 err=<nil>
+zombie1	31.39	46.42	764	421	999538/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.39,46.42 unit=17 mana=1562 err=<nil>
+zombie1	31.45	46.47	764	426	999514/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.45,46.47 unit=17 mana=1562 err=<nil>
+zombie1	31.82	46.06	827	424	999514/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.82,46.06 unit=17 mana=1562 err=<nil>
+zombie1	32.33	45.95	876	440	999488/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.33,45.95 unit=17 mana=1562 err=<nil>
+zombie1	32.65	46.43	864	472	999488/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.65,46.43 unit=17 mana=1562 err=<nil>
+zombie1	32.21	46.50	823	457	999463/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.21,46.50 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.65	837	476	999432/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.54,46.65 unit=17 mana=1562 err=<nil>
+zombie1	32.37	46.92	801	480	999405/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.37,46.92 unit=17 mana=1562 err=<nil>
+zombie1	31.96	47.31	738	480	999374/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.96,47.31 unit=17 mana=1562 err=<nil>
+zombie1	31.70	47.60	694	481	999374/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.70,47.60 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.04	742	460	999346/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.74,47.04 unit=17 mana=1562 err=<nil>
+zombie1	32.06	46.56	806	454	999346/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.06,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.57	46.66	839	478	999322/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.57,46.66 unit=17 mana=1562 err=<nil>
+zombie1	32.56	46.28	868	463	999297/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.56,46.28 unit=17 mana=1562 err=<nil>
+zombie1	32.19	46.31	836	449	999271/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.19,46.31 unit=17 mana=1562 err=<nil>
+zombie1	31.83	46.29	809	434	999241/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.83,46.29 unit=17 mana=1562 err=<nil>
+zombie1	31.61	45.76	833	404	999241/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.61,45.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	45.29	847	373	999241/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.30,45.29 unit=17 mana=1562 err=<nil>
+zombie1	31.49	44.74	905	358	999213/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.49,44.74 unit=17 mana=1562 err=<nil>
+zombie1	31.13	44.33	910	327	999185/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.13,44.33 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999156/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.65	44.50	858	315	999128/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.65,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	44.93	812	326	999100/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.50,44.93 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.10	830	349	999100/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.90,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.72	45.10	816	342	999072/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.72,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.45	770	347	999044/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.50,45.45 unit=17 mana=1562 err=<nil>
+zombie1	30.68	45.43	786	353	999014/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.68,45.43 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.25	810	351	999014/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.80,45.25 unit=17 mana=1562 err=<nil>
+zombie1	30.49	45.68	750	356	998988/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.49,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.17	45.20	763	324	998960/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.17,45.20 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.55	730	335	998933/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.10,45.55 unit=17 mana=1562 err=<nil>
+zombie1	30.04	45.50	729	330	998902/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.04,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.39	775	344	998876/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.50,45.39 unit=17 mana=1562 err=<nil>
+zombie1	30.42	44.93	805	323	998851/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.42,44.93 unit=17 mana=1562 err=<nil>
+zombie1	29.88	45.12	747	309	998824/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.88,45.12 unit=17 mana=1562 err=<nil>
+zombie1	29.40	45.30	694	297	998799/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.40,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.14	45.06	692	277	998773/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.14,45.06 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.56	713	247	998773/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.90,44.56 unit=17 mana=1562 err=<nil>
+zombie1	28.94	43.99	761	226	998744/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.94,43.99 unit=17 mana=1562 err=<nil>
+zombie1	29.08	43.45	816	210	998718/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.08,43.45 unit=17 mana=1562 err=<nil>
+zombie1	28.90	42.91	845	181	998718/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.90,42.91 unit=17 mana=1562 err=<nil>
+zombie1	28.72	43.43	789	195	998694/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.72,43.43 unit=17 mana=1562 err=<nil>
+zombie1	28.70	44.00	742	217	998668/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.70,44.00 unit=17 mana=1562 err=<nil>
+zombie1	28.85	43.65	782	209	998642/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=28.85,43.65 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	998611/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.57	43.63	841	237	998611/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.57,43.63 unit=17 mana=1562 err=<nil>
+zombie1	29.44	43.96	804	245	998583/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.44,43.96 unit=17 mana=1562 err=<nil>
+zombie1	29.40	44.45	762	263	998557/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.40,44.45 unit=17 mana=1562 err=<nil>
+zombie1	29.71	44.92	749	294	998557/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.71,44.92 unit=17 mana=1562 err=<nil>
+zombie1	29.89	45.47	720	323	998525/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.89,45.47 unit=17 mana=1562 err=<nil>
+zombie1	30.44	45.50	761	346	998495/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.44,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.07	45.22	754	320	998495/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.07,45.22 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.74	779	294	998495/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=29.90,44.74 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.50	825	298	998471/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.24,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	998447/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	998423/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.35	44.72	817	312	998398/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.35,44.72 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.21	757	321	998374/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.10,45.21 unit=17 mana=1562 err=<nil>
+zombie1	30.16	45.76	718	346	998347/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.16,45.76 unit=17 mana=1562 err=<nil>
+zombie1	30.45	46.20	706	375	998347/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.45,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.90	46.47	720	404	998320/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.90,46.47 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.90	766	381	998320/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.90,45.90 unit=17 mana=1562 err=<nil>
+zombie1	30.35	45.72	737	352	998320/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.35,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.79	45.86	760	375	998295/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.79,45.86 unit=17 mana=1562 err=<nil>
+zombie1	31.27	45.65	816	386	998264/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.27,45.65 unit=17 mana=1562 err=<nil>
+zombie1	31.50	45.80	822	401	998233/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.50,45.80 unit=17 mana=1562 err=<nil>
+zombie1	31.65	46.33	792	428	998206/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.65,46.33 unit=17 mana=1562 err=<nil>
+zombie1	31.90	46.83	772	458	998206/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.90,46.83 unit=17 mana=1562 err=<nil>
+zombie1	31.84	47.22	736	471	998206/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.84,47.22 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.74	749	439	998206/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.53,46.74 unit=17 mana=1562 err=<nil>
+zombie1	31.06	46.99	692	431	998178/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.06,46.99 unit=17 mana=1562 err=<nil>
+zombie1	30.78	46.74	689	410	998154/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.78,46.74 unit=17 mana=1562 err=<nil>
+zombie1	30.80	46.20	733	389	998125/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.80,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.98	46.14	753	394	998125/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.98,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.29	46.50	749	420	998125/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.29,46.50 unit=17 mana=1562 err=<nil>
+zombie1	31.79	46.36	800	435	998097/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.79,46.36 unit=17 mana=1562 err=<nil>
+zombie1	32.09	45.90	861	429	998073/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.09,45.90 unit=17 mana=1562 err=<nil>
+zombie1	31.54	46.09	802	414	998049/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.54,46.09 unit=17 mana=1562 err=<nil>
+zombie1	31.33	46.60	745	426	998049/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.33,46.60 unit=17 mana=1562 err=<nil>
+zombie1	31.56	46.32	785	424	998023/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.56,46.32 unit=17 mana=1562 err=<nil>
+zombie1	32.01	46.10	839	433	997995/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.01,46.10 unit=17 mana=1562 err=<nil>
+zombie1	32.06	45.94	855	429	997963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.06,45.94 unit=17 mana=1562 err=<nil>
+zombie1	31.57	45.74	832	401	997963/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.57,45.74 unit=17 mana=1562 err=<nil>
+zombie1	31.03	45.88	778	385	997940/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.03,45.88 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.70	751	357	997940/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.51,45.70 unit=17 mana=1562 err=<nil>
+zombie1	31.09	45.70	797	380	997915/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.09,45.70 unit=17 mana=1562 err=<nil>
+zombie1	30.92	46.23	741	395	997891/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=30.92,46.23 unit=17 mana=1562 err=<nil>
+zombie1	31.37	46.14	784	410	997867/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.37,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.74	46.46	788	437	997837/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.74,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.99	46.97	767	467	997837/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.99,46.97 unit=17 mana=1562 err=<nil>
+zombie1	31.98	47.49	725	487	997837/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.98,47.49 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.96	668	497	997813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=31.74,47.96 unit=17 mana=1562 err=<nil>
+zombie1	32.06	48.44	655	529	997813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=13 at=32.06,48.44 unit=17 mana=1562 err=<nil>
+zombie1	32.38	48.92	643	561	997813/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,438,0,0]}}
+> debug goto 1
+=== fb20 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 36 20
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.71	48.68	528	484	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.71,48.68 unit=17 mana=1562 err=<nil>
+zombie1	31.25	48.70	570	507	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.25,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.47	48.20	627	496	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.47,48.20 unit=17 mana=1562 err=<nil>
+zombie1	31.50	48.56	601	511	999889/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.50,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.92	48.56	634	528	999837/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.92,48.56 unit=17 mana=1562 err=<nil>
+zombie1	31.79	48.71	612	529	999787/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.79,48.71 unit=17 mana=1562 err=<nil>
+zombie1	31.43	48.69	585	514	999728/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.43,48.69 unit=17 mana=1562 err=<nil>
+zombie1	31.21	48.16	609	484	999728/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.21,48.16 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.71	621	453	999669/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.90,47.71 unit=17 mana=1562 err=<nil>
+zombie1	30.90	48.29	575	476	999669/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.90,48.29 unit=17 mana=1562 err=<nil>
+zombie1	31.46	48.30	619	499	999612/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.46,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.33	48.81	567	514	999612/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.33,48.81 unit=17 mana=1562 err=<nil>
+zombie1	31.15	48.45	582	493	999563/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.15,48.45 unit=17 mana=1562 err=<nil>
+zombie1	30.76	48.53	544	480	999515/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.76,48.53 unit=17 mana=1562 err=<nil>
+zombie1	30.35	48.48	516	462	999466/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.35,48.48 unit=17 mana=1562 err=<nil>
+zombie1	30.10	47.99	535	432	999420/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.10,47.99 unit=17 mana=1562 err=<nil>
+zombie1	30.15	47.57	572	418	999371/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.15,47.57 unit=17 mana=1562 err=<nil>
+zombie1	30.47	48.05	559	450	999371/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.47,48.05 unit=17 mana=1562 err=<nil>
+zombie1	30.66	47.61	610	440	999324/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.66,47.61 unit=17 mana=1562 err=<nil>
+zombie1	31.07	47.25	672	442	999324/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.07,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.47	46.85	735	442	999267/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.47,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.84	46.55	789	444	999267/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.84,46.55 unit=17 mana=1562 err=<nil>
+zombie1	32.25	46.77	804	470	999218/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.25,46.77 unit=17 mana=1562 err=<nil>
+zombie1	31.93	47.25	740	476	999218/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.93,47.25 unit=17 mana=1562 err=<nil>
+zombie1	31.62	46.87	745	448	999162/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.62,46.87 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.34	779	422	999162/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.50,46.34 unit=17 mana=1562 err=<nil>
+zombie1	31.39	46.42	764	421	999112/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.39,46.42 unit=17 mana=1562 err=<nil>
+zombie1	31.45	46.47	764	426	999052/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.45,46.47 unit=17 mana=1562 err=<nil>
+zombie1	31.82	46.06	827	424	999052/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.82,46.06 unit=17 mana=1562 err=<nil>
+zombie1	32.33	45.95	876	440	998995/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.33,45.95 unit=17 mana=1562 err=<nil>
+zombie1	32.65	46.43	864	472	998995/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.65,46.43 unit=17 mana=1562 err=<nil>
+zombie1	32.21	46.50	823	457	998939/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.21,46.50 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.65	837	476	998892/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.54,46.65 unit=17 mana=1562 err=<nil>
+zombie1	32.37	46.92	801	480	998833/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.37,46.92 unit=17 mana=1562 err=<nil>
+zombie1	31.96	47.31	738	480	998775/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.96,47.31 unit=17 mana=1562 err=<nil>
+zombie1	31.70	47.60	694	481	998775/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.70,47.60 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.04	742	460	998717/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.74,47.04 unit=17 mana=1562 err=<nil>
+zombie1	32.06	46.56	806	454	998717/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.06,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.57	46.66	839	478	998671/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.57,46.66 unit=17 mana=1562 err=<nil>
+zombie1	32.56	46.28	868	463	998621/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.56,46.28 unit=17 mana=1562 err=<nil>
+zombie1	32.19	46.31	836	449	998569/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.19,46.31 unit=17 mana=1562 err=<nil>
+zombie1	31.83	46.29	809	434	998524/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.83,46.29 unit=17 mana=1562 err=<nil>
+zombie1	31.61	45.76	833	404	998524/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.61,45.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	45.29	847	373	998524/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.30,45.29 unit=17 mana=1562 err=<nil>
+zombie1	31.49	44.74	905	358	998473/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.49,44.74 unit=17 mana=1562 err=<nil>
+zombie1	31.13	44.33	910	327	998418/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.13,44.33 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	998360/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.65	44.50	858	315	998310/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.65,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	44.93	812	326	998264/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.50,44.93 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.10	830	349	998264/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.90,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.72	45.10	816	342	998216/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.72,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.45	770	347	998164/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.50,45.45 unit=17 mana=1562 err=<nil>
+zombie1	30.68	45.43	786	353	998104/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.68,45.43 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.25	810	351	998104/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.80,45.25 unit=17 mana=1562 err=<nil>
+zombie1	30.49	45.68	750	356	998051/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.49,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.17	45.20	763	324	998000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.17,45.20 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.55	730	335	997940/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.10,45.55 unit=17 mana=1562 err=<nil>
+zombie1	30.04	45.50	729	330	997881/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.04,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.50	45.39	775	344	997821/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.50,45.39 unit=17 mana=1562 err=<nil>
+zombie1	30.42	44.93	805	323	997761/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.42,44.93 unit=17 mana=1562 err=<nil>
+zombie1	29.88	45.12	747	309	997713/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.88,45.12 unit=17 mana=1562 err=<nil>
+zombie1	29.40	45.30	694	297	997658/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.40,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.14	45.06	692	277	997607/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.14,45.06 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.56	713	247	997607/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.90,44.56 unit=17 mana=1562 err=<nil>
+zombie1	28.94	43.99	761	226	997554/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.94,43.99 unit=17 mana=1562 err=<nil>
+zombie1	29.08	43.45	816	210	997494/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.08,43.45 unit=17 mana=1562 err=<nil>
+zombie1	28.90	42.91	845	181	997494/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.90,42.91 unit=17 mana=1562 err=<nil>
+zombie1	28.72	43.43	789	195	997436/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.72,43.43 unit=17 mana=1562 err=<nil>
+zombie1	28.70	44.00	742	217	997379/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.70,44.00 unit=17 mana=1562 err=<nil>
+zombie1	28.85	43.65	782	209	997326/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=28.85,43.65 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	997266/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.57	43.63	841	237	997266/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.57,43.63 unit=17 mana=1562 err=<nil>
+zombie1	29.44	43.96	804	245	997206/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.44,43.96 unit=17 mana=1562 err=<nil>
+zombie1	29.40	44.45	762	263	997158/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.40,44.45 unit=17 mana=1562 err=<nil>
+zombie1	29.71	44.92	749	294	997158/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.71,44.92 unit=17 mana=1562 err=<nil>
+zombie1	29.89	45.47	720	323	997100/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.89,45.47 unit=17 mana=1562 err=<nil>
+zombie1	30.44	45.50	761	346	997043/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.44,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.07	45.22	754	320	997043/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.07,45.22 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.74	779	294	997043/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=29.90,44.74 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.50	825	298	996990/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.24,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	996940/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.81	44.50	871	321	996884/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.81,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.35	44.72	817	312	996824/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.35,44.72 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.21	757	321	996769/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.10,45.21 unit=17 mana=1562 err=<nil>
+zombie1	30.16	45.76	718	346	996722/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.16,45.76 unit=17 mana=1562 err=<nil>
+zombie1	30.45	46.20	706	375	996722/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.45,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.90	46.47	720	404	996670/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.90,46.47 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.90	766	381	996670/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.90,45.90 unit=17 mana=1562 err=<nil>
+zombie1	30.35	45.72	737	352	996670/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.35,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.79	45.86	760	375	996613/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.79,45.86 unit=17 mana=1562 err=<nil>
+zombie1	31.27	45.65	816	386	996565/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.27,45.65 unit=17 mana=1562 err=<nil>
+zombie1	31.50	45.80	822	401	996519/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.50,45.80 unit=17 mana=1562 err=<nil>
+zombie1	31.65	46.33	792	428	996465/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.65,46.33 unit=17 mana=1562 err=<nil>
+zombie1	31.90	46.83	772	458	996465/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.90,46.83 unit=17 mana=1562 err=<nil>
+zombie1	31.84	47.22	736	471	996465/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.84,47.22 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.74	749	439	996465/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.53,46.74 unit=17 mana=1562 err=<nil>
+zombie1	31.06	46.99	692	431	996411/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.06,46.99 unit=17 mana=1562 err=<nil>
+zombie1	30.78	46.74	689	410	996354/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.78,46.74 unit=17 mana=1562 err=<nil>
+zombie1	30.80	46.20	733	389	996304/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.80,46.20 unit=17 mana=1562 err=<nil>
+zombie1	30.98	46.14	753	394	996304/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.98,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.29	46.50	749	420	996304/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.29,46.50 unit=17 mana=1562 err=<nil>
+zombie1	31.79	46.36	800	435	996247/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.79,46.36 unit=17 mana=1562 err=<nil>
+zombie1	32.09	45.90	861	429	996201/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.09,45.90 unit=17 mana=1562 err=<nil>
+zombie1	31.54	46.09	802	414	996142/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.54,46.09 unit=17 mana=1562 err=<nil>
+zombie1	31.33	46.60	745	426	996142/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.33,46.60 unit=17 mana=1562 err=<nil>
+zombie1	31.56	46.32	785	424	996082/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.56,46.32 unit=17 mana=1562 err=<nil>
+zombie1	32.01	46.10	839	433	996036/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.01,46.10 unit=17 mana=1562 err=<nil>
+zombie1	32.06	45.94	855	429	995984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.06,45.94 unit=17 mana=1562 err=<nil>
+zombie1	31.57	45.74	832	401	995984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.57,45.74 unit=17 mana=1562 err=<nil>
+zombie1	31.03	45.88	778	385	995936/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.03,45.88 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.70	751	357	995936/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.51,45.70 unit=17 mana=1562 err=<nil>
+zombie1	31.09	45.70	797	380	995882/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.09,45.70 unit=17 mana=1562 err=<nil>
+zombie1	30.92	46.23	741	395	995833/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=30.92,46.23 unit=17 mana=1562 err=<nil>
+zombie1	31.37	46.14	784	410	995772/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.37,46.14 unit=17 mana=1562 err=<nil>
+zombie1	31.74	46.46	788	437	995716/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.74,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.99	46.97	767	467	995716/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.99,46.97 unit=17 mana=1562 err=<nil>
+zombie1	31.98	47.49	725	487	995716/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.98,47.49 unit=17 mana=1562 err=<nil>
+zombie1	31.74	47.96	668	497	995660/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=31.74,47.96 unit=17 mana=1562 err=<nil>
+zombie1	32.06	48.44	655	529	995660/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 36 unit 17
+queued skill=36 Fire Bolt lvl=20 at=32.06,48.44 unit=17 mana=1562 err=<nil>
+zombie1	32.38	48.92	643	561	995660/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,438,0,0]}}
+> debug goto 1
+=== cb1 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 38 1
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.99	48.70	549	496	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.99,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.48	48.15	632	494	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.48,48.15 unit=17 mana=1562 err=<nil>
+zombie1	31.71	48.63	613	523	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.71,48.63 unit=17 mana=1562 err=<nil>
+zombie1	31.70	48.76	601	528	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.70,48.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	48.30	606	493	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.30,48.30 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.86	609	459	999998/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.90,47.86 unit=17 mana=1562 err=<nil>
+zombie1	31.35	48.30	610	495	999998/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.35,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.27	48.81	563	512	999998/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.27,48.81 unit=17 mana=1562 err=<nil>
+zombie1	30.81	48.49	551	481	999998/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.81,48.49 unit=17 mana=1562 err=<nil>
+zombie1	30.22	48.27	521	448	999998/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.22,48.27 unit=17 mana=1562 err=<nil>
+zombie1	30.14	47.56	572	417	999996/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.14,47.56 unit=17 mana=1562 err=<nil>
+zombie1	30.58	47.87	582	447	999996/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.58,47.87 unit=17 mana=1562 err=<nil>
+zombie1	31.11	47.23	676	442	999992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.11,47.23 unit=17 mana=1562 err=<nil>
+zombie1	31.66	46.56	774	438	999992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.66,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.20	46.85	794	471	999983/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.20,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.71	47.02	741	458	999978/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.71,47.02 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.20	790	417	999978/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.50,46.20 unit=17 mana=1562 err=<nil>
+zombie1	31.38	46.58	751	427	999970/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.38,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.00	46.00	845	429	999970/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.00,46.00 unit=17 mana=1562 err=<nil>
+zombie1	32.61	46.37	865	468	999970/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.61,46.37 unit=17 mana=1562 err=<nil>
+zombie1	32.22	46.54	820	459	999965/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.22,46.54 unit=17 mana=1562 err=<nil>
+zombie1	32.39	46.91	804	481	999956/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.39,46.91 unit=17 mana=1562 err=<nil>
+zombie1	31.80	47.55	706	483	999956/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.80,47.55 unit=17 mana=1562 err=<nil>
+zombie1	31.76	47.02	745	460	999951/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.76,47.02 unit=17 mana=1562 err=<nil>
+zombie1	32.35	46.58	827	466	999951/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.35,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.21	872	459	999947/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=32.54,46.21 unit=17 mana=1562 err=<nil>
+zombie1	31.89	46.46	800	443	999944/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.89,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.54	45.66	836	397	999944/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.54,45.66 unit=17 mana=1562 err=<nil>
+zombie1	31.44	44.87	891	362	999944/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.44,44.87 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999944/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.74	44.50	865	318	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.74,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.55	45.10	802	335	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.55,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.76	45.10	819	343	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.76,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.68	753	357	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.51,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.26	809	351	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.80,45.26 unit=17 mana=1562 err=<nil>
+zombie1	30.31	45.41	758	337	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.31,45.41 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.61	725	337	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.10,45.61 unit=17 mana=1562 err=<nil>
+zombie1	30.41	45.50	759	345	999941/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.41,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.31	44.96	794	320	999938/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.31,44.96 unit=17 mana=1562 err=<nil>
+zombie1	29.55	45.30	706	303	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.55,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.05	44.93	696	268	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.05,44.93 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.09	751	229	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=28.90,44.09 unit=17 mana=1562 err=<nil>
+zombie1	29.02	43.25	827	200	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.02,43.25 unit=17 mana=1562 err=<nil>
+zombie1	28.74	43.39	794	194	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=28.74,43.39 unit=17 mana=1562 err=<nil>
+zombie1	28.75	43.95	750	217	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=28.75,43.95 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999935/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.50	43.90	814	245	999935/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.50,43.90 unit=17 mana=1562 err=<nil>
+zombie1	29.42	44.49	761	265	999932/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.42,44.49 unit=17 mana=1562 err=<nil>
+zombie1	29.82	45.27	730	313	999932/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.82,45.27 unit=17 mana=1562 err=<nil>
+zombie1	30.47	45.48	765	347	999932/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.47,45.48 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.90	766	301	999930/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=29.90,44.90 unit=17 mana=1562 err=<nil>
+zombie1	30.39	44.50	837	304	999930/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.39,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.92	44.50	880	326	999926/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.92,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.88	795	314	999926/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.24,44.88 unit=17 mana=1562 err=<nil>
+zombie1	30.12	45.72	718	342	999926/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.12,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.65	46.34	711	388	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.65,46.34 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.91	765	381	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.90,45.91 unit=17 mana=1562 err=<nil>
+zombie1	30.53	45.78	746	361	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=30.53,45.78 unit=17 mana=1562 err=<nil>
+zombie1	31.31	45.63	820	386	999923/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=1 at=31.31,45.63 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.14	797	416	999920/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+> debug goto 1
+=== cb4 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 38 4
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.99	48.70	549	496	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.99,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.48	48.15	632	494	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.48,48.15 unit=17 mana=1562 err=<nil>
+zombie1	31.71	48.63	613	523	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.71,48.63 unit=17 mana=1562 err=<nil>
+zombie1	31.70	48.76	601	528	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.70,48.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	48.30	606	493	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.30,48.30 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.86	609	459	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.90,47.86 unit=17 mana=1562 err=<nil>
+zombie1	31.35	48.30	610	495	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.35,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.27	48.81	563	512	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.27,48.81 unit=17 mana=1562 err=<nil>
+zombie1	30.81	48.49	551	481	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.81,48.49 unit=17 mana=1562 err=<nil>
+zombie1	30.22	48.27	521	448	999993/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.22,48.27 unit=17 mana=1562 err=<nil>
+zombie1	30.14	47.56	572	417	999984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.14,47.56 unit=17 mana=1562 err=<nil>
+zombie1	30.58	47.87	582	447	999984/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.58,47.87 unit=17 mana=1562 err=<nil>
+zombie1	31.11	47.23	676	442	999974/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.11,47.23 unit=17 mana=1562 err=<nil>
+zombie1	31.66	46.56	774	438	999970/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.66,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.20	46.85	794	471	999947/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.20,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.71	47.02	741	458	999934/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.71,47.02 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.20	790	417	999934/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.50,46.20 unit=17 mana=1562 err=<nil>
+zombie1	31.38	46.58	751	427	999925/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.38,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.00	46.00	845	429	999925/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.00,46.00 unit=17 mana=1562 err=<nil>
+zombie1	32.61	46.37	865	468	999925/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.61,46.37 unit=17 mana=1562 err=<nil>
+zombie1	32.22	46.54	820	459	999906/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.22,46.54 unit=17 mana=1562 err=<nil>
+zombie1	32.39	46.91	804	481	999889/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.39,46.91 unit=17 mana=1562 err=<nil>
+zombie1	31.80	47.55	706	483	999889/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.80,47.55 unit=17 mana=1562 err=<nil>
+zombie1	31.76	47.02	745	460	999871/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.76,47.02 unit=17 mana=1562 err=<nil>
+zombie1	32.35	46.58	827	466	999866/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.35,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.21	872	459	999853/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=32.54,46.21 unit=17 mana=1562 err=<nil>
+zombie1	31.89	46.46	800	443	999849/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.89,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.54	45.66	836	397	999849/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.54,45.66 unit=17 mana=1562 err=<nil>
+zombie1	31.44	44.87	891	362	999849/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.44,44.87 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999844/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.74	44.50	865	318	999840/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.74,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.55	45.10	802	335	999835/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.55,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.76	45.10	819	343	999835/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.76,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.68	753	357	999835/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.51,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.26	809	351	999835/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.80,45.26 unit=17 mana=1562 err=<nil>
+zombie1	30.31	45.41	758	337	999835/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.31,45.41 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.61	725	337	999831/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.10,45.61 unit=17 mana=1562 err=<nil>
+zombie1	30.41	45.50	759	345	999831/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.41,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.31	44.96	794	320	999821/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.31,44.96 unit=17 mana=1562 err=<nil>
+zombie1	29.55	45.30	706	303	999811/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.55,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.05	44.93	696	268	999801/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.05,44.93 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.09	751	229	999801/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=28.90,44.09 unit=17 mana=1562 err=<nil>
+zombie1	29.02	43.25	827	200	999801/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.02,43.25 unit=17 mana=1562 err=<nil>
+zombie1	28.74	43.39	794	194	999801/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=28.74,43.39 unit=17 mana=1562 err=<nil>
+zombie1	28.75	43.95	750	217	999796/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=28.75,43.95 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999796/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.50	43.90	814	245	999792/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.50,43.90 unit=17 mana=1562 err=<nil>
+zombie1	29.42	44.49	761	265	999788/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.42,44.49 unit=17 mana=1562 err=<nil>
+zombie1	29.82	45.27	730	313	999778/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.82,45.27 unit=17 mana=1562 err=<nil>
+zombie1	30.47	45.48	765	347	999778/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.47,45.48 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.90	766	301	999770/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=29.90,44.90 unit=17 mana=1562 err=<nil>
+zombie1	30.39	44.50	837	304	999770/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.39,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.92	44.50	880	326	999761/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.92,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.88	795	314	999761/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.24,44.88 unit=17 mana=1562 err=<nil>
+zombie1	30.12	45.72	718	342	999756/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.12,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.65	46.34	711	388	999752/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.65,46.34 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.91	765	381	999752/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.90,45.91 unit=17 mana=1562 err=<nil>
+zombie1	30.53	45.78	746	361	999752/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=30.53,45.78 unit=17 mana=1562 err=<nil>
+zombie1	31.31	45.63	820	386	999752/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=4 at=31.31,45.63 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.14	797	416	999747/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+> debug goto 1
+=== cb8 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 38 8
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.99	48.70	549	496	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.99,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.48	48.15	632	494	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.48,48.15 unit=17 mana=1562 err=<nil>
+zombie1	31.71	48.63	613	523	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.71,48.63 unit=17 mana=1562 err=<nil>
+zombie1	31.70	48.76	601	528	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.70,48.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	48.30	606	493	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.30,48.30 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.86	609	459	999982/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.90,47.86 unit=17 mana=1562 err=<nil>
+zombie1	31.35	48.30	610	495	999982/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.35,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.27	48.81	563	512	999982/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.27,48.81 unit=17 mana=1562 err=<nil>
+zombie1	30.81	48.49	551	481	999982/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.81,48.49 unit=17 mana=1562 err=<nil>
+zombie1	30.22	48.27	521	448	999982/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.22,48.27 unit=17 mana=1562 err=<nil>
+zombie1	30.14	47.56	572	417	999962/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.14,47.56 unit=17 mana=1562 err=<nil>
+zombie1	30.58	47.87	582	447	999956/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.58,47.87 unit=17 mana=1562 err=<nil>
+zombie1	31.11	47.23	676	442	999943/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.11,47.23 unit=17 mana=1562 err=<nil>
+zombie1	31.66	46.56	774	438	999929/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.66,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.20	46.85	794	471	999891/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.20,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.71	47.02	741	458	999852/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.71,47.02 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.20	790	417	999846/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.50,46.20 unit=17 mana=1562 err=<nil>
+zombie1	31.38	46.58	751	427	999825/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.38,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.00	46.00	845	429	999825/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.00,46.00 unit=17 mana=1562 err=<nil>
+zombie1	32.61	46.37	865	468	999825/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.61,46.37 unit=17 mana=1562 err=<nil>
+zombie1	32.22	46.54	820	459	999787/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.22,46.54 unit=17 mana=1562 err=<nil>
+zombie1	32.39	46.91	804	481	999748/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.39,46.91 unit=17 mana=1562 err=<nil>
+zombie1	31.80	47.55	706	483	999748/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.80,47.55 unit=17 mana=1562 err=<nil>
+zombie1	31.76	47.02	745	460	999700/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.76,47.02 unit=17 mana=1562 err=<nil>
+zombie1	32.35	46.58	827	466	999687/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.35,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.21	872	459	999655/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=32.54,46.21 unit=17 mana=1562 err=<nil>
+zombie1	31.89	46.46	800	443	999635/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.89,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.54	45.66	836	397	999635/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.54,45.66 unit=17 mana=1562 err=<nil>
+zombie1	31.44	44.87	891	362	999629/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.44,44.87 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999622/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.74	44.50	865	318	999611/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.74,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.55	45.10	802	335	999599/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.55,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.76	45.10	819	343	999599/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.76,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.68	753	357	999599/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.51,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.26	809	351	999599/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.80,45.26 unit=17 mana=1562 err=<nil>
+zombie1	30.31	45.41	758	337	999599/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.31,45.41 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.61	725	337	999585/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.10,45.61 unit=17 mana=1562 err=<nil>
+zombie1	30.41	45.50	759	345	999579/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.41,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.31	44.96	794	320	999557/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.31,44.96 unit=17 mana=1562 err=<nil>
+zombie1	29.55	45.30	706	303	999544/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.55,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.05	44.93	696	268	999511/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.05,44.93 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.09	751	229	999511/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=28.90,44.09 unit=17 mana=1562 err=<nil>
+zombie1	29.02	43.25	827	200	999511/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.02,43.25 unit=17 mana=1562 err=<nil>
+zombie1	28.74	43.39	794	194	999511/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=28.74,43.39 unit=17 mana=1562 err=<nil>
+zombie1	28.75	43.95	750	217	999504/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=28.75,43.95 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	999504/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.50	43.90	814	245	999499/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.50,43.90 unit=17 mana=1562 err=<nil>
+zombie1	29.42	44.49	761	265	999493/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.42,44.49 unit=17 mana=1562 err=<nil>
+zombie1	29.82	45.27	730	313	999459/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.82,45.27 unit=17 mana=1562 err=<nil>
+zombie1	30.47	45.48	765	347	999453/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.47,45.48 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.90	766	301	999441/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=29.90,44.90 unit=17 mana=1562 err=<nil>
+zombie1	30.39	44.50	837	304	999434/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.39,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.92	44.50	880	326	999419/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.92,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.88	795	314	999407/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.24,44.88 unit=17 mana=1562 err=<nil>
+zombie1	30.12	45.72	718	342	999394/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.12,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.65	46.34	711	388	999387/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.65,46.34 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.91	765	381	999387/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.90,45.91 unit=17 mana=1562 err=<nil>
+zombie1	30.53	45.78	746	361	999387/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=30.53,45.78 unit=17 mana=1562 err=<nil>
+zombie1	31.31	45.63	820	386	999387/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=8 at=31.31,45.63 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.14	797	416	999374/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+> debug goto 1
+=== cb13 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 38 13
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.99	48.70	549	496	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.99,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.48	48.15	632	494	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.48,48.15 unit=17 mana=1562 err=<nil>
+zombie1	31.71	48.63	613	523	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.71,48.63 unit=17 mana=1562 err=<nil>
+zombie1	31.70	48.76	601	528	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.70,48.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	48.30	606	493	999992/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.30,48.30 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.86	609	459	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.90,47.86 unit=17 mana=1562 err=<nil>
+zombie1	31.35	48.30	610	495	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.35,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.27	48.81	563	512	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.27,48.81 unit=17 mana=1562 err=<nil>
+zombie1	30.81	48.49	551	481	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.81,48.49 unit=17 mana=1562 err=<nil>
+zombie1	30.22	48.27	521	448	999957/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.22,48.27 unit=17 mana=1562 err=<nil>
+zombie1	30.14	47.56	572	417	999920/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.14,47.56 unit=17 mana=1562 err=<nil>
+zombie1	30.58	47.87	582	447	999910/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.58,47.87 unit=17 mana=1562 err=<nil>
+zombie1	31.11	47.23	676	442	999875/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.11,47.23 unit=17 mana=1562 err=<nil>
+zombie1	31.66	46.56	774	438	999821/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.66,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.20	46.85	794	471	999758/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.20,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.71	47.02	741	458	999686/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.71,47.02 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.20	790	417	999668/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.50,46.20 unit=17 mana=1562 err=<nil>
+zombie1	31.38	46.58	751	427	999622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.38,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.00	46.00	845	429	999622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.00,46.00 unit=17 mana=1562 err=<nil>
+zombie1	32.61	46.37	865	468	999622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.61,46.37 unit=17 mana=1562 err=<nil>
+zombie1	32.22	46.54	820	459	999549/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.22,46.54 unit=17 mana=1562 err=<nil>
+zombie1	32.39	46.91	804	481	999461/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.39,46.91 unit=17 mana=1562 err=<nil>
+zombie1	31.80	47.55	706	483	999461/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.80,47.55 unit=17 mana=1562 err=<nil>
+zombie1	31.76	47.02	745	460	999369/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.76,47.02 unit=17 mana=1562 err=<nil>
+zombie1	32.35	46.58	827	466	999341/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.35,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.21	872	459	999288/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=32.54,46.21 unit=17 mana=1562 err=<nil>
+zombie1	31.89	46.46	800	443	999243/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.89,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.54	45.66	836	397	999243/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.54,45.66 unit=17 mana=1562 err=<nil>
+zombie1	31.44	44.87	891	362	999234/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.44,44.87 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	999216/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.74	44.50	865	318	999197/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.74,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.55	45.10	802	335	999179/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.55,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.76	45.10	819	343	999179/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.76,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.68	753	357	999179/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.51,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.26	809	351	999171/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.80,45.26 unit=17 mana=1562 err=<nil>
+zombie1	30.31	45.41	758	337	999171/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.31,45.41 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.61	725	337	999143/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.10,45.61 unit=17 mana=1562 err=<nil>
+zombie1	30.41	45.50	759	345	999116/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.41,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.31	44.96	794	320	999087/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.31,44.96 unit=17 mana=1562 err=<nil>
+zombie1	29.55	45.30	706	303	999051/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.55,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.05	44.93	696	268	998989/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.05,44.93 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.09	751	229	998989/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=28.90,44.09 unit=17 mana=1562 err=<nil>
+zombie1	29.02	43.25	827	200	998989/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.02,43.25 unit=17 mana=1562 err=<nil>
+zombie1	28.74	43.39	794	194	998989/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=28.74,43.39 unit=17 mana=1562 err=<nil>
+zombie1	28.75	43.95	750	217	998980/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=28.75,43.95 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	998980/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.50	43.90	814	245	998972/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.50,43.90 unit=17 mana=1562 err=<nil>
+zombie1	29.42	44.49	761	265	998945/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.42,44.49 unit=17 mana=1562 err=<nil>
+zombie1	29.82	45.27	730	313	998882/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.82,45.27 unit=17 mana=1562 err=<nil>
+zombie1	30.47	45.48	765	347	998874/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.47,45.48 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.90	766	301	998838/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=29.90,44.90 unit=17 mana=1562 err=<nil>
+zombie1	30.39	44.50	837	304	998791/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.39,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.92	44.50	880	326	998765/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.92,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.88	795	314	998745/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.24,44.88 unit=17 mana=1562 err=<nil>
+zombie1	30.12	45.72	718	342	998727/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.12,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.65	46.34	711	388	998717/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.65,46.34 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.91	765	381	998708/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.90,45.91 unit=17 mana=1562 err=<nil>
+zombie1	30.53	45.78	746	361	998708/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=30.53,45.78 unit=17 mana=1562 err=<nil>
+zombie1	31.31	45.63	820	386	998700/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=13 at=31.31,45.63 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.14	797	416	998683/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+> debug goto 1
+=== cb20 ===
+> debug goto 2
+> debug stat 1 800
+> debug stat 6 256000
+> debug stat 7 256000
+> debug stat 9 400000
+> debug points 38 20
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+zombie1	30.95	48.13	596	464	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.94,48.15 unit=17 mana=1562 err=<nil>
+zombie1	30.99	48.70	549	496	1000000/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.99,48.70 unit=17 mana=1562 err=<nil>
+zombie1	31.48	48.15	632	494	999973/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.48,48.15 unit=17 mana=1562 err=<nil>
+zombie1	31.71	48.63	613	523	999958/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.71,48.63 unit=17 mana=1562 err=<nil>
+zombie1	31.70	48.76	601	528	999944/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.70,48.76 unit=17 mana=1562 err=<nil>
+zombie1	31.30	48.30	606	493	999929/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.30,48.30 unit=17 mana=1562 err=<nil>
+zombie1	30.90	47.86	609	459	999841/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.90,47.86 unit=17 mana=1562 err=<nil>
+zombie1	31.35	48.30	610	495	999813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.35,48.30 unit=17 mana=1562 err=<nil>
+zombie1	31.27	48.81	563	512	999813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.27,48.81 unit=17 mana=1562 err=<nil>
+zombie1	30.81	48.49	551	481	999813/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.81,48.49 unit=17 mana=1562 err=<nil>
+zombie1	30.22	48.27	521	448	999798/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.22,48.27 unit=17 mana=1562 err=<nil>
+zombie1	30.14	47.56	572	417	999726/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.14,47.56 unit=17 mana=1562 err=<nil>
+zombie1	30.58	47.87	582	447	999711/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.58,47.87 unit=17 mana=1562 err=<nil>
+zombie1	31.11	47.23	676	442	999609/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.11,47.23 unit=17 mana=1562 err=<nil>
+zombie1	31.66	46.56	774	438	999509/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.66,46.56 unit=17 mana=1562 err=<nil>
+zombie1	32.20	46.85	794	471	999377/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.20,46.85 unit=17 mana=1562 err=<nil>
+zombie1	31.71	47.02	741	458	999216/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.71,47.02 unit=17 mana=1562 err=<nil>
+zombie1	31.50	46.20	790	417	999187/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.50,46.20 unit=17 mana=1562 err=<nil>
+zombie1	31.38	46.58	751	427	999088/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.38,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.00	46.00	845	429	999028/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.00,46.00 unit=17 mana=1562 err=<nil>
+zombie1	32.61	46.37	865	468	999013/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.61,46.37 unit=17 mana=1562 err=<nil>
+zombie1	32.22	46.54	820	459	998869/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.22,46.54 unit=17 mana=1562 err=<nil>
+zombie1	32.39	46.91	804	481	998707/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.39,46.91 unit=17 mana=1562 err=<nil>
+zombie1	31.80	47.55	706	483	998679/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.80,47.55 unit=17 mana=1562 err=<nil>
+zombie1	31.76	47.02	745	460	998487/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.76,47.02 unit=17 mana=1562 err=<nil>
+zombie1	32.35	46.58	827	466	998430/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.35,46.58 unit=17 mana=1562 err=<nil>
+zombie1	32.54	46.21	872	459	998301/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=32.54,46.21 unit=17 mana=1562 err=<nil>
+zombie1	31.89	46.46	800	443	998200/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.89,46.46 unit=17 mana=1562 err=<nil>
+zombie1	31.54	45.66	836	397	998186/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.54,45.66 unit=17 mana=1562 err=<nil>
+zombie1	31.44	44.87	891	362	998158/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.44,44.87 unit=17 mana=1562 err=<nil>
+zombie1	31.10	44.30	910	325	998129/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.10,44.30 unit=17 mana=1562 err=<nil>
+zombie1	30.74	44.50	865	318	998099/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.74,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.55	45.10	802	335	998039/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.55,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.76	45.10	819	343	998039/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.76,45.10 unit=17 mana=1562 err=<nil>
+zombie1	30.51	45.68	753	357	998025/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.51,45.68 unit=17 mana=1562 err=<nil>
+zombie1	30.80	45.26	809	351	998011/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.80,45.26 unit=17 mana=1562 err=<nil>
+zombie1	30.31	45.41	758	337	998011/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.31,45.41 unit=17 mana=1562 err=<nil>
+zombie1	30.10	45.61	725	337	997951/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.10,45.61 unit=17 mana=1562 err=<nil>
+zombie1	30.41	45.50	759	345	997894/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.41,45.50 unit=17 mana=1562 err=<nil>
+zombie1	30.31	44.96	794	320	997838/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.31,44.96 unit=17 mana=1562 err=<nil>
+zombie1	29.55	45.30	706	303	997765/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.55,45.30 unit=17 mana=1562 err=<nil>
+zombie1	29.05	44.93	696	268	997637/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.05,44.93 unit=17 mana=1562 err=<nil>
+zombie1	28.90	44.09	751	229	997622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=28.90,44.09 unit=17 mana=1562 err=<nil>
+zombie1	29.02	43.25	827	200	997622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.02,43.25 unit=17 mana=1562 err=<nil>
+zombie1	28.74	43.39	794	194	997622/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=28.74,43.39 unit=17 mana=1562 err=<nil>
+zombie1	28.75	43.95	750	217	997609/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=28.75,43.95 unit=17 mana=1562 err=<nil>
+zombie1	29.31	43.50	831	221	997609/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.31,43.50 unit=17 mana=1562 err=<nil>
+zombie1	29.50	43.90	814	245	997593/1000000	NU	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.50,43.90 unit=17 mana=1562 err=<nil>
+zombie1	29.42	44.49	761	265	997536/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.42,44.49 unit=17 mana=1562 err=<nil>
+zombie1	29.82	45.27	730	313	997406/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.82,45.27 unit=17 mana=1562 err=<nil>
+zombie1	30.47	45.48	765	347	997377/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.47,45.48 unit=17 mana=1562 err=<nil>
+zombie1	29.90	44.90	766	301	997277/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=29.90,44.90 unit=17 mana=1562 err=<nil>
+zombie1	30.39	44.50	837	304	997136/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.39,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.92	44.50	880	326	997079/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.92,44.50 unit=17 mana=1562 err=<nil>
+zombie1	30.24	44.88	795	314	997007/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.24,44.88 unit=17 mana=1562 err=<nil>
+zombie1	30.12	45.72	718	342	996965/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.12,45.72 unit=17 mana=1562 err=<nil>
+zombie1	30.65	46.34	711	388	996949/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.65,46.34 unit=17 mana=1562 err=<nil>
+zombie1	30.90	45.91	765	381	996934/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.90,45.91 unit=17 mana=1562 err=<nil>
+zombie1	30.53	45.78	746	361	996919/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=30.53,45.78 unit=17 mana=1562 err=<nil>
+zombie1	31.31	45.63	820	386	996890/1000000	WL	-	-	lvl1	Zombie	#17	-
+> debug cast 38 unit 17
+queued skill=38 Charged Bolt lvl=20 at=31.31,45.63 unit=17 mana=1562 err=<nil>
+zombie1	31.53	46.14	797	416	996845/1000000	WL	-	-	lvl1	Zombie	#17	-
+{"v":1,"stats":{"base":{"str":10,"dex":25,"vit":10,"ene":800},"bonus":[0,0,0,0,0,0,0,0,0,0,0,0],"defense":6,"res":{"fire":0,"cold":0,"light":0,"poison":0},"res_cap":[75,75,75,75],"raw":[10,800,25,10,0,0,256000,256000,400000,400000,18944,18944,1,420,0,0]}}
+> debug goto 1

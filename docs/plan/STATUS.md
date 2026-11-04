@@ -64,6 +64,7 @@
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
+| [sksmoke-a1](../../openspec/changes/sksmoke-a1/) | in-progress | sksmoke | `openspec/changes/sksmoke-a1/**`<br>`docs/probes/sksmoke/2026-11-03-SK-design.txt`<br>`docs/probes/sksmoke/2026-11-03-SK-d2d*`<br>`docs/sksmoke-tools.md`<br>`cmd/d2cheat/skilllevel.go`<br>`cmd/d2cheat/skilllevel_test.go`<br>`internal/combat/cmd/combatlive/sk.go`<br>`internal/combat/cmd/combatlive/sk_test.go` | `instance:i2` |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
@@ -123,6 +124,7 @@
 - change skmiss: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change skresistfix: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
+- change sksmoke-a1: changecheck 0 warnings for this card; leakcheck -mode fail 0
 
 ### Recent merges
 - 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
