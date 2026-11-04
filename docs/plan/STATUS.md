@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 50e66119 11-04 14:18 `Merge agent/floormeasure2: floormeasure2: route-floor measurement from the Gate 2 logs; seed 13 -1370 XP is the injected kill -9, not a death; no max-life field in any log` (floormeasure2)
 - 155f4d59 11-04 14:17 `Merge branch 'main' into floormeasure2` (-)
 - ce58271b 11-04 14:09 `Merge agent/livecheckdrills: livecheckdrills: drill groups DS (P5 stash recheck) and the tome stat-70 drill with fake-lab tests; live runs pending` (livecheckdrills)
 - 6312a99f 11-04 14:08 `Merge branch 'main' into livecheckdrills` (-)
@@ -102,5 +103,4 @@
 - 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
 - e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
 - d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
-- a1d4edb9 11-04 13:59 `Merge branch 'main' into tickcppdiff` (-)
 <!-- statusgen:end -->
