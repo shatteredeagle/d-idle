@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 94dcf5f0 11-04 02:02 `merge origin/main into retreatdrill` (retreatdrill)
 - 024c7593 11-04 01:55 `Merge agent/tomefix: tomefix: audit of false-empty tome verdict, 14 regression tests, live-check recipe (no bot change)` (tomefix)
 - e9f01cdc 11-04 01:54 `merge origin/main into tomefix` (tomefix)
 - 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
@@ -136,5 +137,4 @@
 - ad0eb770 11-04 01:10 `merge origin/main into primcheck` (primcheck)
 - 1cad2adb 11-04 01:10 `merge origin/main into groomland2` (groomland2)
 - 99b8206a 11-04 01:07 `Merge agent/primadd: primadd: draft primitive rows P37-P45 (docs/research, primitives.md untouched)` (primadd)
-- e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 <!-- statusgen:end -->
