@@ -267,3 +267,21 @@ Not re-run: an MSVC build, the full ctest, the full CI tidy selection. No commen
 - old remote heads on the public fork (git ls-remote, V): fix/frozen-armor-and-resume-final c4e9db97, fix/curse-immune-final 802dee68, fix/blizzard-shard-offsets-v2 3ac63fa0. Undo = force-push these back.
 - check (worker host): 7 suites exit 0 on #163 and #160 and #159 builds (build rc 0); pr_guard 0 FAIL / 0 WARN (range and each commit); presubmit --quick 0 FAIL (1, 2, 3 WARN: build skipped and test kinds); g++ and clang++ warning counts on the changed .cpp unchanged from the first rebase. Not re-run: the per-PR differentials (unchanged code paths; the first rebase passed them), clang-tidy.
 - hold: no push to the public fork by this card. Commands: `git push --force-with-lease=fix/frozen-armor-and-resume-final:c4e9db97431f99508e5c8195ae855b493fbaa0ee ghfork local/prconf2-159:fix/frozen-armor-and-resume-final` (likewise 802dee68fb5b26e6c315c9509010f93dd4782590 for fix/curse-immune-final from -160, 3ac63fa06c3b3e21ca53c6eee6d1fbfd4dff84f4 for fix/blizzard-shard-offsets-v2 from -163).
+
+## Batch B (card prbopen, 2026-11-04)
+
+- posted: 2026-11-04 go: the user, replying to the recommendation "open it, but let me rerun the oracle comparison on the rebased head first": "yes to all" (rerun the oracle, then push the prepared branch to the fork and open ONE PR; stop if the rerun showed any difference).
+- posted: 2026-11-04 fetch upstream: main 002ffab4 (git ls-remote of psi29a/d2decomped; unchanged since the branch was prepared, so no rebase was needed; the candidate is one commit on it).
+- posted: 2026-11-04 oracle rerun on the worker host (g++ Release build with the CI flags, head 7e1f8fc4, seed 20261103, 20000 cases per class and kind): 560,000 frames, life, pool and seed differ 0 in every set (roll, reduce, absorb, both, negative percent, exact). The base-side numbers stay S (earlier harness, not offered as a command).
+- posted: 2026-11-04 push (plain, new branch) to the fork: batch2-B-r5 head 7e1f8fc4 (git ls-remote of the fork showed no such branch before).
+- posted: 2026-11-04 PR opened: https://github.com/psi29a/d2decomped/pull/189 (14 files, 1 commit; title "Batch B: a monster's hit is rolled in 256ths, absorbed, then reduced (FUN_0057b420, FUN_0057c1e0)"). State OPEN, base 002ffab4, head 7e1f8fc4 as checked with gh pr view. Body from pr-batch-b-body-r5.md without the internal header, the oracle numbers re-measured on this head, ends with the bare `Agent: Claude Code` line.
+
+| check | result |
+|---|---|
+| oracle, 560,000 frames, game side vs d2d | 0 differ (V, this head) |
+| `test_combat` (Release, `-DD2D_WERROR=ON`) | rc 0 (V) |
+| `python3 tools/pr_guard.py 002ffab4 HEAD` | 0 FAIL, 0 WARN (V) |
+| `test_monster_damage.py` with game data | 10 OK, none skipped (V) |
+
+- not re-run: parity lane (g++ and clang++ with the CI flags, clang-tidy), `g-all`, `test_game` and `test_sk_ground` with game data, presubmit --quick (carried from the earlier run on the same head), MSVC, any live game, soak or hash comparison.
+- nothing else posted: no comments, no reviewer requests, no labels, no second PR.
