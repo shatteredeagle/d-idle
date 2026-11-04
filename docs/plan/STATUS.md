@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
 - df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
 - a10570ed 11-04 13:33 `Merge agent/hirefixlive: hirefixlive: PaidHire follows the talk then hire row menu flow (offline tests; live rerun pending)` (hirefixlive)
 - 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
@@ -101,5 +102,4 @@
 - f3d1dee9 11-04 13:20 `Merge branch 'main' into backlogmigrate` (-)
 - 8255939d 11-04 13:13 `Merge agent/stateevdiff: stateevdiff: Energy Shield absorb order differential, 40,000 cases: game.exe absorbs on the raw field before resistance; d2d after resistance (18,532 of 25,038 shield cases differ in life)` (stateevdiff)
 - 57b991c4 11-04 13:12 `Merge branch 'main' into stateevdiff` (-)
-- 5936f406 11-04 13:11 `Merge branch 'main' into backlogmigrate` (-)
 <!-- statusgen:end -->
