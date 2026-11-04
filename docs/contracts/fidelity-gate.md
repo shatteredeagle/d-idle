@@ -108,7 +108,7 @@ Replicated soaks SHALL use the lockstep private fork (about 100 to 380 times rea
 - **THEN** `d2dsoak run` refuses to start a seed
 
 ### Requirement: Verdict exit codes
-`d2dsoak run` and `d2dsoak compare` MUST exit 0 only when the overall verdict is PASS, 2 on INCONCLUSIVE and 3 on FAIL or NO-DATA, so a script cannot read a non-pass as a pass. Source: docs/research/code-review-2026-10-30.md H1; openspec/specs/soak-gates (NO-DATA is exit 3); card m2-soakexit.
+`d2dsoak run` and `d2dsoak compare` MUST exit 0 only when the overall verdict is PASS, 2 on INCONCLUSIVE and 3 on FAIL or NO-DATA, so a script cannot read a non-pass as a pass. Source: docs/research/code-review-2026-10-30.md H1; docs/contracts/soak-gates.md (NO-DATA is exit 3); card m2-soakexit.
 
 #### Scenario: Inconclusive verdict
 - **WHEN** 3 seeds ran and the verdict is INCONCLUSIVE

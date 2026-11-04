@@ -53,7 +53,7 @@ install and a d2d binary; steps, flags and troubleshooting: [docs/running.md](do
   and the one the container uses (`deploy/container/`, `docs/d2d-container/`; ADR 0009 in `docs/adr/`).
 - **Original Game.exe under Wine (reference).** The path the bot grew up on. It is frozen as a reference: no new features, and
   the old 2 h and 8 h Game.exe gate soaks are retired in favour of the same gates on d2d (ADR 0013, spec
-  `openspec/specs/soak-gates/spec.md`, "d2d gate ladder" in `docs/review-strategy.md`).
+  `docs/contracts/soak-gates.md`, "d2d gate ladder" in `docs/review-strategy.md`).
 
 This repo contains no game files: no Blizzard binaries, MPQ archives, saves or data tables; you need your own legitimate install of Diablo II: Lord of Destruction 1.14d.
 

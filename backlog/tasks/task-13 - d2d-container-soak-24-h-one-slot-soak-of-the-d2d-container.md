@@ -24,6 +24,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/d2d-container-soak"
+contracts: ["proposed/d2d-container-soak"]
 ---
 
 ## Description

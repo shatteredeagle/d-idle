@@ -30,6 +30,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/m1-liveproof"
+contracts: ["proposed/m1-liveproof"]
 ---
 
 ## Description

@@ -15,7 +15,7 @@ d2lod-bot (d.idle) is a Go bot for Diablo II LoD 1.14d. d2d (a lockstep fork of 
 - [plan/](plan/STATUS.md): STATUS (read first), plan-v2 (the plan with the user's decisions), death data.
 - [BACKLOG.md](BACKLOG.md): open items without a card; [needs-you.md](needs-you.md): what waits on the user.
 - [decisions.md](decisions.md) and [adr/](adr/README.md): the user's decisions and why (guard files).
-- [../openspec/specs/](../openspec/specs/): the numeric gates and contracts; [knobs.md](knobs.md) is generated from code.
+- [../docs/contracts/](contracts/README.md): the numeric gates and contracts; [knobs.md](knobs.md) is generated from code.
 - [research/](research/README.md): traces of game.exe vs d2d, upstream PR proofs and evidence packs; topical index with status per doc.
 - [process/](process/): how we work (upstream PR standard, workers, capacity, public split).
 - [sme/](sme/) and [classes/](classes/): game-knowledge notes and per-class plans; [progression/](progression/), [goals/](goals/).

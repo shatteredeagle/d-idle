@@ -30,4 +30,4 @@ Expected values in `internal/resource/melee_test.go` come from the oracle's own 
 
 ## Shared-file lines for the merger
 
-- docs/BACKLOG.md: `- skmeleebot (card [skmeleebot](../openspec/changes/skmeleebot/proposal.md), offline): SKMELEE B1 to B4 done: the simulator's melee rolls to-hit and damage (internal/resource/melee.go), WeakPack has the to-hit term, the melee rung scales its pack limit with the Blunt-vs-undead gain, B4 noted in docs/skmeleebot.md; open: fill Input.Blow / Input.Foe from the live snapshot (weapon StrBonus / DexBonus not loaded).`
+- docs/BACKLOG.md: `- skmeleebot (card [skmeleebot](archive/openspec-index.md#skmeleebot), offline): SKMELEE B1 to B4 done: the simulator's melee rolls to-hit and damage (internal/resource/melee.go), WeakPack has the to-hit term, the melee rung scales its pack limit with the Blunt-vs-undead gain, B4 noted in docs/skmeleebot.md; open: fill Input.Blow / Input.Foe from the live snapshot (weapon StrBonus / DexBonus not loaded).`

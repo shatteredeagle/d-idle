@@ -2,7 +2,7 @@
 
 > status: OpenSpec change cards are retired for NEW work (user 2026-11-04). The replacement is Backlog.md (https://github.com/MrLesk/Backlog.md, MIT; markdown task files in the repo, `backlog browser` board), chosen by the user 2026-11-04 after a small trial (backlog init in a scratch copy, 5 hand-migrated cards, `backlog browser`) that comes before any removal stage; each removal stage still needs the user's go (docs/process/openspec-removal-plan.md). Until the migration lands, existing active cards continue until closed. A new job is named by its branch agent/<id>; its owns/exclusive resources come from the brief and go back in the report, and its result line (verified live or not) goes in the report. Cardless work merges via `merge.sh --card none`.
 
-Work for this repo is tracked as openspec change cards in `openspec/changes/<id>/`. There is no GitHub Issues use, no `gh` or `glab` calls, and no `.scratch/` directory. The forge remote (`forge`, `<owner>/d2lod-bot`) is a push target only; nothing is ever posted to GitHub without the user's go (`openspec/specs/lab-rules`).
+Work for this repo is tracked as openspec change cards in `openspec/changes/<id>/`. There is no GitHub Issues use, no `gh` or `glab` calls, and no `.scratch/` directory. The forge remote (`forge`, `<owner>/d2lod-bot`) is a push target only; nothing is ever posted to GitHub without the user's go (`docs/contracts/lab-rules.md`).
 
 This file replaces the "issue tracker" template of the setup skill (hand-written, the skill was not run). Format and life cycle: `openspec/README.md`.
 
@@ -11,7 +11,7 @@ This file replaces the "issue tracker" template of the setup skill (hand-written
 | skill wording | our equivalent |
 |---|---|
 | issue / ticket | one change card folder `openspec/changes/<id>/` (`proposal.md` = Why and What Changes, `tasks.md` = header block + checkbox tasks) |
-| spec / PRD | `openspec/specs/<capability>/spec.md` (stable contract) plus a delta spec inside the card when the job changes a contract |
+| spec / PRD | `docs/contracts/<capability>/spec.md` (stable contract) plus a delta spec inside the card when the job changes a contract |
 | issue number | the card id (lowercase kebab-case, normally the agent name, e.g. `d2dwire`) |
 | labels / state | the `status:` line of the card header: `proposed`, `in-progress`, `done`, `archived` |
 | assignee | `agent:`, `branch:` and `worktree:` in the header, plus `docs/OWNERS` |

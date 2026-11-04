@@ -1,13 +1,13 @@
 # Rules for every agent working on d2lod-bot
 
-Read in this order: `openspec/README.md` (how jobs and contracts are written), `docs/plan/STATUS.md` (where we are; the block at the bottom is generated), YOUR CHANGE CARD `openspec/changes/<id>/` (the brief: proposal, tasks, `owns:`, `exclusive:`, `gates:`), `GLOSSARY.md` when a term is unclear, then `docs/d2-1.14d-memory.md` and the doc of your area. `PLAN.md` is the founding plan (historical; see its status block). These rules are not optional.
+Read in this order: `docs/contracts/README.md` (how contracts are written), `docs/plan/STATUS.md` (where we are; the block at the bottom is generated), YOUR TASK in `backlog/tasks/` (`docs/backlog.md`; the brief: proposal, tasks, `owns:`, `exclusive:`, `gates:`), `GLOSSARY.md` when a term is unclear, then `docs/d2-1.14d-memory.md` and the doc of your area. `PLAN.md` is the founding plan (historical; see its status block). These rules are not optional.
 
 Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `tools/ops.sh link` imports it into a gitignored `CLAUDE.local.md`).
 
 ## Ownership, exclusive resources, change cards
 - Every job is a change card. The brief is "implement change X". You edit only the paths in the card's `owns:` (mirrored in `docs/OWNERS`) and use only the resources in its `exclusive:` (`instance:iN`, `d2d-control-socket`, `d2d-lab-binary`, `bot-binary:<path>`, `fork-branch:<name>`, `upstream-pr:<topic>`). Need something else? Write it in your report; do not edit it.
 - Tick `tasks.md`, fill `result:` (say verified live or not) at the end. The coordinator archives the card at merge.
-- Contracts and numeric gates are in `openspec/specs/<capability>/spec.md` (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). If your work changes a number there, put a delta spec in your change instead of editing the spec.
+- Contracts and numeric gates are in `docs/contracts/<capability>.md` (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). If your work changes a number there, put a delta spec in your change instead of editing the spec.
 - `go run ./cmd/changecheck` (warn-only for now) checks all of this; run it before you finish. (Status note: since OpenSpec removal stage 2, CI and the pre-push hook no longer run it; the merge pipeline still does until the ops scripts are updated.) Questions about how to write a requirement, scenario or card: the `spec-sme` agent.
 - Before reporting done, run `python3 tools/merge_lines_check.py --changed` (`tools/ci/check.sh` does it): `merge-lines.txt` holds only lines of the form `BACKLOG: text`, `INDEX: text` or `CHANGELOG: text`, no bullets, no OWNERS lines (those go in `docs/OWNERS`).
 
@@ -65,5 +65,5 @@ The project supports several builds and classes (user direction 2026-11-01; `doc
 Under 300 words: what is done and tested (with the exact commands), what is verified live vs not, what you changed on the live character, interface decisions other agents must know, and what you could not finish.
 
 ## Agent skills and guard rule
-Skills are for the user's dedicated sessions; agent runs use them only when the brief says so. Work is tracked as openspec change cards (`openspec/changes/<id>/`; OpenSpec is retired for NEW work since 2026-11-04, existing cards stay until the removal plan lands, so create a card only if the brief names one), see `docs/agents/issue-tracker.md`; we do not use triage labels; domain docs: `GLOSSARY.md`, `docs/adr/`, `openspec/specs/` (`docs/agents/domain.md`).
+Skills are for the user's dedicated sessions; agent runs use them only when the brief says so. Work is tracked as Backlog.md tasks (`backlog/tasks/`; OpenSpec was removed 2026-11-04, the old cards live under git tag `openspec-final`, so create a task only if the brief names one), see `docs/agents/issue-tracker.md`; we do not use triage labels; domain docs: `GLOSSARY.md`, `docs/adr/`, `docs/contracts/` (`docs/agents/domain.md`).
 Agents never create or edit `docs/adr/*`, `GLOSSARY.md` or `docs/decisions.md` entries on their own. Only the user's own grill session or an explicit coordinator brief that names the file may. Skills such as `domain-modeling`, `grill-with-docs`, `research` and `grilling` must not write files in agent runs: put proposed text in your report. Missing or wrong glossary term: say so in the report.

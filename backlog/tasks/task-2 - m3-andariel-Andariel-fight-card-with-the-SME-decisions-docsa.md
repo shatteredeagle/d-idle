@@ -27,6 +27,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/m3-andariel"
+contracts: ["proposed/m3-andariel"]
 ---
 
 ## Description

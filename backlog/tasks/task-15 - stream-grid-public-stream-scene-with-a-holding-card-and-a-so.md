@@ -24,6 +24,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/stream-grid"
+contracts: ["proposed/stream-grid"]
 ---
 
 ## Description

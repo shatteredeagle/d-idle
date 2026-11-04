@@ -1,6 +1,6 @@
 # Tier B design: A:B testing of the d2d backend against the original game (card tierbdesign, 2026-11-02)
 
-> status: design, docs only (card `tierbdesign`). No build, no game start, no live run, no hook change. User approved Tier B design work on 2026-11-02; the hook release stays a separate decision. Parents: docs/research/original-game-lockstep.md (tiers A/B/C), docs/research/seed-study.md (seed pinning, divergence order), docs/research/lockstep-p1p2.md, lockstep-p3.md, lockstep-p4.md, docs/timescale.md, openspec/specs/fidelity-gate, docs/ab-design.md, docs/research/baseline-audit.md.
+> status: design, docs only (card `tierbdesign`). No build, no game start, no live run, no hook change. User approved Tier B design work on 2026-11-02; the hook release stays a separate decision. Parents: docs/research/original-game-lockstep.md (tiers A/B/C), docs/research/seed-study.md (seed pinning, divergence order), docs/research/lockstep-p1p2.md, lockstep-p3.md, lockstep-p4.md, docs/timescale.md, docs/contracts/fidelity-gate.md, docs/ab-design.md, docs/research/baseline-audit.md.
 > Tags: **V read** = read by me in this repo or a cited source this session; **V run** = measured by a run (mine or a cited one); **D** = decompile note of the d2decomped project as cited by seed-study.md; **S** = secondary; **I** = my inference; **U** = unverified. Machines are "the worker host" and "the driver host". Private hook details are in the private hook repository's note "Tier B: private hook notes" and are not repeated here.
 
 ## 0. Recommendation first
@@ -124,7 +124,7 @@ All live work on hidden instances only (never i0), started by the coordinator's 
 | 5 | **TIERB-HOOK** (only if 3.5 says so): frozen virtual clock, `step N`, wait semantics, import scan of the not-covered APIs; private hook repository, generic, no game addresses | d2-worker (private repo) | private hook repository only; public `docs/research/tierb-hook.md` (results, public-safe), `openspec/changes/tierb-hook/**` | none (no game) | the hook's own test suite under Wine with a stub game: frame gate yields 0 frames while frozen, exactly N frames per `step N`, no deadlock in timed waits, null control at free-running k=1 unchanged | stub programs only; needs the user's go for the new hook set before any game use |
 | 6 | **TIERB-DET**: bot step mode (clock from the step counter, helper holds in steps) and determinism probes P3a idle town (5000 frames) then a 2 min scripted walk, twice from the same pinned `.d2s` | d2-live | `cmd/lockstepscan/**` or a new `cmd/tierbprobe/**`, `internal/gclock/**`, `docs/research/tierb-det.md`, `openspec/changes/tierb-det/**` | `instance:i4`, `bot-binary:tierbprobe` | equal state vector V1 of seed-study.md section 4 at every 250 frames for the idle span; first divergence frame per state class reported for the walk; speed factor read 0x400 every frame or reported | hidden i4, hook set with the user's go, run markers, read-only memory; then optionally one d2d run of the same seed to report cross-backend first divergence per class |
 
-### 4.1 Mapping onto openspec/specs/fidelity-gate
+### 4.1 Mapping onto docs/contracts/fidelity-gate.md
 
 | Requirement | A:B mapping | Change needed (delta spec in AB-TOOL, not edited here) |
 |---|---|---|

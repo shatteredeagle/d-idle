@@ -1,6 +1,6 @@
 # fixmeter: combat totals on the d2d backend
 
-> status: offline fix, live proof pending (card [fixmeter](../openspec/changes/fixmeter/proposal.md)). Closes the P28 "Meter totals BLOCKED" note of DRILLS5 ([primitives.md](primitives.md)).
+> status: offline fix, live proof pending (card [fixmeter](archive/openspec-index.md#fixmeter)). Closes the P28 "Meter totals BLOCKED" note of DRILLS5 ([primitives.md](primitives.md)).
 
 ## What was wrong
 

@@ -22,7 +22,7 @@ _Not to be confused with_: Game.exe backend.
 The upstream program and its private fork on the worker host (`~/d2d-lab/fork`, never in this repo). Also loosely "the d2d backend". See `docs/d2d-spike.md`, `docs/d2d-fork.md`.
 
 **fork**:
-Our private, GPL-bound copy of d2d on the forge `<owner>/d2d-fork`; patches never enter this repo and every patch is pushed the same day. `docs/d2d-fork.md`, spec `openspec/specs/lab-rules`.
+Our private, GPL-bound copy of d2d on the forge `<owner>/d2d-fork`; patches never enter this repo and every patch is pushed the same day. `docs/d2d-fork.md`, spec `docs/contracts/lab-rules.md`.
 
 **lab binary (d2d.lab)**:
 The fork build with every verb our tooling needs (`dump`, `step`, `clock`, `debug layout`); read-only and never overwritten. `docs/d2d-lab.md`.
@@ -309,7 +309,7 @@ Read-only advisor for specs and change cards. `.claude/agents/spec-sme.md`.
 One job: `openspec/changes/<id>/` with proposal.md and tasks.md (header block). The unit of work and the issue-tracker equivalent. `openspec/README.md`, `docs/agents/issue-tracker.md`.
 
 **spec**:
-A stable contract in `openspec/specs/<capability>/spec.md` (requirement and scenario form). Numbers live here.
+A stable contract in `docs/contracts/<capability>/spec.md` (requirement and scenario form). Numbers live here.
 
 **delta spec**:
 A spec change inside a card (`## ADDED|MODIFIED|REMOVED Requirements`), applied at archive. `openspec/README.md`.

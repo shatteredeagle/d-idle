@@ -40,7 +40,7 @@ The subagent commits on its branch and replies with one line (file, round number
 Agents never write ADRs, `GLOSSARY.md` or `docs/decisions.md` on their own (AGENTS.md guard rule). Path:
 1. The user says "record it".
 2. The coordinator's brief to a worker names the exact files (`docs/decisions.md` one line, and an ADR only if the decision matters beyond its card), pointing at `mini-rounds.md` as the source.
-3. If an answer changes a numeric gate or a contract in `openspec/specs/`, it goes through a change card with a spec delta, never an edit of the spec.
+3. If an answer changes a numeric gate or a contract in `docs/contracts/`, it goes through a change card with a spec delta, never an edit of the spec.
 4. A decision the user wanted but did not say to record stays in `mini-rounds.md` only; it is not binding until recorded.
 
 ## 5. Worked example (2026-10-30)

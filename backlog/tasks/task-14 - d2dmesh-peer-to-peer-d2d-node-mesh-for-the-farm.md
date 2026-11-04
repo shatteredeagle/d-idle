@@ -25,6 +25,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/d2dmesh"
+contracts: ["proposed/d2dmesh"]
 ---
 
 ## Description

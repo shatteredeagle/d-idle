@@ -12,7 +12,7 @@ Existing record: [ADR 0002](../../adr/0002-d2d-primary-backend-gated.md) says "l
 
 - The container is the product end goal; native on the worker host is the dev path ([ADR 0001](../../adr/0001-container-end-goal-native-dev.md), V).
 - d2d probably becomes primary if it runs containerized better than Wine (user, 2026-10-30; [decisions.md](../../decisions.md), V).
-- The original game stays the ACCEPTANCE target: d2d results are not acceptance results ([spec backend-contract](../../../openspec/specs/backend-contract/spec.md), V).
+- The original game stays the ACCEPTANCE target: d2d results are not acceptance results ([spec backend-contract](../../contracts/backend-contract.md), V).
 - Private fork on the forge (`<owner>/d2d-fork`), GPL-3.0, no d2d code in this repo, nothing distributed, nothing posted upstream without the user ([ADR 0003](../../adr/0003-d2d-fork-private-gpl.md), V).
 - Decision code stays backend-agnostic; Wine-specific container work is paused ([ADR 0002](../../adr/0002-d2d-primary-backend-gated.md), V).
 
@@ -49,7 +49,7 @@ Recommendation of the prebrief author (U, judgement): C now, written as an expli
 ## 5. NOT yet proven (the grill must treat each as a gate or an accepted risk)
 
 1. The bot loop end to end on d2d (goals, planner, town trips, recovery) for hours, not pieces.
-2. The replicated soak within the 20 % gate: same character, N seeds, compared with original-game soaks ([spec fidelity-gate](../../../openspec/specs/fidelity-gate/spec.md), [d2d-soak.md](../../d2d-soak.md); harness built, the real comparison not run) (U).
+2. The replicated soak within the 20 % gate: same character, N seeds, compared with original-game soaks ([spec fidelity-gate](../../contracts/fidelity-gate.md), [d2d-soak.md](../../d2d-soak.md); harness built, the real comparison not run) (U).
 3. Merc on d2d: free Rogue probed on d2d only; hire/revive/gear and the merc reader on the original not done.
 4. Act 2 and later: not run on either backend by the bot; d2d upstream says Act 5 is partial (S).
 5. Pricing and other original-game numbers: tome 450 is our fix, original rule unexplained ([d2d-gaps.md](../../d2d-gaps.md)); wake radius, hit recovery, drops/RNG against the original untested.
@@ -70,7 +70,7 @@ Recommendation of the prebrief author (U, judgement): C now, written as an expli
 2. Which fidelity gap is unacceptable for the bot's purpose (XP/h, deaths, drops, prices, timing)? Which can we live with if the bot only needs relative behaviour?
 3. Is the product the idle container that plays the REAL game's rules (so d2d is a substitute engine users never see) or a bot for the real Game.exe (d2d is only our lab)? That changes whether fidelity must be exact or good enough.
 4. Who reviews the GPL side and by when (before any container leaves the NAS or the repo goes public)? What is the plan if the answer is "nobody": stay private forever?
-5. Upstream relationship: PRs for the cast and price fixes (drafted, nothing posted, [d2dcast](../../../openspec/changes/d2dcast/proposal.md) and d2dprice cards)? Accept permanent fork divergence or rebase on every upstream release?
+5. Upstream relationship: PRs for the cast and price fixes (drafted, nothing posted, [d2dcast](../../archive/openspec-index.md#d2dcast) and d2dprice cards)? Accept permanent fork divergence or rebase on every upstream release?
 6. How much original-game confirmation is enough: every probe, a sample, or only the soak gate?
 7. Time and effort: is the user willing to pay for both backends for months (ADR 0002 consequence), and what is the date when one is dropped?
 

@@ -1,6 +1,6 @@
 # Soak judging and game recycle (agent SOAKFIX)
 
-> status: Game.exe judge and recycle; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md). Still the judge of the frozen path; the d2d replicated soak and gate v2 are docs/d2d-soak.md and openspec/specs/soak-gates.
+> status: Game.exe judge and recycle; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md). Still the judge of the frozen path; the d2d replicated soak and gate v2 are docs/d2d-soak.md and docs/contracts/soak-gates.md.
 
 Tags: V verified offline (tests named below), U unverified live.
 

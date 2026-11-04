@@ -30,6 +30,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/m2-roam"
+contracts: ["proposed/m2-roam"]
 ---
 
 ## Description

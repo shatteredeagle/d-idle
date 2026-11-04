@@ -41,36 +41,36 @@
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [armorhit](../../openspec/changes/armorhit/) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
-| [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
-| [fixbelt](../../openspec/changes/fixbelt/) | in-progress | fixbelt | `docs/fixbelt.md`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/area_ban_test.go`<br>`openspec/changes/fixbelt/**` | - |
-| [fixprogress](../../openspec/changes/fixprogress/) | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go`<br>`openspec/changes/fixprogress/**` | - |
-| [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
-| [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
-| [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
-| [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
-| [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
-| [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
+| [armorhit](../archive/openspec-index.md#armorhit) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
+| [d2d-container-soak](../archive/openspec-index.md#d2d-container-soak) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
+| [fixbelt](../archive/openspec-index.md#fixbelt) | in-progress | fixbelt | `docs/fixbelt.md`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/area_ban_test.go`<br>`openspec/changes/fixbelt/**` | - |
+| [fixprogress](../archive/openspec-index.md#fixprogress) | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go`<br>`openspec/changes/fixprogress/**` | - |
+| [ledgerkey](../archive/openspec-index.md#ledgerkey) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
+| [m1-liveproof](../archive/openspec-index.md#m1-liveproof) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
+| [m3-merc](../archive/openspec-index.md#m3-merc) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
+| [nexthit](../archive/openspec-index.md#nexthit) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
+| [skmiss](../archive/openspec-index.md#skmiss) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
+| [skresistfix](../archive/openspec-index.md#skresistfix) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
 
 ### Gates
-- spec [act1-campaign](../../openspec/specs/act1-campaign/spec.md): 9 requirements
-- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 42 requirements
-- spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
-- spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 9 requirements
-- spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
-- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
-- spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
-- spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 17 requirements
-- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
-- spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
-- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
-- spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
-- spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
-- spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
-- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 25 requirements
-- spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
-- spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
+- spec [act1-campaign](../contracts/act1-campaign.md): 9 requirements
+- spec [backend-contract](../contracts/backend-contract.md): 42 requirements
+- spec [bot-loop](../contracts/bot-loop.md): 6 requirements
+- spec [combat-loop](../contracts/combat-loop.md): 9 requirements
+- spec [d2d-farm](../contracts/d2d-farm.md): 8 requirements
+- spec [dashboard-pub](../contracts/dashboard-pub.md): 5 requirements
+- spec [death-rule](../contracts/death-rule.md): 8 requirements
+- spec [early-game-policy](../contracts/early-game-policy.md): 17 requirements
+- spec [fidelity-gate](../contracts/fidelity-gate.md): 17 requirements
+- spec [lab-rules](../contracts/lab-rules.md): 12 requirements
+- spec [licence-policy](../contracts/licence-policy.md): 7 requirements
+- spec [merc-policy](../contracts/merc-policy.md): 15 requirements
+- spec [process-hygiene](../contracts/process-hygiene.md): 9 requirements
+- spec [public-split](../contracts/public-split.md): 10 requirements
+- spec [replay](../contracts/replay.md): 7 requirements
+- spec [soak-gates](../contracts/soak-gates.md): 25 requirements
+- spec [town-basics](../contracts/town-basics.md): 23 requirements
+- spec [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0

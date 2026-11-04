@@ -124,7 +124,7 @@ Items 1 to 4 and 14 together turn Act 1 into a fully audited gate; item 3 plus 2
 
 ## 4. Proposed spec delta (text only; for the coordinator)
 
-Target spec: `openspec/specs/soak-gates/spec.md`. Not applied here.
+Target spec: `docs/contracts/soak-gates.md`. Not applied here.
 
 ```
 ## ADDED Requirements

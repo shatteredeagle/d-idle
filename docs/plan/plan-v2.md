@@ -5,7 +5,7 @@
 Inputs: docs/plan/code-reality.md (what the code really does), docs/sme/mercenary.md (guides + hireling data),
 the d2-sme proposals (feature-set verdict, plan proposal, merc gearing), docs/g1-log.md (14 G1 attempts),
 docs/sme/pace-tables.md and audit-bot-vs-human.md. Tags: V = read in code/data, S = guide, EXP = veteran judgment (d2-sme), U = unverified.
-Status: decisions in section 10 (2026-10-30); build status per item: [STATUS.md](STATUS.md). Sections 1 and 8, the death-rule text in sections 5 and 9 and the "NOT approved" line in section 10 are historical: the death rule was APPROVED by the user on 2026-10-30 and its final text is section 10.2 (also openspec/specs/death-rule/spec.md); numeric gates now live in openspec/specs/soak-gates/spec.md.
+Status: decisions in section 10 (2026-10-30); build status per item: [STATUS.md](STATUS.md). Sections 1 and 8, the death-rule text in sections 5 and 9 and the "NOT approved" line in section 10 are historical: the death rule was APPROVED by the user on 2026-10-30 and its final text is section 10.2 (also docs/contracts/death-rule.md); numeric gates now live in docs/contracts/soak-gates.md.
 
 ## 1. Where we really are (truth first)
 

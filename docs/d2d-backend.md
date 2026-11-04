@@ -1,6 +1,6 @@
 # d2d as the primary backend: adapter design (agent D2DADAPTER, 2026-10-30)
 
-> status: design doc, decided and built: d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md); the adapter is docs/d2d-bot.md and docs/d2d-wire.md, the gate is openspec/specs/fidelity-gate (20 % on four metrics, not "every row").
+> status: design doc, decided and built: d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md); the adapter is docs/d2d-bot.md and docs/d2d-wire.md, the gate is docs/contracts/fidelity-gate.md (20 % on four metrics, not "every row").
 
 Goal: decide how our Go bot talks to d2d (https://github.com/psi29a/d2decomped, GPL-3.0, native reimplementation of 1.14d,
 local control channel) and plan the work. Docs only; nothing here was run against a game, and nothing was sent upstream.

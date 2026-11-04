@@ -6,7 +6,7 @@ status: ready (SME-grilled, not yet user-grilled). Written 2026-10-30 for the in
 
 How does the bot handle mercenaries and when is it allowed into Act 2 (Monastery road, Andariel, Act 2 entry): free Rogue then Desert Mercenary with a revive economy, or play unmerc'd until a higher clvl, and what readiness bar (clvl, life, kit) opens Andariel and the Monastery?
 
-Existing record: [ADR 0006](../../adr/0006-free-rogue-merc.md) (take the free Rogue, never pay Kashya first, V), [merc-policy spec](../../../openspec/specs/merc-policy/spec.md), plan-v2 11.2 route guard. This grill confirms or changes the numbers in them.
+Existing record: [ADR 0006](../../adr/0006-free-rogue-merc.md) (take the free Rogue, never pay Kashya first, V), [merc-policy spec](../../contracts/merc-policy.md), plan-v2 11.2 route guard. This grill confirms or changes the numbers in them.
 
 ## 2. Already DECIDED (do not re-ask)
 

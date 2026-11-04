@@ -1,6 +1,6 @@
 # Gate 1 rerun (2026-11-01): NOT PASSED
 
-> status: current. One finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill), n=1 seed, not a statistical claim. Previous attempt: [../probes/postfix-soak2.md](../probes/postfix-soak2.md). Criteria: the Gate 1 requirements of openspec/specs/soak-gates/spec.md, minutes are virtual (game) minutes (decision 2026-11-01). Tags: V = counted from the log.
+> status: current. One finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill), n=1 seed, not a statistical claim. Previous attempt: [../probes/postfix-soak2.md](../probes/postfix-soak2.md). Criteria: the Gate 1 requirements of docs/contracts/soak-gates.md, minutes are virtual (game) minutes (decision 2026-11-01). Tags: V = counted from the log.
 
 ## Setup (V)
 - Binary: `bin/d2d.lab2-freezeresume` on the worker host, fork branch `lab2-freezeresume` `ee5e06d8ef99` (the fork stack rebuilt on upstream main 52362d52, so the merges #152 #153 #155 #156 #157 #158 are in; vetting in docs/forkrebase.md of agent/forkrebase: differentials 0, live drill legs PASS), file sha256 prefix c526394770f9.

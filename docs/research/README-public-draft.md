@@ -11,7 +11,7 @@ status page and stream) is called **d.idle**; it is parked until the bot plays w
 ## Status
 
 Early, honest, and measured rather than promised. Today a Sorceress levels through Normal Act 1 unattended for a couple of
-hours (deaths and experience per hour are the gates, see `openspec/specs/soak-gates/spec.md`); other classes ran only short
+hours (deaths and experience per hour are the gates, see `docs/contracts/soak-gates.md`); other classes ran only short
 smoke runs; Acts 2 to 5 and Nightmare/Hell exist partly or only as offline code. The current state is always in
 `docs/plan/STATUS.md`, the day-by-day notes in `CHANGELOG.md`, and the entry point for everything else is `docs/INDEX.md`.
 

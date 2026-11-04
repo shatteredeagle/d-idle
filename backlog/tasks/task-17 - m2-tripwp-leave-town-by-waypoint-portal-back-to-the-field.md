@@ -28,6 +28,7 @@ merge_hash: ""
 overlap: ""
 skip_specs: false
 source: "openspec/changes/m2-tripwp"
+contracts: ["proposed/m2-tripwp"]
 ---
 
 ## Description

@@ -1,11 +1,11 @@
 # Plan for card m3-andariel: the throwaway Andariel fight
 
-> status: plan, offline, nothing verified live. Tags: V = read in this tree or counted from a recorded log (file named), S = secondary (another doc), I = inference, U = unverified. Written for the user decision 2026-11-04 (option c of docs/andarielgate.md). Numbers with an owner (knobs, floors, gates) are cited, never owned here: docs/knobs.md, openspec/specs/merc-policy, soak-gates.
+> status: plan, offline, nothing verified live. Tags: V = read in this tree or counted from a recorded log (file named), S = secondary (another doc), I = inference, U = unverified. Written for the user decision 2026-11-04 (option c of docs/andarielgate.md). Numbers with an owner (knobs, floors, gates) are cited, never owned here: docs/knobs.md, docs/contracts/merc-policy.md, soak-gates.
 
 ## 1. What the fight must prove
 
 Quotes (V):
-- merc-policy, requirement "Andariel floor": "No unattended attempt before the throwaway fight of card m3-andariel has won once: `boss.andarielHold` 1 makes the campaign level instead, 0 lifts it." (openspec/specs/merc-policy/spec.md line 60). Same text in the knob description (internal/env/tuning_boss.go: "Set 0 after that win. Attended runs (bossrun) are not affected. ADR 0011 gate 3.").
+- merc-policy, requirement "Andariel floor": "No unattended attempt before the throwaway fight of card m3-andariel has won once: `boss.andarielHold` 1 makes the campaign level instead, 0 lifts it." (docs/contracts/merc-policy.md line 60). Same text in the knob description (internal/env/tuning_boss.go: "Set 0 after that win. Attended runs (bossrun) are not affected. ADR 0011 gate 3.").
 - Card gates (openspec/changes/m3-andariel/tasks.md): "3 of 3 fights at clvl boss.andarielMinLevel with the kit and a living Rogue: Andariel dead, character alive, antidote drunk on poison, `boss andariel` log lines with life minimum and potions used (raw in docs/probes/andariel)"; "1 fight at the same level without a merc reported (pass or fail, with the cause)"; `go test -p 1 ./internal/boss` including `TestAndarielFightOrder`.
 - Delta spec (openspec/changes/m3-andariel/specs/act1-campaign/spec.md): kit 6 healing, 2 antidotes, 3 mana (caster), tome with 2 or more charges; antidote within 2 s of poison; "open with Static Field to the Normal boss cap, keep range and retreat by portal at the chicken line"; a thin kit at the door starts no attempt and inserts a town trip.
 

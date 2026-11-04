@@ -1,6 +1,6 @@
 # Strategic review: plan, risk, verification debt, process (agent STRATEGY, 2026-10-29)
 
-> status: SUPERSEDED by docs/plan/plan-v2.md (sections 5, 10, 11) and openspec/specs/soak-gates/spec.md; the freeze text and the G1 criteria wording here are historical.
+> status: SUPERSEDED by docs/plan/plan-v2.md (sections 5, 10, 11) and docs/contracts/soak-gates.md; the freeze text and the G1 criteria wording here are historical.
 
 > **Superseded in part (DOCSYNC, 2026-10-30).** The plan and gates below were written 2026-10-29 before the planning session. Current authority: [plan/plan-v2.md](plan/plan-v2.md) (sections 2, 5, 10, 11), [decisions.md](decisions.md) and [plan/STATUS.md](plan/STATUS.md). What changed: (1) the **feature freeze** is lifted for M0-M9 only (user, plan-v2 s10); everything not on that list stays frozen. (2) **Death**: no fixed "deaths <= 2/h" any more; the death rule is plan-v2 s10.2 (streak, recovery share, rate; implemented as d2soak codes). (3) **G2** is a stability + economy soak, not a progression soak (plan-v2 s5). (4) The **Andariel hold** is the knob `boss.andarielMinLevel` (default 15), temporarily set to 22 on running attempts (plan-v2 s11) and gated by the Monastery route guard (needs a merc or clvl 20, s11.2). (5) Gates are now split into stability gates and soft progression gates (plan-v2 s5). The G1 attempt history is in [g1-log.md](g1-log.md). The text below is kept as history; statements marked "(stale)" are out of date.
 

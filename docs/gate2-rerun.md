@@ -21,7 +21,7 @@ All V by `git log origin/main` (merge commits). Check each is an ancestor of the
 | specdelta (judge) | 4c99d0b9 | belt window counts only when pack plus stash gold reaches 30; judge code and tests |
 | hirefix | 94b7a627 | merc seen on d2d (dead merc, ids, revive quote) so hire / alive / revive can be confirmed |
 
-Interim Andariel rule (V, openspec/specs/soak-gates/spec.md, "Gate 2 and Gate 3 meaning"): while `boss.andarielHold` is on,
+Interim Andariel rule (V, docs/contracts/soak-gates.md, "Gate 2 and Gate 3 meaning"): while `boss.andarielHold` is on,
 reaching the gate meets the criterion. The ops judge must be the build that implements the "Held with merc alive, floor
 reached" scenario (heldlog made the line meetable). U: whether the ops-side judge change has landed; ask before the run.
 Not merged (U): the Act 1 `milestone name= word= clvl= virtual=` line and the act1check section (proposal only, spec
