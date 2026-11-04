@@ -51,3 +51,4 @@ allow_merges:
   - b59f1a9   # boarditems: merged without a card (merge.sh --card none)
   - 061c391   # boardsync4: merged without a card (merge.sh --card none)
   - 31e3864   # boardtitle: merged without a card (merge.sh --card none)
+  - 0bb4156   # esverify: merged without a card (merge.sh --card none)
