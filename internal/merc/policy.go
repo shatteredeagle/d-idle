@@ -218,14 +218,24 @@ func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
 	case !c.HaveTP || !c.HavePotions:
 		return no(ReasonKit), price
 	}
-	mult, why := c.Knobs.ReviveGoldMult, ReasonGold
+	why := ReasonGold
 	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
-		mult, why = c.Knobs.StopGoldMult, ReasonStopped
+		why = ReasonStopped
 	}
-	if c.Gold < c.need(price, mult) {
+	if c.Gold < ReviveNeed(c, price) {
 		return no(why), price
 	}
 	return yes(), price
+}
+
+// ReviveNeed is the bar ShouldRevive tests the purse against: price x the revive multiple (the stop multiple after
+// too many deaths) plus the kit reserve. The wiring logs it as need=.
+func ReviveNeed(c Ctx, price int) int {
+	mult := c.Knobs.ReviveGoldMult
+	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
+		mult = c.Knobs.StopGoldMult
+	}
+	return c.need(price, mult)
 }
 
 // MercDied is the field signal: the merc was alive and is now dead while the player is outside town. Leave the area

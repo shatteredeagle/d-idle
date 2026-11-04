@@ -411,14 +411,14 @@ func TestHireStepPoorKeepsRogueAndVisitOpen(t *testing.T) {
 	w, buf, _ := testWire(t, rd, nil)
 	h := &fakeHirer{rows: desertRows, paid: 400}
 	w.hirer = h
-	// price 400 + 150% of the 310 kit = 865
-	if got := w.HireStep(context.Background(), lutSnap(864)); !strings.Contains(got, "gold") || len(h.hired) != 0 || len(h.stripped) != 0 {
+	// price 400 + 100% of the 310 kit = 710 (reserve was 150%, 865; card mercrevive)
+	if got := w.HireStep(context.Background(), lutSnap(709)); !strings.Contains(got, "gold") || len(h.hired) != 0 || len(h.stripped) != 0 {
 		t.Fatalf("poor: %q hired %v stripped %v", got, h.hired, h.stripped)
 	}
 	if h.closed != 1 {
 		t.Error("window left open")
 	}
-	if got := w.HireStep(context.Background(), lutSnap(865)); got != "merc hired" {
+	if got := w.HireStep(context.Background(), lutSnap(710)); got != "merc hired" {
 		t.Fatalf("affordable later: %q\n%s", got, buf)
 	}
 	if n := strings.Count(buf.String(), "merc: hire window row="); n != 3 {
@@ -499,14 +499,14 @@ func TestGoldFarmFollowsMerc(t *testing.T) {
 	if !w.GoldFarm(field(300, 11)) {
 		t.Error("dead merc and short gold must farm")
 	}
-	if !strings.Contains(buf.String(), "merc: gold farm on need=1215 gold=300 clvl=11") {
+	if !strings.Contains(buf.String(), "merc: gold farm on need=1060 gold=300 clvl=11") {
 		t.Errorf("log:\n%s", buf)
 	}
 	if w.GoldFarm(field(5000, 11)) {
 		t.Error("rich enough: no farm")
 	}
-	if w.GoldFarm(field(300, 16)) {
-		t.Error("clvl 16 is past the cap")
+	if w.GoldFarm(field(300, 18)) { // cap 16 -> 18, card mercrevive
+		t.Error("clvl 18 is past the cap")
 	}
 	rd.set(merc.MercState{Known: true, Owned: true, Alive: true})
 	w.curAt = time.Time{}
