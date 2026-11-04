@@ -3,6 +3,8 @@
 ## Purpose
 What a fresh character does from clvl 1 to about 12: take drops, Den of Evil first, no armor rebuy loops, a cap on rejuvenation potions. Source: docs/earlygame.md (audit, offline V), docs/inventory.md, docs/beltfill.md, docs/recovery.md, plan-v2 sections 10.1 and 11; merges earlygame 4553bae, earlyfix2 a7de502, invrejuv 40cb988, rejuvuse aec4ca1.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: m2-roam (Leave an empty area), m2-tripwp (Leave town by waypoint)
+
 ## Requirements
 
 ### Requirement: Den of Evil first
