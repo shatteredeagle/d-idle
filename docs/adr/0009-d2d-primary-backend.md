@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, amended by 0015 (items 1 and 5: v1 product, retirement at container soak)
 date: 2026-10-30
 decision-makers: user (grill 0001), grill session
 supersedes: 0002

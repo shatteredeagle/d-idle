@@ -125,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
-- 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
-- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
-- e4ffa51b 11-04 10:28 `merge origin/main into palprep` (palprep)
-- f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
-- 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
-- 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
-- bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
-- 902f087b 11-04 10:05 `Merge agent/rtleave: rtleave: Fighter.Leave wired in d2drill so RT.leave runs (offline tests; live run pending)` (rtleave)
+- b870d079 11-04 11:42 `Merge agent/noareacards2: noareacards2: no-area card set rewritten from the SME review (farmfallback first), design only` (noareacards2)
+- a769ffa8 11-04 11:41 `Merge branch 'main' into noareacards2` (-)
+- ab438589 11-04 11:38 `Merge agent/prbopen2: prbopen2: posted log for upstream PR #195 (PALSKILL D2/D3)` (prbopen2)
+- 80edfc8f 11-04 11:37 `Merge branch 'main' into prbopen2` (-)
+- 29b4f8aa 11-04 11:34 `Merge agent/cardtriage: cardtriage: triage of the 36 open cards (keep 12, close 12, park 5, drop 7) and ADR candidates, docs only` (cardtriage)
+- dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
+- 419a0752 11-04 11:20 `Merge agent/palprep3: palprep3: PALSKILL D2/D3 r3 (rebased on upstream 7591a92e, verifier caveats applied, oracle 0 differ, body r3)` (palprep3)
+- 16c2000f 11-04 11:19 `merge origin/main into palprep3` (palprep3)
+- 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
+- 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
 <!-- statusgen:end -->

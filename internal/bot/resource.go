@@ -67,7 +67,7 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 	// BELTFIX5: with no healing potion anywhere the town visit withdraws the stash gold for the kit (Town.withdraw), so
 	// every purse test of the policy (poor, futile, trip floor, recovery) sees purse plus bank. Gate 1 20261103-0338:
 	// 6 gold in the pack, 1418 in the stash, 7 virtual minutes without a potion.
-	if in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV == 0 {
+	if healingOf(in) == 0 {
 		in.Gold += p.StashGold
 	}
 	return in
@@ -84,6 +84,37 @@ const idleTripGold = 10
 // noteTripEnd records the gold a finished trip left on the basis of the policy's Gold (codefix F2): the stash counts
 // while no healing potion is carried, so a visit that could not turn it into a potion is futile the next time too.
 func (r *Runner) noteTripEnd(s *d2.Snapshot) { r.noteTripGold(r.resInput(s).Gold) }
+
+// noteTownFutile sets the in-town latch (codefix67 F7) after a finished trip that left the character in town with no
+// healing potion and no more gold on the policy basis than the trip began with: another round would repeat the same
+// shop, stash and withdraw walks. Gold growth, a potion, or leaving town lifts it (townLatched).
+func (r *Runner) noteTownFutile(t *trip, s *d2.Snapshot) {
+	in := r.resInput(s)
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	r.ob.townLatch = s.Player.InTown() && in.Gold < t.startBasis+idleTripGold && healingOf(in) == 0
+	r.ob.townLatchGold = in.Gold
+}
+
+// healingOf is the one healing count of the bot side: belt and pack, healing and rejuvenation.
+func healingOf(in resource.Input) int {
+	return in.Belt.HP + in.Belt.RV + in.Belt.PackHP + in.Belt.PackRV
+}
+
+// townLatched reports whether the latch holds now; it clears itself outside town, with a healing potion, or after gold growth.
+func (r *Runner) townLatched(s *d2.Snapshot) bool {
+	in := r.resInput(s)
+	r.obMu.Lock()
+	defer r.obMu.Unlock()
+	if !r.ob.townLatch {
+		return false
+	}
+	if !s.Player.InTown() || healingOf(in) > 0 || in.Gold >= r.ob.townLatchGold+idleTripGold {
+		r.ob.townLatch = false
+		return false
+	}
+	return true
+}
 
 // noteTripGold remembers the gold a finished chore left, so a trip that could not fix a need is not repeated until
 // gold has grown (TownTripTrigger.Futile).
