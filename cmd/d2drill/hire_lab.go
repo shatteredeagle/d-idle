@@ -11,14 +11,10 @@ import (
 	"d2lod-bot/internal/drill"
 )
 
-// act1HireCode is the dump code of the Act 1 hireling class (d2.MercClasses[0], the Rogue Scout; the code RG is V
-// live in docs/merclive.md). The d2dsrc table is private, so the pairing is repeated here for the one class.
-const act1HireCode = "RG"
-
-// PaidHire (drill.HireLab): walk to Kashya, open her menu, read the price of the "hire" line and click it when the
-// purse covers it. U: whether the menu line (or the window it opens) carries a parseable price, and whether the first
-// row is clickable by line text; d2d has no hire window reader (d2dmerc.ErrNoOffers). A missing quote ends in an
-// error, never a guessed price (docs/merchire.md).
+// PaidHire (drill.HireLab): walk to Kashya, open her menu, get to the hire line or window row that carries the
+// price (through "talk" when the first menu has no hire line, docs/hirefixlive.md) and click it when the purse
+// covers it. U: whether the price is parseable there; d2d has no hire window reader (d2dmerc.ErrNoOffers). A missing
+// quote ends in an error, never a guessed price (docs/merchire.md).
 func (l *lab) PaidHire(ctx context.Context, r *drill.Run) (drill.HireInfo, error) {
 	var info drill.HireInfo
 	ai := l.ApproachKashya(ctx, r, true)
@@ -47,18 +43,64 @@ func (l *lab) PaidHire(ctx context.Context, r *drill.Run) (drill.HireInfo, error
 		return info, err
 	}
 	defer func() { _ = l.CloseAll(ctx) }()
-	line, ok := d2dctl.FindLine(lines, "hire")
+	return hireFlow(ctx, l.be.Client, lines, st.Gold, 400*time.Millisecond)
+}
+
+// menuClient is the part of d2dctl.Client the hire flow needs (a scripted fake stands in for it in the tests).
+type menuClient interface {
+	Menu(ctx context.Context) (d2dctl.List[d2dctl.MenuLine], error)
+	PickMenuLine(ctx context.Context, text string) error
+}
+
+// hireLine finds the line that carries the quote: a "hire" line or a window row with "cost" in it.
+func hireLine(lines []d2dctl.MenuLine) (d2dctl.MenuLine, bool) {
+	if l, ok := d2dctl.FindLine(lines, "hire"); ok {
+		return l, true
+	}
+	return d2dctl.FindLine(lines, "cost")
+}
+
+// hireFlow follows the two-step menu: Kashya's dialog is header, "talk", "cancel" (V live, docs/livedrills2.md). A
+// hire line in the first menu is taken at once; otherwise "talk" is clicked and the menu polled for a hire line or a
+// priced row (U: that the hire window sits behind "talk"). The row is clicked by its own text. WantCode stays empty:
+// the class code comes from the dump after the hire, not from a literal here.
+func hireFlow(ctx context.Context, c menuClient, lines []d2dctl.MenuLine, gold int, gap time.Duration) (drill.HireInfo, error) {
+	var info drill.HireInfo
+	line, ok := hireLine(lines)
 	if !ok {
-		return info, fmt.Errorf("no hire line in Kashya's menu: %v", lines)
+		if _, has := d2dctl.FindLine(lines, "talk"); !has {
+			return info, fmt.Errorf("no hire or talk line in Kashya's menu: %v", lines)
+		}
+		if err := c.PickMenuLine(ctx, "talk"); err != nil {
+			return info, err
+		}
+		seen := lines
+		for i := 0; i < 8 && !ok; i++ {
+			if err := d2dctl.Pause(ctx, gap); err != nil {
+				return info, err
+			}
+			m, err := c.Menu(ctx)
+			if err != nil {
+				return info, err
+			}
+			if len(m.Items) > 0 {
+				seen = m.Items
+			}
+			line, ok = hireLine(m.Items)
+		}
+		if !ok {
+			return info, fmt.Errorf("no hire line after talk; last menu: %v", seen)
+		}
 	}
 	q, ok := d2dmerc.ParseQuote(line.Text)
 	if !ok {
+		_ = c.PickMenuLine(ctx, "cancel")
 		return info, fmt.Errorf("no price in the hire line %q (U: the quote may only be in the window)", line.Text)
 	}
-	info.Quote, info.Row, info.WantCode = q, line.Text, act1HireCode
-	if st.Gold < q {
-		_ = l.be.Client.PickMenuLine(ctx, "cancel")
-		return info, fmt.Errorf("%w: %d gold, quote %d", drill.ErrHireCantAfford, st.Gold, q)
+	info.Quote, info.Row = q, line.Text
+	if gold < q {
+		_ = c.PickMenuLine(ctx, "cancel")
+		return info, fmt.Errorf("%w: %d gold, quote %d", drill.ErrHireCantAfford, gold, q)
 	}
-	return info, l.be.Client.PickMenuLine(ctx, "hire")
+	return info, c.PickMenuLine(ctx, line.Text)
 }

@@ -1,0 +1,5 @@
+DRILL D8.h P18 FAIL hire: no hire line in Kashya's menu: [{Kashya 400 115 Kashya 400 115} {talk 400 133 talk 400 133} {cancel 400 148 cancel 400 148}] | intended: merc present with the class code of the hired row, gold down by the quote read from the window | observed: quote 0 row ""; gold 5000 -> 5000; merc present=false dead=false code= life=[0,0] -> present=false dead=false code= life=[0,0]; err no hire line in Kashya's menu: [{Kashya	400	115 Kashya 400 115} {talk	400	133 talk 400 133} {cancel	400	148 cancel 400 148}]
+
+drill     prim  verdict  det  reason
+D8.h      P18   FAIL     -    hire: no hire line in Kashya's menu: [{Kashya 400 115 Kashya 400 115} {talk 400 133 talk 400 133} {cancel 400 148 cancel 400 148}]
+cheat verbs used (each ledgered with a reason): debug goto 1, debug stat 14 5000

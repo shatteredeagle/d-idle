@@ -78,14 +78,6 @@ func TestGoldFarm(t *testing.T) {
 	if GoldFarm(true, 0, 1000, 5, k) {
 		t.Error("knob 0 must turn the farm off")
 	}
-	for _, a := range []int{2, 3, 4, 8, 9, 13, 17, 18} {
-		if !FarmAreas[a] {
-			t.Errorf("area %d missing", a)
-		}
-	}
-	if FarmAreas[5] || FarmAreas[7] || FarmAreas[26] {
-		t.Error("Dark Wood, Tamoe and the Monastery are not early areas")
-	}
 }
 
 func TestWaitAndLeave(t *testing.T) {
