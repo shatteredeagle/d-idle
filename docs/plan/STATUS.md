@@ -41,7 +41,6 @@
 ### Active changes
 | change | status | agent | owns | exclusive |
 |---|---|---|---|---|
-| [andarielsme](../../openspec/changes/andarielsme/) | in-progress | andarielsme | `docs/andarielsme.md`<br>`openspec/changes/andarielsme/**` | - |
 | [armorhit](../../openspec/changes/armorhit/) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
 | [buildv3](../../openspec/changes/buildv3/) | in-progress | buildv3 | `internal/plandata/build-fallback-lightning-v3.json`<br>`internal/plandata/build-fallback-lightning-v2.json`<br>`docs/plan/data/build-fallback-lightning-v3.json`<br>`docs/plan/data/build-fallback-lightning-v2.json`<br>`internal/plandata/plandata_test.go`<br>`internal/leveler/build.go`<br>`internal/leveler/buildv3_test.go`<br>`internal/combat/classdata/profiles.json`<br>`internal/combat/class_test.go`<br>`internal/combat/pure_test.go`<br>`cmd/d2bot/class.go`<br>`cmd/d2bot/class_test.go`<br>`docs/buildv3.md`<br>`openspec/changes/buildv3/**` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
@@ -84,7 +83,6 @@
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
 - spec [town-basics](../../openspec/specs/town-basics/spec.md): 17 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
-- change andarielsme: go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
 - change buildv3: gofmt, go vet, go test -p 1 per touched package, whole repo on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
 - a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
 - 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
 - 87972cfa 11-04 09:04 `Merge agent/prbopen: prbopen: log of the batch B upstream PR #189 (posted lines)` (prbopen)
@@ -136,5 +135,4 @@
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
 - c0b2638a 11-04 08:56 `merge origin/main into andarielplan` (andarielplan)
 - ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
-- 1f71fb00 11-04 06:33 `Merge agent/gate2run-s13-20261103-2211-g2v: Gate 2 s13 record: NOT PASSED (258 vh, clvl 16): save-point stall from about 01:20 EST (XP/h, no-progress, belt, invariants, no-gain, Andariel, merc)` (gate2run-s13-20261103-2211-g2v)
 <!-- statusgen:end -->
