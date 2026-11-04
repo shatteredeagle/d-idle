@@ -294,3 +294,4 @@ Not re-run: an MSVC build, the full ctest, the full CI tidy selection. No commen
 - posted: 2026-11-04 PR opened: https://github.com/psi29a/d2decomped/pull/195 (8 files, 2 commits; title "Fidelity fixes against game.exe 1.14d: Blessed Hammer's Concentration share and undead / demon bonus"). State OPEN, head 1f91a216 as checked with gh pr view. Body from pr-palskill-body-r3.md without the internal header, ends with the bare `Agent: Claude Code` line. CI checks and CodeRabbit started (IN_PROGRESS right after opening).
 - checks: the ones in the body (pr_guard, Release build, tests) were run before opening on this head and base; nothing re-run after opening.
 - nothing else posted: no comments, no reviewer requests, no labels, no second PR.
+- merged: 2026-11-04 15:32 EST (20:32 UTC) by the maintainer, as #195 (merge commit 2d051d77d on upstream main, checked with `gh pr view 195 --repo psi29a/d2decomped --json mergedAt,mergeCommit`).
