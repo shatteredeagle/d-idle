@@ -39,3 +39,4 @@ allow_merges:
   - 32350aa   # heldlog: merged without a card (merge.sh --card none)
   - 977fe7e   # specapplyb: merged without a card (merge.sh --card none)
   - d0aed67   # specapplya: merged without a card (merge.sh --card none)
+  - e185de4   # adramend: merged without a card (merge.sh --card none)
