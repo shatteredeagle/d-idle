@@ -21,7 +21,7 @@ A fresh Normal character SHALL clear the Den of Evil (skill point spent), kill B
 - **THEN** the claim step retries and the run records the failure
 
 #### Scenario: Forgotten Tower blocked by the guard
-- **WHEN** the route guard blocks the Tower and Cain is not done
+- **WHEN** the route guard blocks the Forgotten Tower and Cain is not done
 - **THEN** the campaign still proceeds to Andariel when the floor and kit hold, and the skipped quests are recorded skipped, never done
 
 ### Requirement: Quest evidence on d2d
@@ -94,7 +94,7 @@ The record SHALL hold these rows. Decided, not verified live.
 |---|---|---|---|
 | 8 | R | Milestone times in virtual hours (Andariel dead, Act 2 entered; ADR 0015 item 9) | T3 |
 | 10 | I | `boss: andariel gate pass clvl=N kit=ok` at or above the floor | T3 |
-| 11 | I | Cain, Tower, Tools each Done or skipped | T2 |
+| 11 | I | Cain, Forgotten Tower, Tools each Done or skipped | T2 |
 | 12 | I | Merc alive 70 percent of field time after the claim | T3 |
 | 13 | I | Lut Gholein waypoint active; Act 2 movie handled (U on game.exe) | T2 |
 
@@ -110,7 +110,7 @@ The Act 1 cleared record SHALL NOT count any ledger entry for the character, a d
 - **THEN** the run is not counted
 
 ### Requirement: Proxy and skip evidence does not count for the Act 1 record
-The Act 1 cleared record SHALL NOT count proxy evidence alone (the proxyStage Andariel Done from Act 2 or later labelled EvMemory, a kill event, an item in the pack, a Warriv menu row), an area change by waypoint or portal without word 6, Cain, Tower or Tools skipped but listed cleared, or bit 12 differences read as changes. Decided, not verified live. Source: user decision 2026-11-04 (d2-sme MUST NOT COUNT). Reconciled 2026-11-04 (source: decision 8).
+The Act 1 cleared record SHALL NOT count proxy evidence alone (the proxyStage Andariel Done from Act 2 or later labelled EvMemory, a kill event, an item in the pack, a Warriv menu row), an area change by waypoint or portal without word 6, Cain, the Forgotten Tower or Tools skipped but listed cleared, or bit 12 differences read as changes. Decided, not verified live. Source: user decision 2026-11-04 (d2-sme MUST NOT COUNT). Reconciled 2026-11-04 (source: decision 8).
 
 #### Scenario: Area change without the word
 - **WHEN** the character reaches area 40 by portal and word 6 is not Done

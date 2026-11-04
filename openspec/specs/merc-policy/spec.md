@@ -74,7 +74,7 @@ Direction (decided 2026-11-04, not implemented): each guarded zone SHALL carry i
 - **THEN** the zone stays open and the gold lost to revive costs, not a lower floor, feeds back
 
 ### Requirement: Route guard starting numbers (direction, U)
-The plan data SHALL start at (U, SME design, tuned only by the death loop): road front (areas 7, 26, 27) clvl 13, road deep (Barracks to Catacombs) clvl 15, Tower clvl 16 flat, Andariel clvl 18 flat with max life 250 and antidote potions. Not implemented: the code keeps the interim numbers. Source: user decision 2026-11-04. Reconciled 2026-11-04 (source: decision 5).
+The plan data SHALL start at (U, SME design, tuned only by the death loop): road front (areas 7, 26, 27) clvl 13, road deep (Barracks to Catacombs) clvl 15, Forgotten Tower clvl 16 flat, Andariel clvl 18 flat with max life 250 and antidote potions. Not implemented: the code keeps the interim numbers. Source: user decision 2026-11-04. Reconciled 2026-11-04 (source: decision 5).
 
 #### Scenario: Code unchanged
 - **WHEN** no code card for the direction has been approved
@@ -178,7 +178,7 @@ Once the readiness model is enabled the route guard SHALL allow an area only whe
 
 #### Scenario: Floor safety net
 - **WHEN** the model rates a clvl 12 character ready for the Forgotten Tower with no merc and the floor is 16
-- **THEN** the guard still blocks the Tower because the model may go at most 2 clvl below the floor, so 14 is the lowest allowed level
+- **THEN** the guard still blocks the Forgotten Tower because the model may go at most 2 clvl below the floor, so 14 is the lowest allowed level
 
 #### Scenario: Model disabled
 - **WHEN** the enable knob is 0
