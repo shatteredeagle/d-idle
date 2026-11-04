@@ -2,7 +2,7 @@
 
 ```yaml
 change: retreatdrill
-status: in-progress
+status: archived
 agent: retreatdrill
 branch: agent/retreatdrill
 worktree: ~/code/d2lod-wt/retreatdrill
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "group RT (RT.drink, RT.portal, RT.leave) designed and unit-tested offline; RT.leave Blocked until Fighter.Leave is wired in d2drill; docs/retreatdrill.md has the command"
+result: "RT.drink and RT.portal ready for a live run; RT.leave blocked until Leave is wired"
 live: "not verified live"
+merge: 789ba3f
 ```
 
 - [x] work done
