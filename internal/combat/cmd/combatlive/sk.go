@@ -15,6 +15,12 @@ import (
 	"d2lod-bot/internal/input"
 )
 
+// The client-side life stat of a monster is a 0..128 percent scale (VERIFIED LIVE 2026-11-03, i2, see
+// docs/probes/drills/2026-11-03-SK-live.txt), so life deltas are not damage points. No exact (server-side) monster life
+// read exists in the repo (UNVERIFIED that one can be built, docs/sksmoke-tools.md). This command therefore uses the
+// "bolts to kill" fallback: cast at one monster until it dies, count the casts that hurt it, and bound the per-hit
+// damage with the monster's max life from monstats. That is an ESTIMATE, not a measurement of single hits.
+
 // skTable is the expected damage per hit in points for the SK drill (docs/probes/drills/2026-11-03-SK-design.txt,
 // computed by hand from skills.txt, S: not checked against the game). Charged Bolt rows are per bolt.
 var skTable = map[string]map[int][2]float64{
@@ -22,10 +28,7 @@ var skTable = map[string]map[int][2]float64{
 	"charged bolt": {1: {2, 4}, 4: {3.5, 5.5}, 8: {5.5, 7.5}, 13: {8, 10}, 20: {13.5, 15.5}},
 }
 
-const (
-	skTolerance = 0.10 // PASS: mean within 10 percent of the table mean (U, proposed in the design file)
-	skSlack     = 0.5  // each hit inside [min-0.5, max+0.5] (life truncation)
-)
+const skMinKills = 10 // kills needed for a verdict
 
 // skOpts are the flags of `combatlive sk`.
 type skOpts struct {
@@ -33,32 +36,38 @@ type skOpts struct {
 	Key     string        // hotkey the skill is bound to (bound beforehand: this command never opens the skill popup)
 	Class   int           // monster class id to hit; 0 = nearest alive monster
 	Level   int           // skill level of the character, selects the table row
-	Hits    int           // stop after this many measured hits
+	Kills   int           // stop after this many usable kills
 	Casts   int           // hard cap on casts
 	Wait    time.Duration // time between cast and the second life read
 	Timeout time.Duration
 }
 
+// SKKill is one monster killed by repeated casts.
+type SKKill struct {
+	Class   int     `json:"class"`
+	ID      int     `json:"id"`
+	Hits    int     `json:"hits"` // casts that lowered its life, the killing cast included
+	MaxLife float64 `json:"maxLife"`
+	Lo      float64 `json:"lo"` // maxLife/Hits: lower bound of the mean damage per hit (the last hit overkills)
+	Hi      float64 `json:"hi"` // maxLife/(Hits-1): upper bound of the mean of the non-killing hits (Hits >= 2)
+}
+
 // SKResult is the one JSON line printed.
 type SKResult struct {
-	Skill    string    `json:"skill"`
-	Level    int       `json:"level"`
-	Hits     int       `json:"hits"`
-	Casts    int       `json:"casts"`
-	Kills    int       `json:"kills"`  // casts that killed the target (not measured)
-	Misses   int       `json:"misses"` // casts with no life change
-	Mean     float64   `json:"mean"`   // points
-	Min      float64   `json:"min"`    // points
-	Max      float64   `json:"max"`    // points
-	ExpMin   float64   `json:"expMin"` // table, 0 when the skill/level is not in the table
-	ExpMax   float64   `json:"expMax"`
-	ExpMean  float64   `json:"expMean"`
-	MeanDev  float64   `json:"meanDev"`  // (mean-expMean)/expMean
-	OutRange int       `json:"outRange"` // hits outside [expMin-0.5, expMax+0.5]
-	Pass     *bool     `json:"pass,omitempty"`
-	Samples  []float64 `json:"samples"`
-	Note     string    `json:"note,omitempty"`
-	Trace    []string  `json:"trace,omitempty"` // first raw readings: class id before after
+	Skill   string   `json:"skill"`
+	Level   int      `json:"level"`
+	Casts   int      `json:"casts"`
+	Misses  int      `json:"misses"`  // casts with no life change
+	OneShot int      `json:"oneShot"` // kills in one hit: only prove damage >= max life, not used
+	Used    []SKKill `json:"kills"`
+	MeanLo  float64  `json:"meanLo"` // mean of Lo over the used kills (points)
+	MeanHi  float64  `json:"meanHi"` // mean of Hi over the used kills (points)
+	ExpMin  float64  `json:"expMin"` // table, 0 when the skill/level is not in the table
+	ExpMax  float64  `json:"expMax"`
+	ExpMean float64  `json:"expMean"`
+	Pass    *bool    `json:"pass,omitempty"` // table mean inside [MeanLo, MeanHi]; an estimate, see Note
+	Note    string   `json:"note,omitempty"`
+	Trace   []string `json:"trace,omitempty"` // first raw readings: class id before after
 }
 
 // skRig is what the sampler needs: reads only, plus one input call. Nothing here writes game memory.
@@ -67,11 +76,19 @@ type skRig struct {
 	In    input.Controller
 	Sleep func(time.Duration)
 	Now   func() time.Time
+	// MaxLife gives the monstats max life range of a class for a difficulty; ok false when unknown.
+	MaxLife func(class, diff int) (lo, hi int, ok bool)
+	Log     io.Writer // one progress line per cast; nil for none
+}
+
+func (g skRig) logf(format string, a ...any) {
+	if g.Log != nil {
+		fmt.Fprintf(g.Log, format+"\n", a...)
+	}
 }
 
 // life returns the unit's stat 6 divided by 256. VERIFIED LIVE 2026-11-03 (i2): for client-side monsters this is a
-// PERCENT scale (full health reads 128, never real points), so the result is NOT damage in points; see
-// docs/probes/drills/2026-11-03-SK-live.txt.
+// PERCENT scale (full health reads 128), so it only tells hurt / not hurt / dead, never points.
 func (g skRig) life(u d2.Unit) (float64, error) {
 	st, err := g.R.UnitStats(u.Addr)
 	if err != nil {
@@ -106,16 +123,21 @@ func (g skRig) target(class int) (d2.Unit, bool, error) {
 	return best, found, nil
 }
 
-// sample casts at the target until o.Hits measured hits, o.Casts casts or the deadline.
+// sample casts at one monster at a time until it dies, until o.Kills usable kills, o.Casts casts or the deadline.
 func (g skRig) sample(ctx context.Context, o skOpts) (*SKResult, error) {
-	res := &SKResult{Skill: o.Skill, Level: o.Level, Samples: []float64{}}
+	res := &SKResult{Skill: o.Skill, Level: o.Level, Used: []SKKill{}}
 	if o.Key == "" {
 		return nil, errors.New("sk: --key is required (the hotkey the skill is bound to)")
 	}
+	pl, err := g.R.Player()
+	if err != nil {
+		return nil, err
+	}
+	diff := int(pl.Difficulty)
 	end := g.Now().Add(o.Timeout)
 	var cur d2.Unit
-	have := false
-	for len(res.Samples) < o.Hits && res.Casts < o.Casts && g.Now().Before(end) {
+	have, hits := false, 0
+	for len(res.Used) < o.Kills && res.Casts < o.Casts && g.Now().Before(end) {
 		if err := ctx.Err(); err != nil {
 			res.Note = err.Error()
 			break
@@ -129,7 +151,8 @@ func (g skRig) sample(ctx context.Context, o skOpts) (*SKResult, error) {
 				res.Note = "no live target"
 				break
 			}
-			cur, have = u, true
+			cur, have, hits = u, true, 0
+			g.logf("target class %d id %d", u.Class, u.ID)
 		}
 		before, err := g.life(cur)
 		if err != nil {
@@ -160,49 +183,69 @@ func (g skRig) sample(ctx context.Context, o skOpts) (*SKResult, error) {
 		if len(res.Trace) < 25 {
 			res.Trace = append(res.Trace, fmt.Sprintf("c%d id%d %.2f %.2f", cur.Class, cur.ID, before, after))
 		}
-		switch d := before - after; {
+		outcome := "hit"
+		switch {
 		case after <= 0:
-			res.Kills++ // overkill: the real hit is unknown, discard
+			outcome = "kill"
+			hits++
 			have = false
-		case d <= 0:
+			g.recordKill(res, cur, hits, diff)
+		case before-after <= 0:
+			outcome = "miss"
 			res.Misses++
 		default:
-			res.Samples = append(res.Samples, d)
+			hits++
 		}
+		g.logf("cast %d class %d id %d life %.2f -> %.2f %s hits %d kills %d", res.Casts, cur.Class, cur.ID, before, after, outcome, hits, len(res.Used))
 	}
 	res.finish()
 	return res, nil
 }
 
-// finish fills the statistics and the verdict against the table.
-func (r *SKResult) finish() {
-	r.Hits = len(r.Samples)
-	if r.Hits == 0 {
+// recordKill keeps a kill that has a known max life and at least two hits.
+func (g skRig) recordKill(res *SKResult, u d2.Unit, hits, diff int) {
+	if g.MaxLife == nil {
+		res.Note = strings.TrimSpace(res.Note + " no monster table: no max life")
 		return
 	}
-	var sum float64
-	r.Min, r.Max = r.Samples[0], r.Samples[0]
-	for _, s := range r.Samples {
-		sum += s
-		r.Min, r.Max = math.Min(r.Min, s), math.Max(r.Max, s)
+	lo, hi, ok := g.MaxLife(u.Class, diff)
+	if !ok || hi <= 0 {
+		res.Note = strings.TrimSpace(res.Note + fmt.Sprintf(" class %d not in monstats", u.Class))
+		return
 	}
-	r.Mean = sum / float64(r.Hits)
+	if hits < 2 {
+		res.OneShot++
+		return
+	}
+	// The rolled max life is unknown: the midpoint of the table range stands in for it (U).
+	ml := float64(lo+hi) / 2
+	if lo != hi && !strings.Contains(res.Note, "max life is the midpoint") {
+		res.Note = strings.TrimSpace(res.Note + " max life is the midpoint of the monstats range (U)")
+	}
+	res.Used = append(res.Used, SKKill{Class: u.Class, ID: int(u.ID), Hits: hits, MaxLife: ml, Lo: ml / float64(hits), Hi: ml / float64(hits-1)})
+}
+
+// finish fills the bounds and the verdict against the table.
+func (r *SKResult) finish() {
+	if len(r.Used) == 0 {
+		return
+	}
+	for _, k := range r.Used {
+		r.MeanLo += k.Lo
+		r.MeanHi += k.Hi
+	}
+	r.MeanLo /= float64(len(r.Used))
+	r.MeanHi /= float64(len(r.Used))
 	row, ok := skTable[strings.ToLower(r.Skill)][r.Level]
 	if !ok {
 		r.Note = strings.TrimSpace(r.Note + " no table row for this skill/level: no verdict")
 		return
 	}
 	r.ExpMin, r.ExpMax, r.ExpMean = row[0], row[1], (row[0]+row[1])/2
-	r.MeanDev = (r.Mean - r.ExpMean) / r.ExpMean
-	for _, s := range r.Samples {
-		if s < r.ExpMin-skSlack || s > r.ExpMax+skSlack {
-			r.OutRange++
-		}
-	}
-	pass := math.Abs(r.MeanDev) <= skTolerance && r.OutRange == 0 && r.Hits >= 40
+	pass := r.ExpMean >= r.MeanLo && r.ExpMean <= r.MeanHi && len(r.Used) >= skMinKills
 	r.Pass = &pass
-	if r.Hits < 40 {
-		r.Note = strings.TrimSpace(r.Note + " fewer than 40 hits")
+	if len(r.Used) < skMinKills {
+		r.Note = strings.TrimSpace(r.Note + " fewer than 10 usable kills")
 	}
 }
 
@@ -216,7 +259,7 @@ func parseSK(args []string, classOf func(string) (int, bool)) (skOpts, error) {
 	fs.StringVar(&o.Key, "key", "", "hotkey the skill is bound to, e.g. f1")
 	fs.StringVar(&mon, "monster", "", "monster name (monstats id), default nearest")
 	fs.IntVar(&o.Level, "level", 0, "skill level of the character (selects the expected row)")
-	fs.IntVar(&o.Hits, "hits", 40, "measured hits wanted")
+	fs.IntVar(&o.Kills, "kills", 10, "usable kills wanted")
 	fs.IntVar(&o.Casts, "casts", 200, "cast cap")
 	fs.DurationVar(&o.Wait, "wait", 900*time.Millisecond, "wait after the cast before the second life read")
 	fs.DurationVar(&o.Timeout, "timeout", 5*time.Minute, "overall limit")

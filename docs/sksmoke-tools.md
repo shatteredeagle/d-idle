@@ -20,27 +20,49 @@ Two offline-built tools for the live Fire Bolt / Charged Bolt damage drill in
 
 ## combatlive sk
 
-    tools/live.sh sk combatlive sk --skill "Fire Bolt" --key f1 --level 13 --monster zombie1 --hits 40
+    tools/live.sh sk combatlive sk --skill "Fire Bolt" --key f1 --level 13 --monster zombie1 --kills 10 --timeout 4m
 
 Flags: `--skill`, `--key` (required: the hotkey the skill is already bound to; the tool never opens the popup),
-`--level` (picks the table row), `--monster` (monstats id, default nearest alive monster), `--hits` (40),
-`--casts` (200), `--wait` (900ms between cast and second read), `--timeout` (5m).
+`--level` (picks the table row), `--monster` (monstats id, default nearest alive monster), `--kills` (10 usable),
+`--casts` (200), `--wait` (900ms between cast and second read), `--timeout` (5m; keep it below the job's max).
 
-- Per sample: read the target's life (stat 6, 256ths, via `UnitStats` of the monster unit), `CastAt(key, monster
-  position)`, wait, read again. Delta in points is one sample. Reads only; no game memory is written.
-- Kills (life <= 0 afterwards) are counted and discarded (overkill hides the hit); unchanged life counts as a miss.
-  Charged Bolt: the delta is the whole cast (several bolts), so compare against bolts x table (design file), not the
-  per-bolt row; the built-in per-bolt table gives no valid verdict for it (U).
-- Output: one JSON line: `hits mean min max casts kills misses expMin expMax expMean meanDev outRange pass samples note`.
-- `pass` = mean within 10 percent of the table mean, every hit inside [min-0.5, max+0.5], at least 40 hits. The
-  thresholds are the design file's proposal (U). The table in sk.go is hand computed from skills.txt (S).
-- Open questions (U): that `UnitStats` of a server-table monster returns real life (unit table is V; monster life
-  stat is V only for town NPCs, see d2.MonsterInfo); that 900 ms covers the missile flight; that CastAt (key plus
-  right click at the unit's subtile position) hits a moving target.
+### Why "bolts to kill" (VERIFIED LIVE 2026-11-03 for the scale; the rest U)
+
+- The monster life the reader sees (stat 6 of a unit from the table `internal/d2` reads) is a 0..128 PERCENT scale
+  (V live, docs/probes/drills/2026-11-03-SK-live.txt), so a per-hit delta is not damage in points.
+- Exact read searched offline: none exists. `d2.Unit.Life/MaxLife` are the same stat; `mem` has no monster-life
+  reader; the d2d `monsters` verb and `debug mon set` give exact hp points (V, docs/forkdbg.md) but only on the d2d
+  backend, not on game.exe, which the drill targets. docs/d2-1.14d-memory.md 2.5 calls the table internal/d2 reads
+  "server side" but notes (R) it is the client's table; docs/cheats.md shows the real server unit is a separate heap copy.
+- Therefore: cast at one monster until it dies (life from the percent read only tells hurt / unhurt / dead), count
+  the casts that hurt it (n, the killing cast included), take its max life ML from monstats (midpoint of MinHP..MaxHP of
+  the character's difficulty, U: the rolled value, champion/unique modifiers and area scaling are not known).
+- Bounds per kill: the sum of the n hits is >= ML (so mean >= ML/n, the last hit overkills) and the first n-1 hits
+  sum to < ML (so their mean < ML/(n-1)). Kills with n = 1 only prove damage >= ML and are counted (`oneShot`), not used.
+  This is an ESTIMATE bracket, not a measurement of single hits: no per-hit range or spread, regeneration ignored.
+  Use a weak monster whose HP is fixed or a narrow range, with skill levels where n is 3 or more.
+- Charged Bolt: several bolts per cast, so n counts casts, not bolts; the per-bolt table gives no valid verdict (U).
+- Output: progress lines on stderr (one per cast: target, life before/after, hit/miss/kill, counters), so a killed run
+  still leaves output; then one JSON line: `skill level casts misses oneShot kills[{class id hits maxLife lo hi}]
+  meanLo meanHi expMin expMax expMean pass note trace`.
+- `pass` (interim, U): at least 10 usable kills and the table mean inside [meanLo, meanHi]. The table in sk.go is hand
+  computed from skills.txt (S).
+- Open questions (U): that 900 ms covers the missile flight; that CastAt (key plus right click at the unit's subtile
+  position) hits a moving target.
+
+### Which read would make the original drill valid (not built, U)
+
+An exact life of one monster in points, before and after each cast. Two routes, both need work outside this card:
+1. game.exe: find the embedded game server's own monster UnitAny (type 1, same class and id as the client unit), the
+   way `serverPlayer` finds the player's (internal/cheat/memory.go: scan private rw mappings, match type, class, id,
+   stat list). Its stat 6 should be 24.8 points. A new scanner in internal/cheat or internal/mem plus one live check.
+2. d2d backend: `monsters` already gives hp `[cur,max]` in points (V). Run the drill on d2d with the existing SkillDebug
+   (`mon set` for a known life, resist 0): needs no fork change, but then it tests d2d's damage, not game.exe's.
+No d2d or fork change is needed for 1 or 2 as described (S); the fork is not edited here.
 
 ## Tests
 
-`go test -p 1 ./cmd/d2cheat ./cmd/combatlive` (synthetic save, d2/fake reader with a fake controller; no game).
+`go test -p 1 ./cmd/d2cheat ./internal/combat/cmd/combatlive` (synthetic save, d2/fake reader with a fake controller; no game).
 
 ## Live checklist (needs the main agent to start i2)
 

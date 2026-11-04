@@ -124,6 +124,6 @@ docs/probes/drills/2026-11-03-SK-design.txt  sksmoke  sksmoke-a1
 docs/sksmoke-tools.md  sksmoke  sksmoke-a1
 cmd/d2cheat/skilllevel.go  sksmoke  sksmoke-a1
 cmd/d2cheat/skilllevel_test.go  sksmoke  sksmoke-a1
-cmd/combatlive/sk.go  sksmoke  sksmoke-a1
-cmd/combatlive/sk_test.go  sksmoke  sksmoke-a1
+internal/combat/cmd/combatlive/sk.go  sksmoke  sksmoke-a1
+internal/combat/cmd/combatlive/sk_test.go  sksmoke  sksmoke-a1
 openspec/changes/sksmoke-a1/**  sksmoke  sksmoke-a1
