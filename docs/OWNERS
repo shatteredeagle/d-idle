@@ -120,3 +120,11 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
+docs/killcredit.md  killcredit  killcredit
+internal/d2dsoakstat/skills.go  killcredit  killcredit
+internal/d2dsoakstat/skills_test.go  killcredit  killcredit
+internal/combat/castlog.go  killcredit  killcredit
+internal/combat/castlog_test.go  killcredit  killcredit
+internal/combat/castfirst.go  killcredit  killcredit
+internal/combat/fight.go  killcredit  killcredit
+openspec/changes/killcredit/**  killcredit  killcredit

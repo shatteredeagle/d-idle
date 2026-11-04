@@ -51,7 +51,9 @@ func TestSkillsJSONAndText(t *testing.T) {
 const fieldsJSON = `{"msg":"build","branch":"agent/x","commit":"abc1234"}
 {"msg":"combat decision","act":"cast","skill":"Charged Bolt"}
 {"msg":"cast result","skill":"Charged Bolt","made":true,"cut":false,"cost":24,"ticks":13}
-{"msg":"cast result","skill":"Charged Bolt","made":false,"cut":true,"cost":24,"ticks":13}
+{"msg":"cast result","skill":"Charged Bolt","made":false,"cut":true,"cost":24,"ticks":13,"kills":1}
+{"msg":"combat decision","act":"cast","skill":"Fire Ball"}
+{"msg":"cast result","skill":"Fire Ball","made":true,"cut":false,"cost":10,"ticks":13,"targets":3}
 {"msg":"cast result","skill":"Chain Lightning","made":true,"cut":false,"cost":30,"ticks":19}
 {"msg":"combat kill","monster":"a","last_skill":"Charged Bolt"}
 {"msg":"combat buff","skill":"Frozen Armor"}
@@ -71,8 +73,8 @@ func TestSkillsLogFields(t *testing.T) {
 	s, _ := ParseSkills(strings.NewReader(fieldsJSON))
 	out := s.Text("a", "")
 	for _, want := range []string{"made effect 1 of 2", "cut before action frame 1 of 2", "mana spent 48 (24.0 per cast)",
-		"kills 1 (last skill of the kill)", "seconds absent ~60 (1 of 2 minute samples without armor, 1 unreadable)",
-		"agent/x abc1234", "Chain Lightning 19, Charged Bolt 13 (modelled"} {
+		"kills 1 credited (last skill of the kill; 1 inside the cast window)", "casts/kill 1.0", "hits/cast 3.0 monsters in the area (1 casts, not confirmed hits)", "hits/cast n/a (not logged), no missile-hit signal", "seconds absent ~60 (1 of 2 minute samples without armor, 1 unreadable)",
+		"agent/x abc1234", "Chain Lightning 19, Charged Bolt 13, Fire Ball 13 (modelled"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("missing %q in\n%s", want, out)
 		}

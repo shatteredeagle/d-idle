@@ -13,14 +13,17 @@ owns:
   - internal/d2dsoakstat/skills_test.go
   - internal/combat/castlog.go
   - internal/combat/castlog_test.go
+  - internal/combat/castfirst.go
+  - internal/combat/fight.go
+  - openspec/changes/killcredit/**
 exclusive: []
 gates:
   - "go test -p 1 ./internal/combat ./internal/d2dsoakstat ./cmd/d2dsoak passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0"
-result: ""
+result: "kills and targets per cast logged, report prints both; missile hits stay n/a (docs/killcredit.md); offline tests only"
 live: "not verified live"
 ```
 
-- [ ] audit what the combat code knows about hits per cast and the killing skill
-- [ ] emit lines (logging only, action sequence unchanged test)
-- [ ] report prints both; docs
+- [x] audit what the combat code knows about hits per cast and the killing skill
+- [x] emit lines (logging only, action sequence unchanged test)
+- [x] report prints both; docs
