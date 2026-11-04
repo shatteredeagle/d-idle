@@ -5,7 +5,7 @@ Contract: `openspec/specs/act1-campaign/spec.md` ("Act 1 cleared record", 14 row
 
 ## Log lines (writer: cmd/d2bot/milestone.go, called from the quest reader in cmd/d2bot/task.go)
 
-- `milestone name=<den|bloodraven|cain|tower|tools|andariel|act2> word=0x<hex> clvl=<n> virtual=<min>`: once per
+- `milestone name=<den|bloodraven|cain|tower (forgotten_tower quest)|tools|andariel|act2> word=0x<hex> clvl=<n> virtual=<min>`: once per
   word, on its first memory read as Done (`quest.Interpret`). Words: den_of_evil, sisters_burial_grounds,
   search_for_cain, forgotten_tower, tools_of_the_trade, sisters_to_the_slaughter (word 6), act1_done (word 7, `act2`).
   `clvl` is the level of the last save read (V by reading the code: the memory reader has no level here; -1 = no save

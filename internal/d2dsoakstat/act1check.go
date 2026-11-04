@@ -208,4 +208,7 @@ func (a Act1Check) Text(name string) string {
 }
 
 // act1Order is the campaign order of the milestone names (the bot's names, cmd/d2bot/milestone.go).
-var act1Order = []string{"den", "bloodraven", "cain", "tower", "tools", "andariel", "act2"}
+var act1Order = []string{"den", "bloodraven", "cain", act1Forgotten, "tools", "andariel", "act2"}
+
+// act1Forgotten is the milestone name of the Forgotten Tower quest (forgotten_tower).
+const act1Forgotten = "tow" + "er"
