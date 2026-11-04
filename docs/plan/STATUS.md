@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
 - 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
 - bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
 - 902f087b 11-04 10:05 `Merge agent/rtleave: rtleave: Fighter.Leave wired in d2drill so RT.leave runs (offline tests; live run pending)` (rtleave)
@@ -136,5 +137,4 @@
 - 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
 - a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
 - 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
-- 87972cfa 11-04 09:04 `Merge agent/prbopen: prbopen: log of the batch B upstream PR #189 (posted lines)` (prbopen)
 <!-- statusgen:end -->
