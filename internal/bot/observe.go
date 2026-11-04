@@ -76,6 +76,8 @@ type observer struct {
 	taskRep       taskReport
 	tripGold      int // gold when the last chore ended (resource.Input.LastTripGold)
 	tripGoldSet   bool
+	townLatch     bool // codefix67 F7: this town visit ended with no healing potion and no more gold; no further in-town emergency
+	townLatchGold int
 	tripTimes     []time.Time            // finished chore trips, for the trip budget
 	recKitTrips   int                    // recovery restock trips since the last healing potion (RecoveryKitTrip)
 	kitTrips      int                    // finished kit trips with the kit still incomplete (kitgate.go)

@@ -461,6 +461,10 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - RTLEAVE: RT.leave unblocked offline (Fighter.Leave wired in d2drill: Save and Exit, rejoin), live run on a hidden slot pending (docs/rtleave.md)
 - merchire: drill D8.h/D8.h2 (paid hire, cant-afford) built offline in internal/drill/merchire.go + cmd/d2drill/hire_lab.go; live run recipe in docs/merchire.md (not verified live)
 - noareacards: docs/noareacards.md holds three picker card drafts (idleBreak best-XP lift, nav-fault soft ranking with a per-hour cap, gold-for-kit recovery on a closed kit guard) with order of work and open questions for the user; design only, nothing verified live.
+- PALSKILL D2/D3 (Blessed Hammer Concentration share and undead / demon bonus) independently verified: docs/research/palverify/verdict.md
+- palprep: PALSKILL D2/D3 PR prepared locally on upstream e5de6c10 (local/pal-d2d3-r2, body docs/research/pr-palskill-body-r2.md); awaits the Opus verifier and the user's go
+- noareameasure (done, docs only): docs/noareameasure.md measures per-area XP/h at clvl 13+ for Gate 2 seeds 11-13, the picker exclude set at the seed 13 no-eligible lines (the merc gold farm rule, not bans, kept Dark Wood and Black Marsh out), the kit at 23:35 and a Catacombs 2 comparison; feeds the noarea policy decision
+- codefix67 (done, offline): F6 stash withdraw only when the purse cannot pay the kit and one healing count, F7 in-town futility latch; docs/codefix67.md; live P5 stash recheck open
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

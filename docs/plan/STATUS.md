@@ -127,14 +127,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
-- 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
-- 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
-- bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
-- 902f087b 11-04 10:05 `Merge agent/rtleave: rtleave: Fighter.Leave wired in d2drill so RT.leave runs (offline tests; live run pending)` (rtleave)
-- 5072f374 11-04 10:04 `merge origin/main into rtleave` (rtleave)
-- ea07d656 11-04 09:55 `Merge agent/mercrevive: mercrevive: merc.goldFarmMaxLevel 16 to 18, revive reserve 150 to 100 percent, need= in the skip log` (mercrevive)
-- 371af0d7 11-04 09:54 `merge origin/main into mercrevive` (mercrevive)
-- 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
-- a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
+- 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
+- 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
+- d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
+- 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
+- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
+- fbd9acf2 11-04 10:39 `merge origin/main into codefix67` (codefix67)
+- 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
+- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
+- 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
+- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
 <!-- statusgen:end -->
