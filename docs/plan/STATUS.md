@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- fdbf1b94 11-04 03:00 `Merge agent/gate2loop: gate2loop: save point after town chores and only when XP was earned (Gate 2 seed 13 save-point loop; partial fix)` (gate2loop)
 - 0dcf201a 11-04 02:47 `Merge agent/merclive: merclive: P18 live on d2d: free Rogue claim PASS, revive flow PASS (price 0 for a cheat-hired level-1 merc), paid hire BLOCKED (no drill)` (merclive)
 - 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 - 3d601e79 11-04 02:24 `Merge agent/retreatfix: retreatfix: RT.drink setup life derived from the chicken/drink knobs, RT.portal bound 10 ticks` (retreatfix)
@@ -136,5 +137,4 @@
 - 94dcf5f0 11-04 02:02 `merge origin/main into retreatdrill` (retreatdrill)
 - 024c7593 11-04 01:55 `Merge agent/tomefix: tomefix: audit of false-empty tome verdict, 14 regression tests, live-check recipe (no bot change)` (tomefix)
 - e9f01cdc 11-04 01:54 `merge origin/main into tomefix` (tomefix)
-- 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
 <!-- statusgen:end -->
