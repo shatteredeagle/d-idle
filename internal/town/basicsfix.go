@@ -136,10 +136,10 @@ func (t *Town) kitPotions(plan ChorePlan) int {
 	return max(n, 1)
 }
 
-// healingCarried is the healing and rejuvenation potions in belt and pack.
+// healingCarried is the healing and rejuvenation potions in belt and pack (the bot side counts the same set, codefix67 F6).
 func (t *Town) healingCarried(s *d2.Snapshot) int {
 	bs := belt.Read(t.e.Data, s.Inventory)
-	return bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
+	return bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP) + belt.PackCount(t.e.Data, s.Inventory, belt.RV)
 }
 
 // needWithdraw is the BELTFIX5 knob-free rule: a character with no healing potion anywhere and less gold in the pack
@@ -148,7 +148,23 @@ func (t *Town) healingCarried(s *d2.Snapshot) int {
 // pack, 0 potions at clvl 11; the town package had no withdraw chore.
 func (t *Town) needWithdraw(s *d2.Snapshot) bool {
 	_, can := t.e.In.(goldMover)
-	return can && s.Player.StashGold > 0 && s.Player.Gold < t.bankKeep(s.Player.Level) && t.healingCarried(s) == 0
+	return can && s.Player.StashGold > 0 && s.Player.Gold < t.kitCost() && s.Player.Gold < t.bankKeep(s.Player.Level) && t.healingCarried(s) == 0
+}
+
+// kitCost is the minimal kit: one portal scroll and HPFirst healing potions at the kit tuning prices. A purse that
+// pays it needs no stash round (codefix67 F6; the withdrawal still tops up to the keep line when it does run).
+func (t *Town) kitCost() int {
+	r := t.e.Tune.Resource
+	return r.KitTPGold + max(r.HPFirst, 1)*r.KitPotionGold
+}
+
+// NeedWithdrawForTest exposes needWithdraw on the current snapshot.
+func (t *Town) NeedWithdrawForTest() (bool, error) {
+	s, err := t.current()
+	if err != nil {
+		return false, err
+	}
+	return t.needWithdraw(s), nil
 }
 
 func (t *Town) withdraw(ctx context.Context, a *Act) error {
