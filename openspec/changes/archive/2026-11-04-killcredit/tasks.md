@@ -2,7 +2,7 @@
 
 ```yaml
 change: killcredit
-status: in-progress
+status: archived
 agent: killcredit
 branch: agent/killcredit
 worktree: ~/code/d2lod-wt/killcredit
@@ -20,8 +20,9 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/combat ./internal/d2dsoakstat ./cmd/d2dsoak passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0"
-result: "kills and targets per cast logged, report prints both; missile hits stay n/a (docs/killcredit.md); offline tests only"
+result: "offline, logging only (action-sequence test); not verified live; missile hits per cast still n/a"
 live: "not verified live"
+merge: 6e395bb
 ```
 
 - [x] audit what the combat code knows about hits per cast and the killing skill
