@@ -1,0 +1,5 @@
+DRILL D8.a P18 PASS revived through Kashya's menu; price taken 0 gold (a Rogue at clvl 1 is revived free on this build: U whether the price is a rule or a gap) | intended: merc alive again, gold down by the reported price | observed: merc present=false dead=true code= life=[0,0] -> present=true dead=false code=RG life=[40,1]; gold 3000 -> 3000 (revive reports 0); err <nil>; panels none
+
+drill     prim  verdict  det  reason
+D8.a      P18   PASS     -    revived through Kashya's menu; price taken 0 gold (a Rogue at clvl 1 is revived free on this build: U whether the price is a rule or a gap)
+cheat verbs used (each ledgered with a reason): debug merc hire 0, debug merc kill, debug stat 14 3000
