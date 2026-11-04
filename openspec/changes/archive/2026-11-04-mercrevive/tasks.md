@@ -2,7 +2,7 @@
 
 ```yaml
 change: mercrevive
-status: in-progress
+status: archived
 agent: mercrevive
 branch: agent/mercrevive
 worktree: ~/code/d2lod-wt/mercrevive
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "reserve 150->100, farm cap 16->18, need= in skip line plus gold wait line; offline tests only"
+result: "offline tests, two kits; not verified live"
 live: "not verified live"
+merge: ea07d65
 ```
 
 - [x] work done

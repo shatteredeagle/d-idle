@@ -51,7 +51,6 @@ tools/emu/next_hit_mode.inc  nexthit  nexthit
 tools/emu/next_hit_summary.py  nexthit  nexthit
 openspec/changes/nexthit/**  nexthit  nexthit
 docs/fixmanamodel.md  fixmanamodel  fixmanamodel
-docs/mercrevive.md  mercrevive  mercrevive
 internal/resource/manamodel.go  fixmanamodel  fixmanamodel
 internal/resource/manamodel_test.go  fixmanamodel  fixmanamodel
 docs/fixskilllvl.md  fixskilllvl  fixskilllvl
@@ -121,4 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-openspec/changes/mercrevive/**  mercrevive  mercrevive
