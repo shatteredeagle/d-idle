@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
 - 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
 - e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
 - d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
@@ -101,5 +102,4 @@
 - 5a08cfce 11-04 12:23 `Merge agent/cardsclose: cardsclose: archive fixcastgap, fixmanamodel, fixskilllvl, skmeleewire (offline only, live proof pending) and drop d2d-default-backend` (cardsclose)
 - 3c3579f4 11-04 12:23 `Merge branch 'main' into cardsclose` (-)
 - 962de9e9 11-04 12:11 `Merge agent/farmfallback: farmfallback: farm flag as plan data (+Dark Wood, Black Marsh), restricted-pick fallback re-pick (offline, two tables)` (farmfallback)
-- b57d0503 11-04 12:10 `Merge branch 'main' into farmfallback` (-)
 <!-- statusgen:end -->
