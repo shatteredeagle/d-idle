@@ -624,6 +624,21 @@ func (r *Runner) banned(area int) bool {
 	return ok
 }
 
+// routeBanned says h blocks a walk to target: banned, and not merely a nav-fault skip of another area. Such a skip
+// (whyUnreachable, whyNavStuck) is no danger, and travelTo may jump over the area by waypoint (codereview3 C1).
+func (r *Runner) routeBanned(h, target int) bool {
+	if !r.banned(h) {
+		return false
+	}
+	if h == target {
+		return true
+	}
+	r.obMu.Lock()
+	why := r.avoidWhy[h]
+	r.obMu.Unlock()
+	return why != whyUnreachable && why != whyNavStuck
+}
+
 // starterBanMax caps what is left of the ban of a first field (the way out of a town) once the character stands in
 // town because of it: staying there gains no gear or level, so a long ban would only deadlock it (LIVE Tcont
 // 2026-10-29: Blood Moor banned, nothing reachable). The cap applies when the planner finds the ban in its way.
@@ -660,7 +675,7 @@ func (r *Runner) routeBan(s *d2.Snapshot, target int) (int, time.Time) {
 		return 0, time.Time{}
 	}
 	for _, h := range append(hops, target) {
-		if h == s.Player.Area || r.d.Plan.IsTown(h) || !r.banned(h) {
+		if h == s.Player.Area || r.d.Plan.IsTown(h) || !r.routeBanned(h, target) {
 			continue
 		}
 		r.obMu.Lock()

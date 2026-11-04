@@ -167,3 +167,36 @@ func TestLowKitStartsRecoveryInsideCooldown(t *testing.T) {
 		t.Fatal("no healing potion and gold 0 must start recovery despite the cooldown")
 	}
 }
+
+// codereview3 C1: a nav-fault skip of an area on the route is no danger ban (travelTo may jump over it by waypoint);
+// a death ban on the same hop still blocks, and a skip of the target itself still hides the target.
+func TestNavSkipOnRouteHopDoesNotBanTheWalk(t *testing.T) {
+	for _, lvl := range []int{8, 20} {
+		g := campaignRig(t, &fakeQuests{}, lvl)
+		g.r.poll()
+		s := g.r.latest()
+		routeVia(g, 99)
+		until := g.clock.Now().Add(10 * time.Minute)
+		for _, why := range []string{whyUnreachable, whyNavStuck} {
+			g.r.avoid[99], g.r.avoidWhy[99] = until, why
+			if h, _ := g.r.routeBan(s, 6); h != 0 {
+				t.Fatalf("clvl %d: %s skip of hop 99 banned the route (%d)", lvl, why, h)
+			}
+			if err := g.r.routeAllowed(s, s.Player.Area, 6, []int{99, 6}); err != nil && strings.Contains(err.Error(), "banned") {
+				t.Fatalf("clvl %d: routeAllowed refused for %s: %v", lvl, why, err)
+			}
+		}
+		g.r.avoidWhy[99] = whyDeath
+		if h, _ := g.r.routeBan(s, 6); h != 99 {
+			t.Fatalf("clvl %d: a death ban must still block the route, got %d", lvl, h)
+		}
+		if err := g.r.routeAllowed(s, s.Player.Area, 6, []int{99, 6}); err == nil {
+			t.Fatalf("clvl %d: routeAllowed must refuse a death-banned hop", lvl)
+		}
+		g.r.avoid[6], g.r.avoidWhy[6] = until, whyUnreachable
+		delete(g.r.avoid, 99)
+		if h, _ := g.r.routeBan(s, 6); h != 6 {
+			t.Fatalf("clvl %d: the skipped target itself must stay banned, got %d", lvl, h)
+		}
+	}
+}
