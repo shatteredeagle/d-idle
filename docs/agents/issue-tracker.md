@@ -1,5 +1,7 @@
 # Issue tracker: openspec change cards
 
+> status: OpenSpec change cards are retired for NEW work (user 2026-11-04). The replacement is docs/cards.md (to be created at stage 1; at most 12 rows, each mapped to one goal G-A..G-F). Existing active cards continue until closed. A new job is named by its branch agent/<id>; its owns/exclusive resources come from the brief and go back in the report, and its result line (verified live or not) goes in the report. Cardless work merges via `merge.sh --card none`.
+
 Work for this repo is tracked as openspec change cards in `openspec/changes/<id>/`. There is no GitHub Issues use, no `gh` or `glab` calls, and no `.scratch/` directory. The forge remote (`forge`, `<owner>/d2lod-bot`) is a push target only; nothing is ever posted to GitHub without the user's go (`openspec/specs/lab-rules`).
 
 This file replaces the "issue tracker" template of the setup skill (hand-written, the skill was not run). Format and life cycle: `openspec/README.md`.
