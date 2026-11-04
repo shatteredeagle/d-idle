@@ -227,6 +227,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		hs := Hostiles(snap, f.hostileCtx(p))
 		ft.Area, ft.Diff = p.Area, int(p.Difficulty)
 		ft.Danger = max(ft.Danger, f.packDanger(p, hs))
+		f.castLogTick(p)
 		f.noteKills(snap, hs, st, &res)
 
 		// 1. survival
@@ -456,7 +457,7 @@ func (f *Fighter) noteKills(snap *d2.Snapshot, alive []Target, st *fightState, r
 		}
 		res.XP += share
 		f.emit(goals.Event{Type: goals.EvKill, Monster: d.name, Boss: d.boss, XP: share})
-		f.info("kill", "monster", d.name, "boss", d.boss, "xp", share)
+		f.info("kill", append([]any{"monster", d.name, "boss", d.boss, "xp", share}, f.lastSkillKV()...)...)
 	}
 }
 

@@ -21,10 +21,22 @@ type SkillStats struct {
 	NovaMonsters   int            // sum of the monsters counted per nova
 	Kills          int            // killtime lines (all skills together)
 	Branch, Commit string         // d2d build, from any line that carries the keys; "" = not logged
+
+	// docs/logfields.md: `cast result`, `combat kill` last_skill and the minute line armor sample. Absent in old logs.
+	Results   map[string]int // cast result lines per skill
+	Made      map[string]int // ... that made the effect
+	Cut       map[string]int // ... cut before the action frame
+	Mana      map[string]int // whole mana spent, summed over the result lines
+	Ticks     map[string]int // modelled cast length in ticks (last value seen)
+	KilledBy  map[string]int // kills whose last cast was this skill
+	ArmorUp   int            // minute samples with an armor state
+	ArmorNone int            // minute samples with no armor state
+	ArmorUnk  int            // minute samples where the state array was not readable
 }
 
 func newSkillStats() SkillStats {
-	return SkillStats{Casts: map[string]int{}, Buffs: map[string]int{}, BuffRetries: map[string]int{}}
+	return SkillStats{Casts: map[string]int{}, Buffs: map[string]int{}, BuffRetries: map[string]int{},
+		Results: map[string]int{}, Made: map[string]int{}, Cut: map[string]int{}, Mana: map[string]int{}, Ticks: map[string]int{}, KilledBy: map[string]int{}}
 }
 
 // ParseSkills reads slog JSON or text lines.
@@ -74,6 +86,38 @@ func ParseSkills(r io.Reader) (SkillStats, error) {
 			}
 		case "killtime":
 			s.Kills++
+		case "combat kill":
+			if kv["last_skill"] != "" {
+				s.KilledBy[kv["last_skill"]]++
+			}
+		case "cast result":
+			k := kv["skill"]
+			if k == "" {
+				break
+			}
+			s.Results[k]++
+			if kv["made"] == "true" {
+				s.Made[k]++
+			}
+			if kv["cut"] == "true" {
+				s.Cut[k]++
+			}
+			if n, err := strconv.Atoi(kv["cost"]); err == nil && n > 0 {
+				s.Mana[k] += n
+			}
+			if n, err := strconv.Atoi(kv["ticks"]); err == nil && n > 0 {
+				s.Ticks[k] = n
+			}
+		case "minute":
+			switch a := kv["armor"]; a {
+			case "":
+			case "?":
+				s.ArmorUnk++
+			case "none":
+				s.ArmorNone++
+			default:
+				s.ArmorUp++
+			}
 		}
 	}
 	return s, sc.Err()
@@ -106,10 +150,19 @@ func (s SkillStats) Text(name, melee string) string {
 		if s.Buffs[k] > 0 && s.Casts[k] == 0 {
 			kind = "buff"
 		}
+		made, cut, mana, kills := na, na, na, na
+		if n := s.Results[k]; n > 0 {
+			made = fmt.Sprintf("%d of %d", s.Made[k], n)
+			cut = fmt.Sprintf("%d of %d", s.Cut[k], n)
+			mana = fmt.Sprintf("%d (%.1f per cast)", s.Mana[k], float64(s.Mana[k])/float64(n))
+		}
+		if len(s.KilledBy) > 0 {
+			kills = strconv.Itoa(s.KilledBy[k]) + " (last skill of the kill)"
+		}
 		fmt.Fprintf(&b, "  %s (%s): casts started %d, made effect %s, cut before action frame %s, mana spent %s, kills %s, casts/kill %s, hits/cast %s",
-			k, kind, s.Casts[k]+s.Buffs[k], na, na, na, na, s.perKill(s.Casts[k]), na)
+			k, kind, s.Casts[k]+s.Buffs[k], made, cut, mana, kills, s.perKill(s.Casts[k]), na)
 		if s.Buffs[k] > 0 {
-			fmt.Fprintf(&b, "; buff recasts after a cut %d, seconds absent %s", s.BuffRetries[k], na)
+			fmt.Fprintf(&b, "; buff recasts after a cut %d, seconds absent %s", s.BuffRetries[k], s.armorAbsent())
 		}
 		b.WriteString("\n")
 	}
@@ -132,8 +185,31 @@ func (s SkillStats) Text(name, melee string) string {
 	if s.Branch != "" || s.Commit != "" {
 		build = s.Branch + " " + s.Commit
 	}
-	fmt.Fprintf(&b, "  d2d build %s; Lightning cast length ticks %s\n", build, na)
+	fmt.Fprintf(&b, "  d2d build %s; Lightning cast length ticks %s\n", build, s.lightningTicks())
 	return b.String()
+}
+
+// armorAbsent is the sampled armor-absent share: one sample per minute line, so seconds are a 60 s per sample estimate.
+func (s SkillStats) armorAbsent() string {
+	if s.ArmorUp+s.ArmorNone == 0 {
+		return na
+	}
+	return fmt.Sprintf("~%d (%d of %d minute samples without armor, %d unreadable)", s.ArmorNone*60, s.ArmorNone, s.ArmorUp+s.ArmorNone, s.ArmorUnk)
+}
+
+// lightningTicks lists the modelled cast length of every skill with Lightning in its name (13 or 19 ticks at FCR 0).
+func (s SkillStats) lightningTicks() string {
+	var out []string
+	for k, n := range s.Ticks {
+		if strings.Contains(k, "Lightning") {
+			out = append(out, fmt.Sprintf("%s %d", k, n))
+		}
+	}
+	if len(out) == 0 {
+		return na
+	}
+	sort.Strings(out)
+	return strings.Join(out, ", ") + " (modelled, castgap.go)"
 }
 
 func (s SkillStats) perKill(casts int) string {

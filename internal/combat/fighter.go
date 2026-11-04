@@ -58,7 +58,8 @@ type Fighter struct {
 	lastDrink     map[PotionKind]time.Time
 	manaChickenAt time.Time // last chicken caused by the mana-burn watch (hard.go)
 	lastCast      time.Time
-	lastCastName  string // skill of lastCast: the gap before the next cast covers ITS cast length
+	clog          castLog // log-only cast outcome tracking (castlog.go)
+	lastCastName  string  // skill of lastCast: the gap before the next cast covers ITS cast length
 	lastCastSkill map[int]time.Time
 	buffAt        map[int]time.Time
 	buffTries     map[int]int // consecutive casts cut by a hit, per skill (card armorcut)
@@ -738,6 +739,7 @@ func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
 	f.lastCast, f.lastCastName = f.now(), sp.Name
 	f.lastCastSkill[sp.ID] = f.lastCast
 	f.noteCast(sp.ID, f.lastCast)
+	f.castLogStart(snap, sp)
 	return err
 }
 
