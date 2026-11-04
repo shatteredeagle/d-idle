@@ -10,6 +10,8 @@ func TestLogLines(t *testing.T) {
 		{LogRevived(600, 9, 675), "merc: revived price=600 level=9 estimate=675", LineRevived},
 		{LogHireWindow(HireOffer{Row: 2, Name: "Greiz Aide", Class: 338, Level: 9, Aura: "Defiance", Price: 360}, 1500, 12), "merc: hire window row=2 name=Greiz_Aide class=338 level=9 aura=Defiance price=360 gold=1500 clvl=12", LineHireWindow},
 		{LogGoldFarm(true, 1200, 300, 11), "merc: gold farm on need=1200 gold=300 clvl=11", LineGoldFarm},
+		{LogGoldFarmReason(false, 1200, 1300, 11, "gold-reached"), "merc: gold farm off need=1200 gold=1300 clvl=11 reason=gold-reached", LineGoldFarm},
+		{LogGoldFarmReason(true, 1200, 300, 11, "x"), "merc: gold farm on need=1200 gold=300 clvl=11", LineGoldFarm},
 		{LogReviveSkipped(ReasonGold, 600, 900, 1000), "merc: revive skipped (gold) price=600 gold=900 need=1000", LineReviveSkipped},
 		{LogReviveSkipped(ReasonStopped, 600, 900, 3300), "merc: revive skipped (stopped by deaths) price=600 gold=900 need=3300", LineReviveSkipped},
 		{LogEquip(SlotHelm, "Skull Cap", "empty slot"), "merc: equip slot=helm item=Skull_Cap reason=empty_slot", LineEquip},

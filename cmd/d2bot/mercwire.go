@@ -338,7 +338,16 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	w.farmOn = on
 	w.mu.Unlock()
 	if changed {
-		w.log.Info(merc.LogGoldFarm(on, need, c.Gold, s.Player.Level))
+		reason := ""
+		switch {
+		case !missing:
+			reason = "merc-back"
+		case c.Gold >= need:
+			reason = "gold-reached"
+		default:
+			reason = "other"
+		}
+		w.log.Info(merc.LogGoldFarmReason(on, need, c.Gold, s.Player.Level, reason))
 	}
 	return on
 }
