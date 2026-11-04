@@ -38,3 +38,4 @@ allow_merges:
   - 8084688   # cipathfilter: merged without a card (merge.sh --card none)
   - 32350aa   # heldlog: merged without a card (merge.sh --card none)
   - 977fe7e   # specapplyb: merged without a card (merge.sh --card none)
+  - d0aed67   # specapplya: merged without a card (merge.sh --card none)
