@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
 - 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
 - 5a08cfce 11-04 12:23 `Merge agent/cardsclose: cardsclose: archive fixcastgap, fixmanamodel, fixskilllvl, skmeleewire (offline only, live proof pending) and drop d2d-default-backend` (cardsclose)
 - 3c3579f4 11-04 12:23 `Merge branch 'main' into cardsclose` (-)
@@ -101,5 +102,4 @@
 - 5074c962 11-04 12:07 `Merge branch 'main' into cardsapply` (-)
 - c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
 - 70a06a94 11-04 11:56 `Merge branch 'main' into mercrevive2` (-)
-- 1348df6b 11-04 11:53 `Merge agent/ctrlfix: AGENTS.md: pointer to the Current truth block; OpenSpec retired for new work (user approved 2026-11-04)` (ctrlfix)
 <!-- statusgen:end -->
