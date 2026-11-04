@@ -121,3 +121,7 @@ docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
 openspec/changes/tomefix/**  tomefix  tomefix
+internal/d2denv/tomefix_test.go  tomefix  tomefix
+internal/town/tomefix_test.go  tomefix  tomefix
+internal/combat/tomefix_test.go  tomefix  tomefix
+docs/tomefix.md  tomefix  tomefix
