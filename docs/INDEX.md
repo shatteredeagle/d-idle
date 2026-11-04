@@ -357,3 +357,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/logfields.md: log fields for the per-skill soak report (cast result, last_skill, armor sample, build); offline only
 - docs/killcredit.md - kill credit per cast window and nova targets per cast, what stays n/a (offline)
 - docs/research/primitives-open-20261104.md: P1..P36 open-item snapshot at 2026-11-04 (latest verdict, evidence, what changed since, ranked open S/A, BLOCKED blockers, never-drilled list)
+- docs/dwm4triage.md: DW.m4 open-inventory triage (portal path opens it; cause of the stuck flag U; no code change)
