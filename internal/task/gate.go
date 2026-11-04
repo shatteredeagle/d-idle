@@ -140,7 +140,7 @@ func AndarielLine(w World) string {
 	g := bossGates[QAndariel]
 	f := g.floor(w)
 	if andarielHeld(w) {
-		return "boss: held for andariel (" + andarielHeldWhy + ")"
+		return fmt.Sprintf("boss: held for andariel (%s) clvl=%d floor=%d merc=%s", andarielHeldWhy, w.Level, AndarielFloor(w), MercState(w))
 	}
 	if w.Level < f {
 		return fmt.Sprintf("boss: held for andariel (clvl %d < floor %d)", w.Level, f)
