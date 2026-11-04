@@ -1,0 +1,3 @@
+BACKLOG: codereview3 - third independent review (gate1fix, recoverykit, xpfallback): fix C1 target skip bans routes through it, C2 target fail count never decays, C3 recovery kit trip ignores failed way to town, C4 plan flag missing in docs/plan/data and TestMatchesDocs always skips
+INDEX: docs/research/codereview3.md - review of the target skip, the recovery kit trip and the XP fallback kit flag, ranked findings with fixes and Gate 1 signals
+CHANGELOG: Docs: third independent code review of the 2026-11-03 Gate 1 fixes (target skip, recovery kit trip, XP fallback flag).
