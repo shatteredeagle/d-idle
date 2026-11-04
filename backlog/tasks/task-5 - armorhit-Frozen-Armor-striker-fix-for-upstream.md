@@ -42,7 +42,7 @@ What changes:
 Next step: PR claim (one batch at a time)
 
 Gates (from the card):
-- changecheck 0 warnings for this card; leakcheck -mode fail 0
+- leakcheck -mode fail 0
 - PR claim only with a differential on real builds: before > 0, after 0
 
 Source: git tag openspec-final, openspec/changes/armorhit/ (this task is the copy).

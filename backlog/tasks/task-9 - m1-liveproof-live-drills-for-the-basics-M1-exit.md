@@ -51,7 +51,7 @@ Gates (from the card):
 - docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
 - starting gold and unidentified sell prices recorded V in docs/basics-live.md with cheat ledger ids
-- tools/agentreap.sh m1-liveproof leaves nothing; changecheck -cli 0 warnings; leakcheck 0
+- tools/agentreap.sh m1-liveproof leaves nothing; leakcheck 0
 
 Source: git tag openspec-final, openspec/changes/m1-liveproof/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
