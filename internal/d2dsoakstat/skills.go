@@ -29,6 +29,9 @@ type SkillStats struct {
 	Mana      map[string]int // whole mana spent, summed over the result lines
 	Ticks     map[string]int // modelled cast length in ticks (last value seen)
 	KilledBy  map[string]int // kills whose last cast was this skill
+	WinKills  map[string]int // kills noted inside the cast window of a result line (docs/killcredit.md)
+	Targets   map[string]int // monsters in the aimed area, summed over casts that logged `targets`
+	TargetN   map[string]int // casts that logged `targets`
 	ArmorUp   int            // minute samples with an armor state
 	ArmorNone int            // minute samples with no armor state
 	ArmorUnk  int            // minute samples where the state array was not readable
@@ -36,7 +39,8 @@ type SkillStats struct {
 
 func newSkillStats() SkillStats {
 	return SkillStats{Casts: map[string]int{}, Buffs: map[string]int{}, BuffRetries: map[string]int{},
-		Results: map[string]int{}, Made: map[string]int{}, Cut: map[string]int{}, Mana: map[string]int{}, Ticks: map[string]int{}, KilledBy: map[string]int{}}
+		Results: map[string]int{}, Made: map[string]int{}, Cut: map[string]int{}, Mana: map[string]int{}, Ticks: map[string]int{}, KilledBy: map[string]int{},
+		WinKills: map[string]int{}, Targets: map[string]int{}, TargetN: map[string]int{}}
 }
 
 // ParseSkills reads slog JSON or text lines.
@@ -105,6 +109,13 @@ func ParseSkills(r io.Reader) (SkillStats, error) {
 			if n, err := strconv.Atoi(kv["cost"]); err == nil && n > 0 {
 				s.Mana[k] += n
 			}
+			if n, err := strconv.Atoi(kv["kills"]); err == nil && n > 0 {
+				s.WinKills[k] += n
+			}
+			if n, err := strconv.Atoi(kv["targets"]); err == nil && n > 0 {
+				s.Targets[k] += n
+				s.TargetN[k]++
+			}
 			if n, err := strconv.Atoi(kv["ticks"]); err == nil && n > 0 {
 				s.Ticks[k] = n
 			}
@@ -157,10 +168,18 @@ func (s SkillStats) Text(name, melee string) string {
 			mana = fmt.Sprintf("%d (%.1f per cast)", s.Mana[k], float64(s.Mana[k])/float64(n))
 		}
 		if len(s.KilledBy) > 0 {
-			kills = strconv.Itoa(s.KilledBy[k]) + " (last skill of the kill)"
+			kills = strconv.Itoa(s.KilledBy[k]) + " credited (last skill of the kill"
+			if len(s.WinKills) > 0 {
+				kills += fmt.Sprintf("; %d inside the cast window", s.WinKills[k])
+			}
+			kills += ")"
+		}
+		hits := na + ", no missile-hit signal in the bot"
+		if n := s.TargetN[k]; n > 0 {
+			hits = fmt.Sprintf("%.1f monsters in the area (%d casts, not confirmed hits)", float64(s.Targets[k])/float64(n), n)
 		}
 		fmt.Fprintf(&b, "  %s (%s): casts started %d, made effect %s, cut before action frame %s, mana spent %s, kills %s, casts/kill %s, hits/cast %s",
-			k, kind, s.Casts[k]+s.Buffs[k], made, cut, mana, kills, s.perKill(s.Casts[k]), na)
+			k, kind, s.Casts[k]+s.Buffs[k], made, cut, mana, kills, s.perKillOf(k), hits)
 		if s.Buffs[k] > 0 {
 			fmt.Fprintf(&b, "; buff recasts after a cut %d, seconds absent %s", s.BuffRetries[k], s.armorAbsent())
 		}
@@ -208,6 +227,17 @@ func (s SkillStats) castTicks() string {
 	}
 	sort.Strings(out)
 	return strings.Join(out, ", ") + " (modelled, castgap.go)"
+}
+
+// perKillOf is casts per credited kill of one skill; without credit lines it falls back to all kills.
+func (s SkillStats) perKillOf(k string) string {
+	if len(s.KilledBy) == 0 {
+		return s.perKill(s.Casts[k])
+	}
+	if s.KilledBy[k] == 0 {
+		return "n/a (no kill credited)"
+	}
+	return fmt.Sprintf("%.1f", float64(s.Casts[k])/float64(s.KilledBy[k]))
 }
 
 func (s SkillStats) perKill(casts int) string {

@@ -422,6 +422,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE1: Gate 1 multi-seed run 20261103-2140-ms4 (seeds 16,17,18,19,21) PASSED (docs/soaks/gate1-multiseed-20261103-2140-ms4.md)
 - sksmoke-a1: SK drill design and expected Fire Bolt / Charged Bolt damage per level (docs/probes/sksmoke/2026-11-03-SK-design.txt); live run BLOCKED (i2 stopped, no skill-level setter, no SK subcommand)
 - sksmoke-a1: Fire Bolt per-hit damage on d2d matches the skills.txt table at levels 1/4/8/13/20 (PASS, compared to table, not game.exe; docs/probes/sksmoke/2026-11-03-SK-d2d.txt); still open: game.exe run (needs exact life read), Charged Bolt per-bolt trace, Frost Nova ring, pack kills per cast
+- chargedbolt (done): Charged Bolt per-bolt PASS on d2d at levels 1/4/8/13/20 (compared to table, not game.exe), docs/chargedbolt.md, evidence docs/probes/sksmoke/2026-11-04-SK-cb.txt
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

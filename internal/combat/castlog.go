@@ -16,6 +16,7 @@ import (
 type castLog struct {
 	off       bool
 	buildDone bool
+	targets   int // monsters counted for the next cast (nova), 0 = unknown; consumed by castLogStart
 	pend      *pendCast
 }
 
@@ -27,6 +28,8 @@ type pendCast struct {
 	sawCast    bool // the player was seen in the cast mode after the click (U live)
 	sawMana    bool // the pool dropped by the cost (the mana leaves at the action frame, S)
 	sawHit     bool // hit recovery seen before either of the above
+	targets    int  // monsters in the area the cast was aimed at (S: counted before the cast, not confirmed hits); 0 = unknown
+	kills      int  // kills noted while this cast was the pending one (S: the hit that killed is not observable)
 }
 
 // castLogStart records a cast just sent. A cast still pending is closed with what was seen (the next cast came first).
@@ -38,7 +41,23 @@ func (f *Fighter) castLogStart(snap *d2.Snapshot, sp SkillSpec) {
 	f.castLogBuild()
 	f.castLogFlush()
 	c.pend = &pendCast{name: sp.Name, at: f.now(), mana: snap.Player.Mana, cost: sp.Cost,
-		ticks: castTicks(sp.Name, f.tune().CastFCR, f.D2D)}
+		ticks: castTicks(sp.Name, f.tune().CastFCR, f.D2D), targets: c.targets}
+	c.targets = 0
+}
+
+// castLogTargets tells the log how many monsters the next cast is aimed at (the crowd nova counts them). The combat
+// code has no missile-hit signal, so this is the only per-cast hit figure it knows (S).
+func (f *Fighter) castLogTargets(n int) {
+	if !f.clog.off {
+		f.clog.targets = n
+	}
+}
+
+// castLogKill credits a kill to the pending cast, if its window is still open.
+func (f *Fighter) castLogKill() {
+	if pc := f.clog.pend; pc != nil && !f.clog.off {
+		pc.kills++
+	}
 }
 
 // castLogTick is called once per fight tick with the fresh player: it watches the pending cast and closes it when the
@@ -73,7 +92,11 @@ func (f *Fighter) castLogFlush() {
 		return
 	}
 	made := pc.sawCast || pc.sawMana
-	f.log().Debug("cast result", "skill", pc.name, "made", made, "cut", pc.sawHit && !made, "cost", pc.cost, "ticks", pc.ticks)
+	args := []any{"skill", pc.name, "made", made, "cut", pc.sawHit && !made, "cost", pc.cost, "ticks", pc.ticks, "kills", pc.kills}
+	if pc.targets > 0 {
+		args = append(args, "targets", pc.targets)
+	}
+	f.log().Debug("cast result", args...)
 }
 
 // castLogBuild writes the one `build` line (branch from D2LOD_BRANCH, commit from the build stamp; n/a-safe: a key
@@ -99,7 +122,7 @@ func (f *Fighter) lastSkillKV() []any {
 	if f.clog.off || f.lastCastName == "" {
 		return nil
 	}
-	return []any{"last_skill", f.lastCastName}
+	return []any{"last_skill", f.lastCastName, "since_cast_ms", f.now().Sub(f.lastCast).Milliseconds()}
 }
 
 // ArmorState names the armor state bit set on the player ("Frozen Armor", ...; "none" when the state array has bits
