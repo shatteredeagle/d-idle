@@ -1,7 +1,9 @@
 # Backend contract specification
 
 ## Purpose
-The seams that keep decision code backend-agnostic, so the same bot runs on the original Game.exe (Wine, /proc/pid/mem reads, input injection) and on the d2d reimplementation (control socket), and what each backend must provide. Source: docs/decisions.md 2026-10-30 rule 1, docs/d2d-backend.md, docs/d2d-bot.md, docs/d2d-wire.md (when merged).
+The seams that keep decision code backend-agnostic, so the same bot runs on the original Game.exe (Wine, /proc/pid/mem reads, input injection) and on the d2d reimplementation (control socket), and what each backend must provide. Source: docs/decisions.md 2026-10-30 rule 1, docs/d2d-backend.md, docs/d2d-bot.md, docs/d2d-wire.md (when merged). Product and oracle (user, 2026-11-04): d2d is the product (native, no Wine); the original Game.exe is the fidelity oracle that the A:B comparison measures d2d against.
+
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: d2d-default-backend (dropped by the user; its rows are not folded, see the end of this file)
 
 ## Requirements
 
@@ -47,12 +49,29 @@ Behaviour the d2d backend cannot provide yet (loot pickup, stat map, skill list,
 - **WHEN** the leveler needs base stats on d2d and `Mem` is `noMem`
 - **THEN** it takes the "unreadable" path and logs it, and does not invent values
 
-### Requirement: Original game remains the acceptance target
-Anything verified only on d2d MUST be tagged V-d2d and is not an acceptance result until the fidelity-gate spec passes or the original game confirms it. Source: docs/decisions.md 2026-10-30; plan-v2 section 11.
+### Requirement: Game.exe is the fidelity oracle, d2d is the product
+d2d (native, no Wine) SHALL be the end product and Game.exe SHALL be the fidelity oracle: a result verified only on d2d MUST be tagged V-d2d, and d2d behaviour is accepted as equal to the original game only when the A:B comparison (goal G-D, the fidelity-gate spec) says EQUIVALENT. The acceptance of the bot is: it clears Act 1 for 24 h on d2d AND the A:B comparison says EQUIVALENT. Source: user decision 2026-11-04 (replaces the ADR 0015 framing of game.exe as the acceptance target; needs an ADR 0015 amendment, branch agent/adramend); docs/decisions.md 2026-10-30; plan-v2 section 11. Reconciled 2026-11-04 (source: decision 4, user 2026-11-04).
 
 #### Scenario: Probe result
 - **WHEN** a d2d probe says the free Rogue is granted without a window
-- **THEN** the doc tags it V-d2d and the original-game probe stays an open item
+- **THEN** the doc tags it V-d2d and the oracle (original-game) probe stays an open item until the A:B comparison or an oracle probe covers it
+
+#### Scenario: Accepted
+- **WHEN** the bot has cleared Act 1 for 24 h on d2d and the A:B verdict is EQUIVALENT
+- **THEN** the backend is accepted; either condition alone is not acceptance
+
+### Requirement: Leaving d2d is the user's decision
+If the A:B verdict (G-D) is DIFFERENT and closing the gap needs a d2d engine rewrite, the user SHALL decide whether to leave d2d, and the decision MUST never be automatic; container build failures and other toolchain failures are tasks, never an exit trigger. Source: ADR 0009 exit trigger, reworded per the user's 2026-11-04 chat (tie to the G-D verdict). Reconciled 2026-11-04 (source: decision 4, user 2026-11-04).
+
+> OPEN QUESTION: confirm break-glass wording. The user only discussed this rule in chat. The old delta also carried a trigger of "about 16 agent-hours for one gap" and "moves a gated fidelity metric past 20 percent"; both are dropped here and tied to the G-D verdict instead. The user should confirm.
+
+#### Scenario: Different verdict and an engine rewrite
+- **WHEN** the A:B verdict is DIFFERENT and the gap needs an engine rewrite
+- **THEN** the coordinator asks the user and nothing switches backend until the user answers
+
+#### Scenario: Toolchain failure
+- **WHEN** the container build fails on the C++26 toolchain
+- **THEN** it is handled as a task (other compiler or base image), not as a reason to leave d2d
 
 ### Requirement: d2d belt keys drink by belt column
 On the d2d combat input the keys "1" to "4" SHALL send `cmd belt <n-1>` (belt column 0 to 3) and count one potion per accepted drink; every other key MUST pass to the d2dinput controller unchanged, because the channel's key verb does not know the belt hotkeys. Source: card d2dcombat; internal/d2dcombat/input.go (Input.Key), internal/d2dctl/combat_verbs.go (Drink); test TestBeltKeysAndCasts.
@@ -294,3 +313,80 @@ The d2d state source SHALL fill `Snapshot.Missiles` from `debug missiles` with o
 #### Scenario: Stock d2d without the verb
 - **WHEN** the d2d answers `err` to `debug missiles`
 - **THEN** every snapshot has no missiles and the verb is sent once
+
+### Requirement: Field objects are listed and operable on d2d
+The d2d state source SHALL list placed objects within 40 cells of the player (chests, shrines, the cage, the Tristram portal) with the objects.txt class of their preset row, and the d2d input SHALL operate one with `cmd interact <index>`, never a walk onto it. Source: drill H.obj. Reconciled 2026-11-04 (source: 2026-10-31-fix-obj).
+
+#### Scenario: Chest near the player
+- **WHEN** the level has a chest preset within 40 cells of the player
+- **THEN** the snapshot lists an object with the chest's class and Interact on it sends `cmd interact` with the preset index
+
+#### Scenario: Hidden or far preset
+- **WHEN** a preset row is hidden or farther than 40 cells
+- **THEN** it is not listed
+
+### Requirement: Waits step the game under lockstep
+The d2d backend SHALL make the pauses of the hover, menu and NPC-approach verbs advance the game by the requested time when d2d runs under lockstep, and SHALL keep them wall sleeps that end with the context on a free-running d2d. Source: docs/probes/drills/2026-10-31-h.txt (H.pause). Reconciled 2026-11-04 (source: 2026-10-31-fix-obj).
+
+#### Scenario: Lockstep pause
+- **WHEN** a pause of 4 seconds is requested under lockstep
+- **THEN** the game is stepped by 4 seconds of ticks and almost no wall time passes
+
+#### Scenario: Free-running pause
+- **WHEN** a pause is requested on a free-running d2d
+- **THEN** no step command is sent and the pause lasts the requested wall time
+
+### Requirement: The d2d portal verb never clicks with a dead context
+The d2d town portal verb SHALL check its context before every try and, when it is cancelled, SHALL return an error that names the cancel cause without pressing a key or clicking. Source: docs/research/town-portal-trace.md (134 of 778 failures were three tries in 10 ms with a cancelled context). Reconciled 2026-11-04 (source: 2026-10-31-fix-portal2).
+
+#### Scenario: Cancelled context
+- **WHEN** the portal verb is called with an already-cancelled context
+- **THEN** no key and no click is made and the error names the cause
+
+### Requirement: The d2d portal verb clicks only when the player is idle
+On d2d the portal verb SHALL NOT click while the player is in hit recovery, attack, block, cast, throw, kick, skill, sequence or knockback mode, because d2d drops the click silently. It SHALL wait up to 2 seconds for an idle mode and then fail with a busy error. Source: docs/research/town-portal-trace.md answer 3. Reconciled 2026-11-04 (source: 2026-10-31-fix-portal2).
+
+#### Scenario: Hit recovery ends within the wait
+- **WHEN** the player is in hit recovery when the verb starts and becomes idle within 2 seconds
+- **THEN** the click happens after the player is idle
+
+#### Scenario: The player stays busy
+- **WHEN** the player is still attacking after 2 seconds
+- **THEN** no click is made and the error says the player is busy
+
+### Requirement: The d2d portal verb succeeds only on a portal object
+The d2d portal verb SHALL report success only when a town portal object (class 59) is within 25 subtiles of the player, never because the scroll left the pack. When the source was spent and no object appeared, it SHALL re-read the pack and charges and retry with the next source; with no source left it SHALL return the no-portal error without another click. Failure lines SHALL name the cause (empty, busy, cancelled, no object after a dropped click, no object after a cut cast). Source: docs/research/town-portal-trace.md. Reconciled 2026-11-04 (source: 2026-10-31-fix-portal2).
+
+#### Scenario: Cast cut by a hit
+- **WHEN** the first scroll is spent and no portal appears while a second scroll is in the pack
+- **THEN** the second scroll is clicked and its portal counts as success
+
+#### Scenario: Last source spent by a cut cast
+- **WHEN** the only scroll is spent and no portal appears
+- **THEN** no second click is made and the error is the no-portal error
+
+### Requirement: Deadlines of game waits are game time under lockstep
+The d2d verbs that wait for the game up to a timeout (the NPC approach) SHALL measure that timeout on the clock of the run: the Pacer's virtual time under lockstep, the wall clock on a free-running d2d. Source: docs/probes/waits-audit.md. Reconciled 2026-11-04 (source: 2026-10-31-waits-audit).
+
+#### Scenario: Lockstep NPC approach that never opens
+- **WHEN** the NPC approach has a 6 second timeout under lockstep and the menu never opens
+- **THEN** it gives up after about 6 virtual seconds of stepped pauses, however little wall time that took
+
+#### Scenario: Free-running approach
+- **WHEN** the clock is the wall clock
+- **THEN** the deadline is the wall time, as before
+
+### Requirement: One call installs the lockstep-aware waits
+The d2d backend SHALL offer one call that detects lockstep and installs the pause and the deadline clock of the verbs, and every d2d program that calls those verbs (the bot, the lab shop tool) SHALL use it. Source: docs/probes/waits-audit.md. Reconciled 2026-11-04 (source: 2026-10-31-waits-audit).
+
+#### Scenario: Install under lockstep
+- **WHEN** the call runs against a lockstep d2d
+- **THEN** a later pause steps the game and the deadline clock advances by the paused time
+
+#### Scenario: Install on a free-running d2d
+- **WHEN** the call runs against a free-running d2d
+- **THEN** a later pause is a wall sleep that sends no step command and the deadline clock is the wall clock
+
+## Pending deltas (not in force)
+- d2d-default-backend (open card, proposed; the user dropped and archived it 2026-11-04): its MODIFIED "Original game remains the acceptance target" and ADDED "Game.exe is frozen" are SUPERSEDED by the oracle wording above and are not folded; its "Leaving d2d is break glass" is replaced by "Leaving d2d is the user's decision".
+- The container-deferred delta (d2d-container-soak) targets soak-gates, not this spec; the container is deferred (docs/decisions.md Current truth) and the delta is not folded here.
