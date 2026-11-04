@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 3c3579f4 11-04 12:23 `Merge branch 'main' into cardsclose` (-)
 - 962de9e9 11-04 12:11 `Merge agent/farmfallback: farmfallback: farm flag as plan data (+Dark Wood, Black Marsh), restricted-pick fallback re-pick (offline, two tables)` (farmfallback)
 - b57d0503 11-04 12:10 `Merge branch 'main' into farmfallback` (-)
 - c61930d7 11-04 12:07 `Merge agent/cardsapply: cardsapply: docs/cards.md (12 active, 5 parked), 14 cards archived (8 closed, 6 dropped); 4 fix cards left open for a decision` (cardsapply)
@@ -101,5 +102,4 @@
 - 1348df6b 11-04 11:53 `Merge agent/ctrlfix: AGENTS.md: pointer to the Current truth block; OpenSpec retired for new work (user approved 2026-11-04)` (ctrlfix)
 - da8865b6 11-04 11:52 `Merge branch 'main' into ctrlfix` (-)
 - dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
-- 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
 <!-- statusgen:end -->
