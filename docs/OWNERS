@@ -120,9 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-openspec/changes/gate2cursor/**  gate2cursor  gate2cursor
-docs/gate2cursor.md  gate2cursor  gate2cursor
-internal/town/hand/drop.go  gate2cursor  gate2cursor
-internal/loot/pickup.go  gate2cursor  gate2cursor
-internal/loot/loot_test.go  gate2cursor  gate2cursor
-internal/town/sim/input.go  gate2cursor  gate2cursor
