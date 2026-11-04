@@ -11,6 +11,7 @@ owns:
   - docs/soakskills.md
   - internal/d2dsoakstat/skills.go
   - internal/d2dsoakstat/skills_test.go
+  - cmd/d2dsoak/main.go
 exclusive: []
 gates:
   - "go test -p 1 ./internal/d2dsoakstat ./cmd/d2dsoak passes"
