@@ -25,15 +25,23 @@ def table(path):
     return out
 
 
+def width(v):
+    nb = v[10]
+    return 6 if nb and len(v) == 11 + 6 * nb else 5     # esverify2 lines carry a poison roll last
+
+
 def classes(v):
     cls, level, mana, dr_pct, dr_flat, mdr, rf, rl, rc, nb = v[1:11]
-    blows = [v[11 + 5 * k: 16 + 5 * k] for k in range(nb)]
+    w = width(v)
+    blows = [v[11 + w * k: 11 + w * (k + 1)] for k in range(nb)]
     tags = ["all", "shield" if level > 0 else "no-shield"]
     if level > 0:
         fields = sum(1 for b in blows for x in b if x > 0)
         tags.append("shield:multi-field" if fields > 1 else "shield:one-field")
         if any(b[4] > 0 for b in blows):
             tags.append("shield:magic")
+        if any(len(b) > 5 and b[5] > 0 for b in blows):
+            tags.append("shield:poison")
         if nb > 1:
             tags.append("shield:multi-blow")
         if mdr or dr_flat:
@@ -45,6 +53,8 @@ def classes(v):
     else:
         if sum(1 for b in blows for x in b if x > 0) > 1:
             tags.append("no-shield:multi-field")
+        if mdr or dr_flat:
+            tags.append("no-shield:mdr-or-flat")
     return tags
 
 

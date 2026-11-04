@@ -3,7 +3,7 @@
 // (rules::monster_blow, Foe::take, Fight::absorb) of whichever d2d tree it is compiled against (base or head).
 //   esv_probe CASES.tsv > out.tsv        (D2_MPQ_DIR, D2_PATCH_INSTALLER: the 1.14d data)
 // A case line (tab separated):
-//   id cls es_level mana256 dr_pct dr_flat mdr res_fire res_light res_cold nblows {phys fire light cold magic} x nblows
+//   id cls es_level mana256 dr_pct dr_flat mdr res_fire res_light res_cold nblows {phys fire light cold magic [poison]} x nblows
 // Whole-point rolls (min == max, `exact`: no draw, no 256ths added). es_level 0: no Energy Shield state.
 // Out: `id life256 mana256` (life lost: the returned whole points x 256 + foe.frac), and `#calc level pct per16` lines.
 #include <ai.hpp>
@@ -80,16 +80,20 @@ int main(int argc, char** argv) {
         foe.fighter.dr_pct = dr_pct; foe.fighter.dr_flat = dr_flat; foe.fighter.mdr = mdr;
         for (auto& r : foe.fighter.res) r = 0;
         for (int k = 0; k < 3; ++k) foe.fighter.res[std::size_t(k)] = res[std::size_t(k)];
+        std::vector<int> rest;
+        for (int v = 0; f >> v;) rest.push_back(v);
+        // esverify2: 6 numbers a blow (a poison roll last) when the line has them, else the first run's 5
+        const std::size_t width = nblows > 0 && rest.size() == std::size_t(nblows) * 6 ? 6 : 5;
         for (int b = 0; b < nblows; ++b) {
-            int phys = 0, fire = 0, light = 0, cold = 0, magic = 0;
-            f >> phys >> fire >> light >> cold >> magic;
+            const auto at = [&](std::size_t k) { return std::size_t(b) * width + k < rest.size() ? rest[std::size_t(b) * width + k] : 0; };
+            const int phys = at(0), fire = at(1), light = at(2), cold = at(3), magic = at(4), poison = width == 6 ? at(5) : 0;
             rules::MonStats attacker;
             attacker.level = 1;
             for (auto& element : attacker.elements) element.type = -1;
             attacker.a1_min = attacker.a1_max = phys;
             std::size_t slot = 0;
-            // monster_blow element types: 0 fire, 1 lightning, 2 cold, 4 magic (3 is poison)
-            for (const auto& [type, roll] : { std::pair{ 0, fire }, std::pair{ 1, light }, std::pair{ 2, cold }, std::pair{ 4, magic } })
+            // monster_blow element types: 0 fire, 1 lightning, 2 cold, 4 magic, 3 poison
+            for (const auto& [type, roll] : { std::pair{ 0, fire }, std::pair{ 1, light }, std::pair{ 2, cold }, std::pair{ 4, magic }, std::pair{ 3, poison } })
                 if (roll > 0 && slot < attacker.elements.size()) attacker.elements[slot++] = { type, 100, roll, roll, 25, "A1" };
             rules::Rng rng(12345 + b);
             foe.take(rules::monster_blow(foe.fighter, 1, rules::Motion::running, attacker, false, rng, false, true, true));
