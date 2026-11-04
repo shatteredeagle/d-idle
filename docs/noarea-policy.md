@@ -31,7 +31,7 @@ Exclusions (`ex`, goal.go:862-878):
 - areas CLEARED in the current game (`l.cleared`);
 - every area with a live ban (`r.avoid`, goal.go:866-871); a ban is a hard exclude, the window does not matter;
 - guarded areas (`guardedAreas`, routeguard.go:125): Monastery chain needs enough potions (log: `0 mana potions < 2`,
-  `3 healing potions < 4`) and a town portal; Tower chain needs a merc or clvl 16; Den waits for its floor. (U: the exact area sets
+  `3 healing potions < 4`) and a town portal; Tower Cellar chain needs a merc or clvl 16; Den waits for its floor. (U: the exact area sets
   are `task.RouteGuarded`/`TowerGuarded`, applied to areas 7..37, routeguard.go:137; their contents were not read.)
 
 Bans (`skipAreaLocked`, areaskip.go:31; defaults tuning_bot.go:74):
@@ -70,7 +70,7 @@ That left Act 1 open field and cave areas. In order:
 
 Why Pick returned nothing at 23:36:00.76 (line 41596): the in-window areas Cave 2 (banned 300 s at 23:35:36, line 41188) and
 Crypt (banned `nav-stuck` 23:35:48) were out, Mausoleum was not picked again (S: it was probably cleared or banned; the log
-block does not say), Outer Cloister/Jail/Catacombs/tower were guarded, and Burial Grounds (the only other entered area not
+block does not say), Outer Cloister/Jail/Catacombs/Tower Cellar were guarded, and Burial Grounds (the only other entered area not
 yet banned, leaves 10, 5 below) had just been banned `nav-stuck` 150 s (line 41504). Everything else (Cold Plains, Cave 1, Den,
 Blood Moor, Stony Field) was banned `unreachable` at 23:35:48 or 23:35:36. So the empty result is the ban set, not the floor
 rule; S: the floor rule (plan.go:434) would also have refused Burial Grounds, since Cave 2 or Crypt (a CLEARED step) still
@@ -117,7 +117,7 @@ potions, no portal) and bans, not because the character outgrew them.
 5. Widen the windows (`leave_clvl` of Cave 2 / Burial Grounds / Cave 1 plus 2-3) or relax `worthFloor` (4 -> 6). Pro: the
    past-window fallback stays alive instead of returning nothing. Con: XP per kill falls with the level gap (LIVE: Den at
    clvl 12 gave 8 XP in 12 min, plan.go:370); data change, shifts every build.
-6. Change the guard: open the Tower chain for clvl 15, or allow mana-potion shortfall when healing potions are fine. Pro: more
+6. Change the guard: open the Tower Cellar chain for clvl 15, or allow mana-potion shortfall when healing potions are fine. Pro: more
    in-window areas. Con: deaths (the guard exists from play-safety evidence, docs/sme/play-safety.md).
 7. Move on instead of waiting: allow Act 2 / Nightmare when Act 1 is exhausted (`Acts` default `[1]`, config.go:101;
    Lut Gholein enter 18). Pro: the real fix for being clvl 16 in Normal Act 1 with no merc. Con: needs quest steps the bot
