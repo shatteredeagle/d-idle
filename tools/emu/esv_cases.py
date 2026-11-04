@@ -39,7 +39,8 @@ def edge():
     # all four elements and the physical in one record, the mana running out inside the record
     for mana in (0, 300, 3000, 30000, 300000):
         for level in (1, 40):
-            rows.append((CLS, level, mana, 20, 3, 2, 75, -50, 30, 1, 300, 200, 150, 120, 80))
+            rows.append((CLS, level, mana, 20, 3, 2, 75, -50, 30, 1, 300, 200, 150, 0, 80))
+            rows.append((CLS, level, mana, 20, 0, 0, 75, -50, 30, 1, 300, 200, 150, 120, 0))
             rows.append((CLS, level, mana, 0, 0, 0, 0, 0, 0, 3, 100, 0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100, 0))
     return rows
 
@@ -58,6 +59,8 @@ def rand_case(rng):
         el = []
         for p in (0.35, 0.35, 0.35, 0.15):
             el.append(rng.choice((rng.randint(1, 60), rng.randint(1, 800), rng.randint(1, 2000))) if rng.random() < p else 0)
+        while sum(1 for x in el if x) > 3:          # a MonStats row has three element slots (rules::MonStats::elements)
+            el[max(i for i, x in enumerate(el) if x)] = 0
         blows += [phys, *el]
     return (CLS, level, mana, dr_pct, dr_flat, mdr, *res, n, *blows)
 
