@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- retreatlive: RT.drink and RT.portal run live on d2d; portal passes, drink setup sits in the chicken zone (finding only)
 - retreatdrill: drill group RT executes the retreat action (drink, town portal, leave) with a numeric pass condition; not run live
 - logfields: the bot logs cast result, last skill of a kill, armor sample and build line; d2dsoak report prints them (logging only, not verified live)
 - soakskills: per-skill soak fields parser and report text (d2dsoakstat), docs/soakskills.md

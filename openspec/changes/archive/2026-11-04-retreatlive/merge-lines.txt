@@ -1,0 +1,3 @@
+BACKLOG: retreatlive: RT.portal PASS live on d2d (1 tick, identical runs); RT.drink FAIL = bound question (20 percent is below chickenPct 25, setup should use about 40 percent); RT.leave still blocked; evidence docs/probes/retreat/, docs/retreatlive.md
+INDEX: docs/retreatlive.md: first live d2d run of the RT retreat drills (portal PASS, drink bound question)
+CHANGELOG: retreatlive: RT.drink and RT.portal run live on d2d; portal passes, drink setup sits in the chicken zone (finding only)

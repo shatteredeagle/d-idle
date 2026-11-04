@@ -1,0 +1,73 @@
+{
+ "results": [
+  {
+   "id": "RT.portal",
+   "primitive": "P29",
+   "title": "retreat executed: 1 adjacent, 34 percent life, empty belt, one scroll: the bot opens a town portal (scroll spent, portal listed)",
+   "verdict": "PASS",
+   "reason": "town-portal executed: 0 ticks to act, 1 to effect, life floor 102",
+   "intended": "portal: Safety decides \"town-portal\", Act carries it out, effect within 50 ticks, life floor above 0",
+   "observed": "adjacent 1 life 102/300 decision \"town-portal\" acted true (err \"\") ticks to act 0, to effect 1; life floor 102 end 102; belt 0-\u003e0 scrolls 1-\u003e0 portal true left false dead false",
+   "runs": [
+    {
+     "Verdict": "PASS",
+     "Reason": "town-portal executed: 0 ticks to act, 1 to effect, life floor 102",
+     "Intended": "portal: Safety decides \"town-portal\", Act carries it out, effect within 50 ticks, life floor above 0",
+     "Observed": "adjacent 1 life 102/300 decision \"town-portal\" acted true (err \"\") ticks to act 0, to effect 1; life floor 102 end 102; belt 0-\u003e0 scrolls 1-\u003e0 portal true left false dead false",
+     "sig": "town-portal|true",
+     "cheats": [
+      "debug goto 2",
+      "debug kill",
+      "debug stat 7 76800",
+      "debug stat 6 76800",
+      "debug belt clear",
+      "debug clearinv",
+      "debug give tsc",
+      "debug spawn zombie1 1 near",
+      "debug stat 6 26112",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 774027746,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "PASS",
+     "Reason": "town-portal executed: 0 ticks to act, 1 to effect, life floor 102",
+     "Intended": "portal: Safety decides \"town-portal\", Act carries it out, effect within 50 ticks, life floor above 0",
+     "Observed": "adjacent 1 life 102/300 decision \"town-portal\" acted true (err \"\") ticks to act 0, to effect 1; life floor 102 end 102; belt 0-\u003e0 scrolls 1-\u003e0 portal true left false dead false",
+     "sig": "town-portal|true",
+     "cheats": [
+      "debug stat 6 76800",
+      "debug goto 2",
+      "debug kill",
+      "debug stat 7 76800",
+      "debug stat 6 76800",
+      "debug belt clear",
+      "debug clearinv",
+      "debug give tsc",
+      "debug spawn zombie1 1 near",
+      "debug stat 6 26112",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 48749614,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug goto 2",
+    "debug kill",
+    "debug stat 7 76800",
+    "debug stat 6 76800",
+    "debug belt clear",
+    "debug clearinv",
+    "debug give tsc",
+    "debug spawn zombie1 1 near",
+    "debug stat 6 26112",
+    "debug goto 1"
+   ]
+  }
+ ]
+}
