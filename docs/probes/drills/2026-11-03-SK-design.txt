@@ -1,0 +1,23 @@
+SKSMOKE-A1 drill design (card sksmoke-a1, 2026-11-03). Status: BLOCKED live (all instances stopped; agents never start games). Nothing here was run on game.exe.
+
+Source of numbers (D, read): skills.tsv of the worker host's table cache (drills13/tables), columns HitShift, EMin/EMinLev1..5, EMax/EMaxLev1..5, EDmgSymPerCalc.
+  Fire Bolt  (id 36): HitShift 7, fire, EMin 6 (Lev 3,4,8,18,54), EMax 12 (Lev 3,6,10,20,56), synergy (Fire Ball + Meteor) x par8
+  Charged Bolt (38): HitShift 7, ltng, EMin 4 (Lev 1,1,2,3,4), EMax 8 (Lev 1,1,2,3,4), synergy Lightning x par8
+Formula (V, docs/research/skill-damage-trace.md, FUN_00644b70/00644d50/00644e40): value256 = (E + brackets) << HitShift; points = value256 / 256 = (E + brackets) / 2.
+  brackets: lvl<=8 (lvl-1)*Lev1; lvl<=16 7*Lev1 + (lvl-8)*Lev2; lvl<=22 7*Lev1 + 8*Lev2 + (lvl-16)*Lev3. Roll per hit = min + rand(max-min) (V, sk-missile-trace.md), so mean = (min+max)/2 before resist.
+  Synergy 0 on the throwaway char when Fire Ball, Meteor, Lightning are 0 points (SETUP must leave them 0).
+
+Expected per hit (points, no resist, no mastery; computed by hand from the above, S):
+  level  FireBolt min-max (mean)   ChargedBolt min-max (mean)   CB bolts (3+lvl-1, cap 24)
+  1      3.0-6.0   (4.5)           2.0-4.0   (3.0)             3
+  4      7.5-10.5  (9.0)           3.5-5.5   (4.5)             6
+  8      13.5-16.5 (15.0)          5.5-7.5   (6.5)             10
+  13     23.5-31.5 (27.5)          8.0-10.0  (9.0)             15
+  20     45.5-60.5 (53.0)          13.5-15.5 (14.5)            22
+
+Method (proposal, U until run): per level, SETUP via d2cheat (reason "SK setup: skill level N") before `runstart SK-<level>`; target a single zero-resist monster of known max life (Blood Moor zombie or fallen); read its life (256ths, mem) before the cast and after the missile lands; one cast per sample, repeat until >= 40 hits per level. Hit damage = life delta of a non-killing hit (discard kills and overkill). Mean over hits compared with the table; Charged Bolt delta of the whole cast / bolts that hit.
+PASS (U, proposed; the gate doc gives no number, so use): measured mean within 10 percent of the table mean over >= 40 hits, each measured hit inside [min - 0.5, max + 0.5] points (life 256ths truncation, PR #135). Pack kills per cast: report only (no PASS in the gate doc).
+Run limits: i2 only, tools/live.sh --bg --max 600 sksmoke combatlive ... (a SK subcommand has to be written first: combatlive has state/probe/tree/bind/fight only), capacity check `tools/ops.sh run capacity2.sh --add 1` (was OK at 2026-11-03 22:13).
+CRUTCH RULE: skill levels are SETUP before runstart; `d2cheat ledger --since-run SK-<n>` must print writes after start: 0. d2cheat today has no per-skill-level verb (only stats skills=N and setstat); internal/cheat/save.go SetSkillLevel edits a .d2s with the game stopped, which needs a restart (not allowed for agents). A per-skill live setter (or the save edit by the main agent) is therefore a precondition.
+Frost Nova ring: not done, no nova harness in internal/drill or cmd/d2drill.
+Preconditions for whoever unblocks: (1) main agent starts i2 and logs Combi in; (2) a skill-level setter; (3) an SK subcommand that reads a monster's life per tick.
