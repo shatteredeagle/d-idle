@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- soak-gates spec: Gate 2 Andariel criterion interim wording (user decision 2026-11-04, option a)
 - docs: Gate 2 soak run s13-20261103-2211-g2v: NOT PASSED (XP/h at or above the m24 floor (1000 per hour); No single state over 10 min without progress; Belt; d2dsoak INVARIANTS; No-gain window at most 90 min (clvl or gold gain; quest step not read; Attempt Andariel at clvl 14 or higher; Hire the merc) (docs/soaks/gate2-s13-20261103-2211-g2v.md).
 - docs: Gate 2 soak run s12-20261103-2210-g2v: NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md).
 - docs: Gate 2 soak run s11-20261103-1954-g2a: NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s11-20261103-1954-g2a.md).
