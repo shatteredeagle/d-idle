@@ -13,8 +13,8 @@ owns:
 exclusive: []
 gates:
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; python3 tools/merge_lines_check.py --changed ok"
-result: ""
+result: "docs/research/primitives-additions-20261104.md: draft rows P37 to P45 (Teleport movement, buff upkeep, object interaction, difficulty change, charms, threshold gear swap, chicken exit, weapon swap, merc gear equip), priority order and missing d2d verbs; docs/primitives.md untouched; not verified live"
 live: "not verified live (docs only)"
 ```
 
-- [ ] work done
+- [x] work done
