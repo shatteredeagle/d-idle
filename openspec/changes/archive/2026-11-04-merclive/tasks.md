@@ -2,7 +2,7 @@
 
 ```yaml
 change: merclive
-status: in-progress
+status: archived
 agent: merclive
 branch: agent/merclive
 worktree: ~/code/d2lod-wt/merclive
@@ -14,7 +14,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits"
-result: "d2d live: D8.c claim PASS (merc RG in dump), D8.a revive PASS but price 0 (not the bot's assumption, U); paid hire BLOCKED (no drill); not game.exe"
+result: "d2d live: claim PASS, revive flow PASS, paid hire BLOCKED; not game.exe"
+merge: 0dcf201
 ```
 
 - [x] Capacity check OK

@@ -120,6 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-openspec/changes/merclive/**  merclive  merclive
-docs/probes/merclive/**  merclive  merclive
-docs/merclive.md  merclive  merclive

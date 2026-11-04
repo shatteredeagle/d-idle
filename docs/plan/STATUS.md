@@ -58,7 +58,6 @@
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [mapitem](../../openspec/changes/mapitem/) | in-progress | mapitem | `docs/stream/map-contiguity.md`<br>`cmd/d2dview/stitch.go`<br>`cmd/d2dview/stitch_test.go`<br>`cmd/d2dview/feed.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`cmd/d2dview/web/index.html` | - |
-| [merclive](../../openspec/changes/merclive/) | in-progress | merclive | `docs/probes/merclive/**`<br>`docs/merclive.md`<br>`openspec/changes/merclive/**` | - |
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
@@ -114,7 +113,6 @@
 - change m3-merc: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-merc leaves nothing
 - change mapitem: go test -p 1 ./cmd/d2dview passes including TestStitchTransitionBloodMoorColdPlains, TestStitchFieldAndTown, TestStitchFieldToCaveIsNotStitched
 - change mapitem: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change merclive: changecheck 0 warnings; leakcheck 0 hits
 - change nexthit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 0dcf201a 11-04 02:47 `Merge agent/merclive: merclive: P18 live on d2d: free Rogue claim PASS, revive flow PASS (price 0 for a cheat-hired level-1 merc), paid hire BLOCKED (no drill)` (merclive)
 - 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 - 3d601e79 11-04 02:24 `Merge agent/retreatfix: retreatfix: RT.drink setup life derived from the chicken/drink knobs, RT.portal bound 10 ticks` (retreatfix)
 - 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
@@ -136,5 +135,4 @@
 - 024c7593 11-04 01:55 `Merge agent/tomefix: tomefix: audit of false-empty tome verdict, 14 regression tests, live-check recipe (no bot change)` (tomefix)
 - e9f01cdc 11-04 01:54 `merge origin/main into tomefix` (tomefix)
 - 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
-- 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
 <!-- statusgen:end -->
