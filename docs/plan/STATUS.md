@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
 - 902f087b 11-04 10:05 `Merge agent/rtleave: rtleave: Fighter.Leave wired in d2drill so RT.leave runs (offline tests; live run pending)` (rtleave)
 - 5072f374 11-04 10:04 `merge origin/main into rtleave` (rtleave)
 - ea07d656 11-04 09:55 `Merge agent/mercrevive: mercrevive: merc.goldFarmMaxLevel 16 to 18, revive reserve 150 to 100 percent, need= in the skip log` (mercrevive)
@@ -136,5 +137,4 @@
 - 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
 - 87972cfa 11-04 09:04 `Merge agent/prbopen: prbopen: log of the batch B upstream PR #189 (posted lines)` (prbopen)
 - 627398b0 11-04 09:03 `merge origin/main into prbopen` (prbopen)
-- b64363b6 11-04 09:00 `Merge agent/noarea: noarea: leveling-area picker policy write-up (Gate 2 seed 13 block, options)` (noarea)
 <!-- statusgen:end -->
