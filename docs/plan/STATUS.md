@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
 - 70a06a94 11-04 11:56 `Merge branch 'main' into mercrevive2` (-)
 - 1348df6b 11-04 11:53 `Merge agent/ctrlfix: AGENTS.md: pointer to the Current truth block; OpenSpec retired for new work (user approved 2026-11-04)` (ctrlfix)
 - da8865b6 11-04 11:52 `Merge branch 'main' into ctrlfix` (-)
@@ -134,5 +135,4 @@
 - b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
 - b870d079 11-04 11:42 `Merge agent/noareacards2: noareacards2: no-area card set rewritten from the SME review (farmfallback first), design only` (noareacards2)
 - a769ffa8 11-04 11:41 `Merge branch 'main' into noareacards2` (-)
-- ab438589 11-04 11:38 `Merge agent/prbopen2: prbopen2: posted log for upstream PR #195 (PALSKILL D2/D3)` (prbopen2)
 <!-- statusgen:end -->
