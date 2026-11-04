@@ -1,0 +1,5 @@
+DRILL RT.portal P29 PASS town-portal executed: 0 ticks to act, 1 to effect, life floor 102 | intended: portal: Safety decides "town-portal", Act carries it out, effect within 50 ticks, life floor above 0 | observed: adjacent 1 life 102/300 decision "town-portal" acted true (err "") ticks to act 0, to effect 1; life floor 102 end 102; belt 0->0 scrolls 1->0 portal true left false dead false | runs: 2, identical
+
+drill     prim  verdict  det  reason
+RT.portal P29   PASS     same town-portal executed: 0 ticks to act, 1 to effect, life floor 102
+cheat verbs used (each ledgered with a reason): debug belt clear, debug clearinv, debug give tsc, debug goto 1, debug goto 2, debug kill, debug spawn zombie1 1 near, debug stat 6 26112, debug stat 6 76800, debug stat 7 76800
