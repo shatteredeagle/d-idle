@@ -2,7 +2,7 @@
 
 ```yaml
 change: dwm4triage
-status: in-progress
+status: archived
 agent: dwm4triage
 branch: agent/dwm4triage
 worktree: ~/code/d2lod-wt/dwm4triage
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "triaged offline: the inventory is opened by the bot's portal emergency, not the drill; stuck flag cause U; no code change; see docs/dwm4triage.md"
+result: "docs only; not settled; live recheck recipe"
 live: "not verified live"
+merge: 21b027a
 ```
 
 - [x] work done

@@ -47,7 +47,6 @@
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend_default_test.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
 | [drills6](../../openspec/changes/drills6/) | in-progress | drills6 | `openspec/changes/drills6/**` | - |
-| [dwm4triage](../../openspec/changes/dwm4triage/) | in-progress | dwm4triage | `docs/dwm4triage.md`<br>`openspec/changes/dwm4triage/**` | - |
 | [fixbelt](../../openspec/changes/fixbelt/) | in-progress | fixbelt | `docs/fixbelt.md`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/area_ban_test.go`<br>`openspec/changes/fixbelt/**` | - |
 | [fixcastgap](../../openspec/changes/fixcastgap/) | in-progress | fixcastgap | `docs/fixcastgap.md`<br>`internal/combat/castgap.go`<br>`internal/combat/castgap_test.go` | - |
 | [fixmanamodel](../../openspec/changes/fixmanamodel/) | in-progress | fixmanamodel | `docs/fixmanamodel.md`<br>`internal/resource/manamodel.go`<br>`internal/resource/manamodel_test.go` | - |
@@ -94,7 +93,6 @@
 - change d2d-replicated-soak: d2dsoak verdict printed for all four gated metrics, 5 or more seeds
 - change d2d-replicated-soak: gaps listed as explained or as fidelity bugs
 - change drills6: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict; whole-repo vet and test -short on the worker host
-- change dwm4triage: go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits
 - change fixbelt: go test -p 1 internal/resource internal/bot; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change fixcastgap: go test -p 1 ./internal/combat ./internal/env ./tools/knobdump passes including TestFightLoopLightningNeverReissuedEarly
 - change fixcastgap: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
 - 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
 - eb6f32e6 11-04 01:17 `merge origin/main into primcheck` (primcheck)
 - c71431a4 11-04 01:14 `Merge agent/groomland2: open-work: rescope SKZEROHIT to the native D1/D2 run (groom proposal)` (groomland2)
@@ -136,5 +135,4 @@
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 - fd5f9825 11-04 01:05 `merge origin/main into groomland2` (groomland2)
 - 6e395bb6 11-04 00:56 `Merge agent/killcredit: killcredit: bot logs kill credit per cast window and nova targets; d2dsoak report prints per-skill kills` (killcredit)
-- 93502f42 11-04 00:55 `merge origin/main into killcredit` (killcredit)
 <!-- statusgen:end -->

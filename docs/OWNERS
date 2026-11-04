@@ -120,5 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/dwm4triage.md  dwm4triage  dwm4triage
-openspec/changes/dwm4triage/**  dwm4triage  dwm4triage
