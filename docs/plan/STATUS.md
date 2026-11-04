@@ -52,7 +52,6 @@
 | [fixmanamodel](../../openspec/changes/fixmanamodel/) | in-progress | fixmanamodel | `docs/fixmanamodel.md`<br>`internal/resource/manamodel.go`<br>`internal/resource/manamodel_test.go` | - |
 | [fixprogress](../../openspec/changes/fixprogress/) | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go`<br>`openspec/changes/fixprogress/**` | - |
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
-| [gate1multi-20261103-1938-ms4](../../openspec/changes/gate1multi-20261103-1938-ms4/) | in-progress | gaterun | `docs/soaks/gate1-multiseed-20261103-1938-ms4.md`<br>`docs/soaks/gate1-s17-20261103-1736-ms4.md`<br>`docs/probes/soak-logs/gate1-s17-20261103-1736-ms4-minutes.jsonl.gz`<br>`docs/soaks/gate1-s19-20261103-1737-ms4.md`<br>`docs/probes/soak-logs/gate1-s19-20261103-1737-ms4-minutes.jsonl.gz`<br>`docs/soaks/gate1-s21-20261103-1737-ms4.md`<br>`docs/probes/soak-logs/gate1-s21-20261103-1737-ms4-minutes.jsonl.gz`<br>`openspec/changes/gate1multi-20261103-1938-ms4/**` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
@@ -102,7 +101,6 @@
 - change fixprogress: go test -p 1 ./internal/town ./internal/bot passes; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change fixskilllvl: go test -p 1 ./internal/d2 ./internal/combat passes; whole-repo go vet and go test -short on the worker host pass
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
-- change gate1multi-20261103-1938-ms4: Gate 1 criteria of the soak-gates spec over seeds 17,19,21, judged by d2dsoak compare (numbers in docs/soaks/gate1-multiseed-20261103-1938-ms4.md)
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 143bbf3a 11-03 19:39 `Merge agent/gate1multi-20261103-1938-ms4: Gate 1 ms4 multiseed record: PASSED indicative (3 seeds 17,19,21; XP/h +1.2% vs baseline)` (gate1multi-20261103-1938-ms4)
 - 9fba0832 11-03 19:34 `Merge agent/codereview3: codereview3: independent review of gate1fix, recoverykit, xpfallback (C1-C4)` (codereview3)
 - e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
 - 952b3944 11-03 17:56 `merge origin/main into verifymonsterpace` (verifymonsterpace)
@@ -136,5 +135,4 @@
 - fe3b2ebd 11-03 17:42 `Merge agent/plandocs: plandocs: apply project review goals G-A..G-F to plan docs; mark covered open-work items done` (plandocs)
 - e57c2a1f 11-03 17:41 `merge origin/main into plandocs` (plandocs)
 - 775f767c 11-03 17:38 `Merge agent/gate1multi-20261103-1650-ms3: Gate 1 ms3 multiseed record: NOT PASSED (17 stall, 19 belt, 21 ok)` (gate1multi-20261103-1650-ms3)
-- 11aa1479 11-03 17:37 `merge origin/main into gate1multi-20261103-1650-ms3` (gate1multi-20261103-1650-ms3)
 <!-- statusgen:end -->
