@@ -1,0 +1,5 @@
+DRILL D8.h2 P18 FAIL wanted ErrCantAfford, got no hire line in Kashya's menu: [{Kashya 400 115 Kashya 400 115} {talk 400 133 talk 400 133} {cancel 400 148 cancel 400 148}] | intended: gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged | observed: quote 0 row ""; gold 1 -> 1; merc present=false dead=false code= life=[0,0] -> present=false dead=false code= life=[0,0]; err no hire line in Kashya's menu: [{Kashya	400	115 Kashya 400 115} {talk	400	133 talk 400 133} {cancel	400	148 cancel 400 148}]
+
+drill     prim  verdict  det  reason
+D8.h2     P18   FAIL     -    wanted ErrCantAfford, got no hire line in Kashya's menu: [{Kashya 400 115 Kashya 400 115} {talk 400 133 talk 400 133} {cancel 400 148 cancel 400 148}]
+cheat verbs used (each ledgered with a reason): debug goto 1, debug stat 14 1
