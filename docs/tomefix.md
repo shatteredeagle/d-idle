@@ -26,7 +26,7 @@ Notes (V code): a tome on the cursor is not a pack source (`Where != ContInvento
 ## Regression tests (all pass)
 - `internal/combat/tomefix_test.go` (`go test -p 1 ./internal/combat -run TomeFix`): charges -> source; shifted/stale snapshot; ground unit with the tome's id; cursor (qty kept, not pack source); panel flag; contract that only absent extras / stat error read empty.
 - `internal/d2denv/tomefix_test.go` (`go test -p 1 ./internal/d2denv -run TomeFix`): Reader with ground/carried id collision, `last` replaced between looks (reads 12 not 0), cursor tome, qty-less record reads empty (contract).
-- `internal/town/tomefix_test.go` (needs gear tables; skips here, ran PASS on the worker host: `labrun orion -- sh -c 'go test -count=1 -p 1 -v ./internal/town -run TomeFix'`): 13 charges raise no trip; moved cell; scroll beside empty tome; no stat list reads empty (contract).
+- `internal/town/tomefix_test.go` (needs gear tables; skips here, ran PASS on the worker host: `go test -count=1 -p 1 -v ./internal/town -run TomeFix` through labrun on the worker host): 13 charges raise no trip; moved cell; scroll beside empty tome; no stat list reads empty (contract).
 
 ## Proven safe offline vs U
 - Safe (V by test): paths 1 to 7 and 11 against stale/shifted snapshot, id collision, cursor, panel state.
