@@ -12,3 +12,5 @@ docs/research/codereview3.md found two medium and two low defects in gate1fix, r
 ## Impact
 
 internal/bot (goal, geargate, areaskip, task, resource), internal/plandata test, one docs data file. Offline only, not verified live.
+
+Note: the card edits TestMatchesDocs in internal/plandata/plandata_test.go (owned by buildv3) and does not own that file; the C1 test lives in internal/bot/areaskip_test.go.
