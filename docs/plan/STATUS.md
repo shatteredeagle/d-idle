@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
 - 87972cfa 11-04 09:04 `Merge agent/prbopen: prbopen: log of the batch B upstream PR #189 (posted lines)` (prbopen)
 - 627398b0 11-04 09:03 `merge origin/main into prbopen` (prbopen)
 - b64363b6 11-04 09:00 `Merge agent/noarea: noarea: leveling-area picker policy write-up (Gate 2 seed 13 block, options)` (noarea)
@@ -136,5 +137,4 @@
 - ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
 - 1f71fb00 11-04 06:33 `Merge agent/gate2run-s13-20261103-2211-g2v: Gate 2 s13 record: NOT PASSED (258 vh, clvl 16): save-point stall from about 01:20 EST (XP/h, no-progress, belt, invariants, no-gain, Andariel, merc)` (gate2run-s13-20261103-2211-g2v)
 - aa67a14d 11-04 06:28 `merge origin/main into gate2run-s13-20261103-2211-g2v` (gate2run-s13-20261103-2211-g2v)
-- 1fca1265 11-04 06:25 `Merge agent/gate2run-s12-20261103-2210-g2v: Gate 2 s12 record: NOT PASSED only on Attempt Andariel at clvl 14+ (45.7 vh, clvl 16, 1 death)` (gate2run-s12-20261103-2210-g2v)
 <!-- statusgen:end -->
