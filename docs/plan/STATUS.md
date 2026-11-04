@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- df6e3798 11-04 03:55 `Merge agent/prbprep: prbprep: batch B rebased onto upstream main 002ffab4a (local head 7e1f8fc4), checks pass, PR body r5 drafted (not posted)` (prbprep)
 - dae56176 11-04 03:30 `Merge agent/gate2cursor: gate2cursor: drop a held item no pack cell takes (Gate 2 seed 13 cursor fault; cause B is policy, unchanged)` (gate2cursor)
 - fa4e46fb 11-04 03:28 `merge origin/main into gate2cursor` (gate2cursor)
 - fdbf1b94 11-04 03:00 `Merge agent/gate2loop: gate2loop: save point after town chores and only when XP was earned (Gate 2 seed 13 save-point loop; partial fix)` (gate2loop)
@@ -134,5 +135,4 @@
 - 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
 - cb2af00e 11-04 02:20 `Merge agent/retreatlive: retreatlive: P29 RT.portal PASS on d2d; RT.drink FAIL on a bound question (setup 20 percent life is below chickenPct 25)` (retreatlive)
 - 789ba3f3 11-04 02:03 `Merge agent/retreatdrill: retreatdrill: drill group RT executes the P29 retreat action (offline-tested, not run live)` (retreatdrill)
-- 94dcf5f0 11-04 02:02 `merge origin/main into retreatdrill` (retreatdrill)
 <!-- statusgen:end -->
