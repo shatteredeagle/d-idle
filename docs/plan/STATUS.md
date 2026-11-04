@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- c00666e5 11-04 08:59 `merge origin/main into noarea` (noarea)
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
 - c0b2638a 11-04 08:56 `merge origin/main into andarielplan` (andarielplan)
 - ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
@@ -136,5 +137,4 @@
 - 4ce50e26 11-04 04:31 `Merge agent/andarielgate: andarielgate: Gate 2 s11 Andariel criterion failed on a deliberate hold (boss.andarielHold=1), no code change; question for the user` (andarielgate)
 - c0a5b1c9 11-04 04:28 `merge origin/main into andarielgate` (andarielgate)
 - f9473ae6 11-04 04:02 `Merge agent/gate2run-s11-20261103-1954-g2a: Gate 2 s11 record: NOT PASSED only on Attempt Andariel at clvl 14+ (merc hired OK, 0 deaths in 14,869 kills, XP/h 6476 above the m24 floor)` (gate2run-s11-20261103-1954-g2a)
-- 0235a87a 11-04 03:58 `merge origin/main into gate2run-s11-20261103-1954-g2a` (gate2run-s11-20261103-1954-g2a)
 <!-- statusgen:end -->
