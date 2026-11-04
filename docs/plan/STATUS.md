@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- fbd9acf2 11-04 10:39 `merge origin/main into codefix67` (codefix67)
 - 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
 - 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
 - e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
@@ -136,5 +137,4 @@
 - 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
 - 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
 - bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
-- 902f087b 11-04 10:05 `Merge agent/rtleave: rtleave: Fighter.Leave wired in d2drill so RT.leave runs (offline tests; live run pending)` (rtleave)
 <!-- statusgen:end -->
