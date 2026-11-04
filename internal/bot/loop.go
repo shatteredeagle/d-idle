@@ -295,6 +295,11 @@ func (r *Runner) hazard(ctx context.Context, snap *d2.Snapshot) {
 }
 
 func (r *Runner) carryOut(ctx context.Context, a SafetyAction) error {
+	if a != SafetyDrinkLife && a != SafetyDrinkMana && a != SafetyDrinkRejuv {
+		if s := r.latest(); s != nil && s.Player != nil {
+			r.e.Log.Info("safety decision", append([]any{"action", a.String(), "area", s.Player.Area}, r.vitalsKV(s, s.Player)...)...)
+		}
+	}
 	sctx, cancel := gclock.WithTimeout(ctx, 15*time.Second)
 	defer cancel()
 	err := r.d.Fighter.Act(sctx, a)

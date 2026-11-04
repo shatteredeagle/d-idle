@@ -446,6 +446,7 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 			o.campaignAt = now
 		}
 		r.emit(goals.Event{Type: goals.EvAreaChange, Area: r.areaName(p.Area), AreaID: p.Area})
+		r.zoneEntry(s, p)
 	}
 
 	// death
@@ -874,7 +875,8 @@ func (r *Runner) recordDeath(p *d2.Player, now time.Time) {
 		msg = "Killed by " + rec.Killer + " in " + rec.AreaName
 	}
 	r.e.Log.Warn("death autopsy: "+rec.Autopsy.Summary, "area", rec.AreaName, "killer", rec.Killer, "killerType", rec.Autopsy.KillerType, "killerLevel", rec.Autopsy.KillerLevel, "hostiles", rec.Autopsy.HostilesNear, "lastSafety", rec.Autopsy.LastSafety, "bug", rec.Autopsy.Bug, "beltHP", rec.Autopsy.BeltHP)
-	r.e.Log.Warn("character died", "area", rec.Area, "killer", rec.Killer, "x", rec.Pos.X, "y", rec.Pos.Y, "corpseValue", rec.CorpseValue)
+	r.e.Log.Warn("character died", "area", rec.Area, "killer", rec.Killer, "x", rec.Pos.X, "y", rec.Pos.Y, "corpseValue", rec.CorpseValue,
+		"life", p.Life, "maxLife", p.MaxLife, "heal", a.kit.BeltHP+a.kit.PackHP, "beltMP", a.kit.BeltMP, "rejuv", a.kit.BeltRV, "tome", a.kit.TownPortals)
 	di := combat.DeathInfo{Area: rec.Area, Difficulty: p.Difficulty, CharLevel: p.Level, MonsterName: a.killerName, MonsterClass: rec.KillerClass,
 		Boss: a.killerBoss, Champion: a.killerChampion, MonsterLevel: a.killerLevel, Affixes: a.killerAffix}
 	if a.killer != nil {
@@ -967,7 +969,7 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 	r.e.Log.Info("minute", append([]any{"area", p.Area, "clvl", p.Level, "xp", p.Exp, "kills", r.lifetimeKills(p.Name), "killsGame", o.kills, "deaths", o.deaths,
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "packHP", packHP, "packMP", packMP, "beltBoxes", beltBoxes, "potionsUsed", int(r.drank.Load()),
 		"gold", p.Gold, "stashGold", p.StashGold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles, o.lostRestarts), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
-		"state", group, "rstate", rstate, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, r.runKV()...)...)
+		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, r.runKV()...)...)
 	o.goldPickupMin = 0
 	r.noteGoldNextMinute(p.Gold, now)
 }
