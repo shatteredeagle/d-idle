@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 3859f3cd 11-04 16:46 `Merge agent/hirewindow: Kashya hire entry needs clvl > 7; d2d matches, no deviation (trace doc)` (hirewindow)
 - 9b620b6f 11-04 16:43 `Merge branch 'main' into hirewindow` (-)
 - 0bb4156c 11-04 16:29 `Merge agent/esverify: esverify: Opus verifier for the Energy Shield absorb-order candidate: CONFIRMED WITH CAVEATS (native FUN_005ca6c0 run, mana 0 differ on 51,065 cases, life 4,494 to 171; caveat C1 flat/mdr negative field)` (esverify)
 - 1724c744 11-04 16:28 `Merge branch 'main' into esverify` (-)
@@ -102,5 +103,4 @@
 - b8facbfa 11-04 16:01 `Merge agent/esprep: esprep: Energy Shield absorb-order PR candidate (local/es-absorb-order 12b78b60 on upstream 2d051d77): differential 60,000 cases, shield life 16,858 to 0 differ; PR body draft, nothing posted` (esprep)
 - 78ea8338 11-04 16:00 `Merge branch 'main' into esprep` (-)
 - 6f72114c 11-04 15:53 `Merge agent/pr195merged: docs: record upstream PR 195 (PALSKILL D2/D3) as merged` (pr195merged)
-- 6f563f51 11-04 14:48 `Merge agent/livedrills3: livedrills3: first live runs on d2d: DS.1 PASS; DS.2 FAIL (drill plan lacks gold, drill bug); DS.3/DS.4 and the tome drills BLOCKED; D8.h/D8.h2 FAIL: Kashya menu after talk has no hire line` (livedrills3)
 <!-- statusgen:end -->
