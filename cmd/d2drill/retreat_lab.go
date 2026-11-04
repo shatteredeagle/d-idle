@@ -14,7 +14,7 @@ func (l *lab) Retreat(ctx context.Context, r *drill.Run, s drill.RetreatSpec) (r
 	ri.TicksToEffect = -1
 	if s.Variant == "leave" && l.rig.Fighter.Leave == nil {
 		// without the hook Act(Chicken) sends the unverified esc-and-click placeholder (combat/fighter.go leave)
-		ri.Err = "leave hook not wired in d2drill (Fighter.Leave is nil): the chicken path cannot be run yet"
+		ri.Err = "leave hook not wired in d2drill (Fighter.Leave is nil): newLab sets it (leave_lab.go)"
 		return
 	}
 	const maxLife = 300
@@ -22,7 +22,13 @@ func (l *lab) Retreat(ctx context.Context, r *drill.Run, s drill.RetreatSpec) (r
 		ri.Err = err.Error()
 		return
 	}
-	defer l.d11Leave(ctx, r)
+	l.left = false
+	defer func() {
+		// after Save and Exit and the rejoin there is no fight to walk away from (and a new process)
+		if !l.left {
+			l.d11Leave(ctx, r)
+		}
+	}()
 	if s.Belt {
 		if err := l.ClearPack(ctx, r); err != nil {
 			ri.Err = "pack: " + err.Error()
@@ -77,6 +83,11 @@ func (l *lab) Retreat(ctx context.Context, r *drill.Run, s drill.RetreatSpec) (r
 	ri.Acted = true
 	if err := l.rig.Fighter.Act(ctx, a); err != nil {
 		ri.ActErr = err.Error()
+		return
+	}
+	if l.left {
+		// the hook returns after exit and rejoin, so the effect is already in: no tick passed after the Act
+		ri.LeftGame, ri.TicksToEffect = true, 0
 		return
 	}
 	for t := 1; t <= s.MaxTicks; t++ {
