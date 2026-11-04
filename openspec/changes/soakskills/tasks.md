@@ -15,10 +15,10 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/d2dsoakstat ./cmd/d2dsoak passes"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0"
-result: ""
+result: "skills.go prints casts, buffs, recasts, novas, swings, casts/kill, build; rest n/a, see docs/soakskills.md; cmd/d2dsoak hook pending"
 live: "not verified live"
 ```
 
-- [ ] audit of section 2 fields against d2dsoak report
-- [ ] add the missing supplied fields (two builds in tests)
-- [ ] docs/soakskills.md: field table, what is not logged
+- [x] audit of section 2 fields against d2dsoak report
+- [x] add the missing supplied fields (two builds in tests)
+- [x] docs/soakskills.md: field table, what is not logged
