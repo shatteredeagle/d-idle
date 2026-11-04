@@ -1,0 +1,46 @@
+{
+ "results": [
+  {
+   "id": "RT.leave",
+   "primitive": "P29",
+   "title": "retreat executed: 1 adjacent, 10 percent life, empty belt, no scroll: the bot chickens (the game is left)",
+   "verdict": "PASS",
+   "reason": "chicken executed: 0 ticks to act, 0 to effect, life floor 30",
+   "intended": "leave: Safety decides \"chicken\", Act carries it out, effect within 200 ticks, life floor above 0",
+   "observed": "adjacent 1 life 30/300 decision \"chicken\" acted true (err \"\") ticks to act 0, to effect 0; life floor 30 end 0; belt 0-\u003e0 scrolls 0-\u003e0 portal false left true dead false",
+   "runs": [
+    {
+     "Verdict": "PASS",
+     "Reason": "chicken executed: 0 ticks to act, 0 to effect, life floor 30",
+     "Intended": "leave: Safety decides \"chicken\", Act carries it out, effect within 200 ticks, life floor above 0",
+     "Observed": "adjacent 1 life 30/300 decision \"chicken\" acted true (err \"\") ticks to act 0, to effect 0; life floor 30 end 0; belt 0-\u003e0 scrolls 0-\u003e0 portal false left true dead false",
+     "sig": "chicken|true",
+     "cheats": [
+      "debug goto 2",
+      "debug kill",
+      "debug stat 7 76800",
+      "debug stat 6 76800",
+      "debug belt clear",
+      "debug clearinv",
+      "debug spawn zombie1 1 near",
+      "debug stat 6 7680"
+     ],
+     "elapsed_ns": 1838888237,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug goto 2",
+    "debug kill",
+    "debug stat 7 76800",
+    "debug stat 6 76800",
+    "debug belt clear",
+    "debug clearinv",
+    "debug spawn zombie1 1 near",
+    "debug stat 6 7680"
+   ]
+  }
+ ]
+}

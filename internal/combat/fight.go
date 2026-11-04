@@ -42,8 +42,9 @@ type track struct {
 }
 
 type seenUnit struct {
-	name string
-	boss bool
+	class int // monster id (statlist row), logged on the kill line
+	name  string
+	boss  bool
 }
 
 type fightState struct {
@@ -442,7 +443,7 @@ func (f *Fighter) noteKills(snap *d2.Snapshot, alive []Target, st *fightState, r
 	}
 	for _, a := range alive {
 		if _, ok := st.seen[a.Unit.ID]; !ok {
-			st.seen[a.Unit.ID] = seenUnit{name: a.Name, boss: a.Boss}
+			st.seen[a.Unit.ID] = seenUnit{class: a.Unit.Class, name: a.Name, boss: a.Boss}
 		}
 	}
 	if len(died) == 0 {
@@ -458,7 +459,7 @@ func (f *Fighter) noteKills(snap *d2.Snapshot, alive []Target, st *fightState, r
 		res.XP += share
 		f.emit(goals.Event{Type: goals.EvKill, Monster: d.name, Boss: d.boss, XP: share})
 		f.castLogKill()
-		f.info("kill", append([]any{"monster", d.name, "boss", d.boss, "xp", share}, f.lastSkillKV()...)...)
+		f.info("kill", append([]any{"monster", d.name, "class", d.class, "boss", d.boss, "xp", share}, f.lastSkillKV()...)...)
 	}
 }
 
