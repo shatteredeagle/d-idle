@@ -30,3 +30,4 @@ allow_merges:
   - 9709162   # areametrics: merged without a card (merge.sh --card none)
   - d27b7e9   # removalplan2: merged without a card (merge.sh --card none)
   - 80f0328   # livedrills2: merged without a card (merge.sh --card none)
+  - 89b52fb   # pldefdiff: merged without a card (merge.sh --card none)
