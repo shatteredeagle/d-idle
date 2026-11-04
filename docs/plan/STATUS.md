@@ -93,7 +93,9 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
 - d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
+- 4a6ce6e6 11-04 13:59 `Merge branch 'main' into adramend` (-)
 - 5953f1ee 11-04 13:59 `Merge branch 'main' into specapplya` (-)
 - 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
 - 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
@@ -101,6 +103,4 @@
 - 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
 - 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
 - df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
-- a10570ed 11-04 13:33 `Merge agent/hirefixlive: hirefixlive: PaidHire follows the talk then hire row menu flow (offline tests; live rerun pending)` (hirefixlive)
-- 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
 <!-- statusgen:end -->
