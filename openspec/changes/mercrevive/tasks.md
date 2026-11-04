@@ -14,8 +14,8 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: ""
+result: "reserve 150->100, farm cap 16->18, need= in skip line plus gold wait line; offline tests only"
 live: "not verified live"
 ```
 
-- [ ] work done
+- [x] work done

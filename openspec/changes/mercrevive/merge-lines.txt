@@ -1,0 +1,1 @@
+BACKLOG: mercrevive: merc.kitReservePct 150 -> 100, merc.goldFarmMaxLevel 16 -> 18, revive skip line prints need=, once-per-change gold wait line (offline, not verified live; docs/mercrevive.md)
