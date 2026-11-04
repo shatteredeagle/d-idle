@@ -65,14 +65,14 @@
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
+- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 17 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
 - spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 7 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
-- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
+- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 25 requirements
 - spec [town-basics](../../openspec/specs/town-basics/spec.md): 17 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
