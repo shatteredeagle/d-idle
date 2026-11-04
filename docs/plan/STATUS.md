@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
 - 9cbf2439 11-04 12:55 `Merge branch 'main' into removalplan2` (-)
 - 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
 - 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
@@ -101,5 +102,4 @@
 - b57d0503 11-04 12:10 `Merge branch 'main' into farmfallback` (-)
 - c61930d7 11-04 12:07 `Merge agent/cardsapply: cardsapply: docs/cards.md (12 active, 5 parked), 14 cards archived (8 closed, 6 dropped); 4 fix cards left open for a decision` (cardsapply)
 - 5074c962 11-04 12:07 `Merge branch 'main' into cardsapply` (-)
-- c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
 <!-- statusgen:end -->
