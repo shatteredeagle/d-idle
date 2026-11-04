@@ -2,7 +2,7 @@
 
 ```yaml
 change: m3-readiness-model
-status: deferred
+status: archived
 agent: m3-readiness-model
 branch: agent/m3-readiness-model
 worktree: ~/code/d2lod-wt/m3-readiness-model
@@ -16,8 +16,8 @@ gates:
   - "go test -p 1 ./internal/readiness passes; go test ./internal/env -run EveryKnob passes with the new knobs"
   - "the guard consults the model only when its enable knob is 1 and never goes more than 2 clvl below the merc-policy floors (test)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
-result:
+merge: none (dropped)
+result: "dropped: stale (evidence: floors set by ADR 0011 and docs/andarielsme.md; folds into m3-act1run)"
 ```
 
 ## 1. Work

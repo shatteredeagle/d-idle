@@ -2,7 +2,7 @@
 
 ```yaml
 change: drills6
-status: in-progress
+status: archived
 agent: drills6
 branch: agent/drills6
 worktree: ~/code/d2lod-wt/drills6
@@ -12,8 +12,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict; whole-repo vet and test -short on the worker host"
-merge:
-result: ""
+merge: on main (see result)
+result: "closed: four fixes merged, drills rerun live (see live field); the one open task was a note (triage 2026-11-04)"
 live: "H.pause PARTIAL, D6.d PARTIAL, D-sync PASS x3, D-run PASS x3, D2 PASS in subsets (full group order-dependent), D-skill not run"
 ```
 
