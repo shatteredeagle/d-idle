@@ -1,7 +1,7 @@
 # SK drill tools (card sksmoke-a1)
 
 Two offline-built tools for the live Fire Bolt / Charged Bolt damage drill in
-`docs/probes/drills/2026-11-03-SK-design.txt`. Status: unit tests only. NOTHING here has run against a game (U).
+`docs/probes/sksmoke/2026-11-03-SK-design.txt`. Status: unit tests only. NOTHING here has run against a game (U).
 
 ## d2cheat skilllevel
 
@@ -29,7 +29,7 @@ Flags: `--skill`, `--key` (required: the hotkey the skill is already bound to; t
 ### Why "bolts to kill" (VERIFIED LIVE 2026-11-03 for the scale; the rest U)
 
 - The monster life the reader sees (stat 6 of a unit from the table `internal/d2` reads) is a 0..128 PERCENT scale
-  (V live, docs/probes/drills/2026-11-03-SK-live.txt), so a per-hit delta is not damage in points.
+  (V live, docs/probes/sksmoke/2026-11-03-SK-live.txt), so a per-hit delta is not damage in points.
 - Exact read searched offline: none exists. `d2.Unit.Life/MaxLife` are the same stat; `mem` has no monster-life
   reader; the d2d `monsters` verb and `debug mon set` give exact hp points (V, docs/forkdbg.md) but only on the d2d
   backend, not on game.exe, which the drill targets. docs/d2-1.14d-memory.md 2.5 calls the table internal/d2 reads

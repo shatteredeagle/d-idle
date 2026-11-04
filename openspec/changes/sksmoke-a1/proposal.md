@@ -4,7 +4,7 @@ docs/research/sorc-act-gate.md section 3 row 4 (SKSMOKE-A1): the Act 1 Sorceress
 
 ## What Changes
 
-- docs/probes/drills/2026-11-03-SK-design.txt: expected per-hit damage (min, max, mean) per level from the patched tables, the measurement method, PASS conditions, the setup cheats, the run steps for instance i2.
+- docs/probes/sksmoke/2026-11-03-SK-design.txt: expected per-hit damage (min, max, mean) per level from the patched tables, the measurement method, PASS conditions, the setup cheats, the run steps for instance i2.
 - Tools for the drill (offline, tests only): `d2cheat skilllevel` (cmd/d2cheat/skilllevel.go) and `combatlive sk` (cmd/combatlive/sk.go), documented in docs/sksmoke-tools.md. Each needs a 4 to 10 line case in the existing main.go of its command (cmd/d2cheat/main.go, cmd/combatlive/main.go).
 
 ## Impact

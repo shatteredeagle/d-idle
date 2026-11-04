@@ -16,12 +16,12 @@ import (
 )
 
 // The client-side life stat of a monster is a 0..128 percent scale (VERIFIED LIVE 2026-11-03, i2, see
-// docs/probes/drills/2026-11-03-SK-live.txt), so life deltas are not damage points. No exact (server-side) monster life
+// docs/probes/sksmoke/2026-11-03-SK-live.txt), so life deltas are not damage points. No exact (server-side) monster life
 // read exists in the repo (UNVERIFIED that one can be built, docs/sksmoke-tools.md). This command therefore uses the
 // "bolts to kill" fallback: cast at one monster until it dies, count the casts that hurt it, and bound the per-hit
 // damage with the monster's max life from monstats. That is an ESTIMATE, not a measurement of single hits.
 
-// skTable is the expected damage per hit in points for the SK drill (docs/probes/drills/2026-11-03-SK-design.txt,
+// skTable is the expected damage per hit in points for the SK drill (docs/probes/sksmoke/2026-11-03-SK-design.txt,
 // computed by hand from skills.txt, S: not checked against the game). Charged Bolt rows are per bolt.
 var skTable = map[string]map[int][2]float64{
 	"fire bolt":    {1: {3, 6}, 4: {7.5, 10.5}, 8: {13.5, 16.5}, 13: {23.5, 31.5}, 20: {45.5, 60.5}},
