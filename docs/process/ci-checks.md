@@ -1,17 +1,17 @@
 # CI checks for the forge job (for the CI agent; no runner exists yet)
 
-> status: OpenSpec cards are no longer required for new work (user, 2026-11-04); changecheck stays for existing cards and its strict dates still apply. Current truth: docs/decisions.md.
+> status: current since OpenSpec removal stage 4. The old card checks (changecheck, the OpenSpec validator, `openspec/.strict.yaml`) are gone; the sections on `history_baseline` and branch-agnostic `changecheck -diff` below are history (tag `openspec-final`, `cmd/changecheck`).
 
-Run from the repo root on a checkout with full history (`fetch-depth: 0`, the merge check reads `git log --merges`). All offline except the first `npx` fetch.
+Run from the repo root. The checks that exist:
 
 ```sh
-go run ./cmd/changecheck -cli          # exits 1 once the dates in openspec/.strict.yaml have passed (cards 2026-11-03, merges 2026-11-06)
-go run ./cmd/changecheck -strict -cli  # stricter: any warning fails, regardless of dates
-sh tools/openspec.sh validate --all --strict   # needs node >= 20.19; changecheck -cli already runs it when node exists
-go test -count=1 ./cmd/changecheck     # the checker's own tests
+python3 -I tools/contracts/check.py    # contract headers, requirements, numbers vs docs/knobs.md (docs/contracts/README.md)
+python3 -I tools/backlog/check.py      # task files: goal label, owns, WIP cap, overlap
+python3 tools/merge_lines_check.py --changed
+tools/ci/check.sh                      # hygiene, merge lines, shims, contracts, gofmt, go vet
 ```
 
-For a pull request or branch check add `-diff agent/<id>` (files changed outside the card's owns). `go run ./cmd/changecheck json` prints the same data as JSON for a report. Do not run whole-repo tests on the head box (4 GB); on the worker host use `labrun worker -- go test -short -count=1 ./...`. Tags: S (derived from the code, no CI run yet).
+Do not run whole-repo tests on the head box (4 GB); on the worker host use `labrun worker -- ...`.
 
 ## leakcheck (change `pubsplit`)
 ```sh

@@ -1,6 +1,7 @@
 # Card board: reading the user's decisions
 
 > status: current. The page is the `/cards` route of the status board (the board host name, port 8897); its code is in the private ops repo.
+> status (stage 4, OpenSpec removal): "card" now means a Backlog.md task in `backlog/tasks/`; the `/cards` page keeps its decision store, only its scan source changes (docs/process/openspec-removal-plan.md).
 
 The user approves, defers or rejects proposed and deferred change cards from a phone. The coordinator reads the answers with
 `tools/cards-decisions.sh` (a stub into the ops repo):

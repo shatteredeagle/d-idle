@@ -93,8 +93,8 @@ edges; the guides say what has been verified on a stranger's machine and what ha
 
 ## Contributing: agents first
 
-This repo is developed mostly by AI coding agents working from written briefs. Every job is a change card in
-a task in `backlog/tasks/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
+This repo is developed mostly by AI coding agents working from written briefs. Every job is a
+task in `backlog/tasks/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
 humans) follow, and `GLOSSARY.md` the vocabulary. If you want to contribute:
 
 - open an issue or a pull request against `main`; describe what you verified and how (live run, unit test, or neither);
@@ -111,7 +111,7 @@ Who has contributed what: [CONTRIBUTORS.md](CONTRIBUTORS.md).
 
 This repository is the working repository: pull requests are merged here directly. Its history starts at an initial snapshot; the working history before it is kept privately.
 Read the rules in `AGENTS.md` (agents first, upstream style: small changes, tagged facts, no game data) before you open a pull request.
-How CI works, in one line: every push to `main` and every pull request runs `.github/workflows/ci.yml` (changecheck, leakcheck, hygiene, gofmt/vet, then the short tests); a `v*` tag also builds and publishes the release tarball.
+How CI works, in one line: every push to `main` and every pull request runs `.github/workflows/ci.yml` (leakcheck, hygiene, gofmt/vet, then the short tests); a `v*` tag also builds and publishes the release tarball.
 Maintainer-only operations material (lab hosts, status board, publishing) lives elsewhere and is not needed to build, test or contribute.
 
 ## Licence
