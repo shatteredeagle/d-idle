@@ -107,14 +107,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
-- 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
-- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
-- 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
-- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
-- 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
-- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
-- e4ffa51b 11-04 10:28 `merge origin/main into palprep` (palprep)
-- f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
+- c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
+- 70a06a94 11-04 11:56 `Merge branch 'main' into mercrevive2` (-)
+- 1348df6b 11-04 11:53 `Merge agent/ctrlfix: AGENTS.md: pointer to the Current truth block; OpenSpec retired for new work (user approved 2026-11-04)` (ctrlfix)
+- da8865b6 11-04 11:52 `Merge branch 'main' into ctrlfix` (-)
+- dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
+- 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
+- d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
+- b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
+- b870d079 11-04 11:42 `Merge agent/noareacards2: noareacards2: no-area card set rewritten from the SME review (farmfallback first), design only` (noareacards2)
+- a769ffa8 11-04 11:41 `Merge branch 'main' into noareacards2` (-)
 <!-- statusgen:end -->
