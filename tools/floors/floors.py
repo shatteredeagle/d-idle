@@ -94,6 +94,14 @@ def main():
         ent = [x for x, _ in vs]; ex = [y for _, y in vs]
         st = lambda l: f"{sum(l)/len(l):.1f}/{min(l)}" if l else 'n/a'
         print(f"{a} | {amap.get(a,'?')} | {b} | {g['min']} | {g['kills']} | {xph} | {g['deaths']} | {g['pots']} | {len(vs)} | {st(ent)} | {st(ex)} | {sd}")
+    print('\n## Chicken summary by area and band (band blank = clvl outside 13-16)\n')
+    print('area | name | band | chickens | with belt healing 0 | median life% at the decision')
+    print('--- | --- | --- | --- | --- | ---')
+    cs = collections.defaultdict(list)
+    for c in chick: cs[(c[2], band(c[3]) or 0)].append(c)
+    for (a, b), r in sorted(cs.items()):
+        lv = sorted(x[4] for x in r)
+        print(f"{a} | {amap.get(a,'?')} | {b or '-'} | {len(r)} | {sum(1 for x in r if x[5]==0)} | {lv[len(lv)//2]}")
     print('\n## Chickens (decision lines, deduped 20 s): seed, time, area, clvl, life%, belt healing, belt rejuv, pack healing')
     for c in chick: print(' | '.join(map(str, c)))
     print('\n## Deaths (deaths counter rose): seed, time, area, clvl, belt healing before, pack healing, hpMin% before, hpMin% at line')
