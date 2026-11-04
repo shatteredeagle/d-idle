@@ -36,7 +36,7 @@ Risk (U live): the ground click with a held item drops it (D2 behaviour, never e
 quest item is picked up again on the next call if the occupancy view says there is room.
 
 Tests (offline, need game tables: run on the worker host):
-`labrun orion -- sh -c 'go test -count=1 -v -run HeldItem ./internal/loot'`
+`go test -count=1 -v -run HeldItem ./internal/loot` through labrun on the worker host
 - `TestPickUpDropsHeldItemWhenPackIsFull`: 40 scrolls fill the pack, a bow is on the cursor; PickUp returns no error, the
   cursor is empty, the bow is on the ground, not re-picked. Old code returned `item stuck on the cursor`.
 - `TestPickUpHeldItemWithRoomGoesToPack`: with room the item still goes to the pack. The sim now drops a cursor item on a
@@ -52,7 +52,7 @@ Evidence (V, log; 7683 such lines in the run):
   town the state read `Waiting: Burial Grounds banned for 3 more min`; 0.15 s wall later `area ban lifted` (idleBreak) and the
   planner chose `Cave Level 1 (past every window, last eligible (leaves at 10))`. So that first block lasted 2 slices.
 - Many bans over the run (`banned after repeated deaths`, `skipped the stalled target area nav-stuck`, route guards:
-  monastery needs 2 mana potions, tower needs a merc and clvl 16).
+  monastery needs 2 mana potions, Tower Cellar needs a merc and clvl 16).
 
 Code (V, read): `Plan.Pick` (plan.go) returns no step when the character is past every window by more than `worthFloor` (4)
 levels and the banned/cleared/guarded set (`ex`) covers the level (`windowExcluded`). In Normal Act 1 the last window
