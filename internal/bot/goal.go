@@ -41,9 +41,6 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 	if l.trip != nil {
 		return r.advanceTrip(ctx, snap, c)
 	}
-	if inTown && r.savePointStep(ctx, snap, c) {
-		return true
-	}
 	if r.beltFillStep(ctx, snap) {
 		return true
 	}
@@ -79,6 +76,11 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		return true
 	}
 	if inTown && (r.gearStep(ctx, snap, c) || (c.spec.camp == nil && r.claimStep(ctx, snap, c))) {
+		return true
+	}
+	// After the town chores, not before: a save point that fired first re-entered the game with the purse unspent and the
+	// tome empty (Gate 2 seed 13, docs/gate2loop.md).
+	if inTown && r.savePointStep(ctx, snap, c) {
 		return true
 	}
 	if !inTown && c.spec.camp == nil && len(l.questPending) > 0 && r.d.Quester != nil && !r.e.Clock.Now().Before(l.claimSkipUntil) && r.hostileNear(snap, r.e.Tune.Bot.ClearRadius) == 0 {
