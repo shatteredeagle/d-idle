@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- c0a5b1c9 11-04 04:28 `merge origin/main into andarielgate` (andarielgate)
 - f9473ae6 11-04 04:02 `Merge agent/gate2run-s11-20261103-1954-g2a: Gate 2 s11 record: NOT PASSED only on Attempt Andariel at clvl 14+ (merc hired OK, 0 deaths in 14,869 kills, XP/h 6476 above the m24 floor)` (gate2run-s11-20261103-1954-g2a)
 - 0235a87a 11-04 03:58 `merge origin/main into gate2run-s11-20261103-1954-g2a` (gate2run-s11-20261103-1954-g2a)
 - df6e3798 11-04 03:55 `Merge agent/prbprep: prbprep: batch B rebased onto upstream main 002ffab4a (local head 7e1f8fc4), checks pass, PR body r5 drafted (not posted)` (prbprep)
@@ -136,5 +137,4 @@
 - 0dcf201a 11-04 02:47 `Merge agent/merclive: merclive: P18 live on d2d: free Rogue claim PASS, revive flow PASS (price 0 for a cheat-hired level-1 merc), paid hire BLOCKED (no drill)` (merclive)
 - 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 - 3d601e79 11-04 02:24 `Merge agent/retreatfix: retreatfix: RT.drink setup life derived from the chicken/drink knobs, RT.portal bound 10 ticks` (retreatfix)
-- 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
 <!-- statusgen:end -->
