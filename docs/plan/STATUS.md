@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 6312a99f 11-04 14:08 `Merge branch 'main' into livecheckdrills` (-)
 - 0ab90a8a 11-04 14:06 `Merge agent/shimregister: shimregister: see branch` (shimregister)
 - 8754456b 11-04 14:05 `Merge branch 'main' into shimregister` (-)
 - 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
@@ -102,5 +103,4 @@
 - a1d4edb9 11-04 13:59 `Merge branch 'main' into tickcppdiff` (-)
 - bc2cbc4e 11-04 13:59 `Merge branch 'main' into noareafix` (-)
 - 4a6ce6e6 11-04 13:59 `Merge branch 'main' into adramend` (-)
-- 5953f1ee 11-04 13:59 `Merge branch 'main' into specapplya` (-)
 <!-- statusgen:end -->
