@@ -22,3 +22,4 @@ allow_merges:
   - b870d07   # noareacards2: merged without a card (merge.sh --card none)
   - d55f87c   # removalplan: merged without a card (merge.sh --card none)
   - dfce36b   # stage0: merged without a card (merge.sh --card none)
+  - 1348df6   # ctrlfix: merged without a card (merge.sh --card none)
