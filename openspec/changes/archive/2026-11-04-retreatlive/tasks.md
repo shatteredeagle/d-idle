@@ -2,7 +2,7 @@
 
 ```yaml
 change: retreatlive
-status: in-progress
+status: archived
 agent: retreatlive
 branch: agent/retreatlive
 worktree: ~/code/d2lod-wt/retreatlive
@@ -14,8 +14,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits"
-result: "RT.portal PASS (2 identical runs, d2d). RT.drink FAIL as designed: 20 percent life is below chickenPct 25, the bot correctly chooses chicken; bound question, propose 40 percent. Verified live on d2d, not game.exe."
+result: "d2d live: RT.portal PASS, RT.drink chicken not drink (setup bound), RT.leave blocked"
 live: "verified live on d2d (lab binary cheats3, slot 3)"
+merge: cb2af00
 ```
 
 - [x] Capacity check OK

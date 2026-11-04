@@ -120,6 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/retreatlive.md  retreatlive  retreatlive
-docs/probes/retreat/**  retreatlive  retreatlive
-openspec/changes/retreatlive/**  retreatlive  retreatlive
