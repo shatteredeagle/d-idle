@@ -128,6 +128,9 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 10491e71 11-04 00:51 `Merge agent/chargedbolt: chargedbolt: Charged Bolt per-bolt damage on d2d matches the table at levels 1/4/8/13/20 (compared to table, not game.exe)` (chargedbolt)
+- 4db134c4 11-04 00:51 `merge origin/main into chargedbolt` (chargedbolt)
+- 5740a15c 11-04 00:48 `Merge agent/backlogcheck: backlogcheck: stale-status table for BACKLOG and decomp-queue (25 stale, 5 current, 10 unsure)` (backlogcheck)
 - f1d14cb0 11-03 23:44 `Merge agent/logfields: logfields: bot logs cast result, last skill, armor sample, build line; d2dsoak report prints them` (logfields)
 - 892ed2f0 11-03 23:08 `Merge agent/sksmoke: sksmoke-a1: d2cheat skilllevel, combatlive sk, Fire Bolt per-hit damage on d2d matches the table at levels 1/4/8/13/20; game.exe run blocked` (sksmoke-a1)
 - 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
@@ -135,7 +138,4 @@
 - d3092536 11-03 21:41 `Merge agent/gate1multi-20261103-2140-ms4: Gate 1 ms4 5-seed record: PASSED, XP/h 10607 vs 9172 (+15.6%)` (gate1multi-20261103-2140-ms4)
 - c963702e 11-03 19:43 `Merge agent/review3fix: review3fix: codereview3 C1 route ban vs target skip, C2 fail-count decay, C3 failed ToTown counts, C4 plan flag in docs copy + TestMatchesDocs` (review3fix)
 - 3a678f6e 11-03 19:42 `merge origin/main into review3fix` (review3fix)
-- 143bbf3a 11-03 19:39 `Merge agent/gate1multi-20261103-1938-ms4: Gate 1 ms4 multiseed record: PASSED indicative (3 seeds 17,19,21; XP/h +1.2% vs baseline)` (gate1multi-20261103-1938-ms4)
-- 9fba0832 11-03 19:34 `Merge agent/codereview3: codereview3: independent review of gate1fix, recoverykit, xpfallback (C1-C4)` (codereview3)
-- e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
 <!-- statusgen:end -->
