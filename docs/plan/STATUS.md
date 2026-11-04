@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 - 6e395bb6 11-04 00:56 `Merge agent/killcredit: killcredit: bot logs kill credit per cast window and nova targets; d2dsoak report prints per-skill kills` (killcredit)
 - 93502f42 11-04 00:55 `merge origin/main into killcredit` (killcredit)
 - 10491e71 11-04 00:51 `Merge agent/chargedbolt: chargedbolt: Charged Bolt per-bolt damage on d2d matches the table at levels 1/4/8/13/20 (compared to table, not game.exe)` (chargedbolt)
@@ -136,5 +137,4 @@
 - 892ed2f0 11-03 23:08 `Merge agent/sksmoke: sksmoke-a1: d2cheat skilllevel, combatlive sk, Fire Bolt per-hit damage on d2d matches the table at levels 1/4/8/13/20; game.exe run blocked` (sksmoke-a1)
 - 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
 - d0deb956 11-03 21:50 `merge origin/main into soakskills` (soakskills)
-- d3092536 11-03 21:41 `Merge agent/gate1multi-20261103-2140-ms4: Gate 1 ms4 5-seed record: PASSED, XP/h 10607 vs 9172 (+15.6%)` (gate1multi-20261103-2140-ms4)
 <!-- statusgen:end -->
