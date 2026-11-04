@@ -23,7 +23,9 @@ Per case, in the order game.exe runs it on a hammer hit:
      table at 0x73c960 (FUN_005ad2f0 for the hammer), on the same record.
   4. FUN_0057c6c0 applies the record (resistance, life), as missile_hit.py.
 Output `id lo hi life` (the min / max after step 2, 256ths; life after, 256ths).
-Also printed per case: `field_first field_final` to stderr summary only.
+PV_DIRECT=1 skips FUN_005a89a0 (the dmg func's own roll is then the only draw).
+To stderr: on how many cases the dmg func changed the field FUN_005a89a0 rolled
+(its FUN_005a8c70 re-rolls the element on the same seed).
 
 Hooked (not the claim): the stat getter / setter (FUN_00625480, FUN_00627260,
 FUN_006253b0), the unit's skill record and level (FUN_00643810 / FUN_006442a0),
@@ -32,6 +34,7 @@ state's stat list, FUN_00625d00 a stat of it), max life and the difficulty row,
 and the side effects life_apply.py stubs, EXCEPT FUN_0063e990 (undead) and
 FUN_0063e940 (demon), which run natively on the real MonStats rows.
 """
+import os
 import random
 import sys
 
@@ -43,6 +46,7 @@ MASK = 0xFFFFFFFF
 HAMMER, AIM, VIGOR = 112, 108, 115
 FAKE = 0x30000000
 STATLIST = 0x31000000
+DIRECT = os.environ.get("PV_DIRECT") == "1"
 
 
 def s32(v):
@@ -85,8 +89,8 @@ class Game:
                    0x5347e0: 3, 0x61ab00: 1, 0x5541b0: 0, 0x621d50: 2, 0x57aa60: 0, 0x57aaa0: 0,
                    0x57aae0: 2, 0x57af80: 2, 0x57b230: 2, 0x57ac50: 3, 0x57add0: 3, 0x5d6410: 0})
         e.stub(1, {0x554200: 1, 0x620bb0: 1, 0x457490: 0})
-        rows = self.dmg_rows()
-        assert len(rows) == 1, rows
+        rows = [r for r in self.dmg_rows() if r[1] == 5]
+        assert len(rows) == 1, rows                      # one row with pSrvDmgFunc 5 (the claim)
         self.hammer_missile = rows[0][0]
 
     def has_state(self, e):
@@ -134,7 +138,8 @@ class Game:
         e.w32(self.missile + 0x20, seed[0])
         e.w32(self.missile + 0x24, seed[1])
         e.mu.mem_write(self.rec, b"\0" * 0x100)
-        e.call(0x5a89a0, self.missile, tgt, self.rec, ecx=self.game, edx=0)
+        if not DIRECT:                                   # PV_DIRECT=1: skip the hit path's first roll (FUN_005a89a0)
+            e.call(0x5a89a0, self.missile, tgt, self.rec, ecx=self.game, edx=0)
         first = s32(e.r32(self.rec + 0x20))
         f = e.r16(self.missiles + self.hammer_missile * 0x1a4 + 0x10)
         fn = e.r32(0x73c960 + 4 * f)

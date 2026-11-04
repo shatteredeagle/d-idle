@@ -2,7 +2,7 @@
 // test-links: game
 // Verifier probe (agent palverify), dropped into tests/game/ of a scratch copy
 // only. `--hammer CASES`: the cases of hammer_game.py, one line each:
-// `id lo hi life` from the REAL rules::missile_damage, (head only)
+// `id lo hi life targetable` from the REAL rules::missile_damage, (head only)
 // rules::aura_influence / rules::influenced with the hammer's Param1, the
 // Missiles.txt row's dmg_func / dmg_par1 / dmg_par2 as Fight::strike sets them,
 // Monster::target() of make_monster(row) for the undead / demon flags, then
@@ -18,6 +18,7 @@
 #include <rules.hpp>
 #include <skills.hpp>
 
+#include <algorithm>
 #include <cassert>
 #include <cstdint>
 #include <cstdio>
@@ -29,6 +30,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <type_traits>
 
 using namespace d2d::game;
 
@@ -54,7 +56,7 @@ int main(int argc, char** argv) try {
         std::printf("# dmg rows %d, hammer id %d par0 %d etype %d\n", dmg_rows, hammer_id, hammer->par[0], hammer->etype);
         for (std::size_t i = 0; i < data->monsters.types.size(); ++i) {
             const auto& t = data->monsters.types[i];
-            std::printf("flag %zu %d %d hc %d\n", i, t.undead ? 1 : 0, t.demon ? 1 : 0, t.hc_idx);
+            std::printf("flag %zu %d %d\n", i, t.undead ? 1 : 0, t.demon ? 1 : 0);
         }
         return 0;
     }
@@ -71,12 +73,13 @@ int main(int argc, char** argv) try {
         return 0;
     }
     if (mode != "--hammer" || argc < 3) return 2;
-    const MissileInfo* row = nullptr;
+    const std::remove_cvref_t<decltype(data->missiles)>::mapped_type* row = nullptr;
     for (const auto& [name, info] : data->missiles) if (name == "blessedhammer") row = &info;
     assert(row);
     std::ifstream cases(argv[2]);
     std::string line;
     int skipped = 0;
+    const bool predraw = std::getenv("PV_PREDRAW") && std::string_view(std::getenv("PV_PREDRAW")) == "1";
     while (std::getline(cases, line)) {
         std::istringstream in(line);
         long long id, lvl, clvl, aim, vigor, pct, mon, res, life, sl, sh;
@@ -103,9 +106,12 @@ int main(int argc, char** argv) try {
         d2d::rules::Rng rng;
         rng.low = std::uint32_t(sl);
         rng.high = std::uint32_t(sh);
+        // PV_PREDRAW=1: advance the stream by the draw FUN_005a89a0 makes first (both stats over 0, rand(max - min)).
+        if (predraw && damage.elo > 0 && damage.ehi > 0) (void)rng(std::uint32_t(std::max(damage.elo, damage.ehi) - std::min(damage.elo, damage.ehi)));
         const auto blow = d2d::rules::missile_blow(damage, target, pierces, rng);
+        const bool targetable = monster.targetable();       // not targetable: d2d's hurt() refuses, no hit lands in play (out of domain)
         hurt(*data, monster, blow.damage, 0, blow.frac);
-        std::printf("%lld %d %d %d\n", id, damage.elo, damage.ehi, monster.alive() ? monster.hit_points * 256 - monster.life_frac : 0);
+        std::printf("%lld %d %d %d %d\n", id, damage.elo, damage.ehi, monster.alive() ? monster.hit_points * 256 - monster.life_frac : 0, targetable ? 1 : 0);
     }
     std::fprintf(stderr, "# skipped %d\n", skipped);
     return 0;
