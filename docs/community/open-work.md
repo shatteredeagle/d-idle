@@ -36,3 +36,33 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 - deliverable: docs/research/sk-zero-hit-run-trace.md
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
 
+
+## PLAYERDIFF: player defence differentials not yet run (block recovery, magic resist, resist clamp, damage reduction order)
+- size: M
+- status: proposed
+- kind: decomp
+- source: backlog:PLAYERDEF
+- question: Two of the player-defence differentials are already run (D1 and D7, docs/research/playerdef-diff-20261104.md). Left open: D2 block recovery tick count, D4 player magic resist, D5 resist clamp order and D6 damage-reduction order of stats 34, 35 and 36, each compared against d2d. The base scripts live in private checkouts, so rebuild them from the commands in the doc. Pick ONE group; the others are separate PRs.
+- start: docs/research/playerdef-diff-20261104.md section 5 (ready-to-run commands); docs/research/playerdef-trace.md section 6 (the differentials and their U lines).
+- deliverable: docs/research/playerdef-diff-<group>.md with the case counts and the number of cases that differ.
+- needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
+
+## SHIELDD2: broken worn item with stats 17, 25, 21 and 22 on the d2d side
+- size: S
+- status: proposed
+- kind: verify
+- source: backlog:SKSHIELD
+- question: game.exe ignores the properties of a broken worn item (382 scenarios, 0 differ; docs/research/shield-diff-20261104.md, row D2). d2d's fight.cpp has no broken test. Build a d2d-side test with a broken item carrying stats 17 and 25 and the flat stats 21 and 22, compare it with the game-side rows over 20,000 cases and report how many differ.
+- start: docs/research/shield-diff-20261104.md (the D2 row); docs/research/skshield-trace.md (the attach rule and the scenario list).
+- deliverable: docs/research/shield-d2-diff.md
+- needs: your own game.exe 1.14d install, upstream d2decomped checkout (buildable), Python 3 with unicorn.
+
+## TICKMVM: monster hits monster, is the 256ths fraction of life kept?
+- size: M
+- status: proposed
+- kind: decomp
+- source: backlog:tickcppdiff
+- question: Does game.exe keep the 256ths fraction of life when a monster hits a monster? The shared apply path is read, not run (docs/research/tickcpp-diff-monster-vs-monster.md). Run it natively and compare with tick.cpp lines 344 and 345 of the upstream tree; report how many cases differ.
+- start: docs/research/tickcpp-diff-monster-vs-monster.md (Q1 read of FUN_0057c1e0 and the apply path).
+- deliverable: docs/research/tickcpp-mvm-run.md with a 100,000-case differential.
+- needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
