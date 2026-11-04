@@ -2,7 +2,7 @@
 
 ```yaml
 change: primcheck
-status: in-progress
+status: archived
 agent: primcheck
 branch: agent/primcheck
 worktree: ~/code/d2lod-wt/primcheck
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; python3 tools/merge_lines_check.py --changed ok"
-result: "docs/research/primitives-open-20261104.md written from the repo only; nothing after 2026-11-01 was drilled live, later cards are offline; not verified live"
+result: "docs only; no drills after 2026-11-01"
 live: "not verified live (docs only)"
+merge: 759e1a9
 ```
 
 - [x] work done

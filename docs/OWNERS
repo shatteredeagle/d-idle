@@ -120,5 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/research/primitives-open-20261104.md  primcheck  primcheck
-openspec/changes/primcheck/**  primcheck  primcheck
