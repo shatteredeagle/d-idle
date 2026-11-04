@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
 - a82c6a8f 11-04 13:21 `Merge agent/backlogmigrate: backlogmigrate (stage 1): backlog/ config, 17 cards copied to Backlog.md tasks, migration script, read-only checker, docs/backlog.md; nothing in openspec/changecheck/CI changed` (backlogmigrate)
 - f3d1dee9 11-04 13:20 `Merge branch 'main' into backlogmigrate` (-)
 - 8255939d 11-04 13:13 `Merge agent/stateevdiff: stateevdiff: Energy Shield absorb order differential, 40,000 cases: game.exe absorbs on the raw field before resistance; d2d after resistance (18,532 of 25,038 shield cases differ in life)` (stateevdiff)
@@ -101,5 +102,4 @@
 - a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
 - 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
 - e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
-- d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
 <!-- statusgen:end -->
