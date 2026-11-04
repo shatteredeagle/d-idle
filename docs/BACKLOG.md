@@ -429,6 +429,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - retreatfix: RT.drink life derived between chicken and drink-life, RT.portal bound 10 ticks (offline tested; live rerun pending, docs/retreatfix.md)
 - retreatlive2: RT.drink PASS and RT.portal PASS live on d2d after retreatfix (drink-life, belt 4 to 3; portal 1 tick under the 10 bound); RT.leave still blocked
 - MERCLIVE: P18 live on d2d slot 3: free Rogue claim PASS (merc RG present), revive of a cheat-killed merc PASS at price 0 (U for real mercs), paid hire BLOCKED (no drill, design in docs/merclive.md) (docs/merclive.md)
+- gate2loop: save point after town chores and only when XP is at risk (Gate 2 seed 13 re-entry loop); needs a seed 13 soak rerun, and the recovery "item stuck on the cursor" fault is still open
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
