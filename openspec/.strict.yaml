@@ -62,3 +62,5 @@ allow_merges:
   - 0b1b54a   # gate2runbook: merged without a card (merge.sh --card none)
   - ed50df4   # drillsfix: merged without a card (merge.sh --card none)
   - b18deb1   # removestage2: merged without a card (merge.sh --card none)
+  - 189ec62   # act1check: merged without a card (merge.sh --card none)
+  - c6fbf41   # esverify2: merged without a card (merge.sh --card none)

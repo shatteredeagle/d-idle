@@ -25,15 +25,23 @@ def table(path):
     return out
 
 
+def width(v):
+    nb = v[10]
+    return 6 if nb and len(v) == 11 + 6 * nb else 5     # esverify2 lines carry a poison roll last
+
+
 def classes(v):
     cls, level, mana, dr_pct, dr_flat, mdr, rf, rl, rc, nb = v[1:11]
-    blows = [v[11 + 5 * k: 16 + 5 * k] for k in range(nb)]
+    w = width(v)
+    blows = [v[11 + w * k: 11 + w * (k + 1)] for k in range(nb)]
     tags = ["all", "shield" if level > 0 else "no-shield"]
     if level > 0:
         fields = sum(1 for b in blows for x in b if x > 0)
         tags.append("shield:multi-field" if fields > 1 else "shield:one-field")
         if any(b[4] > 0 for b in blows):
             tags.append("shield:magic")
+        if any(len(b) > 5 and b[5] > 0 for b in blows):
+            tags.append("shield:poison")
         if nb > 1:
             tags.append("shield:multi-blow")
         if mdr or dr_flat:
@@ -45,6 +53,8 @@ def classes(v):
     else:
         if sum(1 for b in blows for x in b if x > 0) > 1:
             tags.append("no-shield:multi-field")
+        if mdr or dr_flat:
+            tags.append("no-shield:mdr-or-flat")
     return tags
 
 
@@ -66,15 +76,19 @@ def main():
         c = k + CTRL
         if c in game:
             # the shield's own effect: the same frame without it agrees exactly (256ths) on both d2d sides
-            clean = game[c][0] == base[c][0] == head[c][0]
+            clean = game[c][0] == base[c][0] == head[c][0] and not (width(v) == 6 and any(v[16 + 6 * b] > 0 for b in range(v[10])))
             tags.append("shield:ctrl-exact" if clean else "shield:ctrl-differs")
             if clean and len(tags) > 3:
                 tags += [t + "+ctrl-exact" for t in tags if t.startswith("shield:") and "ctrl" not in t]
         for tag in tags:
             cnt[tag]["cases"] += 1
+            # esverify2: with a poison roll the emulator's hooked poison handler (FUN_0057ac50) leaves +0x28 in the record total,
+            # so game.exe's life there is not the frame's; only the mana is compared on those cases
+            poisoned = width(v) == 6 and any(v[16 + 6 * b] > 0 for b in range(v[10]))
             for side, d in (("base", base[k]), ("head", head[k])):
-                checks = {"life_pt": (d[0] >> 8) != (g[0] >> 8), "life_256": d[0] != g[0],
-                          "mana_pt": (d[1] >> 8) != (g[1] >> 8), "mana_256": d[1] != g[1]}
+                checks = {"mana_pt": (d[1] >> 8) != (g[1] >> 8), "mana_256": d[1] != g[1]}
+                if not poisoned:
+                    checks.update({"life_pt": (d[0] >> 8) != (g[0] >> 8), "life_256": d[0] != g[0]})
                 for name, bad in checks.items():
                     if bad:
                         cnt[tag][f"{side}:{name}"] += 1

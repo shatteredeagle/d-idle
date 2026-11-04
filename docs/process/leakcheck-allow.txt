@@ -33,6 +33,7 @@ str .forgejo/
 str TOWERGUARD
 str Tower guard
 str tower areas
+str {"tower", "forgotten_tower"}
 str tower half
 str tower levels
 str Tower 2

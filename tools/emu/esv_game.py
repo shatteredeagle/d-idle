@@ -17,7 +17,7 @@ removal FUN_006277e0 / FUN_00626cd0 / FUN_00639db0 (logged), the overlay calls (
 The skills table at [0x744304] is a fake one with the shield's row (state 30, calc indexes), put in only for the
 duration of the FUN_005ca6c0 call and restored by the trampoline.
 
-CASES lines: id cls level mana256 dr_pct dr_flat mdr res_fire res_light res_cold nblows {phys fire light cold magic} x n
+CASES lines: id cls level mana256 dr_pct dr_flat mdr res_fire res_light res_cold nblows {phys fire light cold magic [poison]} x n
 CALC lines (from esv_probe): `#calc cls C level L pct P per16 R`.
 Out: `id life256 mana256 removed` and a summary to stderr (events seen, calls of the hooks with unexpected arguments).
 """
@@ -145,18 +145,23 @@ class Shield:
         g.stats[(g.target, 0x29)] = res[1] & M32
         g.stats[(g.target, 0x2B)] = res[2] & M32
         g.stats[(g.target, 0x25)] = 0
+        g.stats[(g.target, 0x2D)] = 0
         self.level = level
         self.cur = self.calc.get((cls, level), (0, 1)) if level > 0 else (0, 1)
         self.present = level > 0
         before = g.life()
         removed0 = self.removed
-        for phys, fire, light, cold, magic in blows:
+        for phys, fire, light, cold, magic, *more in blows:
+            poison = more[0] if more else 0
             e.mu.mem_write(g.rec, b"\0" * 0x80)
             e.w32(g.rec, 1)
             e.w32(g.rec + 4, 1)
             vals = (phys << 8, fire << 8, light << 8, cold << 8, magic << 8)
             for f, v in zip(FIELDS, vals):
                 e.w32(g.rec + f, v)
+            if poison:   # esverify2: poison +0x28 (256ths), length +0x2c (table 0x732980 rows 8 and 7; not in the shield's 0x6e30e0)
+                e.w32(g.rec + 0x28, poison << 8)
+                e.w32(g.rec + 0x2C, 50)
             self.expect = vals
             e.call(0x57C6C0, g.target, 1, g.rec, ecx=g.game, edx=g.attacker)
             if not self.present:
@@ -180,7 +185,8 @@ def main():
                 continue
             v = list(map(int, line.split()))
             cid, cls, level, mana, dr_pct, dr_flat, mdr, rf, rl, rc, nb = v[:11]
-            blows = [tuple(v[11 + 5 * k: 16 + 5 * k]) for k in range(nb)]
+            w = 6 if nb and len(v) == 11 + 6 * nb else 5          # esverify2: a poison roll last when the line has 6 a blow
+            blows = [tuple(v[11 + w * k: 11 + w * (k + 1)]) for k in range(nb)]
             if level > 0 and (cls, level) not in s.calc:
                 raise SystemExit(f"no calc for class {cls} level {level}")
             lost, mana_left, removed = s.run(cls, level, mana, dr_pct, dr_flat, mdr, (rf, rl, rc), blows)
