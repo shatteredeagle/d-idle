@@ -3,6 +3,8 @@
 ## Purpose
 How deaths are judged in soaks and what the bot does after a death. The rule was APPROVED by the user on 2026-10-30 (plan-v2 section 10.2; docs/soak-analysis.md section 12) and is implemented in cmd/d2soak and internal/bot/deathrule.go. Evidence: docs/plan/death-data.md, docs/deathautopsy.md, docs/deathspiral.md.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none. This spec is the only authority on judging soak deaths (user decision 2026-11-04); the gatedelta fixed death budget and Poisson cap were dropped.
+
 ## Requirements
 
 ### Requirement: Death is normal

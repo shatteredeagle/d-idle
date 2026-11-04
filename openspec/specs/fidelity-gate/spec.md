@@ -3,21 +3,74 @@
 ## Purpose
 How far the d2d backend may differ from the original game before its statistics stop being trusted: the replicated soak compares the same character and bot on both backends. Source: plan-v2 section 11 and 11.5, docs/d2d-soak.md (harness and pass rule), docs/d2d-fidelity.md, docs/d2d-gaps.md.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+>
+> Death judging (user decision 2026-11-04): soaks judge deaths by the death-rule spec only; this spec's deaths metrics apply to the A:B backend comparison at the 20 percent tolerance. The 2026-10-30 gatedelta rules (fixed death budget, Poisson cap, three proxy rows) were dropped, not folded.
+
 ## Requirements
 
 ### Requirement: Twenty percent tolerance
-The d2d mean of each gated metric (XP per hour, kills per hour, deaths per hour, deaths per 1000 kills) SHALL be within `max(20 % of the baseline mean, abs)` of the original-game baseline, with `abs` = 0.5 deaths/h and 1.0 deaths per 1000 kills where the baseline is near zero. A gap above 20 percent that is not explained by a known gap is a fidelity bug. Source: plan-v2 section 11; docs/d2d-soak.md section 3 (V, tool tested on real logs).
+The d2d mean of each gated metric (XP per hour, kills per hour, deaths per hour, deaths per 1000 kills) SHALL be within `max(20 % of the baseline mean, abs)` of the original-game baseline, with `abs` = 0.5 deaths/h and 1.0 deaths per 1000 kills near a zero baseline. An A:B report MAY state a tighter margin m but MUST name it. An unexplained gap above the tolerance is a fidelity bug. Source: plan-v2 s11; docs/d2d-soak.md s3 (V). Reconciled 2026-11-04 (source: 2026-11-02-abtool; decision 1).
 
 #### Scenario: XP gap
 - **WHEN** the baseline mean is 10.9k XP/h and the d2d mean is 13.5k XP/h
 - **THEN** the gap is +24 percent and the metric is out of tolerance
 
+#### Scenario: Named margin
+- **WHEN** an A:B report uses 15 percent
+- **THEN** the report states the margin next to every verdict
+
 ### Requirement: Verdict classes
-The verdict per metric MUST be PASS when `|gap| <= tol` and the 95 percent half width of the d2d mean is `<= tol`, FAIL when `|gap| - half width > tol`, and INCONCLUSIVE otherwise or with fewer than 5 seeds; the overall verdict is FAIL if any gated metric fails. Source: docs/d2d-soak.md section 3 (V).
+Per metric: PASS when `|gap| <= tol` and the d2d 95 percent half width is `<= tol`, FAIL when `|gap| - half width > tol`, else INCONCLUSIVE (also under 5 seeds); overall FAIL if any gated metric fails. A cross-backend A:B (ab_compare.py) SHALL use the 95 percent ratio interval with both arms' error: PASS inside `[1 - m, 1 + m]`, FAIL wholly beyond, else INCONCLUSIVE with n per arm. Source: docs/d2d-soak.md s3 (V); tierb-design 3.3. Reconciled 2026-11-04 (source: 2026-11-02-abtool).
 
 #### Scenario: Few seeds
 - **WHEN** only 3 seeds ran
 - **THEN** the verdict is INCONCLUSIVE and the tool says how many seeds would settle it
+
+#### Scenario: Both arms' error counted
+- **WHEN** the d2d mean is 10 percent above the game.exe mean and the ratio interval is 0.80 to 1.40
+- **THEN** the verdict is INCONCLUSIVE, although the d2d half width alone would pass
+
+### Requirement: Game.exe arm sample and regimes
+A cross-backend A:B SHALL use at least 5 game.exe runs per arm, SHALL tag every run with its clock regime k and SHALL never pool or compare runs of different k; a lane marked weak is reported and kept out of the verdict. Source: docs/research/tierb-design-20261102.md 3.1, 4.1, 6; baseline-audit.md (5 runs, about 20 percent half width at CV 14 percent). Reconciled 2026-11-04 (source: 2026-11-02-abtool).
+
+#### Scenario: Mixed k
+- **WHEN** a set holds k=1 and k=2 runs
+- **THEN** the tool prints one table per k and no combined row
+
+### Requirement: Pair setup on both backends
+A pair in a cross-backend A:B SHALL start from one `.d2s` (or the same pinned map seed) per seed on both backends with the arms interleaved; a setup-edited file MUST be declared as SETUP. Cross-backend sizing SHALL use the unpaired formula unless the measured pair correlation exceeds 0.5. Source: docs/research/tierb-design-20261102.md 3.1, 3.4. Reconciled 2026-11-04 (source: 2026-11-02-abtool).
+
+#### Scenario: Low pair correlation
+- **WHEN** the pilot measures a pair correlation of 0.2
+- **THEN** n per arm is taken from the unpaired formula
+
+### Requirement: Replicated soak is a fidelity check
+The replicated soak SHALL NOT gate making d2d the primary backend; it MUST be used to find d2d gaps to fix and to fire the exit trigger, and only the four gated metrics (XP/h, kills/h, deaths/h, deaths per 1000 kills) are held to the 20 percent tolerance. Source: ADR 0009 items 2 and 3. Reconciled 2026-11-04 (source: 2026-11-04-d2d-replicated-soak).
+
+#### Scenario: Price gap outside the four metrics
+- **WHEN** a vendor price differs on d2d but the four metrics are in tolerance
+- **THEN** it is an explained known gap, fixed on the fork when cheap
+
+> OPEN QUESTION: "fire the exit trigger" is ADR 0009 wording; user decision 2026-11-04 ties leaving d2d to the A:B (G-D) verdict, which the user decides, never automatic. Wording to be confirmed with the user; text left as in the delta.
+
+### Requirement: Soak FAIL attribution
+A replicated-soak FAIL SHALL count against d2d only when the same bot build's original-game baseline is inside the gate and the gap is traced to an engine difference; otherwise it MUST be treated as a bot bug and fixed in the bot. Source: ADR 0009 attribution rule. Reconciled 2026-11-04 (source: 2026-11-04-d2d-replicated-soak).
+
+#### Scenario: Baseline outside the gate
+- **WHEN** the original-game baseline for the bot build is itself outside the gate
+- **THEN** the FAIL is a bot bug, not an exit-trigger input
+
+### Requirement: Late baseline
+The late baseline (`baselines-late.json`) SHALL hold at least 5 runs of a throwaway character cheat-levelled to clvl 12 and carrying the M1 kit on hidden d2d, with every cheat recorded in the cheat ledger, and SHALL gate only xp_per_hour and kills_per_hour; deaths and gold MUST NOT be judged against it. Source: user decision D5, 2026-10-31 (docs/roadmap.md); d2-sme 2026-10-31; docs/cheats.md. Reconciled 2026-11-04 (source: 2026-11-04-m2-latebase).
+
+#### Scenario: Clvl 12 run judged against the late baseline
+- **WHEN** a clvl 12 d2d set is compared with the late baseline
+- **THEN** xp_per_hour and kills_per_hour get a verdict and the report marks deaths and gold as not compared
+
+#### Scenario: Unledgered cheat
+- **WHEN** a baseline run used a cheat with no ledger entry
+- **THEN** the run is not accepted into baselines-late.json
 
 ### Requirement: Minimum sample
 A fidelity verdict MUST use at least 5 seeds and at least 2 virtual hours per seed (8 seeds by 2 h = 16 h recommended) and at least 10 virtual hours in total for the death metrics. Source: docs/d2d-soak.md section 3 (I, derived from the baseline spread of 10 to 15 percent).
@@ -41,7 +94,7 @@ A gap that matches a listed d2d deviation (Tome of Town Portal 250 gold vs 450, 
 - **THEN** the report lists it as an explained known gap
 
 ### Requirement: What d2d cannot validate
-Wine, input injection, process memory reads, Game.exe crash and hang paths, the failsafe ladder, recycle paths, window focus, the 20 minute save point and OOM guards MUST stay original-game soak topics (G1, G2). Source: docs/d2d-soak.md section 4.
+Wine, input injection, process memory reads, Game.exe crash and hang paths, the failsafe ladder, recycle paths, window focus, the 20 minute save point and OOM guards MUST stay game.exe topics, covered by Gate A (the game.exe acceptance run, ADR 0015; the old G1/G2 names are retired). Source: docs/d2d-soak.md section 4. Reconciled 2026-11-04 (source: Current truth gate names).
 
 #### Scenario: Recovery drill
 - **WHEN** a kill-recovery criterion needs verification
