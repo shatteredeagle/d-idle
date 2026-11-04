@@ -54,7 +54,6 @@
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
-| [gate2run-s12-20261103-2210-g2v](../../openspec/changes/gate2run-s12-20261103-2210-g2v/) | in-progress | gaterun | `docs/soaks/gate2-s12-20261103-2210-g2v.md`<br>`docs/probes/soak-logs/gate2-s12-20261103-2210-g2v-*`<br>`openspec/changes/gate2run-s12-20261103-2210-g2v/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -104,7 +103,6 @@
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
-- change gate2run-s12-20261103-2210-g2v: Gate 2 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate2-s12-20261103-2210-g2v.md)
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 1fca1265 11-04 06:25 `Merge agent/gate2run-s12-20261103-2210-g2v: Gate 2 s12 record: NOT PASSED only on Attempt Andariel at clvl 14+ (45.7 vh, clvl 16, 1 death)` (gate2run-s12-20261103-2210-g2v)
 - 4ce50e26 11-04 04:31 `Merge agent/andarielgate: andarielgate: Gate 2 s11 Andariel criterion failed on a deliberate hold (boss.andarielHold=1), no code change; question for the user` (andarielgate)
 - c0a5b1c9 11-04 04:28 `merge origin/main into andarielgate` (andarielgate)
 - f9473ae6 11-04 04:02 `Merge agent/gate2run-s11-20261103-1954-g2a: Gate 2 s11 record: NOT PASSED only on Attempt Andariel at clvl 14+ (merc hired OK, 0 deaths in 14,869 kills, XP/h 6476 above the m24 floor)` (gate2run-s11-20261103-1954-g2a)
@@ -136,5 +135,4 @@
 - fa4e46fb 11-04 03:28 `merge origin/main into gate2cursor` (gate2cursor)
 - fdbf1b94 11-04 03:00 `Merge agent/gate2loop: gate2loop: save point after town chores and only when XP was earned (Gate 2 seed 13 save-point loop; partial fix)` (gate2loop)
 - 0dcf201a 11-04 02:47 `Merge agent/merclive: merclive: P18 live on d2d: free Rogue claim PASS, revive flow PASS (price 0 for a cheat-hired level-1 merc), paid hire BLOCKED (no drill)` (merclive)
-- 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 <!-- statusgen:end -->
