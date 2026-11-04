@@ -2,6 +2,8 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/resource"
+	"strings"
 	"testing"
 	"time"
 )
@@ -86,5 +88,80 @@ func TestBorderLoopSkipsTheTargetArea(t *testing.T) {
 	}
 	if _, ok := g.r.avoid[3]; !ok || g.r.avoidWhy[3] != "border-loop" {
 		t.Fatalf("avoid %v why %v", g.r.avoid, g.r.avoidWhy)
+	}
+}
+
+// codereview3 C2: failures of one target an hour apart do not pile up into the long skip.
+func TestTargetFailsDecay(t *testing.T) {
+	g := soakyRig(t, 2)
+	const target = 5
+	for i, want := range []time.Duration{1, 2, 4} {
+		if d := g.r.targetFailSkip(target); d != want*g.r.navSkip() {
+			t.Fatalf("failure %d: skip %v, want %v", i+1, d, want*g.r.navSkip())
+		}
+	}
+	g.clock.Sleep(time.Hour)
+	if d := g.r.targetFailSkip(target); d != g.r.navSkip() {
+		t.Fatalf("after an hour one failure must give navSkip, got %v", d)
+	}
+	// a quick repeat still doubles
+	if d := g.r.targetFailSkip(target); d != 2*g.r.navSkip() {
+		t.Fatalf("quick repeat %v", d)
+	}
+	g.r.clearTargetFails(target)
+	if len(g.r.targetFailLast) != 0 || len(g.r.targetFails) != 0 {
+		t.Fatal("clear left state")
+	}
+}
+
+// codereview3 C3: a failed way to town of a recovery kit trip counts toward KitTripCap like failed chores.
+func TestFailedToTownCountsRecoveryKitTrip(t *testing.T) {
+	for _, capN := range []int{2, 3} {
+		g := newRig(t)
+		g.e.Tune.Resource.KitTripCap = capN
+		g.town.toTownErr = errBoom
+		g.w.set(func(w *world) { w.area = 3; w.level = 7; w.gold0 = 40 })
+		g.r.poll()
+		for i := 0; i < capN; i++ {
+			s := g.r.latest()
+			g.r.loop.trip = &trip{plan: ChorePlan{Potions: true, Reason: resource.RecoveryKitReason}, returnTo: s.Player.Area, emergency: true}
+			g.r.advanceTrip(context.Background(), s, control{})
+		}
+		if got := g.r.ob.recKitTrips; got < capN {
+			t.Fatalf("cap %d: recKitTrips %d after %d failed trips", capN, got, capN)
+		}
+	}
+}
+
+// codereview3 C1: a nav-fault skip of an area on the route is no danger ban (travelTo may jump over it by waypoint);
+// a death ban on the same hop still blocks, and a skip of the target itself still hides the target.
+func TestNavSkipOnRouteHopDoesNotBanTheWalk(t *testing.T) {
+	for _, lvl := range []int{8, 20} {
+		g := campaignRig(t, &fakeQuests{}, lvl)
+		g.r.poll()
+		s := g.r.latest()
+		routeVia(g, 99)
+		until := g.clock.Now().Add(10 * time.Minute)
+		for _, why := range []string{whyUnreachable, whyNavStuck} {
+			g.r.avoid[99], g.r.avoidWhy[99] = until, why
+			if h, _ := g.r.routeBan(s, 6); h != 0 {
+				t.Fatalf("clvl %d: %s skip of hop 99 banned the route (%d)", lvl, why, h)
+			}
+			if err := g.r.routeAllowed(s, s.Player.Area, 6, []int{99, 6}); err != nil && strings.Contains(err.Error(), "banned") {
+				t.Fatalf("clvl %d: routeAllowed refused for %s: %v", lvl, why, err)
+			}
+		}
+		g.r.avoidWhy[99] = whyDeath
+		if h, _ := g.r.routeBan(s, 6); h != 99 {
+			t.Fatalf("clvl %d: a death ban must still block the route, got %d", lvl, h)
+		}
+		if err := g.r.routeAllowed(s, s.Player.Area, 6, []int{99, 6}); err == nil {
+			t.Fatalf("clvl %d: routeAllowed must refuse a death-banned hop", lvl)
+		}
+		g.r.avoid[6], g.r.avoidWhy[6] = until, whyUnreachable
+		delete(g.r.avoid, 99)
+		if h, _ := g.r.routeBan(s, 6); h != 6 {
+			t.Fatalf("clvl %d: the skipped target itself must stay banned, got %d", lvl, h)
+		}
 	}
 }

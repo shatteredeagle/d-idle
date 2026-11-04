@@ -929,6 +929,7 @@ func (a taskActs) LevelTo(ctx context.Context, n int) error {
 		}
 		return a.tag(err)
 	}
+	r.clearTargetFails(target) // standing in the target proves it is reachable
 	r.setTargetArea(target)
 	return a.tag(r.sweepPass(ctx, target))
 }

@@ -112,6 +112,11 @@ func (r *Runner) areaAllowed(s *d2.Snapshot, area int) string {
 	if r.banned(area) {
 		return "banned after repeated deaths"
 	}
+	return r.areaRulesWhy(s, area)
+}
+
+// areaRulesWhy is areaAllowed without the ban check (routeAllowed judges bans per hop with routeBanned).
+func (r *Runner) areaRulesWhy(s *d2.Snapshot, area int) string {
 	if why := r.areaGuardWhy(s, area); why != "" {
 		return "route guard (" + why + ")"
 	}
@@ -140,10 +145,10 @@ func (r *Runner) routeAllowed(s *d2.Snapshot, cur, target int, hops []int) error
 		if err := r.routeGuardHop(s, h); err != nil {
 			return err
 		}
-		if r.banned(h) {
+		if r.routeBanned(h, target) {
 			why = "banned after repeated deaths"
 		} else if !safe {
-			why = r.areaAllowed(s, h)
+			why = r.areaRulesWhy(s, h)
 		}
 		if why != "" {
 			return fmt.Errorf("%w: %s (%d): %s", errAreaGated, r.areaName(h), h, why)

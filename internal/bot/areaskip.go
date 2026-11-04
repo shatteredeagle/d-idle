@@ -51,15 +51,34 @@ func (r *Runner) targetFailSkip(target int) time.Duration {
 	if r.targetFails == nil {
 		r.targetFails = map[int]int{}
 	}
+	if r.targetFailLast == nil {
+		r.targetFailLast = map[int]targetFailStamp{}
+	}
+	now := r.e.Clock.Now()
 	n := r.targetFails[target]
+	if last, ok := r.targetFailLast[target]; ok && now.Sub(last.at) > max(2*last.skip, targetFailMemory) {
+		n = 0 // the old failures are history (codereview3 C2)
+	}
+	d := r.navSkip() << min(n, targetSkipDoublings)
 	r.targetFails[target] = n + 1
-	return r.navSkip() << min(n, targetSkipDoublings)
+	r.targetFailLast[target] = targetFailStamp{at: now, skip: d}
+	return d
+}
+
+// targetFailMemory is the shortest time a failed walk is remembered; a longer last skip extends it to twice that skip.
+const targetFailMemory = 30 * time.Minute
+
+// targetFailStamp is when the last failed walk to a target happened and how long it was skipped.
+type targetFailStamp struct {
+	at   time.Time
+	skip time.Duration
 }
 
 // clearTargetFails forgets the failed walks to target after one that worked.
 func (r *Runner) clearTargetFails(target int) {
 	r.obMu.Lock()
 	delete(r.targetFails, target)
+	delete(r.targetFailLast, target)
 	r.obMu.Unlock()
 }
 

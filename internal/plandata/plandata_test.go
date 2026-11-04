@@ -3,6 +3,7 @@ package plandata
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -11,10 +12,19 @@ func TestMatchesDocs(t *testing.T) {
 	if err != nil || len(ents) == 0 {
 		t.Fatalf("nothing embedded: %v", err)
 	}
+	dir := filepath.Join("..", "..", "docs", "plan", "data")
+	if _, err := os.Stat(dir); err != nil {
+		t.Skip("docs/plan/data not present")
+	}
 	for _, e := range ents {
-		doc, err := os.ReadFile(filepath.Join("..", "..", "docs", "plan", "data", e.Name()))
+		doc, err := os.ReadFile(filepath.Join(dir, e.Name()))
 		if err != nil {
-			t.Skip("docs/plan/data not present")
+			// the endgame builds live one level down
+			doc, err = os.ReadFile(filepath.Join(dir, "builds-endgame", strings.TrimPrefix(e.Name(), "build-")))
+		}
+		if err != nil {
+			t.Errorf("internal/plandata/%s has no copy under docs/plan/data (or builds-endgame/): %v", e.Name(), err)
+			continue
 		}
 		emb, _ := FS.ReadFile(e.Name())
 		if string(doc) != string(emb) {
