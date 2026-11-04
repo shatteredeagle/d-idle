@@ -2,7 +2,7 @@
 
 ```yaml
 change: palprep
-status: in-progress
+status: archived
 agent: palprep
 branch: agent/palprep
 worktree: ~/code/d2lod-wt/palprep
@@ -12,7 +12,8 @@ owns:
   - docs/research/pr-palskill-body-r2.md
 gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
-result: "local only: PAL D2/D3 rebased clean onto upstream e5de6c10 (local/pal-d2d3-r2 9e9622eb, on the private fork remote only); oracle 0 differ on 108,598 and 109,522 cases; nothing pushed to GitHub or posted; one tidy finding (unused include) noted in the body; not verified live"
+result: "local only; nothing pushed to GitHub; verifier next"
+merge: 9bf824f
 ```
 
 - [x] fetch upstream, rebase the two candidate commits onto upstream main
