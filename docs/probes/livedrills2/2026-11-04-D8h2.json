@@ -1,0 +1,34 @@
+{
+ "results": [
+  {
+   "id": "D8.h2",
+   "primitive": "P18",
+   "title": "paid hire with gold below the quote: ErrCantAfford, no merc, gold unchanged",
+   "verdict": "FAIL",
+   "reason": "wanted ErrCantAfford, got no hire line in Kashya's menu: [{Kashya\t400\t115 Kashya 400 115} {talk\t400\t133 talk 400 133} {cancel\t400\t148 cancel 400 148}]",
+   "intended": "gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged",
+   "observed": "quote 0 row \"\"; gold 1 -\u003e 1; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line in Kashya's menu: [{Kashya\t400\t115 Kashya 400 115} {talk\t400\t133 talk 400 133} {cancel\t400\t148 cancel 400 148}]",
+   "runs": [
+    {
+     "Verdict": "FAIL",
+     "Reason": "wanted ErrCantAfford, got no hire line in Kashya's menu: [{Kashya\t400\t115 Kashya 400 115} {talk\t400\t133 talk 400 133} {cancel\t400\t148 cancel 400 148}]",
+     "Intended": "gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged",
+     "Observed": "quote 0 row \"\"; gold 1 -\u003e 1; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line in Kashya's menu: [{Kashya\t400\t115 Kashya 400 115} {talk\t400\t133 talk 400 133} {cancel\t400\t148 cancel 400 148}]",
+     "sig": "poor=true err=true present=false",
+     "cheats": [
+      "debug stat 14 1",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 424156097,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug stat 14 1",
+    "debug goto 1"
+   ]
+  }
+ ]
+}

@@ -60,6 +60,20 @@ func LogGoldFarm(on bool, need, gold, clvl int) string {
 	return fmt.Sprintf("%sgold farm %s need=%d gold=%d clvl=%d", Prefix, w, need, gold, clvl)
 }
 
+// LogGoldFarmReason is LogGoldFarm with a `reason=` key on the off line (gold, clvl cap or merc back); on lines are unchanged.
+func LogGoldFarmReason(on bool, need, gold, clvl int, reason string) string {
+	l := LogGoldFarm(on, need, gold, clvl)
+	if on || reason == "" {
+		return l
+	}
+	return l + " reason=" + tok(reason)
+}
+
+// LogFarmBudget: `merc: gold farm budget minutes=40 cooldown=60 need=1990 gold=900`, when the time budget ends an arming.
+func LogFarmBudget(k Knobs, need, gold int) string {
+	return fmt.Sprintf("%sgold farm budget minutes=%d cooldown=%d need=%d gold=%d", Prefix, k.GoldFarmBudgetMin, k.GoldFarmCooldownMin, need, gold)
+}
+
 // LogReviveSkipped: `merc: revive skipped (gold) price=600 gold=900 need=1000`; need is price x mult plus the kit reserve.
 func LogReviveSkipped(reason string, price, gold, need int) string {
 	return fmt.Sprintf("%srevive skipped (%s) price=%d gold=%d need=%d", Prefix, reason, price, gold, need)
