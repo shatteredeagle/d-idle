@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- d7f1c6a3 11-04 16:55 `Merge branch 'main' into gate2runbook` (-)
 - a378bd69 11-04 16:49 `Merge agent/lifelog: life/maxLife in minute line, zone entry and safety decision log lines, soak report table` (lifelog)
 - b7d61733 11-04 16:48 `Merge branch 'main' into lifelog` (-)
 - 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
@@ -102,5 +103,4 @@
 - defd7957 11-04 16:46 `Merge agent/gateacard: Gate A card rewritten as acceptance per ADR 0015` (gateacard)
 - 3859f3cd 11-04 16:46 `Merge agent/hirewindow: Kashya hire entry needs clvl > 7; d2d matches, no deviation (trace doc)` (hirewindow)
 - 72dcbe88 11-04 16:43 `Merge branch 'main' into retiredterms` (-)
-- d7b4e3e9 11-04 16:43 `Merge branch 'main' into ledgerleft` (-)
 <!-- statusgen:end -->
