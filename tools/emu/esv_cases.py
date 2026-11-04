@@ -5,12 +5,14 @@
 
 Line: id cls level mana256 dr_pct dr_flat mdr res_fire res_light res_cold nblows {phys fire light cold magic} x nblows
 id = seed * 10**7 + k. Edge grid first (seed 0 ids), then N random cases (Python's random.Random(seed)).
-Kinds (id // 10**6 % 10 of the random cases is not used: the kind is in the comparison's own classification).
+Every shield case k has a control twin k + 5,000,000: the same frame, level 0 (no shield), so a difference the
+resistance / reduction path makes without the shield can be told from one the shield makes.
 """
 import random
 import sys
 
 CLS = 1   # Sorceress
+CTRL = 5 * 10 ** 6
 
 
 def edge():
@@ -67,6 +69,8 @@ def main():
     rows += [rand_case(rng) for _ in range(n)]
     for k, r in enumerate(rows):
         print(seed * 10 ** 7 + k, *r, sep="\t")
+        if r[1] > 0:   # the control twin: the same frame with no shield (id + 5,000,000)
+            print(seed * 10 ** 7 + CTRL + k, r[0], 0, *r[2:], sep="\t")
 
 
 if __name__ == "__main__":

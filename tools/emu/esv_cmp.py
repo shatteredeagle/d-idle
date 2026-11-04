@@ -10,6 +10,8 @@ points and 256ths) differ from the game, for base and head, and prints the first
 import sys
 from collections import defaultdict
 
+CTRL = 5 * 10 ** 6
+
 
 def table(path):
     out = {}
@@ -17,6 +19,8 @@ def table(path):
         if not line.strip() or line.startswith("#"):
             continue
         f = line.split()
+        if not f[0].lstrip("-").isdigit() or not all(x.lstrip("-").isdigit() for x in f[1:]):
+            continue
         out[int(f[0])] = list(map(int, f[1:]))
     return out
 
@@ -55,10 +59,18 @@ def main():
     first = defaultdict(list)
     missing = [k for k in cases if k not in game or k not in base or k not in head]
     for k, v in cases.items():
-        if k in missing:
+        if k in missing or k % 10 ** 7 >= CTRL:
             continue
         g = game[k]
-        for tag in classes(v):
+        tags = classes(v)
+        c = k + CTRL
+        if c in game:
+            # the shield's own effect: the same frame without it agrees exactly (256ths) on both d2d sides
+            clean = game[c][0] == base[c][0] == head[c][0]
+            tags.append("shield:ctrl-exact" if clean else "shield:ctrl-differs")
+            if clean and len(tags) > 3:
+                tags += [t + "+ctrl-exact" for t in tags if t.startswith("shield:") and "ctrl" not in t]
+        for tag in tags:
             cnt[tag]["cases"] += 1
             for side, d in (("base", base[k]), ("head", head[k])):
                 checks = {"life_pt": (d[0] >> 8) != (g[0] >> 8), "life_256": d[0] != g[0],
@@ -70,14 +82,16 @@ def main():
                             first[(tag, side, name)].append(k)
             if g[2]:
                 cnt[tag]["game:state_removed"] += 1
-    print(f"cases {len(cases)} missing {len(missing)}")
+    ctrl_ids = [k for k in cases if k % 10 ** 7 >= CTRL or cases[k][2] == 0]
+    same = sum(1 for k in ctrl_ids if k in base and k in head and base[k] == head[k])
+    print(f"cases {len(cases)} missing {len(missing)}; no-shield frames (controls and level-0 cases) {len(ctrl_ids)}: base == head on {same}")
     cols = ["cases"] + [f"{s}:{n}" for s in ("base", "head") for n in ("life_pt", "life_256", "mana_pt", "mana_256")] + ["game:state_removed"]
     print("class".ljust(24) + " ".join(c.rjust(14) for c in cols))
     for tag in sorted(cnt):
         print(tag.ljust(24) + " ".join(str(cnt[tag][c]).rjust(14) for c in cols))
     print("first differing ids (class side check: ids -> case | game | base | head):")
     for (tag, side, name), ids in sorted(first.items()):
-        if tag in ("all",) or tag.startswith("shield:") or tag.startswith("no-shield"):
+        if side == "head" or tag.endswith("ctrl-exact"):
             for k in ids[:1]:
                 print(f"  {tag} {side} {name}: {k} -> {cases[k][1:]} | {game[k]} | {base[k]} | {head[k]}")
 
