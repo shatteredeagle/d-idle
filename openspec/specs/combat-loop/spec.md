@@ -3,6 +3,8 @@
 ## Purpose
 What the fight loop of internal/combat must keep true so that it never spins without game time passing: the cost of a failed walk, when a retreat is offered, and the no-progress watchdog.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: A failed walk costs one poll tick
