@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
 - 1f71fb00 11-04 06:33 `Merge agent/gate2run-s13-20261103-2211-g2v: Gate 2 s13 record: NOT PASSED (258 vh, clvl 16): save-point stall from about 01:20 EST (XP/h, no-progress, belt, invariants, no-gain, Andariel, merc)` (gate2run-s13-20261103-2211-g2v)
 - aa67a14d 11-04 06:28 `merge origin/main into gate2run-s13-20261103-2211-g2v` (gate2run-s13-20261103-2211-g2v)
 - 1fca1265 11-04 06:25 `Merge agent/gate2run-s12-20261103-2210-g2v: Gate 2 s12 record: NOT PASSED only on Attempt Andariel at clvl 14+ (45.7 vh, clvl 16, 1 death)` (gate2run-s12-20261103-2210-g2v)
@@ -136,5 +137,4 @@
 - 0235a87a 11-04 03:58 `merge origin/main into gate2run-s11-20261103-1954-g2a` (gate2run-s11-20261103-1954-g2a)
 - df6e3798 11-04 03:55 `Merge agent/prbprep: prbprep: batch B rebased onto upstream main 002ffab4a (local head 7e1f8fc4), checks pass, PR body r5 drafted (not posted)` (prbprep)
 - dae56176 11-04 03:30 `Merge agent/gate2cursor: gate2cursor: drop a held item no pack cell takes (Gate 2 seed 13 cursor fault; cause B is policy, unchanged)` (gate2cursor)
-- fa4e46fb 11-04 03:28 `merge origin/main into gate2cursor` (gate2cursor)
 <!-- statusgen:end -->
