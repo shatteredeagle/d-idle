@@ -61,7 +61,6 @@
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
-| [primadd](../../openspec/changes/primadd/) | in-progress | primadd | `docs/research/primitives-additions-20261104.md`<br>`openspec/changes/primadd/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
@@ -118,7 +117,6 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
-- change primadd: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; python3 tools/merge_lines_check.py --changed ok
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 99b8206a 11-04 01:07 `Merge agent/primadd: primadd: draft primitive rows P37-P45 (docs/research, primitives.md untouched)` (primadd)
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 - 6e395bb6 11-04 00:56 `Merge agent/killcredit: killcredit: bot logs kill credit per cast window and nova targets; d2dsoak report prints per-skill kills` (killcredit)
 - 93502f42 11-04 00:55 `merge origin/main into killcredit` (killcredit)
@@ -136,5 +135,4 @@
 - f1d14cb0 11-03 23:44 `Merge agent/logfields: logfields: bot logs cast result, last skill, armor sample, build line; d2dsoak report prints them` (logfields)
 - 892ed2f0 11-03 23:08 `Merge agent/sksmoke: sksmoke-a1: d2cheat skilllevel, combatlive sk, Fire Bolt per-hit damage on d2d matches the table at levels 1/4/8/13/20; game.exe run blocked` (sksmoke-a1)
 - 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
-- d0deb956 11-03 21:50 `merge origin/main into soakskills` (soakskills)
 <!-- statusgen:end -->
