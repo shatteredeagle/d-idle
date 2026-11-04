@@ -1,0 +1,3 @@
+BACKLOG: GATE2: Gate 2 run s12-20261103-2210-g2v on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md)
+INDEX: docs/soaks/gate2-s12-20261103-2210-g2v.md: Gate 2 run s12-20261103-2210-g2v (NOT PASSED (Attempt Andariel at clvl 14 or higher)), criteria table, fault recovery
+CHANGELOG: docs: Gate 2 soak run s12-20261103-2210-g2v: NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md).
