@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 6480089d 11-04 17:18 `Merge agent/esbody2: esbody2: Energy Shield PR body after the second verification` (esbody2)
 - 90b57ff2 11-04 17:17 `Merge branch 'main' into esbody2` (-)
 - c6fbf41d 11-04 17:14 `Merge agent/esverify2: esverify2: Energy Shield r2 (229aeca7) re-verified vs native FUN_005ca6c0: CONFIRMED WITH CAVEATS; ready to open after body edits; no-shield mdr order confirmed (45 vs 40) for a follow-up PR` (esverify2)
 - ad7e64db 11-04 17:13 `Merge branch 'main' into esverify2` (-)
@@ -102,5 +103,4 @@
 - d1931421 11-04 17:01 `Merge branch 'main' into removestage2` (-)
 - b910e1ba 11-04 17:00 `Merge branch 'main' into act1check` (-)
 - ed50df44 11-04 16:58 `Merge agent/drillsfix: drillsfix: fixes the DS.2, DS.4 and TM.a drills, offline only; DS.3, TM.b, TM.c stay BLOCKED` (drillsfix)
-- a3761b3b 11-04 16:57 `Merge branch 'main' into drillsfix` (-)
 <!-- statusgen:end -->
