@@ -127,6 +127,8 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- f9473ae6 11-04 04:02 `Merge agent/gate2run-s11-20261103-1954-g2a: Gate 2 s11 record: NOT PASSED only on Attempt Andariel at clvl 14+ (merc hired OK, 0 deaths in 14,869 kills, XP/h 6476 above the m24 floor)` (gate2run-s11-20261103-1954-g2a)
+- 0235a87a 11-04 03:58 `merge origin/main into gate2run-s11-20261103-1954-g2a` (gate2run-s11-20261103-1954-g2a)
 - df6e3798 11-04 03:55 `Merge agent/prbprep: prbprep: batch B rebased onto upstream main 002ffab4a (local head 7e1f8fc4), checks pass, PR body r5 drafted (not posted)` (prbprep)
 - dae56176 11-04 03:30 `Merge agent/gate2cursor: gate2cursor: drop a held item no pack cell takes (Gate 2 seed 13 cursor fault; cause B is policy, unchanged)` (gate2cursor)
 - fa4e46fb 11-04 03:28 `merge origin/main into gate2cursor` (gate2cursor)
@@ -135,6 +137,4 @@
 - 5569f16b 11-04 02:36 `Merge agent/retreatlive2: retreatlive2: P29 RT.drink and RT.portal PASS live on d2d (RT.leave still blocked)` (retreatlive2)
 - 3d601e79 11-04 02:24 `Merge agent/retreatfix: retreatfix: RT.drink setup life derived from the chicken/drink knobs, RT.portal bound 10 ticks` (retreatfix)
 - 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
-- cb2af00e 11-04 02:20 `Merge agent/retreatlive: retreatlive: P29 RT.portal PASS on d2d; RT.drink FAIL on a bound question (setup 20 percent life is below chickenPct 25)` (retreatlive)
-- 789ba3f3 11-04 02:03 `Merge agent/retreatdrill: retreatdrill: drill group RT executes the P29 retreat action (offline-tested, not run live)` (retreatdrill)
 <!-- statusgen:end -->
