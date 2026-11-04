@@ -2,7 +2,7 @@
 
 ```yaml
 change: palprep3
-status: in-progress
+status: archived
 agent: palprep3
 branch: agent/palprep3
 worktree: ~/code/d2lod-wt/palprep3
@@ -12,7 +12,8 @@ owns:
   - docs/research/pr-palskill-body-r3.md
 gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
-result: "local only: PAL D2/D3 cherry-picked onto upstream 7591a92e, no conflict (local/pal-d2d3-r3 1f91a216, pushed to the private fork remote only); verifier caveats applied; oracle 0 differ on both harnesses; body r3 written; nothing pushed to GitHub or posted; not verified live"
+result: "local only; nothing pushed to GitHub; awaiting the user go to open"
+merge: 419a075
 ```
 
 - [x] fetch upstream, cherry-pick the two commits, apply the verifier caveats
