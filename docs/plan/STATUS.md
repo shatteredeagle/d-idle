@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- b18deb1a 11-04 17:02 `Merge agent/removestage2: OpenSpec removal stage 2: CI and pre-push no longer run changecheck/openspec` (removestage2)
 - d1931421 11-04 17:01 `Merge branch 'main' into removestage2` (-)
 - ed50df44 11-04 16:58 `Merge agent/drillsfix: drillsfix: fixes the DS.2, DS.4 and TM.a drills, offline only; DS.3, TM.b, TM.c stay BLOCKED` (drillsfix)
 - a3761b3b 11-04 16:57 `Merge branch 'main' into drillsfix` (-)
@@ -102,5 +103,4 @@
 - 0982d903 11-04 16:55 `Merge branch 'main' into esfixbody` (-)
 - a378bd69 11-04 16:49 `Merge agent/lifelog: life/maxLife in minute line, zone entry and safety decision log lines, soak report table` (lifelog)
 - b7d61733 11-04 16:48 `Merge branch 'main' into lifelog` (-)
-- 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
 <!-- statusgen:end -->
