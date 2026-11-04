@@ -3,6 +3,8 @@
 ## Purpose
 What the bot main loop must keep true across games: how bot-started restarts are counted on the minute line, what per-game memory is forgotten on a new game, and how monsters are classified from their flag byte.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Restarts counts every bot-started game

@@ -3,6 +3,8 @@
 ## Purpose
 The licence rules for this repository and its dependencies: repository licence, SPDX headers, compatible third-party code, stdlib-only dependencies, patches that stay downstream, and the corresponding-source duty on distribution.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Repository licence
