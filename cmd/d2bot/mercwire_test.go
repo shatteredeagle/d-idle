@@ -505,13 +505,38 @@ func TestGoldFarmFollowsMerc(t *testing.T) {
 	if w.GoldFarm(field(5000, 11)) {
 		t.Error("rich enough: no farm")
 	}
-	if w.GoldFarm(field(300, 18)) { // cap 16 -> 18, card mercrevive
-		t.Error("clvl 18 is past the cap")
+	if w.GoldFarm(field(300, 17)) { // cap 17 = no-merc Andariel floor (job mercrevive2)
+		t.Error("clvl 17 is past the cap")
 	}
 	rd.set(merc.MercState{Known: true, Owned: true, Alive: true})
 	w.curAt = time.Time{}
 	if w.GoldFarm(field(300, 11)) {
 		t.Error("living merc: no farm")
+	}
+}
+
+func TestGoldFarmBudgetLog(t *testing.T) {
+	rd := &fakeReader{st: merc.MercState{Known: true, Owned: true, Level: 10}}
+	w, buf, _ := testWire(t, rd, nil)
+	clock := time.Date(2026, 11, 4, 12, 0, 0, 0, time.UTC)
+	w.now = func() time.Time { return clock }
+	snap := townSnap(300, true)
+	snap.Player.Level = 11
+	if !w.GoldFarm(snap) {
+		t.Fatal("farm must arm")
+	}
+	clock = clock.Add(41 * time.Minute)
+	w.curAt = time.Time{}
+	if w.GoldFarm(snap) {
+		t.Error("budget spent: farm off")
+	}
+	if !strings.Contains(buf.String(), "merc: gold farm budget minutes=40 cooldown=60") {
+		t.Errorf("log:\n%s", buf)
+	}
+	clock = clock.Add(30 * time.Minute)
+	w.curAt = time.Time{}
+	if w.GoldFarm(snap) {
+		t.Error("cooldown: still off")
 	}
 }
 

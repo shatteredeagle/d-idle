@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, G1/G2 gate parts superseded by 0013
 date: 2026-10-30
 decision-makers: user (decisions made in conversation), coordinator
 ---

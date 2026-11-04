@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, amended by 0015 ("Not changed" part)
 date: 2026-10-31
 decision-makers: user ("retire g1")
 ---
