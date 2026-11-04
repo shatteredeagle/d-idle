@@ -1,5 +1,7 @@
 # Grill workflow: deciding with the user in a dedicated session
 
+> status: the "create change cards with changecheck new" step is retired for new work (OpenSpec retired, user 2026-11-04); the grill still ends in decisions and ADRs written by the user. Current truth: docs/decisions.md.
+
 Decided by the user 2026-10-30. A "grill" is a relentless interview that turns an open decision into an ADR. Tags: V = read in a file (path given), U = our judgement or untested.
 Background and the plugin analysis: [matt-pocock-skills-fit.md](matt-pocock-skills-fit.md) section 3. Skills read read-only from
 `~/.claude/plugins/cache/claude-plugins-official/mattpocock-skills/1.3.1/skills/` (V): `productivity/grill-me/SKILL.md` is a one-liner that calls the `grilling` skill; `engineering/grill-with-docs/SKILL.md` calls `grilling` plus `domain-modeling` (writes `GLOSSARY.md` and ADRs in the working directory). Both are user-invoked only (`disable-model-invocation: true`, V), so a subagent can never run them and the coordinator should not.

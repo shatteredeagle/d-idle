@@ -1,5 +1,7 @@
 # OpenSpec reference (SME notes for setting it up and writing its documents)
 
+> status: background notes from 2026-10-30; OpenSpec is retired for new work (user, 2026-11-04). Current truth: docs/decisions.md; removal plan: docs/process/openspec-removal-plan.md.
+
 Researched 2026-10-30 by SPECRESEARCH-A. Tags: **V** = verified (read in a primary source I fetched, or observed by running the CLI), **S** = secondary (blog/snippet), **U** = unsure. Facts about this project's own fit are in `openspec-fit-notes.md`.
 
 Primary sources used (all fetched 2026-10-30):

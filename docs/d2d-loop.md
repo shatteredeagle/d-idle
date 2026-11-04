@@ -1,5 +1,7 @@
 # Full bot loop on d2d: hours of a fresh Sorceress (agent D2DLOOP, 2026-10-30)
 
+> status: the "G1/G2 check" notes are retired (ADR 0013, amended by ADR 0015); the d2d gate ladder replaces them. Current truth: docs/decisions.md.
+
 Tags: V = verified live on d2d (how stated), U = unverified. Card: `openspec/changes/d2d-loop-hours`.
 Setup (all V): fork binary `d2d.lab5` (docs/d2d-lab.md), lockstep, managed by the bot, fresh Sorceress "Loopy" (`--d2d-class 4`, no boost, no cheat verb,
 no `internal/cheat`), `--goals campaign --toggle autoloot=off,autoparty=off`, own socket and home under `~/d2d-lab/loop/` on the worker host, `flock /tmp/d2d-lab.lock`,

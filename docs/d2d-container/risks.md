@@ -1,5 +1,7 @@
 # d2d container: risks, effort, questions
 
+> status: the G1/G2 evidence question is retired (ADR 0013), and the container is deferred until Gate A passes (ADR 0015). Current truth: docs/decisions.md.
+
 Effort in focused agent-hours (U, estimates; the existing plan puts the container recipe at 8 to 12 h after the A/B report, S docs/d2d-backend.md phase 4). Tags V/S/U as in design.md.
 
 ## Effort per step

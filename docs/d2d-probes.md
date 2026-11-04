@@ -1,5 +1,7 @@
 # d2d probe batch (agent D2DPROBES, 2026-10-30)
 
+> status: "the original game is the acceptance target" is partly superseded: d2d is the product and game.exe the oracle; done means a 24 h d2d Act 1 clear plus the G-D equivalence (ADR 0015; docs/decisions.md Current truth).
+
 Tag **V-d2d** = observed on d2d (a reimplementation, commit e36922e); the original game stays the acceptance target.
 **D2D-src** = read in d2d's source or comments (not checked on Game.exe). **U** = not tested.
 Setup and verbs: docs/d2d-spike.md. Scripts: docs/d2d-probes/ (our own code: thin client `d2p.py`, `c` wrapper, start/stop/restart).
