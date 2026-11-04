@@ -1,3 +1,5 @@
+// Status: since OpenSpec removal stage 2 (docs/process/openspec-removal-plan.md) CI and the pre-push hook no longer run this;
+// the binary stays only for the merge pipeline until stage 3 and is slated for removal.
 // Command changecheck checks the change cards under openspec/ against each other and the repo, and
 // regenerates the generated block of docs/plan/STATUS.md. Warn-only unless -strict. See openspec/README.md.
 // "changecheck json" prints the same data as JSON for the board page (tools/agentstatus/changes.html).
