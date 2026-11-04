@@ -2,7 +2,7 @@
 
 ```yaml
 change: review3fix
-status: in-progress
+status: archived
 agent: review3fix
 branch: agent/review3fix
 worktree: ~/code/d2lod-wt/review3fix
@@ -21,6 +21,7 @@ exclusive: []
 gates:
   - "changecheck 0 warnings for this card; leakcheck -mode fail 0"
 result: "C1-C4 fixed offline, unit tests only, not verified live. C4 also synced docs runs.json and the Cave 2, Crypt, Mausoleum steps (docs copy was stale)."
+merge: c963702
 ```
 
 - [x] C1 route bans ignore nav-fault skips of non-target hops

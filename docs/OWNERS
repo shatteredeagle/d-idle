@@ -120,12 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-openspec/changes/review3fix/**  review3fix  review3fix
-internal/bot/goal.go  review3fix  review3fix
-internal/bot/geargate.go  review3fix  review3fix
-internal/bot/areaskip.go  review3fix  review3fix
-internal/bot/task.go  review3fix  review3fix
-internal/bot/runner.go  review3fix  review3fix
-internal/bot/areaskip_test.go  review3fix  review3fix
-docs/plan/data/progression-normal.json  review3fix  review3fix
-docs/plan/data/runs.json  review3fix  review3fix
