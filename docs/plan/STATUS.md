@@ -61,6 +61,7 @@
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
+| [palverify](../../openspec/changes/palverify/) | in-progress | palverify | `openspec/changes/palverify/**`<br>`docs/research/palverify/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
@@ -117,6 +118,8 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
+- change palverify: changecheck 0 warnings for this card; leakcheck -mode fail 0
+- change palverify: own harness on BASE and HEAD built from clean; verdict with V/S/U tags
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
@@ -125,6 +128,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
 - f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
 - 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
 - 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
@@ -134,5 +138,4 @@
 - ea07d656 11-04 09:55 `Merge agent/mercrevive: mercrevive: merc.goldFarmMaxLevel 16 to 18, revive reserve 150 to 100 percent, need= in the skip log` (mercrevive)
 - 371af0d7 11-04 09:54 `merge origin/main into mercrevive` (mercrevive)
 - 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
-- a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
 <!-- statusgen:end -->
