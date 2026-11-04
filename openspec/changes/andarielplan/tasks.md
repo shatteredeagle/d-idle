@@ -13,8 +13,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: ""
+result: "docs/andarielplan.md: plan with 9 steps, hold-lift path, revive-gold stall causes and fix proposal, user questions; docs only"
 live: "not verified live (docs only)"
 ```
 
-- [ ] work done
+- [x] work done
