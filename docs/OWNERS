@@ -120,6 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/chargedbolt.md  chargedbolt  chargedbolt
-docs/probes/sksmoke/2026-11-04-SK-cb*  chargedbolt  chargedbolt
-openspec/changes/chargedbolt/**  chargedbolt  chargedbolt
