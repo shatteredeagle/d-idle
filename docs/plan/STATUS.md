@@ -107,6 +107,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- b57d0503 11-04 12:10 `Merge branch 'main' into farmfallback` (-)
 - c61930d7 11-04 12:07 `Merge agent/cardsapply: cardsapply: docs/cards.md (12 active, 5 parked), 14 cards archived (8 closed, 6 dropped); 4 fix cards left open for a decision` (cardsapply)
 - 5074c962 11-04 12:07 `Merge branch 'main' into cardsapply` (-)
 - c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
@@ -116,5 +117,4 @@
 - dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
 - 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
 - d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
-- b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
 <!-- statusgen:end -->

@@ -3,6 +3,7 @@
  "normal": [
   {
    "area": 2,
+   "farm": true,
    "name": "Blood Moor",
    "enter_clvl": 1,
    "leave_clvl": 6,
@@ -10,6 +11,7 @@
   },
   {
    "area": 8,
+   "farm": true,
    "name": "Den of Evil",
    "enter_clvl": 2,
    "leave_clvl": 6,
@@ -17,6 +19,7 @@
   },
   {
    "area": 3,
+   "farm": true,
    "name": "Cold Plains",
    "enter_clvl": 5,
    "kit_clvl": 4,
@@ -25,6 +28,7 @@
   },
   {
    "area": 17,
+   "farm": true,
    "name": "Burial Grounds",
    "enter_clvl": 6,
    "xp_fallback_full_kit": true,
@@ -33,6 +37,7 @@
   },
   {
    "area": 9,
+   "farm": true,
    "name": "Cave Level 1",
    "enter_clvl": 6,
    "leave_clvl": 10,
@@ -40,6 +45,7 @@
   },
   {
    "area": 4,
+   "farm": true,
    "name": "Stony Field",
    "enter_clvl": 8,
    "melee_enter_clvl": 7,
@@ -48,6 +54,7 @@
   },
   {
    "area": 5,
+   "farm": true,
    "name": "Dark Wood",
    "enter_clvl": 9,
    "leave_clvl": 13,
@@ -55,6 +62,7 @@
   },
   {
    "area": 6,
+   "farm": true,
    "name": "Black Marsh",
    "enter_clvl": 10,
    "leave_clvl": 14,
@@ -69,6 +77,7 @@
   },
   {
    "area": 13,
+   "farm": true,
    "name": "Cave 2",
    "enter_clvl": 10,
    "leave_clvl": 15,
@@ -76,6 +85,7 @@
   },
   {
    "area": 18,
+   "farm": true,
    "name": "Crypt",
    "enter_clvl": 10,
    "xp_fallback_full_kit": true,
