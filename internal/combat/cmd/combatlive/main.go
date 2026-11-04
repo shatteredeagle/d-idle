@@ -71,6 +71,15 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 	switch sub {
+	case "sk": // read-only damage sampler for the SK drill (docs/sksmoke-tools.md)
+		o, err := parseSK(os.Args[2:], func(n string) (int, bool) {
+			if m := db.MonsterByName(n); m != nil {
+				return m.ID, true
+			}
+			return 0, false
+		})
+		die(err)
+		die(skCmd(ctx, skRig{R: e.Read, In: game, Sleep: time.Sleep, Now: time.Now}, o, os.Stdout))
 	case "deathrec":
 		deathrec(ctx, e, game, nav.New(e), os.Args[2:])
 	case "corpse":
