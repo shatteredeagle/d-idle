@@ -58,22 +58,23 @@
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
 
 ### Gates
-- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
+- spec [act1-campaign](../../openspec/specs/act1-campaign/spec.md): 9 requirements
+- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 42 requirements
 - spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
 - spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 9 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
-- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
-- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
+- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
-- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 7 requirements
+- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
-- spec [town-basics](../../openspec/specs/town-basics/spec.md): 17 requirements
+- spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
