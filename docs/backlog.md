@@ -64,3 +64,13 @@ Statuses and labels cannot be added by the CLI: hand-edit `backlog/config.yml`. 
 ## Plan reference
 
 docs/process/openspec-removal-plan.md (branch agent/removalplan2 until merged): stage 1 = this migration (copy, nothing removed); later stages switch consumers (changecheck, CI, merge scripts, pre-push hook, STATUS block) to read `backlog/`, then retire `openspec/`. None of that is done.
+
+## Config requirements (from the Orion mirror test, 2026-11-04)
+
+- `backlog/config.yml` sets `check_active_branches: true` and `remote_operations: true`; with either off, cards that exist only on unmerged `agent/*` branches do not show in the web board. The fetch remote must be named `origin`.
+- Cards are visible only when COMMITTED on the agent branch (uncommitted worktree edits are invisible): workers commit card changes with their other work.
+- Keep `auto_commit: false` and `bypass_git_hooks: true`: the merge queue needs main == origin/main and a clean clone, and Backlog.md auto-commits would break that.
+- Pin Backlog.md to one version everywhere (1.55.3). Run `backlog init` with `--agent-instructions none` (AGENTS.md is guard-protected; init otherwise writes agent instruction files).
+- `backlog task list` (CLI) does NOT show branch-only cards; only the web board does. Tooling that needs the cross-branch view uses the web API or reads the files, not the CLI list.
+- `active_branch_days` (default 30) limits which branches count; very old agent branches do not show.
+- The web board is a read-only mirror on another machine fetched every 60 s (no phone view, no write API exposed).
