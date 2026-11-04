@@ -3,6 +3,8 @@
 ## Purpose
 What is public and what stays private at the public cut of the repository: file classes, private-name and host-config rules, the leakcheck warn and fail modes, no Blizzard-derived data, and the cut preconditions and verification.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Classes decide what is public

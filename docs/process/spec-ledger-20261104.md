@@ -644,7 +644,7 @@ NUMBER vs CODE (V, both cited):
 | soak-gates:16 | no-gain window 90 min | cmd/d2soak/progress.go:86 `NoGain: 90 * time.Minute` | yes, but code also counts XP >= 500 as progress (progress.go:59, 247): spec lists only clvl, quest step, gold: DRIFT (spec incomplete) |
 | soak-gates:29 | heap alert 8192 MB or +1024 MB in 5 min | cmd/d2soak/status.go:35 | yes |
 | merc-policy:37 | Monastery road no merc 16 / merc 14 | internal/env/tuning_route.go:37-40 defaults 14 / 14; mercpolicy delta says 14 / 14 | spec STALE, delta and code agree |
-| merc-policy:37, 59 | Tower 16 / 14; Andariel 17 / 15 | tuning_route.go:41-44 Tower 16 / 14; Andariel `DefaultAndarielMinLevel*` not opened (U) | Tower yes |
+| merc-policy:37, 59 | Forgotten Tower 16 / 14; Andariel 17 / 15 | tuning_route.go:41-44 Forgotten Tower 16 / 14; Andariel `DefaultAndarielMinLevel*` not opened (U) | Forgotten Tower yes |
 | band rule (baselinefree delta, unapplied) | CV floor 0.14, z 1.96 | internal/d2dsoakstat/bands.go:122-123 | yes |
 | soak-gates:119 / specdelta | stash-aware funded window, price 30 | internal/d2dsoakstat/invariants.go:162 `TotMax >= PotionPrice` (value of PotionPrice not opened, U) | wording of specdelta matches code shape |
 Not checked (U): fidelity-gate numbers (20 %, 5 seeds, 2 h), death-rule numbers (10.2 section citations), town-basics 300/50, lab-rules 25/40 percent limits, gate3gaps 95 percent / 60 lines / 5 GB / 20 GB.

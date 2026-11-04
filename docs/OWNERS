@@ -7,8 +7,8 @@ docs/**               main  -
 openspec/specs/**     main  -
 docs/decisions.md     main  -
 .claude/agents/**     main  -
+backlog/**  main  -
 
-cmd/d2bot/d2dbackend_default_test.go d2d-default-backend d2d-default-backend
 docs/d2d-container-soak.md           d2d-container-soak    d2d-container-soak
 internal/merc/**  m3-merc  m3-merc
 internal/bot/merc_test.go  m3-merc  m3-merc
@@ -30,22 +30,12 @@ docs/decomp-queue.md  skmiss  skmiss
 docs/BACKLOG.md  skmiss  skmiss
 docs/INDEX.md  skmiss  skmiss
 openspec/changes/skmiss/**  skmiss  skmiss
-docs/fixcastgap.md  fixcastgap  fixcastgap
-internal/combat/castgap.go  fixcastgap  fixcastgap
-internal/combat/castgap_test.go  fixcastgap  fixcastgap
 docs/research/pr-nexthit-proof.md  nexthit  nexthit
 docs/research/pr-nexthit-draft.md  nexthit  nexthit
 tools/emu/next_hit.py  nexthit  nexthit
 tools/emu/next_hit_mode.inc  nexthit  nexthit
 tools/emu/next_hit_summary.py  nexthit  nexthit
 openspec/changes/nexthit/**  nexthit  nexthit
-docs/fixmanamodel.md  fixmanamodel  fixmanamodel
-internal/resource/manamodel.go  fixmanamodel  fixmanamodel
-internal/resource/manamodel_test.go  fixmanamodel  fixmanamodel
-docs/fixskilllvl.md  fixskilllvl  fixskilllvl
-internal/d2/skilllevel.go  fixskilllvl  fixskilllvl
-internal/d2/skilllevel_test.go  fixskilllvl  fixskilllvl
-internal/combat/skilllevel_test.go  fixskilllvl  fixskilllvl
 docs/research/pr-armorhit-proof.md  armorhit  armorhit
 docs/research/pr-armorhit-draft.md  armorhit  armorhit
 docs/research/pr-bundle-queue.md  armorhit  armorhit
@@ -56,16 +46,6 @@ docs/research/pr-curseimmune-draft.md  skresistfix  skresistfix
 docs/research/pr-curseimmune-proof.md  skresistfix  skresistfix
 openspec/changes/skresistfix/**  skresistfix  skresistfix
 
-internal/combat/melee.go  skmeleewire  skmeleewire
-internal/combat/melee_test.go  skmeleewire  skmeleewire
-internal/combat/resource.go  skmeleewire  skmeleewire
-internal/data/items.go  skmeleewire  skmeleewire
-internal/data/schema.go  skmeleewire  skmeleewire
-internal/data/data_test.go  skmeleewire  skmeleewire
-internal/resource/sim.go  skmeleewire  skmeleewire
-internal/resource/wire_test.go  skmeleewire  skmeleewire
-docs/skmeleewire.md  skmeleewire  skmeleewire
-openspec/changes/skmeleewire/**  skmeleewire  skmeleewire
 docs/fixbelt.md  fixbelt  fixbelt
 internal/resource/recovery.go  fixbelt  fixbelt
 internal/resource/recovery_test.go  fixbelt  fixbelt

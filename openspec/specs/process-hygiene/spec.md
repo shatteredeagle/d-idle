@@ -3,6 +3,8 @@
 ## Purpose
 How long-running processes are started, registered, reaped and reported so none is left behind: registry wrapper, group kill and TTL, orphan listing, user approval for stops, bounded waiters and the dispatcher janitor duty.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Long processes start through the registry wrapper

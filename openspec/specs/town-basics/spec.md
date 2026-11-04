@@ -3,6 +3,8 @@
 ## Purpose
 What the bot does in town with gold, scrolls, potions, repairs, the stash and the pack so that a poor early character spends on survival first and never burns time or gold on trips that pay nothing. Source: docs/basics-audit.md (the d2-sme's 15 scenarios, 2026-10-31), docs/BACKLOG.md section 0 (user milestone).
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: ID scrolls only on demand
@@ -191,3 +193,52 @@ A belt fill SHALL treat "no column can take this potion kind" as no room for tha
 #### Scenario: Healing would take the last mana column
 - **WHEN** healing fills three columns of a Sorceress belt and a healing potion lies on the ground
 - **THEN** it is not wanted, and a mana potion is
+
+### Requirement: Trips must buy something
+With `town.tripMinSpend` 60 (default 0 = off) a non-emergency town trip SHALL start only when the planned purchase is worth at least 60 gold or the belt holds no healing potion, so that no trip burns a portal scroll for under 30 gold. OFF by default (the A/B of 2026-10-31 failed its gates). Source: docs/goldfloor.md finding 2 (83 percent of NAVSOAK trips spent under 30 gold). Reconciled 2026-11-04 (source: 2026-11-04-goldfloor).
+
+#### Scenario: Small plan
+- **WHEN** the belt holds 2 healing potions, the plan is one 30-gold potion and a portal scroll is held
+- **THEN** no trip is raised
+
+#### Scenario: Empty belt
+- **WHEN** the belt holds no healing potion
+- **THEN** a trip is raised
+
+### Requirement: No scroll rebuy while poor
+With `town.tripMinSpend` above 0 (default 0 = off) a character with gold under the kit line and fewer than 2 healing potions SHALL spend on healing potions first and SHALL NOT buy a portal scroll in the same visit. Source: docs/goldfloor.md (two scrolls bought in 25 s at gold 209). Reconciled 2026-11-04 (source: 2026-11-04-goldfloor).
+
+#### Scenario: Gold 209
+- **WHEN** a visit starts with 209 gold and 1 healing potion
+- **THEN** healing potions are bought and no town portal scroll is
+
+### Requirement: Early mana cap
+With `town.mpCapLevel` 10 and `town.mpCapEarly` 1 (defaults 0 = off, the old mana buying) a visit below clvl 10 SHALL buy at most `town.mpCapEarly` mana potions and a low mana belt SHALL NOT raise a trip. Source: docs/goldfloor.md finding 3 (mana 74 to 305 gold/h at 60 gold each). Reconciled 2026-11-04 (source: 2026-11-04-goldfloor).
+
+#### Scenario: Clvl 6
+- **WHEN** a clvl 6 character has an empty mana belt and 400 gold
+- **THEN** one mana potion is bought and no `mp belt columns` trip is raised
+
+### Requirement: Sell trips only when worth it
+A sell trip for a poor character SHALL start only when the sellable items reach the poverty sell count (4 without a portal scroll, 6 with one) on every trip trigger, so no second trigger reopens a trip below that count. Source: docs/basics-audit.md row 4 and the G2 audit item (an audit label, not the retired gate name); docs/d2d-economy.md Fixes (+28 percent XP/h from the first door). Reconciled 2026-11-04 (source: 2026-11-04-m1-trips).
+
+#### Scenario: Five items with a scroll
+- **WHEN** gold is under 150, a portal scroll is held and 5 sellable items are in the pack
+- **THEN** no sell trip starts
+
+### Requirement: Gold trip above the keep line
+When carried gold exceeds the keep line (300 + 50 x clvl) by more than the trip margin the bot SHALL raise a town trip with reason `gold` at the next safe moment, so a death does not drop the surplus. Source: docs/basics-audit.md E6 and G8; death-rule `Gold carry and corpse`. Reconciled 2026-11-04 (source: 2026-11-04-m1-trips).
+
+#### Scenario: Rich in the field
+- **WHEN** a clvl 6 character carries 1100 gold (keep line 600) and no hostile is near
+- **THEN** a trip with reason `gold` is due
+
+### Requirement: Pack-full threshold
+The pack SHALL count as full at 4 or fewer free cells (one knob in cells, default 4), which raises exactly one sell visit; fresh loot after the visit ends in the pack. Source: docs/basics-audit.md row 14 and G9; d2-sme checklist scenario 14. Reconciled 2026-11-04 (source: 2026-11-04-m1-trips).
+
+#### Scenario: Four free cells
+- **WHEN** the pack has 4 free cells
+- **THEN** one sell visit is due and the next pickup after it lands in the pack
+
+## Pending deltas (not in force)
+None. No open card carries a town-basics delta (ledger 2026-11-04).
