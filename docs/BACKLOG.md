@@ -424,6 +424,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - sksmoke-a1: Fire Bolt per-hit damage on d2d matches the skills.txt table at levels 1/4/8/13/20 (PASS, compared to table, not game.exe; docs/probes/sksmoke/2026-11-03-SK-d2d.txt); still open: game.exe run (needs exact life read), Charged Bolt per-bolt trace, Frost Nova ring, pack kills per cast
 - chargedbolt (done): Charged Bolt per-bolt PASS on d2d at levels 1/4/8/13/20 (compared to table, not game.exe), docs/chargedbolt.md, evidence docs/probes/sksmoke/2026-11-04-SK-cb.txt
 - tomefix: offline audit of the false-empty tome verdict (regression tests in combat, d2denv, town; no bot change needed, producer-side paths and fork qty stay U), live drill recipe in docs/tomefix.md
+- retreatdrill (offline): drill group RT (drink, town portal, chicken executed, numeric pass) for P29, run command and risks in docs/retreatdrill.md; RT.leave blocked until Fighter.Leave is wired in d2drill; live run pending a hidden slot
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
