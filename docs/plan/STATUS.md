@@ -92,14 +92,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
-- 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
-- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
-- 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
-- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
-- 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
-- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
-- e4ffa51b 11-04 10:28 `merge origin/main into palprep` (palprep)
-- f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
+- 89b52fba 11-04 13:07 `Merge agent/pldefdiff: pldefdiff: playerdef differential re-run (pd_calc, seeds 11 and 23, 102,604 cases each): 0 attack-rating mismatches; D2-D6/D8 not run, no PR candidate` (pldefdiff)
+- a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
+- 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
+- e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
+- d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
+- 9cbf2439 11-04 12:55 `Merge branch 'main' into removalplan2` (-)
+- 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
+- 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
+- 5a08cfce 11-04 12:23 `Merge agent/cardsclose: cardsclose: archive fixcastgap, fixmanamodel, fixskilllvl, skmeleewire (offline only, live proof pending) and drop d2d-default-backend` (cardsclose)
+- 3c3579f4 11-04 12:23 `Merge branch 'main' into cardsclose` (-)
 <!-- statusgen:end -->
