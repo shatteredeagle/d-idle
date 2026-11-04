@@ -332,3 +332,23 @@ func TestReportSkills(t *testing.T) {
 		t.Error("no input accepted")
 	}
 }
+
+// The report prints the lifelog area table and the Act 1 section together.
+func TestReportLifeAndAct1(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "bot.log")
+	log := `time=2026-11-04T10:00:00Z level=INFO msg="zone entry" area=2 clvl=9 life=80/80 heal=4 mana=40/40 tome=1 merc=none
+time=2026-11-04T10:01:00Z level=INFO msg=milestone name=den word=0x0001 clvl=5 virtual=9.0
+`
+	if err := os.WriteFile(p, []byte(log), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var b strings.Builder
+	if err := reportSkills([]string{p}, &b); err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{"life per area", "act1check "} {
+		if strings.Count(b.String(), want) != 1 {
+			t.Errorf("want one %q in:\n%s", want, b.String())
+		}
+	}
+}

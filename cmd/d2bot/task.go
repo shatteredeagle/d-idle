@@ -81,6 +81,11 @@ type saveQuestReader struct {
 	have  bool
 
 	memKey string // last logged memory words
+
+	now        func() time.Time // clock of the milestone log (virtual under lockstep); nil = wall
+	t0         time.Time
+	msDone     map[string]bool // Act 1 milestones already logged (milestone.go)
+	andyLogged bool
 }
 
 // memQuests is questmem.Source as the reader needs it.
@@ -197,6 +202,7 @@ func (r *saveQuestReader) Read(diff int) (bot.QuestView, bool) {
 	}
 	rd := quest.NewReader(srcs...)
 	r.logMem(diff)
+	r.logMilestones(diff)
 	v := bot.QuestView{Quests: map[string]task.QuestState{}, WPs: map[int]bool{}}
 	for tid, sid := range taskQuestIDs {
 		info := rd.Quest(diff, sid)
@@ -244,6 +250,9 @@ func newTaskDeps(ctx context.Context, o options, tw *town.Town, nv *nav.Navigato
 	dir := saveDirOf(ctx, o)
 	rd := newSaveQuestReader(func() string { return dir }, name)
 	rd.log = e.Log.Info
+	if e.Clock != nil {
+		rd.now = e.Clock.Now
+	}
 	rd.mem = memQuestSource(e) // questmem needs the memory reader; d2d has its own source (d2dbackend.go)
 	return &bot.TaskDeps{
 		Dialog:   talk.Adapter{T: tw, E: e, Status: rd.status},
