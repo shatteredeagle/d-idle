@@ -5,7 +5,7 @@ change: gate2run-s11-20261103-1954-g2a
 status: in-progress
 agent: gaterun
 branch: agent/gate2run-s11-20261103-1954-g2a
-worktree: /home/jesse/code/d2lod-wt/gate2run-s11-20261103-1954-g2a
+worktree: ~/code/d2lod-wt/gate2run-s11-20261103-1954-g2a
 skip_specs: true
 owns:
   - docs/soaks/gate2-s11-20261103-1954-g2a.md
