@@ -229,3 +229,4 @@ How merges are named today (V, `cmd/changecheck/checks.go`): the subject regex i
 Proposed text for `docs/decisions.md` (not written by this job): `- 2026-11-04 (user, no ADR): OpenSpec retired for new work; card tracking moves to Backlog.md after a trial; contracts under openspec/specs are kept and move to docs/contracts at removal. Plan: docs/process/openspec-removal-plan.md.`
 
 Questions for the user: (1) the 4 or 5 "needs a decision" cards (fixcastgap, fixmanamodel, fixskilllvl, skmeleewire, d2d-default-backend)? (2) drop the changecheck owners/overlap check (recommended) or port it? (3) keep the board `/cards` approve/defer page (S: it needs only a new scan source)? (4) keep contracts' requirement/scenario form unchanged after the move (recommended)? (5) `credit:` blocks of cards: move or drop?
+- Ops merge gates removed (changecheck, openspec validate; rollback MERGE_CHANGECHECK=1), verified by agent/opscheck1.
