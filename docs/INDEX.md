@@ -353,3 +353,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/pr-monsterpace-verifier.md - independent verifier of the monster pace PR candidate (base velocity 75, think paces, Blood Raven home rule, shaman corpse reach): disassembly, own probes, readers, det, CI parity, split advice
 - docs/research/codereview3.md - review of the target skip, the recovery kit trip and the XP fallback kit flag, ranked findings with fixes and Gate 1 signals
 - docs/soaks/gate1-multiseed-20261103-1938-ms4.md: Gate 1 multi-seed run 20261103-1938-ms4 (PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/soaks/gate1-multiseed-20261103-2140-ms4.md: Gate 1 multi-seed run 20261103-2140-ms4 (PASSED), per-seed criteria, d2dsoak output
