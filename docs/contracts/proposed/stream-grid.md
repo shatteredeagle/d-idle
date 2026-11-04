@@ -1,3 +1,9 @@
+---
+id: stream-grid
+goal: G-F
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: stream-grid (stream-scene)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `stream-grid` (git tag `openspec-final`, path `openspec/changes/stream-grid/specs/stream-scene/spec.md`). When the work lands, the branch that implements it folds this text into a NEW contract `docs/contracts/stream-scene.md` (no main file yet) and deletes this file. Backlog task: title starts with `stream-grid:`.

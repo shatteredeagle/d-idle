@@ -1,3 +1,9 @@
+---
+id: m2-tripwp
+goal: G-B
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: m2-tripwp (early-game-policy)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `m2-tripwp` (git tag `openspec-final`, path `openspec/changes/m2-tripwp/specs/early-game-policy/spec.md`). When the work lands, the branch that implements it folds this text into `docs/contracts/early-game-policy.md` and deletes this file. Backlog task: title starts with `m2-tripwp:`.

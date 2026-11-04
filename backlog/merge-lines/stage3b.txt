@@ -1,0 +1,2 @@
+CHANGELOG: process: contracts stage 3b: 6-key headers on every contract, Numbers tables and contract_test.go for soak-gates, death-rule and fidelity-gate, tools/contracts/check.py in CI (merc.goldFarmMaxLevel text fixed to 17)
+INDEX: docs/contracts/README.md header and checks section; tools/contracts/check.py

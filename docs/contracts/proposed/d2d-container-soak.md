@@ -1,3 +1,9 @@
+---
+id: d2d-container-soak
+goal: G-C
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: d2d-container-soak (soak-gates)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `d2d-container-soak` (git tag `openspec-final`, path `openspec/changes/d2d-container-soak/specs/soak-gates/spec.md`). When the work lands, the branch that implements it folds this text into `docs/contracts/soak-gates.md` and deletes this file. Backlog task: title starts with `d2d-container-soak:`.

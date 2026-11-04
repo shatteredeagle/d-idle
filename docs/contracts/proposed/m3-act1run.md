@@ -1,3 +1,9 @@
+---
+id: m3-act1run
+goal: G-B
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: m3-act1run (act1-campaign)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `m3-act1run` (git tag `openspec-final`, path `openspec/changes/m3-act1run/specs/act1-campaign/spec.md`). When the work lands, the branch that implements it folds this text into `docs/contracts/act1-campaign.md` and deletes this file. Backlog task: title starts with `m3-act1run:`.

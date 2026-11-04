@@ -1,4 +1,12 @@
-# d2d-farm Specification
+---
+id: d2d-farm
+goal: G-C
+status: in-force
+enforced_by:
+  - tools/d2dfarm.sh
+  - tools/d2dfarm-remote.sh
+---
+# d2d-farm contract
 
 ## Purpose
 How the d2d farm treats each machine that runs hidden d2d jobs: node registry, capacity probe and admission, run, collect and stop by process group, and the determinism check across hosts. Source: change d2dfarm, docs/process/d2dfarm.md.
