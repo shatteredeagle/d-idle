@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 3a678f6e 11-03 19:42 `merge origin/main into review3fix` (review3fix)
 - 143bbf3a 11-03 19:39 `Merge agent/gate1multi-20261103-1938-ms4: Gate 1 ms4 multiseed record: PASSED indicative (3 seeds 17,19,21; XP/h +1.2% vs baseline)` (gate1multi-20261103-1938-ms4)
 - 9fba0832 11-03 19:34 `Merge agent/codereview3: codereview3: independent review of gate1fix, recoverykit, xpfallback (C1-C4)` (codereview3)
 - e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
@@ -136,5 +137,4 @@
 - 49446cfd 11-03 17:45 `merge origin/main into crfixbundle2` (crfixbundle2)
 - fe3b2ebd 11-03 17:42 `Merge agent/plandocs: plandocs: apply project review goals G-A..G-F to plan docs; mark covered open-work items done` (plandocs)
 - e57c2a1f 11-03 17:41 `merge origin/main into plandocs` (plandocs)
-- 775f767c 11-03 17:38 `Merge agent/gate1multi-20261103-1650-ms3: Gate 1 ms3 multiseed record: NOT PASSED (17 stall, 19 belt, 21 ok)` (gate1multi-20261103-1650-ms3)
 <!-- statusgen:end -->
