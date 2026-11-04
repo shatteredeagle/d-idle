@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 061c3915 11-04 16:24 `Merge agent/boardsync4: board sync: issues 24-26 recorded` (boardsync4)
 - b59f1a90 11-04 16:19 `Merge agent/boarditems: community board: PLAYERDIFF, SHIELDD2, TICKMVM proposed items` (boarditems)
 - b8facbfa 11-04 16:01 `Merge agent/esprep: esprep: Energy Shield absorb-order PR candidate (local/es-absorb-order 12b78b60 on upstream 2d051d77): differential 60,000 cases, shield life 16,858 to 0 differ; PR body draft, nothing posted` (esprep)
 - 78ea8338 11-04 16:00 `Merge branch 'main' into esprep` (-)
@@ -102,5 +103,4 @@
 - 155f4d59 11-04 14:17 `Merge branch 'main' into floormeasure2` (-)
 - ce58271b 11-04 14:09 `Merge agent/livecheckdrills: livecheckdrills: drill groups DS (P5 stash recheck) and the tome stat-70 drill with fake-lab tests; live runs pending` (livecheckdrills)
 - 6312a99f 11-04 14:08 `Merge branch 'main' into livecheckdrills` (-)
-- 0ab90a8a 11-04 14:06 `Merge agent/shimregister: shimregister: see branch` (shimregister)
 <!-- statusgen:end -->
