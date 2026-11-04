@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 32350aad 11-04 13:47 `Merge agent/heldlog: heldlog: the Andariel hold line logs per clvl with floor and merc state (judge interim rule can now be met); gate decision unchanged` (heldlog)
 - 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
 - 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
 - df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
@@ -101,5 +102,4 @@
 - b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
 - a82c6a8f 11-04 13:21 `Merge agent/backlogmigrate: backlogmigrate (stage 1): backlog/ config, 17 cards copied to Backlog.md tasks, migration script, read-only checker, docs/backlog.md; nothing in openspec/changecheck/CI changed` (backlogmigrate)
 - f3d1dee9 11-04 13:20 `Merge branch 'main' into backlogmigrate` (-)
-- 8255939d 11-04 13:13 `Merge agent/stateevdiff: stateevdiff: Energy Shield absorb order differential, 40,000 cases: game.exe absorbs on the raw field before resistance; d2d after resistance (18,532 of 25,038 shield cases differ in life)` (stateevdiff)
 <!-- statusgen:end -->
