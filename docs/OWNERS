@@ -120,5 +120,5 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-docs/probes/drills/2026-11-03-SK-design.txt  sksmoke-a1  sksmoke
-openspec/changes/sksmoke-a1/**  sksmoke-a1  sksmoke
+docs/probes/drills/2026-11-03-SK-design.txt  sksmoke  sksmoke-a1
+openspec/changes/sksmoke-a1/**  sksmoke  sksmoke-a1
