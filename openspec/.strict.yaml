@@ -41,3 +41,4 @@ allow_merges:
   - d0aed67   # specapplya: merged without a card (merge.sh --card none)
   - e185de4   # adramend: merged without a card (merge.sh --card none)
   - 2999303   # noareafix: merged without a card (merge.sh --card none)
+  - 1205b22   # tickcppdiff: merged without a card (merge.sh --card none)
