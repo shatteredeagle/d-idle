@@ -1,0 +1,1 @@
+BACKLOG: codefix67 (done, offline): F6 stash withdraw only when the purse cannot pay the kit and one healing count, F7 in-town futility latch; docs/codefix67.md; live P5 stash recheck open
