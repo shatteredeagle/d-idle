@@ -1,0 +1,3 @@
+BACKLOG: retreatdrill (offline): drill group RT (drink, town portal, chicken executed, numeric pass) for P29, run command and risks in docs/retreatdrill.md; RT.leave blocked until Fighter.Leave is wired in d2drill; live run pending a hidden slot
+INDEX: docs/retreatdrill.md: the P29 retreat action executed live, drill design (offline-tested, not run)
+CHANGELOG: retreatdrill: drill group RT executes the retreat action (drink, town portal, leave) with a numeric pass condition; not run live

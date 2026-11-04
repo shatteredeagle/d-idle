@@ -9,13 +9,12 @@ worktree: ~/code/d2lod-wt/retreatdrill
 skip_specs: true
 owns:
   - docs/retreatdrill.md
-  - internal/drill/retreat_test.go
   - openspec/changes/retreatdrill/**
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: ""
+result: "group RT (RT.drink, RT.portal, RT.leave) designed and unit-tested offline; RT.leave Blocked until Fighter.Leave is wired in d2drill; docs/retreatdrill.md has the command"
 live: "not verified live"
 ```
 
-- [ ] work done
+- [x] work done
