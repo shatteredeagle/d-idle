@@ -2,7 +2,7 @@
 
 ```yaml
 change: rtleave
-status: in-progress
+status: archived
 agent: rtleave
 branch: agent/rtleave
 worktree: ~/code/d2lod-wt/rtleave
@@ -18,8 +18,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "Fighter.Leave wired in d2drill (Save and Exit, rejoin), offline tests pass; not verified live"
+result: "offline; live d2-live run pending"
 live: "not verified live"
+merge: 902f087
 ```
 
 - [x] work done
