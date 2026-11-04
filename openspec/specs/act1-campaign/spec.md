@@ -93,10 +93,10 @@ The record SHALL hold these rows. Decided, not verified live.
 | # | Class | Row | Tier |
 |---|---|---|---|
 | 8 | R | Milestone times in virtual hours (Andariel dead, Act 2 entered; ADR 0015 item 9) | T3 |
-| 10 | I | `boss: andariel gate pass clvl=N kit=ok` at or above the floor | T3 |
+| 10 | I | `boss: andariel gate pass clvl=N kit=ok` at the floor or above | T3 |
 | 11 | I | Cain, Forgotten Tower, Tools each Done or skipped | T2 |
 | 12 | I | Merc alive 70 percent of field time after the claim | T3 |
-| 13 | I | Lut Gholein waypoint active; Act 2 movie handled (U on game.exe) | T2 |
+| 13 | I | Lut Gholein waypoint active; Act 2 movie handled (U) | T2 |
 
 #### Scenario: No milestone times
 - **WHEN** the record has no virtual-hour times for Andariel dead and Act 2 entered
