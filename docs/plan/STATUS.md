@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 1ecbd45f 11-04 02:24 `merge origin/main into retreatfix` (retreatfix)
 - cb2af00e 11-04 02:20 `Merge agent/retreatlive: retreatlive: P29 RT.portal PASS on d2d; RT.drink FAIL on a bound question (setup 20 percent life is below chickenPct 25)` (retreatlive)
 - 789ba3f3 11-04 02:03 `Merge agent/retreatdrill: retreatdrill: drill group RT executes the P29 retreat action (offline-tested, not run live)` (retreatdrill)
 - 94dcf5f0 11-04 02:02 `merge origin/main into retreatdrill` (retreatdrill)
@@ -136,5 +137,4 @@
 - 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
 - eb6f32e6 11-04 01:17 `merge origin/main into primcheck` (primcheck)
 - c71431a4 11-04 01:14 `Merge agent/groomland2: open-work: rescope SKZEROHIT to the native D1/D2 run (groom proposal)` (groomland2)
-- ad0eb770 11-04 01:10 `merge origin/main into primcheck` (primcheck)
 <!-- statusgen:end -->
