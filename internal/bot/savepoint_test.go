@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/task"
 )
 
@@ -17,6 +18,8 @@ func spRig(t *testing.T) (*rig, control) {
 	g.r.d.Cycler = fakeCycler{g.w}
 	g.w.set(func(w *world) { w.state, w.area, w.life, w.maxL = d2.StateInGame, 1, 100, 100 })
 	g.observeAt(g.clock.Now()) // game entry
+	g.w.set(func(w *world) { w.exp = 1000 })
+	g.observeAt(g.clock.Now()) // something earned since: worth a save
 	return g, control{gen: g.r.gen}
 }
 
@@ -140,6 +143,38 @@ type failCycler struct{}
 
 func (failCycler) EnterGame(context.Context, string) error { return errBoom }
 func (failCycler) NewGame(context.Context, string) error   { return errBoom }
+
+// Gate 2 seed 13: the save point ran before the town chores. A due trip must start first; the save point only runs
+// once the trip is done.
+func TestSavePointWaitsForTownChores(t *testing.T) {
+	g, c := spRig(t)
+	g.r.d.Cycler = menuObserver{fakeCycler{g.w}, g}
+	g.clock.Sleep(25 * time.Minute)
+	g.r.poll()
+	s := g.r.latest()
+	c.goal = &goals.Goal{Type: goals.ReachLevel}
+	c.spec = goalSpec{kind: goals.ReachLevel, level: 17}
+	g.r.loop.forceTrip = true
+	g.r.runGoal(context.Background(), s, c)
+	if g.w.count("newgame") != 0 {
+		t.Fatalf("save point preempted the town chores: %s", g.w.log())
+	}
+	if g.r.loop.trip == nil && !strings.Contains(g.w.log(), "chores") {
+		t.Fatalf("no town trip started: %s", g.w.log())
+	}
+}
+
+// Gate 2 seed 13: a game that earns nothing is not saved again and again (789 save points, seconds apart in wall time
+// because pauses and waits advance the virtual clock).
+func TestSavePointNothingEarnedIsNotDue(t *testing.T) {
+	g, c := spRig(t)
+	g.r.obMu.Lock()
+	g.r.ob.savedExp = g.r.ob.exp // as right after a re-entry
+	g.r.obMu.Unlock()
+	if ok, why := g.r.savePointDue(spSnap(g), c, g.clock.Now().Add(time.Hour)); ok || why != "nothing to save" {
+		t.Fatalf("%v %q", ok, why)
+	}
+}
 
 // Any other game entry (recycle, farm NewGame, fresh-game leveling, crash re-entry) is a save too: the timer restarts.
 func TestOtherGameEntriesCountAsSavePoints(t *testing.T) {

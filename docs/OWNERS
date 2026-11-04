@@ -120,3 +120,8 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
+openspec/changes/gate2loop/**  gate2loop  gate2loop
+docs/gate2loop.md  gate2loop  gate2loop
+internal/bot/savepoint.go  gate2loop  gate2loop
+internal/bot/savepoint_test.go  gate2loop  gate2loop
+internal/bot/goal.go  gate2loop  gate2loop

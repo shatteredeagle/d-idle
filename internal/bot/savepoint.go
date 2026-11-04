@@ -62,6 +62,14 @@ func (r *Runner) savePointDue(s *d2.Snapshot, c control, now time.Time) (bool, s
 	if entered.IsZero() || now.Sub(entered) < every {
 		return false, "too soon"
 	}
+	// Nothing earned since the last entry means nothing to save. Without this a game that cannot progress re-entered
+	// every few wall seconds (virtual minutes pass in pauses and waits): 789 save points in Gate 2 seed 13.
+	r.obMu.Lock()
+	risk := r.ob.xpAtRiskLocked(r.d.SavedExp)
+	r.obMu.Unlock()
+	if risk <= 0 {
+		return false, "nothing to save"
+	}
 	return true, ""
 }
 
