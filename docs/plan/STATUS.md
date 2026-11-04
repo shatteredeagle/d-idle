@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- ad7e64db 11-04 17:13 `Merge branch 'main' into esverify2` (-)
 - 189ec624 11-04 17:06 `Merge agent/act1check: act1check: Act 1 milestone log lines and soak report section (rebased over lifelog)` (act1check)
 - 95631e3a 11-04 17:05 `Merge branch 'main' into act1check` (-)
 - b18deb1a 11-04 17:02 `Merge agent/removestage2: OpenSpec removal stage 2: CI and pre-push no longer run changecheck/openspec` (removestage2)
@@ -102,5 +103,4 @@
 - a3761b3b 11-04 16:57 `Merge branch 'main' into drillsfix` (-)
 - 0b1b54ae 11-04 16:56 `Merge agent/gate2runbook: gate2runbook: Gate 2 rerun runbook (docs only)` (gate2runbook)
 - d8c44516 11-04 16:56 `Merge agent/esfixbody: esfix: Energy Shield PR body updated for the native verification and the flat/mdr fix` (esfixbody)
-- d7f1c6a3 11-04 16:55 `Merge branch 'main' into gate2runbook` (-)
 <!-- statusgen:end -->
