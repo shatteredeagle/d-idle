@@ -457,6 +457,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - 2026-11-04 modsprep (supersedes "card in progress"): archived (2026-11-01-modsprep, ec345825); draft v2 READY, det hashes 10 of 14 equal and 4 explained, NOT verified live (no game.exe).
 - 2026-11-04 gen-invariants (supersedes "awaiting the user's approval to launch"): merged and archived (2026-10-31-gen-invariants, a83b28d9); d2dsoak invariants validated offline on the overnight logs, not live.
 - andarielsme - SME decisions for m3-andariel recorded in docs/andarielsme.md and the card text amended (docs only, not verified live)
+- mercrevive: merc.kitReservePct 150 -> 100, merc.goldFarmMaxLevel 16 -> 18, revive skip line prints need=, once-per-change gold wait line (offline, not verified live; docs/mercrevive.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
