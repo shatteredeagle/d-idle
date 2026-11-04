@@ -80,14 +80,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 22dfa4e7 11-04 18:09 `Merge origin/main into removestage3` (-)
+- 6d3acc9f 11-04 17:57 `Merge agent/esfollow: record #198 follow-up commit (CodeRabbit nullopt guard)` (esfollow)
+- bfa50177 11-04 17:51 `Merge agent/nsbody: nsbody: PR body draft, no-shield damage reduction order` (nsbody)
+- 24695402 11-04 17:50 `Merge branch 'main' into nsbody` (-)
 - 4f6e7c7c 11-04 17:49 `Merge origin/main into removestage3` (-)
 - 81eeb8cf 11-04 17:47 `Merge agent/contractsdesign: contracts after OpenSpec: design` (contractsdesign)
 - 92a209d2 11-04 17:24 `Merge agent/removestage2b: remove tools/openspec.sh (stage 2b)` (removestage2b)
 - c1df347e 11-04 17:23 `Merge branch 'main' into none` (-)
 - 43cc7bc0 11-04 17:22 `Merge agent/esopened: record upstream PR: Energy Shield absorb order` (esopened)
 - ef606495 11-04 17:21 `Merge branch 'main' into esopened` (-)
-- 0c9ee4a9 11-04 17:20 `Merge agent/opscheck1: ops merge gates removed check` (opscheck1)
-- 6480089d 11-04 17:18 `Merge agent/esbody2: esbody2: Energy Shield PR body after the second verification` (esbody2)
-- 90b57ff2 11-04 17:17 `Merge branch 'main' into esbody2` (-)
-- c6fbf41d 11-04 17:14 `Merge agent/esverify2: esverify2: Energy Shield r2 (229aeca7) re-verified vs native FUN_005ca6c0: CONFIRMED WITH CAVEATS; ready to open after body edits; no-shield mdr order confirmed (45 vs 40) for a follow-up PR` (esverify2)
 <!-- statusgen:end -->
