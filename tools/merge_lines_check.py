@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lint backlog/merge-lines/<card>.txt (and, for old branches, openspec/changes/*/merge-lines.txt) against the grammar the merge script applies.
+"""Lint backlog/merge-lines/<card>.txt against the grammar the merge script applies.
 
 Usage: python3 tools/merge_lines_check.py [--changed | FILE...]   (default: every active card's merge-lines.txt;
 --changed: only those this branch adds or changes against origin/main, what tools/ci/check.sh runs)
@@ -46,8 +46,7 @@ def lint_text(text, name="merge-lines.txt"):
 
 
 def default_files(root="."):
-    return sorted(glob.glob(os.path.join(root, "backlog", "merge-lines", "*.txt"))
-                  + glob.glob(os.path.join(root, "openspec", "changes", "*", "merge-lines.txt")))
+    return sorted(glob.glob(os.path.join(root, "backlog", "merge-lines", "*.txt")))
 
 
 def changed_files(base="origin/main"):
@@ -60,9 +59,8 @@ def changed_files(base="origin/main"):
 
     names = set(git("diff", "--name-only", base + "...HEAD")) | set(git("diff", "--name-only", "HEAD")) | set(
         git("ls-files", "--others", "--exclude-standard"))
-    return sorted(n for n in names if ((n.startswith("openspec/changes/") and n.endswith("/merge-lines.txt"))
-                                       or (n.startswith("backlog/merge-lines/") and n.endswith(".txt")))
-                  and "/archive/" not in n and os.path.exists(n))
+    return sorted(n for n in names if n.startswith("backlog/merge-lines/") and n.endswith(".txt")
+                  and os.path.exists(n))
 
 
 def main(argv):

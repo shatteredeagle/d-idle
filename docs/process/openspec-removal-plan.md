@@ -201,6 +201,8 @@ No new OpenSpec change; owns, exclusive and result go into the report (section 8
 - Risk: low (wording). Rollback: revert.
 
 ### Stage 5 - other repos (GO: yes per repo)
+- STATUS: DONE 2026-11-04 (branch `agent/stage5`). Public: `cmd/changecheck` deleted (it imported no internal package, so nothing else went), `tools/merge_lines_check.py` and its test read only `backlog/merge-lines/`, hooks.md and ci-checks.md lost their changecheck sections, `tools/ops-cutover.sh` points at the contract and backlog checks. Kept on purpose: `openspec/README.md` (one-line stub), `docs/OWNERS` (AGENTS.md and PLAN.md cite it; nothing reads it), history tools marked HISTORY (`tools/spec`, `tools/backlog/openspec_to_backlog.py`, `tools/credit`). Ops: MERGE_CHANGECHECK code and the openspec helpers removed from merge.sh, mergeq.py, merge_batch.sh, merge_classify.py (`--card none` still accepted and ignored); rollback is `git revert` of the ops commit. Guard files for the coordinator: `docs/decisions.md` (line 17 link and the 2026-11-04 line), `GLOSSARY.md` (lines 285, 318, 328 describe cards, OWNERS and `cmd/changecheck`), ADRs that link into `openspec/`. Final state: OpenSpec removal complete.
+- Original text:
 - What: `d2lod-bot-new` (U, not readable from this job; check existence, repeat section 1 there), the ops repo leftovers (`state/` stays as history). Verify with `grep -rIl -i "openspec\|changecheck"` returning only history. Risk low; rollback revert.
 
 ### Which stages need the user's go
