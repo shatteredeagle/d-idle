@@ -1,0 +1,9 @@
+DRILL DS.1 P5 PASS no withdrawal, bought for 280 | intended: stash stays 1400 (no withdrawal), spent > 0, belt gains | observed: purse 600 -> 320, stash 1400 -> 1400, belt 0 -> 4, spent 280, bought Minor Healing Potionx2 Minor Mana Potionx2 Scroll of Town Portalx1, err "" | runs: 2, identical
+DRILL DS.2 P5 FAIL withdrew 0, wanted 344 | intended: stash falls by keep line 350 minus purse 6 = 344, belt gains | observed: purse 6 -> 6, stash 1400 -> 1400, belt 0 -> 0, spent 0, bought none, err "" | runs: 2, identical
+DRILL DS.4 P5 BLOCKED the rejuvenation did not reach the pack: setup failed | intended: rejuvenation in the pack, stash unchanged | observed: purse 6 -> 6, stash 1400 -> 1400, belt 1 -> 1, spent 0, bought none, err "" pack none | runs: 2, identical
+
+drill     prim  verdict  det  reason
+DS.1      P5    PASS     same no withdrawal, bought for 280
+DS.2      P5    FAIL     same withdrew 0, wanted 344
+DS.4      P5    BLOCKED  same the rejuvenation did not reach the pack: setup failed
+cheat verbs used (each ledgered with a reason): debug clearinv, debug give rvs, debug stat 14 6, debug stat 14 600, debug stat 15 1400
