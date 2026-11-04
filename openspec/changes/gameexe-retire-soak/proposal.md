@@ -9,7 +9,7 @@ Gate A (fidelity acceptance) is the release gate for the product (ADR 0015). Acc
 
 game.exe 2 h / 8 h / 24 h runs are the ORACLE side: they supply the reference lanes for A:B and fidelity evidence. They are not the release gate, and no game.exe soak is needed beyond the A:B reference lanes.
 
-The earlier text (Game.exe-only paths: kill recovery, failsafe ladder, recycle, Wine/OOM that d2d cannot test; regression soak when original-game work resumes) is superseded. Those paths stay parked with the frozen game.exe path (ADR 0009); they are not Gate A criteria. [S: ADR 0015, decisions.md Current truth; not re-verified live]
+Old game.exe-only paths (kill recovery, recycle, Wine/OOM) stay parked, not Gate A criteria. [S: ADR 0015]
 
 ## What Changes
 
