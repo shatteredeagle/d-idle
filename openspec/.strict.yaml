@@ -42,3 +42,4 @@ allow_merges:
   - e185de4   # adramend: merged without a card (merge.sh --card none)
   - 2999303   # noareafix: merged without a card (merge.sh --card none)
   - 1205b22   # tickcppdiff: merged without a card (merge.sh --card none)
+  - 0ab90a8   # shimregister: merged without a card (merge.sh --card none)
