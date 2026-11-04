@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
 - 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
 - 32350aad 11-04 13:47 `Merge agent/heldlog: heldlog: the Andariel hold line logs per clvl with floor and merc state (judge interim rule can now be met); gate decision unchanged` (heldlog)
 - 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
@@ -102,5 +103,4 @@
 - 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
 - 6c451992 11-04 13:27 `Merge agent/shielddiff: shielddiff: off-weapon enhanced damage differential (D1) 2x20,000 cases, PR candidate for SKSHIELDFIX; D2 note` (shielddiff)
 - b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
-- a82c6a8f 11-04 13:21 `Merge agent/backlogmigrate: backlogmigrate (stage 1): backlog/ config, 17 cards copied to Backlog.md tasks, migration script, read-only checker, docs/backlog.md; nothing in openspec/changecheck/CI changed` (backlogmigrate)
 <!-- statusgen:end -->
