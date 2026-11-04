@@ -157,12 +157,13 @@ func (r *Runner) forgetGame() {
 
 // trip is one resumable town visit: portal home, chores, settle, portal back.
 type trip struct {
-	plan      ChorePlan
-	returnTo  int
-	stage     int // 0 go home, 1 chores, 2 settle, 3 back to the field
-	emergency bool
-	startGold int // gold when the trip was first advanced (in the field for most trips), for the trip log line
-	restocks  int // extra shop rounds the field gate asked for in this town visit (max gateRestocks)
+	plan       ChorePlan
+	returnTo   int
+	stage      int // 0 go home, 1 chores, 2 settle, 3 back to the field
+	emergency  bool
+	startGold  int // gold when the trip was first advanced (in the field for most trips), for the trip log line
+	startBasis int // the policy's gold (stash included while no healing potion) at that moment, for the in-town latch
+	restocks   int // extra shop rounds the field gate asked for in this town visit (max gateRestocks)
 }
 
 // antidotes counts antidote potions in belt and pack (0 without a catalog).
@@ -247,7 +248,11 @@ func (r *Runner) needChores(s *d2.Snapshot) (plan ChorePlan, emergency, ok bool)
 	if plan, ok := r.rebuyDue(s); ok {
 		return plan, false, true
 	}
-	return r.choresDue(s)
+	plan, emergency, ok = r.choresDue(s)
+	if ok && emergency && r.townLatched(s) {
+		return plan, emergency, false
+	}
+	return plan, emergency, ok
 }
 
 // rebuyDue sends a naked character that has earned the gold (resource.GearGate CanRebuy) to town for the poverty rebuy:
@@ -447,6 +452,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 	t.plan.PotionFloor = r.potionFloor(p)
 	if t.startGold == 0 {
 		t.startGold = p.Gold
+		t.startBasis = r.resInput(snap).Gold
 	}
 	if !p.InTown() && t.stage < 3 {
 		if t.stage > 0 { // fell out of town mid-trip (portal taken early): start over from the field
@@ -509,6 +515,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			r.setLastTrip(r.e.Clock.Now())
 			if s := r.latest(); s != nil {
 				r.noteTripEnd(s)
+				r.noteTownFutile(t, s)
 				r.logTrip(t, s.Player.Gold)
 				if lb, ok := r.d.Loot.(leftBehinder); ok {
 					lb.ClearLeftBehind()
