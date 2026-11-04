@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
 - 2d3c0d81 11-04 16:47 `Merge branch 'main' into shimcheckci` (-)
 - a1be2f40 11-04 16:46 `Merge agent/retiredterms: status banners on 20 docs for retired terms` (retiredterms)
 - 03d0bcb0 11-04 16:46 `Merge agent/ledgerleft: spec ledger resolutions for 8 rows (needs user decisions)` (ledgerleft)
@@ -102,5 +103,4 @@
 - d7b4e3e9 11-04 16:43 `Merge branch 'main' into ledgerleft` (-)
 - 75c6ac3d 11-04 16:43 `Merge branch 'main' into gateacard` (-)
 - 9b620b6f 11-04 16:43 `Merge branch 'main' into hirewindow` (-)
-- 0bb4156c 11-04 16:29 `Merge agent/esverify: esverify: Opus verifier for the Energy Shield absorb-order candidate: CONFIRMED WITH CAVEATS (native FUN_005ca6c0 run, mana 0 differ on 51,065 cases, life 4,494 to 171; caveat C1 flat/mdr negative field)` (esverify)
 <!-- statusgen:end -->
