@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 6f563f51 11-04 14:48 `Merge agent/livedrills3: livedrills3: first live runs on d2d: DS.1 PASS; DS.2 FAIL (drill plan lacks gold, drill bug); DS.3/DS.4 and the tome drills BLOCKED; D8.h/D8.h2 FAIL: Kashya menu after talk has no hire line` (livedrills3)
 - 50e66119 11-04 14:18 `Merge agent/floormeasure2: floormeasure2: route-floor measurement from the Gate 2 logs; seed 13 -1370 XP is the injected kill -9, not a death; no max-life field in any log` (floormeasure2)
 - 155f4d59 11-04 14:17 `Merge branch 'main' into floormeasure2` (-)
 - ce58271b 11-04 14:09 `Merge agent/livecheckdrills: livecheckdrills: drill groups DS (P5 stash recheck) and the tome stat-70 drill with fake-lab tests; live runs pending` (livecheckdrills)
@@ -102,5 +103,4 @@
 - 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
 - 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
 - e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
-- d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
 <!-- statusgen:end -->
