@@ -1,0 +1,5 @@
+DRILL D8.c P18 PASS the free Rogue was granted by the claim (14.3,21.9:RG) | intended: a fresh character with the Blood Raven reward pending: ClaimRogue opens Kashya's menu and a Rogue appears, the dialog is closed | observed: granted=true merc="14.3,21.9:RG" record states 0 -> 0 err <nil>
+
+drill     prim  verdict  det  reason
+D8.c      P18   PASS     -    the free Rogue was granted by the claim (14.3,21.9:RG)
+cheat verbs used (each ledgered with a reason): debug goto 1, debug quest set 2 0x0002

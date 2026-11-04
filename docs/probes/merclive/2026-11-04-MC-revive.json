@@ -1,0 +1,36 @@
+{
+ "results": [
+  {
+   "id": "D8.a",
+   "primitive": "P18",
+   "title": "merc hired and killed by cheat: the bot's revive through Kashya brings it back for gold",
+   "verdict": "PASS",
+   "reason": "revived through Kashya's menu; price taken 0 gold (a Rogue at clvl 1 is revived free on this build: U whether the price is a rule or a gap)",
+   "intended": "merc alive again, gold down by the reported price",
+   "observed": "merc present=false dead=true code= life=[0,0] -\u003e present=true dead=false code=RG life=[40,1]; gold 3000 -\u003e 3000 (revive reports 0); err \u003cnil\u003e; panels none",
+   "runs": [
+    {
+     "Verdict": "PASS",
+     "Reason": "revived through Kashya's menu; price taken 0 gold (a Rogue at clvl 1 is revived free on this build: U whether the price is a rule or a gap)",
+     "Intended": "merc alive again, gold down by the reported price",
+     "Observed": "merc present=false dead=true code= life=[0,0] -\u003e present=true dead=false code=RG life=[40,1]; gold 3000 -\u003e 3000 (revive reports 0); err \u003cnil\u003e; panels none",
+     "sig": "dead=true-\u003efalse paid\u003e0=false err=false",
+     "cheats": [
+      "debug merc hire 0",
+      "debug merc kill",
+      "debug stat 14 3000"
+     ],
+     "elapsed_ns": 524154996,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug merc hire 0",
+    "debug merc kill",
+    "debug stat 14 3000"
+   ]
+  }
+ ]
+}
