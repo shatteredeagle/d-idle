@@ -7,13 +7,13 @@ tag=$1; shift
 here=$(cd "$(dirname "$0")" && pwd)
 SRC=$HOME/labrun/herdr/code/d2lod-wt/verifier-es$tag
 OUT=${D2_SCRATCH:-/tmp/d2agent-esverify}/$tag
-B=$OUT/build
+B=$OUT/build3
 mkdir -p "$B"
 DEPS=$HOME/d2d-lab/src/build/_deps
 CLI=$(ls -d $HOME/d2d-lab/pr/belt/build/_deps/cli11-src)
 if [ ! -f "$B/build.ninja" ]; then
-	nice cmake -S "$SRC" -B "$B" -G Ninja -DCMAKE_BUILD_TYPE=Release -DD2D_BUILD_APPS=OFF -DD2D_BUILD_TOOLS=OFF -DD2D_BUILD_TESTS=ON \
-		-DFETCHCONTENT_SOURCE_DIR_STORMLIB=$DEPS/stormlib-src -DFETCHCONTENT_SOURCE_DIR_CLI11=$CLI -DFETCHCONTENT_FULLY_DISCONNECTED=ON > "$OUT/cmake.log" 2>&1 || { tail -30 "$OUT/cmake.log"; exit 1; }
+	nice cmake -S "$SRC" -B "$B" -G Ninja -DCMAKE_BUILD_TYPE=Release -DD2D_BUILD_APPS=ON -DD2D_BUILD_TOOLS=OFF -DD2D_BUILD_TESTS=ON \
+		-DFETCHCONTENT_SOURCE_DIR_STORMLIB=$DEPS/stormlib-src -DFETCHCONTENT_SOURCE_DIR_CLI11=$CLI -DFETCHCONTENT_SOURCE_DIR_SENTRY_NATIVE=$DEPS/sentry_native-src -DFETCHCONTENT_FULLY_DISCONNECTED=ON > "$OUT/cmake.log" 2>&1 || { tail -30 "$OUT/cmake.log"; exit 1; }
 fi
 nice ninja -C "$B" -j3 game storm install_detect "$@" > "$OUT/ninja.log" 2>&1 || { tail -40 "$OUT/ninja.log"; exit 1; }
 IN=""

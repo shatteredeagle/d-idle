@@ -70,7 +70,7 @@ int main(int argc, char** argv) {
             base_states = world->actor->self_states;
             built_cls = cls;
             const auto* es = data->skills.get(es_id);
-            for (const int lvl : { 1, 2, 5, 10, 18, 20, 25, 30, 40, 50, 60, 99 })
+            for (int lvl = 1; lvl <= 99; ++lvl)
                 std::printf("#calc cls %d level %d pct %d per16 %d\n", cls, lvl, world->fight.calc(*es, es->calc[0], lvl), world->fight.calc(*es, es->calc[1], lvl));
         }
         auto& fight = world->fight;
