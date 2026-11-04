@@ -2,7 +2,7 @@
 
 ```yaml
 change: noareacards
-status: in-progress
+status: archived
 agent: noareacards
 branch: agent/noareacards
 worktree: ~/code/d2lod-wt/noareacards
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: "docs/noareacards.md: three card drafts, order of work, questions; no code; not verified live"
+result: "docs only; no code; awaits the user review of each card"
 live: "not verified live (docs only)"
+merge: f968460
 ```
 
 - [x] work done
