@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, partly superseded by 0015 (container deferred until Gate A passes; native dev path stands)
 date: 2026-10-29
 decision-makers: user (decisions made in conversation), coordinator
 ---
