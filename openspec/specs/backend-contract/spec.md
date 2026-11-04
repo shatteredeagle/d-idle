@@ -50,7 +50,7 @@ Behaviour the d2d backend cannot provide yet (loot pickup, stat map, skill list,
 - **THEN** it takes the "unreadable" path and logs it, and does not invent values
 
 ### Requirement: Game.exe is the fidelity oracle, d2d is the product
-d2d (native, no Wine) SHALL be the end product and Game.exe SHALL be the fidelity oracle: a result verified only on d2d MUST be tagged V-d2d, and d2d behaviour is accepted as equal to the original game only when the A:B comparison (goal G-D, the fidelity-gate spec) says EQUIVALENT. The acceptance of the bot is: it clears Act 1 for 24 h on d2d AND the A:B comparison says EQUIVALENT. Source: user decision 2026-11-04 (replaces the ADR 0015 framing of game.exe as the acceptance target; needs an ADR 0015 amendment, branch agent/adramend); docs/decisions.md 2026-10-30; plan-v2 section 11. Reconciled 2026-11-04 (source: decision 4, user 2026-11-04).
+d2d (native, no Wine) SHALL be the end product and Game.exe the fidelity oracle: a result verified only on d2d MUST be tagged V-d2d and counts as equal to the original game only when the A:B comparison (goal G-D) says EQUIVALENT. Acceptance: Act 1 cleared for 24 h on d2d AND A:B EQUIVALENT. Source: user 2026-11-04 (replaces the ADR 0015 framing; needs an ADR 0015 amendment). Reconciled 2026-11-04 (source: decision 4).
 
 #### Scenario: Probe result
 - **WHEN** a d2d probe says the free Rogue is granted without a window
@@ -61,9 +61,9 @@ d2d (native, no Wine) SHALL be the end product and Game.exe SHALL be the fidelit
 - **THEN** the backend is accepted; either condition alone is not acceptance
 
 ### Requirement: Leaving d2d is the user's decision
-If the A:B verdict (G-D) is DIFFERENT and closing the gap needs a d2d engine rewrite, the user SHALL decide whether to leave d2d, and the decision MUST never be automatic; container build failures and other toolchain failures are tasks, never an exit trigger. Source: ADR 0009 exit trigger, reworded per the user's 2026-11-04 chat (tie to the G-D verdict). Reconciled 2026-11-04 (source: decision 4, user 2026-11-04).
+If the A:B verdict (G-D) is DIFFERENT and the gap needs a d2d engine rewrite, the user SHALL decide whether to leave d2d, never automatically; toolchain failures are tasks, not an exit trigger. Source: ADR 0009 exit trigger. Reconciled 2026-11-04 (source: decision 4).
 
-> OPEN QUESTION: confirm break-glass wording. The user only discussed this rule in chat. The old delta also carried a trigger of "about 16 agent-hours for one gap" and "moves a gated fidelity metric past 20 percent"; both are dropped here and tied to the G-D verdict instead. The user should confirm.
+> OPEN QUESTION: confirm break-glass wording. The user only discussed this in chat. The old trigger (about 16 agent-hours, metric past 20 percent) is replaced by the G-D verdict.
 
 #### Scenario: Different verdict and an engine rewrite
 - **WHEN** the A:B verdict is DIFFERENT and the gap needs an engine rewrite
@@ -355,7 +355,7 @@ On d2d the portal verb SHALL NOT click while the player is in hit recovery, atta
 - **THEN** no click is made and the error says the player is busy
 
 ### Requirement: The d2d portal verb succeeds only on a portal object
-The d2d portal verb SHALL report success only when a town portal object (class 59) is within 25 subtiles of the player, never because the scroll left the pack. When the source was spent and no object appeared, it SHALL re-read the pack and charges and retry with the next source; with no source left it SHALL return the no-portal error without another click. Failure lines SHALL name the cause (empty, busy, cancelled, no object after a dropped click, no object after a cut cast). Source: docs/research/town-portal-trace.md. Reconciled 2026-11-04 (source: 2026-10-31-fix-portal2).
+The d2d portal verb SHALL report success only when a town portal object (class 59) is within 25 subtiles of the player, never because the scroll left the pack. When the source was spent and no object appeared, it SHALL re-read the pack and retry with the next source; with none left it SHALL return the no-portal error without another click, and failure lines SHALL name the cause. Source: docs/research/town-portal-trace.md. Reconciled 2026-11-04 (source: 2026-10-31-fix-portal2).
 
 #### Scenario: Cast cut by a hit
 - **WHEN** the first scroll is spent and no portal appears while a second scroll is in the pack
