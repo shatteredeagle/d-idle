@@ -54,7 +54,6 @@
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
-| [groomland2](../../openspec/changes/groomland2/) | in-progress | groomland2 | `openspec/changes/groomland2/**` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -104,7 +103,6 @@
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
-- change groomland2: go run ./cmd/changecheck -cli has 0 warnings
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- c71431a4 11-04 01:14 `Merge agent/groomland2: open-work: rescope SKZEROHIT to the native D1/D2 run (groom proposal)` (groomland2)
 - 1cad2adb 11-04 01:10 `merge origin/main into groomland2` (groomland2)
 - 99b8206a 11-04 01:07 `Merge agent/primadd: primadd: draft primitive rows P37-P45 (docs/research, primitives.md untouched)` (primadd)
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
@@ -136,5 +135,4 @@
 - 10491e71 11-04 00:51 `Merge agent/chargedbolt: chargedbolt: Charged Bolt per-bolt damage on d2d matches the table at levels 1/4/8/13/20 (compared to table, not game.exe)` (chargedbolt)
 - 4db134c4 11-04 00:51 `merge origin/main into chargedbolt` (chargedbolt)
 - 5740a15c 11-04 00:48 `Merge agent/backlogcheck: backlogcheck: stale-status table for BACKLOG and decomp-queue (25 stale, 5 current, 10 unsure)` (backlogcheck)
-- f1d14cb0 11-03 23:44 `Merge agent/logfields: logfields: bot logs cast result, last skill, armor sample, build line; d2dsoak report prints them` (logfields)
 <!-- statusgen:end -->

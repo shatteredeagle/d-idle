@@ -2,7 +2,7 @@
 
 ```yaml
 change: groomland2
-status: in-progress
+status: archived
 agent: groomland2
 branch: agent/groomland2
 worktree: ~/code/d2lod-wt/groomland2
@@ -12,8 +12,9 @@ owns:
 exclusive: []
 gates:
   - "go run ./cmd/changecheck -cli has 0 warnings"
-result: "SKZEROHIT rescoped in open-work.md"
+result: "docs only"
 live: "not verified live (docs only)"
+merge: c71431a
 ```
 
 - [x] rescope SKZEROHIT
