@@ -72,14 +72,14 @@ func TestSkillsLogFields(t *testing.T) {
 	out := s.Text("a", "")
 	for _, want := range []string{"made effect 1 of 2", "cut before action frame 1 of 2", "mana spent 48 (24.0 per cast)",
 		"kills 1 (last skill of the kill)", "seconds absent ~60 (1 of 2 minute samples without armor, 1 unreadable)",
-		"agent/x abc1234", "Chain Lightning 19 (modelled"} {
+		"agent/x abc1234", "Chain Lightning 19, Charged Bolt 13 (modelled"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("missing %q in\n%s", want, out)
 		}
 	}
 	s2, _ := ParseSkills(strings.NewReader(fieldsText))
 	out2 := s2.Text("b", "")
-	for _, want := range []string{"Fire Bolt (attack): casts started 1, made effect 1 of 1", "mana spent 5 (5.0 per cast)", "Lightning cast length ticks n/a"} {
+	for _, want := range []string{"Fire Bolt (attack): casts started 1, made effect 1 of 1", "mana spent 5 (5.0 per cast)", "cast length ticks Fire Bolt 13 (modelled"} {
 		if !strings.Contains(out2, want) {
 			t.Errorf("missing %q in\n%s", want, out2)
 		}

@@ -185,7 +185,7 @@ func (s SkillStats) Text(name, melee string) string {
 	if s.Branch != "" || s.Commit != "" {
 		build = s.Branch + " " + s.Commit
 	}
-	fmt.Fprintf(&b, "  d2d build %s; Lightning cast length ticks %s\n", build, s.lightningTicks())
+	fmt.Fprintf(&b, "  d2d build %s; cast length ticks %s\n", build, s.castTicks())
 	return b.String()
 }
 
@@ -197,13 +197,11 @@ func (s SkillStats) armorAbsent() string {
 	return fmt.Sprintf("~%d (%d of %d minute samples without armor, %d unreadable)", s.ArmorNone*60, s.ArmorNone, s.ArmorUp+s.ArmorNone, s.ArmorUnk)
 }
 
-// lightningTicks lists the modelled cast length of every skill with Lightning in its name (13 or 19 ticks at FCR 0).
-func (s SkillStats) lightningTicks() string {
+// castTicks lists the modelled cast length of every skill that logged one (no skill name is hard-coded).
+func (s SkillStats) castTicks() string {
 	var out []string
 	for k, n := range s.Ticks {
-		if strings.Contains(k, "Lightning") {
-			out = append(out, fmt.Sprintf("%s %d", k, n))
-		}
+		out = append(out, fmt.Sprintf("%s %d", k, n))
 	}
 	if len(out) == 0 {
 		return na

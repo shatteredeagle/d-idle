@@ -9,7 +9,7 @@ Nothing here is verified live. All of it is V offline only (unit tests with the 
 | `minute` (info) | new key `armor`: `Frozen Armor`, `Chilling Armor`, `Shiver Armor`, `none`, `?` (state array empty) | `minuteLine` via `combat.ArmorState` | `ParseSkills` | state ids 10/20/88 from d2/states.go; 20 and 88 not seen live (U). One sample per minute line, so absent seconds are about 60 s per sample (S) |
 | `build` (info, once, on the first cast) | `branch` (env `D2LOD_BRANCH`), `commit` (`buildinfo.Current`, left out for `dev`) | `castLogBuild` | `ParseSkills` (old `branch`/`commit` keys on any line still work) | n/a-safe: a missing key stays n/a |
 
-The report prints: made effect and cut as "n of m", mana spent with the per-cast mean, kills as last-skill count, armor-absent seconds estimate on buff skills, and the Lightning cast length for every skill with "Lightning" in its name (13 on d2d, 19 on game.exe at FCR 0, from the model).
+The report prints: made effect and cut as "n of m", mana spent with the per-cast mean, kills as last-skill count, armor-absent seconds estimate on buff skills, and the cast length ticks of every skill that logged one (the Lightning family reads 13 on d2d, 19 on game.exe at FCR 0, from the model) (13 on d2d, 19 on game.exe at FCR 0, from the model).
 
 Still n/a: hits per cast, kills credited per skill by hit (no log source), real measured cast ticks (the model value is printed).
 
