@@ -426,6 +426,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - tomefix: offline audit of the false-empty tome verdict (regression tests in combat, d2denv, town; no bot change needed, producer-side paths and fork qty stay U), live drill recipe in docs/tomefix.md
 - retreatdrill (offline): drill group RT (drink, town portal, chicken executed, numeric pass) for P29, run command and risks in docs/retreatdrill.md; RT.leave blocked until Fighter.Leave is wired in d2drill; live run pending a hidden slot
 - retreatlive: RT.portal PASS live on d2d (1 tick, identical runs); RT.drink FAIL = bound question (20 percent is below chickenPct 25, setup should use about 40 percent); RT.leave still blocked; evidence docs/probes/retreat/, docs/retreatlive.md
+- retreatfix: RT.drink life derived between chicken and drink-life, RT.portal bound 10 ticks (offline tested; live rerun pending, docs/retreatfix.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
