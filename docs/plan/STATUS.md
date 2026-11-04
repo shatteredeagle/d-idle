@@ -60,6 +60,7 @@
 | [mapitem](../../openspec/changes/mapitem/) | in-progress | mapitem | `docs/stream/map-contiguity.md`<br>`cmd/d2dview/stitch.go`<br>`cmd/d2dview/stitch_test.go`<br>`cmd/d2dview/feed.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`cmd/d2dview/web/index.html` | - |
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
+| [palprep](../../openspec/changes/palprep/) | in-progress | palprep | `openspec/changes/palprep/**`<br>`docs/research/pr-palskill-body-r2.md` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
@@ -116,6 +117,7 @@
 - change nexthit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
+- change palprep: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
@@ -125,8 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
-- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
+- e4ffa51b 11-04 10:28 `merge origin/main into palprep` (palprep)
 - f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
 - 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
 - 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
@@ -135,4 +136,5 @@
 - 5072f374 11-04 10:04 `merge origin/main into rtleave` (rtleave)
 - ea07d656 11-04 09:55 `Merge agent/mercrevive: mercrevive: merc.goldFarmMaxLevel 16 to 18, revive reserve 150 to 100 percent, need= in the skip log` (mercrevive)
 - 371af0d7 11-04 09:54 `merge origin/main into mercrevive` (mercrevive)
+- 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
 <!-- statusgen:end -->
