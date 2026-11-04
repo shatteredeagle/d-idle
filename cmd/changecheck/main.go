@@ -145,6 +145,9 @@ func cliValidate(root string) []Finding {
 	if _, err := exec.LookPath("node"); err != nil {
 		return nil
 	}
+	if _, err := os.Stat(root + "/tools/openspec.sh"); err != nil {
+		return nil // wrapper removed in OpenSpec removal stage 2b
+	}
 	cmd := exec.Command("sh", root+"/tools/openspec.sh", "validate", "--all", "--strict")
 	cmd.Dir = root
 	out, err := cmd.CombinedOutput()
