@@ -9,7 +9,6 @@ worktree: ~/code/d2lod-wt/mercrevive
 skip_specs: true
 owns:
   - docs/mercrevive.md
-  - internal/merc/revive_log_test.go
   - openspec/changes/mercrevive/**
 exclusive: []
 gates:
