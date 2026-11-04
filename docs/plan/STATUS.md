@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- ad0eb770 11-04 01:10 `merge origin/main into primcheck` (primcheck)
 - 99b8206a 11-04 01:07 `Merge agent/primadd: primadd: draft primitive rows P37-P45 (docs/research, primitives.md untouched)` (primadd)
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 - 6e395bb6 11-04 00:56 `Merge agent/killcredit: killcredit: bot logs kill credit per cast window and nova targets; d2dsoak report prints per-skill kills` (killcredit)
@@ -136,5 +137,4 @@
 - 5740a15c 11-04 00:48 `Merge agent/backlogcheck: backlogcheck: stale-status table for BACKLOG and decomp-queue (25 stale, 5 current, 10 unsure)` (backlogcheck)
 - f1d14cb0 11-03 23:44 `Merge agent/logfields: logfields: bot logs cast result, last skill, armor sample, build line; d2dsoak report prints them` (logfields)
 - 892ed2f0 11-03 23:08 `Merge agent/sksmoke: sksmoke-a1: d2cheat skilllevel, combatlive sk, Fire Bolt per-hit damage on d2d matches the table at levels 1/4/8/13/20; game.exe run blocked` (sksmoke-a1)
-- 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
 <!-- statusgen:end -->
