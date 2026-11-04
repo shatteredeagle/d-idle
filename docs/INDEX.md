@@ -359,3 +359,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/primitives-open-20261104.md: P1..P36 open-item snapshot at 2026-11-04 (latest verdict, evidence, what changed since, ranked open S/A, BLOCKED blockers, never-drilled list)
 - docs/dwm4triage.md: DW.m4 open-inventory triage (portal path opens it; cause of the stuck flag U; no code change)
 - docs/retreatdrill.md: the P29 retreat action executed live, drill design (offline-tested, not run)
+- docs/retreatlive.md: first live d2d run of the RT retreat drills (portal PASS, drink bound question)
