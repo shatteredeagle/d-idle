@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
 - 6c451992 11-04 13:27 `Merge agent/shielddiff: shielddiff: off-weapon enhanced damage differential (D1) 2x20,000 cases, PR candidate for SKSHIELDFIX; D2 note` (shielddiff)
 - b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
 - a82c6a8f 11-04 13:21 `Merge agent/backlogmigrate: backlogmigrate (stage 1): backlog/ config, 17 cards copied to Backlog.md tasks, migration script, read-only checker, docs/backlog.md; nothing in openspec/changecheck/CI changed` (backlogmigrate)
@@ -101,5 +102,4 @@
 - 5936f406 11-04 13:11 `Merge branch 'main' into backlogmigrate` (-)
 - 89b52fba 11-04 13:07 `Merge agent/pldefdiff: pldefdiff: playerdef differential re-run (pd_calc, seeds 11 and 23, 102,604 cases each): 0 attack-rating mismatches; D2-D6/D8 not run, no PR candidate` (pldefdiff)
 - a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
-- 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
 <!-- statusgen:end -->
