@@ -36,20 +36,23 @@ type itemTrack struct {
 
 // observer turns the stream of snapshots into events and progress marks. All fields are guarded by Runner.obMu.
 type observer struct {
-	init       bool
-	state      d2.State
-	menuSince  time.Time
-	inGameAt   time.Time // when the current game was entered
-	area       int
-	level      int
-	exp        uint32
-	savedExp   uint32 // experience the character had when this game was entered = what its .d2s held (U: area changes may save too, then this overstates the risk)
-	savedNew   bool   // a game was entered and savedExp is not yet taken
-	xpLost     int64  // experience that vanished across game restarts (memory exp dropped to the save's)
-	pendingXP  int64
-	dead       bool
-	portalFrom int // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
-	lastGood   struct {
+	init      bool
+	state     d2.State
+	menuSince time.Time
+	inGameAt  time.Time // when the current game was entered
+	area      int
+	level     int
+	exp       uint32
+	savedExp  uint32 // experience the character had when this game was entered = what its .d2s held (U: area changes may save too, then this overstates the risk)
+	savedNew  bool   // a game was entered and savedExp is not yet taken
+	xpLost    int64  // experience that vanished across game restarts (memory exp dropped to the save's)
+	pendingXP int64
+	am        areaAcc // per-area log counters (areametrics.go)
+	// goldPickupMin is the field gold picked up since the last minute line.
+	goldPickupMin int64
+	dead          bool
+	portalFrom    int // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
+	lastGood      struct {
 		area int
 		pos  input.Point
 	}
@@ -427,6 +430,8 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 	o.level = p.Level
 
 	r.pollQuests(p, now)
+
+	r.noteAreaMetrics(p, now)
 
 	// area change
 	if p.Area != o.area {
@@ -962,7 +967,8 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 	r.e.Log.Info("minute", append([]any{"area", p.Area, "clvl", p.Level, "xp", p.Exp, "kills", r.lifetimeKills(p.Name), "killsGame", o.kills, "deaths", o.deaths,
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "packHP", packHP, "packMP", packMP, "beltBoxes", beltBoxes, "potionsUsed", int(r.drank.Load()),
 		"gold", p.Gold, "stashGold", p.StashGold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles, o.lostRestarts), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
-		"state", group, "rstate", rstate, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p)}, r.runKV()...)...)
+		"state", group, "rstate", rstate, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, r.runKV()...)...)
+	o.goldPickupMin = 0
 	r.noteGoldNextMinute(p.Gold, now)
 }
 

@@ -1,5 +1,7 @@
 # noareacards: three picker change cards (drafts for the coordinator's review, no code)
 
+> Status: SUPERSEDED by `docs/noareacards2.md` (2026-11-04, SME review). Card 1 dropped, card 2 on hold, card 3 rewritten, new first card farmfallback.
+
 Tags: V = verified (code read in this worktree, file:line given), S = secondary (read from `docs/noarea-policy.md` or a comment, not run),
 U = unverified. Nothing here was run live. Origin: user decision 2026-11-04 ("no-area: SME pick") after `docs/noarea-policy.md`
 (Gate 2 seed 13, clvl 15-16). Policy cards stay paused: this file is design text only, no Go changes, no `openspec/changes/noare-*` cards yet.
