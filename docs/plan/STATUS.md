@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
 - 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
 - d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
 - b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
@@ -134,5 +135,4 @@
 - 80edfc8f 11-04 11:37 `Merge branch 'main' into prbopen2` (-)
 - 29b4f8aa 11-04 11:34 `Merge agent/cardtriage: cardtriage: triage of the 36 open cards (keep 12, close 12, park 5, drop 7) and ADR candidates, docs only` (cardtriage)
 - dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
-- 419a0752 11-04 11:20 `Merge agent/palprep3: palprep3: PALSKILL D2/D3 r3 (rebased on upstream 7591a92e, verifier caveats applied, oracle 0 differ, body r3)` (palprep3)
 <!-- statusgen:end -->
