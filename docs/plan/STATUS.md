@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- b7d61733 11-04 16:48 `Merge branch 'main' into lifelog` (-)
 - 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
 - 2d3c0d81 11-04 16:47 `Merge branch 'main' into shimcheckci` (-)
 - a1be2f40 11-04 16:46 `Merge agent/retiredterms: status banners on 20 docs for retired terms` (retiredterms)
@@ -102,5 +103,4 @@
 - 72dcbe88 11-04 16:43 `Merge branch 'main' into retiredterms` (-)
 - d7b4e3e9 11-04 16:43 `Merge branch 'main' into ledgerleft` (-)
 - 75c6ac3d 11-04 16:43 `Merge branch 'main' into gateacard` (-)
-- 9b620b6f 11-04 16:43 `Merge branch 'main' into hirewindow` (-)
 <!-- statusgen:end -->
