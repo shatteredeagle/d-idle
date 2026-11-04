@@ -436,6 +436,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: Gate 2 run s12-20261103-2210-g2v on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md)
 - GATE2: Gate 2 run s13-20261103-2211-g2v on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (XP/h at or above the m24 floor (1000 per hour); No single state over 10 min without progress; Belt; d2dsoak INVARIANTS; No-gain window at most 90 min (clvl or gold gain; quest step not read; Attempt Andariel at clvl 14 or higher; Hire the merc) (docs/soaks/gate2-s13-20261103-2211-g2v.md)
 - andarielspec: soak-gates delta for the Gate 2 Andariel criterion (interim: reaching the gate or a held-for-andariel line with floor and merc evidence counts while boss.andarielHold is set; actual attempt required once lifted); ops gate-judge.py must follow
+- andarielplan: docs/andarielplan.md plans the m3-andariel throwaway fight (9 steps, hold lift, merc revive-gold stall cause and fix); next: user answers in its section 6, then steps 2 and 3 offline
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
