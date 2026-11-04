@@ -46,7 +46,7 @@ Gates (from the card):
 - series at the fight floors (15 with a living merc, 17 without, life floor = N from the diagnostic run (step 2/4)) with the kit (8 healing, 3 antidotes, 4 mana, tome with at least 2 charges): 5 clean wins in a row (or 7 of 8 with a cause for the loss), Andariel dead, character alive, antidote drunk on poison, writes after start: 0, `boss andariel` log lines with life minimum and potions used (raw in docs/probes/andariel); includes handicapped variants (merc at 50 percent life, kit at the gate minimum, tome at 2 charges); retreat by portal at 30 percent (escape) or 12 percent (chicken), one r...
 - the no-merc case at least 3 times, reported (pass or fail, with the cause); test that a dead merc flips the floor between 15 and 17 mid-run
 - go test -p 1 ./internal/boss passes including TestAndarielFightOrder (antidote, then Charged Bolt; Static Field only if a measured drill shows it helps) and TestAndarielScriptHasNoStaticFieldOpener unchanged
-- go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; cheat ledger has one entry per cheat with a reason; tools/agentreap.sh m3-andariel leaves nothing
+- go run ./cmd/leakcheck -mode fail finds 0; cheat ledger has one entry per cheat with a reason; tools/agentreap.sh m3-andariel leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m3-andariel/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

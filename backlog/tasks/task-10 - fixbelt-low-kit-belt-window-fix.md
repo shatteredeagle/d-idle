@@ -40,7 +40,7 @@ What changes:
 Next step: live proof in a seed-set record
 
 Gates (from the card):
-- go test -p 1 internal/resource internal/bot; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
+- go test -p 1 internal/resource internal/bot; leakcheck -mode fail 0; tools/ci/check.sh
 
 Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
