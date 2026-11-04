@@ -1,0 +1,5 @@
+DRILL RT.drink P29 PASS drink executed: 0 ticks to act, 4 to effect, life floor 120 | intended: drink: Safety decides "drink", Act carries it out, effect within 50 ticks, life floor above 0 | observed: adjacent 1 life 120/300 decision "drink-life" acted true (err "") ticks to act 0, to effect 4; life floor 120 end 121; belt 4->3 scrolls 0->0 portal false left false dead false | runs: 2, identical
+
+drill     prim  verdict  det  reason
+RT.drink  P29   PASS     same drink executed: 0 ticks to act, 4 to effect, life floor 120
+cheat verbs used (each ledgered with a reason): debug clearinv, debug goto 1, debug goto 2, debug kill, debug spawn zombie1 1 near, debug stat 6 30720, debug stat 6 76800, debug stat 7 76800
