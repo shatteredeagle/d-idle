@@ -1,0 +1,38 @@
+labrun: synced code/d2lod-wt/livedrills3 → the-worker-host:<labrun>/head-box/code/d2lod-wt/livedrills3 in 0s; running: bash docs/probes/livedrills3/runv.sh DS2v DS DS.2,DS.4 1
+d2dslot: got slot 3
+time=2026-11-04T14:39:34.616-05:00 level=WARN msg="d2d channel not answering: d2d process pid 3094106 still running; socket file is gone (stat <d2d-lab>/slots/3/d2d.sock: no such file or directory); ping: d2dctl: dial <d2d-lab>/slots/3/d2d.sock: dial unix <d2d-lab>/slots/3/d2d.sock: connect: no such
+time=2026-11-04T14:39:36.115-05:00 level=INFO msg="d2dworld: arrived in level 1: 1 adjacent entries, 0 levels not linked yet (pending 0, linkwait 30s)"
+time=2026-11-04T14:39:36.147-05:00 level=INFO msg="npc: interact" class=148 try=1 dist=3 npc="[120 72]"
+time=2026-11-04T14:39:36.156-05:00 level=INFO msg="npc: time-to-panel" ms=0 first-contact=false clicks=1 strategy=wait class=148
+time=2026-11-04T14:39:36.156-05:00 level=INFO msg="npc: menu open" class=148 try=1 ms=4840
+time=2026-11-04T14:39:36.156-05:00 level=INFO msg="npc: menu click" class=148 entry=trade line=1 lines=3 adj=0 at="[281 249]" npc="[120 72]" try=1 slow=false
+time=2026-11-04T14:39:36.158-05:00 level=INFO msg="npc: window open" class=148 entry=trade adj=0 tries=1 ms=4080
+time=2026-11-04T14:39:36.158-05:00 level=INFO msg="npc visit: vendor window open" class=148 ms=8920
+time=2026-11-04T14:39:36.171-05:00 level=INFO msg="shop: potion plan" wantHP=2 wantMP=2 wantRV=0 beltHP=0 beltMP=0 packHP=0 packMP=0 beltOther=0 slots=4 gold=6
+time=2026-11-04T14:39:36.177-05:00 level=INFO msg="shop: potion plan" wantHP=2 wantMP=2 wantRV=0 beltHP=0 beltMP=0 packHP=0 packMP=0 beltOther=0 slots=4 gold=6
+time=2026-11-04T14:39:36.178-05:00 level=INFO msg="shop: visit" bought=map[] spent=0 broke=true err=<nil> gold=6 beltHP=0 beltMP=0 beltRV=0 beltSlots=4 tp=0 tome=false
+time=2026-11-04T14:39:36.182-05:00 level=INFO msg=inventory pct=0 cells=0/40 stashPct=0 stashCells=0/48
+time=2026-11-04T14:39:36.182-05:00 level=INFO msg="inventory contents" pack="" stash=""
+DRILL DS.2 P5 FAIL withdrew 0, wanted 344 | intended: stash falls by keep line 350 minus purse 6 = 344, belt gains | observed: purse 6 -> 6, stash 1400 -> 1400, belt 0 -> 0, spent 0, bought none, err ""
+time=2026-11-04T14:39:36.195-05:00 level=INFO msg="nav: stuck recovered" at="{X:117 Y:64}" method=reclick rung=1 repeat=false
+time=2026-11-04T14:39:36.203-05:00 level=INFO msg="npc: interact" class=148 try=1 dist=3 npc="[120 72]"
+time=2026-11-04T14:39:36.204-05:00 level=INFO msg="npc: time-to-panel" ms=0 first-contact=false clicks=1 strategy=wait class=148
+time=2026-11-04T14:39:36.204-05:00 level=INFO msg="npc: menu open" class=148 try=1 ms=4520
+time=2026-11-04T14:39:36.205-05:00 level=INFO msg="npc: menu click" class=148 entry=trade line=1 lines=3 adj=0 at="[446 135]" npc="[120 72]" try=1 slow=false
+time=2026-11-04T14:39:36.207-05:00 level=INFO msg="npc: window open" class=148 entry=trade adj=0 tries=1 ms=920
+time=2026-11-04T14:39:36.207-05:00 level=INFO msg="npc visit: vendor window open" class=148 ms=5440
+time=2026-11-04T14:39:36.222-05:00 level=INFO msg="shop: potion plan" wantHP=2 wantMP=1 wantRV=0 beltHP=0 beltMP=0 packHP=0 packMP=0 beltOther=0 slots=4 gold=6
+time=2026-11-04T14:39:36.229-05:00 level=INFO msg="shop: potion plan" wantHP=2 wantMP=1 wantRV=0 beltHP=0 beltMP=0 packHP=0 packMP=0 beltOther=0 slots=4 gold=6
+time=2026-11-04T14:39:36.230-05:00 level=INFO msg="shop: visit" bought=map[] spent=0 broke=true err=<nil> gold=6 beltHP=0 beltMP=0 beltRV=1 beltSlots=4 tp=0 tome=false
+time=2026-11-04T14:39:36.232-05:00 level=INFO msg=inventory pct=0 cells=0/40 stashPct=0 stashCells=0/48
+time=2026-11-04T14:39:36.232-05:00 level=INFO msg="inventory contents" pack="" stash=""
+DRILL DS.4 P5 BLOCKED the rejuvenation did not reach the pack: setup failed | intended: rejuvenation in the pack, stash unchanged | observed: purse 6 -> 6, stash 1400 -> 1400, belt 1 -> 1, spent 0, bought none, err "" pack none
+END character Drilly life 40/40 in town: true
+
+drill     prim  verdict  det  reason
+DS.2      P5    FAIL     -    withdrew 0, wanted 344
+DS.4      P5    BLOCKED  -    the rejuvenation did not reach the pack: setup failed
+cheat verbs used (each ledgered with a reason): debug clearinv, debug give rvs, debug stat 14 6, debug stat 15 1400
+cheat ledger: ~/.local/share/d2bot/ledger/cheats.jsonl (actor drills:<drill id>, kind d2d-debug)
+time=2026-11-04T14:39:36.233-05:00 level=WARN msg="d2d: stopped by the bot (kill)"
+labrun: the-worker-host exited 0 after 3s

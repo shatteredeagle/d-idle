@@ -1,0 +1,148 @@
+{
+ "results": [
+  {
+   "id": "DS.1",
+   "primitive": "P5",
+   "title": "600 purse, 1400 stash: no stash gold moves, the shop sells the kit",
+   "verdict": "PASS",
+   "reason": "no withdrawal, bought for 280",
+   "intended": "stash stays 1400 (no withdrawal), spent \u003e 0, belt gains",
+   "observed": "purse 600 -\u003e 320, stash 1400 -\u003e 1400, belt 0 -\u003e 4, spent 280, bought Minor Healing Potionx2 Minor Mana Potionx2 Scroll of Town Portalx1, err \"\"",
+   "runs": [
+    {
+     "Verdict": "PASS",
+     "Reason": "no withdrawal, bought for 280",
+     "Intended": "stash stays 1400 (no withdrawal), spent \u003e 0, belt gains",
+     "Observed": "purse 600 -\u003e 320, stash 1400 -\u003e 1400, belt 0 -\u003e 4, spent 280, bought Minor Healing Potionx2 Minor Mana Potionx2 Scroll of Town Portalx1, err \"\"",
+     "sig": "stash=1400-\u003e1400 spent=true belt=true",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 600",
+      "debug stat 15 1400"
+     ],
+     "elapsed_ns": 561628402,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "PASS",
+     "Reason": "no withdrawal, bought for 280",
+     "Intended": "stash stays 1400 (no withdrawal), spent \u003e 0, belt gains",
+     "Observed": "purse 600 -\u003e 320, stash 1400 -\u003e 1400, belt 0 -\u003e 4, spent 280, bought Minor Healing Potionx2 Minor Mana Potionx2 Scroll of Town Portalx1, err \"\"",
+     "sig": "stash=1400-\u003e1400 spent=true belt=true",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 600",
+      "debug stat 15 1400"
+     ],
+     "elapsed_ns": 78127012,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug clearinv",
+    "debug stat 14 600",
+    "debug stat 15 1400"
+   ]
+  },
+  {
+   "id": "DS.2",
+   "primitive": "P5",
+   "title": "6 purse, 1400 stash: one withdrawal up to the keep line, then potions in the belt",
+   "verdict": "FAIL",
+   "reason": "withdrew 0, wanted 344",
+   "intended": "stash falls by keep line 350 minus purse 6 = 344, belt gains",
+   "observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 0 -\u003e 0, spent 0, bought none, err \"\"",
+   "runs": [
+    {
+     "Verdict": "FAIL",
+     "Reason": "withdrew 0, wanted 344",
+     "Intended": "stash falls by keep line 350 minus purse 6 = 344, belt gains",
+     "Observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 0 -\u003e 0, spent 0, bought none, err \"\"",
+     "sig": "drawn=0 belt=false",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 6",
+      "debug stat 15 1400"
+     ],
+     "elapsed_ns": 35850464,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "FAIL",
+     "Reason": "withdrew 0, wanted 344",
+     "Intended": "stash falls by keep line 350 minus purse 6 = 344, belt gains",
+     "Observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 0 -\u003e 0, spent 0, bought none, err \"\"",
+     "sig": "drawn=0 belt=false",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 6",
+      "debug stat 15 1400"
+     ],
+     "elapsed_ns": 30896446,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug clearinv",
+    "debug stat 14 6",
+    "debug stat 15 1400"
+   ]
+  },
+  {
+   "id": "DS.4",
+   "primitive": "P5",
+   "title": "one rejuvenation in the pack, 6 purse, 1400 stash: no withdrawal",
+   "verdict": "BLOCKED",
+   "reason": "the rejuvenation did not reach the pack: setup failed",
+   "intended": "rejuvenation in the pack, stash unchanged",
+   "observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 1 -\u003e 1, spent 0, bought none, err \"\" pack none",
+   "runs": [
+    {
+     "Verdict": "BLOCKED",
+     "Reason": "the rejuvenation did not reach the pack: setup failed",
+     "Intended": "rejuvenation in the pack, stash unchanged",
+     "Observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 1 -\u003e 1, spent 0, bought none, err \"\" pack none",
+     "sig": "stash=1400-\u003e1400",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 6",
+      "debug stat 15 1400",
+      "debug give rvs"
+     ],
+     "elapsed_ns": 35226042,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "BLOCKED",
+     "Reason": "the rejuvenation did not reach the pack: setup failed",
+     "Intended": "rejuvenation in the pack, stash unchanged",
+     "Observed": "purse 6 -\u003e 6, stash 1400 -\u003e 1400, belt 1 -\u003e 1, spent 0, bought none, err \"\" pack none",
+     "sig": "stash=1400-\u003e1400",
+     "cheats": [
+      "debug clearinv",
+      "debug stat 14 6",
+      "debug stat 15 1400",
+      "debug give rvs"
+     ],
+     "elapsed_ns": 36735639,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug clearinv",
+    "debug stat 14 6",
+    "debug stat 15 1400",
+    "debug give rvs"
+   ]
+  }
+ ]
+}

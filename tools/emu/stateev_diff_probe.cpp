@@ -70,7 +70,7 @@ int main() {
         }
         d2d::rules::Rng rng(12345);
         // running defender: the hit roll is skipped (monster_blow: running && !missile); no block / dodge set
-        const auto taken = d2d::rules::monster_blow(foe.fighter, 1, d2d::rules::Motion::running, att, false, rng, false);
+        const auto taken = d2d::rules::monster_blow(foe.fighter, 1, d2d::rules::Motion::running, att, false, rng, false, true, true);   // exact: no hit roll, no 1..2 point physical roll from an empty range
         foe.take(taken);
         const int pre = foe.damage;
         int espct = 0, per16 = 0;

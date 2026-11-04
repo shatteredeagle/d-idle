@@ -1,5 +1,7 @@
 # Champions are elite, not bosses
 
+> status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d through the gate ladder or say U. Current truth: docs/decisions.md.
+
 Decision (d2-sme, user go 2026-10-31): a champion (monster flag bit 2, no minions; about 3x life, +50% damage, faster, 3x XP, groups of 3-5) is ELITE, never a boss. Tags: the numbers below are the SME's rules of thumb (EXP), not measured; the flag bits are UNVERIFIED live (docs/d2-1.14d-memory.md).
 
 ## What `Boss` gates (read before the change)

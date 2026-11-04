@@ -93,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
-- 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
-- e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
-- d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
-- a1d4edb9 11-04 13:59 `Merge branch 'main' into tickcppdiff` (-)
-- bc2cbc4e 11-04 13:59 `Merge branch 'main' into noareafix` (-)
-- 4a6ce6e6 11-04 13:59 `Merge branch 'main' into adramend` (-)
-- 5953f1ee 11-04 13:59 `Merge branch 'main' into specapplya` (-)
-- 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
-- 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
+- 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
+- 2d3c0d81 11-04 16:47 `Merge branch 'main' into shimcheckci` (-)
+- a1be2f40 11-04 16:46 `Merge agent/retiredterms: status banners on 20 docs for retired terms` (retiredterms)
+- 03d0bcb0 11-04 16:46 `Merge agent/ledgerleft: spec ledger resolutions for 8 rows (needs user decisions)` (ledgerleft)
+- defd7957 11-04 16:46 `Merge agent/gateacard: Gate A card rewritten as acceptance per ADR 0015` (gateacard)
+- 3859f3cd 11-04 16:46 `Merge agent/hirewindow: Kashya hire entry needs clvl > 7; d2d matches, no deviation (trace doc)` (hirewindow)
+- 72dcbe88 11-04 16:43 `Merge branch 'main' into retiredterms` (-)
+- d7b4e3e9 11-04 16:43 `Merge branch 'main' into ledgerleft` (-)
+- 75c6ac3d 11-04 16:43 `Merge branch 'main' into gateacard` (-)
+- 9b620b6f 11-04 16:43 `Merge branch 'main' into hirewindow` (-)
 <!-- statusgen:end -->

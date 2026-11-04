@@ -1,5 +1,7 @@
 # Hooks (change card `hooks`)
 
+> status: the changecheck hook assumes OpenSpec cards are required for new work; that is retired (user, 2026-11-04), the hook stays for existing cards. Current truth: docs/decisions.md.
+
 Tags: V = run in the hooks branch (hook fed sample stdin, fake `go` shim for the failing case, `jq empty`, timing), S = Claude Code docs knowledge, U = not tested.
 
 ## Install, bypass, remove

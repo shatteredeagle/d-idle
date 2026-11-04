@@ -1,6 +1,6 @@
 # Milestone alpha: the 24 h unattended soak (agent SOAK24)
 
-> status: Game.exe soak runbook; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md). G1/G2/Fresha ran with it (docs/g1-log.md); Game.exe is frozen and only the retirement soak (card gameexe-retire-soak) still uses it. The d2d soak is docs/d2d-soak.md.
+> status: Game.exe soak runbook; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md). G1/G2/Fresha ran with it (docs/g1-log.md); Game.exe is frozen and only oracle/A:B reference lanes (card gameexe-retire-soak, now the Gate A card) still use it. SUPERSEDED 2026-11-04 (ADR 0015): game.exe 2 h / 8 h / 24 h runs are the oracle side, not the release gate; Gate A = 24 h d2d Act 1 clear (fresh, uncheated, writes after start 0) AND A:B (G-D) equivalent at 20 percent. The d2d soak is docs/d2d-soak.md.
 
 Tags: V = verified offline (tests, `bash -n`), U = unverified (no live run was made for this document).
 Tools: `tools/soak/soak24.sh` (driver), `tools/soak/soak.sh` (harness wrapper), `cmd/d2soak` (profile `m24`),

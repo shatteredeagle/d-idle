@@ -1,5 +1,7 @@
 # Town layer on the d2d backend (agent D2DTOWN, 2026-10-30)
 
+> status: "Game.exe stays the acceptance target" is partly superseded: d2d is the product and game.exe the oracle; done means a 24 h d2d Act 1 clear plus the G-D equivalence (ADR 0015; docs/decisions.md Current truth).
+
 Tags: **V-d2d** observed on the private fork d2d (commit e36922e + our P1/P2 + the vendor section below) on the worker host; **U** not verified; Game.exe stays the acceptance target.
 Code: `internal/d2dctl/town_verbs.go`, `internal/d2dtown` (adapter, `ClaimRogue`), `cmd/d2dshop` (smoke tool), seams in `internal/town` (`town.Source` optional fields, no behaviour change when unset).
 

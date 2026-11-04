@@ -1,0 +1,30 @@
+labrun: synced code/d2lod-wt/livedrills3 → the-worker-host:<labrun>/head-box/code/d2lod-wt/livedrills3 in 0s; running: bash docs/probes/livedrills3/runtm.sh TM1v TM TM.a 1
+d2dslot: got slot 3
+time=2026-11-04T14:40:10.218-05:00 level=WARN msg="d2d channel not answering: d2d process pid 3096209 still running; socket file is gone (stat <d2d-lab>/slots/3/d2d.sock: no such file or directory); ping: d2dctl: dial <d2d-lab>/slots/3/d2d.sock: dial unix <d2d-lab>/slots/3/d2d.sock: connect: no such
+time=2026-11-04T14:40:11.740-05:00 level=INFO msg="d2dworld: arrived in level 1: 1 adjacent entries, 0 levels not linked yet (pending 0, linkwait 30s)"
+time=2026-11-04T14:40:11.769-05:00 level=INFO msg="npc: interact" class=148 try=1 dist=3 npc="[120 73]"
+time=2026-11-04T14:40:11.777-05:00 level=INFO msg="npc: time-to-panel" ms=0 first-contact=false clicks=1 strategy=wait class=148
+time=2026-11-04T14:40:11.777-05:00 level=INFO msg="npc: menu open" class=148 try=1 ms=4960
+time=2026-11-04T14:40:11.778-05:00 level=INFO msg="npc: menu click" class=148 entry=trade line=1 lines=3 adj=0 at="[272 249]" npc="[120 73]" try=1 slow=false
+time=2026-11-04T14:40:11.785-05:00 level=INFO msg="npc: no window after click" class=148 entry=trade adj=0 menuStillOpen=true ui="[0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]" ignored=1
+time=2026-11-04T14:40:11.786-05:00 level=INFO msg="npc: menu click" class=148 entry=trade line=1 lines=3 adj=5 at="[272 254]" npc="[120 73]" try=2 slow=true
+time=2026-11-04T14:40:11.789-05:00 level=INFO msg="npc: window open" class=148 entry=trade adj=5 tries=2 ms=6800
+time=2026-11-04T14:40:11.789-05:00 level=INFO msg="npc visit: vendor window open" class=148 ms=11760
+time=2026-11-04T14:40:11.806-05:00 level=INFO msg="shop: bought" item="Scroll of Town Portal" price=100 "gold left"=900
+time=2026-11-04T14:40:11.815-05:00 level=INFO msg="shop: bought" item="Tome of Town Portal" price=300 "gold left"=600
+time=2026-11-04T14:40:11.818-05:00 level=INFO msg="shop: bought" item="Scroll of Town Portal" price=100 "gold left"=500
+time=2026-11-04T14:40:11.822-05:00 level=INFO msg="shop: bought" item="Scroll of Town Portal" price=100 "gold left"=400
+time=2026-11-04T14:40:11.825-05:00 level=INFO msg="shop: bought" item="Scroll of Town Portal" price=100 "gold left"=300
+time=2026-11-04T14:40:11.828-05:00 level=INFO msg="shop: bought" item="Scroll of Town Portal" price=100 "gold left"=200
+time=2026-11-04T14:40:11.829-05:00 level=INFO msg="shop: visit" bought="map[Scroll of Town Portal:5 Tome of Town Portal:1]" spent=800 broke=false err=<nil> gold=200 beltHP=4 beltMP=0 beltRV=0 beltSlots=4 tp=6 tome=true
+time=2026-11-04T14:40:11.832-05:00 level=INFO msg=inventory pct=7 cells=3/40 stashPct=0 stashCells=0/48
+time=2026-11-04T14:40:11.832-05:00 level=INFO msg="inventory contents" pack="tbk x1, tsc x1" stash=""
+DRILL TM.a P12 BLOCKED the tome holds 5 charges, the recipe needs 13 or more
+END character Drilly life 40/40 in town: false
+
+drill     prim  verdict  det  reason
+TM.a      P12   BLOCKED  -    the tome holds 5 charges, the recipe needs 13 or more
+cheat verbs used (each ledgered with a reason): debug clearinv, debug give cap, debug goto 2, debug stat 14 1000
+cheat ledger: ~/.local/share/d2bot/ledger/cheats.jsonl (actor drills:<drill id>, kind d2d-debug)
+time=2026-11-04T14:40:12.059-05:00 level=WARN msg="d2d: stopped by the bot (kill)"
+labrun: the-worker-host exited 0 after 4s
