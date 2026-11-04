@@ -2,7 +2,7 @@
 
 ```yaml
 change: m1-trips
-status: deferred
+status: archived
 agent: m1-trips
 branch: agent/m1-trips
 worktree: ~/code/d2lod-wt/m1-trips
@@ -14,8 +14,8 @@ gates:
   - "go test -p 1 ./internal/bot passes including TestChoresDueSecondDoor (4 or 5 sellable items with a scroll and gold under 150 raise no trip), TestGoldTripAboveKeep (carried gold 400 above the keep line raises reason `gold`), TestPackFullFreeCells (4 free cells raise one sell trip, 5 do not)"
   - "go test ./internal/env -run EveryKnob passes with the new knob and docs/knobs.md regenerated"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-merge:
-result:
+merge: none (dropped)
+result: "dropped: stale (evidence: minor next to stability, card triage 2026-11-04)"
 ```
 
 ## 1. Work

@@ -2,7 +2,7 @@
 
 ```yaml
 change: d2d-replicated-soak
-status: proposed
+status: archived
 agent: d2d-replicated-soak
 branch: agent/d2d-replicated-soak
 worktree: ~/code/d2lod-wt/d2d-replicated-soak
@@ -13,8 +13,8 @@ exclusive:
 gates:
   - "d2dsoak verdict printed for all four gated metrics, 5 or more seeds"
   - "gaps listed as explained or as fidelity bugs"
-merge:
-result:
+merge: none (dropped)
+result: "dropped: stale (evidence: replaced by the seed set and the statistical A:B, ADR 0015 items 6 and 8; card triage 2026-11-04)"
 ```
 
 ## 1. Work

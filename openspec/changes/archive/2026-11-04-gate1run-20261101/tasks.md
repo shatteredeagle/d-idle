@@ -2,7 +2,8 @@
 
 ```yaml
 change: gate1run-20261101
-status: in-progress
+status: archived
+merge: records on main (docs/soaks/gate1-20261101.md)
 agent: gaterun
 branch: agent/gate1run-20261101
 worktree: ~/code/d2lod-wt/gate1run-20261101

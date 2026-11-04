@@ -2,7 +2,8 @@
 
 ```yaml
 change: paldurtrace
-status: in-progress
+status: archived
+merge: 9bf824f0 (palprep) and e079944c (palverify)
 agent: chuckado
 branch: paldur-trace
 skip_specs: true

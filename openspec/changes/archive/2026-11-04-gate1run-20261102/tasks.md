@@ -2,7 +2,8 @@
 
 ```yaml
 change: gate1run-20261102
-status: in-progress
+status: archived
+merge: records on main (e223643b)
 agent: gaterun
 branch: agent/gate1run-20261102
 worktree: ~/code/d2lod-wt/gate1run-20261102

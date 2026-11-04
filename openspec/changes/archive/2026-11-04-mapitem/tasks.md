@@ -2,7 +2,8 @@
 
 ```yaml
 change: mapitem
-status: in-progress
+status: archived
+merge: on main (see result)
 agent: mapitem
 branch: agent/mapitem
 worktree: ~/code/d2lod-wt/mapitem
@@ -20,7 +21,7 @@ exclusive: []
 gates:
   - "go test -p 1 ./cmd/d2dview passes including TestStitchTransitionBloodMoorColdPlains, TestStitchFieldAndTown, TestStitchFieldToCaveIsNotStitched"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-result: ""
+result: "closed: merged; the live check is a nicety (triage 2026-11-04)"
 live: "not verified live: see the last section of docs/stream/map-contiguity.md"
 ```
 

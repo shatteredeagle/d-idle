@@ -2,7 +2,8 @@
 
 ```yaml
 change: buildv3
-status: in-progress
+status: archived
+merge: on main (see result)
 agent: buildv3
 branch: agent/buildv3
 worktree: ~/code/d2lod-wt/buildv3

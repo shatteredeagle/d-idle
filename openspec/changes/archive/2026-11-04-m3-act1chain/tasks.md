@@ -2,7 +2,7 @@
 
 ```yaml
 change: m3-act1chain
-status: deferred
+status: archived
 agent: m3-act1chain
 branch: agent/m3-act1chain
 worktree: ~/code/d2lod-wt/m3-act1chain
@@ -18,8 +18,8 @@ gates:
   - "1 seed from a cheat-levelled clvl 12 throwaway (ledgered) on hidden d2d: Den, Blood Raven, the Rogue claim and the Andariel approach (Catacombs 4 entered) reached unattended, every quest's done state read from the save or memory and matching docs/progression/quests.md (raw in docs/probes/act1chain)"
   - "go test -p 1 ./internal/task passes including TestAct1OrderOnD2D (Cain optional, Countess skipped, Andariel required for Warriv)"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m3-act1chain leaves nothing"
-merge:
-result:
+merge: none (dropped)
+result: "dropped: stale (evidence: quest chain text folds into m3-act1run, card triage 2026-11-04)"
 ```
 
 ## 1. Work
