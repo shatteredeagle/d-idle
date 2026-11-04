@@ -295,3 +295,11 @@ Not re-run: an MSVC build, the full ctest, the full CI tidy selection. No commen
 - checks: the ones in the body (pr_guard, Release build, tests) were run before opening on this head and base; nothing re-run after opening.
 - nothing else posted: no comments, no reviewer requests, no labels, no second PR.
 - merged: 2026-11-04 15:32 EST (20:32 UTC) by the maintainer, as #195 (merge commit 2d051d77d on upstream main, checked with `gh pr view 195 --repo psi29a/d2decomped --json mergedAt,mergeCommit`).
+
+## Energy Shield absorb order (no card)
+
+- posted: 2026-11-04 go: the user, dialog answer "Open it now" for the Energy Shield absorb-order PR (one PR, psi29a/d2decomped). Opened with the user's go.
+- posted: 2026-11-04 fetch upstream: main 0646c5da (git ls-remote; unchanged since the candidate was prepared; merge-tree clean; pr_guard 0 FAIL / 0 WARN on the one-commit range).
+- posted: 2026-11-04 push (plain, new branch) to the fork: es-absorb-order head 3b8bb7df (git ls-remote of the fork showed no such branch before). Same commit as the private local/es-absorb-order-r3.
+- posted: 2026-11-04 PR opened: https://github.com/psi29a/d2decomped/pull/198 (1 commit; title "Fidelity fix against game.exe 1.14d: Energy Shield absorbs the unresisted field"). State OPEN, head 3b8bb7df as checked with gh pr view. Body from pr-esabsorb-body.md without the internal header, ends with the bare `Agent: Claude Code` line. CI checks were pending right after opening.
+- nothing else posted: no comments, labels or reviewer requests.
