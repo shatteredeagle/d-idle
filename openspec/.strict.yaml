@@ -35,3 +35,4 @@ allow_merges:
   - a82c6a8   # backlogmigrate: merged without a card (merge.sh --card none)
   - 6c45199   # shielddiff: merged without a card (merge.sh --card none)
   - a10570e   # hirefixlive: merged without a card (merge.sh --card none)
+  - 8084688   # cipathfilter: merged without a card (merge.sh --card none)
