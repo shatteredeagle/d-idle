@@ -47,7 +47,7 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 - deliverable: docs/research/playerdef-diff-<group>.md with the case counts and the number of cases that differ.
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
 
-## SHIELDD2: broken worn item with stats 17, 25, 21 and 22 on the d2d side
+## SHIELDD2: broken worn-item stats (17, 25, 21, 22) on the d2d side
 - size: S
 - status: proposed
 - kind: verify
