@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- process: OpenSpec removal plan marks stage 3 done.
 - process: contracts moved from openspec/specs to docs/contracts, openspec/ removed (old cards under git tag openspec-final), shared-file lines now go in backlog/merge-lines/<branch>.txt.
 - Docs: opened upstream PR #198 (Energy Shield absorb order); posted log in docs/research/openpr-log.md.
 - soak-gates spec: Gate 2 Andariel criterion interim wording (user decision 2026-11-04, option a)
