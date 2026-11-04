@@ -20,3 +20,4 @@ allow_merges:
   - 29b4f8a   # cardtriage: merged without a card (merge.sh --card none)
   - ab43858   # prbopen2: merged without a card (merge.sh --card none)
   - b870d07   # noareacards2: merged without a card (merge.sh --card none)
+  - d55f87c   # removalplan: merged without a card (merge.sh --card none)
