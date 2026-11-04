@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 627398b0 11-04 09:03 `merge origin/main into prbopen` (prbopen)
 - b64363b6 11-04 09:00 `Merge agent/noarea: noarea: leveling-area picker policy write-up (Gate 2 seed 13 block, options)` (noarea)
 - c00666e5 11-04 08:59 `merge origin/main into noarea` (noarea)
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
@@ -136,5 +137,4 @@
 - aa67a14d 11-04 06:28 `merge origin/main into gate2run-s13-20261103-2211-g2v` (gate2run-s13-20261103-2211-g2v)
 - 1fca1265 11-04 06:25 `Merge agent/gate2run-s12-20261103-2210-g2v: Gate 2 s12 record: NOT PASSED only on Attempt Andariel at clvl 14+ (45.7 vh, clvl 16, 1 death)` (gate2run-s12-20261103-2210-g2v)
 - 4ce50e26 11-04 04:31 `Merge agent/andarielgate: andarielgate: Gate 2 s11 Andariel criterion failed on a deliberate hold (boss.andarielHold=1), no code change; question for the user` (andarielgate)
-- c0a5b1c9 11-04 04:28 `merge origin/main into andarielgate` (andarielgate)
 <!-- statusgen:end -->
