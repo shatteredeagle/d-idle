@@ -121,3 +121,9 @@ docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
 openspec/changes/rtleave/**  rtleave  rtleave
+docs/rtleave.md  rtleave  rtleave
+internal/drill/retreat_leave_test.go  rtleave  rtleave
+cmd/d2drill/leave_lab.go  rtleave  rtleave
+cmd/d2drill/leave_lab_test.go  rtleave  rtleave
+cmd/d2drill/retreat_lab.go  rtleave  rtleave
+cmd/d2drill/live.go  rtleave  rtleave

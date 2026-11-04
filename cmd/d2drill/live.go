@@ -58,6 +58,7 @@ type lab struct {
 	wpSpy  *spy
 
 	runPol *d2dinput.RunPolicy // D-run: the controller's policy while it is switched off
+	left   bool                // the chicken hook ran Save and Exit (RT.leave)
 	runDir int                 // D-run: the direction of the measured leg (-1 not found yet; set by Leg)
 }
 
@@ -84,7 +85,9 @@ func newLab(be *d2denv.Backend, db *data.DB, led *cheat.Ledger, char, inst strin
 	lt := loot.New(rig.Env, nv)
 	tw.SetJudge(lt)
 	d2dloot.Attach(lt, be.Source, db)
-	return &lab{be: be, db: db, tw: tw, lt: lt, rig: rig, log: log, led: led, char: char, inst: inst, nv: nv, navr: nv, runDir: -1}
+	l := &lab{be: be, db: db, tw: tw, lt: lt, rig: rig, log: log, led: led, char: char, inst: inst, nv: nv, navr: nv, runDir: -1}
+	rig.Fighter.Leave = leaveHook(be.Cycler, func() { l.left = true })
+	return l
 }
 
 // ---- drill.World ----
