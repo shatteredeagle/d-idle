@@ -2,7 +2,7 @@
 
 ```yaml
 change: backlogapply
-status: in-progress
+status: archived
 agent: backlogapply
 branch: agent/backlogapply
 worktree: ~/code/d2lod-wt/backlogapply
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: "17 of 25 STALE groups confirmed as dated superseding BACKLOG lines, 8 dropped; docs/research/backlog-apply-20261104.md"
+result: "docs only; offline-only stays offline-only in the new lines"
 live: "not verified live (docs only)"
+merge: a81936d
 ```
 
 - [ ] work done
