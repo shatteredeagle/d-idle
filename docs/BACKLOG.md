@@ -431,6 +431,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - MERCLIVE: P18 live on d2d slot 3: free Rogue claim PASS (merc RG present), revive of a cheat-killed merc PASS at price 0 (U for real mercs), paid hire BLOCKED (no drill, design in docs/merclive.md) (docs/merclive.md)
 - gate2loop: save point after town chores and only when XP is at risk (Gate 2 seed 13 re-entry loop); needs a seed 13 soak rerun, and the recovery "item stuck on the cursor" fault is still open
 - gate2cursor: loot drops a cursor item no pack cell takes (hand.DropCursor, U live: ground click); the Gate 2 seed 13 no-area block is a ban/window consequence (policy cards paused); needs a seed 13 soak rerun, see docs/gate2cursor.md
+- GATE2: Gate 2 run s11-20261103-1954-g2a on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s11-20261103-1954-g2a.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

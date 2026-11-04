@@ -360,3 +360,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/dwm4triage.md: DW.m4 open-inventory triage (portal path opens it; cause of the stuck flag U; no code change)
 - docs/retreatdrill.md: the P29 retreat action executed live, drill design (offline-tested, not run)
 - docs/retreatlive.md: first live d2d run of the RT retreat drills (portal PASS, drink bound question)
+- docs/soaks/gate2-s11-20261103-1954-g2a.md: Gate 2 run s11-20261103-1954-g2a (NOT PASSED (Attempt Andariel at clvl 14 or higher)), criteria table, fault recovery
