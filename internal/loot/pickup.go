@@ -130,9 +130,12 @@ func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 		if err != nil {
 			return rep, err
 		}
-		if s.Inventory.Cursor != nil {
+		if cur := s.Inventory.Cursor; cur != nil {
 			if err := l.hand.ClearCursor(ctx); err != nil {
-				return rep, fmt.Errorf("loot: item stuck on the cursor: %w", err)
+				if !errors.Is(err, hand.ErrNoSpace) || l.dropHeld(ctx, cur, err) != nil {
+					return rep, fmt.Errorf("loot: item stuck on the cursor: %w", err)
+				}
+				failed[cur.ID] = 2 // do not pick it straight up again in this call
 			}
 			continue
 		}
@@ -171,7 +174,10 @@ func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 				g = after.Player.Gold - goldBefore
 				rep.GoldGained += g
 			}
-			if err := l.unwear(ctx, c.u); err != nil {
+			if err := l.unwear(ctx, c.u); errors.Is(err, errDropped) {
+				failed[c.u.ID] = 2
+				continue
+			} else if err != nil {
 				return rep, err
 			}
 			rep.Picked = append(rep.Picked, Picked{ID: c.u.ID, Class: c.u.Class, Name: c.name, Verdict: c.v, Gold: g})
@@ -232,6 +238,13 @@ func (l *Looter) unwear(ctx context.Context, u d2.Unit) error {
 		return nil
 	}
 	if err := l.hand.Unequip(ctx, u.ID); err != nil {
+		if errors.Is(err, hand.ErrNoSpace) {
+			// Unequip left the item on the cursor and the pack has no cell for it. Held, it blocks every later pickup
+			// (gate2cursor: the same error on each call, through re-entries). Drop it; it is not a pickup.
+			if derr := l.dropHeld(ctx, nil, err); derr == nil {
+				return errDropped
+			}
+		}
 		return fmt.Errorf("loot: %s was worn on pickup and could not be taken off: %w", l.itemName(u), err)
 	}
 	return l.hand.CloseAll(ctx)
@@ -250,6 +263,23 @@ func LauncherUnwanted(db *data.DB, b *data.ItemBase, c d2.Class) bool {
 }
 
 var errAborted = errors.New("loot: aborted")
+
+// errDropped says unwear had to drop the item on the ground: it was not picked up.
+var errDropped = errors.New("loot: item dropped, no room to take it off")
+
+// dropHeld puts the cursor item on the ground when no pack cell takes it (cause is the ClearCursor error, for the log).
+func (l *Looter) dropHeld(ctx context.Context, held *d2.Unit, cause error) error {
+	name := "an item"
+	if held != nil {
+		name = l.itemName(*held)
+	}
+	if err := l.hand.DropCursor(ctx); err != nil {
+		l.e.Log.Warn("loot: could not drop the held item", "item", name, "err", err)
+		return err
+	}
+	l.e.Log.Warn("loot: no pack cell for the held item, dropped it on the ground", "item", name, "why", cause)
+	return nil
+}
 
 func (l *Looter) emitDrop(c cand) {
 	if l.e.Emit == nil {

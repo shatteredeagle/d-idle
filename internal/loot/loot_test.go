@@ -585,3 +585,55 @@ func TestPickUpTakesOffBowWornByTheGame(t *testing.T) {
 		}
 	}
 }
+
+// gate2cursor: an item on the cursor that no pack cell takes (the pack is full) blocked every later PickUp with "item
+// stuck on the cursor" for hours, through game re-entries (Gate 2 seed 13 log). PickUp must drop it on the ground,
+// leave it alone for the rest of the call and go on.
+func TestPickUpDropsHeldItemWhenPackIsFull(t *testing.T) {
+	l, r := newLooter(t)
+	w := r.W
+	g := w.Lay.Inventory
+	for y := 0; y < g.Rows; y++ {
+		for x := 0; x < g.Cols; x++ {
+			w.Add("isc", d2.ContInventory, x, y)
+		}
+	}
+	held := w.NewItem("sbw", 2)
+	held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+	w.Cursor = &held
+	rep, err := l.PickUp(context.Background(), loot.PickOpts{})
+	if err != nil {
+		t.Fatalf("PickUp failed with a full pack and a held item: %v (%+v)", err, rep)
+	}
+	if w.Cursor != nil {
+		t.Fatal("item still on the cursor")
+	}
+	dropped := false
+	for _, u := range w.Ground {
+		dropped = dropped || u.ID == held.ID
+	}
+	if !dropped {
+		t.Fatal("held item is not on the ground")
+	}
+	for _, p := range rep.Picked {
+		if p.ID == held.ID {
+			t.Fatal("the dropped item was picked up again in the same call")
+		}
+	}
+}
+
+// A cursor item with room in the pack still goes to the pack, not to the ground.
+func TestPickUpHeldItemWithRoomGoesToPack(t *testing.T) {
+	l, r := newLooter(t)
+	w := r.W
+	held := w.NewItem("sbw", 2)
+	held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+	w.Cursor = &held
+	if _, err := l.PickUp(context.Background(), loot.PickOpts{}); err != nil {
+		t.Fatal(err)
+	}
+	s, _ := w.Snapshot()
+	if u, ok := findID(s, held.ID); !ok || u.Item.Where != d2.ContInventory || w.Cursor != nil || len(w.Ground) != 0 {
+		t.Fatalf("held item not in the pack: %+v ground %d", u, len(w.Ground))
+	}
+}
