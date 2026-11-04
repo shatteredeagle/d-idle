@@ -1,5 +1,7 @@
 # Cards
 
+> status: OpenSpec is retired for new work (user, 2026-11-04); cards are moving to Backlog.md (docs/decisions.md Current truth; docs/process/openspec-removal-plan.md).
+
 > The 17 cards below (12 active, 5 parked) were copied into `backlog/` on 2026-11-04 (stage 1, see docs/backlog.md); this file stays the interim list until stage 2.
 
 Stage 1 of the OpenSpec removal plan (docs/process/openspec-removal-plan.md, branch agent/removalplan, not yet on main): this table is the list of active work. The user approved it on 2026-11-04 after the card triage. Each row links to its plain markdown card under `openspec/changes/<id>/` (tasks.md header holds owns, exclusive and gates).
@@ -19,7 +21,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 1 | m3-act1run | G-B | deferred 0/3 | fresh Sorceress clears Act 1 unattended on d2d | - | not run live; absorbs the quest-chain and readiness floors text | [card](../openspec/changes/m3-act1run/) |
 | 2 | m3-andariel | G-B | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | - | first drill per the SME card | [card](../openspec/changes/m3-andariel/) |
 | 3 | m3-merc | G-B | proposed 0/4 | free Rogue run for hours on d2d, merc alive share | - | the soak (revive knob and hire drill already archived) | [card](../openspec/changes/m3-merc/) |
-| 4 | gameexe-retire-soak | G-A | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | rewrite the text for ADR 0015 (acceptance, not retirement) | [card](../openspec/changes/gameexe-retire-soak/) |
+| 4 | gameexe-retire-soak | G-A | deferred 0/2 | Gate A card: d2d 24 h Act 1 clear + A:B (G-D) at 20% | - | text rewritten for ADR 0015 2026-11-04; needs user go for Gate 3 | [card](../openspec/changes/gameexe-retire-soak/) |
 | 5 | armorhit | G-E | in-progress 6/1 | Frozen Armor striker fix for upstream | - | PR claim (one batch at a time) | [card](../openspec/changes/armorhit/) |
 | 6 | nexthit | G-E | in-progress 6/2 | NextHit justhit fix for upstream | - | PR claim | [card](../openspec/changes/nexthit/) |
 | 7 | skmiss | G-E | in-progress 5/2 | missile roll max fix for upstream | - | differential, then PR | [card](../openspec/changes/skmiss/) |

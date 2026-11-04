@@ -47,6 +47,18 @@ class T(unittest.TestCase):
     def test_stale_does_not_fail(self):
         self.assertEqual(self.run_check({"internal/combat/z.go": "var x = 1\n"}), 0)
 
+    def test_identifier_boundaries(self):
+        src = "var MyD2DThing = 1\nvar d2dx = 2\n"
+        self.assertEqual(self.run_check({"internal/combat/e.go": src}, doc=""), 0)
+
+    def test_cmd_d2bot_wiring_is_adapter_but_main_is_not(self):
+        self.assertEqual(self.run_check({"cmd/d2bot/d2dwire.go": "var D2D = 1\n"}, doc=""), 0)
+        self.assertEqual(self.run_check({"cmd/d2bot/main.go": "var D2D = 1\n"}, doc=""), 1)
+
+    def test_missing_register_fails(self):
+        with tempfile.TemporaryDirectory() as root:
+            self.assertEqual(check.main(["--root", root]), 1)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,5 +1,7 @@
 # Determinism of the full bot loop on d2d (agent DETLOOP, 2026-10-30)
 
+> status: the "G1/G2 check" notes are retired (ADR 0013, amended by ADR 0015); verify on d2d through the gate ladder or say U. Current truth: docs/decisions.md.
+
 Tags: V = verified live on the lockstep fork `d2d.lab5` (how stated) or by an offline test named here, S = read in the fork's
 source, U = unverified. Card: `openspec/changes/detloop`. Background: docs/d2d-loop.md "Determinism of lab5" (scripted walks and
 fights are deterministic: det.py; two full-bot runs with one seed were not).
