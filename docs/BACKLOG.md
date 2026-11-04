@@ -459,6 +459,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - andarielsme - SME decisions for m3-andariel recorded in docs/andarielsme.md and the card text amended (docs only, not verified live)
 - mercrevive: merc.kitReservePct 150 -> 100, merc.goldFarmMaxLevel 16 -> 18, revive skip line prints need=, once-per-change gold wait line (offline, not verified live; docs/mercrevive.md)
 - RTLEAVE: RT.leave unblocked offline (Fighter.Leave wired in d2drill: Save and Exit, rejoin), live run on a hidden slot pending (docs/rtleave.md)
+- merchire: drill D8.h/D8.h2 (paid hire, cant-afford) built offline in internal/drill/merchire.go + cmd/d2drill/hire_lab.go; live run recipe in docs/merchire.md (not verified live)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
