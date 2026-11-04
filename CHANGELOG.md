@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 1 multi-seed soak run 20261103-1938-ms4: PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate1-multiseed-20261103-1938-ms4.md).
+- Docs: third independent code review of the 2026-11-03 Gate 1 fixes (target skip, recovery kit trip, XP fallback flag).
 - verifymonsterpace: independent verification of the monster pace PR candidate (docs only)
 - crfixbundle2: bundle 4 (ground-roll tool rejects a partial spawn and an all-unequal game side) and the judged comments
 - Docs: open-work items PALSKILL, PALAURA, PALDUR, VERIFY-TELEPORT-ROOM, VERIFY-AIDEL, SKSTATEEV marked done
