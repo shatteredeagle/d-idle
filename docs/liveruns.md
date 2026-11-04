@@ -1,6 +1,6 @@
 # Live-run runbook: order, rules, shared procedures (agent LIVERUNBOOK, 2026-10-29)
 
-> status: Game.exe live-run runbook; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md), Game.exe is frozen: these runs only happen for the retirement soak or an orig-decision probe (cards gameexe-retire-soak, orig-decision-probes). d2d runs use tools/d2dslot.sh and docs/d2d-bot.md.
+> status: Game.exe live-run runbook; d2d is the primary backend (ADR 0009, 2026-10-30; docs/plan/STATUS.md), Game.exe is frozen: these runs only happen as oracle/A:B reference lanes or an orig-decision probe (cards gameexe-retire-soak = Gate A card, orig-decision-probes). SUPERSEDED 2026-11-04 (ADR 0015): "retirement soak" is no longer a gate; game.exe runs are the oracle side of G-D. d2d runs use tools/d2dslot.sh and docs/d2d-bot.md.
 
 Docs only; nothing here was run live. Written while the worker host was too loaded for new live slots (1-min load 31 at 11:11, BACKLOG guard 24). Aim:
 when a slot opens, a d2-live agent can paste a brief and go. Tags: V = read from a script, table or the worker host filesystem today (path given),
