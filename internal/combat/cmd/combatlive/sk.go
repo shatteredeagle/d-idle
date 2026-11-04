@@ -58,6 +58,7 @@ type SKResult struct {
 	Pass     *bool     `json:"pass,omitempty"`
 	Samples  []float64 `json:"samples"`
 	Note     string    `json:"note,omitempty"`
+	Trace    []string  `json:"trace,omitempty"` // first raw readings: class id before after
 }
 
 // skRig is what the sampler needs: reads only, plus one input call. Nothing here writes game memory.
@@ -68,7 +69,9 @@ type skRig struct {
 	Now   func() time.Time
 }
 
-// life returns the unit's current life in points (stat 6 is 24.8 fixed point; U for monsters, see d2.MonsterInfo).
+// life returns the unit's stat 6 divided by 256. VERIFIED LIVE 2026-11-03 (i2): for client-side monsters this is a
+// PERCENT scale (full health reads 128, never real points), so the result is NOT damage in points; see
+// docs/probes/drills/2026-11-03-SK-live.txt.
 func (g skRig) life(u d2.Unit) (float64, error) {
 	st, err := g.R.UnitStats(u.Addr)
 	if err != nil {
@@ -153,6 +156,9 @@ func (g skRig) sample(ctx context.Context, o skOpts) (*SKResult, error) {
 		after, err := g.life(cur)
 		if err != nil {
 			return res, err
+		}
+		if len(res.Trace) < 25 {
+			res.Trace = append(res.Trace, fmt.Sprintf("c%d id%d %.2f %.2f", cur.Class, cur.ID, before, after))
 		}
 		switch d := before - after; {
 		case after <= 0:
