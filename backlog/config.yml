@@ -1,0 +1,16 @@
+project_name: "d.idle"
+default_status: "Proposed"
+statuses: ["Proposed", "Deferred", "In Progress", "Done"]
+labels: ["G-A", "G-B", "G-C", "G-D", "G-E", "G-F", "parked", "upstream", "soak"]
+date_format: yyyy-mm-dd
+max_column_width: 20
+default_editor: "vi"
+auto_open_browser: false
+default_port: 6420
+remote_operations: false
+auto_commit: false
+filesystem_only: false
+bypass_git_hooks: false
+check_active_branches: false
+active_branch_days: 30
+task_prefix: "task"
