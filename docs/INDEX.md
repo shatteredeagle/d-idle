@@ -365,3 +365,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/soaks/gate2-s13-20261103-2211-g2v.md: Gate 2 run s13-20261103-2211-g2v (NOT PASSED (XP/h at or above the m24 floor (1000 per hour); No single state over 10 min without progress; Belt; d2dsoak INVARIANTS; No-gain window at most 90 min (clvl or gold gain; quest step not read; Attempt Andariel at clvl 14 or higher; Hire the merc)), criteria table, fault recovery
 - docs/andarielplan.md: plan for card m3-andariel (throwaway Andariel fight, lifting boss.andarielHold, revive-gold stall)
 - docs/noareameasure.md - Gate 2 noarea measurements: XP per area at clvl 13+, exclude set with reasons, kit at 23:35 (seed 13)
+- docs/contracts/README.md: the contracts (gates, policies, interfaces, rules), how to change one; docs/archive/openspec-index.md: one line per old OpenSpec change card.

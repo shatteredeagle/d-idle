@@ -467,6 +467,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - codefix67 (done, offline): F6 stash withdraw only when the purse cannot pay the kit and one healing count, F7 in-town futility latch; docs/codefix67.md; live P5 stash recheck open
 - palprep3: PALSKILL D2/D3 PR re-prepared on upstream 7591a92e (local/pal-d2d3-r3 head 1f91a216, verifier caveats applied, body docs/research/pr-palskill-body-r3.md); awaits the user's go to open (merged upstream 2026-11-04 as #195, merge commit 2d051d77d)
 - upstream PR #198 (Energy Shield absorbs the unresisted field, head 3b8bb7df, branch es-absorb-order) is open; watch for the maintainer and CodeRabbit (follow-ups need their own task); the esprep / es-absorb candidate is done.
+- OpenSpec removal stage 3 done: contracts are in docs/contracts/ (18 files, proposed/ holds the 9 open deltas), openspec/ is removed (tag openspec-final, index docs/archive/openspec-index.md), STATUS and the board /changes JSON come from tools/backlog/status.py; stage 3b (headers, checker, Numbers tables) and stage 4 (AGENTS.md) are next.
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
