@@ -13,8 +13,8 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: ""
+result: "docs/noareacards.md: three card drafts, order of work, questions; no code; not verified live"
 live: "not verified live (docs only)"
 ```
 
-- [ ] work done
+- [x] work done
