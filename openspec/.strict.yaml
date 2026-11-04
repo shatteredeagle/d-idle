@@ -37,3 +37,4 @@ allow_merges:
   - a10570e   # hirefixlive: merged without a card (merge.sh --card none)
   - 8084688   # cipathfilter: merged without a card (merge.sh --card none)
   - 32350aa   # heldlog: merged without a card (merge.sh --card none)
+  - 977fe7e   # specapplyb: merged without a card (merge.sh --card none)
