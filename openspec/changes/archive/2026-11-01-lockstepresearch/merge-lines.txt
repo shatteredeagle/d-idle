@@ -1,3 +1,0 @@
-BACKLOG: - LOCKSTEPRESEARCH: original Game.exe lockstep/speed-up researched (docs/research/original-game-lockstep.md): no prior art for D2; frame gate is GAME_UpdateGamesProgress 0x52FC20 (timeGetTime vs 40 ms); proxy-DLL IAT time hook (Tier A) is the plan, probes P0 (Wine clock test, no game) and P1 first; stepping (Tier B) only if needed
-INDEX: - docs/research/original-game-lockstep.md: lockstep or speed-up for the original Game.exe 1.14d: prior art (libTAS, faketime, speed hackers, whisper, D2MOO), frame scheduler, tiers, probe runbook, instrumentation policy (card lockstepresearch)
-CHANGELOG: - docs: research on lockstep / speed-up for the original Game.exe 1.14d (no prior art found; proxy-DLL clock hook plan, probes, policy); nothing run

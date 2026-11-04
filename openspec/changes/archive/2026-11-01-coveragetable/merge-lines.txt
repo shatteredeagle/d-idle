@@ -1,3 +1,0 @@
-BACKLOG: coveragetable: generated rule coverage table of d2d vs game.exe 1.14d (docs/coverage/rule-coverage.md, tools/coverage/coverage.py); keep ledger.tsv in step with each new differential
-INDEX: docs/coverage/rule-coverage.md: generated coverage table per subsystem against the game's data tables (README.md there explains the ledger)
-CHANGELOG: Added a generated rule-coverage table (docs/coverage) that counts, per data-table subsystem, which rows were differentially tested against game.exe 1.14d, with a CI freshness check.

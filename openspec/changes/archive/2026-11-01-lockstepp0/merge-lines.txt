@@ -1,3 +1,0 @@
-BACKLOG: lockstep P0 done (Wine IAT time hook scales frame gate, PASS): next P1 (read dwGameFrame) then tier A proxy DLL, see docs/research/lockstep-p0.md
-INDEX: docs/research/lockstep-p0.md - lockstep probe P0 results: IAT time hook under Wine, k = 1/2/4 frame gate, verdict PASS
-CHANGELOG: Research: lockstep probe P0 (no game) shows an import-table time hook scales a 25 fps frame gate under Wine; probes in tools/lockstep/

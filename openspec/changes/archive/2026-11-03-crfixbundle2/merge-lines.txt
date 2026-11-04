@@ -1,3 +1,0 @@
-BACKLOG: crfixbundle2: CodeRabbit round 2 on staging PR 2 judged (both valid) and fixed on private branches local/bundle-4 / stage/bundle-4 (docs/research/crfix-bundle2-20261102.md); coordinator posts the replies and pushes the staging branch
-INDEX: docs/research/crfix-bundle2-20261102.md: CodeRabbit round 2 on staging PR 2, verdicts, reply texts (card crfixbundle2)
-CHANGELOG: crfixbundle2: bundle 4 (ground-roll tool rejects a partial spawn and an all-unequal game side) and the judged comments

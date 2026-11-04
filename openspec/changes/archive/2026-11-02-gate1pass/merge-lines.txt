@@ -1,3 +1,0 @@
-BACKLOG: - GATE1: Review 3 of the first Gate 1 PASS (run 20261102): all hard criteria PASS, band 11-14 -11 percent inside tolerance, caveats and next steps (docs/soaks/gate1-20261102.md)
-INDEX: - docs/soaks/gate1-20261102.md: Gate 1 run 20261102 (PASSED) with Review 3: criteria, guard counts, comparison, caveats
-CHANGELOG: - docs: Gate 1 PASS review (docs/soaks/gate1-20261102.md, Review 3).

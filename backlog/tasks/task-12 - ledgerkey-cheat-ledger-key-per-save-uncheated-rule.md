@@ -16,7 +16,6 @@ owns:
   - "internal/cheat/ledgerkey.go"
   - "internal/cheat/ledgerkey_test.go"
   - "cmd/d2cheat/main.go"
-  - "openspec/changes/ledgerkey/**"
 exclusive: []
 branch: "agent/ledgerkey"
 agent: "snaplib"
@@ -24,8 +23,7 @@ result: "Offline unit tests only; no live run needed for the key itself."
 live: ""
 merge_hash: ""
 overlap: "Overlap (declared): card memrules (agent/memrules, unmerged) edits internal/cheat/ledger.go (adds `Run` after `Backup`, separate hunk) and cmd/d2cheat/main.go (`runstart`, `--since-run`, separate hunks); merge order is free, ledgerkey was built on main. Overlap (declared): card snaplib writes the setup-copy entries."
-skip_specs: true
-source: "openspec/changes/ledgerkey"
+source: "openspec-final:openspec/changes/ledgerkey"
 ---
 
 ## Description
@@ -43,7 +41,7 @@ Next step: merge check, then close
 Gates (from the card):
 - go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 
-Source: openspec/changes/ledgerkey/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/ledgerkey/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

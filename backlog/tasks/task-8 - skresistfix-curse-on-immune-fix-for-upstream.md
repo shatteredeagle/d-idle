@@ -13,7 +13,6 @@ priority: medium
 ordinal: 8000
 card: "skresistfix"
 owns:
-  - "openspec/changes/skresistfix/**"
   - "docs/research/pr-curseimmune-draft.md"
   - "docs/research/pr-curseimmune-proof.md"
 exclusive:
@@ -24,8 +23,7 @@ result: "Offline, nothing verified live, no d2d slot, no game window. Local upst
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: true
-source: "openspec/changes/skresistfix"
+source: "openspec-final:openspec/changes/skresistfix"
 ---
 
 ## Description
@@ -44,7 +42,7 @@ Gates (from the card):
 - changecheck 0 warnings for this card; leakcheck -mode fail 0
 - PR claim only with a differential on real builds: before > 0, after 0
 
-Source: openspec/changes/skresistfix/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/skresistfix/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

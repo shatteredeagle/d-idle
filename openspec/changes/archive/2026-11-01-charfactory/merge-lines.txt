@@ -1,3 +1,0 @@
-BACKLOG: - CHARFACTORY: research done (docs/research/character-factory.md): fresh chars of all 7 classes and cheated level/act/quest/waypoint setups exist, one honest in-band Sorceress (Fresha), no item creation on Game.exe, no cross-prefix restore tool; plan for an honest snapshot library; ranked cards SNAPLIB-TOOL, LEDGERKEY, SNAPSEED-TEST, SNAPSMOKE, HONESTLADDER, D2DSNAP, FRESHCLASS, PRESETS, ITEMKIT, CLASSLADDER
-INDEX: - docs/research/character-factory.md: what character creation, level and kit setting, save copies and restores exist; capability table; honest snapshot library plan; ranked backlog cards
-CHANGELOG: - docs: character factory research (docs/research/character-factory.md).

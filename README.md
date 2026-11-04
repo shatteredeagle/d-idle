@@ -87,14 +87,14 @@ edges; the guides say what has been verified on a stranger's machine and what ha
 | `internal/` | packages: memory reading, input, navigation, combat, town, leveling, gear, merc, API; `internal/drill` holds the drills |
 | `web/` | dashboard front end (embedded) |
 | `deploy/`, `packaging/` | container files and a NAS app template |
-| `openspec/` | contracts (`specs/`) and the change cards every piece of work is briefed and tracked with |
+| `backlog/` | the work items (Backlog.md tasks) every piece of work is briefed and tracked with; the contracts are in `docs/contracts/` |
 | `docs/` | design, evidence and research notes; `docs/INDEX.md` is the map; `docs/research/` and `docs/probes/` hold traces, drill and soak reports |
 | `tools/` | developer and maintainer scripts (some assume the maintainer's lab and are documented as such); `tools/emu` is the emulator harness |
 
 ## Contributing: agents first
 
 This repo is developed mostly by AI coding agents working from written briefs. Every job is a change card in
-`openspec/changes/<id>/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
+a task in `backlog/tasks/` with the paths it owns and the gates it must pass; `AGENTS.md` holds the rules those agents (and
 humans) follow, and `GLOSSARY.md` the vocabulary. If you want to contribute:
 
 - open an issue or a pull request against `main`; describe what you verified and how (live run, unit test, or neither);

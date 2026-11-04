@@ -1,1 +1,0 @@
-BACKLOG: gate2cursor: loot drops a cursor item no pack cell takes (hand.DropCursor, U live: ground click); the Gate 2 seed 13 no-area block is a ban/window consequence (policy cards paused); needs a seed 13 soak rerun, see docs/gate2cursor.md

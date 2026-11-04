@@ -1,6 +1,8 @@
 # Issue tracker: openspec change cards
 
 > status: OpenSpec change cards are retired for NEW work (user 2026-11-04). The replacement is Backlog.md (https://github.com/MrLesk/Backlog.md, MIT; markdown task files in the repo, `backlog browser` board), chosen by the user 2026-11-04 after a small trial (backlog init in a scratch copy, 5 hand-migrated cards, `backlog browser`) that comes before any removal stage; each removal stage still needs the user's go (docs/process/openspec-removal-plan.md). Until the migration lands, existing active cards continue until closed. A new job is named by its branch agent/<id>; its owns/exclusive resources come from the brief and go back in the report, and its result line (verified live or not) goes in the report. Cardless work merges via `merge.sh --card none`.
+> status (stage 3, OpenSpec removal): `openspec/` no longer exists in the tree; every `openspec/...` path below is a path inside git tag `openspec-final` (`git show openspec-final:<path>`). Current practice: `docs/backlog.md` (tasks) and `docs/contracts/README.md` (contracts). Stage 4 rewrites this file.
+
 
 Work for this repo is tracked as openspec change cards in `openspec/changes/<id>/`. There is no GitHub Issues use, no `gh` or `glab` calls, and no `.scratch/` directory. The forge remote (`forge`, `<owner>/d2lod-bot`) is a push target only; nothing is ever posted to GitHub without the user's go (`docs/contracts/lab-rules.md`).
 

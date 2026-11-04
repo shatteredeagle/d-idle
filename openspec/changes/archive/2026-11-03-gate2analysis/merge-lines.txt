@@ -1,3 +1,0 @@
-BACKLOG: - GATE2FIX: Gate 2 20261102 failure analysis (docs/research/gate2-analysis-20261102.md): top fixes = merc retained after the free-rogue claim (merc=none 5 s later blocked Andariel and the clvl 15 to 16 plateau), emergency kit trip when the portal is cancelled by crowd-retreat (BELT 10), town resupply length (NOKILL 15); judge: gold high-water mark and merc wording
-INDEX: - docs/research/gate2-analysis-20261102.md: Gate 2 run 20261102 failure analysis: per-criterion cause (bot defect, CPU starvation, gate-rule), 41 restarts explained, Gate 1 comparison, ranked fixes, re-run plan
-CHANGELOG: - docs: Gate 2 20261102 failure analysis (docs/research/gate2-analysis-20261102.md).

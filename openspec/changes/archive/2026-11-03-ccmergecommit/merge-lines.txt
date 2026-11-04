@@ -1,1 +1,0 @@
-CHANGELOG: - changecheck: ignore GitHub's synthetic "Merge <sha> into <sha>" commit in the merge check.

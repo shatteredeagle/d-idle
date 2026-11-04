@@ -1,2 +1,0 @@
-BACKLOG: andarielspec: soak-gates delta for the Gate 2 Andariel criterion (interim: reaching the gate or a held-for-andariel line with floor and merc evidence counts while boss.andarielHold is set; actual attempt required once lifted); ops gate-judge.py must follow
-CHANGELOG: soak-gates spec: Gate 2 Andariel criterion interim wording (user decision 2026-11-04, option a)

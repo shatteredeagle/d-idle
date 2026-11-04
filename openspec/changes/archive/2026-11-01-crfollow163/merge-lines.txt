@@ -1,1 +1,0 @@
-BACKLOG: #163 (Blizzard shard offsets) got a tooling follow-up (3ac63fa0) for CodeRabbit; watch for the maintainer.

@@ -1,2 +1,0 @@
-BACKLOG: upstream PR #198 (Energy Shield absorbs the unresisted field, head 3b8bb7df, branch es-absorb-order) is open; watch for the maintainer and CodeRabbit (follow-ups need their own task); the esprep / es-absorb candidate is done.
-CHANGELOG: Docs: opened upstream PR #198 (Energy Shield absorb order); posted log in docs/research/openpr-log.md.

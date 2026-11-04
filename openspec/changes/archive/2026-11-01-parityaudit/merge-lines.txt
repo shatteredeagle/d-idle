@@ -1,3 +1,0 @@
-BACKLOG: - PARITYAUDIT: backend parity audit (memory backend vs d2d), gate tooling gaps, 10-minute smoke runbook, ordered parity backlog (docs/research/backend-parity.md)
-INDEX: - docs/research/backend-parity.md: original-game (memory backend) vs d2d parity matrix, gate tooling gaps, smoke runbook, parity backlog
-CHANGELOG: - docs: backend parity audit for resuming the bot on the original game (docs/research/backend-parity.md).

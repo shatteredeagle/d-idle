@@ -11,7 +11,7 @@ In this order, skipping silently what does not exist:
 3. `docs/adr/` (index: `docs/decisions.md`): the decisions the user made. Read the ones that touch your area.
 4. `docs/plan/STATUS.md`, then `docs/plan/plan-v2.md`, then the doc of your area (`docs/INDEX.md` maps them). Evidence docs carry V (verified) / S (secondary) / U (unverified) tags.
 
-In an agent run the read order of `AGENTS.md` comes first (`openspec/README.md`, STATUS, your change card); this file only adds where the domain vocabulary lives.
+In an agent run the read order of `AGENTS.md` comes first (`docs/contracts/README.md`, STATUS, your task in `backlog/tasks/`); this file only adds where the domain vocabulary lives.
 
 ## File structure
 
@@ -20,7 +20,7 @@ In an agent run the read order of `AGENTS.md` comes first (`openspec/README.md`,
 ├── GLOSSARY.md            vocabulary
 ├── AGENTS.md              agent rules (the only root rules file; no CLAUDE.md)
 ├── docs/contracts/        contracts, numeric gates
-├── openspec/changes/      change cards (the work tracker, docs/agents/issue-tracker.md)
+├── backlog/tasks/         work items (the work tracker, docs/backlog.md)
 ├── docs/adr/              decision records, MADR style, 0001 upward
 ├── docs/decisions.md      one-line index of the ADRs plus the dated verbatim entries
 └── docs/                  evidence, designs, per-area docs

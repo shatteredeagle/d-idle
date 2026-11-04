@@ -1,3 +1,0 @@
-BACKLOG: monsterai D1-D4 (Zombie, Brute, Blood Hawk, Corrupt Rogue/Lancer thinks set a pace d2d omits; Brute runs where d2d walks) need D10 (RN base speed in game.exe) before any PR; D11 (Fallen flee pace 50) to run; harness tools/emu/mai_*; docs/research/monster-ai-trace.md
-INDEX: docs/research/monster-ai-trace.md | Monster AI: Act 1 and 2 core thinks, game.exe vs d2d vs bot (146-row per-AI table, 25 AIs run, D1-D11, B1-B3)
-CHANGELOG: Docs: monster AI trace (monsterai): 25 Act 1/2 AI thinks run in game.exe under the emulator and replayed through d2d's rules::mon_think (Skeleton, Goatman, Quill Rat, Griswold, Smith 0 differ; Zombie, Brute, Blood Hawk, Corrupt Rogue/Lancer pace and run deviations); coverage ledger monster.ai 11 of 146 rows

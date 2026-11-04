@@ -1,3 +1,0 @@
-BACKLOG: apicookbook: wrapper tools/emu/run-on-worker.sh and docs/api-agent-cookbook.md so API-credit decomp jobs can run the emulator (done, card apicookbook)
-INDEX: docs/api-agent-cookbook.md - command forms that work for API-credit runner jobs (emulator wrapper, data paths, forbidden list)
-CHANGELOG: tools/emu/run-on-worker.sh: audited wrapper to run a tools/emu script on the worker host; docs/api-agent-cookbook.md

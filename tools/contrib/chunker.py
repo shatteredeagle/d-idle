@@ -363,14 +363,13 @@ def collect(sources=SOURCES):
 
 def card_summary():
     out = []
-    base = os.path.join(ROOT, "openspec", "changes")
-    for d in sorted(os.listdir(base)):
-        t = os.path.join(base, d, "tasks.md")
-        if d != "archive" and os.path.exists(t):
-            m = re.search(r"(?m)^status:\s*(\S+)", open(t, encoding="utf-8").read())
-            if m and m.group(1) in ("in-progress", "proposed"):
-                out.append("%s (%s)" % (d, m.group(1)))
-    return "open cards: " + ", ".join(out)
+    base = os.path.join(ROOT, "backlog", "tasks")
+    for f in sorted(os.listdir(base)) if os.path.isdir(base) else []:
+        txt = open(os.path.join(base, f), encoding="utf-8").read()
+        c, st = re.search(r'(?m)^card:\s*"?([^"\n]+)', txt), re.search(r"(?m)^status:\s*(.+)$", txt)
+        if c and st and st.group(1).strip().strip("\"'").lower() in ("in progress", "proposed"):
+            out.append("%s (%s)" % (c.group(1), st.group(1).strip().strip("\"'").lower()))
+    return "open tasks: " + ", ".join(out)
 
 
 def mechanical_flags(items, issues):

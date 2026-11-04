@@ -14,7 +14,7 @@ failed or were cancelled (see "Why it failed" below), reworked 2026-10-30 by CIF
 ## Jobs
 - `checks` (light, always, about 5 s on the worker host): `go run ./cmd/leakcheck -mode fail`, `tools/ci/check.sh --hygiene-only`, gofmt,
   `go vet ./cmd/leakcheck`. changecheck and the OpenSpec validator no longer run here (removal stage 2).
-- `test` (heavy, skipped when the diff to the base has only `docs/`, `openspec/` or top-level `*.md` files): `tools/ci/check.sh`
+- `test` (heavy, skipped when the diff to the base has only `docs/`, `backlog/` or top-level `*.md` files): `tools/ci/check.sh`
   (hygiene, gofmt, `go vet ./...`), `PAR=2 tools/ci/test.sh` (`go test -short -p 2 ./...` minus the quarantine list in
   `tools/ci/flaky.txt`, each quarantined test retried once; includes the knobdump drift test), `tools/ci/scripts.sh` (`bash -n` on
   every tracked `.sh`, `tools/winereap_test.sh`, `tools/container-checklist.sh`, `packaging/release.sh --dry-run`). All steps run under

@@ -1,3 +1,0 @@
-BACKLOG: VERIFY-WAYPOINT done (card verifywaypoint): 59,309 of 132,964 reproduced; single writer holds; single player inferred; FUN_00584870 reads with a 5 s window (docs/research/verify-waypoint.md)
-INDEX: docs/research/verify-waypoint.md - independent re-check of the waypoint refusal window (HOLDS / LIMITS)
-CHANGELOG: verifywaypoint: independent verification of the waypoint refusal claim (docs and tools/emu/wpv_* only)

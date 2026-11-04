@@ -1,1 +1,0 @@
-BACKLOG: PALAURA narrowed to the open parts (target filter, enemy-hit damage, Prayer mana and state 85); prior work pal-skill-trace.md

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3 -I
-"""Read-only spec ledger scan (stdlib). Run from the repo root:
+"""HISTORY (needs the openspec/ tree; since OpenSpec removal stage 3 run it only in a checkout of git tag openspec-final). Read-only spec ledger scan (stdlib). Run from the repo root:
 
     python3 -I tools/spec/ledger_scan.py > /tmp/ledger-raw.md
 

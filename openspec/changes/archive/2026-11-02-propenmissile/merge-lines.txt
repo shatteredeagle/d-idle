@@ -1,3 +1,0 @@
-BACKLOG: upstream #164 (monster missile record + poison units, bundled, 8 commits) is open; watch for the maintainer and CodeRabbit (follow-ups need their own card).
-INDEX: docs/research/openpr-log.md: posted log now also covers #164.
-CHANGELOG: Docs: opened upstream PR #164 (monster missile launch record and poison units); posted log in docs/research/openpr-log.md.

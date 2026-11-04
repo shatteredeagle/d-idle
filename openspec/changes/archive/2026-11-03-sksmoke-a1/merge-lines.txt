@@ -1,2 +1,0 @@
-BACKLOG: sksmoke-a1: SK drill design and expected Fire Bolt / Charged Bolt damage per level (docs/probes/sksmoke/2026-11-03-SK-design.txt); live run BLOCKED (i2 stopped, no skill-level setter, no SK subcommand)
-BACKLOG: sksmoke-a1: Fire Bolt per-hit damage on d2d matches the skills.txt table at levels 1/4/8/13/20 (PASS, compared to table, not game.exe; docs/probes/sksmoke/2026-11-03-SK-d2d.txt); still open: game.exe run (needs exact life read), Charged Bolt per-bolt trace, Frost Nova ring, pack kills per cast

@@ -1,3 +1,0 @@
-BACKLOG: - botsupply (card [botsupply](../openspec/changes/botsupply/proposal.md), offline): level-aware gold model and supply table (internal/data/supply.go), area-aware gold pile bar (knob loot.goldPileShare), traced area XP table and fallback levels, ScaledHP fixed, sim gold and monster life from the traced rows (docs/botsupply.md); not verified live
-INDEX: - Bot supply rates and where the code reads them: [botsupply.md](botsupply.md).
-CHANGELOG: - botsupply: gold per kill follows the monster level (Blood Moor 0.39, not 6), early gold piles are no longer skipped, recovery XP table from the real means, simulator monsters with real life.

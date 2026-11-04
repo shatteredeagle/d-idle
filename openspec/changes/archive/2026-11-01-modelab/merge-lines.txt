@@ -1,3 +1,0 @@
-BACKLOG: SKRESIST model A/B done (docs/research/model-ab-skresist.md): Opus and Sonnet found the curse 1/5 rule, Haiku missed it (port-only d2d side); open follow-ups: re-check Sonnet's Fire / Lightning Mastery pierce claim (likely wrong) and its missile physical whole-point deviation (read missile_blow and Blow::frac first)
-INDEX: docs/research/model-ab-skresist.md - model A/B on SKRESIST (Opus vs blind Sonnet vs blind Haiku): rule-by-rule table, deviations, errors, effort, trust verdicts
-CHANGELOG: none (docs only)

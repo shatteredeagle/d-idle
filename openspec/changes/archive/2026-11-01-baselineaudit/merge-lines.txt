@@ -1,3 +1,0 @@
-BACKLOG: - BASELINEAUDIT: baseline trust audit done (docs/research/baseline-audit.md): baselines.json n=3 runs 5.05 virtual h, XP/h CI +-35 percent, deaths baseline biased low; early baseline n=2, not gateable; extra runs listed there
-INDEX: - docs/research/baseline-audit.md: audit of baselines.json and baselines-early.json against the spec minimums, power, confounds, verdict per gate criterion
-CHANGELOG: - docs: baseline trust audit (docs/research/baseline-audit.md).

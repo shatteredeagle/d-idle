@@ -19,7 +19,6 @@ owns:
   - "docs/decomp-queue.md"
   - "docs/BACKLOG.md"
   - "docs/INDEX.md"
-  - "openspec/changes/skmiss/**"
 exclusive:
   - "fork-branch:fix/missile-roll-top"
 branch: "agent/skmiss"
@@ -28,8 +27,7 @@ result: "Offline, nothing verified live. Spawn / mana / flight / hit traced (doc
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: true
-source: "openspec/changes/skmiss"
+source: "openspec-final:openspec/changes/skmiss"
 ---
 
 ## Description
@@ -49,7 +47,7 @@ Gates (from the card):
 - differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
 - changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 
-Source: openspec/changes/skmiss/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/skmiss/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

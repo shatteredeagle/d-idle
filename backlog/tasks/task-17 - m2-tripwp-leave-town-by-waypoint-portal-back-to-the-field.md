@@ -26,8 +26,7 @@ result: ""
 live: ""
 merge_hash: ""
 overlap: ""
-skip_specs: false
-source: "openspec/changes/m2-tripwp"
+source: "openspec-final:openspec/changes/m2-tripwp"
 contracts: ["proposed/m2-tripwp"]
 ---
 
@@ -49,7 +48,7 @@ Gates (from the card):
 - go test -p 1 ./internal/town ./internal/bot -run 'Trip|Waypoint|Chicken' passes including TestLeaveTownByActiveWaypoint and TestChickenPortalsWhenScrollHeld
 - go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m2-tripwp leaves nothing
 
-Source: openspec/changes/m2-tripwp/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/m2-tripwp/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

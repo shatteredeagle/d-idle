@@ -1,2 +1,0 @@
-BACKLOG: plandocs: goals G-A..G-F and the drop/defer list added to the BACKLOG header
-CHANGELOG: Docs: open-work items PALSKILL, PALAURA, PALDUR, VERIFY-TELEPORT-ROOM, VERIFY-AIDEL, SKSTATEEV marked done

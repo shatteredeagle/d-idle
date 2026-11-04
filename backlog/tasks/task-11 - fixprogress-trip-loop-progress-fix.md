@@ -16,7 +16,6 @@ owns:
   - "internal/town/chores.go"
   - "internal/town/town.go"
   - "internal/town/fixprogress_test.go"
-  - "openspec/changes/fixprogress/**"
 exclusive: []
 branch: "agent/fixprogress"
 agent: "fixprogress"
@@ -24,8 +23,7 @@ result: "Cause from the Gate 1 rerun log (V loop, U accounting root); fix and 3 
 live: "not run; recipe in docs/fixprogress.md"
 merge_hash: ""
 overlap: "- m2-tripwp owns internal/town/trip.go: this card adds two lines there (set the flag on ErrNoPortal, clear it when a portal arrives). - goldfloor owns internal/town/shop.go: this card changes one case of scrollCount there (a tome counts 0 while the flag is set)."
-skip_specs: true
-source: "openspec/changes/fixprogress"
+source: "openspec-final:openspec/changes/fixprogress"
 ---
 
 ## Description
@@ -43,7 +41,7 @@ Next step: live proof in a seed-set record
 Gates (from the card):
 - go test -p 1 ./internal/town ./internal/bot passes; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 
-Source: openspec/changes/fixprogress/ (kept in place; this task is a copy).
+Source: git tag openspec-final, openspec/changes/fixprogress/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
