@@ -128,6 +128,7 @@
 - change soakskills: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0
 
 ### Recent merges
+- d3092536 11-03 21:41 `Merge agent/gate1multi-20261103-2140-ms4: Gate 1 ms4 5-seed record: PASSED, XP/h 10607 vs 9172 (+15.6%)` (gate1multi-20261103-2140-ms4)
 - c963702e 11-03 19:43 `Merge agent/review3fix: review3fix: codereview3 C1 route ban vs target skip, C2 fail-count decay, C3 failed ToTown counts, C4 plan flag in docs copy + TestMatchesDocs` (review3fix)
 - 3a678f6e 11-03 19:42 `merge origin/main into review3fix` (review3fix)
 - 143bbf3a 11-03 19:39 `Merge agent/gate1multi-20261103-1938-ms4: Gate 1 ms4 multiseed record: PASSED indicative (3 seeds 17,19,21; XP/h +1.2% vs baseline)` (gate1multi-20261103-1938-ms4)
@@ -137,5 +138,4 @@
 - 360ba010 11-03 17:53 `Merge agent/crfixbundle2: branchclean LAND: crfixbundle2` (crfixbundle2)
 - 553354e7 11-03 17:46 `merge origin/main into verifymonsterpace` (verifymonsterpace)
 - 49446cfd 11-03 17:45 `merge origin/main into crfixbundle2` (crfixbundle2)
-- fe3b2ebd 11-03 17:42 `Merge agent/plandocs: plandocs: apply project review goals G-A..G-F to plan docs; mark covered open-work items done` (plandocs)
 <!-- statusgen:end -->

@@ -419,6 +419,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - VERIFY-MONSTERPACE done (card verifymonsterpace): local/monsterpace-clean eeebb4b6 READY WITH CHANGES (docs/research/pr-monsterpace-verifier.md): addresses and paces confirmed, head 0 of 700,000 pace and 200,000 corpse cases (own model); required: rebase onto current upstream main (clang-tidy step fails on test_game_missiles.cpp at 6935cf64), PR-text fixes; split velocity vs paces recommended
 - codereview3 - third independent review (gate1fix, recoverykit, xpfallback): fix C1 target skip bans routes through it, C2 target fail count never decays, C3 recovery kit trip ignores failed way to town, C4 plan flag missing in docs/plan/data and TestMatchesDocs always skips
 - GATE1: Gate 1 multi-seed run 20261103-1938-ms4 (seeds 17,19,21) PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate1-multiseed-20261103-1938-ms4.md)
+- GATE1: Gate 1 multi-seed run 20261103-2140-ms4 (seeds 16,17,18,19,21) PASSED (docs/soaks/gate1-multiseed-20261103-2140-ms4.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
