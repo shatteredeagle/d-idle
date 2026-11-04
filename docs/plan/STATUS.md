@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 371af0d7 11-04 09:54 `merge origin/main into mercrevive` (mercrevive)
 - 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
 - a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
 - 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
@@ -136,5 +137,4 @@
 - c00666e5 11-04 08:59 `merge origin/main into noarea` (noarea)
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
 - c0b2638a 11-04 08:56 `merge origin/main into andarielplan` (andarielplan)
-- ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
 <!-- statusgen:end -->
