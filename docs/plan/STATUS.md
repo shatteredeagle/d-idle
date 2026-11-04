@@ -43,7 +43,6 @@
 |---|---|---|---|---|
 | [armorhit](../../openspec/changes/armorhit/) | in-progress | armorhit | `openspec/changes/armorhit/**`<br>`docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
 | [buildv3](../../openspec/changes/buildv3/) | in-progress | buildv3 | `internal/plandata/build-fallback-lightning-v3.json`<br>`internal/plandata/build-fallback-lightning-v2.json`<br>`docs/plan/data/build-fallback-lightning-v3.json`<br>`docs/plan/data/build-fallback-lightning-v2.json`<br>`internal/plandata/plandata_test.go`<br>`internal/leveler/build.go`<br>`internal/leveler/buildv3_test.go`<br>`internal/combat/classdata/profiles.json`<br>`internal/combat/class_test.go`<br>`internal/combat/pure_test.go`<br>`cmd/d2bot/class.go`<br>`cmd/d2bot/class_test.go`<br>`docs/buildv3.md`<br>`openspec/changes/buildv3/**` | - |
-| [codefix67](../../openspec/changes/codefix67/) | in-progress | codefix67 | `docs/codefix67.md`<br>`openspec/changes/codefix67/**`<br>`internal/town/codefix67_test.go`<br>`internal/bot/codefix67_test.go` | - |
 | [d2d-container-soak](../../openspec/changes/d2d-container-soak/) | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
 | [d2d-default-backend](../../openspec/changes/d2d-default-backend/) | proposed | d2d-default-backend | `cmd/d2bot/d2dbackend_default_test.go` | - |
 | [d2d-replicated-soak](../../openspec/changes/d2d-replicated-soak/) | proposed | d2d-replicated-soak | `docs/d2d-replicated-soak.md` | `soak-slot:2` |
@@ -87,7 +86,6 @@
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
 - change buildv3: gofmt, go vet, go test -p 1 per touched package, whole repo on the worker host; changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
-- change codefix67: go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits
 - change d2d-container-soak: 24 h soak report.txt says PASS with exit 0
 - change d2d-container-soak: memory curve and periodic d2d restart interval recorded
 - change d2d-default-backend: go test ./cmd/d2bot -run Backend passes
@@ -127,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
+- 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
+- d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
+- 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
+- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
 - fbd9acf2 11-04 10:39 `merge origin/main into codefix67` (codefix67)
+- 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
 - 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
 - 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
 - e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
-- f9cf6efa 11-04 10:29 `merge origin/main into palverify` (palverify)
-- e4ffa51b 11-04 10:28 `merge origin/main into palprep` (palprep)
-- f9684604 11-04 10:25 `Merge agent/noareacards: noareacards: three proposed no-area picker change cards (best-XP idleBreak, nav faults as ranking penalty, gold-for-kit recovery), design text only` (noareacards)
-- 4c1a3fb6 11-04 10:24 `merge origin/main into noareacards` (noareacards)
-- 8dbbe1f7 11-04 10:15 `Merge agent/merchire: merchire: drill D8.h/D8.h2 paid hire and cant-afford (offline; live run pending)` (merchire)
-- bea2ea57 11-04 10:14 `merge origin/main into merchire` (merchire)
 <!-- statusgen:end -->

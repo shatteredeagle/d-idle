@@ -120,7 +120,3 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
-openspec/changes/codefix67/**  codefix67  codefix67
-docs/codefix67.md  codefix67  codefix67
-internal/town/codefix67_test.go  codefix67  codefix67
-internal/bot/codefix67_test.go  codefix67  codefix67

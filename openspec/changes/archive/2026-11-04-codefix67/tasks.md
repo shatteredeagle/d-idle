@@ -2,7 +2,7 @@
 
 ```yaml
 change: codefix67
-status: in-progress
+status: archived
 agent: codefix67
 branch: agent/codefix67
 worktree: ~/code/d2lod-wt/codefix67
@@ -15,8 +15,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "F6 and F7 fixed offline with fake tests (fail without fix by hand revert); touched small edits in internal/town/basicsfix.go and internal/bot/goal.go, observe.go, resource.go; not verified live"
+result: "offline tests fail without the fix; not verified live"
 live: "not verified live"
+merge: 6f679c9
 ```
 
 - [x] work done
