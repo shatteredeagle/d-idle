@@ -179,6 +179,7 @@ type mercWire struct {
 	loaded    map[string]bool          // characters whose entry was read from statePath
 	winLogged map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
 	farmOn    bool
+	waitNeed  int // need of the last logged `merc: gold wait`; 0 = none pending
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
@@ -570,18 +571,31 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 	w.mu.Lock()
 	w.lastDec = dec.Reason
 	w.mu.Unlock()
+	need := merc.ReviveNeed(c, price)
 	if !dec.Do {
-		w.log.Info(merc.LogReviveSkipped(dec.Reason, price, c.Gold))
+		w.log.Info(merc.LogReviveSkipped(dec.Reason, price, c.Gold, need))
+		if dec.Reason == merc.ReasonGold || dec.Reason == merc.ReasonStopped {
+			w.mu.Lock()
+			first := w.waitNeed != need
+			w.waitNeed = need
+			w.mu.Unlock()
+			if first {
+				w.log.Info(merc.LogGoldWait(need, c.Gold))
+			}
+		}
 		return "merc revive skipped: " + dec.Reason
 	}
+	w.mu.Lock()
+	w.waitNeed = 0
+	w.mu.Unlock()
 	if w.rev == nil {
-		w.log.Info(merc.LogReviveSkipped("no reviver", price, c.Gold))
+		w.log.Info(merc.LogReviveSkipped("no reviver", price, c.Gold, need))
 		return "merc revive skipped: no reviver"
 	}
 	est := price
 	paid, err := w.rev.Revive(ctx)
 	if err != nil {
-		w.log.Info(merc.LogReviveSkipped("failed: "+err.Error(), price, c.Gold))
+		w.log.Info(merc.LogReviveSkipped("failed: "+err.Error(), price, c.Gold, need))
 		return "merc revive failed"
 	}
 	w.mu.Lock()
