@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, partly superseded by 0015 (milestones replaced by goals G-A to G-F; WIP limit of 3 stands)
 date: 2026-10-31
 decision-makers: user
 ---
