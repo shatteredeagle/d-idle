@@ -123,3 +123,5 @@ openspec/changes/paldurtrace/**  chuckado  paldurtrace
 docs/soakskills.md  soakskills  soakskills
 internal/d2dsoakstat/skills.go  soakskills  soakskills
 internal/d2dsoakstat/skills_test.go  soakskills  soakskills
+cmd/d2dsoak/main.go  soakskills  soakskills
+cmd/d2dsoak/report.go  soakskills  soakskills

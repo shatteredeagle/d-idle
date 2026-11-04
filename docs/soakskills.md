@@ -21,4 +21,4 @@ Audit result: before this change `d2dsoak` printed no per-skill field (only kill
 
 Log-side follow-ups: emit a `cast result` line (skill, made effect, cut), mana per cast, the kill's last skill, an armor-state sample on the minute line, a `build` line with branch and commit, and the Lightning cast ticks.
 
-Hook still needed outside owns: `cmd/d2dsoak` must call `ParseSkills` per log and print `Text(path, meleeName)` next to `printKillTimes` (cmd/d2dsoak/killtime.go / main.go:205). `meleeName` comes from the skill data, not a literal.
+Hook: `d2dsoak report [-melee SKILLNAME] LOG...` (cmd/d2dsoak/report.go) runs `ParseSkills` per log and prints `Text(path, melee)`. `-melee` is the basic-attack skill name from the skill data (no numeric id); without it the swing line prints n/a. Covered by `TestReportSkills` (fixture log, V offline).
