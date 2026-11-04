@@ -35,11 +35,6 @@ jobs:
         with:
           go-version: "1.27.3"   # AGENTS.md; go.mod only holds the language floor
           cache: false
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "22"     # the pinned OpenSpec CLI in tools/openspec.sh needs node >= 20.19
-      - name: changecheck (cards, owners, merges; runs openspec validate --all --strict)
-        run: go run ./cmd/changecheck -cli
       - name: leakcheck (fail on any hit)
         run: go run ./cmd/leakcheck -mode fail
       - name: Hygiene (no MPQ/saves/keys, no big files)
@@ -48,8 +43,8 @@ jobs:
         run: |
           out=$(gofmt -l $(git ls-files '*.go'))
           [ -z "$out" ] || { echo "gofmt differs:"; echo "$out"; exit 1; }
-      - name: go vet (changecheck and leakcheck; the whole repo is vetted in the test job)
-        run: go vet ./cmd/changecheck ./cmd/leakcheck
+      - name: go vet (leakcheck; the whole repo is vetted in the test job)
+        run: go vet ./cmd/leakcheck
 
   test:
     runs-on: ubuntu-latest

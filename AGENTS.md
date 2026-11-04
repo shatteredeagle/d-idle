@@ -8,7 +8,7 @@ Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `t
 - Every job is a change card. The brief is "implement change X". You edit only the paths in the card's `owns:` (mirrored in `docs/OWNERS`) and use only the resources in its `exclusive:` (`instance:iN`, `d2d-control-socket`, `d2d-lab-binary`, `bot-binary:<path>`, `fork-branch:<name>`, `upstream-pr:<topic>`). Need something else? Write it in your report; do not edit it.
 - Tick `tasks.md`, fill `result:` (say verified live or not) at the end. The coordinator archives the card at merge.
 - Contracts and numeric gates are in `openspec/specs/<capability>/spec.md` (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). If your work changes a number there, put a delta spec in your change instead of editing the spec.
-- `go run ./cmd/changecheck` (warn-only for now) checks all of this; run it before you finish. Questions about how to write a requirement, scenario or card: the `spec-sme` agent.
+- `go run ./cmd/changecheck` (warn-only for now) checks all of this; run it before you finish. (Status note: since OpenSpec removal stage 2, CI and the pre-push hook no longer run it; the merge pipeline still does until the ops scripts are updated.) Questions about how to write a requirement, scenario or card: the `spec-sme` agent.
 - Before reporting done, run `python3 tools/merge_lines_check.py --changed` (`tools/ci/check.sh` does it): `merge-lines.txt` holds only lines of the form `BACKLOG: text`, `INDEX: text` or `CHANGELOG: text`, no bullets, no OWNERS lines (those go in `docs/OWNERS`).
 
 ## The private d2d fork

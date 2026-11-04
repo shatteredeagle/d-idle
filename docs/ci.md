@@ -12,8 +12,8 @@ failed or were cancelled (see "Why it failed" below), reworked 2026-10-30 by CIF
 - `concurrency: ci-<ref>` with cancel-in-progress: a newer push cancels the older run of the same ref.
 
 ## Jobs
-- `checks` (light, always, about 5 s on the worker host): `go run ./cmd/changecheck -cli` (cards, owners, merges; runs `tools/openspec.sh validate
-  --all --strict` when node exists), gofmt, `go vet ./cmd/changecheck`, `tools/ci/check.sh --hygiene-only`.
+- `checks` (light, always, about 5 s on the worker host): `go run ./cmd/leakcheck -mode fail`, `tools/ci/check.sh --hygiene-only`, gofmt,
+  `go vet ./cmd/leakcheck`. changecheck and the OpenSpec validator no longer run here (removal stage 2).
 - `test` (heavy, skipped when the diff to the base has only `docs/`, `openspec/` or top-level `*.md` files): `tools/ci/check.sh`
   (hygiene, gofmt, `go vet ./...`), `PAR=2 tools/ci/test.sh` (`go test -short -p 2 ./...` minus the quarantine list in
   `tools/ci/flaky.txt`, each quarantined test retried once; includes the knobdump drift test), `tools/ci/scripts.sh` (`bash -n` on
@@ -36,7 +36,7 @@ the failing step. Runner log: `ssh worker journalctl --user -u forge-runner -n 1
 
 ## Run the same locally
 ```sh
-go run ./cmd/changecheck -cli && gofmt -l $(git ls-files '*.go') && go vet ./cmd/changecheck && tools/ci/check.sh --hygiene-only   # checks
+go run ./cmd/leakcheck -mode fail && gofmt -l $(git ls-files '*.go') && go vet ./cmd/leakcheck && tools/ci/check.sh --hygiene-only   # checks
 tools/ci/check.sh && PAR=2 tools/ci/test.sh && tools/ci/scripts.sh                                                              # test
 ```
 On the head box (4 GB) do not run the `test` commands; use `labrun worker -- ...`. Keep the runner env in mind when a CI-only failure shows

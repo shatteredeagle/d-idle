@@ -1,8 +1,33 @@
 package main
 
 import (
+	"context"
+
 	"d2lod-bot/internal/combat"
+	"d2lod-bot/internal/data"
+	"d2lod-bot/internal/drill"
 )
+
+// GivePack is the cheat `debug give <code> pack` (docs/forkcheats.md, V): the item goes to the pack grid. A ground give
+// plus pickup puts a potion into the belt, which left the DS.4 pack empty.
+func (l *lab) GivePack(ctx context.Context, r *drill.Run, code string) error {
+	if _, err := r.Cheat(ctx, "debug give "+code+" pack", "one "+code+" in the pack, not the belt: the stash drill needs a rejuvenation in the pack"); err != nil {
+		return err
+	}
+	return l.Tick(ctx, 5)
+}
+
+// TomeGold is the purse the tome drill needs: a tome, TomeMinCharges scrolls (vendor price = cost x mult/1024; the
+// priest's mult is the default 1024, V in data.VendorBuyMult) and the reserve the shop keeps back (MinGoldReserve), so
+// the buy loop never stops short of the target.
+func (l *lab) TomeGold() int {
+	price := func(code string) int {
+		return l.db.ItemByCode(code).BuyPrice(data.PriceFacts{}, data.VendorBuyMult(0), false)
+	}
+	return price("tbk") + drill.TomeMinCharges*price("tsc") + l.tune.Town.MinGoldReserve
+}
+
+func (l *lab) SetScrollTarget(n int) { l.tune.Town.TPScrollTarget = n }
 
 // The lab side of the stash and tome rechecks (docs/livecheckdrills.md). Every number comes from the run's tuning or
 // the item tables; there is no TripLab here (the Runner loop is not wired into the drill lab), so DS.3 reports BLOCKED.

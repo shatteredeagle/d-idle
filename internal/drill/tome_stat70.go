@@ -9,7 +9,7 @@ import (
 
 // Tome stat-70 recheck (docs/tomefix.md "Live-check recipe", docs/livecheckdrills.md).
 const (
-	tomeMinCharges = 13  // the recipe: a tome of 13+ charges
+	TomeMinCharges = 13  // the recipe: a tome of 13+ charges
 	tomeJunk       = 10  // ground items beside the player so the dump carries Extras.Ground
 	tomeLooks      = 60  // reads of the tome through the bot's reader
 	tomeGap        = 750 // ticks between looks: 60 * 750 = 45000 ticks, about 30 virtual minutes at 25 ticks a second (U)
@@ -24,7 +24,9 @@ type TomeLab interface {
 	GiveGround(ctx context.Context, r *Run, code string) error
 	Goto(ctx context.Context, r *Run, level int) error
 	Chores(ctx context.Context, plan string) ChoreInfo
-	JunkCode() string // a pickit-filtered item code to drop on the ground (from the tables)
+	TomeGold() int         // purse that pays a tome plus TomeMinCharges scrolls and the gold reserve (from the item tables and tuning)
+	SetScrollTarget(n int) // the shop buys scrolls up to this count (tuning TPScrollTarget; with a tome the default tops out at 5); 0 restores the default
+	JunkCode() string      // a pickit-filtered item code to drop on the ground (from the tables)
 	LogMark() int
 	LogSince(mark int) []string
 }
@@ -56,9 +58,14 @@ func tomeA(ctx context.Context, r *Run, l TomeLab) Outcome {
 	if err := l.ClearPack(ctx, r); err != nil {
 		return setupFail(err)
 	}
-	if err := l.SetGold(ctx, r, 1000); err != nil {
+	defer func() {
+		l.SetScrollTarget(0) // 0: restore the lab default
+		_ = l.Goto(ctx, r, townArea)
+	}() // the run left the character in Blood Moor (live TM.a); the next drill starts in town
+	if err := l.SetGold(ctx, r, l.TomeGold()); err != nil {
 		return setupFail(err)
 	}
+	l.SetScrollTarget(TomeMinCharges)
 	ci := l.Chores(ctx, "scrolls") // buys and fills a tome (D3.tp, V live)
 	if ci.Err != "" {
 		return setupFail(fmt.Errorf("scrolls chore: %s", ci.Err))
@@ -75,8 +82,8 @@ func tomeA(ctx context.Context, r *Run, l TomeLab) Outcome {
 	if err != nil {
 		return setupFail(err)
 	}
-	if v0.Tome < tomeMinCharges {
-		return Blocks(fmt.Sprintf("the tome holds %d charges, the recipe needs %d or more", v0.Tome, tomeMinCharges))
+	if v0.Tome < TomeMinCharges {
+		return Blocks(fmt.Sprintf("the tome holds %d charges, the recipe needs %d or more", v0.Tome, TomeMinCharges))
 	}
 	mark := l.LogMark()
 	empty, minQ := 0, v0.Tome

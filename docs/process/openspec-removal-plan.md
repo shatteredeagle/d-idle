@@ -186,6 +186,7 @@ No new OpenSpec change; owns, exclusive and result go into the report (section 8
 - Rollback: revert the commits; the old card dirs and `docs/cards.md` are untouched until stage 3.
 
 ### Stage 2 - stop changecheck and the CI step (GO: yes)
+- STATUS: done in the public repo on branch `agent/removestage2`, merged by mergeq (merge hash to be added after the merge). Done: ci.yml node setup, changecheck step and vet package removed; pre-push runs only the leak scan; test-pre-push.sh updated. Deliberately NOT done yet: `tools/openspec.sh` and `cmd/changecheck` stay because the ops merge scripts still call them (merge.sh runs both as gates inside the merged tree); delete them after the ops scripts are updated.
 - What: changecheck warn-only for a week (per the old README), then remove the CI step and node setup, the pre-push validator call, the `openspec` merge gate, `tools/openspec.sh`; delete `cmd/changecheck` except the `status`/`json` bits (or move them).
 - Files: `.github/workflows/ci.yml`, `tools/hooks/pre-push`, `tools/hooks/test-pre-push.sh`, `docs/ci.md`, `tools/session-brief.sh`, `.gitignore`, ops `merge.sh`, `api-agent.py:296`, `publish-cards.sh`.
 - Risk: lost guard against overlapping owners (see 5: brief-level ownership). Rollback: revert; `.strict.yaml` stays until stage 3.
