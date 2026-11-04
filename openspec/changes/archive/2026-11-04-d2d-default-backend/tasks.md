@@ -2,7 +2,7 @@
 
 ```yaml
 change: d2d-default-backend
-status: proposed
+status: archived
 agent: d2d-default-backend
 branch: agent/d2d-default-backend
 worktree: ~/code/d2lod-wt/d2d-default-backend
@@ -13,8 +13,8 @@ exclusive: []
 gates:
   - "go test ./cmd/d2bot -run Backend passes"
   - "bot started with no flag uses d2d"
-merge:
-result:
+merge: none (dropped)
+result: "DROPPED 2026-11-04 by user decision: the backend flip never happened (cmd/d2bot/d2dbackend.go still defaults --backend to game); ADR 0015 makes d2d the lab and game.exe the acceptance target; nothing implemented"
 ```
 
 ## 1. Work

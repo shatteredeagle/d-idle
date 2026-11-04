@@ -2,7 +2,7 @@
 
 ```yaml
 change: skmeleewire
-status: in-progress
+status: archived
 agent: skmeleewire
 branch: agent/skmeleewire
 worktree: ~/code/d2lod-wt/skmeleewire
@@ -22,7 +22,8 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host"
   - "changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict"
-result: "Offline, not verified live: awaits an early-game soak with a staff caster and a sword fighter (drill R1 for stats 21 / 22). combat.resInput now feeds Input.Blow and Input.Foe from the snapshot and the game tables; nil keeps the old behaviour. Build-specific values all come from tables and the stat vector; no class, weapon or level literal."
+merge: on main (see result)
+result: "offline only: code merged on main, live proof pending (closed 2026-11-04 by user decision). Open live proof: task 1.5 early-game soak. Offline, not verified live: awaits an early-game soak with a staff caster and a sword fighter (drill R1 for stats 21 / 22). combat.resInput now feeds Input.Blow and Input.Foe from the snapshot and the game tables; nil keeps the old behaviour. Build-specific values all come from tables and the stat vector; no class, weapon or level literal."
 live: "offline only, nothing run live"
 ```
 
