@@ -2,6 +2,7 @@ package drill
 
 import (
 	"context"
+	"strings"
 	"testing"
 	"time"
 )
@@ -34,9 +35,16 @@ func (s *stashGame) SetStashGold(_ context.Context, r *Run, n int) error {
 	return err
 }
 func (s *stashGame) DrainBelt(context.Context) error { s.belt = 0; return nil }
+
+// GiveGround models the live finding: a ground give plus pickup puts a potion into the belt, not the pack.
 func (s *stashGame) GiveGround(_ context.Context, r *Run, code string) error {
+	s.belt++
+	_, err := r.Cheat(context.Background(), "debug give "+code, "potion for the drill")
+	return err
+}
+func (s *stashGame) GivePack(_ context.Context, r *Run, code string) error {
 	s.rejuv = true
-	_, err := r.Cheat(context.Background(), "debug give "+code, "rejuvenation for the drill")
+	_, err := r.Cheat(context.Background(), "debug give "+code+" pack", "rejuvenation for the drill")
 	return err
 }
 func (s *stashGame) PickupRaw(context.Context) (int, error) { return 1, nil }
@@ -44,7 +52,9 @@ func (s *stashGame) KeepGold() int                          { return s.keep }
 func (s *stashGame) KitCost() int                           { return s.kit }
 func (s *stashGame) RejuvCode() string                      { return "rv1" }
 func (s *stashGame) Chores(_ context.Context, plan string) ChoreInfo {
-	need := s.purse < s.keep && (s.buggy || s.purse < s.kit) && !s.rejuv
+	// internal/town/chores.go: the withdraw step is enabled by plan.Potions && plan.Gold
+	need := strings.Contains(" "+plan+" ", " potions ") && strings.Contains(" "+plan+" ", " gold ") &&
+		s.purse < s.keep && (s.buggy || s.purse < s.kit) && !s.rejuv
 	if need && s.stash > 0 {
 		w := s.keep - s.purse
 		if w > s.stash {
@@ -124,7 +134,13 @@ type tomeGame struct {
 	log        []string
 	logOnDrop  string
 	worldReady bool
+	gold       int
+	target     int
+	area       int
 }
+
+func (g *tomeGame) TomeGold() int         { return 1700 }
+func (g *tomeGame) SetScrollTarget(n int) { g.target = n }
 
 func (g *tomeGame) PView(context.Context) (PortalView, error) {
 	g.looks++
@@ -139,6 +155,7 @@ func (g *tomeGame) PView(context.Context) (PortalView, error) {
 }
 func (g *tomeGame) Tick(context.Context, int) error { return nil }
 func (g *tomeGame) SetGold(_ context.Context, r *Run, n int) error {
+	g.gold = n
 	_, err := r.Cheat(context.Background(), "debug stat 14", "gold")
 	return err
 }
@@ -146,7 +163,7 @@ func (g *tomeGame) GiveGround(_ context.Context, r *Run, c string) error {
 	_, err := r.Cheat(context.Background(), "debug give "+c, "junk")
 	return err
 }
-func (g *tomeGame) Goto(context.Context, *Run, int) error { return nil }
+func (g *tomeGame) Goto(_ context.Context, _ *Run, a int) error { g.area = a; return nil }
 func (g *tomeGame) Chores(context.Context, string) ChoreInfo {
 	return ChoreInfo{}
 }
@@ -169,6 +186,10 @@ func runTome(g *tomeGame, id string) Outcome {
 }
 
 func TestTomeDrill(t *testing.T) {
+	g := &tomeGame{charges: 20}
+	if o := runTome(g, "TM.a"); o.Verdict != Pass || g.gold != 1700 || g.area != townArea {
+		t.Fatalf("%v gold %d area %d: want the derived purse and a return to town", o.Verdict, g.gold, g.area)
+	}
 	if o := runTome(&tomeGame{charges: 20}, "TM.a"); o.Verdict != Pass {
 		t.Fatalf("%v %s", o.Verdict, o.Reason)
 	}
