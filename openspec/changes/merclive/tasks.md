@@ -8,7 +8,7 @@ branch: agent/merclive
 worktree: ~/code/d2lod-wt/merclive
 skip_specs: true
 owns:
-  - docs/probes/merc/**
+  - docs/probes/merclive/**
   - docs/merclive.md
   - openspec/changes/merclive/**
 exclusive: []

@@ -1,6 +1,6 @@
 # merclive: P18 merc claim, hire and revive live on d2d (2026-11-04)
 
-> status: current. Tags: V = ran live this card, S = secondary, U = unverified. d2d lab fork binary d2d.lab-cheats3 on the worker host, hidden slot 3 (not a soak slot), throwaway character, not game.exe. Evidence: docs/probes/merc/2026-11-04-MC-*.{txt,json}; run script 2026-11-04-MC-run.sh (`labrun orion -- bash docs/probes/merc/2026-11-04-MC-run.sh LABEL DRILLID`). Capacity check said OK.
+> status: current. Tags: V = ran live this card, S = secondary, U = unverified. d2d lab fork binary d2d.lab-cheats3 on the worker host, hidden slot 3 (not a soak slot), throwaway character, not game.exe. Evidence: docs/probes/merclive/2026-11-04-MC-*.{txt,json}; run script 2026-11-04-MC-run.sh (`labrun <worker> -- bash docs/probes/merclive/2026-11-04-MC-run.sh LABEL DRILLID`). Capacity check said OK.
 
 | step | drill | observed | verdict vs hirefix.md | tag |
 |---|---|---|---|---|
