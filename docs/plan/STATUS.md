@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
 - d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
 - 9cbf2439 11-04 12:55 `Merge branch 'main' into removalplan2` (-)
 - 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
@@ -101,5 +102,4 @@
 - 962de9e9 11-04 12:11 `Merge agent/farmfallback: farmfallback: farm flag as plan data (+Dark Wood, Black Marsh), restricted-pick fallback re-pick (offline, two tables)` (farmfallback)
 - b57d0503 11-04 12:10 `Merge branch 'main' into farmfallback` (-)
 - c61930d7 11-04 12:07 `Merge agent/cardsapply: cardsapply: docs/cards.md (12 active, 5 parked), 14 cards archived (8 closed, 6 dropped); 4 fix cards left open for a decision` (cardsapply)
-- 5074c962 11-04 12:07 `Merge branch 'main' into cardsapply` (-)
 <!-- statusgen:end -->
