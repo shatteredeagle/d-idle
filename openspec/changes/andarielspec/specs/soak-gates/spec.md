@@ -1,7 +1,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: G2 meaning and floors
-The 8 h profile m24 run (Gate 2 on d2d, 24 h Gate 3) SHALL be called a stability and economy soak, not a progression soak, until Andariel and Act 2 work; it SHALL reach clvl 16, meet the Andariel criterion at clvl 14 or higher, hire the merc and keep gold from staying flat. Until boss.andarielHold is lifted, reaching the Andariel gate at clvl 14 or higher meets the Andariel criterion (evidence in the scenarios; planner "why" strings never count); after the lift an actual attempt is required. Source: plan-v2 section 5 and 10; ADR 0013; docs/andarielgate.md; user decision 2026-11-04.
+The 8 h m24 run (Gate 2) SHALL be called a stability and economy soak, not a progression soak, until Andariel and Act 2 work; it SHALL reach clvl 16, meet the Andariel criterion at clvl 14 or higher, hire the merc and keep gold moving. Until boss.andarielHold is lifted, reaching the Andariel gate meets that criterion (planner "why" strings never count); after the lift an actual attempt is required. Source: plan-v2 s5, s10; ADR 0013; docs/andarielgate.md; user decision 2026-11-04.
 
 #### Scenario: Cheated run
 - **WHEN** a run used cheated gold or cheated levels
