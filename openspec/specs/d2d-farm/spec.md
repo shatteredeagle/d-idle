@@ -3,6 +3,8 @@
 ## Purpose
 How the d2d farm treats each machine that runs hidden d2d jobs: node registry, capacity probe and admission, run, collect and stop by process group, and the determinism check across hosts. Source: change d2dfarm, docs/process/d2dfarm.md.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Node registration and labels

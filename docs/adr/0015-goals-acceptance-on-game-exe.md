@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, amended 2026-11-04
 date: 2026-11-03
 decision-makers: user
 ---
@@ -39,3 +39,30 @@ The project review of 2026-11-03 ([research/project-review-20261103.md](../resea
 * Amends ADR 0009 items 1 and 5 (v1 product, retirement at the container soak) and the "Not changed" part of ADR 0013; supersedes the milestone ordering of ADR 0012 and the container end goal of ADR 0001. The older ADR files are left as written (guard rule: ADRs are not edited); this record is the pointer.
 * game.exe memory reading stays maintained; Gate A lanes on the worker host are scheduled between d2d gates, not overlapped.
 * The plan is [plan/plan-20261103.md](../plan/plan-20261103.md).
+
+## Amendment 2026-11-04 (user, dialog): d2d is the end product, game.exe is the oracle
+
+The original text above stays as written. The user decided that the end product is d2d (native, no Wine layer). game.exe 1.14d is the oracle for fidelity. d2d still deviates from game.exe, so the bot must not be shaped by d2d-only quirks.
+
+### What changes
+
+* Decision Outcome item 1, "done means", now reads: the project is done when a fresh, uncheated character plays 24 h unattended on d2d and clears Act 1 (Andariel dead, Act 2 entered), `writes after start: 0`, AND the A:B comparison of G-D says d2d and game.exe are EQUIVALENT on XP/h and kills/h at the 20 percent tolerance.
+* G-A is re-stated as "fidelity-validated acceptance": the 24 h unattended Act 1 clear runs on d2d; the game.exe lanes of G-D are the reference measurement, not the product. Gate A is renamed "Gate A (fidelity acceptance)": the 24 h d2d run plus the G-D verdict. The game.exe 2 h, 8 h, 24 h rungs of item 3 are no longer required for acceptance.
+* G-D is unchanged and is now part of acceptance.
+* The d2d container (item 5) stays deferred until the amended Gate A passes (native d2d, no Wine), not until a game.exe Gate A.
+
+### What stays
+
+Goals G-B to G-F, the cap of 12 open cards, the WIP limit, XP/h never a per-run pass or fail (seed-set judgement only), and the parked list of item 10.
+
+### Rules
+
+a. game.exe is the spec and d2d the implementation under test. A d2d deviation is a bug in d2d, fixed upstream (G-E), not something to design the bot around.
+b. Any bot-side adaptation to a d2d deviation is a temporary SHIM recorded in `docs/d2d-deviations.md` with: the game.exe rule (V), the d2d behaviour, the code location, the upstream PR that removes it, and the removal condition.
+c. One bot, one backend contract, the same drills and gates on both backends. Lab-fork debug verbs appear only in drills.
+
+The fidelity loop that drives d2d improvements: decomp trace, emulator differential, independent verifier, upstream PR.
+
+### Leaving d2d
+
+The "leaving d2d is break glass" rule (ADR 0009 exit trigger) is replaced: if the G-D verdict is DIFFERENT and the gap needs a rewrite of the engine, the user decides whether to keep developing on d2d or move the work to game.exe. This is never automatic. The attribution rule stays: a replicated-soak FAIL counts against d2d only when the same bot build's game.exe baseline is inside the gate and the gap is traced to an engine difference.

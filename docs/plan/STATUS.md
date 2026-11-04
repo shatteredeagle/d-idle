@@ -53,22 +53,23 @@
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
 
 ### Gates
-- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
+- spec [act1-campaign](../../openspec/specs/act1-campaign/spec.md): 9 requirements
+- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 42 requirements
 - spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
 - spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 9 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
-- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
-- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
+- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 17 requirements
+- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
-- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 7 requirements
+- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
-- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
-- spec [town-basics](../../openspec/specs/town-basics/spec.md): 17 requirements
+- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 25 requirements
+- spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
@@ -92,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 8255939d 11-04 13:13 `Merge agent/stateevdiff: stateevdiff: Energy Shield absorb order differential, 40,000 cases: game.exe absorbs on the raw field before resistance; d2d after resistance (18,532 of 25,038 shield cases differ in life)` (stateevdiff)
-- 57b991c4 11-04 13:12 `Merge branch 'main' into stateevdiff` (-)
-- 89b52fba 11-04 13:07 `Merge agent/pldefdiff: pldefdiff: playerdef differential re-run (pd_calc, seeds 11 and 23, 102,604 cases each): 0 attack-rating mismatches; D2-D6/D8 not run, no PR candidate` (pldefdiff)
-- a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
-- 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
-- e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
-- d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
-- 9cbf2439 11-04 12:55 `Merge branch 'main' into removalplan2` (-)
-- 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
-- 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
+- 0ab90a8a 11-04 14:06 `Merge agent/shimregister: shimregister: see branch` (shimregister)
+- 8754456b 11-04 14:05 `Merge branch 'main' into shimregister` (-)
+- 1205b223 11-04 14:02 `Merge agent/tickcppdiff: tickcppdiff: see branch` (tickcppdiff)
+- 29993039 11-04 14:02 `Merge agent/noareafix: noareafix: see branch` (noareafix)
+- e185de47 11-04 14:02 `Merge agent/adramend: adramend: see branch` (adramend)
+- d0aed671 11-04 14:02 `Merge agent/specapplya: specapplya: soak-gates, fidelity-gate, death-rule, upstream-pr, replay, d2d-farm reconciled (17 folded, 6 dropped, 2 open questions)` (specapplya)
+- a1d4edb9 11-04 13:59 `Merge branch 'main' into tickcppdiff` (-)
+- bc2cbc4e 11-04 13:59 `Merge branch 'main' into noareafix` (-)
+- 4a6ce6e6 11-04 13:59 `Merge branch 'main' into adramend` (-)
+- 5953f1ee 11-04 13:59 `Merge branch 'main' into specapplya` (-)
 <!-- statusgen:end -->
