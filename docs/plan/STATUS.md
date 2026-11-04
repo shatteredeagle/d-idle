@@ -54,6 +54,7 @@
 | [fixskilllvl](../../openspec/changes/fixskilllvl/) | in-progress | fixskilllvl | `docs/fixskilllvl.md`<br>`internal/d2/skilllevel.go`<br>`internal/d2/skilllevel_test.go`<br>`internal/combat/skilllevel_test.go` | - |
 | [gate1run-20261101](../../openspec/changes/gate1run-20261101/) | in-progress | gaterun | `docs/soaks/gate1-20261101.md`<br>`docs/probes/soak-logs/gate1-20261101-*`<br>`openspec/changes/gate1run-20261101/**` | - |
 | [gate1run-20261102](../../openspec/changes/gate1run-20261102/) | in-progress | gaterun | `docs/soaks/gate1-20261102.md`<br>`docs/probes/soak-logs/gate1-20261102-minutes.jsonl.gz`<br>`openspec/changes/gate1run-20261102/**` | - |
+| [gate2cursor](../../openspec/changes/gate2cursor/) | in-progress | gate2cursor | `docs/gate2cursor.md`<br>`openspec/changes/gate2cursor/**`<br>`internal/town/hand/drop.go`<br>`internal/loot/pickup.go`<br>`internal/loot/loot_test.go`<br>`internal/town/sim/input.go` | - |
 | [ledgerkey](../../openspec/changes/ledgerkey/) | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go`<br>`openspec/changes/ledgerkey/**` | - |
 | [m1-liveproof](../../openspec/changes/m1-liveproof/) | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
@@ -103,6 +104,7 @@
 - change fixskilllvl: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change gate1run-20261101: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261101.md)
 - change gate1run-20261102: Gate 1 criteria of the soak-gates spec judged by d2dsoak (numbers in docs/soaks/gate1-20261102.md)
+- change gate2cursor: go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits
 - change ledgerkey: go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change m1-liveproof: docs/primitives.md: every primitive with criticality S or A has a drill verdict PASS (or FAIL with a named fix card) in its evidence column, checked by the coordinator by eye
 - change m1-liveproof: docs/basics-audit.md coverage table has 0 G rows and every S1 or S2 row is C with a test name in the offline-test column and a live proof line (`grep -c '| C ' docs/basics-audit.md` is at least 15)
