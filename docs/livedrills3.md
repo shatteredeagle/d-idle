@@ -18,7 +18,7 @@
 The `withdraw` step is `plan.Potions && plan.Gold`. The drill runs the plan `potions stash`, which has no `gold`, so the step never runs; the log shows only the shop visit (`shop: visit ... broke=true gold=6`) and no stash open. This is a drill plan bug, not evidence about the bot's withdrawal. Fix to try: plan `potions gold stash` in `ds2` (and `ds4`). Not applied (no drill edits).
 
 ## TM.a (V)
-Shop prices on d2d here: TP scroll 100, tome 300 (log `docs/probes/livedrills3/2026-11-04-tm1v.log`). Setup gold of 1000 buys the tome and 5 scrolls only. Needs `debug stat 14` of at least 1600 in the TM.a setup. The run ended with the character in Blood Moor (`END ... in town: false`); the next D8 run's `debug goto 1` brought it back.
+Shop prices on d2d here: TP scroll 100, tome 300 (log `docs/probes/livedrills3/2026-11-04-tm1v.log.txt`). Setup gold of 1000 buys the tome and 5 scrolls only. Needs `debug stat 14` of at least 1600 in the TM.a setup. The run ended with the character in Blood Moor (`END ... in town: false`); the next D8 run's `debug goto 1` brought it back.
 
 ## D8.h / D8.h2: the real Kashya menus (V)
 - First menu (livedrills2): header `Kashya`, `talk`, `cancel`.
@@ -30,4 +30,4 @@ Shop prices on d2d here: TP scroll 100, tome 300 (log `docs/probes/livedrills3/2
 The d2drill path does not call `d2cheat runstart`; every setup write (`debug clearinv`, `debug stat 14/15`, `debug give`, `debug goto 1`) is done by the drill before the bot code runs and is ledgered with the drill id. The bot code made no gameplay write. Number from the ledger: not queried (U), no run id exists to filter on. These are drill runs, not measured runs.
 
 ## Evidence
-`docs/probes/livedrills3/`: DS1 json/txt, DS2v.log, tm1.log, tm1v.log, d8a.log, d8b.log, d8b.json, run scripts. Character left alive in town, no panels (END line of the D8 run). Slot 3 released.
+`docs/probes/livedrills3/`: DS1 json/txt, DS2v.log.txt, tm1.log.txt, tm1v.log.txt, d8a.log.txt, d8b.log.txt, d8b.json, run scripts. Character left alive in town, no panels (END line of the D8 run). Slot 3 released.
