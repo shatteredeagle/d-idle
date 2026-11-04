@@ -125,14 +125,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
-- 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
-- d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
-- 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
-- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
-- fbd9acf2 11-04 10:39 `merge origin/main into codefix67` (codefix67)
-- 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
-- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
-- 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
+- dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
+- 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
+- d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
+- b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
+- b870d079 11-04 11:42 `Merge agent/noareacards2: noareacards2: no-area card set rewritten from the SME review (farmfallback first), design only` (noareacards2)
+- a769ffa8 11-04 11:41 `Merge branch 'main' into noareacards2` (-)
+- ab438589 11-04 11:38 `Merge agent/prbopen2: prbopen2: posted log for upstream PR #195 (PALSKILL D2/D3)` (prbopen2)
+- 80edfc8f 11-04 11:37 `Merge branch 'main' into prbopen2` (-)
+- 29b4f8aa 11-04 11:34 `Merge agent/cardtriage: cardtriage: triage of the 36 open cards (keep 12, close 12, park 5, drop 7) and ADR candidates, docs only` (cardtriage)
+- dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
 <!-- statusgen:end -->
