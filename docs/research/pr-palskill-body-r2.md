@@ -1,6 +1,6 @@
 # PR body: Blessed Hammer's Concentration share and undead / demon bonus (PALSKILL D2 and D3)
 
-> status: DRAFT body for the PALSKILL D2/D3 pull request to psi29a/d2decomped (card palprep, 2026-11-04). Local branch `local/pal-d2d3-r2`, head `9e9622eb`, 2 commits on upstream main `e5de6c10` (after PR 189); also on the private fork remote (Forgejo), not on the public fork. NOT posted. Replaces `pr-pal-d2d3-body.md` (head `fc2f7c48`, base `8c9a92c7`). The rebase was a clean cherry-pick (no conflict; the 8 files merged without edits). Commits are re-authored with the numeric noreply identity. Tags: V = run on this head (how stated), S = carried from the earlier head, U = unverified.
+> status: DRAFT body for the PALSKILL D2/D3 pull request to psi29a/d2decomped (card palprep, 2026-11-04). Local branch `local/pal-d2d3-r2`, head `9e9622eb`, 2 commits on upstream main `e5de6c10` (after PR 189); also on the private fork remote (the private fork remote), not on the public fork. NOT posted. Replaces `pr-pal-d2d3-body.md` (head `fc2f7c48`, base `8c9a92c7`). The rebase was a clean cherry-pick (no conflict; the 8 files merged without edits). Commits are re-authored with the numeric noreply identity. Tags: V = run on this head (how stated), S = carried from the earlier head, U = unverified.
 >
 > Title: `Fidelity fixes against game.exe 1.14d: Blessed Hammer's Concentration share and undead / demon bonus`
 
