@@ -285,3 +285,12 @@ Not re-run: an MSVC build, the full ctest, the full CI tidy selection. No commen
 
 - not re-run: parity lane (g++ and clang++ with the CI flags, clang-tidy), `g-all`, `test_game` and `test_sk_ground` with game data, presubmit --quick (carried from the earlier run on the same head), MSVC, any live game, soak or hash comparison.
 - nothing else posted: no comments, no reviewer requests, no labels, no second PR.
+
+## PALSKILL D2/D3 (2026-11-04)
+
+- posted: 2026-11-04 go: the user, in a dialog answering "Open the PALSKILL D2/D3 upstream PR now? (one plain push of local/pal-d2d3-r3 to the fork, then one PR on psi29a/d2decomped)": "Open it now (Recommended)". Covers one plain push of a new branch and one PR only.
+- posted: 2026-11-04 fetch upstream: main 7591a92e (git ls-remote of psi29a/d2decomped; unchanged since the candidate was prepared, so no rebase and no re-run of the checks; the candidate is two commits on it).
+- posted: 2026-11-04 push (plain, new branch) to the fork: pal-d2d3-r3 head 1f91a216 (git ls-remote of the fork showed no such branch before).
+- posted: 2026-11-04 PR opened: https://github.com/psi29a/d2decomped/pull/195 (8 files, 2 commits; title "Fidelity fixes against game.exe 1.14d: Blessed Hammer's Concentration share and undead / demon bonus"). State OPEN, head 1f91a216 as checked with gh pr view. Body from pr-palskill-body-r3.md without the internal header, ends with the bare `Agent: Claude Code` line. CI checks and CodeRabbit started (IN_PROGRESS right after opening).
+- checks: the ones in the body (pr_guard, Release build, tests) were run before opening on this head and base; nothing re-run after opening.
+- nothing else posted: no comments, no reviewer requests, no labels, no second PR.
