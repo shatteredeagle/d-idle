@@ -61,14 +61,14 @@
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
+- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 17 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
 - spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
-- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
+- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 25 requirements
 - spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
@@ -93,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
-- 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
-- 32350aad 11-04 13:47 `Merge agent/heldlog: heldlog: the Andariel hold line logs per clvl with floor and merc state (judge interim rule can now be met); gate decision unchanged` (heldlog)
-- 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
-- 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
-- df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
-- a10570ed 11-04 13:33 `Merge agent/hirefixlive: hirefixlive: PaidHire follows the talk then hire row menu flow (offline tests; live rerun pending)` (hirefixlive)
-- 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
-- 6c451992 11-04 13:27 `Merge agent/shielddiff: shielddiff: off-weapon enhanced damage differential (D1) 2x20,000 cases, PR candidate for SKSHIELDFIX; D2 note` (shielddiff)
-- b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
+- c61930d7 11-04 12:07 `Merge agent/cardsapply: cardsapply: docs/cards.md (12 active, 5 parked), 14 cards archived (8 closed, 6 dropped); 4 fix cards left open for a decision` (cardsapply)
+- 5074c962 11-04 12:07 `Merge branch 'main' into cardsapply` (-)
+- c7061bdb 11-04 11:57 `Merge agent/mercrevive2: mercrevive2 (SME): merc.goldFarmMaxLevel 18 to 17, gold farm budget 40 min with 60 min cooldown, full-kit reserve 50 percent` (mercrevive2)
+- 70a06a94 11-04 11:56 `Merge branch 'main' into mercrevive2` (-)
+- 1348df6b 11-04 11:53 `Merge agent/ctrlfix: AGENTS.md: pointer to the Current truth block; OpenSpec retired for new work (user approved 2026-11-04)` (ctrlfix)
+- da8865b6 11-04 11:52 `Merge branch 'main' into ctrlfix` (-)
+- dfce36bb 11-04 11:49 `Merge agent/stage0: stage0: OpenSpec retired for new work; replacement Backlog.md after a trial (decisions.md Current truth, issue-tracker banner)` (stage0)
+- 85922b61 11-04 11:49 `Merge branch 'main' into stage0` (-)
+- d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
+- b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
 <!-- statusgen:end -->

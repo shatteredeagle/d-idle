@@ -1,30 +1,69 @@
 # Soak gates specification
 
 ## Purpose
-Numeric pass criteria for the G1 (2 h), G2 (8 h) and 24 h soaks and the health guard that decides when a soak may start, so a run is judged by numbers and not by opinion. Evidence: docs/review-strategy.md (G1 criteria), docs/soak24.md section 3 (profile m24), docs/g1-log.md (attempt log), docs/plan/plan-v2.md section 5.
+Numeric pass criteria for the d2d gate ladder (Gate 1 2 h, Gate 2 8 h, Gate 3 24 h; the old G1/G2 names are retired, see docs/decisions.md Current truth) and the health guard that decides when a soak may start, so a run is judged by numbers and not by opinion. Evidence: docs/review-strategy.md (G1 criteria), docs/soak24.md section 3 (profile m24), docs/g1-log.md (attempt log), docs/plan/plan-v2.md section 5.
+
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: d2d-container-soak (superseded by ADR 0015, container deferred; stays on its card, not folded)
 
 ## Requirements
 
-### Requirement: G2 meaning and floors
-The 8 h profile m24 run (Gate 2 on d2d, 24 h Gate 3) SHALL be called a stability and economy soak, not a progression soak, until Andariel and Act 2 work; it SHALL reach clvl 16, attempt Andariel at clvl 14 or higher, hire the merc and keep gold from staying flat. Source: docs/plan/plan-v2.md section 5 and section 10 (approved 2026-10-30); ADR 0013.
+### Requirement: Gate 2 and Gate 3 meaning and floors
+Gates 2 and 3 SHALL judge stability and economy (goal G-C); progression to Andariel dead and Act 2 is goal G-B (milestone time per seed), not a pass condition. Gate 2 SHALL reach clvl 16, meet the Andariel criterion at clvl 14+, hire the merc and keep gold moving; while boss.andarielHold is on, reaching the Andariel gate meets it, after the lift an attempt is required. Source: plan-v2 s5, s10; ADR 0013. Reconciled 2026-11-04 (source: 2026-11-04-andarielspec, decision 6).
 
 #### Scenario: Cheated run
 - **WHEN** a run used cheated gold or cheated levels
 - **THEN** it does not count toward any gate
 
+#### Scenario: Interim evidence
+- **WHEN** boss.andarielHold is set
+- **THEN** the criterion needs a `boss: andariel gate pass` or `boss: held for andariel (...)` line naming the hold, plus `route guard: andariel floor=` lines showing floor and merc state
+
+#### Scenario: Held with merc alive, floor reached
+- **WHEN** boss.andarielHold is set, the merc is alive, and the log has `route guard: andariel floor=` lines and a `boss: held for andariel (...)` line naming the hold at clvl >= floor-1 and >= 14
+- **THEN** the Andariel criterion is met
+
+#### Scenario: Held with merc dead
+- **WHEN** boss.andarielHold is set and the merc is dead so the floor is 17, and the log shows the `route guard: andariel floor=17` lines with the merc state
+- **THEN** the evidence shows why the gate was not passed, and the criterion is not met unless the character reached clvl 17 and the gate line
+
+#### Scenario: Planner text only
+- **WHEN** the only Andariel mention is a planner "why" string, with no `boss: andariel gate pass` or `boss: held for andariel (...)` line
+- **THEN** the criterion is not met
+
+#### Scenario: Hold lifted
+- **WHEN** boss.andarielHold is lifted after m3-andariel has won once
+- **THEN** only a boss-run start line and an outcome line at clvl 14 or higher meet the criterion
+
 ### Requirement: Soak progress floors
 The m24 profile MUST fail a run whose average XP is below 1000 per hour, whose XP does not change for more than 10 minutes (idle and paused exempt), whose no-gain window (no clvl, quest step or gold gain) exceeds 90 minutes, or whose bot health is down for more than 3 minutes at a time. Source: docs/soak24.md section 3 (U until the first 24 h run calibrates it).
-
 #### Scenario: Idling bot
 - **WHEN** no XP change is seen for 11 minutes outside pause
 - **THEN** d2soak reports a stall FAIL
 
+> OPEN QUESTION: code (cmd/d2soak/progress.go) also counts an XP gain of 500 or more as progress for the 90 minute no-gain window; the floors text lists only clvl, quest step and gold. No decision covers it; text left as is.
+
 ### Requirement: Resource slopes
-A soak MUST keep helper, game and bot fd growth at or below 5 per hour after a 10 minute warm-up, RSS growth at or below 40 MB per hour, threads and goroutines at or below 5 per hour, and ladder rungs and sentinel actions at or below 2 per hour each. Source: docs/soak24.md section 3.
+A soak MUST keep fd growth (helper, game, bot) at or below 5 per hour after a 10 minute warm-up, RSS at or below 40 MB per hour, threads and goroutines at or below 5 per hour, rungs and sentinel actions at or below 2 per hour. On d2d the runner SHALL sample fd, thread and RSS of d2d and bot each wall minute into `mem.csv`; a series over its slope limit FAILS, under 30 samples is NO-DATA. Source: docs/soak24.md s3; gate3gaps.md s1. Reconciled 2026-11-04 (source: 2026-11-03-gate3gaps).
 
 #### Scenario: Leaking helper
 - **WHEN** the fd slope exceeds 5 per hour after warm-up
 - **THEN** the run fails the fd criterion
+
+#### Scenario: d2d fd leak on the gate runner
+- **WHEN** `mem.csv` shows the d2d fd count rising from 400 to 470 over 8 h after warm-up
+- **THEN** the slope is about 9 per hour and the run FAILS the d2d fd criterion
+
+#### Scenario: Bot RSS slope within the limit
+- **WHEN** the bot RSS rises 120 MB over 8 h after warm-up
+- **THEN** the bot RSS row passes at 15 MB per hour
+
+#### Scenario: No samples for a series
+- **WHEN** `mem.csv` lacks the bot columns
+- **THEN** the bot rows read NO-DATA and a Gate 3 run is not a pass
+
+#### Scenario: Restart inside the series
+- **WHEN** the d2d pid changes
+- **THEN** each segment is fitted after its own 10 minute warm-up and the worst slope counts
 
 ### Requirement: Heap runaway alert
 The soak harness SHALL raise a critical alert when the bot RSS exceeds 8192 MB or rises by more than 1024 MB within 5 minutes. Source: docs/soak24.md section 4 (V offline, live U); attempt 16 grew to 48.8 GB before the fix.
@@ -106,22 +145,67 @@ A Gate 1 run SHALL show zero unplanned process exits other than the injected fau
 - **THEN** the report shows 0 panics, no exit other than the injected one, and `saveXp == charXp` after the graceful stop
 
 ### Requirement: Gate 1 deaths and progression
-A Gate 1 run MUST follow the death rule (death-rule spec, `d2dsoak report`) and SHALL earn true XP per hour at or above the d2d baseline at the same clvl (Early baseline fields of the fidelity-gate spec, numbers not copied here). No single state may last more than 10 virtual minutes without a kill or XP gain. Source: G1 criteria 2 and 3; ADR 0009 item 2; user decision 2026-11-01.
+A Gate 1 run MUST follow the death rule (death-rule spec, the only authority on deaths; `d2dsoak report`) and no state may last more than 10 virtual minutes without a kill or XP gain. XP per hour is NEVER a per-run pass or fail (ADR 0015 item 8; XP/h verdicts come from a seed set); the band requirements below are ADVISORY only. Source: G1 criteria 2 and 3; ADR 0009 item 2. Reconciled 2026-11-04 (source: 2026-11-03-specdelta, 2026-11-01-baselinefree, user decision 2).
 
 #### Scenario: XP below the d2d baseline
-- **WHEN** true XP/h is under the d2d baseline at the same clvl
-- **THEN** the run is a FAIL even with no crash
+- **WHEN** true XP/h of one run is under the d2d baseline
+- **THEN** the run is not failed on that account; the band rows show it as ADVISORY and the seed-set verdict decides any claim
 
 #### Scenario: Long silent stretch
 - **WHEN** a Gate 1 log has 11 or more consecutive minute lines with no new kill and no new XP
 - **THEN** the run is a FAIL on the progression criterion
 
+### Requirement: Gate 1 XP per clvl band (advisory)
+XP/h SHALL be computed per clvl band (1-4, 5-7, 8-10, 11-14, 15-20, inclusive, tiling the run from the first minute line in the band to the first above it) and shown against the mean of the baseline runs with at least 0.5 h in that band (`d2dsoak bands`); the rows are ADVISORY and never decide Gate 1. Source: docs/research/baseline-audit.md s4b, s6. Reconciled 2026-11-04 (source: 2026-11-01-baselinefree, user decision 2).
+
+#### Scenario: Fresh run crossing the bands
+- **WHEN** a fresh run reaches clvl 14
+- **THEN** the report lists one advisory XP/h row per band it entered, each against its own baseline
+
+#### Scenario: Band entered briefly
+- **WHEN** the run spent less than 0.5 h in a band
+- **THEN** that band's row is marked as having too little exposure whatever its value
+
+#### Scenario: Whole-run mean
+- **WHEN** a run crosses several bands
+- **THEN** its whole-run XP/h is shown as information only and is never compared with one baseline mean
+
+### Requirement: Band baseline sample (advisory)
+A band row SHALL be marked "thin baseline" when fewer than 3 baseline runs have at least 0.5 h in the band. Source: docs/research/baseline-audit.md section 3 (the interval of a 2-run mean is wider than the mean); `d2dsoak bands`. Reconciled 2026-11-04 (source: 2026-11-01-baselinefree, user decision 2).
+
+#### Scenario: Band with one baseline run
+- **WHEN** the baseline holds one run in clvl 5-7
+- **THEN** the clvl 5-7 row is marked thin baseline
+
+### Requirement: Band tolerance (advisory)
+With 3 or more baseline runs in the band, a row SHALL be flagged "below band" only when XP/h is below the band mean by more than 1.96 x sqrt(CV^2 / k + CV^2 / n) of the mean (k d2d runs pooled, 1 for Gate 1; n baseline runs; CV the larger of the band's CV and 0.14); a flag fails nothing. Source: docs/research/baseline-audit.md s3. Reconciled 2026-11-04 (source: 2026-11-01-baselinefree, user decision 2).
+
+#### Scenario: Band with four baseline runs
+- **WHEN** four baseline runs have at least 0.5 h in clvl 11-14 and a Gate 1 run's XP/h there is below the mean by more than the tolerance
+- **THEN** the clvl 11-14 row is flagged below band and Gate 1 is not failed by it
+
+#### Scenario: Faster than the baseline
+- **WHEN** the run's XP/h in a band is above the band mean
+- **THEN** the row is not flagged whatever the size of the gap
+
 ### Requirement: Gate 1 belt and portal
-A Gate 1 run SHALL have no window longer than 5 virtual minutes with zero healing potions outside town, measured from the minute-line fields packHP and beltBoxes (pack plus belt; one minute line is one virtual minute), and at least one portal trip completed by town portal, not by the waypoint fallback. Source: translated from G1 criterion 4 (the old "bought and used" is now measurable); docs/beltfill.md; user decision 2026-11-01.
+A Gate 1 run SHALL have no funded window over 5 virtual minutes with zero healing potions outside town (packHP, packMP, beltBoxes) and at least one town-portal trip, not the waypoint fallback. A window is funded when `gold` + `stashGold` reaches one Minor Healing Potion (30 gold) at some minute; others are poverty, not failing; no `stashGold` means 0. Source: G1 criterion 4; docs/beltfill.md; user decisions 2026-11-01, 2026-11-03. Reconciled 2026-11-04 (source: 2026-11-03-specdelta).
 
 #### Scenario: Empty field window
-- **WHEN** packHP is 0 and no belt box holds a healing potion outside town for 6 consecutive minute lines
+- **WHEN** no healing potion is held outside town for over 5 minutes and pack plus stash gold reaches 30 at some minute of the window (for example pack 6, stash 1418)
 - **THEN** the run is a FAIL
+
+#### Scenario: Poverty window
+- **WHEN** no healing potion is held outside town for over 5 minutes and pack plus stash gold stays under 30 for the whole window
+- **THEN** the window is reported as poverty and does not fail the run
+
+#### Scenario: Gold crosses the price mid-window
+- **WHEN** pack plus stash gold is under 30 at first and reaches 30 later in the same window
+- **THEN** the window is funded and the run is a FAIL
+
+#### Scenario: Old archive without stashGold
+- **WHEN** the minute lines carry no `stashGold`
+- **THEN** the stash counts as 0: a window with pack gold of 30 or more fails, one with less is poverty, and the report tag stays "stash unknown (old archive)"
 
 #### Scenario: Waypoint only
 - **WHEN** every town return in the run used the waypoint fallback
@@ -146,11 +230,45 @@ At about 60 minutes of Gate 1 exactly one fault SHALL be injected: the d2d proce
 - **THEN** the run is a FAIL on this criterion
 
 ### Requirement: Gate 2 and Gate 3 on d2d
-Gate 2 (8 h) and Gate 3 (24 h) SHALL be soaks of profile m24 on a hidden d2d slot, judged by the Gate 1 criteria that apply over their length, the m24 limits and floors of this spec, and `d2dsoak report` ending with `INVARIANTS: PASS` including the primitives invariant. Gate 3 additionally records the d2d memory curve and the periodic d2d restart interval. Source: docs/review-strategy.md "Next week" table (24 h soak); docs/d2d-container/risks.md step 10.
+Gates 2 (8 h) and 3 (24 h) SHALL be m24 soaks on a hidden d2d slot, judged by the Gate 1 criteria over their length, the m24 limits, resource slopes and `d2dsoak report` ending `INVARIANTS: PASS`. Gate 3 also records memory curve, restart interval and log size. A d2d exit is planned only as an injected fault or after a `planned recycle` supervisor line; others fail stability. Source: docs/review-strategy.md; gate3gaps.md s2. Reconciled 2026-11-04 (source: 2026-11-03-gate3gaps).
 
 #### Scenario: Gate 2 with a violated invariant
 - **WHEN** the Gate 2 report ends with `INVARIANTS: VIOLATED(...)`
 - **THEN** the run is not a pass even if the m24 limits hold
+
+#### Scenario: Planned recycle
+- **WHEN** supervisor.log shows `planned recycle` before a d2d exit and the bot is in game within 3 wall minutes
+- **THEN** the exit is not unplanned and the interval is recorded
+
+#### Scenario: Unplanned d2d exit
+- **WHEN** d2d exits with no injected fault and no planned recycle
+- **THEN** the stability row FAILS
+
+### Requirement: Full bag and disk guard
+A d2d soak SHALL FAIL when `invPct` stays above 95 outside town for more than 60 consecutive minute lines (-1 is unknown and never counts, U threshold). The runner MUST stop with an alert and the verdict NO-DATA when free disk falls under 5 GB, and total logs of a 24 h run SHOULD stay under 20 GB (U). The thresholds marked U stay U until a Gate 3 run calibrates them. Source: docs/research/gate3gaps.md sections 2.3 and 2.4. Reconciled 2026-11-04 (source: 2026-11-03-gate3gaps).
+
+#### Scenario: Full bag
+- **WHEN** 61 consecutive minute lines outside town show `invPct` above 95
+- **THEN** the inventory criterion FAILS
+
+#### Scenario: Disk falling
+- **WHEN** free disk drops under 5 GB at hour 15
+- **THEN** the runner stops with an alert and the verdict is NO-DATA
+
+### Requirement: Gate 0.5 smoke
+Before Gate 2 or Gate 3 a smoke run SHALL pass on the same build: profile m24, 45 wall minutes on a hidden d2d slot (about 9 virtual hours), one injected fault at 15 wall minutes (U thresholds). It is judged by BELT, NOKILL, PROGRESS, WEDGE, HANG, the death rule, fault recovery and the presence of resource samples, not by XP floors or slopes, and never counts as a ladder gate. Source: docs/research/gate3gaps.md section 3 (U thresholds). Reconciled 2026-11-04 (source: 2026-11-03-gate3gaps).
+
+#### Scenario: Belt failure caught early
+- **WHEN** the smoke run shows 6 minute lines outside town without a healing potion
+- **THEN** Gate 0.5 FAILS and no Gate 2 starts on that build
+
+#### Scenario: Slow clock
+- **WHEN** the run reached only 4 virtual hours in 45 wall minutes
+- **THEN** the verdict is NO-DATA, not a pass
+
+#### Scenario: Smoke passes
+- **WHEN** all criteria of the subset hold
+- **THEN** the build may start Gate 2, which must still pass on its own
 
 ### Requirement: A game-lost recovery counts as a restart
 When the bot restarts the game after the game process was lost (a crash, a kill, a hang), the minute line's `restarts` SHALL rise by exactly one at the successful restart, on every backend. A restart already counted through the menu observer or as a bot-started new game SHALL NOT be counted a second time.
@@ -200,3 +318,7 @@ Every minute of the Gate 1 criteria (and of Gates 2 and 3 over their length) SHA
 #### Scenario: Wider invariant unchanged
 - **WHEN** the same log has area changes, quest steps or gold spent inside that 26 minute stretch so the longest stretch without any progress event is 16 virtual minutes
 - **THEN** the PROGRESS invariant (limit 30) still passes and the Gate 1 NOKILL criterion still FAILS
+
+## Pending deltas (not in force)
+
+- d2d-container-soak (open, proposed): ADDED "d2d container one-slot 24 h soak". Superseded by ADR 0015 item 5 (container deferred until Gate A passes); stays on its card.
