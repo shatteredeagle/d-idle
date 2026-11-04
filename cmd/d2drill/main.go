@@ -178,6 +178,10 @@ func run() int {
 		drills = drill.D29(l)
 	case "RT": // retreatdrill: the retreat action executed (drink, town portal, chicken), docs/retreatdrill.md
 		drills = drill.RT(l)
+	case "DS": // codefix67 P5 stash recheck, docs/livecheckdrills.md
+		drills = drill.DStash(l, 10*time.Minute)
+	case "TM": // tomefix stat-70 recheck, docs/livecheckdrills.md
+		drills = drill.DTome(l, 25*time.Minute)
 	case "T": // DRILLS22: live proof of fixtelekey (Teleport capability in Act 2 legs)
 		drills = drill.D22(l)
 	case "H": // hover blind-spot audit (docs/probes/drills/hover-audit.md)

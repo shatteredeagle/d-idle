@@ -45,6 +45,16 @@ func reportSkills(args []string, out io.Writer) error {
 			return fmt.Errorf("%s: %w", p, err)
 		}
 		fmt.Fprint(out, as.Text(p))
+		lf, err := os.Open(p)
+		if err != nil {
+			return err
+		}
+		lrows, err := d2dsoakstat.ParseLife(lf)
+		lf.Close()
+		if err != nil {
+			return fmt.Errorf("%s: %w", p, err)
+		}
+		fmt.Fprint(out, d2dsoakstat.LifeText(p, lrows))
 	}
 	return nil
 }

@@ -1,5 +1,7 @@
 # d2d + bot container: design (agent D2DCONTAINER, 2026-10-30)
 
+> status: the container is deferred until Gate A passes (ADR 0015), and G1/G2-style verdicts are now the d2d gate ladder, not release gates (ADR 0013). Current truth: docs/decisions.md.
+
 Status: DESIGN AND DRAFTS ONLY. Nothing is built, deployed, pushed or changed on the NAS. Drafts live in this directory with a
 `.draft` suffix so nothing builds by accident (README.md here says how to test). Tags: V = read or measured by me this session
 (source or command named), S = secondary (a doc of ours, not re-checked), U = unverified or from memory.

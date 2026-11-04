@@ -1,0 +1,14 @@
+labrun: synced code/d2lod-wt/livedrills3 → the-worker-host:<labrun>/head-box/code/d2lod-wt/livedrills3 in 0s; running: bash docs/probes/livedrills3/run.sh D8b D8 D8.h,D8.h2 2
+d2dslot: got slot 3
+time=2026-11-04T14:40:32.180-05:00 level=WARN msg="d2d channel not answering: d2d process pid 3097887 still running; socket file is gone (stat <d2d-lab>/slots/3/d2d.sock: no such file or directory); ping: d2dctl: dial <d2d-lab>/slots/3/d2d.sock: dial unix <d2d-lab>/slots/3/d2d.sock: connect: no such file or directory"
+DRILL D8.h P18 FAIL hire: no hire line after talk; last menu: [{talk 400 110 talk 400 110} {introduction 400 128 introduction 400 128} {gossip 400 143 gossip 400 143} {cancel 400 158 cancel 400 158}] | intended: merc present with the class code of the hired row, gold down by the quote read from the window | observed: quote 0 row ""; gold 5000 -> 5000; merc present=false dead=false code= life=[0,0] -> present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk	400	110 talk 400 110} {introduction	400	128 introduction 400 128} {gossip	400	143 gossip 400 143} {cancel	
+DRILL D8.h2 P18 FAIL wanted ErrCantAfford, got no hire line after talk; last menu: [{talk 276 32 talk 276 32} {introduction 276 50 introduction 276 50} {gossip 276 65 gossip 276 65} {cancel 276 80 cancel 276 80}] | intended: gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged | observed: quote 0 row ""; gold 1 -> 1; merc present=false dead=false code= life=[0,0] -> present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk	276	32 talk 276 32} {introduction	276	50 introduction 276 50} {gossip	276	65 gossip 276 65} {cancel	276	80 c
+END character Drilly life 40/40 in town: true
+
+drill     prim  verdict  det  reason
+D8.h      P18   FAIL     same hire: no hire line after talk; last menu: [{talk 400 110 talk 400 110} {introduction 400 128 introduction 400 128} {gossip 400 143 gossip 400 143} {cancel 400 158 cancel 400 158}]
+D8.h2     P18   FAIL     same wanted ErrCantAfford, got no hire line after talk; last menu: [{talk 276 32 talk 276 32} {introduction 276 50 introduction 276 50} {gossip 276 65 gossip 276 65} {cancel 276 80 cancel 276 80}]
+cheat verbs used (each ledgered with a reason): debug goto 1, debug stat 14 1, debug stat 14 5000
+cheat ledger: ~/.local/share/d2bot/ledger/cheats.jsonl (actor drills:<drill id>, kind d2d-debug)
+time=2026-11-04T14:40:33.811-05:00 level=WARN msg="d2d: stopped by the bot (kill)"
+labrun: the-worker-host exited 0 after 3s

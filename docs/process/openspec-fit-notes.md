@@ -1,5 +1,7 @@
 # OpenSpec fit notes for d2lod-bot
 
+> status: 2026-10-30 fit assessment; superseded by the OpenSpec retirement for new work (user, 2026-11-04). Current truth: docs/decisions.md.
+
 Researched 2026-10-30 (OpenSpec 1.15.0). Tags V/S/U as in `openspec-reference.md`. This repo: 100+ prose docs, PLAN.md, many parallel agents with disjoint ownership in git worktrees, gates and acceptance numbers.
 
 ## Strengths
