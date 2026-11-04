@@ -41,6 +41,8 @@ func main() {
 		err = cmdBaseline(os.Args[2:])
 	case "bands":
 		err = cmdBands(os.Args[2:])
+	case "report":
+		err = cmdReport(os.Args[2:])
 	default:
 		usage()
 	}
@@ -83,7 +85,7 @@ func verdictExit(overall string, zero bool) int {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: d2dsoak run|extract|compare|baseline|bands ... (see the package comment and docs/d2d-soak.md)")
+	fmt.Fprintln(os.Stderr, "usage: d2dsoak run|extract|compare|baseline|bands|report ... (see the package comment and docs/d2d-soak.md)")
 	os.Exit(ExitUsage)
 }
 

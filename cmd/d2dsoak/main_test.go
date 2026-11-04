@@ -311,3 +311,24 @@ func TestInvLimitsFollowStallLadder(t *testing.T) {
 		t.Errorf("limits %+v vs bot.stallWarnMin %d", l, k)
 	}
 }
+
+func TestReportSkills(t *testing.T) {
+	p := filepath.Join(t.TempDir(), "bot.log")
+	log := `{"msg":"combat decision","act":"cast","skill":"Firebolt"}
+{"msg":"combat decision","act":"cast","skill":"Attack"}
+{"msg":"killtime"}
+`
+	if err := os.WriteFile(p, []byte(log), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var b strings.Builder
+	if err := reportSkills([]string{"-melee", "Attack", p}, &b); err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(b.String(), "Firebolt") || !strings.Contains(b.String(), "kills 1") {
+		t.Errorf("report:\n%s", b.String())
+	}
+	if err := reportSkills(nil, &b); err == nil {
+		t.Error("no input accepted")
+	}
+}
