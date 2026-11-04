@@ -118,6 +118,7 @@
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
+- change prbprep: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
 - change skmeleewire: changecheck -cli 0 warnings; leakcheck -mode fail 0; tools/ci/check.sh; openspec validate --all --strict
 - change skmiss: differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
