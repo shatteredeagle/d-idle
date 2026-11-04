@@ -1,5 +1,7 @@
 # Matt Pocock skills plugin: fit for d2lod-bot (PLUGINFIT, 2026-10-30)
 
+> status: 2026-10-30 plugin fit; its "tracker = OpenSpec change cards" answer is superseded: OpenSpec is retired for new work (user, 2026-11-04). Current truth: docs/decisions.md.
+
 Docs only. Source: the installed plugin `mattpocock-skills` 1.3.1 (MIT, repo github.com/mattpocock/skills), read from `~/.claude/plugins/cache/claude-plugins-official/mattpocock-skills/1.3.1` (README, AGENTS, SCOPE, GLOSSARY, CHANGELOG, `.out-of-scope/`, docs/, every `SKILL.md` and the setup templates). Tags: **V** = I read the file in the plugin (no network, nothing run, nothing modified), **S** = the plugin's own docs describing a behaviour I did not trace in a SKILL.md, **U** = my judgement or untested. Nothing in the plugin was executed, so every "will do X" about runtime behaviour is V-of-the-instructions, not V-of-a-run.
 
 ## Recommendation in five lines

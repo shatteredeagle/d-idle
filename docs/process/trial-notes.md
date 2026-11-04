@@ -1,5 +1,7 @@
 # Trial notes: change cards, specs and the checker (SPECBUILD, 2026-10-30)
 
+> status: historical trial (2026-10-30); its "KEEP the wrapper" recommendation is superseded: OpenSpec is retired for new work (user, 2026-11-04). Current truth: docs/decisions.md.
+
 Tags V (measured or run, how stated), S (doc), U (judgement). Everything here is from one build session by one agent; no multi-agent evidence yet.
 
 ## What was built (V: files in the branch, `go test` green)

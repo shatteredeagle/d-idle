@@ -1,5 +1,7 @@
 # d2d monster spawns per area, 20 seeds (agent PROBES-D2D, 2026-10-30)
 
+> status: "the original game is the acceptance target" is partly superseded: d2d is the product and game.exe the oracle; done means a 24 h d2d Act 1 clear plus the G-D equivalence (ADR 0015; docs/decisions.md Current truth).
+
 Tags: V-d2d = measured on the private lockstep fork (`d2d.lab5`, seeds 1 to 20, fresh Sorceress, `--no-save`, Normal); U = not checked on Game.exe. The original game is the acceptance target: these are the d2d columns to compare against.
 Probe: `cmd/d2dspawn spawns` through `docs/probes/run-d2d.sh` (one d2d per seed, areas in order 2,3,4,5,8 in the same game), table by `docs/probes/spawns_table.py`. Raw data: `docs/probes/d2d-spawns.csv`.
 
