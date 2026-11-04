@@ -40,7 +40,10 @@ func TestCastLogDoesNotChangeActions(t *testing.T) {
 	if !strings.Contains(logOn, "msg=build") || !strings.Contains(logOn, `msg="cast result"`) || !strings.Contains(logOn, "last_skill=") {
 		t.Errorf("log lines missing:\n%s", logOn)
 	}
-	if strings.Contains(logOff, "cast result") || strings.Contains(logOff, "last_skill") {
+	if !strings.Contains(logOn, "since_cast_ms=") || !strings.Contains(logOn, "kills=") {
+		t.Errorf("kill credit fields missing:\n%s", logOn)
+	}
+	if strings.Contains(logOff, "cast result") || strings.Contains(logOff, "last_skill") || strings.Contains(logOff, "targets=") {
 		t.Errorf("off still logs:\n%s", logOff)
 	}
 }

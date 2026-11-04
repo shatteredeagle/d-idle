@@ -118,6 +118,7 @@ func (f *Fighter) novaTick(snap *d2.Snapshot, st *fightState) (bool, error) {
 	st.novas++
 	st.noteCast(now)
 	f.log().Debug("combat decision", "act", "nova", "why", "crowd", "n", n)
+	f.castLogTargets(n)
 	return true, f.cast(snap, nova, input.Point{X: p.X, Y: p.Y})
 }
 

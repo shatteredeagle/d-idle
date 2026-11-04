@@ -457,6 +457,7 @@ func (f *Fighter) noteKills(snap *d2.Snapshot, alive []Target, st *fightState, r
 		}
 		res.XP += share
 		f.emit(goals.Event{Type: goals.EvKill, Monster: d.name, Boss: d.boss, XP: share})
+		f.castLogKill()
 		f.info("kill", append([]any{"monster", d.name, "boss", d.boss, "xp", share}, f.lastSkillKV()...)...)
 	}
 }
