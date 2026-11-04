@@ -9,16 +9,35 @@ func TestKitRefill(t *testing.T) {
 	}
 }
 
-// Potions first: the reserve is 150 percent of the kit, so with a 310 kit the merc needs price + 465.
+// Potions first: the reserve is 100 percent of one kit refill (was 150 before the mercrevive card), so with a 310 kit
+// the merc needs price + 310. Two kits (default refill and a pricier one) pin the bar; gold between the new and the
+// old bar revives now.
 func TestSpendingOrderReserve(t *testing.T) {
-	c := ctx()
-	c.Kit = KitRefill(100, 30, 4, 3)
-	dead := MercState{Known: true, Owned: true, Level: 10} // 750
-	if d, _ := ShouldRevive(dead, withGold(c, 750+465-1), 0); d.Do || d.Reason != ReasonGold {
-		t.Errorf("one gold short of price + 150%% kit: %+v", d)
+	if DefaultKnobs().KitReservePct != 100 {
+		t.Fatalf("default reserve %d, want 100", DefaultKnobs().KitReservePct)
 	}
-	if d, _ := ShouldRevive(dead, withGold(c, 750+465), 0); !d.Do {
-		t.Errorf("price + 150%% kit: %+v", d)
+	dead := MercState{Known: true, Owned: true, Level: 10} // 750
+	for _, tc := range []struct {
+		name string
+		kit  int
+	}{{"default kit", KitRefill(100, 30, 4, 3)}, {"big kit", KitRefill(100, 60, 8, 6)}} {
+		t.Run(tc.name, func(t *testing.T) {
+			c := ctx()
+			c.Kit = tc.kit
+			bar, oldBar := 750+tc.kit, 750+tc.kit*150/100
+			if got := ReviveNeed(c, 750); got != bar {
+				t.Fatalf("need %d, want price + 100%% kit = %d", got, bar)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, bar-1), 0); d.Do || d.Reason != ReasonGold {
+				t.Errorf("one gold short of price + kit: %+v", d)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, bar), 0); !d.Do {
+				t.Errorf("price + kit: %+v", d)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, oldBar-1), 0); !d.Do {
+				t.Errorf("between new and old bar must revive: %+v", d)
+			}
+		})
 	}
 }
 
@@ -47,8 +66,9 @@ func TestGoldFarm(t *testing.T) {
 		{"merc alive", false, 0, 1000, 10, false},
 		{"missing and poor", true, 300, 1000, 10, true},
 		{"missing and rich", true, 1000, 1000, 10, false},
-		{"level cap", true, 300, 1000, 16, false},
-		{"just below the cap", true, 300, 1000, 15, true},
+		{"level cap", true, 300, 1000, 18, false}, // cap 16 -> 18, card mercrevive
+		{"just below the cap", true, 300, 1000, 17, true},
+		{"old cap level now farms", true, 300, 1000, 16, true},
 	} {
 		if got := GoldFarm(c.missing, c.gold, c.need, c.l, k); got != c.want {
 			t.Errorf("%s: %v", c.name, got)

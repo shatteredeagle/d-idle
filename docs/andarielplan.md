@@ -103,3 +103,12 @@ Needs the user:
 6. The revive stall fix: knob first or code first (section 5).
 
 Proposed text for guarded files: none (no ADR, GLOSSARY or decisions edit proposed). The glossary has no entry for "throwaway fight"; the term is used in merc-policy and the knob text only (I).
+
+## Decisions (user, 2026-11-04, the SME version; details and reasoning in docs/andarielsme.md)
+
+1. Static Field is not an opener by default; the no-opener script and its test stay; card text "only if a measured drill shows it helps"; Normal cap read from the tables first (step 2).
+2. Floors 15 with a living merc and 17 without, plus a life floor (N from the diagnostic run); kit 8 healing, 3 antidotes, 4 mana, tome with at least 2 charges.
+3. The declared cheat setup (goto Catacombs 4, given merc and kit) may replace the road; the series has handicapped variants (merc at 50 percent life, kit at the gate minimum, tome at 2 charges) and the no-merc case at least 3 times.
+4. The hold lift is a default change in a separate small commit by the coordinator after 5 clean wins in a row (or 7 of 8 with a cause), writes after start 0, at the lowest shipping floors; retreat at 30 or 12 percent, one re-attempt after a refill, two retreats end the attempt, any death resets the series; the user decides at lift time.
+5. Gate 2 interim wording (a) is already merged (delta spec andarielspec).
+6. Merc revive: knob first (card mercrevive): goldFarmMaxLevel 18, reserve 100 percent of a kit refill, log the bar.

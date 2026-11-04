@@ -1,0 +1,1 @@
+BACKLOG: palprep: PALSKILL D2/D3 PR prepared locally on upstream e5de6c10 (local/pal-d2d3-r2, body docs/research/pr-palskill-body-r2.md); awaits the Opus verifier and the user's go
