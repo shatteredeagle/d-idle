@@ -77,3 +77,9 @@ All shield cases (control not filtered), per seed: head life whole-point differs
 ## Reproduce
 
 Worktrees of the fork at `2d051d77` and `12b78b60` under the verifier's worktree directory, mirrored by labrun; `labrun <worker> -- bash tools/emu/esv_build.sh base|head`, then the runs above. Outputs: `$D2_SCRATCH/run-SEED/` on the worker host (not kept in the repo).
+
+## Shared-file lines for the merger
+
+- BACKLOG: esverify: Energy Shield head 12b78b60 confirmed with caveats against game.exe's native FUN_005ca6c0 (docs/research/esverify/verdict.md); before posting, add C1 (flat / mdr parts go negative in game.exe) to the PR body limits; follow-ups: state end at 0 mana, magic percent resistance, element 256ths in monster_blow.
+- INDEX: research/esverify/verdict.md: independent verification of the Energy Shield absorb-order PR, native FUN_005ca6c0 vs d2d base and head (60,000 random frames + edge grid)
+- CHANGELOG: docs: Energy Shield absorb-order PR verified against game.exe's own FUN_005ca6c0 under the emulator (docs/research/esverify/verdict.md, tools/emu/esv_*)
