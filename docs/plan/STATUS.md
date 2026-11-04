@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
 - 419a0752 11-04 11:20 `Merge agent/palprep3: palprep3: PALSKILL D2/D3 r3 (rebased on upstream 7591a92e, verifier caveats applied, oracle 0 differ, body r3)` (palprep3)
 - 16c2000f 11-04 11:19 `merge origin/main into palprep3` (palprep3)
 - 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
@@ -134,5 +135,4 @@
 - 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
 - fbd9acf2 11-04 10:39 `merge origin/main into codefix67` (codefix67)
 - 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
-- 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
 <!-- statusgen:end -->
