@@ -64,7 +64,6 @@
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
-| [soakskills](../../openspec/changes/soakskills/) | in-progress | soakskills | `docs/soakskills.md`<br>`internal/d2dsoakstat/skills.go`<br>`internal/d2dsoakstat/skills_test.go`<br>`cmd/d2dsoak/main.go`<br>`cmd/d2dsoak/report.go` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
@@ -124,10 +123,9 @@
 - change skmiss: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change skresistfix: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
-- change soakskills: go test -p 1 ./internal/d2dsoakstat ./cmd/d2dsoak passes
-- change soakskills: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0
 
 ### Recent merges
+- 939cd91f 11-03 21:50 `Merge agent/soakskills: soakskills: d2dsoak report prints the per-skill fields of the gate doc section 2` (soakskills)
 - d0deb956 11-03 21:50 `merge origin/main into soakskills` (soakskills)
 - d3092536 11-03 21:41 `Merge agent/gate1multi-20261103-2140-ms4: Gate 1 ms4 5-seed record: PASSED, XP/h 10607 vs 9172 (+15.6%)` (gate1multi-20261103-2140-ms4)
 - c963702e 11-03 19:43 `Merge agent/review3fix: review3fix: codereview3 C1 route ban vs target skip, C2 fail-count decay, C3 failed ToTown counts, C4 plan flag in docs copy + TestMatchesDocs` (review3fix)
@@ -137,5 +135,4 @@
 - e1364ce0 11-03 17:56 `Merge agent/verifymonsterpace: branchclean LAND: verifymonsterpace` (verifymonsterpace)
 - 952b3944 11-03 17:56 `merge origin/main into verifymonsterpace` (verifymonsterpace)
 - 360ba010 11-03 17:53 `Merge agent/crfixbundle2: branchclean LAND: crfixbundle2` (crfixbundle2)
-- 553354e7 11-03 17:46 `merge origin/main into verifymonsterpace` (verifymonsterpace)
 <!-- statusgen:end -->
