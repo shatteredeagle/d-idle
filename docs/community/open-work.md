@@ -26,13 +26,13 @@ Format (read by the board script): one `## ID: title` section per item, then `- 
 - deliverable: docs/research/sk-attack-speed-trace.md; an oracle script under tools/emu/ if you ran game code; exhaustive boundaries or 100,000 cases for any number you call V.
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
 
-## SKZEROHIT: what a zero-damage hit still triggers
+## SKZEROHIT: native run of the zero-damage hit differentials D1 and D2 against d2d
 - size: M
 - status: proposed
 - kind: decomp
 - source: backlog:SKRESIST
-- question: Static answer done (docs/research/sk-zero-hit-trace.md, V read; independently checked in docs/research/verifyzerohit.md): a zero-damage hit keeps knockback, gives no get-hit and no wake; Lightning Enchanted bolts fire on a no-recovery hit. Left open: the native run of the differentials D1 and D2 against d2d (the second-pass run doc is not on main), and whether d2d matches on each point. Re-derive those with your own harness.
+- question: The static answer is done and independently checked (docs/research/sk-zero-hit-trace.md, docs/research/verifyzerohit.md): a zero-damage hit keeps knockback, gives no get-hit and no wake; Lightning Enchanted bolts fire on a no-recovery hit. Left open only: a native run of the differentials D1 and D2 against d2d, and whether d2d matches on each point. Re-derive both with your own harness.
 - start: docs/research/sk-resist-trace.md section 10 (first bullet) and Q9; FUN_0057cb00 (the get-hit gate, S: docs/research/pr-get-hit-rule-proof.md); docs/research/mon-wake-trace.md for the wake rules.
-- deliverable: docs/research/sk-zero-hit-trace.md; a static answer (tagged V read) is a valid first PR, a native run (V run) is better.
+- deliverable: docs/research/sk-zero-hit-run-trace.md
 - needs: your own game.exe 1.14d install, upstream d2decomped checkout, Python 3 with unicorn.
 

@@ -8,6 +8,6 @@ Finished items (17) are in the [archive](work-archive.md).
 |---|---|---|---|---|---|---|
 | SKGROUND | ground skills (Blizzard, Meteor, Hydra, Fire Wall, Thunder Storm, Frozen Orb) | M | decomp | proposed | [brief](open-work.md#skground-ground-skills-blizzard-meteor-hydra-fire-wall-thunder-storm-frozen-orb) | [issue](https://github.com/shatteredeagle/d-idle/issues/4) |
 | SKIAS | swing speed, increased attack speed and the weapon speed modifier | M | decomp | proposed | [brief](open-work.md#skias-swing-speed-increased-attack-speed-and-the-weapon-speed-modifier) | [issue](https://github.com/shatteredeagle/d-idle/issues/18) |
-| SKZEROHIT | what a zero-damage hit still triggers | M | decomp | proposed | [brief](open-work.md#skzerohit-what-a-zero-damage-hit-still-triggers) | [issue](https://github.com/shatteredeagle/d-idle/issues/20) |
+| SKZEROHIT | native run of the zero-damage hit differentials D1 and D2 against d2d | M | decomp | proposed | [brief](open-work.md#skzerohit-native-run-of-the-zero-damage-hit-differentials-d1-and-d2-against-d2d) | [issue](https://github.com/shatteredeagle/d-idle/issues/20) |
 
 3 of 3 listed items are open (the rest are claimed).
