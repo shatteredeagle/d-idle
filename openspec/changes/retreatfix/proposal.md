@@ -9,3 +9,5 @@ RT.drink setup life is derived from the bot knobs (above chickenPct, below drink
 ## Impact
 
 Drill code only, offline tested; the live rerun comes after merge. Not verified live.
+
+Overlap (declared): m1-liveproof owns internal/drill/**; this card only edits retreat.go and retreat_test.go there.

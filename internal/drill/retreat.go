@@ -5,7 +5,17 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"d2lod-bot/internal/env"
 )
+
+// portalMaxTicks bounds the ticks from Act to the town portal showing. Live: 1 tick measured, identical in 2 runs
+// (V, docs/retreatlive.md); 10 leaves margin for a slower rig without hiding a stuck cast.
+const portalMaxTicks = 10
+
+// drinkLifePct is the setup life for RT.drink: the midpoint of the bot's chicken and drink-life thresholds, so it
+// stays strictly between them. A literal 20 sat under ChickenPct 25 and the bot rightly chickened (V, docs/retreatlive.md).
+func drinkLifePct(c env.CombatTuning) int { return (c.ChickenPct + c.DrinkLifePct) / 2 }
 
 // RetreatSpec is one retreat variant: the setup is written before the run starts (life, belt, scroll, monster
 // adjacent); from the decision on the bot alone acts and the drill only reads.
@@ -52,7 +62,9 @@ type RetreatLab interface {
 }
 
 // RT returns the retreat action group (docs/retreatdrill.md): the action executed, not only decided.
-func RT(l RetreatLab) []Drill {
+func RT(l RetreatLab) []Drill { return rt(l, env.DefaultCombatTuning()) }
+
+func rt(l RetreatLab, c env.CombatTuning) []Drill {
 	lim := 10 * time.Minute
 	mk := func(id, title string, s RetreatSpec, want string, effect func(RetreatInfo) bool) Drill {
 		return Drill{ID: id, Primitive: "P29", Title: title, Limit: lim, Do: func(ctx context.Context, r *Run) Outcome {
@@ -60,11 +72,11 @@ func RT(l RetreatLab) []Drill {
 		}}
 	}
 	return []Drill{
-		mk("RT.drink", "retreat executed: 1 adjacent, 20 percent life, belt with healing potions: the bot drinks (belt -1, life up)",
-			RetreatSpec{Variant: "drink", LifePct: 20, Belt: true, Adjacent: 1, MaxTicks: 50}, "drink",
+		mk("RT.drink", "retreat executed: 1 adjacent, mid-band life (between chicken and drink-life), belt with healing potions: the bot drinks (belt -1, life up)",
+			RetreatSpec{Variant: "drink", LifePct: drinkLifePct(c), Belt: true, Adjacent: 1, MaxTicks: 50}, "drink",
 			func(i RetreatInfo) bool { return i.BeltAfter == i.BeltBefore-1 && i.LifeEnd > i.Life }),
 		mk("RT.portal", "retreat executed: 1 adjacent, 34 percent life, empty belt, one scroll: the bot opens a town portal (scroll spent, portal listed)",
-			RetreatSpec{Variant: "portal", LifePct: 34, Scroll: true, Adjacent: 1, MaxTicks: 50}, "town-portal",
+			RetreatSpec{Variant: "portal", LifePct: 34, Scroll: true, Adjacent: 1, MaxTicks: portalMaxTicks}, "town-portal",
 			func(i RetreatInfo) bool { return i.ScrollsAfter == i.ScrollsBefore-1 && i.PortalOpen }),
 		mk("RT.leave", "retreat executed: 1 adjacent, 10 percent life, empty belt, no scroll: the bot chickens (the game is left)",
 			RetreatSpec{Variant: "leave", LifePct: 10, Adjacent: 1, MaxTicks: 200}, "chicken",

@@ -9,8 +9,6 @@ worktree: ~/code/d2lod-wt/retreatfix
 skip_specs: true
 owns:
   - docs/retreatfix.md
-  - internal/drill/retreat.go
-  - internal/drill/retreat_test.go
   - openspec/changes/retreatfix/**
 exclusive: []
 gates:
@@ -19,4 +17,4 @@ result: ""
 live: "not verified live"
 ```
 
-- [ ] work done
+- [x] work done (offline tests only; not verified live)
