@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- d55f87ce 11-04 11:45 `Merge agent/removalplan: removalplan: OpenSpec removal plan (proposal): replacement options, interim rule, staged removal` (removalplan)
 - b23a86f2 11-04 11:45 `Merge branch 'main' into removalplan` (-)
 - b870d079 11-04 11:42 `Merge agent/noareacards2: noareacards2: no-area card set rewritten from the SME review (farmfallback first), design only` (noareacards2)
 - a769ffa8 11-04 11:41 `Merge branch 'main' into noareacards2` (-)
@@ -134,5 +135,4 @@
 - dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
 - 419a0752 11-04 11:20 `Merge agent/palprep3: palprep3: PALSKILL D2/D3 r3 (rebased on upstream 7591a92e, verifier caveats applied, oracle 0 differ, body r3)` (palprep3)
 - 16c2000f 11-04 11:19 `merge origin/main into palprep3` (palprep3)
-- 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
 <!-- statusgen:end -->
