@@ -125,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- ab438589 11-04 11:38 `Merge agent/prbopen2: prbopen2: posted log for upstream PR #195 (PALSKILL D2/D3)` (prbopen2)
 - 80edfc8f 11-04 11:37 `Merge branch 'main' into prbopen2` (-)
 - 29b4f8aa 11-04 11:34 `Merge agent/cardtriage: cardtriage: triage of the 36 open cards (keep 12, close 12, park 5, drop 7) and ADR candidates, docs only` (cardtriage)
 - dfeaebff 11-04 11:34 `Merge branch 'main' into cardtriage` (-)
@@ -134,5 +135,4 @@
 - 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
 - d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
 - 1358ad62 11-04 10:46 `merge origin/main into noareameasure` (noareameasure)
-- 4d01a9ce 11-04 10:42 `Merge agent/decisionsfix: docs: decisions.md Current truth block; ADR statuses name ADR 0015 amendments; mark the superseded Gate 1 XP rule (user side session, docs only)` (decisionsfix)
 <!-- statusgen:end -->
