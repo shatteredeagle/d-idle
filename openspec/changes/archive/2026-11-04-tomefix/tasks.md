@@ -2,7 +2,7 @@
 
 ```yaml
 change: tomefix
-status: in-progress
+status: archived
 agent: tomefix
 branch: agent/tomefix
 worktree: ~/code/d2lod-wt/tomefix
@@ -16,8 +16,9 @@ owns:
 exclusive: []
 gates:
   - "go test -p 1 for each touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: "audit and 14 regression tests pass offline (town ran on the worker host); no bot gap found, no code change; producer paths 9/10 and fork qty stay U"
+result: "offline audit: no path found; stays U: stock items verb and dump items failure, fork qty dropout"
 live: "not verified live"
+merge: 024c759
 ```
 
 - [x] audit the false-empty paths

@@ -64,7 +64,6 @@
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
 | [skmiss](../../openspec/changes/skmiss/) | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md`<br>`openspec/changes/skmiss/**` | `fork-branch:fix/missile-roll-top` |
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
-| [tomefix](../../openspec/changes/tomefix/) | in-progress | tomefix | `docs/tomefix.md`<br>`internal/town/tomefix_test.go`<br>`internal/combat/tomefix_test.go`<br>`internal/d2denv/tomefix_test.go`<br>`openspec/changes/tomefix/**` | - |
 
 ### Gates
 - spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
@@ -124,9 +123,9 @@
 - change skmiss: changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
 - change skresistfix: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
-- change tomefix: go test -p 1 for each touched package passes; changecheck 0 warnings; leakcheck 0 hits
 
 ### Recent merges
+- 024c7593 11-04 01:55 `Merge agent/tomefix: tomefix: audit of false-empty tome verdict, 14 regression tests, live-check recipe (no bot change)` (tomefix)
 - e9f01cdc 11-04 01:54 `merge origin/main into tomefix` (tomefix)
 - 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
 - 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
@@ -136,5 +135,4 @@
 - 1cad2adb 11-04 01:10 `merge origin/main into groomland2` (groomland2)
 - 99b8206a 11-04 01:07 `Merge agent/primadd: primadd: draft primitive rows P37-P45 (docs/research, primitives.md untouched)` (primadd)
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
-- fd5f9825 11-04 01:05 `merge origin/main into groomland2` (groomland2)
 <!-- statusgen:end -->
