@@ -2,7 +2,7 @@
 
 ```yaml
 change: fixcastgap
-status: in-progress
+status: archived
 agent: fixcastgap
 branch: agent/fixcastgap
 worktree: ~/code/d2lod-wt/fixcastgap
@@ -15,7 +15,8 @@ exclusive: []
 gates:
   - "go test -p 1 ./internal/combat ./internal/env ./tools/knobdump passes including TestFightLoopLightningNeverReissuedEarly"
   - "go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes"
-result: "offline: per-skill gap table and knobs, tests pass; not verified live"
+merge: on main (see result)
+result: "offline only: code merged on main, live proof pending (closed 2026-11-04 by user decision). Open live proof: cast gaps per skill against the game with the lab binary carrying fix/lightning-sequence, recipe in docs/fixcastgap.md. Per-skill gap table and knobs, tests pass; not verified live"
 live: "not verified live: see the live proof recipe in docs/fixcastgap.md"
 ```
 

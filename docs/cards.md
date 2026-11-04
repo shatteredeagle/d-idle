@@ -43,12 +43,15 @@ Parked by ADR 0015 item 10 or by the triage: they stay open, nobody works on the
 
 The triage said close or drop, but the git evidence on main does not settle it. Each stays open until the user decides.
 
-| id | question | evidence |
-|---|---|---|
-| fixcastgap | close although its live proof never ran? | code merged on main; only the live proof task is open |
-| fixmanamodel | same | same |
-| fixskilllvl | same | same |
-| skmeleewire | same | same |
-| d2d-default-backend | drop? the flip did not happen | `cmd/d2bot/d2dbackend.go` still defaults `--backend` to `game`; the card's test file does not exist on main |
+No cards are waiting for a decision.
 
 Resolved from git evidence and archived on 2026-11-04: gate1run-20261102 (record and commits are on main).
+
+Resolved by the user's decision on 2026-11-04 and archived: fixcastgap, fixmanamodel, fixskilllvl and skmeleewire closed as "offline only, live proof pending" (their live proofs are listed below); d2d-default-backend dropped (the backend flip never happened, `cmd/d2bot/d2dbackend.go` still defaults `--backend` to `game`; ADR 0015 makes d2d the lab and game.exe the acceptance target).
+
+## Open live proofs
+
+- Under m1-liveproof (G-C basics): fixcastgap, cast gaps per skill with the lab binary carrying fix/lightning-sequence (docs/fixcastgap.md).
+- Under m1-liveproof (G-C basics): fixmanamodel, modelled mana against the dump over a fight (docs/fixmanamodel.md).
+- Under m1-liveproof (G-C basics): fixskilllvl, stat vector with +skills gear and drills P1-P6 of the SKPASS trace (docs/fixskilllvl.md).
+- Under m1-liveproof (G-C basics): skmeleewire, early-game soak with a staff caster and a sword fighter, drill R1 (docs/skmeleewire.md).
