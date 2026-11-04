@@ -8,7 +8,6 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/gear"
-	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/task"
 )
 
@@ -120,16 +119,37 @@ func (r *Runner) areaGuardWhy(s *d2.Snapshot, a int) string {
 // next merc action and the character is below merc.goldFarmMaxLevel. nil = never.
 var MercGoldFarm func(s *d2.Snapshot) bool
 
-// guardedAreas adds the Monastery road and the tower to ex while their guards are closed, so the level picker never offers it.
-// While the gold farm is on (Normal act 1) every area outside merc.FarmAreas is added too.
-func (r *Runner) guardedAreas(s *d2.Snapshot, ex map[int]bool) {
-	if f := MercGoldFarm; f != nil && s != nil && s.Player != nil && s.Player.Difficulty == d2.Normal && s.Player.Act == 0 && f(s) {
-		for a := 2; a <= 132; a++ {
-			if !merc.FarmAreas[a] {
-				ex[a] = true
-			}
+// farmExclude adds every area outside the plan steps flagged farm to ex while the gold farm is on (Normal act 1) and
+// returns the areas it added, so the picker can drop them again when nothing farmable is left (farm = preference).
+// A missing plan table is logged and the farm is skipped, never replaced by a built-in set.
+func (r *Runner) farmExclude(s *d2.Snapshot, ex map[int]bool) []int {
+	f := MercGoldFarm
+	if f == nil || s == nil || s.Player == nil || s.Player.Difficulty != d2.Normal || s.Player.Act != 0 || !f(s) {
+		return nil
+	}
+	farm, err := r.d.Plan.FarmAreas("normal")
+	if err != nil {
+		r.e.Log.Warn("farm: no farm areas", "err", err)
+		return nil
+	}
+	var added []int
+	for a := 2; a <= 132; a++ {
+		if !farm[a] && !ex[a] {
+			ex[a] = true
+			added = append(added, a)
 		}
 	}
+	return added
+}
+
+// guardedAreas adds the Monastery road and the tower to ex while their guards are closed, so the level picker never offers it.
+// While the gold farm is on (Normal act 1) every area outside the plan steps flagged farm is added too.
+func (r *Runner) guardedAreas(s *d2.Snapshot, ex map[int]bool) {
+	r.farmExclude(s, ex)
+	r.guardedAreasNoFarm(s, ex)
+}
+
+func (r *Runner) guardedAreasNoFarm(s *d2.Snapshot, ex map[int]bool) {
 	if r.denGated(s) {
 		ex[areaDenOfEvil] = true // the Den waits for its class floor (campaign.denMinLevel*): level in Blood Moor
 	}
