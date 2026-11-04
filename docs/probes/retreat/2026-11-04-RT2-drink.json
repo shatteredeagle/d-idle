@@ -1,0 +1,67 @@
+{
+ "results": [
+  {
+   "id": "RT.drink",
+   "primitive": "P29",
+   "title": "retreat executed: 1 adjacent, mid-band life (between chicken and drink-life), belt with healing potions: the bot drinks (belt -1, life up)",
+   "verdict": "PASS",
+   "reason": "drink executed: 0 ticks to act, 4 to effect, life floor 120",
+   "intended": "drink: Safety decides \"drink\", Act carries it out, effect within 50 ticks, life floor above 0",
+   "observed": "adjacent 1 life 120/300 decision \"drink-life\" acted true (err \"\") ticks to act 0, to effect 4; life floor 120 end 121; belt 4-\u003e3 scrolls 0-\u003e0 portal false left false dead false",
+   "runs": [
+    {
+     "Verdict": "PASS",
+     "Reason": "drink executed: 0 ticks to act, 4 to effect, life floor 120",
+     "Intended": "drink: Safety decides \"drink\", Act carries it out, effect within 50 ticks, life floor above 0",
+     "Observed": "adjacent 1 life 120/300 decision \"drink-life\" acted true (err \"\") ticks to act 0, to effect 4; life floor 120 end 121; belt 4-\u003e3 scrolls 0-\u003e0 portal false left false dead false",
+     "sig": "drink-life|true",
+     "cheats": [
+      "debug goto 2",
+      "debug kill",
+      "debug stat 7 76800",
+      "debug stat 6 76800",
+      "debug clearinv",
+      "debug spawn zombie1 1 near",
+      "debug stat 6 30720",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 752175363,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "PASS",
+     "Reason": "drink executed: 0 ticks to act, 1 to effect, life floor 120",
+     "Intended": "drink: Safety decides \"drink\", Act carries it out, effect within 50 ticks, life floor above 0",
+     "Observed": "adjacent 1 life 120/300 decision \"drink-life\" acted true (err \"\") ticks to act 0, to effect 1; life floor 120 end 121; belt 3-\u003e2 scrolls 0-\u003e0 portal false left false dead false",
+     "sig": "drink-life|true",
+     "cheats": [
+      "debug stat 6 76800",
+      "debug goto 2",
+      "debug kill",
+      "debug stat 7 76800",
+      "debug stat 6 76800",
+      "debug clearinv",
+      "debug spawn zombie1 1 near",
+      "debug stat 6 30720",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 32136334,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug goto 2",
+    "debug kill",
+    "debug stat 7 76800",
+    "debug stat 6 76800",
+    "debug clearinv",
+    "debug spawn zombie1 1 near",
+    "debug stat 6 30720",
+    "debug goto 1"
+   ]
+  }
+ ]
+}
