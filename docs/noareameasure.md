@@ -1,5 +1,7 @@
 # noareameasure: XP per area, the picker's excluded set and the kit at the Gate 2 seed 13 block
 
+> status: corrected 2026-11-04 per the SME review (docs/noareacards2.md): section 5 band 5.08% (not 1.95%), Cave 2 traced 1.4 XP/kill, the Catacombs 2 figure marked not a forecast, the economy wording limited to the 01:06 flood, the tome drop tagged U.
+
 Tags: V = verified (computed from the logs, or a log line, say which), S = secondary (code read, not run), U = unverified.
 Docs only. Nothing here was run live. It measures; it changes no code and takes no policy decision (it feeds `docs/noarea-policy.md`).
 Evidence (read only): the minute logs of Gate 2 seeds 11, 12, 13 (committed, thinned for seed 13, in `docs/probes/soak-logs/`:
@@ -159,6 +161,11 @@ The tome was refilled to 3 charges at 23:36:07 (inv-tp-dump, area 1). Intermedia
 with address `0xffffffff` (a transient read of the item, verdict dumps; not a real zero).
 Cross-check: `route guard: blocked monastery (3 healing potions < 4)` at 23:35:00 and `(2 healing potions < 4)` at
 23:35:02 agree with the minute lines (belt healing 3-2 plus pack).
+Gold around the trips (S, SME, not re-read here): 2022 at 23:35:06 (V, line 122), then 1616 within 3 s after the chores. The revive
+order is V in code: `mercTown.Chores` runs `Townsman.Chores` and then `ReviveStep` (cmd/d2bot/mercwire.go:664-673), so the revive comes
+after the town chores of its visit; whether shopping sits inside `Townsman.Chores` is U.
+> NOTE: correction unverified for the 1616 figure: its log line is not cited in the doc's own sources and was not re-read (the worker-host
+> bot-0.log path is not in this job's scope). The U tag on the tome drop (line 157) was already present.
 
 ## 4. Dark Wood and Black Marsh at the block (the SME's question)
 - Banned? No. The last Black Marsh ban lifted at 23:33:58 (39812, `area ban lifted`; `level plan: clvl 14 -> area 6 Black Marsh (in
@@ -168,6 +175,7 @@ Cross-check: `route guard: blocked monastery (3 healing potions < 4)` at 23:35:0
   `merc.FarmAreas` = {2,3,4,8,9,13,17,18} (internal/merc/farm.go:10, internal/bot/routeguard.go:126-132). Dark Wood (window 9-13, leaves
   13) and Black Marsh (10-14) are not in that set. They were also past their window at clvl 15 (leave 13 and 14, a gap of 2 and 1 levels, inside the floor of 4).
   At clvl 14 and 23:33:58 the farm was off (39809) and the picker chose Black Marsh. So "banned or eligible" has a third answer: not allowed.
+> NOTE: correction unverified for the "earlier economy cause" wording: the phrase is not in this doc (no match for "economy"). What the doc does say is consistent with the correction: section 2.1 gives the farm rule as the 23:35 cause (V), and the economy numbers (gold 26, 0 healing potions) belong to the 01:06 flood of section 2.2 only (V).
 - Cost (V): they are the two best areas by XP/h in seed 13 at clvl >= 13 (section 1: Black Marsh 31135, Dark Wood 12164 vs Cave 2 13834).
   At clvl 15 the bot made 0 minutes in either (section 1). The pick of Black Marsh at 23:33:58 lasted until the clvl-15 level-up at
   23:34:11 sent it to Mausoleum, which paid 2.3 XP/kill.
@@ -184,21 +192,25 @@ has no minute in area 35 in any of the three seeds (V: not in the minute lines),
 | XP per hour | 1422 | not in the log | V |
 | kills per hour | 262 | not in the log | V |
 | XP per kill | 5.4 | traced plain mean 97.2 at monster level 11 (internal/bot/recoveryxp.go:68 row 35, gap share 100% at clvl 15, d=4) | V for 5.4; trace value S (plain monsters only, bosses and packs excluded by the trace, 12 seeds of rooms) |
-| XP per hour at the same 262 kills/h | 1422 | 97.2 x 262 = about 25500 | U (arithmetic only: assumes the kill pace of the stay, and the traced mean, both unmeasured for Catacombs) |
+| XP per hour at the same 262 kills/h | 1422 | 97.2 x 262 = about 25500 (arithmetic only, not a forecast) | U (assumes the kill pace of the stay, and the traced mean, both unmeasured for Catacombs) |
 | XP per hour at 100 kills/h | n/a | about 9700 | U (same assumption, a lower pace) |
 | comparator, whole of seed 13 at clvl 15 (632 min) | 4303 XP/h | | V |
-| comparator, Cave 2 at clvl 15 (seed 13, 109 min) | 13066 XP/h, 14.6 XP/kill | traced 27.2 x 1.95% = 0.5 XP/kill | V for 13066 and 14.6; trace S |
+| comparator, Cave 2 at clvl 15 (seed 13, 109 min) | 13066 XP/h, 14.6 XP/kill | traced 27.2 x 5.08% = 1.4 XP/kill (d = 2 - 15 = -13, band 5.08, recoveryxp.go:50) | V for 13066 and 14.6; trace V arithmetic |
 
 Caveat (S): the traced table underestimates what the bot actually earns per kill in every area where both exist at clvl 15 (Cave 2
-0.5 traced vs 14.6 measured, Stony Field 0.7 vs 12.4, Burial Grounds 0.8 vs 7.8, Cave 1 0.7 vs 7.1, Cold Plains 0.5 vs 5.0): the
+1.4 traced vs 14.6 measured, Stony Field 1.9 vs 12.4, Burial Grounds 2.0 vs 7.8, Cave 1 1.8 vs 7.1, Cold Plains 1.3 vs 5.0; the traced
+values are V arithmetic at the 5.08% band, clvl 15, the table rows of recoveryxp.go:68-71; the earlier 0.5/0.7/0.8 used 1.95%): the
 kills the bot makes include uniques, champions and packs. Catacombs 2 is not in the measured set, so its 97.2 is a plain-monster
 figure too and its real per-kill value is higher by an unknown factor (U). What the table does support: the gap to the stay
 (5.4 XP/kill) is about 18 times at the plain mean; a clvl 15 character is in the full-XP band for Catacombs 2 (monster level 11,
-d=4) and in the 1.95% band for Cave 2, Stony Field and the Burial Grounds.
+d=4) and in the 5.08% band for Cave 2, Stony Field and the Burial Grounds (monsters 10 or more levels below the player, recoveryxp.go:50).
+
+> NOTE: sign. In this section "d" is mlvl minus clvl (recoveryxp.go:36). Catacombs 2 is mlvl 11 at clvl 15, so d = -4 (the 100% band, recoveryxp.go:45-46), not d=4 as written above. The 97.2 and the 5.4 XP/kill are unchanged (V).
 
 ## 6. Not in the log (do not guess)
 - Any minute in Catacombs 2, 3 or 4, or in Outer Cloister, Jail 1 (areas 27-37) for seeds 11-13 at clvl >= 13 except 4 minutes
   (s11) and 5 minutes (s12) in Monastery Gate: none measured.
+- Gold per area (carried-gold pickup per virtual hour) and XP per kill by monster: neither is measured. The minute lines carry totals per minute, not per kill or per area split (SME gap).
 - Why Pick was empty at 86940 (section 2.2) and the tome state there.
 - The split of XP between plain kills and uniques/packs in the minute lines.
 - The virtual-clock length of each ban at 41596 (the `seconds` of the lines are the ban length; the log shows no clock reading in them).

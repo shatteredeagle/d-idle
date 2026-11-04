@@ -61,14 +61,14 @@
 - spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
-- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
+- spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 17 requirements
 - spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
 - spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
-- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
+- spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 25 requirements
 - spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
@@ -93,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
-- 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
-- 32350aad 11-04 13:47 `Merge agent/heldlog: heldlog: the Andariel hold line logs per clvl with floor and merc state (judge interim rule can now be met); gate decision unchanged` (heldlog)
-- 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
-- 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
-- df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
-- a10570ed 11-04 13:33 `Merge agent/hirefixlive: hirefixlive: PaidHire follows the talk then hire row menu flow (offline tests; live rerun pending)` (hirefixlive)
-- 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
-- 6c451992 11-04 13:27 `Merge agent/shielddiff: shielddiff: off-weapon enhanced damage differential (D1) 2x20,000 cases, PR candidate for SKSHIELDFIX; D2 note` (shielddiff)
-- b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
+- 0b1b54ae 11-04 16:56 `Merge agent/gate2runbook: gate2runbook: Gate 2 rerun runbook (docs only)` (gate2runbook)
+- d8c44516 11-04 16:56 `Merge agent/esfixbody: esfix: Energy Shield PR body updated for the native verification and the flat/mdr fix` (esfixbody)
+- d7f1c6a3 11-04 16:55 `Merge branch 'main' into gate2runbook` (-)
+- 0982d903 11-04 16:55 `Merge branch 'main' into esfixbody` (-)
+- a378bd69 11-04 16:49 `Merge agent/lifelog: life/maxLife in minute line, zone entry and safety decision log lines, soak report table` (lifelog)
+- b7d61733 11-04 16:48 `Merge branch 'main' into lifelog` (-)
+- 161f9342 11-04 16:47 `Merge agent/shimcheckci: shim register check runs in tools/ci/check.sh; UNSURE rows classified` (shimcheckci)
+- 2d3c0d81 11-04 16:47 `Merge branch 'main' into shimcheckci` (-)
+- a1be2f40 11-04 16:46 `Merge agent/retiredterms: status banners on 20 docs for retired terms` (retiredterms)
+- 03d0bcb0 11-04 16:46 `Merge agent/ledgerleft: spec ledger resolutions for 8 rows (needs user decisions)` (ledgerleft)
 <!-- statusgen:end -->

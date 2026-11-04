@@ -3,6 +3,8 @@
 ## Purpose
 What an upstream pull request to the decompilation project must prove and disclose before it is asked for: differential proof against game.exe, one claim per PR, evidence pack, authorship and body format, and no posting without the user's go.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Differential proof against game.exe
@@ -28,7 +30,7 @@ Each function, table, offset and traced behaviour in a claim's causal chain SHAL
 - **THEN** it is verified by an emulator run or a disassembly read, or the claim is narrowed and the link listed under limits
 
 ### Requirement: pr_guard clean
-Before a pack is marked complete the branch SHALL pass upstream's `tools/pr_guard.py` with 0 FAIL and 0 WARN. Source: docs/process/upstream-pr-standard.md section 2.
+Before a pack is marked complete the branch SHALL pass `tools/pr_guard.py` of the upstream project checkout (not in this repo) with 0 FAIL and 0 WARN. Source: docs/process/upstream-pr-standard.md section 2. Reconciled 2026-11-04 (source: ledger dead reference).
 
 #### Scenario: Guard clean
 - **WHEN** the branch is checked with pr_guard
@@ -61,7 +63,7 @@ A change to the upstream project SHALL carry one claim per commit; a PR MAY bund
 - **THEN** it stays out of the bundle and the pack lists why
 
 ### Requirement: Nothing else moved
-Upstream's own tests, `tools/presubmit.py --quick` warnings and the scripted state hashes (`tools/d2ddet`) MUST be unchanged apart from the claimed field, and every caller of a changed function SHALL be listed with what it now does differently. Source: docs/process/upstream-pr-standard.md section 4.
+Upstream's own tests, the `tools/presubmit.py --quick` warnings and the scripted state hashes (`tools/d2ddet`), both in the upstream project checkout (not in this repo), MUST be unchanged apart from the claimed field, and every caller of a changed function SHALL be listed with what it now does differently. Source: docs/process/upstream-pr-standard.md section 4. Reconciled 2026-11-04 (source: ledger dead reference).
 
 #### Scenario: Hash drift
 - **WHEN** a state hash differs in a field other than the claimed one

@@ -465,7 +465,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - palprep: PALSKILL D2/D3 PR prepared locally on upstream e5de6c10 (local/pal-d2d3-r2, body docs/research/pr-palskill-body-r2.md); awaits the Opus verifier and the user's go
 - noareameasure (done, docs only): docs/noareameasure.md measures per-area XP/h at clvl 13+ for Gate 2 seeds 11-13, the picker exclude set at the seed 13 no-eligible lines (the merc gold farm rule, not bans, kept Dark Wood and Black Marsh out), the kit at 23:35 and a Catacombs 2 comparison; feeds the noarea policy decision
 - codefix67 (done, offline): F6 stash withdraw only when the purse cannot pay the kit and one healing count, F7 in-town futility latch; docs/codefix67.md; live P5 stash recheck open
-- palprep3: PALSKILL D2/D3 PR re-prepared on upstream 7591a92e (local/pal-d2d3-r3 head 1f91a216, verifier caveats applied, body docs/research/pr-palskill-body-r3.md); awaits the user's go to open
+- palprep3: PALSKILL D2/D3 PR re-prepared on upstream 7591a92e (local/pal-d2d3-r3 head 1f91a216, verifier caveats applied, body docs/research/pr-palskill-body-r3.md); awaits the user's go to open (merged upstream 2026-11-04 as #195, merge commit 2d051d77d)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
@@ -619,3 +619,4 @@ dethash2 (2026-11-01, card dethash2): second det run, 14 scenarios on 5 builds (
 - SKRESISTFIX: verifier READY (docs/research/pr-curseimmune-verifier.md): draft text edits applied (first-stat -31 -> -6, D2 -100 not -90, pet sibling); next the det state hashes / private-fork carry card and the user's go
 - PALBAND/PALTABLE/PALMANA/SIMCLASS/PALZEAL: done offline (palfix, docs/palfix.md); still owed live: Zealot-lite and the legacy rows in a game, SME review of the Zealot-lite rows
 - PALSME: done offline (docs/palsme.md): Zealot-lite table per the SME review; ready cards PALRETREAT, PALBELT, PALBRGATE, PALMERC1, SMEDOCS (record only; policy features paused until the primitives pass live); Zealot-lite still owed live
+- tickcppdiff (offline, docs only, 2026-11-04): does game.exe keep the 256ths fraction of life when a monster hits a monster (docs/research/tickcpp-diff-monster-vs-monster.md)? The shared apply path is read, not run; open on the community board as TICKMVM: run it with a 100,000-case differential against tick.cpp lines 344-345 of the upstream tree.

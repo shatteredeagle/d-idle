@@ -3,6 +3,8 @@
 ## Purpose
 What a d2d replay file holds, how it is recorded without touching the run, and what playback must guarantee so that a replay doubles as the determinism oracle for the lockstep fork. Source: docs/d2d-fork.md section 5, docs/d2d-loop.md phase 0, user decision 2026-10-30 ("Determinism + replay"), evidence in docs/d2d-replay.md.
 
+> status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none
+
 ## Requirements
 
 ### Requirement: Replay file content
