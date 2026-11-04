@@ -93,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 03d0bcb0 11-04 16:46 `Merge agent/ledgerleft: spec ledger resolutions for 8 rows (needs user decisions)` (ledgerleft)
 - defd7957 11-04 16:46 `Merge agent/gateacard: Gate A card rewritten as acceptance per ADR 0015` (gateacard)
 - 3859f3cd 11-04 16:46 `Merge agent/hirewindow: Kashya hire entry needs clvl > 7; d2d matches, no deviation (trace doc)` (hirewindow)
+- d7b4e3e9 11-04 16:43 `Merge branch 'main' into ledgerleft` (-)
 - 75c6ac3d 11-04 16:43 `Merge branch 'main' into gateacard` (-)
 - 9b620b6f 11-04 16:43 `Merge branch 'main' into hirewindow` (-)
 - 0bb4156c 11-04 16:29 `Merge agent/esverify: esverify: Opus verifier for the Energy Shield absorb-order candidate: CONFIRMED WITH CAVEATS (native FUN_005ca6c0 run, mana 0 differ on 51,065 cases, life 4,494 to 171; caveat C1 flat/mdr negative field)` (esverify)
 - 1724c744 11-04 16:28 `Merge branch 'main' into esverify` (-)
 - 31e38643 11-04 16:27 `Merge agent/boardtitle: community board: reword SHIELDD2 title (feed filter false positive)` (boardtitle)
 - 061c3915 11-04 16:24 `Merge agent/boardsync4: board sync: issues 24-26 recorded` (boardsync4)
-- b59f1a90 11-04 16:19 `Merge agent/boarditems: community board: PLAYERDIFF, SHIELDD2, TICKMVM proposed items` (boarditems)
-- b8facbfa 11-04 16:01 `Merge agent/esprep: esprep: Energy Shield absorb-order PR candidate (local/es-absorb-order 12b78b60 on upstream 2d051d77): differential 60,000 cases, shield life 16,858 to 0 differ; PR body draft, nothing posted` (esprep)
 <!-- statusgen:end -->
