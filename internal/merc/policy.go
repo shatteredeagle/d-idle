@@ -40,6 +40,7 @@ type Ctx struct {
 	// FirstLutVisit: this is the first Lut Gholein visit of the character in this difficulty.
 	FirstLutVisit bool
 	HaveTP        bool
+	KitFull       bool // the kit is already at its minimum (just bought): KitReservePctFullKit applies
 	HavePotions   bool
 	// Revives and merc deaths in the last 60 minutes.
 	RevivesLastHour, DeathsLastHour int
@@ -49,7 +50,11 @@ type Ctx struct {
 // need is the gold a merc payment takes: price x mult, plus KitReservePct of the full kit refill (Kit). Potions come
 // first: the kit reserve stays in the purse when the merc is paid.
 func (c Ctx) need(price, mult int) int {
-	return price*mult + c.Kit*c.Knobs.KitReservePct/100
+	pct := c.Knobs.KitReservePct
+	if c.KitFull {
+		pct = c.Knobs.KitReservePctFullKit
+	}
+	return price*mult + c.Kit*pct/100
 }
 
 func no(why string) Decision { return Decision{Reason: why} }

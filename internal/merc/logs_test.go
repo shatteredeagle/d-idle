@@ -10,6 +10,8 @@ func TestLogLines(t *testing.T) {
 		{LogRevived(600, 9, 675), "merc: revived price=600 level=9 estimate=675", LineRevived},
 		{LogHireWindow(HireOffer{Row: 2, Name: "Greiz Aide", Class: 338, Level: 9, Aura: "Defiance", Price: 360}, 1500, 12), "merc: hire window row=2 name=Greiz_Aide class=338 level=9 aura=Defiance price=360 gold=1500 clvl=12", LineHireWindow},
 		{LogGoldFarm(true, 1200, 300, 11), "merc: gold farm on need=1200 gold=300 clvl=11", LineGoldFarm},
+		{LogGoldFarmReason(false, 1200, 1300, 11, "gold-reached"), "merc: gold farm off need=1200 gold=1300 clvl=11 reason=gold-reached", LineGoldFarm},
+		{LogGoldFarmReason(true, 1200, 300, 11, "x"), "merc: gold farm on need=1200 gold=300 clvl=11", LineGoldFarm},
 		{LogReviveSkipped(ReasonGold, 600, 900, 1000), "merc: revive skipped (gold) price=600 gold=900 need=1000", LineReviveSkipped},
 		{LogReviveSkipped(ReasonStopped, 600, 900, 3300), "merc: revive skipped (stopped by deaths) price=600 gold=900 need=3300", LineReviveSkipped},
 		{LogEquip(SlotHelm, "Skull Cap", "empty slot"), "merc: equip slot=helm item=Skull_Cap reason=empty_slot", LineEquip},
@@ -33,7 +35,7 @@ func TestLogLines(t *testing.T) {
 
 func TestKnobsFromDefaults(t *testing.T) {
 	k := DefaultKnobs()
-	want := Knobs{2, 1, 3, 5, 1, false, true, 10, true, 50, 100, 18} // reserve 150 -> 100 and farm cap 16 -> 18: card mercrevive
+	want := Knobs{2, 1, 3, 5, 1, false, true, 10, true, 50, 100, 17, 50, 40, 60} // farm cap 18 -> 17 (no-merc Andariel floor), full-kit reserve 50, budget 40, cooldown 60: job mercrevive2
 	if k != want {
 		t.Errorf("%+v", k)
 	}

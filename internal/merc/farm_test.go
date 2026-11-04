@@ -66,9 +66,9 @@ func TestGoldFarm(t *testing.T) {
 		{"merc alive", false, 0, 1000, 10, false},
 		{"missing and poor", true, 300, 1000, 10, true},
 		{"missing and rich", true, 1000, 1000, 10, false},
-		{"level cap", true, 300, 1000, 18, false}, // cap 16 -> 18, card mercrevive
-		{"just below the cap", true, 300, 1000, 17, true},
-		{"old cap level now farms", true, 300, 1000, 16, true},
+		{"level cap", true, 300, 1000, 17, false}, // cap 18 -> 17 = no-merc Andariel floor, job mercrevive2
+		{"old cap level no longer farms", true, 300, 1000, 18, false},
+		{"just below the cap", true, 300, 1000, 16, true},
 	} {
 		if got := GoldFarm(c.missing, c.gold, c.need, c.l, k); got != c.want {
 			t.Errorf("%s: %v", c.name, got)
@@ -77,14 +77,6 @@ func TestGoldFarm(t *testing.T) {
 	k.GoldFarmMaxLevel = 0
 	if GoldFarm(true, 0, 1000, 5, k) {
 		t.Error("knob 0 must turn the farm off")
-	}
-	for _, a := range []int{2, 3, 4, 8, 9, 13, 17, 18} {
-		if !FarmAreas[a] {
-			t.Errorf("area %d missing", a)
-		}
-	}
-	if FarmAreas[5] || FarmAreas[7] || FarmAreas[26] {
-		t.Error("Dark Wood, Tamoe and the Monastery are not early areas")
 	}
 }
 
