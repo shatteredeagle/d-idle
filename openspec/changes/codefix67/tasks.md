@@ -10,11 +10,13 @@ skip_specs: true
 owns:
   - docs/codefix67.md
   - openspec/changes/codefix67/**
+  - internal/town/codefix67_test.go
+  - internal/bot/codefix67_test.go
 exclusive: []
 gates:
   - "go test -p 1 per touched package passes; changecheck 0 warnings; leakcheck 0 hits"
-result: ""
+result: "F6 and F7 fixed offline with fake tests (fail without fix by hand revert); touched small edits in internal/town/basicsfix.go and internal/bot/goal.go, observe.go, resource.go; not verified live"
 live: "not verified live"
 ```
 
-- [ ] work done
+- [x] work done

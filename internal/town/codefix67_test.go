@@ -35,14 +35,12 @@ func TestNoWithdrawWhenPurseAlreadyPaysTheKit(t *testing.T) {
 // codefix67 F6: one healing count. A rejuvenation potion in the pack is a healing potion for the withdraw chore, as it
 // is for the bot side.
 func TestNoWithdrawWithPackRejuvenation(t *testing.T) {
-	r, c := withdrawRig(t, 6, 1418, 11, false)
-	r.W.Add("rvs", d2.ContInventory, 0, 0)
-	if _, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Gold: true}); err != nil {
-		t.Fatal(err)
+	r, _ := withdrawRig(t, 6, 1418, 11, false)
+	if need, err := r.T.NeedWithdrawForTest(); err != nil || !need {
+		t.Fatalf("control: want a withdrawal with no potion, got %v %v", need, err)
 	}
-	for _, m := range c.moves {
-		if m < 0 {
-			t.Errorf("withdrawal %v with a rejuvenation potion in the pack", c.moves)
-		}
+	r.W.Add("rvs", d2.ContInventory, 0, 0)
+	if need, err := r.T.NeedWithdrawForTest(); err != nil || need {
+		t.Errorf("withdrawal wanted (%v %v) with a rejuvenation potion in the pack", need, err)
 	}
 }

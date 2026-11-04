@@ -158,6 +158,15 @@ func (t *Town) kitCost() int {
 	return r.KitTPGold + max(r.HPFirst, 1)*r.KitPotionGold
 }
 
+// NeedWithdrawForTest exposes needWithdraw on the current snapshot.
+func (t *Town) NeedWithdrawForTest() (bool, error) {
+	s, err := t.current()
+	if err != nil {
+		return false, err
+	}
+	return t.needWithdraw(s), nil
+}
+
 func (t *Town) withdraw(ctx context.Context, a *Act) error {
 	s, err := t.current()
 	if err != nil {
