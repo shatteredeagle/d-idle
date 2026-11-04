@@ -35,7 +35,8 @@ Gates 2 and 3 SHALL judge stability and economy (goal G-C); progression to Andar
 - **THEN** only a boss-run start line and an outcome line at clvl 14 or higher meet the criterion
 
 ### Requirement: Soak progress floors
-The m24 profile MUST fail a run whose average XP is below 1000 per hour, whose XP does not change for more than 10 minutes (idle and paused exempt), whose no-gain window (no clvl, quest step or gold gain) exceeds 90 minutes, or whose bot health is down for more than 3 minutes at a time. Source: docs/soak24.md section 3 (U until the first 24 h run calibrates it).
+The m24 profile MUST fail a run whose XP does not change for more than 10 minutes (idle and paused exempt), whose no-gain window (no clvl, quest step or gold gain) exceeds 90 minutes, or whose bot health is down for more than 3 minutes at a time. Source: docs/soak24.md section 3 (U until the first 24 h run calibrates it). XP/h is advisory; the judge reports it without failing a run (ops gate-judge change, 2026-11-04).
+
 #### Scenario: Idling bot
 - **WHEN** no XP change is seen for 11 minutes outside pause
 - **THEN** d2soak reports a stall FAIL
