@@ -361,3 +361,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/retreatdrill.md: the P29 retreat action executed live, drill design (offline-tested, not run)
 - docs/retreatlive.md: first live d2d run of the RT retreat drills (portal PASS, drink bound question)
 - docs/soaks/gate2-s11-20261103-1954-g2a.md: Gate 2 run s11-20261103-1954-g2a (NOT PASSED (Attempt Andariel at clvl 14 or higher)), criteria table, fault recovery
+- docs/soaks/gate2-s12-20261103-2210-g2v.md: Gate 2 run s12-20261103-2210-g2v (NOT PASSED (Attempt Andariel at clvl 14 or higher)), criteria table, fault recovery

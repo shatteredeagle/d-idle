@@ -433,6 +433,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - gate2cursor: loot drops a cursor item no pack cell takes (hand.DropCursor, U live: ground click); the Gate 2 seed 13 no-area block is a ban/window consequence (policy cards paused); needs a seed 13 soak rerun, see docs/gate2cursor.md
 - GATE2: Gate 2 run s11-20261103-1954-g2a on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s11-20261103-1954-g2a.md)
 - andarielgate: Gate 2 seed 11 never attempted Andariel because boss.andarielHold=1 (ADR 0011 gate 3, m3-andariel deferred) holds the floor at clvl+1; merc was dead from clvl 14 (revive 1920 gold vs about 1800); no code change, question for the user in docs/andarielgate.md (reword criterion, lift hold for the profile, or run m3-andariel first); not verified live
+- GATE2: Gate 2 run s12-20261103-2210-g2v on d2d.lab2-freezeresume ee5e06d8ef99 + bot 4f50b9a NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

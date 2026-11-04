@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 2 soak run s12-20261103-2210-g2v: NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s12-20261103-2210-g2v.md).
 - docs: Gate 2 soak run s11-20261103-1954-g2a: NOT PASSED (Attempt Andariel at clvl 14 or higher) (docs/soaks/gate2-s11-20261103-1954-g2a.md).
 - retreatlive: RT.drink and RT.portal run live on d2d; portal passes, drink setup sits in the chicken zone (finding only)
 - retreatdrill: drill group RT executes the retreat action (drink, town portal, leave) with a numeric pass condition; not run live
