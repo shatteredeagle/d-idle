@@ -438,6 +438,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - andarielspec: soak-gates delta for the Gate 2 Andariel criterion (interim: reaching the gate or a held-for-andariel line with floor and merc evidence counts while boss.andarielHold is set; actual attempt required once lifted); ops gate-judge.py must follow
 - andarielplan: docs/andarielplan.md plans the m3-andariel throwaway fight (9 steps, hold lift, merc revive-gold stall cause and fix); next: user answers in its section 6, then steps 2 and 3 offline
 - noarea: docs/noarea-policy.md written (picker rules, seed 13 cause, options); the user picks the policy, no code changed
+- prbopen: batch B PR opened upstream as psi29a/d2decomped #189 (head 7e1f8fc4 on upstream main 002ffab4), oracle rerun 560,000 frames 0 differ; log in docs/research/openpr-log.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
