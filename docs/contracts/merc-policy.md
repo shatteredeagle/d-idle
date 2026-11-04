@@ -36,7 +36,7 @@ A Blood Raven attempt MUST start only with clvl 9 or higher for Sorceress, Druid
 The bot SHALL revive a dead merc only with a town portal and potions and gold of at least `merc.reviveGoldMult` (1) x the price plus the kit reserve, at most `merc.reviveMaxPerHour` (2) times an hour, and SHALL use `merc.stopGoldMult` (5) as the multiple when merc deaths exceed `merc.stopDeathsPerHour` (3). Price estimate: level squared / 2 x 15, cap 50,000 (S). Source: user decision 2026-11-02; docs/merc.md policy 5. Reconciled 2026-11-04 (source: mercpolicy).
 
 #### Scenario: Short of gold
-- **WHEN** revive costs 750, the kit reserve is 465 and gold is 1199
+- **WHEN** revive costs 750, the kit reserve is 310 and gold is 1059
 - **THEN** the revive is skipped with reason `gold`
 
 ### Requirement: Route guard
@@ -115,14 +115,14 @@ Gear swaps SHALL need at least `merc.swapGainPct` (10 percent) score gain, items
 - **THEN** she is given a healing potion
 
 ### Requirement: Spending order
-The bot SHALL spend on potions before the merc: a revive or a hire is paid only with gold of at least price x `merc.reviveGoldMult` (1) or `merc.hireGoldMult` (1) plus `merc.kitReservePct` (150) percent of the full kit refill (town portal, `resource.kitMinHP` healing and `resource.kitMinMP` mana potions at the shop prices), with a town portal and potions on hand. Source: user decision 2026-11-02 (SME order). Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
+The bot SHALL spend on potions before the merc: a revive or a hire is paid only with gold of at least price x `merc.reviveGoldMult` (1) or `merc.hireGoldMult` (1) plus `merc.kitReservePct` (100) percent of the full kit refill (town portal, `resource.kitMinHP` healing and `resource.kitMinMP` mana potions at the shop prices), with a town portal and potions on hand. Source: user decision 2026-11-02 (SME order). Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy). `merc.kitReservePct` 150 became 100 (user decision 2026-11-04, after the Gate 2 revive-gold stall of 366 skipped revives). Offline measured only; keep 100 until a Gate 2 rerun shows the skips drop; verify from the log line `merc: revive skipped (gold) price=P gold=G need=N`.
 
 #### Scenario: Reserve short
-- **WHEN** a revive costs 750, the kit refill is 310 and gold is 1214
+- **WHEN** a revive costs 750, the kit refill is 310 and gold is 1059
 - **THEN** the revive is skipped with reason `gold`
 
 #### Scenario: Reserve met
-- **WHEN** the same revive meets gold 1215
+- **WHEN** the same revive meets gold 1060
 - **THEN** the revive runs
 
 #### Scenario: Revive cap (Revive and stop rule)
@@ -148,7 +148,7 @@ At the first Lut Gholein visit per difficulty the bot SHALL read the hire window
 - **THEN** the weapon and the helm are taken off, then the Defiance row is hired and `merc: hired` is logged
 
 #### Scenario: Too poor for the best aura
-- **WHEN** gold is 864 (Defiance 400 plus a 465 reserve is 865) and Prayer would pass
+- **WHEN** gold is 709 (Defiance 400 plus a 310 reserve is 710) and Prayer would pass
 - **THEN** nothing is hired and nothing is stripped
 
 ### Requirement: Gold farm while the merc is missing
