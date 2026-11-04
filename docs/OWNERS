@@ -120,3 +120,8 @@ openspec/changes/palskilltrace/**  chuckado  palskilltrace
 docs/research/durability-trace.md  chuckado  paldurtrace
 tools/emu/verify_paldur.py  chuckado  paldurtrace
 openspec/changes/paldurtrace/**  chuckado  paldurtrace
+docs/logfields.md  logfields  logfields
+internal/d2dsoakstat/skills.go  logfields  logfields
+internal/d2dsoakstat/skills_test.go  logfields  logfields
+internal/combat/castlog.go  logfields  logfields
+internal/combat/castlog_test.go  logfields  logfields
