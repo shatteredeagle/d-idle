@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- logfields: the bot logs cast result, last skill of a kill, armor sample and build line; d2dsoak report prints them (logging only, not verified live)
 - soakskills: per-skill soak fields parser and report text (d2dsoakstat), docs/soakskills.md
 - docs: Gate 1 multi-seed soak run 20261103-2140-ms4: PASSED (docs/soaks/gate1-multiseed-20261103-2140-ms4.md).
 - docs: Gate 1 multi-seed soak run 20261103-1938-ms4: PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate1-multiseed-20261103-1938-ms4.md).

@@ -354,3 +354,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/research/codereview3.md - review of the target skip, the recovery kit trip and the XP fallback kit flag, ranked findings with fixes and Gate 1 signals
 - docs/soaks/gate1-multiseed-20261103-1938-ms4.md: Gate 1 multi-seed run 20261103-1938-ms4 (PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/soaks/gate1-multiseed-20261103-2140-ms4.md: Gate 1 multi-seed run 20261103-2140-ms4 (PASSED), per-seed criteria, d2dsoak output
+- docs/logfields.md: log fields for the per-skill soak report (cast result, last_skill, armor sample, build); offline only
