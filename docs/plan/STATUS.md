@@ -92,6 +92,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 57b991c4 11-04 13:12 `Merge branch 'main' into stateevdiff` (-)
 - 89b52fba 11-04 13:07 `Merge agent/pldefdiff: pldefdiff: playerdef differential re-run (pd_calc, seeds 11 and 23, 102,604 cases each): 0 attack-rating mismatches; D2-D6/D8 not run, no PR candidate` (pldefdiff)
 - a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
 - 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
@@ -101,5 +102,4 @@
 - 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
 - 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
 - 5a08cfce 11-04 12:23 `Merge agent/cardsclose: cardsclose: archive fixcastgap, fixmanamodel, fixskilllvl, skmeleewire (offline only, live proof pending) and drop d2d-default-backend` (cardsclose)
-- 3c3579f4 11-04 12:23 `Merge branch 'main' into cardsclose` (-)
 <!-- statusgen:end -->
