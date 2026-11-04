@@ -65,7 +65,7 @@ Statuses and labels cannot be added by the CLI: hand-edit `backlog/config.yml`. 
 
 docs/process/openspec-removal-plan.md (branch agent/removalplan2 until merged): stage 1 = this migration (copy, nothing removed); later stages switch consumers (changecheck, CI, merge scripts, pre-push hook, STATUS block) to read `backlog/`, then retire `openspec/`. None of that is done.
 
-## Config requirements (from the Orion mirror test, 2026-11-04)
+## Config requirements (from the read-only mirror test, 2026-11-04)
 
 - `backlog/config.yml` sets `check_active_branches: true` and `remote_operations: true`; with either off, cards that exist only on unmerged `agent/*` branches do not show in the web board. The fetch remote must be named `origin`.
 - Cards are visible only when COMMITTED on the agent branch (uncommitted worktree edits are invisible): workers commit card changes with their other work.
