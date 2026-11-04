@@ -1,4 +1,12 @@
-# public-split Specification
+---
+id: public-split
+goal: rule
+status: in-force
+enforced_by:
+  - cmd/leakcheck
+  - tools/ci/gamecode_guard.sh
+---
+# public-split contract
 
 ## Purpose
 What is public and what stays private at the public cut of the repository: file classes, private-name and host-config rules, the leakcheck warn and fail modes, no Blizzard-derived data, and the cut preconditions and verification.

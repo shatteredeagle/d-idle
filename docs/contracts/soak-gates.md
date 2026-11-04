@@ -1,4 +1,15 @@
-# Soak gates specification
+---
+id: soak-gates
+goal: G-C
+status: in-force
+enforced_by:
+  - cmd/d2soak
+  - internal/d2dsoakstat/invariants.go
+  - cmd/d2dsoak
+judged_by_ops: tools/gate-judge.py
+adr: [0009, 0013, 0015]
+---
+# Soak gates contract
 
 ## Purpose
 Numeric pass criteria for the d2d gate ladder (Gate 1 2 h, Gate 2 8 h, Gate 3 24 h; the old G1/G2 names are retired, see docs/decisions.md Current truth) and the health guard that decides when a soak may start, so a run is judged by numbers and not by opinion. Evidence: docs/review-strategy.md (G1 criteria), docs/soak24.md section 3 (profile m24), docs/g1-log.md (attempt log), docs/plan/plan-v2.md section 5.

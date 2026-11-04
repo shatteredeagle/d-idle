@@ -1,4 +1,14 @@
-# Death rule specification
+---
+id: death-rule
+goal: G-C
+status: in-force
+enforced_by:
+  - cmd/d2soak/deathrule.go
+  - internal/bot/deathrule.go
+  - internal/d2dsoakstat/invariants.go
+judged_by_ops: tools/gate-judge.py
+---
+# Death rule contract
 
 ## Purpose
 How deaths are judged in soaks and what the bot does after a death. The rule was APPROVED by the user on 2026-10-30 (plan-v2 section 10.2; docs/soak-analysis.md section 12) and is implemented in cmd/d2soak and internal/bot/deathrule.go. Evidence: docs/plan/death-data.md, docs/deathautopsy.md, docs/deathspiral.md.

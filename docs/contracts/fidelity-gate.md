@@ -1,4 +1,16 @@
-# Fidelity gate specification
+---
+id: fidelity-gate
+goal: G-D
+status: in-force
+enforced_by:
+  - internal/d2dsoakstat/compare.go
+  - internal/d2dsoakstat/bands.go
+  - tools/ab/paired.py
+  - cmd/d2dsoak
+judged_by_ops: tools/gate-judge.py
+adr: [0009, 0015]
+---
+# Fidelity gate contract
 
 ## Purpose
 How far the d2d backend may differ from the original game before its statistics stop being trusted: the replicated soak compares the same character and bot on both backends. Source: plan-v2 section 11 and 11.5, docs/d2d-soak.md (harness and pass rule), docs/d2d-fidelity.md, docs/d2d-gaps.md.

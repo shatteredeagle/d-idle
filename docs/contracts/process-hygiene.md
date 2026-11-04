@@ -1,4 +1,12 @@
-# process-hygiene Specification
+---
+id: process-hygiene
+goal: rule
+status: in-force
+enforced_by:
+  - tools/agentrun.sh
+  - tools/agentreap.sh
+---
+# process-hygiene contract
 
 ## Purpose
 How long-running processes are started, registered, reaped and reported so none is left behind: registry wrapper, group kill and TTL, orphan listing, user approval for stops, bounded waiters and the dispatcher janitor duty.

@@ -1,4 +1,12 @@
-# upstream-pr Specification
+---
+id: upstream-pr
+goal: G-E
+status: in-force
+enforced_by:
+  - tools/d2ddet
+  - cmd/d2ddet
+---
+# upstream-pr contract
 
 ## Purpose
 What an upstream pull request to the decompilation project must prove and disclose before it is asked for: differential proof against game.exe, one claim per PR, evidence pack, authorship and body format, and no posting without the user's go.

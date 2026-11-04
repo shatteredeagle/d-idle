@@ -1,4 +1,13 @@
-# Lab rules specification
+---
+id: lab-rules
+goal: rule
+status: in-force
+enforced_by:
+  - tools/capacity.sh
+  - tools/d2dslot.sh
+  - internal/cheat
+---
+# Lab rules contract
 
 ## Purpose
 The rules for running d2d, the private lockstep fork and live games without agents colliding, leaking secrets or breaking the GPL boundary. Source: AGENTS.md (games, secrets, honesty), docs/decisions.md 2026-10-30, docs/d2d-soak.md section 1, docs/d2d-fork.md, docs/d2d-container/README.md (GPL notes). The d2d lab doc (docs/d2d-lab.md) is owned by the d2dlab change.

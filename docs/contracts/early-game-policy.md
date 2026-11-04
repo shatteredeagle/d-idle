@@ -1,4 +1,13 @@
-# Early game policy specification
+---
+id: early-game-policy
+goal: G-B
+status: in-force
+enforced_by:
+  - internal/town/rebuy.go
+  - internal/town/beltfill.go
+  - internal/bot/goal.go
+---
+# Early game policy contract
 
 ## Purpose
 What a fresh character does from clvl 1 to about 12: take drops, Den of Evil first, no armor rebuy loops, a cap on rejuvenation potions. Source: docs/earlygame.md (audit, offline V), docs/inventory.md, docs/beltfill.md, docs/recovery.md, plan-v2 sections 10.1 and 11; merges earlygame 4553bae, earlyfix2 a7de502, invrejuv 40cb988, rejuvuse aec4ca1.

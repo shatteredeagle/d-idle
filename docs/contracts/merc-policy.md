@@ -1,4 +1,12 @@
-# Merc policy specification
+---
+id: merc-policy
+goal: G-B
+status: in-force
+enforced_by:
+  - internal/merc
+  - internal/d2dmerc
+---
+# Merc policy contract
 
 ## Purpose
 How the bot gets, keeps and gears a mercenary. The user decided on 2026-10-30 to take the free Rogue (Blood Raven reward) and never pay Kashya before the quest. Source: plan-v2 sections 3, 10, 10.1, 10.6, 11.2, 11.3; docs/merc.md and docs/merc-wire.md (code, wired behind `merc.enabled`, default 1 since the mercpolicy card).

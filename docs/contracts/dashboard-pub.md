@@ -1,4 +1,11 @@
-# dashboard-pub Specification
+---
+id: dashboard-pub
+goal: rule
+status: in-force
+enforced_by:
+  - cmd/d2dview/pub.go
+---
+# dashboard-pub contract
 
 ## Purpose
 What the d2d viewer (cmd/d2dview) publishes for the public stream page: the /api/pub backend and engine fields, the status row, and how the stream image recovers after an error, a stall or a hidden tab.

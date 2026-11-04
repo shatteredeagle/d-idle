@@ -1,4 +1,11 @@
-# bot-loop Specification
+---
+id: bot-loop
+goal: G-C
+status: in-force
+enforced_by:
+  - internal/bot
+---
+# bot-loop contract
 
 ## Purpose
 What the bot main loop must keep true across games: how bot-started restarts are counted on the minute line, what per-game memory is forgotten on a new game, and how monsters are classified from their flag byte.

@@ -1,4 +1,12 @@
-# act1-campaign Specification
+---
+id: act1-campaign
+goal: G-B
+status: in-force
+enforced_by:
+  - internal/quest
+  - internal/d2dsoakstat/act1check.go
+---
+# act1-campaign contract
 
 ## Purpose
 What an unattended Normal Act 1 run on the d2d backend must achieve for a fresh character: the quest order, the evidence a quest is done, and the record that says Act 1 is cleared. Source: docs/roadmap.md milestone M3 (goal G-B), docs/sme/play-act-route.md, d2-sme consultations 2026-10-31 and 2026-11-04 (S, EXP unless tagged). Evidence tiers used below: T1 save file, T2 game memory (dump), T3 proxy (log line, event).

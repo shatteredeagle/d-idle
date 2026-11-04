@@ -1,4 +1,11 @@
-# town-basics Specification
+---
+id: town-basics
+goal: G-B
+status: in-force
+enforced_by:
+  - internal/town
+---
+# town-basics contract
 
 ## Purpose
 What the bot does in town with gold, scrolls, potions, repairs, the stash and the pack so that a poor early character spends on survival first and never burns time or gold on trips that pay nothing. Source: docs/basics-audit.md (the d2-sme's 15 scenarios, 2026-10-31), docs/BACKLOG.md section 0 (user milestone).
