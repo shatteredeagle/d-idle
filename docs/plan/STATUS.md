@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 8a4d47af 11-04 09:51 `Merge agent/andarielsme: andarielsme: SME decisions for the m3-andariel fight recorded, card text amended, decisions index line` (andarielsme)
 - a81936d5 11-04 09:07 `Merge agent/backlogapply: backlogapply: 17 superseding BACKLOG lines for stale ready/pending rows, 8 dropped` (backlogapply)
 - 244a5e9e 11-04 09:07 `merge origin/main into backlogapply` (backlogapply)
 - 87972cfa 11-04 09:04 `Merge agent/prbopen: prbopen: log of the batch B upstream PR #189 (posted lines)` (prbopen)
@@ -136,5 +137,4 @@
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
 - c0b2638a 11-04 08:56 `merge origin/main into andarielplan` (andarielplan)
 - ed3b22ff 11-04 08:53 `Merge agent/andarielspec: andarielspec: Gate 2 Andariel criterion delta (reach the gate while boss.andarielHold is set; attempt after the lift)` (andarielspec)
-- 1f71fb00 11-04 06:33 `Merge agent/gate2run-s13-20261103-2211-g2v: Gate 2 s13 record: NOT PASSED (258 vh, clvl 16): save-point stall from about 01:20 EST (XP/h, no-progress, belt, invariants, no-gain, Andariel, merc)` (gate2run-s13-20261103-2211-g2v)
 <!-- statusgen:end -->
