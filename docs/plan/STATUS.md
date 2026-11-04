@@ -127,6 +127,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 16c2000f 11-04 11:19 `merge origin/main into palprep3` (palprep3)
 - 6f679c9a 11-04 10:50 `Merge agent/codefix67: codefix67: F6 stash withdraw only when the purse cannot pay the kit, F7 in-town futility latch (offline)` (codefix67)
 - 8c7e992e 11-04 10:49 `merge origin/main into codefix67` (codefix67)
 - d598139d 11-04 10:46 `Merge agent/noareameasure: noareameasure: XP per area, picker exclude set and kit at the Gate 2 seed 13 block (docs only)` (noareameasure)
@@ -136,5 +137,4 @@
 - 43c7b420 11-04 10:38 `merge origin/main into noareameasure` (noareameasure)
 - 9bf824f0 11-04 10:35 `Merge agent/palprep: palprep: PALSKILL D2/D3 rebased onto upstream main e5de6c106 (local head 9e9622eb), oracle 0 differ, PR body r2 drafted (not posted)` (palprep)
 - 59791f6f 11-04 10:34 `merge origin/main into palprep` (palprep)
-- e079944c 11-04 10:29 `Merge agent/palverify: palverify: independent verdict on PALSKILL D2/D3: confirmed with caveats (0 of 139,757 differ at head; 99,698 at base)` (palverify)
 <!-- statusgen:end -->
