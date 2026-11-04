@@ -93,6 +93,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- 72dcbe88 11-04 16:43 `Merge branch 'main' into retiredterms` (-)
 - 0bb4156c 11-04 16:29 `Merge agent/esverify: esverify: Opus verifier for the Energy Shield absorb-order candidate: CONFIRMED WITH CAVEATS (native FUN_005ca6c0 run, mana 0 differ on 51,065 cases, life 4,494 to 171; caveat C1 flat/mdr negative field)` (esverify)
 - 1724c744 11-04 16:28 `Merge branch 'main' into esverify` (-)
 - 31e38643 11-04 16:27 `Merge agent/boardtitle: community board: reword SHIELDD2 title (feed filter false positive)` (boardtitle)
@@ -102,5 +103,4 @@
 - 78ea8338 11-04 16:00 `Merge branch 'main' into esprep` (-)
 - 6f72114c 11-04 15:53 `Merge agent/pr195merged: docs: record upstream PR 195 (PALSKILL D2/D3) as merged` (pr195merged)
 - 6f563f51 11-04 14:48 `Merge agent/livedrills3: livedrills3: first live runs on d2d: DS.1 PASS; DS.2 FAIL (drill plan lacks gold, drill bug); DS.3/DS.4 and the tome drills BLOCKED; D8.h/D8.h2 FAIL: Kashya menu after talk has no hire line` (livedrills3)
-- 50e66119 11-04 14:18 `Merge agent/floormeasure2: floormeasure2: route-floor measurement from the Gate 2 logs; seed 13 -1370 XP is the injected kill -9, not a death; no max-life field in any log` (floormeasure2)
 <!-- statusgen:end -->
