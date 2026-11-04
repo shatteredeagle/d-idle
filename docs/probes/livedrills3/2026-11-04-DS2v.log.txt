@@ -1,6 +1,6 @@
-labrun: synced code/d2lod-wt/livedrills3 → the-worker-host:~/labrun/herdr/code/d2lod-wt/livedrills3 in 0s; running: bash docs/probes/livedrills3/runv.sh DS2v DS DS.2,DS.4 1
+labrun: synced code/d2lod-wt/livedrills3 → the-worker-host:<labrun>/head-box/code/d2lod-wt/livedrills3 in 0s; running: bash docs/probes/livedrills3/runv.sh DS2v DS DS.2,DS.4 1
 d2dslot: got slot 3
-time=2026-11-04T14:39:34.616-05:00 level=WARN msg="d2d channel not answering: d2d process pid 3094106 still running; socket file is gone (stat ~/d2d-lab/slots/3/d2d.sock: no such file or directory); ping: d2dctl: dial ~/d2d-lab/slots/3/d2d.sock: dial unix ~/d2d-lab/slots/3/d2d.sock: connect: no such
+time=2026-11-04T14:39:34.616-05:00 level=WARN msg="d2d channel not answering: d2d process pid 3094106 still running; socket file is gone (stat <d2d-lab>/slots/3/d2d.sock: no such file or directory); ping: d2dctl: dial <d2d-lab>/slots/3/d2d.sock: dial unix <d2d-lab>/slots/3/d2d.sock: connect: no such
 time=2026-11-04T14:39:36.115-05:00 level=INFO msg="d2dworld: arrived in level 1: 1 adjacent entries, 0 levels not linked yet (pending 0, linkwait 30s)"
 time=2026-11-04T14:39:36.147-05:00 level=INFO msg="npc: interact" class=148 try=1 dist=3 npc="[120 72]"
 time=2026-11-04T14:39:36.156-05:00 level=INFO msg="npc: time-to-panel" ms=0 first-contact=false clicks=1 strategy=wait class=148
