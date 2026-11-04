@@ -2,7 +2,7 @@
 
 ```yaml
 change: backlogcheck
-status: in-progress
+status: archived
 agent: backlogcheck
 branch: agent/backlogcheck
 worktree: ~/code/d2lod-wt/backlogcheck
@@ -15,8 +15,8 @@ gates:
   - "python3 tools/merge_lines_check.py --changed passes"
   - "go run ./cmd/changecheck -cli: 0 warnings"
   - "go run ./cmd/leakcheck -mode fail: 0 hits"
-merge:
-result: "docs-only check, 40 items: 25 STALE, 5 CURRENT, 10 UNSURE; proposed BACKLOG lines in the doc's merger section; not verified live (no game)"
+merge: 5740a15
+result: "docs only; no shared file edited; verdicts from git log and archive dirs"
 ```
 
 - [x] scan docs/BACKLOG.md and docs/decomp-queue.md for status words
