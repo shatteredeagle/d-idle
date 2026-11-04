@@ -3,7 +3,28 @@ package drill
 import (
 	"context"
 	"testing"
+
+	"d2lod-bot/internal/env"
 )
+
+func TestRetreatDrinkLifeBetweenKnobs(t *testing.T) {
+	wide := env.DefaultCombatTuning()
+	wide.ChickenPct, wide.DrinkLifePct = 15, 80
+	tight := env.DefaultCombatTuning()
+	tight.ChickenPct, tight.DrinkLifePct = 44, 46
+	for name, c := range map[string]env.CombatTuning{"default": env.DefaultCombatTuning(), "wide": wide, "tight": tight} {
+		st := &retreatStub{info: RetreatInfo{Err: "stop"}}
+		for _, d := range rt(st, c) {
+			d.Do(context.Background(), nil)
+		}
+		if got := st.got[0].LifePct; got <= c.ChickenPct || got >= c.DrinkLifePct {
+			t.Errorf("%s: drink life %d not in (%d,%d)", name, got, c.ChickenPct, c.DrinkLifePct)
+		}
+		if st.got[1].MaxTicks != 10 {
+			t.Errorf("%s: portal bound %d, want 10", name, st.got[1].MaxTicks)
+		}
+	}
+}
 
 type retreatStub struct {
 	FieldLab
@@ -19,7 +40,7 @@ func (s *retreatStub) Retreat(_ context.Context, _ *Run, sp RetreatSpec) Retreat
 func TestRetreatVerdicts(t *testing.T) {
 	good := map[string]RetreatInfo{
 		"RT.drink":  {Adjacent: 1, Life: 20, MaxLife: 100, LifeFloor: 15, LifeEnd: 60, Decision: "drink-rejuv", Acted: true, TicksToEffect: 3, BeltBefore: 2, BeltAfter: 1},
-		"RT.portal": {Adjacent: 1, Decision: "town-portal", Acted: true, LifeFloor: 20, TicksToEffect: 30, ScrollsBefore: 1, PortalOpen: true},
+		"RT.portal": {Adjacent: 1, Decision: "town-portal", Acted: true, LifeFloor: 20, TicksToEffect: 1, ScrollsBefore: 1, PortalOpen: true},
 		"RT.leave":  {Adjacent: 1, Decision: "chicken", Acted: true, LifeFloor: 5, TicksToEffect: 40, LeftGame: true},
 	}
 	mods := []struct {
