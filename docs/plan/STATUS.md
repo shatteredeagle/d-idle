@@ -53,22 +53,23 @@
 | [skresistfix](../../openspec/changes/skresistfix/) | in-progress | skresistfix | `openspec/changes/skresistfix/**`<br>`docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
 
 ### Gates
-- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 34 requirements
+- spec [act1-campaign](../../openspec/specs/act1-campaign/spec.md): 9 requirements
+- spec [backend-contract](../../openspec/specs/backend-contract/spec.md): 42 requirements
 - spec [bot-loop](../../openspec/specs/bot-loop/spec.md): 6 requirements
 - spec [combat-loop](../../openspec/specs/combat-loop/spec.md): 9 requirements
 - spec [d2d-farm](../../openspec/specs/d2d-farm/spec.md): 8 requirements
-- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 3 requirements
+- spec [dashboard-pub](../../openspec/specs/dashboard-pub/spec.md): 5 requirements
 - spec [death-rule](../../openspec/specs/death-rule/spec.md): 8 requirements
 - spec [early-game-policy](../../openspec/specs/early-game-policy/spec.md): 17 requirements
 - spec [fidelity-gate](../../openspec/specs/fidelity-gate/spec.md): 12 requirements
-- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 9 requirements
+- spec [lab-rules](../../openspec/specs/lab-rules/spec.md): 12 requirements
 - spec [licence-policy](../../openspec/specs/licence-policy/spec.md): 7 requirements
-- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 7 requirements
+- spec [merc-policy](../../openspec/specs/merc-policy/spec.md): 15 requirements
 - spec [process-hygiene](../../openspec/specs/process-hygiene/spec.md): 9 requirements
 - spec [public-split](../../openspec/specs/public-split/spec.md): 10 requirements
 - spec [replay](../../openspec/specs/replay/spec.md): 7 requirements
 - spec [soak-gates](../../openspec/specs/soak-gates/spec.md): 20 requirements
-- spec [town-basics](../../openspec/specs/town-basics/spec.md): 17 requirements
+- spec [town-basics](../../openspec/specs/town-basics/spec.md): 23 requirements
 - spec [upstream-pr](../../openspec/specs/upstream-pr/spec.md): 14 requirements
 - change armorhit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change armorhit: PR claim only with a differential on real builds: before > 0, after 0
@@ -92,14 +93,14 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
-- 8255939d 11-04 13:13 `Merge agent/stateevdiff: stateevdiff: Energy Shield absorb order differential, 40,000 cases: game.exe absorbs on the raw field before resistance; d2d after resistance (18,532 of 25,038 shield cases differ in life)` (stateevdiff)
-- 57b991c4 11-04 13:12 `Merge branch 'main' into stateevdiff` (-)
-- 89b52fba 11-04 13:07 `Merge agent/pldefdiff: pldefdiff: playerdef differential re-run (pd_calc, seeds 11 and 23, 102,604 cases each): 0 attack-rating mismatches; D2-D6/D8 not run, no PR candidate` (pldefdiff)
-- a274bf68 11-04 13:07 `Merge branch 'main' into pldefdiff` (-)
-- 80f03284 11-04 13:02 `Merge agent/livedrills2: livedrills2: RT.leave PASS live on d2d; D8.h and D8.h2 FAIL (no hire line in Kashya menu)` (livedrills2)
-- e2db8bc2 11-04 13:01 `Merge branch 'main' into livedrills2` (-)
-- d27b7e99 11-04 12:56 `Merge agent/removalplan2: removalplan2: OpenSpec removal plan revised for Backlog.md only (migration spec, per-consumer edits, stages T and 0-5)` (removalplan2)
-- 9cbf2439 11-04 12:55 `Merge branch 'main' into removalplan2` (-)
-- 9709162b 11-04 12:42 `Merge agent/areametrics: areametrics: per-area gold pickup, area summary line, kill class; d2dsoak report prints XP/h, XP/kill, gold/h per area` (areametrics)
-- 6c39949c 11-04 12:33 `Merge branch 'main' into areametrics` (-)
+- 977fe7e4 11-04 13:56 `Merge agent/specapplyb: specapplyb: 12 capabilities reconciled (merc-policy, backend-contract, town-basics, lab-rules, dashboard-pub, ... + new act1-campaign base spec); includes the spec ledger and scanner` (specapplyb)
+- 70466ace 11-04 13:56 `Merge branch 'main' into specapplyb` (-)
+- 32350aad 11-04 13:47 `Merge agent/heldlog: heldlog: the Andariel hold line logs per clvl with floor and merc state (judge interim rule can now be met); gate decision unchanged` (heldlog)
+- 71af4db1 11-04 13:47 `Merge branch 'main' into heldlog` (-)
+- 80846882 11-04 13:41 `Merge agent/cipathfilter: ci: backlog/ and the research tool dirs (tools/emu, spec, backlog, shims, floors) count as non-code for the heavy test job (CI path filter, user approved 2026-11-04)` (cipathfilter)
+- df016436 11-04 13:40 `Merge branch 'main' into cipathfilter` (-)
+- a10570ed 11-04 13:33 `Merge agent/hirefixlive: hirefixlive: PaidHire follows the talk then hire row menu flow (offline tests; live rerun pending)` (hirefixlive)
+- 7ae43a3e 11-04 13:32 `Merge branch 'main' into hirefixlive` (-)
+- 6c451992 11-04 13:27 `Merge agent/shielddiff: shielddiff: off-weapon enhanced damage differential (D1) 2x20,000 cases, PR candidate for SKSHIELDFIX; D2 note` (shielddiff)
+- b88ae234 11-04 13:26 `Merge branch 'main' into shielddiff` (-)
 <!-- statusgen:end -->
