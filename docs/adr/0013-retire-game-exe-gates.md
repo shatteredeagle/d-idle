@@ -1,5 +1,5 @@
 ---
-status: accepted, amended by 0015 ("Not changed" part)
+status: accepted, amended by 0015 ("Not changed" part; amended 2026-11-04: d2d is the end product, game.exe the oracle)
 date: 2026-10-31
 decision-makers: user ("retire g1")
 ---
