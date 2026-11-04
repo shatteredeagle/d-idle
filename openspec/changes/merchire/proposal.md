@@ -9,3 +9,7 @@ Implement drill D8.h per the design in docs/merclive.md: hirer window, gold set 
 ## Impact
 
 Offline only (fakes and docs), nothing verified live.
+
+## Overlap (declared)
+
+m1-liveproof owns cmd/d2drill/** and internal/drill/**; merchire edits them and does not list them in owns (like fixmanamodel): three new files (internal/drill/merchire.go, internal/drill/merchire_test.go, cmd/d2drill/hire_lab.go) and a one-line registration in internal/drill/dgame.go (D8 now includes D8h). No shared function is changed.
