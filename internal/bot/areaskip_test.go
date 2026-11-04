@@ -88,3 +88,26 @@ func TestBorderLoopSkipsTheTargetArea(t *testing.T) {
 		t.Fatalf("avoid %v why %v", g.r.avoid, g.r.avoidWhy)
 	}
 }
+
+// codereview3 C2: failures of one target an hour apart do not pile up into the long skip.
+func TestTargetFailsDecay(t *testing.T) {
+	g := soakyRig(t, 2)
+	const target = 5
+	for i, want := range []time.Duration{1, 2, 4} {
+		if d := g.r.targetFailSkip(target); d != want*g.r.navSkip() {
+			t.Fatalf("failure %d: skip %v, want %v", i+1, d, want*g.r.navSkip())
+		}
+	}
+	g.clock.Sleep(time.Hour)
+	if d := g.r.targetFailSkip(target); d != g.r.navSkip() {
+		t.Fatalf("after an hour one failure must give navSkip, got %v", d)
+	}
+	// a quick repeat still doubles
+	if d := g.r.targetFailSkip(target); d != 2*g.r.navSkip() {
+		t.Fatalf("quick repeat %v", d)
+	}
+	g.r.clearTargetFails(target)
+	if len(g.r.targetFailLast) != 0 || len(g.r.targetFails) != 0 {
+		t.Fatal("clear left state")
+	}
+}

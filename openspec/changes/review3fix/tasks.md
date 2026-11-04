@@ -25,6 +25,6 @@ result: ""
 ```
 
 - [x] C1 route bans ignore nav-fault skips of non-target hops
-- [ ] C2 targetFails decay
+- [x] C2 targetFails decay
 - [ ] C3 failed ToTown counts in recKitTrips
 - [ ] C4 plan flags and TestMatchesDocs

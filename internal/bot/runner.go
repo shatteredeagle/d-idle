@@ -113,36 +113,37 @@ type Runner struct {
 	killMu      sync.Mutex      // killedNames
 	killedNames map[string]bool // normalized names of monsters killed in this game (campaign proxies)
 
-	tpd           tpDumper // inv-tp-dump rate limit (tpdump.go)
-	obMu          sync.Mutex
-	ob            observer
-	dlog          *deathLog         // guarded by obMu
-	avoid         map[int]time.Time // areas out of play (death spiral, nav faults), guarded by obMu
-	noMLvlSeen    map[int]bool      // xp rank warnings already logged (area*4+difficulty), guarded by obMu
-	decMu         sync.Mutex        // decisions
-	decisions     []decisionNote    // last planner/runner decisions for the planner dump (deathrule.go)
-	avoidWhy      map[int]string    // producer of each avoid entry (areaskip.go), guarded by obMu
-	targetFails   map[int]int       // consecutive failed walks to a leveling target (areaskip.go), guarded by obMu
-	crossLog      []time.Time       // recent "walked over an area border" re-plans (noteCrossing), guarded by obMu
-	hmu           sync.Mutex        // lastError and ladderStep
-	lastError     string
-	ladder        int
-	selfStop      bool                 // paused by the death-rate rule, guarded by mu
-	merc          mercState            // sticky merc knowledge and chore backoff (resource.go)
-	drank         atomic.Int64         // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
-	noTP          atomic.Bool          // the running task step has Constraints.NoTownPortal: no safety portal, no trip
-	farmMu        sync.Mutex           // guards farm
-	farm          farmProgress         // runs goal progress across farmStep restarts (farm.go)
-	bossRun       atomic.Bool          // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
-	bossStart     map[string]time.Time // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
-	levelerPaused bool                 // selfStop came from the leveler (LevelerPause), guarded by mu
-	autoResumeAt  time.Time            // a failsafe self pause ends by itself at this time (zero: waits for Resume), guarded by mu
-	lastSelfPause time.Time            // for the self pause backoff, guarded by mu
-	pauseStreak   int
-	panicTimes    []time.Time // recovered panics inside PanicWindow, guarded by mu
-	panics        int         // all recovered panics, guarded by mu
-	lastOverrun   time.Time   // the last time the panic budget was exceeded, guarded by mu
-	crash         error       // set when the panic budget cannot be handled by pausing: Run returns it, guarded by mu
+	tpd            tpDumper // inv-tp-dump rate limit (tpdump.go)
+	obMu           sync.Mutex
+	ob             observer
+	dlog           *deathLog               // guarded by obMu
+	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
+	noMLvlSeen     map[int]bool            // xp rank warnings already logged (area*4+difficulty), guarded by obMu
+	decMu          sync.Mutex              // decisions
+	decisions      []decisionNote          // last planner/runner decisions for the planner dump (deathrule.go)
+	avoidWhy       map[int]string          // producer of each avoid entry (areaskip.go), guarded by obMu
+	targetFailLast map[int]targetFailStamp // time and skip of the last failure per target, guarded by obMu
+	targetFails    map[int]int             // consecutive failed walks to a leveling target (areaskip.go), guarded by obMu
+	crossLog       []time.Time             // recent "walked over an area border" re-plans (noteCrossing), guarded by obMu
+	hmu            sync.Mutex              // lastError and ladderStep
+	lastError      string
+	ladder         int
+	selfStop       bool                 // paused by the death-rate rule, guarded by mu
+	merc           mercState            // sticky merc knowledge and chore backoff (resource.go)
+	drank          atomic.Int64         // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
+	noTP           atomic.Bool          // the running task step has Constraints.NoTownPortal: no safety portal, no trip
+	farmMu         sync.Mutex           // guards farm
+	farm           farmProgress         // runs goal progress across farmStep restarts (farm.go)
+	bossRun        atomic.Bool          // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
+	bossStart      map[string]time.Time // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
+	levelerPaused  bool                 // selfStop came from the leveler (LevelerPause), guarded by mu
+	autoResumeAt   time.Time            // a failsafe self pause ends by itself at this time (zero: waits for Resume), guarded by mu
+	lastSelfPause  time.Time            // for the self pause backoff, guarded by mu
+	pauseStreak    int
+	panicTimes     []time.Time // recovered panics inside PanicWindow, guarded by mu
+	panics         int         // all recovered panics, guarded by mu
+	lastOverrun    time.Time   // the last time the panic budget was exceeded, guarded by mu
+	crash          error       // set when the panic budget cannot be handled by pausing: Run returns it, guarded by mu
 
 	// Main-goroutine-only state.
 	loop loopState
