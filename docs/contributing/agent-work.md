@@ -1,6 +1,6 @@
 # Help with d.idle: a guide for friends and their AI agents
 
-> status: current, APPROVED by the maintainer 2026-11-01 (card communitywork); announced to contributors: the GitHub issues, the Discord channels #work-board and #agents and the pinned prompt exist and are live. The open items are on [../community/work-board.md](../community/work-board.md); finished items are in [../community/work-archive.md](../community/work-archive.md).
+> status: current, APPROVED by the maintainer 2026-11-01 (task communitywork); announced to contributors: the GitHub issues, the Discord channels #work-board and #agents and the pinned prompt exist and are live. The open items are on [../community/work-board.md](../community/work-board.md); finished items are in [../community/work-archive.md](../community/work-archive.md).
 
 Guide for Claude users and the agent setup: [../agents/claude-tracing-guide.md](../agents/claude-tracing-guide.md)
 

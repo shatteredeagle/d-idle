@@ -13,7 +13,7 @@ failed or were cancelled (see "Why it failed" below), reworked 2026-10-30 by CIF
 
 ## Jobs
 - `checks` (light, always, about 5 s on the worker host): `go run ./cmd/leakcheck -mode fail`, `tools/ci/check.sh --hygiene-only`, gofmt,
-  `go vet ./cmd/leakcheck`. changecheck and the OpenSpec validator no longer run here (removal stage 2).
+  `go vet ./cmd/leakcheck`. (changecheck and the OpenSpec validator were removed with OpenSpec.)
 - `test` (heavy, skipped when the diff to the base has only `docs/`, `backlog/` or top-level `*.md` files): `tools/ci/check.sh`
   (hygiene, gofmt, `go vet ./...`), `PAR=2 tools/ci/test.sh` (`go test -short -p 2 ./...` minus the quarantine list in
   `tools/ci/flaky.txt`, each quarantined test retried once; includes the knobdump drift test), `tools/ci/scripts.sh` (`bash -n` on
@@ -31,7 +31,7 @@ superseded or killed pushes, not a second cause (U: The forge run logs were not 
 has fetch errors from the forge outages).
 
 ## Read results
-Forge repo page, Actions tab (`/<owner>/d2lod-bot/actions`); a red `checks` is a card/owners/format problem, a red `test` shows
+Forge repo page, Actions tab (`/<owner>/d2lod-bot/actions`); a red `checks` is a leak/hygiene/format problem, a red `test` shows
 the failing step. Runner log: `ssh worker journalctl --user -u forge-runner -n 100` (step output is not in it).
 
 ## Run the same locally
@@ -44,7 +44,7 @@ up: `env -i HOME=$HOME PATH=/usr/bin nice -n 10 bash tools/ci/scripts.sh` on the
 
 ## What the runner needs
 - A forge-runner with label `linux` running jobs on the host. Go 1.27.3, bash, git, curl, python3, gzip/tar/sha256sum; node >= 20.19
-  is optional (openspec validate is skipped without it). No docker.
+  is no longer needed. No docker.
 - `actions/checkout@v4` and `actions/upload-artifact@v3` must be reachable (the forge mirrors them via its default actions URL).
 - Registering the runner needs a registration token (admin action, not done here).
 

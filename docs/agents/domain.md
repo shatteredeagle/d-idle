@@ -7,7 +7,7 @@ One project, one vocabulary. Hand-written in the shape of the setup skill's `dom
 In this order, skipping silently what does not exist:
 
 1. `GLOSSARY.md` (repo root): the project's terms, each with where it lives and what it is not to be confused with. There is no `GLOSSARY-MAP.md` (single context).
-2. `docs/contracts/<capability>/spec.md` for the area you touch: the contracts and numeric gates (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). Numbers live there, do not copy them.
+2. `docs/contracts/<capability>.md` for the area you touch: the contracts and numeric gates (soak-gates, death-rule, backend-contract, fidelity-gate, merc-policy, early-game-policy, lab-rules). Numbers live there, do not copy them.
 3. `docs/adr/` (index: `docs/decisions.md`): the decisions the user made. Read the ones that touch your area.
 4. `docs/plan/STATUS.md`, then `docs/plan/plan-v2.md`, then the doc of your area (`docs/INDEX.md` maps them). Evidence docs carry V (verified) / S (secondary) / U (unverified) tags.
 

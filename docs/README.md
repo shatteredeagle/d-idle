@@ -3,9 +3,9 @@
 d2lod-bot (d.idle) is a Go bot for Diablo II LoD 1.14d. d2d (a lockstep fork of psi29a/d2decomped) is the primary backend ([ADR 0009](adr/0009-d2d-primary-backend.md)); the Game.exe path is frozen and stays the acceptance reference.
 
 ## Reading order (same as [../AGENTS.md](../AGENTS.md))
-1. [../openspec/README.md](../openspec/README.md): how jobs (change cards) and contracts (specs) are written.
+1. [contracts/README.md](contracts/README.md): how contracts are written.
 2. [plan/STATUS.md](plan/STATUS.md): where we are; the block at the bottom is generated.
-3. Your change card `openspec/changes/<id>/` (the brief: proposal, tasks, `owns:`, `exclusive:`, `gates:`).
+3. Your task in `backlog/tasks/` (the brief; [backlog.md](backlog.md): `owns:`, `exclusive:`, `contracts:`, acceptance criteria).
 4. [../GLOSSARY.md](../GLOSSARY.md) when a term is unclear.
 5. [d2-1.14d-memory.md](d2-1.14d-memory.md), then the doc of your area (find it in [INDEX.md](INDEX.md)).
 [../PLAN.md](../PLAN.md) is the founding plan (historical).
