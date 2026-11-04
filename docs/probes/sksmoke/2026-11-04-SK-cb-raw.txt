@@ -1,0 +1,542 @@
+=== setup replies (level 8 run) ===
+> debug goto 2
+28.0 48.0 err=<nil>
+> debug stat 1 800
+ err=<nil>
+> debug stat 6 256000
+ err=<nil>
+> debug stat 7 256000
+ err=<nil>
+> debug stat 9 400000
+ err=<nil>
+> debug points 38 8
+ err=<nil>
+> debug mana full
+mana 35 -> 1562 (max 1562) err=<nil>
+> debug spawn zombie1 1 near
+spawned=1 ids=#17 Zombie hp=11 lvl=1 err=<nil>
+> debug mon set 17 life 1000000 maxlife 1000000 dmg 0 0 res fire 0 res light 0 res cold 0 res phys 0 res magic 0
+#17 Zombie maxlife 11 -> 1000000 life 11 -> 1000000 dmg 0-0 res.phys 0 res.magic 0 res.fire 0 res.light 0 res.cold 0 err=<nil>
+> monsters
+ err=<nil>
+> step 0 err=d2d: usage: step <n> [render]
+
+=== level 8 sample: first cast, frames 1-46 (monsters #17 row, chargedbolt row count) ===
+> debug cast 38 unit 17
+frame 1 bolts 0 hp 1000000/1000000
+frame 2 bolts 0 hp 1000000/1000000
+frame 3 bolts 0 hp 1000000/1000000
+frame 4 bolts 10 hp 1000000/1000000
+frame 5 bolts 10 hp 1000000/1000000
+frame 6 bolts 10 hp 1000000/1000000
+frame 7 bolts 10 hp 1000000/1000000
+frame 8 bolts 10 hp 1000000/1000000
+frame 9 bolts 10 hp 1000000/1000000
+frame 10 bolts 10 hp 1000000/1000000
+frame 11 bolts 10 hp 1000000/1000000
+frame 12 bolts 10 hp 1000000/1000000
+frame 13 bolts 10 hp 1000000/1000000
+frame 14 bolts 10 hp 1000000/1000000
+frame 15 bolts 10 hp 1000000/1000000
+frame 16 bolts 10 hp 1000000/1000000
+frame 17 bolts 10 hp 1000000/1000000
+frame 18 bolts 10 hp 1000000/1000000
+frame 19 bolts 10 hp 1000000/1000000
+frame 20 bolts 10 hp 1000000/1000000
+frame 21 bolts 9 hp 999995/1000000
+frame 22 bolts 8 hp 999989/1000000
+frame 23 bolts 7 hp 999982/1000000
+frame 24 bolts 7 hp 999982/1000000
+frame 25 bolts 7 hp 999982/1000000
+frame 26 bolts 7 hp 999982/1000000
+frame 27 bolts 7 hp 999982/1000000
+frame 28 bolts 7 hp 999982/1000000
+frame 29 bolts 7 hp 999982/1000000
+frame 30 bolts 7 hp 999982/1000000
+frame 31 bolts 7 hp 999982/1000000
+frame 32 bolts 7 hp 999982/1000000
+frame 33 bolts 7 hp 999982/1000000
+frame 34 bolts 7 hp 999982/1000000
+frame 35 bolts 7 hp 999982/1000000
+frame 36 bolts 7 hp 999982/1000000
+frame 37 bolts 7 hp 999982/1000000
+frame 38 bolts 7 hp 999982/1000000
+frame 39 bolts 7 hp 999982/1000000
+frame 40 bolts 7 hp 999982/1000000
+frame 41 bolts 7 hp 999982/1000000
+frame 42 bolts 7 hp 999982/1000000
+frame 43 bolts 0 hp 999982/1000000
+frame 44 bolts 0 hp 999982/1000000
+frame 45 bolts 0 hp 999982/1000000
+> debug cast 38 unit 17
+frame 46 bolts 0 hp 999982/1000000
+=== events per level ===
+# level 1: bolts vanished k in one frame, life drop d (points); d>0 hit, d=0 range end or miss
+L1 ev0 k=3 drop=0
+L1 ev1 k=1 drop=2
+L1 ev2 k=2 drop=0
+L1 ev3 k=3 drop=0
+L1 ev4 k=1 drop=2
+L1 ev5 k=2 drop=0
+L1 ev6 k=1 drop=4
+L1 ev7 k=2 drop=0
+L1 ev8 k=1 drop=2
+L1 ev9 k=2 drop=0
+L1 ev10 k=1 drop=3
+L1 ev11 k=2 drop=0
+L1 ev12 k=1 drop=4
+L1 ev13 k=2 drop=0
+L1 ev14 k=1 drop=3
+L1 ev15 k=2 drop=0
+L1 ev16 k=1 drop=2
+L1 ev17 k=1 drop=4
+L1 ev18 k=1 drop=0
+L1 ev19 k=3 drop=0
+L1 ev20 k=3 drop=0
+L1 ev21 k=3 drop=0
+L1 ev22 k=3 drop=0
+L1 ev23 k=3 drop=0
+L1 ev24 k=3 drop=0
+L1 ev25 k=3 drop=0
+L1 ev26 k=1 drop=4
+L1 ev27 k=2 drop=0
+L1 ev28 k=3 drop=0
+L1 ev29 k=3 drop=0
+L1 ev30 k=3 drop=0
+L1 ev31 k=3 drop=0
+L1 ev32 k=1 drop=3
+L1 ev33 k=2 drop=0
+L1 ev34 k=3 drop=0
+L1 ev35 k=1 drop=2
+L1 ev36 k=1 drop=3
+L1 ev37 k=1 drop=0
+L1 ev38 k=3 drop=0
+L1 ev39 k=1 drop=3
+L1 ev40 k=2 drop=0
+L1 ev41 k=1 drop=3
+L1 ev42 k=2 drop=0
+L1 ev43 k=1 drop=2
+L1 ev44 k=1 drop=3
+L1 ev45 k=1 drop=0
+L1 ev46 k=1 drop=4
+L1 ev47 k=2 drop=0
+L1 ev48 k=1 drop=3
+L1 ev49 k=2 drop=0
+L1 ev50 k=3 drop=0
+L1 ev51 k=3 drop=0
+L1 ev52 k=3 drop=0
+L1 ev53 k=1 drop=3
+L1 ev54 k=2 drop=0
+L1 ev55 k=3 drop=0
+L1 ev56 k=3 drop=0
+L1 ev57 k=3 drop=0
+L1 ev58 k=1 drop=3
+L1 ev59 k=2 drop=0
+L1 ev60 k=3 drop=0
+L1 ev61 k=1 drop=3
+L1 ev62 k=2 drop=0
+L1 ev63 k=1 drop=3
+L1 ev64 k=2 drop=0
+L1 ev65 k=1 drop=2
+L1 ev66 k=1 drop=4
+L1 ev67 k=1 drop=0
+L1 ev68 k=3 drop=0
+L1 ev69 k=1 drop=3
+L1 ev70 k=2 drop=0
+L1 ev71 k=3 drop=0
+L1 ev72 k=3 drop=0
+L1 ev73 k=3 drop=0
+L1 ev74 k=1 drop=3
+L1 ev75 k=2 drop=0
+L1 ev76 k=3 drop=0
+L1 ev77 k=3 drop=0
+L1 ev78 k=3 drop=0
+L1 ev79 k=3 drop=0
+L1 ev80 k=3 drop=0
+L1 ev81 k=3 drop=0
+L1 ev82 k=1 drop=3
+L1 ev83 k=1 drop=3
+L1 ev84 k=1 drop=0
+L1 ev85 k=1 drop=3
+L1 ev86 k=2 drop=0
+L1 ev87 k=3 drop=0
+L1 ev88 k=3 drop=0
+L1 ev89 k=3 drop=0
+L1 ev90 k=1 drop=0
+L1 ev91 k=2 drop=0
+L1 ev92 k=3 drop=0
+L1 ev93 k=3 drop=0
+L1 ev94 k=3 drop=0
+L1 ev95 k=3 drop=0
+L1 ev96 k=3 drop=0
+L1 ev97 k=3 drop=0
+L1 ev98 k=1 drop=0
+L1 ev99 k=2 drop=0
+L1 ev100 k=3 drop=0
+L1 ev101 k=1 drop=2
+L1 ev102 k=2 drop=0
+L1 ev103 k=1 drop=4
+L1 ev104 k=2 drop=0
+L1 ev105 k=1 drop=2
+L1 ev106 k=2 drop=0
+L1 ev107 k=1 drop=3
+L1 ev108 k=2 drop=0
+L1 ev109 k=1 drop=3
+L1 ev110 k=2 drop=0
+L1 ev111 k=1 drop=3
+L1 ev112 k=2 drop=0
+L1 ev113 k=1 drop=3
+L1 ev114 k=1 drop=3
+L1 ev115 k=1 drop=0
+L1 ev116 k=1 drop=4
+L1 ev117 k=1 drop=3
+L1 ev118 k=1 drop=0
+L1 ev119 k=3 drop=0
+L1 ev120 k=1 drop=3
+L1 ev121 k=1 drop=3
+L1 ev122 k=1 drop=0
+L1 ev123 k=3 drop=0
+L1 ev124 k=1 drop=2
+L1 ev125 k=1 drop=3
+L1 ev126 k=1 drop=0
+L1 ev127 k=3 drop=0
+L1 ev128 k=3 drop=0
+L1 ev129 k=3 drop=0
+L1 ev130 k=3 drop=0
+L1 ev131 k=3 drop=0
+L1 ev132 k=3 drop=0
+L1 ev133 k=3 drop=0
+L1 ev134 k=3 drop=0
+L1 ev135 k=3 drop=0
+L1 ev136 k=1 drop=3
+L1 ev137 k=2 drop=0
+L1 ev138 k=3 drop=0
+L1 ev139 k=3 drop=0
+L1 ev140 k=3 drop=0
+L1 ev141 k=3 drop=0
+L1 ev142 k=1 drop=3
+L1 ev143 k=2 drop=0
+L1 ev144 k=1 drop=4
+L1 ev145 k=1 drop=3
+L1 ev146 k=1 drop=0
+L1 ev147 k=1 drop=2
+L1 ev148 k=2 drop=0
+L1 ev149 k=3 drop=0
+L1 ev150 k=3 drop=0
+L1 ev151 k=3 drop=0
+L1 ev152 k=3 drop=0
+L1 ev153 k=1 drop=4
+L1 ev154 k=2 drop=0
+L1 ev155 k=1 drop=3
+L1 ev156 k=2 drop=0
+L1 ev157 k=3 drop=0
+L1 ev158 k=3 drop=0
+L1 ev159 k=1 drop=3
+L1 ev160 k=1 drop=2
+L1 ev161 k=1 drop=0
+L1 ev162 k=1 drop=3
+L1 ev163 k=2 drop=0
+L1 ev164 k=3 drop=0
+L1 ev165 k=1 drop=3
+L1 ev166 k=1 drop=4
+L1 ev167 k=1 drop=0
+L1 ev168 k=1 drop=3
+L1 ev169 k=2 drop=0
+L1 ev170 k=3 drop=0
+L1 ev171 k=1 drop=2
+L1 ev172 k=2 drop=0
+L1 ev173 k=3 drop=0
+L1 ev174 k=3 drop=0
+L1 ev175 k=3 drop=0
+L1 ev176 k=3 drop=0
+L1 ev177 k=1 drop=4
+L1 ev178 k=1 drop=4
+L1 ev179 k=1 drop=0
+L1 ev180 k=3 drop=0
+L1 ev181 k=3 drop=0
+# level 4: bolts vanished k in one frame, life drop d (points); d>0 hit, d=0 range end or miss
+L4 ev0 k=1 drop=3
+L4 ev1 k=5 drop=0
+L4 ev2 k=1 drop=4
+L4 ev3 k=5 drop=0
+L4 ev4 k=1 drop=5
+L4 ev5 k=1 drop=4
+L4 ev6 k=1 drop=5
+L4 ev7 k=3 drop=0
+L4 ev8 k=1 drop=5
+L4 ev9 k=5 drop=0
+L4 ev10 k=1 drop=4
+L4 ev11 k=5 drop=0
+L4 ev12 k=1 drop=4
+L4 ev13 k=5 drop=0
+L4 ev14 k=1 drop=5
+L4 ev15 k=1 drop=6
+L4 ev16 k=4 drop=0
+L4 ev17 k=1 drop=4
+L4 ev18 k=5 drop=0
+L4 ev19 k=1 drop=4
+L4 ev20 k=5 drop=0
+L4 ev21 k=1 drop=4
+L4 ev22 k=1 drop=5
+L4 ev23 k=1 drop=4
+L4 ev24 k=1 drop=4
+L4 ev25 k=2 drop=0
+L4 ev26 k=1 drop=5
+L4 ev27 k=5 drop=0
+L4 ev28 k=6 drop=0
+L4 ev29 k=1 drop=5
+L4 ev30 k=5 drop=0
+L4 ev31 k=6 drop=0
+L4 ev32 k=6 drop=0
+L4 ev33 k=6 drop=0
+L4 ev34 k=6 drop=0
+L4 ev35 k=1 drop=4
+L4 ev36 k=2 drop=10
+L4 ev37 k=3 drop=0
+L4 ev38 k=6 drop=0
+L4 ev39 k=6 drop=0
+L4 ev40 k=6 drop=0
+L4 ev41 k=6 drop=0
+L4 ev42 k=1 drop=4
+L4 ev43 k=1 drop=4
+L4 ev44 k=4 drop=0
+L4 ev45 k=1 drop=4
+L4 ev46 k=5 drop=0
+L4 ev47 k=2 drop=10
+L4 ev48 k=1 drop=5
+L4 ev49 k=1 drop=4
+L4 ev50 k=2 drop=0
+L4 ev51 k=6 drop=0
+L4 ev52 k=1 drop=4
+L4 ev53 k=5 drop=0
+L4 ev54 k=1 drop=5
+L4 ev55 k=5 drop=0
+L4 ev56 k=2 drop=10
+L4 ev57 k=1 drop=3
+L4 ev58 k=1 drop=4
+L4 ev59 k=2 drop=0
+L4 ev60 k=1 drop=5
+L4 ev61 k=1 drop=4
+L4 ev62 k=4 drop=0
+L4 ev63 k=1 drop=5
+L4 ev64 k=1 drop=4
+L4 ev65 k=4 drop=0
+L4 ev66 k=6 drop=0
+L4 ev67 k=1 drop=5
+L4 ev68 k=5 drop=0
+L4 ev69 k=6 drop=0
+L4 ev70 k=1 drop=5
+L4 ev71 k=1 drop=5
+L4 ev72 k=4 drop=0
+L4 ev73 k=6 drop=0
+L4 ev74 k=6 drop=0
+L4 ev75 k=6 drop=0
+L4 ev76 k=1 drop=5
+L4 ev77 k=5 drop=0
+L4 ev78 k=6 drop=0
+L4 ev79 k=1 drop=4
+L4 ev80 k=1 drop=6
+L4 ev81 k=1 drop=5
+L4 ev82 k=1 drop=4
+L4 ev83 k=2 drop=0
+L4 ev84 k=1 drop=4
+L4 ev85 k=5 drop=0
+L4 ev86 k=1 drop=5
+L4 ev87 k=1 drop=5
+L4 ev88 k=2 drop=8
+L4 ev89 k=2 drop=0
+L4 ev90 k=1 drop=5
+L4 ev91 k=5 drop=0
+L4 ev92 k=1 drop=4
+L4 ev93 k=5 drop=0
+L4 ev94 k=1 drop=5
+L4 ev95 k=5 drop=0
+L4 ev96 k=6 drop=0
+L4 ev97 k=1 drop=4
+L4 ev98 k=5 drop=0
+L4 ev99 k=1 drop=5
+L4 ev100 k=5 drop=0
+L4 ev101 k=6 drop=0
+# level 8: bolts vanished k in one frame, life drop d (points); d>0 hit, d=0 range end or miss
+L8 ev0 k=1 drop=5
+L8 ev1 k=1 drop=6
+L8 ev2 k=1 drop=7
+L8 ev3 k=7 drop=0
+L8 ev4 k=1 drop=6
+L8 ev5 k=1 drop=7
+L8 ev6 k=1 drop=7
+L8 ev7 k=7 drop=0
+L8 ev8 k=1 drop=6
+L8 ev9 k=1 drop=6
+L8 ev10 k=1 drop=7
+L8 ev11 k=7 drop=0
+L8 ev12 k=1 drop=8
+L8 ev13 k=9 drop=0
+L8 ev14 k=1 drop=6
+L8 ev15 k=9 drop=0
+L8 ev16 k=1 drop=6
+L8 ev17 k=1 drop=6
+L8 ev18 k=1 drop=7
+L8 ev19 k=7 drop=0
+L8 ev20 k=1 drop=6
+L8 ev21 k=2 drop=13
+L8 ev22 k=7 drop=0
+L8 ev23 k=1 drop=7
+L8 ev24 k=1 drop=6
+L8 ev25 k=8 drop=0
+L8 ev26 k=1 drop=7
+L8 ev27 k=2 drop=13
+L8 ev28 k=7 drop=0
+L8 ev29 k=1 drop=6
+L8 ev30 k=2 drop=13
+L8 ev31 k=1 drop=7
+L8 ev32 k=1 drop=7
+L8 ev33 k=5 drop=0
+L8 ev34 k=1 drop=6
+L8 ev35 k=9 drop=0
+L8 ev36 k=10 drop=0
+L8 ev37 k=1 drop=6
+L8 ev38 k=9 drop=0
+L8 ev39 k=10 drop=0
+L8 ev40 k=1 drop=7
+L8 ev41 k=9 drop=0
+L8 ev42 k=10 drop=0
+L8 ev43 k=10 drop=0
+L8 ev44 k=1 drop=7
+L8 ev45 k=2 drop=12
+L8 ev46 k=1 drop=6
+L8 ev47 k=1 drop=7
+L8 ev48 k=5 drop=0
+L8 ev49 k=1 drop=6
+L8 ev50 k=9 drop=0
+L8 ev51 k=10 drop=0
+L8 ev52 k=10 drop=0
+L8 ev53 k=1 drop=7
+L8 ev54 k=9 drop=0
+L8 ev55 k=1 drop=6
+L8 ev56 k=1 drop=7
+L8 ev57 k=1 drop=7
+L8 ev58 k=7 drop=0
+L8 ev59 k=2 drop=14
+L8 ev60 k=8 drop=0
+L8 ev61 k=1 drop=6
+L8 ev62 k=2 drop=15
+L8 ev63 k=1 drop=6
+L8 ev64 k=3 drop=20
+L8 ev65 k=3 drop=0
+L8 ev66 k=2 drop=12
+L8 ev67 k=1 drop=7
+L8 ev68 k=7 drop=0
+L8 ev69 k=2 drop=13
+L8 ev70 k=8 drop=0
+L8 ev71 k=1 drop=6
+L8 ev72 k=1 drop=7
+L8 ev73 k=2 drop=13
+L8 ev74 k=6 drop=0
+L8 ev75 k=3 drop=17
+L8 ev76 k=1 drop=6
+L8 ev77 k=1 drop=7
+L8 ev78 k=5 drop=0
+L8 ev79 k=2 drop=13
+L8 ev80 k=2 drop=15
+L8 ev81 k=6 drop=0
+# level 13: bolts vanished k in one frame, life drop d (points); d>0 hit, d=0 range end or miss
+L13 ev0 k=1 drop=8
+L13 ev1 k=1 drop=8
+L13 ev2 k=1 drop=10
+L13 ev3 k=12 drop=0
+L13 ev4 k=1 drop=8
+L13 ev5 k=1 drop=9
+L13 ev6 k=1 drop=10
+L13 ev7 k=12 drop=0
+L13 ev8 k=1 drop=9
+L13 ev9 k=1 drop=8
+L13 ev10 k=1 drop=10
+L13 ev11 k=12 drop=0
+L13 ev12 k=1 drop=10
+L13 ev13 k=1 drop=9
+L13 ev14 k=13 drop=0
+L13 ev15 k=2 drop=17
+L13 ev16 k=2 drop=18
+L13 ev17 k=11 drop=0
+L13 ev18 k=1 drop=8
+L13 ev19 k=1 drop=9
+L13 ev20 k=1 drop=10
+L13 ev21 k=1 drop=9
+L13 ev22 k=11 drop=0
+L13 ev23 k=1 drop=9
+L13 ev24 k=3 drop=27
+L13 ev25 k=1 drop=8
+L13 ev26 k=10 drop=0
+L13 ev27 k=1 drop=10
+L13 ev28 k=1 drop=9
+L13 ev29 k=13 drop=0
+L13 ev30 k=1 drop=9
+L13 ev31 k=2 drop=18
+L13 ev32 k=2 drop=19
+L13 ev33 k=10 drop=0
+L13 ev34 k=2 drop=17
+L13 ev35 k=2 drop=18
+L13 ev36 k=1 drop=8
+L13 ev37 k=1 drop=10
+L13 ev38 k=9 drop=0
+L13 ev39 k=1 drop=8
+L13 ev40 k=1 drop=10
+L13 ev41 k=13 drop=0
+L13 ev42 k=15 drop=0
+L13 ev43 k=1 drop=9
+L13 ev44 k=1 drop=10
+L13 ev45 k=13 drop=0
+L13 ev46 k=15 drop=0
+L13 ev47 k=1 drop=9
+L13 ev48 k=14 drop=0
+# level 20: bolts vanished k in one frame, life drop d (points); d>0 hit, d=0 range end or miss
+L20 ev0 k=1 drop=13
+L20 ev1 k=1 drop=14
+L20 ev2 k=1 drop=15
+L20 ev3 k=1 drop=14
+L20 ev4 k=1 drop=15
+L20 ev5 k=17 drop=0
+L20 ev6 k=1 drop=15
+L20 ev7 k=1 drop=14
+L20 ev8 k=2 drop=29
+L20 ev9 k=1 drop=16
+L20 ev10 k=17 drop=0
+L20 ev11 k=1 drop=14
+L20 ev12 k=1 drop=14
+L20 ev13 k=1 drop=14
+L20 ev14 k=1 drop=15
+L20 ev15 k=18 drop=0
+L20 ev16 k=2 drop=28
+L20 ev17 k=1 drop=15
+L20 ev18 k=19 drop=0
+L20 ev19 k=2 drop=29
+L20 ev20 k=2 drop=30
+L20 ev21 k=1 drop=14
+L20 ev22 k=17 drop=0
+L20 ev23 k=1 drop=14
+L20 ev24 k=1 drop=14
+L20 ev25 k=1 drop=15
+L20 ev26 k=1 drop=15
+L20 ev27 k=2 drop=29
+L20 ev28 k=16 drop=0
+L20 ev29 k=1 drop=14
+L20 ev30 k=3 drop=45
+L20 ev31 k=1 drop=13
+L20 ev32 k=2 drop=29
+L20 ev33 k=15 drop=0
+L20 ev34 k=1 drop=14
+L20 ev35 k=2 drop=29
+L20 ev36 k=1 drop=15
+L20 ev37 k=18 drop=0
+L20 ev38 k=1 drop=15
+L20 ev39 k=2 drop=30
+L20 ev40 k=2 drop=30
+L20 ev41 k=1 drop=15
+L20 ev42 k=16 drop=0
+L20 ev43 k=2 drop=28
+L20 ev44 k=3 drop=44
+L20 ev45 k=3 drop=43
+L20 ev46 k=1 drop=15
+L20 ev47 k=2 drop=29
+L20 ev48 k=11 drop=0
