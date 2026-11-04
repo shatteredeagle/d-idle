@@ -1,0 +1,1 @@
+BACKLOG: sksmoke-a1: SK drill design and expected Fire Bolt / Charged Bolt damage per level (docs/probes/drills/2026-11-03-SK-design.txt); live run BLOCKED (i2 stopped, no skill-level setter, no SK subcommand)

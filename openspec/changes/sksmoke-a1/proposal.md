@@ -10,3 +10,7 @@ docs/research/sorc-act-gate.md section 3 row 4 (SKSMOKE-A1): the Act 1 Sorceress
 ## Impact
 
 Docs only. Frost Nova ring: no harness exists in internal/drill or cmd/d2drill (no "nova" there), so it is reported as not done.
+
+## Overlap (declared)
+
+m1-liveproof owns docs/probes/drills/**; this card only adds one new file there (2026-11-03-SK-design.txt) and edits no existing drill file.
