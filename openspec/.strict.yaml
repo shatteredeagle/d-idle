@@ -58,3 +58,6 @@ allow_merges:
   - a1be2f4   # retiredterms: merged without a card (merge.sh --card none)
   - 161f934   # shimcheckci: merged without a card (merge.sh --card none)
   - a378bd6   # lifelog: merged without a card (merge.sh --card none)
+  - d8c4451   # esfixbody: merged without a card (merge.sh --card none)
+  - 0b1b54a   # gate2runbook: merged without a card (merge.sh --card none)
+  - ed50df4   # drillsfix: merged without a card (merge.sh --card none)
