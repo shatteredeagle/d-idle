@@ -34,6 +34,7 @@ func usage() {
   level N | xp N            set level / experience
   stats str=N dex=N vit=N ene=N points=N skills=N
   setstat unit=server|client|both vec=merged|base|both stat=ID value=RAW   (research primitive)
+  skilllevel FILE "Skill Name" N   set hard points of a skill by name in a .d2s (game stopped; class must match)
   overlay xprate=N | nodrop=0 | exppct=P   per-instance excel override (needs -direct -txt launch)
   save FILE key=value...    edit a .d2s (game must be stopped)
   quest set FILE [D/]ACT.QUEST[:STATE]...   quest words (STATE done|started|pending|none|number); wINDEX = raw word
@@ -97,6 +98,9 @@ func main() {
 			fatal(err)
 		}
 		fmt.Println("run-start marker written:", rest[0])
+		return
+	case "skilllevel":
+		cmdSkillLevel(env, reason, actor, rest)
 		return
 	case "show":
 		_, st, err := env.Inspect()
