@@ -60,9 +60,14 @@ func LogGoldFarm(on bool, need, gold, clvl int) string {
 	return fmt.Sprintf("%sgold farm %s need=%d gold=%d clvl=%d", Prefix, w, need, gold, clvl)
 }
 
-// LogReviveSkipped: `merc: revive skipped (gold) price=600 gold=900`.
-func LogReviveSkipped(reason string, price, gold int) string {
-	return fmt.Sprintf("%srevive skipped (%s) price=%d gold=%d", Prefix, reason, price, gold)
+// LogReviveSkipped: `merc: revive skipped (gold) price=600 gold=900 need=1000`; need is price x mult plus the kit reserve.
+func LogReviveSkipped(reason string, price, gold, need int) string {
+	return fmt.Sprintf("%srevive skipped (%s) price=%d gold=%d need=%d", Prefix, reason, price, gold, need)
+}
+
+// LogGoldWait: `merc: gold wait need=1000 gold=900`, once per change of the shortfall state (countable stall).
+func LogGoldWait(need, gold int) string {
+	return fmt.Sprintf("%sgold wait need=%d gold=%d", Prefix, need, gold)
 }
 
 // LogEquip: `merc: equip slot=helm item=Skull_Cap reason=empty_slot`.

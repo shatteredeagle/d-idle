@@ -1,0 +1,266 @@
+##### seed 20261104 (cases.tsv sha1 3357866628e7)
+== direct: game.exe without FUN_005a89a0 vs d2d one draw
+out of domain (not targetable in d2d): 14154 cases, 100 MonStats rows
+cases 88826 game 102980 base 102980 head 102980
+base: differ 63360 (min/max 56364, life only 6996); distinct monsters differing 634
+  demon/conc: 16310 of 16345
+  demon/noconc: 4133 of 9214
+  plain/conc: 29211 of 29289
+  plain/noconc: 0 of 16914
+  undead/conc: 10860 of 10883
+  undead/noconc: 2846 of 6181
+  first: (0, [24, 81, 0, 5, 0, 0, 25, 5000, 2539770547, 86866103], (107059, 108800, 1158927), (107059, 108800, 1199285))
+  first: (1, [8, 50, 0, 20, 345, 0, 100, 1, 1964552273, 1613333945], (179928, 190511, 256), (66150, 70041, 256))
+  first: (2, [29, 4, 5, 20, 0, 1, 0, 5000, 3031205660, 1027863760], (359424, 364032, 734966), (359424, 364032, 916644))
+  first: (3, [27, 15, 5, 20, 345, 1, 25, 50, 477193220, 4278202393], (893030, 905564, 0), (328320, 332928, 0))
+  first: (5, [25, 64, 5, 20, 345, 2, 75, 500, 779309694, 3175152202], (811560, 824094, 0), (298368, 302976, 52304))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 16345
+  demon/noconc: 0 of 9214
+  plain/conc: 0 of 29289
+  plain/noconc: 0 of 16914
+  undead/conc: 0 of 10883
+  undead/noconc: 0 of 6181
+== full hit path: game.exe FUN_005a89a0 + dmg func vs d2d with the first draw advanced
+out of domain (not targetable in d2d): 14154 cases, 100 MonStats rows
+cases 88826 game 102980 base 102980 head 102980
+base: differ 63362 (min/max 56364, life only 6998); distinct monsters differing 634
+  demon/conc: 16310 of 16345
+  demon/noconc: 4133 of 9214
+  plain/conc: 29211 of 29289
+  plain/noconc: 0 of 16914
+  undead/conc: 10860 of 10883
+  undead/noconc: 2848 of 6181
+  first: (0, [24, 81, 0, 5, 0, 0, 25, 5000, 2539770547, 86866103], (107059, 108800, 1157971), (107059, 108800, 1198647))
+  first: (1, [8, 50, 0, 20, 345, 0, 100, 1, 1964552273, 1613333945], (179928, 190511, 256), (66150, 70041, 256))
+  first: (2, [29, 4, 5, 20, 0, 1, 0, 5000, 3031205660, 1027863760], (359424, 364032, 740345), (359424, 364032, 920230))
+  first: (3, [27, 15, 5, 20, 345, 1, 25, 50, 477193220, 4278202393], (893030, 905564, 0), (328320, 332928, 0))
+  first: (5, [25, 64, 5, 20, 345, 2, 75, 500, 779309694, 3175152202], (811560, 824094, 0), (298368, 302976, 53289))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 16345
+  demon/noconc: 0 of 9214
+  plain/conc: 0 of 29289
+  plain/noconc: 0 of 16914
+  undead/conc: 0 of 10883
+  undead/noconc: 0 of 6181
+== full hit path vs d2d one draw (as d2d runs)
+out of domain (not targetable in d2d): 14154 cases, 100 MonStats rows
+cases 88826 game 102980 base 102980 head 102980
+base: differ 70973 (min/max 56364, life only 14609); distinct monsters differing 634
+  demon/conc: 16310 of 16345
+  demon/noconc: 4133 of 9214
+  plain/conc: 29226 of 29289
+  plain/noconc: 7598 of 16914
+  undead/conc: 10860 of 10883
+  undead/noconc: 2846 of 6181
+  first: (0, [24, 81, 0, 5, 0, 0, 25, 5000, 2539770547, 86866103], (107059, 108800, 1157971), (107059, 108800, 1199285))
+  first: (1, [8, 50, 0, 20, 345, 0, 100, 1, 1964552273, 1613333945], (179928, 190511, 256), (66150, 70041, 256))
+  first: (2, [29, 4, 5, 20, 0, 1, 0, 5000, 3031205660, 1027863760], (359424, 364032, 740345), (359424, 364032, 916644))
+  first: (3, [27, 15, 5, 20, 345, 1, 25, 50, 477193220, 4278202393], (893030, 905564, 0), (328320, 332928, 0))
+  first: (5, [25, 64, 5, 20, 345, 2, 75, 500, 779309694, 3175152202], (811560, 824094, 0), (298368, 302976, 52304))
+head: differ 33546 (min/max 0, life only 33546); distinct monsters differing 634
+  demon/conc: 5227 of 16345
+  demon/noconc: 3954 of 9214
+  plain/conc: 10575 of 29289
+  plain/noconc: 7598 of 16914
+  undead/conc: 3480 of 10883
+  undead/noconc: 2712 of 6181
+  first: (0, [24, 81, 0, 5, 0, 0, 25, 5000, 2539770547, 86866103], (107059, 108800, 1157971), (107059, 108800, 1158927))
+  first: (2, [29, 4, 5, 20, 0, 1, 0, 5000, 3031205660, 1027863760], (359424, 364032, 740345), (359424, 364032, 734966))
+  first: (14, [8, 22, 0, 5, 0, 7, 0, 5000, 390988866, 2962918877], (29593, 31334, 1235531), (29593, 31334, 1233923))
+  first: (23, [9, 61, 0, 20, 345, 11, 0, 5000, 1705504580, 3806757418], (206388, 216971, 966887), (206388, 216971, 970378))
+  first: (25, [12, 25, 5, 20, 345, 12, 75, 500, 3185249420, 840584178], (338411, 350945, 0), (338411, 350945, 569))
+##### seed 777 (cases.tsv sha1 6c8f7661eb3e)
+== direct: game.exe without FUN_005a89a0 vs d2d one draw
+out of domain (not targetable in d2d): 7204 cases, 100 MonStats rows
+cases 45776 game 52980 base 52980 head 52980
+base: differ 32639 (min/max 29051, life only 3588); distinct monsters differing 634
+  demon/conc: 8290 of 8325
+  demon/noconc: 2094 of 4757
+  plain/conc: 15152 of 15215
+  plain/noconc: 0 of 8544
+  undead/conc: 5625 of 5646
+  undead/noconc: 1478 of 3289
+  first: (1, [18, 97, 0, 5, 345, 0, 100, 5000, 2583391942, 1241101370], (203602, 208338, 1280000), (74854, 76595, 1280000))
+  first: (3, [24, 1, 20, 20, 345, 1, 25, 500, 2510239022, 1148413128], (1130543, 1148928, 0), (415641, 422400, 0))
+  first: (5, [27, 54, 20, 0, 345, 2, 25, 50, 2476556588, 2258673014], (754114, 764698, 0), (277248, 281139, 0))
+  first: (6, [3, 70, 20, 20, 0, 3, 25, 5000, 404841219, 2355028102], (47308, 54067, 1226165), (47308, 54067, 1244110))
+  first: (7, [15, 22, 0, 5, 345, 3, 25, 50, 2834693667, 2424266885], (163355, 168090, 0), (60057, 61798, 0))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 8325
+  demon/noconc: 0 of 4757
+  plain/conc: 0 of 15215
+  plain/noconc: 0 of 8544
+  undead/conc: 0 of 5646
+  undead/noconc: 0 of 3289
+== full hit path: game.exe FUN_005a89a0 + dmg func vs d2d with the first draw advanced
+out of domain (not targetable in d2d): 7204 cases, 100 MonStats rows
+cases 45776 game 52980 base 52980 head 52980
+base: differ 32638 (min/max 29051, life only 3587); distinct monsters differing 634
+  demon/conc: 8290 of 8325
+  demon/noconc: 2093 of 4757
+  plain/conc: 15152 of 15215
+  plain/noconc: 0 of 8544
+  undead/conc: 5625 of 5646
+  undead/noconc: 1478 of 3289
+  first: (1, [18, 97, 0, 5, 345, 0, 100, 5000, 2583391942, 1241101370], (203602, 208338, 1280000), (74854, 76595, 1280000))
+  first: (3, [24, 1, 20, 20, 345, 1, 25, 500, 2510239022, 1148413128], (1130543, 1148928, 0), (415641, 422400, 0))
+  first: (5, [27, 54, 20, 0, 345, 2, 25, 50, 2476556588, 2258673014], (754114, 764698, 0), (277248, 281139, 0))
+  first: (6, [3, 70, 20, 20, 0, 3, 25, 5000, 404841219, 2355028102], (47308, 54067, 1220332), (47308, 54067, 1240221))
+  first: (7, [15, 22, 0, 5, 345, 3, 25, 50, 2834693667, 2424266885], (163355, 168090, 0), (60057, 61798, 0))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 8325
+  demon/noconc: 0 of 4757
+  plain/conc: 0 of 15215
+  plain/noconc: 0 of 8544
+  undead/conc: 0 of 5646
+  undead/noconc: 0 of 3289
+== full hit path vs d2d one draw (as d2d runs)
+out of domain (not targetable in d2d): 7204 cases, 100 MonStats rows
+cases 45776 game 52980 base 52980 head 52980
+base: differ 36498 (min/max 29051, life only 7447); distinct monsters differing 634
+  demon/conc: 8290 of 8325
+  demon/noconc: 2094 of 4757
+  plain/conc: 15160 of 15215
+  plain/noconc: 3851 of 8544
+  undead/conc: 5625 of 5646
+  undead/noconc: 1478 of 3289
+  first: (1, [18, 97, 0, 5, 345, 0, 100, 5000, 2583391942, 1241101370], (203602, 208338, 1280000), (74854, 76595, 1280000))
+  first: (3, [24, 1, 20, 20, 345, 1, 25, 500, 2510239022, 1148413128], (1130543, 1148928, 0), (415641, 422400, 0))
+  first: (5, [27, 54, 20, 0, 345, 2, 25, 50, 2476556588, 2258673014], (754114, 764698, 0), (277248, 281139, 0))
+  first: (6, [3, 70, 20, 20, 0, 3, 25, 5000, 404841219, 2355028102], (47308, 54067, 1220332), (47308, 54067, 1244110))
+  first: (7, [15, 22, 0, 5, 345, 3, 25, 50, 2834693667, 2424266885], (163355, 168090, 0), (60057, 61798, 0))
+head: differ 16919 (min/max 0, life only 16919); distinct monsters differing 634
+  demon/conc: 2576 of 8325
+  demon/noconc: 1997 of 4757
+  plain/conc: 5383 of 15215
+  plain/noconc: 3851 of 8544
+  undead/conc: 1714 of 5646
+  undead/noconc: 1398 of 3289
+  first: (6, [3, 70, 20, 20, 0, 3, 25, 5000, 404841219, 2355028102], (47308, 54067, 1220332), (47308, 54067, 1226165))
+  first: (10, [4, 71, 20, 0, 0, 5, 0, 5000, 2519217950, 3789771867], (35020, 38912, 1223119), (35020, 38912, 1224487))
+  first: (12, [21, 64, 5, 0, 0, 6, 75, 5000, 1813775370, 1713647171], (90521, 92262, 1245547), (90521, 92262, 1245493))
+  first: (16, [16, 88, 5, 0, 0, 8, 25, 5000, 1538454427, 2218206513], (64409, 66150, 1207156), (64409, 66150, 1206142))
+  first: (19, [3, 60, 0, 5, 345, 9, 0, 5000, 3989076872, 2864224670], (33143, 37878, 1226983), (33143, 37878, 1225094))
+##### seed 4242 (cases.tsv sha1 fb2d3f86d665)
+== direct: game.exe without FUN_005a89a0 vs d2d one draw
+out of domain (not targetable in d2d): 825 cases, 100 MonStats rows
+cases 5155 game 5980 base 5980 head 5980
+base: differ 3699 (min/max 3369, life only 330); distinct monsters differing 634
+  demon/conc: 966 of 1001
+  demon/noconc: 204 of 476
+  plain/conc: 1756 of 1823
+  plain/noconc: 0 of 865
+  undead/conc: 649 of 666
+  undead/noconc: 124 of 324
+  first: (1, [9, 24, 20, 5, 345, 0, 0, 5000, 675949903, 669286396], (244408, 256942, 906919), (89856, 94464, 1189689))
+  first: (3, [5, 24, 5, 0, 345, 1, 0, 50, 3709302185, 2957301031], (52082, 56818, 0), (19148, 20889, 0))
+  first: (5, [11, 1, 5, 0, 345, 2, 100, 500, 2886612693, 1527087471], (116005, 120740, 128000), (42649, 44390, 128000))
+  first: (7, [18, 63, 5, 5, 345, 3, 0, 5000, 1102084373, 717458143], (287438, 294124, 846638), (105676, 108134, 1173640))
+  first: (9, [24, 49, 5, 20, 345, 4, 75, 5000, 982785914, 2123842327], (770826, 783360, 990625), (283392, 288000, 1208386))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 1001
+  demon/noconc: 0 of 476
+  plain/conc: 0 of 1823
+  plain/noconc: 0 of 865
+  undead/conc: 0 of 666
+  undead/noconc: 0 of 324
+== full hit path: game.exe FUN_005a89a0 + dmg func vs d2d with the first draw advanced
+out of domain (not targetable in d2d): 825 cases, 100 MonStats rows
+cases 5155 game 5980 base 5980 head 5980
+base: differ 3699 (min/max 3369, life only 330); distinct monsters differing 634
+  demon/conc: 966 of 1001
+  demon/noconc: 204 of 476
+  plain/conc: 1756 of 1823
+  plain/noconc: 0 of 865
+  undead/conc: 649 of 666
+  undead/noconc: 124 of 324
+  first: (1, [9, 24, 20, 5, 345, 0, 0, 5000, 675949903, 669286396], (244408, 256942, 906346), (89856, 94464, 1188851))
+  first: (3, [5, 24, 5, 0, 345, 1, 0, 50, 3709302185, 2957301031], (52082, 56818, 0), (19148, 20889, 0))
+  first: (5, [11, 1, 5, 0, 345, 2, 100, 500, 2886612693, 1527087471], (116005, 120740, 128000), (42649, 44390, 128000))
+  first: (7, [18, 63, 5, 5, 345, 3, 0, 5000, 1102084373, 717458143], (287438, 294124, 843215), (105676, 108134, 1173256))
+  first: (9, [24, 49, 5, 20, 345, 4, 75, 5000, 982785914, 2123842327], (770826, 783360, 989725), (283392, 288000, 1208811))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 1001
+  demon/noconc: 0 of 476
+  plain/conc: 0 of 1823
+  plain/noconc: 0 of 865
+  undead/conc: 0 of 666
+  undead/noconc: 0 of 324
+== full hit path vs d2d one draw (as d2d runs)
+out of domain (not targetable in d2d): 825 cases, 100 MonStats rows
+cases 5155 game 5980 base 5980 head 5980
+base: differ 4070 (min/max 3369, life only 701); distinct monsters differing 634
+  demon/conc: 966 of 1001
+  demon/noconc: 204 of 476
+  plain/conc: 1767 of 1823
+  plain/noconc: 360 of 865
+  undead/conc: 649 of 666
+  undead/noconc: 124 of 324
+  first: (1, [9, 24, 20, 5, 345, 0, 0, 5000, 675949903, 669286396], (244408, 256942, 906346), (89856, 94464, 1189689))
+  first: (3, [5, 24, 5, 0, 345, 1, 0, 50, 3709302185, 2957301031], (52082, 56818, 0), (19148, 20889, 0))
+  first: (5, [11, 1, 5, 0, 345, 2, 100, 500, 2886612693, 1527087471], (116005, 120740, 128000), (42649, 44390, 128000))
+  first: (7, [18, 63, 5, 5, 345, 3, 0, 5000, 1102084373, 717458143], (287438, 294124, 843215), (105676, 108134, 1173640))
+  first: (9, [24, 49, 5, 20, 345, 4, 75, 5000, 982785914, 2123842327], (770826, 783360, 989725), (283392, 288000, 1208386))
+head: differ 1560 (min/max 0, life only 1560); distinct monsters differing 581
+  demon/conc: 252 of 1001
+  demon/noconc: 188 of 476
+  plain/conc: 484 of 1823
+  plain/noconc: 360 of 865
+  undead/conc: 158 of 666
+  undead/noconc: 118 of 324
+  first: (1, [9, 24, 20, 5, 345, 0, 0, 5000, 675949903, 669286396], (244408, 256942, 906346), (244408, 256942, 906919))
+  first: (7, [18, 63, 5, 5, 345, 3, 0, 5000, 1102084373, 717458143], (287438, 294124, 843215), (287438, 294124, 846638))
+  first: (9, [24, 49, 5, 20, 345, 4, 75, 5000, 982785914, 2123842327], (770826, 783360, 989725), (770826, 783360, 990625))
+  first: (10, [8, 14, 20, 5, 0, 5, 75, 5000, 951285476, 3744506090], (78336, 82944, 1249047), (78336, 82944, 1250205))
+  first: (12, [10, 8, 20, 0, 0, 6, 0, 5000, 37011223, 3194903887], (85606, 89497, 1151588), (85606, 89497, 1151300))
+== PV_BOTH (every row undead and demon), direct
+out of domain (not targetable in d2d): 825 cases, 100 MonStats rows
+cases 5155 game 5980 base 5980 head 5980
+base: differ 4070 (min/max 3369, life only 701); distinct monsters differing 634
+  demon/conc: 966 of 1001
+  demon/noconc: 204 of 476
+  plain/conc: 1767 of 1823
+  plain/noconc: 360 of 865
+  undead/conc: 649 of 666
+  undead/noconc: 124 of 324
+  first: (1, [9, 24, 20, 5, 345, 0, 0, 5000, 675949903, 669286396], (244408, 256942, 782559), (89856, 94464, 1189689))
+  first: (3, [5, 24, 5, 0, 345, 1, 0, 50, 3709302185, 2957301031], (52082, 56818, 0), (19148, 20889, 0))
+  first: (5, [11, 1, 5, 0, 345, 2, 100, 500, 2886612693, 1527087471], (116005, 120740, 128000), (42649, 44390, 128000))
+  first: (7, [18, 63, 5, 5, 345, 3, 0, 5000, 1102084373, 717458143], (287438, 294124, 702184), (105676, 108134, 1173640))
+  first: (9, [24, 49, 5, 20, 345, 4, 75, 5000, 982785914, 2123842327], (770826, 783360, 894150), (283392, 288000, 1208386))
+head: differ 0 (min/max 0, life only 0); distinct monsters differing 0
+  demon/conc: 0 of 1001
+  demon/noconc: 0 of 476
+  plain/conc: 0 of 1823
+  plain/noconc: 0 of 865
+  undead/conc: 0 of 666
+  undead/noconc: 0 of 324
+##### Sorceress regress (upstream missile_hit.py, gen 20000 99)
+base: 64000 cases, 0 differ
+head: 64000 cases, 0 differ
+##### game.exe rows
+dmg rows (index, func, dParam1, dParam2): [(12, 1, 3, 2), (27, 1, 1, 1), (28, 2, 100, 0), (40, 1, 3, 2), (67, 3, 19, 0), (69, 3, 19, 0), (91, 4, 0, 0), (92, 5, 50, 50), (131, 3, 19, 0), (205, 12, 100, 0), (230, 3, 19, 0), (235, 7, 0, 0), (240, 3, 19, 0), (452, 14, 1, 50), (462, 8, 0, 0), (463, 8, 0, 0), (477, 9, 0, 0), (511, 7, 0, 0), (516, 11, 0, 0), (561, 10, 0, 0), (569, 2, 100, 0), (640, 13, 50, 0), (681, 3, 19, 0)]
+table entry 5: 0x5ad2f0
+hammer Param1 (+0x148): 4
+monstats rows: 734
+undead 123 demon 185 both 0 []
+##### d2d flags vs game: 734 rows identical on base and head (diff -q)
+# missile blessedhammer skill 'Blessed Hammer' etype 4
+##### suites
+base build rc=0
+base test_combat rc=0 ok
+base test_rules rc=0 test_rules: ok
+base test_game_rules rc=0 OK: the Cursed umod's hit hook
+base test_game rc=0 OK: two players: their own orders, the other in the View, the party arrives together, monsters go at
+base test_missile_hit rc=77 SKIP: an oracle mode, run `test_missile_hit --missile-hit CASES` (see tools/emu/missile_hit.py)
+base test_monsters rc=0 ok
+head build rc=0
+head test_combat rc=0 ok
+head test_rules rc=0 test_rules: ok
+head test_game_rules rc=0 OK: the Cursed umod's hit hook
+head test_game rc=0 OK: two players: their own orders, the other in the View, the party arrives together, monsters go at
+head test_missile_hit rc=77 SKIP: an oracle mode, run `test_missile_hit --missile-hit CASES` (see tools/emu/missile_hit.py)
+head test_monsters rc=0 ok
+head test_hammer_hit rc=77 SKIP: an oracle mode, run `test_hammer_hit --hammer-hit CASES` (see tools/emu/hammer_hit.py)
+done

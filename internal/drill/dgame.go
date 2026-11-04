@@ -290,14 +290,14 @@ func D8(l GameLab) []Drill {
 	do := func(f func(context.Context, *Run, GameLab) Outcome) func(context.Context, *Run) Outcome {
 		return func(ctx context.Context, r *Run) Outcome { return f(ctx, r, l) }
 	}
-	return []Drill{
-		d8quest(l, lim), // first: a merc owned from an earlier drill forfeits the free Rogue (DRILLS8 F14)
+	ds := append([]Drill{d8quest(l, lim)}, D8h(l, lim)...) // D8.c first: a merc owned from an earlier drill forfeits the free Rogue (DRILLS8 F14); D8.h hires, so before D8.a only on a merc-free character
+	return append(ds, []Drill{
 		{ID: "D8.a", Primitive: "P18", Title: "merc hired and killed by cheat: the bot's revive through Kashya brings it back for gold", Limit: lim, Do: do(d8revive)},
 		{ID: "D8.m", Primitive: "P3", Title: "merc at low life: the bot's belt verb with the merc flag heals it and spends one potion", Limit: lim, Do: do(d8drink)},
 		d8akara(l, lim),
 		d8warriv(l, lim),
 		{ID: "D8.g", Primitive: "P19", Title: "gamble never opens the tab when poor", Needs: []string{"the bot has no gamble code (docs/primitives.md P19: class listed only); the drill is a log grep on a soak, not a scripted scenario"}},
-	}
+	}...)
 }
 
 func d8revive(ctx context.Context, r *Run, l GameLab) Outcome {

@@ -1,0 +1,1 @@
+BACKLOG: merchire: drill D8.h/D8.h2 (paid hire, cant-afford) built offline in internal/drill/merchire.go + cmd/d2drill/hire_lab.go; live run recipe in docs/merchire.md (not verified live)
