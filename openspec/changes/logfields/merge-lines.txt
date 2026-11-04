@@ -1,0 +1,2 @@
+INDEX: docs/logfields.md: log fields for the per-skill soak report (cast result, last_skill, armor sample, build); offline only
+CHANGELOG: logfields: the bot logs cast result, last skill of a kill, armor sample and build line; d2dsoak report prints them (logging only, not verified live)

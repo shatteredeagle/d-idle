@@ -11,14 +11,9 @@ Audit result: before this change `d2dsoak` printed no per-skill field (only kill
 | casts per kill | yes, all skills together and per skill | casts / `killtime` lines (per-skill kills are not credited, so this is casts of that skill over all kills) |
 | novas, monsters per nova | yes | `act=nova n=` |
 | staff swings | yes, when the caller names the melee skill | casts of that skill |
-| d2d branch and commit | only if a line carries `branch`/`commit` keys, else n/a | none today |
-| casts that made a missile/effect | n/a | not logged |
-| casts cut before the action frame | n/a (only buffs: recast count) | not logged for attacks |
-| mana spent | n/a | not logged (the cast book exists in memory, `st.book`) |
-| kills credited per skill, hits per cast | n/a | not logged |
-| armor seconds absent | n/a | not sampled |
-| Lightning cast length 13 or 19 ticks | n/a | not logged |
+| made effect, cut, mana spent, kills (last skill), armor seconds absent, build, Lightning ticks | yes | see docs/logfields.md |
+| hits per cast | n/a | not logged |
 
-Log-side follow-ups: emit a `cast result` line (skill, made effect, cut), mana per cast, the kill's last skill, an armor-state sample on the minute line, a `build` line with branch and commit, and the Lightning cast ticks.
+Log-side fields (change logfields, docs/logfields.md): `cast result`, mana per cast, the kill's last skill, an armor sample on the minute line, the `build` line and the Lightning cast ticks are logged and printed (offline only). Still n/a: kills credited per skill by hit, hits per cast.
 
 Hook: `d2dsoak report [-melee SKILLNAME] LOG...` (cmd/d2dsoak/report.go) runs `ParseSkills` per log and prints `Text(path, melee)`. `-melee` is the basic-attack skill name from the skill data (no numeric id); without it the swing line prints n/a. Covered by `TestReportSkills` (fixture log, V offline).

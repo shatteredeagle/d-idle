@@ -10,3 +10,8 @@ docs/soakskills.md lists the per-skill soak fields that `d2dsoak report` prints 
 ## Impact
 
 Offline only, not verified live. Logging touches internal/combat; declared overlap with main-owned files, small edits.
+
+
+## Overlap (declared)
+
+Small hooks in main-owned files: `internal/combat/fighter.go` (field and one call in `cast`), `internal/combat/fight.go` (one call per tick, one key on the kill line), `internal/bot/observe.go` (`armor` key on the minute line). Logging only, covered by `TestCastLogDoesNotChangeActions`.
