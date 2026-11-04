@@ -16,3 +16,4 @@ allow_merges:
   - b8d3cca   # archive4: merged without a card (merge.sh --card none)
   - 91e287b   # archive5: merged without a card (merge.sh --card none)
   - a7a493b   # reviewbatch2c: merged without a card (merge.sh --card none)
+  - 4d01a9c   # decisionsfix: merged without a card (merge.sh --card none)
