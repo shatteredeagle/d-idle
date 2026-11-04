@@ -59,7 +59,6 @@
 | [m3-merc](../../openspec/changes/m3-merc/) | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | [mapitem](../../openspec/changes/mapitem/) | in-progress | mapitem | `docs/stream/map-contiguity.md`<br>`cmd/d2dview/stitch.go`<br>`cmd/d2dview/stitch_test.go`<br>`cmd/d2dview/feed.go`<br>`cmd/d2dview/pub.go`<br>`cmd/d2dview/main.go`<br>`cmd/d2dview/view_test.go`<br>`cmd/d2dview/web/stream.html`<br>`cmd/d2dview/web/index.html` | - |
 | [nexthit](../../openspec/changes/nexthit/) | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py`<br>`openspec/changes/nexthit/**` | `fork-branch:fix/nexthit` |
-| [noarea](../../openspec/changes/noarea/) | in-progress | noarea | `docs/noarea-policy.md`<br>`openspec/changes/noarea/**` | - |
 | [paldurtrace](../../openspec/changes/paldurtrace/) | in-progress | chuckado | `docs/research/durability-trace.md`<br>`tools/emu/verify_paldur.py`<br>`openspec/changes/paldurtrace/**` | - |
 | [palskilltrace](../../openspec/changes/palskilltrace/) | in-progress | chuckado | `docs/research/pal-skill-trace.md`<br>`docs/research/pal-smite-zeal-sacrifice-trace.md`<br>`tools/emu/verify_palskills.py`<br>`openspec/changes/palskilltrace/**` | - |
 | [skmeleewire](../../openspec/changes/skmeleewire/) | in-progress | skmeleewire | `internal/combat/melee.go`<br>`internal/combat/melee_test.go`<br>`internal/combat/resource.go`<br>`internal/data/items.go`<br>`internal/data/schema.go`<br>`internal/data/data_test.go`<br>`internal/resource/sim.go`<br>`internal/resource/wire_test.go`<br>`docs/skmeleewire.md`<br>`openspec/changes/skmeleewire/**` | - |
@@ -116,7 +115,6 @@
 - change mapitem: go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes
 - change nexthit: changecheck 0 warnings for this card; leakcheck -mode fail 0
 - change nexthit: PR claim only with a differential on real builds: before > 0, after 0
-- change noarea: changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok
 - change paldurtrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change palskilltrace: changecheck -cli 0 warnings; leakcheck -mode fail 0
 - change skmeleewire: go test -p 1 ./internal/data ./internal/resource ./internal/combat ./cmd/d2bot; whole-repo vet and test on the worker host
@@ -127,6 +125,7 @@
 - change skresistfix: PR claim only with a differential on real builds: before > 0, after 0
 
 ### Recent merges
+- b64363b6 11-04 09:00 `Merge agent/noarea: noarea: leveling-area picker policy write-up (Gate 2 seed 13 block, options)` (noarea)
 - c00666e5 11-04 08:59 `merge origin/main into noarea` (noarea)
 - 9087c52d 11-04 08:56 `Merge agent/andarielplan: andarielplan: plan for the m3-andariel throwaway fight, hold lift and the merc revive-gold stall` (andarielplan)
 - c0b2638a 11-04 08:56 `merge origin/main into andarielplan` (andarielplan)
@@ -136,5 +135,4 @@
 - 1fca1265 11-04 06:25 `Merge agent/gate2run-s12-20261103-2210-g2v: Gate 2 s12 record: NOT PASSED only on Attempt Andariel at clvl 14+ (45.7 vh, clvl 16, 1 death)` (gate2run-s12-20261103-2210-g2v)
 - 4ce50e26 11-04 04:31 `Merge agent/andarielgate: andarielgate: Gate 2 s11 Andariel criterion failed on a deliberate hold (boss.andarielHold=1), no code change; question for the user` (andarielgate)
 - c0a5b1c9 11-04 04:28 `merge origin/main into andarielgate` (andarielgate)
-- f9473ae6 11-04 04:02 `Merge agent/gate2run-s11-20261103-1954-g2a: Gate 2 s11 record: NOT PASSED only on Attempt Andariel at clvl 14+ (merc hired OK, 0 deaths in 14,869 kills, XP/h 6476 above the m24 floor)` (gate2run-s11-20261103-1954-g2a)
 <!-- statusgen:end -->

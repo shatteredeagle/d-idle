@@ -2,7 +2,7 @@
 
 ```yaml
 change: noarea
-status: in-progress
+status: archived
 agent: noarea
 branch: agent/noarea
 worktree: ~/code/d2lod-wt/noarea
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: "docs/noarea-policy.md: picker rules, seed 13 cause from log lines, seeds 11/12 comparison, 7 options with recommendation; no code; not verified live"
+result: "docs only; recommendation: change nothing yet"
 live: "not verified live (docs only)"
+merge: b64363b
 ```
 
 - [x] work done
