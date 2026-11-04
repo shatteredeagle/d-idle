@@ -11,9 +11,7 @@ Tags: V = run in the hooks branch (hook fed sample stdin, fake `go` shim for the
 
 ## pre-push (`tools/hooks/pre-push`)
 - Acts only when a pushed ref is `refs/heads/master` or `refs/heads/main` (private repo vs public repo); any other push exits 0 at once (V, sample stdin).
-- Runs `go run ./cmd/changecheck -cli`: it exits 1 for check groups whose date in `openspec/.strict.yaml` has passed (cards/overlap/spec/owners/status from 2026-11-03, merge/diff from 2026-11-06), with a message naming the group. Before the date the warnings are printed but do not block.
-- Then `tools/openspec.sh validate --all --strict` only if `node` is on PATH, else a note. No tests, no whole-repo vet (the head box has 4 GB).
-- Writes `openspec/.last-check` (gitignored) as `DATE N warnings rc=R`; the session brief shows it.
+- Runs the warn-only leak scan (`go run ./cmd/leakcheck -mode warn`). Since OpenSpec removal stage 2 (2026-11-04) it no longer runs `changecheck -cli` or `tools/openspec.sh`, never blocks, and no longer writes `openspec/.last-check`. The text below about changecheck strictness is historical. No tests, no whole-repo vet (the head box has 4 GB).
 - A failing check blocks the push (V, shim `go` returning 1 gives exit 1).
 
 ## Strict dates (`openspec/.strict.yaml`)
