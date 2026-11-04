@@ -195,7 +195,7 @@ A belt fill SHALL treat "no column can take this potion kind" as no room for tha
 - **THEN** it is not wanted, and a mana potion is
 
 ### Requirement: Trips must buy something
-With `town.tripMinSpend` 60 (default 0 = off) a non-emergency town trip SHALL start only when the planned purchase is worth at least 60 gold or the belt holds no healing potion, so that no trip burns a portal scroll for a purchase under 30 gold. The knob is OFF by default (the paired A/B of 2026-10-31 failed its gates; the semantics below apply when it is switched on). Source: docs/goldfloor.md finding 2 (83 percent of NAVSOAK trips spent under 30 gold). Reconciled 2026-11-04 (source: 2026-11-04-goldfloor).
+With `town.tripMinSpend` 60 (default 0 = off) a non-emergency town trip SHALL start only when the planned purchase is worth at least 60 gold or the belt holds no healing potion, so that no trip burns a portal scroll for under 30 gold. OFF by default (the A/B of 2026-10-31 failed its gates). Source: docs/goldfloor.md finding 2 (83 percent of NAVSOAK trips spent under 30 gold). Reconciled 2026-11-04 (source: 2026-11-04-goldfloor).
 
 #### Scenario: Small plan
 - **WHEN** the belt holds 2 healing potions, the plan is one 30-gold potion and a portal scroll is held
