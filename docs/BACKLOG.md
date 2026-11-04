@@ -439,6 +439,23 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - andarielplan: docs/andarielplan.md plans the m3-andariel throwaway fight (9 steps, hold lift, merc revive-gold stall cause and fix); next: user answers in its section 6, then steps 2 and 3 offline
 - noarea: docs/noarea-policy.md written (picker rules, seed 13 cause, options); the user picks the policy, no code changed
 - prbopen: batch B PR opened upstream as psi29a/d2decomped #189 (head 7e1f8fc4 on upstream main 002ffab4), oracle rerun 560,000 frames 0 differ; log in docs/research/openpr-log.md
+- 2026-11-04 FIXMANAMODEL (supersedes the "ready, S, offline" line): offline part merged (0101ebe5); card changes/fixmanamodel still in-progress; the live mana drill and the soak review are NOT done (policy-class: paused).
+- 2026-11-04 SOAKSKILLS (supersedes "ready, S, offline"): merged and archived (2026-11-03-soakskills, b6ad2ab7); offline fixture tests only, not verified live.
+- 2026-11-04 SKSMOKE-A1 (supersedes "ready, M, live slot"): archived (2026-11-03-sksmoke-a1, 5204e9e8) PARTIAL: Fire Bolt on d2d PASS against the table (not game.exe), Charged Bolt no verdict, game.exe live run still blocked.
+- 2026-11-04 FIXLAIR (supersedes "ready fix card"): merged and archived (2026-11-01-fixlair, 68e97db3); offline-complete, NOT verified live (drill T6 needs the Duriel lair).
+- 2026-11-04 ROAMLEG (supersedes "ready fix card"): merged and archived (2026-11-01-roamleg, a1d85cc5); live DRILLS23: roam leg failed 50 to 0, bounces 0; sweep completeness not shown.
+- 2026-11-04 FIXMOUTH, FIXMOUTH2, FIXDENBOUNCE (supersede "live proof pending"): archived (2026-11-01-fixmouth, 2026-11-01-fixmouth2); fixmouth2 live proof FAILED in DRILLS17, den bounce closed live in DRILLS19 by the later FIXMOUTH4 gate (DW.m3 0 bounces x3, DW.m4 0); trigger bound and long-click behaviour UNVERIFIED as principles.
+- 2026-11-04 NEXTHITFIX (supersedes "READY"): archived (2026-11-01-nexthitfix, merge d8e48e04); offline complete, d2d hashes only, not a game.exe proof; the upstream PR is not opened.
+- 2026-11-04 fixmisc F4 (supersedes "live proof pending"): archived (2026-10-31-fixmisc, 749a0134); live D-sync PASS x3 (DRILLS6); town portal and waypoint arrival variants not run.
+- 2026-11-04 fixstall3, fixstall4 (supersede "live proof pending"): archived (2026-10-31-fixstall3, 2026-10-31-fixstall4, 0b0bdb25); live PASS in DRILLS8 (D6.d x3) and DRILLS9 (H.pause 12 of 12 with fixstall4); fixstall3 alone left H.pause partial in DRILLS8.
+- 2026-11-04 fixmeter (supersedes "live proof pending"): archived (2026-10-31-fixmeter, 9eda4b06); live PASS in DRILLS10 (kills, dealt, taken match; hits and misses n/a).
+- 2026-11-04 fixf17 (supersedes "live proof pending"): archived (2026-10-31-fixf17, 9eda4b06); live PASS in DRILLS10.
+- 2026-11-04 fixtalk (supersedes "live proof pending"): archived (2026-10-31-fixtalk, 9eda4b06); live PASS in DRILLS10 (D8.q, D8.w).
+- 2026-11-04 fixportalmelee (supersedes "live check open"): archived (2026-11-01-fixportalmelee, b4752a9d); decision proven live on a snapshot (DRILLS11/12 with fixcrowd); the leave-game action and a hard hit cutting a cast stay UNVERIFIED live.
+- 2026-11-04 fixbuff (supersedes "live proof open"): archived (2026-11-01-fixbuff, b689235c); proven live on d2d (states reply parsed, armor recast at 115.1 s and 229.2 s, 0 absent samples); the stale-cache check is offline only.
+- 2026-11-04 fixrecast (supersedes "card in progress"): archived (2026-11-01-fixrecast, 8e783b17); clock path proven live (drills13); on a stale tables cache the old 150 s recast remains (see the card).
+- 2026-11-04 modsprep (supersedes "card in progress"): archived (2026-11-01-modsprep, ec345825); draft v2 READY, det hashes 10 of 14 equal and 4 explained, NOT verified live (no game.exe).
+- 2026-11-04 gen-invariants (supersedes "awaiting the user's approval to launch"): merged and archived (2026-10-31-gen-invariants, a83b28d9); d2dsoak invariants validated offline on the overnight logs, not live.
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
