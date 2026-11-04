@@ -111,7 +111,7 @@ run). Virtual time from the minute lines, not wall:
 
 ## 6. Capacity and start checks
 
-- Load: `labrun orion -- top -bn2 -d1` on the worker host: idle plus nice >= 25 percent (V, AGENTS rules; `tools/capacity.sh`
+- Load: `labrun <worker> -- top -bn2 -d1` on the worker host: idle plus nice >= 25 percent (V, AGENTS rules; `tools/capacity.sh`
   hangs here). Start guard of the spec: free disk >= 10 GB, 1 min load <= 28 (V; d2dsoak runner itself refuses above 45).
 - `tools/agentreap.sh --list` shows nothing left of earlier runs; a hidden d2d slot is free; no other d2d lock
   (`/tmp/d2d-lab.lock` is how the runner refuses, V docs/d2d-soak.md).
