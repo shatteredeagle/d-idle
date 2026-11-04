@@ -127,6 +127,7 @@
 - change tomefix: go test -p 1 for each touched package passes; changecheck 0 warnings; leakcheck 0 hits
 
 ### Recent merges
+- 21b027af 11-04 01:51 `Merge agent/dwm4triage: dwm4triage: DW.m4 open-inventory triage (docs only, cause narrowed, undecided)` (dwm4triage)
 - 759e1a90 11-04 01:17 `Merge agent/primcheck: primcheck: primitives P1-P36 open-item snapshot at 2026-11-04` (primcheck)
 - eb6f32e6 11-04 01:17 `merge origin/main into primcheck` (primcheck)
 - c71431a4 11-04 01:14 `Merge agent/groomland2: open-work: rescope SKZEROHIT to the native D1/D2 run (groom proposal)` (groomland2)
@@ -136,5 +137,4 @@
 - e823f4c9 11-04 01:06 `merge origin/main into primadd` (primadd)
 - fd5f9825 11-04 01:05 `merge origin/main into groomland2` (groomland2)
 - 6e395bb6 11-04 00:56 `Merge agent/killcredit: killcredit: bot logs kill credit per cast window and nova targets; d2dsoak report prints per-skill kills` (killcredit)
-- 93502f42 11-04 00:55 `merge origin/main into killcredit` (killcredit)
 <!-- statusgen:end -->
