@@ -1,0 +1,92 @@
+{
+ "results": [
+  {
+   "id": "D8.h",
+   "primitive": "P18",
+   "title": "paid hire at the hirer: gold set by the logged cheat, the bot reads the quote and hires; merc in the dump, gold down by the quote",
+   "verdict": "FAIL",
+   "reason": "hire: no hire line after talk; last menu: [{talk\t400\t110 talk 400 110} {introduction\t400\t128 introduction 400 128} {gossip\t400\t143 gossip 400 143} {cancel\t400\t158 cancel 400 158}]",
+   "intended": "merc present with the class code of the hired row, gold down by the quote read from the window",
+   "observed": "quote 0 row \"\"; gold 5000 -\u003e 5000; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t400\t110 talk 400 110} {introduction\t400\t128 introduction 400 128} {gossip\t400\t143 gossip 400 143} {cancel\t400\t158 cancel 400 158}]",
+   "runs": [
+    {
+     "Verdict": "FAIL",
+     "Reason": "hire: no hire line after talk; last menu: [{talk\t400\t110 talk 400 110} {introduction\t400\t128 introduction 400 128} {gossip\t400\t143 gossip 400 143} {cancel\t400\t158 cancel 400 158}]",
+     "Intended": "merc present with the class code of the hired row, gold down by the quote read from the window",
+     "Observed": "quote 0 row \"\"; gold 5000 -\u003e 5000; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t400\t110 talk 400 110} {introduction\t400\t128 introduction 400 128} {gossip\t400\t143 gossip 400 143} {cancel\t400\t158 cancel 400 158}]",
+     "sig": "poor=false err=true present=false",
+     "cheats": [
+      "debug stat 14 5000",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 468735923,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "FAIL",
+     "Reason": "hire: no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "Intended": "merc present with the class code of the hired row, gold down by the quote read from the window",
+     "Observed": "quote 0 row \"\"; gold 5000 -\u003e 5000; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "sig": "poor=false err=true present=false",
+     "cheats": [
+      "debug stat 14 5000",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 29658462,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug stat 14 5000",
+    "debug goto 1"
+   ]
+  },
+  {
+   "id": "D8.h2",
+   "primitive": "P18",
+   "title": "paid hire with gold below the quote: ErrCantAfford, no merc, gold unchanged",
+   "verdict": "FAIL",
+   "reason": "wanted ErrCantAfford, got no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+   "intended": "gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged",
+   "observed": "quote 0 row \"\"; gold 1 -\u003e 1; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+   "runs": [
+    {
+     "Verdict": "FAIL",
+     "Reason": "wanted ErrCantAfford, got no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "Intended": "gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged",
+     "Observed": "quote 0 row \"\"; gold 1 -\u003e 1; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "sig": "poor=true err=true present=false",
+     "cheats": [
+      "debug stat 14 1",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 32615753,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    },
+    {
+     "Verdict": "FAIL",
+     "Reason": "wanted ErrCantAfford, got no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "Intended": "gold below the quote: the hire is refused with ErrCantAfford, no merc, gold unchanged",
+     "Observed": "quote 0 row \"\"; gold 1 -\u003e 1; merc present=false dead=false code= life=[0,0] -\u003e present=false dead=false code= life=[0,0]; err no hire line after talk; last menu: [{talk\t276\t32 talk 276 32} {introduction\t276\t50 introduction 276 50} {gossip\t276\t65 gossip 276 65} {cancel\t276\t80 cancel 276 80}]",
+     "sig": "poor=true err=true present=false",
+     "cheats": [
+      "debug stat 14 1",
+      "debug goto 1"
+     ],
+     "elapsed_ns": 32492310,
+     "ui_pre": "clean",
+     "ui_post": "clean"
+    }
+   ],
+   "deterministic": true,
+   "cheats": [
+    "debug stat 14 1",
+    "debug goto 1"
+   ]
+  }
+ ]
+}
