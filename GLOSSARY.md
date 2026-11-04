@@ -282,7 +282,7 @@ The measurable condition that closes one of the milestones M1 to M6 of `docs/roa
 _Not to be confused with_: the plan-v2 items M0 to M11 above.
 
 **deferred card**:
-A change card queued behind a named dependency or user decision: status `deferred`, `owns:` and `exclusive:` intended but not claimed, no `docs/OWNERS` line. The dispatcher sets it `proposed` and adds the lines when the dependency merges. `openspec/README.md`, `docs/roadmap.md` section 4.
+A change card queued behind a named dependency or user decision: status `deferred`, `owns:` and `exclusive:` intended but not claimed, no `docs/OWNERS` line. The dispatcher sets it `proposed` and adds the lines when the dependency merges. `openspec-final:openspec/README.md`, `docs/roadmap.md` section 4.
 
 **paired A/B**:
 A same-seed comparison of two settings run on matched seeds (see **paired seed**), so the difference is not seed noise. Protocol and tool: card m2-abdesign (`docs/ab-design.md`, `tools/ab`).
@@ -306,19 +306,19 @@ _Not to be confused with_: spec-sme (how to write specs and cards).
 Read-only advisor for specs and change cards. `.claude/agents/spec-sme.md`.
 
 **change card**:
-One job: `openspec/changes/<id>/` with proposal.md and tasks.md (header block). The unit of work and the issue-tracker equivalent. `openspec/README.md`, `docs/agents/issue-tracker.md`.
+One job: `openspec-final:openspec/changes/<id>/` with proposal.md and tasks.md (header block). The unit of work and the issue-tracker equivalent. `openspec-final:openspec/README.md`, `docs/agents/issue-tracker.md`.
 
 **spec**:
 A stable contract in `docs/contracts/<capability>/spec.md` (requirement and scenario form). Numbers live here.
 
 **delta spec**:
-A spec change inside a card (`## ADDED|MODIFIED|REMOVED Requirements`), applied at archive. `openspec/README.md`.
+A spec change inside a card (`## ADDED|MODIFIED|REMOVED Requirements`), applied at archive. `openspec-final:openspec/README.md`.
 
 **owns**:
 The path globs only one active card may edit; mirrored in `docs/OWNERS`.
 
 **exclusive**:
-Shared resources only one active card may use (`instance:iN`, `d2d-control-socket`, `d2d-lab-binary`, ...). `openspec/README.md`.
+Shared resources only one active card may use (`instance:iN`, `d2d-control-socket`, `d2d-lab-binary`, ...). `openspec-final:openspec/README.md`.
 
 **gates (card)**:
 The acceptance lines of a card, each a number or a named test.
@@ -328,7 +328,7 @@ _Not to be confused with_: G1/G2 (soak gates) and the fidelity gate.
 `go run ./cmd/changecheck [-cli]`, the card, spec, OWNERS and STATUS checker. `cmd/changecheck`.
 
 **archive**:
-Moving a finished card to `openspec/changes/archive/YYYY-MM-DD-<id>/` with `merge:` hash; done by the coordinator.
+Moving a finished card to `openspec-final:openspec/changes/archive/YYYY-MM-DD-<id>/` with `merge:` hash; done by the coordinator.
 
 **coordinator / main agent**:
 The session that merges, archives, restarts games and decides; workers do not. `AGENTS.md`.

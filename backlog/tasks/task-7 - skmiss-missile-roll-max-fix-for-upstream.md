@@ -45,7 +45,7 @@ Next step: differential, then PR
 
 Gates (from the card):
 - differential on real d2d builds: before > 0, after 0 for any claim; pr_guard 0/0; presubmit --quick 0 FAIL; upstream tests rc 0
-- changecheck -cli 0 warnings; leakcheck -mode fail 0; openspec validate --all --strict
+- leakcheck -mode fail 0
 
 Source: git tag openspec-final, openspec/changes/skmiss/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

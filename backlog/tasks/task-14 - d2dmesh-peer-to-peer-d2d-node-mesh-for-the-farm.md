@@ -43,7 +43,6 @@ Parked: named in ADR 0015 item 10
 Gates (from the card):
 - go test ./internal/d2dmesh ./cmd/d2dnode passes (3-node loopback cluster: join, convergence, cross-node claim, lease re-queue after a node dies, partition heal, pause/drain, token rejection, recipe rejection)
 - go test -race ./internal/d2dmesh ./cmd/d2dnode passes on the worker host
-- tools/openspec.sh validate --all --strict passes; go run ./cmd/changecheck has 0 warnings
 - no real hostname, IP or person in any committed file of this change
 
 Source: git tag openspec-final, openspec/changes/d2dmesh/ (this task is the copy).
