@@ -1,0 +1,1 @@
+BACKLOG: tomefix: offline audit of the false-empty tome verdict (regression tests in combat, d2denv, town; no bot change needed, producer-side paths and fork qty stay U), live drill recipe in docs/tomefix.md
