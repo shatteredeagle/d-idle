@@ -2,7 +2,7 @@
 
 ```yaml
 change: andarielplan
-status: in-progress
+status: archived
 agent: andarielplan
 branch: agent/andarielplan
 worktree: ~/code/d2lod-wt/andarielplan
@@ -13,8 +13,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: "docs/andarielplan.md: plan with 9 steps, hold-lift path, revive-gold stall causes and fix proposal, user questions; docs only"
+result: "docs only; six user questions in section 6"
 live: "not verified live (docs only)"
+merge: 9087c52
 ```
 
 - [x] work done
