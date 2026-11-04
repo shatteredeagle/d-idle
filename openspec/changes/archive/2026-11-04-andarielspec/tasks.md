@@ -2,7 +2,7 @@
 
 ```yaml
 change: andarielspec
-status: in-progress
+status: archived
 agent: andarielspec
 branch: agent/andarielspec
 worktree: ~/code/d2lod-wt/andarielspec
@@ -11,8 +11,9 @@ owns:
 exclusive: []
 gates:
   - "changecheck 0 warnings; leakcheck 0 hits; merge_lines_check ok"
-result: "delta written; spec text only, not verified live"
+result: "spec delta, validate --all --strict 54/54; judge must follow"
 live: "not verified live (docs only)"
+merge: ed3b22f
 ```
 
 - [x] work done
