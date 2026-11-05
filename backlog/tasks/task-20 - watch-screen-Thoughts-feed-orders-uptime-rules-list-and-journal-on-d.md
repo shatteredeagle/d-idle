@@ -41,3 +41,6 @@ The one player screen of ADR 0016 items 20 to 23 on cmd/d2dview (docs/d2d-view.m
 - [x] #4 Runs on the simulated runner with no game (U: say in the result whether d2dview or d2dash hosts it); not verified live
 - [x] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/watch-screen.md written
 <!-- AC:END -->
+
+
+Notes 2026-11-05 (watchstyle): watch screen restyled in the original d.idle dashboard look (tokens, header, cards, tabs on phone, theme toggle); see docs/research/watch-screen-design.md section 7. Offline tested, screenshots of a local demo only.

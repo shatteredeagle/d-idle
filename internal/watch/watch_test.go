@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -713,5 +714,15 @@ func TestJournalKeepsEverythingInOrder(t *testing.T) {
 	}
 	if c := r.get("/api/why?line=nope", nil); c.Code != 404 {
 		t.Errorf("why unknown line: %d", c.Code)
+	}
+}
+
+func TestWatchAssetsHaveNoThirdPartyURL(t *testing.T) {
+	r := newRig(t, "sorceress")
+	re := regexp.MustCompile(`(?i)(src|href)\s*=\s*["']?(https?:)?//|url\(\s*["']?(https?:)?//|@import`)
+	for _, p := range []string{"/watch", "/watch/app.css", "/watch/app.js"} {
+		if m := re.FindString(r.get(p, nil).Body.String()); m != "" {
+			t.Errorf("%s has an external reference: %q", p, m)
+		}
 	}
 }
