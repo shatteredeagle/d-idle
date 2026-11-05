@@ -950,7 +950,11 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 	if !s.Player.InTown() {
 		return true, r.d.Town.ToTown(ctx)
 	}
-	r.e.Log.Info("leveling: everything worth farming is cleared, starting a fresh game", "level", s.Player.Level, "cleared", len(r.loop.cleared))
+	if !r.freshAllowed(ctx, s) {
+		return true, ctx.Err()
+	}
+	r.e.Log.Info("leveling: everything worth farming is cleared, starting a fresh game", "level", s.Player.Level, "cleared", len(r.loop.cleared),
+		"noGainRestarts", r.loop.freshNoGain, "reason", "no area left to pick")
 	err = r.newGameRun(func(ctx context.Context) error {
 		return r.d.Cycler.NewGame(ctx, difficultyName(s.Player.Difficulty))
 	})(ctx)
@@ -960,6 +964,50 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 		r.forgetGame()
 	}
 	return true, err
+}
+
+// freshAllowed is the progress check in front of a fresh game. It compares the experience with the one at the previous
+// restart: a cycle that gained Route.FreshMinXP resets the no-gain count, a cycle that did not counts. A restart after
+// a no-gain cycle waits Route.FreshGapSec; once Route.FreshMaxNoGain no-gain cycles in a row are reached the bot is
+// "blocked: needs input" and probes one restart every Route.FreshBlockedSec, waiting in town in between, so a Gate run
+// never sees the restart loop spin (Gate 2 rerun seed 13: 75 restarts in 4 h, no XP). The wait is sliced so a stop
+// (ctx) and the watchdog heartbeat stay live. Returns false when ctx ended during the wait.
+func (r *Runner) freshAllowed(ctx context.Context, s *d2.Snapshot) bool {
+	rt, l := r.e.Tune.Route, &r.loop
+	now, exp := r.e.Clock.Now(), s.Player.Exp
+	var gained uint32
+	if !l.freshAt.IsZero() {
+		if exp > l.freshExp {
+			gained = exp - l.freshExp
+		}
+		if int(gained) >= rt.FreshMinXP {
+			l.freshNoGain = 0
+		} else {
+			l.freshNoGain++
+		}
+	}
+	if !l.freshAt.IsZero() && l.freshNoGain > 0 {
+		gap, why := time.Duration(rt.FreshGapSec)*time.Second, "fresh game held back"
+		if rt.FreshMaxNoGain > 0 && l.freshNoGain >= rt.FreshMaxNoGain {
+			gap, why = time.Duration(rt.FreshBlockedSec)*time.Second, "blocked: needs input"
+		}
+		if wait := l.freshAt.Add(gap).Sub(now); wait > 0 {
+			r.e.Log.Info("leveling: "+why, "xpGained", gained, "noGainRestarts", l.freshNoGain, "level", s.Player.Level, "waitSec", int(wait/time.Second))
+			// the count was advanced for this cycle already: do not count it again when the wait ends in this same call
+			for wait > 0 && ctx.Err() == nil {
+				step := min(wait, 5*time.Second)
+				r.e.Clock.Sleep(step)
+				r.Beat()
+				wait -= step
+			}
+			if ctx.Err() != nil {
+				l.freshNoGain-- // the cycle will be judged again by the next call
+				return false
+			}
+		}
+	}
+	l.freshAt, l.freshExp = r.e.Clock.Now(), exp
+	return true
 }
 
 var _ task.Actions = taskActs{}

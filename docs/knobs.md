@@ -294,6 +294,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | route.towerMinLevelNoLife | 16 | 0..40 | levels | 16 | 1 | The no-merc clvl floor while max life is not readable (the pre-life rule, ADR 0011 interim). Log: route guard: blocked tower (no merc, clvl N < 16 (max life unreadable, fallback floor)). |
 | route.towerKitMana | 3 | 0..12 | potions | 3 | 2 | Mana potions the Forgotten Tower kit wants for a class that uses mana every attack (Sorceress, Necromancer, Druid; resource.ManaNeed 2). A melee build such as the Barbarian is not asked. U: SME number. |
 | route.towerNeedsMerc | 0 | 0..1 | bool | 0 | 3 | 0: a living mercenary only lowers the Forgotten Tower floor to route.towerMinLevelMerc (an unknown merc counts as none). 1: a living merc opens the tower at any level (the old rule). |
+| route.freshGapSec | 600 | 0..7200 | s | 600 | 0 | When every leveling area is cleared or blocked the bot starts a fresh game. If the previous fresh game gained under route.freshMinXP the next restart waits until this many seconds have passed (in town, log: leveling: fresh game held back). Gate 2 rerun seed 13 (clvl 15) restarted 75 times in 4 h with no XP. 0 = no gap. |
+| route.freshMaxNoGain | 3 | 0..50 | restarts | 3 | 0 | After this many fresh games in a row that each gained under route.freshMinXP, the bot logs 'leveling: blocked: needs input' and only probes one more restart every route.freshBlockedSec, waiting in town in between. A cycle with enough XP resets the count. 0 turns the bound off (the old endless restart loop). |
+| route.freshMinXP | 200 | 0..1e+05 | xp | 200 | 0 | Experience gained between two fresh-game restarts that resets the no-gain count (log field xpGained). U: a starting number, tune from the Gate logs. |
+| route.freshBlockedSec | 1800 | 0..1.44e+04 | s | 1800 | 0 | Once the no-gain bound is reached the bot waits this long in town between restart probes, so the loop never spins; bans expire and the picker is asked again after each wait. |
 
 ### resource.*
 

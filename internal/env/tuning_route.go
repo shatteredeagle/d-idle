@@ -18,6 +18,10 @@ type RouteTuning struct {
 	TowerMinLife          int // max life the tower needs without a living merc; 0 = no life rule (then TowerMinLevel alone)
 	TowerMinLevelNoLife   int // no-merc clvl floor while max life is unreadable (the pre-life rule)
 	TowerKitMana          int // mana potions the tower kit wants for a class with a mana column in the belt plan
+	FreshGapSec           int // min seconds between two fresh-game restarts while the last one gained under FreshMinXP; 0 = no gap
+	FreshMaxNoGain        int // fresh-game restarts in a row without FreshMinXP gained before the blocked state; 0 = bound off
+	FreshMinXP            int // experience a cycle must gain to count as progress and reset the no-gain count
+	FreshBlockedSec       int // seconds between restart probes once FreshMaxNoGain was reached (the blocked state waits in town)
 }
 
 func DefaultCampaignTuning() CampaignTuning {
@@ -25,7 +29,8 @@ func DefaultCampaignTuning() CampaignTuning {
 }
 func DefaultRouteTuning() RouteTuning {
 	return RouteTuning{MonasteryMinLevel: 14, MonasteryMinLevelMerc: 14, TowerMinLevel: 15, TowerMinLevelMerc: 14, TowerNeedsMerc: 0,
-		TowerMinLife: 150, TowerMinLevelNoLife: 16, TowerKitMana: 3}
+		TowerMinLife: 150, TowerMinLevelNoLife: 16, TowerKitMana: 3,
+		FreshGapSec: 600, FreshMaxNoGain: 3, FreshMinXP: 200, FreshBlockedSec: 1800}
 }
 
 func routeKnobs() []Knob {
@@ -54,5 +59,13 @@ func routeKnobs() []Knob {
 			Desc: "Mana potions the Forgotten Tower kit wants for a class that uses mana every attack (Sorceress, Necromancer, Druid; resource.ManaNeed 2). A melee build such as the Barbarian is not asked. U: SME number."},
 		{Key: "route.towerNeedsMerc", Label: "Tower: a merc opens it at any level", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "0: a living mercenary only lowers the Forgotten Tower floor to route.towerMinLevelMerc (an unknown merc counts as none). 1: a living merc opens the tower at any level (the old rule)."},
+		{Key: "route.freshGapSec", Label: "Fresh game: min gap after a no-gain restart", Unit: "s", Default: 600, Min: 0, Max: 7200, HigherIsBetter: true, NoHandicap: true,
+			Desc: "When every leveling area is cleared or blocked the bot starts a fresh game. If the previous fresh game gained under route.freshMinXP the next restart waits until this many seconds have passed (in town, log: leveling: fresh game held back). Gate 2 rerun seed 13 (clvl 15) restarted 75 times in 4 h with no XP. 0 = no gap."},
+		{Key: "route.freshMaxNoGain", Label: "Fresh game: no-gain restarts before blocked", Unit: "restarts", Default: 3, Min: 0, Max: 50, HigherIsBetter: true, NoHandicap: true,
+			Desc: "After this many fresh games in a row that each gained under route.freshMinXP, the bot logs 'leveling: blocked: needs input' and only probes one more restart every route.freshBlockedSec, waiting in town in between. A cycle with enough XP resets the count. 0 turns the bound off (the old endless restart loop)."},
+		{Key: "route.freshMinXP", Label: "Fresh game: XP that counts as progress", Unit: "xp", Default: 200, Min: 0, Max: 100000, HigherIsBetter: true, NoHandicap: true,
+			Desc: "Experience gained between two fresh-game restarts that resets the no-gain count (log field xpGained). U: a starting number, tune from the Gate logs."},
+		{Key: "route.freshBlockedSec", Label: "Fresh game: probe interval when blocked", Unit: "s", Default: 1800, Min: 0, Max: 14400, HigherIsBetter: true, NoHandicap: true,
+			Desc: "Once the no-gain bound is reached the bot waits this long in town between restart probes, so the loop never spins; bans expire and the picker is asked again after each wait."},
 	}
 }
