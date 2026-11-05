@@ -1,4 +1,0 @@
-BACKLOG: TASK-20 watch-screen: built offline on the simulated runner (internal/watch, d2dview -watch); not verified live
-INDEX: research/watch-screen-design.md - watch screen layout, JSON contract, bot integration, API needs (TASK-20)
-INDEX: watch-screen.md - how to run the watch screen on d2dview (TASK-20)
-CHANGELOG: d2dview -watch: player screen (Thoughts feed, orders, uptime, rules, journal) on a simulated runner; writes only on a separate answer route
