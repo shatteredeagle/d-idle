@@ -1,1 +1,0 @@
-BACKLOG: g2ddiag: Gate 2 g2d NOKILL diagnosis (docs/research/g2d-nokill-diagnosis.md): s11/s13 = failsafe new-game cycling, s17 = empty field sweep; stuck-fight fix not involved; docs only
