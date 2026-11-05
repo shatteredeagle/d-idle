@@ -1,0 +1,1 @@
+BACKLOG: record the PR #200 follow-up (MSVC shadowing fix, efb244d8) in the open-PR log
