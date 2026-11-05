@@ -472,6 +472,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: Gate 2 multi-seed run 20261105-0733-g2c (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-0733-g2c.md)
 - maintenance: spent merge-lines files pruned, tools/backlog/drift.py read-only backlog drift report (docs/backlog-howto.md)
 - docs/process/backlog-board-NAS.md + deploy/backlog-board/: prepared Backlog.md read-only web board for the NAS (not deployed)
+- Backlog.md MCP evaluated (docs/backlog-howto.md), agent instructions block in AGENTS.md, tools/backlog/new_task.py wrapper, .mcp.json
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

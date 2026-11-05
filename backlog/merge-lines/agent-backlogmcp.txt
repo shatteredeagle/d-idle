@@ -1,1 +1,0 @@
-BACKLOG: Backlog.md MCP evaluated (docs/backlog-howto.md), agent instructions block in AGENTS.md, tools/backlog/new_task.py wrapper, .mcp.json
