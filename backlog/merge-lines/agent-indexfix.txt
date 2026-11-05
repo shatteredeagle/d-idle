@@ -1,0 +1,2 @@
+CHANGELOG: docs: Backlog.md NAS board doc renamed to docs/process/backlog-board-nas.md (neutral name); docs index regenerated
+BACKLOG: docs/BACKLOG.md line 491 still names docs/process/backlog-board-NAS.md; the file is now backlog-board-nas.md (lowercase)

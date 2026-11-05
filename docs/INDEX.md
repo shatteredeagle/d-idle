@@ -439,6 +439,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `process/`
 
 - [api-credits.md](process/api-credits.md): API credits: PR review and the optional Haiku tick
+- [backlog-board-nas.md](process/backlog-board-nas.md): Backlog.md web board on the NAS (read-only mirror) (status: DEPLOYED 2026-11-05 as a NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager...)
 - [baseline-runs.md](process/baseline-runs.md): Baseline runs: the extra original-game runs (card baselineruns) (status: current, PREPARED ONLY (2026-11-01). Nothing here was run live; no game was started. The launcher is...)
 - [board-cards.md](process/board-cards.md): Board cards (status: moved to the private ops repo (d2lod-ops, `docs/process/board-cards.md`). Not part of the public tree.)
 - [card-board.md](process/card-board.md): Card board: reading the user's decisions (status: current. The page is the `/cards` route of the status board (the board host name, port 8897); its code is...)
@@ -740,5 +741,3 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [/README.md](../README.md): d2lod-bot (d.idle)
 
 <!-- END GENERATED INDEX -->
-- docs/process/backlog-board-NAS.md - read-only Backlog.md web board on the NAS: compose stack, sync mirror, UI steps
-- docs/research/decision-point-store-notes.md | what internal/decide implements, stage-2 stubs, rule-file gaps
