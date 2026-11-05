@@ -322,6 +322,9 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			}
 			n.recover(o, &w, wp)
 			w.rung++
+			if int32(w.rung) > n.peakRung.Load() {
+				n.peakRung.Store(int32(w.rung))
+			}
 			w.anchorTime = n.clk.Now()
 		}
 		n.clk.Sleep(t.Poll())

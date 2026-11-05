@@ -91,6 +91,9 @@ func (r *Runner) step(ctx context.Context) bool {
 	if r.campaignStall(ctx, snap, c.goal != nil && !c.paused) {
 		return true
 	}
+	if r.droughtCheck(ctx, snap, c) {
+		return true
+	}
 	if r.loop.rec != nil {
 		return r.finishRecovery(ctx, snap, c)
 	}
@@ -519,6 +522,29 @@ func (r *Runner) restartCapHit() bool {
 // restartTimeout covers Leave, Shutdown, helper start, Launch and Login of a recycle (about 200 s, more on a loaded box).
 func (r *Runner) restartTimeout() time.Duration { return 3 * sec(r.cfg.TownTimeoutSec) }
 
+// rung3Burst records one more rung-3 cycle and reports whether bot.rung3WindowMax cycles already happened within
+// bot.rung3WindowMin virtual minutes. Progress does not clear the list, only time does.
+func (r *Runner) rung3Burst() bool {
+	l := &r.loop
+	mx, win := r.e.Tune.Bot.Rung3WindowMax, time.Duration(r.e.Tune.Bot.Rung3WindowMin)*time.Minute
+	if mx <= 0 || win <= 0 {
+		return false
+	}
+	now := r.e.Clock.Now()
+	keep := l.rung3Times[:0]
+	for _, t := range l.rung3Times {
+		if now.Sub(t) < win {
+			keep = append(keep, t)
+		}
+	}
+	l.rung3Times = keep
+	if len(keep) >= mx {
+		return true
+	}
+	l.rung3Times = append(keep, now)
+	return false
+}
+
 // escalate is the error ladder (prior-art 07-safety section 7): close panels, then reset in town, then give up
 // visibly (Error state with a retry timer), never loop silently.
 func (r *Runner) escalate(ctx context.Context, c control, what string, err error) {
@@ -547,6 +573,9 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 		r.hmu.Lock()
 		r.ladder = l.stuckStage
 		r.hmu.Unlock()
+		r.obMu.Lock()
+		r.ob.fsWhy = failsafeTag(what)
+		r.obMu.Unlock()
 		r.e.Log.Warn("failsafe ladder", "step", l.stuckStage, "what", what, "err", err)
 		snap := r.latest()
 		dead := snap == nil || isDead(snap.Player)
@@ -578,6 +607,22 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 					r.e.Log.Warn(fmt.Sprintf("failsafe: rung 3 cap reached cycles=%d window=%v -> pause", l.rung3Cycles, r.e.Clock.Now().Sub(l.rung3Since).Round(time.Second)),
 						"cycles", l.rung3Cycles, "max", mx)
 					l.stuckStage = 4 // the loop's increment lands on the pause rung
+					break
+				}
+				if r.rung3Burst() {
+					// Kills between the cycles refill rung3Cycles, so the cap above never fired in g2d seed 11 (five fresh
+					// games in 20 minutes at full life): leaving the game again is not the cure, leave the area instead.
+					r.e.Log.Warn(fmt.Sprintf("failsafe: %d rung 3 cycles within %d min -> field reset", len(l.rung3Times), r.e.Tune.Bot.Rung3WindowMin), "what", what)
+					if r.skipTargetFor(whyCycling, 4*r.navSkip()) {
+						l.rung3Times = nil
+						l.stuckStage = 0
+						applied = true
+						if cerr := r.e.In.CloseAll(); cerr != nil {
+							r.e.Log.Warn("close panels failed", "err", cerr)
+						}
+					} else {
+						l.stuckStage = 4 // nothing to skip (a farm goal names its area): the pause rung
+					}
 					break
 				}
 				if l.rung3Cycles == 0 {
@@ -636,10 +681,13 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 
 // skipTarget is the cheapest rung: a leveling or campaign goal that stands still on its target area avoids that area for a
 // while and re-plans (the planner then picks another one). Farm goals name their area, so nothing is skipped for them.
-func (r *Runner) skipTarget(why string) {
+func (r *Runner) skipTarget(why string) { r.skipTargetFor(why, r.navSkip()) }
+
+// skipTargetFor is skipTarget for a chosen duration; it reports whether an area was skipped.
+func (r *Runner) skipTargetFor(why string, d time.Duration) bool {
 	c := r.control()
 	if c.spec.kind != goals.ReachLevel && c.spec.camp == nil {
-		return
+		return false
 	}
 	l := &r.loop
 	r.obMu.Lock()
@@ -649,19 +697,20 @@ func (r *Runner) skipTarget(why string) {
 		area = l.stepArea
 	}
 	if area == 0 || (r.d.Plan.IsTown(area)) {
-		return
+		return false
 	}
 	if s := r.latest(); s != nil && r.gearVerdict(s).Gated && area == r.safeFarmArea(s) {
 		// A gated character has nowhere else to go: avoiding the safe farm area left it with no eligible area at all and
 		// the planning block climbed the ladder to game restarts (LIVE G1 attempt 4).
 		l.stepArea = 0
-		return
+		return false
 	}
-	r.skipArea(area, r.navSkip(), why)
+	r.skipArea(area, d, why)
 	l.stepArea = 0
 	l.futile = false
 	delete(l.cleared, area)
 	r.e.Log.Warn("failsafe: skipped the stalled target area", "area", area, "name", r.areaName(area), "reason", why)
+	return true
 }
 
 // selfPause pauses the runner for a failsafe and says why (Status paused, non-fatal Error event). Resume continues.
@@ -950,6 +999,10 @@ func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, 
 				cancel(safetyInterrupt{a})
 				return true
 			}
+		}
+		if r.droughtStage(snap, now) > 0 {
+			cancel(errReplan) // the Run goroutine acts on it (droughtCheck) as soon as the action ends
+			return true
 		}
 		if why := r.replanCause(snap, st); why != "" {
 			r.e.Log.Info("action cancelled: re-plan", "why", why, "area", snap.Player.Area, "level", snap.Player.Level)

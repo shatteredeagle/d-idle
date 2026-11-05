@@ -1348,7 +1348,17 @@ func (r *Runner) noteArea(area int) {
 // roaming: the quest needs every target. The planner then takes the next area or the fresh-game path.
 func (r *Runner) emptyAreaLeave(area int) bool {
 	l := &r.loop
-	if r.cfg.EmptyAreaSec <= 0 || (l.run != nil && l.run.Area == area) {
+	limit := r.cfg.EmptyAreaSec
+	if l.run != nil && l.run.Area == area {
+		// A quest area keeps roaming for its targets, but a sweep that sees no hostile at all for bot.emptyFieldSec is
+		// an emptied field, not a quest in progress (g2d seed 17: 12 minutes in Stony Field after a resupply trip).
+		limit = r.e.Tune.Bot.EmptyFieldSec
+		if s := r.latest(); limit <= 0 || s == nil || len(r.aliveHostiles(s)) > 0 {
+			l.emptySince = time.Time{}
+			return false
+		}
+	}
+	if limit <= 0 {
 		return false
 	}
 	now := r.e.Clock.Now()
@@ -1361,7 +1371,7 @@ func (r *Runner) emptyAreaLeave(area int) bool {
 		l.emptyArea, l.emptyKills, l.emptySince = area, kills, now
 		return false
 	}
-	if now.Sub(l.emptySince) < sec(r.cfg.EmptyAreaSec) {
+	if now.Sub(l.emptySince) < sec(limit) {
 		return false
 	}
 	l.cleared[area] = true

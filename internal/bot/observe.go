@@ -70,8 +70,13 @@ type observer struct {
 	lastProgress  time.Time
 	campaignAt    time.Time // last campaign progress (stall.go): kill or xp, non-town area entered, purchase, quest step
 	rearmAt       time.Time
-	real          uint64 // progress that resets the failsafe ladder
-	progress      uint64 // monotonic progress counter (health endpoint)
+	real          uint64    // progress that resets the failsafe ladder
+	killXPAt      time.Time // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
+	fieldSince    time.Time
+	droughtAt     time.Time // last drought action (drought.go)
+	droughtStage  int       // consecutive drought actions with no kill or XP gain in between
+	fsWhy         string    // short reason of the last failsafe ladder entry (minute line)
+	progress      uint64    // monotonic progress counter (health endpoint)
 	stuckReason   string
 	gold          int
 	lastDisarm    time.Time
@@ -307,6 +312,8 @@ func (o *observer) bump(now time.Time) {
 func (o *observer) bumpReal(now time.Time) {
 	o.bump(now)
 	o.campaignAt = now
+	o.killXPAt = now
+	o.fsWhy = "" // the failsafe reason shown in the minute line is the one since the last kill or XP gain
 	o.real++
 }
 
@@ -442,8 +449,10 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 		o.noteRoute(p.Area)
 		o.mons = map[uint32]monTrack{}
 		o.bump(now)
+		o.fieldSince = time.Time{}
 		if !r.d.Plan.IsTown(p.Area) {
 			o.campaignAt = now
+			o.fieldSince = now
 		}
 		r.emit(goals.Event{Type: goals.EvAreaChange, Area: r.areaName(p.Area), AreaID: p.Area})
 		r.zoneEntry(s, p)
@@ -969,7 +978,7 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 	r.e.Log.Info("minute", append([]any{"area", p.Area, "clvl", p.Level, "xp", p.Exp, "kills", r.lifetimeKills(p.Name), "killsGame", o.kills, "deaths", o.deaths,
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "packHP", packHP, "packMP", packMP, "beltBoxes", beltBoxes, "potionsUsed", int(r.drank.Load()),
 		"gold", p.Gold, "stashGold", p.StashGold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles, o.lostRestarts), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
-		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, r.runKV()...)...)
+		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, append(r.failsafeKV(o), r.runKV()...)...)...)
 	o.goldPickupMin = 0
 	r.noteGoldNextMinute(p.Gold, now)
 }
@@ -1001,4 +1010,42 @@ func (r *Runner) logXPAtRisk(why string) {
 	risk, exp := r.ob.xpAtRiskLocked(r.d.SavedExp), r.ob.exp
 	r.obMu.Unlock()
 	r.e.Log.Warn("xp at risk", "why", why, "xp", exp, "atRisk", risk)
+}
+
+// takeNavRung is the highest nav stuck-ladder rung since the last minute line (0 when the mover does not report it).
+func (r *Runner) takeNavRung() int {
+	if m, ok := r.d.Mover.(interface{ TakePeakRung() int }); ok {
+		return m.TakePeakRung()
+	}
+	return 0
+}
+
+// failsafeTag shortens a failsafe reason for the minute line (the log keeps the full text in the WARN).
+func failsafeTag(what string) string {
+	if rest, ok := strings.CutPrefix(what, "no progress in state "); ok {
+		what = "np_" + strings.Fields(rest)[0]
+	} else if strings.HasPrefix(what, "no progress for") {
+		what = "np_global"
+	}
+	if i := strings.IndexAny(what, ":("); i > 0 {
+		what = what[:i]
+	}
+	what = strings.TrimSpace(what)
+	if len(what) > 24 {
+		what = what[:24]
+	}
+	return strings.ReplaceAll(what, " ", "_")
+}
+
+// failsafeKV adds the last failsafe reason and the nav stuck-ladder peak to the minute line, only when there is
+// something to say (the committed minute logs stay well under their size guard). Caller holds obMu.
+func (r *Runner) failsafeKV(o *observer) []any {
+	var kv []any
+	if o.fsWhy != "" {
+		kv = append(kv, "fsWhy", o.fsWhy)
+	}
+	if n := r.takeNavRung(); n > 0 {
+		kv = append(kv, "navRung", n)
+	}
+	return kv
 }

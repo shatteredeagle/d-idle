@@ -234,6 +234,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.savePointMin | 20 | 0..120 | min | 20 | 1 | Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off. |
 | bot.heapLimitMB | 4096 | 0..8192 | MB | 4096 | 1 | Go heap in use above which d2bot writes a heap profile and exits for a supervisor restart (a runaway allocation would otherwise end in the OOM killer); the GC gets a soft limit 25 percent above it. 0 is off. Normal runs use under 100 MB. |
 | bot.failsafeRung3Max | 6 | 0..50 | count | 6 | 1 | Leave-and-re-enter cycles of failsafe ladder rung 3 allowed without real progress (XP, kills, levels) before the ladder skips to the pause rung. 0 is unbounded. |
+| bot.rung3WindowMax | 3 | 0..20 | count | 3 | 1 | Failsafe leave-and-re-enter cycles allowed inside the burst window even when kills come between them. One more ends in a field reset (skip the area, no new game). 0 is off. |
+| bot.rung3WindowMin | 20 | 1..240 | min | 20 | 2 | Virtual minutes the re-entry burst cap counts over. |
+| bot.droughtMin | 8 | 0..60 | min | 8 | 1 | Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off. |
+| bot.emptyFieldSec | 150 | 0..900 | s | 150 | 1 | A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off. |
 | bot.failsafePauseMaxSec | 3600 | 300..1.44e+04 | s | 3600 | 1 | Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress. |
 | bot.mercRetryMin | 10 | 1..60 | min | 10 | 1 | Minutes between merc chore attempts; a failed hire or revive is not retried sooner. |
 | bot.mercHireMinGold | 400 | 0..2000 | gold | 400 | 1 | Gold in Act 2 town below which no hire is attempted. |
@@ -373,7 +377,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| ladder.enabled | 0 | 0..1 | bool | 0 | 2 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
+| ladder.enabled | 0 | 0..1 | bool | 0 | 3 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
