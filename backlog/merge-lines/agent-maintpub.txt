@@ -1,0 +1,2 @@
+BACKLOG: maintenance: spent merge-lines files pruned, tools/backlog/drift.py read-only backlog drift report (docs/backlog-howto.md)
+CHANGELOG: tools/backlog/drift.py lists tasks whose status disagrees with git (read-only); six applied backlog/merge-lines files removed

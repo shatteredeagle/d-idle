@@ -53,6 +53,10 @@ Statuses and labels cannot be added by the CLI: hand-edit `backlog/config.yml`. 
 - Commit task files yourself with the agent identity (`git -c user.name=Claude -c user.email=noreply@anthropic.com commit`), like any other file.
 - Worktrees are fine: the tool reads and writes the worktree's own `backlog/`. Two agents editing different files merge cleanly; the same field gives ordinary conflict markers inside the frontmatter. S
 
+## Drift report
+
+`python3 -I tools/backlog/drift.py [--repo DIR] [--ref origin/main] [--days 14]` is read-only (it never edits a task and exits 0 always). One line per finding, `<code> TASK-N <card> [<status>]: <what>`: A = Proposed/In Progress with every acceptance box ticked; B = Done with an unticked box; C = In Progress whose `owns:` paths have no commit on the ref in the last 14 days; D = a merge subject on the ref names the task (`Merge agent/<card>`, `task-N`) but the task is not Done. The dispatcher tick prints `DRIFT n tasks` plus the first three lines under `--delta` when the count changed. Tests: `python3 -I tools/backlog/test_drift.py`. V (ran on this repo and on a temp-repo fixture).
+
 ## Known problems
 
 - Piping to `head` (or any early-closing reader) crashes the Bun binary with a stack dump (EPIPE). Cosmetic; redirect to a file instead. S

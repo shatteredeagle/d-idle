@@ -1,1 +1,0 @@
-CHANGELOG: process: OpenSpec removal plan marks stage 3 done.
