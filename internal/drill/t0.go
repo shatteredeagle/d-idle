@@ -25,6 +25,17 @@ type T0Lab interface {
 	VirtualNow() time.Duration
 }
 
+// T0FightLab is optional: a lab that can put the T0 fight-time points (t0.retreat.drink, t0.unique.fight,
+// t0.area.toohard, t2.mercenary) through their real call sites implements it, and the drill then runs one pass of each
+// per round. The offline fake asks the ladder with realistic states; the live lab has no implementation yet
+// (docs/probes/t0drill.md, "Live run needs").
+type T0FightLab interface {
+	FightPoints(ctx context.Context, point string) ChoreInfo
+}
+
+// T0FightPoints are the plans a T0FightLab is asked for, one per wired fight-time point.
+var T0FightPoints = []string{ladder.PointDrink, ladder.PointUnique, ladder.PointTooHard, ladder.PointMerc}
+
 // T0Config selects the drill: the answer profiles, an optional scripted answer file, the virtual minutes and the dir of
 // the persisted answers ("" keeps them in memory).
 type T0Config struct {
@@ -117,7 +128,7 @@ func t0Run(ctx context.Context, r *Run, l T0Lab, c T0Config, profile string, see
 		return setupFail(err)
 	}
 	var errs []string
-	rounds := 0
+	rounds, fightPasses := 0, 0
 	for l.VirtualNow()-vstart < time.Duration(c.Minutes)*time.Minute {
 		if ctx.Err() != nil {
 			return Blocks("cancelled: " + ctx.Err().Error())
@@ -125,6 +136,14 @@ func t0Run(ctx context.Context, r *Run, l T0Lab, c T0Config, profile string, see
 		for _, plan := range []string{"repair", "scrolls"} {
 			if ci := l.Chores(ctx, plan); ci.Err != "" {
 				errs = append(errs, plan+": "+ci.Err)
+			}
+		}
+		if fl, ok := l.(T0FightLab); ok {
+			for _, pt := range T0FightPoints {
+				if ci := fl.FightPoints(ctx, pt); ci.Err != "" {
+					errs = append(errs, pt+": "+ci.Err)
+				}
+				fightPasses++
 			}
 		}
 		lad.Pump()
@@ -142,7 +161,7 @@ func t0Run(ctx context.Context, r *Run, l T0Lab, c T0Config, profile string, see
 	st, rules := lad.Stats(), lad.Store()
 	nrules, nans, nfaded := rules.Stats()
 	rec := t0Record{Profile: profile, Seed: seed, Rounds: rounds, RuleFile: ruleFileHash(), RulesLearned: nrules, AnswersGiven: nans,
-		ThoughtsFaded: nfaded, ThoughtsOpened: st.Opened, Faults: st.Faults, Asked: st.Asked, WritesAfterStart: writes}
+		ThoughtsFaded: nfaded, ThoughtsOpened: st.Opened, Faults: st.Faults, Asked: st.Asked, FightPasses: fightPasses, WritesAfterStart: writes}
 	line, _ := json.Marshal(rec)
 	obs := fmt.Sprintf("%s; writes after start: %d; durability %d/%d gold %d; errors %v", line, writes, v.DurCur, v.DurMax, v.Gold, errs)
 	o := Outcome{Intended: "no loop, no crash, no stall for any answer; every pass returned; no ladder fault; no chore error; writes after start: 0", Observed: obs,
@@ -156,7 +175,7 @@ func t0Run(ctx context.Context, r *Run, l T0Lab, c T0Config, profile string, see
 		o.Verdict, o.Reason = Fail, "ladder fault: "+st.LastFault
 	case len(errs) != 0:
 		o.Verdict, o.Reason = Fail, "chore error: "+errs[0]
-	case len(rules.OpenThoughts()) > 60 || len(rules.Log()) > 8*rounds+16:
+	case len(rules.OpenThoughts()) > 60 || len(rules.Log()) > 8*(rounds+fightPasses)+16:
 		o.Verdict, o.Reason = Fail, "the answer log or the open thoughts grew without bound"
 	default:
 		o.Verdict, o.Reason = Pass, fmt.Sprintf("%d passes, %d thoughts, %d answers, %d rules, %d faded", rounds, st.Opened, nans, nrules, nfaded)
@@ -175,6 +194,7 @@ type t0Record struct {
 	ThoughtsFaded    int    `json:"thoughtsFaded"`
 	ThoughtsOpened   int    `json:"thoughtsOpened"`
 	Asked            int    `json:"asked"`
+	FightPasses      int    `json:"fightPasses"`
 	Faults           int    `json:"faults"`
 	WritesAfterStart int    `json:"writesAfterStart"`
 }

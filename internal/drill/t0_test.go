@@ -74,7 +74,65 @@ func (f *fakeT0) Chores(_ context.Context, plan string) ChoreInfo {
 	return ChoreInfo{Plan: plan}
 }
 
-func runT0(t *testing.T, f *fakeT0, c T0Config) []Result {
+// fakeFight is a fakeT0 that also drives the fight-time points: each pass asks the ladder with a state that moves with
+// the pass count, the way the real call sites ask at changing life, gold and level.
+type fakeFight struct {
+	*fakeT0
+	passes map[string]int
+}
+
+func (f *fakeFight) FightPoints(_ context.Context, point string) ChoreInfo {
+	l := ladder.Active()
+	if l == nil {
+		return ChoreInfo{Plan: point, Err: "no ladder installed"}
+	}
+	n := f.passes[point]
+	f.passes[point]++
+	h := ladder.Hero{Class: f.class, AreaClass: "field", Gold: f.gold, Durability: -1}
+	life := 10 + 9*(n%10)
+	kit := []string{ladder.KitOK, ladder.KitThin, ladder.KitNone}[n%3]
+	var err error
+	switch point {
+	case ladder.PointDrink:
+		_, err = l.DrinkChoice(h, life, ladder.HeldFor(n%2, 0), kit, n%4 == 0, "fight")
+	case ladder.PointUnique:
+		_, err = l.UniqueFight(h, life, 1+n%3, kit, "fight")
+	case ladder.PointTooHard:
+		_, err = l.TooHard(h, 12+n%5, []string{"alive", "dead", "none"}[n%3], kit, "skip")
+	case ladder.PointMerc:
+		_, err = l.MercHire(h, []string{"dead", "none"}[n%2], kit, f.gold >= 400)
+	}
+	if err != nil {
+		l.Fault(err)
+	}
+	return ChoreInfo{Plan: point}
+}
+
+// The fight-time points run in the drill every round when the lab offers them, for 5 profiles x 2 builds, and the
+// record counts the passes.
+func TestT0DrillRunsTheFightPoints(t *testing.T) {
+	for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		c := DefaultT0()
+		c.Minutes = 10
+		f := &fakeFight{fakeT0: &fakeT0{class: cl}, passes: map[string]int{}}
+		res := runT0(t, f, c)
+		for _, x := range res {
+			if x.Verdict != Pass {
+				t.Errorf("%v %s: %s %s | %s", cl, x.ID, x.Verdict, x.Reason, x.Observed)
+			}
+			if !strings.Contains(x.Observed, `"fightPasses":80`) {
+				t.Errorf("%s: record lacks 80 fight passes (20 rounds x 4 points): %s", x.ID, x.Observed)
+			}
+		}
+		for _, pt := range T0FightPoints {
+			if f.passes[pt] < 20 {
+				t.Errorf("%v: %s asked %d times", cl, pt, f.passes[pt])
+			}
+		}
+	}
+}
+
+func runT0(t *testing.T, f T0Lab, c T0Config) []Result {
 	t.Helper()
 	r := &Runner{W: &fakeWorld{}, Repeat: 1}
 	g := r.RunGroup(context.Background(), T0(f, c))
