@@ -47,6 +47,14 @@ D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -
 
 Result files `docs/probes/drills/<date>-<label>.{txt,json}`. Each profile line carries the record: `ruleFileHash`, `rulesLearned`, `answersGiven`, `thoughtsFaded`, `thoughtsOpened`, `faults` and `writes after start: 0`. PASS requires: every pass returned, no ladder fault, no chore error, bounded log, writes after start 0. A non-zero count is CHEATED and never counts.
 
+## Fight-time points (A3) and what the live run needs
+
+Four more points are wired (`t0.retreat.drink`, `t0.unique.fight`, `t0.area.toohard`, `t2.mercenary`; `docs/t0-slice.md`). Offline the drill covers them through the optional `drill.T0FightLab` hook: the fake lab in `internal/drill/t0_test.go` implements it, and `go test -p 1 -count=1 -run T0Drill ./internal/drill` runs 5 profiles x 2 builds x 10 virtual minutes with 80 fight passes per run (`fightPasses` in the record). The real call sites are covered by `internal/combat/ladder_t0_test.go` and `internal/bot/ladder_t0_test.go` (legacy answer untaught, learned answer replaces it). The live lab does not implement the hook, so the live run as written still exercises the town points only. A live run of the fight points needs, in `cmd/d2drill/t0_lab.go`:
+1. `FightPoints` on the lab: for `t0.retreat.drink` and `t0.unique.fight` a Blood Moor pass with the bot's `combat.Fighter` against a real pack (the drill's field lab has the fighter; the lab must install the ladder before the fight and keep `InFight` true), for `t0.area.toohard` one `fillRoute` read of a clvl 14 character, for `t2.mercenary` the Lut Gholein hire chore (needs an act 2 character, so it stays offline-only on a clvl 1 act 1 hero).
+2. A fresh clvl 1 hero cannot reach the elite and low-life states by itself: low life is a SETUP write before `runstart` (d2cheat SetLife) or a real fight; nothing may write after the start.
+3. `ladder.enabled` stays off in `cmd/d2bot`; the drill installs the ladder itself.
+Until then the live acceptance (card items 2 and 3) is met for the town points only.
+
 ## Cleanup
 
 `tools/agentreap.sh t0drill` and `tools/agentreap.sh --list`; the character stays in town (the drill leaves the UI clean, the P35 gate checks it).
