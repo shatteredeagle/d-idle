@@ -1,0 +1,3 @@
+BACKLOG: ladderdoc: automation ladder DRAFT written down (docs/research/automation-ladder.md): tiers T0 to T5, mapping to code, backlog re-ranking, open questions; proposed record text only, guard files untouched
+INDEX: research/automation-ladder.md: DRAFT of the incremental-D2 automation ladder (product direction 2026-11-05): tiers, learn by doing, sacrifice upgrades, mapping to the bot, risks
+CHANGELOG: docs: automation ladder draft (docs/research/automation-ladder.md)
