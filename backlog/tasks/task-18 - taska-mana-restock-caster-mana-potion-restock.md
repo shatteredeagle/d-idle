@@ -27,6 +27,9 @@ owns:
   - "internal/bot/task.go"
   - "internal/bot/towerguard_test.go"
   - "internal/bot/routeguard_test.go"
+  - "internal/bot/freshgame_test.go"
+  - "internal/bot/runner.go"
+  - "docs/research/lvl14plan.md"
   - "docs/knobs.md"
   - "backlog/tasks/task-18 - taska-mana-restock-caster-mana-potion-restock.md"
 exclusive: []
@@ -61,6 +64,8 @@ Change: for a caster (`resource.ManaNeed` >= 2: Sorceress, Necromancer, Druid) t
 - [ ] #6 live proof (Gate 2/3 run, below)
 - [x] #7 TASK-D folded in (SME, user-approved 2026-11-04, numbers U): Forgotten Tower without a living merc needs clvl 15, max life 150 and the kit (4 healing, a portal with charges, 3 mana potions for a class with ManaNeed 2); with a living merc clvl 14; max life unreadable falls back to clvl 16 (TestTowerFloorLifeAndKit, TestTowerLifeLogLine, TestTowerLifeRuleThroughTheBot, TestFillTowerManaFollowsTheManaColumn)
 - [ ] #8 live proof of the tower guard (Gate 2/3 run, below)
+- [x] #9 TASK-C folded in: fresh-game restarts have a progress check and a bound (TestFreshRestartsBoundedWithoutXP for Sorceress and Barbarian, TestFreshRestartCountResetsOnXP, TestFreshBlockedWaitHonoursStop)
+- [ ] #10 live proof of the fresh-game bound (Gate run, below)
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -77,4 +82,8 @@ Not verified (U): rig vendor prices are higher than the game's; the number of tr
 TASK-D (Forgotten Tower floor), folded into this task because the card cap (ADR 0015) allows no new open task. Old rule: `DefaultRouteTuning` TowerMinLevel 16 (internal/env/tuning_route.go), applied by `towerFloor` (internal/task/route.go). New knobs (defaults): `route.towerMinLevel` 15, `route.towerMinLife` 150 (0 = life rule off), `route.towerMinLevelNoLife` 16, `route.towerKitMana` 3, `route.towerMinLevelMerc` 14 unchanged. The merc is no longer required. Build-specific: all numbers are Route knobs; the mana part follows `resource.ManaNeed` >= 2 (Barbarian unchanged). Contract prose in merc-policy (lines about the Forgotten Tower floor 16) is owned by the m3-merc tasks and not edited here; proposed text: "Forgotten Tower: no merc clvl 15 and max life 150 and the kit, merc clvl 14, unreadable life clvl 16 (SME 2026-11-04, U)".
 
 Live proof line (Gate 2/3 log): `route guard: forgotten tower floor=15 (merc=none)`, a closed guard logs `route guard: blocked tower (no merc, life 149 < 150)`; an unreadable life logs `route guard: forgotten tower floor=16 (merc=none) (max life unreadable, fallback floor)`. Not run live.
+
+TASK-C (docs/research/lvl14plan.md; folded in, card cap ADR 0015). Root cause (V, log of Gate 2 rerun seed 13, code read): `freshGameToLevel` (internal/bot/task.go) restarted the game every cycle whenever the picker found nothing and some area was cleared, with no memory of the experience gained: 75 restarts in 4 h at clvl 15. Now `freshAllowed` compares experience with the previous restart (state in `loopState.freshAt/freshExp/freshNoGain`, kept across `forgetGame`). A cycle under `route.freshMinXP` (200, U) counts; a restart after one waits `route.freshGapSec` (600); at `route.freshMaxNoGain` (3; 0 = off) in a row the bot logs `leveling: blocked: needs input` and probes one restart per `route.freshBlockedSec` (1800), waiting in town in sliced sleeps (stop and watchdog heartbeat stay live). The class does not enter the rule (no class data). Not done: the doc's gold-farm slice and the kit-restock-instead-of-restart branch (the wait in town lets bans expire and the picker run again); no contract number changed.
+
+Live proof line (Gate log): `leveling: everything worth farming is cleared, starting a fresh game ... noGainRestarts=N reason="no area left to pick"`, then `leveling: fresh game held back xpGained=X noGainRestarts=N waitSec=S` and `leveling: blocked: needs input ...`. Expected: at most about 3 + 2 per hour restarts without XP, not 19 per hour. Not run live.
 <!-- SECTION:NOTES:END -->

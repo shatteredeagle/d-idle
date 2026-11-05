@@ -163,6 +163,9 @@ type loopState struct {
 	trip             *trip
 	stuckAt          time.Time
 	cleared          map[int]bool // areas fully explored in this game
+	freshAt          time.Time    // when the last fresh game started (survives forgetGame: it is the cross-game progress check)
+	freshExp         uint32       // experience at that moment
+	freshNoGain      int          // fresh games in a row that gained under Route.FreshMinXP
 	sweepKills       map[int]int  // kills per area in this game, for the sweep log line
 	clearedGen       int          // ob.newGames value cleared belongs to
 	stepArea         int          // planner choice (reach_level), kept until level or availability changes

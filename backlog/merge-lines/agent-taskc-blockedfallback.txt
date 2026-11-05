@@ -1,0 +1,1 @@
+BACKLOG: TASK-C folded into task-18: fresh-game restarts get an XP progress check, a gap and a blocked state (route.fresh* knobs).
