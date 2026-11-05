@@ -60,7 +60,7 @@ Stage 3 moves the files byte for byte (pure rename, so `git log --follow` works)
 ```markdown
 ---
 id: soak-gates                    # equals the file name
-goal: G-C                         # G-A..G-F of ADR 0015, or "rule" for standing rules (lab-rules, public-split, ...)
+goal: G-C                         # G-A..G-G of ADR 0015 and 0016, or "rule" for standing rules (lab-rules, public-split, ...)
 status: in-force                  # in-force | proposed (only under docs/contracts/proposed/)
 enforced_by:                      # repo paths (file or dir) that implement or judge it; "prose" if none
   - internal/d2dsoakstat/invariants.go
