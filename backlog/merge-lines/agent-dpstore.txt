@@ -1,0 +1,3 @@
+BACKLOG: TASK-19 decision-point-store: offline store built in internal/decide (catalogue as data, streaks, fading thoughts, rules, replay, persistence); In Progress until the T0 slice proves it live
+INDEX: docs/research/decision-point-store-notes.md | what internal/decide implements, stage-2 stubs, rule-file gaps
+CHANGELOG: Decision-point store (internal/decide): offline learn-by-doing store with answer profiles and replay tests; not wired into the bot yet.
