@@ -36,3 +36,6 @@ internal/gear/stamp.json
 /.claude/
 /docs/needs-you.md
 /tools/d2dfarm.hosts
+
+# stray python wheels at the root
+/*.whl

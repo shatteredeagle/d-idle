@@ -108,7 +108,7 @@ type HireOffer struct {
 	Price int
 }
 
-// Reader is what a backend must provide to read. Fakes: internal/merc/sim.
+// Reader is what a backend must provide to read. Fakes: write one in the test (the old internal/merc/sim was removed 2026-11-05).
 type Reader interface {
 	State() (MercState, error)
 	// Offers lists the rows of the open hire window; an error when no window is open.
