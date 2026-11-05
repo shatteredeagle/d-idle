@@ -658,6 +658,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `archive/`
 
 - [BACKLOG-2026-10-30.md](archive/BACKLOG-2026-10-30.md): Archived 2026-10-31 (doctrim): the backlog as of 2026-10-30 evening, before the trim. Done items were not...
+- [INDEX-20261030.md](archive/INDEX-20261030.md): docs/INDEX.md (hand-written map, 2026-10-30) (status: archived 2026-11-05. Superseded by the generated ../INDEX.md (by area) and ../START-HERE.md. Kept for its...)
 - [archive/README.md](archive/README.md): docs/archive
 - [deathautopsy.md](archive/deathautopsy.md): Death autopsy: G1 attempts 11 to 13 (2026-10-29)
 - [goals-catalog.md](archive/goals-catalog.md): Goal catalog: short-term objectives (research, docs only)
