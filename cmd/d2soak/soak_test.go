@@ -281,7 +281,7 @@ func TestProfileKeepsExplicitFlags(t *testing.T) {
 		t.Fatal(err)
 	}
 	// m1 judges deaths with the death rule, not deaths per hour (plan-v2 10.2)
-	if lim.MaxDeathsPerHour != 0 || !lim.Death.Enabled || lim.MaxNoProgress != 5*time.Minute || lim.MaxSentinelPerHr != 9 || lim.MinXPPerHour != 15000 {
+	if lim.MaxDeathsPerHour != 0 || !lim.Death.Enabled || lim.MaxNoProgress != 5*time.Minute || lim.MaxSentinelPerHr != 9 || lim.AdvisoryXPPerHour != 15000 {
 		t.Fatalf("%+v", lim)
 	}
 }

@@ -134,7 +134,7 @@ func TestProfileM24(t *testing.T) {
 		t.Fatal(err)
 	}
 	if lim.MaxDeathsPerHour != 0 || !lim.Death.Enabled || lim.MaxNoProgress != 10*time.Minute || lim.MaxLadderPerHour != 2 ||
-		lim.MaxSentinelPerHr != 2 || lim.MinXPPerHour != 1000 || lim.MaxRSSMBPerHour != 40 ||
+		lim.MaxSentinelPerHr != 2 || lim.AdvisoryXPPerHour != 1000 || lim.MaxRSSMBPerHour != 40 ||
 		lim.MaxThreadsPerHour != 5 || lim.MaxGoroutinesPerH != 5 {
 		t.Fatalf("%+v", lim)
 	}

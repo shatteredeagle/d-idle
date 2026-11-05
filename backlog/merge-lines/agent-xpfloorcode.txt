@@ -1,0 +1,1 @@
+CHANGELOG: d2soak: XP/h is an advisory line (value, band) and never fails a run; flag --min-xp-per-hour renamed --xp-advisory-per-hour (soak-gates, ADR 0015 item 8)
