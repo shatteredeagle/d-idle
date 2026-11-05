@@ -6,6 +6,7 @@ import (
 	"flag"
 	"fmt"
 	"log/slog"
+	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -27,6 +28,7 @@ type ladderOptions struct {
 	on      bool
 	profile string // "" = a person answers through the watch screen; NAME or holdout:SEED = a scripted player
 	watch   bool
+	store   string // "" = a store per D2BOT_RUN when a run is named, else the shared one; "shared" = the shared one; else a named store
 	// -watch: the read-only viewer and the SEPARATE answer listener (same semantics as d2dview -watch).
 	viewAddr, answerAddr, origins string
 }
@@ -34,6 +36,7 @@ type ladderOptions struct {
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
 	fs.BoolVar(&l.on, "ladder", envBool("D2BOT_LADDER"), "turn the decision ladder on (knob ladder.enabled 1): the T0/T1 points ask a store whose untrained answer is the legacy one; state under <instance state>/ladder (env D2BOT_LADDER; default off)")
 	fs.StringVar(&l.profile, "ladder-profile", envOr("D2BOT_LADDER_PROFILE", ""), "with --ladder: a scripted player for drills (cautious, bold, inconsistent, holdout:SEED); default none, a person answers on the watch screen")
+	fs.StringVar(&l.store, "ladder-store", envOr("D2BOT_LADDER_STORE", ""), "with --ladder: the store under <instance state>/ladder/runs/NAME; default the run named by D2BOT_RUN (so drills are independent), or the shared store when no run is named; \"shared\" forces the shared store (learning carries on across sessions)")
 	fs.BoolVar(&l.watch, "watch", envBool("D2BOT_WATCH"), "with --ladder: serve the player screen (/watch) from this process (env D2BOT_WATCH; default off)")
 	fs.StringVar(&l.viewAddr, "watch-addr", envOr("D2BOT_WATCH_ADDR", "127.0.0.1:8891"), "with --watch: listen address of the read-only viewer; non-loopback requires --token")
 	fs.StringVar(&l.answerAddr, "watch-answer-addr", envOr("D2BOT_WATCH_ANSWER_ADDR", "127.0.0.1:8892"), "with --watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders); non-loopback requires --token")
@@ -218,8 +221,26 @@ func hereFunc(r *bot.Runner) func() string {
 	}
 }
 
-// ladderDir is the decision store's directory, made only when -ladder is on.
-func ladderDir(stateDir string) string { return filepath.Join(stateDir, "ladder") }
+// ladderDir is the decision store's directory, made only when -ladder is on. The shared store is <state>/ladder and
+// carries learning across sessions; a named run (--ladder-store, else D2BOT_RUN) gets <state>/ladder/runs/NAME, so
+// two drills on one instance do not see each other's thoughts and rules (t0drill Result 2, defect 7).
+func ladderDir(stateDir string, l ladderOptions) (string, error) {
+	shared := filepath.Join(stateDir, "ladder")
+	name := l.store
+	if !l.on {
+		return shared, nil
+	}
+	if name == "" {
+		name = os.Getenv("D2BOT_RUN")
+	}
+	if name == "" || name == "shared" {
+		return shared, nil
+	}
+	if strings.ContainsAny(name, `/\:`) || strings.Contains(name, "..") || name[0] == '.' {
+		return "", fmt.Errorf("--ladder-store / D2BOT_RUN %q is not a plain name", name)
+	}
+	return filepath.Join(shared, "runs", name), nil
+}
 
 // logLadder prints the one startup line.
 func logLadder(log *slog.Logger, l ladderOptions, rig *ladderRig, dir string) {
