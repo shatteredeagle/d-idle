@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Decision-point store (internal/decide): offline learn-by-doing store with answer profiles and replay tests; not wired into the bot yet.
 - Backlog.md read-only web board deployed on the NAS as a Docker-tab template behind the proxy and the central login; deploy script and doc (backlog-board doc in docs/process)
 - Backlog.md web board for the NAS prepared (deploy/backlog-board, read-only mirror, UI steps); not deployed
 - cleanup B (docs only): INDEX rebuilt by area, START-HERE and README map, AGENTS reading order, 13 finished research docs archived with stubs, link check clean
