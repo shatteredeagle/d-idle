@@ -16,6 +16,9 @@ owns:
   - "internal/town/chores.go"
   - "internal/town/town.go"
   - "internal/town/fixprogress_test.go"
+  - "internal/town/trip.go"
+  - "internal/town/staleportal_test.go"
+  - "internal/env/tuning_town.go"
 exclusive: []
 branch: "agent/fixprogress"
 agent: "fixprogress"
@@ -36,6 +39,8 @@ What changes:
 - Tests: internal/town/fixprogress_test.go (sim world).
 - docs/fixprogress.md: timeline, evidence, cause tags, live recipe.
 
+Stale town portal (Gate 2 g2b, seed 11, bot 9d03a58; V log, cause U): 43 `portal click failed` lines on one portal id, then a 7-area walk and 11 minutes without a kill. BackToField (internal/town/trip.go) now drops a portal id after town.portalClickFails (default 2) failed entries, rescans, then opens a fresh portal from the tome/scroll, then the waypoint, then the walk. Log lines: `back to field: portal id=X failed N times, dropped`, `back to field: fallback=<newportal|waypoint|walk> reason=...`. Tests: internal/town/staleportal_test.go (Sorceress + Barbarian). Not verified live.
+
 Next step: live proof in a seed-set record
 
 Gates (from the card):
@@ -48,5 +53,6 @@ Source: git tag openspec-final, openspec/changes/fixprogress/ (this task is the 
 <!-- AC:BEGIN -->
 - [x] #1 timeline and cause from the minute log and the bot log
 - [x] #2 town: portal-empty fact and watchdog, tests
+- [x] #4 stale portal: drop id after N failed clicks, fresh portal, waypoint, walk fallback (offline tests)
 - [ ] #3 live proof (later card)
 <!-- AC:END -->
