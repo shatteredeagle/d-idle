@@ -18,8 +18,8 @@ owns:
 exclusive: []
 branch: "agent/watch-screen"
 agent: "watch-screen"
-result: ""
-live: ""
+result: "Built offline, NOT verified live. d2dview hosts the screen (flag -watch, off by default); d2dash not used. internal/watch: Hub (ladder Sink and AnswerSource adapter over internal/decide), GET-only view handler, separate POST answer route, simulated runner with a softcore Sorceress and a hardcore Paladin. Design and contract: docs/research/watch-screen-design.md; run doc: docs/watch-screen.md. owns needs internal/watch/** and docs/research/watch-screen-design.md added (internal/decideapi was not used)."
+live: "no"
 merge_hash: ""
 overlap: "cmd/d2dview is also named by task-15 (stream-grid, Deferred); coordinate the web files before starting."
 source: "grill 0005 outcome (docs/grills/0005-automation-ladder/outcome.md), ADR 0016 item 24"
@@ -35,9 +35,9 @@ The one player screen of ADR 0016 items 20 to 23 on cmd/d2dview (docs/d2d-view.m
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 The feed shows a question thought with answer buttons, fades it after the fade time (virtual clock in tests) and writes it to the journal as missed
-- [ ] #2 Rules list shows each rule with plain-language context; revoke one and revoke all work through the bot route, the viewer endpoints stay read-only (test: no write method on the viewer mux)
-- [ ] #3 Orders box and uptime (share of time making progress; deaths, recovery and town stalls lower it) render from the simulated runner
-- [ ] #4 Runs on the simulated runner with no game (U: say in the result whether d2dview or d2dash hosts it); not verified live
-- [ ] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/watch-screen.md written
+- [x] #1 The feed shows a question thought with answer buttons, fades it after the fade time (virtual clock in tests) and writes it to the journal as missed
+- [x] #2 Rules list shows each rule with plain-language context; revoke one and revoke all work through the bot route, the viewer endpoints stay read-only (test: no write method on the viewer mux)
+- [x] #3 Orders box and uptime (share of time making progress; deaths, recovery and town stalls lower it) render from the simulated runner
+- [x] #4 Runs on the simulated runner with no game (U: say in the result whether d2dview or d2dash hosts it); not verified live
+- [x] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/watch-screen.md written
 <!-- AC:END -->

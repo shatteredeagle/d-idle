@@ -1,0 +1,32 @@
+:root{color-scheme:dark}
+body{margin:0;background:#0d1016;color:#d6dbe6;font:14px/1.4 system-ui,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;padding:8px 12px;background:#151a24;border-bottom:1px solid #263042}
+main{display:flex;flex-wrap:wrap;gap:10px;padding:10px;align-items:flex-start}
+.col{flex:1 1 420px;display:flex;flex-direction:column;gap:10px;min-width:300px}
+.pane{background:#111620;border:1px solid #263042;border-radius:4px;padding:8px}
+.pane h2{margin:0 0 6px;font-size:13px;font-weight:600;color:#8d99b0}
+.tag{display:inline-block;padding:1px 8px;border-radius:3px;background:#1f4d3a;color:#bff0d8;font-weight:600}
+.tag.death,.tag.recovery,.tag.stall{background:#5a1f26;color:#ffc9cf}
+.tag.idle{background:#2a3242;color:#c3cbdb}
+.err{color:#ff7b7b}
+.hint,small{color:#8d99b0}
+ul{list-style:none;margin:0;padding:0}
+li{padding:3px 0;border-bottom:1px solid #1b2230}
+button,select,input{background:#222a38;color:#d6dbe6;border:1px solid #33405a;border-radius:3px;padding:3px 9px}
+button{cursor:pointer}
+button:disabled{opacity:.4;cursor:default}
+.thought{border:1px solid #33405a;border-radius:4px;padding:8px;margin-bottom:8px;background:#161d2b}
+.thought.confirm{border-color:#8a6d1c}
+.thought.fading{opacity:.55}
+.thought .ctx,.thought .meanwhile{color:#9fb0cc;font-size:12px}
+.thought .urg{color:#ffd166;font-size:12px}
+.choices{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.bar{height:5px;background:#222a38;border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:#3a63c8}
+.k-incident{color:#ff9aa5}.k-idle,.k-story{color:#9fd3ff}.k-learned,.k-confirm-yes{color:#8fe3b0}
+.k-missed,.k-late{color:#c9a35c}.k-revoked,.k-revoked-all{color:#e39bd0}
+.rule.revoked .txt{text-decoration:line-through;opacity:.6}
+.t{color:#6f7b92;font-variant-numeric:tabular-nums;margin-right:6px}
+.why{margin:4px 0 4px 16px;padding:4px 8px;background:#1a2233;border-left:3px solid #3a63c8}
+#journal{max-height:360px;overflow:auto}
+img#shot{max-width:100%;background:#000}

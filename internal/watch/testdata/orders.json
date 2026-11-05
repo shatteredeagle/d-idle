@@ -1,0 +1,1 @@
+{"schema":"watch.orders/1","seq":9,"now":61,"orders":[{"id":1,"kind":"fight","minutes":200,"state":"active","text":"Fight here for 200 min","givenAt":0}],"areas":["Blood Moor","Cold Plains","Stony Field","Dark Wood","Black Marsh","Den of Evil","Burial Grounds","Cave 1"],"kinds":["go","fight","home"],"maxMinutes":240}
