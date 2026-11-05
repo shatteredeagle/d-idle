@@ -1,0 +1,31 @@
+#!/bin/bash
+# verifyskbarb: build the d2d probe (once) and run both sides of the independent Barbarian calc / physical check.
+#   tools/emu/run-on-worker.sh --ttl 2400 vbb_run.sh N SEED
+# d2d side: the sorcrest checkout's headers (eval_calc, skill_phys are inline in components/rules) + its build's libgame.a.
+set -e
+HERE=$(cd "$(dirname "$0")" && pwd)
+N=${1:-20000}; SEED=${2:-424242}
+OUT=${D2_SCRATCH:?}/vbb
+mkdir -p "$OUT"
+SRC=$HOME/d2d-lab/pr/sorcrest-d2d
+B=$HOME/d2d-lab/pr/sorcrest-out/build
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+if [ ! -x "$OUT/vbb_test" ] || [ "$HERE/vbb_test.cpp" -nt "$OUT/vbb_test" ]; then
+	IN=""
+	for d in tests components/game components/game/character components/game/gamedata components/game/npc components/log components/mpq components/d2s components/txt components/rules components/drlg components/ds1 components/userdir components/install components/cof components/compcode components/dt1 components/tbl; do IN="$IN -I$SRC/$d"; done
+	STORM=$B/_deps/stormlib-src/src
+	[ -d "$STORM" ] || STORM=$HOME/d2d-lab/src/build/_deps/stormlib-src/src
+	(cd "$B" && nice c++ -DD2D_TEST_SKIPPED=77 -DSTORMLIB_NO_AUTO_LINK $IN -I$STORM -O2 -std=c++26 -include $SRC/cmake/no_near_far.hpp -o "$OUT/vbb_test" "$HERE/vbb_test.cpp" components/game/libgame.a _deps/stormlib-build/libstorm.a /usr/lib/libz.so /usr/lib/libbz2.so components/install/libinstall_detect.a)
+fi
+"$OUT/vbb_test" --dump > "$OUT/dump.txt" 2>&1 || true
+UP=$HOME/d2d-lab/pr/palskill
+PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+export PYTHONPATH=$HERE:$UP/tools/emu
+cd "$UP/tools/emu"
+nice $PY "$HERE/vbb_calc.py" gen "$N" "$SEED" > "$OUT/cases.tsv"
+nice $PY "$HERE/vbb_calc.py" game "$OUT/cases.tsv" > "$OUT/game.tsv" 2> "$OUT/game.err"
+nice "$OUT/vbb_test" --calc "$OUT/cases.tsv" 2> "$OUT/d2d.err" | grep -E '^[0-9]+ ' > "$OUT/d2d.tsv"
+wc -l "$OUT/cases.tsv" "$OUT/game.tsv" "$OUT/d2d.tsv"
+echo "DIFF $(diff "$OUT/game.tsv" "$OUT/d2d.tsv" | grep -c '^<' || true)"
+nice $PY "$HERE/vbb_cmp.py" "$OUT"
+cp "$OUT/dump.txt" "$OUT/dump.$SEED.txt"
