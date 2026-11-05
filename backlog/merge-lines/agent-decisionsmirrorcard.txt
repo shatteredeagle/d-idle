@@ -1,1 +1,0 @@
-BACKLOG: decisions-mirror (TASK-22, deferred): one-way generated mirror of the ADRs into backlog/decisions for the board; ADRs stay the source of truth
