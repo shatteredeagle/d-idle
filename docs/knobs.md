@@ -144,6 +144,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.npcOpenTries | 3 | 1..6 | count | 1 | 2 | Attempts to open an NPC dialog before the chore is skipped. |
 | town.uiTimeoutMs | 2500 | 800..8000 | ms | 800 | 2 | Wait for a panel flag after a click. |
 | town.clickSettleMs | 150 | 40..800 | ms | 800 | 7 | Pause after a UI click before memory is re-read. |
+| town.dropTries | 6 | 1..8 | count | 1 | 6 | Ground clicks tried, each on another cell beside the character, to drop a held item (then a free pack cell, then the failsafe). |
 | town.moveTries | 3 | 1..6 | count | 1 | 3 | Attempts to move one item between grids (each verified in memory). |
 | town.portalSettle | 4500 | 1000..8000 | ms | 8000 | 1 | Wait after arriving in an area before using a portal. |
 | town.portalReuseDist | 40 | 0..100 | subtiles | 0 | 1 | ToTown walks into an open portal this close instead of reading a scroll. |
