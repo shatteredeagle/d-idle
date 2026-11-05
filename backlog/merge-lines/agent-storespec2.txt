@@ -1,0 +1,1 @@
+BACKLOG: decision-point store spec: risk class by context key (kit, hardcore), nine missing T0-T2 points added, life band edges left open (docs/research/decision-point-store-spec.md)

@@ -1,7 +1,7 @@
 # Dispatcher brief, proposed replacement (agent ROADMAP, 2026-10-31)
 
 > status: PROPOSAL (its WIP limit 3 and milestone rule were ADOPTED by the user on 2026-10-31, docs/roadmap.md decision D1; the file replaces the private brief only when the user applies it). The standing brief lives in the private ops repo (`docs/process/dispatcher-brief.md` there; the public file is a pointer). This is the text ROADMAP proposes to replace it with, written against docs/roadmap.md. The user decides (roadmap decision 1); until then the standing brief holds.
-> status (stage 4, OpenSpec removal): the change cards, `changecheck` and `openspec/README.md` named below are retired; read "card" as a Backlog.md task in `backlog/tasks/` (`docs/backlog.md`). The WIP rules stay as adopted; the commands below are history.
+> status (stage 4, OpenSpec removal): the change cards, `changecheck` and `openspec/README.md` named below are retired; read "card" as a Backlog.md task in `backlog/tasks/` (`docs/backlog-howto.md`). The WIP rules stay as adopted; the commands below are history.
 
 ## The one rule
 

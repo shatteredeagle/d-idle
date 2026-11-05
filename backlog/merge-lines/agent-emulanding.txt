@@ -1,0 +1,2 @@
+BACKLOG: tools/emu helper scripts landed from archived branches (cleanup batch A); no game code
+CHANGELOG: tools/emu: 100 emulator helper scripts and small harnesses landed from archived coverage/verifier branches, with a README listing each script

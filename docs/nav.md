@@ -95,7 +95,7 @@ Synthetic 1500x1500 level with 500 random rectangular obstacles, corner to corne
 - Set `n.Guard` for "life low / monster near": return an error to stop; `errors.Is(err, nav.ErrAborted)`.
 - Treat `ErrDead` as the signal to hand over to the death/recovery logic; nav does no corpse pickup. Corpse run: `ToArea(deathLevel)` (waypoint from town, else chain), then `CorpseApproach(corpse)`.
 - `nav` calls `World.Update()`; do not call it concurrently from another goroutine.
-- Live tool: `tools/live.sh nav navlive <state|town|wpui [s]|out [s]|home|goto X Y|path X Y>` (`cmd/navlive` is a symlink to `internal/nav/cmd/navlive`).
+- Live tool: `tools/live.sh nav navlive <state|town|wpui [s]|out [s]|home|goto X Y|path X Y>` (`cmd/navlive` is a symlink to `cmd/navlive`).
 
 
 ## Seed independence, exits, waypoints (agent NAV2, instance i1 "Navi", 2026-10-28)
@@ -106,7 +106,7 @@ data (`LevelMap.Presets`, `BorderCells`, `Exits`, unit tables). Done: `navlive t
 from the tracker) and `internal/town` (the `Act.Approx` coordinate tables are gone; `Town.spotOfClass/spotOfObject` read the preset of the current level,
 so the fallback walk when an NPC is not loaded yet is right in every seed). Tests run on two recorded games: `internal/d2map/testdata/rogue_encampment.d2mi`
 (Testy) and `rogue_encampment_b.d2mi` (Navi, recorded with `d2mapdump record`); `TestRogueEncampmentPaths` / `...GateIsABorderGap` derive all targets from
-presets. Remaining literals: `internal/combat/cmd/combatlive` (x 5935..6005, y 4952; COMBAT's tool, must go), `internal/town/sim` and unit tests use made-up
+presets. Remaining literals: `cmd/combatlive` (x 5935..6005, y 4952; COMBAT's tool, must go), `internal/town/sim` and unit tests use made-up
 coordinates in fake worlds (harmless, not live), and d2map's fixture test asserts the recorded values of fixture A on purpose.
 `navlive town` on Navi's game: waypoint, stash, Akara, Gheed, Charsi, Kashya all reached within 1.4-5.7 subtiles (VERIFIED LIVE).
 

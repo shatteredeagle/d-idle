@@ -1,6 +1,6 @@
 # Issue tracker: Backlog.md tasks
 
-> status: current since OpenSpec removal stage 4. Work is tracked as Backlog.md tasks (https://github.com/MrLesk/Backlog.md, MIT) in `backlog/tasks/`; how the board works, the CLI recipes and the known problems are in `docs/backlog.md`. The retired OpenSpec change cards live under git tag `openspec-final` (index: `docs/archive/openspec-index.md`; `git show openspec-final:<path>`).
+> status: current since OpenSpec removal stage 4. Work is tracked as Backlog.md tasks (https://github.com/MrLesk/Backlog.md, MIT) in `backlog/tasks/`; how the board works, the CLI recipes and the known problems are in `docs/backlog-howto.md`. The retired OpenSpec change cards live under git tag `openspec-final` (index: `docs/archive/openspec-index.md`; `git show openspec-final:<path>`).
 
 Work for this repo is tracked as task files in `backlog/tasks/`. There is no GitHub Issues use, no `gh` or `glab` calls, and no `.scratch/` directory. The forge remote (`forge`, `<owner>/d2lod-bot`) is a push target only; nothing is ever posted to GitHub without the user's go (`docs/contracts/lab-rules.md`).
 
@@ -21,7 +21,7 @@ This file replaces the "issue tracker" template of the setup skill (hand-written
 
 ## Conventions
 
-- Create (coordinator): `backlog task create "<id>: <what>" -s Proposed -l G-C --ac "first step"`, then add `card`, `owns`, `exclusive`, `contracts` by hand (the CLI cannot write them). Recipes: `docs/backlog.md`.
+- Create (coordinator): `backlog task create "<id>: <what>" -s Proposed -l G-C --ac "first step"`, then add `card`, `owns`, `exclusive`, `contracts` by hand (the CLI cannot write them). Recipes: `docs/backlog-howto.md`.
 - Read: `backlog task <n> --plain`, or open the file; list open work with `backlog task list --plain`, plus `docs/plan/STATUS.md` and `docs/BACKLOG.md`.
 - Comment / progress: tick the acceptance criteria of your own task; fill `result:` (say verified live or not). Anything for the coordinator goes in the agent's final report, not in files outside `owns:`.
 - Check: `python3 -I tools/backlog/check.py` and `python3 -I tools/contracts/check.py` must print 0 findings.

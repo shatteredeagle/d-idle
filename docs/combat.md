@@ -191,7 +191,7 @@ Per-tick order now (fight loop, `castfirst.go`): safety (potions, portal, chicke
 - Kiting every target separately burned the budget (and starved casting): the budget is per fight burst now. A cast-gap sleep inside the loop starved survival checks: replaced by a non-blocking gate.
 
 ## Live tool
-`tools/live.sh combat combatlive <state|probe|bind|bindkey SKILL KEY|popup X Y [KEY]|vtest KEY|drink|fight SECS|home>` (source internal/combat/cmd/combatlive, symlinked at cmd/combatlive like inputcal).
+`tools/live.sh combat combatlive <state|probe|bind|bindkey SKILL KEY|popup X Y [KEY]|vtest KEY|drink|fight SECS|home>` (source cmd/combatlive, symlinked at cmd/combatlive like inputcal).
 `fight` needs the character in the Rogue Encampment; `home` walks back east along y=4952. The character was left in the town, no panels.
 
 ## Crowd rule (agent ROUTEGUARD, 2026-10-30; SME decision EXP, U live)

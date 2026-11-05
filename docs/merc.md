@@ -5,7 +5,7 @@ Tags: V verified (offline test or live), S secondary source, U unverified. Every
 
 ## Packages
 - `internal/merc`: types (`MercState`, `HireOffer`, `Item`, `Ctx`, `Decision`), `Reader`/`Actor`/`Backend`, policy (`policy.go`), gear (`gear.go`), formulas, log lines (`logs.go`), knobs (`knobs.go`).
-- `internal/merc/sim`: fake `Backend` with gold accounting, the formulas, the free Rogue and gear loss on replace.
+- `internal/merc/sim`: (removed 2026-11-05, see cleanup plan; was a fake `Backend` with gold accounting, the formulas, the free Rogue and gear loss on replace.)
 - Knobs: group `merc.*` in `internal/env/tuning_merc.go` (10 knobs, all NoHandicap, docs/knobs.md), converted by `merc.KnobsFrom(tuning.Merc)`.
 
 ## Policy and reasons

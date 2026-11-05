@@ -1,0 +1,1 @@
+CHANGELOG: cleanup C: removed internal/merc/sim, cmd/lockstepscan, three unreferenced tools scripts, five root python wheels and .run28.sh (internal/memfd kept: deploy/container/entrypoint imports it)
