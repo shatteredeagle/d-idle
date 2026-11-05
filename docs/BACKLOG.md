@@ -494,6 +494,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - Backlog.md finish: 7 fix and M1 cards reconciled with git (TASK-5..8, 10, 11, 18 Done; TASK-9 stays In Progress), status rules and verified edge cases in docs/backlog-howto.md, check.py fails duplicate task ids
 - TASK-19 decision-point-store: offline store built in internal/decide (catalogue as data, streaks, fading thoughts, rules, replay, persistence); In Progress until the T0 slice proves it live
 - no-shield damage reduction PR #200 merged upstream 2026-11-05 13:22 EST (merge commit 988d39518); docs/archive/research/openpr-log.md and the esverify3 line of docs/BACKLOG.md updated
+- docs/BACKLOG.md line 491 still names docs/process/backlog-board-NAS.md; the file is now backlog-board-nas.md (lowercase)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
