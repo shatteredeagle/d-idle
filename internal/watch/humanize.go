@@ -30,6 +30,10 @@ var fieldText = map[string]map[string]string{
 	"potiontier": {"minor": "minor potions", "light": "light potions", "normal": "normal potions", "greater": "greater potions"},
 	"held":       {"none": "no potion in the belt", "hp": "a healing potion at hand", "rv": "a rejuvenation potion at hand"},
 	"life":       {"lt25": "life under 25%", "25-35": "life 25 to 35%", "35-55": "life 35 to 55%", "55-70": "life 55 to 70%", "gt70": "life over 70%"},
+	"drinklife":  {"lt18": "life under 18%", "18-25": "life 18 to 25%", "26-49": "life 26 to 49%", "50-54": "life 50 to 54%", "55-64": "life 55 to 64%", "ge65": "life 65% or more"},
+	"champbonus": {"none": "no champion bonus", "early": "champion bonus early"},
+	"mercgold":   {"lt400": "gold under 400", "ge400": "gold 400 or more"},
+	"lifeengage": {"lt25": "life under 25%", "25-35": "life 25 to 35%", "35-40": "life 35 to 40%", "40-55": "life 40 to 55%", "55-70": "life 55 to 70%", "gt70": "life over 70%"},
 	"gold":       {"lt100": "gold under 100", "100-500": "gold 100 to 500", "500-1500": "gold 500 to 1500", "gt1500": "gold over 1500"},
 	"levelgap":   {"le0": "area is not above the hero", "1-3": "area 1 to 3 levels above", "4-6": "area 4 to 6 levels above", "ge7": "area 7+ levels above"},
 	"freerows":   {"0": "no free pack row", "1": "1 free pack row", "2+": "2 or more free pack rows"},
@@ -93,7 +97,7 @@ func UrgencyText(key string) string {
 		switch f.Name {
 		case "urgency":
 			return f.Text
-		case "life":
+		case "life", "drinklife":
 			life = f.Text
 		}
 	}

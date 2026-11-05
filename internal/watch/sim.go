@@ -281,7 +281,7 @@ func (s *Sim) tick() {
 	if ask {
 		extra := decide.Obs{Num: map[string]float64{"life": s.Build.Life},
 			Cat: map[string]string{"packdanger": s.Build.Danger, "kit": "OK", "held": "hp"}}
-		if _, err := s.Ladder.Decide(pointRetreat, s.hero(), extra); err != nil {
+		if _, err := s.Ladder.Decide(pointRetreat, s.hero(), extra, ""); err != nil {
 			s.Ladder.Fault(err)
 		}
 	} else {

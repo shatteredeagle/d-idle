@@ -385,7 +385,7 @@ func TestRuleLearnedAfterNAnswers(t *testing.T) {
 				t.Fatalf("rules: %+v", rp)
 			}
 			ru := rp.Rules[0]
-			if ru.Answer != "portal" || ru.Label == "" || !strings.Contains(ru.Context, "life 25 to 35%") && !strings.Contains(ru.Context, "life 35 to 55%") || !strings.HasPrefix(ru.Text, "When asked ") {
+			if ru.Answer != "portal" || ru.Label == "" || !strings.Contains(ru.Context, "life 26 to 49%") || !strings.HasPrefix(ru.Text, "When asked ") {
 				t.Errorf("rule in plain language: %+v", ru)
 			}
 			// The hero now acts alone: no new thought opens for that context.
