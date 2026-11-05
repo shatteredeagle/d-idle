@@ -1,6 +1,6 @@
 # Grill 0005 outcome: the automation ladder
 
-Result: [ADR 0016](../../adr/0016-automation-ladder.md), status proposed, 2026-11-05. The user flips it to accepted. Notes of the grill session; the ADR is the record.
+Result: [ADR 0016](../../adr/0016-automation-ladder.md), status accepted by the user, 2026-11-05. Notes of the grill session; the ADR is the record.
 
 ## Rounds and answers
 
