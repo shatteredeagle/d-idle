@@ -34,7 +34,7 @@ P2: install the proxy in the chosen instance's game folder (instance stopped), `
 - The bot's own timers need a scaled clock for k > 1 (original-game-lockstep.md section 2.6); not written.
 
 
-## P1 results (V read, hidden instance i4, 2026-11-02, read only, tool `cmd/lockstepscan`)
+## P1 results (V read, hidden instance i4, 2026-11-02, read only, tool `cmd/lockstepscan`, removed 2026-11-05, see cleanup plan)
 
 Method: snapshot all rw regions below 2 GB twice 2 s apart, keep 32-bit words that grew by 45 to 56, re-filter twice, then sample the survivors once a second for 10 s by the tool's own wall clock. No writes, no hook (first session) and again with the hook at k=1 (second session).
 
