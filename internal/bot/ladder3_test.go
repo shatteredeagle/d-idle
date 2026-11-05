@@ -19,6 +19,7 @@ func ladderRig(t *testing.T, class d2.Class, rung3 int) *rig {
 	g := newRig(t, func(c *Config, d *Deps, tu *env.Tuning) {
 		c.TownTimeoutSec = 20
 		tu.Bot.FailsafeRung3Max = rung3
+		tu.Bot.Rung3WindowMax = 0 // the burst cap has its own tests (nokill_test.go)
 	})
 	g.r.d.Cycler = fakeCycler{g.w}
 	g.w.set(func(w *world) { w.state = d2.StateInGame; w.area = 1; w.class = class })

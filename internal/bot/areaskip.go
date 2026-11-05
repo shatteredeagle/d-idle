@@ -14,6 +14,8 @@ const (
 	whyGate        = "gate"
 	whyDeath       = "death-streak"
 	whyRoute       = "route"
+	whyCycling     = "new-game-cycling"
+	whyDrought     = "kill-drought"
 	// whyRepeat (deathrule.go) is a repeat-site ban; idleBreak treats it as short-waited, like a fault, so the bot never idles in town for it
 )
 

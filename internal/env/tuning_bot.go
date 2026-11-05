@@ -59,6 +59,15 @@ type BotTuning struct {
 	FailsafeRung3Max    int
 	FailsafePauseMaxSec int
 
+	// NOKILL fixes (docs/research/g2d-nokill-diagnosis.md). Rung3WindowMax rung-3 cycles within Rung3WindowMin virtual
+	// minutes end in a field reset whatever progress came between them (0 = off). DroughtMin: no kill and no XP for
+	// that many virtual minutes in a field area at healthy life forces a re-plan (0 = off). EmptyFieldSec: a quest-run
+	// area with no hostile in sight and no kill for that long is called cleared (non-quest areas keep Config.EmptyAreaSec).
+	Rung3WindowMax int
+	Rung3WindowMin int
+	DroughtMin     int
+	EmptyFieldSec  int
+
 	// Mercenary chore (docs/merc-farm.md). Hiring clicks a verified dialog; reviving clicks an UNVERIFIED one, so it is off.
 	MercRetryMin         int  // minutes between merc chore attempts (a failed hire or revive is not retried sooner)
 	MercHireMinGold      int  // gold in Act 2 town below which no hire is attempted
@@ -78,6 +87,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
+		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -158,6 +168,14 @@ func botKnobs() []Knob {
 			Desc: "Go heap in use above which d2bot writes a heap profile and exits for a supervisor restart (a runaway allocation would otherwise end in the OOM killer); the GC gets a soft limit 25 percent above it. 0 is off. Normal runs use under 100 MB."},
 		{Key: "bot.failsafeRung3Max", Label: "Failsafe re-entry cap", Unit: "count", Default: 6, Min: 0, Max: 50, NoHandicap: true,
 			Desc: "Leave-and-re-enter cycles of failsafe ladder rung 3 allowed without real progress (XP, kills, levels) before the ladder skips to the pause rung. 0 is unbounded."},
+		{Key: "bot.rung3WindowMax", Label: "Re-entry burst cap", Unit: "count", Default: 3, Min: 0, Max: 20, NoHandicap: true,
+			Desc: "Failsafe leave-and-re-enter cycles allowed inside the burst window even when kills come between them. One more ends in a field reset (skip the area, no new game). 0 is off."},
+		{Key: "bot.rung3WindowMin", Label: "Re-entry burst window", Unit: "min", Default: 20, Min: 1, Max: 240, NoHandicap: true,
+			Desc: "Virtual minutes the re-entry burst cap counts over."},
+		{Key: "bot.droughtMin", Label: "Kill drought limit", Unit: "min", Default: 8, Min: 0, Max: 60, NoHandicap: true,
+			Desc: "Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off."},
+		{Key: "bot.emptyFieldSec", Label: "Empty quest field", Unit: "s", Default: 150, Min: 0, Max: 900, NoHandicap: true,
+			Desc: "A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off."},
 		{Key: "bot.failsafePauseMaxSec", Label: "Failsafe pause cap", Unit: "s", Default: 3600, Min: 300, Max: 14400, NoHandicap: true,
 			Desc: "Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress."},
 		// Merc and cube chores: switches and policy, not skill, so no handicap profile moves them (NoHandicap).
