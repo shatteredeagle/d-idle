@@ -1,6 +1,6 @@
 # Automation ladder: d.idle as an incremental Diablo II (DRAFT, product direction 2026-11-05)
 
-> status: DRAFT to refine, not a decision record. Written from the user's product discussion of 2026-11-05 (approved as a design draft; the tooling freeze allows design docs). Nothing here is built unless a row says so. Guard files (decisions.md, ADRs, GLOSSARY.md) are NOT edited; proposed text is in the last section.
+> status: DRAFT, decisions of 2026-11-05 recorded in section 7; not yet in the guard files (see automation-ladder-record-proposal.md). Written from the user's product discussion of 2026-11-05 (approved as a design draft; the tooling freeze allows design docs). Nothing here is built unless a row says so. Guard files (decisions.md, ADRs, GLOSSARY.md) are NOT edited; proposed text is in the last section.
 
 Tags: **V** = read in this repo (file cited), **S** = veteran-player answer from the d2-sme agent (memory, nothing looked up; its numbers stay unverified), **U** = unverified or my judgment, **D** = the user's stated decision (2026-11-05 discussion). Classic 1.14d. D2R-only facts: none used.
 
@@ -143,16 +143,16 @@ Recommendations (U):
 4. Upstream fidelity PRs are neutral to the ladder: they protect the engine all tiers run on.
 5. Treat the `m2-roam` and `m2-tripwp` cards as T0 speed polish, below T4 work.
 
-## 7. Open questions for the user
+## 7. Decisions (user, 2026-11-05)
 
-1. **Currency.** Runes are both the sacrifice currency and runeword material. Accept the tension (D says accepted), or add a separate currency, or let the altar take only duplicates and low runes? How does a player afford a runeword while also upgrading?
-2. **The value of N.** One global N or per decision kind? Is "consistent" strict (N in a row) or a majority? Does a contradicting answer reset the count?
-3. **Tiers vs acts.** Does T4 stop at Act 1, and which tiers cover Acts 2 to 5, Nightmare and Hell? Is there a T6 for later difficulties, or are later difficulties just harder goals for T5?
-4. **Decision-point catalogue.** Section 3 lists candidates from the SME; which are the real set, and which are always-ask (build-defining, per the SME)?
-5. **Gate 2/3 vs T4.** Is "Gate 2/3 = T4 acceptance" right, so the 24 h Act 1 clear stays the fidelity acceptance and not the product bar? (decisions.md currently calls it "done".)
-6. **Watch view.** Is the embedded viewport (V internal/viewport, docs/d2d-view.md) a tier-independent feature available from T0, or itself something to unlock?
-7. Does a hardcore death reset only the character (learned rules and quality levels survive), and does the altar quality survive too?
-8. Mapping of "rank 2 job runner": does the order UI (task orders) already satisfy it, or is it separate?
+The user answered the open questions of the first draft. All lines below are **D** (the user's words, 2026-11-05) unless marked.
+
+1. **Currency.** Anything can be sacrificed. ONE worth rule values every item: runes and perfect gems are the highest, gold and junk are worth little early, gems are mid, runes late. The farm goal reserves the runes its runeword needs, so the bot never burns them. No separate essence currency.
+2. **Learning rule.** The same answer in the same context N times IN A ROW teaches a rule; a different answer resets the count. N depends on risk: 2 for safe, 3 for normal, 5 for risky decision points. Every learned rule is listed and revocable. A sacrifice can skip one repetition. N is tunable data. A new act or a new difficulty is a new context (the hero asks again). Spec: [decision-point-store-spec.md](decision-point-store-spec.md).
+3. **Tiers vs acts.** Tiers are capabilities, acts are content. Build the FULL ladder T0 to T5 inside Act 1 Normal first (Countess is the early rune goal), then Acts 2 to 5 as expansions. Gate 2 and Gate 3 are the T4 acceptance (Act 1 clear). T5 gets its own farm-goal drill and gate later. Gate A (fidelity acceptance, ADR 0015) stays separate.
+4. **Start and control.** No premade character: every run starts from a fresh clvl 1 character. No direct control of the hero.
+
+Still open (not asked yet, U): the final decision-point catalogue (first cut in the spec), the watch view (is the viewport available from T0), whether the altar quality survives rebirth with the rules (assumed yes in the spec), and whether the order UI already satisfies the "job runner" shape.
 
 ## 8. Risks
 
@@ -165,8 +165,4 @@ Recommendations (U):
 
 ## 9. Proposed record text (NOT written to the guard files)
 
-**decisions.md line (proposed):** `2026-11-05 (user, no ADR yet): d.idle is an incremental Diablo II on d2d: no direct hero control; automation tiers T0 Order-taker to T5 Farmer unlock by learn by doing (N consistent answers, revocable) and are upgraded by sacrificing gold, gems and runes at an altar; every run starts from a fresh clvl 1 character; learned automation survives hardcore rebirth; end state a goal-driven farming bot. Draft: docs/research/automation-ladder.md. Gate 2/3 = T4 acceptance is proposed, not decided.`
-
-**ADR outline (proposed):** title `00NN: Automation as progression: the tier ladder`. Context: the project is a faithful bot; the parked idle layer needs a design; shapes 1 to 4 compared (user ranked 4 > 1 > 2; 3 rejected). Decision: tiers T0 to T5; learn by doing; sacrifice upgrades; fresh clvl 1 start; unlocks survive hardcore rebirth; needs-input/incident/uptime. Consequences: Gate 2/3 become T4 acceptance; backlog re-ranked by tier; new work items (decision-point store, altar object, T5 planner). Open: currency, N, tiers per act.
-
-**Glossary terms (proposed):** Tier (an automation capability level T0..T5); Decision point (a named event where the hero stops and asks); Learn by doing (unlock by N consistent answers); Altar (the custom d2d object where items are sacrificed); Sacrifice (spending items to raise a tier's quality); Needs-input (a question card, hero safe in town); Incident (a plain-language journal report of a failure); Uptime (share of time the hero acts rather than waits); Rebirth (a hardcore death that resets the character but keeps learned automation).
+Ready-to-accept text for the user's grill session or an explicit coordinator brief: [automation-ladder-record-proposal.md](automation-ladder-record-proposal.md) (decisions.md line, ADR 0016 draft, glossary terms). The decisions it records are section 7 above; summary: no direct control; tiers T0 to T5 unlock by learn by doing (N in a row, N by risk, revocable) and are raised by sacrificing items valued by one worth rule at an altar; fresh clvl 1 start; unlocks survive hardcore rebirth; full ladder in Act 1 Normal first, other acts as expansions; Gate 2/3 = T4 acceptance, T5 gets its own gate, Gate A separate; end state a goal-driven farming bot.
