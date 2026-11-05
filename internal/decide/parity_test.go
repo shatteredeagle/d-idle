@@ -23,16 +23,8 @@ func legacyDefault(point string, f map[string]string) (ans, split string) {
 	case "t0.retreat.lethal":
 		return "avoid", "" // U: empty placeholder list, never fires today
 	case "t0.area.toohard":
-		// V route floors: monastery 14, tower 14 with a merc and 15 without
-		switch {
-		case is("clvl", "ge15"):
-			return "go", ""
-		case is("clvl", "14"):
-			return "go", "route floor 15 without a merc, 14 with one; the merc is not in the key"
-		case is("kit", "NONE"):
-			return "lower", ""
-		}
-		return "skip", ""
+		// proven by TestDefaultParityTooHard against task.TowerLevelWhy over every clvl 1..40
+		return oracleAnswer, ""
 	case "t0.retreat.repeat":
 		if is("retreats", "3+") {
 			return "leave", "" // V brAttempts 3
@@ -103,9 +95,8 @@ const oracleAnswer = "(oracle)"
 
 // wantRemaining is the documented count of band-interior splits (docs/research/decision-point-store-notes.md).
 // The ADR 0016 gate "a rule file can express today's defaults" closes only when it is 0.
-// The 72 contexts are the clvl 14 contexts of t0.area.toohard (2 hc x 3 areaclass x 4 levelgap x 3 kit): the tower
-// floor is 15 without a merc and 14 with one, and adding merc to a 216-context key makes it 432 (notes, trade-off).
-const wantRemaining = 72
+// Catalogue v4 closed the last 72 (t0.area.toohard at clvl 14: the key now carries merc instead of levelgap).
+const wantRemaining = 0
 
 func TestDefaultParity(t *testing.T) {
 	cat := mustCat(t)

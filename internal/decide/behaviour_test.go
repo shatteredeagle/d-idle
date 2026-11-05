@@ -345,6 +345,44 @@ func TestMigrateKeyIsIdempotentAndLeavesOtherPoints(t *testing.T) {
 	}
 }
 
+// A profile file written by catalogue version 3 (file version 3) still loads; the toohard rule drops its level gap and
+// gets merc none; two gaps collapse into one key; the replay accepts the migrated log.
+func TestVersion3FileMigrates(t *testing.T) {
+	a := "t0.area.toohard|act=1,areaclass=field,clvl=14,diff=normal,hc=normal,kit=OK,levelgap=1-3"
+	b := "t0.area.toohard|act=1,areaclass=field,clvl=14,diff=normal,hc=normal,kit=OK,levelgap=ge7"
+	var lines []string
+	seq, th := 1, 1
+	for _, k := range []string{a, a, a, a, a} { // risky point: 5 answers
+		lines = append(lines, v1Entry(seq, "open", th, k, ""), v1Entry(seq+1, "answer", th, "", "go"))
+		seq, th = seq+2, th+1
+	}
+	dir := t.TempDir()
+	body := `{"version":3,"profile":"v3","hero":"hero1","log":[` + strings.Join(lines, ",") + `],"rules":[]}`
+	if err := os.WriteFile(Path(dir, "v3"), []byte(body), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	cat := mustCat(t)
+	if cat.MigrateKey(a) != cat.MigrateKey(b) {
+		t.Fatal("two level gaps must collapse into one key")
+	}
+	s, err := Open(dir, "v3", cat, &ManualClock{})
+	if err != nil {
+		t.Fatalf("a version 3 file must load: %v", err)
+	}
+	// the point is risky: five equal answers end in a confirm thought, not a rule; the replay must have accepted them
+	// and a call site's context for the same state must carry the migrated key.
+	ctx, err := cat.Build("t0.area.toohard", baseObs(cat, "sorceress").with(map[string]string{"areaclass": "field", "kit": "OK", "merc": "none"}, map[string]float64{"clvl": 14}), 1, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := cat.MigrateKey(a); ctx.Key != want {
+		t.Fatalf("call-site key %s, migrated key %s", ctx.Key, want)
+	}
+	if d, err := s.Ask(ctx); err != nil || d.Source == "" {
+		t.Fatalf("ask after migration: %+v %v", d, err)
+	}
+}
+
 // A profile file written by catalogue version 2 (file version 2) still loads; its rules for the three re-banded
 // points move to the new keys and keep answering.
 func TestVersion2FileMigrates(t *testing.T) {
@@ -382,9 +420,9 @@ func TestVersion2FileMigrates(t *testing.T) {
 			t.Errorf("rule %s = %q, want %q (rules: %v)", k, rules[k], a, rules)
 		}
 	}
-	// a point that did not change keeps its key as written
-	if got := cat.MigrateKey(toohard); got != toohard {
-		t.Errorf("toohard key changed: %s", got)
+	// v4 drops the level gap and adds the merc state (none: the stricter floor)
+	if got, want := cat.MigrateKey(toohard), "t0.area.toohard|act=1,areaclass=field,clvl=14,diff=normal,hc=normal,kit=OK,merc=none"; got != want {
+		t.Errorf("toohard key = %s, want %s", got, want)
 	}
 	// the migrated rule answers the context a call site builds today
 	ctx, err := cat.Build("t0.retreat.drink", baseObs(cat, "sorceress").with(map[string]string{"kit": "OK", "held": "none"}, map[string]float64{"life": 20}), 1, nil)

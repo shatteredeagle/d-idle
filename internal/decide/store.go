@@ -121,11 +121,12 @@ type ThoughtInfo struct {
 	// Choices are the point's answers; "notsure" is always allowed on an ask thought and is not listed.
 	Choices []Answer
 	Expires time.Duration // virtual time at which the thought fades
+	Opened  time.Duration // virtual time at which it was opened (additive in catalogue v4; a ladder ThoughtView carries it)
 }
 
 func (s *Store) info(t *Thought) *ThoughtInfo {
 	p, _ := s.cat.Point(t.Point)
-	ti := &ThoughtInfo{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, Answer: t.Answer, Expires: t.FadesAt}
+	ti := &ThoughtInfo{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, Answer: t.Answer, Expires: t.FadesAt, Opened: t.OpenedAt}
 	if p != nil {
 		ti.Question = p.Question
 		if !t.Confirm {

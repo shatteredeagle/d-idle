@@ -9,8 +9,8 @@ import (
 )
 
 // FileVersion is the on-disk format version; a newer file is refused (ErrFutureVersion).
-// Version 3: keys follow catalogue version 3; older files (1, 2) are migrated on open (Catalogue.MigrateKey).
-const FileVersion = 3
+// Version 4: keys follow catalogue version 4; older files (1, 2, 3) are migrated on open (Catalogue.MigrateKey).
+const FileVersion = 4
 
 var (
 	ErrFutureVersion = errors.New("decide: profile file was written by a newer version")

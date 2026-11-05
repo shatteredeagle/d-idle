@@ -160,7 +160,7 @@ func TestCatalogueRejectsBadData(t *testing.T) {
 		"unknown risk class":    strings.Replace(good, `"class": "safe"`, `"class": "meh"`, 1),
 		"unknown field":         strings.Replace(good, `"contextKeys": ["tripgold", "belt"]`, `"contextKeys": ["tripgold", "mood"]`, 1),
 		"default not an answer": strings.Replace(good, `"answer": "repair"`, `"answer": "x"`, 1),
-		"newer catalogue":       strings.Replace(good, `"version": 3,`, `"version": 4,`, 1),
+		"newer catalogue":       strings.Replace(good, `"version": 4,`, `"version": 5,`, 1),
 	} {
 		if bad == good {
 			t.Fatalf("%s: test edit did not apply", name)

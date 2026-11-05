@@ -1,0 +1,2 @@
+BACKLOG: TASK-19 dptoohard: catalogue v4, t0.area.toohard keys on merc instead of levelgap (162 contexts); all 23 points 0 default-parity splits, ADR 0016 default gate closable; ThoughtInfo.Opened added
+CHANGELOG: decision-point store: catalogue and profile file version 4; t0.area.toohard drops the level gap and reads the merc state; the last 72 default-parity splits are closed

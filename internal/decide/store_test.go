@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestStreakTable(t *testing.T) {
@@ -370,5 +371,18 @@ func TestRebirthKeepsRules(t *testing.T) {
 	}
 	if log := r.s.Log(); log[len(log)-1].Hero != "hero2" {
 		t.Fatal("log lines carry the hero")
+	}
+}
+
+func TestThoughtInfoCarriesOpened(t *testing.T) {
+	r := newRig(t)
+	r.clk.Advance(7 * time.Second)
+	d := r.ask(r.ctx("t1.restock", nil, map[string]float64{"tripgold": 10}))
+	if d.Thought == nil {
+		t.Fatal("no thought")
+	}
+	ti, ok := r.s.Thought(d.Thought.ID)
+	if !ok || ti.Opened != 7*time.Second || ti.Expires <= ti.Opened {
+		t.Fatalf("thought info %+v", ti)
 	}
 }
