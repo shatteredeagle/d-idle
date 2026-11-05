@@ -476,7 +476,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-C folded into task-18: fresh-game restarts get an XP progress check, a gap and a blocked state (route.fresh* knobs).
 - fixcursor3 (task-10 #6): cursor held item is cleared before pickup, a refused pack spot is skipped, bounded retries then ground drop (Gate 2 g2c seed 13 loop); offline tested
 - esverify3: no-shield reduction order head ca7872ab confirmed with caveats against game.exe's native FUN_0057c6c0 (docs/research/esverify/verdict3.md); 135,724 frames, head 0 differences except 24 pre-existing C2 frames; ready to open after body edits (verification done, test_game and test_energy_shield pass with data, name the 256ths sum, C2 measured)
-- no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification)
+- no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification); MERGED upstream 2026-11-05 13:22 EST (merge commit 988d39518)
 - ladderdoc: automation ladder DRAFT written down (docs/research/automation-ladder.md): tiers T0 to T5, mapping to code, backlog re-ranking, open questions; proposed record text only, guard files untouched
 - ladderrecord: automation ladder decisions of 2026-11-05 recorded as a draft (docs/research/automation-ladder-record-proposal.md: decisions.md line, ADR 0016 text, glossary terms; docs/research/decision-point-store-spec.md); guard files untouched, user acceptance pending
 - grill 0005 prebrief written (automation ladder), docs only
