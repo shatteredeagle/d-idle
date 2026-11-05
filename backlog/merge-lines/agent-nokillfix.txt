@@ -1,2 +1,0 @@
-BACKLOG: g2d NOKILL fixes (agent/nokillfix): rung-3 burst cap by time, kill/XP drought watchdog, empty quest field, fsWhy and navRung in the minute line; offline tested, live proof needs the next Gate 2.
-CHANGELOG: bot: failsafe re-entry bursts end in a field reset, an 8-minute kill drought leaves the area, empty quest fields are left after 150 s; new knobs bot.rung3WindowMax, rung3WindowMin, droughtMin, emptyFieldSec; minute line gains fsWhy and navRung.

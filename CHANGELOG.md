@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- bot: failsafe re-entry bursts end in a field reset, an 8-minute kill drought leaves the area, empty quest fields are left after 150 s; new knobs bot.rung3WindowMax, rung3WindowMin, droughtMin, emptyFieldSec; minute line gains fsWhy and navRung.
 - docs: Gate 2 multi-seed soak run 20261105-1607-g2d: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-1607-g2d.md).
 - d2bot gains -ladder, -ladder-profile and -watch (all off by default): the decision ladder and the player screen on the real bot
 - ladder T0 slice A3: the four T0 decision points are wired behind ladder.enabled (off by default; legacy behaviour unchanged)
