@@ -97,10 +97,10 @@ func TestFoundGearTripOnlyForNeededWeapon(t *testing.T) {
 	geartest.Need(t)
 	r := earlyRig(t, d2.Sorceress, 9)
 	w := r.W
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 2; i++ { // two mana potions: a caster below MPFirst has its own trip reason (TASK-A)
 		w.Add("hp1", d2.ContBelt, i, 0)
+		w.Add("mp1", d2.ContBelt, i+2, 0)
 	}
-	w.Add("mp1", d2.ContBelt, 3, 0)
 	w.Add("tsc", d2.ContInventory, 9, 3)
 	w.Add("qui", d2.ContInventory, 0, 0)
 	w.Add("hax", d2.ContInventory, 2, 0)

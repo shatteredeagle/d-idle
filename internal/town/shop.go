@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sort"
+	"strconv"
 	"strings"
 
 	"d2lod-bot/internal/d2"
@@ -270,12 +271,20 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 	}
 	t.e.Log.Info("shop: potion plan", "wantHP", want[belt.HP], "wantMP", want[belt.MP], "wantRV", want[belt.RV], "beltHP", bs.Count[belt.HP],
 		"beltMP", bs.Count[belt.MP], "packHP", belt.PackCount(t.e.Data, s.Inventory, belt.HP), "packMP", belt.PackCount(t.e.Data, s.Inventory, belt.MP), "beltOther", bs.Other, "slots", bs.Slots, "gold", s.Player.Gold)
-	order := []belt.Kind{belt.HP, belt.MP, belt.RV}
-	for _, k := range order {
+	// A caster buys its first mana potions before the healing fill: the fill alone ate the whole purse for hours (seed 11
+	// of the Gate 2 rerun, belt mp = 0 from clvl 4; docs/research/lvl14plan.md TASK-A). Healing still comes first up to
+	// HPFirst. The classes come from resource.ManaNeed, the belt columns from the plan: a build without a mana column has
+	// want[MP] == 0 and shops exactly as before.
+	r := t.e.Tune.Resource
+	caster := resource.ManaNeed(s.Player.Class) >= 2
+	hpHave := bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
+	mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)
+	// buyKind buys up to limit potions of kind k; it returns true when the visit is over (budget).
+	buyKind := func(k belt.Kind, limit int) (bool, error) {
 		src := k
-		for want[k] > 0 {
+		for bought := 0; want[k] > 0 && bought < limit; bought++ {
 			if t.budgetHit(rep) {
-				return nil
+				return true, nil
 			}
 			// Rejuvenation the shop does not sell becomes healing.
 			if _, ok := t.pickPotion(stock, src, band.MaxTier(src), 1<<30); !ok && src == belt.RV {
@@ -285,7 +294,7 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 			}
 			cur, err := t.current()
 			if err != nil {
-				return err
+				return false, err
 			}
 			budget := cur.Player.Gold
 			if t.potionCap > 0 {
@@ -307,14 +316,57 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 				break
 			}
 			if err != nil {
-				return err
+				return false, err
 			}
 			rep.Spent += price
 			rep.Bought[t.nameOf(it)]++
 			want[k]--
 		}
+		return false, nil
+	}
+	type pass struct {
+		k     belt.Kind
+		limit int
+	}
+	passes := []pass{{belt.HP, 1 << 30}, {belt.MP, 1 << 30}, {belt.RV, 1 << 30}}
+	if caster && want[belt.MP] > 0 {
+		passes = append([]pass{{belt.HP, max(r.HPFirst-hpHave, 0)}, {belt.MP, max(r.MPFirst-mpHave, 0)}}, passes...)
+	}
+	boughtBefore := boughtMana(rep.Bought)
+	for _, ps := range passes {
+		if done, err := buyKind(ps.k, ps.limit); done || err != nil {
+			return err
+		}
+	}
+	if caster {
+		t.logManaRestock(s, mpHave, boughtMana(rep.Bought)-boughtBefore)
 	}
 	return nil
+}
+
+// boughtMana counts the mana potions in a ChoreReport.Bought map.
+func boughtMana(bought map[string]int) int {
+	n := 0
+	for name, c := range bought {
+		if strings.Contains(name, "Mana Potion") {
+			n += c
+		}
+	}
+	return n
+}
+
+// logManaRestock is the live proof of the caster restock: one line per visit that bought mana, and one line per change of
+// gold when a caster leaves the shop without any (the farm-gold recovery path takes over from there).
+func (t *Town) logManaRestock(s *d2.Snapshot, mpHave, bought int) {
+	if bought > 0 {
+		t.noManaGold = 0
+		t.e.Log.Info("town: restocked mana potions", "bought", bought, "mpBefore", mpHave, "mpAfter", mpHave+bought, "gold", s.Player.Gold)
+		return
+	}
+	if mpHave == 0 && t.noManaGold != s.Player.Gold+1 {
+		t.noManaGold = s.Player.Gold + 1
+		t.e.Log.Info("caster: no mana, gold " + strconv.Itoa(s.Player.Gold))
+	}
 }
 
 // buyFirstTP buys one town portal scroll when the pack holds none and the gold allows (resource.BuyKit, priced from
