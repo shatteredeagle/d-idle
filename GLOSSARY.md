@@ -306,7 +306,10 @@ _Not to be confused with_: spec-sme (how to write specs and cards).
 Read-only advisor for specs and change cards. `.claude/agents/spec-sme.md`.
 
 **change card**:
-One job: `openspec-final:openspec/changes/<id>/` with proposal.md and tasks.md (header block). The unit of work and the issue-tracker equivalent. `openspec-final:openspec/README.md`, `docs/agents/issue-tracker.md`.
+One job: a Backlog.md task in `backlog/tasks/` with the keys `owns:`, `exclusive:` and `contracts:`. The unit of work and the issue-tracker equivalent. `docs/backlog.md`, `docs/agents/issue-tracker.md`. Before 2026-11-04 cards were OpenSpec changes (`openspec-final:openspec/changes/<id>/`).
+
+**contract**:
+A promise the bot, a judge or the lab keeps: rules and the numbers that decide a gate or a policy; one file per capability in `docs/contracts/<capability>.md`. Not evidence, not a decision record, not a work item. `docs/contracts/README.md`.
 
 **spec**:
 A stable contract in `docs/contracts/<capability>/spec.md` (requirement and scenario form). Numbers live here.
@@ -325,7 +328,7 @@ The acceptance lines of a card, each a number or a named test.
 _Not to be confused with_: G1/G2 (soak gates) and the fidelity gate.
 
 **changecheck**:
-`go run ./cmd/changecheck [-cli]`, the card, spec, OWNERS and STATUS checker. `cmd/changecheck`.
+Removed 2026-11-04; the checks that remain are `tools/contracts/check.py` and `tools/backlog/check.py`.
 
 **archive**:
 Moving a finished card to `openspec-final:openspec/changes/archive/YYYY-MM-DD-<id>/` with `merge:` hash; done by the coordinator.
