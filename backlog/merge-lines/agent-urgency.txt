@@ -1,0 +1,2 @@
+BACKLOG: decision-point spec: urgency band for fight-time points, five life bands as T0 stand-in (docs/research/decision-point-store-spec.md 2.3); band edges checked against repo tables (docs/research/decision-point-band-check.md)
+INDEX: docs/research/decision-point-band-check.md - SME band edges versus repo tables: 9 match, 10 differ, 5 no data
