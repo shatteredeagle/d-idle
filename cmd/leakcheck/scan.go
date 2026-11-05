@@ -36,8 +36,9 @@ var rules = []rule{
 }
 
 var (
-	// Game areas, quests and items that contain a blocked word (the Forgotten Tower, the Jade Figurine).
-	gamePhrases = regexp.MustCompile(`(?i)forgotten[ _]tower|tower cellar|tamoe|jade figurine|"jade",|` +
+	// Game phrases that contain a blocked word (the Jade Figurine, Tower Cellar). Exact phrases such as Forgotten Tower
+	// are data: `phrase` lines in docs/process/leakcheck-allow.txt.
+	gamePhrases = regexp.MustCompile(`(?i)tower cellar|tamoe|jade figurine|"jade",|` +
 		`road and the tower|in the tower|blocked tower|a closed tower|the tower (?:verdict|below|skipped|guard|needs|is closed|\()|` +
 		`tower(?: guard| verdict| corpse| should| not skipped| closed| kit| %| \+| \d| \(|: a merc|,| &&| :=)|` +
 		`(?:and|with) tower (?:open|done)|tower to ex |tower cellar|with a closed tower`)
@@ -61,19 +62,22 @@ func randomToken(s string) bool {
 }
 
 // blank replaces every allow-listed string and game phrase with spaces of the same length.
-func blank(line string, allowStr []string) string {
-	for _, a := range allowStr {
+func blank(line string, a *Allow) string {
+	for _, a := range a.strs() {
 		if strings.Contains(line, a) {
 			line = strings.ReplaceAll(line, a, strings.Repeat(" ", len(a)))
 		}
 	}
+	for _, rx := range a.phrases() {
+		line = rx.ReplaceAllStringFunc(line, func(m string) string { return strings.Repeat(" ", len(m)) })
+	}
 	return gamePhrases.ReplaceAllStringFunc(line, func(m string) string { return strings.Repeat(" ", len(m)) })
 }
 
-func scanText(path, text string, allowStr []string) []Hit {
+func scanText(path, text string, allow *Allow) []Hit {
 	var out []Hit
 	for i, line := range strings.Split(text, "\n") {
-		work := blank(line, allowStr)
+		work := blank(line, allow)
 		for _, r := range rules {
 			if r.only != "" && !strings.HasPrefix(path, r.only) {
 				continue

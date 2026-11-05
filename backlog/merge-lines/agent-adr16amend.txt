@@ -1,0 +1,1 @@
+INDEX: docs/adr/0016-automation-ladder.md amended 2026-11-05 (risk class per key, urgency band, card cap removed)
