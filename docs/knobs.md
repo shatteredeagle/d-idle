@@ -147,6 +147,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.moveTries | 3 | 1..6 | count | 1 | 3 | Attempts to move one item between grids (each verified in memory). |
 | town.portalSettle | 4500 | 1000..8000 | ms | 8000 | 1 | Wait after arriving in an area before using a portal. |
 | town.portalReuseDist | 40 | 0..100 | subtiles | 0 | 1 | ToTown walks into an open portal this close instead of reading a scroll. |
+| town.portalClickFails | 2 | 1..6 | count | 0 | 1 | BackToField drops a town portal id after this many failed entries (click without level change) and falls back to a fresh portal, then the waypoint, then the walk. |
 | town.greetingWaitS | 90 | 0..180 | s | 180 | 1 | Wait for an NPC menu after a click (first contact plays a long speech). |
 | town.greetingSkip | 0 | 0..3 | mode | 3 | 2 | How the first-contact greeting is skipped when the menu is not open 1 s after the click: 0 wait it out (greetingWaitS), 1 click the NPC again, 2 Esc then click again, 3 left click on the NPC tile without hover. docs/npc-skip.md. |
 | town.futileGoldStep | 100 | 0..5000 | gold | 5000 | 4 | After a town visit could not fix a trip reason, do not ask again until gold grew by this. |
