@@ -12,6 +12,13 @@ Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `t
 - Before reporting done, run `python3 tools/merge_lines_check.py --changed` (`tools/ci/check.sh` does it): `merge-lines.txt` holds only lines of the form `BACKLOG: text`, `INDEX: text` or `CHANGELOG: text`, no bullets, no OWNERS lines (those go in `docs/OWNERS`).
 - Optional, read-only: `python3 -I tools/backlog/drift.py` lists tasks whose status disagrees with git (all boxes ticked but open, Done with open boxes, In Progress with no recent commit on its owns, merged but not Done); it never writes and exits 0 (docs/backlog-howto.md, "Drift report").
 
+## Backlog.md for agents
+- Find your task: `backlog task <n> --plain` (the brief names it), or open `backlog/tasks/task-<n> - *.md`. The CLI and `--json` do not show our custom keys (`card`, `owns`, `exclusive`, `contracts`, `result`); read them in the file.
+- Create only when the brief says so, with `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> [--exclusive ..] [--contracts ..] -l G-C --ac ".."`; plain `backlog task create` cannot write those keys and `check.py` then fails the task. It never auto-commits: commit task files yourself.
+- Status, labels, criteria: `backlog task edit <n> -s "In Progress"`, `--check-ac <k>`, `--add-label`. It keeps custom keys but rewrites quote style and `updated_date`: run `git diff` after the first edit of a file and expect only that noise. Fill `result:` by hand.
+- Do not run `backlog init`, `archive` or `delete` on tasks; the coordinator closes tasks. Details: `docs/backlog-howto.md`.
+- MCP: `.mcp.json` starts `backlog mcp start` (stdio, no port) for sessions that can use project MCP servers; it offers the same operations as the CLI with the same limits, so the CLI stays the default (the credit runner has no MCP).
+
 ## The private d2d fork
 - Anything that touches the private d2d fork or the lab patch set (the fork checkout, its branches, the lab binary) MUST be committed and pushed to the fork's private remote THE SAME DAY, and a doc may only cite a commit that is on that remote. Patches never go into this repo (GPL, docs/decisions.md). Nothing is posted to GitHub (issues, PRs, comments) without the user's go; drafts stay in the repo.
 
