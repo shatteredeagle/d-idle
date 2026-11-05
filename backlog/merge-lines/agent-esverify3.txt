@@ -1,0 +1,3 @@
+BACKLOG: esverify3: no-shield reduction order head ca7872ab confirmed with caveats against game.exe's native FUN_0057c6c0 (docs/research/esverify/verdict3.md); 135,724 frames, head 0 differences except 24 pre-existing C2 frames; ready to open after body edits (verification done, test_game and test_energy_shield pass with data, name the 256ths sum, C2 measured)
+INDEX: research/esverify/verdict3.md: verification of the no-shield damage reduction order PR (new seeds 41-43, flat/mdr/resistance-110 grid, clang-tidy base vs head)
+CHANGELOG: docs: no-shield damage reduction order verified against game.exe's own code (docs/research/esverify/verdict3.md, tools/emu/esv3_*)
