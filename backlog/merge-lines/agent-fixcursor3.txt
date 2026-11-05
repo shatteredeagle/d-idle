@@ -1,2 +1,0 @@
-BACKLOG: fixcursor3 (task-10 #6): cursor held item is cleared before pickup, a refused pack spot is skipped, bounded retries then ground drop (Gate 2 g2c seed 13 loop); offline tested
-CHANGELOG: Fix: a held cursor item that the pack spot never accepted no longer blocks looting, waypoints and equip for hours; it goes to another spot or the ground (town.cursorStuckMax).

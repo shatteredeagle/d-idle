@@ -1,2 +1,0 @@
-BACKLOG: TASK-18 (TASK-A mana-restock): casters buy HPFirst healing then MPFirst mana before the healing fill and trip at fewer than MPFirst mana potions; offline tested, not run live.
-CHANGELOG: town: casters buy their first mana potions before the healing fill (belt mp 0 for hours on Gate 2 seed 11); logs 'town: restocked mana potions' and 'caster: no mana, gold N'

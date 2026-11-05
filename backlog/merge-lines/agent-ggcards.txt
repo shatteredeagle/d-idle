@@ -1,2 +1,0 @@
-INDEX: backlog/tasks/task-19 to task-21 - ladder cards decision-point-store, watch-screen, t0-slice (goal G-G, Proposed, tier order after T4/Gate A)
-BACKLOG: add cards decision-point-store, watch-screen, t0-slice (G-G, Proposed; tier order: after T4/Gate A cards per ADR 0016)

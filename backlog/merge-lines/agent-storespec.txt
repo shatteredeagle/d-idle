@@ -1,1 +1,0 @@
-INDEX: docs/research/decision-point-store-spec.md - updated to ADR 0016: fading thoughts, rules list, confirm, answer profiles, kit field and bands from the SME review, rule-file check against the knobs

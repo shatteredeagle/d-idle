@@ -1,1 +1,0 @@
-CHANGELOG: DropCursor retries up to 6 different cells beside the character, then the pack, before the failsafe (town.dropTries); a launcher the class cannot wear is not picked up without a pack cell to take it off

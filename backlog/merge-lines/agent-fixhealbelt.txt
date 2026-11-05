@@ -1,1 +1,0 @@
-CHANGELOG: belt: shop buys healing when only Rejuvenation or mana is in the belt (Rejuvenation is not healing for the BELT gate); new knob town.tripEmptyHPBelt raises a town trip when no healing potion is held
