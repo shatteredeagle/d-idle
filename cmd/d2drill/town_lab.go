@@ -15,7 +15,7 @@ import (
 )
 
 // The D3 drills call the bot's own town code (town.Town: OpenForTest, BuyForTest, SellForTest, Chores,
-// OpenStashForTest, DepositForTest, the same functions internal/town/cmd/townlive and the chore run use); the lab only
+// OpenStashForTest, DepositForTest, the same functions cmd/townlive and the chore run use); the lab only
 // reads state and applies logged cheats.
 
 func (l *lab) TView(ctx context.Context) (drill.TownView, error) {

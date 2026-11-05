@@ -62,7 +62,7 @@ No d2d or fork change is needed for 1 or 2 as described (S); the fork is not edi
 
 ## Tests
 
-`go test -p 1 ./cmd/d2cheat ./internal/combat/cmd/combatlive` (synthetic save, d2/fake reader with a fake controller; no game).
+`go test -p 1 ./cmd/d2cheat ./cmd/combatlive` (synthetic save, d2/fake reader with a fake controller; no game).
 
 ## Live checklist (needs the main agent to start i2)
 

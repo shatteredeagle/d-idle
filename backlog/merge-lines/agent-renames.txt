@@ -1,0 +1,1 @@
+CHANGELOG: cleanup D: docs/backlog.md renamed to docs/backlog-howto.md (case collision with BACKLOG.md); cmd/{combatlive,townlive,inputcal,navlive} are now real directories instead of symlinks into internal/*/cmd

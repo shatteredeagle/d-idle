@@ -20,7 +20,7 @@ In an agent run the read order of `AGENTS.md` comes first (`docs/contracts/READM
 ├── GLOSSARY.md            vocabulary
 ├── AGENTS.md              agent rules (the only root rules file; no CLAUDE.md)
 ├── docs/contracts/        contracts, numeric gates
-├── backlog/tasks/         work items (the work tracker, docs/backlog.md)
+├── backlog/tasks/         work items (the work tracker, docs/backlog-howto.md)
 ├── docs/adr/              decision records, MADR style, 0001 upward
 ├── docs/decisions.md      one-line index of the ADRs plus the dated verbatim entries
 └── docs/                  evidence, designs, per-area docs

@@ -77,7 +77,7 @@ The honest size of this evidence: n = 1 item, one run per model. It is a start, 
 |---|---|
 | Coordinator | One session that plans, launches agents and decides. It never does the traces itself. |
 | Subagents | author, verifier, mechanical, merge. Each has a fixed model and a short role file. |
-| Task | `backlog/tasks/<file>` (a Backlog.md task; formerly a change card). Its frontmatter lists `owns:` (paths the agent may edit, mirrored in `docs/OWNERS`), `exclusive:` (single-user resources such as a game instance or the lab binary) and `contracts:`. `python3 -I tools/backlog/check.py` checks it. See [../backlog.md](../backlog.md). |
+| Task | `backlog/tasks/<file>` (a Backlog.md task; formerly a change card). Its frontmatter lists `owns:` (paths the agent may edit, mirrored in `docs/OWNERS`), `exclusive:` (single-user resources such as a game instance or the lab binary) and `contracts:`. `python3 -I tools/backlog/check.py` checks it. See [../backlog.md](../backlog-howto.md). |
 | Isolation | One git worktree and one branch per agent. Agents never touch other branches or other agents' directories. |
 | Merge | One agent merges at a time, under a lock, with a script: preflight gates (contract check, leakcheck, hygiene, whole-repo tests only when code changed), then a CI check on the pushed commit. Agents never merge or push themselves. |
 | Capacity | Check the worker host's load before heavy or live work. |

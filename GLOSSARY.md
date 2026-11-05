@@ -306,7 +306,7 @@ _Not to be confused with_: spec-sme (how to write specs and cards).
 Read-only advisor for specs and change cards. `.claude/agents/spec-sme.md`.
 
 **change card**:
-One job: a Backlog.md task in `backlog/tasks/` with the keys `owns:`, `exclusive:` and `contracts:`. The unit of work and the issue-tracker equivalent. `docs/backlog.md`, `docs/agents/issue-tracker.md`. Before 2026-11-04 cards were OpenSpec changes (`openspec-final:openspec/changes/<id>/`).
+One job: a Backlog.md task in `backlog/tasks/` with the keys `owns:`, `exclusive:` and `contracts:`. The unit of work and the issue-tracker equivalent. `docs/backlog-howto.md`, `docs/agents/issue-tracker.md`. Before 2026-11-04 cards were OpenSpec changes (`openspec-final:openspec/changes/<id>/`).
 
 **contract**:
 A promise the bot, a judge or the lab keeps: rules and the numbers that decide a gate or a policy; one file per capability in `docs/contracts/<capability>.md`. Not evidence, not a decision record, not a work item. `docs/contracts/README.md`.

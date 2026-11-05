@@ -1,0 +1,6 @@
+ACT2=Duriel,Swarm,PinHead,Mummy,SandLeaper,ClawViper,PantherWoman,PantherJavelin,Scarab,Baboon,SandRaider,GreaterMummy,SandMaggot,Summoner,Vulture,MaggotEgg,MaggotLarva,SandMaggotQueen
+ACT3=Mosquito,ThornHulk,WillOWisp,ZakarumZealot,ZakarumPriest,FrogDemon,Tentacle,TentacleHead,FetishShaman,HighPriest,Hydra,FetishBlowgun,Mephisto,Arach,Fetish,BatDemon
+ACT45=VileMother,VileDog,FingerMage,Regurgitator,DoomKnight,AbyssKnight,OblivionKnight,Megademon,Izual,TrappedSoul,Diablo,ReanimatedHorde,SiegeBeast,Minion,SuicideMinion,Succubus,SuccubusWitch,Overseer,MinionSpawner,Imp,Catapult,FrozenHorror,BloodLord,CatapultSpotter,NpcBarb,GenericSpawner,DeathMauler,PutridDefiler,BaalTentacle,BaalMinion,Ancient,Nihlathak,BaalCrab,BaalCrabClone,ImpRide,HellMeteor,Sarcophagus,Spirit,ArcaneTower,DesertTurret
+LABEL_CONTROL=CatapultSpotter,GenericSpawner,PutridDefiler,BaalCrab,ZakarumPriest   (run with the fourth argument "-" and the fifth "shift")
+SEED11=ACT2,ACT3,ACT45 without Diablo,Ancient,CatapultSpotter,GenericSpawner,PutridDefiler,BaalCrab (600 cases each, the three lists joined in this order)
+RUNS: cmk_run.sh $ACT2 1500 20261103 | 1500 7 ; cmk_run.sh $ACT3 1500 20261103 | 1500 7 ; cmk_run.sh $ACT45 1500 20261103 | 1500 7 ; cmk_run.sh <SEED11 list> 600 11 ; cmk_run.sh $LABEL_CONTROL 1500 20261103 - shift | 1500 7 - shift

@@ -4,7 +4,7 @@
   python3 -I tools/backlog/status.py status [--write] [--merges N]   print or rewrite the generated block of docs/plan/STATUS.md
   python3 -I tools/backlog/status.py json [--merges N]               the JSON the board /changes page reads (tools/agentstatus/changes.html in the ops repo)
 
-Stdlib only, read-only except --write. Task frontmatter is read directly (the Backlog.md CLI hides our custom keys, docs/backlog.md).
+Stdlib only, read-only except --write. Task frontmatter is read directly (the Backlog.md CLI hides our custom keys, docs/backlog-howto.md).
 """
 import glob, json, os, re, subprocess, sys, datetime
 

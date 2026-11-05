@@ -15,7 +15,7 @@
 - `Controller`: MoveMouse, Click(btn,x,y,mods...), Key, Hold/Release, Pos, ClickWorld, MoveTo(w, {Tolerance, Timeout}), SelectSkill,
   CastAt(hotkey, w), Interact(Target), CloseAll.
 - Measurement tool: `tools/live.sh input inputcal <state|sample N|near|hovertest CLASS|selftest|ui|key NAME|dump RVA LEN|goto X Y TOL|peek ..>`
-  (`cmd/inputcal` is a symlink to `internal/input/cmd/inputcal` because live.sh only builds `cmd/<pkg>`). `tools/shot.sh OUT.png`
+  (`cmd/inputcal` is a symlink to `cmd/inputcal` because live.sh only builds `cmd/<pkg>`). `tools/shot.sh OUT.png`
   grabs the game window (read-only X capture).
 
 ## Transform (VERIFIED LIVE, 87 clicks over 3 runs)
