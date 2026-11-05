@@ -36,6 +36,7 @@ type NavTuning struct {
 	TeleReservePct       float64 // a Teleport hop is declined (the walk goes on) when mana after it would fall below this % of max mana
 	TeleMinLeg           float64 // a hop is declined unless it skips more than this much of the planned walk (subtiles)
 	TeleEscapeReservePct float64 // after a walk stall the leg rule is off and this smaller reserve (% of max mana) applies
+	StuckFightLifePct    float64 // stuck ladder at rung 2 or more with hostiles in fight radius and life below this %: fight (or town portal) instead of side-stepping on; 0 = off
 	CautionRadius        float64 // CorpseApproach stops when a living monster is this close (subtiles); its paths avoid monsters at twice the usual radius
 }
 
@@ -44,7 +45,7 @@ func DefaultNavTuning() NavTuning {
 		PathQuality: 1, Sloppiness: 8, WaypointSpacing: 8, ArriveTolerance: 2, PollMs: 100, ReplanMs: 1500,
 		StuckMs: 1200, MaxRecoveries: 6, WallClearance: 3, WallWeight: 0.75, MonsterRadius: 8, MonsterPenalty: 6,
 		ExploreInformed: true, ExploreBucket: 10, WalkTimeoutSec: 120, ExploreTimeoutSec: 300, ExitPush: 8,
-		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15,
+		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60,
 		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 0, BadEdgeTTLSec: 300,
 	}
 }
@@ -131,5 +132,7 @@ func navKnobs() []Knob {
 			Desc: "A hop is skipped unless it skips more than this much of the planned walking path: running speed times the measured time of a hop (0.5625 x 18 ticks = 10, DRILLS24) plus a margin of 3 (docs/teletune2.md). 0 hops whenever mana allows."},
 		{Key: "nav.teleEscapeReservePct", Label: "Teleport escape reserve", Unit: "%", Default: d.TeleEscapeReservePct, Min: 0, Max: 90, HigherIsBetter: true, NoHandicap: true,
 			Desc: "After a walk stalled at the character's spot, a hop ignores the minimum leg and may spend mana down to this share of max mana (never above nav.teleReservePct): leaving a pocket beats keeping mana for fights. Default: about three casts of a 5 to 8 mana attack on a 150 pool (UNSURE)."},
+		{Key: "nav.stuckFightLifePct", Label: "Stuck ladder fight life", Unit: "%", Default: d.StuckFightLifePct, Min: 0, Max: 100, HigherIsBetter: true, NoHandicap: true,
+			Desc: "A walk stalled for the second rung of the stuck ladder or later, with hostiles inside the fight radius and life below this share, hands control to the fight (or the town portal once the fights are used up) instead of side-stepping on (Gate 2 g2c seed 13 died walking the ladder through a boss pack). 0 switches it off."},
 	}
 }

@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -53,6 +52,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | nav.teleReservePct | 40 | 0..90 | % | 40 | 2 | A Teleport hop is skipped (the walk goes on, no waiting for mana) when the mana after it would be below this share of max mana, so fights are not starved. Default: about eight casts of a 5 to 8 mana attack on a 150 mana pool (UNSURE, docs/teletune.md). |
 | nav.teleMinLeg | 13 | 0..120 | subtiles | 13 | 6 | A hop is skipped unless it skips more than this much of the planned walking path: running speed times the measured time of a hop (0.5625 x 18 ticks = 10, DRILLS24) plus a margin of 3 (docs/teletune2.md). 0 hops whenever mana allows. |
 | nav.teleEscapeReservePct | 15 | 0..90 | % | 15 | 1 | After a walk stalled at the character's spot, a hop ignores the minimum leg and may spend mana down to this share of max mana (never above nav.teleReservePct): leaving a pocket beats keeping mana for fights. Default: about three casts of a 5 to 8 mana attack on a 150 pool (UNSURE). |
+| nav.stuckFightLifePct | 60 | 0..100 | % | 60 | 1 | A walk stalled for the second rung of the stuck ladder or later, with hostiles inside the fight radius and life below this share, hands control to the fight (or the town portal once the fights are used up) instead of side-stepping on (Gate 2 g2c seed 13 died walking the ladder through a boss pack). 0 switches it off. |
 
 ### combat.*
 
@@ -78,7 +78,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
-| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 14 | A hostile monster this close counts as a fight. |
+| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 15 | A hostile monster this close counts as a fight. |
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
@@ -365,7 +365,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
-
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)

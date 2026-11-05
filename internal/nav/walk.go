@@ -60,6 +60,8 @@ type walkState struct {
 	spot       *stuckSpot // memory of this stall (stuckmem.go)
 	repeat     bool       // an earlier walk stalled at this spot too: use the alternative ladder
 	method     string     // the last recovery tried; reported once the character moves again
+	fights     int        // stuck-ladder fight hand-overs of this walk (stuckfight.go)
+	why        string     // reason of the last plan, for the border log
 	escTried   bool       // the Escape hook ran (or was refused) during this walk
 }
 
@@ -110,12 +112,14 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			return err
 		}
 		if startLevel == 0 {
+			n.noteBorderBack(o.level)
 			startLevel = o.level
 			if n.walkLevel != 0 && n.walkLevel != o.level {
 				n.arrival = true // the first walk in a level reached by a warp
 			}
 			n.walkLevel = o.level
 		} else if o.level != startLevel {
+			n.lastCross = crossNote{from: startLevel, to: o.level, at: now, reason: w.crossReason()}
 			return fmt.Errorf("%w: %d -> %d", ErrLevelChanged, startLevel, o.level) // a tile fired early; coordinates of the old level mean nothing now
 		}
 		if wo.stopWhen != nil && wo.stopWhen(o) {
@@ -199,7 +203,7 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			if err != nil {
 				return err
 			}
-			w.res, w.have, w.planAt, w.planGoal, w.cur = res, true, now, goal, 0
+			w.res, w.have, w.planAt, w.planGoal, w.cur, w.why = res, true, now, goal, 0, why
 			w.sig = n.monsterSig(o, res.wps, 0)
 			w.clicked = false
 			if wo.onPlan != nil {
@@ -291,6 +295,11 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 				return fmt.Errorf("%w at %v going to %v (after %d recoveries)", ErrStuck, o.pos, goal, w.rung)
 			}
 			n.log.Info("nav stuck", "pos", o.pos, "wp", wp, "rung", w.rung)
+			if done, err := n.stuckFight(ctx, o, &w); err != nil {
+				return err
+			} else if done {
+				continue
+			}
 			if near := n.packNear(o); len(near) > 0 && n.Yield != nil && w.yields < maxYields {
 				w.yields++
 				n.log.Info("nav stalled by monsters, yielding", "pos", o.pos, "near", len(near))
