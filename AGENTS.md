@@ -10,6 +10,7 @@ Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `t
 - Contracts and numeric gates are in `docs/contracts/<capability>.md` (README there). Change a contract in the same branch as the code it describes and name it in your task's `contracts:` key. A line whose `Source:` is a user decision, and the `## Numbers` tables, change only when your brief says the user approved it. Cite knobs as `` `group.key` (value) ``.
 - Before you finish run `python3 -I tools/contracts/check.py` and `python3 -I tools/backlog/check.py` (both must pass; `tools/ci/check.sh` runs the first). Questions about how to write a requirement, scenario or task: ask in your report; the coordinator answers.
 - Before reporting done, run `python3 tools/merge_lines_check.py --changed` (`tools/ci/check.sh` does it): `merge-lines.txt` holds only lines of the form `BACKLOG: text`, `INDEX: text` or `CHANGELOG: text`, no bullets, no OWNERS lines (those go in `docs/OWNERS`).
+- Optional, read-only: `python3 -I tools/backlog/drift.py` lists tasks whose status disagrees with git (all boxes ticked but open, Done with open boxes, In Progress with no recent commit on its owns, merged but not Done); it never writes and exits 0 (docs/backlog-howto.md, "Drift report").
 
 ## Backlog.md for agents
 - Find your task: `backlog task <n> --plain` (the brief names it), or open `backlog/tasks/task-<n> - *.md`. The CLI and `--json` do not show our custom keys (`card`, `owns`, `exclusive`, `contracts`, `result`); read them in the file.

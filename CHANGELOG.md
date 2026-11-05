@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Backlog.md web board for the NAS prepared (deploy/backlog-board, read-only mirror, UI steps); not deployed
+- tools/backlog/drift.py lists tasks whose status disagrees with git (read-only); six applied backlog/merge-lines files removed
 - docs: Gate 2 multi-seed soak run 20261105-0733-g2c: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-0733-g2c.md).
 - docs: Gate 2 multi-seed soak run 20261104-2254-g2b: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261104-2254-g2b.md).
 - OpenSpec removal stage 5: cmd/changecheck and the dead card-check code are deleted; the merge scripts no longer read openspec/.
