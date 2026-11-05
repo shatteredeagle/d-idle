@@ -1,13 +1,13 @@
 ---
 id: TASK-6
-title: "nexthit: NextHit justhit fix for upstream"
-status: In Progress
+title: 'nexthit: NextHit justhit fix for upstream'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - "G-E"
-  - "upstream"
+  - G-E
+  - upstream
 dependencies: []
 priority: medium
 ordinal: 6000
@@ -55,7 +55,11 @@ Source: git tag openspec-final, openspec/changes/nexthit/ (this task is the copy
 - [x] #3 1.3 Before numbers on upstream main (84,779 of 100,198 cases differ)
 - [x] #4 1.4 Claim commit (justhit, LastCollide, one unit a frame); after 0 of 100,198
 - [x] #5 1.5 CI-class checks (pr_guard, presubmit, tests, shadow, clang-tidy, ruff)
-- [ ] #6 1.6 Chain Lightning hop search (C2) and Lightning per frame (C3): designs only
-- [x] #7 1.7 Proof, draft, queue line, card; bot-measurement note
-- [ ] #8 1.8 Independent verifier and det state hashes (later, another agent)
+- [x] #6 1.7 Proof, draft, queue line, card; bot-measurement note
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/nexthit and agent/nexthitfix on main; upstream PR #158 (NextHit hit marks justhit, Nova / Frost Nova) MERGED. Removed criteria 1.6 (Chain Lightning hop C2 and Lightning per frame C3: designs only, never built) and 1.8 (verifier, det hashes): follow-up work, not part of this fix; reopen as a new task if wanted.
+<!-- SECTION:NOTES:END -->

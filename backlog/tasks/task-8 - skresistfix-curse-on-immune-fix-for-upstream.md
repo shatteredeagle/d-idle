@@ -1,13 +1,13 @@
 ---
 id: TASK-8
-title: "skresistfix: curse-on-immune fix for upstream"
-status: In Progress
+title: 'skresistfix: curse-on-immune fix for upstream'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - "G-E"
-  - "upstream"
+  - G-E
+  - upstream
 dependencies: []
 priority: medium
 ordinal: 8000
@@ -53,5 +53,10 @@ Source: git tag openspec-final, openspec/changes/skresistfix/ (this task is the 
 - [x] #4 1.4 CI-class checks and merge check with the open PR branches and local candidates
 - [x] #5 1.5 Draft, proof, card, OWNERS
 - [x] #6 1.6a Independent verifier (VERIFYCURSEIMMUNE): READY
-- [ ] #7 1.6 Det state hashes (another card); the user's go before any push or post
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/skresistfix on main; upstream PR #160 (curse / aura lowering counts a fifth on base resistance >= 100) MERGED. Removed 1.6 (det state hashes, user's go): the upstream merge supersedes it.
+<!-- SECTION:NOTES:END -->

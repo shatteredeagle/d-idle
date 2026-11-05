@@ -33,7 +33,7 @@ Pinned to 1.55.3 everywhere. User-level, no root, no sudo: `tools/backlog/instal
 
 - Dev box: `tools/backlog/install.sh`
 - Worker host: from inside a worktree, `labrun <worker> -- tools/backlog/install.sh` (the worker name from `labrun hosts`) (touches only `~/.local`; never its cache or game dirs)
-- Contributors (Linux or macOS, needs Node.js and npm): `sh tools/backlog/install.sh`, then put `~/.local/bin` on PATH. Another prefix: `sh tools/backlog/install.sh /some/dir`. No Node: take the release binary from the project's GitHub releases page for your platform and check it against the checksums listed there. U (not tried; macOS path not run, S from the npm optional dependency list: darwin-x64, darwin-arm64).
+- Contributors (Linux or macOS, needs Node.js and npm): `sh tools/backlog/install.sh`, then put `~/.local/bin` on PATH. Another prefix: `sh tools/backlog/install.sh /some/dir`. No Node: `install.sh` does NOT fall back; it checks `command -v npm`, prints "npm not found; install Node.js (or download the release binary from the project's GitHub releases)" to stderr and exits 1, installing nothing. V (read the script 2026-11-05). The no-Node route is manual: download the release binary of 1.55.3 for your platform from the project's GitHub releases page, check it against the checksums listed there, `chmod +x`, put it on PATH as `backlog`, and confirm `backlog --version` prints 1.55.3. U (macOS path and the release asset names not tried; S from the npm optional dependency list: darwin-x64, darwin-arm64).
 - Upgrade only by changing `VERSION` in the script and this page together.
 - `backlog init` is not needed (`backlog/config.yml` is in the repo); if you ever run it, use `--agent-instructions none`.
 
@@ -89,6 +89,22 @@ Statuses and labels cannot be added by the CLI: hand-edit `backlog/config.yml`. 
 ## Drift report
 
 `python3 -I tools/backlog/drift.py [--repo DIR] [--ref origin/main] [--days 14]` is read-only (it never edits a task and exits 0 always). One line per finding, `<code> TASK-N <card> [<status>]: <what>`: A = Proposed/In Progress with every acceptance box ticked; B = Done with an unticked box; C = In Progress whose `owns:` paths have no commit on the ref in the last 14 days; D = a merge subject on the ref names the task (`Merge agent/<card>`, `task-N`) but the task is not Done. The dispatcher tick prints `DRIFT n tasks` plus the first three lines under `--delta` when the count changed. Tests: `python3 -I tools/backlog/test_drift.py`. V (ran on this repo and on a temp-repo fixture).
+
+## Status rules
+
+- A task is Done when its code or docs are merged on main AND every acceptance box that can be checked offline is ticked. A criterion that only a live run can satisfy is not left as an unticked box on a Done task: remove it (`task edit N --remove-ac`, or by hand) and carry it in the Implementation Notes as `merged, offline tested; live proof pending: <log line / gate>`. Say verified live or not in `result:`.
+- A task stays In Progress while real work is open (an unbuilt slice, a drill row still to run, a verdict table still to fill).
+- A fix card for an upstream PR is Done when that PR is merged upstream (`gh pr list --repo psi29a/d2decomped --author shatteredeagle --state all`), the note names the PR number; it stays In Progress while the PR is only a draft or open.
+- `python3 -I tools/backlog/drift.py` (read-only, run it in the tick) reports the mismatches: A all boxes ticked but not Done, B Done with an unticked box, C no recent commit on owned paths, D merged branch but not Done. Fix them with `task edit`; do not leave a D line without a reason in the task's note.
+- Caution: some old tasks have duplicate `#N` criterion numbers (tasks 10, 11, 18 before 2026-11-05); `--remove-ac N` and `--check-ac N` act by position, so read `task N --plain` first and verify with `git diff`.
+
+## Verified edge cases
+
+Checked 2026-11-05 in scratch worktrees and clones of main (backlog 1.55.3).
+
+- Cross-branch id allocation. V. `new_task.py` (CLI) in worktree A gave TASK-22; in worktree B on another local branch, created afterward, TASK-23; a third and fourth gave 24 and 25, and a clone whose origin held those local branches gave 26. The CLI reads the other local branches and remote-tracking branches (`check_active_branches`, 30 days), also while the first task was not yet committed. So two worktrees of one repo do not collide. It DOES collide when the other branch is not visible: a single-branch clone of main created TASK-22 again, the same id as an unmerged branch. In this project agents never push, so a branch only another clone has seen is the only case. Rule: ids come from the CLI at creation; create tasks from a checkout that has all live branches (the main clone and its worktrees), `git fetch` first on a separate clone. Backstop: `tools/backlog/check.py` now fails on a duplicate `TASK-N` (new, with a test), so a merge of two colliding branches is caught by `tools/ci/check.sh`; fix by renumbering one file (id, filename) before merging. Not implemented: a max(id)+1 wrapper, because the CLI already covers every branch the repo can see.
+- The Pro runner and MCP. V (read `tools/plan-agent.py` in the ops repo, no change made). It starts `claude -p ... --setting-sources user --settings <job settings> --disable-slash-commands --strict-mcp-config` (the health probe uses `--strict-mcp-config` too) and passes no `--mcp-config`. With `--strict-mcp-config` only servers named by `--mcp-config` are used, so a project `.mcp.json` is NOT loaded, and `--setting-sources user` also skips project settings. A Pro-runner job therefore has no Backlog MCP; it uses the CLI (`backlog task ...`, `tools/backlog/new_task.py`, `check.py`) through Bash, subject to the job's permission list (the Bash allow for `backlog` is not checked here: U). Giving it MCP would need an ops-repo change (`--mcp-config <file>`); not made.
+- No-Node install: see "Install" above (U for macOS).
 
 ## Known problems
 

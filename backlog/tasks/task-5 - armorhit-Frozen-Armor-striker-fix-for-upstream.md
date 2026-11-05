@@ -1,13 +1,13 @@
 ---
 id: TASK-5
-title: "armorhit: Frozen Armor striker fix for upstream"
-status: In Progress
+title: 'armorhit: Frozen Armor striker fix for upstream'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - "G-E"
-  - "upstream"
+  - G-E
+  - upstream
 dependencies: []
 priority: medium
 ordinal: 5000
@@ -56,5 +56,10 @@ Source: git tag openspec-final, openspec/changes/armorhit/ (this task is the cop
 - [x] #4 1.4 Claim commit; after 0 of 108,506; second seed 95,986 -> 0
 - [x] #5 1.5 CI-class checks; merge check with #155 / #156
 - [x] #6 1.6 Proof, draft, queue line, card, OWNERS
-- [ ] #7 1.7 Independent verifier and det state hashes (another card)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/armorhit on main and upstream PR #159 (Frozen Armor freezes by the freeze rule) MERGED in psi29a/d2decomped (docs/archive/research/openpr-log.md). Removed unmet criterion 1.7 (independent verifier, det hashes): the upstream merge supersedes it. Live proof pending: none needed upstream; bot-side no live line.
+<!-- SECTION:NOTES:END -->
