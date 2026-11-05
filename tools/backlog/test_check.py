@@ -23,6 +23,11 @@ class T(unittest.TestCase):
     def test_clean(self):
         self.assertEqual(self.run_dir([task(1, "a"), task(2, "b", "Deferred", ("G-B",))]), [])
 
+    def test_duplicate_task_id(self):
+        out = self.run_dir([task(5, "a"), task(5, "b")])
+        self.assertEqual(len(out), 1)
+        self.assertIn("task id TASK-5", out[0])
+
     def test_no_cap(self):
         self.assertEqual(self.run_dir([task(i, f"c{i}") for i in range(1, 16)]), [])
 

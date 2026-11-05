@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (16)
+## Active (9)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -23,18 +23,11 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 2 | m3-andariel | G-B | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | soak-slot:3 | - | [card](archive/openspec-index.md#m3-andariel) |
 | 3 | m3-merc | G-B | proposed 0/4 | free Rogue run for hours on d2d, merc alive share | soak-slot:3 | - | [card](archive/openspec-index.md#m3-merc) |
 | 4 | gameexe-retire-soak | G-A | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | - | [card](archive/openspec-index.md#gameexe-retire-soak) |
-| 5 | armorhit | G-E | in-progress 6/7 | Frozen Armor striker fix for upstream | fork-branch:fix/armor-hit | - | [card](archive/openspec-index.md#armorhit) |
-| 6 | nexthit | G-E | in-progress 6/8 | NextHit justhit fix for upstream | fork-branch:fix/nexthit | - | [card](archive/openspec-index.md#nexthit) |
-| 7 | skmiss | G-E | in-progress 5/7 | missile roll max fix for upstream | fork-branch:fix/missile-roll-top | - | [card](archive/openspec-index.md#skmiss) |
-| 8 | skresistfix | G-E | in-progress 6/7 | curse-on-immune fix for upstream | fork-branch:fix/curse-immune | - | [card](archive/openspec-index.md#skresistfix) |
-| 9 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
-| 10 | fixbelt | G-C | in-progress 6/7 | low-kit belt window fix | - | - | [card](archive/openspec-index.md#fixbelt) |
-| 11 | fixprogress | G-C | in-progress 4/5 | trip-loop progress fix | - | - | [card](archive/openspec-index.md#fixprogress) |
-| 12 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
-| 13 | taska | G-B | in-progress 7/10 | caster mana potion restock | - | - | [card](archive/openspec-index.md#taska) |
-| 14 | decision-point-store | G-G | proposed 0/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
-| 15 | watch-screen | G-G | proposed 0/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
-| 16 | t0-slice | G-G | proposed 0/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
+| 5 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
+| 6 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
+| 7 | decision-point-store | G-G | proposed 0/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
+| 8 | watch-screen | G-G | proposed 0/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
+| 9 | t0-slice | G-G | proposed 0/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

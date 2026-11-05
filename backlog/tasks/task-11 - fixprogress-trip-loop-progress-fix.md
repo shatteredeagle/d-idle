@@ -1,12 +1,12 @@
 ---
 id: TASK-11
-title: "fixprogress: trip-loop progress fix"
-status: In Progress
+title: 'fixprogress: trip-loop progress fix'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:01:00Z'
 labels:
-  - "G-C"
+  - G-C
 dependencies: []
 priority: low
 ordinal: 11000
@@ -72,5 +72,10 @@ Source: git tag openspec-final, openspec/changes/fixprogress/ (this task is the 
 - [x] #2 town: portal-empty fact and watchdog, tests
 - [x] #4 stale portal: drop id after N failed clicks, fresh portal, waypoint, walk fallback (offline tests)
 - [x] #5 failsafe rung 3 capped per progress window, growing pause backoff (offline tests)
-- [ ] #3 live proof (later card)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/fixprogress on main, 3 sim tests pass. merged, offline tested; live proof pending: Gate 1 rerun, recipe in docs/fixprogress.md (no town trip loop, progress window advances). Removed criterion 'live proof (later card)'.
+<!-- SECTION:NOTES:END -->

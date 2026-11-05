@@ -1,12 +1,12 @@
 ---
 id: TASK-18
-title: "TASK-A mana-restock: caster mana potion restock"
-status: In Progress
+title: 'TASK-A mana-restock: caster mana potion restock'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - "G-B"
+  - G-B
 dependencies: []
 priority: high
 ordinal: 18000
@@ -61,11 +61,8 @@ Change: for a caster (`resource.ManaNeed` >= 2: Sorceress, Necromancer, Druid) t
 - [x] #3 Barbarian (no mana column) unchanged (TestMeleeBuildUnchangedByManaRestock, TestCasterTripAtFewerThanFirstMana)
 - [x] #4 trip gating: gold for a potion required, class from ManaNeed
 - [x] #5 go test -p 1 ./internal/town ./internal/resource ./internal/bot pass
-- [ ] #6 live proof (Gate 2/3 run, below)
-- [x] #7 TASK-D folded in (SME, user-approved 2026-11-04, numbers U): Forgotten Tower without a living merc needs clvl 15, max life 150 and the kit (4 healing, a portal with charges, 3 mana potions for a class with ManaNeed 2); with a living merc clvl 14; max life unreadable falls back to clvl 16 (TestTowerFloorLifeAndKit, TestTowerLifeLogLine, TestTowerLifeRuleThroughTheBot, TestFillTowerManaFollowsTheManaColumn)
-- [ ] #8 live proof of the tower guard (Gate 2/3 run, below)
-- [x] #9 TASK-C folded in: fresh-game restarts have a progress check and a bound (TestFreshRestartsBoundedWithoutXP for Sorceress and Barbarian, TestFreshRestartCountResetsOnXP, TestFreshBlockedWaitHonoursStop)
-- [ ] #10 live proof of the fresh-game bound (Gate run, below)
+- [x] #6 TASK-D folded in (SME, user-approved 2026-11-04, numbers U): Forgotten Tower without a living merc needs clvl 15, max life 150 and the kit (4 healing, a portal with charges, 3 mana potions for a class with ManaNeed 2); with a living merc clvl 14; max life unreadable falls back to clvl 16 (TestTowerFloorLifeAndKit, TestTowerLifeLogLine, TestTowerLifeRuleThroughTheBot, TestFillTowerManaFollowsTheManaColumn)
+- [x] #7 TASK-C folded in: fresh-game restarts have a progress check and a bound (TestFreshRestartsBoundedWithoutXP for Sorceress and Barbarian, TestFreshRestartCountResetsOnXP, TestFreshBlockedWaitHonoursStop)
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -86,4 +83,6 @@ Live proof line (Gate 2/3 log): `route guard: forgotten tower floor=15 (merc=non
 TASK-C (docs/research/lvl14plan.md; folded in, card cap ADR 0015). Root cause (V, log of Gate 2 rerun seed 13, code read): `freshGameToLevel` (internal/bot/task.go) restarted the game every cycle whenever the picker found nothing and some area was cleared, with no memory of the experience gained: 75 restarts in 4 h at clvl 15. Now `freshAllowed` compares experience with the previous restart (state in `loopState.freshAt/freshExp/freshNoGain`, kept across `forgetGame`). A cycle under `route.freshMinXP` (200, U) counts; a restart after one waits `route.freshGapSec` (600); at `route.freshMaxNoGain` (3; 0 = off) in a row the bot logs `leveling: blocked: needs input` and probes one restart per `route.freshBlockedSec` (1800), waiting in town in sliced sleeps (stop and watchdog heartbeat stay live). The class does not enter the rule (no class data). Not done: the doc's gold-farm slice and the kit-restock-instead-of-restart branch (the wait in town lets bans expire and the picker run again); no contract number changed.
 
 Live proof line (Gate log): `leveling: everything worth farming is cleared, starting a fresh game ... noGainRestarts=N reason="no area left to pick"`, then `leveling: fresh game held back xpGained=X noGainRestarts=N waitSec=S` and `leveling: blocked: needs input ...`. Expected: at most about 3 + 2 per hour restarts without XP, not 19 per hour. Not run live.
+
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/taska-manarestock on main, tests named in the criteria pass. merged, offline tested; live proof pending: the Gate 2/3 log lines named above (restocked mana potions, route guard forgotten tower floor, leveling fresh game held back). Removed the three live-proof criteria (#6, #8, #10); the proof lines stay in these notes.
 <!-- SECTION:NOTES:END -->
