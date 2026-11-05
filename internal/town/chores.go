@@ -76,6 +76,17 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 	if band.Capacity(belt.HP, st.Slots) > 0 && st.Count[belt.HP]+belt.PackCount(t.e.Data, inv, belt.HP) < tn.TripMinHPPotions {
 		add(true, "hp", "low on healing potions")
 	}
+	// Gate 2 g2b: 3 mana columns plus one Rejuvenation counted as a kit while no healing potion was left (BELT gate).
+	if tn.TripEmptyHPBelt > 0 && band.Capacity(belt.HP, st.Slots) > 0 && st.Count[belt.HP]+belt.PackCount(t.e.Data, inv, belt.HP) == 0 {
+		if price := t.e.Tune.Resource.KitPotionGold; p.Gold >= price {
+			add(false, "emptyhp", "belt has no healing potion, gold %d", p.Gold)
+		} else if !t.emptyHPLogged {
+			t.emptyHPLogged = true
+			t.e.Log.Info("town: belt has no healing potion, gold buys none", "gold", p.Gold, "price", price)
+		}
+	} else {
+		t.emptyHPLogged = false
+	}
 	mpTrips := !t.mpCapped(p) // goldfloor: below MPCapLevel mana potions never raise a trip
 	// A caster that has reached the kit gate level wants the first mana potions (MPFirst, the route kit's two) in the belt,
 	// not just one; the trip needs the gold of one potion, or it could not fix anything (TASK-A).
@@ -169,6 +180,7 @@ func (t *Town) potionsWanted(s *d2.Snapshot) map[belt.Kind]int {
 			delete(want, k)
 		}
 	}
+	t.ensureHealing(s, band, bs, want)
 	return want
 }
 

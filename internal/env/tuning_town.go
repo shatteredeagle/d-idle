@@ -35,10 +35,10 @@ type TownTuning struct {
 	ClickSettleMs    int // pause after a UI click before the memory is re-read
 	MoveTries        int // attempts to move one item between grids (verified each time)
 	DropTries        int // ground clicks DropCursor tries, each on a different cell next to the character, before it falls back to the pack
+	PortalClickFails int // BackToField drops a town portal id after this many failed entries and uses a fresh portal, the waypoint or the walk (fixstaleportal)
 	PortalSettle     int // ms to wait after arriving before using a portal again
 	ChoreBudgetS     int // seconds one Chores call may take before it gives up
 	SellMaxS         int // seconds the sell chore alone may take (it is capped, then the other chores go on)
-	PortalClickFails int // BackToField drops a town portal id after this many failed entries and uses a fresh portal, the waypoint or the walk (fixstaleportal)
 	PortalReuseDist  int // ToTown uses an already open portal within this many subtiles instead of a scroll
 	GreetingWaitS    int // after clicking an NPC, wait this long for its menu (first contact plays a speech of about 60 s)
 	GreetingSkip     int // how a first-contact NPC greeting is skipped: 0 wait, 1 click the NPC again, 2 Esc then click, 3 click the NPC tile without hover (internal/town/skip.go)
@@ -51,6 +51,7 @@ type TownTuning struct {
 	IDScrollNeed     int // 1: buy identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always up to IDScrollTarget
 	BankFirst        int // 1: deposit the gold above the keep line (never below the minimal kit) before the shop; 0 = after it
 	RepairLatch      int // 1: a repair that changed nothing is not retried until durability changed or gold grew by FutileGoldStep; 0 = retry every visit
+	TripEmptyHPBelt  int // NeedsTrip: 1 = go to town when no healing potion (not Rejuvenation) is in belt or pack and the purse buys one (KitPotionGold); 0 = off
 	TripMinSpend     int // goldfloor: a pure restock trip with a healing potion in the belt needs a planned purchase of at least this gold; a poor character (gold under the kit line, under 2 healing potions) buys no portal scroll (0 = off, old behaviour)
 	MPCapEarly       int // goldfloor: mana potions bought per visit below MPCapLevel
 	MPCapLevel       int // goldfloor: clvl below which MPCapEarly applies and a low mana belt raises no trip (0 = off, old behaviour)
@@ -64,7 +65,7 @@ func DefaultTownTuning() TownTuning {
 		BeltFillPct: 100, TPScrollTarget: 2, TPTomeMinGold: 450, IDScrollTarget: 2, MinGoldReserve: 100, KeyTarget: 0,
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6,
-		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
+		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, TripEmptyHPBelt: 1, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
 		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
 	}
 }
@@ -121,6 +122,7 @@ func townKnobs() []Knob {
 		townK("idScrollNeed", "Identify scroll only if valuable", "bool", "1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old).", d.IDScrollNeed, 0, 1, true),
 		townK("bankFirst", "Bank before shop", "bool", "1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old).", d.BankFirst, 0, 1, true),
 		townK("repairLatch", "Failed repair latch", "bool", "1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old).", d.RepairLatch, 0, 1, true),
+		townK("tripEmptyHPBelt", "Trip: empty healing belt", "on/off", "Go to town when the belt and pack hold no healing potion (Rejuvenation does not count, as in the BELT gate) and the gold buys one. 0 = off.", d.TripEmptyHPBelt, 0, 1, true),
 		townK("tripMinSpend", "Trip floor: min purchase", "gold", "A pure restock trip (healing potions below the resupply line, mana, belt columns, portal scroll) with a healing potion still in the belt starts only when the planned purchase is worth this much; a character with gold under the kit line and under 2 healing potions also buys no portal scroll (potions first). docs/goldfloor.md: 83% of NAVSOAK trips bought under 30 gold. 0 = off (old), the default: levers A and B are off after the failed A/B of 2026-10-31.", d.TripMinSpend, 0, 500, false),
 		townK("mpCapEarly", "Early mana potions per visit", "count", "Mana potions one visit buys below mpCapLevel; only used while mpCapLevel > 0, so set mpCapEarly 1 together with mpCapLevel 10 for the goldfloor lever (OFF by default after the failed A/B, docs/goldfloor.md finding 3: mana was 74 to 305 gold/h at clvl 1-10).", d.MPCapEarly, 0, 8, true),
 		townK("mpCapLevel", "Early mana cap below clvl", "clvl", "Below this level mpCapEarly caps the mana purchase and a low mana belt raises no town trip. 0 = off (old).", d.MPCapLevel, 0, 40, false),
