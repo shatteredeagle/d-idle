@@ -99,3 +99,31 @@ Defects found (not fixed here):
 Acceptance of TASK-21: criteria 2 and 3 are NOT met by this run (no thought was answered, so no rule, no answer count; the fight-time points stayed quiet). Re-run after defect 1 and 2 are fixed.
 
 Fixes (branch agent/drillfix, offline tested, live re-drill pending): defect 1: `InFight` is now `Runner.engaged` (hostile within `combat.fightRadius` of the last snapshot), test `TestLadderQuestionsReachThePlayerInTheField`; defect 2: `bot.NewTuner` takes a post hook (`ladderPost` in `cmd/d2bot`) applied after every build, tests `TestTunerPostSurvivesReloadAndEdit` and `TestLadderPostKeepsTheFlagAcrossATuningFile` (the workaround of moving tuning.json aside is no longer needed); defect 3 (`tools/live.sh` and `D2BOT_INSTANCE`) is in the private ops repo, still open, keep passing `D2_INSTANCE=iN`; defect 4: `-bin` has no default, `D2D_BIN` is required, a usage reply to a setup verb is reported as a stale binary.
+
+## Result 2 (integrated path re-drill after the drillfix merge, VERIFIED LIVE 2026-11-05)
+
+Build `122867a5` (`d2bot` from main, drillfix merged: `InFight` is `Runner.engaged`, `NewTuner` keeps `--ladder`, no tuning file was moved aside). Hidden instance i5, Freshe (Sorceress, clvl 3 at the start of run A, no setup writes). Both runs: `D2_INSTANCE=i5 D2BOT_RUN=<run> tools/live.sh --bg --max 900 t0drill d2bot --attach --ladder --ladder-profile <P> --watch --goals 'farm:Blood Moor' --run-for 10m`, preceded by `d2cheat --reason 'T0 drill re-run, no setup' runstart <run>`. Views read on the worker host loopback (viewer port) at about minutes 1, 3, 5 (A) and 3, 4, 8 (B); the viewer is gone once the bot exits, so there are no end-of-run views. The ladder store directory is shared by both runs (one file per profile).
+
+| | Run A `t0live-20261105b`, profile holdout:101 | Run B `t0live-20261105c`, profile cautious |
+|---|---|---|
+| runtime, exit | 10 min, exit 0 | 10 min, exit 0 |
+| fault / stall | none (`ladder fault` 0, uptime 100 percent, stallSec 0, 0 deaths) | none (same) |
+| log bounded | 474 lines | 537 lines |
+| play | 150 kills in the instance counter at the end, xp 1728 (minute 1) to 3174, clvl 3 | xp to 4605 at minute 9, clvl 4, Blood Moor then Cold Plains (the goal manager's campaign took over, "Quest: fighting (Level up to 5)") |
+| thoughts opened (point: n) | t0.area.toohard 1, t1.repair 1, t1.restock 2, t1.return 1, t1.tp.lost 1 | t0.area.toohard 12, t0.retreat.drink 2, t0.unique.fight 2, t1.repair 2, t1.restock 1, t1.return 2, t1.tp.lost 1 |
+| answered | t1.repair (skip), t1.restock (notsure), t1.return (yes) = 3; t0.area.toohard never answered (stayed open the whole run, never faded in the view); 2 faded | 9 x t0.area.toohard (skip), t1.repair, t1.restock, t1.tp.lost, 2 x t1.return = 14; 5 faded; the two t0.retreat.drink and two t0.unique.fight opened at the end, unanswered |
+| rules learned | 0 (`rules` view empty) | 1: `t1.return` "When asked "Return to the field after town?" (in act 1, in the field, on Normal, softcore hero, with potions and a portal), I return." (2 answers in a row, `needed` 2); a rule candidate for `t0.area.toohard` was refused by the player (journal: "You said no to the rule; the streak starts again") |
+| behaviour change | none observed | none observable: the learned `t1.return` "yes" equals the legacy answer; the `t0.area.toohard` answer "skip" equals the default and the route guard line (`route guard: blocked monastery (no merc, clvl 3 < 14)`) comes from the bot's own guard, so no Blood Moor skip happened |
+| writes after start | `d2cheat ledger --since-run t0live-20261105b`: writes after start: 0 | `... t0live-20261105c`: writes after start: 0 |
+| ladder store dir | 20 KB after A (decide-holdout-101.json + .bak) | 36 KB total (adds decide-cautious.json + .bak) |
+
+`why` entries (first 5 journal lines, plain): 1 "No rule yet, so I used my default "skip repair"" (t1.repair, streak 1 of 2); 2 "...default "buy a scroll"" (t1.tp.lost, streak 1 of 3); 3 "...default "restock"" (t1.restock, streak 1 of 2); 4 "I did "return" because of a rule you taught me: you gave this answer 2 times in a row" (t1.return); 5 "No rule yet, so I used my default "skip repair"" (second t1.repair). Uptime view: state progress, label "Recovery: farming gold" (A) and "Quest: fighting" (B), 100 percent.
+
+Points that fired live: t0.area.toohard, t0.retreat.drink, t0.unique.fight, t1.repair, t1.restock, t1.return, t1.tp.lost. Not seen: t1.town.trigger, t2.mercenary (act 2 only).
+
+Verdict: run A PASS for stability, thoughts answered (town points only) but no rule learned; run B PASS, a rule learned and shown in the `rules` and `why` views. Defect 1 and 2 are confirmed fixed live (ladder stayed on with a saved tuning file, questions reach the player in the field). Acceptance criteria 2 and 3 of TASK-21 stay open: only 2 of the 5 profiles ran in the field, no thought was seen to open mid-fight (the retreat and unique thoughts opened in town at the end of run B), and no learned answer changed behaviour.
+
+New defects (not fixed here):
+5. `ladder.Ladder.Pump` says the bot calls it from its loop, but nothing in `internal/bot` does: `Pump` runs only inside `Decide`. An open question is answered only at the next `Decide` call, so `t0.area.toohard` (asked about once per route) sat open for the whole of run A and was answered only 9 times in run B because it was re-asked. Fix: call `Ladder.Pump` from the runner loop or the status tick (outside a fight).
+6. A thought opened while the player script is silent shows `remainingSec` 539 with `fadeSec` 45 (`openedAt` 568 against a viewer clock of 73): the thought's clock and the viewer clock differ for a thought reopened from a persisted store (store files date from the earlier run). Look at the clock handed to `decide.Open` against the watch Hub clock.
+7. The same persisted store means two runs on one instance are not independent (B started with A's t0.area.toohard thought id 11 still open); a drill should use a clean state dir or say so.
