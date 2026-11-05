@@ -283,3 +283,30 @@ func TestLadderPostKeepsTheFlagAcrossATuningFile(t *testing.T) {
 		}
 	}
 }
+
+// Drills name their run and get their own store; an unnamed run keeps the shared one; "shared" is the explicit
+// continuation (t0drill Result 2, defect 7).
+func TestLadderStorePerRun(t *testing.T) {
+	st := filepath.Join("state", "i5")
+	shared := filepath.Join(st, "ladder")
+	cases := []struct {
+		name, run, flag string
+		on              bool
+		want            string
+		bad             bool
+	}{
+		{"unnamed run", "", "", true, shared, false},
+		{"named run", "t0live-b", "", true, filepath.Join(shared, "runs", "t0live-b"), false},
+		{"flag wins", "t0live-b", "mine", true, filepath.Join(shared, "runs", "mine"), false},
+		{"continue", "t0live-b", "shared", true, shared, false},
+		{"off ignores both", "a/b", "", false, shared, false},
+		{"bad name", "../x", "", true, "", true},
+	}
+	for _, c := range cases {
+		t.Setenv("D2BOT_RUN", c.run)
+		got, err := ladderDir(st, ladderOptions{on: c.on, store: c.flag})
+		if (err != nil) != c.bad || got != c.want {
+			t.Errorf("%s: got %q, %v want %q", c.name, got, err, c.want)
+		}
+	}
+}

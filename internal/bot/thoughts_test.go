@@ -1,7 +1,9 @@
 package bot
 
 import (
+	"context"
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
@@ -209,5 +211,94 @@ func TestLadderQuestionsReachThePlayerInTheField(t *testing.T) {
 			}
 			ladder.Install(nil)
 		}
+	}
+}
+
+// Pump runs from the bot loop (Runner.step), not only inside Decide: a question opened by one decision point is
+// delivered on a later tick, held while a hostile is within the fight radius, answered by the scripted player, and a
+// reply after the fade is a late answer that changes nothing (t0drill Result 2, defect 5).
+func TestLadderPumpRunsFromTheLoop(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
+		for _, delaySec := range []int{1, 100} {
+			g, _, s := gateRig(t, 1, 0, 5000)
+			g.e.Tune.Ladder.Enabled = 1
+			g.w.set(func(w *world) { w.area = 6 })
+			s, _ = g.w.snapshot()
+			ladder.Install(nil)
+			if !g.r.tripVerdict(s).Go {
+				t.Skip("scenario no longer trips in the legacy policy")
+			}
+			src, err := ladder.ParseScript([]byte(fmt.Sprintf(`{"rows":[{"point":%q,"answer":"continue","confirm":"yes","delaySec":%d}]}`, ladder.PointTrigger, delaySec)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			var st *decide.Store
+			l, err := g.r.EnableLadderWith("", "t0", func(s *decide.Store, _ *decide.Catalogue, _ decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+				st = s
+				return &ladder.RecordSink{}, src, nil
+			})
+			if err != nil || l == nil {
+				t.Fatal(err)
+			}
+			t.Cleanup(func() { ladder.Install(nil) })
+			late := 0
+			st.Subscribe(func(e decide.Event) {
+				if e.Kind == decide.EvLateAnswer {
+					late++
+				}
+			})
+			name := fmt.Sprintf("%s delay %d", class, delaySec)
+			legacy := g.r.tripVerdict(s).Go // tick N: opens the thought
+			p := &d2.Player{Class: class, Life: 100, MaxLife: 100, Area: 6, X: 100, Y: 100}
+			setSnap(g.r, &d2.Snapshot{Player: p, Monsters: []d2.Unit{{ID: 9, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 105, Y: 100}}})
+			g.clock.Sleep(2 * time.Second)
+			g.r.pumpLadder()
+			if l.Stats().Answered != 0 || late != 0 {
+				t.Fatalf("%s: answered while engaged: %+v", name, l.Stats())
+			}
+			setSnap(g.r, &d2.Snapshot{Player: p})
+			g.clock.Sleep(2 * time.Second) // tick N+1, nothing hostile near
+			g.r.pumpLadder()
+			if delaySec == 1 {
+				if l.Stats().Answered != 1 {
+					t.Fatalf("%s: the question was not delivered and answered by tick N+1: %+v", name, l.Stats())
+				}
+				continue
+			}
+			g.clock.Sleep(time.Duration(delaySec) * time.Second)
+			g.r.pumpLadder()
+			if l.Stats().Answered != 0 || late != 1 {
+				t.Fatalf("%s: a reply after the fade must be a late answer: %+v late %d", name, l.Stats(), late)
+			}
+			if got := g.r.tripVerdict(s).Go; got != legacy {
+				t.Fatalf("%s: a late answer changed the action: %v -> %v", name, legacy, got)
+			}
+		}
+	}
+}
+
+// The loop itself calls it: one step with a ladder installed answers a due question.
+func TestStepPumpsTheLadder(t *testing.T) {
+	g, _, s := gateRig(t, 1, 0, 5000)
+	g.e.Tune.Ladder.Enabled = 1
+	ladder.Install(nil)
+	src, err := ladder.ParseScript([]byte(`{"rows":[{"point":"` + ladder.PointTrigger + `","answer":"continue","confirm":"yes","delaySec":1}]}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	l, err := g.r.EnableLadderWith("", "t0", func(*decide.Store, *decide.Catalogue, decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+		return &ladder.RecordSink{}, src, nil
+	})
+	if err != nil || l == nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { ladder.Install(nil) })
+	g.w.set(func(w *world) { w.area = 6 })
+	s, _ = g.w.snapshot()
+	g.r.tripVerdict(s)
+	g.clock.Sleep(3 * time.Second)
+	g.r.step(context.Background())
+	if l.Stats().Answered != 1 {
+		t.Fatalf("step did not pump the ladder: %+v", l.Stats())
 	}
 }

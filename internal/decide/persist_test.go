@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 func TestPersistRoundTrip(t *testing.T) {
@@ -123,5 +124,36 @@ func TestPersistedProfileSurvivesScript(t *testing.T) {
 	}
 	if got, _ := s2.RulesJSON(); !bytes.Equal(got, want) {
 		t.Fatal("reload after a long script differs")
+	}
+}
+
+// A thought left open by an earlier run restarts its fade on the new run's clock (t0drill Result 2, defect 6).
+func TestReopenedThoughtFadesOnTheNewClock(t *testing.T) {
+	dir := t.TempDir()
+	cat := mustCat(t)
+	clk := &ManualClock{T: 560 * time.Second}
+	s, err := Open(dir, "alice", cat, clk)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ctx := mustBuild(t, cat, "t0.retreat.lethal", baseObs(cat, "sorceress"))
+	d, err := s.Ask(ctx)
+	if err != nil || d.Thought == nil {
+		t.Fatalf("no thought: %v", err)
+	}
+	id := d.Thought.ID
+	clk2 := &ManualClock{T: 73 * time.Second}
+	s2, err := Open(dir, "alice", cat, clk2)
+	if err != nil {
+		t.Fatal(err)
+	}
+	ti, ok := s2.Thought(id)
+	fade := time.Duration(cat.Config.FadeSec) * time.Second
+	if !ok || ti.Opened != clk2.T || ti.Expires-clk2.T != fade {
+		t.Fatalf("reopened thought keeps the old clock: %+v (now %v)", ti, clk2.T)
+	}
+	clk2.Advance(fade)
+	if n, _ := s2.Tick(); n != 1 {
+		t.Fatalf("the reopened thought must fade after %v, faded %d", fade, n)
 	}
 }

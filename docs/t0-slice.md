@@ -62,6 +62,7 @@ Both switches are OFF by default; without `-ladder` nothing in `cmd/d2bot/ladder
 | flag (env) | meaning |
 |---|---|
 | `-ladder` (`D2BOT_LADDER`) | ladder on; store under `<data>/instances/<id>/state/ladder/decide-<profile>.json` |
+| `-ladder-store NAME` (`D2BOT_LADDER_STORE`) | store directory `state/ladder/runs/NAME`. Default: the run named by `D2BOT_RUN` (drills are independent); no run named: the shared `state/ladder` store, so real play keeps learning across sessions; `shared` forces the shared store (continue a learned profile in a named run) |
 | `-ladder-profile NAME` or `holdout:SEED` (`D2BOT_LADDER_PROFILE`) | scripted player for drills: cautious, bold, inconsistent, holdout:SEED. Without it a person answers on the watch screen |
 | `-watch` (`D2BOT_WATCH`) | serve the player screen from the bot; needs `-ladder` |
 | `-watch-addr` (default `127.0.0.1:8891`) | read-only viewer (GET routes only) |

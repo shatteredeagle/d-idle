@@ -149,7 +149,10 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 
-	ldir := ladderDir(ip.State())
+	ldir, err := ladderDir(ip.State(), o.ladder)
+	if err != nil {
+		return err
+	}
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner))
 	if err != nil {
 		return err

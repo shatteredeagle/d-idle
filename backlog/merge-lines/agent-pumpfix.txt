@@ -1,0 +1,2 @@
+BACKLOG: pumpfix: ladder Pump runs every bot tick, reopened thoughts restart their fade, drills get per-run ladder stores (TASK-21 notes; offline tested, live re-drill next)
+CHANGELOG: d2bot: the decision ladder is pumped every bot tick; --ladder-store / D2BOT_RUN give each drill its own ladder store (the shared store stays the default for unnamed runs)
