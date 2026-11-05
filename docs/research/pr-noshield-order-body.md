@@ -1,10 +1,12 @@
 # PR body: a monster blow takes the flat reduction before the resistance
 
-> status: DRAFT body for a pull request to psi29a/d2decomped (job nsprep, 2026-11-04; retargeted 2026-11-05). Fork branch `local/noshield-reduction-order-r2`, ONE commit on upstream main `4b402827` (the merge of #198, Energy Shield, merged upstream 2026-11-05 05:44 EST as a merge commit, so `3b8bb7df` and `8f9dd904` are in its history). It builds on #198 (merged): it uses #198's `reduce_fine_signed`, `StruckBlow::parts` and `Taken::element_raw`. The earlier branch `local/noshield-reduction-order` (head `fe434d09`) was the same change on `3b8bb7df`; the r2 commit is its cherry-pick, applied without a conflict. Private fork remote only. NOT posted, nothing pushed to GitHub, no PR opened. Tags: V = run (how stated), S = read without a run, U = unverified. The follow-up named in `docs/research/pr-esabsorb-body.md` (limit K1) and `docs/research/esverify/verdict2.md`. The counts below were measured on `fe434d09`; the r2 retarget is the same diff on a newer base and has NOT been re-measured with the native differential. An independent verification of this branch has not been done.
+> status: PR body (job nsprep 2026-11-04, retargeted 2026-11-05, edited after the independent verification of job esverify3, 2026-11-05; verdict CONFIRMED WITH CAVEATS in `docs/research/esverify/verdict3.md`). Fork branch `local/noshield-reduction-order-r2`, head `ca7872ab`, ONE commit on upstream main `4b402827` (the merge of #198). The text from `## What changes` on is the PR body; this header and the title line are not part of it. Tags: V = run (how stated), S = read without a run, U = unverified.
 >
-> Title: `Fidelity fix against game.exe 1.14d: the flat reduction comes off a monster blow before the resistance`
+> Title: `Fidelity fix against game.exe 1.14d: damage reduction comes off a field before the resistance` (title note: the commit also sums the fields in 256ths, which moves frames with no reduction; the first paragraph says so)
 
 ## What changes
+
+This commit does two things that game.exe's `FUN_0057c1e0` / `FUN_0057bf80` do: the flat reduction comes off a field before the resistance (the order), and the frame's element total is the sum of 256ths, not of whole-point parts (the 256ths sum). The second also moves frames with no reduction at all (see the counts). An independent verification against game.exe's own functions (native run in an emulator, new seeds 41 / 42 / 43, 114,054 frames of a second generator) is done, and r2 itself was measured.
 
 `rules::monster_blow` resisted each element and then took the magic damage reduction (mdr) off, clamping each part at 0. game.exe's resistance pass (`FUN_0057bf80`, per field of the damage record) does it the other way round: for a field above 0 the flat reduction comes off first (physical: stat 34 then the percent; fire, lightning, cold, magic: the mdr), then the resistance on what is still above 0, and the result is stored even under 0. `FUN_0057c1e0` sums the stored fields into the record total (+0x4c) and the life update ignores a total that is not above 0 (`0057c852`): a field left under the reduction takes damage off the other fields of the record, and the total is clamped once.
 
@@ -20,19 +22,33 @@ Example (V run, game.exe's own code natively, no shield): 100 fire, 50 % resista
 | `rules::energy_shield_blows` | reads the signed fields (`part_fine`, `physical_now`) instead of the clamped ones; its arithmetic is unchanged |
 | `Foe::take` | copies `sum` and the fields into the blow |
 
-The frame's element total is now the sum of 256ths rather than of whole-point parts; that is the second thing `FUN_0057c1e0` does (it sums the stored fields) and it is the reason the remaining whole-point differences of the control frames (d2d resisted each element in whole points) go too.
+The frame's element total is now the sum of 256ths rather than of whole-point parts; that is the second thing `FUN_0057c1e0` does (it sums the stored fields) and it is the reason the remaining whole-point differences of the control frames (d2d resisted each element in whole points) go too. It also moves frames with no reduction: see the verification below (no shield and no reduction at all: 1,802 of 11,615 frames were wrong before).
 
 ## Evidence from game.exe 1.14d
 
 | Address | What it shows |
 |---|---|
-| `0057bf80` (to `0x57c04d`) | field at or under 0 stored as 0; else the reduction comes off, then only if the rest is above 0 and the resistance is not 0, `MulDiv(rest, 100 - min(res, 100), 100)`; the result is stored even under 0 (V read; V run natively in the esverify job, `esv2_handgame.py`) |
+| `0057bf80` (to `0x57c04d`) | field at or under 0 stored as 0; else the reduction comes off, then only if the rest is above 0 and the resistance is not 0, `MulDiv(rest, 100 - min(res, 100), 100)`; the result is stored even under 0 (V read, V run natively in the emulator) |
 | `0057c1e0` | sums the stored fields into +0x4c; `0057c852`: a total not above 0 is ignored (V read) |
-| native numbers | 45 / 22.5 / 180 / 93 / 45 above (V run, `docs/research/esverify/verdict2.md`, "The no-shield finding") |
+| native numbers | 45 / 22.5 / 180 / 93 / 45 above (V run, the native differential) |
 
-## Counts before and after (V run, the worker host)
+## Independent verification on r2 (V run, the worker host)
 
-The esverify harness (`tools/emu/esv_*`, `esv2_*`; the game side is game.exe's own `FUN_0057c6c0` / `FUN_0057c1e0` / `FUN_0057bf80` and, with a shield, `FUN_005ca6c0`) with its two probes: "before" is `3b8bb7df` (#198, now on upstream main), "after" is `fe434d09`, same cases, same game output. Seeds 31, 32 and 33 of the first generator at 20,000 frames each (new seeds; every earlier job used other ones), the second generator's edge grid (all six damage types, resistance -100 / 0 / 50 / 75 / 100, rolls 1..632, flat and mdr in (0,0) (15,0) (0,10) (15,10) (3,6) (40,40), levels 1 / 40 / 99, mana 0 / 1/256 / 300 points, two-field records, poison) plus 20,000 random frames, and the 17 hand cases. Life is compared in whole points and in 256ths; mana the same.
+A separate verifier ran the same game-side code (game.exe's own `FUN_0057c6c0`, which runs `FUN_0057c1e0` and `FUN_0057bf80`, and with a shield `FUN_005ca6c0`, natively in an emulator) against the base (`4b402827`) and the head (`ca7872ab`) with new seeds 41 / 42 / 43 of the second generator, 114,054 frames. Life is compared in whole points and in 256ths, mana the same.
+
+| Frames | Cases | Base: life differs (pt / 256ths) | Head |
+|---|---|---|---|
+| all | 114,054 | 36,449 / 45,942 | **0 / 0** |
+| no shield | 60,000 | 20,029 / 26,156 | **0 / 0** |
+| no shield, flat or mdr non-zero, no poison | 35,173 | 18,227 / 21,242 | **0 / 0** |
+| no shield, no reduction at all, no poison | 11,615 | 1,802 / 4,914 | **0 / 0** |
+| with a shield | 54,054 | 16,420 / 19,786 | **0 / 0** |
+
+Mana differs on none, base or head. Poison frames are compared on mana only (the emulator hooks the poison handler, so game.exe's life there is not the frame's). A new edge grid of 21,670 frames (flat 0 / 3 / 15 / 60, mdr 0 / 10 / 50 / 100, resistance -100 / 0 / 75 / 100 / 110, all six damage types, physical percent 0 / 20 / 50, shield level 0 / 99, two- and three-field records, three blows in one frame) is equal on head except the 24 frames of C2 (below). Break attempts with every field under the reduction, resistance above 100 and a shield at 0 mana: head equal.
+
+## Counts before and after (V run, the worker host, an earlier branch of the same change, on `3b8bb7df`)
+
+The differential harness (not part of this PR; the game side is game.exe's own `FUN_0057c6c0` / `FUN_0057c1e0` / `FUN_0057bf80` and, with a shield, `FUN_005ca6c0`) with its two probes: "before" is `3b8bb7df` (#198, now on upstream main), "after" is that earlier branch, same cases, same game output. Seeds 31, 32 and 33 of the first generator at 20,000 frames each (new seeds; every earlier job used other ones), the second generator's edge grid (all six damage types, resistance -100 / 0 / 50 / 75 / 100, rolls 1..632, flat and mdr in (0,0) (15,0) (0,10) (15,10) (3,6) (40,40), levels 1 / 40 / 99, mana 0 / 1/256 / 300 points, two-field records, poison) plus 20,000 random frames, and the 17 hand cases. Life is compared in whole points and in 256ths; mana the same.
 
 | Frames | Cases | Before: life differs (pt / 256ths) | After |
 |---|---|---|---|
@@ -56,7 +72,7 @@ This is a re-measurement on the same machinery, not a new claim about shield ari
 
 Two existing assertions encoded the old order and game.exe contradicts them (V run: 40 x 25 % less 2 versus (40 - 2) x 25 %), so they changed: the "monster blows" block of `test_combat.cpp` (`taken.damage == 76 + 8` and `taken.elemental == 8`: now the physical 76.x plus 9.5, `elemental == 9`) and the sure-hit loop of the same file (`damage == 76 + 8`: now 85 or 86, the physical's 256ths decide). `tests/game/test_energy_shield.cpp` needed no change. `tests/game/test_game.cpp` (the Bone Armor cases) needed none either; `settle_blow` keeps the old arithmetic for a blow without `sum`.
 
-`test_combat`, `test_rules`, `test_game_rules`, `test_game`, `test_monsters`, `test_skills`, `test_monster_missile` and `test_energy_shield` return 0 on the retargeted head (V run) except `test_game` and `test_energy_shield`, which exit 77 (SKIP: no game data on the worker host at the time of the retarget; they passed with data on `fe434d09`; rerun with data before opening).
+`test_combat`, `test_rules`, `test_game_rules`, `test_game`, `test_monsters`, `test_skills`, `test_monster_missile` and `test_energy_shield` return 0 on the head (V run); `test_game` and `test_energy_shield` were run with the 1.14d game data, on the base and on the head.
 
 ## Callers and what else moves
 
@@ -69,19 +85,19 @@ Two existing assertions encoded the old order and game.exe contradicts them (V r
 
 - Author and committer are the numeric noreply identity; the body is 3 lines and ends with `Agent: Claude Code`; no `-x` line.
 - `python3 tools/pr_guard.py 4b402827 HEAD`: 0 FAIL, 0 WARN.
-- `python3 tools/presubmit.py --quick --base 3b8bb7df` (run on `fe434d09`, not re-run on r2): 0 FAIL, 4 WARN: unit kinds (answered above), docs-sync (`docs/research/re/combat.md` is updated in the commit), build and gcc skipped by `--quick` (the build was done by hand, above).
-- clang-tidy with the repo's `.clang-tidy` on `tests/test_combat.cpp` (no finding) and `components/game/fight/states.cpp` (no finding in a touched file; the pre-existing `readability-identifier-length` errors in untouched headers remain, as in the second verification).
+- `python3 tools/presubmit.py --quick --base 3b8bb7df` (run on the earlier branch, not re-run on r2): 0 FAIL, 4 WARN: unit kinds (answered above), docs-sync (`docs/research/re/combat.md` is updated in the commit), build and gcc skipped by `--quick` (the build was done by hand, above).
+- clang-tidy with the repo's `.clang-tidy` on `tests/test_combat.cpp` (no finding), and on the TUs that include `combat.hpp` and `ai.hpp`: the same 10 `readability-identifier-length` errors on base and head, all in `outdoor.hpp`, `merc.hpp` and `pets.hpp`; none in `combat.hpp` or `ai.hpp` (V run).
 
 ## Not re-run
 
 - MSVC, clang++ suites, the full parity lane, a live game, a soak, a determinism hash comparison; `test_game` neighbours beyond the list above.
-- The monster-only fields (C4), a physical field above 4,096 points with a percent reduction (C2: pre-existing, the grid has none by design), magic damage with a percent resistance (the harness has no magic resistance column; d2d applies none to a monster's magic blow, `FUN_0057bf80` row `stat 0x25`), the state's removal at 0 mana (C3).
-- Armor states (Bone Armor, Cyclone Armor) together with a shield or with negative fields: the signed total goes through them (`test_combat` Bone Armor cases still pass) but the differential does not put an armor up.
-- An independent verification of this branch.
+- The monster-only fields (C4), a physical field above 4,096 points with a percent reduction (C2: a physical field above 4,096 points with a percent reduction is a pre-existing difference: head equals base on all 54 such frames; 24 frames of the edge grid differ from game.exe only there), magic damage with a percent resistance (the harness has no magic resistance column; d2d applies none to a monster's magic blow, `FUN_0057bf80` row `stat 0x25`), the state's removal at 0 mana (C3).
+- N3: Bone Armor and Cyclone Armor are in no differential (the harness cannot put an armor state up); the signed total goes through them (`test_combat` Bone Armor cases still pass). Cyclone's elemental cut leaves `parts[].fine` stale, as on the base (V read).
+- N4: poison life, the monster-only fields, the aura and burn callers, MSVC and clang++, and the parity lane were not run.
 
 ## Limits
 
 - U: `Taken::damage` and `frac` changed meaning (the clamped total, not the physical's fraction). Every reader in the tree was read (`Foe::take`, `Fight::absorb`, `rules::absorb_blows`, `settle_blow`, `energy_shield_blows`); the callers that build a `Taken` or a blow by hand keep the old meaning because `sum` is unset.
-- The differential harness is not part of this PR (it lives in the lab repo); only `test_combat` is repeatable by upstream, so the counts above are cited, not proven, for the maintainer.
+- The differential harness is not part of this PR; only `test_combat` is repeatable by upstream, so the counts above are cited, not proven, for the maintainer.
 
 Agent: Claude Code

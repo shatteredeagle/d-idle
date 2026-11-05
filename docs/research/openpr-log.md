@@ -305,3 +305,10 @@ Not re-run: an MSVC build, the full ctest, the full CI tidy selection. No commen
 - posted: 2026-11-04 follow-up commit on #198 (standing go, CodeRabbit finding 2): plain push to the fork branch es-absorb-order, 3b8bb7df to 8f9dd904, one new commit 'test: Energy Shield test checks the game data loaded' (adds the `if (!data)` guard before `data->patched` in tests/game/test_energy_shield.cpp; the skip convention is unchanged). pr_guard 0 FAIL / 0 WARN; Release `-DD2D_WERROR=ON` build of test_energy_shield on the worker host, run with game data: OK (V); clang-tidy on the file: only 4 readability-identifier-length hits in components/drlg/outdoor.hpp, none in the touched file. CI right after the push: pending, guard pass. No reply or comment on the PR.
 - nothing else posted: no comments, labels or reviewer requests.
 - 2026-11-05 05:44 EST: #198 Energy Shield absorb order merged upstream (merge commit 4b40282750f216680e8bcb083a9eb6a84186b1f2, a merge commit not a squash; both commits 3b8bb7df and 8f9dd904 are in upstream history). Read-only gh pr view; nothing posted.
+
+## No-shield damage reduction order (no card)
+
+- posted: 2026-11-05 opened under the standing approval (user, re-confirmed 2026-11-04: maintainer-compliant PRs go upstream without a per-PR go; one batch open at a time). Checked first: no open PR of the author on psi29a/d2decomped; upstream main 4b402827 (unchanged, merge-tree clean on the touched files); pr_guard 0 FAIL / 0 WARN on the range.
+- posted: 2026-11-05 push (plain, new branch) to the fork: noshield-reduction-order head ca7872ab (git ls-remote of the fork showed no such branch before). Same commit as the private local/noshield-reduction-order-r2.
+- posted: 2026-11-05 PR opened: https://github.com/psi29a/d2decomped/pull/200 (1 commit; title "Fidelity fix against game.exe 1.14d: damage reduction comes off a field before the resistance"). Body from pr-noshield-order-body.md (after the independent verification) without the internal header, ends with the bare `Agent: Claude Code` line.
+- nothing else posted: no comments, labels or reviewer requests.
