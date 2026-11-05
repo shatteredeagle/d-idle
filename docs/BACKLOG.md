@@ -470,6 +470,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - OpenSpec removal stage 3 done: contracts are in docs/contracts/ (18 files, proposed/ holds the 9 open deltas), openspec/ is removed (tag openspec-final, index docs/archive/openspec-index.md), STATUS and the board /changes JSON come from tools/backlog/status.py; stage 3b (headers, checker, Numbers tables) and stage 4 (AGENTS.md) are next.
 - GATE2: Gate 2 multi-seed run 20261104-2254-g2b (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261104-2254-g2b.md)
 - GATE2: Gate 2 multi-seed run 20261105-0733-g2c (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-0733-g2c.md)
+- maintenance: spent merge-lines files pruned, tools/backlog/drift.py read-only backlog drift report (docs/backlog-howto.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

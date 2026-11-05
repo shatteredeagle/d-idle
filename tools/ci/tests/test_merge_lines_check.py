@@ -40,6 +40,13 @@ class LintTest(unittest.TestCase):
                 f.write("BACKLOG: ok\n")
             self.assertEqual(len(m.default_files(d)), 1)
 
+    def test_empty_dir_is_clean(self):
+        """The merge deletes spent files: an empty (or missing) backlog/merge-lines must not fail the check."""
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(m.default_files(d), [])
+            os.makedirs(os.path.join(d, "backlog", "merge-lines"))
+            self.assertEqual(m.default_files(d), [])
+
 
 if __name__ == "__main__":
     unittest.main()
