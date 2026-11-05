@@ -1,0 +1,1 @@
+CHANGELOG: decisions: Current truth updated for ADR 0016 (automation ladder, tier order ranks work, idle layer un-parked)
