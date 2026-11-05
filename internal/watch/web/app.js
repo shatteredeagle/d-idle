@@ -17,7 +17,7 @@
     var m = Math.floor(s / 60), r = s % 60;
     return (neg ? '-' : '') + m + ':' + (r < 10 ? '0' : '') + r;
   }
-  function say(t) { $('msg').textContent = t || ''; }
+  function say(t) { $('msg').textContent = t || ''; $('msgbar').hidden = !t; }
 
   function get(path) {
     return fetch(path, { cache: 'no-store' }).then(function (r) { return r.json(); });
@@ -43,7 +43,7 @@
       if (t.meanwhile) d.appendChild(el('div', 'meanwhile', t.meanwhile));
       var cs = el('div', 'choices');
       t.choices.forEach(function (c) {
-        var b = el('button', '', c.label); b.type = 'button';
+        var b = el('button', 'btn' + (c.id === 'yes' ? ' primary' : ''), c.label); b.type = 'button';
         b.addEventListener('click', function () {
           if (t.kind === 'confirm') post('/api/confirm', { thought: t.id, yes: c.id === 'yes' });
           else post('/api/answer', { thought: t.id, answer: c.id });
@@ -71,7 +71,7 @@
   }
 
   function revokeBtn(key) {
-    var b = el('button', '', 'Revoke'); b.type = 'button';
+    var b = el('button', 'btn small danger', 'Revoke'); b.type = 'button';
     b.addEventListener('click', function () { post('/api/revoke', { key: key }); });
     return b;
   }
@@ -140,7 +140,7 @@
     o.orders.slice().reverse().forEach(function (x) {
       var li = el('li'); li.appendChild(el('span', '', x.text + ' - ' + x.state + (x.note ? ' (' + x.note + ')' : '') + ' '));
       if (x.state === 'queued' || x.state === 'active') {
-        var b = el('button', '', 'Cancel'); b.type = 'button';
+        var b = el('button', 'btn small', 'Cancel'); b.type = 'button';
         b.addEventListener('click', function () { post('/api/orders/cancel', { id: x.id }); });
         li.appendChild(b);
       }
@@ -152,7 +152,9 @@
     $('state').textContent = u.label; $('state').className = 'tag ' + u.state;
     $('uptime').textContent = u.uptimePct === null ? '-' : u.uptimePct.toFixed(1) + '%';
     $('window').textContent = u.windowPct === null ? '' : '(last ' + Math.round(u.windowSec / 60) + ' min ' + u.windowPct.toFixed(1) + '%)';
+    $('dot').className = 'dot ' + (/^(death|recovery|stall)$/.test(u.state) ? 'bad' : u.state === 'idle' ? 'idle' : 'ok');
     $('deaths').textContent = u.deaths ? u.deaths + ' death' + (u.deaths > 1 ? 's' : '') : '';
+    $('deaths').hidden = !u.deaths;
     $('clock').textContent = 'time ' + mmss(u.now);
     $('uptime').title = u.text;
   }
@@ -178,6 +180,28 @@
   $('okind').addEventListener('change', function () {
     $('oarea').disabled = $('okind').value !== 'go'; $('omin').disabled = $('okind').value === 'home';
   });
+
+  // Phone tabs (the desktop grid shows every panel) and the theme toggle, same as the original dashboard.
+  Array.prototype.forEach.call(document.querySelectorAll('#views button'), function (b) {
+    b.addEventListener('click', function () {
+      $('main').dataset.view = b.dataset.view;
+      Array.prototype.forEach.call(document.querySelectorAll('#views button'), function (o) {
+        if (o === b) o.setAttribute('aria-current', 'page'); else o.removeAttribute('aria-current');
+      });
+    });
+  });
+  var theme = 'auto';
+  try { theme = localStorage.getItem('d2theme') || 'auto'; } catch (e) { /* storage blocked */ }
+  function applyTheme(t) {
+    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
+    $('btn-theme').textContent = 'Theme: ' + (t === 'light' || t === 'dark' ? t : 'auto');
+  }
+  $('btn-theme').addEventListener('click', function () {
+    theme = { auto: 'light', light: 'dark', dark: 'auto' }[theme] || 'auto';
+    try { localStorage.setItem('d2theme', theme); } catch (e) { /* ignore */ }
+    applyTheme(theme);
+  });
+  applyTheme(theme);
 
   function live() {
     var last = 0;

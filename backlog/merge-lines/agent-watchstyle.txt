@@ -1,0 +1,1 @@
+CHANGELOG: watch screen restyled in the original d.idle dashboard look (same tokens, cards, theme toggle, phone tabs)
