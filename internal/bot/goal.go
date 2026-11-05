@@ -1543,13 +1543,7 @@ func (r *Runner) askReturn(s *d2.Snapshot, in resource.Input, v resource.FieldVe
 	if l == nil {
 		return v
 	}
-	kit := ladder.KitOK
-	switch healing := in.Belt.HP + in.Belt.RV + in.Belt.PackHP + in.Belt.PackRV; {
-	case !in.HasTP && healing == 0:
-		kit = ladder.KitNone
-	case !in.HasTP || healing < 2:
-		kit = ladder.KitThin
-	}
+	kit := ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV)
 	go2, err := l.ReturnWanted(ladder.HeroFrom(s.Player), kit, v.Go)
 	if err != nil {
 		l.Fault(err)

@@ -48,10 +48,16 @@ const championEarlyLevel = 15
 // life and +50% damage and a low-level Normal character has little margin (SME rule of thumb, EXP; knob
 // combat.championEarlyPct). Zero outside Normal, at clvl 15+, without a champion in range, or with Level unknown.
 func championBonus(in Input, t Tuning) int {
-	if !in.ChampionPack || in.Hostiles == 0 || in.Diff != d2.Normal || in.Level <= 0 || in.Level >= championEarlyLevel {
+	if !ChampionEarly(in) {
 		return 0
 	}
 	return max(t.ChampionEarlyPct, 0)
+}
+
+// ChampionEarly reports the state the champion bonus applies in (before the knob): a champion pack in range in Normal
+// below championEarlyLevel. The decision-point key (champbonus early) reads it.
+func ChampionEarly(in Input) bool {
+	return in.ChampionPack && in.Hostiles > 0 && in.Diff == d2.Normal && in.Level > 0 && in.Level < championEarlyLevel
 }
 
 // PotionPolicy decides at most one drink. Gap timing (PotionGapMs) is the caller's.
