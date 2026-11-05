@@ -5,7 +5,7 @@
 set -e
 tag=$1; shift
 here=$(cd "$(dirname "$0")" && pwd)
-SRC=$(cd "$here/../../.." && pwd)/verifier2-$tag      # esverify2 (re-verify); the first run used verifier-es<tag>
+SRC=$(cd "$here/../../.." && pwd)/${ESV_TREE:-verifier2}-$tag      # esverify2/3 (ESV_TREE=verifier3); the first run used verifier-es<tag>
 [ -d "$SRC" ] || SRC=$(cd "$here/../../.." && pwd)/verifier-es$tag
 OUT=${D2_SCRATCH:-/tmp/d2agent-esverify}/$tag
 B=$OUT/build3
