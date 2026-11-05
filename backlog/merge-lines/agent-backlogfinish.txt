@@ -1,0 +1,1 @@
+BACKLOG: Backlog.md finish: 7 fix and M1 cards reconciled with git (TASK-5..8, 10, 11, 18 Done; TASK-9 stays In Progress), status rules and verified edge cases in docs/backlog-howto.md, check.py fails duplicate task ids

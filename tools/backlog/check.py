@@ -5,6 +5,7 @@ Rules (ADR 0015 items 10 and 11; the open-card cap of 12 was removed by ADR 0016
   - each of those has exactly one goal label G-A..G-G
   - each task has an `owns` frontmatter key
   - card ids (the part of the title before the first colon) are unique
+  - task ids (TASK-N) are unique (two branches that created a task unseen by each other collide at merge)
 Exit 0 when clean, 1 when there are findings. Standard library only.
 """
 import re
@@ -37,7 +38,7 @@ def parse(path):
 
 
 def check(tasks_dir):
-    findings, seen = [], {}
+    findings, seen, ids = [], {}, {}
     files = sorted(Path(tasks_dir).glob("task-*.md"))
     if not files:
         return [f"{tasks_dir}: no task files"]
@@ -46,6 +47,10 @@ def check(tasks_dir):
         if fm is None:
             findings.append(f"{f.name}: no frontmatter")
             continue
+        tid = fm.get("id", "").upper()
+        if tid and tid in ids:
+            findings.append(f"{f.name}: task id {tid} already used by {ids[tid]}")
+        ids[tid] = f.name
         labels = set(fm["_lists"].get("labels", []))
         card = fm.get("title", "").split(":", 1)[0].strip()
         if card in seen:
