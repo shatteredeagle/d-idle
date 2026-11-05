@@ -119,6 +119,9 @@ func parseFlags(args []string) (options, error) {
 	if err := o.ladder.validate(o.sim); err != nil {
 		return o, err
 	}
+	if o.ladder.on && o.dry {
+		return o, errors.New("--ladder does not combine with --dry: dry runs no goals and no decisions")
+	}
 	if o.dry && o.sim {
 		return o, errors.New("--dry needs a game: use --attach or --managed")
 	}

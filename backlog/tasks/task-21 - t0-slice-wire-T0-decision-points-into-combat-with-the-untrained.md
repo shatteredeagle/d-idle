@@ -51,3 +51,6 @@ The first vertical slice of the ladder: the four T0 points (t0.retreat.drink, t0
 - [x] #4 Two builds: the default Sorceress and one other class or build; class-specific data in profile tables
 - [x] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/t0-slice.md; say verified live or not
 <!-- AC:END -->
+
+
+Notes 2026-11-05 (integ): `d2bot -ladder [-ladder-profile NAME|holdout:SEED]` calls `bot.EnableLadderWith` after the Runner is built (default off, nothing changes without the flag); store under the instance state dir; drill command for the real bot in docs/probes/t0drill.md (Phase B, integrated path). Offline tested only; AC 2 and 3 stay open until the live run.
