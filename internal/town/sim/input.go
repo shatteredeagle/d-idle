@@ -434,6 +434,10 @@ func (c *Input) left(p panel.Pt) error {
 			}
 			return nil
 		}
+		if z.where == d2.ContInventory && w.PutRefuse > 0 {
+			w.PutRefuse--
+			return nil
+		}
 		ww, hh := w.size(*w.Cursor)
 		cc, rr := topLeft(z.g, p, ww, hh)
 		if fits(w.occupied(z.where, z.g), z.g, cc, rr, ww, hh) {

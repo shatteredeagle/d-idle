@@ -420,4 +420,4 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 
 // ClearCursor puts a held item into the pack. nav.Navigator.ClearCursor takes it: the waypoint panel does not open
 // with an item on the cursor (D2D-V).
-func (t *Town) ClearCursor(ctx context.Context) error { return t.h.ClearCursor(ctx) }
+func (t *Town) ClearCursor(ctx context.Context) error { return t.h.ClearOrDrop(ctx) }

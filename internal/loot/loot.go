@@ -77,6 +77,8 @@ type Looter struct {
 	potionSkipMu sync.Mutex
 	potionSkipAt map[string]time.Time // logPotionSkip rate limit
 
+	cursorFails atomic.Int32 // pack clears of a held item that failed in a row (clearHeld)
+
 	e    *env.Env
 	mv   Mover
 	pk   *Pickit

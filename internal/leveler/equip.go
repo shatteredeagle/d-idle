@@ -359,7 +359,7 @@ func (l *Leveler) doSwap(ctx context.Context, h *hand.Hand, s *d2.Snapshot, sw S
 		return l.giveBack(ctx, h, u, slot, c, try, s2)
 	}
 	if s2.Inventory.Cursor != nil { // the displaced item
-		if err := h.ClearCursor(ctx); err != nil {
+		if err := h.ClearOrDrop(ctx); err != nil {
 			return fmt.Errorf("displaced item stays on the cursor: %w", err)
 		}
 	}
