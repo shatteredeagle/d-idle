@@ -114,6 +114,21 @@ Read the rules in `AGENTS.md` (agents first, upstream style: small changes, tagg
 How CI works, in one line: every push to `main` and every pull request runs `.github/workflows/ci.yml` (leakcheck, hygiene, gofmt/vet, then the short tests); a `v*` tag also builds and publishes the release tarball.
 Maintainer-only operations material (lab hosts, status board, publishing) lives elsewhere and is not needed to build, test or contribute.
 
+## Where things live
+
+Start with [docs/START-HERE.md](docs/START-HERE.md) (one page: what this is, where the direction lives, how work flows, how to run the checks).
+
+| Looking for | Go to |
+|---|---|
+| Every doc, by area | [docs/INDEX.md](docs/INDEX.md) |
+| Where we are now | [docs/plan/STATUS.md](docs/plan/STATUS.md) |
+| Direction (the automation ladder) | [docs/adr/0016-automation-ladder.md](docs/adr/0016-automation-ladder.md), [docs/decisions.md](docs/decisions.md) |
+| Rules for agents and contributors | [AGENTS.md](AGENTS.md), [GLOSSARY.md](GLOSSARY.md) |
+| Contracts and gate numbers | [docs/contracts/README.md](docs/contracts/README.md) |
+| Work items | `backlog/tasks/`, [docs/backlog-howto.md](docs/backlog-howto.md) |
+| Code | `cmd/` (programs), `internal/` (packages), `tools/` (scripts and checks) |
+| Research and probes | [docs/research/README.md](docs/research/README.md), [docs/probes/](docs/probes/), [docs/soaks/](docs/soaks/) |
+
 ## Licence
 
 GPL-3.0-or-later, same as d2d (ADR 0010); see `LICENSE`. Third-party code and provenance: `THIRD_PARTY.md`.
