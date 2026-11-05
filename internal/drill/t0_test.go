@@ -58,13 +58,16 @@ func (f *fakeT0) Chores(_ context.Context, plan string) ChoreInfo {
 	}
 	switch plan {
 	case "repair":
-		if ok, err := l.RepairWanted(h, f.dur); err != nil {
+		if ok, err := l.RepairWanted(h, f.dur, f.dur < 30); err != nil {
 			l.Fault(err)
 		} else if ok && f.gold >= 10 {
 			f.dur, f.gold = 100, f.gold-10
 		}
 	case "scrolls":
-		if _, err := l.TPBuyWanted(h); err != nil {
+		if _, err := l.TPBuyWanted(h, f.gold >= 100); err != nil {
+			l.Fault(err)
+		}
+		if _, err := l.RestockWanted(h, ladder.BeltLow, f.gold, f.gold >= 300); err != nil {
 			l.Fault(err)
 		}
 	}

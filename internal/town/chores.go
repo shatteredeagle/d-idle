@@ -208,16 +208,17 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 // RepairDue is the legacy durability test: below the town.repairBelowPct knob.
 func RepairDue(pct, below int) bool { return pct < below }
 
-// repairDue is point t1.repair (docs/t0-slice.md): with the ladder on the store answers, with it off the knob does.
+// repairDue is point t1.repair (docs/t0-slice.md): the knob test is the answer until the ladder (when on) learns a rule.
 func (t *Town) repairDue(s *d2.Snapshot, pct int) bool {
+	legacy := RepairDue(pct, t.tune().RepairBelowPct)
 	if l := ladder.Active(); l != nil {
-		v, err := l.RepairWanted(ladder.HeroFrom(s.Player), pct)
+		v, err := l.RepairWanted(ladder.HeroFrom(s.Player), pct, legacy)
 		if err == nil {
 			return v
 		}
 		l.Fault(err)
 	}
-	return RepairDue(pct, t.tune().RepairBelowPct)
+	return legacy
 }
 
 // repairEstimate is what Repair All charges for the worn items, by game.exe's formula (VERIFIED, docs/research/

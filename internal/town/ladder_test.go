@@ -33,14 +33,27 @@ func TestLadderCallSites(t *testing.T) {
 	if !tn.repairDue(snap, 29) || tn.repairDue(snap, 30) {
 		t.Fatal("ladder repair differs from the legacy test at the default knob")
 	}
-	snap.Player.Gold = 99
-	if tpBuyAllowed(snap.Player) {
-		t.Fatal("ladder should say walk at 99 gold")
+	// nothing learned: the legacy answers stand, whatever the catalogue default would say
+	for _, gold := range []int{0, 99, 100, 5000} {
+		snap.Player.Gold = gold
+		if !tpBuyAllowed(snap.Player) {
+			t.Fatalf("gold %d: tpBuyAllowed is asked after BuyKit allowed, nothing learned must allow", gold)
+		}
+		for _, floor := range []int{0, 100, 300, 9000} {
+			if got := tn.restockFree(snap, floor); got != (gold >= floor) {
+				t.Fatalf("gold %d floor %d: restockFree %v, legacy %v", gold, floor, got, gold >= floor)
+			}
+		}
 	}
-	snap.Player.Gold = 100
-	if !tpBuyAllowed(snap.Player) {
-		t.Fatal("ladder should say buy at 100 gold")
+	ladder.Install(nil)
+	for _, gold := range []int{0, 299, 300} {
+		snap.Player.Gold = gold
+		if got := tn.restockFree(snap, 300); got != (gold >= 300) {
+			t.Fatalf("legacy path: gold %d restockFree %v", gold, got)
+		}
 	}
+	ladder.Install(l)
+	snap.Player.Gold = 300
 	// an unknown class is a fault, and the call site keeps the legacy answer
 	snap.Player.Class = d2.Class(99)
 	if !tn.repairDue(snap, 29) || l.Stats().Faults != 1 {
