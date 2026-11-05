@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/task"
 )
@@ -14,7 +15,7 @@ func TestTowerGuardClosesAreas20To25(t *testing.T) {
 	g := campaignRig(t, &fakeQuests{}, 14)
 	g.r.poll()
 	s := g.r.latest()
-	if why := g.r.towerGuardWhy(s); !strings.Contains(why, "no merc, clvl 14 < 16") {
+	if why := g.r.towerGuardWhy(s); !strings.Contains(why, "no merc, clvl 14 < 15") {
 		t.Fatalf("tower verdict %q", why)
 	}
 	for a := 20; a <= 25; a++ {
@@ -55,7 +56,7 @@ func TestTowerWorldFillsSkipAndLogs(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if w.TowerMinLevel != 16 || w.TowerNeedsMerc || !strings.HasPrefix(w.TowerBlocked, "no merc, clvl 14 < 16") {
+	if w.TowerMinLevel != 15 || w.TowerNeedsMerc || !strings.HasPrefix(w.TowerBlocked, "no merc, clvl 14 < 15") {
 		t.Fatalf("world %+v", w)
 	}
 	if task.TowerSkipWhy(w) == "" {
@@ -113,5 +114,39 @@ func TestRecoveryAllUnreachableInGuardedAreaLeavesFirst(t *testing.T) {
 	}
 	if g.w.count("totown") != 1 {
 		t.Fatalf("calls: %s", g.w.log())
+	}
+}
+
+// The SME tower rule through the bot: max life from the snapshot, 150 opens it at clvl 15, 149 logs the life reason,
+// an unreadable (0) life falls back to 16; the mana part of the kit follows resource.ManaNeed (Barbarian none).
+func TestTowerLifeRuleThroughTheBot(t *testing.T) {
+	for _, c := range []struct {
+		life, lvl int
+		want      string // substring of the verdict, "" = open on level and life (kit may still be thin)
+	}{
+		{150, 15, ""}, {149, 15, "life 149 < 150"}, {0, 15, "clvl 15 < 16 (max life unreadable, fallback floor)"}, {0, 16, ""},
+	} {
+		g := campaignRig(t, &fakeQuests{}, c.lvl)
+		g.w.set(func(w *world) { w.maxL = c.life })
+		g.r.poll()
+		why := g.r.towerGuardWhy(g.r.latest())
+		if c.want == "" && strings.Contains(why, "clvl") || c.want != "" && !strings.Contains(why, c.want) {
+			t.Errorf("max life %d clvl %d: %q, want %q", c.life, c.lvl, why, c.want)
+		}
+	}
+}
+
+func TestFillTowerManaFollowsTheManaColumn(t *testing.T) {
+	g := campaignRig(t, &fakeQuests{}, 15)
+	rt := g.r.e.Tune.Route
+	for _, c := range []struct {
+		class d2.Class
+		mana  int
+	}{{d2.Sorceress, 3}, {d2.Barbarian, 0}} {
+		var w task.World
+		g.r.fillTower(&w, rt, c.class, &d2.Player{MaxLife: 200})
+		if w.TowerKitMana != c.mana || w.MaxLife != 200 || w.TowerMinLife != 150 {
+			t.Errorf("%v: %+v", c.class, w)
+		}
 	}
 }

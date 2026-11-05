@@ -147,6 +147,10 @@ type World struct {
 	TowerMinLevelMerc int  // the Forgotten Tower floor with a living merc while TowerNeedsMerc is false; 0 = the no-merc floor
 	TowerNeedsMerc    bool // true: a living merc opens the tower at any level
 	TowerBlocked      string
+	// MaxLife is the character's max life (0 = not readable). TowerMinLife (0 = no life rule) is the no-merc max-life
+	// floor of the tower; TowerMinLevelNoLife the clvl floor used instead while MaxLife is unreadable; TowerKitMana the
+	// mana potions the tower kit wants (0 = the road's count for a Caster); the bot sets it for a mana-column class only.
+	MaxLife, TowerMinLife, TowerMinLevelNoLife, TowerKitMana int
 	// DenMinLevel is the Normal clvl floor of Den of Evil for this class (caster or melee knob, bot fills it); 0 = no class floor.
 	DenMinLevel int
 

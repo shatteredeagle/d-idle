@@ -325,7 +325,7 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 		w.Banned[task.Area(a)] = true
 	}
 	w.HasMerc = d2.FindMerc(s).Alive
-	r.fillRoute(&w, p.Class)
+	r.fillRoute(&w, p.Class, p)
 	w.DenMinLevel = r.denFloor(s)
 	w.NoTownPortal = r.noTP.Load()
 	if c, ok := r.d.Mover.(interface{ CanTeleport() bool }); ok {
