@@ -27,7 +27,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 6 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
 | 7 | decision-point-store | G-G | in-progress 3/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
 | 8 | watch-screen | G-G | proposed 0/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
-| 9 | t0-slice | G-G | in-progress 0/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
+| 9 | t0-slice | G-G | in-progress 2/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
 | 10 | decisions-mirror | G-F | deferred 0/4 | ADRs mirrored read-only into backlog/decisions for the board | - | - | [card](archive/openspec-index.md#decisions-mirror) |
 <!-- cardsgen:active:end -->
 
