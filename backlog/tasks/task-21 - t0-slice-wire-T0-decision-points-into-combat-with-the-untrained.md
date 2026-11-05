@@ -54,3 +54,5 @@ The first vertical slice of the ladder: the four T0 points (t0.retreat.drink, t0
 
 
 Notes 2026-11-05 (integ): `d2bot -ladder [-ladder-profile NAME|holdout:SEED]` calls `bot.EnableLadderWith` after the Runner is built (default off, nothing changes without the flag); store under the instance state dir; drill command for the real bot in docs/probes/t0drill.md (Phase B, integrated path). Offline tested only; AC 2 and 3 stay open until the live run.
+
+Notes 2026-11-05 (t0live, integrated live run t0live-20261105, VERIFIED LIVE): 10 minute run on i5, 81 kills, clvl 1 to 3, no fault, writes after start 0; only t0.area.toohard fired (about 10 opens, 0 answers) because the ladder holds questions while the runner state is clearing (internal/bot/thoughts.go InFight); AC 2 and 3 stay open. Also: --ladder is lost when a saved tuning file (or its .bak) exists (NewTuner rebuild). Details in docs/probes/t0drill.md Result.
