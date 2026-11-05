@@ -55,3 +55,10 @@ internal/cheat/ledger.go  snaplib  ledgerkey
 internal/cheat/ledgerkey.go  snaplib  ledgerkey
 internal/cheat/ledgerkey_test.go  snaplib  ledgerkey
 cmd/d2cheat/main.go  snaplib  ledgerkey
+docs/soaks/gate2-multiseed-20261104-2254-g2b.md  gaterun  gate2multi-20261104-2254-g2b
+docs/soaks/gate2-s11-20261104-1451-g2b.md  gaterun  gate2multi-20261104-2254-g2b
+docs/probes/soak-logs/gate2-s11-20261104-1451-g2b-minutes.jsonl.gz  gaterun  gate2multi-20261104-2254-g2b
+docs/soaks/gate2-s13-20261104-1452-g2b.md  gaterun  gate2multi-20261104-2254-g2b
+docs/probes/soak-logs/gate2-s13-20261104-1452-g2b-minutes.jsonl.gz  gaterun  gate2multi-20261104-2254-g2b
+docs/soaks/gate2-s17-20261104-1453-g2b.md  gaterun  gate2multi-20261104-2254-g2b
+docs/probes/soak-logs/gate2-s17-20261104-1453-g2b-minutes.jsonl.gz  gaterun  gate2multi-20261104-2254-g2b
