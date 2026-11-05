@@ -185,8 +185,18 @@ Once the readiness model is enabled the route guard SHALL allow an area only whe
 - **THEN** the verdict is not ready
 
 #### Scenario: Floor safety net
-- **WHEN** the model rates a clvl 12 character ready for the Forgotten Tower with no merc and the floor is 16
-- **THEN** the guard still blocks the Forgotten Tower because the model may go at most 2 clvl below the floor, so 14 is the lowest allowed level
+- **WHEN** the model rates a clvl 12 character ready for the Forgotten Tower with no merc, max life 149 and the kit, and the no-merc floor is clvl 15 (max life 150 and the kit)
+- **THEN** the guard still blocks the Forgotten Tower because the model may go at most 2 clvl below the floor, so 13 is the lowest allowed level
+
+#### Scenario: Forgotten Tower floor examples
+- **WHEN** a clvl 15 character with no merc, max life 149 and the kit asks for the Forgotten Tower
+- **THEN** the guard blocks it (max life below 150)
+- **WHEN** a clvl 15 character with no merc, max life 150 and the kit met (4 healing, a town portal with charges, 3 mana potions for a caster) asks for the Forgotten Tower
+- **THEN** the guard allows it
+- **WHEN** a clvl 14 character with a living merc asks for the Forgotten Tower
+- **THEN** the guard allows it (living merc floor clvl 14)
+- **WHEN** the max life cannot be read
+- **THEN** the no-merc floor is clvl 16
 
 #### Scenario: Model disabled
 - **WHEN** the enable knob is 0
