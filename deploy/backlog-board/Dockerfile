@@ -21,7 +21,7 @@ COPY nginx.conf /etc/nginx/board.conf
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod 0755 /usr/local/bin/entrypoint.sh
 
-# 99:100 is Unraid's nobody:users, so the appdata folder needs no chown games.
+# 99:100 is NAS's nobody:users, so the appdata folder needs no chown games.
 USER 99:100
 ENV HOME=/tmp \
     REPO_URL=https://github.com/shatteredeagle/d-idle \
