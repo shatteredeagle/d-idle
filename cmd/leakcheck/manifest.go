@@ -78,10 +78,27 @@ func globRegexp(g string) *regexp.Regexp {
 	return regexp.MustCompile(sb.String())
 }
 
-// Allow is the parsed leakcheck-allow.txt: `path <glob>` skips a file, `str <text>` blanks that exact text.
+// Allow is the parsed leakcheck-allow.txt: `path <glob>` skips a file, `str <text>` blanks that exact text, `phrase <text>` blanks that phrase case-insensitively.
 type Allow struct {
 	Paths []*regexp.Regexp
 	Strs  []string
+	// Phrases are case-insensitive whole phrases (a space in the entry also matches `_`, an optional plural s
+	// follows) that are blanked before every rule: a game name that contains a blocked word.
+	Phrases []*regexp.Regexp
+}
+
+func (a *Allow) phrases() []*regexp.Regexp {
+	if a == nil {
+		return nil
+	}
+	return a.Phrases
+}
+
+func (a *Allow) strs() []string {
+	if a == nil {
+		return nil
+	}
+	return a.Strs
 }
 
 func parseAllow(text string) *Allow {
@@ -101,6 +118,8 @@ func parseAllow(text string) *Allow {
 			a.Paths = append(a.Paths, globRegexp(val))
 		case "str":
 			a.Strs = append(a.Strs, val)
+		case "phrase":
+			a.Phrases = append(a.Phrases, regexp.MustCompile(`(?i)`+strings.ReplaceAll(regexp.QuoteMeta(val), " ", "[ _]")+`s?`))
 		}
 	}
 	return a

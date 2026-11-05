@@ -77,7 +77,7 @@ func run(root string, files []string, allow *Allow, man *Manifest, mode string) 
 			continue
 		}
 		rep.FilesScanned++
-		hits := scanText(f, string(b), allow.Strs)
+		hits := scanText(f, string(b), allow)
 		if len(hits) == 0 {
 			continue
 		}
