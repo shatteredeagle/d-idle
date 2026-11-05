@@ -2,15 +2,16 @@
 
 ## Current truth (read this first; keep to these bullets, update when a newer record lands)
 
-Last verified against ADR 0015 on 2026-11-04. If a bullet and an older entry below disagree, the bullet wins; older ADR headers name what amended them.
+Last verified against ADR 0016 on 2026-11-05. If a bullet and an older entry below disagree, the bullet wins; older ADR headers name what amended them.
 
-- **Done means** ([ADR 0015](adr/0015-goals-acceptance-on-game-exe.md), amended 2026-11-04): a fresh, uncheated character plays 24 h unattended on d2d and clears Act 1 (Andariel dead, Act 2 entered), writes after start 0, AND the A:B comparison (G-D, fresh clvl 1-6 cell, 6 game.exe + 6 d2d lanes) says d2d and game.exe are EQUIVALENT on XP/h and kills/h at 20 percent.
+- **Product direction** ([ADR 0016](adr/0016-automation-ladder.md), 2026-11-05): d.idle is an incremental Diablo II on d2d; the player never controls the hero directly and gives orders and answers questions. Automation is the progression: tiers T0 Order-taker, T1 Tidy, T2 Runner, T3 Planner, T4 Questor, T5 Farmer, learned from answers (fading thoughts, the hero never stops) and raised by sacrifice at an altar. Ladder work starts at T0 now, without waiting for Gate 2.
+- **Done means** (T5 product bar, [ADR 0016](adr/0016-automation-ladder.md); the T5 gate numbers are set when the T4 acceptance passes). The T4 acceptance, kept from [ADR 0015](adr/0015-goals-acceptance-on-game-exe.md) (amended 2026-11-04) (it is also Gate A): a fresh, uncheated character plays 24 h unattended on d2d and clears Act 1 (Andariel dead, Act 2 entered), writes after start 0, AND the A:B comparison (G-D, fresh clvl 1-6 cell, 6 game.exe + 6 d2d lanes) says d2d and game.exe are EQUIVALENT on XP/h and kills/h at 20 percent.
 - **Backends:** d2d (native, no Wine) is the end product and the development backend; game.exe 1.14d is the oracle for fidelity and the reference lanes, not the product. A d2d deviation is fixed upstream; a bot-side workaround is a temporary shim listed in `docs/d2d-deviations.md`. Leaving d2d is the user's call after a DIFFERENT verdict, never automatic.
 - **Gate names:** Gate 0 to 3 = the d2d ladder (drills, 2 h, 8 h, 24 h). Gate A (fidelity acceptance) = the 24 h d2d run plus the G-D verdict. G1 and G2 are retired names (ADR 0013); do not use them.
-- **Ranking work:** goals G-A to G-F (ADR 0015). The old milestones map as: M3 (Andariel, `m3-andariel`) = G-B. The WIP limit of 3 implementation agents stays.
+- **Ranking work:** tier order T0 to T5 (ADR 0016) replaces the goals G-A to G-F as the ranking; Gate 2 and Gate 3 run once T4 is reached. A bot defect is fixed now when it breaks play at the tier being built. The old milestones map as: M3 (Andariel, `m3-andariel`) = G-B. The WIP limit of 3 implementation agents stays.
 - **Cards:** at most 12 open, each mapped to one goal. OpenSpec is removed (user, 2026-11-04): cards are Backlog.md tasks in `backlog/tasks/`, contracts live in `docs/contracts/*.md` (checked by `tools/contracts/check.py`), `cmd/changecheck` and the OpenSpec merge gates are deleted, and the tag `openspec-final` keeps the old state (old cards: `openspec-final:openspec/changes/`).
 - **Metrics:** XP/h is a diagnostic, judged on a seed set (5 seeds, 2 holdout); headline progress is milestone time per seed.
-- **Deferred or parked:** d2d container, fallback-lightning-v3 switch, idle layer, stream-grid, d2dmesh, Tier B, open-ended rule coverage.
+- **Deferred or parked:** d2d container, fallback-lightning-v3 switch, stream-grid, d2dmesh, Tier B, open-ended rule coverage. The idle layer is un-parked as the ladder (ADR 0016); hardcore stays unbuilt until the T4 acceptance passes; a card-cap removal is not yet recorded (the cap of 12 stands).
 
 Index of the decision records in [adr/](adr/README.md) (the dated entries below stay as the verbatim source):
 
