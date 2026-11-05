@@ -1,0 +1,1 @@
+CHANGELOG: docs/cards.md Active and Parked tables are now generated from backlog/tasks by tools/backlog/cards_md.py (--write, --check; check wired into tools/ci/check.sh)
