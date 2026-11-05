@@ -250,6 +250,12 @@ func (l *Looter) unwear(ctx context.Context, u d2.Unit) error {
 	return l.hand.CloseAll(ctx)
 }
 
+// takenOffAgain reports whether picking the item up wears it and unwear then has to take it off into the pack, so a
+// pack cell of its size must exist before the pickup (a worn item with no cell to take it back ends on the cursor).
+func (l *Looter) takenOffAgain(b *data.ItemBase, c d2.Class) bool {
+	return b != nil && (noWear[b.Code] || LauncherUnwanted(l.e.Data, b, c))
+}
+
 // casterNoLauncher is the class-free half of LauncherUnwanted: a bow, crossbow or throwing weapon.
 func casterNoLauncher(db *data.DB, b *data.ItemBase) bool {
 	return db.IsA(b.Type, "miss") || db.IsA(b.Type, "thro")
@@ -399,6 +405,12 @@ func (l *Looter) candidates(s *d2.Snapshot, o PickOpts, failed map[uint32]int) (
 		w, h := 1, 1
 		if b != nil {
 			w, h = max(1, b.Width), max(1, b.Height)
+		}
+		if spot == nil && l.takenOffAgain(b, s.Player.Class) {
+			// No pack map to check: unwear would have nowhere to put the worn item (Gate 2 g2b seed 13).
+			skipped = append(skipped, Skipped{ID: u.ID, Name: name, Why: "no room", Prio: v.Prio})
+			full = true
+			continue
 		}
 		if spot != nil {
 			keep := t.FreeCellsKeep
