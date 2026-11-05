@@ -368,3 +368,4 @@ Rewritten 2026-10-30 evening by REVIEWDOC. One line per doc, grouped by area; th
 - docs/contracts/README.md: the contracts (gates, policies, interfaces, rules), how to change one; docs/archive/openspec-index.md: one line per old OpenSpec change card.
 - docs/contracts/README.md header and checks section; tools/contracts/check.py
 - docs/soaks/gate2-multiseed-20261104-2254-g2b.md: Gate 2 multi-seed run 20261104-2254-g2b (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/soaks/gate2-multiseed-20261105-0733-g2c.md: Gate 2 multi-seed run 20261105-0733-g2c (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
