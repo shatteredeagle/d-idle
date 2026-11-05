@@ -211,4 +211,4 @@ func (a Act1Check) Text(name string) string {
 var act1Order = []string{"den", "bloodraven", "cain", act1Forgotten, "tools", "andariel", "act2"}
 
 // act1Forgotten is the milestone name of the Forgotten Tower quest (forgotten_tower).
-const act1Forgotten = "tow" + "er"
+const act1Forgotten = "tower"

@@ -27,7 +27,7 @@ func TestRules(t *testing.T) {
 		{"cat /mnt/Omlette/d2lod", "machine"},
 		{"Venus is a PC", "machine"},
 		{"the Tower is mine", "machine"},
-		{"Forgotten Tower, Tower Cellar, Tamoe Highland", ""},
+		{"Tower Cellar, Tamoe Highland", ""},
 		{"stowerage, jadeite, Onyxia, venusian", ""},
 		{"asked Desmond", "person"},
 		{"http://192.168.1.20:8897/", "ip"},
@@ -62,10 +62,10 @@ func TestSecretNotEchoed(t *testing.T) {
 
 func TestAllowStrings(t *testing.T) {
 	a := parseAllow("# c\nstr noreply@anthropic.com\nstr shatteredeagle\npath docs/x/**\n")
-	if n := len(scanText("f", "Co-Authored-By: C <noreply@anthropic.com>", a.Strs)); n != 0 {
+	if n := len(scanText("f", "Co-Authored-By: C <noreply@anthropic.com>", a)); n != 0 {
 		t.Errorf("allowed email flagged: %d", n)
 	}
-	if n := len(scanText("f", "other@anthropic.com", a.Strs)); n != 1 {
+	if n := len(scanText("f", "other@anthropic.com", a)); n != 1 {
 		t.Errorf("other email hits = %d", n)
 	}
 	if !a.skipPath("docs/x/y/z.md") || a.skipPath("docs/y.md") {
@@ -132,5 +132,32 @@ func TestLabPathScopedToProbes(t *testing.T) {
 		if got := classes(scanText(c.path, c.line, nil))["labpath"]; got != c.want {
 			t.Errorf("%s %q: labpath hits %d, want %d", c.path, c.line, got, c.want)
 		}
+	}
+}
+
+func TestForgottenTowerPhrase(t *testing.T) {
+	a := parseAllow("phrase Forgotten Tower\n")
+	cases := []struct {
+		line string
+		want int // machine hits
+	}{
+		{"Forgotten Tower", 0},
+		{"the forgotten tower quest", 0},
+		{"FORGOTTEN TOWERS", 0},
+		{"forgotten_tower", 0},
+		{"Forgotten Tower and the tower box", 1},
+		{"tower", 1},
+		{"the tower box", 1},
+		{"Tower", 1},
+		{"Forgotten", 0},
+		{"forgotten  tower", 1},
+	}
+	for _, c := range cases {
+		if got := classes(scanText("f", c.line, a))["machine"]; got != c.want {
+			t.Errorf("%q: machine hits %d, want %d", c.line, got, c.want)
+		}
+	}
+	if got := classes(scanText("f", "Forgotten Tower", nil))["machine"]; got != 1 {
+		t.Errorf("without the allow entry the phrase hits: %d", got)
 	}
 }
