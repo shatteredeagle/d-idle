@@ -54,10 +54,18 @@ func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*l
 	if sink != nil {
 		s = ladder.Tee{logSink, sink}
 	}
-	l, err := ladder.New(ladder.Config{Cat: cat, Store: st, Clock: clk, Sink: s, Answers: answers, InFight: func() bool { return r.State() == StateClearing }})
+	l, err := ladder.New(ladder.Config{Cat: cat, Store: st, Clock: clk, Sink: s, Answers: answers, InFight: r.engaged})
 	if err != nil {
 		return nil, fmt.Errorf("bot: ladder: %w", err)
 	}
 	ladder.Install(l)
 	return l, nil
+}
+
+// engaged reports an actual engagement for the ladder: a living hostile within the fight radius of the last snapshot
+// (the same radius and hostile test the safety rules use). Walking through a cleared field is not a fight, so a
+// question reaches the player there (ADR 0016: the hero never stops).
+func (r *Runner) engaged() bool {
+	s := r.latest()
+	return s != nil && r.hostileNear(s, r.e.Tune.Combat.FightRadius) > 0
 }

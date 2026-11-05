@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/ladder"
 )
@@ -140,5 +141,73 @@ func TestEnableLadderWithWiresAfterTheStore(t *testing.T) {
 	}
 	if l, err := g.r.EnableLadderWith("", "human", bad); l != nil || err == nil || ladder.Active() != nil {
 		t.Fatalf("a failing wire must install nothing: %v %v", l, err)
+	}
+}
+
+// setSnap makes snap the runner's last in-game snapshot (the rig does not run the loop).
+func setSnap(r *Runner, s *d2.Snapshot) {
+	s.State = d2.StateInGame
+	r.obMu.Lock()
+	r.ob.lastSnap = s
+	r.obMu.Unlock()
+}
+
+// Clearing is not a fight: a question is held only while a living hostile is within the fight radius, and is
+// delivered again once it is gone (T0 live drill 2026-11-05, defect 1).
+func TestLadderQuestionsReachThePlayerInTheField(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
+		for _, radius := range []int{22, 12} {
+			g, _, s := gateRig(t, 1, 0, 5000)
+			g.e.Tune.Combat.FightRadius = radius
+			g.e.Tune.Ladder.Enabled = 1
+			g.w.set(func(w *world) { w.area = 6 })
+			s, _ = g.w.snapshot()
+			ladder.Install(nil)
+			if !g.r.tripVerdict(s).Go {
+				t.Skip("scenario no longer trips in the legacy policy")
+			}
+			src, err := ladder.ParseScript([]byte(`{"rows":[{"point":"` + ladder.PointTrigger + `","answer":"continue","confirm":"yes","delaySec":1}]}`))
+			if err != nil {
+				t.Fatal(err)
+			}
+			l, err := g.r.EnableLadderWith("", "t0", func(*decide.Store, *decide.Catalogue, decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+				return &ladder.RecordSink{}, src, nil
+			})
+			if err != nil || l == nil {
+				t.Fatal(err)
+			}
+			g.r.mu.Lock()
+			g.r.st = StateClearing
+			g.r.mu.Unlock()
+			p := &d2.Player{Class: class, Life: 100, MaxLife: 100, Area: 6, X: 100, Y: 100}
+			mon := func(dist int) *d2.Snapshot {
+				return &d2.Snapshot{Player: p, Monsters: []d2.Unit{{ID: 9, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 100 + dist, Y: 100}}}
+			}
+			pump := func(rounds int) {
+				for i := 0; i < rounds; i++ {
+					g.r.tripVerdict(s)
+					g.clock.Sleep(5 * time.Second)
+					l.Pump()
+				}
+			}
+			name := class.String()
+			setSnap(g.r, mon(radius-1))
+			if !g.r.engaged() {
+				t.Fatalf("%s r%d: hostile in range must be engaged", name, radius)
+			}
+			pump(4)
+			if st := l.Stats(); st.Answered != 0 {
+				t.Fatalf("%s r%d: answered %d while engaged", name, radius, st.Answered)
+			}
+			setSnap(g.r, mon(radius+8))
+			if g.r.engaged() {
+				t.Fatalf("%s r%d: hostile out of range is not a fight", name, radius)
+			}
+			pump(4)
+			if st := l.Stats(); st.Answered == 0 {
+				t.Fatalf("%s r%d: a clearing state with nothing in range must deliver the question: %+v", name, radius, st)
+			}
+			ladder.Install(nil)
+		}
 	}
 }
