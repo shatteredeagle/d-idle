@@ -1,5 +1,5 @@
 ---
-status: accepted, amended 2026-11-04
+status: accepted, amended 2026-11-04, amended by 0016 (items 1, 7 and 10; item 11 cap of 12 open cards removed)
 date: 2026-11-03
 decision-makers: user
 ---

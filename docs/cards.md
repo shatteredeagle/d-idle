@@ -7,9 +7,9 @@
 Stage 1 of the OpenSpec removal plan (docs/process/openspec-removal-plan.md, branch agent/removalplan, not yet on main): this table is the list of active work. The user approved it on 2026-11-04 after the card triage. Each row links to its plain markdown card under `openspec/changes/<id>/` (tasks.md header holds owns, exclusive and gates).
 
 Rules (ADR 0015 items 10 and 11):
-- At most 12 rows in the table below. Every row maps to exactly one goal G-A..G-F.
+- No cap on rows (the cap of 12 was removed by the grill 0005 outcome, ADR 0016). Every row maps to exactly one goal G-A..G-F.
 - One row per active job. A job without a card is named by its branch `agent/<id>`.
-- Parked cards stay open but are off the cap: they are listed in "Parked" and are not counted. Nothing is deleted.
+- Parked cards stay open but are listed in "Parked". Nothing is deleted.
 - "Needs a decision" cards stay open with git evidence only; they are not counted and not archived until the user decides.
 
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015).
