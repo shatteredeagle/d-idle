@@ -10,6 +10,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town/belt"
@@ -201,7 +202,22 @@ func (t *Town) needScrolls(s *d2.Snapshot) bool {
 
 func (t *Town) needRepair(s *d2.Snapshot) bool {
 	pct, ok := t.lowestDurability(s)
-	return ok && pct < t.tune().RepairBelowPct && !t.repairLatched(s, pct) && s.Player.Gold >= t.repairEstimate(s)
+	return ok && t.repairDue(s, pct) && !t.repairLatched(s, pct) && s.Player.Gold >= t.repairEstimate(s)
+}
+
+// RepairDue is the legacy durability test: below the town.repairBelowPct knob.
+func RepairDue(pct, below int) bool { return pct < below }
+
+// repairDue is point t1.repair (docs/t0-slice.md): with the ladder on the store answers, with it off the knob does.
+func (t *Town) repairDue(s *d2.Snapshot, pct int) bool {
+	if l := ladder.Active(); l != nil {
+		v, err := l.RepairWanted(ladder.HeroFrom(s.Player), pct)
+		if err == nil {
+			return v
+		}
+		l.Fault(err)
+	}
+	return RepairDue(pct, t.tune().RepairBelowPct)
 }
 
 // repairEstimate is what Repair All charges for the worn items, by game.exe's formula (VERIFIED, docs/research/

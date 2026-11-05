@@ -11,6 +11,7 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town/belt"
@@ -417,6 +418,9 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport, be
 		return nil
 	}
 	if price <= 0 || !resource.BuyKit(resource.Input{Gold: s.Player.Gold}, resource.Tuning{KitTPGold: price}).TP {
+		return nil
+	}
+	if !tpBuyAllowed(s.Player) {
 		return nil
 	}
 	lay, err := t.layout(s)
@@ -916,4 +920,19 @@ func (t *Town) ensureHealing(s *d2.Snapshot, band belt.Band, bs belt.State, want
 	if bs.Count[belt.HP]+belt.PackCount(t.e.Data, s.Inventory, belt.HP) == 0 && band.Capacity(belt.HP, bs.Slots) > 0 && want[belt.HP] < 1 {
 		want[belt.HP] = 1
 	}
+}
+
+// tpBuyAllowed is point t1.tp.lost (docs/t0-slice.md): with the ladder on a "walk" answer vetoes the purchase the
+// legacy test (BuyKit, gold against the real price) already allows; with it off this is always true.
+func tpBuyAllowed(p *d2.Player) bool {
+	l := ladder.Active()
+	if l == nil {
+		return true
+	}
+	buy, err := l.TPBuyWanted(ladder.HeroFrom(p))
+	if err != nil {
+		l.Fault(err)
+		return true
+	}
+	return buy
 }

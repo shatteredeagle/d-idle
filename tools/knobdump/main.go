@@ -20,7 +20,7 @@ import (
 
 var groupDir = map[string]string{"nav": "internal/nav", "combat": "internal/combat", "town": "internal/town",
 	"loot": "internal/loot", "bot": "internal/bot", "resource": "internal/resource", "boss": "internal/boss", "merc": "internal/merc",
-	"campaign": "internal/task", "route": "internal/task"}
+	"campaign": "internal/task", "route": "internal/task", "ladder": "internal/ladder"}
 
 // annotated readers: live knobs the field-reference heuristic cannot count (read through accessor methods or a local copy).
 var annotated = map[string]string{"nav.pollMs": "accessor", "nav.replanMs": "accessor", "nav.stuckMs": "accessor",

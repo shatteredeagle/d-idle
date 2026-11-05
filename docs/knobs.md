@@ -6,7 +6,7 @@ Written 2026-10-29 from master `6b920b0`. Regenerate the tables between the `kno
 
 ## 1. How knobs are set (V)
 
-- Every knob has a dotted key `group.name` (groups: `nav combat town loot bot boss merc resource`) and a range. All writes are clamped to `[min, max]` and rounded for int fields (`bot.SetKnob`).
+- Every knob has a dotted key `group.name` (groups: `nav combat town loot bot boss merc resource ladder`) and a range. All writes are clamped to `[min, max]` and rounded for int fields (`bot.SetKnob`).
 - Order of precedence at start: defaults (optimal) -> handicap profile -> `"tuning"` overrides in config.json. At run time: `PUT /api/v1/instances/{id}/knobs` with `{profile?, overrides?: {key: number|null}}` (null resets to the profile value; the edit is all-or-nothing). `GET` returns every knob with its current value. Doc: docs/api.md.
 - config.json (`D2BOT_CONFIG`, default `<data>/config.json`, the `"bot"` object or the whole file; unknown keys are errors): `profile`, `custom` {Name, Desc, Level, Per}, `tuning` {"bot.clearRadius": 20}. Doc: docs/bot.md "Tuning and handicap profiles".
 - The "worst" column is the end of the range a profile moves toward (the end the bot is least efficient at). Knobs where the default already sits on that end do not change under any profile (list in section 7).
@@ -58,14 +58,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| combat.drinkLifePct | 55 | 35..80 | % | 35 | 6 | Life percent that triggers a healing potion. |
-| combat.drinkRejuvPct | 35 | 20..60 | % | 20 | 4 | Life percent that triggers a rejuvenation potion. |
+| combat.drinkLifePct | 55 | 35..80 | % | 35 | 4 | Life percent that triggers a healing potion. |
+| combat.drinkRejuvPct | 35 | 20..60 | % | 20 | 2 | Life percent that triggers a rejuvenation potion. |
 | combat.drinkRejuvBossPct | 50 | 0..70 | % | 0 | 0 | Life percent that triggers a rejuvenation potion in a fight against champions, uniques or bosses (danger 1+); 0 = off. SME advice, EXP. |
 | combat.championEarlyPct | 10 | 0..25 | pp | 0 | 0 | Percentage points added to the healing potion line and the rejuvenation (boss) line while champions (not bosses) are in range, in Normal below character level 15. Champions have about 3x life and +50% damage. 0 = off. SME rule of thumb, EXP. |
-| combat.chickenPct | 25 | 15..45 | % | 15 | 4 | Life percent at or below which the bot leaves the game (Normal, Nightmare). |
+| combat.chickenPct | 25 | 15..45 | % | 15 | 2 | Life percent at or below which the bot leaves the game (Normal, Nightmare). |
 | combat.chickenHellPct | 30 | 20..50 | % | 20 | 2 | Same as chicken, in Hell. |
 | combat.drinkManaPct | 25 | 5..60 | % | 5 | 2 | Mana percent that triggers a mana potion. |
-| combat.townPotionMin | 2 | 0..4 | count | 0 | 4 | Healing potions left in the belt at which the bot wants a town trip. |
+| combat.townPotionMin | 2 | 0..4 | count | 0 | 2 | Healing potions left in the belt at which the bot wants a town trip. |
 | combat.crowdN | 8 | 0..20 | count | 20 | 8 | Hostiles within 8 subtiles that make a crowd: below it the normal drink and chicken rules apply alone. 0 turns the crowd rule off. |
 | combat.crowdPortalPct | 70 | 40..90 | % | 40 | 3 | In a crowd, open a town portal at or below this life percent when a scroll exists and fewer than 3 monsters are adjacent (a 2 s cast fails when surrounded). |
 | combat.crowdDrinkPct | 65 | 40..85 | % | 40 | 2 | In a crowd, drink a healing potion below this life percent (the portal cannot be cast when surrounded); the normal rule drinks at 55. |
@@ -368,6 +368,12 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
+
+### ladder.*
+
+| key | default | range | unit | worst (rookie) | readers | what it changes |
+|---|---|---|---|---|---|---|
+| ladder.enabled | 0 | 0..1 | bool | 0 | 2 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
