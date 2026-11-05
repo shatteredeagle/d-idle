@@ -2,10 +2,12 @@ package combat
 
 import (
 	"context"
+	"slices"
 	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/resource"
 )
 
@@ -157,6 +159,7 @@ func (f *Fighter) preEngage(ctx context.Context, snap *d2.Snapshot, hs, cand []T
 	}
 	rt := f.rtune()
 	d := resource.PreEngage(in, rt)
+	d = f.askUnique(p, in, d, cand, rt.MinEngageLifePct)
 	// A melee profile ends its attack ladder in the free basic attack, so resting for a cast budget is wasted time
 	// (live: 15-20 s per pack on Palli). Life rests and potions still apply.
 	if f.profileFor(p).MeleeClass() && d.TargetMana > 0 && (d.Action == resource.RestHere || d.Action == resource.RetreatRest) {
@@ -246,6 +249,7 @@ func (f *Fighter) abortFight(ctx context.Context, snap *d2.Snapshot, hs []Target
 	p := snap.Player
 	in := f.resInput(snap, hs, 0, f.resSkills(p, nil, f.attackSkills(p), false))
 	d := resource.AbortFight(in, f.rtune())
+	d = f.askDrink(ctx, p, in, d)
 	if d.Kind == resource.Flee {
 		// Without potion or portal the life barely regenerates: a break-away that never ends only delays the
 		// chicken. Past fleeMax of unbroken fleeing, leave the game deliberately.
@@ -383,4 +387,78 @@ func (f *Fighter) restAura(ctx context.Context, snap *d2.Snapshot, cand []Target
 	if _, err := f.keepAura(ctx, snap, nil, true, true); err != nil {
 		f.info("rest aura failed", "err", err)
 	}
+}
+
+// abortAnswer maps the abort kinds to the answers of t0.retreat.drink for the abort kinds. RetreatOut has no answer of its own: it is the
+// "run" of a hero near town.
+var abortAnswer = map[resource.AbortKind]string{resource.Continue: "fight", resource.PortalOut: "portal",
+	resource.LeaveGame: "leave", resource.RetreatOut: "run", resource.Flee: "run"}
+
+// askDrink is point t0.retreat.drink (docs/t0-slice.md) at the one place the abort ladder runs: the legacy verdict d is
+// the answer until the ladder (when installed) learns a rule for the context. Asked only below 65 percent life, where
+// the catalogue itself says "fight on". A learned answer replaces the verdict: fight (continue), portal, leave, run, or
+// drink (one potion now; without one the legacy verdict stands). The survival step before this one is untouched, so a
+// learned "fight" cannot suppress a potion it already chose to drink.
+func (f *Fighter) askDrink(ctx context.Context, p *d2.Player, in resource.Input, d resource.AbortDecision) resource.AbortDecision {
+	l := ladder.Active()
+	legacy, ok := abortAnswer[d.Kind]
+	if l == nil || !ok || in.LifePct() >= 65 {
+		return d
+	}
+	a, err := l.DrinkChoice(ladder.HeroFrom(p), in.LifePct(), ladder.HeldFor(in.Belt.HP, in.Belt.RV),
+		ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV), resource.ChampionEarly(in), legacy)
+	if err != nil {
+		l.Fault(err)
+		return d
+	}
+	if a == legacy {
+		return d
+	}
+	why := "ladder: " + a + " (" + d.Reason + ")"
+	switch a {
+	case "fight":
+		return resource.AbortDecision{Reason: why}
+	case "portal":
+		return resource.AbortDecision{Kind: resource.PortalOut, Reason: why}
+	case "leave":
+		return resource.AbortDecision{Kind: resource.LeaveGame, Reason: why}
+	case "run":
+		return resource.AbortDecision{Kind: resource.Flee, Reason: why}
+	case "drink":
+		if err := f.Act(ctx, DrinkLife); err == nil {
+			f.info("ladder: drink", "why", d.Reason)
+			return resource.AbortDecision{Reason: why}
+		}
+	}
+	return d
+}
+
+// askUnique is point t0.unique.fight at the pre-engage step: with an elite pack (unique, champion or minion) in the
+// candidates and life at or under 70 percent, the legacy verdict is the answer until a rule is learned: avoid when
+// the legacy step says Avoid or life is under resource.minEngageLifePct (the code heals first there, it does not
+// engage), else fight. A learned avoid ends the approach like the legacy Avoid; a learned fight proceeds past the
+// legacy rest, drink or avoid. With the legacy answer given, the preparation steps (rest, drink) stay as they are.
+func (f *Fighter) askUnique(p *d2.Player, in resource.Input, d resource.PreDecision, cand []Target, minEngagePct int) resource.PreDecision {
+	l := ladder.Active()
+	if l == nil || in.LifePct() > 70 || !slices.ContainsFunc(cand, func(t Target) bool { return t.Elite }) {
+		return d
+	}
+	legacy := "fight"
+	if d.Action == resource.Avoid || in.LifePct() < minEngagePct {
+		legacy = "avoid"
+	}
+	a, err := l.UniqueFight(ladder.HeroFrom(p), in.LifePct(), in.PackDanger,
+		ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV), legacy)
+	if err != nil {
+		l.Fault(err)
+		return d
+	}
+	switch {
+	case a == legacy:
+	case a == "avoid":
+		return resource.PreDecision{Action: resource.Avoid, Reason: "ladder: avoid (" + d.Reason + ")"}
+	case a == "fight":
+		return resource.PreDecision{Action: resource.Proceed, Reason: "ladder: fight (" + d.Reason + ")"}
+	}
+	return d
 }

@@ -15,12 +15,46 @@ const (
 	PointReturn  = "t1.return"
 	PointTrigger = "t1.town.trigger"
 	PointRestock = "t1.restock"
+
+	PointDrink   = "t0.retreat.drink"
+	PointTooHard = "t0.area.toohard"
+	PointUnique  = "t0.unique.fight"
+	PointMerc    = "t2.mercenary"
 )
 
 // Kit values of the t1.return key (docs/research/decision-point-sme-review.md).
 const (
 	KitOK, KitThin, KitNone = "OK", "THIN", "NONE"
 )
+
+// KitFor classes the supplies against the key of the T0 points: NONE with no portal and no healing potion, THIN with no
+// portal or under two healing potions, else OK. One definition for every site (U, simplified from the SME review, which
+// also counts gold).
+func KitFor(hasPortal bool, healing int) string {
+	switch {
+	case !hasPortal && healing <= 0:
+		return KitNone
+	case !hasPortal || healing < 2:
+		return KitThin
+	}
+	return KitOK
+}
+
+// Held values of the t0.retreat.drink key: whether a healing or rejuvenation potion is in the belt.
+const (
+	HeldNone, HeldHP, HeldRV = "none", "hp", "rv"
+)
+
+// HeldFor classes the belt for the t0.retreat.drink key.
+func HeldFor(hp, rv int) string {
+	switch {
+	case hp > 0:
+		return HeldHP
+	case rv > 0:
+		return HeldRV
+	}
+	return HeldNone
+}
 
 // Belt values of the t1.town.trigger and t1.restock keys.
 const (
@@ -86,4 +120,35 @@ func (l *Ladder) yes(point string, h Hero, extra decide.Obs, legacy bool, pos, n
 		return false, fmt.Errorf("ladder: %s: %q is not an answer", point, a)
 	}
 	return a == pos, nil
+}
+
+// DrinkChoice answers t0.retreat.drink: what to do at this life percent with this belt. legacy is one of drink, run,
+// portal, leave, fight. champion is the champion-pack early bonus (resource.ChampionEarly). Hardcore comes from h.
+func (l *Ladder) DrinkChoice(h Hero, lifePct int, held, kit string, champion bool, legacy string) (string, error) {
+	o := decide.Obs{Num: map[string]float64{"life": float64(lifePct)}, Cat: map[string]string{"held": held, "kit": kit}}
+	if champion {
+		o.Cat["champbonus"] = "early"
+	}
+	return l.Decide(PointDrink, h, o, legacy)
+}
+
+// UniqueFight answers t0.unique.fight: fight or avoid an elite pack at this life percent. legacy is fight or avoid.
+// packDanger is the pack rating 0..3 (0 counts as the lowest class).
+func (l *Ladder) UniqueFight(h Hero, lifePct, packDanger int, kit, legacy string) (string, error) {
+	o := decide.Obs{Num: map[string]float64{"life": float64(lifePct)},
+		Cat: map[string]string{"kit": kit, "packdanger": fmt.Sprint(min(max(packDanger, 1), 3))}}
+	return l.Decide(PointUnique, h, o, legacy)
+}
+
+// TooHard answers t0.area.toohard for an area the hero is about to enter: go, skip or lower. merc is
+// task.MercState (alive, dead or none); legacy is go when the route guard is open, else lower with no kit, else skip.
+func (l *Ladder) TooHard(h Hero, clvl int, merc, kit, legacy string) (string, error) {
+	o := decide.Obs{Num: map[string]float64{"clvl": float64(clvl)}, Cat: map[string]string{"merc": merc, "kit": kit, "areaclass": "field"}}
+	return l.Decide(PointTooHard, h, o, legacy)
+}
+
+// MercHire answers t2.mercenary: hire or revive now (true) or wait for gold. h.Gold is the gold held; legacy is the
+// bot's hire gate (gold at or above bot.mercHireMinGold).
+func (l *Ladder) MercHire(h Hero, merc, kit string, legacy bool) (bool, error) {
+	return l.yes(PointMerc, h, decide.Obs{Cat: map[string]string{"merc": merc, "kit": kit}}, legacy, "hire", "wait")
 }

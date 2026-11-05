@@ -141,7 +141,7 @@ func New(c Config) (*Ladder, error) {
 	// thoughts a persisted store reopened never produced an event
 	for _, t := range c.Store.OpenThoughts() {
 		if ti, ok := c.Store.Thought(t.ID); ok {
-			l.q = append(l.q, &pend{v: l.view(ti, ti.Expires-time.Duration(c.Cat.Config.FadeSec)*time.Second)})
+			l.q = append(l.q, &pend{v: l.view(ti)})
 			l.stat.Opened++
 		}
 	}
@@ -160,7 +160,7 @@ func (l *Ladder) onEvent(e decide.Event) {
 			return
 		}
 		l.qmu.Lock()
-		l.q = append(l.q, &pend{v: l.view(*e.Info, l.cfg.Clock.Now())})
+		l.q = append(l.q, &pend{v: l.view(*e.Info)})
 		l.stat.Opened++
 		l.qmu.Unlock()
 	case decide.EvThoughtFaded:
@@ -266,8 +266,8 @@ func (l *Ladder) Pump() {
 
 // view turns the store's public read of a thought into what the sink and the answer source see. The default shown is
 // the action the hero took meanwhile: the legacy answer given at that key, else the catalogue default.
-func (l *Ladder) view(ti decide.ThoughtInfo, opened time.Duration) ThoughtView {
-	v := ThoughtView{ID: ti.ID, Point: ti.Point, Key: ti.Key, Confirm: ti.Confirm, OpenedAt: opened}
+func (l *Ladder) view(ti decide.ThoughtInfo) ThoughtView {
+	v := ThoughtView{ID: ti.ID, Point: ti.Point, Key: ti.Key, Confirm: ti.Confirm, OpenedAt: ti.Opened}
 	for _, a := range ti.Choices {
 		v.Choices = append(v.Choices, a.ID)
 	}

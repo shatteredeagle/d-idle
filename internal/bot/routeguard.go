@@ -9,6 +9,7 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/gear"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/task"
 )
@@ -24,7 +25,7 @@ func (r *Runner) fillRoute(w *task.World, class d2.Class, p *d2.Player) {
 	w.TowerMinLevel, w.TowerMinLevelMerc, w.TowerNeedsMerc = t.Route.TowerMinLevel, t.Route.TowerMinLevelMerc, t.Route.TowerNeedsMerc != 0
 	r.fillTower(w, t.Route, class, p)
 	w.RouteBlocked = task.RouteWhy(*w)
-	w.TowerBlocked = task.TowerWhy(*w)
+	w.TowerBlocked = r.towerWhy(*w, p)
 	line := task.RouteLine(*w)
 	if tl := task.TowerLine(*w); tl != "" {
 		line += "; " + tl
@@ -119,9 +120,42 @@ func (r *Runner) routeGuardWhy(s *d2.Snapshot) string {
 // towerGuardWhy says why the Forgotten Tower (areas 20-25) is closed now ("" = open).
 func (r *Runner) towerGuardWhy(s *d2.Snapshot) string {
 	if w := r.guardWorld(s); w != nil {
-		return task.TowerWhy(*w)
+		return r.towerWhy(*w, s.Player)
 	}
 	return ""
+}
+
+// towerWhy is task.TowerWhy with point t0.area.toohard (docs/t0-slice.md): the level guard's verdict is the answer
+// (go when open, else lower with no kit, else skip) until the ladder, when installed, learns a rule for the context.
+// A learned go lifts the level block (the kit part of the guard stays); a learned skip or lower blocks an area the guard
+// would open. Asked only while the guard is on (Normal), so the other difficulties are untouched. p may be nil.
+func (r *Runner) towerWhy(w task.World, p *d2.Player) string {
+	why := task.TowerWhy(w)
+	l := ladder.Active()
+	if l == nil || p == nil || task.TowerFloor(w) == 0 {
+		return why
+	}
+	kit := ladder.KitFor(w.HasTP, w.Potions)
+	legacy := "go"
+	switch {
+	case task.TowerLevelWhy(w) == "":
+	case kit == ladder.KitNone:
+		legacy = "lower"
+	default:
+		legacy = "skip"
+	}
+	a, err := l.TooHard(ladder.HeroFrom(p), w.Level, task.MercState(w), kit, legacy)
+	if err != nil {
+		l.Fault(err)
+		return why
+	}
+	switch {
+	case a == legacy || a != "go" && legacy != "go":
+		return why
+	case a == "go":
+		return task.TowerKitWhy(w)
+	}
+	return "ladder: " + a
 }
 
 // areaGuardWhy says why guarded area a is closed now ("" = not guarded or open): the Monastery road and the tower.

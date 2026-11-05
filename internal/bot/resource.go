@@ -295,8 +295,25 @@ func (m *mercState) observe(mc d2.Merc, inTown bool, now time.Time) bool {
 	return m.known
 }
 
-// mercWanted says what the merc chore would do now: "hire", "revive" or "" (nothing). Pure apart from the clock.
+// mercWanted says what the merc chore would do now: "hire", "revive" or "" (nothing). Pure apart from the clock; with the
+// ladder installed the legacy verdict is put to point t2.mercenary (askMerc) after the merc lock is released.
 func (r *Runner) mercWanted(s *d2.Snapshot) string {
+	what := r.mercLegacy(s)
+	if what == "" {
+		return ""
+	}
+	merc := "none"
+	if what == "revive" {
+		merc = "dead"
+	}
+	if !r.askMerc(s, merc) {
+		return ""
+	}
+	return what
+}
+
+// mercLegacy is the legacy merc verdict, under the merc lock.
+func (r *Runner) mercLegacy(s *d2.Snapshot) string {
 	if _, ok := r.d.Town.(MercTown); !ok || s.Player == nil || !s.Player.InTown() {
 		return ""
 	}
@@ -328,6 +345,25 @@ func (r *Runner) mercWanted(s *d2.Snapshot) string {
 		return "revive"
 	}
 	return ""
+}
+
+// askMerc is point t2.mercenary (docs/t0-slice.md), asked only where the legacy gate already says hire or revive: the
+// gate is the answer until the ladder, when installed, learns a rule; a learned wait postpones the action (the chore
+// asks again after its retry pause), a learned hire never creates one the gold or the town does not allow. merc is the
+// key's state: none (never seen) or dead.
+func (r *Runner) askMerc(s *d2.Snapshot, merc string) bool {
+	l := ladder.Active()
+	if l == nil {
+		return true
+	}
+	in := r.resInput(s)
+	kit := ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV)
+	hire, err := l.MercHire(ladder.HeroFrom(s.Player), merc, kit, true)
+	if err != nil {
+		l.Fault(err)
+		return true
+	}
+	return hire
 }
 
 // mercChore runs the wanted merc action once and backs off MercRetryMin minutes whatever the outcome.
