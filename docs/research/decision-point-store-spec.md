@@ -65,7 +65,7 @@ State is bucketed so that identical situations map to one key (D item 14: a few 
 
 **Added bands for the new points** (U, my proposals from the knob edges; the SME gave none): durability above 30 / 20 to 30 / below 20 percent (edges are `town.repairBelowPct` 30 and `town.tripRepairPct` 20); merc state alive / dead / none (merc policy owns the facts, V docs/merc.md); identify scroll held yes / no (a boolean, not a count); item class for identify: magic / rare-set-unique-crafted; shrine seen: generic (a shrine's type is hidden until used, S, memory) so the key carries only life band and pack danger; hardcore flag `hc` normal / hardcore.
 
-**Open: life band edges 55 and 35 (DECISION LEFT, bands NOT changed).** The SME's four life bands (above 70 / 40 to 70 / 25 to 40 / below 25) are kept as they are. Today's code edges (V docs/knobs.md, values read 2026-11-05): `combat.drinkLifePct` 55, `combat.drinkRejuvPct` 35, `combat.chickenPct` 25, `town.healBelowLifePct` 70, `combat.kiteLifePct` 70. 25 and 70 sit on SME edges; 55 and 35 fall inside the 40 to 70 and 25 to 40 bands. Options for the discussion with the user: (a) keep four bands and accept a rule file coarser than the knobs at 55 and 35 (the knobs stay the source of the untrained default, 5.3); (b) add edges 55 and 35 (six bands, a finer key, slower learning). Not settled; the store card or the user decides.
+**Life bands (D 2026-11-05, settles the earlier open question): five bands with edges 25, 35, 55 and 70 percent.** The edges are today's knobs (V docs/knobs.md, values read 2026-11-05): `combat.chickenPct` 25, `combat.drinkRejuvPct` 35, `combat.drinkLifePct` 55, `town.healBelowLifePct` 70 and `combat.kiteLifePct` 70. The bands are: above 70, 55 to 70, 35 to 55, 25 to 35, below 25. This replaces the SME's four bands (70 / 40 / 25) for the life field, so the first slice reproduces today's defaults without a combat change (section 2.3, stage 1). The SME's 40 edge is dropped from the key; `resource.minEngageLifePct` 40 stays a knob. Life percent is a short-term stand-in for T0: fight-time points move to the urgency band (section 2.3).
 
 ### 2.2 Streak algorithm (U)
 
@@ -87,6 +87,70 @@ Sacrifice(point): r.skips_banked += 1 (bounded)
 ```
 
 A learned rule applies for every context that produces the same key. Revoked rules are kept (history) but not applied.
+
+### 2.3 Urgency band for fight-time points (D 2026-11-05; formula and edges SME (U), checked in part against repo data)
+
+User reasoning (D): a potion is drunk because of how much it restores and whether damage is still coming, not because of a life percent; the same percent is a different situation at clvl 5 and at clvl 30. So the fight-time points key on ONE derived field `urgency`, with four bands: calm, wary, urgent, critical. It is derived by a fixed table from numbers the bot can read, shown in plain language, and carries no judgment (deterministic, ADR 0016 item 14).
+
+**Inputs** (per tick; stage 2 needs combat to expose the ones marked +, see Open below):
+
+| symbol | meaning | source |
+|---|---|---|
+| L, M | current and max life | snapshot (V `Life`, `MaxLife` logged in `internal/bot/observe.go`) |
+| Rh | restore of the best healing potion in the belt for this class | + item tables; Sorceress, Necromancer, Druid get 2/3 of the base: Minor 30, Light 60, Healing 100, Greater 180, Super 320 over 6.4 to 10.24 s (V docs/sme/mechanics-combat.md 7.3; d2d drank 30.156 per Minor, V docs/d2d-fidelity.md section 2) |
+| Rr | restore of the best rejuvenation (instant, percent of max life) | + item tables (Rejuvenation 35 percent, Full 100 percent: SME (U), not read in the repo) |
+| D5 | damage taken in the last 5 s | + combat damage window |
+| H | largest single hit in the last 10 s | + combat damage window |
+| hit | still being hit: a hit in the last 1.5 s | + combat damage window |
+| N | hostile count near | existing combat target scan (U) |
+| kit | OK / THIN / NONE (2.1) | existing kit reader |
+
+**Derived** (formula data, not code):
+- `htl` (hits-to-live) = L / max(H, 1); 99 when no hit in 10 s.
+- `room` (potion room) = (M - L) / Rh; at 1 or more the potion fits whole, below 0.5 it is mostly wasted.
+- While `hit`, a healing potion counts only 0.6 of its face value (SME (U), the potion ticks over 6 to 10 s; calibrate by reading life every 0.5 s after a drink). Rejuvenation counts in full.
+
+**Table** (first match from the top; one data table the rule file can read; every number is SME (U) unless marked):
+
+| band | when (any row true) | what a veteran does (SME (U)) |
+|---|---|---|
+| critical | htl < 2; or L < 1.5 x H; or D5 >= L | rejuvenation if held (instant); else portal or stairs if kit OK; a healing potion is too slow unless no hostile is near; stop fighting |
+| urgent | htl < 4; or D5 >= 0.5 x L; or (hit and room >= 1) | best healing potion now; step out of melee or kite if a path is free; a second potion 1 s later if still hit; with N >= 3 move first, drink second |
+| wary | htl < 6; or hit | keep fighting, pick the target that stops the damage; drink only if room >= 1; no retreat yet |
+| calm | otherwise (no hit for 3 s or more and htl >= 6) | no urgency; drink only if room >= 1 and no hostile near; rest or walk on |
+
+**Kit modifier** (SME (U)): THIN shifts the band one step up (retreat earlier, no potion in wary); NONE shifts one step up and treats urgent as critical (walk toward town or stairs from wary, take no new fight at htl < 6). Design choice (U, mine): the key carries the raw `urgency` AND `kit` as separate fields, and the shift lives in each point's default-action table, not in the band, so kit is not counted twice and the key stays small (4 x 3 values).
+
+**Transparency line** in the Thoughts feed, for example: `urgent: 3 hits to live (life 38 / biggest hit 12), potion room 1.0 (Minor Healing 30), still being hit, kit THIN`. The feed shows the row that fired and the inputs, never only the band name.
+
+**Per level** (SME (U), numbers from memory; Rh from V 7.3 above):
+
+| case | numbers | band |
+|---|---|---|
+| clvl 5 Sorceress, L 40 of 48 to 60, a hit of 12 | htl 3.3, Minor Healing 30 | urgent at 40 life, which is 65 to 80 percent |
+| clvl 25, L 250 of 300, a hit of 20 | htl 12.5 | calm, even at 50 percent life (L 150: htl 7.5, still calm) |
+| clvl 25 boss pack, D5 150 at L 150 | D5 >= L | critical, rejuvenation first |
+| clvl 5, L 20 of 48, no hit for 5 s, one Minor | room 0.93, htl 99 | calm: drink only if no hostile near |
+
+The point: one percent, two bands. The clvl 5 hero is urgent at 80 percent life because one hit takes a third of it; the clvl 25 hero is calm at 50 percent.
+
+**Which points use urgency** (fight-time danger in the moment):
+
+| point | key field in stage 2 | why |
+|---|---|---|
+| t0.retreat.drink | urgency (replaces life band) | the drink, run or portal choice is the moment |
+| t0.unique.fight | urgency (replaces life band) | a champion pack mid-fight |
+| t0.leave.safe | urgency (replaces life band) | a fast or ranged pack, leave now |
+| t0.retreat.lethal | none (pack type, kit) | a list of pack kinds, no life term |
+| t0.area.toohard, t0.retreat.repeat, t0.shrine (life band stays, not a fight) | ordinary bands | decided between fights; level gap and area class, not the moment |
+| all t1 and t2 points | ordinary bands | town and run level |
+
+**Staging** (D 2026-11-05):
+1. **Stage 1, no combat change.** The three points key on the five life bands above (edges 25, 35, 55, 70) plus kit. Combat keeps its knobs (`combat.chickenPct` and the rest, V docs/knobs.md); the rule file reproduces today's defaults (5.3). This is the stand-in for T0.
+2. **Stage 2, combat computes urgency.** The store reads `urgency` from the table above; the three points swap `life` for `urgency` in their context. The knobs stay the untrained default. Old life-band rules are retired with a journal line, not migrated (a rule keyed on `life` has a different key; U).
+The table above is data (editable without code); the edges are a tuning surface for the store card, like the other bands (Risks, 9).
+
+**Open: what combat must expose for stage 2** (U): (a) a damage window: damage in the last 5 s, the largest single hit in the last 10 s, the time since the last hit (nothing like it was found in `internal/combat` in this pass; not read in depth); (b) the restore of the best healing potion in the belt and the best rejuvenation, from the item tables per class (the 2/3 rule for casters); (c) hostile count near, if the existing target scan does not return it; (d) the heal tick curve to calibrate the 0.6 factor and the htl edges, by a live drill (reading life after a drink) or the d2d potion drill of docs/d2d-fidelity.md; (e) a replay of past soak deaths: which band was the hero in 3 s before each death? If not urgent or critical, the edges are too high (SME check).
 
 ## 3. Where it lives (U)
 
@@ -113,7 +177,7 @@ Source of the situations is the SME list in the ladder doc section 3 (S). Contex
 
 | id | tier | question (short) | answers (+ "not sure") | context (besides act, diff, hc) |
 |---|---|---|---|---|
-| t0.retreat.drink | 0 | life low: drink, run or portal | drink / run / portal | life band, pack danger, kit |
+| t0.retreat.drink | 0 | life low: drink, run or portal | drink / run / portal | urgency band (stage 1: life band, 2.3), pack danger, kit |
 | t0.retreat.lethal | 0 | a pack type that killed or nearly killed us | avoid / fight | pack type (closed list), kit |
 | t0.area.toohard | 0 | area far above the hero | go / skip / lower area | area class, level gap band, kit |
 | t0.retreat.repeat | 0 | two retreats in a row in one area | stay / leave | area class, kit |
@@ -157,8 +221,8 @@ All nine are listed in the SME review; classes, answers and bands are my proposa
 
 | id | tier | context (besides act, diff, hc) | bands | answers | class SC / HC | default (act now) | kit | knob or code mapping (V docs/knobs.md, values read 2026-11-05) |
 |---|---|---|---|---|---|---|---|---|
-| t0.unique.fight | 0 | pack danger class, life band, kit | life 4, kit 3 | fight / avoid | normal / risky (retreat-type) | fight with the early drink line if kit OK and life above 40, else avoid | high | PARTIAL: `combat.championEarlyPct` 10, `combat.drinkRejuvBossPct` 50, `resource.retreatDanger` 2, `resource.minEngageLifePct` 40. No knob says "avoid a champion pack" (GAP) |
-| t0.leave.safe | 0 | fast or ranged pack class (closed list), life band, kit | list, life 4, kit 3 | portal / run / stay | normal / risky (retreat-type) | portal if kit OK, else run | high | GAP: no knob; may fold into t0.retreat.lethal if the lethal list covers fast and ranged packs (SME unsure; the store card decides) |
+| t0.unique.fight | 0 | pack danger class, urgency band (stage 1: life band, 2.3), kit | urgency 4, kit 3 | fight / avoid | normal / risky (retreat-type) | fight with the early drink line if kit OK and urgency calm or wary, else avoid | high | PARTIAL: `combat.championEarlyPct` 10, `combat.drinkRejuvBossPct` 50, `resource.retreatDanger` 2, `resource.minEngageLifePct` 40. No knob says "avoid a champion pack" (GAP) |
+| t0.leave.safe | 0 | fast or ranged pack class (closed list), urgency band (stage 1: life band, 2.3), kit | list, urgency 4, kit 3 | portal / run / stay | normal / risky (retreat-type) | portal if kit OK, else run | high | GAP: no knob; may fold into t0.retreat.lethal if the lethal list covers fast and ranged packs (SME unsure; the store card decides) |
 | t0.shrine | 0 | life band, pack danger class (shrine type unknown, see bands) | life 4 | take / avoid | normal / normal | avoid | low | GAP: no knob; shrine handling was not read in code (U) |
 | t1.repair | 1 | gold band, durability band | gold 4, durability 3 | repair / skip | safe / safe (SME: nearly always yes) | repair | none | GOOD: `town.repairBelowPct` 30, `town.tripRepairPct` 20, `town.repairLatch` 1 (edges 30 and 20 match the durability bands) |
 | t1.identify | 1 | item class, scroll held, gold band | class 2, yes/no | scroll / Cain / leave unidentified | safe / safe | scroll if one is held, else leave unidentified until town buys one | low | PARTIAL: `town.idScrollNeed` 1, `town.idScrollTarget` 2, `town.spareKeep` 4. Cain depends on the quest rescue (campaign state, U): offer the answer only when Cain is available |
@@ -180,7 +244,7 @@ Today's behaviour is set by numeric thresholds in `api.Tuning` knobs (V docs/kno
 
 | decision point | knobs that decide today | default rule it becomes | fit |
 |---|---|---|---|
-| t0.retreat.drink | `combat.drinkLifePct` (55), `combat.drinkRejuvPct` (35), `combat.chickenPct` (25), `combat.crowdPortalPct` (70), `combat.crowdDrinkPct` (65), `resource.retreatBelt` (0) | life above 70: fight on; 40 to 70 with potion: drink; 25 to 40: drink or portal by kit; below 25: leave | PARTIAL: the SME edges 70/40/25 do not hit 55 and 35. Either add edges 55 and 35 to the life band (the store card decides) or accept the rule file as coarser than the knobs. 25 and 70 match |
+| t0.retreat.drink | `combat.drinkLifePct` (55), `combat.drinkRejuvPct` (35), `combat.chickenPct` (25), `combat.crowdPortalPct` (70), `combat.crowdDrinkPct` (65), `resource.retreatBelt` (0) | stage 1, five life bands: above 70 fight on; 55 to 70 fight on (kite below 70); 35 to 55 drink a healing potion; 25 to 35 drink rejuvenation, else portal if kit OK; below 25 leave the game | GOOD at stage 1: all five knob edges (25, 35, 55, 70) are band edges. Stage 2 swaps the life band for the urgency band and the knob edges become the stage-1 stand-in (2.3) |
 | t0.retreat.lethal | `resource.retreatDanger` (2), `resource.minEngageLifePct` (40), `combat.championEarlyPct` (10) | pack type in the closed list: avoid | GAP: the lethal-pack list is a data table that does not exist; today danger is a level 1 to 3, not a list |
 | t0.area.toohard | `route.towerMinLevel` (15), `route.towerMinLevelMerc` (14), `route.monasteryMinLevel` (14), `route.towerMinLife` (150), plan table enter levels (V internal/plandata) | level gap band 4 or more: skip / lower area | PARTIAL: today's floors are absolute clvl numbers per area; the gap band is relative. A rule expresses "gap +4 or more: skip", the per-area floors stay in the route guard |
 | t0.retreat.repeat | `resource.brAttempts` (3), `resource.brLevelGap` (2) for Blood Raven; recovery knobs (`resource.recoveryOn`) | leave after two retreats | GAP for the general case: no knob counts retreats per area |
@@ -194,7 +258,7 @@ Today's behaviour is set by numeric thresholds in `api.Tuning` knobs (V docs/kno
 | t2.failstreak | `resource.gearDeathsHigh` (4) | stop at 3 or more deaths | PARTIAL: 4 in the hour or one area adds gear risk, it does not stop a run |
 | t2.slowrun | `route.freshMaxNoGain` (3), `route.freshMinXP` (200) | continue first, switch second | GAP: no run-time-vs-expected measure exists (U) |
 | t2.bossunsafe | `resource.brAttempts` (3), `resource.brLevelGap` (2), `route.towerMinLevel` (15), `route.towerMinLife` (150) | gear band low: skip | PARTIAL: Blood Raven and Forgotten Tower have floors; no gear composite exists |
-| t0.unique.fight | `combat.championEarlyPct` (10), `combat.drinkRejuvBossPct` (50), `resource.retreatDanger` (2) | kit OK, life above 40: fight; else avoid | PARTIAL: today's code fights with an earlier drink line, it has no avoid answer for a champion pack |
+| t0.unique.fight | `combat.championEarlyPct` (10), `combat.drinkRejuvBossPct` (50), `resource.retreatDanger` (2) | kit OK, urgency calm or wary (stage 1: life above 55): fight; else avoid | PARTIAL: today's code fights with an earlier drink line, it has no avoid answer for a champion pack |
 | t1.repair | `town.repairBelowPct` (30), `town.tripRepairPct` (20) | durability below 30: repair | GOOD: the edges are the band edges |
 | t1.identify | `town.idScrollNeed` (1), `town.idScrollTarget` (2) | magic, rare, set, unique, crafted held: scroll | GOOD |
 | t2.reset.game | `route.freshGapSec` (600), `route.freshMaxNoGain` (3) | restart | GOOD |
