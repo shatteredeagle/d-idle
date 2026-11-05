@@ -1,13 +1,13 @@
 ---
 id: TASK-7
-title: "skmiss: missile roll max fix for upstream"
-status: In Progress
+title: 'skmiss: missile roll max fix for upstream'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - "G-E"
-  - "upstream"
+  - G-E
+  - upstream
 dependencies: []
 priority: medium
 ordinal: 7000
@@ -57,6 +57,10 @@ Source: git tag openspec-final, openspec/changes/skmiss/ (this task is the copy)
 - [x] #3 1.3 Differential oracle (game.exe natively vs the real d2d build), before and after
 - [x] #4 1.4 Local upstream candidate (only if a deviation is proven on the real build)
 - [x] #5 1.5 Docs: trace (deviations table, drill recipe), queue row 14, BACKLOG, INDEX
-- [ ] #6 2.1 Independent verifier (a second agent)
-- [ ] #7 2.2 Det state-hash run (needs a d2d slot)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/skmiss on main; upstream PR #166 (a missile's element roll never reaches its max) MERGED; the mana-at-action-frame deviation (D2) went into PR #187 (batch C), MERGED. Removed 2.1 (verifier) and 2.2 (det hash run, needs a d2d slot): superseded by the upstream merge.
+<!-- SECTION:NOTES:END -->

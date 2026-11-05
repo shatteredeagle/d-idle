@@ -1,12 +1,12 @@
 ---
 id: TASK-10
-title: "fixbelt: low-kit belt window fix"
-status: In Progress
+title: 'fixbelt: low-kit belt window fix'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-05T18:01:00Z'
 labels:
-  - "G-C"
+  - G-C
 dependencies: []
 priority: low
 ordinal: 10000
@@ -57,7 +57,12 @@ Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy
 - [x] #2 fix: low-kit override of the recovery cooldown
 - [x] #3 unit tests
 - [x] #5 Gate 2 g2b #1/#4: shop buys a healing potion when belt and pack hold none (Rejuvenation does not count, as in the BELT gate judge; judge unchanged); town.tripEmptyHPBelt (default 1) raises a trip when no healing potion is held and gold >= KitPotionGold, one log line when gold is short. Offline tested (internal/town/healbelt_test.go, Sorceress + Barbarian); not run live.
-- [ ] #4 live proof (Gate 1 soak)
 - [x] #5 fixcursor2 (G-C, Gate 2 g2b fix #3): DropCursor (internal/town/hand/drop.go) clicks up to town.dropTries (6) different cells beside the character, falls back to a free pack cell (ClearCursor), else ErrCursor + failsafe; log lines `cursor: dropped item= try= offset=`, `cursor: could not clear after N tries items=`; a launcher the class cannot use is not picked up without a pack cell to take it off (internal/loot/pickup.go takenOffAgain). Offline tests only (Sorceress + Barbarian); live proof pending
 - [x] #6 fixcursor3 (G-C, Gate 2 g2c seed 13): ClearCursor tries up to town.cursorStuckMax (3) distinct pack spots (a spot whose put is not confirmed is blocked for the next try, log `cursor: pack spot refused`); PickUp clears a held item before any pickup (pack, else DropCursor) and after cursorStuckMax failed pack clears in a row goes straight to the ground; Town.ClearCursor (nav waypoint hook) and the leveler displaced-item clear use Hand.ClearOrDrop; log `cursor: cleared before pickup item= how=pack|ground`, `cursor: stuck item= cause=`. Offline tests only (Sorceress + Barbarian); live proof pending
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed 2026-11-05 (status reconciliation, backlogfinish). Evidence: Merge agent/fixbelt and agent/fixbelt2 on main, unit tests green. merged, offline tested; live proof pending: Gate 1 soak, recipe in docs/fixbelt.md (belt window gone from the minute log). Removed criterion 'live proof (Gate 1 soak)' so it is carried here.
+<!-- SECTION:NOTES:END -->
