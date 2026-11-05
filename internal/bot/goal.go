@@ -10,6 +10,7 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/resource"
 )
 
@@ -1530,7 +1531,34 @@ func (r *Runner) fieldVerdict(s *d2.Snapshot) resource.FieldVerdict {
 	if _, _, known := r.beltAndInv(s); !known {
 		return resource.FieldVerdict{Go: true, Reason: "belt unknown"}
 	}
-	return resource.FieldGate(r.resInput(s), resource.FromEnv(*r.e.Tune))
+	in, rt := r.resInput(s), resource.FromEnv(*r.e.Tune)
+	return r.askReturn(s, in, resource.FieldGate(in, rt))
+}
+
+// askReturn is point t1.return (docs/t0-slice.md): the field gate's Go is the answer until the ladder (when on) learns a
+// rule for the context. A learned "stay in town" turns a Go into a restock round, which gateRestocks bounds; a learned
+// "return" never lifts a refusal the gate gave (a poor character is still sent to its first field only).
+func (r *Runner) askReturn(s *d2.Snapshot, in resource.Input, v resource.FieldVerdict) resource.FieldVerdict {
+	l := ladder.Active()
+	if l == nil {
+		return v
+	}
+	kit := ladder.KitOK
+	switch healing := in.Belt.HP + in.Belt.RV + in.Belt.PackHP + in.Belt.PackRV; {
+	case !in.HasTP && healing == 0:
+		kit = ladder.KitNone
+	case !in.HasTP || healing < 2:
+		kit = ladder.KitThin
+	}
+	go2, err := l.ReturnWanted(ladder.HeroFrom(s.Player), kit, v.Go)
+	if err != nil {
+		l.Fault(err)
+		return v
+	}
+	if v.Go && !go2 {
+		return resource.FieldVerdict{Restock: true, HaveHP: v.HaveHP, WantHP: v.WantHP, Reason: "ladder: stay in town (" + v.Reason + ")"}
+	}
+	return v
 }
 
 // gateField applies resource.FieldGate before the trip returns to the field. It reports true when it changed the plan:

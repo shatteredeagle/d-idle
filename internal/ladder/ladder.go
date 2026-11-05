@@ -9,6 +9,7 @@ package ladder
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 	"sync"
@@ -91,11 +92,10 @@ type ClockFunc func() time.Duration
 
 func (f ClockFunc) Now() time.Duration { return f() }
 
-// Config builds a Ladder. Store and Cat are required; Rules defaults to the shipped rule file.
+// Config builds a Ladder. Store, Cat and Clock are required.
 type Config struct {
 	Cat     *decide.Catalogue
 	Store   *decide.Store
-	Rules   *decide.RuleFile
 	Clock   decide.Clock
 	Sink    Sink
 	Answers AnswerSource
@@ -112,19 +112,20 @@ type pend struct {
 
 // Ladder asks the store at the wired points. Safe for concurrent use.
 type Ladder struct {
-	cfg  Config
-	mu   sync.Mutex // call sites
-	qmu  sync.Mutex // the queue the store's events fill
-	q    []*pend
-	stat Stats
+	cfg    Config
+	mu     sync.Mutex // call sites; taken before the store's lock
+	qmu    sync.Mutex // the queue and counters the store's events fill; never held while calling the store
+	q      []*pend
+	legacy map[string]string // context key -> the legacy answer last given there (the default a thought shows)
+	stat   Stats
 }
 
 // Stats is the ladder's run record, next to the store's own counters.
 type Stats struct {
-	Asked, ByRule, ByDefault, ByFile int
-	Opened, Answered, Faded, Learned int
-	Faults                           int
-	LastFault                        string
+	Asked, ByRule, ByLegacy, ByDefault int
+	Opened, Answered, Faded, Learned   int
+	Faults                             int
+	LastFault                          string
 }
 
 // New wires the ladder to its store events.
@@ -132,18 +133,18 @@ func New(c Config) (*Ladder, error) {
 	if c.Cat == nil || c.Store == nil || c.Clock == nil {
 		return nil, fmt.Errorf("ladder: catalogue, store and clock are required")
 	}
-	if c.Rules == nil {
-		f, err := decide.ShippedRuleFile()
-		if err != nil {
-			return nil, err
-		}
-		c.Rules = f
-	}
 	if c.Sink == nil {
 		c.Sink = nopSink{}
 	}
-	l := &Ladder{cfg: c}
+	l := &Ladder{cfg: c, legacy: map[string]string{}}
 	c.Store.Subscribe(l.onEvent)
+	// thoughts a persisted store reopened never produced an event
+	for _, t := range c.Store.OpenThoughts() {
+		if ti, ok := c.Store.Thought(t.ID); ok {
+			l.q = append(l.q, &pend{v: l.view(ti, ti.Expires-time.Duration(c.Cat.Config.FadeSec)*time.Second)})
+			l.stat.Opened++
+		}
+	}
 	return l, nil
 }
 
@@ -151,12 +152,21 @@ type nopSink struct{}
 
 func (nopSink) Event(string, ThoughtView, string) {}
 
-// onEvent runs inside the store: it counts and shows, and never calls back into the store.
+// onEvent runs inside the store: it queues, counts and shows, and never calls back into the store.
 func (l *Ladder) onEvent(e decide.Event) {
 	switch e.Kind {
+	case decide.EvThoughtOpened, decide.EvConfirmOpened:
+		if e.Info == nil {
+			return
+		}
+		l.qmu.Lock()
+		l.q = append(l.q, &pend{v: l.view(*e.Info, l.cfg.Clock.Now())})
+		l.stat.Opened++
+		l.qmu.Unlock()
 	case decide.EvThoughtFaded:
 		l.qmu.Lock()
 		l.stat.Faded++
+		l.drop(e.Thought)
 		l.qmu.Unlock()
 		l.cfg.Sink.Event("faded", ThoughtView{ID: e.Thought, Key: e.Key}, "")
 	case decide.EvRuleLearned:
@@ -165,6 +175,11 @@ func (l *Ladder) onEvent(e decide.Event) {
 		l.qmu.Unlock()
 		l.cfg.Sink.Event("learned", ThoughtView{Key: e.Key}, e.Answer)
 	}
+}
+
+// drop removes a thought from the queue (qmu held).
+func (l *Ladder) drop(id int) {
+	l.q = slices.DeleteFunc(l.q, func(p *pend) bool { return p.v.ID == id })
 }
 
 // Fault is called by a call site when Decide failed: the site then runs its legacy path. Counted, never fatal.
@@ -183,14 +198,44 @@ func (l *Ladder) Stats() Stats {
 }
 
 // Decide builds the context of a point from the hero and extra observations, asks the store and returns the answer id
-// to act on now. Layers: learned rule, shipped rule file, catalogue default. Errors name the unknown class, point or
-// field; the caller falls back to its legacy path.
-func (l *Ladder) Decide(point string, h Hero, extra decide.Obs) (string, error) {
+// to act on now. legacy is the answer the old code gives here (an answer id of the point): a learned rule wins, else
+// legacy is acted on, so behaviour equals the old code until a person teaches a rule. legacy "" uses the catalogue
+// default instead. Errors name the unknown class, point or field; the caller falls back to its legacy path.
+func (l *Ladder) Decide(point string, h Hero, extra decide.Obs, legacy string) (string, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if _, err := l.cfg.Store.Tick(); err != nil {
 		return "", err
 	}
+	ctx, err := l.context(point, h, extra)
+	if err != nil {
+		return "", err
+	}
+	l.qmu.Lock()
+	if legacy != "" {
+		l.legacy[ctx.Key] = legacy // before the ask: the thought it opens shows this default
+	}
+	l.qmu.Unlock()
+	d, err := l.cfg.Store.AskWithDefault(ctx, legacy)
+	if err != nil {
+		return "", err
+	}
+	l.qmu.Lock()
+	l.stat.Asked++
+	switch d.Source {
+	case "rule":
+		l.stat.ByRule++
+	case "legacy":
+		l.stat.ByLegacy++
+	default:
+		l.stat.ByDefault++
+	}
+	l.qmu.Unlock()
+	l.pumpLocked()
+	return d.Answer, nil
+}
+
+func (l *Ladder) context(point string, h Hero, extra decide.Obs) (decide.Context, error) {
 	o := h.obs()
 	for k, v := range extra.Num {
 		o.Num[k] = v
@@ -198,31 +243,17 @@ func (l *Ladder) Decide(point string, h Hero, extra decide.Obs) (string, error) 
 	for k, v := range extra.Cat {
 		o.Cat[k] = v
 	}
-	ctx, err := l.cfg.Cat.Build(point, o, 1, nil)
+	return l.cfg.Cat.Build(point, o, 1, nil)
+}
+
+// CatalogueDefault is the untrained default of the catalogue at this state: what the store would answer without a
+// legacy answer. Drills and parity tests compare it with the legacy code; the call sites do not use it.
+func (l *Ladder) CatalogueDefault(point string, h Hero, extra decide.Obs) (string, error) {
+	ctx, err := l.context(point, h, extra)
 	if err != nil {
 		return "", err
 	}
-	d, err := l.cfg.Store.Ask(ctx)
-	if err != nil {
-		return "", err
-	}
-	ans := d.Answer
-	l.qmu.Lock()
-	l.stat.Asked++
-	switch d.Source {
-	case "rule":
-		l.stat.ByRule++
-	default:
-		if a, ok := l.cfg.Rules.Lookup(ctx); ok {
-			ans = a
-			l.stat.ByFile++
-		} else {
-			l.stat.ByDefault++
-		}
-	}
-	l.qmu.Unlock()
-	l.pumpLocked()
-	return ans, nil
+	return l.cfg.Cat.Default(ctx)
 }
 
 // Pump puts queued thoughts to the answer source and delivers the replies that are due. The bot calls it from its
@@ -233,18 +264,17 @@ func (l *Ladder) Pump() {
 	l.pumpLocked()
 }
 
-func (l *Ladder) view(t decide.Thought) ThoughtView {
-	v := ThoughtView{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, OpenedAt: t.OpenedAt}
-	if p, err := l.cfg.Cat.Point(t.Point); err == nil {
-		for _, a := range p.Answers {
-			v.Choices = append(v.Choices, a.ID)
-		}
+// view turns the store's public read of a thought into what the sink and the answer source see. The default shown is
+// the action the hero took meanwhile: the legacy answer given at that key, else the catalogue default.
+func (l *Ladder) view(ti decide.ThoughtInfo, opened time.Duration) ThoughtView {
+	v := ThoughtView{ID: ti.ID, Point: ti.Point, Key: ti.Key, Confirm: ti.Confirm, OpenedAt: opened}
+	for _, a := range ti.Choices {
+		v.Choices = append(v.Choices, a.ID)
 	}
-	if ctx, err := decide.ParseKey(t.Key); err == nil {
+	if d, ok := l.legacy[ti.Key]; ok {
+		v.Default = d
+	} else if ctx, err := decide.ParseKey(ti.Key); err == nil {
 		v.Default, _ = l.cfg.Cat.Default(ctx)
-		if a, ok := l.cfg.Rules.Lookup(ctx); ok {
-			v.Default = a
-		}
 	}
 	return v
 }
@@ -254,8 +284,17 @@ func (l *Ladder) pumpLocked() {
 		return
 	}
 	now := l.cfg.Clock.Now()
-	work := l.sync()
+	l.qmu.Lock()
+	work := append([]*pend(nil), l.q...)
+	l.qmu.Unlock()
+	sort.Slice(work, func(i, j int) bool { return work[i].v.ID < work[j].v.ID })
 	for _, p := range work {
+		if _, open := l.cfg.Store.Thought(p.v.ID); !open { // answered elsewhere or faded
+			l.qmu.Lock()
+			l.drop(p.v.ID)
+			l.qmu.Unlock()
+			continue
+		}
 		if !p.asked {
 			p.asked = true
 			if !p.v.Confirm {
@@ -276,35 +315,16 @@ func (l *Ladder) pumpLocked() {
 		} else {
 			err = l.cfg.Store.Answer(p.v.ID, p.reply.Answer)
 		}
+		l.qmu.Lock()
+		l.drop(p.v.ID) // a reply the store refused is not retried
 		if err == nil {
-			l.qmu.Lock()
 			l.stat.Answered++
-			l.qmu.Unlock()
+		}
+		l.qmu.Unlock()
+		if err == nil {
 			l.cfg.Sink.Event("answer", p.v, p.reply.Answer)
 		}
 	}
-}
-
-// sync reconciles the queue with the store's open thoughts: new ones are queued, closed ones (answered, faded) leave.
-func (l *Ladder) sync() []*pend {
-	open := l.cfg.Store.OpenThoughts()
-	l.qmu.Lock()
-	defer l.qmu.Unlock()
-	have := map[int]*pend{}
-	for _, p := range l.q {
-		have[p.v.ID] = p
-	}
-	l.q = l.q[:0]
-	for _, t := range open {
-		p := have[t.ID]
-		if p == nil {
-			p = &pend{v: l.view(t)}
-			l.stat.Opened++
-		}
-		l.q = append(l.q, p)
-	}
-	sort.Slice(l.q, func(i, j int) bool { return l.q[i].v.ID < l.q[j].v.ID })
-	return append([]*pend(nil), l.q...)
 }
 
 // Open makes a ladder over the shipped catalogue and rule file. dir "" keeps the store in memory; otherwise the

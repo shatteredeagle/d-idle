@@ -8,6 +8,7 @@ import (
 
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/resource"
 )
@@ -75,7 +76,30 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 
 // tripVerdict is the resource policy's answer to "is a town trip worth it now".
 func (r *Runner) tripVerdict(s *d2.Snapshot) resource.Trip {
-	return resource.TownTripTrigger(r.resInput(s), resource.FromEnv(*r.e.Tune))
+	in, rt := r.resInput(s), resource.FromEnv(*r.e.Tune)
+	trip := resource.TownTripTrigger(in, rt)
+	return r.askTrip(s, in, rt, trip)
+}
+
+// askTrip is point t1.town.trigger (docs/t0-slice.md): the policy's verdict is the answer until the ladder (when on)
+// learns a rule for the context. The ladder can only stop a trip the policy wants (a learned "keep going"): a trip
+// needs the policy's method (portal or walk), which an answer cannot supply, so only Go verdicts are asked.
+func (r *Runner) askTrip(s *d2.Snapshot, in resource.Input, rt resource.Tuning, trip resource.Trip) resource.Trip {
+	l := ladder.Active()
+	if l == nil || !trip.Go { // nothing to veto: no question for a trip the policy does not want
+		return trip
+	}
+	_, pct, _ := r.beltAndInv(s)
+	fv := resource.FieldGate(in, rt) // HaveHP and WantHP are filled whether or not the belt gate is on
+	v, err := l.TripWanted(ladder.HeroFrom(s.Player), ladder.BeltBand(fv.HaveHP, fv.WantHP), pct, trip.Go)
+	if err != nil {
+		l.Fault(err)
+		return trip
+	}
+	if trip.Go && !v {
+		return resource.Trip{Reason: "ladder: keep going (" + trip.Reason + ")"}
+	}
+	return trip
 }
 
 // idleTripGold is the gold growth below which a finished chore counts as an idle trip.
