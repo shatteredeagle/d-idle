@@ -1,0 +1,2 @@
+BACKLOG: TASK-21 T0 integrated live run t0live-20261105: no fault, 81 kills, writes 0, but 0 thoughts answered (InFight holds all questions in the field); AC 2 and 3 open, two defects in docs/probes/t0drill.md
+CHANGELOG: T0 ladder live drill result (integrated path) recorded in docs/probes/t0drill.md

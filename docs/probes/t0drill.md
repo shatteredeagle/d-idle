@@ -70,3 +70,28 @@ tools/live.sh t0drill d2bot --attach --ladder --ladder-profile holdout:101 --wat
 ## Unverified until phase B (U)
 
 Ticks per second (25 assumed from the lab's 40 ms pause); whether the repair chore asks the store at every pass on a live character; that the d2d gold, durability and pack cheats leave the character fresh enough for a second profile (each profile re-runs the setup before its own run-start marker); the field (Blood Moor) variant, which needs a wired T0 point.
+
+## Result (integrated path, VERIFIED LIVE 2026-11-05)
+
+Run id `t0live-20261105`, build `2550acee` (`d2bot` from main), hidden instance i5, fresh Sorceress clvl 1 (exp 0, gold 0), no setup writes. Command: `D2_INSTANCE=i5 tools/live.sh --bg --max 900 t0drill d2bot --attach --ladder --ladder-profile holdout:101 --watch --goals 'farm:Blood Moor' --run-for 10m` (job 20261105-172333-d2bot, ran the full 10 minutes, exit 0). Viewer views read on the worker host loopback at about minute 3 and at the end.
+
+| criterion | verdict |
+|---|---|
+| no stall or fault | PASS: no `ladder fault`, uptime 100 percent, 0 deaths, `stallSec` 0 |
+| log bounded | PASS: 462 log lines, ladder store 4 to 10 open/fade pairs |
+| thoughts opened AND answered | FAIL: opened and faded, never answered (see defect 1) |
+| T0/T1/T2 points that fired in the field | only `t0.area.toohard` (about 10 opens, 0 answers); no `t0.retreat.drink`, `t0.unique.fight`, `t1.*` or `t2.mercenary` fired (no low life, no elite, no town chore with the ladder asked) |
+| rules learned after N answers | not testable: 0 answers, `rules` view empty, `live` 0 |
+| uptime view plausible | PASS: state progress, 100 percent, label "Recovery: farming gold" (the hero had 0 gold, so the bot's own recovery farm ran in Blood Moor) |
+| the bot fought | PASS: 81 kills, xp 0 to 1689, clvl 1 to 3 (the log's `summary` line carries older cumulative counters of the instance, ignore it) |
+| writes after start | PASS: `d2cheat ledger --since-run t0live-20261105` prints `writes after start: 0` |
+
+End state: Freshe, clvl 3, Rogue Encampment, no panel open.
+
+Defects found (not fixed here):
+1. `internal/bot/thoughts.go` (`EnableLadderWith`): `InFight` is `r.State() == StateClearing`, which is true for the whole field clear (walking included), so `ladder.Pump` (`internal/ladder/ladder.go`, around line 283) holds every question for the entire Blood Moor run; thoughts fade after 45 s unanswered. The scripted profile therefore never answers in a field farm. Needs a narrower in-fight signal (a hostile within reach / combat engaged) or answering at the end of a fight pass.
+2. `bot.NewTuner` (`internal/bot/tuner.go`): `store.File.Load` falls back to `tuning.json.bak` when `tuning.json` is absent, and `rebuild()` then replaces the whole `Tuning`, which drops the `--ladder` switch (`ladderEnv` ran before `NewTuner`). Symptom: `--ladder: the ladder.enabled knob is off` on an instance with a saved tuning file. Workaround used: both files moved aside for the run and put back after. Fix: apply `ladderEnv` after `NewTuner` (cmd/d2bot/live.go and d2dbackend.go).
+3. `tools/live.sh` ignores `D2BOT_INSTANCE` in the caller's environment; the agent name maps to an instance through `tools/instances.conf`, override with `D2_INSTANCE=iN`. Without it the run targets i0.
+4. `cmd/d2drill` default `-bin` is the stale `d2d.lab6` (no setup verbs): the town drill needs `D2D_BIN` pointing at the freezeresume lab binary (Gate 2 build, fork ee5e06d8ef99); with it the town drill passes on all 5 profiles. Documented only, no code change.
+
+Acceptance of TASK-21: criteria 2 and 3 are NOT met by this run (no thought was answered, so no rule, no answer count; the fight-time points stayed quiet). Re-run after defect 1 and 2 are fixed.
