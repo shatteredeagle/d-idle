@@ -48,7 +48,7 @@ The bot SHALL revive a dead merc only with a town portal and potions and gold of
 - **THEN** the revive is skipped with reason `gold`
 
 ### Requirement: Route guard
-Current implementation (interim): the Monastery road (areas 7, 26 to 37) MUST be entered only at clvl 14 or higher, merc or not (`route.monasteryMinLevel` 14, `...Merc` 14), and the Forgotten Tower (areas 20 to 25) at 16 with no merc, 14 with one, plus the full supply kit; each floor is logged as `route guard: <gate> floor=<n> (merc=<alive|dead|none>)`. ADR 0011; user 2026-11-02. Reconciled 2026-11-04 (source: mercpolicy).
+Current implementation (interim): the Monastery road (areas 7, 26 to 37) MUST be entered only at clvl 14 or higher, merc or not (`route.monasteryMinLevel` 14, `...Merc` 14), and the Forgotten Tower (areas 20 to 25) at clvl 15 with no merc and max life 150 and the kit (4 healing, a town portal with charges, 3 mana potions for a caster), clvl 14 with a living merc, and clvl 16 when max life is unreadable (the merc is no longer required; knobs `route.towerMinLevel` 15, `route.towerMinLife` 150, `route.towerMinLevelNoLife` 16, `route.towerKitMana` 3, `route.towerMinLevelMerc` 14; SME 2026-11-04, U); each floor is logged as `route guard: <gate> floor=<n> (merc=<alive|dead|none>)`. ADR 0011; user 2026-11-02. Reconciled 2026-11-04 (source: mercpolicy).
 
 #### Scenario: No merc at clvl 14
 - **WHEN** a clvl 14 caster without a merc and with the full supply kit picks a leveling area
@@ -82,7 +82,7 @@ Direction (decided 2026-11-04, not implemented): each guarded zone SHALL carry i
 - **THEN** the zone stays open and the gold lost to revive costs, not a lower floor, feeds back
 
 ### Requirement: Route guard starting numbers (direction, U)
-The plan data SHALL start at (U, SME design, tuned only by the death loop): road front (areas 7, 26, 27) clvl 13, road deep (Barracks to Catacombs) clvl 15, Forgotten Tower clvl 16 flat, Andariel clvl 18 flat with max life 250 and antidote potions. Not implemented: the code keeps the interim numbers. Source: user decision 2026-11-04. Reconciled 2026-11-04 (source: decision 5).
+The plan data SHALL start at (U, SME design, tuned only by the death loop): road front (areas 7, 26, 27) clvl 13, road deep (Barracks to Catacombs) clvl 15, Forgotten Tower: no merc clvl 15 and max life 150 and the kit, merc clvl 14, unreadable life clvl 16 (SME 2026-11-04, U), Andariel clvl 18 flat with max life 250 and antidote potions. Not implemented: the code keeps the interim numbers. Source: user decision 2026-11-04. Reconciled 2026-11-04 (source: decision 5).
 
 #### Scenario: Code unchanged
 - **WHEN** no code card for the direction has been approved
