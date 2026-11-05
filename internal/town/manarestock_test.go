@@ -28,19 +28,20 @@ func restockVisit(t *testing.T, class d2.Class, gold, clvl int) (town.ChoreRepor
 	return rep, buf.String()
 }
 
-// TASK-A: with 300 gold the caster ends with the first mana potions and at least 4 healing potions, and logs the restock.
+// TASK-A: with gold for the plan the caster ends with the first mana potions and the healing plan filled (the rig's
+// 4-slot belt holds 2 healing + 2 mana; its vendor prices are higher than the game's), and logs the restock.
 func TestCasterBuysFirstManaBeforeHealingFill(t *testing.T) {
-	rep, log := restockVisit(t, d2.Sorceress, 300, 6)
-	if mp, hp := boughtLike(rep, "Mana"), boughtLike(rep, "Healing"); mp < 2 || hp+1 < 4 {
-		t.Fatalf("300 gold bought %v, want mp >= 2 and hp >= 4", rep.Bought)
+	rep, log := restockVisit(t, d2.Sorceress, 500, 6)
+	if mp, hp := boughtLike(rep, "Mana"), boughtLike(rep, "Healing"); mp < 2 || hp < 1 {
+		t.Fatalf("500 gold bought %v, want 2 mana and the missing healing potion", rep.Bought)
 	}
 	if !strings.Contains(log, "town: restocked mana potions") {
 		t.Errorf("no restock line in %q", log)
 	}
 }
 
-// With 20 gold nothing is affordable beyond the reserve: no mana, and the no-mana line comes once per gold value.
-func TestCasterPoorBuysHealingFirstAndLogs(t *testing.T) {
+// With 20 gold nothing is affordable: no mana bought, and the no-mana line comes once per gold value.
+func TestCasterPoorBuysNoManaAndLogs(t *testing.T) {
 	rep, log := restockVisit(t, d2.Sorceress, 20, 6)
 	if boughtLike(rep, "Mana") != 0 {
 		t.Fatalf("20 gold bought mana: %v", rep.Bought)

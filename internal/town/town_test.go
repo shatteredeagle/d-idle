@@ -210,10 +210,10 @@ func TestNeedsTrip(t *testing.T) {
 	if ok, why := r.T.NeedsTrip(s); !ok || why != "low on healing potions" {
 		t.Fatalf("%v %q", ok, why)
 	}
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 2; i++ { // two mana potions: a caster below MPFirst has its own trip reason (TASK-A)
 		w.Add("hp1", d2.ContBelt, i, 0)
+		w.Add("mp1", d2.ContBelt, i+2, 0)
 	}
-	w.Add("mp1", d2.ContBelt, 3, 0)
 	s, _ = w.Snapshot()
 	if ok, why := r.T.NeedsTrip(s); ok {
 		t.Fatalf("stocked: %q", why)
