@@ -7,65 +7,11 @@ import (
 	"time"
 )
 
-// A profile decides what a player replies. It must not know anything about the store's internals.
-type profile struct {
-	name    string
-	reply   func(rng *rand.Rand, p *Point, def string) string
-	confirm func(rng *rand.Rand) string
-}
+// The profiles themselves are the public API (profiles.go); the tests use them through these short names.
+type profile = Profile
 
-func lastAnswer(p *Point) string { return p.Answers[len(p.Answers)-1].ID }
-
-func knownProfiles() []profile {
-	return []profile{
-		{"cautious", func(_ *rand.Rand, _ *Point, def string) string { return def },
-			func(*rand.Rand) string { return "no" }},
-		{"bold", func(rng *rand.Rand, p *Point, _ string) string {
-			if rng.Intn(10) == 0 {
-				return "" // looked away
-			}
-			return lastAnswer(p)
-		}, func(*rand.Rand) string { return "yes" }},
-		{"inconsistent", func(rng *rand.Rand, p *Point, _ string) string {
-			if rng.Intn(5) == 0 {
-				return NotSure
-			}
-			return p.Answers[rng.Intn(len(p.Answers))].ID
-		}, func(rng *rand.Rand) string { return []string{"yes", "no", ""}[rng.Intn(3)] }},
-	}
-}
-
-// holdout builds a profile from a seed at test time: a preferred answer per point, a flip, ignore and notsure rate.
-func holdout(seed int64) profile {
-	g := rand.New(rand.NewSource(seed))
-	flip, ignore, unsure, yes := g.Float64()*0.5, g.Float64()*0.6, g.Float64()*0.2, g.Float64()
-	pref := map[string]int{}
-	return profile{
-		name: "holdout",
-		reply: func(rng *rand.Rand, p *Point, _ string) string {
-			i, ok := pref[p.ID]
-			if !ok {
-				i = g.Intn(len(p.Answers))
-				pref[p.ID] = i
-			}
-			switch x := rng.Float64(); {
-			case x < ignore:
-				return ""
-			case x < ignore+unsure:
-				return NotSure
-			case x < ignore+unsure+flip:
-				return p.Answers[rng.Intn(len(p.Answers))].ID
-			}
-			return p.Answers[i].ID
-		},
-		confirm: func(rng *rand.Rand) string {
-			if rng.Float64() < yes {
-				return "yes"
-			}
-			return "no"
-		},
-	}
-}
+func knownProfiles() []Profile   { return KnownProfiles() }
+func holdout(seed int64) Profile { return Holdout(seed) }
 
 // genScript makes a script over a fixed pool of observations per point so that keys repeat.
 func genScript(rng *rand.Rand, cat *Catalogue, class string, prof profile, n int) []Step {
@@ -85,7 +31,7 @@ func genScript(rng *rand.Rand, cat *Catalogue, class string, prof profile, n int
 		}
 		def, _ := cat.Default(ctx)
 		st := Step{Wait: time.Duration(rng.Intn(70)) * time.Second, Point: p.ID, Obs: o,
-			Reply: prof.reply(rng, p, def), Confirm: prof.confirm(rng)}
+			Reply: prof.Reply(rng, p, def), Confirm: prof.Confirm(rng)}
 		steps = append(steps, st)
 	}
 	return steps
@@ -136,20 +82,20 @@ func runProfile(t *testing.T, cat *Catalogue, class string, prof profile, seed i
 	rng := rand.New(rand.NewSource(seed))
 	steps := genScript(rng, cat, class, prof, n)
 	clk := &ManualClock{}
-	s, err := New(cat, "prof-"+prof.name, clk)
+	s, err := New(cat, "prof-"+prof.Name, clk)
 	if err != nil {
 		t.Fatal(err)
 	}
 	ds, err := RunScript(s, clk, 1, nil, steps)
 	if err != nil {
-		t.Fatalf("%s seed %d: %v", prof.name, seed, err)
+		t.Fatalf("%s seed %d: %v", prof.Name, seed, err)
 	}
 	checkInvariants(t, cat, s, ds, steps)
 	// the live rules equal the replay of the log, byte for byte
 	live, _ := s.RulesJSON()
-	again, err := Replay(cat, "prof-"+prof.name, s.Log())
+	again, err := Replay(cat, "prof-"+prof.Name, s.Log())
 	if err != nil || !bytes.Equal(live, again) {
-		t.Fatalf("%s: replay differs (%v)", prof.name, err)
+		t.Fatalf("%s: replay differs (%v)", prof.Name, err)
 	}
 	return s, steps
 }
@@ -162,11 +108,11 @@ func TestAnswerProfiles(t *testing.T) {
 	}
 	for _, class := range []string{"sorceress", "paladin"} {
 		for _, prof := range profs {
-			t.Run(class+"/"+prof.name, func(t *testing.T) {
+			t.Run(class+"/"+prof.Name, func(t *testing.T) {
 				s, _ := runProfile(t, cat, class, prof, 7, 3000)
 				rules, answers, faded := s.Stats()
 				t.Logf("rules %d answers %d faded %d", rules, answers, faded)
-				switch prof.name {
+				switch prof.Name {
 				case "cautious", "bold":
 					if rules == 0 {
 						t.Fatal("a consistent profile should teach some rule")

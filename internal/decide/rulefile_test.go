@@ -63,10 +63,11 @@ func TestRuleFileExpressesTodaysDefaults(t *testing.T) {
 	t.Logf("fully covered: %s", strings.Join(full, " "))
 	t.Logf("partly covered: %s", strings.Join(partial, " "))
 	t.Logf("not covered: %s", strings.Join(none, " "))
-	if len(full) < 5 || len(none) == 0 {
-		t.Fatalf("coverage moved: full %d none %d", len(full), len(none))
+	if len(full) != len(cat.Points) {
+		t.Fatalf("coverage: %d of %d points fully covered (partial %v, none %v)", len(full), len(cat.Points), partial, none)
 	}
-	// Verdict (spec 5.3): the file cannot express all of today's defaults; the gate stays open with the gaps above.
+	// Verdict: every context has a row. Whether the rows equal today's defaults is TestDefaultParity; the gate stays
+	// open while that test reports band-interior splits.
 }
 
 func TestRuleFileErrorsNameTheCulprit(t *testing.T) {

@@ -36,7 +36,7 @@ func TestContextKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := "t0.retreat.drink|act=1,diff=normal,hc=hardcore,kit=THIN,life=35-55,packdanger=1"
+	want := "t0.retreat.drink|act=1,diff=normal,hc=hardcore,held=none,kit=THIN,life=35-55,packdanger=1"
 	if ctx.Key != want {
 		t.Fatalf("key = %s", ctx.Key)
 	}
@@ -158,9 +158,9 @@ func TestCatalogueRejectsBadData(t *testing.T) {
 	for name, bad := range map[string]string{
 		"no catch-all risk row": strings.Replace(good, `{"match": {}, "class": "safe"}]`, `{"match": {"kit": "OK"}, "class": "safe"}]`, 1),
 		"unknown risk class":    strings.Replace(good, `"class": "safe"`, `"class": "meh"`, 1),
-		"unknown field":         strings.Replace(good, `"contextKeys": ["gold", "belt"]`, `"contextKeys": ["gold", "mood"]`, 1),
+		"unknown field":         strings.Replace(good, `"contextKeys": ["tripgold", "belt"]`, `"contextKeys": ["tripgold", "mood"]`, 1),
 		"default not an answer": strings.Replace(good, `"answer": "repair"`, `"answer": "x"`, 1),
-		"newer catalogue":       strings.Replace(good, `"version": 1,`, `"version": 2,`, 1),
+		"newer catalogue":       strings.Replace(good, `"version": 2,`, `"version": 3,`, 1),
 	} {
 		if bad == good {
 			t.Fatalf("%s: test edit did not apply", name)
