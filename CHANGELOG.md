@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 2 multi-seed soak run 20261104-2254-g2b: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261104-2254-g2b.md).
 - OpenSpec removal stage 5: cmd/changecheck and the dead card-check code are deleted; the merge scripts no longer read openspec/.
 - process: contracts stage 3b: 6-key headers on every contract, Numbers tables and contract_test.go for soak-gates, death-rule and fidelity-gate, tools/contracts/check.py in CI (merc.goldFarmMaxLevel text fixed to 17)
 - process: OpenSpec removal plan marks stage 3 done.
