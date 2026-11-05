@@ -45,8 +45,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | nav.exitPush | 8 | 3..20 | subtiles | 3 | 1 | How far past a border gap or exit tile the walk continues to trigger the level change. |
 | nav.loadWaitSec | 20 | 5..90 | s | 5 | accessor | How long to wait through a loading screen. |
 | nav.panelWaitMs | 2500 | 800..8000 | ms | 800 | accessor | How long to wait for a clicked panel (waypoint) to open. |
-| nav.useWaypoints | 1 | 0..1 | bool | 1 | 4 | 1: travel, the corpse run and the way back from town take an activated waypoint instead of walking (saves minutes and walking deaths; the route guard still applies to every area on the way). 0 walks everything. |
-| nav.wpMinDistance | 2 | 2..8 | levels | 2 | 2 | A waypoint trip is taken only when it skips at least this many level hops; shorter routes walk. 2 is the shortest trip that saves a level. |
+| nav.useWaypoints | 1 | 0..1 | bool | 1 | 5 | 1: travel, the corpse run and the way back from town take an activated waypoint instead of walking (saves minutes and walking deaths; the route guard still applies to every area on the way). 0 walks everything. |
+| nav.wpMinDistance | 2 | 2..8 | levels | 2 | 3 | A waypoint trip is taken only when it skips at least this many level hops; shorter routes walk. 2 is the shortest trip that saves a level. |
 | nav.wpCooldownSec | 0 | 0..20 | s | 0 | 2 | Deprecated, default 0 (no wait): game.exe has no arrival cooldown in single player (docs/research/waypoint-trace.md) and d2d dropped its own in #153. A value above 0 makes the bot wait this long (plus 1 s) after arriving before clicking a row, for an old d2d binary. |
 | nav.badEdgeTTLSec | 300 | 0..3600 | s | 300 | 2 | A level link or gate that a walk failed on is routed around for this long (game time), and forgotten at once when the game is re-entered; a link the level map itself shows is never marked. 0 restores the old behaviour: marks last for the rest of the run, and a character cut off from a gate it can see is not walked out of its pocket (townwedge). |
 | nav.cautionRadius | 20 | 8..40 | subtiles | 8 | 1 | A corpse run stops and reports when a living monster comes this close; its paths avoid monsters at twice the usual radius. |
@@ -66,7 +66,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.chickenHellPct | 30 | 20..50 | % | 20 | 2 | Same as chicken, in Hell. |
 | combat.drinkManaPct | 25 | 5..60 | % | 5 | 2 | Mana percent that triggers a mana potion. |
 | combat.townPotionMin | 2 | 0..4 | count | 0 | 4 | Healing potions left in the belt at which the bot wants a town trip. |
-| combat.crowdN | 8 | 0..20 | count | 20 | 6 | Hostiles within 8 subtiles that make a crowd: below it the normal drink and chicken rules apply alone. 0 turns the crowd rule off. |
+| combat.crowdN | 8 | 0..20 | count | 20 | 8 | Hostiles within 8 subtiles that make a crowd: below it the normal drink and chicken rules apply alone. 0 turns the crowd rule off. |
 | combat.crowdPortalPct | 70 | 40..90 | % | 40 | 3 | In a crowd, open a town portal at or below this life percent when a scroll exists and fewer than 3 monsters are adjacent (a 2 s cast fails when surrounded). |
 | combat.crowdDrinkPct | 65 | 40..85 | % | 40 | 2 | In a crowd, drink a healing potion below this life percent (the portal cannot be cast when surrounded); the normal rule drinks at 55. |
 | combat.crowdAdjacent | 8 | 3..12 | subtiles | 12 | 5 | A hostile within this distance (centre to centre) is in melee reach and counts as adjacent: three or more make a town portal cast a non-escape (potion, else leave the game) and a crowd 'surrounded'. Default 8 from the live zombie reads (drills11), UNVERIFIED for other monsters. |
@@ -78,14 +78,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
-| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 13 | A hostile monster this close counts as a fight. |
+| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 14 | A hostile monster this close counts as a fight. |
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
 | combat.castGapMs | 650 | 250..1200 | ms | 1200 | 10 | Minimum time between two casts. |
 | combat.castPerSkill | 1 | 0..1 | bool | 0 | 1 | 1 = the gap after a cast is at least that skill's cast length (Lightning and Chain Lightning take 760 ms in Game.exe, longer than the flat gap; d2d casts them as plain SC and keeps 650); 0 = the flat cast gap for every skill. |
 | combat.castMarginMs | 90 | 0..400 | ms | 400 | 1 | Added to the cast length (in 40 ms ticks, plus one dispatch tick) for the per-skill gap; 90 ms keeps the early Sorceress bolts at the old 650. |
-| combat.castFCR | 0 | 0..200 | % | 0 | 1 | Faster cast rate the per-skill gap assumes; 0 is safe for any gear, a real value shortens the gap of the slow skills. |
+| combat.castFCR | 0 | 0..200 | % | 0 | 2 | Faster cast rate the per-skill gap assumes; 0 is safe for any gear, a real value shortens the gap of the slow skills. |
 | combat.lowManaWaitMs | 700 | 300..3000 | ms | 3000 | 1 | Pause when out of mana. |
 | combat.staticCasts | 4 | 0..8 | count | 0 | 1 | Static Field casts that open an elite or boss fight. |
 | combat.staticCastsBR | 0 | 0..8 | count | 8 | 1 | Static Field casts that open the Blood Raven fight; 0 keeps the mana for the attack skill (Charged Bolt for the Sorceress). |
@@ -94,7 +94,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.staticFloorHell | 50 | 10..70 | % | 70 | 1 | Same in Hell. |
 | combat.novaManaFloor | 25 | 0..60 | mana | 60 | 1 | Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts. |
 | combat.kiteEnabled | 1 | 0..1 | bool | 0 | 2 | 1 backs away from melee monsters that get close. |
-| combat.kiteDistance | 10 | 4..20 | subtiles | 4 | 2 | Back away when a melee monster is closer than this. |
+| combat.kiteDistance | 10 | 4..20 | subtiles | 4 | 3 | Back away when a melee monster is closer than this. |
 | combat.kiteLifePct | 70 | 40..100 | % | 40 | 0 | Kite normal monsters only below this life percent. |
 | combat.kiteMaxSteps | 6 | 0..12 | count | 0 | 4 | Retreat steps per target before standing to fight. |
 | combat.kiteRetreat | 12 | 6..20 | subtiles | 6 | 10 | Length of one retreat step. |
@@ -121,16 +121,16 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.healBelowLifePct | 70 | 10..100 | % | 10 | 1 | Visit the healer in town when life is below this. |
 | town.healBelowManaPct | 30 | 0..100 | % | 0 | 1 | Visit the healer when mana is below this; 0 disables. |
 | town.tripMinHPPotions | 2 | 0..8 | count | 0 | 1 | Go to town when fewer healing potions remain (belt and pack). |
-| town.tripMinMPPotions | 1 | 0..8 | count | 0 | 2 | Go to town when fewer mana potions remain (only if the belt plan has a mana column). |
+| town.tripMinMPPotions | 1 | 0..8 | count | 0 | 1 | Go to town when fewer mana potions remain (only if the belt plan has a mana column). |
 | town.tripBeltColumnPct | 50 | 0..100 | % | 0 | 2 | Go to town when a planned belt column is filled below this. |
 | town.tripPackUsedPct | 80 | 40..100 | % | 100 | 4 | Go to town when the backpack is this full. |
 | town.tripRepairPct | 20 | 0..60 | % | 0 | 1 | Go to town when an equipped item is below this durability. |
 | town.beltFillPct | 100 | 25..100 | % | 25 | 1 | Refill each potion type to this share of its planned columns. |
-| town.tpScrollTarget | 2 | 1..20 | count | 1 | 3 | Scrolls to hold when no tome is owned. |
+| town.tpScrollTarget | 2 | 1..20 | count | 1 | 4 | Scrolls to hold when no tome is owned. |
 | town.tpMinGold | 0 | 0..1000 | gold | 1000 | 1 | Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price. |
 | town.tpTomeMinGold | 450 | 0..5000 | gold | 5000 | 2 | Buy a Tome of Town Portal when gold is at least this. |
 | town.idScrollTarget | 2 | 0..20 | count | 0 | 4 | Scrolls to hold when no tome is owned. |
-| town.minGoldReserve | 100 | 0..1e+04 | gold | 1e+04 | 4 | Optional purchases never spend below this. |
+| town.minGoldReserve | 100 | 0..1e+04 | gold | 1e+04 | 5 | Optional purchases never spend below this. |
 | town.keyTarget | 0 | 0..12 | count | 0 | 6 | Keys to hold; 0 never buys keys. |
 | town.repairBelowPct | 30 | 0..90 | % | 0 | 3 | Repair when any equipped item is below this durability. |
 | town.stashGoldBase | 300 | 0..2e+04 | gold | 2e+04 | 3 | Deposit inventory gold above this plus level times stashGoldPerLvl. Death takes ALL carried gold (LIVE G1 attempt 12: 1125 to 0), so keep little. |
@@ -156,14 +156,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old). |
 | town.sellLowGems | 1 | 0..1 | bool | 0 | 1 | 1 sells chipped and flawed gems until the Horadric Cube is in the pack or stash (decision D4, SME: the Cube recipe comes in Act 2); better gems, runes and charms stay. 0 keeps low gems for cube upgrades (old). |
 | town.tpFirstLevel | 0 | 0..30 | clvl | 30 | 1 | potionsFirst: extra floor, no first town portal scroll below this level. 0 = none (default, the SME gold rule decides); 4 with tpScrollPotions 0 restores the old BASICSFIX rule. |
-| town.tpScrollPotions | 2 | 0..10 | potions | 10 | 1 | potionsFirst: the first town portal scroll is bought only when the gold left after the kit potions covers the scroll plus this many healing potions (d2-sme order, decision D3). 0 = no gold margin. |
+| town.tpScrollPotions | 2 | 0..10 | potions | 10 | 2 | potionsFirst: the first town portal scroll is bought only when the gold left after the kit potions covers the scroll plus this many healing potions (d2-sme order, decision D3). 0 = no gold margin. |
 | town.idScrollNeed | 1 | 0..1 | bool | 0 | 2 | 1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old). |
 | town.bankFirst | 1 | 0..1 | bool | 0 | 2 | 1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old). |
 | town.repairLatch | 1 | 0..1 | bool | 0 | 1 | 1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old). |
 | town.tripMinSpend | 0 | 0..500 | gold | 500 | 2 | A pure restock trip (healing potions below the resupply line, mana, belt columns, portal scroll) with a healing potion still in the belt starts only when the planned purchase is worth this much; a character with gold under the kit line and under 2 healing potions also buys no portal scroll (potions first). docs/goldfloor.md: 83% of NAVSOAK trips bought under 30 gold. 0 = off (old), the default: levers A and B are off after the failed A/B of 2026-10-31. |
 | town.mpCapEarly | 0 | 0..8 | count | 0 | 2 | Mana potions one visit buys below mpCapLevel; only used while mpCapLevel > 0, so set mpCapEarly 1 together with mpCapLevel 10 for the goldfloor lever (OFF by default after the failed A/B, docs/goldfloor.md finding 3: mana was 74 to 305 gold/h at clvl 1-10). |
 | town.mpCapLevel | 0 | 0..40 | clvl | 40 | 1 | Below this level mpCapEarly caps the mana purchase and a low mana belt raises no town trip. 0 = off (old). |
-| town.choreBudgetS | 150 | 30..600 | s | 30 | 1 | Time one Chores call may take before it gives up. |
+| town.choreBudgetS | 150 | 30..600 | s | 30 | 2 | Time one Chores call may take before it gives up. |
 
 ### loot.*
 
@@ -258,7 +258,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 |---|---|---|---|---|---|---|
 | merc.reviveMaxPerHour | 2 | 0..12 | count | 2 | 2 | Most merc revives in one hour; a merc that keeps dying costs more than it saves. |
 | merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the price plus merc.kitReservePct of the full kit refill (potions come first). |
-| merc.stopDeathsPerHour | 3 | 1..12 | count | 3 | 2 | More merc deaths than this in an hour stop reviving until gold reaches the stop multiple. |
+| merc.stopDeathsPerHour | 3 | 1..12 | count | 3 | 3 | More merc deaths than this in an hour stop reviving until gold reaches the stop multiple. |
 | merc.stopGoldMult | 5 | 1..20 | x | 5 | 2 | While reviving is stopped by deaths, revive only with gold of at least this many times the price. |
 | merc.hireGoldMult | 1 | 1..10 | x | 1 | 2 | Hire or replace only when gold is at least this many times the quote plus merc.kitReservePct of the full kit refill. |
 | merc.freeRogueOnly | 0 | 0..1 | bool | 0 | 2 | 1 never pays for the Act 1 Rogue, even once Blood Raven is skipped for good; 0 allows that fallback. |
@@ -271,7 +271,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |
-| merc.enabled | 1 | 0..1 | bool | 1 | 1 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
+| merc.enabled | 1 | 0..1 | bool | 1 | 2 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
 
 ### campaign.*
 
@@ -288,8 +288,11 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 |---|---|---|---|---|---|---|
 | route.monasteryMinLevel | 14 | 10..40 | levels | 14 | 2 | The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003; merc decision 2026-11-02): 14 with a full kit, was 16 and 20, so a dead or missing merc does not block the road (the living-merc floors rate a 140-HP Rogue too high). If road deaths fail the death rule at 14 in the act1run soak raise it to 16 or 18 and re-grill. 20 restores the old number. |
 | route.monasteryMinLevelMerc | 14 | 0..40 | levels | 14 | 2 | The same floor with a living merc (unknown counts as none). Interim (ADR 0011): 14. 0 restores the old rule: a living merc opens the road at any level. |
-| route.towerMinLevel | 16 | 0..40 | levels | 16 | 6 | The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl, and with the supply kit (4 healing, a portal, mana for casters). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 16)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. Interim (ADR 0011): 16, was 20. 0 turns the tower guard off. |
+| route.towerMinLevel | 15 | 0..40 | levels | 15 | 7 | The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl AND with route.towerMinLife max life, and with the supply kit (4 healing, a portal with charges, route.towerKitMana mana potions for a class that uses mana). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 15) or (no merc, life N < 150)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. SME 2026-11-04 (user-approved, numbers U): 15 plus life 150, was 16 (ADR 0011 interim) and 20. 0 turns the tower guard off. |
 | route.towerMinLevelMerc | 14 | 0..40 | levels | 14 | 4 | The Forgotten Tower floor with a living merc while route.towerNeedsMerc is 0. Interim (ADR 0011): 14. 0 means the no-merc floor applies to a merc too. |
+| route.towerMinLife | 150 | 0..1000 | life | 150 | 4 | Without a living merc the Forgotten Tower also needs this max life (log: route guard: blocked tower (no merc, life N < 150)). U: SME number, tuned by the death loop. 0 turns the life rule off. While max life cannot be read the fallback floor route.towerMinLevelNoLife applies and the log says so. |
+| route.towerMinLevelNoLife | 16 | 0..40 | levels | 16 | 1 | The no-merc clvl floor while max life is not readable (the pre-life rule, ADR 0011 interim). Log: route guard: blocked tower (no merc, clvl N < 16 (max life unreadable, fallback floor)). |
+| route.towerKitMana | 3 | 0..12 | potions | 3 | 2 | Mana potions the Forgotten Tower kit wants for a class that uses mana every attack (Sorceress, Necromancer, Druid; resource.ManaNeed 2). A melee build such as the Barbarian is not asked. U: SME number. |
 | route.towerNeedsMerc | 0 | 0..1 | bool | 0 | 3 | 0: a living mercenary only lowers the Forgotten Tower floor to route.towerMinLevelMerc (an unknown merc counts as none). 1: a living merc opens the tower at any level (the old rule). |
 
 ### resource.*
@@ -314,7 +317,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.reserveGold | 30 | 0..200 | gold | 0 | 2 | Never spend below this on potions. |
 | resource.potionGoldPct | 80 | 30..100 | % | 30 | 1 | Share of spendable gold potions may take when not poor. |
 | resource.hpFirst | 3 | 1..6 | count | 1 | 8 | Healing potions bought before any mana potion. |
-| resource.mpFirst | 2 | 0..6 | count | 0 | 2 | Mana potions bought for casters after the first healing potions. |
+| resource.mpFirst | 2 | 0..6 | count | 0 | 3 | Mana potions bought for casters after the first healing potions. |
 | resource.tripHPMin | 1 | 0..4 | count | 0 | 2 | Town trip when healing potions are at or below this. |
 | resource.tripMPMin | 0 | 0..4 | count | 0 | 1 | Town trip (casters) when mana potions are at or below this. |
 | resource.tripMinGold | 60 | 30..300 | gold | 30 | 2 | Below this gold a potion trip is futile. |
@@ -323,7 +326,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
 | resource.kitTPGold | 100 | 50..200 | gold | 50 | 7 | Price of one town portal scroll, for the minimal-kit cost. |
-| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 8 | Price of the cheapest healing potion, for the minimal-kit cost. |
+| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 10 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |
@@ -337,8 +340,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripBudget | 3 | 0..10 | trips | 0 | 3 | Finished town trips allowed per window before a thin belt no longer sends the bot home (it drinks and fights on). 0 = no budget. |
 | resource.tripWindowMin | 10 | 1..60 | min | 1 | 3 | Minutes the trip budget looks back. |
 | resource.tripGoldFloor | 300 | 0..1000 | gold | 0 | 4 | Below this gold a thin belt does not trigger a retreat and town buys only one portal scroll. 0 = off. |
-| resource.recoveryOn | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a broke character pauses its quest step, farms gold and sellable loot in a safe area and returns at the target (docs/recovery.md). 0 = old behaviour. |
-| resource.recoveryKitGold | 500 | 200..1000 | gold | 1000 | 6 | Recovery starts when gold is below this and the missing kit (portal, potions) costs more than the gold. SME: about 400-600. |
+| resource.recoveryOn | 1 | 0..1 | 0/1 | 0 | 2 | 1 = a broke character pauses its quest step, farms gold and sellable loot in a safe area and returns at the target (docs/recovery.md). 0 = old behaviour. |
+| resource.recoveryKitGold | 500 | 200..1000 | gold | 1000 | 7 | Recovery starts when gold is below this and the missing kit (portal, potions) costs more than the gold. SME: about 400-600. |
 | resource.recoveryTargetGold | 900 | 400..2000 | gold | 400 | 2 | Recovery ends at this gold once the loot is sold. SME: 800-1000. |
 | resource.recoveryMaxMin | 45 | 10..120 | min | 10 | 3 | Longest recovery cycle; it ends at the cap even when the target is not reached. SME: 30-60. |
 | resource.recoveryCooldownMin | 15 | 0..120 | min | 0 | 1 | Minutes after a recovery before the next one may start. |
@@ -347,10 +350,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |
 | resource.recoveryXPEarly | 0 | 0..3 | levels | 0 | 1 | XP pick: a recovering character may enter an area this many levels below its plan enter and kit level (XPGAP: Cold Plains pays 1.5x the XP per kill of Blood Moor at the same kill rate). 0 = the plan levels. |
 | resource.recoveryKitGate | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering character with no healing potion in the belt or no town portal scroll farms only Blood Moor and Cold Plains and its walks avoid dungeon areas (Den, caves, Burial Grounds, Crypt, Mausoleum; KITGATE). 0 = the old area choice. |
-| resource.kitGateLevel | 8 | 0..20 | level | 20 | 1 | KITGATELEVEL: below this character level an incomplete kit holds a recovering character in Blood Moor and Cold Plains; from it the gate holds only a character with no portal and no healing potion, any other incomplete kit makes a town trip and the area progression goes on. 0 = the gate holds at every level. |
+| resource.kitGateLevel | 8 | 0..20 | level | 20 | 2 | KITGATELEVEL: below this character level an incomplete kit holds a recovering character in Blood Moor and Cold Plains; from it the gate holds only a character with no portal and no healing potion, any other incomplete kit makes a town trip and the area progression goes on. 0 = the gate holds at every level. |
 | resource.kitMinHP | 4 | 1..6 | count | 1 | 0 | Minimum kit from kitGateLevel: healing potions (belt, pack, rejuvenation). Advisor range 4-6. |
 | resource.kitMinMP | 3 | 0..4 | count | 0 | 0 | Minimum kit from kitGateLevel: mana potions in the belt. Advisor range 3-4. Casters only (a build that needs no mana is not asked). |
-| resource.kitTripCap | 2 | 1..5 | trips | 5 | 1 | Kit town trips with the kit still incomplete before the bot proceeds anyway and logs kitgate-skip. |
+| resource.kitTripCap | 2 | 1..5 | trips | 5 | 2 | Kit town trips with the kit still incomplete before the bot proceeds anyway and logs kitgate-skip. |
 | resource.povertySellMin | 0 | 0..16 | items | 0 | 1 | A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll. |
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |

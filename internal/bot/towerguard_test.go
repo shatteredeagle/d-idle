@@ -117,7 +117,7 @@ func TestRecoveryAllUnreachableInGuardedAreaLeavesFirst(t *testing.T) {
 	}
 }
 
-// The SME tower rule through the bot: max life from the snapshot, 150 opens it at clvl 15, 149 logs the life reason,
+// The SME Forgotten Tower rule through the bot: max life from the snapshot, 150 opens it at clvl 15, 149 logs the life reason,
 // an unreadable (0) life falls back to 16; the mana part of the kit follows resource.ManaNeed (Barbarian none).
 func TestTowerLifeRuleThroughTheBot(t *testing.T) {
 	for _, c := range []struct {

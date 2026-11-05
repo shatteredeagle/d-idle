@@ -1,0 +1,2 @@
+BACKLOG: Forgotten Tower guard: no merc needs clvl 15, max life 150 and the kit; merc clvl 14; unreadable life falls back to clvl 16 (SME, user-approved 2026-11-04, numbers U; folded into task-18)
+CHANGELOG: Forgotten Tower guard now opens at clvl 15 with max life 150 and the kit without a merc (was clvl 16), clvl 14 with a merc; new knobs route.towerMinLife, route.towerMinLevelNoLife, route.towerKitMana

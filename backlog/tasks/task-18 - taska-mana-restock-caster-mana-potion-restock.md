@@ -18,6 +18,16 @@ owns:
   - "internal/town/manarestock_test.go"
   - "internal/town/earlygear_test.go"
   - "internal/town/town_test.go"
+  - "internal/env/tuning_route.go"
+  - "internal/task/route.go"
+  - "internal/task/world.go"
+  - "internal/task/towerlife_test.go"
+  - "internal/task/floors_test.go"
+  - "internal/bot/routeguard.go"
+  - "internal/bot/task.go"
+  - "internal/bot/towerguard_test.go"
+  - "internal/bot/routeguard_test.go"
+  - "docs/knobs.md"
   - "backlog/tasks/task-18 - taska-mana-restock-caster-mana-potion-restock.md"
 exclusive: []
 contracts:
@@ -49,6 +59,8 @@ Change: for a caster (`resource.ManaNeed` >= 2: Sorceress, Necromancer, Druid) t
 - [x] #4 trip gating: gold for a potion required, class from ManaNeed
 - [x] #5 go test -p 1 ./internal/town ./internal/resource ./internal/bot pass
 - [ ] #6 live proof (Gate 2/3 run, below)
+- [x] #7 TASK-D folded in (SME, user-approved 2026-11-04, numbers U): Forgotten Tower without a living merc needs clvl 15, max life 150 and the kit (4 healing, a portal with charges, 3 mana potions for a class with ManaNeed 2); with a living merc clvl 14; max life unreadable falls back to clvl 16 (TestTowerFloorLifeAndKit, TestTowerLifeLogLine, TestTowerLifeRuleThroughTheBot, TestFillTowerManaFollowsTheManaColumn)
+- [ ] #8 live proof of the tower guard (Gate 2/3 run, below)
 <!-- AC:END -->
 
 ## Implementation Notes
@@ -61,4 +73,8 @@ Live proof line (Gate 2/3 log): `town: restocked mana potions bought=N mpBefore=
 Two existing fixtures (TestNeedsTrip, TestFoundGearTripOnlyForNeededWeapon) held one mana potion as "stocked"; they now hold two, since a caster below MPFirst has its own trip reason.
 
 Not verified (U): rig vendor prices are higher than the game's; the number of trips per hour with the new threshold (the existing trip budget in resource.TripBudgetSpent still applies upstream) needs a live run.
+
+TASK-D (Forgotten Tower floor), folded into this task because the card cap (ADR 0015) allows no new open task. Old rule: `DefaultRouteTuning` TowerMinLevel 16 (internal/env/tuning_route.go), applied by `towerFloor` (internal/task/route.go). New knobs (defaults): `route.towerMinLevel` 15, `route.towerMinLife` 150 (0 = life rule off), `route.towerMinLevelNoLife` 16, `route.towerKitMana` 3, `route.towerMinLevelMerc` 14 unchanged. The merc is no longer required. Build-specific: all numbers are Route knobs; the mana part follows `resource.ManaNeed` >= 2 (Barbarian unchanged). Contract prose in merc-policy (lines about the Forgotten Tower floor 16) is owned by the m3-merc tasks and not edited here; proposed text: "Forgotten Tower: no merc clvl 15 and max life 150 and the kit, merc clvl 14, unreadable life clvl 16 (SME 2026-11-04, U)".
+
+Live proof line (Gate 2/3 log): `route guard: forgotten tower floor=15 (merc=none)`, a closed guard logs `route guard: blocked tower (no merc, life 149 < 150)`; an unreadable life logs `route guard: forgotten tower floor=16 (merc=none) (max life unreadable, fallback floor)`. Not run live.
 <!-- SECTION:NOTES:END -->
