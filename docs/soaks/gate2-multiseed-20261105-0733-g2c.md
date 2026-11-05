@@ -83,3 +83,29 @@ Fix queue (one agent per failing criterion): written by the reviewing agent from
 ## Notes (U)
 - The invariants scan sees only the compressed minute logs (minute lines, death and exit lines), not the full bot logs: wedge or hang signatures that appear only in other lines are not counted here; the per-seed records carry the full-log judge result.
 - Seeds 16 to 23 are the holdout set of the d2dsoak report (docs/geninv.md); use seeds outside it for tuning-related reruns.
+
+## Signature counts in bot-0.log (V, `grep -cF` on the worker host)
+| signature | s11 | s13 | s17 |
+|---|---|---|---|
+| item stuck on the cursor | 0 | 29500 | 0 |
+| cursor: stuck / cleared before pickup / dropped | 0 / 0 / 0 | 0 / 0 / 0 | 0 / 0 / 0 |
+| fallback=newportal | 22 | 21 | 26 |
+| fresh game held back | 24 | 45 | 0 |
+| leveling: blocked: needs input | 0 | 0 | 0 |
+| town: restocked mana potions | 518 | 412 | 473 |
+| route guard: blocked tower | 554 | 583 | 547 |
+| route guard: forgotten tower floor | 3 | 3 | 5 |
+| boss: held for andariel | 12 | 12 | 14 |
+| chose chicken first | 58 | 35 | 54 |
+| save point: saving and re-entering the game | 58 | 79 | 52 |
+| no eligible reachable leveling area | 0 | 10700 | 10 |
+| revive skipped (gold) | 4 | 391 | 405 |
+
+Last hold line on every seed: `clvl=17 floor=17 merc=dead` (unattended hold, throwaway fight not won).
+
+## Seed 13 stall (V, from the minute log)
+The `cursor:` lines (fix #187, fixcursor3) are absent because the binary of this run predates that fix. XP is frozen at 277937 from
+virtual minute 2252 of 10274 (first such minute logged 2026-11-05 05:24 EST) to the end: 8022 virtual minutes, 78 percent of the
+virtual run and about 128 of 480 wall minutes (27 percent); clvl 17, 1 death, fresh-game counter 92 at the freeze and 1162 at the end.
+The injected fault at 60 wall min also did not recover (no re-entry in 200 s), the same loop. The minute log is kept whole
+(240 KB compressed, under the 256 KB guard).
