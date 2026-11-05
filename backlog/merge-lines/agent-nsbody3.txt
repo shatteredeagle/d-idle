@@ -1,0 +1,1 @@
+BACKLOG: no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification)
