@@ -160,6 +160,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.idScrollNeed | 1 | 0..1 | bool | 0 | 2 | 1 buys identify scrolls only while an unidentified set, rare, unique or crafted item is in the pack; 0 = always idScrollTarget (old). |
 | town.bankFirst | 1 | 0..1 | bool | 0 | 2 | 1 deposits gold above the keep line (never below the minimal kit) before the shop; 0 = the shop spends first (old). |
 | town.repairLatch | 1 | 0..1 | bool | 0 | 1 | 1 retries a repair that changed nothing only after durability changed or gold grew by futileGoldStep; 0 = every visit (old). |
+| town.tripEmptyHPBelt | 1 | 0..1 | on/off | 0 | 1 | Go to town when the belt and pack hold no healing potion (Rejuvenation does not count, as in the BELT gate) and the gold buys one. 0 = off. |
 | town.tripMinSpend | 0 | 0..500 | gold | 500 | 2 | A pure restock trip (healing potions below the resupply line, mana, belt columns, portal scroll) with a healing potion still in the belt starts only when the planned purchase is worth this much; a character with gold under the kit line and under 2 healing potions also buys no portal scroll (potions first). docs/goldfloor.md: 83% of NAVSOAK trips bought under 30 gold. 0 = off (old), the default: levers A and B are off after the failed A/B of 2026-10-31. |
 | town.mpCapEarly | 0 | 0..8 | count | 0 | 2 | Mana potions one visit buys below mpCapLevel; only used while mpCapLevel > 0, so set mpCapEarly 1 together with mpCapLevel 10 for the goldfloor lever (OFF by default after the failed A/B, docs/goldfloor.md finding 3: mana was 74 to 305 gold/h at clvl 1-10). |
 | town.mpCapLevel | 0 | 0..40 | clvl | 40 | 1 | Below this level mpCapEarly caps the mana purchase and a low mana belt raises no town trip. 0 = off (old). |
@@ -330,7 +331,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
 | resource.kitTPGold | 100 | 50..200 | gold | 50 | 7 | Price of one town portal scroll, for the minimal-kit cost. |
-| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 10 | Price of the cheapest healing potion, for the minimal-kit cost. |
+| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 11 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |
@@ -362,7 +363,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
-
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)

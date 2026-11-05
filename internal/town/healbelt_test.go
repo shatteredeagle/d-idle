@@ -30,13 +30,13 @@ func healBeltRig(t *testing.T, class d2.Class, gold int) (*rig, *bytes.Buffer) {
 // Rejuvenation is no healing potion: the shop buys one even though no belt column is free.
 func TestShopBuysHealingWhenOnlyRejuvenationAndMana(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
-		r, _ := healBeltRig(t, class, 88)
+		r, buf := healBeltRig(t, class, 88)
 		rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true})
 		if err != nil {
 			t.Fatal(err)
 		}
 		if boughtLike(rep, "Healing") < 1 {
-			t.Errorf("class %v: bought %v, want a healing potion", class, rep.Bought)
+			t.Errorf("class %v: bought %v, want a healing potion; %s", class, rep.Bought, buf)
 		}
 	}
 }
@@ -45,11 +45,13 @@ func TestShopBuysHealingWhenOnlyRejuvenationAndMana(t *testing.T) {
 func TestEmptyHealingBeltTrip(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
 		r, buf := healBeltRig(t, class, 88)
+		r.Env.Tune.Town.TripMinHPPotions = 0
 		s, _ := r.W.Snapshot()
 		if got, why := r.T.NeedsTrip(s); !got || !strings.Contains(why, "no healing potion") {
 			t.Errorf("class %v rich: NeedsTrip = %v (%s)", class, got, why)
 		}
 		r, buf = healBeltRig(t, class, 0)
+		r.Env.Tune.Town.TripMinHPPotions = 0
 		s, _ = r.W.Snapshot()
 		for i := 0; i < 3; i++ {
 			if got, why := r.T.NeedsTrip(s); got && strings.Contains(why, "no healing potion") {

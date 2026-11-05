@@ -180,6 +180,7 @@ func (t *Town) potionsWanted(s *d2.Snapshot) map[belt.Kind]int {
 			delete(want, k)
 		}
 	}
+	t.ensureHealing(s, band, bs, want)
 	return want
 }
 
