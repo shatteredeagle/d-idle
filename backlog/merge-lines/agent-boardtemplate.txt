@@ -1,1 +1,1 @@
-CHANGELOG: Backlog.md read-only web board deployed on the NAS as a Docker-tab template behind the proxy and the central login; deploy script and doc (docs/process/backlog-board-tower.md)
+CHANGELOG: Backlog.md read-only web board deployed on the NAS as a Docker-tab template behind the proxy and the central login; deploy script and doc (backlog-board doc in docs/process)

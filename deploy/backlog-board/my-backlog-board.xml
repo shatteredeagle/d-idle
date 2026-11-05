@@ -23,7 +23,7 @@
   <DateInstalled/>
   <DonateText/>
   <DonateLink/>
-  <Requires>Built locally (backlog-board:1.55.3), so "check for updates" shows "not available". Needs its own br0 IP because NPM cannot reach Tower's own IP. See deploy/backlog-board/deploy.sh.</Requires>
+  <Requires>Built locally (backlog-board:1.55.3), so "check for updates" shows "not available". Needs its own br0 IP because NPM cannot reach the NAS's own IP. See deploy/backlog-board/deploy.sh.</Requires>
   <Config Name="Board port" Target="6420" Default="6420" Mode="tcp" Description="Listener inside the container (br0 IP, so no host mapping)" Type="Port" Display="always" Required="false" Mask="false">6420</Config>
   <Config Name="Data" Target="/data" Default="/mnt/user/appdata/backlog-board/data" Mode="rw" Description="Repo mirror" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/backlog-board/data</Config>
   <Config Name="Repo URL" Target="REPO_URL" Default="https://github.com/shatteredeagle/d-idle" Mode="" Description="" Type="Variable" Display="advanced" Required="true" Mask="false">https://github.com/shatteredeagle/d-idle</Config>

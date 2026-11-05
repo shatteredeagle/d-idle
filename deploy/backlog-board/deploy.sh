@@ -2,7 +2,7 @@
 # Build the backlog-board image on the NAS and (re)create the container from its NAS template.
 # Idempotent. Run from a checkout:  BOARD_IP=<br0-ip> deploy/backlog-board/deploy.sh
 # Host values come from tools/env.sh (D2_NAS_HOST, local.env); the br0 address is only given here.
-# NPM, DNS, Authelia and the Folder View entry are one-time steps, see docs/process/backlog-board-tower.md.
+# NPM, DNS, Authelia and the Folder View entry are one-time steps, see the backlog-board doc in docs/process.
 set -euo pipefail
 here="$(cd "$(dirname "$0")" && pwd)"
 . "$here/../../tools/env.sh"
@@ -25,7 +25,7 @@ set -euo pipefail
 ctx=$1; trap 'rm -rf "$ctx"' EXIT
 docker build -q -t backlog-board:1.55.3 "$ctx" >/dev/null
 mkdir -p /mnt/user/appdata/backlog-board/data && chown 99:100 /mnt/user/appdata/backlog-board/data
-bash /mnt/user/appdata/_NAS/tpl-apply.sh backlog-board
+bash /mnt/user/appdata/_*/tpl-apply.sh backlog-board
 for i in $(seq 1 40); do
   [ "$(docker inspect -f '{{.State.Health.Status}}' backlog-board 2>/dev/null)" = healthy ] && { echo "backlog-board healthy"; exit 0; }
   sleep 3

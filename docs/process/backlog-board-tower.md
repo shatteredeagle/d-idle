@@ -1,6 +1,6 @@
 # Backlog.md web board on the NAS (read-only mirror)
 
-> status: DEPLOYED 2026-11-05 as an NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager and Authelia). Files: `deploy/backlog-board/`. The Compose Manager sections below are SUPERSEDED. Tags: V verified (how), S secondary, U unverified.
+> status: DEPLOYED 2026-11-05 as a NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager and Authelia). Files: `deploy/backlog-board/`. The Compose Manager sections below are SUPERSEDED. Tags: V verified (how), S secondary, U unverified.
 
 The board is for viewing. Task edits stay in git through agents; nothing written through the web UI survives.
 
@@ -18,7 +18,7 @@ The board is for viewing. Task edits stay in git through agents; nothing written
 - `docker-compose.yml`, `docker-compose.br0.yml`: SUPERSEDED, kept for reference only. Do not start them: that would create a duplicate container.
 
 ## Accepted method (deployed 2026-11-05)
-The NAS runs its containers as Docker-tab templates (`my-<name>.xml` in the dockerMan user templates, applied with `/mnt/user/appdata/_NAS/tpl-apply.sh NAME`), not as Compose Manager stacks. Locally built images are built with `docker build`, then `tpl-apply.sh`. So:
+The NAS runs its containers as Docker-tab templates (`my-<name>.xml` in the dockerMan user templates, applied with the helper `tpl-apply.sh NAME` in the appdata helper folder), not as Compose Manager stacks. Locally built images are built with `docker build`, then `tpl-apply.sh`. So:
 1. Pick a free br0 address: list the addresses of running containers (`docker inspect`) and grep the template files; do not ping. Take the next one above the highest in use and below the DHCP pool. NPM runs on br0 and cannot reach the NAS's own address or bridge addresses, so this app needs its own br0 address (V: the other proxied apps work this way).
 2. `BOARD_IP=<br0-ip> deploy/backlog-board/deploy.sh`. V: ran twice on 2026-11-05; the container went healthy in under a minute, the image build passed the Backlog.md checksum, limits as templated (read-only root, cap_drop ALL, 512 MB, 128 pids, user 99:100).
 3. Folder View: add `backlog-board` to the "Infra" folder in `/boot/config/plugins/folder.view/docker.json` (back the file up first; append to that folder's `containers` list with `jq`). V.
