@@ -25,7 +25,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 4 | gameexe-retire-soak | G-A | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | - | [card](archive/openspec-index.md#gameexe-retire-soak) |
 | 5 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
 | 6 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
-| 7 | decision-point-store | G-G | proposed 0/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
+| 7 | decision-point-store | G-G | in-progress 3/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
 | 8 | watch-screen | G-G | proposed 0/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
 | 9 | t0-slice | G-G | proposed 0/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
 <!-- cardsgen:active:end -->

@@ -1,7 +1,7 @@
 ---
 id: TASK-19
 title: "decision-point-store: learn-by-doing store: answers, streaks, rules, fading thoughts"
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-05T00:00:00Z'
 updated_date: '2026-11-05T00:00:00Z'
@@ -36,9 +36,13 @@ Build the decision-point store of docs/research/decision-point-store-spec.md (al
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Failing tests first: streak table (N by risk, reset on a different answer, skip, new context is a new streak), fade (a faded thought neither counts nor resets), 'not sure' (no count, no reset), confirm (risky: no resets the streak, a faded confirm leaves it unlearned), revoke one and all, no self-revoking rule
-- [ ] #2 Replay test: the same answer log gives the same rules; atomic write and refused newer version like internal/goals/store_test.go
-- [ ] #3 Two builds per the build-flexibility rule: the default Sorceress and one other class or build; no point id or band names a class; an unknown plan or class returns an error naming it
+- [x] #1 Failing tests first: streak table (N by risk, reset on a different answer, skip, new context is a new streak), fade (a faded thought neither counts nor resets), 'not sure' (no count, no reset), confirm (risky: no resets the streak, a faded confirm leaves it unlearned), revoke one and all, no self-revoking rule
+- [x] #2 Replay test: the same answer log gives the same rules; atomic write and refused newer version like internal/goals/store_test.go
+- [x] #3 Two builds per the build-flexibility rule: the default Sorceress and one other class or build; no point id or band names a class; an unknown plan or class returns an error naming it
 - [ ] #4 Rule-file test: the T0 to T2 default rule file reproduces the untrained default of spec section 5.1 on the listed contexts, gaps listed; the ADR 0016 gate 'a rule file can express today's defaults' is ticked or its remaining gaps named
 - [ ] #5 docs/decision-points.md: catalogue, bands and defaults as shipped data; go vet and go test -p 1 of the package; leakcheck 0; contracts and backlog checks clean
 <!-- AC:END -->
+
+## Implementation Notes
+
+Offline slice built in internal/decide (Pro job dpstore; notes in docs/research/decision-point-store-notes.md). Tests prove AC 1 to 3 (streaks, fades, not sure, confirm, revoke, replay, persistence, two classes, errors naming the culprit, 5 answer profiles, random-script invariants). AC 4: the default rule file covers 9 points fully, 4 partly, 10 not; gaps named in the notes, so the ADR 0016 gate stays open. AC 5: docs/decision-points.md is not written yet. Stage-2 urgency is only an interface. Nothing wired into combat; no live proof yet, so status stays In Progress until the T0 slice proves it live. Not verified live.
