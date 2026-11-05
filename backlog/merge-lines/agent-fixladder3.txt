@@ -1,1 +1,0 @@
-CHANGELOG: failsafe ladder: rung 3 (leave and re-enter) is capped per progress window (bot.failsafeRung3Max, default 6) and the pause rung backs off up to bot.failsafePauseMaxSec; fixes the g2c seed 13 loop

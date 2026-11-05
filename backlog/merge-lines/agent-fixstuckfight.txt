@@ -1,1 +1,0 @@
-CHANGELOG: nav stuck ladder at rung 2 or more with hostiles in fight radius and life under 60 percent (new knob nav.stuckFightLifePct) now fights, then takes the town portal, instead of side-stepping on; logs 'nav: stuck ladder -> fight|portal' and 'nav: area border crossed back' (Gate 2 g2c seed 13 death)

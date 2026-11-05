@@ -1,2 +1,0 @@
-BACKLOG: open-card cap of 12 removed (grill 0005, ADR 0016); backlog check accepts G-G; every card still maps to one goal
-INDEX: GLOSSARY.md gains the Automation ladder section (18 terms); ADR 0015 header amended by 0016

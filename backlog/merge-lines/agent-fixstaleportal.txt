@@ -1,1 +1,0 @@
-CHANGELOG: town: BackToField drops a town portal id after town.portalClickFails (2) failed entries and falls back to a fresh portal, the waypoint, then the walk (Gate 2 g2b stale portal); offline tested

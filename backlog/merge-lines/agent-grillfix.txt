@@ -1,1 +1,0 @@
-CHANGELOG: grill docs: the grill never pushes; the coordinator merges the local branch; guard allows git add of exact grill files only
