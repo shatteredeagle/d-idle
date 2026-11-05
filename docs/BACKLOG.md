@@ -490,6 +490,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - decision-point spec: urgency band for fight-time points, five life bands as T0 stand-in (docs/research/decision-point-store-spec.md 2.3); band edges checked against repo tables (docs/research/decision-point-band-check.md)
 - docs/process/backlog-board-NAS.md + deploy/backlog-board/: prepared Backlog.md read-only web board for the NAS (not deployed)
 - Backlog.md MCP evaluated (docs/backlog-howto.md), agent instructions block in AGENTS.md, tools/backlog/new_task.py wrapper, .mcp.json
+- record the PR #200 follow-up (MSVC shadowing fix, efb244d8) in the open-PR log
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
