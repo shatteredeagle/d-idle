@@ -17,7 +17,7 @@ labrun <worker> -- sh -c 'go build -o /tmp/d2drill-t0 ./cmd/d2drill'
 Then, in a d2d slot (the d2drill pattern of the other drill groups; the slot starts its own headless d2d, no game instance of the worker host):
 
 ```
-D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -n 0 -t 3600 -- /tmp/d2drill-t0 -group T0 -label t0-all -repeat 1
+D2D_BIN=<Gate 2 lab binary> D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -n 0 -t 3600 -- /tmp/d2drill-t0 -group T0 -label t0-all -repeat 1
 ```
 
 Single profile or the scripted file (JSON, see `ladder.ScriptFile`):
@@ -26,6 +26,8 @@ Single profile or the scripted file (JSON, see `ladder.ScriptFile`):
 ... -- /tmp/d2drill-t0 -group T0 -only T0.cautious -label t0-cautious -repeat 1
 ... -- /tmp/d2drill-t0 -group T0 -t0-profiles file -t0-answers docs/probes/t0-answers.json -label t0-file -repeat 1
 ```
+
+`D2D_BIN` is required (no default): it must name the Gate 2 lab binary, the fork build with the setup verbs `debug clearinv`, `debug durability` and `debug stat`. Unset, d2drill exits 2 naming `D2D_BIN`; a stale binary answers a setup verb with its usage text and the drill fails with `lab binary lacks verb X, check D2D_BIN`.
 
 Flags: `-t0-profiles` (default `cautious,bold,inconsistent,holdout:101,holdout:202`), `-t0-minutes` (default 10), `-t0-answers`, `-t0-dir` (default: answers in memory). Via `tools/live.sh t0drill d2drill -group T0 ...` if the ship-and-run wrapper is wanted; it must use a hidden instance (i1..i5), never i0.
 
@@ -40,7 +42,7 @@ The drill is a town drill. Five points are wired (`t1.repair`, `t1.tp.lost`, `t1
 Exact command (all 5 runs; needs the build line above first):
 
 ```
-D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -n 0 -t 3600 -- /tmp/d2drill-t0 -group T0 -label t0-all -repeat 1
+D2D_BIN=<Gate 2 lab binary> D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -n 0 -t 3600 -- /tmp/d2drill-t0 -group T0 -label t0-all -repeat 1
 ```
 
 ## What to read
@@ -95,3 +97,5 @@ Defects found (not fixed here):
 4. `cmd/d2drill` default `-bin` is the stale `d2d.lab6` (no setup verbs): the town drill needs `D2D_BIN` pointing at the freezeresume lab binary (Gate 2 build, fork ee5e06d8ef99); with it the town drill passes on all 5 profiles. Documented only, no code change.
 
 Acceptance of TASK-21: criteria 2 and 3 are NOT met by this run (no thought was answered, so no rule, no answer count; the fight-time points stayed quiet). Re-run after defect 1 and 2 are fixed.
+
+Fixes (branch agent/drillfix, offline tested, live re-drill pending): defect 1: `InFight` is now `Runner.engaged` (hostile within `combat.fightRadius` of the last snapshot), test `TestLadderQuestionsReachThePlayerInTheField`; defect 2: `bot.NewTuner` takes a post hook (`ladderPost` in `cmd/d2bot`) applied after every build, tests `TestTunerPostSurvivesReloadAndEdit` and `TestLadderPostKeepsTheFlagAcrossATuningFile` (the workaround of moving tuning.json aside is no longer needed); defect 3 (`tools/live.sh` and `D2BOT_INSTANCE`) is in the private ops repo, still open, keep passing `D2_INSTANCE=iN`; defect 4: `-bin` has no default, `D2D_BIN` is required, a usage reply to a setup verb is reported as a stale binary.

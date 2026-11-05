@@ -154,12 +154,20 @@ func (l *lab) Cheat(ctx context.Context, actor, verb, reason string) (string, er
 	if r != nil {
 		out = strings.TrimSpace(strings.Join(append(append([]string{}, r.Lines...), r.Rest), "\n"))
 	}
+	if err == nil && usageReply(out) {
+		err = fmt.Errorf("lab binary lacks verb %q (d2d answered with its usage text), check D2D_BIN", verb)
+	}
 	e.Time, e.Success, e.After = time.Now().UTC(), err == nil, map[string]any{"reply": out}
 	if err != nil {
 		e.Error = err.Error()
 	}
 	_ = l.led.Append(e)
 	return out, err
+}
+
+// usageReply reports d2d's usage text, which an unknown verb gets instead of an error (a stale lab binary).
+func usageReply(out string) bool {
+	return strings.Contains(strings.ToLower(out), "usage")
 }
 
 // ---- drill.BeltLab ----
