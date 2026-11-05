@@ -741,3 +741,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 <!-- END GENERATED INDEX -->
 - docs/process/backlog-board-NAS.md - read-only Backlog.md web board on the NAS: compose stack, sync mirror, UI steps
+- docs/research/decision-point-store-notes.md | what internal/decide implements, stage-2 stubs, rule-file gaps
