@@ -1,5 +1,5 @@
 ---
-status: accepted
+status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap)
 date: 2026-11-05
 decision-makers: user (grill 0005)
 ---
@@ -109,7 +109,7 @@ Tags: V read in the repo, S secondary or memory, U unverified, D the user's deci
 
 * The final product as a bespoke d2d fork carrying lockstep, cheats and game features (user expectation). Must be squared with ADR 0003 and the ADR 0015 rule that deviations are fixed upstream.
 * End game content, once the core is solid; the altar is what enables it. Own grill, trigger above.
-* Removing the card cap: the user said "the backlog shouldn't have a card limit, the WIP limit stays". Amends ADR 0015 item 11 and needs its own record; the cap stands until then.
+* Removing the card cap: the user said "the backlog shouldn't have a card limit, the WIP limit stays". Amends ADR 0015 item 11 and needs its own record; the cap stands until then. (Superseded 2026-11-05, see the Amendment below: the cap is removed.)
 * Several heroes at once.
 * How story and dialogue are written. Text must be our own; check docs/contracts/licence-policy.md.
 * Runeword details: what the hero does on finding the exact goal rune, and who picks the runeword.
@@ -123,6 +123,29 @@ Tags: V read in the repo, S secondary or memory, U unverified, D the user's deci
 * Work on T4 and Gate A stops being next; the cards stay. Upstream fixes, basics drills and defect cards continue where they serve the tier being built.
 * More test runs: seeds and answer profiles multiply. The store card sizes this; the full matrix runs only at tier boundaries.
 * Rebirth adds a test state (rules present, character fresh).
+
+
+## Amendment 2026-11-05 (user approval 2026-11-05): risk class per key, fight urgency band, card cap removed
+
+The original text above stays as written. These three points amend items 13 and 14 and the Parked list.
+
+### Item 13 clarification: risk class is fixed per context key
+
+Risk class is fixed per context key in the catalogue: the class is a table lookup on the key, and the key's kit band and hardcore flag are part of it. A class never changes at run time while the key stays the same. Answers remain fixed choices.
+
+Source: docs/research/decision-point-store-spec.md section 5.4; the SME review docs/research/decision-point-sme-review.md; user decision 2026-11-05 "go with the SME answer". The 9 points the SME review listed as missing were added to the catalogue, which now has 23 points (spec section 5.2). The catalogue stays final only after the d2-sme review gate (done) plus the band-edge check.
+
+### Item 14 amendment: fight-time points key on one urgency band
+
+Fight-time decision points key on ONE derived urgency band: calm, wary, urgent, critical. It is computed from life, the restore of the best potion in the belt, recent damage, the largest recent hit (hits to live) and whether the hero is still being hit. The formula and the band edges are tunable data in the store spec (spec section 2.3).
+
+The user's reasoning: potion use depends on how much the potion restores and whether damage continues, not on life percent, and the same percent is a different situation at clvl 5 and at clvl 30.
+
+Staging: until combat computes urgency, five life bands are the stand-in for the T0 slice. Their edges are 25, 35, 55 and 70 percent, today's knobs combat.chickenPct, drinkRejuvPct, drinkLifePct and healBelowLifePct/kiteLifePct. The hero shows the urgency inputs in the Thoughts feed. Non-fight points keep ordinary bands.
+
+### Parked update: the card cap is removed
+
+The Parked line "Removing the card cap ... the cap stands until then" is superseded. The cap was removed on 2026-11-05 (user decision; recorded in the ADR 0015 header amendment and the Cards bullet of docs/decisions.md). The WIP limit of 3 implementation agents stays.
 
 ## Sources
 
