@@ -126,7 +126,7 @@ Link by name, not by id: the test case name or a comment carries the scenario na
 
 ### 3.6 Backlog.md tasks reference contracts
 
-- New custom frontmatter key `contracts: [soak-gates, death-rule]` on a task (Backlog.md keeps unknown keys on edit, S per `docs/backlog.md`; `task create` cannot write them, add by hand). `tools/backlog/check.py` warns when a listed id has no `docs/contracts/<id>.md`.
+- New custom frontmatter key `contracts: [soak-gates, death-rule]` on a task (Backlog.md keeps unknown keys on edit, S per `docs/backlog-howto.md`; `task create` cannot write them, add by hand). `tools/backlog/check.py` warns when a listed id has no `docs/contracts/<id>.md`.
 - Acceptance criteria name the contract and requirement: "soak-gates: Gate 1 belt and portal holds on seeds 11,16 (record docs/soaks/...)".
 - The old `skip_specs` key in the migrated tasks is dead: drop it in the stage 3 sweep.
 
@@ -160,7 +160,7 @@ Not checked: whether prose is true, scenario-to-test coverage, ops judge constan
 
 ## 4. De-provisioning map
 
-Removal plan stages: T trial (done), 0 interim rule (done), 1 Backlog.md install and migrate (done, `docs/backlog.md`), 2 stop changecheck and CI step (done; ops gates off by default), 3 archive and move contracts, 4 rewrite rules, 5 other repos. Each OpenSpec or changecheck function:
+Removal plan stages: T trial (done), 0 interim rule (done), 1 Backlog.md install and migrate (done, `docs/backlog-howto.md`), 2 stop changecheck and CI step (done; ops gates off by default), 3 archive and move contracts, 4 rewrite rules, 5 other repos. Each OpenSpec or changecheck function:
 
 | function today | where (V unless S) | action | stage | size | user go |
 |---|---|---|---|---|---|
