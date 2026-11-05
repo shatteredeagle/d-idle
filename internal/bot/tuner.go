@@ -22,6 +22,7 @@ type Tuner struct {
 	custom    *Profile
 	profile   string
 	overrides map[string]float64
+	post      []func(*env.Tuning)
 }
 
 type tunerState struct {
@@ -31,8 +32,12 @@ type tunerState struct {
 
 // NewTuner wraps tune (the pointer in env.Env.Tune) with the profile and overrides it was built from (Config).
 // path, if set, persists later edits (store.File) and restores them now.
-func NewTuner(tune *env.Tuning, cfg Config, path string) (*Tuner, error) {
-	t := &Tuner{tune: tune, custom: cfg.Custom, profile: cfg.Profile, overrides: map[string]float64{}}
+//
+// post, if given, runs on every tuning the Tuner builds (a saved file at start, every later edit) and on tune now: it
+// carries command-line switches that a rebuilt tuning must not drop (--ladder).
+func NewTuner(tune *env.Tuning, cfg Config, path string, post ...func(*env.Tuning)) (*Tuner, error) {
+	t := &Tuner{tune: tune, custom: cfg.Custom, profile: cfg.Profile, overrides: map[string]float64{}, post: post}
+	t.apply(tune)
 	if cfg.Custom != nil {
 		t.profile = t.customName()
 	}
@@ -87,7 +92,19 @@ func (t *Tuner) build(profile string, over map[string]float64) (env.Tuning, erro
 		return nt, err
 	}
 	p.Apply(&nt)
-	return nt, ApplyOverrides(&nt, over)
+	if err := ApplyOverrides(&nt, over); err != nil {
+		return nt, err
+	}
+	t.apply(&nt)
+	return nt, nil
+}
+
+func (t *Tuner) apply(nt *env.Tuning) {
+	for _, f := range t.post {
+		if f != nil {
+			f(nt)
+		}
+	}
 }
 
 // rebuild applies profile and overrides to the live tuning. Callers hold mu (or are the constructor).

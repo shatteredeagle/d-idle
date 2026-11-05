@@ -193,6 +193,15 @@ func ladderEnv(l ladderOptions, t *env.Tuning) {
 	}
 }
 
+// ladderPost is ladderEnv as a Tuner hook: a saved tuning file or a viewer edit rebuilds the whole tuning and must not
+// turn the flag off. Nil without the flag, so the config file and tuning.json stay authoritative.
+func ladderPost(l ladderOptions) func(*env.Tuning) {
+	if !l.on {
+		return nil
+	}
+	return func(t *env.Tuning) { ladderEnv(l, t) }
+}
+
 // hereFunc names the area of the runner's last snapshot ("" when unknown).
 func hereFunc(r *bot.Runner) func() string {
 	return func() string {

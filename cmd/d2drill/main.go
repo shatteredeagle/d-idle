@@ -38,7 +38,7 @@ func run() int {
 	group := flag.String("group", "D1", "drill group (D0 gate self-test, D1 belt, D2 portals and town entry, D3 town, D4 pack, D5 combat, D6 movement, D7 build, D9 lifecycle, DW waypoints, DR repair, D10 fault recovery, H hover audit, P DRILLS11 fix proofs)")
 	only := flag.String("only", "", "comma list of drill ids to run (default: the whole group)")
 	repeat := flag.Int("repeat", 2, "runs per drill (determinism check)")
-	bin := flag.String("bin", envOr("D2D_BIN", filepath.Join(home, "d2d-lab/fork/bin/d2d.lab6")), "d2d binary (the lab build)")
+	bin := flag.String("bin", envOr("D2D_BIN", ""), "d2d binary (default $D2D_BIN: the Gate 2 lab build, the fork build with the setup verbs debug clearinv/durability/stat)")
 	gamedir := flag.String("gamedir", envOr("D2D_DATA", filepath.Join(home, "d2d-lab/data")), "game data directory (read only)")
 	hdir := flag.String("home", filepath.Join(slotDir, "drillhome"), "d2d XDG home (own saves and log)")
 	cache := flag.String("cache", filepath.Join(home, "d2d-lab/drills/tables"), "extracted game tables cache")
@@ -76,6 +76,10 @@ func run() int {
 		}
 		fmt.Printf("%s: %d -> %d bytes\n", *capFile, before, after)
 		return 0
+	}
+	if *bin == "" {
+		fmt.Fprintln(os.Stderr, "d2drill: D2D_BIN is not set: point it (or -bin) at the Gate 2 lab binary, the fork build with the setup verbs debug clearinv/durability/stat; an older lab binary lacks them")
+		return 2
 	}
 	if *sock == "" || slotDir == "" {
 		fmt.Fprintln(os.Stderr, "d2drill: run inside tools/d2dslot.sh (needs D2D_SOCK and D2D_SLOT_DIR)")

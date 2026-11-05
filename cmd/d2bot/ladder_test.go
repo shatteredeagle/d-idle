@@ -12,9 +12,11 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/api"
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/goals/sim"
 	"d2lod-bot/internal/ladder"
@@ -253,5 +255,31 @@ func TestWatchServeTokenRule(t *testing.T) {
 	}
 	if code := httpDo(t, "GET", url+"?t=s3cret", nil, nil); code != 200 {
 		t.Errorf("token: %d", code)
+	}
+}
+
+func TestLadderPostKeepsTheFlagAcrossATuningFile(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "tuning.json")
+	first := env.DefaultTuning()
+	tn0, err := bot.NewTuner(&first, bot.Config{}, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	f := 20.0
+	if err := tn0.Edit(api.TuneEdit{Overrides: map[string]*float64{"combat.fightRadius": &f}}); err != nil { // writes tuning.json
+		t.Fatal(err)
+	}
+	for _, c := range []struct {
+		on   bool
+		want int
+	}{{true, 1}, {false, 0}} {
+		tune := env.DefaultTuning()
+		tn, err := bot.NewTuner(&tune, bot.Config{}, path, ladderPost(ladderOptions{on: c.on}))
+		if err != nil || tn == nil {
+			t.Fatal(err)
+		}
+		if tune.Ladder.Enabled != c.want {
+			t.Fatalf("flag %v: ladder.enabled %d, want %d", c.on, tune.Ladder.Enabled, c.want)
+		}
 	}
 }
