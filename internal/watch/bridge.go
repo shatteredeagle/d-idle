@@ -28,6 +28,7 @@ type GoalsOrders struct {
 	mu     sync.Mutex
 	byGoal map[string]int // goal id -> order id
 	byOrd  map[int]string
+	lost   string // "" playing; KindDeath after a death; KindRecovery after the respawn, until the first kill
 }
 
 func (g *GoalsOrders) Order(o Order) error {
@@ -100,8 +101,45 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 			msg += " These rules were in force; revoke one if it was a bad habit."
 		}
 		g.Hub.Incident(msg, keys...)
+		g.mu.Lock()
+		g.lost = KindDeath
+		g.mu.Unlock()
 		g.Hub.Activity(KindDeath, "dead")
+	case goals.EvAreaChange:
+		// The first area change after a death is the respawn: recovery lasts until the hero kills something again.
+		g.mu.Lock()
+		first := g.lost == KindDeath
+		if first {
+			g.lost = KindRecovery
+		}
+		g.mu.Unlock()
+		if first {
+			g.Hub.Activity(KindRecovery, "back after dying")
+		}
+	case goals.EvKill:
+		g.mu.Lock()
+		was := g.lost
+		g.lost = ""
+		g.mu.Unlock()
+		if was != "" {
+			g.Hub.Activity(KindProgress, "fighting")
+		}
+	case goals.EvError:
+		g.Hub.Activity(KindStall, ev.Message)
 	}
+}
+
+// OnStatus feeds the runner's status (poll it every few seconds): it sets the activity unless a death or its recovery
+// is still being counted, which only a kill ends.
+func (g *GoalsOrders) OnStatus(st goals.Status) {
+	g.mu.Lock()
+	lost := g.lost
+	g.mu.Unlock()
+	if lost != "" {
+		return
+	}
+	kind, label := ActivityFromStatus(st)
+	g.Hub.Activity(kind, label)
 }
 
 // ActivityFromStatus maps the runner's status to an activity kind and label. U: the town-stall rule is a placeholder

@@ -196,6 +196,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	for _, w := range warns {
 		log.Warn("tuning knob skipped", "detail", w)
 	}
+	ladderEnv(o.ladder, &tune)
 	tuner, err := bot.NewTuner(&tune, cfg, filepath.Join(ip.State(), "tuning.json"))
 	if err != nil {
 		return err
@@ -304,6 +305,12 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
+	ldir := ladderDir(ip.State())
+	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner))
+	if err != nil {
+		return err
+	}
+	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err
 	}

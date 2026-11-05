@@ -1,6 +1,9 @@
 package bot
 
 import (
+	"errors"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -103,5 +106,39 @@ func TestLadderTripAndReturnPoints(t *testing.T) {
 	}
 	if v := g.r.tripVerdict(s); v.Go {
 		t.Fatalf("learned continue: %+v stats %+v", v, l.Stats())
+	}
+}
+
+// EnableLadderWith builds the store first and hands it to wire; the knob off never calls wire; the knob off makes no state dir.
+func TestEnableLadderWithWiresAfterTheStore(t *testing.T) {
+	g := newRig(t)
+	ladder.Install(nil)
+	t.Cleanup(func() { ladder.Install(nil) })
+	dir := filepath.Join(t.TempDir(), "ladder")
+	wired := 0
+	wire := func(st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+		wired++
+		if st == nil || cat == nil || clk == nil {
+			t.Fatal("wire got nil parts")
+		}
+		return &ladder.RecordSink{}, nil, nil
+	}
+	if l, err := g.r.EnableLadderWith(dir, "human", wire); l != nil || err != nil || wired != 0 {
+		t.Fatalf("knob off: %v %v %d", l, err, wired)
+	}
+	if _, err := os.Stat(dir); err == nil {
+		t.Fatal("the knob off made the state dir")
+	}
+	g.e.Tune.Ladder.Enabled = 1
+	l, err := g.r.EnableLadderWith(dir, "human", wire)
+	if err != nil || l == nil || wired != 1 || ladder.Active() != l {
+		t.Fatalf("knob on: %v %v %d", l, err, wired)
+	}
+	ladder.Install(nil)
+	bad := func(*decide.Store, *decide.Catalogue, decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+		return nil, nil, errors.New("no screen")
+	}
+	if l, err := g.r.EnableLadderWith("", "human", bad); l != nil || err == nil || ladder.Active() != nil {
+		t.Fatalf("a failing wire must install nothing: %v %v", l, err)
 	}
 }

@@ -57,7 +57,7 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 	if o.ViewAddr == "" || o.AnswerAddr == "" {
 		return Served{}, errors.New("watch: the viewer and the answer address are both required")
 	}
-	if o.ViewAddr == o.AnswerAddr {
+	if _, port, _ := net.SplitHostPort(o.ViewAddr); o.ViewAddr == o.AnswerAddr && port != "0" {
 		return Served{}, errors.New("watch: the answer route needs its own address, apart from the viewer")
 	}
 	for _, a := range []string{o.ViewAddr, o.AnswerAddr} {
