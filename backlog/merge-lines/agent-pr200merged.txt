@@ -1,1 +1,0 @@
-BACKLOG: no-shield damage reduction PR #200 merged upstream 2026-11-05 13:22 EST (merge commit 988d39518); docs/archive/research/openpr-log.md and the esverify3 line of docs/BACKLOG.md updated
