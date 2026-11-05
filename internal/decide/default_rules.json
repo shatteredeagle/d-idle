@@ -69,7 +69,7 @@
   "gaps": [
     {"point": "t0.retreat.drink", "gap": "no band-interior split remains (v3 drinklife has the 18, 26, 50, 55, 65 edges; champbonus carries the clvl under 15 champion bonus, the caller sets it; Nightmare and Hell chicken 30 and the thin-belt retreat are not in the key)"},
     {"point": "t0.retreat.lethal", "gap": "the lethal-pack list is a placeholder enum; today danger is a level 1 to 3, no knob lists pack kinds"},
-    {"point": "t0.area.toohard", "gap": "closed in v4: merc replaces levelgap in the key; clvl 14 goes only with a living merc (tower floors 14 with, 15 without); the Monastery road floor 14 for any merc state and the tower life rule (route.towerMinLevelLife) are not in the key"},
+    {"point": "t0.area.toohard", "gap": "closed in v4: merc replaces levelgap in the key; clvl 14 goes only with a living merc (tall dungeon floors 14 with, 15 without); the Monastery road floor 14 for any merc state and the tall dungeon life rule (route.towerMinLife) are not in the key"},
     {"point": "t0.retreat.repeat", "gap": "no knob counts retreats per area; only Blood Raven has a budget (brAttempts 3), the field is reported by the call site"},
     {"point": "t0.unique.fight", "gap": "closed in v3: lifeengage has the 40 edge for this point only (the shared life field keeps 25/35/55/70); the legacy code has no avoid-champion rule above 40"},
     {"point": "t0.leave.safe", "gap": "no knob and no code path: today the hero stays and fights; the knob is a proposal"},

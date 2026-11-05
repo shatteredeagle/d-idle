@@ -154,8 +154,8 @@ func TestDefaultParityNumericPoints(t *testing.T) {
 	}
 }
 
-// legacyTooHard is the tower guard (task.TowerLevelWhy, the real code) at a clvl with the given merc state, Normal,
-// default route tuning. The tower life rule needs a readable max life above route.towerMinLife, so it is held open.
+// legacyTooHard is the tall dungeon guard (task.TowerLevelWhy, the real code) at a clvl with the given merc state, Normal,
+// default route tuning. The tall dungeon life rule needs a readable max life above route.towerMinLife, so it is held open.
 func legacyTooHard(clvl int, f map[string]string) string {
 	rt := env.DefaultTuning().Route
 	w := task.World{Level: clvl, MaxLife: 10000, Difficulty: "normal",
@@ -181,8 +181,8 @@ func legacyTooHard(clvl int, f map[string]string) string {
 
 // TestDefaultParityTooHard closes t0.area.toohard like the numeric points: every clvl 1..40 inside a clvl band of a
 // context gives one legacy answer (0 splits) equal to the default and the rule file (0 mismatches). Two builds. The
-// Monastery road floor (14 for any merc state) is the weaker twin of the tower floor and is not in the key; the
-// tower, the stricter one, is the oracle. Nightmare and Hell turn both guards off, so only Normal is walked.
+// Monastery road floor (14 for any merc state) is the weaker twin of the tall dungeon floor and is not in the key; the
+// tall dungeon, the stricter one, is the oracle. Nightmare and Hell turn both guards off, so only Normal is walked.
 func TestDefaultParityTooHard(t *testing.T) {
 	cat, err := decide.Shipped()
 	if err != nil {
