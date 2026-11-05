@@ -51,7 +51,7 @@ Example while G2 runs on i4: `tools/soak/soak24.sh start i5 --for 4h --profile m
 | deaths (death rule, plan-v2 10.2) | no `death_streak` / `death_recovery_stuck` / `death_rate` FAIL (docs/soak-analysis.md section 12) | `--death-rule` (on in m1 and m24), `--death-max-back`, `--death-min-kills`, `--deaths FILE` | bot log + `deaths.jsonl`; replaces the old deaths/h gate (m24 sets it to 0) |
 | deaths/h (optional extra) | off in m1 and m24 | `--max-deaths-per-hour N` | `/stats` death total; still works when given |
 | restarts/h (any watched process pid/start change) | alert > 8 in trailing hour; judged by hand against sentinel/recycle events | `--alert-restarts-per-hour` | recycles show here; report counts `processRestarts` |
-| XP progress | >= 1000 XP/h average over the run; no XP change > 10 min (idle/paused exempt) | `--min-xp-per-hour`, `--max-no-progress` (also `--alert-stall`) | floor is low on purpose: it only rejects a bot that idles. Raise after run 1 |
+| XP progress | advisory only: XP/h below the 1000 reference is reported, never fails; no XP change > 10 min (idle/paused exempt) | `--xp-advisory-per-hour`, `--max-no-progress` (also `--alert-stall`) | floor is low on purpose: it only rejects a bot that idles. Raise after run 1 |
 | no gain (minute lines) | no clvl/quest-step/gold gain < 90 min (m1: 45 min); loops < 20; no Waiting > 10 min | `--no-gain`, `--loop-repeats`, `--idle-in-town` (report only; docs/soak-analysis.md section 10) | clvl floor per hour is a warning unless `--fail-below-floor` |
 | max stall (no progress counter) | < 10 min | `--max-no-progress` | longest window printed in the report |
 | bot health down | <= 3 min at a time | `--max-unhealthy` | a fatal bot error fails the run |

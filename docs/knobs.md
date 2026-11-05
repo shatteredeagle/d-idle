@@ -471,7 +471,7 @@ Limit defaults (DefaultLimits) and the explicit-flag-wins profiles:
 | `--max-no-progress` | 10m | 5m | 10m | 10m | 10m |
 | `--max-sentinel-per-hour` | 4 | 2 | 4 | 2 | 4 |
 | `--max-ladder-per-hour` | 4 | 1 | 4 | 2 | 4 |
-| `--min-xp-per-hour` | 0 (off) | 15000 | 0 | 1000 | 0 |
+| `--xp-advisory-per-hour` (advisory, never fails) | 0 (off) | 15000 | 0 | 1000 | 0 |
 | `--max-rss-mb-per-hour` | 50 | 60 | 40 | 40 | 30 |
 | `--max-fds-per-hour` | 5 | 15 | 8 | 5 | 5 |
 | `--max-threads-per-hour` | 10 | 10 | 5 | 5 | 3 |

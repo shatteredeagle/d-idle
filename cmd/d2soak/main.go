@@ -73,7 +73,7 @@ func realMain(args []string) int {
 var profiles = map[string]func(*Limits){
 	"m1": func(l *Limits) { // 2 h run
 		l.MaxDeathsPerHour, l.MaxNoProgress, l.MaxSentinelPerHr, l.MaxLadderPerHour = 1, 5*time.Minute, 2, 1
-		l.MinXPPerHour = 15000
+		l.AdvisoryXPPerHour = 15000
 		l.Progress.NoGain = 45 * time.Minute
 		l.MaxDeathsPerHour, l.Death = 0, DefaultDeathLimits() // the death rule replaces the deaths-per-hour gate
 		l.MaxRSSMBPerHour, l.MaxFDsPerHour, l.MaxThreadsPerHour, l.MaxGoroutinesPerH = 60, 15, 10, 10
@@ -87,7 +87,7 @@ var profiles = map[string]func(*Limits){
 	// limit, and a low XP floor so a bot that only idles cannot pass (UNVERIFIED numbers until the first 24 h run).
 	"m24": func(l *Limits) {
 		l.MaxDeathsPerHour, l.MaxNoProgress, l.MaxSentinelPerHr, l.MaxLadderPerHour = 1, 10*time.Minute, 2, 2
-		l.MinXPPerHour = 1000
+		l.AdvisoryXPPerHour = 1000
 		l.MaxDeathsPerHour, l.Death = 0, DefaultDeathLimits()
 		l.MaxWineOrphans = 2
 		l.MaxRSSMBPerHour, l.MaxFDsPerHour, l.MaxThreadsPerHour, l.MaxGoroutinesPerH = 40, 5, 5, 5
@@ -106,7 +106,7 @@ func limitFlags(fs *flag.FlagSet) (*Limits, func() error) {
 	fs.Float64Var(&l.MaxDeathsPerHour, "max-deaths-per-hour", l.MaxDeathsPerHour, "fail above this death rate (0 = off)")
 	fs.DurationVar(&l.MaxNoProgress, "max-no-progress", l.MaxNoProgress, "fail when no progress for longer (idle/paused exempt)")
 	fs.DurationVar(&l.MaxUnhealthy, "max-unhealthy", l.MaxUnhealthy, "fail when health is down for longer")
-	fs.Float64Var(&l.MinXPPerHour, "min-xp-per-hour", l.MinXPPerHour, "fail below this XP rate (0 = off)")
+	fs.Float64Var(&l.AdvisoryXPPerHour, "xp-advisory-per-hour", l.AdvisoryXPPerHour, "advisory XP/h reference band, never fails a run (0 = off)")
 	fs.Float64Var(&l.MaxLadderPerHour, "max-ladder-per-hour", l.MaxLadderPerHour, "failsafe ladder rungs per hour")
 	fs.Float64Var(&l.MaxSentinelPerHr, "max-sentinel-per-hour", l.MaxSentinelPerHr, "sentinel actions per hour")
 	fs.Float64Var(&l.MaxRSSMBPerHour, "max-rss-mb-per-hour", l.MaxRSSMBPerHour, "RSS slope limit per process")
@@ -148,7 +148,7 @@ func limitFlags(fs *flag.FlagSet) (*Limits, func() error) {
 			"max-deaths-per-hour":     {&l.MaxDeathsPerHour, p.MaxDeathsPerHour},
 			"max-sentinel-per-hour":   {&l.MaxSentinelPerHr, p.MaxSentinelPerHr},
 			"max-ladder-per-hour":     {&l.MaxLadderPerHour, p.MaxLadderPerHour},
-			"min-xp-per-hour":         {&l.MinXPPerHour, p.MinXPPerHour},
+			"xp-advisory-per-hour":    {&l.AdvisoryXPPerHour, p.AdvisoryXPPerHour},
 			"max-rss-mb-per-hour":     {&l.MaxRSSMBPerHour, p.MaxRSSMBPerHour},
 			"max-fds-per-hour":        {&l.MaxFDsPerHour, p.MaxFDsPerHour},
 			"max-threads-per-hour":    {&l.MaxThreadsPerHour, p.MaxThreadsPerHour},

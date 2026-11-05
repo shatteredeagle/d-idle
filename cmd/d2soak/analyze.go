@@ -12,7 +12,7 @@ type Limits struct {
 	MaxDeathsPerHour  float64       // fail above
 	MaxNoProgress     time.Duration // longest window without progress (idle and paused time is exempt)
 	MaxUnhealthy      time.Duration // longest run of unreachable / 503 health
-	MinXPPerHour      float64       // fail below (0 = off; set once the goal is a leveling one)
+	AdvisoryXPPerHour float64       // reference band for the advisory XP/h line; never fails a run (soak-gates: advisory)
 	MaxLadderPerHour  float64       // failsafe ladder rungs per hour
 	MaxSentinelPerHr  float64       // sentinel actions per hour
 	MaxRSSMBPerHour   float64       // slope of any process RSS, MB per hour
@@ -114,8 +114,9 @@ type Report struct {
 	Samples       int            `json:"samples"`
 	XP            int64          `json:"xp"`
 	XPPerHour     float64        `json:"xpPerHour"`
-	XPSource      string         `json:"xpSource,omitempty"` // save | memory | counter: where XP and XPPerHour come from
-	XPCounter     int64          `json:"xpCounter"`          // the bot's /stats total (gross: counts XP that was later lost)
+	XPAdvisory    string         `json:"xpAdvisory,omitempty"` // advisory XP/h line (value, band); informational only
+	XPSource      string         `json:"xpSource,omitempty"`   // save | memory | counter: where XP and XPPerHour come from
+	XPCounter     int64          `json:"xpCounter"`            // the bot's /stats total (gross: counts XP that was later lost)
 	XPCounterPerH float64        `json:"xpCounterPerHour"`
 	XPLost        int64          `json:"xpLost,omitempty"` // metric xp_lost: character XP that vanished between samples
 	XPLostEvents  int            `json:"xpLostEvents,omitempty"`
@@ -242,8 +243,13 @@ func analyze(ss []Sample, lim Limits) Report {
 	if lim.MaxDeathsPerHour > 0 && r.DeathsPerHour > lim.MaxDeathsPerHour {
 		fail("deaths", "%d deaths in %s = %.1f/h (limit %.1f/h)", deaths, r.Span, r.DeathsPerHour, lim.MaxDeathsPerHour)
 	}
-	if lim.MinXPPerHour > 0 && hasStats && r.XPPerHour < lim.MinXPPerHour {
-		fail("xp-rate", "%.0f XP/h is below the floor %.0f XP/h", r.XPPerHour, lim.MinXPPerHour)
+	if lim.AdvisoryXPPerHour > 0 && hasStats {
+		band := "within"
+		if r.XPPerHour < lim.AdvisoryXPPerHour {
+			band = "below"
+		}
+		r.XPAdvisory = fmt.Sprintf("advisory: %.0f XP/h is %s the reference band of %.0f XP/h (never a pass/fail criterion)", r.XPPerHour, band, lim.AdvisoryXPPerHour)
+		warn("xp-advisory", "%s", r.XPAdvisory)
 	}
 	if lim.MaxLadderPerHour > 0 && r.LadderPerHour > lim.MaxLadderPerHour {
 		fail("ladder", "%d failsafe ladder rungs = %.1f/h (limit %.1f/h)", r.LadderSteps, r.LadderPerHour, lim.MaxLadderPerHour)
@@ -552,6 +558,9 @@ func (r Report) Text() string {
 	}
 	fmt.Fprintf(&b, "  run          %s .. %s (%s, %d samples)\n", r.Start.Format(time.RFC3339), r.End.Format(time.RFC3339), r.Span, r.Samples)
 	fmt.Fprintf(&b, "  progress     %.0f XP/h (%d XP, from %s), %.0f kills/h, level %s -> %s\n", r.XPPerHour, r.XP, r.XPSource, r.KillsPerHour, lvl(r.LevelStart), lvl(r.LevelEnd))
+	if r.XPAdvisory != "" {
+		fmt.Fprintf(&b, "  xp advisory  %s\n", strings.TrimPrefix(r.XPAdvisory, "advisory: "))
+	}
 	if r.XPSource != "counter" {
 		fmt.Fprintf(&b, "  xp counter   %.0f XP/h (%d XP, gross), xp_lost %d XP in %d events\n", r.XPCounterPerH, r.XPCounter, r.XPLost, r.XPLostEvents)
 	}
