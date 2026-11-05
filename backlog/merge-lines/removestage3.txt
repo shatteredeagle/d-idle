@@ -1,3 +1,0 @@
-BACKLOG: OpenSpec removal stage 3 done: contracts are in docs/contracts/ (18 files, proposed/ holds the 9 open deltas), openspec/ is removed (tag openspec-final, index docs/archive/openspec-index.md), STATUS and the board /changes JSON come from tools/backlog/status.py; stage 3b (headers, checker, Numbers tables) and stage 4 (AGENTS.md) are next.
-INDEX: docs/contracts/README.md: the contracts (gates, policies, interfaces, rules), how to change one; docs/archive/openspec-index.md: one line per old OpenSpec change card.
-CHANGELOG: process: contracts moved from openspec/specs to docs/contracts, openspec/ removed (old cards under git tag openspec-final), shared-file lines now go in backlog/merge-lines/<branch>.txt.

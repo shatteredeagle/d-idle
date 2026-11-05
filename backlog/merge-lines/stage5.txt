@@ -1,1 +1,0 @@
-CHANGELOG: OpenSpec removal stage 5: cmd/changecheck and the dead card-check code are deleted; the merge scripts no longer read openspec/.
