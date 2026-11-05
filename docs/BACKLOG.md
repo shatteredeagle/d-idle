@@ -506,6 +506,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: Gate 2 multi-seed run 20261105-1607-g2d (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-1607-g2d.md)
 - g2ddiag: Gate 2 g2d NOKILL diagnosis (docs/research/g2d-nokill-diagnosis.md): s11/s13 = failsafe new-game cycling, s17 = empty field sweep; stuck-fight fix not involved; docs only
 - g2d NOKILL fixes (agent/nokillfix): rung-3 burst cap by time, kill/XP drought watchdog, empty quest field, fsWhy and navRung in the minute line; offline tested, live proof needs the next Gate 2.
+- TASK-21 t0live3: integrated T0 re-drill after drillfix, two 10 min runs clean, 7 points fired, 1 rule learned, AC 2 and 3 still open; defect: Ladder.Pump never called from the bot loop
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

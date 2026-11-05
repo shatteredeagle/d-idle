@@ -1,2 +1,0 @@
-BACKLOG: TASK-21 t0live3: integrated T0 re-drill after drillfix, two 10 min runs clean, 7 points fired, 1 rule learned, AC 2 and 3 still open; defect: Ladder.Pump never called from the bot loop
-CHANGELOG: T0 ladder live re-drill (docs/probes/t0drill.md Result 2): questions are answered in the field, a rule was learned; open defect, Pump is not called from the runner loop
