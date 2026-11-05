@@ -1,3 +1,0 @@
-BACKLOG: integ: d2bot -ladder -watch connects the real bot to the watch screen (orders to farm_area goals, uptime from goal events); flags default off; offline tested, live drill command in docs/probes/t0drill.md
-INDEX: docs/t0-slice.md: how to run the ladder and the watch screen on the real bot (d2bot -ladder -watch)
-CHANGELOG: d2bot gains -ladder, -ladder-profile and -watch (all off by default): the decision ladder and the player screen on the real bot

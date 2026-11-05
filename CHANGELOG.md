@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d2bot gains -ladder, -ladder-profile and -watch (all off by default): the decision ladder and the player screen on the real bot
 - ladder T0 slice A3: the four T0 decision points are wired behind ladder.enabled (off by default; legacy behaviour unchanged)
 - watch screen restyled in the original d.idle dashboard look (same tokens, cards, theme toggle, phone tabs)
 - d2dview -watch: player screen (Thoughts feed, orders, uptime, rules, journal) on a simulated runner; writes only on a separate answer route
