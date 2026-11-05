@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
-	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/loot"
+	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town/belt"
 	"d2lod-bot/internal/town/panel"
 )
