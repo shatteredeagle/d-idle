@@ -28,7 +28,7 @@ func TestScriptedAnswersLearnARule(t *testing.T) {
 	l, clk, sink := newLadder(t, src)
 	h := hero(d2.Sorceress, 300)
 	for i := 0; i < 4; i++ {
-		got, err := l.RepairWanted(h, 25)
+		got, err := l.RepairWanted(h, 25, true)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -38,11 +38,11 @@ func TestScriptedAnswersLearnARule(t *testing.T) {
 		clk.Advance(5 * time.Second)
 		l.Pump()
 	}
-	if got, _ := l.RepairWanted(h, 25); got {
+	if got, _ := l.RepairWanted(h, 25, true); got {
 		t.Fatal("rule skip not applied after two matching answers")
 	}
 	// other bands keep the default
-	if got, _ := l.RepairWanted(h, 10); !got {
+	if got, _ := l.RepairWanted(h, 10, true); !got {
 		t.Fatal("a rule for 20-30 changed the lt20 band")
 	}
 	if rules, answers, _ := l.Store().Stats(); rules != 1 || answers < 2 {
@@ -66,7 +66,7 @@ func TestNoQuestionsDuringAFight(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	got, err := l.RepairWanted(hero(d2.Sorceress, 100), 25)
+	got, err := l.RepairWanted(hero(d2.Sorceress, 100), 25, true)
 	if err != nil || !got {
 		t.Fatalf("default now: %v %v", got, err)
 	}
@@ -84,9 +84,9 @@ func TestNoQuestionsDuringAFight(t *testing.T) {
 func TestUnansweredThoughtFades(t *testing.T) {
 	src := &countSrc{r: ladder.Reply{}}
 	l, clk, sink := newLadder(t, src)
-	l.RepairWanted(hero(d2.Sorceress, 100), 25)
+	l.RepairWanted(hero(d2.Sorceress, 100), 25, true)
 	clk.Advance(46 * time.Second)
-	l.RepairWanted(hero(d2.Sorceress, 100), 90) // Tick runs on every decision
+	l.RepairWanted(hero(d2.Sorceress, 100), 90, false) // Tick runs on every decision
 	if st := l.Stats(); st.Faded != 1 {
 		t.Fatalf("stats %+v lines %v", st, sink.Lines())
 	}
@@ -94,7 +94,7 @@ func TestUnansweredThoughtFades(t *testing.T) {
 
 func TestUnknownClassIsAnErrorNotACrash(t *testing.T) {
 	l, _, _ := newLadder(t, nil)
-	_, err := l.RepairWanted(hero(d2.Class(99), 100), 25)
+	_, err := l.RepairWanted(hero(d2.Class(99), 100), 25, true)
 	if err == nil || !strings.Contains(err.Error(), "class") {
 		t.Fatalf("err %v", err)
 	}
@@ -131,11 +131,7 @@ func TestProfilesKeepTheInvariants(t *testing.T) {
 			for at := time.Duration(0); at < 10*time.Minute; at += 5 * time.Second {
 				clk.Advance(5 * time.Second)
 				h := hero(c, rng.Intn(2000))
-				if rng.Intn(2) == 0 {
-					if _, err := l.RepairWanted(h, rng.Intn(101)); err != nil {
-						t.Fatalf("%s %v: %v", p.name, c, err)
-					}
-				} else if _, err := l.TPBuyWanted(h); err != nil {
+				if err := callPoint(l, rng, h); err != nil {
 					t.Fatalf("%s %v: %v", p.name, c, err)
 				}
 				calls++
@@ -161,13 +157,13 @@ func TestProfilesKeepTheInvariants(t *testing.T) {
 
 // Bounded random scripts: arbitrary replies, delays and confirms, 30 seeds.
 func TestRandomScriptsNeverStall(t *testing.T) {
-	cats := []string{"repair", "skip", "buy", "walk", "notsure", "", "bogus", "yes", "no"}
+	cats := []string{"repair", "skip", "buy", "walk", "go", "continue", "notsure", "", "bogus", "yes", "no"}
 	for seed := int64(0); seed < 30; seed++ {
 		rng := rand.New(rand.NewSource(seed))
 		var rows []string
 		for i := 0; i < 5; i++ {
 			rows = append(rows, fmt.Sprintf(`{"point":%q,"answer":%q,"confirm":%q,"delaySec":%d}`,
-				[]string{"t1.repair", "t1.tp.lost", ""}[rng.Intn(3)], cats[rng.Intn(len(cats))], cats[rng.Intn(len(cats))], rng.Intn(80)))
+				[]string{"t1.repair", "t1.tp.lost", "t1.return", "t1.town.trigger", "t1.restock", ""}[rng.Intn(6)], cats[rng.Intn(len(cats))], cats[rng.Intn(len(cats))], rng.Intn(80)))
 		}
 		src, err := ladder.ParseScript([]byte(`{"rows":[` + strings.Join(rows, ",") + `]}`))
 		if err != nil {
@@ -177,13 +173,7 @@ func TestRandomScriptsNeverStall(t *testing.T) {
 		for i := 0; i < 200; i++ {
 			clk.Advance(time.Duration(rng.Intn(20)) * time.Second)
 			h := hero(classes[rng.Intn(2)], rng.Intn(1500))
-			var err error
-			if rng.Intn(2) == 0 {
-				_, err = l.RepairWanted(h, rng.Intn(101))
-			} else {
-				_, err = l.TPBuyWanted(h)
-			}
-			if err != nil {
+			if err := callPoint(l, rng, h); err != nil {
 				t.Fatalf("seed %d step %d: %v", seed, i, err)
 			}
 			l.Pump()
@@ -198,4 +188,24 @@ func TestUnknownProfileNamed(t *testing.T) {
 	if _, err := ladder.NewProfileSource("reckless", 1); err == nil || !strings.Contains(err.Error(), "reckless") {
 		t.Fatalf("err %v", err)
 	}
+}
+
+// callPoint asks one of the five wired points with random state and a random legacy answer.
+func callPoint(l *ladder.Ladder, rng *rand.Rand, h ladder.Hero) error {
+	var err error
+	lg := rng.Intn(2) == 0
+	belt := []string{ladder.BeltFull, ladder.BeltHalf, ladder.BeltLow}[rng.Intn(3)]
+	switch rng.Intn(5) {
+	case 0:
+		_, err = l.RepairWanted(h, rng.Intn(101), lg)
+	case 1:
+		_, err = l.TPBuyWanted(h, lg)
+	case 2:
+		_, err = l.ReturnWanted(h, []string{ladder.KitOK, ladder.KitThin, ladder.KitNone}[rng.Intn(3)], lg)
+	case 3:
+		_, err = l.TripWanted(h, belt, rng.Intn(101), lg)
+	default:
+		_, err = l.RestockWanted(h, belt, rng.Intn(600), lg)
+	}
+	return err
 }

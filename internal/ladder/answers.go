@@ -76,32 +76,26 @@ func (s *FileSource) Reply(v ThoughtView) Reply {
 	return Reply{Answer: ans, Delay: time.Duration(row.DelaySec * float64(time.Second))}
 }
 
-// Profiles named in the T0 drill. They mirror the profiles of internal/decide's tests (those live in a test file and
-// cannot be imported): cautious replies the default, bold the last answer, inconsistent anything, and a holdout is
-// generated from a seed (never a live person).
-var KnownProfiles = []string{"cautious", "bold", "inconsistent"}
-
-// ProfileSource replies the way a named player profile would. It is deterministic per seed.
+// ProfileSource replies the way a named simulated player (decide.Profile: cautious, bold, inconsistent, or a seeded
+// holdout) would. It is deterministic per seed and never a live person.
 type ProfileSource struct {
-	mu                           sync.Mutex
-	name                         string
-	rng, g                       *rand.Rand
-	flip, ignore, unsure, yesPct float64
-	pref                         map[string]int
+	mu   sync.Mutex
+	prof decide.Profile
+	cat  *decide.Catalogue
+	rng  *rand.Rand
 }
 
-// NewProfileSource makes cautious, bold, inconsistent or holdout (seeded).
+// NewProfileSource makes cautious, bold, inconsistent or holdout (seeded) from internal/decide's profiles.
 func NewProfileSource(name string, seed int64) (*ProfileSource, error) {
-	p := &ProfileSource{name: name, rng: rand.New(rand.NewSource(seed)), pref: map[string]int{}}
-	switch name {
-	case "cautious", "bold", "inconsistent":
-	case "holdout":
-		p.g = rand.New(rand.NewSource(seed ^ 0x5eed))
-		p.flip, p.ignore, p.unsure, p.yesPct = p.g.Float64()*0.5, p.g.Float64()*0.6, p.g.Float64()*0.2, p.g.Float64()
-	default:
-		return nil, fmt.Errorf("ladder: unknown answer profile %q", name)
+	prof, err := decide.NewProfile(name, seed)
+	if err != nil {
+		return nil, err
 	}
-	return p, nil
+	cat, err := decide.Shipped()
+	if err != nil {
+		return nil, err
+	}
+	return &ProfileSource{prof: prof, cat: cat, rng: rand.New(rand.NewSource(seed))}, nil
 }
 
 func (p *ProfileSource) Reply(v ThoughtView) Reply {
@@ -109,53 +103,11 @@ func (p *ProfileSource) Reply(v ThoughtView) Reply {
 	defer p.mu.Unlock()
 	r := Reply{Delay: time.Duration(1+p.rng.Intn(30)) * time.Second}
 	if v.Confirm {
-		switch p.name {
-		case "cautious":
-			r.Answer = "no"
-		case "bold":
-			r.Answer = "yes"
-		case "inconsistent":
-			r.Answer = []string{"yes", "no", ""}[p.rng.Intn(3)]
-		default:
-			r.Answer = "no"
-			if p.rng.Float64() < p.yesPct {
-				r.Answer = "yes"
-			}
-		}
+		r.Answer = p.prof.Confirm(p.rng)
 		return r
 	}
-	n := len(v.Choices)
-	if n == 0 {
-		return r
-	}
-	switch p.name {
-	case "cautious":
-		r.Answer = v.Default
-	case "bold":
-		if p.rng.Intn(10) != 0 {
-			r.Answer = v.Choices[n-1]
-		}
-	case "inconsistent":
-		if p.rng.Intn(5) == 0 {
-			r.Answer = decide.NotSure
-		} else {
-			r.Answer = v.Choices[p.rng.Intn(n)]
-		}
-	default:
-		i, ok := p.pref[v.Point]
-		if !ok {
-			i = p.g.Intn(n)
-			p.pref[v.Point] = i
-		}
-		switch x := p.rng.Float64(); {
-		case x < p.ignore:
-		case x < p.ignore+p.unsure:
-			r.Answer = decide.NotSure
-		case x < p.ignore+p.unsure+p.flip:
-			r.Answer = v.Choices[p.rng.Intn(n)]
-		default:
-			r.Answer = v.Choices[i]
-		}
+	if pt, err := p.cat.Point(v.Point); err == nil && len(pt.Answers) > 0 {
+		r.Answer = p.prof.Reply(p.rng, pt, v.Default)
 	}
 	return r
 }
