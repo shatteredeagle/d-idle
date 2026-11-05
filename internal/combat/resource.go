@@ -159,7 +159,7 @@ func (f *Fighter) preEngage(ctx context.Context, snap *d2.Snapshot, hs, cand []T
 	}
 	rt := f.rtune()
 	d := resource.PreEngage(in, rt)
-	d = f.askUnique(p, in, d, cand)
+	d = f.askUnique(p, in, d, cand, rt.MinEngageLifePct)
 	// A melee profile ends its attack ladder in the free basic attack, so resting for a cast budget is wasted time
 	// (live: 15-20 s per pack on Palli). Life rests and potions still apply.
 	if f.profileFor(p).MeleeClass() && d.TargetMana > 0 && (d.Action == resource.RestHere || d.Action == resource.RetreatRest) {
@@ -434,17 +434,17 @@ func (f *Fighter) askDrink(ctx context.Context, p *d2.Player, in resource.Input,
 }
 
 // askUnique is point t0.unique.fight at the pre-engage step: with an elite pack (unique, champion or minion) in the
-// candidates and life at or under 70 percent, the legacy verdict (Avoid, else fight) is the answer until a rule is
-// learned. A learned avoid ends the approach like the legacy Avoid; a learned fight proceeds where the legacy code
-// would have avoided. Resting and drinking before a pack stay with the legacy verdict (they are preparation, not a
-// fight).
-func (f *Fighter) askUnique(p *d2.Player, in resource.Input, d resource.PreDecision, cand []Target) resource.PreDecision {
+// candidates and life at or under 70 percent, the legacy verdict is the answer until a rule is learned: avoid when
+// the legacy step says Avoid or life is under resource.minEngageLifePct (the code heals first there, it does not
+// engage), else fight. A learned avoid ends the approach like the legacy Avoid; a learned fight proceeds past the
+// legacy rest, drink or avoid. With the legacy answer given, the preparation steps (rest, drink) stay as they are.
+func (f *Fighter) askUnique(p *d2.Player, in resource.Input, d resource.PreDecision, cand []Target, minEngagePct int) resource.PreDecision {
 	l := ladder.Active()
 	if l == nil || in.LifePct() > 70 || !slices.ContainsFunc(cand, func(t Target) bool { return t.Elite }) {
 		return d
 	}
 	legacy := "fight"
-	if d.Action == resource.Avoid {
+	if d.Action == resource.Avoid || in.LifePct() < minEngagePct {
 		legacy = "avoid"
 	}
 	a, err := l.UniqueFight(ladder.HeroFrom(p), in.LifePct(), in.PackDanger,

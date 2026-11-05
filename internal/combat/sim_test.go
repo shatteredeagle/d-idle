@@ -34,6 +34,7 @@ type simMon struct {
 }
 
 type sim struct {
+	class       d2.Class // zero (Amazon) unless a test sets it; the ladder tests need a class of the catalogue
 	mu          sync.Mutex
 	t           time.Time
 	px, py      float64
@@ -125,7 +126,7 @@ func (s *sim) snapshot() (*d2.Snapshot, error) {
 	}
 	snap := &d2.Snapshot{
 		State: d2.StateInGame,
-		Player: &d2.Player{ID: 1, X: int(math.Round(s.px)), Y: int(math.Round(s.py)), Area: 2, Level: max(s.clvl, 1), Mode: mode,
+		Player: &d2.Player{ID: 1, Class: s.class, X: int(math.Round(s.px)), Y: int(math.Round(s.py)), Area: 2, Level: max(s.clvl, 1), Mode: mode,
 			Life: int(math.Round(s.life)), MaxLife: int(s.maxL), Mana: int(s.mana), MaxMana: int(s.maxM), Exp: s.exp, Skills: s.skills,
 			RightSkill: 36, LeftSkill: s.left_},
 		Inventory: &d2.Inventory{Items: append([]d2.Unit(nil), s.belt...)},
