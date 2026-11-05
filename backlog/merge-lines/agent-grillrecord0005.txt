@@ -1,2 +1,0 @@
-INDEX: docs/adr/0016-automation-ladder.md: ADR 0016 accepted (grill 0005), automation ladder T0 to T5; outcome in docs/grills/0005-automation-ladder/outcome.md
-BACKLOG: ladder work starts at T0 (ADR 0016); three G-G cards proposed in the grill outcome, not yet created

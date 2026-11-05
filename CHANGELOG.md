@@ -9,6 +9,28 @@ else, it is offline-tested. This file was written from merge subjects and `docs/
 
 ## Unreleased / known issues
 - Backlog.md web board for the NAS prepared (deploy/backlog-board, read-only mirror, UI steps); not deployed
+- cleanup B (docs only): INDEX rebuilt by area, START-HERE and README map, AGENTS reading order, 13 finished research docs archived with stubs, link check clean
+- leakcheck: Forgotten Tower is an allow-list phrase (data), local vs merge-time difference documented in docs/process/hooks.md
+- cleanup D: docs/backlog.md renamed to docs/backlog-howto.md (case collision with BACKLOG.md); cmd/{combatlive,townlive,inputcal,navlive} are now real directories instead of symlinks into internal/*/cmd
+- tools/emu: 100 emulator helper scripts and small harnesses landed from archived coverage/verifier branches, with a README listing each script
+- cleanup C: removed internal/merc/sim, cmd/lockstepscan, three unreferenced tools scripts, five root python wheels and .run28.sh (internal/memfd kept: deploy/container/entrypoint imports it)
+- decisions: Current truth updated for ADR 0016 (automation ladder, tier order ranks work, idle layer un-parked)
+- grill docs: the grill never pushes; the coordinator merges the local branch; guard allows git add of exact grill files only
+- docs: automation ladder decisions of 2026-11-05 and the decision-point store spec (docs/research/automation-ladder.md)
+- docs: automation ladder draft (docs/research/automation-ladder.md)
+- docs: no-shield damage reduction order verified against game.exe's own code (docs/research/esverify/verdict3.md, tools/emu/esv3_*)
+- failsafe ladder: rung 3 (leave and re-enter) is capped per progress window (bot.failsafeRung3Max, default 6) and the pause rung backs off up to bot.failsafePauseMaxSec; fixes the g2c seed 13 loop
+- record #198 merged upstream; no-shield PR body retargeted on upstream main (docs only)
+- Fix: a held cursor item that the pack spot never accepted no longer blocks looting, waypoints and equip for hours; it goes to another spot or the ground (town.cursorStuckMax).
+- nav stuck ladder at rung 2 or more with hostiles in fight radius and life under 60 percent (new knob nav.stuckFightLifePct) now fights, then takes the town portal, instead of side-stepping on; logs 'nav: stuck ladder -> fight|portal' and 'nav: area border crossed back' (Gate 2 g2c seed 13 death)
+- guard drinks healing and rejuvenation potions in state clearing and in the nav stuck ladder (Gate 2 g2c seed 13 death); log line 'guard: drank ... at life N% (state=...)'
+- belt: shop buys healing when only Rejuvenation or mana is in the belt (Rejuvenation is not healing for the BELT gate); new knob town.tripEmptyHPBelt raises a town trip when no healing potion is held
+- town: BackToField drops a town portal id after town.portalClickFails (2) failed entries and falls back to a fresh portal, the waypoint, then the walk (Gate 2 g2b stale portal); offline tested
+- DropCursor retries up to 6 different cells beside the character, then the pack, before the failsafe (town.dropTries); a launcher the class cannot wear is not picked up without a pack cell to take it off
+- docs/cards.md Active and Parked tables are now generated from backlog/tasks by tools/backlog/cards_md.py (--write, --check; check wired into tools/ci/check.sh)
+- d2soak: XP/h is an advisory line (value, band) and never fails a run; flag --min-xp-per-hour renamed --xp-advisory-per-hour (soak-gates, ADR 0015 item 8)
+- Forgotten Tower guard now opens at clvl 15 with max life 150 and the kit without a merc (was clvl 16), clvl 14 with a merc; new knobs route.towerMinLife, route.towerMinLevelNoLife, route.towerKitMana
+- town: casters buy their first mana potions before the healing fill (belt mp 0 for hours on Gate 2 seed 11); logs 'town: restocked mana potions' and 'caster: no mana, gold N'
 - tools/backlog/drift.py lists tasks whose status disagrees with git (read-only); six applied backlog/merge-lines files removed
 - docs: Gate 2 multi-seed soak run 20261105-0733-g2c: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-0733-g2c.md).
 - docs: Gate 2 multi-seed soak run 20261104-2254-g2b: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261104-2254-g2b.md).

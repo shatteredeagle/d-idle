@@ -471,6 +471,23 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: Gate 2 multi-seed run 20261104-2254-g2b (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261104-2254-g2b.md)
 - GATE2: Gate 2 multi-seed run 20261105-0733-g2c (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-0733-g2c.md)
 - maintenance: spent merge-lines files pruned, tools/backlog/drift.py read-only backlog drift report (docs/backlog-howto.md)
+- TASK-18 (TASK-A mana-restock): casters buy HPFirst healing then MPFirst mana before the healing fill and trip at fewer than MPFirst mana potions; offline tested, not run live.
+- Forgotten Tower guard: no merc needs clvl 15, max life 150 and the kit; merc clvl 14; unreadable life falls back to clvl 16 (SME, user-approved 2026-11-04, numbers U; folded into task-18)
+- TASK-C folded into task-18: fresh-game restarts get an XP progress check, a gap and a blocked state (route.fresh* knobs).
+- fixcursor3 (task-10 #6): cursor held item is cleared before pickup, a refused pack spot is skipped, bounded retries then ground drop (Gate 2 g2c seed 13 loop); offline tested
+- esverify3: no-shield reduction order head ca7872ab confirmed with caveats against game.exe's native FUN_0057c6c0 (docs/research/esverify/verdict3.md); 135,724 frames, head 0 differences except 24 pre-existing C2 frames; ready to open after body edits (verification done, test_game and test_energy_shield pass with data, name the 256ths sum, C2 measured)
+- no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification)
+- ladderdoc: automation ladder DRAFT written down (docs/research/automation-ladder.md): tiers T0 to T5, mapping to code, backlog re-ranking, open questions; proposed record text only, guard files untouched
+- ladderrecord: automation ladder decisions of 2026-11-05 recorded as a draft (docs/research/automation-ladder-record-proposal.md: decisions.md line, ADR 0016 text, glossary terms; docs/research/decision-point-store-spec.md); guard files untouched, user acceptance pending
+- grill 0005 prebrief written (automation ladder), docs only
+- ladder work starts at T0 (ADR 0016); three G-G cards proposed in the grill outcome, not yet created
+- open-card cap of 12 removed (grill 0005, ADR 0016); backlog check accepts G-G; every card still maps to one goal
+- add cards decision-point-store, watch-screen, t0-slice (G-G, Proposed; tier order: after T4/Gate A cards per ADR 0016)
+- cleanup plan and inventory 2026-11-05 (docs/process/cleanup-plan-20261105.md, read-only pass; batches A to F await the user)
+- decision-point store spec: risk class by context key (kit, hardcore), nine missing T0-T2 points added, life band edges left open (docs/research/decision-point-store-spec.md)
+- tools/emu helper scripts landed from archived branches (cleanup batch A); no game code
+- Gate 1/2 record files from retired gate run branches landed under docs/soaks and docs/probes/soak-logs (cleanup batch A)
+- decision-point spec: urgency band for fight-time points, five life bands as T0 stand-in (docs/research/decision-point-store-spec.md 2.3); band edges checked against repo tables (docs/research/decision-point-band-check.md)
 - docs/process/backlog-board-NAS.md + deploy/backlog-board/: prepared Backlog.md read-only web board for the NAS (not deployed)
 - Backlog.md MCP evaluated (docs/backlog-howto.md), agent instructions block in AGENTS.md, tools/backlog/new_task.py wrapper, .mcp.json
 
