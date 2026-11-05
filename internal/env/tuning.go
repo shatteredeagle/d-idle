@@ -66,7 +66,7 @@ func Knobs() []Knob {
 	k = append(k, bossKnobs()...)
 	k = append(k, mercKnobs()...)
 	k = append(k, routeKnobs()...)
-	k = append(k, ladderKnobs()...)
 	k = append(k, registeredKnobs()...)
+	k = append(k, ladderKnobs()...)
 	return k
 }

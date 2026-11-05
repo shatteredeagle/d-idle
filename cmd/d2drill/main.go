@@ -18,6 +18,7 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"time"
 
@@ -61,6 +62,10 @@ func run() int {
 	reapScript := flag.String("reap", "tools/agentreap.sh", "D10: the process registry tool")
 	limit := flag.Duration("limit", 0, "override the per-run hard time limit")
 	capFile := flag.String("cap", "", "cap this saved run log in place (head, tail, verdict and error lines; default max 400 KB) before committing it under docs/probes, then exit")
+	t0Profiles := flag.String("t0-profiles", "cautious,bold,inconsistent,holdout:101,holdout:202", "T0: comma list of answer profiles (cautious, bold, inconsistent, holdout:SEED, file)")
+	t0Answers := flag.String("t0-answers", "", "T0: scripted answer file for the profile 'file' (JSON, read only; no stdin, no network)")
+	t0Minutes := flag.Int("t0-minutes", 10, "T0: virtual minutes of play after the run start")
+	t0Dir := flag.String("t0-dir", "", "T0: directory of the persisted answer files (default: in memory)")
 	flag.Parse()
 	binName = *bin
 	if *capFile != "" {
@@ -190,6 +195,14 @@ func run() int {
 		drills = drill.DW(l)
 	case "DR": // repair group of DRILLS4: D3.r, D3.r0, D3.r1 and the price table D3.rt (run with -repair-below 100)
 		drills = drill.DR(l)
+	case "T0": // card t0-slice (TASK-21): ladder.enabled on, scripted answers, wired town points, writes after start 0, docs/probes/t0drill.md
+		cfg, err := t0Config(*t0Profiles, *t0Answers, *t0Minutes, *t0Dir)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "d2drill:", err)
+			return 2
+		}
+		tune.Ladder.Enabled = 1
+		drills = drill.T0(l, cfg)
 	case "D0": // harness self-test of the P35 gate: the drill leaves the pack open on purpose
 		drills = []drill.Drill{{ID: "D0.gate", Primitive: "P35", Title: "selftest: the drill leaves the inventory open, the gate must flag and recover it", Limit: time.Minute,
 			Do: func(ctx context.Context, r *drill.Run) drill.Outcome {
@@ -241,6 +254,32 @@ func run() int {
 		return 1
 	}
 	return 0
+}
+
+// t0Config parses the T0 flags: holdout:SEED profiles are generated from the seed, never from a live person.
+func t0Config(profiles, answers string, minutes int, dir string) (drill.T0Config, error) {
+	c := drill.T0Config{Answers: answers, Minutes: minutes, Dir: dir}
+	for _, p := range strings.Split(profiles, ",") {
+		name, seed, ok := strings.Cut(strings.TrimSpace(p), ":")
+		if name == "holdout" {
+			n, err := strconv.ParseInt(seed, 10, 64)
+			if !ok || err != nil {
+				return c, fmt.Errorf("t0 profile %q: holdout needs a seed (holdout:101)", p)
+			}
+			c.Seeds = append(c.Seeds, n)
+		} else if ok {
+			return c, fmt.Errorf("t0 profile %q: only holdout takes a seed", p)
+		}
+		c.Profiles = append(c.Profiles, name)
+	}
+	if c.Answers == "" {
+		for _, p := range c.Profiles {
+			if p == "file" {
+				return c, fmt.Errorf("t0 profile file needs -t0-answers")
+			}
+		}
+	}
+	return c, nil
 }
 
 func envOr(k, def string) string {
