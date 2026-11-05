@@ -9,7 +9,8 @@ import (
 )
 
 // FileVersion is the on-disk format version; a newer file is refused (ErrFutureVersion).
-const FileVersion = 1
+// Version 2: keys follow catalogue version 2; version 1 files are migrated on open (Catalogue.MigrateKey).
+const FileVersion = 2
 
 var (
 	ErrFutureVersion = errors.New("decide: profile file was written by a newer version")
@@ -56,6 +57,13 @@ func Open(dir, profile string, cat *Catalogue, clk Clock) (*Store, error) {
 	var fs fileState
 	if err := json.Unmarshal(data, &fs); err != nil || fs.Profile != profile {
 		return nil, fmt.Errorf("%w: %s", ErrCorrupt, s.path)
+	}
+	if raw.Version < FileVersion { // an older file: move its keys to the current catalogue shape (see Migration)
+		for i := range fs.Log {
+			if fs.Log[i].Key != "" {
+				fs.Log[i].Key = cat.MigrateKey(fs.Log[i].Key)
+			}
+		}
 	}
 	if err := s.replay(fs.Log); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrCorrupt, err)

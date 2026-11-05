@@ -95,13 +95,55 @@ const (
 	EvConfirmOpened EventKind = "confirm-opened"
 	EvRuleLearned   EventKind = "rule-learned"
 	EvRevoked       EventKind = "revoked"
+	// EvLateAnswer: the player answered after the thought faded. The answer is treated as a fade (nothing counts,
+	// the streak is not reset); the screen can say "too late, I carried on". Not a log line: the fade is.
+	EvLateAnswer EventKind = "late-answer"
 )
 
+// Event is what a subscriber sees. Info is set on EvThoughtOpened and EvConfirmOpened so a subscriber need not poll
+// OpenThoughts.
 type Event struct {
 	Kind    EventKind
 	Key     string
 	Thought int
 	Answer  string
+	Info    *ThoughtInfo
+}
+
+// ThoughtInfo is the public read of one open thought: everything a screen needs to put the question.
+type ThoughtInfo struct {
+	ID       int
+	Point    string
+	Key      string
+	Question string
+	Confirm  bool   // a confirm thought: Answer is the answer that would be learned; Choices is empty (yes or no)
+	Answer   string // confirm only
+	// Choices are the point's answers; "notsure" is always allowed on an ask thought and is not listed.
+	Choices []Answer
+	Expires time.Duration // virtual time at which the thought fades
+}
+
+func (s *Store) info(t *Thought) *ThoughtInfo {
+	p, _ := s.cat.Point(t.Point)
+	ti := &ThoughtInfo{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, Answer: t.Answer, Expires: t.FadesAt}
+	if p != nil {
+		ti.Question = p.Question
+		if !t.Confirm {
+			ti.Choices = append([]Answer(nil), p.Answers...)
+		}
+	}
+	return ti
+}
+
+// Thought reads one open thought; false when it is closed, faded or unknown.
+func (s *Store) Thought(id int) (ThoughtInfo, bool) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	t := s.thoughts[id]
+	if t == nil {
+		return ThoughtInfo{}, false
+	}
+	return *s.info(t), true
 }
 
 // Decision is what a call site gets: the action now. The hero never waits for the thought.
@@ -211,7 +253,7 @@ func (s *Store) apply(e Entry) ([]Event, error) {
 		if _, err := s.cat.Point(e.Point); err != nil {
 			return nil, err
 		}
-		if s.skips[e.Point] < s.cat.Config.MaxSkips {
+		if s.skips[e.Point] < min(s.cat.Config.MaxSkips, 1) { // at most one banked skip per point
 			s.skips[e.Point]++
 		}
 		return nil, nil
@@ -259,7 +301,7 @@ func (s *Store) applyOpen(e Entry) ([]Event, error) {
 	s.nextID++
 	s.thoughts[e.Thought] = &Thought{ID: e.Thought, Point: ctx.Point, Key: e.Key, OpenedAt: e.T, FadesAt: e.FadesAt}
 	s.openByKey[e.Key] = e.Thought
-	return []Event{{Kind: EvThoughtOpened, Key: e.Key, Thought: e.Thought}}, nil
+	return []Event{{Kind: EvThoughtOpened, Key: e.Key, Thought: e.Thought, Info: s.info(s.thoughts[e.Thought])}}, nil
 }
 
 func (s *Store) rec(key string) *Record {
@@ -311,9 +353,13 @@ func (s *Store) applyAnswer(e Entry) ([]Event, error) {
 		return nil, nil
 	}
 	r.AnsweredAt = e.T
+	// A banked skip is consumed by the next non-risky answer at the point, and never used on a risky one.
+	skip := 0
+	if cl != Risky {
+		skip, s.skips[t.Point] = s.skips[t.Point], 0
+	}
 	if r.Last == e.Answer {
-		r.Streak += 1 + s.skips[t.Point]
-		s.skips[t.Point] = 0
+		r.Streak += 1 + skip
 	} else {
 		r.Last, r.Streak = e.Answer, 1
 	}
@@ -331,7 +377,7 @@ func (s *Store) applyAnswer(e Entry) ([]Event, error) {
 		FadesAt: e.T + time.Duration(s.cat.Config.FadeSec)*time.Second}
 	s.thoughts[id] = ct
 	s.openByKey[t.Key] = id
-	return []Event{{Kind: EvConfirmOpened, Key: t.Key, Thought: id, Answer: e.Answer}}, nil
+	return []Event{{Kind: EvConfirmOpened, Key: t.Key, Thought: id, Answer: e.Answer, Info: s.info(ct)}}, nil
 }
 
 // fade closes a thought without count or reset; a faded confirm drops the pending answer (rule stays unlearned).
@@ -393,14 +439,31 @@ func (s *Store) publish(evs []Event) {
 // Ask is called by the bot at a decision point. A live rule answers at once. Otherwise the default is returned at
 // once and a thought opens (unless one is already open for the key, a confirm is pending, or the tier is locked).
 func (s *Store) Ask(ctx Context) (Decision, error) {
+	return s.ask(ctx, "")
+}
+
+// AskWithDefault is Ask for a call site that owns today's behaviour: legacy is the answer the old code would give
+// (an answer id of the point). A live rule still wins; with none the caller's legacy answer is returned (Source
+// "legacy", or "default-locked" for a locked tier) and a thought opens as in Ask. The catalogue default is not used.
+func (s *Store) AskWithDefault(ctx Context, legacy string) (Decision, error) {
+	return s.ask(ctx, legacy)
+}
+
+func (s *Store) ask(ctx Context, legacy string) (Decision, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	p, err := s.cat.Point(ctx.Point)
 	if err != nil {
 		return Decision{}, err
 	}
-	def, err := s.cat.Default(ctx)
-	if err != nil {
+	src := "default"
+	var def string
+	if legacy != "" {
+		if _, ok := p.answer(legacy); !ok {
+			return Decision{}, fmt.Errorf("%w: legacy %q for %s", ErrBadAnswer, legacy, p.ID)
+		}
+		def, src = legacy, "legacy"
+	} else if def, err = s.cat.Default(ctx); err != nil {
 		return Decision{}, err
 	}
 	if r := s.recs[ctx.Key]; r != nil && r.Rule != nil && !r.Rule.Revoked {
@@ -409,7 +472,7 @@ func (s *Store) Ask(ctx Context) (Decision, error) {
 	if p.Tier > s.unlock {
 		return Decision{Answer: def, Source: "default-locked"}, nil
 	}
-	d := Decision{Answer: def, Source: "default"}
+	d := Decision{Answer: def, Source: src}
 	if id, ok := s.openByKey[ctx.Key]; ok {
 		if t := s.thoughts[id]; !t.Confirm {
 			c := *t
@@ -443,6 +506,7 @@ func (s *Store) resolve(id int, op string, e Entry) error {
 		if err != nil {
 			return err
 		}
+		s.emit(Event{Kind: EvLateAnswer, Key: t.Key, Thought: id, Answer: e.Answer})
 		return ErrFaded
 	}
 	if op == OpAnswer && t.Confirm || op == OpConfirm && !t.Confirm {

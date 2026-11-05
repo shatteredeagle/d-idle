@@ -1,48 +1,82 @@
 {
   "version": 1,
   "rules": [
-    {"point": "t0.retreat.drink", "when": {"life": "35-55", "kit": "OK|THIN"}, "answer": "drink", "knobs": "combat.drinkLifePct 55, combat.drinkRejuvPct 35", "vs": "match"},
-    {"point": "t0.retreat.drink", "when": {"life": "25-35", "kit": "OK"}, "answer": "portal", "knobs": "combat.drinkRejuvPct 35, combat.chickenPct 25", "vs": "differs"},
-    {"point": "t0.retreat.drink", "when": {"life": "lt25"}, "answer": "run", "knobs": "combat.chickenPct 25 (leave the game)", "vs": "differs"},
-    {"point": "t0.area.toohard", "when": {"levelgap": "4-6|ge7"}, "answer": "skip", "knobs": "route.towerMinLevel 15, route.monasteryMinLevel 14", "vs": "differs"},
-    {"point": "t0.retreat.repeat", "when": {}, "answer": "leave", "knobs": "resource.brAttempts 3", "vs": "match"},
-    {"point": "t0.unique.fight", "when": {"kit": "OK", "life": "55-70|gt70"}, "answer": "fight", "knobs": "combat.championEarlyPct 10, combat.drinkRejuvBossPct 50", "vs": "match"},
-    {"point": "t1.restock", "when": {"gold": "lt100"}, "answer": "no", "knobs": "resource.tripGoldFloor 300", "vs": "match"},
-    {"point": "t1.restock", "when": {"gold": "100-500", "belt": "low"}, "answer": "yes", "knobs": "town.tripMinHPPotions 2", "vs": "match"},
-    {"point": "t1.restock", "when": {"gold": "100-500"}, "answer": "no", "knobs": "town.tripBeltColumnPct 50", "vs": "differs"},
-    {"point": "t1.restock", "when": {}, "answer": "yes", "knobs": "town.beltFillPct 100", "vs": "match"},
-    {"point": "t1.return", "when": {"kit": "NONE"}, "answer": "no", "knobs": "resource.kitGateLevel 8, resource.kitMinHP 4", "vs": "match"},
-    {"point": "t1.return", "when": {}, "answer": "yes", "knobs": "resource.minFieldBeltPct 0", "vs": "match"},
-    {"point": "t1.keep.kind", "when": {"itemkind": "rune|gem|jewel|charm"}, "answer": "keep", "knobs": "loot.pickStrictness 1, town.sellLowGems 1", "vs": "match"},
-    {"point": "t1.town.trigger", "when": {"freerows": "0|1"}, "answer": "go", "knobs": "town.tripPackUsedPct 80", "vs": "match"},
-    {"point": "t1.town.trigger", "when": {}, "answer": "continue", "knobs": "loot.freeCellsKeep 2", "vs": "differs"},
+    {"point": "t0.retreat.drink", "when": {"life": "55-70|gt70"}, "answer": "fight", "knobs": "combat.drinkLifePct 55 (keep fighting above it)", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"urgency": "calm|wary"}, "answer": "fight", "knobs": "stage 2 stand-in for the life rows", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"held": "hp|rv"}, "answer": "drink", "knobs": "combat.drinkLifePct 55, combat.drinkRejuvPct 35, combat.chickenPct 25: PotionPolicy drinks whenever a potion is held (rejuvenation first under 35)", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"life": "lt25", "kit": "NONE"}, "answer": "leave", "knobs": "combat.chickenPct 25, no potion, no portal: AbortFight leaves the game", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"life": "lt25"}, "answer": "portal", "knobs": "combat.chickenPct 25, no potion: AbortFight portals while above chicken-8", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"life": "25-35|35-55", "kit": "NONE"}, "answer": "run", "knobs": "resource.fleeLifePct 50: no potion, no portal, break away", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {}, "answer": "fight", "knobs": "AbortFight: keep fighting", "vs": "match"},
+
+    {"point": "t0.retreat.lethal", "when": {}, "answer": "avoid", "knobs": "none: the lethal-pack list is an empty placeholder, the point never fires today", "vs": "match"},
+
+    {"point": "t0.area.toohard", "when": {"clvl": "14|ge15"}, "answer": "go", "knobs": "route.monasteryMinLevel 14, route.towerMinLevelMerc 14, route.towerMinLevel 15 (absolute clvl floors)", "vs": "match"},
+    {"point": "t0.area.toohard", "when": {"kit": "NONE"}, "answer": "lower", "knobs": "route floors: a hero below the floor takes the lower area", "vs": "match"},
+    {"point": "t0.area.toohard", "when": {}, "answer": "skip", "knobs": "route floors", "vs": "match"},
+
+    {"point": "t0.retreat.repeat", "when": {"retreats": "3+"}, "answer": "leave", "knobs": "resource.brAttempts 3 (Blood Raven budget, the only retreat counter)", "vs": "match"},
+    {"point": "t0.retreat.repeat", "when": {}, "answer": "stay", "knobs": "resource.brAttempts 3", "vs": "match"},
+
+    {"point": "t0.unique.fight", "when": {"life": "lt25|25-35"}, "answer": "avoid", "knobs": "resource.minEngageLifePct 40: a pack is not engaged below it (the 40 is inside the 35-55 band)", "vs": "match"},
+    {"point": "t0.unique.fight", "when": {"urgency": "urgent|critical"}, "answer": "avoid", "knobs": "stage 2 stand-in", "vs": "match"},
+    {"point": "t0.unique.fight", "when": {}, "answer": "fight", "knobs": "combat.championEarlyPct 10, combat.drinkRejuvBossPct 50: champions are always fought", "vs": "match"},
+
+    {"point": "t0.leave.safe", "when": {}, "answer": "stay", "knobs": "none (proposed: combat.leaveSafeAction); fast and ranged packs have no special handling today", "vs": "match"},
+    {"point": "t0.shrine", "when": {}, "answer": "avoid", "knobs": "none (proposed: loot.shrineTake); shrines are not handled today", "vs": "match"},
+
+    {"point": "t1.restock", "when": {"tripgold": "lt60|60-300"}, "answer": "no", "knobs": "resource.tripGoldFloor 300 (TripBudgetSpent), resource.tripMinGold 60", "vs": "match"},
+    {"point": "t1.restock", "when": {}, "answer": "yes", "knobs": "town.beltFillPct 100, town.tripMinHPPotions 2", "vs": "match"},
+
+    {"point": "t1.return", "when": {}, "answer": "yes", "knobs": "resource.minFieldBeltPct 0 (FieldGate always lets the hero leave)", "vs": "match"},
+
+    {"point": "t1.keep.kind", "when": {}, "answer": "keep", "knobs": "loot.pickStrictness 1, town.sellLowGems 1, loot.valuableMinPrio 70: rare and unique are decided by pickit priority, a rule overrides by kind only", "vs": "match"},
+
+    {"point": "t1.town.trigger", "when": {"packused": "ge80"}, "answer": "go", "knobs": "town.tripPackUsedPct 80", "vs": "match"},
+    {"point": "t1.town.trigger", "when": {"belt": "low"}, "answer": "go", "knobs": "resource.tripHPMin 1 (TownTripTrigger)", "vs": "match"},
+    {"point": "t1.town.trigger", "when": {}, "answer": "continue", "knobs": "TownTripTrigger: nothing needed", "vs": "match"},
+
     {"point": "t1.tp.lost", "when": {"gold": "lt100"}, "answer": "walk", "knobs": "resource.kitTPGold 100", "vs": "match"},
     {"point": "t1.tp.lost", "when": {}, "answer": "buy", "knobs": "town.tpScrollTarget 2", "vs": "match"},
-    {"point": "t1.repair", "when": {"durability": "lt20|20-30"}, "answer": "repair", "knobs": "town.repairBelowPct 30, town.tripRepairPct 20", "vs": "match"},
-    {"point": "t1.repair", "when": {"durability": "gt30"}, "answer": "skip", "knobs": "town.repairBelowPct 30", "vs": "differs"},
-    {"point": "t1.identify", "when": {"scroll": "yes"}, "answer": "scroll", "knobs": "town.idScrollNeed 1, town.idScrollTarget 2", "vs": "match"},
-    {"point": "t1.identify", "when": {"scroll": "no"}, "answer": "leave", "knobs": "town.idScrollNeed 1", "vs": "match"},
-    {"point": "t2.failstreak", "when": {"deaths": "3+"}, "answer": "stop", "knobs": "resource.gearDeathsHigh 4", "vs": "match"},
-    {"point": "t2.failstreak", "when": {}, "answer": "continue", "knobs": "resource.gearDeathsHigh 4", "vs": "differs"},
-    {"point": "t2.reset.game", "when": {}, "answer": "restart", "knobs": "route.freshGapSec 600, route.freshMaxNoGain 3", "vs": "match"}
+
+    {"point": "t1.stash.full", "when": {}, "answer": "sell", "knobs": "none (proposed: town.stashFullAction); the stash chore has no knob", "vs": "match"},
+
+    {"point": "t1.repair", "when": {"durability": "gt30"}, "answer": "skip", "knobs": "town.repairBelowPct 30", "vs": "match"},
+    {"point": "t1.repair", "when": {}, "answer": "repair", "knobs": "town.repairBelowPct 30, town.tripRepairPct 20", "vs": "match"},
+
+    {"point": "t1.identify", "when": {"itemclass": "higher"}, "answer": "scroll", "knobs": "town.idScrollNeed 1 (idScrollWanted: set, rare, unique, crafted), town.idScrollTarget 2", "vs": "match"},
+    {"point": "t1.identify", "when": {}, "answer": "leave", "knobs": "town.idScrollNeed 1 (sellUnidentified sells a plain item as it is)", "vs": "match"},
+
+    {"point": "t1.potions.buy", "when": {}, "answer": "best", "knobs": "none for the tier (proposed: town.potionTier); BuyKit buys the plan's preferred tier", "vs": "match"},
+    {"point": "t1.gamble", "when": {}, "answer": "save", "knobs": "none (proposed: town.gambleAbove); no gamble code path", "vs": "match"},
+
+    {"point": "t2.repeat", "when": {}, "answer": "again", "knobs": "the goal order count (internal/goals/runs.go) decides, not a knob", "vs": "match"},
+    {"point": "t2.failstreak", "when": {"hc": "hardcore"}, "answer": "stop", "knobs": "spec 5.1: hardcore stops at 1 death (hardcore is unbuilt)", "vs": "match"},
+    {"point": "t2.failstreak", "when": {"deaths": "4+"}, "answer": "stop", "knobs": "resource.gearDeathsHigh 4", "vs": "match"},
+    {"point": "t2.failstreak", "when": {}, "answer": "continue", "knobs": "resource.gearDeathsHigh 4", "vs": "match"},
+    {"point": "t2.slowrun", "when": {}, "answer": "continue", "knobs": "none (proposed: route.slowRunRatio); no run-time-versus-expected measure", "vs": "match"},
+    {"point": "t2.bossunsafe", "when": {}, "answer": "skip", "knobs": "resource.gearRiskMedium 3, resource.gearRiskHigh 6", "vs": "match"},
+    {"point": "t2.reset.game", "when": {}, "answer": "restart", "knobs": "route.freshGapSec 600, route.freshMaxNoGain 3: freshAllowed always ends in a restart (after a wait)", "vs": "match"},
+
+    {"point": "t2.mercenary", "when": {"merc": "alive"}, "answer": "wait", "knobs": "merc.enabled 1", "vs": "match"},
+    {"point": "t2.mercenary", "when": {"gold": "500-1500|gt1500"}, "answer": "hire", "knobs": "bot.mercHireMinGold 400 (the 400 is inside the 100-500 band)", "vs": "match"},
+    {"point": "t2.mercenary", "when": {}, "answer": "wait", "knobs": "bot.mercHireMinGold 400", "vs": "match"}
   ],
   "gaps": [
-    {"point": "t0.retreat.drink", "gap": "bands above 55 percent need a 'keep fighting' answer; rejuvenation versus portal needs the potion held; 'leave the game' is not an answer"},
+    {"point": "t0.retreat.drink", "gap": "three band-interior splits remain (see the parity test): champion bonus of +10 points at clvl under 15 inside 55-70; no-potion portal window 17-25 inside lt25; fleeLifePct 50 inside 35-55"},
     {"point": "t0.retreat.lethal", "gap": "the lethal-pack list is a placeholder enum; today danger is a level 1 to 3, no knob lists pack kinds"},
-    {"point": "t0.area.toohard", "gap": "today's floors are absolute clvl per area; the gap band is relative (levelgap)"},
-    {"point": "t0.retreat.repeat", "gap": "no knob counts retreats per area; the rule fires only when the call site reports the repeat"},
-    {"point": "t0.leave.safe", "gap": "no knob; fast and ranged packs are not modelled"},
+    {"point": "t0.area.toohard", "gap": "the tower floor is 15 without a merc and 14 with one; the merc is not in the key, so clvl 14 stays a split"},
+    {"point": "t0.retreat.repeat", "gap": "no knob counts retreats per area; only Blood Raven has a budget (brAttempts 3), the field is reported by the call site"},
+    {"point": "t0.unique.fight", "gap": "minEngageLifePct 40 is inside the 35-55 band (the 40 edge was dropped by the 2026-11-05 decision); the legacy code has no avoid-champion rule above 40"},
+    {"point": "t0.leave.safe", "gap": "no knob and no code path: today the hero stays and fights; the knob is a proposal"},
     {"point": "t0.shrine", "gap": "no knob; shrine handling not read in code"},
-    {"point": "t0.unique.fight", "gap": "no knob says 'avoid a champion pack'"},
-    {"point": "t1.restock", "gap": "gold edges 100 and 500 differ from the floors 300 and 60"},
-    {"point": "t1.keep.kind", "gap": "rare and unique depend on pickit priorities, a rule can only override by class"},
-    {"point": "t1.town.trigger", "gap": "knobs use a percent of the pack and cells, the band uses rows"},
-    {"point": "t1.stash.full", "gap": "no stash-full knob exists; default is whatever the stash chore does"},
+    {"point": "t1.keep.kind", "gap": "rare and unique depend on pickit priorities, a rule can only override by kind"},
+    {"point": "t1.stash.full", "gap": "no stash-full knob exists; the default is whatever the stash chore does (U)"},
     {"point": "t1.potions.buy", "gap": "no potion-tier knob"},
     {"point": "t1.gamble", "gap": "no gamble knob or code path"},
     {"point": "t2.repeat", "gap": "the order count decides, not a knob"},
     {"point": "t2.slowrun", "gap": "no run-time-versus-expected measure exists"},
     {"point": "t2.bossunsafe", "gap": "only Blood Raven and Forgotten Tower have floors; gear risk is a separate composite"},
-    {"point": "t2.mercenary", "gap": "belongs to merc policy; placeholder"}
+    {"point": "t2.mercenary", "gap": "bot.mercHireMinGold 400 is inside the 100-500 gold band; belongs to merc policy"}
   ]
 }

@@ -11,6 +11,10 @@ import (
 //go:embed catalogue.json
 var shippedCatalogue []byte
 
+// CatalogueVersion is the newest catalogue format and content version this build reads. Version 2 added the held,
+// clvl, retreats, tripgold and packused fields and the answers "fight" and "leave" of t0.retreat.drink.
+const CatalogueVersion = 2
+
 // Risk classes (spec 5.1).
 const (
 	Safe   = "safe"
@@ -84,13 +88,26 @@ type UrgencyTable struct {
 	} `json:"rows"`
 }
 
+// Migration rewrites the keys of one point from the previous catalogue version (data, not code): fields are
+// dropped, renamed, get a value set and have values mapped, in that order. Applied once when a profile file written
+// by an older version is opened; a rule keeps its answer and moves to the new key.
+type Migration struct {
+	Point  string                       `json:"point"`
+	Note   string                       `json:"note"`
+	Drop   []string                     `json:"drop,omitempty"`
+	Rename map[string]string            `json:"rename,omitempty"`
+	Values map[string]map[string]string `json:"values,omitempty"`
+	Add    map[string]string            `json:"add,omitempty"`
+}
+
 type Catalogue struct {
-	Version int              `json:"version"`
-	Config  Config           `json:"config"`
-	Fields  map[string]Field `json:"fields"`
-	Classes map[string]Class `json:"classes"`
-	Urgency UrgencyTable     `json:"urgency"`
-	Points  []Point          `json:"points"`
+	Version    int              `json:"version"`
+	Migrations []Migration      `json:"migrations,omitempty"`
+	Config     Config           `json:"config"`
+	Fields     map[string]Field `json:"fields"`
+	Classes    map[string]Class `json:"classes"`
+	Urgency    UrgencyTable     `json:"urgency"`
+	Points     []Point          `json:"points"`
 
 	idx map[string]*Point
 }
@@ -130,7 +147,7 @@ func (p *Point) answer(id string) (Answer, bool) {
 func badToken(s string) bool { return s == "" || strings.ContainsAny(s, "|,=") }
 
 func (c *Catalogue) validate() error {
-	if c.Version != 1 {
+	if c.Version < 1 || c.Version > CatalogueVersion {
 		return fmt.Errorf("decide: catalogue version %d not supported", c.Version)
 	}
 	for _, cl := range []string{Safe, Normal, Risky} {
@@ -193,7 +210,79 @@ func (c *Catalogue) validate() error {
 			return err
 		}
 	}
+	for _, m := range c.Migrations {
+		if _, ok := c.idx[m.Point]; !ok {
+			return fmt.Errorf("decide: migration names unknown point %q", m.Point)
+		}
+		check := func(field, val string) error {
+			f, ok := c.Fields[field]
+			labels := f.Values
+			if f.Kind != "enum" {
+				labels = f.Labels
+			}
+			if !ok || !contains(labels, val) {
+				return fmt.Errorf("decide: migration of %q: field %q has no value %q", m.Point, field, val)
+			}
+			return nil
+		}
+		for f, v := range m.Add {
+			if err := check(f, v); err != nil {
+				return err
+			}
+		}
+		for f, vals := range m.Values {
+			for _, to := range vals {
+				if err := check(f, to); err != nil {
+					return err
+				}
+			}
+		}
+	}
 	return nil
+}
+
+// MigrateKey rewrites a context key written by an older catalogue version to the current shape. A key of a point
+// without a migration, or a key already in the new shape, comes back unchanged.
+func (c *Catalogue) MigrateKey(key string) string {
+	ctx, err := ParseKey(key)
+	if err != nil {
+		return key
+	}
+	changed := false
+	for _, m := range c.Migrations {
+		if m.Point != ctx.Point {
+			continue
+		}
+		for _, f := range m.Drop {
+			if _, ok := ctx.Fields[f]; ok {
+				delete(ctx.Fields, f)
+				changed = true
+			}
+		}
+		for from, to := range m.Rename {
+			if v, ok := ctx.Fields[from]; ok {
+				delete(ctx.Fields, from)
+				ctx.Fields[to] = v
+				changed = true
+			}
+		}
+		for f, vals := range m.Values {
+			if v, ok := ctx.Fields[f]; ok && vals[v] != "" {
+				ctx.Fields[f] = vals[v]
+				changed = true
+			}
+		}
+		for f, v := range m.Add {
+			if _, ok := ctx.Fields[f]; !ok {
+				ctx.Fields[f] = v
+				changed = true
+			}
+		}
+	}
+	if !changed {
+		return key
+	}
+	return makeKey(ctx.Point, ctx.Fields)
 }
 
 func (c *Catalogue) validateMatch(p *Point, m Match) error {

@@ -19,7 +19,7 @@ owns:
 exclusive: []
 branch: "agent/decision-point-store"
 agent: "decision-point-store"
-result: ""
+result: "dpgaps (offline tested, not live): store behaviours (banked skips, LateAnswer, confirm blocks asks), catalogue v2 with migration, default-parity 1168 match / 0 mismatch / 192 band-interior splits in 4 points (gate #4 stays open), public Profiles, Thought and AskWithDefault API; see docs/research/decision-point-store-notes.md"
 live: ""
 merge_hash: ""
 overlap: "New package internal/decide; no overlap with open cards. The call sites in internal/bot, internal/town, internal/combat belong to t0-slice."

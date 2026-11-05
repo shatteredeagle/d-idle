@@ -289,7 +289,7 @@ func TestAskNeverWaits(t *testing.T) {
 func TestTierLocked(t *testing.T) {
 	r := newRig(t)
 	r.s.SetUnlockedTier(0)
-	d := r.ask(r.ctx("t1.restock", nil, nil))
+	d := r.ask(r.ctx("t1.restock", nil, map[string]float64{"tripgold": 300}))
 	if d.Source != "default-locked" || d.Thought != nil || d.Answer != "yes" {
 		t.Fatalf("%+v", d)
 	}
@@ -340,7 +340,7 @@ func TestRulesListPlainLanguage(t *testing.T) {
 	r.say(c, "yes")
 	r.say(c, "yes")
 	v := r.s.Rules()
-	if len(v) != 1 || v[0].Label != "restock" || !strings.Contains(v[0].Context, "gold 100-500") || v[0].Question == "" {
+	if len(v) != 1 || v[0].Label != "restock" || !strings.Contains(v[0].Context, "tripgold 60-300") || v[0].Question == "" {
 		t.Fatalf("%+v", v)
 	}
 	if _, err := json.Marshal(v); err != nil {
