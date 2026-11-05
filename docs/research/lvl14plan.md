@@ -55,12 +55,12 @@ Card ids are placeholders (no card exists yet); Backlog.md task bodies follow. G
 - Problem: the restart loop (task.go:953) fires every 3 minutes with no gain (V).
 - Change: before a fresh game, check what blocked the picks: if any area was skipped only for a fixable cause (mana, healing, portal, gold; `avoidWhy` is whyUnreachable or a guard kit reason), run the chores trip and log `leveling: blocked by kit (reason), restocking`, not a restart. If the only blockers are merc or clvl, allow the restart but at most once per 10 minutes and at most 3 in a row without XP gained (compare experience between restarts); after that, take the quest path or the gold farm (farm flags in plandata) for one slice, and log `leveling: fallback exhausted, farming gold`. Never a tight loop.
 - Acceptance: with a fake state where every area is guarded for `1 mana potions < 2` the bot goes to town and buys, no fresh game; with a merc-only block it restarts at most 3 times, then farms gold; restart counter resets on XP gain; `go test -p 1 ./internal/bot -run Fresh` passes.
-- Offline test plan, two builds: build A (main) and B run the leveling slice against a scripted world that returns the three seed-13 verdicts (tower no merc, Tamoe mana, Burial unreachable) for 4 virtual hours; compare restarts (expect 75 vs at most 3 plus the gold-farm slices) and XP gained.
+- Offline test plan, two builds: build A (main) and B run the leveling slice against a scripted world that returns the three seed-13 verdicts (Forgotten Tower no merc, Tamoe mana, Burial unreachable) for 4 virtual hours; compare restarts (expect 75 vs at most 3 plus the gold-farm slices) and XP gained.
 - Effort: medium (1 day).
 
-### TASK-D: tower-floor - Forgotten Tower at clvl 15 without a merc (optional, ADR 0011 interim)
+### TASK-D: Forgotten Tower floor - Forgotten Tower at clvl 15 without a merc (optional, ADR 0011 interim)
 
-- Goal: G-B. Owns: internal/env/tuning_route.go only. The tower is a no-reward Countess quest in Normal (S tuning text) and killed a clvl 14 caster twice (V text of the knob, attempt 17), so this is ranked last and needs the user. Alternative to a lower floor: hire the merc (mercrevive card) so the existing floor 14 opens it. Proposed text, not applied: keep 16, document that the merc is the lever.
+- Goal: G-B. Owns: internal/env/tuning_route.go only. The Forgotten Tower is a no-reward Countess quest in Normal (S tuning text) and killed a clvl 14 caster twice (V text of the knob, attempt 17), so this is ranked last and needs the user. Alternative to a lower floor: hire the merc (mercrevive card) so the existing floor 14 opens it. Proposed text, not applied: keep 16, document that the merc is the lever.
 - Effort: trivial, but a decision, not a build; no test plan beyond the knob test.
 
 Order: A (cheap, prevents most blocks), C (stops the loop), B (needs the replay), D (decision).
