@@ -13,7 +13,7 @@ d2lod-bot (d.idle) is a Go bot for Diablo II LoD 1.14d. d2d (a lockstep fork of 
 ## Folders
 - Top level `*.md`: one doc per area (bot, combat, nav, items, soak, d2d-*). [INDEX.md](INDEX.md) lists every one in a line, grouped by area; the first doc of each group is the one to read.
 - [plan/](plan/STATUS.md): STATUS (read first), plan-v2 (the plan with the user's decisions), death data.
-- [BACKLOG.md](BACKLOG.md): open items without a card; [needs-you.md](needs-you.md): what waits on the user.
+- [BACKLOG.md](BACKLOG.md): open items without a card; `needs-you.md` (generated, not tracked): what waits on the user.
 - [decisions.md](decisions.md) and [adr/](adr/README.md): the user's decisions and why (guard files).
 - [../docs/contracts/](contracts/README.md): the numeric gates and contracts; [knobs.md](knobs.md) is generated from code.
 - [research/](research/README.md): traces of game.exe vs d2d, upstream PR proofs and evidence packs; topical index with status per doc.

@@ -158,7 +158,7 @@ docs/BACKLOG.md, add:
 
 docs/INDEX.md, decomp lane line, add after the sk-mana-trace entry:
 
-`[research/sk-nova-trace.md](research/sk-nova-trace.md) (Frost Nova ring: 64 missiles, tables, reach; d2d multi-hit, row 18)`
+`[research/sk-nova-trace.md](sk-nova-trace.md) (Frost Nova ring: 64 missiles, tables, reach; d2d multi-hit, row 18)`
 
 docs/research/README.md, add:
 

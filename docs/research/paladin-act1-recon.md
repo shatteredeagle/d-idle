@@ -212,4 +212,4 @@ Next in line after these: PALBLOCK (row 8, pure differential), PALFRAMES (row 6,
 ## 8. Shared-file lines for the merger
 
 - BACKLOG, ROADMAP: `second class probe: Paladin Act 1 (user go 2026-11-01); recon docs/research/paladin-act1-recon.md (card palrecon): Paladin profile, plan tables and live smoke exist; missing d2d held attack and a class parameter in drills; build after the BUILDFLEX audit`
-- INDEX: `- Paladin Act 1 recon: [research/paladin-act1-recon.md](research/paladin-act1-recon.md) (what exists for the Paladin, Act 1 melee needs, Zealot-lite starter table as a proposal, generality metric and predicted file list, 8 SME questions; card palrecon)`
+- INDEX: `- Paladin Act 1 recon: [research/paladin-act1-recon.md](paladin-act1-recon.md) (what exists for the Paladin, Act 1 melee needs, Zealot-lite starter table as a proposal, generality metric and predicted file list, 8 SME questions; card palrecon)`
