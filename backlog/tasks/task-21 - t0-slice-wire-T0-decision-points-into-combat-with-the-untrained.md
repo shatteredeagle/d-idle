@@ -28,8 +28,8 @@ owns:
 exclusive: []
 branch: "agent/t0-slice"
 agent: "t0-slice"
-result: "Phase A (offline, branch agent/t0slice, flag ladder.enabled default 0): glue package internal/ladder, call sites in internal/town (repairDue, tpBuyAllowed) and bot.EnableLadder, golden parity tests, refusal witnesses, 5 profiles x 2 builds, 30 random scripts, T0 drill group in cmd/d2drill on a fake lab. Wired t1.repair and t1.tp.lost; NO T0 point passed parity (t0.retreat.drink refused with a witness, t0.retreat.repeat has no legacy test), so AC 1 and 2 are NOT met for T0 and the drill is a town drill. Not verified live (phase B: docs/probes/t0drill.md). See docs/t0-slice.md."
-live: "not run (phase B pending)"
+result: "Phase A (offline, branch agent/t0slice, flag ladder.enabled default 0): glue package internal/ladder, call sites in internal/town (repairDue, tpBuyAllowed) and bot.EnableLadder, golden parity tests, refusal witnesses, 5 profiles x 2 builds, 30 random scripts, T0 drill group in cmd/d2drill on a fake lab. Wired t1.repair and t1.tp.lost; NO T0 point passed parity (t0.retreat.drink refused with a witness, t0.retreat.repeat has no legacy test), so AC 1 and 2 are NOT met for T0 and the drill is a town drill. Not verified live (phase B: docs/probes/t0drill.md). Phase A2 (agent/t0slice2): internal/ladder now uses the public decide API (AskWithDefault with the legacy answer as the untrained default, Subscribe/Event.Info, decide.KnownProfiles/Holdout/NewProfile; no profile copy); wired t1.return, t1.town.trigger and t1.restock behind ladder.enabled in addition to t1.repair and t1.tp.lost (5 points, all T1 town points; parity grids 4848, 12006, 280, 1080, 12006 states, none refused). t0.retreat.drink, t0.area.toohard, t0.unique.fight and t2.mercenary wait for Track 2b. See docs/t0-slice.md."
+live: "not run (phase B pending; a d2-live agent runs docs/probes/t0drill.md after the Gate 2 g2d runs end)"
 merge_hash: ""
 overlap: "internal/bot/runner.go, task.go and internal/resource are owned by open cards task-10, task-11, task-18: sequence the hook after them or add it as a new file with one call line."
 source: "grill 0005 outcome (docs/grills/0005-automation-ladder/outcome.md), ADR 0016 item 24"
@@ -48,6 +48,6 @@ The first vertical slice of the ladder: the four T0 points (t0.retreat.drink, t0
 - [ ] #1 Hook points placed behind the store interface; with no rule file the behaviour equals today's defaults (regression test on the listed contexts)
 - [ ] #2 T0 drill: fresh clvl 1, order 'Blood Moor', 10 virtual minutes, scripted answers across 3 known profiles and 2 seeded holdouts; invariants hold for every profile (no loop, no crash, no stall); a thought opened mid-fight does not pause the hero
 - [ ] #3 Run record carries the rule-file hash, rules learned, answers given, thoughts faded, and the line 'writes after start: 0'
-- [ ] #4 Two builds: the default Sorceress and one other class or build; class-specific data in profile tables
-- [ ] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/t0-slice.md; say verified live or not
+- [x] #4 Two builds: the default Sorceress and one other class or build; class-specific data in profile tables
+- [x] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/t0-slice.md; say verified live or not
 <!-- AC:END -->

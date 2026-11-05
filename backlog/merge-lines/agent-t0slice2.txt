@@ -1,0 +1,3 @@
+BACKLOG: TASK-21 phase A2: internal/ladder on the public decide API (AskWithDefault legacy default, Subscribe/Info, shared profiles); t1.return, t1.town.trigger, t1.restock wired behind ladder.enabled (default off) next to t1.repair and t1.tp.lost; four T0 points wait for Track 2b; live drill pending
+INDEX: docs/t0-slice.md - ladder T0 slice: five wired town points, parity grids, seams, waiting list
+CHANGELOG: Decision ladder (off by default, ladder.enabled): the town trip trigger, field departure and restock are now decision points that behave exactly as before until a rule is learned
