@@ -6,7 +6,7 @@ Tags: V = read in the Claude Code docs today (fetched by a claude-code-guide age
 ```
 tools/grill.sh 0001 d2d-primary-backend
 ```
-It refuses if master is dirty or behind forge, if the worktree or branch exists, or if there is no prebrief. Otherwise it creates `~/code/d2lod-wt/grill-0001` on branch `grill/0001-d2d-primary-backend`, prints, and runs `claude --agent grill "grill topic 0001"` there. `--print-only` prints both commands and does nothing. Needs no user setting changes (U: the first start asks to trust the workspace, accept it; project-agent hooks are skipped otherwise).
+It refuses if master is dirty or behind origin, if the worktree or branch exists, or if there is no prebrief. Otherwise it creates `~/code/d2lod-wt/grill-0001` on branch `grill/0001-d2d-primary-backend`, prints, and runs `claude --agent grill "grill topic 0001"` there. `--print-only` prints both commands and does nothing. Needs no user setting changes (U: the first start asks to trust the workspace, accept it; project-agent hooks are skipped otherwise).
 
 ## Verified mechanism
 | question | answer | source |
@@ -20,7 +20,7 @@ It refuses if master is dirty or behind forge, if the worktree or branch exists,
 
 ## Decisions
 - The grilling procedure is embedded in `.claude/agents/grill.md` (the `grilling` skill text, V from its SKILL.md in plugin 1.3.1), because grill-me cannot be invoked by an agent. If the plugin text changes, update the agent.
-- `tools: Read, Grep, Glob, Write, Edit, Bash` plus a `PreToolUse` hook `tools/grill-guard.sh` that exits 2 unless: Write/Edit targets `docs/adr/NNNN-slug.md`, `docs/decisions.md` or `docs/grills/NNNN-slug/outcome.md`; Bash is `git log|status|diff|show|branch|remote`, `ls`, `cat`, `git add docs/...`, the project commit, or `git push forge grill/<name>`, with no shell operators. Tested offline with sample payloads (V); payload field names are from the docs only (U, check in the first real session: if the guard blocks everything or nothing, `claude --debug` shows the hook input).
+- `tools: Read, Grep, Glob, Write, Edit, Bash` plus a `PreToolUse` hook `tools/grill-guard.sh` that exits 2 unless: Write/Edit targets `docs/adr/NNNN-slug.md`, `docs/decisions.md` or `docs/grills/NNNN-slug/outcome.md`; Bash is `git log|status|diff|show|branch|remote`, `ls`, `cat`, `git add` of the exact file paths the grill may write (no globs, directories, flags or `..`), or the project commit, with no shell operators; every `git push` is blocked. Tested offline with sample payloads (V); payload field names are from the docs only (U, check in the first real session: if the guard blocks everything or nothing, `claude --debug` shows the hook input).
 - The prebrief's author recommendation is withheld until the key questions are answered (prompt rule, U).
 
 ## If it does not work
