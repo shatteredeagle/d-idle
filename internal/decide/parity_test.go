@@ -47,7 +47,7 @@ func legacyDefault(point string, f map[string]string) (ans, split string) {
 		case is("clvl", "ge15"):
 			return "go", ""
 		case is("clvl", "14"):
-			return "go", "tower floor 15 without a merc, 14 with one; the merc is not in the key"
+			return "go", "route floor 15 without a merc, 14 with one; the merc is not in the key"
 		case is("kit", "NONE"):
 			return "lower", ""
 		}

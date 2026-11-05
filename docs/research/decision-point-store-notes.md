@@ -49,7 +49,7 @@ For every context of every point the rule file, the catalogue default and the le
 1. `t0.retreat.drink` life 55-70 with pack danger 2 or 3: champion bonus (+10 drink points below clvl 15 in Normal), clvl not in this key.
 2. `t0.retreat.drink` life lt25, no potion, kit not NONE: portal only while life is above chicken-8 (17), else leave.
 3. `t0.retreat.drink` life 35-55, no potion, kit NONE: `resource.fleeLifePct` 50 is inside the band.
-4. `t0.area.toohard` clvl 14: tower floor is 15 without a merc, 14 with one; merc not in the key.
+4. `t0.area.toohard` clvl 14: route floor of the tall dungeon is 15 without a merc, 14 with one; merc not in the key.
 5. `t0.unique.fight` life 35-55: `resource.minEngageLifePct` 40 is inside the band (the 40 edge was dropped by decision).
 6. `t2.mercenary` gold 100-500: `bot.mercHireMinGold` 400 is inside the band.
 The rule file answers the conservative side in each (drink-line fight, portal, run, go, fight, wait). Closing them needs a key edge (40, 50, 65) or a field (clvl, merc), a decision for the owner of the bands; the test `wantRemaining` must change with it.

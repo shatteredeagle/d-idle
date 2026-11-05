@@ -84,10 +84,10 @@ func TestParityTPLost(t *testing.T) {
 	t.Logf("t1.tp.lost parity grid: %d states", n)
 }
 
-// Refused points: the parity test found a state where the default rule file and the legacy code disagree, so the point
-// stays on its legacy path. Each case names one witness state; the test fails if the disagreement disappears (then the
-// point may be wired).
-func TestRefusedPointsDisagree(t *testing.T) {
+// Witnesses of the four points the first slice refused. After the catalogue v2 (internal/decide parity table) the
+// default answer equals the legacy action at each witness state; the full grid lives in internal/decide. The points
+// stay unwired until the ladder maps the new fields (held, clvl, retreats, tripgold, packused) from the hero.
+func TestRefusedPointsNowAgree(t *testing.T) {
 	cat, err := decide.Shipped()
 	if err != nil {
 		t.Fatal(err)
@@ -116,45 +116,37 @@ func TestRefusedPointsDisagree(t *testing.T) {
 	}
 	res := resource.FromEnv(env.DefaultTuning())
 
-	// t0.retreat.drink: life 30 percent, kit OK, a pack in melee, healing potions in the belt. Legacy drinks (life under
-	// the drink line, a potion held); the rule file portals at 25 to 35 percent.
 	in := resource.Input{Life: 30, MaxLife: 100, Hostiles: 2, HasTP: true, Belt: resource.Belt{HP: 5, Rows: 1}, Level: 5, Gold: 500}
 	if d := resource.PotionPolicy(in, res); d.Drink != resource.PotionLife {
 		t.Fatalf("legacy no longer drinks at 30 percent: %+v", d)
 	}
-	if got := ans("t0.retreat.drink", base(map[string]string{"kit": "OK", "packdanger": "1"}, map[string]float64{"life": 30})); got != "portal" {
-		t.Errorf("t0.retreat.drink: rule file says %q, expected the witness portal", got)
+	if got := ans("t0.retreat.drink", base(map[string]string{"kit": "OK", "packdanger": "1", "held": "hp"}, map[string]float64{"life": 30})); got != "drink" {
+		t.Errorf("t0.retreat.drink at 30: %q, legacy drinks", got)
 	}
-	// t0.retreat.drink at high life: the point has no 'keep fighting' answer; the file answers drink at 90 percent,
-	// legacy drinks nothing.
 	in.Life = 90
 	if d := resource.PotionPolicy(in, res); d.Drink != resource.PotionNone {
 		t.Fatalf("legacy drinks at 90 percent: %+v", d)
 	}
-	if got := ans("t0.retreat.drink", base(map[string]string{"kit": "OK", "packdanger": "1"}, map[string]float64{"life": 90})); got != "drink" {
-		t.Errorf("t0.retreat.drink at 90: %q", got)
+	if got := ans("t0.retreat.drink", base(map[string]string{"kit": "OK", "packdanger": "1", "held": "hp"}, map[string]float64{"life": 90})); got != "fight" {
+		t.Errorf("t0.retreat.drink at 90: %q, legacy drinks nothing", got)
 	}
-	// t1.return: legacy FieldGate (knob 0) always lets the hero leave town, the file keeps a kit-NONE hero in town.
-	fv := resource.FieldGate(resource.Input{Gold: 0, Class: d2.Sorceress, Level: 1}, res)
-	if !fv.Go {
+	if fv := resource.FieldGate(resource.Input{Gold: 0, Class: d2.Sorceress, Level: 1}, res); !fv.Go {
 		t.Fatalf("legacy field gate stopped: %+v", fv)
 	}
-	if got := ans("t1.return", base(map[string]string{"kit": "NONE", "areaclass": "field"}, nil)); got != "no" {
+	if got := ans("t1.return", base(map[string]string{"kit": "NONE", "areaclass": "field"}, nil)); got != "yes" {
 		t.Errorf("t1.return: %q", got)
 	}
-	// t1.town.trigger: legacy trips on potions (TripHPMin), the file on free pack rows.
 	trip := resource.TownTripTrigger(resource.Input{Life: 100, MaxLife: 100, HasTP: true, Gold: 1000, LastTripGold: -1, Belt: resource.Belt{HP: 6, Rows: 1}}, res)
 	if trip.Go {
 		t.Fatalf("legacy trips with a full belt: %+v", trip)
 	}
-	if got := ans("t1.town.trigger", base(map[string]string{"kit": "OK"}, map[string]float64{"freerows": 0})); got != "go" {
+	if got := ans("t1.town.trigger", base(map[string]string{"belt": "full"}, map[string]float64{"packused": 10})); got != "continue" {
 		t.Errorf("t1.town.trigger: %q", got)
 	}
-	// t1.restock: legacy refuses a trip under tripGoldFloor (300), the file restocks from 100 gold.
 	if resource.TripBudgetSpent(resource.Input{Gold: 150}, res) == "" {
 		t.Fatal("legacy trip budget no longer refuses at 150 gold")
 	}
-	if got := ans("t1.restock", base(map[string]string{"belt": "low"}, map[string]float64{"gold": 150})); got != "yes" {
+	if got := ans("t1.restock", base(map[string]string{"belt": "low"}, map[string]float64{"tripgold": 150})); got != "no" {
 		t.Errorf("t1.restock: %q", got)
 	}
 }
