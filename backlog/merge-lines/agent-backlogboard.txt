@@ -1,3 +1,0 @@
-BACKLOG: docs/process/backlog-board-NAS.md + deploy/backlog-board/: prepared Backlog.md read-only web board for the NAS (not deployed)
-INDEX: docs/process/backlog-board-NAS.md - read-only Backlog.md web board on the NAS: compose stack, sync mirror, UI steps
-CHANGELOG: Backlog.md web board for the NAS prepared (deploy/backlog-board, read-only mirror, UI steps); not deployed
