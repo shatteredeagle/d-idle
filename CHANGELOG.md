@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- decide catalogue v3 (drinklife, lifeengage, mercgold, champbonus; v2 files migrate); default parity 192 -> 72 band-interior splits
+- Decision ladder (off by default, ladder.enabled): the town trip trigger, field departure and restock are now decision points that behave exactly as before until a rule is learned
 - ladder.enabled knob (default 0): wired decision points t1.repair and t1.tp.lost ask the decision-point store; off is the legacy code path
 - docs: Backlog.md NAS board doc renamed to docs/process/backlog-board-nas.md (neutral name); docs index regenerated
 - Decision-point store (internal/decide): offline learn-by-doing store with answer profiles and replay tests; not wired into the bot yet.

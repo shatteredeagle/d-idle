@@ -273,7 +273,7 @@ func TestSacrificeSkip(t *testing.T) {
 
 func TestAskNeverWaits(t *testing.T) {
 	r := newRig(t)
-	c := r.ctx("t0.retreat.drink", map[string]string{"kit": "NONE"}, nil)
+	c := r.ctx("t0.retreat.drink", map[string]string{"kit": "NONE"}, map[string]float64{"life": 40})
 	d := r.ask(c)
 	if d.Answer != "run" || d.Thought == nil || d.Source != "default" {
 		t.Fatalf("%+v", d)

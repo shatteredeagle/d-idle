@@ -522,7 +522,7 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 		// Under twice the floor at most two spares: the Fresha i5 soak spent 12 scrolls (1200 gold) at clvl 4-6 while the belt starved.
 		if floor := t.e.Tune.Resource.TripGoldFloor; j.scroll == "tsc" && floor > 0 {
 			switch {
-			case cur.Player.Gold < floor:
+			case !t.restockFree(cur, floor):
 				j.target = min(j.target, 1)
 			case cur.Player.Gold < 2*floor:
 				j.target = min(j.target, 2)
@@ -922,14 +922,36 @@ func (t *Town) ensureHealing(s *d2.Snapshot, band belt.Band, bs belt.State, want
 	}
 }
 
-// tpBuyAllowed is point t1.tp.lost (docs/t0-slice.md): with the ladder on a "walk" answer vetoes the purchase the
-// legacy test (BuyKit, gold against the real price) already allows; with it off this is always true.
+// restockFree is point t1.restock (docs/t0-slice.md) at the one place the trip gold floor limits town spending: the
+// purse covers the belt potions as well as the scrolls. The legacy answer is gold at or above the floor; with the
+// ladder on a learned answer for the context (belt state, gold band) replaces it, in either direction.
+func (t *Town) restockFree(s *d2.Snapshot, floor int) bool {
+	legacy := s.Player.Gold >= floor
+	if l := ladder.Active(); l != nil {
+		v, err := l.RestockWanted(ladder.HeroFrom(s.Player), t.beltBand(s), s.Player.Gold, legacy)
+		if err == nil {
+			return v
+		}
+		l.Fault(err)
+	}
+	return legacy
+}
+
+// beltBand is the t1.town.trigger / t1.restock belt field: healing and rejuvenation potions in the belt against the
+// plan's capacity for them (U: the band edges "half" and "low" are this function's choice, not measured).
+func (t *Town) beltBand(s *d2.Snapshot) string {
+	bs := belt.Read(t.e.Data, s.Inventory)
+	return ladder.BeltBand(bs.Count[belt.HP]+bs.Count[belt.RV], t.plan(s.Player).Capacity(belt.HP, bs.Slots))
+}
+
+// tpBuyAllowed is point t1.tp.lost (docs/t0-slice.md), asked once BuyKit allows the purchase: with the ladder on a
+// learned "walk" vetoes it; with it off, or with nothing learned, this is true.
 func tpBuyAllowed(p *d2.Player) bool {
 	l := ladder.Active()
 	if l == nil {
 		return true
 	}
-	buy, err := l.TPBuyWanted(ladder.HeroFrom(p))
+	buy, err := l.TPBuyWanted(ladder.HeroFrom(p), true)
 	if err != nil {
 		l.Fault(err)
 		return true

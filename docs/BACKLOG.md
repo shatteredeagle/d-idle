@@ -497,6 +497,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - docs/BACKLOG.md line 491 still names docs/process/backlog-board-NAS.md; the file is now backlog-board-nas.md (lowercase)
 - TASK-21 t0-slice phase A: ladder glue (internal/ladder), t1.repair and t1.tp.lost wired behind ladder.enabled (default off) with golden parity grids, T0 drill group in d2drill; no T0 point passed parity; live drill pending (docs/t0-slice.md, docs/probes/t0drill.md)
 - decisions-mirror (TASK-22, deferred): one-way generated mirror of the ADRs into backlog/decisions for the board; ADRs stay the source of truth
+- TASK-21 phase A2: internal/ladder on the public decide API (AskWithDefault legacy default, Subscribe/Info, shared profiles); t1.return, t1.town.trigger, t1.restock wired behind ladder.enabled (default off) next to t1.repair and t1.tp.lost; four T0 points wait for Track 2b; live drill pending
+- TASK-19 default parity: catalogue v3 closes retreat.drink, unique.fight, mercenary (0 splits, legacy-function oracle); toohard clvl 14 (72 contexts) waits for an owner decision on merc vs levelgap
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
