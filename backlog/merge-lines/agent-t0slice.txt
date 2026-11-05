@@ -1,0 +1,4 @@
+BACKLOG: TASK-21 t0-slice phase A: ladder glue (internal/ladder), t1.repair and t1.tp.lost wired behind ladder.enabled (default off) with golden parity grids, T0 drill group in d2drill; no T0 point passed parity; live drill pending (docs/t0-slice.md, docs/probes/t0drill.md)
+INDEX: docs/t0-slice.md - T0 slice phase A: wired points, refusals with witnesses, API changes wanted from internal/decide
+INDEX: docs/probes/t0drill.md - T0 drill phase B commands (not run)
+CHANGELOG: ladder.enabled knob (default 0): wired decision points t1.repair and t1.tp.lost ask the decision-point store; off is the legacy code path

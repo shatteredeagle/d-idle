@@ -1,7 +1,7 @@
 ---
 id: TASK-21
 title: "t0-slice: wire T0 decision points into combat with the untrained default"
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-05T00:00:00Z'
 updated_date: '2026-11-05T00:00:00Z'
@@ -13,6 +13,14 @@ ordinal: 21000
 card: "t0-slice"
 owns:
   - "internal/decide/t0/**"
+  - "internal/ladder/**"
+  - "internal/env/tuning_ladder.go"
+  - "internal/town/ladder_test.go"
+  - "internal/drill/t0.go"
+  - "internal/drill/t0_test.go"
+  - "cmd/d2drill/t0_lab.go"
+  - "cmd/d2drill/t0_lab_test.go"
+  - "docs/probes/t0drill.md"
   - "internal/bot/thoughts.go"
   - "internal/bot/thoughts_test.go"
   - "internal/combat/thoughtshook.go"
@@ -20,8 +28,8 @@ owns:
 exclusive: []
 branch: "agent/t0-slice"
 agent: "t0-slice"
-result: ""
-live: ""
+result: "Phase A (offline, branch agent/t0slice, flag ladder.enabled default 0): glue package internal/ladder, call sites in internal/town (repairDue, tpBuyAllowed) and bot.EnableLadder, golden parity tests, refusal witnesses, 5 profiles x 2 builds, 30 random scripts, T0 drill group in cmd/d2drill on a fake lab. Wired t1.repair and t1.tp.lost; NO T0 point passed parity (t0.retreat.drink refused with a witness, t0.retreat.repeat has no legacy test), so AC 1 and 2 are NOT met for T0 and the drill is a town drill. Not verified live (phase B: docs/probes/t0drill.md). See docs/t0-slice.md."
+live: "not run (phase B pending)"
 merge_hash: ""
 overlap: "internal/bot/runner.go, task.go and internal/resource are owned by open cards task-10, task-11, task-18: sequence the hook after them or add it as a new file with one call line."
 source: "grill 0005 outcome (docs/grills/0005-automation-ladder/outcome.md), ADR 0016 item 24"
