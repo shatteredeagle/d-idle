@@ -746,3 +746,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/t0-slice.md - ladder T0 slice: five wired town points, parity grids, seams, waiting list
 - research/watch-screen-design.md - watch screen layout, JSON contract, bot integration, API needs (TASK-20)
 - watch-screen.md - how to run the watch screen on d2dview (TASK-20)
+- docs/t0-slice.md: phase A3, T0 fight-time points wired

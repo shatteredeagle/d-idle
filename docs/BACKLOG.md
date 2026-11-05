@@ -501,6 +501,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-19 default parity: catalogue v3 closes retreat.drink, unique.fight, mercenary (0 splits, legacy-function oracle); toohard clvl 14 (72 contexts) waits for an owner decision on merc vs levelgap
 - TASK-19 dptoohard: catalogue v4, t0.area.toohard keys on merc instead of levelgap (162 contexts); all 23 points 0 default-parity splits, ADR 0016 default gate closable; ThoughtInfo.Opened added
 - TASK-20 watch-screen: built offline on the simulated runner (internal/watch, d2dview -watch); not verified live
+- TASK-21 phase A3: four T0 points (t0.retreat.drink, t0.unique.fight, t0.area.toohard, t2.mercenary) wired behind ladder.enabled (default off), golden grids and call-site tests, drill fight hook (offline only)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

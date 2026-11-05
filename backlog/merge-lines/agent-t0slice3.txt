@@ -1,3 +1,0 @@
-BACKLOG: TASK-21 phase A3: four T0 points (t0.retreat.drink, t0.unique.fight, t0.area.toohard, t2.mercenary) wired behind ladder.enabled (default off), golden grids and call-site tests, drill fight hook (offline only)
-INDEX: docs/t0-slice.md: phase A3, T0 fight-time points wired
-CHANGELOG: ladder T0 slice A3: the four T0 decision points are wired behind ladder.enabled (off by default; legacy behaviour unchanged)
