@@ -252,7 +252,7 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 	bs := belt.Read(t.e.Data, s.Inventory)
 	want := t.potionsWanted(s)
 	if floor > 0 {
-		want[belt.HP] = max(min(want[belt.HP]+want[belt.RV], floor-bs.Count[belt.HP]-bs.Count[belt.RV]-belt.PackCount(t.e.Data, s.Inventory, belt.HP)), 0)
+		want[belt.HP] = max(min(want[belt.HP]+want[belt.RV], floor-bs.Count[belt.HP]-belt.PackCount(t.e.Data, s.Inventory, belt.HP)), 0)
 		// A caster keeps a small mana reserve even while recovering: without it a broke Sorceress had no way to fight
 		// back (Fresha soak: 0 mana potions for the whole recovery). Healing still comes first (buy order).
 		mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)
@@ -269,6 +269,7 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 		}
 		want[belt.MP] = max(min(want[belt.MP], left), 0)
 	}
+	t.ensureHealing(s, band, bs, want)
 	t.e.Log.Info("shop: potion plan", "wantHP", want[belt.HP], "wantMP", want[belt.MP], "wantRV", want[belt.RV], "beltHP", bs.Count[belt.HP],
 		"beltMP", bs.Count[belt.MP], "packHP", belt.PackCount(t.e.Data, s.Inventory, belt.HP), "packMP", belt.PackCount(t.e.Data, s.Inventory, belt.MP), "beltOther", bs.Other, "slots", bs.Slots, "gold", s.Player.Gold)
 	// A caster buys its first mana potions before the healing fill: the fill alone ate the whole purse for hours (seed 11
@@ -906,4 +907,13 @@ func (t *Town) logWorn(msg string) {
 		names = append(names, fmt.Sprintf("%d:%s", u.Item.Body, t.nameOf(u)))
 	}
 	t.e.Log.Info(msg, "worn", names, "gold", s.Player.Gold)
+}
+
+// ensureHealing keeps one healing potion in the plan when belt and pack hold none. Rejuvenation is not a healing potion
+// for the BELT gate, so a belt of mana and Rejuvenation columns (no free slot, empty want) still buys one; it stays in
+// the pack. Gate 2 g2b seed 13: 3 mana + 1 Rejuvenation, gold 88, shop plan "wantHP:0", "bought:{}" for 10 minutes.
+func (t *Town) ensureHealing(s *d2.Snapshot, band belt.Band, bs belt.State, want map[belt.Kind]int) {
+	if bs.Count[belt.HP]+belt.PackCount(t.e.Data, s.Inventory, belt.HP) == 0 && band.Capacity(belt.HP, bs.Slots) > 0 && want[belt.HP] < 1 {
+		want[belt.HP] = 1
+	}
 }
