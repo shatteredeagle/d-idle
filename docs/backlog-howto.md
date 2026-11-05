@@ -24,8 +24,41 @@
 |---|---|
 | a text editor, `grep`, `tools/backlog/check.py`, a future changecheck port | yes (plain YAML in the file) |
 | `backlog task N --plain`, `list --json`, `task N --json`, search | no: `--json` shows only native fields. V |
-| `backlog task edit` | keeps them untouched when it rewrites the file. S |
+| `backlog task edit` | keeps them untouched when it rewrites the file. V (2026-11-05, see below) |
 | `backlog task create` | cannot write them: add the lines by hand after creating (at least `card`, `owns`). The checker fails a task with no `owns`. |
+
+## Install
+
+Pinned to 1.55.3 everywhere. User-level, no root, no sudo: `tools/backlog/install.sh` runs a user-level `npm install -g --prefix ~/.local` of the npm package `backlog.md` at exactly 1.55.3 (npm checks the registry integrity hash; the prebuilt Bun binary for the platform comes as the optional dependency `backlog.md-<os>-<arch>` of the same version, MIT licence). It is idempotent (prints `already installed` when the version matches) and prints the path and version. V: installed and run on the dev box (linux-x64) and on the worker host on 2026-11-05; both give `~/.local/bin/backlog` and `backlog --version` = 1.55.3.
+
+- Dev box: `tools/backlog/install.sh`
+- Worker host: from inside a worktree, `labrun <worker> -- tools/backlog/install.sh` (the worker name from `labrun hosts`) (touches only `~/.local`; never its cache or game dirs)
+- Contributors (Linux or macOS, needs Node.js and npm): `sh tools/backlog/install.sh`, then put `~/.local/bin` on PATH. Another prefix: `sh tools/backlog/install.sh /some/dir`. No Node: take the release binary from the project's GitHub releases page for your platform and check it against the checksums listed there. U (not tried; macOS path not run, S from the npm optional dependency list: darwin-x64, darwin-arm64).
+- Upgrade only by changing `VERSION` in the script and this page together.
+- `backlog init` is not needed (`backlog/config.yml` is in the repo); if you ever run it, use `--agent-instructions none`.
+
+## What the CLI can and cannot do with our tasks
+
+Checked 2026-11-05 on the 21 real tasks in a scratch worktree (1.55.3).
+
+- Reads: `task list --plain`, `task N --plain`, `task list --json`, `search <word> --plain` all work (rc 0). V. `task N --plain` prints the file path, native fields, description and criteria, no custom keys. V. `list --json` has schemaVersion and only native fields (id, title, status, labels, priority, ordinal, ac counts, isReady, ...). V.
+- `backlog board view` with output not on a terminal prints a Markdown kanban table (same as `board export`) after a few "Loading tasks from ... branches" lines; the interactive TUI needs a TTY. V.
+- `backlog browser --no-open --port 6420`: binds 127.0.0.1 only; `/` gave 200 and `/api/tasks` gave 200 with the task list as JSON. V. Stopped after the check. Still no authentication.
+- `task edit N -s <status>`, `--add-label`, `--check-ac`, `-a`: custom keys (`card`, `owns`, `exclusive`, `contracts`, `result`, ...), their order and the body are kept. V. It DOES rewrite the frontmatter formatting: double quotes become single quotes or none (`title`, labels), `assignee: []` becomes a list when set, and `updated_date` is refreshed to the current time. Expect noise in the diff on the first edit of each file; the data is the same. V.
+- `task create "x" -s Proposed -l G-G --ac "a"`: writes `task-N - <slug>.md` with id, title, status, assignee, created_date, labels, dependencies, ordinal and the criteria block. No `card`, `owns`, `exclusive`, `contracts`, no `priority` unless given. `python3 tools/backlog/check.py` then fails it with `no owns key`. V. The id is the next free number (22 here).
+- The CLI has no way to set or show our custom keys. V (no option; not in `--json`).
+- `auto_commit: false` kept: none of the commands above created a commit. V.
+
+Config (`backlog config list`) matches what we need: check_active_branches true, remote_operations true, auto_commit false, bypass_git_hooks true, filesystem_only false, active_branch_days 30, default_status Proposed, labels and statuses as in config.yml. V. Nothing to change.
+
+## Wrapper conventions (recommended)
+
+1. Create with the CLI, then add the custom keys by hand in the same edit session: at least `card:` and `owns:` (a list), plus `exclusive:`, `contracts:` when they apply; run `python3 tools/backlog/check.py` before committing. Or write the whole file by hand from a sibling task.
+2. Use the CLI for status, labels, criteria ticks and assignee (`task edit`); it keeps custom keys. Commit the file yourself.
+3. For anything that must see custom keys (owns, exclusive, contracts) read the files or use `tools/backlog/check.py`; do not build on `--json`.
+4. After a CLI edit run `git diff` once: quote-style churn and `updated_date` are expected, anything else is a finding.
+5. Do not run the browser on the worker host or expose it; use it on the dev box only, loopback, short lived.
+6. An MCP server (`backlog mcp`) is not evaluated yet (next job); until then agents use the CLI as above.
 
 ## CLI recipes
 

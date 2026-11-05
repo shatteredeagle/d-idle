@@ -1,6 +1,7 @@
 # leakcheck allow list (cmd/leakcheck). One entry per line, `#` comments.
 #   path <glob>   file is not scanned (it must name private strings to work)
 #   str <text>    exact text is blanked before scanning
+#   phrase <text> whole phrase, case-insensitive (space also matches _, plural s ok), blanked before scanning
 # Keep this short: every entry is a deliberate exception, reviewed like code.
 
 # the scanners and their rule tables name the strings they look for
@@ -29,6 +30,9 @@ str Bearer s3cret
 # docs scrub (package C): false positives, one reason per group
 # the real CI workflow directory of the forge
 str .forgejo/
+# Diablo II area (Act 1); a lone "tower" still hits the machine rule
+phrase Forgotten Tower
+str const act1Forgotten = "tower"
 # game terms: the Forgotten Tower areas, its guard task and the item/monster names (not the host)
 str TOWERGUARD
 str Tower guard

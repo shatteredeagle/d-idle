@@ -1,6 +1,6 @@
 # Rules for every agent working on d2lod-bot
 
-Read in this order: `docs/contracts/README.md` (how contracts are written), `docs/plan/STATUS.md` (where we are; the block at the bottom is generated), YOUR TASK `backlog/tasks/<file>` (named in the brief; how the board works: `docs/backlog-howto.md`; it carries `owns:`, `exclusive:`, `contracts:`, the acceptance criteria and the gates), `GLOSSARY.md` when a term is unclear, then `docs/d2-1.14d-memory.md` and the doc of your area. `PLAN.md` is the founding plan (historical; see its status block). These rules are not optional.
+Read in this order: `docs/START-HERE.md` (the one-page map), `docs/plan/STATUS.md` (where we are; the block at the bottom is generated), YOUR BACKLOG TASK `backlog/tasks/<file>` (named in the brief; how the board works: `docs/backlog-howto.md`; it carries `owns:`, `exclusive:`, `contracts:`, the acceptance criteria and the gates), `docs/contracts/README.md` (how contracts are written), `GLOSSARY.md` when a term is unclear, then `docs/d2-1.14d-memory.md` and the doc of your area (`docs/INDEX.md` lists every doc by area). `PLAN.md` is the founding plan (historical; see its status block). These rules are not optional.
 
 Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `tools/ops.sh link` imports it into a gitignored `CLAUDE.local.md`).
 
@@ -47,7 +47,7 @@ Guide for Claude users and the agent setup: docs/agents/claude-tracing-guide.md
 
 ## Facts and honesty
 - Every offset, struct layout or behavior you rely on is tagged in code comments or docs as VERIFIED LIVE (say how), or UNVERIFIED. Never present a guess as a fact. Keep a short `docs/<your-area>.md` of what you learned, including dead ends.
-- Do not write secrets (CD keys, passwords, tokens) or private hostnames, IPs, home paths or people's names anywhere in the repo (`go run ./cmd/leakcheck`, docs/process/public-split.md).
+- Do not write secrets (CD keys, passwords, tokens) or private hostnames, IPs, home paths or people's names anywhere in the repo (`go run ./cmd/leakcheck -mode fail`, the full scan merge uses, docs/process/public-split.md).
 - This is an offline tool. Do not add anything that talks to Battle.net.
 
 ## Build flexibility

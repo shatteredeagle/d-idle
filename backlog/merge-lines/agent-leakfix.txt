@@ -1,0 +1,1 @@
+CHANGELOG: leakcheck: Forgotten Tower is an allow-list phrase (data), local vs merge-time difference documented in docs/process/hooks.md

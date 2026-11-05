@@ -151,7 +151,7 @@ Plan table check (D): `python3 -I -c 'import gzip,json,collections,glob; [print(
 ## Appendix F: proposed text for guard-rule files (for the owner to approve; not applied)
 
 ### F1. docs/decisions.md (index lines)
-- `- [ADR 0015](adr/0015-acceptance-on-game-exe.md) (2026-11-0X, proposed): Acceptance is game.exe 1.14d: the bot is done when a fresh character plays 24 h unattended on game.exe and clears Act 1; d2d stays the development lab and gate ladder; the d2d container is deferred until then; amends ADR 0009 item 1 and 5 and ADR 0013`
+- `- [ADR 0015](../adr/0015-goals-acceptance-on-game-exe.md) (2026-11-0X, proposed): Acceptance is game.exe 1.14d: the bot is done when a fresh character plays 24 h unattended on game.exe and clears Act 1; d2d stays the development lab and gate ladder; the d2d container is deferred until then; amends ADR 0009 item 1 and 5 and ADR 0013`
 - `- 2026-11-0X (user, no ADR): gate verdicts on XP/h come from a seed set (at least 5 seeds, 2 of them holdout 16-23), never from one seed; per-run gates judge stability, invariants and funded belt windows only`
 - `- 2026-11-0X (user, no ADR): the headline progress metric is virtual hours from a fresh character to Andariel dead and to Act 2, per seed; XP/h is a diagnostic`
 - `- 2026-11-0X (user, no ADR): open cards are capped at 12, each mapped to one of goals G-A..G-E of research/project-review-20261103.md; the WIP limit of ADR 0012 is enforced by changecheck`
