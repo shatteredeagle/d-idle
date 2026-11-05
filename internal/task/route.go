@@ -49,16 +49,44 @@ func towerFloor(w World) int {
 			return min(w.TowerMinLevelMerc, w.TowerMinLevel)
 		}
 	}
+	if towerLifeUnreadable(w) {
+		return max(w.TowerMinLevel, w.TowerMinLevelNoLife)
+	}
 	return w.TowerMinLevel
 }
 
-// TowerLevelWhy says why the tower is closed on level grounds ("" = open): clvl below towerFloor.
+// towerLifeUnreadable: the life rule is on, no merc is alive and max life is not readable (0), so the old, higher
+// no-life floor stands (TowerMinLevelNoLife) instead of the life-checked one.
+func towerLifeUnreadable(w World) bool {
+	return w.TowerMinLife > 0 && w.MaxLife <= 0 && !routeMercOK(w)
+}
+
+// TowerLevelWhy says why the tower is closed on level grounds ("" = open): clvl below towerFloor, or without a merc
+// max life below TowerMinLife (`no merc, life 149 < 150`). A fallback floor says so (`max life unreadable`).
 func TowerLevelWhy(w World) string {
 	f := towerFloor(w)
-	if w.Level >= f {
+	if f == 0 {
 		return ""
 	}
-	return levelWhy(w, f)
+	if w.Level < f {
+		why := levelWhy(w, f)
+		if towerLifeUnreadable(w) {
+			why += " (max life unreadable, fallback floor)"
+		}
+		return why
+	}
+	if w.TowerMinLife > 0 && w.MaxLife > 0 && w.MaxLife < w.TowerMinLife && !routeMercOK(w) {
+		return fmt.Sprintf("no merc, life %d < %d", w.MaxLife, w.TowerMinLife)
+	}
+	return ""
+}
+
+// TowerLifeNote is the extra word of the tower floor log line while the floor is the fallback ("" otherwise).
+func TowerLifeNote(w World) string {
+	if towerFloor(w) > 0 && towerLifeUnreadable(w) {
+		return " (max life unreadable, fallback floor)"
+	}
+	return ""
 }
 
 // levelWhy words a level verdict: `no merc, clvl 14 < 16` or, with a living merc, `clvl 13 < 14 (with merc)`.
@@ -101,7 +129,19 @@ func TowerKitWhy(w World) string {
 	if w.TowerMinLevel <= 0 || !normalDiff(w) {
 		return ""
 	}
-	return kitWhy(w)
+	return kitWhyFor(w, routeHealing, towerManaNeed(w))
+}
+
+// towerManaNeed is the mana potions the tower kit wants: TowerKitMana (the bot sets it only for a class with a mana
+// column in the belt plan), else the road's count for a caster, else none.
+func towerManaNeed(w World) int {
+	switch {
+	case w.TowerKitMana > 0:
+		return w.TowerKitMana
+	case w.Caster:
+		return routeMana
+	}
+	return 0
 }
 
 // TowerWhy is the full tower verdict: "" = open, else level or kit.
@@ -162,15 +202,24 @@ func RouteKitWhy(w World) string {
 }
 
 func kitWhy(w World) string {
+	n := 0
+	if w.Caster {
+		n = routeMana
+	}
+	return kitWhyFor(w, routeHealing, n)
+}
+
+// kitWhyFor is the kit check with the healing and mana counts given (mana 0 = not needed).
+func kitWhyFor(w World, healing, mana int) string {
 	switch {
-	case w.Potions < routeHealing:
-		return fmt.Sprintf("%d healing potions < %d", w.Potions, routeHealing)
+	case w.Potions < healing:
+		return fmt.Sprintf("%d healing potions < %d", w.Potions, healing)
 	case !w.HasTP:
 		return "no town portal"
 	case w.TPKnown && w.TPCharges < routePortals:
 		return fmt.Sprintf("%d portal charges < %d", w.TPCharges, routePortals)
-	case w.Caster && w.ManaPotions < routeMana:
-		return fmt.Sprintf("%d mana potions < %d (caster)", w.ManaPotions, routeMana)
+	case mana > 0 && w.ManaPotions < mana:
+		return fmt.Sprintf("%d mana potions < %d (caster)", w.ManaPotions, mana)
 	}
 	return ""
 }

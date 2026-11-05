@@ -14,6 +14,7 @@ func floorWorld(lvl int, merc string, mut func(*task.World)) task.World {
 	w := task.World{Act: 1, Difficulty: "normal", Level: lvl, Gold: 500, Potions: 5, HasTP: true, ManaPotions: 3, Antidotes: 2,
 		RouteMinLevel: rt.MonasteryMinLevel, RouteMinLevelMerc: rt.MonasteryMinLevelMerc,
 		TowerMinLevel: rt.TowerMinLevel, TowerMinLevelMerc: rt.TowerMinLevelMerc, TowerNeedsMerc: rt.TowerNeedsMerc != 0,
+		TowerMinLife: rt.TowerMinLife, TowerMinLevelNoLife: rt.TowerMinLevelNoLife,
 		AndarielMinLevel: bt.AndarielMinLevel, AndarielMinLevelMerc: bt.AndarielMinLevelMerc,
 		Quests: map[string]task.QuestState{}}
 	switch merc {

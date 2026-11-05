@@ -7,19 +7,22 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/gear"
+	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/task"
 )
 
 // fillRoute copies the route guard and imbue knobs into the World, computes the verdict and logs it once per change
 // (`route guard: blocked monastery (no merc, clvl 12 < 20)`), so a repeat shows in one grep. The guard is a Normal
 // rule; the knob 0 turns it off.
-func (r *Runner) fillRoute(w *task.World, class d2.Class) {
+func (r *Runner) fillRoute(w *task.World, class d2.Class, p *d2.Player) {
 	t := r.e.Tune
 	w.RouteMinLevel, w.RouteMinLevelMerc = t.Route.MonasteryMinLevel, t.Route.MonasteryMinLevelMerc
 	w.ImbueMinLevel, w.ImbueNeedsMerc = t.Campaign.ImbueMinLevel, t.Campaign.ImbueNeedsMerc != 0
 	w.ImbueUseful = class == d2.Barbarian || class == d2.Paladin || class == d2.Assassin
 	w.TowerMinLevel, w.TowerMinLevelMerc, w.TowerNeedsMerc = t.Route.TowerMinLevel, t.Route.TowerMinLevelMerc, t.Route.TowerNeedsMerc != 0
+	r.fillTower(w, t.Route, class, p)
 	w.RouteBlocked = task.RouteWhy(*w)
 	w.TowerBlocked = task.TowerWhy(*w)
 	line := task.RouteLine(*w)
@@ -41,6 +44,19 @@ func (r *Runner) fillRoute(w *task.World, class d2.Class) {
 	r.noteFloors(*w)
 }
 
+// fillTower copies the life and kit knobs of the Forgotten Tower guard. The mana part of the kit is asked only of a class
+// that uses mana every attack (resource.ManaNeed), so a Barbarian is unchanged. A max life that cannot be read stays 0
+// and the guard falls back to the old floor (route.towerMinLevelNoLife) and says so in its log line.
+func (r *Runner) fillTower(w *task.World, rt env.RouteTuning, class d2.Class, p *d2.Player) {
+	w.TowerMinLife, w.TowerMinLevelNoLife = rt.TowerMinLife, rt.TowerMinLevelNoLife
+	if p != nil {
+		w.MaxLife = p.MaxLife
+	}
+	if resource.ManaNeed(class) >= 2 {
+		w.TowerKitMana = rt.TowerKitMana
+	}
+}
+
 // noteFloors logs the effective floor of each guard once per change (`route guard: monastery floor=16 (merc=none)`), so
 // a grep shows which number a decision used and whether the merc state moved it. Normal only; a guard that is off is silent.
 func (r *Runner) noteFloors(w task.World) {
@@ -55,6 +71,9 @@ func (r *Runner) noteFloors(w task.World) {
 	}{{"monastery", task.MonasteryFloor(w)}, {"forgotten tower", task.TowerFloor(w)}, {"andariel", task.AndarielFloor(w)}} {
 		if g.floor > 0 {
 			lines = append(lines, task.FloorLine(g.name, g.floor, w))
+			if g.name == "forgotten tower" {
+				lines[len(lines)-1] += task.TowerLifeNote(w)
+			}
 		}
 	}
 	key := strings.Join(lines, "\n")
@@ -77,6 +96,7 @@ func (r *Runner) guardWorld(s *d2.Snapshot) *task.World {
 	w := task.World{Difficulty: difficultyName(s.Player.Difficulty), Level: s.Player.Level, HasMerc: d2.FindMerc(s).Alive}
 	w.RouteMinLevel, w.RouteMinLevelMerc = r.e.Tune.Route.MonasteryMinLevel, r.e.Tune.Route.MonasteryMinLevelMerc
 	w.TowerMinLevel, w.TowerMinLevelMerc, w.TowerNeedsMerc = r.e.Tune.Route.TowerMinLevel, r.e.Tune.Route.TowerMinLevelMerc, r.e.Tune.Route.TowerNeedsMerc != 0
+	r.fillTower(&w, r.e.Tune.Route, s.Player.Class, s.Player)
 	if task.MercAlive != nil {
 		w.MercAlive, w.MercKnown = task.MercAlive()
 	}

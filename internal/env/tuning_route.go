@@ -15,13 +15,17 @@ type RouteTuning struct {
 	TowerMinLevel         int // clvl that opens the Forgotten Tower (areas 20-25, Countess) without a living merc; 0 = guard off
 	TowerMinLevelMerc     int // same with a living merc (used while TowerNeedsMerc is 0)
 	TowerNeedsMerc        int // 1: a living merc opens the tower at any level (the old rule); 0: a living merc only lowers the floor to TowerMinLevelMerc
+	TowerMinLife          int // max life the tower needs without a living merc; 0 = no life rule (then TowerMinLevel alone)
+	TowerMinLevelNoLife   int // no-merc clvl floor while max life is unreadable (the pre-life rule)
+	TowerKitMana          int // mana potions the tower kit wants for a class with a mana column in the belt plan
 }
 
 func DefaultCampaignTuning() CampaignTuning {
 	return CampaignTuning{ImbueMinLevel: 20, ImbueNeedsMerc: 1, DenMinLevelCaster: 5, DenMinLevelMelee: 3}
 }
 func DefaultRouteTuning() RouteTuning {
-	return RouteTuning{MonasteryMinLevel: 14, MonasteryMinLevelMerc: 14, TowerMinLevel: 16, TowerMinLevelMerc: 14, TowerNeedsMerc: 0}
+	return RouteTuning{MonasteryMinLevel: 14, MonasteryMinLevelMerc: 14, TowerMinLevel: 15, TowerMinLevelMerc: 14, TowerNeedsMerc: 0,
+		TowerMinLife: 150, TowerMinLevelNoLife: 16, TowerKitMana: 3}
 }
 
 func routeKnobs() []Knob {
@@ -38,10 +42,16 @@ func routeKnobs() []Knob {
 			Desc: "The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003; merc decision 2026-11-02): 14 with a full kit, was 16 and 20, so a dead or missing merc does not block the road (the living-merc floors rate a 140-HP Rogue too high). If road deaths fail the death rule at 14 in the act1run soak raise it to 16 or 18 and re-grill. 20 restores the old number."},
 		{Key: "route.monasteryMinLevelMerc", Label: "Monastery road level floor (living merc)", Unit: "levels", Default: 14, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
 			Desc: "The same floor with a living merc (unknown counts as none). Interim (ADR 0011): 14. 0 restores the old rule: a living merc opens the road at any level."},
-		{Key: "route.towerMinLevel", Label: "Forgotten Tower level floor (no merc)", Unit: "levels", Default: 16, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
-			Desc: "The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl, and with the supply kit (4 healing, a portal, mana for casters). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 16)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. Interim (ADR 0011): 16, was 20. 0 turns the tower guard off."},
+		{Key: "route.towerMinLevel", Label: "Forgotten Tower level floor (no merc)", Unit: "levels", Default: 15, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
+			Desc: "The Forgotten Tower and Tower Cellar 1 to 5 (areas 20-25, the Countess, a no-reward quest in Normal) are entered without a living merc only from this clvl AND with route.towerMinLife max life, and with the supply kit (4 healing, a portal with charges, route.towerKitMana mana potions for a class that uses mana). Below it the quest is skipped as optional (log: route guard: blocked tower (no merc, clvl N < 15) or (no merc, life N < 150)), corpses there are abandoned and a character standing there walks out first. G1 attempt 17: a clvl 14 caster died twice in the cellars. SME 2026-11-04 (user-approved, numbers U): 15 plus life 150, was 16 (ADR 0011 interim) and 20. 0 turns the tower guard off."},
 		{Key: "route.towerMinLevelMerc", Label: "Forgotten Tower level floor (living merc)", Unit: "levels", Default: 14, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
 			Desc: "The Forgotten Tower floor with a living merc while route.towerNeedsMerc is 0. Interim (ADR 0011): 14. 0 means the no-merc floor applies to a merc too."},
+		{Key: "route.towerMinLife", Label: "Forgotten Tower max life floor (no merc)", Unit: "life", Default: 150, Min: 0, Max: 1000, HigherIsBetter: true, NoHandicap: true,
+			Desc: "Without a living merc the Forgotten Tower also needs this max life (log: route guard: blocked tower (no merc, life N < 150)). U: SME number, tuned by the death loop. 0 turns the life rule off. While max life cannot be read the fallback floor route.towerMinLevelNoLife applies and the log says so."},
+		{Key: "route.towerMinLevelNoLife", Label: "Forgotten Tower level floor (no merc, life unreadable)", Unit: "levels", Default: 16, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
+			Desc: "The no-merc clvl floor while max life is not readable (the pre-life rule, ADR 0011 interim). Log: route guard: blocked tower (no merc, clvl N < 16 (max life unreadable, fallback floor))."},
+		{Key: "route.towerKitMana", Label: "Forgotten Tower kit: mana potions", Unit: "potions", Default: 3, Min: 0, Max: 12, HigherIsBetter: true, NoHandicap: true,
+			Desc: "Mana potions the Forgotten Tower kit wants for a class that uses mana every attack (Sorceress, Necromancer, Druid; resource.ManaNeed 2). A melee build such as the Barbarian is not asked. U: SME number."},
 		{Key: "route.towerNeedsMerc", Label: "Tower: a merc opens it at any level", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "0: a living mercenary only lowers the Forgotten Tower floor to route.towerMinLevelMerc (an unknown merc counts as none). 1: a living merc opens the tower at any level (the old rule)."},
 	}
