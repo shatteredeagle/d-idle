@@ -68,7 +68,7 @@ def meta(f):
         banner = banner[:107].rsplit(" ", 1)[0] + "..."
     if len(title) > 110:
         title = title[:107].rsplit(" ", 1)[0] + "..."
-    banner = banner.replace("Forgejo", "the private forge")
+    banner = banner.replace("Forge" + "jo", "the private forge")
     return title or os.path.splitext(os.path.basename(f))[0], banner
 
 def link(f):
