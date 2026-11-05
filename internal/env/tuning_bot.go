@@ -54,6 +54,10 @@ type BotTuning struct {
 	// when the Go heap in use passes this many MB (G1 attempt 16: a runaway took 28 GB in 30 s and the OOM killer ended
 	// the process). The Go GC also gets a soft limit 25 percent above it. 0 = off.
 	HeapLimitMB int
+	// FailsafeRung3Max: leave/re-enter cycles (failsafe ladder rung 3) per progress window before the ladder goes to the
+	// pause rung (0 = unbounded). FailsafePauseMaxSec caps the doubling pause of that rung.
+	FailsafeRung3Max    int
+	FailsafePauseMaxSec int
 
 	// Mercenary chore (docs/merc-farm.md). Hiring clicks a verified dialog; reviving clicks an UNVERIFIED one, so it is off.
 	MercRetryMin         int  // minutes between merc chore attempts (a failed hire or revive is not retried sooner)
@@ -73,7 +77,7 @@ func DefaultBotTuning() BotTuning {
 		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 1, PortalSettleMs: 600, ClearRadius: 30,
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
-		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096,
+		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -152,6 +156,10 @@ func botKnobs() []Knob {
 			Desc: "Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off."},
 		{Key: "bot.heapLimitMB", Label: "Heap guard limit", Unit: "MB", Default: 4096, Min: 0, Max: 8192, NoHandicap: true,
 			Desc: "Go heap in use above which d2bot writes a heap profile and exits for a supervisor restart (a runaway allocation would otherwise end in the OOM killer); the GC gets a soft limit 25 percent above it. 0 is off. Normal runs use under 100 MB."},
+		{Key: "bot.failsafeRung3Max", Label: "Failsafe re-entry cap", Unit: "count", Default: 6, Min: 0, Max: 50, NoHandicap: true,
+			Desc: "Leave-and-re-enter cycles of failsafe ladder rung 3 allowed without real progress (XP, kills, levels) before the ladder skips to the pause rung. 0 is unbounded."},
+		{Key: "bot.failsafePauseMaxSec", Label: "Failsafe pause cap", Unit: "s", Default: 3600, Min: 300, Max: 14400, NoHandicap: true,
+			Desc: "Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress."},
 		// Merc and cube chores: switches and policy, not skill, so no handicap profile moves them (NoHandicap).
 		{Key: "bot.mercRetryMin", Label: "Merc chore retry", Unit: "min", Default: 10, Min: 1, Max: 60, NoHandicap: true,
 			Desc: "Minutes between merc chore attempts; a failed hire or revive is not retried sooner."},

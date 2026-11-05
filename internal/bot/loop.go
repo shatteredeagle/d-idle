@@ -537,6 +537,7 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 	if prog-l.ladderProgress >= realResetMin {
 		l.stuckStage, l.restarts = 0, 0
 		l.ladderProgress = prog // real progress since the last rung: the ladder starts over
+		l.rung3Cycles, l.rung3Since, l.ladderPauses = 0, time.Time{}, 0
 	}
 	l.failures = 0
 	l.trip = nil
@@ -572,6 +573,17 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 			}
 		case 3: // leave the game and re-enter through the menus
 			if r.d.Cycler != nil {
+				if mx := r.e.Tune.Bot.FailsafeRung3Max; mx > 0 && l.rung3Cycles >= mx {
+					// leave/re-enter does not help (g2c seed 13: an item stuck on the cursor, 1,100 cycles in 2 h): pause instead
+					r.e.Log.Warn(fmt.Sprintf("failsafe: rung 3 cap reached cycles=%d window=%v -> pause", l.rung3Cycles, r.e.Clock.Now().Sub(l.rung3Since).Round(time.Second)),
+						"cycles", l.rung3Cycles, "max", mx)
+					l.stuckStage = 4 // the loop's increment lands on the pause rung
+					break
+				}
+				if l.rung3Cycles == 0 {
+					l.rung3Since = r.e.Clock.Now()
+				}
+				l.rung3Cycles++
 				applied = true
 				stage := l.stuckStage
 				r.do(ctx, c, StateRecovering, "Failsafe: leaving and re-entering the game", sec(r.cfg.TownTimeoutSec), "new game", func(ctx context.Context) error {
@@ -602,8 +614,10 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 			}
 		default: // pause with a visible error
 			l.stuckStage = 0
-			r.selfPause(fmt.Sprintf("Failsafe: %s (%v). Esc, town, re-entry and restart did not help; paused itself, retrying in %v. Look at the game, or Resume now.", what, err, failsafeRetry))
-			r.autoResumeIn(failsafeRetry)
+			wait := r.pauseBackoff()
+			r.selfPause(fmt.Sprintf("Failsafe: %s (%v). Esc, town, re-entry and restart did not help; paused itself, retrying in %v. Look at the game, or Resume now.", what, err, wait))
+			r.autoResumeIn(wait)
+			r.e.Log.Warn(fmt.Sprintf("failsafe: paused backoff=%d", int(wait/time.Second)), "pauses", l.ladderPauses)
 			r.rearm()
 			r.obMu.Lock()
 			l.ladderProgress = r.ob.real
@@ -681,6 +695,19 @@ func (r *Runner) selfPauseDelay() time.Duration {
 	r.lastSelfPause = now
 	r.pauseStreak++
 	return min(5*time.Minute<<min(r.pauseStreak-1, 4), time.Hour)
+}
+
+// pauseBackoff is the length of the next failsafe pause: failsafeRetry, doubled for every earlier pause since the last
+// real progress, capped at bot knob failsafe.pauseMaxSec (never below failsafeRetry).
+func (r *Runner) pauseBackoff() time.Duration {
+	l := &r.loop
+	limit := max(time.Duration(r.e.Tune.Bot.FailsafePauseMaxSec)*time.Second, failsafeRetry)
+	d := failsafeRetry
+	for i := 0; i < l.ladderPauses && d < limit; i++ {
+		d *= 2
+	}
+	l.ladderPauses++
+	return min(d, limit)
 }
 
 // failsafeRetry is how long the end of the failsafe ladder pauses before the bot tries again by itself: an unattended
