@@ -117,6 +117,7 @@ type Navigator struct {
 	walkSeq      int
 	walkLevel    int         // level of the last walk's first observation (0: none yet)
 	stayLevel    int         // level whose unwanted exits are guarded for the whole stay (FIXMOUTH3); 0: none
+	lastCross    crossNote   // the last walk that ended in another level (stuckfight.go)
 	arrival      bool        // a warp brought us here and no walk has consulted mouthStep since (FIXMOUTH)
 	lastPos      input.Point // position of the last observation (the gate's fallback when Pos fails)
 	gateRewrites int         // clicks the mouth gate rewrote in the current walk (FIXMOUTH4)
