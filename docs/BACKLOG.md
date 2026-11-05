@@ -495,6 +495,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-19 decision-point-store: offline store built in internal/decide (catalogue as data, streaks, fading thoughts, rules, replay, persistence); In Progress until the T0 slice proves it live
 - no-shield damage reduction PR #200 merged upstream 2026-11-05 13:22 EST (merge commit 988d39518); docs/archive/research/openpr-log.md and the esverify3 line of docs/BACKLOG.md updated
 - docs/BACKLOG.md line 491 still names docs/process/backlog-board-NAS.md; the file is now backlog-board-nas.md (lowercase)
+- TASK-21 t0-slice phase A: ladder glue (internal/ladder), t1.repair and t1.tp.lost wired behind ladder.enabled (default off) with golden parity grids, T0 drill group in d2drill; no T0 point passed parity; live drill pending (docs/t0-slice.md, docs/probes/t0drill.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

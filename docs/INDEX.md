@@ -741,3 +741,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [/README.md](../README.md): d2lod-bot (d.idle)
 
 <!-- END GENERATED INDEX -->
+- docs/t0-slice.md - T0 slice phase A: wired points, refusals with witnesses, API changes wanted from internal/decide
+- docs/probes/t0drill.md - T0 drill phase B commands (not run)

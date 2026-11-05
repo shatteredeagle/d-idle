@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ladder.enabled knob (default 0): wired decision points t1.repair and t1.tp.lost ask the decision-point store; off is the legacy code path
 - docs: Backlog.md NAS board doc renamed to docs/process/backlog-board-nas.md (neutral name); docs index regenerated
 - Decision-point store (internal/decide): offline learn-by-doing store with answer profiles and replay tests; not wired into the bot yet.
 - Backlog.md read-only web board deployed on the NAS as a Docker-tab template behind the proxy and the central login; deploy script and doc (backlog-board doc in docs/process)
