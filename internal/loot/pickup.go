@@ -131,12 +131,10 @@ func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 			return rep, err
 		}
 		if cur := s.Inventory.Cursor; cur != nil {
-			if err := l.hand.ClearCursor(ctx); err != nil {
-				if !errors.Is(err, hand.ErrNoSpace) || l.dropHeld(ctx, cur, err) != nil {
-					return rep, fmt.Errorf("loot: item stuck on the cursor: %w", err)
-				}
-				failed[cur.ID] = 2 // do not pick it straight up again in this call
+			if err := l.clearHeld(ctx, cur); err != nil {
+				return rep, fmt.Errorf("loot: item stuck on the cursor: %w", err)
 			}
+			failed[cur.ID] = 2 // do not pick it straight up again in this call
 			continue
 		}
 		if hand.PanelOpen(s.UI) {
@@ -272,6 +270,33 @@ var errAborted = errors.New("loot: aborted")
 
 // errDropped says unwear had to drop the item on the ground: it was not picked up.
 var errDropped = errors.New("loot: item dropped, no room to take it off")
+
+// clearHeld empties the cursor before a pickup: into the pack, or on the ground when no pack spot takes it. After
+// town.cursorStuckMax failed pack clears in a row the pack is not tried again (Gate 2 g2c seed 13: a spot that looked
+// free but never took the item blocked every pickup for hours); the ground drop is the only way left then.
+func (l *Looter) clearHeld(ctx context.Context, cur *d2.Unit) error {
+	name := l.itemName(*cur)
+	var cause error
+	if int(l.cursorFails.Load()) < max(l.e.Tune.Town.CursorStuckMax, 1) {
+		if cause = l.hand.ClearCursor(ctx); cause == nil {
+			l.cursorFails.Store(0)
+			l.e.Log.Info("cursor: cleared before pickup", "item", name, "how", "pack")
+			return nil
+		}
+		if err := ctx.Err(); err != nil {
+			return err
+		}
+		l.cursorFails.Add(1)
+	} else {
+		cause = errors.New("pack skipped after repeated failures")
+	}
+	l.e.Log.Warn("cursor: stuck", "item", name, "cause", cause, "fails", l.cursorFails.Load())
+	if err := l.dropHeld(ctx, cur, cause); err != nil {
+		return errors.Join(cause, err)
+	}
+	l.e.Log.Info("cursor: cleared before pickup", "item", name, "how", "ground")
+	return nil
+}
 
 // dropHeld puts the cursor item on the ground when no pack cell takes it (cause is the ClearCursor error, for the log).
 func (l *Looter) dropHeld(ctx context.Context, held *d2.Unit, cause error) error {

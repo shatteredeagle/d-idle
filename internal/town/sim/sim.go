@@ -49,6 +49,9 @@ type World struct {
 	HealSkip int
 	// DropRefuse makes the first n playfield clicks with an item on the cursor do nothing (a cell that does not take a drop).
 	DropRefuse int
+	// PutRefuse makes the first n pack placements with an item on the cursor do nothing (a spot that looks free in
+	// memory but does not take the item: Gate 2 g2c seed 13).
+	PutRefuse int
 	// PickupToCursor makes ground clicks put the item on the cursor instead of into the pack.
 	PickupToCursor bool
 	// AutoEquipQuest: a ground click on a Shaft (msf) or Top of the Staff (vip) wears it (V live, docs/act2.md P1).

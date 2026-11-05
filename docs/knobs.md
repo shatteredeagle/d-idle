@@ -21,6 +21,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -145,6 +146,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.uiTimeoutMs | 2500 | 800..8000 | ms | 800 | 2 | Wait for a panel flag after a click. |
 | town.clickSettleMs | 150 | 40..800 | ms | 800 | 7 | Pause after a UI click before memory is re-read. |
 | town.dropTries | 6 | 1..8 | count | 1 | 1 | Ground clicks tried, each on another cell beside the character, to drop a held item (then a free pack cell, then the failsafe). |
+| town.cursorStuckMax | 3 | 1..8 | count | 1 | 2 | Pack spots tried to put a held item away (a refused spot is skipped); after this many failed clears in a row loot drops the item on the ground without trying the pack. |
 | town.moveTries | 3 | 1..6 | count | 1 | 3 | Attempts to move one item between grids (each verified in memory). |
 | town.portalSettle | 4500 | 1000..8000 | ms | 8000 | 1 | Wait after arriving in an area before using a portal. |
 | town.portalReuseDist | 40 | 0..100 | subtiles | 0 | 1 | ToTown walks into an open portal this close instead of reading a scroll. |

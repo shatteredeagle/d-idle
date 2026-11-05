@@ -28,7 +28,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 7 | skmiss | G-E | in-progress 5/7 | missile roll max fix for upstream | fork-branch:fix/missile-roll-top | - | [card](archive/openspec-index.md#skmiss) |
 | 8 | skresistfix | G-E | in-progress 6/7 | curse-on-immune fix for upstream | fork-branch:fix/curse-immune | - | [card](archive/openspec-index.md#skresistfix) |
 | 9 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
-| 10 | fixbelt | G-C | in-progress 5/6 | low-kit belt window fix | - | - | [card](archive/openspec-index.md#fixbelt) |
+| 10 | fixbelt | G-C | in-progress 6/7 | low-kit belt window fix | - | - | [card](archive/openspec-index.md#fixbelt) |
 | 11 | fixprogress | G-C | in-progress 3/4 | trip-loop progress fix | - | - | [card](archive/openspec-index.md#fixprogress) |
 | 12 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
 | 13 | taska | G-B | in-progress 7/10 | caster mana potion restock | - | - | [card](archive/openspec-index.md#taska) |

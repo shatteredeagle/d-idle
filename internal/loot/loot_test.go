@@ -734,3 +734,80 @@ func TestPickUpSkipsWornLauncherWithoutRoomToTakeItOff(t *testing.T) {
 		}
 	}
 }
+
+// g2c seed 13: a pack spot that looks free in memory but never takes the held item (move not confirmed) blocked every
+// pickup for hours. ClearCursor now tries another spot; when none takes it, PickUp drops the item on the ground, and
+// after town.cursorStuckMax failed clears in a row it does not touch the pack again.
+func TestPickUpHeldItemRefusedSpot(t *testing.T) {
+	for _, tc := range []struct {
+		name       string
+		class      d2.Class
+		refuse     int // pack placements the game ignores
+		wantGround bool
+	}{
+		{"second spot takes it", d2.Sorceress, 1, false},
+		{"second spot takes it, other class", d2.Barbarian, 2, false},
+		{"every spot refuses: ground", d2.Sorceress, 99, true},
+		{"every spot refuses: ground, other class", d2.Barbarian, 99, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			l, r := newLooter(t)
+			w := r.W
+			w.Player.Class = tc.class
+			w.PutRefuse = tc.refuse
+			held := w.NewItem("sbw", 2)
+			held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+			w.Cursor = &held
+			if _, err := l.PickUp(context.Background(), loot.PickOpts{}); err != nil {
+				t.Fatal(err)
+			}
+			if w.Cursor != nil {
+				t.Fatal("item still on the cursor")
+			}
+			if onGround := len(w.Ground) == 1; onGround != tc.wantGround {
+				t.Fatalf("ground %d, want item there %v", len(w.Ground), tc.wantGround)
+			}
+		})
+	}
+}
+
+// After cursorStuckMax failed pack clears in a row the next held item goes to the ground without a pack attempt.
+func TestPickUpHeldItemSkipsPackAfterRepeatedFailures(t *testing.T) {
+	l, r := newLooter(t)
+	w := r.W
+	w.PutRefuse = 1 << 20
+	max := r.Env.Tune.Town.CursorStuckMax
+	for i := 0; i < max+1; i++ {
+		held := w.NewItem("sbw", 2)
+		held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+		w.Cursor = &held
+		before := w.PutRefuse
+		if _, err := l.PickUp(context.Background(), loot.PickOpts{}); err != nil {
+			t.Fatal(err)
+		}
+		if w.Cursor != nil {
+			t.Fatalf("round %d: item still on the cursor", i)
+		}
+		if i >= max && w.PutRefuse != before {
+			t.Fatalf("round %d: the pack was tried again after %d failures", i, max)
+		}
+	}
+}
+
+// ClearOrDrop is the nav/leveler entry: pack refuses everywhere, the item ends on the ground.
+func TestClearOrDropFallsBackToGround(t *testing.T) {
+	_, r := newLooter(t)
+	w := r.W
+	w.PutRefuse = 99
+	held := w.NewItem("sbw", 2)
+	held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+	w.Cursor = &held
+	h := hand.New(r.Env)
+	h.Snap = w.Snapshot
+	if err := h.ClearOrDrop(context.Background()); err != nil {
+		t.Fatal(err)
+	}
+	if w.Cursor != nil || len(w.Ground) != 1 {
+		t.Fatalf("cursor %v ground %d", w.Cursor != nil, len(w.Ground))
+	}
+}
