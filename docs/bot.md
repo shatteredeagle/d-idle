@@ -181,7 +181,7 @@ Rates: B gained 1 level plus 1,220 XP in about 7.5 live minutes at level 2-3, ab
 
 ## Data paths: migration status (PATHS)
 Done: cheat ledger `<data>/ledger/cheats.jsonl` and backups `<data>/ledger/backups/`; sentinel log `<data>/logs/sentinel.jsonl`; d2watch token `<data>/tokens/d2watch`; game locks `paths.Instance.GameLock` (`$XDG_RUNTIME_DIR/d2bot/game-<id>.lock`) taken TOGETHER with the legacy `/tmp/d2lod-game[-<id>].lock` (launch.LockInstance, sentinel, tools/live.sh, helper.sh; drop the legacy one when no old binary is deployed); data tables `data.OpenCached` -> `<data>/cache/data/v<schema>-<stamp>/` with legacy dirs copied in; launch/cheat game roots via `paths.Layout.GameRoot` (new `<data>/prefixes/<id>`, or dev-era `~/Games/d2lod[-inst/<id>]` kept in place while it exists: a live Wine prefix is not moved automatically). Shell mirror: `tools/lib-paths.sh`. Old locations are read as fallback and moved on first start (tests: internal/paths, internal/cheat, internal/data).
-Not done (other owners): cmd/d2bot live.go still uses `<data>/cache/tables` and `~/Games/d2lod-inst`; tools/rigs/levelerlive, internal/town/cmd/townlive, internal/combat/cmd/combatlive and internal/town/sim use hard-coded Games/ and /tmp cache paths (dev tools); moving the Wine prefixes into `<data>/prefixes` (stop fleet, move, by hand).
+Not done (other owners): cmd/d2bot live.go still uses `<data>/cache/tables` and `~/Games/d2lod-inst`; tools/rigs/levelerlive, cmd/townlive, cmd/combatlive and internal/town/sim use hard-coded Games/ and /tmp cache paths (dev tools); moving the Wine prefixes into `<data>/prefixes` (stop fleet, move, by hand).
 
 ## Integration: resource policy, campaign goal, LIVEBOT follow-ups (INTEGRATE, 2026-10-28)
 

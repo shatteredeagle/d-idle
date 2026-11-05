@@ -262,7 +262,7 @@ func (t *Town) UseSource(s Source) {
 	}
 }
 
-// Live-check hooks (used by internal/town/cmd/townlive): open an NPC dialog by class, the point of a dialog
+// Live-check hooks (used by cmd/townlive): open an NPC dialog by class, the point of a dialog
 // entry, and the stash. They are the same code paths Chores uses.
 func (t *Town) OpenForTest(ctx context.Context, class int) (d2.Unit, error) {
 	if _, err := t.current(); err != nil {

@@ -49,7 +49,7 @@ type ChoreInfo struct {
 }
 
 // TownLab is the instance as the D3 drills use it. Open, Buy, Sell, Chores and the stash calls are the bot's own town
-// code (the same functions internal/town/cmd/townlive and the chores call); the rest is logged-cheat setup or reads.
+// code (the same functions cmd/townlive and the chores call); the rest is logged-cheat setup or reads.
 type TownLab interface {
 	TView(ctx context.Context) (TownView, error)
 	Tick(ctx context.Context, n int) error
