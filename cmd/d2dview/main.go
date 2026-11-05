@@ -42,12 +42,18 @@ func main() {
 	watchSpeed := flag.Float64("watch-speed", 8, "watch mode: max virtual seconds per wall second (0: render every step, no limit)")
 	jpegOut := flag.Bool("jpeg", false, "re-encode frames as JPEG (less bandwidth, about 25 ms CPU per frame); default passes d2d's PNG through")
 	badgeFlag := flag.String("badge", envOr("D2DVIEW_BADGE", Backend), "header badge text of the stream page and the /api/pub backend field (env D2DVIEW_BADGE)")
+	var wo watchOpts
+	flag.BoolVar(&wo.on, "watch", false, "serve the player screen on /watch (read-only GET routes here; answers on -watch-answer-addr); without -upstream it runs on the simulated runner alone")
+	flag.StringVar(&wo.answerAddr, "watch-answer-addr", "127.0.0.1:8892", "watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders)")
+	flag.StringVar(&wo.origins, "watch-origin", "", "watch: comma list of page origins the answer route accepts (default: this viewer's port on localhost)")
+	flag.StringVar(&wo.class, "watch-class", "sorceress", "watch: simulated build, sorceress or paladin")
+	flag.Float64Var(&wo.speed, "watch-sim-speed", 1, "watch: simulated runner, virtual seconds per wall second")
 	flag.Parse()
 	badge = safeText(*badgeFlag, 40)
 	if badge == "" {
 		badge = Backend
 	}
-	if *upstream == "" {
+	if *upstream == "" && !wo.on {
 		log.Fatal("d2dview: need -upstream or $D2D_SOCK")
 	}
 	token := os.Getenv("D2DVIEW_TOKEN")
@@ -65,6 +71,23 @@ func main() {
 		log.Fatal("d2dview: a token is required unless -addr is loopback or -open (D2DVIEW_TOKEN or -token-file)")
 	}
 
+	if *upstream == "" { // -watch alone: the screen on the simulated runner, no game
+		ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+		defer stop()
+		s := &server{token: token}
+		wh, err := startWatch(ctx, wo, *addr, token, *open, false)
+		if err != nil {
+			log.Fatal(err)
+		}
+		s.watch = wh
+		srv := &http.Server{Addr: *addr, Handler: s.watchOnlyRoutes()}
+		go func() { <-ctx.Done(); srv.Close() }()
+		log.Printf("d2dview: watch screen on %s (no game attached, token %v)", *addr, token != "")
+		if err := srv.ListenAndServe(); err != nil && ctx.Err() == nil {
+			log.Fatal(err)
+		}
+		return
+	}
 	mux := NewMux(*upstream)
 	viewSock := *upstream + ".view"
 	if *botSock != "" {
@@ -97,6 +120,11 @@ func main() {
 		go frames.Run(ctx)
 	}
 	s := &server{feed: feed, frames: frames, mux: mux, token: token, watchSpeed: *watchSpeed}
+	if wo.on {
+		if s.watch, err = startWatch(ctx, wo, *addr, token, *open, frames != nil); err != nil {
+			log.Fatal(err)
+		}
+	}
 	srv := &http.Server{Addr: *addr, Handler: s.routes()}
 	go func() { <-ctx.Done(); srv.Close() }()
 	log.Printf("d2dview: listening on %s (token %v)", *addr, token != "")
@@ -127,6 +155,7 @@ type server struct {
 	mux        *Mux
 	token      string
 	watchSpeed float64
+	watch      http.Handler // the read-only player screen (internal/watch), nil unless -watch
 }
 
 func (s *server) routes() http.Handler {
@@ -142,6 +171,7 @@ func (s *server) routes() http.Handler {
 	m.HandleFunc("/frame", s.frame)
 	m.HandleFunc("/stream.mjpg", s.stream)
 	m.HandleFunc("/api/mode", s.setMode)
+	s.mountWatch(m)
 	return s.auth(m)
 }
 
