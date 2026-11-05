@@ -12,8 +12,10 @@ import (
 var shippedCatalogue []byte
 
 // CatalogueVersion is the newest catalogue format and content version this build reads. Version 2 added the held,
-// clvl, retreats, tripgold and packused fields and the answers "fight" and "leave" of t0.retreat.drink.
-const CatalogueVersion = 2
+// clvl, retreats, tripgold and packused fields and the answers "fight" and "leave" of t0.retreat.drink. Version 3 added
+// the point-specific bands drinklife, lifeengage and mercgold (Field.From), the champbonus field and dropped packdanger
+// from t0.retreat.drink, so that defaults equal the legacy knobs inside every band.
+const CatalogueVersion = 3
 
 // Risk classes (spec 5.1).
 const (
@@ -65,6 +67,17 @@ type Field struct {
 	Values []string  `json:"values,omitempty"`
 	Edges  []float64 `json:"edges,omitempty"`
 	Labels []string  `json:"labels,omitempty"`
+	// From names the observation a band reads when it is not its own name: drinklife bands the "life" number with
+	// finer edges than the shared life field, so a call site reports one life value. Optional: a missing enum
+	// observation falls back to Absent (a field added after call sites were written).
+	From   string `json:"from,omitempty"`
+	Absent string `json:"absent,omitempty"`
+}
+
+// isLife reports a key field that bands the life percent (the field "life" or a finer band reading it): stage 2
+// replaces it by urgency.
+func (c *Catalogue) isLife(name string) bool {
+	return name == "life" || c.Fields[name].From == "life"
 }
 
 type Class struct {
@@ -176,6 +189,12 @@ func (c *Catalogue) validate() error {
 		}
 		if len(labels) == 0 {
 			return fmt.Errorf("decide: field %q has no values", name)
+		}
+		if f.From != "" && f.Kind != "band" {
+			return fmt.Errorf("decide: field %q: from needs a band", name)
+		}
+		if f.Absent != "" && (f.Kind != "enum" || !contains(f.Values, f.Absent)) {
+			return fmt.Errorf("decide: field %q: absent %q is not a value", name, f.Absent)
 		}
 		for _, l := range labels {
 			if badToken(l) {
@@ -319,7 +338,11 @@ func (c *Catalogue) validatePoint(p *Point) error {
 		}
 	}
 	if p.Urgency {
-		if !contains(p.ContextKeys, "life") {
+		hasLife := false
+		for _, k := range p.ContextKeys {
+			hasLife = hasLife || c.isLife(k)
+		}
+		if !hasLife {
 			return fmt.Errorf("decide: point %q: urgency point needs a life key", p.ID)
 		}
 		if _, ok := c.Fields["urgency"]; !ok {

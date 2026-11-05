@@ -65,7 +65,7 @@ func (c *Catalogue) Build(pointID string, o Obs, stage int, urg UrgencyProvider)
 	names := append([]string{"act", "diff", "hc"}, p.ContextKeys...)
 	fields := map[string]string{}
 	for _, n := range names {
-		if p.Urgency && stage >= 2 && n == "life" {
+		if p.Urgency && stage >= 2 && c.isLife(n) {
 			n = "urgency"
 		}
 		if _, dup := fields[n]; dup {
@@ -82,6 +82,9 @@ func (c *Catalogue) Build(pointID string, o Obs, stage int, urg UrgencyProvider)
 				}
 				ok = true
 			}
+			if !ok && f.Absent != "" {
+				v, ok = f.Absent, true
+			}
 			if !ok {
 				return Context{}, fmt.Errorf("decide: point %q: missing field %q", pointID, n)
 			}
@@ -90,9 +93,13 @@ func (c *Catalogue) Build(pointID string, o Obs, stage int, urg UrgencyProvider)
 			}
 			fields[n] = v
 		default:
-			v, ok := o.Num[n]
+			src := n
+			if f.From != "" {
+				src = f.From
+			}
+			v, ok := o.Num[src]
 			if !ok {
-				return Context{}, fmt.Errorf("decide: point %q: missing field %q", pointID, n)
+				return Context{}, fmt.Errorf("decide: point %q: missing field %q", pointID, src)
 			}
 			l, err := c.BandLabel(o.Class, n, v)
 			if err != nil {

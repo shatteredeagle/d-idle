@@ -16,29 +16,10 @@ import (
 func legacyDefault(point string, f map[string]string) (ans, split string) {
 	is := func(field, vals string) bool { return contains(strings.Split(vals, "|"), f[field]) }
 	switch point {
-	case "t0.retreat.drink":
-		// V resource.PotionPolicy + AbortFight (drinkLifePct 55, drinkRejuvPct 35, chickenPct 25, fleeLifePct 50)
-		if is("life", "55-70|gt70") {
-			if is("packdanger", "2|3") {
-				return "fight", "champion bonus: +10 drink points below clvl 15 in Normal (championBonus), clvl not in the key"
-			}
-			return "fight", ""
-		}
-		if is("held", "hp|rv") {
-			return "drink", ""
-		}
-		noKit := is("kit", "NONE")
-		switch {
-		case is("life", "lt25") && noKit:
-			return "leave", "" // AbortFight: chicken line, no potion, no portal
-		case is("life", "lt25"):
-			return "portal", "portal only while life > chicken-8 (17), else leave: inside lt25"
-		case noKit && is("life", "35-55"):
-			return "run", "fleeLifePct 50 is inside 35-55"
-		case noKit:
-			return "run", "" // 25-35: below the flee line
-		}
-		return "fight", ""
+	case "t0.retreat.drink", "t0.unique.fight", "t2.mercenary":
+		// numeric axis with finer edges (catalogue v3): TestDefaultParityNumericPoints calls the legacy functions
+		// over every integer value of the band, so no golden row is kept here
+		return oracleAnswer, ""
 	case "t0.retreat.lethal":
 		return "avoid", "" // U: empty placeholder list, never fires today
 	case "t0.area.toohard":
@@ -57,15 +38,6 @@ func legacyDefault(point string, f map[string]string) (ans, split string) {
 			return "leave", "" // V brAttempts 3
 		}
 		return "stay", ""
-	case "t0.unique.fight":
-		// V minEngageLifePct 40: never engage below it; champions are fought otherwise
-		switch {
-		case is("life", "lt25|25-35"):
-			return "avoid", ""
-		case is("life", "35-55"):
-			return "fight", "minEngageLifePct 40 is inside 35-55"
-		}
-		return "fight", ""
 	case "t0.leave.safe":
 		return "stay", "" // U no code path
 	case "t0.shrine":
@@ -122,24 +94,18 @@ func legacyDefault(point string, f map[string]string) (ans, split string) {
 		return "skip", "" // U
 	case "t2.reset.game":
 		return "restart", "" // V freshAllowed always ends in a restart after its wait
-	case "t2.mercenary":
-		switch {
-		case is("merc", "alive"):
-			return "wait", ""
-		case is("gold", "500-1500|gt1500"):
-			return "hire", ""
-		case is("merc", "none|dead") && is("gold", "100-500"):
-			return "wait", "bot.mercHireMinGold 400 is inside 100-500"
-		}
-		return "wait", ""
 	}
 	return "", "no golden row"
 }
 
+// oracleAnswer marks a point whose parity is proven by TestDefaultParityNumericPoints (legacy functions as oracle).
+const oracleAnswer = "(oracle)"
+
 // wantRemaining is the documented count of band-interior splits (docs/research/decision-point-store-notes.md).
 // The ADR 0016 gate "a rule file can express today's defaults" closes only when it is 0.
-// The 192 contexts are 6 distinct splits in 4 points (retreat.drink 3, toohard, unique.fight, mercenary).
-const wantRemaining = 192
+// The 72 contexts are the clvl 14 contexts of t0.area.toohard (2 hc x 3 areaclass x 4 levelgap x 3 kit): the tower
+// floor is 15 without a merc and 14 with one, and adding merc to a 216-context key makes it 432 (notes, trade-off).
+const wantRemaining = 72
 
 func TestDefaultParity(t *testing.T) {
 	cat := mustCat(t)
@@ -150,7 +116,7 @@ func TestDefaultParity(t *testing.T) {
 	if len(cat.Points) != 23 {
 		t.Fatalf("%d points, the golden table has 23", len(cat.Points))
 	}
-	var match, mismatch, split int
+	var match, mismatch, split, oracle int
 	perPoint := map[string]int{}
 	for _, p := range cat.Points {
 		ctxs, err := cat.Contexts(p.ID)
@@ -175,6 +141,8 @@ func TestDefaultParity(t *testing.T) {
 				t.Errorf("%s: catalogue default %q and rule file %q disagree at %s", p.ID, def, file, ctx.Key)
 			}
 			switch {
+			case want == oracleAnswer:
+				oracle++
 			case why != "":
 				split++
 				perPoint[p.ID]++
@@ -197,7 +165,7 @@ func TestDefaultParity(t *testing.T) {
 	for _, id := range ids {
 		t.Logf("split contexts %-18s %d", id, perPoint[id])
 	}
-	t.Logf("parity: %d match, %d mismatch, %d band-interior splits (remaining gap)", match, mismatch, split)
+	t.Logf("parity: %d match, %d mismatch, %d band-interior splits (remaining gap), %d contexts proven by the legacy-function oracle", match, mismatch, split, oracle)
 	if split != wantRemaining {
 		t.Errorf("remaining splits = %d, the notes document %d: update both", split, wantRemaining)
 	}

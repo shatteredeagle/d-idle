@@ -285,9 +285,9 @@ func TestVersion1FileMigrates(t *testing.T) {
 		t.Fatalf("a version 1 file must load: %v", err)
 	}
 	want := map[string]string{
-		"t1.restock|act=1,belt=full,diff=normal,hc=normal,tripgold=60-300":                    "yes",
-		"t1.town.trigger|act=1,belt=full,diff=normal,hc=normal,packused=ge80":                 "go",
-		"t0.retreat.drink|act=1,diff=normal,hc=normal,held=hp,kit=OK,life=25-35,packdanger=1": "portal",
+		"t1.restock|act=1,belt=full,diff=normal,hc=normal,tripgold=60-300":                            "yes",
+		"t1.town.trigger|act=1,belt=full,diff=normal,hc=normal,packused=ge80":                         "go",
+		"t0.retreat.drink|act=1,champbonus=none,diff=normal,drinklife=26-49,hc=normal,held=hp,kit=OK": "portal",
 	}
 	rules := map[string]string{}
 	for _, v := range s.Rules() {
@@ -306,10 +306,10 @@ func TestVersion1FileMigrates(t *testing.T) {
 	if d, _ := s.Ask(ctx); d.Source != "rule" || d.Answer != "yes" {
 		t.Fatalf("the migrated rule must answer: %+v", d)
 	}
-	// the next save writes version 2 and a reload sees the same rules
+	// the next save writes the current version and a reload sees the same rules
 	s.SetQuality("x", 1)
-	if b, _ := os.ReadFile(Path(dir, "old")); !strings.Contains(string(b), `"version": 2`) {
-		t.Fatal("the saved file is not version 2")
+	if b, _ := os.ReadFile(Path(dir, "old")); !strings.Contains(string(b), fmt.Sprintf(`"version": %d`, FileVersion)) {
+		t.Fatal("the saved file is not the current version")
 	}
 	s2, err := Open(dir, "old", cat, &ManualClock{})
 	if err != nil {
@@ -326,8 +326,10 @@ func TestMigrateKeyIsIdempotentAndLeavesOtherPoints(t *testing.T) {
 	cat := mustCat(t)
 	for _, k := range []string{
 		"t1.repair|act=1,diff=normal,durability=lt20,gold=lt100,hc=normal",
-		"t0.retreat.drink|act=1,diff=normal,hc=normal,held=rv,kit=OK,life=gt70,packdanger=1",
+		"t0.retreat.drink|act=1,champbonus=early,diff=normal,drinklife=ge65,hc=normal,held=rv,kit=OK",
 		"t1.restock|act=1,belt=full,diff=normal,hc=normal,tripgold=ge300",
+		"t0.unique.fight|act=1,diff=normal,hc=normal,kit=OK,lifeengage=40-55,packdanger=2",
+		"t2.mercenary|act=1,diff=normal,hc=normal,kit=OK,merc=none,mercgold=ge400",
 	} {
 		if got := cat.MigrateKey(k); got != k {
 			t.Errorf("%s changed to %s", k, got)
@@ -340,6 +342,80 @@ func TestMigrateKeyIsIdempotentAndLeavesOtherPoints(t *testing.T) {
 	}
 	if cat.MigrateKey("garbage") != "garbage" {
 		t.Fatal("garbage key changed")
+	}
+}
+
+// A profile file written by catalogue version 2 (file version 2) still loads; its rules for the three re-banded
+// points move to the new keys and keep answering.
+func TestVersion2FileMigrates(t *testing.T) {
+	drink := "t0.retreat.drink|act=1,diff=normal,hc=normal,held=none,kit=OK,life=lt25,packdanger=3"
+	uniq := "t0.unique.fight|act=1,diff=normal,hc=normal,kit=OK,life=35-55,packdanger=2"
+	merc := "t2.mercenary|act=1,diff=normal,gold=500-1500,hc=normal,kit=OK,merc=dead"
+	toohard := "t0.area.toohard|act=1,areaclass=field,clvl=14,diff=normal,hc=normal,kit=OK,levelgap=1-3"
+	var lines []string
+	seq, th := 1, 1
+	for _, k := range []struct{ key, ans string }{{drink, "portal"}, {drink, "portal"}, {drink, "portal"},
+		{uniq, "avoid"}, {uniq, "avoid"}, {uniq, "avoid"}, {merc, "hire"}, {merc, "hire"}, {merc, "hire"}, {toohard, "go"}} {
+		lines = append(lines, v1Entry(seq, "open", th, k.key, ""), v1Entry(seq+1, "answer", th, "", k.ans))
+		seq, th = seq+2, th+1
+	}
+	body := `{"version":2,"profile":"v2","hero":"hero1","log":[` + strings.Join(lines, ",") + `],"rules":[]}`
+	dir := t.TempDir()
+	if err := os.WriteFile(Path(dir, "v2"), []byte(body), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	cat := mustCat(t)
+	s, err := Open(dir, "v2", cat, &ManualClock{})
+	if err != nil {
+		t.Fatalf("a version 2 file must load: %v", err)
+	}
+	rules := map[string]string{}
+	for _, v := range s.Rules() {
+		rules[v.Key] = v.Answer
+	}
+	for k, a := range map[string]string{
+		"t0.retreat.drink|act=1,champbonus=none,diff=normal,drinklife=18-25,hc=normal,held=none,kit=OK": "portal",
+		"t0.unique.fight|act=1,diff=normal,hc=normal,kit=OK,lifeengage=40-55,packdanger=2":              "avoid",
+		"t2.mercenary|act=1,diff=normal,hc=normal,kit=OK,merc=dead,mercgold=ge400":                      "hire",
+	} {
+		if rules[k] != a {
+			t.Errorf("rule %s = %q, want %q (rules: %v)", k, rules[k], a, rules)
+		}
+	}
+	// a point that did not change keeps its key as written
+	if got := cat.MigrateKey(toohard); got != toohard {
+		t.Errorf("toohard key changed: %s", got)
+	}
+	// the migrated rule answers the context a call site builds today
+	ctx, err := cat.Build("t0.retreat.drink", baseObs(cat, "sorceress").with(map[string]string{"kit": "OK", "held": "none"}, map[string]float64{"life": 20}), 1, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if d, _ := s.Ask(ctx); d.Source != "rule" || d.Answer != "portal" {
+		t.Fatalf("the migrated rule must answer: %+v", d)
+	}
+}
+
+// The optional fields: a call site written before champbonus existed still builds a context (champbonus none).
+func TestOptionalFieldAndFromBands(t *testing.T) {
+	cat := mustCat(t)
+	o := baseObs(cat, "sorceress").with(map[string]string{"kit": "OK", "held": "hp"}, map[string]float64{"life": 60})
+	delete(o.Cat, "champbonus")
+	ctx, err := cat.Build("t0.retreat.drink", o, 1, nil)
+	if err != nil || ctx.Fields["champbonus"] != "none" || ctx.Fields["drinklife"] != "55-64" {
+		t.Fatalf("%v %v", ctx, err)
+	}
+	// one reported life number feeds every band that reads it
+	for _, tc := range []struct {
+		point, field string
+		life         float64
+		want         string
+	}{{"t0.unique.fight", "lifeengage", 39, "35-40"}, {"t0.unique.fight", "lifeengage", 40, "40-55"}} {
+		o := baseObs(cat, "paladin").with(nil, map[string]float64{"life": tc.life})
+		c, err := cat.Build(tc.point, o, 1, nil)
+		if err != nil || c.Fields[tc.field] != tc.want {
+			t.Errorf("%s life %v: %v %v", tc.point, tc.life, c.Fields, err)
+		}
 	}
 }
 

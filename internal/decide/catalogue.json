@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "migrations": [
     {"point": "t0.retreat.drink", "note": "v2 adds the held-potion field; a v1 rule was learned with a healing potion in the belt", "add": {"held": "hp"}},
     {"point": "t0.area.toohard", "note": "v2 adds absolute clvl bands; a v1 rule maps to the weakest band, where the point fires", "add": {"clvl": "lt14"}},
@@ -8,7 +8,14 @@
      "rename": {"gold": "tripgold"}, "values": {"tripgold": {"lt100": "lt60", "100-500": "60-300", "500-1500": "ge300", "gt1500": "ge300"}}},
     {"point": "t1.town.trigger", "note": "v2 uses pack percent and the belt instead of free rows and kit; rows 0 and 1 mean a pack at 80 percent or more",
      "rename": {"freerows": "packused"}, "values": {"packused": {"0": "ge80", "1": "ge80", "2+": "lt80"}}, "drop": ["kit"], "add": {"belt": "full"}},
-    {"point": "t2.failstreak", "note": "v2 moves the death edge from 3 to the repo's gearDeathsHigh 4", "values": {"deaths": {"2": "2-3", "3+": "4+"}}}
+    {"point": "t2.failstreak", "note": "v2 moves the death edge from 3 to the repo's gearDeathsHigh 4", "values": {"deaths": {"2": "2-3", "3+": "4+"}}},
+    {"point": "t0.retreat.drink", "note": "v3 bands life at the legacy lines (17/18, 25/26, 50, 55, 65) in drinklife and replaces pack danger by champbonus; a v2 life band maps to the band it starts in, the middle bands to 26-49; packdanger is dropped (champbonus none)",
+     "drop": ["packdanger"], "rename": {"life": "drinklife"},
+     "values": {"drinklife": {"lt25": "18-25", "25-35": "26-49", "35-55": "26-49", "55-70": "55-64", "gt70": "ge65"}}, "add": {"champbonus": "none"}},
+    {"point": "t0.unique.fight", "note": "v3 adds the 40 edge (resource.minEngageLifePct) in lifeengage; the old 35-55 band maps to 40-55",
+     "rename": {"life": "lifeengage"}, "values": {"lifeengage": {"35-55": "40-55"}}},
+    {"point": "t2.mercenary", "note": "v3 bands gold at the hire floor 400 (bot.mercHireMinGold) in mercgold; old bands map to the side of 400 they mostly lie on",
+     "rename": {"gold": "mercgold"}, "values": {"mercgold": {"lt100": "lt400", "100-500": "lt400", "500-1500": "ge400", "gt1500": "ge400"}}}
   ],
   "config": {
     "nByRisk": {"safe": 2, "normal": 3, "risky": 5},
@@ -35,7 +42,11 @@
     "slot":       {"kind": "enum", "values": ["armor", "weapon", "jewelry"]},
     "potiontier": {"kind": "enum", "values": ["minor", "light", "normal", "greater"]},
     "held":       {"kind": "enum", "values": ["none", "hp", "rv"]},
+    "champbonus": {"kind": "enum", "values": ["none", "early"], "absent": "none"},
     "life":       {"kind": "band", "edges": [25, 35, 55, 70], "labels": ["lt25", "25-35", "35-55", "55-70", "gt70"]},
+    "drinklife":  {"kind": "band", "from": "life", "edges": [18, 26, 50, 55, 65], "labels": ["lt18", "18-25", "26-49", "50-54", "55-64", "ge65"]},
+    "lifeengage": {"kind": "band", "from": "life", "edges": [25, 35, 40, 55, 70], "labels": ["lt25", "25-35", "35-40", "40-55", "55-70", "gt70"]},
+    "mercgold":   {"kind": "band", "from": "gold", "edges": [400], "labels": ["lt400", "ge400"]},
     "gold":       {"kind": "band", "edges": [100, 500, 1500], "labels": ["lt100", "100-500", "500-1500", "gt1500"]},
     "levelgap":   {"kind": "band", "edges": [1, 4, 7], "labels": ["le0", "1-3", "4-6", "ge7"]},
     "freerows":   {"kind": "band", "edges": [1, 2], "labels": ["0", "1", "2+"]},
@@ -68,15 +79,18 @@
     {"id": "t0.retreat.drink", "tier": 0, "urgency": true,
      "question": "Life is low: keep fighting, drink, run, portal or leave the game?",
      "answers": [{"id": "drink", "label": "drink a potion (rejuvenation first when life is critical)"}, {"id": "run", "label": "run away"}, {"id": "portal", "label": "take a town portal"}, {"id": "leave", "label": "leave the game"}, {"id": "fight", "label": "keep fighting"}],
-     "contextKeys": ["life", "packdanger", "kit", "held"],
+     "contextKeys": ["drinklife", "champbonus", "kit", "held"],
      "riskTable": [{"match": {"hc": "hardcore"}, "class": "risky"}, {"match": {}, "class": "normal"}],
      "default": [
-       {"when": {"life": "55-70|gt70"}, "answer": "fight"},
+       {"when": {"drinklife": "ge65"}, "answer": "fight"},
+       {"when": {"drinklife": "55-64", "champbonus": "none"}, "answer": "fight"},
+       {"when": {"drinklife": "55-64", "diff": "nightmare|hell"}, "answer": "fight"},
        {"when": {"urgency": "calm|wary"}, "answer": "fight"},
        {"when": {"held": "hp|rv"}, "answer": "drink"},
-       {"when": {"life": "lt25", "kit": "NONE"}, "answer": "leave"},
-       {"when": {"life": "lt25"}, "answer": "portal"},
-       {"when": {"life": "25-35|35-55", "kit": "NONE"}, "answer": "run"},
+       {"when": {"drinklife": "lt18"}, "answer": "leave"},
+       {"when": {"drinklife": "18-25", "kit": "NONE"}, "answer": "leave"},
+       {"when": {"drinklife": "18-25"}, "answer": "portal"},
+       {"when": {"drinklife": "26-49", "kit": "NONE"}, "answer": "run"},
        {"when": {}, "answer": "fight"}]},
     {"id": "t0.retreat.lethal", "tier": 0,
      "question": "A pack type that nearly killed us: avoid or fight?",
@@ -99,10 +113,10 @@
     {"id": "t0.unique.fight", "tier": 0, "urgency": true,
      "question": "A champion or unique pack: fight or avoid?",
      "answers": [{"id": "fight", "label": "fight with the early drink line"}, {"id": "avoid", "label": "avoid it", "noop": true}],
-     "contextKeys": ["packdanger", "life", "kit"],
+     "contextKeys": ["packdanger", "lifeengage", "kit"],
      "riskTable": [{"match": {"hc": "hardcore"}, "class": "risky"}, {"match": {}, "class": "normal"}],
      "default": [
-       {"when": {"life": "lt25|25-35"}, "answer": "avoid"},
+       {"when": {"lifeengage": "lt25|25-35|35-40"}, "answer": "avoid"},
        {"when": {"urgency": "urgent|critical"}, "answer": "avoid"},
        {"when": {}, "answer": "fight"}]},
     {"id": "t0.leave.safe", "tier": 0, "urgency": true,
@@ -210,8 +224,8 @@
     {"id": "t2.mercenary", "tier": 2,
      "question": "Hire or revive the mercenary now?",
      "answers": [{"id": "hire", "label": "hire or revive now"}, {"id": "wait", "label": "wait for gold"}],
-     "contextKeys": ["gold", "merc", "kit"],
+     "contextKeys": ["mercgold", "merc", "kit"],
      "riskTable": [{"match": {}, "class": "normal"}],
-     "default": [{"when": {"merc": "alive"}, "answer": "wait"}, {"when": {"gold": "500-1500|gt1500"}, "answer": "hire"}, {"when": {}, "answer": "wait"}]}
+     "default": [{"when": {"merc": "alive"}, "answer": "wait"}, {"when": {"mercgold": "ge400"}, "answer": "hire"}, {"when": {}, "answer": "wait"}]}
   ]
 }

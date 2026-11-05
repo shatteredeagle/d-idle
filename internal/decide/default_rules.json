@@ -1,12 +1,15 @@
 {
   "version": 1,
   "rules": [
-    {"point": "t0.retreat.drink", "when": {"life": "55-70|gt70"}, "answer": "fight", "knobs": "combat.drinkLifePct 55 (keep fighting above it)", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "ge65"}, "answer": "fight", "knobs": "combat.drinkLifePct 55 + combat.championEarlyPct 10 (keep fighting at 65 and above)", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "55-64", "champbonus": "none"}, "answer": "fight", "knobs": "combat.drinkLifePct 55 (keep fighting above it without a champion bonus)", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "55-64", "diff": "nightmare|hell"}, "answer": "fight", "knobs": "combat.championEarlyPct 10 applies in Normal only", "vs": "match"},
     {"point": "t0.retreat.drink", "when": {"urgency": "calm|wary"}, "answer": "fight", "knobs": "stage 2 stand-in for the life rows", "vs": "match"},
     {"point": "t0.retreat.drink", "when": {"held": "hp|rv"}, "answer": "drink", "knobs": "combat.drinkLifePct 55, combat.drinkRejuvPct 35, combat.chickenPct 25: PotionPolicy drinks whenever a potion is held (rejuvenation first under 35)", "vs": "match"},
-    {"point": "t0.retreat.drink", "when": {"life": "lt25", "kit": "NONE"}, "answer": "leave", "knobs": "combat.chickenPct 25, no potion, no portal: AbortFight leaves the game", "vs": "match"},
-    {"point": "t0.retreat.drink", "when": {"life": "lt25"}, "answer": "portal", "knobs": "combat.chickenPct 25, no potion: AbortFight portals while above chicken-8", "vs": "match"},
-    {"point": "t0.retreat.drink", "when": {"life": "25-35|35-55", "kit": "NONE"}, "answer": "run", "knobs": "resource.fleeLifePct 50: no potion, no portal, break away", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "lt18"}, "answer": "leave", "knobs": "combat.chickenPct 25: at or below chicken-8 (17) AbortFight leaves the game, portal or not", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "18-25", "kit": "NONE"}, "answer": "leave", "knobs": "combat.chickenPct 25, no potion, no portal: AbortFight leaves the game", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "18-25"}, "answer": "portal", "knobs": "combat.chickenPct 25, no potion: AbortFight portals while above chicken-8", "vs": "match"},
+    {"point": "t0.retreat.drink", "when": {"drinklife": "26-49", "kit": "NONE"}, "answer": "run", "knobs": "resource.fleeLifePct 50: no potion, no portal, break away below 50", "vs": "match"},
     {"point": "t0.retreat.drink", "when": {}, "answer": "fight", "knobs": "AbortFight: keep fighting", "vs": "match"},
 
     {"point": "t0.retreat.lethal", "when": {}, "answer": "avoid", "knobs": "none: the lethal-pack list is an empty placeholder, the point never fires today", "vs": "match"},
@@ -18,7 +21,7 @@
     {"point": "t0.retreat.repeat", "when": {"retreats": "3+"}, "answer": "leave", "knobs": "resource.brAttempts 3 (Blood Raven budget, the only retreat counter)", "vs": "match"},
     {"point": "t0.retreat.repeat", "when": {}, "answer": "stay", "knobs": "resource.brAttempts 3", "vs": "match"},
 
-    {"point": "t0.unique.fight", "when": {"life": "lt25|25-35"}, "answer": "avoid", "knobs": "resource.minEngageLifePct 40: a pack is not engaged below it (the 40 is inside the 35-55 band)", "vs": "match"},
+    {"point": "t0.unique.fight", "when": {"lifeengage": "lt25|25-35|35-40"}, "answer": "avoid", "knobs": "resource.minEngageLifePct 40: a pack is not engaged below it (lifeengage has the 40 edge)", "vs": "match"},
     {"point": "t0.unique.fight", "when": {"urgency": "urgent|critical"}, "answer": "avoid", "knobs": "stage 2 stand-in", "vs": "match"},
     {"point": "t0.unique.fight", "when": {}, "answer": "fight", "knobs": "combat.championEarlyPct 10, combat.drinkRejuvBossPct 50: champions are always fought", "vs": "match"},
 
@@ -59,15 +62,15 @@
     {"point": "t2.reset.game", "when": {}, "answer": "restart", "knobs": "route.freshGapSec 600, route.freshMaxNoGain 3: freshAllowed always ends in a restart (after a wait)", "vs": "match"},
 
     {"point": "t2.mercenary", "when": {"merc": "alive"}, "answer": "wait", "knobs": "merc.enabled 1", "vs": "match"},
-    {"point": "t2.mercenary", "when": {"gold": "500-1500|gt1500"}, "answer": "hire", "knobs": "bot.mercHireMinGold 400 (the 400 is inside the 100-500 band)", "vs": "match"},
+    {"point": "t2.mercenary", "when": {"mercgold": "ge400"}, "answer": "hire", "knobs": "bot.mercHireMinGold 400 (mercgold has the 400 edge)", "vs": "match"},
     {"point": "t2.mercenary", "when": {}, "answer": "wait", "knobs": "bot.mercHireMinGold 400", "vs": "match"}
   ],
   "gaps": [
-    {"point": "t0.retreat.drink", "gap": "three band-interior splits remain (see the parity test): champion bonus of +10 points at clvl under 15 inside 55-70; no-potion portal window 17-25 inside lt25; fleeLifePct 50 inside 35-55"},
+    {"point": "t0.retreat.drink", "gap": "no band-interior split remains (v3 drinklife has the 18, 26, 50, 55, 65 edges; champbonus carries the clvl under 15 champion bonus, the caller sets it; Nightmare and Hell chicken 30 and the thin-belt retreat are not in the key)"},
     {"point": "t0.retreat.lethal", "gap": "the lethal-pack list is a placeholder enum; today danger is a level 1 to 3, no knob lists pack kinds"},
     {"point": "t0.area.toohard", "gap": "the tower floor is 15 without a merc and 14 with one; the merc is not in the key, so clvl 14 stays a split"},
     {"point": "t0.retreat.repeat", "gap": "no knob counts retreats per area; only Blood Raven has a budget (brAttempts 3), the field is reported by the call site"},
-    {"point": "t0.unique.fight", "gap": "minEngageLifePct 40 is inside the 35-55 band (the 40 edge was dropped by the 2026-11-05 decision); the legacy code has no avoid-champion rule above 40"},
+    {"point": "t0.unique.fight", "gap": "closed in v3: lifeengage has the 40 edge for this point only (the shared life field keeps 25/35/55/70); the legacy code has no avoid-champion rule above 40"},
     {"point": "t0.leave.safe", "gap": "no knob and no code path: today the hero stays and fights; the knob is a proposal"},
     {"point": "t0.shrine", "gap": "no knob; shrine handling not read in code"},
     {"point": "t1.keep.kind", "gap": "rare and unique depend on pickit priorities, a rule can only override by kind"},
@@ -77,6 +80,6 @@
     {"point": "t2.repeat", "gap": "the order count decides, not a knob"},
     {"point": "t2.slowrun", "gap": "no run-time-versus-expected measure exists"},
     {"point": "t2.bossunsafe", "gap": "only Blood Raven and Forgotten Tower have floors; gear risk is a separate composite"},
-    {"point": "t2.mercenary", "gap": "bot.mercHireMinGold 400 is inside the 100-500 gold band; belongs to merc policy"}
+    {"point": "t2.mercenary", "gap": "closed in v3: mercgold has the 400 edge for this point only; the hire also needs Act 2 town, which the caller checks"}
   ]
 }

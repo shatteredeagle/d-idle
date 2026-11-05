@@ -74,7 +74,7 @@ func TestPersistRefusesBadFiles(t *testing.T) {
 		body string
 		want error
 	}{
-		"future":   {`{"version":3,"profile":"p","log":[]}`, ErrFutureVersion},
+		"future":   {`{"version":4,"profile":"p","log":[]}`, ErrFutureVersion},
 		"garbage":  {`not json`, ErrCorrupt},
 		"no ver":   {`{"profile":"p","log":[]}`, ErrCorrupt},
 		"truncate": {good[:20], ErrCorrupt},
