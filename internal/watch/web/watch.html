@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle watch screen</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/watch/app.css">
+</head><body>
+<header class="top">
+ <div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
+ <div class="mode" role="status" aria-live="polite"><span class="dot" id="dot"></span><span id="state" class="tag">connecting</span></div>
+ <div class="up">uptime <b id="uptime">-</b> <small id="window"></small></div>
+ <span id="deaths" class="badge bad" hidden></span>
+ <span id="clock" class="muted"></span>
+ <div class="tools"><button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: auto</button></div>
+</header>
+<div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
+<nav class="views" id="views" aria-label="Pages">
+ <button type="button" data-view="thoughts" aria-current="page">Thoughts</button>
+ <button type="button" data-view="orders">Orders</button>
+ <button type="button" data-view="rules">Rules</button>
+ <button type="button" data-view="journal">Journal</button>
+</nav>
+<main id="main" data-view="thoughts">
+ <section class="card game" id="gamepane" aria-labelledby="t-game"><h2 id="t-game">Game</h2>
+  <div id="frame"><img id="shot" alt="game frame" hidden><p id="noframe" class="empty">No game frame here (simulated runner or the frame feed is off).</p></div>
+ </section>
+ <section class="card thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
+  <div id="thoughts"></div>
+  <ul id="feed" class="log-list"></ul>
+ </section>
+ <section class="card orders" data-v="orders" aria-labelledby="t-orders"><h2 id="t-orders">Orders</h2>
+  <form id="orderform" class="orderform">
+   <select id="okind" aria-label="order"><option value="go">Go to</option><option value="fight">Fight here</option><option value="home">Come home</option></select>
+   <select id="oarea" aria-label="area"></select>
+   <label class="check"><input id="omin" type="number" min="1" max="240" value="10" aria-label="minutes"> min</label>
+   <button class="btn primary" type="submit">Give order</button>
+  </form>
+  <ul id="orders" class="log-list"></ul>
+ </section>
+ <section class="card rules" data-v="rules" aria-labelledby="t-rules">
+  <div class="card-head"><h2 id="t-rules">Rules</h2><button class="btn danger small" id="revokeall" type="button">Revoke all</button></div>
+  <p class="hint">Every rule the hero learned from you. A rule never revokes itself.</p>
+  <ul id="rules" class="log-list"></ul>
+ </section>
+ <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
+  <ul id="journal" class="log-list"></ul>
+ </section>
+</main>
+<script src="/watch/app.js"></script>
+</body></html>
