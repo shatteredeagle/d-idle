@@ -1,1 +1,0 @@
-CHANGELOG: drill fixes: ladder questions are held only while a hostile is within the fight radius (not for the whole field clear), the tuner keeps --ladder across tuning.json and edits, d2drill needs D2D_BIN and reports a stale lab binary.
