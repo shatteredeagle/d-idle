@@ -34,7 +34,7 @@ func TestOriginsAndLoopback(t *testing.T) {
 	if got := Origins(" http://a:1 , http://b:2 ", "x:1"); len(got) != 2 || got[1] != "http://b:2" {
 		t.Errorf("listed origins: %v", got)
 	}
-	for addr, want := range map[string]bool{"127.0.0.1:1": true, "localhost:1": true, "[::1]:1": true, "0.0.0.0:1": false, ":1": false, "10.0.0.2:1": false} {
+	for addr, want := range map[string]bool{"127.0.0.1:1": true, "localhost:1": true, "[::1]:1": true, "0.0.0.0:1": false, ":1": false, "192.0.2.1:1": false} {
 		if Loopback(addr) != want {
 			t.Errorf("Loopback(%s) != %v", addr, want)
 		}
