@@ -58,7 +58,7 @@ Config (`backlog config list`) matches what we need: check_active_branches true,
 3. For anything that must see custom keys (owns, exclusive, contracts) read the files or use `tools/backlog/check.py`; do not build on `--json`.
 4. After a CLI edit run `git diff` once: quote-style churn and `updated_date` are expected, anything else is a finding.
 5. Do not run the browser on the worker host or expose it; use it on the dev box only, loopback, short lived.
-6. An MCP server (`backlog mcp`) is not evaluated yet (next job); until then agents use the CLI as above.
+6. The MCP server is evaluated (section "MCP server (verified)"); `tools/backlog/new_task.py` is the create wrapper (card, owns, exclusive, contracts from flags).
 
 ## CLI recipes
 
@@ -111,3 +111,36 @@ docs/process/openspec-removal-plan.md (branch agent/removalplan2 until merged): 
 - `backlog task list` (CLI) does NOT show branch-only cards; only the web board does. Tooling that needs the cross-branch view uses the web API or reads the files, not the CLI list.
 - `active_branch_days` (default 30) limits which branches count; very old agent branches do not show.
 - The web board is a read-only mirror on another machine fetched every 60 s (no phone view, no write API exposed).
+
+## MCP server (verified)
+
+Checked 2026-11-05, Backlog.md 1.55.3, in a scratch worktree on a branch, with a stdlib JSON-RPC stdio client (initialize, tools/list, tools/call) and with `claude -p` (Haiku). Tags V (ran it), U (not tried).
+
+- Start: `backlog mcp start` (stdio, no port, no daemon, no auth; `backlog mcp --help` has only `start`). It works on the cwd's repo, also from a subdirectory (V: a `claude -p` call from `internal/` read TASK-10). It sends instructions "list the resources and read the first one". V
+- Tools (24): `get_backlog_instructions`, `task_create`, `task_list`, `task_search`, `task_edit`, `task_view`, `task_archive`, `task_delete`, `task_restore`, `milestone_list|add|rename|remove|archive`, `definition_of_done_defaults_get|upsert`, `document_list|view|create|update|archive|restore|delete|search`. V
+- `task_create` fields: title, description, status, priority, labels, assignee, dependencies, references, documentation, acceptanceCriteria, ordinal, milestone, parentTaskId, finalSummary, ... No free-form frontmatter. `task_edit` adds status, labels, notesSet/notesAppend (the "Implementation Notes" block), planSet, comments, acceptanceCriteriaSet|Add|Remove|Check|Uncheck, finalSummary. V (schema read from tools/list)
+- Create (`task_create` with status Proposed, label G-G, priority, two criteria, a reference): wrote `task-22 - mcptest-scratch-task.md` with id, title, status, created_date, labels, ordinal and the criteria block; NO card/owns/exclusive/contracts (check.py would fail it). V
+- Edit on a real task (TASK-10: status, check criterion, `notesAppend`): `git diff` shows the custom keys (card, owns, exclusive, branch, agent, result, live, ...) untouched and in order. Same churn as the CLI: title quotes become single, `- "G-C"` becomes `- G-C`, `updated_date` refreshed; `notesAppend` appends a `## Implementation Notes` block with SECTION:NOTES markers at the end of the file (a place for notes we do not use today). V
+- Edit on the new task: status In Progress, `notesSet`, `acceptanceCriteriaCheck`, labels `["G-G","soak"]` all landed. V
+- Config: statuses are validated (`Bogus` is rejected with the allowed list; `Draft` is also accepted because the tool has it built in, not in our config). Labels are NOT validated: label `nonsense` was accepted on create. So G-A..G-G discipline stays with check.py. Prefix `task`, default status Proposed, ids = next free number (22, then 23 after the archive of 22: ids are not reused) are respected. V
+- `task_list`/`task_search`/`task_view` work (text output with file path, status, labels, criteria counts; no custom keys). `task_archive` moves the file to `backlog/archive/tasks/` (the CLI/MCP archive path is not one our checks read; do not use it for finished cards, the coordinator closes by status). V
+- Commits: none. `auto_commit: false` holds; every call only changed files in the worktree. V
+- Branch behaviour: ran inside a worktree on `agent/backlogmcp`; tasks of that worktree's `backlog/tasks` were listed and written there. Cross-branch id allocation (check_active_branches) with another unmerged branch: not tried. U. File locking between two servers on one repo: not tried. U
+- End to end from a worktree: `.mcp.json` at the worktree root with `{"mcpServers":{"backlog":{"command":"backlog","args":["mcp","start"]}}}` made `claude -p --permission-mode dontAsk --allowedTools mcp__backlog__task_view` call the tool and return TASK-10 (V; the same via `--mcp-config` plus `--strict-mcp-config`). Interactive sessions ask once to approve a project-scope server. V for -p, S for the prompt.
+- Where it does not fit: the credit runner (`tools/api-agent.sh`) starts `claude` with `--strict-mcp-config` and `--setting-sources user`, so a project `.mcp.json` is ignored and its permission list has no `mcp__backlog__*` rule: no MCP there without changing the runner (S, docs/api-agent.md in the ops repo). The Pro runner sandbox: not checked here, U (stdio MCP is a local child process, so it should work if `backlog` is on PATH).
+
+### Decision: use with the wrapper, CLI stays the default
+
+MCP does nothing the CLI cannot do (same code, same file edits, same churn) and cannot write our keys. Agents keep using the CLI (it works in every runner, `--plain` output is the same text). The committed `.mcp.json` lets main-account sessions and subagents call `task_view`, `task_list`, `task_search` and `task_edit` as tools without a shell; they must still create tasks with `tools/backlog/new_task.py` and edit custom keys by hand. Do not use `task_archive`, `task_delete` or the document/milestone tools.
+
+### The create wrapper
+
+`python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> [--owns ..] [--exclusive ..] [--contracts ..] [-l G-C] [-s Proposed] [--priority low] [--ac ".."] [-d ".."]` runs `backlog task create`, inserts `card`, `owns`, `exclusive`, `contracts` before the closing `---` of the new file and runs `check.py`. `--card` and `--owns` are required. Tests: `python3 -I tools/backlog/test_new_task.py` (a fake CLI) and one live run against a scratch repo (V: the new file passed check.py with 0 findings).
+
+## Agent instructions
+
+`backlog init` in a scratch copy of the repo (never in the real one), 1.55.3, `--agent-instructions claude,agents,gemini,copilot --integration-mode cli --defaults`: V.
+
+- It APPENDS a `<!-- BACKLOG.MD GUIDELINES START -->` block (about 24 lines) to the existing `AGENTS.md` and `CLAUDE.md` and creates `GEMINI.md` and `.github/copilot-instructions.md` (the same short block, 1.2 KB). It leaves `backlog/config.yml` untouched in an existing project. `cursor` writes AGENTS.md. `--integration-mode mcp` cannot be combined with `--agent-instructions` (init refuses) and writes nothing in that case.
+- The block tells agents to run `backlog instructions overview` at the start and to "not edit task markdown files directly, use the CLI". That clashes with us: our custom keys (`card`, `owns`, ...) can only be set by hand, and CLAUDE.md here is the one line `@AGENTS.md`, so the generated copy in CLAUDE.md would be duplicated text. Decision: do NOT run `init` with instruction files here (keep `--agent-instructions none`, as the config requirements say) and use the one block in AGENTS.md ("Backlog.md for agents") instead.
+- The ops repo `claude/agents/*.md`: d2-worker, d2-live, d2-general and d2-decomp carry the line "your job is the Backlog.md task the brief names, `backlog/tasks/<id>.md` (keys `owns:` ..)" (d2-decomp in "Conventions" and in the boilerplate); d2-merger checks the tasks; spec-sme and grill only mention tasks. None tells agents HOW to edit tasks beyond that line, so the update is one added sentence at the end of that line in the four agents: "Task how-to: the 'Backlog.md for agents' block in AGENTS.md." (not edited in this job).
