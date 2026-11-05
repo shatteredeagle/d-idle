@@ -2,11 +2,13 @@ package loot_test
 
 import (
 	"context"
+	"errors"
 	"strings"
 	"testing"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/loot"
+	"d2lod-bot/internal/town/hand"
 	"d2lod-bot/internal/town/sim"
 )
 
@@ -635,5 +637,100 @@ func TestPickUpHeldItemWithRoomGoesToPack(t *testing.T) {
 	s, _ := w.Snapshot()
 	if u, ok := findID(s, held.ID); !ok || u.Item.Where != d2.ContInventory || w.Cursor != nil || len(w.Ground) != 0 {
 		t.Fatalf("held item not in the pack: %+v ground %d", u, len(w.Ground))
+	}
+}
+
+// DropCursor tries a new cell after each refused ground click (g2b seed 13: one fixed cell failed twice), then puts
+// the item into a free pack cell, and only then gives up.
+func TestDropCursorRetriesOtherCellsThenPack(t *testing.T) {
+	for _, tc := range []struct {
+		name     string
+		class    d2.Class
+		refuse   int // ground clicks that do nothing
+		packFull bool
+		wantErr  bool
+		wantGnd  bool // item ends on the ground
+		clicks   int
+	}{
+		{"second cell drops", d2.Sorceress, 1, false, false, true, 2},
+		{"third cell drops, other class", d2.Barbarian, 2, true, false, true, 3},
+		{"all refused, pack has room", d2.Sorceress, 99, false, false, false, 6},
+		{"all refused, pack full", d2.Barbarian, 99, true, true, false, 6},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			_, r := newLooter(t)
+			w := r.W
+			w.Player.Class = tc.class
+			if tc.packFull {
+				g := w.Lay.Inventory
+				for y := 0; y < g.Rows; y++ {
+					for x := 0; x < g.Cols; x++ {
+						w.Add("isc", d2.ContInventory, x, y)
+					}
+				}
+			}
+			held := w.NewItem("sbw", 2)
+			held.Mode, held.Item.Where = d2.ItemModeCursor, d2.ContCursor
+			w.Cursor = &held
+			w.DropRefuse = tc.refuse
+			h := hand.New(r.Env)
+			h.Snap = w.Snapshot
+			err := h.DropCursor(context.Background())
+			if (err != nil) != tc.wantErr {
+				t.Fatalf("err %v, want error %v", err, tc.wantErr)
+			}
+			if tc.wantErr && !errors.Is(err, hand.ErrCursor) {
+				t.Fatalf("err %v is not ErrCursor", err)
+			}
+			if tc.wantErr != (w.Cursor != nil) {
+				t.Fatalf("cursor held %v with err %v", w.Cursor != nil, err)
+			}
+			if len(w.Ground) == 1 != tc.wantGnd {
+				t.Fatalf("ground %d, want item there %v", len(w.Ground), tc.wantGnd)
+			}
+			seen := map[string]bool{}
+			clicks := 0
+			for _, c := range r.In.Fake.Calls {
+				if strings.HasPrefix(c, "clickworld") {
+					clicks++
+					if seen[c] {
+						t.Fatalf("cell tried twice: %s", c)
+					}
+					seen[c] = true
+				}
+			}
+			if clicks != tc.clicks {
+				t.Fatalf("%d ground clicks, want %d", clicks, tc.clicks)
+			}
+		})
+	}
+}
+
+// A launcher the class cannot use is worn by the game on pickup and unwear needs a pack cell for it: with none, it is
+// not picked up at all (Gate 2 g2b seed 13: Light Crossbow, unwear failed with ErrNoSpace).
+func TestPickUpSkipsWornLauncherWithoutRoomToTakeItOff(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Barbarian} {
+		l, r := newLooter(t)
+		w := r.W
+		w.AutoWearWeapon = true
+		w.Player.Class = class
+		g := w.Lay.Inventory
+		for y := 0; y < g.Rows; y++ {
+			for x := 0; x < g.Cols; x++ {
+				w.Add("isc", d2.ContInventory, x, y)
+			}
+		}
+		xb := w.AddGround("lxb", 2, 6021, 4931)
+		rep, err := l.PickUp(context.Background(), loot.PickOpts{Names: []string{"Light Crossbow"}})
+		if err != nil || len(rep.Picked) != 0 {
+			t.Fatalf("%v: %+v %v", class, rep, err)
+		}
+		s, _ := w.Snapshot()
+		if u, ok := findID(s, xb.ID); ok && u.Item.Where == d2.ContEquipment {
+			t.Fatalf("%v: crossbow was worn", class)
+		}
+		if w.Cursor != nil {
+			t.Fatalf("%v: item on the cursor", class)
+		}
 	}
 }
