@@ -61,3 +61,41 @@ func TestTunerEditProfileOverridesAndPersist(t *testing.T) {
 }
 
 func ptr(s string) *string { return &s }
+
+// A tuning rebuilt from disk or by an edit keeps what the command line forced (--ladder), and without a hook the
+// saved file stays authoritative (T0 live drill 2026-11-05, defect 2).
+func TestTunerPostSurvivesReloadAndEdit(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "state", "tuning.json")
+	seed := env.DefaultTuning()
+	tn, err := NewTuner(&seed, Config{}, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := tn.Edit(api.TuneEdit{Overrides: map[string]*float64{"ladder.enabled": f64(0), "combat.fightRadius": f64(20)}}); err != nil {
+		t.Fatal(err)
+	}
+	force := func(x *env.Tuning) { x.Ladder.Enabled = 1 }
+	for _, prof := range []string{"optimal", "rookie"} {
+		on := env.DefaultTuning()
+		tn, err := NewTuner(&on, Config{Profile: prof}, path, force)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if on.Ladder.Enabled != 1 {
+			t.Fatalf("%s: a saved tuning.json dropped the forced ladder switch", prof)
+		}
+		if err := tn.Edit(api.TuneEdit{Overrides: map[string]*float64{"combat.fightRadius": f64(25)}}); err != nil {
+			t.Fatal(err)
+		}
+		if on.Ladder.Enabled != 1 || on.Combat.FightRadius != 25 {
+			t.Fatalf("%s: an edit dropped the switch or the edit: ladder %d radius %d", prof, on.Ladder.Enabled, on.Combat.FightRadius)
+		}
+	}
+	off := env.DefaultTuning()
+	if _, err := NewTuner(&off, Config{}, path); err != nil {
+		t.Fatal(err)
+	}
+	if off.Ladder.Enabled != 0 {
+		t.Fatal("without a hook the saved ladder.enabled=0 must stay")
+	}
+}
