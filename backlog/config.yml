@@ -1,7 +1,7 @@
 project_name: "d.idle"
 default_status: "Proposed"
 statuses: ["Proposed", "Deferred", "In Progress", "Done"]
-labels: ["G-A", "G-B", "G-C", "G-D", "G-E", "G-F", "parked", "upstream", "soak"]
+labels: ["G-A", "G-B", "G-C", "G-D", "G-E", "G-F", "G-G", "parked", "upstream", "soak"]
 date_format: yyyy-mm-dd
 max_column_width: 20
 default_editor: "vi"

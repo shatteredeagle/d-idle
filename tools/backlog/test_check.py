@@ -23,13 +23,11 @@ class T(unittest.TestCase):
     def test_clean(self):
         self.assertEqual(self.run_dir([task(1, "a"), task(2, "b", "Deferred", ("G-B",))]), [])
 
-    def test_cap(self):
-        out = self.run_dir([task(i, f"c{i}") for i in range(1, 14)])
-        self.assertTrue(any("cap is 12" in x for x in out))
+    def test_no_cap(self):
+        self.assertEqual(self.run_dir([task(i, f"c{i}") for i in range(1, 16)]), [])
 
-    def test_parked_off_cap_and_goal(self):
-        ts = [task(i, f"c{i}") for i in range(1, 13)] + [task(13, "p", "Deferred", ("parked",))]
-        self.assertEqual(self.run_dir(ts), [])
+    def test_parked_needs_no_goal(self):
+        self.assertEqual(self.run_dir([task(1, "p", "Deferred", ("parked",))]), [])
 
     def test_goal_labels(self):
         self.assertTrue(any("0 goal" in x for x in self.run_dir([task(1, "a", labels=())])))
