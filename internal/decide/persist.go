@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // FileVersion is the on-disk format version; a newer file is refused (ErrFutureVersion).
@@ -67,6 +68,15 @@ func Open(dir, profile string, cat *Catalogue, clk Clock) (*Store, error) {
 	}
 	if err := s.replay(fs.Log); err != nil {
 		return nil, fmt.Errorf("%w: %v", ErrCorrupt, err)
+	}
+	// The log's times are on the clock of the run that wrote them; a thought still open after replay would keep that
+	// run's deadline (viewer: remainingSec far above fadeSec). It starts its fade again on this run's clock.
+	if s.clk != nil {
+		now := s.clk.Now()
+		for _, t := range s.thoughts {
+			t.OpenedAt = now
+			t.FadesAt = now + time.Duration(cat.Config.FadeSec)*time.Second
+		}
 	}
 	if fs.Hero != "" {
 		s.hero = fs.Hero

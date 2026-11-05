@@ -69,3 +69,12 @@ func (r *Runner) engaged() bool {
 	s := r.latest()
 	return s != nil && r.hostileNear(s, r.e.Tune.Combat.FightRadius) > 0
 }
+
+// pumpLadder runs once per tick (Runner.step): it puts queued thoughts to the player and delivers answers that are
+// due, so a question opened at one decision point does not wait for the next Decide call. Ladder.Pump holds no game
+// access and holds nothing while engaged (Config.InFight). No ladder installed: nothing runs.
+func (r *Runner) pumpLadder() {
+	if l := ladder.Active(); l != nil {
+		l.Pump()
+	}
+}
