@@ -52,7 +52,7 @@ def render(ts):
          "| # | id | goal | status | what | owner / exclusive | next step | card |",
          "|---|---|---|---|---|---|---|---|"]
     for i, t in enumerate(active, 1):
-        goal = next((x for x in (t.get("labels") or []) if re.fullmatch(r"G-[A-F]", x)), "-")
+        goal = next((x for x in (t.get("labels") or []) if re.fullmatch(r"G-[A-G]", x)), "-")
         st = "%s %d/%d" % (str(t.get("status", "")).lower().replace(" ", "-"), t["_done"], t["_total"])
         what = t.get("title", "").partition(":")[2].strip() or t.get("title", "")
         excl = ", ".join(t.get("exclusive") or []) or "-"

@@ -7,15 +7,15 @@
 Stage 1 of the OpenSpec removal plan (docs/process/openspec-removal-plan.md, branch agent/removalplan, not yet on main): this table is the list of active work. The user approved it on 2026-11-04 after the card triage. Each row links to its plain markdown card under `openspec/changes/<id>/` (tasks.md header holds owns, exclusive and gates).
 
 Rules (ADR 0015 items 10 and 11):
-- No cap on rows (the cap of 12 was removed by the grill 0005 outcome, ADR 0016). Every row maps to exactly one goal G-A..G-F.
+- No cap on rows (the cap of 12 was removed by the grill 0005 outcome, ADR 0016). Every row maps to exactly one goal G-A..G-G.
 - One row per active job. A job without a card is named by its branch `agent/<id>`.
 - Parked cards stay open but are listed in "Parked". Nothing is deleted.
 - "Needs a decision" cards stay open with git evidence only; they are not counted and not archived until the user decides.
 
-Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015).
+Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (13)
+## Active (16)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -32,6 +32,9 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 11 | fixprogress | G-C | in-progress 4/5 | trip-loop progress fix | - | - | [card](archive/openspec-index.md#fixprogress) |
 | 12 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
 | 13 | taska | G-B | in-progress 7/10 | caster mana potion restock | - | - | [card](archive/openspec-index.md#taska) |
+| 14 | decision-point-store | G-G | proposed 0/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
+| 15 | watch-screen | G-G | proposed 0/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
+| 16 | t0-slice | G-G | proposed 0/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
