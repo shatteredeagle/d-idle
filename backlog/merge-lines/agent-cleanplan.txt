@@ -1,0 +1,2 @@
+BACKLOG: cleanup plan and inventory 2026-11-05 (docs/process/cleanup-plan-20261105.md, read-only pass; batches A to F await the user)
+INDEX: docs/process/cleanup-plan-20261105.md - whole-project cleanup plan; docs/process/cleanup-inventory-20261105.tsv - full branch, worktree, doc and code inventory

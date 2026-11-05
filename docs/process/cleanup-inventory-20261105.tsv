@@ -1,0 +1,235 @@
+kind	name	status	ahead	last-date	proposed action
+branch	agent/b2bundle	MERGED-SAFE	0	2026-11-03	merged, but worktree DIRTY (untracked .scr/): owner saves or discards first
+branch	agent/barbdiff	UNMERGED-UNIQUE	2	2026-11-03	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/cleanplan	MERGED-SAFE	0	2026-11-05	keep until this plan is merged
+branch	agent/covmonai	UNMERGED-UNIQUE	2	2026-11-02	owner decides: 9 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/covmonskills	UNMERGED-UNIQUE	3	2026-11-02	owner decides: 17 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/covmonskills2	UNMERGED-UNIQUE	5	2026-11-02	owner decides: 19 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/covstates	UNMERGED-UNIQUE	2	2026-11-02	owner decides: 9 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/covtreasure2	UNMERGED-UNIQUE	1	2026-11-02	owner decides: 16 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/dmgroll	UNMERGED-UNIQUE	12	2026-11-03	owner decides: 46 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/floormeasure	MERGED-SAFE	0	2026-11-04	delete branch + remove worktree if clean (batch A)
+branch	agent/gate1run-20261101-1625	RECORD	1	2026-11-03	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate1run-20261102	RECORD	1	2026-11-02	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate1run-20261103	RECORD	5	2026-11-03	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate1run-20261103-0628	RECORD	1	2026-11-03	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate1run-s16-20261103-1005-ms1	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s16-20261103-1938-ms4	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s17-20261103-1007-ms1	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s17-20261103-1356-ms3	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s17-20261103-1736-ms4	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s18-20261103-1008-ms1	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s18-20261103-1939-ms4	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s19-20261103-1023-ms1	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s19-20261103-1247-ms2	RECORD	1	2026-11-03	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate1run-s19-20261103-1448-ms3	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s19-20261103-1737-ms4	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s20-20261103-1025-ms1	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s21-20261103-1425-ms3	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate1run-s21-20261103-1737-ms4	RECORD	1	2026-11-03	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-20261102	RECORD	2	2026-11-02	bundle then delete; 2 record file(s) only on branch: confirm merged copy (gate2multi?) first; worktree removal after the bundle
+branch	agent/gate2run-s11-20261104-1451-g2b	RECORD	1	2026-11-04	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-s11-20261104-2331-g2c	RECORD	1	2026-11-05	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-s13-20261104-1452-g2b	RECORD	1	2026-11-04	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-s13-20261104-2332-g2c	RECORD	1	2026-11-05	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-s17-20261104-1453-g2b	RECORD	1	2026-11-04	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/gate2run-s17-20261104-2332-g2c	RECORD	1	2026-11-05	bundle then delete; content already on main; worktree removal after the bundle
+branch	agent/ggcards	MERGED-SAFE	0	2026-11-05	merged, but worktree DIRTY (7 modified files (cards.md, contracts-after-openspec.md, cards_md.py ...)): owner saves or discards first
+branch	agent/groomland	UNMERGED-ARCHIVE	3	2026-11-04	bundle then delete (only a retired card or STATUS differs from main); worktree removal after the bundle
+branch	agent/kittrip	UNMERGED-UNIQUE	4	2026-11-02	owner decides: 8 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/levelspawn	UNMERGED-UNIQUE	6	2026-11-02	owner decides: 10 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/lockstepp4run	UNMERGED-UNIQUE	1	2026-11-02	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/noareameasure	MERGED-SAFE	0	2026-11-04	merged, but worktree DIRTY (3 untracked tools/emu scripts): owner saves or discards first
+branch	agent/prb	UNMERGED-UNIQUE	1	2026-11-03	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/prc	UNMERGED-UNIQUE	3	2026-11-03	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/prpal	UNMERGED-UNIQUE	2	2026-11-03	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/reverifymissile	UNMERGED-ARCHIVE	5	2026-11-03	bundle then delete (only a retired card or STATUS differs from main); worktree removal after the bundle
+branch	agent/shimupdate	MERGED-SAFE	0	2026-11-04	delete branch + remove worktree if clean (batch A)
+branch	agent/skdefshieldd2d	UNMERGED-UNIQUE	3	2026-11-02	owner decides: 14 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/sorcdiff	MERGED-SAFE	0	2026-11-03	merged, but worktree DIRTY (untracked scratch-sd/): owner saves or discards first
+branch	agent/specledger	MERGED-SAFE	0	2026-11-04	delete branch + remove worktree if clean (batch A)
+branch	agent/stagea	UNMERGED-UNIQUE	1	2026-11-03	owner decides: 1 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/verifydmg	UNMERGED-UNIQUE	8	2026-11-03	owner decides: 5 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/verifyphys	UNMERGED-UNIQUE	6	2026-11-03	owner decides: 3 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/verifyskbarb	UNMERGED-UNIQUE	1	2026-11-02	owner decides: 9 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	agent/zerohitrun	UNMERGED-UNIQUE	3	2026-11-02	owner decides: 4 file(s) not on main (docs/research, tools/emu, ledger); land, or bundle then delete; worktree removal after the bundle
+branch	grill/0005-automation-ladder	MERGED-SAFE	0	2026-11-05	keep until grill 0005 is closed (worktree grill-0005)
+branch	main	MERGED-SAFE	0	2026-11-05	keep (local main is behind origin/main: fast-forward)
+branch	mergeq/work	MERGED-SAFE	0	2026-11-05	keep (merge agent working branch)
+branch	pr-19	UNMERGED-ARCHIVE	1	2026-11-01	bundle then delete (1 trace-doc commit; later trace docs on main supersede; owner confirm)
+branch	pr-22	UNMERGED-ARCHIVE	1	2026-11-02	bundle then delete (1 trace-doc commit; later trace docs on main supersede; owner confirm)
+branch	pr-23	UNMERGED-ARCHIVE	1	2026-11-02	bundle then delete (1 trace-doc commit; later trace docs on main supersede; owner confirm)
+worktree	~/code/d2lod-bot	branch main	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/.cache/d2-mergeq/repro-covmonskills2	detached repro checkout	-	-	remove with git worktree remove --force after the merge queue is idle; repro dirs are ours
+worktree	~/.cache/d2-mergeq/repro-covtreasure2	detached repro checkout	-	-	remove with git worktree remove --force after the merge queue is idle; repro dirs are ours
+worktree	~/.cache/d2-mergeq/repro10	detached repro checkout	-	-	remove with git worktree remove --force after the merge queue is idle; repro dirs are ours
+worktree	~/.cache/d2-mergeq/repro10b	detached repro checkout	-	-	remove with git worktree remove --force after the merge queue is idle; repro dirs are ours
+worktree	~/code/d2lod-merge	branch mergeq/work	-	-	keep (merge agent)
+worktree	~/code/d2lod-wt/b2bundle	branch agent/b2bundle	-	-	DIRTY (untracked .scr/): keep until owner decides
+worktree	~/code/d2lod-wt/barbdiff	branch agent/barbdiff	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/covmonai	branch agent/covmonai	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/covmonskills	branch agent/covmonskills	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/covmonskills2	branch agent/covmonskills2	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/covstates	branch agent/covstates	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/covtreasure2	branch agent/covtreasure2	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/dmgroll	branch agent/dmgroll	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/floormeasure	branch agent/floormeasure	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-20261101-1625	branch agent/gate1run-20261101-1625	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-20261102	branch agent/gate1run-20261102	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-20261103	branch agent/gate1run-20261103	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-20261103-0628	branch agent/gate1run-20261103-0628	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s16-20261103-1005-ms1	branch agent/gate1run-s16-20261103-1005-ms1	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s16-20261103-1938-ms4	branch agent/gate1run-s16-20261103-1938-ms4	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s17-20261103-1007-ms1	branch agent/gate1run-s17-20261103-1007-ms1	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s17-20261103-1356-ms3	branch agent/gate1run-s17-20261103-1356-ms3	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s17-20261103-1736-ms4	branch agent/gate1run-s17-20261103-1736-ms4	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s18-20261103-1008-ms1	branch agent/gate1run-s18-20261103-1008-ms1	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s18-20261103-1939-ms4	branch agent/gate1run-s18-20261103-1939-ms4	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s19-20261103-1023-ms1	branch agent/gate1run-s19-20261103-1023-ms1	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s19-20261103-1247-ms2	branch agent/gate1run-s19-20261103-1247-ms2	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s19-20261103-1448-ms3	branch agent/gate1run-s19-20261103-1448-ms3	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s19-20261103-1737-ms4	branch agent/gate1run-s19-20261103-1737-ms4	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s20-20261103-1025-ms1	branch agent/gate1run-s20-20261103-1025-ms1	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s21-20261103-1425-ms3	branch agent/gate1run-s21-20261103-1425-ms3	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate1run-s21-20261103-1737-ms4	branch agent/gate1run-s21-20261103-1737-ms4	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-20261102	branch agent/gate2run-20261102	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s11-20261104-1451-g2b	branch agent/gate2run-s11-20261104-1451-g2b	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s11-20261104-2331-g2c	branch agent/gate2run-s11-20261104-2331-g2c	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s13-20261104-1452-g2b	branch agent/gate2run-s13-20261104-1452-g2b	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s13-20261104-2332-g2c	branch agent/gate2run-s13-20261104-2332-g2c	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s17-20261104-1453-g2b	branch agent/gate2run-s17-20261104-1453-g2b	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/gate2run-s17-20261104-2332-g2c	branch agent/gate2run-s17-20261104-2332-g2c	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/ggcards	branch agent/ggcards	-	-	DIRTY (7 modified files (cards.md, contracts-after-openspec.md, cards_md.py ...)): keep until owner decides
+worktree	~/code/d2lod-wt/grill-0005	branch grill/0005-automation-ladder	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/groomland	branch agent/groomland	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/kittrip	branch agent/kittrip	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/levelspawn	branch agent/levelspawn	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/lockstepp4run	branch agent/lockstepp4run	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/noareameasure	branch agent/noareameasure	-	-	DIRTY (3 untracked tools/emu scripts): keep until owner decides
+worktree	~/code/d2lod-wt/prb	branch agent/prb	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/prc	branch agent/prc	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/prpal	branch agent/prpal	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/reverifymissile	branch agent/reverifymissile	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/shimupdate	branch agent/shimupdate	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/skdefshieldd2d	branch agent/skdefshieldd2d	-	-	DIRTY (384 staged entries (index state of a bulk checkout?)): keep until owner decides
+worktree	~/code/d2lod-wt/sorcdiff	branch agent/sorcdiff	-	-	DIRTY (untracked scratch-sd/): keep until owner decides
+worktree	~/code/d2lod-wt/specledger	branch agent/specledger	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/stagea	branch agent/stagea	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/verifydmg	branch agent/verifydmg	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/verifyphys	branch agent/verifyphys	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/verifyskbarb	branch agent/verifyskbarb	-	-	remove after the branch is bundled/merged (batch A/B)
+worktree	~/code/d2lod-wt/zerohitrun	branch agent/zerohitrun	-	-	remove after the branch is bundled/merged (batch A/B)
+package	internal/combat/cmd/combatlive	no importers (5 go files, 1 test files) (main package: a binary, not dead by import)	-	2026-11-03	not dead; misplaced: move under cmd/ (4 binaries live in internal/*/cmd) in batch D
+package	internal/input/cmd/inputcal	no importers (7 go files, 0 test files) (main package: a binary, not dead by import)	-	2026-10-30	not dead; misplaced: move under cmd/ (4 binaries live in internal/*/cmd) in batch D
+package	internal/memfd	no importers (4 go files, 2 test files)	-	2026-10-30	dead-code candidate; confirm not a main/cmd entry then remove in batch C
+package	internal/merc/sim	no importers (2 go files, 1 test files)	-	2026-10-30	dead-code candidate; confirm not a main/cmd entry then remove in batch C
+package	internal/nav/cmd/navlive	no importers (1 go files, 0 test files) (main package: a binary, not dead by import)	-	2026-10-30	not dead; misplaced: move under cmd/ (4 binaries live in internal/*/cmd) in batch D
+package	internal/town/cmd/townlive	no importers (1 go files, 0 test files) (main package: a binary, not dead by import)	-	2026-10-30	not dead; misplaced: move under cmd/ (4 binaries live in internal/*/cmd) in batch D
+rootfile	attrs-26.1.0-py3-none-any.whl	tracked stray python wheel at repo root	-	-	git rm (not a doc); check tools/contracts for a vendored dependency first
+rootfile	jsonschema-4.26.0-py3-none-any.whl	tracked stray python wheel at repo root	-	-	git rm (not a doc); check tools/contracts for a vendored dependency first
+rootfile	jsonschema_specifications-2025.9.1-py3-none-any.whl	tracked stray python wheel at repo root	-	-	git rm (not a doc); check tools/contracts for a vendored dependency first
+rootfile	referencing-0.37.0-py3-none-any.whl	tracked stray python wheel at repo root	-	-	git rm (not a doc); check tools/contracts for a vendored dependency first
+rootfile	rpds_py-2026.9.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl	tracked stray python wheel at repo root	-	-	git rm (not a doc); check tools/contracts for a vendored dependency first
+rootfile	.run28.sh	tracked run script at repo root	-	2026-11-01	move to tools/ or git rm after checking drills28 docs
+rootfile	PLAN.md	founding plan, historical	-	-	keep with a status banner (43 files reference it); no move
+rootfile	CONTRIBUTORS.md	small	-	-	keep
+cachedir	~/.cache/d2-mergeq/repro10	worktree checkout ~52 MB, 2026-11-03	-	2026-11-03	remove (batch A) once merge queue is idle; two hold 411 changed paths (conflict repro): look first
+cachedir	~/.cache/d2-mergeq/repro10b	worktree checkout ~52 MB, 2026-11-03	-	2026-11-03	remove (batch A) once merge queue is idle; two hold 411 changed paths (conflict repro): look first
+cachedir	~/.cache/d2-mergeq/repro-covmonskills2	worktree checkout ~52 MB, 2026-11-03	-	2026-11-03	remove (batch A) once merge queue is idle; two hold 411 changed paths (conflict repro): look first
+cachedir	~/.cache/d2-mergeq/repro-covtreasure2	worktree checkout ~52 MB, 2026-11-03	-	2026-11-03	remove (batch A) once merge queue is idle; two hold 411 changed paths (conflict repro): look first
+remote	origin gh-pages	published site branch	-	-	keep
+remote	origin main	default	-	-	keep
+tag	openspec-final	keep (user rule)	-	-	keep
+tag	pages-history-pre-code	pre-code pages history	-	-	keep (needs user decision to drop)
+doc-not-in-index	docs/ab-design.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/act1check.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/act3.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/act4.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/andarielgate.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/andarielsme.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/areametrics.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/basics-audit.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/beltfill.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/bossgate.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/bot-small.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/botlogs.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/champions.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/chargedbolt.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/codefix67.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/combatspin.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2-knowledge.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-baselines-early.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-container-bot.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-determinism.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-deviations.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-lab6.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-lan-oracle.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-mesh.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-run-ab.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-run.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-soak-full-fix.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/d2d-xp-gap.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/drillsfix.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/farmfallback.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/fixdenbounce.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/fixmouthloop.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/fixmouthloop2.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/fixwp.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/floormeasure.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/forkcheats.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/gate2-rerun.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/gate2cursor.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/gate2loop.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/geninv.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/hastpdump.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/heldlog.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/hirefixlive.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/killfix.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/kitgate.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/licensing.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/lifelog.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/livecheckdrills.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/livedrills2.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/livedrills3.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/liveruns-briefs.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/loot-charms.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/merc-farm.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/merchire.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/merclive.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/mercrevive.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/noarea-policy.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/noareacards.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/noareacards2.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/nowall.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/npc.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/restloop.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/retreatfix.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/retreatlive2.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/roadmap.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/rtleave.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/skmeleewire2.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/skresistbot.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/sksmoke-tools.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/soakskills.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/soakstall.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/spec-skip-audit.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/streamctl-grid.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/tomefix.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+doc-not-in-index	docs/townwedge.md	top-level doc missing from docs/INDEX.md	-	-	add to INDEX (batch B) under its area
+broken-link	docs/INDEX.md	-> needs-you.md	-	-	fix or remove link
+broken-link	docs/README.md	-> needs-you.md	-	-	fix or remove link
+broken-link	docs/research/paladin-act1-recon.md	-> research/paladin-act1-recon.md	-	-	fix or remove link
+broken-link	docs/research/pr-nmlevel-draft.md	-> levelspawn-trace.md	-	-	fix or remove link
+broken-link	docs/research/project-review-20261103.md	-> adr/0015-acceptance-on-game-exe.md	-	-	fix or remove link
+broken-link	docs/research/sk-melee-trace.md	-> research/sk-melee-trace.md	-	-	fix or remove link
+broken-link	docs/research/sk-melee2-trace.md	-> research/sk-melee2-trace.md	-	-	fix or remove link
+broken-link	docs/research/sk-nova-trace.md	-> research/sk-nova-trace.md	-	-	fix or remove link
+broken-link	docs/research/sk-teleport-trace.md	-> research/sk-teleport-trace.md	-	-	fix or remove link
+rename	docs/BACKLOG.md / docs/backlog.md	case collision	-	-	case-collision pair (69 and 8 refs): rename docs/backlog.md -> docs/backlog-howto.md
+package	cmd/lockstepscan	no references in tools, deploy, CI or docs (non-research)	-	2026-11-02	dead-code candidate (only a binary); ask the lockstep owner
+toolfile	tools/mute-d2-watch.sh	no references from other files	-	-	candidate: verify then remove or fold into tools/test/ (batch C)
+toolfile	tools/env-test.sh	no references from other files	-	-	candidate: verify then remove or fold into tools/test/ (batch C)
+toolfile	tools/d2dfarm-test.sh	no references from other files	-	-	candidate: verify then remove or fold into tools/test/ (batch C)
+docs-note	docs/research	410 tracked files, 164 added on 2026-11-02; 603 docs carry a status banner, 36 say superseded	-	-	split into docs/research/<area>/ with stubs (batch B), decision needed
+docs-note	docs/probes	450 files, mostly soak logs and records (gz, csv)	-	-	keep; add one README index per subdir
+backlog-note	backlog/merge-lines	30 files, never pruned (the merger applies, does not delete)	-	-	delete files whose lines are in CHANGELOG/INDEX (batch B, tool: merge.sh --prune or git rm)
