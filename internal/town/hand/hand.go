@@ -290,23 +290,61 @@ func (h *Hand) ClearCursor(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	cur := s.Inventory.Cursor
-	if cur == nil {
+	if s.Inventory.Cursor == nil {
 		return nil
 	}
-	if s, err = h.OpenInventory(ctx); err != nil {
+	// refused: spots the game did not take the item at (Gate 2 g2c seed 13: spot (0,0) looked free in memory and
+	// the put was never confirmed, for hours). Each is blocked for the next try so the item goes elsewhere.
+	var refused [][2]int
+	var last error
+	for try := 0; try < max(h.E.Tune.Town.CursorStuckMax, 1); try++ {
+		cur := s.Inventory.Cursor
+		if s, err = h.OpenInventory(ctx); err != nil {
+			return err
+		}
+		lay, err := h.Layout(s)
+		if err != nil {
+			return err
+		}
+		w, hh := h.Size(*cur)
+		occ := h.Occupancy(s.Inventory, d2.ContInventory, lay.Inventory)
+		for _, r := range refused {
+			occ.Place(r[0], r[1], 1, 1)
+		}
+		c, r, ok := occ.FindSpot(w, hh)
+		if !ok {
+			if last != nil {
+				return fmt.Errorf("%w after %d refused spot(s): %w", ErrNoSpace, len(refused), last)
+			}
+			return ErrNoSpace
+		}
+		if last = h.Put(ctx, cur.ID, lay.Inventory, c, r, w, hh, d2.ContInventory); last == nil {
+			return nil
+		}
+		h.log().Warn("cursor: pack spot refused", "item", cur.ID, "spot", fmt.Sprintf("(%d,%d)", c, r), "size", fmt.Sprintf("%dx%d", w, hh), "try", try+1, "err", last)
+		refused = append(refused, [2]int{c, r})
+		if s, err = h.Fresh(); err != nil {
+			return err
+		}
+		if s.Inventory.Cursor == nil { // it landed somewhere else after all
+			return nil
+		}
+	}
+	return fmt.Errorf("%w after %d refused spot(s): %w", ErrNoSpace, len(refused), last)
+}
+
+// ClearOrDrop empties the cursor: into the pack when a spot takes it, else on the ground (DropCursor). Use it where
+// the item has no further use (a displaced or looted item) and a held item would block everything after it.
+func (h *Hand) ClearOrDrop(ctx context.Context) error {
+	err := h.ClearCursor(ctx)
+	if err == nil || ctx.Err() != nil {
 		return err
 	}
-	lay, err := h.Layout(s)
-	if err != nil {
-		return err
+	h.log().Warn("cursor: stuck", "cause", err)
+	if derr := h.DropCursor(ctx); derr != nil {
+		return fmt.Errorf("%w (ground drop: %v)", err, derr)
 	}
-	w, hh := h.Size(*cur)
-	c, r, ok := h.Occupancy(s.Inventory, d2.ContInventory, lay.Inventory).FindSpot(w, hh)
-	if !ok {
-		return ErrNoSpace
-	}
-	return h.Put(ctx, cur.ID, lay.Inventory, c, r, w, hh, d2.ContInventory)
+	return nil
 }
 
 // PanelOpen reports whether a panel, dialog or menu that blocks clicks is open. The panel table in internal/d2/ui.go
