@@ -46,7 +46,7 @@ Guide for Claude users and the agent setup: docs/agents/claude-tracing-guide.md
 
 ## Facts and honesty
 - Every offset, struct layout or behavior you rely on is tagged in code comments or docs as VERIFIED LIVE (say how), or UNVERIFIED. Never present a guess as a fact. Keep a short `docs/<your-area>.md` of what you learned, including dead ends.
-- Do not write secrets (CD keys, passwords, tokens) or private hostnames, IPs, home paths or people's names anywhere in the repo (`go run ./cmd/leakcheck`, docs/process/public-split.md).
+- Do not write secrets (CD keys, passwords, tokens) or private hostnames, IPs, home paths or people's names anywhere in the repo (`go run ./cmd/leakcheck -mode fail`, the full scan merge uses, docs/process/public-split.md).
 - This is an offline tool. Do not add anything that talks to Battle.net.
 
 ## Build flexibility
