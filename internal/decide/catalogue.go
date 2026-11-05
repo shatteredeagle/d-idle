@@ -14,8 +14,9 @@ var shippedCatalogue []byte
 // CatalogueVersion is the newest catalogue format and content version this build reads. Version 2 added the held,
 // clvl, retreats, tripgold and packused fields and the answers "fight" and "leave" of t0.retreat.drink. Version 3 added
 // the point-specific bands drinklife, lifeengage and mercgold (Field.From), the champbonus field and dropped packdanger
-// from t0.retreat.drink, so that defaults equal the legacy knobs inside every band.
-const CatalogueVersion = 3
+// from t0.retreat.drink, so that defaults equal the legacy knobs inside every band. Version 4 replaced levelgap by merc in
+// the key of t0.area.toohard (the tower floor depends on a living merc, no floor reads the gap).
+const CatalogueVersion = 4
 
 // Risk classes (spec 5.1).
 const (
