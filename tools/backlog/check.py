@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Read-only checker for backlog/tasks (stage 1; replaces no existing check yet).
 
-Rules (ADR 0015 items 10 and 11):
-  - at most 12 tasks that are In Progress, Proposed or Deferred and lack the `parked` label
-  - each of those has exactly one goal label G-A..G-F
+Rules (ADR 0015 items 10 and 11; the open-card cap of 12 was removed by ADR 0016 / grill 0005, the WIP limit lives in the process, not here):
+  - each of those has exactly one goal label G-A..G-G
   - each task has an `owns` frontmatter key
   - card ids (the part of the title before the first colon) are unique
 Exit 0 when clean, 1 when there are findings. Standard library only.
@@ -13,8 +12,7 @@ import sys
 from pathlib import Path
 
 OPEN = {"Proposed", "Deferred", "In Progress"}
-GOALS = {f"G-{c}" for c in "ABCDEF"}
-CAP = 12
+GOALS = {f"G-{c}" for c in "ABCDEFG"}
 
 
 def parse(path):
@@ -39,7 +37,7 @@ def parse(path):
 
 
 def check(tasks_dir):
-    findings, open_n, seen = [], 0, {}
+    findings, seen = [], {}
     files = sorted(Path(tasks_dir).glob("task-*.md"))
     if not files:
         return [f"{tasks_dir}: no task files"]
@@ -56,12 +54,9 @@ def check(tasks_dir):
         if "owns" not in fm and "owns" not in fm["_lists"]:
             findings.append(f"{f.name}: no owns key")
         if fm.get("status") in OPEN and "parked" not in labels:
-            open_n += 1
             n = len(labels & GOALS)
             if n != 1:
                 findings.append(f"{f.name}: {card} has {n} goal labels, want exactly 1")
-    if open_n > CAP:
-        findings.append(f"{open_n} open non-parked tasks, cap is {CAP}")
     return findings
 
 

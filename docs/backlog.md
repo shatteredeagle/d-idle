@@ -7,7 +7,7 @@
 - `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels G-A..G-F (goals of ADR 0015), `parked`, `upstream`, `soak`; `auto_commit: false`. V
 - `backlog/tasks/task-N - <slug>.md`: one file per card, markdown with YAML frontmatter. V
 - `tools/backlog/openspec_to_backlog.py`: the one-shot copier (dry run by default, `--apply`, `--force`; idempotent, keeps a card's TASK number). Re-running without `--force` skips cards that already have a file, so CLI edits are not overwritten.
-- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker, not wired into CI yet. It checks: at most 12 non-parked tasks in Proposed/Deferred/In Progress, exactly one G-A..G-F label on each of those, an `owns` key on every task, unique card ids in titles. Result on the 17 migrated tasks: 0 findings. V
+- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker, not wired into CI yet. It checks: exactly one G-A..G-G label (no cap on open cards since grill 0005) on each of those, an `owns` key on every task, unique card ids in titles. Result on the 17 migrated tasks: 0 findings. V
 
 ## Conventions
 

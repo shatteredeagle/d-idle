@@ -404,3 +404,61 @@ A resistance-reduction stat, for example Cold Mastery's stat 335. It is subtract
 
 **synergy**:
 A bonus to one skill's damage (or duration, for Frozen Armor) per base point spent in other named skills; the feeding skills are listed in Skills.txt columns such as EDmgSymPerCalc. Synergies read base points (**blvl**) only, never gear bonuses. `docs/research/sk-passives-trace.md`.
+
+### Automation ladder
+
+Added 2026-11-05 on the user's go (brief of the coordinator) from the grill 0005 outcome (`docs/grills/0005-automation-ladder/outcome.md`, ADR 0016).
+
+**Automation tier**:
+one of six hero capabilities, T0 Order-taker to T5 Farmer, unlocked in order. Tiers are capabilities; acts are content. _Avoid_: "level".
+
+**Decision point**:
+a named situation in the catalogue where the hero may ask, with fixed answers, a risk class, context fields and a default.
+
+**Learn by doing**:
+teaching a rule by answering the same way in the same context N times in a row (2, 3 or 5 by risk). Deterministic count. _Avoid_: "training", "ML".
+
+**Context key**:
+the decision point plus the banded values of its context fields; two situations with the same key count as the same decision.
+
+**Thought**:
+one line in the Thoughts feed. A question thought has answer buttons and fades when not answered.
+
+**Thoughts feed**:
+the single stream of questions, idle dialogue, story and incidents. Replaces the question card.
+
+**Journal**:
+the permanent history of the Thoughts feed.
+
+**Needs-input**:
+a question open in the Thoughts feed. The hero does not wait for it (ADR 0016 reversed the earlier "waits safe in town"). _Not to be confused with_: incident; the old log line `leveling: blocked: needs input`.
+
+**Incident**:
+a failure the hero could not resolve, reported in plain language.
+
+**Uptime**:
+the share of time spent making progress; deaths, recovery and town stalls lower it.
+
+**Altar**:
+the in-game object that takes sacrifices, a custom d2d object on the private fork. _Avoid_: "forge" (the git host; also the Hellforge).
+
+**Sacrifice**:
+spending an item at the altar to raise a tier's quality. _Not to be confused with_: selling to a vendor; the Paladin skill Sacrifice.
+
+**Worth rule**:
+the one data table that values every sacrificed item, following the Horadric Cube ratios.
+
+**Rebirth**:
+a hardcore death: the character resets, the profile keeps rules and quality (first pass).
+
+**Order**:
+a task the player gives the hero. The only manual control. _Avoid_: "command" (the d2d socket has commands).
+
+**New hero / resume**:
+a new hero starts at clvl 1; an existing hero can be resumed any time. _Avoid_: "run" here; it means a boss run or a measured run.
+
+**Answer profile**:
+a scripted style of answering used in tests; known profiles and holdouts generated from a seed.
+
+**Potential tweaks**:
+the list in ADR 0016 of set-aside ideas, opened only if the user says the game is not fun.
