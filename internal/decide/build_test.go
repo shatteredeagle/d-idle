@@ -36,7 +36,7 @@ func TestContextKey(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	want := "t0.retreat.drink|act=1,diff=normal,hc=hardcore,held=none,kit=THIN,life=35-55,packdanger=1"
+	want := "t0.retreat.drink|act=1,champbonus=none,diff=normal,drinklife=26-49,hc=hardcore,held=none,kit=THIN"
 	if ctx.Key != want {
 		t.Fatalf("key = %s", ctx.Key)
 	}
@@ -44,8 +44,8 @@ func TestContextKey(t *testing.T) {
 	if err != nil || back.Plain() != ctx.Plain() {
 		t.Fatalf("parse: %v %v", back, err)
 	}
-	// raw life 41 and 54 share the key (bands, never raw values)
-	o2 := o.with(nil, map[string]float64{"life": 54})
+	// raw life 26 and 49 share the key (bands, never raw values)
+	o2 := o.with(nil, map[string]float64{"life": 49})
 	if c2, _ := c.Build("t0.retreat.drink", o2, 1, nil); c2.Key != want {
 		t.Fatal("same band must give the same key")
 	}
@@ -90,14 +90,14 @@ func TestUrgencyStageHook(t *testing.T) {
 	o := baseObs(c, "sorceress")
 	delete(o.Cat, "urgency")
 	s1, err := c.Build("t0.retreat.drink", o, 1, nil)
-	if err != nil || s1.Fields["life"] == "" || s1.Fields["urgency"] != "" {
+	if err != nil || s1.Fields["drinklife"] == "" || s1.Fields["urgency"] != "" {
 		t.Fatalf("stage 1 keys on life: %v %v", s1, err)
 	}
 	if _, err := c.Build("t0.retreat.drink", o, 2, nil); err == nil || !strings.Contains(err.Error(), "urgency") {
 		t.Fatalf("stage 2 without a provider: %v", err)
 	}
 	s2, err := c.Build("t0.retreat.drink", o, 2, stubUrgency{"urgent"})
-	if err != nil || s2.Fields["urgency"] != "urgent" || s2.Fields["life"] != "" {
+	if err != nil || s2.Fields["urgency"] != "urgent" || s2.Fields["drinklife"] != "" {
 		t.Fatalf("stage 2: %v %v", s2, err)
 	}
 	if _, err := c.Build("t0.retreat.drink", o, 2, stubUrgency{"frantic"}); err == nil {
@@ -160,7 +160,7 @@ func TestCatalogueRejectsBadData(t *testing.T) {
 		"unknown risk class":    strings.Replace(good, `"class": "safe"`, `"class": "meh"`, 1),
 		"unknown field":         strings.Replace(good, `"contextKeys": ["tripgold", "belt"]`, `"contextKeys": ["tripgold", "mood"]`, 1),
 		"default not an answer": strings.Replace(good, `"answer": "repair"`, `"answer": "x"`, 1),
-		"newer catalogue":       strings.Replace(good, `"version": 2,`, `"version": 3,`, 1),
+		"newer catalogue":       strings.Replace(good, `"version": 3,`, `"version": 4,`, 1),
 	} {
 		if bad == good {
 			t.Fatalf("%s: test edit did not apply", name)
