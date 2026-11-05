@@ -1,5 +1,5 @@
 # Compose Manager stack "backlog-board" (project name below is the plugin's sanitised form).
-# Variant A: bridge network, host port 6420. See docs/process/backlog-board-NAS.md.
+# Variant A: bridge network, host port 6420. See docs/process/backlog-board-nas.md.
 name: backlog_board
 services:
   backlog-board:
