@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 2 multi-seed soak run 20261105-1607-g2d: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-1607-g2d.md).
 - d2bot gains -ladder, -ladder-profile and -watch (all off by default): the decision ladder and the player screen on the real bot
 - ladder T0 slice A3: the four T0 decision points are wired behind ladder.enabled (off by default; legacy behaviour unchanged)
 - watch screen restyled in the original d.idle dashboard look (same tokens, cards, theme toggle, phone tabs)

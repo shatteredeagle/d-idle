@@ -503,6 +503,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-20 watch-screen: built offline on the simulated runner (internal/watch, d2dview -watch); not verified live
 - TASK-21 phase A3: four T0 points (t0.retreat.drink, t0.unique.fight, t0.area.toohard, t2.mercenary) wired behind ladder.enabled (default off), golden grids and call-site tests, drill fight hook (offline only)
 - integ: d2bot -ladder -watch connects the real bot to the watch screen (orders to farm_area goals, uptime from goal events); flags default off; offline tested, live drill command in docs/probes/t0drill.md
+- GATE2: Gate 2 multi-seed run 20261105-1607-g2d (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261105-1607-g2d.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
