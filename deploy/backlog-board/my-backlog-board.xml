@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>backlog-board</Name>
+  <Repository>backlog-board:1.55.3</Repository>
+  <Registry/>
+  <Network>br0</Network>
+  <!-- Replace <br0-ip> with a free br0 address (check docker inspect + a grep of templates-user, not ping). -->
+  <MyIP><br0-ip></MyIP>
+  <MyMAC/>
+  <Shell>sh</Shell>
+  <Privileged>false</Privileged>
+  <Support>https://github.com/shatteredeagle/d-idle</Support>
+  <Project>https://github.com/MrLesk/Backlog.md</Project>
+  <ReadMe/>
+  <Overview>Read-only web board of the public repo's Backlog.md tasks. Mirrors the repo (shallow, credential-free, every 5 minutes) and serves it with Backlog.md; nginx inside the container refuses everything but GET and HEAD. Reached through Nginx Proxy Manager and Authelia.</Overview>
+  <Category>Productivity: Tools:</Category>
+  <WebUI>http://[IP]:6420/</WebUI>
+  <TemplateURL/>
+  <Icon/>
+  <ExtraParams>--restart=unless-stopped --user 99:100 --read-only --tmpfs /tmp:size=64m,mode=1777 --cap-drop=ALL --security-opt=no-new-privileges:true --memory=512m --pids-limit=128</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText/>
+  <DonateLink/>
+  <Requires>Built locally (backlog-board:1.55.3), so "check for updates" shows "not available". Needs its own br0 IP because NPM cannot reach Tower's own IP. See deploy/backlog-board/deploy.sh.</Requires>
+  <Config Name="Board port" Target="6420" Default="6420" Mode="tcp" Description="Listener inside the container (br0 IP, so no host mapping)" Type="Port" Display="always" Required="false" Mask="false">6420</Config>
+  <Config Name="Data" Target="/data" Default="/mnt/user/appdata/backlog-board/data" Mode="rw" Description="Repo mirror" Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/backlog-board/data</Config>
+  <Config Name="Repo URL" Target="REPO_URL" Default="https://github.com/shatteredeagle/d-idle" Mode="" Description="" Type="Variable" Display="advanced" Required="true" Mask="false">https://github.com/shatteredeagle/d-idle</Config>
+  <Config Name="Branch" Target="BRANCH" Default="main" Mode="" Description="" Type="Variable" Display="advanced" Required="true" Mask="false">main</Config>
+  <Config Name="Sync interval" Target="SYNC_INTERVAL" Default="300" Mode="" Description="Seconds between fetches" Type="Variable" Display="advanced" Required="false" Mask="false">300</Config>
+  <Config Name="TZ" Target="TZ" Default="" Mode="" Description="" Type="Variable" Display="advanced" Required="false" Mask="false">America/New_York</Config>
+  <TailscaleStateDir/>
+</Container>

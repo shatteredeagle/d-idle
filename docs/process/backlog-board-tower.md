@@ -1,6 +1,6 @@
 # Backlog.md web board on the NAS (read-only mirror)
 
-> status: prepared, NOT deployed. Files: `deploy/backlog-board/`. Tags: V verified (how), S secondary, U unverified.
+> status: DEPLOYED 2026-11-05 as an NAS Docker-tab template (variant B: own br0 address behind Nginx Proxy Manager and Authelia). Files: `deploy/backlog-board/`. The Compose Manager sections below are SUPERSEDED. Tags: V verified (how), S secondary, U unverified.
 
 The board is for viewing. Task edits stay in git through agents; nothing written through the web UI survives.
 
@@ -12,43 +12,34 @@ The board is for viewing. Task edits stay in git through agents; nothing written
 - Hardening: unprivileged user (NAS nobody:users), read-only root filesystem, `cap_drop ALL`, `no-new-privileges`, 512 MB, 128 pids, no privileged flags. The binary is the pinned release `v1.55.3`, sha256 checked at build (V: the digest GitHub shows and a local `sha256sum` agree).
 
 ## Files
-- `deploy/backlog-board/Dockerfile`, `entrypoint.sh`, `nginx.conf`
-- `docker-compose.yml`: variant A, bridge network, port 6420 published (6420 is unused by the running containers, V: container list on 2026-11-05).
-- `docker-compose.br0.yml`: variant B, own address on br0 for Nginx Proxy Manager.
+- `deploy/backlog-board/Dockerfile`, `entrypoint.sh`, `nginx.conf`: the image (built on the NAS, tag `backlog-board:1.55.3`).
+- `deploy/backlog-board/my-backlog-board.xml`: the NAS template (network br0, `<br0-ip>` placeholder, hardening flags in Extra Parameters, 512 MB, appdata mount, image healthcheck).
+- `deploy/backlog-board/deploy.sh`: build + template + `tpl-apply.sh`; idempotent; `BOARD_IP=<br0-ip> deploy/backlog-board/deploy.sh` (host from `tools/env.sh`).
+- `docker-compose.yml`, `docker-compose.br0.yml`: SUPERSEDED, kept for reference only. Do not start them: that would create a duplicate container.
 
-## What the NAS has today (read-only findings, 2026-11-05)
-- Compose Manager plugin is installed (V: plugin list). Most apps were converted to Docker-tab templates on 2026-10-15; Immich is the compose example (S: operator notes). Compose Manager is fine for this stack because it builds from a Dockerfile.
-- Appdata lives under `/mnt/user/appdata/<app>`; per-app bridge networks exist. NPM, Authelia and Homepage run on `br0` with their own addresses; NPM cannot reach the NAS's own address or bridge addresses (S: operator notes), which is why variant B exists.
-- Names: `*.<domain>` resolves to NPM; `<x>.lan.<domain>` records point at the target host itself (S). Authelia is the central login (`one_factor`, default deny).
+## Accepted method (deployed 2026-11-05)
+The NAS runs its containers as Docker-tab templates (`my-<name>.xml` in the dockerMan user templates, applied with `/mnt/user/appdata/_NAS/tpl-apply.sh NAME`), not as Compose Manager stacks. Locally built images are built with `docker build`, then `tpl-apply.sh`. So:
+1. Pick a free br0 address: list the addresses of running containers (`docker inspect`) and grep the template files; do not ping. Take the next one above the highest in use and below the DHCP pool. NPM runs on br0 and cannot reach the NAS's own address or bridge addresses, so this app needs its own br0 address (V: the other proxied apps work this way).
+2. `BOARD_IP=<br0-ip> deploy/backlog-board/deploy.sh`. V: ran twice on 2026-11-05; the container went healthy in under a minute, the image build passed the Backlog.md checksum, limits as templated (read-only root, cap_drop ALL, 512 MB, 128 pids, user 99:100).
+3. Folder View: add `backlog-board` to the "Infra" folder in `/boot/config/plugins/folder.view/docker.json` (back the file up first; append to that folder's `containers` list with `jq`). V.
+4. DNS (Technitium, via the `labapi` helper): A record `backlog.lan.<domain>` -> `<br0-ip>`, `overwrite=true`. This is the only place the address is written. V: `dig` against the DNS server returns it.
+5. NPM (via `labapi npm`): proxy host `backlog.<domain>` -> `http://backlog.lan.<domain>:6420`, own Let's Encrypt certificate (HTTP-01, like `home.<domain>`), SSL forced, HTTP/2, block exploits, websockets on, no access list; Advanced config = the same LAN-only include plus Authelia forward-auth block as the Homepage host (the `AUTHELIA` string in the portal repo's `deploy/npm-hosts.py`). V: the host's config was read back.
+6. Authelia: add `- domain: backlog.<domain>` / `policy: one_factor` to `access_control.rules` in the live `configuration.yml`; back it up first, run `authelia validate-config --config <new file>` inside the container, then replace the file and restart only that container. V: validation passed; the auth page and `home.<domain>` answered as before afterwards. The portal repo's copy of the file was synced to the live one.
+7. Homepage tile: not added (the portal repo's Homepage files had uncommitted work of other sessions at deploy time). Optional follow-up.
 
-## Choose a variant
-- Direct LAN use only (simplest): variant A, then open `http://<nas-host>.lan.<domain>:6420`. No login: acceptable on the LAN only, never forward this port.
-- Behind NPM + Authelia (recommended, the board has no login of its own): variant B.
-
-## Steps in the NAS web UI (variant A: 9 steps; B adds 6)
-1. Docker tab, Compose section (Compose Manager): "Add New Stack", name `backlog-board`.
-2. Edit the stack's compose file: paste `deploy/backlog-board/docker-compose.yml`, save.
-3. Settings of the stack: autostart on.
-4. "Compose Up" (builds the image from the public repo, a few minutes). Watch the log in the popup.
-5. Docker tab: `backlog-board` is listed, state healthy after about 90 s. Add it to the Folder View folder "Infra".
-6. Logs of the container should show `serving <commit>` and `Backlog.md browser interface running`.
-7. Verify: `curl -fsS http://<nas-host>.lan.<domain>:6420/api/tasks | grep -o '"id":"TASK-[0-9]*"' | sort -u | wc -l` prints 21 or more.
-8. Open `http://<nas-host>.lan.<domain>:6420`: the board loads. Drag a card: the move is refused (403) and nothing changes.
-9. Mirror check: after a push to main, the task shows up within 5 minutes (or restart the container).
-
-Variant B extras (NPM + DNS + Authelia):
-10. Replace the compose file with `docker-compose.br0.yml` and set `ipv4_address` to a free br0 address (check the Docker tab for taken ones; UniFi's DHCP pool starts at .150). Compose Up again.
-11. Technitium (web console): zone `lan.<domain>`, add A record `backlog` pointing at that address. This is the only place the address is written; everything else uses the name.
-12. NPM: new proxy host `backlog.<domain>` (the wildcard already resolves to NPM), forward to `http://backlog.lan.<domain>:6420`, LAN-only access list like the other hosts, certificate as for `home.<domain>`. Websockets on.
-13. Authelia: in `configuration.yml` access_control add a rule for domain `backlog.<domain>` with `one_factor`; paste the forward-auth snippet in the proxy host's Advanced tab, the same one the Homepage host uses. Restart Authelia.
-14. Homepage (optional): add a tile pointing at `https://backlog.<domain>` in the services file.
-15. Verify through the proxy: the page redirects to the Authelia login, then loads the board.
+Verification of 2026-11-05 (V):
+- LAN: `curl -fsS http://<br0-ip>:6420/api/tasks | grep -o '"id":"TASK-[0-9]*"' | sort -u | wc -l` printed 21.
+- Write refused: a POST to `/api/tasks` returned 403.
+- Via the proxy: `https://backlog.<domain>/` answers 302 to the Authelia login with `rd=` back to the board. The step after the login (the board loading behind Authelia) was not exercised: it needs the user's own login (U).
 
 ## Update the pinned version
-Edit `BACKLOG_VERSION` and `BACKLOG_SHA256` in the Dockerfile (get the digest from the release page, check with `sha256sum`), plus the `image:` tag in the compose file; merge; in Compose Manager use "Compose Up" with rebuild (or "Update Stack"). Re-check that `backlog browser --help` still has no host flag and that nginx still blocks writes (step 8).
+Edit `BACKLOG_VERSION` and `BACKLOG_SHA256` in the Dockerfile (get the digest from the release page, check with `sha256sum`) and the image tag in `my-backlog-board.xml` and `deploy.sh`; merge; run `deploy.sh`. Re-check that `backlog browser --help` still has no host flag and that a POST still returns 403.
+
+## Roll back a version
+Re-run `deploy.sh` from the previous commit (it rebuilds the old pinned tag and recreates the container). The data folder is only a disposable mirror.
 
 ## Remove completely
-Compose Manager: "Compose Down" then delete the stack; Docker tab: delete the image `backlog-board:1.55.3`; delete `/mnt/user/appdata/backlog-board`; remove the Folder View entry, the NPM host, the Authelia rule, the DNS record and the Homepage tile (variant B). Nothing else on the NAS is touched.
+`docker rm -f backlog-board`; delete the template `my-backlog-board.xml` from the dockerMan user templates and the image `backlog-board:1.55.3`; delete `/mnt/user/appdata/backlog-board`; remove `backlog-board` from the Folder View entry, the NPM proxy host and its certificate, the Authelia rule (then validate and restart Authelia), the DNS record (`labapi technitium zones/records/delete`) and any Homepage tile. Nothing else on the NAS is touched.
 
 ## Risks
 - No authentication in Backlog.md: variant A is LAN-only by never forwarding the port; for anything beyond that use variant B behind Authelia.
