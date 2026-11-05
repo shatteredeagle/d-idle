@@ -1,6 +1,6 @@
 # PR body: a monster blow takes the flat reduction before the resistance
 
-> status: DRAFT body for a pull request to psi29a/d2decomped (job nsprep, 2026-11-04). Fork branch `local/noshield-reduction-order`, head `fe434d09`, ONE commit on `3b8bb7df` (the head of `local/es-absorb-order-r3`, upstream PR #198, Energy Shield). It STACKS on #198: it uses #198's `reduce_fine_signed`, `StruckBlow::parts` and `Taken::element_raw`, so it is opened only after #198 merges, then rebased onto upstream main (check `git merge-base --is-ancestor 3b8bb7df upstream/main`, rerun `pr_guard` and the tests). Private fork remote only. NOT posted, nothing pushed to GitHub, no PR opened. Tags: V = run (how stated), S = read without a run, U = unverified. The follow-up named in `docs/research/pr-esabsorb-body.md` (limit K1) and `docs/research/esverify/verdict2.md`. An independent verification of this branch has not been done.
+> status: DRAFT body for a pull request to psi29a/d2decomped (job nsprep, 2026-11-04; retargeted 2026-11-05). Fork branch `local/noshield-reduction-order-r2`, ONE commit on upstream main `4b402827` (the merge of #198, Energy Shield, merged upstream 2026-11-05 05:44 EST as a merge commit, so `3b8bb7df` and `8f9dd904` are in its history). It builds on #198 (merged): it uses #198's `reduce_fine_signed`, `StruckBlow::parts` and `Taken::element_raw`. The earlier branch `local/noshield-reduction-order` (head `fe434d09`) was the same change on `3b8bb7df`; the r2 commit is its cherry-pick, applied without a conflict. Private fork remote only. NOT posted, nothing pushed to GitHub, no PR opened. Tags: V = run (how stated), S = read without a run, U = unverified. The follow-up named in `docs/research/pr-esabsorb-body.md` (limit K1) and `docs/research/esverify/verdict2.md`. The counts below were measured on `fe434d09`; the r2 retarget is the same diff on a newer base and has NOT been re-measured with the native differential. An independent verification of this branch has not been done.
 >
 > Title: `Fidelity fix against game.exe 1.14d: the flat reduction comes off a monster blow before the resistance`
 
@@ -8,7 +8,7 @@
 
 `rules::monster_blow` resisted each element and then took the magic damage reduction (mdr) off, clamping each part at 0. game.exe's resistance pass (`FUN_0057bf80`, per field of the damage record) does it the other way round: for a field above 0 the flat reduction comes off first (physical: stat 34 then the percent; fire, lightning, cold, magic: the mdr), then the resistance on what is still above 0, and the result is stored even under 0. `FUN_0057c1e0` sums the stored fields into the record total (+0x4c) and the life update ignores a total that is not above 0 (`0057c852`): a field left under the reduction takes damage off the other fields of the record, and the total is clamped once.
 
-Energy Shield (#198) already does this for the fields the shield takes from; this commit gives a blow with no shield (and the fields a shield leaves alone) the same arithmetic. One claim, one function.
+Energy Shield (#198, merged) already does this for the fields the shield takes from; this commit gives a blow with no shield (and the fields a shield leaves alone) the same arithmetic. One claim, one function.
 
 Example (V run, game.exe's own code natively, no shield): 100 fire, 50 % resistance, mdr 10 deals **45** on game.exe, 40 on d2d before this commit; at 75 % 22.5 against 15; at -100 % 180 against 190. Fire 5 plus cold 100, mdr 6: game.exe 93 (fire is -1 and is summed), d2d 94. Physical 10 under a flat 15 plus fire 50: 45 against 50.
 
@@ -32,7 +32,7 @@ The frame's element total is now the sum of 256ths rather than of whole-point pa
 
 ## Counts before and after (V run, the worker host)
 
-The esverify harness (`tools/emu/esv_*`, `esv2_*`; the game side is game.exe's own `FUN_0057c6c0` / `FUN_0057c1e0` / `FUN_0057bf80` and, with a shield, `FUN_005ca6c0`) with its two probes: "before" is `3b8bb7df` (#198), "after" is `fe434d09`, same cases, same game output. Seeds 31, 32 and 33 of the first generator at 20,000 frames each (new seeds; every earlier job used other ones), the second generator's edge grid (all six damage types, resistance -100 / 0 / 50 / 75 / 100, rolls 1..632, flat and mdr in (0,0) (15,0) (0,10) (15,10) (3,6) (40,40), levels 1 / 40 / 99, mana 0 / 1/256 / 300 points, two-field records, poison) plus 20,000 random frames, and the 17 hand cases. Life is compared in whole points and in 256ths; mana the same.
+The esverify harness (`tools/emu/esv_*`, `esv2_*`; the game side is game.exe's own `FUN_0057c6c0` / `FUN_0057c1e0` / `FUN_0057bf80` and, with a shield, `FUN_005ca6c0`) with its two probes: "before" is `3b8bb7df` (#198, now on upstream main), "after" is `fe434d09`, same cases, same game output. Seeds 31, 32 and 33 of the first generator at 20,000 frames each (new seeds; every earlier job used other ones), the second generator's edge grid (all six damage types, resistance -100 / 0 / 50 / 75 / 100, rolls 1..632, flat and mdr in (0,0) (15,0) (0,10) (15,10) (3,6) (40,40), levels 1 / 40 / 99, mana 0 / 1/256 / 300 points, two-field records, poison) plus 20,000 random frames, and the 17 hand cases. Life is compared in whole points and in 256ths; mana the same.
 
 | Frames | Cases | Before: life differs (pt / 256ths) | After |
 |---|---|---|---|
@@ -50,13 +50,13 @@ Mana differs on none of the shield cases, before or after (also the poison ones:
 
 This is a re-measurement on the same machinery, not a new claim about shield arithmetic: with a shield up the result is the same as #198's wherever #198 was right (`test_energy_shield`, 2,400 cases, unchanged and passing).
 
-## Tests (V run, the worker host, Release, g++, `-DD2D_WERROR=ON` (the default), head `fe434d09`)
+## Tests (V run, the worker host, Release, g++, `-DD2D_WERROR=ON`, head `ca7872ab` on upstream main `4b402827`)
 
 `tests/test_combat.cpp` gets a block that needs no game data: 100 fire at 50 % with mdr 10 is 45; 75 % is 22.5; -100 % is 180; fire 5 plus cold 100 with mdr 6 is 93 with the fire field kept at -1 and `sum` 93 x 256; the same with mdr 0 is 105 (zero-flat control); fields all under the reduction give 0 with `sum` -5 x 256; physical 10 under a flat 15 plus fire 50 is 45, and 60 without the flat.
 
 Two existing assertions encoded the old order and game.exe contradicts them (V run: 40 x 25 % less 2 versus (40 - 2) x 25 %), so they changed: the "monster blows" block of `test_combat.cpp` (`taken.damage == 76 + 8` and `taken.elemental == 8`: now the physical 76.x plus 9.5, `elemental == 9`) and the sure-hit loop of the same file (`damage == 76 + 8`: now 85 or 86, the physical's 256ths decide). `tests/game/test_energy_shield.cpp` needed no change. `tests/game/test_game.cpp` (the Bone Armor cases) needed none either; `settle_blow` keeps the old arithmetic for a blow without `sum`.
 
-`test_combat`, `test_rules`, `test_game_rules`, `test_game`, `test_monsters`, `test_skills`, `test_monster_missile` and `test_energy_shield` return 0 (V run).
+`test_combat`, `test_rules`, `test_game_rules`, `test_game`, `test_monsters`, `test_skills`, `test_monster_missile` and `test_energy_shield` return 0 on the retargeted head (V run) except `test_game` and `test_energy_shield`, which exit 77 (SKIP: no game data on the worker host at the time of the retarget; they passed with data on `fe434d09`; rerun with data before opening).
 
 ## Callers and what else moves
 
@@ -65,11 +65,11 @@ Two existing assertions encoded the old order and game.exe contradicts them (V r
 - Two rows of one element type in one blow are now one field (resisted once, as the record has one field a type); before they were resisted per row. No Monsters.txt row has two of one type that fire in the same mode (U: not checked against every row).
 - The monster-only fields (+0x38, +0x3c, +0x40) are not modelled, as in #198.
 
-## Checks (V, the worker host, head `fe434d09`)
+## Checks (V, the worker host, head `ca7872ab`)
 
 - Author and committer are the numeric noreply identity; the body is 3 lines and ends with `Agent: Claude Code`; no `-x` line.
-- `python3 tools/pr_guard.py 3b8bb7df HEAD`: 0 FAIL, 0 WARN.
-- `python3 tools/presubmit.py --quick --base 3b8bb7df`: 0 FAIL, 4 WARN: unit kinds (answered above), docs-sync (`docs/research/re/combat.md` is updated in the commit), build and gcc skipped by `--quick` (the build was done by hand, above).
+- `python3 tools/pr_guard.py 4b402827 HEAD`: 0 FAIL, 0 WARN.
+- `python3 tools/presubmit.py --quick --base 3b8bb7df` (run on `fe434d09`, not re-run on r2): 0 FAIL, 4 WARN: unit kinds (answered above), docs-sync (`docs/research/re/combat.md` is updated in the commit), build and gcc skipped by `--quick` (the build was done by hand, above).
 - clang-tidy with the repo's `.clang-tidy` on `tests/test_combat.cpp` (no finding) and `components/game/fight/states.cpp` (no finding in a touched file; the pre-existing `readability-identifier-length` errors in untouched headers remain, as in the second verification).
 
 ## Not re-run
