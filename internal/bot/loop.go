@@ -805,6 +805,13 @@ func (r *Runner) handleSafety(ctx context.Context, a SafetyAction) {
 		r.loop.failures++
 		return
 	}
+	if a == SafetyDrinkLife || a == SafetyDrinkRejuv {
+		// Proof line for live runs: the guard drinks in every state, also between fights (g2c seed 13 death, clearing
+		// state dropped the drink while the nav stuck ladder walked).
+		if s := r.latest(); s != nil && s.Player != nil {
+			r.e.Log.Info(fmt.Sprintf("guard: drank %s at life %d%% (state=%s)", potionName(a), s.Player.Life*100/max(s.Player.MaxLife, 1), r.State()))
+		}
+	}
 	switch a {
 	case SafetyTownPortal:
 		r.loop.trip = &trip{plan: r.fullChores("emergency town portal"), returnTo: area, stage: 0, emergency: true}
@@ -909,7 +916,7 @@ func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, 
 			if (a == SafetyTownPortal || a == SafetyCrowdAbandon) && r.noTP.Load() {
 				a = SafetyNone // Ancients: a portal would reset the fight (Constraints.NoTownPortal)
 			}
-			if a != SafetyNone && (st != StateClearing || a == SafetyTownPortal || a == SafetyChicken || a == SafetyCrowdAbandon) && r.safetyDue(a, now) {
+			if a != SafetyNone && (st != StateClearing || a == SafetyTownPortal || a == SafetyChicken || a == SafetyCrowdAbandon || a == SafetyDrinkLife || a == SafetyDrinkRejuv) && r.safetyDue(a, now) {
 				if rt := r.e.Tune.Bot.ReactionMs; rt > 0 {
 					r.e.Clock.Sleep(time.Duration(rt) * time.Millisecond)
 				}
@@ -1178,4 +1185,11 @@ func (r *Runner) noteCrossing(target int) {
 		r.skipAreaLocked(target, borderLoopSkip, "border-loop")
 	}
 	r.obMu.Unlock()
+}
+
+func potionName(a SafetyAction) string {
+	if a == SafetyDrinkRejuv {
+		return "rejuvenation"
+	}
+	return "healing"
 }

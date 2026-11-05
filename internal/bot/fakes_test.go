@@ -44,6 +44,7 @@ type world struct {
 	x, y       int
 	life, maxL int
 	level      int
+	class      d2.Class // 0 = Sorceress (the Amazon value is never used by a test)
 	exp        uint32
 	mode       int
 	diff       d2.Difficulty
@@ -108,7 +109,7 @@ func (w *world) snapshot() (*d2.Snapshot, error) {
 	if w.state != d2.StateInGame {
 		return s, nil
 	}
-	s.Player = &d2.Player{ID: 1, Name: "Testy", Class: d2.Sorceress, Area: w.area, X: w.x, Y: w.y, Life: w.life, MaxLife: w.maxL,
+	s.Player = &d2.Player{ID: 1, Name: "Testy", Class: w.playerClass(), Area: w.area, X: w.x, Y: w.y, Life: w.life, MaxLife: w.maxL,
 		Mana: 50, MaxMana: 50, Level: w.level, Exp: w.exp, Mode: w.mode, Difficulty: w.diff, Act: w.act, StatPoints: w.statPts, SkillPoints: w.skillPts, Gold: w.gold0, StashGold: w.stash0,
 		Resist: d2.Resists{Fire: 75, Cold: 75, Lightning: 75, Poison: 75}}
 	s.Inventory = &d2.Inventory{Items: append([]d2.Unit(nil), w.items...)}
@@ -528,3 +529,10 @@ func (t *fakeTown) Rebuy(ctx context.Context, budget int) (RebuyReport, error) {
 	return RebuyReport{}, nil
 }
 func (t *fakeTown) NeedsTrip(*d2.Snapshot) (bool, string) { return t.needs, t.needsWhy }
+
+func (w *world) playerClass() d2.Class {
+	if w.class != 0 {
+		return w.class
+	}
+	return d2.Sorceress
+}
