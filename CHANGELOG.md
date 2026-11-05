@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- watch screen restyled in the original d.idle dashboard look (same tokens, cards, theme toggle, phone tabs)
 - d2dview -watch: player screen (Thoughts feed, orders, uptime, rules, journal) on a simulated runner; writes only on a separate answer route
 - decision-point store: catalogue and profile file version 4; t0.area.toohard drops the level gap and reads the merc state; the last 72 default-parity splits are closed
 - decide catalogue v3 (drinklife, lifeengage, mercgold, champbonus; v2 files migrate); default parity 192 -> 72 band-interior splits
