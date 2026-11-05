@@ -108,7 +108,7 @@ The d2-sme agent (asked 2026-11-05, answering from memory, nothing looked up) ga
 | clvl | Area or target | Why (SME) |
 |---|---|---|
 | 1 to 10 | Blood Moor / Cold Plains, then Den of Evil | safe XP, first quest; not a rune source |
-| 10 to 18 | Cave, Burial Grounds, Crypt, Tower | Countess (Forgotten Tower) is the first reliable rune source in Normal; which tiers: unsure |
+| 10 to 18 | Cave, Burial Grounds, Crypt, Forgotten Tower | Countess (Forgotten Tower) is the first reliable rune source in Normal; which tiers: unsure |
 | 18 to 25 | Andariel, then Act 2 | move on with the story |
 | 25 to 35 | Normal Act 3 and 4, Mephisto, Countess repeats | Countess runs top out around Lem or Pul in Normal, Pul or Um rare (SME unsure) |
 | 35+ | Nightmare Pindleskin, Act 5 | real rune farming usually starts in Nightmare or Hell |
