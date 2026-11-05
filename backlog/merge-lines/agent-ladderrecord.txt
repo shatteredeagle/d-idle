@@ -1,0 +1,4 @@
+BACKLOG: ladderrecord: automation ladder decisions of 2026-11-05 recorded as a draft (docs/research/automation-ladder-record-proposal.md: decisions.md line, ADR 0016 text, glossary terms; docs/research/decision-point-store-spec.md); guard files untouched, user acceptance pending
+INDEX: research/automation-ladder-record-proposal.md: ready-to-accept record text for the automation ladder (index line, ADR 0016 draft, glossary)
+INDEX: research/decision-point-store-spec.md: spec for the learn-by-doing decision-point store (data model, event flow, T0 to T2 catalogue, tests)
+CHANGELOG: docs: automation ladder decisions of 2026-11-05 and the decision-point store spec (docs/research/automation-ladder.md)
