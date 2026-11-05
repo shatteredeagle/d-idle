@@ -156,8 +156,11 @@ type loopState struct {
 	stuckStage       int
 	inLadder         bool // escalate is running: a stall inside a rung is that rung failing, not a new ladder
 	ladderProgress   uint64
-	restarts         int // failsafe game restarts since the last real progress
-	goneRestarts     int // restarts after an unplanned game exit, same reset rule
+	rung3Cycles      int       // leave/re-enter cycles of rung 3 since the last real progress
+	rung3Since       time.Time // when the first of them started
+	ladderPauses     int       // failsafe pauses since the last real progress (the backoff exponent)
+	restarts         int       // failsafe game restarts since the last real progress
+	goneRestarts     int       // restarts after an unplanned game exit, same reset rule
 	goneProgress     uint64
 	restartTimes     []time.Time // unplanned restarts in the last hour
 	trip             *trip

@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -234,6 +233,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.difficultyBanMin | 60 | 60..600 | min | 600 | 3 | Minutes the bot stays in its difficulty after a switch to the next one did not happen. |
 | bot.savePointMin | 20 | 0..120 | min | 20 | 1 | Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off. |
 | bot.heapLimitMB | 4096 | 0..8192 | MB | 4096 | 1 | Go heap in use above which d2bot writes a heap profile and exits for a supervisor restart (a runaway allocation would otherwise end in the OOM killer); the GC gets a soft limit 25 percent above it. 0 is off. Normal runs use under 100 MB. |
+| bot.failsafeRung3Max | 6 | 0..50 | count | 6 | 1 | Leave-and-re-enter cycles of failsafe ladder rung 3 allowed without real progress (XP, kills, levels) before the ladder skips to the pause rung. 0 is unbounded. |
+| bot.failsafePauseMaxSec | 3600 | 300..1.44e+04 | s | 3600 | 1 | Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress. |
 | bot.mercRetryMin | 10 | 1..60 | min | 10 | 1 | Minutes between merc chore attempts; a failed hire or revive is not retried sooner. |
 | bot.mercHireMinGold | 400 | 0..2000 | gold | 400 | 1 | Gold in Act 2 town below which no hire is attempted. |
 | bot.mercReviveUnverified | 0 | 0..1 | bool | 0 | 3 | 1 lets the town visit click the revive dialog, which is UNVERIFIED live (docs/merc-farm.md). Off until a live probe. |
