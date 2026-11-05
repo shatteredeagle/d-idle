@@ -17,6 +17,12 @@ owns:
   - "internal/resource/recovery_test.go"
   - "internal/bot/broke.go"
   - "internal/bot/area_ban_test.go"
+  - "internal/town/shop.go"
+  - "internal/town/chores.go"
+  - "internal/town/town.go"
+  - "internal/town/healbelt_test.go"
+  - "internal/env/tuning_town.go"
+  - "docs/knobs.md"
 exclusive: []
 branch: "agent/fixbelt"
 agent: "fixbelt"
@@ -50,5 +56,7 @@ Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy
 - [x] #1 locate the window in the minute log
 - [x] #2 fix: low-kit override of the recovery cooldown
 - [x] #3 unit tests
+- [x] #5 Gate 2 g2b #1/#4: shop buys a healing potion when belt and pack hold none (Rejuvenation does not count, as in the BELT gate judge; judge unchanged); town.tripEmptyHPBelt (default 1) raises a trip when no healing potion is held and gold >= KitPotionGold, one log line when gold is short. Offline tested (internal/town/healbelt_test.go, Sorceress + Barbarian); not run live.
 - [ ] #4 live proof (Gate 1 soak)
+- [x] #5 fixcursor2 (G-C, Gate 2 g2b fix #3): DropCursor (internal/town/hand/drop.go) clicks up to town.dropTries (6) different cells beside the character, falls back to a free pack cell (ClearCursor), else ErrCursor + failsafe; log lines `cursor: dropped item= try= offset=`, `cursor: could not clear after N tries items=`; a launcher the class cannot use is not picked up without a pack cell to take it off (internal/loot/pickup.go takenOffAgain). Offline tests only (Sorceress + Barbarian); live proof pending
 <!-- AC:END -->

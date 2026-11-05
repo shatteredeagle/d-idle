@@ -233,7 +233,7 @@ func (t *Town) openPortal(ctx context.Context) (d2.Unit, error) {
 	}
 	var portal d2.Unit
 	_, found, err := t.h.Wait(ctx, 3*time.Second, func(s *d2.Snapshot) bool {
-		portal, ok = findObject(s, ObjPortal)
+		portal, ok = t.findPortal(s)
 		return ok && dist(portal.X, portal.Y, s.Player.X, s.Player.Y) < 25
 	})
 	if err != nil {
@@ -276,6 +276,21 @@ func (t *Town) enterPortal(ctx context.Context, portal d2.Unit) error {
 	return err
 }
 
+// findPortal is the nearest town portal object that BackToField has not dropped.
+func (t *Town) findPortal(s *d2.Snapshot) (d2.Unit, bool) {
+	if len(t.droppedPortals) == 0 {
+		return findObject(s, ObjPortal)
+	}
+	c := *s
+	c.Objects = nil
+	for _, o := range s.Objects {
+		if !t.droppedPortals[o.ID] {
+			c.Objects = append(c.Objects, o)
+		}
+	}
+	return findObject(&c, ObjPortal)
+}
+
 // ErrWrongLevel: the town portal led to another field level than the wanted one (it stands where the last town
 // portal was opened, not where the character died: LIVE G1 attempt 12, portal to Cold Plains, corpse in Monastery
 // Gate). The character stands in that level; the caller walks on with its route logic (waypoints, multi-hop).
@@ -304,9 +319,15 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 	if wait := time.Duration(t.tune().PortalSettle)*time.Millisecond - t.e.Clock.Now().Sub(t.arrived); !t.arrived.IsZero() && wait > 0 {
 		t.e.Clock.Sleep(wait)
 	}
-	// One retry of the portal before the waypoint and the long walk: a dropped click (d2dctl: "did not change the level")
-	// cost 14 wall seconds of walking and a roam over cleared ground (Gate 1 20261102, NOKILL B).
-	for attempt := 0; attempt < 2; attempt++ {
+	// A portal whose entry failed portalClickFails times is dropped (fixstaleportal, Gate 2 g2b: 43 clicks on one stale
+	// object id, then a 7-area walk). The next portal object, a fresh scroll portal, the waypoint and the walk follow.
+	limit := t.tune().PortalClickFails
+	if limit < 1 {
+		limit = 1
+	}
+	fails := map[uint32]int{}
+	t.droppedPortals = map[uint32]bool{}
+	for attempt := 0; attempt < 2*limit+2; attempt++ {
 		if attempt > 0 {
 			if s, err = t.current(); err != nil {
 				return err
@@ -315,17 +336,19 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 				break
 			}
 		}
-		portal, ok := findObject(s, ObjPortal)
+		portal, ok := t.findPortal(s)
 		if !ok {
 			t.e.Log.Info("back to field: no portal in the unit table")
 			break
 		}
 		t.e.Log.Info("back to field: portal in town", "id", portal.ID, "x", portal.X, "y", portal.Y, "player_x", s.Player.X, "player_y", s.Player.Y, "attempt", attempt+1)
+		failed := false
 		if err := t.enterPortal(ctx, portal); err != nil {
 			t.e.Log.Warn("back to field: portal click failed", "err", err)
 			if err := t.wrongLevel(levelNo); err != nil {
 				return err
 			}
+			failed = true
 		} else if _, err := t.waitArea(ctx, levelNo, 15*time.Second); err == nil {
 			return nil
 		} else {
@@ -333,17 +356,50 @@ func (t *Town) BackToField(ctx context.Context, levelNo int) error {
 			if err := t.wrongLevel(levelNo); err != nil {
 				return err
 			}
+			failed = true
+		}
+		if failed {
+			if fails[portal.ID]++; fails[portal.ID] >= limit {
+				t.droppedPortals[portal.ID] = true
+				t.e.Log.Warn(fmt.Sprintf("back to field: portal id=%d failed %d times, dropped", portal.ID, fails[portal.ID]))
+			}
 		}
 		if cerr := ctx.Err(); cerr != nil {
 			return cerr
 		}
 	}
+	if len(t.droppedPortals) > 0 {
+		if s, err = t.current(); err != nil {
+			return err
+		}
+		if data.IsTown(s.Player.Area) {
+			t.e.Log.Info("back to field: fallback=newportal reason=stale portal dropped", "dropped", len(t.droppedPortals))
+			if portal, err := t.openPortal(ctx); err != nil {
+				t.e.Log.Warn("back to field: new portal failed", "err", err)
+			} else if err := t.enterPortal(ctx, portal); err != nil {
+				t.e.Log.Warn("back to field: new portal click failed", "err", err)
+				if werr := t.wrongLevel(levelNo); werr != nil {
+					return werr
+				}
+			} else if _, err := t.waitArea(ctx, levelNo, 15*time.Second); err == nil {
+				return nil
+			} else if werr := t.wrongLevel(levelNo); werr != nil {
+				return werr
+			}
+		}
+	}
 	if lvl := t.e.Data.AreaByID(levelNo); lvl != nil && lvl.Waypoint != 255 && lvl.Waypoint != 0 && t.e.Tune.Nav.UseWaypoints {
+		if len(t.droppedPortals) > 0 {
+			t.e.Log.Info("back to field: fallback=waypoint reason=no working portal", "level", levelNo)
+		}
 		if err := t.mv.TakeWaypoint(ctx, levelNo); err == nil {
 			if _, err := t.waitArea(ctx, levelNo, 15*time.Second); err == nil {
 				return nil
 			}
 		}
+	}
+	if len(t.droppedPortals) > 0 {
+		t.e.Log.Warn("back to field: fallback=walk reason=no working portal or waypoint", "level", levelNo)
 	}
 	if err := t.mv.ExitTo(ctx, levelNo); err != nil {
 		// Not a neighbour of the town (Cold Plains from the Rogue Encampment, waypoint not active yet): walk the chain of

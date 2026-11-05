@@ -124,6 +124,10 @@ func (c *Input) MoveTo(p input.Point, _ input.MoveOpts) error {
 func (c *Input) ClickWorld(p input.Point) error {
 	_ = c.Fake.ClickWorld(p)
 	w := c.W
+	if w.Cursor != nil && w.DropRefuse > 0 {
+		w.DropRefuse--
+		return nil
+	}
 	if w.Cursor != nil { // a playfield click with an item on the cursor drops it (U live)
 		u := *w.Cursor
 		u.Item = &d2.Item{}
