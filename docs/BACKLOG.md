@@ -476,7 +476,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-C folded into task-18: fresh-game restarts get an XP progress check, a gap and a blocked state (route.fresh* knobs).
 - fixcursor3 (task-10 #6): cursor held item is cleared before pickup, a refused pack spot is skipped, bounded retries then ground drop (Gate 2 g2c seed 13 loop); offline tested
 - esverify3: no-shield reduction order head ca7872ab confirmed with caveats against game.exe's native FUN_0057c6c0 (docs/research/esverify/verdict3.md); 135,724 frames, head 0 differences except 24 pre-existing C2 frames; ready to open after body edits (verification done, test_game and test_energy_shield pass with data, name the 256ths sum, C2 measured)
-- no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification)
+- no-shield damage reduction PR opened upstream as #200 (body edited after the independent verification); MERGED upstream 2026-11-05 13:22 EST (merge commit 988d39518)
 - ladderdoc: automation ladder DRAFT written down (docs/research/automation-ladder.md): tiers T0 to T5, mapping to code, backlog re-ranking, open questions; proposed record text only, guard files untouched
 - ladderrecord: automation ladder decisions of 2026-11-05 recorded as a draft (docs/research/automation-ladder-record-proposal.md: decisions.md line, ADR 0016 text, glossary terms; docs/research/decision-point-store-spec.md); guard files untouched, user acceptance pending
 - grill 0005 prebrief written (automation ladder), docs only
@@ -493,6 +493,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - record the PR #200 follow-up (MSVC shadowing fix, efb244d8) in the open-PR log
 - Backlog.md finish: 7 fix and M1 cards reconciled with git (TASK-5..8, 10, 11, 18 Done; TASK-9 stays In Progress), status rules and verified edge cases in docs/backlog-howto.md, check.py fails duplicate task ids
 - TASK-19 decision-point-store: offline store built in internal/decide (catalogue as data, streaks, fading thoughts, rules, replay, persistence); In Progress until the T0 slice proves it live
+- no-shield damage reduction PR #200 merged upstream 2026-11-05 13:22 EST (merge commit 988d39518); docs/archive/research/openpr-log.md and the esverify3 line of docs/BACKLOG.md updated
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
