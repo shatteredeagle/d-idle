@@ -14,34 +14,39 @@ Rules (ADR 0015 items 10 and 11):
 
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015).
 
-## Active (12)
+<!-- cardsgen:active:begin -->
+## Active (13)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
-| 1 | m3-act1run | G-B | deferred 0/3 | fresh Sorceress clears Act 1 unattended on d2d | - | not run live; absorbs the quest-chain and readiness floors text | [card](archive/openspec-index.md#m3-act1run) |
-| 2 | m3-andariel | G-B | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | - | first drill per the SME card | [card](archive/openspec-index.md#m3-andariel) |
-| 3 | m3-merc | G-B | proposed 0/4 | free Rogue run for hours on d2d, merc alive share | - | the soak (revive knob and hire drill already archived) | [card](archive/openspec-index.md#m3-merc) |
-| 4 | gameexe-retire-soak | G-A | deferred 0/2 | Gate A card: d2d 24 h Act 1 clear + A:B (G-D) at 20% | - | text rewritten for ADR 0015 2026-11-04; needs user go for Gate 3 | [card](archive/openspec-index.md#gameexe-retire-soak) |
-| 5 | armorhit | G-E | in-progress 6/1 | Frozen Armor striker fix for upstream | - | PR claim (one batch at a time) | [card](archive/openspec-index.md#armorhit) |
-| 6 | nexthit | G-E | in-progress 6/2 | NextHit justhit fix for upstream | - | PR claim | [card](archive/openspec-index.md#nexthit) |
-| 7 | skmiss | G-E | in-progress 5/2 | missile roll max fix for upstream | - | differential, then PR | [card](archive/openspec-index.md#skmiss) |
-| 8 | skresistfix | G-E | in-progress 6/1 | curse-on-immune fix for upstream | - | PR claim | [card](archive/openspec-index.md#skresistfix) |
-| 9 | m1-liveproof | G-C | in-progress 13/2 | live drills for the basics; M1 exit | - | the two open rows of the M1 exit list | [card](archive/openspec-index.md#m1-liveproof) |
-| 10 | fixbelt | G-C | in-progress 3/1 | low-kit belt window fix | - | live proof in a seed-set record | [card](archive/openspec-index.md#fixbelt) |
-| 11 | fixprogress | G-C | in-progress 2/1 | trip-loop progress fix | - | live proof in a seed-set record | [card](archive/openspec-index.md#fixprogress) |
-| 12 | ledgerkey | G-F | in-progress 2/1 | cheat ledger key per save (uncheated rule) | - | merge check, then close | [card](archive/openspec-index.md#ledgerkey) |
+| 1 | m3-act1run | G-B | deferred 0/3 | fresh Sorceress clears Act 1 unattended on d2d | soak-slot:3 | - | [card](archive/openspec-index.md#m3-act1run) |
+| 2 | m3-andariel | G-B | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | soak-slot:3 | - | [card](archive/openspec-index.md#m3-andariel) |
+| 3 | m3-merc | G-B | proposed 0/4 | free Rogue run for hours on d2d, merc alive share | soak-slot:3 | - | [card](archive/openspec-index.md#m3-merc) |
+| 4 | gameexe-retire-soak | G-A | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | - | [card](archive/openspec-index.md#gameexe-retire-soak) |
+| 5 | armorhit | G-E | in-progress 6/7 | Frozen Armor striker fix for upstream | fork-branch:fix/armor-hit | - | [card](archive/openspec-index.md#armorhit) |
+| 6 | nexthit | G-E | in-progress 6/8 | NextHit justhit fix for upstream | fork-branch:fix/nexthit | - | [card](archive/openspec-index.md#nexthit) |
+| 7 | skmiss | G-E | in-progress 5/7 | missile roll max fix for upstream | fork-branch:fix/missile-roll-top | - | [card](archive/openspec-index.md#skmiss) |
+| 8 | skresistfix | G-E | in-progress 6/7 | curse-on-immune fix for upstream | fork-branch:fix/curse-immune | - | [card](archive/openspec-index.md#skresistfix) |
+| 9 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
+| 10 | fixbelt | G-C | in-progress 5/6 | low-kit belt window fix | - | - | [card](archive/openspec-index.md#fixbelt) |
+| 11 | fixprogress | G-C | in-progress 3/4 | trip-loop progress fix | - | - | [card](archive/openspec-index.md#fixprogress) |
+| 12 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
+| 13 | taska | G-B | in-progress 7/10 | caster mana potion restock | - | - | [card](archive/openspec-index.md#taska) |
+<!-- cardsgen:active:end -->
 
 ## Parked (not counted)
 
 Parked by ADR 0015 item 10 or by the triage: they stay open, nobody works on them, and they come back by moving into the table above (which needs a free row).
 
+<!-- cardsgen:parked:begin -->
 | id | why parked | card |
 |---|---|---|
-| d2d-container-soak | the container soak is deferred (ADR 0015 item 5) | [card](archive/openspec-index.md#d2d-container-soak) |
-| d2dmesh | named in ADR 0015 item 10 | [card](archive/openspec-index.md#d2dmesh) |
-| stream-grid | named in ADR 0015 item 10 | [card](archive/openspec-index.md#stream-grid) |
-| m2-roam | area-choice work (noarea cards) is archived; revisit after Act 1 runs | [card](archive/openspec-index.md#m2-roam) |
-| m2-tripwp | same as m2-roam | [card](archive/openspec-index.md#m2-tripwp) |
+| d2d-container-soak | - | [card](archive/openspec-index.md#d2d-container-soak) |
+| d2dmesh | - | [card](archive/openspec-index.md#d2dmesh) |
+| stream-grid | - | [card](archive/openspec-index.md#stream-grid) |
+| m2-roam | - | [card](archive/openspec-index.md#m2-roam) |
+| m2-tripwp | - | [card](archive/openspec-index.md#m2-tripwp) |
+<!-- cardsgen:parked:end -->
 
 ## Needs a decision (not counted, not archived)
 

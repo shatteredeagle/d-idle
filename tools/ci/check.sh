@@ -29,6 +29,9 @@ done < <(files)
 # --- merge-lines.txt of the cards this branch touches must parse (tools/merge_lines_check.py) ---
 python3 tools/merge_lines_check.py --changed || fail=1
 
+# --- docs/cards.md tables are generated from backlog/tasks (tools/backlog/cards_md.py) ---
+python3 -I tools/backlog/cards_md.py --check || fail=1
+
 # --- d2d shim register (docs/d2d-deviations.md): every d2d branch outside the adapters needs a row ---
 python3 -I tools/shims/check.py || fail=1
 python3 -I tools/shims/test_check.py >/dev/null 2>&1 || bad "tools/shims/test_check.py"
