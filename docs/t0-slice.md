@@ -55,6 +55,41 @@ Not wired, no witness test (U, code read): `t0.retreat.repeat` (no legacy per-ar
 - Drill: `internal/drill/t0_test.go` runs the T0 group on a fake lab for 5 profiles x 2 builds; a CHEATED run fails; the `file` profile and bad inputs block.
 - `ladder.enabled = 0`: the combat, bot, town, resource and env package tests run unchanged.
 
+## How to run it (integrated: d2bot -ladder -watch)
+
+Both switches are OFF by default; without `-ladder` nothing in `cmd/d2bot/ladder.go` runs: no directory is made, no port is opened (V: `TestLadderOffDoesNothing`, `TestLadderFlagRules`). `-ladder` sets the knob `ladder.enabled` 1 for this run only, then `bot.Runner.EnableLadderWith` builds the store, hands it to the watch Hub and installs the ladder (before the runner starts). Works with `--attach` and `--managed` (live and d2d backend); refused with `--sim` (the goals simulator has no bot runner) and `--dry`.
+
+| flag (env) | meaning |
+|---|---|
+| `-ladder` (`D2BOT_LADDER`) | ladder on; store under `<data>/instances/<id>/state/ladder/decide-<profile>.json` |
+| `-ladder-profile NAME` or `holdout:SEED` (`D2BOT_LADDER_PROFILE`) | scripted player for drills: cautious, bold, inconsistent, holdout:SEED. Without it a person answers on the watch screen |
+| `-watch` (`D2BOT_WATCH`) | serve the player screen from the bot; needs `-ladder` |
+| `-watch-addr` (default `127.0.0.1:8891`) | read-only viewer (GET routes only) |
+| `-watch-answer-addr` (default `127.0.0.1:8892`) | SEPARATE listener for answer, confirm, revoke, orders |
+| `-watch-origin` | comma list of page origins the answer route accepts (default: the viewer's port on localhost) |
+| `-token` | required as soon as either address is not loopback (bearer header, `?t=` once, or cookie) |
+
+`-ladder` alone needs someone to answer: add `-watch` or `-ladder-profile`. `-ladder-profile` with `-watch` lets the script answer while the screen shows everything (drills).
+
+Local, a person answers:
+```
+d2bot --attach --ladder --watch --goals 'farm:Blood Moor'      # then open http://127.0.0.1:8891/watch
+```
+LAN, with a token (the page is reached as `http://HOST:8891/watch?t=TOKEN`; the answer route is on 8892):
+```
+d2bot --attach --ladder --watch --watch-addr 0.0.0.0:8891 --watch-answer-addr 0.0.0.0:8892 \
+      --watch-origin http://HOST:8891 --token "$(cat ~/.d2bot-token)" --goals 'farm:Blood Moor'
+```
+Scripted drill (no person, screen optional):
+```
+d2bot --attach --ladder --ladder-profile holdout:101 --watch --goals 'farm:Blood Moor' --run-for 10m
+```
+What it does with the screen: thoughts of the nine wired points reach the Hub through the ladder `Sink`; an answer posted on the answer route goes straight to the store; an order becomes a `farm_area` goal (area, `UntilMins`) at the front of the goal manager and cancelling it removes the goal ("fight here" uses the area of the runner's last snapshot, "come home" an idle goal, U: no go-to-town goal type). Uptime comes from the goal manager's events: death = death, the first area change after it = recovery, the next kill = progress, an error event or runner status error = stall (`watch.GoalsOrders.OnGoalEvent/OnStatus`, V: `TestUptimeFromGoalEvents`); a town stall has no source yet (U).
+
+`writes after start: 0`: the ladder and the screen write no game memory; the only writes are the store file and the bot's own input. A measured run still declares its setup before `d2cheat runstart` as always; the run record takes `writes after start` from `d2cheat ledger --since-run <run>`.
+
+Tested offline only (V): `go test -p 1 -count=1 ./cmd/d2bot ./internal/watch ./internal/bot -run 'Ladder|Uptime|Serve|Token|Origins'` (fake enable on a virtual clock, two builds, human and scripted answers, orders to the real goal manager, viewer read-only, token rule). U live: nothing here has met the real game.
+
 ## T0 drill (phase B, not run)
 
 `cmd/d2drill -group T0`: setup (empty pack, gold 1000, worn gear to durability 1) before `d2cheat runstart`, then 10 virtual minutes of town passes (repair and scrolls chores) through the bot's real town code with the ladder installed. Exercised by the live drill: `t1.repair`, `t1.tp.lost`, `t1.restock` (the town chores). `t1.return` and `t1.town.trigger` live in the bot runner's trip logic, which the town lab does not drive: they are proven offline only (U live). Exact commands and what is asserted: `docs/probes/t0drill.md`.
@@ -68,8 +103,8 @@ Not wired, no witness test (U, code read): `t0.retreat.repeat` (no legacy per-ar
 
 ## Not done
 
-Blood Moor field drill (live), a live lab hook for the fight-time points, a call to `EnableLadder` from cmd/d2bot, the watch-screen thought UI (Track 3), the live drill (phase B).
+Blood Moor field drill (live), a live lab hook for the fight-time points, the live drill (phase B). Done since: the d2bot call (`-ladder`, see "How to run it") and the watch screen.
 
 ## T0 fight-time points in the drill (A3)
 
-`drill.T0FightLab` is an optional interface of the lab (`FightPoints(ctx, point)`); when the lab implements it the drill asks each of the four fight-time points once per round next to the chores and counts the passes (`fightPasses` in the run record; 80 for 20 rounds). The offline fake lab (`internal/drill/t0_test.go`, `TestT0DrillRunsTheFightPoints`: 5 profiles x 2 builds, 10 virtual minutes) implements it by asking the ladder with states that move with the pass count. The live lab (`cmd/d2drill`) does not implement it yet, so a live run exercises the town points only; what it needs is in `docs/probes/t0drill.md` ("Live run needs"). `bot.EnableLadder` is still called by no non-test code: turning the ladder on in `cmd/d2bot` needs a call after the Runner is built (knob `ladder.enabled` 1, a state dir, a profile and an answer source), plus the watch screen or a scripted file to answer; not done on purpose.
+`drill.T0FightLab` is an optional interface of the lab (`FightPoints(ctx, point)`); when the lab implements it the drill asks each of the four fight-time points once per round next to the chores and counts the passes (`fightPasses` in the run record; 80 for 20 rounds). The offline fake lab (`internal/drill/t0_test.go`, `TestT0DrillRunsTheFightPoints`: 5 profiles x 2 builds, 10 virtual minutes) implements it by asking the ladder with states that move with the pass count. The live lab (`cmd/d2drill`) does not implement it yet, so a live run exercises the town points only; what it needs is in `docs/probes/t0drill.md` ("Live run needs"). `cmd/d2bot -ladder` now calls `bot.EnableLadderWith` (integration, "How to run it"); off by default.

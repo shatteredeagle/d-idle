@@ -10,13 +10,13 @@ package main
 import (
 	"context"
 	"crypto/subtle"
+	"d2lod-bot/internal/watch"
 	"embed"
 	"encoding/json"
 	"flag"
 	"fmt"
 	"io/fs"
 	"log"
-	"net"
 	"net/http"
 	"os"
 	"os/signal"
@@ -140,14 +140,7 @@ func envOr(k, def string) string {
 	return def
 }
 
-func loopback(addr string) bool {
-	h, _, err := net.SplitHostPort(addr)
-	if err != nil || h == "" {
-		return false
-	}
-	ip := net.ParseIP(h)
-	return h == "localhost" || (ip != nil && ip.IsLoopback())
-}
+func loopback(addr string) bool { return watch.Loopback(addr) }
 
 type server struct {
 	feed       *Feed

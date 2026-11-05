@@ -44,6 +44,7 @@ type options struct {
 	supervise, cleanStart                                bool
 	superviseMax, testCrashAfter                         int
 	d2d                                                  d2dOptions
+	ladder                                               ladderOptions
 }
 
 func envOr(name, def string) string {
@@ -94,6 +95,7 @@ func parseFlags(args []string) (options, error) {
 	fs.IntVar(&o.testCrashAfter, "test-crash-after", -1, "TEST ONLY (crash drill): panic unrecovered after N seconds; same as D2BOT_TEST=1 D2BOT_TEST_CRASH_AFTER=N (tools/live.sh cannot pass env)")
 	fs.BoolVar(&o.cleanStart, "clean-start", false, "managed mode: stop a game left over from a crashed d2bot before launching a fresh one (set by --supervise on restarts)")
 	d2dFlags(fs, &o.d2d)
+	ladderFlags(fs, &o.ladder)
 	fs.BoolVar(&o.showVersion, "version", false, "print the version and exit")
 	fs.Usage = func() { printUsage(fs, bannerUnicode(fs.Output(), os.Getenv)) } // banner only here, never on --version or the log
 	if err := fs.Parse(args); err != nil {
@@ -113,6 +115,12 @@ func parseFlags(args []string) (options, error) {
 	}
 	if err := o.d2d.validate(o); err != nil {
 		return o, err
+	}
+	if err := o.ladder.validate(o.sim); err != nil {
+		return o, err
+	}
+	if o.ladder.on && o.dry {
+		return o, errors.New("--ladder does not combine with --dry: dry runs no goals and no decisions")
 	}
 	if o.dry && o.sim {
 		return o, errors.New("--dry needs a game: use --attach or --managed")

@@ -305,3 +305,6 @@ func (s *Sim) Run(ctx context.Context, speed float64, period time.Duration) {
 		}
 	}
 }
+
+// OrderableAreas is the list of areas a "go to" order may name: Act 1 only for now (U beyond Rogue Encampment).
+func OrderableAreas() []string { return append([]string(nil), act1Areas...) }

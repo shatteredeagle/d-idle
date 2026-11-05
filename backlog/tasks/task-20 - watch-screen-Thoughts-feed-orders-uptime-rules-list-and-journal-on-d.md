@@ -44,3 +44,6 @@ The one player screen of ADR 0016 items 20 to 23 on cmd/d2dview (docs/d2d-view.m
 
 
 Notes 2026-11-05 (watchstyle): watch screen restyled in the original d.idle dashboard look (tokens, header, cards, tabs on phone, theme toggle); see docs/research/watch-screen-design.md section 7. Offline tested, screenshots of a local demo only.
+
+
+Notes 2026-11-05 (integ): the real bot hosts the screen: `d2bot -ladder -watch` (viewer GET listener, separate answer listener, token unless loopback) with the Hub as Sink and AnswerSource; orders map to farm_area goals through the goal manager; uptime from goal events (death, recovery on respawn, progress on a kill, stall on error). Offline tested; not verified live. docs/t0-slice.md 'How to run it'.

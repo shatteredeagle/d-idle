@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/ladder"
 )
 
@@ -13,13 +14,47 @@ import (
 // clears (a fight may be on) waits to be asked until the runner is in another state. answers may be nil (no player:
 // thoughts open and fade; the defaults act). stateDir "" keeps the answers in memory.
 func (r *Runner) EnableLadder(stateDir, profile string, answers ladder.AnswerSource) (*ladder.Ladder, error) {
+	return r.EnableLadderWith(stateDir, profile, func(*decide.Store, *decide.Catalogue, decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
+		return nil, answers, nil
+	})
+}
+
+// LadderWire connects the ladder to what shows its thoughts and answers them. It gets the store, the catalogue and the
+// fade clock the ladder will use (a watch screen needs the same three) and returns the sink and the answer source; a nil
+// sink is the bot log only, a nil source means no scripted player.
+type LadderWire func(st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (ladder.Sink, ladder.AnswerSource, error)
+
+// EnableLadderWith is EnableLadder with the sink and answer source built by wire after the store exists. Knob off: it
+// installs nothing and does not call wire.
+func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*ladder.Ladder, error) {
 	if r.e.Tune == nil || r.e.Tune.Ladder.Enabled == 0 {
 		return nil, nil
 	}
 	t0 := r.e.Clock.Now()
 	clk := ladder.ClockFunc(func() time.Duration { return r.e.Clock.Now().Sub(t0) })
-	sink := ladder.LogSink{Info: func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) }}
-	l, err := ladder.Open(stateDir, profile, clk, sink, answers, func() bool { return r.State() == StateClearing })
+	cat, err := decide.Shipped()
+	if err != nil {
+		return nil, fmt.Errorf("bot: ladder: %w", err)
+	}
+	var st *decide.Store
+	if stateDir == "" {
+		st, err = decide.New(cat, profile, clk)
+	} else {
+		st, err = decide.Open(stateDir, profile, cat, clk)
+	}
+	if err != nil {
+		return nil, fmt.Errorf("bot: ladder: %w", err)
+	}
+	logSink := ladder.LogSink{Info: func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) }}
+	sink, answers, err := wire(st, cat, clk)
+	if err != nil {
+		return nil, fmt.Errorf("bot: ladder: %w", err)
+	}
+	var s ladder.Sink = logSink
+	if sink != nil {
+		s = ladder.Tee{logSink, sink}
+	}
+	l, err := ladder.New(ladder.Config{Cat: cat, Store: st, Clock: clk, Sink: s, Answers: answers, InFight: func() bool { return r.State() == StateClearing }})
 	if err != nil {
 		return nil, fmt.Errorf("bot: ladder: %w", err)
 	}

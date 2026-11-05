@@ -7,7 +7,6 @@ import (
 	"net"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"d2lod-bot/internal/watch"
@@ -54,24 +53,8 @@ func startWatch(ctx context.Context, o watchOpts, viewAddr, token string, open, 
 	return sim.Hub.ViewHandler(), nil
 }
 
-// watchOrigins lists the page origins the answer route accepts: the -watch-origin list, else the viewer's own port on
-// localhost and the loopback address.
-func watchOrigins(flagVal, viewAddr string) []string {
-	var out []string
-	for _, o := range strings.Split(flagVal, ",") {
-		if o = strings.TrimSpace(o); o != "" {
-			out = append(out, o)
-		}
-	}
-	if len(out) > 0 {
-		return out
-	}
-	_, port, err := net.SplitHostPort(viewAddr)
-	if err != nil {
-		return nil
-	}
-	return []string{"http://localhost:" + port, "http://127.0.0.1:" + port}
-}
+// watchOrigins lists the page origins the answer route accepts (internal/watch.Origins).
+func watchOrigins(flagVal, viewAddr string) []string { return watch.Origins(flagVal, viewAddr) }
 
 // watchOnlyRoutes is the viewer without a game: the watch screen and nothing else.
 func (s *server) watchOnlyRoutes() http.Handler {

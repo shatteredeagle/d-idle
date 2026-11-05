@@ -110,3 +110,32 @@ func TestActivityFromStatus(t *testing.T) {
 		}
 	}
 }
+
+// The uptime source of a real bot: a death, then the respawn (recovery), then the first kill (progress again); the
+// runner status never overrides a death or its recovery.
+func TestUptimeFromGoalEvents(t *testing.T) {
+	r := newRig(t, "sorceress")
+	b := &GoalsOrders{Hub: r.sim.Hub}
+	steps := []struct {
+		do   func()
+		want string
+	}{
+		{func() { b.OnStatus(goals.Status{State: goals.RunnerRunning, Activity: "Fighting"}) }, KindProgress},
+		{func() { b.OnGoalEvent(goals.Event{Type: goals.EvDeath, Area: "Blood Moor"}) }, KindDeath},
+		{func() { b.OnStatus(goals.Status{State: goals.RunnerRunning}) }, KindDeath},
+		{func() { b.OnGoalEvent(goals.Event{Type: goals.EvAreaChange, Area: "Rogue Encampment"}) }, KindRecovery},
+		{func() { b.OnStatus(goals.Status{State: goals.RunnerRunning}) }, KindRecovery},
+		{func() { b.OnGoalEvent(goals.Event{Type: goals.EvKill}) }, KindProgress},
+		{func() { b.OnStatus(goals.Status{State: goals.RunnerError, Message: "stuck"}) }, KindStall},
+	}
+	for i, s := range steps {
+		r.sim.Clock.Advance(time.Second)
+		s.do()
+		if u := r.uptime(); u.State != s.want {
+			t.Fatalf("step %d: state %s, want %s", i, u.State, s.want)
+		}
+	}
+	if u := r.uptime(); u.Deaths != 1 || u.DeathSec == 0 || u.RecoverySec == 0 {
+		t.Errorf("sums: %+v", u)
+	}
+}
