@@ -11,10 +11,10 @@ go test -p 1 -count=1 ./internal/ladder ./internal/drill ./cmd/d2drill ./interna
 ## Build and run on the worker host
 
 ```
-labrun orion -- sh -c 'go build -o /tmp/d2drill-t0 ./cmd/d2drill'
+labrun <worker> -- sh -c 'go build -o /tmp/d2drill-t0 ./cmd/d2drill'
 ```
 
-Then, in a d2d slot (the d2drill pattern of the other drill groups; the slot starts its own headless d2d, no Orion game instance):
+Then, in a d2d slot (the d2drill pattern of the other drill groups; the slot starts its own headless d2d, no game instance of the worker host):
 
 ```
 D2D_AGENT=t0drill tools/agentrun.sh t0drill --ttl 3600 -- tools/d2dslot.sh run -n 0 -t 3600 -- /tmp/d2drill-t0 -group T0 -label t0-all -repeat 1
