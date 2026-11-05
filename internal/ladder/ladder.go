@@ -306,3 +306,25 @@ func (l *Ladder) sync() []*pend {
 	sort.Slice(l.q, func(i, j int) bool { return l.q[i].v.ID < l.q[j].v.ID })
 	return append([]*pend(nil), l.q...)
 }
+
+// Open makes a ladder over the shipped catalogue and rule file. dir "" keeps the store in memory; otherwise the
+// answers persist in dir (decide.Open, file decide-<profile>.json).
+func Open(dir, profile string, clk decide.Clock, sink Sink, src AnswerSource, inFight func() bool) (*Ladder, error) {
+	cat, err := decide.Shipped()
+	if err != nil {
+		return nil, err
+	}
+	var st *decide.Store
+	if dir == "" {
+		st, err = decide.New(cat, profile, clk)
+	} else {
+		st, err = decide.Open(dir, profile, cat, clk)
+	}
+	if err != nil {
+		return nil, err
+	}
+	return New(Config{Cat: cat, Store: st, Clock: clk, Sink: sink, Answers: src, InFight: inFight})
+}
+
+// Store exposes the store for run records (rules, answer log) and for tests.
+func (l *Ladder) Store() *decide.Store { return l.cfg.Store }
