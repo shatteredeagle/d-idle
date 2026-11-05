@@ -1,0 +1,2 @@
+BACKLOG: TASK-19 default parity: catalogue v3 closes retreat.drink, unique.fight, mercenary (0 splits, legacy-function oracle); toohard clvl 14 (72 contexts) waits for an owner decision on merc vs levelgap
+CHANGELOG: decide catalogue v3 (drinklife, lifeengage, mercgold, champbonus; v2 files migrate); default parity 192 -> 72 band-interior splits
