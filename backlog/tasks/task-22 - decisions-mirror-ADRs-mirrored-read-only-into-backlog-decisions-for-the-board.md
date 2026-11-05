@@ -28,5 +28,5 @@ Decided 2026-11-05: ADRs and docs/decisions.md stay the source of truth (guard f
 - [ ] #1 tools/backlog/decisions_mirror.py generates backlog/decisions/decision-N files from docs/adr/*.md one way (ADR 0016 becomes decision-16; status mapped from the ADR header; body copied; file marked 'generated, do not edit')
 - [ ] #2 a --check mode fails CI when the committed mirror differs from the generated one, wired into tools/ci/check.sh like cards_md.py
 - [ ] #3 unit tests: status mapping (accepted, amended, superseded), amendment blocks kept, idempotent output, ADR guard rules unchanged
-- [ ] #4 the Tower board's decisions page lists all ADRs after the next mirror sync
+- [ ] #4 the NAS-hosted board's decisions page lists all ADRs after the next mirror sync
 <!-- AC:END -->
