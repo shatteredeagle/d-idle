@@ -34,6 +34,7 @@ type TownTuning struct {
 	UITimeoutMs     int // wait for a panel flag after a click
 	ClickSettleMs   int // pause after a UI click before the memory is re-read
 	MoveTries       int // attempts to move one item between grids (verified each time)
+	DropTries       int // ground clicks DropCursor tries, each on a different cell next to the character, before it falls back to the pack
 	PortalSettle    int // ms to wait after arriving before using a portal again
 	ChoreBudgetS    int // seconds one Chores call may take before it gives up
 	SellMaxS        int // seconds the sell chore alone may take (it is capped, then the other chores go on)
@@ -61,7 +62,7 @@ func DefaultTownTuning() TownTuning {
 		TripMinHPPotions: 2, TripMinMPPotions: 1, TripBeltColumnPct: 50, TripPackUsedPct: 80, TripRepairPct: 20,
 		BeltFillPct: 100, TPScrollTarget: 2, TPTomeMinGold: 450, IDScrollTarget: 2, MinGoldReserve: 100, KeyTarget: 0,
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
-		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3,
+		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40,
 		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
 	}
@@ -101,6 +102,7 @@ func townKnobs() []Knob {
 		townK("npcOpenTries", "NPC open attempts", "count", "Attempts to open an NPC dialog before the chore is skipped.", d.NPCOpenTries, 1, 6, true),
 		townK("uiTimeoutMs", "Panel timeout", "ms", "Wait for a panel flag after a click.", d.UITimeoutMs, 800, 8000, true),
 		townK("clickSettleMs", "UI click settle", "ms", "Pause after a UI click before memory is re-read.", d.ClickSettleMs, 40, 800, false),
+		townK("dropTries", "Cursor drop attempts", "count", "Ground clicks tried, each on another cell beside the character, to drop a held item (then a free pack cell, then the failsafe).", d.DropTries, 1, 8, true),
 		townK("moveTries", "Item move attempts", "count", "Attempts to move one item between grids (each verified in memory).", d.MoveTries, 1, 6, true),
 		townK("portalSettle", "Portal settle", "ms", "Wait after arriving in an area before using a portal.", d.PortalSettle, 1000, 8000, false),
 		townK("portalReuseDist", "Open portal reuse range", "subtiles", "ToTown walks into an open portal this close instead of reading a scroll.", d.PortalReuseDist, 0, 100, true),

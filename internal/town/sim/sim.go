@@ -47,6 +47,8 @@ type World struct {
 	Heal map[int]bool
 	// HealSkip is the number of NPC clicks the healer ignores before it heals (tests the retry).
 	HealSkip int
+	// DropRefuse makes the first n playfield clicks with an item on the cursor do nothing (a cell that does not take a drop).
+	DropRefuse int
 	// PickupToCursor makes ground clicks put the item on the cursor instead of into the pack.
 	PickupToCursor bool
 	// AutoEquipQuest: a ground click on a Shaft (msf) or Top of the Staff (vip) wears it (V live, docs/act2.md P1).

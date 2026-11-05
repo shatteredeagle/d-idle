@@ -51,4 +51,5 @@ Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy
 - [x] #2 fix: low-kit override of the recovery cooldown
 - [x] #3 unit tests
 - [ ] #4 live proof (Gate 1 soak)
+- [x] #5 fixcursor2 (G-C, Gate 2 g2b fix #3): DropCursor (internal/town/hand/drop.go) clicks up to town.dropTries (6) different cells beside the character, falls back to a free pack cell (ClearCursor), else ErrCursor + failsafe; log lines `cursor: dropped item= try= offset=`, `cursor: could not clear after N tries items=`; a launcher the class cannot use is not picked up without a pack cell to take it off (internal/loot/pickup.go takenOffAgain). Offline tests only (Sorceress + Barbarian); live proof pending
 <!-- AC:END -->
