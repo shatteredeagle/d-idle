@@ -1,0 +1,38 @@
+# Compose Manager stack "backlog-board" (project name below is the plugin's sanitised form).
+# Variant A: bridge network, host port 6420. See docs/process/backlog-board-tower.md.
+name: backlog_board
+services:
+  backlog-board:
+    container_name: backlog-board
+    # Builds from the public repo, no files to copy to the NAS. To build from a
+    # local copy instead, use "context: /mnt/user/appdata/backlog-board/build".
+    build:
+      context: https://github.com/shatteredeagle/d-idle.git#main:deploy/backlog-board
+    image: backlog-board:1.55.3
+    restart: unless-stopped
+    user: "99:100"
+    ports:
+      - "6420:6420"
+    environment:
+      REPO_URL: https://github.com/shatteredeagle/d-idle
+      BRANCH: main
+      SYNC_INTERVAL: "300"
+      TZ: America/New_York
+    volumes:
+      - /mnt/user/appdata/backlog-board/data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    pids_limit: 128
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "-o", "/dev/null", "http://127.0.0.1:6420/api/tasks"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 3
+    labels:
+      net.unraid.docker.icon: https://raw.githubusercontent.com/MrLesk/Backlog.md/main/.github/logo.png
