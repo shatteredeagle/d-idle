@@ -1,0 +1,1 @@
+CHANGELOG: guard drinks healing and rejuvenation potions in state clearing and in the nav stuck ladder (Gate 2 g2c seed 13 death); log line 'guard: drank ... at life N% (state=...)'

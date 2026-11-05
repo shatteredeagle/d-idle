@@ -19,6 +19,9 @@ owns:
   - "internal/town/trip.go"
   - "internal/town/staleportal_test.go"
   - "internal/env/tuning_town.go"
+  - "internal/bot/loop.go"
+  - "internal/bot/guarddrink_test.go"
+  - "internal/bot/fakes_test.go"
 exclusive: []
 branch: "agent/fixprogress"
 agent: "fixprogress"
@@ -40,6 +43,8 @@ What changes:
 - docs/fixprogress.md: timeline, evidence, cause tags, live recipe.
 
 Stale town portal (Gate 2 g2b, seed 11, bot 9d03a58; V log, cause U): 43 `portal click failed` lines on one portal id, then a 7-area walk and 11 minutes without a kill. BackToField (internal/town/trip.go) now drops a portal id after town.portalClickFails (default 2) failed entries, rescans, then opens a fresh portal from the tome/scroll, then the waypoint, then the walk. Log lines: `back to field: portal id=X failed N times, dropped`, `back to field: fallback=<newportal|waypoint|walk> reason=...`. Tests: internal/town/staleportal_test.go (Sorceress + Barbarian). Not verified live.
+
+Guard drink (Gate 2 g2c seed 13 death, 2026-11-05): guardOnce (internal/bot/loop.go) dropped SafetyDrinkLife and SafetyDrinkRejuv in state clearing, so the life fell 65 to 40 to 0 inside the nav stuck ladder with potions in the belt (combat.Decide already returns DrinkRejuv at or below chickenPct with a ready rejuv, Chicken with none usable). The guard now forwards both drinks in every field state (not in town); the drink goes through Fighter.Act, so the fighter's potion cooldown and the guard's 800 ms gap rate-limit it. Live proof line: `guard: drank <healing|rejuvenation> at life N% (state=<state>)`. Tests: internal/bot/guarddrink_test.go (Sorceress + Barbarian). No knob added. Not verified live.
 
 Next step: live proof in a seed-set record
 
