@@ -39,7 +39,7 @@ What changes:
 Next step: merge check, then close
 
 Gates (from the card):
-- go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; changecheck -cli 0 warnings; leakcheck -mode fail 0
+- go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; leakcheck -mode fail 0
 
 Source: git tag openspec-final, openspec/changes/ledgerkey/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

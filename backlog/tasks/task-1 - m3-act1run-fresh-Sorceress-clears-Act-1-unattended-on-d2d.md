@@ -43,7 +43,7 @@ Next step: not run live; absorbs the quest-chain and readiness floors text
 Gates (from the card):
 - 3 of 3 fresh Sorceress seeds, no cheats: Andariel dead and Act 2 entered (area 40 or the Act 2 quest word) before the time cap of act1-campaign `Unattended Act 1 clear`; d2dsoak reports no death-rule FAIL code (death_streak, death_recovery_stuck, death_rate); 0 panics; 0 manual interventions
 - merc alive at least 70 percent of field time after the claim on every seed (minute lines)
-- tools/agentreap.sh m3-act1run leaves nothing; changecheck -cli 0 warnings; leakcheck 0; validate --strict passes
+- tools/agentreap.sh m3-act1run leaves nothing; leakcheck 0
 
 Source: git tag openspec-final, openspec/changes/m3-act1run/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

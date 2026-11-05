@@ -1,4 +1,10 @@
-# licence-policy Specification
+---
+id: licence-policy
+goal: rule
+status: in-force
+enforced_by: prose
+---
+# licence-policy contract
 
 ## Purpose
 The licence rules for this repository and its dependencies: repository licence, SPDX headers, compatible third-party code, stdlib-only dependencies, patches that stay downstream, and the corresponding-source duty on distribution.

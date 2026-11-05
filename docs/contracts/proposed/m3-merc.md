@@ -1,3 +1,9 @@
+---
+id: m3-merc
+goal: G-B
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: m3-merc (merc-policy)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `m3-merc` (git tag `openspec-final`, path `openspec/changes/m3-merc/specs/merc-policy/spec.md`). When the work lands, the branch that implements it folds this text into `docs/contracts/merc-policy.md` and deletes this file. Backlog task: title starts with `m3-merc:`.

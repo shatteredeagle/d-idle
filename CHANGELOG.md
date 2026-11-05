@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- OpenSpec removal stage 5: cmd/changecheck and the dead card-check code are deleted; the merge scripts no longer read openspec/.
+- process: contracts stage 3b: 6-key headers on every contract, Numbers tables and contract_test.go for soak-gates, death-rule and fidelity-gate, tools/contracts/check.py in CI (merc.goldFarmMaxLevel text fixed to 17)
 - process: OpenSpec removal plan marks stage 3 done.
 - process: contracts moved from openspec/specs to docs/contracts, openspec/ removed (old cards under git tag openspec-final), shared-file lines now go in backlog/merge-lines/<branch>.txt.
 - Docs: opened upstream PR #198 (Energy Shield absorb order); posted log in docs/research/openpr-log.md.

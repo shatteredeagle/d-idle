@@ -1,4 +1,15 @@
-# Soak gates specification
+---
+id: soak-gates
+goal: G-C
+status: in-force
+enforced_by:
+  - cmd/d2soak
+  - internal/d2dsoakstat/invariants.go
+  - cmd/d2dsoak
+judged_by_ops: tools/gate-judge.py
+adr: [0009, 0013, 0015]
+---
+# Soak gates contract
 
 ## Purpose
 Numeric pass criteria for the d2d gate ladder (Gate 1 2 h, Gate 2 8 h, Gate 3 24 h; the old G1/G2 names are retired, see docs/decisions.md Current truth) and the health guard that decides when a soak may start, so a run is judged by numbers and not by opinion. Evidence: docs/review-strategy.md (G1 criteria), docs/soak24.md section 3 (profile m24), docs/g1-log.md (attempt log), docs/plan/plan-v2.md section 5.
@@ -319,6 +330,33 @@ Every minute of the Gate 1 criteria (and of Gates 2 and 3 over their length) SHA
 #### Scenario: Wider invariant unchanged
 - **WHEN** the same log has area changes, quest steps or gold spent inside that 26 minute stretch so the longest stretch without any progress event is 16 virtual minutes
 - **THEN** the PROGRESS invariant (limit 30) still passes and the Gate 1 NOKILL criterion still FAILS
+
+## Numbers
+
+Owner of these values is this contract (the user approves them); the tests named in `enforced in` (`contract_test.go` in `cmd/d2soak` and `internal/d2dsoakstat`) read this table and compare it with the code. Change a row only with the user's go, cited in the `Source:` of the requirement that states it, and change the code in the same branch.
+
+| key | value | unit | enforced in |
+|---|---|---|---|
+| gate1.beltMin | 5 | virtual min | internal/d2dsoakstat DefaultInvLimits.BeltMin |
+| gate1.noKillMin | 10 | virtual min | internal/d2dsoakstat DefaultInvLimits.NoKillMin |
+| inv.wedgeMin | 15 | virtual min | internal/d2dsoakstat DefaultInvLimits.WedgeMin |
+| inv.progressMin | 30 | min | internal/d2dsoakstat DefaultInvLimits.ProgressMin |
+| inv.stallWarnMin | 30 | min | internal/d2dsoakstat DefaultInvLimits.StallWarnMin |
+| inv.recoverMin | 10 | virtual min | internal/d2dsoakstat DefaultInvLimits.RecoverMin |
+| inv.earlyFrac | 0.95 | share of requested hours | internal/d2dsoakstat DefaultInvLimits.EarlyFrac |
+| m24.stallMin | 10 | min | cmd/d2soak profile m24 Limits.MaxNoProgress; DefaultAlertRules.StallXP |
+| m24.noGainMin | 90 | min | cmd/d2soak DefaultProgressLimits.NoGain (profile m24 keeps it) |
+| m24.unhealthyMin | 3 | min | cmd/d2soak DefaultLimits.MaxUnhealthy |
+| m24.warmUpMin | 10 | min | cmd/d2soak DefaultLimits.WarmUp |
+| m24.rssMBPerHour | 40 | MB per hour | cmd/d2soak profile m24 Limits.MaxRSSMBPerHour |
+| m24.fdsPerHour | 5 | fds per hour | cmd/d2soak profile m24 Limits.MaxFDsPerHour |
+| m24.threadsPerHour | 5 | threads per hour | cmd/d2soak profile m24 Limits.MaxThreadsPerHour |
+| m24.goroutinesPerHour | 5 | goroutines per hour | cmd/d2soak profile m24 Limits.MaxGoroutinesPerH |
+| m24.ladderPerHour | 2 | rungs per hour | cmd/d2soak profile m24 Limits.MaxLadderPerHour |
+| m24.sentinelPerHour | 2 | actions per hour | cmd/d2soak profile m24 Limits.MaxSentinelPerHr |
+| heap.runawayMB | 8192 | MB | cmd/d2soak DefaultAlertRules.HeapRunawayMB |
+| heap.growthMB | 1024 | MB | cmd/d2soak DefaultAlertRules.HeapGrowthMB |
+| heap.growthWindowMin | 5 | min | cmd/d2soak DefaultAlertRules.HeapGrowthWindow |
 
 ## Pending deltas (not in force)
 

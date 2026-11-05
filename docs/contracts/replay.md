@@ -1,4 +1,12 @@
-# replay Specification
+---
+id: replay
+goal: G-C
+status: in-force
+enforced_by:
+  - internal/d2dreplay
+  - cmd/d2dreplay
+---
+# replay contract
 
 ## Purpose
 What a d2d replay file holds, how it is recorded without touching the run, and what playback must guarantee so that a replay doubles as the determinism oracle for the lockstep fork. Source: docs/d2d-fork.md section 5, docs/d2d-loop.md phase 0, user decision 2026-10-30 ("Determinism + replay"), evidence in docs/d2d-replay.md.

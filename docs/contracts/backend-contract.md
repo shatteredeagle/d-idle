@@ -1,4 +1,13 @@
-# Backend contract specification
+---
+id: backend-contract
+goal: G-C
+status: in-force
+enforced_by:
+  - internal/env/env.go
+  - internal/d2dtown/adapter.go
+  - internal/d2denv/env.go
+---
+# Backend contract
 
 ## Purpose
 The seams that keep decision code backend-agnostic, so the same bot runs on the original Game.exe (Wine, /proc/pid/mem reads, input injection) and on the d2d reimplementation (control socket), and what each backend must provide. Source: docs/decisions.md 2026-10-30 rule 1, docs/d2d-backend.md, docs/d2d-bot.md, docs/d2d-wire.md (when merged). Product and oracle (user, 2026-11-04): d2d is the product (native, no Wine); the original Game.exe is the fidelity oracle that the A:B comparison measures d2d against.

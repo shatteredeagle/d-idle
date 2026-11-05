@@ -40,7 +40,6 @@ What changes:
 Parked: named in ADR 0015 item 10
 
 Gates (from the card):
-- tools/openspec.sh validate --all --strict passes
 - python3 -m unittest in tools/publish/tests passes, including one fixture test per layout size (1, 2, 3-4, 5-6, 7-9 tiles)
 - ?demo=1 screenshots of every layout size show no hostname, IP, path or token (leak grep over scene.html, scene.json and the DOM text)
 - go test ./cmd/d2dview passes (pub feed fields sanitized)

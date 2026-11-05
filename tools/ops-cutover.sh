@@ -51,7 +51,7 @@ cat <<EOS
    (history was extracted with git filter-repo from a clone of master 57dd902; later changes to moved files on master since then
    must be replayed: git log 57dd902..master -- <moved paths>; the board file docs/needs-you.md is edited in ops from now on.)
 3. Merge $branch into master (git merge --no-ff $branch). Run: tools/ops.sh status ; sh tools/ci/check.sh --hygiene-only ;
-   go build ./... ; go run ./cmd/changecheck -cli.
+   go build ./... ; python3 tools/contracts/check.py ; python3 tools/backlog/check.py.
 4. In the master checkout run: tools/ops.sh link  (CLAUDE.local.md, local.env, .claude/agents, docs/needs-you.md).
 5. Existing worktrees: for each (git worktree list) first merge or rebase master into the branch, then tools/ops.sh link there:
      for w in \$(git worktree list --porcelain | sed -n 's/^worktree //p'); do git -C "\$w" merge --no-edit master && (cd "\$w" && tools/ops.sh link); done

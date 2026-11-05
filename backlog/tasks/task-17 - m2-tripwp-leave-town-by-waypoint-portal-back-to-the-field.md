@@ -46,7 +46,7 @@ Parked: same as m2-roam
 Gates (from the card):
 - paired before/after per docs/ab-design.md: `Returning to the field` at most 7 percent of time (was 14) and bot restarts per virtual hour at most half of before, interval excluding zero, raw in docs/probes/tripwp
 - go test -p 1 ./internal/town ./internal/bot -run 'Trip|Waypoint|Chicken' passes including TestLeaveTownByActiveWaypoint and TestChickenPortalsWhenScrollHeld
-- go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m2-tripwp leaves nothing
+- go run ./cmd/leakcheck -mode fail finds 0; tools/agentreap.sh m2-tripwp leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m2-tripwp/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

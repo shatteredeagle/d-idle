@@ -48,7 +48,7 @@ Parked: area-choice work (noarea cards) is archived; revisit after Act 1 runs
 Gates (from the card):
 - before/after on 4 seeds x 2 virtual hours per arm: walk share of kill time at most 55 percent (was 77) and `clear killed nothing` at most 0.15 per kill (was 0.30), same binary, interleaved arms, raw in docs/probes/roam
 - go test -p 1 ./internal/nav ./internal/bot passes; go test ./internal/env -run EveryKnob passes with the new default
-- go run ./cmd/changecheck -cli has 0 warnings; go run ./cmd/leakcheck -mode fail finds 0; tools/openspec.sh validate --all --strict passes; tools/agentreap.sh m2-roam leaves nothing
+- go run ./cmd/leakcheck -mode fail finds 0; tools/agentreap.sh m2-roam leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m2-roam/ (this task is the copy).
 <!-- SECTION:DESCRIPTION:END -->

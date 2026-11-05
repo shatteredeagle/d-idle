@@ -1,3 +1,9 @@
+---
+id: m1-liveproof
+goal: G-B
+status: proposed
+enforced_by: prose
+---
 # Proposed contract text: m1-liveproof (primitives)
 
 > status: PROPOSED, not in force. Converted at OpenSpec removal stage 3 from the delta spec of card `m1-liveproof` (git tag `openspec-final`, path `openspec/changes/m1-liveproof/specs/primitives/spec.md`). When the work lands, the branch that implements it folds this text into a NEW contract `docs/contracts/primitives.md` (no main file yet) and deletes this file. Backlog task: title starts with `m1-liveproof:`.

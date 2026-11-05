@@ -1,4 +1,11 @@
-# combat-loop Specification
+---
+id: combat-loop
+goal: G-C
+status: in-force
+enforced_by:
+  - internal/combat
+---
+# combat-loop contract
 
 ## Purpose
 What the fight loop of internal/combat must keep true so that it never spins without game time passing: the cost of a failed walk, when a retreat is offered, and the no-progress watchdog.

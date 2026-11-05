@@ -33,6 +33,10 @@ python3 tools/merge_lines_check.py --changed || fail=1
 python3 -I tools/shims/check.py || fail=1
 python3 -I tools/shims/test_check.py >/dev/null 2>&1 || bad "tools/shims/test_check.py"
 
+# --- contracts: headers, requirements, knob citations (docs/process/contracts-after-openspec.md 3.8) ---
+python3 -I tools/contracts/check.py || fail=1
+python3 -I tools/contracts/test_check.py >/dev/null 2>&1 || bad "tools/contracts/test_check.py"
+
 # --- no decompiled game code or game data tables (docs/process/gamecode-guard.md) ---
 tools/ci/gamecode_guard.sh || fail=1
 
