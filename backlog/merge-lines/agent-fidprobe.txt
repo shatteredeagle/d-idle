@@ -1,0 +1,3 @@
+BACKLOG: fidprobe-core (TASK-55): engine internal/fidprobe + cmd/d2fidprobe built and tested offline (replay); first live run after Gate 2
+INDEX: [probes/fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe and first-live-run checklist (status: unverified until the first live run)
+CHANGELOG: d2fidprobe: same-save fidelity probe tool (game.exe vs d2d snapshot diff, EQUAL/KNOWN/MISMATCH/UNREADABLE), offline only

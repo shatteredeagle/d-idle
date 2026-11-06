@@ -1,9 +1,10 @@
 ---
 id: TASK-55
 title: 'fidprobe-core: same-save probe tool and fresh/clvl 6 scenarios'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T22:43:00Z'
+updated_date: '2026-11-06T22:54:00Z'
 labels:
   - gate
 dependencies: []
@@ -15,6 +16,7 @@ owns:
   - "docs/research/fidelity-probe-run1.md"
 exclusive: []
 contracts: []
+result: "offline: engine, tool and tests built (two readers + replay; d2s file reader, merc and affix fields not yet); NOT run live, AC all open"
 ---
 
 ## Description
