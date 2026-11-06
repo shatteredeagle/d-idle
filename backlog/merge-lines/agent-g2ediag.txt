@@ -1,0 +1,1 @@
+BACKLOG: g2ediag: Gate 2 g2e failure diagnosis in docs/research/g2e-diagnosis.md (docs only; ranked fixes F1-F7, 4 criterion questions)
