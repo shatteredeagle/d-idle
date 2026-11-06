@@ -2,9 +2,12 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/base64"
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -32,6 +35,8 @@ type ladderOptions struct {
 	store   string // "" = a store per D2BOT_RUN when a run is named, else the shared one; "shared" = the shared one; else a named store
 	// -watch: the read-only viewer and the SEPARATE answer listener (same semantics as d2dview -watch).
 	viewAddr, answerAddr, origins string
+	// The watch screen's OWN access token (viewer GETs and answer/orders POSTs), never the bot API token.
+	watchToken, watchTokenFile string
 	// -watch-video: the game window as MJPEG on the viewer (off by default; capture only while someone watches).
 	video        bool
 	videoFPS     int
@@ -46,9 +51,11 @@ func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
 	fs.StringVar(&l.profile, "ladder-profile", envOr("D2BOT_LADDER_PROFILE", ""), "with --ladder: a scripted player for drills (cautious, bold, inconsistent, holdout:SEED); default none, a person answers on the watch screen")
 	fs.StringVar(&l.store, "ladder-store", envOr("D2BOT_LADDER_STORE", ""), "with --ladder: the store under <instance state>/ladder/runs/NAME; default the run named by D2BOT_RUN (so drills are independent), or the shared store when no run is named; \"shared\" forces the shared store (learning carries on across sessions)")
 	fs.BoolVar(&l.watch, "watch", envBool("D2BOT_WATCH"), "with --ladder: serve the player screen (/watch) from this process (env D2BOT_WATCH; default off)")
-	fs.StringVar(&l.viewAddr, "watch-addr", envOr("D2BOT_WATCH_ADDR", "127.0.0.1:8891"), "with --watch: listen address of the read-only viewer; non-loopback requires --token")
-	fs.StringVar(&l.answerAddr, "watch-answer-addr", envOr("D2BOT_WATCH_ANSWER_ADDR", "127.0.0.1:8892"), "with --watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders); non-loopback requires --token")
+	fs.StringVar(&l.viewAddr, "watch-addr", envOr("D2BOT_WATCH_ADDR", "127.0.0.1:8891"), "with --watch: listen address of the read-only viewer; non-loopback requires --watch-token or --watch-token-file")
+	fs.StringVar(&l.answerAddr, "watch-answer-addr", envOr("D2BOT_WATCH_ANSWER_ADDR", "127.0.0.1:8892"), "with --watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders); non-loopback requires --watch-token or --watch-token-file")
 	fs.StringVar(&l.origins, "watch-origin", envOr("D2BOT_WATCH_ORIGIN", ""), "with --watch: comma list of page origins the answer route accepts (default: the viewer's port on localhost)")
+	fs.StringVar(&l.watchToken, "watch-token", envOr("D2BOT_WATCH_TOKEN", ""), "with --watch: access token of the watch screen, separate from the bot API token --token (env D2BOT_WATCH_TOKEN; it shows in ps, prefer --watch-token-file)")
+	fs.StringVar(&l.watchTokenFile, "watch-token-file", envOr("D2BOT_WATCH_TOKEN_FILE", ""), "with --watch: file holding the watch token; created with a random token (mode 0600) when missing, and the viewer URL is printed once (env D2BOT_WATCH_TOKEN_FILE)")
 	fs.BoolVar(&l.video, "watch-video", envBool("D2BOT_WATCH_VIDEO"), "with --watch: live video of this instance's private game display on the viewer (/stream, /shot.jpg), captured only while someone watches (env D2BOT_WATCH_VIDEO; default off)")
 	fs.StringVar(&l.videoSource, "watch-video-source", envOr("D2BOT_WATCH_VIDEO_SOURCE", videoX11), "with --watch-video: where frames come from, x11 (the instance's private display, ffmpeg or import) or tap (the d2d view tap's /frame, for --backend d2d; token from env D2DVIEW_TOKEN) (env D2BOT_WATCH_VIDEO_SOURCE; default x11)")
 	fs.StringVar(&l.tapURL, "watch-tap-url", envOr("D2BOT_WATCH_TAP_URL", "http://127.0.0.1:8893"), "with --watch-video-source tap: base URL of the d2dview tap (env D2BOT_WATCH_TAP_URL)")
@@ -63,6 +70,8 @@ func (l ladderOptions) validate(sim bool) error {
 			return errors.New("--watch needs --ladder: the screen shows the ladder's thoughts")
 		case l.profile != "":
 			return errors.New("--ladder-profile needs --ladder")
+		case l.watchToken != "" || l.watchTokenFile != "":
+			return errors.New("--watch-token and --watch-token-file need --ladder and --watch")
 		case l.video:
 			return errors.New("--watch-video needs --ladder and --watch")
 		}
@@ -70,6 +79,16 @@ func (l ladderOptions) validate(sim bool) error {
 	}
 	if sim {
 		return errors.New("--ladder needs the real bot runner: use --attach or --managed, not --sim")
+	}
+	if l.watch {
+		if l.watchToken != "" && l.watchTokenFile != "" {
+			return errors.New("--watch-token and --watch-token-file are alternatives: give one")
+		}
+		if l.watchToken == "" && l.watchTokenFile == "" && !(watch.Loopback(l.viewAddr) && watch.Loopback(l.answerAddr)) {
+			return errors.New("--watch on a non-loopback address needs --watch-token or --watch-token-file (the bot API --token is not used for the screen)")
+		}
+	} else if l.watchToken != "" || l.watchTokenFile != "" {
+		return errors.New("--watch-token and --watch-token-file need --watch")
 	}
 	if l.profile == "" && !l.watch {
 		return errors.New("--ladder needs someone to answer: add --watch (a person) or --ladder-profile (a scripted player)")
@@ -137,9 +156,16 @@ type enableFunc func(stateDir, profile string, wire bot.LadderWire) (*ladder.Lad
 // attaches the watch Hub as the thought sink and answer source when -watch is on, and feeds the Hub from the goal
 // manager's events and the runner's status. here names the area the hero stands in, for "fight here"; guard says why the
 // hero's own guards close a game area now (the "too hard" mark of the orders map; nil: none).
-func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, enable enableFunc, m *goals.Manager, status func() goals.Status, here func() string, guard func(areaID int) string) (*ladderRig, error) {
+func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string, enable enableFunc, m *goals.Manager, status func() goals.Status, here func() string, guard func(areaID int) string) (*ladderRig, error) {
 	if !l.on {
 		return nil, nil
+	}
+	watchTok := ""
+	if l.watch {
+		var err error
+		if watchTok, err = l.resolveWatchToken(apiToken); err != nil {
+			return nil, err
+		}
 	}
 	rig := &ladderRig{}
 	var orders *watch.GoalsOrders
@@ -185,7 +211,7 @@ func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, e
 		ladder.Install(nil)
 		return nil, err
 	}
-	served, err := rig.Hub.Serve(ctx, watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: token, Origins: l.origins, Video: vid})
+	served, err := rig.Hub.Serve(ctx, watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid})
 	if err != nil {
 		ladder.Install(nil)
 		return nil, err
@@ -194,6 +220,78 @@ func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, e
 	go rig.Hub.RunTicker(ctx, time.Second)
 	go feedHub(ctx, rig.Hub, orders, m, status)
 	return rig, nil
+}
+
+// watchTokenOut receives the one-time viewer URL when a token file is created (the only place a token is ever printed).
+var watchTokenOut io.Writer = os.Stderr
+
+// minWatchToken is the shortest token accepted from a flag, env or file; generated ones are 32 characters.
+const minWatchToken = 16
+
+// resolveWatchToken returns the access token of the watch screen: the flag/env value, the content of the token file
+// (created 0600 with a random token on first start), or "" (loopback only, as before). It never equals the bot API token.
+func (l ladderOptions) resolveWatchToken(apiToken string) (string, error) {
+	tok := l.watchToken
+	fresh := false
+	if l.watchTokenFile != "" {
+		var err error
+		if tok, fresh, err = loadOrCreateToken(l.watchTokenFile); err != nil {
+			return "", err
+		}
+		if tok == "" {
+			return "", fmt.Errorf("watch token file %s is empty: delete it to have a new token made", l.watchTokenFile)
+		}
+	}
+	if tok == "" {
+		return "", nil
+	}
+	if len(tok) < minWatchToken {
+		return "", fmt.Errorf("the watch token must be at least %d characters", minWatchToken)
+	}
+	if apiToken != "" && tok == apiToken {
+		return "", errors.New("the watch token must differ from the bot API token: the screen is shared with testers, the API is not")
+	}
+	if fresh {
+		base := "http://" + l.viewAddr
+		if o, _, _ := strings.Cut(l.origins, ","); o != "" {
+			base = strings.TrimRight(o, "/") // the page origin is the viewer's public URL
+		}
+		fmt.Fprintf(watchTokenOut, "watch: token created in %s; open %s/watch?t=%s\n", l.watchTokenFile, base, tok)
+	}
+	return tok, nil
+}
+
+// loadOrCreateToken reads path, or creates it with 24 random bytes (base64url, 32 characters) and mode 0600.
+func loadOrCreateToken(path string) (tok string, created bool, err error) {
+	b, err := os.ReadFile(path)
+	if err == nil {
+		if st, e := os.Stat(path); e == nil && st.Mode().Perm()&0o077 != 0 {
+			if e := os.Chmod(path, 0o600); e != nil {
+				return "", false, fmt.Errorf("watch token file %s is readable by others and cannot be fixed: %w", path, e)
+			}
+		}
+		return strings.TrimSpace(string(b)), false, nil
+	}
+	if !errors.Is(err, os.ErrNotExist) {
+		return "", false, err
+	}
+	raw := make([]byte, 24)
+	if _, err := rand.Read(raw); err != nil {
+		return "", false, err
+	}
+	tok = base64.RawURLEncoding.EncodeToString(raw)
+	if err := os.MkdirAll(filepath.Dir(path), 0o700); err != nil {
+		return "", false, err
+	}
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o600)
+	if err != nil {
+		return "", false, err
+	}
+	if _, err := f.WriteString(tok + "\n"); err != nil {
+		f.Close()
+		return "", false, err
+	}
+	return tok, true, f.Close()
 }
 
 func liveRuleKeys(st *decide.Store) []string {
