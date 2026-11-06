@@ -63,8 +63,9 @@ type extra struct {
 // Hub is safe for concurrent use. Lock order: the store's lock, then the Hub's (store events call in), so no Hub
 // method holds its own lock while it calls the store.
 type Hub struct {
-	cfg  Config
-	base time.Duration
+	cfg   Config
+	base  time.Duration
+	video *Video // nil: no game video
 
 	mu     sync.Mutex
 	seq    uint64

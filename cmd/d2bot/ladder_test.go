@@ -310,3 +310,41 @@ func TestLadderStorePerRun(t *testing.T) {
 		}
 	}
 }
+
+func TestWatchVideoOptions(t *testing.T) {
+	dir := t.TempDir()
+	if err := os.WriteFile(filepath.Join(dir, "ffmpeg"), []byte("#!/bin/sh\n"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("PATH", dir)
+	ok := ladderOptions{on: true, watch: true, video: true, videoFPS: 8, videoQuality: 5, instance: "i5"}
+	if err := ok.validate(false); err != nil {
+		t.Fatalf("valid: %v", err)
+	}
+	if v, err := ok.newVideo(); err != nil || v == nil || v.Running() {
+		t.Fatalf("a video must exist but not run before a viewer: %v %v", v, err)
+	}
+	if v, _ := (ladderOptions{on: true, watch: true}).newVideo(); v != nil {
+		t.Error("video without the flag")
+	}
+	for name, mod := range map[string]func(*ladderOptions){
+		"i0 has no private display": func(l *ladderOptions) { l.instance = "i0" },
+		"odd instance id":           func(l *ladderOptions) { l.instance = "main" },
+		"needs --watch":             func(l *ladderOptions) { l.watch = false; l.profile = "bold" },
+		"fps too high":              func(l *ladderOptions) { l.videoFPS = 60 },
+		"quality out of range":      func(l *ladderOptions) { l.videoQuality = 1 },
+	} {
+		l := ok
+		mod(&l)
+		if err := l.validate(false); err == nil {
+			t.Errorf("%s: accepted", name)
+		}
+	}
+	if err := (ladderOptions{video: true, instance: "i5"}).validate(false); err == nil {
+		t.Error("--watch-video without --ladder accepted")
+	}
+	t.Setenv("PATH", t.TempDir())
+	if err := ok.validate(false); err == nil || !strings.Contains(err.Error(), "ffmpeg") {
+		t.Errorf("no tool: %v", err)
+	}
+}

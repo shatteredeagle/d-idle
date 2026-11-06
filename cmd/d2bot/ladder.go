@@ -17,6 +17,7 @@ import (
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/ladder"
+	"d2lod-bot/internal/launch"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/watch"
 )
@@ -31,6 +32,11 @@ type ladderOptions struct {
 	store   string // "" = a store per D2BOT_RUN when a run is named, else the shared one; "shared" = the shared one; else a named store
 	// -watch: the read-only viewer and the SEPARATE answer listener (same semantics as d2dview -watch).
 	viewAddr, answerAddr, origins string
+	// -watch-video: the game window as MJPEG on the viewer (off by default; capture only while someone watches).
+	video        bool
+	videoFPS     int
+	videoQuality int
+	instance     string // set by the parser: the instance whose private display is captured
 }
 
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
@@ -41,6 +47,9 @@ func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
 	fs.StringVar(&l.viewAddr, "watch-addr", envOr("D2BOT_WATCH_ADDR", "127.0.0.1:8891"), "with --watch: listen address of the read-only viewer; non-loopback requires --token")
 	fs.StringVar(&l.answerAddr, "watch-answer-addr", envOr("D2BOT_WATCH_ANSWER_ADDR", "127.0.0.1:8892"), "with --watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders); non-loopback requires --token")
 	fs.StringVar(&l.origins, "watch-origin", envOr("D2BOT_WATCH_ORIGIN", ""), "with --watch: comma list of page origins the answer route accepts (default: the viewer's port on localhost)")
+	fs.BoolVar(&l.video, "watch-video", envBool("D2BOT_WATCH_VIDEO"), "with --watch: live video of this instance's private game display on the viewer (/stream, /shot.jpg), captured only while someone watches (env D2BOT_WATCH_VIDEO; default off)")
+	fs.IntVar(&l.videoFPS, "watch-video-fps", envInt("D2BOT_WATCH_VIDEO_FPS", watch.DefaultVideoFPS), "with --watch-video: frames per second of the shared capture (1 to 15)")
+	fs.IntVar(&l.videoQuality, "watch-video-quality", envInt("D2BOT_WATCH_VIDEO_QUALITY", 5), "with --watch-video: JPEG quality as ffmpeg -q:v, 2 (best, big) to 31 (small)")
 }
 
 func (l ladderOptions) validate(sim bool) error {
@@ -50,6 +59,8 @@ func (l ladderOptions) validate(sim bool) error {
 			return errors.New("--watch needs --ladder: the screen shows the ladder's thoughts")
 		case l.profile != "":
 			return errors.New("--ladder-profile needs --ladder")
+		case l.video:
+			return errors.New("--watch-video needs --ladder and --watch")
 		}
 		return nil
 	}
@@ -58,6 +69,20 @@ func (l ladderOptions) validate(sim bool) error {
 	}
 	if l.profile == "" && !l.watch {
 		return errors.New("--ladder needs someone to answer: add --watch (a person) or --ladder-profile (a scripted player)")
+	}
+	if l.video {
+		if !l.watch {
+			return errors.New("--watch-video needs --watch")
+		}
+		if l.videoFPS < 1 || l.videoFPS > watch.MaxVideoFPS {
+			return fmt.Errorf("--watch-video-fps must be 1 to %d", watch.MaxVideoFPS)
+		}
+		if l.videoQuality < 2 || l.videoQuality > 31 {
+			return errors.New("--watch-video-quality must be 2 to 31")
+		}
+		if _, err := l.newVideo(); err != nil { // refuse at start, not when the first viewer comes
+			return err
+		}
 	}
 	if l.profile != "" {
 		if _, _, err := l.source(); err != nil {
@@ -146,7 +171,12 @@ func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, e
 	if rig.Hub == nil {
 		return rig, nil
 	}
-	served, err := rig.Hub.Serve(ctx, watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: token, Origins: l.origins})
+	vid, err := l.newVideo()
+	if err != nil {
+		ladder.Install(nil)
+		return nil, err
+	}
+	served, err := rig.Hub.Serve(ctx, watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: token, Origins: l.origins, Video: vid})
 	if err != nil {
 		ladder.Install(nil)
 		return nil, err
@@ -252,4 +282,28 @@ func logLadder(log *slog.Logger, l ladderOptions, rig *ladderRig, dir string) {
 		args = append(args, "view", rig.Served.View.String(), "answer", rig.Served.Answer.String())
 	}
 	log.Info("ladder on", args...)
+}
+
+// newVideo builds the game video for -watch-video: the capture of the instance's own private display (100+N, the rule of
+// launch.XvfbDisplay), never the desktop. nil when the flag is off.
+func (l ladderOptions) newVideo() (*watch.Video, error) {
+	if !l.video {
+		return nil, nil
+	}
+	in := launch.Instance{ID: l.instance}
+	if !launch.ValidID(l.instance) || in.Num() <= 0 {
+		return nil, fmt.Errorf("--watch-video: instance %q has no private display (only i1..i9; i0 runs on the desktop)", l.instance)
+	}
+	capture, err := watch.ExecCapture(watch.CaptureOptions{Display: launch.XvfbDisplay{Num: 100 + in.Num()}.Name(), FPS: l.videoFPS, Quality: l.videoQuality})
+	if err != nil {
+		return nil, err
+	}
+	return watch.NewVideo(watch.VideoOptions{Capture: capture})
+}
+
+func envInt(key string, def int) int {
+	if n, err := strconv.Atoi(os.Getenv(key)); err == nil {
+		return n
+	}
+	return def
 }
