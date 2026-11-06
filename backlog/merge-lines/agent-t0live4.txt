@@ -1,2 +1,0 @@
-BACKLOG: TASK-21 live series after pumpfix: 4 profiles x 10 min on i5 clean, questions answered in the field (25 of 42), 2 rules learned, no behaviour change yet, AC 2 and 3 open (docs/probes/t0drill.md Result 3)
-CHANGELOG: T0 drill series after pumpfix, verified live on four answer profiles (docs/probes/t0drill.md Result 3)

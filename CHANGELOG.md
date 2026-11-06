@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- T0 drill series after pumpfix, verified live on four answer profiles (docs/probes/t0drill.md Result 3)
 - d2bot: the decision ladder is pumped every bot tick; --ladder-store / D2BOT_RUN give each drill its own ladder store (the shared store stays the default for unnamed runs)
 - T0 ladder live re-drill (docs/probes/t0drill.md Result 2): questions are answered in the field, a rule was learned; open defect, Pump is not called from the runner loop
 - drill fixes: ladder questions are held only while a hostile is within the fight radius (not for the whole field clear), the tuner keeps --ladder across tuning.json and edits, d2drill needs D2D_BIN and reports a stale lab binary.
