@@ -1,1 +1,0 @@
-BACKLOG: statuses synced to reality: TASK-20 and TASK-30 Done, TASK-23 and TASK-31 In Progress
