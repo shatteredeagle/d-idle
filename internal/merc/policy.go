@@ -49,12 +49,15 @@ type Ctx struct {
 
 // need is the gold a merc payment takes: price x mult, plus KitReservePct of the full kit refill (Kit). Potions come
 // first: the kit reserve stays in the purse when the merc is paid.
-func (c Ctx) need(price, mult int) int {
+func (c Ctx) need(price, mult int) int { return price*mult + c.reserve() }
+
+// reserve is the kit gold kept back from a merc payment.
+func (c Ctx) reserve() int {
 	pct := c.Knobs.KitReservePct
 	if c.KitFull {
 		pct = c.Knobs.KitReservePctFullKit
 	}
-	return price*mult + c.Kit*pct/100
+	return c.Kit * pct / 100
 }
 
 func no(why string) Decision { return Decision{Reason: why} }
@@ -240,7 +243,9 @@ func ReviveNeed(c Ctx, price int) int {
 	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
 		mult = c.Knobs.StopGoldMult
 	}
-	return c.need(price, mult)
+	// The revive reserve is capped (g2f seed 17: 155 to 310 reserve on top of a 1920 price kept the merc dead 7 hours
+	// while the purse sat at 1500 to 2230). The hire reserve stays whole: a hire is not urgent.
+	return price*mult + min(c.reserve(), c.Knobs.ReviveReserveMax)
 }
 
 // MercDied is the field signal: the merc was alive and is now dead while the player is outside town. Leave the area

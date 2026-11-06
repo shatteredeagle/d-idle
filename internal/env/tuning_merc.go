@@ -18,13 +18,14 @@ type MercTuning struct {
 	KitReservePctFullKit int // the kit reserve in % while the kit is already full (just bought)
 	GoldFarmBudgetMin    int // one gold farm arming lasts at most this many virtual minutes; 0 = no budget
 	GoldFarmCooldownMin  int // after a budget end the farm may not arm again for this many minutes
+	ReviveReserveMax     int // a revive never keeps back more than this many gold for the kit (the hire reserve is not capped)
 	Enabled              int // 1: the bot runs the merc policy (revive, guard input, status); 0: Game.exe and d2d behave as before
 }
 
 func DefaultMercTuning() MercTuning {
 	return MercTuning{ReviveMaxPerHour: 2, ReviveGoldMult: 1, StopDeathsPerHour: 3, StopGoldMult: 5, HireGoldMult: 1,
 		FreeRogueOnly: 0, ReplaceAtAct2: 1, SwapGainPct: 10, ReqStrDex: 1, PotionLifePct: 50, KitReservePct: 100, GoldFarmMaxLevel: 17,
-		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, Enabled: 1}
+		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, ReviveReserveMax: 100, Enabled: 1}
 }
 
 func mercKnobs() []Knob {
@@ -53,6 +54,8 @@ func mercKnobs() []Knob {
 			Desc: "A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc."},
 		{Key: "merc.kitReservePctFullKit", Label: "Merc kit reserve, full kit", Unit: "%", Default: 50, Min: 0, Max: 500, NoHandicap: true,
 			Desc: "The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon)."},
+		{Key: "merc.reviveReserveMax", Label: "Merc revive reserve cap", Unit: "gold", Default: 100, Min: 0, Max: 2000, NoHandicap: true,
+			Desc: "The kit reserve a revive keeps back (merc.kitReservePct of the full kit refill) is never more than this many gold, so a dead merc is revived once the purse covers the price plus a town portal scroll. g2f seed 17 stayed dead 7 hours with gold 100 to 300 short of price plus the 155 to 310 reserve."},
 		{Key: "merc.goldFarmBudgetMin", Label: "Merc gold farm budget", Unit: "min", Default: 40, Min: 0, Max: 600, NoHandicap: true,
 			Desc: "One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit."},
 		{Key: "merc.goldFarmCooldownMin", Label: "Merc gold farm cooldown", Unit: "min", Default: 60, Min: 0, Max: 600, NoHandicap: true,

@@ -1,9 +1,10 @@
 ---
 id: TASK-41
 title: 'g2f-record: Gate 2 g2f result, diagnosis and the open decisions'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-06T21:34:00Z'
 labels:
   - gate
 dependencies: []

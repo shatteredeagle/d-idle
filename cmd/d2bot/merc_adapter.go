@@ -30,3 +30,8 @@ var _ interface {
 	HireMerc(context.Context, *d2.Snapshot) (bool, error)
 	ReviveMerc(context.Context, bool) (bool, error)
 } = townAdapter{}
+
+// WithdrawGold makes townAdapter (and so d2dTown) a GoldBank for the merc revive.
+func (a townAdapter) WithdrawGold(ctx context.Context, amount int) error {
+	return a.t.WithdrawGold(ctx, amount)
+}
