@@ -1,2 +1,0 @@
-BACKLOG: TASK-23 testerwatch: watch screen gets its own token (--watch-token, --watch-token-file, env twins; file created 0600 on first start); offline tested, AC 2 and 3 open
-CHANGELOG: d2bot: separate access token for the watch screen (--watch-token-file creates a random 0600 token and prints the viewer URL once); the bot API token no longer opens the screen

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d2bot: separate access token for the watch screen (--watch-token-file creates a random 0600 token and prints the viewer URL once); the bot API token no longer opens the screen
 - decisions: tester build recommendations accepted (fork public with the first friend copy on the users go, verbs flag-gated, tarball); fork wording updated
 - tester build re-planned for the d2d container (docs and backlog tasks only)
 - decisions: the tester build is the d2d container and ships the fork build with its source (user, 2026-11-06); publication needs a later go
