@@ -84,6 +84,7 @@ type Thought struct {
 	Answer   string // for confirm: the answer to learn
 	OpenedAt time.Duration
 	FadesAt  time.Duration
+	Sit      Situation // display only; in memory (not in the answer log), so a reopened thought has none
 }
 
 // EventKind names what a subscriber can see.
@@ -122,11 +123,12 @@ type ThoughtInfo struct {
 	Choices []Answer
 	Expires time.Duration // virtual time at which the thought fades
 	Opened  time.Duration // virtual time at which it was opened (additive in catalogue v4; a ladder ThoughtView carries it)
+	Sit     Situation     // the facts that prompted the question, display only; nil when the call site gave none
 }
 
 func (s *Store) info(t *Thought) *ThoughtInfo {
 	p, _ := s.cat.Point(t.Point)
-	ti := &ThoughtInfo{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, Answer: t.Answer, Expires: t.FadesAt, Opened: t.OpenedAt}
+	ti := &ThoughtInfo{ID: t.ID, Point: t.Point, Key: t.Key, Confirm: t.Confirm, Answer: t.Answer, Expires: t.FadesAt, Opened: t.OpenedAt, Sit: t.Sit}
 	if p != nil {
 		ti.Question = p.Question
 		if !t.Confirm {
@@ -486,6 +488,12 @@ func (s *Store) ask(ctx Context, legacy string) (Decision, error) {
 	evs, err := s.commit(e)
 	if err != nil {
 		return d, err
+	}
+	s.thoughts[e.Thought].Sit = ctx.Sit
+	for i := range evs {
+		if evs[i].Info != nil && evs[i].Thought == e.Thought {
+			evs[i].Info.Sit = ctx.Sit
+		}
 	}
 	c := *s.thoughts[e.Thought]
 	d.Thought = &c
