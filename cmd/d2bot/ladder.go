@@ -15,6 +15,7 @@ import (
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/access"
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
@@ -37,6 +38,9 @@ type ladderOptions struct {
 	viewAddr, answerAddr, origins string
 	// The watch screen's OWN access token (viewer GETs and answer/orders POSTs), never the bot API token.
 	watchToken, watchTokenFile string
+	// The passcode choice of the setup wizard (access.json, written by d2dsetup). A passcode record replaces the token
+	// gate; the token kind and a missing record fall back to the token above, and with no token the screen stays closed.
+	watchAccessFile string
 	// -watch-video: the game window as MJPEG on the viewer (off by default; capture only while someone watches).
 	video        bool
 	videoFPS     int
@@ -56,6 +60,7 @@ func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
 	fs.StringVar(&l.origins, "watch-origin", envOr("D2BOT_WATCH_ORIGIN", ""), "with --watch: comma list of page origins the answer route accepts (default: the viewer's port on localhost)")
 	fs.StringVar(&l.watchToken, "watch-token", envOr("D2BOT_WATCH_TOKEN", ""), "with --watch: access token of the watch screen, separate from the bot API token --token (env D2BOT_WATCH_TOKEN; it shows in ps, prefer --watch-token-file)")
 	fs.StringVar(&l.watchTokenFile, "watch-token-file", envOr("D2BOT_WATCH_TOKEN_FILE", ""), "with --watch: file holding the watch token; created with a random token (mode 0600) when missing, and the viewer URL is printed once (env D2BOT_WATCH_TOKEN_FILE)")
+	fs.StringVar(&l.watchAccessFile, "watch-access-file", envOr("D2BOT_WATCH_ACCESS_FILE", ""), "with --watch: the access choice file of the setup wizard (access.json): a chosen passcode (login form, cookie, rate limit) replaces the token gate; re-read on every request so `d2dsetup reset-access` needs no restart (env D2BOT_WATCH_ACCESS_FILE)")
 	fs.BoolVar(&l.video, "watch-video", envBool("D2BOT_WATCH_VIDEO"), "with --watch: live video of this instance's private game display on the viewer (/stream, /shot.jpg), captured only while someone watches (env D2BOT_WATCH_VIDEO; default off)")
 	fs.StringVar(&l.videoSource, "watch-video-source", envOr("D2BOT_WATCH_VIDEO_SOURCE", videoX11), "with --watch-video: where frames come from, x11 (the instance's private display, ffmpeg or import) or tap (the d2d view tap's /frame, for --backend d2d; token from env D2DVIEW_TOKEN) (env D2BOT_WATCH_VIDEO_SOURCE; default x11)")
 	fs.StringVar(&l.tapURL, "watch-tap-url", envOr("D2BOT_WATCH_TAP_URL", "http://127.0.0.1:8893"), "with --watch-video-source tap: base URL of the d2dview tap (env D2BOT_WATCH_TAP_URL)")
@@ -70,8 +75,8 @@ func (l ladderOptions) validate(sim bool) error {
 			return errors.New("--watch needs --ladder: the screen shows the ladder's thoughts")
 		case l.profile != "":
 			return errors.New("--ladder-profile needs --ladder")
-		case l.watchToken != "" || l.watchTokenFile != "":
-			return errors.New("--watch-token and --watch-token-file need --ladder and --watch")
+		case l.watchToken != "" || l.watchTokenFile != "" || l.watchAccessFile != "":
+			return errors.New("--watch-token, --watch-token-file and --watch-access-file need --ladder and --watch")
 		case l.video:
 			return errors.New("--watch-video needs --ladder and --watch")
 		}
@@ -84,11 +89,11 @@ func (l ladderOptions) validate(sim bool) error {
 		if l.watchToken != "" && l.watchTokenFile != "" {
 			return errors.New("--watch-token and --watch-token-file are alternatives: give one")
 		}
-		if l.watchToken == "" && l.watchTokenFile == "" && !(watch.Loopback(l.viewAddr) && watch.Loopback(l.answerAddr)) {
-			return errors.New("--watch on a non-loopback address needs --watch-token or --watch-token-file (the bot API --token is not used for the screen)")
+		if l.watchToken == "" && l.watchTokenFile == "" && l.watchAccessFile == "" && !(watch.Loopback(l.viewAddr) && watch.Loopback(l.answerAddr)) {
+			return errors.New("--watch on a non-loopback address needs --watch-token, --watch-token-file or --watch-access-file (the bot API --token is not used for the screen)")
 		}
-	} else if l.watchToken != "" || l.watchTokenFile != "" {
-		return errors.New("--watch-token and --watch-token-file need --watch")
+	} else if l.watchToken != "" || l.watchTokenFile != "" || l.watchAccessFile != "" {
+		return errors.New("--watch-token, --watch-token-file and --watch-access-file need --watch")
 	}
 	if l.profile == "" && !l.watch {
 		return errors.New("--ladder needs someone to answer: add --watch (a person) or --ladder-profile (a scripted player)")
@@ -211,7 +216,11 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		ladder.Install(nil)
 		return nil, err
 	}
-	served, err := rig.Hub.Serve(ctx, watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid})
+	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid}
+	if l.watchAccessFile != "" {
+		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
+	}
+	served, err := rig.Hub.Serve(ctx, so)
 	if err != nil {
 		ladder.Install(nil)
 		return nil, err
