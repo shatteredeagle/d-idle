@@ -11,6 +11,12 @@ import (
 // of internal/goals, goal events and runner status feed the Hub's activity timeline. It imports only the goals types;
 // *goals.Manager satisfies GoalQueue as it is.
 
+// questAreas are the Act 1 quest words whose finish means the area was cleared (levels.txt ids; quest ids as in
+// cmd/d2bot/milestone.go). Anything not listed here is never shown as cleared.
+var questAreas = map[string][]int{
+	"den_of_evil": {8}, "sisters_burial_grounds": {17}, "forgotten_tower": {20, 21, 22, 23, 24, 25},
+}
+
 // GoalQueue is the part of *goals.Manager the orders need.
 type GoalQueue interface {
 	Add(g goals.Goal, pos int) (goals.Goal, error)
@@ -116,7 +122,14 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 		if first {
 			g.Hub.Activity(KindRecovery, "back after dying")
 		}
+	case goals.EvQuest:
+		// A finished quest marks its area cleared on the map (Normal only: the map is the Normal Act 1 map; U whether
+		// "done" can precede the boss kill for the quest word, the boss quests read Done when the quest is complete).
+		if ev.Done && ev.Diff == 0 {
+			g.Hub.MarkCleared(questAreas[ev.Quest]...)
+		}
 	case goals.EvKill:
+		g.Hub.NoteKill()
 		g.mu.Lock()
 		was := g.lost
 		g.lost = ""
@@ -132,6 +145,8 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 // OnStatus feeds the runner's status (poll it every few seconds): it sets the activity unless a death or its recovery
 // is still being counted, which only a kill ends.
 func (g *GoalsOrders) OnStatus(st goals.Status) {
+	c := st.Character
+	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: c.XP, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity})
 	g.mu.Lock()
 	lost := g.lost
 	g.mu.Unlock()

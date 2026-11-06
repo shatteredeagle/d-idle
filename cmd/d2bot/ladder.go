@@ -127,8 +127,9 @@ type enableFunc func(stateDir, profile string, wire bot.LadderWire) (*ladder.Lad
 
 // startLadder installs the ladder on the runner (call after the goal manager exists and before the runner starts),
 // attaches the watch Hub as the thought sink and answer source when -watch is on, and feeds the Hub from the goal
-// manager's events and the runner's status. here names the area the hero stands in, for "fight here".
-func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, enable enableFunc, m *goals.Manager, status func() goals.Status, here func() string) (*ladderRig, error) {
+// manager's events and the runner's status. here names the area the hero stands in, for "fight here"; guard says why the
+// hero's own guards close a game area now (the "too hard" mark of the orders map; nil: none).
+func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, enable enableFunc, m *goals.Manager, status func() goals.Status, here func() string, guard func(areaID int) string) (*ladderRig, error) {
 	if !l.on {
 		return nil, nil
 	}
@@ -149,7 +150,7 @@ func startLadder(ctx context.Context, l ladderOptions, token, stateDir string, e
 			return nil, src, nil
 		}
 		orders = &watch.GoalsOrders{Q: m, Here: here, Rules: func() []string { return liveRuleKeys(st) }}
-		hub, err := watch.New(watch.Config{Store: st, Cat: cat, Clock: clk, Areas: watch.OrderableAreas(), Orders: orders, WaitForSink: true})
+		hub, err := watch.New(watch.Config{Store: st, Cat: cat, Clock: clk, Areas: watch.OrderableAreas(), Orders: orders, AreaGuard: guard, WaitForSink: true})
 		if err != nil {
 			return nil, nil, err
 		}

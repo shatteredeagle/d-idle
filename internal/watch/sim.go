@@ -32,16 +32,16 @@ type SimBuild struct {
 	Life     float64
 	Danger   string
 	Areas    []string
+	Level    int // clvl shown on the map
+	// TowerFloor is the clvl below which the sim's guard closes the Forgotten Tower (data, like the bot's tuning).
+	TowerFloor int
 }
 
 // SimBuilds are the two builds of the scenarios: a softcore Sorceress and a hardcore Paladin.
 var SimBuilds = map[string]SimBuild{
-	"sorceress": {Class: d2.Sorceress, Life: 30, Danger: "2", Areas: act1Areas},
-	"paladin":   {Class: d2.Paladin, Hardcore: true, Life: 45, Danger: "3", Areas: act1Areas},
+	"sorceress": {Class: d2.Sorceress, Life: 30, Danger: "2", Level: 6, TowerFloor: 16},
+	"paladin":   {Class: d2.Paladin, Hardcore: true, Life: 45, Danger: "3", Level: 12, TowerFloor: 14},
 }
-
-// Act 1 areas the player may order (names as in cmd/d2dview/areas.go; U beyond Rogue Encampment).
-var act1Areas = []string{"Blood Moor", "Cold Plains", "Stony Field", "Dark Wood", "Black Marsh", "Den of Evil", "Burial Grounds", "Cave 1"}
 
 // pointRetreat is the decision point the sim asks while fighting (the T0 retreat question of the shipped catalogue).
 const pointRetreat = "t0.retreat.drink"
@@ -77,7 +77,12 @@ type Sim struct {
 	nextAsk  time.Duration
 	nextChat time.Duration
 	chatN    int
+	herArea  string
+	xp       int64
+	ticks    int
 }
+
+const simTown = "Rogue Encampment"
 
 // Placeholder idle lines: our own words, no game text (docs/contracts/licence-policy.md).
 var simChatter = []string{
@@ -105,7 +110,16 @@ func NewSim(build string, speed float64) (*Sim, error) {
 		return nil, err
 	}
 	s := &Sim{Clock: clk, Store: st, Build: b, phase: phIdle, nextChat: 60 * time.Second}
-	hub, err := New(Config{Store: st, Cat: cat, Clock: clk, Areas: b.Areas, Orders: s, WaitForSink: true, Speed: speed})
+	b.Areas = OrderableAreas()
+	s.Build = b
+	s.herArea, s.xp = simTown, 0
+	hub, err := New(Config{Store: st, Cat: cat, Clock: clk, Areas: b.Areas, Orders: s, WaitForSink: true, Speed: speed,
+		AreaGuard: func(id int) string {
+			if id >= 20 && id <= 25 && b.Level < b.TowerFloor {
+				return fmt.Sprintf("no mercenary and clvl %d is below %d", b.Level, b.TowerFloor)
+			}
+			return ""
+		}})
 	if err != nil {
 		return nil, err
 	}
@@ -116,6 +130,7 @@ func NewSim(build string, speed float64) (*Sim, error) {
 		return nil, err
 	}
 	hub.Activity(KindIdle, "waiting for an order")
+	s.reportHeroLocked("waiting for an order")
 	return s, nil
 }
 
@@ -150,6 +165,15 @@ func (s *Sim) setLocked(phase, kind, label string, d time.Duration) {
 	s.phase = phase
 	s.until = s.Clock.Now() + d
 	s.Hub.Activity(kind, label)
+	s.reportHeroLocked(label)
+}
+
+func (s *Sim) reportHeroLocked(label string) {
+	id := 0
+	if s.herArea == simTown {
+		id = 1
+	}
+	s.Hub.SetHero(HeroInfo{Class: s.Build.Class.String(), Level: s.Build.Level, XP: s.xp, Area: s.herArea, AreaID: id, Activity: label})
 }
 
 func (s *Sim) busyLocked() bool {
@@ -183,6 +207,7 @@ func (s *Sim) startNextLocked() {
 }
 
 func (s *Sim) fightLocked(now time.Duration) {
+	s.herArea = s.area
 	s.setLocked(phFighting, KindProgress, "fighting in "+s.area, 0)
 	s.nextAsk = now + askEvery
 }
@@ -260,7 +285,18 @@ func (s *Sim) tick() {
 	case s.phase == phWalking && now >= s.until:
 		s.fightLocked(now)
 	}
-	if s.cur != nil && !s.busyLocked() && now >= s.curEnd {
+	if s.phase == phFighting {
+		s.ticks++
+		if s.ticks%2 == 0 {
+			s.xp += 12
+			s.Hub.NoteKill()
+			s.reportHeroLocked("fighting in " + s.herArea)
+		}
+	}
+	if s.cur != nil && !s.busyLocked() && now >= s.curEnd && !s.cur.Forever {
+		if s.cur.Kind == OrderHome {
+			s.herArea = simTown
+		}
 		s.Hub.OrderState(s.cur.ID, OrderDone, "")
 		s.cur = nil
 		s.setLocked(phIdle, KindIdle, "waiting for an order", 0)
@@ -309,6 +345,3 @@ func (s *Sim) Run(ctx context.Context, speed float64, period time.Duration) {
 		}
 	}
 }
-
-// OrderableAreas is the list of areas a "go to" order may name: Act 1 only for now (U beyond Rogue Encampment).
-func OrderableAreas() []string { return append([]string(nil), act1Areas...) }

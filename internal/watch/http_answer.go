@@ -4,6 +4,7 @@ import (
 	"crypto/subtle"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"mime"
 	"net/http"
@@ -30,6 +31,8 @@ type answerBody struct {
 	Kind    string `json:"kind"`
 	Area    string `json:"area"`
 	Minutes int    `json:"minutes"`
+	Until   string `json:"until"`   // orders: "" or "minutes" (timed) or "forever"; "level" arrives with slice 2
+	Replace bool   `json:"replace"` // orders: cancel the open orders first ("Go now")
 	ID      *int   `json:"id"`
 }
 
@@ -205,7 +208,15 @@ func (h *Hub) postRevokeAll(b answerBody) (int, reply) {
 }
 
 func (h *Hub) postOrder(b answerBody) (int, reply) {
-	o, err := h.GiveOrder(b.Kind, b.Area, b.Minutes)
+	r := OrderRequest{Kind: b.Kind, Area: b.Area, Minutes: b.Minutes, Replace: b.Replace}
+	switch b.Until {
+	case "", "minutes":
+	case "forever":
+		r.Forever = true
+	default:
+		return status(fmt.Errorf("%w: until must be minutes or forever (until-level comes later)", ErrBadOrder))
+	}
+	o, err := h.Give(r)
 	if err != nil {
 		return status(err)
 	}

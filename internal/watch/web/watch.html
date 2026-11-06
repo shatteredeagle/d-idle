@@ -15,13 +15,13 @@
 </header>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
 <nav class="views" id="views" aria-label="Pages">
- <button type="button" data-view="thoughts" aria-current="page">Thoughts</button>
+ <button type="button" data-view="orders" aria-current="page">Orders</button>
+ <button type="button" data-view="thoughts">Thoughts</button>
  <button type="button" data-view="game" id="tab-game" hidden>Game</button>
- <button type="button" data-view="orders">Orders</button>
  <button type="button" data-view="rules">Rules</button>
  <button type="button" data-view="journal">Journal</button>
 </nav>
-<main id="main" data-view="thoughts">
+<main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
   <div id="frame"><img id="shot" alt="live game window" hidden><p id="noframe" class="empty" hidden>Waiting for the game picture...</p></div>
  </section>
@@ -29,15 +29,15 @@
   <div id="thoughts"></div>
   <ul id="feed" class="log-list"></ul>
  </section>
- <section class="card orders" data-v="orders" aria-labelledby="t-orders"><h2 id="t-orders">Orders</h2>
-  <form id="orderform" class="orderform">
-   <select id="okind" aria-label="order"><option value="go">Go to</option><option value="fight">Fight here</option><option value="home">Come home</option></select>
-   <select id="oarea" aria-label="area"></select>
-   <label class="check"><input id="omin" type="number" min="1" max="240" value="10" aria-label="minutes"> min</label>
-   <button class="btn primary" type="submit">Give order</button>
-  </form>
-  <ul id="orders" class="log-list"></ul>
+ <section class="card o-now" data-v="orders" aria-labelledby="t-now" id="now"></section>
+ <section class="card o-map" data-v="orders" aria-labelledby="t-map">
+  <div class="card-head"><h2 id="t-map">Where to? Tap an area</h2>
+   <button class="btn" id="viewtoggle" type="button" aria-pressed="false">List view</button></div>
+  <div class="legend" aria-label="Legend"><span>&#9670; hero is here</span><span>&#9654; current order</span><span>#n queued</span><span>&#9888; too hard now</span><span>&#10003; cleared</span><span>dashed = dungeon</span></div>
+  <div id="maparea"><svg class="map" id="svg" role="group" aria-label="Act 1 map"></svg><div class="maplist" id="maplist" hidden></div></div>
+  <p class="hint" id="mapnote"></p>
  </section>
+ <section class="card o-queue" data-v="orders" aria-labelledby="t-q" id="queue"></section>
  <section class="card rules" data-v="rules" aria-labelledby="t-rules">
   <div class="card-head"><h2 id="t-rules">Rules</h2><button class="btn danger small" id="revokeall" type="button">Revoke all</button></div>
   <p class="hint">Every rule the hero learned from you. A rule never revokes itself.</p>
@@ -47,5 +47,8 @@
   <ul id="journal" class="log-list"></ul>
  </section>
 </main>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
 <script src="/watch/app.js"></script>
 </body></html>

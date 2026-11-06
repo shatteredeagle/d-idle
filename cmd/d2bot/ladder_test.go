@@ -112,7 +112,13 @@ func TestLadderWatchOnTheBot(t *testing.T) {
 				defer cancel()
 				m := goalManager(t)
 				lo := ladderOptions{on: true, profile: scripted, watch: true, viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0"}
-				rig, err := startLadder(ctx, lo, "", "", fakeEnable(t, clk, &called), m, func() goals.Status { return goals.Status{State: goals.RunnerRunning, Activity: "Fighting"} }, func() string { return "Cold Plains" })
+				rig, err := startLadder(ctx, lo, "", "", fakeEnable(t, clk, &called), m, func() goals.Status { return goals.Status{State: goals.RunnerRunning, Activity: "Fighting"} }, func() string { return "Cold Plains" },
+					func(id int) string {
+						if id == 20 {
+							return "no merc, clvl 6 < 16"
+						}
+						return ""
+					})
 				if err != nil || rig == nil || rig.Hub == nil || called != 1 {
 					t.Fatalf("%v %v %d", rig, err, called)
 				}
@@ -166,6 +172,27 @@ func TestLadderWatchOnTheBot(t *testing.T) {
 						t.Errorf("the cancelled order's goal is still queued: %+v", g)
 					}
 				}
+				// "Go now" with no time limit: an endless area goal that replaces the open order; the map shows the bot's guard.
+				httpDo(t, "POST", ans+"/api/orders", map[string]any{"kind": "go", "area": "Dark Wood", "until": "forever", "replace": true}, nil)
+				httpDo(t, "POST", ans+"/api/orders", map[string]any{"kind": "go", "area": "Cold Plains", "minutes": 20, "replace": true}, nil)
+				var farm []goals.Goal
+				for _, g := range m.Goals() {
+					if g.Type == goals.FarmArea {
+						farm = append(farm, g)
+					}
+				}
+				if len(farm) != 1 || farm[0].Params.Area != "Cold Plains" || farm[0].Params.UntilMins != 20 {
+					t.Errorf("replace left %+v", farm)
+				}
+				var mv watch.MapView
+				if code := httpDo(t, "GET", view+"/api/orders/map", nil, &mv); code != 200 {
+					t.Fatalf("map: %d", code)
+				}
+				for _, n := range mv.Nodes {
+					if (n.ID == "ftw") != n.Status.Hard || n.Status.HardWhy != map[bool]string{true: "no merc, clvl 6 < 16"}[n.ID == "ftw"] {
+						t.Errorf("node %s: %+v", n.ID, n.Status)
+					}
+				}
 			})
 		}
 	}
@@ -176,7 +203,7 @@ func TestLadderOffDoesNothing(t *testing.T) {
 	dir := t.TempDir()
 	called := 0
 	rig, err := startLadder(context.Background(), ladderOptions{viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0"}, "", filepath.Join(dir, "state"),
-		fakeEnable(t, &watch.SimClock{}, &called), nil, nil, nil)
+		fakeEnable(t, &watch.SimClock{}, &called), nil, nil, nil, nil)
 	if rig != nil || err != nil || called != 0 || ladder.Active() != nil {
 		t.Fatalf("%v %v %d", rig, err, called)
 	}
@@ -190,7 +217,7 @@ func TestLadderOffDoesNothing(t *testing.T) {
 	}
 	defer l.Close()
 	rig, err = startLadder(context.Background(), ladderOptions{on: true, profile: "bold", viewAddr: l.Addr().String(), answerAddr: l.Addr().String()}, "", "",
-		fakeEnable(t, &watch.SimClock{}, &called), nil, nil, nil)
+		fakeEnable(t, &watch.SimClock{}, &called), nil, nil, nil, nil)
 	if err != nil || rig == nil || rig.Hub != nil || rig.Served.View != nil {
 		t.Fatalf("scripted without -watch must open no listener: %+v %v", rig, err)
 	}
@@ -238,13 +265,13 @@ func TestWatchServeTokenRule(t *testing.T) {
 	defer cancel()
 	called := 0
 	lo := ladderOptions{on: true, watch: true, viewAddr: "0.0.0.0:0", answerAddr: "127.0.0.1:0"}
-	if _, err := startLadder(ctx, lo, "", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil); err == nil || !strings.Contains(err.Error(), "token") {
+	if _, err := startLadder(ctx, lo, "", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil); err == nil || !strings.Contains(err.Error(), "token") {
 		t.Fatalf("want a token error, got %v", err)
 	}
 	if ladder.Active() != nil {
 		t.Error("the ladder stayed installed after the screen was refused")
 	}
-	rig, err := startLadder(ctx, lo, "s3cret", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil)
+	rig, err := startLadder(ctx, lo, "s3cret", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}

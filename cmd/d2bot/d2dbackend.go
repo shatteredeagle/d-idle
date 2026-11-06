@@ -308,7 +308,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner))
+	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {
 		return err
 	}

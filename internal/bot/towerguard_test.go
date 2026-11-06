@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
@@ -148,5 +149,33 @@ func TestFillTowerManaFollowsTheManaColumn(t *testing.T) {
 		if w.TowerKitMana != c.mana || w.MaxLife != 200 || w.TowerMinLife != 150 {
 			t.Errorf("%v: %+v", c.class, w)
 		}
+	}
+}
+
+// TestOrderGuardWhy: the read-only fact behind the orders map. It agrees with the guards the walk uses (the tower, the
+// Monastery road), is empty for open areas, and a learned or missing ladder never changes or opens a question.
+func TestOrderGuardWhy(t *testing.T) {
+	g := campaignRig(t, &fakeQuests{}, 14)
+	g.r.poll()
+	if why := g.r.OrderGuardWhy(20); !strings.Contains(why, "no merc, clvl 14 < 15") {
+		t.Errorf("Forgotten Tower: %q", why)
+	}
+	if why := g.r.OrderGuardWhy(25); why == "" {
+		t.Errorf("tower cellar 5 open")
+	}
+	if why := g.r.OrderGuardWhy(3); why != "" {
+		t.Errorf("Cold Plains: %q", why)
+	}
+	if why := g.r.OrderGuardWhy(0); why != "" {
+		t.Errorf("area 0: %q", why)
+	}
+	g.r.avoid = map[int]time.Time{3: g.r.e.Clock.Now().Add(time.Hour)}
+	if why := g.r.OrderGuardWhy(3); why != "banned after repeated deaths" {
+		t.Errorf("banned area: %q", why)
+	}
+	g.r.e.Tune.Route.TowerMinLevel = 0
+	g.r.avoid = nil
+	if why := g.r.OrderGuardWhy(20); why != "" {
+		t.Errorf("guard off: %q", why)
 	}
 }
