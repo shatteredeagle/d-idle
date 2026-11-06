@@ -1,2 +1,0 @@
-BACKLOG: TASK-51 mercrevive: revive reserve by clvl band per the SME (0 gold below clvl 13, 50 from it; merc.reviveReserveLow/High/Clvl replace merc.reviveReserveMax); revive before potions; offline tested, live proof needs the next Gate 2
-CHANGELOG: Mercenary revive reserve now follows the SME rule (0 gold below clvl 13, 50 gold from clvl 13, before potions and repair); merc.reviveReserveMax is retired
