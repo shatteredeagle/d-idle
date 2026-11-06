@@ -1,9 +1,10 @@
 ---
 id: TASK-31
 title: 'testerd2dimage: d2d tester image, realtime entry, compose file, ports'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T14:44:00Z'
+updated_date: '2026-11-06T15:12:00Z'
 labels:
   - G-F
 dependencies:

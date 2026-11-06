@@ -1,9 +1,10 @@
 ---
 id: TASK-30
 title: 'testertap: tap screenshot frame source for the watch video'
-status: Proposed
+status: Done
 assignee: []
 created_date: '2026-11-06T14:44:00Z'
+updated_date: '2026-11-06T15:12:00Z'
 labels:
   - G-F
 dependencies: []

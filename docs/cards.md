@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (21)
+## Active (19)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -26,20 +26,18 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 5 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
 | 6 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
 | 7 | decision-point-store | G-G | in-progress 3/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
-| 8 | watch-screen | G-G | proposed 5/5 | Thoughts feed, orders, uptime, rules list and journal on d2dview | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#watch-screen) |
-| 9 | t0-slice | G-G | in-progress 3/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
-| 10 | decisions-mirror | G-F | deferred 0/4 | ADRs mirrored read-only into backlog/decisions for the board | - | - | [card](archive/openspec-index.md#decisions-mirror) |
-| 11 | testerwatch | G-F | proposed 1/3 | separate watch token, tap video source switch | - | - | [card](archive/openspec-index.md#testerwatch) |
-| 12 | testerimage | G-F | deferred 0/2 | >- | - | - | [card](archive/openspec-index.md#testerimage) |
-| 13 | testerlive | G-F | proposed 0/3 | run the tester flow in the real d2d container | - | - | [card](archive/openspec-index.md#testerlive) |
-| 14 | testerdocs | G-F | proposed 0/2 | d2d tester guide and first-stranger checklist | - | - | [card](archive/openspec-index.md#testerdocs) |
-| 15 | testerreport | G-F | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
-| 16 | testerlicence | G-F | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
-| 17 | testerpack | G-F | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
-| 18 | testertap | G-F | proposed 2/2 | tap screenshot frame source for the watch video | - | - | [card](archive/openspec-index.md#testertap) |
-| 19 | testerd2dimage | G-F | proposed 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
-| 20 | testerd2dwiz | G-F | proposed 0/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
-| 21 | testerrt | G-F | proposed 0/2 | realtime ladder check on d2d for the tester build | - | - | [card](archive/openspec-index.md#testerrt) |
+| 8 | t0-slice | G-G | in-progress 3/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
+| 9 | decisions-mirror | G-F | deferred 0/4 | ADRs mirrored read-only into backlog/decisions for the board | - | - | [card](archive/openspec-index.md#decisions-mirror) |
+| 10 | testerwatch | G-F | in-progress 1/3 | separate watch token, tap video source switch | - | - | [card](archive/openspec-index.md#testerwatch) |
+| 11 | testerimage | G-F | deferred 0/2 | >- | - | - | [card](archive/openspec-index.md#testerimage) |
+| 12 | testerlive | G-F | proposed 0/3 | run the tester flow in the real d2d container | - | - | [card](archive/openspec-index.md#testerlive) |
+| 13 | testerdocs | G-F | proposed 0/2 | d2d tester guide and first-stranger checklist | - | - | [card](archive/openspec-index.md#testerdocs) |
+| 14 | testerreport | G-F | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
+| 15 | testerlicence | G-F | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
+| 16 | testerpack | G-F | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
+| 17 | testerd2dimage | G-F | in-progress 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
+| 18 | testerd2dwiz | G-F | proposed 0/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
+| 19 | testerrt | G-F | proposed 0/2 | realtime ladder check on d2d for the tester build | - | - | [card](archive/openspec-index.md#testerrt) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

@@ -1,12 +1,12 @@
 ---
 id: TASK-20
-title: "watch-screen: Thoughts feed, orders, uptime, rules list and journal on d2dview"
-status: Proposed
+title: 'watch-screen: Thoughts feed, orders, uptime, rules list and journal on d2dview'
+status: Done
 assignee: []
 created_date: '2026-11-05T00:00:00Z'
-updated_date: '2026-11-05T00:00:00Z'
+updated_date: '2026-11-06T15:12:00Z'
 labels:
-  - "G-G"
+  - G-G
 dependencies: []
 priority: medium
 ordinal: 20000
@@ -53,4 +53,3 @@ Notes 2026-11-05 (cardwhy): question cards say what happened (display-only `deci
 Notes 2026-11-05 (ordersmap, orders UX slice 1): the clunky orders form is replaced by a tappable Act 1 map (schematic SVG, list view), an order sheet (10 min / 30 min / 1 h / Until I cancel, Go now replaces the current order), a Hero-now panel (time progress, kills and xp since the order, route breadcrumb, Cancel, Come home) and journal lines at order start, end and refusal; `GET /api/orders/map` (data in `internal/watch/mapdata.go`, Act 1 filled, Acts 2 to 5 empty). The order does not override the hero's guard: the map warns with the guard's reason (`Runner.OrderGuardWhy`, read-only) and a refused walk ends the order failed. Offline tested (httptest, golden JSON for the mock's scenarios A, B and C on two builds, order -> goal -> uptime with a fake queue); the page was smoke-tested in headless Chrome against the simulated runner only; NOT verified on a phone or against the real bot. Spec: docs/research/orders-ux-design.md section 11. No acceptance box ticked or added: the criteria above are the earlier slices'.
 Follow-up, slice 2 (open): Until level N (Hub side); Clear-then-come-home pair; `pos` back and Add to queue; conflict Thought card through `t0.area.toohard`; Tower Cellars orderable; route hops from the bot; level-order ETA.
 Follow-up, slice 3 (open): reorder (`/move`); failed-order strike with dismiss; "cleared" from a nav explored signal; Acts 2 to 5 tables; screen-reader pass.
-
