@@ -2,11 +2,9 @@ package merc
 
 import "testing"
 
-// ctx has the revive reserve cap lifted so the tests of the percent rules see the whole reserve; the cap has its own tests.
+// ctx is a clvl 12 hero (revive reserve 0, the low band) with a 300 gold kit; the reserve bands have their own test.
 func ctx() Ctx {
-	k := DefaultKnobs()
-	k.ReviveReserveMax = 1 << 30
-	return Ctx{Gold: 3000, Kit: 300, Act: 2, PlayerClass: "Sorceress", HaveTP: true, HavePotions: true, Knobs: k, FirstLutVisit: true}
+	return Ctx{Gold: 3000, Kit: 300, Level: 12, Act: 2, PlayerClass: "Sorceress", HaveTP: true, HavePotions: true, Knobs: DefaultKnobs(), FirstLutVisit: true}
 }
 
 func TestFormulas(t *testing.T) {
@@ -182,22 +180,22 @@ func TestShouldRevive(t *testing.T) {
 		why   string
 		cost  int
 	}{
-		{"ok", dead, mut(func(c *Ctx) { c.Gold = 1050 }), 0, true, ReasonOK, 750}, // bars here: reserve 100% of the 300 kit (mercrevive card; was 150%)
-		{"gold short", dead, mut(func(c *Ctx) { c.Gold = 1049 }), 0, false, ReasonGold, 750},
-		{"quote overrides formula", dead, mut(func(c *Ctx) { c.Gold = 1099 }), 800, false, ReasonGold, 800},
+		{"ok", dead, mut(func(c *Ctx) { c.Gold = 750 }), 0, true, ReasonOK, 750}, // bar: price alone below clvl 13 (SME rule, mercrevive)
+		{"gold short", dead, mut(func(c *Ctx) { c.Gold = 749 }), 0, false, ReasonGold, 750},
+		{"quote overrides formula", dead, mut(func(c *Ctx) { c.Gold = 799 }), 800, false, ReasonGold, 800},
 		{"cap", dead, mut(func(c *Ctx) { c.RevivesLastHour = 2 }), 0, false, ReasonCap, 750},
 		{"one more allowed", dead, mut(func(c *Ctx) { c.RevivesLastHour = 1 }), 0, true, ReasonOK, 750},
 		{"no tp", dead, mut(func(c *Ctx) { c.HaveTP = false }), 0, false, ReasonKit, 750},
 		{"no potions", dead, mut(func(c *Ctx) { c.HavePotions = false }), 0, false, ReasonKit, 750},
 		{"3 deaths still normal", dead, mut(func(c *Ctx) { c.DeathsLastHour = 3; c.Gold = 1200 }), 0, true, ReasonOK, 750},
-		{"4 deaths need 5x", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 4049 }), 0, false, ReasonStopped, 750},
-		{"4 deaths 5x ok", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 4050 }), 0, true, ReasonOK, 750},
+		{"4 deaths need 5x", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 3749 }), 0, false, ReasonStopped, 750},
+		{"4 deaths 5x ok", dead, mut(func(c *Ctx) { c.DeathsLastHour = 4; c.Gold = 3750 }), 0, true, ReasonOK, 750},
 		{"alive", MercState{Known: true, Owned: true, Alive: true, Level: 10}, ctx(), 0, false, ReasonAlive, 0},
 		{"not owned", MercState{Known: true}, ctx(), 0, false, ReasonNotOwned, 0},
 		{"unknown", MercState{}, ctx(), 0, false, ReasonUnknown, 0},
 		{"level unknown", MercState{Known: true, Owned: true}, ctx(), 0, false, ReasonNoLevel, 0},
 		{"level unknown but quoted", MercState{Known: true, Owned: true}, ctx(), 600, true, ReasonOK, 600},
-		{"huge price", MercState{Known: true, Owned: true, Level: 200}, mut(func(c *Ctx) { c.Gold = 50299 }), 0, false, ReasonGold, 50000},
+		{"huge price", MercState{Known: true, Owned: true, Level: 200}, mut(func(c *Ctx) { c.Gold = 49999 }), 0, false, ReasonGold, 50000},
 	} {
 		d, cost := ShouldRevive(c.s, c.c, c.price)
 		if d.Do != c.do || d.Reason != c.why || cost != c.cost {

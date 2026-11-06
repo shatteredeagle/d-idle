@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-// The skip line and the wait line carry the real bar (price x mult + kit reserve), so a stall is not a "near miss".
+// The skip line and the wait line carry the real bar (price x mult + revive reserve), so a stall is not a "near miss".
 func TestReviveSkipLogCarriesNeed(t *testing.T) {
 	dead := MercState{Known: true, Owned: true, Level: 10}
 	for _, kit := range []int{310, 620} {
@@ -19,8 +19,8 @@ func TestReviveSkipLogCarriesNeed(t *testing.T) {
 		}
 		need := ReviveNeed(c, price)
 		line := LogReviveSkipped(d.Reason, price, c.Gold, need)
-		if !strings.Contains(line, "need="+strconv.Itoa(price+kit)) {
-			t.Errorf("kit %d: %q lacks need=%d", kit, line, price+kit)
+		if !strings.Contains(line, "need="+strconv.Itoa(price)) {
+			t.Errorf("kit %d: %q lacks need=%d (the kit is not part of a revive bar)", kit, line, price)
 		}
 		if w := LogGoldWait(need, c.Gold); w != "merc: gold wait need="+strconv.Itoa(need)+" gold=100" {
 			t.Errorf("wait line %q", w)

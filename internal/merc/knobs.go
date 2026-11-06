@@ -19,15 +19,15 @@ type Knobs struct {
 
 	KitReservePctFullKit, GoldFarmBudgetMin, GoldFarmCooldownMin int
 
-	// ReviveReserveMax caps the kit reserve of a revive in gold (see ReviveNeed).
-	ReviveReserveMax int
+	// The revive reserve in gold by player clvl band (see ReviveReserve); the hire keeps KitReservePct.
+	ReviveReserveLow, ReviveReserveHigh, ReviveReserveClvl int
 }
 
 // KnobsFrom converts the env tuning group.
 func KnobsFrom(t env.MercTuning) Knobs {
 	return Knobs{t.ReviveMaxPerHour, t.ReviveGoldMult, t.StopDeathsPerHour, t.StopGoldMult, t.HireGoldMult,
 		t.FreeRogueOnly != 0, t.ReplaceAtAct2 != 0, t.SwapGainPct, t.ReqStrDex != 0, t.PotionLifePct, t.KitReservePct, t.GoldFarmMaxLevel,
-		t.KitReservePctFullKit, t.GoldFarmBudgetMin, t.GoldFarmCooldownMin, t.ReviveReserveMax}
+		t.KitReservePctFullKit, t.GoldFarmBudgetMin, t.GoldFarmCooldownMin, t.ReviveReserveLow, t.ReviveReserveHigh, t.ReviveReserveClvl}
 }
 
 // DefaultKnobs are the defaults of env.DefaultMercTuning.

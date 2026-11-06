@@ -194,14 +194,16 @@ type mercWire struct {
 	lastLine time.Time
 	lastDec  string
 
-	lutDone   map[lutKey]bool          // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
-	statePath string                   // where lutDone is kept across restarts ("" = memory only); mercStatePath at construction
-	loaded    map[string]bool          // characters whose entry was read from statePath
-	winLogged map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
-	farmOn    bool
-	budget    merc.FarmBudget // time budget and cooldown of the gold farm
-	skipLogAt time.Time       // last revive refusal written (logSkip)
-	waitNeed  int             // need of the last logged `merc: gold wait`; 0 = none pending
+	lutDone    map[lutKey]bool          // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
+	statePath  string                   // where lutDone is kept across restarts ("" = memory only); mercStatePath at construction
+	loaded     map[string]bool          // characters whose entry was read from statePath
+	winLogged  map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
+	farmOn     bool
+	budget     merc.FarmBudget // time budget and cooldown of the gold farm
+	skipLogAt  time.Time       // last revive refusal written (logSkip)
+	quoteLogAt time.Time       // last unreadable-quote line written (once per town visit)
+	shortFirst bool            // the pre-shop revive was refused for gold (the chores then sell junk first)
+	waitNeed   int             // need of the last logged `merc: gold wait`; 0 = none pending
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
@@ -360,6 +362,7 @@ func mercCtx(w *mercWire, s *d2.Snapshot) merc.Ctx {
 	c.HaveTP, c.HavePotions = w.kit(s)
 	c.Kit = kitRefill(w.e)
 	c.KitFull = w.kitFull(s)
+	c.Level = s.Player.Level
 	return c
 }
 
@@ -640,8 +643,8 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 
 // ReviveFirst is the revive attempt BEFORE the chores shop (g2e F5): the step used to run after every purchase, so a
 // funded hero had spent the gold on discretionary buys and the revive saw a poor purse (U: seed 17 never revived).
-// Before the shop the kit is not bought yet, but the kit reserve inside ReviveNeed (merc.kitReservePct) keeps back the
-// gold for it, so the kit test is waived; only pack gold counts, because the chores bank the rest. A refusal here is
+// Before the shop the kit is not bought yet, so the kit test is waived; the small revive reserve (merc.reviveReserve*)
+// is all that stays back, and the stash covers a shortfall through fundRevive. A refusal here is
 // silent: the normal step after the chores decides and logs.
 func (w *mercWire) ReviveFirst(ctx context.Context, s *d2.Snapshot) string {
 	return w.reviveStep(ctx, s, true)
@@ -666,14 +669,19 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	quote := w.quote
 	w.mu.Unlock()
 	dec, price := merc.ShouldRevive(st, c, quote)
-	if !dec.Do && dec.Reason == merc.ReasonGold && quote == 0 && !first {
+	if !dec.Do && dec.Reason == merc.ReasonGold && quote == 0 {
 		// The level estimate overshoots, so the real quote may be affordable (see QuoteProber).
 		if q := w.probeQuote(ctx, c.Gold); q > 0 {
 			dec, price = merc.ShouldRevive(st, c, q)
 		}
 	}
-	if first && !dec.Do {
-		return ""
+	if first {
+		w.mu.Lock()
+		w.shortFirst = !dec.Do && dec.Reason == merc.ReasonGold
+		w.mu.Unlock()
+		if !dec.Do {
+			return ""
+		}
 	}
 	w.mu.Lock()
 	w.lastDec = dec.Reason
@@ -718,6 +726,14 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	return "merc revived"
 }
 
+func (w *mercWire) takeShortFirst() bool {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	v := w.shortFirst
+	w.shortFirst = false
+	return v
+}
+
 // probeQuote reads the real revive price once while the merc stays dead (the quote of a dead merc does not change) and
 // keeps it for the policy and the gold farm. 0 when the purse is too small to matter, the reviver cannot probe or the
 // read failed (logged once per visit with the refusal; the estimate then decides).
@@ -728,7 +744,15 @@ func (w *mercWire) probeQuote(ctx context.Context, gold int) int {
 	}
 	q, err := p.Probe(ctx)
 	if err != nil {
-		w.log.Warn(merc.Prefix + "revive quote unreadable (" + err.Error() + ")")
+		// Once per town visit; the next visit probes again, nothing is refused for good.
+		now := w.now()
+		w.mu.Lock()
+		again := w.quoteLogAt.IsZero() || now.Sub(w.quoteLogAt) >= mercSkipGap
+		w.quoteLogAt = now
+		w.mu.Unlock()
+		if again {
+			w.log.Warn(merc.Prefix + "revive quote unreadable (" + err.Error() + "), retry on the next visit")
+		}
 		return 0
 	}
 	if q > 0 {
@@ -789,6 +813,15 @@ func (t *mercTown) Chores(ctx context.Context, plan bot.ChorePlan) (bot.ChoreRep
 	var first string
 	if s, serr := t.w.e.Snapshot(); serr == nil {
 		first = t.w.ReviveFirst(ctx, s)
+	}
+	// Short of gold before the shop: sell the junk first (the SME order), then ask again before any potion is bought.
+	if first == "" && plan.Sell && t.w.takeShortFirst() {
+		sell := bot.ChorePlan{Reason: plan.Reason, Sell: true}
+		if rep, err := t.Townsman.Chores(ctx, sell); err == nil || len(rep.Done) > 0 {
+			if s, serr := t.w.e.Snapshot(); serr == nil {
+				first = t.w.ReviveFirst(ctx, s)
+			}
+		}
 	}
 	rep, err := t.Townsman.Chores(ctx, plan)
 	if first != "" {
