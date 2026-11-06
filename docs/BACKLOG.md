@@ -525,6 +525,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-31 testerd2dimage phase A: tester profile (entrypoint TESTER=1/tester), fork pin lab2-freezeresume ee5e06d8ef99, compose.tester.yml, dry-run test; image build deferred
 - TASK-32 testerd2dwiz: cmd/d2dsetup first-run wizard for the d2d tester container, offline tested; open: pin 1.14d Patch_D2 hash, entrypoint hook (see cmd/d2dsetup/README.md), browser check
 - onboardux: tester onboarding flow design (first 60 s, six-screen stepper, first-10-minutes tour, Help and Report) with a clickable mock; docs only, proposes 2 new tasks (tour/Help, controls/passcode)
+- backlog grooming 2026-11-06: tier and area label scheme, statuses and titles fixed, 14 missing tasks (TASK-34 to 47), audit in docs/research/backlog-groom-2026-11-06.md; archives proposed for the user
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- backlog board: labels are now tiers (T0..T5) and areas, check.py rejects unknown labels and folded titles, new_task.py unfolds long titles
 - Onboarding UX design and clickable mock for the d2d tester build (docs only)
 - tester build: d2dsetup first-run wizard for the d2d container (offline tested)
 - d2d container: tester profile (watch screen, ladder, video from the tap, realtime), compose.tester.yml, fork pin lab2-freezeresume
