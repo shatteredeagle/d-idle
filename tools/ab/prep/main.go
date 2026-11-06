@@ -1,5 +1,5 @@
 // Command prep makes the prepared hero of the "late start" A/B variant (docs/ab-design.md, Variants): it starts the
-// lab d2d with --lab-verbs, creates a fresh character, applies the declared setup (level, unspent points, purse, merc),
+// lab d2d with --lab-verbs, creates a fresh character, applies the declared setup (level and its experience, unspent points, purse, merc),
 // saves and quits. The A/B arms then load that save with a d2d WITHOUT --lab-verbs, so no setup verb can run after the
 // run start: "writes after start: 0" holds by construction (the fork refuses gated debug verbs; docs/lab-verbs.md).
 // Every verb is appended to a ledger file with its reason before it is sent.
@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2dinput"
+	"d2lod-bot/internal/telemetry"
 )
 
 // Setup is the declared starting state, identical for both arms.
@@ -26,8 +27,10 @@ type Setup struct {
 // Verbs returns the debug verbs for s in the order they are sent: points follow the level like the build drill
 // (5 stat and 1 skill point per level gained, all unspent so the bot's own leveler spends them).
 func Verbs(s Setup) []string {
+	exp, _ := telemetry.DefaultExpForLevel(s.Clvl) // a level without its experience would leave the hero at the start of a long climb
 	v := []string{
 		fmt.Sprintf("debug stat 12 %d", s.Clvl),
+		fmt.Sprintf("debug stat 13 %d", exp),
 		fmt.Sprintf("debug statpts %d", 5*(s.Clvl-1)),
 		fmt.Sprintf("debug skillpts %d", s.Clvl-1),
 		fmt.Sprintf("debug stat 14 %d", s.Gold),
