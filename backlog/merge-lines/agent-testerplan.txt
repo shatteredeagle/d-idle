@@ -1,0 +1,3 @@
+BACKLOG: tester build plan (game-dir only): 7 slice-1 tasks testerwatch, testerimage, testerlive, testerdocs, testerreport, testerlicence, testerpack (task-23 to task-29, Proposed); plan in docs/research/tester-build-plan.md
+INDEX: docs/research/tester-build-plan.md: gap list, slice plan and open questions for a friend running d.idle in the Wine container (game-dir mode only)
+CHANGELOG: Added a tester build plan (docs and backlog tasks only, nothing built).
