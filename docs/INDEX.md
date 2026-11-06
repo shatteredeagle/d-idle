@@ -758,3 +758,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/d2d-view.md section "Game video from the tap" (d2bot --watch-video-source tap, the /frame sampler finding, tap port 8893)
 - docs/d2d-container/README.md - tester profile, env table, first run, lab-verb gating finding
 - cmd/d2dsetup/README.md :: d2d tester first-run wizard (data check, character, goals, start)
+- docs/research/onboarding-ux-design.md and docs/research/mocks/onboarding.html: onboarding flow for the d2d tester build (inspired by Palimpsest); design plus mock
