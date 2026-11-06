@@ -32,6 +32,8 @@ func passRec(t *testing.T, p string) access.Record {
 	return r
 }
 
+const gateTok = "watch-token-for-tests"
+
 var ok204 = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { w.WriteHeader(204) })
 
 func do(h http.Handler, method, target, body string, hdr map[string]string, cookies ...*http.Cookie) *httptest.ResponseRecorder {
@@ -56,7 +58,7 @@ func form(p string) string { return url.Values{"passcode": {p}}.Encode() }
 func TestViewGatePasscodeLogin(t *testing.T) {
 	rec := passRec(t, "four plain words")
 	a := newAccess(t, &rec)
-	h := a.viewGate("tokentokentokentoken", ok204)
+	h := a.viewGate("watch-token-for-tests", ok204)
 
 	if w := do(h, "GET", "/watch", "", nil); w.Code != 303 || w.Header().Get("Location") != "/login" {
 		t.Errorf("anonymous page: %d %s", w.Code, w.Header().Get("Location"))
@@ -67,10 +69,10 @@ func TestViewGatePasscodeLogin(t *testing.T) {
 		}
 	}
 	// the token does not open a passcode install, as bearer or as ?t=
-	if w := do(h, "GET", "/watch?t=tokentokentokentoken", "", nil); w.Code == 204 {
+	if w := do(h, "GET", "/watch?t=watch-token-for-tests", "", nil); w.Code == 204 {
 		t.Error("?t= token accepted in passcode mode")
 	}
-	if w := do(h, "GET", "/api/rules", "", map[string]string{"Authorization": "Bearer tokentokentokentoken"}); w.Code != 401 {
+	if w := do(h, "GET", "/api/rules", "", map[string]string{"Authorization": "Bearer " + gateTok}); w.Code != 401 {
 		t.Errorf("bearer token: %d", w.Code)
 	}
 	if w := do(h, "GET", "/login", "", nil); w.Code != 200 || !strings.Contains(w.Body.String(), `type="password"`) || w.Header().Get("Content-Security-Policy") == "" {

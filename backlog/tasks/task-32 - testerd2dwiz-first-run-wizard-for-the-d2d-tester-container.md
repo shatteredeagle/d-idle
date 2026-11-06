@@ -13,6 +13,7 @@ ordinal: 32000
 card: "testerd2dwiz"
 owns:
   - "cmd/d2dsetup/**"
+overlap: "TASK-44 (onboardA, 2026-11-06) extends cmd/d2dsetup/** with the six-screen stepper, go-ahead and access; merged testerd2dwiz code is edited there."
 exclusive: []
 contracts: []
 result: "Offline only (fake MPQs, fake extractor, httptest): cmd/d2dsetup, own listener on 8891 before the bot, watch token gate and d2dview cookie, wizard.json plus wizard.env, resumable. AC1 open: the 1.14d proof is an EMPTY patch_sha256 list (verdict unverified until pinned from a real install), real MPQ sizes and data.Open on real data unproven, entrypoint hook and context.sh build line not applied (deploy/ not owned). AC2 page marked not run in a browser (node --check only)."
