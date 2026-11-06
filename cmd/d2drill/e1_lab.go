@@ -21,6 +21,7 @@ import (
 	"d2lod-bot/internal/d2denv"
 	"d2lod-bot/internal/d2dmerc"
 	"d2lod-bot/internal/drill"
+	"d2lod-bot/internal/resource"
 )
 
 // Group E1 (card shortdrills): short live drills of the g2e/g2f fixes, run against the REAL d2bot (not the lab's town
@@ -202,39 +203,39 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 	if err := e1Reset(ctx, h, clvl); err != nil {
 		return f, err
 	}
-	// A cheat-hired merc may be level 1 whose revive is free ("Resurrect Aliza: 0", V run 20261106 slot 5), so try the
-	// hire types until one carries a price; the first priced type is used and every quote seen is reported.
+	// A cheat-hired merc is level 1 and its revive is free ("Resurrect Aliza: 0", V runs of 2026-11-06 on slots 4 and 5,
+	// every hire type 0..4 alike), and no verb sets a merc level. The bot then cannot read a quote (probeQuote keeps only
+	// a price above 0) and decides on the level estimate, so the drill sets the purse around that estimate.
 	if _, err := h.cheat(ctx, "debug stat 14 5000", "E1 setup: a purse that shows the whole menu while the quote is probed"); err != nil {
 		return f, err
 	}
-	q, seen := 0, []string{}
-	for typ := 0; typ <= 15 && q <= 0; typ++ {
-		_, _ = h.cheat(ctx, fmt.Sprintf("debug merc hire %d", typ), "E1 setup: a hired mercenary (no gold), to be killed")
-		_ = h.step(ctx, 5)
-		if _, err := h.cheat(ctx, "debug merc kill", "E1 setup: the mercenary is dead"); err != nil {
-			return f, err
-		}
-		_ = h.step(ctx, 140)
-		rv := d2dmerc.Reviver{C: h.c}
-		pctx, cancel := context.WithTimeout(ctx, 40*time.Second)
-		pq, err := rv.Probe(pctx)
-		cancel()
-		fmt.Printf("E1 setup: hire type %d quote %d err %v\n", typ, pq, err)
-		seen = append(seen, fmt.Sprintf("%d:%d", typ, pq))
-		if err == nil && pq > 0 {
-			q, f["mercType"] = pq, strconv.Itoa(typ)
-		}
-		_, _ = h.c.Do(ctx, "key Escape")
-		_ = h.step(ctx, 10)
+	_, _ = h.cheat(ctx, "debug merc hire 0", "E1 setup: a hired mercenary (no gold), to be killed")
+	_ = h.step(ctx, 5)
+	if _, err := h.cheat(ctx, "debug merc kill", "E1 setup: the mercenary is dead"); err != nil {
+		return f, err
 	}
-	f["quotesByType"] = strings.Join(seen, " ")
+	_ = h.step(ctx, 140)
 	m, err := h.c.Do(ctx, "dump merc")
 	if err != nil {
 		return f, err
 	}
 	f["merc"] = strings.TrimSpace(strings.Join(append(append([]string{}, m.Lines...), m.Rest), " "))
+	if !strings.Contains(f["merc"], `"dead":true`) {
+		return f, fmt.Errorf("the merc is not dead after the kill: %s", f["merc"])
+	}
+	rv := d2dmerc.Reviver{C: h.c}
+	pctx, cancel := context.WithTimeout(ctx, 60*time.Second)
+	q, err := rv.Probe(pctx)
+	cancel()
+	if err != nil {
+		return f, fmt.Errorf("quote probe: %v; menu: %s", err, h.menuText(ctx))
+	}
+	f["liveQuote"] = strconv.Itoa(q)
 	if q <= 0 {
-		return f, fmt.Errorf("no hire type gives a priced revive (type:quote %s); merc %s", f["quotesByType"], f["merc"])
+		q = resource.MercReviveCost(clvl)
+		f["quoteSource"] = "level estimate " + strconv.Itoa(q) + " (the live quote is 0)"
+	} else {
+		f["quoteSource"] = "live quote"
 	}
 	f["quote"] = strconv.Itoa(q)
 	g := gold(q)
