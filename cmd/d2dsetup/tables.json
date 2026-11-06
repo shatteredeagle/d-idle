@@ -1,0 +1,28 @@
+{
+  "files": [
+    {"name": "d2data.mpq", "required": true, "min_size": 100000000, "why": "base game data"},
+    {"name": "d2exp.mpq", "required": true, "min_size": 100000000, "why": "Lord of Destruction data"},
+    {"name": "d2char.mpq", "required": true, "min_size": 100000000, "why": "character graphics"},
+    {"name": "Patch_D2.mpq", "required": true, "min_size": 1000000, "why": "the 1.14 patch (also what makes the data 1.14d)"},
+    {"name": "d2sfx.mpq", "why": "sound effects"},
+    {"name": "d2music.mpq", "why": "music"},
+    {"name": "d2speech.mpq", "why": "speech"},
+    {"name": "d2xmusic.mpq", "why": "expansion music"},
+    {"name": "d2xtalk.mpq", "why": "expansion speech"}
+  ],
+  "patch_sha256": [],
+  "classes": [
+    {"id": "sorceress", "name": "Sorceress", "d2d_index": 4, "supported": true},
+    {"id": "barbarian", "name": "Barbarian", "d2d_index": 0},
+    {"id": "necromancer", "name": "Necromancer", "d2d_index": 1},
+    {"id": "paladin", "name": "Paladin", "d2d_index": 2},
+    {"id": "amazon", "name": "Amazon", "d2d_index": 3},
+    {"id": "druid", "name": "Druid", "d2d_index": 5},
+    {"id": "assassin", "name": "Assassin", "d2d_index": 6}
+  ],
+  "default_class": "sorceress",
+  "presets": [
+    {"id": "campaign:normal_act1", "name": "Act 1, Normal: play the campaign and stop at the end of the act"}
+  ],
+  "default_preset": "campaign:normal_act1"
+}
