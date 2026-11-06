@@ -1020,3 +1020,14 @@ func TestReviveQuoteUnreadableLogsOncePerVisitAndRetries(t *testing.T) {
 		t.Fatalf("next visit: lines %d probes %d:\n%s", n, rev.probes, buf)
 	}
 }
+
+// An old tuning file that names the retired cap still loads; the new band knobs can be set.
+func TestRetiredReviveReserveMaxStillLoads(t *testing.T) {
+	tune := env.DefaultTuning()
+	if err := bot.ApplyOverrides(&tune, map[string]float64{"merc.reviveReserveMax": 10, "merc.reviveReserveHigh": 80}); err != nil {
+		t.Fatal(err)
+	}
+	if tune.Merc.ReviveReserveHigh != 80 {
+		t.Errorf("high band %d", tune.Merc.ReviveReserveHigh)
+	}
+}
