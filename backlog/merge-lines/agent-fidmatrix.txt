@@ -1,2 +1,0 @@
-BACKLOG: TASK-54 fidelity-matrix: 78-row matrix of what the bot uses versus game.exe (13 unverified), same-save probe design; tasks TASK-55 fidprobe-core and TASK-56 fidprobe-vendor proposed
-INDEX: docs/research/fidelity-matrix.md and docs/research/fidelity-probe-design.md: what the bot depends on versus game.exe, how each row is verified, same-save probe design
