@@ -1,0 +1,11 @@
+scenario fresh-sorceress-1: A=gameexe B=d2d
+result     field                        A                  B                  detail
+MISMATCH   base.level                   6                  7                  delta 1
+MISMATCH   derived.max_mana             600                604                rel 0.662% over 0.5%
+UNREADABLE derived.res_cold             0                  ?                  B: no resist read
+MISMATCH   items.equipment              {1 members}        {0 members}        only A [body4:class9/q3/ilvl0/]; only B []
+KNOWN      skills.bonus                 {1 members}        {0 members}        only A [36=1]; only B [] [SK14] game.exe side adds only item_singleskill (stat 107) bonuses; class and tab bonuses (stats 83, 188) are not added by internal/d2 (skills.go, S)
+EQUAL 40 KNOWN 1 MISMATCH 3 UNREADABLE 1
+verdict FAIL
+writes after start: 0
+lab verbs: off

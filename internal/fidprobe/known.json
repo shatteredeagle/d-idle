@@ -1,0 +1,3 @@
+[
+  {"match": "skills.bonus", "row": "SK14", "reason": "game.exe side adds only item_singleskill (stat 107) bonuses; class and tab bonuses (stats 83, 188) are not added by internal/d2 (skills.go, S)"}
+]
