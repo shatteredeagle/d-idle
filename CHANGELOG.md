@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nav mouth gate detours around unwanted cave mouths (fewer unreachable targets); minute log shows the nokillfix mechanism and mouth-gate refusals.
 - docs: Gate 2 multi-seed soak run 20261106-0225-g2e: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-0225-g2e.md).
 - Watch screen: the orders form is replaced by a tappable Act 1 map with an order sheet and a Hero-now panel (offline tested)
 - Orders UX design and clickable mock for the watch screen (docs only)

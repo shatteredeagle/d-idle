@@ -1,2 +1,0 @@
-BACKLOG: g2e F1/F7: nav mouth gate goes around the disc of an unwanted exit instead of refusing; minute line carries nkMech and mouthRef (offline tested, live proof needs the next Gate 2).
-CHANGELOG: nav mouth gate detours around unwanted cave mouths (fewer unreachable targets); minute log shows the nokillfix mechanism and mouth-gate refusals.
