@@ -118,12 +118,12 @@ func (n *Navigator) gateClick(ctl input.Controller, p input.Point) (input.Point,
 	}
 	if n.gateRewrites >= gateMaxRewrites {
 		n.log.Info("nav mouth gate: click held", "from", from, "to", p, "why", "rewrite cap", "cap", gateMaxRewrites)
-		return input.Point{}, ErrMouthGate
+		return input.Point{}, n.refuse()
 	}
 	q, how := n.gateRewrite(lm, from, p, exits)
 	if how == "" {
 		n.log.Info("nav mouth gate: click held", "from", from, "to", p, "why", "no safe click")
-		return input.Point{}, ErrMouthGate
+		return input.Point{}, n.refuse()
 	}
 	n.gateRewrites++
 	n.log.Info("nav mouth gate: click rewritten", "from", from, "to", p, "as", q, "how", how, "rewrites", n.gateRewrites)
@@ -258,4 +258,9 @@ func (n *Navigator) gateDetour(lm *d2map.LevelMap, from, to, ex input.Point, exi
 		}
 	}
 	return best, found
+}
+
+func (n *Navigator) refuse() error {
+	n.gateRefused.Add(1)
+	return ErrMouthGate
 }
