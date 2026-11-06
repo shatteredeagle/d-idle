@@ -53,8 +53,9 @@ type stateSource interface {
 // Navigator implements the Mover contract of docs/archive/wave2.md. It is not safe for concurrent use: one goroutine
 // drives the character, and nav is the one calling Tracker.Update.
 type Navigator struct {
-	peakRung atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
-	cov      *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
+	gateRefused atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
+	peakRung    atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
+	cov         *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
 	// Guard, if set, runs on every observation while walking. A non-nil error stops the walk and is returned
 	// (wrapped with ErrAborted). The bot uses it for "life low or monster near: stop".
 	Guard func(*d2.Snapshot) error
@@ -534,6 +535,9 @@ func (n *Navigator) penalizeExits(f *Field, lm *d2map.LevelMap, goal input.Point
 		f.AddDisc(p.X, p.Y, exitAvoidR, exitAvoidPeak)
 	}
 }
+
+// TakeGateRefusals returns how many clicks the mouth gate refused (ErrMouthGate) since the last call, and resets it.
+func (n *Navigator) TakeGateRefusals() int { return int(n.gateRefused.Swap(0)) }
 
 // TakePeakRung returns the highest stuck-ladder rung reached by any walk since the last call, and resets it. The bot
 // writes it into its minute line so a nav stall is visible in the committed record.

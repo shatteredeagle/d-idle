@@ -147,3 +147,13 @@ Criteria and Numbers tables are not touched by this note; these are questions on
 - The cause lines of the 6-7 Save and Exit bursts and of the post-recovery fresh game (E4).
 - The merc revive decisions of seed 17 (E5).
 - Method note (V): all counts in this note come from scripts over the committed `*-g2e-minutes.jsonl.gz` and `*-g2e-extras.jsonl.gz`; the extras logs hold WARN and a few INFO lines, so absence of a line proves nothing about INFO-level events.
+
+## F1/F7 fix (branch agent/navmouth)
+
+F1 root cause. V (code, extras logs): the refused click is the next waypoint of the wanted exit walk (`exit to Cold Plains`, clicks {54 179}, {113 168}, {148 337}); the straight segment from the hero to it passes within `mouthTriggerR` (15) of an unwanted tile exit (the exits of the level other than `wantExit`). `gateRewrite` could only clip the click at the disc boundary: the first clip crept to the boundary, the next click from there clipped to under `gateMinClip` and was refused, and the walk failed with `ErrMouthGate`, so the leveling target was skipped for 150-1200 s. U: which unwanted exit and which level it was (the extras logs hold the warn lines only, not the Info lines `nav mouth gate: click held`, and the error did not name the exit). The wanted exit itself was not classed as unwanted (`gatedExits` already skips `Dest == wantExit`).
+
+Fix (`internal/nav/mouthgate.go`): from outside the disc a clip shorter than `gateUsefulClip` (8) is no longer taken first; `gateDetour` picks a waypoint on a ring `mouthTriggerR + gateDetourMargin` (20) around the exit, 25 to 90 degrees to either side of the hero's bearing, that passes the invariant against every gated exit, preferring one from which the target is one safe click away, else the shortest way round. A target inside the bound is still held. `gateMaxRewrites` 3 -> 8 (a half circle takes about four clicks). No new knobs (constants stay in the file). Tests: `internal/nav/gatedetour_test.go` (three geometries around the Den exit of the DRILLS16-18 fixture, plus a target inside the bound).
+
+F7: the minute line gains `nkMech` (`rung3`, `drought1`, `drought2`, `emptyfield`: the nokillfix mechanism that fired last, cleared by the next kill or XP gain) and `mouthRef` (mouth-gate refusals in that minute), each only when set. Test `TestMinuteLineShowsNokillMechanismAndMouthRefusals`. Growth: about 25 bytes per affected line before compression; unaffected lines are unchanged.
+
+Unproven live: that the detour clears the refusals in Blood Moor (needs the next Gate 2 and the new `mouthRef` counts).

@@ -1376,6 +1376,7 @@ func (r *Runner) emptyAreaLeave(area int) bool {
 	}
 	l.cleared[area] = true
 	l.emptyArea = 0
+	r.noteNokill("emptyfield")
 	r.e.Log.Info("area abandoned: no kill for a while", "area", area, "name", r.areaName(area), "seconds", int(now.Sub(l.emptySince)/time.Second))
 	r.logSweep(area, true)
 	return true

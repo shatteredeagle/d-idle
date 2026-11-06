@@ -613,6 +613,7 @@ func (r *Runner) escalate(ctx context.Context, c control, what string, err error
 				if r.rung3Burst() {
 					// Kills between the cycles refill rung3Cycles, so the cap above never fired in g2d seed 11 (five fresh
 					// games in 20 minutes at full life): leaving the game again is not the cure, leave the area instead.
+					r.noteNokill("rung3")
 					r.e.Log.Warn(fmt.Sprintf("failsafe: %d rung 3 cycles within %d min -> field reset", len(l.rung3Times), r.e.Tune.Bot.Rung3WindowMin), "what", what)
 					if r.skipTargetFor(whyCycling, 4*r.navSkip()) {
 						l.rung3Times = nil

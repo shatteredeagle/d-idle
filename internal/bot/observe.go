@@ -76,6 +76,7 @@ type observer struct {
 	droughtAt     time.Time // last drought action (drought.go)
 	droughtStage  int       // consecutive drought actions with no kill or XP gain in between
 	fsWhy         string    // short reason of the last failsafe ladder entry (minute line)
+	nkMech        string    // nokillfix mechanism that fired last since the last kill: rung3 | drought1 | drought2 | emptyfield (minute line)
 	progress      uint64    // monotonic progress counter (health endpoint)
 	stuckReason   string
 	gold          int
@@ -313,6 +314,7 @@ func (o *observer) bumpReal(now time.Time) {
 	o.bump(now)
 	o.campaignAt = now
 	o.killXPAt = now
+	o.nkMech = ""
 	o.fsWhy = "" // the failsafe reason shown in the minute line is the one since the last kill or XP gain
 	o.real++
 }
@@ -1020,6 +1022,22 @@ func (r *Runner) takeNavRung() int {
 	return 0
 }
 
+// takeGateRefusals is the number of clicks the nav mouth gate refused since the last minute line (0 when the mover does
+// not report it).
+func (r *Runner) takeGateRefusals() int {
+	if m, ok := r.d.Mover.(interface{ TakeGateRefusals() int }); ok {
+		return m.TakeGateRefusals()
+	}
+	return 0
+}
+
+// noteNokill records which nokillfix mechanism fired last, for the minute line (nkMech).
+func (r *Runner) noteNokill(mech string) {
+	r.obMu.Lock()
+	r.ob.nkMech = mech
+	r.obMu.Unlock()
+}
+
 // failsafeTag shortens a failsafe reason for the minute line (the log keeps the full text in the WARN).
 func failsafeTag(what string) string {
 	if rest, ok := strings.CutPrefix(what, "no progress in state "); ok {
@@ -1044,8 +1062,14 @@ func (r *Runner) failsafeKV(o *observer) []any {
 	if o.fsWhy != "" {
 		kv = append(kv, "fsWhy", o.fsWhy)
 	}
+	if o.nkMech != "" {
+		kv = append(kv, "nkMech", o.nkMech)
+	}
 	if n := r.takeNavRung(); n > 0 {
 		kv = append(kv, "navRung", n)
+	}
+	if n := r.takeGateRefusals(); n > 0 {
+		kv = append(kv, "mouthRef", n)
 	}
 	return kv
 }

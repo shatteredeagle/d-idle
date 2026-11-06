@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"strconv"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -65,6 +66,7 @@ func (r *Runner) droughtCheck(ctx context.Context, s *d2.Snapshot, c control) bo
 	r.ob.droughtAt, r.ob.droughtStage = now, stage
 	since := now.Sub(r.ob.killXPAt)
 	r.obMu.Unlock()
+	r.noteNokill("drought" + strconv.Itoa(stage))
 	r.e.Log.Warn("kill drought", "stage", stage, "area", area, "name", r.areaName(area), "minutes", int(since/time.Minute))
 	if stage == 1 && r.skipTargetFor(whyDrought, 4*r.navSkip()) {
 		return true

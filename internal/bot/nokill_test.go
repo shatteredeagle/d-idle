@@ -235,3 +235,40 @@ func TestMinuteLineShowsFailsafeAndNavRung(t *testing.T) {
 		t.Fatal("the peak must be taken (reset) by the minute line")
 	}
 }
+
+type refuseMover struct {
+	*fakeMover
+	n int
+}
+
+func (p *refuseMover) TakeGateRefusals() int { v := p.n; p.n = 0; return v }
+
+// F7: the minute line names the nokillfix mechanism that fired last and the mouth-gate refusals of the minute; both
+// are absent when there is nothing to say, and a kill clears the mechanism.
+func TestMinuteLineShowsNokillMechanismAndMouthRefusals(t *testing.T) {
+	g := newRig(t)
+	rm := &refuseMover{fakeMover: g.mover, n: 7}
+	g.r.d.Mover = rm
+	var buf strings.Builder
+	g.e.Log = slog.New(slog.NewJSONHandler(&buf, nil))
+	g.r.noteNokill("emptyfield")
+	g.w.set(func(w *world) { w.state = d2.StateInGame; w.area = 2; w.life, w.maxL = 90, 100 })
+	g.r.poll()
+	s := g.r.latest()
+	line := func() string {
+		buf.Reset()
+		g.r.obMu.Lock()
+		g.r.minuteLine(s, s.Player, g.clock.Now())
+		g.r.obMu.Unlock()
+		return buf.String()
+	}
+	if l := line(); !strings.Contains(l, `"nkMech":"emptyfield"`) || !strings.Contains(l, `"mouthRef":7`) {
+		t.Fatalf("minute line lacks the keys: %s", l)
+	}
+	g.r.obMu.Lock()
+	g.r.ob.bumpReal(g.clock.Now())
+	g.r.obMu.Unlock()
+	if l := line(); strings.Contains(l, "nkMech") || strings.Contains(l, "mouthRef") {
+		t.Fatalf("keys must be absent when empty: %s", l)
+	}
+}
