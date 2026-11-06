@@ -144,7 +144,7 @@ func (r *Runner) towerWhy(w task.World, p *d2.Player) string {
 	default:
 		legacy = "skip"
 	}
-	a, err := l.TooHard(ladder.HeroFrom(p), w.Level, task.MercState(w), kit, legacy)
+	a, err := l.TooHard(ladder.HeroFrom(p).With("dest", "the Forgotten Tower", "floor", task.TowerFloor(w)), w.Level, task.MercState(w), kit, legacy)
 	if err != nil {
 		l.Fault(err)
 		return why

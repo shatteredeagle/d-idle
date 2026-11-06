@@ -3,6 +3,7 @@ package combat
 import (
 	"context"
 	"slices"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -405,7 +406,7 @@ func (f *Fighter) askDrink(ctx context.Context, p *d2.Player, in resource.Input,
 	if l == nil || !ok || in.LifePct() >= 65 {
 		return d
 	}
-	a, err := l.DrinkChoice(ladder.HeroFrom(p), in.LifePct(), ladder.HeldFor(in.Belt.HP, in.Belt.RV),
+	a, err := l.DrinkChoice(ladder.HeroFrom(p).With("potions", in.Belt.HP+in.Belt.RV, "hostiles", in.Hostiles), in.LifePct(), ladder.HeldFor(in.Belt.HP, in.Belt.RV),
 		ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV), resource.ChampionEarly(in), legacy)
 	if err != nil {
 		l.Fault(err)
@@ -447,7 +448,7 @@ func (f *Fighter) askUnique(p *d2.Player, in resource.Input, d resource.PreDecis
 	if d.Action == resource.Avoid || in.LifePct() < minEngagePct {
 		legacy = "avoid"
 	}
-	a, err := l.UniqueFight(ladder.HeroFrom(p), in.LifePct(), in.PackDanger,
+	a, err := l.UniqueFight(ladder.HeroFrom(p).With(eliteFacts(cand)...), in.LifePct(), in.PackDanger,
 		ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV), legacy)
 	if err != nil {
 		l.Fault(err)
@@ -461,4 +462,36 @@ func (f *Fighter) askUnique(p *d2.Player, in resource.Input, d resource.PreDecis
 		return resource.PreDecision{Action: resource.Proceed, Reason: "ladder: fight (" + d.Reason + ")"}
 	}
 	return d
+}
+
+// affixWords names the enchantments a question card can say about an elite pack (display only; data, not logic).
+var affixWords = []struct {
+	a Affix
+	w string
+}{{AffixCursed, "cursing"}, {AffixExtraFast, "fast"}, {AffixExtraStrong, "extra strong"}, {AffixMagicResistant, "magic resistant"},
+	{AffixFireEnchanted, "fire"}, {AffixColdEnchanted, "cold"}, {AffixLightningEnchanted, "lightning"}, {AffixManaBurn, "mana burning"},
+	{AffixTeleportation, "teleporting"}, {AffixSpectralHit, "spectral"}, {AffixStoneSkin, "stone skinned"}, {AffixMultiShot, "multishot"}}
+
+// eliteFacts describes the first elite among the candidates for the question card: its name, kind, enchantments and
+// distance in tiles (a tile is 5 subtiles).
+func eliteFacts(cand []Target) []any {
+	i := slices.IndexFunc(cand, func(t Target) bool { return t.Elite })
+	if i < 0 {
+		return nil
+	}
+	t := cand[i]
+	kind := "unique pack"
+	switch {
+	case t.Boss:
+		kind = "boss"
+	case t.Champion:
+		kind = "champion pack"
+	}
+	var ws []string
+	for _, x := range affixWords {
+		if t.Affixes&x.a != 0 {
+			ws = append(ws, x.w)
+		}
+	}
+	return []any{"monster", t.Name, "packkind", kind, "affixes", strings.Join(ws, ", "), "distance", int(t.Dist/5 + 0.5)}
 }
