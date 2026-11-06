@@ -511,6 +511,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-21 live series after pumpfix: 4 profiles x 10 min on i5 clean, questions answered in the field (25 of 42), 2 rules learned, no behaviour change yet, AC 2 and 3 open (docs/probes/t0drill.md Result 3)
 - TASK-20 watch screen: on-demand live video of the game window (d2bot --watch-video, /stream, /shot.jpg); offline tested, live check on i5 passive
 - cardwhy: watch question cards say what happened (display-only Situation facts from the ladder call sites), what each answer does and what the hero does by default; offline tested, user play session next
+- orders UX design (tappable Act 1 map, order sheet, queue, guard conflict) and clickable mock; docs only, awaiting user reaction before any code (docs/research/orders-ux-design.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

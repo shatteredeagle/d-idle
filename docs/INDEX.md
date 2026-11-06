@@ -750,3 +750,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/t0-slice.md: how to run the ladder and the watch screen on the real bot (d2bot -ladder -watch)
 - docs/soaks/gate2-multiseed-20261105-1607-g2d.md: Gate 2 multi-seed run 20261105-1607-g2d (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/research/watch-screen-design.md section 8 Game video (d2bot --watch-video)
+- docs/research/orders-ux-design.md - orders UX design: map, order sheet, queue, guard conflict, 3 slices; mock docs/research/mocks/orders.html

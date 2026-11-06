@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Orders UX design and clickable mock for the watch screen (docs only)
 - watch screen: every question card now names the event behind it (real values), what each answer does, the default and the fade time; the rule key is a footnote
 - watch screen: optional live video of the game window (d2bot --ladder --watch --watch-video), captured only while someone watches
 - T0 drill series after pumpfix, verified live on four answer profiles (docs/probes/t0drill.md Result 3)
