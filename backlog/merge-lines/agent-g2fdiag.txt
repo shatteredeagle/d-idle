@@ -1,3 +1,0 @@
-BACKLOG: TASK-41 g2f diagnosis (docs/research/g2f-diagnosis.md): seed 17 merc never revived (price estimate over the real quote, pack/stash split, reserve); fix in branch agent/g2fdiag (merc.reviveReserveMax, quote probe, stash fetch, tp diag forwarding); offline tested, live proof needs the next Gate 2
-INDEX: docs/research/g2f-diagnosis.md - Gate 2 g2f diagnosis: seed 17 merc economy, seeds 11/13 compared, early death 13, tp field, mouthRef, needs the user
-CHANGELOG: Mercenary revive: reserve capped by merc.reviveReserveMax (10 gold), real quote read from the NPC menu, stash gold fetched before the payment; minute line tp/tpBuy now filled in the d2d stack

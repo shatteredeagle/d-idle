@@ -530,6 +530,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-44 onboardA onboarding slice A built offline: six-screen setup stepper, stored go-ahead, passcode (PBKDF2) or token access with a watch login gate and reset-access; follow-ups TASK-48 (tour) and TASK-49 (controls)
 - friendspreview: shareable clickable mock of the flow with a feedback page (docs/research/mocks/friends-preview.html)
 - GATE2: Gate 2 multi-seed run 20261106-1626-g2f (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-1626-g2f.md)
+- TASK-41 g2f diagnosis (docs/research/g2f-diagnosis.md): seed 17 merc never revived (price estimate over the real quote, pack/stash split, reserve); fix in branch agent/g2fdiag (merc.reviveReserveMax, quote probe, stash fetch, tp diag forwarding); offline tested, live proof needs the next Gate 2
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
