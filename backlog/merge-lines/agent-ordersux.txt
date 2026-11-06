@@ -1,0 +1,3 @@
+BACKLOG: orders UX design (tappable Act 1 map, order sheet, queue, guard conflict) and clickable mock; docs only, awaiting user reaction before any code (docs/research/orders-ux-design.md)
+INDEX: docs/research/orders-ux-design.md - orders UX design: map, order sheet, queue, guard conflict, 3 slices; mock docs/research/mocks/orders.html
+CHANGELOG: Orders UX design and clickable mock for the watch screen (docs only)
