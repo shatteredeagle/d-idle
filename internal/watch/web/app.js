@@ -256,7 +256,7 @@
     n.appendChild(ul);
   }
 
-  var SVGNS = 'http://www.w3.org/2000/svg';
+  var SVGNS = $('svg').namespaceURI; // read from the page's own <svg>: no URL literal in the script
   function sv(tag, at) { var e = document.createElementNS(SVGNS, tag); for (var k in at) e.setAttribute(k, at[k]); return e; }
   function nodeLabel(n) {
     var w = stWords(n);

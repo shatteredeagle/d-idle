@@ -130,6 +130,7 @@ func NewSim(build string, speed float64) (*Sim, error) {
 		return nil, err
 	}
 	hub.Activity(KindIdle, "waiting for an order")
+	s.reportHeroLocked("waiting for an order")
 	return s, nil
 }
 
