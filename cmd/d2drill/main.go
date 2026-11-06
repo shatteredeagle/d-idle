@@ -121,7 +121,7 @@ func run() int {
 	}
 	be, err := d2denv.Build(ctx, d2denv.Config{ID: "drills", Log: log, Tune: &tune, Data: db, Sock: *sock, LinkWait: 30 * time.Second,
 		Bin: *bin, DataDir: *gamedir, Home: *hdir, Nice: 10, LogFile: filepath.Join(*hdir, "d2d.out"),
-		ExtraArgs: []string{"--toggle", "autoloot=off,autoparty=off", "--lockstep"},
+		ExtraArgs: []string{"--toggle", "autoloot=off,autoparty=off", "--lockstep", "--lab-verbs"},
 		Spec:      d2dinput.Spec{Name: *name, Class: *class, Seed: *seed, NoSave: true}})
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "d2drill: build:", err)

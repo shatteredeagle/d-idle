@@ -1,5 +1,6 @@
 #!/bin/bash
 # Proof for the slot pool: N trivial lockstep d2d runs side by side, each on its own slot socket and seed.
+# D2D_LAB_VERBS: set empty ("D2D_LAB_VERBS=") for a d2d binary older than the fork branch d2d.lab3-labverbs (it rejects the flag).
 #   ssh <worker> 'bash -s -- [N]' < tools/d2dslot-test.sh     (hidden d2d only, --no-save, fresh uncheated Sorceress, nice 10)
 # Each run steps a slot-specific number of frames and checks the clock it reads back; cross-talk would show up as
 # a wrong slot/step count/socket echo. Slots held by legacy flock holders are skipped, so fewer than N distinct
@@ -42,7 +43,7 @@ one() {
 	n=$D2D_SLOT; seed=$((100 + n)); out=$D/slot$n; mkdir -p "$out"
 	rm -f "$D2D_SOCK"
 	SDL_VIDEODRIVER=dummy nice -n 10 "$BIN" --data "$HOME/d2d-lab/data" --headless --devctl "$D2D_SOCK" --no-video \
-		--lockstep --no-save --toggle autoloot=off,autoparty=off --seed $seed --start-screen ingame \
+		--lockstep ${D2D_LAB_VERBS---lab-verbs} --no-save --toggle autoloot=off,autoparty=off --seed $seed --start-screen ingame \
 		--start-class 4 --start-name Slotty$n > "$out/d2d.log" 2>&1 &
 	pid=$!
 	for i in $(seq 120); do [ -S "$D2D_SOCK" ] && break; sleep 0.5; done

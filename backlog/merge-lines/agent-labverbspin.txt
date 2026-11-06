@@ -1,0 +1,3 @@
+BACKLOG: LABVERBSPIN: TASK-42 fork lab-verbs gate: pin moved to fork d2d.lab3-labverbs f75816c616c8, --lab-verbs passed by drills, soak lab and gate, d2dsetup hook in the tester entrypoint, 1.14d Patch_D2 hash pinned (docs/lab-verbs.md)
+INDEX: docs/lab-verbs.md: the fork --lab-verbs gate (which debug verbs are gated, who passes the flag, proof)
+CHANGELOG: tester d2d now ships without lab verbs (only read-only debug verbs answer); the first-run wizard runs from the tester entrypoint and the setup page checks the Patch_D2 hash of 1.14d.

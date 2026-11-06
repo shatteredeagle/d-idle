@@ -13,16 +13,18 @@ import (
 // The tables are data (AGENTS.md build flexibility): file set, classes and goal presets are not in Go code.
 // d2d_index is the d2d UI order (V docs/d2d-fidelity.md: 0 Barbarian, 1 Necromancer, 2 Paladin, 3 Amazon,
 // 4 Sorceress, 5 Druid, 6 Assassin). min_size values are loose lower bounds against partial copies (U: not
-// pinned to a real install; the 1.14d version proof is the Patch_D2 hash list, still empty, U).
+// pinned to a real install). size_1_14d is the size in the owner's 1.14d install (V, 2026-11-06; shown, not enforced). The 1.14d
+// version proof is the Patch_D2 hash list (V: sha256 of the owner's Patch_D2.mpq, whose Game.exe file version reads 1.14.3.71).
 
 //go:embed tables.json
 var tablesJSON []byte
 
 type FileSpec struct {
-	Name     string `json:"name"`
-	Required bool   `json:"required,omitempty"`
-	MinSize  int64  `json:"min_size,omitempty"`
-	Why      string `json:"why"`
+	Name      string `json:"name"`
+	Required  bool   `json:"required,omitempty"`
+	MinSize   int64  `json:"min_size,omitempty"`
+	Size1_14d int64  `json:"size_1_14d,omitempty"`
+	Why       string `json:"why"`
 }
 
 type Class struct {
@@ -38,6 +40,7 @@ type Preset struct {
 }
 
 type Tables struct {
+	Source        string     `json:"source,omitempty"`
 	Files         []FileSpec `json:"files"`
 	PatchSHA256   []string   `json:"patch_sha256"`
 	Classes       []Class    `json:"classes"`

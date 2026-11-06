@@ -56,7 +56,7 @@ func TestDockerfileTester(t *testing.T) {
 // context.sh pins the Gate 2 fork commit and refuses game data.
 func TestContextPins(t *testing.T) {
 	c := read(t, "context.sh")
-	wantAll(t, "context.sh", c, "pin_commit=ee5e06d8ef990200b699e61779c64ded1451c33d", "pin_ref=lab2-freezeresume",
+	wantAll(t, "context.sh", c, "pin_commit=f75816c616c8253930d88277b90936e3eabe3bc8", "pin_ref=lab3-labverbs", "./cmd/d2dsetup",
 		"8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e", "-iname '*.mpq'", "-iname 'game.exe'", "*.mpq")
 	if strings.Contains(c, "lab5") {
 		t.Error("context.sh still names lab5")
@@ -77,7 +77,7 @@ func dry(t *testing.T, mode string, env ...string) string {
 
 func TestEntrypointTesterProfile(t *testing.T) {
 	out := dry(t, "tester", "D2BOT_WATCH_ORIGIN=http://tester.example:8891")
-	wantAll(t, "tester dry run", out, "D2BOT_LADDER=1", "D2BOT_WATCH=1", "D2BOT_WATCH_ADDR=0.0.0.0:8891", "D2BOT_WATCH_ANSWER_ADDR=0.0.0.0:8892",
+	wantAll(t, "tester dry run", out, "D2BOT_WATCH_ACCESS_FILE=/data/access.json", "D2BOT_LADDER=1", "D2BOT_WATCH=1", "D2BOT_WATCH_ADDR=0.0.0.0:8891", "D2BOT_WATCH_ANSWER_ADDR=0.0.0.0:8892",
 		"D2BOT_WATCH_ORIGIN=http://tester.example:8891", "D2BOT_WATCH_TOKEN_FILE=/data/watch.token", "D2BOT_LADDER_STORE=/data/ladder",
 		"D2BOT_WATCH_VIDEO=1", "D2BOT_WATCH_VIDEO_SOURCE=tap", "D2BOT_GAMEDIR=/game", "d2d-mode=realtime", "D2DVIEW_TOKEN=***",
 		"d2dview -addr 127.0.0.1:8893", "-jpeg", "--addr 127.0.0.1:8420", "--goals 'campaign:normal_act1'")

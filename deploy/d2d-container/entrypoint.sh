@@ -18,6 +18,17 @@ mode=${1:-bot}
 D2D_SOCK=${D2D_SOCK:-/run/d2d/d2d.sock}
 D2D_BIN=${D2D_BIN:-/opt/d2d/d2d}
 D2D_DATA=${D2D_DATA:-/game}
+if [ "$mode" = tester ] && [ "${ENTRYPOINT_DRYRUN:-0}" = 0 ]; then
+	# first run: the setup wizard (cmd/d2dsetup) checks /game, asks for the hero and the access, and writes /data/wizard.env
+	if ! grep -q '"phase": "done"' /data/wizard.json 2>/dev/null; then
+		echo "entrypoint: first run: open http://<host>:8891/setup.html (the token URL is printed once below)"
+		d2dsetup -data /data -game "$D2D_DATA" -origin "${D2BOT_WATCH_ORIGIN:-}"   # blocks until Start finished
+	fi
+	[ ! -f /data/wizard.env ] || . /data/wizard.env     # D2D_NAME, D2D_CLASS (d2d index), D2BOT_GOALS
+fi
+# the access file (passcode or token hash) of onboarding slice A; the watch side reads it when it exists
+[ "$mode" != tester ] || export D2BOT_WATCH_ACCESS_FILE=${D2BOT_WATCH_ACCESS_FILE:-/data/access.json}
+
 name=${D2D_NAME:-D2dbot}
 class=${D2D_CLASS:-1}
 ctl=$D2D_SOCK.ctl # full-access socket of the tap (d2d takes ONE client; the tap multiplexes)

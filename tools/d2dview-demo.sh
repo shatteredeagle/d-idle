@@ -1,5 +1,6 @@
 #!/bin/bash
 # One-command demo of the sped-up d2d bot with live view (docs/d2d-view.md, change card d2dview2).
+# D2D_LAB_VERBS: set empty ("D2D_LAB_VERBS=") for a d2d binary older than the fork branch d2d.lab3-labverbs (it rejects the flag).
 #   tools/d2dview-demo.sh [--minutes N] [--watch] [--seed N] [--clients] [--no-build]   build, ship, start (detached) on the worker
 #   tools/d2dview-demo.sh status | stop | log
 # Under `flock -w 3000 /tmp/d2d-lab.lock` (held only while it runs; other d2d runs queue) it starts: the d2dview tap/viewer
@@ -43,7 +44,7 @@ if [ "${1:-}" = "--remote" ]; then
   [ $WATCH = 1 ] && curl -s -X POST 'localhost:8893/api/mode?m=watch' > /dev/null
   if [ $CLIENTS = 1 ]; then ( curl -s -N localhost:8893/events > /dev/null & curl -s -N localhost:8893/stream.mjpg > /dev/null & wait ) & CP=$!; fi
   nice -n 10 $D/d2bot --backend d2d --managed --d2d-class 4 --char Viewy --seed $SEED \
-    --toggle autoloot=off,autoparty=off --d2d-args "--lockstep" --d2d-linkwait 60s \
+    --toggle autoloot=off,autoparty=off --d2d-args "--lockstep ${D2D_LAB_VERBS---lab-verbs}" --d2d-linkwait 60s \
     --d2d-bin $F/d2d.lab5 --d2d-data $HOME/d2d-lab/data --gamedir $HOME/d2d-lab/data \
     --d2d-sock $R/d2d.sock --d2d-dial $R/bot.sock --data $D/botdata --addr 127.0.0.1:8471 \
     --goals campaign --run-for ${MIN}m > $D/bot.log 2>&1 &

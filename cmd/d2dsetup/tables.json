@@ -1,16 +1,17 @@
 {
+  "source": "patch_sha256 and size_1_14d are read from the owner's own Diablo II install (Game.exe file version 1.14.3.71, 1.14d) on the worker host, 2026-11-06 (TASK-42); hashes of game files only, no game file is copied",
   "files": [
-    {"name": "d2data.mpq", "required": true, "min_size": 100000000, "why": "base game data"},
-    {"name": "d2exp.mpq", "required": true, "min_size": 100000000, "why": "Lord of Destruction data"},
-    {"name": "d2char.mpq", "required": true, "min_size": 100000000, "why": "character graphics"},
-    {"name": "Patch_D2.mpq", "required": true, "min_size": 1000000, "why": "the 1.14 patch (also what makes the data 1.14d)"},
+    {"name": "d2data.mpq", "required": true, "size_1_14d": 269191615, "min_size": 100000000, "why": "base game data"},
+    {"name": "d2exp.mpq", "required": true, "size_1_14d": 250156780, "min_size": 100000000, "why": "Lord of Destruction data"},
+    {"name": "d2char.mpq", "required": true, "size_1_14d": 266071129, "min_size": 100000000, "why": "character graphics"},
+    {"name": "Patch_D2.mpq", "required": true, "size_1_14d": 5727413, "min_size": 1000000, "why": "the 1.14 patch (also what makes the data 1.14d)"},
     {"name": "d2sfx.mpq", "why": "sound effects"},
     {"name": "d2music.mpq", "why": "music"},
     {"name": "d2speech.mpq", "why": "speech"},
     {"name": "d2xmusic.mpq", "why": "expansion music"},
     {"name": "d2xtalk.mpq", "why": "expansion speech"}
   ],
-  "patch_sha256": [],
+  "patch_sha256": ["531bad76d520eea8cb0601bea5a40e1ec52f51fe7b94a6892dc483d18170c607"],
   "classes": [
     {"id": "sorceress", "name": "Sorceress", "d2d_index": 4, "supported": true},
     {"id": "barbarian", "name": "Barbarian", "d2d_index": 0},

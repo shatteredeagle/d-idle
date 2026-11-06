@@ -50,7 +50,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=d2d /out/ /opt/d2d/
 COPY licenses/ /usr/share/licenses/d2d/
 # our part (separate program, separate layer)
-COPY bin/d2bot bin/d2dsoak bin/d2dview bin/d2dping /opt/d2lod/
+COPY bin/d2bot bin/d2dsoak bin/d2dview bin/d2dsetup bin/d2dping /opt/d2lod/
 COPY entrypoint.sh /opt/d2lod/entrypoint.sh
 
 ENV D2D_BIN=/opt/d2d/d2d \
