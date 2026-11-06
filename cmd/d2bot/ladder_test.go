@@ -408,7 +408,7 @@ func TestWatchVideoOptions(t *testing.T) {
 
 func TestWatchVideoSourceTap(t *testing.T) {
 	t.Setenv("PATH", t.TempDir()) // no ffmpeg, no import: the tap source needs neither, and no X display
-	ok := ladderOptions{on: true, watch: true, video: true, videoSource: "tap", tapURL: "http://127.0.0.1:8893", videoQuality: 5, instance: "i0"}
+	ok := ladderOptions{on: true, watch: true, video: true, viewAddr: "127.0.0.1:8891", answerAddr: "127.0.0.1:8892", videoSource: "tap", tapURL: "http://127.0.0.1:8893", videoQuality: 5, instance: "i0"}
 	if err := ok.validate(false); err != nil {
 		t.Fatalf("tap source: %v", err)
 	}
@@ -427,7 +427,7 @@ func TestWatchVideoSourceTap(t *testing.T) {
 		}
 	}
 	// x11 stays the default and keeps its own limits; the tap flags do nothing there
-	x := ladderOptions{on: true, watch: true, video: true, videoFPS: 10, videoQuality: 5, instance: "i0"}
+	x := ladderOptions{on: true, watch: true, viewAddr: "127.0.0.1:8891", answerAddr: "127.0.0.1:8892", video: true, videoFPS: 10, videoQuality: 5, instance: "i0"}
 	if err := x.validate(false); err == nil {
 		t.Error("x11 on i0 accepted: lost the private-display rule")
 	}
