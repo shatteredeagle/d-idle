@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-const testToken = "0123456789abcdef0123456789abcdef"
+const testToken = "tok-for-tests-only-AAAAAAAAAAAAAAAA"
 
 // small tables: the same shape as tables.json with tiny size bounds, so fake files stay tiny.
 const smallTables = `{
@@ -372,7 +372,7 @@ func TestTokenEnforcement(t *testing.T) {
 			t.Errorf("%s %s without token: %d", c[0], c[1], code)
 		}
 	}
-	if code, _, _ := f.do(t, "GET", "/api/state", "", "Authorization", "Bearer wrong"); code != 401 {
+	if code, _, _ := f.do(t, "GET", "/api/state", "", "Authorization", "Bearer "+strings.Repeat("x", 32)); code != 401 {
 		t.Errorf("wrong token %d", code)
 	}
 	if code, _, _ := f.do(t, "GET", "/api/state", "", "X-No-Auth", "1", "Authorization", "", "Cookie", "d2dview=wrong"); code != 401 {
