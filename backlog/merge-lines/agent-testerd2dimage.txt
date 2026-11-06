@@ -1,0 +1,3 @@
+BACKLOG: TASK-31 testerd2dimage phase A: tester profile (entrypoint TESTER=1/tester), fork pin lab2-freezeresume ee5e06d8ef99, compose.tester.yml, dry-run test; image build deferred
+INDEX: docs/d2d-container/README.md - tester profile, env table, first run, lab-verb gating finding
+CHANGELOG: d2d container: tester profile (watch screen, ladder, video from the tap, realtime), compose.tester.yml, fork pin lab2-freezeresume
