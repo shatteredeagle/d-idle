@@ -2,8 +2,11 @@ package merc
 
 import "testing"
 
+// ctx has the revive reserve cap lifted so the tests of the percent rules see the whole reserve; the cap has its own tests.
 func ctx() Ctx {
-	return Ctx{Gold: 3000, Kit: 300, Act: 2, PlayerClass: "Sorceress", HaveTP: true, HavePotions: true, Knobs: DefaultKnobs(), FirstLutVisit: true}
+	k := DefaultKnobs()
+	k.ReviveReserveMax = 1 << 30
+	return Ctx{Gold: 3000, Kit: 300, Act: 2, PlayerClass: "Sorceress", HaveTP: true, HavePotions: true, Knobs: k, FirstLutVisit: true}
 }
 
 func TestFormulas(t *testing.T) {

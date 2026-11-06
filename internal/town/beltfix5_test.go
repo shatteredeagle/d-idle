@@ -90,3 +90,22 @@ func TestRecoveryFloorLiftedByWithdrawal(t *testing.T) {
 		t.Errorf("recovery without a withdrawal bought %v, want at most 1 healing", rep2.Bought)
 	}
 }
+
+// g2f: WithdrawGold takes the asked amount out of the stash (clamped to it) and nothing for an empty stash.
+func TestWithdrawGoldForTheMerc(t *testing.T) {
+	r, c := withdrawRig(t, 1100, 900, 16, true)
+	if err := r.T.WithdrawGold(context.Background(), 820); err != nil {
+		t.Fatal(err)
+	}
+	if len(c.moves) != 1 || c.moves[0] != -820 {
+		t.Fatalf("moves %v, want one withdrawal of 820", c.moves)
+	}
+	r2, c2 := withdrawRig(t, 1100, 300, 16, true)
+	if err := r2.T.WithdrawGold(context.Background(), 820); err != nil || len(c2.moves) != 1 || c2.moves[0] != -300 {
+		t.Fatalf("clamp to the stash: %v %v", err, c2.moves)
+	}
+	r3, c3 := withdrawRig(t, 1100, 0, 16, true)
+	if err := r3.T.WithdrawGold(context.Background(), 820); err != nil || len(c3.moves) != 0 {
+		t.Fatalf("empty stash: %v %v", err, c3.moves)
+	}
+}

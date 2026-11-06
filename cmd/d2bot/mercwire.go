@@ -47,6 +47,18 @@ type Reviver interface {
 	Revive(ctx context.Context) (paid int, err error)
 }
 
+// QuoteProber reads the revive price from the NPC menu without paying (d2dmerc.Reviver.Probe).
+type QuoteProber interface {
+	Probe(ctx context.Context) (quote int, err error)
+}
+
+// GoldBank takes gold out of the stash into the pack. *town.Town implements it. The revive pays from the pack only (V:
+// d2dmerc.Reviver compares the quote with the pack gold, and banking keeps the pack at the keep line, 1100 at clvl 16,
+// below a 1920 price), so the stash part of the purse has to be fetched first.
+type GoldBank interface {
+	WithdrawGold(ctx context.Context, amount int) error
+}
+
 // Hirer drives the Act 2 hire window. No d2d implementation exists yet (the rows are only readable on screen, docs/d2d-probes.md
 // section 4), so production wiring leaves it nil and the hire step does nothing; tests use a fake.
 type Hirer interface {
@@ -113,6 +125,9 @@ func installMercSeam(s *d2denv.Seams) {
 		if w == nil {
 			return t
 		}
+		if b, ok := t.(GoldBank); ok {
+			w.bank = b
+		}
 		return &mercTown{Townsman: t, w: w}
 	}
 }
@@ -163,6 +178,8 @@ type mercWire struct {
 	rd    merc.Reader
 	rev   Reviver
 	hirer Hirer
+	quote int      // the revive price read from the NPC menu while the merc is dead, 0 = not read (mu)
+	bank  GoldBank // nil: the stash cannot be emptied, so only pack gold counts for a revive
 	cat   bot.Catalog
 	now   func() time.Time
 
@@ -211,9 +228,10 @@ func (w *mercWire) State() (merc.MercState, error) {
 func (w *mercWire) observe(st merc.MercState) {
 	switch {
 	case st.Owned && st.Alive:
-		w.wasAlive, w.seen = true, true
+		w.wasAlive, w.seen, w.quote = true, true, 0
 	case st.Owned && !st.Alive:
 		if w.wasAlive {
+			w.quote = 0
 			w.deaths = append(w.deaths, w.now())
 			w.log.Info(merc.Prefix + "died")
 		}
@@ -364,10 +382,18 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	}
 	c := mercCtx(w, s)
 	missing, price := !st.Owned, hireQuoteNormal
+	need := 0
 	if st.Owned && !st.Alive {
 		missing, price = true, merc.ReviveCost(max(st.Level, 1))
+		w.mu.Lock()
+		if w.quote > 0 {
+			price = w.quote
+		}
+		w.mu.Unlock()
+		need = merc.ReviveNeed(c, price)
+	} else {
+		need = merc.GoldNeed(c, price)
 	}
-	need := merc.GoldNeed(c, price)
 	// The budget sees the merc and level part alone (GoldFarm with gold 0, need 1) so it can tell the early end at the bar.
 	eligible := missing && merc.GoldFarm(true, 0, 1, s.Player.Level, w.knobs)
 	w.mu.Lock()
@@ -632,8 +658,20 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	c := mercCtx(w, s)
 	if first {
 		c.Gold, c.HaveTP, c.HavePotions = s.Player.Gold, true, true
+		if w.bank != nil {
+			c.Gold += s.Player.StashGold // fetched below before the payment
+		}
 	}
-	dec, price := merc.ShouldRevive(st, c, 0)
+	w.mu.Lock()
+	quote := w.quote
+	w.mu.Unlock()
+	dec, price := merc.ShouldRevive(st, c, quote)
+	if !dec.Do && dec.Reason == merc.ReasonGold && quote == 0 && !first {
+		// The level estimate overshoots, so the real quote may be affordable (see QuoteProber).
+		if q := w.probeQuote(ctx, c.Gold); q > 0 {
+			dec, price = merc.ShouldRevive(st, c, q)
+		}
+	}
 	if first && !dec.Do {
 		return ""
 	}
@@ -662,6 +700,7 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 		return "merc revive skipped: no reviver"
 	}
 	est := price
+	w.fundRevive(ctx, s, price)
 	paid, err := w.rev.Revive(ctx)
 	if err != nil {
 		w.logSkip("failed: "+err.Error(), price, c.Gold, need)
@@ -669,6 +708,7 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	}
 	w.mu.Lock()
 	w.revives = append(w.revives, w.now())
+	w.quote = 0
 	w.curAt = time.Time{} // re-read: the merc should be alive now
 	w.mu.Unlock()
 	if q, ok := w.rev.(interface{ Quote() int }); ok && q.Quote() > 0 {
@@ -676,6 +716,50 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	}
 	w.log.Info(merc.LogRevived(paid, st.Level, est))
 	return "merc revived"
+}
+
+// probeQuote reads the real revive price once while the merc stays dead (the quote of a dead merc does not change) and
+// keeps it for the policy and the gold farm. 0 when the purse is too small to matter, the reviver cannot probe or the
+// read failed (logged once per visit with the refusal; the estimate then decides).
+func (w *mercWire) probeQuote(ctx context.Context, gold int) int {
+	p, ok := w.rev.(QuoteProber)
+	if !ok || gold < probeMinGold {
+		return 0
+	}
+	q, err := p.Probe(ctx)
+	if err != nil {
+		w.log.Warn(merc.Prefix + "revive quote unreadable (" + err.Error() + ")")
+		return 0
+	}
+	if q > 0 {
+		w.mu.Lock()
+		w.quote = q
+		w.mu.Unlock()
+		w.log.Info(merc.Prefix + "revive quote read price=" + strconv.Itoa(q) + " gold=" + strconv.Itoa(gold))
+	}
+	return q
+}
+
+// probeMinGold: below this a purse cannot pay any revive (the cheapest quote seen was 120), so the walk to the NPC is saved.
+const probeMinGold = 100
+
+// fundRevive moves the part of the price that the pack lacks out of the stash. price is the formula estimate from the
+// player level, an upper bound (U: the merc is usually a few levels behind), so at worst a little too much is carried
+// until the next bank round. A failure is logged and the revive is tried anyway (it refuses cheaply on a poor pack).
+func (w *mercWire) fundRevive(ctx context.Context, s *d2.Snapshot, price int) {
+	short := min(price-s.Player.Gold, s.Player.StashGold)
+	if short <= 0 {
+		return
+	}
+	if w.bank == nil {
+		w.log.Warn(merc.Prefix + "revive pays from the pack, no stash access (short " + strconv.Itoa(short) + ")")
+		return
+	}
+	if err := w.bank.WithdrawGold(ctx, short); err != nil {
+		w.log.Warn(merc.Prefix + "stash withdrawal for the revive failed (" + err.Error() + ")")
+		return
+	}
+	w.log.Info(merc.Prefix + "withdrew " + strconv.Itoa(short) + " gold for the revive")
 }
 
 // logSkip writes the revive refusal (reason, price, gold, need) at WARN so the journal and the soak extras log carry
@@ -719,6 +803,22 @@ func (t *mercTown) Chores(ctx context.Context, plan bot.ChorePlan) (bot.ChoreRep
 		}
 	}
 	return rep, err
+}
+
+// TPCount and TakeTPBought forward bot.TPDiag: the runner finds the minute line fields tp and tpBuy by a type assertion
+// on its Townsman, and this wrapper hid them (g2f: tp 0 on every minute line while the autopsy counted 2 scrolls).
+func (t *mercTown) TPCount(s *d2.Snapshot) int {
+	if d, ok := t.Townsman.(bot.TPDiag); ok {
+		return d.TPCount(s)
+	}
+	return 0
+}
+
+func (t *mercTown) TakeTPBought() int {
+	if d, ok := t.Townsman.(bot.TPDiag); ok {
+		return d.TakeTPBought()
+	}
+	return 0
 }
 
 // NeedsTrip is polled by the runner; it doubles as the cheap tick for the once-a-minute merc line.

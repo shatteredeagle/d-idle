@@ -60,14 +60,15 @@ func ParseQuote(text string) (int, bool) {
 	return n, digits > 0
 }
 
-func (r *Reviver) Revive(ctx context.Context) (int, error) {
+// openLine opens the hireling's menu and returns the player state and the resurrect line. The menu stays open.
+func (r *Reviver) openLine(ctx context.Context) (d2dctl.State, d2dctl.MenuLine, error) {
 	st, _, err := r.C.State(ctx)
 	if err != nil {
-		return 0, err
+		return st, d2dctl.MenuLine{}, err
 	}
 	npcs, err := r.C.NPCs(ctx)
 	if err != nil {
-		return 0, err
+		return st, d2dctl.MenuLine{}, err
 	}
 	idx := -1
 	for _, name := range hirelings {
@@ -81,7 +82,7 @@ func (r *Reviver) Revive(ctx context.Context) (int, error) {
 		}
 	}
 	if idx < 0 {
-		return 0, ErrNoHireling
+		return st, d2dctl.MenuLine{}, ErrNoHireling
 	}
 	to := r.Timeout
 	if to == 0 {
@@ -89,12 +90,36 @@ func (r *Reviver) Revive(ctx context.Context) (int, error) {
 	}
 	lines, err := r.C.OpenNPCMenu(ctx, idx, to)
 	if err != nil {
-		return 0, err
+		return st, d2dctl.MenuLine{}, err
 	}
 	line, ok := d2dctl.FindLine(lines, "resurrect")
 	if !ok {
 		_ = r.C.PickMenuLine(ctx, "cancel")
-		return 0, ErrNoReviveLine
+		return st, d2dctl.MenuLine{}, ErrNoReviveLine
+	}
+	return st, line, nil
+}
+
+// Probe reads the price of the resurrect line without paying: it walks to the hireling, opens the menu, parses the
+// quote and cancels. The formula in internal/merc takes the player level for the merc level, which overshoots (V g2f seed
+// 11: quote 120 = merc level 4 while the hero was clvl 8, estimate 480), so the wiring asks for the real quote before it
+// calls the purse too poor. 0 with a nil error: the line carried no price.
+func (r *Reviver) Probe(ctx context.Context) (int, error) {
+	_, line, err := r.openLine(ctx)
+	if err != nil {
+		return 0, err
+	}
+	r.LastQuote = 0
+	q, _ := ParseQuote(line.Text)
+	r.LastQuote = q
+	_ = r.C.PickMenuLine(ctx, "cancel")
+	return q, nil
+}
+
+func (r *Reviver) Revive(ctx context.Context) (int, error) {
+	st, line, err := r.openLine(ctx)
+	if err != nil {
+		return 0, err
 	}
 	r.LastQuote = 0
 	if q, ok := ParseQuote(line.Text); ok {

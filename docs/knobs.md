@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -283,6 +282,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.potionLifePct | 50 | 10..80 | % | 50 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
 | merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
 | merc.kitReservePctFullKit | 50 | 0..500 | % | 50 | 2 | The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon). |
+| merc.reviveReserveMax | 10 | 0..2000 | gold | 10 | 2 | The kit reserve a revive keeps back (merc.kitReservePct of the full kit refill) is never more than this many gold, so a dead merc is revived once the purse covers the price plus this margin; the kit itself is checked separately (a scroll and potions must be in hand, or the revive runs first and the shop uses what is left). g2f seed 17 stayed dead 7 hours with gold 100 to 300 short of price plus the 155 to 310 reserve. |
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |

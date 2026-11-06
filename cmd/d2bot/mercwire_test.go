@@ -139,9 +139,9 @@ func TestReviveFlow(t *testing.T) {
 	if !strings.Contains(buf.String(), "merc: revived price=750 level=10") || !strings.Contains(buf.String(), "merc: died") {
 		t.Errorf("log:\n%s", buf.String())
 	}
-	// poor: below 2 x 750
+	// poor: below the price 750 plus the revive reserve cap
 	clk.t = clk.t.Add(10 * time.Second)
-	if got := w.ReviveStep(ctx, townSnap(1000, true)); !strings.Contains(got, "gold") || rev.calls != 1 {
+	if got := w.ReviveStep(ctx, townSnap(700, true)); !strings.Contains(got, "gold") || rev.calls != 1 {
 		t.Errorf("poor: %q", got)
 	}
 	// no kit
@@ -499,7 +499,7 @@ func TestGoldFarmFollowsMerc(t *testing.T) {
 	if !w.GoldFarm(field(300, 11)) {
 		t.Error("dead merc and short gold must farm")
 	}
-	if !strings.Contains(buf.String(), "merc: gold farm on need=1060 gold=300 clvl=11") {
+	if !strings.Contains(buf.String(), "merc: gold farm on need=760 gold=300 clvl=11") {
 		t.Errorf("log:\n%s", buf)
 	}
 	if w.GoldFarm(field(5000, 11)) {
@@ -758,5 +758,145 @@ func TestReviveSkipLoggedOncePerVisit(t *testing.T) {
 	w.ReviveStep(ctx, townSnap(100, true))
 	if n := strings.Count(buf.String(), "level=WARN msg=\"merc: revive skipped (gold)"); n != 2 {
 		t.Fatalf("%d warn lines after a new visit:\n%s", n, buf)
+	}
+}
+
+type fakeBank struct {
+	asked []int
+	err   error
+}
+
+func (f *fakeBank) WithdrawGold(_ context.Context, n int) error {
+	f.asked = append(f.asked, n)
+	return f.err
+}
+
+// g2f seed 17: price 1920, pack held at the keep line (1100) and the rest in the stash. The bar counts both, the revive
+// pays from the pack, so the shortfall comes out of the stash first. Two classes: the rule is class-free.
+func TestReviveFetchesTheStashPart(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		dead := merc.MercState{Known: true, Owned: true, Level: 16}
+		rev := &fakeReviver{paid: 1900}
+		w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
+		bank := &fakeBank{}
+		w.bank = bank
+		snap := func(pack, stash int) *d2.Snapshot {
+			s := townSnap(pack, true)
+			s.Player.Class, s.Player.StashGold = class, stash
+			return s
+		}
+		ctx := context.Background()
+		// 1500 in all against a price of 1920 plus the margin: it waits and moves nothing
+		if got := w.ReviveStep(ctx, snap(1100, 400)); got != "merc revive skipped: gold" || len(bank.asked) != 0 || rev.calls != 0 {
+			t.Fatalf("%v poor: %q asked %v calls %d", class, got, bank.asked, rev.calls)
+		}
+		// 1930 in all: 820 comes out of the stash, then the revive runs
+		if got := w.ReviveStep(ctx, snap(1100, 830)); got != "merc revived" || len(bank.asked) != 1 || bank.asked[0] != 820 || rev.calls != 1 {
+			t.Fatalf("%v funded: %q asked %v calls %d", class, got, bank.asked, rev.calls)
+		}
+	}
+}
+
+// Without a bank only the pack counts before the shop, as before; with one the stash counts too.
+func TestReviveFirstCountsTheStashOnlyWithABank(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 16}
+	s := townSnap(1100, false)
+	s.Player.StashGold = 900
+	rev := &fakeReviver{paid: 1900}
+	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
+	if got := w.ReviveFirst(context.Background(), s); got != "" || rev.calls != 0 {
+		t.Fatalf("no bank: %q calls %d", got, rev.calls)
+	}
+	bank := &fakeBank{}
+	w.bank = bank
+	if got := w.ReviveFirst(context.Background(), s); got != "merc revived" || rev.calls != 1 || len(bank.asked) != 1 || bank.asked[0] != 820 {
+		t.Fatalf("bank: %q calls %d asked %v", got, rev.calls, bank.asked)
+	}
+}
+
+// A failed withdrawal is logged and the revive is still tried.
+func TestReviveWithdrawFailureStillTries(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 16}
+	rev := &fakeReviver{err: errors.New("purse")}
+	w, buf, _ := testWire(t, &fakeReader{st: dead}, rev)
+	w.bank = &fakeBank{err: errors.New("stash closed")}
+	s := townSnap(1100, true)
+	s.Player.StashGold = 900
+	if got := w.ReviveStep(context.Background(), s); got != "merc revive failed" || rev.calls != 1 || !strings.Contains(buf.String(), "stash withdrawal for the revive failed") {
+		t.Fatalf("%q calls %d log %s", got, rev.calls, buf)
+	}
+}
+
+type tpTown struct {
+	bot.Townsman
+	tp, bought int
+}
+
+func (f *tpTown) TPCount(*d2.Snapshot) int { return f.tp }
+func (f *tpTown) TakeTPBought() int        { return f.bought }
+
+// g2f: the runner finds tp and tpBuy by a type assertion on its Townsman; the merc wrapper hid them (tp 0 on every line).
+func TestMercTownForwardsTPDiag(t *testing.T) {
+	var d bot.Townsman = &mercTown{Townsman: &tpTown{tp: 3, bought: 2}}
+	diag, ok := d.(bot.TPDiag)
+	if !ok || diag.TPCount(nil) != 3 || diag.TakeTPBought() != 2 {
+		t.Fatalf("forwarding broken: %v", ok)
+	}
+	d = &mercTown{Townsman: nil}
+	if diag := d.(bot.TPDiag); diag.TPCount(nil) != 0 || diag.TakeTPBought() != 0 {
+		t.Error("an inner town without the diagnostics must read 0")
+	}
+}
+
+type probeReviver struct {
+	fakeReviver
+	quote, probes int
+	err           error
+}
+
+func (p *probeReviver) Probe(context.Context) (int, error) { p.probes++; return p.quote, p.err }
+
+// g2f seed 11: the formula said 480 for a merc whose menu quoted 120. A purse short of the estimate reads the quote
+// once and revives when it covers the real price; the quote is kept while the merc stays dead.
+func TestReviveReadsTheRealQuote(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		dead := merc.MercState{Known: true, Owned: true, Level: 16} // estimate 1920
+		rev := &probeReviver{quote: 1270}
+		rev.paid = 1270
+		w, buf, clk := testWire(t, &fakeReader{st: dead}, rev)
+		snap := func(gold int) *d2.Snapshot {
+			s := townSnap(gold, true)
+			s.Player.Class = class
+			return s
+		}
+		ctx := context.Background()
+		if got := w.ReviveStep(ctx, snap(1000)); got != "merc revive skipped: gold" || rev.probes != 1 || rev.calls != 0 {
+			t.Fatalf("%v poor: %q probes %d calls %d", class, got, rev.probes, rev.calls)
+		}
+		if !strings.Contains(buf.String(), "need=1280") {
+			t.Errorf("the refusal must carry the quote bar:\n%s", buf)
+		}
+		clk.t = clk.t.Add(5 * time.Minute)
+		if got := w.ReviveStep(ctx, snap(1285)); got != "merc revived" || rev.probes != 1 || rev.calls != 1 {
+			t.Fatalf("%v funded: %q probes %d calls %d", class, got, rev.probes, rev.calls)
+		}
+		if w.quote != 0 {
+			t.Error("the quote must be dropped after the revive")
+		}
+	}
+}
+
+// A hopeless purse does not walk to the NPC, and an unreadable quote falls back to the estimate.
+func TestReviveProbeSkippedOrFailed(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 16}
+	rev := &probeReviver{quote: 1270}
+	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
+	if got := w.ReviveStep(context.Background(), townSnap(50, true)); got != "merc revive skipped: gold" || rev.probes != 0 {
+		t.Fatalf("poor: %q probes %d", got, rev.probes)
+	}
+	rev2 := &probeReviver{err: errors.New("no hireling")}
+	w2, buf, _ := testWire(t, &fakeReader{st: dead}, rev2)
+	if got := w2.ReviveStep(context.Background(), townSnap(1500, true)); got != "merc revive skipped: gold" || rev2.probes != 1 || !strings.Contains(buf.String(), "need=1930") {
+		t.Fatalf("failed probe: %q probes %d\n%s", got, rev2.probes, buf)
 	}
 }

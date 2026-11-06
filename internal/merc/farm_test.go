@@ -93,3 +93,47 @@ func TestWaitAndLeave(t *testing.T) {
 		t.Error("leave only when the crowd rule fires with the merc down")
 	}
 }
+
+// g2f seed 17: price 1920 (clvl 16), gold 1930 total, reserve 155 (kit full) or 310: the merc stayed dead 7 hours. The
+// revive reserve is capped by merc.reviveReserveMax; a hire keeps the whole reserve. Two classes: the cap is class-free.
+func TestReviveReserveCap(t *testing.T) {
+	if DefaultKnobs().ReviveReserveMax != 10 {
+		t.Fatalf("default cap %d, want 10", DefaultKnobs().ReviveReserveMax)
+	}
+	dead := MercState{Known: true, Owned: true, Level: 16}
+	for _, class := range []string{"Sorceress", "Paladin"} {
+		for _, full := range []bool{false, true} {
+			c := ctx()
+			c.PlayerClass, c.KitFull, c.Kit = class, full, KitRefill(100, 30, 4, 3)
+			c.Knobs = DefaultKnobs()
+			if got := ReviveNeed(c, 1920); got != 1930 {
+				t.Fatalf("%s full=%v: need %d, want price + cap 1930", class, full, got)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, 1930), 1920); !d.Do {
+				t.Errorf("%s full=%v: gold 1930 price 1920 must revive: %+v", class, full, d)
+			}
+			// gold 1500 still saves for it: the cap never lets the revive go below the price
+			if d, _ := ShouldRevive(dead, withGold(c, 1500), 1920); d.Do || d.Reason != ReasonGold {
+				t.Errorf("%s full=%v: gold 1500 must wait: %+v", class, full, d)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, 1929), 1920); d.Do {
+				t.Errorf("%s full=%v: one short of price + cap: %+v", class, full, d)
+			}
+		}
+	}
+	// a small reserve is not raised to the cap, and cap 0 asks for the bare price
+	c := ctx()
+	c.Knobs, c.Kit = DefaultKnobs(), 6
+	if got := ReviveNeed(c, 1000); got != 1006 {
+		t.Errorf("reserve below the cap: %d want 1006", got)
+	}
+	c.Knobs.ReviveReserveMax = 0
+	if got := ReviveNeed(c, 1000); got != 1000 {
+		t.Errorf("cap 0: %d want 1000", got)
+	}
+	// the hire bar keeps the whole reserve
+	c.Knobs, c.Kit = DefaultKnobs(), 310
+	if got := GoldNeed(c, 400); got != 710 {
+		t.Errorf("hire need %d want 710", got)
+	}
+}
