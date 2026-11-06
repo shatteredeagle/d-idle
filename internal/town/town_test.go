@@ -563,7 +563,7 @@ func TestPoorHeroKeepsScrollReserve(t *testing.T) {
 		name         string
 		potions, res int
 		want         int
-	}{{"kit carried", 3, 2, 2}, {"reserve 1 is the old cap", 3, 1, 1}, {"no potion carried", 0, 2, 1}} {
+	}{{"kit carried", 6, 2, 2}, {"reserve 1 is the old cap", 6, 1, 1}, {"no potion carried", 0, 2, 1}} {
 		t.Run(tc.name, func(t *testing.T) {
 			r := newRig(t)
 			r.W.Player.Gold = 600
@@ -572,6 +572,7 @@ func TestPoorHeroKeepsScrollReserve(t *testing.T) {
 			}
 			r.Env.Tune.Resource.TripGoldFloor = 3000 // 600 gold is under the floor: poor
 			r.Env.Tune.Town.TPScrollTarget = 4
+			r.Env.Tune.Town.TPTomeMinGold = 5000
 			r.Env.Tune.Town.TPReserve = tc.res
 			r.Env.Tune.Town.PotionsFirst = 0
 			rep, err := r.T.Chores(context.Background(), town.ChorePlan{Scrolls: true})

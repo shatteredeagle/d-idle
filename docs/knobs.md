@@ -21,6 +21,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -78,7 +79,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
-| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 15 | A hostile monster this close counts as a fight. |
+| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 16 | A hostile monster this close counts as a fight. |
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
@@ -127,6 +128,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.tripRepairPct | 20 | 0..60 | % | 0 | 1 | Go to town when an equipped item is below this durability. |
 | town.beltFillPct | 100 | 25..100 | % | 25 | 1 | Refill each potion type to this share of its planned columns. |
 | town.tpScrollTarget | 2 | 1..20 | count | 1 | 4 | Scrolls to hold when no tome is owned. |
+| town.tpReserve | 2 | 1..5 | count | 1 | 2 | Town portal scrolls a poor character buys once it carries its minimal healing kit (a dive then does not start with the only scroll spent). 1 = one scroll, the old cap. |
 | town.tpMinGold | 0 | 0..1000 | gold | 1000 | 1 | Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price. |
 | town.tpTomeMinGold | 450 | 0..5000 | gold | 5000 | 2 | Buy a Tome of Town Portal when gold is at least this. |
 | town.idScrollTarget | 2 | 0..20 | count | 0 | 4 | Scrolls to hold when no tome is owned. |
@@ -237,6 +239,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.rung3WindowMax | 3 | 0..20 | count | 3 | 1 | Failsafe leave-and-re-enter cycles allowed inside the burst window even when kills come between them. One more ends in a field reset (skip the area, no new game). 0 is off. |
 | bot.rung3WindowMin | 20 | 1..240 | min | 20 | 2 | Virtual minutes the re-entry burst cap counts over. |
 | bot.droughtMin | 8 | 0..60 | min | 8 | 1 | Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off. |
+| bot.droughtStage2Min | 2 | 0..30 | min | 2 | 1 | Virtual minutes after the first drought action (leave the area) before the second (a fresh game). The old rule waited a full bot.droughtMin, which can never help under the Gate 2 limit of 10. 0 uses bot.droughtMin. |
+| bot.noPortalWaitSec | 20 | 0..240 | s | 20 | 1 | Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits. |
+| bot.freshAfterRecoverySec | 180 | 0..900 | s | 180 | 1 | No unplanned fresh game (no target left, drought) this long after a lost-game recovery, unless life is below the resume line. A second restart right after the recovery fails the Gate 2 fault criterion. 0 is off. |
 | bot.emptyFieldSec | 150 | 0..900 | s | 150 | 1 | A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off. |
 | bot.failsafePauseMaxSec | 3600 | 300..1.44e+04 | s | 3600 | 1 | Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress. |
 | bot.mercRetryMin | 10 | 1..60 | min | 10 | 1 | Minutes between merc chore attempts; a failed hire or revive is not retried sooner. |
@@ -346,7 +351,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |
 | resource.manaPaysCasts | 3 | 0..6 | casts | 6 | 2 | Below the mana drink line a caster skips the potion while its mana still pays this many casts of the cheapest spell. 0 = drink at the line regardless (veteran play: drink at 30 percent before the skill swap). |
 | resource.minFieldBeltPct | 0 | 0..100 | % | 0 | 2 | Leave town for the field only with at least this percent of the planned healing potions (unless poor, then Blood Moor only). 0 = off. |
-| resource.gearGateMode | 1 | 0..1 | 0/1 | 0 | 2 | 0 = hard gate (no weapon, no body armor or no potions and no gold closes the field), 1 = graded risk model (docs/gear-gate.md). |
+| resource.gearGateMode | 1 | 0..1 | 0/1 | 0 | 3 | 0 = hard gate (no weapon, no body armor or no potions and no gold closes the field), 1 = graded risk model (docs/gear-gate.md). |
 | resource.gearRiskMedium | 3 | 1..10 | points | 10 | 0 | Risk points at which gear risk is medium (logged, rebuy priority). |
 | resource.gearRiskHigh | 6 | 2..20 | points | 20 | 0 | Risk points at which gear risk is high and only the first field is open. |
 | resource.gearDeathsHigh | 4 | 2..10 | deaths | 2 | 0 | Deaths in the hour or in one area from which deaths add gear risk. Dying is normal: a few change nothing. |
@@ -365,7 +370,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryXPEarly | 0 | 0..3 | levels | 0 | 1 | XP pick: a recovering character may enter an area this many levels below its plan enter and kit level (XPGAP: Cold Plains pays 1.5x the XP per kill of Blood Moor at the same kill rate). 0 = the plan levels. |
 | resource.recoveryKitGate | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering character with no healing potion in the belt or no town portal scroll farms only Blood Moor and Cold Plains and its walks avoid dungeon areas (Den, caves, Burial Grounds, Crypt, Mausoleum; KITGATE). 0 = the old area choice. |
 | resource.kitGateLevel | 8 | 0..20 | level | 20 | 2 | KITGATELEVEL: below this character level an incomplete kit holds a recovering character in Blood Moor and Cold Plains; from it the gate holds only a character with no portal and no healing potion, any other incomplete kit makes a town trip and the area progression goes on. 0 = the gate holds at every level. |
-| resource.kitMinHP | 4 | 1..6 | count | 1 | 0 | Minimum kit from kitGateLevel: healing potions (belt, pack, rejuvenation). Advisor range 4-6. |
+| resource.kitMinHP | 4 | 1..6 | count | 1 | 1 | Minimum kit from kitGateLevel: healing potions (belt, pack, rejuvenation). Advisor range 4-6. |
 | resource.kitMinMP | 3 | 0..4 | count | 0 | 0 | Minimum kit from kitGateLevel: mana potions in the belt. Advisor range 3-4. Casters only (a build that needs no mana is not asked). |
 | resource.kitTripCap | 2 | 1..5 | trips | 5 | 2 | Kit town trips with the kit still incomplete before the bot proceeds anyway and logs kitgate-skip. |
 | resource.povertySellMin | 0 | 0..16 | items | 0 | 1 | A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll. |

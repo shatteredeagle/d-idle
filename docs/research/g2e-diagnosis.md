@@ -147,3 +147,16 @@ Criteria and Numbers tables are not touched by this note; these are questions on
 - The cause lines of the 6-7 Save and Exit bursts and of the post-recovery fresh game (E4).
 - The merc revive decisions of seed 17 (E5).
 - Method note (V): all counts in this note come from scripts over the committed `*-g2e-minutes.jsonl.gz` and `*-g2e-extras.jsonl.gz`; the extras logs hold WARN and a few INFO lines, so absence of a line proves nothing about INFO-level events.
+
+## 11. F2-F5 fixes (branch agent/g2efix, offline tested, no live proof)
+
+Tags: V = read from code or a test run, U = not proven live. The next Gate 2 is the live proof.
+
+- F2a no-portal low life (V cause: section 2.3). `lowLifeGate` now remembers the first heal trip that failed with `town.ErrNoPortal`; once `healFailLimit` rounds failed and `bot.noPortalWaitSec` (20 s, 0..240) passed it starts a fresh game (`noPortalLeave`, internal/bot/goal.go) instead of `lowLifeWait`. A new game starts in town, which heals. 240 keeps the old two minute waits. Cycler missing: the old wait.
+- F2b scroll reserve (U cause: the log has no scroll count; the code path found is the poor cap in `internal/town/shop.go` that held the scroll target at 1 under the trip gold floor, so a funded-looking hero left with one scroll). New knob `town.tpReserve` (2, 1..5): a poor hero that already carries its minimal healing kit (`resource.kitMinHP`) buys that many scrolls; with no potion carried the potions still come first (1 scroll). 1 is the old cap. The `t1.tp.lost` ladder point is untouched (the legacy test BuyKit is unchanged).
+- F2c walk-back table (S: nav `act1Hints`, U: never walked live). `resource.chainHome` gains 11, 13, 14, 15, 18, 19, 20 (holes, second caves, crypt, mausoleum, Forgotten Tower, passage 2). Tamoe Highland (7) and the pits stay out (codefix F1 test).
+- F3 drought timing (V code). New `bot.droughtStage2Min` (2, 0..30): stage 2 (fresh game) follows stage 1 after 2 virtual minutes from the stage 1 action, so 8 + 2 stays inside the 10 minute limit. 0 restores a full `bot.droughtMin`. A goal that cannot skip an area already took the fresh-game path at stage 1 (`skipTargetFor` returns false for non-leveling, non-camp goals); unchanged.
+- F4 quiet after recovery (V cause: section 5.1). New `bot.freshAfterRecoverySec` (180, 0..900): `freshHold` forbids the planner's fresh game (`noTarget`, `freshGameToLevel`) and the drought fresh game for that long after a lost-game recovery (`loop.gameLost`), unless life is below the resume line. The judge and criteria are untouched.
+- F5 merc revive (U cause: gold). V: `ReviveStep` ran AFTER `Townsman.Chores`, so every purchase (and the bank deposit) came first. `mercTown.Chores` now calls `ReviveFirst` before the shop: pack gold only, kit test waived because the kit reserve (`merc.kitReservePct`) is inside the bar. The normal step after the chores stays. The refusal line (`merc: revive skipped (reason) price= gold= need=`) is now WARN, once per town visit (2 minute gap), so the extras log carries it.
+
+Unproven live: all five. Ladder parity tests (internal/ladder, internal/decide) pass unchanged.
