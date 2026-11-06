@@ -214,10 +214,30 @@
     setInterval(poll, 5000); // safety net: a missed event costs at most 5 s
   }
 
+  // Game video: an MJPEG <img>. It shows only when the server offers a stream, and reconnects when the stream ends or
+  // is refused (viewer limit, capture restart). The token, if any, rides along from this page's own address.
+  function video(url) {
+    var shot = $('shot'), t = new URLSearchParams(location.search).get('t'), tries = 0;
+    $('gamepane').hidden = false; $('tab-game').hidden = false;
+    function connect() {
+      var q = [];
+      if (t) q.push('t=' + encodeURIComponent(t));
+      q.push('r=' + Date.now());
+      shot.src = url + '?' + q.join('&');
+    }
+    shot.addEventListener('load', function () { tries = 0; shot.hidden = false; $('noframe').hidden = true; });
+    shot.addEventListener('error', function () {
+      shot.hidden = true; $('noframe').hidden = false;
+      tries++; setTimeout(connect, Math.min(15000, 1000 * tries));
+    });
+    $('noframe').hidden = false;
+    connect();
+  }
+
   get('/api/config').then(function (c) {
     cfg = c;
     answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
-    if (c.frameUrl) { $('shot').src = c.frameUrl; $('shot').hidden = false; $('noframe').hidden = true; }
+    if (c.frameUrl) video(c.frameUrl);
     refresh(); live(); setInterval(tickCountdown, 250);
   }).catch(function () { say('the viewer is not reachable'); });
 })();

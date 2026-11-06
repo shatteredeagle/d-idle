@@ -16,13 +16,14 @@
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
 <nav class="views" id="views" aria-label="Pages">
  <button type="button" data-view="thoughts" aria-current="page">Thoughts</button>
+ <button type="button" data-view="game" id="tab-game" hidden>Game</button>
  <button type="button" data-view="orders">Orders</button>
  <button type="button" data-view="rules">Rules</button>
  <button type="button" data-view="journal">Journal</button>
 </nav>
 <main id="main" data-view="thoughts">
- <section class="card game" id="gamepane" aria-labelledby="t-game"><h2 id="t-game">Game</h2>
-  <div id="frame"><img id="shot" alt="game frame" hidden><p id="noframe" class="empty">No game frame here (simulated runner or the frame feed is off).</p></div>
+ <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
+  <div id="frame"><img id="shot" alt="live game window" hidden><p id="noframe" class="empty" hidden>Waiting for the game picture...</p></div>
  </section>
  <section class="card thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
   <div id="thoughts"></div>

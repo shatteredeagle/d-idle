@@ -116,6 +116,7 @@ func parseFlags(args []string) (options, error) {
 	if err := o.d2d.validate(o); err != nil {
 		return o, err
 	}
+	o.ladder.instance = o.instance
 	if err := o.ladder.validate(o.sim); err != nil {
 		return o, err
 	}

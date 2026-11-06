@@ -47,6 +47,7 @@ type ServeOptions struct {
 	ViewAddr, AnswerAddr string
 	Token                string
 	Origins              string // comma list; empty: the viewer's port on localhost
+	Video                *Video // game video on the viewer (/stream, /shot.jpg); nil: off
 }
 
 // Served names the addresses that were bound.
@@ -65,6 +66,7 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 			return Served{}, fmt.Errorf("watch: %s is not loopback and needs a token", a)
 		}
 	}
+	h.SetVideo(o.Video)
 	vl, err := net.Listen("tcp", o.ViewAddr)
 	if err != nil {
 		return Served{}, err
@@ -91,6 +93,11 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 	})
 	for _, p := range ViewRoutes {
 		m.Handle(p, h.ViewHandler())
+	}
+	if o.Video != nil {
+		for _, p := range VideoRoutes {
+			m.Handle(p, h.ViewHandler())
+		}
 	}
 	view := &http.Server{Handler: tokenGate(o.Token, m)}
 	ans := &http.Server{Handler: h.AnswerHandler(AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)})}

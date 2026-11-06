@@ -65,7 +65,7 @@ input[type=number] { width: 5rem; }
 .views button[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 650; }
 
 main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; grid-template-columns: 1fr; }
-@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="orders"] .orders, main[data-view="rules"] .rules, main[data-view="journal"] .journal { display: block; } }
+@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .orders, main[data-view="rules"] .rules, main[data-view="journal"] .journal { display: block; } }
 @media (min-width: 900px) {
   .views { display: none; }
   main { grid-template-columns: repeat(12, 1fr); }
@@ -75,7 +75,7 @@ main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 aut
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
 .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
 .card-head h2 { margin: 0 auto 0 0; }
-img#shot { max-width: 100%; border-radius: 8px; background: #000; }
+img#shot { max-width: 100%; width: 100%; height: auto; border-radius: 8px; background: #000; }
 
 .thought { border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; margin-bottom: 8px; background: var(--surface); box-shadow: inset 3px 0 0 var(--accent); }
 .thought.confirm { border-color: var(--warn); box-shadow: inset 3px 0 0 var(--warn); }
