@@ -8,6 +8,10 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Mercenary revive reserve now follows the SME rule (0 gold below clvl 13, 50 gold from clvl 13, before potions and repair); merc.reviveReserveMax is retired
+- Early game: a clvl 4 hero is no longer sent to Cold Plains when Blood Moor is held back, a big pack it fled from is not re-entered until the kit is rebuilt or 10 minutes pass, and a burst of life potions in a pack becomes a town portal (knobs bot.stalePack*, bot.potionBurst*).
+- Mercenary revive: reserve capped by merc.reviveReserveMax (10 gold), real quote read from the NPC menu, stash gold fetched before the payment; minute line tp/tpBuy now filled in the d2d stack
+- docs: Gate 2 multi-seed soak run 20261106-1626-g2f: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-1626-g2f.md).
 - Tester setup page is now six screens with a go-ahead tick, a chosen passcode (or the generated token) and a login for the watch screen; `d2dsetup reset-access` resets it
 - backlog board: labels are now tiers (T0..T5) and areas, check.py rejects unknown labels and folded titles, new_task.py unfolds long titles
 - Onboarding UX design and clickable mock for the d2d tester build (docs only)

@@ -18,13 +18,16 @@ type MercTuning struct {
 	KitReservePctFullKit int // the kit reserve in % while the kit is already full (just bought)
 	GoldFarmBudgetMin    int // one gold farm arming lasts at most this many virtual minutes; 0 = no budget
 	GoldFarmCooldownMin  int // after a budget end the farm may not arm again for this many minutes
+	ReviveReserveLow     int // gold a revive keeps back below ReviveReserveClvl (the hire keeps merc.kitReservePct)
+	ReviveReserveHigh    int // gold a revive keeps back from ReviveReserveClvl on
+	ReviveReserveClvl    int // clvl band edge between the two
 	Enabled              int // 1: the bot runs the merc policy (revive, guard input, status); 0: Game.exe and d2d behave as before
 }
 
 func DefaultMercTuning() MercTuning {
 	return MercTuning{ReviveMaxPerHour: 2, ReviveGoldMult: 1, StopDeathsPerHour: 3, StopGoldMult: 5, HireGoldMult: 1,
 		FreeRogueOnly: 0, ReplaceAtAct2: 1, SwapGainPct: 10, ReqStrDex: 1, PotionLifePct: 50, KitReservePct: 100, GoldFarmMaxLevel: 17,
-		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, Enabled: 1}
+		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, ReviveReserveLow: 0, ReviveReserveHigh: 50, ReviveReserveClvl: 13, Enabled: 1}
 }
 
 func mercKnobs() []Knob {
@@ -32,7 +35,7 @@ func mercKnobs() []Knob {
 		{Key: "merc.reviveMaxPerHour", Label: "Merc revives per hour", Unit: "count", Default: 2, Min: 0, Max: 12, NoHandicap: true,
 			Desc: "Most merc revives in one hour; a merc that keeps dying costs more than it saves."},
 		{Key: "merc.reviveGoldMult", Label: "Revive gold multiple", Unit: "x", Default: 1, Min: 1, Max: 10, NoHandicap: true,
-			Desc: "Revive only with gold of at least this many times the price plus merc.kitReservePct of the full kit refill (potions come first)."},
+			Desc: "Revive only with gold of at least this many times the quote plus the revive reserve (merc.reviveReserveLow/High)."},
 		{Key: "merc.stopDeathsPerHour", Label: "Merc deaths before stop", Unit: "count", Default: 3, Min: 1, Max: 12, NoHandicap: true,
 			Desc: "More merc deaths than this in an hour stop reviving until gold reaches the stop multiple."},
 		{Key: "merc.stopGoldMult", Label: "Stop-state gold multiple", Unit: "x", Default: 5, Min: 1, Max: 20, NoHandicap: true,
@@ -50,9 +53,15 @@ func mercKnobs() []Knob {
 		{Key: "merc.potionLifePct", Label: "Merc potion life", Unit: "%", Default: 50, Min: 10, Max: 80, NoHandicap: true,
 			Desc: "A healing potion goes to the merc only below this life percent in a non-trivial fight."},
 		{Key: "merc.kitReservePct", Label: "Merc kit reserve", Unit: "%", Default: 100, Min: 0, Max: 500, NoHandicap: true,
-			Desc: "A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc."},
+			Desc: "A hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc."},
 		{Key: "merc.kitReservePctFullKit", Label: "Merc kit reserve, full kit", Unit: "%", Default: 50, Min: 0, Max: 500, NoHandicap: true,
 			Desc: "The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon)."},
+		{Key: "merc.reviveReserveLow", Label: "Merc revive reserve, low clvl", Unit: "gold", Default: 0, Min: 0, Max: 2000, NoHandicap: true,
+			Desc: "Gold a revive keeps back on top of the real quote while clvl is below merc.reviveReserveClvl. A dead merc is revived as soon as the purse (pack plus stash) covers the quote plus this, before potions and repair (SME rule, user 2026-11-06). merc.kitReservePct applies to hires only."},
+		{Key: "merc.reviveReserveHigh", Label: "Merc revive reserve, high clvl", Unit: "gold", Default: 50, Min: 0, Max: 2000, NoHandicap: true,
+			Desc: "The same reserve from clvl merc.reviveReserveClvl on: enough for a few potions, never a full kit refill."},
+		{Key: "merc.reviveReserveClvl", Label: "Merc revive reserve band edge", Unit: "levels", Default: 13, Min: 1, Max: 99, NoHandicap: true,
+			Desc: "First clvl that uses merc.reviveReserveHigh instead of merc.reviveReserveLow."},
 		{Key: "merc.goldFarmBudgetMin", Label: "Merc gold farm budget", Unit: "min", Default: 40, Min: 0, Max: 600, NoHandicap: true,
 			Desc: "One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit."},
 		{Key: "merc.goldFarmCooldownMin", Label: "Merc gold farm cooldown", Unit: "min", Default: 60, Min: 0, Max: 600, NoHandicap: true,

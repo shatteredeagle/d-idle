@@ -42,6 +42,7 @@ type Ctx struct {
 	HaveTP        bool
 	KitFull       bool // the kit is already at its minimum (just bought): KitReservePctFullKit applies
 	HavePotions   bool
+	Level         int // player clvl; picks the revive reserve band (0 = unknown, the high band applies)
 	// Revives and merc deaths in the last 60 minutes.
 	RevivesLastHour, DeathsLastHour int
 	Knobs                           Knobs
@@ -49,12 +50,15 @@ type Ctx struct {
 
 // need is the gold a merc payment takes: price x mult, plus KitReservePct of the full kit refill (Kit). Potions come
 // first: the kit reserve stays in the purse when the merc is paid.
-func (c Ctx) need(price, mult int) int {
+func (c Ctx) need(price, mult int) int { return price*mult + c.reserve() }
+
+// reserve is the kit gold kept back from a merc payment.
+func (c Ctx) reserve() int {
 	pct := c.Knobs.KitReservePct
 	if c.KitFull {
 		pct = c.Knobs.KitReservePctFullKit
 	}
-	return price*mult + c.Kit*pct/100
+	return c.Kit * pct / 100
 }
 
 func no(why string) Decision { return Decision{Reason: why} }
@@ -199,7 +203,7 @@ func hasGear(s MercState) bool {
 	return false
 }
 
-// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the kit reserve, with a TP and potions,
+// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the revive reserve, with a TP and potions,
 // at most reviveMaxPerHour times an hour; more than stopDeathsPerHour merc deaths in the hour raises the gold bar to
 // stopGoldMult x price. price is the quote read from the dialog, or 0 to use the formula (needs the merc level).
 func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
@@ -234,13 +238,23 @@ func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
 }
 
 // ReviveNeed is the bar ShouldRevive tests the purse against: price x the revive multiple (the stop multiple after
-// too many deaths) plus the kit reserve. The wiring logs it as need=.
+// too many deaths) plus the revive reserve. The wiring logs it as need=.
 func ReviveNeed(c Ctx, price int) int {
 	mult := c.Knobs.ReviveGoldMult
 	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
 		mult = c.Knobs.StopGoldMult
 	}
-	return c.need(price, mult)
+	return price*mult + c.ReviveReserve()
+}
+
+// ReviveReserve is the small purse a revive keeps back (SME rule, user 2026-11-06): the Low gold below the band edge
+// clvl, the High gold from it. It replaces the kit reserve for revives (g2f seed 17: price 1920 plus a 155 to 310 kit
+// reserve kept the merc dead 7 hours); the hire keeps KitReservePct.
+func (c Ctx) ReviveReserve() int {
+	if c.Level > 0 && c.Level < c.Knobs.ReviveReserveClvl {
+		return c.Knobs.ReviveReserveLow
+	}
+	return c.Knobs.ReviveReserveHigh
 }
 
 // MercDied is the field signal: the merc was alive and is now dead while the player is outside town. Leave the area

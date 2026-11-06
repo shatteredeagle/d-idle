@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -79,7 +78,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
-| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 16 | A hostile monster this close counts as a fight. |
+| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 17 | A hostile monster this close counts as a fight. |
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
@@ -224,6 +223,13 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.stallExitMin | 30 | 5..240 | min | 240 | 1 | Virtual minutes still without campaign progress after the fresh game before the bot exits (status 5) so the supervisor restarts the whole process. |
 | bot.spiralMinutes | 15 | 5..15 | min | 5 | 5 | Window in which the deaths are counted. Shorter forgets sooner. |
 | bot.pauseDeathsPerHour | 8 | 8..20 | deaths | 20 | 2 | Deaths in the last hour after which the bot pauses itself and asks the user. |
+| bot.stalePackHostiles | 4 | 0..12 | count | 12 | 3 | Hostiles near the hero when it left a field by chicken, town portal or crowd exit that make the area a stale pack: no return by portal and no planner pick of that area until bot.stalePackMinutes pass or the kit is rebuilt. 0 turns the rule off. Seed 13 of Gate 2 g2f died 2 s after re-entering a 12-hostile pack at clvl 4. |
+| bot.stalePackMinutes | 10 | 1..60 | min | 60 | 1 | How long a stale pack keeps its area closed. Monsters of a live game stay where they are (U), so the hold is a guess at the time the kit needs to be rebuilt. |
+| bot.stalePackMinHP | 5 | 1..8 | count | 8 | 1 | Healing potions (belt and pack) that lift the stale-pack hold early, together with bot.stalePackMinTier. |
+| bot.stalePackMinTier | 2 | 1..3 | tier | 3 | 1 | Best healing potion tier in the belt that lifts the stale-pack hold early (1 Minor Healing, 2 Light Healing). |
+| bot.potionBurstN | 5 | 0..12 | count | 12 | 2 | Life drinks within bot.potionBurstSec that turn the next drink into a town portal while bot.potionBurstHostiles or more hostiles are near and a portal exists. 0 turns the rule off. Seed 13 drank 11 potions in about 17 s and then died. |
+| bot.potionBurstSec | 20 | 5..60 | s | 60 | 2 | Window in which the life drinks are counted. |
+| bot.potionBurstHostiles | 3 | 1..8 | count | 8 | 1 | Hostiles within the fight radius the potion burst rule needs before it retreats. |
 | bot.povertyTier | 0 | 0..2 | tier | 2 | 3 | Gear tier bought after an abandoned corpse: 0 is the cheapest viable weapon and armor, potions first. |
 | bot.goldFloor | 2000 | 0..2000 | gold | 0 | 6 | Gold town visits must not spend, kept to rebuy gear after a death. |
 | bot.pointsRetrySec | 30 | 30..300 | s | 300 | 2 | Wait before spending stat and skill points again after an attempt that did not finish. Longer leaves points unspent. |
@@ -272,7 +278,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | merc.reviveMaxPerHour | 2 | 0..12 | count | 2 | 2 | Most merc revives in one hour; a merc that keeps dying costs more than it saves. |
-| merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the price plus merc.kitReservePct of the full kit refill (potions come first). |
+| merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the quote plus the revive reserve (merc.reviveReserveLow/High). |
 | merc.stopDeathsPerHour | 3 | 1..12 | count | 3 | 3 | More merc deaths than this in an hour stop reviving until gold reaches the stop multiple. |
 | merc.stopGoldMult | 5 | 1..20 | x | 5 | 2 | While reviving is stopped by deaths, revive only with gold of at least this many times the price. |
 | merc.hireGoldMult | 1 | 1..10 | x | 1 | 2 | Hire or replace only when gold is at least this many times the quote plus merc.kitReservePct of the full kit refill. |
@@ -281,8 +287,11 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.swapGainPct | 10 | 0..100 | % | 10 | 4 | A merc item is swapped only when its score is this much better. Lower swaps more often. |
 | merc.reqStrDex | 1 | 0..1 | bool | 1 | 2 | 1 checks the merc's own Strength and Dexterity against gear (d2decomped finding, UNVERIFIED live); 0 checks only level. |
 | merc.potionLifePct | 50 | 10..80 | % | 50 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
-| merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
+| merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
 | merc.kitReservePctFullKit | 50 | 0..500 | % | 50 | 2 | The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon). |
+| merc.reviveReserveLow | 0 | 0..2000 | gold | 0 | 2 | Gold a revive keeps back on top of the real quote while clvl is below merc.reviveReserveClvl. A dead merc is revived as soon as the purse (pack plus stash) covers the quote plus this, before potions and repair (SME rule, user 2026-11-06). merc.kitReservePct applies to hires only. |
+| merc.reviveReserveHigh | 50 | 0..2000 | gold | 50 | 2 | The same reserve from clvl merc.reviveReserveClvl on: enough for a few potions, never a full kit refill. |
+| merc.reviveReserveClvl | 13 | 1..99 | levels | 13 | 2 | First clvl that uses merc.reviveReserveHigh instead of merc.reviveReserveLow. |
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |

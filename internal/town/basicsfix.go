@@ -2,6 +2,7 @@ package town
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"d2lod-bot/internal/d2"
@@ -176,6 +177,35 @@ func (t *Town) withdraw(ctx context.Context, a *Act) error {
 	if amount <= 0 {
 		return nil
 	}
+	return t.withdrawAmount(ctx, a, s, amount, "for the kit")
+}
+
+// ErrNoGoldMover: the input cannot move gold through the game's own command, so the stash cannot be emptied.
+var ErrNoGoldMover = errors.New("town: no gold mover on this input")
+
+// WithdrawGold takes up to amount gold out of the stash into the pack (the merc revive pays from the pack only: g2f seed
+// 17 held the price in the stash and pack plus stash passed the bar, while banking kept the pack at the keep line).
+// Nothing happens for amount <= 0 or an empty stash.
+func (t *Town) WithdrawGold(ctx context.Context, amount int) error {
+	s, err := t.current()
+	if err != nil {
+		return err
+	}
+	a := ActOfLevel(s.Player.Area)
+	if a == nil {
+		return ErrNotInTown
+	}
+	amount = min(amount, s.Player.StashGold)
+	if amount <= 0 {
+		return nil
+	}
+	if _, ok := t.e.In.(goldMover); !ok {
+		return ErrNoGoldMover
+	}
+	return t.withdrawAmount(ctx, a, s, amount, "for the merc")
+}
+
+func (t *Town) withdrawAmount(ctx context.Context, a *Act, s *d2.Snapshot, amount int, why string) error {
 	if err := t.openStash(ctx, a); err != nil {
 		return err
 	}
@@ -191,7 +221,7 @@ func (t *Town) withdraw(ctx context.Context, a *Act) error {
 	}
 	if first == nil {
 		t.withdrew = true
-		t.e.Log.Info("town: withdrew gold for the kit", "amount", amount, "stash", s.Player.StashGold-amount)
+		t.e.Log.Info("town: withdrew gold "+why, "amount", amount, "stash", s.Player.StashGold-amount)
 	}
 	if err := t.h.CloseAll(ctx); err != nil && first == nil {
 		first = err

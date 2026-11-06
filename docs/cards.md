@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (34)
+## Active (35)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -41,9 +41,9 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 20 | t0fight | T0 | proposed 0/3 | engineered drill for a fight-time question and a learned answer | - | - | [card](archive/openspec-index.md#t0fight) |
 | 21 | ladder-t1 | T1 | proposed 0/3 | Tidy tier: cards and wiring for what T1 still lacks | - | - | [card](archive/openspec-index.md#ladder-t1) |
 | 22 | ladder-t2 | T2 | proposed 0/3 | Runner tier: urgency stage 2 and the unwired T2 points | - | - | [card](archive/openspec-index.md#ladder-t2) |
-| 23 | earlydeath13 | bot-defect | proposed 0/3 | seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains | - | - | [card](archive/openspec-index.md#earlydeath13) |
+| 23 | earlydeath13 | bot-defect | in-progress 2/3 | seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains | - | - | [card](archive/openspec-index.md#earlydeath13) |
 | 24 | tpreserve-live | bot-defect | proposed 0/2 | prove the scroll reserve and no-portal leave with the tp field | - | - | [card](archive/openspec-index.md#tpreserve-live) |
-| 25 | g2f-record | gate | proposed 0/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
+| 25 | g2f-record | gate | in-progress 3/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
 | 26 | fork-labverbs | tester | proposed 3/3 | gate the mutating debug verbs behind a fork flag | fork-branch:d2d.lab3-labverbs | - | [card](archive/openspec-index.md#fork-labverbs) |
 | 27 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
 | 28 | onboardA | onboarding | in-progress 5/5 | onboarding slice A: setup stepper, go-ahead, access | - | - | [card](archive/openspec-index.md#onboardA) |
@@ -53,6 +53,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 32 | onboardtour | onboarding | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
 | 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 | 34 | friendspreview | tester | proposed 2/2 | shareable clickable preview of the flow for friends feedback | - | - | [card](archive/openspec-index.md#friendspreview) |
+| 35 | mercrevive | bot-defect | in-progress 3/3 | revive reserve by clvl band per the SME | - | - | [card](archive/openspec-index.md#mercrevive) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

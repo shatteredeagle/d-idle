@@ -204,6 +204,9 @@ func (r *Runner) guardedAreas(s *d2.Snapshot, ex map[int]bool) {
 }
 
 func (r *Runner) guardedAreasNoFarm(s *d2.Snapshot, ex map[int]bool) {
+	if a := r.stalePackArea(s); a != 0 {
+		ex[a] = true // the pack we fled from is still there: level elsewhere until the kit is rebuilt
+	}
 	if r.denGated(s) {
 		ex[areaDenOfEvil] = true // the Den waits for its class floor (campaign.denMinLevel*): level in Blood Moor
 	}

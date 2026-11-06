@@ -139,6 +139,9 @@ type observer struct {
 
 	lastSafety   SafetyAction
 	lastSafetyAt time.Time
+
+	drinkTimes []time.Time // life drinks inside the burst window (earlyexit.go)
+	stale      stalePack
 }
 
 type lifeStamp struct {

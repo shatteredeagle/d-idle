@@ -176,6 +176,10 @@ func TestActsAgainstFake(t *testing.T) {
 	if _, err := (&Reviver{C: cl, Timeout: 3 * time.Second}).Revive(ctx); !errors.Is(err, ErrNoReviveLine) {
 		t.Errorf("revive: %v", err)
 	}
+	// Probe shares the menu walk: no resurrect line is the same error, and nothing is paid
+	if q, err := (&Reviver{C: cl, Timeout: 3 * time.Second}).Probe(ctx); !errors.Is(err, ErrNoReviveLine) || q != 0 {
+		t.Errorf("probe: %d %v", q, err)
+	}
 	// the fake never grants a merc (state merc=-): the claim reports it, with the burial states
 	if g, err := (Claimer{C: cl}).ClaimFreeRogue(ctx); g || err == nil {
 		t.Errorf("claim: %v %v", g, err)
