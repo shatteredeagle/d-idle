@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (35)
+## Active (38)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -54,6 +54,9 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 | 34 | friendspreview | tester | proposed 2/2 | shareable clickable preview of the flow for friends feedback | - | - | [card](archive/openspec-index.md#friendspreview) |
 | 35 | mercrevive | bot-defect | in-progress 3/3 | revive reserve by clvl band per the SME | - | - | [card](archive/openspec-index.md#mercrevive) |
+| 36 | fidelity-matrix | gate | in-progress 3/3 | bot use versus game.exe, how each row is verified | - | - | [card](archive/openspec-index.md#fidelity-matrix) |
+| 37 | fidprobe-core | gate | proposed 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
+| 38 | fidprobe-vendor | gate | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
