@@ -1,3 +1,0 @@
-BACKLOG: TASK-44 onboardA onboarding slice A built offline: six-screen setup stepper, stored go-ahead, passcode (PBKDF2) or token access with a watch login gate and reset-access; follow-ups TASK-48 (tour) and TASK-49 (controls)
-INDEX: docs/onboarding-slice-a.md | onboarding slice A: setup stepper, go-ahead, passcode or token access, reset command
-CHANGELOG: Tester setup page is now six screens with a go-ahead tick, a chosen passcode (or the generated token) and a login for the watch screen; `d2dsetup reset-access` resets it
