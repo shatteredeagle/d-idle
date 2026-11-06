@@ -9,9 +9,10 @@
 # No *.mpq or Blizzard file may enter CTX: .dockerignore excludes them and the script fails if one is found.
 set -eu
 ctx=${1:?usage: context.sh CTX [REF]}
-# Pin: branch d2d.lab2-freezeresume on the private fork remote, commit ee5e06d8ef99 (Gate 1 and Gate 2 runs, docs/g1-log.md).
-pin_ref=lab2-freezeresume
-pin_commit=ee5e06d8ef990200b699e61779c64ded1451c33d
+# Pin: branch d2d.lab3-labverbs on the private fork remote, commit f75816c616c8 (= the Gate 2 lab2-freezeresume ee5e06d8ef99 plus the
+# --lab-verbs gate; the shipped tester d2d runs WITHOUT --lab-verbs, docs/d2d-container/README.md).
+pin_ref=lab3-labverbs
+pin_commit=f75816c616c8253930d88277b90936e3eabe3bc8
 ref=${2:-$pin_commit}
 fork=${FORK:-$HOME/d2d-lab/fork}
 repo=$(cd "$(dirname "$0")/../.." && pwd)
@@ -24,7 +25,7 @@ printf '*.mpq\n*.MPQ\n*.d2s\n*.exe\n.git\n' > "$ctx/.dockerignore"
 
 # our Go side (CGO off: static, runs on any libc)
 (cd "$repo" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -o "$ctx/bin/" \
-	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./deploy/d2d-container/d2dping)
+	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./cmd/d2dsetup ./deploy/d2d-container/d2dping)
 
 if [ -n "${PREBUILT:-}" ]; then
 	cp "$PREBUILT" "$ctx/bin/d2d"

@@ -815,3 +815,19 @@ func TestRealExtractorFailsOnFakeArchives(t *testing.T) {
 		t.Fatal("fake MPQs extracted")
 	}
 }
+
+// The shipped table pins the 1.14d Patch_D2 hash (V: the owner's install, Game.exe 1.14.3.71).
+func TestShippedTablesPinPatchHash(t *testing.T) {
+	tb, err := LoadTables(tablesJSON)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(tb.PatchSHA256) != 1 || tb.PatchSHA256[0] != "531bad76d520eea8cb0601bea5a40e1ec52f51fe7b94a6892dc483d18170c607" {
+		t.Errorf("patch_sha256 = %v", tb.PatchSHA256)
+	}
+	for _, f := range tb.Files {
+		if f.Size1_14d != 0 && f.MinSize > f.Size1_14d {
+			t.Errorf("%s: min_size %d above the known size %d", f.Name, f.MinSize, f.Size1_14d)
+		}
+	}
+}

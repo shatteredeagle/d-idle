@@ -83,7 +83,7 @@ func (p *procLab) Start(ctx context.Context, seed int, logPath string) (string, 
 		return fail(err)
 	}
 	defer lf.Close()
-	args := []string{"-n", "10", p.Bin, "--data", p.Data, "--headless", "--devctl", p.sock, "--no-video", "--lockstep", "--no-save",
+	args := []string{"-n", "10", p.Bin, "--data", p.Data, "--headless", "--devctl", p.sock, "--no-video", "--lockstep", "--lab-verbs", "--no-save",
 		"--toggle", p.Toggles, "--seed", strconv.Itoa(seed), "--start-screen", "ingame",
 		"--start-class", strconv.Itoa(p.Class), "--start-name", p.Name}
 	p.cmd = exec.Command("nice", args...)

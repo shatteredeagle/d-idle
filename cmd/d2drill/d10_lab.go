@@ -102,7 +102,7 @@ func runD10(ctx context.Context, c d10Cfg, repeat int) int {
 func (c d10Cfg) backend(ctx context.Context, home string, spec d2dinput.Spec) (*d2denv.Backend, error) {
 	be, err := d2denv.Build(ctx, d2denv.Config{ID: "d10", Log: c.Log, Tune: c.Tune, Data: c.DB, Sock: c.Sock, LinkWait: 60 * time.Second,
 		Bin: c.D2D, DataDir: c.GameDir, Home: home, Nice: 10, LogFile: filepath.Join(home, "d2d.out"),
-		ExtraArgs: []string{"--toggle", "autoloot=off,autoparty=off", "--lockstep"}, Spec: spec})
+		ExtraArgs: []string{"--toggle", "autoloot=off,autoparty=off", "--lockstep", "--lab-verbs"}, Spec: spec})
 	if err != nil {
 		return nil, err
 	}
@@ -224,7 +224,7 @@ func d10Once(ctx context.Context, c d10Cfg, dataDir, home string, run int) drill
 	var cur *botProc
 	launch := func(n int) error {
 		args := []string{"--backend", "d2d", "--managed", "--d2d-class", "-1", "--char", c.Name, "--seed", strconv.FormatInt(c.Seed, 10),
-			"--toggle", "autoloot=off,autoparty=off", "--d2d-args", "--lockstep", "--d2d-linkwait", "60s", "--gamedir", c.GameDir,
+			"--toggle", "autoloot=off,autoparty=off", "--d2d-args", "--lockstep --lab-verbs", "--d2d-linkwait", "60s", "--gamedir", c.GameDir,
 			"--d2d-data", c.GameDir, "--data", dataDir, "--d2d-sock", c.Sock, "--addr", c.BotAddr, "--goals", "campaign",
 			"--run-for", fmt.Sprintf("%ds", int(total.Seconds()))}
 		if n > 0 {
