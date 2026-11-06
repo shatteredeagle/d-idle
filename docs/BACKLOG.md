@@ -514,6 +514,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - orders UX design (tappable Act 1 map, order sheet, queue, guard conflict) and clickable mock; docs only, awaiting user reaction before any code (docs/research/orders-ux-design.md)
 - TASK-20 orders UX slice 1 built offline: tappable Act 1 map, order sheet, Hero-now panel, GET /api/orders/map; slices 2 (level orders, queue, conflict card) and 3 (reorder, polish) open
 - GATE2: Gate 2 multi-seed run 20261106-0225-g2e (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-0225-g2e.md)
+- g2ediag: Gate 2 g2e failure diagnosis in docs/research/g2e-diagnosis.md (docs only; ranked fixes F1-F7, 4 criterion questions)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
