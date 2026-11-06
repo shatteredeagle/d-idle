@@ -437,6 +437,7 @@ func (t *Town) buyFirstTP(ctx context.Context, npc d2.Unit, rep *ChoreReport, be
 	}
 	rep.Spent += p
 	rep.Bought[t.nameOf(su)]++
+	t.tpBought.Add(1)
 	return nil
 }
 
@@ -568,6 +569,9 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 			}
 			rep.Spent += price
 			rep.Bought[t.nameOf(su)]++
+			if j.scroll == "tsc" {
+				t.tpBought.Add(1)
+			}
 			have++
 		}
 	}
@@ -976,3 +980,16 @@ func carriedPotionsBonus(t *Town, s *d2.Snapshot) int {
 	}
 	return max(t.tune().TPReserve-1, 0)
 }
+
+// TPCount is the number of town portal scrolls the bot counts as in hand (scrolls in the pack plus the tome's
+// quantity, the same count the shop and trip decisions use). Minute line field tp.
+func (t *Town) TPCount(s *d2.Snapshot) int {
+	if s == nil || s.Inventory == nil {
+		return 0
+	}
+	n, _ := t.scrollCount(s, "tsc", "tbk")
+	return n
+}
+
+// TakeTPBought returns the town portal scrolls bought since the last call (minute line field tpBuy).
+func (t *Town) TakeTPBought() int { return int(t.tpBought.Swap(0)) }

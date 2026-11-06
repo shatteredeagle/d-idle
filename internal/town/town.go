@@ -9,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"sync/atomic"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -49,6 +50,8 @@ type Town struct {
 	mv    Mover
 	judge Judge
 	h     *hand.Hand
+
+	tpBought atomic.Int64 // scrolls bought since the minute line last took the count
 
 	lastVisit Visit // measurement of the last NPC open (skip.go)
 
