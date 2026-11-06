@@ -24,7 +24,11 @@ const (
 	gateMinClip = 2.0
 	// gateMaxRewrites rewritten clicks per walk, then the gate holds (the walk fails with ErrMouthGate): a goal behind
 	// the mouth must not turn into a shuttle between the boundary and the away point.
-	gateMaxRewrites = 3
+	gateMaxRewrites = 8
+	// gateUsefulClip: a clip shorter than this is only a crawl to the boundary; a detour around the disc is tried first.
+	gateUsefulClip = 8.0
+	// gateDetourMargin: the detour waypoint lies this far outside the bound.
+	gateDetourMargin = 5.0
 )
 
 // ErrMouthGate: the click would cross the trigger area of an unwanted exit and no safe replacement exists. It wraps
@@ -139,10 +143,20 @@ func (n *Navigator) gateRewrite(lm *d2map.LevelMap, from, to input.Point, exits 
 	}
 	d0 := dist(from, ex)
 	if d0 >= mouthTriggerR {
-		if c, ok := clipOutside(from, to, ex); ok && dist(from, c) >= gateMinClip && clickOKAll(from, c, exits) {
+		c, ok := clipOutside(from, to, ex)
+		ok = ok && dist(from, c) >= gateMinClip && clickOKAll(from, c, exits)
+		if ok && dist(from, c) >= gateUsefulClip {
 			return c, "clip"
 		}
-		return input.Point{}, "" // no detour from outside: the walk fails and its caller picks another goal
+		// A clip to the boundary only creeps up to the disc; the next click from there clips to nothing and the walk
+		// failed (g2e: 104 / 295 / 47 refusals per seed). Go around the disc instead.
+		if w, found := n.gateDetour(lm, from, to, ex, exits); found {
+			return w, "detour"
+		}
+		if ok {
+			return c, "clip"
+		}
+		return input.Point{}, ""
 	}
 	if d0 < 0.5 {
 		return input.Point{}, ""
@@ -202,4 +216,46 @@ func clipOutside(from, to, ex input.Point) (input.Point, bool) {
 		}
 	}
 	return input.Point{}, false
+}
+
+// gateDetour returns a waypoint on a ring just outside the bound around ex, reached from here without touching any
+// gated disc, (the next click is gated again, so a long way
+// round takes a few of them). It prefers waypoints from which the target is reachable by one more safe click. The ring
+// is the shortest way around a disc; the side is chosen by the total length via the waypoint.
+func (n *Navigator) gateDetour(lm *d2map.LevelMap, from, to, ex input.Point, exits []input.Point) (input.Point, bool) {
+	d0 := dist(from, ex)
+	if d0 < 0.5 || dist(to, ex) < mouthTriggerR {
+		return input.Point{}, false // a target inside the bound is never reached by a detour
+	}
+	var f *Field
+	if lm != nil {
+		f = n.fieldFor(lm)
+	}
+	ux, uy := float64(from.X-ex.X)/d0, float64(from.Y-ex.Y)/d0
+	r := mouthTriggerR + gateDetourMargin
+	var best input.Point
+	bestCost, bestThrough, found := math.MaxFloat64, false, false
+	for _, deg := range []float64{25, 45, 65, 90, -25, -45, -65, -90} {
+		a := deg * math.Pi / 180
+		c := input.Point{
+			X: ex.X + int(math.Round(r*(ux*math.Cos(a)-uy*math.Sin(a)))),
+			Y: ex.Y + int(math.Round(r*(ux*math.Sin(a)+uy*math.Cos(a)))),
+		}
+		if f != nil {
+			x, y, ok := f.nearestWalkable(c.X, c.Y, 3)
+			if !ok {
+				continue
+			}
+			c = input.Point{X: x, Y: y}
+		}
+		if dist(from, c) < gateMinClip || !clickOKAll(from, c, exits) {
+			continue
+		}
+		through := clickOKAll(c, to, exits)
+		cost := dist(from, c) + dist(c, to)
+		if through && !bestThrough || through == bestThrough && cost < bestCost {
+			best, bestCost, bestThrough, found = c, cost, through, true
+		}
+	}
+	return best, found
 }
