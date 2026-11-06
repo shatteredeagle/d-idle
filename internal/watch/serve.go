@@ -46,8 +46,9 @@ func Origins(flagVal, viewAddr string) []string {
 type ServeOptions struct {
 	ViewAddr, AnswerAddr string
 	Token                string
-	Origins              string // comma list; empty: the viewer's port on localhost
-	Video                *Video // game video on the viewer (/stream, /shot.jpg); nil: off
+	Origins              string  // comma list; empty: the viewer's port on localhost
+	Video                *Video  // game video on the viewer (/stream, /shot.jpg); nil: off
+	Access               *Access // passcode choice (access.json); nil: token only. A passcode record replaces the token gate.
 }
 
 // Served names the addresses that were bound.
@@ -62,7 +63,7 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 		return Served{}, errors.New("watch: the answer route needs its own address, apart from the viewer")
 	}
 	for _, a := range []string{o.ViewAddr, o.AnswerAddr} {
-		if o.Token == "" && !Loopback(a) {
+		if o.Token == "" && o.Access == nil && !Loopback(a) {
 			return Served{}, fmt.Errorf("watch: %s is not loopback and needs a token", a)
 		}
 	}
@@ -99,8 +100,14 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 			m.Handle(p, h.ViewHandler())
 		}
 	}
-	view := &http.Server{Handler: tokenGate(o.Token, m)}
-	ans := &http.Server{Handler: h.AnswerHandler(AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)})}
+	view := &http.Server{Handler: o.Access.viewGate(o.Token, m)}
+	ansOpts := AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)}
+	ansH := h.AnswerHandler(ansOpts)
+	if o.Access != nil {
+		ansOpts.Token = "" // the Access gate judges the token or the passcode cookie before the handler runs
+		ansH = o.Access.answerGate(o.Token, h.AnswerHandler(ansOpts))
+	}
+	ans := &http.Server{Handler: ansH}
 	go view.Serve(vl)
 	go ans.Serve(al)
 	go func() { <-ctx.Done(); view.Close(); ans.Close() }()

@@ -26,3 +26,6 @@ fi
 
 ## Not proven
 Offline only: fake MPQs, fake extractor. Not run: the real MPQs (sizes, 1.14d hash), the real `data.Open` on a real install (only its failure path on fake files), the page in a browser (`node --check` only), the handover to the real watch screen on 8891.
+
+## Slice A (onboardA, 2026-11-06): six screens, go-ahead, access
+The page is now welcome, go-ahead, game files, hero, access, start (docs/onboarding-slice-a.md). New state in `wizard.json`: `ahead_at` (the go-ahead tick with its time; Start is refused without it) and `started_at`; new routes `PUT /api/ahead` and `PUT /api/access` (passcode or token; the hash goes to `/data/access.json`, 0600). `d2dsetup reset-access [-passcode]` is the way back in. Hashing: PBKDF2-HMAC-SHA256 from the standard library, 600000 iterations. The watch side is `internal/watch/gate.go` and `d2bot --watch-access-file`.

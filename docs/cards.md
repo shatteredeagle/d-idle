@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (31)
+## Active (33)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -46,10 +46,12 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 25 | g2f-record | gate | proposed 0/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
 | 26 | fork-labverbs | tester | proposed 0/3 | gate the mutating debug verbs behind a fork flag | fork-branch:d2d.lab3-labverbs | - | [card](archive/openspec-index.md#fork-labverbs) |
 | 27 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
-| 28 | onboarding-build | onboarding | proposed 0/1 | onboarding flow build (placeholder, after the design lands) | - | - | [card](archive/openspec-index.md#onboarding-build) |
+| 28 | onboardA | onboarding | in-progress 5/5 | onboarding slice A: setup stepper, go-ahead, access | - | - | [card](archive/openspec-index.md#onboardA) |
 | 29 | upstream-next | upstream | proposed 0/2 | next upstream PR batch candidates (one open batch at a time) | - | - | [card](archive/openspec-index.md#upstream-next) |
 | 30 | statusrefresh | tooling | proposed 0/2 | docs/plan/STATUS.md hand-written part is stale (2026-11-03) | - | - | [card](archive/openspec-index.md#statusrefresh) |
 | 31 | ordersux3 | T0 | proposed 0/4 | orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader | - | - | [card](archive/openspec-index.md#ordersux3) |
+| 32 | onboardtour | onboarding | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
+| 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

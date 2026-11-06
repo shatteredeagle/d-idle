@@ -22,6 +22,7 @@ type FileCheck struct {
 	Name     string `json:"name"`
 	Required bool   `json:"required"`
 	Status   string `json:"status"`
+	Issue    string `json:"issue,omitempty"` // missing, not_mpq, too_small, unreadable (empty when fine)
 	Size     int64  `json:"size,omitempty"`
 	Message  string `json:"message"`
 }
@@ -34,6 +35,10 @@ type Report struct {
 	Version     string `json:"version"`
 	PatchSHA256 string `json:"patch_sha256,omitempty"`
 	Summary     string `json:"summary"`
+	// Verdict is the one state the page shows: ok, missing, too_small, not_mpq, unreadable, problems (mixed),
+	// resurrected, wrong_version, unconfirmed or no_folder. Fix says in one sentence what to do about it.
+	Verdict string `json:"verdict"`
+	Fix     string `json:"fix,omitempty"`
 }
 
 // CheckGame inspects the mounted game folder. It never writes and never fails as a whole: every problem is a
@@ -44,6 +49,7 @@ func CheckGame(dir string, t *Tables) Report {
 	if err != nil {
 		r.OK = false
 		r.Summary = fmt.Sprintf("Cannot read the game folder %s (%s). Mount your Diablo II folder read-only at /game.", dir, reason(err))
+		r.Verdict, r.Fix = "no_folder", "Give the container your classic Diablo II folder (the one with the .mpq files), read-only, then press Check again."
 		return r
 	}
 	byFold := map[string]string{}
@@ -68,14 +74,44 @@ func CheckGame(dir string, t *Tables) Report {
 	switch {
 	case len(missing) > 0 && !hasAnyMPQ(byFold):
 		r.Summary = "No Diablo II archive (.mpq) files in the folder. This build needs the classic Diablo II Lord of Destruction files, version 1.14d. Diablo II Resurrected files do not work."
+		r.Verdict, r.Fix = "resurrected", "Point the container at the folder of your classic install (the one that has the .mpq files), then press Check again."
 	case len(missing) > 0:
 		r.Summary = "Problems with: " + strings.Join(missing, ", ") + "."
+		r.Verdict, r.Fix = problemVerdict(r.Files)
 	case r.Version == "mismatch":
 		r.Summary = "Patch_D2.mpq is not a known 1.14d file. Patch the game to 1.14d and copy the folder again."
+		r.Verdict, r.Fix = "wrong_version", "Install the 1.14d patch in your own game, copy the new Patch_D2.mpq here, then press Check again."
+	case r.Version == "unverified":
+		r.Summary = "All required game files are present, but the version cannot be confirmed yet."
+		r.Verdict, r.Fix = "unconfirmed", "You may continue. Put the fingerprint in your report if the hero behaves strangely."
 	default:
 		r.Summary = "All required game files are present."
+		r.Verdict = "ok"
 	}
 	return r
+}
+
+// problemVerdict names the one problem when every failing required file has the same issue, else "problems".
+func problemVerdict(files []FileCheck) (string, string) {
+	issue := ""
+	for _, f := range files {
+		if f.Status != StatusFail {
+			continue
+		}
+		if issue != "" && issue != f.Issue {
+			return "problems", "Fix the files listed below (copy them again from your classic Diablo II folder), then press Check again. No restart is needed."
+		}
+		issue = f.Issue
+	}
+	switch issue {
+	case "missing":
+		return "missing", "Copy the missing files from your classic Diablo II folder into the folder you gave the container, then press Check again. No restart is needed."
+	case "too_small":
+		return "too_small", "A copy may have stopped half way. Copy the file again, then press Check again."
+	case "not_mpq":
+		return "not_mpq", "Copy the original file again; this one is not a Diablo II archive."
+	}
+	return "unreadable", "Check the file permissions: the container user must be able to read the files."
 }
 
 func hasAnyMPQ(by map[string]string) bool {
@@ -92,7 +128,7 @@ func checkFile(dir string, by map[string]string, f FileSpec) FileCheck {
 	actual, ok := by[strings.ToLower(f.Name)]
 	if !ok {
 		if f.Required {
-			fc.Status, fc.Message = StatusFail, f.Name+" is missing ("+f.Why+"). Copy it from your Diablo II folder."
+			fc.Status, fc.Issue, fc.Message = StatusFail, "missing", f.Name+" is missing ("+f.Why+"). Copy it from your Diablo II folder."
 		} else {
 			fc.Status, fc.Message = StatusInfo, "optional, not found ("+f.Why+")"
 		}
@@ -101,30 +137,30 @@ func checkFile(dir string, by map[string]string, f FileSpec) FileCheck {
 	p := filepath.Join(dir, actual)
 	fi, err := os.Stat(p)
 	if err != nil {
-		return failOrInfo(fc, f, actual+" cannot be read ("+reason(err)+")")
+		return failOrInfo(fc, f, "unreadable", actual+" cannot be read ("+reason(err)+")")
 	}
 	fc.Size = fi.Size()
 	if !fi.Mode().IsRegular() {
-		return failOrInfo(fc, f, actual+" is not a regular file")
+		return failOrInfo(fc, f, "unreadable", actual+" is not a regular file")
 	}
 	fh, err := os.Open(p)
 	if err != nil {
-		return failOrInfo(fc, f, actual+" cannot be read ("+reason(err)+"). Check the file permissions: the container user must be able to read it.")
+		return failOrInfo(fc, f, "unreadable", actual+" cannot be read ("+reason(err)+"). Check the file permissions: the container user must be able to read it.")
 	}
 	defer fh.Close()
 	var head [4]byte
 	if _, err := io.ReadFull(fh, head[:]); err != nil || string(head[:3]) != "MPQ" || (head[3] != 0x1a && head[3] != 0x1b) {
-		return failOrInfo(fc, f, actual+" is not a Diablo II archive (wrong file header). Copy the original file.")
+		return failOrInfo(fc, f, "not_mpq", actual+" is not a Diablo II archive (wrong file header). Copy the original file.")
 	}
 	if fi.Size() < f.MinSize {
-		return failOrInfo(fc, f, fmt.Sprintf("%s is only %s, too small: the copy looks incomplete.", actual, human(fi.Size())))
+		return failOrInfo(fc, f, "too_small", fmt.Sprintf("%s is only %s, too small: the copy looks incomplete.", actual, human(fi.Size())))
 	}
 	fc.Status, fc.Message = StatusPass, human(fi.Size())+", readable"
 	return fc
 }
 
-func failOrInfo(fc FileCheck, f FileSpec, msg string) FileCheck {
-	fc.Message = msg
+func failOrInfo(fc FileCheck, f FileSpec, issue, msg string) FileCheck {
+	fc.Message, fc.Issue = msg, issue
 	if f.Required {
 		fc.Status = StatusFail
 	} else {

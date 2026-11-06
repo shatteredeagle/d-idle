@@ -7,12 +7,15 @@ import (
 	"flag"
 	"net"
 	"net/http"
+	"net/http/cookiejar"
+	"net/url"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/access"
 	"d2lod-bot/internal/api"
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
@@ -312,6 +315,95 @@ func TestWatchServeTokenRule(t *testing.T) {
 	}
 	if code := httpDoH(t, "POST", post, body, hdr("s3cret-watch-token")); code == 401 {
 		t.Errorf("the watch token must pass the answer gate: %d", code)
+	}
+}
+
+// The passcode choice of the setup wizard replaces the token gate on both listeners, a reset takes effect without a
+// restart, and the token kind keeps working.
+func TestWatchServePasscodeAccess(t *testing.T) {
+	access.Iterations = 1000
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	called := 0
+	file := filepath.Join(t.TempDir(), "access.json")
+	st := access.NewStore(file)
+	rec, err := access.NewPasscode("four plain words", time.Now())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := st.Save(rec); err != nil {
+		t.Fatal(err)
+	}
+	lo := ladderOptions{on: true, watch: true, viewAddr: "0.0.0.0:0", answerAddr: "0.0.0.0:0", watchAccessFile: file, watchToken: "s3cret-watch-token"}
+	if err := lo.validate(false); err != nil {
+		t.Fatalf("an access file must satisfy the non-loopback rule: %v", err)
+	}
+	rig, err := startLadder(ctx, lo, "api-token-of-the-bot", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, port, _ := net.SplitHostPort(rig.Served.View.String())
+	_, aport, _ := net.SplitHostPort(rig.Served.Answer.String())
+	jar, _ := cookiejar.New(nil)
+	cl := &http.Client{Jar: jar, CheckRedirect: func(*http.Request, []*http.Request) error { return http.ErrUseLastResponse }}
+	base := "http://127.0.0.1:" + port
+	get := func(u string) int {
+		r, err := cl.Get(u)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r.Body.Close()
+		return r.StatusCode
+	}
+	if c := get(base + "/api/thoughts?t=s3cret-watch-token"); c != 401 {
+		t.Errorf("token must not open a passcode install: %d", c)
+	}
+	if c := get(base + "/watch"); c != http.StatusSeeOther {
+		t.Errorf("page without login: %d", c)
+	}
+	if r, err := cl.PostForm(base+"/login", url.Values{"passcode": {"wrong one"}}); err != nil || r.StatusCode != 401 {
+		t.Fatalf("wrong passcode: %v %v", r, err)
+	}
+	r, err := cl.PostForm(base+"/login", url.Values{"passcode": {"four plain words"}})
+	if err != nil || r.StatusCode != http.StatusSeeOther {
+		t.Fatalf("login: %v %v", r, err)
+	}
+	r.Body.Close()
+	if c := get(base + "/api/thoughts"); c != 200 {
+		t.Errorf("after login: %d", c)
+	}
+	post := "http://127.0.0.1:" + aport + "/api/answer"
+	body, _ := json.Marshal(map[string]any{"thought": 0, "answer": "x"})
+	postStatus := func(withCookie bool) int {
+		req, _ := http.NewRequest("POST", post, bytes.NewReader(body))
+		req.Header.Set("Content-Type", "application/json")
+		if withCookie {
+			for _, c := range jar.Cookies(&url.URL{Scheme: "http", Host: "127.0.0.1"}) {
+				req.AddCookie(c) // cookies ignore the port, so the one from the viewer login reaches the answer port
+			}
+		}
+		r, err := http.DefaultClient.Do(req)
+		if err != nil {
+			t.Fatal(err)
+		}
+		r.Body.Close()
+		return r.StatusCode
+	}
+	if c := postStatus(false); c != 401 {
+		t.Errorf("answer without cookie: %d", c)
+	}
+	if c := postStatus(true); c == 401 {
+		t.Errorf("answer with the login cookie: %d", c)
+	}
+	// reset to the token kind: the old cookie dies at once, the token works
+	if err := st.Save(access.TokenRecord(time.Now())); err != nil {
+		t.Fatal(err)
+	}
+	if c := get(base + "/api/thoughts"); c != 401 {
+		t.Errorf("old cookie after reset: %d", c)
+	}
+	if c := get(base + "/api/thoughts?t=s3cret-watch-token"); c != 200 {
+		t.Errorf("token after reset: %d", c)
 	}
 }
 

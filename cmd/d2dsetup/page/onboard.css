@@ -1,0 +1,58 @@
+/* Setup page look (slice A of docs/research/onboarding-ux-design.md). Tokens come from style.css; no inline styles. */
+.ob-wrap { max-width: 680px; margin: 0 auto; padding: 14px; }
+main.ob-main { display: block; padding: 0; margin: 0; max-width: none; outline: none; }
+.ob-body .btn { min-height: 44px; padding: 8px 16px; }
+.ob-body .btn.primary { background: var(--accent-text); border-color: var(--accent-text); color: var(--on-accent); }
+.ob-body .btn.danger { color: var(--bad); }
+.ob-steps { display: flex; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; }
+.ob-steps li { flex: 1; min-width: 0; text-align: center; font-size: 12px; color: var(--muted); }
+.ob-steps i { display: block; height: 6px; border-radius: 3px; background: var(--line); margin-bottom: 4px; }
+.ob-steps .done i { background: var(--good); }
+.ob-steps .cur i { background: var(--accent); }
+.ob-steps .cur { color: var(--text); font-weight: 650; }
+.ob-steps li span { display: none; }
+.ob-steps .cur span { display: inline; }
+@media (min-width: 560px) { .ob-steps li span { display: inline; } }
+.ob-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; box-shadow: var(--shadow); min-width: 0; display: grid; gap: 12px; }
+.ob-card h2 { font-size: 1.3rem; line-height: 1.25; text-wrap: balance; }
+.ob-card p { margin: 0; max-width: 62ch; }
+.ob-hint { color: var(--muted); font-size: .9rem; }
+.ob-why { background: var(--surface2); border-left: 3px solid var(--info); padding: 8px 12px; border-radius: 6px; font-size: .92rem; }
+.ob-why b { color: var(--info); }
+.ob-list { margin: 0; padding-left: 1.2rem; display: grid; gap: 8px; }
+.ob-nav { display: flex; gap: 10px; justify-content: space-between; flex-wrap: wrap; padding-top: 4px; }
+.ob-nav .r { margin-left: auto; display: flex; gap: 10px; flex-wrap: wrap; }
+.ob-box { border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; background: var(--surface2); }
+.ob-box strong { display: block; }
+.ob-box.err { border-color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, var(--surface)); }
+.ob-box.err strong { color: var(--bad); }
+.ob-box.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 10%, var(--surface)); }
+.ob-box.ok strong { color: var(--good); }
+.ob-box.warn { border-color: var(--warn); background: color-mix(in srgb, var(--warn) 10%, var(--surface)); }
+.ob-box.warn strong { color: var(--warn); }
+.ob-files { list-style: none; margin: 0; padding: 0; }
+.ob-files li { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; padding: 7px 0; border-bottom: 1px solid var(--line); }
+.ob-files .n { font-family: ui-monospace, monospace; font-size: .9rem; min-width: 8.5rem; }
+.ob-files .s { font-weight: 650; }
+.ob-files .m { flex-basis: 100%; font-size: .88rem; color: var(--muted); }
+.good { color: var(--good); } .bad { color: var(--bad); } .warn { color: var(--warn); }
+.ob-opt { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; cursor: pointer; min-height: 44px; }
+.ob-opt:has(input:checked) { border-color: var(--accent); box-shadow: inset 3px 0 0 var(--accent); }
+.ob-opt:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ob-opt input { margin-top: 3px; width: 20px; height: 20px; flex: none; accent-color: var(--accent); }
+.ob-opt strong { display: block; }
+.ob-opt span { color: var(--muted); font-size: .9rem; }
+.ob-field { display: grid; gap: 5px; }
+.ob-field label { font-weight: 650; }
+.ob-field input[type=text], .ob-field input[type=password], .ob-field select { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid var(--muted); border-radius: 8px; background: var(--surface); }
+.ob-field input[aria-invalid="true"] { border-color: var(--bad); border-width: 2px; }
+.ob-err { color: var(--bad); font-weight: 600; font-size: .92rem; }
+.ob-err:empty { display: none; }
+.ob-bar { height: 12px; background: var(--surface2); border-radius: 6px; overflow: hidden; border: 1px solid var(--line); }
+.ob-bar > i { display: block; height: 100%; background: var(--accent); transition: width .5s; }
+.ob-run { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ob-run li { display: flex; gap: 8px; align-items: center; }
+.ob-run li[data-state="next"] { color: var(--muted); }
+.ob-token { font-family: ui-monospace, monospace; background: var(--surface2); padding: 8px 10px; border-radius: 6px; word-break: break-all; }
+.ob-body details summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--accent-text); }
+@media (prefers-reduced-motion: reduce) { .ob-bar > i { transition: none; } }

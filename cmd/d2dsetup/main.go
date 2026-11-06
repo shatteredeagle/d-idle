@@ -39,6 +39,9 @@ func env(k, def string) string {
 }
 
 func run() error {
+	if len(os.Args) > 1 && os.Args[1] == "reset-access" {
+		return resetAccess(os.Args[2:], os.Stdin, os.Stdout)
+	}
 	dataDir := flag.String("data", env("D2SETUP_DATA", "/data"), "state directory (wizard.json, wizard.env, watch.token)")
 	game := flag.String("game", env("D2D_DATA", "/game"), "mounted game data folder")
 	addr := flag.String("addr", env("D2SETUP_ADDR", "0.0.0.0:8891"), "listen address (the port the watch screen takes over afterwards)")
