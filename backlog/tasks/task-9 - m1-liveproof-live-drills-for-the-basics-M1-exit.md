@@ -4,9 +4,9 @@ title: 'm1-liveproof: live drills for the basics; M1 exit'
 status: In Progress
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-05T18:00:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - G-C
+  - drills
   - soak
 dependencies: []
 priority: low
@@ -79,4 +79,6 @@ Source: git tag openspec-final, openspec/changes/m1-liveproof/ (this task is the
 
 <!-- SECTION:NOTES:BEGIN -->
 Reviewed 2026-11-05 (backlogfinish): kept In Progress. Merged agent/drills delivered D0..D9 and DRILLS4/5, but criteria 3.1 (verdicts per P-id in docs/primitives.md and docs/basics-audit.md) and 3.2 are open, and 2 live rows remain.
+
+Groom 2026-11-06: stalled since 2026-11-01. Open: AC 14 (per-P verdicts in docs/primitives.md, fix card per FAIL) and AC 15. Proposed: finish AC 14 as one docs job, then Done. Live proofs after D9 live in later drill cards.
 <!-- SECTION:NOTES:END -->

@@ -4,8 +4,10 @@ title: 'decisions-mirror: ADRs mirrored read-only into backlog/decisions for the
 status: Deferred
 assignee: []
 created_date: '2026-11-05T19:25:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - G-F
+  - tooling
+  - decisions
 dependencies: []
 priority: low
 ordinal: 22000
@@ -30,3 +32,9 @@ Decided 2026-11-05: ADRs and docs/decisions.md stay the source of truth (guard f
 - [ ] #3 unit tests: status mapping (accepted, amended, superseded), amendment blocks kept, idempotent output, ADR guard rules unchanged
 - [ ] #4 the NAS-hosted board's decisions page lists all ADRs after the next mirror sync
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: drift line D is a false positive: the merge was the card itself (Deferred on purpose); tools/backlog/decisions_mirror.py does not exist. Stays Deferred.
+<!-- SECTION:NOTES:END -->

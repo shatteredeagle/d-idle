@@ -5,7 +5,7 @@ status: Proposed
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
 labels:
-  - G-F
+  - tester
 dependencies:
   - TASK-31
 ordinal: 27000

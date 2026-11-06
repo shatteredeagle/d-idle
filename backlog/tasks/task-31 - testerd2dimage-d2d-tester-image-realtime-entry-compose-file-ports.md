@@ -4,9 +4,9 @@ title: 'testerd2dimage: d2d tester image, realtime entry, compose file, ports'
 status: In Progress
 assignee: []
 created_date: '2026-11-06T14:44:00Z'
-updated_date: '2026-11-06T15:12:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - G-F
+  - tester
 dependencies:
   - TASK-23
 priority: high
@@ -36,3 +36,9 @@ Slice 1 (d2d route), gaps G1, G3, G7, G8. Depends on testerwatch. Build runs on 
 - [ ] #1 image pins the d.idle fork ref the Gate 2 evidence used (coordinator names it; the commit is on the fork remote), vendor inputs reproducible from the pack, D2BOT_GAMEDIR=/game, D2D_MODE=realtime default, tap on 127.0.0.1:8893, watch on 8891 and 8892, tester entry runs the wizard then the bot
 - [x] #2 compose.tester.yml: MPQ folder read-only, named volume, ladder/watch/video env, origin from a variable, token file never in the file, 127.0.0.1 publish by default, stop_grace_period; static image test pins these and that no .mpq or Game.exe is in the context
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: wizard (TASK-32) is now merged; AC 1 still needs the built image and the entrypoint hook for d2dsetup plus the context.sh build line (deploy/ is owned here).
+<!-- SECTION:NOTES:END -->

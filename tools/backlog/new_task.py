@@ -7,7 +7,7 @@ the new file, then runs check.py. Stdlib only; run from the repo root.
 
   python3 -I tools/backlog/new_task.py "fixx: what" --card fixx --owns docs/fixx.md \
       [--owns more] [--exclusive instance:i2] [--contracts docs/contracts/x.md] \
-      [-l G-C] [-s Proposed] [--priority low] [--ac "step"]... [-d "text"]
+      [-l T0|tester|..] [-s Proposed] [--priority low] [--ac "step"]... [-d "text"]
 """
 import argparse
 import re

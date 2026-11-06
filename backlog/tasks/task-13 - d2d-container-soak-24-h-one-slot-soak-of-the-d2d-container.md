@@ -1,13 +1,13 @@
 ---
 id: TASK-13
-title: "d2d-container-soak: 24 h one-slot soak of the d2d container"
-status: Proposed
+title: 'd2d-container-soak: 24 h one-slot soak of the d2d container'
+status: Deferred
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - "parked"
-  - "soak"
+  - parked
+  - soak
 dependencies: []
 priority: low
 ordinal: 13000
@@ -51,3 +51,9 @@ Source: git tag openspec-final, openspec/changes/d2d-container-soak/ (this task 
 - [ ] #2 1.2 24 h one-slot soak with restart and kill injection, memory curve (step 10)
 - [ ] #3 1.3 apply the spec delta when this merges
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: set Deferred (was Proposed) to match its parked label and the other parked tasks.
+<!-- SECTION:NOTES:END -->

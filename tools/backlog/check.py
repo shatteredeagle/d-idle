@@ -2,7 +2,8 @@
 """Read-only checker for backlog/tasks (stage 1; replaces no existing check yet).
 
 Rules (ADR 0015 items 10 and 11; the open-card cap of 12 was removed by ADR 0016 / grill 0005, the WIP limit lives in the process, not here):
-  - each of those has exactly one goal label G-A..G-G
+  - every label is in the known set (tiers T0..T5, areas, modifiers soak/parked, legacy G-A..G-G)
+  - an open task that is not parked has exactly one PRIMARY label: a tier T0..T5 (ladder work) or an area label; at most one tier
   - each task has an `owns` frontmatter key
   - card ids (the part of the title before the first colon) are unique
   - task ids (TASK-N) are unique (two branches that created a task unseen by each other collide at merge)
@@ -13,7 +14,11 @@ import sys
 from pathlib import Path
 
 OPEN = {"Proposed", "Deferred", "In Progress"}
-GOALS = {f"G-{c}" for c in "ABCDEFG"}
+GOALS = {f"G-{c}" for c in "ABCDEFG"}  # legacy, still accepted
+TIERS = {f"T{i}" for i in range(6)}
+AREAS = {"watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding"}
+MODIFIERS = {"soak", "parked"}
+KNOWN = GOALS | TIERS | AREAS | MODIFIERS
 
 
 def parse(path):
@@ -59,9 +64,13 @@ def check(tasks_dir):
         if "owns" not in fm and "owns" not in fm["_lists"]:
             findings.append(f"{f.name}: no owns key")
         if fm.get("status") in OPEN and "parked" not in labels:
-            n = len(labels & GOALS)
-            if n != 1:
-                findings.append(f"{f.name}: {card} has {n} goal labels, want exactly 1")
+            n = len(labels & (GOALS | TIERS | AREAS))
+            if n < 1:
+                findings.append(f"{f.name}: {card} has no tier or area label")
+            if len(labels & TIERS) > 1:
+                findings.append(f"{f.name}: {card} has more than one tier label")
+        for x in sorted(labels - KNOWN):
+            findings.append(f"{f.name}: {card} has unknown label {x!r}")
     return findings
 
 

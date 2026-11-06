@@ -5,7 +5,7 @@
   python3 -I tools/backlog/cards_md.py --write    rewrite them in docs/cards.md (prose is untouched)
   python3 -I tools/backlog/cards_md.py --check    exit 1 when the committed docs/cards.md differs
 
-Columns come from task front matter: id = card, goal = the G-x label, status = status + ticked/total
+Columns come from task front matter: id = card, goal = the tier label (T0..T5), else the first area label, else a legacy G-x, status = status + ticked/total
 checklist items, what = title after "card:", owner / exclusive = exclusive (else "-"), next step =
 optional `next:` key (else "-"), parked "why parked" = optional `why_parked:` key (else "-").
 Stdlib only.
@@ -52,7 +52,9 @@ def render(ts):
          "| # | id | goal | status | what | owner / exclusive | next step | card |",
          "|---|---|---|---|---|---|---|---|"]
     for i, t in enumerate(active, 1):
-        goal = next((x for x in (t.get("labels") or []) if re.fullmatch(r"G-[A-G]", x)), "-")
+        labs = t.get("labels") or []
+        goal = next((x for x in labs if re.fullmatch(r"T[0-5]", x)), None) or next(
+            (x for x in labs if x not in ("soak", "parked")), "-")
         st = "%s %d/%d" % (str(t.get("status", "")).lower().replace(" ", "-"), t["_done"], t["_total"])
         what = t.get("title", "").partition(":")[2].strip() or t.get("title", "")
         excl = ", ".join(t.get("exclusive") or []) or "-"

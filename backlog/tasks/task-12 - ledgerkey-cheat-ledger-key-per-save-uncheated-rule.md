@@ -1,12 +1,12 @@
 ---
 id: TASK-12
-title: "ledgerkey: cheat ledger key per save (uncheated rule)"
+title: 'ledgerkey: cheat ledger key per save (uncheated rule)'
 status: In Progress
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - "G-F"
+  - tooling
 dependencies: []
 priority: low
 ordinal: 12000
@@ -50,3 +50,9 @@ Source: git tag openspec-final, openspec/changes/ledgerkey/ (this task is the co
 - [x] #2 1.2 d2cheat ledger flags
 - [ ] #3 1.3 private tools (soak24.sh preflight, ledgercheck.sh) key by instance/name (coordinator)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: AC 3 is a private ops-repo item (the coordinator's); proposed: remove AC 3 from this public task and set Done (code merged 2026-11-01).
+<!-- SECTION:NOTES:END -->

@@ -1,12 +1,12 @@
 ---
 id: TASK-18
-title: 'TASK-A mana-restock: caster mana potion restock'
+title: 'taska: caster mana potion restock'
 status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - G-B
+  - bot-defect
 dependencies: []
 priority: high
 ordinal: 18000
