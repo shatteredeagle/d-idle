@@ -762,3 +762,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/backlog-groom-2026-11-06.md: backlog audit (every task, verdicts, label scheme, causes of the stray labels and the folded title, new tasks, proposed removals)
 - docs/onboarding-slice-a.md | onboarding slice A: setup stepper, go-ahead, passcode or token access, reset command
 - docs/research/mocks/friends-preview.html - one-file clickable preview of the d.idle flow for friends feedback (fake data)
+- docs/soaks/gate2-multiseed-20261106-1626-g2f.md: Gate 2 multi-seed run 20261106-1626-g2f (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 2 multi-seed soak run 20261106-1626-g2f: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-1626-g2f.md).
 - Tester setup page is now six screens with a go-ahead tick, a chosen passcode (or the generated token) and a login for the watch screen; `d2dsetup reset-access` resets it
 - backlog board: labels are now tiers (T0..T5) and areas, check.py rejects unknown labels and folded titles, new_task.py unfolds long titles
 - Onboarding UX design and clickable mock for the d2d tester build (docs only)
