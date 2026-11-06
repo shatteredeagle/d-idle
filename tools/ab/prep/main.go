@@ -15,7 +15,6 @@ import (
 	"strings"
 	"time"
 
-	"d2lod-bot/internal/d2dctl"
 	"d2lod-bot/internal/d2dinput"
 )
 
@@ -103,7 +102,7 @@ func run() error {
 		_ = p.Stop()
 		return err
 	}
-	c := d2dctl.New(*sock, d2dctl.Options{Timeout: 30 * time.Second})
+	c := p.Controller().C // d2d takes one control client: reuse the one Start made
 	enc := json.NewEncoder(lf)
 	for _, v := range Verbs(s) {
 		l := ledgerLine{Time: time.Now().Format(time.RFC3339), Verb: v, Reason: "SETUP: late-start A/B hero, identical for both arms (docs/ab-design.md Variants)"}
