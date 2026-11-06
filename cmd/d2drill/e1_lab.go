@@ -114,6 +114,29 @@ func (h *e1h) area(ctx context.Context) int {
 	return -1
 }
 
+// menuText opens Kashya's menu and returns its lines (diagnosis of an unreadable quote), then cancels.
+func (h *e1h) menuText(ctx context.Context) string {
+	npcs, err := h.c.NPCs(ctx)
+	if err != nil {
+		return err.Error()
+	}
+	for _, n := range npcs.Items {
+		if strings.EqualFold(n.Name, "Kashya") {
+			lines, err := h.c.OpenNPCMenu(ctx, n.Index, 20*time.Second)
+			defer func() { _ = h.c.PickMenuLine(ctx, "cancel") }()
+			if err != nil {
+				return err.Error()
+			}
+			var t []string
+			for _, l := range lines {
+				t = append(t, l.Text)
+			}
+			return strings.Join(t, " | ")
+		}
+	}
+	return "no Kashya"
+}
+
 func (h *e1h) tick(ctx context.Context) int {
 	ci, err := h.c.Step(ctx, 1)
 	if err != nil {
@@ -202,7 +225,7 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 	rv := d2dmerc.Reviver{C: h.c}
 	q, err := rv.Probe(ctx)
 	if err != nil || q <= 0 {
-		return f, fmt.Errorf("quote probe: %d %v", q, err)
+		return f, fmt.Errorf("quote probe: %d %v; menu: %s; merc %s", q, err, h.menuText(ctx), f["merc"])
 	}
 	f["quote"] = strconv.Itoa(q)
 	g := gold(q)
