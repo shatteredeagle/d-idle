@@ -4,7 +4,7 @@
 
 ## Per scenario (all read-only: no input, no memory writes, no cheats, d2d lab verbs off)
 
-1. Capacity: `labrun orion -- top -bn2 -d1` (idle + nice at least 25 percent; `tools/capacity.sh --add 2` as the ops rules say).
+1. Capacity: `labrun` on the worker host (`top -bn2 -d1`) (idle + nice at least 25 percent; `tools/capacity.sh --add 2` as the ops rules say).
 2. Saves: a directory outside the repo with `<role>.d2s` per scenario (roles: `d2fidprobe -list`). Work on COPIES: the host rewrites the save on exit (d2d-lan-oracle.md V). Never commit them.
 3. game.exe side: a hidden instance i1..i5 (private Xvfb), never i0, never another agent's. Only multi/OOG tooling starts it: the coordinator starts it and logs in the character copy (`tools/game.sh start <id>` + OOG login), muted (`-w -ns`, `tools/mute-d2.sh`).
 4. d2d side: one slot from `tools/d2dslot.sh`, started through `tools/agentrun.sh <agent> --ttl SECS -- ...`, the copy placed as `save/<Name>.d2s`, character selected, in town. No `--lab-verbs`.
