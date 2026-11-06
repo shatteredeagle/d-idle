@@ -1,1 +1,0 @@
-CHANGELOG: decisions: d2d fidelity bar (slices 1 to 3 before Gate A), mismatch policy and the vendor probe input rule recorded (user, 2026-11-06)
