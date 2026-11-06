@@ -12,6 +12,13 @@ ordinal: 42000
 card: "fork-labverbs"
 owns:
   - "docs/lab-verbs.md"
+  - "deploy/d2d-container/"
+  - "cmd/d2dsetup/"
+  - "cmd/d2drill/"
+  - "cmd/d2dsoak/lab.go"
+  - "tools/d2dview-demo.sh"
+  - "tools/d2dslot-test.sh"
+  - "docs/d2d-container/README.md"
 exclusive:
   - "fork-branch:d2d.lab3-labverbs"
 contracts: []
