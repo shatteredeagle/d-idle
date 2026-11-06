@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- decisions: the tester build is the d2d container and ships the fork build with its source (user, 2026-11-06); publication needs a later go
 - decisions: the tester build ships game-dir mode only (user, 2026-11-06)
 - Added a tester build plan (docs and backlog tasks only, nothing built).
 - the minute line carries tp (town portal scrolls in hand, always) and tpBuy (scrolls bought that minute, when non-zero)
