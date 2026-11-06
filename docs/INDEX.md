@@ -761,3 +761,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/onboarding-ux-design.md and docs/research/mocks/onboarding.html: onboarding flow for the d2d tester build (inspired by Palimpsest); design plus mock
 - docs/research/backlog-groom-2026-11-06.md: backlog audit (every task, verdicts, label scheme, causes of the stray labels and the folded title, new tasks, proposed removals)
 - docs/onboarding-slice-a.md | onboarding slice A: setup stepper, go-ahead, passcode or token access, reset command
+- docs/research/mocks/friends-preview.html - one-file clickable preview of the d.idle flow for friends feedback (fake data)
