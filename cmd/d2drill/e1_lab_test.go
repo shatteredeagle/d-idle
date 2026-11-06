@@ -35,7 +35,7 @@ func TestE1MercVerdicts(t *testing.T) {
 func TestE1NoPortal(t *testing.T) {
 	l := []string{
 		`{"time":"2026-11-06T17:50:00.000-05:00","level":"WARN","msg":"heal trip: town: no town portal available"}`,
-		`{"time":"2026-11-06T17:50:09.500-05:00","level":"WARN","msg":"low life, no potion and no town portal: leaving the game","waited":"20s"}`,
+		`{"time":"2026-11-06T17:50:09.500-05:00","level":"WARN","msg":"low life, no potion and no town portal: leaving the game","waited":20000000000}`,
 	}
 	if v, _ := e1NoPortalEval(l, false); v != "PASS" {
 		t.Errorf("leave: %s", v)
@@ -46,12 +46,16 @@ func TestE1NoPortal(t *testing.T) {
 	if v, _ := e1NoPortalEval(l[1:], false); v != "FAIL" {
 		t.Errorf("a leave without the no-portal line is not the path under test: %s", v)
 	}
-	if v, _ := e1NoPortalEval(l[:1], true); v != "PASS" {
+	town := append([]string{`{"msg":"zone entry","area":1,"clvl":12}`}, l[:1]...)
+	if v, _ := e1NoPortalEval(town, true); v != "PASS" {
 		t.Errorf("control: %s", v)
+	}
+	if v, _ := e1NoPortalEval(l[:1], true); v != "FAIL" {
+		t.Errorf("control that never reaches town: %s", v)
 	}
 	res := &e1Result{}
 	e1Key(res, l)
-	if res.NoPortalToLeaveSec != 9.5 || !strings.Contains(res.Waited, "20s") {
+	if res.NoPortalToLeaveSec != 9.5 || res.WaitedSec != 20 {
 		t.Errorf("timing: %+v", res)
 	}
 }

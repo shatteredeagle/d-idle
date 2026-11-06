@@ -334,7 +334,10 @@ func e1NoPortalEval(lines []string, scroll bool) (string, string) {
 		if leave >= 0 {
 			return "FAIL", "the control left the game: " + lines[leave]
 		}
-		return "PASS", "no leave; the scroll path was taken"
+		if i := e1Town(lines); i >= 0 {
+			return "PASS", "no leave; the scroll took the hero to town: " + strings.TrimSpace(lines[i])
+		}
+		return "FAIL", "no leave, but the hero never reached town either"
 	}
 	first := e1Find(lines, "no town portal available")
 	switch {
@@ -344,6 +347,16 @@ func e1NoPortalEval(lines []string, scroll bool) (string, string) {
 		return "FAIL", "no leave after the first no-portal line (" + lines[first] + ")"
 	}
 	return "PASS", "left: " + lines[leave]
+}
+
+// e1Town is the first zone entry into area 1 (the Rogue Encampment).
+func e1Town(lines []string) int {
+	for i, l := range lines {
+		if strings.Contains(l, `"zone entry"`) && strings.Contains(l, `"area":1,`) {
+			return i
+		}
+	}
+	return -1
 }
 
 func e1LineOr(lines []string, i int, def string) string {
@@ -369,6 +382,7 @@ type e1Result struct {
 	LeaveWall          string `json:",omitempty"`
 	NoPortalToLeaveSec float64
 	Waited             string `json:",omitempty"`
+	WaitedSec          float64
 	Key                []string
 	LogFile            string
 }
@@ -554,8 +568,10 @@ func e1Key(res *e1Result, lines []string) {
 			res.FirstNoPortalWall, res.LeaveWall = ta.Format("15:04:05.000"), tb.Format("15:04:05.000")
 			res.NoPortalToLeaveSec = tb.Sub(ta).Seconds()
 		}
-		if m := regexp.MustCompile(`"waited":"([^"]+)"|waited=(\S+)`).FindStringSubmatch(lines[b]); m != nil {
-			res.Waited = "bot waited=" + m[1] + m[2] + " (virtual, bot clock)"
+		if m := regexp.MustCompile(`"waited":"?(\d+)`).FindStringSubmatch(lines[b]); m != nil {
+			ns, _ := strconv.ParseInt(m[1], 10, 64)
+			res.Waited = fmt.Sprintf("bot waited %.0f s (virtual, bot clock, since the first no-portal failure)", float64(ns)/1e9)
+			res.WaitedSec = float64(ns) / 1e9
 		}
 	}
 }
