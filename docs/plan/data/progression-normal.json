@@ -23,6 +23,7 @@
    "name": "Cold Plains",
    "enter_clvl": 5,
    "kit_clvl": 4,
+   "early_gap": 1,
    "leave_clvl": 10,
    "purpose": "Cold Plains WP; Burial Grounds 17 for Blood Raven"
   },

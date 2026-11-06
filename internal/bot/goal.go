@@ -1610,6 +1610,7 @@ func (r *Runner) askReturn(s *d2.Snapshot, in resource.Input, v resource.FieldVe
 // Restock runs the chores once more (bounded), BloodMoor redirects a poor character to its first field, where the walk
 // home works. A poor character is never sent shopping, so the two cannot loop.
 func (r *Runner) gateField(s *d2.Snapshot, t *trip) bool {
+	r.redirectStalePack(s, t)
 	if g := r.gearVerdict(s); g.Gated {
 		if a := r.safeFarmArea(s); a != 0 && t.returnTo != a {
 			r.e.Log.Info("field gate: gear gate, first field only", "reason", g.Reason, "area", a)

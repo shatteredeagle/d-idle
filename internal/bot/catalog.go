@@ -24,6 +24,7 @@ type ItemMeta struct {
 	Potion   PotionKind
 	Antidote bool // antidote potion (code yps); its own flag because PotionKind has no antidote
 	Cost     int  // base vendor price, for the corpse value estimate
+	Tier     int  // potion tier 1 (minor) .. 5 (super): the digit of the base code hp1..hp5 (same rule as combat.ItemClass); 0 = not a potion
 }
 
 // MonsterMeta describes a monster class.
@@ -78,6 +79,7 @@ func (c dataCatalog) Item(class int) (ItemMeta, bool) {
 	switch {
 	case c.db.IsA(b.Type, "hpot"):
 		m.Potion = PotionHealing
+		m.Tier = potionTier(b.Code)
 	case c.db.IsA(b.Type, "mpot"):
 		m.Potion = PotionMana
 	case c.db.IsA(b.Type, "rpot"):
@@ -129,4 +131,11 @@ func (c dataCatalog) ExpToReach(level int) int64 {
 		return 0
 	}
 	return c.db.ExpToLevel(level)
+}
+
+func potionTier(code string) int {
+	if len(code) == 3 && code[2] >= '1' && code[2] <= '5' {
+		return int(code[2] - '0')
+	}
+	return 0
 }

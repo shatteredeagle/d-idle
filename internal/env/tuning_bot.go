@@ -33,9 +33,18 @@ type BotTuning struct {
 	RepeatSiteWindowMin int // window in which a second death in one area counts as a repeat site
 	RepeatSiteGapSec    int // a death this soon after the previous one (any area) counts as a repeat site
 	CorpseMinValue      int // gold-equivalent below which the in-field corpse run is skipped outright
-	PauseDeathsPerHour  int // deaths in the last hour (any area) after which the bot pauses itself
-	PovertyTier         int // gear tier bought when rebuilding from vendors after an abandoned corpse: 0 cheapest viable
-	GoldFloor           int // gold the town visit must not spend, kept for rebuying gear
+	// Early death (TASK-39): a pack we fled from is not walked back into, and a potion burst becomes a retreat.
+	StalePackHostiles   int // hostiles within the fight radius at a chicken, portal or crowd exit that make the area a stale pack (0 = rule off)
+	StalePackMinutes    int // minutes the stale pack keeps the area out of the planner and the portal return unless the kit is rebuilt
+	StalePackMinHP      int // healing potions (belt and pack) the kit needs to lift the stale-pack hold early
+	StalePackMinTier    int // best healing potion tier in the belt the kit needs to lift the hold early (1 minor, 2 light)
+	PotionBurstN        int // life drinks within PotionBurstSec that, with hostiles near and a portal, become a town portal (0 = rule off)
+	PotionBurstSec      int // window of the burst rule
+	PotionBurstHostiles int // hostiles within the fight radius the burst rule needs
+
+	PauseDeathsPerHour int // deaths in the last hour (any area) after which the bot pauses itself
+	PovertyTier        int // gear tier bought when rebuilding from vendors after an abandoned corpse: 0 cheapest viable
+	GoldFloor          int // gold the town visit must not spend, kept for rebuying gear
 
 	// Leveling (docs/leveler.md, docs/bot.md "Leveling"): points, gear, poverty, difficulty.
 	PointsRetrySec   int // wait before spending unspent points again after a failed attempt
@@ -92,7 +101,7 @@ func DefaultBotTuning() BotTuning {
 	return BotTuning{
 		TickMs: 100, WatchMs: 50, ReactionMs: 0, ResupplyPotions: 2, InvFullPct: 85,
 		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 1, PortalSettleMs: 600, ClearRadius: 30,
-		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
+		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
 		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, FreshAfterRecoverySec: 180,
@@ -152,6 +161,20 @@ func botKnobs() []Knob {
 			Desc: "Window in which the deaths are counted. Shorter forgets sooner."},
 		{Key: "bot.pauseDeathsPerHour", Label: "Pause after deaths per hour", Unit: "deaths", Default: 8, Min: 8, Max: 20,
 			Desc: "Deaths in the last hour after which the bot pauses itself and asks the user."},
+		{Key: "bot.stalePackHostiles", Label: "Stale pack size", Unit: "count", Default: 4, Min: 0, Max: 12,
+			Desc: "Hostiles near the hero when it left a field by chicken, town portal or crowd exit that make the area a stale pack: no return by portal and no planner pick of that area until bot.stalePackMinutes pass or the kit is rebuilt. 0 turns the rule off. Seed 13 of Gate 2 g2f died 2 s after re-entering a 12-hostile pack at clvl 4."},
+		{Key: "bot.stalePackMinutes", Label: "Stale pack hold", Unit: "min", Default: 10, Min: 1, Max: 60,
+			Desc: "How long a stale pack keeps its area closed. Monsters of a live game stay where they are (U), so the hold is a guess at the time the kit needs to be rebuilt."},
+		{Key: "bot.stalePackMinHP", Label: "Rebuilt kit: healing potions", Unit: "count", Default: 5, Min: 1, Max: 8,
+			Desc: "Healing potions (belt and pack) that lift the stale-pack hold early, together with bot.stalePackMinTier."},
+		{Key: "bot.stalePackMinTier", Label: "Rebuilt kit: potion tier", Unit: "tier", Default: 2, Min: 1, Max: 3,
+			Desc: "Best healing potion tier in the belt that lifts the stale-pack hold early (1 Minor Healing, 2 Light Healing)."},
+		{Key: "bot.potionBurstN", Label: "Potion burst: drinks", Unit: "count", Default: 5, Min: 0, Max: 12,
+			Desc: "Life drinks within bot.potionBurstSec that turn the next drink into a town portal while bot.potionBurstHostiles or more hostiles are near and a portal exists. 0 turns the rule off. Seed 13 drank 11 potions in about 17 s and then died."},
+		{Key: "bot.potionBurstSec", Label: "Potion burst: window", Unit: "s", Default: 20, Min: 5, Max: 60,
+			Desc: "Window in which the life drinks are counted."},
+		{Key: "bot.potionBurstHostiles", Label: "Potion burst: hostiles", Unit: "count", Default: 3, Min: 1, Max: 8,
+			Desc: "Hostiles within the fight radius the potion burst rule needs before it retreats."},
 		{Key: "bot.povertyTier", Label: "Poverty gear tier", Unit: "tier", Default: 0, Min: 0, Max: 2,
 			Desc: "Gear tier bought after an abandoned corpse: 0 is the cheapest viable weapon and armor, potions first."},
 		{Key: "bot.goldFloor", Label: "Gold floor", Unit: "gold", Default: 2000, Min: 0, Max: 2000, HigherIsBetter: true,

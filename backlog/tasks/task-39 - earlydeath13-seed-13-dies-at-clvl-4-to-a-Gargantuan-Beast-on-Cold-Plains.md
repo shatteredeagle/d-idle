@@ -1,9 +1,10 @@
 ---
 id: TASK-39
 title: 'earlydeath13: seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-06T21:56:00Z'
 labels:
   - bot-defect
 dependencies: []
