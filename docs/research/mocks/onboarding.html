@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle onboarding - MOCK</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+/* MOCK ONLY (docs/research/onboarding-ux-design.md). Fake data, not shipped. Tokens copied from web/style.css. */
+:root{--bg:#f3efe6;--surface:#fffdf8;--surface2:#ece6d8;--line:#d6ccb8;--text:#231e17;--muted:#685f50;--accent:#b5760f;--accent-text:#7a4f00;--on-accent:#fff;--good:#2f7d3a;--warn:#9a6200;--bad:#b3342a;--info:#2a63a8;--life:#c0352b;--mana:#2f62c9;--focus:#1f5fd6;--shadow:0 1px 2px rgba(40,30,10,.08),0 4px 14px rgba(40,30,10,.06);--radius:10px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--accent-text:#e6b95c;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--life:#d2453a;--mana:#4f7fe0;--focus:#8db8ff;--shadow:0 1px 2px rgba(0,0,0,.4)}}
+:root[data-theme=dark]{--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--accent-text:#e6b95c;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--life:#d2453a;--mana:#4f7fe0;--focus:#8db8ff;--shadow:0 1px 2px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{margin:0;font-weight:650}h1{font-size:1.15rem}h2{font-size:1.2rem}h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:1rem 0 .4rem}
+p{margin:.5rem 0}.muted{color:var(--muted)}.small{font-size:.88rem}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button,input,select{font:inherit;color:inherit}
+.debug{background:#2a2a2a;color:#eee;padding:6px 10px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.debug select,.debug button{background:#444;color:#fff;border:1px solid #666;border-radius:5px;padding:3px 6px;font-size:13px}
+.debug b{color:#f0c060}
+.top{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}.mark{width:14px;height:14px;background:var(--accent);transform:rotate(45deg);border-radius:2px}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:8px 16px;cursor:pointer;min-height:44px}
+.btn:hover{border-color:var(--muted)}.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:650}
+.btn.danger{color:var(--bad)}.btn.ghost{background:transparent}.btn.small{min-height:36px;padding:4px 12px;font-size:.9rem}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);min-width:0}
+.wz{max-width:680px;margin:0 auto;padding:14px}
+.stepper{display:flex;gap:6px;margin:0 0 16px;padding:0;list-style:none}
+.stepper li{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.stepper i{display:block;height:6px;border-radius:3px;background:var(--line);margin-bottom:4px}
+.stepper .done i{background:var(--good)}.stepper .cur i{background:var(--accent)}.stepper .cur{color:var(--text);font-weight:650}
+@media(max-width:480px){.stepper li span{display:none}.stepper .cur span{display:inline}}
+.why{background:var(--surface2);border-left:3px solid var(--info);padding:8px 12px;border-radius:6px;margin:12px 0;font-size:.92rem}
+.why b{color:var(--info)}
+.nav{display:flex;gap:10px;justify-content:space-between;margin-top:18px;flex-wrap:wrap}
+.nav .r{margin-left:auto;display:flex;gap:10px}
+.err{border:1px solid var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface));border-radius:8px;padding:10px 12px;margin:12px 0}
+.err b{display:block;color:var(--bad)}
+.okbox{border:1px solid var(--good);background:color-mix(in srgb,var(--good) 10%,var(--surface));border-radius:8px;padding:10px 12px;margin:12px 0}
+.warnbox{border:1px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface));border-radius:8px;padding:10px 12px;margin:12px 0}
+ul.plain{padding-left:1.2rem;margin:.4rem 0}ul.plain li{margin:.35rem 0}
+.files{list-style:none;padding:0;margin:10px 0}.files li{display:flex;gap:8px;align-items:baseline;padding:6px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.files .n{font-family:ui-monospace,monospace;font-size:.9rem;min-width:130px}.files .s{font-weight:650}.files .m{flex-basis:100%;font-size:.88rem;color:var(--muted);padding-left:0}
+.good{color:var(--good)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+.bar{height:12px;background:var(--surface2);border-radius:6px;overflow:hidden;border:1px solid var(--line)}.bar>i{display:block;height:100%;background:var(--accent);transition:width .5s}
+.opt{display:block;border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:8px 0;cursor:pointer}
+.opt:has(input:checked){border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.opt input[type=radio]{margin-right:8px}
+label.f{display:block;font-weight:600;margin-top:12px}
+input[type=text],input[type=password],select.sel{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);min-height:44px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.token{font-family:ui-monospace,monospace;background:var(--surface2);padding:8px 10px;border-radius:6px;word-break:break-all}
+details{margin:.6rem 0}summary{cursor:pointer;color:var(--accent-text)}
+.badge{display:inline-block;font-size:.72rem;font-weight:650;text-transform:uppercase;letter-spacing:.05em;padding:1px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.badge.sample{color:var(--info);border-color:var(--info)}.badge.bad{color:var(--bad);border-color:var(--bad)}
+pre.log{background:#1b1815;color:#d8cdb8;padding:10px;border-radius:8px;overflow:auto;font-size:.8rem;margin:8px 0}
+/* watch screen */
+.watch{padding:12px;max-width:1280px;margin:0 auto}
+.stat{display:flex;gap:10px 16px;align-items:center;flex-wrap:wrap;padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--good)}.dot.dead{background:var(--bad)}
+.tabs{display:flex;gap:4px;overflow-x:auto;margin:10px 0}.tabs button{flex:1;min-height:44px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:6px 10px;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected=true]{background:var(--surface2);font-weight:650;border-color:var(--accent)}
+.grid{display:grid;gap:12px;grid-template-columns:1fr}
+.panel{display:none}.panel.on{display:block}
+@media(min-width:900px){.tabs{display:none}.grid{grid-template-columns:repeat(2,1fr)}.panel{display:block}.panel.journal{grid-column:span 2}}
+.hl{outline:3px solid var(--accent);outline-offset:3px;position:relative;z-index:30}
+.shot{aspect-ratio:4/3;background:linear-gradient(#2b2520,#15110d);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#a89c85;text-align:center;font-size:.9rem;position:relative;overflow:hidden}
+.shot .hero{position:absolute;left:46%;top:56%;width:18px;height:34px;background:#8aa6d8;border-radius:8px 8px 3px 3px}
+.shot .mob{position:absolute;width:14px;height:22px;background:#8a3b30;border-radius:6px}
+.bars{display:grid;gap:5px;margin-top:8px;font-size:.85rem}.bars>div{display:grid;grid-template-columns:40px 1fr;gap:8px;align-items:center}
+.bars .bar{height:9px}.bars .life>i{background:var(--life)}.bars .mana>i{background:var(--mana)}
+.thought{border:1px solid var(--line);border-radius:9px;padding:10px 12px;margin:8px 0;background:var(--surface)}
+.thought .q{font-weight:650}.thought .ifn{font-size:.88rem;color:var(--muted);margin:4px 0}
+.choices{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.fade{height:5px;background:var(--surface2);border-radius:3px;margin-top:8px;overflow:hidden}.fade>i{display:block;height:100%;background:var(--warn);width:100%}
+.mapg{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.mapg button{min-height:44px;border:1px solid var(--line);background:var(--surface2);border-radius:8px;cursor:pointer}.mapg button[aria-pressed=true]{border-color:var(--accent);background:var(--surface)}
+ul.l{list-style:none;margin:0;padding:0}ul.l li{padding:7px 0;border-bottom:1px solid var(--line);font-size:.93rem}
+.banner{margin:10px 0;padding:10px 12px;border-radius:9px;border:1px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,var(--surface));display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.banner.bad{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 10%,var(--surface))}
+.banner.info{border-color:var(--info);background:color-mix(in srgb,var(--info) 8%,var(--surface))}
+/* tour */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:20}
+.coach{position:fixed;z-index:40;left:10px;right:10px;bottom:10px;background:var(--surface);border:2px solid var(--accent);border-radius:12px;padding:14px 16px;box-shadow:0 8px 30px rgba(0,0,0,.35);max-width:440px}
+@media(min-width:900px){.coach{left:auto;right:24px;bottom:24px}.coach.left{left:24px;right:auto}}
+.coach .dots{display:flex;gap:5px;margin-bottom:8px}.coach .dots i{width:22px;height:5px;border-radius:3px;background:var(--line)}.coach .dots i.on{background:var(--accent)}
+.sheet{position:fixed;z-index:50;inset:auto 0 0 0;max-height:85vh;overflow:auto;background:var(--surface);border-top:2px solid var(--accent);border-radius:14px 14px 0 0;padding:16px;box-shadow:0 -8px 30px rgba(0,0,0,.35)}
+@media(min-width:900px){.sheet{left:auto;right:24px;bottom:24px;width:480px;border:2px solid var(--accent);border-radius:14px}}
+dl.g dt{font-weight:650;margin-top:10px}dl.g dd{margin:2px 0 0;color:var(--muted)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:90px;background:var(--text);color:var(--bg);padding:8px 14px;border-radius:8px;z-index:60;font-size:.9rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="debug" id="dbg"></div>
+<div id="app"></div>
+<div id="live" class="sr" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+/* MOCK: fake data, no network. Every screen is a function of S. */
+const $=(s,r=document)=>r.querySelector(s);
+const S={view:'setup',step:1,files:'ok',startState:'idle',access:'passcode',pass:'',pass2:'',token:'f3a9c1e07b2d4856a0c91e3b7d5f4a28',tokShown:false,go:false,name:'Sorra',goal:'campaign:normal_act1',
+ tour:0,tourSeen:false,tab:'thoughts',help:false,report:false,ctl:false,hero:'alive',sampleLeft:45,answered:0,rules:0,orders:[],area:'Blood Moor',mins:10,upgrade:false,toast:'',journal:[],ctlMsg:''};
+const STEPS=[['welcome','Welcome'],['ahead','Go-ahead'],['files','Game files'],['hero','Hero'],['access','Access'],['start','Start']];
+const FILES=[['d2data.mpq','Main game data'],['d2exp.mpq','Lord of Destruction data'],['d2char.mpq','Character graphics'],['Patch_D2.mpq','The 1.14d patch data']];
+const GOALS=[['campaign:normal_act1','Play through Act 1 on Normal (recommended)'],['campaign:normal_act2','Act 2 only'],['campaign:normal_all','Every act on Normal']];
+function esc(t){return String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function say(t){$('#live').textContent=t}
+function toast(t){S.toast=t;render();setTimeout(()=>{S.toast='';render()},2600)}
+
+/* debug bar */
+const JUMPS=[['Setup 1 Welcome','setup:1'],['Setup 2 Go-ahead','setup:2'],['Setup 3 Game files (ok)','files:ok'],['Setup 3 missing file','files:missing'],['Setup 3 wrong version (other patch)','files:wrong'],['Setup 3 Resurrected folder','files:d2r'],['Setup 3 hash not pinned yet','files:unverified'],['Setup 4 Hero','setup:4'],['Setup 5 Access','setup:5'],['Setup 6 Start (idle)','start:idle'],['Setup 6 Start (warming up)','start:run'],['Setup 6 Start (d2d not ready)','start:fail'],['Setup 6 Done / first view','start:done'],['Tour 1 your hero','tour:1'],['Tour 2 it asks you','tour:2'],['Tour 3 rules','tour:3'],['Tour 4 orders','tour:4'],['Tour 5 journal','tour:5'],['Returning user','ret'],['Hero dead / recovering','dead'],['Upgrade notice','upg'],['Help panel','help'],['Report preview','report']];
+function dbg(){const o=JUMPS.map(([l,v])=>`<option value="${v}">${l}</option>`).join('');
+ $('#dbg').innerHTML=`<b>MOCK</b><label>Jump: <select id="jump" aria-label="Jump to state">${o}</select></label><button id="dk">Theme</button><span>View width: resize the window (390 phone, 1280 desktop). All data is fake.</span>`;
+ $('#jump').onchange=e=>jump(e.target.value);$('#dk').onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==='dark'?'light':'dark'}}
+function jump(v){const[a,b]=v.split(':');S.help=S.report=S.ctl=false;S.upgrade=false;S.hero='alive';
+ if(a==='setup'){S.view='setup';S.step=+b;S.files='ok'}
+ else if(a==='files'){S.view='setup';S.step=3;S.files=b}
+ else if(a==='start'){S.view='setup';S.step=6;S.startState=b==='run'?'running':b;S.pct=40;if(b==='done')S.tokShown=false}
+ else if(a==='tour'){S.view='watch';S.tour=+b;S.tab=['','game','thoughts','rules','orders','journal'][+b];S.sampleLeft=40}
+ else if(a==='ret'){S.view='watch';S.tour=0;S.tourSeen=true;S.tab='thoughts';S.rules=1;S.journal=['12:02 You answered "drink": Life is low (Blood Moor).']}
+ else if(a==='dead'){S.view='watch';S.tour=0;S.tourSeen=true;S.hero='dead'}
+ else if(a==='upg'){S.view='watch';S.tour=0;S.tourSeen=true;S.upgrade=true}
+ else if(a==='help'){S.view='watch';S.tour=0;S.tourSeen=true;S.help=true}
+ else if(a==='report'){S.view='watch';S.tour=0;S.tourSeen=true;S.report=true}
+ render()}
+
+/* ---------- setup ---------- */
+function stepper(){return `<ol class="stepper" aria-label="Setup progress">${STEPS.map((s,i)=>`<li class="${i+1<S.step?'done':''} ${i+1===S.step?'cur':''}" ${i+1===S.step?'aria-current="step"':''}><i></i>${i+1}<span>. ${s[1]}</span></li>`).join('')}</ol>`}
+function why(t){return `<div class="why"><b>Why we need this.</b> ${t}</div>`}
+function nav(back,next,label='Next',dis=false){return `<div class="nav">${back?'<button class="btn" data-a="back">Back</button>':'<span></span>'}<div class="r">${next?`<button class="btn primary" data-a="next" ${dis?'disabled':''}>${label}</button>`:''}</div></div>`}
+function sWelcome(){return `<h2>Welcome to d.idle</h2>
+<p>d.idle is an idle game made from Diablo II. Five things to know:</p>
+<ul class="plain"><li>Your hero, a Sorceress, plays Diablo II on its own. You do not steer it.</li>
+<li>When it is unsure, it asks you a question. Your answers teach it, and after a few matching answers it stops asking and does that itself.</li>
+<li>You can also send it somewhere, and read a journal of what it did and why.</li>
+<li>It plays offline, single player only. It never connects to Battle.net and never needs a CD key or an account.</li>
+<li>You bring your own Diablo II game files. This takes about 5 minutes the first time.</li></ul>
+${why('So you know what you are about to start before anything is checked or stored.')}${nav(false,true,'Get started')}`}
+function sAhead(){return `<h2>Before we start: what runs on this computer</h2>
+<div class="card"><ul class="plain">
+<li><b>What runs.</b> One container on this computer: a copy of the Diablo II engine (d2d) and the player program (d.idle). Nothing runs anywhere else.</li>
+<li><b>Your game files stay here.</b> They are read in place, read-only. They are never uploaded and never put in the image or the project.</li>
+<li><b>Offline only.</b> The hero plays single player. No Battle.net, no online play, no other players.</li>
+<li><b>What we store.</b> In the data volume only: your hero's save, what you answered, the rules it learned, logs, and your passcode (scrambled). Nothing is sent back to us; there is no telemetry.</li>
+<li><b>How to stop.</b> The Stop button on the watch screen, or <code>docker compose stop</code>. The hero saves first. <b>Reset</b> deletes the hero and what it learned, and nothing else.</li>
+<li><b>Early test build.</b> The hero can die, get stuck, or ask odd questions. That is what you are here to find.</li></ul></div>
+<label class="opt"><input type="checkbox" id="go" ${S.go?'checked':''}> I understand and I want to continue.</label>
+${why('We would rather you decide with the facts than find out later what it does.')}${nav(true,true,'Continue',!S.go)}`}
+function fileRows(){const miss=S.files==='missing',d2r=S.files==='d2r',wrong=S.files==='wrong',unv=S.files==='unverified';
+ return FILES.map(([f,desc])=>{let s='ok',m=desc+'. Found, readable, looks like a real game file.';
+  if(d2r){s='miss';m='Not found.'}
+  else if(miss&&f==='Patch_D2.mpq'){s='miss';m='Not found in the folder. It comes with the 1.14d patch.'}
+  else if(miss&&f==='d2exp.mpq'){s='bad';m='Found, but the file is smaller than expected (a copy that stopped half way?). Copy it again.'}
+  else if(wrong&&f==='Patch_D2.mpq'){s='badver';m='Found, but it is not the 1.14d one.'}
+  else if(unv&&f==='Patch_D2.mpq'){s='unv';m=desc+'. Found. We cannot confirm it is 1.14d yet (see below).'}
+  const lab={ok:['OK','good'],miss:['Missing','bad'],bad:['Problem','bad'],badver:['Wrong version','bad'],unv:['Unconfirmed','warn']}[s];
+  return `<li><span class="n">${f}</span><span class="s ${lab[1]}">${lab[0]}</span><span class="m">${m}</span></li>`}).join('')}
+function sFiles(){let box='',canNext=true;
+ if(S.files==='d2r'){canNext=false;box=`<div class="err" role="alert"><b>This looks like Diablo II: Resurrected, or the wrong folder.</b>d.idle needs the classic game, Diablo II: Lord of Destruction, version 1.14d. Its files are named like d2data.mpq. Resurrected keeps its data in a different format that we cannot use. Point the container at the folder of your classic install (the one that has the .mpq files), then press Check again.</div>`}
+ else if(S.files==='missing'){canNext=false;box=`<div class="err" role="alert"><b>2 files need attention.</b>Copy Patch_D2.mpq and a fresh d2exp.mpq from your classic Diablo II folder into the folder you gave the container, then press Check again. No restart needed.</div>`}
+ else if(S.files==='wrong'){canNext=false;box=`<div class="err" role="alert"><b>These files are not from version 1.14d.</b>d.idle was built for 1.14d, the last classic patch. Install the 1.14d patch in your own game (Blizzard's patch page, or the game's own updater), then copy the new Patch_D2.mpq here and press Check again. Other versions play differently and the hero would misjudge things.</div>`}
+ else if(S.files==='unverified'){box=`<div class="warnbox" role="status"><b>Version not confirmed yet.</b> All files are there, but this early build has no verified fingerprint for 1.14d, so we cannot prove the version. You may continue; if the hero behaves strangely, say so in your report. Fingerprint (for the report): <code>9c1e...b7a2</code></div>`}
+ else{box=`<div class="okbox" role="status"><b class="good">All files found. Version 1.14d confirmed.</b> Optional files (sound, music, speech) are not needed: the hero plays silently.</div>`}
+ return `<h2>Your Diablo II game files</h2>
+<p>This is the folder you gave the container (it sees it as <code>/game</code>, read-only).</p>
+<ul class="files">${fileRows()}</ul>${box}
+<p class="small muted">Your files are only read, here, on this computer. They are not uploaded and not copied anywhere.</p>
+${why('The game engine cannot run without the original data, and we cannot give it to you. The version check stops you losing an evening to a hero that plays the wrong game.')}
+<div class="nav"><button class="btn" data-a="back">Back</button><div class="r"><button class="btn" data-a="recheck">Check again</button><button class="btn primary" data-a="next" ${canNext?'':'disabled'}>Next</button></div></div>`}
+function sHero(){return `<h2>Your hero</h2>
+<label class="f" for="nm">Name <span class="muted small">(letters only, 2 to 15)</span></label><input type="text" id="nm" value="${esc(S.name)}" maxlength="15" autocomplete="off">
+<label class="f">Class</label>
+<div class="opt"><b>Sorceress</b> <span class="badge">only choice in this build</span><div class="small muted">The other six classes are not taught yet. This is the one we have tested most.</div></div>
+<label class="f" for="gl">Goal</label><select class="sel" id="gl">${GOALS.map(([v,l])=>`<option value="${v}" ${v===S.goal?'selected':''}>${l}</option>`).join('')}</select>
+${why('The hero needs a name for its save file and a goal so it knows what to work on. You can change the goal later.')}${nav(true,true)}`}
+function sAccess(){const a=S.access;return `<h2>Who may open the watch screen?</h2>
+<p>The watch screen shows your game and lets whoever opens it answer the hero's questions.</p>
+<label class="opt"><input type="radio" name="ac" value="passcode" ${a==='passcode'?'checked':''}><b>Choose a passcode</b> <span class="badge">recommended</span>
+<div class="small muted">Easy to type on a phone. Works from any device on your home network. You can change it later. 6 or more characters; four random words are strong and easy to remember.</div></label>
+<label class="opt"><input type="radio" name="ac" value="token" ${a==='token'?'checked':''}><b>Use the generated token</b>
+<div class="small muted">32 random characters, no choosing. Safest if you only use this computer, but awkward to type on a phone. Shown once; you can read it again from the container.</div></label>
+${a==='passcode'?`<label class="f" for="p1">Passcode</label><input type="password" id="p1" autocomplete="new-password" value="${esc(S.pass)}"><label class="f" for="p2">Type it again</label><input type="password" id="p2" autocomplete="new-password" value="${esc(S.pass2)}">${S.pass&&S.pass.length<6?'<div class="err" role="alert"><b>Too short.</b>Use 6 or more characters. Four random words work well.</div>':''}${S.pass2&&S.pass!==S.pass2?'<div class="err" role="alert"><b>The two do not match.</b>Type the same passcode in both boxes.</div>':''}`:`<div class="why"><b>Your token</b> (shown once, then hidden): <div class="token">${S.tokShown?S.token:'.... .... .... .... (press Show)'}</div><div class="row" style="margin-top:8px"><button class="btn small" data-a="tok">${S.tokShown?'Hide':'Show'}</button><button class="btn small" data-a="copy">Copy</button></div></div>`}
+<div class="why"><b>Other devices.</b> To watch from your phone, the container must be published on your home network and started with your address, for example <code>http://my-pc:8891</code>. The guide shows the two lines to change. Never put this on the open internet: the page is plain HTTP.</div>
+${why('Anyone who can open the page can answer for your hero, and the answers change how it plays. A passcode or token keeps other people on your network out.')}
+${nav(true,true,'Next',a==='passcode'&&(S.pass.length<6||S.pass!==S.pass2))}`}
+function sStart(){const st=S.startState;let body='';
+ if(st==='idle')body=`<h2>Ready to start</h2><div class="card"><ul class="plain"><li>Hero: <b>${esc(S.name)}</b>, Sorceress</li><li>Goal: ${esc((GOALS.find(g=>g[0]===S.goal)||GOALS[0])[1])}</li><li>Game files: 1.14d, found</li><li>Access: ${S.access==='passcode'?'your passcode':'generated token'}</li></ul></div>
+<div class="warnbox"><b>The first start does a one-time job:</b> it reads the game's data tables. About 1 to 3 minutes (estimate, not measured yet). Keep this page open, or close it and come back: it picks up where it was.</div>${why('This is the one slow step. Doing it now means the hero starts at once next time.')}
+<div class="nav"><button class="btn" data-a="back">Back</button><div class="r"><button class="btn primary" data-a="start">Start d.idle</button></div></div>`;
+ else if(st==='running')body=`<h2>Starting up</h2><p>Step 1 of 3: reading the game data tables (about 2 minutes, once).</p><div class="bar" role="progressbar" aria-valuenow="${S.pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${S.pct}%"></i></div><p class="small muted">${S.pct}% . Then: starting the game engine . creating ${esc(S.name)}. You can close this page; setup continues.</p><div class="nav"><span></span><div class="r"><button class="btn" data-a="adv">Fast-forward (mock)</button></div></div>`;
+ else if(st==='fail')body=`<h2>The game engine did not start</h2><div class="err" role="alert"><b>d2d is not ready.</b>It did not answer after 60 seconds. Usually the computer is short of memory (it needs about 3 GB free) or another program uses the port. Close other heavy programs and press Retry. If it fails twice, use Report a problem: the report has everything we need.</div><details><summary>Show details</summary><pre class="log">d2d: waiting for control socket ... 60s
+d2d: exited code 137 (out of memory?)</pre></details><div class="nav"><button class="btn" data-a="rep">Report a problem</button><div class="r"><button class="btn primary" data-a="retry">Retry</button></div></div>`;
+ else body=`<h2>${esc(S.name)} is awake</h2><div class="okbox"><b class="good">Setup finished.</b> ${S.access==='token'?'Your token is the one you saw. Keep it; the page also remembers this browser.':'Use your passcode to open the watch screen on other devices.'}</div><p>Next you will see the watch screen with a short tour (about 2 minutes). You can skip it and open it again from the Help button.</p><div class="nav"><span></span><div class="r"><button class="btn primary" data-a="open">Open the watch screen</button></div></div>`;
+ return stepper0(st)+body}
+function stepper0(){return ''}
+
+function renderSetup(){const f=[null,sWelcome,sAhead,sFiles,sHero,sAccess,sStart][S.step];
+ return `<header class="top"><div class="brand"><span class="mark"></span><h1>D2 Idle setup</h1></div><button class="btn small ghost" data-a="helpbtn">Help</button></header><main class="wz">${stepper()}<div class="card" id="main" tabindex="-1">${f()}</div></main>`}
+
+/* ---------- watch ---------- */
+const TOUR=[null,
+ {t:'This is your hero',tab:'game',sel:'p-game',b:'The picture is the real game, live. Sorra fights and walks on her own. The bars are her life (red) and mana (blue). You do not need to click anything here.'},
+ {t:'It asks you things',tab:'thoughts',sel:'p-thoughts',b:'When the hero is unsure it asks. This card is a SAMPLE so you can try it. <b>Why am I asked?</b> This is a moment where a veteran player would choose, and the hero has no rule yet. It carries on with its own default while you decide. The bar is a timer: ignore the card and it fades, the hero uses the default, and the Journal notes that you missed it. Nothing bad happens.'},
+ {t:'After a few matching answers it makes a rule',tab:'rules',sel:'p-rules',b:'Give the same answer in the same situation 3 times in a row (2 for safe things, 5 for risky ones) and the hero learns it, then stops asking. It tells you first. Every rule is listed here and you can revoke it with one tap.'},
+ {t:'You can send it somewhere',tab:'orders',sel:'p-orders',b:'Pick an area and how long. The hero walks there and fights. You are not driving: it still drinks potions and runs away when it should. At most 5 orders at a time.'},
+ {t:'The Journal says what it did and why',tab:'journal',sel:'p-journal',b:'Every answer, rule, missed question and order is written here and kept. Tap a line to ask "why did you do that?". Open Help any time for the words used here.'}];
+function thoughtHTML(){if(S.answered>=1&&S.rules===0&&S.sampleDone)return '';
+ return `<div class="thought" id="th"><div><span class="badge sample">Sample</span> <span class="badge">Normal risk</span></div>
+<div class="q">Life is low (30%) and a pack of Fallen is close. What should I do?</div>
+<div class="ifn">If you do nothing: I keep fighting and drink at 25%, my default.</div>
+<details><summary>Why am I being asked?</summary><p class="small">A careful player would decide this by hand, and I have no rule for it yet. After 3 matching answers I will do it myself.</p></details>
+<div class="choices"><button class="btn small" data-a="ans" data-v="drink">Drink a potion</button><button class="btn small" data-a="ans" data-v="portal">Leave by portal</button><button class="btn small" data-a="ans" data-v="fight">Keep fighting</button><button class="btn small ghost" data-a="ans" data-v="notsure">Not sure, you decide</button></div>
+<div class="fade" title="fades in ${S.sampleLeft} s"><i style="width:${Math.round(S.sampleLeft/45*100)}%"></i></div><div class="small muted">Fades in ${S.sampleLeft} s. (Sample thoughts do not fade while the tour is open.)</div></div>`}
+function watchPanels(){const dead=S.hero==='dead';
+ return `<section class="card panel game ${S.tab==='game'?'on':''} ${hl('p-game')}" id="p-game" aria-label="Game"><h2>Game</h2><div class="shot"><span>live game picture (fake)</span><i class="hero"></i><i class="mob" style="left:30%;top:50%"></i><i class="mob" style="left:62%;top:40%"></i></div>
+ <div class="bars"><div class="life"><span>Life</span><div class="bar"><i style="width:${dead?0:68}%"></i></div></div><div class="mana"><span>Mana</span><div class="bar"><i style="width:${dead?0:54}%"></i></div></div></div></section>
+ <section class="card panel thoughts ${S.tab==='thoughts'?'on':''} ${hl('p-thoughts')}" id="p-thoughts" aria-label="Thoughts"><h2>Thoughts</h2>${S.tourSeen&&!S.tour?'<p class="muted">Nothing to ask right now. The hero is fighting in the Blood Moor.</p>':thoughtHTML()}
+ <ul class="l"><li class="muted">12:03 Idle thought: the Blood Moor smells of rot.</li></ul></section>
+ <section class="card panel orders ${S.tab==='orders'?'on':''} ${hl('p-orders')}" id="p-orders" aria-label="Orders"><h2>Where to?</h2><div class="mapg" id="areas">${['Rogue Encampment','Blood Moor','Cold Plains','Den of Evil','Stony Field'].map(a=>`<button aria-pressed="${a===S.area}" data-a="area" data-v="${a}">${a}</button>`).join('')}</div>
+ <div class="row" style="margin-top:10px"><label for="mn">Minutes</label><input id="mn" type="text" value="${S.mins}" style="width:80px"><button class="btn primary" data-a="order">Give order</button></div>
+ <ul class="l">${S.orders.map(o=>`<li>${esc(o)} <button class="btn small" data-a="cancel">Cancel</button></li>`).join('')||'<li class="muted">No orders. The hero decides where to go.</li>'}</ul></section>
+ <section class="card panel rules ${S.tab==='rules'?'on':''} ${hl('p-rules')}" id="p-rules" aria-label="Rules"><h2>Rules</h2>
+ <ul class="l">${(S.rules||S.tour===3)?`<li>${S.tour===3||!S.tourSeen?'<span class="badge sample">Sample</span> ':''}When my life is low and a pack is close (Blood Moor), I drink a potion. <button class="btn small danger" data-a="revoke">Revoke</button></li>`:'<li class="muted">No rules yet. Rules appear after a few matching answers.</li>'}</ul></section>
+ <section class="card panel journal ${S.tab==='journal'?'on':''} ${hl('p-journal')}" id="p-journal" aria-label="Journal"><h2>Journal <small class="muted">(kept)</small></h2>
+ <ul class="l">${S.journal.map(j=>`<li>${esc(j)}</li>`).join('')}<li>12:00 Setup finished. ${esc(S.name)} left the Rogue Encampment.</li><li>11:59 Game data read (first start).</li></ul></section>`}
+function hl(id){return S.tour&&TOUR[S.tour].sel===id?'hl':''}
+function renderWatch(){const dead=S.hero==='dead';
+ const tabs=[['game','Game'],['thoughts','Thoughts'],['orders','Orders'],['rules','Rules'],['journal','Journal']];
+ return `<header class="top"><div class="brand"><span class="mark"></span><h1>d.idle</h1></div><button class="btn small" data-a="helpbtn">Help</button><button class="btn small" data-a="ctl">Pause / Stop</button></header>
+ <div class="stat" role="status"><span class="dot ${dead?'dead':''}"></span><b>${dead?'Recovering':'Fighting in the Blood Moor'}</b><span class="muted small">uptime 94% . deaths ${dead?1:0}</span></div>
+ <div class="watch">
+ ${dead?'<div class="banner bad" role="status"><span><b>Sorra died.</b> That happens, and she is already recovering: walking back for her gear and restocking. Nothing for you to do. It is written in the Journal.</span></div>':''}
+ ${S.upgrade?'<div class="banner info"><span>Updated to a new version (0.4.2). Your hero and rules were kept. <a href="#" data-a="notes">What changed</a></span><button class="btn small" data-a="dismiss">Dismiss</button></div>':''}
+ ${!S.tourSeen&&!S.tour?'<div class="banner info"><span>New here? A 2-minute tour shows what everything is.</span><span class="row"><button class="btn small primary" data-a="tourstart">Start tour</button><button class="btn small" data-a="tourskip">Skip</button></span></div>':''}
+ <nav class="tabs" role="tablist" aria-label="Panels">${tabs.map(([k,l])=>`<button role="tab" aria-selected="${S.tab===k}" data-a="tab" data-v="${k}">${l}</button>`).join('')}</nav>
+ <div class="grid">${watchPanels()}</div></div>${tourHTML()}${helpHTML()}${reportHTML()}${ctlHTML()}${S.toast?`<div class="toast" role="status">${esc(S.toast)}</div>`:''}`}
+function tourHTML(){if(!S.tour)return '';const t=TOUR[S.tour];
+ return `<div class="scrim"></div><div class="coach ${S.tour===2||S.tour===3?'left':''}" role="dialog" aria-labelledby="ct"><div class="dots">${[1,2,3,4,5].map(i=>`<i class="${i<=S.tour?'on':''}"></i>`).join('')}</div><div class="muted small">Step ${S.tour} of 5</div><h2 id="ct">${t.t}</h2><p>${t.b}</p>
+ <div class="nav"><button class="btn small ghost" data-a="tourskip">Skip tour</button><div class="r">${S.tour>1?'<button class="btn small" data-a="tourback">Back</button>':''}<button class="btn small primary" data-a="tournext">${S.tour===5?'Done':'Next'}</button></div></div></div>`}
+function helpHTML(){if(!S.help)return '';return `<div class="scrim" data-a="close"></div><div class="sheet" role="dialog" aria-labelledby="ht"><div class="row" style="justify-content:space-between"><h2 id="ht">Help</h2><button class="btn small" data-a="close">Close</button></div>
+<div class="row" style="margin:8px 0"><button class="btn small" data-a="tourstart">Replay the tour</button><button class="btn small" data-a="rep">Report a problem</button></div>
+<h3>What the numbers mean</h3><dl class="g"><dt>Uptime</dt><dd>The share of time the hero made progress, not counting time when it was dead, recovering or stuck.</dd><dt>Deaths</dt><dd>Times the hero died this session. A few are normal for an early build.</dd><dt>Fades in 31 s</dt><dd>How long before an unanswered question is dropped and the hero uses its default.</dd></dl>
+<h3>Words used here</h3><dl class="g"><dt>Thought</dt><dd>A question from the hero, or a short remark.</dd><dt>Rule</dt><dd>Something the hero learned from your matching answers. You can revoke it.</dd><dt>Order</dt><dd>A trip you send it on: go somewhere, fight here, come home.</dd><dt>Journal</dt><dd>The permanent list of what happened and why.</dd><dt>Goal</dt><dd>The big job, such as Act 1 on Normal.</dd><dt>Risk (safe / normal / risky)</dt><dd>How many matching answers it needs before learning: 2, 3 or 5.</dd></dl>
+<h3>Something wrong?</h3><p class="small">Hero stuck: wait two minutes, then Pause and Resume. Page will not load: check the container is running. Still stuck: Report a problem.</p></div>`}
+function reportHTML(){if(!S.report)return '';return `<div class="scrim" data-a="close"></div><div class="sheet" role="dialog" aria-labelledby="rt"><div class="row" style="justify-content:space-between"><h2 id="rt">Report a problem</h2><button class="btn small" data-a="close">Close</button></div>
+<p>This builds one file you can send us. Nothing is sent from here: you read it, save it, and share it yourself.</p>
+<label class="f" for="what">What went wrong? (optional)</label><input type="text" id="what" placeholder="for example: hero stood still for ten minutes">
+<h3>Included</h3><ul class="plain small"><li>d.idle and engine logs, last 2 hours (3 files, 240 KB)</li><li>Versions of this build and the game engine</li><li>The ledger of the hero's save and answers (counts, no free text)</li><li>Your setup choices: hero name, goal, passcode or token <i>kind</i></li></ul>
+<h3>Left out</h3><ul class="plain small"><li>Your passcode and token (never stored in the clear, never included)</li><li>Your game files, and the folder paths on your computer</li><li>Your computer's name and network address (blanked)</li></ul>
+<details open><summary>Preview the file</summary><pre class="log">d2idle-report-2026-11-06.tar.gz
+  versions.txt      d.idle 0.4.2, d2d lab2, tables ok
+  setup.json        name=Sorra class=Sorceress access=passcode
+  bot.log (tail)    12:03 fight blood-moor ... host=[hidden]
+  ledger.txt        answers=7 rules=1 writes after start=0
+  game files        1.14d, hash 9c1e...b7a2 (no paths)</pre></details>
+<div class="nav"><span></span><div class="r"><button class="btn primary" data-a="build">Save the report file</button></div></div></div>`}
+function ctlHTML(){if(!S.ctl)return '';return `<div class="scrim" data-a="close"></div><div class="sheet" role="dialog" aria-labelledby="cl"><div class="row" style="justify-content:space-between"><h2 id="cl">Pause, stop or reset</h2><button class="btn small" data-a="close">Close</button></div>
+<div class="card" style="margin:10px 0"><b>Pause</b><p class="small muted">The hero stands still where it is, safe. Resume at any time. Questions wait.</p><button class="btn" data-a="pause">Pause the hero</button></div>
+<div class="card" style="margin:10px 0"><b>Stop</b><p class="small muted">Saves the hero and shuts the game down (up to 45 seconds). Start it again with <code>docker compose up -d</code>; the hero continues.</p><button class="btn" data-a="stop">Save and stop</button></div>
+<div class="card" style="margin:10px 0;border-color:var(--bad)"><b class="bad">Reset</b><p class="small muted">Deletes the hero, its rules and the journal, then the setup runs again. Your game files and passcode are untouched. This cannot be undone.</p><label class="f" for="rs">Type RESET to enable</label><input type="text" id="rs" autocomplete="off"><button class="btn danger" id="rsb" data-a="reset" disabled style="margin-top:8px">Delete my hero</button></div>${S.ctlMsg?`<p role="status"><b>${S.ctlMsg}</b></p>`:''}</div>`}
+
+/* ---------- render + events ---------- */
+function render(){const ae=document.activeElement&&document.activeElement.id;const sc=window.scrollY;
+ $('#app').innerHTML=S.view==='setup'?renderSetup():renderWatch();
+ if(S.help&&S.view==='setup'){$('#app').insertAdjacentHTML('beforeend',helpHTML())}
+ if(S.report&&S.view==='setup'){$('#app').insertAdjacentHTML('beforeend',reportHTML())}
+ if(ae&&$('#'+ae)&&ae!=='jump'){const e=$('#'+ae);e.focus();if(e.setSelectionRange&&e.type==='text'||e.type==='password')try{e.setSelectionRange(e.value.length,e.value.length)}catch(_){}}
+ window.scrollTo(0,sc);if(S.view==='watch'&&S.tour&&TOUR[S.tour]){const el=document.getElementById(TOUR[S.tour].sel);if(el&&el.scrollIntoView)el.scrollIntoView({block:'start'})}}
+document.addEventListener('input',e=>{const t=e.target;
+ if(t.id==='nm')S.name=t.value;else if(t.id==='p1'){S.pass=t.value;render()}else if(t.id==='p2'){S.pass2=t.value;render()}
+ else if(t.id==='gl')S.goal=t.value;else if(t.id==='mn')S.mins=t.value;
+ else if(t.id==='go'){S.go=t.checked;render()}
+ else if(t.name==='ac'){S.access=t.value;render()}
+ else if(t.id==='rs'){$('#rsb').disabled=t.value!=='RESET'}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b)return;const a=b.dataset.a,v=b.dataset.v;if(b.tagName==='A')e.preventDefault();
+ if(a==='next'){if(S.step===1||S.step===2||S.step===3||S.step===4||S.step===5)S.step++;if(S.step===2)S.go=false;say('Step '+S.step+' of 6')}
+ else if(a==='back'){S.step=Math.max(1,S.step-1);S.startState='idle'}
+ else if(a==='recheck')toast('Checked again (mock: same result)');
+ else if(a==='tok')S.tokShown=!S.tokShown;
+ else if(a==='copy')toast('Copied (mock)');
+ else if(a==='start'){S.startState='running';S.pct=10;tick()}
+ else if(a==='adv'){S.pct=100;S.startState='done'}
+ else if(a==='retry'){S.startState='running';S.pct=10;tick()}
+ else if(a==='open'){S.view='watch';S.tour=1;S.tab='game';S.sampleLeft=45}
+ else if(a==='helpbtn'){S.help=true}
+ else if(a==='close'){S.help=S.report=S.ctl=false}
+ else if(a==='rep'){S.help=false;S.report=true}
+ else if(a==='build'){S.report=false;toast('Saved d2idle-report-2026-11-06.tar.gz (mock)')}
+ else if(a==='ctl'){S.ctl=true;S.ctlMsg=''}
+ else if(a==='pause'){S.ctlMsg='Paused. Press Pause again to resume (mock).'}
+ else if(a==='stop'){S.ctlMsg='Saving... stopped. The hero is saved (mock).'}
+ else if(a==='reset'){S.ctl=false;toast('Reset (mock): setup would start again');S.view='setup';S.step=1;S.go=false}
+ else if(a==='tab'){S.tab=v}
+ else if(a==='tourstart'){S.help=false;S.tour=1;S.tab='game';S.sampleLeft=45}
+ else if(a==='tourskip'){S.tour=0;S.tourSeen=true;toast('Tour skipped. Find it again under Help.')}
+ else if(a==='tournext'){if(S.tour===5){S.tour=0;S.tourSeen=true;S.tab='thoughts';toast('Tour done. Help is always at the top.')}else{S.tour++;S.tab=TOUR[S.tour].tab}}
+ else if(a==='tourback'){S.tour--;S.tab=TOUR[S.tour].tab}
+ else if(a==='ans'){S.answered++;S.sampleDone=true;S.journal.unshift('12:05 You answered "'+v+'" (sample): Life is low (Blood Moor).');toast(v==='notsure'?'OK, I will decide. This does not count toward a rule.':'Thanks, I will '+v+'. 1 of 3 matching answers toward a rule.')}
+ else if(a==='area'){S.area=v}
+ else if(a==='order'){S.orders=[S.area+' for '+S.mins+' min'];S.journal.unshift('12:06 Order: go to '+S.area+' for '+S.mins+' min.')}
+ else if(a==='cancel'){S.orders=[]}
+ else if(a==='revoke'){S.rules=0;toast('Rule revoked. It will ask again.')}
+ else if(a==='dismiss'){S.upgrade=false}
+ render()});
+let tm=null;function tick(){clearInterval(tm);tm=setInterval(()=>{if(S.startState!=='running'){clearInterval(tm);return}S.pct=Math.min(100,S.pct+12);if(S.pct>=100){S.startState='done';clearInterval(tm)}render()},800)}
+setInterval(()=>{if(S.view==='watch'&&!S.tour&&!S.sampleDone&&S.tourSeen===false){}},1000);
+dbg();render();
+</script></body></html>
