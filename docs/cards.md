@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (35)
+## Active (36)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -54,6 +54,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 | 34 | friendspreview | tester | proposed 2/2 | shareable clickable preview of the flow for friends feedback | - | - | [card](archive/openspec-index.md#friendspreview) |
 | 35 | mercrevive | bot-defect | in-progress 3/3 | revive reserve by clvl band per the SME | - | - | [card](archive/openspec-index.md#mercrevive) |
+| 36 | shortdrills | drills | in-progress 3/3 | short live drills for the g2e/g2f fixes | - | - | [card](archive/openspec-index.md#shortdrills) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

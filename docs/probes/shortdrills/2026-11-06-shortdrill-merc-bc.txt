@@ -1,0 +1,74 @@
+E1.merc-b PASS
+  no revive, purchases happened ({"time":"2026-11-06T18:18:20.81479806-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Sash","price":60,"gold left":750})
+  facts map[clvl:12 gold:810 liveQuote:0 merc:{"v":1,"merc":{"present":false,"dead":true}} quote:1080 quoteSource:level estimate 1080 (the live quote is 0) state:area=1 level=12 gold=810 life=40/40]
+  cheats before the start: debug goto 1; debug clearinv; debug belt clear; debug stat 12 12; debug stat 15 0; debug stat 14 5000; debug merc hire 0; debug merc kill; debug stat 14 810; debug goto 1
+  run E1.merc-b-20261106-231820, writes after start: 0, virtual 152 s, wall 8 s
+    | {"time":"2026-11-06T18:18:20.606296525-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
+    | {"time":"2026-11-06T18:18:20.627641011-05:00","level":"INFO","msg":"d2dsrc","inst":"e1","msg":"d2dsrc: 24 new unknown fields: hovered, inventory.item_flags, missiles, monster.hostile, monster.resists, monster.states, monster.unique_no, mouse, object.class, object.mode, player.hotkeys, player.mode, player.resist.magic, player.skills.bonus, player.states, player.stats.effective, ui.chat, ui.merc, ui.party, ui.quest, ui.trade, unit.flags, unit.owner, viewport"}
+    | {"time":"2026-11-06T18:18:20.629041982-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":1,"clvl":12,"life":"40/40","heal":0,"mana":"35/35","tome":0,"merc":"none"}
+    | {"time":"2026-11-06T18:18:20.631681371-05:00","level":"INFO","msg":"merc: seen class=0 alive=false life=0 level=12 aura=-","inst":"e1"}
+    | {"time":"2026-11-06T18:18:20.81479806-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Sash","price":60,"gold left":750}
+    | {"time":"2026-11-06T18:18:20.988663891-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":720}
+    | {"time":"2026-11-06T18:18:20.993747407-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":690}
+    | {"time":"2026-11-06T18:18:20.998942183-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":660}
+    | {"time":"2026-11-06T18:18:21.004517856-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":600}
+    | {"time":"2026-11-06T18:18:21.009952766-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":540}
+    | {"time":"2026-11-06T18:18:21.009969027-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":0,"mpAfter":2,"gold":750}
+    | {"time":"2026-11-06T18:18:21.024946888-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Scroll of Town Portal","price":100,"gold left":440}
+    | {"time":"2026-11-06T18:18:21.043543503-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":410}
+    | {"time":"2026-11-06T18:18:21.049671224-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":350}
+    | {"time":"2026-11-06T18:18:21.056556496-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":290}
+    | {"time":"2026-11-06T18:18:21.056576326-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":2,"mpAfter":4,"gold":440}
+    | {"time":"2026-11-06T18:18:21.07373765-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Scroll of Town Portal","price":100,"gold left":190}
+    | {"time":"2026-11-06T18:18:21.074845426-05:00","level":"INFO","msg":"shop: visit","inst":"e1","bought":{"Minor Healing Potion":4,"Minor Mana Potion":4,"Scroll of Town Portal":2,"belt":1},"spent":560,"broke":false,"err":null,"gold":190,"beltHP":0,"beltMP":0,"beltRV":0,"beltSlots":8,"tp":2,"tome":false}
+    | {"time":"2026-11-06T18:18:21.186272574-05:00","level":"WARN","msg":"merc: revive skipped (gold) price=1080 gold=190 need=1080","inst":"e1"}
+    | {"time":"2026-11-06T18:18:21.186286195-05:00","level":"INFO","msg":"merc: gold wait need=1080 gold=190","inst":"e1"}
+    | {"time":"2026-11-06T18:18:21.186290635-05:00","level":"INFO","msg":"chores done","inst":"e1","done":["merc revive skipped: gold"],"skipped":["identify","equip","sell","ammo","beltbuy","repair","belt","bank","withdraw","shop","beltafter","stash"]}
+    | {"time":"2026-11-06T18:18:21.62534905-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":2,"clvl":12,"life":"40/40","heal":4,"mana":"35/35","tome":2,"merc":"none"}
+    | {"time":"2026-11-06T18:18:28.685145112-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:29.007848956-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:29.330986016-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:29.658851686-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+    | {"time":"2026-11-06T18:18:29.664736383-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":1}
+    | {"time":"2026-11-06T18:18:30.397150047-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:30.719507536-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:31.041715982-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:31.370047179-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+    | {"time":"2026-11-06T18:18:31.375336898-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":2}
+E1.merc-c PASS
+  skipped for gold: {"time":"2026-11-06T18:18:35.233046515-05:00","level":"WARN","msg":"merc: revive skipped (gold) price=1470 gold=440 need=1520","inst":"e1"}
+  facts map[clvl:14 gold:1480 liveQuote:0 merc:{"v":1,"merc":{"present":false,"dead":true}} quote:1470 quoteSource:level estimate 1470 (the live quote is 0) state:area=1 level=14 gold=1480 life=40/40]
+  cheats before the start: debug goto 1; debug clearinv; debug belt clear; debug stat 12 14; debug stat 15 0; debug stat 14 5000; debug merc hire 0; debug merc kill; debug stat 14 1480; debug goto 1
+  run E1.merc-c-20261106-231834, writes after start: 0, virtual 127 s, wall 8 s
+    | {"time":"2026-11-06T18:18:34.110283156-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
+    | {"time":"2026-11-06T18:18:34.132140629-05:00","level":"INFO","msg":"d2dsrc","inst":"e1","msg":"d2dsrc: 24 new unknown fields: hovered, inventory.item_flags, missiles, monster.hostile, monster.resists, monster.states, monster.unique_no, mouse, object.class, object.mode, player.hotkeys, player.mode, player.resist.magic, player.skills.bonus, player.states, player.stats.effective, ui.chat, ui.merc, ui.party, ui.quest, ui.trade, unit.flags, unit.owner, viewport"}
+    | {"time":"2026-11-06T18:18:34.136388122-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":1,"clvl":14,"life":"40/40","heal":0,"mana":"31/35","tome":0,"merc":"none"}
+    | {"time":"2026-11-06T18:18:34.144075566-05:00","level":"INFO","msg":"merc: seen class=0 alive=false life=0 level=14 aura=-","inst":"e1"}
+    | {"time":"2026-11-06T18:18:34.507250688-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Light Belt","price":180,"gold left":1300}
+    | {"time":"2026-11-06T18:18:34.973655918-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":970}
+    | {"time":"2026-11-06T18:18:34.981116038-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":940}
+    | {"time":"2026-11-06T18:18:34.989877908-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":910}
+    | {"time":"2026-11-06T18:18:34.998671638-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":850}
+    | {"time":"2026-11-06T18:18:35.007041912-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":790}
+    | {"time":"2026-11-06T18:18:35.007063622-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":0,"mpAfter":2,"gold":1000}
+    | {"time":"2026-11-06T18:18:35.024820845-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Scroll of Town Portal","price":100,"gold left":690}
+    | {"time":"2026-11-06T18:18:35.044212572-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":660}
+    | {"time":"2026-11-06T18:18:35.055254825-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":600}
+    | {"time":"2026-11-06T18:18:35.065381315-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":540}
+    | {"time":"2026-11-06T18:18:35.065403605-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":2,"mpAfter":4,"gold":690}
+    | {"time":"2026-11-06T18:18:35.086573918-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Tome of Town Portal","price":400,"gold left":140}
+    | {"time":"2026-11-06T18:18:35.088820002-05:00","level":"INFO","msg":"shop: visit","inst":"e1","bought":{"Minor Healing Potion":4,"Minor Mana Potion":4,"Scroll of Town Portal":1,"Tome of Town Portal":1,"belt":1},"spent":860,"broke":false,"err":null,"gold":140,"beltHP":0,"beltMP":0,"beltRV":0,"beltSlots":8,"tp":4,"tome":true}
+    | {"time":"2026-11-06T18:18:35.233046515-05:00","level":"WARN","msg":"merc: revive skipped (gold) price=1470 gold=440 need=1520","inst":"e1"}
+    | {"time":"2026-11-06T18:18:35.233058535-05:00","level":"INFO","msg":"merc: gold wait need=1520 gold=440","inst":"e1"}
+    | {"time":"2026-11-06T18:18:35.233063495-05:00","level":"INFO","msg":"chores done","inst":"e1","done":["merc revive skipped: gold"],"skipped":["identify","equip","sell","ammo","beltbuy","repair","belt","bank","withdraw","shop","beltafter","heal","stash"]}
+    | {"time":"2026-11-06T18:18:35.546379061-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":2,"clvl":14,"life":"40/40","heal":4,"mana":"35/35","tome":2,"merc":"none"}
+    | {"time":"2026-11-06T18:18:42.174186709-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:42.496135832-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:42.818222897-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:43.147165603-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+    | {"time":"2026-11-06T18:18:43.150028386-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":1}
+    | {"time":"2026-11-06T18:18:43.883480096-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:44.206067908-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:44.530152123-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+    | {"time":"2026-11-06T18:18:44.858730794-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+    | {"time":"2026-11-06T18:18:44.860891526-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":2}

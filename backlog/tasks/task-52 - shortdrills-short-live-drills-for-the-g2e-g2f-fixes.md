@@ -16,11 +16,12 @@ owns:
   - "docs/probes/shortdrills"
 exclusive: []
 contracts: []
+result: "VERIFIED LIVE 2026-11-06 (slots 4 and 5, fork f75816c6): merc-a, merc-b, merc-c, noportal-a, noportal-b all PASS, writes after start 0; merc drills set the purse around the level estimate because a cheat-hired merc revives for 0 (docs/probes/shortdrills.md). Edited 5 lines of cmd/d2drill/main.go (group E1 dispatch), owned by task m1-liveproof."
 ---
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Drill 2 (merc revive before potions, poor variant, clvl 14 variant) built and run live, result recorded
-- [ ] #2 Drill 3 (no-portal low life leaves after bot.noPortalWaitSec, scroll control) built and run live, result recorded
-- [ ] #3 docs/probes/shortdrills.md records run ids, build, binary sha and PASS/FAIL with log lines
+- [x] #1 Drill 2 (merc revive before potions, poor variant, clvl 14 variant) built and run live, result recorded
+- [x] #2 Drill 3 (no-portal low life leaves after bot.noPortalWaitSec, scroll control) built and run live, result recorded
+- [x] #3 docs/probes/shortdrills.md records run ids, build, binary sha and PASS/FAIL with log lines
 <!-- AC:END -->

@@ -1,0 +1,169 @@
+{"time":"2026-11-06T18:16:23.386293498-05:00","level":"INFO","msg":"d2bot start","inst":"e1","version":"dev"}
+{"time":"2026-11-06T18:16:23.449582294-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"/home/jesse/d2d-lab/slots/5/d2d.sock","managed":false,"lockstep":true}
+{"time":"2026-11-06T18:16:23.450236793-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
+2026/11/06 18:16:23 INFO goal from --goals already present, not queued again goal="farm:Blood Moor"
+{"time":"2026-11-06T18:16:23.451202628-05:00","level":"INFO","msg":"goals enqueued","inst":"e1"}
+{"time":"2026-11-06T18:16:23.467821824-05:00","level":"INFO","msg":"bot runner started","inst":"e1","profile":""}
+{"time":"2026-11-06T18:16:23.467878284-05:00","level":"INFO","msg":"listening","inst":"e1","addr":"127.0.0.1:9105","dashboard":"http://127.0.0.1:9105/","instance":"e1"}
+{"time":"2026-11-06T18:16:23.469258875-05:00","level":"INFO","msg":"d2dsrc","inst":"e1","msg":"d2dsrc: 24 new unknown fields: hovered, inventory.item_flags, missiles, monster.hostile, monster.resists, monster.states, monster.unique_no, mouse, object.class, object.mode, player.hotkeys, player.mode, player.resist.magic, player.skills.bonus, player.states, player.stats.effective, ui.chat, ui.merc, ui.party, ui.quest, ui.trade, unit.flags, unit.owner, viewport"}
+{"time":"2026-11-06T18:16:23.469454988-05:00","level":"INFO","msg":"status","inst":"e1","state":"idle","area":1,"x":141,"y":103,"life":40,"level":12,"hostileNear":0,"stuckFor":9223372036854775807}
+{"time":"2026-11-06T18:16:23.470637905-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":1,"clvl":12,"life":"40/40","heal":0,"mana":"35/35","tome":0,"merc":"none"}
+{"time":"2026-11-06T18:16:23.470697426-05:00","level":"INFO","msg":"Entered Rogue Encampment","inst":"e1","type":"area_change","goal":"g1","area":"Rogue Encampment"}
+{"time":"2026-11-06T18:16:23.470717636-05:00","level":"INFO","msg":"state","inst":"e1","from":"idle","to":"in_town","activity":"Binding hotkeys"}
+{"time":"2026-11-06T18:16:23.472397351-05:00","level":"INFO","msg":"class-aware start","inst":"e1","class":"Sorceress","level":12,"combatProfile":"sorceress/lightning","combatBuild":"lightning","levelerBuild":"fallback-lightning-v2"}
+{"time":"2026-11-06T18:16:23.473795842-05:00","level":"INFO","msg":"gear risk: low (no potions +2)","inst":"e1","gold":1090}
+{"time":"2026-11-06T18:16:23.474180617-05:00","level":"INFO","msg":"merc: seen class=0 alive=false life=0 level=12 aura=-","inst":"e1"}
+{"time":"2026-11-06T18:16:23.474287309-05:00","level":"INFO","msg":"inv-tp-dump","inst":"e1","why":"first","area":1,"hastp":false,"decided_by":"none: no portal item in ContInventory with a positive count","statsReader":true,"portal_items":"","items":"63@equipment"}
+{"time":"2026-11-06T18:16:23.474305149-05:00","level":"INFO","msg":"town trip","inst":"e1","reason":"[0 healing potions low on healing potions]","emergency":true}
+{"time":"2026-11-06T18:16:23.474316829-05:00","level":"INFO","msg":"state","inst":"e1","from":"in_town","to":"resupplying","activity":"Chores in town ([0 healing potions low on healing potions])"}
+{"time":"2026-11-06T18:16:23.539684286-05:00","level":"INFO","msg":"d2dsrc","inst":"e1","msg":"d2dsrc: 3 new unknown fields: merc.aura, merc.level, merc.name"}
+{"time":"2026-11-06T18:16:23.53999112-05:00","level":"INFO","msg":"merc: revived price=0 level=12 estimate=1080","inst":"e1"}
+{"time":"2026-11-06T18:16:23.552467975-05:00","level":"INFO","msg":"d2dworld: arrived in level 1: 1 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m30s)","inst":"e1"}
+{"time":"2026-11-06T18:16:23.618091175-05:00","level":"INFO","msg":"npc: interact","inst":"e1","class":154,"try":1,"dist":4,"npc":[28,85]}
+{"time":"2026-11-06T18:16:23.62045329-05:00","level":"INFO","msg":"npc: time-to-panel","inst":"e1","ms":320,"first-contact":false,"clicks":1,"strategy":"wait","class":154}
+{"time":"2026-11-06T18:16:23.62046752-05:00","level":"INFO","msg":"npc: menu open","inst":"e1","class":154,"try":1,"ms":5040}
+{"time":"2026-11-06T18:16:23.620791075-05:00","level":"INFO","msg":"npc: menu click","inst":"e1","class":154,"entry":1,"line":1,"lines":3,"adj":0,"at":[337,131],"npc":[28,85],"try":1,"slow":false}
+{"time":"2026-11-06T18:16:23.624954366-05:00","level":"INFO","msg":"npc: window open","inst":"e1","class":154,"entry":1,"adj":0,"tries":1,"ms":640}
+{"time":"2026-11-06T18:16:23.624971747-05:00","level":"INFO","msg":"npc visit: vendor window open","inst":"e1","class":154,"ms":5680}
+{"time":"2026-11-06T18:16:23.653342646-05:00","level":"INFO","msg":"rebuy: stock seen","inst":"e1","slot":"belt","items":59,"viable":2,"rejected":{"not gear (no base or not a weapon/armor)":2,"unidentified":1,"wrong body slot":54},"str":10,"dex":25,"clvl":12,"spendable":800,"cap":480}
+{"time":"2026-11-06T18:16:23.662922428-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Sash","price":60,"gold left":1030}
+{"time":"2026-11-06T18:16:23.669809759-05:00","level":"INFO","msg":"equip: slot click at (562,251)","inst":"e1","slot":"belt","cursor":2,"try":0,"rect":{"L":536,"T":239,"R":588,"B":264}}
+{"time":"2026-11-06T18:16:23.674453778-05:00","level":"INFO","msg":"equip: confirmed after 1440 ms","inst":"e1","slot":"belt"}
+{"time":"2026-11-06T18:16:23.676857374-05:00","level":"INFO","msg":"belt buy","inst":"e1","had":4,"equipped":["Sash"],"errors":null,"gold":1090}
+{"time":"2026-11-06T18:16:23.793989015-05:00","level":"INFO","msg":"status","inst":"e1","state":"resupplying","area":1,"x":119,"y":77,"life":40,"level":12,"hostileNear":0,"stuckFor":0}
+{"time":"2026-11-06T18:16:23.801922262-05:00","level":"INFO","msg":"npc: interact","inst":"e1","class":148,"try":1,"dist":4,"npc":[121,70]}
+{"time":"2026-11-06T18:16:23.841989995-05:00","level":"INFO","msg":"npc: time-to-panel","inst":"e1","ms":3760,"first-contact":false,"clicks":1,"strategy":"wait","class":148}
+{"time":"2026-11-06T18:16:23.842021985-05:00","level":"INFO","msg":"npc: menu open","inst":"e1","class":148,"try":1,"ms":9280}
+{"time":"2026-11-06T18:16:23.842419921-05:00","level":"INFO","msg":"npc: menu click","inst":"e1","class":148,"entry":1,"line":1,"lines":3,"adj":0,"at":[218,216],"npc":[121,70],"try":1,"slow":false}
+{"time":"2026-11-06T18:16:23.846919477-05:00","level":"INFO","msg":"npc: window open","inst":"e1","class":148,"entry":1,"adj":0,"tries":1,"ms":640}
+{"time":"2026-11-06T18:16:23.846934908-05:00","level":"INFO","msg":"npc visit: vendor window open","inst":"e1","class":148,"ms":9920}
+{"time":"2026-11-06T18:16:23.866786331-05:00","level":"INFO","msg":"shop: potion plan","inst":"e1","wantHP":3,"wantMP":2,"wantRV":0,"beltHP":0,"beltMP":0,"packHP":0,"packMP":0,"beltOther":0,"slots":8,"gold":900}
+{"time":"2026-11-06T18:16:23.877495-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":870}
+{"time":"2026-11-06T18:16:23.882518894-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":840}
+{"time":"2026-11-06T18:16:23.888132827-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":810}
+{"time":"2026-11-06T18:16:23.893974553-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":750}
+{"time":"2026-11-06T18:16:23.90052122-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":690}
+{"time":"2026-11-06T18:16:23.90053972-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":0,"mpAfter":2,"gold":900}
+{"time":"2026-11-06T18:16:23.917796275-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Scroll of Town Portal","price":100,"gold left":590}
+{"time":"2026-11-06T18:16:23.927876854-05:00","level":"INFO","msg":"shop: potion plan","inst":"e1","wantHP":1,"wantMP":2,"wantRV":0,"beltHP":0,"beltMP":0,"packHP":3,"packMP":2,"beltOther":0,"slots":8,"gold":590}
+{"time":"2026-11-06T18:16:23.934568313-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Healing Potion","price":30,"gold left":560}
+{"time":"2026-11-06T18:16:23.941026779-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":500}
+{"time":"2026-11-06T18:16:23.947036087-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Minor Mana Potion","price":60,"gold left":440}
+{"time":"2026-11-06T18:16:23.947050318-05:00","level":"INFO","msg":"town: restocked mana potions","inst":"e1","bought":2,"mpBefore":2,"mpAfter":4,"gold":590}
+{"time":"2026-11-06T18:16:23.963854296-05:00","level":"INFO","msg":"shop: bought","inst":"e1","item":"Scroll of Town Portal","price":100,"gold left":340}
+{"time":"2026-11-06T18:16:23.965173666-05:00","level":"INFO","msg":"shop: visit","inst":"e1","bought":{"Minor Healing Potion":4,"Minor Mana Potion":4,"Scroll of Town Portal":2,"belt":1},"spent":560,"broke":false,"err":null,"gold":340,"beltHP":0,"beltMP":0,"beltRV":0,"beltSlots":8,"tp":2,"tome":false}
+{"time":"2026-11-06T18:16:23.977122212-05:00","level":"INFO","msg":"belt: put id=3 box=0 kind=hp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion] packIDs=[4 5 6 7 9 10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:23.98167287-05:00","level":"INFO","msg":"belt: put id=4 box=4 kind=hp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion] packIDs=[5 6 7 9 10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:23.985979053-05:00","level":"INFO","msg":"belt: put id=5 box=1 kind=hp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion] packIDs=[6 7 9 10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:23.98978685-05:00","level":"INFO","msg":"belt: put id=9 box=5 kind=hp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion 5:Minor Healing Potion] packIDs=[6 7 10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:23.994065693-05:00","level":"INFO","msg":"belt: put id=6 box=2 kind=mp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion 5:Minor Healing Potion 2:Minor Mana Potion] packIDs=[7 10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:23.998551359-05:00","level":"INFO","msg":"belt: put id=7 box=6 kind=mp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion 5:Minor Healing Potion 2:Minor Mana Potion 6:Minor Mana Potion] packIDs=[10 11] err=<nil> at=19:00:43","inst":"e1"}
+{"time":"2026-11-06T18:16:24.003590394-05:00","level":"INFO","msg":"belt: put id=10 box=3 kind=mp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion 5:Minor Healing Potion 2:Minor Mana Potion 6:Minor Mana Potion 3:Minor Mana Potion] packIDs=[11] err=<nil> at=19:00:44","inst":"e1"}
+{"time":"2026-11-06T18:16:24.007829696-05:00","level":"INFO","msg":"belt: put id=11 box=7 kind=mp try=0 -> inBelt=true cursor=- beltBoxes=[0:Minor Healing Potion 4:Minor Healing Potion 1:Minor Healing Potion 5:Minor Healing Potion 2:Minor Mana Potion 6:Minor Mana Potion 3:Minor Mana Potion 7:Minor Mana Potion] packIDs=[] err=<nil> at=19:00:44","inst":"e1"}
+{"time":"2026-11-06T18:16:24.008674499-05:00","level":"INFO","msg":"belt: moved 8 potions from pack (hp 0->4 mp 0->4 rv 0->0)","inst":"e1","rv":0,"dragged":0,"failed":0}
+{"time":"2026-11-06T18:16:24.016625166-05:00","level":"INFO","msg":"inventory","inst":"e1","pct":5,"cells":"2/40","stashPct":0,"stashCells":"0/48"}
+{"time":"2026-11-06T18:16:24.016649537-05:00","level":"INFO","msg":"inventory contents","inst":"e1","pack":"tsc x2","stash":""}
+{"time":"2026-11-06T18:16:24.019176374-05:00","level":"INFO","msg":"chores done","inst":"e1","done":["beltbuy","bank","shop","beltafter","merc revived"],"skipped":["identify","equip","sell","ammo","repair","belt","withdraw","stash"]}
+{"time":"2026-11-06T18:16:24.019267695-05:00","level":"INFO","msg":"inv-tp-dump","inst":"e1","why":"verdict","area":1,"hastp":true,"decided_by":"class=529 addr=0x8","statsReader":true,"portal_items":"scroll class=529 where=inventory addr=0x8 counted=1 raw70=no70; scroll class=529 where=inventory addr=0xc counted=1 raw70=no70","items":"63@equipment 344@equipment 529@inventory 529@inventory 587@belt 587@belt 587@belt 587@belt 592@belt 592@belt 592@belt 592@belt"}
+{"time":"2026-11-06T18:16:24.019337156-05:00","level":"INFO","msg":"trip budget: trip done","inst":"e1","reason":"[0 healing potions low on healing potions]","emergency":true,"goldBefore":1090,"goldAfter":340,"spent":750,"tripsInWindow":1,"windowMin":10,"budget":3,"goldFloor":300}
+{"time":"2026-11-06T18:16:24.02231986-05:00","level":"INFO","msg":"state","inst":"e1","from":"resupplying","to":"traveling","activity":"Walking to Blood Moor"}
+{"time":"2026-11-06T18:16:24.022590334-05:00","level":"INFO","msg":"memory quest words","inst":"e1","normalQuestWords":["den_of_evil=0x0004"]}
+{"time":"2026-11-06T18:16:24.024411971-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":2,"gate":{"X":0,"Y":112},"push":{"X":-8,"Y":112},"border":true}
+{"time":"2026-11-06T18:16:24.026892968-05:00","level":"INFO","msg":"Quest progress: den_of_evil","inst":"e1","type":"quest","goal":"g1"}
+{"time":"2026-11-06T18:16:24.512413365-05:00","level":"INFO","msg":"area summary","inst":"e1","area":1,"minutes":1,"xp":0,"kills":0,"goldPickup":0}
+{"time":"2026-11-06T18:16:24.512467736-05:00","level":"INFO","msg":"zone entry","inst":"e1","area":2,"clvl":12,"life":"40/40","heal":4,"mana":"35/35","tome":2,"merc":"alive"}
+{"time":"2026-11-06T18:16:24.512476436-05:00","level":"INFO","msg":"Entered Blood Moor","inst":"e1","type":"area_change","goal":"g1","area":"Blood Moor"}
+{"time":"2026-11-06T18:16:24.512971464-05:00","level":"INFO","msg":"inv-tp-dump","inst":"e1","why":"area","area":2,"hastp":true,"decided_by":"class=529 addr=0x8","statsReader":true,"portal_items":"scroll class=529 where=inventory addr=0x8 counted=1 raw70=no70; scroll class=529 where=inventory addr=0xc counted=1 raw70=no70","items":"63@equipment 344@equipment 529@inventory 529@inventory 587@belt 587@belt 587@belt 587@belt 592@belt 592@belt 592@belt 592@belt"}
+{"time":"2026-11-06T18:16:24.51878714-05:00","level":"INFO","msg":"state","inst":"e1","from":"traveling","to":"clearing","activity":"Fighting in Blood Moor"}
+{"time":"2026-11-06T18:16:24.55402329-05:00","level":"INFO","msg":"d2dworld: arrived in level 2: 2 adjacent entries, 0 levels not linked yet (pending 0, linkwait 1m30s)","inst":"e1"}
+{"time":"2026-11-06T18:16:24.56410439-05:00","level":"INFO","msg":"roam: coverage points","inst":"e1","level":2,"points":1749,"exits":1}
+{"time":"2026-11-06T18:16:24.598327185-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00","inst":"e1"}
+{"time":"2026-11-06T18:16:24.598883854-05:00","level":"INFO","msg":"clear killed nothing; moving on","inst":"e1","remaining":0,"x":264,"y":352}
+{"time":"2026-11-06T18:16:24.73124583-05:00","level":"INFO","msg":"status","inst":"e1","state":"clearing","area":2,"x":239,"y":330,"life":40,"level":12,"hostileNear":4,"stuckFor":0}
+{"time":"2026-11-06T18:16:24.731810639-05:00","level":"INFO","msg":"minute","inst":"e1","area":2,"clvl":12,"xp":0,"kills":0,"killsGame":0,"deaths":0,"potions":4,"mana":4,"packHP":0,"packMP":0,"beltBoxes":"0:Minor_Healing_Potion 4:Minor_Healing_Potion 1:Minor_Healing_Potion 5:Minor_Healing_Potion 2:Minor_Mana_Potion 6:Minor_Mana_Potion 3:Minor_Mana_Potion 7:Minor_Mana_Potion","potionsUsed":0,"tp":0,"gold":340,"stashGold":130,"restarts":0,"xpRisk":0,"xpLost":0,"rung":0,"goal":"farm_area","step":"Fighting in Blood Moor","state":"other","rstate":"clearing","life":40,"maxLife":40,"mp":35,"maxMana":35,"table":"fallback-lightning-v2","invPct":5,"dmgTaken":0,"hpMinPct":100,"armor":"?","goldPickup":0,"runBelieved":true,"stam":15344,"stamMax":18944,"runKeys":1,"runResets":0,"walkingRaw":"1"}
+{"time":"2026-11-06T18:16:24.824879735-05:00","level":"INFO","msg":"build","inst":"e1"}
+{"time":"2026-11-06T18:16:24.91383418-05:00","level":"INFO","msg":"d2dsrc","inst":"e1","msg":"d2dsrc: 2 new unknown fields: ground.ilvl, ground.quality"}
+{"time":"2026-11-06T18:16:24.914207065-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Zombie","area":2,"total":64.4,"walk":39.9,"cast":1.4,"wait":23,"gap_since_last_kill":64.4,"state":"clearing"}
+{"time":"2026-11-06T18:16:24.915641566-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Zombie","class":5,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":720}
+{"time":"2026-11-06T18:16:24.985384667-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Zombie","area":2,"total":1.5,"walk":0,"cast":1,"wait":0.6,"gap_since_last_kill":1.5,"state":"clearing"}
+{"time":"2026-11-06T18:16:24.99029985-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Zombie","class":5,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":80}
+{"time":"2026-11-06T18:16:25.196477468-05:00","level":"INFO","msg":"combat potion","inst":"e1","kind":"mana","col":3,"life":40,"mana":6}
+{"time":"2026-11-06T18:16:25.359963595-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":9.6,"walk":1,"cast":5.8,"wait":2.8,"gap_since_last_kill":9.6,"state":"clearing"}
+{"time":"2026-11-06T18:16:25.361101491-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":720}
+{"time":"2026-11-06T18:16:25.403322036-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":0.8,"walk":0,"cast":0.5,"wait":0.3,"gap_since_last_kill":0.8,"state":"clearing"}
+{"time":"2026-11-06T18:16:25.404499873-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":80}
+{"time":"2026-11-06T18:16:25.405108702-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=4 damage=0 minlife=100 potions=1 dodges=0 sec=14 casts=19 kites=0 approaches=3 novas=0 forced=0 castsPerSec=1.35","inst":"e1"}
+{"time":"2026-11-06T18:16:25.406393161-05:00","level":"INFO","msg":"loot: 1 seen, picked 0, skipped 1 (1x small gold pile), gold +0","inst":"e1"}
+{"time":"2026-11-06T18:16:25.410526482-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00","inst":"e1"}
+{"time":"2026-11-06T18:16:25.41103268-05:00","level":"INFO","msg":"clear killed nothing; moving on","inst":"e1","remaining":0,"x":229,"y":321}
+{"time":"2026-11-06T18:16:25.412954938-05:00","level":"INFO","msg":"loot: 1 seen, picked 0, skipped 1 (1x small gold pile), gold +0","inst":"e1"}
+{"time":"2026-11-06T18:16:25.936759251-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":9.8,"walk":6.7,"cast":2.2,"wait":1,"gap_since_last_kill":9.8,"state":"clearing"}
+{"time":"2026-11-06T18:16:25.93800313-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":320}
+{"time":"2026-11-06T18:16:26.067682117-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":2.8,"walk":0.9,"cast":1.2,"wait":0.7,"gap_since_last_kill":2.8,"state":"clearing"}
+{"time":"2026-11-06T18:16:26.069814998-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":80}
+{"time":"2026-11-06T18:16:26.13557378-05:00","level":"INFO","msg":"status","inst":"e1","state":"clearing","area":2,"x":207,"y":277,"life":40,"level":12,"hostileNear":4,"stuckFor":1000000000}
+{"time":"2026-11-06T18:16:26.171666804-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":1.9,"walk":0.3,"cast":1.2,"wait":0.3,"gap_since_last_kill":1.9,"state":"clearing"}
+{"time":"2026-11-06T18:16:26.173107195-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":320}
+{"time":"2026-11-06T18:16:26.173913137-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=0 dodges=0 sec=8 casts=9 kites=0 approaches=4 novas=0 forced=0 castsPerSec=1.09","inst":"e1"}
+{"time":"2026-11-06T18:16:26.17542771-05:00","level":"INFO","msg":"loot: potion skip code=hp1 beltWant=0 packHave=0 buffer=0 beltFree=1","inst":"e1"}
+{"time":"2026-11-06T18:16:26.17545039-05:00","level":"INFO","msg":"loot: 1 seen, picked 0, skipped 1 (1x filtered: keep [C] potion already in the pack), gold +0","inst":"e1"}
+{"time":"2026-11-06T18:16:26.244836846-05:00","level":"INFO","msg":"combat potion","inst":"e1","kind":"mana","col":3,"life":40,"mana":8}
+{"time":"2026-11-06T18:16:26.296890305-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":2.1,"walk":0.6,"cast":1.1,"wait":0.4,"gap_since_last_kill":2.1,"state":"clearing"}
+{"time":"2026-11-06T18:16:26.304247774-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":400}
+{"time":"2026-11-06T18:16:26.305276379-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=1 damage=0 minlife=100 potions=1 dodges=0 sec=2 casts=2 kites=0 approaches=2 novas=0 forced=0 castsPerSec=0.96","inst":"e1"}
+{"time":"2026-11-06T18:16:26.345194789-05:00","level":"INFO","msg":"Found Minor Healing Potion","inst":"e1","type":"drop","goal":"g1"}
+{"time":"2026-11-06T18:16:26.348481648-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":1.2,"walk":0.5,"cast":0.2,"wait":0.4,"gap_since_last_kill":1.2,"state":"clearing"}
+{"time":"2026-11-06T18:16:26.499102694-05:00","level":"INFO","msg":"Found ? Gold","inst":"e1","type":"drop","goal":"g1"}
+{"time":"2026-11-06T18:16:26.502227591-05:00","level":"INFO","msg":"loot: 1 seen, picked 2, skipped 0 (), gold +3","inst":"e1"}
+{"time":"2026-11-06T18:16:26.509335756-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00","inst":"e1"}
+{"time":"2026-11-06T18:16:26.510073307-05:00","level":"INFO","msg":"clear killed nothing; moving on","inst":"e1","remaining":0,"x":194,"y":244}
+{"time":"2026-11-06T18:16:26.881220263-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":7.7,"walk":6.2,"cast":0.7,"wait":0.8,"gap_since_last_kill":7.7,"state":"clearing"}
+{"time":"2026-11-06T18:16:26.883104161-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":320}
+{"time":"2026-11-06T18:16:27.116988629-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":3.9,"walk":0,"cast":2.6,"wait":1.3,"gap_since_last_kill":3.9,"state":"clearing"}
+{"time":"2026-11-06T18:16:27.118901707-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":640}
+{"time":"2026-11-06T18:16:27.183178527-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":1.2,"walk":0.3,"cast":0.6,"wait":0.3,"gap_since_last_kill":1.2,"state":"clearing"}
+{"time":"2026-11-06T18:16:27.184982814-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":160}
+{"time":"2026-11-06T18:16:27.279165886-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Fallen","area":2,"total":1.8,"walk":0.2,"cast":1.1,"wait":0.4,"gap_since_last_kill":1.8,"state":"clearing"}
+{"time":"2026-11-06T18:16:27.280929282-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Fallen","class":19,"boss":false,"xp":0,"last_skill":"Fire Bolt","since_cast_ms":240}
+{"time":"2026-11-06T18:16:27.281585772-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=4 damage=0 minlife=100 potions=0 dodges=0 sec=7 casts=11 kites=0 approaches=2 novas=0 forced=0 castsPerSec=1.39","inst":"e1"}
+{"time":"2026-11-06T18:16:27.28280465-05:00","level":"INFO","msg":"loot: 1 seen, picked 0, skipped 1 (1x filtered: drop [C] plain or inferior item), gold +0","inst":"e1"}
+{"time":"2026-11-06T18:16:28.062396985-05:00","level":"INFO","msg":"status","inst":"e1","state":"clearing","area":2,"x":107,"y":90,"life":40,"level":12,"hostileNear":0,"stuckFor":0}
+{"time":"2026-11-06T18:16:28.063137156-05:00","level":"INFO","msg":"minute","inst":"e1","area":2,"clvl":12,"xp":6,"kills":13,"killsGame":13,"deaths":0,"potions":5,"mana":2,"packHP":0,"packMP":0,"beltBoxes":"0:Minor_Healing_Potion 4:Minor_Healing_Potion 1:Minor_Healing_Potion 5:Minor_Healing_Potion 3:Minor_Mana_Potion 7:Minor_Mana_Potion 2:Minor_Healing_Potion","potionsUsed":2,"tp":0,"gold":343,"stashGold":130,"restarts":0,"xpRisk":6,"xpLost":0,"rung":0,"goal":"farm_area","step":"Fighting in Blood Moor","state":"other","rstate":"clearing","life":40,"maxLife":40,"mp":11,"maxMana":35,"table":"fallback-lightning-v2","invPct":5,"dmgTaken":0,"hpMinPct":100,"armor":"?","goldPickup":3,"runBelieved":false,"stam":1609,"stamMax":18944,"runKeys":2,"runResets":0,"walkingRaw":"1"}
+{"time":"2026-11-06T18:16:28.414945686-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00","inst":"e1"}
+{"time":"2026-11-06T18:16:28.414963017-05:00","level":"INFO","msg":"combat health killsPerMin=10.6 castsPerMin=36.3 kitesPerMin=0.0 novas=0 forced=0 damagePerKill=0 windowSec=67","inst":"e1"}
+{"time":"2026-11-06T18:16:28.415724178-05:00","level":"INFO","msg":"clear killed nothing; moving on","inst":"e1","remaining":0,"x":73,"y":73}
+{"time":"2026-11-06T18:16:29.070813602-05:00","level":"INFO","msg":"combat potion","inst":"e1","kind":"mana","col":4,"life":40,"mana":8}
+{"time":"2026-11-06T18:16:29.149503425-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":24.2,"walk":22,"cast":1.7,"wait":0.5,"gap_since_last_kill":24.2,"state":"clearing"}
+{"time":"2026-11-06T18:16:29.152114214-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":320}
+{"time":"2026-11-06T18:16:29.324556033-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":2.1,"walk":0.6,"cast":1.1,"wait":0.4,"gap_since_last_kill":2.1,"state":"clearing"}
+{"time":"2026-11-06T18:16:29.328856667-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":480}
+{"time":"2026-11-06T18:16:29.365091533-05:00","level":"INFO","msg":"killtime","inst":"e1","monster":"Quill Rat","area":2,"total":0.6,"walk":0.2,"cast":0.1,"wait":0.2,"gap_since_last_kill":0.6,"state":"clearing"}
+{"time":"2026-11-06T18:16:29.376543612-05:00","level":"INFO","msg":"combat kill","inst":"e1","monster":"Quill Rat","class":63,"boss":false,"xp":1,"last_skill":"Fire Bolt","since_cast_ms":1160}
+{"time":"2026-11-06T18:16:29.377550707-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=3 damage=0 minlife=100 potions=1 dodges=0 sec=4 casts=5 kites=0 approaches=3 novas=0 forced=0 castsPerSec=1.11","inst":"e1"}
+{"time":"2026-11-06T18:16:29.501213695-05:00","level":"INFO","msg":"Found ? Gold","inst":"e1","type":"drop","goal":"g1"}
+{"time":"2026-11-06T18:16:29.506800578-05:00","level":"INFO","msg":"loot: 1 seen, picked 1, skipped 0 (), gold +5","inst":"e1"}
+{"time":"2026-11-06T18:16:29.676336304-05:00","level":"INFO","msg":"combat fight area=2 diff=0 danger=0 kills=0 damage=0 minlife=100 potions=0 dodges=0 sec=0 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00","inst":"e1"}
+{"time":"2026-11-06T18:16:29.677019614-05:00","level":"INFO","msg":"clear killed nothing; moving on","inst":"e1","remaining":0,"x":61,"y":91}
+{"time":"2026-11-06T18:16:30.582178775-05:00","level":"INFO","msg":"status","inst":"e1","state":"clearing","area":2,"x":98,"y":116,"life":40,"level":12,"hostileNear":0,"stuckFor":0}
+{"time":"2026-11-06T18:16:31.3874535-05:00","level":"INFO","msg":"shutting down: finishing in town","inst":"e1"}
+{"time":"2026-11-06T18:16:31.387558111-05:00","level":"INFO","msg":"Bot stopped","inst":"e1","type":"control","goal":""}
+{"time":"2026-11-06T18:16:31.513721377-05:00","level":"INFO","msg":"state","inst":"e1","from":"idle","to":"resupplying","activity":"Returning to town"}
+{"time":"2026-11-06T18:16:31.516190233-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:31.838944204-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.160726581-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.481719107-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.49073307-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.490768371-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+{"time":"2026-11-06T18:16:32.494746599-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
+{"time":"2026-11-06T18:16:32.495557441-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":1}
+{"time":"2026-11-06T18:16:33.22805981-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:33.549717806-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:33.871823778-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:34.192045211-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:34.199922058-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:34.199942428-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
+{"time":"2026-11-06T18:16:34.203724644-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
+{"time":"2026-11-06T18:16:34.204628458-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":2}
+{"time":"2026-11-06T18:16:35.61241478-05:00","level":"INFO","msg":"summary","inst":"e1","kills":15,"bossKills":0,"drops":3,"deaths":0,"potions":3,"levelUps":0,"errors":15,"xp":8,"activeSeconds":7,"xpPerHour":480}
+{"time":"2026-11-06T18:16:35.612486461-05:00","level":"INFO","msg":"death report","inst":"e1","total":0,"lastHour":0,"goldLost":0,"itemsLost":0,"byMonster":{},"byArea":null}
+{"time":"2026-11-06T18:16:35.612544662-05:00","level":"INFO","msg":"final status","inst":"e1","state":"stopped","activity":"Stopped","level":12,"area":"Blood Moor"}

@@ -1,0 +1,37 @@
+# Short live drills for the g2e/g2f fixes (card shortdrills)
+
+> status: current (2026-11-06). Tags: V = run live on the worker host, S = secondary, U = unverified.
+
+Build under test: bot = branch `agent/shortdrills` on `origin/main` 2a6cf2b9 (the fixes of g2e F2/F2c and g2f merc revive are in it), d2d = fork `d2d.lab3-labverbs-f75816c6-linuxbuild` (fork commit f75816c616c8, binary sha256 prefix 53217ea4ecc8a4d3), lockstep, `--lab-verbs`, Sorceress, seed 1, slots 4 and 5 (slot 3 was held by drill 1), hidden, niced, worker load 12 to 20 on 16 cores during the runs.
+
+## How (V)
+`cmd/d2drill -group E1` (`cmd/d2drill/e1_lab.go`, runner `docs/probes/shortdrills/run.sh SLOT IDS LABEL`): the harness sets the hero up with logged lab verbs, writes the ledger run marker, drops its control connection and starts the REAL `d2bot --backend d2d --attach --d2d-attach --goals farm:Blood Moor` on the same d2d. After the marker the bot acts through its own input channel only; every run below has `writes after start: 0` (`ledger.WritesAfterStart`). Logs: `docs/probes/shortdrills/2026-11-06-*.log.txt`, records `.txt`/`.json`.
+
+Limit (V): the bot is attached, so d2bot cannot restart the d2d ("attached d2d cannot be restarted"); a leave is proven by the bot's own `leaving the game` WARN line and its NewGame call, not by a new process.
+
+## Drill 2: merc revive (group shortdrill-merc)
+Finding that shaped it (V): a `debug merc hire` mercenary is level 1 and the NPC menu says `Resurrect Aliza: 0` (hire types 0 to 4 alike); no lab verb sets a merc level, so a live quote of 1920 cannot be produced. The bot reads no quote then (`probeQuote` keeps only a price above 0) and decides on the level estimate (clvl^2/2 x 15: 1080 at clvl 12, 1470 at clvl 14). The drills therefore set the purse around the ESTIMATE; the real-quote path (probe above 0, stash fund) stays offline-tested only (U live).
+
+| id | setup (before the start) | result |
+|---|---|---|
+| E1.merc-a (run E1.merc-a-20261106-231623) | clvl 12, merc dead, pack 1090 (estimate 1080 + 10), no potions | PASS: `merc: revived price=0 level=12 estimate=1080` (log line 19) comes before the first purchase `shop: bought Sash` (the first purchase of the visit); the bot's first revive try failed once (`npc 5 (Kashya): not reached in 22.36s`, with a menu left open by an earlier harness version) and the next try revived |
+| E1.merc-b (E1.merc-b-20261106-231820) | clvl 12, pack 810 (`max(q-420, q*3/4)` of the estimate 1080) | PASS: no `merc: revived`; the potions are bought (`shop: bought Minor Healing Potion` x3, `Minor Mana Potion`, gold 750 down to 600): no starvation |
+| E1.merc-c (E1.merc-c-20261106-231834) | clvl 14, pack 1480 (estimate 1470 + 10) | PASS: no revive; `merc: revive skipped (gold) price=1470 gold=440 need=1520` (need = 1470 + 50, the clvl 13+ reserve). The first refusal before the shop is silent by design (`ReviveFirst`), so the logged gold is the one left after the visit's purchases |
+
+Virtual run time 127 to 159 s each, wall about 8 s of bot time (lockstep runs faster than real time).
+
+## Drill 3: no portal, low life (group shortdrill-noportal)
+Finding (V): area 11 (Hole Level 1) is no longer a no-portal area. g2e F2c added it to `resource.chainHome`, so with no scroll the bot logs `no town portal and no waypoint: walking the level chain to town` and walks (a first run at 47 percent life, 0 potions and monsters about died once on the way; run label E1.noportal-a of 17:51, FAIL "never reached the no-portal path", log not kept). The drill therefore uses Tamoe Highland (area 7), which is in no walk-home table and has no waypoint.
+
+| id | setup | result |
+|---|---|---|
+| E1.noportal-a (E1.noportal-a-20261106-231911) | area 7, pack and belt empty (0 potions, no scroll or tome), life 18/40 (45 percent shown), monsters cleared | PASS: first `action failed ... town: no town portal available` then `low life, no potion and no town portal: leaving the game` with `waited` = 21 s (bot clock, virtual; knob 20 s) and then `new game` fails only because the d2d is attached. Time from the first no-portal line to the leave: 21 s virtual, 0.12 s wall (vs 240 s before F2). |
+| E1.noportal-b control (E1.noportal-b-20261106-231922) | same with one `tsc` in the pack | PASS: no leave line; `d2d town portal attempt failed ... cancelled (safety town-portal)` then `zone entry area 1` (town) and a shop visit; life 40/40 afterwards |
+
+## Drill 1 (seed 13 short run, by the drill 1 agent)
+Run gate2-s13-20261106-1735-drill13, slot 3, bot 2a6cf2b9, lab3 binary (fork f75816c616c8), manual route (gate-run.sh refused a second run of the same seed). V: 24 wall minutes = 158 virtual minutes, deaths 0, writes after start 0. Progress: clvl 1 to 2 in Blood Moor, clvl 4 at about virtual minute 49 in the Den and Blood Moor, first Cold Plains entry at clvl 5 (about minute 80) and left alive, clvl 6 at about 110, clvl 7 at about 138. No `stale pack` or `potion burst` log lines (0; the grep wording may differ, so U whether the rules fired). Verdict: PASS on survival; the gate verdict FAIL is expected for a short run. Host load rose to about 22 late, so speed dropped.
+
+## Needed for drills 4 and 5
+- A merc with a real level (a quote above 0) would let the real-quote path run live: either a fork verb `debug merc level N` or a paid Kashya hire at clvl 12 (the D8.h hire flow still fails: no hire line after `talk`).
+- The managed-bot variant (`d2bot --managed`) would exercise the real game restart after a leave, but a saved character is back in town, so the no-portal scenario needs the attach form used here.
+- Slot 3 and a load under 1.1 per core; load stayed 0.8 to 1.3 per core here and admission waited about 5 minutes once.
