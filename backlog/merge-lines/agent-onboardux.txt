@@ -1,3 +1,0 @@
-BACKLOG: onboardux: tester onboarding flow design (first 60 s, six-screen stepper, first-10-minutes tour, Help and Report) with a clickable mock; docs only, proposes 2 new tasks (tour/Help, controls/passcode)
-INDEX: docs/research/onboarding-ux-design.md and docs/research/mocks/onboarding.html: onboarding flow for the d2d tester build (inspired by Palimpsest); design plus mock
-CHANGELOG: Onboarding UX design and clickable mock for the d2d tester build (docs only)
