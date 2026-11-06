@@ -1,9 +1,12 @@
 ---
 id: TASK-24
-title: "testerimage: tester compose file, ffmpeg, watch ports"
-status: Proposed
+title: >-
+  testerimage: Wine tester compose file, ffmpeg, watch ports (Deferred: Wine
+  route)
+status: Deferred
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
+updated_date: '2026-11-06T14:44:00Z'
 labels:
   - G-F
 dependencies: []
@@ -22,7 +25,7 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Slice 1. Depends on testerwatch. Build runs on the worker host, not the head box.
+DEFERRED 2026-11-06: the tester build is the d2d container (user decision, d2d first); this was the Wine-image version (appendix 'Wine route (later/optional)' of docs/research/tester-build-plan.md). Replaced by testerd2dimage (TASK-31). Kept for the Wine route; pick it up only if a Wine tester image is wanted later.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
