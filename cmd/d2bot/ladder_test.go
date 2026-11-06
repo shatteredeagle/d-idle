@@ -60,6 +60,15 @@ func goalManager(t *testing.T) *goals.Manager {
 
 func httpDo(t *testing.T, method, url string, body any, out any) int {
 	t.Helper()
+	return httpDoH(t, method, url, body, nil, out)
+}
+
+func httpDoH(t *testing.T, method, url string, body any, hdr map[string]string, outs ...any) int {
+	t.Helper()
+	var out any
+	if len(outs) > 0 {
+		out = outs[0]
+	}
 	var rd *bytes.Reader
 	if body != nil {
 		b, _ := json.Marshal(body)
@@ -68,6 +77,9 @@ func httpDo(t *testing.T, method, url string, body any, out any) int {
 		rd = bytes.NewReader(nil)
 	}
 	req, _ := http.NewRequest(method, url, rd)
+	for k, v := range hdr {
+		req.Header.Set(k, v)
+	}
 	if body != nil {
 		req.Header.Set("Content-Type", "application/json")
 	}
@@ -271,7 +283,11 @@ func TestWatchServeTokenRule(t *testing.T) {
 	if ladder.Active() != nil {
 		t.Error("the ladder stayed installed after the screen was refused")
 	}
-	rig, err := startLadder(ctx, lo, "s3cret", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil)
+	lo.watchToken = "s3cret-watch-token"
+	if _, err := startLadder(ctx, lo, "s3cret-watch-token", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil); err == nil || !strings.Contains(err.Error(), "differ") {
+		t.Fatalf("watch token equal to the API token must be refused, got %v", err)
+	}
+	rig, err := startLadder(ctx, lo, "api-token-of-the-bot", "", fakeEnable(t, &watch.SimClock{}, &called), goalManager(t), nil, nil, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -280,8 +296,21 @@ func TestWatchServeTokenRule(t *testing.T) {
 	if code := httpDo(t, "GET", url, nil, nil); code != 401 {
 		t.Errorf("no token: %d", code)
 	}
-	if code := httpDo(t, "GET", url+"?t=s3cret", nil, nil); code != 200 {
-		t.Errorf("token: %d", code)
+	if code := httpDo(t, "GET", url+"?t=api-token-of-the-bot", nil, nil); code != 401 {
+		t.Errorf("the bot API token must not open the viewer: %d", code)
+	}
+	if code := httpDo(t, "GET", url+"?t=s3cret-watch-token", nil, nil); code != 200 {
+		t.Errorf("watch token: %d", code)
+	}
+	_, aport, _ := net.SplitHostPort(rig.Served.Answer.String())
+	body := map[string]any{"thought": "none", "answer": "x"}
+	post := "http://127.0.0.1:" + aport + "/api/answer"
+	hdr := func(tok string) map[string]string { return map[string]string{"Authorization": "Bearer " + tok} }
+	if code := httpDoH(t, "POST", post, body, hdr("api-token-of-the-bot")); code != 401 {
+		t.Errorf("the bot API token must not open the answer route: %d", code)
+	}
+	if code := httpDoH(t, "POST", post, body, hdr("s3cret-watch-token")); code == 401 {
+		t.Errorf("the watch token must pass the answer gate: %d", code)
 	}
 }
 
@@ -344,7 +373,7 @@ func TestWatchVideoOptions(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", dir)
-	ok := ladderOptions{on: true, watch: true, video: true, videoFPS: 8, videoQuality: 5, instance: "i5"}
+	ok := ladderOptions{on: true, watch: true, video: true, videoFPS: 8, videoQuality: 5, instance: "i5", viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0"}
 	if err := ok.validate(false); err != nil {
 		t.Fatalf("valid: %v", err)
 	}
@@ -373,5 +402,96 @@ func TestWatchVideoOptions(t *testing.T) {
 	t.Setenv("PATH", t.TempDir())
 	if err := ok.validate(false); err == nil || !strings.Contains(err.Error(), "ffmpeg") {
 		t.Errorf("no tool: %v", err)
+	}
+}
+
+// The token file: created once with a random 0600 token, reused on restart, printed only as the one-time URL line.
+func TestWatchTokenFile(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "data", "watch.token")
+	var out bytes.Buffer
+	old := watchTokenOut
+	watchTokenOut = &out
+	defer func() { watchTokenOut = old }()
+	lo := ladderOptions{on: true, watch: true, watchTokenFile: path, viewAddr: "0.0.0.0:8891", answerAddr: "0.0.0.0:8892", origins: "https://tester.example/"}
+	if err := lo.validate(false); err != nil {
+		t.Fatal(err)
+	}
+	tok, err := lo.resolveWatchToken("api")
+	if err != nil || len(tok) < 32 {
+		t.Fatalf("%q %v", tok, err)
+	}
+	if st, err := os.Stat(path); err != nil || st.Mode().Perm() != 0o600 {
+		t.Fatalf("token file mode: %v %v", st, err)
+	}
+	if !strings.Contains(out.String(), "https://tester.example/watch?t="+tok) || strings.Count(out.String(), "\n") != 1 {
+		t.Errorf("one-time URL line: %q", out.String())
+	}
+	out.Reset()
+	again, err := lo.resolveWatchToken("api")
+	if err != nil || again != tok || out.Len() != 0 {
+		t.Errorf("restart must reuse the token silently: %q %v %q", again, err, out.String())
+	}
+	other, _, _ := loadOrCreateToken(filepath.Join(filepath.Dir(path), "b"))
+	if other == tok {
+		t.Error("tokens must be random")
+	}
+	os.Chmod(path, 0o644)
+	if _, err := lo.resolveWatchToken("api"); err != nil {
+		t.Fatal(err)
+	}
+	if st, _ := os.Stat(path); st.Mode().Perm() != 0o600 {
+		t.Error("a loose token file must be tightened")
+	}
+	os.WriteFile(path, []byte("\n"), 0o600)
+	if _, err := lo.resolveWatchToken("api"); err == nil || !strings.Contains(err.Error(), "empty") {
+		t.Errorf("an empty token file must be refused, got %v", err)
+	}
+	os.WriteFile(path, []byte("short\n"), 0o600)
+	if _, err := lo.resolveWatchToken("api"); err == nil {
+		t.Error("a short token must be refused")
+	}
+}
+
+// Flag/env rules of the watch token, and env-only enablement as the container entrypoint sets it.
+func TestWatchTokenFlagRules(t *testing.T) {
+	loop := ladderOptions{on: true, watch: true, viewAddr: "127.0.0.1:8891", answerAddr: "127.0.0.1:8892"}
+	if err := loop.validate(false); err != nil {
+		t.Errorf("loopback needs no token: %v", err)
+	}
+	open := loop
+	open.viewAddr = ":8891"
+	if err := open.validate(false); err == nil || !strings.Contains(err.Error(), "--watch-token") {
+		t.Errorf("non-loopback without a watch token: %v", err)
+	}
+	open.watchToken = "0123456789abcdef0123"
+	if err := open.validate(false); err != nil {
+		t.Error(err)
+	}
+	open.watchTokenFile = "x"
+	if err := open.validate(false); err == nil {
+		t.Error("token and token file together must be refused")
+	}
+	off := ladderOptions{watchToken: "0123456789abcdef0123"}
+	if err := off.validate(false); err == nil {
+		t.Error("a watch token without --ladder must be refused")
+	}
+	t.Setenv("D2BOT_LADDER", "1")
+	t.Setenv("D2BOT_WATCH", "1")
+	t.Setenv("D2BOT_WATCH_ADDR", ":8891")
+	t.Setenv("D2BOT_WATCH_ANSWER_ADDR", ":8892")
+	t.Setenv("D2BOT_WATCH_ORIGIN", "https://tester.example")
+	t.Setenv("D2BOT_WATCH_TOKEN_FILE", "/data/watch.token")
+	t.Setenv("D2BOT_LADDER_STORE", "shared")
+	t.Setenv("D2BOT_TOKEN", "api-token-of-the-bot")
+	o, err := parseFlags([]string{"--attach"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	l := o.ladder
+	if !l.on || !l.watch || l.viewAddr != ":8891" || l.answerAddr != ":8892" || l.origins != "https://tester.example" || l.watchTokenFile != "/data/watch.token" || l.store != "shared" {
+		t.Errorf("env-only enablement: %+v", l)
+	}
+	if o.token != "api-token-of-the-bot" || l.watchToken != "" {
+		t.Error("the bot API token and the watch token must stay independent")
 	}
 }
