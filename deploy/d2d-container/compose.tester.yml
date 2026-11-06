@@ -1,0 +1,32 @@
+# Tester compose file for the d2d image (docs/d2d-container/README.md "Tester profile"). Not deployed anywhere.
+#   D2_GAME_DIR=/path/to/your/Diablo-II  D2_WATCH_ORIGIN=http://localhost:8891  docker compose -f compose.tester.yml up -d
+# The watch token is created by the bot in the data volume (never in this file); read it with
+#   docker compose -f compose.tester.yml exec d2dbot cat /data/watch.token
+services:
+  d2dbot:
+    image: ${D2D_IMAGE:-d2dbot:tester}
+    command: ["tester"]
+    environment:
+      TESTER: "1"
+      D2D_MODE: ${D2D_MODE:-realtime}
+      D2D_NAME: ${D2D_NAME:-D2dbot}
+      D2D_CLASS: ${D2D_CLASS:-1}
+      D2BOT_GOALS: ${D2BOT_GOALS:-campaign:normal_act1}
+      # the page origin(s) the tester types in the browser, comma list; the answer route accepts only these
+      D2BOT_WATCH_ORIGIN: ${D2_WATCH_ORIGIN:?set D2_WATCH_ORIGIN to the URL you open, e.g. http://localhost:8891}
+    volumes:
+      - ${D2_GAME_DIR:?set D2_GAME_DIR to your own Diablo II folder}:/game:ro
+      - d2dbot-data:/data
+    ports:
+      # loopback by default; for a LAN bind set D2_PUBLISH=0.0.0.0 AND keep the token (see the README)
+      - "${D2_PUBLISH:-127.0.0.1}:8891:8891"
+      - "${D2_PUBLISH:-127.0.0.1}:8892:8892"
+    stop_grace_period: 45s
+    init: true
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 3g
+    cpus: 2
+volumes:
+  d2dbot-data:

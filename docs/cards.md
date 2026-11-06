@@ -35,7 +35,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 14 | testerreport | G-F | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
 | 15 | testerlicence | G-F | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
 | 16 | testerpack | G-F | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
-| 17 | testerd2dimage | G-F | in-progress 0/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
+| 17 | testerd2dimage | G-F | in-progress 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
 | 18 | testerd2dwiz | G-F | proposed 0/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
 | 19 | testerrt | G-F | proposed 0/2 | realtime ladder check on d2d for the tester build | - | - | [card](archive/openspec-index.md#testerrt) |
 <!-- cardsgen:active:end -->

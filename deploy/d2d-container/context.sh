@@ -1,13 +1,18 @@
 #!/bin/sh
 # Assemble the docker build context for Dockerfile.d2d in a scratch dir (never inside this repo).
 #   deploy/d2d-container/context.sh CTX [REF]
+# REF defaults to the pinned fork ref below (the binary the Gate 2 evidence used). A different REF is allowed for experiments
+# and is printed in SOURCE.txt, but it is not the pinned build.
 # Env: FORK=~/d2d-lab/fork (private fork checkout: src/ with its build/_deps from an earlier build)
 #      PREBUILT=path to a d2d binary: skip the source stage (build with --build-arg D2D_SRC=prebuilt)
 # The private fork source/binary stays in CTX (a local build artifact); this repo never holds it (GPL, docs/d2d-container/licensing.md).
 # No *.mpq or Blizzard file may enter CTX: .dockerignore excludes them and the script fails if one is found.
 set -eu
 ctx=${1:?usage: context.sh CTX [REF]}
-ref=${2:-lab5}
+# Pin: branch d2d.lab2-freezeresume on the private fork remote, commit ee5e06d8ef99 (Gate 1 and Gate 2 runs, docs/g1-log.md).
+pin_ref=lab2-freezeresume
+pin_commit=ee5e06d8ef990200b699e61779c64ded1451c33d
+ref=${2:-$pin_commit}
 fork=${FORK:-$HOME/d2d-lab/fork}
 repo=$(cd "$(dirname "$0")/../.." && pwd)
 ffsha=8c3850283eb25fa026482078a04051e0be17347b09ef81a0849bec15a96e002e # ffmpeg-9.0.2.tar.xz (docs/d2d-container/design.md 1.1)
@@ -26,7 +31,9 @@ if [ -n "${PREBUILT:-}" ]; then
 	echo "prebuilt d2d: $PREBUILT (sha256 $(sha256sum "$ctx/bin/d2d" | cut -d' ' -f1))" > "$ctx/licenses/SOURCE.txt"
 else
 	git -C "$fork/src" archive --prefix=src/ "$ref" | tar x -C "$ctx"
-	commit=$(git -C "$fork/src" rev-parse "$ref")
+	commit=$(git -C "$fork/src" rev-parse "$ref^{commit}")
+	[ "$ref" != "$pin_commit" ] || [ "$commit" = "$pin_commit" ] || { echo "context.sh: fork commit $commit is not the pin $pin_commit" >&2; exit 1; }
+	[ "$ref" = "$pin_commit" ] && ref="$pin_ref"
 	echo "$commit" | cut -c1-8 > "$ctx/src/VERSION"
 	deps=$fork/src/build/_deps
 	for p in cli11-src:cli11 sentry_native-src:sentry-native; do
