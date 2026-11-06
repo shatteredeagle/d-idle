@@ -272,3 +272,36 @@ func TestMinuteLineShowsNokillMechanismAndMouthRefusals(t *testing.T) {
 		t.Fatalf("keys must be absent when empty: %s", l)
 	}
 }
+
+type tpDiagTown struct {
+	*fakeTown
+	n, bought int
+}
+
+func (t *tpDiagTown) TPCount(*d2.Snapshot) int { return t.n }
+func (t *tpDiagTown) TakeTPBought() int        { b := t.bought; t.bought = 0; return b }
+
+func TestMinuteLineCarriesTownPortalCount(t *testing.T) {
+	g := newRig(t)
+	tt := &tpDiagTown{fakeTown: g.r.d.Town.(*fakeTown), n: 3, bought: 2}
+	g.r.d.Town = tt
+	var buf strings.Builder
+	g.e.Log = slog.New(slog.NewJSONHandler(&buf, nil))
+	g.w.set(func(w *world) { w.state = d2.StateInGame; w.area = 2; w.life, w.maxL = 90, 100 })
+	g.r.poll()
+	s := g.r.latest()
+	line := func() string {
+		buf.Reset()
+		g.r.obMu.Lock()
+		g.r.minuteLine(s, s.Player, g.clock.Now())
+		g.r.obMu.Unlock()
+		return buf.String()
+	}
+	if l := line(); !strings.Contains(l, `"tp":3`) || !strings.Contains(l, `"tpBuy":2`) {
+		t.Fatalf("minute line lacks tp/tpBuy: %s", l)
+	}
+	tt.n = 0
+	if l := line(); !strings.Contains(l, `"tp":0`) || strings.Contains(l, "tpBuy") {
+		t.Fatalf("tp must be always present, tpBuy only when non-zero: %s", l)
+	}
+}

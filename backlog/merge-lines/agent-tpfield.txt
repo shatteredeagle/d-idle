@@ -1,0 +1,1 @@
+CHANGELOG: the minute line carries tp (town portal scrolls in hand, always) and tpBuy (scrolls bought that minute, when non-zero)
