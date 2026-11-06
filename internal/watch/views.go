@@ -24,6 +24,7 @@ const (
 type ChoiceView struct {
 	ID    string `json:"id"`
 	Label string `json:"label"`
+	Does  string `json:"does,omitempty"` // what the hero does on this answer, in plain words
 }
 
 // RuleRef names a rule in force in an incident or journal line, with the revoke target.
@@ -40,6 +41,11 @@ type ThoughtItem struct {
 	Kind         string       `json:"kind"` // "question" or "confirm"
 	Point        string       `json:"point"`
 	Question     string       `json:"question"`
+	Headline     string       `json:"headline"`            // what happened, with the real values
+	Specific     bool         `json:"specific"`            // headline carries the event's values
+	IfNothing    string       `json:"ifNothing,omitempty"` // what the hero does on no answer, and the fade time
+	WhyNow       string       `json:"whyNow,omitempty"`
+	Rule         string       `json:"rule,omitempty"` // footnote: the learning key in words
 	Key          string       `json:"key"`
 	Context      string       `json:"context"`
 	Fields       []FieldView  `json:"fields"`
@@ -99,18 +105,24 @@ func (h *Hub) Thoughts() ThoughtsView {
 		it := ThoughtItem{ID: info.ID, Kind: "question", Point: info.Point, Question: info.Question, Key: info.Key,
 			Context: PlainContext(info.Key), Fields: Fields(info.Key), Urgency: UrgencyText(info.Key), Choices: []ChoiceView{},
 			OpenedAt: h.rel(t.OpenedAt), ExpiresAt: h.rel(info.Expires), RemainingSec: secs(info.Expires - now)}
+		def := ""
 		if rec != nil && rec.meanwhile != "" {
 			it.Meanwhile = "Meanwhile I: " + h.pointAnswerLabel(info.Point, rec.meanwhile)
+			def = rec.meanwhile
 		}
+		card := h.BuildCard(info, def)
+		it.Headline, it.Specific, it.IfNothing, it.WhyNow, it.Rule = card.Headline, card.Specific, card.IfNothing, card.WhyNow, card.Rule
 		if info.Confirm {
 			it.Kind = "confirm"
+			it.Headline, it.Specific, it.WhyNow = "", false, ""
+			it.IfNothing = "If you do nothing: no rule is made and the hero keeps asking."
 			it.Learn = fmt.Sprintf("From now on I will always \"%s\" here (%s). OK?", h.pointAnswerLabel(info.Point, info.Answer), it.Context)
-			it.Choices = []ChoiceView{{"yes", "Yes, always"}, {"no", "No"}}
+			it.Choices = []ChoiceView{{"yes", "Yes, always", ""}, {"no", "No", ""}}
 		} else {
 			for _, c := range info.Choices {
-				it.Choices = append(it.Choices, ChoiceView{c.ID, c.Label})
+				it.Choices = append(it.Choices, ChoiceView{c.ID, c.Label, card.Does[c.ID]})
 			}
-			it.Choices = append(it.Choices, ChoiceView{decide.NotSure, "Not sure, you decide"})
+			it.Choices = append(it.Choices, ChoiceView{decide.NotSure, "Not sure, you decide", "let the hero decide this time; nothing is learned"})
 		}
 		v.Thoughts = append(v.Thoughts, it)
 	}
@@ -207,9 +219,15 @@ func (h *Hub) Journal(limit int, kind string) JournalView {
 			key = keyOf[e.Thought]
 		}
 		q, ctx := question(e.Thought, key), PlainContext(key)
+		when := "" // " When: ..." the event behind the question, if the call site gave its facts
+		if r, ok := sn.recs[e.Thought]; ok {
+			if w := situationLine(r.info); w != "" {
+				when = " When: " + w
+			}
+		}
 		switch e.Op {
 		case decide.OpOpen:
-			txt := fmt.Sprintf("Question: %s (%s).", q, ctx)
+			txt := fmt.Sprintf("Question: %s (%s).%s", q, ctx, when)
 			if r, ok := sn.recs[e.Thought]; ok && r.meanwhile != "" {
 				txt += " Meanwhile I: " + h.pointAnswerLabel(r.info.Point, r.meanwhile) + "."
 			}
@@ -217,10 +235,10 @@ func (h *Hub) Journal(limit int, kind string) JournalView {
 		case decide.OpAnswer:
 			if e.Answer == decide.NotSure {
 				add(e.T, JournalLine{ID: id, Kind: "notsure", Thought: e.Thought, Key: key, Why: true,
-					Text: fmt.Sprintf("You said not sure: %s I used my default.", q)})
+					Text: fmt.Sprintf("You said not sure: %s I used my default.%s", q, when)})
 			} else {
 				add(e.T, JournalLine{ID: id, Kind: "answer", Thought: e.Thought, Key: key, Why: true,
-					Text: fmt.Sprintf("You answered \"%s\": %s", h.answerLabel(key, e.Answer), q)})
+					Text: fmt.Sprintf("You answered \"%s\": %s%s", h.answerLabel(key, e.Answer), q, when)})
 			}
 		case decide.OpConfirm:
 			t := "You confirmed the rule."
@@ -233,7 +251,7 @@ func (h *Hub) Journal(limit int, kind string) JournalView {
 			}
 			add(e.T, JournalLine{ID: id, Kind: k, Thought: e.Thought, Key: key, Why: key != "", Text: t})
 		case decide.OpFade:
-			txt := fmt.Sprintf("Missed: %s (%s). It faded and I carried on with my default; nothing was counted.", q, ctx)
+			txt := fmt.Sprintf("Missed: %s (%s). It faded and I carried on with my default; nothing was counted.%s", q, ctx, when)
 			add(e.T, JournalLine{ID: id, Kind: "missed", Thought: e.Thought, Key: key, Why: key != "", Text: txt})
 		case decide.OpRevoke:
 			add(e.T, JournalLine{ID: id, Kind: "revoked", Key: e.Key, Why: true,

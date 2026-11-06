@@ -11,6 +11,25 @@ type Obs struct {
 	Class string             // build class, resolved through the catalogue's class table
 	Num   map[string]float64 // band and classband fields
 	Cat   map[string]string  // enum fields (act, diff, hc, kit, ...)
+	Sit   Situation          // display only: the facts behind the question; never part of the key or the answer
+}
+
+// Situation is the named facts of one event ("area" "Cold Plains", "life" "28", "potions" "1"), the raw values a
+// screen needs to say what prompted a question. It is display only: it is not banded, not part of the key, never read
+// by a rule, and a thought that opens keeps the first one for its key. Nil means the call site gave none.
+type Situation map[string]string
+
+// With returns a copy with the pairs added (name, value, name, value, ...; values are formatted with fmt.Sprint). An odd
+// trailing name is ignored.
+func (s Situation) With(kv ...any) Situation {
+	out := make(Situation, len(s)+len(kv)/2)
+	for k, v := range s {
+		out[k] = v
+	}
+	for i := 0; i+1 < len(kv); i += 2 {
+		out[fmt.Sprint(kv[i])] = fmt.Sprint(kv[i+1])
+	}
+	return out
 }
 
 // Context is a decision point plus the banded values of its key fields. Key is the string identity.
@@ -18,6 +37,7 @@ type Context struct {
 	Point  string
 	Fields map[string]string
 	Key    string
+	Sit    Situation // display only, see Obs.Sit
 }
 
 // UrgencyProvider is the stage-2 hook (spec 2.3): combat computes the urgency band from its damage window.
@@ -108,7 +128,7 @@ func (c *Catalogue) Build(pointID string, o Obs, stage int, urg UrgencyProvider)
 			fields[n] = l
 		}
 	}
-	return Context{Point: pointID, Fields: fields, Key: makeKey(pointID, fields)}, nil
+	return Context{Point: pointID, Fields: fields, Key: makeKey(pointID, fields), Sit: o.Sit}, nil
 }
 
 func makeKey(point string, fields map[string]string) string {

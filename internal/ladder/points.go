@@ -77,7 +77,7 @@ func BeltBand(have, want int) string {
 // other legacy guards (latch, gold for the estimate) stay with the caller.
 func (l *Ladder) RepairWanted(h Hero, durabilityPct int, legacy bool) (bool, error) {
 	h.Durability = max(durabilityPct, 0)
-	return l.yes(PointRepair, h, decide.Obs{}, legacy, "repair", "skip")
+	return l.yes(PointRepair, h, decide.Obs{Sit: decide.Situation{"durability": fmt.Sprint(h.Durability)}}, legacy, "repair", "skip")
 }
 
 // TPBuyWanted answers t1.tp.lost: buy a town portal scroll or walk. legacy is the purchase test (BuyKit); the caller
@@ -89,20 +89,22 @@ func (l *Ladder) TPBuyWanted(h Hero, legacy bool) (bool, error) {
 // ReturnWanted answers t1.return: leave town for the field now. legacy is the field gate's Go.
 func (l *Ladder) ReturnWanted(h Hero, kit string, legacy bool) (bool, error) {
 	// the area class of this key is where the hero goes, not where it stands
-	return l.yes(PointReturn, h, decide.Obs{Cat: map[string]string{"kit": kit, "areaclass": "field"}}, legacy, "yes", "no")
+	return l.yes(PointReturn, h, decide.Obs{Cat: map[string]string{"kit": kit, "areaclass": "field"}, Sit: decide.Situation{"kit": kit}}, legacy, "yes", "no")
 }
 
 // TripWanted answers t1.town.trigger: go to town now. legacy is the resource policy's Go. packUsedPct is the share of
 // backpack cells in use.
 func (l *Ladder) TripWanted(h Hero, belt string, packUsedPct int, legacy bool) (bool, error) {
-	o := decide.Obs{Cat: map[string]string{"belt": belt}, Num: map[string]float64{"packused": float64(packUsedPct)}}
+	o := decide.Obs{Cat: map[string]string{"belt": belt}, Num: map[string]float64{"packused": float64(packUsedPct)},
+		Sit: decide.Situation{"packused": fmt.Sprint(packUsedPct)}}
 	return l.yes(PointTrigger, h, o, legacy, "go", "continue")
 }
 
 // RestockWanted answers t1.restock: spend this gold on the belt potions. legacy is "the trip budget is not spent on
 // gold" (gold at or above the trip gold floor).
 func (l *Ladder) RestockWanted(h Hero, belt string, tripGold int, legacy bool) (bool, error) {
-	o := decide.Obs{Cat: map[string]string{"belt": belt}, Num: map[string]float64{"tripgold": float64(tripGold)}}
+	o := decide.Obs{Cat: map[string]string{"belt": belt}, Num: map[string]float64{"tripgold": float64(tripGold)},
+		Sit: decide.Situation{"tripgold": fmt.Sprint(tripGold)}}
 	return l.yes(PointRestock, h, o, legacy, "yes", "no")
 }
 
@@ -125,9 +127,11 @@ func (l *Ladder) yes(point string, h Hero, extra decide.Obs, legacy bool, pos, n
 // DrinkChoice answers t0.retreat.drink: what to do at this life percent with this belt. legacy is one of drink, run,
 // portal, leave, fight. champion is the champion-pack early bonus (resource.ChampionEarly). Hardcore comes from h.
 func (l *Ladder) DrinkChoice(h Hero, lifePct int, held, kit string, champion bool, legacy string) (string, error) {
-	o := decide.Obs{Num: map[string]float64{"life": float64(lifePct)}, Cat: map[string]string{"held": held, "kit": kit}}
+	o := decide.Obs{Num: map[string]float64{"life": float64(lifePct)}, Cat: map[string]string{"held": held, "kit": kit},
+		Sit: decide.Situation{"life": fmt.Sprint(lifePct), "kit": kit}}
 	if champion {
 		o.Cat["champbonus"] = "early"
+		o.Sit["champion"] = "yes"
 	}
 	return l.Decide(PointDrink, h, o, legacy)
 }
@@ -136,19 +140,21 @@ func (l *Ladder) DrinkChoice(h Hero, lifePct int, held, kit string, champion boo
 // packDanger is the pack rating 0..3 (0 counts as the lowest class).
 func (l *Ladder) UniqueFight(h Hero, lifePct, packDanger int, kit, legacy string) (string, error) {
 	o := decide.Obs{Num: map[string]float64{"life": float64(lifePct)},
-		Cat: map[string]string{"kit": kit, "packdanger": fmt.Sprint(min(max(packDanger, 1), 3))}}
+		Cat: map[string]string{"kit": kit, "packdanger": fmt.Sprint(min(max(packDanger, 1), 3))},
+		Sit: decide.Situation{"life": fmt.Sprint(lifePct), "kit": kit}}
 	return l.Decide(PointUnique, h, o, legacy)
 }
 
 // TooHard answers t0.area.toohard for an area the hero is about to enter: go, skip or lower. merc is
 // task.MercState (alive, dead or none); legacy is go when the route guard is open, else lower with no kit, else skip.
 func (l *Ladder) TooHard(h Hero, clvl int, merc, kit, legacy string) (string, error) {
-	o := decide.Obs{Num: map[string]float64{"clvl": float64(clvl)}, Cat: map[string]string{"merc": merc, "kit": kit, "areaclass": "field"}}
+	o := decide.Obs{Num: map[string]float64{"clvl": float64(clvl)}, Cat: map[string]string{"merc": merc, "kit": kit, "areaclass": "field"},
+		Sit: decide.Situation{"merc": merc, "kit": kit, "herolevel": fmt.Sprint(clvl)}}
 	return l.Decide(PointTooHard, h, o, legacy)
 }
 
 // MercHire answers t2.mercenary: hire or revive now (true) or wait for gold. h.Gold is the gold held; legacy is the
 // bot's hire gate (gold at or above bot.mercHireMinGold).
 func (l *Ladder) MercHire(h Hero, merc, kit string, legacy bool) (bool, error) {
-	return l.yes(PointMerc, h, decide.Obs{Cat: map[string]string{"merc": merc, "kit": kit}}, legacy, "hire", "wait")
+	return l.yes(PointMerc, h, decide.Obs{Cat: map[string]string{"merc": merc, "kit": kit}, Sit: decide.Situation{"merc": merc}}, legacy, "hire", "wait")
 }

@@ -9,8 +9,8 @@
 | d.idle  [state: fighting in Blood Moor]  uptime 91.2% (last 10 min 88%)  2 deaths  t=12:40 |
 +--------------------------------------------+---------------------------------------+
 | GAME  (viewer frame stream, or a note)     | THOUGHTS                              |
-|                                            |  Question card: text, plain context,  |
-+--------------------------------------------+  urgency line, "Meanwhile I: ...",    |
+|                                            |  Question card: what happened, urgency, |
++--------------------------------------------+  "If you do nothing", answers, key note |
 | ORDERS  [Go to|Fight here|Come home]      |  fixed buttons + "Not sure, you       |
 |   [area v] [10] min  (Give order)          |  decide", fade bar + "fades in 31 s"  |
 |   Go to Blood Moor for 10 min - active  x  |  Confirm card: "From now on I will    |
@@ -41,7 +41,7 @@ Read side, mounted on d2dview (GET and HEAD only, any other method is 405 with `
 | Route | Body (golden: `internal/watch/testdata`) |
 |---|---|
 | `GET /watch`, `/watch/app.js`, `/watch/app.css` | embedded page, CSP `script-src 'self'`, no inline code, no CDN |
-| `GET /api/thoughts` | `thoughts[]` (id, kind question or confirm, question, key, context, fields, urgency, choices[id,label] incl. `notsure`, meanwhile, learn, expiresAt, remainingSec), `feed[]` (idle, story, incident with rule refs, order, learned, late), fadeSec, speed |
+| `GET /api/thoughts` | `thoughts[]` (id, kind question or confirm, question, headline, specific, ifNothing, whyNow, rule, key, context, fields, urgency, choices[id,label,does] incl. `notsure`, meanwhile, learn, expiresAt, remainingSec), `feed[]` (idle, story, incident with rule refs, order, learned, late), fadeSec, speed |
 | `GET /api/journal?limit=&kind=` | `lines[]` (id, t, kind, text, thought, key, why, rules) oldest first |
 | `GET /api/rules` | `rules[]` (key, point, question, context, fields, answer, label, risk, text, learnedAt, revoked), `live` |
 | `GET /api/uptime` | state, label, uptimePct, windowPct, progress/death/recovery/stall seconds, deaths, text, `seq` |
@@ -124,3 +124,17 @@ How (`internal/watch/video.go`, `capture.go`; `d2bot` flags in `cmd/d2bot/ladder
 
 Tests (`internal/watch/video_test.go`, `cmd/d2bot/ladder_test.go`): fake frame source through httptest: token required, multipart framing by Content-Length, viewer cap, on-demand start and delayed stop, linger reuse, capture death and restart, oversize frames, two independent instances, routes absent when off, POST refused, JPEG splitter, tool choice and command line. V offline. 
 Live check (V, 2026-11-05, passive, display `:105` only, worker host at load about 16 of 16 cores, probe run under `nice -n 19`, no input sent): `watch.ExecCapture` with ffmpeg gave 155 frames in 20 s at 8 fps (about 110 KB per JPEG at quality 5, so about 0.9 MB/s per stream), 1.6 s CPU in 20 s (about 8 percent of one core); 4 fps: 76 frames, 0.9 s CPU (about 4 percent). First frame after 0.6 to 1.1 s; steady latency is one frame interval plus the encode (not measured separately, U). The saved frame showed the 800x600 game window (hero in a field with monsters, belt and orbs), not a desktop. U: the page in a real browser (no browser here), `/shot.jpg` and `/stream` through the real listener with the token.
+
+## 9. Question cards (user play session 2026-11-05: "I didn't know why I was making the decisions or what prompted them")
+
+Before this, a card showed the learning key in words ("in act 1, in the field, level under 14 ..."), which describes the rule, not the event. A card now says four things and keeps the key as a footnote:
+
+1. **Headline: what happened**, with the real values and names ("Life fell to 28% in Cold Plains, with 1 healing potion in the belt and 2 enemies close."). It comes from the new display-only `decide.Situation` (named facts such as `area`, `life`, `potions`, `monster`) that the ladder call sites already knew and now pass: `Hero.With(...)` at the call site, `Obs.Sit`, `Context.Sit`, `Thought.Sit`, `ThoughtInfo.Sit`, `ladder.ThoughtView.Sit`. The situation is NOT part of the key, never banded, never read by a rule, and not written to the answer log (a thought reopened from a persisted store has none and shows the generic line). Area names come from `ladder.Config.AreaNames` (the bot's catalogue level names, `Runner.areaName`).
+2. **What each answer does**: every button carries the catalogue label, a plain phrase (`does`) and the answer id (tooltip).
+3. **If you do nothing**: the default the hero takes meanwhile (the legacy answer the ladder reported, else the catalogue default) in plain words and the fade time ("Answer within 45 s or the hero decides.").
+4. **Why now**: only when the urgency band (stage 2) or a low life band says so.
+5. Footnote **"Rule applies when: ..."**: the old context line.
+
+Texts are one data table per decision point in `internal/watch/cardtext.go` (`cardTexts`: headline template, generic line, one phrase per answer). A headline whose facts are not all reported is replaced by the point's generic line, so a call site that lacks a fact degrades to a general sentence and never shows a hole. V `TestEveryPointHasACard` walks the shipped catalogue: every point has a card, every answer a phrase, every placeholder is a known fact, no jargon words; `TestCardsReadWell` renders the nine wired points. The journal appends "When: <headline>" to the question, answer, not-sure and missed lines of a thought that has a situation (V `TestCardNamesTheEventInTheFeed`, both builds). The page shows the headline first, then the "If you do nothing" box, the buttons (label and phrase) and the footnote; text only through `textContent`, no inline script or style.
+
+Not verified live: the facts are read from the same snapshot the call sites already hold (no new game read); only offline tests ran. U: monster level of the destination (toohard) is not known at that call site, so the card says the hero level the bot wants there (`task.TowerFloor`).

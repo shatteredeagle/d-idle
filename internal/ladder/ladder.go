@@ -29,6 +29,18 @@ type Hero struct {
 	Gold       int
 	AreaClass  string // "town", "field" or "boss"
 	Durability int    // percent, lowest worn item; -1 unknown
+
+	// Display only (the situation line of a question card, never part of a key): where the hero is and how it fares.
+	Area  int // level id, 0 unknown
+	Level int // character level, 0 unknown
+	Sit   decide.Situation
+}
+
+// With adds named facts to the hero's situation (name, value, ...). It returns a copy; call sites use it only inside the
+// ladder-on branch, so with the ladder off nothing is computed.
+func (h Hero) With(kv ...any) Hero {
+	h.Sit = h.Sit.With(kv...)
+	return h
 }
 
 // HeroFrom reads the fields every point shares from a snapshot player. Durability stays -1 and AreaClass is derived.
@@ -38,6 +50,10 @@ func HeroFrom(p *d2.Player) Hero {
 		return h
 	}
 	h.Class, h.Act, h.Diff, h.Gold = p.Class, p.Act, p.Difficulty, p.Gold
+	h.Area, h.Level = p.Area, p.Level
+	if p.MaxLife > 0 {
+		h.Sit = decide.Situation{"life": fmt.Sprint(p.Life * 100 / p.MaxLife)}
+	}
 	if p.InTown() {
 		h.AreaClass = "town"
 	}
@@ -70,6 +86,7 @@ type ThoughtView struct {
 	Choices  []string // answer ids of the point
 	Default  string   // the action taken meanwhile
 	OpenedAt time.Duration
+	Sit      decide.Situation // display only: the facts that prompted the question
 }
 
 // Reply is the scripted player's answer: "" lets the thought fade, "notsure" or an answer id answers it. Delay is the
@@ -99,6 +116,8 @@ type Config struct {
 	Clock   decide.Clock
 	Sink    Sink
 	Answers AnswerSource
+	// AreaNames names a level id for the situation line of a question ("" or nil: the card says "this area").
+	AreaNames func(id int) string
 	// InFight reports a fight in progress: questions are held until it is false (the hero acts on the default now).
 	InFight func() bool
 }
@@ -243,7 +262,28 @@ func (l *Ladder) context(point string, h Hero, extra decide.Obs) (decide.Context
 	for k, v := range extra.Cat {
 		o.Cat[k] = v
 	}
+	o.Sit = l.situation(h, extra.Sit)
 	return l.cfg.Cat.Build(point, o, 1, nil)
+}
+
+// situation merges the facts of the hero, the call site's helper and the point's own into the display-only situation:
+// later ones win. The area is named through Config.AreaNames.
+func (l *Ladder) situation(h Hero, extra decide.Situation) decide.Situation {
+	sit := decide.Situation{"gold": fmt.Sprint(h.Gold)}
+	if h.Level > 0 {
+		sit["herolevel"] = fmt.Sprint(h.Level)
+	}
+	if h.Area > 0 && l.cfg.AreaNames != nil {
+		if n := l.cfg.AreaNames(h.Area); n != "" {
+			sit["area"] = n
+		}
+	}
+	for _, m := range []decide.Situation{h.Sit, extra} {
+		for k, v := range m {
+			sit[k] = v
+		}
+	}
+	return sit
 }
 
 // CatalogueDefault is the untrained default of the catalogue at this state: what the store would answer without a
@@ -267,7 +307,7 @@ func (l *Ladder) Pump() {
 // view turns the store's public read of a thought into what the sink and the answer source see. The default shown is
 // the action the hero took meanwhile: the legacy answer given at that key, else the catalogue default.
 func (l *Ladder) view(ti decide.ThoughtInfo) ThoughtView {
-	v := ThoughtView{ID: ti.ID, Point: ti.Point, Key: ti.Key, Confirm: ti.Confirm, OpenedAt: ti.Opened}
+	v := ThoughtView{ID: ti.ID, Point: ti.Point, Key: ti.Key, Confirm: ti.Confirm, OpenedAt: ti.Opened, Sit: ti.Sit}
 	for _, a := range ti.Choices {
 		v.Choices = append(v.Choices, a.ID)
 	}

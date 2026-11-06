@@ -1,0 +1,2 @@
+BACKLOG: cardwhy: watch question cards say what happened (display-only Situation facts from the ladder call sites), what each answer does and what the hero does by default; offline tested, user play session next
+CHANGELOG: watch screen: every question card now names the event behind it (real values), what each answer does, the default and the fade time; the rule key is a footnote

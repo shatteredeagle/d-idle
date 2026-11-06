@@ -1554,7 +1554,7 @@ func (r *Runner) askReturn(s *d2.Snapshot, in resource.Input, v resource.FieldVe
 		return v
 	}
 	kit := ladder.KitFor(in.HasTP, in.Belt.HP+in.Belt.RV+in.Belt.PackHP+in.Belt.PackRV)
-	go2, err := l.ReturnWanted(ladder.HeroFrom(s.Player), kit, v.Go)
+	go2, err := l.ReturnWanted(ladder.HeroFrom(s.Player).With("have", v.HaveHP, "want", v.WantHP), kit, v.Go)
 	if err != nil {
 		l.Fault(err)
 		return v

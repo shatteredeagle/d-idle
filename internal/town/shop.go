@@ -928,7 +928,7 @@ func (t *Town) ensureHealing(s *d2.Snapshot, band belt.Band, bs belt.State, want
 func (t *Town) restockFree(s *d2.Snapshot, floor int) bool {
 	legacy := s.Player.Gold >= floor
 	if l := ladder.Active(); l != nil {
-		v, err := l.RestockWanted(ladder.HeroFrom(s.Player), t.beltBand(s), s.Player.Gold, legacy)
+		v, err := l.RestockWanted(ladder.HeroFrom(s.Player).With(t.beltFacts(s)...), t.beltBand(s), s.Player.Gold, legacy)
 		if err == nil {
 			return v
 		}
@@ -942,6 +942,12 @@ func (t *Town) restockFree(s *d2.Snapshot, floor int) bool {
 func (t *Town) beltBand(s *d2.Snapshot) string {
 	bs := belt.Read(t.e.Data, s.Inventory)
 	return ladder.BeltBand(bs.Count[belt.HP]+bs.Count[belt.RV], t.plan(s.Player).Capacity(belt.HP, bs.Slots))
+}
+
+// beltFacts are the belt numbers beltBand classes, for the question card (display only).
+func (t *Town) beltFacts(s *d2.Snapshot) []any {
+	bs := belt.Read(t.e.Data, s.Inventory)
+	return []any{"have", bs.Count[belt.HP] + bs.Count[belt.RV], "want", t.plan(s.Player).Capacity(belt.HP, bs.Slots)}
 }
 
 // tpBuyAllowed is point t1.tp.lost (docs/t0-slice.md), asked once BuyKit allows the purchase: with the ladder on a

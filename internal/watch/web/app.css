@@ -83,7 +83,14 @@ img#shot { max-width: 100%; width: 100%; height: auto; border-radius: 8px; backg
 .thought .q { font-weight: 600; overflow-wrap: anywhere; }
 .thought .ctx, .thought .meanwhile { color: var(--muted); font-size: .85rem; margin-top: 3px; }
 .thought .urg { color: var(--warn); font-size: .85rem; font-weight: 650; margin-top: 3px; }
+.thought .ask { font-size: .85rem; margin-top: 3px; }
+.thought .ifnothing { font-size: .88rem; margin-top: 6px; padding: 5px 8px; background: var(--surface2); border-radius: 6px; }
+.thought .rulenote { display: block; margin: 0 0 8px; font-size: .75rem; overflow-wrap: anywhere; }
 .choices { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.choices .btn { display: flex; flex-direction: column; align-items: flex-start; text-align: left; flex: 1 1 11rem; max-width: 100%; }
+.choices .btn .lbl { font-weight: 600; }
+.choices .btn .does { font-size: .78rem; color: var(--muted); }
+.choices .btn.primary .does { color: inherit; opacity: .85; }
 .bar { height: 10px; background: var(--surface2); border-radius: 5px; overflow: hidden; border: 1px solid var(--line); }
 .bar > i { display: block; height: 100%; background: var(--accent); border-radius: 4px; transition: width .4s ease; }
 .thought .left { font-size: .8rem; }
