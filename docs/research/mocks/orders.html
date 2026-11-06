@@ -90,7 +90,7 @@ svg.map{width:100%;height:auto;display:block;max-height:none}
  <b>MOCK</b>
  <button type="button" data-sc="camp" aria-pressed="true">A: in camp, clvl 6</button>
  <button type="button" data-sc="mid" aria-pressed="false">B: mid-order + queue</button>
- <button type="button" data-sc="conflict" aria-pressed="false">C: Tower conflict</button>
+ <button type="button" data-sc="conflict" aria-pressed="false">C: Forgotten Tower conflict</button>
  <button type="button" id="dbg-tick">+5 min</button>
  <span class="muted">fake data; sheet opens on a node tap</span>
 </div>
@@ -116,7 +116,7 @@ svg.map{width:100%;height:auto;display:block;max-height:none}
  </section>
  <section class="card c-queue on" data-v="orders" aria-labelledby="t-q" id="queue"></section>
  <section class="card c-thoughts" data-v="thoughts" aria-labelledby="t-th"><h2 id="t-th">Thoughts</h2><div class="fake" style="margin-top:8px">(unchanged: question cards, see watch screen)</div>
-  <p class="muted">Orders conflicts appear here as one card: "You ordered the Tower..." (section 5 of the design).</p><div id="thcard"></div></section>
+  <p class="muted">Orders conflicts appear here as one card: "You ordered the Forgotten Tower..." (section 5 of the design).</p><div id="thcard"></div></section>
  <section class="card c-game" data-v="game" aria-labelledby="t-gm"><h2 id="t-gm">Game video</h2><div class="fake" style="margin-top:8px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center">live picture</div></section>
  <section class="card" data-v="journal" aria-labelledby="t-j" style="grid-column:1/-1"><h2 id="t-j">Journal</h2><ul class="journal" id="journal" style="padding-left:18px"></ul></section>
 </main>
@@ -135,26 +135,26 @@ var AREAS=[
  {id:'crypt',name:'Crypt',x:298,y:552,dungeon:1,orderable:1,range:'clvl 8-14',why:'small, a chest'},
  {id:'sf',name:'Stony Field',x:180,y:552,wp:1,orderable:1,range:'clvl 10-16',why:'open ground, easy to path'},
  {id:'dw',name:'Dark Wood',x:180,y:488,wp:1,orderable:1,range:'clvl 10-16',why:'Inifuss tree is here'},
- {id:'bmarsh',name:'Black Marsh',x:180,y:424,wp:1,orderable:1,range:'clvl 12-18',why:'waypoint, branches to Hole and Tower'},
+ {id:'bmarsh',name:'Black Marsh',x:180,y:424,wp:1,orderable:1,range:'clvl 12-18',why:'waypoint, branches to Hole and the Forgotten Tower'},
  {id:'hole',name:'Hole 1',x:62,y:424,dungeon:1,orderable:1,range:'clvl 12+',why:'dense packs'},
- {id:'tower',name:'Forgotten Tower',x:298,y:424,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'Countess runes; long chain, no waypoint'},
- {id:'cell',name:'Tower Cellars',x:298,y:360,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'the Countess is on level 5'},
+ {id:'ftw',name:'Forgotten Tower',x:298,y:424,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'Countess runes; long chain, no waypoint'},
+ {id:'cell',name:'Cellars 1-5',x:298,y:360,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'the Countess is on level 5'},
  {id:'tam',name:'Tamoe Highland',x:180,y:360,orderable:1,range:'clvl 14-20',why:'leads on to the Monastery'},
  {id:'pit',name:'Pit 1',x:62,y:360,dungeon:1,orderable:1,range:'clvl 16-24',why:'dense, no quest'},
  {id:'mg',name:'Monastery Gate',x:180,y:296},
  {id:'oc',name:'Outer Cloister',x:180,y:232,wp:1},
  {id:'line',name:'Monastery line',x:180,y:168,dungeon:1,sub:'Barracks to Catacombs'}
 ];
-var EDGES=[['camp','bm'],['bm','den','d'],['bm','cp'],['cp','cave','d'],['cp','bg'],['bg','crypt','d'],['cp','sf'],['sf','dw'],['dw','bmarsh'],['bmarsh','hole','d'],['bmarsh','tower','d'],['tower','cell','d'],['bmarsh','tam'],['tam','pit','d'],['tam','mg'],['mg','oc'],['oc','line','d']];
+var EDGES=[['camp','bm'],['bm','den','d'],['bm','cp'],['cp','cave','d'],['cp','bg'],['bg','crypt','d'],['cp','sf'],['sf','dw'],['dw','bmarsh'],['bmarsh','hole','d'],['bmarsh','ftw','d'],['ftw','cell','d'],['bmarsh','tam'],['tam','pit','d'],['tam','mg'],['mg','oc'],['oc','line','d']];
 var NAME={};AREAS.forEach(function(a){NAME[a.id]=a});
-var PATH={camp:['camp'],bm:['camp','bm'],den:['camp','bm','den'],cp:['camp','bm','cp'],cave:['camp','bm','cp','cave'],bg:['camp','bm','cp','bg'],crypt:['camp','bm','cp','bg','crypt'],sf:['camp','bm','cp','sf'],dw:['camp','bm','cp','sf','dw'],bmarsh:['camp','bm','cp','sf','dw','bmarsh'],hole:['camp','bm','cp','sf','dw','bmarsh','hole'],tower:['camp','bm','cp','sf','dw','bmarsh','tower'],cell:['camp','bm','cp','sf','dw','bmarsh','tower','cell'],tam:['camp','bm','cp','sf','dw','bmarsh','tam'],pit:['camp','bm','cp','sf','dw','bmarsh','tam','pit']};
+var PATH={camp:['camp'],bm:['camp','bm'],den:['camp','bm','den'],cp:['camp','bm','cp'],cave:['camp','bm','cp','cave'],bg:['camp','bm','cp','bg'],crypt:['camp','bm','cp','bg','crypt'],sf:['camp','bm','cp','sf'],dw:['camp','bm','cp','sf','dw'],bmarsh:['camp','bm','cp','sf','dw','bmarsh'],hole:['camp','bm','cp','sf','dw','bmarsh','hole'],ftw:['camp','bm','cp','sf','dw','bmarsh','ftw'],cell:['camp','bm','cp','sf','dw','bmarsh','ftw','cell'],tam:['camp','bm','cp','sf','dw','bmarsh','tam'],pit:['camp','bm','cp','sf','dw','bmarsh','tam','pit']};
 var SC={
  camp:{clvl:6,xp:31,hero:'camp',cleared:['bm','den'],mode:'resting',cur:null,queue:[],life:100,journal:['00:12 Back in camp. Rested.','00:05 Blood Moor: 40 kills.','Order done: Blood Moor until level 6 (22 min).']},
  mid:{clvl:7,xp:18,hero:'cp',cleared:['bm','den'],mode:'fighting',cur:{area:'cp',kind:'go',dur:{t:'level',n:9},started:0,kills:47,xpg:1820,etaMin:38,leg:2},queue:[{area:'sf',kind:'go',dur:{t:'min',n:30}},{area:null,kind:'home',dur:null}],life:80,journal:['00:03 Cold Plains: 47 kills since the order.','00:02 Hero walked Rogue Encampment, Blood Moor, Cold Plains.','Order started: Cold Plains until level 9.']},
- conflict:{clvl:6,xp:44,hero:'bmarsh',cleared:['bm','den'],mode:'fighting',cur:{area:'bmarsh',kind:'go',dur:{t:'min',n:30},started:0,kills:12,xpg:430,etaMin:20,leg:5},queue:[],life:90,journal:['00:01 Black Marsh: 12 kills.'],openTower:1}
+ conflict:{clvl:6,xp:44,hero:'bmarsh',cleared:['bm','den'],mode:'fighting',cur:{area:'bmarsh',kind:'go',dur:{t:'min',n:30},started:0,kills:12,xpg:430,etaMin:20,leg:5},queue:[],life:90,journal:['00:01 Black Marsh: 12 kills.'],openFT:1}
 };
 var S=null,sc='camp',pend=null,nextId=1,minutes=0;
-function hardWhy(a,clvl){ // fake of the tower guard: no merc, clvl < 16
+function hardWhy(a,clvl){ // fake of the Forgotten Tower guard: no merc, clvl < 16
  if(a.guard&&clvl<16)return 'No mercenary and clvl '+clvl+' is below 16. The hero skips the Forgotten Tower below that level.';
  return '';}
 function advice(a,clvl){var m=/clvl (\d+)/.exec(a.range||'');return m&&clvl<+m[1]?'Advice, not a guard: veterans go here from '+a.range.replace('clvl ','clvl ')+'.':'';}
@@ -213,7 +213,7 @@ function drawQueue(){
   [['▲','Move up',-1],['▼','Move down',1]].forEach(function(m){var b=el('button','btn small',m[0]);b.type='button';b.setAttribute('aria-label',m[1]+': '+orderText(o));b.disabled=(i+m[2]<0||i+m[2]>=S.queue.length);b.addEventListener('click',function(){var x=S.queue.splice(i,1)[0];S.queue.splice(i+m[2],0,x);render()});li.appendChild(b);});
   var c=el('button','btn small danger','✕');c.type='button';c.setAttribute('aria-label','Cancel: '+orderText(o));c.addEventListener('click',function(){cancel(i)});li.appendChild(c);ul.appendChild(li);});
  n.appendChild(ul);}
-function drawTh(){var d=document.getElementById('thcard');d.textContent='';if(S.conflictCard){var c=el('div','warnbox');c.appendChild(el('b',null,'You ordered the Tower. '));c.appendChild(document.createTextNode('The hero would normally skip it. The guard still decides; it will say so in the journal if it refuses.'));d.appendChild(c);}}
+function drawTh(){var d=document.getElementById('thcard');d.textContent='';if(S.conflictCard){var c=el('div','warnbox');c.appendChild(el('b',null,'You ordered the Forgotten Tower. '));c.appendChild(document.createTextNode('The hero would normally skip it. The guard still decides; it will say so in the journal if it refuses.'));d.appendChild(c);}}
 function render(){
  document.getElementById('hero').textContent='Sorceress clvl '+S.clvl+' ('+S.xp+'% to next) in '+NAME[S.hero].name;
  document.getElementById('mode').textContent=S.mode;
@@ -271,7 +271,7 @@ function cancel(i){var o=i<0?S.cur:S.queue[i];if(!o)return;
  toast('Cancelled: '+orderText(o));render();}
 /* ---- scenarios, tabs, debug ---- */
 function load(k){sc=k;S=JSON.parse(JSON.stringify(SC[k]));minutes=0;document.querySelectorAll('[data-sc]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.sc===k)});closeSheet();render();
- if(S.openTower){var a=NAME.tower;tap(a);}}
+ if(S.openFT){var a=NAME.ftw;tap(a);}}
 document.querySelectorAll('[data-sc]').forEach(function(b){b.addEventListener('click',function(){load(b.dataset.sc)})});
 document.getElementById('dbg-tick').addEventListener('click',function(){minutes+=5;if(S.cur){S.cur.elapsed=(S.cur.elapsed||0)+5;S.cur.kills+=9;S.cur.xpg+=210;S.cur.etaMin=Math.max(0,S.cur.etaMin-5);var pl=(PATH[S.cur.area]||[]).length-1;if(S.cur.leg<pl)S.cur.leg++;else S.hero=S.cur.area;S.xp=Math.min(99,S.xp+4);
   if(S.cur.etaMin===0||(S.cur.dur.t==='min'&&S.cur.elapsed>=S.cur.dur.n)){log('Order done: '+orderText(S.cur)+' ('+S.cur.kills+' kills).');toast('Order done: '+orderText(S.cur));S.cur=S.queue.shift()||null;if(S.cur)Object.assign(S.cur,{kills:0,xpg:0,etaMin:30,leg:0,elapsed:0});else S.mode='idle';}}
