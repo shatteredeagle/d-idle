@@ -7,7 +7,7 @@
 Stage 1 of the OpenSpec removal plan (docs/process/openspec-removal-plan.md, branch agent/removalplan, not yet on main): this table is the list of active work. The user approved it on 2026-11-04 after the card triage. Each row links to its plain markdown card under `openspec/changes/<id>/` (tasks.md header holds owns, exclusive and gates).
 
 Rules (ADR 0015 items 10 and 11):
-- No cap on rows (the cap of 12 was removed by the grill 0005 outcome, ADR 0016). Every row maps to exactly one goal G-A..G-G.
+- No cap on rows (the cap of 12 was removed by the grill 0005 outcome, ADR 0016). Every row carries a tier or area label (docs/backlog-howto.md, Labels); the goal column shows it.
 - One row per active job. A job without a card is named by its branch `agent/<id>`.
 - Parked cards stay open but are listed in "Parked". Nothing is deleted.
 - "Needs a decision" cards stay open with git evidence only; they are not counted and not archived until the user decides.
@@ -15,29 +15,43 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (19)
+## Active (33)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
-| 1 | m3-act1run | G-B | deferred 0/3 | fresh Sorceress clears Act 1 unattended on d2d | soak-slot:3 | - | [card](archive/openspec-index.md#m3-act1run) |
-| 2 | m3-andariel | G-B | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | soak-slot:3 | - | [card](archive/openspec-index.md#m3-andariel) |
-| 3 | m3-merc | G-B | proposed 0/4 | free Rogue run for hours on d2d, merc alive share | soak-slot:3 | - | [card](archive/openspec-index.md#m3-merc) |
-| 4 | gameexe-retire-soak | G-A | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | - | [card](archive/openspec-index.md#gameexe-retire-soak) |
-| 5 | m1-liveproof | G-C | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
-| 6 | ledgerkey | G-F | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
-| 7 | decision-point-store | G-G | in-progress 3/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
-| 8 | t0-slice | G-G | in-progress 3/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
-| 9 | decisions-mirror | G-F | deferred 0/4 | ADRs mirrored read-only into backlog/decisions for the board | - | - | [card](archive/openspec-index.md#decisions-mirror) |
-| 10 | testerwatch | G-F | in-progress 1/3 | separate watch token, tap video source switch | - | - | [card](archive/openspec-index.md#testerwatch) |
-| 11 | testerimage | G-F | deferred 0/2 | >- | - | - | [card](archive/openspec-index.md#testerimage) |
-| 12 | testerlive | G-F | proposed 0/3 | run the tester flow in the real d2d container | - | - | [card](archive/openspec-index.md#testerlive) |
-| 13 | testerdocs | G-F | proposed 0/2 | d2d tester guide and first-stranger checklist | - | - | [card](archive/openspec-index.md#testerdocs) |
-| 14 | testerreport | G-F | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
-| 15 | testerlicence | G-F | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
-| 16 | testerpack | G-F | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
-| 17 | testerd2dimage | G-F | in-progress 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
-| 18 | testerd2dwiz | G-F | proposed 1/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
-| 19 | testerrt | G-F | proposed 0/2 | realtime ladder check on d2d for the tester build | - | - | [card](archive/openspec-index.md#testerrt) |
+| 1 | m3-act1run | T4 | deferred 0/3 | fresh Sorceress clears Act 1 unattended on d2d | soak-slot:3 | - | [card](archive/openspec-index.md#m3-act1run) |
+| 2 | m3-andariel | T4 | deferred 0/3 | Andariel fight card with the SME decisions (docs/andarielsme.md) | soak-slot:3 | - | [card](archive/openspec-index.md#m3-andariel) |
+| 3 | m3-merc | T4 | deferred 0/4 | free Rogue run for hours on d2d, merc alive share | soak-slot:3 | - | [card](archive/openspec-index.md#m3-merc) |
+| 4 | gameexe-retire-soak | gate | deferred 0/2 | game.exe validation paths; becomes the Gate A card | - | - | [card](archive/openspec-index.md#gameexe-retire-soak) |
+| 5 | m1-liveproof | drills | in-progress 13/15 | live drills for the basics; M1 exit | soak-slot:0 | - | [card](archive/openspec-index.md#m1-liveproof) |
+| 6 | ledgerkey | tooling | in-progress 2/3 | cheat ledger key per save (uncheated rule) | - | - | [card](archive/openspec-index.md#ledgerkey) |
+| 7 | decision-point-store | T0 | in-progress 3/5 | learn-by-doing store: answers, streaks, rules, fading thoughts | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#decision-point-store) |
+| 8 | t0-slice | T0 | in-progress 3/5 | wire T0 decision points into combat with the untrained default | - | tier order: after T4/Gate A cards per ADR 0016 | [card](archive/openspec-index.md#t0-slice) |
+| 9 | decisions-mirror | tooling | deferred 0/4 | ADRs mirrored read-only into backlog/decisions for the board | - | - | [card](archive/openspec-index.md#decisions-mirror) |
+| 10 | testerwatch | tester | in-progress 2/3 | separate watch token, tap video source switch | - | - | [card](archive/openspec-index.md#testerwatch) |
+| 11 | testerimage | tester | deferred 0/2 | Wine tester compose, ffmpeg, watch ports (Deferred: Wine route) | - | - | [card](archive/openspec-index.md#testerimage) |
+| 12 | testerlive | tester | proposed 0/3 | run the tester flow in the real d2d container | - | - | [card](archive/openspec-index.md#testerlive) |
+| 13 | testerdocs | tester | proposed 0/2 | d2d tester guide and first-stranger checklist | - | - | [card](archive/openspec-index.md#testerdocs) |
+| 14 | testerreport | tester | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
+| 15 | testerlicence | tester | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
+| 16 | testerpack | tester | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
+| 17 | testerd2dimage | tester | in-progress 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
+| 18 | testerd2dwiz | tester | in-progress 1/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
+| 19 | testerrt | tester | proposed 0/2 | realtime ladder check on d2d for the tester build | - | - | [card](archive/openspec-index.md#testerrt) |
+| 20 | ordersux2 | T0 | proposed 0/5 | orders slice 2: until-level, clear then home, queue, conflict | - | - | [card](archive/openspec-index.md#ordersux2) |
+| 21 | dpwire | T0 | proposed 0/3 | wire the remaining decision points into the bot | - | - | [card](archive/openspec-index.md#dpwire) |
+| 22 | t0fight | T0 | proposed 0/3 | engineered drill for a fight-time question and a learned answer | - | - | [card](archive/openspec-index.md#t0fight) |
+| 23 | ladder-t1 | T1 | proposed 0/3 | Tidy tier: cards and wiring for what T1 still lacks | - | - | [card](archive/openspec-index.md#ladder-t1) |
+| 24 | ladder-t2 | T2 | proposed 0/3 | Runner tier: urgency stage 2 and the unwired T2 points | - | - | [card](archive/openspec-index.md#ladder-t2) |
+| 25 | earlydeath13 | bot-defect | proposed 0/3 | seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains | - | - | [card](archive/openspec-index.md#earlydeath13) |
+| 26 | tpreserve-live | bot-defect | proposed 0/2 | prove the scroll reserve and no-portal leave with the tp field | - | - | [card](archive/openspec-index.md#tpreserve-live) |
+| 27 | g2f-record | gate | proposed 0/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
+| 28 | fork-labverbs | tester | proposed 0/3 | gate the mutating debug verbs behind a fork flag | fork-branch:d2d.lab3-labverbs | - | [card](archive/openspec-index.md#fork-labverbs) |
+| 29 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
+| 30 | onboarding-build | onboarding | proposed 0/1 | onboarding flow build (placeholder, after the design lands) | - | - | [card](archive/openspec-index.md#onboarding-build) |
+| 31 | upstream-next | upstream | proposed 0/2 | next upstream PR batch candidates (one open batch at a time) | - | - | [card](archive/openspec-index.md#upstream-next) |
+| 32 | statusrefresh | tooling | proposed 0/2 | docs/plan/STATUS.md hand-written part is stale (2026-11-03) | - | - | [card](archive/openspec-index.md#statusrefresh) |
+| 33 | ordersux3 | T0 | proposed 0/4 | orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader | - | - | [card](archive/openspec-index.md#ordersux3) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

@@ -26,7 +26,7 @@ def parse(path):
     m = re.match(r"---\n(.*?)\n---\n", text, re.S)
     if not m:
         return None
-    fm, lists, key = {}, {}, None
+    fm, lists, key, folded = {}, {}, None, []
     for line in m.group(1).splitlines():
         li = re.match(r"^\s+- (.*)$", line)
         if li and key:
@@ -35,10 +35,13 @@ def parse(path):
         km = re.match(r"^([A-Za-z_]+):\s*(.*)$", line)
         if km:
             key, val = km.group(1), km.group(2).strip()
+            if val in (">-", ">", "|", "|-"):
+                folded.append(key)
             fm[key] = val.strip("\"'") if val not in ("[]", "") else val
             if val == "[]":
                 lists[key] = []
     fm["_lists"] = lists
+    fm["_folded"] = folded
     return fm
 
 
@@ -58,6 +61,9 @@ def check(tasks_dir):
         ids[tid] = f.name
         labels = set(fm["_lists"].get("labels", []))
         card = fm.get("title", "").split(":", 1)[0].strip()
+        if "title" in fm["_folded"]:
+            findings.append(f"{f.name}: title is a folded block (>-), write it on one line")
+            continue
         if card in seen:
             findings.append(f"{f.name}: card id {card!r} already used by {seen[card]}")
         seen[card] = f.name

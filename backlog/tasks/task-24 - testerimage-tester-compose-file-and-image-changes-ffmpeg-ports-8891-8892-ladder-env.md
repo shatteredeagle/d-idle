@@ -1,8 +1,6 @@
 ---
 id: TASK-24
-title: >-
-  testerimage: Wine tester compose file, ffmpeg, watch ports (Deferred: Wine
-  route)
+title: 'testerimage: Wine tester compose, ffmpeg, watch ports (Deferred: Wine route)'
 status: Deferred
 assignee: []
 created_date: '2026-11-06T14:27:00Z'

@@ -35,6 +35,16 @@ def insert_keys(text, keys):
     return m.group(1) + keys + "\n" + text[m.end(1):]
 
 
+def unfold_title(text):
+    """The CLI writes a long title as a folded `title: >-` block; check.py and
+    greps want one line. Rewrite it as one single-quoted line."""
+    m = re.match(r"(---\nid: [^\n]*\n)title: >-\n((?:  [^\n]*\n)+)", text)
+    if not m:
+        return text
+    title = " ".join(x.strip() for x in m.group(2).splitlines()).replace("'", "''")
+    return m.group(1) + "title: '" + title + "'\n" + text[m.end():]
+
+
 def created_path(output):
     m = re.search(r"^File: (.+)$", output, re.M)
     if not m:
@@ -69,7 +79,7 @@ def main(argv, run=subprocess.run):
         sys.stderr.write(r.stdout + r.stderr)
         return 1
     path = created_path(r.stdout)
-    path.write_text(insert_keys(path.read_text(), render_keys(a.card, a.owns, a.exclusive, a.contracts)))
+    path.write_text(unfold_title(insert_keys(path.read_text(), render_keys(a.card, a.owns, a.exclusive, a.contracts))))
     print(path)
     return run([sys.executable, "-I", str(HERE / "check.py")]).returncode
 

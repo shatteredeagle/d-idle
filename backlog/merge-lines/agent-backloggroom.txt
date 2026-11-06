@@ -1,0 +1,3 @@
+BACKLOG: backlog grooming 2026-11-06: tier and area label scheme, statuses and titles fixed, 14 missing tasks (TASK-34 to 47), audit in docs/research/backlog-groom-2026-11-06.md; archives proposed for the user
+INDEX: docs/research/backlog-groom-2026-11-06.md: backlog audit (every task, verdicts, label scheme, causes of the stray labels and the folded title, new tasks, proposed removals)
+CHANGELOG: backlog board: labels are now tiers (T0..T5) and areas, check.py rejects unknown labels and folded titles, new_task.py unfolds long titles
