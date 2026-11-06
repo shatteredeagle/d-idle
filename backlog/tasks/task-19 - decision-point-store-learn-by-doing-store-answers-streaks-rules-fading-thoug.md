@@ -6,7 +6,7 @@ assignee: []
 created_date: '2026-11-05T00:00:00Z'
 updated_date: '2026-11-05T00:00:00Z'
 labels:
-  - "G-G"
+  - T0
 dependencies: []
 priority: high
 ordinal: 19000

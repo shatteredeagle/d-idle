@@ -1,13 +1,13 @@
 ---
 id: TASK-3
-title: "m3-merc: free Rogue run for hours on d2d, merc alive share"
-status: Proposed
+title: 'm3-merc: free Rogue run for hours on d2d, merc alive share'
+status: Deferred
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - "G-B"
-  - "soak"
+  - T4
+  - soak
 dependencies: []
 priority: high
 ordinal: 3000
@@ -59,3 +59,9 @@ Source: git tag openspec-final, openspec/changes/m3-merc/ (this task is the copy
 - [ ] #3 1.3 2 x 4 virtual hour runs; docs/merc-d2d.md; changecheck, leakcheck, validate; reap
 - [ ] #4 1.4 Open questions kept in the proposal: build merc targets and the live probes (dead-merc forfeit, revive quote, hire windows, merc Str/Dex, merc state after reload); note which the 2 x 4 hour runs answered
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: set Deferred (was Proposed): T4 work, not ranked until T4 (ADR 0016 item 24), same as TASK-1 and TASK-2.
+<!-- SECTION:NOTES:END -->

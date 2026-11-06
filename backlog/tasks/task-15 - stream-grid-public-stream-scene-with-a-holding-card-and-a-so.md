@@ -1,12 +1,12 @@
 ---
 id: TASK-15
-title: "stream-grid: public stream scene with a holding card and a source grid"
+title: 'stream-grid: public stream scene with a holding card and a source grid'
 status: Deferred
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - "parked"
+  - parked
 dependencies: []
 priority: low
 ordinal: 15000
@@ -57,3 +57,9 @@ Source: git tag openspec-final, openspec/changes/stream-grid/ (this task is the 
 - [ ] #6 2.4 Health states (reconnecting, drop) and frame-rate caps (health done; fps cap is only a timing value until a frame feed exists)
 - [x] #7 2.5 Fixture tests per layout size and a leak grep; docs/streamctl-grid.md; deploy through the existing publish path (no restart: user go still needed to point the kiosk)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: the result line names tools/publish/grid.py and scene-grid.* but none exist on main or any branch (U where the code lives). Stays Deferred; see the backlog-groom doc.
+<!-- SECTION:NOTES:END -->

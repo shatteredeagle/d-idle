@@ -23,6 +23,12 @@ class T(unittest.TestCase):
         with self.assertRaises(ValueError):
             new_task.insert_keys(new_task.insert_keys(FM, 'card: "c"'), 'card: "d"')
 
+    def test_unfold_title(self):
+        src = "---\nid: TASK-3\ntitle: >-\n  card: a long\n  title it's\nstatus: Proposed\n---\nbody\n"
+        out = new_task.unfold_title(src)
+        self.assertIn("title: 'card: a long title it''s'\nstatus: Proposed", out)
+        self.assertEqual(new_task.unfold_title(out), out)
+
     def test_created_path(self):
         self.assertEqual(new_task.created_path("File: /a/b c.md\n\nTask"), Path("/a/b c.md"))
         with self.assertRaises(ValueError):

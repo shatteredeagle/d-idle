@@ -7,7 +7,7 @@ the new file, then runs check.py. Stdlib only; run from the repo root.
 
   python3 -I tools/backlog/new_task.py "fixx: what" --card fixx --owns docs/fixx.md \
       [--owns more] [--exclusive instance:i2] [--contracts docs/contracts/x.md] \
-      [-l G-C] [-s Proposed] [--priority low] [--ac "step"]... [-d "text"]
+      [-l T0|tester|..] [-s Proposed] [--priority low] [--ac "step"]... [-d "text"]
 """
 import argparse
 import re
@@ -33,6 +33,16 @@ def insert_keys(text, keys):
     if re.search(r"^(card|owns):", m.group(1), re.M):
         raise ValueError("custom keys already present")
     return m.group(1) + keys + "\n" + text[m.end(1):]
+
+
+def unfold_title(text):
+    """The CLI writes a long title as a folded `title: >-` block; check.py and
+    greps want one line. Rewrite it as one single-quoted line."""
+    m = re.match(r"(---\nid: [^\n]*\n)title: >-\n((?:  [^\n]*\n)+)", text)
+    if not m:
+        return text
+    title = " ".join(x.strip() for x in m.group(2).splitlines()).replace("'", "''")
+    return m.group(1) + "title: '" + title + "'\n" + text[m.end():]
 
 
 def created_path(output):
@@ -69,7 +79,7 @@ def main(argv, run=subprocess.run):
         sys.stderr.write(r.stdout + r.stderr)
         return 1
     path = created_path(r.stdout)
-    path.write_text(insert_keys(path.read_text(), render_keys(a.card, a.owns, a.exclusive, a.contracts)))
+    path.write_text(unfold_title(insert_keys(path.read_text(), render_keys(a.card, a.owns, a.exclusive, a.contracts))))
     print(path)
     return run([sys.executable, "-I", str(HERE / "check.py")]).returncode
 

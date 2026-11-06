@@ -6,8 +6,8 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
-  - "G-B"
-  - "soak"
+  - T4
+  - soak
 dependencies: []
 priority: high
 ordinal: 2000

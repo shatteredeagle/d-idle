@@ -6,7 +6,7 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:01:00Z'
 labels:
-  - G-C
+  - bot-defect
 dependencies: []
 priority: low
 ordinal: 11000

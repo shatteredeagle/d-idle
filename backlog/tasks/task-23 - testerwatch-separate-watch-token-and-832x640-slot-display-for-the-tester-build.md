@@ -4,9 +4,10 @@ title: 'testerwatch: separate watch token, tap video source switch'
 status: In Progress
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
-updated_date: '2026-11-06T15:12:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - G-F
+  - tester
+  - watch
 dependencies:
   - TASK-30
 priority: high
@@ -29,6 +30,12 @@ Slice 1 of docs/research/tester-build-plan.md (d2d route, revised 2026-11-06), g
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 d2bot reads the watch token from D2BOT_WATCH_TOKEN or a token file (never --token on a command line) and the bot API token stays independent; tests prove the viewer is gated and the API is not
-- [ ] #2 d2bot gets --watch-video-source x11|tap (env D2BOT_WATCH_VIDEO_SOURCE, default x11); with tap the video is fed by watch.TapCapture and no ffmpeg or X display is needed; tests for both values and for an unknown value (error naming it)
+- [x] #2 d2bot gets --watch-video-source x11|tap (env D2BOT_WATCH_VIDEO_SOURCE, default x11); with tap the video is fed by watch.TapCapture and no ffmpeg or X display is needed; tests for both values and for an unknown value (error naming it)
 - [ ] #3 docs/research/tester-build-plan.md gaps G3 and G4 updated with the result
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: AC 2 ticked: --watch-video-source x11|tap is on main (cmd/d2bot/ladder.go, tests for both values and an unknown one). Blocking Done: AC 3 (update plan gaps G3 and G4 with the result).
+<!-- SECTION:NOTES:END -->

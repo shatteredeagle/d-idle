@@ -6,7 +6,8 @@ assignee: []
 created_date: '2026-11-06T14:44:00Z'
 updated_date: '2026-11-06T15:12:00Z'
 labels:
-  - G-F
+  - tester
+  - watch
 dependencies: []
 priority: high
 ordinal: 30000

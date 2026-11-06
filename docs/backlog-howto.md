@@ -4,17 +4,31 @@
 
 ## What is where
 
-- `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels G-A..G-F (goals of ADR 0015), `parked`, `upstream`, `soak`; `auto_commit: false`. V
+- `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels: see "Labels" below; `auto_commit: false`. V
 - `backlog/tasks/task-N - <slug>.md`: one file per card, markdown with YAML frontmatter. V
 - `tools/backlog/openspec_to_backlog.py`: the one-shot copier (dry run by default, `--apply`, `--force`; idempotent, keeps a card's TASK number). Re-running without `--force` skips cards that already have a file, so CLI edits are not overwritten.
-- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker, not wired into CI yet. It checks: exactly one G-A..G-G label (no cap on open cards since grill 0005) on each of those, an `owns` key on every task, unique card ids in titles. Result on the 17 migrated tasks: 0 findings. V
+- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker, not wired into CI yet. It checks: every label is known, an open non-parked task has a tier or area label (at most one tier), an `owns` key on every task, unique card ids in titles, no folded `title: >-` block. V
 
 ## Conventions
 
 - The card id is the title prefix: `<card-id>: <what>`. Task ids are `TASK-N` (assigned by the tool, not settable); the card id still names the branch `agent/<id>`, the `Change:` trailer and the merge subject. V
-- One goal label per open task; parked tasks carry `parked` and (for now) no goal label because docs/cards.md gives them none.
+- Labels: see "Labels" below. Keep a title under 80 characters: the CLI rewrites a longer title as a folded `title: >-` block on its next edit, which hides the card id from greps and from `check.py` (it now fails such a file; `new_task.py` unfolds on create; after any `task edit` on a long title look at the first lines). V (2026-11-06, TASK-24 showed a bare `>-`).
 - Priority from rank: 1-4 high, 5-8 medium, 9-12 low, parked low. Dependencies only where a card says "After <card>" (today: m3-act1run after m3-andariel).
 - Acceptance criteria are the tasks.md checkboxes (checked stay checked). The card's gates are listed in the description, not as criteria, so the progress count shows work, not prose.
+
+## Labels (scheme of 2026-11-06)
+
+ADR 0016 replaced the goals G-A..G-G by the tier ladder as the ranking of work, so the labels now say WHAT the task is, not a goal. `backlog/config.yml` lists them; the CLI and MCP do not validate labels, `tools/backlog/check.py` does (V).
+
+- Tier (ladder work, at most one): `T0` Order-taker, `T1` Tidy, `T2` Runner, `T3` Planner, `T4` Questor (Act 1 clear cards 1 to 3), `T5` Farmer.
+- Area (non-ladder work; an open task needs a tier or one area): `watch` (watch screen, orders), `tester` (tester build and its container), `gate` (Gate 2, Gate 3, Gate A records), `upstream` (PRs to the decompiled project), `bot-defect` (a fix for a defect seen in a run), `drills` (live drill suites), `tooling`, `decisions`, `onboarding`.
+- Modifiers (combine with the above): `soak` (needs a soak slot), `parked` (kept, not ranked; also set status Deferred).
+- Legacy `G-A..G-G` stay accepted by the checker for old branches; no task on main carries one since 2026-11-06 (mapping: G-A gate, G-B T4 or bot-defect, G-C bot-defect or drills, G-E upstream, G-F tester or tooling, G-G T0). Tasks from 2026-11-06 on use the new labels. Dependencies are the `dependencies:` key (`backlog task edit N --dep M`), never a label.
+- `docs/cards.md` shows the tier, else the first area label, in its goal column.
+
+## The rule that keeps the board true
+
+Every agent job gets a task. Create it BEFORE launching the agent (`new_task.py`, status Proposed) or name an existing one in the brief; a job with no task is invisible on the board and was the main cause of the mess found on 2026-11-06 (merged work with Proposed tasks, stale statuses, 14 pieces of open work with no task). The agent ticks its boxes and fills `result:`; the coordinator sets the status at merge (Done only when every box is ticked, else In Progress with a note naming the open box). `python3 -I tools/backlog/drift.py` in the coordinator tick shows the misses. The grooming pass of 2026-11-06 is in docs/research/backlog-groom-2026-11-06.md.
 
 ## Custom frontmatter fields (ours; the tool has no native field)
 

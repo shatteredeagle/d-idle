@@ -1,11 +1,12 @@
 ---
 id: TASK-32
 title: 'testerd2dwiz: first-run wizard for the d2d tester container'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T14:44:00Z'
+updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - G-F
+  - tester
 dependencies: []
 priority: high
 ordinal: 32000
@@ -28,3 +29,9 @@ Slice 1 (d2d route), gap G2. Standalone small wizard mirroring cmd/d2fleet/inter
 - [ ] #1 steps: data check of /game (required d2data, d2exp, Patch_D2; 1.14d check; plain-language misses), table extract, character name and class (class to d2d UI index from a data table, unknown class is an error naming it), one goals preset, Start; state in /data/wizard.json, resumable
 - [x] #2 token gate and cookie, no field for keys or free text beyond the name, key-shaped input refused; tests with a fake /game folder and a fake backend; page checked in a browser or marked not run
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Groom 2026-11-06: merged on main (offline). Status set to In Progress, not Done: AC 1 is open (1.14d proof needs a pinned Patch_D2 hash from a real install; entrypoint hook and context.sh build line not applied, see TASK-31 and the backlog-groom doc).
+<!-- SECTION:NOTES:END -->

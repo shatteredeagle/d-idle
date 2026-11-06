@@ -35,8 +35,16 @@ class T(unittest.TestCase):
         self.assertEqual(self.run_dir([task(1, "p", "Deferred", ("parked",))]), [])
 
     def test_goal_labels(self):
-        self.assertTrue(any("0 goal" in x for x in self.run_dir([task(1, "a", labels=())])))
-        self.assertTrue(any("2 goal" in x for x in self.run_dir([task(1, "a", labels=("G-A", "G-B"))])))
+        self.assertTrue(any("no tier or area" in x for x in self.run_dir([task(1, "a", labels=("soak",))])))
+        self.assertTrue(any("more than one tier" in x for x in self.run_dir([task(1, "a", labels=("T0", "T1"))])))
+        self.assertEqual(self.run_dir([task(1, "a", labels=("T0", "watch", "soak"))]), [])
+
+    def test_unknown_label(self):
+        self.assertTrue(any("unknown label" in x for x in self.run_dir([task(1, "a", labels=("T0", "TASK30"))])))
+
+    def test_folded_title(self):
+        folded = task(1, "a").replace('title: "a: x"', "title: >-\n  a: x")
+        self.assertTrue(any("folded block" in x for x in self.run_dir([folded])))
 
     def test_owns_and_dup(self):
         out = self.run_dir([task(1, "a", owns=False), task(2, "a")])
