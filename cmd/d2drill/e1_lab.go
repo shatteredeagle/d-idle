@@ -202,30 +202,36 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 	if err := e1Reset(ctx, h, clvl); err != nil {
 		return f, err
 	}
-	// the merc is hired at the hero's level (U), killed, and left dead for 140 ticks as D8.a does
-	_, _ = h.cheat(ctx, "debug merc hire 0", "E1 setup: a hired mercenary (no gold), to be killed")
-	_ = h.step(ctx, 5)
-	if _, err := h.cheat(ctx, "debug merc kill", "E1 setup: the mercenary is dead"); err != nil {
+	// A cheat-hired merc may be level 1 whose revive is free ("Resurrect Aliza: 0", V run 20261106 slot 5), so try the
+	// hire types until one carries a price; the first priced type is used and every quote seen is reported.
+	if _, err := h.cheat(ctx, "debug stat 14 5000", "E1 setup: a purse that shows the whole menu while the quote is probed"); err != nil {
 		return f, err
 	}
-	_ = h.step(ctx, 140)
+	q, seen := 0, []string{}
+	for typ := 0; typ <= 15 && q <= 0; typ++ {
+		_, _ = h.cheat(ctx, fmt.Sprintf("debug merc hire %d", typ), "E1 setup: a hired mercenary (no gold), to be killed")
+		_ = h.step(ctx, 5)
+		if _, err := h.cheat(ctx, "debug merc kill", "E1 setup: the mercenary is dead"); err != nil {
+			return f, err
+		}
+		_ = h.step(ctx, 140)
+		rv := d2dmerc.Reviver{C: h.c}
+		pq, err := rv.Probe(ctx)
+		seen = append(seen, fmt.Sprintf("%d:%d", typ, pq))
+		if err == nil && pq > 0 {
+			q, f["mercType"] = pq, strconv.Itoa(typ)
+		}
+		_, _ = h.c.Do(ctx, "key Escape")
+		_ = h.step(ctx, 10)
+	}
+	f["quotesByType"] = strings.Join(seen, " ")
 	m, err := h.c.Do(ctx, "dump merc")
 	if err != nil {
 		return f, err
 	}
 	f["merc"] = strings.TrimSpace(strings.Join(append(append([]string{}, m.Lines...), m.Rest), " "))
-	if !strings.Contains(f["merc"], `"dead":true`) {
-		return f, fmt.Errorf("the merc is not dead after the kill: %s", f["merc"])
-	}
-	// the real quote, read from the NPC menu without paying (what the bot reads too)
-	if _, err := h.cheat(ctx, "debug stat 14 5000", "E1 setup: a purse that shows the whole menu while the quote is probed"); err != nil {
-		return f, err
-	}
-	_ = h.step(ctx, 5)
-	rv := d2dmerc.Reviver{C: h.c}
-	q, err := rv.Probe(ctx)
-	if err != nil || q <= 0 {
-		return f, fmt.Errorf("quote probe: %d %v; menu: %s; merc %s", q, err, h.menuText(ctx), f["merc"])
+	if q <= 0 {
+		return f, fmt.Errorf("no hire type gives a priced revive (type:quote %s); merc %s", f["quotesByType"], f["merc"])
 	}
 	f["quote"] = strconv.Itoa(q)
 	g := gold(q)
