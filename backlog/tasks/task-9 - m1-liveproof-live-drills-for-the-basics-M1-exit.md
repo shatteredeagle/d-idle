@@ -1,10 +1,10 @@
 ---
 id: TASK-9
 title: 'm1-liveproof: live drills for the basics; M1 exit'
-status: In Progress
+status: Deferred
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-06T16:00:00Z'
+updated_date: '2026-11-06T16:13:00Z'
 labels:
   - drills
   - soak
