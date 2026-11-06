@@ -299,6 +299,7 @@ func (r *Runner) hazard(ctx context.Context, snap *d2.Snapshot) {
 }
 
 func (r *Runner) carryOut(ctx context.Context, a SafetyAction) error {
+	a = r.earlyExit(r.latest(), a)
 	if a != SafetyDrinkLife && a != SafetyDrinkMana && a != SafetyDrinkRejuv {
 		if s := r.latest(); s != nil && s.Player != nil {
 			r.e.Log.Info("safety decision", append([]any{"action", a.String(), "area", s.Player.Area}, r.vitalsKV(s, s.Player)...)...)
