@@ -31,7 +31,7 @@ import (
 //	shortdrill-merc    E1.merc-a  clvl 12, dead merc, purse = real quote + 10: revive BEFORE any potion purchase
 //	                   E1.merc-b  clvl 12, purse below the quote: no revive, the potions are bought
 //	                   E1.merc-c  clvl 14, purse = quote + 10: waits (needs quote + 50)
-//	shortdrill-noportal E1.noportal-a  Hole Level 1 (area 11), 0 potions, 47 percent life, no portal: leaves after about 20 s
+//	shortdrill-noportal E1.noportal-a  Tamoe Highland (area 7; area 11 is now in chainHome: g2e F2c walks home from it), 0 potions, 47 percent life, no portal: leaves after about 20 s
 //	                   E1.noportal-b  the same with a town portal scroll: the bot portals, does not leave
 //
 // Limit (U): the bot is attached, so d2bot cannot restart this d2d; the leave is proven by the bot's own
@@ -153,7 +153,7 @@ func e1Scenarios() []e1Scenario {
 			func(q int) int { return max(q-420, q*3/4) }, e1MercEvalB),
 		merc("E1.merc-c", "clvl 14, dead merc, purse = quote + 10 (needs quote + 50): waits, no revive", 14,
 			func(q int) int { return q + 10 }, e1MercEvalC),
-		np("E1.noportal-a", "area 11, 0 potions, 47 percent life, no scroll or tome: the bot leaves after bot.noPortalWaitSec", false),
+		np("E1.noportal-a", "area 7, 0 potions, 47 percent life, no scroll or tome: the bot leaves after bot.noPortalWaitSec", false),
 		np("E1.noportal-b", "control: the same with a town portal scroll in the pack: the bot portals to town, does not leave", true),
 	}
 }
@@ -235,7 +235,7 @@ func e1NoPortalSetup(ctx context.Context, h *e1h, scroll bool) (map[string]strin
 		}
 	}
 	for _, v := range []struct{ verb, why string }{
-		{"debug goto 11", "E1 setup: Hole Level 1 (area 11), the area of g2f seed 11"},
+		{"debug goto 7", "E1 setup: Tamoe Highland (area 7): not in the walk-home tables (resource.chainHome), no waypoint, so no way to town without a portal"},
 	} {
 		if _, err := h.cheat(ctx, v.verb, v.why); err != nil {
 			return f, err
@@ -263,8 +263,8 @@ func e1NoPortalSetup(ctx context.Context, h *e1h, scroll bool) (map[string]strin
 	}
 	a := h.area(ctx)
 	f["state"] = fmt.Sprintf("area=%d level=%d gold=%d life=%d/%d", a, st.Level, st.Gold, st.Life.Cur, st.Life.Max)
-	if a != 11 {
-		return f, fmt.Errorf("not in area 11: %s", f["state"])
+	if a != 7 {
+		return f, fmt.Errorf("not in area 7: %s", f["state"])
 	}
 	return f, nil
 }
@@ -373,14 +373,14 @@ type e1Result struct {
 	LogFile            string
 }
 
-var e1TimeRe = regexp.MustCompile(`time=(\S+)`)
+var e1TimeRe = regexp.MustCompile(`"time":"([^"]+)"|time=(\S+)`)
 
 func e1Time(line string) (time.Time, bool) {
 	m := e1TimeRe.FindStringSubmatch(line)
 	if m == nil {
 		return time.Time{}, false
 	}
-	t, err := time.Parse(time.RFC3339Nano, m[1])
+	t, err := time.Parse(time.RFC3339Nano, m[1]+m[2])
 	return t, err == nil
 }
 
@@ -481,7 +481,7 @@ func e1One(ctx context.Context, c e1Cfg, sc e1Scenario) e1Result {
 	defer lf.Close()
 	res.LogFile = filepath.Base(logPath)
 	args := []string{"--backend", "d2d", "--attach", "--d2d-attach", "--d2d-sock", c.Sock, "--gamedir", c.GameDir, "--data", filepath.Join(c.SlotDir, "e1data"),
-		"--addr", c.BotAddr, "--goals", sc.Goals, "--log-level", "debug", "--run-for", fmt.Sprintf("%ds", int(c.Wall.Seconds()))}
+		"--addr", c.BotAddr, "--goals", sc.Goals, "--log-level", "info", "--run-for", fmt.Sprintf("%ds", int(c.Wall.Seconds()))}
 	cmd := exec.Command(c.Bot, args...)
 	cmd.Env = append(os.Environ(), "D2BOT_INSTANCE="+c.Instance, "D2BOT_RUN="+run)
 	pr, pw := io.Pipe()
@@ -554,8 +554,8 @@ func e1Key(res *e1Result, lines []string) {
 			res.FirstNoPortalWall, res.LeaveWall = ta.Format("15:04:05.000"), tb.Format("15:04:05.000")
 			res.NoPortalToLeaveSec = tb.Sub(ta).Seconds()
 		}
-		if m := regexp.MustCompile(`waited=(\S+)`).FindStringSubmatch(lines[b]); m != nil {
-			res.Waited = "bot waited=" + m[1] + " (virtual, bot clock)"
+		if m := regexp.MustCompile(`"waited":"([^"]+)"|waited=(\S+)`).FindStringSubmatch(lines[b]); m != nil {
+			res.Waited = "bot waited=" + m[1] + m[2] + " (virtual, bot clock)"
 		}
 	}
 }

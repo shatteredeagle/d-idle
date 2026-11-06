@@ -34,8 +34,8 @@ func TestE1MercVerdicts(t *testing.T) {
 
 func TestE1NoPortal(t *testing.T) {
 	l := []string{
-		`time=2026-11-06T17:50:00.000-05:00 level=WARN msg="heal trip: town: no town portal available"`,
-		`time=2026-11-06T17:50:09.500-05:00 level=WARN msg="low life, no potion and no town portal: leaving the game" waited=20s`,
+		`{"time":"2026-11-06T17:50:00.000-05:00","level":"WARN","msg":"heal trip: town: no town portal available"}`,
+		`{"time":"2026-11-06T17:50:09.500-05:00","level":"WARN","msg":"low life, no potion and no town portal: leaving the game","waited":"20s"}`,
 	}
 	if v, _ := e1NoPortalEval(l, false); v != "PASS" {
 		t.Errorf("leave: %s", v)
