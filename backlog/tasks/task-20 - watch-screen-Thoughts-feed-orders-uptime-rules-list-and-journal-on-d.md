@@ -47,3 +47,5 @@ Notes 2026-11-05 (watchstyle): watch screen restyled in the original d.idle dash
 
 
 Notes 2026-11-05 (integ): the real bot hosts the screen: `d2bot -ladder -watch` (viewer GET listener, separate answer listener, token unless loopback) with the Hub as Sink and AnswerSource; orders map to farm_area goals through the goal manager; uptime from goal events (death, recovery on respawn, progress on a kill, stall on error). Offline tested; not verified live. docs/t0-slice.md 'How to run it'.
+
+Notes 2026-11-05 (cardwhy): question cards say what happened (display-only `decide.Situation` facts from the ladder call sites), what each answer does, what the hero does if you do not answer, and keep the key as a footnote; journal lines carry "When: ...". Offline tested, not verified live; design doc section 9.

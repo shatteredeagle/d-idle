@@ -91,7 +91,7 @@ var cardTexts = map[string]cardText{
 		Does:     map[string]string{"sell": "sell the surplus", "drop": "drop the surplus", "pause": "pause until you decide"},
 	},
 	"t1.repair": {
-		Headline: "In town with gear worn down to {durability}% and {gold} gold: repairs would cost about {cost} gold.",
+		Headline: "In town with gear worn down to {durability}% and {gold} gold on hand.",
 		Generic:  "In town with worn gear.",
 		Does:     map[string]string{"repair": "pay the smith to repair", "skip": "leave the gear as it is"},
 	},

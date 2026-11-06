@@ -12,7 +12,7 @@ import (
 var sampleFacts = decide.Situation{"life": "28", "area": "Cold Plains", "potions": "1", "hostiles": "2", "pack": "cursing champion pack",
 	"dest": "the Forgotten Tower", "floor": "14", "herolevel": "9", "retreats": "2", "packkind": "cursing champion pack", "monster": "Bishibosh",
 	"distance": "14", "tripgold": "45", "have": "2", "want": "6", "kit": "THIN", "item": "a rune", "packused": "85", "gold": "300",
-	"durability": "22", "cost": "120", "run": "quest", "deaths": "3", "boss": "Andariel", "merc": "dead"}
+	"durability": "22", "run": "quest", "deaths": "3", "boss": "Andariel", "merc": "dead"}
 
 // TestEveryPointHasACard: every point of the shipped catalogue has a headline and a generic line, a plain phrase for
 // each of its answers (and none for answers it does not have), and every placeholder resolves to a known fact.
@@ -103,7 +103,7 @@ func TestCardsReadWell(t *testing.T) {
 		{"t1.return", "The town chores are done: the belt holds 2 of 6 healing potions and supplies are thin (potions or a portal are missing).", sampleFacts},
 		{"t1.town.trigger", "The pack is 85% full and the belt holds 2 of 6 healing potions in Cold Plains.", sampleFacts},
 		{"t1.tp.lost", "No town portal scroll is left, and the hero has 300 gold.", sampleFacts},
-		{"t1.repair", "In town with gear worn down to 22% and 300 gold: repairs would cost about 120 gold.", sampleFacts},
+		{"t1.repair", "In town with gear worn down to 22% and 300 gold on hand.", sampleFacts},
 		{"t2.mercenary", "The mercenary is dead and the hero holds 300 gold in Cold Plains.", sampleFacts},
 	}
 	for _, c := range cases {

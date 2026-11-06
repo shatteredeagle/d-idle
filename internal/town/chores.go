@@ -212,7 +212,7 @@ func RepairDue(pct, below int) bool { return pct < below }
 func (t *Town) repairDue(s *d2.Snapshot, pct int) bool {
 	legacy := RepairDue(pct, t.tune().RepairBelowPct)
 	if l := ladder.Active(); l != nil {
-		v, err := l.RepairWanted(ladder.HeroFrom(s.Player).With("cost", t.repairEstimate(s)), pct, legacy)
+		v, err := l.RepairWanted(ladder.HeroFrom(s.Player), pct, legacy)
 		if err == nil {
 			return v
 		}
