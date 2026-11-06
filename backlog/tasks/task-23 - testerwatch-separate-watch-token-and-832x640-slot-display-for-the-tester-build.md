@@ -1,10 +1,10 @@
 ---
 id: TASK-23
 title: 'testerwatch: separate watch token, tap video source switch'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
-updated_date: '2026-11-06T14:55:00Z'
+updated_date: '2026-11-06T15:12:00Z'
 labels:
   - G-F
 dependencies:
