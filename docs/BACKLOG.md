@@ -535,6 +535,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-51 mercrevive: revive reserve by clvl band per the SME (0 gold below clvl 13, 50 from it; merc.reviveReserveLow/High/Clvl replace merc.reviveReserveMax); revive before potions; offline tested, live proof needs the next Gate 2
 - LABVERBSPIN: TASK-42 fork lab-verbs gate: pin moved to fork d2d.lab3-labverbs f75816c616c8, --lab-verbs passed by drills, soak lab and gate, d2dsetup hook in the tester entrypoint, 1.14d Patch_D2 hash pinned (docs/lab-verbs.md)
 - TASK-54 fidelity-matrix: 78-row matrix of what the bot uses versus game.exe (13 unverified), same-save probe design; tasks TASK-55 fidprobe-core and TASK-56 fidprobe-vendor proposed
+- ABMERC: TASK-53 paired A/B harness for the merc revive reserve (clvl 11 late-start variant, tools/ab/mercab.sh), dry run proven, full 16-run A/B pending host capacity; standing rule: strategy changes get a paired A/B (docs/ab-merc.md, docs/ab-design.md Variants)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
