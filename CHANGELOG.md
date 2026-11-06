@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tester build: d2dsetup first-run wizard for the d2d container (offline tested)
 - d2d container: tester profile (watch screen, ladder, video from the tap, realtime), compose.tester.yml, fork pin lab2-freezeresume
 - Game video panel works on the d2d backend: --watch-video-source tap reads the d2d view tap; the tap now listens on 127.0.0.1:8893 by default (8891/8892 stay with the watch screen)
 - d2bot: separate access token for the watch screen (--watch-token-file creates a random 0600 token and prints the viewer URL once); the bot API token no longer opens the screen
