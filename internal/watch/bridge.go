@@ -117,6 +117,7 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 			g.Hub.Activity(KindRecovery, "back after dying")
 		}
 	case goals.EvKill:
+		g.Hub.NoteKill()
 		g.mu.Lock()
 		was := g.lost
 		g.lost = ""
@@ -132,6 +133,8 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 // OnStatus feeds the runner's status (poll it every few seconds): it sets the activity unless a death or its recovery
 // is still being counted, which only a kill ends.
 func (g *GoalsOrders) OnStatus(st goals.Status) {
+	c := st.Character
+	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: c.XP, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity})
 	g.mu.Lock()
 	lost := g.lost
 	g.mu.Unlock()

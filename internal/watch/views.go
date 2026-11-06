@@ -425,7 +425,11 @@ func (h *Hub) OrdersView() OrdersView {
 	v := OrdersView{Schema: ordersSchema, Seq: h.seq, Now: h.rel(h.cfg.Clock.Now()), Orders: []Order{},
 		Areas: append([]string{}, h.cfg.Areas...), Kinds: []string{OrderGo, OrderHere, OrderHome}, MaxMinutes: MaxOrderMinutes}
 	for _, o := range h.orders {
-		v.Orders = append(v.Orders, *o)
+		c := *o
+		if x0, ok := h.xp0[o.ID]; ok && o.State == OrderActive {
+			c.XPGained = max(0, h.hero.XP-x0)
+		}
+		v.Orders = append(v.Orders, c)
 	}
 	return v
 }

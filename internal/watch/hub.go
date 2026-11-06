@@ -10,6 +10,7 @@ package watch
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -28,6 +29,9 @@ type Config struct {
 	Areas []string
 	// Orders takes validated orders; nil keeps them on the screen only.
 	Orders OrderSink
+	// AreaGuard says why the hero's own guard closes the game area id now ("" = open or not guarded). It must only
+	// read: no question, no log, no game access. nil: every area is open. The map shows it as "too hard now".
+	AreaGuard func(areaID int) string
 	// WaitForSink hides a thought until the ladder's Sink reports it shown (the ladder holds questions during a
 	// fight). Leave false when no ladder is connected.
 	WaitForSink bool
@@ -67,15 +71,18 @@ type Hub struct {
 	base  time.Duration
 	video *Video // nil: no game video
 
-	mu     sync.Mutex
-	seq    uint64
-	ch     chan struct{}
-	recs   map[int]*thoughtRec
-	extras []extra
-	nextX  int
-	orders []*Order
-	nextO  int
-	up     uptimeTracker
+	mu      sync.Mutex
+	seq     uint64
+	ch      chan struct{}
+	recs    map[int]*thoughtRec
+	extras  []extra
+	nextX   int
+	orders  []*Order
+	nextO   int
+	up      uptimeTracker
+	hero    HeroInfo
+	cleared map[int]bool  // game area ids known to be cleared (MarkCleared)
+	xp0     map[int]int64 // order id -> hero xp when the order started
 }
 
 // New makes a Hub and subscribes it to the store.
@@ -398,11 +405,33 @@ func (h *Hub) Incident(text string, ruleKeys ...string) { h.Note("incident", tex
 // Say is Note("idle", ...): the hero's idle dialogue.
 func (h *Hub) Say(text string) { h.Note("idle", text) }
 
-// GiveOrder validates and records an order, then hands it to the bot's OrderSink.
+// OrderRequest is what the answer route passes to Give.
+type OrderRequest struct {
+	Kind    string
+	Area    string
+	Minutes int
+	Forever bool // no time limit
+	Replace bool // "Go now" in slice 1: every open order is cancelled first
+}
+
+// GiveOrder is Give for a timed order that queues like before.
 func (h *Hub) GiveOrder(kind, area string, minutes int) (Order, error) {
-	o, err := validateOrder(kind, area, minutes, h.cfg.Areas)
+	return h.Give(OrderRequest{Kind: kind, Area: area, Minutes: minutes})
+}
+
+// Give validates and records an order, then hands it to the bot's OrderSink. The order only asks: the hero's own guard
+// still decides when the walk starts, and a refusal ends the order failed with the guard's reason (OrderState).
+func (h *Hub) Give(r OrderRequest) (Order, error) {
+	o, err := validateOrder(r.Kind, r.Area, r.Minutes, r.Forever, h.cfg.Areas)
 	if err != nil {
 		return o, err
+	}
+	if r.Replace {
+		for _, id := range h.openIDs() {
+			if err := h.CancelOrder(id); err != nil && !errors.Is(err, errOrderClosed) {
+				return o, err
+			}
+		}
 	}
 	h.mu.Lock()
 	open := 0
@@ -429,6 +458,18 @@ func (h *Hub) GiveOrder(kind, area string, minutes int) (Order, error) {
 		}
 	}
 	return o, nil
+}
+
+func (h *Hub) openIDs() []int {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	var ids []int
+	for _, x := range h.orders {
+		if x.State == OrderQueued || x.State == OrderActive {
+			ids = append(ids, x.ID)
+		}
+	}
+	return ids
 }
 
 // CancelOrder cancels an open order.
@@ -458,15 +499,82 @@ func (h *Hub) CancelOrder(id int) error {
 	return nil
 }
 
-// OrderState is called by the bot when an order starts, ends or fails.
+// OrderState is called by the bot when an order starts, ends or fails. It also writes the journal line and keeps the
+// progress (start time, xp gained) of the Hero-now panel.
 func (h *Hub) OrderState(id int, state, note string) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	for _, o := range h.orders {
-		if o.ID == id && o.State != state {
-			o.State, o.Note = state, safeText(note, 120)
-			h.addExtraLocked(extra{kind: "order", text: fmt.Sprintf("Order %s: %s", state, o.Text)})
-			h.notifyLocked()
+		if o.ID != id || o.State == state {
+			continue
+		}
+		o.State, o.Note = state, safeText(note, 200)
+		switch state {
+		case OrderActive:
+			o.StartedAt = h.rel(h.cfg.Clock.Now())
+			if h.xp0 == nil {
+				h.xp0 = map[int]int64{}
+			}
+			h.xp0[id] = h.hero.XP
+		case OrderDone, OrderCancelled, OrderFailed:
+			if x0, ok := h.xp0[id]; ok {
+				o.XPGained = max(0, h.hero.XP-x0)
+				delete(h.xp0, id)
+			}
+		}
+		h.addExtraLocked(extra{kind: "order", text: orderLine(*o, state)})
+		h.notifyLocked()
+	}
+}
+
+// orderLine is the journal line of an order change.
+func orderLine(o Order, state string) string {
+	switch state {
+	case OrderActive:
+		return "Order started: " + o.Text
+	case OrderDone:
+		return "Order done: " + o.Text + progressText(o)
+	case OrderCancelled:
+		return "Order cancelled: " + o.Text + progressText(o)
+	}
+	if reason, ok := guardRefusal(o.Note); ok {
+		return "Order refused by the hero's guard: " + reason
+	}
+	if o.Note != "" {
+		return "Order failed: " + o.Text + " (" + o.Note + ")"
+	}
+	return "Order failed: " + o.Text
+}
+
+func progressText(o Order) string {
+	switch {
+	case o.Kills > 0 && o.XPGained > 0:
+		return fmt.Sprintf(" (%d kills, +%d xp)", o.Kills, o.XPGained)
+	case o.Kills > 0:
+		return fmt.Sprintf(" (%d kills)", o.Kills)
+	}
+	return ""
+}
+
+// guardRefusal says whether a failed order's note is the hero's guard turning the walk down, and returns the reason.
+// U: matches the wording of bot.errAreaGated ("area not allowed now: AREA (ID): route guard (WHY)") as the runner
+// reports it in the goal's failure message; a different wording just reads "Order failed".
+func guardRefusal(note string) (string, bool) {
+	const marker = "area not allowed now"
+	i := strings.Index(note, marker)
+	if i < 0 {
+		return "", false
+	}
+	return strings.TrimSpace(strings.TrimPrefix(strings.TrimPrefix(note[i:], marker), ":")), true
+}
+
+// NoteKill counts a kill for the open order (the bot calls it on every kill event).
+func (h *Hub) NoteKill() {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	for _, o := range h.orders {
+		if o.State == OrderActive {
+			o.Kills++
 		}
 	}
 }

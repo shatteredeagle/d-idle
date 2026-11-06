@@ -30,10 +30,15 @@ type Order struct {
 	Kind    string  `json:"kind"`
 	Area    string  `json:"area,omitempty"`
 	Minutes int     `json:"minutes,omitempty"`
+	Forever bool    `json:"forever,omitempty"` // runs until the player cancels it (all farm limits 0)
 	State   string  `json:"state"`
 	Note    string  `json:"note,omitempty"`
 	Text    string  `json:"text"`
 	GivenAt float64 `json:"givenAt"` // virtual seconds
+	// Progress, for the Hero-now panel: set when the order starts, kills and xp counted until it ends.
+	StartedAt float64 `json:"startedAt,omitempty"`
+	Kills     int     `json:"kills,omitempty"`
+	XPGained  int64   `json:"xpGained,omitempty"`
 }
 
 // OrderSink is what the bot implements to take an order. The Hub validates first; the sink may still refuse (error text
@@ -57,18 +62,23 @@ var (
 )
 
 func orderText(o Order) string {
+	how := fmt.Sprintf("for %d min", o.Minutes)
+	if o.Forever {
+		how = "until you cancel"
+	}
 	switch o.Kind {
 	case OrderGo:
-		return fmt.Sprintf("Go to %s for %d min", o.Area, o.Minutes)
+		return fmt.Sprintf("Farm %s %s", o.Area, how)
 	case OrderHere:
-		return fmt.Sprintf("Fight here for %d min", o.Minutes)
+		return "Fight here " + how
 	default:
-		return "Come home"
+		return "Rest in town"
 	}
 }
 
 // validateOrder normalises an order request against the area list (case-insensitive) and the limits.
-func validateOrder(kind, area string, minutes int, areas []string) (Order, error) {
+// forever (no time limit) replaces the minutes; the two never combine.
+func validateOrder(kind, area string, minutes int, forever bool, areas []string) (Order, error) {
 	o := Order{Kind: kind}
 	switch kind {
 	case OrderGo:
@@ -82,13 +92,19 @@ func validateOrder(kind, area string, minutes int, areas []string) (Order, error
 		}
 		fallthrough
 	case OrderHere:
-		if minutes < 1 || minutes > MaxOrderMinutes {
+		switch {
+		case forever && minutes != 0:
+			return o, fmt.Errorf("%w: until-you-cancel takes no minutes", ErrBadOrder)
+		case forever:
+			o.Forever = true
+		case minutes < 1 || minutes > MaxOrderMinutes:
 			return o, fmt.Errorf("%w: minutes must be 1 to %d", ErrBadOrder, MaxOrderMinutes)
+		default:
+			o.Minutes = minutes
 		}
-		o.Minutes = minutes
 	case OrderHome:
-		if area != "" || minutes != 0 {
-			return o, fmt.Errorf("%w: come home takes no area or minutes", ErrBadOrder)
+		if area != "" || minutes != 0 || forever {
+			return o, fmt.Errorf("%w: rest in town takes no area or minutes", ErrBadOrder)
 		}
 	default:
 		return o, fmt.Errorf("%w: kind must be go, fight or home", ErrBadOrder)

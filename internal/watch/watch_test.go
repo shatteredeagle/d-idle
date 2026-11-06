@@ -528,13 +528,13 @@ func TestUptimeLowersOnDeathRecoveryAndStall(t *testing.T) {
 func TestOrdersLifecycle(t *testing.T) {
 	r := newRig(t, "sorceress")
 	rp := r.must("/api/orders", map[string]any{"kind": "go", "area": "blood moor", "minutes": 1})
-	if rp.Order == nil || rp.Order.Area != "Blood Moor" || rp.Order.Text != "Go to Blood Moor for 1 min" || rp.Order.ID != 1 {
+	if rp.Order == nil || rp.Order.Area != "Blood Moor" || rp.Order.Text != "Farm Blood Moor for 1 min" || rp.Order.ID != 1 {
 		t.Fatalf("order: %+v", rp.Order)
 	}
 	r.must("/api/orders", map[string]any{"kind": "home"})
 	var ov OrdersView
 	r.get("/api/orders", &ov)
-	if len(ov.Orders) != 2 || ov.Orders[0].State != OrderActive || ov.Orders[1].State != OrderQueued || len(ov.Areas) != 8 || ov.Kinds[0] != OrderGo {
+	if len(ov.Orders) != 2 || ov.Orders[0].State != OrderActive || ov.Orders[1].State != OrderQueued || len(ov.Areas) != len(OrderableAreas()) || ov.Kinds[0] != OrderGo {
 		t.Fatalf("orders box: %+v", ov)
 	}
 	r.sim.Step(70 * time.Second) // the minute ends, then "come home" runs for 10 s
