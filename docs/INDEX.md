@@ -754,3 +754,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/orders-ux-design.md section 11: orders UX slice 1 as built, guard behaviour, area graph differences
 - docs/soaks/gate2-multiseed-20261106-0225-g2e.md: Gate 2 multi-seed run 20261106-0225-g2e (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/research/tester-build-plan.md: gap list, slice plan and open questions for a friend running d.idle in the Wine container (game-dir mode only)
+- docs/research/tester-build-plan.md revised: d2d first, d.idle fork shipped with its source, Wine plan as appendix
