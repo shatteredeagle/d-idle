@@ -42,3 +42,31 @@ What changes against the xpgap reading: the verdict on the three fixes stands (n
 ## Not done here
 - `cmd/d2dsoak compare` and `tools/d2dloop` were not changed: the card owns only `tools/ab/**` and this doc. `paired.py` reads `an.py` lines; a native `d2dsoak` paired mode would need its own card (U: small, the statistic is 30 lines).
 - The protocol was not run live; the arms of the worked example are the existing xpgap runs.
+
+## Variants
+The standard recipe (fresh clvl 1 character, 2 virtual hours) only reaches about clvl 8. An effect that lives at a higher level cannot be seen there. A variant changes the START state, never the statistic: pairing, interleaving, 8 seeds and the interval rule stay as above. Tags: V = run in this form on the worker, U = not yet measured.
+
+### Late start (the merc revive reserve, task abmerc)
+Why: a merc dies and a revive matters from about clvl 12, and g2f reached clvl 16 only after about 25 virtual hours, so a clvl 1 run of 2 hours cannot test merc.reviveReserve*.
+
+- **Start state, identical in both arms.** A prepared hero: Sorceress, clvl 11 with the experience of level 11, all stat and skill points unspent (the bot's own leveler spends them), 500 gold in the purse, empty stash, the Act 1 Rogue hired for free (`debug merc hire 0`), starting kit as a fresh character. 500 gold is below the revive quote at clvl 11 (about 900, S), so the first death makes the reserve matter. Made by `tools/ab/prep` (V, ran in the dry run): the lab d2d runs WITH `--lab-verbs`, the verbs go through a ledger file (`prep-ledger.jsonl`, reason `SETUP`), then `save` and `quit`.
+- **No write after the start.** The arm loads that save with a d2d WITHOUT `--lab-verbs`; the fork refuses gated debug verbs there (docs/lab-verbs.md), so a gameplay write is impossible by construction. Each run log ends with `writes after start: N` (count of refused setup verbs seen, 0 expected).
+- **Horizon.** 4 virtual hours per seed (the 2 hour fidelity minimum is for clvl 1 runs; here the interesting part starts after the first death). A run that has not reached clvl 17 by then reports XP gained instead of the time to clvl 17.
+- **Seeds.** 11 13 17 19 21 23 25 27 (8 pairs), arms interleaved: the two arms of a seed run side by side on two slots (`tools/ab/mercab.sh`). Arm names in the logs are `new` (A) and `old` (B).
+- **Per seed record** (`tools/ab/mercan.py`): XP/h and kills/h over the elapsed virtual time (headline, read by `paired.py --base old --arm new`), merc alive share of the minutes, merc deaths, revives, `revive skipped` lines, player deaths, clvl reached, virtual minute of the first minute line at clvl 17.
+- **Statistic.** XP/h and kills/h by the paired interval. The merc columns are mechanism evidence, reported as paired means, not tested separately.
+- **Limits (U).** The start is a cheated hero, so a result applies to the clvl 11 to 17 stretch with this kit; it says nothing about the climb to clvl 11. The prepared character has the starting life of a fresh Sorceress until it levels or rests (V in the dry run: life 40 at the first minute, 136 on the first zone entry), the same in both arms.
+
+Arms of the merc A/B, exactly (`tools/ab/mercrun.sh`, written into the instance `tuning.json`):
+
+| arm | merc.reviveReserveLow | merc.reviveReserveHigh | merc.reviveReserveClvl |
+|---|---|---|---|
+| A `new`: the SME rule of #276 (the defaults) | 0 | 50 | 13 |
+| B `old`: the old policy, emulated | 155 | 310 | 13 |
+
+B is the closest the knobs express, not the 2026-11-02 rule. The old rule kept `merc.kitReservePct` (100 percent) of the live full-kit cost, which changes with the shop prices and the potion tier (S: about 155 at the low levels and 310 later, from the g2f seed 17 log), and halved it while the kit was full. B uses those two sums as fixed gold per clvl band. Also not reproducible by a knob: the old spending order (potions first, then the merc) is code; in both arms the revive runs before potions and repair. So B tests "a reserve of one kit refill versus almost none", not the old ordering. Name that limit in any claim.
+
+Run plan, dry-run result and numbers: docs/ab-merc.md.
+
+## Standing rule: when a paired A/B is required
+A change that claims to be a strategy improvement (a rule that changes WHAT the bot does to earn more XP or lose less, not the repair of something that does not work) gets a paired A/B (at least 8 seeds, paired mean with its 95 percent interval) before its long gate. A bug fix gets a short drill in its exact failing scenario instead. If the effect lives at a level a clvl 1 run does not reach, use a variant above (late start). Checked in the review of the task: the brief or result names the A/B record, or says "bug fix: drill <id>".

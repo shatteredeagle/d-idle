@@ -1,0 +1,3 @@
+BACKLOG: ABMERC: TASK-53 paired A/B harness for the merc revive reserve (clvl 11 late-start variant, tools/ab/mercab.sh), dry run proven, full 16-run A/B pending host capacity; standing rule: strategy changes get a paired A/B (docs/ab-merc.md, docs/ab-design.md Variants)
+INDEX: docs/ab-merc.md: paired A/B of the merc revive reserve (late-start variant), run plan
+CHANGELOG: Paired A/B harness for the merc revive reserve and the standing rule that strategy changes need a paired A/B before the long gate
