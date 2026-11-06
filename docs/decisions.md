@@ -11,6 +11,7 @@ Last verified against ADR 0016 on 2026-11-05. If a bullet and an older entry bel
 - **Ranking work:** tier order T0 to T5 (ADR 0016) replaces the goals G-A to G-F as the ranking; Gate 2 and Gate 3 run once T4 is reached. A bot defect is fixed now when it breaks play at the tier being built. The old milestones map as: M3 (Andariel, `m3-andariel`) = G-B. The WIP limit of 3 implementation agents stays.
 - **Cards:** no cap on open cards (the cap of 12 was removed by the grill 0005 outcome, ADR 0016; ADR 0015 keeps it as history), each card maps to one goal. OpenSpec is removed (user, 2026-11-04): cards are Backlog.md tasks in `backlog/tasks/`, contracts live in `docs/contracts/*.md` (checked by `tools/contracts/check.py`), `cmd/changecheck` and the OpenSpec merge gates are deleted, and the tag `openspec-final` keeps the old state (old cards: `openspec-final:openspec/changes/`).
 - **Metrics:** XP/h is a diagnostic, judged on a seed set (5 seeds, 2 holdout); headline progress is milestone time per seed.
+- **Tester build** (user, 2026-11-06): the first tester build ships `game-dir` mode only (the user's own Diablo II 1.14d folder in the Wine container image, [plan](research/tester-build-plan.md)); the installer and downloader routes (`stubs`, `installer-dirs`) are a later slice and wait for the noVNC/Xpra display work. For this build the Wine image is used even though other entries call the container paused.
 - **Deferred or parked:** d2d container, fallback-lightning-v3 switch, stream-grid, d2dmesh, Tier B, open-ended rule coverage. The idle layer is un-parked as the ladder (ADR 0016); hardcore stays unbuilt until the T4 acceptance passes; the open-card cap of 12 is removed by the grill 0005 outcome; each card still maps to one goal.
 
 Index of the decision records in [adr/](adr/README.md) (the dated entries below stay as the verbatim source):
@@ -31,6 +32,10 @@ Index of the decision records in [adr/](adr/README.md) (the dated entries below 
 - 2026-11-01 (user, no ADR): the project must support multiple builds and classes: new code derives from build data and profiles (plan table + combat profile + class traits), never from the one lightning Sorceress build; unknown class or table is an error, never a Sorceress fallback; seams and phases in [research/build-flexibility-audit.md](research/build-flexibility-audit.md)
 - Licence: GPL (same as d2d, GPL-3.0-or-later) - user, 2026-10-30 ([ADR 0010](adr/0010-licence-same-as-d2d.md))
 - Repo going public soon; lockstep patches stay in the downstream fork until upstream wants them - user, 2026-10-30 ([ADR 0010 addendum](adr/0010-licence-same-as-d2d.md))
+
+## 2026-11-06: the tester build ships game-dir mode only
+- **Decision (user):** "Yes start with gamedir only", after the coordinator laid out the three routes (existing Diablo II folder, Blizzard downloader stubs, downloaded installer folders). Only `game-dir` is proven end to end in the real container (docs/container.md); the other two need an interactive installer window and so a noVNC or Xpra display that is not built.
+- **Scope:** the tester brings their own game folder (and `LODPatch_114d.exe` only if the folder is not already 1.14d). No CD key is needed in this mode. Nothing Blizzard owns is bundled or downloaded (docs/licensing.md). Slice 1 tasks: see `backlog/tasks/` (tester*), plan in `docs/research/tester-build-plan.md`.
 
 ## 2026-10-29: the end goal is a container; native on the worker host stays the dev path
 - **Product:** the container (deploy/container, d2fleet wizard, bot-owned game per slot) is the supported way to run D.idle, and the cross-platform answer (Linux, the NAS, Windows/Intel Mac via Docker). Docker and virtualization are assumed on the host: no setup docs for them.
