@@ -138,6 +138,18 @@ func (h *e1h) menuText(ctx context.Context) string {
 	return "no Kashya"
 }
 
+// closeUI sends Escape while a panel, dialog or cursor item is open (never on a clean screen: that opens the game menu).
+func (h *e1h) closeUI(ctx context.Context) {
+	for i := 0; i < 5; i++ {
+		f, err := h.c.UI(ctx)
+		if err != nil || !(f.Inventory || f.Stash || f.Cube || f.NPCMenu || f.Vendor || f.SkillTree || f.Waypoint || f.GameMenu) {
+			return
+		}
+		_, _ = h.c.Do(ctx, "key Escape")
+		_ = h.step(ctx, 15)
+	}
+}
+
 func (h *e1h) tick(ctx context.Context) int {
 	ci, err := h.c.Step(ctx, 1)
 	if err != nil {
@@ -244,8 +256,11 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 		return f, err
 	}
 	_ = h.step(ctx, 25)
-	_, _ = h.c.Do(ctx, "key Escape")
-	_ = h.step(ctx, 10)
+	h.closeUI(ctx)
+	if _, err := h.cheat(ctx, "debug goto 1", "E1 setup: the arrival cell of the camp, as after a fresh start (the quote probe walked the hero to Kashya)"); err != nil {
+		return f, err
+	}
+	_ = h.step(ctx, 50)
 	st, _, err := h.c.State(ctx)
 	if err != nil {
 		return f, err
