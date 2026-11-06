@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (33)
+## Active (34)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -52,6 +52,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 31 | ordersux3 | T0 | proposed 0/4 | orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader | - | - | [card](archive/openspec-index.md#ordersux3) |
 | 32 | onboardtour | onboarding | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
 | 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
+| 34 | friendspreview | tester | proposed 2/2 | shareable clickable preview of the flow for friends feedback | - | - | [card](archive/openspec-index.md#friendspreview) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

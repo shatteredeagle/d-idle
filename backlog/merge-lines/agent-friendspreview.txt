@@ -1,0 +1,2 @@
+BACKLOG: friendspreview: shareable clickable mock of the flow with a feedback page (docs/research/mocks/friends-preview.html)
+INDEX: docs/research/mocks/friends-preview.html - one-file clickable preview of the d.idle flow for friends feedback (fake data)

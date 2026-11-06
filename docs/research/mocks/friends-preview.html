@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle - early preview (fake data)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+/* MOCK ONLY (task friendspreview). Fake data, no network. Tokens copied from web/style.css. Designs reused from mocks/onboarding.html and mocks/orders.html. */
+:root{--bg:#f3efe6;--surface:#fffdf8;--surface2:#ece6d8;--line:#d6ccb8;--text:#231e17;--muted:#685f50;--accent:#b5760f;--accent-text:#7a4f00;--on-accent:#fff;--good:#2f7d3a;--warn:#9a6200;--bad:#b3342a;--info:#2a63a8;--life:#c0352b;--mana:#2f62c9;--focus:#1f5fd6;--shadow:0 1px 2px rgba(40,30,10,.08),0 4px 14px rgba(40,30,10,.06);--radius:10px}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--accent-text:#e6b95c;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--life:#d2453a;--mana:#4f7fe0;--focus:#8db8ff;--shadow:0 1px 2px rgba(0,0,0,.4)}}
+:root[data-theme=dark]{--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--accent-text:#e6b95c;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--life:#d2453a;--mana:#4f7fe0;--focus:#8db8ff;--shadow:0 1px 2px rgba(0,0,0,.4)}
+*{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-bottom:132px}
+h1,h2,h3{margin:0;font-weight:650;line-height:1.25}h1{font-size:1.6rem}h2{font-size:1.25rem}
+h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:1rem 0 .4rem}
+p{margin:.5rem 0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+.top{position:sticky;top:0;z-index:10;display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--surface);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:8px;font-weight:700}
+.brand i{width:14px;height:14px;background:var(--accent);transform:rotate(45deg);border-radius:2px;display:block}
+.banner{background:var(--surface2);border-bottom:1px solid var(--warn);padding:6px 14px;font-size:.85rem;text-align:center}
+main{max-width:860px;margin:0 auto;padding:16px 14px}
+.screen{display:none}.screen.on{display:block}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin:12px 0;min-width:0}
+.muted{color:var(--muted)}
+.btn{border:1px solid var(--line);background:var(--surface2);border-radius:8px;padding:8px 14px;min-height:44px;min-width:44px}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:650}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{display:inline-block;font-size:.72rem;font-weight:650;text-transform:uppercase;letter-spacing:.05em;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.built{color:var(--good);border-color:var(--good)}.chip.todo{color:var(--warn);border-color:var(--warn)}
+.stephead{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:4px}
+.stephead .n{background:var(--accent);color:var(--on-accent);width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:700;flex:none}
+.hero-big{font-size:1.1rem}
+.points{padding-left:1.1rem}.points li{margin:.35rem 0}
+code,pre{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem}
+pre{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px;overflow-x:auto;margin:.5rem 0;white-space:pre-wrap;word-break:break-word}
+label{display:block;font-weight:600;margin:.6rem 0 .2rem}
+label.inl{display:flex;gap:10px;align-items:flex-start;font-weight:400;min-height:44px;padding:6px 0}
+input[type=checkbox],input[type=radio]{width:22px;height:22px;flex:none;margin:2px 0 0;accent-color:var(--accent)}
+input[type=text],textarea,select{width:100%;background:var(--surface);border:1px solid var(--muted);border-radius:8px;padding:10px;min-height:44px}
+textarea{min-height:84px;resize:vertical}
+.bar{height:10px;background:var(--surface2);border-radius:5px;overflow:hidden;border:1px solid var(--line)}
+.bar>i{display:block;height:100%;background:var(--accent);transition:width .4s}
+.bar.life>i{background:var(--life)}.bar.mana>i{background:var(--mana)}
+.grid2{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:900px){.grid2{grid-template-columns:1fr 1fr}main{padding:20px}}
+/* sub stepper */
+.sub{display:flex;gap:4px;margin:8px 0;list-style:none;padding:0}
+.sub li{flex:1;text-align:center;font-size:.8rem;padding:6px 2px;border-bottom:4px solid var(--line);color:var(--muted)}
+.sub li.on{border-color:var(--accent);color:var(--text);font-weight:650}.sub li.ok{border-color:var(--good)}
+/* game panel placeholder */
+.game{position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(45deg,var(--surface2) 0 14px,var(--surface) 14px 28px);border:1px dashed var(--muted);border-radius:8px;display:grid;place-items:center;overflow:hidden}
+.game .cap{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 8px;font-size:.8rem;text-align:center;max-width:90%}
+.game .me{position:absolute;left:30%;top:55%;width:18px;height:18px;background:var(--accent);transform:rotate(45deg);animation:walk 6s ease-in-out infinite alternate}
+.game .mob{position:absolute;right:25%;top:40%;width:14px;height:14px;background:var(--bad);border-radius:50%}
+@keyframes walk{to{left:55%}}
+@media(prefers-reduced-motion:reduce){.game .me{animation:none}.bar>i{transition:none}}
+/* thought card */
+.thought{border:2px solid var(--accent);border-radius:var(--radius);padding:12px;background:var(--surface);margin:8px 0}
+.thought.done{border-color:var(--line);opacity:.9}
+.fade{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin:8px 0}.fade>i{display:block;height:100%;background:var(--accent);width:100%}
+.facts{display:grid;gap:6px;margin:8px 0}.facts div{background:var(--surface2);border-radius:8px;padding:8px 10px;font-size:.92rem}
+.facts b{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.count3{display:flex;gap:6px;margin:6px 0}.count3 span{flex:1;height:10px;border-radius:5px;background:var(--surface2);border:1px solid var(--line)}.count3 span.f{background:var(--good);border-color:var(--good)}
+.rule{border:1px solid var(--good);border-radius:8px;padding:8px 10px;margin:6px 0;display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+@keyframes pop{from{transform:scale(.96);background:var(--surface2)}}
+.rule.new{animation:pop .6s}
+/* map */
+.map{position:relative;aspect-ratio:360/330;width:100%;background:var(--surface2);border:1px solid var(--line);border-radius:8px;margin:8px 0}
+.map svg{position:absolute;inset:0;width:100%;height:100%}
+.map line{stroke:var(--muted);stroke-width:2;vector-effect:non-scaling-stroke}
+.node{position:absolute;transform:translate(-50%,-50%);min-height:44px;min-width:44px;width:max-content;max-width:31%;padding:2px 6px;border-radius:8px;border:2px solid var(--line);background:var(--surface);font-size:.74rem;line-height:1.15;text-align:center}
+@media(min-width:700px){.node{font-size:.85rem;padding:4px 10px}}
+.node[aria-pressed=true]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.node.hard{border-style:dashed;border-color:var(--warn)}
+.node.here::before{content:"\25C6 ";color:var(--accent-text)}
+.warnbox{border:1px solid var(--warn);background:var(--surface2);border-radius:8px;padding:10px;margin:8px 0}
+.q{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:6px 0;flex-wrap:wrap}
+/* journal */
+.j{border-bottom:1px solid var(--line);padding:8px 0}
+.j .why{margin:6px 0 0;padding:8px 10px;background:var(--surface2);border-radius:8px;font-size:.92rem}
+.death{border:2px solid var(--bad);border-radius:var(--radius);padding:12px;background:var(--surface);margin:10px 0}
+.death.ok{border-color:var(--good)}
+/* footer nav */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:6px 10px calc(8px + env(safe-area-inset-bottom))}
+.nav .in{max-width:860px;margin:0 auto}
+.dots{display:flex;visibility:hidden}.dots.show{visibility:visible}
+.dots button{flex:1;min-height:44px;background:none;border:0;padding:0;display:grid;place-items:center;color:var(--muted);font-size:.7rem}
+.dots button i{display:block;width:14px;height:14px;border-radius:50%;border:2px solid var(--muted);margin-bottom:2px}
+.dots button.on i{background:var(--accent);border-color:var(--accent)}.dots button.past i{border-color:var(--good);background:var(--good)}
+.navrow{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.navrow .lbl{font-size:.85rem;color:var(--muted);text-align:center;flex:1}
+.sr{position:absolute;left:-9999px}
+</style></head>
+<body>
+<a class="sr" href="#main">Skip to content</a>
+<header class="top"><div class="brand"><i></i> d.idle <span class="chip">early preview</span></div>
+<button class="btn" id="theme" aria-label="Switch light or dark theme">Theme</button></header>
+<div class="banner">Fake data, nothing here talks to the internet. The real thing runs on your own computer.</div>
+<main id="main" tabindex="-1">
+
+<!-- 0 landing -->
+<section class="screen" data-id="landing" aria-labelledby="h-landing">
+<h1 id="h-landing">What is d.idle?</h1>
+<p class="hero-big">An idle Diablo II. Your hero plays on its own while you do something else.</p>
+<div class="card"><ul class="points">
+<li>It <b>asks you questions</b> when it is unsure, and <b>learns from your answers</b>.</li>
+<li>You can <b>send it somewhere</b> on a map.</li>
+<li>You can <b>watch</b> it play, or ignore it for hours.</li>
+<li><b>Offline single-player only.</b> You bring your own Diablo II game files.</li></ul></div>
+<p class="muted">This is an early preview with fake data. Click through the five minutes below, then tell us what you think on the last page. About 5 to 8 minutes in total.</p>
+<div class="row"><button class="btn primary" data-go="s1">Start the five minutes</button><button class="btn" data-go="real">What is real today?</button></div>
+</section>
+
+<!-- 1 install -->
+<section class="screen" data-id="s1" aria-labelledby="h-s1">
+<div class="stephead"><span class="n">1</span><h2 id="h-s1">Install: one command</h2><span class="chip todo">Not built yet</span></div>
+<p>You would start by pasting one line into a terminal on your own computer. The command name below is a placeholder.</p>
+<div class="card"><pre>didle-install</pre>
+<button class="btn primary" id="runinst">Pretend to run it</button>
+<pre id="instout" aria-live="polite" hidden></pre></div>
+<p class="muted">The idea: nothing to configure by hand. When it finishes, the setup page opens in your browser.</p>
+</section>
+
+<!-- 2 setup -->
+<section class="screen" data-id="s2" aria-labelledby="h-s2">
+<div class="stephead"><span class="n">2</span><h2 id="h-s2">Setup: four short steps</h2><span class="chip todo">Not built yet</span></div>
+<ol class="sub" id="sub"><li>Go-ahead</li><li>Game files</li><li>Hero</li><li>Access</li></ol>
+<div class="card" id="setupbody"></div>
+<div class="row"><button class="btn" id="subback">Back</button><button class="btn primary" id="subnext">Continue</button></div>
+</section>
+
+<!-- 3 watch -->
+<section class="screen" data-id="s3" aria-labelledby="h-s3">
+<div class="stephead"><span class="n">3</span><h2 id="h-s3">Watch, and answer questions</h2><span class="chip built">First build exists</span></div>
+<div class="grid2">
+<div class="card"><h3>Live game</h3>
+<div class="game" role="img" aria-label="Drawn placeholder for the live game video"><div class="me"></div><div class="mob"></div><div class="cap">Drawn placeholder. The real screen streams the actual game.</div></div>
+<p style="margin:10px 0 2px"><b>Sorceress, level 6</b> in Cold Plains, fighting.</p>
+<div class="muted" style="font-size:.85rem">Life</div><div class="bar life"><i style="width:78%"></i></div>
+<div class="muted" style="font-size:.85rem;margin-top:6px">Mana</div><div class="bar mana"><i style="width:52%"></i></div></div>
+<div>
+<div class="card"><h3>Thoughts</h3><div id="thoughts" aria-live="polite"></div>
+<div class="row"><button class="btn" id="nextq">A magic ring shows up again</button></div>
+<p class="muted" style="font-size:.85rem">Try it: give the same answer three times in a row.</p></div>
+<div class="card"><h3>Rules (what the hero learned)</h3><div id="rules"></div></div>
+</div></div>
+</section>
+
+<!-- 4 orders -->
+<section class="screen" data-id="s4" aria-labelledby="h-s4">
+<div class="stephead"><span class="n">4</span><h2 id="h-s4">Send the hero somewhere</h2><span class="chip built">First build exists</span></div>
+<p>Tap an area, pick how long, press Go now. Act 1 only here; the hero is level 6 and in camp.</p>
+<div class="map" id="map"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" id="edges"></svg></div>
+<div class="card" id="sheet"><p class="muted">No area picked yet.</p></div>
+<div class="card"><h3>Now and queue</h3><div id="queue"><p class="muted">No order. The hero follows its own plan.</p></div></div>
+</section>
+
+<!-- 5 journal -->
+<section class="screen" data-id="s5" aria-labelledby="h-s5">
+<div class="stephead"><span class="n">5</span><h2 id="h-s5">Journal: what happened and why</h2><span class="chip built">First build exists</span></div>
+<p>Press "Why did you do that?" on any line.</p>
+<div class="card" id="journal"></div>
+</section>
+
+<!-- 6 help -->
+<section class="screen" data-id="s6" aria-labelledby="h-s6">
+<div class="stephead"><span class="n">6</span><h2 id="h-s6">Help and "Report a problem"</h2><span class="chip todo">Not built yet</span></div>
+<div class="card"><h3>Help</h3>
+<details><summary>What does the hero do while I am away?</summary><p>It plays on its own and keeps a journal. Questions fade away on their own and the hero does the safe thing.</p></details>
+<details><summary>Why did it ask me that?</summary><p>Every question says why you are asked and what happens if you do nothing.</p></details>
+<details><summary>How do I stop it?</summary><p>Pause is always one press away, at the top of the watch screen.</p></details></div>
+<div class="card"><h3>Report a problem</h3>
+<p>You would see the report before anything leaves your computer. Tick what you are happy to include:</p>
+<label class="inl"><input type="checkbox" checked> What the hero did in the last 10 minutes</label>
+<label class="inl"><input type="checkbox" checked> Version and settings</label>
+<label class="inl"><input type="checkbox"> A screenshot of the watch screen</label>
+<p class="muted">Never included: passwords, your game files, your save files.</p>
+<button class="btn" id="mkrep">Show report preview</button><pre id="repout" hidden>Report (example)
+version: preview
+hero: Sorceress level 6, Cold Plains
+last 10 min: 47 kills, 1 question answered, 0 deaths
+you wrote: (your note goes here)</pre></div>
+</section>
+
+<!-- 7 death -->
+<section class="screen" data-id="s7" aria-labelledby="h-s7">
+<div class="stephead"><span class="n">7</span><h2 id="h-s7">When the hero dies</h2><span class="chip todo">Wording is a mock</span></div>
+<p>Dying is part of the game. The watch screen tells you plainly and the hero tries to get back on its feet.</p>
+<div class="death" id="death" role="status"></div>
+<div class="row"><button class="btn" id="dnext">Show the next moment</button><button class="btn" id="dreset">Start again</button></div>
+</section>
+
+<!-- 8 real -->
+<section class="screen" data-id="real" aria-labelledby="h-real">
+<h2 id="h-real">What is real today and what is not</h2>
+<div class="grid2">
+<div class="card"><h3>Real today <span class="chip built">built</span></h3><ul class="points">
+<li>The hero plays Diablo II on its own, on a game engine we run ourselves.</li>
+<li>Thoughts, question cards, rules, the orders map, the journal and live video exist in a first build used by one person.</li></ul></div>
+<div class="card"><h3>Not built yet <span class="chip todo">todo</span></h3><ul class="points">
+<li>The installer and the container for friends.</li>
+<li>The full guided tour, Help and Report a problem.</li>
+<li>More decision points: about 9 of 22 ask you today.</li>
+<li>Classes other than Sorceress.</li>
+<li>Acts 2 to 5 on the orders map.</li></ul></div></div>
+<p class="muted">Everything in the walkthrough is fake data. Screens with a "Not built yet" tag show the plan, not a working feature. No release date is promised.</p>
+</section>
+
+<!-- 9 feedback -->
+<section class="screen" data-id="fb" aria-labelledby="h-fb">
+<h2 id="h-fb">Your feedback</h2>
+<p>This is the point of the preview. Short answers are fine. Nothing is sent anywhere.</p>
+<form id="form" onsubmit="return false"></form>
+<div class="row"><button class="btn primary" id="copy">Copy my answers</button></div>
+<p id="copymsg" role="status" class="muted"></p>
+<textarea id="fallback" aria-label="Your answers, select all and copy" hidden rows="10"></textarea>
+<p><b>Send the copied text back to whoever sent you this.</b></p>
+</section>
+</main>
+
+<nav class="nav" aria-label="Preview navigation"><div class="in">
+<div class="dots" id="dots"></div>
+<div class="navrow"><button class="btn" id="back">Back</button><span class="lbl" id="lbl"></span><button class="btn primary" id="next">Next</button></div>
+</div></nav>
+
+<script>
+(function(){
+var ORDER=['landing','s1','s2','s3','s4','s5','s6','s7','real','fb'],cur=0;
+var STEPN=['Install','Setup','Watch','Orders','Journal','Help','Death'];
+function $(i){return document.getElementById(i)}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function show(i){
+ cur=Math.max(0,Math.min(ORDER.length-1,i));
+ [].forEach.call(document.querySelectorAll('.screen'),function(s){s.classList.toggle('on',s.dataset.id===ORDER[cur])});
+ var inw=cur>=1&&cur<=7;$('dots').classList.toggle('show',inw);
+ [].forEach.call($('dots').children,function(b,k){b.className=(k+1===cur)?'on':(k+1<cur?'past':'')});
+ $('back').disabled=cur===0;$('next').disabled=cur===ORDER.length-1;
+ $('lbl').textContent=inw?'Step '+cur+' of 7: '+STEPN[cur-1]:(ORDER[cur]==='fb'?'Last page':(ORDER[cur]==='real'?'Honest status':'Welcome'));
+ $('next').textContent=cur===7?'Next: what is real':(cur===8?'Next: feedback':'Next');
+ window.scrollTo(0,0);$('main').focus({preventScroll:true});
+ if(ORDER[cur]==='s3')startTimer();else stopTimer();
+}
+for(var k=0;k<7;k++)(function(k){var b=el('button');b.type='button';b.setAttribute('aria-label','Go to step '+(k+1)+': '+STEPN[k]);b.appendChild(el('i'));b.appendChild(document.createTextNode(k+1));b.onclick=function(){show(k+1)};$('dots').appendChild(b)})(k);
+$('back').onclick=function(){show(cur-1)};$('next').onclick=function(){show(cur+1)};
+[].forEach.call(document.querySelectorAll('[data-go]'),function(b){b.onclick=function(){show(ORDER.indexOf(b.dataset.go))}});
+$('theme').onclick=function(){var r=document.documentElement,d=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');r.dataset.theme=d==='dark'?'light':'dark'};
+
+/* 1 install */
+$('runinst').onclick=function(){var o=$('instout');o.hidden=false;o.textContent='';var L=['Checking your computer ... ok','Setting things up ... ok','Done. Opening the setup page in your browser (example output).'],i=0;
+ (function t(){if(i<L.length){o.textContent+=L[i++]+'\n';setTimeout(t,350)}})()};
+
+/* 2 setup */
+var sub=0,ok=[0,0,0,0],files='ok',fileMsg={ok:['Found','Your Diablo II files were found and look right (version check passed).'],missing:['Not found','We could not find the game files. Point to the folder where Diablo II and Lord of Destruction are installed.'],old:['Wrong version','Files found, but an older version. The game needs to be updated to the latest patch first.']};
+function setup(){
+ var b=$('setupbody');b.textContent='';
+ [].forEach.call($('sub').children,function(li,k){li.className=k===sub?'on':(ok[k]?'ok':'')});
+ if(sub===0){b.appendChild(el('h3',null,'Go-ahead'));b.appendChild(el('p',null,'Before anything else, three honest questions.'));
+  var c=['I own Diablo II and Lord of Destruction.','I will use my own game files. d.idle does not include any.','I understand this is offline single-player only.'];
+  c.forEach(function(t,i){var l=el('label','inl');var x=el('input');x.type='checkbox';x.onchange=function(){chk()};l.appendChild(x);l.appendChild(document.createTextNode(t));b.appendChild(l)});
+  chk();}
+ if(sub===1){b.appendChild(el('h3',null,'Game files check'));b.appendChild(el('p',null,'Pretend the check finds one of these (pick one to see each state):'));
+  var s=el('div','row');['ok','missing','old'].forEach(function(k){var l=el('label','inl');var r=el('input');r.type='radio';r.name='fs';r.checked=files===k;r.onchange=function(){files=k;ok[1]=k==='ok'?1:0;setup()};l.appendChild(r);l.appendChild(document.createTextNode(fileMsg[k][0]));s.appendChild(l)});b.appendChild(s);
+  var w=el('div','warnbox');w.setAttribute('role','status');w.appendChild(el('b',null,fileMsg[files][0]+': '));w.appendChild(document.createTextNode(fileMsg[files][1]));b.appendChild(w);
+  $('subnext').disabled=files!=='ok';}
+ if(sub===2){b.appendChild(el('h3',null,'Your hero'));var l=el('label',null,'Hero name');l.htmlFor='hn';b.appendChild(l);var i=el('input');i.type='text';i.id='hn';i.value='Sparky';i.maxLength=15;b.appendChild(i);
+  var l2=el('label',null,'Class');l2.htmlFor='hc';b.appendChild(l2);var s=el('select');s.id='hc';[['Sorceress',0],['Necromancer (later)',1],['Paladin (later)',1],['Amazon (later)',1],['Barbarian (later)',1],['Druid (later)',1],['Assassin (later)',1]].forEach(function(o){var op=el('option',null,o[0]);op.disabled=!!o[1];s.appendChild(op)});b.appendChild(s);
+  b.appendChild(el('p','muted','Only the Sorceress works today. The name is fake and stays on your computer.'));ok[2]=1;$('subnext').disabled=false;}
+ if(sub===3){b.appendChild(el('h3',null,'Access'));b.appendChild(el('p',null,'How should you open d.idle later, for example from your phone on your home network?'));
+  [['A short passcode (simplest)',1],['A long access token (for people who like that)',0]].forEach(function(o,i){var l=el('label','inl');var r=el('input');r.type='radio';r.name='ac';r.checked=!!o[1];r.onchange=function(){pc.hidden=i!==0};l.appendChild(r);l.appendChild(document.createTextNode(o[0]));b.appendChild(l)});
+  var pc=el('pre',null,'Example passcode: 7K2-M9Q (fake)');pc.id='pc';b.appendChild(pc);ok[3]=1;$('subnext').disabled=false;}
+ $('subback').disabled=sub===0;$('subnext').textContent=sub===3?'Finish setup':'Continue';
+}
+function chk(){var a=[].slice.call($('setupbody').querySelectorAll('input[type=checkbox]'));ok[0]=a.every(function(x){return x.checked})?1:0;$('subnext').disabled=!ok[0];[].forEach.call($('sub').children,function(li,k){if(k===0&&ok[0])li.classList.add('ok')})}
+$('subback').onclick=function(){if(sub>0){sub--;setup()}};
+$('subnext').onclick=function(){if(sub<3){sub++;setup()}else{var b=$('setupbody');b.textContent='';b.appendChild(el('h3',null,'All set'));b.appendChild(el('p',null,'Setup done (pretend). Next: the watch screen.'));$('subnext').hidden=true;$('subback').hidden=true;}};
+setup();
+
+/* 3 thoughts */
+var streak=0,lastAns=null,rules=[],tmr=null,left=30,qn=0;
+function stopTimer(){clearInterval(tmr);tmr=null}
+function startTimer(){if(!$('thoughts').firstChild)ask()}
+function ask(){
+ stopTimer();var t=$('thoughts');t.textContent='';qn++;
+ if(rules.length){var d=el('div','thought done');d.appendChild(el('p',null,'Not asked this time: Rule 1 applies, so the hero picked up the magic ring.'));d.appendChild(el('p','muted','You can remove the rule on the right at any time.'));t.appendChild(d);return}
+ var c=el('div','thought');c.appendChild(el('b',null,'A magic ring is on the ground. Pick it up?'));
+ var f=el('div','facts');
+ [['Why am I asked','Rings can be worth the walk, or not. The hero cannot tell what you are saving for, so it asks.'],['If you do nothing','After the timer runs out the hero leaves the ring and carries on.']].forEach(function(p){var d=el('div');d.appendChild(el('b',null,p[0]));d.appendChild(document.createTextNode(p[1]));f.appendChild(d)});c.appendChild(f);
+ var fd=el('div','fade');var fi=el('i');fd.appendChild(fi);fd.setAttribute('role','timer');fd.setAttribute('aria-label','Time left before this question fades');c.appendChild(fd);
+ var tx=el('div','muted','');tx.style.fontSize='.85rem';c.appendChild(tx);
+ var r=el('div','row');[['Pick it up','pick'],['Leave it','leave']].forEach(function(o){var b=el('button','btn'+(o[1]==='pick'?' primary':''),o[0]);b.onclick=function(){answer(o[1],c)};r.appendChild(b)});c.appendChild(r);
+ var ct=el('div');ct.id='ct';c.appendChild(ct);t.appendChild(c);counter(ct);
+ left=30;
+ var tk=function(){fi.style.width=(left/30*100)+'%';tx.textContent='Fades in '+left+' s'};tk();
+ tmr=setInterval(function(){left--;tk();if(left<=0){stopTimer();c.className='thought done';c.querySelector('.row').remove();tx.textContent='Faded. The hero left the ring. This does not count towards a rule.';streak=0;lastAns=null;counter(ct)}},1000);
+}
+function counter(ct){ct.textContent='';if(!streak)return;ct.appendChild(el('p','muted','Same answer in a row: '+streak+' of 3'));var w=el('div','count3');for(var i=0;i<3;i++)w.appendChild(el('span',i<streak?'f':''));ct.appendChild(w)}
+function answer(a,c){
+ stopTimer();streak=(a===lastAns)?streak+1:1;lastAns=a;
+ var ct=$('ct');c.className='thought done';c.querySelector('.row').remove();
+ var d=el('p',null,'You said: '+(a==='pick'?'pick it up':'leave it')+'.');c.appendChild(d);counter(ct);
+ if(streak===3){var R=$('rules');var msg=a==='pick'?'Always pick up magic rings':'Always leave magic rings';rules=[msg];drawRules(true);c.appendChild(el('p',null,'Three in a row. A rule was created. See the Rules panel.'));streak=0}
+}
+function drawRules(isnew){var R=$('rules');R.textContent='';if(!rules.length){R.appendChild(el('p','muted','No rules yet. Answer the same way three times and one appears.'));return}
+ var d=el('div','rule'+(isnew?' new':''));d.appendChild(el('span',null,'Rule 1: '+rules[0]));var b=el('button','btn','Remove');b.onclick=function(){rules=[];streak=0;lastAns=null;drawRules()};d.appendChild(b);R.appendChild(d)}
+drawRules();
+$('nextq').onclick=function(){ask()};
+
+/* 4 orders */
+var AREAS=[['camp','Rogue Encampment',17,89,0],['bm','Blood Moor',17,68,0],['den','Den of Evil',17,47,0],['cp','Cold Plains',50,68,0],['cave','Cave 1',50,89,0],['bg','Burial Grounds',83,68,0],['crypt','Crypt',83,47,0],['sf','Stony Field',50,47,0],['dw','Dark Wood',50,26,0],['bmarsh','Black Marsh',50,9,0],['hole','Hole 1',17,9,0],['ftw','Forgotten Tower',83,9,1]];
+var EDG=[['camp','bm'],['bm','den'],['bm','cp'],['cp','cave'],['cp','bg'],['bg','crypt'],['cp','sf'],['sf','dw'],['dw','bmarsh'],['bmarsh','hole'],['bmarsh','ftw']],AN={},pick=null,order=null;
+AREAS.forEach(function(a){AN[a[0]]=a});
+(function(){var m=$('map'),sv=$('edges');
+ AREAS.forEach(function(a){a.y=a[3]});
+ EDG.forEach(function(e){var A=AN[e[0]],B=AN[e[1]];var l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',A[2]);l.setAttribute('y1',A.y);l.setAttribute('x2',B[2]);l.setAttribute('y2',B.y);sv.appendChild(l)});
+ AREAS.forEach(function(a){var b=el('button','node'+(a[4]?' hard':'')+(a[0]==='camp'?' here':''),a[1]);b.type='button';b.id='n-'+a[0];b.setAttribute('aria-pressed','false');b.style.left=a[2]+'%';b.style.top=a.y+'%';if(a[4])b.title='Too hard for the hero right now';b.onclick=function(){choose(a[0])};m.appendChild(b)});
+})();
+function choose(id){pick=id;[].forEach.call(document.querySelectorAll('.node'),function(n){n.setAttribute('aria-pressed',n.id==='n-'+id)});
+ var a=AN[id],s=$('sheet');s.textContent='';s.appendChild(el('h3',null,'Order: '+a[1]));
+ if(id==='camp'){s.appendChild(el('p','muted','The hero is already here.'));return}
+ if(a[4]){var w=el('div','warnbox');w.setAttribute('role','alert');w.appendChild(el('b',null,'Too hard for the hero right now. '));w.appendChild(document.createTextNode('It has no mercenary and is level 6; it skips the Forgotten Tower below level 16. Pick another area, or queue it for later.'));s.appendChild(w);return}
+ var f=el('fieldset');f.style.cssText='border:0;padding:0;margin:0';var lg=el('legend',null,'How long?');lg.style.fontWeight='600';f.appendChild(lg);
+ [['30 minutes','30 min'],['Until level 7','until level 7'],['Until I say stop','until you stop it']].forEach(function(o,i){var l=el('label','inl');var r=el('input');r.type='radio';r.name='dur';r.value=o[1];r.checked=i===0;l.appendChild(r);l.appendChild(document.createTextNode(o[0]));f.appendChild(l)});s.appendChild(f);
+ var b=el('button','btn primary','Go now');b.onclick=function(){var d=f.querySelector('input:checked').value;order={a:a[1],d:d};drawQ();[].forEach.call(document.querySelectorAll('.node.here'),function(n){n.classList.remove('here')});$('n-'+id).classList.add('here');s.appendChild(el('p','muted','Sent. See "Now and queue" below.'))};s.appendChild(b)}
+function drawQ(){var q=$('queue');q.textContent='';if(!order){q.appendChild(el('p','muted','No order. The hero follows its own plan.'));return}
+ var d=el('div','q');d.appendChild(el('span','chip built','now'));d.appendChild(el('span',null,order.a+', '+order.d));var b=el('button','btn','Cancel');b.onclick=function(){order=null;drawQ()};d.appendChild(b);q.appendChild(d);q.appendChild(el('p','muted','The hero walks there, fights, then goes home to rest when the order ends.'))}
+
+/* 5 journal */
+var J=[['00:12','Went back to town and rested.','Life was under 40 percent and the potions were low, so resting was safer than another fight.'],['00:09','Used a life potion in Cold Plains.','A pack was hitting hard. At under half life the hero drinks before it keeps fighting.'],['00:05','Left a magic ring on the ground.','You answered "leave it" earlier. Without a rule, the hero asks first.'],['00:02','Answered your question about the ring.','This line shows how your answers add up towards a rule.']];
+(function(){var j=$('journal');J.forEach(function(e){var d=el('div','j');d.appendChild(el('b',null,e[0]+'  '));d.appendChild(document.createTextNode(e[1]));var b=el('button','btn','Why did you do that?');b.style.marginTop='6px';b.style.display='block';b.setAttribute('aria-expanded','false');var w=el('div','why',e[2]);w.hidden=true;b.onclick=function(){w.hidden=!w.hidden;b.setAttribute('aria-expanded',!w.hidden)};d.appendChild(b);d.appendChild(w);j.appendChild(d)})})();
+
+/* 6 report */
+$('mkrep').onclick=function(){$('repout').hidden=false};
+
+/* 7 death */
+var ds=0,DS=[['The hero died in Cold Plains.','A pack caught it at low life. Nothing was lost in this preview.',0],['Back in town, recovering.','Resting, restocking potions, then deciding whether to go back or pick an easier area.',0],['Back on its feet.','The hero is playing again. The journal has the full story, and you can ask "why did you do that?" on any line.',1]];
+function death(){var d=$('death'),x=DS[ds];d.textContent='';d.className='death'+(x[2]?' ok':'');d.appendChild(el('b',null,(x[2]?'':'Recovering: ')+x[0]));d.appendChild(el('p',null,x[1]));$('dnext').disabled=ds===2}
+$('dnext').onclick=function(){ds++;death()};$('dreset').onclick=function(){ds=0;death()};death();
+
+/* 9 feedback */
+var Q=['In one sentence, what do you think this game is?','Did the "why am I asked" text make sense?','Would you answer questions, or want it fully automatic?','Is sending the hero somewhere with the map clear?','What would you want to see or control that is missing?','What would make you stop playing after 10 minutes?','Would you run this on your own computer with your own Diablo II files? What would stop you?','Anything confusing in the flow?'];
+Q.forEach(function(q,i){var l=el('label',null,(i+1)+'. '+q);l.htmlFor='q'+i;var t=el('textarea');t.id='q'+i;t.name='q'+i;$('form').appendChild(l);$('form').appendChild(t)});
+$('copy').onclick=function(){var s='d.idle preview feedback\n\n';Q.forEach(function(q,i){s+=(i+1)+'. '+q+'\n'+($('q'+i).value||'(no answer)')+'\n\n'});
+ var f=$('fallback'),m=$('copymsg');f.value=s;
+ function fb(){f.hidden=false;f.focus();f.select();m.textContent='Copy did not work here. Select all in the box below (it is selected for you) and copy it by hand.'}
+ try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(function(){m.textContent='Copied. Now paste it to whoever sent you this.'},fb)}else{f.hidden=false;f.select();var ok=document.execCommand('copy');if(ok){m.textContent='Copied. Now paste it to whoever sent you this.'}else fb()}}catch(e){fb()}};
+show(0);
+})();
+</script>
+</body></html>
