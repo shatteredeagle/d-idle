@@ -35,7 +35,7 @@ func TestLogLines(t *testing.T) {
 
 func TestKnobsFromDefaults(t *testing.T) {
 	k := DefaultKnobs()
-	want := Knobs{2, 1, 3, 5, 1, false, true, 10, true, 50, 100, 17, 50, 40, 60, 10} // farm cap 18 -> 17 (no-merc Andariel floor), full-kit reserve 50, budget 40, cooldown 60: job mercrevive2
+	want := Knobs{2, 1, 3, 5, 1, false, true, 10, true, 50, 100, 17, 50, 40, 60, 0, 50, 13} // farm cap 18 -> 17 (no-merc Andariel floor), full-kit reserve 50, budget 40, cooldown 60: job mercrevive2
 	if k != want {
 		t.Errorf("%+v", k)
 	}

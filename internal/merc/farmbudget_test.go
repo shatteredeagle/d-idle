@@ -91,7 +91,7 @@ func TestLogFarmBudget(t *testing.T) {
 	}
 }
 
-// Full kit (just bought): 50 percent of the refill is reserved, not 100. Two kit profiles.
+// Hire bar: a full kit (just bought) reserves 50 percent of the refill, not 100. Two kit profiles. A revive ignores the kit.
 func TestFullKitReserve(t *testing.T) {
 	if k := DefaultKnobs(); k.KitReservePctFullKit != 50 || k.GoldFarmBudgetMin != 40 || k.GoldFarmCooldownMin != 60 || k.GoldFarmMaxLevel != 17 {
 		t.Fatalf("defaults %+v", k)
@@ -104,22 +104,22 @@ func TestFullKitReserve(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			c := ctx()
 			c.Kit = tc.kit
-			if got, want := ReviveNeed(c, 750), 750+tc.kit; got != want {
+			if got, want := GoldNeed(c, 750), 750+tc.kit; got != want {
 				t.Fatalf("empty kit need %d, want %d", got, want)
 			}
 			c.KitFull = true
 			bar := 750 + tc.kit/2
-			if got := ReviveNeed(c, 750); got != bar {
+			if got := GoldNeed(c, 750); got != bar {
 				t.Fatalf("full kit need %d, want %d", got, bar)
 			}
-			if d, _ := ShouldRevive(dead, withGold(c, bar-1), 0); d.Do {
+			if got := ReviveNeed(c, 750); got != 750 {
+				t.Errorf("a revive does not reserve the kit: %d", got)
+			}
+			if d, _ := ShouldRevive(dead, withGold(c, 749), 0); d.Do {
 				t.Errorf("one short: %+v", d)
 			}
-			if d, _ := ShouldRevive(dead, withGold(c, bar), 0); !d.Do {
+			if d, _ := ShouldRevive(dead, withGold(c, 750), 0); !d.Do {
 				t.Errorf("at the bar: %+v", d)
-			}
-			if GoldNeed(c, 750) != bar-0 && c.Knobs.ReviveGoldMult == 1 {
-				t.Errorf("GoldNeed %d", GoldNeed(c, 750))
 			}
 		})
 	}

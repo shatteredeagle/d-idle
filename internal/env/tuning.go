@@ -53,7 +53,7 @@ type Knob struct {
 
 // RetiredKnobs are keys of knobs that no longer exist. Old config.json "tuning" objects and saved tuner state may
 // still name them; they load and are ignored.
-var RetiredKnobs = map[string]bool{"bot.starveGold": true, "bot.starveRecoverGold": true}
+var RetiredKnobs = map[string]bool{"bot.starveGold": true, "bot.starveRecoverGold": true, "merc.reviveReserveMax": true}
 
 // Knobs lists every tuning knob across domains.
 func Knobs() []Knob {

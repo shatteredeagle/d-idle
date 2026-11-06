@@ -499,7 +499,7 @@ func TestGoldFarmFollowsMerc(t *testing.T) {
 	if !w.GoldFarm(field(300, 11)) {
 		t.Error("dead merc and short gold must farm")
 	}
-	if !strings.Contains(buf.String(), "merc: gold farm on need=760 gold=300 clvl=11") {
+	if !strings.Contains(buf.String(), "merc: gold farm on need=750 gold=300 clvl=11") {
 		t.Errorf("log:\n%s", buf)
 	}
 	if w.GoldFarm(field(5000, 11)) {
@@ -873,7 +873,7 @@ func TestReviveReadsTheRealQuote(t *testing.T) {
 		if got := w.ReviveStep(ctx, snap(1000)); got != "merc revive skipped: gold" || rev.probes != 1 || rev.calls != 0 {
 			t.Fatalf("%v poor: %q probes %d calls %d", class, got, rev.probes, rev.calls)
 		}
-		if !strings.Contains(buf.String(), "need=1280") {
+		if !strings.Contains(buf.String(), "need=1270") {
 			t.Errorf("the refusal must carry the quote bar:\n%s", buf)
 		}
 		clk.t = clk.t.Add(5 * time.Minute)
@@ -896,7 +896,138 @@ func TestReviveProbeSkippedOrFailed(t *testing.T) {
 	}
 	rev2 := &probeReviver{err: errors.New("no hireling")}
 	w2, buf, _ := testWire(t, &fakeReader{st: dead}, rev2)
-	if got := w2.ReviveStep(context.Background(), townSnap(1500, true)); got != "merc revive skipped: gold" || rev2.probes != 1 || !strings.Contains(buf.String(), "need=1930") {
+	if got := w2.ReviveStep(context.Background(), townSnap(1500, true)); got != "merc revive skipped: gold" || rev2.probes != 1 || !strings.Contains(buf.String(), "need=1920") {
 		t.Fatalf("failed probe: %q probes %d\n%s", got, rev2.probes, buf)
+	}
+}
+
+// SME rule (user 2026-11-06): the revive keeps back 0 gold below clvl 13 and 50 from clvl 13, whatever the kit costs.
+// Price 1920 (merc clvl 16). Two classes: the band is class-free.
+func TestReviveReserveByClvl(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, tc := range []struct {
+			clvl, gold int
+			revive     bool
+		}{{12, 1930, true}, {12, 1919, false}, {14, 1930, false}, {14, 1975, true}, {13, 1969, false}} {
+			rev := &fakeReviver{paid: 1920}
+			w, buf, _ := testWire(t, &fakeReader{st: merc.MercState{Known: true, Owned: true, Level: 16}}, rev)
+			s := townSnap(tc.gold, true)
+			s.Player.Class, s.Player.Level = class, tc.clvl
+			got := w.ReviveStep(context.Background(), s)
+			if (got == "merc revived") != tc.revive || (rev.calls == 1) != tc.revive {
+				t.Errorf("%v clvl %d gold %d: %q calls %d", class, tc.clvl, tc.gold, got, rev.calls)
+			}
+			if tc.clvl == 14 && !tc.revive && !strings.Contains(buf.String(), "need=1970") {
+				t.Errorf("clvl 14 refusal must show need=1970:\n%s", buf)
+			}
+		}
+	}
+}
+
+// A town that records the order of its chores and the revive, and lets a chore change the purse.
+type orderTown struct {
+	bot.Townsman
+	order *[]string
+	plans []bot.ChorePlan
+	sold  func()
+}
+
+func (o *orderTown) Chores(_ context.Context, p bot.ChorePlan) (bot.ChoreReport, error) {
+	o.plans = append(o.plans, p)
+	switch {
+	case p.Sell && !p.Potions:
+		*o.order = append(*o.order, "sell")
+		if o.sold != nil {
+			o.sold()
+		}
+	default:
+		*o.order = append(*o.order, "shop")
+	}
+	return bot.ChoreReport{}, nil
+}
+
+type orderReviver struct {
+	fakeReviver
+	order *[]string
+}
+
+func (r *orderReviver) Revive(ctx context.Context) (int, error) {
+	*r.order = append(*r.order, "revive")
+	return r.fakeReviver.Revive(ctx)
+}
+
+type mercSnapReader struct {
+	d2.StateReader
+	s *d2.Snapshot
+}
+
+func (r *mercSnapReader) Snapshot() (*d2.Snapshot, error) { return r.s, nil }
+
+// The revive comes before the potion purchase in the same visit; when the purse is short the junk is sold first and the
+// revive asked again, still before any potion is bought. Quote unreadable: nothing is bought for the merc and the next
+// visit tries again.
+func TestReviveBeforePotionsSellsJunkFirst(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 10} // 750, clvl 12 reserve 0
+	var order []string
+	rev := &orderReviver{order: &order}
+	rev.paid = 750
+	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
+	snap := townSnap(400, false)
+	snap.Player.Level = 12
+	w.e.Read = &mercSnapReader{s: snap}
+	town := &orderTown{order: &order, sold: func() { snap.Player.Gold = 800 }}
+	mt := &mercTown{Townsman: town, w: w}
+	rep, err := mt.Chores(context.Background(), bot.ChorePlan{Sell: true, Potions: true, Repair: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := strings.Join(order, ","); got != "sell,revive,shop" {
+		t.Errorf("order %s, want sell,revive,shop", got)
+	}
+	if len(rep.Done) == 0 || rep.Done[0] != "merc revived" {
+		t.Errorf("report %v", rep.Done)
+	}
+	// a funded purse revives first, no extra sell round
+	order = nil
+	rev2 := &orderReviver{order: &order}
+	rev2.paid = 750
+	w2, _, _ := testWire(t, &fakeReader{st: dead}, rev2)
+	snap2 := townSnap(900, false)
+	snap2.Player.Level = 12
+	w2.e.Read = &mercSnapReader{s: snap2}
+	mt2 := &mercTown{Townsman: &orderTown{order: &order}, w: w2}
+	if _, err := mt2.Chores(context.Background(), bot.ChorePlan{Sell: true, Potions: true}); err != nil {
+		t.Fatal(err)
+	}
+	if got := strings.Join(order, ","); got != "revive,shop" {
+		t.Errorf("funded order %s, want revive,shop", got)
+	}
+}
+
+func TestReviveQuoteUnreadableLogsOncePerVisitAndRetries(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 16} // estimate 1920
+	rev := &probeReviver{err: errors.New("no hireling")}
+	w, buf, clk := testWire(t, &fakeReader{st: dead}, rev)
+	ctx := context.Background()
+	w.ReviveFirst(ctx, townSnap(1500, false))
+	w.ReviveStep(ctx, townSnap(1500, true))
+	if n := strings.Count(buf.String(), "revive quote unreadable"); n != 1 || rev.probes != 2 {
+		t.Fatalf("unreadable lines %d probes %d (one line per visit, probe each time):\n%s", n, rev.probes, buf)
+	}
+	clk.t = clk.t.Add(5 * time.Minute)
+	w.ReviveStep(ctx, townSnap(1500, true))
+	if n := strings.Count(buf.String(), "revive quote unreadable"); n != 2 || rev.probes != 3 {
+		t.Fatalf("next visit: lines %d probes %d:\n%s", n, rev.probes, buf)
+	}
+}
+
+// An old tuning file that names the retired cap still loads; the new band knobs can be set.
+func TestRetiredReviveReserveMaxStillLoads(t *testing.T) {
+	tune := env.DefaultTuning()
+	if err := bot.ApplyOverrides(&tune, map[string]float64{"merc.reviveReserveMax": 10, "merc.reviveReserveHigh": 80}); err != nil {
+		t.Fatal(err)
+	}
+	if tune.Merc.ReviveReserveHigh != 80 {
+		t.Errorf("high band %d", tune.Merc.ReviveReserveHigh)
 	}
 }

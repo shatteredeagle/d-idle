@@ -41,10 +41,10 @@ A Blood Raven attempt MUST start only with clvl 9 or higher for Sorceress, Druid
 - **THEN** the claim at Kashya still runs and no gold is spent
 
 ### Requirement: Revive and stop rule
-The bot SHALL revive a dead merc only with a town portal and potions and gold of at least `merc.reviveGoldMult` (1) x the price plus the kit reserve, at most `merc.reviveMaxPerHour` (2) times an hour, and SHALL use `merc.stopGoldMult` (5) as the multiple when merc deaths exceed `merc.stopDeathsPerHour` (3). Price estimate: level squared / 2 x 15, cap 50,000 (S). Source: user decision 2026-11-02; docs/merc.md policy 5. Reconciled 2026-11-04 (source: mercpolicy).
+The bot SHALL revive a dead merc only with a town portal and potions and gold of at least `merc.reviveGoldMult` (1) x the price plus the revive reserve (see Spending order), at most `merc.reviveMaxPerHour` (2) times an hour, and SHALL use `merc.stopGoldMult` (5) as the multiple when merc deaths exceed `merc.stopDeathsPerHour` (3). Price estimate: level squared / 2 x 15, cap 50,000 (S). Source: user decision 2026-11-02; docs/merc.md policy 5. Reconciled 2026-11-04 (source: mercpolicy).
 
 #### Scenario: Short of gold
-- **WHEN** revive costs 750, the kit reserve is 310 and gold is 1059
+- **WHEN** revive costs 750, clvl is 14 (reserve 50) and gold is 799
 - **THEN** the revive is skipped with reason `gold`
 
 ### Requirement: Route guard
@@ -123,15 +123,19 @@ Gear swaps SHALL need at least `merc.swapGainPct` (10 percent) score gain, items
 - **THEN** she is given a healing potion
 
 ### Requirement: Spending order
-The bot SHALL spend on potions before the merc: a revive or a hire is paid only with gold of at least price x `merc.reviveGoldMult` (1) or `merc.hireGoldMult` (1) plus `merc.kitReservePct` (100) percent of the full kit refill (town portal, `resource.kitMinHP` healing and `resource.kitMinMP` mana potions at the shop prices), with a town portal and potions on hand. Source: user decision 2026-11-02 (SME order). Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy). `merc.kitReservePct` 150 became 100 (user decision 2026-11-04, after the Gate 2 revive-gold stall of 366 skipped revives). Offline measured only; keep 100 until a Gate 2 rerun shows the skips drop; verify from the log line `merc: revive skipped (gold) price=P gold=G need=N`.
+The bot SHALL revive a dead merc before it buys potions or repairs (selling junk first), as soon as pack plus stash gold covers the probed real quote plus a small reserve: `merc.reviveReserveLow` (0) gold below clvl `merc.reviveReserveClvl` (13) and `merc.reviveReserveHigh` (50) gold from it, never a full potion refill. The stash shortfall is withdrawn for the payment. The price formula (level squared / 2 x 15) never gates the payment; it only decides whether to try when the quote cannot be read, and an unreadable quote is logged once per town visit and probed again on the next visit. A HIRE keeps the potions-first rule: gold of at least price x `merc.hireGoldMult` (1) plus `merc.kitReservePct` (100) percent of the full kit refill (town portal, `resource.kitMinHP` healing and `resource.kitMinMP` mana potions at the shop prices), with a town portal and potions on hand. Source: user 2026-11-06: defer to the SME (SME answer: revive ASAP with a small reserve); hires: user decision 2026-11-02 (SME order), `merc.kitReservePct` 150 became 100 (user decision 2026-11-04). Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy). Replaces the 100 percent kit reserve on revives (g2f seed 17: price 1920 plus a 155 to 310 reserve kept the merc dead 7 hours; the interim cap `merc.reviveReserveMax` of #274 is retired and ignored when an old tuning file names it). Offline tested only; verify from the log lines `merc: revive skipped (gold) price=P gold=G need=N` and `merc: revived`.
 
 #### Scenario: Reserve short
-- **WHEN** a revive costs 750, the kit refill is 310 and gold is 1059
-- **THEN** the revive is skipped with reason `gold`
+- **WHEN** a revive costs 1920, clvl is 14 and gold is 1930
+- **THEN** the revive is skipped with reason `gold` and needs 1970
 
 #### Scenario: Reserve met
-- **WHEN** the same revive meets gold 1060
+- **WHEN** the same revive meets gold 1975 at clvl 14, or gold 1920 at clvl 12
 - **THEN** the revive runs
+
+#### Scenario: Hire keeps the kit reserve
+- **WHEN** a hire quotes 400, the kit refill is 310 and gold is 709
+- **THEN** the hire waits (it needs 710)
 
 #### Scenario: Revive cap (Revive and stop rule)
 - **WHEN** two revives already happened in the last hour
@@ -139,7 +143,7 @@ The bot SHALL spend on potions before the merc: a revive or a hire is paid only 
 
 #### Scenario: Stop state (Revive and stop rule)
 - **WHEN** a 4th merc death happens in an hour and revive costs 750
-- **THEN** the revive needs 5 x 750 plus the reserve
+- **THEN** the revive needs 5 x 750 plus the revive reserve
 
 ### Requirement: Revive price is read, not computed
 The bot SHALL pay a revive whatever the NPC takes and log `merc: revived price=<paid> level=<n> estimate=<formula>`; the formula min(level squared / 2 x 15, 50,000) is used only as the pre-check estimate (S, unconfirmed on 1.14d) and MUST NOT be treated as the price. Source: user decision 2026-11-02; docs/merc-wire.md. Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
@@ -160,7 +164,7 @@ At the first Lut Gholein visit per difficulty the bot SHALL read the hire window
 - **THEN** nothing is hired and nothing is stripped
 
 ### Requirement: Gold farm while the merc is missing
-While the merc is dead or missing, gold is below the next merc payment (revive estimate or Normal hire quote of 400, plus the kit reserve) and clvl is below `merc.goldFarmMaxLevel` (17, 0 = off), a Normal Act 1 character SHALL level only in Blood Moor, Cold Plains, Stony Field, the Den of Evil, Caves 1 and 2, the Burial Grounds and the Crypt, and log `merc: gold farm on|off` once per change. Source: user decision 2026-11-02; cap raised from 16 to 17 by commit 8f4b8e3f (mercrevive2), docs/knobs.md is the owner. Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
+While the merc is dead or missing, gold is below the next merc payment (revive estimate or Normal hire quote of 400, plus the reserve (revive reserve, or the kit reserve for a hire)) and clvl is below `merc.goldFarmMaxLevel` (17, 0 = off), a Normal Act 1 character SHALL level only in Blood Moor, Cold Plains, Stony Field, the Den of Evil, Caves 1 and 2, the Burial Grounds and the Crypt, and log `merc: gold farm on|off` once per change. Source: user decision 2026-11-02; cap raised from 16 to 17 by commit 8f4b8e3f (mercrevive2), docs/knobs.md is the owner. Reconciled 2026-11-04 (source: 2026-11-02-mercpolicy).
 
 #### Scenario: Dead merc, thin purse
 - **WHEN** a clvl 11 character has a dead merc and 300 gold
