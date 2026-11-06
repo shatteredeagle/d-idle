@@ -283,8 +283,9 @@
       var words = stWords(n).slice(0, 2).join(' '), sub = n.sub || words;
       var t1 = sv('text', { x: 52, y: sub ? 18 : 27, 'text-anchor': 'middle' });
       if (n.name.length > 12) t1.setAttribute('font-size', '10.5');
+      if (n.name.length > 16) t1.setAttribute('font-size', '9.5');
       t1.textContent = n.name; g.appendChild(t1);
-      if (sub) { var t2 = sv('text', { x: 52, y: 34, 'text-anchor': 'middle', 'class': 'st' }); t2.textContent = sub; g.appendChild(t2); }
+      if (sub) { var t2 = sv('text', { x: 52, y: 34, 'text-anchor': 'middle', 'class': 'st' }); if (sub.length > 15) t2.setAttribute('font-size', '9.5'); t2.textContent = sub; g.appendChild(t2); }
       var act = function () { tap(n, g); };
       g.addEventListener('click', act);
       g.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(); } });
@@ -426,6 +427,9 @@
       });
     });
   });
+  // #orders, #thoughts, ... opens that tab (a link, a screenshot); the default is Orders.
+  var hv = location.hash.slice(1), hb = document.querySelector('#views button[data-view="' + hv.replace(/[^a-z]/g, '') + '"]');
+  if (hb && !hb.hidden) hb.click();
   var theme = 'auto';
   try { theme = localStorage.getItem('d2theme') || 'auto'; } catch (e) { /* storage blocked */ }
   function applyTheme(t) {
