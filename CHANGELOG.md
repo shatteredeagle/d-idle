@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- watch screen: optional live video of the game window (d2bot --ladder --watch --watch-video), captured only while someone watches
 - T0 drill series after pumpfix, verified live on four answer profiles (docs/probes/t0drill.md Result 3)
 - d2bot: the decision ladder is pumped every bot tick; --ladder-store / D2BOT_RUN give each drill its own ladder store (the shared store stays the default for unnamed runs)
 - T0 ladder live re-drill (docs/probes/t0drill.md Result 2): questions are answered in the field, a rule was learned; open defect, Pump is not called from the runner loop

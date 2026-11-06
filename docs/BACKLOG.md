@@ -509,6 +509,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-21 t0live3: integrated T0 re-drill after drillfix, two 10 min runs clean, 7 points fired, 1 rule learned, AC 2 and 3 still open; defect: Ladder.Pump never called from the bot loop
 - pumpfix: ladder Pump runs every bot tick, reopened thoughts restart their fade, drills get per-run ladder stores (TASK-21 notes; offline tested, live re-drill next)
 - TASK-21 live series after pumpfix: 4 profiles x 10 min on i5 clean, questions answered in the field (25 of 42), 2 rules learned, no behaviour change yet, AC 2 and 3 open (docs/probes/t0drill.md Result 3)
+- TASK-20 watch screen: on-demand live video of the game window (d2bot --watch-video, /stream, /shot.jpg); offline tested, live check on i5 passive
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

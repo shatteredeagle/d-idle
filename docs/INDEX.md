@@ -749,3 +749,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/t0-slice.md: phase A3, T0 fight-time points wired
 - docs/t0-slice.md: how to run the ladder and the watch screen on the real bot (d2bot -ladder -watch)
 - docs/soaks/gate2-multiseed-20261105-1607-g2d.md: Gate 2 multi-seed run 20261105-1607-g2d (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/research/watch-screen-design.md section 8 Game video (d2bot --watch-video)
