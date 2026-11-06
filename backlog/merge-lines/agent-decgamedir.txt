@@ -1,0 +1,1 @@
+CHANGELOG: decisions: the tester build ships game-dir mode only (user, 2026-11-06)
