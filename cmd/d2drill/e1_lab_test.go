@@ -1,0 +1,70 @@
+package main
+
+import (
+	"strings"
+	"testing"
+)
+
+func TestE1MercVerdicts(t *testing.T) {
+	f := map[string]string{"quote": "1920", "gold": "1930"}
+	revFirst := []string{"msg=\"merc: revived price=1920 level=12\"", "msg=\"town: restocked mana potions\""}
+	buyFirst := []string{"msg=\"town: restocked mana potions\"", "msg=\"merc: revived price=1920 level=12\""}
+	if v, _ := e1MercEvalA(revFirst, f); v != "PASS" {
+		t.Errorf("revive first: %s", v)
+	}
+	if v, _ := e1MercEvalA(buyFirst, f); v != "FAIL" {
+		t.Errorf("purchase first must fail: %s", v)
+	}
+	if v, _ := e1MercEvalA(nil, f); v != "FAIL" {
+		t.Errorf("no revive must fail: %s", v)
+	}
+	if v, _ := e1MercEvalB([]string{"merc: revive skipped (gold) price=1920 gold=1500 need=1920", "town: restocked mana potions"}, f); v != "PASS" {
+		t.Errorf("poor variant: %s", v)
+	}
+	if v, _ := e1MercEvalB([]string{"merc: revive skipped (gold)"}, f); v != "FAIL" {
+		t.Errorf("poor variant without purchases starves the potions: %s", v)
+	}
+	if v, _ := e1MercEvalC([]string{"merc: revive skipped (gold) price=1920 gold=1930 need=1970"}, f); v != "PASS" {
+		t.Errorf("clvl 14 waits: %s", v)
+	}
+	if v, _ := e1MercEvalC([]string{"merc: revived price=1920"}, f); v != "FAIL" {
+		t.Errorf("clvl 14 must not revive at quote+10: %s", v)
+	}
+}
+
+func TestE1NoPortal(t *testing.T) {
+	l := []string{
+		`time=2026-11-06T17:50:00.000-05:00 level=WARN msg="heal trip: town: no town portal available"`,
+		`time=2026-11-06T17:50:09.500-05:00 level=WARN msg="low life, no potion and no town portal: leaving the game" waited=20s`,
+	}
+	if v, _ := e1NoPortalEval(l, false); v != "PASS" {
+		t.Errorf("leave: %s", v)
+	}
+	if v, _ := e1NoPortalEval(l[:1], false); v != "FAIL" {
+		t.Errorf("no leave must fail: %s", v)
+	}
+	if v, _ := e1NoPortalEval(l[1:], false); v != "FAIL" {
+		t.Errorf("a leave without the no-portal line is not the path under test: %s", v)
+	}
+	if v, _ := e1NoPortalEval(l[:1], true); v != "PASS" {
+		t.Errorf("control: %s", v)
+	}
+	res := &e1Result{}
+	e1Key(res, l)
+	if res.NoPortalToLeaveSec != 9.5 || !strings.Contains(res.Waited, "20s") {
+		t.Errorf("timing: %+v", res)
+	}
+}
+
+func TestE1Scenarios(t *testing.T) {
+	seen := map[string]bool{}
+	for _, s := range e1Scenarios() {
+		if seen[s.ID] || s.Setup == nil || s.Eval == nil || s.Done == nil || s.Goals == "" {
+			t.Errorf("scenario %q incomplete or duplicated", s.ID)
+		}
+		seen[s.ID] = true
+	}
+	if len(seen) != 5 {
+		t.Errorf("want 5 scenarios, got %d", len(seen))
+	}
+}
