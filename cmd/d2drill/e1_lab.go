@@ -216,7 +216,10 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 		}
 		_ = h.step(ctx, 140)
 		rv := d2dmerc.Reviver{C: h.c}
-		pq, err := rv.Probe(ctx)
+		pctx, cancel := context.WithTimeout(ctx, 40*time.Second)
+		pq, err := rv.Probe(pctx)
+		cancel()
+		fmt.Printf("E1 setup: hire type %d quote %d err %v\n", typ, pq, err)
 		seen = append(seen, fmt.Sprintf("%d:%d", typ, pq))
 		if err == nil && pq > 0 {
 			q, f["mercType"] = pq, strconv.Itoa(typ)
