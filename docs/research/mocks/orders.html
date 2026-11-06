@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle orders - MOCK</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+/* MOCK ONLY (docs/research/orders-ux-design.md). Fake data, not shipped. Tokens copied from web/style.css. */
+:root{--bg:#f3efe6;--surface:#fffdf8;--surface2:#ece6d8;--line:#d6ccb8;--text:#231e17;--muted:#685f50;--accent:#b5760f;--accent-text:#7a4f00;--on-accent:#fff;--good:#2f7d3a;--warn:#9a6200;--bad:#b3342a;--info:#2a63a8;--focus:#1f5fd6;--shadow:0 1px 2px rgba(40,30,10,.08),0 4px 14px rgba(40,30,10,.06);--radius:10px}
+@media (prefers-color-scheme:dark){:root{--bg:#14110f;--surface:#1e1a17;--surface2:#29231e;--line:#3b332b;--text:#ece4d6;--muted:#a99f8f;--accent:#d9a441;--accent-text:#e6b95c;--on-accent:#1a1408;--good:#78c27d;--warn:#e3a93a;--bad:#ec7d6c;--info:#7ab0e8;--focus:#8db8ff;--shadow:0 1px 2px rgba(0,0,0,.4)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{margin:0;font-weight:650}h1{font-size:1.15rem}h2{font-size:1rem}
+h3{font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:.9rem 0 .4rem}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+.debug{background:#2a2a2a;color:#eee;padding:6px 10px;font-size:13px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.debug button{background:#444;border:1px solid #666;color:#eee;border-radius:6px;padding:6px 10px;min-height:36px}
+.debug button[aria-pressed=true]{background:#d9a441;color:#1a1408;border-color:#d9a441}
+.top{display:flex;gap:12px;align-items:center;padding:10px 14px;background:var(--surface);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mark{width:14px;height:14px;background:var(--accent);transform:rotate(45deg);display:inline-block;margin-right:8px}
+.muted{color:var(--muted)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 14px;margin:0}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+main{display:grid;gap:12px;padding:12px;max-width:1280px;margin:0 auto;grid-template-columns:1fr}
+@media(min-width:900px){main{grid-template-columns:repeat(12,1fr)}
+ .c-map{grid-column:1/6;grid-row:1/4}.c-now{grid-column:6/13}.c-queue{grid-column:6/13}.c-thoughts{grid-column:6/10}.c-game{grid-column:10/13}
+ .views{display:none}}
+@media(max-width:899px){[data-v]{display:none}[data-v].on{display:block}}
+.views{display:flex;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+.views button{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:12px 4px;min-height:44px;color:var(--muted)}
+.views button[aria-current=page]{border-bottom-color:var(--accent);color:var(--text);font-weight:650}
+.btn{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:8px 14px;min-height:44px}
+.btn.primary{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:650}
+.btn.danger{color:var(--bad);border-color:var(--bad);background:none}
+.btn.small{min-height:44px;min-width:44px;padding:6px 10px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:8px 14px;min-height:44px}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:650}
+.chip[aria-pressed=true]::before{content:"\2713\00a0"}
+.badge{display:inline-block;border:1px solid currentColor;border-radius:999px;padding:0 8px;font-size:.78rem;font-weight:600}
+.good{color:var(--good)}.warn{color:var(--warn)}.bad{color:var(--bad)}.info{color:var(--info)}
+.bar{height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin:6px 0}
+.bar>i{display:block;height:100%;background:var(--accent)}
+/* map */
+.maphead{display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap}
+.legend{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:.8rem;color:var(--muted);margin:6px 0}
+svg.map{width:100%;height:auto;display:block;max-height:none}
+.edge{stroke:var(--line);stroke-width:2;fill:none}
+.edge.dg{stroke-dasharray:4 4}
+.node{cursor:pointer}
+.node rect.b{fill:var(--surface);stroke:var(--muted);stroke-width:1.5}
+.node.town rect.b{fill:var(--surface2)}
+.node.dungeon rect.b{stroke-dasharray:5 3}
+.node.locked{cursor:not-allowed;opacity:.55}
+.node.hero rect.b{stroke:var(--info);stroke-width:3}
+.node.current rect.b{stroke:var(--accent);stroke-width:3.5;fill:var(--surface2)}
+.node.hard rect.b{stroke:var(--warn);stroke-width:2.5}
+.node text{fill:var(--text);font-size:12px;pointer-events:none}
+.node text.st{font-size:10.5px;fill:var(--muted);font-weight:600}
+.node:focus-visible rect.b,.node:hover rect.b{stroke:var(--focus);stroke-width:3}
+.node:focus{outline:none}
+.list{display:none}
+.maplist .list{display:block}.maplist svg.map{display:none}
+.list li{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid var(--line);align-items:center}
+.list ul{list-style:none;margin:0;padding:0}.list button{width:100%;text-align:left;background:none;border:0;min-height:44px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+/* sheet */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;z-index:20}
+.scrim.open{display:block}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-radius:16px 16px 0 0;padding:14px 16px 18px;max-height:92vh;overflow:auto;z-index:21;box-shadow:0 -6px 24px rgba(0,0,0,.3);display:none}
+.sheet.open{display:block}
+@media(min-width:900px){.sheet{left:50%;right:auto;width:480px;bottom:auto;top:50%;transform:translate(-50%,-50%);border-radius:var(--radius)}}
+.warnbox{border:2px solid var(--warn);border-left-width:6px;border-radius:8px;padding:10px 12px;margin:10px 0;background:var(--surface2)}
+.warnbox b{color:var(--warn)}
+.crumbs{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:.85rem;margin:6px 0}
+.crumbs span.s{padding:2px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface2)}
+.crumbs span.s.done{color:var(--good);border-color:var(--good)}
+.crumbs span.s.now{border-color:var(--accent);font-weight:700}
+.q{list-style:none;margin:0;padding:0}
+.q li{display:flex;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.q li .t{flex:1;min-width:0}
+.q .num{width:26px;height:26px;border-radius:50%;border:1px solid var(--muted);display:inline-flex;align-items:center;justify-content:center;font-size:.8rem;flex:none}
+.quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.journal li{padding:4px 0;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);background:var(--text);color:var(--bg);padding:10px 16px;border-radius:8px;z-index:30;display:none;max-width:90vw}
+.fake{border:1px dashed var(--line);border-radius:8px;padding:14px;color:var(--muted);text-align:center}
+.step{display:inline-flex;align-items:center;gap:6px}
+</style></head><body>
+<div class="debug" role="group" aria-label="Mock scenarios (debug bar, not part of the screen)">
+ <b>MOCK</b>
+ <button type="button" data-sc="camp" aria-pressed="true">A: in camp, clvl 6</button>
+ <button type="button" data-sc="mid" aria-pressed="false">B: mid-order + queue</button>
+ <button type="button" data-sc="conflict" aria-pressed="false">C: Forgotten Tower conflict</button>
+ <button type="button" id="dbg-tick">+5 min</button>
+ <span class="muted">fake data; sheet opens on a node tap</span>
+</div>
+<header class="top">
+ <h1><span class="mark" aria-hidden="true"></span>d.idle</h1>
+ <span id="hero" class="muted"></span>
+ <span class="badge" id="mode"></span>
+</header>
+<nav class="views" id="views" aria-label="Pages">
+ <button type="button" data-view="orders" aria-current="page">Orders</button>
+ <button type="button" data-view="thoughts">Thoughts</button>
+ <button type="button" data-view="game">Game</button>
+ <button type="button" data-view="journal">Journal</button>
+</nav>
+<main>
+ <section class="card c-now on" data-v="orders" aria-labelledby="t-now" id="now"></section>
+ <section class="card c-map on" data-v="orders" aria-labelledby="t-map">
+  <div class="maphead"><h2 id="t-map">Where to? Tap an area</h2>
+   <button class="btn small" id="viewtoggle" type="button" aria-pressed="false">List view</button></div>
+  <div class="legend" aria-label="Legend"><span>&#9670; hero is here</span><span>&#9654; current order</span><span>#n queued</span><span>&#9888; too hard now</span><span>&#10003; cleared</span><span>dashed = dungeon</span></div>
+  <div id="maparea"><svg class="map" id="svg" viewBox="0 130 360 590" role="group" aria-label="Act 1 map"></svg><div class="list" id="list"></div></div>
+  <p class="muted" style="font-size:.8rem;margin:6px 0 0">Act 1 only today. The same screen draws Acts 2 to 5 from data once their areas are orderable.</p>
+ </section>
+ <section class="card c-queue on" data-v="orders" aria-labelledby="t-q" id="queue"></section>
+ <section class="card c-thoughts" data-v="thoughts" aria-labelledby="t-th"><h2 id="t-th">Thoughts</h2><div class="fake" style="margin-top:8px">(unchanged: question cards, see watch screen)</div>
+  <p class="muted">Orders conflicts appear here as one card: "You ordered the Forgotten Tower..." (section 5 of the design).</p><div id="thcard"></div></section>
+ <section class="card c-game" data-v="game" aria-labelledby="t-gm"><h2 id="t-gm">Game video</h2><div class="fake" style="margin-top:8px;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center">live picture</div></section>
+ <section class="card" data-v="journal" aria-labelledby="t-j" style="grid-column:1/-1"><h2 id="t-j">Journal</h2><ul class="journal" id="journal" style="padding-left:18px"></ul></section>
+</main>
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title"></div>
+<div class="toast" id="toast" role="status"></div>
+<script>
+/* ---- data (fake). Mirrors the proposed GET /api/orders/map, see the design doc section 6. ---- */
+var AREAS=[
+ {id:'camp',name:'Rogue Encampment',x:62,y:680,town:1,wp:1,orderable:1},
+ {id:'bm',name:'Blood Moor',x:62,y:616,orderable:1,range:'clvl 1-8',why:'safe first xp'},
+ {id:'den',name:'Den of Evil',x:62,y:552,dungeon:1,orderable:1,range:'clvl 1-8',why:'quest; many monsters in a small cave, no waypoint (below clvl 4 risky)'},
+ {id:'cp',name:'Cold Plains',x:180,y:616,wp:1,orderable:1,range:'clvl 6-12',why:'open ground, waypoint'},
+ {id:'cave',name:'Cave 1',x:180,y:680,dungeon:1,orderable:1,range:'clvl 6-10',why:'small, quick'},
+ {id:'bg',name:'Burial Grounds',x:298,y:616,orderable:1,range:'clvl 8-14',why:'Blood Raven and her archers shoot from range (below clvl 8)'},
+ {id:'crypt',name:'Crypt',x:298,y:552,dungeon:1,orderable:1,range:'clvl 8-14',why:'small, a chest'},
+ {id:'sf',name:'Stony Field',x:180,y:552,wp:1,orderable:1,range:'clvl 10-16',why:'open ground, easy to path'},
+ {id:'dw',name:'Dark Wood',x:180,y:488,wp:1,orderable:1,range:'clvl 10-16',why:'Inifuss tree is here'},
+ {id:'bmarsh',name:'Black Marsh',x:180,y:424,wp:1,orderable:1,range:'clvl 12-18',why:'waypoint, branches to Hole and the Forgotten Tower'},
+ {id:'hole',name:'Hole 1',x:62,y:424,dungeon:1,orderable:1,range:'clvl 12+',why:'dense packs'},
+ {id:'ftw',name:'Forgotten Tower',x:298,y:424,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'Countess runes; long chain, no waypoint'},
+ {id:'cell',name:'Cellars 1-5',x:298,y:360,dungeon:1,orderable:1,guard:1,range:'clvl 15-22',why:'the Countess is on level 5'},
+ {id:'tam',name:'Tamoe Highland',x:180,y:360,orderable:1,range:'clvl 14-20',why:'leads on to the Monastery'},
+ {id:'pit',name:'Pit 1',x:62,y:360,dungeon:1,orderable:1,range:'clvl 16-24',why:'dense, no quest'},
+ {id:'mg',name:'Monastery Gate',x:180,y:296},
+ {id:'oc',name:'Outer Cloister',x:180,y:232,wp:1},
+ {id:'line',name:'Monastery line',x:180,y:168,dungeon:1,sub:'Barracks to Catacombs'}
+];
+var EDGES=[['camp','bm'],['bm','den','d'],['bm','cp'],['cp','cave','d'],['cp','bg'],['bg','crypt','d'],['cp','sf'],['sf','dw'],['dw','bmarsh'],['bmarsh','hole','d'],['bmarsh','ftw','d'],['ftw','cell','d'],['bmarsh','tam'],['tam','pit','d'],['tam','mg'],['mg','oc'],['oc','line','d']];
+var NAME={};AREAS.forEach(function(a){NAME[a.id]=a});
+var PATH={camp:['camp'],bm:['camp','bm'],den:['camp','bm','den'],cp:['camp','bm','cp'],cave:['camp','bm','cp','cave'],bg:['camp','bm','cp','bg'],crypt:['camp','bm','cp','bg','crypt'],sf:['camp','bm','cp','sf'],dw:['camp','bm','cp','sf','dw'],bmarsh:['camp','bm','cp','sf','dw','bmarsh'],hole:['camp','bm','cp','sf','dw','bmarsh','hole'],ftw:['camp','bm','cp','sf','dw','bmarsh','ftw'],cell:['camp','bm','cp','sf','dw','bmarsh','ftw','cell'],tam:['camp','bm','cp','sf','dw','bmarsh','tam'],pit:['camp','bm','cp','sf','dw','bmarsh','tam','pit']};
+var SC={
+ camp:{clvl:6,xp:31,hero:'camp',cleared:['bm','den'],mode:'resting',cur:null,queue:[],life:100,journal:['00:12 Back in camp. Rested.','00:05 Blood Moor: 40 kills.','Order done: Blood Moor until level 6 (22 min).']},
+ mid:{clvl:7,xp:18,hero:'cp',cleared:['bm','den'],mode:'fighting',cur:{area:'cp',kind:'go',dur:{t:'level',n:9},started:0,kills:47,xpg:1820,etaMin:38,leg:2},queue:[{area:'sf',kind:'go',dur:{t:'min',n:30}},{area:null,kind:'home',dur:null}],life:80,journal:['00:03 Cold Plains: 47 kills since the order.','00:02 Hero walked Rogue Encampment, Blood Moor, Cold Plains.','Order started: Cold Plains until level 9.']},
+ conflict:{clvl:6,xp:44,hero:'bmarsh',cleared:['bm','den'],mode:'fighting',cur:{area:'bmarsh',kind:'go',dur:{t:'min',n:30},started:0,kills:12,xpg:430,etaMin:20,leg:5},queue:[],life:90,journal:['00:01 Black Marsh: 12 kills.'],openFT:1}
+};
+var S=null,sc='camp',pend=null,nextId=1,minutes=0;
+function hardWhy(a,clvl){ // fake of the Forgotten Tower guard: no merc, clvl < 16
+ if(a.guard&&clvl<16)return 'No mercenary and clvl '+clvl+' is below 16. The hero skips the Forgotten Tower below that level.';
+ return '';}
+function advice(a,clvl){var m=/clvl (\d+)/.exec(a.range||'');return m&&clvl<+m[1]?'Advice, not a guard: veterans go here from '+a.range.replace('clvl ','clvl ')+'.':'';}
+function status(a){var st=[];
+ if(S.hero===a.id)st.push('hero');
+ if(S.cur&&S.cur.area===a.id)st.push('cur');
+ var qi=S.queue.findIndex(function(o){return o.area===a.id});if(qi>=0)st.push('q'+(qi+1));
+ if(hardWhy(a,S.clvl))st.push('hard');
+ if(S.cleared.indexOf(a.id)>=0)st.push('clr');
+ return st;}
+function stText(st){var o=[];st.forEach(function(s){o.push({hero:'◆ here',cur:'▶ order',hard:'⚠ hard',clr:'✓ cleared'}[s]||'#'+s.slice(1))});return o.join(' ');}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+function ns(t,at){var e=document.createElementNS('http://www.w3.org/2000/svg',t);for(var k in at)e.setAttribute(k,at[k]);return e;}
+function durText(d){if(!d)return '';return d.t==='min'?(d.n>=60&&d.n%60===0?d.n/60+' h':d.n+' min'):d.t==='level'?'until level '+d.n:'until you cancel';}
+function orderText(o){if(o.kind==='home')return 'Rest in town';var a=NAME[o.area].name;return (o.kind==='clear'?'Clear ':'Farm ')+a+(o.kind==='clear'?', then come home':'')+' '+durText(o.dur);}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(function(){t.style.display='none'},2600);}
+function log(m){var hh=('0'+Math.floor(minutes/60)).slice(-2)+':'+('0'+minutes%60).slice(-2);S.journal.unshift(hh+' '+m);}
+/* ---- render ---- */
+function drawMap(){
+ var svg=document.getElementById('svg');svg.textContent='';
+ EDGES.forEach(function(e){var a=NAME[e[0]],b=NAME[e[1]];svg.appendChild(ns('line',{x1:a.x,y1:a.y,x2:b.x,y2:b.y,class:'edge'+(e[2]?' dg':'')}));});
+ AREAS.forEach(function(a){
+  var st=status(a),cls='node'+(a.town?' town':'')+(a.dungeon?' dungeon':'')+(a.orderable?'':' locked')+(st.indexOf('hero')>=0?' hero':'')+(st.indexOf('cur')>=0?' current':'')+(st.indexOf('hard')>=0?' hard':'');
+  var g=ns('g',{class:cls,tabindex:0,role:'button','aria-label':a.name+(st.length?', '+stText(st):'')+(a.orderable?'':', not orderable yet'),transform:'translate('+(a.x-52)+','+(a.y-22)+')'});
+  g.appendChild(ns('rect',{class:'b',width:104,height:44,rx:8}));
+  var t=ns('text',{x:52,y:a.sub||st.length?18:27,'text-anchor':'middle'});t.textContent=a.name;if(a.name.length>12)t.setAttribute('font-size','10.5');g.appendChild(t);
+  var s2=a.sub||stText(st);if(s2){var t2=ns('text',{x:52,y:34,'text-anchor':'middle',class:'st'});t2.textContent=s2;g.appendChild(t2);}
+  var act=function(){tap(a)};g.addEventListener('click',act);g.addEventListener('keydown',function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();act();}});
+  svg.appendChild(g);});
+ var L=document.getElementById('list');L.textContent='';var ul=el('ul');
+ AREAS.forEach(function(a){var li=el('li'),b=el('button');b.type='button';b.appendChild(el('span',null,a.name+(a.dungeon?' (dungeon)':'')));b.appendChild(el('span','muted',a.orderable?stText(status(a)):'not orderable yet'));b.addEventListener('click',function(){tap(a)});li.appendChild(b);ul.appendChild(li);});L.appendChild(ul);
+}
+function crumbs(area,leg){var p=PATH[area]||[area],d=el('div','crumbs');d.setAttribute('aria-label','Route');
+ p.forEach(function(id,i){if(i)d.appendChild(el('span','muted','›'));d.appendChild(el('span','s'+(i<leg?' done':i===leg?' now':''),NAME[id].name));});return d;}
+function drawNow(){
+ var n=document.getElementById('now');n.textContent='';
+ var h=el('div','card-head');h.appendChild(el('h2',null,'Hero now'));h.id='t-now';h.firstChild.id='t-now';n.appendChild(h);
+ var c=S.cur;
+ if(!c){n.appendChild(el('p',null,S.hero==='camp'?'In Rogue Encampment, resting. No order. Tap an area on the map to send the hero.':'Following its own plan in '+NAME[S.hero].name+'. No order.'));
+  var q=el('div','quick');var b=el('button','btn','Rest in town');b.type='button';b.addEventListener('click',function(){quickHome()});q.appendChild(b);n.appendChild(q);return;}
+ var title=el('p',null);var bt=el('b',null,orderText(c));title.appendChild(bt);n.appendChild(title);
+ var pct=c.dur&&c.dur.t==='min'?Math.min(100,Math.round((c.elapsed||0)/c.dur.n*100)):c.dur&&c.dur.t==='level'?Math.min(100,Math.round(S.xp)):0;
+ var what=c.kind==='home'?'Walking to town':S.hero===c.area?'Fighting in '+NAME[c.area].name:'Walking to '+NAME[c.area].name;
+ n.appendChild(el('div','muted',what+' ('+(c.leg>=(PATH[c.area]||[]).length-1?'arrived':'step '+c.leg+' of '+((PATH[c.area]||[]).length-1))+')'));
+ var bar=el('div','bar');bar.setAttribute('role','progressbar');bar.setAttribute('aria-valuenow',pct);bar.setAttribute('aria-valuemin',0);bar.setAttribute('aria-valuemax',100);bar.setAttribute('aria-label','Order progress');bar.appendChild(document.createElement('i')).style.width=pct+'%';n.appendChild(bar);
+ n.appendChild(el('div',null,pct+'% - '+(c.dur&&c.dur.t==='forever'?'runs until you cancel':'about '+c.etaMin+' min left')+(c.dur&&c.dur.t==='level'?' (level '+S.clvl+', '+S.xp+'% to next)':'')));
+ n.appendChild(el('div','muted',c.kills+' kills, +'+c.xpg+' xp since the order'));
+ n.appendChild(crumbs(c.area,c.leg));
+ var q2=el('div','quick');var cb=el('button','btn danger','Cancel order');cb.type='button';cb.addEventListener('click',function(){cancel(-1)});q2.appendChild(cb);
+ var hb=el('button','btn','Come home');hb.type='button';hb.addEventListener('click',function(){quickHome()});q2.appendChild(hb);n.appendChild(q2);
+}
+function drawQueue(){
+ var n=document.getElementById('queue');n.textContent='';var h=el('div','card-head');var t=el('h2',null,'Up next ('+S.queue.length+')');t.id='t-q';h.appendChild(t);n.appendChild(h);
+ if(!S.queue.length){n.appendChild(el('p','muted','Nothing queued. Orders you add with "Add to queue" wait here.'));return;}
+ var ul=el('ol','q');S.queue.forEach(function(o,i){var li=el('li');li.appendChild(el('span','num',String(i+1)));li.appendChild(el('span','t',orderText(o)));
+  [['▲','Move up',-1],['▼','Move down',1]].forEach(function(m){var b=el('button','btn small',m[0]);b.type='button';b.setAttribute('aria-label',m[1]+': '+orderText(o));b.disabled=(i+m[2]<0||i+m[2]>=S.queue.length);b.addEventListener('click',function(){var x=S.queue.splice(i,1)[0];S.queue.splice(i+m[2],0,x);render()});li.appendChild(b);});
+  var c=el('button','btn small danger','✕');c.type='button';c.setAttribute('aria-label','Cancel: '+orderText(o));c.addEventListener('click',function(){cancel(i)});li.appendChild(c);ul.appendChild(li);});
+ n.appendChild(ul);}
+function drawTh(){var d=document.getElementById('thcard');d.textContent='';if(S.conflictCard){var c=el('div','warnbox');c.appendChild(el('b',null,'You ordered the Forgotten Tower. '));c.appendChild(document.createTextNode('The hero would normally skip it. The guard still decides; it will say so in the journal if it refuses.'));d.appendChild(c);}}
+function render(){
+ document.getElementById('hero').textContent='Sorceress clvl '+S.clvl+' ('+S.xp+'% to next) in '+NAME[S.hero].name;
+ document.getElementById('mode').textContent=S.mode;
+ drawMap();drawNow();drawQueue();drawTh();
+ var j=document.getElementById('journal');j.textContent='';S.journal.forEach(function(x){j.appendChild(el('li',null,x))});}
+/* ---- sheet ---- */
+function tap(a){
+ if(!a.orderable){toast(a.name+' is not orderable yet.');return;}
+ if(a.town){pend={area:null,kind:'home',dur:null};}
+ else pend={area:a.id,kind:'go',dur:{t:'min',n:30},lvl:Math.min(99,S.clvl+1)};
+ openSheet(a);}
+function openSheet(a){
+ var sh=document.getElementById('sheet');sh.textContent='';
+ var hd=el('div','card-head');var t=el('h2',null,a.town?'Rest in town':'Send the hero to '+a.name);t.id='sh-title';hd.appendChild(t);
+ var x=el('button','btn small','Close');x.type='button';x.addEventListener('click',closeSheet);hd.appendChild(x);sh.appendChild(hd);
+ if(a.town){sh.appendChild(el('p',null,'The hero walks to Rogue Encampment, heals, restocks and rests. No timer: it stays until you give another order.'));}
+ else{
+  sh.appendChild(el('p','muted',(a.range?'Veterans: '+a.range+' - ':'')+(a.why||'')));
+  var w=hardWhy(a,S.clvl);
+  if(w){var wb=el('div','warnbox');wb.setAttribute('role','alert');wb.appendChild(el('b',null,'⚠ Too hard for the hero now. '));wb.appendChild(document.createTextNode(w+' You may still confirm: the hero’s own guard has the last word and will turn the order down if it is still unsafe when the hero gets there.'));sh.appendChild(wb);}
+  else{var ad=advice(a,S.clvl);if(ad)sh.appendChild(el('p','warn','⚠ '+ad));}
+  sh.appendChild(el('h3',null,'What to do'));var c1=el('div','chips');
+  [['go','Farm here'],['clear','Clear it, then come home']].forEach(function(k){var b=chip(k[1],pend.kind===k[0]);b.addEventListener('click',function(){pend.kind=k[0];openSheet(a)});c1.appendChild(b);});sh.appendChild(c1);
+  sh.appendChild(el('h3',null,'For how long'));var c2=el('div','chips');
+  [['10 min',{t:'min',n:10}],['30 min',{t:'min',n:30}],['1 h',{t:'min',n:60}],['Until level '+pend.lvl,{t:'level',n:pend.lvl}],['Until I cancel',{t:'forever'}]].forEach(function(k){
+   var on=pend.dur.t===k[1].t&&(k[1].t!=='min'||pend.dur.n===k[1].n);var b=chip(k[0],on);b.addEventListener('click',function(){pend.dur=k[1];openSheet(a)});c2.appendChild(b);});sh.appendChild(c2);
+  if(pend.dur.t==='level'){var st=el('div','step');st.style.marginTop='8px';var m=el('button','btn small','−');m.type='button';m.setAttribute('aria-label','Lower target level');var p=el('button','btn small','+');p.type='button';p.setAttribute('aria-label','Raise target level');
+   m.addEventListener('click',function(){pend.lvl=Math.max(S.clvl+1,pend.lvl-1);pend.dur={t:'level',n:pend.lvl};openSheet(a)});p.addEventListener('click',function(){pend.lvl=Math.min(99,pend.lvl+1);pend.dur={t:'level',n:pend.lvl};openSheet(a)});
+   st.appendChild(m);st.appendChild(el('b',null,'Level '+pend.lvl));st.appendChild(p);sh.appendChild(st);}
+  sh.appendChild(el('h3',null,'Route'));sh.appendChild(crumbs(a.id,-1));
+ }
+ sh.appendChild(el('p','muted',a.town?'':'Summary: '+orderText(pend.kind==='home'?pend:{area:a.id,kind:pend.kind,dur:pend.dur})));
+ var q=el('div','quick');
+ var go=el('button','btn primary',a.town?'Confirm':'Go now');go.type='button';go.addEventListener('click',function(){confirmOrder(true)});q.appendChild(go);
+ if(!a.town&&S.cur){var ad2=el('button','btn','Add to queue');ad2.type='button';ad2.addEventListener('click',function(){confirmOrder(false)});q.appendChild(ad2);}
+ sh.appendChild(q);
+ if(!a.town&&S.cur)sh.appendChild(el('p','muted','"Go now" puts it first and the current order waits behind it. "Add to queue" puts it last.'));
+ document.getElementById('scrim').classList.add('open');sh.classList.add('open');var f=sh.querySelector('.chip[aria-pressed=true]')||sh.querySelector('.btn.primary');f&&f.focus();}
+function chip(txt,on){var b=el('button','chip',txt);b.type='button';b.setAttribute('aria-pressed',on?'true':'false');return b;}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('scrim').classList.remove('open');pend=null;}
+function confirmOrder(now){
+ var o={area:pend.area,kind:pend.kind,dur:pend.dur};
+ if(S.queue.length+(S.cur?1:0)>=5){toast('At most 5 open orders. Cancel one first.');return;}
+ var hardA=o.area&&hardWhy(NAME[o.area],S.clvl);
+ if(!S.cur||now){ if(S.cur){S.queue.unshift(S.cur);} S.cur=Object.assign(o,{kills:0,xpg:0,etaMin:o.dur&&o.dur.t==='min'?o.dur.n:60,leg:0,elapsed:0});S.mode='walking';
+  log('Order started: '+orderText(o)+'.');}
+ else S.queue.push(o);
+ if(hardA){S.conflictCard=1;log('You ordered '+NAME[o.area].name+' although the hero is too weak. The guard decides on arrival.');}
+ toast(S.cur===o?'Order given: '+orderText(o):'Queued: '+orderText(o));
+ closeSheet();render();}
+function quickHome(){pend={area:null,kind:'home',dur:null};if(S.cur){S.queue.unshift(S.cur);S.cur=null;}confirmOrder(true);}
+function cancel(i){var o=i<0?S.cur:S.queue[i];if(!o)return;
+ if(i<0){log('Order cancelled: '+orderText(o)+'.');S.cur=S.queue.shift()||null;if(S.cur){Object.assign(S.cur,{kills:0,xpg:0,etaMin:30,leg:0,elapsed:0});log('Order started: '+orderText(S.cur)+'.')}else S.mode='resting';}
+ else{S.queue.splice(i,1);log('Order cancelled: '+orderText(o)+'.');}
+ toast('Cancelled: '+orderText(o));render();}
+/* ---- scenarios, tabs, debug ---- */
+function load(k){sc=k;S=JSON.parse(JSON.stringify(SC[k]));minutes=0;document.querySelectorAll('[data-sc]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.sc===k)});closeSheet();render();
+ if(S.openFT){var a=NAME.ftw;tap(a);}}
+document.querySelectorAll('[data-sc]').forEach(function(b){b.addEventListener('click',function(){load(b.dataset.sc)})});
+document.getElementById('dbg-tick').addEventListener('click',function(){minutes+=5;if(S.cur){S.cur.elapsed=(S.cur.elapsed||0)+5;S.cur.kills+=9;S.cur.xpg+=210;S.cur.etaMin=Math.max(0,S.cur.etaMin-5);var pl=(PATH[S.cur.area]||[]).length-1;if(S.cur.leg<pl)S.cur.leg++;else S.hero=S.cur.area;S.xp=Math.min(99,S.xp+4);
+  if(S.cur.etaMin===0||(S.cur.dur.t==='min'&&S.cur.elapsed>=S.cur.dur.n)){log('Order done: '+orderText(S.cur)+' ('+S.cur.kills+' kills).');toast('Order done: '+orderText(S.cur));S.cur=S.queue.shift()||null;if(S.cur)Object.assign(S.cur,{kills:0,xpg:0,etaMin:30,leg:0,elapsed:0});else S.mode='idle';}}
+ render();});
+document.getElementById('scrim').addEventListener('click',closeSheet);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+document.getElementById('viewtoggle').addEventListener('click',function(){var m=document.getElementById('maparea').parentNode,on=m.classList.toggle('maplist');this.setAttribute('aria-pressed',on);this.textContent=on?'Map view':'List view'});
+document.querySelectorAll('#views button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#views button').forEach(function(x){x.removeAttribute('aria-current')});b.setAttribute('aria-current','page');
+ document.querySelectorAll('[data-v]').forEach(function(s){s.classList.toggle('on',s.dataset.v===b.dataset.view)})})});
+load({'#b':'mid','#c':'conflict'}[location.hash]||'camp');
+</script></body></html>
