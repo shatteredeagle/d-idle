@@ -39,6 +39,18 @@ type Step struct {
 	FallbackKit bool
 	// Farm (progression "farm") marks an area the gold farm prefers while the merc is missing (merc.GoldFarm). Missing = false.
 	Farm bool
+	// EarlyGap (progression "early_gap") is how many levels below its entry level the step is refused as the "first
+	// eligible" fallback while an excluded step (cleared, banned, Den floor) still covers the level: the character waits
+	// or starts a fresh game instead. 0 = the package default earlyGap. Cold Plains sets 1 so that a clvl 4 caster is
+	// never sent there because Blood Moor was cleared (Gate 2 g2f seed 13: died at clvl 4-5 to the Cold Plains pack, V).
+	EarlyGap int
+}
+
+func (s Step) earlyGap() int {
+	if s.EarlyGap > 0 {
+		return s.EarlyGap
+	}
+	return earlyGap
 }
 
 // enter is the entry level of the step for the character kind.
@@ -257,6 +269,7 @@ func (p *Plan) parseSteps(diff string, b []byte) error {
 		s.MeleeEnter, _ = e.num("melee_enter_clvl")
 		s.FallbackKit = e.boolean("xp_fallback_full_kit")
 		s.Farm = e.boolean("farm")
+		s.EarlyGap, _ = e.num("early_gap")
 		s.LeaveLvl, ok = e.num("leave_clvl", "target_clvl", "leave")
 		if !ok || s.LeaveLvl < s.EnterLvl {
 			p.warn("progression-%s: step %d has no usable leave level", diff, id)
@@ -442,8 +455,14 @@ func (p *Plan) Pick(diff string, level int, o PickOptions) (Step, bool) {
 	// Below every entry level: the first step is still better than nothing, but not when it is far above the character
 	// and an excluded (cleared) step covers the level: a clvl 3 Sorceress with no potions was sent to Burial Grounds
 	// (enter 6) after Blood Moor was cleared (live 2026-10-29, Soaky). The caller starts a fresh game instead.
-	if o.Floor > 0 && eligible[0].enter(o.Melee)-level >= earlyGap && p.windowExcluded(diff, level, o) {
-		return Step{}, false
+	if first := eligible[0]; o.Floor > 0 && first.enter(o.Melee)-level >= first.earlyGap() {
+		strict := o
+		if first.EarlyGap > 0 {
+			strict.Cleared = nil // a step with its own gap counts every excluded step, not only the cleared ones
+		}
+		if p.windowExcluded(diff, level, strict) {
+			return Step{}, false
+		}
 	}
 	return eligible[0], true
 }

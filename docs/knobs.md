@@ -78,7 +78,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.targetQuality | 100 | 20..100 | % | 20 | 3 | 100 picks the best target; lower picks the nearest more often and loses ticks. |
 | combat.rangeMargin | 3 | 0..8 | subtiles | 0 | 1 | Distance kept inside a skill's maximum range. |
 | combat.clearRadius | 40 | 15..80 | subtiles | 15 | 1 | Radius around the start point cleared when the caller gives none. |
-| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 16 | A hostile monster this close counts as a fight. |
+| combat.fightRadius | 22 | 10..40 | subtiles | 10 | 17 | A hostile monster this close counts as a fight. |
 | combat.maxTargetSec | 45 | 20..90 | s | 90 | 1 | Give up on one target after this long. |
 | combat.noProgressSec | 12 | 5..30 | s | 30 | 1 | Give up on a target whose life did not drop for this long. |
 | combat.clearMaxSec | 180 | 30..600 | s | 30 | 2 | Upper bound of one Clear call. |
@@ -223,6 +223,13 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.stallExitMin | 30 | 5..240 | min | 240 | 1 | Virtual minutes still without campaign progress after the fresh game before the bot exits (status 5) so the supervisor restarts the whole process. |
 | bot.spiralMinutes | 15 | 5..15 | min | 5 | 5 | Window in which the deaths are counted. Shorter forgets sooner. |
 | bot.pauseDeathsPerHour | 8 | 8..20 | deaths | 20 | 2 | Deaths in the last hour after which the bot pauses itself and asks the user. |
+| bot.stalePackHostiles | 4 | 0..12 | count | 12 | 3 | Hostiles near the hero when it left a field by chicken, town portal or crowd exit that make the area a stale pack: no return by portal and no planner pick of that area until bot.stalePackMinutes pass or the kit is rebuilt. 0 turns the rule off. Seed 13 of Gate 2 g2f died 2 s after re-entering a 12-hostile pack at clvl 4. |
+| bot.stalePackMinutes | 10 | 1..60 | min | 60 | 1 | How long a stale pack keeps its area closed. Monsters of a live game stay where they are (U), so the hold is a guess at the time the kit needs to be rebuilt. |
+| bot.stalePackMinHP | 5 | 1..8 | count | 8 | 1 | Healing potions (belt and pack) that lift the stale-pack hold early, together with bot.stalePackMinTier. |
+| bot.stalePackMinTier | 2 | 1..3 | tier | 3 | 1 | Best healing potion tier in the belt that lifts the stale-pack hold early (1 Minor Healing, 2 Light Healing). |
+| bot.potionBurstN | 5 | 0..12 | count | 12 | 2 | Life drinks within bot.potionBurstSec that turn the next drink into a town portal while bot.potionBurstHostiles or more hostiles are near and a portal exists. 0 turns the rule off. Seed 13 drank 11 potions in about 17 s and then died. |
+| bot.potionBurstSec | 20 | 5..60 | s | 60 | 2 | Window in which the life drinks are counted. |
+| bot.potionBurstHostiles | 3 | 1..8 | count | 8 | 1 | Hostiles within the fight radius the potion burst rule needs before it retreats. |
 | bot.povertyTier | 0 | 0..2 | tier | 2 | 3 | Gear tier bought after an abandoned corpse: 0 is the cheapest viable weapon and armor, potions first. |
 | bot.goldFloor | 2000 | 0..2000 | gold | 0 | 6 | Gold town visits must not spend, kept to rebuy gear after a death. |
 | bot.pointsRetrySec | 30 | 30..300 | s | 300 | 2 | Wait before spending stat and skill points again after an attempt that did not finish. Longer leaves points unspent. |

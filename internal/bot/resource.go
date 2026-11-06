@@ -51,6 +51,7 @@ func (r *Runner) resInput(s *d2.Snapshot) resource.Input {
 			switch m.Potion {
 			case PotionHealing:
 				in.Belt.HP++
+				in.Belt.HPTier = max(in.Belt.HPTier, m.Tier)
 			case PotionMana:
 				in.Belt.MP++
 			case PotionRejuv:

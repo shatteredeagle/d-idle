@@ -171,7 +171,7 @@ func TestPickColdPlainsNeedsKitOrLevel4(t *testing.T) {
 		kit   bool
 		want  int // 0 = nothing eligible
 	}{
-		{1, false, 0}, {2, false, 0}, {3, false, 0}, {4, false, 3},
+		{1, false, 0}, {2, false, 0}, {3, false, 0}, {4, false, 0}, // clvl 4: early_gap 1 (TASK-39), see TestPickColdPlainsNotBelowEntryWhenBloodMoorHeld
 		{1, true, 3}, {3, true, 3}, // (kit rows run without Floor: with it the old earlyGap rule still sends a clvl 1-3 to a fresh game)
 	} {
 		s, ok := p.Pick("normal", c.level, PickOptions{Acts: act1, Exclude: held, FullKit: c.kit, Floor: map[bool]int{false: 4}[c.kit]})
@@ -354,5 +354,27 @@ func TestFallbackTableLevels(t *testing.T) {
 	}
 	if m, b := areaXP(13, 19, normalMLvl[19], d2.Normal), areaXP(13, 6, normalMLvl[6], d2.Normal); m >= b {
 		t.Errorf("Mausoleum %.1f must rank under Black Marsh %.1f at clvl 13", m, b)
+	}
+}
+
+// TASK-39: with Blood Moor held back and the Den under its caster floor, a clvl 4 character (caster or melee, whatever
+// the kit) is not sent to Cold Plains (enter 5, early_gap 1); clvl 5 may go.
+func TestPickColdPlainsNotBelowEntryWhenBloodMoorHeld(t *testing.T) {
+	p, _ := LoadPlan("")
+	act1 := map[int]bool{1: true}
+	held := map[int]bool{2: true, 8: true}
+	for _, melee := range []bool{false, true} {
+		for _, kit := range []bool{false, true} {
+			if s, ok := p.Pick("normal", 4, PickOptions{Acts: act1, Exclude: held, FullKit: kit, Melee: melee, Floor: 4}); ok {
+				t.Errorf("melee %v kit %v clvl 4: got %+v, want nothing eligible", melee, kit, s)
+			}
+			if s, ok := p.Pick("normal", 5, PickOptions{Acts: act1, Exclude: held, FullKit: kit, Melee: melee, Floor: 4}); !ok || s.Area != 3 {
+				t.Errorf("melee %v kit %v clvl 5: got %+v %v, want Cold Plains", melee, kit, s, ok)
+			}
+		}
+	}
+	// held only by a bounded avoid (Cleared set without Blood Moor) still counts for a step with its own gap
+	if s, ok := p.Pick("normal", 4, PickOptions{Acts: act1, Exclude: held, Cleared: map[int]bool{}, FullKit: true, Floor: 4}); ok {
+		t.Errorf("clvl 4 with Blood Moor avoided: got %+v", s)
 	}
 }
