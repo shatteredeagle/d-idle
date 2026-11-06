@@ -1,0 +1,3 @@
+BACKLOG: GATE2: Gate 2 multi-seed run 20261106-0225-g2e (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-0225-g2e.md)
+INDEX: docs/soaks/gate2-multiseed-20261106-0225-g2e.md: Gate 2 multi-seed run 20261106-0225-g2e (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+CHANGELOG: docs: Gate 2 multi-seed soak run 20261106-0225-g2e: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-0225-g2e.md).
