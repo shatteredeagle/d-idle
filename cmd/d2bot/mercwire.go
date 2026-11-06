@@ -154,8 +154,11 @@ func levelEstimate(s *d2.Snapshot) int {
 
 // mercWire is the policy state of one bot.
 type mercWire struct {
-	e     *env.Env
-	log   interface{ Info(string, ...any) }
+	e   *env.Env
+	log interface {
+		Info(string, ...any)
+		Warn(string, ...any)
+	}
 	knobs merc.Knobs
 	rd    merc.Reader
 	rev   Reviver
@@ -180,6 +183,7 @@ type mercWire struct {
 	winLogged map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
 	farmOn    bool
 	budget    merc.FarmBudget // time budget and cooldown of the gold farm
+	skipLogAt time.Time       // last revive refusal written (logSkip)
 	waitNeed  int             // need of the last logged `merc: gold wait`; 0 = none pending
 }
 
@@ -605,6 +609,19 @@ func (w *mercWire) WaitForMerc(ctx context.Context, why string) {
 // as one short string for the chore report ("" nothing to do). Revive is U on every game (docs/merc-wire.md): a
 // failed attempt is logged and costs nothing but time; the revive cap counts attempts that paid.
 func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
+	return w.reviveStep(ctx, s, false)
+}
+
+// ReviveFirst is the revive attempt BEFORE the chores shop (g2e F5): the step used to run after every purchase, so a
+// funded hero had spent the gold on discretionary buys and the revive saw a poor purse (U: seed 17 never revived).
+// Before the shop the kit is not bought yet, but the kit reserve inside ReviveNeed (merc.kitReservePct) keeps back the
+// gold for it, so the kit test is waived; only pack gold counts, because the chores bank the rest. A refusal here is
+// silent: the normal step after the chores decides and logs.
+func (w *mercWire) ReviveFirst(ctx context.Context, s *d2.Snapshot) string {
+	return w.reviveStep(ctx, s, true)
+}
+
+func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) string {
 	if s == nil || s.Player == nil || !s.Player.InTown() {
 		return ""
 	}
@@ -613,13 +630,19 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 		return ""
 	}
 	c := mercCtx(w, s)
+	if first {
+		c.Gold, c.HaveTP, c.HavePotions = s.Player.Gold, true, true
+	}
 	dec, price := merc.ShouldRevive(st, c, 0)
+	if first && !dec.Do {
+		return ""
+	}
 	w.mu.Lock()
 	w.lastDec = dec.Reason
 	w.mu.Unlock()
 	need := merc.ReviveNeed(c, price)
 	if !dec.Do {
-		w.log.Info(merc.LogReviveSkipped(dec.Reason, price, c.Gold, need))
+		w.logSkip(dec.Reason, price, c.Gold, need)
 		if dec.Reason == merc.ReasonGold || dec.Reason == merc.ReasonStopped {
 			w.mu.Lock()
 			first := w.waitNeed != need
@@ -635,13 +658,13 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 	w.waitNeed = 0
 	w.mu.Unlock()
 	if w.rev == nil {
-		w.log.Info(merc.LogReviveSkipped("no reviver", price, c.Gold, need))
+		w.logSkip("no reviver", price, c.Gold, need)
 		return "merc revive skipped: no reviver"
 	}
 	est := price
 	paid, err := w.rev.Revive(ctx)
 	if err != nil {
-		w.log.Info(merc.LogReviveSkipped("failed: "+err.Error(), price, c.Gold, need))
+		w.logSkip("failed: "+err.Error(), price, c.Gold, need)
 		return "merc revive failed"
 	}
 	w.mu.Lock()
@@ -655,6 +678,23 @@ func (w *mercWire) ReviveStep(ctx context.Context, s *d2.Snapshot) string {
 	return "merc revived"
 }
 
+// logSkip writes the revive refusal (reason, price, gold, need) at WARN so the journal and the soak extras log carry
+// it, once per town visit: calls less than mercSkipGap apart are one visit (g2e F5: the INFO line was invisible and
+// seed 17's missing revive could not be explained).
+func (w *mercWire) logSkip(reason string, price, gold, need int) {
+	now := w.now()
+	w.mu.Lock()
+	again := w.skipLogAt.IsZero() || now.Sub(w.skipLogAt) >= mercSkipGap
+	w.skipLogAt = now
+	w.mu.Unlock()
+	if again {
+		w.log.Warn(merc.LogReviveSkipped(reason, price, gold, need))
+	}
+}
+
+// mercSkipGap separates town visits for logSkip.
+const mercSkipGap = 2 * time.Minute
+
 // mercTown adds the merc step to the Townsman's chores; everything else passes through.
 type mercTown struct {
 	bot.Townsman
@@ -662,7 +702,14 @@ type mercTown struct {
 }
 
 func (t *mercTown) Chores(ctx context.Context, plan bot.ChorePlan) (bot.ChoreReport, error) {
+	var first string
+	if s, serr := t.w.e.Snapshot(); serr == nil {
+		first = t.w.ReviveFirst(ctx, s)
+	}
 	rep, err := t.Townsman.Chores(ctx, plan)
+	if first != "" {
+		rep.Done = append(rep.Done, first)
+	}
 	if s, serr := t.w.e.Snapshot(); serr == nil {
 		if what := t.w.HireStep(ctx, s); what != "" {
 			rep.Done = append(rep.Done, what)
