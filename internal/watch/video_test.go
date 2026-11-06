@@ -78,7 +78,7 @@ func videoServer(t *testing.T, token string, src *fakeSrc, o VideoOptions) (*htt
 	}
 	r.sim.Hub.SetVideo(v)
 	m := http.NewServeMux()
-	for _, p := range ViewRoutes {
+	for _, p := range append(append([]string{}, ViewRoutes...), VideoRoutes...) {
 		m.Handle(p, r.sim.Hub.ViewHandler())
 	}
 	srv := httptest.NewServer(tokenGate(token, m))
@@ -387,4 +387,42 @@ func readPart(t *testing.T, br *bufio.Reader) (ctype string, body []byte) {
 		t.Fatal(err)
 	}
 	return
+}
+
+// Serve mounts the video routes only with a Video, on the viewer listener, behind the token.
+func TestServeMountsVideoOnlyWhenOn(t *testing.T) {
+	for _, on := range []bool{false, true} {
+		r := newRig(t, "sorceress")
+		o := ServeOptions{ViewAddr: "127.0.0.1:0", AnswerAddr: "127.0.0.1:0", Token: "tok"}
+		if on {
+			o.Video, _ = NewVideo(VideoOptions{Capture: (&fakeSrc{}).capture, Linger: 10 * time.Millisecond})
+		}
+		ctx, cancel := context.WithCancel(context.Background())
+		sv, err := r.sim.Hub.Serve(ctx, o)
+		if err != nil {
+			t.Fatal(err)
+		}
+		u := "http://" + sv.View.String() + "/shot.jpg"
+		if resp := mustGet(t, u); resp.StatusCode != 401 {
+			t.Errorf("on=%v no token: %d", on, resp.StatusCode)
+		}
+		want := 404
+		if on {
+			want = 503 // a capture with no frames yet
+		}
+		req, _ := http.NewRequestWithContext(ctx, "GET", u, nil)
+		req.Header.Set("Authorization", "Bearer tok")
+		ctx2, c2 := context.WithTimeout(ctx, 200*time.Millisecond)
+		req = req.WithContext(ctx2)
+		resp, err := http.DefaultClient.Do(req)
+		c2()
+		if on && err != nil {
+			cancel()
+			continue // the shot waits for a frame; the timeout is the proof that the route exists
+		}
+		if err != nil || resp.StatusCode != want {
+			t.Errorf("on=%v: %v %v", on, resp, err)
+		}
+		cancel()
+	}
 }

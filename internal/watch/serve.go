@@ -94,6 +94,11 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 	for _, p := range ViewRoutes {
 		m.Handle(p, h.ViewHandler())
 	}
+	if o.Video != nil {
+		for _, p := range VideoRoutes {
+			m.Handle(p, h.ViewHandler())
+		}
+	}
 	view := &http.Server{Handler: tokenGate(o.Token, m)}
 	ans := &http.Server{Handler: h.AnswerHandler(AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)})}
 	go view.Serve(vl)

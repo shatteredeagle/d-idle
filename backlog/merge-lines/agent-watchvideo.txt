@@ -1,0 +1,3 @@
+BACKLOG: TASK-20 watch screen: on-demand live video of the game window (d2bot --watch-video, /stream, /shot.jpg); offline tested, live check on i5 passive
+INDEX: docs/research/watch-screen-design.md section 8 Game video (d2bot --watch-video)
+CHANGELOG: watch screen: optional live video of the game window (d2bot --ladder --watch --watch-video), captured only while someone watches
