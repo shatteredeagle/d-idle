@@ -14,6 +14,7 @@ type TownTuning struct {
 	// Restocking.
 	BeltFillPct     int // refill each potion type up to this percent of its planned columns
 	TPScrollTarget  int // town portal scrolls to hold when there is no tome
+	TPReserve       int // scrolls a poor character that carries its minimal healing kit still buys (g2e F2b; 1 = the old single scroll)
 	TPMinGold       int // below this gold the first town portal scroll is not bought and its absence is no trip reason (0 = off): potions first
 	TPTomeMinGold   int // buy a Tome of Town Portal when gold is at least this and none is owned
 	IDScrollTarget  int // identify scrolls to hold when there is no tome
@@ -63,7 +64,7 @@ func DefaultTownTuning() TownTuning {
 	return TownTuning{
 		HealBelowLifePct: 70, HealBelowManaPct: 30,
 		TripMinHPPotions: 2, TripMinMPPotions: 1, TripBeltColumnPct: 50, TripPackUsedPct: 80, TripRepairPct: 20,
-		BeltFillPct: 100, TPScrollTarget: 2, TPTomeMinGold: 450, IDScrollTarget: 2, MinGoldReserve: 100, KeyTarget: 0,
+		BeltFillPct: 100, TPScrollTarget: 2, TPReserve: 2, TPTomeMinGold: 450, IDScrollTarget: 2, MinGoldReserve: 100, KeyTarget: 0,
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6, CursorStuckMax: 3,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, TripEmptyHPBelt: 1, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
@@ -88,6 +89,7 @@ func townKnobs() []Knob {
 		townK("tripRepairPct", "Trip: durability", "%", "Go to town when an equipped item is below this durability.", d.TripRepairPct, 0, 60, true),
 		townK("beltFillPct", "Belt fill target", "%", "Refill each potion type to this share of its planned columns.", d.BeltFillPct, 25, 100, true),
 		townK("tpScrollTarget", "Town portal scrolls", "count", "Scrolls to hold when no tome is owned.", d.TPScrollTarget, 1, 20, true),
+		townK("tpReserve", "Scroll reserve (poor)", "count", "Town portal scrolls a poor character buys once it carries its minimal healing kit (a dive then does not start with the only scroll spent). 1 = one scroll, the old cap.", d.TPReserve, 1, 5, true),
 		townK("tpMinGold", "TP scroll min gold", "gold", "Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price.", d.TPMinGold, 0, 1000, false),
 		townK("tpTomeMinGold", "TP tome min gold", "gold", "Buy a Tome of Town Portal when gold is at least this.", d.TPTomeMinGold, 0, 5000, false),
 		townK("idScrollTarget", "Identify scrolls", "count", "Scrolls to hold when no tome is owned.", d.IDScrollTarget, 0, 20, true),

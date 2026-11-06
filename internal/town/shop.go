@@ -523,7 +523,10 @@ func (t *Town) buyScrolls(ctx context.Context, npc d2.Unit, rep *ChoreReport) er
 		if floor := t.e.Tune.Resource.TripGoldFloor; j.scroll == "tsc" && floor > 0 {
 			switch {
 			case !t.restockFree(cur, floor):
-				j.target = min(j.target, 1)
+				// g2e F2b: a poor character that already carries its potions keeps TPReserve scrolls, so a dive does
+				// not start with the only scroll spent on the way back (seed 11 reached area 11 with none). With no
+				// potion carried the potions still come first: one scroll.
+				j.target = min(j.target, max(1, min(t.tune().TPReserve, 1+carriedPotionsBonus(t, cur))))
 			case cur.Player.Gold < 2*floor:
 				j.target = min(j.target, 2)
 			}
@@ -963,4 +966,13 @@ func tpBuyAllowed(p *d2.Player) bool {
 		return true
 	}
 	return buy
+}
+
+// carriedPotionsBonus is the number of extra scrolls a poor character may afford: TPReserve-1 once its minimal healing
+// kit is carried, 0 before.
+func carriedPotionsBonus(t *Town, s *d2.Snapshot) int {
+	if t.healingCarried(s) < max(t.e.Tune.Resource.KitMinHP, 1) {
+		return 0
+	}
+	return max(t.tune().TPReserve-1, 0)
 }

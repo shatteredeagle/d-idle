@@ -724,3 +724,39 @@ func TestFighterSeamGetsTheMercStateOnlyWithTheKnob(t *testing.T) {
 		t.Errorf("state %+v err %v", st, err)
 	}
 }
+
+// g2e F5: the revive runs before the shop, on pack gold, with the kit test waived (the kit reserve is inside the bar).
+func TestReviveFirstBeforeShop(t *testing.T) {
+	rd := &fakeReader{st: merc.MercState{Known: true, Owned: true, Level: 10}}
+	rev := &fakeReviver{paid: 750}
+	w, buf, clk := testWire(t, rd, rev)
+	ctx := context.Background()
+	if got := w.ReviveFirst(ctx, townSnap(300, false)); got != "" || rev.calls != 0 || buf.Len() != 0 {
+		t.Fatalf("poor purse: %q calls %d log %q", got, rev.calls, buf)
+	}
+	if got := w.ReviveFirst(ctx, townSnap(9000, false)); got != "merc revived" || rev.calls != 1 {
+		t.Fatalf("funded, no kit yet: %q calls %d", got, rev.calls)
+	}
+	clk.t = clk.t.Add(time.Minute)
+	rd.set(merc.MercState{Known: true, Owned: true, Alive: true, Level: 10})
+	if w.ReviveStep(ctx, townSnap(100, true)) != "" || rev.calls != 1 {
+		t.Fatal("an alive merc is not revived again after the shop")
+	}
+}
+
+// g2e F5: the refusal is written at WARN, once per town visit.
+func TestReviveSkipLoggedOncePerVisit(t *testing.T) {
+	rd := &fakeReader{st: merc.MercState{Known: true, Owned: true, Level: 10}}
+	w, buf, clk := testWire(t, rd, &fakeReviver{paid: 750})
+	ctx := context.Background()
+	w.ReviveStep(ctx, townSnap(100, true))
+	w.ReviveStep(ctx, townSnap(100, true))
+	if n := strings.Count(buf.String(), "level=WARN msg=\"merc: revive skipped (gold)"); n != 1 {
+		t.Fatalf("%d warn lines in one visit:\n%s", n, buf)
+	}
+	clk.t = clk.t.Add(5 * time.Minute)
+	w.ReviveStep(ctx, townSnap(100, true))
+	if n := strings.Count(buf.String(), "level=WARN msg=\"merc: revive skipped (gold)"); n != 2 {
+		t.Fatalf("%d warn lines after a new visit:\n%s", n, buf)
+	}
+}

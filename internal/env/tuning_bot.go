@@ -68,6 +68,14 @@ type BotTuning struct {
 	DroughtMin     int
 	EmptyFieldSec  int
 
+	// g2e fixes (docs/research/g2e-diagnosis.md, addendum "F2-F5 fixes"). NoPortalWaitSec: seconds after the first heal
+	// trip that failed for lack of a town portal before the hero leaves the game (240 or more = never, the old wait).
+	// DroughtStage2Min: virtual minutes after a stage 1 drought action before stage 2 (fresh game); 0 = DroughtMin.
+	// FreshAfterRecoverySec: no unplanned fresh game this long after a lost-game recovery (0 = off).
+	NoPortalWaitSec       int
+	DroughtStage2Min      int
+	FreshAfterRecoverySec int
+
 	// Mercenary chore (docs/merc-farm.md). Hiring clicks a verified dialog; reviving clicks an UNVERIFIED one, so it is off.
 	MercRetryMin         int  // minutes between merc chore attempts (a failed hire or revive is not retried sooner)
 	MercHireMinGold      int  // gold in Act 2 town below which no hire is attempted
@@ -87,7 +95,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
-		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150,
+		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, FreshAfterRecoverySec: 180,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -174,6 +182,12 @@ func botKnobs() []Knob {
 			Desc: "Virtual minutes the re-entry burst cap counts over."},
 		{Key: "bot.droughtMin", Label: "Kill drought limit", Unit: "min", Default: 8, Min: 0, Max: 60, NoHandicap: true,
 			Desc: "Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off."},
+		{Key: "bot.droughtStage2Min", Label: "Kill drought, second stage", Unit: "min", Default: 2, Min: 0, Max: 30, NoHandicap: true,
+			Desc: "Virtual minutes after the first drought action (leave the area) before the second (a fresh game). The old rule waited a full bot.droughtMin, which can never help under the Gate 2 limit of 10. 0 uses bot.droughtMin."},
+		{Key: "bot.noPortalWaitSec", Label: "No portal: leave after", Unit: "s", Default: 20, Min: 0, Max: 240, NoHandicap: true,
+			Desc: "Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits."},
+		{Key: "bot.freshAfterRecoverySec", Label: "Quiet after recovery", Unit: "s", Default: 180, Min: 0, Max: 900, NoHandicap: true,
+			Desc: "No unplanned fresh game (no target left, drought) this long after a lost-game recovery, unless life is below the resume line. A second restart right after the recovery fails the Gate 2 fault criterion. 0 is off."},
 		{Key: "bot.emptyFieldSec", Label: "Empty quest field", Unit: "s", Default: 150, Min: 0, Max: 900, NoHandicap: true,
 			Desc: "A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off."},
 		{Key: "bot.failsafePauseMaxSec", Label: "Failsafe pause cap", Unit: "s", Default: 3600, Min: 300, Max: 14400, NoHandicap: true,

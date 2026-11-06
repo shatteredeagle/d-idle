@@ -20,7 +20,13 @@ var walkableHome = map[int]bool{2: true, 8: true, 3: true}
 // chainHome adds the fields of the quest route (Stony Field, Dark Wood, Black Marsh, Burial Grounds, the caves) that
 // town.walkChainToTown reaches by walking the level chain (BELTFIX3, Gate 1 20261102: 37 virtual minutes without
 // potions in Dark Wood). Only the no-healing emergency trip may use it (ChainHome); U: the walk from each area.
-var chainHome = map[int]bool{4: true, 5: true, 6: true, 9: true, 10: true, 17: true}
+//
+// g2e F2c adds the levels the route table (nav act1Hints) links to that chain: the holes, the second caves, the
+// crypt, the mausoleum, the Forgotten Tower and the second underground passage (Tamoe Highland and the pits stay out:
+// kept out by the codefix F1 test) (seed 11 stood
+// in area 11, Hole Level 1, with no scroll and no walk home). U: the walk from each of them was never run live.
+var chainHome = map[int]bool{4: true, 5: true, 6: true, 9: true, 10: true, 17: true,
+	11: true, 13: true, 14: true, 15: true, 18: true, 19: true, 20: true}
 
 // NearTownArea reports whether a character without a scroll can still walk home from area (Input.NearTown).
 func NearTownArea(area int) bool { return walkableHome[area] }

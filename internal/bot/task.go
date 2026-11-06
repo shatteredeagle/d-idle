@@ -950,6 +950,12 @@ func (r *Runner) freshGameToLevel(ctx context.Context, s *d2.Snapshot) (done boo
 	if !s.Player.InTown() {
 		return true, r.d.Town.ToTown(ctx)
 	}
+	if hold := r.freshHold(s.Player); hold > 0 {
+		r.e.Log.Info("leveling: fresh game held back after a recovery", "waitSec", int(hold/time.Second))
+		r.pause(ctx, min(hold, 5*time.Second))
+		r.Beat()
+		return true, ctx.Err()
+	}
 	if !r.freshAllowed(ctx, s) {
 		return true, ctx.Err()
 	}

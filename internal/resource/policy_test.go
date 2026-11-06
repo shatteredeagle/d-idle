@@ -550,3 +550,15 @@ func TestEscapeInChainFieldLeavesGame(t *testing.T) {
 		t.Errorf("Blood Moor: %v, want RetreatOut", k)
 	}
 }
+
+// g2e F2c: the dungeon levels of the route table walk home like their field, but are never "near town".
+func TestChainHomeDungeonLevels(t *testing.T) {
+	for _, area := range []int{11, 13, 14, 15, 18, 19, 20} {
+		if NearTownArea(area) || !ChainHomeArea(area) {
+			t.Errorf("area %d: near %v chain %v, want false/true", area, NearTownArea(area), ChainHomeArea(area))
+		}
+	}
+	if ChainHomeArea(40) {
+		t.Error("an unknown area must not be walkable home")
+	}
+}
