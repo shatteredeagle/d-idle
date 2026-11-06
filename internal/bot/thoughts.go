@@ -54,7 +54,7 @@ func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*l
 	if sink != nil {
 		s = ladder.Tee{logSink, sink}
 	}
-	l, err := ladder.New(ladder.Config{Cat: cat, Store: st, Clock: clk, Sink: s, Answers: answers, InFight: r.engaged})
+	l, err := ladder.New(ladder.Config{Cat: cat, Store: st, Clock: clk, Sink: s, Answers: answers, InFight: r.engaged, AreaNames: r.areaName})
 	if err != nil {
 		return nil, fmt.Errorf("bot: ladder: %w", err)
 	}

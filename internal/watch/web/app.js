@@ -37,13 +37,19 @@
     if (!th.thoughts.length) box.appendChild(el('p', 'hint', 'No open question. The hero carries on.'));
     th.thoughts.forEach(function (t) {
       var d = el('div', 'thought ' + t.kind); d.dataset.id = t.id;
-      d.appendChild(el('div', 'q', t.kind === 'confirm' ? t.learn : t.question));
-      d.appendChild(el('div', 'ctx', t.context));
-      if (t.urgency) d.appendChild(el('div', 'urg', t.urgency));
-      if (t.meanwhile) d.appendChild(el('div', 'meanwhile', t.meanwhile));
+      // headline = what happened; then the urgency, what happens on no answer, the buttons (plain phrase + id), the rule footnote
+      d.appendChild(el('div', 'q', t.kind === 'confirm' ? t.learn : (t.headline || t.question)));
+      if (t.kind !== 'confirm' && t.headline && t.headline !== t.question) d.appendChild(el('div', 'ask', t.question));
+      if (t.whyNow) d.appendChild(el('div', 'urg', t.whyNow));
+      else if (t.urgency) d.appendChild(el('div', 'urg', t.urgency));
+      if (t.ifNothing) d.appendChild(el('div', 'ifnothing', t.ifNothing));
+      else if (t.meanwhile) d.appendChild(el('div', 'meanwhile', t.meanwhile));
       var cs = el('div', 'choices');
       t.choices.forEach(function (c) {
-        var b = el('button', 'btn' + (c.id === 'yes' ? ' primary' : ''), c.label); b.type = 'button';
+        var b = el('button', 'btn' + (c.id === 'yes' ? ' primary' : ''), ''); b.type = 'button';
+        b.appendChild(el('span', 'lbl', c.label));
+        if (c.does) b.appendChild(el('small', 'does', c.does));
+        b.title = c.id;
         b.addEventListener('click', function () {
           if (t.kind === 'confirm') post('/api/confirm', { thought: t.id, yes: c.id === 'yes' });
           else post('/api/answer', { thought: t.id, answer: c.id });
@@ -51,6 +57,7 @@
         cs.appendChild(b);
       });
       d.appendChild(cs);
+      if (t.rule) d.appendChild(el('small', 'rulenote', t.rule));
       var bar = el('div', 'bar'), fill = el('i'); bar.appendChild(fill); d.appendChild(bar);
       var left = el('small', 'left'); d.appendChild(left);
       box.appendChild(d);

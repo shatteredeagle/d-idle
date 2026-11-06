@@ -91,7 +91,7 @@ func (r *Runner) askTrip(s *d2.Snapshot, in resource.Input, rt resource.Tuning, 
 	}
 	_, pct, _ := r.beltAndInv(s)
 	fv := resource.FieldGate(in, rt) // HaveHP and WantHP are filled whether or not the belt gate is on
-	v, err := l.TripWanted(ladder.HeroFrom(s.Player), ladder.BeltBand(fv.HaveHP, fv.WantHP), pct, trip.Go)
+	v, err := l.TripWanted(ladder.HeroFrom(s.Player).With("have", fv.HaveHP, "want", fv.WantHP), ladder.BeltBand(fv.HaveHP, fv.WantHP), pct, trip.Go)
 	if err != nil {
 		l.Fault(err)
 		return trip
