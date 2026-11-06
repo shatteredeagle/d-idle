@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d2drill group E1: short live drills run the real d2bot attached to a prepared d2d (merc revive before potions, no-portal low life leaves)
 - Paired A/B harness for the merc revive reserve and the standing rule that strategy changes need a paired A/B before the long gate
 - decisions: d2d fidelity bar (slices 1 to 3 before Gate A), mismatch policy and the vendor probe input rule recorded (user, 2026-11-06)
 - tester d2d now ships without lab verbs (only read-only debug verbs answer); the first-run wizard runs from the tester entrypoint and the setup page checks the Patch_D2 hash of 1.14d.
