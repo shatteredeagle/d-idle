@@ -472,8 +472,8 @@ var affixWords = []struct {
 	{AffixFireEnchanted, "fire"}, {AffixColdEnchanted, "cold"}, {AffixLightningEnchanted, "lightning"}, {AffixManaBurn, "mana burning"},
 	{AffixTeleportation, "teleporting"}, {AffixSpectralHit, "spectral"}, {AffixStoneSkin, "stone skinned"}, {AffixMultiShot, "multishot"}}
 
-// eliteFacts describes the first elite among the candidates for the question card: its name, kind, enchantments and
-// distance in tiles (a tile is 5 subtiles).
+// eliteFacts describes the first elite among the candidates for the question card: its name, its kind (with the
+// enchantments: "cursing champion pack") and the distance in tiles (a tile is 5 subtiles).
 func eliteFacts(cand []Target) []any {
 	i := slices.IndexFunc(cand, func(t Target) bool { return t.Elite })
 	if i < 0 {
@@ -493,5 +493,8 @@ func eliteFacts(cand []Target) []any {
 			ws = append(ws, x.w)
 		}
 	}
-	return []any{"monster", t.Name, "packkind", kind, "affixes", strings.Join(ws, ", "), "distance", int(t.Dist/5 + 0.5)}
+	if len(ws) > 0 {
+		kind = strings.Join(ws, " and ") + " " + kind
+	}
+	return []any{"monster", t.Name, "packkind", kind, "distance", int(t.Dist/5 + 0.5)}
 }

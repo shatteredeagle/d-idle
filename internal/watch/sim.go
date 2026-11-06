@@ -275,12 +275,16 @@ func (s *Sim) tick() {
 		s.nextChat = now + 120*time.Second
 		s.chatN++
 	}
-	n := s.chatN
+	n, area := s.chatN, s.area
+	if area == "" {
+		area = "the field"
+	}
 	s.mu.Unlock()
 	// The store and the Hub are called without the Sim lock: their callbacks never call the Sim.
 	if ask {
 		extra := decide.Obs{Num: map[string]float64{"life": s.Build.Life},
-			Cat: map[string]string{"packdanger": s.Build.Danger, "kit": "OK", "held": "hp"}}
+			Cat: map[string]string{"packdanger": s.Build.Danger, "kit": "OK", "held": "hp"},
+			Sit: decide.Situation{"life": fmt.Sprint(int(s.Build.Life)), "area": area, "potions": "4", "hostiles": "3"}}
 		if _, err := s.Ladder.Decide(pointRetreat, s.hero(), extra, ""); err != nil {
 			s.Ladder.Fault(err)
 		}
