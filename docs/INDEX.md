@@ -756,3 +756,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/tester-build-plan.md: gap list, slice plan and open questions for a friend running d.idle in the Wine container (game-dir mode only)
 - docs/research/tester-build-plan.md revised: d2d first, d.idle fork shipped with its source, Wine plan as appendix
 - docs/d2d-view.md section "Game video from the tap" (d2bot --watch-video-source tap, the /frame sampler finding, tap port 8893)
+- docs/d2d-container/README.md - tester profile, env table, first run, lab-verb gating finding
