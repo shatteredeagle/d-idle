@@ -134,3 +134,28 @@ Fixed on branch `agent/pumpfix` (offline tests, not yet re-drilled live):
 7. `d2bot --ladder` uses `state/ladder/runs/<D2BOT_RUN>` when a run is named, else the shared store; `--ladder-store shared` continues the shared one. Test: `TestLadderStorePerRun` (cmd/d2bot).
 
 Next live re-drill (instance i5, Freshe; the integrated path needs no `D2D_BIN`): `d2cheat --reason 'T0 drill re-run, no setup' runstart <run>`, then `D2_INSTANCE=i5 D2BOT_RUN=<run> tools/live.sh --bg --max 900 t0drill d2bot --attach --ladder --ladder-profile <P> --watch --goals 'farm:Blood Moor' --run-for 10m`, one profile per run (cautious, bold, inconsistent, holdout:101); expect t0.area.toohard answered within a tick or two and `remainingSec <= fadeSec` in the thoughts view.
+
+## Result 3 (series after pumpfix, four profiles, VERIFIED LIVE 2026-11-05)
+
+Build `8490b3467` (main after #246: Pump in the bot loop, reopened thoughts restart their fade, per-run store). Hidden instance i5, Freshe (Sorceress, clvl 4 at the start, clvl 5 at the end of every run after the first), no setup writes. One 10 minute run per profile, one at a time: `d2cheat --reason 'T0 drill, no setup' runstart <run>`, then `D2_INSTANCE=i5 D2BOT_RUN=<run> tools/live.sh --bg --max 900 t0drill d2bot --attach --ladder --ladder-store <run> --ladder-profile <P> --watch --goals 'farm:Blood Moor' --run-for 10m`. Views (thoughts, rules, uptime, journal) read on the worker host loopback near minutes 1, 5 and 10. Load: the worker host sat at 12.7 to 16.2 load average on 16 cores (0.8 to 1.0 per core, below the 1.1 limit) while the Gate 2 seeds ran; the drill added about one core; no gate seed was touched and no new stall was seen from this side.
+
+| | d `...d` cautious (shared store, see defect 8) | e `...e` cautious | f `...f` bold | g `...g` inconsistent | h `...h` holdout:101 |
+|---|---|---|---|---|---|
+| exit / fault / stall / deaths | 0 / none / 0 / 0 | same | same | same | same |
+| kills, xp (area summaries) | 89, 2300 | 72, 1628 | 21, 511 | 25, 700 | 45, 1376 |
+| opened (point: n) | toohard 12, retreat.drink 3, unique.fight 2, repair 4, restock 1, tp.lost 1 | toohard 12, repair 3, restock 3, return 2 | toohard 8, repair 1, restock 1, return 1 | toohard 14, repair 2, restock 2, return 1, tp.lost 2 | toohard 6, repair 2, restock 3, return 1, tp.lost 2 |
+| answered | toohard 9, retreat.drink 2, unique.fight 2, repair 4, restock 1, tp.lost 1 | toohard 9, repair 2, restock 2, return 1 | toohard 6, restock 1, return 1 | toohard 9, repair 1, restock 1, return 1, tp.lost 1 | toohard 6, repair 1, restock 1, return 1, tp.lost 1 |
+| faded unanswered | 5 | 7 | 4 | 7 | 2 (3 more open at the end) |
+| rules learned | restock yes, repair skip (plus 2 older ones from the shared store) | none | t0.area.toohard `lower` (5 answers, learned 19:07:40) | none | t0.area.toohard `skip` |
+| writes after start | 0 | 0 | 0 | 0 | 0 |
+| per-run store | none (shared dir) | 20 KB | 20 KB | 20 KB | 20 KB |
+
+Field answers (Pump fix): in runs e to h, 25 of 42 answers arrived while the hero was in Blood Moor, Cold Plains, Den of Evil or a cave (area at answer time), the other 17 in town. The open-to-answer delay of the scripted players is 7 to 44 s (median 32 s, per-profile think time), always under the 45 s fade; the thoughts that faded were the ones whose scripted delay or the area change ran past 45 s. `remainingSec <= fadeSec` held in every view of every run (the defect 6 symptom, 539 against 45, is gone). Runs e to h started with 0 open thoughts and a clean `rules` view (defect 7 fixed when the store is named with `--ladder-store`). Journal first lines (run h): question "Restock belt potions now?" with the meanwhile answer, then "You answered ..." entries, each carrying the thought id.
+
+Points fired: t0.area.toohard (all runs, asked repeatedly from `fillRoute` while the route guard blocks the tower and monastery at clvl 4 to 5), t1.repair, t1.restock, t1.return, t1.tp.lost. t0.retreat.drink and t0.unique.fight fired only in run d, as thoughts carried over at start from the shared store (opened in earlier runs, answered at 25 to 35 s while in Blood Moor); in e to h no fight-time point opened in 40 minutes (the hero rarely fell under 70 percent life). Not seen: t1.town.trigger, t2.mercenary.
+
+Behaviour: no answer changed behaviour. The `t0.area.toohard` answers `skip`/`lower` equal the default (`lower` is `skip` in effect, no lower-area detour exists), `go` and `notsure` (run g) had no effect either because the only affected guard is the Forgotten Tower, which the route guard blocks anyway (`route guard: blocked tower (no merc, clvl 4 < 15)`). The learned `lower` (run f) and `skip` (run h) rules therefore keep the legacy route.
+
+Verdict: stability PASS for all four profiles (4 x 10 min plus the contaminated run d), questions are answered in the field (Pump fix confirmed live), 2 rules learned from 4 clean runs. Acceptance criteria 2 and 3 of TASK-21 stay open: no fight-point thought was opened AND answered in a fresh clean run, no learned answer changed behaviour, and holdout 202 was not run.
+
+New defect 8 (private ops repo, `tools/live.sh`): it forwards only a fixed list of variables to the worker host, so `D2BOT_RUN` set on the caller never reaches `d2bot`; run d logged `"dir":".../state/ladder"` (shared) and inherited old thoughts and rules. Workaround used from run e: `--ladder-store <run>`. The documented command above already includes it.
