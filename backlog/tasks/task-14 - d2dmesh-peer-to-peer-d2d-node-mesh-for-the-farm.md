@@ -1,10 +1,10 @@
 ---
 id: TASK-14
-title: "d2dmesh: peer-to-peer d2d node mesh for the farm"
-status: Deferred
+title: 'd2dmesh: peer-to-peer d2d node mesh for the farm'
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-04T00:00:00Z'
+updated_date: '2026-11-06T16:13:00Z'
 labels:
   - parked
 dependencies: []

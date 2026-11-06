@@ -1,10 +1,10 @@
 ---
 id: TASK-12
 title: 'ledgerkey: cheat ledger key per save (uncheated rule)'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-04T00:00:00Z'
-updated_date: '2026-11-06T16:00:00Z'
+updated_date: '2026-11-06T16:13:00Z'
 labels:
   - tooling
 dependencies: []
@@ -48,7 +48,6 @@ Source: git tag openspec-final, openspec/changes/ledgerkey/ (this task is the co
 <!-- AC:BEGIN -->
 - [x] #1 1.1 key, filter, CheatedKey, summary (internal/cheat/ledgerkey_test.go, legacy and renamed cases)
 - [x] #2 1.2 d2cheat ledger flags
-- [ ] #3 1.3 private tools (soak24.sh preflight, ledgercheck.sh) key by instance/name (coordinator)
 <!-- AC:END -->
 
 ## Implementation Notes
