@@ -109,10 +109,10 @@
    "{\"time\":\"2026-11-06T18:19:23.518934971-05:00\",\"level\":\"INFO\",\"msg\":\"zone entry\",\"inst\":\"e1\",\"area\":2,\"clvl\":12,\"life\":\"40/40\",\"heal\":0,\"mana\":\"35/35\",\"tome\":0,\"merc\":\"none\"}",
    "{\"time\":\"2026-11-06T18:19:30.890186812-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal: no portal source (empty)\",\"inst\":\"e1\",\"try\":1}",
    "{\"time\":\"2026-11-06T18:19:30.891883287-05:00\",\"level\":\"INFO\",\"msg\":\"no town portal: walking back to town\",\"inst\":\"e1\",\"from\":2,\"to\":1}",
-   "{\"time\":\"2026-11-06T18:19:30.899073703-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @-\u003e/home/jesse/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":1}",
+   "{\"time\":\"2026-11-06T18:19:30.899073703-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @-\u003e$HOME/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":1}",
    "{\"time\":\"2026-11-06T18:19:31.626059391-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal: no portal source (empty)\",\"inst\":\"e1\",\"try\":1}",
    "{\"time\":\"2026-11-06T18:19:31.627573383-05:00\",\"level\":\"INFO\",\"msg\":\"no town portal: walking back to town\",\"inst\":\"e1\",\"from\":2,\"to\":1}",
-   "{\"time\":\"2026-11-06T18:19:31.634226721-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @-\u003e/home/jesse/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":2}"
+   "{\"time\":\"2026-11-06T18:19:31.634226721-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @-\u003e$HOME/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":2}"
   ],
   "LogFile": "2026-11-06-shortdrill-noportal-E1.noportal-b.log.txt"
  }

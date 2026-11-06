@@ -1,5 +1,5 @@
 {"time":"2026-11-06T18:19:22.760253495-05:00","level":"INFO","msg":"d2bot start","inst":"e1","version":"dev"}
-{"time":"2026-11-06T18:19:22.812866474-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"/home/jesse/d2d-lab/slots/4/d2d.sock","managed":false,"lockstep":true}
+{"time":"2026-11-06T18:19:22.812866474-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"$HOME/d2d-lab/slots/4/d2d.sock","managed":false,"lockstep":true}
 {"time":"2026-11-06T18:19:22.813727027-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
 {"time":"2026-11-06T18:19:22.816116252-05:00","level":"INFO","msg":"goals enqueued","inst":"e1"}
 2026/11/06 18:19:22 INFO goal from --goals already present, not queued again goal="farm:Blood Moor"
@@ -134,11 +134,11 @@
 {"time":"2026-11-06T18:19:30.890186812-05:00","level":"INFO","msg":"d2d town portal: no portal source (empty)","inst":"e1","try":1}
 {"time":"2026-11-06T18:19:30.891883287-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
 {"time":"2026-11-06T18:19:30.895535831-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
-{"time":"2026-11-06T18:19:30.899073703-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @->/home/jesse/d2d-lab/slots/4/d2d.sock: i/o timeout))","consecutive":1}
+{"time":"2026-11-06T18:19:30.899073703-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @->$HOME/d2d-lab/slots/4/d2d.sock: i/o timeout))","consecutive":1}
 {"time":"2026-11-06T18:19:31.626059391-05:00","level":"INFO","msg":"d2d town portal: no portal source (empty)","inst":"e1","try":1}
 {"time":"2026-11-06T18:19:31.627573383-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
 {"time":"2026-11-06T18:19:31.631009514-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
-{"time":"2026-11-06T18:19:31.634226721-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @->/home/jesse/d2d-lab/slots/4/d2d.sock: i/o timeout))","consecutive":2}
+{"time":"2026-11-06T18:19:31.634226721-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (walk to town failed: nav: click {129 138}: context canceled (read unix @->$HOME/d2d-lab/slots/4/d2d.sock: i/o timeout))","consecutive":2}
 {"time":"2026-11-06T18:19:32.98375714-05:00","level":"INFO","msg":"summary","inst":"e1","kills":109,"bossKills":0,"drops":26,"deaths":1,"potions":3,"levelUps":0,"errors":8,"xp":32,"activeSeconds":297,"xpPerHour":120}
 {"time":"2026-11-06T18:19:32.983830112-05:00","level":"INFO","msg":"death report","inst":"e1","total":1,"lastHour":1,"goldLost":0,"itemsLost":1,"byMonster":{"Night Clan":1},"byArea":[{"area":6,"name":"Black Marsh","deaths":1,"last":"1969-12-31T19:00:19.04-05:00"}]}
 {"time":"2026-11-06T18:19:32.983915773-05:00","level":"INFO","msg":"death","inst":"e1","area":"Black Marsh","killer":"Night Clan","level":12,"corpseValue":168,"retrieved":false,"why":"corpse worth about 168 gold, threshold 1000"}

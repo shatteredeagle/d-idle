@@ -1,5 +1,5 @@
 {"time":"2026-11-06T18:19:11.026931068-05:00","level":"INFO","msg":"d2bot start","inst":"e1","version":"dev"}
-{"time":"2026-11-06T18:19:11.091481293-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"/home/jesse/d2d-lab/slots/4/d2d.sock","managed":false,"lockstep":true}
+{"time":"2026-11-06T18:19:11.091481293-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"$HOME/d2d-lab/slots/4/d2d.sock","managed":false,"lockstep":true}
 {"time":"2026-11-06T18:19:11.092383326-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
 2026/11/06 18:19:11 INFO goal from --goals already present, not queued again goal="farm:Blood Moor"
 {"time":"2026-11-06T18:19:11.095939319-05:00","level":"INFO","msg":"goals enqueued","inst":"e1"}

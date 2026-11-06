@@ -1,5 +1,5 @@
 {"time":"2026-11-06T18:16:23.386293498-05:00","level":"INFO","msg":"d2bot start","inst":"e1","version":"dev"}
-{"time":"2026-11-06T18:16:23.449582294-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"/home/jesse/d2d-lab/slots/5/d2d.sock","managed":false,"lockstep":true}
+{"time":"2026-11-06T18:16:23.449582294-05:00","level":"INFO","msg":"d2d backend up","inst":"e1","sock":"$HOME/d2d-lab/slots/5/d2d.sock","managed":false,"lockstep":true}
 {"time":"2026-11-06T18:16:23.450236793-05:00","level":"INFO","msg":"merc policy on (merc.enabled=1)","inst":"e1","reviver":true}
 2026/11/06 18:16:23 INFO goal from --goals already present, not queued again goal="farm:Blood Moor"
 {"time":"2026-11-06T18:16:23.451202628-05:00","level":"INFO","msg":"goals enqueued","inst":"e1"}
@@ -148,22 +148,22 @@
 {"time":"2026-11-06T18:16:31.3874535-05:00","level":"INFO","msg":"shutting down: finishing in town","inst":"e1"}
 {"time":"2026-11-06T18:16:31.387558111-05:00","level":"INFO","msg":"Bot stopped","inst":"e1","type":"control","goal":""}
 {"time":"2026-11-06T18:16:31.513721377-05:00","level":"INFO","msg":"state","inst":"e1","from":"idle","to":"resupplying","activity":"Returning to town"}
-{"time":"2026-11-06T18:16:31.516190233-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:31.838944204-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:32.160726581-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:32.481719107-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:32.49073307-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:31.516190233-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:31.838944204-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.160726581-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.481719107-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.49073307-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
 {"time":"2026-11-06T18:16:32.490768371-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
 {"time":"2026-11-06T18:16:32.494746599-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
-{"time":"2026-11-06T18:16:32.495557441-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":1}
-{"time":"2026-11-06T18:16:33.22805981-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:33.549717806-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:33.871823778-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:34.192045211-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
-{"time":"2026-11-06T18:16:34.199922058-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:32.495557441-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":1}
+{"time":"2026-11-06T18:16:33.22805981-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":1,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:33.549717806-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":2,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:33.871823778-05:00","level":"INFO","msg":"d2d town portal attempt failed","inst":"e1","try":3,"err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:34.192045211-05:00","level":"INFO","msg":"d2d town: no portal opened, falling back","inst":"e1","err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
+{"time":"2026-11-06T18:16:34.199922058-05:00","level":"WARN","msg":"open portal did not lead to town","inst":"e1","err":"context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)"}
 {"time":"2026-11-06T18:16:34.199942428-05:00","level":"INFO","msg":"no town portal: walking back to town","inst":"e1","from":2,"to":1}
 {"time":"2026-11-06T18:16:34.203724644-05:00","level":"INFO","msg":"nav exit","inst":"e1","to":1,"gate":{"X":279,"Y":352},"push":{"X":287,"Y":352},"border":true}
-{"time":"2026-11-06T18:16:34.204628458-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->/home/jesse/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":2}
+{"time":"2026-11-06T18:16:34.204628458-05:00","level":"WARN","msg":"action failed","inst":"e1","what":"stop: go to town","err":"town: no town portal available (open portal: context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @->$HOME/d2d-lab/slots/5/d2d.sock: i/o timeout))","consecutive":2}
 {"time":"2026-11-06T18:16:35.61241478-05:00","level":"INFO","msg":"summary","inst":"e1","kills":15,"bossKills":0,"drops":3,"deaths":0,"potions":3,"levelUps":0,"errors":15,"xp":8,"activeSeconds":7,"xpPerHour":480}
 {"time":"2026-11-06T18:16:35.612486461-05:00","level":"INFO","msg":"death report","inst":"e1","total":0,"lastHour":0,"goldLost":0,"itemsLost":0,"byMonster":{},"byArea":null}
 {"time":"2026-11-06T18:16:35.612544662-05:00","level":"INFO","msg":"final status","inst":"e1","state":"stopped","activity":"Stopped","level":12,"area":"Blood Moor"}
