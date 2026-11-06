@@ -765,3 +765,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/soaks/gate2-multiseed-20261106-1626-g2f.md: Gate 2 multi-seed run 20261106-1626-g2f (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/research/g2f-diagnosis.md - Gate 2 g2f diagnosis: seed 17 merc economy, seeds 11/13 compared, early death 13, tp field, mouthRef, needs the user
 - docs/lab-verbs.md: the fork --lab-verbs gate (which debug verbs are gated, who passes the flag, proof)
+- docs/research/fidelity-matrix.md and docs/research/fidelity-probe-design.md: what the bot depends on versus game.exe, how each row is verified, same-save probe design
+- docs/ab-merc.md: paired A/B of the merc revive reserve (late-start variant), run plan

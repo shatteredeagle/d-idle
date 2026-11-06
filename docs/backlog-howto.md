@@ -26,6 +26,10 @@ ADR 0016 replaced the goals G-A..G-G by the tier ladder as the ranking of work, 
 - Legacy `G-A..G-G` stay accepted by the checker for old branches; no task on main carries one since 2026-11-06 (mapping: G-A gate, G-B T4 or bot-defect, G-C bot-defect or drills, G-E upstream, G-F tester or tooling, G-G T0). Tasks from 2026-11-06 on use the new labels. Dependencies are the `dependencies:` key (`backlog task edit N --dep M`), never a label.
 - `docs/cards.md` shows the tier, else the first area label, in its goal column.
 
+## Standing rule: strategy changes need a paired A/B (user 2026-11-06)
+
+A change that claims to be a strategy improvement (not a bug fix) gets a paired A/B (at least 8 seeds, paired mean with a 95 percent interval) before its long gate; a bug fix gets a short drill in its exact failing scenario. Tooling and protocol: `tools/ab/`, docs/ab-design.md (the "Variants" section covers effects that a clvl 1 run does not reach). The task for a strategy change lists the A/B as an acceptance criterion; the task for a bug fix names its drill.
+
 ## The rule that keeps the board true
 
 Every agent job gets a task. Create it BEFORE launching the agent (`new_task.py`, status Proposed) or name an existing one in the brief; a job with no task is invisible on the board and was the main cause of the mess found on 2026-11-06 (merged work with Proposed tasks, stale statuses, 14 pieces of open work with no task). The agent ticks its boxes and fills `result:`; the coordinator sets the status at merge (Done only when every box is ticked, else In Progress with a note naming the open box). `python3 -I tools/backlog/drift.py` in the coordinator tick shows the misses. The grooming pass of 2026-11-06 is in docs/research/backlog-groom-2026-11-06.md.
