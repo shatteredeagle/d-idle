@@ -1,5 +1,7 @@
 # Onboarding UX for the d.idle tester build (design, before any code)
 
+> status: approved by the user 2026-11-06 (mock and recommendations); slice A built (docs/onboarding-slice-a.md).
+
 > status: DESIGN with a clickable mock, for the user to react to. No product code changed. Mock: [mocks/onboarding.html](mocks/onboarding.html) (open it in a browser; the "Jump" box at the top goes to every screen and state). Written 2026-11-06 (agent onboardux) after the user asked whether the onboarding flow had been designed; it had not past the first-run wizard (setup of cmd/d2dsetup, task testerd2dwiz).
 > Tags: V = read in this repo or in the Palimpsest project (file named), S = secondary, U = unverified or my judgment. Classic 1.14d; nothing here is D2R. Inspiration: Palimpsest (the user's own standalone SETI-style contributor container, GPL-3.0-or-later like this repo): its audience rules, onboarding wizard and dashboard. The copy below is written fresh for d.idle; no Palimpsest text or code was copied.
 > Parents: [tester-build-plan.md](tester-build-plan.md) (tasks 23 to 33), [watch-screen-design.md](watch-screen-design.md), [orders-ux-design.md](orders-ux-design.md), [automation-ladder.md](automation-ladder.md), [ADR 0016](../adr/0016-automation-ladder.md), `cmd/d2dsetup/README.md`, `docs/d2d-container/README.md`.
