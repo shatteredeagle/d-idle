@@ -1,0 +1,182 @@
+# Fidelity matrix: what the bot uses versus game.exe, and how each row is verified
+
+> status: research, 2026-11-06, card `fidelity-matrix` (docs and tasks only; no game, no worker-host run, no Go change). Answers the user's question of 2026-11-06 ("is there a plan to verify d2d is 100 % 1:1 with game.exe for everything we use: early Act 1, all Sorceress skills and passives we use, stats, gear, vendors..."). Companion: [fidelity-probe-design.md](fidelity-probe-design.md).
+> Tags: **V** read in this repo this session (file named; the file's own tag is repeated where it matters), **S** secondary (an upstream or SME statement, or a doc we did not re-check), **U** unverified. "game.exe" is 1.14d; nothing here is D2R. Numbers that have an owner are cited, not copied as new facts: oracle counts come from `docs/coverage/ledger.tsv` and the trace docs named per row.
+
+## Answer in six lines
+
+1. **No, there is no complete plan, and "100 % 1:1" is not what the existing evidence can show.** The evidence is strong where it is a code-level oracle (game.exe's own functions run under an emulator against d2d's rules: 7.2 million cases, 74 % of 4,915 table rows run-tested, `docs/coverage/rule-coverage.md` V) and thin or missing exactly where the bot touches the world through state: vendor stock, area layouts beyond five areas, equip rules, quest triggers, boss skills, item stat readout, the player's own stat sheet, and the end-to-end rates (V).
+2. **Of 78 behaviours the bot depends on:** 18 oracle 0-diff, 21 oracle-found deviations (most fixed or drafted upstream, some only in private branches, so the lab binary differs from upstream main), 9 read-only, 4 data tables, 7 measured on d2d only, **13 with no verification at all**, 6 not a fidelity question (adapter/policy). Totals by state and method are below.
+3. **The cheapest broad win is a same-save probe**: one `.d2s` into game.exe (read-only) and d2d (read-only verbs), diff two `d2.Snapshot` JSON documents plus the save file itself. It covers stat sheet, skills, inventory, NPC list, waypoints, quest words (about 16 rows, method B) and costs about 14 h for the first slice.
+4. **What a probe can never show:** anything random (drops, rolls, fights): d2d's runtime RNG is one fixed stream and game.exe's is per-unit (`seed-study.md`, `tierb-design-20261102.md` V). Those rows stay with the oracle (C) and the statistical A:B (D).
+5. **Biggest unverified risks:** Act 1 area layouts outside five areas (MA04), boss skills and death mods (MA13), monster missiles (MA10), player missile flight (SK03), vendor stock (VN04), equip rules and item stat readout (IT03, IT04, ST07), quest triggers (PR01, PR02), end-to-end rates (EN03).
+6. Slice plan and open questions: see the end of this file and [fidelity-probe-design.md](fidelity-probe-design.md).
+
+## How the list was derived (V)
+
+Not from memory: from `internal/plandata/build-fallback-lightning-v2.json` (the fresh-Sorceress table: Charged Bolt 20 points from clvl 2, Frozen Armor at clvl 5 and 22, Frost Nova clvl 6, Telekinesis 11, Teleport 18, Chain Lightning 27, Lightning Mastery 26-30, Lightning 40, Warmth 91; 5 Vitality per level, Strength from the class floor), `internal/combat/classdata/profiles.json` (`sorceress/lightning`: attack order Chain Lightning, Lightning, Charged Bolt, Fire Bolt; below clvl 26 Charged Bolt, Fire Bolt, Ice Bolt; buffs Frozen Armor group then Energy Shield; F-key layout), `internal/plandata/progression-normal.json` (areas Blood Moor 1-6, Den of Evil 2-6, Cold Plains 5-10, Burial Grounds 6-10, Cave 1, Stony Field 8-12, Dark Wood 9-13, Black Marsh, Forgotten Tower, Cave 2, Crypt, Mausoleum, Tamoe Highland, Outer Cloister, Jail, Catacombs 2-4, then Act 2 from clvl 18), `internal/loot/pickit_starter.json` + `rules.go` (keep/stash/sell rules, stat conditions), `internal/resource` (belt plan, early-gear policy below clvl 15, merc revive reserve, poverty mode), `internal/town` (identify, belt fill, cube, merc hire/revive, NPC menus) and `internal/quest/act1.go` (Den, Blood Raven, Cain skipped). Other builds (Paladin, Amazon, Necromancer, Barbarian, Druid, Assassin, Blizzard Sorceress) exist as data in `plandata/build-*.json` and `classdata/profiles.json`; rows here are the default lightning Sorceress, and the class oracles (`skills.ama/nec/pal/bar/dru` 93-100 % run-tested, `skills.ass` 0 %) are in `docs/coverage/rule-coverage.md`. What the gate character really casts (V, `sorcdiff.md`): Charged Bolt, Frozen Armor, Frost Nova, Fire Bolt; no gate run passed clvl 15, so Teleport, Chain Lightning, Lightning and Lightning Mastery were never exercised in a measured run.
+
+Existing verification sources (all V, read): `docs/coverage/` (ledger and generated table; the "run-tested" notion), `docs/research/d2d-fidelity-riskmap.md` (20 areas ranked, 52 h top-10), `docs/d2d-fidelity.md` (measurements on d2d only, gap rule 20 %), `docs/d2d-deviations.md` (shim register R01-R07), `docs/research/sorc-skill-matrix.md` and `sorcdiff*.md`, `docs/contracts/fidelity-gate.md`, `docs/d2d-lan-oracle.md` (demo: game.exe hosts, d2d joins; town layout 35/35 rooms in Rogue Encampment, Lut Gholein mismatch open), `docs/research/tierb-design-20261102.md` (true stepping held; statistical A:B first), `docs/ab-design.md`. `docs/d2d-lan-oracle.md` is a one-off demo of a LAN host/joiner pair, not a harness; it proves d2d can join a game.exe host and that whisper (an injected DLL stand-in, INSTRUMENTATION) can read levels, and it ends with a 15-25 h proposal (spawn/XP diff harness) that nobody started.
+
+States: **OD** oracle with 0 differences on the compared rows; **DEV** oracle found a d2d deviation (the row says merged / draft / private branch only); **RO** read-only; **DT** same data table (same MPQ); **DM** measured on d2d only or a doc rule; **NONE** nothing; **MODEL** adapter or bot policy, not a fidelity question.
+Methods: **A** data-table diff; **B** same-save deterministic probe; **C** code-level oracle differential (`tools/emu`); **D** statistical A:B (`tools/ab`, fidelity-gate). Risk if wrong: **S1** death or stuck, **S2** gold, **S3** time (XP/h), **S4** cosmetic. Priority: P1 do first, P2 next, P3 only when cheap or on a regression. Hours are agent-hours for the work still open (0 when the row is closed); estimates are U.
+
+## Totals
+
+| state | meaning | rows |
+|---|---|---:|
+| OD | oracle, 0 diffs on the rows compared | 18 |
+| DEV | oracle found a d2d deviation (fix state in the row) | 21 |
+| RO | read-only (disassembly or source, no run) | 9 |
+| DT | data table identical (same MPQ) | 4 |
+| DM | measured on d2d only / doc rule | 7 |
+| NONE | none | 13 |
+| MODEL | not a fidelity question (adapter or bot policy) | 6 |
+| total | | 78 |
+
+| method | meaning | rows | hours (rows still open) |
+|---|---|---:|---:|
+| A | data-table diff | 4 | 7 |
+| B | same-save deterministic probe | 16 | 55 |
+| C | code-level oracle differential | 47 | 106 |
+| D | statistical A:B | 4 | 46 |
+| - | none needed (model/adapter) | 7 | 0 |
+
+Priority split of open rows (OD/DT/MODEL excluded): P1 20 rows, P2 21, P3 9. Total open hours in the table are about 214 (U, estimates), of which 40 h is the end-to-end A:B (EN03) and 46 h is method D overall.
+
+Reading the totals: "OD" rows are closed only for the aspect the ledger names (for example MA05 spawn density compares the generator per room, not what a bot meets while walking). A DEV row with a merged upstream fix is closed for upstream main but not for the private lab binary until the fork is rebased (shims R01 to R06, `docs/d2d-deviations.md`).
+
+## The matrix
+
+| id | area | what the bot depends on (code ref) | game.exe ground truth | state | current verification | method | h | risk | pri |
+|---|---|---|---|---|---|---|---:|---|---|
+| SK01 | skills | Charged Bolt count, spawn, aim, bolt do (main attack to clvl 25); `plandata/build-fallback-lightning-v2.json`, `classdata/profiles.json` | game.exe skill do-funcs (decompile) | OD | sorcdiff2 C: 2,400 cases 0 differ; roll top-inclusive D1 merged upstream (#166) (V, sorcdiff.md, sorcdiff2.md) | C | 0 | S3 | P3 |
+| SK02 | skills | Charged/Fire/Ice Bolt damage roll, synergies, masteries; `combat` damage model | Skills.txt + FUN calc (decompile) | DEV | skill_damage 116,000 cases: min-synergy gate on 13 skills and MulDiv above 4,096 are d2d deviations; Charged/Fire/Ice Bolt and Frost Nova clean; PR draft pr-skill-damage (V, skill-damage-trace.md, ledger skillfx.damage) | C | 2 | S3 | P2 |
+| SK03 | skills | Player missile flight: speed, range, pierce, collision (`classdata/skills.json` ranges 10/20/25) | game.exe missile path (decompile) | RO | only roll + count compared; flight/hit by read; missiles 43 % run-tested; Lightning piercing and units-per-frame have no harness (V, sk-missile-trace.md, sorcdiff.md, riskmap rank 1) | C | 10 | S3 | P1 |
+| SK04 | skills | Mana cost formula per skill and level; `resource/manamodel.go` | Skills.txt manashift/lvlmana | OD | 357 rows x levels 1..60, 130,840 cases 0 differ except minmana floor D2 (Teleport) (V, sk-mana-trace.md) | C | 0 | S3 | P3 |
+| SK05 | skills | Mana paid at action frame, refund on cut cast; shim `manamodel.go:BookD2D` (R03 in d2d-deviations) | game.exe pays at action frame | DEV | 42,168 of 42,168 cases differ on main; fix on private branch local/sorc-mana-timing-r2 (0 of 53,628 differ); no upstream PR (V, sorcdiff2.md) | C | 3 | S3 | P2 |
+| SK06 | skills | Cast length / FCR breakpoints / plain-cast ticks (`combat/castgap.go`) | FUN_00623f50 cast branch | DEV | PR #128 merged; 401 FCR values equal for plain casts; Lightning/Chain Lightning 19 vs 13 ticks fixed only on private branch (shim R01) (V, cast-trace-gameexe.md, sorcdiff.md) | C | 2 | S3 | P3 |
+| SK07 | skills | Frozen Armor: state, defence, duration (120 s at lvl 1; bot recasts every 150 s), striker chill, armor group | Skills.txt + FUN armor_hit | DEV | striker effect merged #159; group stacking D2 fixed on private branch; trigger D5 (any damage vs physical) read only (V, sk-armor-trace.md, sorcdiff2.md) | C | 2 | S2 | P2 |
+| SK08 | skills | Frost Nova on a crowd of 3+ (25 mana): ring, justhit, freeze/chill rule | FUN next_hit / freeze_rules | DEV | NextHit #158 and ring aim merged; freeze rule 225,748 cases with deviations C3 to C5; nova units-per-frame folded into D1 (V, sk-nova-trace.md, pr-freeze-proof.md) | C | 2 | S3 | P3 |
+| SK09 | skills | Fire Bolt as clvl-1 start skill and mana-out fallback | same as SK01/SK02 | OD | same differentials as Charged Bolt; live drill D5.a with an oracle for Fire Bolt mana and hp (V, sorc-skill-matrix.md) | C | 0 | S3 | P3 |
+| SK10 | skills | Static Field (legacy characters only), chill length | FUN static_field | DEV | merged #155/#156; v2 table does not learn it (V, sorcdiff.md) | C | 0 | S4 | P3 |
+| SK11 | skills | Teleport hops (clvl 18 band, nav); never reached in a measured run | FUN teleport + Skills.txt | DEV | D1 room / D2 blocked target in batch 2 (private, not open upstream); D3/D4 mana on refused hop unverified (V, sk-teleport-trace.md) | C | 4 | S1 | P2 |
+| SK12 | skills | Lightning / Chain Lightning / Lightning Mastery (clvl 26+ band) | same | DEV | cast length fixed privately; hop pick merged; piercing no harness (V, sorcdiff.md) | C | 5 | S3 | P3 |
+| SK13 | skills | Skill point rules: prerequisites, reqlevel gates, quest point, per-clvl table `leveler/build.go` | Skills.txt (same MPQ) | DT | bot reads the same data tables; the leveler refuses a spend below ReqLevel (V read, sorcdiff.md) | A | 1 | S3 | P3 |
+| SK14 | skills | Skill hotkey bind / right-skill select (`d2dsrc` BindSkills, F-keys) | client UI | MODEL | adapter concern: d2d binds by id; game.exe by key (skill-bind-trace.md V read) | - | 0 | S4 | P3 |
+| SK15 | skills | Unused-by-bot sorc skills (Energy Shield, Thunder Storm, Telekinesis cast, Warmth) | n/a | RO | not cast by the bot (V grep, sorcdiff.md item 3); read in game.exe only | - | 0 | S4 | P3 |
+| SK16 | skills | Player hit recovery (get-hit rule, length, render) during casts | FUN 00623f50 get-hit branch | DEV | fight.hpp:715 waits 2 frames in game.exe; PR drafts get-hit-rule/length/render; not all merged (S, riskmap rank 8, pr-get-hit-*) | C | 3 | S1 | P2 |
+| ST01 | stats | Life/mana/stamina per level and per stat point (Vit 5 per level in plan) | CharStats.txt + FUN_00570880/626200 | RO | desk read: d2d equal except gear-share truncation D3; no differential (S, playerdef-trace.md) | B | 3 | S1 | P1 |
+| ST02 | stats | Defence = base + dex/4 (+armor), to-hit, block (player side) | FUN_006223f0, 00622720 | RO | arithmetic V run equal on 102,604 cases but own-vs-gear dex hooked, not run (V, playerdef-diff-20261104.md); F02 deviations are monster side (town walk block, F14) | B | 3 | S1 | P1 |
+| ST03 | stats | Resists, difficulty penalty 0/-40/-100, cap 75; `resource` readiness | FUN_0057be00 | OD | d2d measured 0/-40/-100 (V, d2d-fidelity.md 6); defender side 222,464 cases 0 mismatch; curse-on-immune D1 (task-8) (V, skdefenders-trace.md) | C | 0 | S1 | P3 |
+| ST04 | stats | Natural mana regen (floor formula) and zero life regen; bot regen model | FUN_005806f0 | RO | d2d exact to the digit (V-d2d, d2d-fidelity.md 2); game.exe read equal; bot model 1.2-1.8x fast (ledger F17) | C | 2 | S3 | P3 |
+| ST05 | stats | Healing/mana potion effect: 30 life over 7.68 s (Minor), double fill by Vit, chain drinking | FUN potion use (decompile) | DM | d2d 28 drinks equal doc; double fill missing 0/24 (differs); chain drinking not run; no game.exe run (V-d2d, d2d-fidelity.md 1d, 1e) | C | 3 | S1 | P2 |
+| ST06 | stats | Gear stat sums the bot reads (stats 19, 21, 22, 25; d2d has no unit stat above 15, fork `dump stats` gear) | ItemStatCost + equip sums | RO | S/I read (playerdef-trace.md, forkdbg.md); same-save probe compares them | B | 3 | S1 | P1 |
+| ST07 | stats | Stat allocation: class floors (Sorc Str 12), Vit per level, base values; leveler reads base stats via Mem (noMem on d2d) | charstats.txt, d2s stat block | NONE | d2d-wire.md: leveler hits its 'unreadable' path on d2d (U); no comparison of fresh-character stats at all | B | 2 | S1 | P1 |
+| ST08 | stats | Player walk/run speed and stamina drain/regen | FUN walk velocity | DM | d2d walk 1.87 cells/s incidental, stamina regen exact max/256 per tick; game.exe player side not run (V-d2d fidelity 1c; walk-speed-trace.md covers monsters) | C | 3 | S3 | P2 |
+| ST09 | stats | XP thresholds / level-up (experience.txt) and clvl cap | experience.txt (same MPQ) | DT | `data.Experience` reads the same table both sides use (V read, internal/data/skills.go) | A | 1 | S3 | P3 |
+| ST10 | stats | XP award per kill and level-difference penalty (the headline XP/h) | FUN_0057e2f0/0057e390 | RO | per-monster XP equal at clvl 4 to 6 (Fallen 18, Zombie 33...); grid 119,790 lines vs old d2d port; upstream fix 01337ba3; Den +60 % was composition, not formula (V, xp-award-trace.md) | C | 3 | S3 | P2 |
+| IT01 | items | Item type tree (IsA), equip slots, two-hand, socket cap | itemtypes.txt | OD | 98 types, 553,647 cases all equal (V, covitemtypes-trace.md) | C | 0 | S3 | P3 |
+| IT02 | items | Armor/weapon base data (def, damage, speed, durability, requirements) | armor.txt/weapons.txt (same MPQ) | DT | same MPQ; 0 of 508 base rows run-compared (ledger items.armor/items.weapons UNTESTED) (V, coverage/rule-coverage.md) | A | 2 | S3 | P2 |
+| IT03 | items | Equip legality: strength/dex/level requirements, hand/slot rules, swap; `loot/wear.go`, `resource/gear.go` | FUN inventory equip (INVENTORY 2 verified of 109) | NONE | requirements not enforced in several d2d equip paths (world.hpp:808, fight.hpp:819) (S, riskmap item_equip) | B | 4 | S1 | P1 |
+| IT04 | items | Item stat reading: affix values, ilvl, quality, sockets, ethereal (feeds pickit `stats` rules, sell value) | ItemStatCost, d2s item section | NONE | bot reads both sides through different adapters (mem vs `dump items`); never diffed on one item (U) | B | 4 | S2 | P1 |
+| IT05 | items | Drops: treasure class pick, NoDrop, quality, magic/rare affix roll, gold piles (ilvl-1 to 20) | FUN_005a6600/0055a6d0 | OD | 1,012 of 1,012 class tables, 100,000 rolls, 360,000 seed-for-seed first drops 0 differ; 5 of 39,980 made items (elixirs) unported (V, treasure-trace.md, seeddist-trace.md) | C | 0 | S3 | P3 |
+| IT06 | items | Pickit keep/sell/stash rules (runes, gems, charms, uniques) `loot/pickit_starter.json` | bot logic | MODEL | bot policy, only depends on IT04 and V01 correctness (V read) | - | 0 | S3 | P3 |
+| IT07 | items | Identify (scroll/tome; Cain not used), unid price | FUN identify + price | NONE | flow unverified live on d2d; Cain not reachable before rescue (V, d2d-fidelity.md 6; items.md) | B | 3 | S3 | P2 |
+| IT08 | items | Durability loss and repair gate/cost (Charsi) | FUN_0062e660/62efb0 mode 3 | DEV | repair cost differ 42,705/100,000 in d2d; gate PR draft; durability-trace S (V, price-trace.md Q1, pr-vendor-repair-gate-draft.md) | C | 2 | S3 | P2 |
+| IT09 | items | Belt: pickup lands in belt first, autobelt, belt sizes/columns; `town/beltfill.go` | FUN pickup (belt-pickup-trace) | DEV | game.exe V run; d2d puts it in the pack (shim R04); belt PR draft (V, belt-pickup-trace.md, d2d-deviations.md) | C | 2 | S2 | P2 |
+| IT10 | items | Inventory/stash geometry, stash 2.5M cap, purse cap clvl x 10,000 | FUN_00623460 | RO | stash cap V by disassembly; purse cap game.exe check not traced (I) (V, price-trace.md Q4) | C | 2 | S2 | P3 |
+| IT11 | items | Runes/gems/cube recipes (rune upgrade, imbue); cube is Act 2 | Cube recipes (cubemain.txt same MPQ) | DT | same table; recipe execution V live on game.exe once (items.md); d2d untested | A | 3 | S4 | P3 |
+| VN01 | vendors | Buy price formula (base x NPC mult, quality extras, quest -10 %); bot `loot.SellValue` / gold plans | FUN_0062efb0 mode 0 | DEV | model equals game.exe on 100,000 cases; d2d buy differs 39,626/100,000 (magic/superior priced at base, tomes fixed by #127) (V, price-trace.md Q5) | C | 2 | S2 | P1 |
+| VN02 | vendors | Sell price = cost/2 (ethereal /4, class /4); old bot Cost/4 estimate fixed | FUN_0062efb0 mode 1 | DEV | V run: S = cost/2; d2d sell differs 38,939/100,000; loot/fixprice_test pins cost/2 (V, price-trace.md Q2) | C | 2 | S2 | P1 |
+| VN03 | vendors | Consumable prices: TP scroll 100, ID 80, Minor HP 30, Minor MP 60, key 45, tomes 250/200 (live saw 450) | items/misc.txt + price fn | DM | d2d equals table to the gold; live tome price 450 at clvl 3 unexplained until #127 (V-d2d, d2d-fidelity.md 6; items.md) | C | 1 | S2 | P1 |
+| VN04 | vendors | Stock lists per NPC (Akara potions/scrolls/tomes/wands, Charsi armor/weapons, Gheed, Kashya): what items, how many, ilvl, magic affixes | NPC inventory generation (decompile; npc.txt, ilvl rule) | NONE | no differential on stock generation; d2d dump of stock exists only in a fork patch (d2d-town.md); game.exe stock readable from the NPC's item list (U) | B | 8 | S2 | P1 |
+| VN05 | vendors | Stock refresh: when stock re-rolls (new game, level-up, time), persistence | game.exe stock seed rules | NONE | unknown on both sides; SME list says 'low confidence' (S) | B | 5 | S3 | P2 |
+| VN06 | vendors | Gold needed for the first purchases (tome of TP, potions) drives early-game plan; sell income | derived from VN01-VN03 | DM | gold plans calibrated on d2d prices where sell = 50 % (matches V run) (V-d2d) | D | 0 | S2 | P2 |
+| VN07 | vendors | Town layout and NPC placement (Rogue Encampment): 35/35 rooms, NPC thinking, preset units | DRLG + presets | OD | levels.layout id 1: 150 comparisons + 30 camp NPC thinks, map seeds 1..30 (V, seedspawn-trace.md, d2d-lan-oracle.md) | C | 0 | S2 | P3 |
+| VN08 | vendors | NPC dialog menu lines, trade window flow, vendor tab compaction (Game.exe compacts tabs, d2d draws four) | client UI | MODEL | adapter layer (`d2dtown`), C02 in d2d-deviations; flow works end to end on d2d (V, d2d-town.md) | - | 0 | S3 | P3 |
+| VN09 | vendors | Gamble (Gheed) | n/a | MODEL | not used by the bot (V grep: no gamble code in internal/town) | - | 0 | S4 | P3 |
+| MA01 | monsters | Base monster rows: life, defence, to-hit, damage, exp, resists (Normal) | monstats.txt (same MPQ) | OD | 242,220 cases and 85,213 real Normal units 0 differ (NM level D1 not used) (V, monster-stats-trace.md) | C | 0 | S3 | P3 |
+| MA02 | monsters | Area monster level per difficulty (drives drops, XP, danger) | levels.txt FUN_0061dca0 | OD | ids 1..136 x diff x exp: 1,088 cases 0 differ (V, levelsareas-trace.md) | C | 0 | S3 | P3 |
+| MA03 | areas | Layout, presets, room seeds, populated rooms: Rogue Encampment, Blood Moor, Cold Plains, Stony Field, Den of Evil | DRLG | OD | 936 + 180 cases, map seeds 1..30 and edge seeds (V, seedspawn-trace.md) | C | 0 | S1 | P3 |
+| MA04 | areas | Layout of the OTHER bot-used Act 1 areas: Burial Grounds, Cave 1/2, Dark Wood, Black Marsh, Tamoe Highland, Outer Cloister, Barracks/Jail, Catacombs 1-4, Forgotten Tower, Crypt, Mausoleum, Tristram | DRLG outdoor (0 verified / 102 ported) and maze levels | NONE | `progression-normal.json` lists them; levels.layout compared 5 areas only; Lut Gholein shows a tile mismatch (act 2) (V, d2d-lan-oracle.md, riskmap) | C | 10 | S1 | P1 |
+| MA05 | monsters | Spawn density and composition per room (kills/h driver) | FUN room population | OD | generator equals game.exe per room, 20 seeds x 4 levels; no PR (V, spawn-density-trace.md) | C | 0 | S3 | P3 |
+| MA06 | monsters | Unique / champion / superunique roll and modifiers (Corpsefire, Bishibosh, Rakanishu, Treehead, Blood Raven) | FUN_005a4f50, uniques tables | DEV | 157,618 cases; boss life/def/exp base-level D1 (AR/damage right), at most two immunities untraced; PR pr-mods (V, monster-mods-trace.md, uniqmods-trace.md) | C | 3 | S1 | P2 |
+| MA07 | monsters | Wake / aggro radius, think cadence, leash | FUN_005dc380 etc | OD | stand 85,820 + aidel 55,268 cases 0 differ; active-room rule and first think open (V, mon-wake-trace.md) | C | 2 | S3 | P2 |
+| MA08 | monsters | AI types met in Act 1 (Fallen, Shaman rally, Carver, Quill Rat, Zombie, Dark Hunter, Raven, Skeleton, Mummy) | monstats AI | OD | monster.ai 89 OD, 12 DEV, 40 untested of 146 (V, rule-coverage.md); Fallen rally untested on d2d (V-d2d) | C | 3 | S1 | P2 |
+| MA09 | monsters | Monster melee roll and attack rate | FUN monster attack | OD | phys roll 100,000 0 differ; attack-frame table fight.hpp:787 and attackrate-as-IAS flagged in riskmap (V, monster-attack-trace.md) | C | 3 | S1 | P2 |
+| MA10 | monsters | Monster ranged/missiles: archers, Blood Raven arrows, Fetish dart, lightning-enchanted | missiles.txt, FUN missile hit | DEV | F14 missile block gate and MissA to-hit deviate; 371 of 684 missile rows untested; Soaky death has no d2d twin (V, monster-attack-trace.md, rule-coverage.md) | C | 6 | S1 | P1 |
+| MA11 | monsters | Status effects on monsters: freeze/chill length, curse, poison, stun | states.txt, FUN freeze | DEV | states 12 % run-tested, 22 deviations, 149 untested (V, rule-coverage.md) | C | 5 | S2 | P2 |
+| MA12 | monsters | Monster movement speed, path finding, stuck cases | FUN path + velocity | DEV | F08 monster velocity D1; PATH 11 verified/6 ported/63 untouched; path stops at 77 subtiles (V, walk-speed-trace.md; S riskmap) | C | 4 | S1 | P2 |
+| MA13 | monsters | Boss specifics: Andariel poison cloud, immunities, Blood Raven skeleton raise, Countess, Corpsefire; death mods | monstats/skills, boss AI | NONE | boss base stats OD via MA01; boss skills and death triggers not compared; 'boss/act-boss death mods untraced' upstream todo (S, riskmap 1) | C | 8 | S1 | P1 |
+| PR01 | progress | Den of Evil: clear detection, quest word, Akara skill point reward | FUN quest state (QUESTS 31 verified/359 ported) | NONE | d2d runs it (Wirey, DRILLS); no game.exe comparison of the trigger or reward (V, d2d-wire.md; riskmap quests) | B | 4 | S1 | P1 |
+| PR02 | progress | Blood Raven kill -> Kashya free Rogue claim (quest word, reward flow) | quest FSM + hireling.txt | NONE | hire price/level OD (R02); the claim flow is U on both sides (quest/act1.go tag U) | B | 4 | S1 | P1 |
+| PR03 | progress | Cain / Inifuss / Cairn Stones / Tristram (bot skips in v2) | quests | NONE | skip flagged true in quest/act1.go; not needed until the T4 'clear Act 1' bar | B | 3 | S4 | P3 |
+| PR04 | progress | Andariel kill, Act 2 entry (Warriv), difficulty rules | quest FSM | NONE | no verification; part of Gate A bar (decisions.md Current truth) | D | 6 | S2 | P2 |
+| PR05 | progress | Quest and waypoint state words in the save/memory (what the bot reads) | d2s 0x14F Woo! block + game memory | RO | same layout in d2s and `dump quests` (d2d-fork.md); mem side questmem live-checked partly (S) | B | 2 | S1 | P1 |
+| PR06 | progress | Waypoint activation, 39-bit mask, refusal window, menu list; shim R06 (act 3-5 coordinates) | FUN waypoint; wp_refuse.py | DEV | waypoint-trace V run + independent re-check; PR draft pr-wp (V, waypoint-trace.md, verify-waypoint.md) | C | 2 | S2 | P2 |
+| PR07 | progress | Town portal: tome use, scroll count, portal pos (0.6 cells south), expiry | tome_use.py | DEV | V run; d2d deviations listed (V, town-portal-trace.md) | C | 2 | S2 | P2 |
+| PR08 | progress | Death penalty: gold toll min(clvl,20) %, floor clvl x 500, XP loss 0/5/10 %, corpse (one body) | FUN death | DM | d2d 120/120 equals the doc rule; the original not run; corpse list differs (many bodies) (V-d2d, d2d-fidelity.md 9, 10.7) | B | 3 | S2 | P1 |
+| PR09 | progress | Area transitions: level borders, cave mouth warp trigger, arrival position (shim R05) | DRLG warps | DM | arrival inside the trigger on d2d (docs/d2d-loop.md S); no game.exe comparison | B | 3 | S1 | P2 |
+| ME01 | merc | Hireling stats by level (Act 1 Rogue) | hireling.txt FUN_00572840 | OD | 2,940 (Id x level) cases equal (V, mercstats-trace.md) | C | 0 | S2 | P3 |
+| ME02 | merc | Hire and revive price; offered level formula | FUN hire | OD | 108,000 offers and 256 revive levels equal (V, mercstats-trace.md) | C | 0 | S2 | P3 |
+| ME03 | merc | Merc AI (follow, attack, no flee, Rogue backs off) and skill gating by reqlevel | merc think | OD | 100,000 cases each (V, mercstats-trace.md) | C | 0 | S1 | P3 |
+| ME04 | merc | Merc XP share (2x exp, 86/256 scaling) | FUN_0057e860 | OD | 100,000 cases; 86/256 V read only (V, mercstats-trace.md) | C | 0 | S3 | P3 |
+| ME05 | merc | Merc life regen and Act 2 auras | stat 0x4a, aura calc | DEV | two d2d gaps, effect U (V, mercstats-trace.md); auras irrelevant before Act 2 | C | 3 | S2 | P3 |
+| ME06 | merc | Hire/claim window flow and merc stat reader (`hirereader`, `d2dmerc`) | client UI | MODEL | adapter; 'claim not reached' in the 11-minute d2d wire run (V, d2d-wire.md) | - | 0 | S2 | P2 |
+| EN01 | engine | Tick rate 25 Hz, lockstep clock vs game.exe real time; bot wall-clock thresholds | game loop | MODEL | C03 in deviations: env clock virtual under lockstep (V, d2d-deviations.md) | - | 0 | S3 | P3 |
+| EN02 | engine | Map seed pin from the .d2s (0xAB + difficulty bit), layout reproducible; unit/combat RNG streams differ by design | FUN_0056a090 | DEV | layout equal (MA03); d2d runtime RNG is one fixed stream, so fights/drops/XP are not seed-for-seed comparable (V, seed-study.md, tierb-design-20261102.md) | D | 0 | S3 | P2 |
+| EN03 | engine | End-to-end rates: XP/h, kills/h, deaths/h on fresh clvl 1-6 (6 game.exe + 6 d2d lanes) | whole stack | NONE | gate G-D; pilot k=2 inconclusive; Gate A not started (V, contracts/fidelity-gate.md, tierb-design) | D | 40 | S1 | P1 |
+| EN04 | engine | d2d loads a real game.exe .d2s (char select -> join) | d2s reader | DM | LAN oracle: a copy of an i1 game.exe character joined and saw 5/5 items matching host; lab6 save/load works (V, d2d-lan-oracle.md, d2d-fork.md) | B | 1 | S1 | P1 |
+## The ten largest unverified or open items (rank by risk x cost)
+
+| # | rows | why | first method | h |
+|---|---|---|---|---:|
+| 1 | MA04 layout of the other bot-used Act 1 areas | only five areas are compared; the bot walks 15 more (V); a layout difference changes routes, stuck rate and monster counts | C (extend `seedspawn` oracle) | 10 |
+| 2 | MA13 boss skills and death mods (Andariel, Blood Raven, Countess) | ends the Act 1 bar; Andariel poison and cold resist change the kill | C + B (boss stats through probe) | 8 |
+| 3 | MA10 monster missiles | F14 deviations proven, 371 of 684 missiles untested; Blood Raven, archers, Soaky death | C | 6 |
+| 4 | SK03 player missile flight | the bot's whole damage is missiles; flight/range/pierce read-only | C | 10 |
+| 5 | VN04 vendor stock lists (and VN05 refresh) | no comparison; stock decides what the bot can buy before gold is tight | B + C | 13 |
+| 6 | IT03 equip rules, IT04 item stat readout, ST07 stat allocation/readout | the bot's gear and level-up logic reads these; d2d leveler path is 'unreadable' (U) | B | 10 |
+| 7 | PR01, PR02, PR05 Den and Blood Raven triggers, quest words | gates the first merc and the skill point; d2d only | B + C | 10 |
+| 8 | EN03 end-to-end A:B | the arbiter; pilot k=2 inconclusive | D | 40 |
+| 9 | ST01, ST02, ST06 player stat sheet and defence | first thing a probe can close cheaply | B | 9 |
+| 10 | PR08 death rules on game.exe | d2d follows the doc rule; the original was never run for the corpse and floor rules | B (needs input) | 3 |
+
+## SME list merged (tag S; the d2-sme agent answered from veteran memory and fetched nothing)
+
+The SME produced 81 dependency rows. Each maps to a row above except these, which the matrix adds or corrects (S unless stated):
+- FCR/FHR breakpoints for the Sorceress (0/9/20/30/48/75/125; 0/5/9/14/20/30/42/60/86/142): covered by SK06 and SK16; the oracle compared all 401 FCR values for the cast branch (V, sorcdiff.md); the hit-recovery table is open.
+- Per-level gains (life +1... mana +2 per level), 5 stat points per level, base stats Str 10 Dex 25 Vit 10 Ene 35: ST01/ST07 (row: probe fresh clvl 1; SME says verify in charstats.txt, agreed).
+- Inventory 10x4, stash 6x8, belt rows by belt base: IT10 (grid sizes); the belt size tie to belt base is in IT09.
+- Gold carry limit clvl x 10,000: IT10 (the code V says d2d clamps; game.exe sell path U).
+- Experience loss none in Normal: PR08; XP table values level 2 at 500, 3 at 1,500, 4 at 3,750, 5 at 7,500 (SME memory, U): ST09 reads experience.txt (A).
+- Countess runes: SME 'low'; the treasure oracle covers Act 1 and 2 classes (IT05 V) but boss death mods stay MA13.
+- Warriv, Hardcore: not used.
+- **Contradicted by V:** SME says sell is "about a quarter / Cost/4" (low confidence): V run is cost/2 (VN02, price-trace.md); SME says Charged Bolt etc. 'Static Field clvl 6' while the v2 plan never learns it (V). SME says tomes ~450 (unsure): d2d 250, live 450 (V-live), VN03. SME says Telekinesis is learned for items: the bot only spends a prerequisite point (V).
+- Quirks worth a row if a probe ever fails: mana fixed point 1/256 rounding (SK04/SK05, covered), defence per hit uses attacker level (ST02), Frozen Armor replaces rather than stacks and chills only melee attackers (SK07), Static Field floor, Ice Bolt chill vs cold-immune (MA11).
+
+## Rows for other builds (not expanded)
+
+Paladin, Amazon, Necromancer, Barbarian, Druid have class skill oracles at 93-100 % run-tested; Assassin 0 % (V, rule-coverage.md). The Blizzard Sorceress adds Ice Bolt, Ice Blast, Glacial Spike, Blizzard, Cold Mastery, Warmth (S, sorc-skill-matrix.md). The matrix above is the default build; a row for another build is the same row with the class table (AGENTS.md build-flexibility rule).
+
+## Slice plan (hours, U)
+
+| slice | what | rows closed | h |
+|---|---|---|---:|
+| 1 | Same-save probe core: tool, 4 scenarios (fresh clvl 1, clvl 6 gear, clvl 12 + merc, clvl 16 Gate 2 kit), stat sheet, skills, items, merc, NPC list, waypoints, quest words | ST01 ST02 ST06 ST07 IT03(read) IT04 PR05 EN04 and probes MA03 | 14 |
+| 2 | Vendor probe: stock lists, item stats and quotes per vendor, same game, then price oracle on stock items | VN01-VN05 | 12 |
+| 3 | Area layout oracle for the 15 other Act 1 areas (offline, `tools/emu`) | MA04 | 10 |
+| 4 | Boss and monster-missile oracle (Andariel, Blood Raven, archers, F14 rest) | MA10 MA13 | 14 |
+| 5 | Quest trigger probes on saves with quest words set (Den, Blood Raven, claim) | PR01 PR02 PR04 | 12 |
+| 6 | Gate A statistical A:B on a fixed seed set (existing contract) | EN03 | 40 |
+
+Tasks created for slices 1 and 2: see the card `fidelity-matrix` result line and `backlog/tasks/` (fidelity-probe-core, fidelity-probe-vendor).
+
+## Open questions for the user (with my recommendation)
+
+1. **How much of "everything" before Gate A?** Recommend: slices 1 to 3 (about 36 h) before the 24 h Gate A run, slices 4 and 5 as they are cheap in parallel, never 100 % (random rows are not provable 1:1).
+2. **Does d2d being the end product change the bar?** Recommend yes: the bar becomes "bot-visible behaviour equals game.exe within the gate tolerances", so a deviation that changes no gated metric (SK10, SK15, ME05) is documented, not fixed.
+3. **On a mismatch: fix upstream, patch the fork, or compensate in the bot?** Recommend: upstream PR when the oracle proves it (existing path); fork patch only when the maintainer holds off, and list it in `d2d-deviations.md`; a bot compensation only as a registered shim with a removal condition (ADR 0015 amendment).
+4. **May the same-save probe use input (open a vendor window, walk to a waypoint) on a hidden game.exe instance, still with zero memory writes?** Recommend yes for slice 2 only, input through `d2input`, no writes; character state restored from a save copy afterward.
+5. **Should the private-branch fixes (R01, R03, group stacking, batch 2) be rebased into the lab binary before the probe runs?** Recommend yes, otherwise the probe re-finds known deviations; or run the probe against both binaries once to measure the delta.
