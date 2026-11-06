@@ -84,3 +84,24 @@ Fix queue (one agent per failing criterion): written by the reviewing agent from
 ## Notes (U)
 - The invariants scan sees only the compressed minute logs (minute lines, death and exit lines), not the full bot logs: wedge or hang signatures that appear only in other lines are not counted here; the per-seed records carry the full-log judge result.
 - Seeds 16 to 23 are the holdout set of the d2dsoak report (docs/geninv.md); use seeds outside it for tuning-related reruns.
+
+## Review notes (task 41; V = counted from the committed minute and extras logs, S = inferred, U = unverified)
+| item | seed 11 | seed 13 | seed 17 |
+|---|---|---|---|
+| clvl / XP / kills (V) | 16 / 243919 / 10541 | 16 / 273190 / 13321 | 16 / 247974 / 10487 |
+| deaths (V) | 0 | 1 (08:28 wall, Cold Plains, clvl about 5, Gargantuan Beast: the early seed-13 death again) | 0 |
+| d2d re-entries in the minute lines (V) | 34 | 68 | 20 |
+| longest NOKILL window, limit 10 (V, d2dsoak) | 8 | 9 | 6 |
+| longest BELT window, limit 5 (V, d2dsoak) | 4 | 2 | 3 |
+| fault recovery (V, path A) | 2.8 s | 3.0 s | 2.2 s |
+| `failsafe ladder` lines / `fsWhy` minute lines (V) | 32 / 30 | 98 / 97 | 16 / 13 |
+| dominant `fsWhy` (V) | task_step 15, np_clearing 10, recovery 4 | np_clearing 45, task_step 44, recovery 8 | np_clearing 9, task_step 4 |
+| `mouthRef` summed over minute lines (V) | 430 | 536 | 159 |
+| `town portal did not appear` (V) | 19 | 16 | 22 |
+| merc deaths / revive skips in extras (V) | 11 / 65 | 9 / 61 | 1 / 68 (all "gold") |
+
+- All three minute logs carry the new fields `fsWhy`, `navRung`, `nkMech`, `mouthRef`, `tp` (V; `tp` is 0 on every line of all three seeds, so it is not usable: U whether it counts scrolls). `tpBuy` is absent from all three logs (V).
+- Andariel (V): seeds 11 and 13 meet the interim rule (held/gate lines with merc alive at the floor). Seed 17 lost its merc once (09:14 wall, clvl 12) and never revived it in 7 hours: 68 "revive skipped (gold)" lines, price 1920 at the end, gold 1500 to 1930 against a need of 2075 to 2230 (price plus the reserve). The revive-first decision never fired for lack of gold, so it neither helped nor failed here (S): the blocker is gold against the reserve, not the order.
+- Scrolls do not explain the "town portal did not appear" events (V): every logged event had `toolQty` of 1 or more (tsc or tbk in hand).
+- mouthRef (S): g2e reported 104/295/47 refusals; g2f sums are 430/536/159 over longer runs. The counter is per minute line here and the g2e figure may be counted differently (U), so no reduction can be claimed.
+- Three seeds are indicative only; a real claim needs 5. XP/h is advisory: mean 8976 vs baseline 9172 (-2.1 percent, inside the 1834 tolerance).
