@@ -112,7 +112,13 @@ func TestLadderWatchOnTheBot(t *testing.T) {
 				defer cancel()
 				m := goalManager(t)
 				lo := ladderOptions{on: true, profile: scripted, watch: true, viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0"}
-				rig, err := startLadder(ctx, lo, "", "", fakeEnable(t, clk, &called), m, func() goals.Status { return goals.Status{State: goals.RunnerRunning, Activity: "Fighting"} }, func() string { return "Cold Plains" }, nil)
+				rig, err := startLadder(ctx, lo, "", "", fakeEnable(t, clk, &called), m, func() goals.Status { return goals.Status{State: goals.RunnerRunning, Activity: "Fighting"} }, func() string { return "Cold Plains" },
+					func(id int) string {
+						if id == 20 {
+							return "no merc, clvl 6 < 16"
+						}
+						return ""
+					})
 				if err != nil || rig == nil || rig.Hub == nil || called != 1 {
 					t.Fatalf("%v %v %d", rig, err, called)
 				}
@@ -164,6 +170,27 @@ func TestLadderWatchOnTheBot(t *testing.T) {
 				for _, g := range m.Goals() {
 					if g.Params.Area == "Dark Wood" {
 						t.Errorf("the cancelled order's goal is still queued: %+v", g)
+					}
+				}
+				// "Go now" with no time limit: an endless area goal that replaces the open order; the map shows the bot's guard.
+				httpDo(t, "POST", ans+"/api/orders", map[string]any{"kind": "go", "area": "Dark Wood", "until": "forever", "replace": true}, nil)
+				httpDo(t, "POST", ans+"/api/orders", map[string]any{"kind": "go", "area": "Cold Plains", "minutes": 20, "replace": true}, nil)
+				var farm []goals.Goal
+				for _, g := range m.Goals() {
+					if g.Type == goals.FarmArea {
+						farm = append(farm, g)
+					}
+				}
+				if len(farm) != 1 || farm[0].Params.Area != "Cold Plains" || farm[0].Params.UntilMins != 20 {
+					t.Errorf("replace left %+v", farm)
+				}
+				var mv watch.MapView
+				if code := httpDo(t, "GET", view+"/api/orders/map", nil, &mv); code != 200 {
+					t.Fatalf("map: %d", code)
+				}
+				for _, n := range mv.Nodes {
+					if (n.ID == "ftw") != n.Status.Hard || n.Status.HardWhy != map[bool]string{true: "no merc, clvl 6 < 16"}[n.ID == "ftw"] {
+						t.Errorf("node %s: %+v", n.ID, n.Status)
 					}
 				}
 			})
