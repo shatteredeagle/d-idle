@@ -1,3 +1,0 @@
-BACKLOG: TASK-20 orders UX slice 1 built offline: tappable Act 1 map, order sheet, Hero-now panel, GET /api/orders/map; slices 2 (level orders, queue, conflict card) and 3 (reorder, polish) open
-INDEX: docs/research/orders-ux-design.md section 11: orders UX slice 1 as built, guard behaviour, area graph differences
-CHANGELOG: Watch screen: the orders form is replaced by a tappable Act 1 map with an order sheet and a Hero-now panel (offline tested)
