@@ -1,2 +1,0 @@
-BACKLOG: TASK-39 earlydeath13: plan field early_gap (Cold Plains 1) keeps a clvl 4 hero out of Cold Plains, stale-pack hold after a chicken/portal exit, potion-burst retreat; offline tested, live proof needs the next Gate 2
-CHANGELOG: Early game: a clvl 4 hero is no longer sent to Cold Plains when Blood Moor is held back, a big pack it fled from is not re-entered until the kit is rebuilt or 10 minutes pass, and a burst of life potions in a pack becomes a town portal (knobs bot.stalePack*, bot.potionBurst*).
