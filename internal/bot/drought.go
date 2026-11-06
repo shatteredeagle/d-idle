@@ -41,11 +41,15 @@ func (r *Runner) droughtStage(s *d2.Snapshot, now time.Time) int {
 		o.killXPAt = now // the window starts when the bot is active
 		return 0
 	}
+	need := m
+	if s2 := time.Duration(r.e.Tune.Bot.DroughtStage2Min) * time.Minute; o.droughtStage >= 1 && s2 > 0 {
+		need = min(m, s2) // g2e F3: after the first action the second follows soon, not a full limit later
+	}
 	anchor := o.killXPAt
 	if o.droughtAt.After(anchor) {
 		anchor = o.droughtAt
 	}
-	if o.fieldSince.IsZero() || now.Sub(o.fieldSince) < droughtMinField || now.Sub(anchor) < m {
+	if o.fieldSince.IsZero() || now.Sub(o.fieldSince) < droughtMinField || now.Sub(anchor) < need {
 		return 0
 	}
 	return o.droughtStage + 1
@@ -69,7 +73,7 @@ func (r *Runner) droughtCheck(ctx context.Context, s *d2.Snapshot, c control) bo
 	if stage == 1 && r.skipTargetFor(whyDrought, 4*r.navSkip()) {
 		return true
 	}
-	if r.d.Cycler == nil {
+	if r.d.Cycler == nil || r.freshHold(s.Player) > 0 {
 		return false
 	}
 	err := r.newGameRun(func(ctx context.Context) error {
@@ -81,4 +85,16 @@ func (r *Runner) droughtCheck(ctx context.Context, s *d2.Snapshot, c control) bo
 	}
 	r.forgetGame()
 	return true
+}
+
+// freshHold is g2e F4: how much longer an unplanned fresh game stays forbidden after a lost-game recovery (seed 17
+// started one 1 s after the recovery and failed the one-restart fault criterion). Zero when life is below the resume
+// line (a new game heals) or when no recovery happened lately.
+func (r *Runner) freshHold(p *d2.Player) time.Duration {
+	w := time.Duration(r.e.Tune.Bot.FreshAfterRecoverySec) * time.Second
+	at := r.loop.recoveredAt
+	if w <= 0 || at.IsZero() || r.belowResume(p) {
+		return 0
+	}
+	return max(at.Add(w).Sub(r.e.Clock.Now()), 0)
 }

@@ -495,6 +495,7 @@ func (r *Runner) gameLost(ctx context.Context, c control, ev launch.Event) {
 	}
 	if err == nil {
 		r.noteGameLost()
+		l.recoveredAt = r.e.Clock.Now()
 		r.noteReentry()
 	}
 }

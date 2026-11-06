@@ -12,6 +12,7 @@ import (
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/resource"
+	"d2lod-bot/internal/town"
 )
 
 // runGoal makes one decision for the active goal and runs at most one action.
@@ -1013,6 +1014,11 @@ func (r *Runner) noTarget(ctx context.Context, s *d2.Snapshot, c control) bool {
 		why = "no eligible area is left in this game"
 	}
 	if r.d.Cycler != nil && len(l.cleared) > 0 {
+		if hold := r.freshHold(s.Player); hold > 0 {
+			r.setState(StateInTown, "Fresh game held back after a recovery ("+hold.Round(time.Second).String()+")")
+			r.pause(ctx, 5*time.Second)
+			return false
+		}
 		diff := c.spec.difficulty
 		return r.do(ctx, c, StateInTown, "Starting a fresh game", sec(r.cfg.TownTimeoutSec), "new game", r.newGameRun(func(ctx context.Context) error {
 			return r.d.Cycler.NewGame(ctx, diff)
@@ -1484,14 +1490,48 @@ func (r *Runner) lowLifeGate(ctx context.Context, snap *d2.Snapshot, c control) 
 		return false // a potion is the guard's business
 	}
 	if l.healFails >= healFailLimit {
+		if r.noPortalLeave(ctx, p, c) {
+			return true
+		}
 		if r.lowLifeWait(fmt.Sprintf("Life %d%% in area %d, no potion, and the way to town failed %d times", p.LifePct(), p.Area, l.healFails)) {
 			return true
 		}
 	}
-	ok := r.do(ctx, c, StateResupplying, fmt.Sprintf("Going to town to heal (life %d%%)", p.LifePct()), sec(r.cfg.TownTimeoutSec), "heal trip", r.d.Town.ToTown)
-	if !ok {
+	var terr error
+	ok := r.do(ctx, c, StateResupplying, fmt.Sprintf("Going to town to heal (life %d%%)", p.LifePct()), sec(r.cfg.TownTimeoutSec), "heal trip", func(ctx context.Context) error {
+		terr = r.d.Town.ToTown(ctx)
+		return terr
+	})
+	if ok {
+		l.noPortalSince = time.Time{}
+	} else {
 		l.healFails++
+		if errors.Is(terr, town.ErrNoPortal) && l.noPortalSince.IsZero() {
+			l.noPortalSince = r.e.Clock.Now()
+		}
 	}
+	return true
+}
+
+// noPortalLeave is g2e F2 (docs/research/g2e-diagnosis.md section 2): in the field with no potion, low life and no
+// way to town (no scroll, no walk fallback for this area) the hero used to wait lowLifeRetry five times and left only
+// through the 240 s failsafe (seed 11, 11 belt minutes). A new game starts in town, which heals. It leaves once the
+// way to town failed because no portal exists and bot.noPortalWaitSec passed since the first such failure. It
+// reports whether it acted.
+func (r *Runner) noPortalLeave(ctx context.Context, p *d2.Player, c control) bool {
+	l := &r.loop
+	wait := time.Duration(r.e.Tune.Bot.NoPortalWaitSec) * time.Second
+	if l.noPortalSince.IsZero() || r.d.Cycler == nil || wait >= 240*time.Second || r.e.Clock.Now().Sub(l.noPortalSince) < wait {
+		return false
+	}
+	r.e.Log.Warn("low life, no potion and no town portal: leaving the game", "life", p.LifePct(), "area", p.Area, "name", r.areaName(p.Area), "waited", r.e.Clock.Now().Sub(l.noPortalSince).Round(time.Second))
+	l.noPortalSince, l.healFails, l.lowLifeUntil = time.Time{}, 0, time.Time{}
+	if !r.do(ctx, c, StateRecovering, "No way to town: leaving and re-entering the game", sec(r.cfg.TownTimeoutSec), "new game", r.newGameRun(func(ctx context.Context) error {
+		return r.d.Cycler.NewGame(ctx, difficultyName(p.Difficulty))
+	})) {
+		return false
+	}
+	r.forgetGame()
 	return true
 }
 
