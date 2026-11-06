@@ -1,0 +1,3 @@
+BACKLOG: shortdrills: short live drills E1 (merc revive before potions, no-portal low life leaves in 21 s virtual), all PASS, docs/probes/shortdrills.md
+INDEX: docs/probes/shortdrills.md: short live drills for the g2e/g2f fixes (cmd/d2drill -group E1)
+CHANGELOG: d2drill group E1: short live drills run the real d2bot attached to a prepared d2d (merc revive before potions, no-portal low life leaves)
