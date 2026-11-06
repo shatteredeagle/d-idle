@@ -43,7 +43,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 22 | ladder-t2 | T2 | proposed 0/3 | Runner tier: urgency stage 2 and the unwired T2 points | - | - | [card](archive/openspec-index.md#ladder-t2) |
 | 23 | earlydeath13 | bot-defect | proposed 0/3 | seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains | - | - | [card](archive/openspec-index.md#earlydeath13) |
 | 24 | tpreserve-live | bot-defect | proposed 0/2 | prove the scroll reserve and no-portal leave with the tp field | - | - | [card](archive/openspec-index.md#tpreserve-live) |
-| 25 | g2f-record | gate | proposed 0/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
+| 25 | g2f-record | gate | in-progress 3/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
 | 26 | fork-labverbs | tester | proposed 0/3 | gate the mutating debug verbs behind a fork flag | fork-branch:d2d.lab3-labverbs | - | [card](archive/openspec-index.md#fork-labverbs) |
 | 27 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
 | 28 | onboardA | onboarding | in-progress 5/5 | onboarding slice A: setup stepper, go-ahead, access | - | - | [card](archive/openspec-index.md#onboardA) |
