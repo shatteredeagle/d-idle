@@ -42,6 +42,7 @@ func NewServer(w *Wizard, token string) (*Server, error) {
 	s.mux.HandleFunc("GET /{$}", index)
 	s.mux.HandleFunc("GET /setup.html", index)
 	s.mux.Handle("GET /app.js", static)
+	s.mux.Handle("GET /onboard.css", static)
 	s.mux.HandleFunc("GET /style.css", func(rw http.ResponseWriter, r *http.Request) {
 		b, err := web.FS.ReadFile("style.css") // the wizard's own look, not forked
 		if err != nil {

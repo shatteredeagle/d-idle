@@ -216,7 +216,7 @@ func (w *Wizard) State(token string) View {
 }
 
 func (w *Wizard) progressLocked() *Progress {
-	p := &Progress{StartedAt: w.saved.StartedAt, EstimateSec: int(warmEstimate / time.Second)}
+	p := &Progress{StartedAt: w.saved.StartedAt, EstimateSec: int(warmEstimate / time.Second), Steps: []StepState{}}
 	t, err := time.Parse(time.RFC3339, w.saved.StartedAt)
 	if err != nil {
 		return p
