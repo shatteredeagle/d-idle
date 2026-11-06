@@ -520,6 +520,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - tester build plan (game-dir only): 7 slice-1 tasks testerwatch, testerimage, testerlive, testerdocs, testerreport, testerlicence, testerpack (task-23 to task-29, Proposed); plan in docs/research/tester-build-plan.md
 - TASK-23..29 reworked for the d2d tester route (testerimage TASK-24 Deferred, Wine route); new TASK-30 testertap, TASK-31 testerd2dimage, TASK-32 testerd2dwiz, TASK-33 testerrt (all Proposed, G-F)
 - TASK-23 testerwatch: watch screen gets its own token (--watch-token, --watch-token-file, env twins; file created 0600 on first start); offline tested, AC 2 and 3 open
+- TASK-30 testertap: game video from the d2d tap (watch.TapCapture, d2bot --watch-video-source tap), tap default moved to loopback 8893; offline tested, not live
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
