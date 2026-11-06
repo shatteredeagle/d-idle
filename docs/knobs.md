@@ -271,7 +271,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | merc.reviveMaxPerHour | 2 | 0..12 | count | 2 | 2 | Most merc revives in one hour; a merc that keeps dying costs more than it saves. |
-| merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the price plus merc.kitReservePct of the full kit refill (potions come first). |
+| merc.reviveGoldMult | 1 | 1..10 | x | 1 | 3 | Revive only with gold of at least this many times the quote plus the revive reserve (merc.reviveReserveLow/High). |
 | merc.stopDeathsPerHour | 3 | 1..12 | count | 3 | 3 | More merc deaths than this in an hour stop reviving until gold reaches the stop multiple. |
 | merc.stopGoldMult | 5 | 1..20 | x | 5 | 2 | While reviving is stopped by deaths, revive only with gold of at least this many times the price. |
 | merc.hireGoldMult | 1 | 1..10 | x | 1 | 2 | Hire or replace only when gold is at least this many times the quote plus merc.kitReservePct of the full kit refill. |
@@ -280,9 +280,11 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.swapGainPct | 10 | 0..100 | % | 10 | 4 | A merc item is swapped only when its score is this much better. Lower swaps more often. |
 | merc.reqStrDex | 1 | 0..1 | bool | 1 | 2 | 1 checks the merc's own Strength and Dexterity against gear (d2decomped finding, UNVERIFIED live); 0 checks only level. |
 | merc.potionLifePct | 50 | 10..80 | % | 50 | 3 | A healing potion goes to the merc only below this life percent in a non-trivial fight. |
-| merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A revive or hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
+| merc.kitReservePct | 100 | 0..500 | % | 100 | 2 | A hire also needs this percent of the full kit refill cost (town portal, resource.kitMinHP healing, resource.kitMinMP mana) in gold on top of the price: potions first, then the merc. |
 | merc.kitReservePctFullKit | 50 | 0..500 | % | 50 | 2 | The kit reserve used instead of merc.kitReservePct while the kit is already full (potions and portal just bought, so the next refill is not due soon). |
-| merc.reviveReserveMax | 10 | 0..2000 | gold | 10 | 2 | The kit reserve a revive keeps back (merc.kitReservePct of the full kit refill) is never more than this many gold, so a dead merc is revived once the purse covers the price plus this margin; the kit itself is checked separately (a scroll and potions must be in hand, or the revive runs first and the shop uses what is left). g2f seed 17 stayed dead 7 hours with gold 100 to 300 short of price plus the 155 to 310 reserve. |
+| merc.reviveReserveLow | 0 | 0..2000 | gold | 0 | 2 | Gold a revive keeps back on top of the real quote while clvl is below merc.reviveReserveClvl. A dead merc is revived as soon as the purse (pack plus stash) covers the quote plus this, before potions and repair (SME rule, user 2026-11-06). merc.kitReservePct applies to hires only. |
+| merc.reviveReserveHigh | 50 | 0..2000 | gold | 50 | 2 | The same reserve from clvl merc.reviveReserveClvl on: enough for a few potions, never a full kit refill. |
+| merc.reviveReserveClvl | 13 | 1..99 | levels | 13 | 2 | First clvl that uses merc.reviveReserveHigh instead of merc.reviveReserveLow. |
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |

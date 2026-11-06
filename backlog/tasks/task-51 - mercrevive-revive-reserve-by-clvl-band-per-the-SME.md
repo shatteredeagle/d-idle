@@ -26,6 +26,7 @@ owns:
 exclusive: []
 contracts:
   - "merc-policy"
+result: "Offline tested only (two builds); not verified live, the next Gate 2 must show the revive on a seed like 17."
 ---
 
 ## Description
@@ -33,7 +34,7 @@ User 2026-11-06: defer to the SME on the revive reserve (follow-up of TASK-41 / 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Revive reserve is 0 gold below clvl 13 and 50 gold from clvl 13 (knobs merc.reviveReserveLow/High/Clvl), merc.reviveReserveMax removed and retired; kitReservePct stays for hires only
-- [ ] #2 Revive runs before potions/repair with pack plus stash gold and the probed real quote; an unreadable quote logs once per visit and retries next visit
-- [ ] #3 Contract merc-policy.md, docs/merc.md, knobs.md updated (Source: user 2026-11-06 defer to the SME); two-build tests pass; ladder t2.mercenary parity tests unchanged and green
+- [x] #1 Revive reserve is 0 gold below clvl 13 and 50 gold from clvl 13 (knobs merc.reviveReserveLow/High/Clvl), merc.reviveReserveMax removed and retired; kitReservePct stays for hires only
+- [x] #2 Revive runs before potions/repair with pack plus stash gold and the probed real quote; an unreadable quote logs once per visit and retries next visit
+- [x] #3 Contract merc-policy.md, docs/merc.md, knobs.md updated (Source: user 2026-11-06 defer to the SME); two-build tests pass; ladder t2.mercenary parity tests unchanged and green
 <!-- AC:END -->

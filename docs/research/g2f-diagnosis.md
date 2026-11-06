@@ -103,3 +103,6 @@ Nothing here is decided by the agent; contracts and the Numbers tables are not e
 
 ## Shared-file lines for the merger
 See backlog/merge-lines/agent-g2fdiag.txt.
+
+## 8. Addendum 2026-11-06: reserve settled by the SME (task mercrevive)
+Open question 4 is closed: the user deferred to the SME, whose rule replaces the cap of section 7 F-A. `merc.reviveReserveMax` is retired (old tuning files that name it still load, the key is ignored). A revive keeps back `merc.reviveReserveLow` (0) gold below clvl `merc.reviveReserveClvl` (13) and `merc.reviveReserveHigh` (50) from it, runs before potions and repair (junk sold first), uses the probed real quote and the stash withdrawal; `merc.kitReservePct` applies to hires only. Offline tested only; live proof needs the next Gate 2.
