@@ -47,6 +47,11 @@ type Reviver interface {
 	Revive(ctx context.Context) (paid int, err error)
 }
 
+// QuoteProber reads the revive price from the NPC menu without paying (d2dmerc.Reviver.Probe).
+type QuoteProber interface {
+	Probe(ctx context.Context) (quote int, err error)
+}
+
 // GoldBank takes gold out of the stash into the pack. *town.Town implements it. The revive pays from the pack only (V:
 // d2dmerc.Reviver compares the quote with the pack gold, and banking keeps the pack at the keep line, 1100 at clvl 16,
 // below a 1920 price), so the stash part of the purse has to be fetched first.
@@ -173,6 +178,7 @@ type mercWire struct {
 	rd    merc.Reader
 	rev   Reviver
 	hirer Hirer
+	quote int      // the revive price read from the NPC menu while the merc is dead, 0 = not read (mu)
 	bank  GoldBank // nil: the stash cannot be emptied, so only pack gold counts for a revive
 	cat   bot.Catalog
 	now   func() time.Time
@@ -222,9 +228,10 @@ func (w *mercWire) State() (merc.MercState, error) {
 func (w *mercWire) observe(st merc.MercState) {
 	switch {
 	case st.Owned && st.Alive:
-		w.wasAlive, w.seen = true, true
+		w.wasAlive, w.seen, w.quote = true, true, 0
 	case st.Owned && !st.Alive:
 		if w.wasAlive {
+			w.quote = 0
 			w.deaths = append(w.deaths, w.now())
 			w.log.Info(merc.Prefix + "died")
 		}
@@ -378,6 +385,11 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	need := 0
 	if st.Owned && !st.Alive {
 		missing, price = true, merc.ReviveCost(max(st.Level, 1))
+		w.mu.Lock()
+		if w.quote > 0 {
+			price = w.quote
+		}
+		w.mu.Unlock()
 		need = merc.ReviveNeed(c, price)
 	} else {
 		need = merc.GoldNeed(c, price)
@@ -650,7 +662,16 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 			c.Gold += s.Player.StashGold // fetched below before the payment
 		}
 	}
-	dec, price := merc.ShouldRevive(st, c, 0)
+	w.mu.Lock()
+	quote := w.quote
+	w.mu.Unlock()
+	dec, price := merc.ShouldRevive(st, c, quote)
+	if !dec.Do && dec.Reason == merc.ReasonGold && quote == 0 && !first {
+		// The level estimate overshoots, so the real quote may be affordable (see QuoteProber).
+		if q := w.probeQuote(ctx, c.Gold); q > 0 {
+			dec, price = merc.ShouldRevive(st, c, q)
+		}
+	}
 	if first && !dec.Do {
 		return ""
 	}
@@ -687,6 +708,7 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	}
 	w.mu.Lock()
 	w.revives = append(w.revives, w.now())
+	w.quote = 0
 	w.curAt = time.Time{} // re-read: the merc should be alive now
 	w.mu.Unlock()
 	if q, ok := w.rev.(interface{ Quote() int }); ok && q.Quote() > 0 {
@@ -695,6 +717,31 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 	w.log.Info(merc.LogRevived(paid, st.Level, est))
 	return "merc revived"
 }
+
+// probeQuote reads the real revive price once while the merc stays dead (the quote of a dead merc does not change) and
+// keeps it for the policy and the gold farm. 0 when the purse is too small to matter, the reviver cannot probe or the
+// read failed (logged once per visit with the refusal; the estimate then decides).
+func (w *mercWire) probeQuote(ctx context.Context, gold int) int {
+	p, ok := w.rev.(QuoteProber)
+	if !ok || gold < probeMinGold {
+		return 0
+	}
+	q, err := p.Probe(ctx)
+	if err != nil {
+		w.log.Warn(merc.Prefix + "revive quote unreadable (" + err.Error() + ")")
+		return 0
+	}
+	if q > 0 {
+		w.mu.Lock()
+		w.quote = q
+		w.mu.Unlock()
+		w.log.Info(merc.Prefix + "revive quote read price=" + strconv.Itoa(q) + " gold=" + strconv.Itoa(gold))
+	}
+	return q
+}
+
+// probeMinGold: below this a purse cannot pay any revive (the cheapest quote seen was 120), so the walk to the NPC is saved.
+const probeMinGold = 100
 
 // fundRevive moves the part of the price that the pack lacks out of the stash. price is the formula estimate from the
 // player level, an upper bound (U: the merc is usually a few levels behind), so at worst a little too much is carried

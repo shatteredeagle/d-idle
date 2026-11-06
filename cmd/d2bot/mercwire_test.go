@@ -847,3 +847,56 @@ func TestMercTownForwardsTPDiag(t *testing.T) {
 		t.Error("an inner town without the diagnostics must read 0")
 	}
 }
+
+type probeReviver struct {
+	fakeReviver
+	quote, probes int
+	err           error
+}
+
+func (p *probeReviver) Probe(context.Context) (int, error) { p.probes++; return p.quote, p.err }
+
+// g2f seed 11: the formula said 480 for a merc whose menu quoted 120. A purse short of the estimate reads the quote
+// once and revives when it covers the real price; the quote is kept while the merc stays dead.
+func TestReviveReadsTheRealQuote(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		dead := merc.MercState{Known: true, Owned: true, Level: 16} // estimate 1920
+		rev := &probeReviver{quote: 1270}
+		rev.paid = 1270
+		w, buf, clk := testWire(t, &fakeReader{st: dead}, rev)
+		snap := func(gold int) *d2.Snapshot {
+			s := townSnap(gold, true)
+			s.Player.Class = class
+			return s
+		}
+		ctx := context.Background()
+		if got := w.ReviveStep(ctx, snap(1000)); got != "merc revive skipped: gold" || rev.probes != 1 || rev.calls != 0 {
+			t.Fatalf("%v poor: %q probes %d calls %d", class, got, rev.probes, rev.calls)
+		}
+		if !strings.Contains(buf.String(), "need=1280") {
+			t.Errorf("the refusal must carry the quote bar:\n%s", buf)
+		}
+		clk.t = clk.t.Add(5 * time.Minute)
+		if got := w.ReviveStep(ctx, snap(1285)); got != "merc revived" || rev.probes != 1 || rev.calls != 1 {
+			t.Fatalf("%v funded: %q probes %d calls %d", class, got, rev.probes, rev.calls)
+		}
+		if w.quote != 0 {
+			t.Error("the quote must be dropped after the revive")
+		}
+	}
+}
+
+// A hopeless purse does not walk to the NPC, and an unreadable quote falls back to the estimate.
+func TestReviveProbeSkippedOrFailed(t *testing.T) {
+	dead := merc.MercState{Known: true, Owned: true, Level: 16}
+	rev := &probeReviver{quote: 1270}
+	w, _, _ := testWire(t, &fakeReader{st: dead}, rev)
+	if got := w.ReviveStep(context.Background(), townSnap(50, true)); got != "merc revive skipped: gold" || rev.probes != 0 {
+		t.Fatalf("poor: %q probes %d", got, rev.probes)
+	}
+	rev2 := &probeReviver{err: errors.New("no hireling")}
+	w2, buf, _ := testWire(t, &fakeReader{st: dead}, rev2)
+	if got := w2.ReviveStep(context.Background(), townSnap(1500, true)); got != "merc revive skipped: gold" || rev2.probes != 1 || !strings.Contains(buf.String(), "need=1930") {
+		t.Fatalf("failed probe: %q probes %d\n%s", got, rev2.probes, buf)
+	}
+}
