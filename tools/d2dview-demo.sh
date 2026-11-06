@@ -3,7 +3,7 @@
 #   tools/d2dview-demo.sh [--minutes N] [--watch] [--seed N] [--clients] [--no-build]   build, ship, start (detached) on the worker
 #   tools/d2dview-demo.sh status | stop | log
 # Under `flock -w 3000 /tmp/d2d-lab.lock` (held only while it runs; other d2d runs queue) it starts: the d2dview tap/viewer
-# on :8891 (LAN, no token, throwaway offline character), then d2bot --managed (starts d2d lab5 headless, lockstep) whose
+# on :8893 (LAN, no token, throwaway offline character), then d2bot --managed (starts d2d lab5 headless, lockstep) whose
 # client dials the tap (--d2d-dial), a fresh Sorceress, no cheats; it SAVES (inside the demo dir, wiped each start): --no-save loses the character at every save point (chicken, docs/d2d-loop.md). When the time is up, or on `stop`, it quits the
 # bot (which saves nothing and quits d2d), then the viewer, and releases the lock.
 #   --watch     start in watch mode (every frame rendered, paced ~8x) instead of fast mode (sampled frames)
@@ -36,12 +36,12 @@ if [ "${1:-}" = "--remote" ]; then
   }
   trap cleanup EXIT INT TERM
   BA=(); [ "$JPEG" = 1 ] && BA+=(-jpeg); [ -n "$BADGE" ] && BA+=(-badge "$BADGE")
-  ${DVBIN:-$D/d2dview} "${BA[@]}" -addr :8891 -open -token-file /dev/null -upstream $R/d2d.sock -bot-sock $R/bot.sock -shots $SH -fps 6 \
+  ${DVBIN:-$D/d2dview} "${BA[@]}" -addr :8893 -open -token-file /dev/null -upstream $R/d2d.sock -bot-sock $R/bot.sock -shots $SH -fps 6 \
     -bot-api http://127.0.0.1:8471 > $D/view.log 2>&1 &
   VP=$!
-  for i in $(seq 40); do curl -s -o /dev/null localhost:8891/api/state && break; sleep 0.25; done
-  [ $WATCH = 1 ] && curl -s -X POST 'localhost:8891/api/mode?m=watch' > /dev/null
-  if [ $CLIENTS = 1 ]; then ( curl -s -N localhost:8891/events > /dev/null & curl -s -N localhost:8891/stream.mjpg > /dev/null & wait ) & CP=$!; fi
+  for i in $(seq 40); do curl -s -o /dev/null localhost:8893/api/state && break; sleep 0.25; done
+  [ $WATCH = 1 ] && curl -s -X POST 'localhost:8893/api/mode?m=watch' > /dev/null
+  if [ $CLIENTS = 1 ]; then ( curl -s -N localhost:8893/events > /dev/null & curl -s -N localhost:8893/stream.mjpg > /dev/null & wait ) & CP=$!; fi
   nice -n 10 $D/d2bot --backend d2d --managed --d2d-class 4 --char Viewy --seed $SEED \
     --toggle autoloot=off,autoparty=off --d2d-args "--lockstep" --d2d-linkwait 60s \
     --d2d-bin $F/d2d.lab5 --d2d-data $HOME/d2d-lab/data --gamedir $HOME/d2d-lab/data \
@@ -49,7 +49,7 @@ if [ "${1:-}" = "--remote" ]; then
     --goals campaign --run-for ${MIN}m > $D/bot.log 2>&1 &
   BP=$!
   until=$(date -d "+$MIN minutes" +%H:%M)
-  echo "UP http://$(hostname -f):8891/ until $until mode=$([ $WATCH = 1 ] && echo watch || echo fast) clients=$CLIENTS seed=$SEED" > "$D/status"
+  echo "UP http://$(hostname -f):8893/ until $until mode=$([ $WATCH = 1 ] && echo watch || echo fast) clients=$CLIENTS seed=$SEED" > "$D/status"
   wait $BP || true
   echo "cpu: viewer $(ps -o cputime=,etime= -p $VP)" >> "$D/bot.log"
   exit 0

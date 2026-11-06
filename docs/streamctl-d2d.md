@@ -12,15 +12,15 @@ The stream can be launched again and CAN show the d2d combined page, with no cod
 - Default URL: `https://shatteredeagle.github.io/d-idle/scene.html`. Configured by `--url` of `scene.sh start`, or env `D2S_SCENE_URL` (stream.sh passes it on). If the scene unit is already active, `scene.sh start` keeps its running URL (V: FRESH=0 skips the launch).
 
 ## Pointing the kiosk at d2d (not run)
-The kiosk runs on the worker host, so `http://127.0.0.1:8891/stream` is local; port 8891 need not be exposed. d2dview must be started with the bot or a d2d run behind it (docs/d2d-view.md); `-addr 127.0.0.1:8891` is enough for the stream, and needs no token on loopback.
+The kiosk runs on the worker host, so `http://127.0.0.1:8893/stream` is local; port 8893 need not be exposed. d2dview must be started with the bot or a d2d run behind it (docs/d2d-view.md); `-addr 127.0.0.1:8893` is enough for the stream, and needs no token on loopback.
 1. Start the d2d run and d2dview (as in docs/d2d-view.md).
-2. `~/d2lod-live/scene.sh start --mode full --url http://127.0.0.1:8891/stream` (scene-only stream), or for a scene tile next to games `--mode tile` (same URL, `?tile=1` is added).
+2. `~/d2lod-live/scene.sh start --mode full --url http://127.0.0.1:8893/stream` (scene-only stream), or for a scene tile next to games `--mode tile` (same URL, `?tile=1` is added).
 3. Go live with the usual streamctl call (`POST /api/stream/start {"instances":["scene"]}`), which reuses the running scene unit. Requires approval, see below.
 To go back to the public scene: `scene.sh stop all`, then start again without `--url` (or restart the stream).
 
 ## When no d2d run is active
 - The page itself says "waiting for a d2d run" (state API answers, d2d not attached): safe but dull.
-- If d2dview is down the kiosk shows Chromium's error page ON AIR (U: not tried). So switch the scene back to the public page as soon as the run ends: the d2d run script should call `scene.sh stop all` in its cleanup, or only use the d2d scene while the run is watched. A watchdog (restart the scene with the default URL when `http://127.0.0.1:8891/api/pub` fails twice) would close this gap; not built (outside this card's paths).
+- If d2dview is down the kiosk shows Chromium's error page ON AIR (U: not tried). So switch the scene back to the public page as soon as the run ends: the d2d run script should call `scene.sh stop all` in its cleanup, or only use the d2d scene while the run is watched. A watchdog (restart the scene with the default URL when `http://127.0.0.1:8893/api/pub` fails twice) would close this gap; not built (outside this card's paths).
 
 ## Cost
 - Capture and encode: encoder is on the GPU (V from the ffmpeg line); Chromium kiosk is capped at 35 % of a core and ffmpeg at 60 % (V, unit limits). Rough total for a scene-only stream: about 0.5 to 1 core (S, estimate).
@@ -32,7 +32,7 @@ The page reads only `/api/pub` (cmd/d2dview/pub.go), never `/api/state`, `/event
 
 ## Exact command for approval (not run)
 ```
-ssh worker.example '~/d2lod-live/scene.sh start --mode full --url http://127.0.0.1:8891/stream'
+ssh worker.example '~/d2lod-live/scene.sh start --mode full --url http://127.0.0.1:8893/stream'
 curl -s -H "Authorization: Bearer $(ssh worker.example cat ~/.config/streamctl/token)" -X POST \
   -d '{"instances":["scene"]}' http://worker.example:8433/api/stream/start
 ```

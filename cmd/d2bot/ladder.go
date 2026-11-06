@@ -36,6 +36,8 @@ type ladderOptions struct {
 	video        bool
 	videoFPS     int
 	videoQuality int
+	videoSource  string // "x11" (private display, default) or "tap" (the d2d view tap's /frame; d2d has no display)
+	tapURL       string
 	instance     string // set by the parser: the instance whose private display is captured
 }
 
@@ -48,7 +50,9 @@ func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
 	fs.StringVar(&l.answerAddr, "watch-answer-addr", envOr("D2BOT_WATCH_ANSWER_ADDR", "127.0.0.1:8892"), "with --watch: listen address of the SEPARATE answer route (answer, confirm, revoke, orders); non-loopback requires --token")
 	fs.StringVar(&l.origins, "watch-origin", envOr("D2BOT_WATCH_ORIGIN", ""), "with --watch: comma list of page origins the answer route accepts (default: the viewer's port on localhost)")
 	fs.BoolVar(&l.video, "watch-video", envBool("D2BOT_WATCH_VIDEO"), "with --watch: live video of this instance's private game display on the viewer (/stream, /shot.jpg), captured only while someone watches (env D2BOT_WATCH_VIDEO; default off)")
-	fs.IntVar(&l.videoFPS, "watch-video-fps", envInt("D2BOT_WATCH_VIDEO_FPS", watch.DefaultVideoFPS), "with --watch-video: frames per second of the shared capture (1 to 15)")
+	fs.StringVar(&l.videoSource, "watch-video-source", envOr("D2BOT_WATCH_VIDEO_SOURCE", videoX11), "with --watch-video: where frames come from, x11 (the instance's private display, ffmpeg or import) or tap (the d2d view tap's /frame, for --backend d2d; token from env D2DVIEW_TOKEN) (env D2BOT_WATCH_VIDEO_SOURCE; default x11)")
+	fs.StringVar(&l.tapURL, "watch-tap-url", envOr("D2BOT_WATCH_TAP_URL", "http://127.0.0.1:8893"), "with --watch-video-source tap: base URL of the d2dview tap (env D2BOT_WATCH_TAP_URL)")
+	fs.IntVar(&l.videoFPS, "watch-video-fps", envInt("D2BOT_WATCH_VIDEO_FPS", 0), "with --watch-video: frames per second of the shared capture (x11: 1 to 15, default 8; tap: 1 to 6, default 4)")
 	fs.IntVar(&l.videoQuality, "watch-video-quality", envInt("D2BOT_WATCH_VIDEO_QUALITY", 5), "with --watch-video: JPEG quality as ffmpeg -q:v, 2 (best, big) to 31 (small)")
 }
 
@@ -74,8 +78,12 @@ func (l ladderOptions) validate(sim bool) error {
 		if !l.watch {
 			return errors.New("--watch-video needs --watch")
 		}
-		if l.videoFPS < 1 || l.videoFPS > watch.MaxVideoFPS {
-			return fmt.Errorf("--watch-video-fps must be 1 to %d", watch.MaxVideoFPS)
+		maxFPS := watch.MaxVideoFPS
+		if l.videoSource == videoTap {
+			maxFPS = watch.MaxTapFPS
+		}
+		if l.videoFPS != 0 && (l.videoFPS < 1 || l.videoFPS > maxFPS) {
+			return fmt.Errorf("--watch-video-fps must be 1 to %d with source %s", maxFPS, l.videoSource)
 		}
 		if l.videoQuality < 2 || l.videoQuality > 31 {
 			return errors.New("--watch-video-quality must be 2 to 31")
@@ -291,16 +299,36 @@ func (l ladderOptions) newVideo() (*watch.Video, error) {
 	if !l.video {
 		return nil, nil
 	}
+	switch l.videoSource {
+	case videoTap:
+		capture, err := watch.TapCapture(watch.TapOptions{URL: l.tapURL, Token: os.Getenv("D2DVIEW_TOKEN"), FPS: l.videoFPS, Quality: l.videoQuality})
+		if err != nil {
+			return nil, err
+		}
+		return watch.NewVideo(watch.VideoOptions{Capture: capture})
+	case videoX11, "":
+	default:
+		return nil, fmt.Errorf("--watch-video-source must be %s or %s, not %q", videoX11, videoTap, l.videoSource)
+	}
+	fps := l.videoFPS
+	if fps == 0 {
+		fps = watch.DefaultVideoFPS
+	}
 	in := launch.Instance{ID: l.instance}
 	if !launch.ValidID(l.instance) || in.Num() <= 0 {
 		return nil, fmt.Errorf("--watch-video: instance %q has no private display (only i1..i9; i0 runs on the desktop)", l.instance)
 	}
-	capture, err := watch.ExecCapture(watch.CaptureOptions{Display: launch.XvfbDisplay{Num: 100 + in.Num()}.Name(), FPS: l.videoFPS, Quality: l.videoQuality})
+	capture, err := watch.ExecCapture(watch.CaptureOptions{Display: launch.XvfbDisplay{Num: 100 + in.Num()}.Name(), FPS: fps, Quality: l.videoQuality})
 	if err != nil {
 		return nil, err
 	}
 	return watch.NewVideo(watch.VideoOptions{Capture: capture})
 }
+
+const (
+	videoX11 = "x11"
+	videoTap = "tap"
+)
 
 func envInt(key string, def int) int {
 	if n, err := strconv.Atoi(os.Getenv(key)); err == nil {
