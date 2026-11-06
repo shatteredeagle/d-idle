@@ -14,7 +14,11 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"d2lod-bot/internal/access"
 )
+
+func init() { access.Iterations = 1000 }
 
 const testToken = "tok-for-tests-only-AAAAAAAAAAAAAAAA"
 
@@ -161,6 +165,113 @@ func TestVersionPin(t *testing.T) {
 	}
 }
 
+// The six verdict states of the game files screen (mock screen 3) plus the folder that cannot be read.
+func TestFileVerdicts(t *testing.T) {
+	tb := tables(t, smallTables)
+	pin := func(d string) *Tables {
+		b, _ := os.ReadFile(filepath.Join(d, "patch_d2.mpq"))
+		sum := sha256.Sum256(b)
+		return tables(t, strings.Replace(smallTables, `"patch_sha256": []`, `"patch_sha256": ["`+hex.EncodeToString(sum[:])+`"]`, 1))
+	}
+	cases := []struct {
+		name    string
+		setup   func(d string)
+		tb      func(d string) *Tables
+		verdict string
+		ok      bool
+		issue   string // issue of the first failing file
+	}{
+		{"all good and pinned", func(string) {}, pin, "ok", true, ""},
+		{"hash not pinned yet", func(string) {}, func(string) *Tables { return tb }, "unconfirmed", true, ""},
+		{"missing patch", func(d string) { os.Remove(filepath.Join(d, "patch_d2.mpq")) }, func(string) *Tables { return tb }, "missing", false, "missing"},
+		{"too small", func(d string) { mpq(t, d, "d2exp.mpq", 10) }, func(string) *Tables { return tb }, "too_small", false, "too_small"},
+		{"not an archive", func(d string) { os.WriteFile(filepath.Join(d, "d2exp.mpq"), make([]byte, 128), 0o644) }, func(string) *Tables { return tb }, "not_mpq", false, "not_mpq"},
+		{"two kinds of problem", func(d string) {
+			os.Remove(filepath.Join(d, "d2char.mpq"))
+			mpq(t, d, "d2exp.mpq", 10)
+		}, func(string) *Tables { return tb }, "problems", false, ""},
+		{"wrong version", func(string) {}, func(string) *Tables {
+			return tables(t, strings.Replace(smallTables, `"patch_sha256": []`, `"patch_sha256": ["`+strings.Repeat("0", 64)+`"]`, 1))
+		}, "wrong_version", false, ""},
+		{"Resurrected folder", func(d string) {
+			es, _ := os.ReadDir(d)
+			for _, e := range es {
+				os.Remove(filepath.Join(d, e.Name()))
+			}
+			os.WriteFile(filepath.Join(d, "Diablo II Resurrected.exe"), []byte("MZ"), 0o644)
+		}, func(string) *Tables { return tb }, "resurrected", false, ""},
+	}
+	for _, c := range cases {
+		d := goodGame(t)
+		c.setup(d)
+		r := CheckGame(d, c.tb(d))
+		if r.Verdict != c.verdict || r.OK != c.ok {
+			t.Errorf("%s: verdict %q ok %v (%s)", c.name, r.Verdict, r.OK, r.Summary)
+		}
+		if !r.OK && r.Fix == "" || c.verdict == "unconfirmed" && (r.Fix == "" || r.PatchSHA256 == "") {
+			t.Errorf("%s: no fix hint / fingerprint: %+v", c.name, r)
+		}
+		if c.issue != "" {
+			found := false
+			for _, f := range r.Files {
+				if f.Status == StatusFail && f.Issue == c.issue {
+					found = true
+				}
+			}
+			if !found {
+				t.Errorf("%s: no file with issue %s: %+v", c.name, c.issue, r.Files)
+			}
+		}
+	}
+	if r := CheckGame(filepath.Join(t.TempDir(), "nope"), tb); r.Verdict != "no_folder" || r.OK || r.Fix == "" || strings.Contains(r.Summary, t.TempDir()) {
+		t.Errorf("no folder: %+v", r)
+	}
+}
+
+func TestResetAccess(t *testing.T) {
+	dir := t.TempDir()
+	st := access.NewStore(filepath.Join(dir, accessFile))
+	rec, _ := access.NewPasscode("old passcode", time.Now())
+	st.Save(rec)
+	oldCookie := rec.Session()
+
+	// default: back to the generated token, which is created when missing; the old login stops working
+	var out bytes.Buffer
+	if err := resetAccess([]string{"-data", dir}, strings.NewReader(""), &out); err != nil {
+		t.Fatal(err)
+	}
+	if got := st.Current(); got.Kind != access.KindToken || got.SessionOK(oldCookie) {
+		t.Errorf("after token reset: %+v", got)
+	}
+	tok, err := os.ReadFile(filepath.Join(dir, "watch.token"))
+	if err != nil || len(strings.TrimSpace(string(tok))) != 32 || strings.Contains(out.String(), strings.TrimSpace(string(tok))) {
+		t.Errorf("token file %q %v; the command must name the file, not print the token: %s", tok, err, out.String())
+	}
+
+	// -passcode reads one line from standard input and never echoes it
+	out.Reset()
+	if err := resetAccess([]string{"-data", dir, "-passcode"}, strings.NewReader("brand new words\n"), &out); err != nil {
+		t.Fatal(err)
+	}
+	if got := st.Current(); got.Kind != access.KindPasscode || !got.Verify("brand new words") || got.Verify("old passcode") || strings.Contains(out.String(), "brand") {
+		t.Errorf("after passcode reset: %+v / %s", got, out.String())
+	}
+	if fi, _ := os.Stat(filepath.Join(dir, accessFile)); fi.Mode().Perm() != 0o600 {
+		t.Errorf("mode %v", fi.Mode())
+	}
+	for name, in := range map[string]string{"short": "abc\n", "empty": "", "blank line": "\n"} {
+		if err := resetAccess([]string{"-data", dir, "-passcode"}, strings.NewReader(in), &out); err == nil {
+			t.Errorf("%s accepted", name)
+		}
+	}
+	if got := st.Current(); !got.Verify("brand new words") {
+		t.Error("a rejected reset changed the passcode")
+	}
+	if err := resetAccess([]string{"-data", dir, "extra"}, strings.NewReader(""), &out); err == nil {
+		t.Error("stray argument accepted")
+	}
+}
+
 func TestNameValidation(t *testing.T) {
 	for _, ok := range []string{"Ab", "Sorcy", "Abcdefghijklmno"} {
 		if validCharName(ok) != nil {
@@ -250,18 +361,39 @@ func (f *fixture) waitPhase(t *testing.T, want string) View {
 	return View{}
 }
 
+// ready walks the first four steps with the given access choice (a JSON body for PUT /api/access).
+func (f *fixture) ready(t *testing.T, accessBody string) {
+	t.Helper()
+	for _, c := range [][3]string{{"PUT", "/api/ahead", `{"ok":true}`}, {"PUT", "/api/inputs", goodInputs}, {"PUT", "/api/access", accessBody}} {
+		if code, body, _ := f.do(t, c[0], c[1], c[2]); code != 200 {
+			t.Fatalf("%s %s: %d %s", c[0], c[1], code, body)
+		}
+	}
+}
+
+const tokenChoice = `{"kind":"token"}`
+const passChoice = `{"kind":"passcode","passcode":"four plain words","confirm":"four plain words"}`
+
 const goodInputs = `{"char_name":"Sorcy","class":"sorceress","goals":"campaign:normal_act1"}`
 
 func TestHappyPath(t *testing.T) {
 	f := newFixture(t, smallTables)
-	if v := f.state(t); v.Phase != "character" || !v.Check.OK || v.Inputs.Class != "sorceress" || v.Inputs.Goals != "campaign:normal_act1" {
+	if v := f.state(t); v.Phase != "ahead" || v.Ahead.OK || !v.Check.OK || v.Inputs.Class != "sorceress" || v.Inputs.Goals != "campaign:normal_act1" || v.Access != "" {
 		t.Fatalf("first state %+v", v)
 	}
 	if _, err := os.Stat(filepath.Join(f.data, stateFile)); err == nil {
-		t.Fatal("state file written before Start")
+		t.Fatal("state file written before the first answer")
 	}
-	if code, body, _ := f.do(t, "PUT", "/api/inputs", goodInputs); code != 200 || !strings.Contains(body, `"start"`) {
-		t.Fatalf("inputs %d %s", code, body)
+	// every step in order: go-ahead, game files (already fine), hero, access, start
+	steps := []struct{ method, path, body, phase string }{
+		{"PUT", "/api/ahead", `{"ok":true}`, "character"},
+		{"PUT", "/api/inputs", goodInputs, "access"},
+		{"PUT", "/api/access", tokenChoice, "start"},
+	}
+	for _, c := range steps {
+		if code, body, _ := f.do(t, c.method, c.path, c.body); code != 200 || !strings.Contains(body, `"phase":"`+c.phase+`"`) {
+			t.Fatalf("%s %s: %d %s (want phase %s)", c.method, c.path, code, body, c.phase)
+		}
 	}
 	if code, _, _ := f.do(t, "POST", "/api/start", ""); code != 202 {
 		t.Fatalf("start %d", code)
@@ -284,6 +416,9 @@ func TestHappyPath(t *testing.T) {
 	if err := json.Unmarshal(b, &s); err != nil || s.Phase != "done" || s.CharName != "Sorcy" || s.ClassIndex != 4 || s.Goals != "campaign:normal_act1" || s.PatchSHA256 == "" {
 		t.Errorf("wizard.json %s %v", b, err)
 	}
+	if _, err := time.Parse(time.RFC3339, s.AheadAt); err != nil || s.StartedAt == "" {
+		t.Errorf("go-ahead date / start time not stored: %+v", s)
+	}
 	if fi, _ := os.Stat(filepath.Join(f.data, stateFile)); fi.Mode().Perm() != 0o600 {
 		t.Errorf("mode %v", fi.Mode())
 	}
@@ -294,18 +429,145 @@ func TestHappyPath(t *testing.T) {
 	if strings.Contains(string(b), testToken) {
 		t.Error("token inside wizard.json")
 	}
-	// a second start or new inputs after done are refused
-	if code, _, _ := f.do(t, "POST", "/api/start", ""); code != 409 {
-		t.Errorf("start after done %d", code)
+	// a second start, new inputs, a new go-ahead or a new access choice after done are refused
+	for _, c := range [][3]string{{"POST", "/api/start", ""}, {"PUT", "/api/inputs", goodInputs}, {"PUT", "/api/ahead", `{"ok":false}`}, {"PUT", "/api/access", passChoice}} {
+		if code, _, _ := f.do(t, c[0], c[1], c[2]); code != 409 {
+			t.Errorf("%s %s after done %d", c[0], c[1], code)
+		}
 	}
-	if code, _, _ := f.do(t, "PUT", "/api/inputs", goodInputs); code != 409 {
-		t.Errorf("inputs after done %d", code)
+}
+
+// The passcode kind: no token in the done view, only a hash in access.json (0600), and this browser is signed in.
+func TestHappyPathPasscode(t *testing.T) {
+	f := newFixture(t, smallTables)
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
+	f.do(t, "PUT", "/api/inputs", goodInputs)
+	code, body, h := f.do(t, "PUT", "/api/access", passChoice)
+	if code != 200 || !strings.Contains(body, `"access":"passcode"`) || strings.Contains(body, "four plain") || strings.Contains(body, "hash") {
+		t.Fatalf("access %d %s", code, body)
+	}
+	ck := h.Get("Set-Cookie")
+	for _, want := range []string{"d2dpass=", "HttpOnly", "SameSite=Strict", "Path=/"} {
+		if !strings.Contains(ck, want) {
+			t.Errorf("cookie %q lacks %s", ck, want)
+		}
+	}
+	if strings.Contains(ck, "Secure") {
+		t.Error("Secure cookie on plain HTTP would never be sent back")
+	}
+	raw, _ := os.ReadFile(filepath.Join(f.data, accessFile))
+	if strings.Contains(string(raw), "four plain") || !strings.Contains(string(raw), `"kind": "passcode"`) {
+		t.Errorf("access.json %s", raw)
+	}
+	if fi, _ := os.Stat(filepath.Join(f.data, accessFile)); fi.Mode().Perm() != 0o600 {
+		t.Errorf("access.json mode %v", fi.Mode())
+	}
+	// the session cookie alone opens the setup page again, without the token
+	cookie := strings.SplitN(ck, ";", 2)[0]
+	if code, _, _ := f.do(t, "GET", "/api/state", "", "X-No-Auth", "1", "Authorization", "", "Cookie", cookie); code != 200 {
+		t.Errorf("passcode cookie: %d", code)
+	}
+	if code, _, _ := f.do(t, "GET", "/api/state", "", "X-No-Auth", "1", "Authorization", "", "Cookie", "d2dpass=forged"); code != 401 {
+		t.Errorf("forged passcode cookie: %d", code)
+	}
+	f.do(t, "POST", "/api/start", "")
+	if v := f.waitPhase(t, "done"); v.Token != "" || v.Access != "passcode" {
+		t.Errorf("done view %+v", v)
+	}
+	// the stored record verifies the passcode (what the watch gate will do)
+	if !f.w.Access.Current().Verify("four plain words") {
+		t.Error("stored hash does not verify")
+	}
+}
+
+func TestGoAheadEnforcedAndStored(t *testing.T) {
+	f := newFixture(t, smallTables)
+	f.do(t, "PUT", "/api/inputs", goodInputs)
+	f.do(t, "PUT", "/api/access", tokenChoice)
+	// everything else is ready, the tick is missing
+	code, body, _ := f.do(t, "POST", "/api/start", "")
+	if code != 400 || !strings.Contains(body, "go-ahead") || !strings.Contains(body, `"fix"`) || len(f.extracted) != 0 {
+		t.Fatalf("start without go-ahead: %d %s", code, body)
+	}
+	if v := f.state(t); v.Phase != "ahead" {
+		t.Errorf("phase %s", v.Phase)
+	}
+	now := time.Date(2026, 11, 6, 15, 4, 5, 0, time.UTC)
+	f.w.Now = func() time.Time { return now }
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
+	if v := f.state(t); v.Ahead.At != "2026-11-06T15:04:05Z" || v.Phase != "start" {
+		t.Errorf("tick not stored with date: %+v", v)
+	}
+	// ticking again keeps the first date; unticking clears it and blocks Start again
+	now = now.Add(time.Hour)
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
+	if v := f.state(t); v.Ahead.At != "2026-11-06T15:04:05Z" {
+		t.Errorf("date overwritten: %+v", v.Ahead)
+	}
+	f.do(t, "PUT", "/api/ahead", `{"ok":false}`)
+	if code, _, _ := f.do(t, "POST", "/api/start", ""); code != 400 {
+		t.Errorf("start after untick %d", code)
+	}
+	// it is remembered after a restart
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
+	f.build(t, smallTables)
+	if v := f.state(t); !v.Ahead.OK || v.Phase != "start" || v.Access != "token" {
+		t.Errorf("resume: %+v", v)
+	}
+	if code, _, _ := f.do(t, "PUT", "/api/ahead", `{"ok":true,"x":1}`); code != 400 {
+		t.Errorf("unknown field %d", code)
+	}
+}
+
+func TestAccessChoiceRules(t *testing.T) {
+	f := newFixture(t, smallTables)
+	for name, body := range map[string]string{
+		"too short":  `{"kind":"passcode","passcode":"12345","confirm":"12345"}`,
+		"mismatch":   `{"kind":"passcode","passcode":"abcdef","confirm":"abcdeg"}`,
+		"no kind":    `{"kind":""}`,
+		"other kind": `{"kind":"none"}`,
+		"unknown":    `{"kind":"token","password":"x"}`,
+	} {
+		code, resp, _ := f.do(t, "PUT", "/api/access", body)
+		if code != 400 {
+			t.Errorf("%s: %d %s", name, code, resp)
+		}
+		if name == "too short" && (!strings.Contains(resp, "too short") || !strings.Contains(resp, `"fix"`)) {
+			t.Errorf("short text %s", resp)
+		}
+	}
+	if _, err := os.Stat(filepath.Join(f.data, accessFile)); err == nil {
+		t.Fatal("a rejected choice was stored")
+	}
+	// no composition rules: six equal letters are fine; the choice can be changed until Start
+	if code, _, _ := f.do(t, "PUT", "/api/access", `{"kind":"passcode","passcode":"aaaaaa","confirm":"aaaaaa"}`); code != 200 {
+		t.Errorf("simple passcode %d", code)
+	}
+	if code, _, _ := f.do(t, "PUT", "/api/access", tokenChoice); code != 200 || f.state(t).Access != "token" {
+		t.Errorf("switch to token %d", code)
+	}
+}
+
+// Back on the page is a client matter; the server must let every earlier answer be changed until Start.
+func TestEarlierAnswersCanBeChanged(t *testing.T) {
+	f := newFixture(t, smallTables)
+	f.ready(t, tokenChoice)
+	if code, _, _ := f.do(t, "PUT", "/api/inputs", `{"char_name":"Other","class":"sorceress","goals":"campaign:normal_act1"}`); code != 200 {
+		t.Fatalf("change hero %d", code)
+	}
+	os.Remove(filepath.Join(f.game, "d2char.mpq"))
+	if code, body, _ := f.do(t, "POST", "/api/check", ""); code != 200 || !strings.Contains(body, `"phase":"data"`) || !strings.Contains(body, `"verdict":"missing"`) {
+		t.Errorf("recheck %d %s", code, body)
+	}
+	if v := f.state(t); v.Inputs.CharName != "Other" || v.Access != "token" || !v.Ahead.OK {
+		t.Errorf("answers lost: %+v", v)
 	}
 }
 
 func TestFailureAndRerun(t *testing.T) {
 	f := newFixture(t, smallTables)
 	os.Remove(filepath.Join(f.game, "d2exp.mpq"))
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
 	v := f.state(t)
 	if v.Phase != "data" || v.Check.OK {
 		t.Fatalf("missing file: %+v", v)
@@ -320,13 +582,13 @@ func TestFailureAndRerun(t *testing.T) {
 	if code != 200 || !strings.Contains(body, `"phase":"character"`) {
 		t.Fatalf("recheck %d %s", code, body)
 	}
-	// extraction fails: phase failed, then a retry succeeds
+	// extraction fails: phase failed with a plain message and a fix hint, then a retry succeeds
 	f.exErr = errors.New("bad archive")
-	f.do(t, "PUT", "/api/inputs", goodInputs)
+	f.ready(t, tokenChoice)
 	f.do(t, "POST", "/api/start", "")
 	v = f.waitPhase(t, "failed")
-	if !strings.Contains(v.Error, "bad archive") {
-		t.Errorf("error %q", v.Error)
+	if !strings.Contains(v.Error, "bad archive") || v.Fix == "" || v.Progress == nil {
+		t.Errorf("error %q fix %q", v.Error, v.Fix)
 	}
 	if _, err := os.Stat(filepath.Join(f.data, envFile)); err == nil {
 		t.Error("wizard.env written after a failed run")
@@ -354,7 +616,7 @@ func TestInputsRejected(t *testing.T) {
 	if code, body, _ := f.do(t, "PUT", "/api/inputs", `{"char_name":"Necro","class":"necromancer","goals":"campaign:normal_act1"}`); !strings.Contains(body, "not supported in this build") {
 		t.Errorf("unsupported text %d %s", code, body)
 	}
-	if f.state(t).Phase != "character" {
+	if f.state(t).Phase != "ahead" {
 		t.Error("rejected input moved the wizard")
 	}
 }
@@ -362,12 +624,12 @@ func TestInputsRejected(t *testing.T) {
 func TestTokenEnforcement(t *testing.T) {
 	f := newFixture(t, smallTables)
 	noAuth := []string{"X-No-Auth", "1", "Authorization", ""}
-	for _, p := range []string{"/", "/setup.html", "/app.js", "/style.css", "/api/state"} {
+	for _, p := range []string{"/", "/setup.html", "/app.js", "/onboard.css", "/style.css", "/api/state"} {
 		if code, _, _ := f.do(t, "GET", p, "", noAuth...); code != 401 {
 			t.Errorf("GET %s without token: %d", p, code)
 		}
 	}
-	for _, c := range [][]string{{"PUT", "/api/inputs"}, {"POST", "/api/start"}, {"POST", "/api/check"}} {
+	for _, c := range [][]string{{"PUT", "/api/inputs"}, {"PUT", "/api/ahead"}, {"PUT", "/api/access"}, {"POST", "/api/start"}, {"POST", "/api/check"}} {
 		if code, _, _ := f.do(t, c[0], c[1], "", noAuth...); code != 401 {
 			t.Errorf("%s %s without token: %d", c[0], c[1], code)
 		}
@@ -404,10 +666,10 @@ func TestTokenEnforcement(t *testing.T) {
 
 func TestResumeAfterRestart(t *testing.T) {
 	f := newFixture(t, smallTables)
-	f.do(t, "PUT", "/api/inputs", goodInputs)
-	// restart before Start: inputs survive, the wizard is at the start step
+	f.ready(t, tokenChoice)
+	// restart before Start: every answer survives, the wizard is at the start step
 	f.build(t, smallTables)
-	if v := f.state(t); v.Phase != "start" || v.Inputs.CharName != "Sorcy" {
+	if v := f.state(t); v.Phase != "start" || v.Inputs.CharName != "Sorcy" || !v.Ahead.OK || v.Access != "token" || v.Interrupted {
 		t.Fatalf("resume inputs: %+v", v)
 	}
 	f.do(t, "POST", "/api/start", "")
@@ -442,15 +704,60 @@ func TestSecondProfile(t *testing.T) {
 	if v := f.state(t); v.Inputs.Class != "necromancer" || len(v.Presets) != 2 {
 		t.Fatalf("profile state %+v", v)
 	}
+	f.do(t, "PUT", "/api/ahead", `{"ok":true}`)
 	if code, body, _ := f.do(t, "PUT", "/api/inputs", `{"char_name":"Necro","class":"necromancer","goals":"levelto:12"}`); code != 200 {
 		t.Fatalf("%d %s", code, body)
 	}
+	f.do(t, "PUT", "/api/access", passChoice)
 	f.do(t, "POST", "/api/start", "")
 	f.waitPhase(t, "done")
 	env, _ := os.ReadFile(filepath.Join(f.data, envFile))
 	if string(env) != "D2D_NAME='Necro'\nD2D_CLASS='1'\nD2BOT_GOALS='levelto:12'\n" {
 		t.Errorf("env %q", env)
 	}
+}
+
+func TestInterruptedStartIsResumable(t *testing.T) {
+	f := newFixture(t, smallTables)
+	f.ready(t, tokenChoice)
+	f.w.mu.Lock()
+	f.w.saved.StartedAt = "2026-11-06T15:00:00Z" // a start that was cut off by a restart
+	f.w.saveLocked()
+	f.w.mu.Unlock()
+	f.build(t, smallTables)
+	v := f.state(t)
+	if v.Phase != "start" || !v.Interrupted || v.Progress != nil {
+		t.Fatalf("interrupted: %+v", v)
+	}
+	f.do(t, "POST", "/api/start", "")
+	f.waitPhase(t, "done")
+}
+
+// The warm-up progress comes from the stored start time, so a closed page or a second browser sees the same numbers.
+func TestProgressSurvivesClosedPage(t *testing.T) {
+	f := newFixture(t, smallTables)
+	f.ready(t, tokenChoice)
+	block := make(chan struct{})
+	f.w.Extract = func(string) error { <-block; return nil }
+	now := time.Date(2026, 11, 6, 15, 0, 0, 0, time.UTC)
+	f.w.Now = func() time.Time { return now }
+	if code, _, _ := f.do(t, "POST", "/api/start", ""); code != 202 {
+		t.Fatal(code)
+	}
+	now = now.Add(30 * time.Second)
+	v := f.state(t) // "another browser": a fresh request with no page state
+	if v.Phase != "running" || v.Progress == nil || v.Progress.ElapsedSec != 30 || v.Progress.EstimateSec != 120 || v.Progress.Percent != 25 || len(v.Progress.Steps) != 3 || v.Progress.Steps[0].State != "doing" {
+		t.Fatalf("progress %+v", v.Progress)
+	}
+	now = now.Add(10 * time.Minute)
+	if v := f.state(t); v.Progress.Percent != 95 {
+		t.Errorf("percent must cap below 100 while running: %d", v.Progress.Percent)
+	}
+	if code, _, _ := f.do(t, "POST", "/api/start", ""); code != 409 {
+		t.Errorf("second start while running %d", code)
+	}
+	close(block)
+	f.waitPhase(t, "done")
 }
 
 func TestPageIsXSSSafe(t *testing.T) {
@@ -464,8 +771,22 @@ func TestPageIsXSSSafe(t *testing.T) {
 		}
 	}
 	idx, _ := pageFS.ReadFile("page/index.html")
-	if strings.Contains(string(idx), "<script>") || strings.Contains(string(idx), " onclick") {
-		t.Error("inline script in index.html (the CSP forbids it)")
+	if strings.Contains(string(idx), "<script>") || strings.Contains(string(idx), " onclick") || strings.Contains(string(idx), "style=") {
+		t.Error("inline script or style in index.html (the CSP forbids it)")
+	}
+	css, _ := pageFS.ReadFile("page/onboard.css")
+	for name, text := range map[string]string{"app.js": string(b), "index.html": string(idx), "onboard.css": string(css)} {
+		if strings.Contains(text, "http://") && name != "app.js" || strings.Contains(text, "https://") || strings.Contains(text, "@import") {
+			t.Errorf("%s reaches for an external URL", name)
+		}
+	}
+	for _, want := range []string{"textContent", "aria-current", "role: 'alert'", "aria-label"} {
+		if !strings.Contains(string(b), want) {
+			t.Errorf("app.js lacks %q", want)
+		}
+	}
+	if strings.Contains(string(b), "style=") || strings.Contains(string(b), "'style'") {
+		t.Error("app.js sets a style attribute (blocked by the CSP); use el.style")
 	}
 }
 
