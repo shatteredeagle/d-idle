@@ -30,7 +30,7 @@ import (
 var webFS embed.FS
 
 func main() {
-	addr := flag.String("addr", ":8891", "listen address; a token is required unless it is loopback or -open")
+	addr := flag.String("addr", envOr("D2DVIEW_ADDR", "127.0.0.1:8893"), "listen address (env D2DVIEW_ADDR; default loopback 8893, 8891/8892 belong to the watch screen of d2bot --watch); a token is required unless it is loopback or -open")
 	upstream := flag.String("upstream", os.Getenv("D2D_SOCK"), "the d2d control socket (default $D2D_SOCK)")
 	botSock := flag.String("bot-sock", "", "socket to create for the bot (it dials this instead of the d2d); empty: no bot, the viewer attaches alone")
 	tokenFile := flag.String("token-file", "", "file with the access token (or env D2DVIEW_TOKEN); default ~/.config/d2dview/token")

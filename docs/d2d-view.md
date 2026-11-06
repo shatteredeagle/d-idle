@@ -13,10 +13,10 @@ monsters seen, and the bot's goal text. Stdlib only, read-only.
 ```
 # 1. start d2d yourself on UPSTREAM (lockstep, `flock -n /tmp/d2d-lab.lock`, own socket), e.g. as ~/d2d-lab/view/run.sh does
 # 2. start the viewer; it creates the bot's socket and its own filtered socket (UPSTREAM.view)
-d2dview -addr :8891 -open -upstream $RUN/up.sock -bot-sock $RUN/bot.sock [-bot-api http://127.0.0.1:8471]
+d2dview -addr :8893 -open -upstream $RUN/up.sock -bot-sock $RUN/bot.sock [-bot-api http://127.0.0.1:8471]
 # 3. point the bot at the BOT socket instead of the d2d:  d2bot --backend d2d --attach --d2d-attach --d2d-sock $RUN/bot.sock ...
 ```
-Open `http://worker.example:8891/` (port 8891: next to the board 8897 and d2watch 8890, free when checked U; any
+Open `http://worker.example:8893/` (since 2026-11-06 the tap's default is loopback `127.0.0.1:8893`, flag `-addr` or env `D2DVIEW_ADDR`; 8891 and 8892 belong to the watch screen of `d2bot --watch`, see "Game video" below; any
 port is approved for d2d work). Auth like d2watch: token in `D2DVIEW_TOKEN` or `~/.config/d2dview/token` (sent as
 `?t=...`, kept in a cookie, never logged or printed); no token is allowed only on loopback or with `-open` (LAN, a
 throwaway offline character; the page shows a game picture). Without `-bot-sock` the viewer just attaches to the d2d
@@ -80,7 +80,7 @@ this. The d2d runs `--headless --no-video`; whether lab5 draws a real picture in
    mode does not need to rewrite the bot's lines. Not needed now.
 
 ## d2watch tile (done by card d2dview2; code V by node --check and d2watch tests, NOT deployed, NOT seen in a browser)
-`cmd/d2watch/web/app.js` (about 30 lines at the end plus two edits): a tile `d2d bot` whose `<img>` is `http://<host>:8891/stream.mjpg`
+`cmd/d2watch/web/app.js` (about 30 lines at the end plus two edits): a tile `d2d bot` whose `<img>` is `http://<host>:8893/stream.mjpg`
 straight from d2dview, so d2watch spends no CPU or bandwidth on it. Shown only while d2dview answers (opaque no-cors GET of
 `/api/state` every 5 s); the stream opens only while the tile is wanted (not paused, tab visible). No token support: use `-open`.
 d2watch itself idles at about 0.8 percent CPU (V, 4.5 h average of the running service); the tile adds nothing server-side
@@ -120,3 +120,16 @@ only (see Live).
   page open costs about 35 to 40 percent of speed here (U: the content also changes per minute, one run, not the same seed A/B). d2dview CPU: 2:39 over 15 min
   (18 percent of a core, mostly the tap forwarding every bot command, with clients about 25 percent).
 - Watch mode, 3 min, clients attached: ratio 2.1 (not the 8x cap: software rendering of every step bounds it, as predicted), d2dview CPU 5 s in 3 min.
+
+## Game video from the tap (task testertap, offline tested, NOT live)
+The watch screen's Game video panel has no X display to grab on the d2d backend. `d2bot --watch --watch-video --watch-video-source tap`
+(env `D2BOT_WATCH_VIDEO_SOURCE=tap`; default `x11`, which is the old behaviour) polls this tap's `/frame` through `watch.TapCapture`
+(internal/watch/tapcapture.go): `--watch-tap-url` (env `D2BOT_WATCH_TAP_URL`, default `http://127.0.0.1:8893`), the token from env
+`D2DVIEW_TOKEN` (Bearer), `--watch-video-fps` 1 to 6 (default 4), `--watch-video-quality` as for x11 (mapped to JPEG quality 100-3q).
+PNG frames are re-encoded as JPEG with the stdlib, a tap started with `-jpeg` passes through, a frame equal to the previous one is not
+re-sent. Start, stop (5 s linger), the 3-viewer cap and the 512 KiB frame cap are `watch.Video`'s and unchanged.
+
+Does `/frame` keep the sampler awake? Yes (V, read from cmd/d2dview/main.go `frame` and frames.go): every `/frame` request calls
+`Frames.Touch()`, and the sampler grabs screenshots while the last touch is under 5 s old, so any poll rate of at least one per 5 s keeps it
+awake and nobody polling lets it fall asleep (`/stream.mjpg` touches the same way). `/frame` answers 503 until the first sample
+exists (TapCapture waits up to 3 s for that, only for 503), 401 for a wrong token, 404 when the tap runs with `-fps 0`.

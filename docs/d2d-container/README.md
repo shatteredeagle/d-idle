@@ -6,7 +6,7 @@ Files (all in `deploy/d2d-container/`): `Dockerfile.d2d` (staged build), `contex
 
 ## What it is
 One container = one d2d (the slot: no lock, one fixed socket `/run/d2d/d2d.sock`). Inside, under tini and a non-root user (uid 1000):
-`d2dview` tap (always on, listens on 127.0.0.1:8891, creates `d2d.sock.ctl` full access and `d2d.sock.view` read-only) -> `d2d` headless; in `bot` mode `d2bot --backend d2d --managed --d2d-dial d2d.sock.ctl` starts, drives, saves and quits d2d. d2d takes ONE client, so everything (bot, healthcheck, `docker exec` probes) goes through the tap. No Wine, no X, no ptrace.
+`d2dview` tap (always on, listens on 127.0.0.1:8893, creates `d2d.sock.ctl` full access and `d2d.sock.view` read-only) -> `d2d` headless; in `bot` mode `d2bot --backend d2d --managed --d2d-dial d2d.sock.ctl` starts, drives, saves and quits d2d. d2d takes ONE client, so everything (bot, healthcheck, `docker exec` probes) goes through the tap. No Wine, no X, no ptrace.
 
 ## Build (on the worker host; docker build is blocked on the head box)
 ```
@@ -32,10 +32,10 @@ Game data: your own MPQs (`d2data.mpq`, `d2exp.mpq` required; d2char, Patch_D2, 
 | `D2D_NAME` / `D2D_CLASS` | `D2dbot` / `1` | character; class in d2d UI order (1 = Necromancer). An existing save of that name is loaded, else a new character is created |
 | `D2D_SEED`, `D2D_NOSAVE` | unset, 0 | map seed; `1` = throwaway character |
 | `D2BOT_RUN_HOURS`, `D2BOT_GOALS`, `D2BOT_ADDR`, `D2BOT_ARGS` | unset, unset, 127.0.0.1:8420, unset | bot run limit (`--run-for Nh`), goals, API address, extra flags |
-| `D2D_VIEW_ADDR` | 127.0.0.1:8891 | viewer tap HTTP (non-loopback needs a token, docs/d2d-view.md) |
+| `D2D_VIEW_ADDR` | 127.0.0.1:8893 | viewer tap HTTP (non-loopback needs a token, docs/d2d-view.md) |
 | `D2D_DATA`, `D2D_BIN`, `D2D_SOCK`, `D2D_ARGS` | `/game`, `/opt/d2d/d2d`, `/run/d2d/d2d.sock`, unset | paths and extra d2d args |
 
-Ports: none exposed by default (which ones to publish is the user's call: 8431 dashboard as in `design.md` section 7; viewer 8891 and bot API 8420 are loopback inside). The socket lives on the container filesystem; a bind mount from the NAS's shfs may not support unix sockets (U), keep it off `/mnt/user`.
+Ports: none exposed by default (which ones to publish is the user's call: 8431 dashboard as in `design.md` section 7; viewer tap 8893 and bot API 8420 are loopback inside). The socket lives on the container filesystem; a bind mount from the NAS's shfs may not support unix sockets (U), keep it off `/mnt/user`.
 Healthcheck: `d2dping ping` against `d2d.sock.view`. Stop: SIGTERM, the bot saves and quits d2d (grace 45 s suggested, U).
 
 ## Update flow

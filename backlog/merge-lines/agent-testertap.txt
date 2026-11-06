@@ -1,0 +1,3 @@
+BACKLOG: TASK-30 testertap: game video from the d2d tap (watch.TapCapture, d2bot --watch-video-source tap), tap default moved to loopback 8893; offline tested, not live
+INDEX: docs/d2d-view.md section "Game video from the tap" (d2bot --watch-video-source tap, the /frame sampler finding, tap port 8893)
+CHANGELOG: Game video panel works on the d2d backend: --watch-video-source tap reads the d2d view tap; the tap now listens on 127.0.0.1:8893 by default (8891/8892 stay with the watch screen)

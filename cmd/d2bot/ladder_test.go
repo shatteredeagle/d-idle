@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"flag"
 	"net"
 	"net/http"
 	"os"
@@ -402,6 +403,39 @@ func TestWatchVideoOptions(t *testing.T) {
 	t.Setenv("PATH", t.TempDir())
 	if err := ok.validate(false); err == nil || !strings.Contains(err.Error(), "ffmpeg") {
 		t.Errorf("no tool: %v", err)
+	}
+}
+
+func TestWatchVideoSourceTap(t *testing.T) {
+	t.Setenv("PATH", t.TempDir()) // no ffmpeg, no import: the tap source needs neither, and no X display
+	ok := ladderOptions{on: true, watch: true, video: true, viewAddr: "127.0.0.1:8891", answerAddr: "127.0.0.1:8892", videoSource: "tap", tapURL: "http://127.0.0.1:8893", videoQuality: 5, instance: "i0"}
+	if err := ok.validate(false); err != nil {
+		t.Fatalf("tap source: %v", err)
+	}
+	if v, err := ok.newVideo(); err != nil || v == nil || v.Running() {
+		t.Fatalf("a video must exist but not run before a viewer: %v %v", v, err)
+	}
+	for name, mod := range map[string]func(*ladderOptions){
+		"fps above the tap rate": func(l *ladderOptions) { l.videoFPS = 7 },
+		"unknown source":         func(l *ladderOptions) { l.videoSource = "vnc" },
+		"bad url":                func(l *ladderOptions) { l.tapURL = "127.0.0.1:8893" },
+	} {
+		l := ok
+		mod(&l)
+		if err := l.validate(false); err == nil {
+			t.Errorf("%s: accepted", name)
+		}
+	}
+	// x11 stays the default and keeps its own limits; the tap flags do nothing there
+	x := ladderOptions{on: true, watch: true, viewAddr: "127.0.0.1:8891", answerAddr: "127.0.0.1:8892", video: true, videoFPS: 10, videoQuality: 5, instance: "i0"}
+	if err := x.validate(false); err == nil {
+		t.Error("x11 on i0 accepted: lost the private-display rule")
+	}
+	fs := flag.NewFlagSet("t", flag.ContinueOnError)
+	var l ladderOptions
+	ladderFlags(fs, &l)
+	if err := fs.Parse(nil); err != nil || l.videoSource != "x11" || l.tapURL != "http://127.0.0.1:8893" {
+		t.Errorf("defaults: %q %q %v", l.videoSource, l.tapURL, err)
 	}
 }
 

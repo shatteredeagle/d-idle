@@ -47,7 +47,7 @@ stop() {
 trap stop TERM INT
 
 # tap first: bot mode points d2bot at $ctl before d2d exists (the tap redials upstream lazily)
-d2dview -addr "${D2D_VIEW_ADDR:-127.0.0.1:8891}" -upstream "$D2D_SOCK" -bot-sock "$ctl" -shots /tmp/d2dview >/tmp/d2dview.log 2>&1 &
+d2dview -addr "${D2D_VIEW_ADDR:-127.0.0.1:8893}" -upstream "$D2D_SOCK" -bot-sock "$ctl" -shots /tmp/d2dview >/tmp/d2dview.log 2>&1 &
 pids="$!"
 
 if [ "$mode" = bot ]; then
