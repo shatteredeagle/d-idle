@@ -1,16 +1,154 @@
-# Tester build plan (level 2, game-dir only)
+# Tester build plan (d2d first, fork shipped with its source)
 
-> status: planning doc, 2026-11-06 (agent testerplan). User decision 2026-11-06: "Yes start with gamedir only". Docs and backlog tasks only; nothing was built or run. Tags: V = read in code or docs of this tree (path given), S = secondary (a doc says so, not re-checked), U = unverified or from memory. Target: classic 1.14d, not D2R. No private hostnames or home paths appear here; "the worker host" is the lab Docker machine.
+> status: REVISED 2026-11-06 (agent testerplan2). User decisions 2026-11-06: (1) "d2d first": the tester build is the d2d container, not the Wine image; (2) "Ship the fork build and publish its source": the image contains the d.idle fork of d2d and the matching fork source ships with it; the actual publication happens only at distribution time and only on the user's explicit go; ADR 0003 (fork private) needs the user's amendment first. The first plan (Wine image, game-dir, tasks TASK-23 to TASK-29) is kept below as the appendix "Wine route (later/optional)". Docs and backlog only; nothing was built or run. Tags: V = read in code or docs of this tree (path given), S = secondary (a doc says so, not re-checked), U = unverified or from memory. Target: classic 1.14d data through d2d, not D2R (no D2R-only fact is used). No private hostnames or home paths: "the worker host" is the lab Docker machine.
 
-## 1. The target
+User context 2026-11-06 (relayed by the coordinator): all of our d2d work is to be offered to upstream; the maintainer keeps upstream a clean re-implementation of Diablo II for now. The fork is "the d.idle fork of d2d" with our additions; those may be pulled into upstream after upstream reaches 1.0. So today the fork's additions (lockstep, debug and setup-cheat verbs, ladder/bot hooks) are NOT upstream PRs. Unchanged rules: nothing is posted or published anywhere without the user's explicit go at distribution time; test cheats and lab verbs stay out of every upstream PR; ADR 0003 stands until the user amends it.
+
+## 1. The target (d2d tester)
+
+A friend who owns Diablo II Lord of Destruction and can paste a few shell lines (Docker on Linux x86_64). They bring their own game data files and nothing else (no CD key, no Battle.net, no account, no `Game.exe`). They run `docker compose up -d` on a compose file from the pack and open one URL. A browser wizard checks the data folder and asks name, class and goal preset, then Start. The same page then becomes the watch screen: question cards that say why, the Act 1 orders map, and the game video. They play the automation ladder (T0/T1 points) in real time by answering cards and giving orders, and send back a scrubbed report bundle.
+
+Game data they provide (mounted read-only at `/game`, never in an image layer):
+- Required by the container today: `d2data.mpq` and `d2exp.mpq` (V deploy/d2d-container/entrypoint.sh checks exactly these two, case-insensitive). Our bot's table extraction also reads `patch_d2.mpq` (V internal/setup/checks.go line 447 lists d2data, d2exp, patch_d2), so treat `Patch_D2.mpq` as required for the tester (it is also what makes the data 1.14d).
+- d2d's own install check looks for d2char, d2sfx, d2speech, d2music, d2video; the spike ran with 9 files (d2data 257 MB, d2exp 239, d2char 254, Patch_D2 5.5, d2sfx 47, d2speech 156, d2music 333, d2xmusic 53, d2xtalk 58; 1.4 GB, no video MPQs) (V docs/d2d-container/design.md section 3). The minimum set d2data, d2exp, d2char, Patch_D2 (about 760 MB) is untested (U, design.md says so): testerlive proves or disproves it. Sound and music are optional in headless play (audio is the null device) but the install check may warn (U).
+- Which game version: the wizard must reject data that is not 1.14d. The Wine doctor checks `Game.exe` 1.14.3.71 (S docs/setup.md), which the d2d tester does not have; the d2d wizard needs another check (hash or size of `Patch_D2.mpq`, U, to be pinned from the owner's own copy). A D2R folder has no `d2data.mpq` and fails the file check at once.
+
+Out of scope: any installer or downloader route, Windows native, Battle.net, a public release, Gate A (24 h acceptance), the `stubs`/`installer-dirs` routes of the Wine wizard.
+
+## 2. What exists today (V)
+
+- A d2d container image exists in the tree: `deploy/d2d-container/{Dockerfile.d2d,entrypoint.sh,context.sh,smoke.sh,d2dping/}`; smoke PASS on the worker host 2026-10-30 (build about 5 min at -j4, image 386 MB, create/save/restart/load works; bot mode ran 90 s with no goals) (V docs/d2d-container/README.md "Smoke test and results"). Not run: goals for an hour, the healthcheck going healthy, realtime mode, `--read-only`.
+- Container shape: tini, uid 1000, `d2dview` tap (127.0.0.1:8891, creates `d2d.sock.ctl` full access and `d2d.sock.view` read-only) then `d2bot --backend d2d --managed --d2d-dial <ctl>`, which starts, drives, saves and quits d2d (V entrypoint.sh, cmd/d2bot/d2dbackend.go). No Wine, no X, no ptrace.
+- The watch screen is built into d2bot (`--ladder --watch`; env twins `D2BOT_LADDER`, `D2BOT_WATCH`, `D2BOT_WATCH_ADDR` default 127.0.0.1:8891, `D2BOT_WATCH_ANSWER_ADDR` default 127.0.0.1:8892, `D2BOT_WATCH_ORIGIN`, `D2BOT_WATCH_VIDEO[_FPS|_QUALITY]`, `D2BOT_TOKEN`) (V cmd/d2bot/ladder.go). `startLadder` runs on the d2d path (V cmd/d2bot/d2dbackend.go line 311). It has never run in the d2d container.
+
+## 3. Gap list
+
+### G1 d2d image from the d.idle fork (build inputs)
+- V: the image builds the fork from a context assembled by `context.sh` (`git archive` of a fork ref, default `lab5`, plus a `VERSION` file) with vendored CLI11 37bb6edc, sentry-native fb2a04d4 (with submodules) and FFmpeg 9.0.2 (sha256 checked), all copied from the fork checkout's earlier build directory (V deploy/d2d-container/context.sh). Apt: g++ 15 on Ubuntu 26.04, cmake, SDL3, OpenAL, StormLib 9.30 (V design.md section 1.1).
+- V: build 5 min at -j4 (373 steps), 39 s from cache, image 386 MB (README). U: 15 to 25 min from scratch on a clean machine (design.md estimate). The tester does not build; we build once on the worker host.
+- Qt quirk (V design.md 1.1 row 6): CMake configure demands Qt6 for the launcher; the Qt dev packages are installed in the build stage only and only the `d2d` target is built, so no Qt at run time. An optional fork patch to skip the launcher and make Sentry optional would shrink the build (U, 2 to 3 h, risks.md step 3); not needed for the tester.
+- Defect: the pin is `lab5`, but the gates ran a later lab binary that carries the freeze-resume, armor-hit and next-hit fixes (V docs/forkfreeze.md: branch `lab-freezeresume`, tip efe7bc36) and the verbs the bot reads. The image must pin the fork commit the Gate 2 evidence used (U which; the coordinator names it). AGENTS.md: that commit must be on the fork's remote the same day before a doc cites it.
+- Defect: `context.sh` takes the vendored inputs from a private build tree a stranger cannot reproduce; the source pack needs a `vendor/` tarball or pinned URLs plus hashes (G9).
+- Defect: `entrypoint.sh` does not set `D2BOT_GAMEDIR`, so d2bot warns "no game tables (--gamedir): combat, town and campaign goals stay off on d2d" and runs without a catalog (V cmd/d2bot/d2dbackend.go line 281; entrypoint.sh has no gamedir). The tester entry must pass `D2BOT_GAMEDIR=/game`. U: that `data.Open` extracts the tables into a writable cache under `/data` on first start, and how long that takes (the Wine wizard has an explicit extract step, V internal/setup/steps.go).
+- Defect: the image default is `D2D_MODE=lockstep` (V Dockerfile.d2d ENV); the tester needs `realtime` (G6).
+
+### G2 the d2d wizard (mirror of cmd/d2fleet)
+- V: the Wine wizard is `internal/setup` (state machine, `web/setup.html`) with steps data-dir, sources, prefix, install-d2, install-lod or import-game, patch, extract, character; Inputs are paths, `charName`, `charClass`, `profile`, `goals`; there is no CD-key field and the HTTP decoder rejects unknown fields (V internal/setup/wizard.go, steps.go). Its steps are Wine-shaped (prefix, patch, a 1.9 GB copy); `d2fleet` has no d2d mode (V docs/d2d-container-bot.md "Not done: d2fleet wizard for d2d").
+- Proposed: a small standalone program (not a rewrite of d2fleet; risks.md puts a d2fleet d2d mode at 6 to 10 h, U). Steps: (1) data check: list `/game`, required files present, sizes sane, 1.14d check, say what is missing in plain words; (2) table extract with progress (the same `internal/data` call); (3) character: name (letters only, 2 to 15, the rule of `validCharName`) and class by name, mapped to the d2d UI index from a data table (V docs/d2d-fidelity.md: 0 Barbarian, 1 Necromancer, 2 Paladin, 3 Amazon, 4 Sorceress, 5 Druid, 6 Assassin; so the Sorceress is 4 in d2d order, which answers the STATUS worry about "class 4": the d2s byte uses another order, V docs/d2d-backend.md line 49); (4) one goals preset, `campaign:normal_act1`, softcore Normal; (5) Start: write `/data/wizard.json` (inputs and done flag) and the container proceeds to the real run. Resume after restart: a character save of that name is loaded (V entrypoint `saved` check, `--d2d-class -1`).
+- Mirror points from the Wine wizard: token gate and cookie, refuse key-shaped text, no field for anything but names and choices.
+- U: `web/setup.html` ran only against a mock, never in a browser against a real backend (V docs/setup-ui.md); reuse its look, not its state machine.
+
+### G3 ladder and watch inside the d2d container
+- V: every flag has an env twin; the entry passes none today. Needed: `D2BOT_LADDER=1`, `D2BOT_WATCH=1`, `D2BOT_WATCH_ADDR=0.0.0.0:8891`, `D2BOT_WATCH_ANSWER_ADDR=0.0.0.0:8892`, `D2BOT_WATCH_ORIGIN=<what the tester types in the browser>`, `D2BOT_WATCH_VIDEO=1`, `D2BOT_GOALS=campaign:normal_act1`. Non-loopback listeners require a token (V internal/watch/serve.go lines 62-66).
+- V defect (token clash, as in the Wine plan): the viewer/answer token is the bot API token (`startLadder(ctx, o.ladder, o.token, ...)`, d2dbackend.go line 311). In the d2d container the bot API listens on loopback 127.0.0.1:8420 and nothing proxies it, so sharing costs little, but a separate `D2BOT_WATCH_TOKEN` read from a file (never on a command line) is the clean fix (task testerwatch).
+- V PORT CONFLICT: the tap listens on 127.0.0.1:8891 (entrypoint default `D2D_VIEW_ADDR`) and the watch screen defaults to 127.0.0.1:8891 too (ladder.go), in the same container: the second bind fails and d2bot would not start. Resolution: move the tap to loopback `127.0.0.1:8893` (`D2D_VIEW_ADDR`; internal, never published; it stays usable by `docker exec` and by the new frame source) and keep 8891 (viewer) and 8892 (answer route, a deliberately separate listener, V serve.go) for the watch screen. Publish both bound to 127.0.0.1 by default; the guide documents a LAN bind and an SSH tunnel. The wizard also serves on 8891 and exits before the bot starts, so the tester keeps one URL.
+- Origin: the answer route accepts only listed page origins; the tester's LAN name is unknown in advance, so `D2BOT_WATCH_ORIGIN` comes from a compose variable.
+- Healthcheck: `d2dping ping` against the tap's read-only socket (V); an HTTP probe of 8891 only after the live run shows it stable (U).
+
+### G4 game video from the tap (design)
+- V: d2d has no X display (SDL dummy), so the Wine route's `ffmpeg x11grab` capture (V internal/watch/capture.go) and the `:(100+N)` display rule (V ladder.go `newVideo`) do not apply; `--watch-video` would fail at start in the d2d container.
+- V: the video side is already a seam: `watch.Video` consumes a `CaptureFunc func(ctx) (<-chan []byte, error)` of JPEG frames shared by all viewers (max 3, frames over 512 KiB dropped, capture only while watched, 5 s linger) (V internal/watch/video.go). A tap source is another `CaptureFunc`: the "frame source interface" already exists.
+- V: the tap already samples d2d screenshots: the fork's `screenshot <path>` verb through its read-only socket into a private dir, served as `/frame` and `/stream.mjpg`, only while someone watches, at most `-fps 6` and never faster than 4 times the last screenshot's duration; `-jpeg` re-encodes to q72 (about 25 ms CPU per 800x600 frame), otherwise d2d's PNG passes through (V cmd/d2dview/frames.go, docs/d2d-view.md). In lockstep the reply waits for the next drawn frame.
+- Proposal (task testertap): `internal/watch` gets `TapCapture` returning JPEG frames; d2bot gets `--watch-video-source x11|tap` (env `D2BOT_WATCH_VIDEO_SOURCE`, default x11, the container sets `tap`). Two ways to feed it: (a) poll the tap's `http://127.0.0.1:8893/frame` with the tap started `-jpeg` (no new protocol; one place throttles screenshots); (b) d2bot dials `d2d.sock.view` itself, calls `screenshot` and converts PNG to JPEG with the standard library. Recommend (a). U: whether `/frame` calls `Touch` to keep the sampler awake; read cmd/d2dview/web before building.
+- Rate and bandwidth: 4 to 6 fps; JPEG q72 of 800x600 is roughly 40 to 60 KB (U, estimate), so about 0.25 MB/s for the one shared stream; the sampler spends at most about 20 percent of d2d's time on pictures (V). Measured in lockstep with a viewer attached: speed fell by 35 to 40 percent (V docs/d2d-view.md demo run). In realtime d2d already draws every frame, so the extra is mainly the screenshot encode (U; measured in testerrt).
+- Not reusable: the tap's "watch mode" (`step n render` rewriting) is a lockstep feature and does nothing in realtime.
+
+### G5 what the d.idle fork adds, and what the tester path needs in realtime
+Additions (V docs/d2d-fork.md, forkcheats.md, forkfreeze.md): P2 lockstep (`--lockstep`, `--time-scale`, `step`, `clock`, deferred reply); P1 `dump` (player, stats, skills, items, quests, ui, merc, time); read-only `debug` verbs (level, players, warps, portals, presets, objects, corpses, layout, grid, nearby, itemat, missiles, states, blocked); mutating lab verbs (stat, goto, warp, points, give, quest, spawn, hit, kill, pin, durability, belt, merc, act, equip, difficulty); gameplay-fidelity fixes (freeze-resume, armor-hit, next-hit and others on lab branches).
+- Needed in realtime by ladder, bot and watch: `dump` (state source), the read-only debug verbs the town, nav and combat code calls (a grep of non-test Go code counts `debug level` 28 times, `debug portals` 12, `debug presets` 10, `debug grid` 5, `debug itemat` 5), `screenshot` (video), and the save-and-exit behaviour (V Lifecycle.SaveExit). The fidelity fixes make play honest and cost nothing at run time.
+- Not needed in realtime: `--lockstep`, `step`, `clock` pacing; the bot's `LateClock` reads `clock` and falls back to the wall clock when lockstep is off (V internal/d2denv/env.go `Detect`). `D2D_BOOST` and every mutating verb are lab or SETUP tools; callers of Goto, Warp and Points are the probes and drills, not the bot's play path (V grep: cmd/d2dcasts*, d2dspawn, d2dshop, internal/drill).
+- Question Q2 for the user: the shipped binary would carry all lab verbs on the container-internal socket (no published port reaches it). Recommend gating the mutating verbs behind a fork flag the image never passes and leaving read-only verbs and `dump` on (a small fork patch, U 2 to 3 h, done in the fork, not in this repo).
+
+### G6 realtime play of the ladder (lockstep assumptions)
+- V: Gate 0 to 2 and all d2d soak records ran the d2d lab binary in `--lockstep`, with `Pacer.Sleep` turned into `step` calls and virtual time (V internal/d2dinput/pacer.go; STATUS "hidden, lockstep fork"). A human plays in real time. design.md section 6: real time "has the only run history (10 to 20 minute runs; no day-long d2d run exists, U)". So realtime is a new regime for the bot (U).
+- Safe by construction: `LateClock` picks the wall clock when lockstep is off (V env.go); the health heartbeat is wall-clock under lockstep and counter-based otherwise, "U live" for the free-running case (V docs/d2d-wire.md live result 5); thought fades and the Hub run on the bot clock, and `watch.Config.Speed` defaults to 1 (V internal/watch/hub.go lines 26 and 38), right for realtime and wrong for a sped-up run (the Hub shows wrong countdowns if a tester ever runs timescale).
+- Assumes lockstep, flag for the realtime check: (a) `logPace` and `stopAtVirtual` run only in lockstep (V d2dbackend.go lines 331-337); `D2BOT_RUN_HOURS` is wall time in realtime, which is fine; (b) the memory growth of about 100 MB per first-visited level and "a long soak must restart d2d" (V docs/d2d-fork.md section 7) were measured at lockstep speeds; realtime takes far longer to reach the same growth, so probably no issue in a tester's evenings (U); (c) U: `HangAfter` 90 s and the runner's "no progress in state X for 240 s" clocks are virtual under lockstep and wall in realtime: a slow real machine could trip them where a fast lockstep run never did (an open item in d2d-wire.md live result 5); (d) menus, character select and level loads run in real time even under lockstep (V d2d-fork.md), so those paths are already exercised.
+- Pacing: stock realtime is 25 ticks/s, so the tester sees a 1x game and an Act 1 campaign takes many hours of play. `timescale:N` (faithful only to about x11, V) is untested with a human answering. Recommend realtime only in slice 1; task testerrt runs a one-hour realtime session with a person answering on the worker host and records stalls, CPU and fade behaviour.
+- Crutch rule: tester runs are uncheated play; the wizard writes no game state.
+
+### G7 persistence (`/data`)
+- V: saves at `/data/config/d2d/save/` (`.d2s .key .ma0 .map`), bot state and logs under `/data`; the ladder store is `<instance state>/ladder/` (V ladder.go `ladderDir`, docs/t0-slice.md); `HOME` and `XDG_*` point into `/data` (V Dockerfile.d2d). A named volume is the default; a bind mount on a network share may not support unix sockets (the sockets live under `/run/d2d`, off the volume; V README).
+- New: `/data/wizard.json` (inputs and done flag), `/data/token` (mode 600, 32 random bytes), the extracted-tables cache. Restart loads the character when its save exists (V). Smoke proved save, stop, restart, load (V). Image upgrade on the same volume: U, tested once in testerlive. Stop grace: README suggests 45 s (U); set `stop_grace_period: 45s` and measure.
+
+### G8 first-run flow, what the tester types, security
+- Flow: (1) edit two lines of `compose.tester.yml` (the folder with the MPQs, an optional LAN origin) and run `docker compose up -d`; (2) `docker exec <name> cat /data/token`; (3) open `http://localhost:8891/?t=TOKEN` (or the SSH-tunnelled URL); (4) wizard: data check, extract, name, class, goals, Start; (5) the page turns into the watch screen with the video; (6) answer cards. The tester types: a folder path, a token, a name, a class pick.
+- Security (V serve.go): the viewer is GET-only, answers go through a separate listener with an origin check, both token-gated off loopback; HTTP only, no TLS, so "only on a network you trust". The d2d control socket has no authentication and sits inside the container (V docs/d2d-wire.md "Socket safety"); no published port reaches it. `--cap-drop ALL --security-opt no-new-privileges:true`, no `SYS_PTRACE` (V smoke.sh, design.md section 4). The default publish is 127.0.0.1; LAN needs a deliberate edit.
+- No CD key is ever asked.
+
+### G9 GPL packaging (fork shipped with its source)
+NOT LEGAL ADVICE. Basis: docs/d2d-container/gpl.md and docs/licensing.md (S); the readings below are U.
+- What ships with the image: (1) the d.idle fork source for exactly the shipped binary: `git archive` of the pinned ref plus the `VERSION` file, one tarball; (2) the vendored inputs, or a list with URLs, commits and hashes (CLI11, sentry-native with submodules, FFmpeg 9.0.2 sha256 8c385028...), because the corresponding source includes what is needed to build; (3) the build recipe: `Dockerfile.d2d`, `context.sh`, `entrypoint.sh`, the compose file; (4) our own source: d2lod-bot is GPL-3.0-or-later (V ADR 0010), same tarball route at the image commit (the repo is not public yet, V docs/licensing.md); (5) `/usr/share/licenses/d2d/` with the GPL text, upstream `LEGAL.md` and a `NOTICE` for third parties (SDL3, OpenAL Soft, FFmpeg Bink-only static, StormLib, libcurl, zlib, bzip2, Sentry/Crashpad; Ubuntu packages carry their copyright files under `/usr/share/doc`); (6) `SOURCE.txt` rewritten: today it says "NOT FOR DISTRIBUTION until the corresponding source is offered" (V context.sh); it must name the commit and state the offer (source is in the pack; a written offer valid at least three years for later copies).
+- Upstream artwork: the icon (Freepik licence) is compiled into the binary (V gpl.md); U whether redistribution is allowed; confirm the terms or patch the icon out of the shipped build.
+- Game data never ships: not in the image, the context or the pack (V: `context.sh` aborts if it finds an `.mpq` or `game.exe`; `.dockerignore` excludes them).
+- Is the ADR 0003 amendment needed first? Yes (S). ADR 0003 says no distribution until the user names a GPL reviewer and that the container cannot ship the fork until the review is decided. The user's decision of 2026-11-06 is the direction; the coordinator records it and the user's grill amends the ADR. Order: amendment, reviewer named or explicitly waived, pack built, then the user's explicit go on the day the first copy leaves the machine.
+- Publishing the source: two routes meet the offer, a public repo and tag for the d.idle fork (consistent with the intent to offer the work to upstream after 1.0) or only the tarball inside the pack. One must exist before the first outside copy. This plan publishes nothing (Q1).
+
+### G10 docs for a non-agent, report bundle, first-stranger checklist
+- V: `docs/quickstart.md` is stale for container use and `README.md` is developer-facing; there is no tester guide. Needed: `docs/tester-guide.md` (prerequisites, compose, token, wizard, watch URL, what you will see, stop and update, troubleshooting: uid 1000 volume permission, port in use, missing MPQs, token, slow first start; known weaknesses; what to send back). Task testerdocs.
+- Report bundle: a `docker exec` script writes a tarball with the bot log, d2d log, minute lines, deaths, ladder journal, the wizard inputs without paths and `d2dping state`; it scrubs token, key-shaped text, home paths and hostnames; a test greps the output. Task testerreport.
+- First-stranger checklist: compose up on a clean machine; wizard completes; character appears; a card shows within a stated time; an answer lands (a rule appears after the second identical answer); one order from the map; the video moves; stop and start keeps character and ladder store; bundle produced and scrubbed; same-volume update. Pass criteria are written in the guide; we rehearse on the worker host with a throwaway volume (testerlive) and then on a clean second machine.
+- Known bot weaknesses for the guide (V docs/research/g2e-diagnosis.md, docs/t0-slice.md, STATUS): Gate 2 (8 h) has not passed (merc claim and guard, kit trip timing, tome stat collision, judge artefacts; fixes merged, not verified live); Gate 3 and Gate A not run; nothing past Act 1 has run live; only 9 of 22 decision points are wired to cards, so many situations give no card; the integrated T0 live drill answered 0 thoughts because InFight holds questions in the field (STATUS, TASK-21); a level-1 Sorceress dies or chickens in Den of Evil in early runs (V docs/d2d-wire.md); orders UX slices 2-3 are not built; nothing is verified in realtime (G6). Tell the tester to pick the Sorceress and expect deaths, stuck periods that end in a game restart, and repeated cards.
+
+### G11 resources and hosts
+- V numbers: d2d RSS 471 MB flat idle, 564 MB level cycling, 515 to 754 MB after many first visits; about one core per d2d; Go bot 40 to 120 MB (design.md section 4); image 386 MB. Recommended minimum for the guide (U, rounded up): 2 cores free, 3 GB RAM, 5 GB disk plus the tester's MPQs (0.8 to 1.4 GB). `--memory 3g --cpus 2` as in the draft (U that 3 GB holds for a long run).
+- Hosts: verified only on the worker host (Docker, Linux x86_64) (V). Docker Desktop on Windows or Mac no longer needs ptrace or Yama (U), so d2d is likelier to work there than Wine was; software rendering costs one core; Apple silicon would emulate x86_64, expected slow (U). Test one such machine before a friend gets it (Q3).
+
+### G12 bot-path items to re-check live
+- The entry passes `--toggle autoloot=off,autoparty=off`; the bot's own pickup is wired (V cmd/d2bot/d2dloot.go, `cmd pickup` per docs/d2d-loot.md); live status beyond the drills is U. Without pickup gold stays 0 and the hero turns poor (V docs/d2d-wire.md live results, written before the looter was wired).
+- Non-Sorceress builds: docs/research/build-flexibility-audit.md lists leftovers; the wizard offers one class (Q4).
+
+## 4. Slice plan (d2d route)
+
+| # | card | what | est. h | depends on |
+|---|---|---|---|---|
+| 1 | testertap | `internal/watch/tapcapture.go`: a `CaptureFunc` turning the tap's screenshots into JPEG frames; offline tests with a fake tap | 5 | none |
+| 2 | testerwatch (reworked) | d2bot: `--watch-video-source x11\|tap`, a separate `D2BOT_WATCH_TOKEN` (file), no watch token on a command line | 4 | 1 |
+| 3 | testerd2dimage | tester image: pinned fork ref and vendor pack, `D2BOT_GAMEDIR`, realtime default, ports (tap to 8893), tester entry mode (wizard then bot), `compose.tester.yml`, licence files and a real `SOURCE.txt`, static image test | 6 | 2 |
+| 4 | testerd2dwiz | standalone d2d wizard (data check, extract, name, class, goals, Start) on 8891, state in `/data/wizard.json` | 8 | code: none; joins the image at 3 |
+| 5 | testerrt | realtime ladder check: offline audit of lockstep assumptions with a fix list, then a one-hour realtime session on the worker host with a person answering | 5 | 3 (1 for video) |
+| 6 | testerlive (reworked) | full tester flow in the real d2d container: wizard, ladder, watch from a second machine, video, restart, same-volume upgrade, minimal MPQ set | 8 | 3, 4, 5 |
+| 7 | testerdocs | tester guide, d2d checklist | 4 | 2; final pass after 6 |
+| 8 | testerreport | scrubbed report bundle | 3 | 3 |
+| 9 | testerlicence | fork-with-source package: NOTICE, SOURCE.txt, offer, vendor list, user-decision list | 4 | none |
+| 10 | testerpack | `tools/tester-pack.sh`: image tarball, compose, guide, fork source tarball with vendor inputs, our source tarball, checksums | 4 | 3, 9 |
+
+Total 51 h. Critical path: testertap 5 + testerwatch 4 + testerd2dimage 6 + testerlive 8 + testerpack 4 = 27 h. The wizard (8 h) and testerrt (5 h) run beside the image and both finish before testerlive; docs, report and licence run in parallel. WIP limit of 3 implementation agents (decisions.md): tap and watch are Go, the wizard is Go plus web, the image is deploy; testerrt and testerlive use the worker host's Docker (no lab game instance, but the fork binary and its load, so coordinate with gate runs).
+
+Slice 2 (not tasked), about 25 to 35 h after the first outside tester: Docker Desktop verification (4), feedback form (3), wiring the 13 unwired decision points (bot work, 15 or more), orders UX slices 2-3 (8), registry publishing (3), the lab-verb flag if not done in slice 1 (3), `--read-only` root (2).
+
+## 5. Risks and open questions
+
+Risks: (R1) the ladder, watch and realtime play have never run in the d2d container and no day-long realtime d2d run exists: testerlive and testerrt may find defects beyond the estimate (the 51 h has no slack; expect 30 percent more). (R2) A wrong fork pin drops the fidelity fixes or the verbs the bot reads. (R3) Build reproducibility for a stranger depends on the vendor pack (G9). (R4) Early game in realtime on a slower host may kill the hero more often than the lockstep gates suggest. (R5) HTTP only on a LAN. (R6) Blizzard exposure of a bot for a Blizzard game and the Freepik icon terms are outside what these docs can answer.
+
+Open questions for the user (5, each with a recommendation):
+1. When is the d.idle fork repo made public: before the first outside tester, or with it? ADR 0003 must be amended first. Recommendation: rehearse on your own machines (no distribution, nothing published); publish a tagged fork repo plus the source tarball in the pack on the day the first friend gets the image, on your explicit go that day; name or waive the GPL reviewer in the same grill.
+2. Cheat and lab verbs in the shipped binary: stripped, or behind a flag? Recommendation: gate the mutating verbs behind a fork flag the image never passes, keep read-only verbs and `dump`; none of it goes into an upstream PR (standing rule; upstream stays a clean re-implementation until 1.0).
+3. Who tests first, and where? Recommendation: you on one clean second machine (Docker Desktop or the NAS), then one friend; at most two testers until the report bundle works.
+4. Class and goals: lock to the Sorceress and `campaign:normal_act1`? Recommendation: yes; other classes only as "experimental" in the guide.
+5. Image delivery: a `docker save` tarball in the pack or a registry? Recommendation: tarball for the first two testers (the pack already holds the source tarballs); a registry only after the GPL and publication decisions.
+
+## 6. Proposed decision line (for the coordinator; agents may not edit decisions.md)
+
+"2026-11-06 (user): the tester build is the d2d container (d2d first) with the d.idle fork build in the image and its source published with it; the game data is the tester's own; the Wine image route is later/optional. Publication happens only at distribution time on the user's explicit go; ADR 0003 needs the user's amendment before the first outside copy."
+
+This supersedes the container choice in the 2026-11-06 "game-dir mode only" entry (the Wine image); its principle (the tester's own game files, nothing Blizzard-owned bundled) still holds.
+
+---
+
+# Appendix: Wine route (later/optional)
+
+The original plan of the same day, kept as written apart from heading levels. It applies if a Wine-image tester build is wanted later. Tasks TASK-23 to TASK-29 were written for it; the revised status of each is in the backlog (testerimage is Deferred, the others were reworked for d2d).
+
+
+### 1. The target
 
 The tester is a friend who owns Diablo II Lord of Destruction and is comfortable pasting a few shell lines (Docker on Linux). They bring their own Diablo II install folder (patched to 1.14d, file version 1.14.3.71; optionally `LODPatch_114d.exe` if the folder is older) and nothing else: no CD key, no Battle.net, no account of ours. They run one `docker compose up -d` from a compose file we ship, plus one `docker exec ... cat /data/token`. They open the setup wizard in a browser (game-dir mode: pick the mounted folder, name and class, Start), wait for the import (a 1.9 GB copy) and the character step, then open the watch screen on the bot's viewer port: question cards that say why, the Act 1 orders map, the live game video. They play the automation ladder (T0 and T1 decision points) by answering cards and giving orders, and send back a report bundle. Out of scope for this slice: the `stubs` and `installer-dirs` wizard routes (they need noVNC or Xpra, which is not built, V docs/container.md "Still missing"), a downloader of any kind, Windows native, Battle.net, a public release, and Gate A (the 24 h acceptance).
 
 Which image: the only image that has the game-dir wizard and a proven first run is the Wine image `deploy/container/` (`d2idle`), which runs the real `Game.exe` 1.14d under plain Wine, not d2d (V docs/container.md "FIRST REAL RUN OF THE WIZARD IMAGE"). The d2d image (`deploy/d2d-container/`) has no wizard, no X display (so no video) and carries the GPL fork patches (V docs/d2d-container/README.md). Slice 1 therefore uses the Wine image. See open question 1: this reverses the "Wine container work is PAUSED" banners (docs/decisions.md Current truth lists "d2d container" as deferred).
 
-## 2. Gap list
+### 2. Gap list
 
-### a) Ladder, watch and video in the container image today
+#### a) Ladder, watch and video in the container image today
 - V: nothing in `internal/fleet`, `cmd/d2fleet`, `internal/setup` or `deploy/container/` mentions `ladder`, `watch` or `video` (grep). The slot command line is `d2bot --managed --instance iN --char NAME --addr 127.0.0.1:0 --data ROOT --config ... [--stop-game] [--goals G] --autostart` (internal/fleet/bot.go `args`, `Spec.BotArgs`). No `--ladder`.
 - V: but d2bot is started with `os.Environ()` plus `D2BOT_INSTANCE`, `D2BOT_FLEET` (bot.go ~line 499, 354), and every watch flag has an env twin: `D2BOT_LADDER`, `D2BOT_WATCH`, `D2BOT_WATCH_VIDEO`, `D2BOT_WATCH_ADDR`, `D2BOT_WATCH_ANSWER_ADDR`, `D2BOT_WATCH_ORIGIN`, `D2BOT_TOKEN` (cmd/d2bot/ladder.go, main.go). So container ENV is enough to switch it on; no fleet code change is needed for the flags.
 - V: `--ladder` works with `--managed` on the live (game.exe) path: `startLadder` is called from `cmd/d2bot/live.go:156` and from the d2d path (`d2dbackend.go:311`). U: it has never met the real game.exe under the wizard image. docs/t0-slice.md says "U live: nothing here has met the real game"; the played sessions were on d2d.
@@ -18,56 +156,56 @@ Which image: the only image that has the game-dir wizard and a proven first run 
 - V defect (token clash): the watch token is the same `--token` / `D2BOT_TOKEN` as the bot's own API token (`startLadder(ctx, o.ladder, o.token, ...)`; `serve.go` uses `o.token` for the API). A token in the env would also lock the slot's bot API, which the fleet proxy reaches without credentials (U that it would 401; code read only). Fix needed: a separate `D2BOT_WATCH_TOKEN` (or a token file).
 - Fix: task `testerwatch` (env/flag), `testerimage` (ENV, EXPOSE, compose).
 
-### b) Game display and video capture in the container
+#### b) Game display and video capture in the container
 - V: the fleet gives slot iN the display `:(100+N)` (the slot test saw "Xvfb :101", docs/container.md), and the video code derives `:(100+N)` from `D2BOT_INSTANCE` via `launch.XvfbDisplay{Num: 100+in.Num()}` (cmd/d2bot/ladder.go `newVideo`). Fleet sets `D2BOT_INSTANCE=iN` (bot.go:354). So the id rule matches for slots i1..i9. U: never run together; the video was only live-checked against the d2d lab's `:105` (watch-screen-design.md section 8).
 - V defect: `watch.ExecCapture` needs `ffmpeg` or ImageMagick `import` on PATH, else `--watch-video` refuses to start (internal/watch/capture.go). The image installs only `xvfb xauth x11-apps x11-utils` (Dockerfile line 10). The fleet's own game view uses `xwd` (internal/viewport), which the image has. Fix: add `ffmpeg` to the image (Debian wine already pulls ffmpeg libraries, S docs/container.md spike #10), or teach `ExecCapture` an `xwd` path.
 - V: slot Xvfb is 800x600x24 (`launch/display.go` default), which clips the bottom 20 px (belt, orb base) because Wine draws a title bar; the fix 832x640x24 is known (V docs/container.md "Plain Wine vs Proton" difference 1) and `d2container run` uses it, but the slot Xvfb does not. Video would show a cut-off picture. Fix: pass a size for container slots (task `testerimage`; code in `internal/fleet`/`cmd/d2fleet` is owned by `testerwatch`).
 - Cost (S watch-screen-design.md section 8): about 8 percent of one core at 8 fps, 0.9 MB/s per viewer, capture only while someone watches.
 
-### c) Persistent data
+#### c) Persistent data
 - V: `/data` volume holds the prefix, base prefix `/data/prefixes/base`, slot prefixes, saves (`Saved Games/Diablo II`), `setup.json`, `fleet.json`, `token`, `instances/iN/` (logs, state, goals) (docs/container.md, bot.go). The ladder store is `<data>/instances/<id>/state/ladder/` (docs/t0-slice.md: "no run named: the shared `state/ladder` store ... keeps learning across sessions"), so it is on the volume. Restart: wizard done at once, slot restored and playing in 40 s, same character (V, first real run). `docker stop` with `stop-timeout 90` saved and exited in 16 s (V). `Fleet.Close` keeps specs (fix 9).
 - Upgrade (new image, same volume): U. Slot prefixes are hardlink clones of the base prefix; a changed Wine version in the new image against an old prefix is untested. The goals-seeded marker avoids re-adding goals (V). Plan: the tester guide says "keep the volume, pull a new image, `up -d`", and the live task tests exactly that once.
 - Known risk (V docs/container.md): bind dir and `/data` must be one filesystem for the hardlinks; use a named volume (compose does).
 
-### d) First-run flow
+#### d) First-run flow
 - V steps (docs/container.md checklist items 1-9, `tools/container-checklist.sh` passes 23 offline checks, real run once): open `setup.html?token=...`, mode `game-dir`, source path `/src`, optional `/patch/LODPatch_114d.exe`, Start; import-game, patch (skipped if 1.14.3.71), extract, then STOP at `character` for a name (letters only) and class; Start again, character created in about 25 to 35 s, slot appears and plays.
 - What the tester types: the token (printed by one `docker exec`), the folder is a compose bind (edited path in the compose file), name, class, goals preset (pick "Act 1 campaign"). That is the whole interaction.
 - CD key: never stored; no input field exists, `cdKey` in PUT /inputs is a 400, the form refuses text shaped like a key (V docs/setup-ui.md, container.md item 8). Game-dir mode needs none.
 - Gaps: U the wizard UI has run only against the mock (docs/setup-ui.md "not run against the Go backend"), not in a browser against the real backend. U the wizard has no "open the watch screen" link at the end; the tester must know port 8891 and that the token is the same. Wizard goal choices (`campaign:normal_act1`) vs ladder defaults (`farm:Blood Moor` in the docs) need one chosen preset (task `testerlive`).
 
-### e) Token and security on a tester's LAN
+#### e) Token and security on a tester's LAN
 - V: `d2start.sh` makes `/data/token` once from 32 random bytes (mode 600) and passes `-token-file`, so the token is not on the d2fleet command line. The wizard page takes `?token=` once and sets a cookie.
 - V: the watch listeners require a token when not loopback; token via bearer header, `?t=` or cookie; answer route origin check (`-watch-origin`, default the viewer's port on localhost, so a LAN browser needs `D2BOT_WATCH_ORIGIN=http://HOST:8891`) (watch-screen-design.md section 2, serve.go).
 - Defects: (1) the `--token` flag form puts a token on the command line (visible in `ps`); use env or a file. The env route works for d2bot (`D2BOT_TOKEN`) but see the clash in (a). (2) Two tokens would be cleaner, but one random file for wizard and watch is acceptable on a tester LAN. (3) The origin cannot be known in advance (tester's LAN name or IP): compose takes `D2BOT_WATCH_ORIGIN` from an env var the tester sets; default publish is `127.0.0.1` only, with a documented switch to a LAN bind. HTTP only, no TLS: say so in the guide, "only on a network you trust".
 - Compose publishes `127.0.0.1:8431` today (V compose.example.yml); a tester on another machine than the Docker host needs a LAN bind or an SSH tunnel; the guide gives the tunnel line as the safe default.
 
-### f) Resources and supported hosts
+#### f) Resources and supported hosts
 - V numbers (docs/container.md): one slot uses about one core (Game.exe spins), 212 to 289 MiB RAM, peak 245 MiB in the wizard run, 111 PIDs; image 1.18 to 1.21 GB; data dir about 1.9 GB game copy plus the base and slot prefixes (hardlinks); doctor wants 8 GB free plus 0.25 GB per slot (U default, docs/setup.md). With video and the wizard: add about 0.1 core while watching (S).
 - Recommended minimum for the guide: 2 cores free, 3 GB RAM, 12 GB disk (U, a safe round-up of the V figures).
 - Verified hosts: only one Linux x86_64 Docker host (the worker host, Docker 29.9, kernel Yama ptrace_scope 1). Not verified: the NAS (the template exists, U for the Wine image on it), Docker Desktop on Windows or Mac (U: needs a Linux VM kernel with Yama scope 0 or 1, 32-bit Wine, x86_64; Apple silicon would emulate and is expected too slow), rootless Docker/podman (V docs/container.md "Not tested"), Yama scope 2/3 (doctor refuses). Slice 1 claims: Linux x86_64 with Docker only. A host with Yama scope 2 fails the subreaper check with a clear message (V doctor).
 - Host load: a container reads the host's load1; slot admission may refuse on a busy host; set `D2FLEET_MAX_LOAD_FACTOR=-1` in the compose (V fix 4).
 
-### g) Docs for a non-agent
+#### g) Docs for a non-agent
 - V: `docs/quickstart.md` exists but is banner-marked STALE for the Wine path and describes the native route; `docs/troubleshooting.md` exists (linked there, not read in depth: U currency); `README.md` has a "Quick start (safe, offline)" for developers; `docs/research/README-public-draft.md` is a public-release draft. None is a tester guide for the container.
 - Missing: a one-page tester guide (prerequisites, compose, token, wizard, watch URL, what you will see, how to stop and update), troubleshooting for the container (volume permissions uid 1000, Yama, port in use, token, slow import), a report bundle (logs, minute lines, deaths, ledger line, ladder journal, `d2doctor --json`) with a token and path scrubber, and a feedback path. The feedback form is a slice 2 item; slice 1 uses "send the bundle plus three sentences" (open question 5 style choice, no form).
 
-### h) First-stranger test checklist
+#### h) First-stranger test checklist
 - V: `docs/container.md` "User test checklist" has 9 steps for the wizard only. It lacks: the compose file route, the watch screen steps (open 8891, a card appears, answer one, give one order, see the video, the map), the restart-with-ladder-state check, the report bundle, the update check, and the pass/fail criteria for the stranger. Task `testerdocs` updates it; `testerlive` runs it ourselves first on the worker host (rehearsal by the owner's clean machine or a throwaway volume).
 
-### i) GPL and notices if the image goes to a friend
+#### i) GPL and notices if the image goes to a friend
 - V: the Wine image contains: our binaries (d2bot, d2fleet, d2doctor, d2container, d2input.exe; GPL-3.0-or-later, `LICENSE`, ADR 0010), Debian wine, Xvfb and tools (each under its own licence, source from Debian), tini, rsync. It contains NO d2d and NO fork patches (it runs the real game, V Dockerfile; the d2d image is separate). So the question "private d2d fork patches in a shared image" (ADR 0003) does not arise for slice 1; it arises only if the tester build later uses the d2d image.
 - Obligations for sharing (S docs/d2d-container/gpl.md, docs/licensing.md; U legal reading): ship a GPL text and notice in the image (`/usr/share/licenses/d2idle/`), a `SOURCE.txt` naming the exact git commit of d2lod-bot for the image, and the Dockerfile and build script; Debian packages: their source is available from Debian via `apt source` (U: a written pointer should say so for the pinned release). d2lod-bot is licensed GPL-3.0-or-later and is going public (S licensing.md answered 2026-10-30), so a public tag with the commit satisfies the source offer for our code if the repo is public by then; if the repo is still private when the image goes out, ship the `git archive` tarball with the image (task `testerpack`). THIRD_PARTY.md exists (S).
 - USER DECISION needed (flagged): (1) is it acceptable to share the image (a distribution) before the repo is public, and does the user want the source tarball route; (2) if a later d2d-based tester image is wanted, whether the private fork patches (P1 dump, P2 lockstep) may be published (ADR 0003 says no until the user decides); (3) who reviews the GPL position (docs/d2d-container/gpl.md question 1). Also Blizzard exposure for a bot that automates a Blizzard game (U, outside what the docs can answer).
 - Game files never ship: the image and the pack must not contain MPQs, `Game.exe`, saves or the token (V policy; a static image test exists: `go test ./deploy/container/...`).
 
-### j) Bot weaknesses the tester will hit
+#### j) Bot weaknesses the tester will hit
 - V (docs/research/g2e-diagnosis.md; STATUS gate block): Gate 2 (8 h) did not pass on any of 3 seeds in g2e; causes: no town portal scroll and no potions at low life in a dungeon area (E1), out of scrolls and poor with an unreachable target (E2), early deaths that are deterministic on seed 13 (E3, clvl 4), a merc that dies and is never revived so Andariel prep fails (E5), a fresh game started right after recovery (E4). Fixes F2-F5 merged to main (git log: g2efix) but not verified live; Gate 3 (24 h) and Gate A not run; nothing past Act 1 has run live.
 - V: only 9 of the 22 decision points are wired to cards (docs/t0-slice.md table lists nine wired; the unwired list names `t0.retreat.repeat`, `t1.identify`, `t1.keep.kind`, `t2.failstreak`, `t2.reset.game`, and others). So many situations never produce a card; the hero simply plays by the legacy rules.
 - V: Orders UX slices 2-3 are deferred (docs/research/orders-ux-design.md); only the area map order (slice 1) is built.
 - S: the game.exe class-4 question in STATUS ("Sorceress (class 4)" vs Barbarian) may void older gate numbers; irrelevant to a tester who picks a class in the wizard, but bots other than the Sorceress have only short smoke runs (docs/quickstart.md section 0). Recommend telling the tester to pick Sorceress.
 - Tell the tester (goes in the guide): this is an alpha; expect deaths (the hero recovers), a stuck period now and then (the failsafe leaves the game and restarts), some cards will repeat, few cards in town, Normal Act 1 only, one character, softcore. It is offline single player, never touches Battle.net.
 
-## 3. Slice plan
+### 3. Slice plan
 
 Slice 1: the minimum a friend can run (7 tasks, 27 h, critical path about 16 h).
 
@@ -85,7 +223,7 @@ Order: 1, 2 (serial); then 3 with 5 and 4 in parallel; 6 any time; 7 last. WIP l
 
 Slice 2: polish (not tasked now), about 30 to 40 h: Docker Desktop (Windows/Mac) verification (6, U on Yama); a feedback form or an issue template and a report upload (3); a wizard end screen with the watch link and a "start the ladder" choice (3); wire the 13 unwired decision points to cards (bot work, 15 or more, owner of the bot); orders UX slices 2-3 (8); multi-slot port allocation for watch (3); in-image healthcheck for the watch port (2); signed image publishing to a registry (3); the d2d-image tester variant with its GPL package (12 plus the ADR 0003 decision); the `stubs`/`installer-dirs` routes with noVNC or Xpra (10).
 
-## 4. Risks and open questions for the user
+### 4. Risks and open questions for the user
 
 Risks: (R1) the ladder and watch stack has never run against the real game.exe in the container; the live task may find defects that cost more than the estimate (the flags are env-only, so the integration risk is real but contained). (R2) The bot's early game on a stranger's machine, different CPU and load, may die more than on the worker host. (R3) A tester's 1.14d folder may differ in files (e.g. a patched Steam-less install, D2R folder by mistake): the doctor checks the file version and sha256 against one pinned hash and warns otherwise (V docs/setup.md); an unknown but correct version warns only. (R4) HTTP without TLS on a LAN. (R5) 1.9 GB import time on slow disks.
 
@@ -96,6 +234,6 @@ Open questions:
 4. Where should the image live: a tarball you hand over (`docker save`) or a registry pull? Recommendation: tarball for the first two testers, a registry only after the GPL decision.
 5. Class and goals for the tester: allow any class or lock to the Sorceress and the Act 1 campaign preset? Recommendation: lock the guide to Sorceress and `campaign:normal_act1`, mention other classes as experimental.
 
-## 5. Proposed decision line (for the coordinator to record; agents may not edit decisions.md)
+### 5. Proposed decision line (for the coordinator to record; agents may not edit decisions.md)
 
 "2026-11-06 (user): the tester build ships game-dir mode only (the user's own Diablo II folder in the Wine container image); the installer and downloader routes (`stubs`, `installer-dirs`) are a later slice."

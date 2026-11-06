@@ -1,17 +1,17 @@
 ---
 id: TASK-26
-title: "testerdocs: tester guide and first-stranger checklist"
+title: "testerdocs: d2d tester guide and first-stranger checklist"
 status: Proposed
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
 labels:
   - G-F
-dependencies: []
+dependencies:
+  - TASK-31
 ordinal: 26000
 card: "testerdocs"
 owns:
   - "docs/tester-guide.md"
-  - "docs/container.md"
 exclusive: []
 contracts: []
 ---
@@ -19,11 +19,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
-Slice 1. Depends on testerwatch; final pass after testerlive.
+Slice 1 (d2d route), reworked from the Wine version: docs/container.md (Wine) is no longer touched; the checklist lives in the guide. Depends on testerd2dimage (TASK-31); final pass after testerlive. Estimate 4 h.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docs/tester-guide.md: prerequisites, compose route, token, wizard, watch URL, what to expect, stop and update, troubleshooting, known weaknesses (g2e findings, 9 of 22 cards), what to send back (estimate 4 h)
-- [ ] #2 docs/container.md checklist gains the compose, watch screen, restart, bundle and update steps with pass criteria
+- [ ] #1 docs/tester-guide.md: prerequisites, the MPQ files to bring, compose route, token, wizard, watch URL and ports, what to expect (realtime), stop and update, troubleshooting, known weaknesses (g2e findings, 9 of 22 cards, nothing verified past Act 1), what to send back
+- [ ] #2 the first-stranger checklist with pass criteria (compose, wizard, card, answer, order, video, restart, bundle, update) is part of the guide; no private hostnames or paths
 <!-- AC:END -->
