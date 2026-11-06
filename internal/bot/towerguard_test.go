@@ -158,7 +158,7 @@ func TestOrderGuardWhy(t *testing.T) {
 	g := campaignRig(t, &fakeQuests{}, 14)
 	g.r.poll()
 	if why := g.r.OrderGuardWhy(20); !strings.Contains(why, "no merc, clvl 14 < 15") {
-		t.Errorf("tower: %q", why)
+		t.Errorf("Forgotten Tower: %q", why)
 	}
 	if why := g.r.OrderGuardWhy(25); why == "" {
 		t.Errorf("tower cellar 5 open")

@@ -136,7 +136,7 @@ func TestOrdersMapScenarioCTooHard(t *testing.T) {
 		v := r.omap()
 		ft, cell := nodeOf(t, v, "ftw"), nodeOf(t, v, "cell")
 		if !ft.Status.Hard || ft.Status.HardWhy != c.want || !ft.Orderable {
-			t.Errorf("%s tower: %+v", c.build, ft)
+			t.Errorf("%s Forgotten Tower: %+v", c.build, ft)
 		}
 		if !cell.Status.Hard || cell.Orderable {
 			t.Errorf("%s cellars: %+v", c.build, cell)
