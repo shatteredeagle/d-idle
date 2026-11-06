@@ -101,7 +101,21 @@ if [ "${PROFILE:-}" = tester ]; then
 		sleep 1
 	done
 	docker exec "$name" stat -c %a /data/watch.token | grep -qx 600 || fail "watch.token is not mode 600"
-	log "tester profile: watch token created (mode 600), d2bot up"
+	docker logs "$name" 2>&1 | grep -qF "first run: open" || fail "tester profile: the first-run wizard did not start"
+	log "tester profile: first-run wizard up, watch token created (mode 600)"
+	# a finished wizard (state seeded as the wizard writes it): the entrypoint skips it and the d2d socket comes up
+	docker rm -f "$name" >/dev/null 2>&1 || true
+	docker run --rm -v "$vol":/data --entrypoint sh "$image" -c "printf '{\"phase\": \"done\"}' > /data/wizard.json; printf \"D2D_NAME='Csmoke'\\nD2D_CLASS='4'\\nD2BOT_GOALS='campaign:normal_act1'\\n\" > /data/wizard.env" || fail "seed wizard state"
+	docker run -d --name "$name" --cap-drop ALL --security-opt no-new-privileges:true --memory 3g --cpus 2 \
+		-v "$mpqs":/game:ro -v "$vol":/data -e TESTER=1 -e D2D_NOSAVE=1 "$image" >/dev/null
+	i=0
+	until docker exec "$name" test -S /run/d2d/d2d.sock 2>/dev/null; do
+		i=$((i + 1))
+		[ $i -lt 90 ] || fail "tester profile: d2d socket not up after a finished wizard"
+		sleep 1
+	done
+	docker logs "$name" 2>&1 | grep -qF "first run: open" && fail "tester profile: the wizard ran again after done"
+	log "tester profile: finished wizard skipped, d2bot started d2d"
 fi
 ok=1
 log "PASS"
