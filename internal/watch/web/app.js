@@ -29,7 +29,7 @@
       headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
     }).then(function (r) {
       return r.json().then(function (j) { if (!j.ok) say(j.error || ('error ' + r.status)); else say(''); return j; });
-    }).catch(function () { say('the answer route is not reachable'); }).then(refresh);
+    }).catch(function () { say('the answer route is not reachable'); }).then(function (j) { refresh(); return j; });
   }
 
   function renderThoughts() {
@@ -140,19 +140,251 @@
     $('revokeall').disabled = r.live === 0;
   }
 
-  function renderOrders(o) {
-    var sel = $('oarea');
-    if (!sel.options.length) o.areas.forEach(function (a) { var op = el('option', '', a); op.value = a; sel.appendChild(op); });
-    var ul = $('orders'); clear(ul);
-    o.orders.slice().reverse().forEach(function (x) {
-      var li = el('li'); li.appendChild(el('span', '', x.text + ' - ' + x.state + (x.note ? ' (' + x.note + ')' : '') + ' '));
-      if (x.state === 'queued' || x.state === 'active') {
-        var b = el('button', 'btn small', 'Cancel'); b.type = 'button';
-        b.addEventListener('click', function () { post('/api/orders/cancel', { id: x.id }); });
-        li.appendChild(b);
-      }
-      ul.appendChild(li);
+  // ---- Orders: Hero now, map, queue, sheet (docs/research/orders-ux-design.md). All text via textContent. ----
+  var om = null, ord = { orders: [] }, ordAt = 0, mapList = false, pend = null, sheetFrom = null, toastTimer = 0;
+  var DURS = [['10 min', 10], ['30 min', 30], ['1 h', 60], ['Until I cancel', 0]];
+
+  function nodeById(id) { for (var i = 0; i < om.nodes.length; i++) if (om.nodes[i].id === id) return om.nodes[i]; return null; }
+  function nodeByOrder(name) {
+    for (var i = 0; i < om.nodes.length; i++) if (om.nodes[i].order && om.nodes[i].order.toLowerCase() === String(name).toLowerCase()) return om.nodes[i];
+    return null;
+  }
+  function heroNode() {
+    for (var i = 0; i < om.nodes.length; i++) if (om.nodes[i].status.here) return om.nodes[i];
+    return null;
+  }
+  // The route is the shortest path over the map edges from where the hero is (else the town) to the node. It is the
+  // schematic path, not a promise: the bot's own navigator picks the real way (U).
+  function path(toId) {
+    var from = heroNode(), start = from ? from.id : om.town;
+    var adj = {};
+    om.edges.forEach(function (e) { (adj[e.from] = adj[e.from] || []).push(e.to); (adj[e.to] = adj[e.to] || []).push(e.from); });
+    var prev = {}; prev[start] = null; var q = [start];
+    while (q.length) {
+      var c = q.shift();
+      if (c === toId) break;
+      (adj[c] || []).forEach(function (n) { if (!(n in prev)) { prev[n] = c; q.push(n); } });
+    }
+    if (!(toId in prev)) return [toId];
+    var p = []; for (var x = toId; x !== null; x = prev[x]) p.unshift(x);
+    return p;
+  }
+  function crumbs(ids, here) {
+    var d = el('div', 'crumbs'); d.setAttribute('aria-label', 'Route');
+    var hi = here ? ids.indexOf(here.id) : -1;
+    ids.forEach(function (id, i) {
+      if (i) d.appendChild(el('span', 'muted', '›'));
+      var n = nodeById(id), st = hi < 0 ? '' : i < hi ? ' done' : i === hi ? ' now' : '';
+      d.appendChild(el('span', 's' + st, (st === ' done' ? '✓ ' : st === ' now' ? '▶ ' : '') + (n ? n.name : id)));
     });
+    return d;
+  }
+  function stWords(n) {
+    var s = n.status, w = [];
+    if (s.here) w.push('◆ here');
+    if (s.order) w.push('▶ order');
+    if (s.queued) w.push('#' + s.queued);
+    if (s.hard) w.push('⚠ hard');
+    if (s.cleared) w.push('✓ cleared');
+    return w;
+  }
+  function activeOrder() { for (var i = 0; i < ord.orders.length; i++) if (ord.orders[i].state === 'active') return ord.orders[i]; return null; }
+  function lastClosed() {
+    for (var i = ord.orders.length - 1; i >= 0; i--) if (/^(done|failed|cancelled)$/.test(ord.orders[i].state)) return ord.orders[i];
+    return null;
+  }
+  function toast(m) {
+    var t = $('toast'); t.textContent = m; t.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(function () { t.hidden = true; }, 3000);
+  }
+  function elapsedSec(o) { return Math.max(0, ord.now - o.startedAt + (performance.now() - ordAt) / 1000 * (th.speed || 1)); }
+
+  function renderNow() {
+    var n = $('now'); clear(n);
+    if (!om) return;
+    var h = el('div', 'card-head'), t = el('h2', '', 'Hero now'); t.id = 't-now'; h.appendChild(t); n.appendChild(h);
+    var o = activeOrder(), here = heroNode();
+    var act = om.hero.activity ? om.hero.activity.charAt(0).toUpperCase() + om.hero.activity.slice(1) : '';
+    if (!o) {
+      var named = here ? 'In ' + here.name + '.' : 'Position unknown.';
+      n.appendChild(el('p', '', 'Following its own plan. ' + named + (act ? ' ' + act + '.' : '') + ' No order. Tap an area on the map to send the hero.'));
+      var lc = lastClosed();
+      if (lc) n.appendChild(el('div', 'last', 'Last order: ' + lc.text + ' - ' + lc.state + (lc.note ? ' (' + lc.note + ')' : '') + '.'));
+      var qk = el('div', 'quick'), hb = el('button', 'btn', 'Rest in town'); hb.type = 'button';
+      hb.addEventListener('click', function () { send({ kind: 'home' }); });
+      qk.appendChild(hb); n.appendChild(qk);
+      return;
+    }
+    n.appendChild(el('p', '', '')).appendChild(el('b', '', o.text));
+    if (act) n.appendChild(el('div', 'muted', act));
+    var el0 = elapsedSec(o), eta = '', pct = null;
+    if (o.forever) eta = 'runs until you cancel';
+    else if (o.minutes) { pct = Math.min(100, Math.round(el0 / (o.minutes * 60) * 100)); eta = 'about ' + Math.max(0, Math.ceil(o.minutes - el0 / 60)) + ' min left'; }
+    if (pct !== null) {
+      var bar = el('div', 'bar progress'), fill = el('i'); fill.style.width = pct + '%';
+      bar.setAttribute('role', 'progressbar'); bar.setAttribute('aria-valuemin', 0); bar.setAttribute('aria-valuemax', 100);
+      bar.setAttribute('aria-valuenow', pct); bar.setAttribute('aria-label', 'Order progress');
+      bar.appendChild(fill); n.appendChild(bar);
+      n.appendChild(el('div', '', pct + '% - ' + eta));
+    } else n.appendChild(el('div', '', eta));
+    n.appendChild(el('div', 'muted', (o.kills || 0) + ' kills, +' + (o.xpGained || 0) + ' xp since the order'));
+    var target = o.kind === 'home' ? nodeById(om.town) : o.kind === 'go' ? nodeByOrder(o.area) : here;
+    if (target) n.appendChild(crumbs(path(target.id), here));
+    var qk2 = el('div', 'quick');
+    var cb = el('button', 'btn danger', 'Cancel order'); cb.type = 'button';
+    cb.addEventListener('click', function () { post('/api/orders/cancel', { id: o.id }).then(function (j) { if (j && j.ok) toast('Cancelled: ' + o.text); }); });
+    var hm = el('button', 'btn', 'Come home'); hm.type = 'button';
+    hm.setAttribute('aria-label', 'Cancel the order and rest in town');
+    hm.addEventListener('click', function () { send({ kind: 'home' }); });
+    qk2.appendChild(cb); qk2.appendChild(hm); n.appendChild(qk2);
+  }
+
+  function renderQueue() {
+    var n = $('queue'); clear(n);
+    if (!om) return;
+    var qd = ord.orders.filter(function (x) { return x.state === 'queued'; });
+    var h = el('div', 'card-head'), t = el('h2', '', 'Up next (' + qd.length + ')'); t.id = 't-q'; h.appendChild(t); n.appendChild(h);
+    if (!qd.length) { n.appendChild(el('p', 'muted', 'Nothing queued. "Go now" replaces the current order; a real queue (Add to queue) comes in a later update.')); return; }
+    var ul = el('ol', 'q-list');
+    qd.forEach(function (x, i) {
+      var li = el('li'); li.appendChild(el('span', 'badge', String(i + 1)));
+      li.appendChild(el('span', 't2', x.text));
+      var c = el('button', 'btn small danger', '✕'); c.type = 'button'; c.setAttribute('aria-label', 'Cancel: ' + x.text);
+      c.addEventListener('click', function () { post('/api/orders/cancel', { id: x.id }); });
+      li.appendChild(c); ul.appendChild(li);
+    });
+    n.appendChild(ul);
+  }
+
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  function sv(tag, at) { var e = document.createElementNS(SVGNS, tag); for (var k in at) e.setAttribute(k, at[k]); return e; }
+  function nodeLabel(n) {
+    var w = stWords(n);
+    var l = n.name + (n.kind === 'dungeon' ? ', dungeon' : '') + (w.length ? ', ' + w.join(', ') : '');
+    if (n.status.hard) l += ', too hard now: ' + n.status.hardWhy;
+    if (!n.orderable) l += ', not orderable yet';
+    return l;
+  }
+  function renderMap() {
+    var svg = $('svg'), ml = $('maplist'); clear(svg); clear(ml);
+    if (!om) return;
+    $('mapnote').textContent = om.populated ? 'Act 1 only today. Acts 2 to 5 appear here from data once their areas can be ordered.' : 'No map data for this act yet.';
+    $('svg').setAttribute('viewBox', om.box.x + ' ' + om.box.y + ' ' + om.box.w + ' ' + om.box.h);
+    var by = {}; om.nodes.forEach(function (n) { by[n.id] = n; });
+    om.edges.forEach(function (e) {
+      var a = by[e.from], b = by[e.to]; if (!a || !b) return;
+      svg.appendChild(sv('line', { x1: a.x, y1: a.y, x2: b.x, y2: b.y, 'class': 'edge' + (e.dungeon ? ' dg' : '') }));
+    });
+    om.nodes.forEach(function (n) {
+      var s = n.status, cls = 'node' + (n.kind === 'town' ? ' town' : '') + (n.kind === 'dungeon' ? ' dungeon' : '') + (n.orderable ? '' : ' locked') +
+        (s.here ? ' hero' : '') + (s.order ? ' current' : '') + (s.hard ? ' hard' : '');
+      var g = sv('g', { 'class': cls, tabindex: 0, role: 'button', 'aria-label': nodeLabel(n), transform: 'translate(' + (n.x - 52) + ',' + (n.y - 22) + ')' });
+      g.appendChild(sv('rect', { 'class': 'b', width: 104, height: 44, rx: 8 }));
+      var words = stWords(n).slice(0, 2).join(' '), sub = n.sub || words;
+      var t1 = sv('text', { x: 52, y: sub ? 18 : 27, 'text-anchor': 'middle' });
+      if (n.name.length > 12) t1.setAttribute('font-size', '10.5');
+      t1.textContent = n.name; g.appendChild(t1);
+      if (sub) { var t2 = sv('text', { x: 52, y: 34, 'text-anchor': 'middle', 'class': 'st' }); t2.textContent = sub; g.appendChild(t2); }
+      var act = function () { tap(n, g); };
+      g.addEventListener('click', act);
+      g.addEventListener('keydown', function (ev) { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); act(); } });
+      svg.appendChild(g);
+    });
+    var ul = el('ul');
+    om.nodes.forEach(function (n) {
+      var li = el('li'), b = el('button', '', ''); b.type = 'button';
+      b.appendChild(el('span', '', n.name + (n.kind === 'dungeon' ? ' (dungeon)' : '')));
+      b.appendChild(el('span', 'muted', n.orderable ? stWords(n).join(' ') : 'not orderable yet'));
+      b.setAttribute('aria-label', nodeLabel(n));
+      b.addEventListener('click', function () { tap(n, b); });
+      li.appendChild(b); ul.appendChild(li);
+    });
+    ml.appendChild(ul);
+    svg.hidden = mapList; ml.hidden = !mapList;
+  }
+
+  // A redraw keeps keyboard focus: the same index of button in the same card gets it back.
+  function renderOrders() {
+    var ae = document.activeElement, keep = null;
+    ['now', 'queue', 'maparea'].forEach(function (id) {
+      var box = $(id), items = box.querySelectorAll('button, [role=button]');
+      for (var i = 0; i < items.length; i++) if (items[i] === ae) keep = [id, i];
+    });
+    renderNow(); renderQueue(); renderMap();
+    if (keep) {
+      var items2 = $(keep[0]).querySelectorAll('button, [role=button]');
+      if (items2[keep[1]] && $('sheet').hidden) items2[keep[1]].focus();
+    }
+  }
+
+  // ---- the order sheet ----
+  function summary() {
+    if (pend.node.kind === 'town') return 'Summary: rest in town.';
+    return 'Summary: farm ' + pend.node.name + (pend.mins ? ' for ' + pend.mins + ' min' : ' until you cancel') + '.';
+  }
+  function tap(n, from) {
+    if (!n.orderable) { toast(n.name + ' is not orderable yet.'); return; }
+    pend = { node: n, mins: 30 };
+    sheetFrom = from;
+    drawSheet();
+  }
+  function chip(txt, on, fn) {
+    var b = el('button', 'chip', txt); b.type = 'button'; b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.addEventListener('click', fn); return b;
+  }
+  function drawSheet() {
+    var n = pend.node, sh = $('sheet'); clear(sh);
+    var hd = el('div', 'card-head'), t = el('h2', '', n.kind === 'town' ? 'Rest in town' : 'Send the hero to ' + n.name); t.id = 'sh-title'; hd.appendChild(t);
+    var x = el('button', 'btn', 'Close'); x.type = 'button'; x.addEventListener('click', closeSheet); hd.appendChild(x); sh.appendChild(hd);
+    var cur = activeOrder();
+    if (n.kind === 'town') {
+      sh.appendChild(el('p', '', 'The hero walks to town and rests. The current order, if any, is replaced.'));
+    } else {
+      if (n.range || n.why) sh.appendChild(el('p', 'muted', 'Veterans: ' + [n.range, n.why].filter(Boolean).join(' - ')));
+      if (n.status.hard) {
+        var wb = el('div', 'warnbox'); wb.setAttribute('role', 'alert');
+        wb.appendChild(el('b', '', '⚠ Too hard for the hero now. '));
+        wb.appendChild(document.createTextNode('The hero’s guard says: ' + n.status.hardWhy + '. You may still confirm: the order only asks, the hero’s own guard has the last word and will turn the order down if it is still unsafe when the hero gets there. The journal will say so.'));
+        sh.appendChild(wb);
+      } else if (n.advice) sh.appendChild(el('p', 'warn', '⚠ ' + n.advice));
+      sh.appendChild(el('h3', 'sub-h', 'For how long'));
+      var cs = el('div', 'chips');
+      DURS.forEach(function (d) { cs.appendChild(chip(d[0], pend.mins === d[1], function () { pend.mins = d[1]; drawSheet(); })); });
+      sh.appendChild(cs);
+      sh.appendChild(el('h3', 'sub-h', 'Route'));
+      sh.appendChild(crumbs(path(n.id), null));
+    }
+    sh.appendChild(el('p', 'muted', summary()));
+    var qk = el('div', 'quick'), go = el('button', 'btn primary', n.kind === 'town' ? 'Confirm' : 'Go now'); go.type = 'button';
+    go.addEventListener('click', function () { confirmOrder(); });
+    qk.appendChild(go); sh.appendChild(qk);
+    if (cur && n.kind !== 'town') sh.appendChild(el('p', 'muted', '"Go now" replaces the current order (' + cur.text + ').'));
+    $('scrim').hidden = false; sh.hidden = false;
+    var f = sh.querySelector('.chip[aria-pressed="true"]') || sh.querySelector('.btn.primary'); if (f) f.focus();
+  }
+  function closeSheet() {
+    $('sheet').hidden = true; $('scrim').hidden = true; pend = null;
+    if (sheetFrom && sheetFrom.focus) { try { sheetFrom.focus(); } catch (e) { /* node gone */ } }
+  }
+  function confirmOrder() {
+    var n = pend.node;
+    var body = n.kind === 'town' ? { kind: 'home' } : pend.mins ? { kind: 'go', area: n.order, minutes: pend.mins } : { kind: 'go', area: n.order, until: 'forever' };
+    closeSheet();
+    send(body);
+  }
+  // "Go now": the new order replaces every open one (slice 1 has no queue).
+  function send(body) {
+    body.replace = true;
+    return post('/api/orders', body).then(function (j) { if (j && j.ok && j.order) toast('Order given: ' + j.order.text); });
+  }
+  function trapTab(ev) {
+    if (ev.key === 'Escape' && !$('sheet').hidden) { closeSheet(); return; }
+    if (ev.key !== 'Tab' || $('sheet').hidden) return;
+    var f = $('sheet').querySelectorAll('button:not([disabled])');
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (ev.shiftKey && document.activeElement === first) { ev.preventDefault(); last.focus(); }
+    else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
   }
 
   function renderUptime(u) {
@@ -168,10 +400,10 @@
 
   function refresh() {
     if (pending) return; pending = true;
-    Promise.all([get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders')])
+    Promise.all([get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')])
       .then(function (a) {
         th = a[0]; thoughtsAt = performance.now();
-        renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); renderUptime(a[3]); renderOrders(a[4]);
+        renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); renderUptime(a[3]); ord = a[4]; ordAt = performance.now(); om = a[5]; renderOrders();
       }).catch(function () { say('the viewer is not reachable'); })
       .then(function () { pending = false; });
   }
@@ -179,13 +411,10 @@
   $('revokeall').addEventListener('click', function () {
     if (window.confirm('Revoke every rule? The hero will ask again.')) post('/api/revoke-all', { confirm: true });
   });
-  $('orderform').addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    var kind = $('okind').value;
-    post('/api/orders', { kind: kind, area: kind === 'go' ? $('oarea').value : '', minutes: kind === 'home' ? 0 : parseInt($('omin').value, 10) || 0 });
-  });
-  $('okind').addEventListener('change', function () {
-    $('oarea').disabled = $('okind').value !== 'go'; $('omin').disabled = $('okind').value === 'home';
+  $('scrim').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', trapTab);
+  $('viewtoggle').addEventListener('click', function () {
+    mapList = !mapList; this.setAttribute('aria-pressed', mapList ? 'true' : 'false'); this.textContent = mapList ? 'Map view' : 'List view'; renderMap();
   });
 
   // Phone tabs (the desktop grid shows every panel) and the theme toggle, same as the original dashboard.
@@ -246,5 +475,6 @@
     answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
     if (c.frameUrl) video(c.frameUrl);
     refresh(); live(); setInterval(tickCountdown, 250);
+    setInterval(function () { if (activeOrder()) { if (!pending) refresh(); } }, 5000);
   }).catch(function () { say('the viewer is not reachable'); });
 })();
