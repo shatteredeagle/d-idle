@@ -56,7 +56,6 @@ COPY entrypoint.sh /opt/d2lod/entrypoint.sh
 ENV D2D_BIN=/opt/d2d/d2d \
     D2D_DATA=/game \
     D2D_SOCK=/run/d2d/d2d.sock \
-    D2D_MODE=lockstep \
     D2BOT_DATA=/data \
     HOME=/data \
     XDG_CONFIG_HOME=/data/config \
@@ -68,6 +67,10 @@ ENV D2D_BIN=/opt/d2d/d2d \
 
 USER d2
 VOLUME /data
+# Tester ports: 8891 watch screen (viewer), 8892 answer route; publish them on 127.0.0.1 (compose.tester.yml). The bot API
+# and the viewer tap stay loopback inside. D2D_MODE has no default here: the entrypoint chooses (lockstep for bot, realtime for
+# the tester profile) so a TESTER=1 start is not forced into lockstep by an image ENV.
+EXPOSE 8891 8892
 # /game: the user's own MPQs, mounted read-only at run time. No port is exposed by default: the viewer tap listens on
 # 127.0.0.1:8893 and the bot API on 127.0.0.1:8420 inside the container (publish with -p only if wanted).
 # The healthcheck dials the read-only tap socket (a bare d2d takes one client, the bot's).
