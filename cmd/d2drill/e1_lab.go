@@ -83,6 +83,37 @@ func (h *e1h) cheat(ctx context.Context, verb, reason string) (string, error) {
 
 func (h *e1h) step(ctx context.Context, n int) error { _, err := h.c.Step(ctx, n); return err }
 
+// area reads "dump player" (the same field the bot's reader takes); -1 when unreadable.
+func (h *e1h) area(ctx context.Context) int {
+	r, err := h.c.Do(ctx, "dump player")
+	if err != nil {
+		return -1
+	}
+	line := strings.TrimSpace(r.Rest)
+	for _, l := range r.Lines {
+		if strings.TrimSpace(l) != "" {
+			line = l
+			break
+		}
+	}
+	var raw struct {
+		Area *int `json:"area"`
+		P    struct {
+			Area *int `json:"area"`
+		} `json:"player"`
+	}
+	if json.Unmarshal([]byte(line), &raw) != nil {
+		return -1
+	}
+	if raw.Area != nil {
+		return *raw.Area
+	}
+	if raw.P.Area != nil {
+		return *raw.P.Area
+	}
+	return -1
+}
+
 func (h *e1h) tick(ctx context.Context) int {
 	ci, err := h.c.Step(ctx, 1)
 	if err != nil {
@@ -186,7 +217,7 @@ func e1MercSetup(ctx context.Context, h *e1h, clvl int, gold func(int) int) (map
 	if err != nil {
 		return f, err
 	}
-	f["state"] = fmt.Sprintf("area=%v level=%d gold=%d life=%d/%d", st.M["area"], st.Level, st.Gold, st.Life.Cur, st.Life.Max)
+	f["state"] = fmt.Sprintf("area=%d level=%d gold=%d life=%d/%d", h.area(ctx), st.Level, st.Gold, st.Life.Cur, st.Life.Max)
 	if st.Gold != g || st.Level != clvl {
 		return f, fmt.Errorf("setup not as intended: %s", f["state"])
 	}
@@ -230,8 +261,9 @@ func e1NoPortalSetup(ctx context.Context, h *e1h, scroll bool) (map[string]strin
 	if err != nil {
 		return f, err
 	}
-	f["state"] = fmt.Sprintf("area=%v level=%d gold=%d life=%d/%d", st.M["area"], st.Level, st.Gold, st.Life.Cur, st.Life.Max)
-	if a, _ := st.KV.Int("area"); a != 11 {
+	a := h.area(ctx)
+	f["state"] = fmt.Sprintf("area=%d level=%d gold=%d life=%d/%d", a, st.Level, st.Gold, st.Life.Cur, st.Life.Max)
+	if a != 11 {
 		return f, fmt.Errorf("not in area 11: %s", f["state"])
 	}
 	return f, nil
