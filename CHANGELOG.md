@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- the minute line carries tp (town portal scrolls in hand, always) and tpBuy (scrolls bought that minute, when non-zero)
 - Bot: low life with no potion and no town portal now leaves the game after 20 s; drought stage 2 follows stage 1 after 2 minutes; no fresh game within 180 s of a recovery; merc revive runs before the shop and its refusal is logged; poor heroes keep a second scroll (knobs bot.noPortalWaitSec, bot.droughtStage2Min, bot.freshAfterRecoverySec, town.tpReserve)
 - nav mouth gate detours around unwanted cave mouths (fewer unreachable targets); minute log shows the nokillfix mechanism and mouth-gate refusals.
 - docs: Gate 2 multi-seed soak run 20261106-0225-g2e: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261106-0225-g2e.md).
