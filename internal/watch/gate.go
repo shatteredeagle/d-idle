@@ -20,18 +20,6 @@ type Access struct {
 	Limiter *access.Limiter
 }
 
-// SessionCookie is the passcode login cookie. HttpOnly and SameSite=Strict; Secure is not set because the screen is
-// plain HTTP on a home network (a Secure cookie would never be sent), so the cookie can be read by anyone who can
-// watch the traffic of that network: the guide says never to publish the port on the internet.
-const SessionCookie = "d2dpass"
-
-const sessionAge = 30 * 24 * time.Hour
-
-// NewSessionCookie is the cookie that proves a passcode login for rec (also used by d2dsetup after the passcode was set).
-func NewSessionCookie(rec access.Record) *http.Cookie {
-	return &http.Cookie{Name: SessionCookie, Value: rec.Session(), Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: int(sessionAge / time.Second)}
-}
-
 // ClientKey is the rate-limit key: the peer address without the port. Proxy headers are not trusted.
 func ClientKey(r *http.Request) string {
 	h, _, err := net.SplitHostPort(r.RemoteAddr)
@@ -67,11 +55,11 @@ func (a *Access) viewGate(token string, next http.Handler) http.Handler {
 			loginCSS(w, r)
 			return
 		case "/logout":
-			http.SetCookie(w, &http.Cookie{Name: SessionCookie, Path: "/", MaxAge: -1, HttpOnly: true, SameSite: http.SameSiteStrictMode})
+			http.SetCookie(w, &http.Cookie{Name: access.SessionCookie, Path: "/", MaxAge: -1, HttpOnly: true, SameSite: http.SameSiteStrictMode})
 			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			return
 		}
-		if c, err := r.Cookie(SessionCookie); err == nil && rec.SessionOK(c.Value) {
+		if c, err := r.Cookie(access.SessionCookie); err == nil && rec.SessionOK(c.Value) {
 			next.ServeHTTP(w, r)
 			return
 		}
@@ -95,7 +83,7 @@ func (a *Access) answerGate(token string, next http.Handler) http.Handler {
 			var ok bool
 			switch {
 			case rec.Kind == access.KindPasscode:
-				c, err := r.Cookie(SessionCookie)
+				c, err := r.Cookie(access.SessionCookie)
 				ok = err == nil && rec.SessionOK(c.Value)
 			case token != "":
 				ok = AnswerOptions{Token: token}.tokenOK(r)
@@ -120,7 +108,7 @@ var loginTmpl = template.Must(template.New("login").Parse(`<!doctype html>
 <form method="post" action="/login" class="wz-form">
 <div class="wz-field"><label for="pc">Passcode</label><input type="password" id="pc" name="passcode" autocomplete="current-password" autofocus required></div>
 <div class="wz-actions"><button class="btn primary big" type="submit">Open the watch screen</button></div></form>
-<p class="wz-hint">Forgot it? Run <code>docker compose exec d2dbot d2dsetup reset-access</code> on the computer that runs d.idle.</p>
+<p class="wz-hint">Forgot it? Run <code>docker compose -f compose.tester.yml exec d2dbot d2dsetup reset-access</code> on the computer that runs d.idle.</p>
 </section></main></div></body></html>`))
 
 type loginData struct{ Msg, Fix string }
@@ -159,7 +147,7 @@ func (a *Access) login(w http.ResponseWriter, r *http.Request, rec access.Record
 			return
 		}
 		a.Limiter.Success(key)
-		http.SetCookie(w, NewSessionCookie(rec))
+		http.SetCookie(w, rec.Cookie())
 		http.Redirect(w, r, "/watch", http.StatusSeeOther)
 	default:
 		w.Header().Set("Allow", "GET, POST")

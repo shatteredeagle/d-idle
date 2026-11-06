@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"strings"
 
+	"d2lod-bot/internal/access"
 	"d2lod-bot/web"
 )
 
@@ -56,9 +57,11 @@ func NewServer(w *Wizard, token string) (*Server, error) {
 		writeJSON(rw, 200, s.W.State(s.Token))
 	})
 	s.mux.HandleFunc("PUT /api/inputs", s.putInputs)
+	s.mux.HandleFunc("PUT /api/ahead", s.putAhead)
+	s.mux.HandleFunc("PUT /api/access", s.putAccess)
 	s.mux.HandleFunc("POST /api/start", func(rw http.ResponseWriter, r *http.Request) {
 		if err := s.W.Start(); err != nil {
-			writeJSON(rw, errCode(err), errBody{err.Error()})
+			fail(rw, err)
 			return
 		}
 		writeJSON(rw, 202, s.W.State(s.Token))
@@ -68,6 +71,17 @@ func NewServer(w *Wizard, token string) (*Server, error) {
 
 type errBody struct {
 	Error string `json:"error"`
+	Fix   string `json:"fix,omitempty"`
+}
+
+// fail writes err as JSON with its fix hint when it has one.
+func fail(rw http.ResponseWriter, err error) {
+	b := errBody{Error: err.Error()}
+	var ue *userError
+	if errors.As(err, &ue) {
+		b.Fix = ue.Fix
+	}
+	writeJSON(rw, errCode(err), b)
 }
 
 func errCode(err error) int {
@@ -88,18 +102,60 @@ func (s *Server) putInputs(rw http.ResponseWriter, r *http.Request) {
 	dec := json.NewDecoder(http.MaxBytesReader(rw, r.Body, 4<<10))
 	dec.DisallowUnknownFields() // a stray "cdKey" field is a 400 and is never stored
 	if err := dec.Decode(&in); err != nil {
-		writeJSON(rw, 400, errBody{"bad input: unknown or malformed field (CD keys are never accepted here)"})
+		writeJSON(rw, 400, errBody{Error: "bad input: unknown or malformed field (CD keys are never accepted here)"})
 		return
 	}
 	if err := s.W.SetInputs(in); err != nil {
-		writeJSON(rw, errCode(err), errBody{err.Error()})
+		fail(rw, err)
 		return
 	}
 	writeJSON(rw, 200, s.W.State(s.Token))
 }
 
+func decodeBody(rw http.ResponseWriter, r *http.Request, v any) bool {
+	dec := json.NewDecoder(http.MaxBytesReader(rw, r.Body, 4<<10))
+	dec.DisallowUnknownFields()
+	if err := dec.Decode(v); err != nil || dec.More() {
+		writeJSON(rw, 400, errBody{Error: "bad input: unknown or malformed field", Fix: "Reload the page and try again."})
+		return false
+	}
+	return true
+}
+
+func (s *Server) putAhead(rw http.ResponseWriter, r *http.Request) {
+	var b struct {
+		OK bool `json:"ok"`
+	}
+	if !decodeBody(rw, r, &b) {
+		return
+	}
+	if err := s.W.SetAhead(b.OK); err != nil {
+		fail(rw, err)
+		return
+	}
+	writeJSON(rw, 200, s.W.State(s.Token))
+}
+
+// putAccess stores the choice. For a passcode it also signs this browser in on the watch screen that takes over
+// the port (the d2dpass cookie, SameSite=Strict), so the tester is not asked for the passcode they just typed.
+func (s *Server) putAccess(rw http.ResponseWriter, r *http.Request) {
+	var c AccessChoice
+	if !decodeBody(rw, r, &c) {
+		return
+	}
+	rec, err := s.W.SetAccess(c)
+	if err != nil {
+		fail(rw, err)
+		return
+	}
+	if rec.Kind == access.KindPasscode {
+		http.SetCookie(rw, rec.Cookie())
+	}
+	writeJSON(rw, 200, s.W.State(s.Token))
+}
+
 // ServeHTTP gates everything: the token (bearer header, or ?t= which sets the cookie and is stripped by a
-// redirect) is required for every request, loopback or not. Mutating requests also need a same-origin Origin
+// redirect), or the passcode cookie once one is chosen, is required for every request, loopback or not. Mutating requests also need a same-origin Origin
 // (when the browser sends one) and a JSON content type.
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := w.Header()
@@ -114,11 +170,15 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	} else if c, err := r.Cookie(cookieName); err == nil && got == "" {
 		got = c.Value
 	}
-	if subtle.ConstantTimeCompare([]byte(got), []byte(s.Token)) != 1 {
+	signedIn := false
+	if c, err := r.Cookie(access.SessionCookie); err == nil {
+		signedIn = s.W.Access.Current().SessionOK(c.Value) // the passcode just chosen also opens this page again
+	}
+	if !signedIn && subtle.ConstantTimeCompare([]byte(got), []byte(s.Token)) != 1 {
 		http.Error(w, "unauthorized: open the page with ?t=<the watch token> (see /data/watch.token)", http.StatusUnauthorized)
 		return
 	}
-	if fromQuery {
+	if fromQuery && subtle.ConstantTimeCompare([]byte(got), []byte(s.Token)) == 1 {
 		http.SetCookie(w, &http.Cookie{Name: cookieName, Value: got, Path: "/", HttpOnly: true, SameSite: http.SameSiteLaxMode})
 		u := *r.URL
 		q := u.Query()

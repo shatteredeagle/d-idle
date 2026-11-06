@@ -19,6 +19,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/http"
 	"os"
 	"path/filepath"
 	"sync"
@@ -113,6 +114,18 @@ func (r Record) Session() string {
 func (r Record) SessionOK(v string) bool {
 	s := r.Session()
 	return s != "" && subtle.ConstantTimeCompare([]byte(v), []byte(s)) == 1
+}
+
+// SessionCookie is the passcode login cookie. HttpOnly and SameSite=Strict; Secure is not set because the screen is
+// plain HTTP on a home network (a Secure cookie would never be sent back), so anyone who can watch that network's
+// traffic can read it: the guide says never to publish the port on the internet.
+const SessionCookie = "d2dpass"
+
+const sessionAge = 30 * 24 * time.Hour
+
+// Cookie is the cookie that proves a passcode login for r.
+func (r Record) Cookie() *http.Cookie {
+	return &http.Cookie{Name: SessionCookie, Value: r.Session(), Path: "/", HttpOnly: true, SameSite: http.SameSiteStrictMode, MaxAge: int(sessionAge / time.Second)}
 }
 
 func enc(b []byte) string { return base64.RawStdEncoding.EncodeToString(b) }

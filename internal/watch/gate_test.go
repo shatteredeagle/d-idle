@@ -85,7 +85,7 @@ func TestViewGatePasscodeLogin(t *testing.T) {
 		t.Fatalf("cookies %v", cs)
 	}
 	c := cs[0]
-	if c.Name != SessionCookie || !c.HttpOnly || c.SameSite != http.SameSiteStrictMode || c.Path != "/" || c.MaxAge <= 0 || c.Secure {
+	if c.Name != access.SessionCookie || !c.HttpOnly || c.SameSite != http.SameSiteStrictMode || c.Path != "/" || c.MaxAge <= 0 || c.Secure {
 		t.Errorf("cookie flags: %+v", c)
 	}
 	if strings.Contains(c.Value, "four") || c.Value == rec.Hash {
@@ -94,7 +94,7 @@ func TestViewGatePasscodeLogin(t *testing.T) {
 	if w := do(h, "GET", "/api/thoughts", "", nil, c); w.Code != 204 {
 		t.Errorf("with cookie: %d", w.Code)
 	}
-	if w := do(h, "GET", "/api/thoughts", "", nil, &http.Cookie{Name: SessionCookie, Value: "x"}); w.Code != 401 {
+	if w := do(h, "GET", "/api/thoughts", "", nil, &http.Cookie{Name: access.SessionCookie, Value: "x"}); w.Code != 401 {
 		t.Errorf("forged cookie: %d", w.Code)
 	}
 	// a new passcode (reset) invalidates the old cookie without a restart
@@ -168,7 +168,7 @@ func TestAnswerGate(t *testing.T) {
 	if w := do(h, "POST", "/api/answer", "{}", nil); w.Code != 401 || !strings.Contains(w.Body.String(), "unauthorized") {
 		t.Errorf("no cookie: %d", w.Code)
 	}
-	c := NewSessionCookie(rec)
+	c := rec.Cookie()
 	if w := do(h, "POST", "/api/answer", "{}", nil, c); w.Code != 204 {
 		t.Errorf("cookie: %d", w.Code)
 	}
