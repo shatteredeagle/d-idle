@@ -1,0 +1,1 @@
+CHANGELOG: decisions: tester build recommendations accepted (fork public with the first friend copy on the users go, verbs flag-gated, tarball); fork wording updated
