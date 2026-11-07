@@ -85,3 +85,29 @@ Fix queue (one agent per failing criterion): written by the reviewing agent from
 ## Notes (U)
 - The invariants scan sees only the compressed minute logs (minute lines, death and exit lines), not the full bot logs: wedge or hang signatures that appear only in other lines are not counted here; the per-seed records carry the full-log judge result.
 - Seeds 16 to 23 are the holdout set of the d2dsoak report (docs/geninv.md); use seeds outside it for tuning-related reruns.
+
+## Review notes (wave 1 of g2g, 3 seeds; read from the minute and extras logs and the worker-host triage, V unless tagged)
+Tag g2g, bot 2a6cf2b, binary `d2d.lab3-labverbs-f75816c6-linuxbuild`, ladder off, 8 wall h, fault at 60 wall min. Wave 2 (seeds 19 and 21, tag g2g2) is separate; the 5-seed claim waits for it. Record numbers cut every seed to 1699 virtual min; the table below uses the full run.
+
+| item | seed 11 | seed 13 | seed 17 (holdout) |
+|---|---|---|---|
+| virtual min / final clvl / XP / kills | 1963 / 16 / 249706 / 12514 | 2414 / 17 / 289572 / 15114 | 1699 / 16 / 243718 / 10687 |
+| deaths / writes after start / bot restarts | 0 / 0 / 0 | 0 / 0 / 0 | 0 / 0 / 0 |
+| fresh games (`restarts` field) | 36 | 88 | 24 |
+| fault recovery (path A, limit 180 s) | 3.4 s | 2.2 s | 2.2 s |
+| longest NOKILL window (limit 10) | 6 | 11 (min 1190, Cave 1, town chores, 3 fresh games inside) | 14 (min 1036, Black Marsh, 3 fresh games inside) |
+| longest funded BELT window (limit 5) | 0 (poverty windows only, 8) | 0 | 8 (min 198 to 205, Blood Moor, recovery, right after the injected kill) |
+| dominant `fsWhy` minute lines | task_step 19, np_clearing 15, recovery 6, guard_exit 4 | np_clearing 50, task_step 20, recovery 11, guard_exit 1 | np_clearing 11, task_step 8, recovery 4, guard_exit 2 |
+| `failsafe ladder` lines / `town portal did not appear` | 57 / 25 | 103 / 13 | 18 / 26 |
+| `mouthRef` summed per minute (g2f 430/536/159) | 422 | 468 | 206 |
+| `nkMech` minute lines | emptyfield 4 | emptyfield 8, drought1 2 | drought1 6, emptyfield 3, drought2 3, drought3 2 |
+| merc deaths / `revive skipped` lines | 17 / 53 (52 cap, 1 gold) | 17 / 52 (all cap) | 16 / 61 (58 cap, 3 gold) |
+| advisory XP/h, full run (baseline 9172) | 7627 | 7193 | 8600 |
+
+- Verdicts: seed 11 PASS, seed 13 FAIL (NOKILL 11), seed 17 FAIL (NOKILL 14, funded BELT 8). Overall NOT PASSED, indicative (3 of 5 seeds). Advisory XP/h mean on the cut 1699 min is 8339 (-9.1 percent, inside the 1834 tolerance); XP/h never fails a run. Per-band XP/h at clvl 13+ is 5720 to 7653, the slow part of every seed.
+- Both failing NOKILL windows and the BELT window overlap a d2d restart: the NOKILL ones sit on 3 fresh-game restarts, the BELT one on the injected kill at the start of the recovery (pack gold 16 to 31, funded by the judge's pack plus stash rule, kit cost about 190). U: whether the judge should exclude a window that contains a restart; not decided here.
+- `tp` reads 0 on every minute line of all three seeds. That is expected and not a finding: the tp count was fixed in #286, after bot commit 2a6cf2b.
+- Andariel (V by the per-seed records): all three meet the interim rule (9, 12 and 10 gate/held lines; floor 15 with merc alive, 17 with merc dead or none). The g2f seed 17 failure (no revive for lack of gold) did not recur. The revive decision was exercised: the `need=` values show the reserve (price 1260 -> need 1310, i.e. reserve 50 from clvl 13; price 480 -> need 480, reserve 0 below it) and the quote prices (1920, 2160) go past the formula; every skip is `revive cap` (merc.reviveMaxPerHour 2), with 9 distinct clock hours of cap lines per seed. Seed 13 sat on the cap with gold 2358 against need 2210. So revives happened (the cap is only reached after two) and the merc kept dying (17/17/16 deaths in 8 h); the cap, not gold, now limits it. The `revived` success line is not in the extras logs, so an exact revive count is U. Stash withdrawal for the quote: no direct line in the kept logs (U).
+- Early-death rule lines `guard: potion burst` and `stale pack noted` / `field gate: stale pack` do not appear in the kept minute or extras logs of any seed (0 hits; deaths are 0). U: whether the extras filter keeps those INFO lines, so this is not proof the rule never fired.
+- mouthRef (S): 422/468/206 against 430/536/159 in g2f on the same seeds; no clear reduction from the nav-mouth detours (the unit of the older g2e figure is U). navRung shows rung 2 on 289/433/302 minute lines.
+- Remaining process notes: no secrets or home paths in the committed files (leakcheck run before commit); every committed file is under 256 KB.
