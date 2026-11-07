@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (41)
+## Active (46)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -47,19 +47,24 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 26 | abmerc | ops | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
 | 27 | fidprobe-vendor | bot | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
 | 28 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
-| 29 | sessionrec | T0 | proposed 0/3 | play-session command plus a session record (questions per 10 minutes) | - | - | [card](archive/openspec-index.md#sessionrec) |
-| 30 | h1baseline | docs | proposed 0/3 | H4 and H1 baseline sessions (the user plays 1 h watching, 30 min from the clvl 6 save) | - | - | [card](archive/openspec-index.md#h1baseline) |
-| 31 | qdensity | T0 | proposed 0/3 | question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating) | - | - | [card](archive/openspec-index.md#qdensity) |
-| 32 | returnmock | watch | proposed 0/2 | return-screen mock (day-away story, missed questions grouped by kind) | - | - | [card](archive/openspec-index.md#returnmock) |
-| 33 | run4h | ops | proposed 0/2 | 4-hour unattended realtime run of the play-session command | instance:i4 | - | [card](archive/openspec-index.md#run4h) |
-| 34 | smokebot | ops | proposed 0/3 | 45-minute smoke per bot change (Gate 0.5 or Gate 1 on one seed) | - | - | [card](archive/openspec-index.md#smokebot) |
-| 35 | h3verdict | docs | proposed 0/2 | H3 orders session and the H1 verdict (the user plays 1 h with orders only) | - | - | [card](archive/openspec-index.md#h3verdict) |
-| 36 | lanhowto | docs | proposed 0/2 | one friend over the LAN, a one-page how-to | - | - | [card](archive/openspec-index.md#lanhowto) |
-| 37 | designbrief | docs | proposed 0/2 | design brief v1 (the loop that won, three metrics with targets, what is cut) | - | - | [card](archive/openspec-index.md#designbrief) |
-| 38 | qqueue | T0 | proposed 0/3 | questions queue for the player''s return; remove the 45 s fade (D2) | - | - | [card](archive/openspec-index.md#qqueue) |
-| 39 | dietcards | ops | proposed 0/3 | stop committing docs/cards.md (generate on demand or in CI; fix the mergeq preflight and the cards_md --check use) | - | - | [card](archive/openspec-index.md#dietcards) |
-| 40 | dietarchive | docs | proposed 0/2 | archive finished research docs with stubs | - | - | [card](archive/openspec-index.md#dietarchive) |
-| 41 | dietrule | docs | proposed 0/2 | docs-only merge limit rule in docs/backlog-howto.md | - | - | [card](archive/openspec-index.md#dietrule) |
+| 29 | fid-load-life-mana | d2d | proposed 3/4 | d2d keeps the saved life and mana at load (pilot) | - | - | [card](archive/openspec-index.md#fid-load-life-mana) |
+| 30 | fid-load-maxmana | d2d | proposed 0/3 | d2d truncates the Pally maximum mana at load (19.5 to 19.0) | - | - | [card](archive/openspec-index.md#fid-load-maxmana) |
+| 31 | fid-poison-res-diag | d2d | proposed 0/3 | diagnose Freshe poison resist 6 in d2d, absent in game.exe | - | - | [card](archive/openspec-index.md#fid-poison-res-diag) |
+| 32 | fid-probe-doc | docs | proposed 2/2 | describe the d2s reader, scenario 15 and the new options in fidprobe.md | - | - | [card](archive/openspec-index.md#fid-probe-doc) |
+| 33 | fid-fixtures | ops | proposed 0/3 | create the true fresh Paladin and a sorc-6 with gear test character | - | - | [card](archive/openspec-index.md#fid-fixtures) |
+| 34 | sessionrec | T0 | proposed 0/3 | play-session command plus a session record (questions per 10 minutes) | - | - | [card](archive/openspec-index.md#sessionrec) |
+| 35 | h1baseline | docs | proposed 0/3 | H4 and H1 baseline sessions (the user plays 1 h watching, 30 min from the clvl 6 save) | - | - | [card](archive/openspec-index.md#h1baseline) |
+| 36 | qdensity | T0 | proposed 0/3 | question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating) | - | - | [card](archive/openspec-index.md#qdensity) |
+| 37 | returnmock | watch | proposed 0/2 | return-screen mock (day-away story, missed questions grouped by kind) | - | - | [card](archive/openspec-index.md#returnmock) |
+| 38 | run4h | ops | proposed 0/2 | 4-hour unattended realtime run of the play-session command | instance:i4 | - | [card](archive/openspec-index.md#run4h) |
+| 39 | smokebot | ops | proposed 0/3 | 45-minute smoke per bot change (Gate 0.5 or Gate 1 on one seed) | - | - | [card](archive/openspec-index.md#smokebot) |
+| 40 | h3verdict | docs | proposed 0/2 | H3 orders session and the H1 verdict (the user plays 1 h with orders only) | - | - | [card](archive/openspec-index.md#h3verdict) |
+| 41 | lanhowto | docs | proposed 0/2 | one friend over the LAN, a one-page how-to | - | - | [card](archive/openspec-index.md#lanhowto) |
+| 42 | designbrief | docs | proposed 0/2 | design brief v1 (the loop that won, three metrics with targets, what is cut) | - | - | [card](archive/openspec-index.md#designbrief) |
+| 43 | qqueue | T0 | proposed 0/3 | questions queue for the player''s return; remove the 45 s fade (D2) | - | - | [card](archive/openspec-index.md#qqueue) |
+| 44 | dietcards | ops | proposed 0/3 | stop committing docs/cards.md (generate on demand or in CI; fix the mergeq preflight and the cards_md --check use) | - | - | [card](archive/openspec-index.md#dietcards) |
+| 45 | dietarchive | docs | proposed 0/2 | archive finished research docs with stubs | - | - | [card](archive/openspec-index.md#dietarchive) |
+| 46 | dietrule | docs | proposed 0/2 | docs-only merge limit rule in docs/backlog-howto.md | - | - | [card](archive/openspec-index.md#dietrule) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
