@@ -1,2 +1,0 @@
-BACKLOG: TASK-101 upstream PR opened: psi29a/d2decomped#242 (load life/mana, head 8308864a), merge pending; new card TASK-125 (Fight::revive refills only life)
-CHANGELOG: Upstream PR #242 opened: a character enters a game with the life and mana it was saved with

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Upstream PR #242 opened: a character enters a game with the life and mana it was saved with
 - Design and cards for friends self-update (registry publishing plan, signed in-app updater with rollback); docs and cards only
 - docs: Gate 2 wave 3a (g2h, seeds 11/13/17) result and analysis against g2g (docs/research/g2h-wave3a.md, docs/soaks/gate2-multiseed-20261107-1811-g2h.md); indicative, 3 seeds.
 - Load life/mana trace: game.exe loader address and emulator oracle for the upstream PR candidate (docs and tools/emu only)
