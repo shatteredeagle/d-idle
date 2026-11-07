@@ -2,10 +2,13 @@
 id: TASK-13
 title: 'd2d-container-soak: 24 h one-slot soak of the d2d container'
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
+  - container
+  - drill
   - parked
   - soak
 dependencies: []
@@ -29,6 +32,8 @@ contracts: ["proposed/d2d-container-soak"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 The one-slot 24 h soak of the d2d container (risks step 10) is the gate that, per ADR 0009, ends Game.exe in the dev and product path. Needs the user's go for the NAS template (step 9). It also carries restart and kill injection for the d2d process.
 
 What changes:
@@ -43,6 +48,8 @@ Gates (from the card):
 - memory curve and periodic d2d restart interval recorded
 
 Source: git tag openspec-final, openspec/changes/d2d-container-soak/ (this task is the copy).
+
+Done when: template and first run by a non-agent per docs/container.md (step 9, user go); 24 h one-slot soak with restart and kill injection, memory curve (step 10); apply the spec delta when this merges (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

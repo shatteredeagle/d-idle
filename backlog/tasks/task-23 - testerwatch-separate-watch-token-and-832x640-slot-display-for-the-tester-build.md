@@ -2,12 +2,15 @@
 id: TASK-23
 title: 'testerwatch: separate watch token, tap video source switch'
 status: In Progress
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:27:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - tester
   - watch
+  - feature
+  - tester
+milestone: m-1
 dependencies:
   - TASK-30
 priority: high
@@ -25,7 +28,11 @@ result: "AC 1 done offline (cmd/d2bot tests: token file 0600 reuse, viewer and a
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Slice 1 of docs/research/tester-build-plan.md (d2d route, revised 2026-11-06), gaps G3 and G4. Reworked from the Wine version: the 832x640 slot display criterion moved to the Wine appendix (Wine route, later/optional). Depends on testertap (TASK-30). Estimate 4 h.
+
+Done when: d2bot reads the watch token from D2BOT_WATCH_TOKEN or a token file (never --token on a command line) and...; d2bot gets --watch-video-source x11|tap (env D2BOT_WATCH_VIDEO_SOURCE, default x11); with tap the video is...; docs/research/tester-build-plan.md gaps G3 and G4 updated with the result (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

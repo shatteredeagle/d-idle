@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - upstream
+  - d2d
+  - upstream-pr
+  - d2d-monsters
+  - d2d-skills
 dependencies: []
 priority: medium
 ordinal: 8000
@@ -28,6 +31,8 @@ source: "openspec-final:openspec/changes/skresistfix"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 SKRESIST (docs/research/sk-resist-trace.md, branch agent/skresist) proved deviation D1 on the real d2d build: a curse or enemy aura that lowers a monster's resistance counts its full value on an immune monster, while game.exe divides a negative change by 5 when the monster's base resistance is 100 or more (FUN_005c3540). Hell and Nightmare immunities break on d2d that game.exe keeps. The trace stopped at "harness ready, no fix"; this card builds the local upstream candidate.
 
 What changes:
@@ -42,6 +47,8 @@ Gates (from the card):
 - PR claim only with a differential on real builds: before > 0, after 0
 
 Source: git tag openspec-final, openspec/changes/skresistfix/ (this task is the copy).
+
+Done when: Worktree skresistfix, branch fix/curse-immune from upstream main 72132b99 (worker host); Claim commit; test mode test_sk_resist (real target_of) and oracle sk_resist.py as the tooling commit; Differential before and after on two seeds (147,628 cases each) (and 3 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -2,9 +2,13 @@
 id: TASK-36
 title: 't0fight: engineered drill for a fight-time question and a learned answer'
 status: Proposed
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-06T16:02:00Z'
 labels:
+  - bot
+  - drill
+  - ladder
   - T0
 dependencies: []
 priority: high
@@ -22,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Closes TASK-21 AC 2 and 3 for the fight points: docs/probes/t0drill.md says live acceptance is met for the town points only. A fresh clvl 1 hero cannot reach an elite or low life by itself, so the setup writes before runstart.
+
+Done when: Drill sets up low life or an elite pack by SETUP writes before d2cheat runstart; no gameplay write after...; A fight-time question opens mid-fight and is answered in the field; the hero keeps fighting while it is...; A second run after a learned answer behaves differently (rulesLearned > 0 and the action changes) on two... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -2,11 +2,13 @@
 id: TASK-9
 title: 'm1-liveproof: live drills for the basics; M1 exit'
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-06T16:13:00Z'
 labels:
-  - drills
+  - bot
+  - drill
   - soak
 dependencies: []
 priority: low
@@ -35,6 +37,8 @@ contracts: ["proposed/m1-liveproof"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Policy work (trips, kit, gold floor, early game) sits on basic actions that were only tested against fakes: the healing belt is empty in about a third of the minutes of the long soaks, ground potions are skipped as "already in the pack" while the belt is empty, town portals fail thousands of times, and several specs are tagged UNVERIFIED (skill binding, meter totals, the portal route of town interact, waypoint row choice, belt rows by belt type). docs/primitives.md lists 36 primitives with a definition of correct each. docs/basics-audit.md lists 10 live checks and 2 unknowns (starting gold, unidentified sell prices) that no offline test can close. This card becomes the live drill suite that proves them on a hidden d2d with throwaway characters, before policy work resumes.
 
 What changes:
@@ -54,6 +58,8 @@ Gates (from the card):
 - tools/agentreap.sh m1-liveproof leaves nothing; leakcheck 0
 
 Source: git tag openspec-final, openspec/changes/m1-liveproof/ (this task is the copy).
+
+Done when: `cmd/d2drill` and `internal/drill`: scenario type, cheat-step wrapper, StateReader before/after, result...; Name the missing cheats and verbs in the report (durability, merc death, `debug wp`, click modifiers);...; D1 belt: P1 P2 P3 P7 (fill from pack, belt rows per belt type, drink per column and merc, ground potion... (and 12 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:01:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: low
 ordinal: 11000
@@ -43,6 +46,8 @@ source: "openspec-final:openspec/changes/fixprogress"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Gate 1 rerun (docs/soaks/gate1-rerun.md on agent/gate1) failed the progress criterion: 43 virtual minutes with no kill and no XP (limit 10). The log shows a trip loop, not a stuck walk: walk to town, shop buys nothing with 600 gold, walk back, field check asks for a scroll again.
 
 What changes:
@@ -64,6 +69,8 @@ Gates (from the card):
 - go test -p 1 ./internal/town ./internal/bot passes; leakcheck -mode fail 0; tools/ci/check.sh
 
 Source: git tag openspec-final, openspec/changes/fixprogress/ (this task is the copy).
+
+Done when: timeline and cause from the minute log and the bot log; town: portal-empty fact and watchdog, tests; stale portal: drop id after N failed clicks, fresh portal, waypoint, walk fallback (offline tests) (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-06T21:58:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
-  - bot-defect
+  - bot
+  - feature
+  - gate
+milestone: m-0
 dependencies: []
+priority: medium
 ordinal: 51000
 card: "mercrevive"
 owns:
@@ -32,6 +36,16 @@ result: "Offline tested only (two builds); not verified live, the next Gate 2 mu
 
 ## Description
 User 2026-11-06: defer to the SME on the revive reserve (follow-up of TASK-41 / #274, which capped it with merc.reviveReserveMax). SME rule: revive as soon as the real quote plus a small reserve is on hand (0 gold below clvl 13, 50 from clvl 13), before potions and repair.
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
+The SME gave a revive reserve by clvl band; this makes the merc revive spending follow it.
+
+Done when: Revive reserve is 0 gold below clvl 13 and 50 gold from clvl 13 (knobs merc.reviveReserveLow/High/Clvl),...; Revive runs before potions/repair with pack plus stash gold and the probed real quote; an unreadable quote...; Contract merc-policy.md, docs/merc.md, knobs.md updated (Source: user 2026-11-06 defer to the SME);... (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

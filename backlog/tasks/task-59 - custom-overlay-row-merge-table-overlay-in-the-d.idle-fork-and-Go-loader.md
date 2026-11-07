@@ -2,11 +2,19 @@
 id: TASK-59
 title: 'custom-overlay: row-merge table overlay in the d.idle fork and Go loader'
 status: In Progress
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T03:01:00Z'
 labels:
+  - d2d
+  - feature
+  - d2d-data
+  - d2d-loot
+  - metacurrency
   - T5
+milestone: m-3
 dependencies: []
+priority: medium
 ordinal: 57000
 card: "custom-overlay"
 owns:
@@ -21,6 +29,16 @@ exclusive: []
 contracts: []
 result: "Fork branch d2d.lab4-overlay (private remote) built on the worker host (D2D_WERROR=OFF: GCC 16 trips -Werror in untouched ui.cpp/command code); ctest test_overlay (merge, malformed, hash pin) and overlay_d2d (start off/on/malformed against real MPQs) pass, verified live-free. AC 1 stays open: vanilla table-hash equality not measured (only by code path); full ctest suite not run. Go side: internal/overlay, internal/data, d2bot flag tested on the worker host. Not pinned in gates."
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
+Custom items need a row-merge table overlay in the d.idle fork and a Go loader that feeds it.
+
+Done when: Overlay hook in Stack::try_read, flag-gated, vanilla hashes unchanged; Go data loader applies the same fragments and stamps them (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

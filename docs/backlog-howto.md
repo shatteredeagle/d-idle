@@ -4,27 +4,41 @@
 
 ## What is where
 
-- `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels: see "Labels" below; `auto_commit: false`. V
+- `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels: see "Labels and fields" below; `auto_commit: false`. V
 - `backlog/tasks/task-N - <slug>.md`: one file per card, markdown with YAML frontmatter. V
 - `tools/backlog/openspec_to_backlog.py`: the one-shot copier (dry run by default, `--apply`, `--force`; idempotent, keeps a card's TASK number). Re-running without `--force` skips cards that already have a file, so CLI edits are not overwritten.
-- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker, not wired into CI yet. It checks: every label is known, an open non-parked task has a tier or area label (at most one tier), an `owns` key on every task, unique card ids in titles, no folded `title: >-` block. V
+- `tools/backlog/check.py` (+ `test_check.py`, run `python3 -I tools/backlog/test_check.py`): read-only checker. It checks the closed label scheme and fields (section "Labels and fields"), an `owns` key on every task, unique card and task ids, no folded `title: >-` block. V
 
 ## Conventions
 
 - The card id is the title prefix: `<card-id>: <what>`. Task ids are `TASK-N` (assigned by the tool, not settable); the card id still names the branch `agent/<id>`, the `Change:` trailer and the merge subject. V
-- Labels: see "Labels" below. Keep a title under 80 characters: the CLI rewrites a longer title as a folded `title: >-` block on its next edit, which hides the card id from greps and from `check.py` (it now fails such a file; `new_task.py` unfolds on create; after any `task edit` on a long title look at the first lines). V (2026-11-06, TASK-24 showed a bare `>-`).
-- Priority from rank: 1-4 high, 5-8 medium, 9-12 low, parked low. Dependencies only where a card says "After <card>" (today: m3-act1run after m3-andariel).
+- Labels: see "Labels and fields" below. Keep a title under 80 characters: the CLI rewrites a longer title as a folded `title: >-` block on its next edit, which hides the card id from greps and from `check.py` (it now fails such a file; `new_task.py` unfolds on create; after any `task edit` on a long title look at the first lines). V (2026-11-06, TASK-24 showed a bare `>-`).
+- Priority and dependencies: see "Labels and fields".
 - Acceptance criteria are the tasks.md checkboxes (checked stay checked). The card's gates are listed in the description, not as criteria, so the progress count shows work, not prose.
 
-## Labels (scheme of 2026-11-06)
+## Labels and fields (closed scheme of 2026-11-07)
 
-ADR 0016 replaced the goals G-A..G-G by the tier ladder as the ranking of work, so the labels now say WHAT the task is, not a goal. `backlog/config.yml` lists them; the CLI and MCP do not validate labels, `tools/backlog/check.py` does (V).
+User go 2026-11-07. The label set is CLOSED: `backlog/config.yml` lists it and `tools/backlog/check.py` fails any card (not archived) that breaks the rules below. The CLI and MCP do not validate labels; the checker does (V). Cards are tracked by area: filter the board by component, kind, track or milestone.
 
-- Tier (ladder work, at most one): `T0` Order-taker, `T1` Tidy, `T2` Runner, `T3` Planner, `T4` Questor (Act 1 clear cards 1 to 3), `T5` Farmer.
-- Area (non-ladder work; an open task needs a tier or one area): `watch` (watch screen, orders), `tester` (tester build and its container), `gate` (Gate 2, Gate 3, Gate A records), `upstream` (PRs to the decompiled project), `bot-defect` (a fix for a defect seen in a run), `drills` (live drill suites), `tooling`, `decisions`, `onboarding`.
-- Modifiers (combine with the above): `soak` (needs a soak slot), `parked` (kept, not ranked; also set status Deferred).
-- Legacy `G-A..G-G` stay accepted by the checker for old branches; no task on main carries one since 2026-11-06 (mapping: G-A gate, G-B T4 or bot-defect, G-C bot-defect or drills, G-E upstream, G-F tester or tooling, G-G T0). Tasks from 2026-11-06 on use the new labels. Dependencies are the `dependencies:` key (`backlog task edit N --dep M`), never a label.
-- `docs/cards.md` shows the tier, else the first area label, in its goal column.
+| Family | Labels | Rule |
+|---|---|---|
+| Component | `bot` (the d.idle bot core: internal/, cmd/d2bot, combat, nav, town, merc, decide, ladder), `d2d` (the engine fork and its lab verbs/overlay), `container` (tester image, wizard, compose, licence pack), `watch` (watch screen, orders map, video, cards UI), `ops` (lab tooling, gates, merge pipeline, board), `docs` (docs, decisions, glossary) | exactly one per card |
+| Kind | `feature`, `bug`, `probe`, `oracle`, `drill`, `research`, `chore`, `readonly`, `d2d-measure`, `model-check`, `upstream-pr`, `bot-fix` | exactly one per card |
+| D2d area | `d2d-combat`, `d2d-skills`, `d2d-monsters`, `d2d-items`, `d2d-loot`, `d2d-town`, `d2d-vendor`, `d2d-movement`, `d2d-pathing`, `d2d-levels`, `d2d-network`, `d2d-time`, `d2d-data`, `d2d-ui` | one or more, only on a `d2d` card or a `fidelity` card |
+| Track | `fidelity`, `gate`, `tester`, `onboarding`, `metacurrency`, `ladder` | at least one when it applies |
+| Tier / gate | `T0`..`T5` (at most one), `G-A`..`G-G` (the Gate A..G groups, exactly as used) | when it applies |
+| Modifier | `soak` (needs a soak slot), `parked` (kept, not ranked; also status Deferred) | when it applies |
+
+Mapping of the retired labels: `bot-defect` is kind `bug` (or `bot-fix` for a bot change that answers a d2d deviation) with component `bot`; `upstream` is kind `upstream-pr` with component `d2d`; `drills` is kind `drill`; `tooling` is component `ops`; `decisions` is component `docs`; `watch` stays as a component; `tester`, `onboarding`, `gate` stay as tracks. Component by `owns:` paths: internal/ and cmd/ is `bot` (cmd/d2dsetup, deploy/, the image is `container`; internal/watch is `watch`; fork work is `d2d`), tools/ and ops is `ops`, docs only is `docs`. A fidelity card is `d2d` for oracle, probe, upstream and measure work on the engine, `bot` for tooling and policy work in internal/. `docs/cards.md` shows the tier, else the first label (the component), in its goal column.
+
+Fields on every card (the checker enforces the first three for all cards, the rest for Proposed and In Progress):
+- `priority`: `high` = blocks a gate or the friends/tester build; `medium` = planned; `low` = parked or nice to have.
+- `dependencies`: real task ids (`backlog task edit N --dep M`), never a label or a card name.
+- `assignee`: the runner or agent type that does the work: `pro-runner` (bot defects only), `credit-runner` (docs, tooling, offline Go), `live-agent` (needs a live game instance), `user` (a user decision). Required on Proposed and In Progress; Deferred and Done cards may stay empty (a Done card keeps the runner when its result line says so).
+- `milestone`: the native Backlog.md mechanism. Files in `backlog/milestones/` (`backlog milestone add "<name>" -d ".."`), and the task front matter key `milestone: m-N` (`backlog task edit N --milestone m-N` also works). Active: `m-0` Gate 2 pass, `m-1` Friends build, `m-2` Fidelity Gate A, `m-3` Metacurrency v1. `check.py` fails a `milestone:` that has no file. V
+- Description: first line `Size: S|M|L` (S up to 4 h, M up to 8 h, L more), then a one-sentence why, and a `Done when:` line derived from the acceptance criteria. Do not invent facts.
+
+Creating a card: `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> [-l <area|track|tier|modifier>] [--priority medium] [--assignee credit-runner] [--size M] [--milestone m-N] [--dep TASK-N]`. `--component` and `--kind` are required (an old call without them stops with the allowed values); an unknown or retired label is refused. Fidelity cards: map docs/research/fidelity-cards.md. Dependencies are the `dependencies:` key, never a label.
 
 ## Standing rule: strategy changes need a paired A/B (user 2026-11-06)
 
@@ -83,13 +97,13 @@ Config (`backlog config list`) matches what we need: check_active_branches true,
 Run the binary by absolute path or from PATH once the user installs it; never from inside an untrusted download directory. Never pipe its output to `head` (see problems).
 
 ```
-backlog task create "<card-id>: <what>" -s Proposed -l G-C --priority medium --ac "first step" --ac "second step"
+backlog task create "<card-id>: <what>" -s Proposed -l bot -l bug -a credit-runner --priority medium --ac "first step" --ac "second step"
 backlog task edit 12 -s "In Progress"            # status (must be one of config.yml)
 backlog task edit 12 --check-ac 2                # tick criterion 2
-backlog task edit 12 --add-label upstream
+backlog task edit 12 --add-label d2d-skills
 backlog task edit 12 --dep 3                     # on create: --dep TASK-3
 backlog task list --plain                        # grouped by status
-backlog task list -s "In Progress" -l G-E --plain
+backlog task list -s "In Progress" -l d2d --plain
 backlog task list --json                         # versioned (schemaVersion 1); no description
 backlog task list --ready --plain                # not blocked by an open dependency
 backlog task 12 --json                           # one task with description and dependency graph
@@ -169,7 +183,7 @@ MCP does nothing the CLI cannot do (same code, same file edits, same churn) and 
 
 ### The create wrapper
 
-`python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> [--owns ..] [--exclusive ..] [--contracts ..] [-l G-C] [-s Proposed] [--priority low] [--ac ".."] [-d ".."]` runs `backlog task create`, inserts `card`, `owns`, `exclusive`, `contracts` before the closing `---` of the new file and runs `check.py`. `--card` and `--owns` are required. Tests: `python3 -I tools/backlog/test_new_task.py` (a fake CLI) and one live run against a scratch repo (V: the new file passed check.py with 0 findings).
+`python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> [--owns ..] [--exclusive ..] [--contracts ..] [-l <label>] [-s Proposed] [--priority medium] [--assignee ..] [--size M] [--ac ".."] [-d ".."]` runs `backlog task create`, inserts `card`, `owns`, `exclusive`, `contracts` before the closing `---` of the new file and runs `check.py`. `--card` and `--owns` are required. Tests: `python3 -I tools/backlog/test_new_task.py` (a fake CLI) and one live run against a scratch repo (V: the new file passed check.py with 0 findings).
 
 ## Agent instructions
 

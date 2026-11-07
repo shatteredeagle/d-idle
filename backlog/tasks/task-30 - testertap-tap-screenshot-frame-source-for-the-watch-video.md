@@ -6,8 +6,10 @@ assignee: []
 created_date: '2026-11-06T14:44:00Z'
 updated_date: '2026-11-06T15:12:00Z'
 labels:
-  - tester
   - watch
+  - feature
+  - tester
+milestone: m-1
 dependencies: []
 priority: high
 ordinal: 30000
@@ -32,7 +34,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 1 of docs/research/tester-build-plan.md (d2d route), gap G4. The d2d container has no X display, so the watch video needs a CaptureFunc fed by the tap's screenshots. Depends on nothing; estimate 5 h.
+
+Done when: watch.TapCapture returns a CaptureFunc of JPEG frames from the tap (poll of its /frame with the tap...; result states the measured bytes per frame and the CPU of one stream (offline numbers; live numbers belong... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -6,8 +6,11 @@ assignee: []
 created_date: '2026-11-05T00:00:00Z'
 updated_date: '2026-11-06T15:12:00Z'
 labels:
-  - T0
   - watch
+  - feature
+  - ladder
+  - T0
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 20000
@@ -31,7 +34,11 @@ next: "tier order: after T4/Gate A cards per ADR 0016"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 The one player screen of ADR 0016 items 20 to 23 on cmd/d2dview (docs/d2d-view.md): game frame, Thoughts feed (questions with answer buttons and 'not sure', idle dialogue, incidents; replaces the question card), orders box, uptime, rules list with its context in plain language (revoke one or all, a 'why did you do that' link from journal lines), and the journal as the feed's permanent history including missed questions. The viewer stays read-only: answers, confirms, revokes and orders go through a separate bot route (names in spec section 6). It first runs on the simulated runner (U: whether d2dview can take the goals sim is not read; cmd/d2dash already serves the sim). Needs the store API of decision-point-store; build against its interface with a fake. Story and dialogue text must be our own (docs/contracts/licence-policy.md); this card ships placeholder lines only. Order note: tier order: after T4/Gate A cards per ADR 0016 (the four T4 and Gate A cards m3-act1run, m3-andariel, m3-merc, gameexe-retire-soak wait their turn). Ladder work is product work, outside the tooling freeze (ADR 0016 item 3). Tags: V read in repo, U unverified.
+
+Done when: The feed shows a question thought with answer buttons, fades it after the fade time (virtual clock in...; Rules list shows each rule with plain-language context; revoke one and revoke all work through the bot...; Orders box and uptime (share of time making progress; deaths, recovery and town stalls lower it) render... (and 2 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

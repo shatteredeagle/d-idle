@@ -2,10 +2,14 @@
 id: TASK-25
 title: "testerlive: run the tester flow in the real d2d container"
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:27:00Z'
 labels:
+  - container
+  - drill
   - tester
+milestone: m-1
 dependencies:
   - TASK-31
   - TASK-32
@@ -22,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 1 (d2d route), reworked from the Wine version. Depends on testerd2dimage (TASK-31), testerd2dwiz (TASK-32) and testerrt (TASK-33). Uses the worker host Docker only, no lab game instance; throwaway data volume removed afterwards. The game data is a copy of the owner's own MPQs mounted read-only. Estimate 8 h.
+
+Done when: image built on the worker host; wizard to character to the bot playing; watch screen opened from a second...; the minimal MPQ set (d2data, d2exp, d2char, Patch_D2) is tried and the answer recorded in...; every defect found is listed with a fix owner; the result says verified live or not, writes after start 0... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

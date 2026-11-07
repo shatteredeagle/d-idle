@@ -6,14 +6,24 @@ check.py fails a task without `owns`. This wraps the CLI, inserts the keys into
 the new file, then runs check.py. Stdlib only; run from the repo root.
 
   python3 -I tools/backlog/new_task.py "fixx: what" --card fixx --owns docs/fixx.md \
+      --component bot --kind bug \
       [--owns more] [--exclusive instance:i2] [--contracts docs/contracts/x.md] \
-      [-l T0|tester|..] [-s Proposed] [--priority low] [--ac "step"]... [-d "text"]
+      [-l T0|tester|d2d-skills|..] [-s Proposed] [--priority medium] [--assignee credit-runner] \
+      [--size M] [--milestone m-1] [--dep TASK-5] [--ac "step"]... [-d "why, then Done when"]
+
+The closed label scheme (component, kind, d2d area, track, tier, modifier) is in
+docs/backlog-howto.md and enforced by check.py. --component and --kind are required;
+--priority defaults to medium, --assignee to credit-runner, --size to M. The
+description always starts with the `Size:` line.
 """
 import argparse
 import re
 import subprocess
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import check as scheme  # noqa: E402
 
 HERE = Path(__file__).resolve().parent
 
@@ -59,21 +69,34 @@ def main(argv, run=subprocess.run):
     ap.add_argument("--owns", action="append", required=True)
     ap.add_argument("--exclusive", action="append", default=[])
     ap.add_argument("--contracts", action="append", default=[])
-    ap.add_argument("-l", "--label", action="append", default=[])
+    ap.add_argument("--component", required=True, choices=sorted(scheme.COMPONENTS))
+    ap.add_argument("--kind", required=True, choices=sorted(scheme.KINDS))
+    ap.add_argument("-l", "--label", action="append", default=[], help="extra labels: d2d-* area, track, tier, soak, parked")
     ap.add_argument("-s", "--status", default="Proposed")
-    ap.add_argument("--priority")
+    ap.add_argument("--priority", default="medium", choices=sorted(scheme.PRIORITIES))
+    ap.add_argument("--assignee", default="credit-runner", choices=sorted(scheme.ASSIGNEES))
+    ap.add_argument("--size", default="M", choices=["S", "M", "L"])
+    ap.add_argument("--milestone")
+    ap.add_argument("--dep", action="append", default=[])
     ap.add_argument("--ac", action="append", default=[])
     ap.add_argument("-d", "--description")
     a = ap.parse_args(argv)
-    cmd = ["backlog", "task", "create", a.title, "-s", a.status, "--plain"]
-    for x in a.label:
+    extra = [x for x in a.label if x not in scheme.KNOWN]
+    if extra:
+        ap.error(f"unknown label(s) {extra}; the closed set is in docs/backlog-howto.md (component and kind have their own flags)")
+    if set(a.label) & (scheme.COMPONENTS | scheme.KINDS):
+        ap.error("component and kind go in --component and --kind, not -l")
+    cmd = ["backlog", "task", "create", a.title, "-s", a.status, "--plain", "-a", a.assignee]
+    for x in [a.component, a.kind] + a.label:
         cmd += ["-l", x]
+    for x in a.dep:
+        cmd += ["--dep", x]
+    if a.milestone:
+        cmd += ["--milestone", a.milestone]
     for x in a.ac:
         cmd += ["--ac", x]
-    if a.priority:
-        cmd += ["--priority", a.priority]
-    if a.description:
-        cmd += ["-d", a.description]
+    cmd += ["--priority", a.priority]
+    cmd += ["-d", f"Size: {a.size}\n\n" + (a.description or "Why: TODO. Done when: TODO.")]
     r = run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
         sys.stderr.write(r.stdout + r.stderr)

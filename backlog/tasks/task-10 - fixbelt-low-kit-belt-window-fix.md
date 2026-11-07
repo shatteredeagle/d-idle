@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:01:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: low
 ordinal: 10000
@@ -36,6 +39,8 @@ source: "openspec-final:openspec/changes/fixbelt"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Gate 1 rerun (bot f4ca264, d2d lab2-freezeresume) failed the belt criterion: a 6 virtual minute window with no healing potion outside town (limit 5). The window sits at clvl 7 in the 15 minute recovery cooldown; evidence and cause in docs/fixbelt.md.
 
 What changes:
@@ -49,6 +54,8 @@ Gates (from the card):
 - go test -p 1 internal/resource internal/bot; leakcheck -mode fail 0; tools/ci/check.sh
 
 Source: git tag openspec-final, openspec/changes/fixbelt/ (this task is the copy).
+
+Done when: locate the window in the minute log; fix: low-kit override of the recovery cooldown; unit tests (and 3 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Read-only checker for backlog/tasks (stage 1; replaces no existing check yet).
+"""Read-only checker for backlog/tasks. Closed label scheme of 2026-11-07 (docs/backlog-howto.md, "Labels").
 
-Rules (ADR 0015 items 10 and 11; the open-card cap of 12 was removed by ADR 0016 / grill 0005, the WIP limit lives in the process, not here):
-  - every label is in the known set (tiers T0..T5, areas, modifiers soak/parked, legacy G-A..G-G)
-  - an open task that is not parked has exactly one PRIMARY label: a tier T0..T5 (ladder work) or an area label; at most one tier
+Rules, for every card in backlog/tasks (archived cards live elsewhere):
+  - every label is in the closed set (config.yml mirrors it): component, kind, d2d area, track, tier T0..T5, gate letter G-A..G-G, modifier soak/parked
+  - exactly one COMPONENT (bot d2d container watch ops docs) and exactly one KIND; at most one tier
+  - d2d-* area labels only on a d2d card or a fidelity card
+  - a `priority` (high medium low)
+  - Proposed and In Progress cards: an assignee from the runner set, and `Size: S|M|L` as the first line of the description (Deferred and Done are exempt)
+  - `milestone`, when set, names a file in backlog/milestones; every dependency is an existing task id
   - each task has an `owns` frontmatter key
-  - card ids (the part of the title before the first colon) are unique
-  - task ids (TASK-N) are unique (two branches that created a task unseen by each other collide at merge)
+  - card ids (the part of the title before the first colon) are unique; task ids (TASK-N) are unique
 Exit 0 when clean, 1 when there are findings. Standard library only.
 """
 import re
@@ -14,11 +17,17 @@ import sys
 from pathlib import Path
 
 OPEN = {"Proposed", "Deferred", "In Progress"}
-GOALS = {f"G-{c}" for c in "ABCDEFG"}  # legacy, still accepted
+ACTIVE = {"Proposed", "In Progress"}
+COMPONENTS = {"bot", "d2d", "container", "watch", "ops", "docs"}
+KINDS = {"feature", "bug", "probe", "oracle", "drill", "research", "chore", "readonly", "d2d-measure", "model-check", "upstream-pr", "bot-fix"}
+D2D_AREAS = {"d2d-" + x for x in ("combat skills monsters items loot town vendor movement pathing levels network time data ui".split())}
+TRACKS = {"fidelity", "gate", "tester", "onboarding", "metacurrency", "ladder"}
 TIERS = {f"T{i}" for i in range(6)}
-AREAS = {"watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding"}
+GATES = {f"G-{c}" for c in "ABCDEFG"}
 MODIFIERS = {"soak", "parked"}
-KNOWN = GOALS | TIERS | AREAS | MODIFIERS
+KNOWN = COMPONENTS | KINDS | D2D_AREAS | TRACKS | TIERS | GATES | MODIFIERS
+PRIORITIES = {"high", "medium", "low"}
+ASSIGNEES = {"pro-runner", "credit-runner", "live-agent", "user"}
 
 
 def parse(path):
@@ -45,13 +54,21 @@ def parse(path):
     return fm
 
 
+def first_desc_line(path):
+    m = re.search(r"<!-- SECTION:DESCRIPTION:BEGIN -->\n(.*?)\n", Path(path).read_text(), re.S)
+    return m.group(1).strip() if m else ""
+
+
 def check(tasks_dir):
     findings, seen, ids = [], {}, {}
     files = sorted(Path(tasks_dir).glob("task-*.md"))
     if not files:
         return [f"{tasks_dir}: no task files"]
-    for f in files:
-        fm = parse(f)
+    ms_dir = Path(tasks_dir).parent / "milestones"
+    milestones = {re.match(r"(m-\d+)", f.name).group(1) for f in ms_dir.glob("m-*.md")} if ms_dir.is_dir() else None
+    parsed = [(f, parse(f)) for f in files]
+    known_ids = {fm.get("id", "").upper() for _, fm in parsed if fm}
+    for f, fm in parsed:
         if fm is None:
             findings.append(f"{f.name}: no frontmatter")
             continue
@@ -69,14 +86,35 @@ def check(tasks_dir):
         seen[card] = f.name
         if "owns" not in fm and "owns" not in fm["_lists"]:
             findings.append(f"{f.name}: no owns key")
-        if fm.get("status") in OPEN and "parked" not in labels:
-            n = len(labels & (GOALS | TIERS | AREAS))
-            if n < 1:
-                findings.append(f"{f.name}: {card} has no tier or area label")
-            if len(labels & TIERS) > 1:
-                findings.append(f"{f.name}: {card} has more than one tier label")
         for x in sorted(labels - KNOWN):
             findings.append(f"{f.name}: {card} has unknown label {x!r}")
+        comp = sorted(labels & COMPONENTS)
+        if len(comp) != 1:
+            findings.append(f"{f.name}: {card} needs exactly one component ({' '.join(sorted(COMPONENTS))}), has {comp or 'none'}")
+        kind = sorted(labels & KINDS)
+        if len(kind) != 1:
+            findings.append(f"{f.name}: {card} needs exactly one kind ({' '.join(sorted(KINDS))}), has {kind or 'none'}")
+        if len(labels & TIERS) > 1:
+            findings.append(f"{f.name}: {card} has more than one tier label")
+        if labels & D2D_AREAS and "d2d" not in labels and "fidelity" not in labels:
+            findings.append(f"{f.name}: {card} has a d2d-* area label but is neither a d2d card nor a fidelity card")
+        if fm.get("priority") not in PRIORITIES:
+            findings.append(f"{f.name}: {card} needs priority high|medium|low, has {fm.get('priority')!r}")
+        asg = fm["_lists"].get("assignee", [])
+        for x in asg:
+            if x not in ASSIGNEES:
+                findings.append(f"{f.name}: {card} has unknown assignee {x!r} ({' '.join(sorted(ASSIGNEES))})")
+        if fm.get("status") in ACTIVE:
+            if not asg:
+                findings.append(f"{f.name}: {card} ({fm.get('status')}) has no assignee")
+            if not re.fullmatch(r"Size: [SML]\b.*", first_desc_line(f)):
+                findings.append(f"{f.name}: {card} ({fm.get('status')}) needs 'Size: S|M|L' as the first line of the description")
+        ms = fm.get("milestone")
+        if ms and milestones is not None and ms not in milestones:
+            findings.append(f"{f.name}: {card} milestone {ms!r} has no file in backlog/milestones")
+        for d in fm["_lists"].get("dependencies", []):
+            if d.upper() not in known_ids:
+                findings.append(f"{f.name}: {card} depends on {d}, which is not a task")
     return findings
 
 
