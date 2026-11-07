@@ -132,3 +132,7 @@ Where custom items would serve (S/U, ideas, not decisions):
 - No game.exe run with `-direct -txt` was made; section 2 is the SME file's statement plus community knowledge.
 - d2d's behaviour for an out-of-range unique id and for a missing string key was not traced.
 - Nothing here was run; no fork file was changed.
+
+## Implementation status (TASK-59, 2026-11-06)
+
+Built per section 3: fork `--overlay-dir` (default off) merging `excel/<Table>.txt` fragments inside `Stack`, key rules per table, overlay tag in `info`; Go `internal/overlay` plus `internal/data` stamp and merge; `d2bot --overlay-dir`. Format, key table, hash and switches: [docs/overlay.md](../overlay.md). Not built: strings, art, the drop-probability test (TASK-63).
