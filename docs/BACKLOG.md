@@ -540,6 +540,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - tpcount (task 57) done: minute-line tp scroll count fixed; drill 4 PASS, pre-fix control FAIL
 - customitems feasibility study done (docs/research/custom-items.md); follow-ups custom-overlay and custom-item-1 Proposed
 - TASK-61 metacurrency design (registry, per-character item plus account ledger, first slice); TASK-60 reworked to the stackable token; TASK-62 to 64 proposed (ledger, rows, slice)
+- TASK-59 table overlay: fork --overlay-dir (branch d2d.lab4-overlay, default off), Go internal/overlay + data cache stamp, d2bot --overlay-dir, docs/overlay.md; fork build/ctest see the task result
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

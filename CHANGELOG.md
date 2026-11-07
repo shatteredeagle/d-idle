@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d.idle mode table overlay (--overlay-dir) on the Go side and in the fork branch; vanilla unchanged
 - metacurrency decisions recorded (docs/decisions.md, ADR 0016 amendment 2026-11-06, glossary terms Mark, Tally, Bank, Registry); docs only
 - tpcount: the minute line field tp (and tpBuy) read 0 on the d2d path because the town adapter hid bot.TPDiag; fixed and drilled live (E1.tp-a/b/c)
 - d2drill group E1: short live drills run the real d2bot attached to a prepared d2d (merc revive before potions, no-portal low life leaves)
