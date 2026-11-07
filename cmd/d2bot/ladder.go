@@ -17,11 +17,13 @@ import (
 
 	"d2lod-bot/internal/access"
 	"d2lod-bot/internal/bot"
+	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/launch"
+	"d2lod-bot/internal/overlay"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/watch"
 )
@@ -30,6 +32,10 @@ import (
 // without -ladder nothing in this file runs, no directory is made and no port is opened.
 
 type ladderOptions struct {
+	// d.idle mode (set by the d2d backend from --overlay-dir, never a flag of its own): the overlay directory and the
+	// profile directory of the currency ledger. Empty = vanilla, no currency code runs and the screen is unchanged.
+	overlayDir, currencyDir string
+
 	on      bool
 	profile string // "" = a person answers through the watch screen; NAME or holdout:SEED = a scripted player
 	watch   bool
@@ -152,6 +158,7 @@ type ladderRig struct {
 	Ladder *ladder.Ladder
 	Hub    *watch.Hub
 	Served watch.Served
+	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
 }
 
 // enableFunc is bot.(*Runner).EnableLadderWith (a seam for tests).
@@ -195,6 +202,10 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 		orders.Hub = hub
 		rig.Hub = hub
+		if rig.Wallet, err = newWallet(l); err != nil {
+			return nil, nil, err
+		}
+		hub.SetCurrency(rig.Wallet)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}
@@ -229,6 +240,26 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	go rig.Hub.RunTicker(ctx, time.Second)
 	go feedHub(ctx, rig.Hub, orders, m, status)
 	return rig, nil
+}
+
+// newWallet opens the account ledger of the profile for d.idle mode; nil (and no error) in vanilla mode, so the watch
+// screen then has no currency route and no strip.
+func newWallet(l ladderOptions) (*currency.Wallet, error) {
+	if l.overlayDir == "" {
+		return nil, nil
+	}
+	mode, err := overlay.Mode(l.overlayDir)
+	if err != nil {
+		return nil, err
+	}
+	led, err := currency.Open(l.currencyDir, currency.Options{Mode: mode, Instance: os.Getenv("D2BOT_INSTANCE")})
+	if err != nil {
+		return nil, err
+	}
+	if err := led.Verify(); err != nil {
+		return nil, fmt.Errorf("currency ledger %s: %w", l.currencyDir, err)
+	}
+	return currency.NewWallet(mode, led), nil
 }
 
 // watchTokenOut receives the one-time viewer URL when a token file is created (the only place a token is ever printed).

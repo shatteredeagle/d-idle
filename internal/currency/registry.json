@@ -1,0 +1,40 @@
+{
+  "schema": "currency.registry/1",
+  "currencies": [
+    {
+      "id": "mark",
+      "scope": "per_character",
+      "name": "Raven's Mark",
+      "blurb": "A token the fallen leave behind. It lives in the hero's pack until it is banked in town.",
+      "storage": "item",
+      "item": {"code": "", "art_donor": "key"},
+      "stackable": true,
+      "cap": 12,
+      "sources": ["mark_field"],
+      "sinks": ["bank"],
+      "converts_to": {"currency": "tally", "ratio": 1, "via": "cube_bank"},
+      "display": {"icon": "mark", "label": "in pack", "order": 1, "where": ["header"]}
+    },
+    {
+      "id": "tally",
+      "scope": "account",
+      "name": "Tally",
+      "blurb": "What the hero's patron keeps for you. It stays with you even if the hero is lost.",
+      "storage": "ledger",
+      "stackable": false,
+      "cap": 0,
+      "sources": ["bank", "grant"],
+      "sinks": ["ladder_upgrade"],
+      "display": {"icon": "tally", "label": "banked", "order": 2, "where": ["header", "spend"]}
+    }
+  ],
+  "sources": [
+    {"id": "mark_field", "currency": "mark", "name": "Fallen monsters in the field", "daily_cap": 0},
+    {"id": "bank", "currency": "tally", "name": "Marks banked in town", "daily_cap": 2000},
+    {"id": "grant", "currency": "tally", "name": "Tier unlock grants", "daily_cap": 0}
+  ],
+  "upgrades": [
+    {"id": "fade_faster", "sink": "ladder_upgrade", "currency": "tally", "tier": "T0", "name": "Faster answer fade", "effect": "Unanswered questions fade a little sooner.", "costs": [30, 75, 180], "wired": false},
+    {"id": "retreat_precision", "sink": "ladder_upgrade", "currency": "tally", "tier": "T0", "name": "Retreat precision", "effect": "The hero retreats less often when it does not need to.", "costs": [30, 75, 180], "wired": false}
+  ]
+}

@@ -65,13 +65,14 @@ input[type=number] { width: 5rem; }
 .views button[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 650; }
 
 main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; grid-template-columns: 1fr; }
-@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal { display: block; } }
+@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal { display: block; } main[data-view="spend"] .spend { display: block; } }
+main .spend[hidden] { display: none !important; }
 @media (min-width: 900px) {
   .views { display: none; }
   main { grid-template-columns: repeat(12, 1fr); }
   .o-map { grid-column: 1 / 6; grid-row: 1 / 4; } .o-now { grid-column: 6 / 13; grid-row: 1; } .o-queue { grid-column: 6 / 13; grid-row: 2; }
   .thoughts { grid-column: 6 / 10; grid-row: 3; } .game { grid-column: 10 / 13; grid-row: 3; }
-  .rules { grid-column: 1 / 6; } .journal { grid-column: 6 / 13; }
+  .rules { grid-column: 1 / 6; } .journal { grid-column: 6 / 13; } .spend { grid-column: 1 / 13; }
 }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
 .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
@@ -149,3 +150,16 @@ svg.map { width: 100%; height: auto; display: block; }
 .q-list li { display: flex; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); }
 .q-list .t2 { flex: 1; min-width: 0; overflow-wrap: anywhere; }
 .last { margin-top: 8px; padding: 6px 10px; background: var(--surface2); border-radius: 6px; font-size: .9rem; overflow-wrap: anywhere; }
+
+/* currency strip and spend sheet (docs/currency.md); hidden unless the bot runs in d.idle mode */
+.curstrip { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; font-size: .9rem; }
+.curstrip[hidden] { display: none; }
+.curstrip .cur { white-space: nowrap; }
+.curstrip .cur b { font-variant-numeric: tabular-nums; }
+.curstrip .off { color: var(--muted); }
+.spendrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--line); }
+.spendrow .sp-main { flex: 1 1 14rem; min-width: 0; }
+.spendrow .sp-name { font-weight: 600; }
+.spendrow .sp-effect, .spendrow .sp-why { font-size: .85rem; color: var(--muted); }
+.spendrow .sp-cost { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.spendrow button:disabled { opacity: .55; cursor: not-allowed; }

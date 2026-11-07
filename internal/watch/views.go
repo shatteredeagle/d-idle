@@ -451,9 +451,10 @@ type ConfigView struct {
 	AnswerPort int    `json:"answerPort,omitempty"`
 	FadeSec    int    `json:"fadeSec"`
 	FrameURL   string `json:"frameUrl,omitempty"` // the viewer's frame stream, empty when there is no game
+	Currency   bool   `json:"currency,omitempty"` // the page shows the balance strip (d.idle mode)
 }
 
 func (h *Hub) Config() ConfigView {
 	return ConfigView{Schema: configSchema, AnswerBase: strings.TrimRight(h.cfg.AnswerBase, "/"), AnswerPort: h.cfg.AnswerPort,
-		FadeSec: h.cfg.Cat.Config.FadeSec, FrameURL: h.cfg.FrameURL}
+		FadeSec: h.cfg.Cat.Config.FadeSec, FrameURL: h.cfg.FrameURL, Currency: h.cur.Load() != nil}
 }

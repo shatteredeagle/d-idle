@@ -64,7 +64,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 43 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
 | 44 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
 | 45 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
-| 46 | currency-ledger | T5 | proposed 0/2 | registry and account ledger (Go, offline) | - | - | [card](archive/openspec-index.md#currency-ledger) |
+| 46 | currency-ledger | T5 | in-progress 2/2 | registry and account ledger (Go, offline) | - | - | [card](archive/openspec-index.md#currency-ledger) |
 | 47 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
 | 48 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
 <!-- cardsgen:active:end -->
