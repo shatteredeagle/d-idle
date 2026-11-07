@@ -462,3 +462,15 @@ a scripted style of answering used in tests; known profiles and holdouts generat
 
 **Potential tweaks**:
 the list in ADR 0016 of set-aside ideas, opened only if the user says the game is not fun.
+
+**Mark (Raven's Mark)**:
+The per-character currency: a stackable custom item (registry id `mark`) the hero carries; d.idle mode only. Carried marks can be lost with the hero; banking turns them into **Tally**. `docs/research/metacurrency-design.md`.
+
+**Tally**:
+The account-wide currency (registry id `tally`): banked worth in an append-only ledger per profile ("account" means per profile). Never lost; spent on ladder upgrades. See **Mark**, **Bank**.
+
+**Bank**:
+The town action that removes a stack of marks (a cube recipe at first) and credits the observed loss to the Tally ledger.
+
+**Registry**:
+The data table of currencies (id, scope, name, source, sink, storage, conversion). One worth unit, several scopes and forms; a new currency is a row, not code (ADR 0016, Amendment 2026-11-06).

@@ -1,0 +1,2 @@
+CHANGELOG: metacurrency decisions recorded (docs/decisions.md, ADR 0016 amendment 2026-11-06, glossary terms Mark, Tally, Bank, Registry); docs only
+INDEX: docs/research/metacurrency-design.md now approved by the user 2026-11-06
