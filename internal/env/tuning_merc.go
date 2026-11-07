@@ -21,13 +21,14 @@ type MercTuning struct {
 	ReviveReserveLow     int // gold a revive keeps back below ReviveReserveClvl (the hire keeps merc.kitReservePct)
 	ReviveReserveHigh    int // gold a revive keeps back from ReviveReserveClvl on
 	ReviveReserveClvl    int // clvl band edge between the two
+	QuoteMaxAgeHours     int // a read revive quote is reused for this many game hours while the merc level is unchanged; 0 = no age limit
 	Enabled              int // 1: the bot runs the merc policy (revive, guard input, status); 0: Game.exe and d2d behave as before
 }
 
 func DefaultMercTuning() MercTuning {
 	return MercTuning{ReviveMaxPerHour: 2, ReviveGoldMult: 1, StopDeathsPerHour: 3, StopGoldMult: 5, HireGoldMult: 1,
 		FreeRogueOnly: 0, ReplaceAtAct2: 1, SwapGainPct: 10, ReqStrDex: 1, PotionLifePct: 50, KitReservePct: 100, GoldFarmMaxLevel: 17,
-		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, ReviveReserveLow: 0, ReviveReserveHigh: 50, ReviveReserveClvl: 13, Enabled: 1}
+		KitReservePctFullKit: 50, GoldFarmBudgetMin: 40, GoldFarmCooldownMin: 60, ReviveReserveLow: 0, ReviveReserveHigh: 50, ReviveReserveClvl: 13, QuoteMaxAgeHours: 4, Enabled: 1}
 }
 
 func mercKnobs() []Knob {
@@ -68,6 +69,8 @@ func mercKnobs() []Knob {
 			Desc: "Minutes after a budget end before the gold farm may arm again."},
 		{Key: "merc.goldFarmMaxLevel", Label: "Merc gold farm up to clvl", Unit: "levels", Default: 17, Min: 0, Max: 40, NoHandicap: true,
 			Desc: "While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off."},
+		{Key: "merc.quoteMaxAgeHours", Label: "Merc quote max age", Unit: "h", Default: 4, Min: 0, Max: 48, NoHandicap: true,
+			Desc: "The revive price read from the Kashya menu is used for the gold farm trigger and the revive bar for this many game hours while the merc level is unchanged; after that, or at a new level, the next visit reads it again. The level formula is only the fallback before any quote was read. 0 = never stale."},
 		{Key: "merc.enabled", Label: "Merc policy on", Unit: "bool", Default: 1, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md)."},
 	}

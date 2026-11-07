@@ -1,0 +1,2 @@
+BACKLOG: TASK-66 merc revive cap on the env clock, farm trigger and revive bar on the read quote (knob merc.quoteMaxAgeHours); live drill E1.merc-quote blocked (quote reads 0 for a cheat-hired merc)
+CHANGELOG: merc revive cap and death window now count game time (lockstep), and a read revive quote replaces the level formula in the gold-farm trigger and the revive bar

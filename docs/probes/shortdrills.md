@@ -47,3 +47,6 @@ Run (V): slot 4, d2d lab3-labverbs f75816c6 (sha256 53217ea4ecc8...), `docs/prob
 | E1.tp-b (E1.tp-b-20261107-015608) | a `tbk` in the pack | PASS: minute `tp=3`, equal to the quantity inv-tp-dump counted (a given tome starts with 3 charges) |
 | E1.tp-c (E1.tp-c-20261107-015625) | no scroll, gold 600 | PASS: `tpBuy` on the first minute line, max tp 1 |
 | control, label shortdrill-tpcount-prefix (E1.tp-a-20261107-015718) | the same as tp-a with d2bot built WITHOUT the fix | FAIL: first minute line `tp=0`, want 3 |
+
+## Drill 6: merc quote in the farm trigger (E1.merc-quote, TASK-66)
+Run E1.merc-quote-20261107-071629 (slot 4, same fork binary as above, lockstep): result BLOCKED, not PASS (V). Setup as drill 2 (clvl 12, dead cheat-hired merc, pack 300, stash 0); `writes after start: 0`, virtual 159 s. The cheat-hired merc is level 1 and the menu quotes 0, so the bot read no quote above 0 (`probeQuote` keeps only a price above 0; 0 also means "no price parsed") and only the formula path ran. The new rule (quote used by the farm trigger and the revive bar) is therefore proven offline only (`TestQuoteReplacesTheFormulaEverywhere`, two classes), U live. Unblock: a lab verb that sets the merc level, or a real hire via Kashya at a known low level.
