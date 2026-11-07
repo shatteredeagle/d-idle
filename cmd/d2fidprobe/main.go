@@ -11,6 +11,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
@@ -43,6 +44,8 @@ func run(args []string, stdout, stderr io.Writer) int {
 	fs.StringVar(&f.instance, "instance", os.Getenv("D2BOT_INSTANCE"), "game.exe instance (i1..i5), default $D2BOT_INSTANCE")
 	fs.StringVar(&f.sock, "sock", os.Getenv("D2D_SOCK"), "d2d control socket, default $D2D_SOCK")
 	fs.StringVar(&f.tables, "tables", "", "extracted game table cache dir for d2dsrc item rows")
+	ref := fs.String("ref", "", "third reference: a <role>.d2s copy; its sheet is also diffed against side A and side B (appended to the report)")
+	dump := fs.String("dump", "", "also write both sheets (every field, set members included) as JSON to this file")
 	out := fs.String("out", "", "also write <scenario>.txt and .json here")
 	format := fs.String("format", "text", "stdout format: text or json")
 	all := fs.Bool("all", false, "list EQUAL cells too")
@@ -68,7 +71,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 		return 2
 	}
 	if *saves != "" {
-		if _, err := os.Stat(filepath.Join(*saves, sc.Role+".d2s")); err != nil {
+		if _, err := os.Stat(filepath.Join(*saves, sc.Role+".d2s")); err != nil && sc.Role != "any" {
 			fmt.Fprintf(stderr, "d2fidprobe: scenario %s needs %s.d2s in %s: %v\n", sc.Name, sc.Role, *saves, err)
 			return 2
 		}
@@ -82,17 +85,26 @@ func run(args []string, stdout, stderr io.Writer) int {
 	if err == nil {
 		var sb fidprobe.Source
 		if sb, err = newSource(*b, "B", &f); err == nil {
-			return probe(sc, sa, sb, rules, *reads, *gap, *out, *format, *all, stdout, stderr)
+			return probe(sc, sa, sb, rules, *reads, *gap, *ref, *dump, *out, *format, *all, stdout, stderr)
 		}
 	}
 	fmt.Fprintln(stderr, err)
 	return 2
 }
 
-func probe(sc fidprobe.Scenario, a, b fidprobe.Source, rules *fidprobe.Rules, reads int, gap time.Duration, out, format string, all bool, stdout, stderr io.Writer) int {
+func probe(sc fidprobe.Scenario, a, b fidprobe.Source, rules *fidprobe.Rules, reads int, gap time.Duration, ref, dump, out, format string, all bool, stdout, stderr io.Writer) int {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
-	rep, err := fidprobe.Run(ctx, sc, a, b, reads, gap, rules)
+	rep, sa, sb, err := fidprobe.RunSheets(ctx, sc, a, b, reads, gap, rules)
+	if err == nil && dump != "" {
+		var js []byte
+		if js, err = json.MarshalIndent(map[string]*fidprobe.Sheet{"a": sa, "b": sb}, "", " "); err == nil {
+			err = os.WriteFile(dump, append(js, '\n'), 0o644)
+		}
+	}
+	if err == nil && ref != "" {
+		err = addRef(rep, ref, sc, sa, sb, rules)
+	}
 	if err != nil {
 		fmt.Fprintln(stderr, err)
 		return 1
@@ -127,4 +139,26 @@ func probe(sc fidprobe.Scenario, a, b fidprobe.Source, rules *fidprobe.Rules, re
 		return 3
 	}
 	return 0
+}
+
+// addRef appends the file-vs-A and file-vs-B diffs to the report text and JSON cells under a prefix, so
+// the three-way view lives in one report.
+func addRef(rep *fidprobe.Report, path string, sc fidprobe.Scenario, sa, sb *fidprobe.Sheet, rules *fidprobe.Rules) error {
+	fs := fidprobe.FileSource{Path: path}
+	sf, err := fs.Sheet()
+	if err != nil {
+		return err
+	}
+	for _, side := range []*fidprobe.Sheet{sa, sb} {
+		r := fidprobe.Diff(sf, side, sc.Groups, rules)
+		for _, c := range r.Cells {
+			if c.Class == fidprobe.Unreadable {
+				continue // fields the file cannot give are not a finding
+			}
+			c.Key = "ref:file/" + side.Source + ":" + c.Key
+			rep.Cells = append(rep.Cells, c)
+			rep.Counts[c.Class]++
+		}
+	}
+	return nil
 }

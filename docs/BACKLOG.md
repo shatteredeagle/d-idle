@@ -556,6 +556,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - fidelity matrix: 29 backlog cards (fid-*) for every unverified row, map in docs/research/fidelity-cards.md; new labels fidelity, kind labels and d2d-* areas
 - board scheme (2026-11-07): closed label set (component, kind, d2d area, track), priority, assignee, size, dependencies and milestones on every card; check.py enforces it, docs/backlog-howto.md has the table
 - fidprobe-core (TASK-55): first live same-save probe run, scenarios 1-4 read-only on i5 + d2d slot 3; all MISMATCH (d2d heals to full on load, reader scope); docs/probes/fidprobe.md
+- TASK-55 d2s file reader + probe run 2 + run1 write-up: d2d heals life/mana on load, max mana 19.5 vs 19.0 (docs/research/fidelity-probe-run1.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -8,6 +8,9 @@
     {"match": "derived.max_stamina", "rule": "rel", "tol": 0.005},
     {"match": "*", "rule": "exact"}
   ],
+  "class_skill_first": [6, 36, 66, 96, 126, 221, 251],
+  "class_skill_count": 30,
+  "stats_scope_only": [31, 67, 68, 69, 72, 73, 172, 194, 350, 351],
   "unreadable_map": {
     "inventory": "items.",
     "item": "items.",

@@ -12,5 +12,6 @@
   {"id": 11, "name": "act1-quests-done", "role": "sorc-act1-done", "class": "Sorceress", "difficulty": 0, "groups": ["base", "waypoints", "quests"], "purpose": "quest words and waypoint mask"},
   {"id": 12, "name": "andariel-dead-lut-gholein", "role": "sorc-act2-town", "class": "Sorceress", "difficulty": 0, "groups": ["base", "npcs", "objects", "waypoints"], "purpose": "act 2 town layout, waypoint list"},
   {"id": 13, "name": "nightmare-clvl30", "role": "sorc-nm-30", "class": "Sorceress", "difficulty": 1, "groups": ["base", "derived", "skills", "stats"], "purpose": "difficulty penalties, nightmare level formula"},
-  {"id": 14, "name": "hardcore-control", "role": "sorc-hc", "class": "Sorceress", "difficulty": 0, "groups": ["base"], "purpose": "flag handling only; skip when no fixture"}
+  {"id": 14, "name": "hardcore-control", "role": "sorc-hc", "class": "Sorceress", "difficulty": 0, "groups": ["base"], "purpose": "flag handling only; skip when no fixture"},
+  {"id": 15, "name": "load-life-mana", "role": "any", "class": "", "difficulty": 0, "groups": ["load"], "purpose": "current and maximum life, mana and stamina right after load, with 8 fractional bits, file vs game.exe vs d2d"}
 ]
