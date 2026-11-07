@@ -546,6 +546,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: Gate 2 multi-seed run 20261107-0150-g2g (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md)
 - TASK-65 g2g diagnosis docs/research/g2g-diagnosis.md; TASK-66 to TASK-68 proposed bot-defect fixes (merc clock and quote, mouth gate loop, town portal scroll first)
 - TASK-66 merc revive cap on the env clock, farm trigger and revive bar on the read quote (knob merc.quoteMaxAgeHours); live drill E1.merc-quote blocked (quote reads 0 for a cheat-hired merc)
+- mouthfix (TASK-67): mouth gate escalates a click refused 3 times from inside a trigger disc (pocket escape); E1.mouth-pocket drill, pocket not reproduced live
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

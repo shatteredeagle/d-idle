@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nav mouth gate no longer repeats the same refusal forever from inside a trigger disc: after 3 identical holds it steps sideways or sends the click
 - merc revive cap and death window now count game time (lockstep), and a read revive quote replaces the level formula in the gold-farm trigger and the revive bar
 - Gate 2 g2g wave 1 diagnosed: merc revive cap runs on the wall clock and the farm trigger uses the formula estimate (docs/research/g2g-diagnosis.md)
 - docs: Gate 2 multi-seed soak run 20261107-0150-g2g: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md).
