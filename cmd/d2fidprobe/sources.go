@@ -98,8 +98,10 @@ func newSource(spec, role string, f *flags) (fidprobe.Source, error) {
 			return nil, fmt.Errorf("d2fidprobe: d2d side needs -sock or $D2D_SOCK")
 		}
 		return d2dSide{f.sock, f.tables}, nil
+	case strings.HasPrefix(spec, "file:"):
+		return fidprobe.FileSource{Path: spec[5:]}, nil
 	case strings.HasPrefix(spec, "json:"):
 		return jsonSide{role, spec[5:]}, nil
 	}
-	return nil, fmt.Errorf("d2fidprobe: source %q: want gameexe, d2d or json:FILE", spec)
+	return nil, fmt.Errorf("d2fidprobe: source %q: want gameexe, d2d, file:FILE.d2s or json:FILE", spec)
 }

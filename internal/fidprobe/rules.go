@@ -37,7 +37,14 @@ type Known struct {
 type Rules struct {
 	Tolerance     []Rule            `json:"tolerance"`
 	UnreadableMap map[string]string `json:"unreadable_map"`
-	Known         []Known           `json:"-"`
+	// Reader scope (run 1, fidprobe.md): skills.base lists only the class's own skills with points
+	// (game.exe also lists Attack, Kick and the like); stats.vector skips zero entries and the ids in
+	// StatsScopeOnly, which only one reader lists (S: reader scope, not a game difference). Those ids go
+	// to the group statsx, which no scenario compares.
+	ClassSkillFirst []int   `json:"class_skill_first"`
+	ClassSkillCount int     `json:"class_skill_count"`
+	StatsScopeOnly  []int   `json:"stats_scope_only"`
+	Known           []Known `json:"-"`
 }
 
 // DefaultRules loads the embedded tables.
@@ -149,4 +156,21 @@ func FindScenario(ref string) (Scenario, error) {
 		}
 	}
 	return Scenario{}, fmt.Errorf("fidprobe: unknown scenario %q", ref)
+}
+
+// InClassSkills reports whether skill id belongs to the 30 skills of class.
+func (r *Rules) InClassSkills(class, id int) bool {
+	if class < 0 || class >= len(r.ClassSkillFirst) {
+		return false
+	}
+	return id >= r.ClassSkillFirst[class] && id < r.ClassSkillFirst[class]+r.ClassSkillCount
+}
+
+func (r *Rules) scopeOnly(id int) bool {
+	for _, x := range r.StatsScopeOnly {
+		if x == id {
+			return true
+		}
+	}
+	return false
 }

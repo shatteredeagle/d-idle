@@ -4,8 +4,8 @@ MISMATCH   base.level                   6                  7                  de
 MISMATCH   derived.max_mana             600                604                rel 0.662% over 0.5%
 UNREADABLE derived.res_cold             0                  ?                  B: no resist read
 MISMATCH   items.equipment              {1 members}        {0 members}        only A [body4:class9/q3/ilvl0/]; only B []
-KNOWN      skills.bonus                 {1 members}        {0 members}        only A [36=1]; only B [] [SK14] game.exe side adds only item_singleskill (stat 107) bonuses; class and tab bonuses (stats 83, 188) are not added by internal/d2 (skills.go, S)
-EQUAL 40 KNOWN 1 MISMATCH 3 UNREADABLE 1
+KNOWN      skills.bonus                 {1 members}        {0 members}        only A [36=1]; only B [] [SK14] reader scope (S): game.exe side lists the item_singleskill bonus (stat 107, e.g. a staff +1 to one skill, per skill id in internal/d2); the d2d reader gives base skill levels only, so the bonus is missing on the d2d side, not extra on game.exe; no game difference is claimed
+EQUAL 47 KNOWN 1 MISMATCH 3 UNREADABLE 1
 verdict FAIL
 writes after start: 0
 lab verbs: off

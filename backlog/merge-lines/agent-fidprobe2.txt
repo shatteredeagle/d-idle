@@ -1,0 +1,3 @@
+BACKLOG: TASK-55 d2s file reader + probe run 2 + run1 write-up: d2d heals life/mana on load, max mana 19.5 vs 19.0 (docs/research/fidelity-probe-run1.md)
+INDEX: docs/research/fidelity-probe-run1.md - fidelity probe runs 1 and 2: per-scenario results, classified mismatches, candidate upstream PRs
+CHANGELOG: d2fidprobe gets a d2s file reader, scenario 15 load-life-mana, -ref/-dump and reader-scope normalisation

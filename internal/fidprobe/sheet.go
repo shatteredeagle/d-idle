@@ -137,9 +137,15 @@ func FromInput(in Input) (*Sheet, error) {
 	i("skills.left", p.LeftSkill)
 	i("skills.right", p.RightSkill)
 
+	rl, err := DefaultRules()
+	if err != nil {
+		return nil, err
+	}
 	var sk, bonus []string
 	for _, x := range p.Skills {
-		sk = append(sk, fmt.Sprintf("%d=%d", x.ID, x.Level))
+		if rl.InClassSkills(int(p.Class), x.ID) && x.Level != 0 {
+			sk = append(sk, fmt.Sprintf("%d=%d", x.ID, x.Level))
+		}
 		if x.Bonus != 0 {
 			bonus = append(bonus, fmt.Sprintf("%d=%d", x.ID, x.Bonus))
 		}
@@ -147,11 +153,29 @@ func FromInput(in Input) (*Sheet, error) {
 	s.Set("skills.base", sk)
 	s.Set("skills.bonus", bonus)
 
-	var st []string
+	var st, stx []string
 	for k, v := range p.Stats {
-		st = append(st, fmt.Sprintf("%d/%d=%d", k>>16, k&0xffff, v))
+		if v == 0 {
+			continue // absent and zero are the same quantity (game.exe omits zeros, d2d lists them)
+		}
+		e := fmt.Sprintf("%d/%d=%d", k>>16, k&0xffff, v)
+		if rl.scopeOnly(int(k & 0xffff)) {
+			stx = append(stx, e)
+		} else {
+			st = append(st, e)
+		}
 	}
 	s.Set("stats.vector", st)
+	s.Set("statsx.vector", stx)
+	// load.*: the current and maximum life, mana and stamina with their 8 fractional bits, from the stat
+	// vector (stats 6 to 11). Kept apart from derived.* (integers) for the load-time comparison.
+	for i, n := range []string{"life", "max_life", "mana", "max_mana", "stamina", "max_stamina"} {
+		if v, ok := p.Stats[uint32(6+i)]; ok {
+			s.Float("load."+n, float64(v)/256)
+		} else {
+			s.Unreadable("load."+n, "stat "+fmt.Sprint(6+i)+" not in the stat vector")
+		}
+	}
 
 	items := map[d2.Container][]string{}
 	for _, u := range in.Snap.Inventory.Items {
