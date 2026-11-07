@@ -30,11 +30,11 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Tier 2 part 1 of docs/research/self-update-design.md sections 3.2, 3.3. Needs the key custody decision (updkey).
+Tier 2 part 1 of docs/research/self-update-design.md sections 3.2, 3.3. Key custody decided 2026-11-07: the private key is an environment-scoped CI secret (see Decisions in the design); needs the updkey setup (TASK-124) before the first signed release.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 MANIFEST.json schema and asset layout written as a contract-style doc; cmd/d2sign (stdlib ed25519) keygen, sign, verify with a review summary; tests
-- [ ] #2 app-release.yml builds assets from a tag and creates a DRAFT release; signing stays manual; nothing run or pushed
+- [ ] #2 app-release.yml builds assets from a tag and uploads the assets; a signing job in the approval-gated `app-release` environment (required reviewer, environment-scoped secret) signs the manifest and publishes; signed `REVOKED` file and minimum version supported; nothing run or pushed
 <!-- AC:END -->

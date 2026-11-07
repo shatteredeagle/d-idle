@@ -35,6 +35,6 @@ Tier 2 part 2 of docs/research/self-update-design.md sections 3.5 to 3.7. Phase 
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 internal/selfupdate: manifest verify, fetch with ETag and caps, safe unpack, state with downgrade floor, engine state machine; offline tests incl. hash mismatch, bad signature, crafted tar
+- [ ] #1 internal/selfupdate: manifest verify, fetch with ETag and caps, safe unpack, state with downgrade floor, signed REVOKED file and minimum version, engine state machine; offline tests incl. hash mismatch, bad signature, crafted tar
 - [ ] #2 watch GET /api/update/status on the viewer and POST check/download/apply/cancel/rollback/inbox on the answer listener behind the token; banner with changelog and progress; never silent; offline switch D2BOT_UPDATE_CHECK=off
 <!-- AC:END -->
