@@ -1,2 +1,0 @@
-BACKLOG: fidprobe-core (TASK-55): first live same-save probe run, scenarios 1-4 read-only on i5 + d2d slot 3; all MISMATCH (d2d heals to full on load, reader scope); docs/probes/fidprobe.md
-CHANGELOG: First live fidelity probe run: game.exe and d2d loaded the same four saves; base stats, max life/mana, quests and waypoints equal, current life/mana at load differs
