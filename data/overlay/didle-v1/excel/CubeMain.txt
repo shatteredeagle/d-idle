@@ -1,0 +1,2 @@
+description	enabled	numinputs	input 1	output
+DI bank: mark	1	1	mrk	isc,qty=1

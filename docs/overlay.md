@@ -81,3 +81,9 @@ DI Fake Mark	1	0	zzm1	1
 - Strings (`.tbl`) and art: a new row shows its key until the string path is built; the first slice relies on the key text.
 - Whether game.exe or d2d tolerates a d.idle save in vanilla mode (policy: refuse by offline scan, TASK-62).
 - Vanilla table-hash equality (overlay off vs the unchanged build) and the full fork ctest suite were not run (V only: test_overlay and overlay_d2d pass on the worker host).
+
+## First shipped overlay: didle-v1 (TASK-63, 2026-11-06)
+
+`data/overlay/didle-v1/excel/` holds the first real fragments: the Raven's Mark currency (`mrk`), one treasure-class line and one cube bank row. Rows, rates and checks: [research/currency-rows.md](research/currency-rows.md); probe record: [probes/currency1.md](probes/currency1.md). Offline validation (`internal/overlay/didlev1_test.go`) needs the user's own install and skips without it.
+
+Donor columns. A new Misc row needs the numbers that make a valid row of the Skeleton Key kind, which are game constants and not text. They are copied as VALUES only, with the minimum set: `type`, `alternategfx`, `component`, `invwidth`, `invheight`, `flippyfile`, `invfile`, `dropsound`, `dropsfxframe`, `usesound`, `transtbl` (what the art and sounds are called). Ours: `name`, `code`, `namestr`, `level`, `levelreq`, `rarity`, `spawnable`, `cost`, `nodurability`, `stackable`, `minstack`, `maxstack`, `spawnstack`. The replaced Blood Raven treasure row carries only the key and the two cells `Item5`, `Prob5`.
