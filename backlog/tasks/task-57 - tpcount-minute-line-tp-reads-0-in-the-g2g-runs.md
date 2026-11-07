@@ -1,9 +1,10 @@
 ---
 id: TASK-57
 title: 'tpcount: minute-line tp reads 0 in the g2g runs'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T01:55:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - bot-defect
 dependencies: []

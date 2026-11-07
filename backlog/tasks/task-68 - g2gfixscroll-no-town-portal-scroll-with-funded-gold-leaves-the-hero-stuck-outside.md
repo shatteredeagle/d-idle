@@ -1,10 +1,10 @@
 ---
 id: TASK-68
 title: 'g2gfixscroll: no town portal scroll with funded gold leaves the hero stuck outside'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T07:05:00Z'
-updated_date: '2026-11-07T07:13:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - bot-defect
 dependencies: []

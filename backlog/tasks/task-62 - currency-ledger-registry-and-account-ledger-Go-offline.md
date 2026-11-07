@@ -1,10 +1,10 @@
 ---
 id: TASK-62
 title: 'currency-ledger: registry and account ledger (Go, offline)'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T03:13:00Z'
-updated_date: '2026-11-07T04:13:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - T5
 dependencies: []

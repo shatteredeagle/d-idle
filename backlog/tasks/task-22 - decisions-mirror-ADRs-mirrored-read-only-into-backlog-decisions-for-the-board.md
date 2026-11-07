@@ -38,3 +38,5 @@ Decided 2026-11-05: ADRs and docs/decisions.md stay the source of truth (guard f
 <!-- SECTION:NOTES:BEGIN -->
 Groom 2026-11-06: drift line D is a false positive: the merge was the card itself (Deferred on purpose); tools/backlog/decisions_mirror.py does not exist. Stays Deferred.
 <!-- SECTION:NOTES:END -->
+
+Status sync 2026-11-07: stays Deferred; the drift D line is a false positive (the merge was the card itself).

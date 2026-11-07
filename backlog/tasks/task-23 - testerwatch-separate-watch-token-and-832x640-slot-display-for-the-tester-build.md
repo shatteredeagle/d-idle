@@ -19,7 +19,7 @@ owns:
 overlap: "TASK-44 (onboardA, 2026-11-06) adds one flag (--watch-access-file) to cmd/d2bot/ladder.go and one test to ladder_test.go; the watch-token tests are unchanged."
 exclusive: []
 contracts: []
-result: "AC 1 done offline (cmd/d2bot tests: token file 0600 reuse, viewer and answer route reject the bot API token, env-only enablement); NOT verified live; AC 2 (video source) and 3 wait for TASK-30 and the entrypoint/README edits, which this task does not own"
+result: "AC 1 done offline (cmd/d2bot tests: token file 0600 reuse, viewer and answer route reject the bot API token, env-only enablement); NOT verified live; AC 2 (video source) and 3 wait for TASK-30 and the entrypoint/README edits, which this task does not own Status sync 2026-11-07: stays open, AC 2 and 3 need the real container and the tester live run (TASK-25 pending)."
 ---
 
 ## Description

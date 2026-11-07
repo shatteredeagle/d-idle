@@ -1,10 +1,10 @@
 ---
 id: TASK-58
 title: 'customitems: feasibility of own items and drop-table overlays on d2d'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T02:58:00Z'
-updated_date: '2026-11-07T03:01:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - T5
 dependencies: []

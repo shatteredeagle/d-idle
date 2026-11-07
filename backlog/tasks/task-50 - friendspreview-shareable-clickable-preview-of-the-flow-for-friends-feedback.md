@@ -1,9 +1,10 @@
 ---
 id: TASK-50
 title: 'friendspreview: shareable clickable preview of the flow for friends feedback'
-status: Proposed
+status: Done
 assignee: []
 created_date: '2026-11-06T20:30:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - tester
 dependencies: []

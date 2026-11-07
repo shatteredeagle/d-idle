@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (55)
+## Active (38)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -43,37 +43,20 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 22 | ladder-t2 | T2 | proposed 0/3 | Runner tier: urgency stage 2 and the unwired T2 points | - | - | [card](archive/openspec-index.md#ladder-t2) |
 | 23 | earlydeath13 | bot-defect | in-progress 2/3 | seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains | - | - | [card](archive/openspec-index.md#earlydeath13) |
 | 24 | tpreserve-live | bot-defect | proposed 0/2 | prove the scroll reserve and no-portal leave with the tp field | - | - | [card](archive/openspec-index.md#tpreserve-live) |
-| 25 | g2f-record | gate | in-progress 3/3 | Gate 2 g2f result, diagnosis and the open decisions | - | - | [card](archive/openspec-index.md#g2f-record) |
-| 26 | fork-labverbs | tester | proposed 3/3 | gate the mutating debug verbs behind a fork flag | fork-branch:d2d.lab3-labverbs | - | [card](archive/openspec-index.md#fork-labverbs) |
-| 27 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
-| 28 | onboardA | onboarding | in-progress 5/5 | onboarding slice A: setup stepper, go-ahead, access | - | - | [card](archive/openspec-index.md#onboardA) |
-| 29 | upstream-next | upstream | proposed 0/2 | next upstream PR batch candidates (one open batch at a time) | - | - | [card](archive/openspec-index.md#upstream-next) |
-| 30 | statusrefresh | tooling | proposed 0/2 | docs/plan/STATUS.md hand-written part is stale (2026-11-03) | - | - | [card](archive/openspec-index.md#statusrefresh) |
-| 31 | ordersux3 | T0 | proposed 0/4 | orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader | - | - | [card](archive/openspec-index.md#ordersux3) |
-| 32 | onboardtour | onboarding | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
-| 33 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
-| 34 | friendspreview | tester | proposed 2/2 | shareable clickable preview of the flow for friends feedback | - | - | [card](archive/openspec-index.md#friendspreview) |
-| 35 | mercrevive | bot-defect | in-progress 3/3 | revive reserve by clvl band per the SME | - | - | [card](archive/openspec-index.md#mercrevive) |
-| 36 | shortdrills | drills | in-progress 3/3 | short live drills for the g2e/g2f fixes | - | - | [card](archive/openspec-index.md#shortdrills) |
-| 37 | abmerc | tooling | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
-| 38 | fidelity-matrix | gate | in-progress 3/3 | bot use versus game.exe, how each row is verified | - | - | [card](archive/openspec-index.md#fidelity-matrix) |
-| 39 | fidprobe-core | gate | in-progress 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
-| 40 | fidprobe-vendor | gate | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
-| 41 | tpcount | bot-defect | in-progress 2/2 | minute-line tp reads 0 in the g2g runs | - | - | [card](archive/openspec-index.md#tpcount) |
-| 42 | customitems | T5 | in-progress 3/3 | feasibility of own items and drop-table overlays on d2d | - | - | [card](archive/openspec-index.md#customitems) |
-| 43 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
-| 44 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
-| 45 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
-| 46 | currency-ledger | T5 | in-progress 2/2 | registry and account ledger (Go, offline) | - | - | [card](archive/openspec-index.md#currency-ledger) |
-| 47 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
-| 48 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
-| 49 | g2grecord | gate | in-progress 3/3 | Gate 2 g2g wave 1 result | - | - | [card](archive/openspec-index.md#g2grecord) |
-| 50 | g2gfixmerc | bot-defect | in-progress 3/3 | merc caps and gold-farm need on the virtual clock and the read price | - | - | [card](archive/openspec-index.md#g2gfixmerc) |
-| 51 | g2gfixmouth | bot-defect | in-progress 2/2 | nav mouth gate no safe click loop at repeated spots | - | - | [card](archive/openspec-index.md#g2gfixmouth) |
-| 52 | g2gfixscroll | bot-defect | in-progress 2/2 | no town portal scroll with funded gold leaves the hero stuck outside | - | - | [card](archive/openspec-index.md#g2gfixscroll) |
-| 53 | judgebelt | gate | in-progress 3/3 | belt funded test judged at the window start | - | - | [card](archive/openspec-index.md#judgebelt) |
-| 54 | forkpub | tester | proposed 3/3 | fork publication phase 1 scan report, push plan, ADR 0003 amendment | - | - | [card](archive/openspec-index.md#forkpub) |
-| 55 | g2g2record | gate | in-progress 3/4 | Gate 2 g2g wave 2 and the five-seed verdict | - | - | [card](archive/openspec-index.md#g2g2record) |
+| 25 | playsession | T0 | proposed 0/3 | one command for a LAN play session | - | - | [card](archive/openspec-index.md#playsession) |
+| 26 | upstream-next | upstream | proposed 0/2 | next upstream PR batch candidates (one open batch at a time) | - | - | [card](archive/openspec-index.md#upstream-next) |
+| 27 | statusrefresh | tooling | proposed 0/2 | docs/plan/STATUS.md hand-written part is stale (2026-11-03) | - | - | [card](archive/openspec-index.md#statusrefresh) |
+| 28 | ordersux3 | T0 | proposed 0/4 | orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader | - | - | [card](archive/openspec-index.md#ordersux3) |
+| 29 | onboardtour | onboarding | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
+| 30 | onboardctl | onboarding | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
+| 31 | abmerc | tooling | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
+| 32 | fidprobe-core | gate | in-progress 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
+| 33 | fidprobe-vendor | gate | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
+| 34 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
+| 35 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
+| 36 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
+| 37 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
+| 38 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

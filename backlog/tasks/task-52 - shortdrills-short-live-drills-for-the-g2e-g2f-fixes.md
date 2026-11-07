@@ -1,9 +1,10 @@
 ---
 id: TASK-52
 title: 'shortdrills: short live drills for the g2e/g2f fixes'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-06T22:34:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - drills
 dependencies: []
