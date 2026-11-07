@@ -13,6 +13,15 @@
    (`-tables` is the extracted game table cache that `d2dsnap -tables` takes; without it item classes are unknown and the items group is UNREADABLE.)
 6. Read the table: any MISMATCH is a matrix row update and, for a d2d deviation, an oracle task; it is never added to `known.json` without a row and a reason. Stop the instance (`tools/game.sh stop <id>`), `tools/agentreap.sh <agent>`, `tools/agentreap.sh --list`.
 
+## Run 2 additions (2026-11-07; V live, see [fidelity-probe-run1.md](../research/fidelity-probe-run1.md))
+
+- Third reference, the d2s file reader (`internal/fidprobe/file.go`, stdlib, on `internal/cheat/d2s`): side source `-a file:X.d2s` (or `-b file:X.d2s`) reads header (class, level, difficulty, act), the stat block with its 8 fractional bits (str/ene/dex/vit, points, exp, gold, current and maximum life, mana, stamina), the 30 class skill levels, quests and waypoints. It does NOT read items, selected skills, area or resists: those cells show UNREADABLE, never EQUAL.
+- `-ref X.d2s`: the file's sheet is also diffed against side A and side B and appended to the report (file against game.exe, file against d2d).
+- `-dump F.json`: both sheets with every field (set members included) as JSON, for re-scoring without the game.
+- Scenario 15 `load-life-mana` (group `load`): life, maximum life, mana, maximum mana, stamina and maximum stamina as floats (stat/256) right after a load. Read game.exe 1 to 2 s after `oog start`; d2d after `key Return` in lockstep with no step. Between repeats: `oog leave`, restore the save copy, `oog start`; d2d restarted with a fresh copy.
+- Instance note: the agent name is not in `tools/instances.conf`, so name the hidden instance with `D2_INSTANCE=i5` for `tools/live.sh` and `oog` (or `-instance i5` for the probe), as in [d2d-lan-oracle.md](../d2d-lan-oracle.md).
+- Normalisation (data in `rules.json`): `skills.base` lists the class's own 30 skills; zero stat entries are dropped on both sides; stat ids only one reader lists go to `statsx`, which no scenario compares.
+
 ## Offline replay (no game)
 
 `d2fidprobe -scenario fresh-sorceress-1 -a json:A.json -b json:B.json -reads 1`, with `A.json` from a `d2.Snapshot` JSON and `B.json` from `d2dsnap -progress`.
