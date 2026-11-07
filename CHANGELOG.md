@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d2fidprobe gets a d2s file reader, scenario 15 load-life-mana, -ref/-dump and reader-scope normalisation
 - First live fidelity probe run: game.exe and d2d loaded the same four saves; base stats, max life/mana, quests and waypoints equal, current life/mana at load differs
 - docs: Gate 2 g2g wave 2 collected and the combined five-seed verdict written (NOT PASSED, 3 of 5 seeds) (docs/research/g2g-five-seed.md).
 - d2fidprobe: same-save fidelity probe tool (game.exe vs d2d snapshot diff, EQUAL/KNOWN/MISMATCH/UNREADABLE), offline only
