@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (52)
+## Active (53)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -71,6 +71,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 50 | g2gfixmerc | bot-defect | in-progress 3/3 | merc caps and gold-farm need on the virtual clock and the read price | - | - | [card](archive/openspec-index.md#g2gfixmerc) |
 | 51 | g2gfixmouth | bot-defect | in-progress 2/2 | nav mouth gate no safe click loop at repeated spots | - | - | [card](archive/openspec-index.md#g2gfixmouth) |
 | 52 | g2gfixscroll | bot-defect | in-progress 2/2 | no town portal scroll with funded gold leaves the hero stuck outside | - | - | [card](archive/openspec-index.md#g2gfixscroll) |
+| 53 | judgebelt | gate | in-progress 3/3 | belt funded test judged at the window start | - | - | [card](archive/openspec-index.md#judgebelt) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
