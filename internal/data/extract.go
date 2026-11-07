@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"d2lod-bot/internal/data/mpq"
+	"d2lod-bot/internal/overlay"
 )
 
 // Stamp identifies the install a cache was extracted from.
@@ -24,6 +25,14 @@ type Stamp struct {
 	// PatchSHA256 is the hex sha256 of Patch_D2.mpq: sizes alone miss a
 	// same-size modded patch. Empty when the install has no patch archive.
 	PatchSHA256 string `json:"patch_sha256,omitempty"`
+	// OverlayHash8 is the hash of the d.idle overlay fragments (D2_OVERLAY_DIR, docs/overlay.md); empty in vanilla
+	// mode, so a vanilla cache and a d.idle cache never count as the same cache.
+	OverlayHash8 string `json:"overlay,omitempty"`
+}
+
+// overlayFragments reads the fragments named by D2_OVERLAY_DIR (none when unset).
+func overlayFragments() ([]overlay.Fragment, error) {
+	return overlay.Load(os.Getenv(overlay.Env))
 }
 
 // InstallStamp computes the stamp for an install directory: sizes of
@@ -47,6 +56,13 @@ func InstallStamp(installDir string) (Stamp, error) {
 			}
 		}
 	}
+	frags, err := overlayFragments()
+	if err != nil {
+		return st, err
+	}
+	if len(frags) > 0 || os.Getenv(overlay.Env) != "" {
+		st.OverlayHash8 = overlay.Hash8(frags)
+	}
 	if st.Files["d2data.mpq"] == 0 {
 		return st, fmt.Errorf("data: d2data.mpq not found in %s", installDir)
 	}
@@ -54,7 +70,7 @@ func InstallStamp(installDir string) (Stamp, error) {
 }
 
 func (s Stamp) equal(o Stamp) bool {
-	if s.Schema != o.Schema || s.PatchSHA256 != o.PatchSHA256 || len(s.Files) != len(o.Files) {
+	if s.Schema != o.Schema || s.PatchSHA256 != o.PatchSHA256 || s.OverlayHash8 != o.OverlayHash8 || len(s.Files) != len(o.Files) {
 		return false
 	}
 	for k, v := range s.Files {
@@ -174,6 +190,14 @@ func readSources(installDir string) (*sources, error) {
 		return nil, err
 	}
 	defer closeAll(as)
+	frags, err := overlayFragments()
+	if err != nil {
+		return nil, err
+	}
+	byTable := map[string]overlay.Fragment{}
+	for _, f := range frags {
+		byTable[f.Table] = f
+	}
 	s := &sources{tables: map[string][]byte{}, strs: map[string]string{}}
 	for _, sp := range specs {
 		raw, err := readFirst(as, excelDir+sp.name+".txt")
@@ -182,6 +206,13 @@ func readSources(installDir string) (*sources, error) {
 				continue
 			}
 			return nil, err
+		}
+		if f, ok := byTable[strings.ToLower(sp.name)]; ok {
+			m, err := overlay.Merge(string(raw), f)
+			if err != nil {
+				return nil, err
+			}
+			raw = []byte(m.Text)
 		}
 		s.tables[sp.name] = trimTable(raw, sp.cols)
 	}
@@ -330,6 +361,12 @@ func Load(cacheDir string) (*DB, error) {
 // Open returns the DB for an install, re-extracting into cacheDir first when
 // the cache is missing or was made from a different install.
 func Open(installDir, cacheDir string) (*DB, error) {
+	// A d.idle overlay gets its own cache directory per fragment hash, so switching modes does not thrash one cache.
+	if frags, err := overlayFragments(); err != nil {
+		return nil, err
+	} else if os.Getenv(overlay.Env) != "" {
+		cacheDir = filepath.Join(cacheDir, "didle-"+overlay.Hash8(frags))
+	}
 	if !CacheCurrent(installDir, cacheDir) {
 		if err := Extract(installDir, cacheDir); err != nil {
 			return nil, err
