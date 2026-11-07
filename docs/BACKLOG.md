@@ -562,6 +562,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - dietcards (TASK-116): docs/cards.md no longer committed; no more cards.md merge-queue conflicts
 - fidbatch: upstream batching rules and bundle queue entry for fid-load-life-mana (not ready: no game.exe address, no oracle, no verifier); candidate branch on the private fork remote (TASK-101)
 - TASK-101 load life/mana: game.exe loader found (FUN_0056b180 -> FUN_0056af80, kept exactly, stamina = maximum), oracle fl_load.py V run 414 cases (parent 392 differ, new fork branch 0); needs independent Opus verification; fork branch push pending
+- fix TASK-116 folded title (TASK-116)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
