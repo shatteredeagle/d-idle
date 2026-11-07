@@ -778,3 +778,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
 - docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
 - docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
+- docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident

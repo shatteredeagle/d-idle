@@ -1,2 +1,0 @@
-CHANGELOG: d.idle fork published as the standalone public repo shatteredeagle/d2d-didle (record: docs/fork-publication/PUBLISHED.md)
-INDEX: docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident
