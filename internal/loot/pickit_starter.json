@@ -7,6 +7,7 @@
   {"name": "quest items by code", "match": {"codes": ["j34", "g34", "d33", "g33", "bbb", "qey", "qhr", "qbr", "qf1", "qf2", "mss", "hfh", "ice", "tr2", "xyz", "luv"]}, "action": "keep",  "tier": "S", "prio": 100, "reason": "act 3-5 quest item (docs/act3.md X6), in case items.txt does not flag it"},
   {"name": "unique charms",    "match": {"types": ["scha","mcha","lcha"], "qualities": ["unique"]}, "action": "stash", "tier": "S", "prio": 95, "reason": "unique charm (Annihilus, Torch, Gheed)"},
   {"name": "runes",            "match": {"types": ["rune"]},                                    "action": "stash", "tier": "S", "prio": 90, "reason": "rune"},
+  {"name": "currency marks", "match": {"codes": ["mrk"]},                                  "action": "keep",  "tier": "S", "prio": 92, "reason": "Raven's Mark currency (d.idle overlay didle-v1, docs/research/currency-rows.md): carry in the pack until the cube bank turns it into tally; never sell or drop"},
   {"name": "tomes",            "match": {"codes": ["tbk","ibk"], "needed": "tome"},             "action": "keep",  "tier": "S", "prio": 88, "reason": "tome we lack"},
   {"name": "top gems",         "match": {"codes": ["gzv","gly","glb","glg","glr","glw","gpv","gpy","gpb","gpg","gpr","gpw","skl","skz"]}, "action": "stash", "tier": "S", "prio": 80, "reason": "flawless or perfect gem"},
   {"name": "unique and set",   "match": {"qualities": ["unique","set"], "notTypes": ["scha","mcha","lcha"]}, "action": "stash", "tier": "A", "prio": 85, "reason": "unique or set item (identify, sell non-upgrades later)"},
