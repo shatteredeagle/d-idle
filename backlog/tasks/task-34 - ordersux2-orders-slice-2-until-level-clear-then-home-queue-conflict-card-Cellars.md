@@ -1,15 +1,17 @@
 ---
 id: TASK-34
 title: 'ordersux2: orders slice 2: until-level, clear then home, queue, conflict'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-07T21:56:00Z'
 labels:
   - watch
   - feature
   - ladder
   - T0
+  - parked
 milestone: m-1
 dependencies: []
 priority: medium
@@ -22,6 +24,7 @@ owns:
   - "docs/orders-slice2.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

@@ -1,10 +1,11 @@
 ---
 id: TASK-77
 title: 'fid-stock-oracle: oracle: vendor stock generation and refresh'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:03:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - oracle
@@ -12,6 +13,7 @@ labels:
   - d2d-loot
   - d2d-vendor
   - fidelity
+  - parked
 milestone: m-2
 dependencies:
   - TASK-55
@@ -23,6 +25,7 @@ owns:
   - "docs/probes/fid/fid-stock-oracle.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

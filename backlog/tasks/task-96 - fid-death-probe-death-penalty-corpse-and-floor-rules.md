@@ -1,16 +1,18 @@
 ---
 id: TASK-96
 title: 'fid-death: probe: death penalty, corpse and floor rules'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - d2d-measure
   - d2d-combat
   - d2d-items
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: high
@@ -20,6 +22,7 @@ owns:
   - "docs/probes/fid/fid-death.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description
