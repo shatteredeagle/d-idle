@@ -76,12 +76,21 @@ timescale:*) mflag="--time-scale ${D2D_MODE#timescale:}" ;;
 esac
 
 # a character that already has a save is loaded from the select screen, otherwise a new one is created
+# (bare d2d keeps its saves under XDG_CONFIG_HOME; the managed d2d of d2bot under <data>/instances/<inst>/d2d/config: TASK-25 live
+# defect, only the first was checked, so every restart created a NEW character over the saved one)
 saved=
-[ -f "$XDG_CONFIG_HOME/d2d/save/$name.d2s" ] && saved=1
+for f in "$XDG_CONFIG_HOME/d2d/save/$name.d2s" "${D2BOT_DATA:-/data}"/instances/*/d2d/config/d2d/save/"$name".d2s; do
+	[ -f "$f" ] && saved=1
+done
 
 pids=
 stop() {
 	trap '' TERM INT
+	# the bot (or bare d2d) first and alone: it saves and quits d2d THROUGH the tap, so the tap must outlive it (TASK-25 live:
+	# a TERM to the tap at the same time made the save-and-quit fail and the bot relaunched d2d until docker killed the container)
+	last=${pids##* }
+	kill -TERM "$last" 2>/dev/null || true
+	wait "$last" 2>/dev/null || true
 	for p in $pids; do kill -TERM "$p" 2>/dev/null || true; done
 	wait
 	exit 0
