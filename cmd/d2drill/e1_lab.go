@@ -204,6 +204,7 @@ func e1Scenarios() []e1Scenario {
 			func(q int) int { return q + 10 }, e1MercEvalC),
 		np("E1.noportal-a", "area 7, 0 potions, 47 percent life, no scroll or tome: the bot leaves after bot.noPortalWaitSec", false),
 		np("E1.noportal-b", "control: the same with a town portal scroll in the pack: the bot portals to town, does not leave", true),
+		e1MouthScenario(),
 	}
 }
 
