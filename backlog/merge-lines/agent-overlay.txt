@@ -1,0 +1,3 @@
+BACKLOG: TASK-59 table overlay: fork --overlay-dir (branch d2d.lab4-overlay, default off), Go internal/overlay + data cache stamp, d2bot --overlay-dir, docs/overlay.md; fork build/ctest see the task result
+INDEX: docs/overlay.md - table overlay file format, keys per table, mode stamp (d.idle mode)
+CHANGELOG: d.idle mode table overlay (--overlay-dir) on the Go side and in the fork branch; vanilla unchanged
