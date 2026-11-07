@@ -32,5 +32,5 @@ Why: direction review section 7 step 8. Done when: the draft is in the repo for 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 One page: the loop that won, the three metrics with their target, what is cut; draft only, replaces the Current truth ranking paragraph through the user's grill
-- [ ] #2 Direction in two sentences at the top
+- [ ] #2 Friend feedback (TASK-113) is the H-test audience for this brief. Direction in two sentences at the top
 <!-- AC:END -->
