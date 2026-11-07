@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (54)
+## Active (55)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -73,6 +73,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 52 | g2gfixscroll | bot-defect | in-progress 2/2 | no town portal scroll with funded gold leaves the hero stuck outside | - | - | [card](archive/openspec-index.md#g2gfixscroll) |
 | 53 | judgebelt | gate | in-progress 3/3 | belt funded test judged at the window start | - | - | [card](archive/openspec-index.md#judgebelt) |
 | 54 | forkpub | tester | proposed 3/3 | fork publication phase 1 scan report, push plan, ADR 0003 amendment | - | - | [card](archive/openspec-index.md#forkpub) |
+| 55 | g2g2record | gate | in-progress 3/4 | Gate 2 g2g wave 2 and the five-seed verdict | - | - | [card](archive/openspec-index.md#g2g2record) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
