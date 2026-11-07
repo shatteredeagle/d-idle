@@ -1,2 +1,0 @@
-CHANGELOG: docs: direction review of the whole project (parity premise, ladder, metacurrency, tester build, gate and board machinery; stop list, two-week plan, five user decisions) (docs/research/direction-review.md)
-INDEX: research: [direction-review.md](research/direction-review.md): 2026-11-07 review of product direction, foundation, process cost, design hypotheses, player-experience pass, stop list, two-week plan, risks, decisions for the user

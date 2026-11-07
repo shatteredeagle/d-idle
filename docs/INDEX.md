@@ -784,3 +784,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/soaks/gate2-multiseed-20261107-0953-g2g2.md: Gate 2 g2g wave 2 record (seeds 19, 21), per-seed criteria, d2dsoak output
 - docs/research/fidelity-cards.md: backlog map of the fidelity cards (card, matrix rows, kind, d2d area, live, size, deps, label counts)
 - docs/research/fidelity-probe-run1.md - fidelity probe runs 1 and 2: per-scenario results, classified mismatches, candidate upstream PRs
+- research: [direction-review.md](research/direction-review.md): 2026-11-07 review of product direction, foundation, process cost, design hypotheses, player-experience pass, stop list, two-week plan, risks, decisions for the user
