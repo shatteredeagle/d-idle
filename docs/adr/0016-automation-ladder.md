@@ -1,5 +1,5 @@
 ---
-status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap)
+status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap), amended 2026-11-06 (item 15: one worth unit, several scopes)
 date: 2026-11-05
 decision-makers: user (grill 0005)
 ---
@@ -146,6 +146,14 @@ Staging: until combat computes urgency, five life bands are the stand-in for the
 ### Parked update: the card cap is removed
 
 The Parked line "Removing the card cap ... the cap stands until then" is superseded. The cap was removed on 2026-11-05 (user decision; recorded in the ADR 0015 header amendment and the Cards bullet of docs/decisions.md). The WIP limit of 3 implementation agents stays.
+
+## Amendment 2026-11-06 (user approval 2026-11-06, "accept"): item 15, one worth unit in several scopes
+
+The original text above stays as written. This amends item 15 only.
+
+Item 15 said "under one worth rule with no second currency". New wording: there is ONE worth unit and one worth table. The currency registry (a data table, [docs/research/metacurrency-design.md](../research/metacurrency-design.md)) may hold that unit in several scopes and forms: today per-character Raven's Mark items (`mark`) and the per-profile Tally ledger (`tally`, banked worth). Banking turns marks into tally at their worth; a mark is priced so that banking never beats cubing. A new currency is a registry row, not code. The rest of item 15 (cube ratios, quality-level minimum classes, vendor cap, reserved runes) is unchanged. "Account" means per profile. Carried marks can be lost, the banked tally never is.
+
+Source: user decision 2026-11-06, all six recommendations of docs/research/metacurrency-design.md; entry in docs/decisions.md.
 
 ## Sources
 
