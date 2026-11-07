@@ -1,0 +1,2 @@
+INDEX: docs/research/review-load-life-mana-opus.md: independent Opus verification of the load life/mana candidate r2 (TASK-101): loader claim holds (incl. live stat callback), limits for after-load rescale, d2d refresh clamp, life-0 saves
+BACKLOG: TASK-101 verification (fidverify1): r2 READY to open after the PR body gains the limits of review-load-life-mana-opus.md F2-F4; candidate card: d2d Fight::revive refills life only, game.exe resurrect also mana and stamina (0x54c17c..0x54c198)
