@@ -1,3 +1,0 @@
-BACKLOG: TASK-65 g2g diagnosis docs/research/g2g-diagnosis.md; TASK-66 to TASK-68 proposed bot-defect fixes (merc clock and quote, mouth gate loop, town portal scroll first)
-INDEX: docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
-CHANGELOG: Gate 2 g2g wave 1 diagnosed: merc revive cap runs on the wall clock and the farm trigger uses the formula estimate (docs/research/g2g-diagnosis.md)

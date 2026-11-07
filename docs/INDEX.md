@@ -775,3 +775,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/currency-rows.md - Raven's Mark overlay rows, rate and bank recipe (TASK-63); docs/probes/currency1.md - currency slice 1 live acceptance (pending)
 - docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block
 - docs/soaks/gate2-multiseed-20261107-0150-g2g.md: Gate 2 multi-seed run 20261107-0150-g2g (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
