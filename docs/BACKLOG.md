@@ -564,6 +564,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-101 load life/mana: game.exe loader found (FUN_0056b180 -> FUN_0056af80, kept exactly, stamina = maximum), oracle fl_load.py V run 414 cases (parent 392 differ, new fork branch 0); needs independent Opus verification; fork branch push pending
 - fix TASK-116 folded title (TASK-116)
 - TASK-101 verification (fidverify1): r2 READY to open after the PR body gains the limits of review-load-life-mana-opus.md F2-F4; candidate card: d2d Fight::revive refills life only, game.exe resurrect also mana and stamina (0x54c17c..0x54c198)
+- GATE2: wave 3a (g2h, seeds 11/13/17) 3 of 3 PASS, indicative only (3 seeds; wave 3b not run, decision D1); g2g NOKILL failures gone; analysis docs/research/g2h-wave3a.md (TASK-119)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

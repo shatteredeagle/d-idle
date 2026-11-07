@@ -1,4 +1,0 @@
-BACKLOG: GATE2: wave 3a (g2h, seeds 11/13/17) 3 of 3 PASS, indicative only (3 seeds; wave 3b not run, decision D1); g2g NOKILL failures gone; analysis docs/research/g2h-wave3a.md (TASK-119)
-INDEX: docs/research/g2h-wave3a.md: Gate 2 wave 3a (g2h) vs g2g per seed, merc numbers, three-fix proof checklist, reload-heal caveat
-INDEX: docs/soaks/gate2-multiseed-20261107-1811-g2h.md: Gate 2 multi-seed run g2h (PASSED, indicative: 3 seeds), per-seed criteria, d2dsoak output
-CHANGELOG: docs: Gate 2 wave 3a (g2h, seeds 11/13/17) result and analysis against g2g (docs/research/g2h-wave3a.md, docs/soaks/gate2-multiseed-20261107-1811-g2h.md); indicative, 3 seeds.
