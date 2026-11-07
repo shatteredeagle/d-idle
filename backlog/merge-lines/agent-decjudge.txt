@@ -1,2 +1,0 @@
-CHANGELOG: Gate 2 BELT judge: a belt window counts as funded by the gold at its first minute (user 2026-11-07); decisions entry for the g2g judging answers
-BACKLOG: judgebelt: belt funded test at the window start (d2dsoakstat, soak-gates, decisions)
