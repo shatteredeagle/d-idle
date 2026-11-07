@@ -776,3 +776,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block
 - docs/soaks/gate2-multiseed-20261107-0150-g2g.md: Gate 2 multi-seed run 20261107-0150-g2g (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
 - docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
+- docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
