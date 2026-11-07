@@ -1,15 +1,17 @@
 ---
 id: TASK-37
 title: 'ladder-t1: Tidy tier: cards and wiring for what T1 still lacks'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-07T21:56:00Z'
 labels:
   - bot
   - feature
   - ladder
   - T1
+  - parked
 dependencies: []
 priority: medium
 ordinal: 37000
@@ -18,6 +20,7 @@ owns:
   - "docs/ladder-t1.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

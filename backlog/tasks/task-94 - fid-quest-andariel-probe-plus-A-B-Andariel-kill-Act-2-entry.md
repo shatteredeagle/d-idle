@@ -1,10 +1,11 @@
 ---
 id: TASK-94
 title: 'fid-quest-andariel: probe plus A:B: Andariel kill, Act 2 entry'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - bot
   - drill
@@ -12,6 +13,7 @@ labels:
   - d2d-monsters
   - fidelity
   - gate
+  - parked
 milestone: m-2
 dependencies:
   - TASK-55
@@ -23,6 +25,7 @@ owns:
   - "docs/probes/fid/fid-quest-andariel.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

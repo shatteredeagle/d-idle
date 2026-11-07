@@ -1,16 +1,17 @@
 ---
 id: TASK-47
 title: 'ordersux3: orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:03:00Z'
-updated_date: '2026-11-06T16:03:00Z'
+updated_date: '2026-11-07T21:56:00Z'
 labels:
   - watch
   - feature
   - ladder
   - T0
+  - parked
 dependencies:
   - TASK-34
 priority: low
@@ -22,6 +23,7 @@ owns:
   - "docs/orders-slice3.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

@@ -1,10 +1,11 @@
 ---
 id: TASK-88
 title: 'fid-sorc-upstream: upstream: private-branch Sorceress fixes (mana timing, cast length, armor group)'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -12,6 +13,7 @@ labels:
   - d2d-skills
   - d2d-time
   - fidelity
+  - parked
 milestone: m-2
 dependencies:
   - TASK-92
@@ -22,6 +24,7 @@ owns:
   - "docs/probes/fid/fid-sorc-upstream.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

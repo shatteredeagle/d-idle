@@ -1,15 +1,17 @@
 ---
 id: TASK-64
 title: 'currency-slice: bank step, balance line and kill drill'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T03:13:00Z'
+updated_date: '2026-11-07T21:56:00Z'
 labels:
   - bot
   - feature
   - metacurrency
   - T5
+  - parked
 milestone: m-3
 dependencies: []
 priority: medium
@@ -20,6 +22,7 @@ owns:
   - "docs/probes/currency-drill.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

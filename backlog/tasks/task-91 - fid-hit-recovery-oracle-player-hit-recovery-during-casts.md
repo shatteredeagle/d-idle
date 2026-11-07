@@ -1,10 +1,11 @@
 ---
 id: TASK-91
 title: 'fid-hit-recovery: oracle: player hit recovery during casts'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - oracle
@@ -12,6 +13,7 @@ labels:
   - d2d-skills
   - d2d-time
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: medium
@@ -21,6 +23,7 @@ owns:
   - "docs/probes/fid/fid-hit-recovery.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

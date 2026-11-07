@@ -1,16 +1,18 @@
 ---
 id: TASK-92
 title: 'fid-lab-rebase: lab binary rebase: private fixes into the lab binary'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - d2d-measure
   - d2d-data
   - d2d-time
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: high
@@ -20,6 +22,7 @@ owns:
   - "docs/probes/fid/fid-lab-rebase.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

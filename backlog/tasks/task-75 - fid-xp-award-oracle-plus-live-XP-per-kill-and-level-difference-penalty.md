@@ -1,16 +1,18 @@
 ---
 id: TASK-75
 title: 'fid-xp-award: oracle plus live: XP per kill and level-difference penalty'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:03:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - readonly
   - d2d-combat
   - d2d-monsters
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: medium
@@ -20,6 +22,7 @@ owns:
   - "docs/probes/fid/fid-xp-award.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

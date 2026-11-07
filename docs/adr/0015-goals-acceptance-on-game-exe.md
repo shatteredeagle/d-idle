@@ -1,5 +1,5 @@
 ---
-status: accepted, amended 2026-11-04, amended by 0016 (items 1, 7 and 10; item 11 cap of 12 open cards removed)
+status: accepted, amended 2026-11-04, amended by 0016 (items 1, 7 and 10; item 11 cap of 12 open cards removed), amended by ADR 0017 (2026-11-07: ranking of work and Gate 2 waves)
 date: 2026-11-03
 decision-makers: user
 ---

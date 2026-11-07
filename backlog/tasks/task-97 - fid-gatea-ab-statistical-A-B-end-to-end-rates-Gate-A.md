@@ -1,10 +1,11 @@
 ---
 id: TASK-97
 title: 'fid-gatea-ab: statistical A:B: end-to-end rates, Gate A'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - d2d-measure
@@ -14,6 +15,7 @@ labels:
   - fidelity
   - gate
   - soak
+  - parked
 milestone: m-2
 dependencies:
   - TASK-55
@@ -27,6 +29,7 @@ owns:
   - "docs/probes/fid/fid-gatea-ab.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07; Gate A and Gate 3 runs wait for the design brief v1 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description
