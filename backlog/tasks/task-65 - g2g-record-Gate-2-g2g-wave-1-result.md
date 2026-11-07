@@ -11,9 +11,10 @@ ordinal: 63000
 card: "g2grecord"
 owns:
   - "docs/soaks/gate2-multiseed-20261107-0150-g2g.md"
+  - "docs/research/g2g-diagnosis.md"
 exclusive: []
 contracts: []
-result: "Gate 2 g2g wave 1 (seeds 11, 13, 17) NOT PASSED, indicative at 3 of 5 seeds: seed 11 PASS, seeds 13 and 17 fail NOKILL, seed 17 also funded BELT; record read from logs, nothing run live by this task."
+result: "Gate 2 g2g wave 1 (seeds 11, 13, 17) NOT PASSED, indicative at 3 of 5 seeds: seed 11 PASS, seeds 13 and 17 fail NOKILL, seed 17 also funded BELT; record read from logs, nothing run live by this task. Diagnosis of the failures: docs/research/g2g-diagnosis.md (read from the logs and the worker-host bot logs, nothing run live)."
 ---
 
 ## Acceptance Criteria

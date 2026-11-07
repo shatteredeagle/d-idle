@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (49)
+## Active (52)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -68,6 +68,9 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 47 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
 | 48 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
 | 49 | g2grecord | gate | in-progress 3/3 | Gate 2 g2g wave 1 result | - | - | [card](archive/openspec-index.md#g2grecord) |
+| 50 | g2gfixmerc | bot-defect | proposed 0/3 | merc caps and gold-farm need on the virtual clock and the read price | - | - | [card](archive/openspec-index.md#g2gfixmerc) |
+| 51 | g2gfixmouth | bot-defect | proposed 0/2 | nav mouth gate no safe click loop at repeated spots | - | - | [card](archive/openspec-index.md#g2gfixmouth) |
+| 52 | g2gfixscroll | bot-defect | proposed 0/2 | no town portal scroll with funded gold leaves the hero stuck outside | - | - | [card](archive/openspec-index.md#g2gfixscroll) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
