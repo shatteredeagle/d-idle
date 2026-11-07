@@ -1,0 +1,52 @@
+[
+ {
+  "ID": "E1.tp-a",
+  "Group": "shortdrill-tpcount",
+  "Title": "town, 3 town portal scrolls in the pack: the minute line shows tp=3",
+  "Verdict": "FAIL",
+  "Reason": "first minute line tp=0, want 3",
+  "Facts": {
+   "gold": "0",
+   "scrolls": "3",
+   "state": "area=1 level=12 gold=0",
+   "tome": "false"
+  },
+  "Cheats": [
+   "debug goto 1",
+   "debug clearinv",
+   "debug belt clear",
+   "debug stat 12 12",
+   "debug stat 15 0",
+   "debug give tsc pack",
+   "debug give tsc pack",
+   "debug give tsc pack",
+   "debug stat 14 0"
+  ],
+  "Run": "E1.tp-a-20261107-015718",
+  "WritesAfterStart": 0,
+  "VirtualSec": 148.48,
+  "WallSec": 10.015462079,
+  "NoPortalToLeaveSec": 0,
+  "WaitedSec": 0,
+  "Key": [
+   "{\"time\":\"2026-11-06T20:57:18.437491186-05:00\",\"level\":\"INFO\",\"msg\":\"merc policy on (merc.enabled=1)\",\"inst\":\"e1\",\"reviver\":true}",
+   "{\"time\":\"2026-11-06T20:57:18.455511384-05:00\",\"level\":\"INFO\",\"msg\":\"d2dsrc\",\"inst\":\"e1\",\"msg\":\"d2dsrc: 24 new unknown fields: hovered, inventory.item_flags, missiles, monster.hostile, monster.resists, monster.states, monster.unique_no, mouse, object.class, object.mode, player.hotkeys, player.mode, player.resist.magic, player.skills.bonus, player.states, player.stats.effective, ui.chat, ui.merc, ui.party, ui.quest, ui.trade, unit.flags, unit.owner, viewport\"}",
+   "{\"time\":\"2026-11-06T20:57:18.456750872-05:00\",\"level\":\"INFO\",\"msg\":\"zone entry\",\"inst\":\"e1\",\"area\":1,\"clvl\":12,\"life\":\"40/40\",\"heal\":0,\"mana\":\"35/35\",\"tome\":3,\"merc\":\"none\"}",
+   "{\"time\":\"2026-11-06T20:57:18.877714263-05:00\",\"level\":\"INFO\",\"msg\":\"zone entry\",\"inst\":\"e1\",\"area\":2,\"clvl\":12,\"life\":\"40/40\",\"heal\":0,\"mana\":\"35/35\",\"tome\":3,\"merc\":\"none\"}",
+   "{\"time\":\"2026-11-06T20:57:18.878000218-05:00\",\"level\":\"INFO\",\"msg\":\"inv-tp-dump\",\"inst\":\"e1\",\"why\":\"first\",\"area\":2,\"hastp\":true,\"decided_by\":\"class=529 addr=0x2\",\"statsReader\":true,\"portal_items\":\"scroll class=529 where=inventory addr=0x2 counted=1 raw70=no70; scroll class=529 where=inventory addr=0x3 counted=1 raw70=no70; scroll class=529 where=inventory addr=0x4 counted=1 raw70=no70\",\"items\":\"63@equipment 529@inventory 529@inventory 529@inventory\"}",
+   "{\"time\":\"2026-11-06T20:57:20.888910103-05:00\",\"level\":\"INFO\",\"msg\":\"minute\",\"inst\":\"e1\",\"area\":2,\"clvl\":12,\"xp\":6,\"kills\":128,\"killsGame\":6,\"deaths\":0,\"potions\":0,\"mana\":0,\"packHP\":0,\"packMP\":0,\"beltBoxes\":\"\",\"potionsUsed\":0,\"tp\":0,\"gold\":2,\"stashGold\":0,\"restarts\":0,\"xpRisk\":6,\"xpLost\":0,\"rung\":0,\"goal\":\"farm_area\",\"step\":\"Fighting in Blood Moor\",\"state\":\"other\",\"rstate\":\"clearing\",\"life\":38,\"maxLife\":40,\"mp\":1,\"maxMana\":35,\"table\":\"fallback-lightning-v2\",\"invPct\":7,\"dmgTaken\":2,\"hpMinPct\":95,\"armor\":\"?\",\"goldPickup\":2,\"runBelieved\":true,\"stam\":3270,\"stamMax\":18944,\"runKeys\":3,\"runResets\":0,\"walkingRaw\":\"1\"}",
+   "{\"time\":\"2026-11-06T20:57:25.221973095-05:00\",\"level\":\"INFO\",\"msg\":\"minute\",\"inst\":\"e1\",\"area\":2,\"clvl\":12,\"xp\":7,\"kills\":132,\"killsGame\":10,\"deaths\":0,\"potions\":0,\"mana\":0,\"packHP\":0,\"packMP\":0,\"beltBoxes\":\"\",\"potionsUsed\":0,\"tp\":0,\"gold\":2,\"stashGold\":0,\"restarts\":0,\"xpRisk\":7,\"xpLost\":0,\"rung\":0,\"goal\":\"farm_area\",\"step\":\"Fighting in Blood Moor\",\"state\":\"other\",\"rstate\":\"clearing\",\"life\":34,\"maxLife\":40,\"mp\":2,\"maxMana\":35,\"table\":\"fallback-lightning-v2\",\"invPct\":7,\"dmgTaken\":6,\"hpMinPct\":85,\"armor\":\"?\",\"goldPickup\":0,\"navRung\":1,\"runBelieved\":true,\"stam\":2968,\"stamMax\":18944,\"runKeys\":11,\"runResets\":0,\"walkingRaw\":\"1\"}",
+   "{\"time\":\"2026-11-06T20:57:28.525760794-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":1,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:28.847359802-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":2,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:29.168844628-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":3,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:29.495126484-05:00\",\"level\":\"INFO\",\"msg\":\"no town portal: walking back to town\",\"inst\":\"e1\",\"from\":2,\"to\":1}",
+   "{\"time\":\"2026-11-06T20:57:29.500378282-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (open portal: context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":1}",
+   "{\"time\":\"2026-11-06T20:57:30.23346834-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":1,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:30.556929275-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":2,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:30.879658339-05:00\",\"level\":\"INFO\",\"msg\":\"d2d town portal attempt failed\",\"inst\":\"e1\",\"try\":3,\"err\":\"context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)\"}",
+   "{\"time\":\"2026-11-06T20:57:31.206352563-05:00\",\"level\":\"INFO\",\"msg\":\"no town portal: walking back to town\",\"inst\":\"e1\",\"from\":2,\"to\":1}",
+   "{\"time\":\"2026-11-06T20:57:31.211966476-05:00\",\"level\":\"WARN\",\"msg\":\"action failed\",\"inst\":\"e1\",\"what\":\"stop: go to town\",\"err\":\"town: no town portal available (open portal: context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout)) (walk to town failed: context canceled (read unix @-\u003e<home>/d2d-lab/slots/4/d2d.sock: i/o timeout))\",\"consecutive\":2}"
+  ],
+  "LogFile": "2026-11-07-shortdrill-tpcount-prefix-E1.tp-a.log.txt"
+ }
+]

@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (40)
+## Active (41)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -59,6 +59,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 38 | fidelity-matrix | gate | in-progress 3/3 | bot use versus game.exe, how each row is verified | - | - | [card](archive/openspec-index.md#fidelity-matrix) |
 | 39 | fidprobe-core | gate | proposed 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
 | 40 | fidprobe-vendor | gate | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
+| 41 | tpcount | bot-defect | in-progress 2/2 | minute-line tp reads 0 in the g2g runs | - | - | [card](archive/openspec-index.md#tpcount) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

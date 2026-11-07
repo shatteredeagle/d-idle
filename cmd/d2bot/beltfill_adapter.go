@@ -13,3 +13,9 @@ func (a townAdapter) FillBelt(ctx context.Context) (int, error) {
 	rep, err := a.t.FillBelt(ctx)
 	return rep.Moved, err
 }
+
+// TPCount and TakeTPBought make townAdapter (and so d2dTown) a bot.TPDiag: the adapter holds the Town in a named field,
+// so without these the runner's type assertion for the minute line fields tp and tpBuy failed and tp read 0 on every
+// line (g2g: 2500 lines, while inv-tp-dump counted a tome).
+func (a townAdapter) TPCount(s *d2.Snapshot) int { return a.t.TPCount(s) }
+func (a townAdapter) TakeTPBought() int          { return a.t.TakeTPBought() }

@@ -35,3 +35,15 @@ Run gate2-s13-20261106-1735-drill13, slot 3, bot 2a6cf2b9, lab3 binary (fork f75
 - A merc with a real level (a quote above 0) would let the real-quote path run live: either a fork verb `debug merc level N` or a paid Kashya hire at clvl 12 (the D8.h hire flow still fails: no hire line after `talk`).
 - The managed-bot variant (`d2bot --managed`) would exercise the real game restart after a leave, but a saved character is back in town, so the no-portal scenario needs the attach form used here.
 - Slot 3 and a load under 1.1 per core; load stayed 0.8 to 1.3 per core here and admission waited about 5 minutes once.
+
+## Drill 4: minute-line tp count (group shortdrill-tpcount, card tpcount)
+Finding (V, g2g seed 13 bot log): 1488 minute lines, all `"tp":0`, no `tpBuy`, while 1115 of 1320 `inv-tp-dump` lines had `hastp` true (for example `tome class=518 ... counted=1`). Cause (V by code and by the live control below): `townAdapter` keeps the `*town.Town` in a named field, so neither it nor `d2dTown` (which embeds it) implemented `bot.TPDiag`; `mercTown` forwarded to an inner Townsman that had nothing to forward, and the runner's type assertion failed. Fix: `TPCount` and `TakeTPBought` on `townAdapter` (`cmd/d2bot/beltfill_adapter.go`), test `TestD2DTownChainIsTPDiag`. The count itself (`Town.scrollCount`) was right.
+
+Run (V): slot 4, d2d lab3-labverbs f75816c6 (sha256 53217ea4ecc8...), `docs/probes/shortdrills/run.sh 4 shortdrill-tpcount shortdrill-tpcount`, writes after start 0 for all.
+
+| id | setup | result |
+|---|---|---|
+| E1.tp-a (run E1.tp-a-20261107-015552) | clvl 12, 3 `tsc` in the pack | PASS: first minute line `tp=3` |
+| E1.tp-b (E1.tp-b-20261107-015608) | a `tbk` in the pack | PASS: minute `tp=3`, equal to the quantity inv-tp-dump counted (a given tome starts with 3 charges) |
+| E1.tp-c (E1.tp-c-20261107-015625) | no scroll, gold 600 | PASS: `tpBuy` on the first minute line, max tp 1 |
+| control, label shortdrill-tpcount-prefix (E1.tp-a-20261107-015718) | the same as tp-a with d2bot built WITHOUT the fix | FAIL: first minute line `tp=0`, want 3 |
