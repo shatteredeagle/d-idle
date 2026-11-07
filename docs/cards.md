@@ -50,7 +50,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 29 | onboardtour | watch | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
 | 30 | onboardctl | watch | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 | 31 | abmerc | ops | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
-| 32 | fidprobe-core | bot | in-progress 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
+| 32 | fidprobe-core | bot | in-progress 1/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
 | 33 | fidprobe-vendor | bot | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
 | 34 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
 | 35 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |

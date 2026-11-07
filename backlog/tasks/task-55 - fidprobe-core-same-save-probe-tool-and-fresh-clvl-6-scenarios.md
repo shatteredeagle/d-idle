@@ -25,7 +25,7 @@ owns:
   - "docs/research/fidelity-probe-run1.md"
 exclusive: []
 contracts: []
-result: "offline: engine, tool and tests built (two readers + replay; d2s file reader, merc and affix fields not yet); NOT run live, AC all open"
+result: "first LIVE run 2026-11-07 (i5 + d2d slot 3, lab verbs off): scenarios 1-4 ran read-only, writes after start 0, all four MISMATCH (current life/mana healed by d2d, max mana 19.5 vs 19, poison res, reader-scope diffs), items/npcs/objects UNREADABLE; AC1 (d2s reader) and AC3 (run1.md) open; findings in docs/probes/fidprobe.md"
 ---
 
 ## Description
@@ -41,6 +41,6 @@ Done when: internal/fidprobe: Sheet, three readers (d2s file, game.exe mem, d2d 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 internal/fidprobe: Sheet, three readers (d2s file, game.exe mem, d2d dump), Diff, Expected table, Markdown/JSON report; offline tests on recorded snapshots
-- [ ] #2 cmd/d2fidprobe wired; scenarios 1-4 of docs/research/fidelity-probe-design.md section 5 run read-only, no input, writes after start 0
+- [x] #2 cmd/d2fidprobe wired; scenarios 1-4 of docs/research/fidelity-probe-design.md section 5 run read-only, no input, writes after start 0
 - [ ] #3 fidelity-probe-run1.md: mismatches and UNREADABLE fields listed against matrix rows; matrix rows updated by the coordinator
 <!-- AC:END -->
