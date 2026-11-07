@@ -31,4 +31,4 @@ Tarball: `git archive --format=tar.gz --prefix=d2d-didle-<short>/ -o d2d-didle-<
 
 ## Outside check (V, 2026-11-07)
 
-Fresh `git clone --depth 1 -b didle/main`: LICENSE present; no .mpq/.dc6/.dcc/.d2s/.d2x/.dll/.exe files; sweep with the cmd/leakcheck patterns (domain, machine, person, home path, lab path, secret shapes): 0 hits in our content. Matches that exist are upstream's own: example LAN addresses in docs/READMEs (192.168.x, e.g. README.md line 134), `/Users/Shared`, one upstream maintainer address in a workflow, a public Sentry DSN in apps/launcher/CMakeLists.txt, and game text "jade figurine".
+Fresh `git clone --depth 1 -b didle/main`: LICENSE present; no .mpq/.dc6/.dcc/.d2s/.d2x/.dll/.exe files; sweep with the cmd/leakcheck patterns (domain, machine, person, home path, lab path, secret shapes): 0 hits in our content. Matches that exist are upstream's own: example LAN addresses in docs/READMEs (192.168.x, e.g. README.md line 134), one upstream maintainer address in a workflow, a public Sentry DSN in apps/launcher/CMakeLists.txt, and game text "jade figurine".
