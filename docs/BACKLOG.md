@@ -553,6 +553,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - fidprobe-core (TASK-55): engine internal/fidprobe + cmd/d2fidprobe built and tested offline (replay); first live run after Gate 2
 - GATE2: g2g five-seed verdict NOT PASSED, 3 of 5 seeds pass (seeds 13 and 17 fail NOKILL); wave 2 seeds 19 and 21 pass (docs/research/g2g-five-seed.md)
 - status sync 2026-11-07
+- fidelity matrix: 29 backlog cards (fid-*) for every unverified row, map in docs/research/fidelity-cards.md; new labels fidelity, kind labels and d2d-* areas
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
