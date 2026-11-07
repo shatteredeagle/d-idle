@@ -2,10 +2,13 @@
 id: TASK-17
 title: "m2-tripwp: leave town by waypoint, portal back to the field"
 status: Deferred
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
+  - bot
+  - feature
   - parked
   - soak
 dependencies: []
@@ -33,6 +36,8 @@ contracts: ["proposed/m2-tripwp"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 xpgap measured (24 virtual hours, 85 town trips): a trip costs about 4 minutes of which 2.4 are the walk back to the field, 14 percent of all time is `Returning to the field` at 11 kills/h, and chicken leave-game restarts are 21 percent of the long kill gaps at 129 s each (docs/d2d-xp-gap.md). The bot walks out of the Rogue Encampment even when the target area's waypoint is active and leaves the game on a chicken when a portal would do. Both are nav and trip policy, not economy.
 
 What changes:
@@ -49,6 +54,8 @@ Gates (from the card):
 - go run ./cmd/leakcheck -mode fail finds 0; tools/agentreap.sh m2-tripwp leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m2-tripwp/ (this task is the copy).
+
+Done when: Read docs/d2d-xp-gap.md (trip costs), internal/town/trip.go, internal/bot/waypoints.go (the 10 minute...; Waypoint out of town and portal return; chicken by portal when a scroll is held; Paired before/after; docs/tripwp.md; changecheck, leakcheck, validate; reap (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

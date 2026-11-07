@@ -2,17 +2,24 @@
 id: TASK-97
 title: 'fid-gatea-ab: statistical A:B: end-to-end rates, Gate A'
 status: Proposed
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-07T18:04:00Z'
 labels:
-  - fidelity
+  - d2d
   - d2d-measure
-  - d2d-time
   - d2d-combat
   - d2d-monsters
+  - d2d-time
+  - fidelity
   - gate
   - soak
-dependencies: []
+milestone: m-2
+dependencies:
+  - TASK-55
+  - TASK-56
+  - TASK-72
+  - TASK-92
 priority: high
 ordinal: 95000
 card: "fid-gatea-ab"
@@ -25,7 +32,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Fidelity matrix rows: EN03. Method/kind: d2d-measure. Live game (host time): yes (6 game.exe + 6 d2d lanes, soak slots, about 40 h). Size: L. Fix: bot or upstream depending on the gap; the arbiter. Dependencies: fid-lab-rebase; fid-probe-readers; slices 1 to 3. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: Fixed seed set run on 6 game.exe and 6 d2d lanes at fresh clvl 1 to 6; tolerance:...; XP/h, kills/h, deaths/h table with paired interval in docs/probes/fid/fid-gatea-ab.md; Every lane record carries writes after start: 0 (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

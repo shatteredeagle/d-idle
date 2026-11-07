@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-06T22:34:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
-  - drills
+  - bot
+  - drill
+  - gate
+milestone: m-0
 dependencies: []
+priority: medium
 ordinal: 52000
 card: "shortdrills"
 owns:
@@ -19,6 +23,16 @@ exclusive: []
 contracts: []
 result: "VERIFIED LIVE 2026-11-06 (slots 4 and 5, fork f75816c6): merc-a, merc-b, merc-c, noportal-a, noportal-b all PASS, writes after start 0; merc drills set the purse around the level estimate because a cheat-hired merc revives for 0 (docs/probes/shortdrills.md). Edited 5 lines of cmd/d2drill/main.go (group E1 dispatch), owned by task m1-liveproof."
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
+The g2e and g2f fixes needed a short live proof in their exact failing scenario instead of a long gate run.
+
+Done when: Drill 2 (merc revive before potions, poor variant, clvl 14 variant) built and run live, result recorded; Drill 3 (no-portal low life leaves after bot.noPortalWaitSec, scroll control) built and run live, result...; docs/probes/shortdrills.md records run ids, build, binary sha and PASS/FAIL with log lines (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

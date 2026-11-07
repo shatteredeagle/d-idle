@@ -2,15 +2,18 @@
 id: TASK-72
 title: 'fid-probe-readers: probe reader gaps: d2s third reference, merc fields, affix values'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:03:00Z'
 labels:
-  - fidelity
+  - bot
   - probe
-  - d2d-items
   - d2d-data
-  - tooling
-dependencies: []
+  - d2d-items
+  - fidelity
+milestone: m-2
+dependencies:
+  - TASK-55
 priority: medium
 ordinal: 70000
 card: "fid-probe-readers"
@@ -23,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Fidelity matrix rows: ST07 IT04 ME06. Method/kind: probe. Live game (host time): no (offline, then covered by the TASK-55 live run). Size: M. Fix: bot change (tooling in internal/fidprobe). Dependencies: TASK-55. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: Third reference: saves.Decode of the .d2s fills the Sheet; scenario 1 replay shows file == game.exe == d2d...; Merc fields (class, level, life, resists, skills) readable on both sides; scenario 6 replay lists no...; Item affix values (IT04) read on both sides for scenario 10 fixture; UNREADABLE share below 5 % (probe... (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

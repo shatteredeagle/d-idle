@@ -1,0 +1,1 @@
+BACKLOG: board scheme (2026-11-07): closed label set (component, kind, d2d area, track), priority, assignee, size, dependencies and milestones on every card; check.py enforces it, docs/backlog-howto.md has the table

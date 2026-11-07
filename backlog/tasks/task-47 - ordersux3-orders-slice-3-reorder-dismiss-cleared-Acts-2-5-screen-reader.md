@@ -2,12 +2,15 @@
 id: TASK-47
 title: 'ordersux3: orders slice 3: reorder, dismiss, cleared, Acts 2-5, screen reader'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T16:03:00Z'
 updated_date: '2026-11-06T16:03:00Z'
 labels:
-  - T0
   - watch
+  - feature
+  - ladder
+  - T0
 dependencies:
   - TASK-34
 priority: low
@@ -24,7 +27,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 3 of docs/research/orders-ux-design.md. Starts after ordersux2 (shared file internal/watch/orders.go).
+
+Done when: Reorder: POST /api/orders/move {id, delta}; failed orders keep strikes and can be dismissed; tests; Cleared marks come from a nav explored signal, not only quest events; test with a recorded map; the...; Acts 2 to 5 tables in mapdata.go, same schema (data only, orderable false until the bot can walk there);... (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

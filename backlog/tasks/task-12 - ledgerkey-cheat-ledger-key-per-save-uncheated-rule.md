@@ -6,7 +6,8 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-06T16:13:00Z'
 labels:
-  - tooling
+  - bot
+  - feature
 dependencies: []
 priority: low
 ordinal: 12000
@@ -29,6 +30,8 @@ source: "openspec-final:openspec/changes/ledgerkey"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 The cheat ledger is keyed by character name, so five copies of one save (or one name in two prefixes) share one identity and one cheat poisons all of them (docs/research/character-factory.md 4.5; Palli exists in two prefixes with a shared count). The baseline copies and the memrules 'writes after start' count need per-prefix identity.
 
 What changes:
@@ -42,6 +45,8 @@ Gates (from the card):
 - go test -p 1 ./internal/cheat/...; go vet ./cmd/d2cheat; leakcheck -mode fail 0
 
 Source: git tag openspec-final, openspec/changes/ledgerkey/ (this task is the copy).
+
+Done when: key, filter, CheatedKey, summary (internal/cheat/ledgerkey_test.go, legacy and renamed cases); d2cheat ledger flags (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

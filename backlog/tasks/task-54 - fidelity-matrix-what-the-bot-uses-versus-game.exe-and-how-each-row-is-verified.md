@@ -6,8 +6,13 @@ assignee: []
 created_date: '2026-11-06T22:38:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - docs
+  - research
+  - fidelity
   - gate
+milestone: m-2
 dependencies: []
+priority: medium
 ordinal: 52000
 card: "fidelity-matrix"
 owns:
@@ -21,7 +26,11 @@ result: "docs only, not verified live: matrix of 78 rows (18 OD, 21 DEV, 9 RO, 4
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 User question 2026-11-06: do we have a plan to verify d2d is 1:1 with game.exe for everything the bot uses. Docs and tasks only.
+
+Done when: docs/research/fidelity-matrix.md: one row per bot-used behaviour with current verification, method, cost,...; docs/research/fidelity-probe-design.md: same-save probe design (read-only, no cheats) with harness shape,...; ranked first slice, slice plan (at most 6, with hours) and tasks for the first two slices (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

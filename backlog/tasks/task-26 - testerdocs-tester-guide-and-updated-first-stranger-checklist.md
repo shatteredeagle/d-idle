@@ -2,12 +2,17 @@
 id: TASK-26
 title: "testerdocs: d2d tester guide and first-stranger checklist"
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:27:00Z'
 labels:
+  - docs
+  - chore
   - tester
+milestone: m-1
 dependencies:
   - TASK-31
+priority: high
 ordinal: 26000
 card: "testerdocs"
 owns:
@@ -19,7 +24,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Slice 1 (d2d route), reworked from the Wine version: docs/container.md (Wine) is no longer touched; the checklist lives in the guide. Depends on testerd2dimage (TASK-31); final pass after testerlive. Estimate 4 h.
+
+Done when: docs/tester-guide.md: prerequisites, the MPQ files to bring, compose route, token, wizard, watch URL and...; the first-stranger checklist with pass criteria (compose, wizard, card, answer, order, video, restart,... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

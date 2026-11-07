@@ -2,11 +2,15 @@
 id: TASK-39
 title: 'earlydeath13: seed 13 dies at clvl 4 to a Gargantuan Beast on Cold Plains'
 status: In Progress
-assignee: []
+assignee:
+  - pro-runner
 created_date: '2026-11-06T16:02:00Z'
 updated_date: '2026-11-06T21:56:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: high
 ordinal: 39000
@@ -20,7 +24,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 docs/research/g2e-diagnosis.md E3: death at clvl 4, identical in g2d, g2e and g2f via lockstep replay (deterministic). A bot defect, not noise.
+
+Done when: Replay the death offline or on the lockstep binary; record the state before the fight (life, mana, skills,...; Root cause named (target choice, retreat threshold, kit or route guard) with a proposed fix and a test...; A rerun of seed 13 passes the clvl 4 stretch; result says verified live or not and writes after start (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

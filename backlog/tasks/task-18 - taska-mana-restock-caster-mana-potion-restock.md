@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: high
 ordinal: 18000
@@ -47,11 +50,15 @@ source: "docs/research/lvl14plan.md TASK-A"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Gate 2 rerun seed 11 (clvl 4 to 16) fought with belt mp = 0 for hours (`combat out of mana: backing off` 2,400+ times) and Tamoe Highland was route-guarded for `1 mana potions < 2 (caster)`.
 
 Root cause (V, code read): `Town.buyPotions` (internal/town/shop.go) filled the kinds in the order HP, MP, RV with the full planned count of healing potions first, so a purse of a few hundred gold went into healing and `manaReserve` then refused the mana. `resource.PlanBuys` already has the HPFirst/MPFirst order but only the simulator calls it. Second gap: `tripReasons` raised a mana trip only at fewer than `town.tripMinMPPotions` (1) potions, below the route kit's 2.
 
 Change: for a caster (`resource.ManaNeed` >= 2: Sorceress, Necromancer, Druid) the shop buys HPFirst healing, then MPFirst mana potions, then the normal fill; a caster at `resource.kitGateLevel` or above with gold for one potion also trips at fewer than MPFirst mana potions. Build-specific data: belt columns come from the class plan (`resource.PlanFor`), HPFirst/MPFirst/KitGateLevel are Resource knobs; a class without a mana column has want[MP] == 0 and shops as before. No number in a contract changes.
+
+Done when: caster with gold ends a visit with the first mana potions and the healing plan filled...; caster with 20 gold buys nothing unaffordable and logs `caster: no mana, gold N` once per gold value...; Barbarian (no mana column) unchanged (TestMeleeBuildUnchangedByManaRestock,... (and 4 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

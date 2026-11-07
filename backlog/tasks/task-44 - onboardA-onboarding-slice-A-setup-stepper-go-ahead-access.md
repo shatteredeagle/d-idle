@@ -6,8 +6,11 @@ assignee: []
 created_date: '2026-11-06T16:02:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
-  - onboarding
+  - container
+  - feature
   - tester
+  - onboarding
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 44000
@@ -30,7 +33,11 @@ result: "Built and tested offline (go test -race of cmd/d2dsetup, internal/acces
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Slice A of docs/research/onboarding-ux-design.md (user approved the mock and its five recommendations 2026-11-06): six-screen stepper in cmd/d2dsetup (welcome, go-ahead, game files, hero, access, start), why boxes, Back, resume, plain-English errors, stored go-ahead tick with date, file verdict states, warm-up progress that survives a closed page, done screen; access by user-chosen passcode (PBKDF2-SHA256 hash in /data, 0600) or the generated token, with a passcode login and cookie in the watch gate, rate limit and a reset command. Slices B and C: TASK-48 (onboardtour), TASK-49 (onboardctl). Replaces the old placeholder.
+
+Done when: Six-screen stepper with why boxes, Back, resumable state and plain errors with Retry; go-ahead tick stored...; Game-file verdicts: missing, too small, wrong version, Resurrected folder, hash unconfirmed; Start screen with warm-up progress and estimate that survives a closed page; done screen (and 2 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

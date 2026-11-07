@@ -2,14 +2,18 @@
 id: TASK-78
 title: 'fid-belt-pr: oracle: belt pickup lands in belt first'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:03:00Z'
 labels:
-  - fidelity
+  - d2d
   - upstream-pr
   - d2d-items
   - d2d-loot
-dependencies: []
+  - fidelity
+milestone: m-2
+dependencies:
+  - TASK-92
 priority: medium
 ordinal: 76000
 card: "fid-belt-pr"
@@ -22,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Fidelity matrix rows: IT09. Method/kind: upstream-pr. Live game (host time): no (belt-pickup-trace is a V game.exe run). Size: S. Fix: upstream PR (pr-belt-draft.md) and retire shim R04 in the bot; needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: lab-binary rebase for the shim. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: Belt PR evidence pack (pr-belt-evidence-pack.md) re-run on current main: pickup of a potion with free belt...; Autobelt and belt size/column data checked for belt base types in the plan (belt sizes tie to belt base); After the fix: shim R04 removed from the bot or kept with a removal condition in docs/d2d-deviations.md (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

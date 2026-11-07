@@ -2,11 +2,15 @@
 id: TASK-31
 title: 'testerd2dimage: d2d tester image, realtime entry, compose file, ports'
 status: In Progress
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:44:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
+  - container
+  - feature
   - tester
+milestone: m-1
 dependencies:
   - TASK-23
 priority: high
@@ -28,7 +32,11 @@ result: "Phase A offline (not live): tester profile in entrypoint.sh, fork pin l
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 1 (d2d route), gaps G1, G3, G7, G8. Depends on testerwatch. Build runs on the worker host. Estimate 6 h.
+
+Done when: image pins the d.idle fork ref the Gate 2 evidence used (coordinator names it; the commit is on the fork...; compose.tester.yml: MPQ folder read-only, named volume, ladder/watch/video env, origin from a variable,... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

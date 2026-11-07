@@ -2,12 +2,15 @@
 id: TASK-85
 title: 'fid-boss-mods: oracle: unique, champion and boss modifiers (merge pr-mods)'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:03:00Z'
 labels:
-  - fidelity
+  - d2d
   - upstream-pr
   - d2d-monsters
+  - fidelity
+milestone: m-2
 dependencies: []
 priority: medium
 ordinal: 83000
@@ -21,7 +24,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Fidelity matrix rows: MA06. Method/kind: upstream-pr. Live game (host time): no. Size: S. Fix: upstream PR (pr-mods draft); boss life/def/exp base-level D1; needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: none. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: pr-mods evidence re-run on current main (157,618 cases); expected 0 differ after the fix; tolerance: 0...; At most two untraced immunities (Corpsefire, Bishibosh, Rakanishu, Treehead, Blood Raven) traced and compared (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

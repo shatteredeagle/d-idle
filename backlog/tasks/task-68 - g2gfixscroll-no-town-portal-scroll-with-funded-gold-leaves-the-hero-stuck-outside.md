@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-07T07:05:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: medium
 ordinal: 66000
@@ -29,7 +32,11 @@ result: "bot fix: gearStep restocks the portal scroll (Townsman Chores) before t
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 docs/research/g2g-diagnosis.md finding S1: seed 17 minute 1035 to 1050, no town portal scroll at gold 304 to 460, pocket stall in Black Marsh, 15 virtual minutes without a kill. U on why the scroll was not bought.
+
+Done when: town code buys a scroll before gear when the scroll count is 0 and gold covers it; offline test with a fake shop (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

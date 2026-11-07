@@ -2,17 +2,21 @@
 id: TASK-55
 title: 'fidprobe-core: same-save probe tool and fresh/clvl 6 scenarios'
 status: In Progress
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-06T22:43:00Z'
 updated_date: '2026-11-07T18:04:00Z'
 labels:
-  - gate
-  - fidelity
+  - bot
   - probe
-  - d2d-skills
   - d2d-items
   - d2d-network
+  - d2d-skills
+  - fidelity
+  - gate
+milestone: m-2
 dependencies: []
+priority: high
 ordinal: 53000
 card: "fidprobe-core"
 owns:
@@ -27,7 +31,11 @@ result: "offline: engine, tool and tests built (two readers + replay; d2s file r
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Slice 1 of docs/research/fidelity-matrix.md. Needs a coordinator step to start and log in one hidden instance. Design: docs/research/fidelity-probe-design.md.
+
+Done when: internal/fidprobe: Sheet, three readers (d2s file, game.exe mem, d2d dump), Diff, Expected table,...; cmd/d2fidprobe wired; scenarios 1-4 of docs/research/fidelity-probe-design.md section 5 run read-only, no...; fidelity-probe-run1.md: mismatches and UNREADABLE fields listed against matrix rows; matrix rows updated... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

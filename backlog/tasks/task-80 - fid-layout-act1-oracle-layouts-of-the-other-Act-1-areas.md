@@ -2,13 +2,16 @@
 id: TASK-80
 title: 'fid-layout-act1: oracle: layouts of the other Act 1 areas'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:03:00Z'
 labels:
-  - fidelity
+  - d2d
   - oracle
   - d2d-levels
   - d2d-pathing
+  - fidelity
+milestone: m-2
 dependencies: []
 priority: high
 ordinal: 78000
@@ -22,7 +25,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Fidelity matrix rows: MA04. Method/kind: oracle. Live game (host time): no (offline emulator, tools/emu seedspawn). Size: L. Fix: upstream PR where the DRLG differs (0 of 102 outdoor ports verified); needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: none. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: Extend the seedspawn oracle to Burial Grounds, Cave 1/2, Dark Wood, Black Marsh, Tamoe Highland, Outer...; Per-area result table in docs/probes/fid/fid-layout-act1.md (cases, differ, fix state); Same-save check (scenario 8, Stony Field) first-load monster/object list equals on a pinned seed (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

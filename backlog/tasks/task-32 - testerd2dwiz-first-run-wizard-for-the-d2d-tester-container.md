@@ -2,11 +2,15 @@
 id: TASK-32
 title: 'testerd2dwiz: first-run wizard for the d2d tester container'
 status: In Progress
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:44:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
+  - container
+  - feature
   - tester
+milestone: m-1
 dependencies: []
 priority: high
 ordinal: 32000
@@ -22,7 +26,11 @@ result: "Offline only (fake MPQs, fake extractor, httptest): cmd/d2dsetup, own l
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 1 (d2d route), gap G2. Standalone small wizard mirroring cmd/d2fleet/internal/setup, no Wine steps. No dependency for the code; joins the image at testerd2dimage. Estimate 8 h.
+
+Done when: steps: data check of /game (required d2data, d2exp, Patch_D2; 1.14d check; plain-language misses), table...; token gate and cookie, no field for keys or free text beyond the name, key-shaped input refused; tests... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

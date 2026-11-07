@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - upstream
+  - d2d
+  - upstream-pr
+  - d2d-combat
+  - d2d-skills
 dependencies: []
 priority: medium
 ordinal: 5000
@@ -31,6 +34,8 @@ source: "openspec-final:openspec/changes/armorhit"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 The user asked (2026-11-01) whether Frozen Armor behaves on d2d as in game.exe. SKARMOR (docs/research/sk-armor-trace.md D1) proved the game side (FUN_005cac50 follows the freeze rule) and read d2d's `buff_events` as stunning and chilling every damaging striker, but no d2d-side run existed, so no PR candidate could be proposed.
 
 What changes:
@@ -45,6 +50,8 @@ Gates (from the card):
 - PR claim only with a differential on real builds: before > 0, after 0
 
 Source: git tag openspec-final, openspec/changes/armorhit/ (this task is the copy).
+
+Done when: Worktree fix/armor-hit from current upstream main on the worker host; d2d test mode test_armor_hit (real buff_events) + game oracle armor_hit.py (FUN_005cac50 natively); Before numbers on upstream main (95,920 of 108,506) (and 3 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -2,14 +2,18 @@
 id: TASK-73
 title: 'fid-probe-equip: probe: equip legality and identify flow'
 status: Proposed
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-07T18:03:00Z'
 labels:
-  - fidelity
+  - d2d
   - probe
   - d2d-items
   - d2d-ui
-dependencies: []
+  - fidelity
+milestone: m-2
+dependencies:
+  - TASK-55
 priority: high
 ordinal: 71000
 card: "fid-probe-equip"
@@ -22,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Fidelity matrix rows: IT03 IT07. Method/kind: probe. Live game (host time): yes (hidden game.exe instance plus a d2d slot, host time about 1 h). Size: M. Fix: upstream PR if d2d skips requirement checks (world.hpp:808, fight.hpp:819); else none; needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: TASK-55 (scenarios 3, 4). Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: Scenario 4 save: equip an item above Str/Dex/level requirement on both sides; expected both refuse (code,...; Hand/slot rules: two-hand with shield, swap weapon set; expected equal accept/refuse on both sides; Identify: unid item in pack, ID scroll or tome use; expected same item state and same scroll count after... (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
