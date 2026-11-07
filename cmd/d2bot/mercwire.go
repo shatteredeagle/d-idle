@@ -178,10 +178,11 @@ type mercWire struct {
 	rd    merc.Reader
 	rev   Reviver
 	hirer Hirer
-	quote int      // the revive price read from the NPC menu while the merc is dead, 0 = not read (mu)
-	bank  GoldBank // nil: the stash cannot be emptied, so only pack gold counts for a revive
+	quote int       // the revive price read from the NPC menu while the merc is dead, 0 = not read (mu)
+	last  readQuote // the newest real quote; outlives the revive and the death so the farm trigger and the next revive never go back to the formula (mu)
+	bank  GoldBank  // nil: the stash cannot be emptied, so only pack gold counts for a revive
 	cat   bot.Catalog
-	now   func() time.Time
+	now   func() time.Time // the env clock (virtual under lockstep), wall time when the env has none
 
 	mu       sync.Mutex
 	cur      merc.MercState
@@ -207,8 +208,41 @@ type mercWire struct {
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
-	return &mercWire{e: e, log: e.Log, knobs: merc.KnobsFrom(e.Tune.Merc), rd: rd, rev: rev, cat: cat, now: time.Now,
+	return &mercWire{e: e, log: e.Log, knobs: merc.KnobsFrom(e.Tune.Merc), rd: rd, rev: rev, cat: cat,
+		now:     func() time.Time { return envNow(e) },
 		lutDone: map[lutKey]bool{}, loaded: map[string]bool{}, statePath: mercStatePath, winLogged: map[merc.Difficulty]bool{}}
+}
+
+// envNow is the game clock of the env: virtual minutes under lockstep, so the hourly revive and death windows count
+// game hours (g2g M1). Wall time only when the env has no clock.
+func envNow(e *env.Env) time.Time {
+	if e != nil && e.Clock != nil {
+		return e.Clock.Now()
+	}
+	return time.Now()
+}
+
+// readQuote is a price read from the Kashya menu with the merc level and game time of the read.
+type readQuote struct {
+	price, level int
+	at           time.Time
+}
+
+// quoteFor is the real revive price to use for a merc of this level, 0 when none is known: the quote of this dead
+// spell, else the last read one while the merc level is unchanged and it is younger than merc.quoteMaxAgeHours game
+// hours. The formula is only the first-visit fallback (g2g M2). Caller holds mu.
+func (w *mercWire) quoteFor(level int) int {
+	if w.quote > 0 {
+		return w.quote
+	}
+	l := w.last
+	if l.price <= 0 || l.level != level {
+		return 0
+	}
+	if h := w.e.Tune.Merc.QuoteMaxAgeHours; h > 0 && w.now().Sub(l.at) >= time.Duration(h)*time.Hour {
+		return 0
+	}
+	return l.price
 }
 
 // State is the merc state of at most mercStateTTL ago. A death while the player is away from town is logged once.
@@ -373,7 +407,7 @@ func kitRefill(e *env.Env) int {
 }
 
 // GoldFarm is bot.MercGoldFarm: true while the merc is dead or missing, gold cannot pay the next merc action and the
-// character is below merc.goldFarmMaxLevel. The price is the formula estimate (pre-check only) or the Normal hire quote.
+// character is below merc.goldFarmMaxLevel. The price is the real quote once one was read (quoteFor), else the formula estimate, or the Normal hire quote.
 // Logs `merc: gold farm on|off` once per change.
 func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	if s == nil || s.Player == nil {
@@ -389,8 +423,8 @@ func (w *mercWire) GoldFarm(s *d2.Snapshot) bool {
 	if st.Owned && !st.Alive {
 		missing, price = true, merc.ReviveCost(max(st.Level, 1))
 		w.mu.Lock()
-		if w.quote > 0 {
-			price = w.quote
+		if q := w.quoteFor(st.Level); q > 0 {
+			price = q
 		}
 		w.mu.Unlock()
 		need = merc.ReviveNeed(c, price)
@@ -666,12 +700,12 @@ func (w *mercWire) reviveStep(ctx context.Context, s *d2.Snapshot, first bool) s
 		}
 	}
 	w.mu.Lock()
-	quote := w.quote
+	quote := w.quoteFor(st.Level)
 	w.mu.Unlock()
 	dec, price := merc.ShouldRevive(st, c, quote)
 	if !dec.Do && dec.Reason == merc.ReasonGold && quote == 0 {
 		// The level estimate overshoots, so the real quote may be affordable (see QuoteProber).
-		if q := w.probeQuote(ctx, c.Gold); q > 0 {
+		if q := w.probeQuote(ctx, c.Gold, st.Level); q > 0 {
 			dec, price = merc.ShouldRevive(st, c, q)
 		}
 	}
@@ -737,7 +771,7 @@ func (w *mercWire) takeShortFirst() bool {
 // probeQuote reads the real revive price once while the merc stays dead (the quote of a dead merc does not change) and
 // keeps it for the policy and the gold farm. 0 when the purse is too small to matter, the reviver cannot probe or the
 // read failed (logged once per visit with the refusal; the estimate then decides).
-func (w *mercWire) probeQuote(ctx context.Context, gold int) int {
+func (w *mercWire) probeQuote(ctx context.Context, gold, level int) int {
 	p, ok := w.rev.(QuoteProber)
 	if !ok || gold < probeMinGold {
 		return 0
@@ -758,6 +792,7 @@ func (w *mercWire) probeQuote(ctx context.Context, gold int) int {
 	if q > 0 {
 		w.mu.Lock()
 		w.quote = q
+		w.last = readQuote{price: q, level: level, at: w.now()}
 		w.mu.Unlock()
 		w.log.Info(merc.Prefix + "revive quote read price=" + strconv.Itoa(q) + " gold=" + strconv.Itoa(gold))
 	}

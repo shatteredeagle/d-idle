@@ -8,6 +8,22 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d.idle fork published as the standalone public repo shatteredeagle/d2d-didle (record: docs/fork-publication/PUBLISHED.md)
+- ADR 0003 amended: the d.idle fork is to be published as the public GitHub fork d2d-didle (scan report and drafts, nothing pushed yet)
+- Gate 2 BELT judge: a belt window counts as funded by the gold at its first minute (user 2026-11-07); decisions entry for the g2g judging answers
+- bot: the town portal scroll is restocked before the gear shop spends gold; a refused equip is no longer retried in every fresh game (town.equipKindFails)
+- nav mouth gate no longer repeats the same refusal forever from inside a trigger disc: after 3 identical holds it steps sideways or sends the click
+- merc revive cap and death window now count game time (lockstep), and a read revive quote replaces the level formula in the gold-farm trigger and the revive bar
+- Gate 2 g2g wave 1 diagnosed: merc revive cap runs on the wall clock and the farm trigger uses the formula estimate (docs/research/g2g-diagnosis.md)
+- docs: Gate 2 multi-seed soak run 20261107-0150-g2g: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md).
+- Metacurrency foundation (offline): currency registry and hash-chained tally ledger, and a balance strip on the watch screen in d.idle mode
+- First metacurrency overlay data: the Raven's Mark token, one drop line and a cube bank row (d.idle mode only)
+- d.idle mode table overlay (--overlay-dir) on the Go side and in the fork branch; vanilla unchanged
+- metacurrency decisions recorded (docs/decisions.md, ADR 0016 amendment 2026-11-06, glossary terms Mark, Tally, Bank, Registry); docs only
+- tpcount: the minute line field tp (and tpBuy) read 0 on the d2d path because the town adapter hid bot.TPDiag; fixed and drilled live (E1.tp-a/b/c)
+- d2drill group E1: short live drills run the real d2bot attached to a prepared d2d (merc revive before potions, no-portal low life leaves)
+- Paired A/B harness for the merc revive reserve and the standing rule that strategy changes need a paired A/B before the long gate
+- decisions: d2d fidelity bar (slices 1 to 3 before Gate A), mismatch policy and the vendor probe input rule recorded (user, 2026-11-06)
 - tester d2d now ships without lab verbs (only read-only debug verbs answer); the first-run wizard runs from the tester entrypoint and the setup page checks the Patch_D2 hash of 1.14d.
 - Mercenary revive reserve now follows the SME rule (0 gold below clvl 13, 50 gold from clvl 13, before potions and repair); merc.reviveReserveMax is retired
 - Early game: a clvl 4 hero is no longer sent to Cold Plains when Blood Moor is held back, a big pack it fled from is not re-entered until the kit is rebuilt or 10 minutes pass, and a burst of life potions in a pack becomes a town portal (knobs bot.stalePack*, bot.potionBurst*).

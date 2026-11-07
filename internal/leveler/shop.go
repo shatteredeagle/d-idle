@@ -171,7 +171,7 @@ func (l *Leveler) shopAt(ctx context.Context, h *hand.Hand, v Vendor, class int,
 		eq, pack := l.gearState(s)
 		var stock []Cand
 		for _, u := range items {
-			if c := l.cand(s.Player, u); c.Slots != nil && !l.badEverywhere(u.ID, c.Slots, s.Player.Level) {
+			if c := l.cand(s.Player, u); c.Slots != nil && !l.badEverywhere(u.ID, u.Class, c.Slots, s.Player.Level) {
 				c.Price = c.Price * data.VendorBuyMult(class) / 1024 // Charsi 0.9375, Gheed 1.0625, Act 5 x2
 				stock = append(stock, c)
 			}

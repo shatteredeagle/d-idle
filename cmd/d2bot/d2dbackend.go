@@ -23,6 +23,7 @@ import (
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/event"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/overlay"
 	"d2lod-bot/internal/questmem"
 	"d2lod-bot/internal/server"
 )
@@ -44,7 +45,8 @@ type d2dOptions struct {
 	extraArgs string
 	nice      int
 	linkWait  time.Duration
-	attach    bool // --d2d-attach: the confirmation that a d2d this bot did not start may be driven
+	overlay   string // --overlay-dir: d.idle mode table overlay (docs/overlay.md); "" = vanilla
+	attach    bool   // --d2d-attach: the confirmation that a d2d this bot did not start may be driven
 }
 
 func (d d2dOptions) on() bool { return d.backend == "d2d" }
@@ -61,6 +63,7 @@ func d2dFlags(fs *flag.FlagSet, d *d2dOptions) {
 	fs.StringVar(&d.toggle, "toggle", "", "d2d backend, --managed: d2d QoL toggles, e.g. autoloot=off,autoparty=off (passed as --toggle)")
 	fs.StringVar(&d.extraArgs, "d2d-args", "", "d2d backend, --managed: extra d2d arguments, space separated (e.g. --lockstep)")
 	fs.IntVar(&d.nice, "d2d-nice", 10, "d2d backend, --managed: run d2d under nice -n (0 = off)")
+	fs.StringVar(&d.overlay, "overlay-dir", envOr(overlay.Env, ""), "d2d backend: d.idle mode, merge our table fragments from <dir>/excel/*.txt (docs/overlay.md); passed to a --managed d2d and applied to the bot's own data cache; default off = vanilla (env D2_OVERLAY_DIR)")
 	fs.BoolVar(&d.attach, "d2d-attach", envBool("D2D_ATTACH"), "d2d backend, --attach: confirm that the d2d on the socket is yours; --attach alone is refused (one control client per d2d, a stranger's d2d would be driven) (env D2D_ATTACH)")
 	fs.DurationVar(&d.linkWait, "d2d-linkwait", 0, "d2d backend: how long arriving in a level waits for d2d to link the neighbour levels (0 = default)")
 }
@@ -69,6 +72,9 @@ func (d *d2dOptions) validate(o options) error {
 	switch d.backend {
 	case "", "game":
 		d.backend = ""
+		if d.overlay != "" {
+			return errors.New("--overlay-dir is d.idle mode and needs --backend d2d (Game.exe cannot load our rows)")
+		}
 		return nil
 	case "d2d":
 	default:
@@ -86,7 +92,13 @@ func (d *d2dOptions) validate(o options) error {
 	if o.managed && d.bin == "" {
 		return errors.New("--backend d2d --managed needs the d2d binary (--d2d-bin or D2D_BIN)")
 	}
-	return nil
+	if d.overlay != "" {
+		if _, err := overlay.Mode(d.overlay); err != nil {
+			return err
+		}
+	}
+	// internal/data reads the twin from the environment (one switch for the cache stamp and the merge).
+	return os.Setenv(overlay.Env, d.overlay)
 }
 
 // d2dSock is the control socket: the flag/env, else one per instance in the run dir.
@@ -148,6 +160,9 @@ func d2dConfig(o options, log *slog.Logger, tune *env.Tuning, db *data.DB, home 
 		cfg.LogFile = filepath.Join(home, "d2d.out")
 		if o.d2d.toggle != "" {
 			cfg.ExtraArgs = append(cfg.ExtraArgs, "--toggle", o.d2d.toggle)
+		}
+		if o.d2d.overlay != "" {
+			cfg.ExtraArgs = append(cfg.ExtraArgs, "--overlay-dir", o.d2d.overlay)
 		}
 		cfg.ExtraArgs = append(cfg.ExtraArgs, strings.Fields(o.d2d.extraArgs)...)
 	}
@@ -307,6 +322,10 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	ldir, err := ladderDir(ip.State(), o.ladder)
 	if err != nil {
 		return err
+	}
+	if o.d2d.overlay != "" {
+		o.ladder.overlayDir = o.d2d.overlay
+		o.ladder.currencyDir = envOr("D2BOT_CURRENCY_DIR", filepath.Join(ip.State(), "currency"))
 	}
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {

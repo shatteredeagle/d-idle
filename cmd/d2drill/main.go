@@ -149,6 +149,10 @@ func run() int {
 		return l.runProbe(ctx, *probe)
 	}
 
+	if strings.EqualFold(*group, "E1") { // card shortdrills: the real bot, attached to this d2d after the setup
+		return runE1(ctx, e1Cfg{Bot: *botBin, Sock: *sock, BotAddr: os.Getenv("D2D_BOT_ADDR"), SlotDir: slotDir, GameDir: *gamedir, Instance: "e1",
+			Out: *out, Date: *date, Label: cmp.Or(*label, "e1"), Only: *only, Wall: cmp.Or(*limit, 8*time.Minute), Led: led, Log: log}, be)
+	}
 	var drills []drill.Drill
 	switch strings.ToUpper(*group) {
 	case "D1":

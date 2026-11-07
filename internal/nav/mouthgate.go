@@ -3,6 +3,7 @@ package nav
 import (
 	"fmt"
 	"math"
+	"time"
 
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/data"
@@ -27,6 +28,14 @@ const (
 	gateMaxRewrites = 8
 	// gateUsefulClip: a clip shorter than this is only a crawl to the boundary; a detour around the disc is tried first.
 	gateUsefulClip = 8.0
+	// gateHoldEscalate: the same click (same from and to) refused this many times within gateHoldWindow means the walk
+	// will not get out by itself. V (g2g logs, docs/research/g2g-diagnosis.md): one short step refused 40 to 150 times,
+	// and a hero at (114,169) in the Burial Grounds and one at (87,287) in the Black Marsh left only through a restart.
+	gateHoldEscalate = 3
+	gateHoldWindow   = 120 * time.Second
+	// gatePocketFor: after an escalation, holds from inside a trigger disc are answered with the pocket rule for this
+	// long, so a walk out of the pocket does not need three refusals per step.
+	gatePocketFor = 30 * time.Second
 	// gateDetourMargin: the detour waypoint lies this far outside the bound.
 	gateDetourMargin = 5.0
 )
@@ -117,13 +126,11 @@ func (n *Navigator) gateClick(ctl input.Controller, p input.Point) (input.Point,
 		return p, nil
 	}
 	if n.gateRewrites >= gateMaxRewrites {
-		n.log.Info("nav mouth gate: click held", "from", from, "to", p, "why", "rewrite cap", "cap", gateMaxRewrites)
-		return input.Point{}, n.refuse()
+		return n.hold(lm, from, p, exits, "rewrite cap")
 	}
 	q, how := n.gateRewrite(lm, from, p, exits)
 	if how == "" {
-		n.log.Info("nav mouth gate: click held", "from", from, "to", p, "why", "no safe click")
-		return input.Point{}, n.refuse()
+		return n.hold(lm, from, p, exits, "no safe click")
 	}
 	n.gateRewrites++
 	n.log.Info("nav mouth gate: click rewritten", "from", from, "to", p, "as", q, "how", how, "rewrites", n.gateRewrites)
@@ -263,4 +270,90 @@ func (n *Navigator) gateDetour(lm *d2map.LevelMap, from, to, ex input.Point, exi
 func (n *Navigator) refuse() error {
 	n.gateRefused.Add(1)
 	return ErrMouthGate
+}
+
+// gateHoldState remembers the last refused click so a repeat can be told from a first refusal.
+type gateHoldState struct {
+	from, to    input.Point
+	count       int
+	at          time.Time
+	pocketUntil time.Time
+}
+
+// hold answers a click the gate cannot rewrite. A first refusal stays a refusal (ErrMouthGate, the caller drops the
+// target). The same click refused gateHoldEscalate times, or any hold while the pocket window is open, escalates when
+// the hero stands inside the trigger disc of an unwanted exit (or the rewrite cap shuttled it there): the refusal then
+// only repeats until the failsafe ladder restarts the game (g2g seeds 13 and 17). The pocket rule moves the hero
+// without getting closer to any exit, and when no such cell exists (a dead end whose only way out passes the exit)
+// sends the click itself: a fired trigger is a level change the walk already handles (ErrLevelChanged, bounce note),
+// a restart is not. A target inside the bound with the hero outside is never escalated: that is a permanent refusal.
+func (n *Navigator) hold(lm *d2map.LevelMap, from, p input.Point, exits []input.Point, why string) (input.Point, error) {
+	now := n.clk.Now()
+	h := &n.gateHolds
+	if h.from == from && h.to == p && now.Sub(h.at) < gateHoldWindow {
+		h.count++
+	} else {
+		h.from, h.to, h.count = from, p, 1
+	}
+	h.at = now
+	inside := false
+	for _, e := range exits {
+		if dist(from, e) < mouthTriggerR {
+			inside = true
+		}
+	}
+	if (h.count >= gateHoldEscalate || now.Before(h.pocketUntil)) && (inside || why == "rewrite cap") {
+		h.pocketUntil = now.Add(gatePocketFor)
+		q, how := n.pocketClick(lm, from, p, exits)
+		n.log.Info("nav mouth gate: pocket escape", "from", from, "to", p, "as", q, "how", how, "why", why, "holds", h.count)
+		return q, nil
+	}
+	n.log.Info("nav mouth gate: click held", "from", from, "to", p, "why", why, "holds", h.count)
+	return input.Point{}, n.refuse()
+}
+
+// pocketClick: the walkable cell 4 to 20 subtiles away, in line of sight, that gets no closer to any exit the hero is
+// inside and is farthest from the nearest one; the requested click when there is none.
+func (n *Navigator) pocketClick(lm *d2map.LevelMap, from, p input.Point, exits []input.Point) (input.Point, string) {
+	var f *Field
+	if lm != nil {
+		f = n.fieldFor(lm)
+	}
+	var best input.Point
+	bestScore, found := -math.MaxFloat64, false
+	for _, l := range []float64{4, 8, 12, 20} {
+		for deg := 0.0; deg < 360; deg += 22.5 {
+			a := deg * math.Pi / 180
+			c := input.Point{X: from.X + int(math.Round(l*math.Cos(a))), Y: from.Y + int(math.Round(l*math.Sin(a)))}
+			if f != nil {
+				x, y, ok := f.nearestWalkable(c.X, c.Y, 2)
+				if !ok || !f.los(from.X, from.Y, x, y, 0) {
+					continue
+				}
+				c = input.Point{X: x, Y: y}
+			}
+			if dist(from, c) < gateMinClip {
+				continue
+			}
+			score, ok := math.MaxFloat64, true
+			for _, e := range exits {
+				d0 := dist(from, e)
+				if d0 >= mouthTriggerR {
+					continue
+				}
+				if d := segDist(e, from, c); d < d0-0.5 || dist(c, e) < d0 {
+					ok = false
+					break
+				}
+				score = math.Min(score, dist(c, e))
+			}
+			if ok && score > bestScore {
+				best, bestScore, found = c, score, true
+			}
+		}
+	}
+	if found {
+		return best, "away-sideways"
+	}
+	return p, "through"
 }

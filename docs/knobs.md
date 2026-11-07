@@ -126,8 +126,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.tripPackUsedPct | 80 | 40..100 | % | 100 | 4 | Go to town when the backpack is this full. |
 | town.tripRepairPct | 20 | 0..60 | % | 0 | 1 | Go to town when an equipped item is below this durability. |
 | town.beltFillPct | 100 | 25..100 | % | 25 | 1 | Refill each potion type to this share of its planned columns. |
+| town.equipKindFails | 2 | 1..10 | count | 10 | 1 | Failed equips of one item kind (base class) into one slot before that kind is skipped until the character gains a level. The memory is by kind, so a fresh game (new item ids) does not repeat the same refused swap (g2g E1: Cap to head failed in every game). |
 | town.tpScrollTarget | 2 | 1..20 | count | 1 | 4 | Scrolls to hold when no tome is owned. |
-| town.tpReserve | 2 | 1..5 | count | 1 | 2 | Town portal scrolls a poor character buys once it carries its minimal healing kit (a dive then does not start with the only scroll spent). 1 = one scroll, the old cap. |
+| town.tpReserve | 2 | 1..5 | count | 1 | 3 | Town portal scrolls a poor character buys once it carries its minimal healing kit (a dive then does not start with the only scroll spent). 1 = one scroll, the old cap. |
 | town.tpMinGold | 0 | 0..1000 | gold | 1000 | 1 | Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price. |
 | town.tpTomeMinGold | 450 | 0..5000 | gold | 5000 | 2 | Buy a Tome of Town Portal when gold is at least this. |
 | town.idScrollTarget | 2 | 0..20 | count | 0 | 4 | Scrolls to hold when no tome is owned. |
@@ -231,12 +232,12 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.potionBurstSec | 20 | 5..60 | s | 60 | 2 | Window in which the life drinks are counted. |
 | bot.potionBurstHostiles | 3 | 1..8 | count | 8 | 1 | Hostiles within the fight radius the potion burst rule needs before it retreats. |
 | bot.povertyTier | 0 | 0..2 | tier | 2 | 3 | Gear tier bought after an abandoned corpse: 0 is the cheapest viable weapon and armor, potions first. |
-| bot.goldFloor | 2000 | 0..2000 | gold | 0 | 6 | Gold town visits must not spend, kept to rebuy gear after a death. |
+| bot.goldFloor | 2000 | 0..2000 | gold | 0 | 7 | Gold town visits must not spend, kept to rebuy gear after a death. |
 | bot.pointsRetrySec | 30 | 30..300 | s | 300 | 2 | Wait before spending stat and skill points again after an attempt that did not finish. Longer leaves points unspent. |
 | bot.gearCheckSec | 60 | 60..600 | s | 600 | 1 | Minimum time between gear passes in town (equip better items, shop). Longer wears worse gear for longer. |
 | bot.gearMinGold | 150 | 150..1500 | gold | 1500 | 3 | Gold needed before the bot shops for weapons and armor. Higher shops rarely. |
-| bot.gearBudgetPct | 70 | 20..70 | % | 20 | 1 | Share of the gold above the potion reserve one shopping pass may spend on gear. |
-| bot.gearReserve | 100 | 0..100 | gold | 0 | 1 | Gold kept for potions when shopping for gear. Lower risks starving after a shopping spree. |
+| bot.gearBudgetPct | 70 | 20..70 | % | 20 | 2 | Share of the gold above the potion reserve one shopping pass may spend on gear. |
+| bot.gearReserve | 100 | 0..100 | gold | 0 | 2 | Gold kept for potions when shopping for gear. Lower risks starving after a shopping spree. |
 | bot.sellMinItems | 4 | 4..12 | items | 12 | 3 | Sellable pack items that justify a town trip for a character without gold. Higher carries loot longer. |
 | bot.difficultyBanMin | 60 | 60..600 | min | 600 | 3 | Minutes the bot stays in its difficulty after a switch to the next one did not happen. |
 | bot.savePointMin | 20 | 0..120 | min | 20 | 1 | Minutes in one game before the bot, in town and idle, saves and re-enters it (a crash loses what came after the last save); 0 is off. |
@@ -295,6 +296,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |
+| merc.quoteMaxAgeHours | 4 | 0..48 | h | 4 | 1 | The revive price read from the Kashya menu is used for the gold farm trigger and the revive bar for this many game hours while the merc level is unchanged; after that, or at a new level, the next visit reads it again. The level formula is only the fallback before any quote was read. 0 = never stale. |
 | merc.enabled | 1 | 0..1 | bool | 1 | 2 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
 
 ### campaign.*
@@ -353,7 +355,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripHealPct | 50 | 25..80 | % | 25 | 1 | Life percent below which a character that cannot regenerate goes to town for free healing. |
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
-| resource.kitTPGold | 100 | 50..200 | gold | 50 | 7 | Price of one town portal scroll, for the minimal-kit cost. |
+| resource.kitTPGold | 100 | 50..200 | gold | 50 | 8 | Price of one town portal scroll, for the minimal-kit cost. |
 | resource.kitPotionGold | 30 | 20..100 | gold | 20 | 11 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |

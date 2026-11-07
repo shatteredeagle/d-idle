@@ -766,3 +766,16 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/g2f-diagnosis.md - Gate 2 g2f diagnosis: seed 17 merc economy, seeds 11/13 compared, early death 13, tp field, mouthRef, needs the user
 - docs/lab-verbs.md: the fork --lab-verbs gate (which debug verbs are gated, who passes the flag, proof)
 - docs/research/fidelity-matrix.md and docs/research/fidelity-probe-design.md: what the bot depends on versus game.exe, how each row is verified, same-save probe design
+- docs/ab-merc.md: paired A/B of the merc revive reserve (late-start variant), run plan
+- docs/probes/shortdrills.md: short live drills for the g2e/g2f fixes (cmd/d2drill -group E1)
+- docs/research/custom-items.md: custom items and drop-table overlays on d2d, two-mode rule, first-item proposal
+- docs/research/metacurrency-design.md - per-character and account-wide currencies from custom items: registry, storage, sources, sinks, first slice
+- docs/research/metacurrency-design.md now approved by the user 2026-11-06
+- docs/overlay.md - table overlay file format, keys per table, mode stamp (d.idle mode)
+- docs/research/currency-rows.md - Raven's Mark overlay rows, rate and bank recipe (TASK-63); docs/probes/currency1.md - currency slice 1 live acceptance (pending)
+- docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block
+- docs/soaks/gate2-multiseed-20261107-0150-g2g.md: Gate 2 multi-seed run 20261107-0150-g2g (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
+- docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
+- docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
+- docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
+- docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident

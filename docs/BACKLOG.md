@@ -535,6 +535,21 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-51 mercrevive: revive reserve by clvl band per the SME (0 gold below clvl 13, 50 from it; merc.reviveReserveLow/High/Clvl replace merc.reviveReserveMax); revive before potions; offline tested, live proof needs the next Gate 2
 - LABVERBSPIN: TASK-42 fork lab-verbs gate: pin moved to fork d2d.lab3-labverbs f75816c616c8, --lab-verbs passed by drills, soak lab and gate, d2dsetup hook in the tester entrypoint, 1.14d Patch_D2 hash pinned (docs/lab-verbs.md)
 - TASK-54 fidelity-matrix: 78-row matrix of what the bot uses versus game.exe (13 unverified), same-save probe design; tasks TASK-55 fidprobe-core and TASK-56 fidprobe-vendor proposed
+- ABMERC: TASK-53 paired A/B harness for the merc revive reserve (clvl 11 late-start variant, tools/ab/mercab.sh), dry run proven, full 16-run A/B pending host capacity; standing rule: strategy changes get a paired A/B (docs/ab-merc.md, docs/ab-design.md Variants)
+- shortdrills: short live drills E1 (merc revive before potions, no-portal low life leaves in 21 s virtual), all PASS, docs/probes/shortdrills.md
+- tpcount (task 57) done: minute-line tp scroll count fixed; drill 4 PASS, pre-fix control FAIL
+- customitems feasibility study done (docs/research/custom-items.md); follow-ups custom-overlay and custom-item-1 Proposed
+- TASK-61 metacurrency design (registry, per-character item plus account ledger, first slice); TASK-60 reworked to the stackable token; TASK-62 to 64 proposed (ledger, rows, slice)
+- TASK-59 table overlay: fork --overlay-dir (branch d2d.lab4-overlay, default off), Go internal/overlay + data cache stamp, d2bot --overlay-dir, docs/overlay.md; fork build/ctest see the task result
+- TASK-63 currency-rows: Raven's Mark overlay rows (Misc mrk, Blood Raven class line 1 in 37 kills, cube bank row) in data/overlay/didle-v1, offline validation against the real tables, pickit keep rule; live acceptance pending (docs/probes/currency1.md)
+- TASK-62 currency-ledger built offline (not live): currency registry as data, hash-chained ledger with write-ahead bank entries, Observer for the bot hook, watch /api/currency with a header strip and a Spend tab shell; docs/currency.md
+- GATE2: Gate 2 multi-seed run 20261107-0150-g2g (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md)
+- TASK-65 g2g diagnosis docs/research/g2g-diagnosis.md; TASK-66 to TASK-68 proposed bot-defect fixes (merc clock and quote, mouth gate loop, town portal scroll first)
+- TASK-66 merc revive cap on the env clock, farm trigger and revive bar on the read quote (knob merc.quoteMaxAgeHours); live drill E1.merc-quote blocked (quote reads 0 for a cheat-hired merc)
+- mouthfix (TASK-67): mouth gate escalates a click refused 3 times from inside a trigger disc (pocket escape); E1.mouth-pocket drill, pocket not reproduced live
+- TASK-68 g2gfixscroll: the gear step restocks the town portal scroll before it spends gold on gear (live drill E1.tp-first PASS), and a failed equip is remembered by item kind across games (town.equipKindFails); the equip to leave-game link of g2g seed 13 does not exist in code.
+- judgebelt: belt funded test at the window start (d2dsoakstat, soak-gates, decisions)
+- forkpub (TASK-70) fork publication phase 1: history scan (clean: no credentials, private hosts or Blizzard data), push plan, ADR 0003 amendment 2026-11-07; nothing pushed to GitHub
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -104,8 +104,8 @@ type Invariants struct {
 	// outside town with no healing potion in pack or belt). BeltWindowMin is 0 for logs without packHP/beltBoxes.
 	NoKillXPMin   int `json:"noKillXpMin"`
 	BeltWindowMin int `json:"beltWindowMin"`
-	// BeltFundedMin is the longest belt window in which pack plus stash gold covered a potion (PotionPrice) at some
-	// minute; the BELT invariant uses it, poverty windows are reported but do not fail (soak-gates, specdelta).
+	// BeltFundedMin is the longest belt window in which pack plus stash gold covered a potion (PotionPrice) at the
+	// window's first minute; the BELT invariant uses it, poverty windows are reported but do not fail (soak-gates, specdelta).
 	BeltFundedMin int `json:"beltFundedMin"`
 	// BeltWindows lists each belt window over BeltReportMin minute lines (report only).
 	BeltWindows []BeltWindow `json:"beltWindows,omitempty"`
@@ -146,6 +146,7 @@ type BeltWindow struct {
 	PackMax    int  `json:"packMax"`
 	TotMin     int  `json:"totMin"`
 	TotMax     int  `json:"totMax"`
+	TotFirst   int  `json:"totFirst"` // pack plus stash gold at the window's first minute (the funded test, user 2026-11-07)
 	StashKnown bool `json:"stashKnown"`
 }
 
@@ -157,9 +158,10 @@ func (w *BeltWindow) add(m Minute) {
 	w.StashKnown = w.StashKnown || m.HasStash
 }
 
-// Funded reports that pack plus stash gold covered a potion at some minute. Old archives have no stash gold, so
-// they count as pack gold only (stash unknown = 0).
-func (w BeltWindow) Funded() bool { return w.TotMax >= PotionPrice }
+// Funded reports that pack plus stash gold covered a potion at the window's FIRST minute (user 2026-11-07, g2g question 2:
+// a pickup on the last minute does not make a window that started in poverty a belt failure). Old archives have no stash
+// gold, so they count as pack gold only (stash unknown = 0).
+func (w BeltWindow) Funded() bool { return w.TotFirst >= PotionPrice }
 
 func (w BeltWindow) verdict() string {
 	if w.Funded() {
@@ -168,12 +170,12 @@ func (w BeltWindow) verdict() string {
 	return "poverty, not failing"
 }
 
-// Tag is "poverty" when even pack plus stash gold stayed under a potion, "funded" otherwise (the best minute counts), "unknown stash" for old archives.
+// Tag is "poverty" when pack plus stash gold was under a potion at the first minute, "funded" otherwise, "unknown stash" for old archives.
 func (w BeltWindow) Tag() string {
 	switch {
 	case !w.StashKnown:
 		return "stash unknown (old archive)"
-	case w.TotMax < PotionPrice:
+	case !w.Funded():
 		return "poverty (pack+stash < potion price)"
 	}
 	return "funded (pack+stash >= potion price)"
@@ -374,7 +376,7 @@ func ScanInvariants(r io.Reader, x ExitInfo, lim InvLimits) (Invariants, error) 
 			belt++
 			inv.BeltWindowMin = max(inv.BeltWindowMin, belt)
 			if belt == 1 {
-				win = BeltWindow{PackMin: m.Gold, PackMax: m.Gold, TotMin: m.Gold + m.StashGold, TotMax: m.Gold + m.StashGold}
+				win = BeltWindow{PackMin: m.Gold, PackMax: m.Gold, TotMin: m.Gold + m.StashGold, TotMax: m.Gold + m.StashGold, TotFirst: m.Gold + m.StashGold}
 			}
 			win.add(m)
 			winOpen = true

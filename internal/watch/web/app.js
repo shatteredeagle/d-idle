@@ -399,10 +399,42 @@
     $('uptime').title = u.text;
   }
 
+  // ---- Currencies (d.idle mode only): header strip and the spend sheet shell. Nothing here buys anything yet. ----
+  function renderCurrency(c) {
+    var strip = $('curstrip'); clear(strip);
+    strip.hidden = false; $('tab-spend').hidden = !c.enabled; $('spendpane').hidden = !c.enabled;
+    if (!c.enabled) { strip.appendChild(el('span', 'off', c.text)); return; }
+    if (c.error) strip.appendChild(el('span', 'off', c.error));
+    c.currencies.forEach(function (r) {
+      if (r.where.indexOf('header') < 0) return;
+      var s = el('span', 'cur'); s.title = r.blurb;
+      s.appendChild(document.createTextNode(r.name + ' '));
+      s.appendChild(el('b', '', r.amount === null ? '-' : String(r.amount)));
+      s.appendChild(document.createTextNode(' ' + r.label));
+      strip.appendChild(s);
+    });
+    $('spendtext').textContent = c.text;
+    var ul = $('spendlist'); clear(ul);
+    if (!c.spend.length) ul.appendChild(el('li', 'empty', 'Nothing to buy yet.'));
+    c.spend.forEach(function (u) {
+      var li = el('li', 'spendrow'), m = el('div', 'sp-main');
+      m.appendChild(el('div', 'sp-name', u.name + (u.tier ? ' (' + u.tier + ')' : '') + '  level ' + u.level + ' of ' + u.maxLevel));
+      m.appendChild(el('div', 'sp-effect', u.effect));
+      if (u.why) m.appendChild(el('div', 'sp-why', u.why));
+      li.appendChild(m);
+      li.appendChild(el('span', 'sp-cost', u.cost === null ? '-' : u.cost + ' ' + u.currency));
+      var b = el('button', 'btn small', 'Buy'); b.type = 'button'; b.disabled = !u.enabled;
+      li.appendChild(b); ul.appendChild(li);
+    });
+  }
+
   function refresh() {
     if (pending) return; pending = true;
-    Promise.all([get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')])
+    var reqs = [get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')];
+    if (cfg.currency) reqs.push(get('/api/currency'));
+    Promise.all(reqs)
       .then(function (a) {
+        if (a[6]) renderCurrency(a[6]);
         th = a[0]; thoughtsAt = performance.now();
         renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); renderUptime(a[3]); ord = a[4]; ordAt = performance.now(); om = a[5]; renderOrders();
       }).catch(function () { say('the viewer is not reachable'); })

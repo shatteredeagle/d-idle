@@ -1,4 +1,4 @@
-# d2d private fork: lockstep clock and `dump` verb (agent D2DFORK, 2026-10-30)
+# d2d fork (private on the forge, published as the GitHub fork d2d-didle from 2026-11-07, ADR 0003 amendment): lockstep clock and `dump` verb (agent D2DFORK, 2026-10-30)
 
 Result in one paragraph: a small additive patch to d2d (the headless D2 re-implementation, GPL-3.0) gives it a virtual
 clock. With `--lockstep` the game advances only when told (`step <n>`), headless, at about **120x real time** with the

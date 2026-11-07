@@ -111,6 +111,9 @@ func (r *Runner) gearStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 	}
 	r.do(ctx, c, StateInTown, "Gear: equip and shop", sec(r.cfg.TownTimeoutSec), "gear", func(ctx context.Context) error {
 		// Failures here are logged, never escalated: gear is an upgrade, not a requirement.
+		if budget >= 50 && r.scrollShort(snap) {
+			budget = r.scrollFirst(ctx, snap, budget)
+		}
 		if budget >= 50 {
 			rep, err := r.d.Gear.Shop(ctx, budget)
 			r.e.Log.Info("gear shop", "budget", budget, "bought", rep.Bought, "spent", rep.Spent, "err", err)
@@ -120,6 +123,27 @@ func (r *Runner) gearStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 		return ctx.Err()
 	})
 	return true
+}
+
+// scrollShort is the g2g S1 check: the pack holds fewer town portal scrolls than the reserve (town.tpReserve) and the
+// gold covers one. Without the Townsman's count (TPCount) the gear shop keeps its own kit reserve and nothing changes.
+func (r *Runner) scrollShort(snap *d2.Snapshot) bool {
+	d, ok := r.d.Town.(interface{ TPCount(*d2.Snapshot) int })
+	return ok && d.TPCount(snap) < r.e.Tune.Town.TPReserve && snap.Player.Gold >= r.e.Tune.Resource.KitTPGold
+}
+
+// scrollFirst runs the town restock (shop NPC: scroll and kit potions in the town code's own order) before the gear
+// shop and returns the gear budget recomputed from the gold that is left. Seed 17 of Gate 2 g2g left town with one scroll
+// after a 156 gold gear pass, used it, and had none 15 virtual minutes from the next town (docs/research/g2g-diagnosis.md).
+func (r *Runner) scrollFirst(ctx context.Context, snap *d2.Snapshot, budget int) int {
+	t := r.e.Tune.Bot
+	rep, err := r.d.Town.Chores(ctx, ChorePlan{Reason: "scroll before gear", GoldFloor: t.GoldFloor})
+	gold := snap.Player.Gold
+	if s := r.poll(); s != nil && s.Player != nil {
+		gold = s.Player.Gold
+	}
+	r.e.Log.Info("gear: scroll before gear", "done", rep.Done, "skipped", rep.Skipped, "err", err, "gold", gold)
+	return min(budget, max((gold-t.GearReserve)*t.GearBudgetPct/100, 0))
 }
 
 // ---- poverty -------------------------------------------------------------------------------------

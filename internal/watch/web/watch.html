@@ -10,6 +10,7 @@
  <div class="mode" role="status" aria-live="polite"><span class="dot" id="dot"></span><span id="state" class="tag">connecting</span></div>
  <div class="up">uptime <b id="uptime">-</b> <small id="window"></small></div>
  <span id="deaths" class="badge bad" hidden></span>
+ <div class="curstrip" id="curstrip" role="status" aria-label="Currencies" hidden></div>
  <span id="clock" class="muted"></span>
  <div class="tools"><button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: auto</button></div>
 </header>
@@ -20,6 +21,7 @@
  <button type="button" data-view="game" id="tab-game" hidden>Game</button>
  <button type="button" data-view="rules">Rules</button>
  <button type="button" data-view="journal">Journal</button>
+ <button type="button" data-view="spend" id="tab-spend" hidden>Spend</button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -42,6 +44,10 @@
   <div class="card-head"><h2 id="t-rules">Rules</h2><button class="btn danger small" id="revokeall" type="button">Revoke all</button></div>
   <p class="hint">Every rule the hero learned from you. A rule never revokes itself.</p>
   <ul id="rules" class="log-list"></ul>
+ </section>
+ <section class="card spend" id="spendpane" data-v="spend" hidden aria-labelledby="t-spend"><h2 id="t-spend">Spend</h2>
+  <p class="hint" id="spendtext"></p>
+  <ul id="spendlist" class="log-list"></ul>
  </section>
  <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
   <ul id="journal" class="log-list"></ul>

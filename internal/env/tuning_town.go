@@ -57,6 +57,7 @@ type TownTuning struct {
 	TripMinSpend     int // goldfloor: a pure restock trip with a healing potion in the belt needs a planned purchase of at least this gold; a poor character (gold under the kit line, under 2 healing potions) buys no portal scroll (0 = off, old behaviour)
 	MPCapEarly       int // goldfloor: mana potions bought per visit below MPCapLevel
 	MPCapLevel       int // goldfloor: clvl below which MPCapEarly applies and a low mana belt raises no trip (0 = off, old behaviour)
+	EquipKindFails   int // g2g E1: failed equips of one item kind (base class) into one slot, across games, before that kind is skipped until the character gains a level
 	FutileGoldStep   int // after a visit that could not fix a trip reason (cannot afford, not sold), NeedsTrip stays quiet about it until gold grew by this
 }
 
@@ -68,7 +69,7 @@ func DefaultTownTuning() TownTuning {
 		RepairBelowPct: 30, StashGoldBase: 300, StashGoldPerLvl: 50, SellJunk: 1, BeltBuyLevel: 10,
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6, CursorStuckMax: 3,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, TripEmptyHPBelt: 1, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
-		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1,
+		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1, EquipKindFails: 2,
 	}
 }
 
@@ -88,6 +89,7 @@ func townKnobs() []Knob {
 		townK("tripPackUsedPct", "Trip: pack full", "%", "Go to town when the backpack is this full.", d.TripPackUsedPct, 40, 100, false),
 		townK("tripRepairPct", "Trip: durability", "%", "Go to town when an equipped item is below this durability.", d.TripRepairPct, 0, 60, true),
 		townK("beltFillPct", "Belt fill target", "%", "Refill each potion type to this share of its planned columns.", d.BeltFillPct, 25, 100, true),
+		townK("equipKindFails", "Equip: failures per kind", "count", "Failed equips of one item kind (base class) into one slot before that kind is skipped until the character gains a level. The memory is by kind, so a fresh game (new item ids) does not repeat the same refused swap (g2g E1: Cap to head failed in every game).", d.EquipKindFails, 1, 10, false),
 		townK("tpScrollTarget", "Town portal scrolls", "count", "Scrolls to hold when no tome is owned.", d.TPScrollTarget, 1, 20, true),
 		townK("tpReserve", "Scroll reserve (poor)", "count", "Town portal scrolls a poor character buys once it carries its minimal healing kit (a dive then does not start with the only scroll spent). 1 = one scroll, the old cap.", d.TPReserve, 1, 5, true),
 		townK("tpMinGold", "TP scroll min gold", "gold", "Below this gold the first town portal scroll is not bought and a missing scroll is no trip reason, so a poor character puts its gold into potions first (XPGAP: 62% of the gold of a fresh d2d character went to scrolls). 0 = always buy at the scroll price.", d.TPMinGold, 0, 1000, false),
