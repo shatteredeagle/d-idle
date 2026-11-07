@@ -32,7 +32,7 @@ func e1TPFirstScenarios() []e1Scenario {
 	}
 }
 
-// e1GearSetup: town, clvl 20, a full belt (healing in columns 0 and 1, mana in 2 and 3), n separate scrolls, gold,
+// e1GearSetup: town, clvl 20, a full belt (healing in boxes 0 and 1, mana in 2 and 3), n separate scrolls, gold,
 // and extra lab verbs (extra may be nil).
 func e1GearSetup(scrolls, gold int, extra func(context.Context, *e1h) error) func(context.Context, *e1h) (map[string]string, error) {
 	return func(ctx context.Context, h *e1h) (map[string]string, error) {
@@ -40,12 +40,18 @@ func e1GearSetup(scrolls, gold int, extra func(context.Context, *e1h) error) fun
 		if err := e1Reset(ctx, h, 20); err != nil {
 			return f, err
 		}
-		for box := 0; box < 16; box++ {
+		for box := 0; box < 4; box++ { // the starting belt has 4 boxes (d2d: "no belt box" above 3, V 2026-11-07)
 			code := "hp1"
-			if box%4 >= 2 {
+			if box >= 2 {
 				code = "mp1"
 			}
 			if _, err := h.cheat(ctx, fmt.Sprintf("debug give %s belt %d", code, box), "E1 setup: a full belt, so no potion trip competes with the gear pass"); err != nil {
+				return f, err
+			}
+		}
+		// potions in the pack count for the trip check (belt + pack), so no potion trip runs before the gear step
+		for _, code := range []string{"hp1", "hp1", "hp1", "mp1", "mp1", "mp1"} {
+			if _, err := h.cheat(ctx, "debug give "+code+" pack", "E1 setup: spare potions in the pack, so no potion trip competes with the gear pass"); err != nil {
 				return f, err
 			}
 		}
@@ -73,7 +79,7 @@ func e1GearSetup(scrolls, gold int, extra func(context.Context, *e1h) error) fun
 }
 
 func e1TPFirstDone(l []string) bool {
-	return e1Find(l, `"gear shop"`) >= 0 || e1Find(l, "gear: scroll before gear") >= 0 && e1Find(l, "leveler: buying") >= 0
+	return e1Find(l, `"gear shop"`) >= 0 || e1Find(l, "Chores in town") >= 0 || e1Find(l, `"to":"traveling"`) >= 0
 }
 
 // e1Scroll is the first scroll purchase line of the town code.
