@@ -17,6 +17,7 @@ import (
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/launch"
+	"d2lod-bot/internal/town"
 )
 
 type stalledC struct{ frame int }
@@ -197,5 +198,27 @@ func TestD2DHealthRecentStepIsProofOfLife(t *testing.T) {
 	step = time.Now()
 	if _, ok := mon.P.Alive(); !ok {
 		t.Fatal("a step that just finished must count as alive while pings starve")
+	}
+}
+
+// g2g: tp was 0 on every minute line because townAdapter (and so d2dTown) did not implement bot.TPDiag, so the
+// merc wrapper's forward found nothing. Every Townsman the d2d path can hand the runner must be a TPDiag.
+func TestD2DTownChainIsTPDiag(t *testing.T) {
+	ta := townAdapter{t: &town.Town{}}
+	chain := map[string]bot.Townsman{
+		"adapter":       ta,
+		"d2dTown":       d2dTown{townAdapter: ta},
+		"mercOverD2D":   &mercTown{Townsman: d2dTown{townAdapter: ta}},
+		"mercOverPlain": &mercTown{Townsman: ta},
+	}
+	for name, tn := range chain {
+		d, ok := tn.(bot.TPDiag)
+		if !ok {
+			t.Errorf("%s (%T) hides bot.TPDiag", name, tn)
+			continue
+		}
+		if d.TPCount(nil) != 0 || d.TakeTPBought() != 0 {
+			t.Errorf("%s: empty town must read 0", name)
+		}
 	}
 }

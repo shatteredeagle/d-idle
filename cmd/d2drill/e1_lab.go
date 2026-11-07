@@ -35,6 +35,10 @@ import (
 //	shortdrill-noportal E1.noportal-a  Tamoe Highland (area 7; area 11 is now in chainHome: g2e F2c walks home from it), 0 potions, 47 percent life, no portal: leaves after about 20 s
 //	                   E1.noportal-b  the same with a town portal scroll: the bot portals, does not leave
 //
+//	shortdrill-tpcount  E1.tp-a  town, 3 town portal scrolls in the pack: the first minute line says tp=3
+//	                   E1.tp-b  town, a tome in the pack: the minute line tp equals the tome quantity the inv-tp-dump line counts
+//	                   E1.tp-c  town, no scroll, gold 600: a minute line carries tpBuy and tp is then above 0
+//
 // Limit (U): the bot is attached, so d2bot cannot restart this d2d; the leave is proven by the bot's own
 // "leaving the game" line and its NewGame call, not by a new process.
 
@@ -182,7 +186,16 @@ func e1Scenarios() []e1Scenario {
 			},
 			Eval: func(l []string, f map[string]string) (string, string) { return e1NoPortalEval(l, scroll) }}
 	}
+	tp := func(id, title string, setup func(context.Context, *e1h) (map[string]string, error), done func([]string) bool, eval func([]string, map[string]string) (string, string)) e1Scenario {
+		return e1Scenario{ID: id, Group: "shortdrill-tpcount", Title: title, Goals: "farm:Blood Moor", Setup: setup, Done: done, Eval: eval}
+	}
 	return []e1Scenario{
+		tp("E1.tp-a", "town, 3 town portal scrolls in the pack: the minute line shows tp=3", e1TPSetup(3, false, 0),
+			func(l []string) bool { return len(e1Minutes(l)) >= 1 }, e1TPEvalA),
+		tp("E1.tp-b", "town, a town portal tome in the pack: the minute line tp equals the quantity inv-tp-dump counts", e1TPSetup(0, true, 0),
+			func(l []string) bool { return len(e1Minutes(l)) >= 1 }, e1TPEvalB),
+		tp("E1.tp-c", "town, no scroll, gold 600: the bot buys scrolls, tpBuy appears and tp is above 0", e1TPSetup(0, false, 600),
+			func(l []string) bool { return len(e1Minutes(l)) >= 3 }, e1TPEvalC),
 		merc("E1.merc-a", "clvl 12, dead merc, purse = quote + 10, no potions: the revive happens before any potion purchase", 12,
 			func(q int) int { return q + 10 }, e1MercEvalA),
 		merc("E1.merc-b", "clvl 12, dead merc, purse below the quote: no revive, the potions are bought", 12,
@@ -315,6 +328,119 @@ func e1NoPortalSetup(ctx context.Context, h *e1h, scroll bool) (map[string]strin
 		return f, fmt.Errorf("not in area 7: %s", f["state"])
 	}
 	return f, nil
+}
+
+// e1TPSetup puts the hero in the camp with n scrolls (separate pack items: a given scroll is not merged into a tome),
+// optionally a tome, and a purse of gold (0 keeps the stat at 0).
+func e1TPSetup(n int, tome bool, gold int) func(context.Context, *e1h) (map[string]string, error) {
+	return func(ctx context.Context, h *e1h) (map[string]string, error) {
+		f := map[string]string{"scrolls": strconv.Itoa(n), "tome": strconv.FormatBool(tome), "gold": strconv.Itoa(gold)}
+		if err := e1Reset(ctx, h, 12); err != nil {
+			return f, err
+		}
+		for i := 0; i < n; i++ {
+			if _, err := h.cheat(ctx, "debug give tsc pack", "E1 setup: a town portal scroll in the pack"); err != nil {
+				return f, err
+			}
+		}
+		if tome {
+			if _, err := h.cheat(ctx, "debug give tbk pack", "E1 setup: a town portal tome in the pack"); err != nil {
+				return f, err
+			}
+		}
+		if _, err := h.cheat(ctx, fmt.Sprintf("debug stat 14 %d", gold), fmt.Sprintf("E1 setup: purse %d", gold)); err != nil {
+			return f, err
+		}
+		_ = h.step(ctx, 25)
+		st, _, err := h.c.State(ctx)
+		if err != nil {
+			return f, err
+		}
+		f["state"] = fmt.Sprintf("area=%d level=%d gold=%d", h.area(ctx), st.Level, st.Gold)
+		return f, nil
+	}
+}
+
+var (
+	e1TPRe    = regexp.MustCompile(`"tp":(\d+)`)
+	e1TPBuyRe = regexp.MustCompile(`"tpBuy":(\d+)`)
+	e1CountRe = regexp.MustCompile(`tome class=\d+ where=inventory addr=\S+ counted=(\d+)`)
+)
+
+// e1Minutes are the bot's minute lines.
+func e1Minutes(lines []string) []string {
+	var out []string
+	for _, l := range lines {
+		if strings.Contains(l, `"msg":"minute"`) && e1TPRe.MatchString(l) {
+			out = append(out, l)
+		}
+	}
+	return out
+}
+
+func e1Int(re *regexp.Regexp, l string) int {
+	if m := re.FindStringSubmatch(l); m != nil {
+		n, _ := strconv.Atoi(m[1])
+		return n
+	}
+	return 0
+}
+
+func e1TPEvalA(lines []string, _ map[string]string) (string, string) {
+	m := e1Minutes(lines)
+	if len(m) == 0 {
+		return "FAIL", "no minute line with a tp field"
+	}
+	if tp := e1Int(e1TPRe, m[0]); tp != 3 {
+		return "FAIL", fmt.Sprintf("first minute line tp=%d, want 3", tp)
+	}
+	return "PASS", "first minute line tp=3 with 3 scrolls in the pack"
+}
+
+func e1TPEvalB(lines []string, _ map[string]string) (string, string) {
+	m := e1Minutes(lines)
+	if len(m) == 0 {
+		return "FAIL", "no minute line with a tp field"
+	}
+	i := -1
+	for j, l := range lines {
+		if strings.Contains(l, `"inv-tp-dump"`) && e1CountRe.MatchString(l) {
+			i = j
+			break
+		}
+	}
+	if i < 0 {
+		return "FAIL", "no inv-tp-dump line counting a tome"
+	}
+	want, tp := e1Int(e1CountRe, lines[i]), e1Int(e1TPRe, m[0])
+	if want <= 0 {
+		return "FAIL", fmt.Sprintf("the tome counted %d: inconclusive (the given tome is empty), minute tp=%d", want, tp)
+	}
+	if tp != want {
+		return "FAIL", fmt.Sprintf("minute tp=%d, inv-tp-dump counted %d", tp, want)
+	}
+	return "PASS", fmt.Sprintf("minute tp=%d equals the tome quantity counted by inv-tp-dump", tp)
+}
+
+func e1TPEvalC(lines []string, _ map[string]string) (string, string) {
+	m := e1Minutes(lines)
+	if len(m) == 0 {
+		return "FAIL", "no minute line with a tp field"
+	}
+	buy, hi := -1, 0
+	for j, l := range m {
+		if buy < 0 && e1Int(e1TPBuyRe, l) > 0 {
+			buy = j
+		}
+		hi = max(hi, e1Int(e1TPRe, l))
+	}
+	switch {
+	case buy < 0:
+		return "FAIL", fmt.Sprintf("no minute line with tpBuy over %d minute lines (max tp %d)", len(m), hi)
+	case hi == 0:
+		return "FAIL", "tpBuy appeared but tp stayed 0"
+	}
+	return "PASS", fmt.Sprintf("tpBuy>0 on minute line %d, max tp %d", buy+1, hi)
 }
 
 // ---- verdicts from the bot log ----
@@ -602,7 +728,7 @@ func e1One(ctx context.Context, c e1Cfg, sc e1Scenario) e1Result {
 
 // e1Key picks the lines worth quoting and the no-portal timing.
 func e1Key(res *e1Result, lines []string) {
-	pat := regexp.MustCompile(`merc|no town portal|leaving the game|low life|heal trip|bought|restocked|town portal|NewGame|new game|Going to town|Resupply|waiting before`)
+	pat := regexp.MustCompile(`"msg":"minute"|inv-tp-dump|merc|no town portal|leaving the game|low life|heal trip|bought|restocked|town portal|NewGame|new game|Going to town|Resupply|waiting before`)
 	for _, l := range lines {
 		if pat.MatchString(l) && len(res.Key) < 40 {
 			res.Key = append(res.Key, strings.TrimSpace(l))

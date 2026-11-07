@@ -71,3 +71,33 @@ func TestE1Scenarios(t *testing.T) {
 		t.Errorf("want 5 scenarios, got %d", len(seen))
 	}
 }
+
+func TestE1TPEvals(t *testing.T) {
+	min := func(tp, buy int) string {
+		s := fmt.Sprintf(`{"msg":"minute","tp":%d`, tp)
+		if buy > 0 {
+			s += fmt.Sprintf(`,"tpBuy":%d`, buy)
+		}
+		return s + `}`
+	}
+	dump := `{"msg":"inv-tp-dump","portal_items":"tome class=518 where=inventory addr=0x3 counted=4 raw70=4"}`
+	for _, c := range []struct {
+		name  string
+		eval  func([]string, map[string]string) (string, string)
+		lines []string
+		want  string
+	}{
+		{"a ok", e1TPEvalA, []string{min(3, 0)}, "PASS"},
+		{"a zero", e1TPEvalA, []string{min(0, 0)}, "FAIL"},
+		{"a none", e1TPEvalA, nil, "FAIL"},
+		{"b ok", e1TPEvalB, []string{dump, min(4, 0)}, "PASS"},
+		{"b zero", e1TPEvalB, []string{dump, min(0, 0)}, "FAIL"},
+		{"c ok", e1TPEvalC, []string{min(0, 0), min(2, 2)}, "PASS"},
+		{"c no buy", e1TPEvalC, []string{min(0, 0)}, "FAIL"},
+		{"c buy tp0", e1TPEvalC, []string{min(0, 2)}, "FAIL"},
+	} {
+		if v, why := c.eval(c.lines, nil); v != c.want {
+			t.Errorf("%s: %s (%s), want %s", c.name, v, why, c.want)
+		}
+	}
+}
