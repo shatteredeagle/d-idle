@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (44)
+## Active (48)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -62,7 +62,11 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 41 | tpcount | bot-defect | in-progress 2/2 | minute-line tp reads 0 in the g2g runs | - | - | [card](archive/openspec-index.md#tpcount) |
 | 42 | customitems | T5 | in-progress 3/3 | feasibility of own items and drop-table overlays on d2d | - | - | [card](archive/openspec-index.md#customitems) |
 | 43 | custom-overlay | T5 | proposed 0/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
-| 44 | custom-item-1 | T5 | proposed 0/2 | Raven''s Cowl unique on Blood Raven, d.idle mode only | - | - | [card](archive/openspec-index.md#custom-item-1) |
+| 44 | custom-item-1 | T5 | proposed 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
+| 45 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
+| 46 | currency-ledger | T5 | proposed 0/2 | registry and account ledger (Go, offline) | - | - | [card](archive/openspec-index.md#currency-ledger) |
+| 47 | currency-rows | T5 | proposed 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
+| 48 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)

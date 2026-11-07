@@ -1,9 +1,10 @@
 ---
 id: TASK-60
-title: 'custom-item-1: Raven''s Cowl unique on Blood Raven, d.idle mode only'
+title: 'custom-item-1: stackable currency token from one early source'
 status: Proposed
 assignee: []
 created_date: '2026-11-07T03:01:00Z'
+updated_date: '2026-11-07T03:13:00Z'
 labels:
   - T5
 dependencies: []
@@ -17,6 +18,6 @@ contracts: []
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Rows, string and TC entry written; offline probability test passes
-- [ ] #2 Lockstep drill drop rate within the binomial interval; bot stashes it
+- [ ] #1 Token row, TC line and cube bank recipe in the overlay; offline drop-probability test passes
+- [ ] #2 Drill kills N, pack count within the binomial interval, ledger credit equals pack loss
 <!-- AC:END -->
