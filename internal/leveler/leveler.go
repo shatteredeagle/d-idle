@@ -56,9 +56,10 @@ type Leveler struct {
 	player func() (*d2.Player, error)
 
 	mu       sync.Mutex
-	rejected map[string]int     // skill -> character level at which the game refused a point
-	bad      map[badKey]badMark // (item id, slot) -> its failed equips; slot -1 is a failed purchase
-	badSlot  map[int]badMark    // body location -> failed equips of different items into it
+	rejected map[string]int      // skill -> character level at which the game refused a point
+	bad      map[badKey]badMark  // (item id, slot) -> its failed equips; slot -1 is a failed purchase
+	badSlot  map[int]badMark     // body location -> failed equips of different items into it
+	badKind  map[kindKey]badMark // (base class, slot) -> failed equips of any item of that kind; survives a new game's item ids
 	stats    Stats
 	need     [numAttr]int // gear requirements reported by NeedStats
 }

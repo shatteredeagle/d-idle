@@ -62,24 +62,24 @@ func TestEquipFailureMemoryPerItemAndSlot(t *testing.T) {
 	lvl := 6
 	l := &Leveler{o: Options{Snapshot: func() (*d2.Snapshot, error) { return &d2.Snapshot{Player: &d2.Player{Level: lvl}}, nil }}}
 	l.markBadSwap(Swap{Item: cand(7, "amulet", 5, true, d2.BodyNeck), Slot: d2.BodyNeck})
-	if !l.isBadSlot(7, d2.BodyNeck, 6) {
+	if !l.isBadSlot(7, 0, d2.BodyNeck, 6) {
 		t.Fatal("not remembered")
 	}
-	if l.isBadSlot(7, d2.BodyNeck, 7) {
+	if l.isBadSlot(7, 0, d2.BodyNeck, 7) {
 		t.Fatal("level up must clear")
 	}
-	if l.isBadSlot(8, d2.BodyNeck, 6) {
+	if l.isBadSlot(8, 0, d2.BodyNeck, 6) {
 		t.Fatal("another item is fresh")
 	}
-	if !l.badEverywhere(7, []int{d2.BodyNeck}, 6) {
+	if !l.badEverywhere(7, 0, []int{d2.BodyNeck}, 6) {
 		t.Fatal("single-slot item should be bad everywhere")
 	}
 	l.markBadSwap(Swap{Item: cand(9, "ring", 5, true), Slot: d2.BodyRRing})
-	if l.badEverywhere(9, []int{d2.BodyRRing, d2.BodyLRing}, 6) {
+	if l.badEverywhere(9, 0, []int{d2.BodyRRing, d2.BodyLRing}, 6) {
 		t.Fatal("ring failed one slot only")
 	}
 	l.markBadSwap(Swap{Slot: -1, Item: cand(10, "x", 1, true)})
-	if !l.badEverywhere(10, []int{d2.BodyHead}, 6) {
+	if !l.badEverywhere(10, 0, []int{d2.BodyHead}, 6) {
 		t.Fatal("failed purchase is bad everywhere")
 	}
 }
