@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (65)
+## Active (64)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -50,40 +50,39 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 29 | onboardtour | watch | proposed 0/3 | onboarding slice B: tour, Help, state banners | - | - | [card](archive/openspec-index.md#onboardtour) |
 | 30 | onboardctl | watch | proposed 0/3 | onboarding slice C: Pause, Stop, Reset, report hook | - | - | [card](archive/openspec-index.md#onboardctl) |
 | 31 | abmerc | ops | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
-| 32 | fidprobe-core | bot | in-progress 3/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
-| 33 | fidprobe-vendor | bot | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
-| 34 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
-| 35 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
-| 36 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
-| 37 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
-| 38 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
-| 39 | fid-probe-readers | bot | proposed 0/4 | probe reader gaps: d2s third reference, merc fields, affix values | - | - | [card](archive/openspec-index.md#fid-probe-readers) |
-| 40 | fid-probe-equip | d2d | proposed 0/4 | probe: equip legality and identify flow | - | - | [card](archive/openspec-index.md#fid-probe-equip) |
-| 41 | fid-probe-regen-speed | d2d | proposed 0/4 | probe and measure: regen, potions, player walk and stamina | - | - | [card](archive/openspec-index.md#fid-probe-regen-speed) |
-| 42 | fid-xp-award | d2d | proposed 0/2 | oracle plus live: XP per kill and level-difference penalty | - | - | [card](archive/openspec-index.md#fid-xp-award) |
-| 43 | fid-price-pr | d2d | proposed 0/4 | oracle: buy, sell and repair price deviations, gold plans | - | - | [card](archive/openspec-index.md#fid-price-pr) |
-| 44 | fid-stock-oracle | d2d | proposed 0/4 | oracle: vendor stock generation and refresh | - | - | [card](archive/openspec-index.md#fid-stock-oracle) |
-| 45 | fid-belt-pr | d2d | proposed 0/3 | oracle: belt pickup lands in belt first | - | - | [card](archive/openspec-index.md#fid-belt-pr) |
-| 46 | fid-inv-limits | d2d | proposed 0/2 | oracle: stash cap, purse cap, grid sizes | - | - | [card](archive/openspec-index.md#fid-inv-limits) |
-| 47 | fid-layout-act1 | d2d | proposed 0/4 | oracle: layouts of the other Act 1 areas | - | - | [card](archive/openspec-index.md#fid-layout-act1) |
-| 48 | fid-transitions | d2d | proposed 0/2 | probe: area transitions and arrival position | - | - | [card](archive/openspec-index.md#fid-transitions) |
-| 49 | fid-monster-move | d2d | proposed 0/3 | oracle: monster velocity, pathing, stuck cases | - | - | [card](archive/openspec-index.md#fid-monster-move) |
-| 50 | fid-missile-player | d2d | proposed 0/3 | oracle: player missile flight, pierce, units per frame | - | - | [card](archive/openspec-index.md#fid-missile-player) |
-| 51 | fid-missile-monster | d2d | proposed 0/3 | oracle: monster missiles and ranged attackers | - | - | [card](archive/openspec-index.md#fid-missile-monster) |
-| 52 | fid-boss-mods | d2d | proposed 0/2 | oracle: unique, champion and boss modifiers (merge pr-mods) | - | - | [card](archive/openspec-index.md#fid-boss-mods) |
-| 53 | fid-boss-skills | d2d | proposed 0/3 | oracle: boss skills and death mods | - | - | [card](archive/openspec-index.md#fid-boss-skills) |
-| 54 | fid-status-effects | d2d | proposed 0/3 | oracle: monster states, freeze rule | - | - | [card](archive/openspec-index.md#fid-status-effects) |
-| 55 | fid-sorc-upstream | d2d | proposed 0/4 | upstream: private-branch Sorceress fixes (mana timing, cast length, armor group) | - | - | [card](archive/openspec-index.md#fid-sorc-upstream) |
-| 56 | fid-skill-damage-pr | d2d | proposed 0/2 | upstream: skill damage min-synergy gate and MulDiv | - | - | [card](archive/openspec-index.md#fid-skill-damage-pr) |
-| 57 | fid-teleport | d2d | proposed 0/3 | oracle: Teleport hops, refusal and mana | - | - | [card](archive/openspec-index.md#fid-teleport) |
-| 58 | fid-hit-recovery | d2d | proposed 0/2 | oracle: player hit recovery during casts | - | - | [card](archive/openspec-index.md#fid-hit-recovery) |
-| 59 | fid-lab-rebase | d2d | proposed 0/3 | lab binary rebase: private fixes into the lab binary | - | - | [card](archive/openspec-index.md#fid-lab-rebase) |
-| 60 | fid-quest-den-raven | d2d | proposed 0/3 | probe: Den of Evil and Blood Raven triggers | - | - | [card](archive/openspec-index.md#fid-quest-den-raven) |
-| 61 | fid-quest-andariel | bot | proposed 0/3 | probe plus A:B: Andariel kill, Act 2 entry | - | - | [card](archive/openspec-index.md#fid-quest-andariel) |
-| 62 | fid-wp-tp-pr | d2d | proposed 0/3 | upstream: waypoint and town portal deviations | - | - | [card](archive/openspec-index.md#fid-wp-tp-pr) |
-| 63 | fid-death | d2d | proposed 0/2 | probe: death penalty, corpse and floor rules | - | - | [card](archive/openspec-index.md#fid-death) |
-| 64 | fid-gatea-ab | d2d | proposed 0/3 | statistical A:B: end-to-end rates, Gate A | - | - | [card](archive/openspec-index.md#fid-gatea-ab) |
-| 65 | fid-matrix-refresh | docs | proposed 0/2 | update the matrix as cards close | - | - | [card](archive/openspec-index.md#fid-matrix-refresh) |
+| 32 | fidprobe-vendor | bot | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
+| 33 | custom-overlay | T5 | in-progress 1/2 | row-merge table overlay in the d.idle fork and Go loader | - | - | [card](archive/openspec-index.md#custom-overlay) |
+| 34 | custom-item-1 | T5 | in-progress 0/2 | stackable currency token from one early source | - | - | [card](archive/openspec-index.md#custom-item-1) |
+| 35 | metacurrency | T5 | in-progress 0/3 | per-character and account-wide currencies from custom items | - | - | [card](archive/openspec-index.md#metacurrency) |
+| 36 | currency-rows | T5 | in-progress 0/2 | token row, drop line and bank recipe overlay | - | - | [card](archive/openspec-index.md#currency-rows) |
+| 37 | currency-slice | T5 | proposed 0/2 | bank step, balance line and kill drill | - | - | [card](archive/openspec-index.md#currency-slice) |
+| 38 | fid-probe-readers | bot | proposed 0/4 | probe reader gaps: d2s third reference, merc fields, affix values | - | - | [card](archive/openspec-index.md#fid-probe-readers) |
+| 39 | fid-probe-equip | d2d | proposed 0/4 | probe: equip legality and identify flow | - | - | [card](archive/openspec-index.md#fid-probe-equip) |
+| 40 | fid-probe-regen-speed | d2d | proposed 0/4 | probe and measure: regen, potions, player walk and stamina | - | - | [card](archive/openspec-index.md#fid-probe-regen-speed) |
+| 41 | fid-xp-award | d2d | proposed 0/2 | oracle plus live: XP per kill and level-difference penalty | - | - | [card](archive/openspec-index.md#fid-xp-award) |
+| 42 | fid-price-pr | d2d | proposed 0/4 | oracle: buy, sell and repair price deviations, gold plans | - | - | [card](archive/openspec-index.md#fid-price-pr) |
+| 43 | fid-stock-oracle | d2d | proposed 0/4 | oracle: vendor stock generation and refresh | - | - | [card](archive/openspec-index.md#fid-stock-oracle) |
+| 44 | fid-belt-pr | d2d | proposed 0/3 | oracle: belt pickup lands in belt first | - | - | [card](archive/openspec-index.md#fid-belt-pr) |
+| 45 | fid-inv-limits | d2d | proposed 0/2 | oracle: stash cap, purse cap, grid sizes | - | - | [card](archive/openspec-index.md#fid-inv-limits) |
+| 46 | fid-layout-act1 | d2d | proposed 0/4 | oracle: layouts of the other Act 1 areas | - | - | [card](archive/openspec-index.md#fid-layout-act1) |
+| 47 | fid-transitions | d2d | proposed 0/2 | probe: area transitions and arrival position | - | - | [card](archive/openspec-index.md#fid-transitions) |
+| 48 | fid-monster-move | d2d | proposed 0/3 | oracle: monster velocity, pathing, stuck cases | - | - | [card](archive/openspec-index.md#fid-monster-move) |
+| 49 | fid-missile-player | d2d | proposed 0/3 | oracle: player missile flight, pierce, units per frame | - | - | [card](archive/openspec-index.md#fid-missile-player) |
+| 50 | fid-missile-monster | d2d | proposed 0/3 | oracle: monster missiles and ranged attackers | - | - | [card](archive/openspec-index.md#fid-missile-monster) |
+| 51 | fid-boss-mods | d2d | proposed 0/2 | oracle: unique, champion and boss modifiers (merge pr-mods) | - | - | [card](archive/openspec-index.md#fid-boss-mods) |
+| 52 | fid-boss-skills | d2d | proposed 0/3 | oracle: boss skills and death mods | - | - | [card](archive/openspec-index.md#fid-boss-skills) |
+| 53 | fid-status-effects | d2d | proposed 0/3 | oracle: monster states, freeze rule | - | - | [card](archive/openspec-index.md#fid-status-effects) |
+| 54 | fid-sorc-upstream | d2d | proposed 0/4 | upstream: private-branch Sorceress fixes (mana timing, cast length, armor group) | - | - | [card](archive/openspec-index.md#fid-sorc-upstream) |
+| 55 | fid-skill-damage-pr | d2d | proposed 0/2 | upstream: skill damage min-synergy gate and MulDiv | - | - | [card](archive/openspec-index.md#fid-skill-damage-pr) |
+| 56 | fid-teleport | d2d | proposed 0/3 | oracle: Teleport hops, refusal and mana | - | - | [card](archive/openspec-index.md#fid-teleport) |
+| 57 | fid-hit-recovery | d2d | proposed 0/2 | oracle: player hit recovery during casts | - | - | [card](archive/openspec-index.md#fid-hit-recovery) |
+| 58 | fid-lab-rebase | d2d | proposed 0/3 | lab binary rebase: private fixes into the lab binary | - | - | [card](archive/openspec-index.md#fid-lab-rebase) |
+| 59 | fid-quest-den-raven | d2d | proposed 0/3 | probe: Den of Evil and Blood Raven triggers | - | - | [card](archive/openspec-index.md#fid-quest-den-raven) |
+| 60 | fid-quest-andariel | bot | proposed 0/3 | probe plus A:B: Andariel kill, Act 2 entry | - | - | [card](archive/openspec-index.md#fid-quest-andariel) |
+| 61 | fid-wp-tp-pr | d2d | proposed 0/3 | upstream: waypoint and town portal deviations | - | - | [card](archive/openspec-index.md#fid-wp-tp-pr) |
+| 62 | fid-death | d2d | proposed 0/2 | probe: death penalty, corpse and floor rules | - | - | [card](archive/openspec-index.md#fid-death) |
+| 63 | fid-gatea-ab | d2d | proposed 0/3 | statistical A:B: end-to-end rates, Gate A | - | - | [card](archive/openspec-index.md#fid-gatea-ab) |
+| 64 | fid-matrix-refresh | docs | proposed 0/2 | update the matrix as cards close | - | - | [card](archive/openspec-index.md#fid-matrix-refresh) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
