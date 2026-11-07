@@ -567,6 +567,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - GATE2: wave 3a (g2h, seeds 11/13/17) 3 of 3 PASS, indicative only (3 seeds; wave 3b not run, decision D1); g2g NOKILL failures gone; analysis docs/research/g2h-wave3a.md (TASK-119)
 - TASK-120 ghcrpublish (lead) plus TASK-121 updrelease, TASK-122 updclient, TASK-123 updboot, TASK-124 updkey (user): self-update for friends, registry first then in-app updater; design in docs/research/self-update-design.md, nothing built or published
 - TASK-101 upstream PR opened: psi29a/d2decomped#242 (load life/mana, head 8308864a), merge pending; new card TASK-125 (Fight::revive refills only life)
+- TASK-124 updkey now sets up an environment-scoped CI signing secret with a required reviewer and tag protection (user decisions 2026-11-07 recorded in the self-update design)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

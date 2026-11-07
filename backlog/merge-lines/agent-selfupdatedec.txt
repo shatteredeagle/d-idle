@@ -1,1 +1,0 @@
-BACKLOG: TASK-124 updkey now sets up an environment-scoped CI signing secret with a required reviewer and tag protection (user decisions 2026-11-07 recorded in the self-update design)
