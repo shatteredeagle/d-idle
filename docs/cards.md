@@ -59,7 +59,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 38 | run4h | ops | proposed 0/2 | 4-hour unattended realtime run of the play-session command | instance:i4 | - | [card](archive/openspec-index.md#run4h) |
 | 39 | smokebot | ops | proposed 0/3 | 45-minute smoke per bot change (Gate 0.5 or Gate 1 on one seed) | - | - | [card](archive/openspec-index.md#smokebot) |
 | 40 | h3verdict | docs | proposed 0/2 | H3 orders session and the H1 verdict (the user plays 1 h with orders only) | - | - | [card](archive/openspec-index.md#h3verdict) |
-| 41 | lanhowto | docs | proposed 0/2 | one friend over the LAN, a one-page how-to | - | - | [card](archive/openspec-index.md#lanhowto) |
+| 41 | friendsfb | docs | proposed 0/2 | friends feedback via the tester container | - | - | [card](archive/openspec-index.md#friendsfb) |
 | 42 | designbrief | docs | proposed 0/2 | design brief v1 (the loop that won, three metrics with targets, what is cut) | - | - | [card](archive/openspec-index.md#designbrief) |
 | 43 | qqueue | T0 | proposed 0/3 | questions queue for the player''s return; remove the 45 s fade (D2) | - | - | [card](archive/openspec-index.md#qqueue) |
 | 44 | dietcards | ops | proposed 0/3 | stop committing docs/cards.md (generate on demand or in CI; fix the mergeq preflight and the cards_md --check use) | - | - | [card](archive/openspec-index.md#dietcards) |
