@@ -1,1 +1,0 @@
-CHANGELOG: Direction record amended: tester container continues because remote friends are the only testers; plan step 7 is TASK-113 friends feedback via the container (m-1), container cards TASK-23, 25-29, 31-33 at high priority.
