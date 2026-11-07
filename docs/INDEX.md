@@ -780,3 +780,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
 - docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident
 - [probes/fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe and first-live-run checklist (status: unverified until the first live run)
+- docs/research/g2g-five-seed.md: Gate 2 g2g combined five-seed verdict (waves 1 and 2), belt re-judge of wave 1, merc numbers, paired comparison with g2f
+- docs/soaks/gate2-multiseed-20261107-0953-g2g2.md: Gate 2 g2g wave 2 record (seeds 19, 21), per-seed criteria, d2dsoak output
