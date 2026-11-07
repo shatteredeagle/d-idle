@@ -22,6 +22,7 @@ ADR 0016 replaced the goals G-A..G-G by the tier ladder as the ranking of work, 
 
 - Tier (ladder work, at most one): `T0` Order-taker, `T1` Tidy, `T2` Runner, `T3` Planner, `T4` Questor (Act 1 clear cards 1 to 3), `T5` Farmer.
 - Area (non-ladder work; an open task needs a tier or one area): `watch` (watch screen, orders), `tester` (tester build and its container), `gate` (Gate 2, Gate 3, Gate A records), `upstream` (PRs to the decompiled project), `bot-defect` (a fix for a defect seen in a run), `drills` (live drill suites), `tooling`, `decisions`, `onboarding`.
+- Fidelity cards (user 2026-11-07): area `fidelity` on every card, ONE kind label (`probe`, `oracle`, `readonly`, `d2d-measure`, `model-check`, `upstream-pr`, `bot-fix`, `drill`) and one or more d2d areas (`d2d-combat`, `d2d-skills`, `d2d-monsters`, `d2d-items`, `d2d-loot`, `d2d-town`, `d2d-vendor`, `d2d-movement`, `d2d-pathing`, `d2d-levels`, `d2d-network`, `d2d-time`, `d2d-data`, `d2d-ui`). Map: docs/research/fidelity-cards.md.
 - Modifiers (combine with the above): `soak` (needs a soak slot), `parked` (kept, not ranked; also set status Deferred).
 - Legacy `G-A..G-G` stay accepted by the checker for old branches; no task on main carries one since 2026-11-06 (mapping: G-A gate, G-B T4 or bot-defect, G-C bot-defect or drills, G-E upstream, G-F tester or tooling, G-G T0). Tasks from 2026-11-06 on use the new labels. Dependencies are the `dependencies:` key (`backlog task edit N --dep M`), never a label.
 - `docs/cards.md` shows the tier, else the first area label, in its goal column.

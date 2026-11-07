@@ -16,9 +16,11 @@ from pathlib import Path
 OPEN = {"Proposed", "Deferred", "In Progress"}
 GOALS = {f"G-{c}" for c in "ABCDEFG"}  # legacy, still accepted
 TIERS = {f"T{i}" for i in range(6)}
-AREAS = {"watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding"}
+AREAS = {"watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding", "fidelity"}
+KINDS = {"probe", "oracle", "readonly", "d2d-measure", "model-check", "upstream-pr", "bot-fix", "drill"}
+D2D_AREAS = {"d2d-" + x for x in ("combat skills monsters items loot town vendor movement pathing levels network time data ui".split())}
 MODIFIERS = {"soak", "parked"}
-KNOWN = GOALS | TIERS | AREAS | MODIFIERS
+KNOWN = GOALS | TIERS | AREAS | MODIFIERS | KINDS | D2D_AREAS
 
 
 def parse(path):

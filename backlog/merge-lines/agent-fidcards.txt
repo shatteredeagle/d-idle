@@ -1,0 +1,2 @@
+BACKLOG: fidelity matrix: 29 backlog cards (fid-*) for every unverified row, map in docs/research/fidelity-cards.md; new labels fidelity, kind labels and d2d-* areas
+INDEX: docs/research/fidelity-cards.md: backlog map of the fidelity cards (card, matrix rows, kind, d2d area, live, size, deps, label counts)

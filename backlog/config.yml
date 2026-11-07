@@ -1,7 +1,7 @@
 project_name: "d.idle"
 default_status: "Proposed"
 statuses: ["Proposed", "Deferred", "In Progress", "Done"]
-labels: ["T0", "T1", "T2", "T3", "T4", "T5", "watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding", "soak", "parked", "G-A", "G-B", "G-C", "G-D", "G-E", "G-F", "G-G"]
+labels: ["T0", "T1", "T2", "T3", "T4", "T5", "watch", "tester", "gate", "upstream", "bot-defect", "drills", "tooling", "decisions", "onboarding", "soak", "parked", "fidelity", "probe", "oracle", "readonly", "d2d-measure", "model-check", "upstream-pr", "bot-fix", "drill", "d2d-combat", "d2d-skills", "d2d-monsters", "d2d-items", "d2d-loot", "d2d-town", "d2d-vendor", "d2d-movement", "d2d-pathing", "d2d-levels", "d2d-network", "d2d-time", "d2d-data", "d2d-ui", "G-A", "G-B", "G-C", "G-D", "G-E", "G-F", "G-G"]
 date_format: yyyy-mm-dd
 max_column_width: 20
 default_editor: "vi"

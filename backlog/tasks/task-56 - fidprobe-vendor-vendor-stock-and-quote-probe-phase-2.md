@@ -4,9 +4,13 @@ title: 'fidprobe-vendor: vendor stock and quote probe, phase 2'
 status: Proposed
 assignee: []
 created_date: '2026-11-06T22:43:00Z'
-updated_date: '2026-11-06T22:43:00Z'
+updated_date: '2026-11-07T18:04:00Z'
 labels:
   - gate
+  - fidelity
+  - probe
+  - d2d-vendor
+  - d2d-town
 dependencies:
   - TASK-55
 ordinal: 54000

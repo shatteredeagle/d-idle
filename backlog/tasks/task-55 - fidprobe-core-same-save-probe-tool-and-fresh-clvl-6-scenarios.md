@@ -4,9 +4,14 @@ title: 'fidprobe-core: same-save probe tool and fresh/clvl 6 scenarios'
 status: In Progress
 assignee: []
 created_date: '2026-11-06T22:43:00Z'
-updated_date: '2026-11-06T22:54:00Z'
+updated_date: '2026-11-07T18:04:00Z'
 labels:
   - gate
+  - fidelity
+  - probe
+  - d2d-skills
+  - d2d-items
+  - d2d-network
 dependencies: []
 ordinal: 53000
 card: "fidprobe-core"
