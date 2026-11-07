@@ -11,7 +11,7 @@ import (
 // both the missing scroll and a gear pass, and fewer scrolls than town.tpReserve restocks the scroll BEFORE the gear
 // shop spends the gold.
 //
-//	E1.tp-first-a  clvl 20, 1 scroll, 400 gold, full belt: `gear: scroll before gear` and a scroll bought before the
+//	E1.tp-first-a  clvl 20, 1 scroll, 700 gold, full belt: `gear: scroll before gear` and a scroll bought before the
 //	               first `leveler: buying`
 //	E1.tp-first-b  control: 2 scrolls (the reserve is held): no `scroll before gear` line, the gear pass is unchanged
 //
@@ -23,11 +23,11 @@ func init() { e1Extra = append(e1Extra, e1TPFirstScenarios()...) }
 func e1TPFirstScenarios() []e1Scenario {
 	mk := func(id, title string, scrolls int, eval func([]string) (string, string)) e1Scenario {
 		return e1Scenario{ID: id, Group: "shortdrill-tpfirst", Title: title, Goals: "farm:Blood Moor",
-			Setup: e1GearSetup(scrolls, 400, nil), Done: e1TPFirstDone,
+			Setup: e1GearSetup(scrolls, 700, nil), Done: e1TPFirstDone,
 			Eval: func(l []string, _ map[string]string) (string, string) { return eval(l) }}
 	}
 	return []e1Scenario{
-		mk("E1.tp-first-a", "clvl 20, 1 scroll, 400 gold, full belt: the scroll is bought before the gear shop spends", 1, e1TPFirstEvalA),
+		mk("E1.tp-first-a", "clvl 20, 1 scroll, 700 gold, full belt: the scroll is bought before the gear shop spends", 1, e1TPFirstEvalA),
 		mk("E1.tp-first-b", "control: 2 scrolls, same purse: no scroll restock before the gear pass", 2, e1TPFirstEvalB),
 	}
 }
@@ -77,7 +77,7 @@ func e1TPFirstDone(l []string) bool {
 	return e1Find(l, `"gear shop"`) >= 0 || e1Find(l, "Chores in town") >= 0 || e1Find(l, `"to":"traveling"`) >= 0
 }
 
-// e1Scroll is the first portal scroll or tome purchase line of the town code (a purse from 450 gold buys the tome).
+// e1Scroll is the first portal scroll or tome purchase line of the town code (a purse from 450 gold buys the tome first, as the town code decides).
 func e1Scroll(l []string) int {
 	for i, s := range l {
 		if strings.Contains(s, `"shop: bought"`) && (strings.Contains(s, "Scroll of Town Portal") || strings.Contains(s, "Tome of Town Portal")) {
