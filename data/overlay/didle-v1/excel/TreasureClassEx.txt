@@ -1,0 +1,3 @@
+Treasure Class	Picks	NoDrop	Item1	Prob1	Item5	Prob5
+DI Mark A	1	2	mrk	1		
+Blood Raven					DI Mark A	1

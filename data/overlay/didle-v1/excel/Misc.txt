@@ -1,0 +1,2 @@
+name	code	namestr	type	alternategfx	component	invwidth	invheight	flippyfile	invfile	dropsound	dropsfxframe	usesound	transtbl	level	levelreq	rarity	spawnable	cost	nodurability	stackable	minstack	maxstack	spawnstack
+DI Mark	mrk	didle_mrk	key	key	16	1	1	flpkey	invkey	item_key	12	item_key	5	0	0	0	0	1	1	1	1	12	1
