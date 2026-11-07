@@ -1,2 +1,0 @@
-BACKLOG: TASK-61 metacurrency design (registry, per-character item plus account ledger, first slice); TASK-60 reworked to the stackable token; TASK-62 to 64 proposed (ledger, rows, slice)
-INDEX: docs/research/metacurrency-design.md - per-character and account-wide currencies from custom items: registry, storage, sources, sinks, first slice
