@@ -44,6 +44,7 @@ This image contains the program d2d, built from:
   repository : https://github.com/shatteredeagle/d2d-didle
   commit     : f75816c616c8253930d88277b90936e3eabe3bc8   (tag didle-gate2-lab3)
   tarball    : d2d-didle-f75816c616c8.tar.gz  sha256 <fill at cut>
+               (made from the public tag with `git archive`, see docs/fork-publication/PUBLISHED.md)
 Vendored inputs (name, version, sha256): <fill at cut from the build context>
 Build recipe: the Dockerfile and CMake flags in the source tarball of the
 bot repository, commit <fill at cut>.
@@ -65,9 +66,9 @@ Upstream LEGAL.md names the icon (Freepik licence) and a freeware font. The icon
 
 ## 6. USER DECISION list
 
-1. ADR 0003 amendment: RECORDED 2026-11-07 (docs/adr/0003, "Amendment 2026-11-07"): public GitHub fork `d2d-didle`, lab verbs flag-gated and off by default. Done; nothing else here is published yet.
+1. ADR 0003 amendment: RECORDED 2026-11-07 (docs/adr/0003, "Amendment 2026-11-07"): public GitHub fork `d2d-didle`, lab verbs flag-gated and off by default. Done.
 2. GPL reviewer: named or waived (open; ADR 0003 says none yet; the user's go of 2026-11-07 covers the publication of the source, not a review).
-3. When the repo goes public: phase 2 after the coordinator reads the scan (conditional on a clean scan; the scan found no credentials or private hosts).
+3. When the repo goes public: DONE 2026-11-07 as the standalone repo https://github.com/shatteredeagle/d2d-didle (record: docs/fork-publication/PUBLISHED.md).
 4. Lab and cheat verbs: FLAG-GATED, not stripped (decided 2026-11-07). The test cheats never go into an upstream PR without approval.
 5. The user's go on the day of the first copy of an image to anyone else.
 6. Rewrite history or not (session-URL trailers): docs/research/fork-publication-scan.md, D1.

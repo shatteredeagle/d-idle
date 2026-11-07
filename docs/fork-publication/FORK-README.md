@@ -1,6 +1,6 @@
 # d2d-didle: the d.idle fork of d2d
 
-> Draft for the fork root (phase 2 adds it as README-DIDLE.md on `didle/main`). Written 2026-11-07.
+> Draft; the published version is README-DIDLE.md on the public didle/main (docs/fork-publication/PUBLISHED.md).
 
 This is a fork of [psi29a/d2decomped](https://github.com/psi29a/d2decomped), the clean-room reimplementation of Diablo II 1.14d ("d2d"). It carries the patches the d.idle project (an idle-play bot for Diablo II) needs to drive and measure d2d headlessly. It is offered to upstream: the maintainer keeps upstream a clean reimplementation until 1.0, so these patches are not expected to merge as they are; fixes that stand alone are sent upstream as normal pull requests.
 
