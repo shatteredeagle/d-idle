@@ -13,7 +13,7 @@ import (
 //
 //	E1.tp-first-a  clvl 20, 1 scroll, 700 gold, full belt: `gear: scroll before gear` and a scroll bought before the
 //	               first `leveler: buying`
-//	E1.tp-first-b  control: 2 scrolls (the reserve is held): no `scroll before gear` line, the gear pass is unchanged
+//	E1.tp-first-b  control: 2 scrolls, 400 gold (the reserve is held): no `scroll before gear` line, the gear pass is unchanged
 //
 // A full belt keeps the town trip quiet (one scroll is not a trip reason: only none is), so the gear step is the
 // first thing the bot does in town, as in the seed 17 minute 1035.
@@ -21,14 +21,14 @@ import (
 func init() { e1Extra = append(e1Extra, e1TPFirstScenarios()...) }
 
 func e1TPFirstScenarios() []e1Scenario {
-	mk := func(id, title string, scrolls int, eval func([]string) (string, string)) e1Scenario {
+	mk := func(id, title string, scrolls, gold int, eval func([]string) (string, string)) e1Scenario {
 		return e1Scenario{ID: id, Group: "shortdrill-tpfirst", Title: title, Goals: "farm:Blood Moor",
-			Setup: e1GearSetup(scrolls, 700, nil), Done: e1TPFirstDone,
+			Setup: e1GearSetup(scrolls, gold, nil), Done: e1TPFirstDone,
 			Eval: func(l []string, _ map[string]string) (string, string) { return eval(l) }}
 	}
 	return []e1Scenario{
-		mk("E1.tp-first-a", "clvl 20, 1 scroll, 700 gold, full belt: the scroll is bought before the gear shop spends", 1, e1TPFirstEvalA),
-		mk("E1.tp-first-b", "control: 2 scrolls, same purse: no scroll restock before the gear pass", 2, e1TPFirstEvalB),
+		mk("E1.tp-first-a", "clvl 20, 1 scroll, 700 gold, full belt: the scroll is bought before the gear shop spends", 1, 700, e1TPFirstEvalA),
+		mk("E1.tp-first-b", "control: 2 scrolls, 400 gold (a purse that buys no tome): no scroll restock before the gear pass", 2, 400, e1TPFirstEvalB),
 	}
 }
 
