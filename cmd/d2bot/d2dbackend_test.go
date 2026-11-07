@@ -295,3 +295,35 @@ func TestSoakHours(t *testing.T) {
 		t.Fatal("unset must be 0")
 	}
 }
+
+// --overlay-dir (d.idle mode): only a d2d backend takes it, a bad directory is refused, a managed d2d gets the flag
+// only when it is set, and the twin env is what internal/data reads.
+func TestBackendOverlayDir(t *testing.T) {
+	t.Setenv("D2_OVERLAY_DIR", "")
+	if _, err := parseFlags([]string{"--overlay-dir", "/x"}); err == nil {
+		t.Error("overlay accepted on the Game.exe backend")
+	}
+	if _, err := parseFlags([]string{"--attach", "--d2d-attach", "--backend", "d2d", "--overlay-dir", t.TempDir()}); err == nil {
+		t.Error("overlay dir without excel/ accepted")
+	}
+	base := []string{"--managed", "--backend", "d2d", "--d2d-bin", "/b/d2d"}
+	o, err := parseFlags(base)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if cfg := d2dConfig(o, slog.Default(), &env.Tuning{}, nil, "/home"); strings.Contains(strings.Join(cfg.ExtraArgs, " "), "overlay") {
+		t.Fatalf("vanilla start passes an overlay flag: %v", cfg.ExtraArgs)
+	}
+	dir := t.TempDir()
+	if err := os.MkdirAll(filepath.Join(dir, "excel"), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	o, err = parseFlags(append(base, "--overlay-dir", dir))
+	if err != nil {
+		t.Fatal(err)
+	}
+	cfg := d2dConfig(o, slog.Default(), &env.Tuning{}, nil, "/home")
+	if strings.Join(cfg.ExtraArgs, " ") != "--overlay-dir "+dir || os.Getenv("D2_OVERLAY_DIR") != dir {
+		t.Fatalf("%v env=%q", cfg.ExtraArgs, os.Getenv("D2_OVERLAY_DIR"))
+	}
+}
