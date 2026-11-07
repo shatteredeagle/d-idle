@@ -768,3 +768,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/fidelity-matrix.md and docs/research/fidelity-probe-design.md: what the bot depends on versus game.exe, how each row is verified, same-save probe design
 - docs/ab-merc.md: paired A/B of the merc revive reserve (late-start variant), run plan
 - docs/probes/shortdrills.md: short live drills for the g2e/g2f fixes (cmd/d2drill -group E1)
+- docs/research/custom-items.md: custom items and drop-table overlays on d2d, two-mode rule, first-item proposal

@@ -1,2 +1,0 @@
-BACKLOG: customitems feasibility study done (docs/research/custom-items.md); follow-ups custom-overlay and custom-item-1 Proposed
-INDEX: docs/research/custom-items.md: custom items and drop-table overlays on d2d, two-mode rule, first-item proposal
