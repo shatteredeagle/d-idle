@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-06T20:30:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - docs
+  - research
   - tester
+milestone: m-1
 dependencies: []
+priority: medium
 ordinal: 50000
 card: "friendspreview"
 owns:
@@ -16,6 +20,16 @@ exclusive: []
 contracts: []
 result: "Single-file preview built; clicked through at 390 and 1280 px light and dark in headless Chromium on the worker host (no overflow, no console errors, no network, copy fallback works). Not shown to a real browser clipboard permission."
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
+Friends cannot give feedback on a flow they cannot see, so this makes a clickable offline preview of it.
+
+Done when: Single offline HTML preview walks landing, install, setup, watch/thoughts/rules, orders map, journal,...; Checked in headless browser at 390 and 1280 px: no overflow, no console errors, whole path clicked (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

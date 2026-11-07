@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-07T07:05:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
-  - bot-defect
+  - bot
+  - bug
+  - gate
+milestone: m-0
 dependencies: []
 priority: high
 ordinal: 65000
@@ -25,7 +28,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 docs/research/g2g-diagnosis.md finding N1: 379/468/187 click held (no safe click) lines per seed, the same 3 spots repeated 38 to 56 times; detour fired 10/17/2 times.
+
+Done when: inside-disc and outside-disc holds at the recorded spots resolve or escalate within 3 holds; offline test from the recorded from/to pairs (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

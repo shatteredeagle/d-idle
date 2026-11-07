@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-07T14:57:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - ops
+  - chore
   - gate
+milestone: m-0
 dependencies: []
+priority: medium
 ordinal: 69000
 card: "g2g2record"
 owns:
@@ -17,6 +21,16 @@ exclusive: []
 contracts: []
 result: "Wave 2 (seeds 19, 21) PASS; combined five-seed verdict NOT PASSED (3 of 5; seeds 13, 17 fail NOKILL). Logs only, not verified live."
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
+Gate 2 g2g wave 2 and the combined five-seed verdict need to be recorded.
+
+Done when: Wave 2 (seeds 19, 21) collected with the rebuilt d2dsoak and recorded; Wave 1 re-judged with the belt rule; changed rows listed; Five-seed table, paired g2f comparison and verdict against the contract written (and 1 more criteria below)
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

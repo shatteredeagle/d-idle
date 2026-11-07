@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - upstream
+  - d2d
+  - upstream-pr
+  - d2d-combat
+  - d2d-skills
 dependencies: []
 priority: medium
 ordinal: 6000
@@ -31,6 +34,8 @@ source: "openspec-final:openspec/changes/nexthit"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Three traces (SKLIGHT D1/D2, SKNOVA D1, SKMISS) found the same d2d deviation, D-NEXTHIT: game.exe's NextHit rule puts state 0x56 `justhit` on a struck unit for NextDelay frames, so one nova / chain / pierce missile effect hits a unit once per window and one unit a frame; d2d tracks NextHit per missile. Effects were modelled only; no differential existed.
 
 What changes:
@@ -45,6 +50,8 @@ Gates (from the card):
 - PR claim only with a differential on real builds: before > 0, after 0
 
 Source: git tag openspec-final, openspec/changes/nexthit/ (this task is the copy).
+
+Done when: Worktree fix/nexthit from current upstream main on the worker host; Stateful differential: d2d test_next_hit mode + game.exe replay oracle; Before numbers on upstream main (84,779 of 100,198 cases differ) (and 3 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

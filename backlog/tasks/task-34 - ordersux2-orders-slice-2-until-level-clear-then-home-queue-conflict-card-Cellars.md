@@ -2,11 +2,15 @@
 id: TASK-34
 title: 'ordersux2: orders slice 2: until-level, clear then home, queue, conflict'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T16:02:00Z'
 labels:
-  - T0
   - watch
+  - feature
+  - ladder
+  - T0
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 34000
@@ -23,7 +27,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice 2 of docs/research/orders-ux-design.md section 11 ('Left for slice 2'). Slice 1 is merged and offline tested only.
+
+Done when: Until level N: the Hub ends the order on a clvl poll (POST /api/orders until=level is no longer refused);...; Clear then come home is a farm-then-home pair of goals; the order sheet offers it as a chip; test for the...; Add to queue and pos back on POST /api/orders; the Up next list is writable; tests for order of start (and 2 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

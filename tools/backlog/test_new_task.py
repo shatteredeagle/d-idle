@@ -43,14 +43,29 @@ class T(unittest.TestCase):
             def run(cmd, **kw):
                 calls.append(cmd)
                 return SimpleNamespace(returncode=0, stdout=f"File: {f}\n", stderr="")
-            rc = new_task.main(["t", "--card", "c", "--owns", "a", "-l", "G-G", "--ac", "s"], run=run)
+            rc = new_task.main(["t", "--card", "c", "--owns", "a", "--component", "bot", "--kind", "bug", "-l", "T0", "--ac", "s"], run=run)
             self.assertEqual(rc, 0)
             self.assertIn("--ac", calls[0])
+            self.assertIn("medium", calls[0])
+            self.assertIn("credit-runner", calls[0])
+            self.assertEqual([calls[0][i + 1] for i, x in enumerate(calls[0]) if x == "-l"], ["bot", "bug", "T0"])
+            self.assertTrue(calls[0][calls[0].index("-d") + 1].startswith("Size: M\n\n"))
             self.assertIn('owns:\n  - "a"', f.read_text())
 
     def test_owns_required(self):
         with self.assertRaises(SystemExit):
-            new_task.main(["t", "--card", "c"])
+            new_task.main(["t", "--card", "c", "--component", "bot", "--kind", "bug"])
+
+    def test_old_invocation_refused(self):
+        with self.assertRaises(SystemExit):
+            new_task.main(["t", "--card", "c", "--owns", "a", "-l", "G-C"])
+
+    def test_old_labels_refused(self):
+        for bad in ("bot-defect", "tooling", "drills"):
+            with self.assertRaises(SystemExit):
+                new_task.main(["t", "--card", "c", "--owns", "a", "--component", "bot", "--kind", "bug", "-l", bad])
+        with self.assertRaises(SystemExit):
+            new_task.main(["t", "--card", "c", "--owns", "a", "--component", "bot", "--kind", "bug", "-l", "ops"])
 
 
 if __name__ == "__main__":

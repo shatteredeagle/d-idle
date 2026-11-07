@@ -2,12 +2,13 @@
 id: TASK-22
 title: 'decisions-mirror: ADRs mirrored read-only into backlog/decisions for the board'
 status: Deferred
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-05T19:25:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
-  - tooling
-  - decisions
+  - docs
+  - chore
 dependencies: []
 priority: low
 ordinal: 22000
@@ -22,7 +23,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Decided 2026-11-05: ADRs and docs/decisions.md stay the source of truth (guard files, 547 ADR references, grill workflow). This card builds a one-way generated mirror so the Backlog.md board shows the decision log next to the tasks. Do later; no conversion of the ADRs.
+
+Done when: tools/backlog/decisions_mirror.py generates backlog/decisions/decision-N files from docs/adr/*.md one way...; a --check mode fails CI when the committed mirror differs from the generated one, wired into...; unit tests: status mapping (accepted, amended, superseded), amendment blocks kept, idempotent output, ADR... (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

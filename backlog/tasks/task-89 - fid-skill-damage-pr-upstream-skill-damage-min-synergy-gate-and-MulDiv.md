@@ -2,13 +2,16 @@
 id: TASK-89
 title: 'fid-skill-damage-pr: upstream: skill damage min-synergy gate and MulDiv'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:04:00Z'
 labels:
-  - fidelity
+  - d2d
   - upstream-pr
-  - d2d-skills
   - d2d-combat
+  - d2d-skills
+  - fidelity
+milestone: m-2
 dependencies: []
 priority: medium
 ordinal: 87000
@@ -22,7 +25,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Fidelity matrix rows: SK02. Method/kind: upstream-pr. Live game (host time): no. Size: S. Fix: upstream PR (pr-skill-damage draft); needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: none. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: skill_damage 116,000 cases re-run on current main; expected 0 differ for the 13 skills after the fix;...; Charged/Fire/Ice Bolt and Frost Nova stay clean (no regression) (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

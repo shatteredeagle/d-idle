@@ -14,7 +14,7 @@ Maintainers also read `AGENTS.private.md` if present (it is not in this repo; `t
 
 ## Backlog.md for agents
 - Find your task: `backlog task <n> --plain` (the brief names it), or open `backlog/tasks/task-<n> - *.md`. The CLI and `--json` do not show our custom keys (`card`, `owns`, `exclusive`, `contracts`, `result`); read them in the file.
-- Create only when the brief says so, with `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> [--exclusive ..] [--contracts ..] -l G-C --ac ".."`; plain `backlog task create` cannot write those keys and `check.py` then fails the task. It never auto-commits: commit task files yourself.
+- Create only when the brief says so, with `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> [--exclusive ..] [--contracts ..] [-l <area/track/tier>] [--priority ..] [--assignee ..] [--size ..] --ac ".."` (closed label set: docs/backlog-howto.md); plain `backlog task create` cannot write those keys and `check.py` then fails the task. It never auto-commits: commit task files yourself.
 - Status, labels, criteria: `backlog task edit <n> -s "In Progress"`, `--check-ac <k>`, `--add-label`. It keeps custom keys but rewrites quote style and `updated_date`: run `git diff` after the first edit of a file and expect only that noise. Fill `result:` by hand.
 - Do not run `backlog init`, `archive` or `delete` on tasks; the coordinator closes tasks. Details: `docs/backlog-howto.md`.
 - MCP: `.mcp.json` starts `backlog mcp start` (stdio, no port) for sessions that can use project MCP servers; it offers the same operations as the CLI with the same limits, so the CLI stays the default (the credit runner has no MCP).

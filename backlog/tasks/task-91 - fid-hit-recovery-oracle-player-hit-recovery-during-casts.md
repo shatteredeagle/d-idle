@@ -2,14 +2,17 @@
 id: TASK-91
 title: 'fid-hit-recovery: oracle: player hit recovery during casts'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-07T18:04:00Z'
 labels:
-  - fidelity
+  - d2d
   - oracle
   - d2d-combat
   - d2d-skills
   - d2d-time
+  - fidelity
+milestone: m-2
 dependencies: []
 priority: medium
 ordinal: 89000
@@ -23,7 +26,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Fidelity matrix rows: SK16. Method/kind: oracle. Live game (host time): no. Size: M. Fix: upstream PR (get-hit rule, length, render drafts; not all merged); needs the proof standard docs (differential vs original code) before any upstream PR. Dependencies: none. Source: docs/research/fidelity-matrix.md; map docs/research/fidelity-cards.md.
+
+Done when: FHR table 0/5/9/14/20/30/42/60/86/142 compared; tolerance: 0 differing cases in the oracle run; a...; fight.hpp:715 2-frame wait rule compared with game.exe; remaining get-hit drafts listed with merge state (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

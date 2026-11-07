@@ -2,12 +2,17 @@
 id: TASK-28
 title: 'testerlicence: GPL package for the d.idle fork shipped with its source'
 status: In Progress
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T14:27:00Z'
 updated_date: '2026-11-07T14:24:00Z'
 labels:
+  - container
+  - feature
   - tester
+milestone: m-1
 dependencies: []
+priority: high
 ordinal: 28000
 card: "testerlicence"
 owns:
@@ -20,7 +25,11 @@ result: "partial: docs/tester-licence.md drafted (NOTICE, SOURCE.txt, offer, shi
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
 Slice 1 (d2d route), reworked: the image now contains the d.idle fork of d2d, so the package covers the fork source. Plan gap G9. No dependency; the decisions themselves are the user's (ADR 0003 amendment, GPL reviewer, publication timing). Plans the publication; does not do it. Estimate 4 h.
+
+Done when: docs/tester-licence.md: NOTICE and SOURCE.txt text (without the NOT FOR DISTRIBUTION line), the written...; the explicit USER DECISION list: ADR 0003 amendment first, GPL reviewer named or waived, when the d.idle... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

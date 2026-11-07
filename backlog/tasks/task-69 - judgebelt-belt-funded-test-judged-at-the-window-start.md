@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-07T13:12:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - ops
+  - bug
   - gate
+milestone: m-0
 dependencies: []
+priority: medium
 ordinal: 67000
 card: "judgebelt"
 owns:
@@ -20,6 +24,16 @@ result: "Offline only: unit tests in internal/d2dsoakstat (seed 17 case and cont
 contracts:
   - "soak-gates"
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
+The belt-funded test must judge the funded state at the window start.
+
+Done when: Decisions entry 2026-11-07 added; d2dsoakstat funded test at the window's first minute, tests for seed 17 case and the contrast; soak-gates BELT funded wording and scenarios updated (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

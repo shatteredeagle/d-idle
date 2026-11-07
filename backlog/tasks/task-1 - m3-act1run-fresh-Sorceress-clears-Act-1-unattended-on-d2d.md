@@ -2,14 +2,17 @@
 id: TASK-1
 title: "m3-act1run: fresh Sorceress clears Act 1 unattended on d2d"
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
+  - bot
+  - drill
   - T4
   - soak
 dependencies:
-  - "TASK-2"
+  - TASK-2
 priority: high
 ordinal: 1000
 card: "m3-act1run"
@@ -31,6 +34,8 @@ contracts: ["proposed/m3-act1run"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Milestone M3 (docs/roadmap.md) is done when a fresh Sorceress clears Act 1 unattended on d2d without cheats on repeated seeds, under the death rule, with the merc kept; every earlier M3 card proves one piece on a cheat-levelled character. This is the closing run and its evidence doc; it changes no code and files one finding per failure for a bug-fix card.
 
 What changes:
@@ -46,6 +51,8 @@ Gates (from the card):
 - tools/agentreap.sh m3-act1run leaves nothing; leakcheck 0
 
 Source: git tag openspec-final, openspec/changes/m3-act1run/ (this task is the copy).
+
+Done when: Compute the cap from the M2 result (1.3 x 176,132 / the M2 XP/h) and write it in the delta with its source; 3 seeds, one slot, each wall-limited; collect reports; docs/act1-run.md; a finding per failure for the next card; changecheck, leakcheck, validate; reap (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

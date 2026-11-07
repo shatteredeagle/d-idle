@@ -2,10 +2,13 @@
 id: TASK-16
 title: "m2-roam: leave empty areas, roam toward unexplored tiles"
 status: Deferred
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
+  - bot
+  - feature
   - parked
   - soak
 dependencies: []
@@ -35,6 +38,8 @@ contracts: ["proposed/m2-roam"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Walk is 13.8 of the 18 seconds per kill on d2d (77 percent, docs/d2d-soak-full-fix.md) against about 5 on the original: the longest gaps are border ping-pong between Blood Moor, Cold Plains and Cave 1 (`nav exit`, `nav stuck`) and roaming a swept area (`clear killed nothing` 0.30 per kill against 0.09 on the original, docs/research/per-kill-time-split.md). The empty-area exit exists (`bot.emptyAreaSec`) but defaults to off (docs/killfix.md). This is the largest remaining component of the fidelity gap after the economy fixes.
 
 What changes:
@@ -51,6 +56,8 @@ Gates (from the card):
 - go run ./cmd/leakcheck -mode fail finds 0; tools/agentreap.sh m2-roam leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m2-roam/ (this task is the copy).
+
+Done when: Read docs/d2d-soak-full-fix.md kill-time section, docs/research/per-kill-time-split.md tables 2 and 3,...; Roam and exit changes with offline tests on recorded maps (internal/nav fixtures); emptyAreaSec default on; EveryKnob test; docs/knobs.md regenerated (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

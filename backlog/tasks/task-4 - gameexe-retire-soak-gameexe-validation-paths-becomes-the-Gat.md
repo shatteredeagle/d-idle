@@ -2,10 +2,13 @@
 id: TASK-4
 title: "gameexe-retire-soak: game.exe validation paths; becomes the Gate A card"
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
+  - ops
+  - chore
   - gate
 dependencies: []
 priority: high
@@ -26,6 +29,8 @@ source: "openspec-final:openspec/changes/gameexe-retire-soak"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Retirement of Game.exe and the validation of Game.exe-only paths (kill recovery, failsafe ladder, recycle, Wine/OOM) that d2d cannot test, deferred by the ADR 0009 addendum until original-game work resumes. G2 and the Fresha soak finish as the last baselines. Deferred: user: original-game work is much further down the line.
 
 What changes:
@@ -38,6 +43,8 @@ Gates (from the card):
 - Game.exe G1/G2 criteria re-verified once work resumes
 
 Source: git tag openspec-final, openspec/changes/gameexe-retire-soak/ (this task is the copy).
+
+Done when: list the Game.exe-only criteria no d2d run covers; regression soak on Game.exe when original-game work resumes (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

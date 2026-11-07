@@ -2,10 +2,13 @@
 id: TASK-2
 title: "m3-andariel: Andariel fight card with the SME decisions (docs/andarielsme.md)"
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-04T00:00:00Z'
 labels:
+  - bot
+  - feature
   - T4
   - soak
 dependencies: []
@@ -32,6 +35,8 @@ contracts: ["proposed/m3-andariel"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 Andariel has never been fought on either backend (docs/plan/STATUS.md), and the d2-sme calls her the biggest unknown of the Act 1 clear: a low-level Sorceress dies to poison nova and cold bolts at close range, to an empty belt, or to a dead merc that turns her onto the caster. The fight does not depend on the economy or walk work, so it runs in parallel with M1 and M2 on a cheat-levelled throwaway (ledgered) at the floor level.
 
 What changes:
@@ -49,6 +54,8 @@ Gates (from the card):
 - go run ./cmd/leakcheck -mode fail finds 0; cheat ledger has one entry per cheat with a reason; tools/agentreap.sh m3-andariel leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m3-andariel/ (this task is the copy).
+
+Done when: Read docs/bossgate.md, internal/boss/act1.go, docs/sme/play-act-route.md section 4; write the fight order...; Prepare the throwaway (cmd/d2cheat: level, gold, kit; merc claimed honestly or hired per merc-policy: no...; the series (with the merc, handicapped variants, at least 3 without a merc; setup may be goto Catacombs 4... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

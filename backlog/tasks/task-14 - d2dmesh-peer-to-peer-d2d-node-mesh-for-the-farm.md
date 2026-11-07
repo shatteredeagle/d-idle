@@ -6,6 +6,8 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-06T16:13:00Z'
 labels:
+  - ops
+  - feature
   - parked
 dependencies: []
 priority: low
@@ -29,6 +31,8 @@ contracts: ["proposed/d2dmesh"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 The user wants every d2d container to be able to act as the farm server: nodes are meshed, a new one is added to the farm, and the farm is managed from any node (Tdarr nodes and forge runners, but peer-to-peer, no coordinator host). The v1 farm (change d2dfarm) is a push model driven from one machine over ssh; it needs that machine up and holds the only queue. A leaderless node mesh removes the single point and makes the NAS containers, the worker host slots and a WSL node interchangeable members. This card designs the mesh and proves the hard parts (membership convergence, job leases, partition recovery, authentication) in a stdlib-only prototype with an in-process cluster test; nothing is deployed.
 
 What changes:
@@ -46,6 +50,8 @@ Gates (from the card):
 - no real hostname, IP or person in any committed file of this change
 
 Source: git tag openspec-final, openspec/changes/d2dmesh/ (this task is the copy).
+
+Done when: capability spec `d2d-mesh` (ADDED requirements with scenarios); `tools/openspec.sh validate --all --strict`; `docs/d2d-mesh.md` (<= 150 lines): gossip membership, leases, conflict resolution, no Raft and the...; `internal/d2dmesh`: state table and merge (LWW per node record, fenced leases per job, tombstones), lease... (and 4 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -6,8 +6,13 @@ assignee: []
 created_date: '2026-11-07T03:13:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - bot
+  - feature
+  - metacurrency
   - T5
+milestone: m-3
 dependencies: []
+priority: medium
 ordinal: 60000
 card: "currency-ledger"
 owns:
@@ -21,6 +26,16 @@ exclusive: []
 contracts: []
 result: "Built offline, NOT verified live. internal/currency: registry (JSON, validated), hash-chained flock ledger with head file, write-ahead bank (Begin/Commit/Recover), Observer interface and Fake, soft cap, spend; watch GET /api/currency, header strip and Spend tab shell (nothing wired); d2bot wallet only with --overlay-dir. Tests: go test -race ./internal/currency ./internal/watch ./cmd/d2bot. Page not seen in a browser. Format and operations: docs/currency.md."
 ---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
+The currency design needs a registry and an account ledger that work offline before anything drops in the game.
+
+Done when: Registry loads from data; hash-chained append-only ledger with write-ahead bank entries; tests on two...; Pack observer credits observed loss only, refuses cheated stacks, idempotent on replay (acceptance criteria below).
+<!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->

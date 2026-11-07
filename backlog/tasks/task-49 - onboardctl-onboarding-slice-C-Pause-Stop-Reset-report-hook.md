@@ -2,11 +2,14 @@
 id: TASK-49
 title: 'onboardctl: onboarding slice C: Pause, Stop, Reset, report hook'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T16:20:00Z'
 labels:
-  - onboarding
   - watch
+  - feature
+  - onboarding
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 49000
@@ -22,7 +25,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice C of docs/research/onboarding-ux-design.md (approved 2026-11-06): Pause and Stop in the controls sheet, Reset behind a typed word (deletes hero, rules, journal, not game files or passcode), report preview and bundle hook to TASK-27, guide hook to TASK-26. About 7 h. Uses the passcode gate of onboardA (internal/access).
+
+Done when: Pause/resume, Stop and Reset routes on the answer listener, origin-checked, typed word for Reset; Report preview page hook to TASK-27 (bundle) and text for TASK-26 (guide); Tests for each route and the gate (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

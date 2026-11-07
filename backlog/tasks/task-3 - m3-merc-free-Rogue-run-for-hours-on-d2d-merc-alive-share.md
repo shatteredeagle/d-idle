@@ -2,10 +2,13 @@
 id: TASK-3
 title: 'm3-merc: free Rogue run for hours on d2d, merc alive share'
 status: Deferred
-assignee: []
+assignee:
+  - live-agent
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-06T16:00:00Z'
 labels:
+  - bot
+  - feature
   - T4
   - soak
 dependencies: []
@@ -32,6 +35,8 @@ contracts: ["proposed/m3-merc"]
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: L
+
 The free Rogue is coded (merc-policy spec, docs/merc-wire.md) behind `merc.enabled` default 0 and was never run for hours on d2d; the route guard needs a living merc to enter the Monastery road below its level floor, so without a merc that works for hours the Act 1 clear waits for clvl 18 or more (d2-sme 2026-10-31). This card makes the claim, the keep-alive and the revive work on d2d for hours and turns the knob on for d2d.
 
 What changes:
@@ -50,6 +55,8 @@ Gates (from the card):
 - go run ./cmd/leakcheck -mode fail finds 0; tools/agentreap.sh m3-merc leaves nothing
 
 Source: git tag openspec-final, openspec/changes/m3-merc/ (this task is the copy).
+
+Done when: Read docs/merc-wire.md, docs/merc.md, merc-policy spec, ADR 0011 and the grill 0003 outcome; failing tests...; Revive, stop rule and merc potions wired for d2d; bailout and keeper/throwaway rule (always revive until a...; 2 x 4 virtual hour runs; docs/merc-d2d.md; changecheck, leakcheck, validate; reap (and 1 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

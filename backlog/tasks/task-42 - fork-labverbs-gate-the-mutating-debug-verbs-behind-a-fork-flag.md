@@ -6,7 +6,11 @@ assignee: []
 created_date: '2026-11-06T16:02:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - d2d
+  - feature
+  - d2d-data
   - tester
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 42000
@@ -29,7 +33,11 @@ result: "Verified live on the worker host 2026-11-06 (V): fork d2d.lab3-labverbs
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 docs/d2d-container/README.md: at the pinned fork ref the debug verb group answers unconditionally on the container-internal socket. Proposed: --lab-verbs (env D2D_LAB_VERBS=1), passed by the lab and gate harness, never by the tester entrypoint. Work is in the private fork, committed and pushed the same day.
+
+Done when: Fork: build and ctest pass with the flag off and on; read-only verbs (dump, level, players, warps,...; Bot play path unchanged without the flag (a short bot run on the gated build); the doc lists every gated verb; Pin moved in the tester image; the bot-repo gate and drill launch flags updated (the private ops side is... (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -6,7 +6,10 @@ assignee: []
 created_date: '2026-11-04T00:00:00Z'
 updated_date: '2026-11-05T18:00:00Z'
 labels:
-  - upstream
+  - d2d
+  - upstream-pr
+  - d2d-combat
+  - d2d-skills
 dependencies: []
 priority: medium
 ordinal: 7000
@@ -32,6 +35,8 @@ source: "openspec-final:openspec/changes/skmiss"
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Before act progression goes further the user asked for a focused check of the Sorceress skills. SKILLINV's matrix (docs/research/sorc-skill-matrix.md) leaves the player missile pipeline UNTRACED apart from Fire Bolt's one live mana / damage proof. Decomp row 14: how game.exe 1.14d spawns, flies and lands the plan's missile skills (Fire Bolt, Charged Bolt, Ice Bolt, Frost Nova, Lightning, Chain Lightning), what d2d does, what the bot assumes.
 
 What changes:
@@ -47,6 +52,8 @@ Gates (from the card):
 - leakcheck -mode fail 0
 
 Source: git tag openspec-final, openspec/changes/skmiss/ (this task is the copy).
+
+Done when: Trace spawn, mana payment, flight and hit in game.exe 1.14d (tags); Read d2d's missile creation, flight and damage; the bot's casting model; Differential oracle (game.exe natively vs the real d2d build), before and after (and 2 more criteria below)
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

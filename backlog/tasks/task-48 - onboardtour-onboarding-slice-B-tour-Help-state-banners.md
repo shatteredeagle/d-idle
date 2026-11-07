@@ -2,11 +2,14 @@
 id: TASK-48
 title: 'onboardtour: onboarding slice B: tour, Help, state banners'
 status: Proposed
-assignee: []
+assignee:
+  - credit-runner
 created_date: '2026-11-06T16:20:00Z'
 labels:
-  - onboarding
   - watch
+  - feature
+  - onboarding
+milestone: m-1
 dependencies: []
 priority: medium
 ordinal: 48000
@@ -22,7 +25,11 @@ contracts: []
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Slice B of docs/research/onboarding-ux-design.md (approved 2026-11-06): guided tour with page-only sample thought and rule, Help sheet, state banners (hero died, engine restarted, upgrade), tour_seen flag, 44 px targets. About 8 h. Hooks into watch.html and app.js are one-line script/link tags: widen with a note in the watch-screen task that owns them (TASK-47 owns internal/watch/web/**).
+
+Done when: Tour of five steps with a page-only sample thought, Back/Skip/resume, phone bottom sheet; Help sheet and state banners; tour_seen stored; Tests and a 390/1280 px check (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

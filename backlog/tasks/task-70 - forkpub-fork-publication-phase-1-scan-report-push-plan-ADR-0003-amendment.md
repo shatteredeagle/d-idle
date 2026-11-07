@@ -6,8 +6,12 @@ assignee: []
 created_date: '2026-11-07T14:24:00Z'
 updated_date: '2026-11-07T15:14:00Z'
 labels:
+  - d2d
+  - chore
   - tester
+milestone: m-1
 dependencies: []
+priority: medium
 ordinal: 68000
 card: "forkpub"
 owns:
@@ -25,7 +29,11 @@ result: "docs only, verified on a scratch bare clone of the private remote (not 
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
 Phase 1 of the d.idle fork publication (user go 2026-11-07). Phase 2 (create the GitHub fork, push) is the coordinator's after reviewing the scan.
+
+Done when: scan report with findings, scope, identities, licence gaps and push plan; ADR 0003 amendment 2026-11-07 and index/decisions updates; drafts: fork README, SOURCE.txt/offer text; nothing pushed to GitHub (acceptance criteria below).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
