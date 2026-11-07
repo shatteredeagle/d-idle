@@ -201,10 +201,10 @@ With 3 or more baseline runs in the band, a row SHALL be flagged "below band" on
 - **THEN** the row is not flagged whatever the size of the gap
 
 ### Requirement: Gate 1 belt and portal
-A Gate 1 run SHALL have no funded window over 5 virtual minutes with zero healing potions outside town (packHP, packMP, beltBoxes) and at least one town-portal trip, not the waypoint fallback. A window is funded when `gold` + `stashGold` reaches one Minor Healing Potion (30 gold) at some minute; others are poverty, not failing; no `stashGold` means 0. Source: G1 criterion 4; docs/beltfill.md; user decisions 2026-11-01, 2026-11-03. Reconciled 2026-11-04 (source: 2026-11-03-specdelta).
+A Gate 1 run SHALL have no funded window over 5 virtual minutes with zero healing potions outside town (packHP, packMP, beltBoxes) and at least one town-portal trip, not the waypoint fallback. A window is funded when `gold` + `stashGold` reaches one Minor Healing Potion (30 gold) at the window's first minute; others are poverty, not failing; no `stashGold` means 0. Source: G1 criterion 4; docs/beltfill.md; user decisions 2026-11-01, 2026-11-03; user 2026-11-07: accept (g2g question 2). Reconciled 2026-11-04 (source: 2026-11-03-specdelta).
 
 #### Scenario: Empty field window
-- **WHEN** no healing potion is held outside town for over 5 minutes and pack plus stash gold reaches 30 at some minute of the window (for example pack 6, stash 1418)
+- **WHEN** no healing potion is held outside town for over 5 minutes and pack plus stash gold is 30 or more at the first minute of the window (for example pack 6, stash 1418)
 - **THEN** the run is a FAIL
 
 #### Scenario: Poverty window
@@ -212,7 +212,11 @@ A Gate 1 run SHALL have no funded window over 5 virtual minutes with zero healin
 - **THEN** the window is reported as poverty and does not fail the run
 
 #### Scenario: Gold crosses the price mid-window
-- **WHEN** pack plus stash gold is under 30 at first and reaches 30 later in the same window
+- **WHEN** pack plus stash gold is under 30 at the first minute and reaches 30 later in the same window (for example on its last minute, g2g seed 17)
+- **THEN** the window is poverty and does not fail the run (user 2026-11-07)
+
+#### Scenario: Funded at the start, then spent
+- **WHEN** pack plus stash gold is 30 or more at the first minute and no healing potion is held for over 5 minutes
 - **THEN** the window is funded and the run is a FAIL
 
 #### Scenario: Old archive without stashGold

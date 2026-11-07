@@ -558,7 +558,9 @@ func TestBeltPovertyExcused(t *testing.T) {
 	}{
 		{"poverty pack+stash 16", 6, 10, false, 0, false, 0},
 		{"funded pack 6 stash 1418", 6, 1418, false, 0, true, 7},
-		{"mixed crosses 30 mid window", 6, 10, false, 4, true, 7},
+		{"poverty start, crosses 30 mid window", 6, 10, false, 4, false, 0},
+		{"seed 17: poverty, touches 30 on the last minute", 6, 10, false, 7, false, 0},
+		{"funded start, falls to poverty", 40, 0, false, -4, true, 7},
 		{"old archive pack 6", 6, 0, true, 0, false, 0},
 		{"old archive pack 40", 40, 0, true, 0, true, 7},
 		{"exactly the price", 20, 10, false, 0, true, 7},
@@ -570,6 +572,10 @@ func TestBeltPovertyExcused(t *testing.T) {
 			b.run(tc.crossAt, true)
 			b.gold = 40
 			b.run(8-tc.crossAt, true)
+		} else if tc.crossAt < 0 { // funded at the first minute, then spent down
+			b.run(-tc.crossAt, true)
+			b.gold = 6
+			b.run(8+tc.crossAt, true)
 		} else {
 			b.run(8, true)
 		}

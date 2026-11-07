@@ -35,6 +35,10 @@ Index of the decision records in [adr/](adr/README.md) (the dated entries below 
 - Licence: GPL (same as d2d, GPL-3.0-or-later) - user, 2026-10-30 ([ADR 0010](adr/0010-licence-same-as-d2d.md))
 - Repo going public soon; lockstep patches stay in the downstream fork until upstream wants them - user, 2026-10-30 ([ADR 0010 addendum](adr/0010-licence-same-as-d2d.md))
 
+## 2026-11-07: Gate 2 judging decisions (g2g)
+- **Decision (user, popup answer "accept" to the recommendations in docs/research/g2g-diagnosis.md, "Needs the user"):** (1) a NOKILL or BELT window that contains a fresh-game restart still counts as a failure: the criterion stays literal, judge and contract unchanged. (2) The BELT "funded" test is judged at the window's FIRST minute (pack plus stash gold of at least one potion, 30), not on any single minute inside the window: judge change (`internal/d2dsoakstat`, task judgebelt), `docs/contracts/soak-gates.md` wording updated, no Numbers line moves. (3) The Andariel interim rule keeps clvl 17 as the working floor (the merc clock and quote fix is already done in TASK-66; nothing further recorded).
+- **Reason:** the g2g seed 17 belt window of 8 minutes (minutes 198 to 205) started in poverty (pack gold 16 to 20, stash 0) and was counted funded only because pack gold touched 31 on its last minute; a restart is the ladder's remedy for a stall, so excluding it would hide the failures it answers.
+
 ## 2026-11-06: the tester build ships game-dir mode only
 - **Decision (user):** "Yes start with gamedir only", after the coordinator laid out the three routes (existing Diablo II folder, Blizzard downloader stubs, downloaded installer folders). Only `game-dir` is proven end to end in the real container (docs/container.md); the other two need an interactive installer window and so a noVNC or Xpra display that is not built.
 - **Scope:** the tester brings their own game folder (and `LODPatch_114d.exe` only if the folder is not already 1.14d). No CD key is needed in this mode. Nothing Blizzard owns is bundled or downloaded (docs/licensing.md). Slice 1 tasks: see `backlog/tasks/` (tester*), plan in `docs/research/tester-build-plan.md`.
