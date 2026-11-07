@@ -773,3 +773,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/metacurrency-design.md now approved by the user 2026-11-06
 - docs/overlay.md - table overlay file format, keys per table, mode stamp (d.idle mode)
 - docs/research/currency-rows.md - Raven's Mark overlay rows, rate and bank recipe (TASK-63); docs/probes/currency1.md - currency slice 1 live acceptance (pending)
+- docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block

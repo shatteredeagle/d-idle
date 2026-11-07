@@ -1,3 +1,0 @@
-BACKLOG: TASK-62 currency-ledger built offline (not live): currency registry as data, hash-chained ledger with write-ahead bank entries, Observer for the bot hook, watch /api/currency with a header strip and a Spend tab shell; docs/currency.md
-INDEX: docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block
-CHANGELOG: Metacurrency foundation (offline): currency registry and hash-chained tally ledger, and a balance strip on the watch screen in d.idle mode
