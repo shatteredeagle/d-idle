@@ -1,15 +1,17 @@
 ---
 id: TASK-79
 title: 'fid-inv-limits: oracle: stash cap, purse cap, grid sizes'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - oracle
   - d2d-items
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: low
@@ -19,6 +21,7 @@ owns:
   - "docs/probes/fid/fid-inv-limits.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

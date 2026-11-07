@@ -4,3 +4,4 @@ MADR-style, one file per decision the user made or the project depends on; `docs
 
 - [0015](0015-goals-acceptance-on-game-exe.md): accepted, amended 2026-11-04 (d2d is the end product, game.exe is the fidelity oracle; see its Amendment section), amended by 0016
 - [0016](0016-automation-ladder.md): accepted 2026-11-05 (grill 0005; automation ladder T0 to T5 is the progression and ranks work; amends 0015 items 1, 7 and 10), amended 2026-11-05 (items 13, 14, card cap), amended 2026-11-06 (item 15: one worth unit, several scopes)
+- [0017](0017-direction-fun-first-2026-11-07.md): accepted 2026-11-07 (user popups D1 to D5 on the direction review: find the fun first for two weeks, idle game, tester container continues, metacurrency paused, board and docs diet; amends 0015 and 0016 on ranking and gate waves)

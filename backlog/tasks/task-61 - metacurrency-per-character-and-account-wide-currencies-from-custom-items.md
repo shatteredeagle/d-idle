@@ -1,15 +1,17 @@
 ---
 id: TASK-61
 title: 'metacurrency: per-character and account-wide currencies from custom items'
-status: In Progress
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T03:11:00Z'
+updated_date: '2026-11-07T21:56:00Z'
 labels:
   - docs
   - research
   - metacurrency
   - T5
+  - parked
 milestone: m-3
 dependencies: []
 priority: medium
@@ -19,6 +21,7 @@ owns:
   - "docs/research/metacurrency-design.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

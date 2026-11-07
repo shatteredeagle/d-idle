@@ -22,6 +22,7 @@ owns:
   - "docs/probes/fid/fid-lowvalue.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

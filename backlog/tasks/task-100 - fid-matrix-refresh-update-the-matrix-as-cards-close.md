@@ -1,15 +1,17 @@
 ---
 id: TASK-100
 title: 'fid-matrix-refresh: update the matrix as cards close'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - docs
   - model-check
   - d2d-data
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: low
@@ -19,6 +21,7 @@ owns:
   - "docs/probes/fid/fid-matrix-refresh.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

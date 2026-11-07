@@ -1,16 +1,18 @@
 ---
 id: TASK-73
 title: 'fid-probe-equip: probe: equip legality and identify flow'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-07T18:03:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - probe
   - d2d-items
   - d2d-ui
   - fidelity
+  - parked
 milestone: m-2
 dependencies:
   - TASK-55
@@ -21,6 +23,7 @@ owns:
   - "docs/probes/fid/fid-probe-equip.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description

@@ -1,11 +1,11 @@
 ---
 id: TASK-55
 title: 'fidprobe-core: same-save probe tool and fresh/clvl 6 scenarios'
-status: In Progress
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-06T22:43:00Z'
-updated_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:46:00Z'
 labels:
   - bot
   - probe

@@ -1,5 +1,5 @@
 ---
-status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap), amended 2026-11-06 (item 15: one worth unit, several scopes)
+status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap), amended 2026-11-06 (item 15: one worth unit, several scopes), amended by ADR 0017 (2026-11-07: ranking of work and Gate 2 waves)
 date: 2026-11-05
 decision-makers: user (grill 0005)
 ---

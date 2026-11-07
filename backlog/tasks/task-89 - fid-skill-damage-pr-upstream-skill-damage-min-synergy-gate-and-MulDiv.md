@@ -1,16 +1,18 @@
 ---
 id: TASK-89
 title: 'fid-skill-damage-pr: upstream: skill damage min-synergy gate and MulDiv'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
+updated_date: '2026-11-07T21:55:00Z'
 labels:
   - d2d
   - upstream-pr
   - d2d-combat
   - d2d-skills
   - fidelity
+  - parked
 milestone: m-2
 dependencies: []
 priority: medium
@@ -20,6 +22,7 @@ owns:
   - "docs/probes/fid/fid-skill-damage-pr.md"
 exclusive: []
 contracts: []
+result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
 ---
 
 ## Description
