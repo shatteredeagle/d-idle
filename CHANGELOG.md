@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- docs: Gate 2 multi-seed soak run 20261107-0150-g2g: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md).
 - Metacurrency foundation (offline): currency registry and hash-chained tally ledger, and a balance strip on the watch screen in d.idle mode
 - First metacurrency overlay data: the Raven's Mark token, one drop line and a cube bank row (d.idle mode only)
 - d.idle mode table overlay (--overlay-dir) on the Go side and in the fork branch; vanilla unchanged

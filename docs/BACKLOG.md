@@ -543,6 +543,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-59 table overlay: fork --overlay-dir (branch d2d.lab4-overlay, default off), Go internal/overlay + data cache stamp, d2bot --overlay-dir, docs/overlay.md; fork build/ctest see the task result
 - TASK-63 currency-rows: Raven's Mark overlay rows (Misc mrk, Blood Raven class line 1 in 37 kills, cube bank row) in data/overlay/didle-v1, offline validation against the real tables, pickit keep rule; live acceptance pending (docs/probes/currency1.md)
 - TASK-62 currency-ledger built offline (not live): currency registry as data, hash-chained ledger with write-ahead bank entries, Observer for the bot hook, watch /api/currency with a header strip and a Spend tab shell; docs/currency.md
+- GATE2: Gate 2 multi-seed run 20261107-0150-g2g (seeds 11,13,17) NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (docs/soaks/gate2-multiseed-20261107-0150-g2g.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
