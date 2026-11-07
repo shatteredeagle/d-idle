@@ -1,0 +1,22 @@
+{
+  "tolerance": [
+    {"match": "derived.life", "rule": "rel", "tol": 0.005},
+    {"match": "derived.max_life", "rule": "rel", "tol": 0.005},
+    {"match": "derived.mana", "rule": "rel", "tol": 0.005},
+    {"match": "derived.max_mana", "rule": "rel", "tol": 0.005},
+    {"match": "derived.stamina", "rule": "rel", "tol": 0.005},
+    {"match": "derived.max_stamina", "rule": "rel", "tol": 0.005},
+    {"match": "*", "rule": "exact"}
+  ],
+  "unreadable_map": {
+    "inventory": "items.",
+    "item": "items.",
+    "monsters": "npcs.",
+    "monster": "npcs.",
+    "npcs": "npcs.",
+    "objects": "objects.",
+    "object": "objects.",
+    "skills": "skills.",
+    "stats": "stats."
+  }
+}

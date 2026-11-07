@@ -779,3 +779,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
 - docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
 - docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident
+- [probes/fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe and first-live-run checklist (status: unverified until the first live run)

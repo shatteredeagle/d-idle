@@ -57,7 +57,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 36 | shortdrills | drills | in-progress 3/3 | short live drills for the g2e/g2f fixes | - | - | [card](archive/openspec-index.md#shortdrills) |
 | 37 | abmerc | tooling | in-progress 3/4 | paired A/B of the merc revive reserve; A/B standard | - | - | [card](archive/openspec-index.md#abmerc) |
 | 38 | fidelity-matrix | gate | in-progress 3/3 | bot use versus game.exe, how each row is verified | - | - | [card](archive/openspec-index.md#fidelity-matrix) |
-| 39 | fidprobe-core | gate | proposed 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
+| 39 | fidprobe-core | gate | in-progress 0/3 | same-save probe tool and fresh/clvl 6 scenarios | - | - | [card](archive/openspec-index.md#fidprobe-core) |
 | 40 | fidprobe-vendor | gate | proposed 0/3 | vendor stock and quote probe, phase 2 | - | - | [card](archive/openspec-index.md#fidprobe-vendor) |
 | 41 | tpcount | bot-defect | in-progress 2/2 | minute-line tp reads 0 in the g2g runs | - | - | [card](archive/openspec-index.md#tpcount) |
 | 42 | customitems | T5 | in-progress 3/3 | feasibility of own items and drop-table overlays on d2d | - | - | [card](archive/openspec-index.md#customitems) |

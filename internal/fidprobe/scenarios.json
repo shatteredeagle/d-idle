@@ -1,0 +1,16 @@
+[
+  {"id": 1, "name": "fresh-sorceress-1", "role": "sorc-fresh", "class": "Sorceress", "difficulty": 0, "slice1": true, "groups": ["base", "derived", "skills", "stats", "items", "npcs", "objects", "waypoints", "quests"], "purpose": "base sheet, starting items, NPC list, waypoint mask"},
+  {"id": 2, "name": "fresh-paladin-1", "role": "pal-fresh", "class": "Paladin", "difficulty": 0, "slice1": true, "groups": ["base", "derived", "skills", "stats", "items", "npcs", "objects", "waypoints", "quests"], "purpose": "second class: not Sorceress-only"},
+  {"id": 3, "name": "sorceress-6-skills", "role": "sorc-6", "class": "Sorceress", "difficulty": 0, "slice1": true, "groups": ["base", "derived", "skills", "stats", "items", "waypoints", "quests"], "purpose": "skill points and derived stats at a real plan state"},
+  {"id": 4, "name": "sorceress-6-vendor-gear", "role": "sorc-6-gear", "class": "Sorceress", "difficulty": 0, "slice1": true, "groups": ["base", "derived", "skills", "stats", "items"], "purpose": "defence, requirements, magic affixes"},
+  {"id": 5, "name": "clvl9-gold", "role": "sorc-9-gold", "class": "Sorceress", "difficulty": 0, "groups": ["base", "items"], "purpose": "poor and rich purse behaviour"},
+  {"id": 6, "name": "clvl12-merc-alive", "role": "sorc-12-merc", "class": "Sorceress", "difficulty": 0, "groups": ["base", "derived", "items", "merc"], "purpose": "merc stats, auras, gear"},
+  {"id": 7, "name": "clvl12-merc-dead", "role": "sorc-12-nomerc", "class": "Sorceress", "difficulty": 0, "groups": ["base", "merc"], "purpose": "revive quote"},
+  {"id": 8, "name": "clvl12-stony-field", "role": "sorc-12-field", "class": "Sorceress", "difficulty": 0, "groups": ["base", "position", "npcs", "objects"], "purpose": "first-load room and monster lists on a pinned seed"},
+  {"id": 9, "name": "clvl16-gate2-kit", "role": "sorc-16-kit", "class": "Sorceress", "difficulty": 0, "groups": ["base", "derived", "skills", "stats", "items"], "purpose": "the real test state: skills, belt, tomes, charms"},
+  {"id": 10, "name": "item-zoo-clvl20", "role": "sorc-20-zoo", "class": "Sorceress", "difficulty": 0, "groups": ["base", "items", "stats"], "purpose": "affix readout over every quality"},
+  {"id": 11, "name": "act1-quests-done", "role": "sorc-act1-done", "class": "Sorceress", "difficulty": 0, "groups": ["base", "waypoints", "quests"], "purpose": "quest words and waypoint mask"},
+  {"id": 12, "name": "andariel-dead-lut-gholein", "role": "sorc-act2-town", "class": "Sorceress", "difficulty": 0, "groups": ["base", "npcs", "objects", "waypoints"], "purpose": "act 2 town layout, waypoint list"},
+  {"id": 13, "name": "nightmare-clvl30", "role": "sorc-nm-30", "class": "Sorceress", "difficulty": 1, "groups": ["base", "derived", "skills", "stats"], "purpose": "difficulty penalties, nightmare level formula"},
+  {"id": 14, "name": "hardcore-control", "role": "sorc-hc", "class": "Sorceress", "difficulty": 0, "groups": ["base"], "purpose": "flag handling only; skip when no fixture"}
+]
