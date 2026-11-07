@@ -1031,3 +1031,81 @@ func TestRetiredReviveReserveMaxStillLoads(t *testing.T) {
 		t.Errorf("high band %d", tune.Merc.ReviveReserveHigh)
 	}
 }
+
+// g2g M1: the hourly revive cap and death window count the env clock, which runs about 4x wall time under lockstep.
+func TestMercWindowsFollowTheEnvClock(t *testing.T) {
+	dt := env.DefaultTuning()
+	ck := &mwClock{}
+	e := &env.Env{Tune: &dt, Clock: ck, Log: slog.New(slog.NewTextHandler(&bytes.Buffer{}, nil))}
+	w := newMercWire(e, &fakeReader{}, nil, fakeCat{})
+	w.revives = []time.Time{w.now(), w.now()}
+	w.deaths = []time.Time{w.now()}
+	ck.slept = 59 * time.Minute // 59 game minutes; the wall clock has moved a few milliseconds
+	s := townSnap(5000, true)
+	if c := mercCtx(w, s); c.RevivesLastHour != 2 || c.DeathsLastHour != 1 {
+		t.Fatalf("inside the game hour: %+v", c)
+	}
+	ck.slept = 61 * time.Minute
+	if c := mercCtx(w, s); c.RevivesLastHour != 0 || c.DeathsLastHour != 0 {
+		t.Fatalf("after the game hour the cap must release: %+v", c)
+	}
+	e.Clock = nil
+	if d := time.Since(w.now()); d < 0 || d > time.Minute {
+		t.Errorf("no env clock must fall back to wall time, off by %v", d)
+	}
+}
+
+// g2g M2: after one real quote every consumer uses it (farm bar, revive bar), not the level formula; a new merc level
+// or an old read goes back to the probe.
+func TestQuoteReplacesTheFormulaEverywhere(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		dead := merc.MercState{Known: true, Owned: true, Level: 16} // formula 1920
+		rev := &probeReviver{quote: 120}
+		rev.paid = 120
+		rd := &fakeReader{st: dead}
+		w, buf, clk := testWire(t, rd, rev)
+		snap := func(gold int) *d2.Snapshot {
+			s := townSnap(gold, true)
+			s.Player.Class, s.Player.Level = class, 16
+			return s
+		}
+		if !w.GoldFarm(snap(100)) || !strings.Contains(buf.String(), "need=1970") {
+			t.Fatalf("%v: before any quote the formula arms the farm:\n%s", class, buf)
+		}
+		ctx := context.Background()
+		if got := w.ReviveStep(ctx, snap(100)); got != "merc revive skipped: gold" || rev.probes != 1 {
+			t.Fatalf("%v: %q probes %d", class, got, rev.probes)
+		}
+		if got := w.ReviveStep(ctx, snap(300)); got != "merc revived" {
+			t.Fatalf("%v: %q", class, got)
+		}
+		// dies again at the same level: no new probe, the farm bar is the quote plus the reserve
+		rd.set(dead)
+		w.curAt = time.Time{}
+		clk.t = clk.t.Add(10 * time.Minute)
+		if w.GoldFarm(snap(300)) {
+			t.Errorf("%v: 300 gold covers the quote 120, no farm", class)
+		}
+		if got := w.ReviveStep(ctx, snap(300)); got != "merc revived" || rev.probes != 1 {
+			t.Fatalf("%v: second revive %q probes %d", class, got, rev.probes)
+		}
+		// a new level makes the old quote void, as does age
+		rd.set(merc.MercState{Known: true, Owned: true, Level: 17})
+		w.curAt = time.Time{}
+		w.mu.Lock()
+		q := w.quoteFor(17)
+		w.mu.Unlock()
+		if q != 0 {
+			t.Errorf("%v: quote for a new level = %d", class, q)
+		}
+		w.mu.Lock()
+		w.last.level = 16
+		fresh := w.quoteFor(16)
+		clk.t = clk.t.Add(5 * time.Hour)
+		stale := w.quoteFor(16)
+		w.mu.Unlock()
+		if fresh != 120 || stale != 0 {
+			t.Errorf("%v: fresh %d stale %d", class, fresh, stale)
+		}
+	}
+}

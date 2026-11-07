@@ -1,3 +1,3 @@
 BACKLOG: TASK-68 g2gfixscroll: the gear step restocks the town portal scroll before it spends gold on gear (live drill E1.tp-first PASS), and a failed equip is remembered by item kind across games (town.equipKindFails); the equip to leave-game link of g2g seed 13 does not exist in code.
-INDEX: docs/probes/shortdrills.md: drill 6, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
+INDEX: docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
 CHANGELOG: bot: the town portal scroll is restocked before the gear shop spends gold; a refused equip is no longer retried in every fresh game (town.equipKindFails)
