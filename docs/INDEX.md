@@ -791,3 +791,6 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
 - docs/research/fid-loadhp-trace.md - character load of life/mana/stamina: game.exe addresses, oracle result, client whole-point copy (TASK-101)
 - docs/research/review-load-life-mana-opus.md: independent Opus verification of the load life/mana candidate r2 (TASK-101): loader claim holds (incl. live stat callback), limits for after-load rescale, d2d refresh clamp, life-0 saves
+- docs/research/g2h-wave3a.md: Gate 2 wave 3a (g2h) vs g2g per seed, merc numbers, three-fix proof checklist, reload-heal caveat
+- docs/soaks/gate2-multiseed-20261107-1811-g2h.md: Gate 2 multi-seed run g2h (PASSED, indicative: 3 seeds), per-seed criteria, d2dsoak output
+- docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
