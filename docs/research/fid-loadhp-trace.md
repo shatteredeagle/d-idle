@@ -23,7 +23,7 @@
 
 Private fork branch `pilot/load-life-mana`, commit `693f9def` on fork main c36b77b1, pushed to the private remote the same day. Not in this repo (GPL). `take_character` now: for life and mana, `value = min(value & ~0xff, max)`; stamina still refilled (Q3). Test added to `tests/test_game.cpp` (the `World` the suite already builds): a saved 89.54/91 life, 19.5/19.5 mana and 50/102 stamina go through `take_character`; asserts life 89*256, mana 19*256, max mana 4992, stamina 102*256, and a saved life above the maximum is clamped to it.
 
-Harness: `tools/emu/fl_build.sh` (worker host, `labrun orion --detach -- tools/emu/fl_build.sh`; `BASE=1` reverts the one source file to the parent). V test: with the fix `test_game` prints "OK: a save's life and mana are kept on entering a game (fraction dropped)" and finishes OK; with `BASE=1` it aborts on `Assertion hero.character.stats.values[kLife] == 89 * 256 failed` (mismatch before, none after). The test input comes from the live reads, so it proves d2d does what the live game.exe did on those values, not that game.exe's code does so for every value.
+Harness: `tools/emu/fl_build.sh` (worker host, `labrun <worker> --detach -- tools/emu/fl_build.sh`; `BASE=1` reverts the one source file to the parent). V test: with the fix `test_game` prints "OK: a save's life and mana are kept on entering a game (fraction dropped)" and finishes OK; with `BASE=1` it aborts on `Assertion hero.character.stats.values[kLife] == 89 * 256 failed` (mismatch before, none after). The test input comes from the live reads, so it proves d2d does what the live game.exe did on those values, not that game.exe's code does so for every value.
 
 ## 4. What is missing for the proof standard
 
