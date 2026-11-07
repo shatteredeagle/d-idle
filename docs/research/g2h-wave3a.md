@@ -9,7 +9,7 @@ Seeds 19 and 21 (wave 3b) were NOT run: the user's direction decision D1 (2026-1
 
 ## 1. Setup (V)
 - Bot origin/main 75087859 (contains #296, #298, #299, #286, #300), binary `d2d.lab3-labverbs-f75816c6-linuxbuild`, ladder off, 8 wall h, fault at 60 wall min, tag g2h. Runs gate2-s13-20261107-1007, gate2-s11-20261107-1008, gate2-s17-20261107-1008 (ended 18:08 EST).
-- Judge: `d2dsoak` rebuilt from origin/main 3eea4ba7 (`labrun orion -- nice -n 19 go build -o /tmp/d2dsoak.g2h ./cmd/d2dsoak`), copied into each run's `bin/` with the shipped binary kept as `bin/d2dsoak.orig-20261107`, then `gate-run.sh --collect-multi --gate 2 --tag g2h`. The belt rule is the funded rule (#300).
+- Judge: `d2dsoak` rebuilt from origin/main 3eea4ba7 (`go build -o d2dsoak ./cmd/d2dsoak` on the worker host under nice 19), copied into each run's `bin/` with the shipped binary kept as `bin/d2dsoak.orig-20261107`, then `gate-run.sh --collect-multi --gate 2 --tag g2h`. The belt rule is the funded rule (#300).
 - Restart-containing NOKILL and BELT windows stay literal. Andariel interim floor stays clvl 17 (hold on). Gate 3 not started.
 - Virtual minutes reached: 1780 / 2379 / 1899 (seeds 11 / 13 / 17); speed 3.7x / 5.0x / 4.0x virtual per wall. The host was shared with probe and review agents. g2g reached 1963 / 2414 / 1699. The two g2g NOKILL failures sat at virtual minutes 1190 (seed 13) and 1036 (seed 17), inside the 1780 minutes every g2h seed reached, so the shorter exposure on seeds 11 and 13 does not hide that pattern. XP/h is compared over the first 1579 virtual minutes for all runs. Slower speed does not change the verdict (virtual time is what the criteria count).
 
