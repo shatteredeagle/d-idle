@@ -96,3 +96,13 @@ docs/probes/soak-logs/gate2-s13-20261106-0823-g2f-extras.jsonl.gz  gaterun  gate
 docs/soaks/gate2-s17-20261106-0823-g2f.md  gaterun  gate2multi-g2f
 docs/probes/soak-logs/gate2-s17-20261106-0823-g2f-minutes.jsonl.gz  gaterun  gate2multi-g2f
 docs/probes/soak-logs/gate2-s17-20261106-0823-g2f-extras.jsonl.gz  gaterun  gate2multi-g2f
+docs/soaks/gate2-multiseed-20261107-0150-g2g.md  gaterun  gate2multi-20261107-0150-g2g
+docs/soaks/gate2-s11-20261106-1728-g2g.md  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s11-20261106-1728-g2g-minutes.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s11-20261106-1728-g2g-extras.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
+docs/soaks/gate2-s13-20261106-1728-g2g.md  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s13-20261106-1728-g2g-minutes.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s13-20261106-1728-g2g-extras.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
+docs/soaks/gate2-s17-20261106-1729-g2g.md  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s17-20261106-1729-g2g-minutes.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
+docs/probes/soak-logs/gate2-s17-20261106-1729-g2g-extras.jsonl.gz  gaterun  gate2multi-20261107-0150-g2g
