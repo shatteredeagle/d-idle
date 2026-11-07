@@ -12,8 +12,10 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
+	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/ladder"
 )
@@ -69,7 +71,8 @@ type extra struct {
 type Hub struct {
 	cfg   Config
 	base  time.Duration
-	video *Video // nil: no game video
+	video *Video                          // nil: no game video
+	cur   atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
 
 	mu      sync.Mutex
 	seq     uint64
