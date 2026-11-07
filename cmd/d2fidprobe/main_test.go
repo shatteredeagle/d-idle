@@ -52,7 +52,7 @@ func TestReplayExitCodes(t *testing.T) {
 
 func TestListAndErrors(t *testing.T) {
 	var o, e bytes.Buffer
-	if rc := run([]string{"-list"}, &o, &e); rc != 0 || strings.Count(o.String(), "\n") != 14 {
+	if rc := run([]string{"-list"}, &o, &e); rc != 0 || strings.Count(o.String(), "\n") != 15 {
 		t.Fatalf("rc %d\n%s", rc, o.String())
 	}
 	if rc := run([]string{"-scenario", "99"}, &o, &e); rc != 2 {

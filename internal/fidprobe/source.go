@@ -89,6 +89,9 @@ func ParseInput(b []byte) (Input, error) {
 
 // CheckScenario verifies the character on a sheet is the one the scenario names.
 func CheckScenario(sc Scenario, s *Sheet) error {
+	if sc.Class == "" {
+		return nil // the scenario compares any character
+	}
 	f, ok := s.Fields["base.class"]
 	if !ok || !f.Readable() {
 		return fmt.Errorf("fidprobe: %s: class unreadable", s.Source)
@@ -104,20 +107,34 @@ func CheckScenario(sc Scenario, s *Sheet) error {
 
 // Run reads both sources and diffs them for the scenario.
 func Run(ctx context.Context, sc Scenario, a, b Source, reads int, gap time.Duration, rules *Rules) (*Report, error) {
-	sa, err := ReadStable(ctx, a, reads, gap, rules)
+	rep, _, _, err := RunSheets(ctx, sc, a, b, reads, gap, rules)
+	return rep, err
+}
+
+// RunSheets is Run that also returns the two sheets (for a third reference such as the file).
+func RunSheets(ctx context.Context, sc Scenario, a, b Source, reads int, gap time.Duration, rules *Rules) (*Report, *Sheet, *Sheet, error) {
+	sa, err := readSide(ctx, a, reads, gap, rules)
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
-	sb, err := ReadStable(ctx, b, reads, gap, rules)
+	sb, err := readSide(ctx, b, reads, gap, rules)
 	if err != nil {
-		return nil, err
+		return nil, nil, nil, err
 	}
 	for _, s := range []*Sheet{sa, sb} {
 		if err := CheckScenario(sc, s); err != nil {
-			return nil, err
+			return nil, nil, nil, err
 		}
 	}
 	rep := Diff(sa, sb, sc.Groups, rules)
 	rep.Scenario = sc.Name
-	return rep, nil
+	return rep, sa, sb, nil
+}
+
+// readSide is ReadStable, or the direct sheet for a file source (a file does not change between reads).
+func readSide(ctx context.Context, src Source, n int, gap time.Duration, rules *Rules) (*Sheet, error) {
+	if ss, ok := src.(SheetSource); ok {
+		return ss.Sheet()
+	}
+	return ReadStable(ctx, src, n, gap, rules)
 }

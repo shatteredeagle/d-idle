@@ -18,7 +18,7 @@ func snap(class d2.Class) *d2.Snapshot {
 		Strength: 20, Dexterity: 25, Vitality: 30, Energy: 40, Life: 1000, MaxLife: 1000, Mana: 600, MaxMana: 600,
 		Stamina: 200, MaxStamina: 200, Resist: d2.Resists{Fire: 5}, LeftSkill: 36, RightSkill: 40,
 		Skills: []d2.Skill{{ID: 36, Level: 1, Bonus: 1}, {ID: 40, Level: 4}},
-		Stats:  d2.Stats{0: 20, 2: 25}}
+		Stats:  d2.Stats{0: 20, 2: 25, 6: 256000, 7: 256000, 8: 153600, 9: 153600, 10: 51200, 11: 51200}}
 	inv := &d2.Inventory{Items: []d2.Unit{
 		{Class: 5, Item: &d2.Item{Where: d2.ContInventory, GX: 1, GY: 2, Quality: 2, ILvl: 3, Flags: d2.FlagIdentified}},
 		{Class: 9, Item: &d2.Item{Where: d2.ContEquipment, Body: 4, Quality: 3}},
@@ -158,7 +158,7 @@ func (f *fake) Read(context.Context) (Input, error) {
 
 func TestRunTwoBuildsAndStability(t *testing.T) {
 	scs, _ := Scenarios()
-	if len(scs) != 14 {
+	if len(scs) != 15 {
 		t.Fatalf("catalogue has %d", len(scs))
 	}
 	for _, c := range []struct {
