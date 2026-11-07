@@ -1,0 +1,3 @@
+BACKLOG: fidbatch: upstream batching rules and bundle queue entry for fid-load-life-mana (not ready: no game.exe address, no oracle, no verifier); candidate branch on the private fork remote (TASK-101)
+INDEX: docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
+CHANGELOG: docs: fidelity-fix PR candidate rebuilt on upstream main to the maintainer's rules (draft, not opened)
