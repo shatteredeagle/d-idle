@@ -1,8 +1,6 @@
 ---
 id: TASK-116
-title: >-
-  dietcards: stop committing docs/cards.md (generate on demand or in CI; fix the
-  mergeq preflight and the cards_md --check use)
+title: 'dietcards: stop committing docs/cards.md (generate on demand or in CI; fix the mergeq preflight and the cards_md --check use)'
 status: Done
 assignee:
   - credit-runner
