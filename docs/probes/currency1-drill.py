@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Currency slice 1 live acceptance (docs/probes/currency1.md): a fresh headless d2d with the didle-v1 overlay and
 --lab-verbs spawns and kills Blood Raven N times in the Burial Grounds, then counts `mrk` items on the ground.
-The character is throwaway (--no-save, private HOME); no Wine, no display, no Orion game instance.
+The character is throwaway (--no-save, private HOME); no Wine, no display, no shared game instance.
 Usage: currency1-drill.py <d2d> <overlay-dir> [N=300] [batch=15]   env D2_MPQ_DIR = the install (default /tmp/d2mpq)
 Prints one JSON line (counts, expected, interval). Exit 0 when the count is inside the 99.9 percent interval."""
 import json, math, os, shutil, socket, subprocess, sys, tempfile, time
