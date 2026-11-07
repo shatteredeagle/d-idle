@@ -78,7 +78,7 @@ func dry(t *testing.T, mode string, env ...string) string {
 func TestEntrypointTesterProfile(t *testing.T) {
 	out := dry(t, "tester", "D2BOT_WATCH_ORIGIN=http://tester.example:8891")
 	wantAll(t, "tester dry run", out, "D2BOT_WATCH_ACCESS_FILE=/data/access.json", "D2BOT_LADDER=1", "D2BOT_WATCH=1", "D2BOT_WATCH_ADDR=0.0.0.0:8891", "D2BOT_WATCH_ANSWER_ADDR=0.0.0.0:8892",
-		"D2BOT_WATCH_ORIGIN=http://tester.example:8891", "D2BOT_WATCH_TOKEN_FILE=/data/watch.token", "D2BOT_LADDER_STORE=/data/ladder",
+		"D2BOT_WATCH_ORIGIN=http://tester.example:8891", "D2BOT_WATCH_TOKEN_FILE=/data/watch.token", "D2BOT_LADDER_STORE=shared",
 		"D2BOT_WATCH_VIDEO=1", "D2BOT_WATCH_VIDEO_SOURCE=tap", "D2BOT_GAMEDIR=/game", "d2d-mode=realtime", "D2DVIEW_TOKEN=***",
 		"d2dview -addr 127.0.0.1:8893", "-jpeg", "--addr 127.0.0.1:8420", "--goals 'campaign:normal_act1'")
 	if regexp.MustCompile(`TOKEN=[0-9a-f]{8}`).MatchString(out) {

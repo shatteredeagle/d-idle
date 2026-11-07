@@ -95,7 +95,7 @@ Dry run without the game: `ENTRYPOINT_DRYRUN=1 TESTER=1 D2BOT_WATCH_ORIGIN=http:
 | `D2BOT_RUN_HOURS`, `D2BOT_ADDR`, `D2BOT_ARGS` | unset, `127.0.0.1:8420`, unset | user | run limit, bot API (keep loopback), extra flags |
 | `D2BOT_GAMEDIR` | `$D2D_DATA` (tester) | profile | game tables for combat, town and campaign goals |
 | `D2BOT_LADDER` | `1` (tester) | profile | decision ladder on |
-| `D2BOT_LADDER_STORE` | `/data/ladder` (tester) | profile | ladder store |
+| `D2BOT_LADDER_STORE` | `shared` (tester) | profile | a plain name, not a path: `shared` is the store under the bot state in the `/data` volume (the container sets `D2BOT_DATA=/data`) |
 | `D2BOT_WATCH`, `D2BOT_WATCH_VIDEO`, `D2BOT_WATCH_VIDEO_SOURCE` | `1`, `1`, `tap` (tester) | profile | watch screen, video from the tap |
 | `D2BOT_WATCH_ADDR`, `D2BOT_WATCH_ANSWER_ADDR` | `0.0.0.0:8891`, `0.0.0.0:8892` (tester) | profile | listeners inside the container; the host publish is loopback by default |
 | `D2BOT_WATCH_ORIGIN` | `http://localhost:8891,http://127.0.0.1:8891` | compose (`D2_WATCH_ORIGIN`, required there) | page origins the answer route accepts |
