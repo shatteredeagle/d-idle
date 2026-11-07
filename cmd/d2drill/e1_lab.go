@@ -172,6 +172,9 @@ type e1Scenario struct {
 	Eval func(lines []string, facts map[string]string) (verdict, reason string)
 }
 
+// e1Extra holds the scenarios registered by the other e1_*.go files (init).
+var e1Extra []e1Scenario
+
 func e1Scenarios() []e1Scenario {
 	merc := func(id, title string, clvl int, gold func(q int) int, eval func([]string, map[string]string) (string, string)) e1Scenario {
 		return e1Scenario{ID: id, Group: "shortdrill-merc", Title: title, Goals: "farm:Blood Moor",
@@ -581,7 +584,7 @@ func runE1(ctx context.Context, c e1Cfg, be *d2denv.Backend) int {
 		}
 	}
 	var out []e1Result
-	for _, sc := range e1Scenarios() {
+	for _, sc := range append(e1Scenarios(), e1Extra...) {
 		if len(want) > 0 && !want[sc.ID] && !want[sc.Group] {
 			continue
 		}
