@@ -272,7 +272,7 @@ func (l *Leveler) isBadSlot(id uint32, class, slot, level int) bool {
 }
 
 // kindKey is one item kind (base class) failing into one body slot. Unit ids change with every game, the base class
-// does not (g2g seed 13: Cap to head failed in 6 games in a row, each time a new id).
+// does not (g2g seed 13: Cap to head failed in several games, each time a new id).
 type kindKey struct{ class, slot int }
 
 // kindBlockedLocked: EquipKindFails failures of this kind into this slot, and the character has not gained the levels

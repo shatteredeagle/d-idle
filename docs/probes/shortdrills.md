@@ -47,3 +47,24 @@ Run (V): slot 4, d2d lab3-labverbs f75816c6 (sha256 53217ea4ecc8...), `docs/prob
 | E1.tp-b (E1.tp-b-20261107-015608) | a `tbk` in the pack | PASS: minute `tp=3`, equal to the quantity inv-tp-dump counted (a given tome starts with 3 charges) |
 | E1.tp-c (E1.tp-c-20261107-015625) | no scroll, gold 600 | PASS: `tpBuy` on the first minute line, max tp 1 |
 | control, label shortdrill-tpcount-prefix (E1.tp-a-20261107-015718) | the same as tp-a with d2bot built WITHOUT the fix | FAIL: first minute line `tp=0`, want 3 |
+
+## Drill 6: scroll before gear, equip failure (groups shortdrill-tpfirst, shortdrill-equip; task g2gfixscroll)
+
+> Tags: V = run live on the worker host (2026-11-07), U = unverified. Bot = branch `agent/tpfirst` on `origin/main` 23ccaf64, d2d = fork `d2d.lab3-labverbs-f75816c6-linuxbuild`, slot 4, runner `docs/probes/shortdrills/run-tpfirst.sh SLOT GROUP LABEL`, drill code `cmd/d2drill/e1_tp_first.go` and `e1_equip.go`. Writes after start: 0 in every run.
+
+Finding behind the fix (V, bot log of Gate 2 g2g seed 17, minute 1035): the hero entered town with ONE scroll (`inv-tp-dump` counted=1), the town trip raises "no town portal scroll" only at 0, so no chores ran; the gear step (`internal/bot/leveling.go gearStep`) spent 156 gold (Cap, Sash, Leather Gloves), the hero left with one scroll and 304 gold, used it for the pocket escape and had none 15 virtual minutes later. The gear shop's own kit reserve (`leveler.kitReserve`) counts a tome or ONE scroll as "has a portal", so it reserved nothing. The minute line `tp` read 0 there (pre-#286).
+
+| id | setup (before the start) | result |
+|---|---|---|
+| E1.tp-first-a (E1.tp-first-a-20261107-074523) | clvl 20, 1 `tsc`, 4 healing in the belt, spare potions in the pack, purse 700 | PASS: `gear: scroll before gear` (town restock run by the gear step) and a Tome of Town Portal bought (the town code buys the tome from 450 gold) before the first gear purchase; the gear budget is then recomputed from the gold left |
+| E1.tp-first-b control (E1.tp-first-b-20261107-074536) | the same with 2 scrolls and purse 400 | PASS: the gear pass runs, no `scroll before gear` line |
+| E1.equip-fail (E1.equip-fail-20261107-074309) | clvl 20, two Caps in the pack | INCONCLUSIVE: the d2d accepted every swap, so no `equip failed` line appeared; the "no leave after a failed equip" assertion is NOT proven live (offline: leveler test only) |
+
+Runs that failed on the way and shaped the setup (V): the belt of a fresh character has 4 boxes (`no belt box` above 3); a potion trip (`[2 healing potions]`) ran before the gear step until the belt held 4 healing potions; with purse 400 a `[heal]` trip sometimes ran first and bought the scroll through the normal chores (run 2026-11-07 074323: FAIL "no restock line", the scroll was bought anyway), so the purse of the main scenario is 700.
+
+Not proven (U): a control run WITHOUT the fix (prefix build) was not made; the first live run of the group (before the potion-trip fix of the setup) is not a control.
+
+### Equip failure vs leave-game (g2g seed 13 E1) (V by log, code reading)
+- No code path leaves the game on an equip failure. In all 20 `leveler: equip failed` lines of seed 13 the next game-leaving line is one of two independent things: `save point: saving and re-entering the game` (xp at risk, `savePointStep`, runs right after `gearStep` by design) or `leveling: everything worth farming is cleared, starting a fresh game ... reason no area left to pick` (`freshGameToLevel`; area 7 unreachable and Forgotten Tower closed by the route guard on 2 mana potions). The sequence in the same second is coincidence of ordering, not cause.
+- Real defect found: the failed-swap memory was keyed by unit id (`badKey{id, slot}`), and ids change with every game, so after each fresh game the same Cap to head swap was tried again (Cap to head failed in several games). Fix: a second memory by item kind (base class, slot) that survives the new ids, `town.equipKindFails` (2), the kind is skipped until the character gains the levels the backoff asks for (one per failure, at most 4). Retry per swap was already bounded (2 clicks, `swapAttempts`, 2 failed swaps per visit).
+- Cause of the refusal itself (U): "slot click refused ... stillOnCursor: true" on swapping over an occupied slot and `hand: unexpected cursor state: cursor never held item N` on picking from the pack. Not reproduced with lab verbs (d2d accepts the swap in the drill). Fidelity-matrix row candidate: IT03 (equip rules, swap over a worn item): add "swap onto an occupied slot leaves the item on the cursor in d2d (g2g seed 13, 20 times)" as the observed difference to check against game.exe.
