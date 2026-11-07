@@ -295,6 +295,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | merc.goldFarmBudgetMin | 40 | 0..600 | min | 40 | 4 | One gold farm arming lasts at most this many virtual minutes, and ends early when gold reaches the revive bar; then merc.goldFarmCooldownMin applies. 0 = no time limit. |
 | merc.goldFarmCooldownMin | 60 | 0..600 | min | 60 | 3 | Minutes after a budget end before the gold farm may arm again. |
 | merc.goldFarmMaxLevel | 17 | 0..40 | levels | 17 | 3 | While the merc is dead or missing and gold cannot pay for a revive or hire, a Normal Act 1 character below this clvl levels only in Blood Moor, Cold Plains, Stony Field, Den, Caves, Burial Grounds and Crypt. 17 equals boss.andarielMinLevel, the no-merc Andariel floor: at that level farming buys nothing. 0 turns it off. |
+| merc.quoteMaxAgeHours | 4 | 0..48 | h | 4 | 1 | The revive price read from the Kashya menu is used for the gold farm trigger and the revive bar for this many game hours while the merc level is unchanged; after that, or at a new level, the next visit reads it again. The level formula is only the fallback before any quote was read. 0 = never stale. |
 | merc.enabled | 1 | 0..1 | bool | 1 | 2 | 1 runs the mercenary policy in the bot (revive, Act 2 hire, merc state for the route guards, status line); 0 leaves the bot exactly as it was. On by default since the 2026-11-02 merc decision (docs/merc-wire.md). |
 
 ### campaign.*
