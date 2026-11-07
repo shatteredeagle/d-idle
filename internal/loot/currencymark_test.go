@@ -13,7 +13,7 @@ import (
 func TestCurrencyMarkIsKept(t *testing.T) {
 	for _, build := range []string{"", "sorceress_blizzard_endgame90", "barbarian_warcry_endgame90"} {
 		l, r := newLooter(t)
-		r.W.DB.Items = append(r.W.DB.Items, &data.ItemBase{Kind: data.KindMisc, Name: "DI Mark", Code: "mrk", NameKey: "didle_mrk", Type: "key", Width: 1, Height: 1, Stackable: true, MinStack: 1, MaxStack: 12})
+		r.W.DB.Items = append(r.W.DB.Items, &data.ItemBase{Kind: data.KindMisc, Name: "Raven's Mark", Code: "mrk", NameKey: "Raven's Mark", Type: "key", Width: 1, Height: 1, Stackable: true, MinStack: 1, MaxStack: 12})
 		l.SetBuild(build)
 		u := r.W.Add("mrk", d2.ContInventory, 0, 0)
 		for _, gold := range []int{0, 5000} {
