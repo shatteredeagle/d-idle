@@ -1,10 +1,11 @@
 ---
 id: TASK-119
 title: 'g2h-record: Gate 2 wave 3a (g2h) result'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:14:00Z'
+updated_date: '2026-11-07T23:24:00Z'
 labels:
   - ops
   - research
