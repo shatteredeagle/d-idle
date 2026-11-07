@@ -1,4 +1,0 @@
-BACKLOG: TASK-101 fid-load-life-mana (pilot, high): d2d keeps the saved life and mana at load; trace docs/research/fid-loadhp-trace.md, private fork branch pilot/load-life-mana 693f9def (unit test fails before, passes after), draft docs/research/pr-load-life-mana-draft.md NOT POSTED; differential vs game.exe code missing. Cards TASK-102 (Pally max mana), TASK-103 (poison resist diagnosis), TASK-104 (fidprobe.md, done in this branch), TASK-105 (fresh Paladin and sorc-6 fixtures, live-agent, provenance rule).
-INDEX: docs/research/fid-loadhp-trace.md | life and mana at load, d2d against game.exe, pilot fix and test design
-INDEX: docs/research/pr-load-life-mana-draft.md | DRAFT NOT POSTED: keep saved life and mana at load
-CHANGELOG: Fidelity: fix cards for the run-1 deviations, load-time life/mana trace and a private-fork pilot fix with a failing-then-passing unit test (docs only here).

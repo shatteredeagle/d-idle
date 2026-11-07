@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fidelity: fix cards for the run-1 deviations, load-time life/mana trace and a private-fork pilot fix with a failing-then-passing unit test (docs only here).
 - Direction review decisions D1 to D5 recorded (ADR 0017, decisions.md); board re-shaped: fidelity slices 3 to 6, metacurrency, orders 2 and 3 and unwired ladder cards deferred, milestone m-4 "Find the fun" with TASK-106 to TASK-118.
 - docs: direction review of the whole project (parity premise, ladder, metacurrency, tester build, gate and board machinery; stop list, two-week plan, five user decisions) (docs/research/direction-review.md)
 - d2fidprobe gets a d2s file reader, scenario 15 load-life-mana, -ref/-dump and reader-scope normalisation
