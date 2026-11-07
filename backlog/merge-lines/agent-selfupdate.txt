@@ -1,3 +1,0 @@
-BACKLOG: TASK-120 ghcrpublish (lead) plus TASK-121 updrelease, TASK-122 updclient, TASK-123 updboot, TASK-124 updkey (user): self-update for friends, registry first then in-app updater; design in docs/research/self-update-design.md, nothing built or published
-INDEX: docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
-CHANGELOG: Design and cards for friends self-update (registry publishing plan, signed in-app updater with rollback); docs and cards only
