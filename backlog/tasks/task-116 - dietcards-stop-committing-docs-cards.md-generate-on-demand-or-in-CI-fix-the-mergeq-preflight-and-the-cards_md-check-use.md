@@ -19,6 +19,7 @@ owns:
   - "docs/backlog-howto.md"
 exclusive: []
 contracts: []
+result: "docs/cards.md untracked + gitignored; cards_md.py --write builds it whole, --check only runs the generator; check.sh, howto, ops auto_done/mergeq/merging.md updated; offline, not verified live (no game needed)"
 ---
 
 ## Description
@@ -31,7 +32,7 @@ Why: user decision D5 (board and docs diet), implementation is this separate car
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docs/cards.md is generated on demand or in CI and no longer committed; remove it from the repo and add a stub or ignore
-- [ ] #2 mergeq preflight and every cards_md --check call site updated; no cards.md merge conflicts left
-- [ ] #3 tools/ci/check.sh passes
+- [x] #1 docs/cards.md is generated on demand or in CI and no longer committed; remove it from the repo and add a stub or ignore
+- [x] #2 mergeq preflight and every cards_md --check call site updated; no cards.md merge conflicts left
+- [x] #3 tools/ci/check.sh passes
 <!-- AC:END -->
