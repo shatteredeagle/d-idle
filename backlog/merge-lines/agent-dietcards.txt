@@ -1,2 +1,0 @@
-CHANGELOG: docs/cards.md is now generated and gitignored (not committed); CI only checks that tools/backlog/cards_md.py runs (TASK-116)
-BACKLOG: dietcards (TASK-116): docs/cards.md no longer committed; no more cards.md merge-queue conflicts
