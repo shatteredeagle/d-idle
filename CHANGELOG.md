@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Load life/mana trace: game.exe loader address and emulator oracle for the upstream PR candidate (docs and tools/emu only)
 - docs: fidelity-fix PR candidate rebuilt on upstream main to the maintainer's rules (draft, not opened)
 - docs/cards.md is now generated and gitignored (not committed); CI only checks that tools/backlog/cards_md.py runs (TASK-116)
 - Direction record amended: tester container continues because remote friends are the only testers; plan step 7 is TASK-113 friends feedback via the container (m-1), container cards TASK-23, 25-29, 31-33 at high priority.

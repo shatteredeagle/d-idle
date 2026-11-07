@@ -789,3 +789,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/fid-loadhp-trace.md | life and mana at load, d2d against game.exe, pilot fix and test design
 - docs/research/pr-load-life-mana-draft.md | DRAFT NOT POSTED: keep saved life and mana at load
 - docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
+- docs/research/fid-loadhp-trace.md - character load of life/mana/stamina: game.exe addresses, oracle result, client whole-point copy (TASK-101)
