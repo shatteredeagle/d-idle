@@ -29,7 +29,8 @@ import (
 // d2d takes one client), and starts `d2bot --backend d2d --attach` on the same slot. After the start the bot acts only
 // through its real input channel; "writes after start" comes from the ledger. The verdict is read from the bot's log.
 //
-//	shortdrill-merc    E1.merc-a  clvl 12, dead merc, purse = real quote + 10: revive BEFORE any potion purchase
+//	shortdrill-merc    E1.merc-quote  clvl 12, purse 300: with a read quote no gold farm, the revive happens (BLOCKED when the quote reads 0)
+//	                   E1.merc-a  clvl 12, dead merc, purse = real quote + 10: revive BEFORE any potion purchase
 //	                   E1.merc-b  clvl 12, purse below the quote: no revive, the potions are bought
 //	                   E1.merc-c  clvl 14, purse = quote + 10: waits (needs quote + 50)
 //	shortdrill-noportal E1.noportal-a  Tamoe Highland (area 7; area 11 is now in chainHome: g2e F2c walks home from it), 0 potions, 47 percent life, no portal: leaves after about 20 s
@@ -202,6 +203,8 @@ func e1Scenarios() []e1Scenario {
 			func(q int) int { return max(q-420, q*3/4) }, e1MercEvalB),
 		merc("E1.merc-c", "clvl 14, dead merc, purse = quote + 10 (needs quote + 50): waits, no revive", 14,
 			func(q int) int { return q + 10 }, e1MercEvalC),
+		merc("E1.merc-quote", "clvl 12, dead merc, purse 300 (far below the formula 1080): a read quote covers it, so no gold farm and the revive happens", 12,
+			func(int) int { return 300 }, e1MercQuoteEval),
 		np("E1.noportal-a", "area 7, 0 potions, 47 percent life, no scroll or tome: the bot leaves after bot.noPortalWaitSec", false),
 		np("E1.noportal-b", "control: the same with a town portal scroll in the pack: the bot portals to town, does not leave", true),
 		e1MouthScenario(),
@@ -501,6 +504,22 @@ func e1MercEvalC(lines []string, f map[string]string) (string, string) {
 		return "PASS", "skipped for gold: " + lines[i]
 	}
 	return "FAIL", "no `revive skipped (gold)` line and no revive"
+}
+
+// e1MercQuoteEval (g2g M2): once the quote is read the farm bar is the quote, not the level formula. BLOCKED when the
+// menu quoted nothing above 0 (a cheat-hired merc is level 1 and says 0), because then only the formula path runs.
+func e1MercQuoteEval(lines []string, f map[string]string) (string, string) {
+	r, farm := e1Find(lines, "merc: revived"), e1Find(lines, "merc: gold farm on")
+	if e1Find(lines, "revive quote read price=") < 0 {
+		return "BLOCKED", "the bot read no quote above 0 (live quote " + f["liveQuote"] + "): only the formula path ran, the new rule is not exercised"
+	}
+	switch {
+	case farm >= 0 && (r < 0 || farm < r):
+		return "FAIL", "gold farm armed although a quote was read: " + e1LineOr(lines, farm, "")
+	case r < 0:
+		return "FAIL", "no revive although the quote fits the purse (" + f["gold"] + ")"
+	}
+	return "PASS", "quote read, no gold farm, revived: " + e1LineOr(lines, r, "")
 }
 
 func e1NoPortalEval(lines []string, scroll bool) (string, string) {

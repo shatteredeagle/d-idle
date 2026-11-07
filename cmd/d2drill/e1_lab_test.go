@@ -68,8 +68,8 @@ func TestE1Scenarios(t *testing.T) {
 		}
 		seen[s.ID] = true
 	}
-	if len(seen) < 8 {
-		t.Errorf("want at least 8 scenarios, got %d", len(seen))
+	if len(seen) < 9 {
+		t.Errorf("want at least 9 scenarios, got %d", len(seen))
 	}
 }
 
@@ -100,5 +100,22 @@ func TestE1TPEvals(t *testing.T) {
 		if v, why := c.eval(c.lines, nil); v != c.want {
 			t.Errorf("%s: %s (%s), want %s", c.name, v, why, c.want)
 		}
+	}
+}
+
+func TestE1MercQuoteVerdicts(t *testing.T) {
+	f := map[string]string{"liveQuote": "0", "gold": "300"}
+	if v, _ := e1MercQuoteEval([]string{"merc: gold farm on need=1130"}, f); v != "BLOCKED" {
+		t.Errorf("no quote read: %s", v)
+	}
+	q := "merc: revive quote read price=120 gold=300"
+	if v, _ := e1MercQuoteEval([]string{q, "merc: revived price=120"}, f); v != "PASS" {
+		t.Errorf("quote, revive: %s", v)
+	}
+	if v, _ := e1MercQuoteEval([]string{q, "merc: gold farm on need=170", "merc: revived price=120"}, f); v != "FAIL" {
+		t.Errorf("farm before the revive: %s", v)
+	}
+	if v, _ := e1MercQuoteEval([]string{q}, f); v != "FAIL" {
+		t.Errorf("no revive: %s", v)
 	}
 }
