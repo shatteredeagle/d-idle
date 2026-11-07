@@ -1,2 +1,0 @@
-CHANGELOG: tpcount: the minute line field tp (and tpBuy) read 0 on the d2d path because the town adapter hid bot.TPDiag; fixed and drilled live (E1.tp-a/b/c)
-BACKLOG: tpcount (task 57) done: minute-line tp scroll count fixed; drill 4 PASS, pre-fix control FAIL

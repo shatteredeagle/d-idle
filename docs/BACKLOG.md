@@ -537,6 +537,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-54 fidelity-matrix: 78-row matrix of what the bot uses versus game.exe (13 unverified), same-save probe design; tasks TASK-55 fidprobe-core and TASK-56 fidprobe-vendor proposed
 - ABMERC: TASK-53 paired A/B harness for the merc revive reserve (clvl 11 late-start variant, tools/ab/mercab.sh), dry run proven, full 16-run A/B pending host capacity; standing rule: strategy changes get a paired A/B (docs/ab-merc.md, docs/ab-design.md Variants)
 - shortdrills: short live drills E1 (merc revive before potions, no-portal low life leaves in 21 s virtual), all PASS, docs/probes/shortdrills.md
+- tpcount (task 57) done: minute-line tp scroll count fixed; drill 4 PASS, pre-fix control FAIL
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
