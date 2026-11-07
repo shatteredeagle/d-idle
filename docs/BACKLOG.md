@@ -569,6 +569,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-101 upstream PR opened: psi29a/d2decomped#242 (load life/mana, head 8308864a), merge pending; new card TASK-125 (Fight::revive refills only life)
 - TASK-124 updkey now sets up an environment-scoped CI signing secret with a required reviewer and tag protection (user decisions 2026-11-07 recorded in the self-update design)
 - TASK-101 upstream PR #242 head is 2cf72cb1 after the CodeRabbit fix (fl_load.py gen usage)
+- TASK-126 learnedbrain (parked, low): tiny answer-prediction model experiment on the player's answers, blocked by TASK-106 and about 500 labelled answers; RL policy out of scope
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

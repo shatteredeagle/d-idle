@@ -794,3 +794,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/g2h-wave3a.md: Gate 2 wave 3a (g2h) vs g2g per seed, merc numbers, three-fix proof checklist, reload-heal caveat
 - docs/soaks/gate2-multiseed-20261107-1811-g2h.md: Gate 2 multi-seed run g2h (PASSED, indicative: 3 seeds), per-seed criteria, d2dsoak output
 - docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
+- docs/research/decision-dataset.md: decision dataset schema v1 (JSONL per decision-point firing, privacy, size estimate); logged by the session record (TASK-106)

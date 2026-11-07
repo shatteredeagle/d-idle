@@ -1,3 +1,0 @@
-BACKLOG: TASK-126 learnedbrain (parked, low): tiny answer-prediction model experiment on the player's answers, blocked by TASK-106 and about 500 labelled answers; RL policy out of scope
-INDEX: docs/research/decision-dataset.md: decision dataset schema v1 (JSONL per decision-point firing, privacy, size estimate); logged by the session record (TASK-106)
-CHANGELOG: Design: decision dataset kept by the session record (TASK-106 criteria 4 and 5) and a parked learned-brain experiment card (TASK-126)
