@@ -788,3 +788,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/adr/0017-direction-fun-first-2026-11-07.md - direction for the next two weeks (decisions D1 to D5 of the direction review)
 - docs/research/fid-loadhp-trace.md | life and mana at load, d2d against game.exe, pilot fix and test design
 - docs/research/pr-load-life-mana-draft.md | DRAFT NOT POSTED: keep saved life and mana at load
+- docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
