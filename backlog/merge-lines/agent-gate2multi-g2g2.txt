@@ -1,0 +1,4 @@
+BACKLOG: GATE2: g2g five-seed verdict NOT PASSED, 3 of 5 seeds pass (seeds 13 and 17 fail NOKILL); wave 2 seeds 19 and 21 pass (docs/research/g2g-five-seed.md)
+INDEX: docs/research/g2g-five-seed.md: Gate 2 g2g combined five-seed verdict (waves 1 and 2), belt re-judge of wave 1, merc numbers, paired comparison with g2f
+INDEX: docs/soaks/gate2-multiseed-20261107-0953-g2g2.md: Gate 2 g2g wave 2 record (seeds 19, 21), per-seed criteria, d2dsoak output
+CHANGELOG: docs: Gate 2 g2g wave 2 collected and the combined five-seed verdict written (NOT PASSED, 3 of 5 seeds) (docs/research/g2g-five-seed.md).
