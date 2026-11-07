@@ -20,9 +20,12 @@ owns:
   - "docs/research/fid-loadhp-trace.md"
   - "docs/research/pr-load-life-mana-draft.md"
   - "tools/emu/fl_build.sh"
+  - "tools/emu/fl_load.py"
+  - "tools/emu/fo_build.sh"
+  - "tools/emu/fo_diff.sh"
 exclusive: []
 contracts: []
-result: "trace, fork branch pilot/load-life-mana 693f9def (test_game fails before, passes after, worker host) and DRAFT PR text written; differential vs game.exe code NOT built (AC 3 open: gap written in the trace). Not verified live after the fix."
+result: "loader found: FUN_0056b180 -> FUN_0056af80 (0x56b0ff, 0x56b10d), no clamp, stamina = maximum; oracle tools/emu/fl_load.py (V run, 414 cases): parent 392 differ, pilot r1 341, new branch local/fid-load-life-mana-r2 0; the pilot fraction drop was the client display copy (FUN_00548760 sar 8, FUN_0045d9b0 shl 8). r2 in a scratch clone and a bundle on the worker host, push to the private remote refused by the sandbox. Not verified live; needs the independent Opus verification."
 ---
 
 ## Description
@@ -39,6 +42,6 @@ Joins the bundle "character load and stats" (docs/research/pr-bundle-queue.md, e
 <!-- AC:BEGIN -->
 - [x] #1 Trace docs/research/fid-loadhp-trace.md with d2d code path, original behaviour, tags
 - [x] #2 Private fork branch pilot/load-life-mana builds and test_game passes after the fix and fails before it
-- [ ] #3 Differential vs game.exe code (emulator) built or the gap written down
+- [x] #3 Differential vs game.exe code (emulator) built or the gap written down
 - [x] #4 Draft PR text docs/research/pr-load-life-mana-draft.md, DRAFT NOT POSTED
 <!-- AC:END -->

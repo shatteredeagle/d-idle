@@ -1,0 +1,3 @@
+BACKLOG: TASK-101 load life/mana: game.exe loader found (FUN_0056b180 -> FUN_0056af80, kept exactly, stamina = maximum), oracle fl_load.py V run 414 cases (parent 392 differ, new fork branch 0); needs independent Opus verification; fork branch push pending
+INDEX: docs/research/fid-loadhp-trace.md - character load of life/mana/stamina: game.exe addresses, oracle result, client whole-point copy (TASK-101)
+CHANGELOG: Load life/mana trace: game.exe loader address and emulator oracle for the upstream PR candidate (docs and tools/emu only)
