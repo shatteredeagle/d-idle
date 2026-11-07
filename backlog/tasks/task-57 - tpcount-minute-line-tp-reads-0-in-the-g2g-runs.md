@@ -17,10 +17,11 @@ owns:
   - "docs/probes/shortdrills.md"
 exclusive: []
 contracts: []
+result: "VERIFIED LIVE 2026-11-06 (slot 4, fork f75816c6): E1.tp-a, tp-b, tp-c PASS with writes after start 0; the pre-fix d2bot FAILs tp-a (tp=0). Cause: townAdapter hid bot.TPDiag; fixed. Count was right (docs/probes/shortdrills.md, drill 4)."
 ---
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Cause found and fixed with a unit test per wrapper
-- [ ] #2 Drill E1.tp-a/b/c run live, result recorded
+- [x] #1 Cause found and fixed with a unit test per wrapper
+- [x] #2 Drill E1.tp-a/b/c run live, result recorded
 <!-- AC:END -->
