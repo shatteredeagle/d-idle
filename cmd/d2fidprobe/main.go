@@ -11,6 +11,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"flag"
 	"fmt"
 	"io"
@@ -44,6 +45,7 @@ func run(args []string, stdout, stderr io.Writer) int {
 	fs.StringVar(&f.sock, "sock", os.Getenv("D2D_SOCK"), "d2d control socket, default $D2D_SOCK")
 	fs.StringVar(&f.tables, "tables", "", "extracted game table cache dir for d2dsrc item rows")
 	ref := fs.String("ref", "", "third reference: a <role>.d2s copy; its sheet is also diffed against side A and side B (appended to the report)")
+	dump := fs.String("dump", "", "also write both sheets (every field, set members included) as JSON to this file")
 	out := fs.String("out", "", "also write <scenario>.txt and .json here")
 	format := fs.String("format", "text", "stdout format: text or json")
 	all := fs.Bool("all", false, "list EQUAL cells too")
@@ -83,17 +85,23 @@ func run(args []string, stdout, stderr io.Writer) int {
 	if err == nil {
 		var sb fidprobe.Source
 		if sb, err = newSource(*b, "B", &f); err == nil {
-			return probe(sc, sa, sb, rules, *reads, *gap, *ref, *out, *format, *all, stdout, stderr)
+			return probe(sc, sa, sb, rules, *reads, *gap, *ref, *dump, *out, *format, *all, stdout, stderr)
 		}
 	}
 	fmt.Fprintln(stderr, err)
 	return 2
 }
 
-func probe(sc fidprobe.Scenario, a, b fidprobe.Source, rules *fidprobe.Rules, reads int, gap time.Duration, ref, out, format string, all bool, stdout, stderr io.Writer) int {
+func probe(sc fidprobe.Scenario, a, b fidprobe.Source, rules *fidprobe.Rules, reads int, gap time.Duration, ref, dump, out, format string, all bool, stdout, stderr io.Writer) int {
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 	defer cancel()
 	rep, sa, sb, err := fidprobe.RunSheets(ctx, sc, a, b, reads, gap, rules)
+	if err == nil && dump != "" {
+		var js []byte
+		if js, err = json.MarshalIndent(map[string]*fidprobe.Sheet{"a": sa, "b": sb}, "", " "); err == nil {
+			err = os.WriteFile(dump, append(js, '\n'), 0o644)
+		}
+	}
 	if err == nil && ref != "" {
 		err = addRef(rep, ref, sc, sa, sb, rules)
 	}
