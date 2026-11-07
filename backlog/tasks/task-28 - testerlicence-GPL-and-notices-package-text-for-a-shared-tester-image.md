@@ -1,9 +1,10 @@
 ---
 id: TASK-28
-title: "testerlicence: GPL package for the d.idle fork shipped with its source"
-status: Proposed
+title: 'testerlicence: GPL package for the d.idle fork shipped with its source'
+status: In Progress
 assignee: []
 created_date: '2026-11-06T14:27:00Z'
+updated_date: '2026-11-07T14:24:00Z'
 labels:
   - tester
 dependencies: []
@@ -13,6 +14,7 @@ owns:
   - "docs/tester-licence.md"
 exclusive: []
 contracts: []
+result: "partial: docs/tester-licence.md drafted (NOTICE, SOURCE.txt, offer, ship list, decision list); AC1 stays open until vendor hashes and the Ubuntu source list are cut from a real build and the Freepik terms are checked; not verified live"
 ---
 
 ## Description
@@ -24,5 +26,5 @@ Slice 1 (d2d route), reworked: the image now contains the d.idle fork of d2d, so
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 docs/tester-licence.md: NOTICE and SOURCE.txt text (without the NOT FOR DISTRIBUTION line), the written offer, the list of what ships (fork source tarball at the pinned ref, vendor inputs with hashes, build recipe, our source tarball, licence files), Ubuntu package source pointer, Freepik icon question, game data never shipped
-- [ ] #2 the explicit USER DECISION list: ADR 0003 amendment first, GPL reviewer named or waived, when the d.idle fork repo is made public, whether lab and cheat verbs are stripped or flag-gated, the user's go on the day of the first copy; no legal advice claimed; nothing is published or posted
+- [x] #2 the explicit USER DECISION list: ADR 0003 amendment first, GPL reviewer named or waived, when the d.idle fork repo is made public, whether lab and cheat verbs are stripped or flag-gated, the user's go on the day of the first copy; no legal advice claimed; nothing is published or posted
 <!-- AC:END -->

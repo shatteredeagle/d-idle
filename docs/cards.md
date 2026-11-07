@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (53)
+## Active (54)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -31,7 +31,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 10 | testerlive | tester | proposed 0/3 | run the tester flow in the real d2d container | - | - | [card](archive/openspec-index.md#testerlive) |
 | 11 | testerdocs | tester | proposed 0/2 | d2d tester guide and first-stranger checklist | - | - | [card](archive/openspec-index.md#testerdocs) |
 | 12 | testerreport | tester | proposed 0/1 | scrubbed report bundle for the d2d tester | - | - | [card](archive/openspec-index.md#testerreport) |
-| 13 | testerlicence | tester | proposed 0/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
+| 13 | testerlicence | tester | in-progress 1/2 | GPL package for the d.idle fork shipped with its source | - | - | [card](archive/openspec-index.md#testerlicence) |
 | 14 | testerpack | tester | proposed 0/1 | build the d2d tester pack | - | - | [card](archive/openspec-index.md#testerpack) |
 | 15 | testerd2dimage | tester | in-progress 1/2 | d2d tester image, realtime entry, compose file, ports | - | - | [card](archive/openspec-index.md#testerd2dimage) |
 | 16 | testerd2dwiz | tester | in-progress 1/2 | first-run wizard for the d2d tester container | - | - | [card](archive/openspec-index.md#testerd2dwiz) |
@@ -72,6 +72,7 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 51 | g2gfixmouth | bot-defect | in-progress 2/2 | nav mouth gate no safe click loop at repeated spots | - | - | [card](archive/openspec-index.md#g2gfixmouth) |
 | 52 | g2gfixscroll | bot-defect | in-progress 2/2 | no town portal scroll with funded gold leaves the hero stuck outside | - | - | [card](archive/openspec-index.md#g2gfixscroll) |
 | 53 | judgebelt | gate | in-progress 3/3 | belt funded test judged at the window start | - | - | [card](archive/openspec-index.md#judgebelt) |
+| 54 | forkpub | tester | proposed 3/3 | fork publication phase 1 scan report, push plan, ADR 0003 amendment | - | - | [card](archive/openspec-index.md#forkpub) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
