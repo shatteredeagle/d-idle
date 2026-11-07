@@ -790,3 +790,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/pr-load-life-mana-draft.md | DRAFT NOT POSTED: keep saved life and mana at load
 - docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
 - docs/research/fid-loadhp-trace.md - character load of life/mana/stamina: game.exe addresses, oracle result, client whole-point copy (TASK-101)
+- docs/research/review-load-life-mana-opus.md: independent Opus verification of the load life/mana candidate r2 (TASK-101): loader claim holds (incl. live stat callback), limits for after-load rescale, d2d refresh clamp, life-0 saves
