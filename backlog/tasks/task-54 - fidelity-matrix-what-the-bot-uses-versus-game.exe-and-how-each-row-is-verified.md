@@ -1,10 +1,10 @@
 ---
 id: TASK-54
 title: 'fidelity-matrix: bot use versus game.exe, how each row is verified'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-06T22:38:00Z'
-updated_date: '2026-11-06T22:43:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - gate
 dependencies: []

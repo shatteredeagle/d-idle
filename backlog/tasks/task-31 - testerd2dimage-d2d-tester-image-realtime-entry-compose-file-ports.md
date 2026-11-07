@@ -22,7 +22,7 @@ owns:
   - "docs/d2d-container/README.md"
 exclusive: []
 contracts: []
-result: "Phase A offline (not live): tester profile in entrypoint.sh, fork pin lab2-freezeresume ee5e06d8ef99 (on the fork remote, V), compose.tester.yml, static+dry-run test, README env table. AC1 open: wizard step (testerd2dwiz not merged) and the built image; phase B (build+smoke) deferred, Gate 2 g2f still running."
+result: "Phase A offline (not live): tester profile in entrypoint.sh, fork pin lab2-freezeresume ee5e06d8ef99 (on the fork remote, V), compose.tester.yml, static+dry-run test, README env table. AC1 open: wizard step (testerd2dwiz not merged) and the built image; phase B (build+smoke) deferred, Gate 2 g2f still running. Status sync 2026-11-07: stays open, AC 1 needs the real-container image build and the wizard hook; tester live run TASK-25 pending."
 ---
 
 ## Description

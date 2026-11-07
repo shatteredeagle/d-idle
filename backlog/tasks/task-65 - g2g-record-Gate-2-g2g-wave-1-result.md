@@ -1,9 +1,10 @@
 ---
 id: TASK-65
 title: 'g2g-record: Gate 2 g2g wave 1 result'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T06:52:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - gate
 dependencies: []

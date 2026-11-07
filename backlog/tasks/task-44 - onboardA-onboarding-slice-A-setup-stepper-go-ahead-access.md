@@ -1,9 +1,10 @@
 ---
 id: TASK-44
 title: 'onboardA: onboarding slice A: setup stepper, go-ahead, access'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - onboarding
   - tester

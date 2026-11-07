@@ -1,10 +1,10 @@
 ---
 id: TASK-42
 title: 'fork-labverbs: gate the mutating debug verbs behind a fork flag'
-status: Proposed
+status: Done
 assignee: []
 created_date: '2026-11-06T16:02:00Z'
-updated_date: '2026-11-06T22:05:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - tester
 dependencies: []

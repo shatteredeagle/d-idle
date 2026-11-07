@@ -14,7 +14,7 @@ owns:
   - "docs/tester-licence.md"
 exclusive: []
 contracts: []
-result: "partial: docs/tester-licence.md drafted (NOTICE, SOURCE.txt, offer, ship list, decision list); AC1 stays open until vendor hashes and the Ubuntu source list are cut from a real build and the Freepik terms are checked; not verified live"
+result: "partial: docs/tester-licence.md drafted (NOTICE, SOURCE.txt, offer, ship list, decision list); AC1 stays open until vendor hashes and the Ubuntu source list are cut from a real build and the Freepik terms are checked; not verified live Status sync 2026-11-07: stays open, AC 1 needs the vendor hashes and the Ubuntu source list cut from a real build (placeholders at pack cut)."
 ---
 
 ## Description

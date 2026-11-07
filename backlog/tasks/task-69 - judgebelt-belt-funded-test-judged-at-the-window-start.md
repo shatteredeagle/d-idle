@@ -1,9 +1,10 @@
 ---
 id: TASK-69
 title: 'judgebelt: belt funded test judged at the window start'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-07T13:12:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - gate
 dependencies: []

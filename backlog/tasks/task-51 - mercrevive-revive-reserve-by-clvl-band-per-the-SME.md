@@ -1,9 +1,10 @@
 ---
 id: TASK-51
 title: 'mercrevive: revive reserve by clvl band per the SME'
-status: In Progress
+status: Done
 assignee: []
 created_date: '2026-11-06T21:58:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - bot-defect
 dependencies: []

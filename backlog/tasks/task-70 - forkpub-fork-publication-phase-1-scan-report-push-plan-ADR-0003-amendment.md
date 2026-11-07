@@ -1,9 +1,10 @@
 ---
 id: TASK-70
 title: 'forkpub: fork publication phase 1 scan report, push plan, ADR 0003 amendment'
-status: Proposed
+status: Done
 assignee: []
 created_date: '2026-11-07T14:24:00Z'
+updated_date: '2026-11-07T15:14:00Z'
 labels:
   - tester
 dependencies: []

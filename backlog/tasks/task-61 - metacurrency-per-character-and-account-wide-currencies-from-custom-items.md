@@ -21,3 +21,5 @@ contracts: []
 - [ ] #2 Item and overlay mapping: sources, sinks, fidelity and safety
 - [ ] #3 First slice defined with estimate, dependencies and proposed tasks
 <!-- AC:END -->
+
+Status sync 2026-11-07: design doc merged but the three acceptance boxes are not ticked; stays In Progress until the owner ticks them.
