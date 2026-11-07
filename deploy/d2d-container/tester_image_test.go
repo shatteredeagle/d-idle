@@ -104,3 +104,15 @@ func TestEntrypointBotDefaultUnchanged(t *testing.T) {
 		}
 	}
 }
+
+// TASK-25 live defect: `eval d2bot ... &` made $! the eval subshell, so the TERM trap never reached d2bot and a
+// container stop killed the character without a save. The background job must exec d2bot.
+func TestEntrypointExecsBot(t *testing.T) {
+	b, err := os.ReadFile("entrypoint.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(b), "eval exec d2bot") {
+		t.Error("entrypoint.sh must start the bot with `eval exec d2bot ... &` so that $! is d2bot")
+	}
+}

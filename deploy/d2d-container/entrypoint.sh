@@ -115,7 +115,8 @@ if [ "$mode" = bot ]; then
 		exit 0
 	fi
 	# shellcheck disable=SC2086 # args is built above with its own quoting
-	eval d2bot $args ${D2BOT_ARGS:-} &
+	# exec: $! must be d2bot itself, else the TERM trap kills only the eval subshell and d2bot never saves (TASK-25 defect)
+	eval exec d2bot $args ${D2BOT_ARGS:-} &
 	pids="$pids $!"
 else
 	if [ -n "$saved" ]; then
