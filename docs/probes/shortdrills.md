@@ -47,3 +47,7 @@ Run (V): slot 4, d2d lab3-labverbs f75816c6 (sha256 53217ea4ecc8...), `docs/prob
 | E1.tp-b (E1.tp-b-20261107-015608) | a `tbk` in the pack | PASS: minute `tp=3`, equal to the quantity inv-tp-dump counted (a given tome starts with 3 charges) |
 | E1.tp-c (E1.tp-c-20261107-015625) | no scroll, gold 600 | PASS: `tpBuy` on the first minute line, max tp 1 |
 | control, label shortdrill-tpcount-prefix (E1.tp-a-20261107-015718) | the same as tp-a with d2bot built WITHOUT the fix | FAIL: first minute line `tp=0`, want 3 |
+
+## E1.mouth-pocket (TASK-67, g2gfixmouth)
+
+Run (V, 2026-11-07): slot 3, d2d lab3-labverbs f75816c6, `docs/probes/mouthfix-run.sh 3 E1.mouth-pocket shortdrill-mouth`, setup `debug goto 6` + `debug warp 17 57` (subtile 87,287), clvl 15, writes after start 0. Result: NOT REPRODUCED (inconclusive). On this slot's seed the hero is not boxed in at that spot: the bot walked on at once (zone entries 6, 5, 10, died to a Misshapen in the Underground Passage while walking to the Blood Moor on 40 life: the throwaway is a weak clvl 15 stat set), 0 `nav mouth gate` lines. The g2g pocket is seed dependent (U): reproducing it needs the seed of the g2g seed 17 run and a hero that stays alive; the slot runner takes no seed argument here. The escalation itself is covered by `TestRepeatedHoldInAPocketEscalates` (offline, assumed exit and walls, U). The first Eval printed FAIL for this run because only status lines counted as leaving; zone entries count now.

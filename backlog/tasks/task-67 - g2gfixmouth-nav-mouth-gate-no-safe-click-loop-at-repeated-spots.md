@@ -1,9 +1,10 @@
 ---
 id: TASK-67
 title: 'g2gfixmouth: nav mouth gate no safe click loop at repeated spots'
-status: Proposed
+status: In Progress
 assignee: []
 created_date: '2026-11-07T07:05:00Z'
+updated_date: '2026-11-07T07:19:00Z'
 labels:
   - bot-defect
 dependencies: []

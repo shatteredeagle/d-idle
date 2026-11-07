@@ -53,9 +53,12 @@ func e1MouthScenario() e1Scenario {
 	}
 }
 
-// e1MouthLeft is the index of the first status line more than 20 subtiles from the pocket (same area), or -1.
+// e1MouthLeft is the index of the first status line more than 20 subtiles from the pocket (same area), or -1; a zone entry into another area counts too.
 func e1MouthLeft(lines []string) int {
 	for i, l := range lines {
+		if strings.Contains(l, `"msg":"zone entry"`) && !strings.Contains(l, fmt.Sprintf(`"area":%d,`, mouthPocketArea)) {
+			return i // another area: the hero is out
+		}
 		m := e1StatusRe.FindStringSubmatch(l)
 		if m == nil || m[1] != fmt.Sprint(mouthPocketArea) {
 			continue
