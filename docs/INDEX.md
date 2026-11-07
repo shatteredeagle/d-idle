@@ -770,3 +770,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/shortdrills.md: short live drills for the g2e/g2f fixes (cmd/d2drill -group E1)
 - docs/research/custom-items.md: custom items and drop-table overlays on d2d, two-mode rule, first-item proposal
 - docs/research/metacurrency-design.md - per-character and account-wide currencies from custom items: registry, storage, sources, sinks, first slice
+- docs/research/metacurrency-design.md now approved by the user 2026-11-06

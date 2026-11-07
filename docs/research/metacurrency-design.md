@@ -1,6 +1,6 @@
 # Metacurrency design: per-character and account-wide currencies from custom items
 
-> status: design, 2026-11-06, card `metacurrency` (TASK-61; docs and tasks only: no Go change, no live run, no fork change). Answers the user's 2026-11-06 reply to docs/research/custom-items.md: custom items are for a METACURRENCY, "both, one that is per character and one that is account wide, we may end up adding multiple". The study's other open questions (power budget, which boss first, the Blood Raven unique) are n/a: the first custom item is a currency token, not gear.
+> status: approved by the user 2026-11-06 (all six recommendations; recorded in docs/decisions.md and the ADR 0016 Amendment 2026-11-06). Design, 2026-11-06, card `metacurrency` (TASK-61; docs and tasks only: no Go change, no live run, no fork change). Answers the user's 2026-11-06 reply to docs/research/custom-items.md: custom items are for a METACURRENCY, "both, one that is per character and one that is account wide, we may end up adding multiple". The study's other open questions (power budget, which boss first, the Blood Raven unique) are n/a: the first custom item is a currency token, not gear.
 > Tags: **V** read this session in this repo; **S** secondary (a repo doc, the d2-sme agent's veteran memory, tagged EXP); **U** unverified or from memory. Target classic 1.14d. D2R facts are flagged D2R. No Blizzard table text is copied; only column names and our own proposed rows appear.
 
 ## Answer in eight lines
