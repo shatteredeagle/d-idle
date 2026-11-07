@@ -552,6 +552,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - forkpub (TASK-70) fork publication phase 1: history scan (clean: no credentials, private hosts or Blizzard data), push plan, ADR 0003 amendment 2026-11-07; nothing pushed to GitHub
 - fidprobe-core (TASK-55): engine internal/fidprobe + cmd/d2fidprobe built and tested offline (replay); first live run after Gate 2
 - GATE2: g2g five-seed verdict NOT PASSED, 3 of 5 seeds pass (seeds 13 and 17 fail NOKILL); wave 2 seeds 19 and 21 pass (docs/research/g2g-five-seed.md)
+- status sync 2026-11-07
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
