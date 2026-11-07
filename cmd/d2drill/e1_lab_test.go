@@ -102,3 +102,20 @@ func TestE1TPEvals(t *testing.T) {
 		}
 	}
 }
+
+func TestE1MercQuoteVerdicts(t *testing.T) {
+	f := map[string]string{"liveQuote": "0", "gold": "300"}
+	if v, _ := e1MercQuoteEval([]string{"merc: gold farm on need=1130"}, f); v != "BLOCKED" {
+		t.Errorf("no quote read: %s", v)
+	}
+	q := "merc: revive quote read price=120 gold=300"
+	if v, _ := e1MercQuoteEval([]string{q, "merc: revived price=120"}, f); v != "PASS" {
+		t.Errorf("quote, revive: %s", v)
+	}
+	if v, _ := e1MercQuoteEval([]string{q, "merc: gold farm on need=170", "merc: revived price=120"}, f); v != "FAIL" {
+		t.Errorf("farm before the revive: %s", v)
+	}
+	if v, _ := e1MercQuoteEval([]string{q}, f); v != "FAIL" {
+		t.Errorf("no revive: %s", v)
+	}
+}
