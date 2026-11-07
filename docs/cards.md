@@ -15,7 +15,7 @@ Rules (ADR 0015 items 10 and 11):
 Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and basics, G-D measurement, G-E upstream fixes, G-F rules (see ADR 0015), G-G automation ladder (ADR 0016).
 
 <!-- cardsgen:active:begin -->
-## Active (65)
+## Active (70)
 
 | # | id | goal | status | what | owner / exclusive | next step | card |
 |---|---|---|---|---|---|---|---|
@@ -84,6 +84,11 @@ Goals: G-A acceptance on game.exe, G-B Act 1 clear on d2d, G-C stability and bas
 | 63 | fid-death | d2d | proposed 0/2 | probe: death penalty, corpse and floor rules | - | - | [card](archive/openspec-index.md#fid-death) |
 | 64 | fid-gatea-ab | d2d | proposed 0/3 | statistical A:B: end-to-end rates, Gate A | - | - | [card](archive/openspec-index.md#fid-gatea-ab) |
 | 65 | fid-matrix-refresh | docs | proposed 0/2 | update the matrix as cards close | - | - | [card](archive/openspec-index.md#fid-matrix-refresh) |
+| 66 | fid-load-life-mana | d2d | proposed 3/4 | d2d keeps the saved life and mana at load (pilot) | - | - | [card](archive/openspec-index.md#fid-load-life-mana) |
+| 67 | fid-load-maxmana | d2d | proposed 0/3 | d2d truncates the Pally maximum mana at load (19.5 to 19.0) | - | - | [card](archive/openspec-index.md#fid-load-maxmana) |
+| 68 | fid-poison-res-diag | d2d | proposed 0/3 | diagnose Freshe poison resist 6 in d2d, absent in game.exe | - | - | [card](archive/openspec-index.md#fid-poison-res-diag) |
+| 69 | fid-probe-doc | docs | proposed 2/2 | describe the d2s reader, scenario 15 and the new options in fidprobe.md | - | - | [card](archive/openspec-index.md#fid-probe-doc) |
+| 70 | fid-fixtures | ops | proposed 0/3 | create the true fresh Paladin and a sorc-6 with gear test character | - | - | [card](archive/openspec-index.md#fid-fixtures) |
 <!-- cardsgen:active:end -->
 
 ## Parked (not counted)
