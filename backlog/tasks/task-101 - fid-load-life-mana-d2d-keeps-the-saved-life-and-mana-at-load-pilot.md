@@ -1,10 +1,11 @@
 ---
 id: TASK-101
 title: 'fid-load-life-mana: d2d keeps the saved life and mana at load (pilot)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:49:00Z'
+updated_date: '2026-11-07T22:55:00Z'
 labels:
   - d2d
   - upstream-pr
