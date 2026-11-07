@@ -1,9 +1,12 @@
 ---
 id: TASK-66
-title: 'g2gfixmerc: merc caps and gold-farm need on the virtual clock and the read price'
-status: Proposed
+title: >-
+  g2gfixmerc: merc caps and gold-farm need on the virtual clock and the read
+  price
+status: In Progress
 assignee: []
 created_date: '2026-11-07T07:05:00Z'
+updated_date: '2026-11-07T07:13:00Z'
 labels:
   - bot-defect
 dependencies: []
