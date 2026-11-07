@@ -80,4 +80,4 @@ DI Fake Mark	1	0	zzm1	1
 
 - Strings (`.tbl`) and art: a new row shows its key until the string path is built; the first slice relies on the key text.
 - Whether game.exe or d2d tolerates a d.idle save in vanilla mode (policy: refuse by offline scan, TASK-62).
-- Fork build and ctest on the worker host: see the TASK-59 result line for the state.
+- Vanilla table-hash equality (overlay off vs the unchanged build) and the full fork ctest suite were not run (V only: test_overlay and overlay_d2d pass on the worker host).
