@@ -4,6 +4,14 @@
 > Tags: V verified (how is named), S secondary (read in a repo doc or a vendor's docs, not re-run), U unverified. Everything about GitHub, ghcr or Docker behaviour below is S or U until the first run (the card ghcr-publish proves it).
 > Related: docs/research/tester-build-plan.md (the tester slices), docs/tester-licence.md (GPL pack), docs/fork-publication/PUBLISHED.md (public fork), docs/overlay.md (table overlay), deploy/d2d-container/ (Dockerfile.d2d, entrypoint.sh, compose.tester.yml, context.sh).
 
+## Decisions (user, popup answers 2026-11-07)
+
+1. Signing key custody: the private key is STORED AS A CI SECRET, so releases sign automatically in GitHub Actions. This is the user's explicit departure from the recommendation in 3.3 and section 8 (offline key, CI never signs); sections 3.3, 3.12, 6 and 8 below are adjusted, the old text is kept where it explains the alternative. Default mitigations the coordinator adopts (details in 3.3 and card TASK-124): a GitHub Actions ENVIRONMENT (`app-release`) with the user as required reviewer on the signing/release job, so nothing is signed without a manual approval click; the secret scoped to that environment only, not repo-wide; branch and tag protection on `tester-v*` and `release-*`; 2FA on the account; a documented public-key rotation (an image rebuild is needed); a revocation path (signed `REVOKED` file and a monotonic minimum version).
+2. Repo that owns the image and the releases: `shatteredeagle/d-idle`, the fork `d2d-didle` is a pinned input (as recommended).
+3. Signing tool: plain Ed25519 with our own stdlib `cmd/d2sign` (as recommended).
+4. Auto-check: ON by default, daily, version-only, never downloads without a click, one off switch (as recommended).
+5. Platform: amd64 only (the user did not object).
+
 ## 0. What exists today (V: read in this checkout)
 
 - The image is built by `deploy/d2d-container/context.sh` into a scratch dir: our Go binaries (`d2bot d2dsoak d2dview d2dsetup d2dping`, CGO off, static) land in `/opt/d2lod/`; the d2d binary (GPL fork, pinned commit) lands in `/opt/d2d/` through a multi-stage build from fork source (`Dockerfile.d2d`); licence texts land in `/usr/share/licenses/d2d/`. The entrypoint is `tini -- /opt/d2lod/entrypoint.sh`, command `tester`.
@@ -133,7 +141,13 @@ Options weighed for a one-person project:
 | minisign | Mature, small, the file format is familiar. | Its default prehashed signature mode uses BLAKE2b, which is not in the Go standard library (U: legacy non-prehashed mode would be stdlib-verifiable, but then we depend on its format details for little gain). |
 | cosign keyless (Sigstore, OIDC from the Actions run) | No key to keep; identity is "this workflow of this repo". | The trust root is GitHub itself: a compromised repo or workflow signs happily (it protects against a stolen artifact, not a stolen account). Verification needs Sigstore roots/Rekor (network, TUF) and a large dependency, against our stdlib-only rule. |
 
-Recommendation: a plain Ed25519 keypair made with a tiny tool `cmd/d2sign` (stdlib only), signing the exact bytes of `MANIFEST.json`. The PRIVATE key stays OFFLINE with the user (encrypted file, a backup copy kept separately); CI builds and uploads the assets and a DRAFT release; the user runs `d2sign` over the manifest on their own machine and uploads the `.sig`, then publishes. That one manual step is the point: a stolen GitHub token or workflow cannot produce a release the container accepts. The image bakes the public key(s). Rotation: the image carries up to two public keys (current, next); a new key is introduced by a normal image release (Tier 1) that bakes both, after which the old one is dropped by the next image; an emergency revocation uses the signed `revoke` list in a newer manifest and, if the key itself is lost, a Tier 1 image (the friend pulls). Because the key is only changeable by an image release, a key compromise is a Tier 1 event; say so to the user.
+DECIDED (2026-11-07, user): a plain Ed25519 keypair made with a tiny tool `cmd/d2sign` (stdlib only), signing the exact bytes of `MANIFEST.json`. The PRIVATE key is a secret of a GitHub Actions ENVIRONMENT, not kept offline: the release workflow builds the assets, then a signing job in that environment runs `d2sign` and uploads the `.sig`. The earlier recommendation (key offline, CI never signs, a human signs each manifest) was NOT adopted; with a CI-held key a compromised repo or Actions token can ship an update every container accepts, so the controls below carry the trust:
+
+- Environment `app-release` with a required reviewer (the user) on the signing/release job: no release is signed without a manual approval click. The key is an environment secret only, never a repo-wide secret, so other workflows and PR runs cannot read it.
+- Tag protection (rulesets) on `tester-v*` and `release-*`; the release workflow runs only from protected tags; 2FA on the owning account; no self-hosted runner for this job.
+- The key pair is generated by `cmd/d2sign keygen` on the user's own machine, the private key is pasted into the secret and the local copy is destroyed or kept encrypted as a backup; it is never in the repo.
+- Rotation: the image bakes up to two public keys (current, next). A new key is introduced by an image release (Tier 1) that bakes both; after friends have pulled it, releases are signed with the new key and a later image drops the old one. Because the public key lives in the image, rotating always needs an image rebuild and a pull by the friend.
+- Revocation (yanking a bad release): the updater refuses any version listed in a signed `REVOKED` file (published next to the latest manifest, signed with the same key) and any version below a monotonic minimum version carried in the signed manifest and kept in `state.json`. If the key itself is compromised, rotation (above) is the only fix and is a Tier 1 event; say so to friends.
 
 ### 3.4 Compatibility gate (checked by the boot shim AND by the updater before download)
 
@@ -189,8 +203,8 @@ Each release carries its source tag and the offer: `SOURCE.txt` and the fork sou
 
 | Threat | With signature pinning | Without / remaining |
 |---|---|---|
-| Compromised GitHub account or token, malicious release uploaded | Rejected: no valid signature (key is offline). | If the SIGNING key is stolen, an attacker publishes a valid malicious release; mitigation: signed revoke list, key rotation through a Tier 1 image, hardware-backed or encrypted key. |
-| Compromised CI workflow or a poisoned dependency | CI cannot sign. A bad binary built by CI is only caught if the human signs a manifest whose hashes they have not reviewed, so the signing tool prints file names, sizes and the source commits and requires confirmation. | A reproducible build is not claimed. |
+| Compromised GitHub account or token, malicious release uploaded | Account or token alone: the signing job needs the environment approval and the environment secret, so an upload without a signature is rejected by containers. | RESIDUAL (consequence of the CI-secret decision): a compromised repo owner, Actions token with environment access, or an approved malicious workflow run can ship an update every container accepts. Mitigations: required reviewer, environment-scoped secret, tag protection, 2FA, signed `REVOKED` file and minimum version, key rotation through a Tier 1 image. |
+| Compromised CI workflow or a poisoned dependency | CI signs, but only in the approval-gated environment; the reviewer sees the job summary (file names, sizes, source commits printed by `d2sign`) before clicking approve. A poisoned dependency that reaches an approved run is signed. | A reproducible build is not claimed. |
 | MITM / hostile network | TLS to GitHub plus hash plus signature; a MITM can only block (denial), not substitute. | Blocking means the friend stays on the old version; the banner shows "last check failed". |
 | Replay of an old, signed, vulnerable release (downgrade) | `seq` floor and version floor stored in `state.json`; lower values refused. | The floor lives on the friend's volume: someone with write access to the volume already owns the container. |
 | Rogue release by the maintainer by mistake | Auto rollback on health failure covers crashes, not subtle misbehaviour (a bot that plays badly). | The staged canary (the maintainer's own container updates first) is the process mitigation. |
@@ -217,7 +231,7 @@ No telemetry, no id, no count of installs. The only outbound traffic is the GitH
 | flags/env | `cmd/d2bot` (`--update-check`, `--update-repo`, env twins `D2BOT_UPDATE_*`; the repo default is a constant, the flag only for tests) | the existing flag/env-twin convention in `cmd/d2bot/ladder.go` |
 | boot shim | `cmd/didleboot` (static Go) | selection, health, rollback, handoff exec |
 | signing tool | `cmd/d2sign` | keygen, sign, verify, prints a review summary |
-| release workflow | `.github/workflows/app-release.yml` | builds assets, writes the manifest with hashes, creates a DRAFT release; signing is manual |
+| release workflow | `.github/workflows/app-release.yml` | builds assets, writes the manifest with hashes, uploads the assets; a signing job in the approval-gated `app-release` environment signs the manifest and publishes |
 | image changes | `deploy/d2d-container/Dockerfile.d2d`, `entrypoint.sh` | owned by TASK-31; changes arrive as a follow-up |
 
 The build-flexibility rule in AGENTS.md applies: nothing here encodes a class or build; the updater moves bytes only.
@@ -239,7 +253,7 @@ Worker host drills (Docker only, no lab game, throwaway volume): (1) happy path:
 | Version display + check banner without apply (phase 1 below) | 4 | 0.5 |
 | Total | about 40 | about 9.5 |
 
-Risks: (1) the hosted runner may not build the fork in reasonable time or may run out of disk (FFmpeg + Qt headers; U) , fallback is a self-hosted runner, which is a security question for a public repo (never for forks' PRs), so the tag-triggered, maintainers-only workflow is the rule; (2) the restart-based apply interrupts the run: mitigate by "apply when safe"; (3) boot shim bugs are unfixable by the updater (it is in the image): keep it under 300 lines with the heaviest tests; (4) a rate limit or a GitHub outage blocks updates (manual inbox path exists); (5) the signing key is a single point; (6) public repo workflows run on public infrastructure: no secrets other than GITHUB_TOKEN may be needed; (7) the compose-file distribution problem remains: friends need the compose file once and a way to learn it changed (a release asset, version-stamped; the guide tells them to re-download it when a release says so).
+Risks: (1) the hosted runner may not build the fork in reasonable time or may run out of disk (FFmpeg + Qt headers; U) , fallback is a self-hosted runner, which is a security question for a public repo (never for forks' PRs), so the tag-triggered, maintainers-only workflow is the rule; (2) the restart-based apply interrupts the run: mitigate by "apply when safe"; (3) boot shim bugs are unfixable by the updater (it is in the image): keep it under 300 lines with the heaviest tests; (4) a rate limit or a GitHub outage blocks updates (manual inbox path exists); (5) the signing key is a single point and now lives in CI (see 3.3 mitigations); (6) public repo workflows run on public infrastructure: the only secret beyond GITHUB_TOKEN is the signing key, environment-scoped and approval-gated; (7) the compose-file distribution problem remains: friends need the compose file once and a way to learn it changed (a release asset, version-stamped; the guide tells them to re-download it when a release says so).
 
 ## 7. Phased rollout and the friend's experience
 
@@ -252,9 +266,9 @@ Risks: (1) the hosted runner may not build the fork in reasonable time or may ru
 
 Recommendation: the first friend build is P0 plus the P1 version display and banner (about 4 agent-hours, no key needed, no signing); P2 follows once the first friend round shows what breaks, because the updater must not be the first thing to break a friend's character. If the user wants no terminal at all in the first round, P2 must come first and the first friend build waits for it.
 
-## 8. Open decisions for the user (questions with a recommendation)
+## 8. Decisions (all five answered 2026-11-07; see the top)
 
-1. Signing key custody (blocks P2): who holds the private key and where? Recommend: you, offline (encrypted file on your own machine plus one separate backup), signing each manifest by hand with `cmd/d2sign`; CI never holds it. Alternative: a CI secret (convenient, but then GitHub compromise equals release compromise).
+1. Signing key custody: DECIDED, CI secret in an approval-gated environment (see Decisions at the top). The original recommendation was an offline key.
 2. Which repo owns the image and the releases? Recommend: `shatteredeagle/d-idle` (the bot repo) for both, with the fork as a pinned input and its tag named in every release; not the fork repo.
 3. Signing tool: Recommend a plain Ed25519 key with our own stdlib `cmd/d2sign` rather than cosign or minisign (stdlib-only rule, offline, no extra trust root).
 4. Auto-check default: Recommend ON with a version-only daily check to `github.com`, never downloading without a click, with one switch to turn all outbound calls off and a line in the guide that GitHub sees the IP.
@@ -264,4 +278,4 @@ Also needed before the first outside copy (existing, not new): your go on the fi
 
 ## 9. Cards
 
-TASK-120 ghcrpublish (Tier 1, lead card), TASK-121 updrelease (manifest, d2sign, release workflow), TASK-122 updclient (updater package, watch UI), TASK-123 updboot (boot shim, rollback, drills), TASK-124 updkey (key custody, assigned to the user). Order: 120, then 124 and 121, then 122 and 123 (122 can ship the version display and banner before 121 exists).
+TASK-120 ghcrpublish (Tier 1, lead card), TASK-121 updrelease (manifest, d2sign, release workflow), TASK-122 updclient (updater package, watch UI), TASK-123 updboot (boot shim, rollback, drills), TASK-124 updkey (generate the key pair, environment secret, reviewer and tag protection; the GitHub settings clicks are the user's). Order: 120, then 124 and 121, then 122 and 123 (122 can ship the version display and banner before 121 exists).
