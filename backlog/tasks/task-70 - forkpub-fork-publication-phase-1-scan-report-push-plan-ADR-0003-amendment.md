@@ -1,0 +1,35 @@
+---
+id: TASK-70
+title: 'forkpub: fork publication phase 1 scan report, push plan, ADR 0003 amendment'
+status: Proposed
+assignee: []
+created_date: '2026-11-07T14:24:00Z'
+labels:
+  - tester
+dependencies: []
+ordinal: 68000
+card: "forkpub"
+owns:
+  - "docs/research/fork-publication-scan.md"
+  - "docs/fork-publication"
+  - "docs/adr/0003-d2d-fork-private-gpl.md"
+  - "docs/adr/README.md"
+  - "docs/decisions.md"
+  - "docs/d2d-fork.md"
+exclusive: []
+contracts: []
+result: "docs only, verified on a scratch bare clone of the private remote (not live game); nothing pushed to GitHub"
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Phase 1 of the d.idle fork publication (user go 2026-11-07). Phase 2 (create the GitHub fork, push) is the coordinator's after reviewing the scan.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 scan report with findings, scope, identities, licence gaps and push plan
+- [x] #2 ADR 0003 amendment 2026-11-07 and index/decisions updates
+- [x] #3 drafts: fork README, SOURCE.txt/offer text; nothing pushed to GitHub
+<!-- AC:END -->

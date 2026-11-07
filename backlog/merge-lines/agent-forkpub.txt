@@ -1,0 +1,3 @@
+BACKLOG: forkpub (TASK-70) fork publication phase 1: history scan (clean: no credentials, private hosts or Blizzard data), push plan, ADR 0003 amendment 2026-11-07; nothing pushed to GitHub
+INDEX: docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
+CHANGELOG: ADR 0003 amended: the d.idle fork is to be published as the public GitHub fork d2d-didle (scan report and drafts, nothing pushed yet)
