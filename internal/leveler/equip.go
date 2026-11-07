@@ -51,7 +51,7 @@ func (l *Leveler) gearState(s *d2.Snapshot) (eq map[int]Cand, pack []Cand) {
 				alt[u.Item.Body] = c
 			}
 		case d2.ContInventory:
-			if c := l.cand(s.Player, u); c.Slots != nil && !l.badEverywhere(u.ID, c.Slots, s.Player.Level) {
+			if c := l.cand(s.Player, u); c.Slots != nil && !l.badEverywhere(u.ID, u.Class, c.Slots, s.Player.Level) {
 				pack = append(pack, c)
 			}
 		}
@@ -84,7 +84,7 @@ func (l *Leveler) SwapsFor(s *d2.Snapshot) []Swap {
 		sws := ChooseGear(eq, pack)
 		bad := -1
 		for _, sw := range sws {
-			if l.isBadSlot(sw.Item.Unit.ID, sw.Slot, s.Player.Level) {
+			if l.isBadSlot(sw.Item.Unit.ID, sw.Item.Unit.Class, sw.Slot, s.Player.Level) {
 				bad = packIndex(pack, sw.Item.Unit.ID)
 				break
 			}
@@ -208,10 +208,16 @@ func (l *Leveler) markBadSwap(sw Swap) {
 		l.bad = map[badKey]badMark{}
 		l.badSlot = map[int]badMark{}
 	}
+	if l.badKind == nil {
+		l.badKind = map[kindKey]badMark{}
+	}
 	k := badKey{sw.Item.Unit.ID, sw.Slot}
 	m := l.bad[k]
 	l.bad[k] = badMark{lvl, m.fails + 1}
 	if sw.Slot > 0 {
+		kk := kindKey{sw.Item.Unit.Class, sw.Slot}
+		km := l.badKind[kk]
+		l.badKind[kk] = badMark{lvl, km.fails + 1}
 		sm := l.badSlot[sw.Slot]
 		if sm.level != lvl {
 			sm = badMark{level: lvl}
@@ -243,14 +249,14 @@ type badKey struct {
 
 // badEverywhere: the item failed purchase, or every slot it fits, at this character level (a ring that missed one
 // slot may still go to the other).
-func (l *Leveler) badEverywhere(id uint32, slots []int, level int) bool {
+func (l *Leveler) badEverywhere(id uint32, class int, slots []int, level int) bool {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	if l.bad[badKey{id, -1}].blocked(level) {
 		return true
 	}
 	for _, sl := range slots {
-		if !l.bad[badKey{id, sl}].blocked(level) {
+		if !l.bad[badKey{id, sl}].blocked(level) && !l.kindBlockedLocked(class, sl, level) {
 			return false
 		}
 	}
@@ -259,10 +265,24 @@ func (l *Leveler) badEverywhere(id uint32, slots []int, level int) bool {
 
 // isBadSlot: this item failed to reach this slot recently (backoff by failure count; a level up or a new id
 // clears it, so the amulet that never reached `neck` is not retried on every town visit, soak R7).
-func (l *Leveler) isBadSlot(id uint32, slot, level int) bool {
+func (l *Leveler) isBadSlot(id uint32, class, slot, level int) bool {
 	l.mu.Lock()
 	defer l.mu.Unlock()
-	return l.bad[badKey{id, slot}].blocked(level)
+	return l.bad[badKey{id, slot}].blocked(level) || l.kindBlockedLocked(class, slot, level)
+}
+
+// kindKey is one item kind (base class) failing into one body slot. Unit ids change with every game, the base class
+// does not (g2g seed 13: Cap to head failed in several games, each time a new id).
+type kindKey struct{ class, slot int }
+
+// kindBlockedLocked: EquipKindFails failures of this kind into this slot, and the character has not gained the levels
+// the backoff asks for. The caller holds l.mu.
+func (l *Leveler) kindBlockedLocked(class, slot, level int) bool {
+	if slot <= 0 || l.e == nil || l.e.Tune == nil {
+		return false
+	}
+	m := l.badKind[kindKey{class, slot}]
+	return m.fails >= max(l.e.Tune.Town.EquipKindFails, 1) && m.blocked(level)
 }
 
 // slotBlocked: two items already failed into the slot at this level.
