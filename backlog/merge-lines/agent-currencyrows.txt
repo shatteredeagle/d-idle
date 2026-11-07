@@ -1,3 +1,0 @@
-BACKLOG: TASK-63 currency-rows: Raven's Mark overlay rows (Misc mrk, Blood Raven class line 1 in 37 kills, cube bank row) in data/overlay/didle-v1, offline validation against the real tables, pickit keep rule; live acceptance pending (docs/probes/currency1.md)
-INDEX: docs/research/currency-rows.md - Raven's Mark overlay rows, rate and bank recipe (TASK-63); docs/probes/currency1.md - currency slice 1 live acceptance (pending)
-CHANGELOG: First metacurrency overlay data: the Raven's Mark token, one drop line and a cube bank row (d.idle mode only)
