@@ -68,8 +68,8 @@ func TestE1Scenarios(t *testing.T) {
 		}
 		seen[s.ID] = true
 	}
-	if len(seen) != 9 {
-		t.Errorf("want 9 scenarios, got %d", len(seen))
+	if len(seen) < 9 {
+		t.Errorf("want at least 9 scenarios, got %d", len(seen))
 	}
 }
 

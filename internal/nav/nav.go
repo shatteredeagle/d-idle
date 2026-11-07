@@ -117,12 +117,13 @@ type Navigator struct {
 	hard         []blocked    // cells the planner must not cross for a while (stuckmem.go)
 	spots        []*stuckSpot // recent stalls (stuckmem.go)
 	walkSeq      int
-	walkLevel    int         // level of the last walk's first observation (0: none yet)
-	stayLevel    int         // level whose unwanted exits are guarded for the whole stay (FIXMOUTH3); 0: none
-	lastCross    crossNote   // the last walk that ended in another level (stuckfight.go)
-	arrival      bool        // a warp brought us here and no walk has consulted mouthStep since (FIXMOUTH)
-	lastPos      input.Point // position of the last observation (the gate's fallback when Pos fails)
-	gateRewrites int         // clicks the mouth gate rewrote in the current walk (FIXMOUTH4)
+	walkLevel    int           // level of the last walk's first observation (0: none yet)
+	stayLevel    int           // level whose unwanted exits are guarded for the whole stay (FIXMOUTH3); 0: none
+	lastCross    crossNote     // the last walk that ended in another level (stuckfight.go)
+	arrival      bool          // a warp brought us here and no walk has consulted mouthStep since (FIXMOUTH)
+	lastPos      input.Point   // position of the last observation (the gate's fallback when Pos fails)
+	gateRewrites int           // clicks the mouth gate rewrote in the current walk (FIXMOUTH4)
+	gateHolds    gateHoldState // repeated refusals of one click and the pocket window (mouthgate.go)
 	escaping     bool
 	teleBad      map[[2]int]int  // hop cells where nothing happened
 	teleFails    int             // consecutive explore hops that did not move
