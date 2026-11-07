@@ -38,6 +38,8 @@ Fields on every card (the checker enforces the first three for all cards, the re
 - `milestone`: the native Backlog.md mechanism. Files in `backlog/milestones/` (`backlog milestone add "<name>" -d ".."`), and the task front matter key `milestone: m-N` (`backlog task edit N --milestone m-N` also works). Active: `m-0` Gate 2 pass, `m-1` Friends build, `m-2` Fidelity Gate A, `m-3` Metacurrency v1. `check.py` fails a `milestone:` that has no file. V
 - Description: first line `Size: S|M|L` (S up to 4 h, M up to 8 h, L more), then a one-sentence why, and a `Done when:` line derived from the acceptance criteria. Do not invent facts.
 
+`docs/cards.md` is generated and gitignored (TASK-116): it is not committed and nothing regenerates it for you. Run `python3 -I tools/backlog/cards_md.py --write` locally if you want to read it; CI only checks `cards_md.py --check` (the generator runs). If a merge of main reports a conflict in `docs/cards.md` (your branch still edits it), take the deletion: `git rm --cached docs/cards.md` and keep the file out of your commit.
+
 Creating a card: `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> [-l <area|track|tier|modifier>] [--priority medium] [--assignee credit-runner] [--size M] [--milestone m-N] [--dep TASK-N]`. `--component` and `--kind` are required (an old call without them stops with the allowed values); an unknown or retired label is refused. Fidelity cards: map docs/research/fidelity-cards.md. Dependencies are the `dependencies:` key, never a label.
 
 ## Standing rule: strategy changes need a paired A/B (user 2026-11-06)

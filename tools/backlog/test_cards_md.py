@@ -46,7 +46,7 @@ class T(unittest.TestCase):
         with self.assertRaises(ValueError):
             cm.apply("no markers", {"active": "A", "parked": "P"})
 
-    def test_committed_cards_md_is_current(self):
+    def test_check_runs(self):
         r = subprocess.run([sys.executable, "-I", os.path.join(HERE, "cards_md.py"), "--check"], capture_output=True, text=True)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 

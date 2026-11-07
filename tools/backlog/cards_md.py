@@ -1,9 +1,11 @@
 #!/usr/bin/env python3 -I
-"""Generate the Active and Parked tables of docs/cards.md from backlog/tasks/*.md.
+"""Generate docs/cards.md (Active and Parked tables) from backlog/tasks/*.md.
+
+docs/cards.md is generated and gitignored (TASK-116, ADR 0017 D5): never commit it.
 
   python3 -I tools/backlog/cards_md.py            print both generated blocks
-  python3 -I tools/backlog/cards_md.py --write    rewrite them in docs/cards.md (prose is untouched)
-  python3 -I tools/backlog/cards_md.py --check    exit 1 when the committed docs/cards.md differs
+  python3 -I tools/backlog/cards_md.py --write    write docs/cards.md (creates it, or refreshes the blocks of a local copy)
+  python3 -I tools/backlog/cards_md.py --check    CI check: the generator runs without error (output is not compared)
 
 Columns come from task front matter: id = card, goal = the tier label (T0..T5), else the first area label, else a legacy G-x, status = status + ticked/total
 checklist items, what = title after "card:", owner / exclusive = exclusive (else "-"), next step =
@@ -19,6 +21,11 @@ spec.loader.exec_module(status)
 
 CARDS = os.path.join(status.ROOT, "docs", "cards.md")
 BLOCKS = ("active", "parked")
+HEADER = """# Cards
+
+> status: GENERATED from backlog/tasks/*.md by tools/backlog/cards_md.py and not committed (gitignored). Run `python3 -I tools/backlog/cards_md.py --write` to read it; the Backlog.md board is the source of truth (docs/backlog-howto.md).
+
+"""
 LINK = "[card](archive/openspec-index.md#%s)"
 
 
@@ -81,19 +88,12 @@ def apply(text, blocks):
 
 def main(argv):
     blocks = render(status.tasks())
-    if "--write" in argv or "--check" in argv:
-        old = open(CARDS, encoding="utf-8").read()
-        try:
-            new = apply(old, blocks)
-        except ValueError as e:
-            print(e)
-            return 1
-        if "--check" in argv:
-            if new != old:
-                print("docs/cards.md is stale: run python3 -I tools/backlog/cards_md.py --write")
-                return 1
-            print("cards.md check: ok")
-            return 0
+    if "--check" in argv:
+        render(status.tasks())
+        print("cards.md check: ok (generator runs)")
+        return 0
+    if "--write" in argv:
+        new = HEADER + "\n\n".join(wrap(k, blocks[k]) for k in BLOCKS) + "\n"
         open(CARDS, "w", encoding="utf-8").write(new)
         print("docs/cards.md rewritten")
         return 0
