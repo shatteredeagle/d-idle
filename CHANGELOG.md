@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- ADR 0003 amended: the d.idle fork is to be published as the public GitHub fork d2d-didle (scan report and drafts, nothing pushed yet)
 - Gate 2 BELT judge: a belt window counts as funded by the gold at its first minute (user 2026-11-07); decisions entry for the g2g judging answers
 - bot: the town portal scroll is restocked before the gear shop spends gold; a refused equip is no longer retried in every fresh game (town.equipKindFails)
 - nav mouth gate no longer repeats the same refusal forever from inside a trigger disc: after 3 identical holds it steps sideways or sends the click
