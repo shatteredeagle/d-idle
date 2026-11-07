@@ -785,3 +785,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/fidelity-cards.md: backlog map of the fidelity cards (card, matrix rows, kind, d2d area, live, size, deps, label counts)
 - docs/research/fidelity-probe-run1.md - fidelity probe runs 1 and 2: per-scenario results, classified mismatches, candidate upstream PRs
 - research: [direction-review.md](research/direction-review.md): 2026-11-07 review of product direction, foundation, process cost, design hypotheses, player-experience pass, stop list, two-week plan, risks, decisions for the user
+- docs/adr/0017-direction-fun-first-2026-11-07.md - direction for the next two weeks (decisions D1 to D5 of the direction review)

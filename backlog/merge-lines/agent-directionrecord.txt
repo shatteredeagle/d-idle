@@ -1,3 +1,0 @@
-CHANGELOG: Direction review decisions D1 to D5 recorded (ADR 0017, decisions.md); board re-shaped: fidelity slices 3 to 6, metacurrency, orders 2 and 3 and unwired ladder cards deferred, milestone m-4 "Find the fun" with TASK-106 to TASK-118.
-BACKLOG: m-4 Find the fun (TASK-106 to TASK-118): session record, baseline, question-density variant, return mock, smoke, LAN how-to, design brief, queue for return, board diet.
-INDEX: docs/adr/0017-direction-fun-first-2026-11-07.md - direction for the next two weeks (decisions D1 to D5 of the direction review)
