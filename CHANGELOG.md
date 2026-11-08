@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tester container: fixed the ladder store name, save on stop, stop order, and reload of a saved hero (first live run); context.sh can build from the published fork tag
 - Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
 - Skill damage (SK02) differential re-run on current upstream main: 0 of 116,000 cases differ; the earlier fix is upstream (PR #146), no new PR
 - fid-vendor-price (TASK-76): price oracle re-run on upstream main 9c78f391, no reachable d2d price deviation left; tools/emu/fp_price_runs.sh and fp_clamp.py added; follow-on D9/D10 branch marked superseded
