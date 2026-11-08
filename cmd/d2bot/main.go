@@ -165,7 +165,22 @@ func init() {
 }
 
 func main() {
-	o, err := parseFlags(os.Args[1:])
+	args := os.Args[1:]
+	if len(args) > 0 && args[0] == "sessions" {
+		if err := sessionsMain(args[1:], os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, "d2bot:", err)
+			os.Exit(2)
+		}
+		return
+	}
+	if len(args) > 0 && args[0] == "play" {
+		var err error
+		if args, err = playArgs(args[1:]); err != nil {
+			fmt.Fprintln(os.Stderr, "d2bot:", err)
+			os.Exit(2)
+		}
+	}
+	o, err := parseFlags(args)
 	if errors.Is(err, flag.ErrHelp) {
 		return
 	}
@@ -177,6 +192,7 @@ func main() {
 		fmt.Println("d2bot", version)
 		return
 	}
+	o.ladder.play = playMode
 	log, err := newLogger(o.logLevel, o.instance)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "d2bot:", err)
