@@ -27,6 +27,8 @@ contracts: []
 Size: M
 
 Why: direction review section 7 step 4 and D2 (idle game). Done when: the mock and its short doc are in the repo.
+
+Amended 2026-11-07 (ADR 0018): this mock is the design input of returnscreen (TASK-127, the first playable slice); the five moments, expedition cards and policy before/after cards of fun-ideas.md sections 3 and 13 are added to the mock scope.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

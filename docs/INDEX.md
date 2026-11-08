@@ -793,3 +793,13 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/review-load-life-mana-opus.md: independent Opus verification of the load life/mana candidate r2 (TASK-101): loader claim holds (incl. live stat callback), limits for after-load rescale, d2d refresh clamp, life-0 saves
 - docs/research/g2h-wave3a.md: Gate 2 wave 3a (g2h) vs g2g per seed, merc numbers, three-fix proof checklist, reload-heal caveat
 - docs/soaks/gate2-multiseed-20261107-1811-g2h.md: Gate 2 multi-seed run g2h (PASSED, indicative: 3 seeds), per-seed criteria, d2dsoak output
+- docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
+- docs/research/decision-dataset.md: decision dataset schema v1 (JSONL per decision-point firing, privacy, size estimate); logged by the session record (TASK-106)
+- docs/research/fun-ideas.md: the converged d.idle loop (expeditions, tally, policy sheet, Codex, legacy charm) with the incremental-games research and the comparison of dropped ideas
+- docs/research/fun-ideas.md: now the final design-conversation doc: decisions so far, skill-unlock reconciliation, prototype plan, ADR-ready block
+- docs/adr/0018-fun-loop-expedition-ledger-2026-11-07.md - the Expedition Ledger loop, Act 1 Codex, Hall of Fame (ADR 0018)
+- docs/research/fid-revive-refill.md | what game.exe's respawn refills (life, mana, stamina to the maxima) and d2d's Fight::revive; oracle, deviations, drill recipe (TASK-125)
+- docs/research/pr-revive-refill-draft.md | PR draft: a respawn after death refills life, mana and stamina (candidate, unverified, not opened)
+- docs/research/fid-vendor-price-trace.md - vendor buy/sell/repair/quote prices, game.exe vs upstream main 9c78f391 (negative result, counted differentials, VN03 tomes, drill recipe)
+- docs/probes/fid/fid-skill-damage-pr.md: skill damage (SK02) re-run on upstream main, all proven deviations already merged, no PR candidate (TASK-89)
+- docs/tally-strip.md - tally sources, charter sink, strip and summary (TASK-129)

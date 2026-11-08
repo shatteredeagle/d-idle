@@ -565,6 +565,16 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - fix TASK-116 folded title (TASK-116)
 - TASK-101 verification (fidverify1): r2 READY to open after the PR body gains the limits of review-load-life-mana-opus.md F2-F4; candidate card: d2d Fight::revive refills life only, game.exe resurrect also mana and stamina (0x54c17c..0x54c198)
 - GATE2: wave 3a (g2h, seeds 11/13/17) 3 of 3 PASS, indicative only (3 seeds; wave 3b not run, decision D1); g2g NOKILL failures gone; analysis docs/research/g2h-wave3a.md (TASK-119)
+- TASK-120 ghcrpublish (lead) plus TASK-121 updrelease, TASK-122 updclient, TASK-123 updboot, TASK-124 updkey (user): self-update for friends, registry first then in-app updater; design in docs/research/self-update-design.md, nothing built or published
+- TASK-101 upstream PR opened: psi29a/d2decomped#242 (load life/mana, head 8308864a), merge pending; new card TASK-125 (Fight::revive refills only life)
+- TASK-124 updkey now sets up an environment-scoped CI signing secret with a required reviewer and tag protection (user decisions 2026-11-07 recorded in the self-update design)
+- TASK-101 upstream PR #242 head is 2cf72cb1 after the CodeRabbit fix (fl_load.py gen usage)
+- TASK-126 learnedbrain (parked, low): tiny answer-prediction model experiment on the player's answers, blocked by TASK-106 and about 500 labelled answers; RL policy out of scope
+- m-4 fun loop cards TASK-127 returnscreen, 128 policysheet, 129 tallystrip, 130 codexfirsts (two-week playable), 134 playsession2, then 131 proposezone, 132 skillreqcheck, 133 skillunlocks, 135 legacyhall; 136 legacycharm parked
+- TASK-125 fid-revive-refill: game.exe respawn (packet 0x41, FUN_0054c0e0) refills life, mana and stamina; d2d refilled life only; candidate local/fid-revive-refill-r1 built, 390 -> 0 of 408 cases; needs independent Opus verification (docs/research/fid-revive-refill.md, pr-revive-refill-draft.md)
+- TASK-76 fid-price-pr un-parked and run (agent fidprice): NEGATIVE, no PR candidate; D1-D10 already merged upstream, residual only at 26M+ gold prices; AC 2 (VN03) ticked, AC 1/3/4 open; trace docs/research/fid-vendor-price-trace.md
+- TASK-89 fid-skill-damage-pr: no PR candidate, the min-synergy gate and MulDiv are already merged upstream (PR #146, 2026-10-31); 116,000 cases x 2 seeds on upstream main 9c78f391 = 0 differ, blvl/lvl split 0 of 116,000 (docs/probes/fid/fid-skill-damage-pr.md); matrix row SK02 proposed DEV -> OK
+- TASK-129 tallystrip: tally credits from events, charter quote and spend, strip view built offline (not live); AC 2 open (mounting, order slot 2, perk)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

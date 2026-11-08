@@ -26,6 +26,8 @@ contracts: []
 Size: S
 
 Why: direction review section 7 step 6. Done when: docs/probes/h3-verdict.md has the verdict.
+
+Amended 2026-11-07 (ADR 0018): the H1/H3/H4 comparison becomes the verdict of playsession2 (TASK-134) on the Expedition Ledger loop; this orders-only session stays as the H3 data point.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

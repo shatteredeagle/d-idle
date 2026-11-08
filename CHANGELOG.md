@@ -8,6 +8,16 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
+- Skill damage (SK02) differential re-run on current upstream main: 0 of 116,000 cases differ; the earlier fix is upstream (PR #146), no new PR
+- fid-vendor-price (TASK-76): price oracle re-run on upstream main 9c78f391, no reachable d2d price deviation left; tools/emu/fp_price_runs.sh and fp_clamp.py added; follow-on D9/D10 branch marked superseded
+- Research: game.exe's respawn refills life, mana and stamina to their maxima; d2d refilled life only. Candidate fix and oracle (390 of 408 cases differ before, 0 after) are built and wait for independent verification; nothing is posted upstream.
+- Fun loop decisions recorded (ADR 0018, Expedition Ledger); prototype cards TASK-127 to 136 in m-4; TASK-108 and TASK-115 Deferred
+- fun ideas: decisions applied (proposal waits when away, charter is tally only, optional retire into the Hall of Fame, policy effects on sheet and return screen), skill unlocks reconciled with the leveler and the v3 table, 8-card prototype plan, ADR-ready decision block (docs/research/fun-ideas.md)
+- fun ideas: converged design doc (docs/research/fun-ideas.md): Expedition Ledger, Act 1 Codex, Legacy and the Hall; incremental-games research; user and SME answers applied; Blessings, level walls, gambling dropped
+- Design: decision dataset kept by the session record (TASK-106 criteria 4 and 5) and a parked learned-brain experiment card (TASK-126)
+- Upstream PR #242 opened: a character enters a game with the life and mana it was saved with
+- Design and cards for friends self-update (registry publishing plan, signed in-app updater with rollback); docs and cards only
 - docs: Gate 2 wave 3a (g2h, seeds 11/13/17) result and analysis against g2g (docs/research/g2h-wave3a.md, docs/soaks/gate2-multiseed-20261107-1811-g2h.md); indicative, 3 seeds.
 - Load life/mana trace: game.exe loader address and emulator oracle for the upstream PR candidate (docs and tools/emu only)
 - docs: fidelity-fix PR candidate rebuilt on upstream main to the maintainer's rules (draft, not opened)
