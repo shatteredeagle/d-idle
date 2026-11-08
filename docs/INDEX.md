@@ -838,3 +838,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/unlock-ladder.md: the shared unlock framework (trigger table, persistence, reveal, API)
 - docs/tester-registry.md - publish prep for the tester image on ghcr.io (what the user must do, GPL offer, risks, first-publish checklist)
 - docs/pact-away.md - Pact away safety: presence, consent API, life floor, Hardcore flag
+- docs/pact-ui.md - Pact offer UI: routes, view model, unlock, cost-and-paid section

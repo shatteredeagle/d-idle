@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Pact offer page at /watch/pacts with heat bar, effect lines, rewards and a proposed-set preview; locked Pacts show as silhouettes until Andariel dies
 - Pact away safety: Pacts act only while a viewer is present or under a typed, dated, per-difficulty consent; pause under 35% life; Hardcore flag stub
 - Prepared the (inert) workflow and docs to publish the tester image to ghcr.io; compose.tester.yml now reads D2_IMAGE
 - Unlock ladder framework: per-profile unlocks from Codex firsts, level, quest and tally spend, with a reveal line and a return-screen section.
