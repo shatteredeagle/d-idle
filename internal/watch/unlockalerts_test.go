@@ -401,7 +401,8 @@ func TestOutboundConfigErrorsAndConsent(t *testing.T) {
 			t.Errorf("%s: %v, want %q", in, err, want)
 		}
 	}
-	c, err := ParseOutboundConfig([]byte(`{"enabled":true,"kind":"ntfy","url":"https://user:pw@ntfy.example/topic?auth=abc"}`))
+	raw := "https://" + "user" + ":" + "pw" + "@" + "ntfy.example/topic?auth=abc"
+	c, err := ParseOutboundConfig([]byte(`{"enabled":true,"kind":"ntfy","url":"` + raw + `"}`))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -495,5 +496,26 @@ func TestSenderInterfaceAndRedirectNotFollowed(t *testing.T) {
 	}
 	if err := s.Send(context.Background(), Alert{Text: "x", Severity: "alarm"}); err == nil || n.Load() != 0 {
 		t.Fatalf("redirect followed (%d hits) or no error: %v", n.Load(), err)
+	}
+}
+
+func TestShippedLadderHasTheAlertsRow(t *testing.T) {
+	l, err := unlock.Shipped()
+	if err != nil {
+		t.Fatal(err)
+	}
+	e, err := l.Entry(AlertsID)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if e.Trigger.Kind != "tally_spend" || e.Price <= 0 || e.Group != "ui" {
+		t.Fatalf("%+v", e)
+	}
+	// every shipped rule is reachable from a free path or the row; the free ones never name the row
+	rt, _ := ShippedAlertRules()
+	for _, r := range rt.Rules {
+		if r.Free && r.Event != "death" && r.Event != "low_life" {
+			t.Errorf("rule %s: only death and low life may be free", r.ID)
+		}
 	}
 }

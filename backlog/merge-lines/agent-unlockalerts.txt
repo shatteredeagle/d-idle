@@ -1,0 +1,3 @@
+BACKLOG: TASK-162 unlockalerts: alert rules table, in-page toast centre, webhook and ntfy senders (off by default), ladder row alerts (docs/unlock-alerts.md)
+INDEX: docs/unlock-alerts.md - alerts and pings: rules, in-page channel, outbound interface (off), ladder row
+CHANGELOG: Watch screen alerts: death and low life always, unique/boss/level/town/Pact/proposal alerts behind the alerts unlock; outbound webhook/ntfy exist but are off by default
