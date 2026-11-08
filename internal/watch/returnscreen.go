@@ -1078,7 +1078,8 @@ func RenderReturn(d ReturnData, notes bool) []byte {
 	return []byte(b.String())
 }
 
-const returnCSS = `.ret{max-width:46rem;margin:0 auto;padding:12px}.ret .card{margin-bottom:12px;padding:12px 14px}
+// main.ret must reset the global main grid (12 columns from 900 px up in app.css), or every card becomes a narrow column.
+const returnCSS = `main.ret{display:block;grid-template-columns:none;max-width:46rem;margin:0 auto;padding:12px}.ret .card{min-width:0;overflow-wrap:anywhere}.ret .card{margin-bottom:12px;padding:12px 14px}
 .headline{font-size:1.1rem;margin:0}.moments{list-style:none;margin:0;padding:0}.moment{padding:6px 0;border-bottom:1px solid var(--line)}
 .trip,.missed{border:1px solid var(--line);border-radius:8px;padding:8px 12px;margin-bottom:8px}.trip h3,.missed h3{margin:0;font-size:.95rem}
 .trip dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:6px 0}.trip dt{color:var(--muted)}.trip dd{margin:0}
