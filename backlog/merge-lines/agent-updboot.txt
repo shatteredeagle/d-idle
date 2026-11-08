@@ -1,0 +1,3 @@
+BACKLOG: TASK-123 updboot: cmd/didleboot boot shim (select, health probation, automatic rollback), image wiring and a drill checklist; container drills not run
+INDEX: docs/self-update-drill.md - boot shim, rollback rules, image changes and the worker-host drill checklist
+CHANGELOG: Self-update part 3: boot shim with automatic rollback and image changes (not yet run in a container)
