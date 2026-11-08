@@ -81,3 +81,52 @@ func TestPactDeskConsentAndHardcore(t *testing.T) {
 		}
 	}
 }
+
+func TestUnlockOfAndChooseThroughDesk(t *testing.T) {
+	if unlockOf("Andariel", "Hell") != "andariel_first_kill" || unlockOf("Baal", "Normal") != "baal_normal" || unlockOf("Baal", "Hell") != "" || unlockOf("Mephisto", "") != "" {
+		t.Error("unlock triggers")
+	}
+	for _, class := range []string{"sorceress", "paladin"} {
+		cat, _ := pact.Shipped(pact.Refs{})
+		ctl, _ := pact.New(pact.Config{Cat: cat, Class: class})
+		hc, _ := pact.OpenHardcore("", nil)
+		d := &pactDesk{ctl: ctl, hc: hc}
+		if err := d.Choose([]watch.PactPick{{ID: "blood_ravens_tithe", Rank: 1}}); err == nil || !strings.Contains(err.Error(), "locked") {
+			t.Errorf("%s: locked Pact chosen: %v", class, err)
+		}
+		ctl.Unlock("andariel_first_kill")
+		if err := d.Choose([]watch.PactPick{{ID: "blood_ravens_tithe", Rank: 1}}); err != nil {
+			t.Errorf("%s: %v", class, err)
+		}
+		v, err := d.Catalogue("andariels_shadow:1")
+		if err != nil || v.(pact.View).Proposed == nil {
+			t.Errorf("%s: %v %v", class, v, err)
+		}
+		if _, err := d.Catalogue("junk"); err == nil {
+			t.Errorf("%s: junk proposal accepted", class)
+		}
+		if v, _ := d.Catalogue("-"); v.(pact.View).Proposed == nil || len(v.(pact.View).Proposed.Picks) != 0 {
+			t.Errorf("%s: the empty proposal", class)
+		}
+	}
+}
+
+func TestCostLineWithoutAndWithCounters(t *testing.T) {
+	c := pact.CostLine{Name: "Griswold's Debt", Rank: 1, Effect: "repairs wait", Row: "repair", Start: 100, End: -1, Reward: pact.Reward{TallyPct: 5}}
+	if l := costLine(pact.CostLine{Name: "X", Rank: 1, Effect: "e", Start: -1}, nil); !strings.Contains(l, "not acted yet") || !strings.Contains(l, "tally +0%") {
+		t.Error(l)
+	}
+	if l := costLine(c, nil); !strings.Contains(l, "No counter") {
+		t.Error(l)
+	}
+	cat, _ := decide.Shipped()
+	tbl, _ := decide.ShippedPolicy(cat)
+	st, _ := decide.Open(t.TempDir(), "pact", cat, &decide.ManualClock{})
+	ps, err := watch.NewPolicySheet(st, cat, tbl, func() string { return "paladin" }, func() float64 { return 700 }, watch.NewAwayLog(nil), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if l := costLine(c, ps); !strings.Contains(l, "After, 10 min") || !strings.Contains(l, "Before, 10 min") {
+		t.Error(l)
+	}
+}

@@ -2,6 +2,7 @@ package watch
 
 import (
 	"errors"
+	"io"
 	"mime"
 	"net/http"
 	"sync"
@@ -13,8 +14,8 @@ import (
 
 // PactRoutes are the viewer GET routes; PactPostRoutes the answer listener's.
 var (
-	PactRoutes     = []string{"/api/pacts/offer"}
-	PactPostRoutes = []string{"/api/pacts/consent", "/api/pacts/revoke", "/api/pacts/hardcore"}
+	PactRoutes     = []string{"/api/pacts/offer", "/api/pacts", "/watch/pacts", "/watch/pacts.js"}
+	PactPostRoutes = []string{"/api/pacts/consent", "/api/pacts/revoke", "/api/pacts/hardcore", "/api/pacts/select"}
 )
 
 // ErrPactInactive marks a refusal that is not the caller's mistake: the thing is not switched on (Hardcore today).
@@ -29,6 +30,16 @@ type PactDesk interface {
 	HardcoreConfirm(typed string) error
 	HardcoreRevoke() error
 	HardcoreActivate() error
+	// Catalogue is the offer page's data: the catalogue by family, the heat budget and, for a proposal ("id:rank,id:rank",
+	// "" = none, "-" = the empty set), the proposed set next to the current one.
+	Catalogue(propose string) (any, error)
+	Choose(picks []PactPick) error // replace the chosen set; locked or refused Pacts come back as errors
+}
+
+// PactPick is one chosen Pact at one rank.
+type PactPick struct {
+	ID   string `json:"id"`
+	Rank int    `json:"rank"`
 }
 
 // PactAPI holds the desk once it exists.
@@ -45,24 +56,58 @@ func (a *PactAPI) Bind(d PactDesk) { a.mu.Lock(); a.d = d; a.mu.Unlock() }
 
 func (a *PactAPI) desk() PactDesk { a.mu.Lock(); defer a.mu.Unlock(); return a.d }
 
-// Handler serves GET /api/pacts/offer.
+// Handler serves the viewer GET routes: /api/pacts/offer, /api/pacts, the page and its script.
 func (a *PactAPI) Handler() http.Handler {
-	return readOnly(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	m := http.NewServeMux()
+	off := func(w http.ResponseWriter) {
+		writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "Pacts are off or the hero is not known yet"})
+	}
+	m.HandleFunc("/api/pacts/offer", func(w http.ResponseWriter, r *http.Request) {
 		d := a.desk()
 		if d == nil {
-			writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "Pacts are off or the hero is not known yet"})
+			off(w)
 			return
 		}
 		writeJSON(w, 200, map[string]any{"offer": d.Offer(), "hardcore": d.Hardcore()})
-	}))
+	})
+	m.HandleFunc("/api/pacts", func(w http.ResponseWriter, r *http.Request) {
+		d := a.desk()
+		if d == nil {
+			off(w)
+			return
+		}
+		v, err := d.Catalogue(r.URL.Query().Get("propose"))
+		if err != nil {
+			writeJSON(w, http.StatusBadRequest, policyReply{Code: "propose", Error: err.Error()})
+			return
+		}
+		writeJSON(w, 200, v)
+	})
+	m.HandleFunc("/watch/pacts", func(w http.ResponseWriter, r *http.Request) {
+		pactHdr(w, "text/html; charset=utf-8")
+		io.WriteString(w, pactPage)
+	})
+	m.HandleFunc("/watch/pacts.js", func(w http.ResponseWriter, r *http.Request) {
+		pactHdr(w, "text/javascript; charset=utf-8")
+		io.WriteString(w, pactJS)
+	})
+	return readOnly(m)
+}
+
+func pactHdr(w http.ResponseWriter, ctype string) {
+	w.Header().Set("Content-Type", ctype)
+	w.Header().Set("Cache-Control", "no-store")
+	w.Header().Set("X-Content-Type-Options", "nosniff")
+	w.Header().Set("Content-Security-Policy", policyCSP)
 }
 
 type pactBody struct {
-	Pact      string `json:"pact"`
-	Rank      int    `json:"rank"`
-	AwayHours int    `json:"awayHours"`
-	Typed     string `json:"typed"`
-	Action    string `json:"action"`
+	Pact      string     `json:"pact"`
+	Rank      int        `json:"rank"`
+	AwayHours int        `json:"awayHours"`
+	Typed     string     `json:"typed"`
+	Action    string     `json:"action"`
+	Picks     []PactPick `json:"picks"`
 }
 
 // PostHandler serves the three POST routes.
@@ -113,6 +158,8 @@ func (a *PactAPI) PostHandler(o AnswerOptions) http.Handler {
 			err = d.Consent(b.Pact, b.Rank, b.AwayHours, b.Typed)
 		case "/api/pacts/revoke":
 			err = d.Revoke(b.Pact)
+		case "/api/pacts/select":
+			err = d.Choose(b.Picks)
 		case "/api/pacts/hardcore":
 			switch b.Action {
 			case "confirm":

@@ -37,6 +37,18 @@ func pactRefs(sheet *watch.PolicySheet) pact.Refs {
 	}
 }
 
+// unlockOf names the catalogue trigger a boss kill opens ("" = none). The Andariel kill is the same event the Hall uses
+// for its retire question (internal/watch/hall.go).
+func unlockOf(monster, difficulty string) string {
+	switch {
+	case monster == "Andariel":
+		return "andariel_first_kill"
+	case monster == "Baal" && difficultyOf(difficulty) == 0:
+		return "baal_normal"
+	}
+	return ""
+}
+
 func difficultyOf(s string) int {
 	switch strings.ToLower(s) {
 	case "nightmare":
@@ -78,6 +90,13 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 						rig.Hub.Incident("Pact: " + err.Error())
 					}
 				}
+				if ctl != nil && ev.Type == goals.EvKill {
+					if t := unlockOf(ev.Monster, rig.Pacts.desk.heroNow().Difficulty); t != "" {
+						if err := ctl.Unlock(t); err != nil {
+							rig.Hub.Incident("Pact: " + err.Error())
+						}
+					}
+				}
 			case <-tick.C:
 				st := status()
 				hero := st.Character
@@ -98,6 +117,7 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 							Knobs: pact.KnobSetter(l.knobs), Sheet: pactSheet{rig.Fun.Policy},
 							Pause:   func(reason string) error { rig.Hub.Incident("Pact: " + reason); return m.Pause() },
 							Present: pres.Present,
+							Rel:     rig.Fun.Policy.Now,
 							Journal: func(line string) { rig.Hub.Incident(line) },
 						})
 						if err == nil {
@@ -165,6 +185,29 @@ func (d *pactDesk) Consent(id string, rank, hours int, typed string) error {
 	return fmt.Errorf("%q is not chosen", id)
 }
 
+// Catalogue is the offer page's data; propose is "id:rank,..." ("" none, "-" the empty set).
+func (d *pactDesk) Catalogue(propose string) (any, error) {
+	if propose == "" {
+		return d.ctl.View(nil), nil
+	}
+	picks := []pact.Pick{}
+	if propose != "-" {
+		var err error
+		if picks, err = pact.ParsePicks(propose); err != nil {
+			return nil, err
+		}
+	}
+	return d.ctl.View(picks), nil
+}
+
+func (d *pactDesk) Choose(picks []watch.PactPick) error {
+	ps := make([]pact.Pick, len(picks))
+	for i, p := range picks {
+		ps[i] = pact.Pick{ID: p.ID, Rank: p.Rank}
+	}
+	return d.ctl.Choose(ps)
+}
+
 func (d *pactDesk) Revoke(id string) error { return d.ctl.Revoke(id) }
 func (d *pactDesk) Hardcore() any          { return d.hc.State() }
 func (d *pactDesk) HardcoreConfirm(typed string) error {
@@ -185,12 +228,14 @@ func registerPactSection(f *watch.Fun, getenv func(string) string) *pactHolder {
 	}
 	h := &pactHolder{pres: pact.NewPresence(0, nil), api: watch.NewPactAPI(), desk: &pactDesk{}}
 	f.Pacts, f.OnView = h.api, h.pres.Touch
-	f.Return.Sections.Register("pacts", pactSection(h))
+	f.Return.Sections.Register("pacts", pactSection(h, f.Policy))
 	return h
 }
 
-// pactSection is the return screen's Pact lines: what each chosen Pact does and whether it acts now.
-func pactSection(h *pactHolder) watch.ReturnSection {
+// pactSection is the return screen's Pact lines: what each chosen Pact does and whether it acts now, then what each cost
+// and paid, with before/after counters from the policy sheet for a Pact that sets a sheet row (the same counters as the
+// policy cards). The tally multiplier is not paid by any code yet, so the "paid" part says what is promised (U).
+func pactSection(h *pactHolder, sheet *watch.PolicySheet) watch.ReturnSection {
 	return watch.SectionFunc(func(*watch.ReturnData) *watch.SectionView {
 		ctl := h.ctl.Load()
 		if ctl == nil {
@@ -204,6 +249,52 @@ func pactSection(h *pactHolder) watch.ReturnSection {
 		for _, l := range ls {
 			v.Lines = append(v.Lines, fmt.Sprintf("%s (rank %d): %s [%s]", l.Pact, l.Rank, l.Text, l.Status))
 		}
+		for _, c := range ctl.Costs() {
+			v.Lines = append(v.Lines, costLine(c, sheet))
+		}
 		return v
 	})
+}
+
+func costLine(c pact.CostLine, sheet *watch.PolicySheet) string {
+	head := fmt.Sprintf("%s (rank %d) cost: %s.", c.Name, c.Rank, c.Effect)
+	paid := fmt.Sprintf(" Promised: tally +%d%%", c.Reward.TallyPct)
+	if c.Reward.CharmPoints > 0 {
+		paid += fmt.Sprintf(", charm points +%d", c.Reward.CharmPoints)
+	}
+	if c.Reward.Title != "" {
+		paid += ", title " + c.Reward.Title
+	}
+	paid += " (nothing pays the tally bonus yet, U)."
+	if c.Start < 0 {
+		return head + " It has not acted yet." + paid
+	}
+	end := c.End
+	if end < 0 {
+		if sheet == nil {
+			return head + " It is acting now. No counter is tied to this lever (U)." + paid
+		}
+		end = sheet.Now()
+	}
+	acted := end - c.Start
+	if acted < 1 {
+		return head + " It just started." + paid
+	}
+	line := fmt.Sprintf("%s It acted for %s.", head, fmtSecs(acted))
+	if c.Row == "" || sheet == nil {
+		return line + " No counter is tied to this lever (U)." + paid
+	}
+	after, ok1 := sheet.Counters(c.Row, c.Start, end)
+	before, ok2 := sheet.Counters(c.Row, max(c.Start-acted, 0), c.Start)
+	if !ok1 || !ok2 {
+		return line + " The sheet has no counters for this row." + paid
+	}
+	return fmt.Sprintf("%s After, %s: %s. Before, %s: %s.%s", line, fmtSecs(acted), after, fmtSecs(acted), before, paid)
+}
+
+func fmtSecs(s float64) string {
+	if s < 90 {
+		return fmt.Sprintf("%.0f s", s)
+	}
+	return fmt.Sprintf("%.0f min", s/60)
 }
