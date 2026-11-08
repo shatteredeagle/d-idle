@@ -23,7 +23,10 @@ Timeline of the unfixed bot (bot `minute` and `recovery:` lines):
 - Tests: `TestRecoveryStallsAtLowIncome` (resource; two tunings), `TestSlowFieldStartsAFreshGame` and `TestSlowFieldQuietCases` (bot; two classes). Both fail on the code before.
 
 ## Drill after the fix
-See the result block in `backlog/tasks/task-138*.md` and the numbers appended below by the run.
+Run 2 (stall rule only) and run 3 (both rules), fresh volume each, container left running 40 to 45 minutes (not a full hour), writes after start 0.
+- Run 2 (V): `recovery: end (gold 11, reason stalled)` at 20 min 20 s; recovery did not restart; the planner went on with `level.5`. The field was then empty: 48 kills and xp 1083 (clvl 2) at minute 40, one kill per 1 to 5 minutes. The old kill drought did not fire (a straggler resets it), which led to the slow-field rule.
+- Run 3 (V, both rules): `recovery: end (gold 8, reason stalled)` at minute 25; the old kill drought stage 1 then left Blood Moor (`stage 1 ... minutes 8`), the hero visited Cave Level 1 (area 9), shopped and came back; 61 kills, xp 1437 (clvl 2) at minute 38. The slow-field rule never fired in this run (U live): there were always 3 or more kills in a 10 minute window. It is proven offline only.
+- XP per hour is NOT shown improved (V): all three runs sit at 25 to 35 xp per minute early (xp 1605 at minute 24 unfixed, 1083 at 40 with the empty field, 1437 at 38). The hero stays at clvl 2 to 3 after 40 minutes; clvl 5 to 8 in the first hour was not reached and is U for the fixes.
 
 ## Not covered
 Reaching the Den of Evil (clvl 5, 7500 XP) inside one realtime hour was not shown (U): the pace above makes it an hour-two event. Gold income at clvl 1 to 4 is unchanged; the kit stays unaffordable until loot sells or the level rises.
