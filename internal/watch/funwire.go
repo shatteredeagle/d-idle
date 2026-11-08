@@ -100,6 +100,8 @@ type Fun struct {
 	Hall *HallDesk
 	// Chronicle is nil unless the ladder has the Chronicle rows (TASK-154).
 	Chronicle *Chronicle
+	// Voice is nil unless the ladder has the row "voice" (TASK-155).
+	Voice *Voice
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -149,6 +151,14 @@ func NewFun(c FunConfig) (*Fun, error) {
 				return nil, err
 			}
 			f.Chronicle = ch
+		}
+		if c.Unlock.Has(VoiceID) {
+			h := c.Hub
+			vo, err := NewVoice(f.Unlocks, c.Hub, nil, func() string { return h.heroNow().Class }, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			f.Voice = vo
 		}
 	}
 	if c.Proposals != nil {
@@ -226,6 +236,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Chronicle != nil {
 		f.Chronicle.OnGoalEvent(ev)
+	}
+	if f.Voice != nil {
+		f.Voice.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -331,6 +344,9 @@ func (f *Fun) flush() {
 		if f.Chronicle != nil {
 			f.Chronicle.OnFired(fired)
 		}
+		if f.Voice != nil {
+			f.Voice.OnFired(fired)
+		}
 	}
 }
 
@@ -384,6 +400,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Chronicle != nil {
 		m.Handle(ChronicleRoute, f.Chronicle.Handler())
 	}
+	if f.Voice != nil {
+		m.Handle(VoiceRoute, f.Voice.Handler())
+	}
 	if f.Hall != nil {
 		hh := f.Hall.Handler()
 		for _, p := range HallRoutes {
@@ -418,6 +437,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Unlocks != nil {
 		m.Handle(UnlocksBuyRoute, f.Unlocks.BuyHandler(o))
+	}
+	if f.Voice != nil {
+		m.Handle(VoiceMuteRoute, f.Voice.MuteHandler(o))
 	}
 	if f.Hall != nil {
 		m.Handle(HallPostRoute, f.Hall.PostHandler(o))

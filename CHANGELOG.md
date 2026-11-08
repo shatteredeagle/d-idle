@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch page: the hero speaks at the first level-up, the first death and every Codex first, with a Diary tab and a mute switch.
 - Watch page: Chronicle panel (kill/loot feed after the first kill, run timeline after the first expedition card) and a Still locked list on the ladder.
 - Pact offer page at /watch/pacts with heat bar, effect lines, rewards and a proposed-set preview; locked Pacts show as silhouettes until Andariel dies
 - Pact away safety: Pacts act only while a viewer is present or under a typed, dated, per-difficulty consent; pause under 35% life; Hardcore flag stub
