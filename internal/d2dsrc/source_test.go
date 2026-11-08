@@ -543,3 +543,43 @@ func TestBuffStatesRefused(t *testing.T) {
 		t.Error("a refused verb should switch the read off")
 	}
 }
+
+// The fraction of a fixed-point stat survives when stats.raw carries it (TASK-207): Paladin max mana 19.5 is
+// 4992 in 256ths while the player pair holds the whole 19.
+func TestPlayerStatsKeepFraction(t *testing.T) {
+	cases := []struct {
+		name        string
+		mana, mxMan int // player pair, whole points
+		raw         []int
+		wantMax     int32
+		wantMana    int32
+	}{
+		{"paladin 19.5", 19, 19, []int{0, 15, 0, 0, 0, 0, 0, 0, 4992, 4992, 0, 0}, 4992, 4992},
+		{"sorceress 100.25", 100, 100, []int{0, 0, 0, 0, 0, 0, 0, 0, 25600, 25664, 0, 0}, 25664, 25600},
+		{"no raw shifts whole points", 25, 25, nil, 25 << 8, 25 << 8},
+		{"raw disagreeing with the pair is ignored", 25, 25, []int{0, 0, 0, 0, 0, 0, 0, 0, 9999, 9999, 0, 0}, 25 << 8, 25 << 8},
+	}
+	for _, c := range cases {
+		b := &builder{rp: newRep(&tracker{counts: map[string]uint64{}, logf: quiet})}
+		pl := &d2.Player{Mana: c.mana, MaxMana: c.mxMan}
+		b.rp.have("player.mana")
+		st := obj{"base": map[string]any{}}
+		if c.raw != nil {
+			a := make([]any, len(c.raw))
+			for i, v := range c.raw {
+				a[i] = float64(v)
+			}
+			st["raw"] = a
+		}
+		b.playerStats(pl, st, obj{})
+		if got := pl.Stats[uint32(d2.StatMaxMana)]; got != c.wantMax {
+			t.Errorf("%s: max mana %d, want %d", c.name, got, c.wantMax)
+		}
+		if got := pl.Stats[uint32(d2.StatMana)]; got != c.wantMana {
+			t.Errorf("%s: mana %d, want %d", c.name, got, c.wantMana)
+		}
+		if pl.MaxMana != c.mxMan {
+			t.Errorf("%s: whole-point MaxMana changed to %d", c.name, pl.MaxMana)
+		}
+	}
+}
