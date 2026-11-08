@@ -1,10 +1,11 @@
 ---
 id: TASK-115
 title: 'qqueue: questions queue for the player''s return; remove the 45 s fade (D2)'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-08T00:27:00Z'
 labels:
   - bot
   - feature
@@ -30,6 +31,8 @@ contracts: []
 Size: L
 
 Why: user decision D2 (d.idle is an idle game), implementation is this later card. Done when: the criteria below hold.
+
+Deferred 2026-11-07 (ADR 0018): folded into returnscreen (TASK-127, missed questions grouped, queued for the return) and proposezone (TASK-131, the hero waits and nothing fades for the player). Reopen only for the decide-side queue if those two need it.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
