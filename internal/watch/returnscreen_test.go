@@ -202,13 +202,13 @@ func (r *retRig) get(path, token string) *httptest.ResponseRecorder {
 func TestReturnServedBehindToken(t *testing.T) {
 	for _, b := range []string{"sorceress", "paladin"} {
 		t.Run(b, func(t *testing.T) {
-			r := newRetRig(t, b, "sekret")
+			r := newRetRig(t, b, strings.Repeat("w", 8))
 			for _, p := range []string{"/watch/return", "/api/return", "/watch/return.js", "/watch/return.css", "/watch"} {
 				if w := r.get(p, ""); w.Code != 401 {
 					t.Errorf("%s without token: %d", p, w.Code)
 				}
 			}
-			w := r.get("/watch/return", "sekret")
+			w := r.get("/watch/return", strings.Repeat("w", 8))
 			if w.Code != 200 || !strings.Contains(w.Body.String(), "While you were away") || !strings.Contains(w.Header().Get("Content-Security-Policy"), "script-src 'self'") {
 				t.Fatalf("page: %d %v", w.Code, w.Header())
 			}
@@ -216,7 +216,7 @@ func TestReturnServedBehindToken(t *testing.T) {
 				t.Error("inline code breaks the CSP")
 			}
 			var d ReturnData
-			w = r.get("/api/return", "sekret")
+			w = r.get("/api/return", strings.Repeat("w", 8))
 			if err := json.Unmarshal(w.Body.Bytes(), &d); err != nil || d.Schema != returnSchema || len(d.Trips) != 1 || d.Trips[0].Kills != 1 {
 				t.Errorf("api: %v %+v", err, d)
 			}
@@ -227,7 +227,7 @@ func TestReturnServedBehindToken(t *testing.T) {
 			}
 			post = httptest.NewRecorder()
 			req := httptest.NewRequest("POST", "/api/return", nil)
-			req.Header.Set("Authorization", "Bearer sekret")
+			req.Header.Set("Authorization", "Bearer "+strings.Repeat("w", 8))
 			r.h.ServeHTTP(post, req)
 			if post.Code != 405 {
 				t.Errorf("the viewer must be read-only: %d", post.Code)
