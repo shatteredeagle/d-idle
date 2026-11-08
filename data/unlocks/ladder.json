@@ -258,6 +258,16 @@
       "id": "risk", "group": "ui",
       "trigger": {"kind": "seen", "args": {"what": "near_death_survived"}},
       "reveal": {"title": "Risk meter", "text": "Before a boss the hero reads its own numbers (potions, life, kit and the route guard) and tells you ready, marginal or turn back, by the same lines it fights by.", "teaser": "Survive a brush with death."}
+    },
+    {
+      "id": "bestiary", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 10}},
+      "reveal": {"title": "Cain's notes", "text": "Cain's notes now keep a card for every kind of monster the hero has killed ten of: what it is, how it fights, what it drops and a veteran's tip.", "teaser": "Kill ten of one kind of monster."}
+    },
+    {
+      "id": "bestiary_resists", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 50}},
+      "reveal": {"title": "Cain's notes: resistances", "text": "After fifty kills of one kind its card shows how well it resists each element, on every difficulty.", "teaser": "Kill fifty of one kind of monster."}
     }
   ]
 }

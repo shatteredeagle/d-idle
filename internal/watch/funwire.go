@@ -48,6 +48,10 @@ func (h *Hub) place(r OrderRequest, approve bool) (Order, *Charter, error) {
 		return o, nil, err
 	}
 	o, q, err := b.p.PlaceOrder(r, approve)
+	if !approve && q.Price > 0 && errors.Is(err, currency.ErrCharterNeeded) {
+		// the hero says it once in the journal when a map order asks for a charter (the 402 carries the same numbers)
+		h.Say(decide.AboveRangeWarning(q.Min, q.Max, q.Level, q.Price))
+	}
 	var ch *Charter
 	if q.Price > 0 {
 		ch = &Charter{Area: q.Area, Price: q.Price, Text: q.Text}
@@ -80,6 +84,8 @@ type FunConfig struct {
 	Affixes AffixSource
 	// Hall turns the Hall of Fame and the retire question on (TASK-135). StatePath "" keeps the state next to the ledger.
 	Hall *HallConfig
+	// Monsters gives the bestiary its type, attack pattern and resists (TASK-158). nil: cards carry the flavour only.
+	Monsters MonsterTables
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -112,6 +118,8 @@ type Fun struct {
 	Risk *RiskMeter
 	// Reveal is nil unless the ladder has the rows "idreveal" and "idreveal_later" (TASK-157).
 	Reveal *Reveal
+	// Bestiary is nil unless the ladder has the rows "bestiary" and "bestiary_resists" (TASK-158).
+	Bestiary *Bestiary
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -185,6 +193,15 @@ func NewFun(c FunConfig) (*Fun, error) {
 			}
 			f.Risk = rm
 			sec.Register(RiskSectionID, rm.Section())
+		}
+		if c.Unlock.Has(BestiaryID) || c.Unlock.Has(BestiaryResistsID) {
+			h := c.Hub
+			be, err := NewBestiary(f.Unlocks, nil, c.Monsters, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			f.Bestiary = be
+			sec.Register(BestiarySectionID, be.Section())
 		}
 		if c.Unlock.Has(IDRevealID) || c.Unlock.Has(IDRevealLaterID) {
 			h := c.Hub
@@ -279,6 +296,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Reveal != nil {
 		f.Reveal.OnGoalEvent(ev)
+	}
+	if f.Bestiary != nil {
+		f.Bestiary.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -451,6 +471,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Risk != nil {
 		m.Handle(RiskRoute, f.Risk.Handler())
+	}
+	if f.Bestiary != nil {
+		m.Handle(BestiaryRoute, f.Bestiary.Handler())
 	}
 	if f.Reveal != nil {
 		m.Handle(RevealRoute, f.Reveal.Handler())

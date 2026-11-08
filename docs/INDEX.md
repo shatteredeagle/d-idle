@@ -847,3 +847,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/senses-units.md: senses units (enemy dots, target bar, elite markers), data flow, tier privacy, live checklist
 - docs/pact-ui.md and docs/unlock-ladder.md updated for the Pact ladder entries
 - internal/decide/champmods.json: monster modifier id to display name table for the senses elite markers
+- docs/unlock-bestiary.md - Cain's notes bestiary (TASK-158): cards per monster kind, 10 and 50 kill steps

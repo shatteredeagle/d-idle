@@ -1,0 +1,17 @@
+{
+  "schema": "bestiary.notes/1",
+  "doc": "docs/unlock-bestiary.md",
+  "note": "Flavour for the Cain's-notes bestiary (TASK-158). name is the in-game monster name compared case-insensitively with the goals kill events and with monstats. family is the only thing a locked silhouette shows. tipTag: S secondary (the SME's veteran memory, docs/research/class-early-game.md and fun-ideas.md), U unverified. Type, resists and the attack pattern come from the extracted game tables, never from this file.",
+  "kinds": [
+    {"name": "Fallen", "family": "demon", "flavour": "Small red imps with more courage than sense. They scatter when their leader falls.", "drops": "Gold and the odd potion; nothing special.", "tip": "Fight them in a corridor, not in the open; they run when the pack leader or a shaman dies.", "tipTag": "S"},
+    {"name": "Fallen Shaman", "family": "demon", "flavour": "The one with the staff. It calls its dead back to their feet.", "drops": "Gold and small things.", "tip": "Kill shamans first, or the pack never stays dead.", "tipTag": "S"},
+    {"name": "Carver", "family": "demon", "flavour": "A Fallen that kept its spear and lost its manners.", "drops": "Gold and the odd potion.", "tip": "Hits harder than a Fallen; do not let a pack surround you.", "tipTag": "U"},
+    {"name": "Devilkin", "family": "demon", "flavour": "Older and meaner kin of the Fallen, with a cruel staff of their own.", "drops": "Gold and potions.", "tip": "Treat a pack as a shaman fight: kill the caster first.", "tipTag": "U"},
+    {"name": "Quill Rat", "family": "beast", "flavour": "A rat with a coat of needles it is glad to throw at you.", "drops": "Little; gold at best.", "tip": "The needles chip life from a distance; close in quickly or step out of line.", "tipTag": "S"},
+    {"name": "Zombie", "family": "undead", "flavour": "Slow, stubborn and not much to look at once you are close.", "drops": "Gold and the odd potion.", "tip": "Slow movers: keep your distance and use it.", "tipTag": "U"},
+    {"name": "Skeleton", "family": "undead", "flavour": "Old bones that have not been told to lie down.", "drops": "Gold, sometimes a weapon or armour piece.", "tip": "Bones shrug off blades; fire and magic work better.", "tipTag": "U"},
+    {"name": "Returned", "family": "undead", "flavour": "A skeleton with a grudge and a better shield.", "drops": "Gold and weapons.", "tip": "Archers among them shoot from range; get out of the line of fire.", "tipTag": "U"},
+    {"name": "Goatman", "family": "beast", "flavour": "Tall, horned and out of the highlands.", "drops": "Gold and weapons.", "tip": "Hard hitters in a crowd; veterans meet them later than the Cold Plains.", "tipTag": "U"},
+    {"name": "Gargantuan Beast", "family": "beast", "flavour": "Slow and huge, and it knows it.", "drops": "Gold and the odd potion.", "tip": "Slow to turn; do not stand toe to toe.", "tipTag": "U"}
+  ]
+}
