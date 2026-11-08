@@ -1,3 +1,0 @@
-BACKLOG: TASK-106 sessionrec: session record (session.jsonl, summary), decision dataset (decisions.jsonl, schema v1) with export, `d2bot play` launcher; offline fixtures only, live smoke pending
-INDEX: docs/session-record.md: session record, decision dataset files, `d2bot play` and `d2bot sessions export`
-CHANGELOG: `d2bot play` starts a play session (ladder, watch, video, phone URL printed once) and writes a session record plus a local decision dataset; `d2bot sessions export` makes an anonymised copy
