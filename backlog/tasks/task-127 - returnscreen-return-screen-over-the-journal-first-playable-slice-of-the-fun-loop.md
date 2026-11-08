@@ -20,7 +20,7 @@ owns:
   - "docs/return-screen.md"
 exclusive: []
 contracts: []
-result: "Built offline, not verified live and not wired into Serve (see docs/return-screen.md Wiring): BuildReturn + page + JSON + handlers + AwayLog + sections registry; goldens for a Sorceress and a Paladin fixture; trip boundary and event fields are U."
+result: "Built offline and wired into the live bot by TASK-140 (feedHub, Serve routes, sections tally/codex/quiet). Live smoke 2026-11-07 on d2d (10 min, lockstep): /api/return filled with 4 expeditions and 90 kills; gold, waypoints, drops (autoloot off) and quests stayed empty. Trip boundary rule held on real area_change events."
 ---
 
 ## Description

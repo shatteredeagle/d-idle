@@ -21,7 +21,7 @@ owns:
   - "docs/tally-strip.md"
 exclusive: []
 contracts: []
-result: "Built offline, fixture-tested, NOT verified live. Credits, charter quote and spend, strip view and hook done (docs/tally-strip.md). AC 2 open: not mounted in serve.go/web/bridge, no order slot 2 or perk. Extra files: internal/currency/tallyrows.json, registry.json sources, watch tallystrip_test.go and testdata."
+result: "Credits, quote, charter spend, strip, hook done; wired by TASK-140 (strip on the header and the return screen, /api/tally, charter on the order route, waypoint hook). AC 2 stays open ONLY for order slot 2 and the first perk (unwired). Tally needs the d.idle overlay: the live smoke ran vanilla, so the strip showed off; credits are verified by the end-to-end test only."
 ---
 
 ## Description

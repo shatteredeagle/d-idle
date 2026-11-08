@@ -92,10 +92,20 @@ func (r *Runner) activeWaypoints(s *d2.Snapshot) (map[int]bool, bool) {
 func (r *Runner) markTouched(s *d2.Snapshot, areas ...int) {
 	r.loop.wp.init()
 	for _, a := range areas {
-		r.loop.wp.touched[wpKey{diffOf(s), a}] = true
-		delete(r.loop.wp.failed, wpKey{diffOf(s), a})
+		k := wpKey{diffOf(s), a}
+		fresh := !r.loop.wp.touched[k]
+		r.loop.wp.touched[k] = true
+		delete(r.loop.wp.failed, k)
+		if h := r.wpHook; fresh && h != nil && k.diff == 0 {
+			h(a, r.areaName(a))
+		}
 	}
 }
+
+// SetWaypointHook registers fn to hear of every waypoint this runner touches for the first time in Normal (area id and
+// name; the save reader's older state is not reported). Call it before the runner starts; fn runs on the loop goroutine
+// and must not block. The watch wiring uses it for the tally and the Codex (docs/codex.md).
+func (r *Runner) SetWaypointHook(fn func(areaID int, name string)) { r.wpHook = fn }
 
 // wpTripWorthTrying: false when a waypoint trip to area would only burn a panel round trip (about 20 s: the click on
 // a never touched waypoint does nothing, V live i4 soak 2026-10-29) because it is known to be inactive or failed lately.

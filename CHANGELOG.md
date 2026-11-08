@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- the player screen now lands on a return screen after 20 minutes away, shows the tally strip, asks for a charter before an order above the zone range, and fills the Act 1 Codex from the bot's events (-ladder -watch)
+- Act 1 Codex: 37 firsts raise discovery questions through the decision store and fill a per-profile Codex (offline, not yet wired into the bot)
 - Opus verification of the respawn refill candidate (TASK-125): claim holds; r2 moves the test out of test_game.cpp (conflict with PR #242)
 - tester image: context.sh now fetches CLI11, sentry-native and FFmpeg from public release archives with pinned sha256; no local fork checkout needed
 - Decision ladder: a question is not asked again within 30 minutes of being asked or answered, an answered question's answer is reused meanwhile, and a key nobody answers three times in a row goes quiet with one journal line (knobs ladder.repeatCooldownMin, ladder.quietAfter).

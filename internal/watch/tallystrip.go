@@ -126,7 +126,7 @@ func (s *TallyStrip) OnEvent(ev goals.Event) {
 			s.credit(currency.TallyEvent{Kind: currency.EvArea, ID: id, Subject: ev.Area})
 			s.mu.Lock()
 			if !s.inField {
-				s.inField, s.start = true, s.Now()
+				s.inField, s.start = true, s.Now().Truncate(time.Second) // ledger stamps are whole seconds
 			}
 			s.mu.Unlock()
 			return
@@ -242,6 +242,9 @@ func (s *TallyStrip) Quote(area string) (currency.Quote, error) {
 	s.Hub.mu.Lock()
 	level := s.Hub.hero.Level
 	s.Hub.mu.Unlock()
+	if level <= 0 { // before the first status poll: any price would be a guess
+		return currency.Quote{Area: area}, fmt.Errorf("%w: the hero's level is not known yet, try again in a moment", ErrBadOrder)
+	}
 	return s.Tally.Rows.Quote(area, level)
 }
 

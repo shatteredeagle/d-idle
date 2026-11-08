@@ -865,6 +865,9 @@ func (c ReturnConfig) ReturnHandler(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 	})
 	m.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/api/thoughts" {
+			c.Visit.touch() // the open live page polls this: a look in progress
+		}
 		if next == nil {
 			http.NotFound(w, r)
 			return
