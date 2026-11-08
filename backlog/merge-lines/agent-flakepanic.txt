@@ -1,2 +1,0 @@
-BACKLOG: TASK-165 flakepanicsafe: the "Waiting for a fresh game" wait is an info event, not an error; fixes the TestPanicIsRecoveredAndRunnerKeepsGoing flake on main CI
-CHANGELOG: Bot: waiting for a fresh game no longer counts as an error event
