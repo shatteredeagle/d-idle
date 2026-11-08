@@ -1,3 +1,0 @@
-BACKLOG: TASK-135 legacyhall: Hall of Fame ledger kinds, retire question (never auto), titles table, /watch/hall and /api/hall (built offline; permanence event and process wiring missing)
-INDEX: docs/hall-of-fame.md - Hall of Fame, titles and the optional retire after Andariel (watch)
-CHANGELOG: Hall of Fame page and optional retire after Andariel, with titles from a data table (ledger and UI only, no charm)
