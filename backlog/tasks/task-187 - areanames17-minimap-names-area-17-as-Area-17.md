@@ -29,5 +29,5 @@ Live check of 2026-11-08: the Sorceress run showed map.area 'Area 17' on /api/se
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Every Act 1 area id the bot visits has its name (Burial Grounds, Catacombs, Tristram, Cave levels, Tower) in the area table used by /api/senses
+- [ ] #1 Every Act 1 area id the bot visits has its name (Burial Grounds, Catacombs, Tristram, Cave levels, Cellar levels) in the area table used by /api/senses
 <!-- AC:END -->
