@@ -35,3 +35,9 @@ old = "if (boss.elem == 2) cold_len = boss.elem_len;"
 assert s.count(old) == 1
 s = s.replace(old, "if (boss.elem == 2) cold_len = boss_elem_length(boss, level);")
 open(p, "w").write(s)
+p = t + "/docs/research/re/monsters.md"
+s = open(p).read()
+old = "    element min / max = MonLvl damage for its level × (elemental rows) %,\n    then FUN_005a1370;\n"
+assert s.count(old) == 1
+s = s.replace(old, "    element min / max = MonLvl damage for its level × (elemental rows) %,\n    cold enchanted (FUN_005a1c70) also the cold's length: the unit's level\n    × 5 + 100 frames (stat 0x38; ghostly's FUN_005a1080 adds 150),\n    then FUN_005a1370;\n")
+open(p, "w").write(s)
