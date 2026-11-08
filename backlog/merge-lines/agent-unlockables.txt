@@ -1,0 +1,3 @@
+BACKLOG: TASK-153 to TASK-163 unlockables (m-4, Proposed, low): unlockladder framework plus ten unlockable watch features; design note only, not a decision
+INDEX: docs/research/unlockables.md - unlockable features brainstorm: the ten, first-40-minutes schedule, patterns, cautions (not a decision)
+CHANGELOG: Unlockable features design note and eleven Proposed cards (TASK-153 to TASK-163)
