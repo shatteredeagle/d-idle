@@ -4,7 +4,7 @@ Design: `docs/research/info-unlocks.md` (tier 1). View only: the panel reads a s
 
 ## Data flow
 
-d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, areaName, heroPos)` -> `Publisher.Snapshot()` -> `watch.Senses` -> `GET /api/senses` (poll about 2 Hz) -> `web/senses.js` canvas beside the video (Game tab).
+d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, areaName, heroPos)` -> `Publisher.Snapshot()` -> `watch.Senses` -> `GET /api/senses` (poll about 2 Hz) -> `web/senses.js` canvas beside the video (top of `/watch`, not a tab since watchlayout).
 
 - `internal/senses`: `Map` (schema `watch.senses/1`: areaId, area, version, x0, y0, step, w, h, rle, exits[], waypoints[]), `Snapshot` (map + hero + optional units, empty until TASK-151), `Build`, `Encode`/`Decode`, `Publisher`.
 - Cells: 0 unknown, 1 walkable (BlockWalk clear, the Kolbot rule of d2map), 2 blocked. RLE is a flat `value,length` list in row-major order. A level longer than 256 subtiles is downsampled by an integer `step` (a block is walkable when any cell is).
@@ -33,7 +33,19 @@ d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, area
 ## Live checklist (ready to run, not run)
 
 1. Start a hidden instance with `d2bot ... -ladder -watch -watch-video` (senses.tier defaults to 1).
-2. Open `/watch?t=<token>` Game tab: the panel shows "Waiting..." then the town map around the hero only.
+2. Open `/watch?t=<token>` (video and map sit at the top): the panel shows "Waiting..." then the town map around the hero only.
 3. Walk: fog clears behind the hero, the cross follows within 1 s, zoom +/- and drag work.
 4. Take a waypoint/exit: the map changes (new area name), the previous area keeps its fog on return.
 5. Without the token `/api/senses` answers 401. Writes after start: 0 (read-only).
+
+## Contiguous areas (watchlayout)
+
+User feedback 2026-11-08: the minimap showed only the current area. Now the last visited neighbours are drawn in the same canvas.
+
+- Table: `internal/senses/adjacency.json` (embedded; sits there because `go:embed` cannot reach `data/`). It lists which area pairs may be stitched: 1-2 (V: both recorded town images report area 2 as the only neighbour, contact on the whole shared edge), 2-3, 3-4, 4-5, 5-6, 6-7 (S, the Act 1 wilderness chain, no image). A pair not listed is never stitched (dungeon entrances and portals are warps, not walks). The offset is NOT in the table.
+- Alignment is derived: `Publisher` keeps the last fogged map and level rectangle of each visited area. For a listed pair it finds the neighbour's rectangle in the current level's own `Adjacent` list (`LevelMap.Adjacent`, from `pRoom2Near`) and sets `dx,dy` = that rectangle minus the one recorded when the neighbour was visited. Both frames absolute (Game.exe): dx=dy=0 (V on the recorded town: Blood Moor `{5480,4800,480,280}` ends exactly at the town's west edge x=5960). Level-relative frame (d2d without AddOrigin): the difference carries the shift (synthetic test only; U live).
+- Fallback ("not stitched"): no table, pair not listed, the level reports no such neighbour, rectangle size mismatch, or a neighbour grid over `senses.MaxNeighbourRLE` runs: the neighbour is left out and `Publisher.Skipped()` holds the reason, which names the pair (`senses: adjacency 2<->1: ...`). At most `senses.MaxNeighbours` (2), most recent first.
+- API: `/api/senses` gains `neighbours: [{areaId, version, dx, dy, map?}]`, same `Map` schema, fog as of the last visit (each area keeps its own fog). `map` is omitted when the page sends `nb=<areaId>:<version>,...` with that version. Only with tier 1 (the same gate as the map); tier 0 or a units-only unlock sends none.
+- Panel: one world canvas in subtiles; neighbours are drawn dimmer behind the current area, the zoom-0 view fits the union box.
+- V (offline): `go test ./internal/senses -run 'Stitched|Relative|Fallbacks|Adjacency|Cap'`, `go test -race ./internal/watch -run Stitch`, `go test ./internal/watch -run SensesJS` (node, when installed), golden `internal/watch/testdata/senses-stitched.json`. The Blood Moor grid in the tests is SYNTHETIC (no Blood Moor image was recorded); only the town image and its Adjacent rectangle are real.
+- U (live check item): walk town -> Blood Moor -> town on d2d and look for (a) the neighbour abutting the current area without a gap or overlap, (b) the reported `Adjacent` rect of the town from inside the Blood Moor on d2d. Until then d2d alignment is unverified; a wrong one shows as a visible seam, never as a crash.

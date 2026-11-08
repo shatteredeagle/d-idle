@@ -1,0 +1,3 @@
+BACKLOG: watchlayout: video inline at the top of /watch, minimap stitches neighbour areas (TASK-189)
+INDEX: docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
+CHANGELOG: Watch screen: the game video now sits at the top of the main page (collapse, full screen) with the map beside it; the map draws the area you just left next to the current one.

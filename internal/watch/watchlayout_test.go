@@ -87,3 +87,13 @@ func TestAppJSVideoReconnectAndCollapse(t *testing.T) {
 		t.Fatalf("%v\n%s", err, out)
 	}
 }
+
+func TestSensesJSStitchedWorldAndNeighbourCache(t *testing.T) {
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Skip("node not available")
+	}
+	if out, err := exec.Command(node, "testdata/senses_logic.js", "web/senses.js").CombinedOutput(); err != nil {
+		t.Fatalf("%v\n%s", err, out)
+	}
+}
