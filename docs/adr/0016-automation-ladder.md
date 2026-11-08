@@ -1,5 +1,5 @@
 ---
-status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap), amended 2026-11-06 (item 15: one worth unit, several scopes), amended by ADR 0017 (2026-11-07: ranking of work and Gate 2 waves)
+status: accepted, amended 2026-11-05 (items 13, 14, Parked: card cap), amended 2026-11-06 (item 15: one worth unit, several scopes), amended by ADR 0017 (2026-11-07: ranking of work and Gate 2 waves), amended by ADR 0018 (2026-11-07: items 10, 15, 16, 17, the loop and the altar economy)
 date: 2026-11-05
 decision-makers: user (grill 0005)
 ---
@@ -54,7 +54,7 @@ Tags: V read in the repo, S secondary or memory, U unverified, D the user's deci
 
 ### Learning
 
-10. The hero never stops for a question. A question appears as a thought in the Thoughts feed and the hero carries on with its default. A thought fades after a time (start about 30 to 60 seconds, U). A faded thought neither counts toward a streak nor resets one; the next occurrence makes a new thought. This reverses "needs-input: the hero waits safe in town" of 2026-11-05.
+10. The hero never stops for a question. A question appears as a thought in the Thoughts feed and the hero carries on with its default. A thought fades after a time (start about 30 to 60 seconds, U). A faded thought neither counts toward a streak nor resets one; the next occurrence makes a new thought. This reverses "needs-input: the hero waits safe in town" of 2026-11-05. *(Amended by ADR 0018: the fade is not a player-facing rule or a sink; unanswered questions queue for the return screen.)*
 11. The default is the untrained behaviour, plain and often poor. Not paying attention costs deaths and slow progress; that is the intended penalty. Irreversible choices (skill points, sacrifices, entering the next act) default to doing nothing. A poor default may cost time or lives but must never loop or stall.
 12. The same answer in the same context N times in a row teaches a rule. N is 2, 3 or 5 for safe, normal, risky, as tunable data. A different answer resets the streak. A sacrifice can skip one repetition. A new act or difficulty is a new context.
 13. Risk class is fixed per decision point in the catalogue. Answers are always fixed choices, never typed numbers. Every question offers "not sure, you decide", which uses the default and does not count. Risky points confirm before learning ("from now on I'll always do X here, OK?"); a no, or a confirm that fades, leaves the rule unlearned, and a no resets the streak.
@@ -62,9 +62,9 @@ Tags: V read in the repo, S secondary or memory, U unverified, D the user's deci
 
 ### Altar and economy
 
-15. Anything can be sacrificed, under one worth rule with no second currency. Worth follows the Horadric Cube ratios (V internal/cubejobs), so sacrificing a rune never beats cubing it. Each quality level names a minimum item class, so gold and junk pay only low levels. Nothing a vendor sells is worth more at the altar than the gold it cost. The farm goal reserves the runes its runeword needs. All values are one data table.
-16. Pace: each quality level is priced in the farming time of the tier below, and each tier takes longer than the last. First session shape: first rule learned within about 10 minutes (U); T0 unlocked and a first sacrifice made, with T1 in sight. Questions per 10 minutes and time to first unlock are logged, never pass or fail. The user judges the fun.
-17. Altar is the term (it was also called the forge). The worth table and quality levels live in the bot, in this repo. The object lives only on a private fork branch and only shows the altar and removes the item. Gate and A:B binaries never contain it. It is built after the store and the Thoughts feed. Shipping it waits for the GPL reviewer of ADR 0003.
+15. Anything can be sacrificed, under one worth rule with no second currency. Worth follows the Horadric Cube ratios (V internal/cubejobs), so sacrificing a rune never beats cubing it. Each quality level names a minimum item class, so gold and junk pay only low levels. Nothing a vendor sells is worth more at the altar than the gold it cost. The farm goal reserves the runes its runeword needs. All values are one data table. *(Amended by ADR 0018: the first sink is tally credited from observed events, spent on charters, order slots, perks and rule skips; no item first, the Raven's Mark stays deferred.)*
+16. Pace: each quality level is priced in the farming time of the tier below, and each tier takes longer than the last. First session shape: first rule learned within about 10 minutes (U); T0 unlocked and a first sacrifice made, with T1 in sight. Questions per 10 minutes and time to first unlock are logged, never pass or fail. The user judges the fun. *(Amended by ADR 0018: pacing targets are the logged targets of fun-ideas.md section 7, never a pass or fail.)*
+17. Altar is the term (it was also called the forge). The worth table and quality levels live in the bot, in this repo. The object lives only on a private fork branch and only shows the altar and removes the item. Gate and A:B binaries never contain it. It is built after the store and the Thoughts feed. Shipping it waits for the GPL reviewer of ADR 0003. *(Amended by ADR 0018: the altar stays parked; the ledger does its job without a fork object.)*
 
 ### Testing
 

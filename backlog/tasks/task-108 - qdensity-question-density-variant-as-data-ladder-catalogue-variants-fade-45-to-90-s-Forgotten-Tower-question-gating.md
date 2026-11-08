@@ -1,10 +1,11 @@
 ---
 id: TASK-108
 title: 'qdensity: question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating)'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-08T00:27:00Z'
 labels:
   - bot
   - feature
@@ -30,6 +31,8 @@ contracts: []
 Size: L
 
 Why: direction review section 7 step 3 and H1 experiment. Done when: a second 30-minute session with a different feel and a comparable record is possible.
+
+Deferred 2026-11-07 (ADR 0018): superseded by codexfirsts (TASK-130); question density in hour one comes from Act 1 firsts. Reopen only if the first playsession2 (TASK-134) shows a density problem the Codex does not fix.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
