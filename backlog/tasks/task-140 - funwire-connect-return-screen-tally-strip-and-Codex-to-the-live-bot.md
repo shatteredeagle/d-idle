@@ -1,7 +1,7 @@
 ---
 id: TASK-140
 title: 'funwire: connect return screen, tally strip and Codex to the live bot'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T02:12:00Z'

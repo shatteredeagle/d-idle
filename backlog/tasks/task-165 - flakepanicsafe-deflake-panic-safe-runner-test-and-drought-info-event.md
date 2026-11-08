@@ -1,7 +1,7 @@
 ---
 id: TASK-165
 title: 'flakepanicsafe: deflake panic-safe runner test and drought info event'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:21:00Z'

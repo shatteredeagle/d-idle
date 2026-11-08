@@ -1,7 +1,7 @@
 ---
 id: TASK-146
 title: 'classchores: per-class chore defaults for the policy sheet'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:03:00Z'
