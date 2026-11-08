@@ -1,0 +1,118 @@
+{
+  "schema": "alerts.rules/1",
+  "doc": "docs/unlock-alerts.md",
+  "note": "Event to alert rules (TASK-162). free rules are basic safety info and are never gated by the ladder row alerts. Text is the hero's voice; classText overrides it per class. Placeholders: {hero} {item} {quality} {monster} {area} {level} {pct} {reason} {from} {to}.",
+  "rules": [
+    {
+      "id": "death",
+      "event": "death",
+      "severity": "alarm",
+      "free": true,
+      "cooldownSecs": 0,
+      "text": "Stay a while and listen: the hero has died to {monster} in {area}.",
+      "classText": {
+        "amazon": "The Amazon falls to {monster} in {area}. Her spear lies cold.",
+        "sorceress": "The Sorceress is spent. {monster} ended her in {area}.",
+        "necromancer": "The Necromancer joins his own dead, taken by {monster} in {area}.",
+        "paladin": "The Paladin is down. {monster} took her in {area}; the Light waits.",
+        "barbarian": "The Barbarian is felled by {monster} in {area}. The mountain is quiet.",
+        "druid": "The Druid is torn down by {monster} in {area}. The wolves howl.",
+        "assassin": "The Assassin is caught by {monster} in {area}. The shadows close."
+      }
+    },
+    {
+      "id": "low_life",
+      "event": "low_life",
+      "filters": {
+        "belowPct": 30
+      },
+      "severity": "warn",
+      "free": true,
+      "cooldownSecs": 120,
+      "text": "The hero is hurt badly: life is down to {pct}% in {area}."
+    },
+    {
+      "id": "unique_drop",
+      "event": "drop",
+      "filters": {
+        "qualities": [
+          "unique",
+          "set"
+        ]
+      },
+      "severity": "good",
+      "free": false,
+      "cooldownSecs": 0,
+      "text": "Something glints in the dust: {item} ({quality})."
+    },
+    {
+      "id": "rare_drop",
+      "event": "drop",
+      "filters": {
+        "qualities": [
+          "rare",
+          "rune"
+        ]
+      },
+      "severity": "info",
+      "free": false,
+      "cooldownSecs": 300,
+      "text": "A fine find, stranger: {item} ({quality})."
+    },
+    {
+      "id": "boss_kill",
+      "event": "kill",
+      "filters": {
+        "boss": true
+      },
+      "severity": "good",
+      "free": false,
+      "cooldownSecs": 0,
+      "text": "{monster} has fallen. The hero stands over the remains."
+    },
+    {
+      "id": "level_up",
+      "event": "level_up",
+      "filters": {
+        "minLevel": 2
+      },
+      "severity": "info",
+      "free": false,
+      "cooldownSecs": 0,
+      "text": "The hero has grown stronger: level {level}.",
+      "classText": {
+        "amazon": "The bow sings louder: level {level}.",
+        "sorceress": "Sparks climb the staff: level {level}.",
+        "necromancer": "The bones answer sharper: level {level}.",
+        "paladin": "The Light burns brighter: level {level}.",
+        "barbarian": "The axe feels lighter: level {level}.",
+        "druid": "The roots run deeper: level {level}.",
+        "assassin": "The blades move faster: level {level}."
+      }
+    },
+    {
+      "id": "back_in_town",
+      "event": "town",
+      "severity": "info",
+      "free": false,
+      "cooldownSecs": 900,
+      "text": "The hero is back in {area} and ready to trade."
+    },
+    {
+      "id": "pact_pause",
+      "event": "pact_pause",
+      "severity": "warn",
+      "free": false,
+      "cooldownSecs": 0,
+      "text": "A Pact holds the hero in town and waits for you: {reason}"
+    },
+    {
+      "id": "proposal_waiting",
+      "event": "proposal",
+      "severity": "info",
+      "free": false,
+      "cooldownSecs": 600,
+      "text": "The hero would like to leave {from} for {to} and awaits your word."
+    }
+  ]
+}
