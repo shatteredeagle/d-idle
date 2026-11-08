@@ -1,3 +1,0 @@
-BACKLOG: policydryrun (TASK-205): policy sheet previews what a change would have done before saving (stance and pickup rows computed from recorded events, others say why not).
-INDEX: docs/policy-preview.md - policy preview (dry run before saving a policy row), honesty rule, which rows support it
-CHANGELOG: The policy sheet shows a preview card ("if this had been on for the last hour...") with Save and Cancel before a row changes; rows without recorded evidence say so.

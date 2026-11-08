@@ -642,6 +642,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-102 fid-load-maxmana: NO d2d deviation, the Pally max mana 19.0 was the bot reader (internal/d2dsrc/player.go:215); d2d holds 4992 (V run); TASK-76 price: already upstream, re-run on 1453f853 (seed 7: 1/0/13, overflow family only); TASK-78 belt: 780,000 oracle cases 0 differ, already upstream; TASK-79 inv limits: caps and grids equal, one deviation (load gold clamp, 363 of 539 before, 0 after) with local candidate local/fid-load-gold-clamp 42d40b09, card TASK-203; TASK-91 hit recovery: length 110,836, decision 73,694 frames, frames 1.7M ticks all 0 differ, mode-gate for a hit during a cast stays U
 - walksmooth2 (TASK-196): Paladin pauses were observation latency (three snapshot readers on one channel, 850 ms per observe); minimap and guard now reuse the walker's snapshot; nav.trace timing lines in the dev image
 - whyline (TASK-206): the watch screen shows a one-line reason under the video card, built from the bot's real decision reasons (docs/whyline.md)
+- policydryrun (TASK-205): policy sheet previews what a change would have done before saving (stance and pickup rows computed from recorded events, others say why not).
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -877,3 +877,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/pr-load-gold-draft.md | TASK-203 local PR draft: a saved purse or stash over its cap is 0 on entering a game (2026-11-08)
 - docs/walksmooth.md: walksmooth2 section (measured causes, trace lines, fix)
 - docs/whyline.md - why-line under the video card: reason codes, templates, hold rules
+- docs/policy-preview.md - policy preview (dry run before saving a policy row), honesty rule, which rows support it
