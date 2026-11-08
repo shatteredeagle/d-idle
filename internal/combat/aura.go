@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -131,6 +132,9 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	if p.Area != f.auraArea {
 		f.auraDirty, f.auraArea = true, p.Area
 	}
+	if now.Before(f.auraRetryAt) { // a failed apply backs off even when the area or a death marks the aura dirty
+		return false, nil
+	}
 	if !force && !f.auraDirty && now.Sub(f.auraChecked) < ms(f.tune().AuraCheckMs) {
 		return false, nil
 	}
@@ -145,7 +149,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	}
 	// A hotkey press changes the aura at once when one is active; with none active the right click casts it.
 	for try := 0; try < 3; try++ {
-		if err := f.cast(snap, want, input.Point{X: p.X, Y: p.Y}); err != nil {
+		if err := f.applyAura(ctx, snap, want); err != nil {
 			return false, err
 		}
 		if err := f.sleep(ctx, 250*time.Millisecond); err != nil {
@@ -155,15 +159,38 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 		if err != nil {
 			return false, err
 		}
+		f.lastRight = s.Player.RightSkill
 		if cur, ok := f.ActiveAura(s.Player); (ok && cur == want.ID) || (!ok && s.Player.RightSkill == want.ID) {
 			f.auraDirty = false
 			f.info("aura up", "skill", want.Name, "tries", try+1)
 			return true, nil
 		}
 	}
-	f.info("aura did not come up", "skill", want.Name)
-	f.auraChecked = now.Add(10 * time.Second) // do not hammer the key when something blocks it
+	f.info("aura did not come up", "skill", want.Name, "id", want.ID, "right", f.lastRight)
+	f.auraRetryAt = now.Add(auraRetryBackoff) // do not hammer the key when something blocks it
 	return false, nil
+}
+
+// auraRetryBackoff is how long a failed aura apply waits before the next try (V live, palready: without it the
+// dirty flag made every combat tick press the key again, 140 lines in 22 minutes).
+const auraRetryBackoff = 10 * time.Second
+
+// applyAura presses the aura's hotkey. On d2d there are no hotkeys: V live (palready, docs/palready.md) "cmd skill" casts
+// at the point and never changes the selected skill, and "cmd select" is accepted but leaves rskill unchanged even with
+// the picker open, so the aura is picked through the right skill popup (SetRight, read back from the state).
+func (f *Fighter) applyAura(ctx context.Context, snap *d2.Snapshot, want SkillSpec) error {
+	if f.D2D {
+		err := f.SetRight(ctx, want.ID)
+		if err != nil && !errors.Is(err, ErrBindFailed) {
+			return err
+		}
+		if err != nil {
+			f.info("aura popup pick failed", "err", err.Error(), "cells", len(f.popupCells(snap.Player, want.ID)), "rows", len(f.listRows))
+		}
+		return nil
+	}
+	p := snap.Player
+	return f.cast(snap, want, input.Point{X: p.X, Y: p.Y})
 }
 
 func hasBandAura(p *Profile) bool {
