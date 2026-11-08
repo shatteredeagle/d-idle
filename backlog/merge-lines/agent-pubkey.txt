@@ -1,1 +1,0 @@
-BACKLOG: TASK-124 release public key committed (deploy/d2d-container/pubkeys/current.pub); user steps for the GitHub environment still open
