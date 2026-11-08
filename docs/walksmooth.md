@@ -26,3 +26,27 @@ Before the change the stop-short cases end in `ErrStuck` (3 of 5 cases fail; the
 ## Not done / needs the game
 - The live timing of `cmd move` in realtime was not measured: a realtime debug run on a worker slot was refused by the permission system in this session. Recipe: `docs/probes/walksmooth/run.sh w1 7 4m` on the worker (realtime, debug log: `nav click` lines carry position and waypoint) and compare click intervals with `nav stuck`.
 - Whether the Paladin really walked (U): read `stam` in the minute lines after the update; with the heal it must drop below `stamMax` during travel.
+
+## walksmooth2 (TASK-196, 2026-11-08): the pauses were observation latency, measured live
+Tags: V = measured in the user's dev container (hero Doofer, realtime d2d), S = read in code, U = unverified.
+
+### Trace (dev image only)
+`nav.trace` lines in the bot log (on when `DIDLE_DEV` is set or `D2BOT_NAV_TRACE=1`; never in a stamped release): `click` (from, to, dist, reason first/newwp/still/retry, snapMs/updMs of the observation it was based on, clickMs of the command, gapMs since the last click), `stall`/`resume` (two polls without movement, pause length), `plan` (ms), `leg` (one per walk: duration, path subtiles, speed, clicks per 100 subtiles, still time, polls, mean/max observe ms, callers), `move` (primeMs, runMs, cmdMs, stam, runBelieved per move command), `snapcallers` (every 30 s: who asked for a full snapshot, count and mean ms) and the existing `d2dtrace` verb table. Code: `internal/nav/trace.go`, `internal/d2denv/snapstats.go`.
+
+### Before (first 40 minutes after the walksmooth deploy, logs; 850 ms per observe)
+- Travel legs: 3.6 to 5.9 subtiles/s (walk 9.4, run 14), path/net ratio 2 to 2.5 (the walker clicked waypoints behind it because its position was stale), 10 to 12 clicks per 100 subtiles, click gaps 1.0 to 2.5 s (median about 1.2 s), 54 `nav stuck` lines in 40 minutes (13 to 19 subtiles from the waypoint: the click was long since spent), every walk start cost 2 s.
+- Cause (V, `snapcallers` + `d2dtrace`): ONE observation took 500 to 1100 ms (snapshot about 340 ms, world update 16 to 166 ms, measured by `nav.trace click` snapMs/updMs and the leg obsAvgMs 800 to 900). Three readers queued full snapshots on the one control channel: the walker, the safety guard (`bot.guardOnce` -> `poll`, about 2 reads per second) and the minimap feed (`sensesFeedUnits` -> `unitSource.Units`, a second full snapshot INSIDE every second nav observe). The channel answers one line per d2d frame (V: every verb in the `d2dtrace` table averages 16.6 ms, also the eight lines of a prefetch batch, so a snapshot is about 10 frames = 170 ms alone). The walker saw its own position about one second late, so the character reached the click target and stood until the next poll.
+- Not the cause (V): plan time (0 to 2 ms), `cmd move` itself (16 ms), the pointer-over-unit effect (`cmd move` is a semantic command, no pointer, S), the stuck ladder (it fires only after the pause already happened).
+
+### Fix
+1. `d2denv.Reader.Recent(maxAge)`: the last full snapshot when it is younger than maxAge.
+2. `sensesUnits` (`cmd/d2bot/sensesunits.go`) uses the snapshot the nav observe just read (`recentSnapAge` 1 s) instead of a second read.
+3. The safety guard (`Runner.pollWith(true)` from `guardOnce`) takes a snapshot younger than `guardPollReuse` (350 ms); the main loop's `poll()` still reads fresh (act then look).
+Tests: `TestReaderRecent`, `TestUnitSourceReusesTheWalkersSnapshot`, `TestGuardPollReusesRecentSnapshot` (Sorceress and Paladin), `TestWalkTraceOffAndOn`.
+
+### After (same container, minutes after the deploy)
+Observe 400 ms instead of 850 (snapcallers: the minimap reader is gone, the guard drops from about 62 to 47 reads per 30 s with the 150 ms window; 350 ms window added after), travel legs 9.3 to 11.5 subtiles/s, click gaps 0.5 to 0.6 s, 11 to 12 clicks per 100 subtiles, path/net ratio near 1.
+
+### Left over (not fixed here)
+- Fork evidence: d2d answers one channel line per frame (16.6 ms each) even for a pipelined batch; a pump that dispatches every complete line per frame would make a snapshot about 17 ms instead of 170 ms. Card for the fork (no upstream posting): `Channel::pump` dispatch all complete lines per frame in realtime (the lab4 build did it for lockstep only, docs/d2d-pace.md).
+- Short walks (one waypoint, 5 subtiles) cost about 2 s each: observe, plan, click, observe. Combat approach steps call `GoTo` once per step; a cheaper position-only poll during a walk (one `debug players` instead of a snapshot) would cut the poll to 17 ms. Not done: the guard and the monster signature need the snapshot.
