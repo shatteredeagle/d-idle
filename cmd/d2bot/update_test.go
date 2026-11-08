@@ -10,9 +10,9 @@ import (
 )
 
 func TestUpdateCheckSwitch(t *testing.T) {
-	for v, want := range map[string]bool{"": true, "on": true, "off": false, "OFF": false, "0": false, "false": false, "no": false} {
+	for v, want := range map[string]bool{"": true, "on": true, "manual": true, "off": false, "OFF": false, "0": false, "false": false, "no": false} {
 		t.Setenv("D2BOT_UPDATE_CHECK", v)
-		if got := updateCheckEnabled(); got != want {
+		if got := updateCheckMode() != selfupdate.CheckOff; got != want {
 			t.Errorf("D2BOT_UPDATE_CHECK=%q: %v", v, got)
 		}
 	}
@@ -39,5 +39,22 @@ func TestNewUpdaterNeedsRootAndKey(t *testing.T) {
 	}
 	if s := e.Status(); s.CheckEnabled || s.Running != version {
 		t.Fatalf("status %+v", s)
+	}
+}
+
+// A DEV image trusts the dev key although no key is baked; a normal image ignores the same variables.
+func TestNewUpdaterDevSource(t *testing.T) {
+	root, keys := t.TempDir(), t.TempDir()
+	t.Setenv("D2BOT_UPDATE_DIR", root)
+	t.Setenv("D2BOT_UPDATE_KEYS", keys)
+	pub, _, _ := selfupdate.GenerateKey(rand.Reader)
+	t.Setenv("D2BOT_UPDATE_URL", "http://lan.example:8899")
+	t.Setenv("D2BOT_UPDATE_PUBKEY", string(selfupdate.EncodePublicKey(pub)))
+	if newUpdater(nil) != nil {
+		t.Fatal("a normal image honoured the dev variables")
+	}
+	t.Setenv("DIDLE_DEV", "1")
+	if newUpdater(nil) == nil {
+		t.Fatal("a dev image did not take the dev key")
 	}
 }

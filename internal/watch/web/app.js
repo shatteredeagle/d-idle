@@ -509,7 +509,20 @@
   // is refused (viewer limit, capture restart). The token, if any, rides along from this page's own address.
   function video(url) {
     var shot = $('shot'), t = new URLSearchParams(location.search).get('t'), tries = 0;
-    $('gamepane').hidden = false; $('tab-game').hidden = false;
+    var pane = $('gamepane'), col = $('video-collapse');
+    pane.hidden = false;
+    function collapse(on) {
+      pane.classList.toggle('collapsed', on); col.setAttribute('aria-pressed', String(on)); col.textContent = on ? 'Expand' : 'Collapse';
+      try { localStorage.setItem('d2videocollapsed', on ? '1' : '0'); } catch (e) { /* storage blocked */ }
+    }
+    var saved = null;
+    try { saved = localStorage.getItem('d2videocollapsed'); } catch (e) { /* storage blocked */ }
+    if (saved === '1') { pane.classList.add('collapsed'); col.setAttribute('aria-pressed', 'true'); col.textContent = 'Expand'; }
+    col.addEventListener('click', function () { collapse(!pane.classList.contains('collapsed')); });
+    $('video-full').addEventListener('click', function () {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (pane.requestFullscreen) pane.requestFullscreen();
+    });
     function connect() {
       var q = [];
       if (t) q.push('t=' + encodeURIComponent(t));
@@ -519,7 +532,7 @@
     shot.addEventListener('load', function () { tries = 0; shot.hidden = false; $('noframe').hidden = true; });
     shot.addEventListener('error', function () {
       shot.hidden = true; $('noframe').hidden = false;
-      tries++; setTimeout(connect, Math.min(15000, 1000 * tries));
+      tries++; setTimeout(connect, Math.min(15000, 1000 * tries)); // backoff 1 s, 2 s ... capped at 15 s
     });
     $('noframe').hidden = false;
     connect();

@@ -858,3 +858,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/first-session.md: first play session guide (start, screens, wired vs fixtures table, 30 minute run sheet, baseline sessions, troubleshooting, known broken, for a friend) (TASK-134)
 - docs/soaks/recoverypace.md - recoverypace: why the early game is a gold loop, the fix and the before/after drill (TASK-183)
 - docs/smoke.md - smoke run: how to run, rules, cost, difference from Gate 1/2 (tools area)
+- docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
+- docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
+- docs/stance.md - fight stance row and the 2026-11-08 Paladin feedback diagnosis
+- docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)
+- docs/watch-origin.md: same-origin rule for login and setup POSTs (Origin null, Sec-Fetch-Site)
+- docs/research/update-surface.md: update surface review: layered image inventory with measured sizes, platform ABI contract, migrations, A/B stage-0 shim, root-key delegation, phased cards P1-P4
+- docs/research/incremental-arpg.md: deep pass on idle/incremental ARPG-like games, top mechanics to borrow, anti-patterns, proposed cards

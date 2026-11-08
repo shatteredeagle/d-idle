@@ -1,0 +1,40 @@
+---
+id: TASK-193
+title: 'originfix: Safari login 403 forbidden origin (Origin null)'
+status: Proposed
+assignee:
+  - credit-runner
+created_date: '2026-11-08T16:22:00Z'
+labels:
+  - watch
+  - bug
+milestone: m-1
+dependencies: []
+priority: high
+ordinal: 156000
+card: "originfix"
+owns:
+  - "internal/access/sameorigin.go"
+  - "internal/access/sameorigin_test.go"
+  - "internal/watch/gate.go"
+  - "internal/watch/gate_test.go"
+  - "cmd/d2dsetup/server.go"
+  - "cmd/d2dsetup/d2dsetup_test.go"
+  - "docs/watch-origin.md"
+exclusive: []
+contracts: []
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: S
+
+Why: TODO. Done when: TODO.
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [ ] #1 SameOrigin helper with table tests; login and setup use it; Referrer-Policy same-origin
+- [ ] #2 deployed to the dev container and curl-verified
+<!-- AC:END -->

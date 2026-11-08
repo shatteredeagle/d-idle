@@ -135,3 +135,51 @@ func TestMoveToStallWaitIsClockTime(t *testing.T) {
 		t.Fatalf("stall cost %v of clock time", got)
 	}
 }
+
+// WALKSMOOTH: the belief says running, but stamina never drains during a long walk outside town: the character is
+// walking (the toggle started on). One extra key press fixes it, never more than driftMaxHeals, never in town.
+func TestRunBeliefHealsWhenStaminaNeverDrains(t *testing.T) {
+	for _, tc := range []struct {
+		name  string
+		level string
+		keys  int
+	}{
+		{"field", "2 30.70 13.70 57 41 864 912", 1 + driftMaxHeals}, // first press + the corrections
+		{"town", "1 30.70 13.70 57 41 864 912", 1},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			fix := fake.Sample()
+			fix.Level = tc.level
+			c, srv := rig(t, fix)
+			c.Run = DefaultRunPolicy()
+			clk := c.Clock.(*fclock)
+			for i := 0; i < 80; i++ { // 80 moves, 300 ms apart: 24 s of continuous walking at full stamina
+				if err := c.Move(input.Point{X: 175 + i, Y: 70}); err != nil {
+					t.Fatal(err)
+				}
+				clk.Sleep(300 * time.Millisecond)
+			}
+			if k := countLines(srv, "key r"); k != tc.keys {
+				t.Fatalf("%d run keys, want %d", k, tc.keys)
+			}
+		})
+	}
+}
+
+// A walk with gaps (fights between moves) at full stamina is not evidence of anything.
+func TestRunBeliefHealIgnoresSeparateMoves(t *testing.T) {
+	fix := fake.Sample()
+	fix.Level = "2 30.70 13.70 57 41 864 912"
+	c, srv := rig(t, fix)
+	c.Run = DefaultRunPolicy()
+	clk := c.Clock.(*fclock)
+	for i := 0; i < 40; i++ {
+		if err := c.Move(input.Point{X: 175 + i, Y: 70}); err != nil {
+			t.Fatal(err)
+		}
+		clk.Sleep(3 * time.Second)
+	}
+	if k := countLines(srv, "key r"); k != 1 {
+		t.Fatalf("%d run keys, want 1", k)
+	}
+}

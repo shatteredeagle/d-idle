@@ -41,8 +41,33 @@ type PolicyOption struct {
 	Risk       string             `json:"risk,omitempty"` // one line, required with suboptimal
 	Rules      []PolicyRule       `json:"rules,omitempty"`
 	Knobs      map[string]float64 `json:"knobs,omitempty"`
-	Applies    string             `json:"applies,omitempty"`
-	Note       string             `json:"note,omitempty"`
+	// ClassKnobs are knob values per catalogue class, added to Knobs (a class value wins). When present every
+	// catalogue class must have an entry: a missing class is an error naming it, never a fallback to another class.
+	ClassKnobs map[string]map[string]float64 `json:"classKnobs,omitempty"`
+	// Says is the option in plain words for the sheet and the before/after card.
+	Says    string `json:"says,omitempty"`
+	Applies string `json:"applies,omitempty"`
+	Note    string `json:"note,omitempty"`
+}
+
+// KnobsFor is the knob values the option sets for a class: Knobs with the class's ClassKnobs on top. An option with
+// class knobs and a class without an entry is an error naming the class.
+func (o *PolicyOption) KnobsFor(class string) (map[string]float64, error) {
+	out := make(map[string]float64, len(o.Knobs))
+	for k, v := range o.Knobs {
+		out[k] = v
+	}
+	if len(o.ClassKnobs) == 0 {
+		return out, nil
+	}
+	ck, ok := o.ClassKnobs[class]
+	if !ok {
+		return nil, fmt.Errorf("decide: policy option %q has no knob values for class %q", o.ID, class)
+	}
+	for k, v := range ck {
+		out[k] = v
+	}
+	return out, nil
 }
 
 // EffectCounter names one counter of the effect line of a row (the watch package computes it from the event stream).
@@ -133,7 +158,7 @@ func (r *PolicyRow) validate(cat *Catalogue) error {
 	if err != nil {
 		return fmt.Errorf("decide: policy row %q: default: %w", r.ID, err)
 	}
-	if len(def.Rules) > 0 || len(def.Knobs) > 0 || def.Suboptimal {
+	if len(def.Rules) > 0 || len(def.Knobs) > 0 || len(def.ClassKnobs) > 0 || def.Suboptimal {
 		return fmt.Errorf("decide: policy row %q: the default option must change nothing (it is today's behaviour)", r.ID)
 	}
 	seen := map[string]bool{}
@@ -153,6 +178,18 @@ func (r *PolicyRow) validate(cat *Catalogue) error {
 		}
 		if err := cat.checkPolicyRules(o.Rules); err != nil {
 			return fmt.Errorf("decide: policy row %q option %q: %w", r.ID, o.ID, err)
+		}
+		if len(o.ClassKnobs) > 0 {
+			for c := range o.ClassKnobs {
+				if _, ok := cat.Classes[c]; !ok {
+					return fmt.Errorf("decide: policy row %q option %q: classKnobs name unknown class %q", r.ID, o.ID, c)
+				}
+			}
+			for c := range cat.Classes {
+				if _, ok := o.ClassKnobs[c]; !ok {
+					return fmt.Errorf("decide: policy row %q option %q: classKnobs has no entry for class %q", r.ID, o.ID, c)
+				}
+			}
 		}
 	}
 	return nil

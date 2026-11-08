@@ -44,3 +44,6 @@ internal/gear/stamp.json
 /docs/cards.md
 cmd/d2dsetup/d2dsetup
 .smoke-*.err
+
+# dev-loop update (TASK-192): a tree shipped to the worker host for building
+/.devupdate-src/

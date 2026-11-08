@@ -1,0 +1,11 @@
+# Dev-loop override (docs/dev-update.md). Make the image once with DEV=1 (tools/dev-update.sh --image), then change the bot as
+# often as you like:
+#   D2_IMAGE=d2dbot:dev D2_DEV_URL=http://<worker host>:<port> D2_DEV_PUBKEY="$(cat ~/.config/didle-dev/update-ed25519.pub)" \
+#     D2_GAME_DIR=... D2_WATCH_ORIGIN=... docker compose -f compose.tester.yml -f docker-compose.dev.yml up -d
+# then `tools/dev-update.sh --to <container>` from the repo. The key is the DEV key, never the release key.
+services:
+  d2dbot:
+    environment:
+      D2BOT_UPDATE_URL: ${D2_DEV_URL:?set D2_DEV_URL to the dev update server, e.g. http://worker:18899}
+      D2BOT_UPDATE_PUBKEY: ${D2_DEV_PUBKEY:?set D2_DEV_PUBKEY to the contents of the dev .pub file}
+      D2BOT_UPDATE_CHECK: manual

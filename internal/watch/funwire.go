@@ -3,6 +3,7 @@ package watch
 import (
 	"errors"
 	"fmt"
+	"log/slog"
 	"net/http"
 	"strings"
 	"sync"
@@ -309,6 +310,11 @@ func NewFun(c FunConfig) (*Fun, error) {
 			return nil, err
 		}
 		f.Policy = ps
+		h.OnClass(func() {
+			if err := ps.EnsureStart(); err != nil {
+				slog.Warn("policy sheet: class start", "err", err)
+			}
+		})
 		sec.Register(PolicySectionID, ps.Section())
 	}
 	if c.Hall != nil {

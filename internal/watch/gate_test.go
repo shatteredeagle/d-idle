@@ -138,6 +138,21 @@ func TestLoginLockoutAndNoLeak(t *testing.T) {
 	}
 }
 
+func TestLoginNullOrigin(t *testing.T) {
+	rec := passRec(t, "four plain words")
+	h := newAccess(t, &rec).viewGate("", ok204)
+	// Safari/WebKit sends Origin: null after a no-referrer form POST; Sec-Fetch-Site same-origin rescues it, cross-site does not
+	if w := do(h, "POST", "/login", form("wrong words here"), map[string]string{"Origin": "null", "Sec-Fetch-Site": "same-origin"}); w.Code != 401 {
+		t.Errorf("null+same-origin login: %d", w.Code)
+	}
+	if w := do(h, "POST", "/login", form("wrong words here"), map[string]string{"Origin": "null", "Sec-Fetch-Site": "cross-site"}); w.Code != 403 {
+		t.Errorf("null+cross-site login: %d", w.Code)
+	}
+	if w := do(h, "POST", "/login", form("wrong words here"), map[string]string{"Origin": "null"}); w.Code != 403 {
+		t.Errorf("bare null login: %d", w.Code)
+	}
+}
+
 func TestViewGateTokenKindAndNoFile(t *testing.T) {
 	for name, rec := range map[string]*access.Record{"no file": nil, "token kind": func() *access.Record { r := access.TokenRecord(time.Now()); return &r }()} {
 		h := newAccess(t, rec).viewGate("tok", ok204)

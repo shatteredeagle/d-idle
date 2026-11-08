@@ -47,6 +47,9 @@ type Controller struct {
 	runPresses int
 	runResets  int
 	walkRaw    string
+	runHeals   int       // run-key presses made because stamina never drained while running was believed (run.go)
+	chainStart time.Time // start of the current chain of moves at full stamina
+	lastMoveAt time.Time
 }
 
 // New returns a Controller with default transform and polling.

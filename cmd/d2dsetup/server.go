@@ -6,8 +6,8 @@ import (
 	"encoding/json"
 	"errors"
 	"io/fs"
+	"log"
 	"net/http"
-	"net/url"
 	"strings"
 
 	"d2lod-bot/internal/access"
@@ -161,7 +161,7 @@ func (s *Server) putAccess(rw http.ResponseWriter, r *http.Request) {
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := w.Header()
 	h.Set("Cache-Control", "no-store")
-	h.Set("Referrer-Policy", "no-referrer")
+	h.Set("Referrer-Policy", "same-origin")
 	h.Set("X-Content-Type-Options", "nosniff")
 	h.Set("Content-Security-Policy", "default-src 'self'; frame-ancestors 'none'")
 	got := strings.TrimPrefix(r.Header.Get("Authorization"), "Bearer ")
@@ -189,11 +189,10 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.Method != http.MethodGet && r.Method != http.MethodHead {
-		if o := r.Header.Get("Origin"); o != "" {
-			if u, err := url.Parse(o); err != nil || u.Host != r.Host {
-				http.Error(w, "forbidden origin", http.StatusForbidden)
-				return
-			}
+		if !access.SameOrigin(r) {
+			log.Printf("setup: forbidden origin (Origin=%q Referer-set=%t Sec-Fetch-Site=%q Host=%q)", r.Header.Get("Origin"), r.Header.Get("Referer") != "", r.Header.Get("Sec-Fetch-Site"), r.Host)
+			http.Error(w, "forbidden origin", http.StatusForbidden)
+			return
 		}
 		if ct := r.Header.Get("Content-Type"); r.ContentLength != 0 && !strings.HasPrefix(ct, "application/json") {
 			http.Error(w, "content type must be application/json", http.StatusUnsupportedMediaType)

@@ -67,6 +67,8 @@ type PolicySheet struct {
 	mu      sync.Mutex
 	changes []PolicyChange
 	started map[string]bool // classes whose starting options were applied
+	// reapplyClass: Reapply ran before the class was known and left the class-specific knobs for EnsureStart.
+	reapplyClass bool
 }
 
 // NewPolicySheet checks that every effect counter of the table exists; an unknown one is an error naming it.
@@ -197,7 +199,10 @@ func (p *PolicySheet) set(row *decide.PolicyRow, opt *decide.PolicyOption, recor
 		return PolicyChange{Row: row.ID, From: from, To: opt.ID}, false, nil
 	}
 	prev, _ := row.Option(from)
-	over := knobEdit(prev, opt)
+	over, err := knobEdit(prev, opt, strings.ToLower(p.class()))
+	if err != nil {
+		return PolicyChange{}, false, fmt.Errorf("watch: policy %s/%s: %w", row.ID, opt.ID, err)
+	}
 	if len(over) > 0 {
 		if p.knobs == nil {
 			return PolicyChange{}, false, fmt.Errorf("%w (row %q, option %q)", ErrPolicyNoKnobs, row.ID, opt.ID)
@@ -208,7 +213,7 @@ func (p *PolicySheet) set(row *decide.PolicyRow, opt *decide.PolicyOption, recor
 	}
 	if err := p.store.SetPolicy(row.ID, opt.ID, opt.Rules); err != nil {
 		if len(over) > 0 {
-			back := knobEdit(opt, prev)
+			back, _ := knobEdit(opt, prev, strings.ToLower(p.class()))
 			if e := p.knobs(back); e != nil {
 				err = fmt.Errorf("%w (and the knobs could not be put back: %v)", err, e)
 			}
@@ -225,18 +230,26 @@ func (p *PolicySheet) set(row *decide.PolicyRow, opt *decide.PolicyOption, recor
 }
 
 // knobEdit is the edit that takes the knobs from option a to option b: b's values, and a reset for what only a set.
-func knobEdit(a, b *decide.PolicyOption) map[string]*float64 {
+func knobEdit(a, b *decide.PolicyOption, class string) (map[string]*float64, error) {
 	over := map[string]*float64{}
 	if a != nil {
-		for k := range a.Knobs {
+		ak, err := a.KnobsFor(class)
+		if err != nil {
+			return nil, err
+		}
+		for k := range ak {
 			over[k] = nil
 		}
 	}
-	for k, v := range b.Knobs {
+	bk, err := b.KnobsFor(class)
+	if err != nil {
+		return nil, err
+	}
+	for k, v := range bk {
 		v := v
 		over[k] = &v
 	}
-	return over
+	return over, nil
 }
 
 // Reapply sets the knobs of every stored option again (the store is the truth; the tuner keeps its own copy and may
@@ -245,6 +258,7 @@ func (p *PolicySheet) Reapply() error {
 	if p.knobs == nil {
 		return nil
 	}
+	class := strings.ToLower(p.class())
 	over := map[string]*float64{}
 	for _, pv := range p.store.Policies() {
 		row, err := p.table.Row(pv.Row)
@@ -255,7 +269,23 @@ func (p *PolicySheet) Reapply() error {
 		if err != nil {
 			return err
 		}
-		for k, v := range opt.Knobs {
+		if class == "" && len(opt.ClassKnobs) > 0 {
+			// The class is not known yet (the first snapshot is still to come): the class-specific knobs follow in
+			// EnsureStart, which runs when the class shows up.
+			p.mu.Lock()
+			p.reapplyClass = true
+			p.mu.Unlock()
+			for k, v := range opt.Knobs {
+				v := v
+				over[k] = &v
+			}
+			continue
+		}
+		kv, err := opt.KnobsFor(class)
+		if err != nil {
+			return err
+		}
+		for k, v := range kv {
 			v := v
 			over[k] = &v
 		}
@@ -265,6 +295,31 @@ func (p *PolicySheet) Reapply() error {
 	}
 	return p.knobs(over)
 }
+
+// EnsureStart settles what needs the hero's class: the class's starting options and the class-specific knobs of the
+// stored options. Call it when the class becomes known. Before that it does nothing (ErrPolicyNoClass is not an error
+// here).
+func (p *PolicySheet) EnsureStart() error {
+	_, _, err := p.rows()
+	if errors.Is(err, ErrPolicyNoClass) {
+		return nil
+	}
+	if err != nil {
+		return err
+	}
+	p.mu.Lock()
+	again := p.reapplyClass
+	p.reapplyClass = false
+	p.mu.Unlock()
+	if again {
+		return p.Reapply()
+	}
+	return nil
+}
+
+// SetStarts replaces the source of the class's starting options (nil: the embedded table). The bot sets one that gives
+// nothing when a named run (D2BOT_RUN, a gate or soak) is on, so a measured run keeps today's knobs.
+func (p *PolicySheet) SetStarts(f func(class string) (map[string]string, error)) { p.starts = f }
 
 // Changes lists this run's changes, oldest first.
 func (p *PolicySheet) Changes() []PolicyChange {
@@ -438,6 +493,7 @@ type PolicyOptionView struct {
 	Default    bool     `json:"default,omitempty"`
 	Suboptimal bool     `json:"suboptimal,omitempty"`
 	Risk       string   `json:"risk,omitempty"`
+	Says       string   `json:"says,omitempty"`    // the option in plain words
 	Applies    string   `json:"applies,omitempty"` // part, record or empty (fully wired)
 	Note       string   `json:"note,omitempty"`
 	Rules      []string `json:"rules,omitempty"`
@@ -491,8 +547,13 @@ func (p *PolicySheet) View() (PolicyView, error) {
 			for _, ru := range o.Rules {
 				ov.Rules = append(ov.Rules, p.store.PlainRule(ru))
 			}
-			ks := make([]string, 0, len(o.Knobs))
-			for k, val := range o.Knobs {
+			kv, kerr := o.KnobsFor(class)
+			if kerr != nil {
+				return PolicyView{}, kerr
+			}
+			ov.Says = o.Says
+			ks := make([]string, 0, len(kv))
+			for k, val := range kv {
 				ks = append(ks, fmt.Sprintf("%s = %v", k, val))
 			}
 			sort.Strings(ks)
@@ -549,6 +610,9 @@ func (p *PolicySheet) Section() ReturnSection {
 			to, _ := row.Option(ch.To)
 			from, _ := row.Option(ch.From)
 			head := fmt.Sprintf("%s: now \"%s\" (was \"%s\").", row.Label, to.Label, from.Label)
+			if to.Says != "" {
+				head += " " + to.Says
+			}
 			win, why := p.window(ch)
 			if why != "" {
 				sv.Lines = append(sv.Lines, head+" No comparison yet: "+why+".")
@@ -713,7 +777,7 @@ var policyTmpl = template.Must(template.New("policy").Parse(`<!DOCTYPE html>
 {{range .Rows}}<section class="card" data-row="{{.ID}}" aria-labelledby="row-{{.ID}}"><h2 id="row-{{.ID}}">{{.Label}}</h2><p>{{.Help}}</p>
 <div class="opts">{{$row := .ID}}{{range .Options}}<div class="opt{{if .Current}} cur{{end}}">
 <button type="button" class="btn small{{if .Current}} primary{{end}}" data-act="policy" data-row="{{$row}}" data-option="{{.ID}}" {{if .Current}}aria-pressed="true"{{else}}aria-pressed="false"{{end}}>{{.Label}}</button>
-{{if .Default}}<span class="badge">default</span>{{end}}{{if .Suboptimal}}<span class="badge">your call</span> <span class="hint">{{.Risk}}</span>{{end}}
+{{if .Says}}<span class="hint">{{.Says}}</span>{{end}}{{if .Default}}<span class="badge">default</span>{{end}}{{if .Suboptimal}}<span class="badge">your call</span> <span class="hint">{{.Risk}}</span>{{end}}
 {{if .Applies}}<span class="badge">{{if eq .Applies "record"}}not wired yet{{else}}partly wired{{end}}</span> <span class="hint">{{.Note}}</span>{{end}}
 </div>{{end}}</div>
 {{if .Effect}}<p class="effect">{{.Effect.Text}}</p>{{else}}<p class="hint">{{.EffectNote}}</p>{{end}}

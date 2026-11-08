@@ -55,7 +55,7 @@
       "summons": [],
       "buffs": ["Might", "Holy Fire", "Prayer", "Resist Fire"],
       "town_trip": {"health_potions_below": 3, "durability_below_pct": 25},
-      "start": {}
+      "start": {"stance": "aggressive"}
     },
     "sorceress": {
       "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1; casters"},
