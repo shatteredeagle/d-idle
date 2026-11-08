@@ -411,6 +411,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | ladder.enabled | 0 | 0..1 | bool | 0 | 3 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
 | ladder.repeatCooldownMin | 30 | 0..600 | min | 30 | 0 | The same question (same decision point and context key) is not put again for this long after it was asked or answered; if the player answered it, that answer acts meanwhile (no re-ask). 0: ask every time it comes up (the old behaviour, which re-asked about every minute while the situation lasted). TASK-137. |
 | ladder.quietAfter | 3 | 0..20 | questions | 3 | 0 | After this many questions for one key faded unanswered in a row the bot uses the default, stops asking about it and writes one journal line. An answer resets the count. 0: never stop. Needs ladder.repeatCooldownMin above 0. TASK-137. |
+| ladder.awayMin | 20 | 1..1440 | min | 20 | 0 | Minutes since the player last looked at the watch screen after which the player counts as away. The hero keeps farming where it is; a zone proposal waits for the return and is never accepted by itself (docs/proposezone.md). TASK-131. |
 
 ### senses.*
 

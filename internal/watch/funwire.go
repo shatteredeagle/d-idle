@@ -48,6 +48,10 @@ func (h *Hub) place(r OrderRequest, approve bool) (Order, *Charter, error) {
 		return o, nil, err
 	}
 	o, q, err := b.p.PlaceOrder(r, approve)
+	if !approve && q.Price > 0 && errors.Is(err, currency.ErrCharterNeeded) {
+		// the hero says it once in the journal when a map order asks for a charter (the 402 carries the same numbers)
+		h.Say(decide.AboveRangeWarning(q.Min, q.Max, q.Level, q.Price))
+	}
 	var ch *Charter
 	if q.Price > 0 {
 		ch = &Charter{Area: q.Area, Price: q.Price, Text: q.Text}
