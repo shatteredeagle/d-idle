@@ -68,6 +68,9 @@ type FunConfig struct {
 	Tracker func(class string) (*decide.Tracker, error) // builds the Tracker once the hero's class is known
 	// Policy turns the chores policy sheet on (TASK-128): the table and, for options that set knobs, the tuner's edit.
 	Policy *PolicyConfig
+	// Proposals turns the zone proposals on (TASK-131): the proposer, the clock and the bot's facts. Intro is filled from
+	// the Codex when it is left nil and a Codex is wired.
+	Proposals *ProposalConfig
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -84,6 +87,8 @@ type Fun struct {
 	Return ReturnConfig
 	Strip  *TallyStrip
 	Policy *PolicySheet // nil: the sheet is off
+	// Proposals is nil when zone proposals are off.
+	Proposals *ProposalDesk
 
 	codex   *decide.Codex
 	table   *decide.Firsts
@@ -109,12 +114,30 @@ func NewFun(c FunConfig) (*Fun, error) {
 	if (c.Codex == nil) != (c.Table == nil) || (c.Codex != nil && (c.Clock == nil || c.Tracker == nil)) {
 		return nil, errors.New("watch: the Codex needs its file, the table, a clock and a tracker factory together")
 	}
+	if c.Visit == nil {
+		c.Visit = NewVisit("", nil)
+	}
 	sec := DefaultSections()
 	sec.Register("tally", TallySection(c.Strip))
 	if c.Codex != nil {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Proposals != nil {
+		pc := *c.Proposals
+		if pc.Intro == nil && c.Codex != nil {
+			pc.Intro = CodexIntro(c.Codex, c.Table)
+		}
+		if pc.Visit == nil {
+			pc.Visit = c.Visit
+		}
+		pd, err := NewProposalDesk(c.Hub, pc)
+		if err != nil {
+			return nil, err
+		}
+		f.Proposals = pd
+		sec.Register(ProposalsSectionID, pd.Section())
+	}
 	if c.Policy != nil {
 		h := c.Hub
 		ps, err := NewPolicySheet(h.cfg.Store, h.cfg.Cat, c.Policy.Table, func() string { return strings.ToLower(h.heroNow().Class) },
@@ -124,9 +147,6 @@ func NewFun(c FunConfig) (*Fun, error) {
 		}
 		f.Policy = ps
 		sec.Register(PolicySectionID, ps.Section())
-	}
-	if c.Visit == nil {
-		c.Visit = NewVisit("", nil)
 	}
 	f.Return = ReturnConfig{Hub: c.Hub, Events: f.Away, Visit: c.Visit, Speed: c.Speed, Sections: sec, Notes: c.Notes}
 	if c.Strip != nil {
@@ -254,6 +274,9 @@ func (f *Fun) flush() {
 // Settle updates Codex entries whose thought closed and delivers the edges that waited for the class (call it from
 // the loop that polls the status).
 func (f *Fun) Settle() {
+	if f.Proposals != nil {
+		f.Proposals.Tick()
+	}
 	if f.codex == nil {
 		return
 	}
@@ -285,6 +308,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if src := f.CodexSource(); src != nil {
 		m.Handle(CodexRoute, CodexHandler(src))
 	}
+	if f.Proposals != nil {
+		m.Handle(ProposalsRoute, f.Proposals.Handler())
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -302,6 +328,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	ra := f.Return.ReturnAnswerHandler(o)
 	for _, p := range ReturnPostRoutes {
 		m.Handle(p, ra)
+	}
+	if f.Proposals != nil {
+		m.Handle(ProposalsPostRoute, f.Proposals.PostHandler(o))
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))

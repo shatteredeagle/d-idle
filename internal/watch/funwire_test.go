@@ -36,6 +36,12 @@ type funRig struct {
 // a store on the firsts catalogue, a tally on a d.idle ledger, a Codex tracker built once the class is known.
 func newFunRig(t *testing.T, class string, level int) *funRig {
 	t.Helper()
+	return newFunRigWith(t, class, level, nil)
+}
+
+// newFunRigWith is newFunRig with a hook that may add parts to the FunConfig before the Fun is built.
+func newFunRigWith(t *testing.T, class string, level int, mod func(*funRig, *FunConfig)) *funRig {
+	t.Helper()
 	r := &funRig{t: t, wall: time.Unix(1_800_000_000, 0), clock: &SimClock{}}
 	cat, err := decide.Shipped()
 	if err != nil {
@@ -71,11 +77,15 @@ func newFunRig(t *testing.T, class string, level int) *funRig {
 	}
 	r.strip.Now = func() time.Time { return now }
 	codex := decide.NewCodex("fun-" + strings.ToLower(class))
-	r.fun, err = NewFun(FunConfig{Hub: r.hub, Visit: NewVisit("", func() time.Time { return r.wall }), Speed: 1, Strip: r.strip,
+	fc := FunConfig{Hub: r.hub, Visit: NewVisit("", func() time.Time { return r.wall }), Speed: 1, Strip: r.strip,
 		Codex: codex, Table: tbl, Clock: r.clock,
 		Tracker: func(c string) (*decide.Tracker, error) {
 			return decide.NewTracker(tbl, cat, st, codex, r.clock, decide.Who{Class: c, Diff: "normal"})
-		}})
+		}}
+	if mod != nil {
+		mod(r, &fc)
+	}
+	r.fun, err = NewFun(fc)
 	if err != nil {
 		t.Fatal(err)
 	}
