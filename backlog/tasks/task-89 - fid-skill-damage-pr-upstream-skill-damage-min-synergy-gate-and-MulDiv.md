@@ -1,11 +1,11 @@
 ---
 id: TASK-89
 title: 'fid-skill-damage-pr: upstream: skill damage min-synergy gate and MulDiv'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
-updated_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-08T00:48:00Z'
 labels:
   - d2d
   - upstream-pr
