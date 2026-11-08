@@ -1,6 +1,6 @@
 # The return screen (TASK-127)
 
-> status: first slice, built and tested on fixtures; not wired into `Serve`, not run live. Design: `docs/research/fun-ideas.md` 3.6, ADR 0018.
+> status: first slice, built and tested on fixtures and now WIRED into the bot (TASK-140, `internal/watch/funwire.go`); live result in the Wiring section. Design: `docs/research/fun-ideas.md` 3.6, ADR 0018.
 
 One server-rendered page, `GET /watch/return`, that says what happened while the player was away. Code: `internal/watch/returnscreen.go`; tests and goldens: `returnscreen_test.go`, `internal/watch/testdata/returnscreen/`.
 
@@ -51,11 +51,16 @@ cfg.Sections = reg
 
 `Register` with an existing id replaces it in place; returning nil hides the section; `After` puts it behind the missed questions. A section reads the finished `ReturnData` (trips, deaths, moments) and returns text lines; no HTML.
 
-## Wiring (outside TASK-127's owns; needed to go live)
+## Wiring (TASK-140, done)
 
-1. `cmd/d2bot` `feedHub`: build `away := hub.AwayLog()` once, call `away.OnGoalEvent(ev)` next to `o.OnGoalEvent(ev)`.
-2. `Serve`: make `rc := watch.ReturnConfig{Hub: h, Events: away, Visit: watch.NewVisit(<state>/visit.json, nil), Speed: ...}`; mount `rc.ReturnHandler(h.ViewHandler())` on `watch.ReturnRoutes` and `/watch` (inside the existing view gate, so the token or passcode covers it); wrap the answer handler so `watch.ReturnPostRoutes` go to `rc.ReturnAnswerHandler(ansOpts)`.
-3. Optional: `rc.Notes = <the session record>` once TASK-106 exists.
+- `cmd/d2bot` `startLadder` builds a `watch.Fun` (`internal/watch/funwire.go`, `cmd/d2bot/funwire.go`) when `-ladder -watch` is on and hands it to `ServeOptions.Fun`; `feedHub` calls `Fun.OnGoalEvent(ev)` next to `GoalsOrders.OnGoalEvent` (the away log, the tally credits and the Codex edges) and `Fun.Settle()` on its 2 s tick. The manager subscription is taken inside `startLadder`, before the runner starts, so the first events are not lost.
+- Viewer (GET only, behind the existing token or passcode gate): `/watch` is the landing redirect (`ReturnHandler` wraps the live handler), `/watch/return`, `/api/return`, the two assets, `/api/tally`, `/api/codex`. Answer listener: `ReturnPostRoutes` go to `ReturnAnswerHandler` with the same `AnswerOptions`; everything else stays on `AnswerHandler`.
+- A look: `/watch?live=1` and every poll of `/api/thoughts` (the open live page) touch the `Visit` file `<ladder state>/visit.json`. Over 20 minutes since the last look, `/watch` redirects once.
+- Sections: `tally` (`TallySection`, after the questions), `codex` (`CodexReturnSection`), `quiet` (`QuietSection`, hidden when empty; "I stopped asking about X ..." from the TASK-137 `quiet` event, which `Hub.Event` now writes as a journal line of kind `quiet`), `proposals` stays the placeholder for card 131.
+- Notes sink: still none (`Notes` nil, the box says so) until TASK-106.
+- Page header: a `Return screen` link and the tally strip (`/api/tally`), both hidden when the route is missing.
+
+Tested: `TestFunWiringEndToEnd` (real listeners, two builds), `TestFunQuietNote`, `cmd/d2bot` `TestFeedHubFunLoop`.
 
 ## Not verified
 

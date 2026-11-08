@@ -1,6 +1,6 @@
 # The Act 1 Codex and its firsts (TASK-130)
 
-> status: built and tested offline (fixtures and a synthesized run); NOT wired into the bot loop and NOT verified live. Design: docs/research/fun-ideas.md section 4, ADR 0018 item 5.
+> status: built and tested offline (fixtures and a synthesized run) and wired into the bot by TASK-140 (see Wiring); live result in that section. Design: docs/research/fun-ideas.md section 4, ADR 0018 item 5.
 
 A **first** is the hero's first meeting with something in Act 1. It fills one **Codex entry** (per profile, persistent) and, when its row has a question, raises ONE thought through the decision-point store with a default and a visible consequence. The table is data; no monster, area, skill or class name is Go.
 
@@ -50,3 +50,11 @@ A first's thought opens like any other: it waits for the player until the fade (
 - NOT verified live: no game, no bot wiring, no real soak. A live check needs the hooks above and one run of a fresh hero; the first 10 minutes at 1x should show at least 3 firsts (kill criterion of TASK-130).
 
 Build flexibility: class data are `defaultByClass` and the catalogue's class table (an unknown class is an error naming it); tests run the default Sorceress and a Paladin.
+
+## Wiring (TASK-140)
+
+- `-ladder -watch` with a person answering (no `--ladder-profile`): `useFirsts` calls `Runner.SetLadderFirsts(ShippedFirsts())`, so the ladder's store is built on `cat.WithFirsts(tbl)`; scripted drills keep the shipped catalogue. `newFun` opens `decide.OpenCodex(<ladder state>, <profile>)` and builds the `Tracker` lazily, once the status poll has reported the class (`HeroInfo.Class` lowercased, difficulty `normal` until a difficulty reader exists, U). Edges that arrive before that wait in a queue (200 at most) and are delivered by the next `Fun.Settle()`.
+- Edges derived from `goals.Event` only (no new memory reader): kill gives `monster` (the name of the kill, so "first sight" is "first kill"), area change gives `area`, drop gives `drop` (rune, unique, set or rare by `rankOf`), death gives `death` (the killer); the waypoint hook gives `waypoint`. `Settle()` runs on the feed's 2 s tick.
+- STILL MISSING readers: `champion` (the death log knows `killerChampion`, but `goals.Event` has no champion field), `shrine` (no object reader), difficulty, and a true "first sight" edge (nearest hostile newly in range). Those rows never fire.
+- `GET /api/codex` on the viewer; the return screen registers `CodexReturnSection` under `codex`.
+- Tested: `TestFunWiringEndToEnd` (Fallen, Corpsefire, Blood Moor, the unique drop and the Cold Plains waypoint fire; a replay adds nothing), `cmd/d2bot` `TestFeedHubFunLoop` (class unknown at first), `internal/bot` `TestSetLadderFirstsAddsTheCodexPoint`.

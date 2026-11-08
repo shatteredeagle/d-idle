@@ -1,0 +1,2 @@
+BACKLOG: TASK-140 funwire: return screen, tally strip and Codex connected to the live bot (feedHub, Serve routes, charter on the order route, waypoint hook); end-to-end test on a real server for two builds
+CHANGELOG: the player screen now lands on a return screen after 20 minutes away, shows the tally strip, asks for a charter before an order above the zone range, and fills the Act 1 Codex from the bot's events (-ladder -watch)
