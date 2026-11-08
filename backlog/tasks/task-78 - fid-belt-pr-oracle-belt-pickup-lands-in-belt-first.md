@@ -5,7 +5,7 @@ status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-08T17:18:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-belt-pr.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "NO DEVIATION, already upstream (2026-11-08, agent decomp5): belt pickup 390,000 and shift-click 390,000 oracle cases on upstream 1453f853, 0 differ (V run, game.exe functions unhooked); docs/probes/fid/fid-belt-pr.md. AC 3: shim R04 stays until the lab binary carries the fix (needs TASK-92). Offline."
 ---
 
 ## Description
@@ -38,7 +38,7 @@ Done when: Belt PR evidence pack (pr-belt-evidence-pack.md) re-run on current ma
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Belt PR evidence pack (pr-belt-evidence-pack.md) re-run on current main: pickup of a potion with free belt slots lands in the belt; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 Autobelt and belt size/column data checked for belt base types in the plan (belt sizes tie to belt base)
+- [x] #1 Belt PR evidence pack (pr-belt-evidence-pack.md) re-run on current main: pickup of a potion with free belt slots lands in the belt; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #2 Autobelt and belt size/column data checked for belt base types in the plan (belt sizes tie to belt base)
 - [ ] #3 After the fix: shim R04 removed from the bot or kept with a removal condition in docs/d2d-deviations.md
 <!-- AC:END -->
