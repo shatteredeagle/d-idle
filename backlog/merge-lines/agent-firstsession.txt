@@ -1,2 +1,0 @@
-INDEX: docs/first-session.md: first play session guide (start, screens, wired vs fixtures table, 30 minute run sheet, baseline sessions, troubleshooting, known broken, for a friend) (TASK-134)
-CHANGELOG: first play session guide docs/first-session.md for the first human run and the friend hand-off (TASK-134)
