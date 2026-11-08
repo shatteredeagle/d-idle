@@ -1,0 +1,3 @@
+BACKLOG: TASK-147 classpacing measured pace of seven class tables in lockstep (90 virtual minutes): docs/soaks/classpacing.md; cards TASK-182 equipfail, TASK-183 recoverypace, TASK-184 cpnav
+INDEX: docs/soaks/classpacing.md - measured early-game pace per class (TASK-147)
+CHANGELOG: Measured the first 90 virtual minutes of seven class tables on lockstep d2d (docs/soaks/classpacing.md); found equip, recovery-loop and Assassin navigation defects.
