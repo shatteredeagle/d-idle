@@ -158,13 +158,14 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 		if err != nil {
 			return false, err
 		}
+		f.lastRight = s.Player.RightSkill
 		if cur, ok := f.ActiveAura(s.Player); (ok && cur == want.ID) || (!ok && s.Player.RightSkill == want.ID) {
 			f.auraDirty = false
 			f.info("aura up", "skill", want.Name, "tries", try+1)
 			return true, nil
 		}
 	}
-	f.info("aura did not come up", "skill", want.Name)
+	f.info("aura did not come up", "skill", want.Name, "id", want.ID, "right", f.lastRight, "selector", f.auraSelects)
 	f.auraRetryAt = now.Add(auraRetryBackoff) // do not hammer the key when something blocks it
 	return false, nil
 }
@@ -183,6 +184,7 @@ type auraSelector interface {
 // applyAura presses the aura's hotkey, or selects it by id on a backend that has no hotkeys.
 func (f *Fighter) applyAura(snap *d2.Snapshot, want SkillSpec) error {
 	if as, ok := f.e.In.(auraSelector); ok {
+		f.auraSelects++
 		return as.SelectAura(want.ID)
 	}
 	p := snap.Player
