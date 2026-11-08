@@ -1,10 +1,13 @@
 ---
 id: TASK-145
-title: 'wizardclass: first-run wizard lists only classes with a normal30 table, Paladin preselected'
-status: Proposed
+title: >-
+  wizardclass: first-run wizard lists only classes with a normal30 table,
+  Paladin preselected
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:03:00Z'
+updated_date: '2026-11-08T05:49:00Z'
 labels:
   - container
   - feature
