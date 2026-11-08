@@ -25,6 +25,10 @@ const (
 	KindSpend   = "spend"   // pays Amount for an upgrade
 	KindVoid    = "void"    // closes a pending whose pack did not change
 	KindRefused = "refused" // closes a pending whose credit was refused after the fact (cheated)
+	// The Hall of Fame kinds (docs/hall-of-fame.md): one memorial record per hero, payload in Data, idempotent by Key.
+	// They carry no currency and never move a balance, so they are allowed in every non-vanilla mode.
+	KindHallRetire = "hall.retire" // the player retired the hero into the Hall after Andariel
+	KindHallDeath  = "hall.death"  // the hero is permanently dead (hardcore flag or the death-limit rule)
 
 	VanillaMode = "vanilla"
 	// EventsMode is a ledger without the d.idle overlay (vanilla d2d, game.exe): only the tally is kept, credited from
@@ -50,26 +54,27 @@ var (
 // Entry is one ledger line. The field order is the canonical JSON order (encoding/json writes struct fields in
 // order), so the line bytes are what the next entry hashes.
 type Entry struct {
-	Seq       int    `json:"seq"`
-	TS        string `json:"ts"`
-	Prev      string `json:"prev"`
-	Kind      string `json:"kind"`
-	Currency  string `json:"currency,omitempty"`
-	Amount    int64  `json:"amount,omitempty"`
-	Sealed    int64  `json:"sealed,omitempty"` // part of Amount above the daily soft cap: booked, not spendable
-	Source    string `json:"source,omitempty"`
-	Key       string `json:"key,omitempty"` // idempotency key of the observation or grant
-	Ref       int    `json:"ref,omitempty"` // seq of the pending this entry closes
-	Mode      string `json:"mode"`
-	Instance  string `json:"instance,omitempty"`
-	Character string `json:"character,omitempty"`
-	Run       string `json:"run,omitempty"`
-	Recipe    string `json:"recipe,omitempty"`
-	Before    *int   `json:"before,omitempty"` // pack count before / after the bank action
-	After     *int   `json:"after,omitempty"`
-	Upgrade   string `json:"upgrade,omitempty"`
-	Level     int    `json:"level,omitempty"` // level reached by a spend
-	Note      string `json:"note,omitempty"`
+	Seq       int             `json:"seq"`
+	TS        string          `json:"ts"`
+	Prev      string          `json:"prev"`
+	Kind      string          `json:"kind"`
+	Currency  string          `json:"currency,omitempty"`
+	Amount    int64           `json:"amount,omitempty"`
+	Sealed    int64           `json:"sealed,omitempty"` // part of Amount above the daily soft cap: booked, not spendable
+	Source    string          `json:"source,omitempty"`
+	Key       string          `json:"key,omitempty"` // idempotency key of the observation or grant
+	Ref       int             `json:"ref,omitempty"` // seq of the pending this entry closes
+	Mode      string          `json:"mode"`
+	Instance  string          `json:"instance,omitempty"`
+	Character string          `json:"character,omitempty"`
+	Run       string          `json:"run,omitempty"`
+	Recipe    string          `json:"recipe,omitempty"`
+	Before    *int            `json:"before,omitempty"` // pack count before / after the bank action
+	After     *int            `json:"after,omitempty"`
+	Upgrade   string          `json:"upgrade,omitempty"`
+	Level     int             `json:"level,omitempty"` // level reached by a spend
+	Note      string          `json:"note,omitempty"`
+	Data      json.RawMessage `json:"data,omitempty"` // payload of a hall.* entry (compact JSON)
 }
 
 // Options configure a Ledger.
@@ -121,6 +126,17 @@ func (l *Ledger) vanilla() bool { return l.opt.Mode == VanillaMode }
 
 // events is the overlay-free mode: tally credits and spends only.
 func (l *Ledger) events() bool { return l.opt.Mode == EventsMode }
+
+// eventsAllowList is what events mode accepts besides the tally credits: kind -> currency. A hall.* entry has no currency.
+var eventsAllowList = map[string]map[string]bool{
+	KindCredit:     {"tally": true},
+	KindGrant:      {"tally": true},
+	KindSpend:      {"tally": true},
+	KindHallRetire: {"": true},
+	KindHallDeath:  {"": true},
+}
+
+func eventsAllowed(e Entry) bool { return eventsAllowList[e.Kind][e.Currency] }
 
 func hashLine(b []byte) string { s := sha256.Sum256(b); return hex.EncodeToString(s[:]) }
 
@@ -374,11 +390,15 @@ func (l *Ledger) appendLocked(st *state, e Entry) (Entry, error) {
 	if l.vanilla() {
 		return Entry{}, ErrVanilla
 	}
-	if l.events() && (e.Currency != "tally" || (e.Kind != KindCredit && e.Kind != KindGrant && e.Kind != KindSpend)) {
+	if l.events() && !eventsAllowed(e) {
 		return Entry{}, fmt.Errorf("%w: %s of %q", ErrNeedsOverlay, e.Kind, e.Currency)
 	}
 	switch e.Kind {
 	case KindPending, KindVoid, KindRefused, KindCommit, KindCredit, KindGrant, KindSpend:
+	case KindHallRetire, KindHallDeath:
+		if e.Key == "" || e.Currency != "" || e.Amount != 0 || len(e.Data) == 0 {
+			return Entry{}, fmt.Errorf("currency: %s needs a key and data, and carries no currency or amount", e.Kind)
+		}
 	default:
 		return Entry{}, fmt.Errorf("currency: unknown entry kind %q", e.Kind)
 	}

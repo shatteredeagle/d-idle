@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "classes": ["amazon", "assassin", "barbarian", "druid", "necromancer", "paladin", "sorceress"],
+  "titles": [
+    {"id": "andariel", "rank": 90, "text": "Slayer of Andariel", "flavour": "The Maiden of Anguish is dust, and the road east is open.", "when": {"monster": "Andariel", "min": 1}},
+    {"id": "countess", "rank": 70, "text": "Breaker of the Countess", "flavour": "The Forgotten Tower keeps one less secret.", "when": {"monster": "The Countess", "min": 1}},
+    {"id": "butcher", "rank": 65, "text": "the Butcher's End", "flavour": "Ah, fresh meat. Not this time.", "when": {"monster": "The Butcher", "min": 1}},
+    {"id": "bloodraven", "rank": 60, "text": "Bane of Blood Raven", "flavour": "The Rogues' captain rests at last.", "when": {"monster": "Blood Raven", "min": 1}},
+    {"id": "corpsefire", "rank": 50, "text": "Corpsefire's Doom", "flavour": "The Den of Evil is clean.", "when": {"monster": "Corpsefire", "min": 1}},
+    {"id": "fallen", "rank": 40, "text": "the Fallen's Bane", "flavour": "A hundred small blades, a hundred small mistakes.", "when": {"monster": "Fallen", "min": 100}},
+    {"id": "retired.sorceress", "rank": 30, "text": "Archmage of the Hall", "flavour": "The staff is laid down; the sparks remember.", "classes": ["sorceress"], "when": {"status": "retired"}},
+    {"id": "retired.paladin", "rank": 30, "text": "Paladin of the Hall", "flavour": "The shield hangs by the door; the Light does not forget.", "classes": ["paladin"], "when": {"status": "retired"}},
+    {"id": "retired", "rank": 20, "text": "Wanderer of Sanctuary", "flavour": "A long road, walked to a good end.", "when": {"status": "retired"}},
+    {"id": "dead.sorceress", "rank": 30, "text": "Ashes of the Sorceress", "flavour": "Fire and frost keep her name.", "classes": ["sorceress"], "when": {"status": "dead"}},
+    {"id": "dead.paladin", "rank": 30, "text": "Fallen Paladin", "flavour": "He held the line until the line was gone.", "classes": ["paladin"], "when": {"status": "dead"}},
+    {"id": "dead", "rank": 20, "text": "Remembered by the Fire", "flavour": "Stay awhile, and listen to what they did.", "when": {"status": "dead"}}
+  ]
+}

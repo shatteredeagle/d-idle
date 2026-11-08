@@ -37,7 +37,7 @@ func TestHasWhatTheConsumersLoad(t *testing.T) {
 	for _, n := range []string{"areas", "runs", "progression-normal", "progression-nightmare", "progression-hell",
 		"build-primary-blizzard", "build-fallback-lightning", "build-fallback-lightning-v2", "build-fallback-lightning-v3", "build-paladin-normal30-v2", "build-paladin-normal30", "quest-points",
 		"build-necromancer_leveling_normal30", "build-necromancer_summoner_normal30", "build-amazon_bow_normal30", "build-amazon_javelin_normal30",
-		"build-druid_fire_normal30", "build-assassin_fireblast_normal30", "build-barbarian_melee_normal30"} {
+		"build-druid_fire_normal30", "build-assassin_fireblast_normal30", "build-barbarian_melee_normal30", "build-sorceress_normal30"} {
 		if _, err := FS.ReadFile(n + ".json"); err != nil {
 			t.Errorf("%s.json: %v", n, err)
 		}

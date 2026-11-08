@@ -1,0 +1,392 @@
+{
+ "build": "sorceress_normal30",
+ "class": "sorceress",
+ "combat": "lightning",
+ "selector": "sorceress_normal30",
+ "schema": "per-clvl allocation applied on level-up (clvl = new level). skills: skill points spent that level. Quest points (see quest_points) are spent immediately on top; unspent quest points follow 'quest_point_policy'.",
+ "respec": null,
+ "note": "TASK-144 sorcnormal30. Normal-difficulty leveling table for clvl 2..30, the Sorceress counterpart of the other classes' *_normal30 files. Rows 2-30 are the approved BUILDV3 rows (build-fallback-lightning-v3.json, SME rows, user-approved 2026-11-01) copied unchanged; docs/buildv3.md. The Charged Bolt, Lightning, Chain Lightning line is kept on purpose: docs/research/class-early-game.md section 1 names a Fire Bolt / Ice Bolt / Fire Ball path (EXP, UNSURE), but the approved v3 table is what the gates measure and a different line needs a user decision (open choice, docs/sorcnormal30.md). Rows are a priority list: the leveler spends a point on the next row it may legally take, so a row sits where it is legal when the point arrives. Skill clvl requirements V from the real tables (docs/research/skill-req-check.md): Frozen Armor 1, Frost Nova 6 (see that doc), Lightning 12, Teleport 18, Chain Lightning 18. Unlock schedule: docs/skill-unlocks.md, unlocks-sorceress.json (nothing here locks later than Bishibosh). Selected by name (levelerBuild sorceress_normal30); the default Sorceress table (SelectBuild) is unchanged.",
+ "rows": [
+  {
+   "clvl": 2,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 3,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 4,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 5,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    },
+    {
+     "skill": "Frozen Armor",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 6,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Frost Nova",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 7,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 8,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 9,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 10,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 11,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Telekinesis",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 12,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 13,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 14,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 15,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 16,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 17,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Charged Bolt",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 18,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Teleport",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 19,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 20,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 21,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 22,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 23,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 24,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 25,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 26,
+   "strength": 3,
+   "dexterity": 0,
+   "vitality": 2,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 27,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 28,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 29,
+   "strength": 0,
+   "dexterity": 0,
+   "vitality": 5,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  },
+  {
+   "clvl": 30,
+   "strength": 5,
+   "dexterity": 0,
+   "vitality": 0,
+   "energy": 0,
+   "skills": [
+    {
+     "skill": "Chain Lightning",
+     "points": 1
+    }
+   ]
+  }
+ ]
+}

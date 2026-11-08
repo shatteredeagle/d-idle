@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "source": "docs/research/class-early-game.md section 4 (veteran, EXP, UNVERIFIED: not measured; card classpacing measures)",
+  "all_classes": {"town_trip": {"belt_below_pct": 50, "pack_full": true, "tp_tome_below": 1}},
+  "classes": {
+    "amazon": {
+      "potions": {"health": 1, "mana": 1, "note": "bow build; EXP about 1:1"},
+      "repair": {"cadence": "rare", "below_durability_pct": 0},
+      "ammo": {"kind": "arrows", "quiver_min": 250, "quiver_max": 350, "restock_below_pct": 20, "note": "javelins are picked up from the floor; only the bow has an ammo trigger"},
+      "summons": [],
+      "buffs": [],
+      "town_trip": {"health_potions_below": 3, "ammo_below_pct": 20},
+      "start": {}
+    },
+    "assassin": {
+      "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
+      "repair": {"cadence": "rare", "below_durability_pct": 0, "note": "claws; EXP rarely"},
+      "ammo": null,
+      "summons": ["traps: lay then fire"],
+      "buffs": [],
+      "town_trip": {"mana_potions_below": 3},
+      "start": {}
+    },
+    "barbarian": {
+      "potions": {"health": 1, "mana": 0, "note": "no mana potions; EXP"},
+      "repair": {"cadence": "every_trip", "below_durability_pct": 25},
+      "ammo": null,
+      "summons": [],
+      "buffs": ["Battle Orders", "Shout"],
+      "town_trip": {"health_potions_below": 3, "durability_below_pct": 25},
+      "start": {}
+    },
+    "druid": {
+      "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
+      "repair": {"cadence": "rare", "below_durability_pct": 0},
+      "ammo": null,
+      "summons": ["Raven", "Creeper", "Wolves"],
+      "buffs": ["Oak Sage", "Cyclone Armor"],
+      "town_trip": {"mana_potions_below": 3},
+      "start": {}
+    },
+    "necromancer": {
+      "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
+      "repair": {"cadence": "rare", "below_durability_pct": 0},
+      "ammo": null,
+      "summons": ["Skeleton", "Golem"],
+      "buffs": [],
+      "town_trip": {"mana_potions_below": 3},
+      "start": {}
+    },
+    "paladin": {
+      "potions": {"health": 4, "mana": 1, "note": "EXP about 4:1 health to mana"},
+      "repair": {"cadence": "every_trip", "below_durability_pct": 25},
+      "ammo": null,
+      "summons": [],
+      "buffs": ["Might", "Holy Fire", "Prayer", "Resist Fire"],
+      "town_trip": {"health_potions_below": 3, "durability_below_pct": 25},
+      "start": {}
+    },
+    "sorceress": {
+      "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1; casters"},
+      "repair": {"cadence": "rare", "below_durability_pct": 0, "note": "EXP casters almost never"},
+      "ammo": null,
+      "summons": [],
+      "buffs": [],
+      "town_trip": {"mana_potions_below": 3},
+      "start": {}
+    }
+  }
+}

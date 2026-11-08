@@ -49,6 +49,7 @@ type ServeOptions struct {
 	Origins              string  // comma list; empty: the viewer's port on localhost
 	Video                *Video  // game video on the viewer (/stream, /shot.jpg); nil: off
 	Access               *Access // passcode choice (access.json); nil: token only. A passcode record replaces the token gate.
+	Senses               *Senses // side-panel minimap (/api/senses); nil: off
 	Fun                  *Fun    // return screen, tally strip and Codex (funwire.go); nil: the plain live screen only
 	Update               Updater // self-update status, banner and answer routes (update.go); nil: no update UI
 }
@@ -102,6 +103,11 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 	}
 	if o.Fun != nil {
 		o.Fun.mountView(m, h.ViewHandler())
+	}
+	if o.Senses != nil {
+		for _, p := range SensesRoutes {
+			m.Handle(p, o.Senses.Handler())
+		}
 	}
 	if o.Video != nil {
 		for _, p := range VideoRoutes {

@@ -45,6 +45,10 @@ type Env struct {
 	Clock Clock
 	// Emit publishes a bot event to the goal manager. Never blocks; may drop when the consumer is slow.
 	Emit func(goals.Event)
+	// OnObserve, when set, is called by nav from its own goroutine right after each successful World.Update with the
+	// current level map and the hero position in that map's coordinates. It must only read (the senses minimap,
+	// docs/senses-map.md) and must not keep lm: the Tracker is single-goroutine.
+	OnObserve func(lm *d2map.LevelMap, pos d2map.Point)
 }
 
 // Snapshot is one consistent read of the whole game state for this tick.

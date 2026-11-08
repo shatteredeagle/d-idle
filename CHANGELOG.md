@@ -8,6 +8,17 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Self-update part 2: signed-release client (check, download, verify, side-by-side install, rollback marker) and a never-silent update banner on the watch screen
+- Hall of Fame page and optional retire after Andariel, with titles from a data table (ledger and UI only, no charm)
+- sensesmap: the watch screen minimap is now fed by the bot (knob senses.tier, default 1, needs -watch); view only.
+- Sorceress now has a normal30 leveling table (same rows as v3); the setup wizard lists her without the fallback note
+- per-class skill unlock tables for all seven classes, leveler unlock rule and the one free-choice point (TASK-132, TASK-133, TASK-143)
+- Pact catalogue data file with 12 Pacts, loader, heat cap and incompatibility rules (TASK-166)
+- pactnative probe: /players N verified offline on game.exe (typed through the input helper), hardcore hero created, Nightmare -40 / 5 pct and Hell -100 / 10 pct read from DifficultyLevels.txt; new read-only tools cmd/pactprobe and cmd/mpqcat
+- per-class chore defaults as data for all seven classes; the policy sheet reads class starting options (TASK-146)
+- Self-update part 1: cmd/d2sign, signed release manifest format and a draft (inert) release workflow
+- Watch screen: side-panel minimap (view only, fog of war, token gated) behind a tier-1 unlock hook
+- merc hire kit check follows the belt plan: an all-mana belt hires a mercenary (TASK-174)
 - First-run wizard offers every class that has a leveling table and preselects the Paladin
 - Paladin now fights on the d2d backend: melee skills attack by unit id instead of a bare click that never landed
 - An expedition with no kills, drops or XP no longer pays tally; the session summary shows wall and game time; the return-screen landing happens once per absence.

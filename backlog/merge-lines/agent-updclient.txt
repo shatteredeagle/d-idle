@@ -1,3 +1,0 @@
-BACKLOG: TASK-122 updclient: internal/selfupdate engine and watch update banner/API, offline-tested against a fake GitHub (not run live)
-INDEX: docs/self-update-client.md - self-update client package, watch update API and banner, env switches
-CHANGELOG: Self-update part 2: signed-release client (check, download, verify, side-by-side install, rollback marker) and a never-silent update banner on the watch screen

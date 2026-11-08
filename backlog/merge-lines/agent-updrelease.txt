@@ -1,3 +1,0 @@
-BACKLOG: TASK-121 updrelease: d2sign (Ed25519), MANIFEST.json schema, release asset builder, DRAFT inert app-release workflow (offline, not run on GitHub)
-INDEX: docs/self-update-release.md - signed app release manifest, d2sign tool, asset builder and the inert workflow draft
-CHANGELOG: Self-update part 1: cmd/d2sign, signed release manifest format and a draft (inert) release workflow
