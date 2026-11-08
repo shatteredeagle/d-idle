@@ -792,6 +792,7 @@ var policyTmpl = template.Must(template.New("policy").Parse(`<!DOCTYPE html>
 {{if .Says}}<span class="hint">{{.Says}}</span>{{end}}{{if .Default}}<span class="badge">default</span>{{end}}{{if .Suboptimal}}<span class="badge">your call</span> <span class="hint">{{.Risk}}</span>{{end}}
 {{if .Applies}}<span class="badge">{{if eq .Applies "record"}}not wired yet{{else}}partly wired{{end}}</span> <span class="hint">{{.Note}}</span>{{end}}
 </div>{{end}}</div>
+<div class="preview" data-preview="{{.ID}}" hidden></div>
 {{if .Effect}}<p class="effect">{{.Effect.Text}}</p>{{else}}<p class="hint">{{.EffectNote}}</p>{{end}}
 </section>{{end}}
 </main>
@@ -814,11 +815,34 @@ var msg=document.getElementById('msg');
 function say(t){msg.textContent=t||'';}
 function base(){return fetch('/api/config',{cache:'no-store'}).then(function(r){return r.json();}).then(function(c){
  if(c.answerBase)return c.answerBase;return location.protocol+'//'+location.hostname+':'+c.answerPort;});}
+function post(path,body){return base().then(function(u){return fetch(u+path,{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}).then(function(r){return r.json();});}
+function el(tag,cls,text){var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n;}
+function box(row){return document.querySelector('[data-preview="'+row+'"]');}
+function close(row){var b=box(row);if(b){b.hidden=true;b.textContent='';}}
+function save(row,option){post('/api/policy',{row:row,option:option}).then(function(j){
+ say(j.ok?(j.changed?'Changed':'Already set'):(j.error||'failed'));if(j.ok&&j.changed)setTimeout(function(){location.reload();},500);})
+ .catch(function(){say('the answer route is not reachable');});}
+function render(row,option,label,j){var b=box(row);b.textContent='';b.hidden=false;
+ b.appendChild(el('h3','','Preview: '+label));
+ if(!j||j.error){b.appendChild(el('p','hint',(j&&j.error)||'The preview is not available.'));}
+ else if(!j.supported){b.appendChild(el('p','hint',j.reason));}
+ else{
+  if(j.reason)b.appendChild(el('p','hint',j.reason));
+  (j.lines||[]).forEach(function(l){var p=el('p','effect',l.text);
+   p.appendChild(el('span','hint',' ('+l.basis+'; confidence '+l.confidence+')'));b.appendChild(p);});
+  if(j.filteredTotal>0){b.appendChild(el('p','hint','Filtered out ('+j.filteredTotal+'), shown here and not lost:'));
+   var ul=el('ul','');(j.filtered||[]).forEach(function(f){ul.appendChild(el('li','',f.item+' ('+f.quality+'): '+f.why));});
+   if(j.filteredTotal>(j.filtered||[]).length)ul.appendChild(el('li','','and '+(j.filteredTotal-j.filtered.length)+' more'));b.appendChild(ul);}
+  (j.notes||[]).forEach(function(n){b.appendChild(el('p','hint',n));});
+ }
+ var sv=el('button','btn small primary','Save');sv.type='button';sv.onclick=function(){save(row,option);};
+ var cn=el('button','btn small','Cancel');cn.type='button';cn.onclick=function(){close(row);say('');};
+ b.appendChild(sv);b.appendChild(cn);}
 document.addEventListener('click',function(e){var b=e.target.closest('button[data-act="policy"]');if(!b||b.disabled)return;
- base().then(function(u){return fetch(u+'/api/policy',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({row:b.dataset.row,option:b.dataset.option})});}).then(function(r){return r.json();})
- .then(function(j){say(j.ok?(j.changed?'Changed':'Already set'):(j.error||'failed'));if(j.ok&&j.changed)setTimeout(function(){location.reload();},500);})
- .catch(function(){say('the answer route is not reachable');});});
+ var row=b.dataset.row,option=b.dataset.option;if(b.getAttribute('aria-pressed')==='true')return;
+ say('Computing the preview...');
+ post('/api/policy/preview',{row:row,option:option}).then(function(j){say('');render(row,option,b.textContent,j);})
+ .catch(function(){say('');render(row,option,b.textContent,{error:'The preview route is not reachable; you can still save.'});});});
 })();`
 
 // Now is the sheet's clock in seconds (the same one the counters use).

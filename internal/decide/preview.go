@@ -309,7 +309,7 @@ func (sp *PreviewSpecs) previewLows(res *PreviewResult, spec previewSpec, cur, n
 			if l.key == "leave" {
 				pl.Text = fmt.Sprintf("The hero would have retreated at %s instead of %s: %d of the %d fights dipped into that band and would have ended in a retreat.", pct(b), pct(a), d, n)
 			} else {
-				pl.Text = fmt.Sprintf("The hero would have drunk at %s instead of %s: at least %d more fights with a potion (%d potions were drunk in the window; one fight can use several).", pct(b), pct(a), d, potions)
+				pl.Text = fmt.Sprintf("The hero would have drunk at %s instead of %s: at least %d more fights with a potion (potions drunk in the window: %d; one fight can use several).", pct(b), pct(a), d, potions)
 			}
 		default:
 			d = -between(b, a)
@@ -317,7 +317,7 @@ func (sp *PreviewSpecs) previewLows(res *PreviewResult, spec previewSpec, cur, n
 			if l.key == "leave" {
 				pl.Text = fmt.Sprintf("The hero would have retreated at %s instead of %s: up to %d of the %d fights that fell to that line would have gone on (what followed is not recorded).", pct(b), pct(a), -d, n)
 			} else {
-				pl.Text = fmt.Sprintf("The hero would have drunk at %s instead of %s: up to %d fewer fights with a potion (%d potions were drunk in the window).", pct(b), pct(a), -d, potions)
+				pl.Text = fmt.Sprintf("The hero would have drunk at %s instead of %s: up to %d fewer fights with a potion (potions drunk in the window: %d).", pct(b), pct(a), -d, potions)
 			}
 		}
 		pl.Confidence = confidence(n, true)
