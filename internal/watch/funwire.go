@@ -10,6 +10,7 @@ import (
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/unlock"
 )
 
 // The wiring of the fun loop (TASK-127 return screen, TASK-129 tally strip, TASK-130 Codex; docs/return-screen.md,
@@ -71,6 +72,8 @@ type FunConfig struct {
 	// Proposals turns the zone proposals on (TASK-131): the proposer, the clock and the bot's facts. Intro is filled from
 	// the Codex when it is left nil and a Codex is wired.
 	Proposals *ProposalConfig
+	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
+	Unlock *unlock.Engine
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -89,6 +92,8 @@ type Fun struct {
 	Policy *PolicySheet // nil: the sheet is off
 	// Proposals is nil when zone proposals are off.
 	Proposals *ProposalDesk
+	// Unlocks is nil when the unlock ladder is off.
+	Unlocks *Unlocks
 
 	codex   *decide.Codex
 	table   *decide.Firsts
@@ -123,6 +128,10 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Unlock != nil {
+		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Away: f.Away, Spend: c.Strip.UnlockSpender()}
+		sec.Register(UnlocksSectionID, f.Unlocks.Section())
+	}
 	if c.Proposals != nil {
 		pc := *c.Proposals
 		if pc.Intro == nil && c.Codex != nil {
@@ -170,6 +179,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	f.Away.OnGoalEvent(ev)
 	if f.Strip != nil {
 		f.Strip.OnEvent(ev)
+	}
+	if f.Unlocks != nil {
+		f.Unlocks.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -265,8 +277,12 @@ func (f *Fun) flush() {
 	f.pending = nil
 	f.mu.Unlock()
 	for _, q := range queue {
-		if _, err := t.Observe(q); err != nil {
+		fired, err := t.Observe(q)
+		if err != nil {
 			f.fail(err)
+		}
+		if f.Unlocks != nil {
+			f.Unlocks.OnFired(fired)
 		}
 	}
 }
@@ -311,6 +327,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Proposals != nil {
 		m.Handle(ProposalsRoute, f.Proposals.Handler())
 	}
+	if f.Unlocks != nil {
+		m.Handle(UnlocksRoute, f.Unlocks.Handler())
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -331,6 +350,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Proposals != nil {
 		m.Handle(ProposalsPostRoute, f.Proposals.PostHandler(o))
+	}
+	if f.Unlocks != nil {
+		m.Handle(UnlocksBuyRoute, f.Unlocks.BuyHandler(o))
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))

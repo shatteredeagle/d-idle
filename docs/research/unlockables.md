@@ -81,4 +81,6 @@ Loot call-outs and sounds (default show-all); policy presets; scouting report; r
 
 ## Cards
 
+Built: the framework of `unlockladder` is in `docs/unlock-ladder.md` (engine `internal/unlock`, table `data/unlocks/ladder.json`).
+
 `unlockladder` (TASK-153; shared framework: per-profile persistence of open unlocks, trigger table as data with kinds codex_first, quest, level, tally_spend, retire_count, kills_of_kind, a reveal moment of log line plus silhouette, API gating; reused by the senses ladder), then TASK-154 to TASK-163 in the order of section 2: `unlockchronicle`, `unlockvoice`, `unlockquestlog`, `unlockidreveal`, `unlockbestiary`, `unlockrisk`, `unlockatlas`, `unlockorderqueue`, `unlockalerts`, `unlockhall`.
