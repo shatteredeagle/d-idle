@@ -1,0 +1,3 @@
+BACKLOG: TASK-168 pactui: Pact offer page and /api/pacts (families, ranks, heat bar, proposal vs current, incompatibility reasons, unlock silhouettes) and a cost-and-paid return section; offline only; docs/pact-ui.md
+INDEX: docs/pact-ui.md - Pact offer UI: routes, view model, unlock, cost-and-paid section
+CHANGELOG: Pact offer page at /watch/pacts with heat bar, effect lines, rewards and a proposed-set preview; locked Pacts show as silhouettes until Andariel dies

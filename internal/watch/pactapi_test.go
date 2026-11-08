@@ -24,6 +24,19 @@ func (f *fakeDesk) HardcoreConfirm(t string) error {
 	f.calls = append(f.calls, "hc "+t)
 	return nil
 }
+func (f *fakeDesk) Catalogue(q string) (any, error) {
+	if q == "bad" {
+		return nil, errors.New("bad proposal")
+	}
+	return map[string]string{"q": q}, nil
+}
+func (f *fakeDesk) Choose(p []PactPick) error {
+	f.calls = append(f.calls, "choose")
+	if len(p) > 2 {
+		return errors.New("too many")
+	}
+	return nil
+}
 func (f *fakeDesk) HardcoreRevoke() error   { return nil }
 func (f *fakeDesk) HardcoreActivate() error { return ErrPactInactive }
 
@@ -102,5 +115,41 @@ func TestPactRoutesGatesAndErrors(t *testing.T) {
 		if w.Code != 405 {
 			t.Errorf("GET on a post route: %d", w.Code)
 		}
+	}
+}
+
+func TestPactUIRoutes(t *testing.T) {
+	a := NewPactAPI()
+	get := func(path string) *httptest.ResponseRecorder {
+		w := httptest.NewRecorder()
+		a.Handler().ServeHTTP(w, httptest.NewRequest("GET", path, nil))
+		return w
+	}
+	if w := get("/api/pacts"); w.Code != 503 {
+		t.Fatalf("no desk: %d", w.Code)
+	}
+	if w := get("/watch/pacts"); w.Code != 200 || !strings.Contains(w.Body.String(), "pacts.js") || !strings.Contains(w.Header().Get("Content-Security-Policy"), "script-src 'self'") {
+		t.Fatalf("page: %d", w.Code)
+	}
+	if w := get("/watch/pacts.js"); w.Code != 200 || strings.Contains(w.Body.String(), "innerHTML") {
+		t.Fatalf("script: %d", w.Code)
+	}
+	d := &fakeDesk{}
+	a.Bind(d)
+	if w := get("/api/pacts?propose=a:1"); w.Code != 200 || !strings.Contains(w.Body.String(), `"q":"a:1"`) {
+		t.Fatalf("catalogue: %d %s", w.Code, w.Body)
+	}
+	if w := get("/api/pacts?propose=bad"); w.Code != 400 {
+		t.Fatalf("bad proposal: %d", w.Code)
+	}
+	post := a.PostHandler(AnswerOptions{Token: "tok"})
+	if w := pactPost(post, "/api/pacts/select", "", "", `{"picks":[]}`); w.Code != 401 {
+		t.Fatalf("select without token: %d", w.Code)
+	}
+	if w := pactPost(post, "/api/pacts/select", "tok", "", `{"picks":[{"id":"a","rank":1}]}`); w.Code != 200 {
+		t.Fatalf("select: %d", w.Code)
+	}
+	if w := pactPost(post, "/api/pacts/select", "tok", "", `{"picks":[{"id":"a","rank":1},{"id":"b","rank":1},{"id":"c","rank":1}]}`); w.Code != 400 {
+		t.Fatalf("select refused: %d", w.Code)
 	}
 }
