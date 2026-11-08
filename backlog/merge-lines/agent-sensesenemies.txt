@@ -1,0 +1,3 @@
+BACKLOG: TASK-151 sensesenemies: unit dots, target bar and name on the senses panel (tiers 2 and 3), fixtures only; live checklist in docs/senses-units.md
+INDEX: docs/senses-units.md: senses units (enemy dots, target bar, elite markers), data flow, tier privacy, live checklist
+CHANGELOG: Watch screen senses: enemy dots (tier 2) and a health bar with name for the monster being attacked (tier 3, per Codex class)
