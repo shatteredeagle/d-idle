@@ -862,3 +862,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
 - docs/stance.md - fight stance row and the 2026-11-08 Paladin feedback diagnosis
 - docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)
+- docs/watch-origin.md: same-origin rule for login and setup POSTs (Origin null, Sec-Fetch-Site)
