@@ -20,8 +20,14 @@ owns:
   - "internal/watch/sensesunlock.go"
   - "internal/watch/sensesunlock_test.go"
   - "internal/watch/senses_tiers.json"
+  - "internal/watch/senses.go"
+  - "internal/watch/testdata/senses-ladder-*.json"
+  - "data/unlocks/ladder.json"
+  - "docs/senses-unlock.md"
+  - "cmd/d2bot/ladder.go"
 exclusive: []
 contracts: []
+result: "Seven senses rows in data/unlocks/ladder.json, watch.LadderUnlocker, /api/senses gating with locked list and next, golden JSON tiers 0-4, buying tiers 5-6; offline only (go test ./internal/watch ./internal/unlock), not verified live. AC4 open: registry rows not owned here. cmd/d2bot mounts NewSensesLock (knob range still 0..1, so no cap yet)."
 ---
 
 ## Description
@@ -34,8 +40,8 @@ Design: docs/research/info-unlocks.md. Not on the two-week playable path (return
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tier table as data (tier, sense, trigger kind: codex/level/spend, trigger value); persisted per profile beside the Codex file; never relocks
-- [ ] #2 /api/senses returns only unlocked tiers (locked keys absent), plus a teaser for the next tier
-- [ ] #3 Return screen shows a New sense notice; the unlock raises no question
+- [x] #1 Tier table as data (tier, sense, trigger kind: codex/level/spend, trigger value); persisted per profile beside the Codex file; never relocks
+- [x] #2 /api/senses returns only unlocked tiers (locked keys absent), plus a teaser for the next tier
+- [x] #3 Return screen shows a New sense notice; the unlock raises no question
 - [ ] #4 Tier 5/6 spend rows registered in the tally ledger registry (with the tallystrip owner)
 <!-- AC:END -->

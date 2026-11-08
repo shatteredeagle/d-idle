@@ -612,6 +612,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-168 pactui: Pact offer page and /api/pacts (families, ranks, heat bar, proposal vs current, incompatibility reasons, unlock silhouettes) and a cost-and-paid return section; offline only; docs/pact-ui.md
 - TASK-154 unlockchronicle: Chronicle feed and run timeline tape on the unlock ladder (offline tests, not live); also opens the ladder in cmd/d2bot.
 - TASK-155 unlockvoice: hero voice and diary (lines as data, seeded, mute switch) on the unlock ladder (offline tests, not live).
+- sensesunlock (TASK-149): seven senses tiers as ladder rows, LadderUnlocker, /api/senses locked list and next, buy tiers 5 and 6; offline-tested, wired in cmd/d2bot
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
