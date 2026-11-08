@@ -78,11 +78,7 @@ func status(r Report, name string) FileCheck {
 
 func TestDefaultTablesLoad(t *testing.T) {
 	tb := DefaultTables()
-	c, err := tb.Class("sorceress")
-	if err != nil || !c.Supported || c.Table != "fallback" || c.Note == "" || c.D2DIndex != 4 {
-		t.Fatalf("sorceress %+v %v", c, err)
-	}
-	for _, id := range []string{"barbarian", "necromancer", "paladin", "amazon", "druid", "assassin"} {
+	for _, id := range []string{"sorceress", "barbarian", "necromancer", "paladin", "amazon", "druid", "assassin"} {
 		if c, err := tb.Class(id); err != nil || !c.Supported || c.Table != "normal30" {
 			t.Errorf("%s %+v %v", id, c, err)
 		}

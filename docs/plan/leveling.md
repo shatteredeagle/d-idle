@@ -87,3 +87,7 @@ See section 4. Recommended schedule: run 4-8 h sessions, restart the game every 
 
 ## Uncertainty
 Area ids/auras/quest points and all level thresholds are R. The first engineering milestone should be to dump levels.txt, skills.txt, hireling.txt, monstats.txt, superuniques.txt from the user's MPQs and diff against these data files.
+
+## Sorceress normal30 table (TASK-144)
+
+`data/build-sorceress_normal30.json` (clvl 2..30, class sorceress, combat lightning) is the Sorceress counterpart of the other classes' normal30 tables. Its rows equal the approved v3 table; see `docs/sorcnormal30.md`. Select it by name (`levelerBuild sorceress_normal30`); the default selection and the pinned gate tables are unchanged.
