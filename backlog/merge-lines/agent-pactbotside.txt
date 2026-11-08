@@ -1,0 +1,2 @@
+CHANGELOG: bot-side Pacts: Blood Raven's Tithe and Andariel's Shadow through the tuner and policy sheet, away-consent record, off in gates and measured runs (TASK-167)
+INDEX: docs/pact-botside.md - the Pact controller on the bot: levers, safe zones, consent, off switch
