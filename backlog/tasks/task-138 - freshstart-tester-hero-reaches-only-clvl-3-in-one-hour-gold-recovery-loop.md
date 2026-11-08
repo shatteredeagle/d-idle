@@ -26,6 +26,7 @@ owns:
   - "internal/bot/observe.go"
   - "internal/bot/nokill_test.go"
   - "internal/env/tuning_bot.go"
+  - "cmd/d2bot/resource_test.go"
 exclusive: []
 contracts: []
 ---
