@@ -46,12 +46,19 @@ def run_case(game, case, rng):
 
 
 LAST = []
+REACH = {}
 TALLY = {}
 
 
 def run_case2(game, case, rng):
     got = run_case(game, case, rng)
     LAST[:] = [got, case]
+    if got and got[1][1] == "range" and case["name"] != "random" and case["to"] != case["from"]:
+        x0, y0 = (case["from"][0] << 16) + 0x8000, (case["from"][1] << 16) + 0x8000
+        track = got[0]
+        # distance flown in subtiles and frames (game.exe's own run), straight-line rows only
+        d = ((track[-1][0] - x0) ** 2 + (track[-1][1] - y0) ** 2) ** 0.5 / 65536
+        REACH.setdefault(case["name"], []).append((round(d, 2), len(track), case["level"]))
     return got
 
 
@@ -69,5 +76,6 @@ def fly(table, case, blocked):
 missiles.run_case = run_case2
 missiles.fly = fly
 import atexit
+atexit.register(lambda: [print("reach", n, "flights", len(v), "max subtiles", max(x[0] for x in v), "min subtiles", min(x[0] for x in v), "frames", sorted({x[1] for x in v})) for n, v in sorted(REACH.items())])
 atexit.register(lambda: [print("tally", k, v) for k, v in sorted(TALLY.items()) if k[3] != "same"])
 missiles.main()
