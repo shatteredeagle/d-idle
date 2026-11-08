@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- first play session guide docs/first-session.md for the first human run and the friend hand-off (TASK-134)
 - Fixed: the leveler no longer tries to wear unidentified magic items, and the bow-path Amazon takes the Buckler off before wearing a Short Bow instead of buying and selling it in a loop
 - The watch screen's bestiary, risk meter and order queue now run on the live bot; bestiary kill counts survive a restart
 - Watch screen alerts: death and low life always, unique/boss/level/town/Pact/proposal alerts behind the alerts unlock; outbound webhook/ntfy exist but are off by default
