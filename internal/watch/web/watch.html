@@ -31,6 +31,7 @@
  <button type="button" data-view="cards" id="tab-cards" hidden>Cards</button>
  <button type="button" data-view="bestiary" id="tab-bestiary" hidden>Cain's notes</button>
  <button type="button" data-view="atlas" id="tab-atlas" hidden>Atlas</button>
+ <button type="button" data-view="alerts" id="tab-alerts" hidden>Alerts <span id="alertbadge" class="badge" hidden></span></button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -92,11 +93,23 @@
   <p class="hint" id="atlasnext"></p>
   <ol id="atlaslist" class="log-list atlas-list"></ol>
  </section>
+ <section class="card alerts" id="alertspane" data-v="alerts" hidden aria-labelledby="t-alerts"><h2 id="t-alerts">Alerts <small class="muted" id="alertsstate"></small></h2>
+  <p class="hint" id="alertsteaser" hidden></p>
+  <div class="row">
+   <label class="hint"><input type="checkbox" id="alertsound"> Play a sound on a new alert</label>
+   <button type="button" class="btn small" id="alertnotify">Turn on desktop notifications</button>
+  </div>
+  <p class="hint" id="alertnotifynote"></p>
+  <ul id="alertlist" class="log-list alert-list"></ul>
+  <h3>Outbound</h3>
+  <p class="hint" id="alertconsent"></p>
+ </section>
  <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
   <ul id="journal" class="log-list"></ul>
  </section>
 </main>
 <div class="scrim" id="scrim" hidden></div>
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden></div>
 <div class="sheet revealsheet" id="revealsheet" role="dialog" aria-modal="true" aria-labelledby="rv-title" hidden>
  <h2 id="rv-title"></h2><p id="rv-text"></p><p class="hint" id="rv-note"></p>
@@ -107,4 +120,5 @@
 <script src="/watch/senses_units.js"></script>
 <script src="/watch/senses.js"></script>
 <script src="/watch/unlockui.js"></script>
+<script src="/watch/alerts.js"></script>
 </body></html>
