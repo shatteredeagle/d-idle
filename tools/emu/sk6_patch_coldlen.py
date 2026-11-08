@@ -10,8 +10,9 @@ new = ("    int elem_len = 0;                           // the cold's length (fr
 assert s.count(old) == 1
 s = s.replace(old, new)
 old = "// FUN_005a1370's \"at most two immunities\""
-new = ("// The cold length a boss's blow carries (frames): FUN_005a1c70 adds the unit's level x 5 + 100, ghostly's FUN_005a1080 150.\n"
-       "inline int boss_elem_length(const BossStats& stats, int level) { return stats.elem_len + stats.elem_len_per_level * level; }\n"
+new = ("// The cold length a boss's blow carries (frames): FUN_005a1c70 adds the unit's level x 5 + 100 (a level above 110 counts as 110:\n"
+       "// the 113 units of tools/emu/umod_stats.py get 650), ghostly's FUN_005a1080 150.\n"
+       "inline int boss_elem_length(const BossStats& stats, int level) { return stats.elem_len + stats.elem_len_per_level * std::min(level, 110); }\n"
        "// FUN_005a1370's \"at most two immunities\"")
 assert s.count(old) == 1
 s = s.replace(old, new)
