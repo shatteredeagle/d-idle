@@ -59,7 +59,7 @@ func (t *walkTrace) poll(pos input.Point, now time.Time, obs time.Duration, stil
 		if !t.lastClick.IsZero() {
 			sinceClick = now.Sub(t.lastClick).Milliseconds()
 		}
-		t.n.log.Info("nav.trace stall", "t", now.UnixMilli(), "pos", pos, "sinceClickMs", sinceClick,
+		t.n.log.Info("nav.trace stall", "t", now.UnixMilli(), "pos", pos, "sinceClickMs", sinceClick, "snapMs", t.n.obsSnapMs, "updMs", t.n.obsUpdMs,
 			"movedSinceClick", round1(dist(pos, t.clickPos)), "obsMs", ms)
 	case !still && !t.stillAt.IsZero():
 		d := now.Sub(t.stillAt)
@@ -80,7 +80,7 @@ func (t *walkTrace) click(pos, wp input.Point, now time.Time, reason string, too
 	t.clicks++
 	t.lastClick, t.clickPos = now, pos
 	t.n.log.Info("nav.trace click", "t", now.UnixMilli(), "from", pos, "to", wp, "dist", round1(dist(pos, wp)),
-		"reason", reason, "clickMs", took.Milliseconds(), "gapMs", gap, "wp", cur, "of", of)
+		"reason", reason, "snapMs", t.n.obsSnapMs, "updMs", t.n.obsUpdMs, "clickMs", took.Milliseconds(), "gapMs", gap, "wp", cur, "of", of)
 }
 
 func (t *walkTrace) plan(took time.Duration, why string, wps int) {
