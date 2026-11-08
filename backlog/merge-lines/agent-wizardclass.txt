@@ -1,2 +1,0 @@
-BACKLOG: TASK-145 wizardclass: first-run wizard lists classes from the plandata tables (normal30, Sorceress via fallback), Paladin preselected, unknown class is an error naming it; docs/wizardclass.md
-CHANGELOG: First-run wizard offers every class that has a leveling table and preselects the Paladin

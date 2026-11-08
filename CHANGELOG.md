@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- First-run wizard offers every class that has a leveling table and preselects the Paladin
 - Paladin now fights on the d2d backend: melee skills attack by unit id instead of a bare click that never landed
 - An expedition with no kills, drops or XP no longer pays tally; the session summary shows wall and game time; the return-screen landing happens once per absence.
 - Paladin smoke run of the return screen, tally, Codex, policy sheet and session record on lockstep and in the container; findings and four defect cards (docs/paladinsmoke.md)
