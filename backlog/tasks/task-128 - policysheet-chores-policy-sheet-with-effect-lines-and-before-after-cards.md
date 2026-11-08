@@ -1,7 +1,7 @@
 ---
 id: TASK-128
 title: 'policysheet: chores policy sheet with effect lines and before/after cards'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:26:00Z'

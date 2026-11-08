@@ -20,7 +20,7 @@ owns:
   - "docs/probes/ptrclick.md"
 exclusive: []
 contracts: []
-result: "plan and fork code reading only (S, fork c36b77b1); probe not run, no live game"
+result: "plan and fork code reading only (S, fork c36b77b1); probe not run, no live game Status sync 2026-11-08 (stays open): probe not run (no live game)."
 ---
 
 ## Description

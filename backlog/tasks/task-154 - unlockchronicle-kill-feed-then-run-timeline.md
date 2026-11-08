@@ -1,7 +1,7 @@
 ---
 id: TASK-154
 title: 'unlockchronicle: kill feed, then run timeline'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:15:00Z'

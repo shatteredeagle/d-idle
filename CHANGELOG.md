@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch page: magic and rare finds arrive as face-down cards; flip one to see its quality, colour and a sound.
+- Watch page: Quests tab with the Act 1 quest log, unlocked when Akara gives the Den of Evil quest.
+- Senses unlock ladder: the watch screen's senses open from Codex firsts, level and tally spend; /api/senses lists locked tiers.
 - Watch page: the hero speaks at the first level-up, the first death and every Codex first, with a Diary tab and a mute switch.
 - Watch page: Chronicle panel (kill/loot feed after the first kill, run timeline after the first expedition card) and a Still locked list on the ladder.
 - Pact offer page at /watch/pacts with heat bar, effect lines, rewards and a proposed-set preview; locked Pacts show as silhouettes until Andariel dies

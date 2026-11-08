@@ -27,6 +27,8 @@
  <button type="button" data-view="spend" id="tab-spend" hidden>Spend</button>
  <button type="button" data-view="chronicle" id="tab-chronicle" hidden>Chronicle</button>
  <button type="button" data-view="diary" id="tab-diary" hidden>Diary</button>
+ <button type="button" data-view="quests" id="tab-quests" hidden>Quests</button>
+ <button type="button" data-view="cards" id="tab-cards" hidden>Cards</button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -70,6 +72,14 @@
  <section class="card diary" id="diarypane" data-v="diary" hidden aria-labelledby="t-diary"><h2 id="t-diary">Diary <small class="muted">(one page per milestone)</small></h2>
   <ol id="diarylist" class="log-list diary-list"></ol>
  </section>
+ <section class="card quests" id="questspane" data-v="quests" hidden aria-labelledby="t-quests"><h2 id="t-quests">Quests <small class="muted" id="questdiff"></small></h2>
+  <ul id="questlist" class="log-list quest-list"></ul>
+  <p class="hint" id="questmore"></p>
+ </section>
+ <section class="card cards" id="cardspane" data-v="cards" hidden aria-labelledby="t-cards"><h2 id="t-cards">Find cards <small class="muted">(flip to identify)</small></h2>
+  <label class="hint"><input type="checkbox" id="revealsound" checked> Play a sound on the flip</label>
+  <ul id="cardlist" class="log-list card-list"></ul>
+ </section>
  <section class="card silhouettes" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
   <ul id="lockedlist" class="log-list"></ul>
  </section>
@@ -79,6 +89,10 @@
 </main>
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden></div>
+<div class="sheet revealsheet" id="revealsheet" role="dialog" aria-modal="true" aria-labelledby="rv-title" hidden>
+ <h2 id="rv-title"></h2><p id="rv-text"></p><p class="hint" id="rv-note"></p>
+ <div class="btnrow"><button class="btn primary" id="rv-flip" type="button">Flip the card</button><button class="btn ghost" id="rv-close" type="button">Later</button></div>
+</div>
 <div class="toast" id="toast" role="status" hidden></div>
 <script src="/watch/app.js"></script>
 <script src="/watch/senses.js"></script>

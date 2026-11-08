@@ -36,7 +36,13 @@ def parse(path):
     if not m:
         return None
     fm, lists, key, folded = {}, {}, None, []
+    fold_key = None
     for line in m.group(1).splitlines():
+        if fold_key and line.startswith("  "):
+            # continuation of a folded block scalar (the Backlog.md CLI folds long titles)
+            fm[fold_key] = (fm.get(fold_key, "") + " " + line.strip()).strip()
+            continue
+        fold_key = None
         li = re.match(r"^\s+- (.*)$", line)
         if li and key:
             lists.setdefault(key, []).append(li.group(1).strip().strip("\"'"))
@@ -46,6 +52,9 @@ def parse(path):
             key, val = km.group(1), km.group(2).strip()
             if val in (">-", ">", "|", "|-"):
                 folded.append(key)
+                fold_key = key
+                fm[key] = ""
+                continue
             fm[key] = val.strip("\"'") if val not in ("[]", "") else val
             if val == "[]":
                 lists[key] = []
@@ -78,9 +87,6 @@ def check(tasks_dir):
         ids[tid] = f.name
         labels = set(fm["_lists"].get("labels", []))
         card = fm.get("title", "").split(":", 1)[0].strip()
-        if "title" in fm["_folded"]:
-            findings.append(f"{f.name}: title is a folded block (>-), write it on one line")
-            continue
         if card in seen:
             findings.append(f"{f.name}: card id {card!r} already used by {seen[card]}")
         seen[card] = f.name

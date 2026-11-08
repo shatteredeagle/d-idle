@@ -65,7 +65,7 @@ input[type=number] { width: 5rem; }
 .views button[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 650; }
 
 main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; grid-template-columns: 1fr; }
-@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal, main[data-view="journal"] .silhouettes, main[data-view="chronicle"] .chronicle, main[data-view="diary"] .diary { display: block; } main[data-view="spend"] .spend { display: block; } }
+@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal, main[data-view="journal"] .silhouettes, main[data-view="chronicle"] .chronicle, main[data-view="diary"] .diary, main[data-view="quests"] .quests, main[data-view="cards"] .cards { display: block; } main[data-view="spend"] .spend { display: block; } }
 main .spend[hidden] { display: none !important; }
 @media (min-width: 900px) {
   .views { display: none; }
@@ -188,3 +188,14 @@ main [data-v][hidden] { display: none !important; }
 .voicestrip[hidden] { display: none; }
 .voicestrip q { quotes: "\201C" "\201D"; }
 .diary-list li b { display: block; font-style: normal; font-size: .8rem; color: var(--muted); }
+.quest-list li.done { opacity: .7; }
+.quest-list .qname { font-weight: 650; }
+.quest-list .qstate { margin-left: 6px; font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--accent-text); }
+.quest-list .qwhy, .quest-list .qreward { display: block; color: var(--muted); font-size: .85rem; }
+.card-list li { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.card-list .cface { font-style: italic; color: var(--muted); }
+.card-list .q-magic { color: var(--q-magic); } .card-list .q-rare { color: var(--q-rare); } .card-list .q-set { color: var(--q-set); }
+.card-list .q-unique { color: var(--q-unique); } .card-list .q-crafted { color: var(--q-crafted); }
+.revealsheet.q-magic { border-top: 4px solid var(--q-magic); } .revealsheet.q-rare { border-top: 4px solid var(--q-rare); }
+.revealsheet.q-set { border-top: 4px solid var(--q-set); } .revealsheet.q-unique { border-top: 4px solid var(--q-unique); }
+.revealsheet.q-crafted { border-top: 4px solid var(--q-crafted); }

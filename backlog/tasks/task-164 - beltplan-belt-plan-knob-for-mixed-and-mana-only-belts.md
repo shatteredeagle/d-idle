@@ -30,7 +30,7 @@ owns:
   - "cmd/d2bot/resource_test.go"
 exclusive: []
 contracts: []
-result: "Built and tested offline, whole-repo gate green on the worker host. NOT verified live: the live drill was skipped (host busy: 18 game processes, load 7; no free hidden instance claimed). Drill checklist in docs/belt-plan.md."
+result: "Built and tested offline, whole-repo gate green on the worker host. NOT verified live: the live drill was skipped (host busy: 18 game processes, load 7; no free hidden instance claimed). Drill checklist in docs/belt-plan.md. Status sync 2026-11-08 (stays open): live drill skipped."
 ---
 
 ## Description

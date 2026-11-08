@@ -1,7 +1,7 @@
 ---
 id: TASK-106
 title: 'sessionrec: play-session command plus a session record (questions per 10 minutes)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'

@@ -74,6 +74,8 @@ type FunConfig struct {
 	Proposals *ProposalConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
+	// Affixes reads the properties of an identified item for the reveal card (TASK-157). nil: cards say they are not read.
+	Affixes AffixSource
 	// Hall turns the Hall of Fame and the retire question on (TASK-135). StatePath "" keeps the state next to the ledger.
 	Hall *HallConfig
 }
@@ -102,6 +104,10 @@ type Fun struct {
 	Chronicle *Chronicle
 	// Voice is nil unless the ladder has the row "voice" (TASK-155).
 	Voice *Voice
+	// Quests is nil unless the ladder has the row "questlog" (TASK-156).
+	Quests *QuestLog
+	// Reveal is nil unless the ladder has the rows "idreveal" and "idreveal_later" (TASK-157).
+	Reveal *Reveal
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -141,7 +147,7 @@ func NewFun(c FunConfig) (*Fun, error) {
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
 	if c.Unlock != nil {
-		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Away: f.Away, Spend: c.Strip.UnlockSpender()}
+		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Spend: c.Strip.UnlockSpender()}
 		sec.Register(UnlocksSectionID, f.Unlocks.Section())
 		if c.Unlock.Has(ChronicleID) || c.Unlock.Has(ChronicleTapeID) {
 			h := c.Hub
@@ -159,6 +165,22 @@ func NewFun(c FunConfig) (*Fun, error) {
 				return nil, err
 			}
 			f.Voice = vo
+		}
+		if c.Unlock.Has(QuestLogID) {
+			h := c.Hub
+			ql, err := NewQuestLog(f.Unlocks, nil, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			f.Quests = ql
+		}
+		if c.Unlock.Has(IDRevealID) || c.Unlock.Has(IDRevealLaterID) {
+			h := c.Hub
+			rv, err := NewReveal(f.Unlocks, nil, c.Affixes, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			f.Reveal = rv
 		}
 	}
 	if c.Proposals != nil {
@@ -239,6 +261,12 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Voice != nil {
 		f.Voice.OnGoalEvent(ev)
+	}
+	if f.Quests != nil {
+		f.Quests.OnGoalEvent(ev)
+	}
+	if f.Reveal != nil {
+		f.Reveal.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -403,6 +431,12 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Voice != nil {
 		m.Handle(VoiceRoute, f.Voice.Handler())
 	}
+	if f.Quests != nil {
+		m.Handle(QuestLogRoute, f.Quests.Handler())
+	}
+	if f.Reveal != nil {
+		m.Handle(RevealRoute, f.Reveal.Handler())
+	}
 	if f.Hall != nil {
 		hh := f.Hall.Handler()
 		for _, p := range HallRoutes {
@@ -437,6 +471,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Unlocks != nil {
 		m.Handle(UnlocksBuyRoute, f.Unlocks.BuyHandler(o))
+	}
+	if f.Reveal != nil {
+		m.Handle(RevealFlipRoute, f.Reveal.FlipHandler(o))
 	}
 	if f.Voice != nil {
 		m.Handle(VoiceMuteRoute, f.Voice.MuteHandler(o))

@@ -64,6 +64,76 @@
     answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
   }).catch(function () {});
 
+  function quests(open) {
+    if (!open.questlog) { $('tab-quests').hidden = true; $('questspane').hidden = true; return Promise.resolve(); }
+    return get('/api/questlog').then(function (v) {
+      $('tab-quests').hidden = false; $('questspane').hidden = false;
+      $('questdiff').textContent = v.difficulty ? '(' + v.difficulty + ')' : '';
+      var ul = $('questlist'); clear(ul);
+      (v.quests || []).forEach(function (q) {
+        var li = el('li', q.state), head = el('div', '');
+        head.appendChild(el('span', 'qname', q.name)); head.appendChild(el('span', 'qstate', q.state));
+        li.appendChild(head);
+        li.appendChild(el('div', 'qobj', q.objective));
+        li.appendChild(el('span', 'qwhy', q.why));
+        if (q.reward) li.appendChild(el('span', 'qreward', 'Reward: ' + q.reward));
+        ul.appendChild(li);
+      });
+      $('questmore').textContent = v.notGiven > 0 ? v.notGiven + ' more in Act 1 not given yet.' : '';
+    });
+  }
+
+  // Identify reveal: a face-down card carries no quality or colour; the flip asks the answer route and then shows both.
+  var shown = {}, modalCard = '';
+  function beep(cue) {
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC || !$('revealsound').checked || !cue) return;
+    try {
+      var ac = new AC(), t = ac.currentTime;
+      cue.forEach(function (s) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.frequency.value = s[0]; g.gain.value = 0.05; o.connect(g); g.connect(ac.destination);
+        o.start(t); o.stop(t + s[1] / 1000); t += s[1] / 1000;
+      });
+    } catch (e) { /* no audio */ }
+  }
+  function flip(id) {
+    return fetch(answerBase + '/api/reveal/flip', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id }) }).then(function (r) { return r.json(); }).then(function (j) {
+      if (j.card) { beep(j.card.cue); showCard(j.card); }
+      tick(true);
+    }).catch(function () {});
+  }
+  function showCard(c) {
+    var sh = $('revealsheet'); sh.className = 'sheet revealsheet' + (c.colour ? ' ' + c.colour : '');
+    $('rv-title').textContent = c.revealed ? c.label + ': ' + c.name : (shown.face || 'Unidentified item');
+    $('rv-text').textContent = c.revealed ? c.text : (shown.faceText || '');
+    $('rv-note').textContent = c.revealed ? ((c.affixes || []).join('; ') || c.affixNote || '') : '';
+    $('rv-flip').hidden = c.revealed; modalCard = c.revealed ? '' : c.id;
+    sh.hidden = false; (c.revealed ? $('rv-close') : $('rv-flip')).focus();
+  }
+  $('rv-flip').addEventListener('click', function () { if (modalCard) flip(modalCard); });
+  $('rv-close').addEventListener('click', function () { $('revealsheet').hidden = true; modalCard = ''; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !$('revealsheet').hidden) $('rv-close').click(); });
+  var offered = {};
+  function reveal(open) {
+    if (!open.idreveal) { $('tab-cards').hidden = true; $('cardspane').hidden = true; return Promise.resolve(); }
+    return get('/api/reveal').then(function (v) {
+      $('tab-cards').hidden = false; $('cardspane').hidden = false;
+      shown.face = v.face; shown.faceText = v.faceText;
+      var ul = $('cardlist'); clear(ul);
+      (v.cards || []).slice().reverse().forEach(function (c) {
+        var li = el('li', ''), b = el('button', 'btn small', c.revealed ? 'Show' : 'Flip');
+        b.type = 'button'; b.addEventListener('click', function () { showCard(c); });
+        li.appendChild(b);
+        if (c.revealed) li.appendChild(el('span', c.colour, c.label + ': ' + c.name));
+        else li.appendChild(el('span', 'cface', (v.face || 'Unidentified item') + ' #' + c.n));
+        ul.appendChild(li);
+        if (!c.revealed && !offered[c.id] && $('revealsheet').hidden) { offered[c.id] = true; showCard(c); }
+      });
+    });
+  }
+
   function tick(now) {
     clearTimeout(timer);
     get('/api/unlocks').then(function (u) {
@@ -71,7 +141,7 @@
       var open = {};
       (u.open || []).forEach(function (s) { open[s.id] = true; });
       silhouettes(u);
-      return Promise.all([chronicle(open), voice(open)]);
+      return Promise.all([chronicle(open), voice(open), quests(open), reveal(open)]);
     }).catch(function () { fails++; }).then(function () {
       if (fails < 5) timer = setTimeout(tick, 4000);
     });

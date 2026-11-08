@@ -1,7 +1,7 @@
 ---
 id: TASK-130
 title: 'codexfirsts: Act 1 firsts fire discovery questions, Codex page'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:26:00Z'

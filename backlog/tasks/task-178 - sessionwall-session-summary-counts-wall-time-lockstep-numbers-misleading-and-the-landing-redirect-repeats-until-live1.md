@@ -1,7 +1,7 @@
 ---
 id: TASK-178
 title: 'sessionwall: session summary counts wall time (lockstep numbers misleading) and the landing redirect repeats until live=1'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T04:19:00Z'
