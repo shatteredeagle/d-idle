@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "minutes": 45,
+  "crash_patterns": ["panic:", "fatal error:", "goroutine ", "SIGSEGV"],
+  "error_levels": ["ERROR"],
+  "error_allow": [],
+  "min_kills": 1,
+  "equip_patterns": ["slot click refused", "did not reach slot", "equip retry/failed"],
+  "equip_max": 5,
+  "aura_pattern": "did not come up",
+  "aura_max": 3,
+  "question_msg": "question",
+  "question_key_attrs": ["key", "thought"],
+  "questions_max": 12,
+  "question_repeat_max": 1,
+  "session_files": ["session.jsonl", "decisions.jsonl", "summary.json", "summary.md"],
+  "writes_required": true,
+  "classes": {
+    "barbarian":   {"d2d_index": 0, "build": "barbarian_melee_normal30",        "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 2}]},
+    "necromancer": {"d2d_index": 1, "build": "necromancer_leveling_normal30",   "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 3}]},
+    "paladin":     {"d2d_index": 2, "build": "paladin-normal30-v2",             "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 4}]},
+    "amazon":      {"d2d_index": 3, "build": "amazon_bow_normal30",             "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 3}]},
+    "sorceress":   {"d2d_index": 4, "build": "sorceress_normal30",              "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 3}]},
+    "druid":       {"d2d_index": 5, "build": "druid_fire_normal30",             "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 3}]},
+    "assassin":    {"d2d_index": 6, "build": "assassin_fireblast_normal30",     "clvl": [{"minute": 20, "min": 2}, {"minute": 45, "min": 3}]}
+  }
+}

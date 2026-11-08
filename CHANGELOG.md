@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tools/smoke.sh and cmd/d2smoke: a 45-virtual-minute smoke with a one-line PASS/FAIL verdict per bot commit (not yet run live)
 - The player and tester profile ends the early gold-farm recovery sooner (stall check after 10 minutes, ends once the kit is affordable) and walks to town to sell junk less often; gate and soak defaults are unchanged.
 - first play session guide docs/first-session.md for the first human run and the friend hand-off (TASK-134)
 - Fixed: the leveler no longer tries to wear unidentified magic items, and the bow-path Amazon takes the Buckler off before wearing a Short Bow instead of buying and selling it in a loop
