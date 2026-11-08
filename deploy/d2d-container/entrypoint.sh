@@ -48,7 +48,7 @@ if [ "$mode" = tester ]; then
 	export D2BOT_LADDER=1 D2BOT_WATCH=1 D2BOT_WATCH_VIDEO=1 D2BOT_WATCH_VIDEO_SOURCE=tap
 	export D2BOT_WATCH_ADDR=${D2BOT_WATCH_ADDR:-0.0.0.0:8891} D2BOT_WATCH_ANSWER_ADDR=${D2BOT_WATCH_ANSWER_ADDR:-0.0.0.0:8892}
 	export D2BOT_WATCH_ORIGIN D2BOT_GOALS
-	export D2BOT_WATCH_TOKEN_FILE=${D2BOT_WATCH_TOKEN_FILE:-/data/watch.token} D2BOT_LADDER_STORE=${D2BOT_LADDER_STORE:-/data/ladder}
+	export D2BOT_WATCH_TOKEN_FILE=${D2BOT_WATCH_TOKEN_FILE:-/data/watch.token} D2BOT_LADDER_STORE=${D2BOT_LADDER_STORE:-shared}
 	export D2BOT_GAMEDIR=${D2BOT_GAMEDIR:-$D2D_DATA} D2DVIEW_ADDR=${D2D_VIEW_ADDR:-127.0.0.1:8893}
 	export D2BOT_WATCH_TAP_URL=${D2BOT_WATCH_TAP_URL:-http://$D2DVIEW_ADDR}
 	# the tap and d2bot share one token through the environment (not ps, not a file); it is new at every start
@@ -60,7 +60,7 @@ if [ "$mode" = tester ]; then
 fi
 
 if [ "$dry" = 0 ]; then
-	for f in d2data.mpq d2exp.mpq; do
+	for f in d2data.mpq d2exp.mpq d2char.mpq Patch_D2.mpq; do
 		# the Wine-era files are mixed case on some installs
 		ls "$D2D_DATA" 2>/dev/null | grep -qix "$f" || { echo "entrypoint: $D2D_DATA/$f missing: mount your game data read-only at /game" >&2; exit 64; }
 	done
@@ -76,12 +76,21 @@ timescale:*) mflag="--time-scale ${D2D_MODE#timescale:}" ;;
 esac
 
 # a character that already has a save is loaded from the select screen, otherwise a new one is created
+# (bare d2d keeps its saves under XDG_CONFIG_HOME; the managed d2d of d2bot under <data>/instances/<inst>/d2d/config: TASK-25 live
+# defect, only the first was checked, so every restart created a NEW character over the saved one)
 saved=
-[ -f "$XDG_CONFIG_HOME/d2d/save/$name.d2s" ] && saved=1
+for f in "$XDG_CONFIG_HOME/d2d/save/$name.d2s" "${D2BOT_DATA:-/data}"/instances/*/d2d/config/d2d/save/"$name".d2s; do
+	[ -f "$f" ] && saved=1
+done
 
 pids=
 stop() {
 	trap '' TERM INT
+	# the bot (or bare d2d) first and alone: it saves and quits d2d THROUGH the tap, so the tap must outlive it (TASK-25 live:
+	# a TERM to the tap at the same time made the save-and-quit fail and the bot relaunched d2d until docker killed the container)
+	last=${pids##* }
+	kill -TERM "$last" 2>/dev/null || true
+	wait "$last" 2>/dev/null || true
 	for p in $pids; do kill -TERM "$p" 2>/dev/null || true; done
 	wait
 	exit 0
@@ -115,7 +124,8 @@ if [ "$mode" = bot ]; then
 		exit 0
 	fi
 	# shellcheck disable=SC2086 # args is built above with its own quoting
-	eval d2bot $args ${D2BOT_ARGS:-} &
+	# exec: $! must be d2bot itself, else the TERM trap kills only the eval subshell and d2bot never saves (TASK-25 defect)
+	eval exec d2bot $args ${D2BOT_ARGS:-} &
 	pids="$pids $!"
 else
 	if [ -n "$saved" ]; then
