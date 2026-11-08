@@ -1,7 +1,7 @@
 ---
 id: TASK-177
 title: 'palpace: realtime Paladin is far below the expected 1.5 to 2x Sorceress pace (13 kills, clvl 1 after 20 minutes)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T04:19:00Z'

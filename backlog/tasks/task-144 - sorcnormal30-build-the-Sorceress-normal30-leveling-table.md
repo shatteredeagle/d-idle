@@ -1,7 +1,7 @@
 ---
 id: TASK-144
 title: 'sorcnormal30: build the Sorceress normal30 leveling table'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:03:00Z'

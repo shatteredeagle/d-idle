@@ -21,7 +21,7 @@ owns:
   - "docs/tally-strip.md"
 exclusive: []
 contracts: []
-result: "Credits, quote, charter spend, strip, hook done; wired by TASK-140 (strip on the header and the return screen, /api/tally, charter on the order route, waypoint hook). AC 2 stays open ONLY for order slot 2 and the first perk (unwired). Tally needs the d.idle overlay: the live smoke ran vanilla, so the strip showed off; credits are verified by the end-to-end test only."
+result: "Credits, quote, charter spend, strip, hook done; wired by TASK-140 (strip on the header and the return screen, /api/tally, charter on the order route, waypoint hook). AC 2 stays open ONLY for order slot 2 and the first perk (unwired). Tally needs the d.idle overlay: the live smoke ran vanilla, so the strip showed off; credits are verified by the end-to-end test only. Status sync 2026-11-08 (stays open): AC2 open for order slot 2 and first perk (unwired)."
 ---
 
 ## Description

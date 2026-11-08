@@ -1,7 +1,7 @@
 ---
 id: TASK-33
 title: 'testerrt: realtime ladder check on d2d for the tester build'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-06T14:44:00Z'

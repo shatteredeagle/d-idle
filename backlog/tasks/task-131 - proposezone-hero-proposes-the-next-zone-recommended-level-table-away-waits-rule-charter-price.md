@@ -44,4 +44,4 @@ Amendment 2026-11-07 (class generic): the recommended-level table is per-class d
 - [x] #3 docs/proposezone.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->
 
-result: offline fixtures only, not verified live, not wired into cmd/d2bot (docs/proposezone.md). AC 2 stays open: the charter price for map orders was built by TASK-129; the proposal accept path is tested (402 above range) but the hero warning for map orders is unchanged. Edits outside owns: internal/watch/funwire.go, returnscreen.go (SectionButton.Act, proposal button), funwire_test.go (rig option).
+result: "offline fixtures only, not verified live, not wired into cmd/d2bot (docs/proposezone.md). AC 2 stays open: the charter price for map orders was built by TASK-129; the proposal accept path is tested (402 above range) but the hero warning for map orders is unchanged. Edits outside owns: internal/watch/funwire.go, returnscreen.go (SectionButton.Act, proposal button), funwire_test.go (rig option). Status sync 2026-11-08 (stays open): AC2 open (hero warning for map orders)."

@@ -1,7 +1,7 @@
 ---
 id: TASK-121
 title: 'updrelease: signed app release manifest, d2sign tool and release workflow'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:28:00Z'
