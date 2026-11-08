@@ -29,6 +29,7 @@ contracts: []
 Size: S
 
 Why: ADR 0018 item 7, fun-ideas.md section 13 card 8. No charm, no stat grant. Kill: the user does not want to retire a hero that just killed Andariel. Done when: the criteria below hold.
+Note 2026-11-07: the legacy charm tiers it points at (TASK-136) are per-class data; see the amendment there.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

@@ -31,6 +31,7 @@ contracts: []
 Size: M
 
 Why: ADR 0018 item 6, fun-ideas.md sections 12 and 13 card 7. Skills unlock by quest or find, never by currency. Kill: the v3 soak order changes (any refused row in the buildv3 replay test). Done when: the criteria below hold.
+Note 2026-11-07: this card owns the Sorceress unlock file; the other six classes are TASK-143 (classunlocks), which does not duplicate it.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
