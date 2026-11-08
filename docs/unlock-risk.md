@@ -33,5 +33,5 @@ First near-death survived: the life reading falls below `nearDeathPct` (25) and 
 
 ## Not done
 
-- Not wired in `cmd/d2bot`: the bot passes `FunConfig.Risk` with a `Facts(zone)` that fills `GuardWhy` from `areaGuardWhy`, `Kit` from `ladder.KitFor`, the engage lines from the resource tuning, life percent from the snapshot and `Dead`. Until then the row stays shut (nothing feeds `Tick`).
+- Wired in `cmd/d2bot` (TASK-185): `FunConfig.Risk` with `bot.Runner.RiskFacts` (`internal/bot/riskfacts.go`: `GuardWhy` from the route guard through `OrderGuardWhy`, `Kit` from `ladder.KitFor`, the engage lines from the resource tuning, life percent and `Dead` from the snapshot); `Fun.Settle` feeds `Tick` on the 2 s poll. V `TestRiskFacts` (bot), `TestRiskMeterWiredToTheBotFacts` (cmd/d2bot, two classes). `ResistGap` is 0 (U).
 - A viewer panel is not built; the data is the route. Live: nothing run against a game; every threshold in `risk.json` is U.

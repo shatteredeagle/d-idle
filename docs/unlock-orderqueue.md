@@ -36,4 +36,4 @@ V `TestOrderQueueLockedUntilTheDenAndSlotsOpenInTurn` (two classes, goldens `tes
 
 ## Not done
 
-- Not wired in `cmd/d2bot`: pass `FunConfig.OrderQueue` with `Quote: strip.Quote` and `Halt` from the Pact controller and the low-life pause. No viewer panel (the data is the route). Live: nothing run against a game; the Den "cleared" signal is the quest stage 2 the bot's quest reader already emits (U live), and the slot events and prices are U.
+- Wired in `cmd/d2bot` (TASK-185): `FunConfig.OrderQueue` with `Quote: strip.Quote` and `Halt` = the Pact controller's `Paused`; V `TestOrderQueueWiredThroughTheOrdersPath` (two classes: quest events open slots, orders placed in turn through `Hub.place`, a death stops it, resume goes on). No viewer panel (the data is the route). Live: nothing run against a game; the Den "cleared" signal is the quest stage 2 the bot's quest reader already emits (U live), and the slot events and prices are U.

@@ -22,6 +22,10 @@ The Act 1 waypoints as numbered nodes: lit for the ones the hero has taken, silh
 - Nothing reads the game; the bot's existing waypoint hook (`Fun.OnWaypoint`) feeds the Codex.
 - A repeat of a waypoint changes nothing and writes no second reveal.
 
+## Wiring
+
+`cmd/d2bot` needs no config for the atlas (TASK-185): `NewFun` builds it from the ladder row, the Codex and the proposal desk. V `TestBestiaryWiredWithTableAndRestart` fetches `/api/atlas` through the real wiring.
+
 ## Verified
 
 V offline: `go test ./internal/watch -run Atlas` (golden payloads for Sorceress and Paladin with the proposal on a dark node and on a lit one, token gates, replay, table order and Codex ids, errors naming the node or the row). U: the page in a browser, a real waypoint stream, a proposal to a zone without a waypoint (the node list then marks nothing).
