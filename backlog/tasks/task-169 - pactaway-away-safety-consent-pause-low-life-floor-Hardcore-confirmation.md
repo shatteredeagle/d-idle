@@ -1,7 +1,7 @@
 ---
 id: TASK-169
 title: 'pactaway: away safety: consent, pause, low-life floor, Hardcore confirmation'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:33:00Z'

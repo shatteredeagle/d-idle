@@ -1,7 +1,7 @@
 ---
 id: TASK-141
 title: 'tallynooverlay: tally works without the overlay'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T02:44:00Z'

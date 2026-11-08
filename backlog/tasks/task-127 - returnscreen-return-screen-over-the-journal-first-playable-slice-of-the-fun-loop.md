@@ -1,7 +1,7 @@
 ---
 id: TASK-127
 title: 'returnscreen: return screen over the journal (first playable slice of the fun loop)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:26:00Z'

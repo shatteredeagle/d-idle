@@ -37,7 +37,7 @@ owns:
   - "docs/knobs.md"
 exclusive: []
 contracts: []
-result: "Built offline (fixtures and fakes only, no live run, no browser run): internal/senses, /api/senses, canvas panel, docs/senses-map.md. Wiring done (sensesfeed): Env.OnObserve called from nav.observe after World.Update, cmd/d2bot builds the Publisher when -watch and knob senses.tier (default 1) is >= 1; tests: cmd/d2bot SensesFeed* (two areas, fog, version, throttle, race), nav ObserveCallsHook. Origin: no Origin applied, V by code reading, live d2d check still open (U). Owns widened to cmd/d2bot, internal/env, internal/nav, tools/knobdump."
+result: "Built offline (fixtures and fakes only, no live run, no browser run): internal/senses, /api/senses, canvas panel, docs/senses-map.md. Wiring done (sensesfeed): Env.OnObserve called from nav.observe after World.Update, cmd/d2bot builds the Publisher when -watch and knob senses.tier (default 1) is >= 1; tests: cmd/d2bot SensesFeed* (two areas, fog, version, throttle, race), nav ObserveCallsHook. Origin: no Origin applied, V by code reading, live d2d check still open (U). Owns widened to cmd/d2bot, internal/env, internal/nav, tools/knobdump. Status sync 2026-11-08 (stays open): live/browser run not done."
 ---
 
 ## Description
