@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Self-update part 2: signed-release client (check, download, verify, side-by-side install, rollback marker) and a never-silent update banner on the watch screen
+- Hall of Fame page and optional retire after Andariel, with titles from a data table (ledger and UI only, no charm)
 - sensesmap: the watch screen minimap is now fed by the bot (knob senses.tier, default 1, needs -watch); view only.
 - Sorceress now has a normal30 leveling table (same rows as v3); the setup wizard lists her without the fallback note
 - per-class skill unlock tables for all seven classes, leveler unlock rule and the one free-choice point (TASK-132, TASK-133, TASK-143)

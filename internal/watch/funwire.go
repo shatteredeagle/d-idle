@@ -74,6 +74,8 @@ type FunConfig struct {
 	Proposals *ProposalConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
+	// Hall turns the Hall of Fame and the retire question on (TASK-135). StatePath "" keeps the state next to the ledger.
+	Hall *HallConfig
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -94,6 +96,8 @@ type Fun struct {
 	Proposals *ProposalDesk
 	// Unlocks is nil when the unlock ladder is off.
 	Unlocks *Unlocks
+	// Hall is nil when the Hall of Fame is off.
+	Hall *HallDesk
 
 	codex   *decide.Codex
 	table   *decide.Firsts
@@ -157,6 +161,18 @@ func NewFun(c FunConfig) (*Fun, error) {
 		f.Policy = ps
 		sec.Register(PolicySectionID, ps.Section())
 	}
+	if c.Hall != nil {
+		hc := *c.Hall
+		if hc.StatePath == "" && hc.Store != nil && hc.Store.Ledger != nil {
+			hc.StatePath = ledgerDirState(hc.Store.Ledger)
+		}
+		hd, err := NewHallDesk(hc)
+		if err != nil {
+			return nil, err
+		}
+		f.Hall = hd
+		sec.Register(HallSectionID, hd.Section())
+	}
 	f.Return = ReturnConfig{Hub: c.Hub, Events: f.Away, Visit: c.Visit, Speed: c.Speed, Sections: sec, Notes: c.Notes}
 	if c.Strip != nil {
 		c.Hub.SetOrderPlacer(c.Strip)
@@ -177,6 +193,9 @@ func (f *Fun) CodexSource() CodexSource {
 // have no reader behind goals.Event (docs/codex.md).
 func (f *Fun) OnGoalEvent(ev goals.Event) {
 	f.Away.OnGoalEvent(ev)
+	if f.Hall != nil {
+		f.Hall.OnGoalEvent(ev)
+	}
 	if f.Strip != nil {
 		f.Strip.OnEvent(ev)
 	}
@@ -290,6 +309,9 @@ func (f *Fun) flush() {
 // Settle updates Codex entries whose thought closed and delivers the edges that waited for the class (call it from
 // the loop that polls the status).
 func (f *Fun) Settle() {
+	if f.Hall != nil {
+		f.Hub.setHeroTitle(f.Hall.Title())
+	}
 	if f.Proposals != nil {
 		f.Proposals.Tick()
 	}
@@ -330,6 +352,12 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Unlocks != nil {
 		m.Handle(UnlocksRoute, f.Unlocks.Handler())
 	}
+	if f.Hall != nil {
+		hh := f.Hall.Handler()
+		for _, p := range HallRoutes {
+			m.Handle(p, hh)
+		}
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -353,6 +381,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Unlocks != nil {
 		m.Handle(UnlocksBuyRoute, f.Unlocks.BuyHandler(o))
+	}
+	if f.Hall != nil {
+		m.Handle(HallPostRoute, f.Hall.PostHandler(o))
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))
