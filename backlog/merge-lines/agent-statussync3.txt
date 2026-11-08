@@ -1,1 +1,0 @@
-BACKLOG: status sync 2026-11-08: 19 tasks set Done, open tasks annotated, TASK-101 notes PR 242/245 merged upstream
