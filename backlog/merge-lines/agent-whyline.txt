@@ -1,3 +1,0 @@
-BACKLOG: whyline (TASK-206): the watch screen shows a one-line reason under the video card, built from the bot's real decision reasons (docs/whyline.md)
-INDEX: docs/whyline.md - why-line under the video card: reason codes, templates, hold rules
-CHANGELOG: watch: a plain "why" line under the video says why the hero is doing what it does, with the last five reasons in the Chronicle
