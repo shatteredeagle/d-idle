@@ -1,3 +1,0 @@
-BACKLOG: TASK-166 to TASK-173 pact system cards (pactcatalogue, pactbotside, pactui, pactaway, pactnative, pacthall, pactoverlay, pactnightmare), Proposed, m-4, not on the two-week path
-INDEX: docs/research/pact-system.md - Pact system design note: opt-in challenge rules, heat, unlocks, catalogue, away safety (not a decision)
-CHANGELOG: Pact system design note and eight Proposed cards (docs only)
