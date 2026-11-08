@@ -11,6 +11,12 @@
       "id": "chronicle_tape", "group": "ui",
       "trigger": {"kind": "seen", "args": {"what": "expedition_card"}},
       "reveal": {"title": "Run timeline", "text": "The Chronicle now shows a tape of every expedition: where the hero went and what it cost.", "teaser": "Read your first expedition card."}
+    },
+    {
+      "id": "voice", "group": "ui",
+      "trigger": {"kind": "level", "args": {"min": 2}},
+      "alt": [{"kind": "codex_first", "args": {"sub": "death"}}],
+      "reveal": {"title": "Hero voice", "text": "The hero now speaks at milestones, and keeps a diary page for each: the first level-up, the first death and every first sight in the Codex. A mute switch silences the spoken line.", "teaser": "Reach level 2, or fall once."}
     }
   ]
 }

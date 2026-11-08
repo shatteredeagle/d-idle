@@ -1,0 +1,141 @@
+{
+ "schema": "voice.lines/1",
+ "doc": "docs/unlock-voice.md",
+ "note": "Lines the hero speaks at milestones. Placeholders {name} (the thing just met) and {n} (the level) only. Each kind needs 6 or more any lines; classes adds flavour for one class (keys must be in classes). The choice is seeded by profile, kind and key, so a replay says the same line. No line may name content the hero has not met.",
+ "classes": [
+  "amazon",
+  "assassin",
+  "barbarian",
+  "druid",
+  "necromancer",
+  "paladin",
+  "sorceress"
+ ],
+ "kinds": {
+  "levelup_first": {
+   "milestone": "First level-up",
+   "any": [
+    "That stung less than I feared. Stronger already.",
+    "Something shifted in me. I feel it in my arms.",
+    "A little sharper than this morning. Good.",
+    "So that is what growing feels like. I could get used to it.",
+    "Level {n}. The camp can keep its worries.",
+    "The road is long, but I have taken one more step on it."
+   ],
+   "classes": {
+    "sorceress": [
+     "The fire answers me a little quicker now.",
+     "Level {n}. The Vizjerei would be proud, or jealous."
+    ],
+    "paladin": [
+     "The Light stirs. Level {n}, and the vow holds.",
+     "I have stood in worse. Now I stand a little taller."
+    ]
+   }
+  },
+  "death_first": {
+   "milestone": "First death",
+   "any": [
+    "That is a lesson, and not a gentle one.",
+    "Dark for a moment, then the camp fire again. I will be warier.",
+    "I fell. I will remember who did it.",
+    "Not my finest hour. Gold lost, pride bruised.",
+    "So death in this land is a door, not a wall. I would still rather not.",
+    "Back on my feet. The next fight will go differently."
+   ],
+   "classes": {
+    "sorceress": [
+     "I should have kept my distance. Next time I will."
+    ],
+    "paladin": [
+     "Even a shield arm tires. I rise again."
+    ]
+   }
+  },
+  "codex_monster": {
+   "milestone": "First sight: a new foe",
+   "any": [
+    "So that is what a {name} looks like. Noted.",
+    "A {name}. I will know it again.",
+    "{name}. Not what I had in mind, but I can work with it.",
+    "I had heard the word. Now I have met the {name}.",
+    "That is a {name}. Remember the way it moves.",
+    "There it is: a {name}. Keep your guard up."
+   ],
+   "classes": {
+    "sorceress": [
+     "A {name}. Let us see how it takes a spark."
+    ],
+    "paladin": [
+     "A {name}. The shield is ready."
+    ]
+   }
+  },
+  "codex_area": {
+   "milestone": "First sight: a new place",
+   "any": [
+    "{name}. The map has one more name on it.",
+    "I have not walked {name} before. Eyes open.",
+    "So this is {name}. It smells of old trouble.",
+    "{name} spreads out ahead. Slowly, now.",
+    "A new road, and it leads to {name}.",
+    "{name}. Every place is a story, and most end badly."
+   ]
+  },
+  "codex_waypoint": {
+   "milestone": "First waypoint",
+   "any": [
+    "A waypoint in {name}. Now the way home is short.",
+    "The stone hums. {name} is a place I can return to quickly.",
+    "{name} is lit. A good day's work.",
+    "Light enough to step through. {name} is on the map for good.",
+    "One more waypoint, one less long walk back.",
+    "{name}: the old magic still answers the touch."
+   ]
+  },
+  "codex_shrine": {
+   "milestone": "First shrine",
+   "any": [
+    "A shrine. Odd magic hums in it.",
+    "I do not know who built this, but it still works.",
+    "Something answered when I touched the shrine.",
+    "A shrine in the wild. Take what it gives.",
+    "The shrine glows faintly. Take it as a gift.",
+    "A strange blessing. I will take it."
+   ]
+  },
+  "codex_drop": {
+   "milestone": "First notable find",
+   "any": [
+    "Something good lay in the dirt. Do not drop it.",
+    "That is worth a second look back in camp.",
+    "A find. Even the dead keep things worth taking.",
+    "I will not leave that behind.",
+    "Not every day the ground pays well.",
+    "A find like that deserves a closer look in town."
+   ]
+  },
+  "codex_champion": {
+   "milestone": "First champion",
+   "any": [
+    "That one was not like the others. It watched me back.",
+    "Marked and mean. A champion.",
+    "A champion pack. I will remember the glow.",
+    "Tougher than the common sort. Be careful with those.",
+    "That pack felt wrong. Now I know the name for it.",
+    "A champion. Worth the trouble if I live."
+   ]
+  },
+  "codex_death": {
+   "milestone": "Slain by a new killer",
+   "any": [
+    "Slain by {name}. I will not forget that.",
+    "{name} did that. Next time it will not.",
+    "A new name for the list of things that kill me: {name}.",
+    "{name} had the better of me. The score is not settled.",
+    "Lesson learned. It was {name}.",
+    "{name}. I will keep my distance."
+   ]
+  }
+ }
+}
