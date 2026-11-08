@@ -1,0 +1,1 @@
+CHANGELOG: The hero now proposes the next zone in a real run (facts from the bot's kit, potions and deaths; knob ladder.awayMin) and warns in the journal when a map order is above its range (TASK-131).

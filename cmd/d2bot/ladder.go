@@ -65,6 +65,10 @@ type ladderOptions struct {
 	knobs watch.KnobSetter
 	// sensesTier is the knob senses.tier (set by the backend from the tuning before startLadder): 0 = no minimap.
 	sensesTier int
+	// proposals: the zone proposer's inputs (docs/proposezone.md), set by the backend from the runner and the tuning
+	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
+	proposalFacts                          func() watch.ProposalFacts
+	awayMin, repeatCooldownMin, quietAfter int
 }
 
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {

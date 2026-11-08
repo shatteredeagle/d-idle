@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/api"
@@ -97,6 +98,9 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if cfg.Unlock, err = openUnlocks(stateDir, l.storeProfile()); err != nil {
 		return nil, err
 	}
+	if cfg.Proposals, err = newProposals(l, stateDir, clk); err != nil {
+		return nil, err
+	}
 	pt, err := decide.ShippedPolicy(cat)
 	if err != nil {
 		return nil, err
@@ -110,6 +114,38 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 		return nil, fmt.Errorf("policy sheet: %w", err)
 	}
 	return f, nil
+}
+
+// newProposals builds the zone proposer's config (docs/proposezone.md): the shipped table, the tally zone table as the
+// one range source, a state file next to the other ladder state, the knob values for the repeat rule. nil (no error)
+// when the backend gave no facts reader or a scripted player answers.
+func newProposals(l ladderOptions, stateDir string, clk decide.Clock) (*watch.ProposalConfig, error) {
+	if l.proposalFacts == nil || l.profile != "" {
+		return nil, nil
+	}
+	tbl, err := decide.ShippedProposeTable()
+	if err != nil {
+		return nil, err
+	}
+	rows := currency.DefaultTallyRows()
+	ranges := func(area string) (int, int, bool) {
+		for _, z := range rows.Zones {
+			if strings.EqualFold(z.Area, strings.TrimSpace(area)) {
+				return z.Min, z.Max, true
+			}
+		}
+		return 0, 0, false
+	}
+	path := ""
+	if stateDir != "" {
+		path = filepath.Join(stateDir, "proposals-"+l.storeProfile()+".json")
+	}
+	pr, err := decide.NewProposer(tbl, ranges, clk, path)
+	if err != nil {
+		return nil, err
+	}
+	pr.SetRepeatPolicy(time.Duration(l.repeatCooldownMin)*time.Minute, l.quietAfter)
+	return &watch.ProposalConfig{Proposer: pr, Clock: clk, Facts: l.proposalFacts, AwayMin: l.awayMin}, nil
 }
 
 // knobSetter is the policy sheet's knob path: the tuner's own edit (range checks, all or nothing, saved to tuning.json).
