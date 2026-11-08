@@ -23,14 +23,14 @@ Walk and run animation rate: `walk_rates.py` against `test_combat --walk-rates`:
 
 | Function | What | Result |
 |---|---|---|
-| FUN_00679c80 | the toward pather, path types 2 / 5 / 6 / 0xd (a monster's walk and run) on random walls, starts, ends, near and steps | compared in `moves.py` (block 1) |
-| FUN_006503f0 -> FUN_00650350 | the chase check: re-path, stop distance, budget, target kind | compared (block 2) |
+| FUN_00679c80 | the toward pather, path types 2 / 5 / 6 / 0xd (a monster's walk and run) on random walls, starts, ends, near and steps | `paths ok: 20000 cases, 10259 short of their end` |
+| FUN_006503f0 -> FUN_00650350 | the chase check: re-path, stop distance, budget, target kind | `chase ok: 20000 cases, 7657 stop, 6175 go on, 6168 re-path` |
 | FUN_005a8030 | which modes think at once when they end | "think at once: WL and RN only, as ai.cpp": ok |
 | FUN_0067b850 | the search pather (path type 1) with and without a unit to walk to | `search ok: 2000 cases, 1047 reach their end` |
 | FUN_00679ed0 | a player's path (type 7: toward, then search when close) | `player ok: 2000 cases, 648 reach their end` |
 | wall pather (toward + search around walls) | | `wall ok: 2000 cases, 970 reach their end, 1252 go round` |
 
-plus `sight.py 20000 3` (**ok, 20,000 cases, 1,606 blocked**), `search.py 20000 2` (**ok, 20,000 cases**, 16,714 found a target), `path_dynamic.py` (**ok: 5,065 cases** over the 70 dynamic-path accessors, setters and wrappers of PATH/Path.cpp). The step per tick (velocity x unit vector, no acceleration) is the documented rule in walk-speed-trace.md Q2 (V, earlier). "Port and compare the 6 ported ones" is therefore met: the six functions in the table (rows 1 to 5 plus the wall pather) are compared; the first two rows' result lines were not captured in this run's log (only the last four of `moves.py`'s lines), the script prints `ok` per block and any mismatch: it printed no mismatch (V run, the full per-block lines U for the record).
+plus `sight.py 20000 3` (**ok, 20,000 cases, 1,606 blocked**), `search.py 20000 2` (**ok, 20,000 cases**, 16,714 found a target), `path_dynamic.py` (**ok: 5,065 cases** over the 70 dynamic-path accessors, setters and wrappers of PATH/Path.cpp). The step per tick (velocity x unit vector, no acceleration) is the documented rule in walk-speed-trace.md Q2 (V, earlier). "Port and compare the 6 ported ones" is therefore met: the six functions of the table (rows 1 to 5 plus the wall pather) are compared, every block `ok` (V run; 20,000 + 20,000 + 2,000 + 2,000 + 2,000 cases).
 
 ## Q3. The 77-point path (AC #3) V read + V run
 

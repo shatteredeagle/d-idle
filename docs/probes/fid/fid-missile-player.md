@@ -55,7 +55,7 @@ Both structural counts (no frame with two hits in game.exe; a monster hit again 
 
 ## Q5. Mana timing, Charged Bolt count, Chain Lightning hops (carried, not re-run)
 
-- Mana paid at the action frame, not at the command (old D2): upstream has `tools/emu/cast_mana.py` / `test_cast_mana` ("with a get-hit cut") merged; not re-run in this batch (S, U for the current head).
+- Mana paid at the action frame, not at the command (old D2): upstream's `cast_mana.py gen 1` against `test_cast_mana --cast-mana` (a Sorceress self cast, with a get-hit cut): **53,628 cases, 0 differ** (V run, `tools/emu/d6_final2.sh`). The old SKMISS D2 / B3 deviation is merged and equal on the d2d side; the bot's `ManaBurnTracker` booking at the command (B2 below) is the bot-side remainder.
 - Charged Bolt count min(24, 3 + lvl - 1) and the wiggle: count V read + D (FUN_005c9300), the wiggle is in `missiles.py` (the chargedbolt flights above, V run). The count itself on d2d: S (components), no oracle (U).
 - Chain Lightning hop choice (FUN_005aa730 -> FUN_0056bd10: lowest unit id above the struck one's): d2d implements the same words (S, fight/missiles.cpp); no differential (U). Buildable: replay FUN_005aa730 natively with a unit list (as next_hit.py) against `Fight`; blocked on game.exe's unit id order for the test.
 
