@@ -1,10 +1,13 @@
 ---
 id: TASK-132
-title: 'skillreqcheck: verify the SME skill clvl requirements and Static Field / Warmth / Teleport timing against the tables'
-status: Proposed
+title: >-
+  skillreqcheck: verify the SME skill clvl requirements and Static Field /
+  Warmth / Teleport timing against the tables
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-08T06:16:00Z'
 labels:
   - docs
   - research
@@ -16,8 +19,10 @@ ordinal: 124000
 card: "skillreqcheck"
 owns:
   - "docs/research/skillreq-check.md"
+  - "docs/research/skill-req-check.md"
 exclusive: []
 contracts: []
+result: "Note written docs/research/skill-req-check.md; table read on the worker host from the real install tables (V, offline, no game). Nine of the SME level claims wrong, all matching the author memory; Teleport unlock recommended at waypoint:catacombs_2. owns widened by the brief name skill-req-check.md."
 ---
 
 ## Description
@@ -30,6 +35,6 @@ Why: fun-ideas.md section 12 UNVERIFIED list; the SME's clvl requirements disagr
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Each skill of the SME schedule checked with data.DB.SkillByName(...).ReqLevel (offline, from the user's own tables); a table of SME value, table value, verdict (V with the command)
-- [ ] #2 Static Field, Warmth and Teleport timing checked against docs/buildv3.md (v3 spends Teleport at 18; Catacombs run at clvl 14 to 17): recommendation for the Teleport unlock event; no Go changes; leakcheck 0
+- [x] #1 Each skill of the SME schedule checked with data.DB.SkillByName(...).ReqLevel (offline, from the user's own tables); a table of SME value, table value, verdict (V with the command)
+- [x] #2 Static Field, Warmth and Teleport timing checked against docs/buildv3.md (v3 spends Teleport at 18; Catacombs run at clvl 14 to 17): recommendation for the Teleport unlock event; no Go changes; leakcheck 0
 <!-- AC:END -->

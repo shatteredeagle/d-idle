@@ -33,8 +33,9 @@ const smallTables = `{
  ],
  "patch_sha256": [],
  "classes": [
-  {"id": "sorceress", "name": "Sorceress", "d2d_index": 4, "supported": true},
-  {"id": "necromancer", "name": "Necromancer", "d2d_index": 1}
+  {"id": "sorceress", "name": "Sorceress", "d2d_index": 4},
+  {"id": "necromancer", "name": "Necromancer", "d2d_index": 1},
+  {"id": "witch", "name": "Witch", "d2d_index": 9}
  ],
  "default_class": "sorceress",
  "presets": [{"id": "campaign:normal_act1", "name": "Act 1"}],
@@ -78,18 +79,18 @@ func status(r Report, name string) FileCheck {
 func TestDefaultTablesLoad(t *testing.T) {
 	tb := DefaultTables()
 	c, err := tb.Class("sorceress")
-	if err != nil || !c.Supported || c.D2DIndex != 4 {
+	if err != nil || !c.Supported || c.Table != "fallback" || c.Note == "" || c.D2DIndex != 4 {
 		t.Fatalf("sorceress %+v %v", c, err)
 	}
 	for _, id := range []string{"barbarian", "necromancer", "paladin", "amazon", "druid", "assassin"} {
-		if c, err := tb.Class(id); err != nil || c.Supported {
+		if c, err := tb.Class(id); err != nil || !c.Supported || c.Table != "normal30" {
 			t.Errorf("%s %+v %v", id, c, err)
 		}
 	}
 	if _, err := tb.Class("wizard"); err == nil || !strings.Contains(err.Error(), `"wizard"`) {
 		t.Errorf("unknown class error %v", err)
 	}
-	for _, bad := range []string{`{"bogus":1}`, strings.Replace(smallTables, `"default_class": "sorceress"`, `"default_class": "necromancer"`, 1), strings.Replace(smallTables, `"campaign:normal_act1", "name"`, `"campaign:nope", "name"`, 1)} {
+	for _, bad := range []string{`{"bogus":1}`, strings.Replace(smallTables, `"default_class": "sorceress"`, `"default_class": "witch"`, 1), strings.Replace(smallTables, `"campaign:normal_act1", "name"`, `"campaign:nope", "name"`, 1)} {
 		if _, err := LoadTables([]byte(bad)); err == nil {
 			t.Errorf("accepted %.60s", bad)
 		}
@@ -603,7 +604,7 @@ func TestInputsRejected(t *testing.T) {
 	for name, body := range map[string]string{
 		"cd key field":     `{"char_name":"Sorcy","class":"sorceress","goals":"campaign:normal_act1","cd_key":"ABCD"}`,
 		"key as name":      `{"char_name":"ABCD-1234-EFGH-5678","class":"sorceress","goals":"campaign:normal_act1"}`,
-		"unsupported":      `{"char_name":"Necro","class":"necromancer","goals":"campaign:normal_act1"}`,
+		"no table":         `{"char_name":"Witchy","class":"witch","goals":"campaign:normal_act1"}`,
 		"unknown class":    `{"char_name":"Wizzy","class":"wizard","goals":"campaign:normal_act1"}`,
 		"free-text goals":  `{"char_name":"Sorcy","class":"sorceress","goals":"campaign:normal_act1;rm"}`,
 		"not json":         `[`,
@@ -613,8 +614,8 @@ func TestInputsRejected(t *testing.T) {
 			t.Errorf("%s: %d %s", name, code, body)
 		}
 	}
-	if code, body, _ := f.do(t, "PUT", "/api/inputs", `{"char_name":"Necro","class":"necromancer","goals":"campaign:normal_act1"}`); !strings.Contains(body, "not supported in this build") {
-		t.Errorf("unsupported text %d %s", code, body)
+	if code, body, _ := f.do(t, "PUT", "/api/inputs", `{"char_name":"Witchy","class":"witch","goals":"campaign:normal_act1"}`); !strings.Contains(body, `unknown class \"witch\"`) {
+		t.Errorf("no-table text %d %s", code, body)
 	}
 	if f.state(t).Phase != "ahead" {
 		t.Error("rejected input moved the wizard")
@@ -697,7 +698,6 @@ func TestResumeAfterRestart(t *testing.T) {
 func TestSecondProfile(t *testing.T) {
 	raw := strings.NewReplacer(
 		`"default_class": "sorceress"`, `"default_class": "necromancer"`,
-		`{"id": "necromancer", "name": "Necromancer", "d2d_index": 1}`, `{"id": "necromancer", "name": "Necromancer", "d2d_index": 1, "supported": true}`,
 		`"presets": [{"id": "campaign:normal_act1", "name": "Act 1"}]`, `"presets": [{"id": "campaign:normal_act1", "name": "Act 1"}, {"id": "levelto:12", "name": "Level 12"}]`,
 	).Replace(smallTables)
 	f := newFixture(t, raw)

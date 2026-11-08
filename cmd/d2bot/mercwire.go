@@ -21,6 +21,7 @@ import (
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/nav"
+	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/task"
 )
 
@@ -351,7 +352,23 @@ func (w *mercWire) kit(s *d2.Snapshot) (tp, potions bool) {
 			potions = true
 		}
 	}
+	if !potions && !w.healingPlanned(s) {
+		potions = true // a belt plan without a healing column asks for none (docs/belt-plan.md)
+	}
 	return tp, potions
+}
+
+// healingPlanned reports whether the player's belt plan (resource.beltPlan and the column overrides) holds a healing
+// or rejuvenation column. The default spec keeps today's answer (true). The build name is not known here, so a spec
+// that only overrides single columns is laid over the class plan (U for the mana-heavy build table). A spec that does
+// not resolve keeps the old behaviour; the town and kit gate log that error.
+func (w *mercWire) healingPlanned(s *d2.Snapshot) bool {
+	spec := resource.SpecOfEnv(w.e.Tune.Resource)
+	if spec.IsDefault() || s == nil || s.Player == nil {
+		return true
+	}
+	plan, err := spec.PlanFor(resource.Input{Class: s.Player.Class, Level: s.Player.Level, Diff: s.Player.Difficulty})
+	return err != nil || plan.HasHealing()
 }
 
 // kitFull: a town portal and at least resource.kitMinHP healing (or rejuvenation) and kitMinMP mana potions are
@@ -381,7 +398,11 @@ func (w *mercWire) kitFull(s *d2.Snapshot) bool {
 		}
 	}
 	rt := w.e.Tune.Resource
-	return tp && hp >= rt.KitMinHP && mp >= rt.KitMinMP
+	minHP := rt.KitMinHP
+	if !w.healingPlanned(s) {
+		minHP = 0
+	}
+	return tp && hp >= minHP && mp >= rt.KitMinMP
 }
 
 func mercCtx(w *mercWire, s *d2.Snapshot) merc.Ctx {
