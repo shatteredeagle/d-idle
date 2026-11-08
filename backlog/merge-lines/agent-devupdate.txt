@@ -1,0 +1,3 @@
+BACKLOG: TASK-192 devupdate: tools/dev-update.sh puts a new bot build into a running DEV container in about 6 s (signed with a dev key, LAN directory, shim restarts the bot process only), rollback and fault drills verified on a throwaway container; one-time DEV image rebuild (docs/dev-update.md)
+INDEX: docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)
+CHANGELOG: Dev tooling: tools/dev-update.sh updates a running dev container with a new bot build in seconds, with rollback and signature/downgrade checks; dev images only (DEV=1), production defaults unchanged.
