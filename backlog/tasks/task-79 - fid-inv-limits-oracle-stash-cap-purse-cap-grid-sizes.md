@@ -1,7 +1,7 @@
 ---
 id: TASK-79
 title: 'fid-inv-limits: oracle: stash cap, purse cap, grid sizes'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
