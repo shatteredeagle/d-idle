@@ -1120,9 +1120,9 @@ type recentReader interface {
 
 // guardPollReuse: a poll that finds a snapshot this young (the walker or the fighter just read one) uses it instead of
 // queueing another full read on the d2d channel. One read costs a few hundred ms there (V live, WALKSMOOTH2: the guard
-// alone kept about 2 reads per second in flight and doubled the walker's observe time). Safety reacts 150 ms later at
-// worst, below the guard's own poll period.
-const guardPollReuse = 150 * time.Millisecond
+// alone kept about 2 reads per second in flight and doubled the walker's observe time). Safety reacts 350 ms later at
+// worst; a guard poll takes about that long itself.
+const guardPollReuse = 350 * time.Millisecond
 
 func (r *Runner) guardSnapshot() (*d2.Snapshot, error) {
 	if rr, ok := r.e.Read.(recentReader); ok && r.d.Snapshot != nil {

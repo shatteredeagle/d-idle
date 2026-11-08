@@ -88,6 +88,9 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 	}
 	var w walkState
 	tr := &walkTrace{n: n}
+	if n.Trace {
+		tr.callers = callerNames(3, 5)
+	}
 	defer func() { tr.end(tr.last, n.clk.Now(), werr) }()
 	mouthSeq := 0
 	w.anchorTime = n.clk.Now()

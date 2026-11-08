@@ -196,7 +196,10 @@ func (c *Controller) Move(w input.Point) error {
 	err := c.C.CmdMove(c.ctx(), x, y)
 	if c.Trace != nil {
 		t3 := c.clk().Now()
-		c.Trace("nav.trace move", "primeMs", t1.Sub(t0).Milliseconds(), "runMs", t2.Sub(t1).Milliseconds(),
+		c.runMu.Lock()
+		stam, stamMax, run := c.stCur, c.stMax, c.running
+		c.runMu.Unlock()
+		c.Trace("nav.trace move", "stam", stam, "stamMax", stamMax, "runBelieved", run, "primeMs", t1.Sub(t0).Milliseconds(), "runMs", t2.Sub(t1).Milliseconds(),
 			"cmdMs", t3.Sub(t2).Milliseconds(), "to", w)
 	}
 	return err

@@ -3,6 +3,8 @@ package nav
 import (
 	"math"
 	"os"
+	"runtime"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/input"
@@ -28,6 +30,7 @@ type walkTrace struct {
 	obsMax    int64
 	polls     int
 	started   bool
+	callers   string
 }
 
 func (t *walkTrace) on() bool { return t != nil && t.n.Trace }
@@ -114,7 +117,7 @@ func (t *walkTrace) end(pos input.Point, now time.Time, err error) {
 	t.n.log.Info("nav.trace leg", "durMs", dur.Milliseconds(), "pathSubtiles", round1(t.pathLen), "net", round1(moved),
 		"speed", round1(speed), "clicks", t.clicks, "clicksPer100", round1(per100), "stalls", t.stalls,
 		"stillMs", t.stillFor.Milliseconds(), "polls", t.polls, "obsAvgMs", avgMs(t.obsMs, t.polls), "obsMaxMs", t.obsMax,
-		"planMs", t.planMs, "err", errStr(err))
+		"planMs", t.planMs, "err", errStr(err), "callers", t.callers)
 }
 
 func avgMs(sum int64, n int) int64 {
@@ -136,3 +139,22 @@ func errStr(err error) string {
 // TraceEnv reports whether the click-timing trace is on: D2BOT_NAV_TRACE=1 (cmd/d2bot sets it by default in the dev
 // image, never in a stamped release).
 func TraceEnv() bool { return os.Getenv("D2BOT_NAV_TRACE") == "1" }
+
+// callerNames returns up to n function names above the skip-th frame, short form, for the trace.
+func callerNames(skip, n int) string {
+	var pcs [8]uintptr
+	k := runtime.Callers(skip, pcs[:])
+	fr := runtime.CallersFrames(pcs[:k])
+	var who []string
+	for f, more := fr.Next(); len(who) < n; f, more = fr.Next() {
+		name := f.Function
+		if i := strings.LastIndex(name, "/"); i >= 0 {
+			name = name[i+1:]
+		}
+		who = append(who, name)
+		if !more {
+			break
+		}
+	}
+	return strings.Join(who, " < ")
+}
