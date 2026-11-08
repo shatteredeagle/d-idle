@@ -1,3 +1,0 @@
-CHANGELOG: Return screen (first slice): /watch/return summarises an away window as moments, expedition cards and missed questions with answer-once-for-all; section registry for tally and proposals; not wired into Serve yet.
-BACKLOG: TASK-127 returnscreen built offline (page, JSON, handlers, goldens); wiring into Serve and feedHub listed in docs/return-screen.md.
-INDEX: docs/return-screen.md - the return screen: what it shows, data sources, sections registry, wiring.

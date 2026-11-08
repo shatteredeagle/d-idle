@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Return screen (first slice): /watch/return summarises an away window as moments, expedition cards and missed questions with answer-once-for-all; section registry for tally and proposals; not wired into Serve yet.
 - tester container: fixed the ladder store name, save on stop, stop order, and reload of a saved hero (first live run); context.sh can build from the published fork tag
 - Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
 - Skill damage (SK02) differential re-run on current upstream main: 0 of 116,000 cases differ; the earlier fix is upstream (PR #146), no new PR

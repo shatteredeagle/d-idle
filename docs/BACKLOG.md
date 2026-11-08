@@ -576,6 +576,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-89 fid-skill-damage-pr: no PR candidate, the min-synergy gate and MulDiv are already merged upstream (PR #146, 2026-10-31); 116,000 cases x 2 seeds on upstream main 9c78f391 = 0 differ, blvl/lvl split 0 of 116,000 (docs/probes/fid/fid-skill-damage-pr.md); matrix row SK02 proposed DEV -> OK
 - TASK-129 tallystrip: tally credits from events, charter quote and spend, strip view built offline (not live); AC 2 open (mounting, order slot 2, perk)
 - TASK-25 and TASK-33 verified live 2026-11-07: tester container ran end to end (wizard, bot, watch, video) and one 1 h realtime session (0 stalls, 0 deaths); six container defects fixed; cards TASK-137 (ladder repeat), TASK-138 (fresh-start pace), TASK-139 (image reproducibility)
+- TASK-127 returnscreen built offline (page, JSON, handlers, goldens); wiring into Serve and feedHub listed in docs/return-screen.md.
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

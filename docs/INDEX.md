@@ -804,3 +804,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/fid/fid-skill-damage-pr.md: skill damage (SK02) re-run on upstream main, all proven deviations already merged, no PR candidate (TASK-89)
 - docs/tally-strip.md - tally sources, charter sink, strip and summary (TASK-129)
 - docs/tester-live.md - first end-to-end run of the tester container, MPQ answer, defects, 1 h realtime session; docs/tester-realtime.md - lockstep assumption audit for realtime
+- docs/return-screen.md - the return screen: what it shows, data sources, sections registry, wiring.
