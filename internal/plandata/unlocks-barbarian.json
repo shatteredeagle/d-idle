@@ -1,0 +1,12 @@
+{
+  "class": "barbarian",
+  "doc": "Skill unlocks by quest or find (ADR 0018 item 6, docs/skill-unlocks.md). A skill not listed is free; its level requirement from Skills.txt still applies. Skill names are the Skills.txt keys (as the build tables use them; the display name is in the note when it differs). Events: quest:<id>, waypoint:<area>, boss:<superunique>, item:<kind>, clvl:<n>, alternatives joined by '|'. Source: the veteran schedule in docs/research/class-early-game.md section 2 (a veteran estimate, not measured): every tag S is that estimate, U is unsure or changed by this file (note says why). Moved or freed against the veteran schedule so that no row of the class's normal30 build tables is refused at the expected event levels (TestClassUnlocks).",
+  "mustFree": ["Bash", "Double Swing", "Double Throw", "Shout", "Howl", "Iron Skin", "Frenzy", "Battle Orders"],
+  "unlocks": [
+    {"skill": "Natural Resistance", "event": "quest:den_of_evil", "codex": "corpsefire", "tag": "S", "note": "Veteran: 'Natural Resistance or Iron Skin' at the Den; Iron Skin stays free (the melee table spends it at clvl 18)."},
+    {"skill": "Taunt", "event": "boss:bishibosh", "codex": "bishibosh", "tag": "S"},
+    {"skill": "Find Item", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S"},
+    {"skill": "Whirlwind", "event": "boss:andariel", "codex": "andariel", "tag": "S"},
+    {"skill": "Berserk", "event": "boss:andariel", "codex": "andariel", "tag": "S"}
+  ]
+}
