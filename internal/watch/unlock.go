@@ -26,8 +26,26 @@ const (
 	UnlocksRoute    = "/api/unlocks"
 	UnlocksBuyRoute = "/api/unlocks/buy"
 
+	// UnlockUIRoute serves the script of the unlocked panels (web/unlockui.js).
+	UnlockUIRoute = "/watch/unlockui.js"
+
 	unlocksSchema = "watch.unlocks/1"
 )
+
+func unlockUIHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		b, err := webFS.ReadFile("web/unlockui.js")
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
+		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		w.Header().Set("Content-Security-Policy", pageCSP)
+		w.Header().Set("Cache-Control", "no-store")
+		w.Write(b)
+	})
+}
 
 // Unlocks connects the engine to the Hub, the away log and the tally.
 type Unlocks struct {
@@ -36,8 +54,10 @@ type Unlocks struct {
 	Away   *AwayLog
 	Spend  unlock.Spender // nil: tally is off, buying answers 503
 
-	mu   sync.Mutex
-	errs []string
+	mu      sync.Mutex
+	errs    []string
+	kills   map[string]int // running kills per monster name, in memory (a restart starts again; opening is persisted)
+	killSeq uint64         // highest kill Seq counted: a replayed stream never counts twice
 }
 
 // Observe feeds the engine and reveals what opened.
@@ -79,6 +99,10 @@ func (u *Unlocks) Errors() []string {
 // OnGoalEvent maps the goals events the ladder reads: a level reached and a finished quest.
 func (u *Unlocks) OnGoalEvent(ev goals.Event) {
 	switch ev.Type {
+	case goals.EvKill:
+		if n := u.countKill(ev); n > 0 {
+			u.Observe(unlock.Event{Type: unlock.EvKills, Name: ev.Monster, N: n})
+		}
 	case goals.EvLevelUp:
 		if ev.Level > 0 {
 			u.Observe(unlock.Event{Type: unlock.EvLevel, N: ev.Level})
@@ -89,6 +113,29 @@ func (u *Unlocks) OnGoalEvent(ev goals.Event) {
 		}
 	}
 }
+
+// countKill returns the running count of the monster kind, 0 for an event without a name or one already counted.
+func (u *Unlocks) countKill(ev goals.Event) int {
+	if ev.Monster == "" {
+		return 0
+	}
+	u.mu.Lock()
+	defer u.mu.Unlock()
+	if ev.Seq != 0 {
+		if ev.Seq <= u.killSeq {
+			return 0
+		}
+		u.killSeq = ev.Seq
+	}
+	if u.kills == nil {
+		u.kills = map[string]int{}
+	}
+	u.kills[ev.Monster]++
+	return u.kills[ev.Monster]
+}
+
+// Seen reports a viewer-side moment (trigger kind seen), for example "expedition_card".
+func (u *Unlocks) Seen(what string) { u.Observe(unlock.Event{Type: unlock.EvSeen, Name: what}) }
 
 // OnFired maps new Codex entries (decide.Tracker.Observe) to codex_first events.
 func (u *Unlocks) OnFired(fired []decide.Fired) {

@@ -1,0 +1,49 @@
+{
+  "schema": "chronicle.wording/1",
+  "doc": "docs/unlock-chronicle.md",
+  "note": "Placeholders: {name} the monster, item, area or killer; {n} a level; {xp} experience. Item lines never name a quality (the identify reveal owns that). Every kind needs 3 or more variants; the choice is seeded by the event number, so a replay prints the same line.",
+  "kinds": {
+    "kill": [
+      "Slain: {name}.",
+      "{name} falls before you.",
+      "Another {name} returns to the dust.",
+      "{name} is no more.",
+      "You cut down {name}."
+    ],
+    "kill_xp": [
+      "Slain: {name} (+{xp} experience).",
+      "{name} falls before you (+{xp} experience).",
+      "{name} is no more (+{xp} experience)."
+    ],
+    "boss": [
+      "{name} is dead. The land is quieter.",
+      "Victory: {name} lies slain.",
+      "The deed is done: {name} has fallen."
+    ],
+    "drop": [
+      "Picked up: {name}.",
+      "Something glints: {name}.",
+      "Into the pack: {name}."
+    ],
+    "area": [
+      "You enter {name}.",
+      "The road leads to {name}.",
+      "{name} lies ahead."
+    ],
+    "level": [
+      "You have reached level {n}.",
+      "Stronger now: level {n}.",
+      "Level {n}. The wounds of the road fade."
+    ],
+    "death": [
+      "You have died. Slain by {name}.",
+      "{name} brought you down.",
+      "Darkness: {name} was the last thing you saw."
+    ],
+    "first": [
+      "First sight: {name}.",
+      "A new thing in the world: {name}.",
+      "You have not seen {name} before."
+    ]
+  }
+}
