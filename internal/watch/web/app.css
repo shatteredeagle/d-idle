@@ -65,13 +65,13 @@ input[type=number] { width: 5rem; }
 .views button[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 650; }
 
 main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; grid-template-columns: 1fr; }
-@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal, main[data-view="journal"] .silhouettes, main[data-view="chronicle"] .chronicle, main[data-view="diary"] .diary, main[data-view="quests"] .quests, main[data-view="cards"] .cards { display: block; } main[data-view="spend"] .spend { display: block; } }
+@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal, main[data-view="journal"] .silhouettes, main[data-view="chronicle"] .chronicle, main[data-view="diary"] .diary, main[data-view="quests"] .quests, main[data-view="cards"] .cards { display: block; } main[data-view="spend"] .spend { display: block; } }
 main .spend[hidden] { display: none !important; }
 @media (min-width: 900px) {
   .views { display: none; }
   main { grid-template-columns: repeat(12, 1fr); }
   .o-map { grid-column: 1 / 6; grid-row: 1 / 4; } .o-now { grid-column: 6 / 13; grid-row: 1; } .o-queue { grid-column: 6 / 13; grid-row: 2; }
-  .thoughts { grid-column: 6 / 10; grid-row: 3; } .game { grid-column: 10 / 13; grid-row: 3; }
+  .thoughts { grid-column: 6 / 10; grid-row: 3; }
   .rules { grid-column: 1 / 6; } .journal { grid-column: 6 / 13; } .spend { grid-column: 1 / 13; }
 }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
@@ -168,7 +168,12 @@ svg.map { width: 100%; height: auto; display: block; }
 .spendrow button:disabled { opacity: .55; cursor: not-allowed; }
 
 .gamerow { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
-.gamerow #frame { flex: 1 1 480px; min-width: 0; }
+.videotop { width: calc(100% - 32px); max-width: 1248px; margin: 16px auto 0; box-sizing: border-box; }
+.videotop[hidden] { display: none; }
+.videotop.collapsed .gamerow { display: none; }
+.videotop:fullscreen { max-width: none; margin: 0; overflow: auto; }
+.gamerow #frame { flex: 1 1 480px; min-width: 0; aspect-ratio: 4 / 3; }
+@media (max-width: 899px) { .gamerow { flex-direction: column; flex-wrap: nowrap; } .gamerow #frame { flex: none; width: 100%; } .sensespanel { width: 100%; box-sizing: border-box; } }
 .sensespanel { flex: 0 0 auto; background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; }
 .sensespanel h3 { margin: 0; font-size: .9rem; }
 .sensespanel canvas { display: block; width: 320px; max-width: 100%; height: auto; background: var(--bg); border-radius: 6px; touch-action: none; cursor: grab; }

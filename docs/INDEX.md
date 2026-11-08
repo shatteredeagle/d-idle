@@ -858,3 +858,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/first-session.md: first play session guide (start, screens, wired vs fixtures table, 30 minute run sheet, baseline sessions, troubleshooting, known broken, for a friend) (TASK-134)
 - docs/soaks/recoverypace.md - recoverypace: why the early game is a gold loop, the fix and the before/after drill (TASK-183)
 - docs/smoke.md - smoke run: how to run, rules, cost, difference from Gate 1/2 (tools area)
+- docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
