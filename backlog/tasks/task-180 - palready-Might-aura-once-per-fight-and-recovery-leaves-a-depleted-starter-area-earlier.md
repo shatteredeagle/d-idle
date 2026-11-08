@@ -25,6 +25,7 @@ owns:
   - "internal/env/tuning_bot.go"
   - "cmd/d2bot/d2dwire.go"
   - "docs/knobs.md"
+  - "docs/d2d-deviations.md"
   - "docs/probes/paladinsmoke/"
   - "docs/probes/test-characters.md"
 exclusive: []
