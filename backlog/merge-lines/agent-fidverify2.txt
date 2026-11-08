@@ -1,2 +1,0 @@
-INDEX: docs/research/review-revive-refill-opus.md: Opus verification of the revive refill candidate (TASK-125): HOLDS, READY as r2 (test moved to its own file)
-CHANGELOG: Opus verification of the respawn refill candidate (TASK-125): claim holds; r2 moves the test out of test_game.cpp (conflict with PR #242)
