@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Hall of Fame is now mounted in the real bot: the retire question appears after the Andariel kill (keep or retire; retire stops the bot cleanly). A death is not yet booked as permanent (TASK-135).
 - Watch screen senses: elite markers (champion, unique, superunique) with mod names, shown only after the first encounter of that kind
 - Pact unlocks now run through the shared unlock ladder (Andariel kill, Baal in Normal); away-consent changes show on the return screen
 - Watch screen senses: enemy dots (tier 2) and a health bar with name for the monster being attacked (tier 3, per Codex class)
