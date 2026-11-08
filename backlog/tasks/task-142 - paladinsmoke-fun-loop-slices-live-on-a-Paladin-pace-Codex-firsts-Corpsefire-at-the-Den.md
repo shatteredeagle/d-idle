@@ -1,10 +1,13 @@
 ---
 id: TASK-142
-title: 'paladinsmoke: fun-loop slices live on a Paladin (pace, Codex firsts, Corpsefire at the Den)'
-status: Proposed
+title: >-
+  paladinsmoke: fun-loop slices live on a Paladin (pace, Codex firsts,
+  Corpsefire at the Den)
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T03:03:00Z'
+updated_date: '2026-11-08T04:29:00Z'
 labels:
   - bot
   - drill
