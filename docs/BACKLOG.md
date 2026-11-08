@@ -581,6 +581,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-139 verified live 2026-11-07: the tester image builds from public inputs only (CLI11 2.6.2, sentry-native 0.17.3, FFmpeg 9.0.2 pinned by sha256 in context.sh, fork from tag didle-gate2-lab3); binary matches the local build except the build timestamp
 - TASK-130 codexfirsts: Act 1 firsts table (37 rows), Codex, Tracker, /api/codex built and tested offline; bot hooks and live check open
 - TASK-140 funwire: return screen, tally strip and Codex connected to the live bot (feedHub, Serve routes, charter on the order route, waypoint hook); end-to-end test on a real server for two builds
+- TASK-125 upstream PR #245 open (revive refill); merge pending
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
