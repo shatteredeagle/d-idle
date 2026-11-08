@@ -169,6 +169,7 @@ type ladderRig struct {
 	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
 	Rec    *watch.Session   // the play session's record (play.go); nil outside `d2bot play`
 	Video  *watch.Video
+	Pacts  *pactHolder // the Pacts return section (pactwire.go); nil when Pacts are off
 }
 
 // StopRec ends the session record (summary written); safe on a nil rig and to call twice.
@@ -234,6 +235,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes); err != nil {
 			return nil, nil, err
 		}
+		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"strings"
+	"sync/atomic"
 	"time"
 
 	"d2lod-bot/internal/goals"
@@ -49,7 +50,7 @@ func difficultyOf(s string) int {
 // for the hero's class, then evaluates every two seconds, counts deaths and resumes after the player takes the hero back.
 // Presence of a human is not detected yet (TASK-168/169): Pacts act only on a typed away-consent (U).
 func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.Manager, status func() goals.Status, stateDir string, getenv func(string) string) {
-	if pact.Off(getenv) || rig == nil || rig.Fun == nil || rig.Fun.Policy == nil || stateDir == "" || m == nil || status == nil {
+	if pact.Off(getenv) || rig == nil || rig.Fun == nil || rig.Pacts == nil || rig.Fun.Policy == nil || stateDir == "" || m == nil || status == nil {
 		return
 	}
 	ch, unsub := m.Subscribe()
@@ -95,7 +96,7 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 						rig.Hub.Incident("Pacts are off: " + err.Error())
 						return
 					}
-					rig.Fun.Return.Sections.Register("pacts", pactSection(ctl))
+					rig.Pacts.ctl.Store(ctl)
 				}
 				paused := st.State == goals.RunnerPaused
 				if wasPaused && !paused {
@@ -112,9 +113,29 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 	}()
 }
 
+// pactHolder is the section's late-bound controller: the section registry is not safe to change once the screen is
+// served, so the section is registered before Serve (registerPactSection) and finds its controller here.
+type pactHolder struct {
+	ctl atomic.Pointer[pact.Controller]
+}
+
+// registerPactSection adds the "Pacts" return section; nil (nothing registered) when Pacts are off or there is no screen.
+func registerPactSection(f *watch.Fun, getenv func(string) string) *pactHolder {
+	if pact.Off(getenv) || f == nil {
+		return nil
+	}
+	h := &pactHolder{}
+	f.Return.Sections.Register("pacts", pactSection(h))
+	return h
+}
+
 // pactSection is the return screen's Pact lines: what each chosen Pact does and whether it acts now.
-func pactSection(ctl *pact.Controller) watch.ReturnSection {
+func pactSection(h *pactHolder) watch.ReturnSection {
 	return watch.SectionFunc(func(*watch.ReturnData) *watch.SectionView {
+		ctl := h.ctl.Load()
+		if ctl == nil {
+			return nil
+		}
 		ls := ctl.Lines()
 		if len(ls) == 0 {
 			return nil

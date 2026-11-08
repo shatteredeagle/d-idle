@@ -25,7 +25,7 @@ All of: not off (below), out of the safe zones (town; the Den of Evil, U: the qu
 
 ## Return screen
 
-Section "Pacts" (registered by `cmd/d2bot/pactwire.go`): one line per chosen Pact, "Name (rank r): effect line [active | why not]", the effect line from the catalogue. Not the before/after counter cards of the policy section (U: those need the change record this path deliberately skips).
+Section "Pacts" (registered by `cmd/d2bot/pactwire.go` before the screen is served: the registry is not safe to change afterwards, V by a -race failure): one line per chosen Pact, "Name (rank r): effect line [active | why not]", the effect line from the catalogue. Not the before/after counter cards of the policy section (U: those need the change record this path deliberately skips).
 
 ## Not done
 
