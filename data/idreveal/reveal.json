@@ -1,0 +1,18 @@
+{
+  "schema": "idreveal.cards/1",
+  "doc": "docs/unlock-idreveal.md",
+  "note": "One entry per item quality that can get a card. label is the quality word shown only after the flip; colour is the page's CSS class (--q-* variables in app.css); cue is the sound the page plays on the flip as [frequency in Hz, milliseconds] steps; text has 3 or more variants, chosen by the card number. The face of an unflipped card shows none of these.",
+  "face_down": {
+    "title": "Unidentified item",
+    "text": "The hero picked something up that still hides what it is. Flip the card to find out."
+  },
+  "qualities": {
+    "magic": {"label": "Magic", "colour": "q-magic", "cue": [[523, 90], [659, 120]], "text": ["The item glows blue. It carries a charm or two.", "A blue light: magic is in it.", "It hums blue in the hand."]},
+    "rare": {"label": "Rare", "colour": "q-rare", "cue": [[523, 80], [659, 80], [784, 140]], "text": ["Yellow fire: a rare, with several properties.", "It blazes yellow. This one is worth a look.", "A rare piece. The hero smiles."]},
+    "set": {"label": "Set item", "colour": "q-set", "cue": [[392, 80], [523, 80], [659, 80], [784, 160]], "text": ["Green light: a piece of a set.", "It shines green. Somewhere there are others like it.", "A set item. It wants company."]},
+    "unique": {"label": "Unique", "colour": "q-unique", "cue": [[330, 100], [440, 100], [587, 100], [880, 220]], "text": ["Gold-brown light: a unique, one of a kind.", "A unique! It has a name of its own.", "The item rings out: one of a kind."]},
+    "crafted": {"label": "Crafted", "colour": "q-crafted", "cue": [[440, 80], [587, 140]], "text": ["Orange glow: a crafted item.", "A craftsman's work, with a fine edge.", "It glows orange, made by hand."]}
+  },
+  "first_cards": ["magic", "rare"],
+  "later_cards": ["set", "unique", "crafted"]
+}

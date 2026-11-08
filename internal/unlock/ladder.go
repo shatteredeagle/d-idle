@@ -25,6 +25,7 @@ const (
 	RetireCount = "retire_count"  // args: min (heroes retired so far; the source reports the running count)
 	KillsOfKind = "kills_of_kind" // args: kind (monster name, or * for any), min (running count reported by the source)
 	QuestStage  = "quest_stage"   // args: quest (id), min (stage: 1 started, 2 cleared, 3 done)
+	ItemQuality = "item_quality"  // args: qualities (list: magic, rare, set, unique, ...; the first item picked up of any of them)
 	Seen        = "seen"          // args: what (a viewer-side moment such as expedition_card)
 )
 
@@ -144,6 +145,14 @@ func (t Trigger) validate() error {
 		return need("quest")
 	case Seen:
 		return need("what")
+	case ItemQuality:
+		if err := need("qualities"); err != nil {
+			return err
+		}
+		if len(t.strs("qualities")) == 0 {
+			return fmt.Errorf("trigger %s: arg qualities needs at least one quality", t.Kind)
+		}
+		return nil
 	case QuestStage:
 		if err := need("quest", "min"); err != nil {
 			return err
