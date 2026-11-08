@@ -33,7 +33,7 @@ fetch() { # url sha256 -> verified path in the cache
 	f=${VENDOR_CACHE:-${TMPDIR:-/tmp}/d2d-vendor-cache}/$(basename "$1")
 	mkdir -p "$(dirname "$f")"
 	if ! { [ -f "$f" ] && echo "$2  $f" | sha256sum -c - >/dev/null 2>&1; }; then
-		curl -fsSL --retry 3 -o "$f.part" "$1" && mv "$f.part" "$f"
+		curl -fsSL --retry 5 --retry-all-errors --connect-timeout 20 -o "$f.part" "$1" && mv "$f.part" "$f" || { echo "context.sh: download of $1 failed" >&2; exit 1; }
 	fi
 	echo "$2  $f" | sha256sum -c - >&2 || { echo "context.sh: sha256 mismatch for $1" >&2; exit 1; }
 	echo "$f"

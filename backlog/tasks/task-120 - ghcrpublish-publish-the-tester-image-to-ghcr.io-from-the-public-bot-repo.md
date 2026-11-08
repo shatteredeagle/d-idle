@@ -20,8 +20,13 @@ owns:
   - ".github/workflows/tester-image.yml"
   - "docs/registry-publish.md"
   - "deploy/d2d-container/compose.friends.yml"
+  - "docs/tester-registry.md"
+  - "deploy/d2d-container/compose.tester.yml"
+  - "deploy/d2d-container/context.sh"
+  - "deploy/d2d-container/tester_image_test.go"
 exclusive: []
 contracts: []
+result: "PREP only (2026-11-08, agent/ghcrprep): inert workflow_dispatch workflow + environment gate written, compose.tester.yml takes D2_IMAGE, static tests, worker-host dry run (smoke PASS, cold build numbers in docs/tester-registry.md). Nothing pushed or run on GitHub; AC 1 and 3 partly (no live registry, no scan on a hosted runner), AC 2 uses compose.tester.yml instead of compose.friends.yml; task stays open for the first publish."
 ---
 
 ## Description
