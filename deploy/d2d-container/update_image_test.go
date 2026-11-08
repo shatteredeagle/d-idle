@@ -69,3 +69,14 @@ func TestReleaseBuilderShipsLauncher(t *testing.T) {
 	b := read(t, "../../tools/release/app-assets.sh")
 	wantAll(t, "app-assets.sh", b, "deploy/d2d-container/entrypoint.sh", "bin/entrypoint.sh")
 }
+
+// TASK-192: the dev variant exists, is off by default, and the compose override names the three variables.
+func TestDevVariant(t *testing.T) {
+	d := read(t, "Dockerfile.d2d")
+	wantAll(t, "Dockerfile.d2d", d, "ARG DEV=0", "DIDLE_DEV=$DEV", "LABEL io.didle.dev=$DEV")
+	c := read(t, "docker-compose.dev.yml")
+	wantAll(t, "docker-compose.dev.yml", c, "D2BOT_UPDATE_URL", "D2BOT_UPDATE_PUBKEY", "D2BOT_UPDATE_CHECK: manual")
+	if strings.Contains(c, "BEGIN") || strings.Contains(c, "d2sign-ed25519-private") {
+		t.Error("a key in the compose override")
+	}
+}

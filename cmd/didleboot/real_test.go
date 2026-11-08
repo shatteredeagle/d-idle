@@ -3,8 +3,11 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/selfupdate"
 )
@@ -89,5 +92,28 @@ func TestRealPendingReleaseThatDiesIsRolledBack(t *testing.T) {
 	}
 	if mk, _ := l.ReadMarker(); mk == nil || !strings.Contains(mk.Reason, "exited with code 1") {
 		t.Fatalf("marker %+v", mk)
+	}
+}
+
+// A launcher that is terminated but leaves a child behind (the setup wizard case, TASK-192): the leftover is swept
+// before the shim reports the child gone.
+func TestRealSweepsLeftoverChildren(t *testing.T) {
+	_, baseBin := realEnv(t)
+	pidf := filepath.Join(t.TempDir(), "pid")
+	launcher(t, baseBin, `sleep 300 & echo $! > `+pidf+`; exit 0`)
+	if code := realMain([]string{"x"}); code != 0 {
+		t.Fatalf("exit %d", code)
+	}
+	raw, err := os.ReadFile(pidf)
+	if err != nil {
+		t.Fatal(err)
+	}
+	pid, _ := strconv.Atoi(strings.TrimSpace(string(raw)))
+	if err := syscall.Kill(pid, 0); err == nil {
+		// still there: is it a zombie of a reaped group? (no init in the test: give the kernel a moment)
+		time.Sleep(300 * time.Millisecond)
+		if b, _ := os.ReadFile("/proc/" + strconv.Itoa(pid) + "/stat"); !strings.Contains(string(b), ") Z") && len(b) > 0 {
+			t.Fatalf("leftover child %d still running", pid)
+		}
 	}
 }
