@@ -178,3 +178,51 @@ func TestEntrypointLoadsManagedSave(t *testing.T) {
 		t.Errorf("a new character is not created with the wizard class:\n%s", o)
 	}
 }
+
+// TASK-120: the compose file takes the image from D2_IMAGE and keeps the local build tag as the default.
+func TestComposeImageVariable(t *testing.T) {
+	wantAll(t, "compose.tester.yml", read(t, "compose.tester.yml"), "image: ${D2_IMAGE:-${D2D_IMAGE:-d2dbot:tester}}")
+}
+
+// TASK-120: the publish workflow is inert until a person acts and carries no secret.
+func TestTesterImageWorkflow(t *testing.T) {
+	w := read(t, "../../.github/workflows/tester-image.yml")
+	// triggers: workflow_dispatch only
+	on := w[strings.Index(w, "\non:"):strings.Index(w, "\nconcurrency:")]
+	if strings.Contains(on, "pull_request") || strings.Contains(on, "push:") || strings.Contains(on, "schedule") || strings.Contains(on, "workflow_run") {
+		t.Errorf("tester-image.yml may only be triggered by workflow_dispatch:\n%s", on)
+	}
+	wantAll(t, "tester-image.yml", w, "workflow_dispatch:", "confirm:", "inputs.confirm == 'publish'", "environment: tester-publish",
+		"packages: write", "secrets.GITHUB_TOKEN", "platforms: linux/amd64", "org.opencontainers.image.source=", "org.opencontainers.image.licenses=",
+		"org.opencontainers.image.revision=", "context.sh", "push: false", "No Blizzard data")
+	// no secret other than GITHUB_TOKEN, no personal token, no raw credential
+	for _, m := range regexp.MustCompile(`secrets\.([A-Za-z0-9_]+)`).FindAllStringSubmatch(w, -1) {
+		if m[1] != "GITHUB_TOKEN" {
+			t.Errorf("tester-image.yml uses secret %s", m[1])
+		}
+	}
+	if regexp.MustCompile(`(?i)(ghp_|github_pat_|password:\s*[^$\s])`).MatchString(w) {
+		t.Error("tester-image.yml holds a credential")
+	}
+	// packages: write only in the publish job, which sits behind the environment
+	i := strings.Index(w, "\n  publish:")
+	if i < 0 || strings.Contains(w[:i], "packages: write") || !strings.Contains(w[i:], "packages: write") {
+		t.Error("packages: write must appear only in the publish job")
+	}
+	if p := w[i:]; strings.Index(p, "environment: tester-publish") < 0 || strings.Index(p, "environment: tester-publish") > strings.Index(p, "steps:") {
+		t.Error("the publish job must declare environment: tester-publish")
+	}
+	if strings.Contains(w[:i], "push: true") {
+		t.Error("the build job must not push")
+	}
+	// every action is pinned: a 40-hex SHA or a major version, with a comment saying so
+	for _, l := range strings.Split(w, "\n") {
+		m := regexp.MustCompile(`uses:\s*(\S+)@(\S+)(.*)`).FindStringSubmatch(l)
+		if m == nil {
+			continue
+		}
+		if !regexp.MustCompile(`^([0-9a-f]{40}|v[0-9]+)$`).MatchString(m[2]) || !strings.Contains(m[3], "#") {
+			t.Errorf("action not pinned by SHA or major with a comment: %s", strings.TrimSpace(l))
+		}
+	}
+}
