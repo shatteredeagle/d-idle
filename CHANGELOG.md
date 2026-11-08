@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fidelity oracle batch on upstream main 1453f853: belt, price, hit-recovery and cap differentials all 0 differ; one local PR candidate for the load gold clamp (docs only, nothing posted)
 - Live check of the watch panels and a multi-seed class pace re-measure (docs only; cards for the target bar, area names and an Amazon no-ammo deadlock)
 - Quest hints: on entering town the hero says which quest giver it is ready to visit or why it is not yet (new policy row "How I handle quests in town": Quiet, Hints, Hints and ask me)
 - design review of the hot-update surface (docs/research/update-surface.md); doc only
