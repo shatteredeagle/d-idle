@@ -1,0 +1,3 @@
+BACKLOG: TASK-111 smokebot: tools/smoke.sh one-line 45-minute smoke verdict per bot change (judge d2smoke, rules data/smoke/rules.json); built and unit-tested, not yet run live
+INDEX: docs/smoke.md - smoke run: how to run, rules, cost, difference from Gate 1/2 (tools area)
+CHANGELOG: tools/smoke.sh and cmd/d2smoke: a 45-virtual-minute smoke with a one-line PASS/FAIL verdict per bot commit (not yet run live)
