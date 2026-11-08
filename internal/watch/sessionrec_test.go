@@ -284,7 +284,7 @@ func TestExportScrubs(t *testing.T) {
 	}
 	// a hostile line: names, a path, an address, a token and an unknown field
 	f, _ := os.OpenFile(filepath.Join(r.s.Dir(), "decisions.jsonl"), os.O_APPEND|os.O_WRONLY, 0o600)
-	f.WriteString(`{"v":1,"kind":"fire","id":99,"session":"x","commit":"abc1234","t_wall":"2026-11-08T10:01:00Z","point":"t1.repair","ctx":{"act":"1","zed":"Zedname"},"class":"sorceress","build":"/home/jesse/x","options":["a","me@host"],"default":"a","answer":"a","by":"default","account":"jesse","note":"hello"}` + "\n")
+	f.WriteString(`{"v":1,"kind":"fire","id":99,"session":"x","commit":"abc1234","t_wall":"2026-11-08T10:01:00Z","point":"t1.repair","ctx":{"act":"1","zed":"Zedname"},"class":"sorceress","build":"var/x/y","options":["a","me@host"],"default":"a","answer":"a","by":"default","account":"ann","note":"hello"}` + "\n")
 	f.Close()
 	var buf bytes.Buffer
 	n, err := ExportSession(r.s.Dir(), &buf, ExportOptions{Names: []string{"Zedname", "human"}, Rand: bytes.NewReader([]byte("ABCDEFGHijklmnop"))})
@@ -295,7 +295,7 @@ func TestExportScrubs(t *testing.T) {
 		t.Errorf("scrubbed %d", n)
 	}
 	out := buf.String()
-	for _, bad := range []string{"jesse", "Zedname", "/home", "@host", "3132333435363738", "human", "note", "account", secretTok, "t_wall", "2026-11-08"} {
+	for _, bad := range []string{"ann", "Zedname", "var/x", "@host", "3132333435363738", "human", "note", "account", secretTok, "t_wall", "2026-11-08"} {
 		if strings.Contains(out, bad) {
 			t.Errorf("export leaks %q:\n%s", bad, out)
 		}

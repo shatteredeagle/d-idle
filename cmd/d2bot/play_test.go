@@ -37,8 +37,8 @@ func TestPlayArgsPrintsTokenOnce(t *testing.T) {
 	if !playMode || !l.on || !l.watch || !l.video || l.viewAddr != "0.0.0.0:8891" || l.watchTokenFile != filepath.Join(dir, "watch.token") {
 		t.Fatalf("defaults: %+v", l)
 	}
-	tok, _ := os.ReadFile(l.watchTokenFile)
-	if got := out.String(); strings.Count(got, strings.TrimSpace(string(tok))) != 1 || !strings.Contains(got, "/watch?t=") {
+	watchSecret, _ := os.ReadFile(l.watchTokenFile)
+	if got := out.String(); strings.Count(got, strings.TrimSpace(string(watchSecret))) != 1 || !strings.Contains(got, "/watch?t=") {
 		t.Errorf("printed:\n%s", got)
 	}
 }
@@ -51,9 +51,9 @@ func TestPlaySessionWiring(t *testing.T) {
 			ctx, cancel := context.WithCancel(context.Background())
 			defer cancel()
 			state := t.TempDir()
-			tf := filepath.Join(t.TempDir(), "tok")
-			const tok = "play-token-0123456789abcdefABCDEF"
-			os.WriteFile(tf, []byte(tok), 0o600)
+			tf := filepath.Join(t.TempDir(), "watchSecret")
+			watchSecret := strings.Repeat("Qx7", 11)
+			os.WriteFile(tf, []byte(watchSecret), 0o600)
 			m := goalManager(t)
 			lo := ladderOptions{on: true, watch: true, play: true, viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0", watchTokenFile: tf}
 			status := func() goals.Status {
@@ -67,7 +67,7 @@ func TestPlaySessionWiring(t *testing.T) {
 			if rig.Fun.Return.Notes == nil {
 				t.Error("notes box not wired")
 			}
-			if err := rig.Fun.Return.Notes.SaveSessionNotes("fun " + tok); err != nil {
+			if err := rig.Fun.Return.Notes.SaveSessionNotes("fun " + watchSecret); err != nil {
 				t.Fatal(err)
 			}
 			time.Sleep(2500 * time.Millisecond) // a few polls and the death event
@@ -82,7 +82,7 @@ func TestPlaySessionWiring(t *testing.T) {
 			}
 			for _, e := range ents {
 				b, _ := os.ReadFile(filepath.Join(dir, e.Name()))
-				if bytes.Contains(b, []byte(tok)) {
+				if bytes.Contains(b, []byte(watchSecret)) {
 					t.Errorf("token in %s", e.Name())
 				}
 			}
