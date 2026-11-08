@@ -49,3 +49,7 @@ User feedback 2026-11-08: the minimap showed only the current area. Now the last
 - Panel: one world canvas in subtiles; neighbours are drawn dimmer behind the current area, the zoom-0 view fits the union box.
 - V (offline): `go test ./internal/senses -run 'Stitched|Relative|Fallbacks|Adjacency|Cap'`, `go test -race ./internal/watch -run Stitch`, `go test ./internal/watch -run SensesJS` (node, when installed), golden `internal/watch/testdata/senses-stitched.json`. The Blood Moor grid in the tests is SYNTHETIC (no Blood Moor image was recorded); only the town image and its Adjacent rectangle are real.
 - U (live check item): walk town -> Blood Moor -> town on d2d and look for (a) the neighbour abutting the current area without a gap or overlap, (b) the reported `Adjacent` rect of the town from inside the Blood Moor on d2d. Until then d2d alignment is unverified; a wrong one shows as a visible seam, never as a crash.
+
+## Area names (TASK-187)
+
+`internal/status/areas.go` names every Act 1 area id 1..39 with the in-game names (Burial Grounds 17, Crypt 18, Tower Cellar Level 1..5 = 21..25, Catacombs Level 1..4 = 34..37, Tristram 38). Status: id 17 V live (d2d panels run, 2026-11-08); the rest S (Levels.txt order, equal to internal/plandata/areas.json and the goals catalog; no extracted Levels.txt in this checkout). An id without a name reads `Unknown area (id N)`. Test: `TestAreaNameAct1Complete`.

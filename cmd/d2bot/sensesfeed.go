@@ -19,13 +19,16 @@ const sensesEvery = 500 * time.Millisecond
 // useSenses feeds the side-panel minimap (docs/senses-map.md). nav calls Env.OnObserve from the goroutine that just ran
 // World.Update, so the Tracker is read only there; the Publisher copies what it needs into an immutable snapshot and the
 // HTTP side sees only that. Call it after startLadder; no rig or no Publisher (senses.tier 0): nothing.
-func useSenses(rig *ladderRig, e *env.Env, log *slog.Logger) {
+func useSenses(rig *ladderRig, e *env.Env, f *combat.Fighter, log *slog.Logger) {
 	if rig == nil || rig.Senses == nil || e == nil {
 		return
 	}
 	var us *unitSource
 	if e.Read != nil {
 		us = &unitSource{Read: e.Read, Cat: combat.NewCatalog(e.Data), ModName: decide.ModName}
+		if f != nil {
+			us.Attacking = f.Attacking
+		}
 	}
 	e.OnObserve = sensesFeedUnits(rig.Senses, time.Now, log, us)
 }

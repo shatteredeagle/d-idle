@@ -14,6 +14,9 @@ type unitSource struct {
 	Read    d2.StateReader
 	Cat     combat.Catalog // may be nil: names stay empty, friendly tests use the class tables only
 	ModName func(id int) string
+	// Attacking returns the id of the monster the fighter is attacking now (0 = none). d2d never sets Snapshot.Hovered
+	// (TASK-186), so the bot's own target is the source; nil = fall back to Hovered.
+	Attacking func() uint32
 }
 
 // recentReader is implemented by the d2d reader (d2denv.Reader.Recent).
@@ -29,8 +32,8 @@ const recentSnapAge = time.Second
 const superFlag = 0x02
 
 // Units reads the monsters and classifies them: hostile monster, mercenary (blue), NPC (green). Dead units, summons and
-// other friendlies are left out. The target is the monster under the cursor (Snapshot.Hovered, the bot aims the mouse at
-// the monster it attacks; U: not checked live).
+// other friendlies are left out. The target is the monster the fighter attacks (Attacking) or, on Game.exe, the one under the
+// cursor (Snapshot.Hovered; U: not checked live).
 func (s unitSource) Units() []senses.Unit {
 	if s.Read == nil {
 		return nil
@@ -72,6 +75,11 @@ func (s unitSource) Units() []senses.Unit {
 		}
 		if u.Kind == senses.KindMonster {
 			u.Target = snap.Hovered.Active && snap.Hovered.Type == d2.TypeMonster && snap.Hovered.ID == m.ID
+			if s.Attacking != nil {
+				if id := s.Attacking(); id != 0 && id == m.ID {
+					u.Target = true
+				}
+			}
 			if mi := m.Monster; mi != nil {
 				if mi.MaxLife > 0 {
 					u.LifePct = max(1, min(100, mi.LifePct))

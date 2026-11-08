@@ -42,7 +42,7 @@ func TestSensesFeedTwoAreas(t *testing.T) {
 	clk := time.Unix(0, 0)
 	now := func() time.Time { return clk }
 	e := &env.Env{}
-	useSenses(&ladderRig{Senses: pub}, e, slog.Default())
+	useSenses(&ladderRig{Senses: pub}, e, nil, slog.Default())
 	if e.OnObserve == nil {
 		t.Fatal("useSenses did not set the hook")
 	}
