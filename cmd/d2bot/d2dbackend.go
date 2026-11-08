@@ -16,6 +16,7 @@ import (
 
 	"d2lod-bot/internal/api"
 	"d2lod-bot/internal/bot"
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/d2denv"
 	"d2lod-bot/internal/d2dinput"
@@ -279,10 +280,12 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		OnSnapshot: disp.OnSnapshot, Bus: bus, Restart: func(ctx context.Context) error { return be.Cycler.NewGame(ctx, "") }}
 	// Rig and town copy the Env by value, before bot.New installs Env.Emit: they would emit into nothing (kills, potions,
 	// drops never reached the goal manager, summary 0 kills). Give them a forwarder bound to the runner later.
+	var feedFighter *combat.Fighter
 	emit := &lateEmit{}
 	e.Emit = emit.send
 	if db != nil { // combat and town need the game tables; without them the "not yet" stubs stay
 		st := buildD2DStack(ctx, o, be, nv, db, cfg, ref, log)
+		feedFighter = st.cb.f
 		if seams.Fighter == nil {
 			seams.Fighter = st.seams().Fighter
 		}
@@ -343,6 +346,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	defer lrig.StopRec()
 	useFun(lrig, runner, runID())
+	useFightFeed(lrig, feedFighter, ldir, log)
 	useSenses(lrig, be.Env, log)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
