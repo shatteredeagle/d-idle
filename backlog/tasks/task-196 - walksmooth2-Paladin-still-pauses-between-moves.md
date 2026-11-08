@@ -1,10 +1,11 @@
 ---
 id: TASK-196
 title: 'walksmooth2: Paladin still pauses between moves'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T16:57:00Z'
+updated_date: '2026-11-08T18:03:00Z'
 labels:
   - bot
   - bug
