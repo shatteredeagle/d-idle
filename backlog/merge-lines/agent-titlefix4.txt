@@ -1,0 +1,1 @@
+BACKLOG: backlog checker reads folded titles (the CLI and auto-Done fold long titles)
