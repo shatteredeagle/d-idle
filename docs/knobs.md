@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -339,8 +338,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.restStartManaPct | 60 | 20..90 | % | 20 | 2 | Casters rest in place until mana reaches this percent (or the pack's cast budget) before engaging. |
 | resource.castsPerMonster | 3 | 1..6 | count | 1 | 3 | Casts budgeted per monster of the next pack when deciding how much mana is enough. |
 | resource.restMaxSec | 45 | 10..120 | s | 10 | 5 | Longest rest before a pack; beyond it the policy drinks, falls back to melee or goes on. |
-| resource.engageLifePct | 65 | 40..90 | % | 40 | 3 | Life percent below which the bot fixes its life before a pack. |
-| resource.minEngageLifePct | 40 | 25..70 | % | 25 | 6 | Life percent below which a pack is not engaged at all. |
+| resource.engageLifePct | 65 | 40..90 | % | 40 | 4 | Life percent below which the bot fixes its life before a pack. |
+| resource.minEngageLifePct | 40 | 25..70 | % | 25 | 7 | Life percent below which a pack is not engaged at all. |
 | resource.retreatDanger | 2 | 1..3 | level | 3 | 1 | Pack danger at which resting happens out of sight. |
 | resource.hpReserve | 1 | 0..4 | count | 0 | 1 | Healing potions kept for emergencies, not spent on engaging. |
 | resource.economyManaPct | 40 | 10..70 | % | 10 | 1 | Below this mana percent the cheapest attack skill is used. |
@@ -389,6 +388,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryXPPick | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower. |
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |
 | resource.recoveryXPEarly | 0 | 0..3 | levels | 0 | 1 | XP pick: a recovering character may enter an area this many levels below its plan enter and kit level (XPGAP: Cold Plains pays 1.5x the XP per kill of Blood Moor at the same kill rate). 0 = the plan levels. |
+| resource.recoveryEndOnKit | 0 | 0..1 | 0/1 | 0 | 1 | 1 = a running recovery ends as soon as the gold covers the missing kit (the same test that stops one from starting), instead of going on to recoveryTargetGold or the stall check (TASK-183: at clvl 1 to 5 the target is for gear the character does not need yet). 0 = the old end rules only. |
 | resource.recoveryKitGate | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering character with no healing potion in the belt or no town portal scroll farms only Blood Moor and Cold Plains and its walks avoid dungeon areas (Den, caves, Burial Grounds, Crypt, Mausoleum; KITGATE). 0 = the old area choice. |
 | resource.kitGateLevel | 8 | 0..20 | level | 20 | 2 | KITGATELEVEL: below this character level an incomplete kit holds a recovering character in Blood Moor and Cold Plains; from it the gate holds only a character with no portal and no healing potion, any other incomplete kit makes a town trip and the area progression goes on. 0 = the gate holds at every level. |
 | resource.kitMinHP | 4 | 1..6 | count | 1 | 1 | Minimum kit from kitGateLevel: healing potions (belt, pack, rejuvenation). Advisor range 4-6. |
@@ -409,9 +409,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | ladder.enabled | 0 | 0..1 | bool | 0 | 3 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
-| ladder.repeatCooldownMin | 30 | 0..600 | min | 30 | 0 | The same question (same decision point and context key) is not put again for this long after it was asked or answered; if the player answered it, that answer acts meanwhile (no re-ask). 0: ask every time it comes up (the old behaviour, which re-asked about every minute while the situation lasted). TASK-137. |
-| ladder.quietAfter | 3 | 0..20 | questions | 3 | 0 | After this many questions for one key faded unanswered in a row the bot uses the default, stops asking about it and writes one journal line. An answer resets the count. 0: never stop. Needs ladder.repeatCooldownMin above 0. TASK-137. |
-| ladder.awayMin | 20 | 1..1440 | min | 20 | 0 | Minutes since the player last looked at the watch screen after which the player counts as away. The hero keeps farming where it is; a zone proposal waits for the return and is never accepted by itself (docs/proposezone.md). TASK-131. |
+| ladder.repeatCooldownMin | 30 | 0..600 | min | 30 | 2 | The same question (same decision point and context key) is not put again for this long after it was asked or answered; if the player answered it, that answer acts meanwhile (no re-ask). 0: ask every time it comes up (the old behaviour, which re-asked about every minute while the situation lasted). TASK-137. |
+| ladder.quietAfter | 3 | 0..20 | questions | 3 | 2 | After this many questions for one key faded unanswered in a row the bot uses the default, stops asking about it and writes one journal line. An answer resets the count. 0: never stop. Needs ladder.repeatCooldownMin above 0. TASK-137. |
+| ladder.awayMin | 20 | 1..1440 | min | 20 | 2 | Minutes since the player last looked at the watch screen after which the player counts as away. The hero keeps farming where it is; a zone proposal waits for the return and is never accepted by itself (docs/proposezone.md). TASK-131. |
 
 ### senses.*
 

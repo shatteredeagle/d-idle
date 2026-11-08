@@ -77,6 +77,7 @@ type ResourceTuning struct {
 	BeltCol3, BeltCol4   int
 	KitTripCap           int // kit town trips with the kit still incomplete before the bot proceeds anyway (kitgate-skip)
 	RecoveryXPEarly      int // XP pick only: the area may be entered this many levels below its enter and kit level (0 = the plan levels, the old behaviour)
+	RecoveryEndOnKit     int // 1: a running recovery ends when the gold covers the missing kit (TASK-183); 0 = the old end rules only
 	PovertySellMin       int // poor character: pack junk items needed for a sell trip (0 = the built-in 4 on foot, 6 with a portal scroll)
 	BRAttempts           int // Blood Raven attempts before waiting for more levels; 0 = unlimited
 	BRLevelGap           int // levels to gain after the last attempt before the budget is renewed
