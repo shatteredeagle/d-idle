@@ -2,6 +2,8 @@ package watch
 
 import (
 	"encoding/json"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -184,5 +186,32 @@ func TestBestiaryNoTablesAndShippedNotes(t *testing.T) {
 	c := cardOf(v, "fallen")
 	if v.Tables || c.State != "full" || c.Resists != nil || c.Type != "" || c.Tip == "" {
 		t.Fatalf("%+v %+v", v.Tables, c)
+	}
+}
+
+func TestBestiaryStoreKeepsCountsAndFilterSkipsUnknownKinds(t *testing.T) {
+	notes, skipped, err := FilterBestiaryNotes(nil)
+	if err != nil || len(skipped) != 0 || len(notes) == 0 {
+		t.Fatalf("no tables: %d notes, skipped %v, %v", len(notes), skipped, err)
+	}
+	tbl := bestiaryTables(t)
+	delete(tbl, "zombie")
+	kept, skipped, err := FilterBestiaryNotes(tbl)
+	if err != nil || len(skipped) != 1 || skipped[0] != "Zombie" || len(kept) != len(notes)-1 {
+		t.Fatalf("filter: %d kept, skipped %v, %v", len(kept), skipped, err)
+	}
+	path := filepath.Join(t.TempDir(), "sub", "bestiary.json")
+	r, _ := bestiaryRig(t, "Sorceress")
+	r.fun.Bestiary.SetStore(path)
+	r.feed(kills("Fallen", 12, 1)...)
+	b2 := &Bestiary{kills: map[string]int{}}
+	if err := b2.SetStore(path); err != nil || b2.kills["fallen"] != 12 {
+		t.Fatalf("reload: %v %v", err, b2.kills)
+	}
+	if err := os.WriteFile(path, []byte(`{"schema":"x"}`), 0o600); err != nil {
+		t.Fatal(err)
+	}
+	if err := (&Bestiary{kills: map[string]int{}}).SetStore(path); err == nil {
+		t.Error("a foreign file was accepted")
 	}
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strings"
@@ -67,7 +68,7 @@ func runID() string {
 
 // newFun builds the fun loop for a running ladder: the tally strip when the profile has a d.idle wallet, the Codex when
 // the catalogue carries the firsts point (useFirsts), and the return screen over both.
-func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink, status func() goals.Status) (*watch.Fun, error) {
+func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink, status func() goals.Status, halt func() string) (*watch.Fun, error) {
 	run := runID()
 	cfg := watch.FunConfig{Hub: hub, Speed: 1, Notes: notes}
 	if stateDir != "" {
@@ -111,9 +112,29 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if cfg.Hall, err = newHallConfig(wallet, l.storeProfile(), status); err != nil {
 		return nil, err
 	}
+	var fun *watch.Fun // the risk facts read the proposal desk of the Fun built below
+	if cfg.Risk, err = newRiskConfig(l, func() string { return nextZone(fun) }); err != nil {
+		return nil, err
+	}
+	cfg.OrderQueue = &watch.OrderQueueConfig{Halt: halt}
+	if cfg.Strip != nil {
+		cfg.OrderQueue.Quote = cfg.Strip.Quote
+	}
+	if m := l.monsterTables(); m != nil {
+		cfg.Monsters = m
+		if stateDir != "" {
+			cfg.BestiaryPath = filepath.Join(stateDir, "bestiary-"+l.storeProfile()+".json")
+		}
+	} else {
+		slog.Info("bestiary: no monster table, cards carry the flavour only")
+	}
 	f, err := watch.NewFun(cfg)
 	if err != nil {
 		return nil, err
+	}
+	fun = f
+	for _, e := range f.Errors() {
+		slog.Warn("fun: " + e)
 	}
 	if err := f.Policy.Reapply(); err != nil {
 		return nil, fmt.Errorf("policy sheet: %w", err)
@@ -132,15 +153,7 @@ func newProposals(l ladderOptions, stateDir string, clk decide.Clock) (*watch.Pr
 	if err != nil {
 		return nil, err
 	}
-	rows := currency.DefaultTallyRows()
-	ranges := func(area string) (int, int, bool) {
-		for _, z := range rows.Zones {
-			if strings.EqualFold(z.Area, strings.TrimSpace(area)) {
-				return z.Min, z.Max, true
-			}
-		}
-		return 0, 0, false
-	}
+	ranges := tallyRanges()
 	path := ""
 	if stateDir != "" {
 		path = filepath.Join(stateDir, "proposals-"+l.storeProfile()+".json")
@@ -151,6 +164,58 @@ func newProposals(l ladderOptions, stateDir string, clk decide.Clock) (*watch.Pr
 	}
 	pr.SetRepeatPolicy(time.Duration(l.repeatCooldownMin)*time.Minute, l.quietAfter)
 	return &watch.ProposalConfig{Proposer: pr, Clock: clk, Facts: l.proposalFacts, AwayMin: l.awayMin}, nil
+}
+
+// tallyRanges is the one zone range source: the tally zone table.
+func tallyRanges() decide.RangeFn {
+	rows := currency.DefaultTallyRows()
+	return func(area string) (int, int, bool) {
+		for _, z := range rows.Zones {
+			if strings.EqualFold(z.Area, strings.TrimSpace(area)) {
+				return z.Min, z.Max, true
+			}
+		}
+		return 0, 0, false
+	}
+}
+
+// monsterTables is the monster table accessor for the bestiary: nil without tables (a nil *data.DB must not become a
+// non-nil interface).
+func (l ladderOptions) monsterTables() watch.MonsterTables {
+	if l.monsters == nil {
+		return nil
+	}
+	return l.monsters
+}
+
+// newRiskConfig builds the risk meter's config (docs/unlock-risk.md): the proposer table and the tally zone ranges as the
+// shared sources and the runner's facts. next names the zone the hero proposes next ("" = the area it stands in). nil (no
+// error) when the backend gave no facts reader or a scripted player answers.
+func newRiskConfig(l ladderOptions, next func() string) (*watch.RiskConfig, error) {
+	if l.riskFacts == nil || l.profile != "" {
+		return nil, nil
+	}
+	pt, err := decide.ShippedProposeTable()
+	if err != nil {
+		return nil, err
+	}
+	return &watch.RiskConfig{Propose: pt, Ranges: tallyRanges(), Facts: func(zone string) watch.RiskFacts {
+		if zone == "" {
+			zone = next()
+		}
+		return l.riskFacts(zone)
+	}}, nil
+}
+
+// nextZone is the zone of the first pending proposal, "" without one.
+func nextZone(f *watch.Fun) string {
+	if f == nil || f.Proposals == nil {
+		return ""
+	}
+	if p := f.Proposals.View().Pending; len(p) > 0 {
+		return p[0].To
+	}
+	return ""
 }
 
 // knobSetter is the policy sheet's knob path: the tuner's own edit (range checks, all or nothing, saved to tuning.json).

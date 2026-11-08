@@ -67,7 +67,11 @@ type ladderOptions struct {
 	sensesTier int
 	// proposals: the zone proposer's inputs (docs/proposezone.md), set by the backend from the runner and the tuning
 	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
-	proposalFacts                          func() watch.ProposalFacts
+	proposalFacts func() watch.ProposalFacts
+	// riskFacts is the hero risk meter's reader (bot.Runner.RiskFacts); nil: no meter. monsters is the monster table
+	// for the bestiary; nil (no game tables): flavour-only cards.
+	riskFacts                              func(zone string) watch.RiskFacts
+	monsters                               watch.MonsterTables
 	awayMin, repeatCooldownMin, quietAfter int
 }
 
@@ -241,7 +245,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 			}
 			notes = rig.Rec
 		}
-		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes, status); err != nil {
+		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes, status, func() string { return pactHalt(rig) }); err != nil {
 			return nil, nil, err
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
@@ -294,6 +298,17 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	go feedHub(ctx, rig.Hub, orders, rig.Fun, rig.Rec, ch, unsub, status)
 	startPacts(ctx, l, rig, m, status, stateDir, os.Getenv)
 	return rig, nil
+}
+
+// pactHalt is the order queue's stop signal: the reason a Pact paused the hero ("" = none or no Pact yet).
+func pactHalt(rig *ladderRig) string {
+	if rig.Pacts == nil {
+		return ""
+	}
+	if c := rig.Pacts.ctl.Load(); c != nil {
+		return c.Paused()
+	}
+	return ""
 }
 
 // newWallet opens the account ledger of the profile. With the d.idle overlay the mode is its stamp (marks, bank and
