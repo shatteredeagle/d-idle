@@ -11,6 +11,7 @@ labels:
   - ladder
 milestone: m-4
 dependencies:
+  - TASK-147
   - TASK-129
 priority: medium
 ordinal: 123000
@@ -33,6 +34,7 @@ contracts: []
 Size: M
 
 Why: ADR 0018 item 2 and 3 of the decisions, fun-ideas.md section 13 card 5; folds in TASK-115 qqueue (nothing fades for the player, proposals queue for the return). Kill: the user never accepts a proposal and always orders from the map. Done when: the criteria below hold.
+Amendment 2026-11-07 (class generic): the recommended-level table is per-class data, not one Sorceress table. Until TASK-147 (classpacing) measures it, use the veteran estimate of docs/research/class-early-game.md section 5 with its UNSURE tag, keyed by class (Paladin default test class, ADR 0018 Amendment); depends on TASK-147 for the measured values.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

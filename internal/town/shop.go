@@ -226,7 +226,7 @@ func (t *Town) manaReserve(s *d2.Snapshot) int {
 	if n, hasTome := t.scrollCount(s, "tsc", "tbk"); n == 0 && !hasTome {
 		res += r.KitTPGold
 	}
-	if t.healingCarried(s) < max(r.KitMinHP, 1) {
+	if t.planHasHealing(s.Player) && t.healingCarried(s) < max(r.KitMinHP, 1) {
 		res += r.KitPotionGold
 	}
 	return res
@@ -975,7 +975,7 @@ func tpBuyAllowed(p *d2.Player) bool {
 // carriedPotionsBonus is the number of extra scrolls a poor character may afford: TPReserve-1 once its minimal healing
 // kit is carried, 0 before.
 func carriedPotionsBonus(t *Town, s *d2.Snapshot) int {
-	if t.healingCarried(s) < max(t.e.Tune.Resource.KitMinHP, 1) {
+	if t.planHasHealing(s.Player) && t.healingCarried(s) < max(t.e.Tune.Resource.KitMinHP, 1) {
 		return 0
 	}
 	return max(t.tune().TPReserve-1, 0)

@@ -65,6 +65,7 @@ type Tuning struct {
 	RecoveryOn, RecoveryKitGold, RecoveryTargetGold, RecoveryMaxMin, RecoveryCooldownMin, RecoveryStallMin, RecoveryStallGold, RecoveryStallHoldMin, RecoveryPotionFloor, RecoveryManaFloor, RecoveryXPPick, RecoveryMaxAreaAbove int
 	RecoveryXPEarly, RecoveryKitGate, PovertySellMin                                                                                                                                                                              int
 	KitGateLevel, KitMinHP, KitMinMP, KitTripCap                                                                                                                                                                                  int
+	BeltPlan, BeltCol1, BeltCol2, BeltCol3, BeltCol4                                                                                                                                                                              int // the belt plan knob (beltspec.go)
 	BRAttempts, BRLevelGap                                                                                                                                                                                                        int
 }
 
@@ -139,6 +140,11 @@ func Knobs() []env.Knob {
 		k("povertySellMin", "Poverty sell trip items", "items", "A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll.", d.PovertySellMin, 0, 16, true),
 		k("brAttempts", "Blood Raven attempts", "count", "Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3.", d.BRAttempts, 0, 6, false),
 		k("brLevelGap", "Blood Raven retry levels", "levels", "Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2.", d.BRLevelGap, 1, 6, true),
+		k("beltPlan", "Belt plan", "template", "What the four belt columns hold. 0 = the build's own plan, 1 balanced (healing, healing, mana, rejuvenation), 2 all healing, 3 all mana (risky: no healing potion is bought), 4 three healing to one mana, 5 one to one, 6 rejuvenation only. Tier follows the level and the potion tier option. docs/belt-plan.md.", d.BeltPlan, 0, 6, false),
+		k("beltCol1", "Belt column 1", "kind", "Override the first belt column: 0 = plan, 1 healing, 2 mana, 3 rejuvenation, 4 empty (nothing bought for it).", d.BeltCol1, 0, 4, false),
+		k("beltCol2", "Belt column 2", "kind", "Override the second belt column (values as beltCol1).", d.BeltCol2, 0, 4, false),
+		k("beltCol3", "Belt column 3", "kind", "Override the third belt column (values as beltCol1).", d.BeltCol3, 0, 4, false),
+		k("beltCol4", "Belt column 4", "kind", "Override the fourth belt column (values as beltCol1).", d.BeltCol4, 0, 4, false),
 		k("povertyLevels", "Poverty farm levels below", "levels", "Poverty mode farms the plan area for a character this many levels lower.", d.PovertyLevels, 1, 10, true),
 	}
 }
@@ -162,6 +168,7 @@ func FromEnv(t env.Tuning) Tuning {
 		TripBudget: r.TripBudget, TripWindowMin: r.TripWindowMin, TripGoldFloor: r.TripGoldFloor,
 		RecoveryOn: r.RecoveryOn, RecoveryKitGold: r.RecoveryKitGold, RecoveryTargetGold: r.RecoveryTargetGold,
 		RecoveryMaxMin: r.RecoveryMaxMin, RecoveryCooldownMin: r.RecoveryCooldownMin, RecoveryStallMin: r.RecoveryStallMin, RecoveryStallGold: r.RecoveryStallGold, RecoveryStallHoldMin: r.RecoveryStallHoldMin, RecoveryPotionFloor: r.RecoveryPotionFloor, RecoveryManaFloor: r.RecoveryManaFloor, RecoveryXPPick: r.RecoveryXPPick, RecoveryMaxAreaAbove: r.RecoveryMaxAreaAbove, RecoveryXPEarly: r.RecoveryXPEarly, RecoveryKitGate: r.RecoveryKitGate, KitGateLevel: r.KitGateLevel, KitMinHP: r.KitMinHP, KitMinMP: r.KitMinMP, KitTripCap: r.KitTripCap, PovertySellMin: r.PovertySellMin, BRAttempts: r.BRAttempts, BRLevelGap: r.BRLevelGap,
+		BeltPlan: r.BeltPlan, BeltCol1: r.BeltCol1, BeltCol2: r.BeltCol2, BeltCol3: r.BeltCol3, BeltCol4: r.BeltCol4,
 	}
 }
 

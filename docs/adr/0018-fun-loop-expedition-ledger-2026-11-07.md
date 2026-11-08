@@ -30,3 +30,12 @@ ADR 0017 ranked work fun-first and asked for a design base. The direction review
 - The catalogue's chore points stop opening cards once the policy sheet covers them; the return screen becomes the `/watch` landing after an absence; the ledger registry gains the sources and prices of fun-ideas.md section 3.4. The metacurrency slice (TASK-60 to 64) stays paused except the ledger credits of tallystrip.
 - Every pacing number in fun-ideas.md section 7 is a logged target, never a pass or fail, until a session record exists.
 - Glossary candidates (not written; the user's grill session decides): Expedition, Report card, Charter, Policy sheet, Codex, Legacy charm, Hall of Fame.
+
+## Amendment 2026-11-07 (class generic)
+
+User popups, 2026-11-07. Source for the class facts: [research/class-early-game.md](../research/class-early-game.md) (veteran estimate, not measured).
+
+1. **World-generic first, class overlay second.** The loop's world layer is class-free: Corpsefire at the Den as the early goal, waypoint milestones, the Act 1 firsts, the tally events. Unlock schedules and must-stay-free lists, chore defaults (potion mix, repair, ammo, summon upkeep, aura and buff, town triggers), charm tiers, pacing by zone and first-skill tables are per-class data in `internal/plandata` / `internal/combat/classdata`, never Go literals (AGENTS.md build flexibility).
+2. **Default test class: Paladin.** The first friend session and the two-week playtest default to the Paladin; the Sorceress stays for engine tests. The first-run wizard lists the classes that have a normal30 leveling table (read from data), Paladin preselected; the friend picks.
+
+Consequences: the Sorceress has no normal30 table (card sorcnormal30 builds it); per-class cards classunlocks, classchores, classcharm (amends TASK-135/136 notes), classpacing (measured early-game timing; feeds the return screen's recommended-level table in TASK-131), wizardclass and paladinsmoke (live smoke of the loop on a Paladin) carry the work. Every pacing number in the research doc stays a logged target until classpacing measures it.

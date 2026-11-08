@@ -349,7 +349,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.poorGold | 150 | 50..500 | gold | 50 | 1 | Below this gold life potions come before mana potions. |
 | resource.reserveGold | 30 | 0..200 | gold | 0 | 2 | Never spend below this on potions. |
 | resource.potionGoldPct | 80 | 30..100 | % | 30 | 1 | Share of spendable gold potions may take when not poor. |
-| resource.hpFirst | 3 | 1..6 | count | 1 | 8 | Healing potions bought before any mana potion. |
+| resource.hpFirst | 3 | 1..6 | count | 1 | 9 | Healing potions bought before any mana potion. |
 | resource.mpFirst | 2 | 0..6 | count | 0 | 3 | Mana potions bought for casters after the first healing potions. |
 | resource.tripHPMin | 1 | 0..4 | count | 0 | 2 | Town trip when healing potions are at or below this. |
 | resource.tripMPMin | 0 | 0..4 | count | 0 | 1 | Town trip (casters) when mana potions are at or below this. |
@@ -381,7 +381,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryStallMin | 20 | 0..120 | min | 0 | 2 | A recovery that gained under recoveryStallGold after this many minutes ends as stalled: at clvl 1 to 4 a plain kill drops a few gold, so the bar is out of reach for hours (V, tester realtime hour: 28 gold in 11 min) and the campaign never resumed. 0 = off. |
 | resource.recoveryStallGold | 100 | 20..500 | gold | 20 | 1 | Gold a recovery must have gained after recoveryStallMin minutes to go on. |
 | resource.recoveryStallHoldMin | 60 | 0..240 | min | 0 | 1 | Minutes after a stalled recovery during which a low kit does not start another one (a death streak still does). |
-| resource.recoveryPotionFloor | 2 | 0..6 | count | 6 | 3 | While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan. |
+| resource.recoveryPotionFloor | 2 | 0..6 | count | 6 | 4 | While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan. |
 | resource.recoveryXPPick | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower. |
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |
 | resource.recoveryXPEarly | 0 | 0..3 | levels | 0 | 1 | XP pick: a recovering character may enter an area this many levels below its plan enter and kit level (XPGAP: Cold Plains pays 1.5x the XP per kill of Blood Moor at the same kill rate). 0 = the plan levels. |
@@ -393,6 +393,11 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.povertySellMin | 0 | 0..16 | items | 0 | 1 | A poor character walks to town to sell junk only with this many sellable items (XPGAP: 4-item trips netted +23 gold for 3.5 minutes). 0 = built-in 4 on foot, 6 with a portal scroll. |
 | resource.brAttempts | 3 | 0..6 | count | 6 | 1 | Blood Raven attempts before the bot waits for more levels (or skips her). 0 = unlimited. SME: 2-3. |
 | resource.brLevelGap | 2 | 1..6 | levels | 1 | 0 | Levels to gain after the last attempt before the Blood Raven budget renews. SME: clvl+2. |
+| resource.beltPlan | 0 | 0..6 | template | 6 | 2 | What the four belt columns hold. 0 = the build's own plan, 1 balanced (healing, healing, mana, rejuvenation), 2 all healing, 3 all mana (risky: no healing potion is bought), 4 three healing to one mana, 5 one to one, 6 rejuvenation only. Tier follows the level and the potion tier option. docs/belt-plan.md. |
+| resource.beltCol1 | 0 | 0..4 | kind | 4 | 2 | Override the first belt column: 0 = plan, 1 healing, 2 mana, 3 rejuvenation, 4 empty (nothing bought for it). |
+| resource.beltCol2 | 0 | 0..4 | kind | 4 | 2 | Override the second belt column (values as beltCol1). |
+| resource.beltCol3 | 0 | 0..4 | kind | 4 | 2 | Override the third belt column (values as beltCol1). |
+| resource.beltCol4 | 0 | 0..4 | kind | 4 | 2 | Override the fourth belt column (values as beltCol1). |
 | resource.povertyLevels | 4 | 1..10 | levels | 1 | 2 | Poverty mode farms the plan area for a character this many levels lower. |
 
 ### ladder.*
