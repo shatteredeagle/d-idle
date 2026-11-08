@@ -16,8 +16,14 @@ ordinal: 146000
 card: "pactnative"
 owns:
   - "docs/research/pact-native.md"
-exclusive: []
+  - "docs/probes/pactnative.md"
+  - "docs/probes/pactnative/"
+  - "cmd/pactprobe"
+  - "cmd/mpqcat"
+exclusive:
+  - "instance:i5"
 contracts: []
+result: "2026-11-08, docs/probes/pactnative.md. VERIFIED LIVE (i5, game.exe 1.14d, zero writes): /players typed through the input helper works offline (game prints players set to N), monster hits-to-kill rise 1.00 / 1.36 / 1.75 / 2.25 for N=1/2/4/8 (Fallen, Blood Moor; capped below by one-hit kills, so the exact life factor stays S from the decompilation, 1.5/2.5/4.5); client life reads 128/128 so real max life is not readable; a hardcore hero is created and played offline (save status byte 0x24). READ FROM TABLES (T): DifficultyLevels.txt Nightmare -40 resist and 5 pct death XP, Hell -100 and 10; Levels.txt MonUMin/MonUMax (+N,H) drive the elite count (Blood Moor 0 / 4-5 / 7-9). NOT measured: damage scaling, drop and XP effect (U, S from fork notes); d2d has no /players command (S, fork source read). AC 1 left open."
 ---
 
 ## Description
@@ -31,8 +37,8 @@ Size: S. Needs the live agent. Not on the two-week playable path. Design note: d
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Live: /players 1..8 offline on 1.14d works; monster life, damage, drops and XP effect measured
-- [ ] #2 Live or table check: Nightmare death XP penalty and resist penalty (-5 pct, -40) and Hell values
-- [ ] #3 Whether a Hardcore hero can be created and played offline; every number tagged V or U
+- [x] #2 Live or table check: Nightmare death XP penalty and resist penalty (-5 pct, -40) and Hell values
+- [x] #3 Whether a Hardcore hero can be created and played offline; every number tagged V or U
 <!-- AC:END -->
 
 ## Implementation Notes

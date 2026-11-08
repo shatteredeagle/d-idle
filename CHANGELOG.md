@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- pactnative probe: /players N verified offline on game.exe (typed through the input helper), hardcore hero created, Nightmare -40 / 5 pct and Hell -100 / 10 pct read from DifficultyLevels.txt; new read-only tools cmd/pactprobe and cmd/mpqcat
+- per-class chore defaults as data for all seven classes; the policy sheet reads class starting options (TASK-146)
+- Self-update part 1: cmd/d2sign, signed release manifest format and a draft (inert) release workflow
 - Watch screen: side-panel minimap (view only, fog of war, token gated) behind a tier-1 unlock hook
 - merc hire kit check follows the belt plan: an all-mana belt hires a mercenary (TASK-174)
 - First-run wizard offers every class that has a leveling table and preselects the Paladin

@@ -824,3 +824,6 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/ptrclick.md - d2d left-click uses last frame hover unit: harness or deviation, probe plan (TASK-179)
 - docs/senses-map.md - side-panel minimap: data flow, schema, fog, tier hook, live checklist
 - docs/research/skill-req-check.md - SME skill clvl requirements checked against the tables (TASK-132)
+- docs/self-update-release.md - signed app release manifest, d2sign tool, asset builder and the inert workflow draft
+- docs/classchores.md - per-class chore defaults data and how the policy sheet reads them
+- docs/probes/pactnative.md - native difficulty levers on 1.14d: /players works offline and scales monster life, Hardcore creatable, Nightmare/Hell penalties and elite-count columns from the tables (TASK-170)
