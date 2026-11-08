@@ -1,0 +1,45 @@
+{
+  "schema": "currency.tallyrows/1",
+  "currency": "tally",
+  "kill": {
+    "source": "tally_kills",
+    "per": 25,
+    "amount": 1,
+    "weights": [
+      {"class": "normal", "weight": 1},
+      {"class": "boss", "weight": 0}
+    ]
+  },
+  "credits": [
+    {"event": "first_monster", "source": "tally_firsts", "amount": 5, "why": "first %s"},
+    {"event": "first_area", "source": "tally_firsts", "amount": 5, "why": "first visit to %s"},
+    {"event": "boss", "source": "tally_boss", "amount": 15, "why": "killed %s"},
+    {"event": "quest", "source": "tally_quest", "amount": 10, "why": "quest %s done"},
+    {"event": "waypoint", "source": "tally_waypoint", "amount": 10, "why": "waypoint lit at %s"},
+    {"event": "trip", "source": "tally_trip", "amount": 2, "why": "expedition %s completed"}
+  ],
+  "charter": {
+    "base": 20,
+    "tiers": [
+      {"up_to_above": 3, "mult": 1},
+      {"up_to_above": 6, "mult": 2},
+      {"up_to_above": 99, "mult": 4}
+    ]
+  },
+  "zones": [
+    {"area": "Blood Moor", "min": 1, "max": 8},
+    {"area": "Den of Evil", "min": 1, "max": 8},
+    {"area": "Cold Plains", "min": 6, "max": 12},
+    {"area": "Cave Level 1", "min": 6, "max": 10},
+    {"area": "Burial Grounds", "min": 8, "max": 14},
+    {"area": "Crypt", "min": 8, "max": 14},
+    {"area": "Stony Field", "min": 10, "max": 16},
+    {"area": "Dark Wood", "min": 10, "max": 16},
+    {"area": "Black Marsh", "min": 12, "max": 18},
+    {"area": "Hole 1", "min": 12, "max": 99},
+    {"area": "Forgotten Tower", "min": 15, "max": 22},
+    {"area": "Tower Cellar 1", "min": 15, "max": 22},
+    {"area": "Tamoe Highland", "min": 14, "max": 20},
+    {"area": "Pit 1", "min": 16, "max": 24}
+  ]
+}
