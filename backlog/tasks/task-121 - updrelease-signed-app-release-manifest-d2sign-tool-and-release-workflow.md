@@ -21,6 +21,9 @@ owns:
   - "cmd/d2sign"
   - ".github/workflows/app-release.yml"
   - "docs/self-update-release.md"
+  - "internal/selfupdate/manifest.go"
+  - "internal/selfupdate/manifest_test.go"
+  - "tools/release"
 exclusive: []
 contracts: []
 ---
@@ -35,6 +38,8 @@ Tier 2 part 1 of docs/research/self-update-design.md sections 3.2, 3.3. Key cust
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 MANIFEST.json schema and asset layout written as a contract-style doc; cmd/d2sign (stdlib ed25519) keygen, sign, verify with a review summary; tests
-- [ ] #2 app-release.yml builds assets from a tag and uploads the assets; a signing job in the approval-gated `app-release` environment (required reviewer, environment-scoped secret) signs the manifest and publishes; signed `REVOKED` file and minimum version supported; nothing run or pushed
+- [x] #1 MANIFEST.json schema and asset layout written as a contract-style doc; cmd/d2sign (stdlib ed25519) keygen, sign, verify with a review summary; tests
+- [x] #2 app-release.yml builds assets from a tag and uploads the assets; a signing job in the approval-gated `app-release` environment (required reviewer, environment-scoped secret) signs the manifest and publishes; signed `REVOKED` file and minimum version supported; nothing run or pushed
 <!-- AC:END -->
+
+result: offline only, NOT verified on GitHub. cmd/d2sign (keygen, manifest, revoked, sign, verify, summary), internal/selfupdate/manifest.go (schema, canonical marshal, revoke/min-version, keys, versions), tools/release/app-assets.sh (reproducible tarballs, checked by two runs), docs/self-update-release.md and a DRAFT inert .github/workflows/app-release.yml (workflow_dispatch only, needs repo variable APP_RELEASE_ENABLED, d2d build step intentionally fails until TASK-120 wiring). Owns widened to manifest.go, its test and tools/release (TASK-122 builds on manifest.go). AC2 is met as a draft: unrun, the environment/secret/reviewer are user steps (TASK-124).
