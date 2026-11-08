@@ -1,0 +1,15 @@
+{"build":"build-sorceress","catalogue":4,"class":"sorceress","commit":"abc1234","kind":"start","session":"20261108T100000Z-human","t_s":0,"t_wall":"2026-11-08T10:00:00Z","v":1}
+{"fire":1,"kind":"question","point":"t1.repair","t_s":30,"t_wall":"2026-11-08T10:00:30Z","thought":1,"v":1}
+{"kind":"viewers","n":1,"open":true,"t_s":31,"t_wall":"2026-11-08T10:00:31Z","v":1}
+{"answer":"repair","by":"player","kind":"answer","latency_ms":10000,"t_s":41,"t_wall":"2026-11-08T10:00:41Z","thought":1,"v":1}
+{"area":"Cold Plains","forever":false,"kind":"order","minutes":20,"order":1,"order_kind":"go","t_s":46,"t_wall":"2026-11-08T10:00:46Z","v":1}
+{"fire":2,"kind":"question","point":"t1.repair","t_s":47,"t_wall":"2026-11-08T10:00:47Z","thought":2,"v":1}
+{"kind":"death","t_s":47,"t_wall":"2026-11-08T10:00:47Z","v":1}
+{"by":"timeout","kind":"fade","t_s":92,"t_wall":"2026-11-08T10:01:32Z","thought":2,"v":1}
+{"credits":2,"kind":"sample","life_pct":40,"t_s":300,"t_wall":"2026-11-08T10:05:00Z","v":1,"xp":1000}
+{"kind":"notes","t_s":347,"t_wall":"2026-11-08T10:05:47Z","text":"the first ten minutes were fun [removed]","v":1}
+{"area":"","forever":false,"kind":"order","minutes":0,"order":2,"order_kind":"home","t_s":348,"t_wall":"2026-11-08T10:05:48Z","v":1}
+{"credits":5,"kind":"sample","life_pct":80,"t_s":600,"t_wall":"2026-11-08T10:10:00Z","v":1,"xp":3600}
+{"credits":5,"kind":"sample","life_pct":80,"t_s":900,"t_wall":"2026-11-08T10:15:00Z","v":1,"xp":3600}
+{"kind":"viewers","n":0,"open":false,"t_s":1068,"t_wall":"2026-11-08T10:17:48Z","v":1}
+{"kind":"stop","t_s":1077,"t_wall":"2026-11-08T10:17:57Z","v":1}

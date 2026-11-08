@@ -177,6 +177,7 @@ type Store struct {
 	quality   map[string]int
 	log       []Entry
 	subs      []func(Event)
+	askObs    func(AskEvent)
 
 	// Repeat suppression (TASK-137). Derived from the log by apply, so it survives a reload; zero cooldown = off.
 	cooldown   time.Duration
@@ -246,6 +247,18 @@ func (s *Store) SetRepeatPolicy(cooldown time.Duration, quietAfter int) {
 	s.cooldown, s.quietAfter = cooldown, quietAfter
 	s.mu.Unlock()
 }
+
+// AskEvent is one call of Ask or AskWithDefault and what it decided, for the session record's decision dataset
+// (docs/research/decision-dataset.md). It is delivered after the store's lock is released.
+type AskEvent struct {
+	Ctx      Context
+	Legacy   string
+	Decision Decision
+}
+
+// SetAskObserver sets the one observer of every successful Ask; nil removes it. It sees rule answers and repeats too,
+// which Subscribe does not.
+func (s *Store) SetAskObserver(f func(AskEvent)) { s.mu.Lock(); s.askObs = f; s.mu.Unlock() }
 
 func (s *Store) Subscribe(f func(Event)) { s.mu.Lock(); s.subs = append(s.subs, f); s.mu.Unlock() }
 
@@ -516,6 +529,17 @@ func (s *Store) AskWithDefault(ctx Context, legacy string) (Decision, error) {
 }
 
 func (s *Store) ask(ctx Context, legacy string) (Decision, error) {
+	d, err := s.askLocked(ctx, legacy)
+	s.mu.Lock()
+	obs := s.askObs
+	s.mu.Unlock()
+	if obs != nil && err == nil {
+		obs(AskEvent{Ctx: ctx, Legacy: legacy, Decision: d})
+	}
+	return d, err
+}
+
+func (s *Store) askLocked(ctx Context, legacy string) (Decision, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	p, err := s.cat.Point(ctx.Point)
