@@ -26,13 +26,28 @@ func (h *Hub) SetHero(in HeroInfo) {
 	in.Activity = safeText(in.Activity, 80)
 	in.Area = safeText(in.Area, 60)
 	h.mu.Lock()
-	defer h.mu.Unlock()
 	was := h.hero
 	in.Title = was.Title
 	h.hero = in
 	if in.Area != was.Area || in.AreaID != was.AreaID || in.Level != was.Level || in.Activity != was.Activity || in.Known != was.Known {
 		h.notifyLocked()
 	}
+	fire := h.onClass
+	if in.Class == "" || in.Class == was.Class {
+		fire = nil
+	}
+	h.mu.Unlock()
+	if fire != nil {
+		fire() // outside the lock: the hook reads the hero again
+	}
+}
+
+// OnClass registers a function run when the hero's class becomes known or changes (the policy sheet settles the
+// class's starting options there).
+func (h *Hub) OnClass(f func()) {
+	h.mu.Lock()
+	h.onClass = f
+	h.mu.Unlock()
 }
 
 // MarkCleared records game areas the bot knows are cleared (a quest milestone). Nothing marks an area cleared by itself:

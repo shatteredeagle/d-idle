@@ -138,6 +138,91 @@
        {"id": "pause", "label": "Pause until the player acts", "suboptimal": true, "risk": "The hero idles with a full stash.", "rules": [{"point": "t1.stash.full", "answer": "pause"}],
         "applies": "record", "note": "The bot does not ask t1.stash.full yet (docs/t0-slice.md)."}
      ],
-     "effect": [{"counter": "gold_in", "label": "gold gained"}, {"counter": "trips", "label": "town trips", "heuristic": true}]}
+     "effect": [{"counter": "gold_in", "label": "gold gained"}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
+    {
+      "id": "stance",
+      "label": "How boldly the hero fights",
+      "default": "default",
+      "help": "How far the hero notices and chases monsters and how early it backs off. It moves existing fight settings together: how far away a monster is noticed, how long a chase lasts, the life lines for potions and for leaving the game, extra care against champions, and when the potion count sends the hero to town. A melee hero and a caster get different numbers for the same stance (sheet: Knobs).",
+      "options": [
+        {
+          "id": "cautious",
+          "label": "Cautious",
+          "says": "Cautious: only fights what comes close (noticed within about 4 tiles for a melee hero, 5 for a caster), gives up a chase sooner, drinks a healing potion at 65 percent life, leaves the game at 35 percent, takes extra care with champions and goes to town when 3 healing potions are left.",
+          "classKnobs": {
+            "paladin": {
+              "bot.clearRadius": 20,
+              "combat.drinkLifePct": 65,
+              "combat.chickenPct": 35,
+              "combat.championEarlyPct": 20,
+              "combat.townPotionMin": 3,
+              "combat.maxApproaches": 8,
+              "combat.kiteLifePct": 85,
+              "combat.crowdAbandonN": 10
+            },
+            "sorceress": {
+              "bot.clearRadius": 24,
+              "combat.drinkLifePct": 65,
+              "combat.chickenPct": 35,
+              "combat.championEarlyPct": 20,
+              "combat.townPotionMin": 3,
+              "combat.maxApproaches": 8,
+              "combat.kiteLifePct": 85,
+              "combat.crowdAbandonN": 10
+            }
+          }
+        },
+        {
+          "id": "default",
+          "label": "Balanced",
+          "says": "Balanced: today's behaviour. Monsters within 6 tiles are fought, a healing potion at 55 percent life, the game is left at 25 percent, a town trip at 2 healing potions."
+        },
+        {
+          "id": "aggressive",
+          "label": "Aggressive",
+          "says": "Aggressive: goes after monsters from farther away (about 8 tiles for a melee hero, 7 for a caster), chases longer, drinks at 50 percent life, leaves the game at 22 percent (20 for a caster), takes less extra care with champions and goes to town only when 1 healing potion is left. A melee hero starts here: it has to walk up to its target.",
+          "classKnobs": {
+            "paladin": {
+              "bot.clearRadius": 40,
+              "combat.drinkLifePct": 50,
+              "combat.chickenPct": 22,
+              "combat.championEarlyPct": 8,
+              "combat.townPotionMin": 1,
+              "combat.maxApproaches": 18,
+              "combat.kiteLifePct": 70,
+              "combat.crowdAbandonN": 18
+            },
+            "sorceress": {
+              "bot.clearRadius": 36,
+              "combat.drinkLifePct": 50,
+              "combat.chickenPct": 20,
+              "combat.championEarlyPct": 5,
+              "combat.townPotionMin": 1,
+              "combat.maxApproaches": 16,
+              "combat.kiteLifePct": 55,
+              "combat.crowdAbandonN": 20
+            }
+          }
+        }
+      ],
+      "effect": [
+        {
+          "counter": "kills",
+          "label": "kills"
+        },
+        {
+          "counter": "deaths",
+          "label": "deaths"
+        },
+        {
+          "counter": "closecalls",
+          "label": "close calls"
+        },
+        {
+          "counter": "potions",
+          "label": "potions drunk"
+        }
+      ]
+    }
   ]
 }
