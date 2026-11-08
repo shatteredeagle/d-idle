@@ -122,7 +122,7 @@ uv run python fr_revive.py gen 500 31415926 > fr_cases.tsv; ... game / alive; te
 | `pr_guard.py up/main HEAD` / `--sorted` | 0 FAIL, 0 WARN / 0 FAIL | |
 | presubmit `check_gcc` on the two touched TUs | ok | |
 | clang-tidy on the two touched TUs | no finding in a touched file (findings only in untouched headers: drlg/outdoor.hpp:1068, rules/merc.hpp:104) | |
-| presubmit `--quick --base up/main` | PRESUB_R2 | |
+| presubmit `--quick --base up/main` | 1 FAIL, 3 WARN: FAIL `gcc` = the launcher `main.moc` only (F7, reproduced on the parent); WARN docs-sync (no `.md` changed: answered in the body), WARN build (skipped by `--quick`), and WARN doc-claims (a heuristic on existing docs; this branch adds no `.md`); clang-tidy ok on 311 TUs (no finding on an added line); short names, sorted, ruff, attribution and tool tests ok | |
 
 Note for anyone re-running presubmit in a fork clone: without `--base up/main` it diffs against the fork's own `origin/main`, which is behind upstream, and reports dozens of FAILs in files this branch never touched (it did here once). Pass the base.
 
