@@ -10,7 +10,7 @@ import (
 
 // SensesRoutes are the GET routes of the side-panel minimap (docs/senses-map.md). Mount them on the viewer behind the
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
-var SensesRoutes = []string{"/api/senses", "/watch/senses.js"}
+var SensesRoutes = []string{"/api/senses", "/watch/senses.js", "/watch/senses_units.js"}
 
 // Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
 // reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
@@ -47,13 +47,13 @@ type Senses struct {
 // SensesReply is /api/senses. A locked tier's key is absent, not empty. The map is left out when the caller already
 // holds it (?v=<version>).
 type SensesReply struct {
-	Schema  string         `json:"schema"`
-	Tiers   []int          `json:"tiers_unlocked"`
-	Version uint64         `json:"version,omitempty"`
-	Map     *senses.Map    `json:"map,omitempty"`
-	Hero    *senses.Point  `json:"hero,omitempty"`
-	Units   []senses.Point `json:"units,omitempty"`
-	Waiting bool           `json:"waiting,omitempty"`
+	Schema  string        `json:"schema"`
+	Tiers   []int         `json:"tiers_unlocked"`
+	Version uint64        `json:"version,omitempty"`
+	Map     *senses.Map   `json:"map,omitempty"`
+	Hero    *senses.Point `json:"hero,omitempty"`
+	Units   []PublicUnit  `json:"units,omitempty"`
+	Waiting bool          `json:"waiting,omitempty"`
 	// Locked lists the tiers not open yet (titles and hints only) and Next is the lowest of them; both are present only
 	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
 	Locked []SenseLock `json:"locked,omitempty"`
@@ -97,7 +97,7 @@ func (s *Senses) Reply(have uint64) SensesReply {
 		r.Hero = &h
 	}
 	if allowed[2] {
-		r.Units = snap.Unit
+		r.Units = publicUnits(snap.Unit, s.Lock, allowed[3], allowed[4])
 	}
 	return r
 }
@@ -113,17 +113,19 @@ func (s *Senses) Handler() http.Handler {
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
 		writeJSON(w, 200, s.Reply(have))
 	})
-	m.HandleFunc("/watch/senses.js", func(w http.ResponseWriter, r *http.Request) {
-		b, err := fs.ReadFile(webFS, "web/senses.js")
-		if err != nil {
-			http.NotFound(w, r)
-			return
-		}
-		w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
-		w.Header().Set("X-Content-Type-Options", "nosniff")
-		w.Header().Set("Content-Security-Policy", pageCSP)
-		w.Header().Set("Cache-Control", "no-store")
-		w.Write(b)
-	})
+	for route, file := range map[string]string{"/watch/senses.js": "web/senses.js", "/watch/senses_units.js": "web/senses_units.js"} {
+		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
+			b, err := fs.ReadFile(webFS, file)
+			if err != nil {
+				http.NotFound(w, r)
+				return
+			}
+			w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+			w.Header().Set("X-Content-Type-Options", "nosniff")
+			w.Header().Set("Content-Security-Policy", pageCSP)
+			w.Header().Set("Cache-Control", "no-store")
+			w.Write(b)
+		})
+	}
 	return m
 }
