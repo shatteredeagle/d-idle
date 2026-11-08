@@ -55,6 +55,7 @@ type ChronicleView struct {
 	Teaser string          `json:"teaser,omitempty"`
 	Lines  []ChronicleLine `json:"lines"`
 	Tape   TapeView        `json:"tape"`
+	Why    []WhyEntry      `json:"why,omitempty"` // the last reasons, newest first (whyline.go); only while the feed is open
 }
 
 // TapeView is the run timeline: the expedition cards, oldest first.
@@ -70,7 +71,8 @@ type Chronicle struct {
 	u     *Unlocks
 	words map[string][]string
 	now   func() float64
-	trips func() []Trip // nil: the tape stays empty
+	trips func() []Trip     // nil: the tape stays empty
+	why   func() []WhyEntry // nil: no reason history
 
 	mu    sync.Mutex
 	n     int
@@ -224,6 +226,9 @@ func (c *Chronicle) View(since int) ChronicleView {
 		}
 		c.mu.Unlock()
 	}
+	if feed.Open && c.why != nil {
+		v.Why = c.why()
+	}
 	if tape.Open && c.trips != nil {
 		ts := c.trips()
 		for i := len(ts) - 1; i >= 0; i-- { // the return screen lists newest first; the tape runs oldest first
@@ -232,6 +237,9 @@ func (c *Chronicle) View(since int) ChronicleView {
 	}
 	return v
 }
+
+// SetWhy gives the Chronicle detail the reason history of the whyline.
+func (c *Chronicle) SetWhy(f func() []WhyEntry) { c.why = f }
 
 // Handler serves GET /api/chronicle[?since=N].
 func (c *Chronicle) Handler() http.Handler {

@@ -17,7 +17,7 @@ var webFS embed.FS
 // Routes of the read-only side (mounted on d2dview). Every one is GET (HEAD) only. The game video routes (VideoRoutes)
 // are not in this list: d2dview has its own /stream, so only the bot's own listener (Serve) mounts them.
 var ViewRoutes = []string{"/watch", "/watch/", "/api/thoughts", "/api/journal", "/api/rules", "/api/uptime", "/api/orders", "/api/orders/map",
-	"/api/why", "/api/config", "/api/events", "/api/currency"}
+	"/api/why", WhylineRoute, "/api/config", "/api/events", "/api/currency"}
 
 // VideoRoutes are served by ViewHandler only when a Video is set (Serve mounts them for d2bot -watch-video).
 var VideoRoutes = []string{"/stream", "/shot.jpg"}
@@ -77,6 +77,7 @@ func (h *Hub) ViewHandler() http.Handler {
 			http.NotFound(w, r)
 		}
 	})
+	m.Handle(WhylineRoute, h.why.Handler())
 	m.HandleFunc("/api/thoughts", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, 200, h.Thoughts()) })
 	m.HandleFunc("/api/journal", func(w http.ResponseWriter, r *http.Request) {
 		limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))

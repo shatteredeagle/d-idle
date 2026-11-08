@@ -190,6 +190,9 @@ main [data-v][hidden] { display: none !important; }
 .silhouettes li { opacity: .65; border-style: dashed; }
 .silhouettes li b { letter-spacing: .08em; }
 .voicestrip { margin: 6px 12px; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--surface2); font-family: Georgia, "Times New Roman", serif; font-style: italic; }
+.whyline { margin: 6px 12px; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--surface2); }
+.whyline[hidden] { display: none; }
+.whyline b { margin-right: 6px; }
 .voicestrip[hidden] { display: none; }
 .voicestrip q { quotes: "\201C" "\201D"; }
 .diary-list li b { display: block; font-style: normal; font-size: .8rem; color: var(--muted); }

@@ -115,8 +115,9 @@ func playSessionConfig(l ladderOptions, stateDir string, st *decide.Store, cat *
 	var creditsAt time.Time
 	sc := watch.SessionConfig{Root: filepath.Join(stateDir, "sessions"), Profile: l.storeProfile(), Commit: buildinfo.Current(),
 		CatalogueVersion: cat.Version, Store: st, Cat: cat, Clock: clk,
-		Secrets: []string{watchTok, l.watchToken}, // the access token is never written; free text is scrubbed of it
-		Orders:  func() []watch.Order { return hub.OrdersView().Orders },
+		Secrets:   []string{watchTok, l.watchToken}, // the access token is never written; free text is scrubbed of it
+		Orders:    func() []watch.Order { return hub.OrdersView().Orders },
+		WhyCounts: hub.Whyline().Counts,
 		Viewers: func() int {
 			if rig.Video == nil {
 				return -1 // no video: the viewer count is unknown (U: only video viewers are counted)

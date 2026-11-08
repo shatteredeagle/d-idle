@@ -185,6 +185,7 @@ func NewFun(c FunConfig) (*Fun, error) {
 			if err != nil {
 				return nil, err
 			}
+			ch.SetWhy(h.why.History)
 			f.Chronicle = ch
 		}
 		if c.Unlock.Has(VoiceID) {
