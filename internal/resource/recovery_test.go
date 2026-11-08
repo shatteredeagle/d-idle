@@ -119,3 +119,34 @@ func TestRecoveryStallsAtLowIncome(t *testing.T) {
 		}
 	}
 }
+
+// TASK-183: a running recovery ends when the gold covers the missing kit (recoveryEndOnKit), for a caster kit (mana
+// potions asked) and a melee kit (none). Off keeps the old end rules, so the gate defaults run as before.
+func TestRecoveryEndsWhenKitAffordable(t *testing.T) {
+	t0 := time.Unix(1000, 0)
+	for _, c := range []struct {
+		name      string
+		mpFirst   int
+		shortfall func(gold int) int
+	}{
+		{"caster", 2, func(int) int { return 190 }},
+		{"melee", 0, func(int) int { return 130 }},
+	} {
+		tu := DefaultTuning()
+		tu.MPFirst = c.mpFirst
+		run := RecoveryInput{Was: true, Gold: 150, Shortfall: c.shortfall(150), SellMin: 2, Since: t0, Now: t0.Add(6 * time.Minute)}
+		tu.RecoveryEndOnKit = 1
+		if v := RecoveryCheck(run, tu); c.shortfall(0) == 190 && (!v.On || v.End) {
+			t.Fatalf("%s: 150 gold does not cover a 190 kit: %+v", c.name, v)
+		}
+		run.Gold = 200
+		run.Shortfall = c.shortfall(200)
+		if v := RecoveryCheck(run, tu); !v.End || v.Reason != KitReason {
+			t.Fatalf("%s: affordable kit must end the recovery: %+v", c.name, v)
+		}
+		tu.RecoveryEndOnKit = 0
+		if v := RecoveryCheck(run, tu); !v.On || v.End {
+			t.Fatalf("%s: with the knob off the recovery goes on (old rules): %+v", c.name, v)
+		}
+	}
+}

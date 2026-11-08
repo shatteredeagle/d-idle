@@ -1,7 +1,7 @@
 ---
 id: TASK-185
 title: 'unlockwire: wire bestiary, risk, order queue and atlas into the live bot'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T11:45:00Z'

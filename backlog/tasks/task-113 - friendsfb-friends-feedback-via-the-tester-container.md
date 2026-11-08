@@ -27,6 +27,7 @@ owns:
   - "docs/friends-feedback.md"
 exclusive: []
 contracts: []
+result: "Status sync 2026-11-08 (stays open): AC1 open: docs/friends-feedback.md does not exist; merge was the direction record, not this card."
 ---
 
 ## Description

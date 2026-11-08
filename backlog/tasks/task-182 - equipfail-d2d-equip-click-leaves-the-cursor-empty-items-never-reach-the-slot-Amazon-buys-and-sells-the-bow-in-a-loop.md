@@ -1,7 +1,7 @@
 ---
 id: TASK-182
 title: 'equipfail: d2d equip click leaves the cursor empty, items never reach the slot; Amazon buys and sells the bow in a loop'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T11:07:00Z'

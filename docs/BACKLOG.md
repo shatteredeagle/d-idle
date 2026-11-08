@@ -625,6 +625,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-162 unlockalerts: alert rules table, in-page toast centre, webhook and ntfy senders (off by default), ladder row alerts (docs/unlock-alerts.md)
 - unlockwire: bestiary tables and kill store, risk meter facts and order queue wired into the live bot (TASK-185)
 - TASK-182 equipfail: equip failures traced to unidentified magic items and the Amazon bow refused with Javelin and Buckler both worn; fixed and measured (docs/soaks/equipfail.md)
+- TASK-183 recoverypace: recoveryEndOnKit knob and the player/tester early-game preset (ladder on only); recovery 19-23 -> 10-11 min, town chores halved on Paladin and Sorceress (one seed); Barbarian re-run open
+- status sync 2026-11-08 part 5: TASK-182 and TASK-185 Done; stay-open notes on TASK-113, 124, 126, 134
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

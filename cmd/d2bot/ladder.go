@@ -455,6 +455,34 @@ func ladderEnv(l ladderOptions, t *env.Tuning) {
 	}
 }
 
+// playerTuning is the early-game pace preset of the player and tester profile (TASK-183, docs/soaks/recoverypace.md): the
+// knobs that end the gold loop sooner. It applies only with the ladder on (`d2bot play`, the tester container); gate and
+// soak runs do not set the ladder and keep the code defaults. A key the config file already sets wins, and a saved
+// tuning.json (a viewer edit, a drill arm) replaces the whole override map as before, so an arm can switch the preset off
+// by writing the old values.
+var playerTuning = map[string]float64{
+	"resource.recoveryEndOnKit":  1,  // recovery ends when the kit is affordable, not at the 900 gold gear target
+	"resource.recoveryStallMin":  10, // a recovery with under 50 gold gained after 10 minutes is a stall (default 20 / 100)
+	"resource.recoveryStallGold": 50,
+	"resource.povertySellMin":    8, // a poor hero walks to town to sell only with 8 junk items (default 4 on foot)
+}
+
+// withPlayerTuning returns cfg with the player preset laid under its own tuning keys. A copy: cfg.Tuning is not changed.
+func withPlayerTuning(cfg bot.Config, l ladderOptions) bot.Config {
+	if !l.on {
+		return cfg
+	}
+	m := make(map[string]float64, len(playerTuning)+len(cfg.Tuning))
+	for k, v := range playerTuning {
+		m[k] = v
+	}
+	for k, v := range cfg.Tuning {
+		m[k] = v
+	}
+	cfg.Tuning = m
+	return cfg
+}
+
 // ladderPost is ladderEnv as a Tuner hook: a saved tuning file or a viewer edit rebuilds the whole tuning and must not
 // turn the flag off. Nil without the flag, so the config file and tuning.json stay authoritative.
 func ladderPost(l ladderOptions) func(*env.Tuning) {

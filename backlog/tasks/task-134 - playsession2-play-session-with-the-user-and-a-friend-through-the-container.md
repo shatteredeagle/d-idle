@@ -27,6 +27,7 @@ owns:
   - "docs/probes/playsession2.md"
 exclusive: []
 contracts: []
+result: "Status sync 2026-11-08 (stays open): AC1 open: the 4-hour realtime session has not run; merge was the guide only (firstsession)."
 ---
 
 ## Description
