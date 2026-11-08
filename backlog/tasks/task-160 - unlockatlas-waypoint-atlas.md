@@ -17,8 +17,15 @@ card: "unlockatlas"
 owns:
   - "internal/watch/unlockatlas.go"
   - "internal/watch/unlockatlas_test.go"
+  - "internal/watch/funwire.go"
+  - "internal/watch/web/"
+  - "internal/watch/testdata/atlas-*.json"
+  - "data/atlas/"
+  - "data/unlocks/ladder.json"
+  - "docs/unlock-atlas.md"
 exclusive: []
 contracts: []
+result: "Built and tested offline (go test ./internal/watch ./internal/unlock ./cmd/d2bot; golden payloads for Sorceress and Paladin, dark and lit proposal node, token gates, replay, errors); not verified live or in a browser. Owns widened to funwire.go, web/, data/atlas, ladder row atlas. Waypoint order and area ids are data (data/atlas/waypoints.json); lit comes from the Codex waypoint firsts, so the bot's existing waypoint hook needs no change. See docs/unlock-atlas.md."
 ---
 
 ## Description

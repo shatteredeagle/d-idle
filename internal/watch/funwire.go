@@ -112,6 +112,8 @@ type Fun struct {
 	Reveal *Reveal
 	// Bestiary is nil unless the ladder has the rows "bestiary" and "bestiary_resists" (TASK-158).
 	Bestiary *Bestiary
+	// Atlas is nil unless the ladder has the row "atlas" (TASK-160).
+	Atlas *Atlas
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -186,6 +188,25 @@ func NewFun(c FunConfig) (*Fun, error) {
 			}
 			f.Bestiary = be
 			sec.Register(BestiarySectionID, be.Section())
+		}
+		if c.Unlock.Has(AtlasID) {
+			var lit func(string) bool
+			if c.Codex != nil {
+				lit = c.Codex.Has
+			}
+			at, err := NewAtlas(f.Unlocks, nil, lit, func() string {
+				if f.Proposals == nil {
+					return ""
+				}
+				if p := f.Proposals.View().Pending; len(p) > 0 {
+					return p[0].To
+				}
+				return ""
+			})
+			if err != nil {
+				return nil, err
+			}
+			f.Atlas = at
 		}
 		if c.Unlock.Has(IDRevealID) || c.Unlock.Has(IDRevealLaterID) {
 			h := c.Hub
@@ -452,6 +473,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Bestiary != nil {
 		m.Handle(BestiaryRoute, f.Bestiary.Handler())
+	}
+	if f.Atlas != nil {
+		m.Handle(AtlasRoute, f.Atlas.Handler())
 	}
 	if f.Reveal != nil {
 		m.Handle(RevealRoute, f.Reveal.Handler())
