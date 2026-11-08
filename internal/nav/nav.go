@@ -54,10 +54,11 @@ type stateSource interface {
 // drives the character, and nav is the one calling Tracker.Update.
 type Navigator struct {
 	// Trace turns on the "nav.trace" click-timing lines (trace.go): off in production, on in the dev image.
-	Trace       bool
-	gateRefused atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
-	peakRung    atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
-	cov         *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
+	Trace               bool
+	obsSnapMs, obsUpdMs int64        // cost of the last observe(), for the trace
+	gateRefused         atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
+	peakRung            atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
+	cov                 *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
 	// Guard, if set, runs on every observation while walking. A non-nil error stops the walk and is returned
 	// (wrapped with ErrAborted). The bot uses it for "life low or monster near: stop".
 	Guard func(*d2.Snapshot) error
@@ -217,14 +218,18 @@ type obs struct {
 
 // observe reads the game once and advances the map tracker. errLoading means "not in a level right now".
 func (n *Navigator) observe() (*obs, error) {
+	t0 := n.clk.Now()
 	snap, err := n.st.Snapshot()
 	if err != nil {
 		return nil, err
 	}
+	n.obsSnapMs = n.clk.Now().Sub(t0).Milliseconds()
 	if snap.State != d2.StateInGame || snap.Player == nil {
 		return nil, errLoading
 	}
+	t1 := n.clk.Now()
 	st, err := n.w.Update()
+	n.obsUpdMs = n.clk.Now().Sub(t1).Milliseconds()
 	if err != nil {
 		if errors.Is(err, d2map.ErrNotInGame) {
 			return nil, errLoading
