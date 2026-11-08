@@ -1,0 +1,6 @@
+{
+  "schema": "watch.orderqueue/1",
+  "doc": "docs/unlock-orderqueue.md. The slot rows of the unlock ladder, in order: each open row is one order that may wait behind the running one. The first row gates the queue.",
+  "slots": ["orderqueue", "orderqueue2", "orderqueue3"],
+  "maxUntilLevel": 99
+}

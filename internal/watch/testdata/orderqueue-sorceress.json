@@ -1,0 +1,25 @@
+{
+  "schema": "watch.orderqueue/1",
+  "open": true,
+  "title": "Order queue, first slot",
+  "capacity": 3,
+  "slots": [
+    {
+      "id": "orderqueue",
+      "title": "Order queue, first slot",
+      "open": true
+    },
+    {
+      "id": "orderqueue2",
+      "title": "Order queue, second slot",
+      "open": true
+    },
+    {
+      "id": "orderqueue3",
+      "title": "Order queue, third slot",
+      "open": true
+    }
+  ],
+  "entries": [],
+  "balance": 30
+}

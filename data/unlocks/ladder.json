@@ -273,6 +273,25 @@
       "id": "atlas", "group": "ui",
       "trigger": {"kind": "codex_first", "args": {"sub": "waypoint"}},
       "reveal": {"title": "Waypoint atlas", "text": "The atlas lights every waypoint the hero has taken and shows where it wants to go next.", "teaser": "Take your first waypoint."}
+    },
+    {
+      "id": "orderqueue", "group": "ui",
+      "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 2}},
+      "reveal": {"title": "Order queue, first slot", "text": "One order may now wait behind the running one: give an order and the hero goes on to the next when it ends. A queue never overrides the hero's own guard and stops when the hero dies.", "teaser": "Clear the Den of Evil."}
+    },
+    {
+      "id": "orderqueue2", "group": "ui",
+      "trigger": {"kind": "quest_stage", "args": {"quest": "sisters_burial", "min": 3}},
+      "alt": [{"kind": "quest_stage", "args": {"quest": "tools_of_the_trade", "min": 3}}, {"kind": "tally_spend"}],
+      "price": 30,
+      "reveal": {"title": "Order queue, second slot", "text": "A second order may wait in the queue.", "teaser": "Finish Kashya's or Charsi's quest, or buy it with tally."}
+    },
+    {
+      "id": "orderqueue3", "group": "ui",
+      "trigger": {"kind": "quest_stage", "args": {"quest": "search_for_cain", "min": 3}},
+      "alt": [{"kind": "tally_spend"}],
+      "price": 75,
+      "reveal": {"title": "Order queue, third slot", "text": "A third order may wait in the queue.", "teaser": "Rescue Deckard Cain, or buy it with tally."}
     }
   ]
 }
