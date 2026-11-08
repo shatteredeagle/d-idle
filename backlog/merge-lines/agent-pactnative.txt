@@ -1,2 +1,0 @@
-INDEX: docs/probes/pactnative.md - native difficulty levers on 1.14d: /players works offline and scales monster life, Hardcore creatable, Nightmare/Hell penalties and elite-count columns from the tables (TASK-170)
-CHANGELOG: pactnative probe: /players N verified offline on game.exe (typed through the input helper), hardcore hero created, Nightmare -40 / 5 pct and Hell -100 / 10 pct read from DifficultyLevels.txt; new read-only tools cmd/pactprobe and cmd/mpqcat
