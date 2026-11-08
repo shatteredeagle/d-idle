@@ -21,8 +21,11 @@ owns:
   - "internal/leveler/unlocks.go"
   - "internal/leveler/unlocks_test.go"
   - "docs/skill-unlocks.md"
+  - "internal/leveler/leveler.go"
+  - "docs/plan/data/unlocks-sorceress.json"
 exclusive: []
 contracts: []
+result: "Engine, Sorceress table and tests built and passing offline (two classes; real-table Validate on the worker host). NOT done: Codex icons and the free-choice picker UI, the runner Fire/Options wiring (AC3 icons part open). Not verified live. owns widened: leveler.go (Options + PlanFor) and the docs/plan/data copy that TestMatchesDocs requires."
 ---
 
 ## Description
@@ -36,7 +39,7 @@ Note 2026-11-07: this card owns the Sorceress unlock file; the other six classes
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Per-class unlock table as data (internal/plandata/unlocks-<class>.json, events quest/waypoint/boss/item/clvl); the leveler Rule gains an unlocked(name) refusal from the per-hero progress state; measured runs load an all-met table; unknown class or skill is an error naming it; test against two classes or builds
-- [ ] #2 The player may spend ONE free-choice point on a Codex-unlocked skill that the build table skips, shown with its consequence; the buildv3 replay test shows no refused row
+- [x] #1 Per-class unlock table as data (internal/plandata/unlocks-<class>.json, events quest/waypoint/boss/item/clvl); the leveler Rule gains an unlocked(name) refusal from the per-hero progress state; measured runs load an all-met table; unknown class or skill is an error naming it; test against two classes or builds
+- [x] #2 The player may spend ONE free-choice point on a Codex-unlocked skill that the build table skips, shown with its consequence; the buildv3 replay test shows no refused row
 - [ ] #3 Codex skill icons light up on the unlock; docs/skill-unlocks.md says built vs verified live and uses only levels checked by skillreqcheck; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->
