@@ -149,6 +149,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 
+	o.ladder.currencyDir = currencyDirFor(ip.State())
 	ldir, err := ladderDir(ip.State(), o.ladder)
 	if err != nil {
 		return err
