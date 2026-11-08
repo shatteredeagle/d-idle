@@ -172,6 +172,7 @@ type ladderRig struct {
 	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
 	Rec    *watch.Session   // the play session's record (play.go); nil outside `d2bot play`
 	Video  *watch.Video
+	Pacts  *pactHolder       // the Pacts return section (pactwire.go); nil when Pacts are off
 	Senses *senses.Publisher // side-panel minimap source (sensesfeed.go); nil when senses.tier is 0
 }
 
@@ -238,6 +239,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes); err != nil {
 			return nil, nil, err
 		}
+		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}
@@ -265,6 +267,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Senses = &senses.Publisher{}
 		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.FixedTier(l.sensesTier)}
 	}
+	so.Update = startUpdater(ctx)
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
 	}
@@ -280,6 +283,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	ch, unsub := m.Subscribe() // subscribed before startLadder returns: the first events of the run are not lost
 	go feedHub(ctx, rig.Hub, orders, rig.Fun, rig.Rec, ch, unsub, status)
+	startPacts(ctx, l, rig, m, status, stateDir, os.Getenv)
 	return rig, nil
 }
 

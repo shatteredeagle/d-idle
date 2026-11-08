@@ -37,6 +37,7 @@ pack() { # pack TARBALL DIR
 mkdir -p "$stage/bin" "$stage/d2d" "$stage/data"
 (cd "$repo" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -ldflags "-X main.version=$version" -o "$stage/bin/" \
 	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./cmd/d2dsetup ./deploy/d2d-container/d2dping)
+install -m 0755 "$repo/deploy/d2d-container/entrypoint.sh" "$stage/bin/entrypoint.sh" # the release carries its mode logic (design 3.9)
 install -m 0755 "$d2d" "$stage/d2d/d2d"
 if [ -n "$overlay" ]; then cp -r "$overlay"/. "$stage/data/"; else : >"$stage/data/.keep"; fi
 

@@ -28,6 +28,9 @@ type Limits struct {
 	MasteryStep   int `json:"mastery_step"`
 	SlotsAtUnlock int `json:"slots_at_unlock"`
 	NoSafetyRank  int `json:"no_safety_rank"` // two Pacts tagged no_safety at this rank or more are incompatible
+	SafeMinutes   int `json:"safe_minutes"`   // Pacts stay off for this many minutes of a hero's life ... (U, design note section 7)
+	SafeClvl      int `json:"safe_clvl"`      // ... and below this clvl; both must be over (whichever is later)
+	ConsentDays   int `json:"consent_days"`   // an away-consent ends after this many days (U, section 5)
 }
 
 // Params is what a rank changes. Row and Option name a policy sheet option; Knobs are tuner overrides; Values are the
@@ -37,6 +40,10 @@ type Params struct {
 	Option string             `json:"option,omitempty"`
 	Knobs  map[string]float64 `json:"knobs,omitempty"`
 	Values map[string]float64 `json:"values,omitempty"`
+	// UntilClvl: Row, Option and Knobs apply only below this clvl (0 = always; 99 = never lifted).
+	UntilClvl int `json:"until_clvl,omitempty"`
+	// DeathLimit: after this many deaths the hero is paused in town and waits for the player (0 = none).
+	DeathLimit int `json:"death_limit,omitempty"`
 }
 
 // Reward is paid on the meta layer only (tally, charm points, a title); never vanilla XP or loot.
@@ -143,7 +150,7 @@ func Parse(data []byte, refs Refs) (*Catalogue, error) {
 		return nil, fmt.Errorf("pact: catalogue version %d not supported", c.Version)
 	}
 	l := c.Limits
-	if l.StartCap <= 0 || l.MaxCap < l.StartCap || l.MasteryStep <= 0 || l.SlotsAtUnlock <= 0 || l.NoSafetyRank <= 0 {
+	if l.StartCap <= 0 || l.MaxCap < l.StartCap || l.MasteryStep <= 0 || l.SlotsAtUnlock <= 0 || l.NoSafetyRank <= 0 || l.SafeMinutes <= 0 || l.SafeClvl <= 0 || l.ConsentDays <= 0 {
 		return nil, fmt.Errorf("pact: catalogue: bad limits %+v", l)
 	}
 	c.idx = map[string]*Pact{}
