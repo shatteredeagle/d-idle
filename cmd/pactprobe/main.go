@@ -23,6 +23,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/launch"
 	"d2lod-bot/internal/mem"
 	"d2lod-bot/internal/nav"
 )
@@ -61,6 +62,10 @@ func main() {
 	case "scan":
 		secs, _ := strconv.Atoi(os.Args[2])
 		scan(e, nav.New(e), secs)
+	case "hc": // hc NAME CLASS: create a HARDCORE character through the normal OOG flow and enter the game
+		flow := &launch.Flow{Mem: proc, In: typer{input.NewOOG(cl), cl}, Log: func(s string) { fmt.Println("  flow:", s) }}
+		err := flow.Start(context.Background(), launch.CharSpec{Name: os.Args[2], Class: os.Args[3], Create: true, ForceNew: true, Hardcore: true, Difficulty: "normal"})
+		fmt.Println("hc start:", err)
 	case "fight":
 		secs, _ := strconv.Atoi(os.Args[2])
 		fight(e, game, nav.New(e), secs)
@@ -194,28 +199,46 @@ func fight(e *env.Env, g *input.Game, n *nav.Navigator, secs int) {
 		}
 		return best
 	}
-	log := func(sn *d2.Snapshot) {
-		el := time.Since(t0).Round(100 * time.Millisecond)
-		if lastPl >= 0 && sn.Player.Life != lastPl {
-			fmt.Printf("%v PLAYER life %d -> %d (%+d)\n", el, lastPl, sn.Player.Life, sn.Player.Life-lastPl)
-		}
-		lastPl = sn.Player.Life
-		for _, u := range sn.Monsters {
-			if u.Class != fallenClass || u.Monster == nil {
+	// A fast poller (about 40 ms) so that single hits are seen; the main loop only drives the fight.
+	stopPoll := make(chan struct{})
+	pollDone := make(chan struct{})
+	rd := d2.New(e.Mem)
+	go func() {
+		defer close(pollDone)
+		for {
+			select {
+			case <-stopPoll:
+				return
+			case <-time.After(40 * time.Millisecond):
+			}
+			el := time.Since(t0).Round(10 * time.Millisecond)
+			if pl, err := rd.Player(); err == nil {
+				if lastPl >= 0 && pl.Life != lastPl {
+					fmt.Printf("%v PLAYER life %d -> %d (%+d)\n", el, lastPl, pl.Life, pl.Life-lastPl)
+				}
+				lastPl = pl.Life
+			}
+			us, err := rd.Units(d2.TypeMonster)
+			if err != nil {
 				continue
 			}
-			if old, ok := lastLife[u.ID]; ok && old != u.Monster.Life {
-				fmt.Printf("%v FALLEN id=%d life %d -> %d mode=%d\n", el, u.ID, old, u.Monster.Life, u.Mode)
+			for _, u := range us {
+				if u.Class != fallenClass || u.Monster == nil {
+					continue
+				}
+				if old, ok := lastLife[u.ID]; ok && old != u.Monster.Life {
+					fmt.Printf("%v FALLEN id=%d life %d -> %d mode=%d\n", el, u.ID, old, u.Monster.Life, u.Mode)
+				}
+				lastLife[u.ID] = u.Monster.Life
 			}
-			lastLife[u.ID] = u.Monster.Life
 		}
-	}
+	}()
+	defer func() { close(stopPoll); <-pollDone }()
 	for time.Now().Before(end) {
 		sn, err := e.Snapshot()
 		if err != nil {
 			continue
 		}
-		log(sn)
 		if sn.Player.MaxLife > 0 && sn.Player.Life*100 < 40*sn.Player.MaxLife {
 			fmt.Println("RETREAT life", sn.Player.Life, "/", sn.Player.MaxLife)
 			break
@@ -244,3 +267,11 @@ func fight(e *env.Env, g *input.Game, n *nav.Navigator, secs int) {
 	defer c()
 	fmt.Println("ToArea(1):", n.ToArea(rctx, 1))
 }
+
+// typer adds the WM_CHAR path to the input.OOG adapter (as cmd/oog does).
+type typer struct {
+	*input.OOG
+	c *input.Client
+}
+
+func (t typer) TypeChar(r rune) error { return t.c.TypeChar(r) }
