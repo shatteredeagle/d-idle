@@ -160,13 +160,13 @@ func (r First) matches(e FirstEvent) bool {
 
 // Entry of the Codex: one first the hero has met.
 type CodexEntry struct {
-	ID      string        `json:"id"`
-	Kind    string        `json:"kind"`
-	Title   string        `json:"title"`
-	Subject string        `json:"subject"`
-	Area    string        `json:"area,omitempty"`
-	Clvl    int           `json:"clvl,omitempty"`
-	FirstAt time.Duration `json:"firstAt"`
+	ID       string `json:"id"`
+	Kind     string `json:"kind"`
+	Title    string `json:"title"`
+	Subject  string `json:"subject"`
+	Area     string `json:"area,omitempty"`
+	Clvl     int    `json:"clvl,omitempty"`
+	FirstSec int64  `json:"firstSec"` // virtual seconds since the run started
 	// Decided is the answer id in force ("" for a quiet first); Source says who chose: "default" (the table, on
 	// the player's behalf), "answered" (the player), "quiet" (no question).
 	Decided string `json:"decided,omitempty"`
@@ -322,11 +322,11 @@ func (c *Codex) Summary(t *Firsts, now, window time.Duration) CodexSummary {
 		if e.Source != "quiet" {
 			s.Asked++
 		}
-		if window <= 0 || e.FirstAt >= now-window {
+		if window <= 0 || time.Duration(e.FirstSec)*time.Second >= now-window {
 			s.Recent = append(s.Recent, *e)
 		}
 	}
-	sort.SliceStable(s.Recent, func(i, j int) bool { return s.Recent[i].FirstAt > s.Recent[j].FirstAt })
+	sort.SliceStable(s.Recent, func(i, j int) bool { return s.Recent[i].FirstSec > s.Recent[j].FirstSec })
 	for _, r := range t.Firsts {
 		if c.byID[r.ID] == nil {
 			s.Missing = append(s.Missing, r.Title)
@@ -416,7 +416,7 @@ func (t *Tracker) Observe(e FirstEvent) ([]Fired, error) {
 			break // the event is already claimed by this row
 		}
 		ent := CodexEntry{ID: r.ID, Kind: r.Kind, Title: r.Title, Subject: e.Name, Area: e.Area, Clvl: e.Clvl,
-			FirstAt: t.clk.Now(), Tip: r.Tip, TipTag: r.TipTag, Source: "quiet"}
+			FirstSec: int64(t.clk.Now() / time.Second), Tip: r.Tip, TipTag: r.TipTag, Source: "quiet"}
 		f := Fired{ID: r.ID}
 		if r.Question != "" {
 			ctx, err := t.cat.Build(FirstsPoint, t.obs(r, e), 1, nil)

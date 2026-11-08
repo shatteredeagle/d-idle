@@ -116,7 +116,7 @@ func TestFirsts_EveryFirstOnce_TwoClasses(t *testing.T) {
 				if f == nil {
 					t.Fatalf("event %+v did not fire %s (fired %v)", ev, r.ID, got)
 				}
-				if f.Entry.FirstAt != 90*time.Second || f.Entry.Tip != r.Tip {
+				if f.Entry.FirstSec != 90 || f.Entry.Tip != r.Tip {
 					t.Fatalf("entry %+v", f.Entry)
 				}
 				wantThought := r.Question != ""
