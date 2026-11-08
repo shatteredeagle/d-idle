@@ -1,7 +1,7 @@
 ---
 id: TASK-139
 title: 'imgrepro: image build must not need the local fork build dir'
-status: Proposed
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:43:00Z'
@@ -33,5 +33,7 @@ Found by TASK-25: context.sh now takes the d2d source from the published fork ta
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 build from public inputs only, hashes checked
+- [x] #1 build from public inputs only, hashes checked
 <!-- AC:END -->
+
+result: verified live yes (2026-11-07): image built on the worker host from a clean scratch copy with no local fork checkout; CLI11 2.6.2, sentry-native 0.17.3 and FFmpeg 9.0.2 come from public archives pinned by sha256 in context.sh; 409 MB, static self-test PASS, wizard 401 without and 200 with the token, binary differs from the local-build one only in the build timestamp (25 bytes). Details docs/tester-imgrepro.md.

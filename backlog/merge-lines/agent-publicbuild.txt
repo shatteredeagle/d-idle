@@ -1,0 +1,3 @@
+BACKLOG: TASK-139 verified live 2026-11-07: the tester image builds from public inputs only (CLI11 2.6.2, sentry-native 0.17.3, FFmpeg 9.0.2 pinned by sha256 in context.sh, fork from tag didle-gate2-lab3); binary matches the local build except the build timestamp
+INDEX: docs/tester-imgrepro.md - tester image from public inputs: vendored input versions, hashes, licences, sentry decision, proof
+CHANGELOG: tester image: context.sh now fetches CLI11, sentry-native and FFmpeg from public release archives with pinned sha256; no local fork checkout needed
