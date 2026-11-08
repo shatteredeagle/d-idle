@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Self-update part 1: cmd/d2sign, signed release manifest format and a draft (inert) release workflow
+- Watch screen: side-panel minimap (view only, fog of war, token gated) behind a tier-1 unlock hook
+- merc hire kit check follows the belt plan: an all-mana belt hires a mercenary (TASK-174)
 - First-run wizard offers every class that has a leveling table and preselects the Paladin
 - Paladin now fights on the d2d backend: melee skills attack by unit id instead of a bare click that never landed
 - An expedition with no kills, drops or XP no longer pays tally; the session summary shows wall and game time; the return-screen landing happens once per absence.
