@@ -1,0 +1,3 @@
+BACKLOG: walksmooth (TASK-188): stop-and-go walk of a realtime Paladin: nav advances past a waypoint a stopped character cannot reach (d2d ends moves 5 to 6 subtiles short), clicks a lookahead waypoint, and d2dinput corrects a run belief that never drains stamina; offline sim before/after, not verified live
+INDEX: docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
+CHANGELOG: nav: a walk no longer waits out the stuck detector when the game ends a move a few subtiles short of the waypoint; the next move is issued ahead; the run toggle is corrected when stamina shows the character is walking

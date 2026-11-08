@@ -3,8 +3,10 @@ package d2dinput
 import (
 	"os"
 	"strconv"
+	"time"
 
 	"d2lod-bot/internal/d2dctl"
+	"d2lod-bot/internal/data"
 )
 
 // RunPolicy turns d2d's run toggle on and off by stamina, the way the original character runs while stamina
@@ -68,8 +70,36 @@ func stamina(s d2dctl.State) (cur, max int, ok bool) {
 func (c *Controller) ResetRun() {
 	c.runMu.Lock()
 	c.running = false
+	c.runHeals, c.chainStart = 0, time.Time{}
 	c.runResets++
 	c.runMu.Unlock()
+}
+
+const (
+	// driftChain: moves closer together than this belong to one continuous walk.
+	driftChain = 1500 * time.Millisecond
+	// driftAfter: running drains stamina within a second or two (docs/d2d-run.md: 3.9 per second of 74), so a walk
+	// this long at full stamina is not running.
+	driftAfter = 4 * time.Second
+	// driftMaxHeals bounds the corrections per controller: the belief cannot be read, so never keep toggling.
+	driftMaxHeals = 2
+)
+
+// noDrain tracks a chain of moves (called before each move with the stamina just read) and reports true once, after
+// driftAfter of continuous moves outside town at full stamina while the run toggle is believed on.
+func (c *Controller) noDrain(cur, max int) bool {
+	now := c.clk().Now()
+	c.runMu.Lock()
+	defer c.runMu.Unlock()
+	if c.chainStart.IsZero() || now.Sub(c.lastMoveAt) > driftChain || cur < max || data.IsTown(c.lastLevel) {
+		c.chainStart = now
+	}
+	c.lastMoveAt = now
+	if cur < max || data.IsTown(c.lastLevel) || c.runHeals >= driftMaxHeals || now.Sub(c.chainStart) < driftAfter {
+		return false
+	}
+	c.chainStart = now
+	return true
 }
 
 // RunInfo is the observable run state for the minute log line (change fixrun). Believed is OUR belief of the
@@ -122,6 +152,18 @@ func (c *Controller) manageRun() {
 	c.walkRaw, _ = st.Get("walking")
 	running := c.running
 	c.runMu.Unlock()
+	if running && c.noDrain(cur, max) {
+		// WALKSMOOTH: believed running, moving for seconds outside town, and stamina never left the maximum: the
+		// character is walking (V live: a Paladin session logged stam == stamMax in every minute line while it
+		// travelled; the belief starts wrong if the game starts with run on). The key toggles, so press it once.
+		if c.C.Key(c.ctx(), "r") == nil {
+			c.runMu.Lock()
+			c.runPresses++
+			c.runHeals++
+			c.runMu.Unlock()
+		}
+		return
+	}
 	if want := p.want(cur, max, running); want != running {
 		if c.C.Key(c.ctx(), "r") == nil {
 			c.runMu.Lock()

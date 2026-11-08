@@ -15,6 +15,11 @@ import (
 )
 
 // simLevel is one level of the simulated world.
+type pendingMove struct {
+	at time.Time
+	p  input.Point
+}
+
 type simLevel struct {
 	no    int
 	rect  d2map.Rect
@@ -53,6 +58,11 @@ type sim struct {
 	castCost      int
 	noTeleport    bool // casts do nothing
 	voidUnknown   bool // truth cells that are not in the truth grid never become known
+
+	stopShort float64       // a move ends this far from its target (d2d ends moves short, WALKSMOOTH)
+	cmdDelay  time.Duration // a move command takes effect this long after the click (a loaded host)
+	pend      []pendingMove
+	exact     *input.Point // the walk's final goal: a move to it is not cut short
 
 	clicks       []input.Point
 	rawClicks    [][2]int
@@ -205,6 +215,10 @@ func (s *sim) step(dt time.Duration) {
 	if s.onStep != nil {
 		s.onStep(s)
 	}
+	for len(s.pend) > 0 && !s.now.Before(s.pend[0].at) {
+		t := s.pend[0].p
+		s.target, s.pend = &t, s.pend[1:]
+	}
 	if s.target == nil {
 		return
 	}
@@ -213,7 +227,7 @@ func (s *sim) step(dt time.Duration) {
 	for left > 0 {
 		dx, dy := tx-s.px, ty-s.py
 		d := math.Hypot(dx, dy)
-		if d < 0.05 {
+		if d < 0.05 || s.stopShort > 0 && d <= s.stopShort && (s.exact == nil || *s.exact != *s.target) {
 			s.target = nil
 			return
 		}
@@ -284,6 +298,10 @@ func (s *sim) ClickWorld(w input.Point) error {
 		s.onClickWorld(s, w)
 	}
 	t := w
+	if s.cmdDelay > 0 {
+		s.pend = append(s.pend, pendingMove{at: s.now.Add(s.cmdDelay), p: t})
+		return nil
+	}
 	s.target = &t
 	return nil
 }
