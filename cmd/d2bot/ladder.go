@@ -24,6 +24,7 @@ import (
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/launch"
 	"d2lod-bot/internal/overlay"
+	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/watch"
 )
@@ -61,6 +62,8 @@ type ladderOptions struct {
 	// knobs is the tuner's edit for the policy sheet's knob options (set by the backend before startLadder; nil: those
 	// options are refused, rule-only options work).
 	knobs watch.KnobSetter
+	// sensesTier is the knob senses.tier (set by the backend from the tuning before startLadder): 0 = no minimap.
+	sensesTier int
 }
 
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {
@@ -170,6 +173,7 @@ type ladderRig struct {
 	Rec    *watch.Session   // the play session's record (play.go); nil outside `d2bot play`
 	Video  *watch.Video
 	Pacts  *pactHolder // the Pacts return section (pactwire.go); nil when Pacts are off
+	Senses *senses.Publisher // side-panel minimap source (sensesfeed.go); nil when senses.tier is 0
 }
 
 // StopRec ends the session record (summary written); safe on a nil rig and to call twice.
@@ -259,6 +263,10 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	rig.Video = vid
 	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
+	if l.sensesTier >= 1 {
+		rig.Senses = &senses.Publisher{}
+		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.FixedTier(l.sensesTier)}
+	}
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
 	}

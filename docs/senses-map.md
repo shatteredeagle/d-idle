@@ -16,16 +16,23 @@ d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, area
 ## Tags
 
 - V (tests, offline): RLE round trip, golden JSON of a synthesized grid (`internal/senses/testdata/tiny.golden.json`), downsampling, fog reveal, two areas keep their own fog, tier gating, version cache, GET only, 401 without token, the recorded Rogue Encampment image of `internal/d2map/testdata` (live-recorded 2026-10-28) builds a 140x100 map at step 2.
-- U: reveal radius 24 (a guess to tune); that hero and presets share the grid's coordinate space on both backends (d2d level-relative `Origin` is NOT applied; check on d2d); exits/waypoints of a live level (the recorded town image gave none inside the reveal radius); the canvas look (no browser run was done).
+- U: reveal radius 24 (a guess to tune); that hero and presets share the grid's coordinate space on both backends (see Coordinates: no Origin is applied, V by code, live d2d check open); exits/waypoints of a live level (the recorded town image gave none inside the reveal radius); the canvas look (no browser run was done).
 - Not built: enemy dots, bars, elites (TASK-151/152), the ladder (TASK-149), video overlay.
 
-## Not wired yet
+## Wiring (done, TASK-148 AC1)
 
-`cmd/d2bot` does not construct a `Senses` or call `Observe`: the Tracker is single goroutine, so the call belongs in the bot's own tick after `World.Update()` (`internal/bot`, not owned by this card). Wiring is two lines: `pub := &senses.Publisher{}`; `ServeOptions.Senses = &watch.Senses{Src: pub, Lock: watch.FixedTier(1)}` (knob `senses.tier`, default 1, to be registered with the wiring); in the tick `pub.Observe(world.Current(), areaName, st.Pos)` about every 500 ms and on `st.LevelChanged`. Bot inputs are unaffected because Observe only reads.
+- Knob `senses.tier` (default 1, 0 = no panel; `internal/env/tuning_senses.go`, listed in docs/knobs.md). `cmd/d2bot` (`startLadder`, only with `-watch`) builds a `senses.Publisher` and sets `ServeOptions.Senses = &watch.Senses{Src: pub, Lock: watch.FixedTier(tier)}` when the tier is 1 or more; `useSenses` (cmd/d2bot/sensesfeed.go) then sets `Env.OnObserve` on the live and d2d backends.
+- The call site is `nav.Navigator.observe`, the one place that runs `World.Update()` on the bot's goroutine for both backends (Tracker and d2dworld): right after a successful Update it calls `Env.OnObserve(lm, State.Pos)`. The hook reads only; `Publisher.Observe` builds the immutable `Snapshot` (fresh slices, hero by value) under its own lock, so the HTTP side never touches the Tracker. Throttle: unchanged area and grid within 500 ms are skipped; an area change or a grown grid goes at once.
+- V (offline tests): `go test ./cmd/d2bot -run SensesFeed` (two fake areas: snapshot follows the hero, fog reveals, version changes only on reveal or area change, fog kept per area, throttle, concurrent pollers) and `go test -race` of it; `go test ./internal/nav -run ObserveCallsHook` (hook receives the level map and tracker position, observation unchanged).
+
+## Coordinates (the Origin question)
+
+- Finding, V by code reading (not by a live run): both backends place grid cells, `State.Pos`, presets and exits in ONE space per level. Game.exe: absolute act subtiles, `LevelMap.Origin` is zero. d2d (`d2dworld.OriginNone`, the default): level-relative everywhere, and `LevelMap.Origin = 5*OriginX, 5*OriginY` is set only so static absolute tables (nav's known waypoint positions) can be converted; nothing in the grid or `State.Pos` is shifted by it (`internal/d2dworld/world.go`, `internal/nav/waypoint.go`). The panel therefore applies NO Origin: the hero is `State.Pos` (the position d2map itself uses against the grid), never the raw `Snapshot.Player` x/y. Test: `strip` maps with a nonzero Origin keep `X0` at the grid's own coordinates (cmd/d2bot/sensesfeed_test.go).
+- U: the live d2d run (hero cross lands on the right cell on a real d2d level, `OriginTiles` mode if ever enabled: then Pos and grid are both absolute and the same argument holds). The recorded Rogue Encampment image is Game.exe (Origin zero) and cannot show the d2d case.
 
 ## Live checklist (ready to run, not run)
 
-1. Start a hidden instance with a bot built with the wiring above and `-watch -watch-video`.
+1. Start a hidden instance with `d2bot ... -ladder -watch -watch-video` (senses.tier defaults to 1).
 2. Open `/watch?t=<token>` Game tab: the panel shows "Waiting..." then the town map around the hero only.
 3. Walk: fog clears behind the hero, the cross follows within 1 s, zoom +/- and drag work.
 4. Take a waypoint/exit: the map changes (new area name), the previous area keeps its fog on return.
