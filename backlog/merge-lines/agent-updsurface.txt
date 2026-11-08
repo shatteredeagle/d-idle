@@ -1,2 +1,0 @@
-INDEX: docs/research/update-surface.md: update surface review: layered image inventory with measured sizes, platform ABI contract, migrations, A/B stage-0 shim, root-key delegation, phased cards P1-P4
-CHANGELOG: design review of the hot-update surface (docs/research/update-surface.md); doc only
