@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- `d2bot play` starts a play session (ladder, watch, video, phone URL printed once) and writes a session record plus a local decision dataset; `d2bot sessions export` makes an anonymised copy
 - tally strip works without the d.idle overlay (events-mode ledger on vanilla d2d and game.exe) (TASK-141)
 - bot: a gold recovery that earns almost nothing at clvl 1 to 4 now ends as stalled, and a depleted early field starts a fresh game (knobs resource.recoveryStall*, bot.droughtSlow*)
 - upstream PR #245 opened: a respawn after death refills life, mana and stamina (TASK-125)

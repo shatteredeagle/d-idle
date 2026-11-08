@@ -1,0 +1,7 @@
+{"catalogue":4,"commit":"abc1234","kind":"header","schema":"decision-dataset","session":"3132333435363738","start":"2026-11-08T10:00:00Z","v":1,"window_min":10}
+{"v":1,"kind":"fire","id":1,"session":"3132333435363738","commit":"abc1234","t_game":30000,"t_wall":"2026-11-08T10:00:30Z","point":"t1.repair","ctx":{"act":"1","diff":"normal","durability":"20-30","gold":"500-1500","hc":"normal"},"class":"sorceress","build":"build-sorceress","options":["repair","skip"],"default":"repair","answer":"repair","by":"default","latency_ms":null}
+{"answer":"repair","by":"player","kind":"answer","latency_ms":10000,"of":1,"v":1}
+{"v":1,"kind":"fire","id":2,"session":"3132333435363738","commit":"abc1234","t_game":47000,"t_wall":"2026-11-08T10:00:47Z","point":"t1.repair","ctx":{"act":"1","diff":"normal","durability":"20-30","gold":"gt1500","hc":"normal"},"class":"sorceress","build":"build-sorceress","options":["repair","skip"],"default":"repair","answer":"repair","by":"default","latency_ms":null}
+{"answer":null,"by":"timeout","kind":"answer","latency_ms":null,"of":2,"v":1}
+{"deaths":1,"kind":"outcome","life_pct_min":40,"of":1,"v":1,"window_min":10,"xp_per_h":21600}
+{"deaths":1,"kind":"outcome","life_pct_min":40,"of":2,"v":1,"window_min":10,"xp_per_h":15600}

@@ -810,3 +810,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/codex.md | Act 1 Codex and firsts: table, tracker, /api/codex, reader status (TASK-130)
 - docs/research/pr-bundle-queue.md: fid-revive-refill row now OPEN as PR #245
 - docs/fresh-start-pace.md - why a fresh tester hero crawled in Blood Moor (TASK-138)
+- docs/session-record.md: session record, decision dataset files, `d2bot play` and `d2bot sessions export`

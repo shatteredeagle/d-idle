@@ -1,6 +1,6 @@
 # Decision dataset (schema v1)
 
-> status: DESIGN (user decision 2026-11-07). Implemented by the session record (TASK-106, acceptance criteria 4 and 5); consumed by the learned-brain experiment (TASK-126). Tags: V verified, S secondary, U unverified. Nothing here is built yet; every number is U.
+> status: BUILT offline (TASK-106: `internal/watch/sessionrec.go`, `sessionexport.go`; how to use: `docs/session-record.md`). Not yet run live. Consumed by the learned-brain experiment (TASK-126). Tags: V verified, S secondary (fixture), U unverified.
 
 ## Why
 
@@ -10,7 +10,8 @@ Every time a decision point of the store (`internal/decide`, `docs/t0-slice.md`)
 
 - One append-only JSONL file per session: `<data volume>/sessions/<session id>/decisions.jsonl`, written by the same command run as the session record. Never rewritten; a line is flushed when written.
 - Line 1 of the file is a header `{"v":1,"kind":"header",...}` (schema version, session id, bot commit, catalogue version, start wall time). Every later line carries `"v":1`.
-- Two line kinds: `"kind":"fire"` (the firing) and `"kind":"outcome"` (follow-up, references the firing by `id`, written N minutes later; the firing line is not edited).
+- Four line kinds: `header`, `fire` (the firing), `answer` (what the player did with the thought a firing opened: `of` = fire id, `by` `player` with `latency_ms`, or `timeout` when it faded) and `outcome` (follow-up, `of` = fire id, written N minutes later). A fire line is never edited, so `by` on it says who decided the action taken NOW (`rule`, `player` for a remembered answer inside the repeat cooldown, `default`), and the `answer` line says what the person said afterwards. Readers skip unknown kinds.
+- A repeat of the same key and source inside 60 game seconds is not logged; the summary counts it (`fires_suppressed`).
 
 ## Fields of a `fire` line
 
@@ -38,9 +39,9 @@ An `outcome` line: `{"v":1,"kind":"outcome","of":<id>,"window_min":N,"life_pct_m
 - No secrets, no account names, no character names, no host names or paths; the session id is random. The leakcheck scan covers the docs, not the data; the recorder must not write free text from the game.
 - Export for friends' feedback is opt-in: an explicit command writes an anonymised copy (session ids re-randomised, wall time reduced to an offset) to a file the person then chooses to send.
 
-## Size estimate (U)
+## Size (S: fixture, replaces the estimate)
 
-A `fire` line is about 300 to 500 bytes. The store deduplicates by key, so firings per hour are in the tens to a few hundred (the session record's questions-per-10-minutes number will say). At 300 firings per hour: roughly 100 to 150 KB per hour, plus outcome lines of about 100 bytes each (30 KB). A year of daily 2-hour sessions stays under 100 MB. TASK-106 replaces this estimate with a measured one.
+`TestDatasetSizePerHour` simulates one hour with a question every 20 seconds (the busy end) and a quarter of them answered: 63 logged firings, about 30 KB of `decisions.jsonl` per hour including header, answer and outcome lines (about 480 bytes per firing), plus about 3 KB of session record. A year of daily 2-hour sessions stays under 25 MB. A live number (V) replaces this once a session has run; each `summary.json` carries `decision_bytes_per_h` for it.
 
 ## Versioning
 

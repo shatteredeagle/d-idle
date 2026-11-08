@@ -36,6 +36,10 @@ type ladderOptions struct {
 	// vanilla) and the profile directory of the currency ledger (set by every backend; the tally runs without the overlay).
 	overlayDir, currencyDir string
 
+	// play: the play-session command (play.go) is running; a person plays through the watch screen and the session
+	// record (internal/watch/sessionrec.go) is written. Set by `d2bot play`, never a flag of its own.
+	play bool
+
 	on      bool
 	profile string // "" = a person answers through the watch screen; NAME or holdout:SEED = a scripted player
 	watch   bool
@@ -163,6 +167,15 @@ type ladderRig struct {
 	Served watch.Served
 	Fun    *watch.Fun       // return screen, tally strip and Codex (funwire.go); nil without -watch
 	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
+	Rec    *watch.Session   // the play session's record (play.go); nil outside `d2bot play`
+	Video  *watch.Video
+}
+
+// StopRec ends the session record (summary written); safe on a nil rig and to call twice.
+func (r *ladderRig) StopRec() {
+	if r != nil && r.Rec != nil {
+		_ = r.Rec.Stop()
+	}
 }
 
 // enableFunc is bot.(*Runner).EnableLadderWith (a seam for tests).
@@ -184,6 +197,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 	}
 	rig := &ladderRig{}
+	var notes watch.NotesSink
 	var orders *watch.GoalsOrders
 	wire := func(st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (ladder.Sink, ladder.AnswerSource, error) {
 		var src ladder.AnswerSource
@@ -210,7 +224,14 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 			return nil, nil, err
 		}
 		hub.SetCurrency(rig.Wallet)
-		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk); err != nil {
+		if l.play && stateDir != "" {
+			sc := playSessionConfig(l, stateDir, st, cat, clk, watchTok, status, hub, rig)
+			if rig.Rec, err = watch.NewSession(sc); err != nil {
+				return nil, nil, err
+			}
+			notes = rig.Rec
+		}
+		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes); err != nil {
 			return nil, nil, err
 		}
 		if src == nil {
@@ -234,6 +255,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		ladder.Install(nil)
 		return nil, err
 	}
+	rig.Video = vid
 	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
@@ -245,8 +267,11 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	rig.Served = served
 	go rig.Hub.RunTicker(ctx, time.Second)
+	if rig.Rec != nil {
+		go runSession(ctx, rig.Rec)
+	}
 	ch, unsub := m.Subscribe() // subscribed before startLadder returns: the first events of the run are not lost
-	go feedHub(ctx, rig.Hub, orders, rig.Fun, ch, unsub, status)
+	go feedHub(ctx, rig.Hub, orders, rig.Fun, rig.Rec, ch, unsub, status)
 	return rig, nil
 }
 
@@ -357,7 +382,7 @@ func liveRuleKeys(st *decide.Store) []string {
 // feedHub forwards the goal manager's events (orders, deaths, kills, area changes) and a status poll to the Hub and,
 // when fun is set, to the return screen, tally strip and Codex: the
 // uptime source (docs/research/watch-screen-design.md, 3.5).
-func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *watch.Fun, ch <-chan goals.Event, unsub func(), status func() goals.Status) {
+func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *watch.Fun, rec *watch.Session, ch <-chan goals.Event, unsub func(), status func() goals.Status) {
 	defer unsub()
 	tick := time.NewTicker(2 * time.Second)
 	defer tick.Stop()
@@ -370,6 +395,9 @@ func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *wat
 				return
 			}
 			o.OnGoalEvent(ev)
+			if rec != nil && ev.Type == goals.EvDeath {
+				rec.OnDeath()
+			}
 			if fun != nil {
 				fun.OnGoalEvent(ev)
 			}

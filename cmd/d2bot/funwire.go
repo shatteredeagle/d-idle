@@ -63,9 +63,9 @@ func runID() string {
 
 // newFun builds the fun loop for a running ladder: the tally strip when the profile has a d.idle wallet, the Codex when
 // the catalogue carries the firsts point (useFirsts), and the return screen over both.
-func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (*watch.Fun, error) {
+func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink) (*watch.Fun, error) {
 	run := runID()
-	cfg := watch.FunConfig{Hub: hub, Speed: 1}
+	cfg := watch.FunConfig{Hub: hub, Speed: 1, Notes: notes}
 	if stateDir != "" {
 		cfg.Visit = watch.NewVisit(filepath.Join(stateDir, "visit.json"), nil)
 	}
