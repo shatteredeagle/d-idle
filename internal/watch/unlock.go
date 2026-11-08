@@ -121,6 +121,9 @@ func (u *Unlocks) OnGoalEvent(ev goals.Event) {
 			u.Observe(unlock.Event{Type: unlock.EvLevel, N: ev.Level})
 		}
 	case goals.EvQuest:
+		if ev.Stage > 0 && ev.Quest != "" {
+			u.Observe(unlock.Event{Type: unlock.EvQuestStage, Name: ev.Quest, N: ev.Stage})
+		}
 		if ev.Done && ev.Quest != "" {
 			u.Observe(unlock.Event{Type: unlock.EvQuest, Name: ev.Quest})
 		}

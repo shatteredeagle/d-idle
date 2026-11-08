@@ -102,6 +102,8 @@ type Fun struct {
 	Chronicle *Chronicle
 	// Voice is nil unless the ladder has the row "voice" (TASK-155).
 	Voice *Voice
+	// Quests is nil unless the ladder has the row "questlog" (TASK-156).
+	Quests *QuestLog
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -159,6 +161,14 @@ func NewFun(c FunConfig) (*Fun, error) {
 				return nil, err
 			}
 			f.Voice = vo
+		}
+		if c.Unlock.Has(QuestLogID) {
+			h := c.Hub
+			ql, err := NewQuestLog(f.Unlocks, nil, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			f.Quests = ql
 		}
 	}
 	if c.Proposals != nil {
@@ -239,6 +249,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Voice != nil {
 		f.Voice.OnGoalEvent(ev)
+	}
+	if f.Quests != nil {
+		f.Quests.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -402,6 +415,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Voice != nil {
 		m.Handle(VoiceRoute, f.Voice.Handler())
+	}
+	if f.Quests != nil {
+		m.Handle(QuestLogRoute, f.Quests.Handler())
 	}
 	if f.Hall != nil {
 		hh := f.Hall.Handler()

@@ -27,6 +27,7 @@
  <button type="button" data-view="spend" id="tab-spend" hidden>Spend</button>
  <button type="button" data-view="chronicle" id="tab-chronicle" hidden>Chronicle</button>
  <button type="button" data-view="diary" id="tab-diary" hidden>Diary</button>
+ <button type="button" data-view="quests" id="tab-quests" hidden>Quests</button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -69,6 +70,10 @@
  </section>
  <section class="card diary" id="diarypane" data-v="diary" hidden aria-labelledby="t-diary"><h2 id="t-diary">Diary <small class="muted">(one page per milestone)</small></h2>
   <ol id="diarylist" class="log-list diary-list"></ol>
+ </section>
+ <section class="card quests" id="questspane" data-v="quests" hidden aria-labelledby="t-quests"><h2 id="t-quests">Quests <small class="muted" id="questdiff"></small></h2>
+  <ul id="questlist" class="log-list quest-list"></ul>
+  <p class="hint" id="questmore"></p>
  </section>
  <section class="card silhouettes" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
   <ul id="lockedlist" class="log-list"></ul>

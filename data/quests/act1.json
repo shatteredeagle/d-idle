@@ -1,0 +1,133 @@
+{
+ "schema": "questlog.quests/1",
+ "doc": "docs/unlock-questlog.md",
+ "note": "Act 1 quests the log can show. Ids are the task layer's (internal/task/world.go); stage names are the task layer's (started, cleared, done). reward is per difficulty (S: from the plan note quest-points.json for Den, from the wiki for the others, U: nightmare and hell not checked); a difficulty with no entry shows no reward line. Text names no monster or place the hero has not been sent to by that quest.",
+ "quests": [
+  {
+   "id": "den_of_evil",
+   "name": "Den of Evil",
+   "giver": "Akara",
+   "stages": {
+    "started": {
+     "objective": "Clear the Den of Evil, the cave north of the Blood Moor.",
+     "why": "Akara asked the hero to kill every monster in the cave before the camp is overrun."
+    },
+    "cleared": {
+     "objective": "Return to Akara.",
+     "why": "The Den is empty. Akara pays when the hero reports back."
+    },
+    "done": {
+     "objective": "Done. Akara has paid.",
+     "why": "The hero spoke to Akara and the quest is closed."
+    }
+   },
+   "reward": {
+    "normal": "One skill point."
+   }
+  },
+  {
+   "id": "sisters_burial",
+   "name": "Sisters' Burial Grounds",
+   "giver": "Kashya",
+   "stages": {
+    "started": {
+     "objective": "Kill Blood Raven at the Burial Grounds.",
+     "why": "Kashya asked the hero to free her old Rogue sister from the curse that raised her."
+    },
+    "cleared": {
+     "objective": "Return to Kashya.",
+     "why": "Blood Raven is dead. Kashya waits to hear it."
+    },
+    "done": {
+     "objective": "Done. Kashya's rogues will hire out.",
+     "why": "Kashya thanked the hero and offers mercenaries."
+    }
+   },
+   "reward": {
+    "normal": "Kashya hires out mercenaries."
+   }
+  },
+  {
+   "id": "tools_of_the_trade",
+   "name": "Tools of the Trade",
+   "giver": "Charsi",
+   "stages": {
+    "started": {
+     "objective": "Find the Horadric Malus in the Barracks.",
+     "why": "Charsi needs her lost hammer, the Horadric Malus, and sent the hero to the Barracks."
+    },
+    "cleared": {
+     "objective": "Bring the Malus to Charsi.",
+     "why": "The hero holds the Malus. Charsi will use it."
+    },
+    "done": {
+     "objective": "Done. Charsi can imbue an item.",
+     "why": "Charsi repaid the favour with a crafting service."
+    }
+   },
+   "reward": {
+    "normal": "Charsi imbues one item."
+   }
+  },
+  {
+   "id": "search_for_cain",
+   "name": "The Search for Cain",
+   "giver": "Akara",
+   "stages": {
+    "started": {
+     "objective": "Find the Scroll of Inifuss and read it with Akara.",
+     "why": "Akara thinks Deckard Cain is alive and the scroll in the Dark Wood points to where."
+    },
+    "cleared": {
+     "objective": "Follow the scroll to Tristram.",
+     "why": "The scroll is read. The trail leads to the Cairn Stones."
+    },
+    "done": {
+     "objective": "Done. Cain is free.",
+     "why": "Cain was rescued in Tristram and is back in camp."
+    }
+   },
+   "reward": {
+    "normal": "Cain identifies items for free."
+   }
+  },
+  {
+   "id": "forgotten_tower",
+   "name": "The Forgotten Tower",
+   "giver": "Kashya",
+   "stages": {
+    "started": {
+     "objective": "Kill the Countess at the Forgotten Tower.",
+     "why": "The way to the lower levels runs through the Forgotten Tower and its mistress."
+    },
+    "cleared": {
+     "objective": "Collect your due.",
+     "why": "The Countess is dead."
+    },
+    "done": {
+     "objective": "Done.",
+     "why": "The place is quiet at last."
+    }
+   }
+  },
+  {
+   "id": "sisters_to_slaughter",
+   "name": "Sisters to the Slaughter",
+   "giver": "Warriv",
+   "stages": {
+    "started": {
+     "objective": "Kill Andariel in the Catacombs.",
+     "why": "The last guard of the way east is the Maiden of Anguish."
+    },
+    "cleared": {
+     "objective": "Talk to Warriv.",
+     "why": "Andariel is dead. The road east is open."
+    },
+    "done": {
+     "objective": "Done. Act II opens.",
+     "why": "The hero can sail east to Lut Gholein."
+    }
+   }
+  }
+ ]
+}
