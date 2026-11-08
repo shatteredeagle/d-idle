@@ -1,0 +1,3 @@
+BACKLOG: TASK-197 questhints: the hero thinks about quest NPCs when entering town (hint table, policy row questhints, docs/quest-hints.md); TASK-198 live drill for the quest-giving UNSURE items
+INDEX: docs/quest-hints.md - quest hints in town: the rule, the table with verified tags, the live drill checklist
+CHANGELOG: Quest hints: on entering town the hero says which quest giver it is ready to visit or why it is not yet (new policy row "How I handle quests in town": Quiet, Hints, Hints and ask me)
