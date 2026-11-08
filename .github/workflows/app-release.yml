@@ -3,7 +3,7 @@
 #   - the only trigger is workflow_dispatch (no push, no tag, no schedule);
 #   - every job needs the repository variable APP_RELEASE_ENABLED=true, which nobody sets until the steps in
 #     docs/self-update-release.md ("Turning it on", card TASK-124) are done;
-#   - the file holds no secret: the signing key is the environment secret D2SIGN_KEY of the environment
+#   - the file holds no secret: the signing key is the environment secret D2SIGN_PRIVATE_KEY of the environment
 #     `app-release`, which needs the user as required reviewer (a GitHub setting this file cannot create).
 # Warning: GitHub creates a missing environment on first use WITHOUT reviewers. Do not set the variable before the
 # environment, its reviewer, the secret and the tag rulesets exist.
@@ -91,8 +91,8 @@ jobs:
         run: go run ./cmd/d2sign summary -in assets/MANIFEST.json | tee -a "$GITHUB_STEP_SUMMARY"
       - name: Sign
         env:
-          D2SIGN_KEY: ${{ secrets.D2SIGN_KEY }}
-        run: go run ./cmd/d2sign sign -key-env D2SIGN_KEY -in assets/MANIFEST.json
+          D2SIGN_PRIVATE_KEY: ${{ secrets.D2SIGN_PRIVATE_KEY }}
+        run: go run ./cmd/d2sign sign -key-env D2SIGN_PRIVATE_KEY -in assets/MANIFEST.json
       - name: Verify against the pinned public key and the asset hashes
         run: go run ./cmd/d2sign verify -pub deploy/d2d-container/pubkeys/current.pub -in assets/MANIFEST.json -dir assets
       - uses: actions/upload-artifact@v4
