@@ -280,3 +280,24 @@ func TestSelectRulesStateAndLines(t *testing.T) {
 		t.Errorf("class scope on load: %v", err)
 	}
 }
+
+// Rakanishu's Bargain rank 3 goes through the same generic path: a sheet row and a knob.
+func TestBargainRank3SetsRowAndKnob(t *testing.T) {
+	for _, class := range []string{"paladin", "sorceress"} {
+		r := newRig(t, class, "")
+		r.present = true
+		if err := r.c.Select([]Pick{{"rakanishus_bargain", 3}}); err != nil {
+			t.Fatal(err)
+		}
+		if err := r.c.Evaluate(field); err != nil {
+			t.Fatal(err)
+		}
+		if r.sheet.cur["tp"] != "walk" || r.knobs["town.tpReserve"] != 1 {
+			t.Errorf("%s: row %q knobs %v", class, r.sheet.cur["tp"], r.knobs)
+		}
+		r.c.Evaluate(Where{Level: 6, Age: time.Hour, InTown: true})
+		if r.sheet.cur["tp"] != "default" || len(r.knobs) != 0 {
+			t.Errorf("%s: not put back: row %q knobs %v", class, r.sheet.cur["tp"], r.knobs)
+		}
+	}
+}

@@ -272,6 +272,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	ch, unsub := m.Subscribe() // subscribed before startLadder returns: the first events of the run are not lost
 	go feedHub(ctx, rig.Hub, orders, rig.Fun, rig.Rec, ch, unsub, status)
+	startPacts(ctx, l, rig, m, status, stateDir, os.Getenv)
 	return rig, nil
 }
 
