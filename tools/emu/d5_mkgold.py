@@ -1,5 +1,5 @@
 import os,re
-T=os.environ.get('D5_TREE','/home/jesse/d2d-lab/wt-decomp5')
+T=os.environ.get('D5_TREE',os.path.expanduser('~/d2d-lab/wt-decomp5'))
 # setup.cpp fix
 p=T+'/components/game/world/setup.cpp'
 s=open(p).read()

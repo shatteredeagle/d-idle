@@ -21,6 +21,7 @@ exclusive:
   - "fork-branch:local/fid-load-gold-clamp"
   - "upstream-pr:load-gold-clamp"
 contracts: []
+result: "Candidate prepared (2026-11-08, agent decomp5): local/fid-load-gold-clamp commit 42d40b09 on the private fork remote, oracle 363 of 539 before, 0 after; waits for the independent verifier and the user's go; docs/research/pr-load-gold-draft.md."
 ---
 
 ## Description

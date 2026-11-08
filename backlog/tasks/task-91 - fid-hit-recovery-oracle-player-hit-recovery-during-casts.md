@@ -5,7 +5,7 @@ status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-08T17:18:00Z'
 labels:
   - d2d
   - oracle
@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-hit-recovery.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "NO DEVIATION in the covered paths (2026-11-08, agent decomp5, upstream 1453f853): get-hit length 110,836 cases 0 differ, decision 73,694 frames 0 differ, drawn frames 1,747,580 ticks 0 differ (monsters); the three drafts are merged; FHR breakpoints table in docs/probes/fid/fid-hit-recovery.md. U: mode-transition gate for a hit during a cast, player drawn frames. Offline."
 ---
 
 ## Description
@@ -38,6 +38,6 @@ Done when: FHR table 0/5/9/14/20/30/42/60/86/142 compared; tolerance: 0 differin
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 FHR table 0/5/9/14/20/30/42/60/86/142 compared; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 fight.hpp:715 2-frame wait rule compared with game.exe; remaining get-hit drafts listed with merge state
+- [x] #1 FHR table 0/5/9/14/20/30/42/60/86/142 compared; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #2 fight.hpp:715 2-frame wait rule compared with game.exe; remaining get-hit drafts listed with merge state
 <!-- AC:END -->

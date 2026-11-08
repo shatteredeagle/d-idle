@@ -27,7 +27,7 @@ owns:
   - "docs/research/pr-price2-draft.md"
 exclusive: []
 contracts: []
-result: "NEGATIVE, no PR candidate (2026-11-07, agent fidprice): D1 to D10 are merged upstream; upstream main 9c78f391 vs game.exe FUN_0062efb0 differs only at 26M+ gold prices with random magic-stat mods (seed 7: buy 1 / sell 0 / repair 13 of 100,000); consumables 2,304 of 2,448 plus tomes 144 of 144 agree; offline emulator runs only, nothing live; trace docs/research/fid-vendor-price-trace.md Status sync 2026-11-08 (stays open): negative result, no PR candidate; boxes open."
+result: "ALREADY UPSTREAM, no PR candidate (2026-11-08, agent decomp5 re-run on upstream 1453f853): seed 7 buy 1 / sell 0 / repair 13 of 100,000 (the 2^31 overflow family at 26M+ prices, I unreachable), seed 1 0/0/16, tomes 0 of 144; docs/probes/fid/fid-price-pr.md. AC 1, 3, 4 stay open (before-numbers outdated, nothing to send, bot gold plan not touched). Offline emulator runs only."
 ---
 
 ## Description

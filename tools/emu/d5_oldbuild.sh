@@ -1,10 +1,11 @@
 #!/bin/bash
 # decomp5 (worker host): build test_game of an OLD upstream commit $1 with the --load-d2s mode, in its own tree and build dir
 set -u
+H=$(cd "$(dirname "$0")" && pwd)
 REV=$1; N=$2
 T=$HOME/d2d-lab/wt-decomp5-$N; B=$HOME/d2d-lab/build-decomp5-$N; D=$HOME/d2d-lab/src/build/_deps
 cd ~/d2d-lab/fp-scratch.git && git worktree add -f --detach $T $REV 2>&1 | tail -1
-D5_TREE=$T python3 $HOME/labrun/herdr/code/d2lod-wt/decomp5/tools/emu/d5_patch_loadd2s.py || exit 1
+D5_TREE=$T python3 $H/d5_patch_loadd2s.py || exit 1
 mkdir -p $B; ln -sfn $B $T/build
 nice -n 19 cmake -S $T -B $B -G Ninja -DCMAKE_BUILD_TYPE=Release -DD2D_WERROR=OFF \
  -DCMAKE_CXX_COMPILER_LAUNCHER=$HOME/.local/bin/ccache -DCMAKE_C_COMPILER_LAUNCHER=$HOME/.local/bin/ccache \

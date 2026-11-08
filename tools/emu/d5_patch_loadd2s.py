@@ -1,6 +1,6 @@
 import re,sys
 import os
-T=os.environ.get('D5_TREE','/home/jesse/d2d-lab/wt-decomp5')
+T=os.environ.get('D5_TREE',os.path.expanduser('~/d2d-lab/wt-decomp5'))
 p=T+'/tests/game/test_game.cpp'
 if not os.path.exists(p): p=T+'/tests/test_game.cpp'
 s=open(p).read()
