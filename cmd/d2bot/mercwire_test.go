@@ -1109,3 +1109,50 @@ func TestQuoteReplacesTheFormulaEverywhere(t *testing.T) {
 		}
 	}
 }
+
+type manaCat struct{ fakeCat }
+
+func (c manaCat) Item(class int) (bot.ItemMeta, bool) {
+	if class == 3 {
+		return bot.ItemMeta{Name: "Mana Potion", Potion: bot.PotionMana}, true
+	}
+	return c.fakeCat.Item(class)
+}
+
+// TASK-174: the hire kit follows the belt plan: a mixed belt still needs healing, an all-mana belt hires without it.
+func TestKitFollowsBeltPlan(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, c := range []struct {
+			name     string
+			plan     int
+			wantPots bool
+			wantFull bool
+			withHeal bool
+		}{
+			{"default, no healing", 0, false, false, false},
+			{"balanced, no healing", 1, false, false, false},
+			{"all mana, no healing", 3, true, true, false},
+			{"all healing, no healing", 2, false, false, false},
+			{"balanced, healing", 1, true, true, true},
+		} {
+			w, _, _ := testWire(t, nil, nil)
+			w.cat = manaCat{}
+			w.e.Tune.Resource.BeltPlan = c.plan
+			s := townSnap(0, false)
+			s.Player.Class = class
+			s.Inventory.Items = []d2.Unit{{Class: 1, Item: &d2.Item{Where: d2.ContInventory}}}
+			for i := 0; i < w.e.Tune.Resource.KitMinMP; i++ {
+				s.Inventory.Items = append(s.Inventory.Items, d2.Unit{Class: 3, Item: &d2.Item{Where: d2.ContBelt}})
+			}
+			for i := 0; c.withHeal && i < w.e.Tune.Resource.KitMinHP; i++ {
+				s.Inventory.Items = append(s.Inventory.Items, d2.Unit{Class: 2, Item: &d2.Item{Where: d2.ContBelt}})
+			}
+			if tp, pots := w.kit(s); !tp || pots != c.wantPots {
+				t.Errorf("%v %s: kit tp %v potions %v, want potions %v", class, c.name, tp, pots, c.wantPots)
+			}
+			if got := w.kitFull(s); got != c.wantFull {
+				t.Errorf("%v %s: kitFull %v, want %v", class, c.name, got, c.wantFull)
+			}
+		}
+	}
+}
