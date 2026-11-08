@@ -29,6 +29,8 @@
  <button type="button" data-view="diary" id="tab-diary" hidden>Diary</button>
  <button type="button" data-view="quests" id="tab-quests" hidden>Quests</button>
  <button type="button" data-view="cards" id="tab-cards" hidden>Cards</button>
+ <button type="button" data-view="bestiary" id="tab-bestiary" hidden>Cain's notes</button>
+ <button type="button" data-view="atlas" id="tab-atlas" hidden>Atlas</button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -82,6 +84,13 @@
  </section>
  <section class="card silhouettes" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
   <ul id="lockedlist" class="log-list"></ul>
+ </section>
+ <section class="card bestiary" id="bestiarypane" data-v="bestiary" hidden aria-labelledby="t-bestiary"><h2 id="t-bestiary">Cain's notes <small class="muted" id="bestiarycount"></small></h2>
+  <ul id="bestiarylist" class="log-list bestiary-list"></ul>
+ </section>
+ <section class="card atlas" id="atlaspane" data-v="atlas" hidden aria-labelledby="t-atlas"><h2 id="t-atlas">Waypoint atlas <small class="muted" id="atlascount"></small></h2>
+  <p class="hint" id="atlasnext"></p>
+  <ol id="atlaslist" class="log-list atlas-list"></ol>
  </section>
  <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
   <ul id="journal" class="log-list"></ul>

@@ -260,6 +260,21 @@
       "reveal": {"title": "Risk meter", "text": "Before a boss the hero reads its own numbers (potions, life, kit and the route guard) and tells you ready, marginal or turn back, by the same lines it fights by.", "teaser": "Survive a brush with death."}
     },
     {
+      "id": "bestiary", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 10}},
+      "reveal": {"title": "Cain's notes", "text": "Cain's notes now keep a card for every kind of monster the hero has killed ten of: what it is, how it fights, what it drops and a veteran's tip.", "teaser": "Kill ten of one kind of monster."}
+    },
+    {
+      "id": "bestiary_resists", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 50}},
+      "reveal": {"title": "Cain's notes: resistances", "text": "After fifty kills of one kind its card shows how well it resists each element, on every difficulty.", "teaser": "Kill fifty of one kind of monster."}
+    },
+    {
+      "id": "atlas", "group": "ui",
+      "trigger": {"kind": "codex_first", "args": {"sub": "waypoint"}},
+      "reveal": {"title": "Waypoint atlas", "text": "The atlas lights every waypoint the hero has taken and shows where it wants to go next.", "teaser": "Take your first waypoint."}
+    },
+    {
       "id": "orderqueue", "group": "ui",
       "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 2}},
       "reveal": {"title": "Order queue, first slot", "text": "One order may now wait behind the running one: give an order and the hero goes on to the next when it ends. A queue never overrides the hero's own guard and stops when the hero dies.", "teaser": "Clear the Den of Evil."}
