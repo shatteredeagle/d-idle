@@ -12,4 +12,11 @@ missile)
   echo "== missiles.py 1500 7"; uv run python missiles.py 1500 7 | tail -3
   echo "== next_hit 1 400"; $B/tests/test_next_hit --next-hit 1 400 > $O/nh.d 2>/dev/null; uv run python next_hit.py $O/nh.d > $O/nh.g; grep -E '^[HT]' $O/nh.d | diff $O/nh.g - | wc -l; grep -c '^T' $O/nh.d
   ;;
+light)
+  echo "== lightning pierce (sk6_light_hit.py vs test_light_pierce) seed ${2:-1} n ${3:-400}"
+  $B/tests/test_light_pierce --light-hit ${2:-1} ${3:-400} > $O/lp.d 2>$O/lp.err; echo "d2d rc=$?"; grep -c '^T' $O/lp.d
+  uv run python sk6_light_hit.py $O/lp.d > $O/lp.g 2>$O/lp.gerr; echo "game rc=$?"; grep -c '^T' $O/lp.g
+  grep -E '^[HT]' $O/lp.d | diff $O/lp.g - > $O/lp.diff; echo "differing lines: $(grep -c '^[<>]' $O/lp.diff)"
+  python3 $(dirname $0)/sk6_light_sum.py $O/lp.g $O/lp.d
+  ;;
 esac
