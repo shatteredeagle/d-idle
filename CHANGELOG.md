@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Design note and five proposed cards for information unlocks (watch-screen senses unlocked by Codex firsts and tally); docs only
 - class-generic decisions F10/F11 (world-generic first, Paladin default test class), veteran per-class early-game research, cards TASK-142 to 147
 - Policy sheet: /watch/policy lists the chore decisions with every allowed value, poor ones included, and shows what each change did; the return screen shows before/after cards with a change-it-back button
 - `d2bot play` starts a play session (ladder, watch, video, phone URL printed once) and writes a session record plus a local decision dataset; `d2bot sessions export` makes an anonymised copy
