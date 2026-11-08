@@ -1,0 +1,3 @@
+BACKLOG: TASK-148 sensesmap: side-panel minimap v1 built offline (internal/senses, /api/senses, canvas panel); bot tick not wired, live not run
+INDEX: docs/senses-map.md - side-panel minimap: data flow, schema, fog, tier hook, live checklist
+CHANGELOG: Watch screen: side-panel minimap (view only, fog of war, token gated) behind a tier-1 unlock hook
