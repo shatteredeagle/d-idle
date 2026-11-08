@@ -1,0 +1,3 @@
+BACKLOG: TASK-156 unlockquestlog: Act 1 quest log on the unlock ladder, opens when Akara hands out the Den quest (offline tests, live read unverified).
+INDEX: docs/unlock-questlog.md - Quest log: Act 1 quests with objective and reason, from the existing quest events (TASK-156)
+CHANGELOG: Watch page: Quests tab with the Act 1 quest log, unlocked when Akara gives the Den of Evil quest.
