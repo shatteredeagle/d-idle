@@ -4,7 +4,7 @@
   'use strict';
   var panel = document.getElementById('sensespanel'), cv = document.getElementById('sensescanvas');
   if (!panel || !cv) return;
-  var ctx = cv.getContext('2d'), map = null, cells = null, hero = null, version = 0;
+  var ctx = cv.getContext('2d'), map = null, cells = null, hero = null, units = [], version = 0;
   var zoom = 0, panX = 0, panY = 0, fails = 0, timer = 0, drag = null;
 
   function decode(m) {
@@ -40,10 +40,12 @@
       var h = at(hero); ctx.strokeStyle = css('--bad', '#b3342a'); ctx.lineWidth = 3;
       ctx.beginPath(); ctx.moveTo(h[0] - 7, h[1]); ctx.lineTo(h[0] + 7, h[1]); ctx.moveTo(h[0], h[1] - 7); ctx.lineTo(h[0], h[1] + 7); ctx.stroke();
     }
+    if (window.sensesUnitsDraw && units.length) window.sensesUnitsDraw(ctx, at, units, css, cv);
   }
   function apply(r) {
     if (r.map) { map = r.map; cells = decode(map); version = r.version; panX = panY = 0; document.getElementById('sensesarea').textContent = map.area || ('area ' + map.areaId); }
     hero = r.hero || hero;
+    units = r.units || [];
     var note = document.getElementById('sensesnote');
     note.textContent = r.waiting ? 'Waiting for the first area...' : 'Legend: cross hero, diamond waypoint, square exit. Fog clears as the hero walks.';
     draw();

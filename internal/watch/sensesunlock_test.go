@@ -21,7 +21,7 @@ func sensesSrc(t *testing.T) snapSrc {
 	if !ok {
 		t.Fatal("no snapshot")
 	}
-	snap.Unit = []senses.Point{{X: 3, Y: 1}}
+	snap.Unit = []senses.Unit{{ID: 1, Kind: senses.KindMonster, X: 3, Y: 1, Class: 5, Name: "Fallen", LifePct: 80, Target: true}}
 	return snapSrc{snap}
 }
 

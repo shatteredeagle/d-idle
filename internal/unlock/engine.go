@@ -299,6 +299,19 @@ func (e *Engine) Met(sub, name string) bool {
 	return e.met[strings.ToLower(sub+"/"+name)]
 }
 
+// MetKind says whether any Codex first of that kind was seen (for example "champion": the first champion pack of any mod).
+func (e *Engine) MetKind(sub string) bool {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	pre := strings.ToLower(sub) + "/"
+	for k, v := range e.met {
+		if v && strings.HasPrefix(k, pre) {
+			return true
+		}
+	}
+	return false
+}
+
 // State is one entry as the watcher may see it. Text is empty while the entry is locked (no spoilers); a locked
 // entry shows its teaser and, for sale, its price.
 type State struct {
