@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fun loop decisions recorded (ADR 0018, Expedition Ledger); prototype cards TASK-127 to 136 in m-4; TASK-108 and TASK-115 Deferred
 - fun ideas: decisions applied (proposal waits when away, charter is tally only, optional retire into the Hall of Fame, policy effects on sheet and return screen), skill unlocks reconciled with the leveler and the v3 table, 8-card prototype plan, ADR-ready decision block (docs/research/fun-ideas.md)
 - fun ideas: converged design doc (docs/research/fun-ideas.md): Expedition Ledger, Act 1 Codex, Legacy and the Hall; incremental-games research; user and SME answers applied; Blessings, level walls, gambling dropped
 - Design: decision dataset kept by the session record (TASK-106 criteria 4 and 5) and a parked learned-brain experiment card (TASK-126)
