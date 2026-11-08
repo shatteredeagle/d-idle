@@ -5,6 +5,7 @@ status: Proposed
 assignee:
   - user
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-08T03:49:00Z'
 labels:
   - docs
   - research
@@ -37,3 +38,9 @@ Amended 2026-11-07 (ADR 0018): the H1/H4 numbers are also logged by playsession2
 - [ ] #2 30 minutes from the clvl 6 save: real question count per 10 minutes and one sentence on whether it felt good
 - [ ] #3 If the count is already 3 per 10 minutes and it feels good, the qdensity card is marked unneeded
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+first-hour principle: watch mode (live video) carries the opening and the return screen carries the absences; H4 measures time-to-tab-close with video only
+<!-- SECTION:NOTES:END -->

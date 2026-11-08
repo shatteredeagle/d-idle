@@ -5,6 +5,7 @@ status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:33:00Z'
+updated_date: '2026-11-08T04:02:00Z'
 labels:
   - bot
   - feature
@@ -36,3 +37,9 @@ Size: M. Not on the two-week playable path. Design note: docs/research/pact-syst
 - [ ] #2 Tests for two builds
 - [ ] #3 Safe zones (first 10 minutes or clvl 5, Den until quest done, town) keep Pacts off
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+The FIRST TWO Pacts are Blood Raven's Tithe (no belt potions) and Andariel's Shadow (death limit) (user 2026-11-07, ADR 0019).
+<!-- SECTION:NOTES:END -->

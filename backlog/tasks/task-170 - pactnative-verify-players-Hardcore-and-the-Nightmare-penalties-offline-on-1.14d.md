@@ -5,6 +5,7 @@ status: Proposed
 assignee:
   - live-agent
 created_date: '2026-11-08T03:34:00Z'
+updated_date: '2026-11-08T04:02:00Z'
 labels:
   - bot
   - research
@@ -33,3 +34,9 @@ Size: S. Needs the live agent. Not on the two-week playable path. Design note: d
 - [ ] #2 Live or table check: Nightmare death XP penalty and resist penalty (-5 pct, -40) and Hell values
 - [ ] #3 Whether a Hardcore hero can be created and played offline; every number tagged V or U
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Decides whether /players Pacts exist (ADR 0019).
+<!-- SECTION:NOTES:END -->
