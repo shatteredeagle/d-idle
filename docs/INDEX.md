@@ -842,3 +842,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/unlock-chronicle.md - Chronicle: kill and loot feed in D2 words, timeline tape (TASK-154)
 - docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
 - docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
+- docs/unlock-questlog.md - Quest log: Act 1 quests with objective and reason, from the existing quest events (TASK-156)
