@@ -37,3 +37,7 @@ Row `potionmix` options: default, balanced, `h3m1`, `h1m1`, `allmana` (suboptima
 - `town.tripMinHPPotions` and other trip knobs are unchanged; they ask for nothing when the plan has no healing column (capacity 0).
 - Rejuvenation columns early buy healing in the shop (`buyKind` converts; S, `docs/sme/potion-policy.md`).
 - Live drill: see the task result.
+
+## Live drill checklist (not run)
+
+Hidden instance, throwaway Paladin or Sorceress, nice 19, `writes after start: 0`: set `resource.beltPlan` 3 through the tuner (`PUT /api/v1/instances/{id}/knobs`), empty the belt, run a town restock (`NeedsTrip` then `Chores` with potions), then check with `d2cheat` read or the minute line `boxes` that the belt holds mana potions in all four columns and no healing potion was bought; set it back to 0.

@@ -5,6 +5,7 @@ status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:18:00Z'
+updated_date: '2026-11-08T03:27:00Z'
 labels:
   - bot
   - feature
@@ -29,6 +30,7 @@ owns:
   - "cmd/d2bot/resource_test.go"
 exclusive: []
 contracts: []
+result: "Built and tested offline, whole-repo gate green on the worker host. NOT verified live: the live drill was skipped (host busy: 18 game processes, load 7; no free hidden instance claimed). Drill checklist in docs/belt-plan.md."
 ---
 
 ## Description
@@ -41,9 +43,9 @@ Why: the policy sheet options 'potion mix' and 'belt fill' only moved drink line
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 belt plan templates and per-column overrides as data (resource.beltPlan, resource.beltCol1..4)
-- [ ] #2 restock, belt fill, loot pickup and kit gate follow the plan
-- [ ] #3 policy sheet rows potion mix and belt fill apply through the knob
-- [ ] #4 table tests for each template, two classes, default regression, unknown template error
+- [x] #1 belt plan templates and per-column overrides as data (resource.beltPlan, resource.beltCol1..4)
+- [x] #2 restock, belt fill, loot pickup and kit gate follow the plan
+- [x] #3 policy sheet rows potion mix and belt fill apply through the knob
+- [x] #4 table tests for each template, two classes, default regression, unknown template error
 - [ ] #5 live drill all mana (or skipped with reason)
 <!-- AC:END -->
