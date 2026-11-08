@@ -1,0 +1,1 @@
+CHANGELOG: merc hire kit check follows the belt plan: an all-mana belt hires a mercenary (TASK-174)

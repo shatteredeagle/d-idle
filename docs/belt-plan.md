@@ -33,7 +33,7 @@ Row `potionmix` options: default, balanced, `h3m1`, `h1m1`, `allmana` (suboptima
 
 ## Not done / U
 
-- `merc` kit check (`cmd/d2bot/mercwire.go kitFull`) still asks `kitMinHP`: an all-mana hero does not hire a mercenary.
+- `merc` kit check (`cmd/d2bot/mercwire.go`) follows the plan since TASK-174 (V `TestKitFollowsBeltPlan`, Sorceress and Paladin; build name unknown there, U for the mana-heavy build table).
 - `town.tripMinHPPotions` and other trip knobs are unchanged; they ask for nothing when the plan has no healing column (capacity 0).
 - Rejuvenation columns early buy healing in the shop (`buyKind` converts; S, `docs/sme/potion-policy.md`).
 - Live drill: see the task result.
