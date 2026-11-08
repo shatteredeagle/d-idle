@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "note": "Belt plan templates (resource.beltPlan). Columns are front to back (hotkeys 1..4); hp healing, mp mana, rv rejuvenation. Id 0 keeps the build's own plan (PlanForBuild). Tier follows the potion tier option and the plan's tier caps.",
+  "templates": [
+    {"id": 1, "name": "balanced",   "cols": ["hp", "hp", "mp", "rv"], "label": "Balanced: two healing, one mana, one rejuvenation (rejuvenation is healing until the shop sells it)"},
+    {"id": 2, "name": "all health", "cols": ["hp", "hp", "hp", "hp"], "label": "All healing potions", "risk": "Casters run dry of mana and fight with the cheap attack."},
+    {"id": 3, "name": "all mana",   "cols": ["mp", "mp", "mp", "mp"], "label": "All mana potions", "risk": "No healing potion is bought; life can only be answered by the town portal and the walk home. Your call, risky."},
+    {"id": 4, "name": "3:1",        "cols": ["hp", "hp", "hp", "mp"], "label": "Three healing columns to one mana column"},
+    {"id": 5, "name": "1:1",        "cols": ["hp", "hp", "mp", "mp"], "label": "Healing and mana in equal parts"},
+    {"id": 6, "name": "rejuv only", "cols": ["rv", "rv", "rv", "rv"], "label": "Rejuvenation only", "risk": "Expensive; early on the shop does not sell it, so the belt stays empty."}
+  ]
+}

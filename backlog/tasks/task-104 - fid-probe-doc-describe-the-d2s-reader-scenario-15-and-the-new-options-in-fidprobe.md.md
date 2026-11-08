@@ -1,10 +1,11 @@
 ---
 id: TASK-104
 title: 'fid-probe-doc: describe the d2s reader, scenario 15 and the new options in fidprobe.md'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:49:00Z'
+updated_date: '2026-11-08T03:49:00Z'
 labels:
   - docs
   - chore

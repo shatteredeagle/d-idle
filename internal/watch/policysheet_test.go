@@ -2,6 +2,7 @@ package watch
 
 import (
 	"bytes"
+	"d2lod-bot/internal/resource"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -236,13 +237,13 @@ func TestPolicySetAppliesRuleAndSurvivesReload(t *testing.T) {
 func TestPolicyKnobPath(t *testing.T) {
 	r := newPolRig(t, "sorceress", true)
 	r.set("potionmix", "allmana")
-	if len(r.calls) != 1 || r.calls[0]["combat.drinkLifePct"] == nil || *r.calls[0]["combat.drinkLifePct"] != 35 {
+	if len(r.calls) != 1 || r.calls[0]["resource.beltPlan"] == nil || *r.calls[0]["resource.beltPlan"] != 3 {
 		t.Fatalf("calls %v", r.calls)
 	}
 	r.set("potionmix", "allhealth") // takes the first option's knob back and sets the new ones
 	last := r.calls[len(r.calls)-1]
-	if v, ok := last["combat.drinkLifePct"]; !ok || v != nil {
-		t.Fatalf("old knob not reset: %v", last)
+	if v := last["resource.beltPlan"]; v == nil || *v != 2 {
+		t.Fatalf("plan knob not moved to all healing: %v", last)
 	}
 	if v := last["town.tripMinMPPotions"]; v == nil || *v != 0 {
 		t.Fatalf("new knob not set: %v", last)
@@ -290,7 +291,7 @@ func TestPolicyKnobKeysAreRealKnobs(t *testing.T) {
 		t.Fatal(err)
 	}
 	byKey := map[string]env.Knob{}
-	for _, k := range env.Knobs() {
+	for _, k := range append(env.Knobs(), resource.Knobs()...) { // cmd/d2bot registers the resource group
 		byKey[k.Key] = k
 	}
 	n := 0

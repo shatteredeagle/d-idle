@@ -1,0 +1,19 @@
+{
+  "schema": "decide.proposezone/1",
+  "doc": "Zone graph for the hero's proposals (Act 1 Normal) and the per-class lead. Values are U: the SME's veteran ranges live in the tally zone table (internal/currency/tallyrows.json), not here; this file only says which zone follows which and how many levels earlier or later a class feels ready. Swap the file with ParseProposeTable.",
+  "zones": [
+    {"area": "Blood Moor",     "next": ["Cold Plains"]},
+    {"area": "Den of Evil",    "next": ["Cold Plains"]},
+    {"area": "Cold Plains",    "next": ["Stony Field", "Burial Grounds"]},
+    {"area": "Burial Grounds", "next": ["Stony Field"]},
+    {"area": "Stony Field",    "next": ["Dark Wood"]},
+    {"area": "Dark Wood",      "next": ["Black Marsh"]},
+    {"area": "Black Marsh",    "next": ["Tamoe Highland", "Forgotten Tower"]},
+    {"area": "Tamoe Highland", "next": ["Pit 1"]}
+  ],
+  "classes": {
+    "sorceress": {"lead": 1, "note": "U: low life and no armour early, wants a level more than the table minimum"},
+    "paladin":   {"lead": 0, "note": "U: the table minimum is the veteran paladin line"}
+  },
+  "minPotions": 2
+}

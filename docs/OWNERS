@@ -43,9 +43,9 @@ docs/research/pr-curseimmune-draft.md  skresistfix  skresistfix
 docs/research/pr-curseimmune-proof.md  skresistfix  skresistfix
 
 docs/fixbelt.md  fixbelt  fixbelt
-internal/resource/recovery.go  fixbelt  fixbelt
-internal/resource/recovery_test.go  fixbelt  fixbelt
-internal/bot/broke.go  fixbelt  fixbelt
+internal/resource/recovery.go  freshstart  freshstart
+internal/resource/recovery_test.go  freshstart  freshstart
+internal/bot/broke.go  freshstart  freshstart
 internal/bot/area_ban_test.go  fixbelt  fixbelt
 docs/fixprogress.md  fixprogress  fixprogress
 internal/town/fixprogress_test.go  fixprogress  fixprogress

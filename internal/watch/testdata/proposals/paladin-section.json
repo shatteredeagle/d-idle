@@ -1,0 +1,31 @@
+{
+ "id": "proposals",
+ "title": "Waiting for your yes",
+ "lines": [
+  "I am level 6 and ready for Cold Plains (recommended 6 to 12, kit ok). Go there?",
+  "First time in Cold Plains: Light the waypoint before anything else.",
+  "level 6 is inside 6 to 12; 4 potions in the belt; no deaths lately.",
+  "The hero has been farming Blood Moor for 600 min since it was ready."
+ ],
+ "placeholder": "Nothing is waiting. The hero keeps farming where it is.",
+ "buttons": [
+  {
+   "label": "Accept: go to Cold Plains",
+   "row": "1",
+   "option": "go",
+   "act": "proposal"
+  },
+  {
+   "label": "Decline: stay in Blood Moor",
+   "row": "1",
+   "option": "stay",
+   "act": "proposal"
+  },
+  {
+   "label": "Ask me later",
+   "row": "1",
+   "option": "later",
+   "act": "proposal"
+  }
+ ]
+}

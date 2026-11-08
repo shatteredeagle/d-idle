@@ -1,13 +1,15 @@
 ---
 id: TASK-150
 title: 'sensesvideo: research overlay aligned to the video (projection and camera)'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:12:00Z'
+updated_date: '2026-11-08T03:49:00Z'
 labels:
   - watch
   - research
+  - parked
 milestone: m-4
 dependencies:
   - TASK-148
@@ -34,3 +36,9 @@ Design: docs/research/info-unlocks.md. Not on the two-week playable path (return
 - [ ] #2 Verdict: overlay feasible with calibration or not; error in pixels; frame delay of the stream measured
 - [ ] #3 Live steps written as a ready-to-run checklist (no game used by the agent)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+side-panel minimap is the primary design (user 2026-11-07); video overlay deferred
+<!-- SECTION:NOTES:END -->

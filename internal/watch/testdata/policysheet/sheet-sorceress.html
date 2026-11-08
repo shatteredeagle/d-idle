@@ -122,19 +122,35 @@
 <span class="badge">partly wired</span> <span class="hint">Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md).</span>
 </div></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
-</section><section class="card" data-row="potionmix" aria-labelledby="row-potionmix"><h2 id="row-potionmix">Potion mix</h2><p>Which potions the hero relies on. The belt columns follow the build; these options move the drink lines.</p>
+</section><section class="card" data-row="potionmix" aria-labelledby="row-potionmix"><h2 id="row-potionmix">Potion mix</h2><p>What the four belt columns hold, so what the hero buys and refills in town. The default is the build&#39;s own plan (casters about half mana, a Barbarian no mana). Rejuvenation columns buy healing until the shop sells rejuvenation. docs/belt-plan.md.</p>
 <div class="opts"><div class="opt cur">
-<button type="button" class="btn small primary" data-act="policy" data-row="potionmix" data-option="default" aria-pressed="true">The build&#39;s mix (today&#39;s rule)</button>
+<button type="button" class="btn small primary" data-act="policy" data-row="potionmix" data-option="default" aria-pressed="true">The build&#39;s own mix (today&#39;s rule)</button>
 <span class="badge">default</span>
 
 </div><div class="opt">
-<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allmana" aria-pressed="false">Mana potions first</button>
-<span class="badge">your call</span> <span class="hint">Few healing potions are drunk; deaths with a full mana belt.</span>
-<span class="badge">not wired yet</span> <span class="hint">Only the healing drink line moves (to its lowest value). No bot path buys an all-mana belt yet (the belt plan is code, docs/sme/potion-policy.md); a bot card is needed.</span>
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="balanced" aria-pressed="false">Balanced: two healing, one mana, one rejuvenation</button>
+
+
 </div><div class="opt">
-<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allhealth" aria-pressed="false">Healing potions only</button>
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="h3m1" aria-pressed="false">Three healing columns to one mana column</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="h1m1" aria-pressed="false">Healing and mana in equal parts</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allmana" aria-pressed="false">All mana potions</button>
+<span class="badge">your call</span> <span class="hint">No healing potion is bought; life can only be answered by the town portal and the walk home. Your call, risky.</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allhealth" aria-pressed="false">All healing potions</button>
 <span class="badge">your call</span> <span class="hint">Casters run dry of mana and fight with the cheap attack.</span>
-<span class="badge">partly wired</span> <span class="hint">Mana potions are not drunk or demanded, but the belt plan may still buy some (U).</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="rejuv" aria-pressed="false">Rejuvenation only</button>
+<span class="badge">your call</span> <span class="hint">Expensive, and early on the shop does not sell it, so the belt stays empty.</span>
+
 </div></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="potiontier" aria-labelledby="row-potiontier"><h2 id="row-potiontier">Which potions to buy</h2><p>Best affordable potions, or the cheapest that are enough.</p>
@@ -148,7 +164,7 @@
 <span class="badge">not wired yet</span> <span class="hint">The bot does not ask this point yet (docs/t0-slice.md); the choice is stored for when it does.</span>
 </div></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
-</section><section class="card" data-row="belt" aria-labelledby="row-belt"><h2 id="row-belt">Belt fill</h2><p>How full each potion column is refilled in town.</p>
+</section><section class="card" data-row="belt" aria-labelledby="row-belt"><h2 id="row-belt">Belt fill</h2><p>How full each column of the belt plan (see Potion mix) is refilled in town.</p>
 <div class="opts"><div class="opt cur">
 <button type="button" class="btn small primary" data-act="policy" data-row="belt" data-option="default" aria-pressed="true">Fill every planned column (today&#39;s rule)</button>
 <span class="badge">default</span>
