@@ -1,1 +1,0 @@
-INDEX: docs/research/incremental-arpg.md: deep pass on idle/incremental ARPG-like games, top mechanics to borrow, anti-patterns, proposed cards

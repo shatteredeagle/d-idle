@@ -864,3 +864,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)
 - docs/watch-origin.md: same-origin rule for login and setup POSTs (Origin null, Sec-Fetch-Site)
 - docs/research/update-surface.md: update surface review: layered image inventory with measured sizes, platform ABI contract, migrations, A/B stage-0 shim, root-key delegation, phased cards P1-P4
+- docs/research/incremental-arpg.md: deep pass on idle/incremental ARPG-like games, top mechanics to borrow, anti-patterns, proposed cards
