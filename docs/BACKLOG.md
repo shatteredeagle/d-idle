@@ -637,6 +637,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-124 release public key committed (deploy/d2d-container/pubkeys/current.pub); user steps for the GitHub environment still open
 - TASK-124 release workflow reads the environment secret D2SIGN_PRIVATE_KEY (matches the secret the user created)
 - TASK-195 mapreveal card (later zones stay hidden on the minimap until found or unlocked)
+- TASK-197 questhints: the hero thinks about quest NPCs when entering town (hint table, policy row questhints, docs/quest-hints.md); TASK-198 live drill for the quest-giving UNSURE items
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
