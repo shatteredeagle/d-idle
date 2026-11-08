@@ -43,6 +43,7 @@ owns:
   - "backlog/tasks/task-130*"
 exclusive: []
 contracts: []
+result: "Wired and tested (watch e2e on a real server for two builds, cmd/d2bot feedHub test, bot hook tests); whole-repo gate green on the worker host. Live smoke 10 min on d2d: real events arrived, see docs/codex.md Wiring. Tally not live (needs the overlay)."
 ---
 
 ## Description
@@ -55,7 +56,7 @@ Wiring job for the first playable slice of the fun loop (ADR 0018). Done when: t
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 feedHub feeds the return screen, tally strip and Codex; routes mounted; charter sink on the order route
-- [ ] #2 End-to-end offline test (real server, two builds) passes
-- [ ] #3 Live smoke result recorded, or skipped with the reason
+- [x] #1 feedHub feeds the return screen, tally strip and Codex; routes mounted; charter sink on the order route
+- [x] #2 End-to-end offline test (real server, two builds) passes
+- [x] #3 Live smoke result recorded, or skipped with the reason
 <!-- AC:END -->
