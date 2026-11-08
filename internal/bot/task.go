@@ -190,6 +190,7 @@ func (r *Runner) taskStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 	}
 	var res task.Result
 	l.task.err = nil
+	r.setWhy(WhyQuestStep, "step", stepTitle(hasStep, step.Title), "level", itoa(snap.Player.Level))
 	ok := r.do(ctx, c, st, act, 40*time.Minute, "task step", func(ctx context.Context) error {
 		res, _ = ex.Tick(ctx, camp)
 		if l.task.err != nil {

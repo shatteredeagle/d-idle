@@ -1,0 +1,62 @@
+{
+  "neutral": "Doing what the plan says.",
+  "codes": {
+    "quest_step": {"params": ["step", "level"], "say": [
+      "{step}: I am level {level} and the quest chain says it is next.",
+      "On the quest path: {step} (I am level {level})."]},
+    "walk": {"params": ["area", "level"], "say": [
+      "Heading to {area} because the plan sends a level {level} hero there.",
+      "Walking to {area}: that is where the plan wants me at level {level}."]},
+    "fight": {"params": ["area", "life"], "say": [
+      "Fighting in {area}, my life is {life}%.",
+      "In a fight at {area} with {life}% life."]},
+    "town_trip": {"params": ["why"], "say": [
+      "Going back to town: {why}.",
+      "Town trip: {why}."]},
+    "town_chores": {"params": ["why"], "say": [
+      "In town: {why}.",
+      "Doing chores in town: {why}."]},
+    "heal_trip": {"params": ["life", "line"], "say": [
+      "Going to town to heal: life {life}%, I only go out again above {line}%.",
+      "Too hurt to fight (life {life}%, my line is {line}%), so I am heading to town to heal."]},
+    "wait_heal": {"params": ["why"], "say": [
+      "Waiting to heal: {why}.",
+      "Holding until I can heal: {why}."]},
+    "claim_trip": {"params": [], "say": [
+      "Going to town to claim a finished quest reward.",
+      "A quest is finished, so I am going to town for the reward."]},
+    "back_to_field": {"params": [], "say": [
+      "Chores are done, heading back out.",
+      "Town is finished, so I am going back to where I was."]},
+    "to_town": {"params": [], "say": [
+      "Going to town: there is nothing for me to do outside right now.",
+      "Heading to town to wait safely."]},
+    "area_done": {"params": [], "say": [
+      "Heading home: nothing useful is left in this area.",
+      "This area is done, so I am returning to town."]},
+    "guard_exit": {"params": ["why"], "say": [
+      "Leaving a dangerous area: {why}.",
+      "Getting out of here first: {why}."]},
+    "farm_runs": {"params": ["area"], "say": [
+      "Farming {area} again for what it drops.",
+      "Another run at {area} for drops."]},
+    "farm_gold": {"params": ["level"], "say": [
+      "Short of gold: levelling up from level {level} until I can afford what I need.",
+      "Out of money, so I am farming gold at level {level}."]},
+    "after_death_restock": {"params": [], "say": [
+      "I died, so I am restocking in town before anything else.",
+      "Back from a death: buying supplies first."]},
+    "after_death_corpse": {"params": [], "say": [
+      "I died, so I am going back for my corpse and its items.",
+      "Fetching my corpse: my gear is still lying there."]},
+    "after_death_gold": {"params": [], "say": [
+      "Checking the spot where I died for dropped gold.",
+      "Sweeping my death spot for gold."]},
+    "hold": {"params": ["question"], "say": [
+      "Hold: waiting for your yes about {question}.",
+      "Waiting for your answer about {question}."]},
+    "activity": {"params": ["activity"], "say": [
+      "Now: {activity}.",
+      "Busy with: {activity}."]}
+  }
+}

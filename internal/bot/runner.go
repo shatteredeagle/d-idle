@@ -139,6 +139,8 @@ type Runner struct {
 	noTP           atomic.Bool          // the running task step has Constraints.NoTownPortal: no safety portal, no trip
 	farmMu         sync.Mutex           // guards farm
 	farm           farmProgress         // runs goal progress across farmStep restarts (farm.go)
+	why            goals.Why            // reason of the current activity (whyline.go); guarded by mu
+	pendingWhy     goals.Why            // announced by setWhy, taken by the next setLocked; guarded by mu
 	bossRun        atomic.Bool          // a boss script is running (Deps.Task.Boss): routine town trips wait, the guard's re-plan cancels are off
 	bossStart      map[string]time.Time // start of the last unfinished boss run by name (taskActs.KillBoss, loop goroutine only)
 	levelerPaused  bool                 // selfStop came from the leveler (LevelerPause), guarded by mu
@@ -466,7 +468,7 @@ func (r *Runner) Stop() error {
 func (r *Runner) Status() goals.Status {
 	r.mu.Lock()
 	defer r.mu.Unlock()
-	s := goals.Status{Activity: r.activity, Message: r.message, Character: r.char, Updated: r.updated}
+	s := goals.Status{Activity: r.activity, Why: r.why, Message: r.message, Character: r.char, Updated: r.updated}
 	if r.goal != nil {
 		s.GoalID = r.goal.ID
 	}
@@ -508,6 +510,10 @@ func (r *Runner) setLocked(st State, activity string) {
 	}
 	if activity != r.activity {
 		r.noteDecision(string(st) + ": " + activity)
+	}
+	// The reason announced by setWhy belongs to the next activity set; a new activity without one has no reason.
+	if r.pendingWhy.Code != "" || activity != r.activity {
+		r.why, r.pendingWhy = r.pendingWhy, goals.Why{}
 	}
 	r.st, r.activity = st, activity
 	r.updated = now

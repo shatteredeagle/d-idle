@@ -446,9 +446,18 @@
   }
   function refreshTally() { get('/api/tally').then(renderTally).catch(function () { renderTally(null); }); }
 
+  // The whyline: the hero's own reason for what it does, from /api/whyline (hidden while the route or a line is missing).
+  function renderWhy(v) {
+    var box = $('whyline');
+    box.hidden = !v || !v.text;
+    if (!box.hidden) $('whytext').textContent = v.text;
+  }
+  function refreshWhy() { get('/api/whyline').then(renderWhy).catch(function () { renderWhy(null); }); }
+
   function refresh() {
     if (pending) return; pending = true;
     refreshTally();
+    refreshWhy();
     var reqs = [get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')];
     if (cfg.currency) reqs.push(get('/api/currency'));
     Promise.all(reqs)

@@ -67,9 +67,17 @@ type Character struct {
 	Difficulty string `json:"difficulty,omitempty"`
 }
 
+// Why is the decision reason behind the current activity: a code plus parameters, rendered into a plain line by the
+// watch layer's template table (internal/watch/whyline.json). The zero value means "no reason recorded".
+type Why struct {
+	Code   string            `json:"code,omitempty"`
+	Params map[string]string `json:"params,omitempty"`
+}
+
 type Status struct {
 	State     RunnerState `json:"state"`
 	Activity  string      `json:"activity"` // short human text: "Fighting", "Walking to Cold Plains", "Selling in town"
+	Why       Why         `json:"why,omitempty"`
 	GoalID    string      `json:"goalId,omitempty"`
 	Message   string      `json:"message,omitempty"`
 	Character Character   `json:"character"`

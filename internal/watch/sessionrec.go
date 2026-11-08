@@ -48,10 +48,11 @@ type SessionConfig struct {
 	Vitals           func() Vitals
 	Viewers          func() int
 	Orders           func() []Order
-	Secrets          []string // scrubbed from every free-text field
-	WindowMin        int      // outcome window of the dataset (default 10)
-	SampleSec        int      // period of the "sample" lines of the record (default 300)
-	DedupeSec        int      // repeats of one key and source inside this many game seconds are counted, not logged (default 60)
+	WhyCounts        func() map[string]int // reason codes started this session (counts only, whyline.go); nil: none
+	Secrets          []string              // scrubbed from every free-text field
+	WindowMin        int                   // outcome window of the dataset (default 10)
+	SampleSec        int                   // period of the "sample" lines of the record (default 300)
+	DedupeSec        int                   // repeats of one key and source inside this many game seconds are counted, not logged (default 60)
 }
 
 // fireLine is a "fire" line of the dataset; field order is the file's order.
@@ -163,6 +164,7 @@ type Summary struct {
 	DecisionBytesPerH     float64          `json:"decision_bytes_per_h"` // per GAME hour; the wall figure follows
 	DecisionBytesPerWallH float64          `json:"decision_bytes_per_wall_h"`
 	DecisionBytesByKind   map[string]int64 `json:"decision_bytes_by_kind"`
+	WhyChain              map[string]int   `json:"why_chain,omitempty"` // reason codes started, counts only
 	inTab                 time.Duration
 	questionsPerBucket    map[int]int
 }
@@ -611,6 +613,9 @@ func (s *Session) finish(now time.Time) Summary {
 	}
 	sum.DecisionBytesByKind = maps.Clone(s.decKind)
 	sum.Credits = s.last.Credits - s.vit0.Credits
+	if s.cfg.WhyCounts != nil {
+		sum.WhyChain = s.cfg.WhyCounts()
+	}
 	sum.First10 = s.timeline
 	if sum.First10 == nil {
 		sum.First10 = []TimelineItem{}
