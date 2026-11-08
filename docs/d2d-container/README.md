@@ -72,7 +72,7 @@ Cleanup done: containers, volumes, the image and the context dir were removed on
 `entrypoint.sh tester` (or `TESTER=1` with the default `bot` command; the compose file sets `command: ["tester"]`) is bot mode plus the watch screen. Everything is environment; no secret is on a command line. The default `bot` mode keeps its settings (lockstep, no ladder, no watch), checked by `deploy/d2d-container/tester_image_test.go`.
 
 First run for a tester (U until the image is built and run, phase B of testerd2dimage):
-1. Mounts: your own Diablo II folder read-only at `/game` (`d2data.mpq` and `d2exp.mpq` at least; never copied into the image) and a named volume at `/data` (saves, ladder store, the watch token).
+1. Mounts: your own Diablo II folder read-only at `/game` (`d2data.mpq`, `d2exp.mpq`, `d2char.mpq` and `Patch_D2.mpq` are required, V TASK-25; never copied into the image) and a named volume at `/data` (saves, ladder store, the watch token).
 2. `D2_GAME_DIR=<your folder> D2_WATCH_ORIGIN=http://localhost:8891 docker compose -f compose.tester.yml up -d`. `D2_WATCH_ORIGIN` is the URL you will type in the browser (the answer route accepts only that origin); for another machine use its name, e.g. `http://mybox:8891`, and `D2_PUBLISH=0.0.0.0` (default `127.0.0.1`).
 3. Ports: 8891 watch screen and video, 8892 answer route. The viewer tap (127.0.0.1:8893) and the bot API (127.0.0.1:8420) stay inside the container.
 4. The token: on first start d2bot creates `/data/watch.token` (mode 600) and prints the viewer URL once in the log. Read it later with `docker compose -f compose.tester.yml exec d2dbot cat /data/watch.token` (or `docker run --rm -v d2dbot-data:/data busybox cat /data/watch.token`, or `docker logs`). Open `http://localhost:8891/watch` and give the token.
@@ -95,7 +95,7 @@ Dry run without the game: `ENTRYPOINT_DRYRUN=1 TESTER=1 D2BOT_WATCH_ORIGIN=http:
 | `D2BOT_RUN_HOURS`, `D2BOT_ADDR`, `D2BOT_ARGS` | unset, `127.0.0.1:8420`, unset | user | run limit, bot API (keep loopback), extra flags |
 | `D2BOT_GAMEDIR` | `$D2D_DATA` (tester) | profile | game tables for combat, town and campaign goals |
 | `D2BOT_LADDER` | `1` (tester) | profile | decision ladder on |
-| `D2BOT_LADDER_STORE` | `/data/ladder` (tester) | profile | ladder store |
+| `D2BOT_LADDER_STORE` | `shared` (tester) | profile | a plain name, not a path: `shared` is the store under the bot state in the `/data` volume (the container sets `D2BOT_DATA=/data`) |
 | `D2BOT_WATCH`, `D2BOT_WATCH_VIDEO`, `D2BOT_WATCH_VIDEO_SOURCE` | `1`, `1`, `tap` (tester) | profile | watch screen, video from the tap |
 | `D2BOT_WATCH_ADDR`, `D2BOT_WATCH_ANSWER_ADDR` | `0.0.0.0:8891`, `0.0.0.0:8892` (tester) | profile | listeners inside the container; the host publish is loopback by default |
 | `D2BOT_WATCH_ORIGIN` | `http://localhost:8891,http://127.0.0.1:8891` | compose (`D2_WATCH_ORIGIN`, required there) | page origins the answer route accepts |
