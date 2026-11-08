@@ -3,7 +3,7 @@
 // part of the image and cannot be replaced by an update, so it stays small. Design: docs/research/self-update-design.md
 // 3.1, 3.8, 3.9; drills: docs/self-update-drill.md.
 //
-//	didleboot [launcher args...]     run (the image ENTRYPOINT is tini -- didleboot)
+//	didleboot [--launcher PATH] [launcher args...]   run (the image ENTRYPOINT is tini -- didleboot --launcher /opt/d2lod/entrypoint.sh)
 //	didleboot -select                print the release that would run and exit (drills, support)
 //
 // Env: DIDLE_ROOT (/data/didle), DIDLE_BASE_BIN (/opt/d2lod), DIDLE_BASE_D2D (/opt/d2d), DIDLE_BASE_VERSION (0.0.0),
@@ -61,9 +61,13 @@ func imageFromEnv() Image {
 func main() { os.Exit(realMain(os.Args[1:])) }
 
 func realMain(args []string) int {
+	img := imageFromEnv()
+	if len(args) >= 2 && args[0] == "--launcher" {
+		img.Base.Entry, args = args[1], args[2:]
+	}
 	b := &Boot{
 		Layout: selfupdate.Layout{Root: envOr("DIDLE_ROOT", "/data/didle")},
-		Image:  imageFromEnv(),
+		Image:  img,
 		Policy: DefaultPolicy(),
 		Clock:  realClock{},
 		Log:    func(f string, a ...any) { fmt.Fprintf(os.Stderr, "didleboot: "+f+"\n", a...) },

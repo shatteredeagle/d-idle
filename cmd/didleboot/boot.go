@@ -221,6 +221,10 @@ func (b *Boot) Run() int {
 		rel, skipped := b.Select(st)
 		b.writeImageStatus(rel.Version, skipped)
 		pending := !rel.Base && st.Pending == rel.Version && st.Pending != ""
+		if st.Pending != "" && !pending { // the pending release cannot run here (newer base, gate): do not judge a later one by it
+			st.Pending, st.Boots = "", 0
+			b.Layout.SaveState(st)
+		}
 		if pending {
 			st.Boots++
 			b.Layout.SaveState(st)

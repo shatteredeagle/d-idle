@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"crypto/ed25519"
 	"crypto/rand"
 	"crypto/sha256"
@@ -396,3 +397,5 @@ func TestImageStatusRecordsChanges(t *testing.T) {
 		t.Fatalf("image.json: %s", s)
 	}
 }
+
+func ctx() context.Context { return context.Background() }
