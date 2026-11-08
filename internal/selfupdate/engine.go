@@ -239,11 +239,24 @@ func (e *Engine) evaluate(st *State, r Remote) (Manifest, error) {
 		return Manifest{}, fmt.Errorf("%s was rolled back before and is not retried", m.Version)
 	}
 	if m.MinImage <= e.cfg.ImageABI {
-		if m.Compat.BotAPI > e.cfg.Local.BotAPI || m.Compat.D2DCtl > e.cfg.Local.D2DCtl || m.Compat.DataSchema != e.cfg.Local.DataSchema {
-			return Manifest{}, fmt.Errorf("%w: release pairs %+v, install %+v", ErrIncompatible, m.Compat, e.cfg.Local)
+		if err := Gate(m, e.cfg.ImageABI, e.cfg.Local); err != nil {
+			return Manifest{}, err
 		}
 	}
 	return m, nil
+}
+
+// Gate is the compatibility gate of design 3.4, shared by the updater and the boot shim: the image must be new
+// enough (ErrNeedsImage), the protocol pairs must not exceed what the install speaks and the data schema must match
+// exactly (no migrations yet, U).
+func Gate(m Manifest, imageABI int, local Compat) error {
+	if m.MinImage > imageABI {
+		return fmt.Errorf("%w (needs image ABI %d, have %d)", ErrNeedsImage, m.MinImage, imageABI)
+	}
+	if m.Compat.BotAPI > local.BotAPI || m.Compat.D2DCtl > local.D2DCtl || m.Compat.DataSchema != local.DataSchema {
+		return fmt.Errorf("%w: release pairs %+v, install %+v", ErrIncompatible, m.Compat, local)
+	}
+	return nil
 }
 
 // Inbox looks for a release set in <root>/inbox and treats it like a checked release: same signature, floor,
@@ -419,17 +432,7 @@ func (e *Engine) Apply(confirm string, force bool) error {
 
 // undo points current back at old and records why.
 func (e *Engine) undo(old, from, reason string) {
-	l := e.cfg.Layout
-	if old != "" {
-		l.SwapCurrent(old)
-	} else {
-		os.Remove(l.Current())
-	}
-	st, _ := l.LoadState()
-	st.Current, st.Previous, st.Pending = old, "", ""
-	st.Bad = append(st.Bad, from)
-	l.SaveState(st)
-	l.WriteMarker(RollbackMarker{From: from, To: old, Reason: reason, At: e.cfg.Now()})
+	e.cfg.Layout.Rollback(from, old, reason, e.cfg.Now())
 }
 
 // Rollback goes back to the previous release by hand (or to the baked base when there is none) and restarts.
