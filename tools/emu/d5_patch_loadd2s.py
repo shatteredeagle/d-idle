@@ -1,7 +1,11 @@
 import re,sys
-p='/home/jesse/d2d-lab/wt-decomp5/tests/game/test_game.cpp'
+import os
+T=os.environ.get('D5_TREE','/home/jesse/d2d-lab/wt-decomp5')
+p=T+'/tests/game/test_game.cpp'
+if not os.path.exists(p): p=T+'/tests/test_game.cpp'
 s=open(p).read()
 marker='    // `--waypoint-refuse CASES`'
+m2='    // `--skill-tips'
 add='''    // `--load-d2s FILE`: a real save through the join (World::enter) and then
     // one Fight::update_fighters, as the game does at its first frame: the
     // stats before and after (256ths) and what the worn items add to each
@@ -38,6 +42,7 @@ add='''    // `--load-d2s FILE`: a real save through the join (World::enter) and
         return 0;
     }
 '''
+if marker not in s: marker=m2
 assert marker in s
 s=s.replace(marker,add+marker,1)
 open(p,'w').write(s)
