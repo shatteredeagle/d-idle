@@ -16,6 +16,16 @@ ordinal: 114000
 card: "freshstart"
 owns:
   - "docs/fresh-start-pace.md"
+  - "internal/resource/recovery.go"
+  - "internal/resource/recovery_test.go"
+  - "internal/resource/tuning.go"
+  - "internal/env/tuning_resource.go"
+  - "internal/bot/broke.go"
+  - "docs/knobs.md"
+  - "internal/bot/drought.go"
+  - "internal/bot/observe.go"
+  - "internal/bot/nokill_test.go"
+  - "internal/env/tuning_bot.go"
 exclusive: []
 contracts: []
 ---
