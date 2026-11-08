@@ -242,7 +242,8 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	rig.Served = served
 	go rig.Hub.RunTicker(ctx, time.Second)
-	go feedHub(ctx, rig.Hub, orders, rig.Fun, m, status)
+	ch, unsub := m.Subscribe() // subscribed before startLadder returns: the first events of the run are not lost
+	go feedHub(ctx, rig.Hub, orders, rig.Fun, ch, unsub, status)
 	return rig, nil
 }
 
@@ -349,9 +350,8 @@ func liveRuleKeys(st *decide.Store) []string {
 // feedHub forwards the goal manager's events (orders, deaths, kills, area changes) and a status poll to the Hub and,
 // when fun is set, to the return screen, tally strip and Codex: the
 // uptime source (docs/research/watch-screen-design.md, 3.5).
-func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *watch.Fun, m *goals.Manager, status func() goals.Status) {
-	ch, cancel := m.Subscribe()
-	defer cancel()
+func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *watch.Fun, ch <-chan goals.Event, unsub func(), status func() goals.Status) {
+	defer unsub()
 	tick := time.NewTicker(2 * time.Second)
 	defer tick.Stop()
 	for {

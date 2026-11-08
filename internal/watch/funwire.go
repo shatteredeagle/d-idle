@@ -206,17 +206,22 @@ func (f *Fun) tracking() *decide.Tracker {
 }
 
 func (f *Fun) observe(e decide.FirstEvent) {
+	f.mu.Lock()
+	if len(f.pending) < maxPendingFirsts {
+		f.pending = append(f.pending, e)
+	}
+	f.mu.Unlock()
+	f.flush()
+}
+
+// flush gives the queued edges to the tracker once the hero's class is known.
+func (f *Fun) flush() {
 	t := f.tracking()
 	if t == nil {
-		f.mu.Lock()
-		if f.mkTrack != nil && len(f.pending) < maxPendingFirsts {
-			f.pending = append(f.pending, e)
-		}
-		f.mu.Unlock()
 		return
 	}
 	f.mu.Lock()
-	queue := append(f.pending, e)
+	queue := f.pending
 	f.pending = nil
 	f.mu.Unlock()
 	for _, q := range queue {
@@ -226,8 +231,13 @@ func (f *Fun) observe(e decide.FirstEvent) {
 	}
 }
 
-// Settle updates Codex entries whose thought closed (call it from the loop that polls the status).
+// Settle updates Codex entries whose thought closed and delivers the edges that waited for the class (call it from
+// the loop that polls the status).
 func (f *Fun) Settle() {
+	if f.codex == nil {
+		return
+	}
+	f.flush()
 	f.mu.Lock()
 	t := f.tracker
 	f.mu.Unlock()
