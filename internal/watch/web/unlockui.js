@@ -8,7 +8,7 @@
   function get(path) {
     return fetch(path, { cache: 'no-store', credentials: 'same-origin' }).then(function (r) { if (!r.ok) throw new Error(String(r.status)); return r.json(); });
   }
-  var timer = 0, fails = 0, chronN = 0;
+  var timer = 0, fails = 0, chronN = 0, answerBase = '', muted = false;
 
   function silhouettes(u) {
     var list = $('lockedlist'); clear(list);
@@ -41,13 +41,37 @@
     });
   }
 
-  function tick() {
+  function voice(open) {
+    if (!open.voice) { $('voicestrip').hidden = true; $('tab-diary').hidden = true; $('diarypane').hidden = true; return Promise.resolve(); }
+    return get('/api/voice').then(function (v) {
+      muted = !!v.muted;
+      $('tab-diary').hidden = false; $('diarypane').hidden = false;
+      var b = $('voicemute');
+      b.textContent = muted ? 'Unmute voice' : 'Mute voice'; b.setAttribute('aria-pressed', muted ? 'true' : 'false');
+      $('voicestrip').hidden = !v.latest;
+      $('voicetext').textContent = !v.latest ? '' : muted ? 'The hero is quiet. The diary still fills.' : v.latest.text;
+      var ol = $('diarylist'); clear(ol);
+      (v.diary || []).slice().reverse().forEach(function (p) {
+        var li = el('li', ''); li.appendChild(el('b', '', p.milestone)); li.appendChild(el('span', '', p.text)); ol.appendChild(li);
+      });
+    });
+  }
+  $('voicemute').addEventListener('click', function () {
+    fetch(answerBase + '/api/voice/mute', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ muted: !muted }) }).then(function () { tick(true); }).catch(function () {});
+  });
+  fetch('/api/config', { credentials: 'same-origin' }).then(function (r) { return r.json(); }).then(function (c) {
+    answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
+  }).catch(function () {});
+
+  function tick(now) {
+    clearTimeout(timer);
     get('/api/unlocks').then(function (u) {
       fails = 0;
       var open = {};
       (u.open || []).forEach(function (s) { open[s.id] = true; });
       silhouettes(u);
-      return chronicle(open);
+      return Promise.all([chronicle(open), voice(open)]);
     }).catch(function () { fails++; }).then(function () {
       if (fails < 5) timer = setTimeout(tick, 4000);
     });
