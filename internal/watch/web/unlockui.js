@@ -64,6 +64,25 @@
     answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
   }).catch(function () {});
 
+  function quests(open) {
+    if (!open.questlog) { $('tab-quests').hidden = true; $('questspane').hidden = true; return Promise.resolve(); }
+    return get('/api/questlog').then(function (v) {
+      $('tab-quests').hidden = false; $('questspane').hidden = false;
+      $('questdiff').textContent = v.difficulty ? '(' + v.difficulty + ')' : '';
+      var ul = $('questlist'); clear(ul);
+      (v.quests || []).forEach(function (q) {
+        var li = el('li', q.state), head = el('div', '');
+        head.appendChild(el('span', 'qname', q.name)); head.appendChild(el('span', 'qstate', q.state));
+        li.appendChild(head);
+        li.appendChild(el('div', 'qobj', q.objective));
+        li.appendChild(el('span', 'qwhy', q.why));
+        if (q.reward) li.appendChild(el('span', 'qreward', 'Reward: ' + q.reward));
+        ul.appendChild(li);
+      });
+      $('questmore').textContent = v.notGiven > 0 ? v.notGiven + ' more in Act 1 not given yet.' : '';
+    });
+  }
+
   function tick(now) {
     clearTimeout(timer);
     get('/api/unlocks').then(function (u) {
@@ -71,7 +90,7 @@
       var open = {};
       (u.open || []).forEach(function (s) { open[s.id] = true; });
       silhouettes(u);
-      return Promise.all([chronicle(open), voice(open)]);
+      return Promise.all([chronicle(open), voice(open), quests(open)]);
     }).catch(function () { fails++; }).then(function () {
       if (fails < 5) timer = setTimeout(tick, 4000);
     });

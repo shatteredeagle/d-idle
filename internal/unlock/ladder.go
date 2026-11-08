@@ -24,6 +24,7 @@ const (
 	TallySpend  = "tally_spend"   // opened by Buy; the entry's price is paid from the tally
 	RetireCount = "retire_count"  // args: min (heroes retired so far; the source reports the running count)
 	KillsOfKind = "kills_of_kind" // args: kind (monster name, or * for any), min (running count reported by the source)
+	QuestStage  = "quest_stage"   // args: quest (id), min (stage: 1 started, 2 cleared, 3 done)
 	Seen        = "seen"          // args: what (a viewer-side moment such as expedition_card)
 )
 
@@ -143,6 +144,13 @@ func (t Trigger) validate() error {
 		return need("quest")
 	case Seen:
 		return need("what")
+	case QuestStage:
+		if err := need("quest", "min"); err != nil {
+			return err
+		}
+		if n, ok := t.num("min"); !ok || n > 3 {
+			return fmt.Errorf("trigger %s: arg min is a stage from 1 to 3", t.Kind)
+		}
 	case Level, RetireCount:
 		if err := need("min"); err != nil {
 			return err
