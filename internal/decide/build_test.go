@@ -116,8 +116,8 @@ func TestUrgencyStageHook(t *testing.T) {
 
 func TestCatalogueShape(t *testing.T) {
 	c := mustCat(t)
-	if len(c.Points) != 23 {
-		t.Fatalf("%d points, spec says 23", len(c.Points))
+	if len(c.Points) != 25 {
+		t.Fatalf("%d points, spec says 25", len(c.Points))
 	}
 	tiers := map[int]int{}
 	for _, p := range c.Points {

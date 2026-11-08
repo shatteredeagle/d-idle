@@ -7,3 +7,8 @@ import _ "embed"
 //
 //go:embed act1.json
 var JSON []byte
+
+// HintsJSON is act1-hints.json, the town hint table (TASK-197; the code is internal/watch/questhints.go).
+//
+//go:embed act1-hints.json
+var HintsJSON []byte

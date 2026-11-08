@@ -123,6 +123,8 @@ type Fun struct {
 	Voice *Voice
 	// Quests is nil unless the ladder has the row "questlog" (TASK-156).
 	Quests *QuestLog
+	// Hints is nil unless the policy sheet is on (TASK-197); its row "questhints" decides whether it speaks.
+	Hints *QuestHints
 	// Risk is nil unless the ladder has the row "risk" and FunConfig.Risk is set (TASK-159).
 	Risk *RiskMeter
 	// Queue is nil unless FunConfig.OrderQueue is set and the ladder has the slot rows (TASK-161).
@@ -316,6 +318,12 @@ func NewFun(c FunConfig) (*Fun, error) {
 			}
 		})
 		sec.Register(PolicySectionID, ps.Section())
+		qh, err := f.newQuestHints(c)
+		if err != nil {
+			return nil, err
+		}
+		f.Hints = qh
+		sec.Register(QuestHintsSectionID, qh.Section())
 	}
 	if c.Hall != nil {
 		hc := *c.Hall
@@ -341,6 +349,41 @@ func NewFun(c FunConfig) (*Fun, error) {
 		c.Hub.SetOrderPlacer(c.Strip)
 	}
 	return f, nil
+}
+
+// newQuestHints builds the quest hint desk over the policy row and the surfaces the hero speaks on.
+func (f *Fun) newQuestHints(c FunConfig) (*QuestHints, error) {
+	h := c.Hub
+	dir, profile := "", "default"
+	if c.Unlock != nil {
+		dir, profile = c.Unlock.Dir(), c.Unlock.Profile()
+	}
+	return NewQuestHints(QuestHintsConfig{
+		Mode:  func() string { return f.Policy.CurrentOption(QuestHintsRow) },
+		Class: func() string { return strings.ToLower(h.heroNow().Class) },
+		Level: func() int { return h.heroNow().Level },
+		Now:   func() float64 { return h.rel(h.cfg.Clock.Now()) },
+		Say: func(text string) {
+			if f.Voice == nil || !f.Voice.Muted() {
+				h.Say(text)
+			}
+			if f.Chronicle != nil {
+				f.Chronicle.Thought(text)
+			}
+		},
+		Ask: func(point, quest string) error {
+			ctx, err := h.cfg.Cat.Build(point, decide.Obs{Class: strings.ToLower(h.heroNow().Class),
+				Cat: map[string]string{"act": "1", "diff": "normal", "hc": "normal", "quest": quest}}, 1, nil)
+			if err != nil {
+				return err
+			}
+			_, err = h.cfg.Store.Ask(ctx)
+			return err
+		},
+		Fail:    f.fail,
+		Dir:     dir,
+		Profile: profile,
+	})
 }
 
 // CodexSource is the Codex view's source, nil without a Codex.
@@ -373,6 +416,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Quests != nil {
 		f.Quests.OnGoalEvent(ev)
+	}
+	if f.Hints != nil {
+		f.Hints.OnGoalEvent(ev)
 	}
 	if f.Queue != nil {
 		f.Queue.OnGoalEvent(ev)
@@ -504,6 +550,9 @@ func (f *Fun) Settle() {
 	}
 	if f.Proposals != nil {
 		f.Proposals.Tick()
+	}
+	if f.Hints != nil {
+		f.Hints.Tick()
 	}
 	if f.Alerts != nil {
 		f.Alerts.Tick()
