@@ -223,11 +223,12 @@ func (p *Proposer) Look(in ProposeInput) (*Proposal, error) {
 	}
 	p.mu.Lock()
 	defer p.mu.Unlock()
+	dirty := false
 	for _, it := range p.f.Items {
 		if it.State == ProposalPending {
 			// The hero moved on its own (an order of the player) and left the pair: the question is stale and closes.
 			if !strings.EqualFold(it.From, in.Area) && in.Area != "" {
-				it.State = ProposalStayed
+				it.State, dirty = ProposalStayed, true
 				continue
 			}
 			c := *it
@@ -249,6 +250,7 @@ func (p *Proposer) Look(in ProposeInput) (*Proposal, error) {
 		if rec == nil {
 			rec = &proposeRec{ReadyAt: now}
 			p.f.Recs[key] = rec
+			dirty = true
 		}
 		if p.quietAfter > 0 && rec.Stays >= p.quietAfter {
 			continue
@@ -259,7 +261,11 @@ func (p *Proposer) Look(in ProposeInput) (*Proposal, error) {
 		pr := &Proposal{ID: p.f.Next, Key: key, From: node.Area, To: to, Class: strings.ToLower(in.Class), Clvl: in.Clvl, Min: min, Max: max,
 			State: ProposalPending, Asked: now, ReadyAt: rec.ReadyAt, Away: in.Away, Options: []string{ProposeGo, ProposeStay, ProposeLater}}
 		pr.Text = fmt.Sprintf("I am level %d and ready for %s (recommended %d to %d, kit ok). Go there?", in.Clvl, to, min, max)
-		pr.Why = []string{fmt.Sprintf("level %d is inside %d to %d (%s wants %d more level%s first)", in.Clvl, min, max, pr.Class, cl.Lead, plural(cl.Lead)),
+		lvl := fmt.Sprintf("level %d is inside %d to %d", in.Clvl, min, max)
+		if cl.Lead > 0 {
+			lvl += fmt.Sprintf(" and a %s wants %d level%s more than the minimum", pr.Class, cl.Lead, plural(cl.Lead))
+		}
+		pr.Why = []string{lvl,
 			fmt.Sprintf("%d potion%s in the belt", in.Potions, plural(in.Potions))}
 		if in.Deaths > 0 {
 			pr.Why = append(pr.Why, fmt.Sprintf("%d death%s in %s lately", in.Deaths, plural(in.Deaths), node.Area))
@@ -271,6 +277,9 @@ func (p *Proposer) Look(in ProposeInput) (*Proposal, error) {
 		c := *pr
 		return &c, p.saveLocked()
 	}
+	if !dirty {
+		return nil, nil
+	}
 	return nil, p.saveLocked()
 }
 
@@ -280,6 +289,9 @@ func plural(n int) string {
 	}
 	return "s"
 }
+
+// Knows says whether the proposer has next zones for area.
+func (p *Proposer) Knows(area string) bool { return p.tbl.Knows(area) }
 
 // Pending lists the open proposals, oldest first.
 func (p *Proposer) Pending() []Proposal {
