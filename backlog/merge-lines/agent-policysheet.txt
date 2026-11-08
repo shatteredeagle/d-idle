@@ -1,0 +1,3 @@
+BACKLOG: TASK-128 policysheet: chores policy sheet (14 rows as data, suboptimal choices allowed and flagged), changes through the decide store op policy and the tuner, effect lines on the sheet and before/after cards on the return screen; offline fixtures, not live; gaps in docs/policy-sheet.md
+INDEX: docs/policy-sheet.md: the chores policy sheet, its table, effect counters, return-screen cards, built vs verified, gaps
+CHANGELOG: Policy sheet: /watch/policy lists the chore decisions with every allowed value, poor ones included, and shows what each change did; the return screen shows before/after cards with a change-it-back button

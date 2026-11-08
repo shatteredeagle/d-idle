@@ -54,6 +54,9 @@ type ladderOptions struct {
 	videoSource  string // "x11" (private display, default) or "tap" (the d2d view tap's /frame; d2d has no display)
 	tapURL       string
 	instance     string // set by the parser: the instance whose private display is captured
+	// knobs is the tuner's edit for the policy sheet's knob options (set by the backend before startLadder; nil: those
+	// options are refused, rule-only options work).
+	knobs watch.KnobSetter
 }
 
 func ladderFlags(fs *flag.FlagSet, l *ladderOptions) {

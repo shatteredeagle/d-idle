@@ -62,6 +62,21 @@
 
 </div></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="return" aria-labelledby="row-return"><h2 id="row-return">Leaving town</h2><p>Whether the hero goes back out after a town visit.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="return" data-option="default" aria-pressed="true">Go back out when the field gate allows (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="return" data-option="fullkit" aria-pressed="false">Wait in town until the kit is full</button>
+
+<span class="badge">partly wired</span> <span class="hint">A &#39;no&#39; becomes a restock round, bounded by the gate&#39;s restock limit; a &#39;yes&#39; never lifts a refusal (docs/t0-slice.md).</span>
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="return" data-option="stay" aria-pressed="false">Stay in town (restock rounds only)</button>
+<span class="badge">your call</span> <span class="hint">The hero stops farming until the restock limit lets it out.</span>
+<span class="badge">partly wired</span> <span class="hint">A &#39;no&#39; becomes a restock round, bounded by the gate&#39;s restock limit (docs/t0-slice.md).</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="tp" aria-labelledby="row-tp"><h2 id="row-tp">A lost town portal scroll</h2><p>Buy a scroll when there is none, or walk back.</p>
 <div class="opts"><div class="opt cur">
 <button type="button" class="btn small primary" data-act="policy" data-row="tp" data-option="default" aria-pressed="true">Buy one when gold allows (today&#39;s rule)</button>

@@ -30,6 +30,17 @@
      ],
      "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "kills", "label": "kills"}, {"counter": "deaths", "label": "deaths"}]},
 
+    {"id": "return", "label": "Leaving town", "default": "default",
+     "help": "Whether the hero goes back out after a town visit.",
+     "options": [
+       {"id": "default", "label": "Go back out when the field gate allows (today's rule)"},
+       {"id": "fullkit", "label": "Wait in town until the kit is full", "rules": [{"point": "t1.return", "when": {"kit": "THIN|NONE"}, "answer": "no"}],
+        "applies": "part", "note": "A 'no' becomes a restock round, bounded by the gate's restock limit; a 'yes' never lifts a refusal (docs/t0-slice.md)."},
+       {"id": "stay", "label": "Stay in town (restock rounds only)", "suboptimal": true, "risk": "The hero stops farming until the restock limit lets it out.", "rules": [{"point": "t1.return", "answer": "no"}],
+        "applies": "part", "note": "A 'no' becomes a restock round, bounded by the gate's restock limit (docs/t0-slice.md)."}
+     ],
+     "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "kills", "label": "kills"}, {"counter": "deaths", "label": "deaths"}]},
+
     {"id": "tp", "label": "A lost town portal scroll", "default": "default",
      "help": "Buy a scroll when there is none, or walk back.",
      "options": [

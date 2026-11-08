@@ -133,6 +133,45 @@
    "effectNote": "Not changed. This row follows today's behaviour."
   },
   {
+   "id": "return",
+   "label": "Leaving town",
+   "help": "Whether the hero goes back out after a town visit.",
+   "current": "default",
+   "default": "default",
+   "changed": false,
+   "options": [
+    {
+     "id": "default",
+     "label": "Go back out when the field gate allows (today's rule)",
+     "current": true,
+     "default": true
+    },
+    {
+     "id": "fullkit",
+     "label": "Wait in town until the kit is full",
+     "current": false,
+     "applies": "part",
+     "note": "A 'no' becomes a restock round, bounded by the gate's restock limit; a 'yes' never lifts a refusal (docs/t0-slice.md).",
+     "rules": [
+      "Return to the field after town? (kit THIN|NONE): stay in town"
+     ]
+    },
+    {
+     "id": "stay",
+     "label": "Stay in town (restock rounds only)",
+     "current": false,
+     "suboptimal": true,
+     "risk": "The hero stops farming until the restock limit lets it out.",
+     "applies": "part",
+     "note": "A 'no' becomes a restock round, bounded by the gate's restock limit (docs/t0-slice.md).",
+     "rules": [
+      "Return to the field after town? (always): stay in town"
+     ]
+    }
+   ],
+   "effectNote": "Not changed. This row follows today's behaviour."
+  },
+  {
    "id": "tp",
    "label": "A lost town portal scroll",
    "help": "Buy a scroll when there is none, or walk back.",
