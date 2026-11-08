@@ -171,6 +171,11 @@ func Candidate(db *data.DB, p *d2.Player, u d2.Unit, st d2.Stats) Cand {
 	switch {
 	case b.Kind == data.KindWeapon && it.Quality == d2.QualityLow:
 		c.Why = "low quality"
+	case it.Quality >= d2.QualityMagic && !worn(it) && !it.Identified():
+		// The game refuses to wear an unidentified magic or better item (VERIFIED LIVE: the equipfail logs show the town
+		// chore logging "equip: skip Quilted Armor reason=unidentified" for item 46 two seconds before this planner
+		// clicked the same item into the torso slot and the click was refused). The identify chore makes it usable.
+		c.Why = "unidentified"
 	case it.Quality >= d2.QualityMagic && !worn(it) && p.Level < it.ILvl:
 		// A magic, rare, set or unique item's required level is raised by its affixes and the game gives no way to read it
 		// from memory. The item level is an upper bound, so the item counts as unusable below it (VERIFIED LIVE: a magic Cap

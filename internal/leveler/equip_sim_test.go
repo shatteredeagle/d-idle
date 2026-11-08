@@ -136,3 +136,26 @@ func TestEquipSkipsRefusedItemForAnother(t *testing.T) {
 		t.Fatal("refused amulet not back in the pack")
 	}
 }
+
+// An unidentified magic item is never planned: the game refuses it (equipfail, VERIFIED LIVE: item 46 "Quilted Armor"
+// was skipped by the town chore as unidentified and refused at the torso slot by the leveler two seconds later). Two
+// classes; once identified the same item is worn.
+func TestEquipSkipsUnidentifiedMagicItem(t *testing.T) {
+	geartest.Need(t)
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		r, lv, us := equipRig(t, "qui")
+		r.W.Player.Class = class
+		it := r.W.Items[len(r.W.Items)-1]
+		it.Item.Flags &^= d2.FlagIdentified
+		r.W.Items[len(r.W.Items)-1] = it
+		rep := lv.Equip(context.Background())
+		if _, ok := worn(r.W, us[0].ID); ok || len(rep.Swaps) != 0 || len(r.W.Clicks) != 0 {
+			t.Fatalf("%v: unidentified magic armor was equipped or clicked: %+v, %d clicks", class, rep, len(r.W.Clicks))
+		}
+		it.Item.Flags |= d2.FlagIdentified
+		r.W.Items[len(r.W.Items)-1] = it
+		if rep := lv.Equip(context.Background()); rep.Err != nil || len(rep.Swaps) == 0 {
+			t.Fatalf("%v: identified armor not worn: %+v", class, rep)
+		}
+	}
+}

@@ -371,6 +371,9 @@ func (c *Input) left(p panel.Pt) error {
 			if w.EquipRefuse[w.Cursor.ID] {
 				return nil // the game refuses the item (requirement): it stays on the cursor
 			}
+			if w.OneOffPerClick && info.body == d2.BodyRHand && w.base(*w.Cursor).TwoHanded && w.wornAt(d2.BodyRHand) && w.wornAt(d2.BodyLHand) {
+				return nil // d2d rules::equip: two worn items would come off, the click is refused
+			}
 			ty := w.DB.ItemType(w.base(*w.Cursor).Type)
 			if ty == nil || ty.BodyLocs[0] != info.loc && ty.BodyLocs[1] != info.loc {
 				return nil
@@ -684,4 +687,14 @@ func (w *World) noneWorn(body int) bool {
 		}
 	}
 	return true
+}
+
+// wornAt reports whether an item is worn at the body slot.
+func (w *World) wornAt(body int) bool {
+	for _, u := range w.Items {
+		if u.Item.Where == d2.ContEquipment && u.Item.Body == body {
+			return true
+		}
+	}
+	return false
 }

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fixed: the leveler no longer tries to wear unidentified magic items, and the bow-path Amazon takes the Buckler off before wearing a Short Bow instead of buying and selling it in a loop
 - The watch screen's bestiary, risk meter and order queue now run on the live bot; bestiary kill counts survive a restart
 - Watch screen alerts: death and low life always, unique/boss/level/town/Pact/proposal alerts behind the alerts unlock; outbound webhook/ntfy exist but are off by default
 - Order queue (TASK-161): GET and POST /api/orderqueue, orders run in turn, slots open with the Den, Kashya or Charsi and Cain or for tally; stops on death or a Pact pause (offline, not wired in the bot yet)
