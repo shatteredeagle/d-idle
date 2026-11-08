@@ -1,6 +1,6 @@
 ---
 id: TASK-153
-title: 'unlockladder: shared unlock framework: persistence, trigger table as data, reveal, API gating'
+title: "unlockladder: shared unlock framework: persistence, trigger table as data, reveal, API gating"
 status: Done
 assignee:
   - credit-runner
@@ -28,7 +28,7 @@ owns:
   - "internal/watch/funwire.go"
 exclusive: []
 contracts: []
-result: "Engine, ladder.json schema, reveal, GET /api/unlocks, POST /api/unlocks/buy built and tested offline (go test ./internal/unlock ./internal/watch); not verified live; cmd/d2bot does not open the engine yet; kills/retire have no emitter;."
+result: "Engine, ladder.json schema, reveal, GET /api/unlocks, POST /api/unlocks/buy built and tested offline (go test ./internal/unlock ./internal/watch); not verified live; cmd/d2bot does not open the engine yet; kills/retire have no emitter; shipped table empty (TASK-149 adds senses rows)."
 ---
 
 ## Description
