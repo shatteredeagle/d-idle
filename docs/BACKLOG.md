@@ -636,6 +636,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-192 devupdate: tools/dev-update.sh puts a new bot build into a running DEV container in about 6 s (signed with a dev key, LAN directory, shim restarts the bot process only), rollback and fault drills verified on a throwaway container; one-time DEV image rebuild (docs/dev-update.md)
 - TASK-124 release public key committed (deploy/d2d-container/pubkeys/current.pub); user steps for the GitHub environment still open
 - TASK-124 release workflow reads the environment secret D2SIGN_PRIVATE_KEY (matches the secret the user created)
+- TASK-195 mapreveal card (later zones stay hidden on the minimap until found or unlocked)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
