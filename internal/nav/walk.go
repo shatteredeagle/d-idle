@@ -20,6 +20,7 @@ import (
 type walkOpts struct {
 	ignoreUnit uint32           // unit id left out of the monster penalties
 	stopWhen   func(*obs) bool  // walk ends successfully when true (checked every tick)
+	fastPoll   bool             // APPROACHFAST: fixed goal, nothing reads the monster list: position-only polls between full ones
 	timeout    time.Duration    // 0: tuning WalkTimeout
 	onPlan     func(planResult) // test and debug hook
 	escape     bool             // a stalled walk tries the Escape hook (town portal) before it gives up (GoTo, GoToUnit)
@@ -67,6 +68,46 @@ type walkState struct {
 }
 
 // walk is the executor loop. tgt is evaluated every tick, so a moving target (GoToUnit) is followed.
+// fastMaxJump: a position change larger than this since the last full read is not a walk (portal, teleport, warp): read
+// everything again. fullPollEvery: the longest a walk goes on a full read (monster list, life, UI) while it polls the
+// position only.
+const (
+	fastMaxJump   = 40.0
+	fullPollEvery = 500 * time.Millisecond
+)
+
+// observeFast is a position-only observation: the world tracker's own update (one `debug level` line, one d2d frame)
+// moves the character in a copy of the last full observation. nil means "use a full read": the level changed, the
+// position jumped or the update failed. The monster list, life and UI are those of the full read, at most
+// fullPollEvery old (APPROACHFAST).
+func (n *Navigator) observeFast(base *obs) *obs {
+	t0 := n.clk.Now()
+	st, err := n.w.Update()
+	n.obsUpdMs = n.clk.Now().Sub(t0).Milliseconds()
+	n.obsSnapMs = 0
+	if err != nil || st.LevelChanged || st.LevelNo != base.state.LevelNo {
+		return nil
+	}
+	lm := n.w.Current()
+	if lm == nil || lm != base.lm {
+		return nil
+	}
+	dx, dy := st.Pos.X-base.state.Pos.X, st.Pos.Y-base.state.Pos.Y
+	if math.Hypot(float64(dx), float64(dy)) > fastMaxJump {
+		return nil
+	}
+	pos := input.Point{X: base.pos.X + dx, Y: base.pos.Y + dy}
+	snap := *base.snap
+	pl := *base.snap.Player
+	pl.X, pl.Y = pos.X, pos.Y
+	snap.Player = &pl
+	if n.e != nil && n.e.OnObserve != nil {
+		n.e.OnObserve(lm, st.Pos)
+	}
+	n.lastPos = pos
+	return &obs{snap: &snap, state: st, lm: lm, pos: pos, level: base.level}
+}
+
 func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float64, error), wo walkOpts) (werr error) {
 	t := n.tune()
 	timeout := wo.timeout
@@ -93,6 +134,8 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 	}
 	defer func() { tr.end(tr.last, n.clk.Now(), werr) }()
 	mouthSeq := 0
+	var full *obs // the last FULL observation of this walk (fast polls build on it)
+	var fullAt time.Time
 	w.anchorTime = n.clk.Now()
 	first := true
 	startLevel := 0
@@ -111,9 +154,19 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 		}
 		t = n.tune()
 		obsAt := n.clk.Now()
-		o, err := n.observeWait(ctx)
-		if err != nil {
-			return err
+		var o *obs
+		if wo.fastPoll && !n.NoFastPoll && full != nil && w.still < 2 && obsAt.Sub(fullAt) < fullPollEvery {
+			o = n.observeFast(full)
+			if o != nil {
+				tr.fast++
+			}
+		}
+		if o == nil {
+			var err error
+			if o, err = n.observeWait(ctx); err != nil {
+				return err
+			}
+			full, fullAt = o, n.clk.Now()
 		}
 		obsDur := n.clk.Now().Sub(obsAt)
 		if err := n.guard(o); err != nil {
@@ -176,6 +229,7 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 				return err
 			}
 			w.clicked = false
+			full = nil // the panel state of the old read is stale now
 			n.clk.Sleep(t.Poll())
 			continue
 		}
@@ -339,6 +393,7 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 				return fmt.Errorf("%w at %v going to %v (after %d recoveries)", ErrStuck, o.pos, goal, w.rung)
 			}
 			n.log.Info("nav stuck", "pos", o.pos, "wp", wp, "rung", w.rung)
+			full = nil // the ladder acts on the world: the next look is a full one
 			if done, err := n.stuckFight(ctx, o, &w); err != nil {
 				return err
 			} else if done {

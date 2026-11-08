@@ -29,6 +29,7 @@ type walkTrace struct {
 	planMs    int64
 	obsMax    int64
 	polls     int
+	fast      int // polls that were position-only (APPROACHFAST)
 	started   bool
 	callers   string
 }
@@ -116,7 +117,7 @@ func (t *walkTrace) end(pos input.Point, now time.Time, err error) {
 	}
 	t.n.log.Info("nav.trace leg", "durMs", dur.Milliseconds(), "pathSubtiles", round1(t.pathLen), "net", round1(moved),
 		"speed", round1(speed), "clicks", t.clicks, "clicksPer100", round1(per100), "stalls", t.stalls,
-		"stillMs", t.stillFor.Milliseconds(), "polls", t.polls, "obsAvgMs", avgMs(t.obsMs, t.polls), "obsMaxMs", t.obsMax,
+		"stillMs", t.stillFor.Milliseconds(), "polls", t.polls, "fastPolls", t.fast, "obsAvgMs", avgMs(t.obsMs, t.polls), "obsMaxMs", t.obsMax,
 		"planMs", t.planMs, "err", errStr(err), "callers", t.callers)
 }
 
