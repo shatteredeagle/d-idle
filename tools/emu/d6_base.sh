@@ -1,7 +1,9 @@
 #!/bin/bash
 # decomp6 (worker host): re-run upstream's own oracles on the scratch tree of upstream main.
 #   d6_base.sh missile | status | move | boss
-. "$(cd "$(dirname "$0")" && pwd)/d6_env.sh"
+HERE=$(cd "$(dirname "$0")" && pwd)
+. $HERE/d6_env.sh
+cp $HERE/sk6_*.py $T/tools/emu/ 2>/dev/null
 cd $T/tools/emu
 git -C $T log --oneline -1
 set -o pipefail
@@ -17,6 +19,6 @@ light)
   $B/tests/test_light_pierce --light-hit ${2:-1} ${3:-400} > $O/lp.d 2>$O/lp.err; echo "d2d rc=$?"; grep -c '^T' $O/lp.d
   uv run python sk6_light_hit.py $O/lp.d > $O/lp.g 2>$O/lp.gerr; echo "game rc=$?"; grep -c '^T' $O/lp.g
   grep -E '^[HT]' $O/lp.d | diff $O/lp.g - > $O/lp.diff; echo "differing lines: $(grep -c '^[<>]' $O/lp.diff)"
-  python3 $(dirname $0)/sk6_light_sum.py $O/lp.g $O/lp.d
+  python3 $HERE/sk6_light_sum.py $O/lp.g $O/lp.d
   ;;
 esac

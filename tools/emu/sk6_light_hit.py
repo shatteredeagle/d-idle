@@ -34,6 +34,7 @@ CollideKill, CollideFriend, NextHit, NextDelay, ToHit, AlwaysExplode,
 pSrvHitFunc, pSrvDmgFunc); missile +0x10 (collision class) 3; a missile's
 last unit at creation its owner (FUN_0059fa30 0x59fdbb).
 """
+import os
 import sys
 
 import emu
@@ -128,7 +129,7 @@ class Game:
         for key, touched in contacts:
             missile = self.missile(key)
             e.w32(self.ctx, self.game); e.w32(self.ctx + 4, missile); e.w32(self.ctx + 8, self.owner); e.w32(self.ctx + 0xc, self.row)
-            for index in touched:
+            for index in (touched[::-1] if os.environ.get("SK6_REVERSE") else touched):   # decomp6: the unit order is d2d's monster order, or its reverse
                 unit = self.monsters[index]
                 if e.call(0x5a8850, ecx=unit, edx=self.ctx):
                     e.call(0x5adf10, unit, 0, ecx=self.game, edx=missile)
