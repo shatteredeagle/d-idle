@@ -90,6 +90,12 @@ type BotTuning struct {
 	DroughtSlowKills      int
 	DroughtSlowMaxLevel   int
 	FreshAfterRecoverySec int
+	// Dry recovery field (palready): while a recovery farms gold, fewer than RecoveryDryKills kills in RecoveryDryMin
+	// minutes in the same field area send the hero to the next eligible area (the area is skipped for
+	// RecoveryDrySkipMin minutes; no other eligible area: a fresh game). 0 for RecoveryDryMin = off.
+	RecoveryDryMin     int
+	RecoveryDryKills   int
+	RecoveryDrySkipMin int
 
 	// Mercenary chore (docs/merc-farm.md). Hiring clicks a verified dialog; reviving clicks an UNVERIFIED one, so it is off.
 	MercRetryMin         int  // minutes between merc chore attempts (a failed hire or revive is not retried sooner)
@@ -110,7 +116,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
-		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180,
+		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180, RecoveryDryMin: 5, RecoveryDryKills: 5, RecoveryDrySkipMin: 15,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -219,6 +225,12 @@ func botKnobs() []Knob {
 			Desc: "Kills the slow-field window must hold to go on in the same game."},
 		{Key: "bot.droughtSlowMaxLevel", Label: "Slow field below clvl", Unit: "level", Default: 10, Min: 0, Max: 40, NoHandicap: true,
 			Desc: "The slow-field rule applies below this clvl only (small early fields deplete; later levels clear on purpose). 0 is off."},
+		{Key: "bot.recoveryDryMin", Label: "Dry recovery window", Unit: "min", Default: 5, Min: 0, Max: 30, NoHandicap: true,
+			Desc: "While a recovery farms gold, after this many minutes in one field area with fewer than bot.recoveryDryKills kills in them (a depleted Blood Moor: 141 s since the last kill, V realtime Paladin drill) the hero moves on to the next area the recovery rules allow, or starts a fresh game when there is none. The safe-range rules (route guard, kit gate, bans) still decide which areas qualify. 0 is off."},
+		{Key: "bot.recoveryDryKills", Label: "Dry recovery kills", Unit: "kills", Default: 5, Min: 1, Max: 60, NoHandicap: true,
+			Desc: "Kills the dry-recovery window must hold to stay in the same area."},
+		{Key: "bot.recoveryDrySkipMin", Label: "Dry recovery: area skip", Unit: "min", Default: 15, Min: 1, Max: 60, NoHandicap: true,
+			Desc: "Minutes the recovery stays out of an area it left as dry (a new game or a respawn refills it)."},
 		{Key: "bot.noPortalWaitSec", Label: "No portal: leave after", Unit: "s", Default: 20, Min: 0, Max: 240, NoHandicap: true,
 			Desc: "Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits."},
 		{Key: "bot.freshAfterRecoverySec", Label: "Quiet after recovery", Unit: "s", Default: 180, Min: 0, Max: 900, NoHandicap: true,
