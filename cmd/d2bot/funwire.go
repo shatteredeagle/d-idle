@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
+	"syscall"
 	"time"
 
 	"d2lod-bot/internal/api"
@@ -11,6 +13,7 @@ import (
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
@@ -64,7 +67,7 @@ func runID() string {
 
 // newFun builds the fun loop for a running ladder: the tally strip when the profile has a d.idle wallet, the Codex when
 // the catalogue carries the firsts point (useFirsts), and the return screen over both.
-func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink) (*watch.Fun, error) {
+func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink, status func() goals.Status) (*watch.Fun, error) {
 	run := runID()
 	cfg := watch.FunConfig{Hub: hub, Speed: 1, Notes: notes}
 	if stateDir != "" {
@@ -102,6 +105,9 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 		return nil, err
 	}
 	cfg.Policy = &watch.PolicyConfig{Table: pt, Knobs: l.knobs}
+	if cfg.Hall, err = newHallConfig(wallet, l.storeProfile(), status); err != nil {
+		return nil, err
+	}
 	f, err := watch.NewFun(cfg)
 	if err != nil {
 		return nil, err
@@ -137,4 +143,35 @@ func openCodex(stateDir, profile string) (*decide.Codex, error) {
 // backend, so the tally survives a backend change).
 func currencyDirFor(stateDir string) string {
 	return envOr("D2BOT_CURRENCY_DIR", filepath.Join(stateDir, "currency"))
+}
+
+// stopSelf is the bot's graceful shutdown: SIGTERM to this process, the path `docker stop` and the updater take (hero
+// saved, d2d quit in managed mode; docs/tester-live.md). A seam for tests.
+var stopSelf = func() error { return syscall.Kill(os.Getpid(), syscall.SIGTERM) }
+
+// newHallConfig wires the Hall of Fame (docs/hall-of-fame.md "Wiring"): the ledger of the account, the shipped title
+// table, the hero's facts from the status poll and the shutdown path. nil (no error) without an account ledger or a
+// status source: the Hall needs both, and the rest of the fun loop does not.
+func newHallConfig(wallet *currency.Wallet, profile string, status func() goals.Status) (*watch.HallConfig, error) {
+	if wallet == nil || wallet.Ledger == nil || status == nil {
+		return nil, nil
+	}
+	titles, err := watch.ShippedHallTitles()
+	if err != nil {
+		return nil, err
+	}
+	start := time.Now()
+	return &watch.HallConfig{
+		Store: &watch.HallStore{Ledger: wallet.Ledger, Titles: titles},
+		Stop:  func() error { return stopSelf() },
+		Facts: func() watch.HallFacts {
+			c := status().Character
+			f := watch.HallFacts{Name: c.Name, Class: strings.ToLower(c.Class), Level: c.Level, WallSecs: time.Since(start).Seconds()}
+			if c.Name != "" {
+				f.ID = profile + ":" + c.Name // U: no creation stamp in the status, so a recreated name is the same hero
+			}
+			// Permanent stays false: no event says a death is final (hardcore play does not exist yet, docs/pact-away.md).
+			return f
+		},
+	}, nil
 }

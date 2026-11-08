@@ -1,0 +1,1 @@
+CHANGELOG: Hall of Fame is now mounted in the real bot: the retire question appears after the Andariel kill (keep or retire; retire stops the bot cleanly). A death is not yet booked as permanent (TASK-135).
