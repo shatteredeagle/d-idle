@@ -1,10 +1,11 @@
 ---
 id: TASK-137
 title: 'ladderrepeat: the same ladder question reopens every minute after an answer'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:43:00Z'
+updated_date: '2026-11-08T03:49:00Z'
 labels:
   - bot
   - bug
@@ -18,6 +19,7 @@ owns:
   - "docs/ladder-repeat.md"
 exclusive: []
 contracts: []
+result: "Offline (merge #337, docs/t0-slice.md 'Repeat suppression'): cause in decide.Store.Ask (dedup only while open; answers only counted toward rules); fix = cooldown (ladder.repeatCooldownMin), answer reuse, quiet after 3 faded (ladder.quietAfter); reproduction test 10 thoughts -> 1 on sorceress and paladin; persistence over reload; whole-repo gate green. Live confirmation is the next container run."
 ---
 
 ## Description
@@ -30,6 +32,6 @@ Found by TASK-25 (docs/tester-live.md): in a 1 h realtime session the t0.area.to
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 cause of the repeat identified with log lines
-- [ ] #2 fix or documented decision; test with two builds
+- [x] #1 cause of the repeat identified with log lines
+- [x] #2 fix or documented decision; test with two builds
 <!-- AC:END -->
