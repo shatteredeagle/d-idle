@@ -1,11 +1,11 @@
 ---
 id: TASK-167
 title: 'pactbotside: bot-side Pacts through the policy sheet, first three'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:33:00Z'
-updated_date: '2026-11-08T04:02:00Z'
+updated_date: '2026-11-08T08:17:00Z'
 labels:
   - bot
   - feature
