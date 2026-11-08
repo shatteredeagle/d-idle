@@ -1,0 +1,2 @@
+INDEX: docs/unlock-atlas.md - waypoint atlas (TASK-160): lit and silhouette Act 1 waypoints, the hero's proposed next zone
+CHANGELOG: Waypoint atlas: Act 1 waypoints lit as the hero takes them, proposed next zone marked (/api/atlas, panel)

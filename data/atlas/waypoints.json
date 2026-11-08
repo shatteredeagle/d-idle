@@ -1,0 +1,17 @@
+{
+  "schema": "atlas.waypoints/1",
+  "doc": "docs/unlock-atlas.md",
+  "note": "The Act 1 waypoints in the order of the SME (docs/research/fun-ideas.md, S Q-S6); none outside Act 1 yet. areaId is the levels.txt id (V internal/saves/progress.go waypointTable). codexId is the Codex entry of internal/decide/firsts_act1.json that records the waypoint as taken; empty: the town waypoint, which is lit from the start (S).",
+  "act": 1,
+  "nodes": [
+    {"id": "rogue_encampment", "name": "Rogue Encampment", "areaId": 1, "codexId": ""},
+    {"id": "cold_plains", "name": "Cold Plains", "areaId": 3, "codexId": "wp_cold_plains"},
+    {"id": "stony_field", "name": "Stony Field", "areaId": 4, "codexId": "wp_stony_field"},
+    {"id": "dark_wood", "name": "Dark Wood", "areaId": 5, "codexId": "wp_dark_wood"},
+    {"id": "black_marsh", "name": "Black Marsh", "areaId": 6, "codexId": "wp_black_marsh"},
+    {"id": "outer_cloister", "name": "Outer Cloister", "areaId": 27, "codexId": "wp_outer_cloister"},
+    {"id": "jail_1", "name": "Jail Level 1", "areaId": 29, "codexId": "wp_jail_1"},
+    {"id": "inner_cloister", "name": "Inner Cloister", "areaId": 32, "codexId": "wp_inner_cloister"},
+    {"id": "catacombs_2", "name": "Catacombs Level 2", "areaId": 35, "codexId": "wp_catacombs_2"}
+  ]
+}
