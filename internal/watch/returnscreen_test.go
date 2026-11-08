@@ -251,11 +251,25 @@ func TestReturnLandingAfterAbsence(t *testing.T) {
 	if w.Code != http.StatusFound || w.Header().Get("Location") != "/watch/return" {
 		t.Errorf("21 min: %d %v", w.Code, w.Header())
 	}
+	// the same absence redirects once: the next visits reach the live page until a look and a new absence (TASK-178)
+	for i := 0; i < 3; i++ {
+		r.wall = r.wall.Add(time.Minute)
+		if w := r.get("/watch", ""); w.Code != 200 {
+			t.Errorf("repeat %d in the same absence: %d", i, w.Code)
+		}
+	}
 	if w := r.get("/watch?live=1", ""); w.Body.String() != "LIVE" {
 		t.Error("?live=1 must reach the live screen")
 	}
 	if w := r.get("/watch", ""); w.Code != 200 {
 		t.Error("the look resets the absence")
+	}
+	r.wall = r.wall.Add(21 * time.Minute) // a second absence lands again, once
+	if w := r.get("/watch", ""); w.Code != http.StatusFound {
+		t.Errorf("second absence: %d", w.Code)
+	}
+	if w := r.get("/watch", ""); w.Code != 200 {
+		t.Errorf("second absence repeat: %d", w.Code)
 	}
 	if w := r.get("/watch/return?hours=4", ""); w.Code != 200 { // the explicit view never needs an absence
 		t.Error("explicit view")
