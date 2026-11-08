@@ -18,6 +18,7 @@ owns:
   - "docs/self-update-keys.md"
 exclusive: []
 contracts: []
+result: "Status sync 2026-11-08 (stays open): AC1 open: user steps (key, GitHub settings) not done; merge was the decision record, not this card."
 ---
 
 ## Description

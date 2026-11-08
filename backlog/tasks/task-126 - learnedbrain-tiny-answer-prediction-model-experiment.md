@@ -19,6 +19,7 @@ owns:
   - "docs/research/decision-dataset.md"
 exclusive: []
 contracts: []
+result: "Status sync 2026-11-08 (stays open): AC1 open: no 500 labelled answers yet; merge was the decision dataset (TASK-106), not this card."
 ---
 
 ## Description
