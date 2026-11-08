@@ -1,1 +1,0 @@
-CHANGELOG: per-class skill unlock tables for all seven classes, leveler unlock rule and the one free-choice point (TASK-132, TASK-133, TASK-143)
