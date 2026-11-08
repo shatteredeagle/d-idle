@@ -1,7 +1,7 @@
 ---
 id: TASK-125
 title: 'fid-revive-refill: Fight::revive refills only life; game.exe resurrect (0x54c17c..0x54c198) also refills mana and stamina'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:31:00Z'

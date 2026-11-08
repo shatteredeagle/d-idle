@@ -3,6 +3,7 @@ package watch
 import (
 	"sort"
 
+	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/unlock"
 )
 
@@ -56,4 +57,20 @@ func NewSensesLock(eng *unlock.Engine, knob int) Unlocker {
 		l.Cap = knob
 	}
 	return l
+}
+
+// EliteSeen is the spoiler rule of tier 4 (docs/senses-units.md): an elite of that kind is marked only after the Codex
+// holds its first. A champion needs any champion first; a superunique needs its own first (name is the unit's own name);
+// a rare unique has no Codex row of its own, so it follows the tier alone (U, an open choice).
+func (l LadderUnlocker) EliteSeen(kind, name string) bool {
+	if l.Engine == nil || !l.Allowed(4) {
+		return false
+	}
+	switch kind {
+	case senses.EliteChampion:
+		return l.Engine.MetKind("champion")
+	case senses.EliteSuperunique, senses.EliteBoss:
+		return l.Engine.Met("monster", name)
+	}
+	return true
 }

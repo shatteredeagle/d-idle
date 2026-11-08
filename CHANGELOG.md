@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Cain's notes bestiary: per-kind monster cards unlock at 10 kills, resists at 50 (/api/bestiary, panel, return section)
+- The hero now proposes the next zone in a real run (facts from the bot's kit, potions and deaths; knob ladder.awayMin) and warns in the journal when a map order is above its range (TASK-131).
+- Hall of Fame is now mounted in the real bot: the retire question appears after the Andariel kill (keep or retire; retire stops the bot cleanly). A death is not yet booked as permanent (TASK-135).
+- Watch screen senses: elite markers (champion, unique, superunique) with mod names, shown only after the first encounter of that kind
+- Pact unlocks now run through the shared unlock ladder (Andariel kill, Baal in Normal); away-consent changes show on the return screen
+- Watch screen senses: enemy dots (tier 2) and a health bar with name for the monster being attacked (tier 3, per Codex class)
+- Watch page: magic and rare finds arrive as face-down cards; flip one to see its quality, colour and a sound.
 - Watch page: Quests tab with the Act 1 quest log, unlocked when Akara gives the Den of Evil quest.
 - Senses unlock ladder: the watch screen's senses open from Codex firsts, level and tally spend; /api/senses lists locked tiers.
 - Watch page: the hero speaks at the first level-up, the first death and every Codex first, with a Diary tab and a mute switch.

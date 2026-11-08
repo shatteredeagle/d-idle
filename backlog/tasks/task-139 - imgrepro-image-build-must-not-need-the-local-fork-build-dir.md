@@ -1,7 +1,7 @@
 ---
 id: TASK-139
 title: 'imgrepro: image build must not need the local fork build dir'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:43:00Z'

@@ -330,6 +330,8 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.sensesTier = tune.Senses.Tier
+	o.ladder.proposalFacts = runner.ProposalFacts
+	o.ladder.awayMin, o.ladder.repeatCooldownMin, o.ladder.quietAfter = tune.Ladder.AwayMin, tune.Ladder.RepeatCooldownMin, tune.Ladder.QuietAfter
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {
 		return err

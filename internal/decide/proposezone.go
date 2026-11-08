@@ -355,3 +355,10 @@ func (p *Proposer) Answer(id int, answer string) (Proposal, error) {
 	}
 	return *it, p.saveLocked()
 }
+
+// AboveRangeWarning is the hero's line when the player orders a zone above its range from the map (TASK-131 AC2): the
+// recommended range, the hero's level and the charter price in tally. The order API quotes the same numbers
+// (currency.Quote); this is the wording, kept here so the proposer and the map speak alike.
+func AboveRangeWarning(min, max, level int, price int64) string {
+	return fmt.Sprintf("That is above my range (recommended L%d-L%d, I am level %d): it costs %d tally; go?", min, max, level, price)
+}

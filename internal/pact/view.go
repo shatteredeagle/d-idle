@@ -54,29 +54,32 @@ func (c *Controller) Spans() []Span {
 	return append([]Span(nil), c.spans...)
 }
 
-// Unlock records that a trigger happened (for example "andariel_first_kill"). It is kept in the state file.
-func (c *Controller) Unlock(trigger string) error {
+func (c *Controller) unlockedLocked(t string) bool {
+	return c.cfg.Gate != nil && c.cfg.Gate.Allowed(LadderID(t))
+}
+
+// Legacy lists the unlock triggers the state file recorded before the unlock ladder took over (TASK-168 -> TASK-153).
+// The caller adopts each into the ladder, then calls ClearLegacy.
+func (c *Controller) Legacy() []string {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	if c.unlockedLocked(trigger) {
+	return append([]string(nil), c.st.Unlocked...)
+}
+
+// ClearLegacy drops the pre-ladder unlock field from the state file once the ladder holds it. Idempotent.
+func (c *Controller) ClearLegacy() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if len(c.st.Unlocked) == 0 {
 		return nil
 	}
 	old := c.st
-	c.st.Unlocked = append(append([]string(nil), c.st.Unlocked...), trigger)
+	c.st.Unlocked = nil
 	if err := c.save(); err != nil {
 		c.st = old
 		return err
 	}
 	return nil
-}
-
-func (c *Controller) unlockedLocked(t string) bool {
-	for _, u := range c.st.Unlocked {
-		if u == t {
-			return true
-		}
-	}
-	return false
 }
 
 // unlockText says in plain words what opens a Pact. Counted triggers (hall_count:N, tally:N) are not seen by the bot

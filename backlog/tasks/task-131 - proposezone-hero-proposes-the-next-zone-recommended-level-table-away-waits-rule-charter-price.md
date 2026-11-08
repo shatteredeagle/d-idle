@@ -24,6 +24,15 @@ owns:
   - "internal/watch/proposals_test.go"
   - "internal/watch/testdata/proposals/"
   - "docs/proposezone.md"
+  - "cmd/d2bot/proposewire_test.go"
+  - "cmd/d2bot/funwire.go"
+  - "cmd/d2bot/ladder.go"
+  - "cmd/d2bot/live.go"
+  - "cmd/d2bot/d2dbackend.go"
+  - "internal/bot/proposefacts.go"
+  - "internal/env/tuning_ladder.go"
+  - "internal/watch/funwire.go"
+  - "docs/knobs.md"
 exclusive: []
 contracts: []
 ---
@@ -40,8 +49,8 @@ Amendment 2026-11-07 (class generic): the recommended-level table is per-class d
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 Proposal point with the zone range table (SME values kept as data, UNSURE entries tagged); when the player is away the hero waits and keeps farming the current safe zone, the proposal queues on the return screen; no advance without the player's yes, no in-range or timed auto-advance
-- [ ] #2 Above-range orders from the map cost a charter in tally only, with the hero's warning; the guard keeps the last word on arrival; two-build test
+- [x] #2 Above-range orders from the map cost a charter in tally only, with the hero's warning; the guard keeps the last word on arrival; two-build test
 - [x] #3 docs/proposezone.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->
 
-result: offline fixtures only, not verified live, not wired into cmd/d2bot (docs/proposezone.md). AC 2 stays open: the charter price for map orders was built by TASK-129; the proposal accept path is tested (402 above range) but the hero warning for map orders is unchanged. Edits outside owns: internal/watch/funwire.go, returnscreen.go (SectionButton.Act, proposal button), funwire_test.go (rig option).
+result: "wired 2026-11-08 (agent/proposewire): cmd/d2bot passes FunConfig.Proposals with a Runner.ProposalFacts reader, state file next to the ladder state, knob ladder.awayMin; hero warning line for above-range map orders (AC2). Fixtures only (TestProposalsOnTheRealWiring, two classes), NOT verified live. Owns widened to the wiring files listed."

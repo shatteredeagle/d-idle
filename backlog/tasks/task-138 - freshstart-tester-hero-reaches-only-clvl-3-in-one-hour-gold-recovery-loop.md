@@ -45,4 +45,4 @@ Found by TASK-25: a fresh Sorceress in the container, realtime, goals campaign:n
 - [ ] #2 uncheated realtime hour reaches the next campaign step
 <!-- AC:END -->
 
-result: cause named (docs/fresh-start-pace.md): recovery with an unreachable gold bar never ends (V live, 3 container runs) and a depleted Blood Moor starts no fresh game (V live; fresh-game rule offline only). Fixes: resource.recoveryStall*, bot.droughtSlow*. AC 2 NOT met: no uncheated realtime hour reached the next campaign step; stall rule verified live (ends at 20 to 25 min, no restart), XP per hour not improved. Writes after start 0. Tests offline.
+result: "cause named (docs/fresh-start-pace.md): recovery with an unreachable gold bar never ends (V live, 3 container runs) and a depleted Blood Moor starts no fresh game (V live; fresh-game rule offline only). Fixes: resource.recoveryStall*, bot.droughtSlow*. AC 2 NOT met: no uncheated realtime hour reached the next campaign step; stall rule verified live (ends at 20 to 25 min, no restart), XP per hour not improved. Writes after start 0. Tests offline. Status sync 2026-11-08 (stays open): live drill/fresh-game rule not verified live."

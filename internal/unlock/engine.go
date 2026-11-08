@@ -20,7 +20,9 @@ const (
 	EvLevel      = "level"       // N: character level
 	EvKills      = "kills"       // Name: monster kind, N: kills of it so far
 	EvRetire     = "retire"      // N: heroes retired so far
+	EvBossKill   = "boss_kill"   // Name: monster name, Sub: difficulty (normal|nightmare|hell); a kill is idempotent
 	EvQuestStage = "quest_stage" // Name: quest id, N: stage reached (1 started, 2 cleared, 3 done)
+	EvItem       = "item"        // Name: quality of an item the hero picked up (magic, rare, set, unique, ...)
 	EvSeen       = "seen"        // Name: something the viewer did or saw ("expedition_card"); idempotent by nature
 )
 
@@ -35,8 +37,9 @@ type Event struct {
 
 // How an entry was opened.
 const (
-	ByTrigger = "trigger"
-	ByBuying  = "bought"
+	ByTrigger   = "trigger"
+	ByBuying    = "bought"
+	ByMigration = "migrated"
 )
 
 // Opened is the persisted record of one open entry.
@@ -171,7 +174,7 @@ func (e *Engine) rollbackLocked(ids []string, metKey string, hadMet bool) {
 // an unknown type is an error naming it. A failed save opens nothing and returns the error; the event can be sent again.
 func (e *Engine) Observe(ev Event) ([]Entry, error) {
 	switch ev.Type {
-	case EvCodexFirst, EvQuest, EvLevel, EvKills, EvRetire, EvSeen, EvQuestStage:
+	case EvCodexFirst, EvQuest, EvLevel, EvKills, EvRetire, EvSeen, EvQuestStage, EvItem, EvBossKill:
 	default:
 		return nil, fmt.Errorf("%w %q", ErrUnknownEvent, ev.Type)
 	}
@@ -232,11 +235,24 @@ func (t Trigger) matches(ev Event) bool {
 	case QuestStage:
 		n, _ := t.num("min")
 		return ev.Type == EvQuestStage && strings.EqualFold(t.str("quest"), ev.Name) && ev.N >= n
+	case ItemQuality:
+		if ev.Type != EvItem {
+			return false
+		}
+		for _, q := range t.strs("qualities") {
+			if strings.EqualFold(q, ev.Name) {
+				return true
+			}
+		}
+		return false
 	case Seen:
 		return ev.Type == EvSeen && strings.EqualFold(t.str("what"), ev.Name)
 	case RetireCount:
 		n, _ := t.num("min")
 		return ev.Type == EvRetire && ev.N >= n
+	case BossKill:
+		d := t.str("difficulty")
+		return ev.Type == EvBossKill && strings.EqualFold(t.str("boss"), ev.Name) && (d == "" || strings.EqualFold(d, ev.Sub))
 	case KillsOfKind:
 		n, _ := t.num("min")
 		k := t.str("kind")
@@ -281,6 +297,19 @@ func (e *Engine) Met(sub, name string) bool {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	return e.met[strings.ToLower(sub+"/"+name)]
+}
+
+// MetKind says whether any Codex first of that kind was seen (for example "champion": the first champion pack of any mod).
+func (e *Engine) MetKind(sub string) bool {
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	pre := strings.ToLower(sub) + "/"
+	for k, v := range e.met {
+		if v && strings.HasPrefix(k, pre) {
+			return true
+		}
+	}
+	return false
 }
 
 // State is one entry as the watcher may see it. Text is empty while the entry is locked (no spoilers); a locked
@@ -354,4 +383,23 @@ func (e *Engine) Buy(id string, sp Spender) (Entry, error) {
 		return Entry{}, err
 	}
 	return en, nil
+}
+
+// Adopt opens an entry that was already unlocked by an older system (a migration), without a trigger. It returns false
+// when the entry is already open. The caller says nothing: the viewer saw the old unlock. An unknown id is an error.
+func (e *Engine) Adopt(id string) (bool, error) {
+	if _, err := e.l.Entry(id); err != nil {
+		return false, err
+	}
+	e.mu.Lock()
+	defer e.mu.Unlock()
+	if _, open := e.opened[id]; open {
+		return false, nil
+	}
+	e.openLocked(id, ByMigration)
+	if err := e.saveLocked(); err != nil {
+		e.rollbackLocked([]string{id}, "", false)
+		return false, err
+	}
+	return true, nil
 }

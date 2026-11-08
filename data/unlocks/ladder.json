@@ -57,6 +57,37 @@
       }
     },
     {
+      "id": "pact_andariel_first_kill",
+      "group": "pacts",
+      "trigger": {
+        "kind": "boss_kill",
+        "args": {
+          "boss": "Andariel"
+        }
+      },
+      "reveal": {
+        "title": "Pacts",
+        "text": "The first Andariel kill taught the hero its first Pacts: bargains that make the run harder and pay the tally.",
+        "teaser": "???"
+      }
+    },
+    {
+      "id": "pact_baal_normal",
+      "group": "pacts",
+      "trigger": {
+        "kind": "boss_kill",
+        "args": {
+          "boss": "Baal",
+          "difficulty": "normal"
+        }
+      },
+      "reveal": {
+        "title": "Pact of Nightmares",
+        "text": "Baal fell in Normal. The Nightmare Pacts are open.",
+        "teaser": "???"
+      }
+    },
+    {
       "id": "senses_map",
       "group": "senses",
       "tier": 1,
@@ -212,6 +243,26 @@
       "id": "questlog", "group": "ui",
       "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 1}},
       "reveal": {"title": "Quest log", "text": "The quests the hero holds, each with its current objective and why the hero is going there.", "teaser": "Take a quest from Akara."}
+    },
+    {
+      "id": "idreveal", "group": "ui",
+      "trigger": {"kind": "item_quality", "args": {"qualities": ["magic", "rare"]}},
+      "reveal": {"title": "Identify reveal", "text": "Magic and rare finds arrive as face-down cards. Flip a card to see what the item turned out to be: its quality, its colour and a sound.", "teaser": "Pick up a magic or rare item."}
+    },
+    {
+      "id": "idreveal_later", "group": "ui",
+      "trigger": {"kind": "codex_first", "args": {"sub": "drop", "ids": ["first_unique", "first_set"]}},
+      "reveal": {"title": "Unique and set cards", "text": "Unique, set and crafted finds now arrive as cards too.", "teaser": "Find your first unique or set item."}
+    },
+    {
+      "id": "bestiary", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 10}},
+      "reveal": {"title": "Cain's notes", "text": "Cain's notes now keep a card for every kind of monster the hero has killed ten of: what it is, how it fights, what it drops and a veteran's tip.", "teaser": "Kill ten of one kind of monster."}
+    },
+    {
+      "id": "bestiary_resists", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 50}},
+      "reveal": {"title": "Cain's notes: resistances", "text": "After fifty kills of one kind its card shows how well it resists each element, on every difficulty.", "teaser": "Kill fifty of one kind of monster."}
     }
   ]
 }
