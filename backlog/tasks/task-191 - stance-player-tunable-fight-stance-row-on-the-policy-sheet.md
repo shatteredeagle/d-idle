@@ -20,6 +20,7 @@ owns:
   - "docs/stance.md"
   - "cmd/d2bot"
   - "docs/plan/data/chores-defaults.json"
+  - "docs/knobs.md"
 exclusive: []
 contracts: []
 result: "Stance row Cautious/Balanced/Aggressive with per-class knobs, Paladin class start, session record line, return card text; tests for two classes and POST golden. Offline only, NOT verified live; Aggressive survival values U."
