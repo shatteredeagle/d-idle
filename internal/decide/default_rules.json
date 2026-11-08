@@ -52,6 +52,8 @@
     {"point": "t1.identify", "when": {}, "answer": "leave", "knobs": "town.idScrollNeed 1 (sellUnidentified sells a plain item as it is)", "vs": "match"},
 
     {"point": "t1.potions.buy", "when": {}, "answer": "best", "knobs": "none for the tier (proposed: town.potionTier); BuyKit buys the plan's preferred tier", "vs": "match"},
+    {"point": "t1.quest.imbue", "when": {}, "answer": "weapon", "knobs": "none; no code path reads the answer (TASK-197)", "vs": "match"},
+    {"point": "t1.quest.cain", "when": {}, "answer": "do", "knobs": "none; the campaign plan does the chain today (TASK-197)", "vs": "match"},
     {"point": "t1.gamble", "when": {}, "answer": "save", "knobs": "none (proposed: town.gambleAbove); no gamble code path", "vs": "match"},
 
     {"point": "t2.repeat", "when": {}, "answer": "again", "knobs": "the goal order count (internal/goals/runs.go) decides, not a knob", "vs": "match"},
@@ -78,6 +80,8 @@
     {"point": "t1.stash.full", "gap": "no stash-full knob exists; the default is whatever the stash chore does (U)"},
     {"point": "t1.potions.buy", "gap": "no potion-tier knob"},
     {"point": "t1.gamble", "gap": "no gamble knob or code path"},
+    {"point": "t1.quest.imbue", "gap": "asked only by the quest hint desk; no bot path reads the answer yet"},
+    {"point": "t1.quest.cain", "gap": "asked only by the quest hint desk; the campaign plan decides the chain"},
     {"point": "t2.repeat", "gap": "the order count decides, not a knob"},
     {"point": "t2.slowrun", "gap": "no run-time-versus-expected measure exists"},
     {"point": "t2.bossunsafe", "gap": "only Blood Raven and Forgotten Tower have floors; gear risk is a separate composite"},
