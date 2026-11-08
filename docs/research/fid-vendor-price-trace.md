@@ -126,6 +126,10 @@ tools/emu/fp_price_runs.sh TREE BUILD OUT tomes
 - The clamped runs are still at prices over 26M, so they do not prove reachability either way.
 - No game was run, no d2d slot used. Not run: the other test binaries, clang-tidy, presubmit (no code changed).
 
+## Status sync 2026-11-08 (agent decomp5, re-run on upstream main 1453f853)
+
+Re-run of `fp_price_runs.sh` (via `tools/emu/d5_price_run.sh`) on the newer upstream main: seed 7 1 / 0 / 13 (identical to the table above), seed 1 0 / 0 / 16, edge seed 3 2 / 1 / 31, tomes 0 of 144. Result unchanged: already upstream, no PR candidate. Details: docs/probes/fid/fid-price-pr.md.
+
 ## Shared-file lines for the merger
 
 See `backlog/merge-lines/agent-fidprice.txt`.
