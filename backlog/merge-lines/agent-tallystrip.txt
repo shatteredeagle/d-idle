@@ -1,3 +1,0 @@
-BACKLOG: TASK-129 tallystrip: tally credits from events, charter quote and spend, strip view built offline (not live); AC 2 open (mounting, order slot 2, perk)
-INDEX: docs/tally-strip.md - tally sources, charter sink, strip and summary (TASK-129)
-CHANGELOG: Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
