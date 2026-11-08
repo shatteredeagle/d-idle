@@ -853,3 +853,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/unlock-risk.md: hero risk meter (TASK-159), a ready / marginal / turn-back verdict from the bot's own guard, kit and life lines
 - docs/unlock-orderqueue.md: order queue (TASK-161), up to three orders in turn, slots owned by the unlock ladder, optional tally purchase
 - docs/unlock-alerts.md - alerts and pings: rules, in-page channel, outbound interface (off), ladder row
+- docs/unlock-ladder.md - now lists every ladder row and the live wiring of bestiary, risk, order queue and atlas

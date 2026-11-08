@@ -1,3 +1,0 @@
-BACKLOG: unlockwire: bestiary tables and kill store, risk meter facts and order queue wired into the live bot (TASK-185)
-INDEX: docs/unlock-ladder.md - now lists every ladder row and the live wiring of bestiary, risk, order queue and atlas
-CHANGELOG: The watch screen's bestiary, risk meter and order queue now run on the live bot; bestiary kill counts survive a restart
