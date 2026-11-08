@@ -207,6 +207,11 @@
         "text": "New sense: life and mana as numbers, resists and the mercenary.",
         "teaser": "Reach level 12 or meet an act boss."
       }
+    },
+    {
+      "id": "questlog", "group": "ui",
+      "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 1}},
+      "reveal": {"title": "Quest log", "text": "The quests the hero holds, each with its current objective and why the hero is going there.", "teaser": "Take a quest from Akara."}
     }
   ]
 }
