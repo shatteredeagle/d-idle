@@ -1,1 +1,0 @@
-INDEX: docs/research/skill-req-check.md - SME skill clvl requirements checked against the tables (TASK-132)

@@ -823,3 +823,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/palmelee.md - why the Paladin never hit on d2d, the Swing fix, drill and realtime numbers
 - docs/probes/ptrclick.md - d2d left-click uses last frame hover unit: harness or deviation, probe plan (TASK-179)
 - docs/senses-map.md - side-panel minimap: data flow, schema, fog, tier hook, live checklist
+- docs/research/skill-req-check.md - SME skill clvl requirements checked against the tables (TASK-132)
