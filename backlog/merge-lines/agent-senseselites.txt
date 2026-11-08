@@ -1,3 +1,0 @@
-BACKLOG: TASK-152 senseselites: champion, unique and superunique markers with mod names on the senses panel (tier 4), Codex first-encounter gate, fixtures only
-INDEX: internal/decide/champmods.json: monster modifier id to display name table for the senses elite markers
-CHANGELOG: Watch screen senses: elite markers (champion, unique, superunique) with mod names, shown only after the first encounter of that kind
