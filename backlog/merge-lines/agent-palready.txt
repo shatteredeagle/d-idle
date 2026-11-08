@@ -1,3 +1,0 @@
-BACKLOG: TASK-180 palready: Might aura comes up once through the right popup on d2d (0 failure lines, was 140 to 2485), failure backoff; recovery leaves a dry field (bot.recoveryDry* knobs, offline only); docs/palready.md
-INDEX: docs/palready.md - Might aura on d2d and the dry-recovery rule (TASK-180)
-CHANGELOG: Paladin on d2d: the Might aura is now picked through the right skill popup and stays up instead of failing on every fight; a recovery in a dry field moves on after five minutes (knobs bot.recoveryDryMin, bot.recoveryDryKills, bot.recoveryDrySkipMin).

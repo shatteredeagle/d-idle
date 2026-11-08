@@ -604,6 +604,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-144 sorcnormal30: Sorceress normal30 table (v3 rows 2-30, opt-in sorceress_normal30), wizard lists her as normal30
 - TASK-135 legacyhall: Hall of Fame ledger kinds, retire question (never auto), titles table, /watch/hall and /api/hall (built offline; permanence event and process wiring missing)
 - TASK-122 updclient: internal/selfupdate engine and watch update banner/API, offline-tested against a fake GitHub (not run live)
+- TASK-180 palready: Might aura comes up once through the right popup on d2d (0 failure lines, was 140 to 2485), failure backoff; recovery leaves a dry field (bot.recoveryDry* knobs, offline only); docs/palready.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

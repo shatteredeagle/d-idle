@@ -832,3 +832,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
 - docs/hall-of-fame.md - Hall of Fame, titles and the optional retire after Andariel (watch)
 - docs/self-update-client.md - self-update client package, watch update API and banner, env switches
+- docs/palready.md - Might aura on d2d and the dry-recovery rule (TASK-180)
