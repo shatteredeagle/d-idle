@@ -25,6 +25,8 @@ const (
 	SchemaVersion = 1
 	// MaxManifestBytes caps what a parser or fetcher reads.
 	MaxManifestBytes = 1 << 20
+	// ManifestName is the file name of the manifest in a release set and in an installed release.
+	ManifestName = "MANIFEST.json"
 )
 
 // Compat are the protocol pairs a release was built against (design 3.4).

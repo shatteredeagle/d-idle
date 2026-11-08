@@ -387,7 +387,7 @@ func (e *Engine) Apply(confirm string, force bool) error {
 	if err != nil {
 		return e.fail(err)
 	}
-	if err := l.InstallRelease(m, dir, e.cfg.SelfTest); err != nil {
+	if err := l.InstallRelease(m, e.remote.Raw, e.remote.Sig, dir, e.cfg.SelfTest); err != nil {
 		return e.fail(err)
 	}
 	old := l.CurrentVersion()

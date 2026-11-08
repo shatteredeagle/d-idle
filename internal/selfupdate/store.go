@@ -82,9 +82,10 @@ func Unpack(tgz io.Reader, dir string) error {
 }
 
 // InstallRelease unpacks every file of m found in stagingDir into releases/<ver>.tmp/<dest> and renames the
-// directory to releases/<ver>. A leftover .tmp from an earlier crash is removed first. selftest (may be nil) runs
+// directory to releases/<ver>. The signed manifest and its signature are kept inside (MANIFEST.json, MANIFEST.json.sig)
+// so the boot shim can re-check the compatibility gate and the signature. A leftover .tmp from an earlier crash is removed first. selftest (may be nil) runs
 // on the finished directory before the rename.
-func (l Layout) InstallRelease(m Manifest, stagingDir string, selftest func(dir string) error) error {
+func (l Layout) InstallRelease(m Manifest, raw, sig []byte, stagingDir string, selftest func(dir string) error) error {
 	final := l.Release(m.Version)
 	if _, err := os.Stat(final); err == nil {
 		return fmt.Errorf("selfupdate: release %s already exists", m.Version)
@@ -100,6 +101,12 @@ func (l Layout) InstallRelease(m Manifest, stagingDir string, selftest func(dir 
 			os.RemoveAll(tmp)
 		}
 	}()
+	if err := os.WriteFile(filepath.Join(tmp, ManifestName), raw, 0o644); err != nil {
+		return err
+	}
+	if err := os.WriteFile(filepath.Join(tmp, ManifestName+".sig"), sig, 0o644); err != nil {
+		return err
+	}
 	for _, f := range m.Files {
 		fh, err := os.Open(filepath.Join(stagingDir, f.Name))
 		if err != nil {

@@ -177,6 +177,9 @@ func TestGoodUpdate(t *testing.T) {
 	if l.CurrentVersion() != "0.4.0" {
 		t.Fatalf("current = %q", l.CurrentVersion())
 	}
+	if raw, err := os.ReadFile(filepath.Join(l.Current(), ManifestName)); err != nil || Verify([]ed25519.PublicKey{f.pub}, raw, mustRead(t, filepath.Join(l.Current(), ManifestName+".sig"))) != nil {
+		t.Fatalf("installed manifest missing or unsigned: %v", err)
+	}
 	if b, _ := os.ReadFile(filepath.Join(l.Current(), "bin", "d2bot")); string(b) != "bot 0.4.0" {
 		t.Fatalf("unpacked content %q", b)
 	}
@@ -607,4 +610,13 @@ func TestInboxOfflineApply(t *testing.T) {
 	if err := e2.Inbox(); !errors.Is(err, ErrBadSignature) {
 		t.Fatalf("inbox with a foreign signature: %v", err)
 	}
+}
+
+func mustRead(t *testing.T, p string) []byte {
+	t.Helper()
+	b, err := os.ReadFile(p)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return b
 }
