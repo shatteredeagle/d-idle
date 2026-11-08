@@ -1,0 +1,2 @@
+BACKLOG: approachfast (TASK-209): GoTo walks poll the position only between full snapshots; short approach steps use 1 to 2 full reads instead of 5 to 8
+CHANGELOG: Combat approach steps read the position only between full snapshots (faster short steps).
