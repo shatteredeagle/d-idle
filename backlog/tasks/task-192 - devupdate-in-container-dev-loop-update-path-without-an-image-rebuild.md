@@ -1,10 +1,11 @@
 ---
 id: TASK-192
 title: 'devupdate: in-container dev-loop update path without an image rebuild'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T15:24:00Z'
+updated_date: '2026-11-08T16:12:00Z'
 labels:
   - container
   - feature
