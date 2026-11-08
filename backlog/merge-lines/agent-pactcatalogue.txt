@@ -1,2 +1,0 @@
-CHANGELOG: Pact catalogue data file with 12 Pacts, loader, heat cap and incompatibility rules (TASK-166)
-INDEX: docs/pact-catalogue.md - the Pact catalogue data, loader and rules
