@@ -1,7 +1,7 @@
 ---
 id: TASK-131
 title: 'proposezone: hero proposes the next zone (recommended-level table, away-waits rule, charter price)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:26:00Z'
