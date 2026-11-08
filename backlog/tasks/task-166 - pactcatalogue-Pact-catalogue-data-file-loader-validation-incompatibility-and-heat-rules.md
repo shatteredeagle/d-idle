@@ -1,7 +1,7 @@
 ---
 id: TASK-166
 title: 'pactcatalogue: Pact catalogue data file, loader, validation, incompatibility and heat rules'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:33:00Z'

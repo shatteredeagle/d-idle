@@ -1,7 +1,7 @@
 ---
 id: TASK-155
 title: 'unlockvoice: hero voice and journal'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'

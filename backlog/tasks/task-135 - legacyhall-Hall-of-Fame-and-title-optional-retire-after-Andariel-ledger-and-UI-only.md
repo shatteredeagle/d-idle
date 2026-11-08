@@ -47,4 +47,4 @@ Note 2026-11-07: the legacy charm tiers it points at (TASK-136) are per-class da
 - [x] #2 docs/hall-of-fame.md says built vs verified live; go vet and go test -p 1 of internal/watch; leakcheck 0
 <!-- AC:END -->
 
-result: built and tested offline (fixtures and fakes, not verified live): Hall ledger kinds, store, retire desk, routes, return section, titles table. Missing: a permanent-death event (HallFacts.Permanent seam), process wiring in cmd/d2bot, a decide catalogue point for the question (see docs/hall-of-fame.md). Owns widened (funwire, mapview, returnscreen, app.js, currency ledger) as listed above.
+result: "built and tested offline (fixtures and fakes, not verified live): Hall ledger kinds, store, retire desk, routes, return section, titles table. Missing: a permanent-death event (HallFacts.Permanent seam), process wiring in cmd/d2bot, a decide catalogue point for the question (see docs/hall-of-fame.md). Owns widened (funwire, mapview, returnscreen, app.js, currency ledger) as listed above. Status sync 2026-11-08 (stays open): permanent-death event, process wiring and decide catalogue missing."
