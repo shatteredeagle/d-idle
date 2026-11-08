@@ -1,0 +1,2 @@
+BACKLOG: TASK-179 ptrclick: d2d click-targeting uses the previous frame pointer unit; probe plan docs/probes/ptrclick.md (Proposed, m-2)
+INDEX: docs/probes/ptrclick.md - d2d left-click uses last frame hover unit: harness or deviation, probe plan (TASK-179)
