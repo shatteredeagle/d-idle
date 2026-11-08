@@ -13,7 +13,7 @@
   ],
   "patch_sha256": ["531bad76d520eea8cb0601bea5a40e1ec52f51fe7b94a6892dc483d18170c607"],
   "classes": [
-    {"id": "sorceress", "name": "Sorceress", "d2d_index": 4, "supported": true},
+    {"id": "sorceress", "name": "Sorceress", "d2d_index": 4},
     {"id": "barbarian", "name": "Barbarian", "d2d_index": 0},
     {"id": "necromancer", "name": "Necromancer", "d2d_index": 1},
     {"id": "paladin", "name": "Paladin", "d2d_index": 2},
@@ -21,7 +21,7 @@
     {"id": "druid", "name": "Druid", "d2d_index": 5},
     {"id": "assassin", "name": "Assassin", "d2d_index": 6}
   ],
-  "default_class": "sorceress",
+  "default_class": "paladin",
   "presets": [
     {"id": "campaign:normal_act1", "name": "Act 1, Normal: play the campaign and stop at the end of the act"}
   ],

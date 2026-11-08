@@ -138,11 +138,13 @@ function sFiles() {
 function sHero() {
   const nameIn = h('input', { type: 'text', id: 'ob-name', maxlength: '15', autocomplete: 'off', spellcheck: 'false', value: st.inputs.char_name || '' });
   const cls = h('select', { id: 'ob-class' }, st.classes.map((c) => {
-    const o = h('option', { value: c.id, text: c.name + (c.supported ? '' : ' (not supported in this build)') });
-    if (!c.supported) o.disabled = true;
+    const o = h('option', { value: c.id, text: c.name + (c.table === 'fallback' ? ' (fallback table)' : '') });
     if (c.id === st.inputs.class) o.selected = true;
     return o;
   }));
+  const noteOf = () => (st.classes.find((c) => c.id === cls.value) || {}).note || '';
+  const clsNote = h('div', { class: 'ob-hint', id: 'ob-class-note', text: noteOf() });
+  cls.onchange = () => { clsNote.textContent = noteOf(); };
   const goals = h('select', { id: 'ob-goals' }, st.presets.map((p) => {
     const o = h('option', { value: p.id, text: p.name });
     if (p.id === st.inputs.goals) o.selected = true;
@@ -157,7 +159,7 @@ function sHero() {
   const field = (id, label, control, hint) => h('div', { class: 'ob-field' }, h('label', { for: id, text: label }), control, hint ? h('div', { class: 'ob-hint', text: hint }) : null);
   return [h('h2', { text: 'Your hero' }), errBox(),
     field('ob-name', 'Name (letters only, 2 to 15)', nameIn, 'A character with this name is created, or loaded if it already exists.'), e,
-    field('ob-class', 'Class', cls, 'This build plays the Sorceress. The other classes are listed but not supported yet.'),
+    field('ob-class', 'Class', cls, 'The Paladin is preselected. Only classes with a leveling table are listed.'), clsNote,
     field('ob-goals', 'Goal', goals, 'You can change the goal later.'),
     h('p', { class: 'ob-hint', text: 'Chores (repairs, potions, town trips) start on sensible defaults. You can change any of them, even to poor choices, on the Policy sheet at /watch/policy once the hero runs.' }),
     h('p', { class: 'ob-hint', text: 'No CD key is needed or accepted here. The game runs offline.' }),
