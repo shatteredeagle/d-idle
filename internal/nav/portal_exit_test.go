@@ -108,3 +108,37 @@ func TestPackStallWithoutYieldRetreatsThenFails(t *testing.T) {
 		t.Fatal("walked through a solid pack")
 	}
 }
+
+// TASK-184 cpnav (V: class pace drill, Assassin seed 7, Blood Moor): the planner priced exit tiles out to 14 subtiles
+// while the mouth gate refuses any click within mouthTriggerR (15), so a corridor path hugging the disc at 14.6 was
+// planned and then refused ("click would cross the trigger area of an unwanted exit", Cold Plains unreachable). With
+// room to pass, the planned walk must keep the gate's distance. Nav is class-free: no class data enters the walk.
+func TestGoToKeepsMouthGateDistanceFromUnwantedExit(t *testing.T) {
+	ex := input.Point{X: 1080, Y: 1034}
+	for _, tc := range []struct {
+		name string
+		goal input.Point
+	}{
+		{"east", input.Point{X: 1150, Y: 1034}},
+		{"east-low", input.Point{X: 1150, Y: 1050}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			g := openField(1000, 1000, 200, 80)
+			s := newSim(g, input.Point{X: 1010, Y: 1034})
+			s.levels[0].lm.Exits = []d2map.Exit{{Dest: 62, Pos: d2map.Point{X: ex.X, Y: ex.Y}}}
+			n := s.navigator()
+			minD := 1e9
+			s.onStep = func(s *sim) {
+				if d := dist(s.pos(), ex); d < minD {
+					minD = d
+				}
+			}
+			if err := n.GoTo(ctxT(t), tc.goal); err != nil {
+				t.Fatal(err)
+			}
+			if minD < mouthTriggerR {
+				t.Fatalf("walked within %.1f of an unwanted exit, gate distance is %.0f", minD, mouthTriggerR)
+			}
+		})
+	}
+}

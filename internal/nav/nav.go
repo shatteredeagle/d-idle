@@ -521,6 +521,11 @@ func (n *Navigator) GoToUnitOf(ctx context.Context, typ int, unitID uint32) erro
 const (
 	exitAvoidR    = 14.0
 	exitAvoidPeak = 31.0
+	// exitPenaltyR is the radius of the planner's exit penalty. It must exceed mouthTriggerR: the mouth gate refuses
+	// every click within mouthTriggerR of an unwanted exit, and a penalty that ends inside that radius lets the path hug
+	// the disc at 14 to 15 where the gate then refuses it (V cpnav: Assassin seed 7, Blood Moor corridor at 14.6 from
+	// the Den mouth, Cold Plains unreachable). The 3 extra subtiles keep the gradient that steers the path outward.
+	exitPenaltyR = mouthTriggerR + 3
 )
 
 // penalizeExits makes the cells around every tile exit costly, so a walk to somewhere else does not step on one by
@@ -536,7 +541,7 @@ func (n *Navigator) penalizeExits(f *Field, lm *d2map.LevelMap, goal input.Point
 		if dist(p, goal) <= exitAvoidR+2 {
 			continue
 		}
-		f.AddDisc(p.X, p.Y, exitAvoidR, exitAvoidPeak)
+		f.AddDisc(p.X, p.Y, exitPenaltyR, exitAvoidPeak)
 	}
 }
 
