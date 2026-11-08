@@ -1,0 +1,4 @@
+BACKLOG: TASK-125 fid-revive-refill: game.exe respawn (packet 0x41, FUN_0054c0e0) refills life, mana and stamina; d2d refilled life only; candidate local/fid-revive-refill-r1 built, 390 -> 0 of 408 cases; needs independent Opus verification (docs/research/fid-revive-refill.md, pr-revive-refill-draft.md)
+INDEX: docs/research/fid-revive-refill.md | what game.exe's respawn refills (life, mana, stamina to the maxima) and d2d's Fight::revive; oracle, deviations, drill recipe (TASK-125)
+INDEX: docs/research/pr-revive-refill-draft.md | PR draft: a respawn after death refills life, mana and stamina (candidate, unverified, not opened)
+CHANGELOG: Research: game.exe's respawn refills life, mana and stamina to their maxima; d2d refilled life only. Candidate fix and oracle (390 of 408 cases differ before, 0 after) are built and wait for independent verification; nothing is posted upstream.
