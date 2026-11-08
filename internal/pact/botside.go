@@ -39,6 +39,7 @@ type Consent struct {
 	Difficulty int       `json:"difficulty"`
 	At         time.Time `json:"at"`
 	Typed      string    `json:"typed"`
+	Hours      int       `json:"hours,omitempty"` // how long the player asked it to last; 0 = the catalogue's consent_days
 }
 
 // State is what survives a restart (one JSON file, 0600). The death count and a pause do not: a new process is a new
@@ -59,6 +60,7 @@ type Config struct {
 	Pause   func(reason string) error // hold the hero in town and wait for the player
 	Present func() bool               // a human is connected now; nil = nobody (consent only)
 	Now     func() time.Time
+	Journal func(line string) // a pause or resume of a Pact is said here (nil: not written)
 }
 
 // Where is the hero now, for the safe zones.
@@ -68,6 +70,8 @@ type Where struct {
 	InTown     bool
 	InDen      bool          // in the Den of Evil with its quest not done (U: the caller's approximation)
 	Age        time.Duration // time since the hero was created or first seen
+	Life       int           // current and maximum life; MaxLife 0 = unknown (the low-life floor then does not act)
+	MaxLife    int
 }
 
 // Line is one effect line for the policy-changes return section: what the Pact does and whether it acts right now.
@@ -89,6 +93,7 @@ type Controller struct {
 	rows    map[string]string  // row -> the option it had before a Pact took it
 	deaths  int
 	paused  string // reason, "" = not paused by a Pact
+	lowLife bool   // under the life floor (away.go)
 	lastWho Where
 }
 
@@ -159,6 +164,12 @@ func (c *Controller) Select(picks []Pick) error {
 // the player writes it out, a click is not enough. It is dated now and ends after Limits.ConsentDays, when the Pact's
 // rank or the difficulty changes, or at Revoke.
 func (c *Controller) Grant(pactID, typed string, difficulty int) error {
+	return c.GrantFor(pactID, typed, difficulty, 0)
+}
+
+// GrantFor is Grant with a length: hours of away play the player allows (0 = the catalogue's consent_days; more than
+// that is refused).
+func (c *Controller) GrantFor(pactID, typed string, difficulty, hours int) error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	p, err := c.cfg.Cat.Get(pactID)
@@ -177,6 +188,9 @@ func (c *Controller) Grant(pactID, typed string, difficulty int) error {
 	if !strings.EqualFold(strings.Join(strings.Fields(typed), " "), p.Name) {
 		return fmt.Errorf("pact: away-consent for %q needs its name typed out (%q)", pactID, p.Name)
 	}
+	if max := c.cfg.Cat.Limits.ConsentDays * 24; hours < 0 || hours > max {
+		return fmt.Errorf("pact: away-consent lasts 1 to %d hours", max)
+	}
 	var out []Consent
 	for _, co := range c.st.Consents {
 		if co.Pact != pactID {
@@ -184,7 +198,7 @@ func (c *Controller) Grant(pactID, typed string, difficulty int) error {
 		}
 	}
 	old := c.st
-	c.st.Consents = append(out, Consent{Pact: pactID, Rank: rank, Difficulty: difficulty, At: c.cfg.Now(), Typed: typed})
+	c.st.Consents = append(out, Consent{Pact: pactID, Rank: rank, Difficulty: difficulty, At: c.cfg.Now(), Typed: typed, Hours: hours})
 	if err := c.save(); err != nil {
 		c.st = old
 		return err
@@ -212,8 +226,11 @@ func (c *Controller) Revoke(pactID string) error {
 }
 
 func (c *Controller) consented(id string, rank, diff int) bool {
-	ttl := time.Duration(c.cfg.Cat.Limits.ConsentDays) * 24 * time.Hour
 	for _, co := range c.st.Consents {
+		ttl := time.Duration(c.cfg.Cat.Limits.ConsentDays) * 24 * time.Hour
+		if co.Hours > 0 {
+			ttl = min(ttl, time.Duration(co.Hours)*time.Hour)
+		}
 		if co.Pact == id && co.Rank == rank && co.Difficulty == diff && c.cfg.Now().Sub(co.At) < ttl {
 			return true
 		}
@@ -243,6 +260,9 @@ func (c *Controller) live(p Pick, w Where) (bool, string) {
 	if c.paused != "" {
 		return false, "paused: " + c.paused
 	}
+	if c.lowLife {
+		return false, fmt.Sprintf("paused: life under %d%%", c.cfg.Cat.Limits.LifeFloor())
+	}
 	if c.cfg.Present != nil && c.cfg.Present() || c.consented(p.ID, p.Rank, w.Difficulty) {
 		return true, "active"
 	}
@@ -261,6 +281,7 @@ func (c *Controller) Evaluate(w Where) error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	c.lastWho = w
+	c.checkLife(w)
 	wt := want{knobs: map[string]float64{}, rows: map[string]string{}}
 	for _, pk := range c.st.Picks {
 		on, _ := c.live(pk, w)
