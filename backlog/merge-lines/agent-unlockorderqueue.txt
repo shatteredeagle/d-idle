@@ -1,0 +1,2 @@
+INDEX: docs/unlock-orderqueue.md: order queue (TASK-161), up to three orders in turn, slots owned by the unlock ladder, optional tally purchase
+CHANGELOG: Order queue (TASK-161): GET and POST /api/orderqueue, orders run in turn, slots open with the Den, Kashya or Charsi and Cain or for tally; stops on death or a Pact pause (offline, not wired in the bot yet)
