@@ -248,6 +248,9 @@ type SectionButton struct {
 	Label  string `json:"label"`
 	Row    string `json:"row"`
 	Option string `json:"option"`
+	// Act is the page action: "policy" (the default, POST /api/policy) or "proposal" (POST /api/proposals/answer, Row is
+	// the proposal id).
+	Act string `json:"act,omitempty"`
 }
 
 // ReturnSection is the plug-in point of the page (cards 129 tally, 131 proposals, 130 policy effects). Build reads the
@@ -1030,7 +1033,7 @@ var returnTmpl = template.Must(template.New("return").Funcs(template.FuncMap{"du
 <script src="/watch/return.js"></script>
 </body></html>
 {{define "sec"}}<section class="card" data-section="{{.ID}}" aria-label="{{.Title}}"><h2>{{.Title}}</h2>
-{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}{{if .Buttons}}<div class="row">{{range .Buttons}}<button type="button" class="btn small" data-act="policy" data-row="{{.Row}}" data-option="{{.Option}}">{{.Label}}</button>{{end}}</div>{{end}}</section>{{end}}`))
+{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}{{if .Buttons}}<div class="row">{{range .Buttons}}<button type="button" class="btn small" data-act="{{if .Act}}{{.Act}}{{else}}policy{{end}}" data-row="{{.Row}}" data-option="{{.Option}}">{{.Label}}</button>{{end}}</div>{{end}}</section>{{end}}`))
 
 type returnPage struct {
 	ReturnData
@@ -1067,5 +1070,6 @@ document.addEventListener('click',function(e){var b=e.target.closest('button[dat
  if(a==='answer')post('/api/return/answer-kind',{point:b.dataset.point,answer:b.dataset.answer});
  else if(a==='rule')post('/api/return/answer-kind',{point:b.dataset.point,yes:b.dataset.yes==='1'});
  else if(a==='policy')post('/api/policy',{row:b.dataset.row,option:b.dataset.option});
+ else if(a==='proposal')post('/api/proposals/answer',{id:parseInt(b.dataset.row,10),answer:b.dataset.option});
  else if(a==='notes')post('/api/return/notes',{text:document.getElementById('notes').value});});
 })();`
