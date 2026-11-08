@@ -1,0 +1,2 @@
+INDEX: docs/unlock-risk.md: hero risk meter (TASK-159), a ready / marginal / turn-back verdict from the bot's own guard, kit and life lines
+CHANGELOG: Hero risk meter (TASK-159): GET /api/risk and a 'Closest call' return section, unlocked by surviving a near-death; the verdict uses the bot's guard, kit and engage lines (offline, not wired in the bot yet)

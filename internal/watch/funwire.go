@@ -72,6 +72,8 @@ type FunConfig struct {
 	// Proposals turns the zone proposals on (TASK-131): the proposer, the clock and the bot's facts. Intro is filled from
 	// the Codex when it is left nil and a Codex is wired.
 	Proposals *ProposalConfig
+	// Risk turns the hero risk meter on (TASK-159) when the ladder also has the row "risk"; the bot supplies the facts.
+	Risk *RiskConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
 	// Affixes reads the properties of an identified item for the reveal card (TASK-157). nil: cards say they are not read.
@@ -106,6 +108,8 @@ type Fun struct {
 	Voice *Voice
 	// Quests is nil unless the ladder has the row "questlog" (TASK-156).
 	Quests *QuestLog
+	// Risk is nil unless the ladder has the row "risk" and FunConfig.Risk is set (TASK-159).
+	Risk *RiskMeter
 	// Reveal is nil unless the ladder has the rows "idreveal" and "idreveal_later" (TASK-157).
 	Reveal *Reveal
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
@@ -173,6 +177,14 @@ func NewFun(c FunConfig) (*Fun, error) {
 				return nil, err
 			}
 			f.Quests = ql
+		}
+		if c.Risk != nil && c.Unlock.Has(RiskID) {
+			rm, err := NewRiskMeter(f.Unlocks, c.Hub, *c.Risk)
+			if err != nil {
+				return nil, err
+			}
+			f.Risk = rm
+			sec.Register(RiskSectionID, rm.Section())
 		}
 		if c.Unlock.Has(IDRevealID) || c.Unlock.Has(IDRevealLaterID) {
 			h := c.Hub
@@ -387,6 +399,9 @@ func (f *Fun) Settle() {
 	if f.Proposals != nil {
 		f.Proposals.Tick()
 	}
+	if f.Risk != nil {
+		f.Risk.Tick()
+	}
 	if f.codex == nil {
 		return
 	}
@@ -433,6 +448,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Quests != nil {
 		m.Handle(QuestLogRoute, f.Quests.Handler())
+	}
+	if f.Risk != nil {
+		m.Handle(RiskRoute, f.Risk.Handler())
 	}
 	if f.Reveal != nil {
 		m.Handle(RevealRoute, f.Reveal.Handler())
