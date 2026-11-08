@@ -1,10 +1,13 @@
 ---
 id: TASK-153
-title: 'unlockladder: shared unlock framework: persistence, trigger table as data, reveal, API gating'
-status: Proposed
+title: >-
+  unlockladder: shared unlock framework: persistence, trigger table as data,
+  reveal, API gating
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:15:00Z'
+updated_date: '2026-11-08T08:35:00Z'
 labels:
   - watch
   - feature
