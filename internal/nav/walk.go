@@ -67,7 +67,7 @@ type walkState struct {
 }
 
 // walk is the executor loop. tgt is evaluated every tick, so a moving target (GoToUnit) is followed.
-func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float64, error), wo walkOpts) error {
+func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float64, error), wo walkOpts) (werr error) {
 	t := n.tune()
 	timeout := wo.timeout
 	if timeout <= 0 {
@@ -87,6 +87,8 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 		n.log.Debug("nav walk", "callers", strings.Join(who, " < "))
 	}
 	var w walkState
+	tr := &walkTrace{n: n}
+	defer func() { tr.end(tr.last, n.clk.Now(), werr) }()
 	mouthSeq := 0
 	w.anchorTime = n.clk.Now()
 	first := true
@@ -105,10 +107,12 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			return fmt.Errorf("%w: walk did not finish in %v", ErrTimeout, timeout)
 		}
 		t = n.tune()
+		obsAt := n.clk.Now()
 		o, err := n.observeWait(ctx)
 		if err != nil {
 			return err
 		}
+		obsDur := n.clk.Now().Sub(obsAt)
 		if err := n.guard(o); err != nil {
 			return err
 		}
@@ -200,10 +204,12 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			replan, why = true, "partial"
 		}
 		if replan {
+			planAt := n.clk.Now()
 			res, err := n.plan(o.lm, o.pos, goal, tol, o.snap.Monsters, wo.ignoreUnit)
 			if err != nil {
 				return err
 			}
+			tr.plan(n.clk.Now().Sub(planAt), why, len(res.wps))
 			w.res, w.have, w.planAt, w.planGoal, w.cur, w.base, w.why = res, true, now, goal, 0, 0, why
 			w.sig = n.monsterSig(o, res.wps, 0)
 			w.clicked = false
@@ -277,11 +283,23 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			w.still++
 		}
 		w.prev = o.pos
+		tr.poll(o.pos, now, obsDur, w.still >= 2)
 		if !w.clicked || wp != w.lastClickPt || now.Sub(w.lastClick) > 3*time.Second ||
 			(w.still >= 2 && now.Sub(w.lastClick) >= 250*time.Millisecond) {
+			reason := "retry"
+			switch {
+			case !w.clicked:
+				reason = "first"
+			case wp != w.lastClickPt:
+				reason = "newwp"
+			case w.still >= 2:
+				reason = "still"
+			}
+			clickAt := n.clk.Now()
 			if err := n.in.ClickWorld(wp); err != nil {
 				return fmt.Errorf("nav: click %v: %w", wp, err)
 			}
+			tr.click(o.pos, wp, clickAt, reason, n.clk.Now().Sub(clickAt), w.cur, len(w.res.wps))
 			w.clicked, w.lastClick, w.lastClickPt = true, now, wp
 			n.log.Debug("nav click", "pos", o.pos, "wp", wp, "cur", w.cur, "of", len(w.res.wps))
 		}

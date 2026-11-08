@@ -35,6 +35,9 @@ type Controller struct {
 	// Poll is MoveTo's polling interval (default 100 ms).
 	Poll time.Duration
 
+	// Trace, when set, receives the cost of each move command split by phase ("nav.trace move" in the bot log).
+	Trace func(msg string, kv ...any)
+
 	// Run, when set, manages the run toggle by stamina before every move (run.go). nil: always walk, as before.
 	Run *RunPolicy
 
@@ -182,12 +185,21 @@ func (c *Controller) ClickWorld(w input.Point) error { return c.Move(w) }
 
 // Move is ClickWorld by its semantic name.
 func (c *Controller) Move(w input.Point) error {
+	t0 := c.clk().Now()
 	if err := c.prime(); err != nil {
 		return err
 	}
+	t1 := c.clk().Now()
 	c.manageRun()
+	t2 := c.clk().Now()
 	x, y := c.cell(w)
-	return c.C.CmdMove(c.ctx(), x, y)
+	err := c.C.CmdMove(c.ctx(), x, y)
+	if c.Trace != nil {
+		t3 := c.clk().Now()
+		c.Trace("nav.trace move", "primeMs", t1.Sub(t0).Milliseconds(), "runMs", t2.Sub(t1).Milliseconds(),
+			"cmdMs", t3.Sub(t2).Milliseconds(), "to", w)
+	}
+	return err
 }
 
 // MoveTo re-issues "cmd move" until the player is within Tolerance of w (a long path stops short, V). A

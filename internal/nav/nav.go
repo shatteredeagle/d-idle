@@ -53,6 +53,8 @@ type stateSource interface {
 // Navigator implements the Mover contract of docs/archive/wave2.md. It is not safe for concurrent use: one goroutine
 // drives the character, and nav is the one calling Tracker.Update.
 type Navigator struct {
+	// Trace turns on the "nav.trace" click-timing lines (trace.go): off in production, on in the dev image.
+	Trace       bool
 	gateRefused atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
 	peakRung    atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
 	cov         *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
@@ -158,7 +160,7 @@ type blocked struct {
 
 // New builds a Navigator from the instance Env.
 func New(e *env.Env) *Navigator {
-	n := &Navigator{e: e, in: e.In, clk: e.Clock, log: e.Log, rng: rand.New(rand.NewSource(1))}
+	n := &Navigator{e: e, in: e.In, clk: e.Clock, log: e.Log, rng: rand.New(rand.NewSource(1)), Trace: TraceEnv()}
 	if e.World != nil {
 		n.w = e.World
 	}
