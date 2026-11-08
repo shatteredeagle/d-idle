@@ -18,6 +18,7 @@ owns:
   - "docs/palpace.md"
 exclusive: []
 contracts: []
+result: "Realtime after the fix: 62 kills, clvl 2 in 20 min (before 13 kills, clvl 1); remaining idle = recovery roaming in a depleted Blood Moor; expectation corrected (docs/palmelee.md, docs/palpace.md). Verified live yes, writes after start 0."
 ---
 
 ## Description
@@ -30,6 +31,6 @@ Found by paladinsmoke (TASK-142, docs/paladinsmoke.md). Container, realtime, fre
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Idle stretches explained from the minute lines and combat decisions
-- [ ] #2 Realtime Paladin run of 20 minutes with the fix, kills and clvl recorded
+- [x] #1 Idle stretches explained from the minute lines and combat decisions
+- [x] #2 Realtime Paladin run of 20 minutes with the fix, kills and clvl recorded
 <!-- AC:END -->
