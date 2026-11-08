@@ -1,2 +1,0 @@
-BACKLOG: smokefix: TASK-176 empty expedition credits no tally (trip_floor), TASK-178 session summary reports wall and game clocks, identity line, landing redirect once per absence
-CHANGELOG: An expedition with no kills, drops or XP no longer pays tally; the session summary shows wall and game time; the return-screen landing happens once per absence.

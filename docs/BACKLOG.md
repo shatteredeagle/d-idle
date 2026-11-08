@@ -594,6 +594,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-166 to TASK-173 pact system cards (pactcatalogue, pactbotside, pactui, pactaway, pactnative, pacthall, pactoverlay, pactnightmare), Proposed, m-4, not on the two-week path
 - TASK-174 mercnomana (merc hire check follows the belt plan); TASK-150 sensesvideo Deferred and parked
 - PALADINSMOKE (TASK-142, live): fun-loop slices on a Paladin; slices answer, but the Paladin kills nothing in lockstep and 13 in 20 realtime minutes; cards TASK-175 palmelee (high), TASK-176 tallyempty, TASK-177 palpace, TASK-178 sessionwall; docs/paladinsmoke.md
+- smokefix: TASK-176 empty expedition credits no tally (trip_floor), TASK-178 session summary reports wall and game clocks, identity line, landing redirect once per absence
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
