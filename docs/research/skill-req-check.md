@@ -6,7 +6,7 @@
 
 The table values were read from the worker host's real install tables (`/tmp/d2mpq`, the same install `internal/data/real_test.go` uses) through `data.DB.SkillByName(name)` (`ReqLevel`, `MaxLevel`, `ReqSkills`). A throwaway test file (not committed) printed each row:
 
-    labrun orion -- sh -c 'go test -count=1 -run TestZZDump -v ./internal/data'
+    (on the worker host) sh -c 'go test -count=1 -run TestZZDump -v ./internal/data'
 
 Caveat (U): whether that install carries a patched Skills.txt is not known to this note (`docs/buildv3.md` speaks of "patched Skills.txt"). The values below are the ones the bot's own `Rule` reads, so they are the ones that matter for the leveler; they match classic 1.14d as the author remembers it, except the Energy Shield prerequisites (see the end).
 
