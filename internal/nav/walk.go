@@ -44,6 +44,7 @@ type walkState struct {
 	planGoal input.Point
 	sig      uint64
 	cur      int
+	base     int // waypoint the normal reach would have reached; the stuck ladder works from it, not from cur (WALKSMOOTH)
 
 	lastClick   time.Time
 	lastClickPt input.Point
@@ -203,7 +204,7 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			if err != nil {
 				return err
 			}
-			w.res, w.have, w.planAt, w.planGoal, w.cur, w.why = res, true, now, goal, 0, why
+			w.res, w.have, w.planAt, w.planGoal, w.cur, w.base, w.why = res, true, now, goal, 0, 0, why
 			w.sig = n.monsterSig(o, res.wps, 0)
 			w.clicked = false
 			if wo.onPlan != nil {
@@ -227,8 +228,22 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			return f.los(a.X, a.Y, b.X, b.Y, 0)
 		}
 		reach := math.Min(6, math.Max(2, t.WaypointSpacing*0.5))
+		for w.base < len(w.res.wps)-1 && dist(o.pos, w.res.wps[w.base]) <= reach && sees(o.pos, w.res.wps[w.base+1]) {
+			w.base++
+		}
+		w.cur = max(w.cur, w.base)
 		for w.cur < len(w.res.wps)-1 && dist(o.pos, w.res.wps[w.cur]) <= reach && sees(o.pos, w.res.wps[w.cur+1]) {
 			w.cur++
+		}
+		if w.still >= 2 {
+			// WALKSMOOTH: the character stood still for two polls. d2d ends a move short of its target (V: every
+			// "nav stuck" line of a live Paladin session had the waypoint 5 to 6 subtiles away, beyond reach), and
+			// a reclick of the same target does nothing. A waypoint within stopReach of a standing character is
+			// reached: go on to the next one now instead of waiting for the 1.2 s stuck ladder.
+			stop := math.Max(reach, t.WaypointSpacing*stopReachSpacings)
+			for w.cur < len(w.res.wps)-1 && dist(o.pos, w.res.wps[w.cur]) <= stop && sees(o.pos, w.res.wps[w.cur+1]) {
+				w.cur++
+			}
 		}
 		if len(w.res.wps) == 0 {
 			return emptyPathErr()
@@ -241,11 +256,19 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			switch {
 			case w.cur > 0 && sees(o.pos, w.res.wps[w.cur-1]):
 				w.cur--
+				w.base = min(w.base, w.cur)
 				wp = w.res.wps[w.cur]
 			case now.Sub(w.planAt) > 300*time.Millisecond: // off the path: plan again from here
 				w.have = false
 				continue
 			}
+		}
+		wpStuck := w.res.wps[min(w.base, w.cur)] // the stuck ladder works from the normal waypoint, not from a lookahead or stop-short click
+		if wo.oneClick {
+			wpStuck = wp
+		}
+		if !wo.oneClick && sees(o.pos, wp) {
+			wp = n.lookahead(o, &w, sees, t.WaypointSpacing)
 		}
 		moved := dist(o.pos, w.prev) > 0.25
 		if moved {
@@ -320,7 +343,7 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 					}
 				}
 			}
-			n.recover(o, &w, wp)
+			n.recover(o, &w, wpStuck)
 			w.rung++
 			if int32(w.rung) > n.peakRung.Load() {
 				n.peakRung.Store(int32(w.rung))
@@ -329,6 +352,36 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 		}
 		n.clk.Sleep(t.Poll())
 	}
+}
+
+// stopReachSpacings and lookaheadSpacings (WALKSMOOTH, in waypoint spacings): a standing character counts a waypoint
+// within stopReachSpacings x spacing as reached; the click goes to the farthest waypoint within lookaheadSpacings x
+// spacing that the path leads straight to, so the next move is always issued before the previous one ends.
+const (
+	stopReachSpacings  = 0.8
+	lookaheadSpacings  = 2.5
+	lookaheadStraightR = 2.0 // intermediate waypoints may lie this far off the chord
+)
+
+// lookahead returns the waypoint to click: wps[cur], or a later one when the character sees it, it is not farther
+// than lookaheadSpacings x spacing, the waypoints between lie on the chord (the chord is the planned path) and the
+// mouth gate lets the click through. A click that ends before the next one is sent makes the character stand.
+func (n *Navigator) lookahead(o *obs, w *walkState, sees func(a, b input.Point) bool, spacing float64) input.Point {
+	wps := w.res.wps
+	best := wps[w.cur]
+	far := spacing * lookaheadSpacings
+	_, exits := n.gatedExits()
+	for j := w.cur + 1; j < len(wps) && dist(o.pos, wps[j]) <= far; j++ {
+		straight := true
+		for k := w.cur; k < j && straight; k++ {
+			straight = segDist(wps[k], o.pos, wps[j]) <= lookaheadStraightR
+		}
+		if !straight || !sees(o.pos, wps[j]) || !clickOKAll(o.pos, wps[j], exits) {
+			break
+		}
+		best = wps[j]
+	}
+	return best
 }
 
 // pinnedRungs and pinnedRadius: after this many rungs of the ladder with the character still within pinnedRadius
