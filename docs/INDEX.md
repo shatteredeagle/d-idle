@@ -821,3 +821,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/adr/0019-pacts-and-unlocks-2026-11-07.md: Pacts, information unlocks and the unlock ladder (user, 2026-11-07)
 - docs/paladinsmoke.md - Paladin smoke of the fun-loop slices (TASK-142): pace, Codex firsts, slices, container numbers, defects
 - docs/palmelee.md - why the Paladin never hit on d2d, the Swing fix, drill and realtime numbers
+- docs/probes/ptrclick.md - d2d left-click uses last frame hover unit: harness or deviation, probe plan (TASK-179)
