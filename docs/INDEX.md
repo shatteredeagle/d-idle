@@ -859,3 +859,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/soaks/recoverypace.md - recoverypace: why the early game is a gold loop, the fix and the before/after drill (TASK-183)
 - docs/smoke.md - smoke run: how to run, rules, cost, difference from Gate 1/2 (tools area)
 - docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
+- docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
