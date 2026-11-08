@@ -1,6 +1,6 @@
 #!/bin/sh
-# fidrevive (worker host): see docs/research/fid-revive-refill.md section 6; run through `labrun orion -- sh <this>` from the synced scratch clone of the fork branch.
-export FO_TREE=$HOME/labrun/herdr/scratch-fidrevive FO_BUILD=$HOME/d2d-lab/build-fidrevive
+# fidrevive (worker host): see docs/research/fid-revive-refill.md section 6; run through the worker host runner from the synced scratch clone of the fork branch.
+export FO_TREE=${FR_TREE:?the synced scratch clone of the fork branch} FO_BUILD=$HOME/d2d-lab/build-fidrevive
 mkdir -p $FO_BUILD
 T=$FO_TREE; B=$FO_BUILD; D=$HOME/d2d-lab/src/build/_deps
 [ -f $B/build.ninja ] || nice -n 19 cmake -S $T -B $B -G Ninja -DCMAKE_BUILD_TYPE=Release -DD2D_WERROR=OFF \

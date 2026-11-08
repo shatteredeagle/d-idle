@@ -50,13 +50,13 @@ Branch `local/fid-revive-refill-r1`, commit `c3dac20a`, 4 files (components/game
 ## 6. Runs (V run, worker host, nice 19, `-j2`, GCC Release, own build dir)
 
 ```sh
-# in the scratch clone of the fork (not the dev checkout); fr_build.sh builds test_game, fr_diff.sh diffs game.exe (fr_revive.py) against d2d
-labrun orion -- sh tools/emu/fr_build.sh
-labrun orion -- sh tools/emu/fr_diff.sh after          # cases 408, mismatching 0
-FR_DIFF=<path of fr_diff.sh> labrun orion -- sh tools/emu/fr_before.sh   # swaps in the parent's fight/setup.cpp: 390 mismatching; full test_game on the parent aborts rc 134
-labrun orion -- sh tools/emu/fr_seed2.sh                # seed 20261108: 1508 cases 0 mismatching; the alive control changes 0
+# FR_TREE = the synced scratch clone of the fork branch (not the dev checkout); fr_build.sh builds test_game, fr_diff.sh diffs game.exe (fr_revive.py) against d2d
+<worker host runner> sh tools/emu/fr_build.sh
+<worker host runner> sh tools/emu/fr_diff.sh after          # cases 408, mismatching 0
+FR_DIFF=<path of fr_diff.sh> <worker host runner> sh tools/emu/fr_before.sh   # swaps in the parent's fight/setup.cpp: 390 mismatching; full test_game on the parent aborts rc 134
+<worker host runner> sh tools/emu/fr_seed2.sh                # seed 20261108: 1508 cases 0 mismatching; the alive control changes 0
 ```
-Results: before 390 of 408 differ (the 18 that agree already had mana and stamina at the maximum); `test_game` on the parent aborts with `Assertion got[0] == 90 * 256 + 77 && got[1] == 40 * 256 + 99 && got[2] == 80 * 256 + 13 failed` (test_game.cpp:1304), rc 134; with the fix `test_game` rc 0, 29 `OK` lines, among them "OK: a respawn refills life, mana and stamina"; the oracle: 0 of 408 and 0 of 1508 differ. `pr_guard.py up/main HEAD`: 0 FAIL, 0 WARN. presubmit: see the draft.
+Results: before 390 of 408 differ (the 18 that agree already had mana and stamina at the maximum); `test_game` on the parent aborts with `Assertion got[0] == 90 * 256 + 77 && got[1] == 40 * 256 + 99 && got[2] == 80 * 256 + 13 failed` (test_game.cpp:1304), rc 134; with the fix `test_game` rc 0, 29 `OK` lines, among them "OK: a respawn refills life, mana and stamina"; the oracle: 0 of 408 and 0 of 1508 differ. `pr_guard.py up/main HEAD`: 0 FAIL, 0 WARN. `presubmit.py --quick`: clang-tidy ok (no finding on an added line), the `gcc` step FAILED only on `apps/launcher/main.cpp` (`main.moc` missing: build dir configured for `test_game` only; not a touched file); `-fsyntax-only -Wshadow -Werror -Wall -Wextra` on fight/setup.cpp and test_game.cpp: rc 0 (V run).
 
 ## 7. Limits of the proof
 

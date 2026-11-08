@@ -1,7 +1,7 @@
 #!/bin/sh
-# fidrevive (worker host): see docs/research/fid-revive-refill.md section 6; run through `labrun orion -- sh <this>` from the synced scratch clone of the fork branch.
+# fidrevive (worker host): see docs/research/fid-revive-refill.md section 6; run through the worker host runner from the synced scratch clone of the fork branch.
 export D2_BUILD=$HOME/d2d-lab/src/build D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe D2_MPQ_DIR=/tmp/ug-emu
-T=$HOME/labrun/herdr/scratch-fidrevive; B=$HOME/d2d-lab/build-fidrevive; O=/tmp/fr_out; mkdir -p $O
+T=${FR_TREE:?the synced scratch clone of the fork branch}; B=$HOME/d2d-lab/build-fidrevive; O=/tmp/fr_out; mkdir -p $O
 cd $T/tools/emu
 [ -f $O/cases.tsv ] || nice -n 19 uv run python fr_revive.py gen 400 > $O/cases.tsv
 [ -f $O/game.tsv ] || nice -n 19 uv run python fr_revive.py game $O/cases.tsv > $O/game.tsv
