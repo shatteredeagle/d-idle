@@ -1,0 +1,3 @@
+BACKLOG: unlockladder (TASK-153): internal/unlock engine, data/unlocks/ladder.json, reveal, GET /api/unlocks, POST /api/unlocks/buy; offline-tested, not yet wired in cmd/d2bot
+INDEX: docs/unlock-ladder.md: the shared unlock framework (trigger table, persistence, reveal, API)
+CHANGELOG: Unlock ladder framework: per-profile unlocks from Codex firsts, level, quest and tally spend, with a reveal line and a return-screen section.
