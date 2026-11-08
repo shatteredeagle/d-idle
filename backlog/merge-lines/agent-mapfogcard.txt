@@ -1,0 +1,1 @@
+BACKLOG: TASK-195 mapreveal card (later zones stay hidden on the minimap until found or unlocked)
