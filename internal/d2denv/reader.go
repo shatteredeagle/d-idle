@@ -26,8 +26,22 @@ const (
 type Reader struct {
 	*d2dsrc.Source
 
-	mu   sync.Mutex
-	last *d2dsrc.Result
+	mu     sync.Mutex
+	last   *d2dsrc.Result
+	lastAt time.Time // wall time the last snapshot completed (Recent)
+}
+
+// Recent returns the last full snapshot when it completed within maxAge. It is for background readers (the safety
+// guard, the minimap feed) that must not queue a second full read behind the walker's own: one snapshot costs a few
+// hundred ms on the channel (V live, WALKSMOOTH2), and the readers used to double or triple the walk's observe time.
+// Callers that need the state AFTER an action they just took must use Snapshot.
+func (r *Reader) Recent(maxAge time.Duration) (*d2.Snapshot, bool) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if r.last == nil || r.last.Snap == nil || time.Since(r.lastAt) > maxAge {
+		return nil, false
+	}
+	return r.last.Snap, true
 }
 
 var _ d2.StateReader = (*Reader)(nil)
@@ -39,7 +53,11 @@ func NewReader(src *d2dsrc.Source) *Reader { return &Reader{Source: src} }
 func (r *Reader) Snapshot() (*d2.Snapshot, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	t0 := time.Now()
 	res, err := r.Source.Read(ctx)
+	if snapStatsOn() {
+		noteSnap(3, time.Since(t0))
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +65,7 @@ func (r *Reader) Snapshot() (*d2.Snapshot, error) {
 	_ = r.Source.FillMissiles(ctx, res)
 	addrFromID(res.Snap)
 	r.mu.Lock()
-	r.last = res
+	r.last, r.lastAt = res, time.Now()
 	r.mu.Unlock()
 	return res.Snap, nil
 }

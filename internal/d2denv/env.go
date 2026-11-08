@@ -88,6 +88,9 @@ func Build(ctx context.Context, cfg Config) (*Backend, error) {
 	clk := &LateClock{c: c, ctx: ctx}
 	ctl := d2dinput.New(c)
 	ctl.Ctx, ctl.Clock = ctx, clk
+	if nav.TraceEnv() {
+		ctl.Trace = func(msg string, kv ...any) { cfg.Log.Info(msg, kv...) }
+	}
 	ctl.Run = d2dinput.RunPolicyFromEnv() // run while stamina lasts; D2D_RUN=off restores the walk-only bot
 	if cfg.LinkWait == 0 {
 		cfg.LinkWait = DefaultLinkWait
@@ -289,6 +292,9 @@ func traceLoop(ctx context.Context, c *d2dctl.Client, clk *LateClock, log *slog.
 		case <-tk.C:
 			steps, ticks, v, _ := clk.Pace()
 			log.Info("d2dtrace", "steps", steps, "ticks", ticks, "virtual", v.Round(time.Second), "verbs", "\n"+c.TraceReport())
+			if snapStatsOn() {
+				log.Info("nav.trace snapcallers", "callers", "\n"+snapReport())
+			}
 		}
 	}
 }

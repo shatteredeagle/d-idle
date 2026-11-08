@@ -971,7 +971,7 @@ func (r *Runner) guard(ctx context.Context, cancel context.CancelCauseFunc, done
 // guardOnce is one look of the guard; true when it cancelled the action (the guard is then finished).
 func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, st State) bool {
 	{
-		snap := r.poll()
+		snap := r.pollWith(true)
 		now := r.e.Clock.Now()
 		if g := r.gameEvent(); g != nil {
 			cancel(*g)

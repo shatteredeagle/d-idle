@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/senses"
@@ -14,6 +16,14 @@ type unitSource struct {
 	ModName func(id int) string
 }
 
+// recentReader is implemented by the d2d reader (d2denv.Reader.Recent).
+type recentReader interface {
+	Recent(maxAge time.Duration) (*d2.Snapshot, bool)
+}
+
+// recentSnapAge: the age up to which the minimap feed reuses the walker's snapshot.
+const recentSnapAge = time.Second
+
 // superFlag is the 0x02 bit next to the boss bit of a superunique (0x0a, docs/orig-spawns.md). U for the live game:
 // the census saw it, no drill told a superunique from a rare by it.
 const superFlag = 0x02
@@ -25,7 +35,16 @@ func (s unitSource) Units() []senses.Unit {
 	if s.Read == nil {
 		return nil
 	}
-	snap, err := s.Read.Snapshot()
+	// The nav walk that calls this has just read a snapshot: reuse it instead of queueing a second full read behind it
+	// (WALKSMOOTH2, V live: that read was a third of the walk's time).
+	var snap *d2.Snapshot
+	var err error
+	if rr, ok := s.Read.(recentReader); ok {
+		snap, _ = rr.Recent(recentSnapAge)
+	}
+	if snap == nil {
+		snap, err = s.Read.Snapshot()
+	}
 	if err != nil || snap == nil || snap.State != d2.StateInGame {
 		return nil
 	}

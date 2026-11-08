@@ -168,3 +168,30 @@ func TestUseSensesNoUnitsWithoutReader(t *testing.T) {
 		t.Fatal("hook not set")
 	}
 }
+
+// recentFake is a reader whose Snapshot must not be called when Recent has a snapshot (WALKSMOOTH2).
+type recentFake struct {
+	fake.Reader
+	recent *d2.Snapshot
+	reads  int
+}
+
+func (r *recentFake) Snapshot() (*d2.Snapshot, error) { r.reads++; return r.Reader.Snapshot() }
+func (r *recentFake) Recent(time.Duration) (*d2.Snapshot, bool) {
+	return r.recent, r.recent != nil
+}
+
+func TestUnitSourceReusesTheWalkersSnapshot(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		rf := &recentFake{Reader: fake.Reader{Snap: snapOf(class, false, 0)}, recent: snapOf(class, false, 0)}
+		us := unitSource{Read: rf, Cat: unitCat(), ModName: modName}.Units()
+		if rf.reads != 0 || len(us) == 0 {
+			t.Fatalf("%v: a recent snapshot existed, yet Snapshot was read %d times (units %d)", class, rf.reads, len(us))
+		}
+		rf.recent = nil
+		unitSource{Read: rf, Cat: unitCat(), ModName: modName}.Units()
+		if rf.reads != 1 {
+			t.Fatalf("%v: without a recent snapshot one fresh read is expected, got %d", class, rf.reads)
+		}
+	}
+}
