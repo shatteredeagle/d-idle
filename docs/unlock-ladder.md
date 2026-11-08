@@ -36,9 +36,9 @@ Basics are never entries (nothing in the table may gate a view the first session
 
 ## Not done here
 
-- `cmd/d2bot` does not open the engine yet. Wiring: in `newFun`, `unlock.Shipped()` then `unlock.Open(stateDir, l.storeProfile(), ladder, nil)` into `cfg.Unlock`; the senses side is TASK-149.
-- No emitter feeds `kills` or `retire` events.
-- The shipped table holds the seven senses rows (TASK-149, `docs/senses-unlock.md`); the ten unlockable cards add theirs.
+- (Done in TASK-154) `cmd/d2bot` newFun opens the shipped ladder into `cfg.Unlock`; `Unlocks.OnGoalEvent` feeds `kills` (per monster name, in memory). New trigger kind `seen` (arg `what`) for viewer-side moments.
+- No emitter feeds `retire` events.
+- The shipped table holds the Chronicle rows (`docs/unlock-chronicle.md`) and the seven senses rows (TASK-149, `docs/senses-unlock.md`); the other unlockable cards add theirs.
 
 ## Verified
 

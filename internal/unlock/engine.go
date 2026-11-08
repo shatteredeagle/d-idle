@@ -20,6 +20,7 @@ const (
 	EvLevel      = "level"       // N: character level
 	EvKills      = "kills"       // Name: monster kind, N: kills of it so far
 	EvRetire     = "retire"      // N: heroes retired so far
+	EvSeen       = "seen"        // Name: something the viewer did or saw ("expedition_card"); idempotent by nature
 )
 
 // Event is one observation from a system that already exists.
@@ -116,6 +117,17 @@ func Open(dir, profile string, l *Ladder, now func() time.Time) (*Engine, error)
 	return e, nil
 }
 
+// Profile is the profile the engine was opened for; Dir is its state directory ("" in memory). Features that keep
+// their own small state file (the hero voice) put it next to the engine's.
+func (e *Engine) Profile() string { return e.profile }
+
+func (e *Engine) Dir() string {
+	if e.path == "" {
+		return ""
+	}
+	return filepath.Dir(e.path)
+}
+
 func (e *Engine) saveLocked() error {
 	if e.path == "" {
 		return nil
@@ -158,7 +170,7 @@ func (e *Engine) rollbackLocked(ids []string, metKey string, hadMet bool) {
 // an unknown type is an error naming it. A failed save opens nothing and returns the error; the event can be sent again.
 func (e *Engine) Observe(ev Event) ([]Entry, error) {
 	switch ev.Type {
-	case EvCodexFirst, EvQuest, EvLevel, EvKills, EvRetire:
+	case EvCodexFirst, EvQuest, EvLevel, EvKills, EvRetire, EvSeen:
 	default:
 		return nil, fmt.Errorf("%w %q", ErrUnknownEvent, ev.Type)
 	}
@@ -216,6 +228,8 @@ func (t Trigger) matches(ev Event) bool {
 	case Level:
 		n, _ := t.num("min")
 		return ev.Type == EvLevel && ev.N >= n
+	case Seen:
+		return ev.Type == EvSeen && strings.EqualFold(t.str("what"), ev.Name)
 	case RetireCount:
 		n, _ := t.num("min")
 		return ev.Type == EvRetire && ev.N >= n
@@ -236,6 +250,9 @@ func (e *Engine) Allowed(id string) bool {
 }
 
 func (e *Engine) known(id string) bool { _, err := e.l.Entry(id); return err == nil }
+
+// Has says whether the ladder has a row with that id (a feature without its row stays off).
+func (e *Engine) Has(id string) bool { return e.known(id) }
 
 // Check is Allowed with an error naming an unknown entry.
 func (e *Engine) Check(id string) (bool, error) {
