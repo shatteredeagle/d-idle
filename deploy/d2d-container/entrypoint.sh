@@ -60,7 +60,7 @@ if [ "$mode" = tester ]; then
 fi
 
 if [ "$dry" = 0 ]; then
-	for f in d2data.mpq d2exp.mpq; do
+	for f in d2data.mpq d2exp.mpq d2char.mpq Patch_D2.mpq; do
 		# the Wine-era files are mixed case on some installs
 		ls "$D2D_DATA" 2>/dev/null | grep -qix "$f" || { echo "entrypoint: $D2D_DATA/$f missing: mount your game data read-only at /game" >&2; exit 64; }
 	done
