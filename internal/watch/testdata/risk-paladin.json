@@ -1,0 +1,54 @@
+{
+  "schema": "watch.risk/1",
+  "open": true,
+  "title": "Risk meter",
+  "verdict": {
+    "verdict": "ready",
+    "gauge": 100,
+    "zone": "Forgotten Tower",
+    "reasons": [],
+    "checks": [
+      {
+        "name": "guard",
+        "state": "ok",
+        "detail": "the route guard is open"
+      },
+      {
+        "name": "kit",
+        "state": "ok",
+        "detail": "the kit is complete"
+      },
+      {
+        "name": "potions",
+        "state": "ok",
+        "detail": "5 potions in the belt"
+      },
+      {
+        "name": "life",
+        "state": "ok",
+        "detail": "life 70%"
+      },
+      {
+        "name": "level",
+        "state": "ok",
+        "detail": "level 16, zone 15 to 22"
+      },
+      {
+        "name": "resist",
+        "state": "ok",
+        "detail": "no resist gap known"
+      },
+      {
+        "name": "close calls",
+        "state": "ok",
+        "detail": "1 close call lately"
+      }
+    ]
+  },
+  "closest": {
+    "at": 0,
+    "zone": "Forgotten Tower",
+    "lowPct": 12
+  },
+  "recentCloseCalls": 1
+}
