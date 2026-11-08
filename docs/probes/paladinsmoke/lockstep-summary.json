@@ -1,0 +1,218 @@
+{
+  "v": 1,
+  "session": "20261108T034042Z-human",
+  "commit": "dev",
+  "class": "paladin",
+  "build": "",
+  "start": "2026-11-08T03:40:42Z",
+  "end": "2026-11-08T04:16:42Z",
+  "duration_s": 2159.6,
+  "questions": 30,
+  "answered": 0,
+  "faded": 30,
+  "rules_learned": 0,
+  "rules_revoked": 0,
+  "questions_per_10min": [
+    28,
+    1,
+    1,
+    0
+  ],
+  "fires_by": {
+    "default": 27857
+  },
+  "fires_logged": 2035,
+  "fires_suppressed": 25822,
+  "answer_latency_median_ms": null,
+  "orders": 2,
+  "mean_sec_between_orders": 0,
+  "stayed_in_tab_min": 0,
+  "deaths": 0,
+  "xp_per_h": 0,
+  "credits": 593,
+  "first_10min": [
+    {
+      "t_s": 0,
+      "kind": "question",
+      "label": "t0.area.toohard"
+    },
+    {
+      "t_s": 3,
+      "kind": "fade"
+    },
+    {
+      "t_s": 3.6,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 3.7,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 4.8,
+      "kind": "question",
+      "label": "t0.area.toohard"
+    },
+    {
+      "t_s": 4.8,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 5,
+      "kind": "fade"
+    },
+    {
+      "t_s": 5,
+      "kind": "fade"
+    },
+    {
+      "t_s": 5.4,
+      "kind": "question",
+      "label": "t1.restock"
+    },
+    {
+      "t_s": 6,
+      "kind": "fade"
+    },
+    {
+      "t_s": 6,
+      "kind": "fade"
+    },
+    {
+      "t_s": 6,
+      "kind": "fade"
+    },
+    {
+      "t_s": 6.3,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 6.5,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 6.6,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 11,
+      "kind": "fade"
+    },
+    {
+      "t_s": 11,
+      "kind": "fade"
+    },
+    {
+      "t_s": 11,
+      "kind": "fade"
+    },
+    {
+      "t_s": 27.3,
+      "kind": "question",
+      "label": "t1.town.trigger"
+    },
+    {
+      "t_s": 29,
+      "kind": "fade"
+    },
+    {
+      "t_s": 44.2,
+      "kind": "question",
+      "label": "t0.area.toohard"
+    },
+    {
+      "t_s": 46,
+      "kind": "question",
+      "label": "t1.return"
+    },
+    {
+      "t_s": 49,
+      "kind": "fade"
+    },
+    {
+      "t_s": 49,
+      "kind": "fade"
+    },
+    {
+      "t_s": 73.8,
+      "kind": "question",
+      "label": "t1.repair"
+    },
+    {
+      "t_s": 75,
+      "kind": "fade"
+    },
+    {
+      "t_s": 84.8,
+      "kind": "question",
+      "label": "t1.restock"
+    },
+    {
+      "t_s": 89,
+      "kind": "fade"
+    },
+    {
+      "t_s": 90.9,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 91,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 91.2,
+      "kind": "question",
+      "label": "t0.retreat.drink"
+    },
+    {
+      "t_s": 93,
+      "kind": "fade"
+    },
+    {
+      "t_s": 93,
+      "kind": "fade"
+    },
+    {
+      "t_s": 93,
+      "kind": "fade"
+    },
+    {
+      "t_s": 134,
+      "kind": "question",
+      "label": "t1.town.trigger"
+    },
+    {
+      "t_s": 136,
+      "kind": "fade"
+    },
+    {
+      "t_s": 143.7,
+      "kind": "question",
+      "label": "t0.area.toohard"
+    },
+    {
+      "t_s": 145,
+      "kind": "fade"
+    },
+    {
+      "t_s": 146.6,
+      "kind": "question",
+      "label": "t1.return"
+    },
+    {
+      "t_s": 151,
+      "kind": "fade"
+    }
+  ],
+  "record_bytes": 7441,
+  "decision_bytes": 978504,
+  "decision_bytes_per_h": 1631117
+}

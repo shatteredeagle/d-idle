@@ -1,0 +1,3 @@
+BACKLOG: PALADINSMOKE (TASK-142, live): fun-loop slices on a Paladin; slices answer, but the Paladin kills nothing in lockstep and 13 in 20 realtime minutes; cards TASK-175 palmelee (high), TASK-176 tallyempty, TASK-177 palpace, TASK-178 sessionwall; docs/paladinsmoke.md
+INDEX: docs/paladinsmoke.md - Paladin smoke of the fun-loop slices (TASK-142): pace, Codex firsts, slices, container numbers, defects
+CHANGELOG: Paladin smoke run of the return screen, tally, Codex, policy sheet and session record on lockstep and in the container; findings and four defect cards (docs/paladinsmoke.md)
