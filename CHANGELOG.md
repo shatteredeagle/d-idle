@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Unlock ladder framework: per-profile unlocks from Codex firsts, level, quest and tally spend, with a reveal line and a return-screen section.
 - Self-update part 3: boot shim with automatic rollback and image changes (not yet run in a container)
 - bot-side Pacts: Blood Raven's Tithe and Andariel's Shadow through the tuner and policy sheet, away-consent record, off in gates and measured runs (TASK-167)
 - Paladin on d2d: the Might aura is now picked through the right skill popup and stays up instead of failing on every fight; a recovery in a dry field moves on after five minutes (knobs bot.recoveryDryMin, bot.recoveryDryKills, bot.recoveryDrySkipMin).
