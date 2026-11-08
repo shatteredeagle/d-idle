@@ -20,12 +20,12 @@ Spoiler rule: no resist or immunity field is sent before the 50th kill of that k
 - `internal/watch/unlockbestiary.go`: `Bestiary`, `GET /api/bestiary`, schema `watch.bestiary/1`, the return screen section "New in Cain's notes" (cards and resist pages opened since the viewer left).
 - `data/bestiary/notes.json`: the kinds (name, family, flavour, drops, tip, tipTag S or U). Type, attack pattern and resists come from the extracted tables (`data.Monster`), through the `MonsterTables` interface (`FunConfig.Monsters`). With no tables the cards carry flavour only (`tables:false`). With tables, a kind missing from the monster table is an error naming it.
 - `internal/watch/web/unlockui.js`, `watch.html`: the panel.
-- Kills are counted per kind in memory from the goals kill events (a replayed `Seq` never counts twice); a restart counts again, the ladder rows stay open (U).
+- Kills are counted per kind from the goals kill events (a replayed `Seq` never counts twice). `cmd/d2bot` keeps them in `bestiary-<profile>.json` in the state dir (`FunConfig.BestiaryPath`, `Bestiary.SetStore`), so a restart goes on from the old counts (V `TestBestiaryWiredWithTableAndRestart`).
 
 ## Open items
 
 - U: the kind names in `notes.json` match monstats display names (a real-table check is a follow-up; the tests use a fixture table). Tips are secondary (S: `docs/research/class-early-game.md`, the SME) or U.
-- `cmd/d2bot` does not set `FunConfig.Monsters` yet (needs the `data.DB` plumbed into `newFun` and the names checked against the real table first), so the live bot shows flavour-only cards.
+- `cmd/d2bot` sets `FunConfig.Monsters` from the `data.DB` it opened (TASK-185); without game tables the cards are flavour-only. A shipped kind missing from the table is skipped and logged (`FilterBestiaryNotes`), not fatal.
 - Drops are free text, not the treasure class tree (U).
 
 ## Verified
