@@ -23,6 +23,10 @@ owns:
   - "internal/bot"
   - "internal/loot"
   - "docs/belt-plan.md"
+  - "docs/knobs.md"
+  - "docs/policy-sheet.md"
+  - "internal/watch"
+  - "cmd/d2bot/resource_test.go"
 exclusive: []
 contracts: []
 ---
@@ -32,7 +36,7 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Why: the policy sheet options 'potion mix' and 'belt fill' only moved drink lines; no path bought an all-mana or mixed-ratio belt, and the user wants players to be able to make suboptimal choices and learn. Done when: resource.beltPlan and resource.beltCol1..4 choose the columns, and the shop, belt fill, loot pickup, kit gate and policy sheet follow them (docs/belt-plan.md).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
