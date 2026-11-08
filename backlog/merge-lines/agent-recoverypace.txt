@@ -1,3 +1,0 @@
-BACKLOG: TASK-183 recoverypace: recoveryEndOnKit knob and the player/tester early-game preset (ladder on only); recovery 19-23 -> 10-11 min, town chores halved on Paladin and Sorceress (one seed); Barbarian re-run open
-INDEX: docs/soaks/recoverypace.md - recoverypace: why the early game is a gold loop, the fix and the before/after drill (TASK-183)
-CHANGELOG: The player and tester profile ends the early gold-farm recovery sooner (stall check after 10 minutes, ends once the kit is affordable) and walks to town to sell junk less often; gate and soak defaults are unchanged.
