@@ -208,7 +208,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.leaveSlack | 0 | 0..6 | levels | 6 | 5 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
 | bot.corpseRetries | 1 | 0..1 | count | 0 | 1 | Max attempts to recover the corpse after a softcore death. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
-| bot.clearRadius | 30 | 12..30 | subtiles | 12 | 13 | Reach of one clear sweep. Smaller means more walking between sweeps. |
+| bot.clearRadius | 30 | 12..45 | subtiles | 12 | 13 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
 | bot.corpseValueMin | 1000 | 1..2e+04 | gold | 2e+04 | 4 | Estimated value of the gear on the corpse below which it is abandoned. Higher abandons more. |
 | bot.spiralDeaths | 4 | 3..8 | deaths | 8 | 4 | Deaths in one area within the spiral window that make the bot avoid that area (one fewer when the area is clearly too high for the level or the character died with no potions and no gold). Dying is normal: the default allows three deaths on the same goal. Higher tolerates more. |
 | bot.dangerBanMin | 20 | 5..120 | min | 120 | 1 | How long the spiral breaker keeps the character out of an area. Longer stalls the goal more. |

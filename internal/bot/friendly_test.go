@@ -57,3 +57,17 @@ func TestHostileNearSkipsIgnored(t *testing.T) {
 		t.Fatalf("hostileNear = %d, want 1", n)
 	}
 }
+
+// The fighter's scope is a circle (combat.inRange); a monster in the corner of the radius square is outside it, and
+// counting it made Clear kill nothing and start the futile window (live d2play-20261108: 'clear killed nothing;
+// moving on' remaining 0, sec=0, twice in 4 minutes).
+func TestHostileNearIsACircleLikeTheFighterScope(t *testing.T) {
+	r := &Runner{d: Deps{Catalog: aiCatalog{}, Fighter: &fakeFighter{}}}
+	s := &d2.Snapshot{Player: &d2.Player{ID: 1, Area: 2, X: 100, Y: 100}, Monsters: []d2.Unit{
+		{ID: 5, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 125, Y: 125}, // 35 away, inside the square
+		{ID: 6, Type: d2.TypeMonster, Class: 10, Mode: d2.MonModeStand, X: 120, Y: 120}, // 28 away
+	}}
+	if n := r.hostileNear(s, 30); n != 1 {
+		t.Fatalf("hostileNear = %d, want 1 (only the unit inside the circle)", n)
+	}
+}

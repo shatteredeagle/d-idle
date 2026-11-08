@@ -72,6 +72,8 @@ func newPolRig(t *testing.T, class string, withKnobs bool) *polRig {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// The class starts have their own tests (policystart_test.go, stance_test.go); the rows of the older tests begin on the defaults.
+	r.sheet.SetStarts(func(string) (map[string]string, error) { return nil, nil })
 	return r
 }
 
@@ -340,6 +342,7 @@ func TestPolicyErrorsNameTheThing(t *testing.T) {
 	for class, wantErr := range map[string]bool{"sorceress": true, "paladin": false} {
 		st, _ := decide.New(cat, "p", &decide.ManualClock{})
 		ps, _ := NewPolicySheet(st, cat, tbl, func() string { return class }, func() float64 { return 0 }, NewAwayLog(nil), func(map[string]*float64) error { return nil })
+		ps.SetStarts(func(string) (map[string]string, error) { return nil, nil })
 		_, _, err := ps.Set("pal", "x")
 		if wantErr != errors.Is(err, ErrPolicyScope) || (!wantErr && err != nil) {
 			t.Errorf("%s: %v", class, err)

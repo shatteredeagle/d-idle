@@ -121,8 +121,12 @@ func TestFeedHubFunLoop(t *testing.T) {
 			if code := httpDo(t, "POST", answer+"/api/policy", map[string]string{"row": "repair", "option": "never"}, nil); code != 200 {
 				t.Errorf("policy change: %d", code)
 			}
-			if code := httpDo(t, "POST", answer+"/api/policy", map[string]string{"row": "belt", "option": "half"}, nil); code != 200 || len(knobCalls) != 1 || *knobCalls[0]["town.beltFillPct"] != 50 {
+			if code := httpDo(t, "POST", answer+"/api/policy", map[string]string{"row": "belt", "option": "half"}, nil); code != 200 || len(knobCalls) == 0 || *knobCalls[len(knobCalls)-1]["town.beltFillPct"] != 50 {
 				t.Errorf("knob option: %d %v", code, knobCalls)
+			}
+			// the Paladin's class start (Aggressive) reached the knob path when the hero's class showed up; the Sorceress stays on Balanced
+			if want := map[string]int{"Paladin": 2, "Sorceress": 1}[class]; want != 0 && len(knobCalls) != want {
+				t.Errorf("%s: %d knob calls, want %d (class start + belt)", class, len(knobCalls), want)
 			}
 			if code := httpDo(t, "GET", view+"/api/policy", nil, &pv); code != 200 {
 				t.Fatal(code)

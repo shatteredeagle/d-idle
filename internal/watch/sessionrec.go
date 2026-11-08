@@ -494,6 +494,9 @@ func (s *Session) onLog(e decide.Entry) {
 		return &ms
 	}
 	switch e.Op {
+	case decide.OpPolicy:
+		// a sheet row changed (the player, a Pact or the class start); the stance row is the fight stance
+		s.writeRec("policy", map[string]any{"row": e.Key, "option": e.Answer})
 	case decide.OpAnswer:
 		if !known {
 			return

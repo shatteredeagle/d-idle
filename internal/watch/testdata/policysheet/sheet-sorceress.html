@@ -235,6 +235,21 @@
 <span class="badge">not wired yet</span> <span class="hint">The bot does not ask t1.stash.full yet (docs/t0-slice.md).</span>
 </div></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="stance" aria-labelledby="row-stance"><h2 id="row-stance">How boldly the hero fights</h2><p>How far the hero notices and chases monsters and how early it backs off. It moves existing fight settings together: how far away a monster is noticed, how long a chase lasts, the life lines for potions and for leaving the game, extra care against champions, and when the potion count sends the hero to town. A melee hero and a caster get different numbers for the same stance (sheet: Knobs).</p>
+<div class="opts"><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="stance" data-option="cautious" aria-pressed="false">Cautious</button>
+<span class="hint">Cautious: only fights what comes close (noticed within about 4 tiles for a melee hero, 5 for a caster), gives up a chase sooner, drinks a healing potion at 65 percent life, leaves the game at 35 percent, takes extra care with champions and goes to town when 3 healing potions are left.</span>
+
+</div><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="stance" data-option="default" aria-pressed="true">Balanced</button>
+<span class="hint">Balanced: today&#39;s behaviour. Monsters within 6 tiles are fought, a healing potion at 55 percent life, the game is left at 25 percent, a town trip at 2 healing potions.</span><span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="stance" data-option="aggressive" aria-pressed="false">Aggressive</button>
+<span class="hint">Aggressive: goes after monsters from farther away (about 8 tiles for a melee hero, 7 for a caster), chases longer, drinks at 50 percent life, leaves the game at 22 percent (20 for a caster), takes less extra care with champions and goes to town only when 1 healing potion is left. A melee hero starts here: it has to walk up to its target.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section>
 </main>
 <p id="msg" class="hint" role="status"></p>

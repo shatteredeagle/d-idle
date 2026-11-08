@@ -136,6 +136,10 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	for _, e := range f.Errors() {
 		slog.Warn("fun: " + e)
 	}
+	if os.Getenv("D2BOT_RUN") != "" {
+		// A named run (gate, soak, drill) keeps today's knobs: the class start of the stance row is for the player's game.
+		f.Policy.SetStarts(func(string) (map[string]string, error) { return nil, nil })
+	}
 	if err := f.Policy.Reapply(); err != nil {
 		return nil, fmt.Errorf("policy sheet: %w", err)
 	}
