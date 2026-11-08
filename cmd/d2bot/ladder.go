@@ -158,6 +158,7 @@ type ladderRig struct {
 	Ladder *ladder.Ladder
 	Hub    *watch.Hub
 	Served watch.Served
+	Fun    *watch.Fun       // return screen, tally strip and Codex (funwire.go); nil without -watch
 	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
 }
 
@@ -206,6 +207,9 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 			return nil, nil, err
 		}
 		hub.SetCurrency(rig.Wallet)
+		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk); err != nil {
+			return nil, nil, err
+		}
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}
@@ -227,7 +231,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		ladder.Install(nil)
 		return nil, err
 	}
-	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid}
+	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
 	}
@@ -238,7 +242,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	}
 	rig.Served = served
 	go rig.Hub.RunTicker(ctx, time.Second)
-	go feedHub(ctx, rig.Hub, orders, m, status)
+	go feedHub(ctx, rig.Hub, orders, rig.Fun, m, status)
 	return rig, nil
 }
 
@@ -342,9 +346,10 @@ func liveRuleKeys(st *decide.Store) []string {
 	return keys
 }
 
-// feedHub forwards the goal manager's events (orders, deaths, kills, area changes) and a status poll to the Hub: the
+// feedHub forwards the goal manager's events (orders, deaths, kills, area changes) and a status poll to the Hub and,
+// when fun is set, to the return screen, tally strip and Codex: the
 // uptime source (docs/research/watch-screen-design.md, 3.5).
-func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, m *goals.Manager, status func() goals.Status) {
+func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, fun *watch.Fun, m *goals.Manager, status func() goals.Status) {
 	ch, cancel := m.Subscribe()
 	defer cancel()
 	tick := time.NewTicker(2 * time.Second)
@@ -358,9 +363,15 @@ func feedHub(ctx context.Context, hub *watch.Hub, o *watch.GoalsOrders, m *goals
 				return
 			}
 			o.OnGoalEvent(ev)
+			if fun != nil {
+				fun.OnGoalEvent(ev)
+			}
 		case <-tick.C:
 			if status != nil {
 				o.OnStatus(status())
+			}
+			if fun != nil {
+				fun.Settle()
 			}
 		}
 	}
