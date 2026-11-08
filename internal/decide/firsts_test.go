@@ -293,3 +293,19 @@ func TestCodex_FileErrors(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+// The repeat policy (cooldown, quiet) is per key and a first asks its own key once: it must never suppress a first.
+func TestFirsts_NotSuppressedByRepeatPolicy(t *testing.T) {
+	tr, st, cx, clk := firstsRig(t, "sorceress", "")
+	st.SetRepeatPolicy(DefaultRepeatCooldown, DefaultQuietAfter)
+	for _, n := range []string{"Fallen", "Fallen Shaman", "Quill Rat", "Corpsefire", "Bishibosh"} {
+		clk.Advance(10 * time.Second)
+		got, err := tr.Observe(FirstEvent{Kind: "monster", Name: n})
+		if err != nil || len(got) != 1 || got[0].Decision == nil || got[0].Decision.Thought == nil {
+			t.Fatalf("%s: %v %v", n, got, err)
+		}
+	}
+	if len(st.OpenThoughts()) != 5 || len(cx.Entries()) != 5 {
+		t.Fatalf("%d open, %d entries", len(st.OpenThoughts()), len(cx.Entries()))
+	}
+}

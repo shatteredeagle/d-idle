@@ -88,3 +88,29 @@ func CodexHandler(src CodexSource) http.Handler {
 		writeJSON(w, http.StatusOK, CodexViewOf(src, window))
 	})
 }
+
+// CodexReturnSection is the return screen's "firsts" section (registry id CodexSectionID). The return window's clock
+// (journal seconds) is not the Codex's run clock (U), so it shows the three newest entries and the count, not a window.
+func CodexReturnSection(src CodexSource) ReturnSection {
+	return SectionFunc(func(*ReturnData) *SectionView {
+		s := src.Summary(0)
+		v := &SectionView{ID: CodexSectionID, Title: "Codex", Placeholder: fmt.Sprintf("%d of %d Act 1 entries", s.Filled, s.Total)}
+		for i, e := range s.Recent {
+			if i == 3 {
+				break
+			}
+			line := e.Title
+			if e.Label != "" {
+				line += ": " + e.Label + " (" + e.Source + ")"
+			}
+			v.Lines = append(v.Lines, line+". "+e.Tip)
+		}
+		if len(v.Lines) > 0 {
+			v.Lines = append(v.Lines, fmt.Sprintf("%d of %d Act 1 entries", s.Filled, s.Total))
+		}
+		return v
+	})
+}
+
+// CodexSectionID is the id to pass to SectionRegistry.Register.
+const CodexSectionID = "codex"

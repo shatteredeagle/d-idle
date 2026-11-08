@@ -40,7 +40,7 @@ A first's thought opens like any other: it waits for the player until the fade (
 
 ## /api/codex
 
-`watch.codex/1`: `total` (rows), `filled`, `asked`, `byKind`, `recent` (newest first, every entry or those within `window` minutes), `missing` (titles not met), `line` (the return screen text, e.g. "3 new firsts: Fallen Shaman, Corpsefire, Cold Plains waypoint (3 of 37 Act 1 entries)"). Mount `CodexRoute` with `CodexHandler(CodexReader{...})`. TASK-127's `ReturnSection` registry has not landed on main: the return screen calls `watch.CodexSection(summary)` until it does. `firstSec` is virtual seconds since the run started.
+`watch.codex/1`: `total` (rows), `filled`, `asked`, `byKind`, `recent` (newest first, every entry or those within `window` minutes), `missing` (titles not met), `line` (the return screen text, e.g. "3 new firsts: Fallen Shaman, Corpsefire, Cold Plains waypoint (3 of 37 Act 1 entries)"). Mount `CodexRoute` with `CodexHandler(CodexReader{...})`. TASK-127's `ReturnSection` registry has not landed on main: register `watch.CodexReturnSection(reader)` under `watch.CodexSectionID` on the SectionRegistry (merged; the call is a one-liner for the wiring owner). The repeat policy of TASK-137 is per key and a first asks its key once, so it is never suppressed (test). `firstSec` is virtual seconds since the run started.
 
 ## Honesty tags
 

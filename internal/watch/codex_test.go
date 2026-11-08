@@ -38,7 +38,7 @@ func codexRig(t *testing.T, class string) (CodexReader, *decide.Tracker, *decide
 	return CodexReader{Codex: cx, Table: tbl, Clock: clk}, tr, clk
 }
 
-func feed(t *testing.T, tr *decide.Tracker, clk *decide.ManualClock) {
+func feedCodex(t *testing.T, tr *decide.Tracker, clk *decide.ManualClock) {
 	t.Helper()
 	for _, s := range []struct {
 		at time.Duration
@@ -58,7 +58,7 @@ func feed(t *testing.T, tr *decide.Tracker, clk *decide.ManualClock) {
 func TestCodexAPI_Golden(t *testing.T) {
 	for _, class := range []string{"sorceress", "paladin"} {
 		rd, tr, clk := codexRig(t, class)
-		feed(t, tr, clk)
+		feedCodex(t, tr, clk)
 		clk.T = 30 * time.Minute
 		h := CodexHandler(rd)
 		get := func(path string) *httptest.ResponseRecorder {
@@ -97,9 +97,24 @@ func TestCodexSection(t *testing.T) {
 	if got := CodexSection(rd.Summary(0)); got != "0 of "+strconv.Itoa(rd.Summary(0).Total)+" Act 1 entries" {
 		t.Fatalf("empty: %q", got)
 	}
-	feed(t, tr, clk)
+	feedCodex(t, tr, clk)
 	got := CodexSection(rd.Summary(0))
 	if !strings.HasPrefix(got, "3 new firsts: Fallen Shaman, Corpsefire, Cold Plains waypoint (3 of ") {
 		t.Fatalf("section %q", got)
+	}
+}
+
+func TestCodexReturnSection(t *testing.T) {
+	rd, tr, clk := codexRig(t, "sorceress")
+	reg := DefaultSections()
+	reg.Register(CodexSectionID, CodexReturnSection(rd))
+	sec := CodexReturnSection(rd)
+	if v := sec.Build(&ReturnData{}); len(v.Lines) != 0 || !strings.HasSuffix(v.Placeholder, "Act 1 entries") {
+		t.Fatalf("empty: %+v", v)
+	}
+	feedCodex(t, tr, clk)
+	v := sec.Build(&ReturnData{})
+	if len(v.Lines) != 4 || !strings.HasPrefix(v.Lines[0], "Cold Plains waypoint: start trips here") {
+		t.Fatalf("lines %q", v.Lines)
 	}
 }
