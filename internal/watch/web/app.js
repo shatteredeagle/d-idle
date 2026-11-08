@@ -204,10 +204,11 @@
     if (!om) return;
     var h = el('div', 'card-head'), t = el('h2', '', 'Hero now'); t.id = 't-now'; h.appendChild(t); n.appendChild(h);
     var o = activeOrder(), here = heroNode();
+    var ttl = om.hero.title ? ' Title: ' + om.hero.title + '.' : '';
     var act = om.hero.activity ? om.hero.activity.charAt(0).toUpperCase() + om.hero.activity.slice(1) : '';
     if (!o) {
       var named = here ? 'In ' + here.name + '.' : 'Position unknown.';
-      n.appendChild(el('p', '', 'Following its own plan. ' + named + (act ? ' ' + act + '.' : '') + ' No order. Tap an area on the map to send the hero.'));
+      n.appendChild(el('p', '', 'Following its own plan. ' + named + (act ? ' ' + act + '.' : '') + ttl + ' No order. Tap an area on the map to send the hero.'));
       var lc = lastClosed();
       if (lc) n.appendChild(el('div', 'last', 'Last order: ' + lc.text + ' - ' + lc.state + (lc.note ? ' (' + lc.note + ')' : '') + '.'));
       var qk = el('div', 'quick'), hb = el('button', 'btn', 'Rest in town'); hb.type = 'button';
