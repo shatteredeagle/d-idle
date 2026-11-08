@@ -1,0 +1,16 @@
+{
+ "id": "policy",
+ "title": "Policy changes",
+ "lines": [
+  "Potion mix: now \"Mana potions first\" (was \"The build's mix (today's rule)\"). After, 15 min: mana potions drunk: 3, healing potions drunk: 0, rejuvenation potions drunk: 0, deaths: 2, deaths with no potion drunk just before: 1 (U). Before, 15 min: mana potions drunk: 1, healing potions drunk: 1, rejuvenation potions drunk: 0, deaths: 0, deaths with no potion drunk just before: 0 (U).",
+  "(U) marks a counter whose link to the setting is a guess, not a measurement. 'Not reported' means no event carries it yet."
+ ],
+ "after": true,
+ "buttons": [
+  {
+   "label": "Change it back: Potion mix",
+   "row": "potionmix",
+   "option": "default"
+  }
+ ]
+}
