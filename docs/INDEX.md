@@ -798,3 +798,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/fun-ideas.md: the converged d.idle loop (expeditions, tally, policy sheet, Codex, legacy charm) with the incremental-games research and the comparison of dropped ideas
 - docs/research/fun-ideas.md: now the final design-conversation doc: decisions so far, skill-unlock reconciliation, prototype plan, ADR-ready block
 - docs/adr/0018-fun-loop-expedition-ledger-2026-11-07.md - the Expedition Ledger loop, Act 1 Codex, Hall of Fame (ADR 0018)
+- docs/research/fid-revive-refill.md | what game.exe's respawn refills (life, mana, stamina to the maxima) and d2d's Fight::revive; oracle, deviations, drill recipe (TASK-125)
+- docs/research/pr-revive-refill-draft.md | PR draft: a respawn after death refills life, mana and stamina (candidate, unverified, not opened)
