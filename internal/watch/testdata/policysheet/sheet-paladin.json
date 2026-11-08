@@ -283,40 +283,71 @@
   {
    "id": "potionmix",
    "label": "Potion mix",
-   "help": "Which potions the hero relies on. The belt columns follow the build; these options move the drink lines.",
+   "help": "What the four belt columns hold, so what the hero buys and refills in town. The default is the build's own plan (casters about half mana, a Barbarian no mana). Rejuvenation columns buy healing until the shop sells rejuvenation. docs/belt-plan.md.",
    "current": "default",
    "default": "default",
    "changed": false,
    "options": [
     {
      "id": "default",
-     "label": "The build's mix (today's rule)",
+     "label": "The build's own mix (today's rule)",
      "current": true,
      "default": true
     },
     {
+     "id": "balanced",
+     "label": "Balanced: two healing, one mana, one rejuvenation",
+     "current": false,
+     "knobs": [
+      "resource.beltPlan = 1"
+     ]
+    },
+    {
+     "id": "h3m1",
+     "label": "Three healing columns to one mana column",
+     "current": false,
+     "knobs": [
+      "resource.beltPlan = 4"
+     ]
+    },
+    {
+     "id": "h1m1",
+     "label": "Healing and mana in equal parts",
+     "current": false,
+     "knobs": [
+      "resource.beltPlan = 5"
+     ]
+    },
+    {
      "id": "allmana",
-     "label": "Mana potions first",
+     "label": "All mana potions",
      "current": false,
      "suboptimal": true,
-     "risk": "Few healing potions are drunk; deaths with a full mana belt.",
-     "applies": "record",
-     "note": "Only the healing drink line moves (to its lowest value). No bot path buys an all-mana belt yet (the belt plan is code, docs/sme/potion-policy.md); a bot card is needed.",
+     "risk": "No healing potion is bought; life can only be answered by the town portal and the walk home. Your call, risky.",
      "knobs": [
-      "combat.drinkLifePct = 35"
+      "resource.beltPlan = 3"
      ]
     },
     {
      "id": "allhealth",
-     "label": "Healing potions only",
+     "label": "All healing potions",
      "current": false,
      "suboptimal": true,
      "risk": "Casters run dry of mana and fight with the cheap attack.",
-     "applies": "part",
-     "note": "Mana potions are not drunk or demanded, but the belt plan may still buy some (U).",
      "knobs": [
       "combat.drinkManaPct = 5",
+      "resource.beltPlan = 2",
       "town.tripMinMPPotions = 0"
+     ]
+    },
+    {
+     "id": "rejuv",
+     "label": "Rejuvenation only",
+     "current": false,
+     "suboptimal": true,
+     "risk": "Expensive, and early on the shop does not sell it, so the belt stays empty.",
+     "knobs": [
+      "resource.beltPlan = 6"
      ]
     }
    ],
@@ -354,7 +385,7 @@
   {
    "id": "belt",
    "label": "Belt fill",
-   "help": "How full each potion column is refilled in town.",
+   "help": "How full each column of the belt plan (see Potion mix) is refilled in town.",
    "current": "default",
    "default": "default",
    "changed": false,

@@ -71,13 +71,15 @@
      "effect": [{"counter": "deaths", "label": "deaths"}, {"counter": "closecalls", "label": "close calls"}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
 
     {"id": "potionmix", "label": "Potion mix", "default": "default",
-     "help": "Which potions the hero relies on. The belt columns follow the build; these options move the drink lines.",
+     "help": "What the four belt columns hold, so what the hero buys and refills in town. The default is the build's own plan (casters about half mana, a Barbarian no mana). Rejuvenation columns buy healing until the shop sells rejuvenation. docs/belt-plan.md.",
      "options": [
-       {"id": "default", "label": "The build's mix (today's rule)"},
-       {"id": "allmana", "label": "Mana potions first", "suboptimal": true, "risk": "Few healing potions are drunk; deaths with a full mana belt.", "knobs": {"combat.drinkLifePct": 35},
-        "applies": "record", "note": "Only the healing drink line moves (to its lowest value). No bot path buys an all-mana belt yet (the belt plan is code, docs/sme/potion-policy.md); a bot card is needed."},
-       {"id": "allhealth", "label": "Healing potions only", "suboptimal": true, "risk": "Casters run dry of mana and fight with the cheap attack.", "knobs": {"combat.drinkManaPct": 5, "town.tripMinMPPotions": 0},
-        "applies": "part", "note": "Mana potions are not drunk or demanded, but the belt plan may still buy some (U)."}
+       {"id": "default", "label": "The build's own mix (today's rule)"},
+       {"id": "balanced", "label": "Balanced: two healing, one mana, one rejuvenation", "knobs": {"resource.beltPlan": 1}},
+       {"id": "h3m1", "label": "Three healing columns to one mana column", "knobs": {"resource.beltPlan": 4}},
+       {"id": "h1m1", "label": "Healing and mana in equal parts", "knobs": {"resource.beltPlan": 5}},
+       {"id": "allmana", "label": "All mana potions", "suboptimal": true, "risk": "No healing potion is bought; life can only be answered by the town portal and the walk home. Your call, risky.", "knobs": {"resource.beltPlan": 3}},
+       {"id": "allhealth", "label": "All healing potions", "suboptimal": true, "risk": "Casters run dry of mana and fight with the cheap attack.", "knobs": {"resource.beltPlan": 2, "combat.drinkManaPct": 5, "town.tripMinMPPotions": 0}},
+       {"id": "rejuv", "label": "Rejuvenation only", "suboptimal": true, "risk": "Expensive, and early on the shop does not sell it, so the belt stays empty.", "knobs": {"resource.beltPlan": 6}}
      ],
      "effect": [{"counter": "potions_mana", "label": "mana potions drunk"}, {"counter": "potions_health", "label": "healing potions drunk"}, {"counter": "potions_rejuv", "label": "rejuvenation potions drunk"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
 
@@ -91,7 +93,7 @@
      "effect": [{"counter": "potions", "label": "potions drunk"}, {"counter": "deaths", "label": "deaths"}]},
 
     {"id": "belt", "label": "Belt fill", "default": "default",
-     "help": "How full each potion column is refilled in town.",
+     "help": "How full each column of the belt plan (see Potion mix) is refilled in town.",
      "options": [
        {"id": "default", "label": "Fill every planned column (today's rule)"},
        {"id": "half", "label": "Fill half of each column", "suboptimal": true, "risk": "Fewer potions per trip; more trips and thinner fights.", "knobs": {"town.beltFillPct": 50}},

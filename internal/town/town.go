@@ -6,6 +6,7 @@ package town
 import (
 	"context"
 	"d2lod-bot/internal/gclock"
+	"d2lod-bot/internal/resource"
 	"errors"
 	"fmt"
 	"math"
@@ -92,6 +93,7 @@ type Town struct {
 	stashRefused     map[uint32]bool                          // pack items a full stash refused and relieveStash could not place
 	cubeBlocked      string                                   // state signature after a cube chore found no pack room
 	shopClass        int                                      // class of the NPC whose trade window is open (0 = none): chores of one NPC share it
+	planErrLogged    bool                                     // the belt plan error was logged once
 	noWalk           bool                                     // openNPC clicks a loaded NPC without walking next to it first
 	menuEntry        func(Entry) (input.Point, bool)          // backend-reported dialog line point (replaces the pixel model of entryPoint)
 	menuIndex        func(idx int) (input.Point, bool)        // same, by line index below the header
@@ -120,10 +122,25 @@ func (t *Town) SetBuild(name string) {
 }
 
 func (t *Town) plan(p *d2.Player) belt.Band {
+	var b belt.Band
 	if t.planFn != nil {
-		return t.planFn(p.Class, p.Level)
+		b = t.planFn(p.Class, p.Level)
+	} else {
+		b = belt.PlanForBuild(p.Class, p.Level, p.Difficulty, t.build)
 	}
-	return belt.PlanForBuild(p.Class, p.Level, p.Difficulty, t.build)
+	// The player's belt plan (resource.beltPlan, docs/belt-plan.md) decides the shopping list, the fill and the trips.
+	b, err := b.WithSpec(resource.SpecOfEnv(t.e.Tune.Resource))
+	if err != nil && !t.planErrLogged {
+		t.planErrLogged = true
+		t.e.Log.Warn("belt plan: " + err.Error())
+	}
+	return b
+}
+
+// planHasHealing reports a healing or rejuvenation column in the belt plan of p.
+func (t *Town) planHasHealing(p *d2.Player) bool {
+	b := t.plan(p)
+	return b.Capacity(belt.HP, belt.Columns) > 0 || b.Capacity(belt.RV, belt.Columns) > 0
 }
 
 // SetJudge replaces the item judge.

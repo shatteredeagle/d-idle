@@ -411,3 +411,37 @@ func WillBeltFor(db *data.DB, inv *d2.Inventory, k Kind, b Band) bool {
 	_, ok := PlaceFor(Slots(db, inv), PlacedItems(db, inv), k, b)
 	return ok
 }
+
+// WithSpec lays the player's belt plan choice (resource.beltPlan, beltCol1..4) over the band's columns. The tier caps stay.
+func (b Band) WithSpec(s resource.PlanSpec) (Band, error) {
+	if s.IsDefault() {
+		return b, nil
+	}
+	var rp resource.BeltPlan
+	for i, k := range b.Cols {
+		switch k {
+		case HP:
+			rp.Cols[i] = resource.PotionLife
+		case MP:
+			rp.Cols[i] = resource.PotionMana
+		case RV:
+			rp.Cols[i] = resource.PotionRejuv
+		}
+	}
+	rp, err := s.Apply(rp)
+	if err != nil {
+		return b, err
+	}
+	for i, k := range rp.Cols {
+		b.Cols[i] = None
+		switch k {
+		case resource.PotionLife:
+			b.Cols[i] = HP
+		case resource.PotionMana:
+			b.Cols[i] = MP
+		case resource.PotionRejuv:
+			b.Cols[i] = RV
+		}
+	}
+	return b, nil
+}

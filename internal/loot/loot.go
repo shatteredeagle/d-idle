@@ -512,6 +512,9 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 		}
 		st := belt.Read(db, inv)
 		band := belt.PlanForBuild(p.Class, p.Level, p.Difficulty, n.l.build) // same plan the shop buys by, else mana-hungry classes pick up the wrong kind
+		if b, err := band.WithSpec(resource.SpecOfEnv(n.l.e.Tune.Resource)); err == nil {
+			band = b // the player's belt plan (docs/belt-plan.md); a bad value is logged by the shop
+		}
 		// B1: game.exe puts a clicked ground potion on the belt first (same-kind column with room, else an empty column),
 		// so a potion the plan carries and the belt will take is wanted whatever the pack holds; the pack buffer below
 		// only limits potions that would land in the pack.

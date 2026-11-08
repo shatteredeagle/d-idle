@@ -229,7 +229,10 @@ func (p BeltPlan) capacity(k Potion, rows int) int {
 // HPFirst healing potions, then MPFirst mana potions (casters), then fill healing, fill mana, then rejuvenation. The tier is the highest
 // not above PrefTier whose "first" purchases fit; a poor character therefore buys minor potions.
 func PlanBuys(in Input, t Tuning, pr Prices) Buys {
-	plan := PlanForBuild(in.Class, in.Level, in.Diff, in.Build)
+	plan, err := SpecOf(t).PlanFor(in)
+	if err != nil {
+		return Buys{} // the knobs are clamped; an out-of-range value buys nothing rather than a wrong belt
+	}
 	rows := in.Belt.Rows
 	spend := in.Gold - t.ReserveGold
 	if !in.HasTP {
@@ -240,7 +243,7 @@ func PlanBuys(in Input, t Tuning, pr Prices) Buys {
 	}
 	if !Poor(in, t) {
 		// The share never cuts into the survival kit the gear shop reserves (KitShortfall, minus the portal bought above).
-		kit := KitShortfall(true, in.Belt.HP+in.Belt.RV, in.Belt.MP, t)
+		kit := KitShortfall(true, KitHealing(plan, in.Belt.HP+in.Belt.RV, t), in.Belt.MP, t)
 		spend = max(spend*t.PotionGoldPct/100, min(spend, kit))
 	}
 	b := Buys{Spendable: spend}
@@ -257,10 +260,8 @@ func PlanBuys(in Input, t Tuning, pr Prices) Buys {
 		needRV = 0
 	}
 	firstHP := min(t.HPFirst, needHP)
-	firstMP := 0
-	if in.manaNeed() >= 1 {
-		firstMP = min(t.MPFirst, needMP)
-	}
+	// The plan decides which kinds are bought: a column the player gave to mana is filled for any class.
+	firstMP := min(t.MPFirst, needMP)
 	tier := plan.PrefTier
 	for tier > 1 && firstHP*pr.HP[tier-1]+firstMP*pr.MP[min(tier, 5)-1] > spend {
 		tier--
@@ -275,9 +276,7 @@ func PlanBuys(in Input, t Tuning, pr Prices) Buys {
 	buy(&b.HP, firstHP, hpP)
 	buy(&b.MP, firstMP, mpP)
 	buy(&b.HP, needHP, hpP)
-	if in.manaNeed() >= 1 {
-		buy(&b.MP, needMP, mpP)
-	}
+	buy(&b.MP, needMP, mpP)
 	rvTier := 1
 	if plan.PrefTier >= 4 {
 		rvTier = 2
