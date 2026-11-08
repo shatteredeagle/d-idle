@@ -1,10 +1,10 @@
 # d2d container (docs/d2d-container/README.md). Build context from deploy/d2d-container/context.sh, never from the repo root.
-# The d2d binary is the private GPL fork: local build artifact only, never pushed to a registry (licensing.md).
+# The d2d binary is built from the published GPL fork (tag didle-gate2-lab3) and public vendored archives; never pushed by this file (licensing.md).
 # Game data (MPQs) is NEVER in an image: mount it read-only at /game.
 ARG UBUNTU=ubuntu:26.04
 ARG D2D_SRC=build
 
-# stage 1a: build the fork from the supplied context (src/, vendor/); no network needed after apt
+# stage 1a: build the fork from the supplied context (src/, vendor/: public archives, sha256-checked by context.sh); no network needed after apt
 FROM ${UBUNTU} AS d2d-build
 ARG BUILD_JOBS=4
 ENV DEBIAN_FRONTEND=noninteractive

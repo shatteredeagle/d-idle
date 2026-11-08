@@ -3,6 +3,7 @@ package d2dcontainer_test
 import (
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"testing"
@@ -63,6 +64,35 @@ func TestContextPins(t *testing.T) {
 	}
 }
 
+// TASK-139: every vendored input is a public archive pinned by sha256; no local build dir, home path or private remote.
+func TestContextPublicInputs(t *testing.T) {
+	c := read(t, "context.sh")
+	wantAll(t, "context.sh", c,
+		"cli11_url=https://github.com/CLIUtils/CLI11/archive/refs/tags/v2.6.2.tar.gz",
+		"cli11_sha=c6ea6b2e5608b3ea8617999bd5f47420c71b2ebdb8dc4767c1034d1da5785711",
+		"sentry_url=https://github.com/getsentry/sentry-native/releases/download/0.17.3/sentry-native.zip",
+		"sentry_sha=930039d20b8f7d5520c8cb1d9911d63ce8a9e0635b56ae08256936d1f45b66ac",
+		"ffurl=https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz", "sha256sum -c", "pin_tag=didle-gate2-lab3",
+		"https://github.com/shatteredeagle/d2d-didle")
+	for _, bad := range []string{"$HOME", "d2d-lab", "_deps", "ffmpeg_build-prefix", "/home/", "d2d-fork", "$FORK/", "${FORK:"} {
+		// the only allowed mention of the old private remote is none at all
+		if strings.Contains(c, bad) {
+			t.Errorf("context.sh must not reference %q (public inputs only)", bad)
+		}
+	}
+	d := read(t, "Dockerfile.d2d")
+	for _, bad := range []string{"/home/", "d2d-lab", "$HOME"} {
+		if strings.Contains(d, bad) {
+			t.Errorf("Dockerfile.d2d must not reference %q", bad)
+		}
+	}
+	// privacy: the image sends no crash reports (empty DSN at build and run time, no opt-in flag anywhere)
+	wantAll(t, "Dockerfile.d2d", d, "-DD2D_SENTRY_DSN=", "SENTRY_DSN= \\")
+	if strings.Contains(read(t, "entrypoint.sh"), "send-crash-reports") {
+		t.Error("entrypoint.sh must not enable --send-crash-reports")
+	}
+}
+
 // Run the entrypoint dry run: the resolved tester profile, tokens masked; the default bot mode unchanged.
 func dry(t *testing.T, mode string, env ...string) string {
 	t.Helper()
@@ -78,7 +108,7 @@ func dry(t *testing.T, mode string, env ...string) string {
 func TestEntrypointTesterProfile(t *testing.T) {
 	out := dry(t, "tester", "D2BOT_WATCH_ORIGIN=http://tester.example:8891")
 	wantAll(t, "tester dry run", out, "D2BOT_WATCH_ACCESS_FILE=/data/access.json", "D2BOT_LADDER=1", "D2BOT_WATCH=1", "D2BOT_WATCH_ADDR=0.0.0.0:8891", "D2BOT_WATCH_ANSWER_ADDR=0.0.0.0:8892",
-		"D2BOT_WATCH_ORIGIN=http://tester.example:8891", "D2BOT_WATCH_TOKEN_FILE=/data/watch.token", "D2BOT_LADDER_STORE=/data/ladder",
+		"D2BOT_WATCH_ORIGIN=http://tester.example:8891", "D2BOT_WATCH_TOKEN_FILE=/data/watch.token", "D2BOT_LADDER_STORE=shared",
 		"D2BOT_WATCH_VIDEO=1", "D2BOT_WATCH_VIDEO_SOURCE=tap", "D2BOT_GAMEDIR=/game", "d2d-mode=realtime", "D2DVIEW_TOKEN=***",
 		"d2dview -addr 127.0.0.1:8893", "-jpeg", "--addr 127.0.0.1:8420", "--goals 'campaign:normal_act1'")
 	if regexp.MustCompile(`TOKEN=[0-9a-f]{8}`).MatchString(out) {
@@ -102,5 +132,49 @@ func TestEntrypointBotDefaultUnchanged(t *testing.T) {
 		if strings.Contains(out, no) {
 			t.Errorf("default bot mode got tester settings (%s):\n%s", no, out)
 		}
+	}
+}
+
+// TASK-25 live defect: `eval d2bot ... &` made $! the eval subshell, so the TERM trap never reached d2bot and a
+// container stop killed the character without a save. The background job must exec d2bot.
+func TestEntrypointExecsBot(t *testing.T) {
+	b, err := os.ReadFile("entrypoint.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.Contains(string(b), "eval exec d2bot") {
+		t.Error("entrypoint.sh must start the bot with `eval exec d2bot ... &` so that $! is d2bot")
+	}
+}
+
+func TestEntrypointStopsBotBeforeTap(t *testing.T) {
+	b, err := os.ReadFile("entrypoint.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(b)
+	i := strings.Index(s, "stop() {")
+	j := strings.Index(s[i:], "\n}")
+	if i < 0 || j < 0 || !strings.Contains(s[i:i+j], `kill -TERM "$last"`) || strings.Index(s[i:i+j], `wait "$last"`) > strings.Index(s[i:i+j], "for p in $pids") {
+		t.Error("stop() must TERM and wait for the bot (last pid) before it stops the tap")
+	}
+}
+
+// A character saved by the managed d2d (under <data>/instances/<inst>/d2d/config) must be loaded, not recreated.
+func TestEntrypointLoadsManagedSave(t *testing.T) {
+	data := t.TempDir()
+	save := filepath.Join(data, "instances", "main", "d2d", "config", "d2d", "save")
+	if err := os.MkdirAll(save, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(save, "Hero.d2s"), []byte("x"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	out := dry(t, "tester", "D2BOT_DATA="+data, "D2D_NAME=Hero", "D2D_CLASS=4")
+	if !strings.Contains(out, "--d2d-class -1") {
+		t.Errorf("a saved character is not loaded (want --d2d-class -1):\n%s", out)
+	}
+	if o := dry(t, "tester", "D2BOT_DATA="+t.TempDir(), "D2D_NAME=Hero", "D2D_CLASS=4"); !strings.Contains(o, "--d2d-class 4") {
+		t.Errorf("a new character is not created with the wizard class:\n%s", o)
 	}
 }
