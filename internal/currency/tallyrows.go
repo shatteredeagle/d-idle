@@ -228,9 +228,10 @@ type Tally struct {
 	Character string
 	Run       string
 
-	mu    sync.Mutex
-	seen  map[string]bool // keys already in the ledger, so a kill does not re-read the whole file
-	kills int64           // weighted kills since this process started
+	mu      sync.Mutex
+	seen    map[string]bool // keys already in the ledger, so a kill does not re-read the whole file
+	kills   int64           // weighted kills since this process started
+	counted map[string]bool // kill event ids already counted, so a replay in this process adds nothing
 }
 
 // NewTally seeds the booked keys from the ledger.
@@ -245,7 +246,7 @@ func NewTally(l *Ledger, rows *TallyRows, character, run string) (*Tally, error)
 	if err != nil {
 		return nil, err
 	}
-	t := &Tally{L: l, Rows: rows, Character: character, Run: run, seen: map[string]bool{}}
+	t := &Tally{L: l, Rows: rows, Character: character, Run: run, seen: map[string]bool{}, counted: map[string]bool{}}
 	for _, e := range es {
 		if e.Key != "" {
 			t.seen[e.Key] = true
@@ -288,6 +289,10 @@ func (t *Tally) Credit(ev TallyEvent) ([]Entry, error) {
 			r := t.Rows.credit("boss")
 			cs = append(cs, candidate{"boss/" + ev.Subject, r.Source, fmt.Sprintf(r.Why, ev.Subject), r.Amount})
 		}
+		if t.counted[ev.ID] {
+			break
+		}
+		t.counted[ev.ID] = true
 		before := t.kills / t.Rows.Kill.Per
 		t.kills += w
 		if t.kills/t.Rows.Kill.Per > before {
