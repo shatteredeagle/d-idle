@@ -5,6 +5,7 @@ status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:34:00Z'
+updated_date: '2026-11-08T04:02:00Z'
 labels:
   - bot
   - feature
@@ -39,3 +40,9 @@ Size: L. Parked: needs the bot past Act 1. Not on the two-week playable path. De
 - [ ] #2 Nightmare entry warnings shown only with verified numbers; away off after the move
 - [ ] #3 Blocked until the bot plays past Act 1 (class and act coverage)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Unlocks at Baal killed in Normal; same hero; ONE Pact (user 2026-11-07, ADR 0019).
+<!-- SECTION:NOTES:END -->
