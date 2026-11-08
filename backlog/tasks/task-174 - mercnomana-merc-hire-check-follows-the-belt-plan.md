@@ -1,10 +1,11 @@
 ---
 id: TASK-174
 title: 'mercnomana: merc hire check follows the belt plan'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:49:00Z'
+updated_date: '2026-11-08T06:03:00Z'
 labels:
   - bot
   - bug
