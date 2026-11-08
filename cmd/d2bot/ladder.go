@@ -274,6 +274,12 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
 	if l.sensesTier >= 1 {
 		rig.Senses = &senses.Publisher{}
+		adj, err := senses.ShippedAdjacency()
+		if err != nil {
+			ladder.Install(nil)
+			return nil, err
+		}
+		rig.Senses.SetAdjacency(adj)
 		var eng *unlock.Engine
 		if rig.Fun != nil && rig.Fun.Unlocks != nil {
 			eng = rig.Fun.Unlocks.Engine
