@@ -1,0 +1,16 @@
+{
+  "class": "amazon",
+  "doc": "Skill unlocks by quest or find (ADR 0018 item 6, docs/skill-unlocks.md). A skill not listed is free; its level requirement from Skills.txt still applies. Skill names are the Skills.txt keys (as the build tables use them; the display name is in the note when it differs). Events: quest:<id>, waypoint:<area>, boss:<superunique>, item:<kind>, clvl:<n>, alternatives joined by '|'. Source: the veteran schedule in docs/research/class-early-game.md section 2 (a veteran estimate, not measured): every tag S is that estimate, U is unsure or changed by this file (note says why). Moved or freed against the veteran schedule so that no row of the class's normal30 build tables is refused at the expected event levels (TestClassUnlocks).",
+  "mustFree": ["Jab", "Magic Arrow", "Fire Arrow", "Poison Javelin", "Multiple Shot", "Exploding Arrow", "Inner Sight", "Dodge"],
+  "unlocks": [
+    {"skill": "Slow Missiles", "event": "quest:den_of_evil", "codex": "corpsefire", "tag": "U", "note": "Veteran says 'Slow Missiles or Critical Strike': both locked, the choice is open."},
+    {"skill": "Critical Strike", "event": "quest:den_of_evil", "codex": "corpsefire", "tag": "U", "note": "See Slow Missiles."},
+    {"skill": "Dopplezon", "event": "boss:bishibosh", "codex": "bishibosh", "tag": "U", "note": "display name: Decoy Veteran: may stay locked."},
+    {"skill": "Penetrate", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S"},
+    {"skill": "Pierce", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S"},
+    {"skill": "Valkyrie", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S"},
+    {"skill": "Lightning Bolt", "event": "quest:rescue_cain", "tag": "U", "note": "Cain rescued; quest id U. The javelin table first spends it at clvl 14."},
+    {"skill": "Fend", "event": "quest:rescue_cain", "tag": "U"},
+    {"skill": "Lightning Fury", "event": "boss:andariel", "codex": "andariel", "tag": "S"}
+  ]
+}

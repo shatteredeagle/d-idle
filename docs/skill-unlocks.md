@@ -39,3 +39,18 @@ Checked against v3 (buildv3 replay, `TestBuildV3WithUnlocks`): with every event 
 - V (offline): the loader, the rule, reorder-without-banking, the free choice, a Paladin and a Sorceress case, `Validate` against the real tables on the worker host (`go test -run TestUnlocksValidate ./internal/leveler`, skips without the install).
 - U: every event placement (veteran schedule); whether the runner can emit `waypoint:`, `boss:` and `quest:` events (waypoint-lit is U today); the quest id `rescue_cain`.
 - Not built: the runner call to `Progress.Fire` and to `Options.Unlocks`; Codex skill icons lighting up and the free-choice picker in the watch UI (`internal/watch` is not owned by this card); persisting Progress with the hero. A follow-up card should do these.
+
+## The other six classes (TASK-143)
+
+Files: `internal/plandata/unlocks-<amazon|assassin|barbarian|druid|necromancer|paladin>.json` (copies under `docs/plan/data/`), from section 2 of `docs/research/class-early-game.md`. All events are the veteran's (tag S, a veteran estimate, not measured); tag U marks an entry that is unsure or that this table changed. Skill names are the Skills.txt keys, which differ from the display name for a few skills (Quickness is Burst of Speed, Eruption is Fissure, Fire Trauma is Fire Blast, Wake of Fire Sentry is Wake of Fire, Plague Poppy is Poison Creeper, Dopplezon is Decoy); every name was checked against the real tables (V, `TestUnlockSkillsExistInTheTables` on the worker host, skips without them). Levels are not stored in the files; they come from Skills.txt at run time, and several of the veteran's per-class level claims are wrong (for example Zeal is level 12, not 6, and Lightning Bolt level 12 for the Amazon; same pattern as `docs/research/skill-req-check.md`).
+
+Deviations from the veteran schedule, all because a skill is a row of the class's normal30 build table and the rule is that nothing the bot needs locks later than Bishibosh:
+
+- Amazon: Exploding Arrow and Multiple Shot (veteran: Andariel) are free; the bow table spends them at clvl 7 and 12.
+- Assassin: Wake of Fire (veteran: Blood Raven) is free; it is the main attack from clvl 12.
+- Barbarian: Battle Orders (veteran: Blood Raven), Frenzy (Andariel) and Howl are free; the table spends Howl at 7, Battle Orders at 26, Frenzy at 24, and Battle Orders is the class's defensive buff. Shout stays free as the veteran says.
+- Necromancer: Skeleton Mastery (veteran: Den) is free (summoner table row clvl 3); Raise Skeletal Mage (Andariel) is free (row 12); Bone Spear moves from Andariel to the Cain quest (U, leveling table row 18).
+- Paladin: Resist Fire stays free (Corpsefire is fire; the legacy table spends it at clvl 4), only Resist Lightning locks at the Den; Prayer stays free as the veteran says, only Cleansing locks.
+- Amazon "Slow Missiles or Critical Strike" is ambiguous in the schedule: both are locked until the Den (U, open choice).
+
+Tests (`internal/plandata/unlocks_class_test.go`): all seven files load; each class keeps its main attack, a defensive buff and an immunity skill free; at the expected event levels no row of the class's build tables is refused (`TestNoBuildRowIsRefusedByAnUnlock`; event levels are S estimates kept in the test); unknown class is an error naming it. Not verified live; the expected event levels are estimates.
