@@ -1,10 +1,13 @@
 ---
 id: TASK-180
-title: 'palready: Might aura once per fight and recovery leaves a depleted starter area earlier'
-status: Proposed
+title: >-
+  palready: Might aura once per fight and recovery leaves a depleted starter
+  area earlier
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T05:37:00Z'
+updated_date: '2026-11-08T08:07:00Z'
 labels:
   - bot
   - bug
