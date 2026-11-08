@@ -14,9 +14,9 @@ for path in sys.argv[1:]:
         if m == "class-aware start": start = f'{d.get("class")} profile={d.get("combatProfile")} build={d.get("levelerBuild")}'
         if d.get("level") == "ERROR" or d.get("level") == "WARN":
             errs[m[:70]] = errs.get(m[:70], 0) + 1
-        if "codex" in m.lower() and "first" in m.lower(): firsts += 1
-        if "question" in m.lower(): qs += 1
-    print(f"== {path}: {start}; minute lines {len(rows)}; codex-first lines {firsts}; question lines {qs}")
+        if m.startswith("ladder: thought"): firsts += 1
+        if "question" in m.lower() and "ask" in m.lower(): qs += 1
+    print(f"== {path}: {start}; minute lines {len(rows)}; ladder thought lines {firsts}; question lines {qs}")
     for want in (10, 20, 30, 45, 60, 90):
         r = [x for x in rows if True]
         if len(rows) >= want:
