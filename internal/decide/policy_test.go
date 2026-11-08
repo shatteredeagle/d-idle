@@ -150,3 +150,24 @@ func TestPolicyFirstRuleWins(t *testing.T) {
 		}
 	}
 }
+
+func TestPolicyClassKnobsNameTheMissingClass(t *testing.T) {
+	cat, err := Shipped()
+	if err != nil {
+		t.Fatal(err)
+	}
+	row := func(ck string) string {
+		return `{"version":1,"rows":[{"id":"r","label":"L","help":"H","default":"d","options":[{"id":"d","label":"D"},{"id":"x","label":"X","classKnobs":` + ck + `}]}]}`
+	}
+	for name, c := range map[string]struct{ ck, want string }{
+		"missing class": {`{"paladin":{"bot.clearRadius":20}}`, `"sorceress"`},
+		"unknown class": {`{"paladin":{},"sorceress":{},"necromancer":{}}`, `"necromancer"`},
+	} {
+		if _, err := ParsePolicy([]byte(row(c.ck)), cat); err == nil || !strings.Contains(err.Error(), c.want) {
+			t.Errorf("%s: %v", name, err)
+		}
+	}
+	if _, err := ParsePolicy([]byte(row(`{"paladin":{},"sorceress":{}}`)), cat); err != nil {
+		t.Errorf("complete table: %v", err)
+	}
+}

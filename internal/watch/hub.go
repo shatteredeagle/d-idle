@@ -69,11 +69,12 @@ type extra struct {
 // Hub is safe for concurrent use. Lock order: the store's lock, then the Hub's (store events call in), so no Hub
 // method holds its own lock while it calls the store.
 type Hub struct {
-	cfg    Config
-	base   time.Duration
-	video  *Video                          // nil: no game video
-	cur    atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
-	placer atomic.Pointer[placerBox]       // nil: orders go straight to Give (no charter sink)
+	cfg     Config
+	base    time.Duration
+	video   *Video                          // nil: no game video
+	cur     atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
+	placer  atomic.Pointer[placerBox]       // nil: orders go straight to Give (no charter sink)
+	onClass func()                          // run when the hero's class becomes known (OnClass); guarded by mu
 
 	mu      sync.Mutex
 	seq     uint64

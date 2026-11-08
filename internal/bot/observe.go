@@ -568,7 +568,10 @@ func (r *Runner) hostileNear(s *d2.Snapshot, radius int) int {
 	n := 0
 	for i := range s.Monsters {
 		u := &s.Monsters[i]
-		if !r.hostile(s, u) || max(abs(u.X-s.Player.X), abs(u.Y-s.Player.Y)) > radius {
+		// Euclidean, like the fighter's scope (combat.inRange): a square test counted a unit in the corner of the
+		// box (25,25 at radius 30) that Clear then refused, so the sweep logged 'clear killed nothing' and walked on
+		// ignoring hostiles for the futile window.
+		if !r.hostile(s, u) || math.Hypot(float64(u.X-s.Player.X), float64(u.Y-s.Player.Y)) > float64(radius) {
 			continue
 		}
 		// A unit the fighter gave up on (unreachable, too dangerous) is not worth a Clear: it would kill nothing.

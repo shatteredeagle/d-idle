@@ -568,6 +568,56 @@
     }
    ],
    "effectNote": "Not changed. This row follows today's behaviour."
+  },
+  {
+   "id": "stance",
+   "label": "How boldly the hero fights",
+   "help": "How far the hero notices and chases monsters and how early it backs off. It moves existing fight settings together: how far away a monster is noticed, how long a chase lasts, the life lines for potions and for leaving the game, extra care against champions, and when the potion count sends the hero to town. A melee hero and a caster get different numbers for the same stance (sheet: Knobs).",
+   "current": "default",
+   "default": "default",
+   "changed": false,
+   "options": [
+    {
+     "id": "cautious",
+     "label": "Cautious",
+     "current": false,
+     "says": "Cautious: only fights what comes close (noticed within about 4 tiles for a melee hero, 5 for a caster), gives up a chase sooner, drinks a healing potion at 65 percent life, leaves the game at 35 percent, takes extra care with champions and goes to town when 3 healing potions are left.",
+     "knobs": [
+      "bot.clearRadius = 20",
+      "combat.championEarlyPct = 20",
+      "combat.chickenPct = 35",
+      "combat.crowdAbandonN = 10",
+      "combat.drinkLifePct = 65",
+      "combat.kiteLifePct = 85",
+      "combat.maxApproaches = 8",
+      "combat.townPotionMin = 3"
+     ]
+    },
+    {
+     "id": "default",
+     "label": "Balanced",
+     "current": true,
+     "default": true,
+     "says": "Balanced: today's behaviour. Monsters within 6 tiles are fought, a healing potion at 55 percent life, the game is left at 25 percent, a town trip at 2 healing potions."
+    },
+    {
+     "id": "aggressive",
+     "label": "Aggressive",
+     "current": false,
+     "says": "Aggressive: goes after monsters from farther away (about 8 tiles for a melee hero, 7 for a caster), chases longer, drinks at 50 percent life, leaves the game at 22 percent (20 for a caster), takes less extra care with champions and goes to town only when 1 healing potion is left. A melee hero starts here: it has to walk up to its target.",
+     "knobs": [
+      "bot.clearRadius = 40",
+      "combat.championEarlyPct = 8",
+      "combat.chickenPct = 22",
+      "combat.crowdAbandonN = 18",
+      "combat.drinkLifePct = 50",
+      "combat.kiteLifePct = 70",
+      "combat.maxApproaches = 18",
+      "combat.townPotionMin = 1"
+     ]
+    }
+   ],
+   "effectNote": "Not changed. This row follows today's behaviour."
   }
  ],
  "legend": "(U) marks a counter whose link to the setting is a guess, not a measurement. 'Not reported' means no event carries it yet."
