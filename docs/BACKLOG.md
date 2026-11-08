@@ -608,6 +608,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-123 updboot: cmd/didleboot boot shim (select, health probation, automatic rollback), image wiring and a drill checklist; container drills not run
 - unlockladder (TASK-153): internal/unlock engine, data/unlocks/ladder.json, reveal, GET /api/unlocks, POST /api/unlocks/buy; offline-tested, not yet wired in cmd/d2bot
 - TASK-120 ghcrpublish PREP: inert tester-image workflow (workflow_dispatch + environment tester-publish), D2_IMAGE in compose.tester.yml, dry run on the worker host, docs/tester-registry.md; nothing published
+- TASK-169 pactaway: away safety built offline (presence from viewer requests, consent API with typed name and hours, low-life pause, separate Hardcore flag with a refusing stub); docs/pact-away.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
