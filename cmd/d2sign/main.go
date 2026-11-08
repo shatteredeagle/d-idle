@@ -126,7 +126,7 @@ func cmdManifest(args []string, out io.Writer) error {
 	fs.IntVar(&m.Compat.D2DCtl, "d2d-ctl", 0, "compat.d2d_ctl")
 	fs.IntVar(&m.Compat.DataSchema, "data-schema", 0, "compat.data_schema")
 	fs.StringVar(&m.Source.Bot, "src-bot", "", "bot source tag/commit")
-	fs.StringVar(&m.Source.D2D, "src-d2d", "", "d2d fork tag/commit")
+	fs.StringVar(&m.Source.Fork, "src-d2d", "", "d2d fork tag/commit")
 	fs.StringVar(&m.Source.Offer, "offer", "SOURCE.txt", "source offer file name")
 	fs.StringVar(&m.Revoke.MinVersion, "min-version", "", "refuse every version below this")
 	var files, revoke multi
@@ -322,7 +322,7 @@ func cmdSummary(args []string, out io.Writer) error {
 	if m, err := selfupdate.ParseManifest(doc); err == nil {
 		fmt.Fprintf(out, "release %s (seq %d, channel %s, issued %s)\n", m.Version, m.Seq, m.Channel, m.Issued)
 		fmt.Fprintf(out, "min image %d; compat bot_api %d d2d_ctl %d data_schema %d\n", m.MinImage, m.Compat.BotAPI, m.Compat.D2DCtl, m.Compat.DataSchema)
-		fmt.Fprintf(out, "source bot %s, d2d %s, offer %s\n", m.Source.Bot, m.Source.D2D, m.Source.Offer)
+		fmt.Fprintf(out, "source bot %s, d2d %s, offer %s\n", m.Source.Bot, m.Source.Fork, m.Source.Offer)
 		for _, f := range m.Files {
 			fmt.Fprintf(out, "file %s -> %s  %d bytes  sha256 %s\n", f.Name, f.Dest, f.Size, f.SHA256)
 		}

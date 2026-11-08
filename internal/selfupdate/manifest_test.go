@@ -14,7 +14,7 @@ func sample() Manifest {
 		Schema: SchemaVersion, Version: "0.4.0", Seq: 17, Issued: "2026-11-20T00:00:00Z",
 		Channel: "stable", Notes: "n", MinImage: 3,
 		Compat: Compat{BotAPI: 4, D2DCtl: 2, DataSchema: 5},
-		Source: Source{Bot: "app-v0.4.0", D2D: "didle-gate2-lab3", Offer: "SOURCE.txt"},
+		Source: Source{Bot: "app-v0.4.0", Fork: "didle-gate2-lab3", Offer: "SOURCE.txt"},
 		Files: []File{
 			{Name: "b.tar.gz", SHA256: strings.Repeat("ab", 32), Size: 2, Dest: "d2d"},
 			{Name: "a.tar.gz", SHA256: strings.Repeat("cd", 32), Size: 1, Dest: "bin"},

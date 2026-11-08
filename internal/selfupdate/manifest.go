@@ -37,7 +37,7 @@ type Compat struct {
 // Source names the corresponding source of a release (GPL offer, design 3.11).
 type Source struct {
 	Bot   string `json:"bot"`
-	D2D   string `json:"d2d"`
+	Fork  string `json:"d2d"`
 	Offer string `json:"offer"`
 }
 
