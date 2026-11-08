@@ -1,10 +1,11 @@
 ---
 id: TASK-190
 title: 'stancefix: melee sweep ignores corner monsters (hostileNear square vs circle)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T15:22:00Z'
+updated_date: '2026-11-08T16:01:00Z'
 labels:
   - bot
   - bug
