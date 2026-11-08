@@ -23,7 +23,7 @@ Counts carry the running total, so a repeated event can never count twice. Repla
 
 ## Reveal
 
-Every entry that opens (by trigger or by buying) writes one Chronicle line (`Hub.Note("story", "Unlocked: Title. Text")`) and one away event (`AwayUnlock`). The return screen section `unlocks`, "Unlocked since you left", lists the away events newer than the viewer's last look and is hidden when there are none. Opening raises no question.
+Every entry that opens (by trigger or by buying) writes one Chronicle line (`Hub.Note("story", "Unlocked: Title. Text")`) and one reveal record (`AwayUnlock`, kept in the `Unlocks`' own log so a late reveal in camp cannot open a phantom expedition on the return screen). The return screen section `unlocks`, "Unlocked since you left", lists the away events newer than the viewer's last look and is hidden when there are none. Opening raises no question.
 
 ## API
 
@@ -38,7 +38,7 @@ Basics are never entries (nothing in the table may gate a view the first session
 
 - (Done in TASK-154) `cmd/d2bot` newFun opens the shipped ladder into `cfg.Unlock`; `Unlocks.OnGoalEvent` feeds `kills` (per monster name, in memory). New trigger kind `seen` (arg `what`) for viewer-side moments.
 - No emitter feeds `retire` events.
-- The shipped table holds the unlockable rows added so far (Chronicle: `docs/unlock-chronicle.md`); TASK-149 adds the senses rows.
+- The shipped table holds the Chronicle rows (`docs/unlock-chronicle.md`) and the seven senses rows (TASK-149, `docs/senses-unlock.md`); the other unlockable cards add theirs.
 
 ## Verified
 

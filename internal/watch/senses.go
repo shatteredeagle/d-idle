@@ -12,9 +12,21 @@ import (
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
 var SensesRoutes = []string{"/api/senses", "/watch/senses.js"}
 
-// Unlocker says which senses tiers the watcher has earned. The ladder (TASK-149) plugs in here; this card ships
-// FixedTier only. Tier 1 is the map and the hero marker.
+// Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
+// reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
 type Unlocker interface{ Allowed(tier int) bool }
+
+// Teaser is an optional Unlocker part: the locked tiers, for the silhouettes of the panel.
+type Teaser interface{ Locked() []SenseLock }
+
+// SenseLock is a locked tier as the panel may show it: the title and the hint, never what it reveals.
+type SenseLock struct {
+	ID     string `json:"id"`
+	Tier   int    `json:"tier"`
+	Title  string `json:"title"`
+	Teaser string `json:"teaser,omitempty"`
+	Price  int64  `json:"price,omitempty"` // tally, when the tier can be bought (POST /api/unlocks/buy)
+}
 
 // FixedTier unlocks every tier up to and including N (knob senses.tier, default 1; 0 turns the panel off).
 type FixedTier int
@@ -42,19 +54,32 @@ type SensesReply struct {
 	Hero    *senses.Point  `json:"hero,omitempty"`
 	Units   []senses.Point `json:"units,omitempty"`
 	Waiting bool           `json:"waiting,omitempty"`
+	// Locked lists the tiers not open yet (titles and hints only) and Next is the lowest of them; both are present only
+	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
+	Locked []SenseLock `json:"locked,omitempty"`
+	Next   *SenseLock  `json:"next,omitempty"`
 }
 
-const maxTier = 6 // the ladder of info-unlocks.md has six rungs
+const maxTier = 7 // the ladder of info-unlocks.md has seven rungs (tier 0 is the video alone)
 
 // Reply builds the answer for a caller that holds map version have.
 func (s *Senses) Reply(have uint64) SensesReply {
 	r := SensesReply{Schema: senses.Schema, Tiers: []int{}}
+	allowed := map[int]bool{}
 	for t := 1; t <= maxTier; t++ {
 		if s.Lock != nil && s.Lock.Allowed(t) {
+			allowed[t] = true
 			r.Tiers = append(r.Tiers, t)
 		}
 	}
-	if s.Lock == nil || !s.Lock.Allowed(1) {
+	if tz, ok := s.Lock.(Teaser); ok {
+		r.Locked = tz.Locked()
+		if len(r.Locked) > 0 {
+			n := r.Locked[0]
+			r.Next = &n
+		}
+	}
+	if !allowed[1] && !allowed[2] {
 		return r
 	}
 	snap, ok := s.Src.Snapshot()
@@ -62,13 +87,18 @@ func (s *Senses) Reply(have uint64) SensesReply {
 		r.Waiting = true
 		return r
 	}
-	r.Version = snap.Map.Version
-	if snap.Map.Version != have {
-		m := snap.Map
-		r.Map = &m
+	if allowed[1] {
+		r.Version = snap.Map.Version
+		if snap.Map.Version != have {
+			m := snap.Map
+			r.Map = &m
+		}
+		h := snap.Hero
+		r.Hero = &h
 	}
-	h := snap.Hero
-	r.Hero = &h
+	if allowed[2] {
+		r.Units = snap.Unit
+	}
 	return r
 }
 
