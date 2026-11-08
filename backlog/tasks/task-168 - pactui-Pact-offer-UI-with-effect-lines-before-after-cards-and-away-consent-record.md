@@ -1,10 +1,11 @@
 ---
 id: TASK-168
-title: 'pactui: Pact offer UI with effect lines, before/after cards and away-consent record'
-status: Proposed
+title: "pactui: Pact offer UI with effect lines, before/after cards and away-consent record"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:33:00Z'
+updated_date: '2026-11-08T09:06:00Z'
 labels:
   - watch
   - feature

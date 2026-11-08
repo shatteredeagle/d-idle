@@ -839,3 +839,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/tester-registry.md - publish prep for the tester image on ghcr.io (what the user must do, GPL offer, risks, first-publish checklist)
 - docs/pact-away.md - Pact away safety: presence, consent API, life floor, Hardcore flag
 - docs/pact-ui.md - Pact offer UI: routes, view model, unlock, cost-and-paid section
+- docs/unlock-chronicle.md - Chronicle: kill and loot feed in D2 words, timeline tape (TASK-154)
+- docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
+- docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
+- docs/unlock-questlog.md - Quest log: Act 1 quests with objective and reason, from the existing quest events (TASK-156)

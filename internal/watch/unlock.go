@@ -18,7 +18,7 @@ import (
 // the viewer was away. Nothing here reads the game and nothing reaches the bot.
 
 const (
-	// AwayUnlock is the away-log kind of an opened entry; Item holds "Title: text", Type the entry id.
+	// AwayUnlock is the kind of a reveal record (kept in the Unlocks' own log, not the return screen's); Item holds "Title: text", Type the entry id.
 	AwayUnlock = "unlock"
 	// UnlocksSectionID is the return screen section id.
 	UnlocksSectionID = "unlocks"
@@ -51,13 +51,28 @@ func unlockUIHandler() http.Handler {
 type Unlocks struct {
 	Engine *unlock.Engine
 	Hub    *Hub
-	Away   *AwayLog
 	Spend  unlock.Spender // nil: tally is off, buying answers 503
 
 	mu      sync.Mutex
 	errs    []string
 	kills   map[string]int // running kills per monster name, in memory (a restart starts again; opening is persisted)
 	killSeq uint64         // highest kill Seq counted: a replayed stream never counts twice
+	// log holds the reveals, apart from the return screen's event log: an unlock arriving in camp (the Codex settles
+	// after the hero is back) must not open a phantom expedition there.
+	log *AwayLog
+}
+
+func (u *Unlocks) reveals() *AwayLog {
+	u.mu.Lock()
+	defer u.mu.Unlock()
+	if u.log == nil {
+		var now func() float64
+		if u.Hub != nil {
+			now = func() float64 { return u.Hub.rel(u.Hub.cfg.Clock.Now()) }
+		}
+		u.log = NewAwayLog(now)
+	}
+	return u.log
 }
 
 // Observe feeds the engine and reveals what opened.
@@ -71,14 +86,12 @@ func (u *Unlocks) Observe(ev unlock.Event) {
 	}
 }
 
-// reveal is the moment: a Chronicle line and an away event. Never skipped, so nothing unlocks silently.
+// reveal is the moment: a Chronicle line and a reveal record. Never skipped, so nothing unlocks silently.
 func (u *Unlocks) reveal(e unlock.Entry) {
 	if u.Hub != nil {
 		u.Hub.Note("story", fmt.Sprintf("Unlocked: %s. %s", e.Reveal.Title, e.Reveal.Text))
 	}
-	if u.Away != nil {
-		u.Away.Add(AwayEvent{Kind: AwayUnlock, Item: safeText(e.Reveal.Title+": "+e.Reveal.Text, 200), Type: e.ID})
-	}
+	u.reveals().Add(AwayEvent{Kind: AwayUnlock, Item: safeText(e.Reveal.Title+": "+e.Reveal.Text, 200), Type: e.ID})
 }
 
 func (u *Unlocks) fail(err error) {
@@ -193,7 +206,7 @@ func (u *Unlocks) Handler() http.Handler {
 func (u *Unlocks) Section() ReturnSection {
 	return SectionFunc(func(d *ReturnData) *SectionView {
 		var lines []string
-		for _, e := range u.Away.Events() {
+		for _, e := range u.reveals().Events() {
 			if e.Kind == AwayUnlock && e.T >= d.Since {
 				lines = append(lines, e.Item)
 			}

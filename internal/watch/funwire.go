@@ -147,7 +147,7 @@ func NewFun(c FunConfig) (*Fun, error) {
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
 	if c.Unlock != nil {
-		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Away: f.Away, Spend: c.Strip.UnlockSpender()}
+		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Spend: c.Strip.UnlockSpender()}
 		sec.Register(UnlocksSectionID, f.Unlocks.Section())
 		if c.Unlock.Has(ChronicleID) || c.Unlock.Has(ChronicleTapeID) {
 			h := c.Hub
