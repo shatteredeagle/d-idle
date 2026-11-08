@@ -818,3 +818,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/belt-plan.md | belt plan knob: templates, column overrides, where the plan acts, safety floor | TASK-164
 - [proposezone.md](proposezone.md): the hero proposes the next zone, away rule, answer routes, charter on accept (status: built offline, not wired)
 - docs/research/pact-system.md - Pact system design note: opt-in challenge rules, heat, unlocks, catalogue, away safety (not a decision)
+- docs/adr/0019-pacts-and-unlocks-2026-11-07.md: Pacts, information unlocks and the unlock ladder (user, 2026-11-07)

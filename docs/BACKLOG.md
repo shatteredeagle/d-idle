@@ -592,6 +592,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-164 beltplan: belt plan knob (resource.beltPlan, beltCol1..4): mixed and all-mana belts bought, filled and kit-gated per plan; policy sheet potion mix applies through it (docs/belt-plan.md)
 - TASK-131 proposezone: the hero proposes the next zone and waits when the player is away (proposer in decide, desk and return section in watch, docs/proposezone.md); offline only, not wired into d2bot
 - TASK-166 to TASK-173 pact system cards (pactcatalogue, pactbotside, pactui, pactaway, pactnative, pacthall, pactoverlay, pactnightmare), Proposed, m-4, not on the two-week path
+- TASK-174 mercnomana (merc hire check follows the belt plan); TASK-150 sensesvideo Deferred and parked
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
