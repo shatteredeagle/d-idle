@@ -340,3 +340,45 @@ func (c *Controller) levers(propose []Pick) []LeverLine {
 	}
 	return out
 }
+
+// CostLine is one chosen Pact for the "what it cost and paid" section: what it asked, how long it acted (from the first
+// stretch at the current rank to the end of the last) and what it promises.
+type CostLine struct {
+	Pact   string  `json:"pact"`
+	Name   string  `json:"name"`
+	Rank   int     `json:"rank"`
+	Effect string  `json:"effect"`
+	Row    string  `json:"row,omitempty"` // the policy row it sets, the key of the sheet's counters
+	Start  float64 `json:"start"`         // first live moment at this rank; -1 = never acted
+	End    float64 `json:"end"`           // end of the last stretch; -1 = acting now
+	Reward Reward  `json:"reward"`
+}
+
+// Costs lists the chosen Pacts with their live stretches.
+func (c *Controller) Costs() []CostLine {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	var out []CostLine
+	for _, pk := range c.st.Picks {
+		p, err := c.cfg.Cat.Get(pk.ID)
+		if err != nil {
+			continue
+		}
+		r, err := p.Rank(pk.Rank)
+		if err != nil {
+			continue
+		}
+		cl := CostLine{Pact: p.ID, Name: p.Name, Rank: pk.Rank, Effect: r.EffectLine, Row: r.Params.Row, Start: -1, End: 0, Reward: r.Reward}
+		for _, sp := range c.spans {
+			if sp.Pact != p.ID || sp.Rank != pk.Rank {
+				continue
+			}
+			if cl.Start < 0 {
+				cl.Start = sp.Start
+			}
+			cl.End = sp.End
+		}
+		out = append(out, cl)
+	}
+	return out
+}
