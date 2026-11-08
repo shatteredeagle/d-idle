@@ -1,10 +1,11 @@
 ---
 id: TASK-151
 title: 'sensesenemies: enemy dots, health bars and names in the senses panel'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:12:00Z'
+updated_date: '2026-11-08T10:20:00Z'
 labels:
   - watch
   - feature
