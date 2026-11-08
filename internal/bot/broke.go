@@ -27,6 +27,7 @@ type brokeState struct {
 	lastLog   time.Time
 	loot      [3]int // looter totals at the last progress line
 	cycles    int
+	stalled   bool // the last recovery ended as stalled (resource.StallReason)
 	areaNote  int
 	kitGate   bool // KITGATE active (kitgate.go)
 }
@@ -70,19 +71,19 @@ func (r *Runner) updateRecovery(s *d2.Snapshot) bool {
 	v := resource.RecoveryCheck(resource.RecoveryInput{
 		Gold: s.Player.Gold, Shortfall: resource.KitShortfall(in.HasTP, healing, mana, t), Sellable: in.Sellable,
 		SellMin: r.e.Tune.Bot.SellMinItems, Now: r.e.Clock.Now(), Since: b.since, LastEnd: b.lastEnd, Was: b.on,
-		Force: streak >= resource.RecoveryForceDeaths, LowKit: resource.KitLow(healing, t),
+		Force: streak >= resource.RecoveryForceDeaths, StartGold: b.startGold, Stalled: b.stalled, LowKit: resource.KitLow(healing, t),
 	}, t)
 	now := r.e.Clock.Now()
 	switch {
 	case v.Start:
-		*b = brokeState{on: true, since: now, lastEnd: b.lastEnd, startGold: s.Player.Gold, startXP: int(s.Player.Exp), lastLog: now, cycles: b.cycles + 1, loot: r.lootTotals()}
+		*b = brokeState{on: true, since: now, lastEnd: b.lastEnd, stalled: b.stalled, startGold: s.Player.Gold, startXP: int(s.Player.Exp), lastLog: now, cycles: b.cycles + 1, loot: r.lootTotals()}
 		r.e.Log.Warn(fmt.Sprintf("recovery: start (gold %d < kit %d)", s.Player.Gold, t.RecoveryKitGold), "level", s.Player.Level, "cycle", b.cycles)
 	case v.End:
 		mins := max(int(now.Sub(b.since).Minutes()), 1)
 		gain := s.Player.Gold - b.startGold
 		r.e.Log.Info(fmt.Sprintf("recovery: end (gold %d, reason %s)", s.Player.Gold, v.Reason), "level", s.Player.Level)
 		r.e.Log.Info(fmt.Sprintf("recovery: gold %+d in %d min", gain, mins), "goldPerHour", gain*60/mins, "xpGained", int(s.Player.Exp)-b.startXP)
-		b.on, b.lastEnd = false, now
+		b.on, b.lastEnd, b.stalled = false, now, v.Reason == resource.StallReason
 		r.loop.stepArea = 0 // the quest planner picks again
 	case b.on && now.Sub(b.lastLog) >= time.Minute:
 		b.lastLog = now

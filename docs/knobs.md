@@ -375,6 +375,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryTargetGold | 900 | 400..2000 | gold | 400 | 2 | Recovery ends at this gold once the loot is sold. SME: 800-1000. |
 | resource.recoveryMaxMin | 45 | 10..120 | min | 10 | 3 | Longest recovery cycle; it ends at the cap even when the target is not reached. SME: 30-60. |
 | resource.recoveryCooldownMin | 15 | 0..120 | min | 0 | 1 | Minutes after a recovery before the next one may start. |
+| resource.recoveryStallMin | 20 | 0..120 | min | 0 | 2 | A recovery that gained under recoveryStallGold after this many minutes ends as stalled: at clvl 1 to 4 a plain kill drops a few gold, so the bar is out of reach for hours (V, tester realtime hour: 28 gold in 11 min) and the campaign never resumed. 0 = off. |
+| resource.recoveryStallGold | 100 | 20..500 | gold | 20 | 1 | Gold a recovery must have gained after recoveryStallMin minutes to go on. |
+| resource.recoveryStallHoldMin | 60 | 0..240 | min | 0 | 1 | Minutes after a stalled recovery during which a low kit does not start another one (a death streak still does). |
 | resource.recoveryPotionFloor | 2 | 0..6 | count | 6 | 3 | While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan. |
 | resource.recoveryXPPick | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower. |
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |
@@ -394,6 +397,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | ladder.enabled | 0 | 0..1 | bool | 0 | 3 | 1: the wired decision points (t1.repair, t1.tp.lost; docs/t0-slice.md) build a context key and ask the decision-point store for the action: a learned rule, else the untrained default. The hero never waits for a question. 0: the legacy code paths, unchanged. Default off until the live drill passes. |
+
+Fields without a knob entry:
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
