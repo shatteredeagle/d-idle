@@ -15,10 +15,16 @@ priority: high
 ordinal: 104000
 card: "smokebot"
 owns:
-  - "tools/smoke"
+  - "tools/smoke.sh"
+  - "tools/smoke-worker.sh"
+  - "cmd/d2smoke"
+  - "internal/smoke"
+  - "data/smoke"
+  - "docs/soaks/smoke-*"
   - "docs/smoke.md"
 exclusive: []
 contracts: []
+result: "Built and unit-tested offline: tools/smoke.sh, tools/smoke-worker.sh, cmd/d2smoke + internal/smoke judge, data/smoke/rules.json, docs/smoke.md. NOT run live (U); AC1 means the command exists and prints the verdict line, first live run is the checklist in docs/smoke.md."
 ---
 
 ## Description
@@ -31,7 +37,7 @@ Why: direction review section 7 step 5 (decision D1). Done when: a bot merge can
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 One command runs Gate 0.5 (or Gate 1, one seed, 45 min) on a branch and prints a one-line verdict
-- [ ] #2 docs/smoke.md states it is the regression floor while Gate 2 waves are paused (ADR 0017); built vs verified live
+- [x] #1 One command runs Gate 0.5 (or Gate 1, one seed, 45 min) on a branch and prints a one-line verdict
+- [x] #2 docs/smoke.md states it is the regression floor while Gate 2 waves are paused (ADR 0017); built vs verified live
 - [ ] #3 leakcheck 0; tools/ci/check.sh
 <!-- AC:END -->
