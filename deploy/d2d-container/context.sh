@@ -46,7 +46,10 @@ printf '*.mpq\n*.MPQ\n*.d2s\n*.exe\n.git\nvendor-archives\n' > "$ctx/.dockerigno
 
 # our Go side (CGO off: static, runs on any libc)
 (cd "$repo" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -o "$ctx/bin/" \
-	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./cmd/d2dsetup ./deploy/d2d-container/d2dping)
+	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./cmd/d2dsetup ./cmd/didleboot ./deploy/d2d-container/d2dping)
+# trusted release public keys (*.pub, up to two: current and next; the private key is never in the repo)
+mkdir -p "$ctx/pubkeys"
+for k in "$repo"/deploy/d2d-container/pubkeys/*.pub; do [ ! -f "$k" ] || cp "$k" "$ctx/pubkeys/"; done
 
 if [ -n "${PREBUILT:-}" ]; then
 	cp "$PREBUILT" "$ctx/bin/d2d"

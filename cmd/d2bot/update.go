@@ -25,9 +25,6 @@ const (
 	defaultUpdateKeys = "/opt/didle/pubkeys"
 )
 
-// localCompat is what this build speaks (UNVERIFIED against a real image: the first release sets the numbers).
-var localCompat = selfupdate.Compat{BotAPI: 1, D2DCtl: 1, DataSchema: 1}
-
 func updateCheckEnabled() bool {
 	switch strings.ToLower(os.Getenv("D2BOT_UPDATE_CHECK")) {
 	case "off", "0", "false", "no":
@@ -53,7 +50,7 @@ func newUpdater(shutdown func() error) *selfupdate.Engine {
 		Keys:         keys,
 		Running:      version,
 		ImageABI:     abi,
-		Local:        localCompat,
+		Local:        selfupdate.BuildCompat,
 		CheckEnabled: updateCheckEnabled(),
 		Shutdown:     shutdown,
 	})

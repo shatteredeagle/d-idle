@@ -119,3 +119,28 @@ func (s State) IsBad(v string) bool {
 	}
 	return false
 }
+
+// Rollback points `current` back at `to` ("" = the baked base: the link is removed), clears the pending state, puts
+// `from` on the bad list (it is not retried; a newer version clears the need) and writes the marker. The boot shim and
+// the engine share it.
+func (l Layout) Rollback(from, to, reason string, at time.Time) error {
+	if to != "" {
+		if err := l.SwapCurrent(to); err != nil {
+			return err
+		}
+	} else if err := os.Remove(l.Current()); err != nil && !errors.Is(err, os.ErrNotExist) {
+		return err
+	}
+	st, err := l.LoadState()
+	if err != nil {
+		return err
+	}
+	st.Current, st.Previous, st.Pending, st.Boots = to, "", "", 0
+	if !st.IsBad(from) {
+		st.Bad = append(st.Bad, from)
+	}
+	if err := l.SaveState(st); err != nil {
+		return err
+	}
+	return l.WriteMarker(RollbackMarker{From: from, To: to, Reason: reason, At: at})
+}
