@@ -16,6 +16,7 @@ type HeroInfo struct {
 	AreaID   int    `json:"areaId,omitempty"`
 	Activity string `json:"activity,omitempty"`
 	Known    bool   `json:"known"`
+	Title    string `json:"title,omitempty"` // the best Hall title earned so far (hall.go)
 }
 
 // SetHero records the hero's state. Only a change a person can see (area, level, what it does) wakes the page; xp alone
@@ -27,6 +28,7 @@ func (h *Hub) SetHero(in HeroInfo) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
 	was := h.hero
+	in.Title = was.Title
 	h.hero = in
 	if in.Area != was.Area || in.AreaID != was.AreaID || in.Level != was.Level || in.Activity != was.Activity || in.Known != was.Known {
 		h.notifyLocked()
@@ -223,5 +225,16 @@ func orderAt(o Order, n MapNode, hero HeroInfo) bool {
 		return hero.Known && nodeHas(n, hero.AreaID, hero.Area)
 	default:
 		return n.Kind == "town"
+	}
+}
+
+// setHeroTitle records the hero's title for the watch header; a change wakes the page.
+func (h *Hub) setHeroTitle(t string) {
+	t = safeText(t, 60)
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	if h.hero.Title != t {
+		h.hero.Title = t
+		h.notifyLocked()
 	}
 }

@@ -830,3 +830,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/pact-catalogue.md - the Pact catalogue data, loader and rules
 - docs/skill-unlocks.md - per-class skill unlock table, leveler rule, free-choice point (TASK-133)
 - docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
+- docs/hall-of-fame.md - Hall of Fame, titles and the optional retire after Andariel (watch)
