@@ -103,6 +103,10 @@ func (u *Unlocks) OnGoalEvent(ev goals.Event) {
 		if n := u.countKill(ev); n > 0 {
 			u.Observe(unlock.Event{Type: unlock.EvKills, Name: ev.Monster, N: n})
 		}
+	case goals.EvDrop:
+		if ev.Item != nil && ev.Item.Quality != "" {
+			u.Observe(unlock.Event{Type: unlock.EvItem, Name: ev.Item.Quality})
+		}
 	case goals.EvLevelUp:
 		if ev.Level > 0 {
 			u.Observe(unlock.Event{Type: unlock.EvLevel, N: ev.Level})
