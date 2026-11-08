@@ -1,3 +1,0 @@
-CHANGELOG: class-generic decisions F10/F11 (world-generic first, Paladin default test class), veteran per-class early-game research, cards TASK-142 to 147
-BACKLOG: TASK-142 to 147 (m-4/m-1): paladinsmoke, classunlocks, sorcnormal30, wizardclass, classchores, classpacing; classcharm folded into TASK-136, TASK-131 depends on TASK-147
-INDEX: docs/research/class-early-game.md: per-class early game, veteran estimate (unlocks, chores, charms, pacing), not measured
