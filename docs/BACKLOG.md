@@ -644,6 +644,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - whyline (TASK-206): the watch screen shows a one-line reason under the video card, built from the bot's real decision reasons (docs/whyline.md)
 - policydryrun (TASK-205): policy sheet previews what a change would have done before saving (stance and pickup rows computed from recorded events, others say why not).
 - status sync 2026-11-08 part 6: TASK-79 and TASK-91 Done; TASK-76, 78, 102, 206 stay open with notes; new card TASK-207 d2dsrcmana
+- approachfast (TASK-209): GoTo walks poll the position only between full snapshots; short approach steps use 1 to 2 full reads instead of 5 to 8
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
