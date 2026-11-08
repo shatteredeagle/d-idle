@@ -50,6 +50,7 @@ type ServeOptions struct {
 	Video                *Video  // game video on the viewer (/stream, /shot.jpg); nil: off
 	Access               *Access // passcode choice (access.json); nil: token only. A passcode record replaces the token gate.
 	Fun                  *Fun    // return screen, tally strip and Codex (funwire.go); nil: the plain live screen only
+	Update               Updater // self-update status, banner and answer routes (update.go); nil: no update UI
 }
 
 // Served names the addresses that were bound.
@@ -107,7 +108,15 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 			m.Handle(p, h.ViewHandler())
 		}
 	}
-	view := &http.Server{Handler: o.Access.viewGate(o.Token, m)}
+	var viewH http.Handler = m
+	if o.Update != nil {
+		uh := UpdateHandler(o.Update)
+		for _, p := range UpdateRoutes {
+			m.Handle(p, uh)
+		}
+		viewH = withUpdateBanner(m)
+	}
+	view := &http.Server{Handler: o.Access.viewGate(o.Token, viewH)}
 	ansOpts := AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)}
 	if o.Access != nil {
 		ansOpts.Token = "" // the Access gate judges the token or the passcode cookie before the handler runs
@@ -115,6 +124,15 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 	ansH := h.AnswerHandler(ansOpts)
 	if o.Fun != nil {
 		ansH = o.Fun.wrapAnswer(ansH, ansOpts)
+	}
+	if o.Update != nil {
+		um := http.NewServeMux()
+		um.Handle("/", ansH)
+		uah := UpdateAnswerHandler(o.Update, ansOpts)
+		for _, p := range UpdatePostRoutes {
+			um.Handle(p, uah)
+		}
+		ansH = um
 	}
 	if o.Access != nil {
 		ansH = o.Access.answerGate(o.Token, ansH)

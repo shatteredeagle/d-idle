@@ -179,6 +179,11 @@ func (e *Engine) Check(ctx context.Context) error {
 	if err := e.cfg.Layout.SaveState(st); err != nil {
 		return restore(err)
 	}
+	return e.offer(r, m)
+}
+
+// offer records a verified release as available (or as nothing, when it is not newer).
+func (e *Engine) offer(r Remote, m Manifest) error {
 	e.mu.Lock()
 	defer e.mu.Unlock()
 	e.remote, e.man = r, m
@@ -239,6 +244,40 @@ func (e *Engine) evaluate(st *State, r Remote) (Manifest, error) {
 		}
 	}
 	return m, nil
+}
+
+// Inbox looks for a release set in <root>/inbox and treats it like a checked release: same signature, floor,
+// revocation and compatibility rules, no network. Press Download and Apply afterwards as usual.
+func (e *Engine) Inbox() error {
+	e.mu.Lock()
+	if e.state == StateDownloading || e.state == StateApplying {
+		s := e.state
+		e.mu.Unlock()
+		return fmt.Errorf("busy (%s)", s)
+	}
+	e.lastErr = ""
+	e.mu.Unlock()
+	st, err := e.cfg.Layout.LoadState()
+	if err != nil {
+		return err
+	}
+	r, err := LoadInbox(e.cfg.Layout.Inbox())
+	if err != nil {
+		return e.softFail(err)
+	}
+	m, err := e.evaluate(&st, r)
+	e.cfg.Layout.SaveState(st)
+	if err != nil {
+		return e.softFail(err)
+	}
+	return e.offer(r, m)
+}
+
+func (e *Engine) softFail(err error) error {
+	e.mu.Lock()
+	e.lastErr = err.Error()
+	e.mu.Unlock()
+	return err
 }
 
 // Download stages and verifies the available release. It does not restart anything.

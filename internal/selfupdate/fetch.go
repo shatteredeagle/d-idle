@@ -45,6 +45,7 @@ type Remote struct {
 	Revoked                *Revoked          // set (empty) when the release carries a REVOKED file; Engine.Check fills it after verifying
 	assets                 map[string]string // name -> download URL
 	revokedRaw, revokedSig []byte
+	localDir               string // set for an inbox release: files are copied, not fetched
 	NotModified            bool
 }
 
@@ -232,6 +233,9 @@ func (c *Client) asset(ctx context.Context, r Remote, name string, limit int64) 
 // Download fetches the manifest file f of r into dir (stream, capped at f.Size so a lying server cannot fill the
 // disk). Hash and size are checked by the caller with File.VerifyFile.
 func (c *Client) Download(ctx context.Context, r Remote, f File, dir string, progress func(n int64)) error {
+	if r.localDir != "" {
+		return copyLocal(filepath.Join(r.localDir, f.Name), dir, f, progress)
+	}
 	u, ok := r.assets[f.Name]
 	if !ok {
 		return fmt.Errorf("release %s has no asset %s", r.Tag, f.Name)
@@ -277,4 +281,52 @@ func (c *countReader) Read(p []byte) (int, error) {
 		c.on(c.n)
 	}
 	return n, err
+}
+
+func copyLocal(src, dir string, f File, progress func(int64)) error {
+	in, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer in.Close()
+	if err := os.MkdirAll(dir, 0o755); err != nil {
+		return err
+	}
+	out, err := os.OpenFile(filepath.Join(dir, f.Name), os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
+	if err != nil {
+		return err
+	}
+	n, err := io.Copy(out, &countReader{r: io.LimitReader(in, f.Size+1), on: progress})
+	if cerr := out.Close(); err == nil {
+		err = cerr
+	}
+	if err == nil && n > f.Size {
+		err = fmt.Errorf("%s: larger than the manifest says", f.Name)
+	}
+	return err
+}
+
+// LoadInbox reads a release set dropped into dir (MANIFEST.json, MANIFEST.json.sig, optional REVOKED and
+// REVOKED.sig, and the assets). Nothing is verified here.
+func LoadInbox(dir string) (Remote, error) {
+	var r Remote
+	var err error
+	if r.Raw, err = os.ReadFile(filepath.Join(dir, "MANIFEST.json")); err != nil {
+		return r, fmt.Errorf("inbox: %w", err)
+	}
+	if r.Sig, err = os.ReadFile(filepath.Join(dir, "MANIFEST.json.sig")); err != nil {
+		return r, fmt.Errorf("inbox: %w", err)
+	}
+	if len(r.Raw) > MaxManifestBytes {
+		return r, errors.New("inbox: manifest too large")
+	}
+	if raw, err := os.ReadFile(filepath.Join(dir, "REVOKED")); err == nil {
+		sig, err := os.ReadFile(filepath.Join(dir, "REVOKED.sig"))
+		if err != nil {
+			return r, fmt.Errorf("inbox: %w", err)
+		}
+		r.revokedRaw, r.revokedSig = raw, sig
+	}
+	r.localDir, r.Tag = dir, "inbox"
+	return r, nil
 }

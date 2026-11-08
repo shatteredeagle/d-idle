@@ -571,3 +571,40 @@ func TestRunChecksOnce(t *testing.T) {
 		t.Fatal("Run downloaded")
 	}
 }
+
+func TestInboxOfflineApply(t *testing.T) {
+	f := newFake(t)
+	f.publish("0.4.0", 5, nil)
+	e, l := f.engine(t, "0.3.0", func(c *Config) { c.CheckEnabled = false })
+	if err := e.Inbox(); err == nil {
+		t.Fatal("empty inbox accepted")
+	}
+	os.MkdirAll(l.Inbox(), 0o755)
+	for n, b := range f.assets {
+		os.WriteFile(filepath.Join(l.Inbox(), n), b, 0o644)
+	}
+	before := f.calls.Load()
+	if err := e.Inbox(); err != nil {
+		t.Fatal(err)
+	}
+	if err := e.Download(ctx); err != nil {
+		t.Fatal(err)
+	}
+	if err := e.Apply("0.4.0", true); err != nil {
+		t.Fatal(err)
+	}
+	if f.calls.Load() != before || l.CurrentVersion() != "0.4.0" {
+		t.Fatalf("calls %d current %q", f.calls.Load()-before, l.CurrentVersion())
+	}
+	// a bad signature in the inbox is refused like any other
+	g := newFake(t)
+	g.publish("0.4.0", 5, nil)
+	e2, l2 := g.engine(t, "0.3.0", nil)
+	os.MkdirAll(l2.Inbox(), 0o755)
+	for n, b := range f.assets { // signed by the other fake's key
+		os.WriteFile(filepath.Join(l2.Inbox(), n), b, 0o644)
+	}
+	if err := e2.Inbox(); !errors.Is(err, ErrBadSignature) {
+		t.Fatalf("inbox with a foreign signature: %v", err)
+	}
+}
