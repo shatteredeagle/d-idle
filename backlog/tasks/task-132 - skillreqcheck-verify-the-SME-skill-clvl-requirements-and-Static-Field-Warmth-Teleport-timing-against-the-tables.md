@@ -1,10 +1,13 @@
 ---
 id: TASK-132
-title: 'skillreqcheck: verify the SME skill clvl requirements and Static Field / Warmth / Teleport timing against the tables'
-status: Proposed
+title: >-
+  skillreqcheck: verify the SME skill clvl requirements and Static Field /
+  Warmth / Teleport timing against the tables
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-08T06:16:00Z'
 labels:
   - docs
   - research
