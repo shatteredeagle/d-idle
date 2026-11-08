@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Live check of the watch panels and a multi-seed class pace re-measure (docs only; cards for the target bar, area names and an Amazon no-ammo deadlock)
 - Quest hints: on entering town the hero says which quest giver it is ready to visit or why it is not yet (new policy row "How I handle quests in town": Quiet, Hints, Hints and ask me)
 - design review of the hot-update surface (docs/research/update-surface.md); doc only
 - Fix: watch login and setup wizard no longer answer 403 'forbidden origin' on Safari (Origin: null); Referrer-Policy is same-origin and the origin check also reads Sec-Fetch-Site and Referer.

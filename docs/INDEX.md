@@ -867,3 +867,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/incremental-arpg.md: deep pass on idle/incremental ARPG-like games, top mechanics to borrow, anti-patterns, proposed cards
 - docs/quest-hints.md - quest hints in town: the rule, the table with verified tags, the live drill checklist
 - docs/research/incremental-arpg.md: second pass: walled games read (Godville, Melvor, IdleOn, Idle Champions), why people watch bots, loot-filter and return-screen precedents, 3 new cards
+- docs/probes/panels-live.md - live check of the watch APIs against lockstep Paladin and Sorceress runs
+- docs/soaks/classpacing2.md - seven classes x seeds 7, 11, 13, 90 virtual minutes, mean and range, gate-tuning Paladin arm

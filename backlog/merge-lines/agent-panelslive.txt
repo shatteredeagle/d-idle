@@ -1,4 +1,0 @@
-BACKLOG: TASK-147 panelslive: watch panels checked live (docs/probes/panels-live.md: 12 endpoints work; minimap hero cell walkable 58/58, no Origin shift needed; target bar never fires on d2d, TASK-186; area 17 unnamed, TASK-187) and multi-seed class pace (docs/soaks/classpacing2.md: Necromancer and Sorceress clearly faster, others no clear gain, Amazon deadlock TASK-204)
-INDEX: docs/probes/panels-live.md - live check of the watch APIs against lockstep Paladin and Sorceress runs
-INDEX: docs/soaks/classpacing2.md - seven classes x seeds 7, 11, 13, 90 virtual minutes, mean and range, gate-tuning Paladin arm
-CHANGELOG: Live check of the watch panels and a multi-seed class pace re-measure (docs only; cards for the target bar, area names and an Amazon no-ammo deadlock)
