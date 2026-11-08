@@ -1,0 +1,2 @@
+CHANGELOG: per-class chore defaults as data for all seven classes; the policy sheet reads class starting options (TASK-146)
+INDEX: docs/classchores.md - per-class chore defaults data and how the policy sheet reads them
