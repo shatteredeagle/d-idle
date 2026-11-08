@@ -13,7 +13,7 @@ SMOKE PASS|FAIL <class> <commit> clvl@45=N kills=N deaths=N notes=<notes or fail
 `--record` also files `docs/soaks/smoke-<stamp>-<class>.md` (verdict, failed rules, at most 12 sample log lines; a few KB, far under the 256 KB guard). Commit it yourself if it matters.
 
 ## What it does
-1. `tools/smoke.sh` makes a detached worktree of the commit and runs `tools/smoke-worker.sh` through `labrun orion` (the worker host) from it, so the bot under test is the one built.
+1. `tools/smoke.sh` makes a detached worktree of the commit and runs `tools/smoke-worker.sh` through `labrun $D2_LABRUN_HOST` (local.env) (the worker host) from it, so the bot under test is the one built.
 2. The worker half is the recipe of `docs/probes/classpacing/run-class.sh` (V there): fresh character through the normal path, `d2bot play --backend d2d --managed --d2d-args "--lockstep" --goals campaign`, lab binary with lab verbs OFF (no `--lab-verbs`), `nice -n 19`, no setup writes. `D2BOT_RUN` is set so Pacts stay off, and `d2cheat runstart` is written before the bot starts.
 3. Profile `tester` adds `--ladder` (decision ladder on, session record under `<data>/sessions`); profile `gate` leaves it off, as the gate runs do, and skips the session-file rules.
 4. The wall time is `minutes/12 + 3` minutes of `--run-for` (lockstep is about 18 virtual minutes per wall minute, V in classpacing), about 10 to 15 minutes per class with the build and the game start. Classes run one after the other (one live job at a time).

@@ -5,6 +5,8 @@
 #   --profile tester: decision ladder ON (session record checked); gate: ladder OFF (session rules skipped).
 # Exit: 0 every class PASS, 1 any FAIL, 2 usage or infrastructure error.
 set -u
+. "$(dirname "$0")/env.sh"
+[ -n "${D2_LABRUN_HOST:-}" ] || { echo "smoke.sh: set D2_LABRUN_HOST (local.env)" >&2; exit 2; }
 here=$(cd "$(dirname "$0")/.." && pwd); cd "$here" || exit 2
 commit=origin/main classes=paladin,sorceress minutes= profile=tester seed=7 record=0 dry=0
 while [ $# -gt 0 ]; do
@@ -31,7 +33,7 @@ git worktree add -q --detach "$wt" "$sha" || exit 2
 trap 'git worktree remove --force "$wt" >/dev/null 2>&1' EXIT
 rc=0
 for c in ${classes//,/ }; do
-	out=$(cd "$wt" && labrun orion -- bash tools/smoke-worker.sh "$c" "$sha" "$minutes" "$profile" "$seed" "$record" 2>"$here/.smoke-$c.err")
+	out=$(cd "$wt" && labrun "$D2_LABRUN_HOST" -- bash tools/smoke-worker.sh "$c" "$sha" "$minutes" "$profile" "$seed" "$record" 2>"$here/.smoke-$c.err")
 	r=$?
 	verdict=$(printf '%s\n' "$out" | grep '^SMOKE ' | head -1)
 	if [ -z "$verdict" ]; then
