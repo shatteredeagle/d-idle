@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- nav: a walk no longer waits out the stuck detector when the game ends a move a few subtiles short of the waypoint; the next move is issued ahead; the run toggle is corrected when stamina shows the character is walking
 - Watch screen: the game video now sits at the top of the main page (collapse, full screen) with the map beside it; the map draws the area you just left next to the current one.
 - nav: exit penalty radius now exceeds the mouth gate radius, fixing 'leveling area unreachable' on corridors near an unwanted exit (cpnav)
 - tools/smoke.sh and cmd/d2smoke: a 45-virtual-minute smoke with a one-line PASS/FAIL verdict per bot commit (not yet run live)

@@ -1,10 +1,11 @@
 ---
 id: TASK-189
 title: 'watchlayout: video inline at the top, contiguous minimap'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T15:22:00Z'
+updated_date: '2026-11-08T15:39:00Z'
 labels:
   - watch
   - feature
