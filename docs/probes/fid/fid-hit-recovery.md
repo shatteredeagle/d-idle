@@ -53,7 +53,7 @@ None in Q1 to Q4. U items (cannot be called "no deviation" yet):
 
 ## Bot findings (described, not changed)
 
-B1 `internal/combat` uses a fixed per-class cast recovery and a post-hit pause (not read here, no file:line): if it does not read the class's FHR breakpoints from data, a kiting plan after a hit is off by the table's steps. Not checked in this task (U); the table above (V run) is the oracle to compare with.
+B1 `internal/combat/fighter.go:627-684` (`watchCast`, the buff retry bound) and `internal/combat/hard.go:146` (`modeGetHit`, mode 4) treat a player in hit recovery as a cut cast and recast; the bot has no FHR table and reads the mode instead, so it needs no breakpoint equality. What it assumes (a hit cuts a cast and the cost is spent or not) is exactly the U of D1 above, seen on d2d by drills (DRILLS26 D26-A, DRILLS15 M2 per the code comments) and not compared with game.exe. Described, not changed.
 
 ## PR candidate
 
@@ -62,4 +62,4 @@ No PR candidate: no proven deviation. The three prepared drafts are merged.
 ## Drill recipe (lab binary with lab verbs, docs/forkdbg.md)
 
 1. D1: Sorceress, `debug spawn fallen1 1` next to her, `debug mon set <id> dmg <big> <big>`, `debug cast 36 <x> <y>` (Frost Nova needs no target) and `step` until the hit lands during the cast; `dump stats` raw[8] each tick: does the cast complete and mana drop on the action frame, or is it cut by the get-hit? On game.exe (an instance of the bot): watch the same sequence with the unit mode read (mode 4 after the hit). The two must match.
-2. FHR table: equip +FHR items to the breakpoints 0/5/9/14, hit by a spawned Fallen, count ticks to the next idle with `dump player` mode and `step 1`: expect 16, 15, 14, 13 (record 256/8, halved by the 25 fps tick rate relation of the table, V run values above).
+2. FHR table: equip +FHR items to the breakpoints 0/5/9/14, hit by a spawned Fallen, count ticks to the next idle with `dump player` mode and `step 1`: expect the oracle's hold for that FHR (the `ticks` column of `tools/emu/d5_hit_run.sh`'s game.tsv; 16 at FHR 0 for the record 256/8).
