@@ -38,7 +38,7 @@ fi
 url=http://$D2_WORKER_HOST:${DIDLE_DEV_PORT:-18899}
 log=$(mktemp)
 trap 'rm -f "$log"' EXIT
-labrun "${D2_LABRUN_HOST:-orion}" ${send[@]+"${send[@]}"} -- tools/dev-update-host.sh --url "$url" --src "$src" ${host[@]+"${host[@]}"} >"$log" 2>&1
+labrun "${D2_LABRUN_HOST:?set D2_LABRUN_HOST in local.env (the labrun machine name)}" ${send[@]+"${send[@]}"} -- tools/dev-update-host.sh --url "$url" --src "$src" ${host[@]+"${host[@]}"} >"$log" 2>&1
 rc=$?
 if [ "$verbose" = 1 ]; then grep -v '^DEVUPDATE' "$log" >&2; fi
 grep -h '^DEVUPDATE' "$log" | sed 's/^DEVUPDATE: //'
