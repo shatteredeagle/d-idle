@@ -1,8 +1,6 @@
 ---
 id: TASK-168
-title: >-
-  pactui: Pact offer UI with effect lines, before/after cards and away-consent
-  record
+title: 'pactui: Pact offer UI with effect lines, before/after cards and away-consent record'
 status: Done
 assignee:
   - credit-runner
