@@ -140,3 +140,31 @@ func TestPanicSecondOverrunEnds(t *testing.T) {
 		return errors.Is(g.r.crash, ErrPanicStorm)
 	})
 }
+
+// The wait for a fresh game is not an error: once the area is done the bot idles in town and the clock may jump past
+// every drought threshold without an error event (the old EvError made the panic test above flaky on slow runners).
+func TestFreshGameWaitIsInfoNotError(t *testing.T) {
+	g, pm := panicRig(t, 0)
+	g.run()
+	g.r.Start(farm("Blood Moor"))
+	isWait := func(e goals.Event) bool { return strings.Contains(e.Message, "Waiting for a fresh game") }
+	g.waitFor("the fresh game wait", func() bool {
+		for _, e := range g.events(goals.EvInfo) {
+			if isWait(e) {
+				return true
+			}
+		}
+		return false
+	})
+	g.clock.Sleep(6 * time.Hour) // virtual: past droughtMin, droughtSlowMin and droughtStage2Min
+	g.clock.Sleep(time.Minute)
+	_ = pm
+	for _, e := range g.events(goals.EvError) {
+		if isWait(e) {
+			t.Fatalf("informational wait emitted as an error: %+v", e)
+		}
+	}
+	if err := g.finish(); err != nil {
+		t.Fatalf("Run returned %v", err)
+	}
+}

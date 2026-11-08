@@ -65,6 +65,11 @@ func (r *Runner) updateRecovery(s *d2.Snapshot) bool {
 	in := r.resInput(s)
 	t := resource.FromEnv(*r.e.Tune)
 	healing, mana := in.Belt.HP+in.Belt.RV, in.Belt.MP
+	if plan, err := resource.SpecOf(t).PlanFor(in); err != nil {
+		r.e.Log.Warn("belt plan: " + err.Error())
+	} else {
+		healing = resource.KitHealing(plan, healing, t)
+	}
 	r.obMu.Lock()
 	streak := r.dlog.since(r.e.Clock.Now().Add(-resource.RecoveryForceMin*time.Minute), 0)
 	r.obMu.Unlock()

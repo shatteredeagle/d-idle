@@ -815,3 +815,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/class-early-game.md: per-class early game, veteran estimate (unlocks, chores, charms, pacing), not measured
 - docs/research/info-unlocks.md - progressive view-only senses for the watcher (minimap, enemy dots, bars, elites), tier ladder, feasibility, cards TASK-148 to 152
 - docs/research/unlockables.md - unlockable features brainstorm: the ten, first-40-minutes schedule, patterns, cautions (not a decision)
+- docs/belt-plan.md | belt plan knob: templates, column overrides, where the plan acts, safety floor | TASK-164
+- [proposezone.md](proposezone.md): the hero proposes the next zone, away rule, answer routes, charter on accept (status: built offline, not wired)

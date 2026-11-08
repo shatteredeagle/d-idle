@@ -27,7 +27,8 @@ type kit struct {
 	TP     bool
 	HP, MP int
 	minHP  int
-	minMP  int // 0 for a build that needs no mana (resource.ManaNeed), so no class is named here
+	noHP   bool // the belt plan has no healing column (docs/belt-plan.md): healing potions are not asked for
+	minMP  int  // 0 for a build that needs no mana (resource.ManaNeed), so no class is named here
 }
 
 // kitRead reads the kit; known is false before the belt and pack can be read.
@@ -40,6 +41,23 @@ func (r *Runner) kitRead(s *d2.Snapshot) (k kit, known bool) {
 	k = kit{TP: in.HasTP, HP: in.Belt.HP + in.Belt.RV + in.Belt.PackHP + in.Belt.PackRV, MP: in.Belt.MP, minHP: rt.KitMinHP}
 	if resource.ManaNeed(in.Class) >= 2 {
 		k.minMP = rt.KitMinMP
+	}
+	spec := resource.SpecOfEnv(rt)
+	if !spec.IsDefault() {
+		plan, err := spec.PlanFor(in)
+		if err != nil {
+			r.e.Log.Warn("belt plan: " + err.Error())
+			return k, false
+		}
+		k.noHP = !plan.HasHealing()
+		if k.noHP {
+			k.minHP = 0
+		}
+		// The player's plan, not the class, says whether mana is part of the kit.
+		k.minMP = 0
+		if plan.HasMana() {
+			k.minMP = rt.KitMinMP
+		}
 	}
 	return k, true
 }
@@ -64,7 +82,7 @@ func (k kit) missing() []string {
 func (r *Runner) kitMissing(s *d2.Snapshot) bool {
 	k, known := r.kitRead(s)
 	// F6: healing potions waiting in the pack count; the belt fill (town chores and the field step) belts them
-	return known && (k.HP < 1 || !k.TP)
+	return known && (k.HP < 1 && !k.noHP || !k.TP)
 }
 
 // kitBandOpen reports a character at or above KitGateLevel: the band where an incomplete kit is a town trip, not a hold.

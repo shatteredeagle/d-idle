@@ -51,7 +51,7 @@ Built and tested offline: table and loader, store op and precedence, page and JS
 
 ## Gaps (what a bot or event card would add)
 
-- Potion mix: no path buys an all-mana or any ratio belt (the belt plan is code, `docs/sme/potion-policy.md`); "Mana potions first" only moves the healing drink line, "Healing potions only" does not stop the plan buying mana (record/part, in the option notes). Needs a belt-plan knob in `internal/resource` (a bot card).
+- Potion mix: solved by the belt plan knob (TASK-164, `docs/belt-plan.md`): the `potionmix` options now set `resource.beltPlan`, so the shop, the fill, the loot pickup and the kit gate follow the chosen columns. Potion tier (`potiontier`) is still a record.
 - `t1.identify`, `t1.potions.buy`, `t1.stash.full`, `t1.keep.kind` are not asked by the bot yet (`docs/t0-slice.md`): their rows store the choice; identify acts through its scroll knobs only.
 - `t0.retreat.drink` rules act only at the abort step and not under the stage-2 urgency key (U).
 - No repair, purchase, or gold event exists, so repair counts and gold are "not reported".
