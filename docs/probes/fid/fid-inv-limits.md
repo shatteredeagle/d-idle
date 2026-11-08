@@ -11,7 +11,7 @@ Tags: V read (disassembly, `tools/emu/d5_dis.sh` = upstream's disasm.py), V run 
 | Purse cap = clvl x 10,000: FUN_00622e70 = `FUN_00625480(unit, 12, 0) * 0x2710` (0x622e70..0x622e87) | disassembly | V read |
 | Stash cap = 2,500,000: FUN_00623460 = `mov eax, 0x2625a0; ret 4` | disassembly | V read |
 | The same two functions run natively on a real stat list for clvl 1..99 | `fl_gold.py limits`: **99 of 99 equal** to clvl x 10,000 and 2,500,000 | V run (`tools/emu/d5_gold_run.sh limits`) |
-| The add helper FUN_0053ff00(unit, stat, delta) (callers: sell, pickup, pay, trade, death drop) sets stat 0xe or 0xf to **0** when the sum would pass the cap (0x53ff47..0x53ff6f), else adds | disassembly | V read |
+| The add helper FUN_0053ff00(unit, stat, delta) (20 call sites, e.g. in FUN_00540900 and FUN_0055c850 (ground gold), FUN_00564d50 (the stash command), FUN_00576d90 (pay), FUN_00566cc0 (death), FUN_00567c70, FUN_0055b060, and the transaction handler near 0x577e90; which are the sell path is not traced) sets stat 0xe or 0xf to **0** when the sum would pass the cap (0x53ff47..0x53ff6f), else adds | disassembly | V read |
 | The sell handler FUN_00579510: the excess over the purse cap is returned to drop at the player's feet (FUN_0055b060) | d2d's own comment (rules.hpp `store_sell`); the handler was not run natively | I (from d2d's port), U for the native run |
 
 d2d's sites: `rules::pay` (rules.hpp, pays through the FUN_0053ff00 zero rule), `store_sell` (`purse + price - over`), the ground pickup `room` (loot.hpp `take`: clvl x 10000 - gold), the stash deposit and withdraw (commands.cpp, `kStashGoldMax` 2,500,000 and `values[kLevel] * 10000`). All use clvl x 10,000 and 2,500,000: the numbers agree with game.exe's (V read of d2d, V run of game.exe).
