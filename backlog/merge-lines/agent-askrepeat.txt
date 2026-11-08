@@ -1,2 +1,0 @@
-BACKLOG: TASK-137 ladder: the same question no longer reopens every minute (store cooldown, answer reuse, go quiet; knobs ladder.repeatCooldownMin and ladder.quietAfter); live confirmation is the next container run
-CHANGELOG: Decision ladder: a question is not asked again within 30 minutes of being asked or answered, an answered question's answer is reused meanwhile, and a key nobody answers three times in a row goes quiet with one journal line (knobs ladder.repeatCooldownMin, ladder.quietAfter).

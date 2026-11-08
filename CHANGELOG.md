@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Decision ladder: a question is not asked again within 30 minutes of being asked or answered, an answered question's answer is reused meanwhile, and a key nobody answers three times in a row goes quiet with one journal line (knobs ladder.repeatCooldownMin, ladder.quietAfter).
 - Return screen (first slice): /watch/return summarises an away window as moments, expedition cards and missed questions with answer-once-for-all; section registry for tally and proposals; not wired into Serve yet.
 - tester container: fixed the ladder store name, save on stop, stop order, and reload of a saved hero (first live run); context.sh can build from the published fork tag
 - Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
