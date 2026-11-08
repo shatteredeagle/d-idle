@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Order queue (TASK-161): GET and POST /api/orderqueue, orders run in turn, slots open with the Den, Kashya or Charsi and Cain or for tally; stops on death or a Pact pause (offline, not wired in the bot yet)
 - Hero risk meter (TASK-159): GET /api/risk and a 'Closest call' return section, unlocked by surviving a near-death; the verdict uses the bot's guard, kit and engage lines (offline, not wired in the bot yet)
 - Waypoint atlas: Act 1 waypoints lit as the hero takes them, proposed next zone marked (/api/atlas, panel)
 - Measured the first 90 virtual minutes of seven class tables on lockstep d2d (docs/soaks/classpacing.md); found equip, recovery-loop and Assassin navigation defects.

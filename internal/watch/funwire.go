@@ -81,6 +81,8 @@ type FunConfig struct {
 	Alerts *AlertsConfig
 	// Risk turns the hero risk meter on (TASK-159) when the ladder also has the row "risk"; the bot supplies the facts.
 	Risk *RiskConfig
+	// OrderQueue turns the order queue on (TASK-161) when the ladder has its slot rows.
+	OrderQueue *OrderQueueConfig
 	// Unlock turns the unlock ladder on (TASK-153): the engine of the profile (unlock.Open). nil: no ladder, no routes.
 	Unlock *unlock.Engine
 	// Affixes reads the properties of an identified item for the reveal card (TASK-157). nil: cards say they are not read.
@@ -119,6 +121,8 @@ type Fun struct {
 	Quests *QuestLog
 	// Risk is nil unless the ladder has the row "risk" and FunConfig.Risk is set (TASK-159).
 	Risk *RiskMeter
+	// Queue is nil unless FunConfig.OrderQueue is set and the ladder has the slot rows (TASK-161).
+	Queue *OrderQueue
 	// Reveal is nil unless the ladder has the rows "idreveal" and "idreveal_later" (TASK-157).
 	Reveal *Reveal
 	// Bestiary is nil unless the ladder has the rows "bestiary" and "bestiary_resists" (TASK-158).
@@ -192,6 +196,13 @@ func NewFun(c FunConfig) (*Fun, error) {
 				return nil, err
 			}
 			f.Quests = ql
+		}
+		if c.OrderQueue != nil && c.Unlock.Has(OrderQueueID) {
+			oq, err := NewOrderQueue(f.Unlocks, c.Hub, *c.OrderQueue)
+			if err != nil {
+				return nil, err
+			}
+			f.Queue = oq
 		}
 		if c.Risk != nil && c.Unlock.Has(RiskID) {
 			rm, err := NewRiskMeter(f.Unlocks, c.Hub, *c.Risk)
@@ -342,6 +353,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	if f.Quests != nil {
 		f.Quests.OnGoalEvent(ev)
 	}
+	if f.Queue != nil {
+		f.Queue.OnGoalEvent(ev)
+	}
 	if f.Reveal != nil {
 		f.Reveal.OnGoalEvent(ev)
 	}
@@ -476,6 +490,9 @@ func (f *Fun) Settle() {
 	if f.Risk != nil {
 		f.Risk.Tick()
 	}
+	if f.Queue != nil {
+		f.Queue.Tick()
+	}
 	if f.codex == nil {
 		return
 	}
@@ -526,6 +543,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Risk != nil {
 		m.Handle(RiskRoute, f.Risk.Handler())
 	}
+	if f.Queue != nil {
+		m.Handle(OrderQueueRoute, f.Queue.Handler())
+	}
 	if f.Bestiary != nil {
 		m.Handle(BestiaryRoute, f.Bestiary.Handler())
 	}
@@ -573,6 +593,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Unlocks != nil {
 		m.Handle(UnlocksBuyRoute, f.Unlocks.BuyHandler(o))
+	}
+	if f.Queue != nil {
+		m.Handle(OrderQueueRoute, f.Queue.PostHandler(o))
 	}
 	if f.Reveal != nil {
 		m.Handle(RevealFlipRoute, f.Reveal.FlipHandler(o))

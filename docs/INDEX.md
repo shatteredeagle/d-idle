@@ -851,3 +851,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/soaks/classpacing.md - measured early-game pace per class (TASK-147)
 - docs/unlock-atlas.md - waypoint atlas (TASK-160): lit and silhouette Act 1 waypoints, the hero's proposed next zone
 - docs/unlock-risk.md: hero risk meter (TASK-159), a ready / marginal / turn-back verdict from the bot's own guard, kit and life lines
+- docs/unlock-orderqueue.md: order queue (TASK-161), up to three orders in turn, slots owned by the unlock ladder, optional tally purchase
