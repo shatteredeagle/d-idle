@@ -1,2 +1,0 @@
-CHANGELOG: fun ideas: decisions applied (proposal waits when away, charter is tally only, optional retire into the Hall of Fame, policy effects on sheet and return screen), skill unlocks reconciled with the leveler and the v3 table, 8-card prototype plan, ADR-ready decision block (docs/research/fun-ideas.md)
-INDEX: docs/research/fun-ideas.md: now the final design-conversation doc: decisions so far, skill-unlock reconciliation, prototype plan, ADR-ready block

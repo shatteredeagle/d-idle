@@ -796,3 +796,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
 - docs/research/decision-dataset.md: decision dataset schema v1 (JSONL per decision-point firing, privacy, size estimate); logged by the session record (TASK-106)
 - docs/research/fun-ideas.md: the converged d.idle loop (expeditions, tally, policy sheet, Codex, legacy charm) with the incremental-games research and the comparison of dropped ideas
+- docs/research/fun-ideas.md: now the final design-conversation doc: decisions so far, skill-unlock reconciliation, prototype plan, ADR-ready block
