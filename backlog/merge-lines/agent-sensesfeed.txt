@@ -1,1 +1,0 @@
-CHANGELOG: sensesmap: the watch screen minimap is now fed by the bot (knob senses.tier, default 1, needs -watch); view only.
