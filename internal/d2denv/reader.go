@@ -39,7 +39,11 @@ func NewReader(src *d2dsrc.Source) *Reader { return &Reader{Source: src} }
 func (r *Reader) Snapshot() (*d2.Snapshot, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	t0 := time.Now()
 	res, err := r.Source.Read(ctx)
+	if snapStatsOn {
+		noteSnap(3, time.Since(t0))
+	}
 	if err != nil {
 		return nil, err
 	}

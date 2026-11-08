@@ -292,6 +292,9 @@ func traceLoop(ctx context.Context, c *d2dctl.Client, clk *LateClock, log *slog.
 		case <-tk.C:
 			steps, ticks, v, _ := clk.Pace()
 			log.Info("d2dtrace", "steps", steps, "ticks", ticks, "virtual", v.Round(time.Second), "verbs", "\n"+c.TraceReport())
+			if snapStatsOn {
+				log.Info("nav.trace snapcallers", "callers", "\n"+snapReport())
+			}
 		}
 	}
 }
