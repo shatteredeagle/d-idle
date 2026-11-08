@@ -1,0 +1,2 @@
+INDEX: docs/unlock-bestiary.md - Cain's notes bestiary (TASK-158): cards per monster kind, 10 and 50 kill steps
+CHANGELOG: Cain's notes bestiary: per-kind monster cards unlock at 10 kills, resists at 50 (/api/bestiary, panel, return section)

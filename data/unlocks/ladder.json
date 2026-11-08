@@ -253,6 +253,16 @@
       "id": "idreveal_later", "group": "ui",
       "trigger": {"kind": "codex_first", "args": {"sub": "drop", "ids": ["first_unique", "first_set"]}},
       "reveal": {"title": "Unique and set cards", "text": "Unique, set and crafted finds now arrive as cards too.", "teaser": "Find your first unique or set item."}
+    },
+    {
+      "id": "bestiary", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 10}},
+      "reveal": {"title": "Cain's notes", "text": "Cain's notes now keep a card for every kind of monster the hero has killed ten of: what it is, how it fights, what it drops and a veteran's tip.", "teaser": "Kill ten of one kind of monster."}
+    },
+    {
+      "id": "bestiary_resists", "group": "ui",
+      "trigger": {"kind": "kills_of_kind", "args": {"kind": "*", "min": 50}},
+      "reveal": {"title": "Cain's notes: resistances", "text": "After fifty kills of one kind its card shows how well it resists each element, on every difficulty.", "teaser": "Kill fifty of one kind of monster."}
     }
   ]
 }

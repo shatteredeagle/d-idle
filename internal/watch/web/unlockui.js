@@ -83,6 +83,37 @@
     });
   }
 
+  var RESIST_TYPES = ['physical', 'magic', 'fire', 'lightning', 'cold', 'poison'];
+  function resistText(r) {
+    return RESIST_TYPES.map(function (k) { return k + ' ' + (r[k] >= 100 ? 'immune' : r[k] + '%'); }).join(', ');
+  }
+  function bestiary(open) {
+    if (!open.bestiary) { $('tab-bestiary').hidden = true; $('bestiarypane').hidden = true; return Promise.resolve(); }
+    return get('/api/bestiary').then(function (v) {
+      $('tab-bestiary').hidden = false; $('bestiarypane').hidden = false;
+      $('bestiarycount').textContent = '(' + v.met + ' of ' + v.total + ' met)';
+      var ul = $('bestiarylist'); clear(ul);
+      (v.cards || []).forEach(function (c) {
+        var li = el('li', 'beast ' + c.state);
+        if (c.state === 'silhouette') {
+          li.appendChild(el('b', '', '???')); li.appendChild(el('span', 'muted', ' a ' + c.family + ' you have not fought yet'));
+        } else if (c.state === 'met') {
+          li.appendChild(el('b', '', c.name)); li.appendChild(el('span', 'muted', ' ' + c.kills + ' kills, ' + c.next + ' more for its card'));
+        } else {
+          li.appendChild(el('b', '', c.name));
+          li.appendChild(el('span', 'muted', ' ' + c.kills + ' kills' + (c.type ? ', ' + c.type : '') + ' (' + c.family + ')'));
+          if (c.attack && c.attack.length) li.appendChild(el('div', '', 'Attacks: ' + c.attack.join(', ')));
+          li.appendChild(el('div', '', c.flavour)); li.appendChild(el('div', '', 'Drops: ' + c.drops));
+          li.appendChild(el('div', 'tip', 'Tip: ' + c.tip + (c.tipTag === 'U' ? ' (unverified)' : '')));
+          if (c.state === 'full' && c.resists) {
+            ['normal', 'nightmare', 'hell'].forEach(function (d) { li.appendChild(el('div', 'resist', d + ': ' + resistText(c.resists[d]))); });
+          } else if (c.next > 0) li.appendChild(el('div', 'muted', c.next + ' more kills for its resistances'));
+        }
+        ul.appendChild(li);
+      });
+    });
+  }
+
   // Identify reveal: a face-down card carries no quality or colour; the flip asks the answer route and then shows both.
   var shown = {}, modalCard = '';
   function beep(cue) {
@@ -141,7 +172,7 @@
       var open = {};
       (u.open || []).forEach(function (s) { open[s.id] = true; });
       silhouettes(u);
-      return Promise.all([chronicle(open), voice(open), quests(open), reveal(open)]);
+      return Promise.all([chronicle(open), voice(open), quests(open), reveal(open), bestiary(open)]);
     }).catch(function () { fails++; }).then(function () {
       if (fails < 5) timer = setTimeout(tick, 4000);
     });
