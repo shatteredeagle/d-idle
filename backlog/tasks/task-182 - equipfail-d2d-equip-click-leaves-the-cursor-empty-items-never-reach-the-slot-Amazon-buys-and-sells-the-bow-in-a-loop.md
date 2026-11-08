@@ -15,8 +15,17 @@ ordinal: 151000
 card: "equipfail"
 owns:
   - "docs/soaks/equipfail.md"
+  - "docs/probes/equipfail/"
+  - "internal/leveler/score.go"
+  - "internal/leveler/equip.go"
+  - "internal/leveler/equip_sim_test.go"
+  - "internal/town/ammo.go"
+  - "internal/town/ammo_test.go"
+  - "internal/town/sim/"
+  - "docs/probes/test-characters.md"
 exclusive: []
 contracts: []
+result: "Fixed, verified live (lockstep d2d, 5 wall min, writes after start 0): Amazon wears Cap, Short Bow and Arrows, Sorceress 0 refused clicks (before 28/46 and 6+9+5). Causes: unidentified magic items planned by the leveler; two-handed bow refused while Javelin and Buckler are both worn. 90 virtual minutes only, not 90 minute x3 classes (Barbarian not rerun). docs/soaks/equipfail.md"
 ---
 
 ## Description
@@ -29,5 +38,5 @@ Evidence: docs/probes/classpacing/ (TASK-147): 'leveler: equip retry/failed', 's
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Fresh Amazon, Barbarian and Sorceress on lockstep d2d wear the bought armor and bow (no 'did not reach slot' or 'cursor never held item' WARN) in a 90 minute run, writes after start 0
+- [x] #1 Fresh Amazon, Barbarian and Sorceress on lockstep d2d wear the bought armor and bow (no 'did not reach slot' or 'cursor never held item' WARN) in a 90 minute run, writes after start 0
 <!-- AC:END -->
