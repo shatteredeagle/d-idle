@@ -1,3 +1,0 @@
-BACKLOG: TASK-155 unlockvoice: hero voice and diary (lines as data, seeded, mute switch) on the unlock ladder (offline tests, not live).
-INDEX: docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
-CHANGELOG: Watch page: the hero speaks at the first level-up, the first death and every Codex first, with a Diary tab and a mute switch.

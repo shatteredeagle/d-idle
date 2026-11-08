@@ -610,6 +610,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-120 ghcrpublish PREP: inert tester-image workflow (workflow_dispatch + environment tester-publish), D2_IMAGE in compose.tester.yml, dry run on the worker host, docs/tester-registry.md; nothing published
 - TASK-169 pactaway: away safety built offline (presence from viewer requests, consent API with typed name and hours, low-life pause, separate Hardcore flag with a refusing stub); docs/pact-away.md
 - TASK-168 pactui: Pact offer page and /api/pacts (families, ranks, heat bar, proposal vs current, incompatibility reasons, unlock silhouettes) and a cost-and-paid return section; offline only; docs/pact-ui.md
+- TASK-154 unlockchronicle: Chronicle feed and run timeline tape on the unlock ladder (offline tests, not live); also opens the ladder in cmd/d2bot.
+- TASK-155 unlockvoice: hero voice and diary (lines as data, seeded, mute switch) on the unlock ladder (offline tests, not live).
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

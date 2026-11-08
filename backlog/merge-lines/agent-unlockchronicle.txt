@@ -1,3 +1,0 @@
-BACKLOG: TASK-154 unlockchronicle: Chronicle feed and run timeline tape on the unlock ladder (offline tests, not live); also opens the ladder in cmd/d2bot.
-INDEX: docs/unlock-chronicle.md - Chronicle: kill and loot feed in D2 words, timeline tape (TASK-154)
-CHANGELOG: Watch page: Chronicle panel (kill/loot feed after the first kill, run timeline after the first expedition card) and a Still locked list on the ladder.
