@@ -3,7 +3,9 @@
 #   deploy/d2d-container/context.sh CTX [REF]
 # REF defaults to the pinned fork ref below (the binary the Gate 2 evidence used). A different REF is allowed for experiments
 # and is printed in SOURCE.txt, but it is not the pinned build.
-# Env: FORK=~/d2d-lab/fork (private fork checkout: src/ with its build/_deps from an earlier build)
+# Env: FORK=~/d2d-lab/fork (fork checkout: src/ with its build/_deps from an earlier build)
+#      FORK_URL=https://github.com/shatteredeagle/d2d-didle  take the d2d SOURCE from the published fork instead of the
+#      checkout (clone of tag didle-gate2-lab3, checked against the pin below; the vendored inputs still come from $FORK)
 #      PREBUILT=path to a d2d binary: skip the source stage (build with --build-arg D2D_SRC=prebuilt)
 # The private fork source/binary stays in CTX (a local build artifact); this repo never holds it (GPL, docs/d2d-container/licensing.md).
 # No *.mpq or Blizzard file may enter CTX: .dockerignore excludes them and the script fails if one is found.
@@ -31,8 +33,15 @@ if [ -n "${PREBUILT:-}" ]; then
 	cp "$PREBUILT" "$ctx/bin/d2d"
 	echo "prebuilt d2d: $PREBUILT (sha256 $(sha256sum "$ctx/bin/d2d" | cut -d' ' -f1))" > "$ctx/licenses/SOURCE.txt"
 else
-	git -C "$fork/src" archive --prefix=src/ "$ref" | tar x -C "$ctx"
-	commit=$(git -C "$fork/src" rev-parse "$ref^{commit}")
+	srcrepo=$fork/src
+	if [ -n "${FORK_URL:-}" ]; then
+		srcrepo=$(mktemp -d)
+		trap 'rm -rf "$srcrepo"' EXIT
+		git clone -q --no-checkout "$FORK_URL" "$srcrepo"
+		git -C "$srcrepo" fetch -q --tags origin
+	fi
+	git -C "$srcrepo" archive --prefix=src/ "$ref" | tar x -C "$ctx"
+	commit=$(git -C "$srcrepo" rev-parse "$ref^{commit}")
 	[ "$ref" != "$pin_commit" ] || [ "$commit" = "$pin_commit" ] || { echo "context.sh: fork commit $commit is not the pin $pin_commit" >&2; exit 1; }
 	[ "$ref" = "$pin_commit" ] && ref="$pin_ref"
 	echo "$commit" | cut -c1-8 > "$ctx/src/VERSION"
@@ -49,7 +58,7 @@ else
 	cp "$fork/src/LEGAL.md" "$ctx/licenses/d2d-LEGAL.md"
 	cat > "$ctx/licenses/SOURCE.txt" <<EOT
 This image contains d2d, a GPL-3.0-or-later program (upstream https://github.com/psi29a/d2decomped) with local patches.
-Fork: private repo <owner>/d2d-fork, ref $ref, commit $commit.
+Fork: ${FORK_URL:-private repo <owner>/d2d-fork}, ref $ref, commit $commit.
 Vendored build inputs: CLI11 37bb6edc, sentry-native fb2a04d4 (with submodules), FFmpeg 9.0.2 (sha256 $ffsha).
 Build recipe: Dockerfile and entrypoint in this context (deploy/d2d-container in the d2lod-bot repo).
 NOT FOR DISTRIBUTION until the corresponding source is offered to every recipient (docs/d2d-container/licensing.md).
