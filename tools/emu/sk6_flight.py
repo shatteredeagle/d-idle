@@ -45,5 +45,29 @@ def run_case(game, case, rng):
     return inner(game, case, rng)
 
 
-missiles.run_case = run_case
+LAST = []
+TALLY = {}
+
+
+def run_case2(game, case, rng):
+    got = run_case(game, case, rng)
+    LAST[:] = [got, case]
+    return got
+
+
+fly0 = missiles.fly
+
+
+def fly(table, case, blocked):
+    want = fly0(table, case, blocked)
+    got = LAST[0]
+    key = (case["name"], got[1][1], want[1][1], "same" if got == want else ("end-frame" if got[1] != want[1] else "track"))
+    TALLY[key] = TALLY.get(key, 0) + 1
+    return want
+
+
+missiles.run_case = run_case2
+missiles.fly = fly
+import atexit
+atexit.register(lambda: [print("tally", k, v) for k, v in sorted(TALLY.items()) if k[3] != "same"])
 missiles.main()
