@@ -807,3 +807,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/return-screen.md - the return screen: what it shows, data sources, sections registry, wiring.
 - docs/tester-imgrepro.md - tester image from public inputs: vendored input versions, hashes, licences, sentry decision, proof
 - docs/research/review-revive-refill-opus.md: Opus verification of the revive refill candidate (TASK-125): HOLDS, READY as r2 (test moved to its own file)
+- docs/codex.md | Act 1 Codex and firsts: table, tracker, /api/codex, reader status (TASK-130)
