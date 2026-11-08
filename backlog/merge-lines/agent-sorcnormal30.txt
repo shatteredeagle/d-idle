@@ -1,0 +1,3 @@
+BACKLOG: TASK-144 sorcnormal30: Sorceress normal30 table (v3 rows 2-30, opt-in sorceress_normal30), wizard lists her as normal30
+INDEX: docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
+CHANGELOG: Sorceress now has a normal30 leveling table (same rows as v3); the setup wizard lists her without the fallback note
