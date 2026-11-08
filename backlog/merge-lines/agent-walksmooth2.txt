@@ -1,3 +1,0 @@
-BACKLOG: walksmooth2 (TASK-196): Paladin pauses were observation latency (three snapshot readers on one channel, 850 ms per observe); minimap and guard now reuse the walker's snapshot; nav.trace timing lines in the dev image
-INDEX: docs/walksmooth.md: walksmooth2 section (measured causes, trace lines, fix)
-CHANGELOG: Fixed: the Paladin's stop-and-go travel (the bot read the game state three times over for every step); travel speed about doubled in the dev container

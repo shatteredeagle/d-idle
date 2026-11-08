@@ -875,3 +875,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/fid/fid-inv-limits.md | TASK-79 purse and stash caps, grids, and the load gold clamp deviation (2026-11-08)
 - docs/probes/fid/fid-hit-recovery.md | TASK-91 get-hit length, decision, drawn frames, FHR breakpoint table (2026-11-08)
 - docs/research/pr-load-gold-draft.md | TASK-203 local PR draft: a saved purse or stash over its cap is 0 on entering a game (2026-11-08)
+- docs/walksmooth.md: walksmooth2 section (measured causes, trace lines, fix)
