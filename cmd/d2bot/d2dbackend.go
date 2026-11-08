@@ -323,10 +323,8 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
-	if o.d2d.overlay != "" {
-		o.ladder.overlayDir = o.d2d.overlay
-		o.ladder.currencyDir = envOr("D2BOT_CURRENCY_DIR", filepath.Join(ip.State(), "currency"))
-	}
+	o.ladder.overlayDir = o.d2d.overlay
+	o.ladder.currencyDir = currencyDirFor(ip.State())
 	if err := useFirsts(o.ladder, runner); err != nil {
 		return err
 	}

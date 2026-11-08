@@ -1,0 +1,1 @@
+CHANGELOG: tally strip works without the d.idle overlay (events-mode ledger on vanilla d2d and game.exe) (TASK-141)
