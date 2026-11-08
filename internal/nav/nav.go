@@ -233,6 +233,9 @@ func (n *Navigator) observe() (*obs, error) {
 	if lm == nil {
 		return nil, errLoading
 	}
+	if n.e != nil && n.e.OnObserve != nil {
+		n.e.OnObserve(lm, st.Pos)
+	}
 	n.noteLevel(snap)
 	n.lastPos = input.Point{X: snap.Player.X, Y: snap.Player.Y}
 	return &obs{snap: snap, state: st, lm: lm, pos: input.Point{X: snap.Player.X, Y: snap.Player.Y}, level: snap.Player.Area}, nil

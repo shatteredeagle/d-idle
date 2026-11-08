@@ -386,3 +386,42 @@ func TestLedgerRefusesUnreadableEntryKinds(t *testing.T) {
 		t.Fatal("negative credit accepted")
 	}
 }
+
+// The Hall kinds are allowed in events mode (an allow-list, not a wildcard), idempotent by key, and move no balance.
+func TestHallKinds(t *testing.T) {
+	for _, mode := range []string{EventsMode, didle} {
+		l, _ := newLedger(t, mode)
+		e := Entry{Kind: KindHallRetire, Key: "hall:retire:Sorra", Character: "Sorra", Data: []byte(`{"class":"sorceress"}`)}
+		first, err := l.Append(e)
+		if err != nil {
+			t.Fatalf("%s: %v", mode, err)
+		}
+		again, err := l.Append(e)
+		if !errors.Is(err, ErrDuplicate) || again.Seq != first.Seq {
+			t.Fatalf("%s replay: %v seq %d", mode, err, again.Seq)
+		}
+		if err := l.Verify(); err != nil {
+			t.Fatalf("%s: %v", mode, err)
+		}
+		for _, bad := range []Entry{
+			{Kind: KindHallDeath, Character: "x", Data: []byte(`{}`)},                          // no key
+			{Kind: KindHallDeath, Key: "k", Character: "x"},                                    // no data
+			{Kind: KindHallDeath, Key: "k2", Currency: "tally", Amount: 1, Data: []byte(`{}`)}, // carries a balance
+			{Kind: "hall.other", Key: "k3", Data: []byte(`{}`)},                                // unknown kind
+		} {
+			if _, err := l.Append(bad); err == nil {
+				t.Errorf("%s: accepted %+v", mode, bad)
+			}
+		}
+		if b, _ := l.Balance("tally"); b.Credited != 0 {
+			t.Errorf("%s: a hall entry moved the tally: %+v", mode, b)
+		}
+	}
+	if !eventsAllowed(Entry{Kind: KindCredit, Currency: "tally"}) || eventsAllowed(Entry{Kind: KindCommit, Currency: "tally"}) || eventsAllowed(Entry{Kind: KindHallDeath, Currency: "tally"}) {
+		t.Error("events allow-list drifted")
+	}
+	v, _ := Open(t.TempDir(), Options{})
+	if _, err := v.Append(Entry{Kind: KindHallRetire, Key: "k", Data: []byte(`{}`)}); !errors.Is(err, ErrVanilla) {
+		t.Errorf("vanilla: %v", err)
+	}
+}
