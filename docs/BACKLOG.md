@@ -624,6 +624,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - status sync 2026-11-08 part 4: TASK-131 and TASK-156 Done; stay-open notes on 147 and 157
 - TASK-162 unlockalerts: alert rules table, in-page toast centre, webhook and ntfy senders (off by default), ladder row alerts (docs/unlock-alerts.md)
 - unlockwire: bestiary tables and kill store, risk meter facts and order queue wired into the live bot (TASK-185)
+- TASK-182 equipfail: equip failures traced to unidentified magic items and the Amazon bow refused with Javelin and Buckler both worn; fixed and measured (docs/soaks/equipfail.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

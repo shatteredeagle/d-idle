@@ -7,8 +7,10 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/gear"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/town/panel"
 )
 
 // Ammo and ranged gear (docs/gear.md). Charsi's Misc tab sells Arrows and Bolts (V live, smoke-amazon finding 3); the
@@ -236,6 +238,51 @@ func (t *Town) wearRanged(ctx context.Context, class string) error {
 	return nil
 }
 
+// shelveOffhand frees the left hand before a two-handed weapon goes into an occupied right hand. The game takes off at
+// most one worn item per equip click and refuses the click otherwise (d2d rules::equip: "as long as only one item comes
+// off in all"), so a Javelin in the right hand plus a Buckler in the left hand refuses the bought Short Bow and leaves
+// it on the cursor (equipfail: the Amazon bought, could not wear, sold and bought the bow again). The shield goes back
+// into the pack; the quiver job that follows replaces nothing. Does nothing for one-handed jobs and a free hand.
+func (t *Town) shelveOffhand(ctx context.Context, s *d2.Snapshot, lay *panel.Layout, j equipJob) error {
+	b := t.base(j.unit)
+	if j.body != d2.BodyRHand || b == nil || !b.TwoHanded || b.Kind != data.KindWeapon {
+		return nil
+	}
+	if s.Inventory.Equipped(d2.BodyRHand) == nil {
+		return nil
+	}
+	off := s.Inventory.Equipped(d2.BodyLHand)
+	if off == nil {
+		return nil
+	}
+	r, ok := lay.Slots["lArm"]
+	if !ok {
+		return fmt.Errorf("town: no screen position for slot lArm")
+	}
+	c := r.Center()
+	if err := t.e.In.MoveMouse(c.X, c.Y); err != nil {
+		return err
+	}
+	t.e.Clock.Sleep(equipHover)
+	if err := t.e.In.Click(input.Left, c.X, c.Y); err != nil {
+		return err
+	}
+	id := off.ID
+	_, done, err := t.h.Wait(ctx, 2*time.Second, func(s *d2.Snapshot) bool {
+		return s.Inventory.Cursor != nil && s.Inventory.Cursor.ID == id
+	})
+	if err != nil {
+		return err
+	}
+	if !done {
+		return fmt.Errorf("town: left hand item %d did not come to the cursor", id)
+	}
+	if err := t.h.ClearCursor(ctx); err != nil {
+		return fmt.Errorf("town: left hand item %d could not go to the pack: %w", id, err)
+	}
+	return nil
+}
+
 func (t *Town) wear(ctx context.Context, j equipJob) error {
 	s, err := t.h.OpenInventory(ctx)
 	if err != nil {
@@ -254,6 +301,9 @@ func (t *Town) wear(ctx context.Context, j equipJob) error {
 		if err := t.h.ClearCursor(ctx); err != nil {
 			return fmt.Errorf("cursor not empty: %w", err)
 		}
+	}
+	if err := t.shelveOffhand(ctx, s, lay, j); err != nil {
+		return err
 	}
 	if err := t.h.Take(ctx, j.unit, lay.Inventory); err != nil {
 		return err
