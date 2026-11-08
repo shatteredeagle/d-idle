@@ -1,5 +1,47 @@
 {
   "schema": "unlock.ladder/1",
   "doc": "docs/unlock-ladder.md",
-  "entries": []
+  "entries": [
+    {
+      "id": "senses_map", "group": "senses", "tier": 1,
+      "trigger": {"kind": "codex_first", "args": {"sub": "area"}},
+      "alt": [{"kind": "level", "args": {"min": 2}}],
+      "reveal": {"title": "Minimap", "text": "New sense: a map of the area, with the hero on it.", "teaser": "Meet a new place, or reach level 2."}
+    },
+    {
+      "id": "senses_dots", "group": "senses", "tier": 2,
+      "trigger": {"kind": "codex_first", "args": {"sub": "monster"}},
+      "reveal": {"title": "Enemy dots", "text": "New sense: monsters in range show as dots on the map.", "teaser": "Meet your first monster."}
+    },
+    {
+      "id": "senses_bars", "group": "senses", "tier": 3,
+      "trigger": {"kind": "codex_first", "args": {"sub": "monster"}},
+      "reveal": {"title": "Health bars and names", "text": "New sense: monsters you have met in the Codex show a name and a health bar.", "teaser": "Meet a monster; each kind opens once it is in the Codex."}
+    },
+    {
+      "id": "senses_elites", "group": "senses", "tier": 4,
+      "trigger": {"kind": "codex_first", "args": {"sub": "champion"}},
+      "alt": [{"kind": "codex_first", "args": {"sub": "monster", "ids": ["corpsefire", "bishibosh", "rakanishu", "blood_raven", "treehead", "griswold", "countess"]}}],
+      "reveal": {"title": "Elite markers", "text": "New sense: champions and named bosses carry a ring and their mod names.", "teaser": "Meet a champion or a named boss."}
+    },
+    {
+      "id": "senses_loot", "group": "senses", "tier": 5,
+      "trigger": {"kind": "tally_spend"},
+      "alt": [{"kind": "codex_first", "args": {"sub": "drop"}}],
+      "price": 40,
+      "reveal": {"title": "Eye for loot", "text": "New sense: rare, unique, set and rune drops on the ground are marked.", "teaser": "Costs tally, or find a first drop."}
+    },
+    {
+      "id": "senses_danger", "group": "senses", "tier": 6,
+      "trigger": {"kind": "tally_spend"},
+      "price": 80,
+      "reveal": {"title": "Danger rating", "text": "New sense: a rating of the area from monster level, the hero's level and the elites in view.", "teaser": "Costs tally."}
+    },
+    {
+      "id": "senses_hero", "group": "senses", "tier": 7,
+      "trigger": {"kind": "level", "args": {"min": 12}},
+      "alt": [{"kind": "codex_first", "args": {"sub": "monster", "ids": ["andariel"]}}],
+      "reveal": {"title": "Hero overlays", "text": "New sense: life and mana as numbers, resists and the mercenary.", "teaser": "Reach level 12 or meet an act boss."}
+    }
+  ]
 }

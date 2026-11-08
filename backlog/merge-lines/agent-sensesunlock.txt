@@ -1,0 +1,3 @@
+BACKLOG: sensesunlock (TASK-149): seven senses tiers as ladder rows, LadderUnlocker, /api/senses locked list and next, buy tiers 5 and 6; offline-tested, not yet wired in cmd/d2bot
+INDEX: docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
+CHANGELOG: Senses unlock ladder: the watch screen's senses open from Codex firsts, level and tally spend; /api/senses lists locked tiers.

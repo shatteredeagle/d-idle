@@ -38,7 +38,7 @@ Basics are never entries (nothing in the table may gate a view the first session
 
 - `cmd/d2bot` does not open the engine yet. Wiring: in `newFun`, `unlock.Shipped()` then `unlock.Open(stateDir, l.storeProfile(), ladder, nil)` into `cfg.Unlock`; the senses side is TASK-149.
 - No emitter feeds `kills` or `retire` events.
-- The shipped table has no entries; TASK-149 adds the senses rows, the ten unlockable cards add theirs.
+- The shipped table holds the seven senses rows (TASK-149, `docs/senses-unlock.md`); the ten unlockable cards add theirs.
 
 ## Verified
 

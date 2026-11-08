@@ -27,7 +27,7 @@ owns:
   - "internal/watch/funwire.go"
 exclusive: []
 contracts: []
-result: "Engine, ladder.json schema, reveal, GET /api/unlocks, POST /api/unlocks/buy built and tested offline (go test ./internal/unlock ./internal/watch); not verified live; cmd/d2bot does not open the engine yet; kills/retire have no emitter; shipped table empty (TASK-149 adds senses rows)."
+result: "Engine, ladder.json schema, reveal, GET /api/unlocks, POST /api/unlocks/buy built and tested offline (go test ./internal/unlock ./internal/watch); not verified live; cmd/d2bot does not open the engine yet; kills/retire have no emitter;."
 ---
 
 ## Description
