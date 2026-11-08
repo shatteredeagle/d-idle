@@ -1,0 +1,1 @@
+INDEX: docs/research/incremental-arpg.md: second pass: walled games read (Godville, Melvor, IdleOn, Idle Champions), why people watch bots, loot-filter and return-screen precedents, 3 new cards
