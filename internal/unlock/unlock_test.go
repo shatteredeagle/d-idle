@@ -232,3 +232,25 @@ func TestStatesHideLockedText(t *testing.T) {
 		t.Fatal(open)
 	}
 }
+
+func TestSeenAndAnyKill(t *testing.T) {
+	l := mustLadder(t, `{"schema":"unlock.ladder/1","entries":[
+ {"id":"feed","group":"ui","trigger":{"kind":"kills_of_kind","args":{"kind":"*","min":1}},"reveal":{"title":"Feed","text":"F"}},
+ {"id":"tape","group":"ui","trigger":{"kind":"seen","args":{"what":"expedition_card"}},"reveal":{"title":"Tape","text":"T"}}]}`)
+	e, _ := Open("", "p", l, nil)
+	if got, _ := e.Observe(Event{Type: EvSeen, Name: "something else"}); len(got) != 0 {
+		t.Fatalf("wrong seen opened %v", ids(got))
+	}
+	if got, _ := e.Observe(Event{Type: EvKills, Name: "Zombie", N: 1}); ids(got) != "feed" {
+		t.Fatalf("first kill of any kind: %q", ids(got))
+	}
+	if got, _ := e.Observe(Event{Type: EvSeen, Name: "Expedition_Card"}); ids(got) != "tape" {
+		t.Fatalf("seen: %q", ids(got))
+	}
+	if got, _ := e.Observe(Event{Type: EvSeen, Name: "expedition_card"}); len(got) != 0 {
+		t.Fatalf("replay opened %v", ids(got))
+	}
+	if _, err := Parse([]byte(`{"schema":"unlock.ladder/1","entries":[{"id":"x","group":"ui","trigger":{"kind":"seen"},"reveal":{"title":"t","text":"x"}}]}`)); err == nil || !strings.Contains(err.Error(), `"what"`) {
+		t.Fatalf("seen without what: %v", err)
+	}
+}

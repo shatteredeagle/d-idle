@@ -65,7 +65,7 @@ input[type=number] { width: 5rem; }
 .views button[aria-current="page"] { border-bottom-color: var(--accent); font-weight: 650; }
 
 main { display: grid; gap: 16px; padding: 16px; max-width: 1280px; margin: 0 auto; grid-template-columns: 1fr; }
-@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal { display: block; } main[data-view="spend"] .spend { display: block; } }
+@media (max-width: 899px) { main [data-v] { display: none; } main[data-view="thoughts"] .thoughts, main[data-view="game"] .game, main[data-view="orders"] .o-now, main[data-view="orders"] .o-map, main[data-view="orders"] .o-queue, main[data-view="rules"] .rules, main[data-view="journal"] .journal, main[data-view="journal"] .silhouettes, main[data-view="chronicle"] .chronicle { display: block; } main[data-view="spend"] .spend { display: block; } }
 main .spend[hidden] { display: none !important; }
 @media (min-width: 900px) {
   .views { display: none; }
@@ -174,3 +174,13 @@ svg.map { width: 100%; height: auto; display: block; }
 .sensespanel canvas { display: block; width: 320px; max-width: 100%; height: auto; background: var(--bg); border-radius: 6px; touch-action: none; cursor: grab; }
 .sensespanel .btnrow { display: inline-flex; gap: 4px; }
 .sensespanel.min canvas, .sensespanel.min .hint { display: none; }
+
+/* unlockable panels (docs/unlock-ladder.md): hidden until the ladder opens them; locked ones are silhouettes */
+main [data-v][hidden] { display: none !important; }
+.chron { max-height: 22rem; overflow-y: auto; }
+.chron li { font-family: Georgia, "Times New Roman", serif; }
+.chron li.kind-boss, .chron li.kind-death { font-weight: 600; }
+.chron li.kind-first { color: var(--accent-text); }
+.tape { margin: 6px 0 0; padding-left: 1.4rem; font-size: .88rem; }
+.silhouettes li { opacity: .65; border-style: dashed; }
+.silhouettes li b { letter-spacing: .08em; }

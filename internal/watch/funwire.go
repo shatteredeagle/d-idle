@@ -98,6 +98,8 @@ type Fun struct {
 	Unlocks *Unlocks
 	// Hall is nil when the Hall of Fame is off.
 	Hall *HallDesk
+	// Chronicle is nil unless the ladder has the Chronicle rows (TASK-154).
+	Chronicle *Chronicle
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -139,6 +141,15 @@ func NewFun(c FunConfig) (*Fun, error) {
 	if c.Unlock != nil {
 		f.Unlocks = &Unlocks{Engine: c.Unlock, Hub: c.Hub, Away: f.Away, Spend: c.Strip.UnlockSpender()}
 		sec.Register(UnlocksSectionID, f.Unlocks.Section())
+		if c.Unlock.Has(ChronicleID) || c.Unlock.Has(ChronicleTapeID) {
+			h := c.Hub
+			ch, err := NewChronicle(f.Unlocks, nil, func() float64 { return h.rel(h.cfg.Clock.Now()) },
+				func() []Trip { return f.Return.Return(7 * 86400).Trips })
+			if err != nil {
+				return nil, err
+			}
+			f.Chronicle = ch
+		}
 	}
 	if c.Proposals != nil {
 		pc := *c.Proposals
@@ -178,6 +189,13 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(HallSectionID, hd.Section())
 	}
 	f.Return = ReturnConfig{Hub: c.Hub, Events: f.Away, Visit: c.Visit, Speed: c.Speed, Sections: sec, Notes: c.Notes}
+	if f.Unlocks != nil {
+		f.Return.OnRead = func(d ReturnData) { // the first expedition card the viewer is shown
+			if len(d.Trips) > 0 {
+				f.Unlocks.Seen("expedition_card")
+			}
+		}
+	}
 	if c.Strip != nil {
 		c.Hub.SetOrderPlacer(c.Strip)
 	}
@@ -205,6 +223,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Unlocks != nil {
 		f.Unlocks.OnGoalEvent(ev)
+	}
+	if f.Chronicle != nil {
+		f.Chronicle.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -307,6 +328,9 @@ func (f *Fun) flush() {
 		if f.Unlocks != nil {
 			f.Unlocks.OnFired(fired)
 		}
+		if f.Chronicle != nil {
+			f.Chronicle.OnFired(fired)
+		}
 	}
 }
 
@@ -355,6 +379,10 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Unlocks != nil {
 		m.Handle(UnlocksRoute, f.Unlocks.Handler())
+		m.Handle(UnlockUIRoute, unlockUIHandler())
+	}
+	if f.Chronicle != nil {
+		m.Handle(ChronicleRoute, f.Chronicle.Handler())
 	}
 	if f.Hall != nil {
 		hh := f.Hall.Handler()

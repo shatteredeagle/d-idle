@@ -762,6 +762,8 @@ type ReturnConfig struct {
 	Sections *SectionRegistry
 	// Notes receives the three sentences of the session record (TASK-106). nil: the box says no record is connected.
 	Notes NotesSink
+	// OnRead is called with the data of every served HTML return page (a card the viewer is shown); nil: none.
+	OnRead func(ReturnData)
 }
 
 // NotesSink is what the session record (TASK-106) implements.
@@ -875,7 +877,11 @@ func (c ReturnConfig) ReturnHandler(next http.Handler) http.Handler {
 	}
 	m.HandleFunc("/watch/return", func(w http.ResponseWriter, r *http.Request) {
 		hdr(w, "text/html; charset=utf-8")
-		w.Write(RenderReturn(c.Return(since(r)), c.Notes != nil))
+		d := c.Return(since(r))
+		if c.OnRead != nil && r.Method == http.MethodGet {
+			c.OnRead(d)
+		}
+		w.Write(RenderReturn(d, c.Notes != nil))
 	})
 	m.HandleFunc("/api/return", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, 200, c.Return(since(r))) })
 	m.HandleFunc("/watch/return.js", func(w http.ResponseWriter, r *http.Request) {
