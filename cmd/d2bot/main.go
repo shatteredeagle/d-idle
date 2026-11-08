@@ -199,8 +199,8 @@ func main() {
 		os.Exit(2)
 	}
 	log.Info("d2bot start", "version", version)
-	if version == "dev" && os.Getenv("D2BOT_NAV_TRACE") == "" {
-		os.Setenv("D2BOT_NAV_TRACE", "1") // the dev image traces walk timing (nav.trace lines); releases do not
+	if (version == "dev" || os.Getenv("DIDLE_DEV") != "") && os.Getenv("D2BOT_NAV_TRACE") == "" {
+		os.Setenv("D2BOT_NAV_TRACE", "1") // the dev image (DIDLE_DEV) traces walk timing (nav.trace lines); releases do not
 	}
 	if m := gclock.StartNote(gclock.Default.K); m != "" {
 		log.Info(m)
