@@ -1,10 +1,11 @@
 ---
 id: TASK-25
-title: "testerlive: run the tester flow in the real d2d container"
-status: Proposed
+title: 'testerlive: run the tester flow in the real d2d container'
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T14:27:00Z'
+updated_date: '2026-11-08T01:05:00Z'
 labels:
   - container
   - drill
