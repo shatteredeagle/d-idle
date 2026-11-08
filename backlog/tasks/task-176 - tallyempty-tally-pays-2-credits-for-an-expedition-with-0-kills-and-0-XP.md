@@ -1,10 +1,11 @@
 ---
 id: TASK-176
 title: 'tallyempty: tally pays 2 credits for an expedition with 0 kills and 0 XP'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:59:00Z'
+updated_date: '2026-11-08T04:48:00Z'
 labels:
   - watch
   - bug
