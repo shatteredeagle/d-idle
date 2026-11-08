@@ -19,6 +19,7 @@ const (
 	OpRevokeAll = "revokeall" // player revoked all rules
 	OpSacrifice = "sacrifice" // a sacrifice banks one skip for a point
 	OpRebirth   = "rebirth"   // hardcore rebirth: new hero, rules/log/quality stay
+	OpPolicy    = "policy"    // the player set a chores-sheet row to an option (policy.go)
 )
 
 // Entry is one line of the append-only answer log. T is virtual time.
@@ -33,6 +34,8 @@ type Entry struct {
 	Answer  string        `json:"answer,omitempty"`
 	Yes     bool          `json:"yes,omitempty"`
 	FadesAt time.Duration `json:"fadesAt,omitempty"`
+	// Policy ops only: Key is the sheet row, Answer the option id, Rules what the option decides.
+	Rules []PolicyRule `json:"rules,omitempty"`
 }
 
 // Clock is injectable so fades run on virtual time.
@@ -183,6 +186,8 @@ type Store struct {
 	quietAfter int
 	asked      map[string]*askState
 
+	policy map[string]*PolicyState // sheet row -> its current option (policy.go)
+
 	answers, faded int
 }
 
@@ -209,7 +214,7 @@ func New(cat *Catalogue, profile string, clk Clock) (*Store, error) {
 	return &Store{
 		cat: cat, clk: clk, profile: profile, hero: "hero1", unlock: 2,
 		recs: map[string]*Record{}, asked: map[string]*askState{}, thoughts: map[int]*Thought{}, openByKey: map[string]int{},
-		nextID: 1, skips: map[string]int{}, quality: map[string]int{},
+		nextID: 1, skips: map[string]int{}, quality: map[string]int{}, policy: map[string]*PolicyState{},
 	}, nil
 }
 
@@ -302,6 +307,8 @@ func (s *Store) apply(e Entry) ([]Event, error) {
 			s.skips[e.Point]++
 		}
 		return nil, nil
+	case OpPolicy:
+		return nil, s.applyPolicy(e)
 	case OpRebirth:
 		// Open thoughts belong to the dead hero; rules, streaks, log and quality stay (spec 3).
 		var evs []Event
@@ -531,6 +538,9 @@ func (s *Store) ask(ctx Context, legacy string) (Decision, error) {
 		def, src = legacy, "legacy"
 	} else if def, err = s.cat.Default(ctx); err != nil {
 		return Decision{}, err
+	}
+	if a, ok := s.policyAnswer(ctx); ok { // the sheet is the player's standing choice: it answers before any card
+		return Decision{Answer: a, Source: "policy"}, nil
 	}
 	if r := s.recs[ctx.Key]; r != nil && r.Rule != nil && !r.Rule.Revoked {
 		return Decision{Answer: r.Rule.Answer, Source: "rule"}, nil
