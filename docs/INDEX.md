@@ -861,3 +861,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
 - docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
 - docs/stance.md - fight stance row and the 2026-11-08 Paladin feedback diagnosis
+- docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)

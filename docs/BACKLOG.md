@@ -633,6 +633,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - watchlayout: video inline at the top of /watch, minimap stitches neighbour areas (TASK-189)
 - walksmooth (TASK-188): stop-and-go walk of a realtime Paladin: nav advances past a waypoint a stopped character cannot reach (d2d ends moves 5 to 6 subtiles short), clicks a lookahead waypoint, and d2dinput corrects a run belief that never drains stamina; offline sim before/after, not verified live
 - TASK-190 hostileNear is a circle like the fighter scope (no futile window for corner monsters); TASK-191 fight stance row (Cautious/Balanced/Aggressive) on the policy sheet, per-class knobs
+- TASK-192 devupdate: tools/dev-update.sh puts a new bot build into a running DEV container in about 6 s (signed with a dev key, LAN directory, shim restarts the bot process only), rollback and fault drills verified on a throwaway container; one-time DEV image rebuild (docs/dev-update.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
