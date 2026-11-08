@@ -62,6 +62,8 @@ B2 The bot's danger model rates Cold Enchanted as low danger in Normal (monster-
 
 `fid/cold-enchanted-length` (fork scratch repo, private remote, pushed 2026-11-08; two commits on upstream a5b970d5): commit 1 the differential (`tools/emu/umod_stats.py`, `tests/monsters/test_umod_stats.cpp`, a README row; before: 13,283 cold_len mismatches for uniques / superuniques), commit 2 the claim (`components/rules/uniques.hpp` +6 lines `elem_len_per_level` and `boss_elem_length`, `components/game/ai.cpp` 1 line, a doc line in `docs/research/re/monsters.md`; after 2,039, of which the 1,990 with two enchants are E1 and 49 are the top-level U). Identity and message form as the TASK-83 candidate. **Not "after 0"**: the PR claim must be limited to single-enchant units below the top levels, or E1 fixed first; presubmit and pr_guard results are in the card result. Needs an independent verifier and the user's go; not posted.
 
+Overlap check (read-only `gh`, 2026-11-08): no open PR or issue on Cold Enchanted or boss mods (#157 and the Ponytail batches are merged).
+
 Usefulness: Cold Enchanted is one of the mods a Normal Act 1 unique can roll (I); its hit chills the player; on d2d the chill is one frame. For the bot it means d2d under-rates those uniques (a soak on d2d is slightly easier than the original game there), an edge case in early play, no effect on the Sorceress's or Paladin's usual packs.
 
 ## Drill recipe (lab binary, docs/forkdbg.md)
