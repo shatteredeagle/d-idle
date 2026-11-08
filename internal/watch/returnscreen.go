@@ -519,7 +519,7 @@ func BuildReturn(in ReturnInput) ReturnData {
 
 	// The five moments, each only when it happened.
 	if closeAt > 0 {
-		d.Moments = append(d.Moments, Moment{"close", "Closest call", fmt.Sprintf("Life fell to %d%%. %s", closeAt, closeWhere)})
+		d.Moments = append(d.Moments, Moment{"close", "Closest call", closeWhere})
 	}
 	if boss != "" {
 		d.Moments = append(d.Moments, Moment{"boss", "Named boss", boss})
@@ -681,7 +681,11 @@ func groupTrips(evs []AwayEvent, d *ReturnData) (trips []Trip, bestDrop, boss st
 			cur.Gold += e.Gold
 		case AwayClose:
 			if e.LifePct > 0 && (closeLife == 0 || e.LifePct < closeLife) {
-				closeLife, closeWhere = e.LifePct, e.Area
+				closeLife, closeWhere = e.LifePct, fmt.Sprintf("Life fell to %d%%", e.LifePct)
+				if e.Area != "" {
+					closeWhere += " in " + e.Area
+				}
+				closeWhere += "."
 				cur.Closest = e.LifePct
 			}
 		}
