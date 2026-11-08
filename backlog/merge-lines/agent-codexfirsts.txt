@@ -1,0 +1,3 @@
+BACKLOG: TASK-130 codexfirsts: Act 1 firsts table (37 rows), Codex, Tracker, /api/codex built and tested offline; bot hooks and live check open
+INDEX: docs/codex.md | Act 1 Codex and firsts: table, tracker, /api/codex, reader status (TASK-130)
+CHANGELOG: Act 1 Codex: 37 firsts raise discovery questions through the decision store and fill a per-profile Codex (offline, not yet wired into the bot)

@@ -250,7 +250,7 @@
     "Countess"
    ],
    "title": "The Countess",
-   "tip": "She drops El to Tir runes; her tower is long and the supplies run out.",
+   "tip": "She drops El to Tir runes; her dungeon is long and the supplies run out.",
    "tipTag": "S",
    "question": "The Countess, last floor of the Forgotten Tower. Go in for runes?",
    "yes": "go in",
@@ -397,8 +397,7 @@
    "id": "forgotten_tower",
    "kind": "area",
    "match": [
-    "Forgotten Tower",
-    "Tower Cellar Level 1"
+    "Forgotten Tower"
    ],
    "title": "Forgotten Tower",
    "tip": "Level 12 or more, with resistances, before the last floor.",
@@ -407,8 +406,8 @@
    "yes": "run it",
    "no": "level first",
    "default": "no",
-   "teaches": "the Tower is run only with level and resistances",
-   "consequence": "the card says 'ran the Tower' or 'levelled first'"
+   "teaches": "the Forgotten Tower is run only with level and resistances",
+   "consequence": "the card says 'ran the Forgotten Tower' or 'levelled first'"
   },
   {
    "id": "wp_cold_plains",
