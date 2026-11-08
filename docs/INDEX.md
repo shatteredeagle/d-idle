@@ -841,3 +841,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/pact-ui.md - Pact offer UI: routes, view model, unlock, cost-and-paid section
 - docs/unlock-chronicle.md - Chronicle: kill and loot feed in D2 words, timeline tape (TASK-154)
 - docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
+- docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
