@@ -40,6 +40,11 @@ func KitLow(healing int, t Tuning) bool {
 	return t.RecoveryPotionFloor > 0 && healing < t.RecoveryPotionFloor
 }
 
+// KitReason is the End reason of a recovery whose purpose is met: the missing kit is affordable, the same test that
+// keeps a recovery from starting (recoveryEndOnKit; TASK-183: the bar of 500 and the target of 900 are for gear, a
+// character at clvl 1 to 5 only needs the portal and the potions).
+const KitReason = "kit affordable"
+
 // StallReason is the End reason of a recovery whose gold income is too low to reach the bar (docs/fresh-start-pace.md).
 const StallReason = "stalled"
 
@@ -71,6 +76,8 @@ func RecoveryCheck(in RecoveryInput, t Tuning) RecoveryVerdict {
 		return RecoveryVerdict{End: true, Reason: fmt.Sprintf("time cap %d min", t.RecoveryMaxMin)}
 	case t.RecoveryStallMin > 0 && ran >= time.Duration(t.RecoveryStallMin)*time.Minute && in.Gold-in.StartGold < t.RecoveryStallGold:
 		return RecoveryVerdict{End: true, Reason: StallReason}
+	case t.RecoveryEndOnKit > 0 && in.Shortfall <= in.Gold:
+		return RecoveryVerdict{End: true, Reason: KitReason}
 	case in.Gold >= t.RecoveryTargetGold && in.Sellable < max(in.SellMin, 1):
 		return RecoveryVerdict{End: true, Reason: fmt.Sprintf("target %d reached, loot sold", t.RecoveryTargetGold)}
 	}
