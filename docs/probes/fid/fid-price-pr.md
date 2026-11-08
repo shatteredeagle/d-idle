@@ -8,7 +8,7 @@ Tags: V run (game.exe's own FUN_0062efb0 run by the emulator and compared with d
 
 Claim of the card: buy 39,626, sell 38,939 and repair 42,705 of 100,000 oracle cases differ; fix them by an upstream PR (price-trace.md Q5 D1 to D10, pr-vendor-repair-gate-draft.md).
 
-Verdict: **the claim is out of date; every deviation D1 to D10 is merged upstream** (list with commits: fid-vendor-price-trace.md Q1). The oracle on upstream main **1453f853** (2026-11-08, 8 commits newer than the earlier run's 9c78f391):
+Verdict: **the claim is out of date; every deviation D1 to D10 is merged upstream** (list with commits: fid-vendor-price-trace.md Q1). The oracle on upstream main **1453f853** (2026-11-08, newer than the earlier run's 9c78f391):
 
 | Run (`tools/emu/d5_price_run.sh`, which calls `fp_price_runs.sh`) | Cases | buy / sell / repair differ | Cases with a difference |
 |---|---|---|---|
