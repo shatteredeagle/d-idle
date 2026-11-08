@@ -1,6 +1,7 @@
 package pact
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -48,8 +49,19 @@ type State struct {
 	Picks     []Pick    `json:"picks"`
 	Consents  []Consent `json:"consents"`
 	Masteries int       `json:"masteries"`
-	Unlocked  []string  `json:"unlocked,omitempty"` // unlock triggers seen (andariel_first_kill ...)
+	// Unlocked is the pre-ladder unlock record (TASK-168). Nothing writes it now: the unlock ladder owns unlocks
+	// (docs/pact-ui.md); Legacy and ClearLegacy hand the old values over once.
+	Unlocked []string `json:"unlocked,omitempty"`
+
+	extra map[string]json.RawMessage // keys this version does not know, written back unchanged
 }
+
+// Gate is the unlock ladder as the controller sees it: whether the entry of a Pact's unlock_trigger is open.
+type Gate interface{ Allowed(id string) bool }
+
+// LadderID is the ladder entry id of a catalogue unlock_trigger. A trigger the ladder has no entry for (a counted one,
+// or one not decided yet) is never open.
+func LadderID(trigger string) string { return "pact_" + trigger }
 
 // Config wires a Controller. Cat and Class are required; Path "" keeps the state in memory.
 type Config struct {
@@ -63,6 +75,10 @@ type Config struct {
 	Now     func() time.Time
 	Rel     func() float64    // seconds on the return screen's clock, for the live spans (nil: spans are not kept)
 	Journal func(line string) // a pause or resume of a Pact is said here (nil: not written)
+	// Gate says which Pacts are unlocked. nil: every Pact is locked (no silent unlock).
+	Gate Gate
+	// ConsentLog gets one line each time an away-consent is granted, revoked or ends, for the return screen (nil: not written).
+	ConsentLog func(line string)
 }
 
 // Where is the hero now, for the safe zones.
@@ -116,6 +132,12 @@ func New(cfg Config) (*Controller, error) {
 			if err := json.Unmarshal(b, &c.st); err != nil {
 				return nil, fmt.Errorf("pact: state %s: %w", cfg.Path, err)
 			}
+			var all map[string]json.RawMessage
+			_ = json.Unmarshal(b, &all)
+			for _, k := range []string{"picks", "consents", "masteries", "unlocked"} {
+				delete(all, k)
+			}
+			c.st.extra = all
 			if err := cfg.Cat.Check(c.st.Picks, cfg.Class, cfg.Cat.Limits.SlotsAtUnlock, c.st.Masteries); err != nil {
 				return nil, fmt.Errorf("pact: state %s: %w", cfg.Path, err)
 			}
@@ -130,10 +152,29 @@ func (c *Controller) save() error {
 	if c.cfg.Path == "" {
 		return nil
 	}
-	b, err := json.MarshalIndent(c.st, "", " ")
+	b, err := json.Marshal(c.st)
 	if err != nil {
 		return err
 	}
+	if len(c.st.extra) > 0 {
+		var all map[string]json.RawMessage
+		if err := json.Unmarshal(b, &all); err != nil {
+			return err
+		}
+		for k, v := range c.st.extra {
+			if _, known := all[k]; !known {
+				all[k] = v
+			}
+		}
+		if b, err = json.Marshal(all); err != nil {
+			return err
+		}
+	}
+	var pretty bytes.Buffer
+	if err := json.Indent(&pretty, b, "", " "); err != nil {
+		return err
+	}
+	b = pretty.Bytes()
 	return os.WriteFile(c.cfg.Path, b, 0o600)
 }
 
@@ -160,7 +201,33 @@ func (c *Controller) Select(picks []Pick) error {
 		c.st = old
 		return err
 	}
+	for _, co := range old.Consents {
+		if !hasConsent(keep, co) {
+			c.logConsent(co.Pact, "ended: the Pact or its rank changed")
+		}
+	}
 	return nil
+}
+
+func hasConsent(l []Consent, x Consent) bool {
+	for _, co := range l {
+		if co.Pact == x.Pact && co.At.Equal(x.At) {
+			return true
+		}
+	}
+	return false
+}
+
+// logConsent says one consent change on the return screen's line (ConsentLog) and in the journal.
+func (c *Controller) logConsent(pactID, what string) {
+	name := pactID
+	if p, err := c.cfg.Cat.Get(pactID); err == nil {
+		name = p.Name
+	}
+	line := "Away-consent for " + name + " " + what
+	if c.cfg.ConsentLog != nil {
+		c.cfg.ConsentLog(line)
+	}
 }
 
 // Grant records the player's away-consent for one chosen Pact. typed must be the Pact's name (case and spaces aside):
@@ -206,6 +273,11 @@ func (c *Controller) GrantFor(pactID, typed string, difficulty, hours int) error
 		c.st = old
 		return err
 	}
+	length := fmt.Sprintf("%d days", c.cfg.Cat.Limits.ConsentDays)
+	if hours > 0 {
+		length = fmt.Sprintf("%d hours", hours)
+	}
+	c.logConsent(pactID, fmt.Sprintf("given for rank %d, up to %s", rank, length))
 	return nil
 }
 
@@ -225,16 +297,48 @@ func (c *Controller) Revoke(pactID string) error {
 		c.st = old
 		return err
 	}
+	if len(out) != len(old.Consents) {
+		c.logConsent(pactID, "revoked")
+	}
 	return nil
+}
+
+// ttl is how long a consent lasts.
+func (c *Controller) ttl(co Consent) time.Duration {
+	ttl := time.Duration(c.cfg.Cat.Limits.ConsentDays) * 24 * time.Hour
+	if co.Hours > 0 {
+		ttl = min(ttl, time.Duration(co.Hours)*time.Hour)
+	}
+	return ttl
+}
+
+// expireConsents drops the consents that ran out and says so once each.
+func (c *Controller) expireConsents() {
+	var keep, gone []Consent
+	for _, co := range c.st.Consents {
+		if c.cfg.Now().Sub(co.At) < c.ttl(co) {
+			keep = append(keep, co)
+		} else {
+			gone = append(gone, co)
+		}
+	}
+	if len(gone) == 0 {
+		return
+	}
+	old := c.st
+	c.st.Consents = keep
+	if err := c.save(); err != nil {
+		c.st = old // said again at the next tick
+		return
+	}
+	for _, co := range gone {
+		c.logConsent(co.Pact, "ran out")
+	}
 }
 
 func (c *Controller) consented(id string, rank, diff int) bool {
 	for _, co := range c.st.Consents {
-		ttl := time.Duration(c.cfg.Cat.Limits.ConsentDays) * 24 * time.Hour
-		if co.Hours > 0 {
-			ttl = min(ttl, time.Duration(co.Hours)*time.Hour)
-		}
-		if co.Pact == id && co.Rank == rank && co.Difficulty == diff && c.cfg.Now().Sub(co.At) < ttl {
+		if co.Pact == id && co.Rank == rank && co.Difficulty == diff && c.cfg.Now().Sub(co.At) < c.ttl(co) {
 			return true
 		}
 	}
@@ -285,6 +389,7 @@ func (c *Controller) Evaluate(w Where) error {
 	defer c.mu.Unlock()
 	c.lastWho = w
 	c.checkLife(w)
+	c.expireConsents()
 	wt := want{knobs: map[string]float64{}, rows: map[string]string{}}
 	liveNow := map[string]int{}
 	defer func() { c.trackSpans(liveNow) }()

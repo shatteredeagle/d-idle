@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"path/filepath"
 	"strings"
@@ -11,6 +12,7 @@ import (
 
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/pact"
+	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
 
@@ -37,16 +39,9 @@ func pactRefs(sheet *watch.PolicySheet) pact.Refs {
 	}
 }
 
-// unlockOf names the catalogue trigger a boss kill opens ("" = none). The Andariel kill is the same event the Hall uses
-// for its retire question (internal/watch/hall.go).
-func unlockOf(monster, difficulty string) string {
-	switch {
-	case monster == "Andariel":
-		return "andariel_first_kill"
-	case monster == "Baal" && difficultyOf(difficulty) == 0:
-		return "baal_normal"
-	}
-	return ""
+// ladderDifficulty is the ladder's name for a difficulty ("normal" for an unknown or empty one, like difficultyOf).
+func ladderDifficulty(s string) string {
+	return [...]string{"normal", "nightmare", "hell"}[difficultyOf(s)]
 }
 
 func difficultyOf(s string) int {
@@ -64,7 +59,7 @@ func difficultyOf(s string) int {
 // A human is present while a viewer request came in the last limits.presence_min minutes or a video stream is open
 // (TASK-169); without one a Pact acts only on a typed away-consent. Pacts pause under the life floor.
 func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.Manager, status func() goals.Status, stateDir string, getenv func(string) string) {
-	if pact.Off(getenv) || rig == nil || rig.Fun == nil || rig.Pacts == nil || rig.Fun.Policy == nil || stateDir == "" || m == nil || status == nil {
+	if pact.Off(getenv) || rig == nil || rig.Fun == nil || rig.Fun.Unlocks == nil || rig.Pacts == nil || rig.Fun.Policy == nil || stateDir == "" || m == nil || status == nil {
 		return
 	}
 	ch, unsub := m.Subscribe()
@@ -90,12 +85,9 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 						rig.Hub.Incident("Pact: " + err.Error())
 					}
 				}
-				if ctl != nil && ev.Type == goals.EvKill {
-					if t := unlockOf(ev.Monster, rig.Pacts.desk.heroNow().Difficulty); t != "" {
-						if err := ctl.Unlock(t); err != nil {
-							rig.Hub.Incident("Pact: " + err.Error())
-						}
-					}
+				if ev.Type == goals.EvKill && rig.Fun.Unlocks != nil {
+					// The ladder names the bosses (data/unlocks/ladder.json); it reveals what opens.
+					rig.Fun.Unlocks.Observe(unlock.Event{Type: unlock.EvBossKill, Name: ev.Monster, Sub: ladderDifficulty(rig.Pacts.desk.heroNow().Difficulty)})
 				}
 			case <-tick.C:
 				st := status()
@@ -119,7 +111,15 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 							Present: pres.Present,
 							Rel:     rig.Fun.Policy.Now,
 							Journal: func(line string) { rig.Hub.Incident(line) },
+							Gate:    rig.Fun.Unlocks.Engine,
+							ConsentLog: func(line string) {
+								rig.Hub.Incident(line)
+								rig.Fun.Away.Add(watch.AwayEvent{Kind: watch.AwayPactConsent, Item: line})
+							},
 						})
+						if err == nil {
+							err = adoptLegacyUnlocks(ctl, rig.Fun.Unlocks.Engine)
+						}
 						if err == nil {
 							var hc *pact.Hardcore
 							if hc, err = pact.OpenHardcore(filepath.Join(stateDir, "hardcore.json"), nil); err == nil {
@@ -148,6 +148,17 @@ func startPacts(ctx context.Context, l ladderOptions, rig *ladderRig, m *goals.M
 			}
 		}
 	}()
+}
+
+// adoptLegacyUnlocks moves the unlock triggers an older pacts-state.json recorded into the ladder (silently: the viewer
+// saw them open), then drops the old field. Safe to run on every start.
+func adoptLegacyUnlocks(ctl *pact.Controller, eng *unlock.Engine) error {
+	for _, trig := range ctl.Legacy() {
+		if _, err := eng.Adopt(pact.LadderID(trig)); err != nil && !errors.Is(err, unlock.ErrUnknownEntry) {
+			return err // an unknown trigger (no ladder entry) stays locked and is dropped with the field
+		}
+	}
+	return ctl.ClearLegacy()
 }
 
 // pactHolder is the section's late-bound controller: the section registry is not safe to change once the screen is
@@ -228,21 +239,27 @@ func registerPactSection(f *watch.Fun, getenv func(string) string) *pactHolder {
 	}
 	h := &pactHolder{pres: pact.NewPresence(0, nil), api: watch.NewPactAPI(), desk: &pactDesk{}}
 	f.Pacts, f.OnView = h.api, h.pres.Touch
-	f.Return.Sections.Register("pacts", pactSection(h, f.Policy))
+	f.Return.Sections.Register("pacts", pactSection(h, f.Policy, f.Away))
 	return h
 }
 
 // pactSection is the return screen's Pact lines: what each chosen Pact does and whether it acts now, then what each cost
 // and paid, with before/after counters from the policy sheet for a Pact that sets a sheet row (the same counters as the
 // policy cards). The tally multiplier is not paid by any code yet, so the "paid" part says what is promised (U).
-func pactSection(h *pactHolder, sheet *watch.PolicySheet) watch.ReturnSection {
-	return watch.SectionFunc(func(*watch.ReturnData) *watch.SectionView {
+func pactSection(h *pactHolder, sheet *watch.PolicySheet, away *watch.AwayLog) watch.ReturnSection {
+	return watch.SectionFunc(func(d *watch.ReturnData) *watch.SectionView {
 		ctl := h.ctl.Load()
 		if ctl == nil {
 			return nil
 		}
 		ls := ctl.Lines()
-		if len(ls) == 0 {
+		var consent []string // away-consent changes since the viewer left
+		for _, e := range away.Events() {
+			if e.Kind == watch.AwayPactConsent && e.T >= d.Since {
+				consent = append(consent, e.Item)
+			}
+		}
+		if len(ls) == 0 && len(consent) == 0 {
 			return nil
 		}
 		v := &watch.SectionView{ID: "pacts", Title: "Pacts"}
@@ -252,6 +269,7 @@ func pactSection(h *pactHolder, sheet *watch.PolicySheet) watch.ReturnSection {
 		for _, c := range ctl.Costs() {
 			v.Lines = append(v.Lines, costLine(c, sheet))
 		}
+		v.Lines = append(v.Lines, consent...)
 		return v
 	})
 }

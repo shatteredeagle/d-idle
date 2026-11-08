@@ -4,7 +4,7 @@ Shared framework behind the watch screen's unlocks: the senses tiers (`docs/rese
 
 ## Pieces
 
-- `data/unlocks/ladder.json` (embedded by `data/unlocks/unlocks.go`): the table. An entry has `id`, `group` (`senses` or `ui`), `tier` (senses only, unique per group), `trigger {kind,args}`, optional `alt` triggers (any of them opens it), `reveal {title,text,teaser}` and `price` (tally, only with a `tally_spend` trigger). `unlock.Parse` rejects: an unknown trigger kind (error names the kind and the entry), a missing arg, a reveal without title or text (nothing unlocks silently), a price without `tally_spend` or the reverse, duplicate ids or senses tiers, an unknown group.
+- `data/unlocks/ladder.json` (embedded by `data/unlocks/unlocks.go`): the table. An entry has `id`, `group` (`senses`, `ui` or `pacts`), `tier` (senses only, unique per group), `trigger {kind,args}`, optional `alt` triggers (any of them opens it), `reveal {title,text,teaser}` and `price` (tally, only with a `tally_spend` trigger). `unlock.Parse` rejects: an unknown trigger kind (error names the kind and the entry), a missing arg, a reveal without title or text (nothing unlocks silently), a price without `tally_spend` or the reverse, duplicate ids or senses tiers, an unknown group.
 - `internal/unlock`: `Engine` (`Open(dir, profile, ladder, clock)`), file `unlocks-<profile>.json` beside the Codex and the ledger (atomic write, never relocks, an id the ladder dropped stays on file). `Observe(Event)` opens entries once and returns them; `Allowed(id)`, `SenseTier(n)`, `Met(sub, name)`, `States(group)` (locked entries carry the teaser and price, never the text), `Pending()`, `Buy(id, Spender)`.
 - `internal/watch/unlock.go`: `Unlocks` (reveal, feed, routes, return section), `LedgerSpender`, `TallyStrip.UnlockSpender()`. `FunConfig.Unlock` (an `*unlock.Engine`) turns it on; nil means no ladder, no routes.
 
@@ -17,9 +17,14 @@ Shared framework behind the watch screen's unlocks: the senses tiers (`docs/rese
 | `level` | `min` | a level-up event with `Level >= min` |
 | `kills_of_kind` | `kind` (or `*`), `min` | `Event{Type: kills, Name, N}`: the source reports the running count (U: no emitter feeds it yet) |
 | `retire_count` | `min` | `Event{Type: retire, N}`: running count (U: no emitter yet) |
+| `boss_kill` | `boss` (monster name), `difficulty` (`normal`/`nightmare`/`hell`; absent = any) | `Event{Type: boss_kill, Name, Sub: difficulty}`: a kill event, idempotent (opens once). Fed by `startPacts` (cmd/d2bot/pactwire.go) |
 | `tally_spend` | none; the entry's `price` | `POST /api/unlocks/buy` |
 
 Counts carry the running total, so a repeated event can never count twice. Replay safety for the rest comes from "open once".
+
+## Pacts group
+
+Entries `pact_<unlock_trigger>` open the Pacts of the catalogue (`data/pacts/pacts.json`) with that trigger; `pact.Controller` reads `Allowed`. `Engine.Adopt(id)` opens an entry from an older record without a reveal (the Pact state migration). See `docs/pact-ui.md`.
 
 ## Reveal
 
@@ -37,8 +42,8 @@ Basics are never entries (nothing in the table may gate a view the first session
 ## Not done here
 
 - (Done in TASK-154) `cmd/d2bot` newFun opens the shipped ladder into `cfg.Unlock`; `Unlocks.OnGoalEvent` feeds `kills` (per monster name, in memory). New trigger kind `seen` (arg `what`) for viewer-side moments.
-- No emitter feeds `retire` events.
-- The shipped table holds the Chronicle rows (`docs/unlock-chronicle.md`) and the seven senses rows (TASK-149, `docs/senses-unlock.md`); the other unlockable cards add theirs.
+- No emitter feeds `retire` events. (pactladder) `startPacts` feeds `boss_kill` events.
+- The shipped table holds the Chronicle rows (`docs/unlock-chronicle.md`), the seven senses rows (TASK-149, `docs/senses-unlock.md`) and the Pacts rows (TASK-181, `docs/pact-ui.md`); the other unlockable cards add theirs.
 
 ## Verified
 

@@ -197,3 +197,31 @@ func TestUnlocksOffWithoutEngine(t *testing.T) {
 		t.Fatalf("%d", resp.StatusCode)
 	}
 }
+
+// The shipped ladder opens the first Pacts at an Andariel kill, through the same reveal as every other entry.
+func TestShippedPactUnlockReveals(t *testing.T) {
+	for _, class := range []string{"Sorceress", "Paladin"} {
+		l, err := unlock.Shipped()
+		if err != nil {
+			t.Fatal(err)
+		}
+		eng, _ := unlock.Open(t.TempDir(), "pa", l, nil)
+		r := newFunRigWith(t, class, 1, func(_ *funRig, fc *FunConfig) { fc.Unlock = eng })
+		r.fun.Unlocks.Observe(unlock.Event{Type: unlock.EvBossKill, Name: "Baal", Sub: "nightmare"})
+		if len(storyLines(r)) != 0 {
+			t.Fatalf("%s: Baal in Nightmare revealed", class)
+		}
+		r.fun.Unlocks.Observe(unlock.Event{Type: unlock.EvBossKill, Name: "Andariel", Sub: "normal"})
+		r.fun.Unlocks.Observe(unlock.Event{Type: unlock.EvBossKill, Name: "Andariel", Sub: "normal"})
+		if got := storyLines(r); len(got) != 1 || !strings.Contains(got[0], "Pacts") {
+			t.Fatalf("%s: %v", class, got)
+		}
+		var v UnlocksView
+		r.getJSON(UnlocksRoute, &v)
+		for _, s := range v.Locked {
+			if s.ID == "pact_baal_normal" && s.Text != "" {
+				t.Fatalf("%s: locked Pact leaks its text", class)
+			}
+		}
+	}
+}

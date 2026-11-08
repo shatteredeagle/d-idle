@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Pact unlocks now run through the shared unlock ladder (Andariel kill, Baal in Normal); away-consent changes show on the return screen
 - Watch screen senses: enemy dots (tier 2) and a health bar with name for the monster being attacked (tier 3, per Codex class)
 - Watch page: magic and rare finds arrive as face-down cards; flip one to see its quality, colour and a sound.
 - Watch page: Quests tab with the Act 1 quest log, unlocked when Akara gives the Den of Evil quest.

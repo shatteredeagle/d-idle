@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
 
@@ -82,19 +83,33 @@ func TestPactDeskConsentAndHardcore(t *testing.T) {
 	}
 }
 
-func TestUnlockOfAndChooseThroughDesk(t *testing.T) {
-	if unlockOf("Andariel", "Hell") != "andariel_first_kill" || unlockOf("Baal", "Normal") != "baal_normal" || unlockOf("Baal", "Hell") != "" || unlockOf("Mephisto", "") != "" {
-		t.Error("unlock triggers")
+func TestLadderDifficulty(t *testing.T) {
+	if ladderDifficulty("Hell") != "hell" || ladderDifficulty("Nightmare") != "nightmare" || ladderDifficulty("") != "normal" {
+		t.Error("ladder difficulty names")
 	}
+}
+
+func TestChooseThroughDeskFollowsLadder(t *testing.T) {
 	for _, class := range []string{"sorceress", "paladin"} {
 		cat, _ := pact.Shipped(pact.Refs{})
-		ctl, _ := pact.New(pact.Config{Cat: cat, Class: class})
+		lad, err := unlock.Shipped()
+		if err != nil {
+			t.Fatal(err)
+		}
+		eng, _ := unlock.Open("", "t", lad, nil)
+		ctl, _ := pact.New(pact.Config{Cat: cat, Class: class, Gate: eng})
 		hc, _ := pact.OpenHardcore("", nil)
 		d := &pactDesk{ctl: ctl, hc: hc}
 		if err := d.Choose([]watch.PactPick{{ID: "blood_ravens_tithe", Rank: 1}}); err == nil || !strings.Contains(err.Error(), "locked") {
 			t.Errorf("%s: locked Pact chosen: %v", class, err)
 		}
-		ctl.Unlock("andariel_first_kill")
+		if _, err := eng.Observe(unlock.Event{Type: unlock.EvBossKill, Name: "Mephisto", Sub: "normal"}); err != nil {
+			t.Fatal(err)
+		}
+		if err := d.Choose([]watch.PactPick{{ID: "blood_ravens_tithe", Rank: 1}}); err == nil {
+			t.Errorf("%s: another boss opened the Pact", class)
+		}
+		eng.Observe(unlock.Event{Type: unlock.EvBossKill, Name: "Andariel", Sub: ladderDifficulty("Hell")})
 		if err := d.Choose([]watch.PactPick{{ID: "blood_ravens_tithe", Rank: 1}}); err != nil {
 			t.Errorf("%s: %v", class, err)
 		}
