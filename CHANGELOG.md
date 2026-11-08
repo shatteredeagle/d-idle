@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- per-class chore defaults as data for all seven classes; the policy sheet reads class starting options (TASK-146)
 - Self-update part 1: cmd/d2sign, signed release manifest format and a draft (inert) release workflow
 - Watch screen: side-panel minimap (view only, fog of war, token gated) behind a tier-1 unlock hook
 - merc hire kit check follows the belt plan: an all-mana belt hires a mercenary (TASK-174)
