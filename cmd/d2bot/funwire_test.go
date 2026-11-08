@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -50,8 +51,12 @@ func fakeEnableFirsts(t *testing.T, clk *watch.SimClock) enableFunc {
 // The manager's events reach the return screen, the tally strip and the Codex through feedHub, in d.idle mode, with the
 // class unknown until the first status poll (the firsts wait for it).
 func TestFeedHubFunLoop(t *testing.T) {
-	for _, class := range []string{"Sorceress", "Paladin"} {
-		t.Run(class, func(t *testing.T) {
+	for _, c := range []struct {
+		class   string
+		overlay bool
+	}{{"Sorceress", true}, {"Paladin", true}, {"Sorceress", false}, {"Paladin", false}} {
+		class := c.class
+		t.Run(fmt.Sprintf("%s/overlay=%v", class, c.overlay), func(t *testing.T) {
 			ov := t.TempDir()
 			if err := os.MkdirAll(filepath.Join(ov, "excel"), 0o755); err != nil {
 				t.Fatal(err)
@@ -64,8 +69,11 @@ func TestFeedHubFunLoop(t *testing.T) {
 			m := goalManager(t)
 			var knobCalls []map[string]*float64
 			lo := ladderOptions{on: true, watch: true, viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0",
-				overlayDir: ov, currencyDir: filepath.Join(t.TempDir(), "currency"),
-				knobs: func(o map[string]*float64) error { knobCalls = append(knobCalls, o); return nil }}
+				currencyDir: filepath.Join(t.TempDir(), "currency"),
+				knobs:       func(o map[string]*float64) error { knobCalls = append(knobCalls, o); return nil }}
+			if c.overlay {
+				lo.overlayDir = ov
+			}
 			status := func() goals.Status {
 				return goals.Status{State: goals.RunnerRunning, Character: goals.Character{Class: class, Level: 5, Area: "Blood Moor", AreaID: 2}}
 			}

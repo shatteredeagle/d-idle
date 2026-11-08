@@ -72,6 +72,10 @@ type TallyStrip struct {
 	firstErr error
 }
 
+// TallyOffText is the strip when no ledger is attached: the human setting (the ladder and the watch screen) is off.
+// The overlay is not a reason; tally runs on vanilla d2d and game.exe too.
+const TallyOffText = "Tally is off: it runs when the ladder and the watch screen are on (-ladder -watch)."
+
 // NewTallyStrip checks the parts.
 func NewTallyStrip(h *Hub, w *currency.Wallet, t *currency.Tally, isTown func(string) bool) (*TallyStrip, error) {
 	if h == nil || w == nil || t == nil || isTown == nil {
@@ -81,7 +85,7 @@ func NewTallyStrip(h *Hub, w *currency.Wallet, t *currency.Tally, isTown func(st
 }
 
 func (s *TallyStrip) fail(err error) {
-	if err == nil || errors.Is(err, currency.ErrVanilla) {
+	if err == nil || errors.Is(err, currency.ErrVanilla) || errors.Is(err, currency.ErrNeedsOverlay) {
 		return
 	}
 	s.mu.Lock()
@@ -168,7 +172,7 @@ func (s *TallyStrip) View() *TallyView {
 	v := &TallyView{Schema: tallySchema, Mode: w.Mode, Recent: []TallyLine{}, Next: []NextBuy{}}
 	if w.Mode == "" || w.Mode == currency.VanillaMode || w.Ledger == nil {
 		v.Mode = currency.VanillaMode
-		v.Strip = "Tally is off in vanilla mode."
+		v.Strip = TallyOffText
 		return v
 	}
 	v.Enabled = true

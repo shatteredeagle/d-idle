@@ -315,7 +315,7 @@ func tallyOff() http.Handler {
 			http.Error(w, "GET only", http.StatusMethodNotAllowed)
 			return
 		}
-		writeJSON(w, 200, &TallyView{Schema: tallySchema, Mode: currency.VanillaMode, Strip: "Tally is off in vanilla mode.", Recent: []TallyLine{}, Next: []NextBuy{}})
+		writeJSON(w, 200, &TallyView{Schema: tallySchema, Mode: currency.VanillaMode, Strip: TallyOffText, Recent: []TallyLine{}, Next: []NextBuy{}})
 	})
 }
 

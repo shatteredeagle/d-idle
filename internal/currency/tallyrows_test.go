@@ -1,6 +1,7 @@
 package currency
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"strings"
@@ -192,5 +193,36 @@ func TestSummaryForWindow(t *testing.T) {
 	all, _ := ta.SummaryFor(Window{From: start, To: mid})
 	if all.Credited != 10 || all.Spent != 0 || all.Balance != 0 {
 		t.Errorf("early window: %+v", all)
+	}
+}
+
+// Events mode (no overlay): the tally is credited from observed events, everything that needs the overlay stays refused.
+func TestEventsModeCreditsTallyOnly(t *testing.T) {
+	for _, hero := range []string{"Sorc", "Pala"} {
+		t.Run(hero, func(t *testing.T) {
+			l, _ := newLedger(t, EventsMode)
+			ta, err := NewTally(l, DefaultTallyRows(), hero, "r1")
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err := ta.Credit(TallyEvent{Kind: EvQuest, ID: "1", Subject: "q"}); err != nil {
+				t.Fatalf("events mode refused a tally credit: %v", err)
+			}
+			if _, err := ta.Credit(TallyEvent{Kind: EvQuest, ID: "1", Subject: "q"}); err != nil {
+				t.Fatalf("replay: %v", err)
+			}
+			sum, err := ta.SummaryFor(Window{})
+			if err != nil || sum.Balance != 10 {
+				t.Fatalf("balance %d, %v", sum.Balance, err)
+			}
+			if _, err := l.BeginBank(context.Background(), bankReq("k"), nil); !errors.Is(err, ErrNeedsOverlay) {
+				t.Errorf("bank in events mode: %v", err)
+			}
+			for _, e := range []Entry{{Kind: KindPending, Currency: "tally", Key: "p"}, {Kind: KindCommit, Currency: "tally", Source: "bank", Key: "g", Amount: 1}} {
+				if _, err := l.Append(e); !errors.Is(err, ErrNeedsOverlay) {
+					t.Errorf("%s/%s in events mode: %v", e.Kind, e.Currency, err)
+				}
+			}
+		})
 	}
 }

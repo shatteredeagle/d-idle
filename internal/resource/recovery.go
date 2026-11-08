@@ -16,6 +16,8 @@ type RecoveryInput struct {
 	LastEnd   time.Time // when the last one ended (zero: never)
 	Was       bool      // a recovery is running
 	Force     bool      // a death streak with an empty purse: start even inside the cooldown
+	StartGold int       // gold when the running recovery started
+	Stalled   bool      // the last recovery ended as stalled (RecoveryCheck reason stallReason)
 	LowKit    bool      // KitLow: the healing potions are under the floor (Gate 1 rerun: 6 virtual minutes fighting with none)
 }
 
@@ -38,6 +40,9 @@ func KitLow(healing int, t Tuning) bool {
 	return t.RecoveryPotionFloor > 0 && healing < t.RecoveryPotionFloor
 }
 
+// StallReason is the End reason of a recovery whose gold income is too low to reach the bar (docs/fresh-start-pace.md).
+const StallReason = "stalled"
+
 // RecoveryCheck is the recovery state machine. A human with an empty purse does not push the quest: he drops back to easy
 // monsters, farms gold and sellable loot, restocks and returns. Start: gold is under RecoveryKitGold and the kit it lacks
 // costs more than the gold, outside the cooldown. End: gold reached RecoveryTargetGold and the loot is sold, or the time
@@ -55,6 +60,8 @@ func RecoveryCheck(in RecoveryInput, t Tuning) RecoveryVerdict {
 			return RecoveryVerdict{Reason: "the missing kit is affordable"}
 		case !in.LastEnd.IsZero() && in.Now.Sub(in.LastEnd) < cool && !in.Force && !in.LowKit:
 			return RecoveryVerdict{Reason: "cooldown"}
+		case in.Stalled && !in.LastEnd.IsZero() && in.Now.Sub(in.LastEnd) < time.Duration(t.RecoveryStallHoldMin)*time.Minute && !in.Force:
+			return RecoveryVerdict{Reason: "stalled hold"}
 		}
 		return RecoveryVerdict{On: true, Start: true, Reason: fmt.Sprintf("gold %d < kit %d", in.Gold, t.RecoveryKitGold)}
 	}
@@ -62,6 +69,8 @@ func RecoveryCheck(in RecoveryInput, t Tuning) RecoveryVerdict {
 	switch {
 	case t.RecoveryMaxMin > 0 && ran >= time.Duration(t.RecoveryMaxMin)*time.Minute:
 		return RecoveryVerdict{End: true, Reason: fmt.Sprintf("time cap %d min", t.RecoveryMaxMin)}
+	case t.RecoveryStallMin > 0 && ran >= time.Duration(t.RecoveryStallMin)*time.Minute && in.Gold-in.StartGold < t.RecoveryStallGold:
+		return RecoveryVerdict{End: true, Reason: StallReason}
 	case in.Gold >= t.RecoveryTargetGold && in.Sellable < max(in.SellMin, 1):
 		return RecoveryVerdict{End: true, Reason: fmt.Sprintf("target %d reached, loot sold", t.RecoveryTargetGold)}
 	}

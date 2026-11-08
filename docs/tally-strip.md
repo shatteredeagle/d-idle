@@ -3,7 +3,7 @@
 > status: built offline 2026-11-07 and wired into the bot by TASK-140 (see Wiring), TASK-129 (fun loop, ADR 0018, [research/fun-ideas.md](research/fun-ideas.md) sections 3.4 and 13 card 3). NOT verified live: nothing here has met a real game or a real journal. Ledger and registry design: [currency.md](currency.md).
 > Tags: **V** verified by a test in this repo (named); **U** unverified or a guess.
 
-Code: `internal/currency/tallyrows.go` (rows, credits, quote, charter spend, summary), `internal/currency/tallyrows.json` (the data), `internal/watch/tallystrip.go` (event hook, strip view, order flow). Off in vanilla mode (the ledger refuses; the view says so).
+Code: `internal/currency/tallyrows.go` (rows, credits, quote, charter spend, summary), `internal/currency/tallyrows.json` (the data), `internal/watch/tallystrip.go` (event hook, strip view, order flow). Runs without the d.idle overlay too (TASK-141, events mode, below).
 
 ## Sources (credits from observed events, no item)
 
@@ -48,8 +48,13 @@ A charter is the price of a "go" order to an area above the hero's recommended r
 - The return screen's tally section prints the strip, the last trip's net and its first five lines.
 - Fixed on the way: the trip window started at a sub-second time while ledger stamps are whole seconds, so the first credit of a trip fell outside "this trip" (V `TestFeedHubFunLoop`).
 
+## Without the overlay (TASK-141, decision F1)
+
+- The ledger has a mode `events` (`currency.EventsMode`): `newWallet` (cmd/d2bot/ladder.go) opens it whenever the ladder and the watch screen are on and the overlay is off, on vanilla d2d and game.exe alike. It accepts only tally credit, grant and spend entries; the bank, marks (items) and every other entry kind return `ErrNeedsOverlay`. With the overlay the mode is the overlay stamp, as before.
+- The ledger directory is `<profile state dir>/currency` for every backend (`currencyDirFor`, env `D2BOT_CURRENCY_DIR`), per profile, idempotent through the same keys. A ledger written in events mode and later opened with the overlay keeps its entries (the mode is a stamp on each entry).
+- The strip says off only without a ledger (ladder or watch off), with the reason in the text (`watch.TallyOffText`). V `TestFeedHubFunLoop` (Sorceress and Paladin, with and without overlay), `TestEventsModeCreditsTallyOnly` (two heroes). U live on vanilla d2d.
+
 ## Not done
 
 - Order slot 2 (`MaxOpenOrders` from a ledger value) and the first perk are not built; `next` lists registry upgrades that exist (unwired). TASK-129 AC 2 stays open for that part.
-- Tally needs the d.idle overlay mode; a vanilla bot shows nothing credited by design.
 - U: every amount and price above; the pace (60 to 75 tally in hour one) is not measured.

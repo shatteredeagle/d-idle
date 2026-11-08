@@ -582,6 +582,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-130 codexfirsts: Act 1 firsts table (37 rows), Codex, Tracker, /api/codex built and tested offline; bot hooks and live check open
 - TASK-140 funwire: return screen, tally strip and Codex connected to the live bot (feedHub, Serve routes, charter on the order route, waypoint hook); end-to-end test on a real server for two builds
 - TASK-125 upstream PR #245 open (revive refill); merge pending
+- TASK-138 tester hero crawl: recovery stall rule and slow-field fresh game (docs/fresh-start-pace.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

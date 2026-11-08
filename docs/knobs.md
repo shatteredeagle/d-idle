@@ -247,6 +247,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.rung3WindowMin | 20 | 1..240 | min | 20 | 2 | Virtual minutes the re-entry burst cap counts over. |
 | bot.droughtMin | 8 | 0..60 | min | 8 | 1 | Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off. |
 | bot.droughtStage2Min | 2 | 0..30 | min | 2 | 1 | Virtual minutes after the first drought action (leave the area) before the second (a fresh game). The old rule waited a full bot.droughtMin, which can never help under the Gate 2 limit of 10. 0 uses bot.droughtMin. |
+| bot.droughtSlowMin | 10 | 0..60 | min | 10 | 1 | Early game: after this many minutes in one field area with fewer than bot.droughtSlowKills kills in them (a depleted Blood Moor gives a straggler every few minutes, which keeps bot.droughtMin quiet; V, tester realtime drill: 45 kills in 25 min, then one per 1 to 5 min) the bot starts a fresh game, which refills the field. 0 is off. |
+| bot.droughtSlowKills | 3 | 1..30 | kills | 3 | 1 | Kills the slow-field window must hold to go on in the same game. |
+| bot.droughtSlowMaxLevel | 10 | 0..40 | level | 10 | 2 | The slow-field rule applies below this clvl only (small early fields deplete; later levels clear on purpose). 0 is off. |
 | bot.noPortalWaitSec | 20 | 0..240 | s | 20 | 1 | Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits. |
 | bot.freshAfterRecoverySec | 180 | 0..900 | s | 180 | 1 | No unplanned fresh game (no target left, drought) this long after a lost-game recovery, unless life is below the resume line. A second restart right after the recovery fails the Gate 2 fault criterion. 0 is off. |
 | bot.emptyFieldSec | 150 | 0..900 | s | 150 | 1 | A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off. |
@@ -375,6 +378,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.recoveryTargetGold | 900 | 400..2000 | gold | 400 | 2 | Recovery ends at this gold once the loot is sold. SME: 800-1000. |
 | resource.recoveryMaxMin | 45 | 10..120 | min | 10 | 3 | Longest recovery cycle; it ends at the cap even when the target is not reached. SME: 30-60. |
 | resource.recoveryCooldownMin | 15 | 0..120 | min | 0 | 1 | Minutes after a recovery before the next one may start. |
+| resource.recoveryStallMin | 20 | 0..120 | min | 0 | 2 | A recovery that gained under recoveryStallGold after this many minutes ends as stalled: at clvl 1 to 4 a plain kill drops a few gold, so the bar is out of reach for hours (V, tester realtime hour: 28 gold in 11 min) and the campaign never resumed. 0 = off. |
+| resource.recoveryStallGold | 100 | 20..500 | gold | 20 | 1 | Gold a recovery must have gained after recoveryStallMin minutes to go on. |
+| resource.recoveryStallHoldMin | 60 | 0..240 | min | 0 | 1 | Minutes after a stalled recovery during which a low kit does not start another one (a death streak still does). |
 | resource.recoveryPotionFloor | 2 | 0..6 | count | 6 | 3 | While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan. |
 | resource.recoveryXPPick | 1 | 0..1 | 0/1 | 0 | 1 | 1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower. |
 | resource.recoveryMaxAreaAbove | 1 | 0..4 | levels | 4 | 1 | XP pick: the recovery area's monster level may be at most this many above the character level. |

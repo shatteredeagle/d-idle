@@ -52,6 +52,9 @@ func (l *Ledger) BeginBank(ctx context.Context, req BankRequest, obs Observer) (
 	if l.vanilla() {
 		return nil, ErrVanilla
 	}
+	if l.events() {
+		return nil, ErrNeedsOverlay
+	}
 	if req.Key == "" || req.Character == "" {
 		return nil, errors.New("currency: a bank request needs a character and a key")
 	}
@@ -192,7 +195,7 @@ func (l *Ledger) Bank(ctx context.Context, req BankRequest, obs Observer, act fu
 // Recover settles every pending bank entry left by a crash: the pack is read again, the credit is the loss since the
 // pending entry (never more than it recorded), and an unchanged pack voids it. Call it at start, in the new session.
 func (l *Ledger) Recover(ctx context.Context, obs Observer) ([]*BankResult, error) {
-	if l.vanilla() {
+	if l.vanilla() || l.events() {
 		return nil, nil
 	}
 	un, err := l.lock()

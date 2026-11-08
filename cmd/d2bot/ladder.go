@@ -32,8 +32,8 @@ import (
 // without -ladder nothing in this file runs, no directory is made and no port is opened.
 
 type ladderOptions struct {
-	// d.idle mode (set by the d2d backend from --overlay-dir, never a flag of its own): the overlay directory and the
-	// profile directory of the currency ledger. Empty = vanilla, no currency code runs and the screen is unchanged.
+	// The overlay directory (d.idle mode, set by the d2d backend from --overlay-dir, never a flag of its own; empty =
+	// vanilla) and the profile directory of the currency ledger (set by every backend; the tally runs without the overlay).
 	overlayDir, currencyDir string
 
 	on      bool
@@ -250,15 +250,19 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	return rig, nil
 }
 
-// newWallet opens the account ledger of the profile for d.idle mode; nil (and no error) in vanilla mode, so the watch
-// screen then has no currency route and no strip.
+// newWallet opens the account ledger of the profile. With the d.idle overlay the mode is its stamp (marks, bank and
+// tally); without it the ledger runs in events mode and keeps only the tally, credited from observed events, so vanilla
+// d2d and game.exe get the strip too. nil (and no error) only when there is no ledger directory.
 func newWallet(l ladderOptions) (*currency.Wallet, error) {
-	if l.overlayDir == "" {
+	if l.currencyDir == "" {
 		return nil, nil
 	}
-	mode, err := overlay.Mode(l.overlayDir)
-	if err != nil {
-		return nil, err
+	mode := currency.EventsMode
+	if l.overlayDir != "" {
+		var err error
+		if mode, err = overlay.Mode(l.overlayDir); err != nil {
+			return nil, err
+		}
 	}
 	led, err := currency.Open(l.currencyDir, currency.Options{Mode: mode, Instance: os.Getenv("D2BOT_INSTANCE")})
 	if err != nil {
