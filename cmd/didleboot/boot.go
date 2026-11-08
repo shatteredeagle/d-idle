@@ -45,11 +45,21 @@ type Policy struct {
 	Stable       time.Duration // stays up without exiting, then the release is good
 	MaxBoots     int           // the Nth boot of a pending release rolls it back before it starts
 	TermGrace    time.Duration // after TERM, wait this long before KILL
+	NoProbes     bool          // dev images: the game may not run (setup wizard, no hero), so only "stays up" counts
 }
 
 // DefaultPolicy: 60 s, 3 min, 10 min, third boot, 45 s (the compose stop_grace_period).
 func DefaultPolicy() Policy {
 	return Policy{Step: time.Second, ProbeEvery: 5 * time.Second, BotAPIWithin: time.Minute, TickWithin: 3 * time.Minute, Stable: 10 * time.Minute, MaxBoots: 3, TermGrace: 45 * time.Second}
+}
+
+// DevPolicy is the policy of a DEV image (DIDLE_DEV=1, docs/dev-update.md): a pending release only has to stay up for
+// 15 s (a crashing build is still rolled back), because the dev loop is also used with the setup wizard or no hero,
+// where there is no bot API and no d2d counter to probe.
+func DevPolicy() Policy {
+	p := DefaultPolicy()
+	p.Stable, p.NoProbes = 15*time.Second, true
+	return p
 }
 
 type Clock interface {
@@ -82,6 +92,7 @@ type Boot struct {
 	Probe  Probes
 	Runner Runner
 	Stop   func() bool // true once the shim itself was asked to stop (container stop)
+	Reload func() bool // true once (consumed) when the running release should be stopped and the selection redone (dev loop)
 	Log    func(format string, a ...any)
 }
 
@@ -207,6 +218,7 @@ const (
 	outStopped outcome = iota // the shim was asked to stop
 	outExited                 // the child ended on its own
 	outUnhealthy
+	outReload // restart on request: not a failure, no rollback
 )
 
 // Run supervises until the child ends on its own (exit code returned, the container restart policy takes over) or
@@ -253,6 +265,9 @@ func (b *Boot) Run() int {
 				continue
 			}
 			return code
+		case outReload:
+			b.logf("reload requested: restarting the release selection")
+			continue
 		case outUnhealthy:
 			b.stopChild(child)
 			b.rollback(rel.Version, st.Previous, why)
@@ -297,6 +312,9 @@ func (b *Boot) watch(c Child, rel Release, probation bool) (out outcome, code in
 	p := b.Policy
 	start := b.Clock.Now()
 	var apiOK, tickOK, watchOK, haveTick bool
+	if p.NoProbes {
+		apiOK, tickOK, watchOK = true, true, true
+	}
 	var lastTick uint64
 	var lastProbe time.Time
 	for {
@@ -305,6 +323,9 @@ func (b *Boot) watch(c Child, rel Release, probation bool) (out outcome, code in
 		}
 		if code, ok := c.Exited(); ok {
 			return outExited, code, "", confirmed
+		}
+		if b.Reload != nil && b.Reload() {
+			return outReload, b.stopChild(c), "", confirmed
 		}
 		if probation {
 			now := b.Clock.Now()

@@ -5,6 +5,7 @@
 //
 //	didleboot [--launcher PATH] [launcher args...]   run (the image ENTRYPOINT is tini -- didleboot --launcher /opt/d2lod/entrypoint.sh)
 //	didleboot -select                print the release that would run and exit (drills, support)
+//	didleboot check-now | rollback-now   DEV images only (dev.go, docs/dev-update.md)
 //
 // Env: DIDLE_ROOT (/data/didle), DIDLE_BASE_BIN (/opt/d2lod), DIDLE_BASE_D2D (/opt/d2d), DIDLE_BASE_VERSION (0.0.0),
 // D2BOT_IMAGE_ABI (0), DIDLE_KEYS (/opt/didle/pubkeys), D2BOT_ADDR (127.0.0.1:8420), D2D_SOCK, TESTER=1 (the watch
@@ -12,6 +13,7 @@
 package main
 
 import (
+	"context"
 	"crypto/ed25519"
 	"fmt"
 	"os"
@@ -32,6 +34,8 @@ func envOr(name, def string) string {
 	return def
 }
 
+func ctxBackground() context.Context { return context.Background() }
+
 func loadKeys(dir string) []ed25519.PublicKey {
 	files, _ := filepath.Glob(filepath.Join(dir, "*.pub"))
 	var keys []ed25519.PublicKey
@@ -48,12 +52,18 @@ func loadKeys(dir string) []ed25519.PublicKey {
 func imageFromEnv() Image {
 	abi, _ := strconv.Atoi(os.Getenv("D2BOT_IMAGE_ABI"))
 	bin := envOr("DIDLE_BASE_BIN", "/opt/d2lod")
+	keys := loadKeys(envOr("DIDLE_KEYS", "/opt/didle/pubkeys"))
+	if src, err := selfupdate.DevFromEnv(os.Getenv); err != nil {
+		fmt.Fprintln(os.Stderr, "didleboot: dev source ignored:", err)
+	} else if src != nil {
+		keys = append(keys, src.Keys...) // a DEV image trusts the dev key as well (DIDLE_DEV=1 only)
+	}
 	return Image{
 		ABI:         abi,
 		BaseVersion: envOr("DIDLE_BASE_VERSION", "0.0.0"),
 		Base:        Release{Base: true, BinDir: bin, D2DDir: envOr("DIDLE_BASE_D2D", "/opt/d2d"), Entry: filepath.Join(bin, "entrypoint.sh")},
 		Local:       selfupdate.BuildCompat,
-		Keys:        loadKeys(envOr("DIDLE_KEYS", "/opt/didle/pubkeys")),
+		Keys:        keys,
 		WatchWanted: os.Getenv("TESTER") == "1",
 	}
 }
@@ -65,8 +75,12 @@ func realMain(args []string) int {
 	if len(args) >= 2 && args[0] == "--launcher" {
 		img.Base.Entry, args = args[1], args[2:]
 	}
+	layout := selfupdate.Layout{Root: envOr("DIDLE_ROOT", "/data/didle")}
+	if len(args) > 0 && (args[0] == "check-now" || args[0] == "rollback-now") {
+		return devCommand(args[0], img, layout, os.Stdout)
+	}
 	b := &Boot{
-		Layout: selfupdate.Layout{Root: envOr("DIDLE_ROOT", "/data/didle")},
+		Layout: layout,
 		Image:  img,
 		Policy: DefaultPolicy(),
 		Clock:  realClock{},
@@ -88,10 +102,26 @@ func realMain(args []string) int {
 	ping := filepath.Join(b.Image.Base.BinDir, "d2dping")
 	b.Probe = newProbes(envOr("D2BOT_ADDR", "127.0.0.1:8420"), watchAddr, ping, envOr("D2D_SOCK", "/run/d2d/d2d.sock"))
 	b.Runner = osRunner{args: args, env: os.Environ()}
+	if devOn() {
+		b.Policy = DevPolicy()
+		os.MkdirAll(layout.Root, 0o755)
+		os.WriteFile(pidFile(layout), []byte(strconv.Itoa(os.Getpid())+"\n"), 0o644)
+	}
+	var reload atomic.Bool
+	b.Reload = func() bool { return reload.CompareAndSwap(true, false) }
 	var stop atomic.Bool
 	b.Stop = stop.Load
 	sig := make(chan os.Signal, 2)
 	signal.Notify(sig, syscall.SIGTERM, syscall.SIGINT)
 	go func() { <-sig; stop.Store(true) }()
+	if devOn() { // SIGHUP: restart the bot process on the newly selected release (the container stays up)
+		hup := make(chan os.Signal, 2)
+		signal.Notify(hup, syscall.SIGHUP)
+		go func() {
+			for range hup {
+				reload.Store(true)
+			}
+		}()
+	}
 	return b.Run()
 }

@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 	"crypto/ed25519"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"strconv"
-	"strings"
 	"syscall"
 	"time"
 
@@ -18,19 +18,16 @@ import (
 // container's /data/didle, or D2BOT_UPDATE_DIR) and a trusted public key is baked in; anywhere else the watch
 // screen shows no update UI.
 //
-// Env: D2BOT_UPDATE_CHECK=off|0|false|no switches every outbound call off (the inbox still works);
+// Env: D2BOT_UPDATE_CHECK=off|0|false|no switches every outbound call off (the inbox still works), manual keeps the
+// buttons but starts no daily check (internal/selfupdate/dev.go);
 // D2BOT_UPDATE_DIR (default /data/didle), D2BOT_UPDATE_KEYS (default /opt/didle/pubkeys, *.pub), D2BOT_IMAGE_ABI.
 const (
 	defaultUpdateDir  = "/data/didle"
 	defaultUpdateKeys = "/opt/didle/pubkeys"
 )
 
-func updateCheckEnabled() bool {
-	switch strings.ToLower(os.Getenv("D2BOT_UPDATE_CHECK")) {
-	case "off", "0", "false", "no":
-		return false
-	}
-	return true
+func updateCheckMode() selfupdate.CheckMode {
+	return selfupdate.ParseCheckMode(os.Getenv("D2BOT_UPDATE_CHECK"))
 }
 
 // newUpdater builds the engine, or returns nil when this is not an updatable install.
@@ -40,18 +37,25 @@ func newUpdater(shutdown func() error) *selfupdate.Engine {
 		return nil
 	}
 	keys := loadPubKeys(envOr("D2BOT_UPDATE_KEYS", defaultUpdateKeys))
+	client := &selfupdate.Client{UserAgent: "didle-updater/" + version}
+	// DEV images only (DIDLE_DEV=1): a LAN source and one more trusted key (docs/dev-update.md)
+	if dev, err := selfupdate.DevFromEnv(os.Getenv); err != nil {
+		slog.Warn("update: dev source ignored", "err", err)
+	} else if dev != nil {
+		keys, client = append(keys, dev.Keys...), dev.Client("didle-updater/"+version)
+	}
 	if len(keys) == 0 {
 		return nil
 	}
 	abi, _ := strconv.Atoi(os.Getenv("D2BOT_IMAGE_ABI"))
 	return selfupdate.New(selfupdate.Config{
 		Layout:       selfupdate.Layout{Root: root},
-		Client:       &selfupdate.Client{UserAgent: "didle-updater/" + version},
+		Client:       client,
 		Keys:         keys,
 		Running:      version,
 		ImageABI:     abi,
 		Local:        selfupdate.BuildCompat,
-		CheckEnabled: updateCheckEnabled(),
+		CheckEnabled: updateCheckMode() != selfupdate.CheckOff,
 		Shutdown:     shutdown,
 	})
 }
@@ -79,6 +83,8 @@ func startUpdater(ctx context.Context) watch.Updater {
 	if e == nil {
 		return nil
 	}
-	go e.Run(ctx, 2*time.Minute)
+	if updateCheckMode() == selfupdate.CheckOn { // manual: the buttons and check-now ask, nothing runs by itself
+		go e.Run(ctx, 2*time.Minute)
+	}
 	return e
 }

@@ -23,6 +23,7 @@ Two ways. Use the container first: it is the path that ran for an hour with a pe
 5. Class pick: the wizard lists only classes that have a leveling table (`docs/wizardclass.md`): Paladin (default), Necromancer, Amazon, Assassin, Barbarian, Druid, Sorceress. Only Paladin and Sorceress were ever played in a container; the others are listed, not proven (U).
 6. After Start there is a 1 to 3 minute warm-up, then the hero walks out. Watch URL: `http://<host>:8891/watch?t=<token>`. Answers go to port 8892 (same host, set up for you by the page).
 7. Stop: `docker compose -f compose.tester.yml stop` (up to 45 s; the bot saves the character). Same volume keeps the hero (V, recreated 4 times).
+8. Getting new builds into your container: a normal image needs a rebuild and a recreate for every bot change. For testing, build a DEV image once and recreate the container once from it; after that `tools/dev-update.sh --to <container>` swaps the bot in about 6 seconds with the same volume, and `--rollback` goes back (`docs/dev-update.md`; the container, volume and hero are kept, the bot restarts like a `docker stop` and start; S/V on a throwaway container, a hero mid-fight U).
 
 ### A2. `d2bot play` (on a machine with a d2d backend)
 

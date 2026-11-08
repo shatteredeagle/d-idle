@@ -58,7 +58,12 @@ COPY bin/didleboot /opt/didle/boot
 COPY pubkeys/ /opt/didle/pubkeys/
 
 ARG APP_VERSION=0.0.0
-ENV DIDLE_BASE_VERSION=$APP_VERSION \
+# DEV=1 makes the dev-loop image (docs/dev-update.md): the shim and the bot honour D2BOT_UPDATE_URL / D2BOT_UPDATE_PUBKEY, the
+# shim restarts the bot process on SIGHUP and `didleboot check-now` fetches a build. DEV=0 (the default) ignores all of that.
+ARG DEV=0
+LABEL io.didle.dev=$DEV
+ENV DIDLE_DEV=$DEV \
+    DIDLE_BASE_VERSION=$APP_VERSION \
     D2BOT_IMAGE_ABI=1 \
     D2D_BIN=/opt/d2d/d2d \
     D2D_DATA=/game \
