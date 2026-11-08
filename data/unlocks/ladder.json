@@ -1,5 +1,37 @@
 {
   "schema": "unlock.ladder/1",
   "doc": "docs/unlock-ladder.md",
-  "entries": []
+  "entries": [
+    {
+      "id": "pact_andariel_first_kill",
+      "group": "pacts",
+      "trigger": {
+        "kind": "boss_kill",
+        "args": {
+          "boss": "Andariel"
+        }
+      },
+      "reveal": {
+        "title": "Pacts",
+        "text": "The first Andariel kill taught the hero its first Pacts: bargains that make the run harder and pay the tally.",
+        "teaser": "???"
+      }
+    },
+    {
+      "id": "pact_baal_normal",
+      "group": "pacts",
+      "trigger": {
+        "kind": "boss_kill",
+        "args": {
+          "boss": "Baal",
+          "difficulty": "normal"
+        }
+      },
+      "reveal": {
+        "title": "Pact of Nightmares",
+        "text": "Baal fell in Normal. The Nightmare Pacts are open.",
+        "teaser": "???"
+      }
+    }
+  ]
 }

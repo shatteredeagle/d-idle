@@ -24,6 +24,7 @@ const (
 	TallySpend  = "tally_spend"   // opened by Buy; the entry's price is paid from the tally
 	RetireCount = "retire_count"  // args: min (heroes retired so far; the source reports the running count)
 	KillsOfKind = "kills_of_kind" // args: kind (monster name), min (running count reported by the source)
+	BossKill    = "boss_kill"     // args: boss (monster name), difficulty (normal|nightmare|hell; absent = any)
 )
 
 // Trigger is one way to open an entry. Args depend on Kind (see the constants).
@@ -40,7 +41,7 @@ type Reveal struct {
 }
 
 // Entry is one row of the ladder. Group says who consumes it ("senses": Tier is the senses tier; "ui": a view or
-// control). Alt triggers open it too (first one to fire wins). A tally_spend trigger needs Price > 0.
+// control; "pacts": a Pact the catalogue names as "pact_<unlock_trigger>"). Alt triggers open it too (first one to fire wins). A tally_spend trigger needs Price > 0.
 type Entry struct {
 	ID      string    `json:"id"`
 	Group   string    `json:"group"`
@@ -66,7 +67,9 @@ var (
 	ErrAlreadyOpen    = errors.New("unlock: entry is already open")
 )
 
-var groups = []string{"senses", "ui"}
+var groups = []string{"senses", "ui", "pacts"}
+
+var difficulties = []string{"normal", "nightmare", "hell"}
 
 // Shipped loads the embedded ladder.
 func Shipped() (*Ladder, error) { return Parse(unlockdata.JSON) }
@@ -148,6 +151,19 @@ func (t Trigger) validate() error {
 		if err := need("kind", "min"); err != nil {
 			return err
 		}
+	case BossKill:
+		if err := need("boss"); err != nil {
+			return err
+		}
+		if t.str("boss") == "" {
+			return errors.New("trigger boss_kill: arg boss is empty")
+		}
+		if d, ok := t.Args["difficulty"]; ok {
+			if s, _ := d.(string); !contains(difficulties, s) {
+				return fmt.Errorf("trigger boss_kill: difficulty %v is not one of %v", d, difficulties)
+			}
+		}
+		return nil
 	case TallySpend:
 		return nil
 	default:

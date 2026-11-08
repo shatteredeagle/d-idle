@@ -12,6 +12,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/status"
+	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
 
@@ -90,6 +91,15 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 		cfg.Table, cfg.Clock = tbl, clk
 		cfg.Tracker = func(class string) (*decide.Tracker, error) {
 			return decide.NewTracker(tbl, cat, st, cfg.Codex, clk, decide.Who{Class: class, Diff: "normal"})
+		}
+	}
+	if stateDir != "" {
+		lad, err := unlock.Shipped()
+		if err != nil {
+			return nil, err
+		}
+		if cfg.Unlock, err = unlock.Open(stateDir, l.storeProfile(), lad, nil); err != nil {
+			return nil, err
 		}
 	}
 	pt, err := decide.ShippedPolicy(cat)

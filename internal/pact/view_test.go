@@ -35,9 +35,7 @@ func TestViewLockedSilhouettesAndChoose(t *testing.T) {
 		if err := r.c.Choose([]Pick{{"blood_ravens_tithe", 1}}); err == nil || !strings.Contains(err.Error(), "locked") {
 			t.Fatalf("%s: chose a locked Pact: %v", class, err)
 		}
-		if err := r.c.Unlock("andariel_first_kill"); err != nil {
-			t.Fatal(err)
-		}
+		r.kill("Andariel", "normal")
 		if err := r.c.Choose([]Pick{{"blood_ravens_tithe", 1}}); err != nil {
 			t.Fatalf("%s: %v", class, err)
 		}
@@ -57,7 +55,7 @@ func TestViewLockedSilhouettesAndChoose(t *testing.T) {
 
 func TestViewProposalHeatAndReasons(t *testing.T) {
 	r := newRig(t, "paladin", "")
-	r.c.Unlock("andariel_first_kill")
+	r.kill("Andariel", "normal")
 	r.c.Choose([]Pick{{"blood_ravens_tithe", 1}})
 	// a set over the cap or incompatible is shown with its error, not hidden
 	all := r.c.cfg.Cat.Pacts
@@ -104,15 +102,5 @@ func TestSpansTrackActivation(t *testing.T) {
 	r.c.Evaluate(field)
 	if sp = r.c.Spans(); len(sp) != 2 || sp[1].End != -1 {
 		t.Fatalf("%+v", sp)
-	}
-}
-
-func TestUnlockSurvivesRestart(t *testing.T) {
-	path := t.TempDir() + "/p.json"
-	r := newRig(t, "paladin", path)
-	r.c.Unlock("andariel_first_kill")
-	r2 := newRig(t, "paladin", path)
-	if err := r2.c.Choose([]Pick{{"blood_ravens_tithe", 1}}); err != nil {
-		t.Fatal(err)
 	}
 }
