@@ -42,6 +42,10 @@ type PactPick struct {
 	Rank int    `json:"rank"`
 }
 
+// AwayPactConsent is the away-log kind of an away-consent change (given, revoked, ran out); Item holds the line. The
+// Pacts return section lists these so the player sees what was allowed while away.
+const AwayPactConsent = "pact_consent"
+
 // PactAPI holds the desk once it exists.
 type PactAPI struct {
 	mu sync.Mutex

@@ -1,6 +1,7 @@
 package pact
 
 import (
+	"d2lod-bot/internal/unlock"
 	"os"
 	"path/filepath"
 	"strings"
@@ -28,12 +29,22 @@ type rig struct {
 	paused  []string
 	present bool
 	now     time.Time
+	eng     *unlock.Engine
+	consent []string
 }
 
 func newRig(t *testing.T, class, path string) *rig {
 	t.Helper()
 	r := &rig{t: t, knobs: map[string]float64{}, sheet: &fakeSheet{cur: map[string]string{}}, now: time.Unix(1_700_000_000, 0)}
+	lad, err := unlock.Shipped()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if r.eng, err = unlock.Open("", "t", lad, nil); err != nil {
+		t.Fatal(err)
+	}
 	c, err := New(Config{
+		Gate: r.eng, ConsentLog: func(l string) { r.consent = append(r.consent, l) },
 		Cat: shipped(t), Class: class, Path: path, Sheet: r.sheet,
 		Knobs: func(over map[string]*float64) error {
 			r.edits++
@@ -148,10 +159,16 @@ func TestTithePresentConsentAndSafeZones(t *testing.T) {
 		if held() {
 			t.Errorf("%s: consent survived 8 days", class)
 		}
+		if last := r.consent[len(r.consent)-1]; !strings.Contains(last, "ran out") {
+			t.Errorf("%s: expiry not said on the return line: %q", class, last)
+		}
 		r.now = r.now.Add(-8 * 24 * time.Hour)
+		if err := r.c.Grant("blood_ravens_tithe", "Blood Raven's Tithe", 0); err != nil {
+			t.Fatal(err)
+		}
 		step(field)
 		if !held() {
-			t.Errorf("%s: consent should be valid again at day 0", class)
+			t.Errorf("%s: a new consent should switch it on again", class)
 		}
 		if err := r.c.Select([]Pick{{"blood_ravens_tithe", 3}}); err != nil {
 			t.Fatal(err)
@@ -299,5 +316,13 @@ func TestBargainRank3SetsRowAndKnob(t *testing.T) {
 		if r.sheet.cur["tp"] != "default" || len(r.knobs) != 0 {
 			t.Errorf("%s: not put back: row %q knobs %v", class, r.sheet.cur["tp"], r.knobs)
 		}
+	}
+}
+
+// kill feeds a boss kill to the ladder, as the bot's kill events do.
+func (r *rig) kill(boss, diff string) {
+	r.t.Helper()
+	if _, err := r.eng.Observe(unlock.Event{Type: unlock.EvBossKill, Name: boss, Sub: diff}); err != nil {
+		r.t.Fatal(err)
 	}
 }

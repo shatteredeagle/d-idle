@@ -233,6 +233,44 @@ func TestStatesHideLockedText(t *testing.T) {
 	}
 }
 
+func TestBossKillTrigger(t *testing.T) {
+	const row = `{"schema":"unlock.ladder/1","entries":[
+ {"id":"any","group":"pacts","trigger":{"kind":"boss_kill","args":{"boss":"Andariel"}},"reveal":{"title":"A","text":"a"}},
+ {"id":"normal","group":"pacts","trigger":{"kind":"boss_kill","args":{"boss":"Baal","difficulty":"normal"}},"reveal":{"title":"B","text":"b"}}]}`
+	for _, c := range []struct {
+		ev   Event
+		want string
+	}{
+		{Event{Type: EvBossKill, Name: "andariel", Sub: "hell"}, "any"},
+		{Event{Type: EvBossKill, Name: "Baal", Sub: "nightmare"}, ""},
+		{Event{Type: EvBossKill, Name: "Baal", Sub: "Normal"}, "normal"},
+		{Event{Type: EvBossKill, Name: "Mephisto", Sub: "normal"}, ""},
+		{Event{Type: EvKills, Name: "Andariel", N: 5}, ""},
+	} {
+		e, _ := Open("", "p", mustLadder(t, row), nil)
+		got, err := e.Observe(c.ev)
+		if err != nil || ids(got) != c.want {
+			t.Errorf("%+v: got %q err %v, want %q", c.ev, ids(got), err, c.want)
+		}
+	}
+	for _, bad := range []string{
+		`{"kind":"boss_kill","args":{}}`,
+		`{"kind":"boss_kill","args":{"boss":"Baal","difficulty":"easy"}}`,
+	} {
+		s := `{"schema":"unlock.ladder/1","entries":[{"id":"x","group":"pacts","trigger":` + bad + `,"reveal":{"title":"A","text":"a"}}]}`
+		if _, err := Parse([]byte(s)); err == nil {
+			t.Errorf("accepted %s", bad)
+		}
+	}
+	e, _ := Open("", "p", mustLadder(t, row), nil)
+	if ok, err := e.Adopt("any"); !ok || err != nil || !e.Allowed("any") {
+		t.Fatal("adopt")
+	}
+	if got, _ := e.Observe(Event{Type: EvBossKill, Name: "Andariel", Sub: "normal"}); len(got) != 0 {
+		t.Fatal("an adopted entry opened again")
+	}
+}
+
 func TestSeenAndAnyKill(t *testing.T) {
 	l := mustLadder(t, `{"schema":"unlock.ladder/1","entries":[
  {"id":"feed","group":"ui","trigger":{"kind":"kills_of_kind","args":{"kind":"*","min":1}},"reveal":{"title":"Feed","text":"F"}},
