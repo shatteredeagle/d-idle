@@ -58,6 +58,8 @@ type Snapshot struct {
 	Map  Map    `json:"map"`
 	Hero Point  `json:"hero"`
 	Unit []Unit `json:"units,omitempty"`
+	// Neighbours are visited areas stitched beside Map (adjacency.go); empty when none is known or aligned.
+	Neighbours []Neighbour `json:"neighbours,omitempty"`
 }
 
 // Build makes the map of lm. area is the display name ("" is fine). An empty or missing grid is an error naming the
@@ -170,6 +172,40 @@ type Publisher struct {
 	seq     uint64
 	areaNo  int
 	seen    map[int]map[block]struct{}
+	adj     *Adjacency     // nil: no stitching
+	visits  map[int]*visit // last fogged map of each area of the session
+	visitNo uint64
+	skipped []error
+}
+
+// SetAdjacency sets the table of areas that are stitched into one canvas; nil turns stitching off (the default).
+func (p *Publisher) SetAdjacency(a *Adjacency) {
+	p.mu.Lock()
+	p.adj = a
+	p.mu.Unlock()
+}
+
+// Skipped returns why the last observation left visited neighbours out (alignment errors name the pair).
+func (p *Publisher) Skipped() []error {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	return append([]error(nil), p.skipped...)
+}
+
+// refreshNeighbours records the current map as a visit (changed: the hero just entered this area) and recomputes the
+// neighbour list, which can grow after the map did not (d2map learns the neighbours as rooms load). Holding p.mu.
+func (p *Publisher) refreshNeighbours(lm *d2map.LevelMap, changed bool) {
+	if p.adj == nil {
+		return
+	}
+	if p.visits == nil {
+		p.visits = map[int]*visit{}
+	}
+	if changed {
+		p.visitNo++
+	}
+	p.visits[lm.No] = &visit{m: p.snap.Map, rect: lm.Rect, seq: p.visitNo}
+	p.snap.Neighbours, p.skipped = neighbours(p.adj, lm, p.visits)
 }
 
 // Observe records the hero position, reveals the cells around it and rebuilds the map when the area, the grid or the
@@ -190,8 +226,10 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 		p.seen[lm.No] = sv
 	}
 	grew := reveal(sv, hero)
-	if !grew && p.have && lm.No == p.areaNo && lm.Grid.Version() == p.areaVer {
+	changed := !p.have || lm.No != p.areaNo
+	if !grew && !changed && lm.Grid.Version() == p.areaVer {
 		p.snap.Hero = Point{hero.X, hero.Y}
+		p.refreshNeighbours(lm, false)
 		return nil
 	}
 	p.seq++
@@ -207,6 +245,7 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 	}
 	p.snap = Snapshot{Map: m, Hero: Point{hero.X, hero.Y}, Unit: keep}
 	p.have, p.areaNo, p.areaVer = true, lm.No, lm.Grid.Version()
+	p.refreshNeighbours(lm, changed)
 	return nil
 }
 

@@ -18,10 +18,22 @@
 </header>
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
+<section class="card game videotop" id="gamepane" aria-labelledby="t-game" hidden>
+ <div class="card-head"><h2 id="t-game">Game</h2>
+  <span class="btnrow"><button class="btn small" id="video-full" type="button" aria-label="Full screen">Full screen</button><button class="btn small" id="video-collapse" type="button" aria-pressed="false" aria-controls="gamerow">Collapse</button></span></div>
+ <div class="gamerow" id="gamerow">
+  <div id="frame"><img id="shot" alt="live game window" width="800" height="600" hidden><p id="noframe" class="empty" hidden>Waiting for the game picture...</p></div>
+  <aside class="sensespanel" id="sensespanel" aria-label="Area map" hidden>
+   <div class="card-head"><h3>Map <small id="sensesarea" class="muted"></small></h3>
+    <span class="btnrow"><button class="btn small" id="senses-zin" type="button" aria-label="Zoom in">+</button><button class="btn small" id="senses-zout" type="button" aria-label="Zoom out">-</button><button class="btn small" id="senses-hide" type="button" aria-pressed="true">Hide</button></span></div>
+   <canvas id="sensescanvas" width="320" height="320" role="img" aria-label="Top-down map of the area; the cross is the hero"></canvas>
+   <p class="hint" id="sensesnote"></p>
+  </aside>
+ </div>
+</section>
 <nav class="views" id="views" aria-label="Pages">
  <button type="button" data-view="orders" aria-current="page">Orders</button>
  <button type="button" data-view="thoughts">Thoughts</button>
- <button type="button" data-view="game" id="tab-game" hidden>Game</button>
  <button type="button" data-view="rules">Rules</button>
  <button type="button" data-view="journal">Journal</button>
  <button type="button" data-view="spend" id="tab-spend" hidden>Spend</button>
@@ -34,17 +46,6 @@
  <button type="button" data-view="alerts" id="tab-alerts" hidden>Alerts <span id="alertbadge" class="badge" hidden></span></button>
 </nav>
 <main id="main" data-view="orders">
- <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
-  <div class="gamerow">
-   <div id="frame"><img id="shot" alt="live game window" hidden><p id="noframe" class="empty" hidden>Waiting for the game picture...</p></div>
-   <aside class="sensespanel" id="sensespanel" aria-label="Area map" hidden>
-    <div class="card-head"><h3>Map <small id="sensesarea" class="muted"></small></h3>
-     <span class="btnrow"><button class="btn small" id="senses-zin" type="button" aria-label="Zoom in">+</button><button class="btn small" id="senses-zout" type="button" aria-label="Zoom out">-</button><button class="btn small" id="senses-hide" type="button" aria-pressed="true">Hide</button></span></div>
-    <canvas id="sensescanvas" width="320" height="320" role="img" aria-label="Top-down map of the area; the cross is the hero"></canvas>
-    <p class="hint" id="sensesnote"></p>
-   </aside>
-  </div>
- </section>
  <section class="card thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
   <div id="thoughts"></div>
   <ul id="feed" class="log-list"></ul>

@@ -4,6 +4,7 @@ import (
 	"io/fs"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"d2lod-bot/internal/senses"
 )
@@ -53,17 +54,49 @@ type SensesReply struct {
 	Map     *senses.Map   `json:"map,omitempty"`
 	Hero    *senses.Point `json:"hero,omitempty"`
 	Units   []PublicUnit  `json:"units,omitempty"`
-	Waiting bool          `json:"waiting,omitempty"`
+	// Neighbours are visited areas stitched beside Map (internal/senses adjacency.go), tier 1 like the map itself.
+	Neighbours []SenseNeighbour `json:"neighbours,omitempty"`
+	Waiting    bool             `json:"waiting,omitempty"`
 	// Locked lists the tiers not open yet (titles and hints only) and Next is the lowest of them; both are present only
 	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
 	Locked []SenseLock `json:"locked,omitempty"`
 	Next   *SenseLock  `json:"next,omitempty"`
 }
 
+// SenseNeighbour is a neighbour area in the current area's coordinate space: add DX, DY to its subtile coordinates.
+// Map is left out when the caller already holds that version (?nb=<areaId>:<version>,...).
+type SenseNeighbour struct {
+	AreaID  int         `json:"areaId"`
+	Version uint64      `json:"version"`
+	DX      int         `json:"dx"`
+	DY      int         `json:"dy"`
+	Map     *senses.Map `json:"map,omitempty"`
+}
+
+// parseHave reads ?nb=2:5,1:3 into areaId -> version; malformed items are ignored (the map is then simply sent).
+func parseHave(s string) map[int]uint64 {
+	out := map[int]uint64{}
+	for _, it := range strings.Split(s, ",") {
+		a, v, ok := strings.Cut(it, ":")
+		if !ok {
+			continue
+		}
+		ai, e1 := strconv.Atoi(a)
+		vi, e2 := strconv.ParseUint(v, 10, 64)
+		if e1 == nil && e2 == nil {
+			out[ai] = vi
+		}
+	}
+	return out
+}
+
 const maxTier = 7 // the ladder of info-unlocks.md has seven rungs (tier 0 is the video alone)
 
 // Reply builds the answer for a caller that holds map version have.
-func (s *Senses) Reply(have uint64) SensesReply {
+func (s *Senses) Reply(have uint64) SensesReply { return s.ReplyNb(have, nil) }
+
+// ReplyNb is Reply for a caller that also holds the given neighbour map versions (areaId -> version).
+func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 	r := SensesReply{Schema: senses.Schema, Tiers: []int{}}
 	allowed := map[int]bool{}
 	for t := 1; t <= maxTier; t++ {
@@ -95,6 +128,14 @@ func (s *Senses) Reply(have uint64) SensesReply {
 		}
 		h := snap.Hero
 		r.Hero = &h
+		for _, n := range snap.Neighbours {
+			sn := SenseNeighbour{AreaID: n.AreaID, Version: n.Version, DX: n.DX, DY: n.DY}
+			if v, ok := haveNb[n.AreaID]; !ok || v != n.Version {
+				m := n.Map
+				sn.Map = &m
+			}
+			r.Neighbours = append(r.Neighbours, sn)
+		}
 	}
 	if allowed[2] {
 		r.Units = publicUnits(snap.Unit, s.Lock, allowed[3], allowed[4])
@@ -111,7 +152,7 @@ func (s *Senses) Handler() http.Handler {
 			return
 		}
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
-		writeJSON(w, 200, s.Reply(have))
+		writeJSON(w, 200, s.ReplyNb(have, parseHave(r.URL.Query().Get("nb"))))
 	})
 	for route, file := range map[string]string{"/watch/senses.js": "web/senses.js", "/watch/senses_units.js": "web/senses_units.js"} {
 		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
