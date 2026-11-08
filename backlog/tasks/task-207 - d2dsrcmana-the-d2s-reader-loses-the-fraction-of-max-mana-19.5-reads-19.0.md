@@ -1,10 +1,11 @@
 ---
 id: TASK-207
 title: 'd2dsrcmana: the d2s reader loses the fraction of max mana (19.5 reads 19.0)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T20:31:00Z'
+updated_date: '2026-11-08T21:06:00Z'
 labels:
   - bot
   - bug
