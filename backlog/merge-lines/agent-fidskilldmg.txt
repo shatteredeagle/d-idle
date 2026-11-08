@@ -1,0 +1,3 @@
+BACKLOG: TASK-89 fid-skill-damage-pr: no PR candidate, the min-synergy gate and MulDiv are already merged upstream (PR #146, 2026-10-31); 116,000 cases x 2 seeds on upstream main 9c78f391 = 0 differ, blvl/lvl split 0 of 116,000 (docs/probes/fid/fid-skill-damage-pr.md); matrix row SK02 proposed DEV -> OK
+INDEX: docs/probes/fid/fid-skill-damage-pr.md: skill damage (SK02) re-run on upstream main, all proven deviations already merged, no PR candidate (TASK-89)
+CHANGELOG: Skill damage (SK02) differential re-run on current upstream main: 0 of 116,000 cases differ; the earlier fix is upstream (PR #146), no new PR
