@@ -57,6 +57,15 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 	cb := rig.Fighter
 	cb.Leave = be.Cycler.LeaveGame
 	cb.Portal = d2dPortal(e, be, combat.NewCatalog(db))
+	// The skill popup rows: the Paladin's aura is picked through the right popup (cmd select leaves rskill unchanged, V
+	// live palready). Without the install tables the popup cannot be used and the aura check backs off.
+	if o.gameDir != "" {
+		if rows, err := combat.LoadListRows(o.gameDir, db); err != nil {
+			log.Warn("skill list rows unavailable: the aura cannot be picked", "err", err)
+		} else {
+			cb.SetListRows(rows)
+		}
+	}
 
 	// Town clicks need the hover-then-click step (every dialog and vendor click, docs/d2d-town.md break 4).
 	// fixstall3 F11: d2dtown.Input (not HoverFirstBelt) so the town sees WalkingInteractor and BeltPut/MoveGold too.

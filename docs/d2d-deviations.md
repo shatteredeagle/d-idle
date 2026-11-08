@@ -26,6 +26,7 @@ Key = `file:identifier` as the checker sees it. "Last verified" = date the row w
 | R05 | arrival inside a warp trigger | not observed as a problem (U) | arrival can land inside a cave mouth's trigger area (docs/d2d-loop.md, S) | `internal/bot/config.go:MouthGuard` `internal/nav/nav.go:mouthGuard` `internal/nav/walk.go:SetMouthGuard` `internal/nav/walk.go:mouthGuard` | SHIM | none found (U) | d2d spawns outside the trigger area; drop the config key (default off already) | 2026-11-04 |
 | R06 | waypoint coordinates, acts 3 to 5 towns | act-absolute positions | level-relative; the bot adds the level origin (V live DRILLS4 per act2hints.go comment) | `internal/nav/act2hints.go:knownWaypointRel` `internal/nav/waypoint.go:knownWaypointRel` | SHIM | none found (U) | d2dworld reports act-absolute positions: move the table into the adapter or delete it | 2026-11-04 |
 | R07 | backend selection (cmd wiring) | n/a | `--backend d2d` picks the d2d environment | `cmd/d2bot/main.go:d2d` `cmd/d2bot/behaviors.go:d2d` | MODEL | n/a | none (this is the seam) | 2026-11-04 |
+| R08 | right skill (aura) selection | the hotkey switches the aura in about 200 ms, no cast | `cmd skill` casts at a point and `cmd select` leaves rskill unchanged (V live palready, docs/palready.md), so the aura is picked through the right popup and read back | `internal/combat/aura.go:D2D` `internal/combat/bindleft.go:D2D` | SHIM | with R02 | delete when `cmd select` sets rskill on d2d | 2026-11-08 |
 
 ## Seen only in comments or data (not checked by the script)
 
