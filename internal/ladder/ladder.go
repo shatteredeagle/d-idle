@@ -142,6 +142,7 @@ type Ladder struct {
 // Stats is the ladder's run record, next to the store's own counters.
 type Stats struct {
 	Asked, ByRule, ByLegacy, ByDefault int
+	ByAnswer, Quieted                  int // ByAnswer: repeats answered by the player's earlier answer; Quieted: keys that stopped asking
 	Opened, Answered, Faded, Learned   int
 	Faults                             int
 	LastFault                          string
@@ -188,6 +189,19 @@ func (l *Ladder) onEvent(e decide.Event) {
 		l.drop(e.Thought)
 		l.qmu.Unlock()
 		l.cfg.Sink.Event("faded", ThoughtView{ID: e.Thought, Key: e.Key}, "")
+	case decide.EvQuiet:
+		l.qmu.Lock()
+		l.stat.Quieted++
+		def := l.legacy[e.Key]
+		if ctx, err := decide.ParseKey(e.Key); err == nil && def == "" {
+			def, _ = l.cfg.Cat.Default(ctx)
+		}
+		l.qmu.Unlock()
+		pt := ""
+		if ctx, err := decide.ParseKey(e.Key); err == nil {
+			pt = ctx.Point
+		}
+		l.cfg.Sink.Event("quiet", ThoughtView{Point: pt, Key: e.Key, Default: def}, "no answer after repeated questions: I will use the default ("+def+") and stop asking")
 	case decide.EvRuleLearned:
 		l.qmu.Lock()
 		l.stat.Learned++
@@ -244,6 +258,8 @@ func (l *Ladder) Decide(point string, h Hero, extra decide.Obs, legacy string) (
 	switch d.Source {
 	case "rule":
 		l.stat.ByRule++
+	case "answer":
+		l.stat.ByAnswer++
 	case "legacy":
 		l.stat.ByLegacy++
 	default:
