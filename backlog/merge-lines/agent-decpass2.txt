@@ -1,0 +1,3 @@
+CHANGELOG: docs: ADR 0019 records the Pact and unlock decisions (F12 to F14); cards TASK-23, 31, 32, 104, 137 closed, TASK-150 deferred, TASK-174 mercnomana added
+BACKLOG: TASK-174 mercnomana (merc hire check follows the belt plan); TASK-150 sensesvideo Deferred and parked
+INDEX: docs/adr/0019-pacts-and-unlocks-2026-11-07.md: Pacts, information unlocks and the unlock ladder (user, 2026-11-07)
