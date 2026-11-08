@@ -15,8 +15,14 @@ ordinal: 142000
 card: "palmelee"
 owns:
   - "docs/palmelee.md"
+  - "internal/d2dcombat/input.go"
+  - "internal/d2dcombat/input_test.go"
+  - "internal/combat/fighter.go"
+  - "internal/combat/swing_test.go"
+  - "docs/probes/paladinsmoke/run-b.sh"
 exclusive: []
 contracts: []
+result: "Root cause V: bare d2d click without a hover never attacked; Swing by unit id fixes it. Lockstep drill: clvl 9 / 1195 kills in 240 virtual minutes, writes after start 0 (docs/palmelee.md). Verified live yes."
 ---
 
 ## Description
@@ -29,7 +35,7 @@ Found by paladinsmoke (TASK-142, docs/paladinsmoke.md). A fresh Paladin (lockste
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Root cause named (bot walk vs d2d verb), tagged V from a live probe
-- [ ] #2 A fresh Paladin reaches clvl 2 in Blood Moor on lockstep d2d, writes after start: 0
-- [ ] #3 Offline test with Paladin and Barbarian profiles
+- [x] #1 Root cause named (bot walk vs d2d verb), tagged V from a live probe
+- [x] #2 A fresh Paladin reaches clvl 2 in Blood Moor on lockstep d2d, writes after start: 0
+- [x] #3 Offline test with Paladin and Barbarian profiles
 <!-- AC:END -->

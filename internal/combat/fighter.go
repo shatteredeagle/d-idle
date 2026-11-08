@@ -712,6 +712,13 @@ func (f *Fighter) fightBuff(ctx context.Context, snap *d2.Snapshot, hs []Target)
 
 // ---- casting --------------------------------------------------------------------------------------------
 
+// swinger is implemented by a backend that attacks a unit by id instead of with a pixel click (the d2d channel,
+// d2dcombat.Input.Swing). V live (palmelee): on lockstep d2d a bare left click on a monster never attacked, because a
+// click acts on the unit under the pointer of the previous frame and the pointer had not been moved there.
+type swinger interface {
+	Swing(skill int, at input.Point) error
+}
+
 // holdClicker is implemented by input.Game: press the button, keep it down for d, release.
 type holdClicker interface {
 	HoldClick(b input.Button, x, y int, d time.Duration) error
@@ -720,7 +727,10 @@ type holdClicker interface {
 func (f *Fighter) cast(snap *d2.Snapshot, sp SkillSpec, at input.Point) error {
 	var err error
 	left := sp.Hand == HandLeft || sp.ID == meleeSpec().ID
+	sw, swings := f.e.In.(swinger)
 	switch {
+	case left && swings:
+		err = sw.Swing(sp.ID, at)
 	case left:
 		s := screenOf(snap, at)
 		if hc, ok := f.e.In.(holdClicker); ok && sp.Hold {

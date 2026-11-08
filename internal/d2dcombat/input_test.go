@@ -59,3 +59,17 @@ func TestUnmappedHotkeyFallsBack(t *testing.T) {
 		t.Fatalf("lines %q", got)
 	}
 }
+
+func TestSwingAddressesTheMonsterByUnit(t *testing.T) {
+	in, srv := newInput(t)
+	if err := in.Swing(0, input.Point{X: 65, Y: 147}); err != nil { // sample monster #5
+		t.Fatal(err)
+	}
+	want := []string{"monsters", "cmd skill 0 13 29.5 5 left"}
+	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
+		t.Fatalf("lines\n got %q\nwant %q", got, want)
+	}
+	if s := in.Stats(); s.Casts[0] != 1 {
+		t.Fatalf("stats %+v", s)
+	}
+}

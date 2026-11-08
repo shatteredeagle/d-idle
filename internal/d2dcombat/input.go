@@ -91,3 +91,30 @@ func (i *Input) Click(b input.Button, x, y int, mods ...input.Mod) error {
 	i.mu.Unlock()
 	return i.Controller.Click(b, x, y, mods...)
 }
+
+// Swing is a left-button attack ("cmd skill <id> x y <unit> left"): the monster standing at w gets the blow by unit
+// id, so the hero walks up and hits it without a pointer hover (a bare click on d2d acts on the unit under the pointer
+// of the previous frame, which under lockstep is never the target: palmelee, docs/palmelee.md). Without a monster
+// near w it clicks the point like before. skill 0 is the basic attack.
+func (i *Input) Swing(skill int, w input.Point) error {
+	x, y := (float64(w.X)+0.5)/5, (float64(w.Y)+0.5)/5
+	ml, err := i.C.Monsters(i.ctx)
+	if err != nil {
+		return err
+	}
+	m, ok := d2dctl.NearestAlive(ml.Items, x, y, 1.5)
+	if !ok {
+		return i.Controller.ClickWorld(w)
+	}
+	err = i.C.CmdSkill(i.ctx, skill, m.CellX, m.CellY, d2dctl.SkillOpts{Unit: m.Unit, Left: true})
+	if err == nil {
+		i.mu.Lock()
+		i.stats.Clicks++
+		if i.stats.Casts == nil {
+			i.stats.Casts = map[int]int{}
+		}
+		i.stats.Casts[skill]++
+		i.mu.Unlock()
+	}
+	return err
+}
