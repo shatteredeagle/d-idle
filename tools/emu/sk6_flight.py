@@ -17,5 +17,7 @@ want = ("lightningbolt", "chainlightning", "frostnova", "nova", "iceblast", "fir
 ids = {n: names.index(n) for n in want}
 assert (ids["chargedbolt"], ids["firebolt"], ids["icebolt"]) == (56, 58, 59), ids
 print("rows", ids)
-missiles.ROWS = {n: ids[n] for n in want}
+import os
+rows = os.environ.get("SK6_ROWS", ",".join(want)).split(",")
+missiles.ROWS = {n: ids[n] for n in rows}
 missiles.main()
