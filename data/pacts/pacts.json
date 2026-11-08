@@ -1,0 +1,719 @@
+{
+ "version": 1,
+ "source": "docs/research/pact-system.md section 3 and 4 (a design note, every reward and heat value is U: tune in play)",
+ "limits": {
+  "start_cap": 12,
+  "max_cap": 20,
+  "mastery_step": 1,
+  "slots_at_unlock": 2,
+  "no_safety_rank": 3
+ },
+ "pacts": [
+  {
+   "id": "blood_ravens_tithe",
+   "name": "Blood Raven's Tithe",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [
+    "no_safety"
+   ],
+   "incompatible_with": [
+    {
+     "id": "pact_of_rotting_bone",
+     "min_rank": 3,
+     "other_min_rank": 3,
+     "reason": "No potions plus four times the enemy life is not a fight, it is a coin flip."
+    },
+    {
+     "id": "strangers_toll",
+     "reason": "No merc and no potions."
+    }
+   ],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 3,
+     "params": {
+      "values": {
+       "min_clvl_potions": 8
+      },
+      "knobs": {
+       "resource.beltCol1": 4,
+       "resource.beltCol2": 4,
+       "resource.beltCol3": 4,
+       "resource.beltCol4": 4,
+       "town.tripMinHPPotions": 0,
+       "town.tripMinMPPotions": 0
+      }
+     },
+     "reward": {
+      "tally_pct": 6
+     },
+     "effect_line": "No belt potions below clvl 8; tally x1.06"
+    },
+    {
+     "rank": 3,
+     "heat": 9,
+     "params": {
+      "values": {
+       "min_clvl_potions": 14
+      },
+      "knobs": {
+       "resource.beltCol1": 4,
+       "resource.beltCol2": 4,
+       "resource.beltCol3": 4,
+       "resource.beltCol4": 4,
+       "town.tripMinHPPotions": 0,
+       "town.tripMinMPPotions": 0
+      }
+     },
+     "reward": {
+      "tally_pct": 30,
+      "charm_points": 1
+     },
+     "effect_line": "No belt potions below clvl 14; tally x1.30"
+    },
+    {
+     "rank": 5,
+     "heat": 15,
+     "params": {
+      "values": {
+       "min_clvl_potions": 99
+      },
+      "knobs": {
+       "resource.beltCol1": 4,
+       "resource.beltCol2": 4,
+       "resource.beltCol3": 4,
+       "resource.beltCol4": 4,
+       "town.tripMinHPPotions": 0,
+       "town.tripMinMPPotions": 0
+      }
+     },
+     "reward": {
+      "tally_pct": 90,
+      "charm_points": 1,
+      "title": "Dry Belt"
+     },
+     "effect_line": "Never buys or belts potions; tally x1.90"
+    }
+   ],
+   "learn_text": "Potions are the cheapest safety there is. This shows how far the hero gets without them."
+  },
+  {
+   "id": "andariels_shadow",
+   "name": "Andariel's Shadow",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "safe",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "death_limit": 3
+      }
+     },
+     "reward": {
+      "tally_pct": 5
+     },
+     "effect_line": "After 3 deaths in an expedition the hero stops in town; tally x1.05"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "values": {
+       "death_limit": 2
+      }
+     },
+     "reward": {
+      "tally_pct": 25
+     },
+     "effect_line": "After 2 deaths in an expedition the hero stops in town; tally x1.25"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "values": {
+       "death_limit": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 75
+     },
+     "effect_line": "After 1 death in an expedition the hero stops in town; tally x1.75"
+    }
+   ],
+   "learn_text": "A hero that dies too often is not ready for the zone. This shows how many deaths a stretch really costs."
+  },
+  {
+   "id": "rakanishus_bargain",
+   "name": "Rakanishu's Bargain",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [
+    "no_safety"
+   ],
+   "incompatible_with": [
+    {
+     "id": "warrivs_long_road",
+     "reason": "The same lever twice."
+    }
+   ],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "no_tp_after_den": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 6
+     },
+     "effect_line": "No town portal after the Den quest; tally x1.06"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "row": "tp",
+      "option": "walk",
+      "knobs": {
+       "town.tpReserve": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 30
+     },
+     "effect_line": "Never uses a town portal; tally x1.30"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "row": "tp",
+      "option": "walk",
+      "knobs": {
+       "town.tpReserve": 1
+      },
+      "values": {
+       "no_waypoints": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 85
+     },
+     "effect_line": "No town portal and no waypoints; tally x1.85"
+    }
+   ],
+   "learn_text": "A portal is the way out of a bad fight. This shows how far the hero gets on foot."
+  },
+  {
+   "id": "griswolds_debt",
+   "name": "Griswold's Debt",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "safe",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 1,
+     "params": {
+      "row": "repair",
+      "option": "low"
+     },
+     "reward": {
+      "tally_pct": 5
+     },
+     "effect_line": "Repairs only under 20 percent durability; tally x1.05"
+    },
+    {
+     "rank": 3,
+     "heat": 3,
+     "params": {
+      "row": "repair",
+      "option": "never"
+     },
+     "reward": {
+      "tally_pct": 20
+     },
+     "effect_line": "Never repairs; tally x1.20"
+    },
+    {
+     "rank": 5,
+     "heat": 5,
+     "params": {
+      "row": "repair",
+      "option": "never"
+     },
+     "reward": {
+      "tally_pct": 45
+     },
+     "effect_line": "Never repairs; tally x1.45"
+    }
+   ],
+   "learn_text": "Gear wears out. This shows what a worn kit costs in a long run."
+  },
+  {
+   "id": "cains_silence",
+   "name": "Cain's Silence",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "safe",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 1,
+     "params": {
+      "row": "identify",
+      "option": "none"
+     },
+     "reward": {
+      "tally_pct": 5
+     },
+     "effect_line": "Never identifies; tally x1.05"
+    },
+    {
+     "rank": 3,
+     "heat": 3,
+     "params": {
+      "row": "identify",
+      "option": "none"
+     },
+     "reward": {
+      "tally_pct": 10
+     },
+     "effect_line": "Never identifies; tally x1.10"
+    },
+    {
+     "rank": 5,
+     "heat": 5,
+     "params": {
+      "row": "identify",
+      "option": "none"
+     },
+     "reward": {
+      "tally_pct": 25
+     },
+     "effect_line": "Never identifies; tally x1.25"
+    }
+   ],
+   "learn_text": "Unidentified finds hide their worth. This shows what the hero misses by not looking."
+  },
+  {
+   "id": "cursed_gold",
+   "name": "Pact of the Cursed Gold",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "safe",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "gold_loss_pct": 10
+      }
+     },
+     "reward": {
+      "tally_pct": 6
+     },
+     "effect_line": "A death costs 10 percent of the gold carried in the tally ledger; tally x1.06"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "values": {
+       "gold_loss_pct": 30
+      }
+     },
+     "reward": {
+      "tally_pct": 30
+     },
+     "effect_line": "A death costs 30 percent of the gold carried in the tally ledger; tally x1.30"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "values": {
+       "gold_loss_pct": 100
+      }
+     },
+     "reward": {
+      "tally_pct": 90
+     },
+     "effect_line": "A death costs all carried gold in the tally ledger; tally x1.90"
+    }
+   ],
+   "learn_text": "Death should cost something. A ledger entry only: the game's own gold is never touched."
+  },
+  {
+   "id": "hungry_dark",
+   "name": "The Hungry Dark",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "safe",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 3,
+     "params": {
+      "values": {
+       "max_trees": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 8
+     },
+     "effect_line": "Only the skills of one chosen tree; tally x1.08"
+    },
+    {
+     "rank": 3,
+     "heat": 9,
+     "params": {
+      "values": {
+       "max_skills": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 35
+     },
+     "effect_line": "One skill only; tally x1.35"
+    },
+    {
+     "rank": 5,
+     "heat": 15,
+     "params": {
+      "values": {
+       "max_skills": 1,
+       "no_synergy_points": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 100
+     },
+     "effect_line": "One skill only and no synergy points; tally x2.00"
+    }
+   ],
+   "learn_text": "Few tools, used well. This shows how much of a build is the main skill."
+  },
+  {
+   "id": "strangers_toll",
+   "name": "The Stranger's Toll",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [
+    "no_safety"
+   ],
+   "incompatible_with": [
+    {
+     "id": "blood_ravens_tithe",
+     "reason": "No merc and no potions."
+    }
+   ],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "hire_min_clvl": 10
+      }
+     },
+     "reward": {
+      "tally_pct": 5
+     },
+     "effect_line": "No mercenary until clvl 10; tally x1.05"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "values": {
+       "hire_until_boss": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 25
+     },
+     "effect_line": "No mercenary until Andariel is dead; tally x1.25"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "values": {
+       "hire_never": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 60
+     },
+     "effect_line": "Never hires a mercenary; tally x1.60"
+    }
+   ],
+   "learn_text": "A mercenary carries a lot of a young hero's fights. This shows how much."
+  },
+  {
+   "id": "warrivs_long_road",
+   "name": "Warriv's Long Road",
+   "lever_family": "bot",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [
+    "no_safety"
+   ],
+   "incompatible_with": [
+    {
+     "id": "rakanishus_bargain",
+     "reason": "The same lever twice."
+    }
+   ],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "waypoints_after_first": 0
+      }
+     },
+     "reward": {
+      "tally_pct": 5
+     },
+     "effect_line": "Waypoints only for the first visit of each; tally x1.05"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "values": {
+       "no_waypoints": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 28
+     },
+     "effect_line": "No waypoints; tally x1.28"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "row": "tp",
+      "option": "walk",
+      "knobs": {
+       "town.tpReserve": 1
+      },
+      "values": {
+       "no_waypoints": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 80
+     },
+     "effect_line": "No waypoints and no town portal; tally x1.80"
+    }
+   ],
+   "learn_text": "Walking everywhere. This shows what the shortcuts really save."
+  },
+  {
+   "id": "pact_of_rotting_bone",
+   "name": "Pact of Rotting Bone",
+   "lever_family": "native",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "amazon",
+    "assassin",
+    "barbarian",
+    "paladin",
+    "sorceress"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 2,
+     "params": {
+      "values": {
+       "players": 2
+      }
+     },
+     "reward": {
+      "tally_pct": 6
+     },
+     "effect_line": "The game runs as /players 2; tally x1.06"
+    },
+    {
+     "rank": 3,
+     "heat": 6,
+     "params": {
+      "values": {
+       "players": 4
+      }
+     },
+     "reward": {
+      "tally_pct": 30
+     },
+     "effect_line": "The game runs as /players 4; tally x1.30"
+    },
+    {
+     "rank": 5,
+     "heat": 10,
+     "params": {
+      "values": {
+       "players": 6
+      }
+     },
+     "reward": {
+      "tally_pct": 85
+     },
+     "effect_line": "The game runs as /players 6; tally x1.85"
+    }
+   ],
+   "learn_text": "More enemies and tougher ones. Summoners are left out: their minions die."
+  },
+  {
+   "id": "pact_of_nightmares",
+   "name": "Pact of Nightmares",
+   "lever_family": "native",
+   "kind": "fixed",
+   "unlock_trigger": "baal_normal",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "present_only",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 8,
+     "params": {
+      "values": {
+       "difficulty": 1
+      }
+     },
+     "reward": {
+      "tally_pct": 25
+     },
+     "effect_line": "The same hero plays on in Nightmare; tally x1.25 while there"
+    }
+   ],
+   "learn_text": "The same hero moves on to Nightmare for a larger payout. Death costs more there."
+  },
+  {
+   "id": "bishiboshs_wager",
+   "name": "Bishibosh's Wager",
+   "lever_family": "overlay",
+   "kind": "ranked",
+   "unlock_trigger": "andariel_first_kill",
+   "class_scope": [
+    "all"
+   ],
+   "away_safety": "needs_consent",
+   "tags": [],
+   "incompatible_with": [],
+   "ranks": [
+    {
+     "rank": 1,
+     "heat": 3,
+     "params": {
+      "values": {
+       "elite_pct": 10
+      }
+     },
+     "reward": {
+      "tally_pct": 8
+     },
+     "effect_line": "About 10 percent more elite groups; tally x1.08"
+    },
+    {
+     "rank": 3,
+     "heat": 9,
+     "params": {
+      "values": {
+       "elite_pct": 30
+      }
+     },
+     "reward": {
+      "tally_pct": 35
+     },
+     "effect_line": "About 30 percent more elite groups; tally x1.35"
+    },
+    {
+     "rank": 5,
+     "heat": 15,
+     "params": {
+      "values": {
+       "elite_pct": 60
+      }
+     },
+     "reward": {
+      "tally_pct": 100
+     },
+     "effect_line": "About 60 percent more elite groups; tally x2.00"
+    }
+   ],
+   "learn_text": "More named and champion packs. Needs the d2d overlay."
+  }
+ ]
+}
