@@ -1,10 +1,11 @@
 ---
 id: TASK-205
 title: 'policydryrun: preview what a policy sheet change would have done'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T19:47:00Z'
+updated_date: '2026-11-08T20:18:00Z'
 labels:
   - watch
   - feature
