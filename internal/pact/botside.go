@@ -48,6 +48,7 @@ type State struct {
 	Picks     []Pick    `json:"picks"`
 	Consents  []Consent `json:"consents"`
 	Masteries int       `json:"masteries"`
+	Unlocked  []string  `json:"unlocked,omitempty"` // unlock triggers seen (andariel_first_kill ...)
 }
 
 // Config wires a Controller. Cat and Class are required; Path "" keeps the state in memory.
@@ -60,6 +61,7 @@ type Config struct {
 	Pause   func(reason string) error // hold the hero in town and wait for the player
 	Present func() bool               // a human is connected now; nil = nobody (consent only)
 	Now     func() time.Time
+	Rel     func() float64    // seconds on the return screen's clock, for the live spans (nil: spans are not kept)
 	Journal func(line string) // a pause or resume of a Pact is said here (nil: not written)
 }
 
@@ -94,6 +96,7 @@ type Controller struct {
 	deaths  int
 	paused  string // reason, "" = not paused by a Pact
 	lowLife bool   // under the life floor (away.go)
+	spans   []Span // when each Pact acted (view.go)
 	lastWho Where
 }
 
@@ -283,11 +286,14 @@ func (c *Controller) Evaluate(w Where) error {
 	c.lastWho = w
 	c.checkLife(w)
 	wt := want{knobs: map[string]float64{}, rows: map[string]string{}}
+	liveNow := map[string]int{}
+	defer func() { c.trackSpans(liveNow) }()
 	for _, pk := range c.st.Picks {
 		on, _ := c.live(pk, w)
 		if !on {
 			continue
 		}
+		liveNow[pk.ID] = pk.Rank
 		p, err := c.cfg.Cat.Get(pk.ID)
 		if err != nil {
 			return err
