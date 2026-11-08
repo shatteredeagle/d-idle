@@ -25,8 +25,10 @@ Not the cause (V): click coordinates and the previous-frame pointer: the same sl
 | Sorceress BEFORE (classpacing `sor1`) | 6 | 9 | 5 |
 | Amazon AFTER (`eqa3fix`) | 0 | 0 | 0 (worn: Cap, Short Bow, Arrows) |
 | Sorceress AFTER (`eqs1`) | 0 | 0 | 0 |
+| Barbarian BEFORE (classpacing `bar1`) | 1 | 1 | 3 |
+| Barbarian AFTER (`eqb2`, 94 virtual minutes, 5 equips) | 0 | 0 | 0 |
 
-The Barbarian was not rerun (U; its one BEFORE failure is the same unidentified Quilted Armor).
+Each AFTER run is one seed-7 run of about 90 virtual minutes; the class runs differ after the first loot so this is a rate comparison, not a same-item comparison.
 
 ## Tests
 `TestEquipSkipsUnidentifiedMagicItem` (Sorceress and Paladin; fails without the fix), `TestAmmoWearsTwoHandedBowOverJavelinAndBuckler` (sim flag `OneOffPerClick`; fails without the fix with the live message `did not reach slot rArm`). Both need the real tables (`/tmp/d2mpq`, the worker host).

@@ -25,7 +25,7 @@ owns:
   - "docs/probes/test-characters.md"
 exclusive: []
 contracts: []
-result: "Fixed, verified live (lockstep d2d, 5 wall min, writes after start 0): Amazon wears Cap, Short Bow and Arrows, Sorceress 0 refused clicks (before 28/46 and 6+9+5). Causes: unidentified magic items planned by the leveler; two-handed bow refused while Javelin and Buckler are both worn. 90 virtual minutes only, not 90 minute x3 classes (Barbarian not rerun). docs/soaks/equipfail.md"
+result: "Fixed, verified live (lockstep d2d, 5 wall min, writes after start 0): Amazon wears Cap, Short Bow and Arrows, Barbarian and Sorceress 0 refused clicks (before 28/46 and 6+9+5). Causes: unidentified magic items planned by the leveler; two-handed bow refused while Javelin and Buckler are both worn.  About 90 virtual minutes (5 wall) per class, one seed. docs/soaks/equipfail.md"
 ---
 
 ## Description
