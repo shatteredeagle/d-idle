@@ -69,10 +69,11 @@ type extra struct {
 // Hub is safe for concurrent use. Lock order: the store's lock, then the Hub's (store events call in), so no Hub
 // method holds its own lock while it calls the store.
 type Hub struct {
-	cfg   Config
-	base  time.Duration
-	video *Video                          // nil: no game video
-	cur   atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
+	cfg    Config
+	base   time.Duration
+	video  *Video                          // nil: no game video
+	cur    atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
+	placer atomic.Pointer[placerBox]       // nil: orders go straight to Give (no charter sink)
 
 	mu      sync.Mutex
 	seq     uint64
@@ -244,6 +245,11 @@ func (h *Hub) addExtraLocked(x extra) {
 func (h *Hub) Event(kind string, v ladder.ThoughtView, detail string) {
 	h.mu.Lock()
 	defer h.mu.Unlock()
+	if kind == "quiet" {
+		// TASK-137: a key that went unanswered stops asking; the return screen says so (QuietSection).
+		h.addExtraLocked(extra{kind: "quiet", key: v.Key, text: fmt.Sprintf("I stopped asking about %s: no answer after repeated questions. I use the default (%s).",
+			PlainContext(v.Key), h.pointAnswerLabel(v.Point, v.Default))})
+	}
 	if kind == "thought" {
 		if r := h.recs[v.ID]; r != nil {
 			r.shown = true

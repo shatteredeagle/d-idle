@@ -99,6 +99,9 @@ const (
 	// EvLateAnswer: the player answered after the thought faded. The answer is treated as a fade (nothing counts,
 	// the streak is not reset); the screen can say "too late, I carried on". Not a log line: the fade is.
 	EvLateAnswer EventKind = "late-answer"
+	// EvQuiet: a key went unanswered QuietAfter times in a row; from now on its question is not put again, the
+	// default acts, and this one event is the journal line ("I'll use the default and stop asking about X").
+	EvQuiet EventKind = "quiet"
 )
 
 // Event is what a subscriber sees. Info is set on EvThoughtOpened and EvConfirmOpened so a subscriber need not poll
@@ -175,6 +178,11 @@ type Store struct {
 	log       []Entry
 	subs      []func(Event)
 
+	// Repeat suppression (TASK-137). Derived from the log by apply, so it survives a reload; zero cooldown = off.
+	cooldown   time.Duration
+	quietAfter int
+	asked      map[string]*askState
+
 	answers, faded int
 }
 
@@ -200,9 +208,43 @@ func New(cat *Catalogue, profile string, clk Clock) (*Store, error) {
 	}
 	return &Store{
 		cat: cat, clk: clk, profile: profile, hero: "hero1", unlock: 2,
-		recs: map[string]*Record{}, thoughts: map[int]*Thought{}, openByKey: map[string]int{},
+		recs: map[string]*Record{}, asked: map[string]*askState{}, thoughts: map[int]*Thought{}, openByKey: map[string]int{},
 		nextID: 1, skips: map[string]int{}, quality: map[string]int{},
 	}, nil
+}
+
+// askState is what the store remembers of one key between questions: when it was last put, when and how it was last
+// answered, and how many questions in a row faded unanswered. Times are on the clock of the run that wrote the log.
+type askState struct {
+	opened, answered time.Duration
+	hasOpen, hasAns  bool
+	answer           string // "" = the player said "not sure": the default stands
+	fades            int
+}
+
+func (s *Store) ast(key string) *askState {
+	a := s.asked[key]
+	if a == nil {
+		a = &askState{}
+		s.asked[key] = a
+	}
+	return a
+}
+
+// DefaultRepeatCooldown and DefaultQuietAfter are the values the bot wiring passes (knobs ladder.repeatCooldownMin
+// and ladder.quietAfter). A bare store has no suppression, so its own tests and the drills see every ask.
+const (
+	DefaultRepeatCooldown = 30 * time.Minute
+	DefaultQuietAfter     = 3
+)
+
+// SetRepeatPolicy turns repeat suppression on. While cooldown has not passed since a key was put (asked, faded) or
+// answered, a repeat of the same key opens no thought and the answer given before, else the default, acts. After
+// quietAfter unanswered thoughts in a row the key goes quiet for good. cooldown 0 switches it off.
+func (s *Store) SetRepeatPolicy(cooldown time.Duration, quietAfter int) {
+	s.mu.Lock()
+	s.cooldown, s.quietAfter = cooldown, quietAfter
+	s.mu.Unlock()
 }
 
 func (s *Store) Subscribe(f func(Event)) { s.mu.Lock(); s.subs = append(s.subs, f); s.mu.Unlock() }
@@ -303,6 +345,8 @@ func (s *Store) applyOpen(e Entry) ([]Event, error) {
 	}
 	s.nextID++
 	s.thoughts[e.Thought] = &Thought{ID: e.Thought, Point: ctx.Point, Key: e.Key, OpenedAt: e.T, FadesAt: e.FadesAt}
+	a := s.ast(e.Key)
+	a.opened, a.hasOpen = e.T, true
 	s.openByKey[e.Key] = e.Thought
 	return []Event{{Kind: EvThoughtOpened, Key: e.Key, Thought: e.Thought, Info: s.info(s.thoughts[e.Thought])}}, nil
 }
@@ -348,6 +392,11 @@ func (s *Store) applyAnswer(e Entry) ([]Event, error) {
 	cl, _ := s.cat.RiskClass(ctx)
 	s.close(t)
 	s.answers++
+	a := s.ast(t.Key)
+	a.answered, a.hasAns, a.fades = e.T, true, 0
+	if a.answer = e.Answer; e.Answer == NotSure {
+		a.answer = ""
+	}
 	if e.Answer == NotSure {
 		return nil, nil // uses the default, does not count, does not reset
 	}
@@ -400,7 +449,15 @@ func (s *Store) applyFade(e Entry) ([]Event, error) {
 	if s.thoughts[e.Thought] == nil {
 		return nil, fmt.Errorf("%w: %d", ErrNoThought, e.Thought)
 	}
-	return s.fade(e.Thought), nil
+	t := s.thoughts[e.Thought]
+	evs := s.fade(e.Thought)
+	if !t.Confirm {
+		a := s.ast(t.Key)
+		if a.fades++; s.quietAfter > 0 && a.fades == s.quietAfter {
+			evs = append(evs, Event{Kind: EvQuiet, Key: t.Key})
+		}
+	}
+	return evs, nil
 }
 
 func (s *Store) applyConfirm(e Entry) ([]Event, error) {
@@ -415,6 +472,11 @@ func (s *Store) applyConfirm(e Entry) ([]Event, error) {
 	s.close(t)
 	s.answers++
 	r.Pending = ""
+	a := s.ast(t.Key)
+	a.answered, a.hasAns, a.fades, a.answer = e.T, true, 0, ""
+	if e.Yes {
+		a.answer = t.Answer
+	}
 	if !e.Yes {
 		r.Streak, r.Last = 0, ""
 		return nil, nil
@@ -430,6 +492,7 @@ func (s *Store) applyRevoke(key string, t time.Duration) ([]Event, error) {
 	}
 	r.Rule.Revoked, r.Rule.RevokedAt, r.Rule.RevokedBy = true, t, "player"
 	r.Streak, r.Last, r.Pending = 0, "", ""
+	delete(s.asked, key) // the player changed their mind: ask afresh
 	return []Event{{Kind: EvRevoked, Key: key, Answer: r.Rule.Answer}}, nil
 }
 
@@ -482,6 +545,20 @@ func (s *Store) ask(ctx Context, legacy string) (Decision, error) {
 			d.Thought = &c
 		}
 		return d, nil
+	}
+	if a := s.asked[ctx.Key]; a != nil && s.cooldown > 0 {
+		now := s.clk.Now()
+		switch {
+		case s.quietAfter > 0 && a.fades >= s.quietAfter:
+			return d, nil
+		case a.hasAns && now-a.answered < s.cooldown:
+			if a.answer != "" {
+				d.Answer, d.Source = a.answer, "answer"
+			}
+			return d, nil
+		case a.hasOpen && now-a.opened < s.cooldown:
+			return d, nil
+		}
 	}
 	e := Entry{Op: OpOpen, Thought: s.nextID, Point: ctx.Point, Key: ctx.Key,
 		FadesAt: s.clk.Now() + time.Duration(s.cat.Config.FadeSec)*time.Second}

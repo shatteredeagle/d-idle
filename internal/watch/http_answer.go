@@ -9,6 +9,8 @@ import (
 	"mime"
 	"net/http"
 	"strings"
+
+	"d2lod-bot/internal/currency"
 )
 
 // AnswerOptions guards the answer route, which carries every write of the screen.
@@ -34,6 +36,7 @@ type answerBody struct {
 	Until   string `json:"until"`   // orders: "" or "minutes" (timed) or "forever"; "level" arrives with slice 2
 	Replace bool   `json:"replace"` // orders: cancel the open orders first ("Go now")
 	ID      *int   `json:"id"`
+	Approve bool   `json:"approve"` // orders above the zone range: pay the charter (docs/tally-strip.md)
 }
 
 type reply struct {
@@ -43,6 +46,7 @@ type reply struct {
 	Allowed []string `json:"allowed,omitempty"`
 	Revoked int      `json:"revoked,omitempty"`
 	Order   *Order   `json:"order,omitempty"`
+	Charter *Charter `json:"charter,omitempty"` // the price and the hero's warning of an order above the zone range
 }
 
 // AnswerHandler serves POST /api/answer, /api/confirm, /api/revoke, /api/revoke-all, /api/orders and /api/orders/cancel.
@@ -149,6 +153,10 @@ func status(err error) (int, reply) {
 		return 400, withCode(r, "wrong-kind")
 	case errors.Is(err, ErrBadOrder):
 		return 400, withCode(r, "bad-order")
+	case errors.Is(err, currency.ErrCharterNeeded):
+		return 402, withCode(r, "charter-needed")
+	case errors.Is(err, currency.ErrInsufficient):
+		return 402, withCode(r, "insufficient")
 	case errors.Is(err, ErrOrdersFull), errors.Is(err, errOrderClosed):
 		return 409, withCode(r, "order-state")
 	}
@@ -216,11 +224,13 @@ func (h *Hub) postOrder(b answerBody) (int, reply) {
 	default:
 		return status(fmt.Errorf("%w: until must be minutes or forever (until-level comes later)", ErrBadOrder))
 	}
-	o, err := h.Give(r)
+	o, ch, err := h.place(r, b.Approve)
 	if err != nil {
-		return status(err)
+		code, rep := status(err)
+		rep.Charter = ch
+		return code, rep
 	}
-	return 200, reply{OK: true, Order: &o}
+	return 200, reply{OK: true, Order: &o, Charter: ch}
 }
 
 func (h *Hub) postCancel(b answerBody) (int, reply) {

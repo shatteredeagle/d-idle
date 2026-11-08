@@ -1,3 +1,0 @@
-BACKLOG: TASK-25 and TASK-33 verified live 2026-11-07: tester container ran end to end (wizard, bot, watch, video) and one 1 h realtime session (0 stalls, 0 deaths); six container defects fixed; cards TASK-137 (ladder repeat), TASK-138 (fresh-start pace), TASK-139 (image reproducibility)
-INDEX: docs/tester-live.md - first end-to-end run of the tester container, MPQ answer, defects, 1 h realtime session; docs/tester-realtime.md - lockstep assumption audit for realtime
-CHANGELOG: tester container: fixed the ladder store name, save on stop, stop order, and reload of a saved hero (first live run); context.sh can build from the published fork tag

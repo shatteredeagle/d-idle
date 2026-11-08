@@ -77,6 +77,10 @@ func Open(dir, profile string, cat *Catalogue, clk Clock) (*Store, error) {
 			t.OpenedAt = now
 			t.FadesAt = now + time.Duration(cat.Config.FadeSec)*time.Second
 		}
+		// The same goes for the repeat cooldown: a restart starts every window anew.
+		for _, a := range s.asked {
+			a.opened, a.answered = now, now
+		}
 	}
 	if fs.Hero != "" {
 		s.hero = fs.Hero

@@ -64,6 +64,35 @@ func TestContextPins(t *testing.T) {
 	}
 }
 
+// TASK-139: every vendored input is a public archive pinned by sha256; no local build dir, home path or private remote.
+func TestContextPublicInputs(t *testing.T) {
+	c := read(t, "context.sh")
+	wantAll(t, "context.sh", c,
+		"cli11_url=https://github.com/CLIUtils/CLI11/archive/refs/tags/v2.6.2.tar.gz",
+		"cli11_sha=c6ea6b2e5608b3ea8617999bd5f47420c71b2ebdb8dc4767c1034d1da5785711",
+		"sentry_url=https://github.com/getsentry/sentry-native/releases/download/0.17.3/sentry-native.zip",
+		"sentry_sha=930039d20b8f7d5520c8cb1d9911d63ce8a9e0635b56ae08256936d1f45b66ac",
+		"ffurl=https://ffmpeg.org/releases/ffmpeg-9.0.2.tar.xz", "sha256sum -c", "pin_tag=didle-gate2-lab3",
+		"https://github.com/shatteredeagle/d2d-didle")
+	for _, bad := range []string{"$HOME", "d2d-lab", "_deps", "ffmpeg_build-prefix", "/home/", "d2d-fork", "$FORK/", "${FORK:"} {
+		// the only allowed mention of the old private remote is none at all
+		if strings.Contains(c, bad) {
+			t.Errorf("context.sh must not reference %q (public inputs only)", bad)
+		}
+	}
+	d := read(t, "Dockerfile.d2d")
+	for _, bad := range []string{"/home/", "d2d-lab", "$HOME"} {
+		if strings.Contains(d, bad) {
+			t.Errorf("Dockerfile.d2d must not reference %q", bad)
+		}
+	}
+	// privacy: the image sends no crash reports (empty DSN at build and run time, no opt-in flag anywhere)
+	wantAll(t, "Dockerfile.d2d", d, "-DD2D_SENTRY_DSN=", "SENTRY_DSN= \\")
+	if strings.Contains(read(t, "entrypoint.sh"), "send-crash-reports") {
+		t.Error("entrypoint.sh must not enable --send-crash-reports")
+	}
+}
+
 // Run the entrypoint dry run: the resolved tester profile, tokens masked; the default bot mode unchanged.
 func dry(t *testing.T, mode string, env ...string) string {
 	t.Helper()

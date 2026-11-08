@@ -574,6 +574,14 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-125 fid-revive-refill: game.exe respawn (packet 0x41, FUN_0054c0e0) refills life, mana and stamina; d2d refilled life only; candidate local/fid-revive-refill-r1 built, 390 -> 0 of 408 cases; needs independent Opus verification (docs/research/fid-revive-refill.md, pr-revive-refill-draft.md)
 - TASK-76 fid-price-pr un-parked and run (agent fidprice): NEGATIVE, no PR candidate; D1-D10 already merged upstream, residual only at 26M+ gold prices; AC 2 (VN03) ticked, AC 1/3/4 open; trace docs/research/fid-vendor-price-trace.md
 - TASK-89 fid-skill-damage-pr: no PR candidate, the min-synergy gate and MulDiv are already merged upstream (PR #146, 2026-10-31); 116,000 cases x 2 seeds on upstream main 9c78f391 = 0 differ, blvl/lvl split 0 of 116,000 (docs/probes/fid/fid-skill-damage-pr.md); matrix row SK02 proposed DEV -> OK
+- TASK-129 tallystrip: tally credits from events, charter quote and spend, strip view built offline (not live); AC 2 open (mounting, order slot 2, perk)
+- TASK-25 and TASK-33 verified live 2026-11-07: tester container ran end to end (wizard, bot, watch, video) and one 1 h realtime session (0 stalls, 0 deaths); six container defects fixed; cards TASK-137 (ladder repeat), TASK-138 (fresh-start pace), TASK-139 (image reproducibility)
+- TASK-127 returnscreen built offline (page, JSON, handlers, goldens); wiring into Serve and feedHub listed in docs/return-screen.md.
+- TASK-137 ladder: the same question no longer reopens every minute (store cooldown, answer reuse, go quiet; knobs ladder.repeatCooldownMin and ladder.quietAfter); live confirmation is the next container run
+- TASK-139 verified live 2026-11-07: the tester image builds from public inputs only (CLI11 2.6.2, sentry-native 0.17.3, FFmpeg 9.0.2 pinned by sha256 in context.sh, fork from tag didle-gate2-lab3); binary matches the local build except the build timestamp
+- TASK-130 codexfirsts: Act 1 firsts table (37 rows), Codex, Tracker, /api/codex built and tested offline; bot hooks and live check open
+- TASK-140 funwire: return screen, tally strip and Codex connected to the live bot (feedHub, Serve routes, charter on the order route, waypoint hook); end-to-end test on a real server for two builds
+- TASK-125 upstream PR #245 open (revive refill); merge pending
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

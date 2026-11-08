@@ -21,6 +21,7 @@ owns:
   - "docs/tally-strip.md"
 exclusive: []
 contracts: []
+result: "Credits, quote, charter spend, strip, hook done; wired by TASK-140 (strip on the header and the return screen, /api/tally, charter on the order route, waypoint hook). AC 2 stays open ONLY for order slot 2 and the first perk (unwired). Tally needs the d.idle overlay: the live smoke ran vanilla, so the strip showed off; credits are verified by the end-to-end test only."
 ---
 
 ## Description
@@ -33,7 +34,7 @@ Why: ADR 0018 item 1 (the tally ledger side is un-paused as part of the loop; th
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Ledger credits from Hub events through registry source rows (kills per 25, quest, waypoint when the event exists (U), first, boss, completed expedition); prices are registry rows
+- [x] #1 Ledger credits from Hub events through registry source rows (kills per 25, quest, waypoint when the event exists (U), first, boss, completed expedition); prices are registry rows
 - [ ] #2 Strip on the watch header and the return screen; a spend sheet listing the next three buys (charter, order slot 2, first perk) with ledger spend; sinks wired: order slot 2 (MaxOpenOrders from a ledger-read value) and one perk that is an existing knob row
-- [ ] #3 docs/tally-strip.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
+- [x] #3 docs/tally-strip.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->

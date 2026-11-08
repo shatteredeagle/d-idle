@@ -23,7 +23,7 @@
       "storage": "ledger",
       "stackable": false,
       "cap": 0,
-      "sources": ["bank", "grant"],
+      "sources": ["bank", "grant", "tally_kills", "tally_firsts", "tally_boss", "tally_quest", "tally_waypoint", "tally_trip"],
       "sinks": ["ladder_upgrade"],
       "display": {"icon": "tally", "label": "banked", "order": 2, "where": ["header", "spend"]}
     }
@@ -31,7 +31,13 @@
   "sources": [
     {"id": "mark_field", "currency": "mark", "name": "Fallen monsters in the field", "daily_cap": 0},
     {"id": "bank", "currency": "tally", "name": "Marks banked in town", "daily_cap": 2000},
-    {"id": "grant", "currency": "tally", "name": "Tier unlock grants", "daily_cap": 0}
+    {"id": "grant", "currency": "tally", "name": "Tier unlock grants", "daily_cap": 0},
+    {"id": "tally_kills", "currency": "tally", "name": "Kills in the field", "daily_cap": 120},
+    {"id": "tally_firsts", "currency": "tally", "name": "Firsts: a monster kind or an area met", "daily_cap": 0},
+    {"id": "tally_boss", "currency": "tally", "name": "A named boss killed", "daily_cap": 0},
+    {"id": "tally_quest", "currency": "tally", "name": "A quest completed", "daily_cap": 0},
+    {"id": "tally_waypoint", "currency": "tally", "name": "A waypoint lit", "daily_cap": 0},
+    {"id": "tally_trip", "currency": "tally", "name": "An expedition completed", "daily_cap": 40}
   ],
   "upgrades": [
     {"id": "fade_faster", "sink": "ladder_upgrade", "currency": "tally", "tier": "T0", "name": "Faster answer fade", "effect": "Unanswered questions fade a little sooner.", "costs": [30, 75, 180], "wired": false},
