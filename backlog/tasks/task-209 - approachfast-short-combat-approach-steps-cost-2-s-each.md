@@ -1,10 +1,11 @@
 ---
 id: TASK-209
 title: 'approachfast: short combat approach steps cost 2 s each'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T20:54:00Z'
+updated_date: '2026-11-08T21:22:00Z'
 labels:
   - bot
   - bug
