@@ -3,6 +3,37 @@
   "doc": "docs/unlock-ladder.md",
   "entries": [
     {
+      "id": "chronicle",
+      "group": "ui",
+      "trigger": {
+        "kind": "kills_of_kind",
+        "args": {
+          "kind": "*",
+          "min": 1
+        }
+      },
+      "reveal": {
+        "title": "Chronicle",
+        "text": "A running log of what the hero kills, finds and sees, in Diablo II words.",
+        "teaser": "Win your first fight."
+      }
+    },
+    {
+      "id": "chronicle_tape",
+      "group": "ui",
+      "trigger": {
+        "kind": "seen",
+        "args": {
+          "what": "expedition_card"
+        }
+      },
+      "reveal": {
+        "title": "Run timeline",
+        "text": "The Chronicle now shows a tape of every expedition: where the hero went and what it cost.",
+        "teaser": "Read your first expedition card."
+      }
+    },
+    {
       "id": "pact_andariel_first_kill",
       "group": "pacts",
       "trigger": {

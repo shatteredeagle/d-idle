@@ -93,14 +93,9 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 			return decide.NewTracker(tbl, cat, st, cfg.Codex, clk, decide.Who{Class: class, Diff: "normal"})
 		}
 	}
-	if stateDir != "" {
-		lad, err := unlock.Shipped()
-		if err != nil {
-			return nil, err
-		}
-		if cfg.Unlock, err = unlock.Open(stateDir, l.storeProfile(), lad, nil); err != nil {
-			return nil, err
-		}
+	var err error
+	if cfg.Unlock, err = openUnlocks(stateDir, l.storeProfile()); err != nil {
+		return nil, err
 	}
 	pt, err := decide.ShippedPolicy(cat)
 	if err != nil {
@@ -120,6 +115,15 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 // knobSetter is the policy sheet's knob path: the tuner's own edit (range checks, all or nothing, saved to tuning.json).
 func knobSetter(t *bot.Tuner) watch.KnobSetter {
 	return func(over map[string]*float64) error { return t.Edit(api.TuneEdit{Overrides: over}) }
+}
+
+// openUnlocks opens the unlock ladder of the profile (docs/unlock-ladder.md); without a state dir it lives in memory.
+func openUnlocks(stateDir, profile string) (*unlock.Engine, error) {
+	lad, err := unlock.Shipped()
+	if err != nil {
+		return nil, err
+	}
+	return unlock.Open(stateDir, profile, lad, nil)
 }
 
 func openCodex(stateDir, profile string) (*decide.Codex, error) {

@@ -41,9 +41,9 @@ Basics are never entries (nothing in the table may gate a view the first session
 
 ## Not done here
 
-- `cmd/d2bot` opens the engine in `newFun` (pactladder) when there is a state dir; the senses side is TASK-149.
-- No emitter feeds `kills` or `retire` events.
-- The shipped table has no entries; TASK-149 adds the senses rows, the ten unlockable cards add theirs.
+- (Done in TASK-154) `cmd/d2bot` newFun opens the shipped ladder into `cfg.Unlock`; `Unlocks.OnGoalEvent` feeds `kills` (per monster name, in memory). New trigger kind `seen` (arg `what`) for viewer-side moments.
+- No emitter feeds `retire` events. (pactladder) `startPacts` feeds `boss_kill` events.
+- The shipped table holds the unlockable rows added so far (Chronicle: `docs/unlock-chronicle.md`); TASK-149 adds the senses rows.
 
 ## Verified
 

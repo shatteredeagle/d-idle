@@ -24,6 +24,7 @@
  <button type="button" data-view="rules">Rules</button>
  <button type="button" data-view="journal">Journal</button>
  <button type="button" data-view="spend" id="tab-spend" hidden>Spend</button>
+ <button type="button" data-view="chronicle" id="tab-chronicle" hidden>Chronicle</button>
 </nav>
 <main id="main" data-view="orders">
  <section class="card game" id="gamepane" data-v="game" hidden aria-labelledby="t-game"><h2 id="t-game">Game</h2>
@@ -59,6 +60,14 @@
   <p class="hint" id="spendtext"></p>
   <ul id="spendlist" class="log-list"></ul>
  </section>
+ <section class="card chronicle" id="chroniclepane" data-v="chronicle" hidden aria-labelledby="t-chron"><h2 id="t-chron">Chronicle</h2>
+  <ul id="chronlines" class="log-list chron" aria-live="off"></ul>
+  <h3 id="t-tape" hidden>Run timeline</h3>
+  <ol id="tape" class="tape" hidden></ol>
+ </section>
+ <section class="card silhouettes" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
+  <ul id="lockedlist" class="log-list"></ul>
+ </section>
  <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
   <ul id="journal" class="log-list"></ul>
  </section>
@@ -68,4 +77,5 @@
 <div class="toast" id="toast" role="status" hidden></div>
 <script src="/watch/app.js"></script>
 <script src="/watch/senses.js"></script>
+<script src="/watch/unlockui.js"></script>
 </body></html>

@@ -23,7 +23,8 @@ const (
 	Level       = "level"         // args: min (character level)
 	TallySpend  = "tally_spend"   // opened by Buy; the entry's price is paid from the tally
 	RetireCount = "retire_count"  // args: min (heroes retired so far; the source reports the running count)
-	KillsOfKind = "kills_of_kind" // args: kind (monster name), min (running count reported by the source)
+	KillsOfKind = "kills_of_kind" // args: kind (monster name, or * for any), min (running count reported by the source)
+	Seen        = "seen"          // args: what (a viewer-side moment such as expedition_card)
 	BossKill    = "boss_kill"     // args: boss (monster name), difficulty (normal|nightmare|hell; absent = any)
 )
 
@@ -143,6 +144,8 @@ func (t Trigger) validate() error {
 		return need("sub")
 	case Quest:
 		return need("quest")
+	case Seen:
+		return need("what")
 	case Level, RetireCount:
 		if err := need("min"); err != nil {
 			return err
