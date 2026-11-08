@@ -305,3 +305,71 @@ func TestMinuteLineCarriesTownPortalCount(t *testing.T) {
 		t.Fatalf("tp must be always present, tpBuy only when non-zero: %s", l)
 	}
 }
+
+// TASK-138, tester realtime drill: Blood Moor was down to a straggler every 1 to 5 minutes at clvl 2, so the kill
+// drought (8 minutes without any kill) never fired and the hero walked an empty field for the hour.
+func TestSlowFieldStartsAFreshGame(t *testing.T) {
+	for _, cl := range nokillClasses {
+		t.Run(cl.String(), func(t *testing.T) {
+			g := droughtRig(t, cl, false)
+			g.w.set(func(w *world) { w.level = 2 })
+			kill := func() {
+				g.r.obMu.Lock()
+				now := g.r.e.Clock.Now()
+				g.r.ob.killXPAt = now
+				g.r.ob.killTimes = append(g.r.ob.killTimes, now)
+				g.r.obMu.Unlock()
+			}
+			for i := 0; i < 3; i++ { // one kill every 3 minutes: no kill drought, but 3 kills per 9 minutes fills the bar only barely
+				if g.droughtStep(3 * time.Minute) {
+					t.Fatalf("minute %d: too early", (i+1)*3)
+				}
+				if i < 2 {
+					kill()
+				}
+			}
+			if !g.droughtStep(2 * time.Minute) {
+				t.Fatal("11 minutes with 2 kills must start a fresh game")
+			}
+			if n := strings.Count(g.w.log(), "newgame"); n != 1 {
+				t.Fatalf("%d fresh games, want 1", n)
+			}
+			if g.droughtStep(3 * time.Minute) {
+				t.Fatal("the window restarts after the action")
+			}
+		})
+	}
+}
+
+func TestSlowFieldQuietCases(t *testing.T) {
+	g := droughtRig(t, d2.Sorceress, false)
+	g.w.set(func(w *world) { w.level = 2 })
+	for i := 0; i < 4; i++ { // a busy field: 4 kills in the window
+		g.r.obMu.Lock()
+		g.r.ob.killTimes = append(g.r.ob.killTimes, g.r.e.Clock.Now())
+		g.r.obMu.Unlock()
+		g.droughtStep(0)
+	}
+	g.r.obMu.Lock()
+	g.r.ob.killXPAt = g.r.e.Clock.Now().Add(5 * time.Minute)
+	g.r.obMu.Unlock()
+	if g.droughtStep(5*time.Minute + 30*time.Second) {
+		t.Fatal("kills at the bar keep the game")
+	}
+	g.w.set(func(w *world) { w.level = 12 }) // above the clvl cap
+	g.r.obMu.Lock()
+	g.r.ob.killTimes = nil
+	g.r.ob.killXPAt = g.r.e.Clock.Now().Add(20 * time.Minute)
+	g.r.obMu.Unlock()
+	if g.droughtStep(15 * time.Minute) {
+		t.Fatal("the rule is for the early levels")
+	}
+	g.w.set(func(w *world) { w.level = 2 })
+	g.r.e.Tune.Bot.DroughtSlowMin = 0
+	g.r.obMu.Lock()
+	g.r.ob.killXPAt = g.r.e.Clock.Now().Add(20 * time.Minute)
+	g.r.obMu.Unlock()
+	if g.droughtStep(15 * time.Minute) {
+		t.Fatal("knob 0 is off")
+	}
+}
