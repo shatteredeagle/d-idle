@@ -20,4 +20,30 @@ print("rows", ids)
 import os
 rows = os.environ.get("SK6_ROWS", ",".join(want)).split(",")
 missiles.ROWS = {n: ids[n] for n in rows}
+# Size 2 missiles (Lightning rows): the footprint table of docs/research/re/missiles.md (rules::missile_touches), as the foe test
+SIZE = {r["Missile"]: int(r.get("Size") or 1) for r in txt_rows(e, "Missiles") if r.get("Missile")}
+CUR = [1]
+
+
+def touches(mx, my, ux, uy, size):
+    dx, dy = abs(mx - ux), abs(my - uy)
+    a, b = sorted((CUR[0], size))
+    if (a, b) == (1, 1): return dx == 0 and dy == 0
+    if (a, b) == (1, 2): return dx + dy <= 1
+    if (a, b) == (1, 3): return dx <= 1 and dy <= 1
+    if (a, b) == (2, 2): return dx + dy <= 2
+    if (a, b) == (2, 3): return (dx < 3 and dy < 2) or (dy < 3 and dx <= 1)
+    return dx <= 2 and dy <= 2
+
+
+missiles.touches = touches
+inner = missiles.run_case
+
+
+def run_case(game, case, rng):
+    CUR[0] = SIZE.get([k for k, v in ids.items() if v == case["mid"]][0], 1) if case["name"] != "random" else 1
+    return inner(game, case, rng)
+
+
+missiles.run_case = run_case
 missiles.main()
