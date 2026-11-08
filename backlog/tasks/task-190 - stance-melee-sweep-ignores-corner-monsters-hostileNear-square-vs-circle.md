@@ -17,6 +17,7 @@ owns:
   - "internal/bot/friendly_test.go"
 exclusive: []
 contracts: []
+result: "Fixed hostileNear (square vs circle) so a corner monster no longer starts the futile-clear window; regression test added. Log evidence in docs/stance.md. Offline only, NOT verified live."
 ---
 
 ## Description
@@ -24,10 +25,10 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Part of the 2026-11-08 feedback (Paladin does not fight). See docs/stance.md.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 hostileNear uses the fighter's circular scope; regression test
+- [x] #1 hostileNear uses the fighter's circular scope; regression test
 <!-- AC:END -->

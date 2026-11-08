@@ -1,8 +1,10 @@
 package watch
 
 import (
+	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
@@ -164,6 +166,30 @@ func TestStancePostGolden(t *testing.T) {
 		}
 		if w := polPost(ans, map[string]string{"Authorization": "Bearer tok"}, `{"row":"stance","option":"reckless"}`); w.Code != 400 || !strings.Contains(w.Body.String(), "reckless") {
 			t.Errorf("%s: unknown option: %d %s", class, w.Code, w.Body)
+		}
+	}
+}
+
+// A change of the stance row is one line of the session record.
+func TestStanceChoiceInSessionRecord(t *testing.T) {
+	for _, class := range []string{"sorceress", "paladin"} {
+		r := newSessRig(t, class)
+		r.s.Poll()
+		if err := r.st.SetPolicy("stance", "aggressive", nil); err != nil {
+			t.Fatal(err)
+		}
+		r.advance(10 * time.Second)
+		if err := r.s.Stop(); err != nil {
+			t.Fatal(err)
+		}
+		found := false
+		for _, l := range readLines(t, filepath.Join(r.s.Dir(), "session.jsonl")) {
+			if l["kind"] == "policy" && l["row"] == "stance" && l["option"] == "aggressive" {
+				found = true
+			}
+		}
+		if !found {
+			t.Errorf("%s: no policy line in the session record", class)
 		}
 	}
 }

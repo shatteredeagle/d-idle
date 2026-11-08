@@ -19,8 +19,10 @@ owns:
   - "internal/env/tuning_bot.go"
   - "docs/stance.md"
   - "cmd/d2bot"
+  - "docs/plan/data/chores-defaults.json"
 exclusive: []
 contracts: []
+result: "Stance row Cautious/Balanced/Aggressive with per-class knobs, Paladin class start, session record line, return card text; tests for two classes and POST golden. Offline only, NOT verified live; Aggressive survival values U."
 ---
 
 ## Description
@@ -28,11 +30,11 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Part of the 2026-11-08 feedback (Paladin does not fight). See docs/stance.md.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 stance row Cautious/Balanced/Aggressive with per-class knob table
-- [ ] #2 tests for two classes, POST /api/policy golden, defaults unchanged
+- [x] #1 stance row Cautious/Balanced/Aggressive with per-class knob table
+- [x] #2 tests for two classes, POST /api/policy golden, defaults unchanged
 <!-- AC:END -->
