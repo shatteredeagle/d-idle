@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>d.idle - policy sheet</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,"><link rel="stylesheet" href="/watch/app.css"><link rel="stylesheet" href="/watch/return.css">
+</head><body>
+<header class="top"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
+<a class="btn" href="/watch/return">While you were away</a> <a class="btn primary" href="/watch?live=1">Live screen</a></header>
+<main class="ret" id="policy">
+<section class="card" aria-labelledby="p-head"><h2 id="p-head">Policy sheet (sorceress)</h2>
+<p>How the hero handles its chores. Set it once, change it any time. Poor choices are allowed: try them and read what they cost.</p>
+<p class="hint">(U) marks a counter whose link to the setting is a guess, not a measurement. &#39;Not reported&#39; means no event carries it yet.</p></section>
+<section class="card" data-row="repair" aria-labelledby="row-repair"><h2 id="row-repair">Repair gear</h2><p>When the hero repairs its gear in town. Repair costs gold; broken gear stops protecting.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="repair" data-option="default" aria-pressed="true">Repair under 30 percent durability (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="repair" data-option="low" aria-pressed="false">Repair only under 20 percent</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="repair" data-option="always" aria-pressed="false">Repair every town visit</button>
+<span class="badge">your call</span> <span class="hint">Pays for repairs that are not needed yet.</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="repair" data-option="never" aria-pressed="false">Never repair</button>
+<span class="badge">your call</span> <span class="hint">Gear wears out; defence and damage fall until it breaks.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="restock" aria-labelledby="row-restock"><h2 id="row-restock">Spend spare gold on belt potions</h2><p>Whether a trip with little gold still tops up the belt before buying scrolls.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="restock" data-option="default" aria-pressed="true">Top up when the trip has the gold (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="restock" data-option="always" aria-pressed="false">Always top up the belt first</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="restock" data-option="never" aria-pressed="false">Never top up on a poor trip</button>
+<span class="badge">your call</span> <span class="hint">The belt stays thin after a poor trip.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="town" aria-labelledby="row-town"><h2 id="row-town">When to go to town</h2><p>What sends the hero home on its own: a full pack, a thin belt, or nothing.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="town" data-option="default" aria-pressed="true">Resource rule: pack at 80 percent or a thin belt (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="town" data-option="early" aria-pressed="false">Go early: half belt or pack at 80 percent</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="town" data-option="pack" aria-pressed="false">Only when the pack is full</button>
+<span class="badge">your call</span> <span class="hint">The belt can run dry far from town.</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="town" data-option="never" aria-pressed="false">Never on its own</button>
+<span class="badge">your call</span> <span class="hint">The pack fills and the belt empties; only a death or an order brings the hero home.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="tp" aria-labelledby="row-tp"><h2 id="row-tp">A lost town portal scroll</h2><p>Buy a scroll when there is none, or walk back.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="tp" data-option="default" aria-pressed="true">Buy one when gold allows (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="tp" data-option="buy" aria-pressed="false">Always buy one</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="tp" data-option="walk" aria-pressed="false">Always walk back</button>
+<span class="badge">your call</span> <span class="hint">Long, dangerous walks, especially from boss areas.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="tpreserve" aria-labelledby="row-tpreserve"><h2 id="row-tpreserve">Town portal scroll reserve</h2><p>How many scrolls a poor hero buys once it has its minimal healing kit.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="tpreserve" data-option="default" aria-pressed="true">Two scrolls (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="tpreserve" data-option="three" aria-pressed="false">Three scrolls</button>
+
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="tpreserve" data-option="one" aria-pressed="false">One scroll</button>
+<span class="badge">your call</span> <span class="hint">A dive can start with the only scroll spent.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="retreat" aria-labelledby="row-retreat"><h2 id="row-retreat">When life is low</h2><p>What the hero does at low life when the survival step found nothing to drink. The usual potion drinking comes first and does not change.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="retreat" data-option="default" aria-pressed="true">Today&#39;s rule (drink, then portal or leave by life and kit)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="retreat" data-option="early" aria-pressed="false">Portal out early when no potion is held</button>
+
+<span class="badge">partly wired</span> <span class="hint">Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md).</span>
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="retreat" data-option="bold" aria-pressed="false">Keep fighting down to 18 percent</button>
+<span class="badge">your call</span> <span class="hint">Death risk rises sharply under 25 percent life.</span>
+<span class="badge">partly wired</span> <span class="hint">Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md).</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="potionmix" aria-labelledby="row-potionmix"><h2 id="row-potionmix">Potion mix</h2><p>Which potions the hero relies on. The belt columns follow the build; these options move the drink lines.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="potionmix" data-option="default" aria-pressed="true">The build&#39;s mix (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allmana" aria-pressed="false">Mana potions first</button>
+<span class="badge">your call</span> <span class="hint">Few healing potions are drunk; deaths with a full mana belt.</span>
+<span class="badge">not wired yet</span> <span class="hint">Only the healing drink line moves (to its lowest value). No bot path buys an all-mana belt yet (the belt plan is code, docs/sme/potion-policy.md); a bot card is needed.</span>
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potionmix" data-option="allhealth" aria-pressed="false">Healing potions only</button>
+<span class="badge">your call</span> <span class="hint">Casters run dry of mana and fight with the cheap attack.</span>
+<span class="badge">partly wired</span> <span class="hint">Mana potions are not drunk or demanded, but the belt plan may still buy some (U).</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="potiontier" aria-labelledby="row-potiontier"><h2 id="row-potiontier">Which potions to buy</h2><p>Best affordable potions, or the cheapest that are enough.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="potiontier" data-option="default" aria-pressed="true">Best affordable (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="potiontier" data-option="cheapest" aria-pressed="false">Cheapest sufficient</button>
+<span class="badge">your call</span> <span class="hint">Weak potions heal little; more drinks and more deaths in a hard fight.</span>
+<span class="badge">not wired yet</span> <span class="hint">The bot does not ask this point yet (docs/t0-slice.md); the choice is stored for when it does.</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="belt" aria-labelledby="row-belt"><h2 id="row-belt">Belt fill</h2><p>How full each potion column is refilled in town.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="belt" data-option="default" aria-pressed="true">Fill every planned column (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="belt" data-option="half" aria-pressed="false">Fill half of each column</button>
+<span class="badge">your call</span> <span class="hint">Fewer potions per trip; more trips and thinner fights.</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="belt" data-option="quarter" aria-pressed="false">Fill a quarter of each column</button>
+<span class="badge">your call</span> <span class="hint">The belt is nearly empty after every visit.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="whites" aria-labelledby="row-whites"><h2 id="row-whites">Pick up plain (white) items</h2><p>How much loot the hero walks to: only keepers, or also what sells.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="whites" data-option="default" aria-pressed="true">Normal pickup (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="whites" data-option="sellable" aria-pressed="false">Also pick up what sells</button>
+<span class="badge">your call</span> <span class="hint">The pack fills with whites; more town trips.</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="whites" data-option="keepers" aria-pressed="false">Keepers only</button>
+<span class="badge">your call</span> <span class="hint">Leaves the gold that white items would sell for.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="sell" aria-labelledby="row-sell"><h2 id="row-sell">Sell junk in town</h2><p>Whether the hero sells what the pickit rates as sell.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="sell" data-option="default" aria-pressed="true">Sell junk (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="sell" data-option="keep" aria-pressed="false">Keep everything</button>
+<span class="badge">your call</span> <span class="hint">The pack and the stash fill; the hero stops picking up.</span>
+
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="identify" aria-labelledby="row-identify"><h2 id="row-identify">Identify items</h2><p>Scrolls for the items that matter, every item, or nothing.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="identify" data-option="default" aria-pressed="true">Scroll for rare and better, leave magic items (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="identify" data-option="all" aria-pressed="false">Scroll for every item</button>
+
+<span class="badge">partly wired</span> <span class="hint">The bot does not ask t1.identify yet; only the scroll knob acts (docs/t0-slice.md).</span>
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="identify" data-option="none" aria-pressed="false">Never identify</button>
+<span class="badge">your call</span> <span class="hint">Unidentified finds sell cheap and their worth is never seen.</span>
+<span class="badge">partly wired</span> <span class="hint">The bot does not ask t1.identify yet; only the scroll knob acts (docs/t0-slice.md).</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section><section class="card" data-row="stash" aria-labelledby="row-stash"><h2 id="row-stash">A full stash</h2><p>Sell the surplus, drop it, or pause.</p>
+<div class="opts"><div class="opt cur">
+<button type="button" class="btn small primary" data-act="policy" data-row="stash" data-option="default" aria-pressed="true">Sell the surplus (today&#39;s rule)</button>
+<span class="badge">default</span>
+
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="stash" data-option="drop" aria-pressed="false">Drop the surplus</button>
+<span class="badge">your call</span> <span class="hint">Dropped items are gone for good.</span>
+<span class="badge">not wired yet</span> <span class="hint">The bot does not ask t1.stash.full yet (docs/t0-slice.md).</span>
+</div><div class="opt">
+<button type="button" class="btn small" data-act="policy" data-row="stash" data-option="pause" aria-pressed="false">Pause until the player acts</button>
+<span class="badge">your call</span> <span class="hint">The hero idles with a full stash.</span>
+<span class="badge">not wired yet</span> <span class="hint">The bot does not ask t1.stash.full yet (docs/t0-slice.md).</span>
+</div></div>
+<p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
+</section>
+</main>
+<p id="msg" class="hint" role="status"></p>
+<script src="/watch/policy.js"></script>
+</body></html>

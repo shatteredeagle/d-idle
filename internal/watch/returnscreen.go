@@ -1030,8 +1030,7 @@ var returnTmpl = template.Must(template.New("return").Funcs(template.FuncMap{"du
 <script src="/watch/return.js"></script>
 </body></html>
 {{define "sec"}}<section class="card" data-section="{{.ID}}" aria-label="{{.Title}}"><h2>{{.Title}}</h2>
-{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}
-{{if .Buttons}}<div class="row">{{range .Buttons}}<button type="button" class="btn small" data-act="policy" data-row="{{.Row}}" data-option="{{.Option}}">{{.Label}}</button>{{end}}</div>{{end}}</section>{{end}}`))
+{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}{{if .Buttons}}<div class="row">{{range .Buttons}}<button type="button" class="btn small" data-act="policy" data-row="{{.Row}}" data-option="{{.Option}}">{{.Label}}</button>{{end}}</div>{{end}}</section>{{end}}`))
 
 type returnPage struct {
 	ReturnData

@@ -251,7 +251,7 @@ var policyCounters = map[string]counterFn{
 		return countWhere(a, f, t, func(e AwayEvent) bool { return e.Kind == AwayArea && data.IsTown(e.AreaID) })
 	},
 	"whites": func(a []AwayEvent, f, t float64) (int, bool) {
-		return countWhere(a, f, t, func(e AwayEvent) bool { q, _ := rankOf(e); return e.Kind == AwayDrop && q == "" })
+		return countWhere(a, f, t, func(e AwayEvent) bool { q, _ := rankOf(e); return e.Kind == AwayDrop && q == "normal" })
 	},
 	"drops": func(a []AwayEvent, f, t float64) (int, bool) {
 		return countWhere(a, f, t, func(e AwayEvent) bool {
