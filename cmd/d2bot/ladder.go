@@ -267,6 +267,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Senses = &senses.Publisher{}
 		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.FixedTier(l.sensesTier)}
 	}
+	so.Update = startUpdater(ctx)
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
 	}
