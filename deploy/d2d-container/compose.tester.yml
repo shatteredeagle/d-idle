@@ -4,7 +4,9 @@
 #   docker compose -f compose.tester.yml exec d2dbot cat /data/watch.token
 services:
   d2dbot:
-    image: ${D2D_IMAGE:-d2dbot:tester}
+    # D2_IMAGE=ghcr.io/shatteredeagle/didle-tester:latest uses the published image (docs/tester-registry.md); unset = the local build
+    image: ${D2_IMAGE:-${D2D_IMAGE:-d2dbot:tester}}
+    pull_policy: ${D2_PULL_POLICY:-missing}
     command: ["tester"]
     environment:
       TESTER: "1"
