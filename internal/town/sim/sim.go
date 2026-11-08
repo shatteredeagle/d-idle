@@ -38,6 +38,9 @@ type World struct {
 	Refuse map[uint32]map[string]bool
 	// EquipRefuse lists item ids the game refuses to wear (level requirement): a slot click leaves them on the cursor.
 	EquipRefuse map[uint32]bool
+	// OneOffPerClick: a two-handed weapon is refused while both hands hold an item (the game takes off one worn item per
+	// equip click; VERIFIED LIVE equipfail: Short Bow over Javelin plus Buckler).
+	OneOffPerClick bool
 	// SlotIgnore is the number of equipment-slot left clicks the game ignores (the item stays on the cursor), the
 	// live "slot click refused" pattern of soak 2026-10-30; RightClickEquip lets a right click on a pack item wear it
 	// into an empty matching slot (U live).

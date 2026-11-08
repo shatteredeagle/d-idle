@@ -357,6 +357,9 @@ func (l *Leveler) doSwap(ctx context.Context, h *hand.Hand, s *d2.Snapshot, sw S
 		}
 	}
 	u := sw.Item.Unit
+	if cur, ok := hand.Find(s.Inventory, u.ID); ok && cur.Item != nil && cur.Item.Where == d2.ContInventory {
+		u = cur // a retry: the failed try put the item back into the first free cell, not where the swap was planned
+	}
 	if err := h.Take(ctx, u, lay.Inventory); err != nil {
 		return err
 	}
