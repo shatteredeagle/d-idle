@@ -848,3 +848,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/pact-ui.md and docs/unlock-ladder.md updated for the Pact ladder entries
 - internal/decide/champmods.json: monster modifier id to display name table for the senses elite markers
 - docs/unlock-bestiary.md - Cain's notes bestiary (TASK-158): cards per monster kind, 10 and 50 kill steps
+- docs/soaks/classpacing.md - measured early-game pace per class (TASK-147)
+- docs/unlock-atlas.md - waypoint atlas (TASK-160): lit and silhouette Act 1 waypoints, the hero's proposed next zone

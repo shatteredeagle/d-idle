@@ -114,6 +114,23 @@
     });
   }
 
+  function atlas(open) {
+    if (!open.atlas) { $('tab-atlas').hidden = true; $('atlaspane').hidden = true; return Promise.resolve(); }
+    return get('/api/atlas').then(function (v) {
+      $('tab-atlas').hidden = false; $('atlaspane').hidden = false;
+      $('atlascount').textContent = '(' + v.lit + ' of ' + v.total + ' lit)';
+      $('atlasnext').textContent = v.next ? 'The hero would like to go to ' + v.next + ' next.' : '';
+      var ol = $('atlaslist'); clear(ol);
+      (v.slots || []).forEach(function (s) {
+        var li = el('li', 'wp ' + s.state + (s.next ? ' next' : ''));
+        if (s.state === 'lit') li.appendChild(el('b', '', s.name));
+        else li.appendChild(el('span', 'muted', 'An unlit waypoint'));
+        if (s.next) li.appendChild(el('span', '', ' - next'));
+        ol.appendChild(li);
+      });
+    });
+  }
+
   // Identify reveal: a face-down card carries no quality or colour; the flip asks the answer route and then shows both.
   var shown = {}, modalCard = '';
   function beep(cue) {
@@ -172,7 +189,7 @@
       var open = {};
       (u.open || []).forEach(function (s) { open[s.id] = true; });
       silhouettes(u);
-      return Promise.all([chronicle(open), voice(open), quests(open), reveal(open), bestiary(open)]);
+      return Promise.all([chronicle(open), voice(open), quests(open), reveal(open), bestiary(open), atlas(open)]);
     }).catch(function () { fails++; }).then(function () {
       if (fails < 5) timer = setTimeout(tick, 4000);
     });

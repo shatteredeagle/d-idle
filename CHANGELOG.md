@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Waypoint atlas: Act 1 waypoints lit as the hero takes them, proposed next zone marked (/api/atlas, panel)
+- Measured the first 90 virtual minutes of seven class tables on lockstep d2d (docs/soaks/classpacing.md); found equip, recovery-loop and Assassin navigation defects.
 - Cain's notes bestiary: per-kind monster cards unlock at 10 kills, resists at 50 (/api/bestiary, panel, return section)
 - The hero now proposes the next zone in a real run (facts from the bot's kit, potions and deaths; knob ladder.awayMin) and warns in the journal when a map order is above its range (TASK-131).
 - Hall of Fame is now mounted in the real bot: the retire question appears after the Andariel kill (keep or retire; retire stops the bot cleanly). A death is not yet booked as permanent (TASK-135).
