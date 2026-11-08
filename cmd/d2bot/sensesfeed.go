@@ -7,6 +7,7 @@ import (
 
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2map"
+	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
@@ -24,7 +25,7 @@ func useSenses(rig *ladderRig, e *env.Env, log *slog.Logger) {
 	}
 	var us *unitSource
 	if e.Read != nil {
-		us = &unitSource{Read: e.Read, Cat: combat.NewCatalog(e.Data)}
+		us = &unitSource{Read: e.Read, Cat: combat.NewCatalog(e.Data), ModName: decide.ModName}
 	}
 	e.OnObserve = sensesFeedUnits(rig.Senses, time.Now, log, us)
 }
