@@ -93,6 +93,10 @@ type Fun struct {
 	Proposals *ProposalDesk
 	// Hall is nil when the Hall of Fame is off.
 	Hall *HallDesk
+	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
+	Pacts *PactAPI
+	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
+	OnView func()
 
 	codex   *decide.Codex
 	table   *decide.Firsts
@@ -339,6 +343,11 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 			m.Handle(p, hh)
 		}
 	}
+	if f.Pacts != nil {
+		for _, p := range PactRoutes {
+			m.Handle(p, f.Pacts.Handler())
+		}
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -362,6 +371,11 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Hall != nil {
 		m.Handle(HallPostRoute, f.Hall.PostHandler(o))
+	}
+	if f.Pacts != nil {
+		for _, p := range PactPostRoutes {
+			m.Handle(p, f.Pacts.PostHandler(o))
+		}
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))

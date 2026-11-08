@@ -1,0 +1,3 @@
+BACKLOG: TASK-169 pactaway: away safety built offline (presence from viewer requests, consent API with typed name and hours, low-life pause, separate Hardcore flag with a refusing stub); docs/pact-away.md
+INDEX: docs/pact-away.md - Pact away safety: presence, consent API, life floor, Hardcore flag
+CHANGELOG: Pact away safety: Pacts act only while a viewer is present or under a typed, dated, per-difficulty consent; pause under 35% life; Hardcore flag stub

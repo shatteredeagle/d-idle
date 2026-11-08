@@ -122,6 +122,10 @@ func (h *Hub) Serve(ctx context.Context, o ServeOptions) (Served, error) {
 		}
 		viewH = withUpdateBanner(m)
 	}
+	if o.Fun != nil && o.Fun.OnView != nil {
+		inner, seen := viewH, o.Fun.OnView
+		viewH = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { seen(); inner.ServeHTTP(w, r) })
+	}
 	view := &http.Server{Handler: o.Access.viewGate(o.Token, viewH)}
 	ansOpts := AnswerOptions{Token: o.Token, Origins: Origins(o.Origins, viewURL)}
 	if o.Access != nil {

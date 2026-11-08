@@ -56,6 +56,15 @@ func NewPresence(window time.Duration, now func() time.Time) *Presence {
 	return &Presence{window: window, now: now}
 }
 
+// SetWindow changes the window (the catalogue's presence_min, known only after it is loaded).
+func (p *Presence) SetWindow(d time.Duration) {
+	if d > 0 {
+		p.mu.Lock()
+		p.window = d
+		p.mu.Unlock()
+	}
+}
+
 // Touch records a viewer request now.
 func (p *Presence) Touch() {
 	p.mu.Lock()
