@@ -621,6 +621,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - pactladder (TASK-181): Pacts use the shared unlock ladder; boss_kill trigger, pacts group, consent lines on the return screen
 - TASK-152 senseselites: champion, unique and superunique markers with mod names on the senses panel (tier 4), Codex first-encounter gate, fixtures only
 - TASK-147 classpacing measured pace of seven class tables in lockstep (90 virtual minutes): docs/soaks/classpacing.md; cards TASK-182 equipfail, TASK-183 recoverypace, TASK-184 cpnav
+- status sync 2026-11-08 part 4: TASK-131 and TASK-156 Done; stay-open notes on 147 and 157
+- TASK-162 unlockalerts: alert rules table, in-page toast centre, webhook and ntfy senders (off by default), ladder row alerts (docs/unlock-alerts.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -275,6 +275,12 @@
       "reveal": {"title": "Waypoint atlas", "text": "The atlas lights every waypoint the hero has taken and shows where it wants to go next.", "teaser": "Take your first waypoint."}
     },
     {
+      "id": "alerts", "group": "ui",
+      "trigger": {"kind": "tally_spend"},
+      "price": 60,
+      "reveal": {"title": "Alerts and pings", "text": "The hero tells you when something happens: a unique drop, a boss kill, a level, a return to town, a Pact pause or a proposal waiting. Death and low life are always told.", "teaser": "Costs tally."}
+    },
+    {
       "id": "orderqueue", "group": "ui",
       "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 2}},
       "reveal": {"title": "Order queue, first slot", "text": "One order may now wait behind the running one: give an order and the hero goes on to the next when it ends. A queue never overrides the hero's own guard and stops when the hero dies.", "teaser": "Clear the Den of Evil."}

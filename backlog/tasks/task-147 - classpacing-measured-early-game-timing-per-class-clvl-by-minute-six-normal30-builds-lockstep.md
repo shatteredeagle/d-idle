@@ -21,7 +21,7 @@ owns:
   - "docs/soaks/classpacing.md"
 exclusive: []
 contracts: []
-result: "Measured 90 virtual minutes (not 2 hours) for seven tables, one seed each, writes after start 0, verified live on lockstep d2d. AC1 partial, AC2 done (minutes-by-zone only as area ids in minutes/*.jsonl), AC3 see leakcheck. Pace is dominated by the recovery loop and equip failures (cards TASK-182/183/184), so not yet a clean per-class ranking."
+result: "Measured 90 virtual minutes (not 2 hours) for seven tables, one seed each, writes after start 0, verified live on lockstep d2d. AC1 partial, AC2 done (minutes-by-zone only as area ids in minutes/*.jsonl), AC3 see leakcheck. Pace is dominated by the recovery loop and equip failures (cards TASK-182/183/184), so not yet a clean per-class ranking. Status sync 2026-11-08 (stays open): AC1 open (two-hour per-class soaks not run; 90 virtual minutes measured)."
 ---
 
 ## Description

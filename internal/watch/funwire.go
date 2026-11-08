@@ -76,6 +76,9 @@ type FunConfig struct {
 	// Proposals turns the zone proposals on (TASK-131): the proposer, the clock and the bot's facts. Intro is filled from
 	// the Codex when it is left nil and a Codex is wired.
 	Proposals *ProposalConfig
+	// Alerts turns alerts and pings on (TASK-162): rules table, outbound setting (off by default). nil: the alerts are
+	// on only if the ladder has the row "alerts", with the shipped rules and no outbound channel.
+	Alerts *AlertsConfig
 	// Risk turns the hero risk meter on (TASK-159) when the ladder also has the row "risk"; the bot supplies the facts.
 	Risk *RiskConfig
 	// OrderQueue turns the order queue on (TASK-161) when the ladder has its slot rows.
@@ -129,6 +132,8 @@ type Fun struct {
 	Bestiary *Bestiary
 	// Atlas is nil unless the ladder has the row "atlas" (TASK-160).
 	Atlas *Atlas
+	// Alerts is nil unless the ladder has the row "alerts" or FunConfig.Alerts is set (TASK-162).
+	Alerts *Alerts
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -274,6 +279,28 @@ func NewFun(c FunConfig) (*Fun, error) {
 		f.Proposals = pd
 		sec.Register(ProposalsSectionID, pd.Section())
 	}
+	if c.Alerts != nil || (c.Unlock != nil && c.Unlock.Has(AlertsID)) {
+		ac := AlertsConfig{}
+		if c.Alerts != nil {
+			ac = *c.Alerts
+		}
+		h := c.Hub
+		al, err := NewAlerts(f.Unlocks, ac, func() float64 { return h.rel(h.cfg.Clock.Now()) }, func() string { return strings.ToLower(h.heroNow().Class) })
+		if err != nil {
+			return nil, err
+		}
+		if f.Proposals != nil {
+			al.proposals = func() []decide.Proposal {
+				var out []decide.Proposal
+				for _, p := range f.Proposals.View().Pending {
+					out = append(out, p.Proposal)
+				}
+				return out
+			}
+		}
+		al.incidents = func() []JournalLine { return h.Journal(0, "incident").Lines }
+		f.Alerts = al
+	}
 	if c.Policy != nil {
 		h := c.Hub
 		ps, err := NewPolicySheet(h.cfg.Store, h.cfg.Cat, c.Policy.Table, func() string { return strings.ToLower(h.heroNow().Class) },
@@ -349,6 +376,9 @@ func (f *Fun) OnGoalEvent(ev goals.Event) {
 	}
 	if f.Bestiary != nil {
 		f.Bestiary.OnGoalEvent(ev)
+	}
+	if f.Alerts != nil {
+		f.Alerts.OnGoalEvent(ev)
 	}
 	if f.codex == nil {
 		return
@@ -469,6 +499,9 @@ func (f *Fun) Settle() {
 	if f.Proposals != nil {
 		f.Proposals.Tick()
 	}
+	if f.Alerts != nil {
+		f.Alerts.Tick()
+	}
 	if f.Risk != nil {
 		f.Risk.Tick()
 	}
@@ -533,6 +566,10 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Atlas != nil {
 		m.Handle(AtlasRoute, f.Atlas.Handler())
+	}
+	if f.Alerts != nil {
+		m.Handle(AlertsRoute, f.Alerts.Handler())
+		m.Handle(AlertsUIRoute, alertsUIHandler())
 	}
 	if f.Reveal != nil {
 		m.Handle(RevealRoute, f.Reveal.Handler())

@@ -17,8 +17,17 @@ card: "unlockalerts"
 owns:
   - "internal/watch/unlockalerts.go"
   - "internal/watch/unlockalerts_test.go"
+  - "internal/watch/web/alerts.js"
+  - "internal/watch/testdata/alerts-*.json"
+  - "data/alerts/"
+  - "docs/unlock-alerts.md"
+  - "internal/watch/funwire.go"
+  - "internal/watch/web/watch.html"
+  - "internal/watch/web/app.css"
+  - "data/unlocks/ladder.json"
 exclusive: []
 contracts: []
+result: "Built and tested offline (go test ./internal/watch ./internal/unlock ./cmd/d2bot; rules table, cooldowns and filters, golden payloads for Sorceress and Paladin, token gates, senders against httptest only); not verified live or in a real browser. Owns widened to funwire.go, web/, data/alerts, ladder row alerts. Outbound senders exist but are OFF by default and nothing reads a profile file into them yet. Low-life has no emitter. See docs/unlock-alerts.md."
 ---
 
 ## Description
