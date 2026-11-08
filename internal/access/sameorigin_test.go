@@ -25,6 +25,7 @@ func TestSameOrigin(t *testing.T) {
 		{"no origin foreign referer", map[string]string{"Referer": "http://evil.example/"}, host, false},
 		{"no origin same referer", map[string]string{"Referer": "http://orion.lan.birbhub.com:8891/"}, host, true},
 		{"sfs same-origin + null", map[string]string{"Origin": "null", "Sec-Fetch-Site": "same-origin"}, host, true},
+		{"firefox: Origin null + Sec-Fetch-Site same-origin, no Referer", map[string]string{"Origin": "null", "Sec-Fetch-Site": "same-origin"}, host, true},
 		{"sfs none", map[string]string{"Sec-Fetch-Site": "none"}, host, true},
 		{"sfs cross-site", map[string]string{"Sec-Fetch-Site": "cross-site"}, host, false},
 		{"sfs same-site", map[string]string{"Sec-Fetch-Site": "same-site"}, host, false},
