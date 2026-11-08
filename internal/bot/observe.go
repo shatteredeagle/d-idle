@@ -172,8 +172,17 @@ type aliveInfo struct {
 func isDead(p *d2.Player) bool { return p != nil && combat.IsDead(p) }
 
 // poll takes a snapshot, derives events and feeds the watchdog. It returns nil while loading or when the read failed.
-func (r *Runner) poll() *d2.Snapshot {
-	snap, err := r.d.Snapshot()
+func (r *Runner) poll() *d2.Snapshot { return r.pollWith(false) }
+
+// pollWith is poll; reuse lets the safety guard take a snapshot a walker just read (guardPollReuse).
+func (r *Runner) pollWith(reuse bool) *d2.Snapshot {
+	var snap *d2.Snapshot
+	var err error
+	if reuse {
+		snap, err = r.guardSnapshot()
+	} else {
+		snap, err = r.d.Snapshot()
+	}
 	now := r.e.Clock.Now()
 	r.obMu.Lock()
 	defer r.obMu.Unlock()
@@ -1102,4 +1111,24 @@ func (r *Runner) tpDiag(s *d2.Snapshot) (tp, tpBuy int) {
 	}
 	r.tpBuyMin = tpBuy
 	return tp, tpBuy
+}
+
+// recentReader is implemented by the d2d reader: the last full snapshot when it is younger than maxAge.
+type recentReader interface {
+	Recent(maxAge time.Duration) (*d2.Snapshot, bool)
+}
+
+// guardPollReuse: a poll that finds a snapshot this young (the walker or the fighter just read one) uses it instead of
+// queueing another full read on the d2d channel. One read costs a few hundred ms there (V live, WALKSMOOTH2: the guard
+// alone kept about 2 reads per second in flight and doubled the walker's observe time). Safety reacts 150 ms later at
+// worst, below the guard's own poll period.
+const guardPollReuse = 150 * time.Millisecond
+
+func (r *Runner) guardSnapshot() (*d2.Snapshot, error) {
+	if rr, ok := r.e.Read.(recentReader); ok && r.d.Snapshot != nil {
+		if s, ok := rr.Recent(guardPollReuse); ok {
+			return s, nil
+		}
+	}
+	return r.d.Snapshot()
 }
