@@ -31,6 +31,9 @@ type Limits struct {
 	SafeMinutes   int `json:"safe_minutes"`   // Pacts stay off for this many minutes of a hero's life ... (U, design note section 7)
 	SafeClvl      int `json:"safe_clvl"`      // ... and below this clvl; both must be over (whichever is later)
 	ConsentDays   int `json:"consent_days"`   // an away-consent ends after this many days (U, section 5)
+	// Optional (0 = the default in away.go): minutes a viewer counts as present, and the life percent under which Pacts pause.
+	PresenceMin  int `json:"presence_min,omitempty"`
+	LifeFloorPct int `json:"life_floor_pct,omitempty"`
 }
 
 // Params is what a rank changes. Row and Option name a policy sheet option; Knobs are tuner overrides; Values are the

@@ -2,6 +2,9 @@ package main
 
 import (
 	"context"
+	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/pact"
+	"errors"
 	"strings"
 	"testing"
 
@@ -37,5 +40,44 @@ func TestPactRefsNameTheMissingRow(t *testing.T) {
 	}
 	if err := r.Option("nosuchrow", "x"); err == nil || !strings.Contains(err.Error(), "nosuchrow") {
 		t.Errorf("unknown row: %v", err)
+	}
+}
+
+// The desk behind /api/pacts: consent needs the chosen rank and the typed name; Hardcore has its own typed name (the
+// hero's) and activation is refused, for two classes.
+func TestPactDeskConsentAndHardcore(t *testing.T) {
+	for _, class := range []string{"sorceress", "paladin"} {
+		cat, err := pact.Shipped(pact.Refs{})
+		if err != nil {
+			t.Fatal(err)
+		}
+		ctl, err := pact.New(pact.Config{Cat: cat, Class: class})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if err := ctl.Select([]pact.Pick{{ID: "blood_ravens_tithe", Rank: 1}}); err != nil {
+			t.Fatal(err)
+		}
+		hc, _ := pact.OpenHardcore("", nil)
+		d := &pactDesk{ctl: ctl, hc: hc}
+		d.setHero(goals.Character{Name: "Zed", Class: class, Difficulty: "Nightmare"})
+		if err := d.Consent("blood_ravens_tithe", 3, 4, "Blood Raven's Tithe"); err == nil {
+			t.Errorf("%s: wrong rank accepted", class)
+		}
+		if err := d.Consent("blood_ravens_tithe", 1, 4, "Zed"); err == nil {
+			t.Errorf("%s: the hero's name consented a Pact", class)
+		}
+		if err := d.Consent("blood_ravens_tithe", 1, 4, "Blood Raven's Tithe"); err != nil {
+			t.Errorf("%s: %v", class, err)
+		}
+		if err := d.HardcoreConfirm("Blood Raven's Tithe"); err == nil {
+			t.Errorf("%s: a Pact name confirmed hardcore", class)
+		}
+		if err := d.HardcoreConfirm("zed"); err != nil {
+			t.Errorf("%s: %v", class, err)
+		}
+		if err := d.HardcoreActivate(); !errors.Is(err, watch.ErrPactInactive) {
+			t.Errorf("%s: activate: %v", class, err)
+		}
 	}
 }
