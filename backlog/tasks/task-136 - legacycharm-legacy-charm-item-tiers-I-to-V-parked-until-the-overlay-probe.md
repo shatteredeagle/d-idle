@@ -29,6 +29,7 @@ contracts: []
 Size: M
 
 Why: ADR 0018 item 7, fun-ideas.md section 13 later. Parked: starts only after the overlay probe proves the charm row in d2d (TASK-59) and the user approves game.exe use. Permanent stat points, +skills, XP bonuses, level head starts and inherited uniques are never built. Done when: the criteria below hold.
+Amendment 2026-11-07 (class generic, classcharm): charm tiers are per-class data (life, mana, MF, resists, potion rows); melee classes (Barbarian, Paladin) get mana 0 and +life/+resists/damage/defense instead; Tier I with 2 Minor Healing suits every class. Source: docs/research/class-early-game.md section 8 (EXP). The tier data file is part of this card; no separate classcharm card.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
