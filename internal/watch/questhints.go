@@ -320,12 +320,16 @@ func (q *QuestHints) isTown(ev goals.Event) bool {
 func (q *QuestHints) OnGoalEvent(ev goals.Event) {
 	switch ev.Type {
 	case goals.EvQuest:
-		if ev.Diff != 0 || ev.Stage < 1 {
+		stage := ev.Stage
+		if ev.Done {
+			stage = len(questStages)
+		}
+		if ev.Diff != 0 || stage < 1 {
 			return
 		}
 		q.mu.Lock()
-		if ev.Stage > q.f.Stage[ev.Quest] {
-			q.f.Stage[ev.Quest] = ev.Stage
+		if stage > q.f.Stage[ev.Quest] {
+			q.f.Stage[ev.Quest] = stage
 			q.saveLocked()
 		}
 		q.mu.Unlock()
