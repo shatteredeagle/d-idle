@@ -101,6 +101,11 @@ func NewWizard(data, game string, t *Tables, ex Extractor) (*Wizard, error) {
 	if w.saved.Schema == 0 {
 		w.saved.Schema = schema
 	}
+	if w.saved.Phase != "done" && w.saved.Class != "" {
+		if _, err := t.Class(w.saved.Class); err != nil {
+			return nil, fmt.Errorf("%s: %w (edit or delete it)", stateFile, err)
+		}
+	}
 	return w, nil
 }
 
@@ -294,9 +299,6 @@ func (w *Wizard) SetInputs(in Inputs) error {
 	c, err := w.Tables.Class(in.Class)
 	if err != nil {
 		return err
-	}
-	if !c.Supported {
-		return fmt.Errorf("%s is not supported in this build", c.Name)
 	}
 	if _, err := w.Tables.Preset(in.Goals); err != nil {
 		return err

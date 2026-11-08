@@ -5,9 +5,11 @@ import (
 	_ "embed"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"strings"
 
 	"d2lod-bot/internal/fleet"
+	"d2lod-bot/internal/plandata"
 )
 
 // The tables are data (AGENTS.md build flexibility): file set, classes and goal presets are not in Go code.
@@ -27,11 +29,15 @@ type FileSpec struct {
 	Why       string `json:"why"`
 }
 
+// Class is a wizard choice. Table and Note are filled from the plan tables (see wizardclass.go), never from tables.json;
+// a "supported" key in the file is ignored.
 type Class struct {
 	ID        string `json:"id"`
 	Name      string `json:"name"`
 	D2DIndex  int    `json:"d2d_index"`
 	Supported bool   `json:"supported"`
+	Table     string `json:"table,omitempty"` // "normal30" or "fallback"
+	Note      string `json:"note,omitempty"`
 }
 
 type Preset struct {
@@ -49,21 +55,27 @@ type Tables struct {
 	DefaultPreset string     `json:"default_preset"`
 }
 
-// LoadTables decodes and validates a table set. Unknown fields, an unknown default or an unsupported default
-// class are errors that name the offender.
-func LoadTables(raw []byte) (*Tables, error) {
+// LoadTables is LoadTablesWith over the embedded plan tables.
+func LoadTables(raw []byte) (*Tables, error) { return LoadTablesWith(raw, plandata.FS) }
+
+// LoadTablesWith decodes and validates a table set. The class list is the file's catalog (names, d2d UI index)
+// narrowed to the classes the plan tables can level (wizardclass.go); a class with no table is dropped, so choosing it is
+// an "unknown class" error. Unknown fields, an unknown default or a default without a table are errors that name the
+// offender.
+func LoadTablesWith(raw []byte, plan fs.FS) (*Tables, error) {
 	var t Tables
 	dec := json.NewDecoder(bytes.NewReader(raw))
 	dec.DisallowUnknownFields()
 	if err := dec.Decode(&t); err != nil {
 		return nil, fmt.Errorf("tables: %w", err)
 	}
-	c, err := t.Class(t.DefaultClass)
+	kinds, err := planTables(plan)
 	if err != nil {
-		return nil, fmt.Errorf("tables: default class: %w", err)
+		return nil, fmt.Errorf("tables: %w", err)
 	}
-	if !c.Supported {
-		return nil, fmt.Errorf("tables: default class %q is not supported", c.ID)
+	t.Classes = withPlan(t.Classes, kinds)
+	if _, err := t.Class(t.DefaultClass); err != nil {
+		return nil, fmt.Errorf("tables: default class (no leveling table?): %w", err)
 	}
 	if _, err := t.Preset(t.DefaultPreset); err != nil {
 		return nil, fmt.Errorf("tables: default preset: %w", err)

@@ -42,3 +42,4 @@ internal/gear/stamp.json
 
 # generated, never committed (TASK-116): python3 -I tools/backlog/cards_md.py --write
 /docs/cards.md
+cmd/d2dsetup/d2dsetup
