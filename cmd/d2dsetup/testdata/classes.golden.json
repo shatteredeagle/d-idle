@@ -4,8 +4,7 @@
   "name": "Sorceress",
   "d2d_index": 4,
   "supported": true,
-  "table": "fallback",
-  "note": "Plays the older fallback leveling table (Lightning) until a normal30 table exists for this class."
+  "table": "normal30"
  },
  {
   "id": "barbarian",

@@ -90,7 +90,7 @@ func TestPaladinPreselectedSorceressFallbackNote(t *testing.T) {
 			sorc = c
 		}
 	}
-	if sorc.Table != "fallback" || !strings.Contains(sorc.Note, "fallback") {
+	if sorc.Table != "normal30" || sorc.Note != "" {
 		t.Errorf("sorceress %+v", sorc)
 	}
 }
