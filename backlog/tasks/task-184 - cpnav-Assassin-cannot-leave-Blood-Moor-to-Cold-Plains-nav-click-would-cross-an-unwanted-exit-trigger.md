@@ -15,6 +15,9 @@ ordinal: 153000
 card: "cpnav"
 owns:
   - "docs/soaks/cpnav.md"
+  - "internal/nav/nav.go"
+  - "internal/nav/portal_exit_test.go"
+  - "docs/probes/test-characters.md"
 exclusive: []
 contracts: []
 ---
@@ -29,5 +32,7 @@ Evidence: bot-ass1 line 'leveling area unreachable ... nav: click {81 344}: nav:
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Fresh Assassin reaches Cold Plains from Blood Moor without 'leveling area unreachable'
+- [x] #1 Fresh Assassin reaches Cold Plains from Blood Moor without 'leveling area unreachable'
 <!-- AC:END -->
+
+result: fixed and verified live (docs/soaks/cpnav.md): planner exit penalty radius now mouthTriggerR+3; the Assassin drill (seed 7) reaches Cold Plains at clvl 5 with no unwanted-exit refusal. Other classes not re-run live.

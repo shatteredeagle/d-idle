@@ -1,0 +1,2 @@
+BACKLOG: TASK-184 cpnav: planner exit penalty radius raised above the mouth gate radius; Assassin reaches Cold Plains (V live, docs/soaks/cpnav.md)
+CHANGELOG: nav: exit penalty radius now exceeds the mouth gate radius, fixing 'leveling area unreachable' on corridors near an unwanted exit (cpnav)
