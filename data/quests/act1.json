@@ -98,7 +98,7 @@
    "stages": {
     "started": {
      "objective": "Kill the Countess at the Forgotten Tower.",
-     "why": "The way to the lower levels runs through the Tower and its mistress."
+     "why": "The way to the lower levels runs through the Forgotten Tower and its mistress."
     },
     "cleared": {
      "objective": "Collect your due.",
@@ -106,7 +106,7 @@
     },
     "done": {
      "objective": "Done.",
-     "why": "The Tower is quiet."
+     "why": "The place is quiet at last."
     }
    }
   },
