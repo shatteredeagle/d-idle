@@ -1,10 +1,13 @@
 ---
 id: TASK-175
-title: 'palmelee: Paladin lands no hit in lockstep d2d (0 kills in 11 virtual hours); realtime kills slowly'
-status: Proposed
+title: >-
+  palmelee: Paladin lands no hit in lockstep d2d (0 kills in 11 virtual hours);
+  realtime kills slowly
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:59:00Z'
+updated_date: '2026-11-08T05:25:00Z'
 labels:
   - bot
   - bug
