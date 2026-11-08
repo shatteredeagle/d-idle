@@ -1,3 +1,0 @@
-BACKLOG: TASK-157 unlockidreveal: identify reveal cards (face down, flip, colour and sound) on the unlock ladder; affixes need a reader that does not exist (offline tests, not live).
-INDEX: docs/unlock-idreveal.md - Identify reveal: face-down cards for magic and rare finds, flip to reveal, what the bot does with unidentified items (TASK-157)
-CHANGELOG: Watch page: magic and rare finds arrive as face-down cards; flip one to see its quality, colour and a sound.

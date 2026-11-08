@@ -843,3 +843,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
 - docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
 - docs/unlock-questlog.md - Quest log: Act 1 quests with objective and reason, from the existing quest events (TASK-156)
+- docs/unlock-idreveal.md - Identify reveal: face-down cards for magic and rare finds, flip to reveal, what the bot does with unidentified items (TASK-157)
