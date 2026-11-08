@@ -684,6 +684,7 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))
+		m.Handle(PolicyPreviewRoute, f.Policy.PolicyPreviewHandler(o))
 	}
 	return m
 }

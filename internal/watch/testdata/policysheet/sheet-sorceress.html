@@ -27,6 +27,7 @@
 <span class="badge">your call</span> <span class="hint">Gear wears out; defence and damage fall until it breaks.</span>
 
 </div></div>
+<div class="preview" data-preview="repair" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="restock" aria-labelledby="row-restock"><h2 id="row-restock">Spend spare gold on belt potions</h2><p>Whether a trip with little gold still tops up the belt before buying scrolls.</p>
 <div class="opts"><div class="opt cur">
@@ -42,6 +43,7 @@
 <span class="badge">your call</span> <span class="hint">The belt stays thin after a poor trip.</span>
 
 </div></div>
+<div class="preview" data-preview="restock" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="town" aria-labelledby="row-town"><h2 id="row-town">When to go to town</h2><p>What sends the hero home on its own: a full pack, a thin belt, or nothing.</p>
 <div class="opts"><div class="opt cur">
@@ -61,6 +63,7 @@
 <span class="badge">your call</span> <span class="hint">The pack fills and the belt empties; only a death or an order brings the hero home.</span>
 
 </div></div>
+<div class="preview" data-preview="town" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="return" aria-labelledby="row-return"><h2 id="row-return">Leaving town</h2><p>Whether the hero goes back out after a town visit.</p>
 <div class="opts"><div class="opt cur">
@@ -76,6 +79,7 @@
 <span class="badge">your call</span> <span class="hint">The hero stops farming until the restock limit lets it out.</span>
 <span class="badge">partly wired</span> <span class="hint">A &#39;no&#39; becomes a restock round, bounded by the gate&#39;s restock limit (docs/t0-slice.md).</span>
 </div></div>
+<div class="preview" data-preview="return" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="tp" aria-labelledby="row-tp"><h2 id="row-tp">A lost town portal scroll</h2><p>Buy a scroll when there is none, or walk back.</p>
 <div class="opts"><div class="opt cur">
@@ -91,6 +95,7 @@
 <span class="badge">your call</span> <span class="hint">Long, dangerous walks, especially from boss areas.</span>
 
 </div></div>
+<div class="preview" data-preview="tp" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="tpreserve" aria-labelledby="row-tpreserve"><h2 id="row-tpreserve">Town portal scroll reserve</h2><p>How many scrolls a poor hero buys once it has its minimal healing kit.</p>
 <div class="opts"><div class="opt cur">
@@ -106,6 +111,7 @@
 <span class="badge">your call</span> <span class="hint">A dive can start with the only scroll spent.</span>
 
 </div></div>
+<div class="preview" data-preview="tpreserve" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="retreat" aria-labelledby="row-retreat"><h2 id="row-retreat">When life is low</h2><p>What the hero does at low life when the survival step found nothing to drink. The usual potion drinking comes first and does not change.</p>
 <div class="opts"><div class="opt cur">
@@ -121,6 +127,7 @@
 <span class="badge">your call</span> <span class="hint">Death risk rises sharply under 25 percent life.</span>
 <span class="badge">partly wired</span> <span class="hint">Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md).</span>
 </div></div>
+<div class="preview" data-preview="retreat" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="potionmix" aria-labelledby="row-potionmix"><h2 id="row-potionmix">Potion mix</h2><p>What the four belt columns hold, so what the hero buys and refills in town. The default is the build&#39;s own plan (casters about half mana, a Barbarian no mana). Rejuvenation columns buy healing until the shop sells rejuvenation. docs/belt-plan.md.</p>
 <div class="opts"><div class="opt cur">
@@ -152,6 +159,7 @@
 <span class="badge">your call</span> <span class="hint">Expensive, and early on the shop does not sell it, so the belt stays empty.</span>
 
 </div></div>
+<div class="preview" data-preview="potionmix" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="potiontier" aria-labelledby="row-potiontier"><h2 id="row-potiontier">Which potions to buy</h2><p>Best affordable potions, or the cheapest that are enough.</p>
 <div class="opts"><div class="opt cur">
@@ -163,6 +171,7 @@
 <span class="badge">your call</span> <span class="hint">Weak potions heal little; more drinks and more deaths in a hard fight.</span>
 <span class="badge">not wired yet</span> <span class="hint">The bot does not ask this point yet (docs/t0-slice.md); the choice is stored for when it does.</span>
 </div></div>
+<div class="preview" data-preview="potiontier" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="belt" aria-labelledby="row-belt"><h2 id="row-belt">Belt fill</h2><p>How full each column of the belt plan (see Potion mix) is refilled in town.</p>
 <div class="opts"><div class="opt cur">
@@ -178,6 +187,7 @@
 <span class="badge">your call</span> <span class="hint">The belt is nearly empty after every visit.</span>
 
 </div></div>
+<div class="preview" data-preview="belt" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="whites" aria-labelledby="row-whites"><h2 id="row-whites">Pick up plain (white) items</h2><p>How much loot the hero walks to: only keepers, or also what sells.</p>
 <div class="opts"><div class="opt cur">
@@ -193,6 +203,7 @@
 <span class="badge">your call</span> <span class="hint">Leaves the gold that white items would sell for.</span>
 
 </div></div>
+<div class="preview" data-preview="whites" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="sell" aria-labelledby="row-sell"><h2 id="row-sell">Sell junk in town</h2><p>Whether the hero sells what the pickit rates as sell.</p>
 <div class="opts"><div class="opt cur">
@@ -204,6 +215,7 @@
 <span class="badge">your call</span> <span class="hint">The pack and the stash fill; the hero stops picking up.</span>
 
 </div></div>
+<div class="preview" data-preview="sell" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="identify" aria-labelledby="row-identify"><h2 id="row-identify">Identify items</h2><p>Scrolls for the items that matter, every item, or nothing.</p>
 <div class="opts"><div class="opt cur">
@@ -219,6 +231,7 @@
 <span class="badge">your call</span> <span class="hint">Unidentified finds sell cheap and their worth is never seen.</span>
 <span class="badge">partly wired</span> <span class="hint">The bot does not ask t1.identify yet; only the scroll knob acts (docs/t0-slice.md).</span>
 </div></div>
+<div class="preview" data-preview="identify" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="stash" aria-labelledby="row-stash"><h2 id="row-stash">A full stash</h2><p>Sell the surplus, drop it, or pause.</p>
 <div class="opts"><div class="opt cur">
@@ -234,6 +247,7 @@
 <span class="badge">your call</span> <span class="hint">The hero idles with a full stash.</span>
 <span class="badge">not wired yet</span> <span class="hint">The bot does not ask t1.stash.full yet (docs/t0-slice.md).</span>
 </div></div>
+<div class="preview" data-preview="stash" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="stance" aria-labelledby="row-stance"><h2 id="row-stance">How boldly the hero fights</h2><p>How far the hero notices and chases monsters and how early it backs off. It moves existing fight settings together: how far away a monster is noticed, how long a chase lasts, the life lines for potions and for leaving the game, extra care against champions, and when the potion count sends the hero to town. A melee hero and a caster get different numbers for the same stance (sheet: Knobs).</p>
 <div class="opts"><div class="opt">
@@ -249,6 +263,7 @@
 <span class="hint">Aggressive: goes after monsters from farther away (about 8 tiles for a melee hero, 7 for a caster), chases longer, drinks at 50 percent life, leaves the game at 22 percent (20 for a caster), takes less extra care with champions and goes to town only when 1 healing potion is left. A melee hero starts here: it has to walk up to its target.</span>
 
 </div></div>
+<div class="preview" data-preview="stance" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section><section class="card" data-row="questhints" aria-labelledby="row-questhints"><h2 id="row-questhints">How I handle quests in town</h2><p>When the hero walks into town it looks at the people who give quests. Hints: it says out loud which quest giver it should visit (when it feels strong enough) or why it is not ready yet. It never changes which quest the campaign works on next. Hints and ask me: the same, and it also asks you the two quest questions it cannot settle alone (which kind of item Charsi should imbue, and whether to do the long Search for Cain chain).</p>
 <div class="opts"><div class="opt cur">
@@ -264,6 +279,7 @@
 <span class="hint">Hints and ask me: the same hints, and two questions in the feed: what kind of item Charsi should imbue, and whether to do the Search for Cain chain now. The answers are kept; the campaign plan does not read them yet.</span>
 
 </div></div>
+<div class="preview" data-preview="questhints" hidden></div>
 <p class="hint">Not changed. This row follows today&#39;s behaviour.</p>
 </section>
 </main>

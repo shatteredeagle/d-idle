@@ -1,0 +1,96 @@
+[
+ {
+  "schema": "decide.policy.preview/1",
+  "row": "stance",
+  "from": "default",
+  "to": "cautious",
+  "supported": true,
+  "enough": true,
+  "window": {
+   "seconds": 1000,
+   "events": 15
+  },
+  "lines": [
+   {
+    "key": "leave",
+    "text": "The hero would have retreated at 35% instead of 25%: 2 of the 10 fights dipped into that band and would have ended in a retreat.",
+    "delta": 2,
+    "based": 10,
+    "basis": "based on 10 fights in the last 17 minutes",
+    "confidence": "medium",
+    "bound": "at least"
+   },
+   {
+    "key": "drink",
+    "text": "The hero would have drunk at 65% instead of 55%: at least 2 more fights with a potion (potions drunk in the window: 1; one fight can use several).",
+    "delta": 2,
+    "based": 10,
+    "basis": "based on 10 fights in the last 17 minutes",
+    "confidence": "medium",
+    "bound": "at least"
+   }
+  ],
+  "filtered": [],
+  "filteredTotal": 0,
+  "notes": [
+   "Deaths, kills and questions asked are not previewed: the log cannot say what would have happened after a different decision."
+  ]
+ },
+ {
+  "schema": "decide.policy.preview/1",
+  "row": "whites",
+  "from": "default",
+  "to": "keepers",
+  "supported": true,
+  "enough": true,
+  "window": {
+   "seconds": 1000,
+   "events": 15
+  },
+  "lines": [
+   {
+    "key": "pickups",
+    "text": "Up to 2 of the 4 recorded pickups would have stayed on the ground. Nothing is dropped silently: they are listed below.",
+    "delta": -2,
+    "based": 4,
+    "basis": "based on 4 pickups in the last 17 minutes",
+    "confidence": "low",
+    "bound": "at most"
+   }
+  ],
+  "filtered": [
+   {
+    "item": "Cap",
+    "quality": "normal",
+    "t": 610,
+    "why": "normal quality: strictness 2 no longer picks it up (the pickit may still have kept it)"
+   },
+   {
+    "item": "Short Sword",
+    "quality": "normal",
+    "t": 600,
+    "why": "normal quality: strictness 2 no longer picks it up (the pickit may still have kept it)"
+   }
+  ],
+  "filteredTotal": 2,
+  "notes": [
+   "What a merchant would have paid for these items is not previewed: no sell or gold event is recorded."
+  ]
+ },
+ {
+  "schema": "decide.policy.preview/1",
+  "row": "sell",
+  "from": "default",
+  "to": "keep",
+  "supported": false,
+  "enough": false,
+  "reason": "no preview for this row yet: no sell or gold event is recorded, so what would have been sold cannot be counted (the white pickups of the loot row are previewed instead)",
+  "window": {
+   "seconds": 1000,
+   "events": 15
+  },
+  "lines": [],
+  "filtered": [],
+  "filteredTotal": 0
+ }
+]
