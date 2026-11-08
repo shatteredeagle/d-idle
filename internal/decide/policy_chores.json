@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "rows": [
+    {"id": "repair", "label": "Repair gear", "default": "default",
+     "help": "When the hero repairs its gear in town. Repair costs gold; broken gear stops protecting.",
+     "options": [
+       {"id": "default", "label": "Repair under 30 percent durability (today's rule)"},
+       {"id": "low", "label": "Repair only under 20 percent", "rules": [{"point": "t1.repair", "when": {"durability": "lt20"}, "answer": "repair"}, {"point": "t1.repair", "answer": "skip"}]},
+       {"id": "always", "label": "Repair every town visit", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}]},
+       {"id": "never", "label": "Never repair", "suboptimal": true, "risk": "Gear wears out; defence and damage fall until it breaks.", "rules": [{"point": "t1.repair", "answer": "skip"}]}
+     ],
+     "effect": [{"counter": "repairs", "label": "repairs"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
+
+    {"id": "restock", "label": "Spend spare gold on belt potions", "default": "default",
+     "help": "Whether a trip with little gold still tops up the belt before buying scrolls.",
+     "options": [
+       {"id": "default", "label": "Top up when the trip has the gold (today's rule)"},
+       {"id": "always", "label": "Always top up the belt first", "rules": [{"point": "t1.restock", "answer": "yes"}]},
+       {"id": "never", "label": "Never top up on a poor trip", "suboptimal": true, "risk": "The belt stays thin after a poor trip.", "rules": [{"point": "t1.restock", "answer": "no"}]}
+     ],
+     "effect": [{"counter": "potions", "label": "potions drunk"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
+
+    {"id": "town", "label": "When to go to town", "default": "default",
+     "help": "What sends the hero home on its own: a full pack, a thin belt, or nothing.",
+     "options": [
+       {"id": "default", "label": "Resource rule: pack at 80 percent or a thin belt (today's rule)"},
+       {"id": "early", "label": "Go early: half belt or pack at 80 percent", "rules": [{"point": "t1.town.trigger", "when": {"belt": "half|low"}, "answer": "go"}, {"point": "t1.town.trigger", "when": {"packused": "ge80"}, "answer": "go"}, {"point": "t1.town.trigger", "answer": "continue"}]},
+       {"id": "pack", "label": "Only when the pack is full", "suboptimal": true, "risk": "The belt can run dry far from town.", "rules": [{"point": "t1.town.trigger", "when": {"packused": "ge80"}, "answer": "go"}, {"point": "t1.town.trigger", "answer": "continue"}]},
+       {"id": "never", "label": "Never on its own", "suboptimal": true, "risk": "The pack fills and the belt empties; only a death or an order brings the hero home.", "rules": [{"point": "t1.town.trigger", "answer": "continue"}]}
+     ],
+     "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "kills", "label": "kills"}, {"counter": "deaths", "label": "deaths"}]},
+
+    {"id": "return", "label": "Leaving town", "default": "default",
+     "help": "Whether the hero goes back out after a town visit.",
+     "options": [
+       {"id": "default", "label": "Go back out when the field gate allows (today's rule)"},
+       {"id": "fullkit", "label": "Wait in town until the kit is full", "rules": [{"point": "t1.return", "when": {"kit": "THIN|NONE"}, "answer": "no"}],
+        "applies": "part", "note": "A 'no' becomes a restock round, bounded by the gate's restock limit; a 'yes' never lifts a refusal (docs/t0-slice.md)."},
+       {"id": "stay", "label": "Stay in town (restock rounds only)", "suboptimal": true, "risk": "The hero stops farming until the restock limit lets it out.", "rules": [{"point": "t1.return", "answer": "no"}],
+        "applies": "part", "note": "A 'no' becomes a restock round, bounded by the gate's restock limit (docs/t0-slice.md)."}
+     ],
+     "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "kills", "label": "kills"}, {"counter": "deaths", "label": "deaths"}]},
+
+    {"id": "tp", "label": "A lost town portal scroll", "default": "default",
+     "help": "Buy a scroll when there is none, or walk back.",
+     "options": [
+       {"id": "default", "label": "Buy one when gold allows (today's rule)"},
+       {"id": "buy", "label": "Always buy one", "rules": [{"point": "t1.tp.lost", "answer": "buy"}]},
+       {"id": "walk", "label": "Always walk back", "suboptimal": true, "risk": "Long, dangerous walks, especially from boss areas.", "rules": [{"point": "t1.tp.lost", "answer": "walk"}]}
+     ],
+     "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "deaths", "label": "deaths"}]},
+
+    {"id": "tpreserve", "label": "Town portal scroll reserve", "default": "default",
+     "help": "How many scrolls a poor hero buys once it has its minimal healing kit.",
+     "options": [
+       {"id": "default", "label": "Two scrolls (today's rule)"},
+       {"id": "three", "label": "Three scrolls", "knobs": {"town.tpReserve": 3}},
+       {"id": "one", "label": "One scroll", "suboptimal": true, "risk": "A dive can start with the only scroll spent.", "knobs": {"town.tpReserve": 1}}
+     ],
+     "effect": [{"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "deaths", "label": "deaths"}]},
+
+    {"id": "retreat", "label": "When life is low", "default": "default",
+     "help": "What the hero does at low life when the survival step found nothing to drink. The usual potion drinking comes first and does not change.",
+     "options": [
+       {"id": "default", "label": "Today's rule (drink, then portal or leave by life and kit)"},
+       {"id": "early", "label": "Portal out early when no potion is held", "rules": [{"point": "t0.retreat.drink", "when": {"drinklife": "26-49|50-54|55-64", "held": "none"}, "answer": "portal"}],
+        "applies": "part", "note": "Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md)."},
+       {"id": "bold", "label": "Keep fighting down to 18 percent", "suboptimal": true, "risk": "Death risk rises sharply under 25 percent life.", "rules": [{"point": "t0.retreat.drink", "when": {"drinklife": "18-25"}, "answer": "fight"}],
+        "applies": "part", "note": "Acts at the abort step only; the stage-2 urgency key does not carry the life band (U, docs/t0-slice.md)."}
+     ],
+     "effect": [{"counter": "deaths", "label": "deaths"}, {"counter": "closecalls", "label": "close calls"}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
+
+    {"id": "potionmix", "label": "Potion mix", "default": "default",
+     "help": "Which potions the hero relies on. The belt columns follow the build; these options move the drink lines.",
+     "options": [
+       {"id": "default", "label": "The build's mix (today's rule)"},
+       {"id": "allmana", "label": "Mana potions first", "suboptimal": true, "risk": "Few healing potions are drunk; deaths with a full mana belt.", "knobs": {"combat.drinkLifePct": 35},
+        "applies": "record", "note": "Only the healing drink line moves (to its lowest value). No bot path buys an all-mana belt yet (the belt plan is code, docs/sme/potion-policy.md); a bot card is needed."},
+       {"id": "allhealth", "label": "Healing potions only", "suboptimal": true, "risk": "Casters run dry of mana and fight with the cheap attack.", "knobs": {"combat.drinkManaPct": 5, "town.tripMinMPPotions": 0},
+        "applies": "part", "note": "Mana potions are not drunk or demanded, but the belt plan may still buy some (U)."}
+     ],
+     "effect": [{"counter": "potions_mana", "label": "mana potions drunk"}, {"counter": "potions_health", "label": "healing potions drunk"}, {"counter": "potions_rejuv", "label": "rejuvenation potions drunk"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
+
+    {"id": "potiontier", "label": "Which potions to buy", "default": "default",
+     "help": "Best affordable potions, or the cheapest that are enough.",
+     "options": [
+       {"id": "default", "label": "Best affordable (today's rule)"},
+       {"id": "cheapest", "label": "Cheapest sufficient", "suboptimal": true, "risk": "Weak potions heal little; more drinks and more deaths in a hard fight.", "rules": [{"point": "t1.potions.buy", "answer": "cheapest"}],
+        "applies": "record", "note": "The bot does not ask this point yet (docs/t0-slice.md); the choice is stored for when it does."}
+     ],
+     "effect": [{"counter": "potions", "label": "potions drunk"}, {"counter": "deaths", "label": "deaths"}]},
+
+    {"id": "belt", "label": "Belt fill", "default": "default",
+     "help": "How full each potion column is refilled in town.",
+     "options": [
+       {"id": "default", "label": "Fill every planned column (today's rule)"},
+       {"id": "half", "label": "Fill half of each column", "suboptimal": true, "risk": "Fewer potions per trip; more trips and thinner fights.", "knobs": {"town.beltFillPct": 50}},
+       {"id": "quarter", "label": "Fill a quarter of each column", "suboptimal": true, "risk": "The belt is nearly empty after every visit.", "knobs": {"town.beltFillPct": 25}}
+     ],
+     "effect": [{"counter": "potions", "label": "potions drunk"}, {"counter": "trips", "label": "town trips", "heuristic": true}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
+
+    {"id": "whites", "label": "Pick up plain (white) items", "default": "default",
+     "help": "How much loot the hero walks to: only keepers, or also what sells.",
+     "options": [
+       {"id": "default", "label": "Normal pickup (today's rule)"},
+       {"id": "sellable", "label": "Also pick up what sells", "suboptimal": true, "risk": "The pack fills with whites; more town trips.", "knobs": {"loot.pickStrictness": 0}},
+       {"id": "keepers", "label": "Keepers only", "suboptimal": true, "risk": "Leaves the gold that white items would sell for.", "knobs": {"loot.pickStrictness": 2}}
+     ],
+     "effect": [{"counter": "whites", "label": "white items picked up", "heuristic": true}, {"counter": "gold_in", "label": "gold gained"}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
+
+    {"id": "sell", "label": "Sell junk in town", "default": "default",
+     "help": "Whether the hero sells what the pickit rates as sell.",
+     "options": [
+       {"id": "default", "label": "Sell junk (today's rule)"},
+       {"id": "keep", "label": "Keep everything", "suboptimal": true, "risk": "The pack and the stash fill; the hero stops picking up.", "knobs": {"town.sellJunk": 0}}
+     ],
+     "effect": [{"counter": "gold_in", "label": "gold gained"}, {"counter": "trips", "label": "town trips", "heuristic": true}]},
+
+    {"id": "identify", "label": "Identify items", "default": "default",
+     "help": "Scrolls for the items that matter, every item, or nothing.",
+     "options": [
+       {"id": "default", "label": "Scroll for rare and better, leave magic items (today's rule)"},
+       {"id": "all", "label": "Scroll for every item", "rules": [{"point": "t1.identify", "answer": "scroll"}], "knobs": {"town.idScrollNeed": 0},
+        "applies": "part", "note": "The bot does not ask t1.identify yet; only the scroll knob acts (docs/t0-slice.md)."},
+       {"id": "none", "label": "Never identify", "suboptimal": true, "risk": "Unidentified finds sell cheap and their worth is never seen.", "rules": [{"point": "t1.identify", "answer": "leave"}], "knobs": {"town.idScrollTarget": 0},
+        "applies": "part", "note": "The bot does not ask t1.identify yet; only the scroll knob acts (docs/t0-slice.md)."}
+     ],
+     "effect": [{"counter": "drops", "label": "drops worth noting"}, {"counter": "gold_in", "label": "gold gained"}]},
+
+    {"id": "stash", "label": "A full stash", "default": "default",
+     "help": "Sell the surplus, drop it, or pause.",
+     "options": [
+       {"id": "default", "label": "Sell the surplus (today's rule)"},
+       {"id": "drop", "label": "Drop the surplus", "suboptimal": true, "risk": "Dropped items are gone for good.", "rules": [{"point": "t1.stash.full", "answer": "drop"}],
+        "applies": "record", "note": "The bot does not ask t1.stash.full yet (docs/t0-slice.md)."},
+       {"id": "pause", "label": "Pause until the player acts", "suboptimal": true, "risk": "The hero idles with a full stash.", "rules": [{"point": "t1.stash.full", "answer": "pause"}],
+        "applies": "record", "note": "The bot does not ask t1.stash.full yet (docs/t0-slice.md)."}
+     ],
+     "effect": [{"counter": "gold_in", "label": "gold gained"}, {"counter": "trips", "label": "town trips", "heuristic": true}]}
+  ]
+}

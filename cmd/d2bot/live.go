@@ -157,10 +157,12 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	if err := useFirsts(o.ladder, runner); err != nil {
 		return err
 	}
+	o.ladder.knobs = knobSetter(tuner)
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {
 		return err
 	}
+	defer lrig.StopRec()
 	useFun(lrig, runner, runID())
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {

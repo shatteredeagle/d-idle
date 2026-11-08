@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"d2lod-bot/internal/api"
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/data"
@@ -62,9 +63,9 @@ func runID() string {
 
 // newFun builds the fun loop for a running ladder: the tally strip when the profile has a d.idle wallet, the Codex when
 // the catalogue carries the firsts point (useFirsts), and the return screen over both.
-func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (*watch.Fun, error) {
+func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.Wallet, st *decide.Store, cat *decide.Catalogue, clk decide.Clock, notes watch.NotesSink) (*watch.Fun, error) {
 	run := runID()
-	cfg := watch.FunConfig{Hub: hub, Speed: 1}
+	cfg := watch.FunConfig{Hub: hub, Speed: 1, Notes: notes}
 	if stateDir != "" {
 		cfg.Visit = watch.NewVisit(filepath.Join(stateDir, "visit.json"), nil)
 	}
@@ -91,7 +92,24 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 			return decide.NewTracker(tbl, cat, st, cfg.Codex, clk, decide.Who{Class: class, Diff: "normal"})
 		}
 	}
-	return watch.NewFun(cfg)
+	pt, err := decide.ShippedPolicy(cat)
+	if err != nil {
+		return nil, err
+	}
+	cfg.Policy = &watch.PolicyConfig{Table: pt, Knobs: l.knobs}
+	f, err := watch.NewFun(cfg)
+	if err != nil {
+		return nil, err
+	}
+	if err := f.Policy.Reapply(); err != nil {
+		return nil, fmt.Errorf("policy sheet: %w", err)
+	}
+	return f, nil
+}
+
+// knobSetter is the policy sheet's knob path: the tuner's own edit (range checks, all or nothing, saved to tuning.json).
+func knobSetter(t *bot.Tuner) watch.KnobSetter {
+	return func(over map[string]*float64) error { return t.Edit(api.TuneEdit{Overrides: over}) }
 }
 
 func openCodex(stateDir, profile string) (*decide.Codex, error) {

@@ -583,6 +583,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-140 funwire: return screen, tally strip and Codex connected to the live bot (feedHub, Serve routes, charter on the order route, waypoint hook); end-to-end test on a real server for two builds
 - TASK-125 upstream PR #245 open (revive refill); merge pending
 - TASK-138 tester hero crawl: recovery stall rule and slow-field fresh game (docs/fresh-start-pace.md)
+- TASK-106 sessionrec: session record (session.jsonl, summary), decision dataset (decisions.jsonl, schema v1) with export, `d2bot play` launcher; offline fixtures only, live smoke pending
+- TASK-128 policysheet: chores policy sheet (14 rows as data, suboptimal choices allowed and flagged), changes through the decide store op policy and the tuner, effect lines on the sheet and before/after cards on the return screen; offline fixtures, not live; gaps in docs/policy-sheet.md
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
