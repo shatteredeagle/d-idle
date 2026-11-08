@@ -180,8 +180,12 @@ const auraRetryBackoff = 10 * time.Second
 // the picker open, so the aura is picked through the right skill popup (SetRight, read back from the state).
 func (f *Fighter) applyAura(ctx context.Context, snap *d2.Snapshot, want SkillSpec) error {
 	if f.D2D {
-		if err := f.SetRight(ctx, want.ID); err != nil && !errors.Is(err, ErrBindFailed) {
+		err := f.SetRight(ctx, want.ID)
+		if err != nil && !errors.Is(err, ErrBindFailed) {
 			return err
+		}
+		if err != nil {
+			f.info("aura popup pick failed", "err", err.Error(), "cells", len(f.popupCells(snap.Player, want.ID)), "rows", len(f.listRows))
 		}
 		return nil
 	}
