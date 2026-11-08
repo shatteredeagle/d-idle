@@ -1,1 +1,0 @@
-BACKLOG: TASK-186 and TASK-187: senses target from the fighter's attack target, Act 1 area names
