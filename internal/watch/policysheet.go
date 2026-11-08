@@ -745,6 +745,19 @@ document.addEventListener('click',function(e){var b=e.target.closest('button[dat
  .catch(function(){say('the answer route is not reachable');});});
 })();`
 
+// Now is the sheet's clock in seconds (the same one the counters use).
+func (p *PolicySheet) Now() float64 { return p.now() }
+
+// Counters is the counter text of a row over [from, to] seconds, for the Pact cards. ok is false for a row the table
+// lacks or one with no counters.
+func (p *PolicySheet) Counters(rowID string, from, to float64) (text string, ok bool) {
+	row, err := p.table.Row(rowID)
+	if err != nil || len(row.Effect) == 0 {
+		return "", false
+	}
+	return counterText(p.count(row, from, to)), true
+}
+
 // CurrentOption is the option now chosen for a row (the row default when never set); "" for a row the table lacks.
 func (p *PolicySheet) CurrentOption(rowID string) string {
 	row, err := p.table.Row(rowID)
