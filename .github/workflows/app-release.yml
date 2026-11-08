@@ -1,0 +1,124 @@
+# DRAFT, INERT. Self-update app release (docs/self-update-release.md, docs/research/self-update-design.md 3.2, 3.3).
+# Nothing here has ever run. It is inert on purpose:
+#   - the only trigger is workflow_dispatch (no push, no tag, no schedule);
+#   - every job needs the repository variable APP_RELEASE_ENABLED=true, which nobody sets until the steps in
+#     docs/self-update-release.md ("Turning it on", card TASK-124) are done;
+#   - the file holds no secret: the signing key is the environment secret D2SIGN_KEY of the environment
+#     `app-release`, which needs the user as required reviewer (a GitHub setting this file cannot create).
+# Warning: GitHub creates a missing environment on first use WITHOUT reviewers. Do not set the variable before the
+# environment, its reviewer, the secret and the tag rulesets exist.
+name: app-release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version x.y.z (tag app-v<version> must exist and be protected)"
+        required: true
+      seq:
+        description: "Monotonic release counter, greater than the last release"
+        required: true
+      notes:
+        description: "Short plain-text changelog"
+        required: true
+      d2d_tag:
+        description: "Tag of the public fork to build d2d from"
+        required: true
+        default: didle-gate2-lab3
+      dry_run:
+        description: "Build and sign, do not publish"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    if: ${{ vars.APP_RELEASE_ENABLED == 'true' && startsWith(github.ref, 'refs/tags/app-v') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.3"
+          cache: false
+      - uses: actions/checkout@v4
+        with:
+          repository: shatteredeagle/d2d-didle
+          ref: ${{ inputs.d2d_tag }}
+          path: d2d-src
+      - name: Build d2d from the public fork tag
+        # UNWRITTEN: reuse the d2d-build stage of deploy/d2d-container/Dockerfile.d2d (card TASK-120 owns it) and copy
+        # the binary to d2d-out/d2d. Failing here keeps the draft from producing a release with a placeholder.
+        run: |
+          echo "d2d build step not wired yet (needs TASK-120)" >&2
+          exit 1
+      - name: Build the asset set (unsigned)
+        env:
+          VERSION: ${{ inputs.version }}
+          SEQ: ${{ inputs.seq }}
+          NOTES: ${{ inputs.notes }}
+          D2D_TAG: ${{ inputs.d2d_tag }}
+        run: |
+          tools/release/app-assets.sh --version "$VERSION" --seq "$SEQ" \
+            --issued "$(date -u +%Y-%m-%dT%H:%M:%SZ)" --out assets --d2d-bin d2d-out/d2d \
+            --notes "$NOTES" --src-bot "$GITHUB_REF_NAME" --src-d2d "$D2D_TAG"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-assets
+          path: assets/
+          if-no-files-found: error
+
+  sign:
+    needs: build
+    if: ${{ vars.APP_RELEASE_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    # Required reviewer lives on this environment; the key is an environment secret, never a repo secret.
+    environment: app-release
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.3"
+          cache: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-assets
+          path: assets
+      - name: Review summary (what the approver signed off on)
+        run: go run ./cmd/d2sign summary -in assets/MANIFEST.json | tee -a "$GITHUB_STEP_SUMMARY"
+      - name: Sign
+        env:
+          D2SIGN_KEY: ${{ secrets.D2SIGN_KEY }}
+        run: go run ./cmd/d2sign sign -key-env D2SIGN_KEY -in assets/MANIFEST.json
+      - name: Verify against the pinned public key and the asset hashes
+        run: go run ./cmd/d2sign verify -pub deploy/d2d-container/pubkeys/current.pub -in assets/MANIFEST.json -dir assets
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-signed
+          path: assets/
+          if-no-files-found: error
+
+  publish:
+    needs: sign
+    if: ${{ vars.APP_RELEASE_ENABLED == 'true' && inputs.dry_run != true }}
+    runs-on: ubuntu-latest
+    environment: app-release
+    permissions:
+      contents: write
+    timeout-minutes: 10
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: app-signed
+          path: assets
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ inputs.version }}
+          NOTES: ${{ inputs.notes }}
+        run: |
+          gh release create "app-v$VERSION" assets/* --repo "$GITHUB_REPOSITORY" \
+            --title "d.idle app $VERSION" --notes "$NOTES"

@@ -20,6 +20,7 @@ import (
 
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/plandata"
 )
 
 const policySchema = "watch.policy/1"
@@ -60,8 +61,12 @@ type PolicySheet struct {
 	events *AwayLog
 	knobs  KnobSetter
 
+	// starts gives the option ids a class starts on (plandata.Chores); nil reads the embedded table.
+	starts func(class string) (map[string]string, error)
+
 	mu      sync.Mutex
 	changes []PolicyChange
+	started map[string]bool // classes whose starting options were applied
 }
 
 // NewPolicySheet checks that every effect counter of the table exists; an unknown one is an error naming it.
@@ -80,12 +85,77 @@ func NewPolicySheet(store *decide.Store, cat *decide.Catalogue, table *decide.Po
 }
 
 func (p *PolicySheet) rows() (string, []*decide.PolicyRow, error) {
+	c, rows, err := p.classRows()
+	if err != nil {
+		return c, rows, err
+	}
+	return c, rows, p.applyStart(c, rows)
+}
+
+func (p *PolicySheet) classRows() (string, []*decide.PolicyRow, error) {
 	c := strings.ToLower(p.class())
 	if c == "" {
 		return "", nil, ErrPolicyNoClass
 	}
 	rows, err := p.table.RowsFor(p.cat, c)
 	return c, rows, err
+}
+
+// applyStart puts the class's starting options (internal/plandata chores-defaults.json, card classchores) on rows the
+// player never set, once per class. It is a start, not a change: no PolicyChange is recorded, and a row the player
+// already set (the store holds an option) is left alone. A row or option id the table does not have is an error
+// naming it; a start equal to the row's default does nothing.
+func (p *PolicySheet) applyStart(class string, rows []*decide.PolicyRow) error {
+	p.mu.Lock()
+	if p.started[class] {
+		p.mu.Unlock()
+		return nil
+	}
+	p.mu.Unlock()
+	get := p.starts
+	if get == nil {
+		get = func(c string) (map[string]string, error) {
+			ch, err := plandata.Chores(c)
+			return ch.Start, err
+		}
+	}
+	start, err := get(class)
+	if err != nil {
+		return err
+	}
+	ids := make([]string, 0, len(start))
+	for id := range start {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	for _, id := range ids {
+		var row *decide.PolicyRow
+		for _, r := range rows {
+			if r.ID == id {
+				row = r
+			}
+		}
+		if row == nil {
+			return fmt.Errorf("watch: chore start of class %q names row %q, which the sheet does not have for it", class, id)
+		}
+		opt, err := row.Option(start[id])
+		if err != nil {
+			return fmt.Errorf("watch: chore start of class %q: %w", class, err)
+		}
+		if opt.ID == row.Default || p.store.PolicyOption(row.ID) != "" {
+			continue
+		}
+		if _, _, err := p.set(row, opt, false); err != nil {
+			return fmt.Errorf("watch: chore start %s/%s of class %q: %w", row.ID, opt.ID, class, err)
+		}
+	}
+	p.mu.Lock()
+	if p.started == nil {
+		p.started = map[string]bool{}
+	}
+	p.started[class] = true
+	p.mu.Unlock()
+	return nil
 }
 
 func (p *PolicySheet) current(r *decide.PolicyRow) string {
@@ -117,6 +187,11 @@ func (p *PolicySheet) Set(rowID, optID string) (PolicyChange, bool, error) {
 	if err != nil {
 		return PolicyChange{}, false, fmt.Errorf("%w %q of row %q", ErrPolicyOption, safeText(optID, 40), row.ID)
 	}
+	return p.set(row, opt, true)
+}
+
+// set applies an option; record false (a class start) leaves out the change record the return screen shows.
+func (p *PolicySheet) set(row *decide.PolicyRow, opt *decide.PolicyOption, record bool) (PolicyChange, bool, error) {
 	from := p.current(row)
 	if from == opt.ID {
 		return PolicyChange{Row: row.ID, From: from, To: opt.ID}, false, nil
@@ -141,9 +216,11 @@ func (p *PolicySheet) Set(rowID, optID string) (PolicyChange, bool, error) {
 		return PolicyChange{}, false, err
 	}
 	ch := PolicyChange{Row: row.ID, From: from, To: opt.ID, T: p.now()}
-	p.mu.Lock()
-	p.changes = append(p.changes, ch)
-	p.mu.Unlock()
+	if record {
+		p.mu.Lock()
+		p.changes = append(p.changes, ch)
+		p.mu.Unlock()
+	}
 	return ch, true, nil
 }
 
