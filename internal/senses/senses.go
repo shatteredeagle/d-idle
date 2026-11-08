@@ -53,11 +53,11 @@ type Map struct {
 	Waypoints []Point `json:"waypoints"`
 }
 
-// Snapshot is what Publisher hands out: the map, the hero (2 Hz) and the optional units (empty until TASK-151).
+// Snapshot is what Publisher hands out: the map, the hero (2 Hz) and the optional units (SetUnits).
 type Snapshot struct {
-	Map  Map     `json:"map"`
-	Hero Point   `json:"hero"`
-	Unit []Point `json:"units,omitempty"`
+	Map  Map    `json:"map"`
+	Hero Point  `json:"hero"`
+	Unit []Unit `json:"units,omitempty"`
 }
 
 // Build makes the map of lm. area is the display name ("" is fine). An empty or missing grid is an error naming the
@@ -200,7 +200,12 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 		p.seq--
 		return err
 	}
-	p.snap = Snapshot{Map: m, Hero: Point{hero.X, hero.Y}}
+	// A new map keeps the units only inside the same area: a new area starts with none until SetUnits runs again.
+	var keep []Unit
+	if p.have && lm.No == p.areaNo {
+		keep = p.snap.Unit
+	}
+	p.snap = Snapshot{Map: m, Hero: Point{hero.X, hero.Y}, Unit: keep}
 	p.have, p.areaNo, p.areaVer = true, lm.No, lm.Grid.Version()
 	return nil
 }
