@@ -10,9 +10,8 @@ import (
 
 // The class list comes from the plan tables (internal/plandata build-*.json), not from a literal (decision F11,
 // TASK-145). A class is offered when it has a normal30 leveling table (build name contains "normal30"). The Sorceress
-// has none yet (TASK-144 sorcnormal30), but the bot plays her through the documented fallback table
-// (build-fallback-*.json, leveler default "fallback"), so a class whose only table is a fallback one is offered too,
-// marked as such. A class with neither is not offered. A table with no "class" key is the Sorceress's, as in
+// got hers with TASK-144 (sorcnormal30); a class whose only table is a fallback one (build-fallback-*.json) is still
+// offered, marked as such. A class with neither is not offered. A table with no "class" key is the Sorceress's, as in
 // leveler.ParseBuild.
 const (
 	tableNormal30 = "normal30"
