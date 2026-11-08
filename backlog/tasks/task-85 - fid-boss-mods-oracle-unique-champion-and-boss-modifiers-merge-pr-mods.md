@@ -21,7 +21,7 @@ owns:
   - "docs/probes/fid/fid-boss-mods.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "2026-11-08 decomp6: pr-mods merged and equal for c/u/s (184,064 boss_level cases, 0 differences except sub-point life representation); Cold Enchanted chill length missing on d2d (13,283 -> 2,039 cases) with local candidate fid/cold-enchanted-length (fork remote, not posted, not zero after: two-enchant units and 49 top-level cases remain); doc docs/probes/fid/fid-boss-mods.md; not verified live"
 ---
 
 ## Description
@@ -36,6 +36,6 @@ Done when: pr-mods evidence re-run on current main (157,618 cases); expected 0 d
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 pr-mods evidence re-run on current main (157,618 cases); expected 0 differ after the fix; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 At most two untraced immunities (Corpsefire, Bishibosh, Rakanishu, Treehead, Blood Raven) traced and compared
+- [x] #1 pr-mods evidence re-run on current main (157,618 cases); expected 0 differ after the fix; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #2 At most two untraced immunities (Corpsefire, Bishibosh, Rakanishu, Treehead, Blood Raven) traced and compared
 <!-- AC:END -->

@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-missile-player.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "2026-11-08 decomp6: flight, range, roll and Nova hits equal (0 differences: 1,500 + 2,500 flights, 168,000 roll cases, 598 nova casts, V run on upstream a5b970d5); Lightning one-unit-a-frame deviation proven (44 of 1,192 casts, 0 after) with local candidate fid/missile-last-unit f45e45c8 (fork remote, not posted); AC 2 open: Chain Lightning hop not compared; doc docs/probes/fid/fid-missile-player.md; not verified live"
 ---
 
 ## Description
@@ -37,7 +37,7 @@ Done when: Harness for missile flight: speed, range, collision per frame for Cha
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Harness for missile flight: speed, range, collision per frame for Charged Bolt, Fire Bolt, Ice Bolt, Frost Nova ring; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #1 Harness for missile flight: speed, range, collision per frame for Charged Bolt, Fire Bolt, Ice Bolt, Frost Nova ring; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
 - [ ] #2 Lightning and Chain Lightning piercing and hop (SK12) compared; Frost Nova units-per-frame (SK08, folded in D1)
-- [ ] #3 classdata/skills.json ranges 10/20/25 confirmed against the oracle
+- [x] #3 classdata/skills.json ranges 10/20/25 confirmed against the oracle
 <!-- AC:END -->
