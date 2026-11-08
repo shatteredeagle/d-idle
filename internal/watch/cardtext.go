@@ -105,6 +105,16 @@ var cardTexts = map[string]cardText{
 		Generic:  "The hero is about to buy belt potions.",
 		Does:     map[string]string{"best": "buy the best potions it can afford", "cheapest": "buy the cheapest that are enough"},
 	},
+	"t1.quest.imbue": {
+		Headline: "Charsi's quest is next on the list: she will imbue one item, once, and the item becomes a rare.",
+		Generic:  "Charsi can imbue one item.",
+		Does:     map[string]string{"weapon": "plan to imbue a weapon", "armor": "plan to imbue body armor", "jewelry": "plan to imbue a circlet or belt"},
+	},
+	"t1.quest.cain": {
+		Headline: "The Search for Cain is a long chain of errands (scroll, stones, Tristram) and the hero is strong enough to start it.",
+		Generic:  "The Search for Cain is available.",
+		Does:     map[string]string{"do": "plan the whole chain", "later": "leave it for later"},
+	},
 	"t1.gamble": {
 		Headline: "The hero holds {gold} gold and could gamble some of it.",
 		Generic:  "The hero could gamble some gold.",

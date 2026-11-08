@@ -10,7 +10,7 @@
       "summons": [],
       "buffs": [],
       "town_trip": {"health_potions_below": 3, "ammo_below_pct": 20},
-      "start": {}
+      "start": {"questhints": "hints"}
     },
     "assassin": {
       "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
@@ -19,7 +19,7 @@
       "summons": ["traps: lay then fire"],
       "buffs": [],
       "town_trip": {"mana_potions_below": 3},
-      "start": {}
+      "start": {"questhints": "hints"}
     },
     "barbarian": {
       "potions": {"health": 1, "mana": 0, "note": "no mana potions; EXP"},
@@ -28,7 +28,7 @@
       "summons": [],
       "buffs": ["Battle Orders", "Shout"],
       "town_trip": {"health_potions_below": 3, "durability_below_pct": 25},
-      "start": {}
+      "start": {"questhints": "hints"}
     },
     "druid": {
       "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
@@ -37,7 +37,7 @@
       "summons": ["Raven", "Creeper", "Wolves"],
       "buffs": ["Oak Sage", "Cyclone Armor"],
       "town_trip": {"mana_potions_below": 3},
-      "start": {}
+      "start": {"questhints": "hints"}
     },
     "necromancer": {
       "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1"},
@@ -46,7 +46,7 @@
       "summons": ["Skeleton", "Golem"],
       "buffs": [],
       "town_trip": {"mana_potions_below": 3},
-      "start": {}
+      "start": {"questhints": "hints"}
     },
     "paladin": {
       "potions": {"health": 4, "mana": 1, "note": "EXP about 4:1 health to mana"},
@@ -55,7 +55,7 @@
       "summons": [],
       "buffs": ["Might", "Holy Fire", "Prayer", "Resist Fire"],
       "town_trip": {"health_potions_below": 3, "durability_below_pct": 25},
-      "start": {"stance": "aggressive"}
+      "start": {"stance": "aggressive", "questhints": "hints"}
     },
     "sorceress": {
       "potions": {"health": 1, "mana": 1, "note": "EXP about 1:1; casters"},
@@ -64,7 +64,7 @@
       "summons": [],
       "buffs": [],
       "town_trip": {"mana_potions_below": 3},
-      "start": {}
+      "start": {"questhints": "hints"}
     }
   }
 }

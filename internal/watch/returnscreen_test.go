@@ -360,3 +360,24 @@ func TestReturnNotesFeedTheRecord(t *testing.T) {
 		t.Errorf("notes: %d %q", w.Code, nb.got)
 	}
 }
+
+// The return and policy pages reuse app.css, whose `main` is a 12-column grid at >= 900 px; main.ret must reset it
+// (screenshot 2026-11-08: ~13 columns 25 px wide). Visual check not possible here; this pins the rule and the class.
+func TestReturnLayoutResetsMainGrid(t *testing.T) {
+	if !strings.Contains(returnCSS, "main.ret{display:block;grid-template-columns:none;") {
+		t.Fatal("return.css lost the main.ret grid reset")
+	}
+	for _, name := range []string{"sorceress.html", "paladin.html"} {
+		b, err := os.ReadFile("testdata/returnscreen/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(string(b), `<main class="ret"`) || !strings.Contains(string(b), "/watch/return.css") {
+			t.Fatalf("%s: main.ret or return.css link missing", name)
+		}
+	}
+	b, _ := os.ReadFile("testdata/policysheet/sheet-sorceress.html")
+	if !strings.Contains(string(b), `<main class="ret"`) || !strings.Contains(string(b), "/watch/return.css") {
+		t.Fatal("policy page does not use main.ret with return.css")
+	}
+}

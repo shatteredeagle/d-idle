@@ -1,0 +1,114 @@
+{
+ "schema": "quests.hints/1",
+ "doc": "docs/quest-hints.md",
+ "note": "Town hints for the Act 1 quest givers (TASK-197). Every value carries a verified tag: SRC read in the repo, EXP veteran memory (d2-sme, 2026-11-08), UNSURE the veteran was not sure (live drill TASK-198). The engine has no level requirement for any Act 1 quest (EXP); clvl below is only the hero's own sense of being ready. Lines are first person, short, and name nothing the hero has not been shown.",
+ "town": {"id": 1, "name": "Rogue Encampment", "verified": "SRC"},
+ "families": {
+  "paladin": {"family": "melee", "verified": "EXP"},
+  "barbarian": {"family": "melee", "verified": "EXP"},
+  "amazon": {"family": "melee", "verified": "UNSURE"},
+  "assassin": {"family": "caster", "verified": "UNSURE"},
+  "sorceress": {"family": "caster", "verified": "EXP"},
+  "druid": {"family": "caster", "verified": "UNSURE"},
+  "necromancer": {"family": "summoner", "verified": "EXP"}
+ },
+ "quests": [
+  {
+   "id": "den_of_evil",
+   "giver": "Akara",
+   "how": "npc_dialog",
+   "clvl": {"melee": 1, "caster": 2, "summoner": 3},
+   "available": {},
+   "go": [
+    "Akara keeps glancing toward the Blood Moor. I think I can help her now.",
+    "Time to ask Akara what is bothering her about the moor.",
+    "The healer looks worried, and I have a few levels behind me. Let me hear her out."
+   ],
+   "too_weak": [
+    "Akara keeps glancing toward the Blood Moor. I will take a few levels first.",
+    "Something is wrong under the moor, but I am not up to it yet.",
+    "Akara's worry can wait one more level. So can I."
+   ],
+   "verified": {"giver": "SRC", "how": "SRC", "clvl": "EXP", "available": "SRC", "lines": "EXP"}
+  },
+  {
+   "id": "sisters_burial",
+   "giver": "Kashya",
+   "how": "npc_dialog",
+   "clvl": {"melee": 7, "caster": 8, "summoner": 9},
+   "available": {"area": {"id": 3, "name": "Cold Plains"}},
+   "go": [
+    "Kashya watches the Cold Plains with that worried look. Time to see about her problem.",
+    "The captain of the rogues has a task for me. I think I can take it now.",
+    "Kashya's sisters need someone. Maybe that someone is me."
+   ],
+   "too_weak": [
+    "Kashya watches the Cold Plains. Her sisters... I should not go in without a few more levels.",
+    "Kashya looks worried, but I do not think I can help her until I am stronger.",
+    "Whatever troubles the rogues is beyond me for now."
+   ],
+   "verified": {"giver": "EXP", "how": "EXP", "clvl": "EXP", "available": "UNSURE", "lines": "EXP"}
+  },
+  {
+   "id": "search_for_cain",
+   "giver": "Akara",
+   "how": "auto_on_area",
+   "clvl": {"melee": 9, "caster": 11, "summoner": 12},
+   "available": {"area": {"id": 4, "name": "Stony Field"}},
+   "ask": {"point": "t1.quest.cain", "quest": "cain", "min_clvl": 12},
+   "go": [
+    "Akara knows something about the old tree in the woods. I may be ready to look.",
+    "That old tree has been on my mind. Akara might tell me why."
+   ],
+   "too_weak": [
+    "Akara hums about something old and sick in the woods. I should be stronger first.",
+    "The woods beyond the fields feel wrong. A few more levels, then I will ask."
+   ],
+   "verified": {"giver": "SRC", "how": "EXP", "clvl": "EXP", "available": "UNSURE", "lines": "EXP", "ask": "EXP"}
+  },
+  {
+   "id": "tools_of_the_trade",
+   "giver": "Charsi",
+   "how": "npc_dialog",
+   "clvl": {"melee": 12, "caster": 14, "summoner": 15},
+   "available": {"area": {"id": 27, "name": "Outer Cloister"}},
+   "ask": {"point": "t1.quest.imbue", "quest": "tools", "min_clvl": 0},
+   "go": [
+    "Charsi keeps tapping that hammer. I think I can fetch what she is missing now.",
+    "Charsi's forge is short of something. I might be ready to look for it."
+   ],
+   "too_weak": [
+    "Charsi keeps tapping that hammer. Something is missing, and I am not ready to fetch it.",
+    "Whatever she needs is somewhere dangerous, and I am not ready.",
+    "The blacksmith seems troubled, but I do not think I can help until I am stronger."
+   ],
+   "verified": {"giver": "EXP", "how": "EXP", "clvl": "EXP", "available": "UNSURE", "lines": "EXP", "ask": "EXP"}
+  },
+  {
+   "id": "forgotten_tower",
+   "giver": "",
+   "how": "auto_on_kill",
+   "clvl": {"melee": 13, "caster": 15, "summoner": 16},
+   "available": {},
+   "go": [],
+   "too_weak": [],
+   "verified": {"giver": "EXP", "how": "EXP", "clvl": "EXP", "available": "SRC", "lines": "SRC"}
+  },
+  {
+   "id": "sisters_to_slaughter",
+   "giver": "Warriv",
+   "how": "auto_on_kill",
+   "clvl": {"melee": 16, "caster": 18, "summoner": 18},
+   "available": {"quest": {"id": "sisters_burial", "stage_min": 3}},
+   "go": [
+    "Warriv is packing the cart. Perhaps it is time to see what lies past the Catacombs.",
+    "Warriv keeps looking east. I think I am ready."
+   ],
+   "too_weak": [
+    "Warriv is packing the cart. He wants the Catacombs cleared. Not yet.",
+    "The road east is shut for now, and so am I."
+   ],
+   "verified": {"giver": "EXP", "how": "EXP", "clvl": "EXP", "available": "UNSURE", "lines": "EXP"}
+  }
+ ]
+}

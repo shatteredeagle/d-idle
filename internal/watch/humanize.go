@@ -27,6 +27,7 @@ var fieldText = map[string]map[string]string{
 	"gear":       {"low": "gear weak", "mid": "gear fair", "high": "gear strong"},
 	"merc":       {"alive": "mercenary alive", "dead": "mercenary dead", "none": "no mercenary"},
 	"slot":       {"armor": "slot is armor", "weapon": "slot is weapon", "jewelry": "slot is jewelry"},
+	"quest":      {"tools": "about Tools of the Trade", "cain": "about the Search for Cain"},
 	"potiontier": {"minor": "minor potions", "light": "light potions", "normal": "normal potions", "greater": "greater potions"},
 	"held":       {"none": "no potion in the belt", "hp": "a healing potion at hand", "rv": "a rejuvenation potion at hand"},
 	"life":       {"lt25": "life under 25%", "25-35": "life 25 to 35%", "35-55": "life 35 to 55%", "55-70": "life 55 to 70%", "gt70": "life over 70%"},

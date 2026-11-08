@@ -618,6 +618,36 @@
     }
    ],
    "effectNote": "Not changed. This row follows today's behaviour."
+  },
+  {
+   "id": "questhints",
+   "label": "How I handle quests in town",
+   "help": "When the hero walks into town it looks at the people who give quests. Hints: it says out loud which quest giver it should visit (when it feels strong enough) or why it is not ready yet. It never changes which quest the campaign works on next. Hints and ask me: the same, and it also asks you the two quest questions it cannot settle alone (which kind of item Charsi should imbue, and whether to do the long Search for Cain chain).",
+   "current": "quiet",
+   "default": "quiet",
+   "changed": false,
+   "options": [
+    {
+     "id": "quiet",
+     "label": "Quiet",
+     "current": true,
+     "default": true,
+     "says": "Quiet: the hero says nothing about quest givers when it enters town. Today's behaviour."
+    },
+    {
+     "id": "hints",
+     "label": "Hints",
+     "current": false,
+     "says": "Hints: when it enters town the hero says which quest giver it is ready to visit, or that something is not for it yet, at most once per visit."
+    },
+    {
+     "id": "ask",
+     "label": "Hints and ask me",
+     "current": false,
+     "says": "Hints and ask me: the same hints, and two questions in the feed: what kind of item Charsi should imbue, and whether to do the Search for Cain chain now. The answers are kept; the campaign plan does not read them yet."
+    }
+   ],
+   "effectNote": "Not changed. This row follows today's behaviour."
   }
  ],
  "legend": "(U) marks a counter whose link to the setting is a guess, not a measurement. 'Not reported' means no event carries it yet."
