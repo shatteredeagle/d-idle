@@ -101,3 +101,35 @@ func TestBowTripAtGold(t *testing.T) {
 		t.Fatalf("bow trip with a bow in the pack")
 	}
 }
+
+// equipfail (VERIFIED LIVE): the Amazon's Short Bow was refused while the Javelin AND the Buckler were worn (one worn
+// item may come off per equip click), bought, sold and bought again. The bow must end up worn with the quiver.
+func TestAmmoWearsTwoHandedBowOverJavelinAndBuckler(t *testing.T) {
+	geartest.Need(t)
+	r := newRig(t)
+	w := r.W
+	w.OneOffPerClick = true
+	for _, b := range w.DB.Items {
+		if b.Code == "sbw" && !b.TwoHanded {
+			t.Fatal("Short Bow is not two-handed in this table: the rule under test does not apply")
+		}
+	}
+	w.Player.Class = d2.Amazon
+	w.Stock(r.Charsi, "sbw", "aqv", "cqv")
+	w.Add("jav", d2.ContEquipment, 0, 0).Item.Body = d2.BodyRHand
+	w.Add("buc", d2.ContEquipment, 0, 0).Item.Body = d2.BodyLHand
+	r.T.SetAmmoPath("bow")
+	rep, err := r.T.Chores(context.Background(), town.ChorePlan{Ammo: true})
+	if err != nil {
+		t.Fatal(err)
+	}
+	codes := map[int]string{}
+	for _, u := range w.Items {
+		if u.Item.Where == d2.ContEquipment {
+			codes[u.Item.Body] = w.DB.Items[u.Class].Code
+		}
+	}
+	if codes[d2.BodyRHand] != "sbw" || w.Cursor != nil {
+		t.Fatalf("worn %v cursor %v steps %+v", codes, w.Cursor, rep.Steps)
+	}
+}
