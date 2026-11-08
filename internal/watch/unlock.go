@@ -213,35 +213,10 @@ type unlockReply struct {
 // routes (origin list, token, JSON only, small body). 402 when the tally is short, nothing is booked then.
 func (u *Unlocks) BuyHandler(o AnswerOptions) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		origin := r.Header.Get("Origin")
-		allowed := origin != "" && containsStr(o.Origins, origin)
-		if allowed {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			w.Header().Set("Vary", "Origin")
+		if !unlockPostGate(o, w, r) {
+			return
 		}
 		fail := func(code int, c, msg string) { writeJSON(w, code, unlockReply{Code: c, Error: msg}) }
-		switch {
-		case r.Method == http.MethodOptions && allowed:
-			w.Header().Set("Access-Control-Allow-Methods", "POST")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-			w.WriteHeader(http.StatusNoContent)
-			return
-		case r.Method != http.MethodPost:
-			w.Header().Set("Allow", "POST, OPTIONS")
-			fail(http.StatusMethodNotAllowed, "method", "POST only")
-			return
-		case origin != "" && !allowed:
-			fail(http.StatusForbidden, "origin", "origin not allowed")
-			return
-		case !o.tokenOK(r):
-			fail(http.StatusUnauthorized, "token", "unauthorized")
-			return
-		}
-		if mt, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || mt != "application/json" {
-			fail(http.StatusUnsupportedMediaType, "content-type", "send application/json")
-			return
-		}
 		var b unlockBuyBody
 		if err := decodeSmall(r, &b); err != nil || b.ID == "" {
 			fail(http.StatusBadRequest, "body", `body must be {"id": "<entry>"}`)
@@ -307,4 +282,35 @@ func (s *TallyStrip) UnlockSpender() unlock.Spender {
 		return nil
 	}
 	return LedgerSpender{Ledger: s.Wallet.Ledger, Currency: s.Tally.Rows.Currency, Character: s.Tally.Character, Run: s.Tally.Run}
+}
+
+// unlockPostGate is the gate every unlock POST route shares with the other answer routes: origin list (CORS preflight
+// included), token, JSON only. It answers and returns false when the request must stop.
+func unlockPostGate(o AnswerOptions, w http.ResponseWriter, r *http.Request) bool {
+	origin := r.Header.Get("Origin")
+	allowed := origin != "" && containsStr(o.Origins, origin)
+	if allowed {
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.Header().Set("Vary", "Origin")
+	}
+	fail := func(code int, c, msg string) bool { writeJSON(w, code, unlockReply{Code: c, Error: msg}); return false }
+	switch {
+	case r.Method == http.MethodOptions && allowed:
+		w.Header().Set("Access-Control-Allow-Methods", "POST")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		w.WriteHeader(http.StatusNoContent)
+		return false
+	case r.Method != http.MethodPost:
+		w.Header().Set("Allow", "POST, OPTIONS")
+		return fail(http.StatusMethodNotAllowed, "method", "POST only")
+	case origin != "" && !allowed:
+		return fail(http.StatusForbidden, "origin", "origin not allowed")
+	case !o.tokenOK(r):
+		return fail(http.StatusUnauthorized, "token", "unauthorized")
+	}
+	if mt, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || mt != "application/json" {
+		return fail(http.StatusUnsupportedMediaType, "content-type", "send application/json")
+	}
+	return true
 }
