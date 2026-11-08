@@ -65,9 +65,10 @@ func TestKillsFirstsBossAndReplay(t *testing.T) {
 func TestOnceRowsAndTrip(t *testing.T) {
 	ta, _ := newTally(t, "Sorc")
 	for _, ev := range []TallyEvent{
-		{EvQuest, "q1", "den_of_evil/0", ""}, {EvQuest, "q2", "den_of_evil/0", ""},
-		{EvWaypoint, "w1", "Cold Plains", ""}, {EvArea, "a1", "Cold Plains", ""},
-		{EvTrip, "t1", "1", ""}, {EvTrip, "t1", "1", ""}, {EvTrip, "t2", "2", ""},
+		{Kind: EvQuest, ID: "q1", Subject: "den_of_evil/0"}, {Kind: EvQuest, ID: "q2", Subject: "den_of_evil/0"},
+		{Kind: EvWaypoint, ID: "w1", Subject: "Cold Plains"}, {Kind: EvArea, ID: "a1", Subject: "Cold Plains"},
+		{Kind: EvTrip, ID: "t1", Subject: "1", Kills: 3}, {Kind: EvTrip, ID: "t1", Subject: "1", Kills: 3},
+		{Kind: EvTrip, ID: "t2", Subject: "2", Drops: 1},
 	} {
 		if _, err := ta.Credit(ev); err != nil {
 			t.Fatal(err)
@@ -224,5 +225,33 @@ func TestEventsModeCreditsTallyOnly(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// An expedition with no activity pays nothing; any one reached floor field pays (the floor is data, tallyrows.json).
+func TestTripFloor(t *testing.T) {
+	for _, hero := range []string{"Sorc", "Pally"} {
+		ta, _ := newTally(t, hero)
+		f := ta.Rows.TripFloor
+		for i, ev := range []TallyEvent{
+			{Kind: EvTrip, ID: "e0", Subject: "1"},
+			{Kind: EvTrip, ID: "e1", Subject: "2", Kills: f.Kills - 1},
+		} {
+			if es, err := ta.Credit(ev); err != nil || len(es) != 0 {
+				t.Fatalf("%s: empty trip %d booked %+v %v", hero, i, es, err)
+			}
+		}
+		for i, ev := range []TallyEvent{
+			{Kind: EvTrip, ID: "a", Subject: "3", Kills: f.Kills},
+			{Kind: EvTrip, ID: "b", Subject: "4", Drops: f.Drops},
+			{Kind: EvTrip, ID: "c", Subject: "5", XP: f.XP},
+		} {
+			if es, err := ta.Credit(ev); err != nil || len(es) != 1 {
+				t.Fatalf("%s: active trip %d booked %+v %v", hero, i, es, err)
+			}
+		}
+		if got := bal(t, ta); got != 6 {
+			t.Errorf("%s: balance %d, want 6", hero, got)
+		}
 	}
 }
