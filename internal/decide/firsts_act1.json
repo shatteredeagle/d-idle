@@ -1,0 +1,680 @@
+{
+ "version": 1,
+ "group": "act1",
+ "doc": "Act 1 firsts (TASK-130, docs/codex.md). kind: monster|area|waypoint|shrine|drop|champion|death. match: names compared case-insensitively against FirstEvent.Name, '*' matches any; area: only when the event area equals it. A row without 'question' fills the Codex without opening a thought. tipTag: V verified, S secondary (SME), U unverified. defaultByClass overrides default for a class in the catalogue's class table. An event fires at most one first, the first matching row in table order, so a more specific row goes before a general one.",
+ "field": {
+  "kind": "enum",
+  "values": [
+   "fallen",
+   "fallen_shaman",
+   "quill_rat",
+   "corpsefire",
+   "bishibosh",
+   "rakanishu",
+   "blood_raven",
+   "skeleton_archer",
+   "treehead",
+   "griswold",
+   "countess",
+   "andariel",
+   "blood_moor",
+   "den_of_evil",
+   "cold_plains",
+   "stony_field",
+   "burial_grounds",
+   "cave",
+   "dark_wood",
+   "black_marsh",
+   "forgotten_tower",
+   "wp_cold_plains",
+   "wp_stony_field",
+   "wp_dark_wood",
+   "wp_black_marsh",
+   "wp_outer_cloister",
+   "wp_jail_1",
+   "wp_inner_cloister",
+   "wp_catacombs_2",
+   "first_shrine",
+   "first_rune",
+   "first_unique",
+   "first_set",
+   "first_rare",
+   "champion_notable",
+   "champion_pack",
+   "first_death"
+  ]
+ },
+ "point": {
+  "id": "t0.first",
+  "tier": 0,
+  "question": "A first for this hero: the question is in the situation.",
+  "answers": [
+   {
+    "id": "yes",
+    "label": "the first option"
+   },
+   {
+    "id": "no",
+    "label": "the second option"
+   }
+  ],
+  "contextKeys": [
+   "first"
+  ],
+  "riskTable": [
+   {
+    "match": {},
+    "class": "normal"
+   }
+  ],
+  "default": [
+   {
+    "when": {},
+    "answer": "yes"
+   }
+  ]
+ },
+ "firsts": [
+  {
+   "id": "fallen",
+   "kind": "monster",
+   "match": [
+    "Fallen"
+   ],
+   "title": "Fallen",
+   "tip": "Fallen run when a Shaman or the leader dies; do not chase them into the dark.",
+   "tipTag": "S",
+   "question": "First Fallen pack: they flee when their leader dies. Fight them in a corridor, not in the open?",
+   "yes": "fight them at a chokepoint",
+   "no": "fight wherever we stand",
+   "default": "yes",
+   "teaches": "chokepoint over open ground",
+   "consequence": "the card says 'held the corridor' or 'fought in the open'"
+  },
+  {
+   "id": "fallen_shaman",
+   "kind": "monster",
+   "match": [
+    "Fallen Shaman",
+    "Carver Shaman"
+   ],
+   "title": "Fallen Shaman",
+   "tip": "Shamans resurrect the pack; they die first or the fight never ends.",
+   "tipTag": "S",
+   "question": "First Fallen Shaman: they raise the dead pack. Kill shamans first?",
+   "yes": "kill shamans first",
+   "no": "kill whatever is nearest",
+   "default": "yes",
+   "teaches": "shamans are priority targets",
+   "consequence": "the target order puts shamans first; the card shows shamans killed"
+  },
+  {
+   "id": "quill_rat",
+   "kind": "monster",
+   "match": [
+    "Quill Rat",
+    "Spike Fiend"
+   ],
+   "title": "Quill Rats",
+   "tip": "Spikes chip a low-level hero; rush the rat or leave the line of fire.",
+   "tipTag": "U",
+   "question": "Quill Rats spit spikes from range. Close in on them, or keep away from the volley?",
+   "yes": "close in",
+   "no": "keep away",
+   "default": "yes",
+   "teaches": "ranged chip damage is closed or avoided, not tanked",
+   "consequence": "the card counts chip damage taken"
+  },
+  {
+   "id": "corpsefire",
+   "kind": "monster",
+   "match": [
+    "Corpsefire"
+   ],
+   "title": "Corpsefire",
+   "tip": "Fight him at the cave mouth and keep moving; standing in his fire costs potions.",
+   "tipTag": "S",
+   "question": "Corpsefire: a unique in the Den, burns what stands near. Kite him instead of standing?",
+   "yes": "kite him",
+   "no": "stand and fight",
+   "default": "yes",
+   "teaches": "kite a fire unique under clvl 5 (the default for casters; melee builds stand)",
+   "consequence": "the card says 'kited Corpsefire' or 'stood against Corpsefire'; the Den skill point follows the kill",
+   "defaultByClass": {
+    "paladin": "no"
+   }
+  },
+  {
+   "id": "bishibosh",
+   "kind": "monster",
+   "match": [
+    "Bishibosh"
+   ],
+   "title": "Bishibosh",
+   "tip": "He runs with fast Fallen; fight where you can retreat, then go on to the waypoint.",
+   "tipTag": "S",
+   "question": "Bishibosh and his pack are fast. Fight in the open, or fall back to the road?",
+   "yes": "fall back to the road",
+   "no": "fight in the open",
+   "default": "yes",
+   "teaches": "fast packs are fought with a retreat behind us",
+   "consequence": "the card shows the closest call of that fight"
+  },
+  {
+   "id": "rakanishu",
+   "kind": "monster",
+   "match": [
+    "Rakanishu"
+   ],
+   "title": "Rakanishu",
+   "tip": "Lightning enchanted: his hits chain; stay at range and keep the belt filled.",
+   "tipTag": "S",
+   "question": "Rakanishu is lightning enchanted. Fight him now?",
+   "yes": "fight him",
+   "no": "skip him this trip",
+   "default": "yes",
+   "teaches": "lightning enchanted uniques are fought from range with a full belt",
+   "consequence": "the card says 'fought' or 'skipped'"
+  },
+  {
+   "id": "blood_raven",
+   "kind": "monster",
+   "match": [
+    "Blood Raven"
+   ],
+   "title": "Blood Raven",
+   "tip": "Her fire arrows and raised skeletons end careless level 6 heroes; level up in the Moor first.",
+   "tipTag": "S",
+   "question": "Blood Raven sighted. Attempt her this trip (level 6; veterans wait for 8)?",
+   "yes": "attempt her",
+   "no": "avoid her",
+   "default": "no",
+   "teaches": "the first wall: avoid below range, fight in range",
+   "consequence": "the card shows 'fought and kited' or 'avoided'"
+  },
+  {
+   "id": "skeleton_archer",
+   "kind": "monster",
+   "match": [
+    "Dark Archer",
+    "Skeleton Archer",
+    "Burning Dead Archer"
+   ],
+   "title": "Dark Archers",
+   "tip": "Archers out-range most early casters; the corner is stronger than the open field.",
+   "tipTag": "U",
+   "question": "First archers at range. Rush them, or break line of sight?",
+   "yes": "rush them",
+   "no": "break line of sight",
+   "default": "yes",
+   "teaches": "ranged packs are closed on or ducked",
+   "consequence": "the card counts arrows taken"
+  },
+  {
+   "id": "treehead",
+   "kind": "monster",
+   "match": [
+    "Treehead Woodfist"
+   ],
+   "title": "Treehead Woodfist",
+   "tip": "Killing him is not required for the scroll (S SME round 3).",
+   "tipTag": "S",
+   "question": "Treehead Woodfist guards the Tree of Inifuss. Kill him for the loot?",
+   "yes": "kill him",
+   "no": "leave him",
+   "default": "no",
+   "teaches": "optional bosses are chosen",
+   "consequence": "the card names the loot or the skipped boss"
+  },
+  {
+   "id": "griswold",
+   "kind": "monster",
+   "match": [
+    "Griswold"
+   ],
+   "title": "Griswold",
+   "tip": "His gear is the prize; he is tougher than anything before Tristram.",
+   "tipTag": "U",
+   "question": "Griswold in Tristram. Fight him now?",
+   "yes": "fight him",
+   "no": "skip him",
+   "default": "no",
+   "teaches": "Tristram bosses are optional",
+   "consequence": "the card names the drop or the skip"
+  },
+  {
+   "id": "countess",
+   "kind": "monster",
+   "match": [
+    "The Countess",
+    "Countess"
+   ],
+   "title": "The Countess",
+   "tip": "She drops El to Tir runes; her tower is long and the supplies run out.",
+   "tipTag": "S",
+   "question": "The Countess, last floor of the Forgotten Tower. Go in for runes?",
+   "yes": "go in",
+   "no": "turn back",
+   "default": "yes",
+   "teaches": "a rune farm needs a full kit",
+   "consequence": "the card counts the runes dropped"
+  },
+  {
+   "id": "andariel",
+   "kind": "monster",
+   "match": [
+    "Andariel"
+   ],
+   "title": "Andariel",
+   "tip": "Poison is the killer: poison resistance and antidotes first.",
+   "tipTag": "S",
+   "question": "Andariel, Act 1 final. Attempt her now?",
+   "yes": "attempt her",
+   "no": "not yet",
+   "default": "no",
+   "teaches": "the Act 1 boss waits for resistances and antidotes",
+   "consequence": "the card says 'Andariel down' or 'not yet'"
+  },
+  {
+   "id": "blood_moor",
+   "kind": "area",
+   "match": [
+    "Blood Moor"
+   ],
+   "title": "Blood Moor",
+   "tip": "The first field; the Den of Evil is the cave at its far side.",
+   "tipTag": "S"
+  },
+  {
+   "id": "den_of_evil",
+   "kind": "area",
+   "match": [
+    "Den of Evil"
+   ],
+   "title": "Den of Evil",
+   "tip": "Every monster dead earns a free skill point from Akara.",
+   "tipTag": "V",
+   "question": "The Den of Evil, a cave with no waypoint. Clear it all for Akara's skill point?",
+   "yes": "clear it all",
+   "no": "come back later",
+   "default": "yes",
+   "teaches": "the Den is cleared to the last monster",
+   "consequence": "Akara's skill point is the first unlock"
+  },
+  {
+   "id": "cold_plains",
+   "kind": "area",
+   "match": [
+    "Cold Plains"
+   ],
+   "title": "Cold Plains",
+   "tip": "Light the waypoint before anything else.",
+   "tipTag": "S",
+   "question": "Cold Plains: the road to the Burial Grounds. Stay and farm, or press on?",
+   "yes": "farm here",
+   "no": "press on",
+   "default": "yes",
+   "teaches": "farm the plains until the waypoint is lit and in range",
+   "consequence": "the next orders start from the waypoint"
+  },
+  {
+   "id": "stony_field",
+   "kind": "area",
+   "match": [
+    "Stony Field"
+   ],
+   "title": "Stony Field",
+   "tip": "The five Cairn Stones open the portal to Tristram once the scroll is deciphered.",
+   "tipTag": "S",
+   "question": "Stony Field: open, with the Cairn Stones. Look for them now?",
+   "yes": "look for the stones",
+   "no": "skip them",
+   "default": "no",
+   "teaches": "optional quest objects are hunted when asked",
+   "consequence": "the card names the Cairn Stones found or skipped"
+  },
+  {
+   "id": "burial_grounds",
+   "kind": "area",
+   "match": [
+    "Burial Grounds"
+   ],
+   "title": "Burial Grounds",
+   "tip": "Level 8 is the veteran line; the Rogue camp is beyond.",
+   "tipTag": "S",
+   "question": "The Burial Grounds belong to Blood Raven. Enter before level 8?",
+   "yes": "enter",
+   "no": "wait",
+   "default": "no",
+   "teaches": "Blood Raven's ground waits for level 8",
+   "consequence": "the card says 'entered' or 'waited'"
+  },
+  {
+   "id": "cave",
+   "kind": "area",
+   "match": [
+    "Cave Level 1",
+    "Cave Level 2",
+    "Cave"
+   ],
+   "title": "Cave",
+   "tip": "Corridors punish casters who wake two packs.",
+   "tipTag": "S",
+   "question": "A cave: tight corridors, two packs at once. Fight at the entrance?",
+   "yes": "fight at the entrance",
+   "no": "push in",
+   "default": "yes",
+   "teaches": "caves are fought from the entrance",
+   "consequence": "the card shows the closest call of the cave"
+  },
+  {
+   "id": "dark_wood",
+   "kind": "area",
+   "match": [
+    "Dark Wood"
+   ],
+   "title": "Dark Wood",
+   "tip": "The scroll is part of the Cain quest.",
+   "tipTag": "S",
+   "question": "Dark Wood: dense, dark, the Tree of Inifuss. Hunt the tree now?",
+   "yes": "hunt the tree",
+   "no": "skip it",
+   "default": "yes",
+   "teaches": "the Tree of Inifuss is part of the Cain quest",
+   "consequence": "the card names the scroll found or skipped"
+  },
+  {
+   "id": "black_marsh",
+   "kind": "area",
+   "match": [
+    "Black Marsh"
+   ],
+   "title": "Black Marsh",
+   "tip": "Its waypoint shortens every later trip.",
+   "tipTag": "S"
+  },
+  {
+   "id": "forgotten_tower",
+   "kind": "area",
+   "match": [
+    "Forgotten Tower",
+    "Tower Cellar Level 1"
+   ],
+   "title": "Forgotten Tower",
+   "tip": "Level 12 or more, with resistances, before the last floor.",
+   "tipTag": "U",
+   "question": "The Forgotten Tower: deep, with the Countess. Run it at this level?",
+   "yes": "run it",
+   "no": "level first",
+   "default": "no",
+   "teaches": "the Tower is run only with level and resistances",
+   "consequence": "the card says 'ran the Tower' or 'levelled first'"
+  },
+  {
+   "id": "wp_cold_plains",
+   "kind": "waypoint",
+   "match": [
+    "Cold Plains"
+   ],
+   "title": "Cold Plains waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "S",
+   "question": "Cold Plains waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_stony_field",
+   "kind": "waypoint",
+   "match": [
+    "Stony Field"
+   ],
+   "title": "Stony Field waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "S",
+   "question": "Stony Field waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_dark_wood",
+   "kind": "waypoint",
+   "match": [
+    "Dark Wood"
+   ],
+   "title": "Dark Wood waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "U",
+   "question": "Dark Wood waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_black_marsh",
+   "kind": "waypoint",
+   "match": [
+    "Black Marsh"
+   ],
+   "title": "Black Marsh waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "S",
+   "question": "Black Marsh waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_outer_cloister",
+   "kind": "waypoint",
+   "match": [
+    "Outer Cloister"
+   ],
+   "title": "Outer Cloister waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "S",
+   "question": "Outer Cloister waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_jail_1",
+   "kind": "waypoint",
+   "match": [
+    "Jail Level 1"
+   ],
+   "title": "Jail Level 1 waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "U",
+   "question": "Jail waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_inner_cloister",
+   "kind": "waypoint",
+   "match": [
+    "Inner Cloister"
+   ],
+   "title": "Inner Cloister waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "U",
+   "question": "Inner Cloister waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "wp_catacombs_2",
+   "kind": "waypoint",
+   "match": [
+    "Catacombs Level 2"
+   ],
+   "title": "Catacombs Level 2 waypoint",
+   "tip": "A lit waypoint is a shorter trip every time.",
+   "tipTag": "U",
+   "question": "Catacombs waypoint lit: start trips here from now on?",
+   "yes": "start trips here",
+   "no": "keep the old start",
+   "default": "yes",
+   "teaches": "trips start at the furthest lit waypoint in range",
+   "consequence": "the next order starts here; the card shows the waypoint lit"
+  },
+  {
+   "id": "first_shrine",
+   "kind": "shrine",
+   "match": [
+    "*"
+   ],
+   "title": "First shrine",
+   "tip": "Most shrines help for a minute or two; a few cost.",
+   "tipTag": "U",
+   "question": "First shrine: take shrines when no pack is near?",
+   "yes": "take it when calm",
+   "no": "avoid shrines",
+   "default": "yes",
+   "teaches": "shrines are taken when the screen is calm",
+   "consequence": "the card names the shrine and its effect"
+  },
+  {
+   "id": "first_rune",
+   "kind": "drop",
+   "match": [
+    "rune"
+   ],
+   "title": "First rune",
+   "tip": "Runes are worth keeping for a recipe or a runeword.",
+   "tipTag": "S",
+   "question": "First rune. Keep all runes?",
+   "yes": "keep all runes",
+   "no": "sell them",
+   "default": "yes",
+   "teaches": "runes are kept",
+   "consequence": "the stash line grows; the card names the rune"
+  },
+  {
+   "id": "first_unique",
+   "kind": "drop",
+   "match": [
+    "unique"
+   ],
+   "title": "First unique",
+   "tip": "A unique is either good now or good in the stash; sell only the plainly useless.",
+   "tipTag": "U",
+   "question": "First unique item. Keep every unique?",
+   "yes": "keep it",
+   "no": "sell it",
+   "default": "yes",
+   "teaches": "uniques are kept",
+   "consequence": "the card names the best drop"
+  },
+  {
+   "id": "first_set",
+   "kind": "drop",
+   "match": [
+    "set"
+   ],
+   "title": "First set item",
+   "tip": "A single set piece rarely beats a good rare, but the full set does.",
+   "tipTag": "U",
+   "question": "First set piece. Keep set items?",
+   "yes": "keep it",
+   "no": "sell it",
+   "default": "yes",
+   "teaches": "set pieces are kept",
+   "consequence": "the stash line grows"
+  },
+  {
+   "id": "first_rare",
+   "kind": "drop",
+   "match": [
+    "rare"
+   ],
+   "title": "First rare",
+   "tip": "Rares are rolled at identify; a scroll is cheap.",
+   "tipTag": "U",
+   "question": "First rare item. Identify it right away?",
+   "yes": "identify it",
+   "no": "carry it unknown",
+   "default": "yes",
+   "teaches": "rares are identified in town",
+   "consequence": "the card shows the identify reveal"
+  },
+  {
+   "id": "champion_notable",
+   "kind": "champion",
+   "match": [
+    "Extra Strong",
+    "Extra Fast",
+    "Cursed",
+    "Magic Resistant",
+    "Fire Enchanted",
+    "Lightning Enchanted",
+    "Cold Enchanted",
+    "Mana Burn",
+    "Spectral Hit",
+    "Stone Skin",
+    "Teleportation"
+   ],
+   "title": "Champion with notable mods",
+   "tip": "Extra Fast, Cursed and Lightning Enchanted decide most early deaths.",
+   "tipTag": "U",
+   "question": "This pack has dangerous mods. Fight it anyway?",
+   "yes": "fight it",
+   "no": "avoid it",
+   "default": "no",
+   "teaches": "notable mods lower the engage line",
+   "consequence": "the card names the mods"
+  },
+  {
+   "id": "champion_pack",
+   "kind": "champion",
+   "match": [
+    "*"
+   ],
+   "title": "First champion pack",
+   "tip": "Champions hit twice as hard and have more life; fight them with life to spare.",
+   "tipTag": "S",
+   "question": "First champion pack: fight it above 60 percent life?",
+   "yes": "fight above 60 percent",
+   "no": "avoid champions",
+   "default": "yes",
+   "teaches": "champion packs are fought with life in hand (t0.unique.fight)",
+   "consequence": "the card shows the closest call"
+  },
+  {
+   "id": "first_death",
+   "kind": "death",
+   "match": [
+    "*"
+   ],
+   "title": "First death",
+   "tip": "A death is information: the Codex keeps the killer and the place.",
+   "tipTag": "U",
+   "question": "First death. Avoid this killer until level 8?",
+   "yes": "avoid it for now",
+   "no": "fight it again",
+   "default": "yes",
+   "teaches": "the killer is avoided until the hero outlevels it (t0.retreat.lethal)",
+   "consequence": "the card names the killer; the rule applies on the next trip"
+  }
+ ]
+}
