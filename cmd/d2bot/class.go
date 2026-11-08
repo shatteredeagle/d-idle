@@ -4,6 +4,7 @@ import (
 	"context"
 	"log/slog"
 	"strings"
+	"sync/atomic"
 
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
@@ -48,6 +49,9 @@ func planForClass(c d2.Class, cfgBuild string, level int, owned map[string]int) 
 	return cp
 }
 
+// planBuild is the leveler build id chosen at the class-aware start; the play session record reads it (empty until then).
+var planBuild atomic.Pointer[string]
+
 // applyClass reads the character's class from memory and sets the fighter's build. Returns the plan for the log.
 func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *combat.Fighter, tw *town.Town, lt *loot.Looter, cfgBuild string, db *data.DB, log *slog.Logger) {
 	s, err := snap()
@@ -61,6 +65,7 @@ func applyClass(ctx context.Context, snap func() (*d2.Snapshot, error), cb *comb
 		cb.Build = cp.CombatBuild
 	}
 	cb.GearBuild = cp.LevelerBuild
+	planBuild.Store(&cp.LevelerBuild)
 	if tw != nil {
 		tw.SetAmmoPath(ammoPath(cp.LevelerBuild))
 		tw.SetBuild(cp.LevelerBuild)

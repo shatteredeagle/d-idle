@@ -140,10 +140,11 @@ func ReadAwayEvents(r io.Reader) ([]AwayEvent, error) {
 // Visit remembers when the player last looked at the live screen, to tell an absence. In memory, optionally kept in a
 // small JSON file so a bot restart does not forget it.
 type Visit struct {
-	mu   sync.Mutex
-	last time.Time
-	path string
-	now  func() time.Time
+	mu     sync.Mutex
+	last   time.Time
+	landed time.Time // when /watch last redirected to the return screen; a redirect is due once per absence
+	path   string
+	now    func() time.Time
 }
 
 // NewVisit makes a tracker; path "" keeps it in memory only. A missing or unreadable file means "never seen".
@@ -154,10 +155,11 @@ func NewVisit(path string, now func() time.Time) *Visit {
 	v := &Visit{path: path, now: now}
 	if b, err := os.ReadFile(path); path != "" && err == nil {
 		var f struct {
-			Last time.Time `json:"lastSeen"`
+			Last   time.Time `json:"lastSeen"`
+			Landed time.Time `json:"landed"`
 		}
 		if json.Unmarshal(b, &f) == nil {
-			v.last = f.Last
+			v.last, v.landed = f.Last, f.Landed
 		}
 	}
 	return v
@@ -168,10 +170,31 @@ func (v *Visit) Touch() {
 	v.mu.Lock()
 	defer v.mu.Unlock()
 	v.last = v.now()
+	v.save()
+}
+
+func (v *Visit) save() {
 	if v.path != "" {
-		b, _ := json.Marshal(map[string]time.Time{"lastSeen": v.last})
+		b, _ := json.Marshal(map[string]time.Time{"lastSeen": v.last, "landed": v.landed})
 		os.WriteFile(v.path, b, 0o600)
 	}
+}
+
+// due says whether /watch should land on the return screen now: the last look is older than AwayAfter and no landing
+// happened since that look. Due marks the landing, so the same absence redirects once; a new look and a new absence
+// make it due again.
+func (v *Visit) due() bool {
+	if v == nil {
+		return false
+	}
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	if v.last.IsZero() || v.now().Sub(v.last) <= AwayAfter || v.landed.After(v.last) {
+		return false
+	}
+	v.landed = v.now()
+	v.save()
+	return true
 }
 
 // Away is how long ago the last look was; ok is false when there was none.
@@ -866,7 +889,7 @@ func (c ReturnConfig) ReturnHandler(next http.Handler) http.Handler {
 	m.HandleFunc("/watch", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Query().Get("live") != "" {
 			c.Visit.touch()
-		} else if c.Absent() {
+		} else if c.Visit.due() {
 			http.Redirect(w, r, "/watch/return", http.StatusFound)
 			return
 		}

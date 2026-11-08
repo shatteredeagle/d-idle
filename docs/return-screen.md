@@ -33,7 +33,7 @@ The fixture format is one `AwayEvent` JSON per line (`ReadAwayEvents`); a record
 
 ## Landing and absence
 
-`ReturnConfig.ReturnHandler(next)` wraps the live handler. `/watch` goes to `/watch/return` when the last look is older than `AwayAfter` (20 min); `/watch?live=1` (the link on the page) reaches the live screen and counts as a look. A first start with no earlier look is not a return.
+`ReturnConfig.ReturnHandler(next)` wraps the live handler. `/watch` goes to `/watch/return` when the last look is older than `AwayAfter` (20 min), ONCE per absence (`visit.json` keeps a `landed` stamp; a later `/watch` in the same absence reaches the live screen, and a new look then a new absence lands again; TASK-178, V `TestReturnLandingAfterAbsence`); `/watch?live=1` (the link on the page) reaches the live screen and counts as a look. A first start with no earlier look is not a return.
 
 ## Questions: what the buttons really do
 

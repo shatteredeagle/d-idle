@@ -17,7 +17,7 @@ The hook is `(*watch.TallyStrip).OnEvent(goals.Event)`; the data is `tallyrows.j
 | boss kill (class `boss`, weight 0) | 15, once per name | `boss/<name>` | `tally_boss` |
 | quest done | 10 | `quest/<quest>/<difficulty>` | `tally_quest` |
 | waypoint lit | 10 | `waypoint/<area>` | `tally_waypoint` (U: no goals event says it; the bot calls `TallyStrip.Waypoint`) |
-| expedition completed (back in town after a field trip) | 2 | `trip/<character>/<event id of the arrival>` | `tally_trip` (cap 40 per day) |
+| expedition completed (back in town after a field trip) | 2 | `trip/<character>/<event id of the arrival>` | `tally_trip` (cap 40 per day); pays only when the trip did something: `trip_floor` in tallyrows.json (any one of 3 kills, 1 drop, 1 XP; V `TestTripFloor`, `TestEmptyExpeditionPaysNothing`, TASK-176) |
 
 Event id = `<run>:<goals.Event.Seq>`. An event without a sequence number is reported on the strip as an error and not credited. Replaying a journal into the same ledger books nothing (V `TestKillsFirstsBossAndReplay`, `TestTallyStripGolden`, both for two builds); firsts and quests are account-wide (a second hero does not earn them again). Unknown kill class: error naming the class (V `TestCreditErrors`).
 
