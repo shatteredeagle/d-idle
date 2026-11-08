@@ -1,3 +1,0 @@
-BACKLOG: TASK-190 hostileNear is a circle like the fighter scope (no futile window for corner monsters); TASK-191 fight stance row (Cautious/Balanced/Aggressive) on the policy sheet, per-class knobs
-INDEX: docs/stance.md - fight stance row and the 2026-11-08 Paladin feedback diagnosis
-CHANGELOG: Policy sheet gets a fight stance row (Cautious, Balanced, Aggressive) with per-class numbers; the Paladin starts Aggressive; the sweep no longer treats a monster in the corner of its radius as a target it then refuses
