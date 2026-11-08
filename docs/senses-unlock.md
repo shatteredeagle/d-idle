@@ -30,5 +30,5 @@ V offline (`go test ./internal/watch ./internal/unlock`): golden JSON of the rep
 
 ## Not done
 
-- `cmd/d2bot` still mounts `FixedTier(l.sensesTier)`. Wiring: open the engine (`unlock.Shipped`, `unlock.Open(stateDir, profile, ...)`), pass it as `FunConfig.Unlock` and mount `Lock: watch.LadderUnlocker{Engine: eng}`.
+- Wired: `cmd/d2bot/ladder.go` mounts `watch.NewSensesLock(engine, senses.tier)`. The knob's range in `internal/env` is still 0..1, so no cap can be set yet; widening it to 0..7 (docs/knobs.md) is for the tuning owner. A value of 1 is never a cap.
 - Acceptance #4 of the card (tier 5 and 6 spend rows in the currency registry): the registry (`internal/currency/registry.json`) is not owned here; the spends are booked with upgrade `unlock` and the price in the ladder. The tallystrip owner decides whether they become registry rows.

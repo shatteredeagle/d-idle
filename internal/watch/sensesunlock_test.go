@@ -187,3 +187,18 @@ func TestSensesLadderThroughFunTwoClasses(t *testing.T) {
 		}
 	}
 }
+
+func TestNewSensesLock(t *testing.T) {
+	eng := shippedEngine(t)
+	eng.Observe(unlock.Event{Type: unlock.EvLevel, N: 2})
+	eng.Observe(unlock.Event{Type: unlock.EvCodexFirst, Sub: "monster", ID: "fallen", Name: "Fallen"})
+	if l := NewSensesLock(nil, 1); l.Allowed(2) || !l.Allowed(1) {
+		t.Fatal("no ladder: the knob is a fixed tier")
+	}
+	if l := NewSensesLock(eng, 1); !l.Allowed(2) || !l.Allowed(3) {
+		t.Fatal("the default knob 1 must not cap the ladder")
+	}
+	if l := NewSensesLock(eng, 2); !l.Allowed(2) || l.Allowed(3) {
+		t.Fatal("a knob above 1 is a maximum")
+	}
+}

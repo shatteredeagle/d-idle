@@ -26,6 +26,7 @@ import (
 	"d2lod-bot/internal/overlay"
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
+	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
 
@@ -265,7 +266,11 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 	so := watch.ServeOptions{ViewAddr: l.viewAddr, AnswerAddr: l.answerAddr, Token: watchTok, Origins: l.origins, Video: vid, Fun: rig.Fun}
 	if l.sensesTier >= 1 {
 		rig.Senses = &senses.Publisher{}
-		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.FixedTier(l.sensesTier)}
+		var eng *unlock.Engine
+		if rig.Fun != nil && rig.Fun.Unlocks != nil {
+			eng = rig.Fun.Unlocks.Engine
+		}
+		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.NewSensesLock(eng, l.sensesTier)}
 	}
 	so.Update = startUpdater(ctx)
 	if l.watchAccessFile != "" {

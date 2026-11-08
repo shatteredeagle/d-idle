@@ -43,3 +43,17 @@ func (l LadderUnlocker) Locked() []SenseLock {
 func (l LadderUnlocker) Met(monster string) bool {
 	return l.Engine != nil && l.Allowed(3) && l.Engine.Met("monster", monster)
 }
+
+// NewSensesLock picks the Unlocker for the knob senses.tier (0 means no panel: the caller mounts no Senses). Without a
+// ladder it is FixedTier(knob). With one the ladder decides; a knob above 1 is a maximum on top of it, while 1 (the
+// default, "map only" before the ladder existed) is not a cap, or the ladder could never open tier 2.
+func NewSensesLock(eng *unlock.Engine, knob int) Unlocker {
+	if eng == nil {
+		return FixedTier(knob)
+	}
+	l := LadderUnlocker{Engine: eng}
+	if knob > 1 {
+		l.Cap = knob
+	}
+	return l
+}

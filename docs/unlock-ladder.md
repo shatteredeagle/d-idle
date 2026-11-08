@@ -23,7 +23,7 @@ Counts carry the running total, so a repeated event can never count twice. Repla
 
 ## Reveal
 
-Every entry that opens (by trigger or by buying) writes one Chronicle line (`Hub.Note("story", "Unlocked: Title. Text")`) and one away event (`AwayUnlock`). The return screen section `unlocks`, "Unlocked since you left", lists the away events newer than the viewer's last look and is hidden when there are none. Opening raises no question.
+Every entry that opens (by trigger or by buying) writes one Chronicle line (`Hub.Note("story", "Unlocked: Title. Text")`) and one reveal record (`AwayUnlock`, kept in the `Unlocks`' own log so a late reveal in camp cannot open a phantom expedition on the return screen). The return screen section `unlocks`, "Unlocked since you left", lists the away events newer than the viewer's last look and is hidden when there are none. Opening raises no question.
 
 ## API
 

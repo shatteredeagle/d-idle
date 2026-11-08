@@ -24,9 +24,10 @@ owns:
   - "internal/watch/testdata/senses-ladder-*.json"
   - "data/unlocks/ladder.json"
   - "docs/senses-unlock.md"
+  - "cmd/d2bot/ladder.go"
 exclusive: []
 contracts: []
-result: "Seven senses rows in data/unlocks/ladder.json, watch.LadderUnlocker, /api/senses gating with locked list and next, golden JSON tiers 0-4, buying tiers 5-6; offline only (go test ./internal/watch ./internal/unlock), not verified live. AC4 open: registry rows not owned here. cmd/d2bot still mounts FixedTier."
+result: "Seven senses rows in data/unlocks/ladder.json, watch.LadderUnlocker, /api/senses gating with locked list and next, golden JSON tiers 0-4, buying tiers 5-6; offline only (go test ./internal/watch ./internal/unlock), not verified live. AC4 open: registry rows not owned here. cmd/d2bot mounts NewSensesLock (knob range still 0..1, so no cap yet)."
 ---
 
 ## Description
