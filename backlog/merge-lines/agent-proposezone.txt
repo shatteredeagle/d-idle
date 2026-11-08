@@ -1,3 +1,0 @@
-BACKLOG: TASK-131 proposezone: the hero proposes the next zone and waits when the player is away (proposer in decide, desk and return section in watch, docs/proposezone.md); offline only, not wired into d2bot
-INDEX: [proposezone.md](proposezone.md): the hero proposes the next zone, away rule, answer routes, charter on accept (status: built offline, not wired)
-CHANGELOG: Zone proposals: the hero proposes the next Act 1 zone when level and kit fit, waits and keeps farming while the player is away, and lists the question on the return screen (offline, TASK-131)

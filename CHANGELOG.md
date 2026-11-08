@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Zone proposals: the hero proposes the next Act 1 zone when level and kit fit, waits and keeps farming while the player is away, and lists the question on the return screen (offline, TASK-131)
 - Belt plan knob: players can choose mixed, all-mana, all-health or rejuvenation-only belts from the policy sheet; the shop, fill, loot pickup and kit gate follow the plan
 - Bot: waiting for a fresh game no longer counts as an error event
 - Unlockable features design note and eleven Proposed cards (TASK-153 to TASK-163)
