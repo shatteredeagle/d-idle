@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 
@@ -144,8 +146,77 @@ type Bestiary struct {
 
 	mu     sync.Mutex
 	seq    uint64
-	kills  map[string]int // lower-case kind name, in memory (a restart counts again; the ladder rows are persisted)
+	kills  map[string]int // lower-case kind name; saved to path when set (SetStore)
+	path   string
 	opened []bestiaryOpened
+}
+
+const bestiaryStoreSchema = "bestiary.kills/1"
+
+type bestiaryStore struct {
+	Schema string         `json:"schema"`
+	Kills  map[string]int `json:"kills"`
+}
+
+// SetStore keeps the kill counts in the file at path (loaded now, rewritten on every counted kill), so a restart goes on
+// from the old counts. A missing file starts empty; an unreadable or foreign one is an error and nothing is changed.
+func (b *Bestiary) SetStore(path string) error {
+	raw, err := os.ReadFile(path)
+	var st bestiaryStore
+	switch {
+	case os.IsNotExist(err):
+	case err != nil:
+		return fmt.Errorf("bestiary store: %w", err)
+	default:
+		if err := json.Unmarshal(raw, &st); err != nil || st.Schema != bestiaryStoreSchema {
+			return fmt.Errorf("bestiary store %s: not a %s file", path, bestiaryStoreSchema)
+		}
+	}
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.path = path
+	for k, n := range st.Kills {
+		if n > b.kills[k] {
+			b.kills[k] = n
+		}
+	}
+	return nil
+}
+
+// saveLocked writes the counts atomically. A failed write loses the save only; the counts stay in memory.
+func (b *Bestiary) saveLocked() {
+	if b.path == "" {
+		return
+	}
+	raw, err := json.Marshal(bestiaryStore{Schema: bestiaryStoreSchema, Kills: b.kills})
+	if err != nil {
+		return
+	}
+	tmp := b.path + ".tmp"
+	if os.MkdirAll(filepath.Dir(b.path), 0o700) != nil || os.WriteFile(tmp, raw, 0o600) != nil || os.Rename(tmp, b.path) != nil {
+		return
+	}
+}
+
+// FilterBestiaryNotes returns the shipped kinds that exist in the monster table and the names that do not (a kind the
+// table lacks is skipped, not fatal). tables nil: every kind, none skipped.
+func FilterBestiaryNotes(tables MonsterTables) (notes []BestiaryNote, skipped []string, err error) {
+	all, err := ParseBestiaryNotes(bestiarydata.JSON)
+	if err != nil {
+		return nil, nil, err
+	}
+	if tables == nil {
+		return all, nil, nil
+	}
+	notes = []BestiaryNote{} // never nil: nil means "read the embedded file" to NewBestiary
+	for _, n := range all {
+		if tables.MonsterByName(n.Name) == nil {
+			skipped = append(skipped, n.Name)
+			continue
+		}
+		notes = append(notes, n)
+	}
+	return notes, skipped, nil
 }
 
 // NewBestiary builds the bestiary over the ladder. A ladder without the row "bestiary" or "bestiary_resists" is an error
@@ -206,6 +277,7 @@ func (b *Bestiary) OnGoalEvent(ev goals.Event) {
 		return
 	}
 	b.kills[key]++
+	b.saveLocked()
 	switch b.kills[key] {
 	case BestiaryCardKills:
 		b.record(b.notes[idx].Name, "card")
