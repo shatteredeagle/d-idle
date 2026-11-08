@@ -831,3 +831,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/skill-unlocks.md - per-class skill unlock table, leveler rule, free-choice point (TASK-133)
 - docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
 - docs/hall-of-fame.md - Hall of Fame, titles and the optional retire after Andariel (watch)
+- docs/self-update-client.md - self-update client package, watch update API and banner, env switches
