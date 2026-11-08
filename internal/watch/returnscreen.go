@@ -271,7 +271,7 @@ type SectionButton struct {
 	Label  string `json:"label"`
 	Row    string `json:"row"`
 	Option string `json:"option"`
-	// Act is the page action: "policy" (the default, POST /api/policy) or "proposal" (POST /api/proposals/answer, Row is
+	// Act is the page action: "policy" (the default, POST /api/policy), "hall" (POST /api/hall/answer) or "proposal" (POST /api/proposals/answer, Row is
 	// the proposal id).
 	Act string `json:"act,omitempty"`
 }
@@ -1093,6 +1093,7 @@ document.addEventListener('click',function(e){var b=e.target.closest('button[dat
  if(a==='answer')post('/api/return/answer-kind',{point:b.dataset.point,answer:b.dataset.answer});
  else if(a==='rule')post('/api/return/answer-kind',{point:b.dataset.point,yes:b.dataset.yes==='1'});
  else if(a==='policy')post('/api/policy',{row:b.dataset.row,option:b.dataset.option});
+ else if(a==='hall')post('/api/hall/answer',{answer:b.dataset.option});
  else if(a==='proposal')post('/api/proposals/answer',{id:parseInt(b.dataset.row,10),answer:b.dataset.option});
  else if(a==='notes')post('/api/return/notes',{text:document.getElementById('notes').value});});
 })();`
