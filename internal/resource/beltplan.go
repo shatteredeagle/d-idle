@@ -56,7 +56,10 @@ type FieldVerdict struct {
 // that share of the planned healing potions (and a missing town portal): a character that can pay shops again, a poor one
 // farms the Blood Moor only (the walk home works there). Off (0) always says Go.
 func FieldGate(in Input, t Tuning) FieldVerdict {
-	plan := PlanForBuild(in.Class, in.Level, in.Diff, in.Build)
+	plan, err := SpecOf(t).PlanFor(in)
+	if err != nil {
+		return FieldVerdict{Reason: err.Error()} // no silent Go: the knob value is wrong
+	}
 	want := plan.capacity(PotionLife, in.Belt.Rows)
 	v := FieldVerdict{HaveHP: in.Belt.HP + in.Belt.RV, WantHP: want}
 	if t.MinFieldBeltPct <= 0 || want == 0 {

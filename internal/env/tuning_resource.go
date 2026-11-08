@@ -72,6 +72,9 @@ type ResourceTuning struct {
 	KitGateLevel         int // KITGATELEVEL: below this clvl the kit gate holds the character in Blood Moor and Cold Plains; from it an incomplete kit makes a town trip and the progression goes on (0 = the gate holds at every level, the old behaviour)
 	KitMinHP             int // minimum kit from KitGateLevel: healing potions (belt, pack and rejuvenation)
 	KitMinMP             int // minimum kit from KitGateLevel: mana potions in the belt
+	BeltPlan             int // belt plan template (0 = the build's plan; docs/belt-plan.md)
+	BeltCol1, BeltCol2   int // belt column overrides (0 = plan, 1 healing, 2 mana, 3 rejuvenation, 4 empty)
+	BeltCol3, BeltCol4   int
 	KitTripCap           int // kit town trips with the kit still incomplete before the bot proceeds anyway (kitgate-skip)
 	RecoveryXPEarly      int // XP pick only: the area may be entered this many levels below its enter and kit level (0 = the plan levels, the old behaviour)
 	PovertySellMin       int // poor character: pack junk items needed for a sell trip (0 = the built-in 4 on foot, 6 with a portal scroll)
