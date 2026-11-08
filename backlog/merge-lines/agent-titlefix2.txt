@@ -1,1 +1,0 @@
-BACKLOG: fix folded titles on TASK-142 and TASK-175 (check.py was failing on main)
