@@ -7,6 +7,8 @@
   "start": "2026-11-08T10:00:00Z",
   "end": "2026-11-08T10:17:57Z",
   "duration_s": 1077,
+  "game_duration_s": 1077,
+  "game_per_wall": 1,
   "questions": 2,
   "answered": 1,
   "faded": 1,
@@ -27,6 +29,7 @@
   "stayed_in_tab_min": 17.3,
   "deaths": 1,
   "xp_per_h": 12033,
+  "xp_per_wall_h": 12033,
   "credits": 5,
   "notes": "the first ten minutes were fun [removed]",
   "first_10min": [
@@ -75,5 +78,12 @@
   ],
   "record_bytes": 1607,
   "decision_bytes": 1257,
-  "decision_bytes_per_h": 4201
+  "decision_bytes_per_h": 4201,
+  "decision_bytes_per_wall_h": 4201,
+  "decision_bytes_by_kind": {
+    "answer": 160,
+    "fire": 748,
+    "header": 161,
+    "outcome": 188
+  }
 }
