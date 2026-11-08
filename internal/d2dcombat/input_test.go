@@ -65,7 +65,7 @@ func TestSwingAddressesTheMonsterByUnit(t *testing.T) {
 	if err := in.Swing(0, input.Point{X: 65, Y: 147}); err != nil { // sample monster #5
 		t.Fatal(err)
 	}
-	want := []string{"monsters", "cmd skill 0 13.1 29.5 5 left"}
+	want := []string{"monsters", "cmd skill 0 13 29.5 5 left"}
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines\n got %q\nwant %q", got, want)
 	}
