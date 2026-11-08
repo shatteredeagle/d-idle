@@ -1,10 +1,11 @@
 ---
 id: TASK-181
 title: 'pactladder: Pacts use the shared unlock ladder'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T09:11:00Z'
+updated_date: '2026-11-08T10:30:00Z'
 labels:
   - bot
   - chore

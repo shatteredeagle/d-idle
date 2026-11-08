@@ -241,7 +241,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 			}
 			notes = rig.Rec
 		}
-		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes); err != nil {
+		if rig.Fun, err = newFun(l, stateDir, hub, rig.Wallet, st, cat, clk, notes, status); err != nil {
 			return nil, nil, err
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
