@@ -35,3 +35,28 @@ Without a ladder (`FixedTier`) the per-class and per-kind Codex rules do not app
 ## Open choice
 
 A rare unique (no superunique name) has no Codex row, so tier 4 shows it once the tier is open (U, `LadderUnlocker.EliteSeen`).
+
+# Senses tier 4: elite markers with mod names (TASK-152, senseselites)
+
+Tags: V offline test, U not run live, S secondary. Nothing here ran against a live game.
+
+## What is drawn
+
+Champion: gold ring. Rare unique: purple ring. Superunique: both rings and the monster's own name. Boss: a crown (the reader cannot tell a boss from a superunique yet, so `boss` is never sent today; U). The label is the name (own name for a superunique) and the mod names after a colon. Colours and shapes live in `web/senses_units.js`.
+
+## Where each part lives
+
+- Kind: `unitSource.elite` (cmd/d2bot/sensesunits.go) from `MonsterInfo.Kind()`: champion (flag 0x04), unique (boss bit 0x08 without 0x04), superunique when the 0x02 bit is also set (`superFlag`, 0x0a; U). Own name from `MonsterInfo.Name` (U: set for uniques and bosses per the reader comment).
+- Mod ids: `MonsterInfo.EnchantIDs()` (the one place that reads the enchant array; an unknown kind or an id above 40 gives no mods at all, so a bad read never prints wrong names). Names: data table `internal/decide/champmods.json` via `decide.ModName(id)`; an id not in the table reads `unknown mod #N`.
+- The table is S: the ids are the monumod.txt row ids the combat package read from the real file (internal/combat/target.go), the names are those of the Codex champion row (`firsts_act1.json`; a test keeps both in step). `Multiple Shots` (29) is U. monumod.txt itself is not in the repo or the extracted tables of this checkout, so no test compares against it; add one that skips without tables when the extract has the file.
+- Gate (spoiler rule): `watch.applyElite` (internal/watch/senses_elites.go) with `LadderUnlocker.EliteSeen`: a champion is marked once any Codex champion entry exists, a superunique once its own Codex monster entry exists, a rare unique once tier 4 is open (U, open choice). A kind not met yet stays the plain red dot of tier 2: no ring, no name, no mods, not in the bytes.
+
+## Tests (V offline)
+
+`go test -race ./internal/watch ./internal/decide ./cmd/d2bot -run 'Senses|ChampMods|UnitSource'`: champion with two mods, superunique with its own name, rare unique with an unknown mod id, a plain monster unmarked, tier 3 shows none of it, first-encounter matrix (champion only, superunique only, both) for a Sorceress and a Paladin, mod table checks (unique ids, tags, Codex names covered, unknown id), garbage enchant bytes give a champion without mods, golden JSON of tier 4 (`senses-units-tier4.json`).
+
+## Not done, live checklist
+
+1. The `champion` Codex reader is still missing (docs/codex.md): nothing emits a champion first yet, so tier 4 opens today only through the superunique alt trigger. Wire that reader first.
+2. Live: does a real champion read flags 0x0c with enchant ids at +0x1C, and are they the ids of the table? Is a superunique 0x0a with a name?
+3. Check a Bishibosh/Corpsefire read: `Name` filled? If not, `Title` stays empty and the marker uses the class name, which the Codex gate would not match (the marker would stay hidden, never wrong).

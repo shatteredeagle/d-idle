@@ -38,18 +38,8 @@ func publicUnits(us []senses.Unit, lock Unlocker, tier3, tier4 bool) []PublicUni
 			if tier3 && u.Target && u.Name != "" && (gate == nil || gate.Met(u.Name)) {
 				p.Target, p.Name, p.LifePct = true, u.Name, u.LifePct
 			}
-			if tier4 && u.Elite != "" {
-				name := u.Title
-				if name == "" {
-					name = u.Name
-				}
-				if gate == nil || gate.EliteSeen(u.Elite, name) {
-					p.Elite = u.Elite
-					p.Mods = append([]string(nil), u.Mods...)
-					if p.Name == "" && u.Title != "" {
-						p.Name = u.Title
-					}
-				}
+			if tier4 {
+				applyElite(&p, u, gate)
 			}
 		}
 		out = append(out, p)

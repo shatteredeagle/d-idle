@@ -1,0 +1,18 @@
+{
+ "doc": "Monster modifier ids (monumod.txt row id, as stored in MonsterData.Enchants) to display names, for the senses elite markers (TASK-152, docs/senses-units.md). tag: S = id read from the real monumod.txt by the combat package (internal/combat/target.go affixByMod), name taken from the Codex champion table (firsts_act1.json); U = id or name not checked. That the client's enchant array holds these ids is U (D2BS offset, no live champion read yet). Ids not listed read 'unknown mod #N'; extend this file, never the code.",
+ "mods": [
+  {"id": 5, "name": "Extra Strong", "tag": "S"},
+  {"id": 6, "name": "Extra Fast", "tag": "S"},
+  {"id": 7, "name": "Cursed", "tag": "S"},
+  {"id": 8, "name": "Magic Resistant", "tag": "S"},
+  {"id": 9, "name": "Fire Enchanted", "tag": "S"},
+  {"id": 17, "name": "Lightning Enchanted", "tag": "S"},
+  {"id": 18, "name": "Cold Enchanted", "tag": "S"},
+  {"id": 25, "name": "Mana Burn", "tag": "S"},
+  {"id": 26, "name": "Teleportation", "tag": "S"},
+  {"id": 27, "name": "Spectral Hit", "tag": "S"},
+  {"id": 28, "name": "Stone Skin", "tag": "S"},
+  {"id": 29, "name": "Multiple Shots", "tag": "U"},
+  {"id": 30, "name": "Aura Enchanted", "tag": "S"}
+ ]
+}
