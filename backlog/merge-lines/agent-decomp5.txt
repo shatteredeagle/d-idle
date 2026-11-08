@@ -1,8 +1,0 @@
-BACKLOG: TASK-102 fid-load-maxmana: NO d2d deviation, the Pally max mana 19.0 was the bot reader (internal/d2dsrc/player.go:215); d2d holds 4992 (V run); TASK-76 price: already upstream, re-run on 1453f853 (seed 7: 1/0/13, overflow family only); TASK-78 belt: 780,000 oracle cases 0 differ, already upstream; TASK-79 inv limits: caps and grids equal, one deviation (load gold clamp, 363 of 539 before, 0 after) with local candidate local/fid-load-gold-clamp 42d40b09, card TASK-203; TASK-91 hit recovery: length 110,836, decision 73,694 frames, frames 1.7M ticks all 0 differ, mode-gate for a hit during a cast stays U
-INDEX: docs/research/fid-loadmaxmana-trace.md | TASK-102 trace: the Paladin max mana at load, d2d keeps 4992, the 19.0 was the bot reader (2026-11-08)
-INDEX: docs/probes/fid/fid-price-pr.md | TASK-76 price oracle re-run on upstream 1453f853, already upstream (2026-11-08)
-INDEX: docs/probes/fid/fid-belt-pr.md | TASK-78 belt pickup and shift-click oracle, 780,000 cases 0 differ (2026-11-08)
-INDEX: docs/probes/fid/fid-inv-limits.md | TASK-79 purse and stash caps, grids, and the load gold clamp deviation (2026-11-08)
-INDEX: docs/probes/fid/fid-hit-recovery.md | TASK-91 get-hit length, decision, drawn frames, FHR breakpoint table (2026-11-08)
-INDEX: docs/research/pr-load-gold-draft.md | TASK-203 local PR draft: a saved purse or stash over its cap is 0 on entering a game (2026-11-08)
-CHANGELOG: Fidelity oracle batch on upstream main 1453f853: belt, price, hit-recovery and cap differentials all 0 differ; one local PR candidate for the load gold clamp (docs only, nothing posted)

@@ -869,3 +869,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/incremental-arpg.md: second pass: walled games read (Godville, Melvor, IdleOn, Idle Champions), why people watch bots, loot-filter and return-screen precedents, 3 new cards
 - docs/probes/panels-live.md - live check of the watch APIs against lockstep Paladin and Sorceress runs
 - docs/soaks/classpacing2.md - seven classes x seeds 7, 11, 13, 90 virtual minutes, mean and range, gate-tuning Paladin arm
+- docs/research/fid-loadmaxmana-trace.md | TASK-102 trace: the Paladin max mana at load, d2d keeps 4992, the 19.0 was the bot reader (2026-11-08)
+- docs/probes/fid/fid-price-pr.md | TASK-76 price oracle re-run on upstream 1453f853, already upstream (2026-11-08)
+- docs/probes/fid/fid-belt-pr.md | TASK-78 belt pickup and shift-click oracle, 780,000 cases 0 differ (2026-11-08)
+- docs/probes/fid/fid-inv-limits.md | TASK-79 purse and stash caps, grids, and the load gold clamp deviation (2026-11-08)
+- docs/probes/fid/fid-hit-recovery.md | TASK-91 get-hit length, decision, drawn frames, FHR breakpoint table (2026-11-08)
+- docs/research/pr-load-gold-draft.md | TASK-203 local PR draft: a saved purse or stash over its cap is 0 on entering a game (2026-11-08)
