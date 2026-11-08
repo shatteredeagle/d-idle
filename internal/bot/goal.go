@@ -1036,7 +1036,7 @@ func (r *Runner) noTarget(ctx context.Context, s *d2.Snapshot, c control) bool {
 	if r.d.Cycler != nil {
 		reason = "nothing was cleared in this game (areas avoided for a while or held back), so a new game would not help"
 	}
-	r.setError("Waiting for a fresh game: "+why+" and "+reason, sec(r.cfg.ErrorRetrySec))
+	r.setWait("Waiting for a fresh game: "+why+" and "+reason, sec(r.cfg.ErrorRetrySec), goals.EvInfo)
 	return false
 }
 

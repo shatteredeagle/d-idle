@@ -233,7 +233,11 @@ func (r *Runner) fatalf(format string, a ...any) {
 }
 
 // setError enters the Error state (non-fatal) for retry; it emits one Error event per distinct message.
-func (r *Runner) setError(msg string, retry time.Duration) {
+func (r *Runner) setError(msg string, retry time.Duration) { r.setWait(msg, retry, goals.EvError) }
+
+// setWait is setError with the event type chosen by the caller: an informational wait (nothing is wrong, the bot
+// idles until a fresh game) emits EvInfo so it does not count as an error in stats, health and the away log.
+func (r *Runner) setWait(msg string, retry time.Duration, typ goals.EventType) {
 	now := r.e.Clock.Now()
 	r.obMu.Lock()
 	r.loop.errGames = r.ob.newGames
@@ -246,7 +250,7 @@ func (r *Runner) setError(msg string, retry time.Duration) {
 	if r.loop.pendingErr != msg {
 		r.loop.pendingErr = msg
 		r.e.Log.Error("bot error", "msg", msg, "retry", retry)
-		r.emit(goals.Event{Type: goals.EvError, Message: msg})
+		r.emit(goals.Event{Type: typ, Message: msg})
 	}
 }
 
