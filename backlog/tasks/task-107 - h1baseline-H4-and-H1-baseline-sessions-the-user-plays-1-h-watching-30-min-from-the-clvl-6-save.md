@@ -27,6 +27,8 @@ contracts: []
 Size: S
 
 Why: direction review section 7 step 2 (H4 and H1 baseline). Done when: the numbers and sentences are in docs/probes/h1-baseline.md.
+
+Amended 2026-11-07 (ADR 0018): the H1/H4 numbers are also logged by playsession2 (TASK-134) with the fun-loop cards; the qdensity remark in the criteria is moot (TASK-108 is Deferred).
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
