@@ -1,10 +1,11 @@
 ---
 id: TASK-197
 title: 'questhints: the hero thinks about quest NPCs when entering town'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T17:06:00Z'
+updated_date: '2026-11-08T17:30:00Z'
 labels:
   - bot
   - feature
