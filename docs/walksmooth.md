@@ -67,3 +67,8 @@ Tests (`internal/nav/approachfast_test.go`): full snapshots per approach step Pa
 
 ### Fork card (not done here, private fork only)
 `Channel::pump` dispatches one complete line per d2d frame (V: every verb averages 16.6 ms, also the eight lines of a pipelined batch), so a snapshot costs about 10 frames. Request: dispatch every complete line of the input buffer per frame in realtime (as the lab4 build already does for lockstep, docs/d2d-pace.md); a snapshot would drop from about 170 ms to about 20 ms and make the whole fast-poll split unnecessary. No upstream posting.
+
+### After (V, same container, 11 minutes after the deploy of main 0.0.261108211221; `nav.trace leg`)
+- 121 legs, 766 polls of which 131 were position-only (17 percent; most legs are short, so their first poll is the full one). No `nav stuck` line, 7 stalls (before: 21 in 476 legs).
+- Combat legs under 10 subtiles (15 samples, few): median 1.0 s (before 1.08 s), observe mean 167 ms (before 218). Combat legs of 10 subtiles or more (15): observe mean 127 ms (before 220), median duration unchanged (2.95 s: speed bound). Clicks per 100 subtiles 16.0 over all legs (before 17.1).
+- Reading: the long approach legs gain (observe about 40 percent cheaper); a one-waypoint step is dominated by its first, full observe plus the fighter's own snapshot just before it, so the 2 s per step does not go away with fast polls alone. Next steps, not done: (1) start a `GoTo` from the fighter's snapshot (`Reader.Recent`, about 100 ms old) instead of reading again; (2) the fork card above (one line per frame), which makes every full read about 20 ms.
