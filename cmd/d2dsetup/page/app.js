@@ -159,6 +159,7 @@ function sHero() {
     field('ob-name', 'Name (letters only, 2 to 15)', nameIn, 'A character with this name is created, or loaded if it already exists.'), e,
     field('ob-class', 'Class', cls, 'This build plays the Sorceress. The other classes are listed but not supported yet.'),
     field('ob-goals', 'Goal', goals, 'You can change the goal later.'),
+    h('p', { class: 'ob-hint', text: 'Chores (repairs, potions, town trips) start on sensible defaults. You can change any of them, even to poor choices, on the Policy sheet at /watch/policy once the hero runs.' }),
     h('p', { class: 'ob-hint', text: 'No CD key is needed or accepted here. The game runs offline.' }),
     why('The hero needs a name for its save file and a goal so it knows what to work on.'),
     nav(true, btn('Next', save, 'primary'))];

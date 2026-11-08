@@ -66,6 +66,15 @@ type FunConfig struct {
 	Table   *decide.Firsts
 	Clock   decide.Clock
 	Tracker func(class string) (*decide.Tracker, error) // builds the Tracker once the hero's class is known
+	// Policy turns the chores policy sheet on (TASK-128): the table and, for options that set knobs, the tuner's edit.
+	Policy *PolicyConfig
+}
+
+// PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
+// that set knobs are refused with a clear error, rule-only options work).
+type PolicyConfig struct {
+	Table *decide.PolicyTable
+	Knobs KnobSetter
 }
 
 // Fun connects the three pieces to one running bot. Safe for concurrent use.
@@ -74,6 +83,7 @@ type Fun struct {
 	Away   *AwayLog
 	Return ReturnConfig
 	Strip  *TallyStrip
+	Policy *PolicySheet // nil: the sheet is off
 
 	codex   *decide.Codex
 	table   *decide.Firsts
@@ -105,6 +115,16 @@ func NewFun(c FunConfig) (*Fun, error) {
 		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
 	}
 	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Policy != nil {
+		h := c.Hub
+		ps, err := NewPolicySheet(h.cfg.Store, h.cfg.Cat, c.Policy.Table, func() string { return strings.ToLower(h.heroNow().Class) },
+			func() float64 { return h.rel(h.cfg.Clock.Now()) }, f.Away, c.Policy.Knobs)
+		if err != nil {
+			return nil, err
+		}
+		f.Policy = ps
+		sec.Register(PolicySectionID, ps.Section())
+	}
 	if c.Visit == nil {
 		c.Visit = NewVisit("", nil)
 	}
@@ -265,6 +285,12 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if src := f.CodexSource(); src != nil {
 		m.Handle(CodexRoute, CodexHandler(src))
 	}
+	if f.Policy != nil {
+		ph := f.Policy.PolicyHandler()
+		for _, p := range PolicyRoutes {
+			m.Handle(p, ph)
+		}
+	}
 }
 
 // owns says whether a ViewRoutes entry is served by mountView instead (the landing redirect and the look tracking).
@@ -276,6 +302,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	ra := f.Return.ReturnAnswerHandler(o)
 	for _, p := range ReturnPostRoutes {
 		m.Handle(p, ra)
+	}
+	if f.Policy != nil {
+		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))
 	}
 	return m
 }
