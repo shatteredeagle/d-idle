@@ -17,8 +17,15 @@ card: "unlockbestiary"
 owns:
   - "internal/watch/unlockbestiary.go"
   - "internal/watch/unlockbestiary_test.go"
+  - "internal/watch/funwire.go"
+  - "internal/watch/web/"
+  - "internal/watch/testdata/bestiary-*.json"
+  - "data/bestiary/"
+  - "data/unlocks/ladder.json"
+  - "docs/unlock-bestiary.md"
 exclusive: []
 contracts: []
+result: "Built and tested offline (go test ./internal/watch ./internal/unlock ./cmd/d2bot; golden payloads at 10 and 50 kills for Sorceress and Paladin, spoiler rule, replay, return section); not verified live or in a browser. Owns widened to funwire.go, web/, data/bestiary, ladder rows bestiary and bestiary_resists. Card tables come through FunConfig.Monsters; cmd/d2bot does not set it yet (flavour-only cards live), kind names unchecked against the real monstats (U). See docs/unlock-bestiary.md."
 ---
 
 ## Description
