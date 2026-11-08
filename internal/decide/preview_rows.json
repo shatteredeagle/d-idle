@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "minEvents": 3,
+  "rows": {
+    "stance": {"kind": "lows", "drinkKnob": "combat.drinkLifePct", "leaveKnob": "combat.chickenPct"},
+    "whites": {"kind": "pickups", "knob": "loot.pickStrictness",
+               "hide": {"2": ["normal"], "3": ["normal", "magic", "rare", "crafted", "set"]},
+               "alwaysKept": ["rune", "gem"]},
+    "repair": {"kind": "none", "reason": "no repair, durability or gold event is recorded"},
+    "restock": {"kind": "none", "reason": "no purchase event is recorded; the belt state at each town visit is not kept"},
+    "town": {"kind": "none", "reason": "town trips are recorded but not what triggered them (pack, belt or an order)"},
+    "return": {"kind": "none", "reason": "the kit state when the hero left town is not recorded"},
+    "tp": {"kind": "none", "reason": "lost portal scrolls and the walks back are not recorded"},
+    "tpreserve": {"kind": "none", "reason": "the scroll count at each trip is not recorded"},
+    "retreat": {"kind": "none", "reason": "the stance row previews the retreat line from recorded fights; this per-situation rule needs the situation at each retreat, which is not recorded"},
+    "potionmix": {"kind": "none", "reason": "the belt contents and which column ran dry are not recorded"},
+    "potiontier": {"kind": "none", "reason": "potion purchases and their prices are not recorded"},
+    "belt": {"kind": "none", "reason": "the belt fill at each town visit is not recorded"},
+    "sell": {"kind": "none", "reason": "no sell or gold event is recorded, so what would have been sold cannot be counted (the white pickups of the loot row are previewed instead)"},
+    "identify": {"kind": "none", "reason": "identify scrolls used and unidentified items carried are not recorded"},
+    "stash": {"kind": "none", "reason": "stash fullness and gold deposits are not recorded"},
+    "questhints": {"kind": "none", "reason": "hints only speak; no recorded event shows what a hint changed"}
+  }
+}

@@ -695,45 +695,57 @@ type policyBody struct {
 	Option string `json:"option"`
 }
 
+// policyGate runs the checks every POST route of the sheet shares (origin list, token, JSON only, small body with known
+// fields) and returns the decoded body. When ok is false the reply is already written.
+func policyGate(o AnswerOptions, w http.ResponseWriter, r *http.Request, dst any) bool {
+	origin := r.Header.Get("Origin")
+	allowed := origin != "" && containsStr(o.Origins, origin)
+	if allowed {
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+		w.Header().Set("Vary", "Origin")
+	}
+	fail := func(code int, c, msg string) {
+		writeJSON(w, code, policyReply{Code: c, Error: msg})
+	}
+	switch {
+	case r.Method == http.MethodOptions && allowed:
+		w.Header().Set("Access-Control-Allow-Methods", "POST")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		w.WriteHeader(http.StatusNoContent)
+		return false
+	case r.Method != http.MethodPost:
+		w.Header().Set("Allow", "POST, OPTIONS")
+		fail(http.StatusMethodNotAllowed, "method", "POST only")
+		return false
+	case origin != "" && !allowed:
+		fail(http.StatusForbidden, "origin", "origin not allowed")
+		return false
+	case !o.tokenOK(r):
+		fail(http.StatusUnauthorized, "token", "unauthorized")
+		return false
+	}
+	if mt, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || mt != "application/json" {
+		fail(http.StatusUnsupportedMediaType, "content-type", "send application/json")
+		return false
+	}
+	if err := decodeSmall(r, dst); err != nil {
+		fail(http.StatusBadRequest, "body", "body must be one small JSON object with known fields")
+		return false
+	}
+	return true
+}
+
 // PolicyAnswerHandler is the write side: POST /api/policy {row, option}. Same gate as the other answer routes (origin
 // list, token, JSON only, small body).
 func (p *PolicySheet) PolicyAnswerHandler(o AnswerOptions) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		origin := r.Header.Get("Origin")
-		allowed := origin != "" && containsStr(o.Origins, origin)
-		if allowed {
-			w.Header().Set("Access-Control-Allow-Origin", origin)
-			w.Header().Set("Access-Control-Allow-Credentials", "true")
-			w.Header().Set("Vary", "Origin")
+		var b policyBody
+		if !policyGate(o, w, r, &b) {
+			return
 		}
 		fail := func(code int, c, msg string, opts ...string) {
 			writeJSON(w, code, policyReply{Code: c, Error: msg, Allowed: opts})
-		}
-		switch {
-		case r.Method == http.MethodOptions && allowed:
-			w.Header().Set("Access-Control-Allow-Methods", "POST")
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
-			w.WriteHeader(http.StatusNoContent)
-			return
-		case r.Method != http.MethodPost:
-			w.Header().Set("Allow", "POST, OPTIONS")
-			fail(http.StatusMethodNotAllowed, "method", "POST only")
-			return
-		case origin != "" && !allowed:
-			fail(http.StatusForbidden, "origin", "origin not allowed")
-			return
-		case !o.tokenOK(r):
-			fail(http.StatusUnauthorized, "token", "unauthorized")
-			return
-		}
-		if mt, _, err := mime.ParseMediaType(r.Header.Get("Content-Type")); err != nil || mt != "application/json" {
-			fail(http.StatusUnsupportedMediaType, "content-type", "send application/json")
-			return
-		}
-		var b policyBody
-		if err := decodeSmall(r, &b); err != nil {
-			fail(http.StatusBadRequest, "body", "body must be one small JSON object with known fields")
-			return
 		}
 		_, changed, err := p.Set(b.Row, b.Option)
 		switch {
