@@ -1,0 +1,12 @@
+{
+ "schema": "watch.senses.adjacency/1",
+ "note": "Pairs of areas whose maps are drawn in one canvas. The alignment itself is NOT stored here: it is derived at run time from the neighbour rectangle d2map reports for the current level (LevelMap.Adjacent) against the rectangle recorded when the neighbour was visited. A pair absent from this list is never stitched (dungeon entrances and portals are tile warps, not walks).",
+ "pairs": [
+  {"a": 1, "b": 2, "evidence": "V", "note": "Rogue Encampment west edge touches the Blood Moor; both recorded images of internal/d2map/testdata report area 2 as the only neighbour, contact on the whole shared edge"},
+  {"a": 2, "b": 3, "evidence": "S", "note": "Blood Moor to Cold Plains is an outdoor walk (wiki); no recorded image"},
+  {"a": 3, "b": 4, "evidence": "S", "note": "Cold Plains to Stony Field"},
+  {"a": 4, "b": 5, "evidence": "S", "note": "Stony Field to Dark Wood"},
+  {"a": 5, "b": 6, "evidence": "S", "note": "Dark Wood to Black Marsh"},
+  {"a": 6, "b": 7, "evidence": "S", "note": "Black Marsh to Tamoe Highland"}
+ ]
+}

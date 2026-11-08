@@ -34,6 +34,13 @@ func writeJSON(w http.ResponseWriter, code int, v any) {
 	json.NewEncoder(w).Encode(v) // encoding/json escapes <, > and & as < etc.
 }
 
+func queryOf(r *http.Request) string {
+	if r.URL.RawQuery == "" {
+		return ""
+	}
+	return "?" + r.URL.RawQuery
+}
+
 // ViewHandler serves the screen and its GET endpoints. It refuses every method but GET and HEAD, and it never writes
 // to the store: faded thoughts are recorded by the bot side (Tick), not by a read.
 func (h *Hub) ViewHandler() http.Handler {
@@ -59,6 +66,9 @@ func (h *Hub) ViewHandler() http.Handler {
 		switch r.URL.Path {
 		case "/watch/":
 			page(w, r)
+		case "/watch/video", "/watch/game":
+			// The video used to be the "Game" tab; it now sits at the top of /watch. Old links land there, token kept.
+			http.Redirect(w, r, "/watch"+queryOf(r), http.StatusFound)
 		case "/watch/app.js":
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
 		case "/watch/app.css":

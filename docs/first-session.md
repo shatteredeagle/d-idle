@@ -35,9 +35,9 @@ All are GET pages behind the watch token (`?t=<token>` once, then a cookie). Wit
 
 | URL | What it shows | State |
 |---|---|---|
-| `/watch` | Live screen: video, Hero now (class, level, title), question cards with choices and a fade bar, journal, rules, orders map, tally strip in the header. If you were away over 20 minutes it sends you ONCE to the return screen; `/watch?live=1` skips that | V video and questions in the container; page in a browser U |
+| `/watch` | Live screen: the video sits at the top (with the area map beside it; Collapse and Full screen buttons; old `/watch/video` links redirect here), then Hero now (class, level, title), question cards with choices and a fade bar, journal, rules, orders map, tally strip in the header. If you were away over 20 minutes it sends you ONCE to the return screen; `/watch?live=1` skips that | V video and questions in the container; page in a browser U |
 | `/watch/return` (`/api/return`) | What happened while you were away: headline, closest call, deaths, drops, expedition cards, questions missed with "answer once for all" and "make this a rule", tally, Codex line, "Unlocked since you left", policy before/after cards, proposals, notes box | wired (TASK-140); live smoke of the feed V, page S |
-| `/api/senses` + Game tab panel | Fog-of-war minimap beside the video, hero cross, exits, waypoints. Tier 1 is on by default (`senses.tier` 1) | S, never seen in a browser or on a live level |
+| `/api/senses` + map panel | Fog-of-war minimap beside the video (the area you just left is drawn next to the current one when they touch), hero cross, exits, waypoints. Tier 1 is on by default (`senses.tier` 1) | S, never seen in a browser or on a live level |
 | `/watch/policy` (`/api/policy`) | Chores sheet: repair, restock, town trips, retreat, potion mix, belt fill, whites, sell... One row per chore, change = one click. Poor choices are allowed and flagged "your call" | S; bot reading the rules live is U |
 | `/api/proposals` and the return screen section | "I am level N and ready for <Zone>. Go there?" go / stay / later. Default stay, never auto-orders | S, wired with fixtures |
 | `/watch/pacts` (`/api/pacts`) | Pact offer page. Pacts are locked silhouettes until the Andariel (or Baal Normal) kill | S; not reachable in 30 min |
@@ -80,7 +80,7 @@ Pace first (do not be surprised). Realtime means game time equals your clock.
 Minute by minute:
 
 1. Min 0 to 3: wizard done, warm-up. Open `/watch`. Look for: video moving, "Hero now" card, journal lines. Nothing to do.
-2. Min 3 to 6: the hero leaves the Rogue Encampment and fights in Blood Moor. Look at the Game tab minimap: it should show the area around the hero only (fog). If the panel stays empty, note it (U).
+2. Min 3 to 6: the hero leaves the Rogue Encampment and fights in Blood Moor. Look at the minimap at the top: it should show the area around the hero (fog) and, after you cross an exit, the area you left drawn next to it. If the panel stays empty, note it (U).
 3. Min 5 to 10: first questions. Expect, in this order of likelihood (V `docs/probes/t0drill.md`, `docs/tester-live.md`):
    - `t0.area.toohard`: "Forgotten Tower is too hard for you right now: go, skip, lower?" Answer: skip. It is route planning; the hero is not near it. If it comes back within a minute, write down the time (known defect, D7).
    - `t0.retreat.drink`: a potion question during a fight; `t1.repair`, `t1.restock`, `t1.return` in town.
