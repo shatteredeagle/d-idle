@@ -649,6 +649,12 @@ func TestTokenEnforcement(t *testing.T) {
 	if code, _, _ := f.do(t, "PUT", "/api/inputs", goodInputs, "Origin", "http://evil.example"); code != 403 {
 		t.Errorf("foreign origin %d", code)
 	}
+	if code, _, _ := f.do(t, "PUT", "/api/inputs", goodInputs, "Origin", "null", "Sec-Fetch-Site", "cross-site"); code != 403 {
+		t.Errorf("null cross-site %d", code)
+	}
+	if code, _, _ := f.do(t, "PUT", "/api/inputs", goodInputs, "Origin", "null", "Sec-Fetch-Site", "same-origin"); code != 200 {
+		t.Errorf("null same-origin %d", code)
+	}
 	host := strings.TrimPrefix(f.srv.URL, "http://")
 	if code, _, _ := f.do(t, "PUT", "/api/inputs", goodInputs, "Origin", "http://"+host); code != 200 {
 		t.Errorf("same origin %d", code)
