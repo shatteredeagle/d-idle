@@ -334,6 +334,13 @@ func (v *Voice) View() VoiceView {
 	return out
 }
 
+// Muted says whether the voice is muted (a muted voice says nothing in the feed).
+func (v *Voice) Muted() bool {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	return v.f.Muted
+}
+
 // SetMuted is the mute switch: a muted voice still writes the diary but says nothing in the feed.
 func (v *Voice) SetMuted(m bool) error {
 	v.mu.Lock()
