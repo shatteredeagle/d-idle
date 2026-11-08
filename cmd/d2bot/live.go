@@ -172,6 +172,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	defer lrig.StopRec()
 	useFun(lrig, runner, runID())
+	useFightFeed(lrig, bh.combat, ldir, log)
 	useSenses(lrig, e, log)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {

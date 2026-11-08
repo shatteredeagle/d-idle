@@ -1,0 +1,1 @@
+CHANGELOG: policy preview now has data: each fight records its lowest life percent and the away log keeps close and drop events across restarts (previewfeed)

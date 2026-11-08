@@ -39,6 +39,10 @@ type Fighter struct {
 	// MercState reads the merc for the field rules (mercfield.go). Nil, the default, leaves them off.
 	MercState func() (merc.MercState, error)
 
+	// OnFight, when set, gets one FightEnd per finished fight that took damage or lasted FightMinSec (passive: the
+	// policy preview's feed, card previewfeed). It runs on the fight goroutine and must not block.
+	OnFight func(FightEnd)
+
 	mercSt mercFieldState
 
 	e   *env.Env

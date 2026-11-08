@@ -47,10 +47,17 @@ type AwayEvent struct {
 	Done    bool    `json:"done,omitempty"`
 	LifePct int     `json:"lifePct,omitempty"` // AwayClose only; a source that knows the minimum life of a fight reports it here
 	Gold    int64   `json:"gold,omitempty"`    // AwayGold only: gold gained (U: no emitter yet)
+	// AwayClose only (card previewfeed): one finished fight. Potions drunk, seconds, damage taken, and how it ended
+	// ("chicken", "portal" or empty). Wall is unix seconds, so a restart can place a spooled event on the new time base.
+	Potions int    `json:"potions,omitempty"`
+	Sec     int    `json:"sec,omitempty"`
+	Damage  int    `json:"damage,omitempty"`
+	Left    string `json:"left,omitempty"`
+	Wall    int64  `json:"wall,omitempty"`
 }
 
 // Away event kinds: the goals manager's own (kill, drop, death, level_up, area_change, potion, quest) plus two that no
-// emitter sends yet (close, gold); the page uses them when present.
+// emitter sends yet (gold); close comes from the fight feed (awayspool.go); the page uses them when present.
 const (
 	AwayKill   = "kill"
 	AwayDrop   = "drop"
@@ -70,6 +77,9 @@ type AwayLog struct {
 	now func() float64
 	max int
 	evs []AwayEvent
+
+	spool *os.File // previewfeed: close and drop events survive a restart (awayspool.go)
+	wall  func() time.Time
 }
 
 // NewAwayLog makes a log; now gives the journal's time base (Hub.AwayLog does that for a Hub).
@@ -88,6 +98,7 @@ func (l *AwayLog) Add(e AwayEvent) {
 		e.T = l.now()
 	}
 	l.evs = append(l.evs, e)
+	l.spoolLocked(e)
 	if len(l.evs) > l.max {
 		l.evs = append([]AwayEvent(nil), l.evs[len(l.evs)-l.max:]...)
 	}
