@@ -1,15 +1,15 @@
 ---
 id: TASK-194
 title: 'returnlayout: return page cards render as narrow columns'
-status: Proposed
-milestone: m-4
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T16:46:00Z'
-updated_date: '2026-11-08T16:47:00Z'
+updated_date: '2026-11-08T17:01:00Z'
 labels:
   - watch
   - bug
+milestone: m-4
 dependencies: []
 priority: high
 ordinal: 157000
