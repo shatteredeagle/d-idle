@@ -628,6 +628,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-183 recoverypace: recoveryEndOnKit knob and the player/tester early-game preset (ladder on only); recovery 19-23 -> 10-11 min, town chores halved on Paladin and Sorceress (one seed); Barbarian re-run open
 - status sync 2026-11-08 part 5: TASK-182 and TASK-185 Done; stay-open notes on TASK-113, 124, 126, 134
 - TASK-111 smokebot: tools/smoke.sh one-line 45-minute smoke verdict per bot change (judge d2smoke, rules data/smoke/rules.json); built and unit-tested, not yet run live
+- TASK-184 cpnav: planner exit penalty radius raised above the mouth gate radius; Assassin reaches Cold Plains (V live, docs/soaks/cpnav.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
