@@ -124,7 +124,13 @@ func playSessionConfig(l ladderOptions, stateDir string, st *decide.Store, cat *
 			return rig.Video.Viewers()
 		}}
 	if status != nil {
-		sc.Identity = func() (string, string) { return strings.ToLower(status().Character.Class), "" }
+		sc.Identity = func() (string, string) {
+			b := ""
+			if p := planBuild.Load(); p != nil {
+				b = *p
+			}
+			return strings.ToLower(status().Character.Class), b
+		}
 		sc.Vitals = func() watch.Vitals {
 			c := status().Character
 			v := watch.Vitals{XP: c.XP}

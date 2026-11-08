@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"maps"
 	"os"
 	"path/filepath"
 	"slices"
@@ -75,7 +76,7 @@ type fireLine struct {
 
 type pendingOutcome struct {
 	id        int
-	at        time.Time
+	at        time.Duration // game clock
 	xp0       int64
 	deaths0   int
 	minLife   float64
@@ -85,11 +86,13 @@ type pendingOutcome struct {
 
 // Session is one play session. Safe for concurrent use.
 type Session struct {
-	cfg   SessionConfig
-	dir   string
-	id    string // directory name: UTC start plus profile
-	sid   string // random id of the dataset
-	start time.Time
+	cfg       SessionConfig
+	dir       string
+	id        string // directory name: UTC start plus profile
+	sid       string // random id of the dataset
+	start     time.Time
+	gameStart time.Duration // the game clock at the start; lockstep runs it many times faster than the wall
+	identSent [2]string     // class and build of the last start or identity line
 
 	mu       sync.Mutex
 	rec, dec *os.File
@@ -110,6 +113,7 @@ type Session struct {
 	ordTimes []float64
 	bytesRec int64
 	bytesDec int64
+	decKind  map[string]int64
 	timeline []TimelineItem
 
 	sum Summary
@@ -125,37 +129,42 @@ type TimelineItem struct {
 
 // Summary is summary.json: the metrics the direction review asked for.
 type Summary struct {
-	V                  int            `json:"v"`
-	Session            string         `json:"session"`
-	Commit             string         `json:"commit"`
-	Class              string         `json:"class"`
-	Build              string         `json:"build"`
-	Start              string         `json:"start"`
-	End                string         `json:"end"`
-	DurationS          float64        `json:"duration_s"`
-	Questions          int            `json:"questions"`
-	Answered           int            `json:"answered"`
-	Faded              int            `json:"faded"`
-	RulesLearned       int            `json:"rules_learned"`
-	RulesRevoked       int            `json:"rules_revoked"`
-	QuestionsPer10Min  []int          `json:"questions_per_10min"`
-	FiresBy            map[string]int `json:"fires_by"`
-	FiresLogged        int            `json:"fires_logged"`
-	FiresSuppressed    int            `json:"fires_suppressed"`
-	LatencyMedianMS    *int64         `json:"answer_latency_median_ms"`
-	Orders             int            `json:"orders"`
-	SecBetweenOrders   *float64       `json:"mean_sec_between_orders"`
-	StayedInTabMin     float64        `json:"stayed_in_tab_min"`
-	Deaths             int            `json:"deaths"`
-	XPPerH             float64        `json:"xp_per_h"`
-	Credits            int64          `json:"credits"`
-	Notes              string         `json:"notes,omitempty"`
-	First10            []TimelineItem `json:"first_10min"`
-	RecordBytes        int64          `json:"record_bytes"`
-	DecisionBytes      int64          `json:"decision_bytes"`
-	DecisionBytesPerH  float64        `json:"decision_bytes_per_h"`
-	inTab              time.Duration
-	questionsPerBucket map[int]int
+	V                     int              `json:"v"`
+	Session               string           `json:"session"`
+	Commit                string           `json:"commit"`
+	Class                 string           `json:"class"`
+	Build                 string           `json:"build"`
+	Start                 string           `json:"start"`
+	End                   string           `json:"end"`
+	DurationS             float64          `json:"duration_s"`      // wall seconds
+	GameDurationS         float64          `json:"game_duration_s"` // game-clock seconds (virtual under lockstep)
+	WallToGame            float64          `json:"game_per_wall"`   // game seconds per wall second (1 in realtime)
+	Questions             int              `json:"questions"`
+	Answered              int              `json:"answered"`
+	Faded                 int              `json:"faded"`
+	RulesLearned          int              `json:"rules_learned"`
+	RulesRevoked          int              `json:"rules_revoked"`
+	QuestionsPer10Min     []int            `json:"questions_per_10min"`
+	FiresBy               map[string]int   `json:"fires_by"`
+	FiresLogged           int              `json:"fires_logged"`
+	FiresSuppressed       int              `json:"fires_suppressed"`
+	LatencyMedianMS       *int64           `json:"answer_latency_median_ms"`
+	Orders                int              `json:"orders"`
+	SecBetweenOrders      *float64         `json:"mean_sec_between_orders"`
+	StayedInTabMin        float64          `json:"stayed_in_tab_min"`
+	Deaths                int              `json:"deaths"`
+	XPPerH                float64          `json:"xp_per_h"` // per GAME hour; xp_per_wall_h is the same per wall hour
+	XPPerWallH            float64          `json:"xp_per_wall_h"`
+	Credits               int64            `json:"credits"`
+	Notes                 string           `json:"notes,omitempty"`
+	First10               []TimelineItem   `json:"first_10min"`
+	RecordBytes           int64            `json:"record_bytes"`
+	DecisionBytes         int64            `json:"decision_bytes"`
+	DecisionBytesPerH     float64          `json:"decision_bytes_per_h"` // per GAME hour; the wall figure follows
+	DecisionBytesPerWallH float64          `json:"decision_bytes_per_wall_h"`
+	DecisionBytesByKind   map[string]int64 `json:"decision_bytes_by_kind"`
+	inTab                 time.Duration
+	questionsPerBucket    map[int]int
 }
 
 // NewSession creates the directory and both files, writes the headers and hooks the store. Call Poll about every
@@ -186,6 +195,8 @@ func NewSession(cfg SessionConfig) (*Session, error) {
 	s := &Session{cfg: cfg, sid: hex.EncodeToString(rb[:]), seen: map[int]int{}, openedAt: map[int]time.Duration{},
 		lastFire: map[string]time.Duration{}, seenOrd: map[int]bool{}}
 	s.start = cfg.Now().UTC()
+	s.gameStart = cfg.Clock.Now()
+	s.decKind = map[string]int64{}
 	base := s.start.Format("20060102T150405Z")
 	if cfg.Profile != "" {
 		base += "-" + cfg.Profile
@@ -221,6 +232,7 @@ func NewSession(cfg SessionConfig) (*Session, error) {
 	s.writeDec(map[string]any{"v": SessionSchema, "kind": "header", "schema": "decision-dataset", "session": s.sid, "commit": cfg.Commit,
 		"catalogue": cfg.CatalogueVersion, "start": s.start.Format(time.RFC3339), "window_min": cfg.WindowMin})
 	s.writeRec("start", map[string]any{"session": s.id, "commit": cfg.Commit, "class": class, "build": build, "catalogue": cfg.CatalogueVersion})
+	s.identSent = [2]string{class, build}
 	cfg.Store.SetAskObserver(s.OnAsk)
 	cfg.Store.Subscribe(s.onEvent)
 	return s, nil
@@ -270,11 +282,20 @@ func (s *Session) writeDec(v any) {
 	b, _ := json.Marshal(v)
 	n, _ := s.dec.Write(append(b, '\n'))
 	s.bytesDec += int64(n)
+	var k struct {
+		Kind string `json:"kind"`
+	}
+	_ = json.Unmarshal(b, &k)
+	s.decKind[k.Kind] += int64(n)
 }
 
 func round1(f float64) float64 { return float64(int64(f*10+0.5)) / 10 }
 
-func (s *Session) bucket() int { return int(s.elapsed() / 600) }
+// gameElapsed is game seconds since the start; the ten-minute buckets and the per-hour figures use it, because under
+// lockstep one wall minute holds many game minutes.
+func (s *Session) gameElapsed() float64 { return (s.cfg.Clock.Now() - s.gameStart).Seconds() }
+
+func (s *Session) bucket() int { return int(s.gameElapsed() / 600) }
 
 func fromSource(src string) string {
 	switch src {
@@ -340,7 +361,7 @@ func (s *Session) OnAsk(ev decide.AskEvent) {
 		Options: opts, Default: def, Answer: d.Answer, By: by})
 	s.sum.FiresLogged++
 	s.sum.FiresBy[by]++
-	po := &pendingOutcome{id: s.fireN, at: s.cfg.Now(), xp0: s.last.XP, deaths0: s.sum.Deaths}
+	po := &pendingOutcome{id: s.fireN, at: now, xp0: s.last.XP, deaths0: s.sum.Deaths}
 	if newThought {
 		s.seen[d.Thought.ID] = s.fireN
 		s.openedAt[d.Thought.ID] = d.Thought.OpenedAt
@@ -455,7 +476,11 @@ func (s *Session) Poll() {
 		s.lastSamp = now
 	}
 	s.lastPoll = now
-	s.outcomes(now, false)
+	s.outcomes(s.cfg.Clock.Now(), false)
+	if class, build := s.identity(); class != "" && [2]string{class, build} != s.identSent {
+		s.identSent = [2]string{class, build}
+		s.writeRec("identity", map[string]any{"class": class, "build": build})
+	}
 }
 
 func (s *Session) onLog(e decide.Entry) {
@@ -491,14 +516,14 @@ func (s *Session) onLog(e decide.Entry) {
 }
 
 // outcomes writes the outcome line of every firing whose window is over (all of them at the stop, marked partial).
-func (s *Session) outcomes(now time.Time, final bool) {
+func (s *Session) outcomes(now time.Duration, final bool) {
 	win := time.Duration(s.cfg.WindowMin) * time.Minute
 	keep := s.pending[:0]
 	for _, p := range s.pending {
 		if s.cfg.Vitals != nil && (!p.haveLife || s.last.LifePct < p.minLife) {
 			p.minLife, p.haveLife = s.last.LifePct, true
 		}
-		el := now.Sub(p.at)
+		el := now - p.at
 		if el < win && !final {
 			keep = append(keep, p)
 			continue
@@ -527,7 +552,7 @@ func (s *Session) Stop() error {
 		return nil
 	}
 	now := s.cfg.Now()
-	s.outcomes(now, true)
+	s.outcomes(s.cfg.Clock.Now(), true)
 	s.stopped = true
 	s.cfg.Store.SetAskObserver(nil)
 	s.writeRec("stop", nil)
@@ -543,8 +568,13 @@ func (s *Session) finish(now time.Time) Summary {
 	sum := s.sum
 	sum.End = now.UTC().Format(time.RFC3339)
 	sum.Class, sum.Build = s.identity()
-	dur := now.Sub(s.start)
-	sum.DurationS = round1(dur.Seconds())
+	wall := now.Sub(s.start)
+	dur := s.cfg.Clock.Now() - s.gameStart
+	sum.DurationS = round1(wall.Seconds())
+	sum.GameDurationS = round1(dur.Seconds())
+	if wall > 0 {
+		sum.WallToGame = round1(dur.Seconds() / wall.Seconds())
+	}
 	n := int(dur/(10*time.Minute)) + 1
 	sum.QuestionsPer10Min = make([]int, n)
 	for b, c := range s.sum.questionsPerBucket {
@@ -570,6 +600,13 @@ func (s *Session) finish(now time.Time) Summary {
 		}
 		sum.DecisionBytesPerH = float64(int64(float64(s.bytesDec) / h))
 	}
+	if h := wall.Hours(); h > 0 {
+		if s.haveVit0 {
+			sum.XPPerWallH = float64(int64(float64(s.last.XP-s.vit0.XP)/h + 0.5))
+		}
+		sum.DecisionBytesPerWallH = float64(int64(float64(s.bytesDec) / h))
+	}
+	sum.DecisionBytesByKind = maps.Clone(s.decKind)
 	sum.Credits = s.last.Credits - s.vit0.Credits
 	sum.First10 = s.timeline
 	if sum.First10 == nil {
@@ -583,18 +620,18 @@ func (s *Session) finish(now time.Time) Summary {
 func (m Summary) Markdown() string {
 	var b strings.Builder
 	fmt.Fprintf(&b, "# Play session %s\n\n", m.Session)
-	fmt.Fprintf(&b, "- Length: %.1f min (%s to %s), commit %s, %s %s\n", m.DurationS/60, m.Start, m.End, m.Commit, m.Class, m.Build)
+	fmt.Fprintf(&b, "- Length: %.1f min wall, %.1f min game (x%.1f), %s to %s, commit %s, %s %s\n", m.DurationS/60, m.GameDurationS/60, m.WallToGame, m.Start, m.End, m.Commit, m.Class, m.Build)
 	fmt.Fprintf(&b, "- Questions: %d asked, %d answered, %d faded; per 10 minutes: %v\n", m.Questions, m.Answered, m.Faded, m.QuestionsPer10Min)
 	fmt.Fprintf(&b, "- Rules learned: %d (revoked %d); orders given: %d", m.RulesLearned, m.RulesRevoked, m.Orders)
 	if m.SecBetweenOrders != nil {
 		fmt.Fprintf(&b, ", %.0f s between orders", *m.SecBetweenOrders)
 	}
-	fmt.Fprintf(&b, "\n- In the tab: %.1f min; deaths: %d; XP/h: %.0f; credits: %d\n", m.StayedInTabMin, m.Deaths, m.XPPerH, m.Credits)
+	fmt.Fprintf(&b, "\n- In the tab: %.1f min; deaths: %d; XP per game hour: %.0f (per wall hour %.0f); credits: %d\n", m.StayedInTabMin, m.Deaths, m.XPPerH, m.XPPerWallH, m.Credits)
 	if m.LatencyMedianMS != nil {
 		fmt.Fprintf(&b, "- Median answer latency: %d ms\n", *m.LatencyMedianMS)
 	}
 	fmt.Fprintf(&b, "- Decided by: %v (logged %d, repeats not logged %d)\n", m.FiresBy, m.FiresLogged, m.FiresSuppressed)
-	fmt.Fprintf(&b, "- Dataset: %d bytes (%.0f per hour); record %d bytes\n", m.DecisionBytes, m.DecisionBytesPerH, m.RecordBytes)
+	fmt.Fprintf(&b, "- Dataset: %d bytes (%.0f per game hour, %.0f per wall hour); record %d bytes\n", m.DecisionBytes, m.DecisionBytesPerH, m.DecisionBytesPerWallH, m.RecordBytes)
 	if m.Notes != "" {
 		fmt.Fprintf(&b, "\n## Notes\n\n%s\n", m.Notes)
 	}

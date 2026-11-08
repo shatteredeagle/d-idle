@@ -58,6 +58,18 @@ type CharterRow struct {
 	Tiers []CharterTier `json:"tiers"`
 }
 
+// TripFloor is the least activity that makes an expedition pay its "trip" row: the trip pays when ANY one field is
+// reached (0 = that field is not a reason). A walk in and out with nothing done pays nothing.
+type TripFloor struct {
+	Kills int64 `json:"kills"`
+	Drops int64 `json:"drops"`
+	XP    int64 `json:"xp"`
+}
+
+func (f TripFloor) met(kills, drops, xp int64) bool {
+	return f.Kills > 0 && kills >= f.Kills || f.Drops > 0 && drops >= f.Drops || f.XP > 0 && xp >= f.XP
+}
+
 // Zone is the recommended clvl range of an area.
 type Zone struct {
 	Area string `json:"area"`
@@ -67,12 +79,13 @@ type Zone struct {
 
 // TallyRows is the validated tally table.
 type TallyRows struct {
-	Schema   string      `json:"schema"`
-	Currency string      `json:"currency"`
-	Kill     KillRow     `json:"kill"`
-	Credits  []CreditRow `json:"credits"`
-	Charter  CharterRow  `json:"charter"`
-	Zones    []Zone      `json:"zones"`
+	Schema    string      `json:"schema"`
+	Currency  string      `json:"currency"`
+	Kill      KillRow     `json:"kill"`
+	Credits   []CreditRow `json:"credits"`
+	TripFloor TripFloor   `json:"trip_floor"`
+	Charter   CharterRow  `json:"charter"`
+	Zones     []Zone      `json:"zones"`
 }
 
 //go:embed tallyrows.json
@@ -141,6 +154,9 @@ func (t *TallyRows) Validate(reg *Registry) error {
 		if !seen[need] {
 			return fmt.Errorf("tally rows: no credit row for event %q", need)
 		}
+	}
+	if f := t.TripFloor; f.Kills < 0 || f.Drops < 0 || f.XP < 0 || f.Kills+f.Drops+f.XP == 0 {
+		return errors.New("tally rows: trip_floor: needs at least one positive field and no negative one")
 	}
 	if t.Charter.Base <= 0 || len(t.Charter.Tiers) == 0 {
 		return errors.New("tally rows: charter: needs base > 0 and tiers")
@@ -219,6 +235,8 @@ func (t *TallyRows) Quote(area string, level int) (Quote, error) {
 // example run plus the event's sequence number): replaying the same journal then books nothing twice.
 type TallyEvent struct {
 	Kind, ID, Subject, Class string
+	// Activity of the trip (EvTrip only): kills, drops and XP seen since the hero left town.
+	Kills, Drops, XP int64
 }
 
 // Tally credits and spends the tally of one profile. Safe for concurrent use.
@@ -308,6 +326,9 @@ func (t *Tally) Credit(ev TallyEvent) ([]Entry, error) {
 		r := t.Rows.credit("waypoint")
 		cs = append(cs, candidate{"waypoint/" + ev.Subject, r.Source, fmt.Sprintf(r.Why, ev.Subject), r.Amount})
 	case EvTrip:
+		if !t.Rows.TripFloor.met(ev.Kills, ev.Drops, ev.XP) {
+			break
+		}
 		r := t.Rows.credit("trip")
 		cs = append(cs, candidate{"trip/" + t.Character + "/" + ev.ID, r.Source, fmt.Sprintf(r.Why, ev.Subject), r.Amount})
 	default:

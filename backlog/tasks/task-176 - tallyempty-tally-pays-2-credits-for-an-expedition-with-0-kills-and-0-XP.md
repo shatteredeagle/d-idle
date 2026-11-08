@@ -1,10 +1,11 @@
 ---
 id: TASK-176
 title: 'tallyempty: tally pays 2 credits for an expedition with 0 kills and 0 XP'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:59:00Z'
+updated_date: '2026-11-08T04:48:00Z'
 labels:
   - watch
   - bug
@@ -15,8 +16,14 @@ ordinal: 143000
 card: "tallyempty"
 owns:
   - "internal/currency/tallyrows.json"
+  - "internal/currency/tallyrows.go"
+  - "internal/currency/tallyrows_test.go"
+  - "internal/watch/tallystrip.go"
+  - "internal/watch/tallystrip_test.go"
+  - "docs/tally-strip.md"
 exclusive: []
 contracts: []
+result: "Offline V: trip_floor (3 kills, 1 drop or 1 XP) in tallyrows.json; TestTripFloor, TestEmptyExpeditionPaysNothing, two classes. Not verified live. Owns widened to the tally code and docs."
 ---
 
 ## Description
@@ -29,6 +36,6 @@ Found by paladinsmoke (TASK-142). With a hero that killed nothing, GET /api/tall
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 A zero-kill, zero-XP expedition credits 0 (offline test)
-- [ ] #2 A normal expedition still credits its row
+- [x] #1 A zero-kill, zero-XP expedition credits 0 (offline test)
+- [x] #2 A normal expedition still credits its row
 <!-- AC:END -->

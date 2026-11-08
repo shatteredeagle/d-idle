@@ -147,3 +147,24 @@ func TestCharterFlow(t *testing.T) {
 		}
 	}
 }
+
+// A walk out and back with nothing done pays no trip credit; a trip with kills still does (TASK-176).
+func TestEmptyExpeditionPaysNothing(t *testing.T) {
+	for _, build := range []string{"sorceress", "paladin"} {
+		_, s, _ := tallyRig(t, build, 5)
+		var evs []goals.Event
+		for i := 0; i < 5; i++ {
+			evs = append(evs, goals.Event{Type: goals.EvAreaChange, Area: "Rogue Encampment"})
+			evs = append(evs, goals.Event{Type: goals.EvAreaChange, Area: "Blood Moor"})
+		}
+		evs = append(evs, goals.Event{Type: goals.EvAreaChange, Area: "Rogue Encampment"})
+		for i := range evs {
+			evs[i].Seq = uint64(i + 1)
+		}
+		feed(s, evs...)
+		// only the one-time first visit to Blood Moor (5); the five empty trips add nothing
+		if v := s.View(); v.Balance != 5 {
+			t.Errorf("%s: balance %d after empty trips, want 5", build, v.Balance)
+		}
+	}
+}

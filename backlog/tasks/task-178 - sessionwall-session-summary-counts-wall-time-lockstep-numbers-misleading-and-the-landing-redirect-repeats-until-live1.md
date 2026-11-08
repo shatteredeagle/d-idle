@@ -15,8 +15,18 @@ ordinal: 145000
 card: "sessionwall"
 owns:
   - "docs/sessionwall.md"
+  - "internal/watch/sessionrec.go"
+  - "internal/watch/sessionrec_test.go"
+  - "internal/watch/testdata/session-summary.json.golden"
+  - "internal/watch/returnscreen.go"
+  - "internal/watch/returnscreen_test.go"
+  - "cmd/d2bot/class.go"
+  - "cmd/d2bot/play.go"
+  - "docs/session-record.md"
+  - "docs/return-screen.md"
 exclusive: []
 contracts: []
+result: "Offline V: summary reports wall and game clocks, rates on the game clock (TestSummaryBothClocksLockstep, two classes); identity line carries class and build; landing redirect once per absence (TestReturnLandingAfterAbsence); record size measured from the smoke run and doc corrected, not reduced. Not verified live. Owns widened to the watch/session code and docs."
 ---
 
 ## Description
@@ -29,6 +39,6 @@ Found by paladinsmoke (TASK-142, docs/paladinsmoke.md). (1) summary.json of a lo
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Summary per-hour numbers use the injected game clock; test with a fake clock
-- [ ] #2 Redirect behaviour and docs/return-screen.md agree
+- [x] #1 Summary per-hour numbers use the injected game clock; test with a fake clock
+- [x] #2 Redirect behaviour and docs/return-screen.md agree
 <!-- AC:END -->

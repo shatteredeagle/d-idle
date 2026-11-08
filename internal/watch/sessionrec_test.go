@@ -24,24 +24,32 @@ type sessRig struct {
 	ords []Order
 	s    *Session
 	cls  string
+	id   func() (string, string) // overrides the identity of the class when set
 }
 
 const secretTok = "tok-SECRET-0123456789abcdef"
 
-func newSessRig(t *testing.T, class string) *sessRig {
+func newSessRig(t *testing.T, class string) *sessRig { return newSessRigID(t, class, nil) }
+
+func newSessRigID(t *testing.T, class string, id func() (string, string)) *sessRig {
 	t.Helper()
 	cat, err := decide.Shipped()
 	if err != nil {
 		t.Fatal(err)
 	}
-	r := &sessRig{t: t, cat: cat, clk: &decide.ManualClock{}, wall: time.Date(2026, 11, 8, 10, 0, 0, 0, time.UTC), cls: class}
+	r := &sessRig{t: t, cat: cat, clk: &decide.ManualClock{}, wall: time.Date(2026, 11, 8, 10, 0, 0, 0, time.UTC), cls: class, id: id}
 	if r.st, err = decide.New(cat, "human", r.clk); err != nil {
 		t.Fatal(err)
 	}
 	r.s, err = NewSession(SessionConfig{Root: t.TempDir(), Profile: "human", Commit: "abc1234", CatalogueVersion: cat.Version,
 		Store: r.st, Cat: cat, Clock: r.clk, Now: func() time.Time { return r.wall }, Rand: bytes.NewReader([]byte("12345678abcdefgh")),
-		Identity: func() (string, string) { return class, "build-" + class },
-		Vitals:   func() Vitals { return r.v }, Viewers: func() int { return r.view }, Orders: func() []Order { return r.ords },
+		Identity: func() (string, string) {
+			if r.id != nil {
+				return r.id()
+			}
+			return class, "build-" + class
+		},
+		Vitals: func() Vitals { return r.v }, Viewers: func() int { return r.view }, Orders: func() []Order { return r.ords },
 		Secrets: []string{secretTok}})
 	if err != nil {
 		t.Fatal(err)
@@ -361,5 +369,68 @@ func TestSummaryAndDatasetGolden(t *testing.T) {
 		if !bytes.Equal(got, want) {
 			t.Errorf("%s differs from %s:\n%s", n, gp, got)
 		}
+	}
+}
+
+// Under lockstep the game clock runs 20x the wall: the summary reports both clocks and the per-hour figures and the
+// ten-minute buckets follow the game clock (TASK-178). The class is unknown at the start and arrives in an identity line.
+func TestSummaryBothClocksLockstep(t *testing.T) {
+	for _, class := range []string{"sorceress", "paladin"} {
+		t.Run(class, func(t *testing.T) {
+			known := ""
+			r := newSessRigID(t, class, func() (string, string) { return known, "" })
+			r.v = Vitals{LifePct: 100}
+			r.s.Poll()
+			for i := 0; i < 36*60; i++ { // 36 wall minutes
+				r.clk.Advance(20 * time.Second) // 12 game hours
+				r.wall = r.wall.Add(time.Second)
+				if i == 5 {
+					known = class
+				}
+				if i == 100 {
+					r.v = Vitals{LifePct: 100, XP: 12000}
+				}
+				if i%240 == 0 {
+					r.ask(float64(500 + i))
+				}
+				if _, err := r.st.Tick(); err != nil {
+					t.Fatal(err)
+				}
+				r.s.Poll()
+			}
+			if err := r.s.Stop(); err != nil {
+				t.Fatal(err)
+			}
+			var sum Summary
+			b, _ := os.ReadFile(filepath.Join(r.s.Dir(), "summary.json"))
+			if err := json.Unmarshal(b, &sum); err != nil {
+				t.Fatal(err)
+			}
+			if sum.DurationS != 2160 || sum.GameDurationS != 43200 || sum.WallToGame != 20 {
+				t.Errorf("clocks: wall %v game %v ratio %v", sum.DurationS, sum.GameDurationS, sum.WallToGame)
+			}
+			if sum.XPPerH != 1000 || sum.XPPerWallH != 20000 {
+				t.Errorf("xp per game hour %v (want 1000), per wall hour %v (want 20000)", sum.XPPerH, sum.XPPerWallH)
+			}
+			if len(sum.QuestionsPer10Min) != 73 {
+				t.Errorf("buckets follow the game clock: %d", len(sum.QuestionsPer10Min))
+			}
+			if sum.DecisionBytes == 0 || sum.DecisionBytesPerWallH <= sum.DecisionBytesPerH*19 || sum.DecisionBytesByKind["fire"] == 0 {
+				t.Errorf("bytes: %d per game h %v per wall h %v by kind %v", sum.DecisionBytes, sum.DecisionBytesPerH, sum.DecisionBytesPerWallH, sum.DecisionBytesByKind)
+			}
+			rec := readLines(t, filepath.Join(r.s.Dir(), "session.jsonl"))
+			if rec[0]["class"] != "" {
+				t.Errorf("start line class %v", rec[0]["class"])
+			}
+			var got string
+			for _, l := range rec {
+				if l["kind"] == "identity" {
+					got, _ = l["class"].(string)
+				}
+			}
+			if got != class || sum.Class != class {
+				t.Errorf("identity line %q, summary %q", got, sum.Class)
+			}
+		})
 	}
 }

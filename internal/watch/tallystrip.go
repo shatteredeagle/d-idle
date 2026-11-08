@@ -64,12 +64,13 @@ type TallyStrip struct {
 	IsTown func(area string) bool
 	Now    func() time.Time
 
-	mu       sync.Mutex
-	inField  bool
-	start    time.Time
-	trips    int
-	last     *currency.Window
-	firstErr error
+	mu               sync.Mutex
+	inField          bool
+	start            time.Time
+	trips            int
+	kills, drops, xp int64 // activity of the trip under way
+	last             *currency.Window
+	firstErr         error
 }
 
 // TallyOffText is the strip when no ledger is attached: the human setting (the ladder and the watch screen) is off.
@@ -109,7 +110,15 @@ func (s *TallyStrip) OnEvent(ev goals.Event) {
 		return
 	}
 	switch ev.Type {
+	case goals.EvDrop:
+		s.mu.Lock()
+		s.drops++
+		s.mu.Unlock()
 	case goals.EvKill:
+		s.mu.Lock()
+		s.kills++
+		s.xp += ev.XP
+		s.mu.Unlock()
 		if ev.Monster == "" {
 			return
 		}
@@ -131,6 +140,7 @@ func (s *TallyStrip) OnEvent(ev goals.Event) {
 			s.mu.Lock()
 			if !s.inField {
 				s.inField, s.start = true, s.Now().Truncate(time.Second) // ledger stamps are whole seconds
+				s.kills, s.drops, s.xp = 0, 0, 0
 			}
 			s.mu.Unlock()
 			return
@@ -141,12 +151,13 @@ func (s *TallyStrip) OnEvent(ev goals.Event) {
 		if was {
 			s.trips++
 		}
-		n := s.trips
+		n, kills, drops, xp := s.trips, s.kills, s.drops, s.xp
 		s.mu.Unlock()
 		if !was {
 			return
 		}
-		s.credit(currency.TallyEvent{Kind: currency.EvTrip, ID: id, Subject: fmt.Sprint(n)})
+		s.credit(currency.TallyEvent{Kind: currency.EvTrip, ID: id, Subject: fmt.Sprint(n),
+			Kills: kills, Drops: drops, XP: xp})
 		s.mu.Lock()
 		s.last = &currency.Window{From: start, To: s.Now().Add(time.Second)}
 		s.mu.Unlock()

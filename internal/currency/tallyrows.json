@@ -18,6 +18,7 @@
     {"event": "waypoint", "source": "tally_waypoint", "amount": 10, "why": "waypoint lit at %s"},
     {"event": "trip", "source": "tally_trip", "amount": 2, "why": "expedition %s completed"}
   ],
+  "trip_floor": {"kills": 3, "drops": 1, "xp": 1},
   "charter": {
     "base": 20,
     "tiers": [
