@@ -33,6 +33,10 @@ type Options struct {
 	DebugHold int // ms to wait before undoing a failed equip, for screenshots
 	// Dry plans and logs but never clicks.
 	Dry bool
+	// Unlocks and Progress gate skill points by quest, waypoint or boss (docs/skill-unlocks.md). Nil Unlocks: nothing is
+	// locked (fidelity and measured runs; a table with AllMetProgress is the equivalent).
+	Unlocks  *Unlocks
+	Progress *Progress
 	// Snapshot replaces env.Snapshot for the hand (tests with the simulated town).
 	Snapshot func() (*d2.Snapshot, error)
 }
@@ -302,6 +306,9 @@ func (l *Leveler) PlanFor(snap *d2.Snapshot) []Action {
 	b, err := l.buildFor(p)
 	if err != nil {
 		return nil
+	}
+	if l.o.Unlocks != nil {
+		return l.o.Unlocks.Plan(b, l.have(p), l.ruleFor(l.classCode(p.Class)), l.skipSet(p.Level), l.o.Progress)
 	}
 	return b.Plan(l.have(p), l.ruleFor(l.classCode(p.Class)), l.skipSet(p.Level))
 }
