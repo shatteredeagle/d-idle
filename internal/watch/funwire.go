@@ -88,6 +88,9 @@ type FunConfig struct {
 	Hall *HallConfig
 	// Monsters gives the bestiary its type, attack pattern and resists (TASK-158). nil: cards carry the flavour only.
 	Monsters MonsterTables
+	// BestiaryPath keeps the kill counts of the bestiary across restarts ("" = in memory). With Monsters set, kinds the
+	// table lacks are skipped and named in Fun.Errors (not fatal).
+	BestiaryPath string
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -209,9 +212,21 @@ func NewFun(c FunConfig) (*Fun, error) {
 		}
 		if c.Unlock.Has(BestiaryID) || c.Unlock.Has(BestiaryResistsID) {
 			h := c.Hub
-			be, err := NewBestiary(f.Unlocks, nil, c.Monsters, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			notes, skipped, err := FilterBestiaryNotes(c.Monsters)
 			if err != nil {
 				return nil, err
+			}
+			for _, n := range skipped {
+				f.fail(fmt.Errorf("bestiary: kind %q is not in the monster table, skipped", n))
+			}
+			be, err := NewBestiary(f.Unlocks, notes, c.Monsters, func() float64 { return h.rel(h.cfg.Clock.Now()) })
+			if err != nil {
+				return nil, err
+			}
+			if c.BestiaryPath != "" {
+				if err := be.SetStore(c.BestiaryPath); err != nil {
+					return nil, err
+				}
 			}
 			f.Bestiary = be
 			sec.Register(BestiarySectionID, be.Section())
