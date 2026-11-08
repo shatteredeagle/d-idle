@@ -1,0 +1,3 @@
+BACKLOG: TASK-125 upstream PR #245 open (revive refill); merge pending
+INDEX: docs/research/pr-bundle-queue.md: fid-revive-refill row now OPEN as PR #245
+CHANGELOG: upstream PR #245 opened: a respawn after death refills life, mana and stamina (TASK-125)
