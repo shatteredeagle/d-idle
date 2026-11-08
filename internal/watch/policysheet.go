@@ -744,3 +744,45 @@ document.addEventListener('click',function(e){var b=e.target.closest('button[dat
  .then(function(j){say(j.ok?(j.changed?'Changed':'Already set'):(j.error||'failed'));if(j.ok&&j.changed)setTimeout(function(){location.reload();},500);})
  .catch(function(){say('the answer route is not reachable');});});
 })();`
+
+// CurrentOption is the option now chosen for a row (the row default when never set); "" for a row the table lacks.
+func (p *PolicySheet) CurrentOption(rowID string) string {
+	row, err := p.table.Row(rowID)
+	if err != nil {
+		return ""
+	}
+	return p.current(row)
+}
+
+// DefaultOption is the default option id of a row, "" for a row the table lacks.
+func (p *PolicySheet) DefaultOption(rowID string) string {
+	row, err := p.table.Row(rowID)
+	if err != nil {
+		return ""
+	}
+	return row.Default
+}
+
+// SetByPact is Set for a Pact (TASK-167): the same knobs, rules and log line, but no recorded change, so the return
+// screen offers no "change it back" card for something a Pact the player chose is holding in place.
+func (p *PolicySheet) SetByPact(rowID, optID string) error {
+	_, rows, err := p.rows()
+	if err != nil {
+		return err
+	}
+	row, err := p.table.Row(rowID)
+	if err != nil {
+		return fmt.Errorf("%w %q", ErrPolicyRow, safeText(rowID, 40))
+	}
+	for _, r := range rows {
+		if r == row {
+			opt, err := row.Option(optID)
+			if err != nil {
+				return fmt.Errorf("%w %q of row %q", ErrPolicyOption, safeText(optID, 40), row.ID)
+			}
+			_, _, err = p.set(row, opt, false)
+			return err
+		}
+	}
+	return fmt.Errorf("%w: %q, class %q", ErrPolicyScope, row.ID, strings.ToLower(p.class()))
+}

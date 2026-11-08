@@ -52,8 +52,15 @@ COPY licenses/ /usr/share/licenses/d2d/
 # our part (separate program, separate layer)
 COPY bin/d2bot bin/d2dsoak bin/d2dview bin/d2dsetup bin/d2dping /opt/d2lod/
 COPY entrypoint.sh /opt/d2lod/entrypoint.sh
+# the boot shim (Tier 2 self-update, docs/self-update-drill.md): picks the release to run, confirms or rolls back an update.
+# It and the baked public keys cannot be changed by an update; changing them needs a new image.
+COPY bin/didleboot /opt/didle/boot
+COPY pubkeys/ /opt/didle/pubkeys/
 
-ENV D2D_BIN=/opt/d2d/d2d \
+ARG APP_VERSION=0.0.0
+ENV DIDLE_BASE_VERSION=$APP_VERSION \
+    D2BOT_IMAGE_ABI=1 \
+    D2D_BIN=/opt/d2d/d2d \
     D2D_DATA=/game \
     D2D_SOCK=/run/d2d/d2d.sock \
     D2BOT_DATA=/data \
@@ -75,5 +82,8 @@ EXPOSE 8891 8892
 # 127.0.0.1:8893 and the bot API on 127.0.0.1:8420 inside the container (publish with -p only if wanted).
 # The healthcheck dials the read-only tap socket (a bare d2d takes one client, the bot's).
 HEALTHCHECK --interval=30s --timeout=6s --start-period=90s --retries=3 CMD ["/opt/d2lod/d2dping", "ping"]
-ENTRYPOINT ["/usr/bin/tini", "--", "/opt/d2lod/entrypoint.sh"]
+# tini -> boot shim -> the launcher of the selected release. The baked launcher is the one named here; a downloaded release
+# brings its own (bin/entrypoint.sh). Without a downloaded release nothing changes: the shim runs this launcher as before.
+LABEL io.didle.image.abi="1"
+ENTRYPOINT ["/usr/bin/tini", "--", "/opt/didle/boot", "--launcher", "/opt/d2lod/entrypoint.sh"]
 CMD ["bot"]

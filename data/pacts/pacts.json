@@ -6,7 +6,10 @@
   "max_cap": 20,
   "mastery_step": 1,
   "slots_at_unlock": 2,
-  "no_safety_rank": 3
+  "no_safety_rank": 3,
+  "safe_minutes": 10,
+  "safe_clvl": 5,
+  "consent_days": 7
  },
  "pacts": [
   {
@@ -39,9 +42,7 @@
      "rank": 1,
      "heat": 3,
      "params": {
-      "values": {
-       "min_clvl_potions": 8
-      },
+      "until_clvl": 8,
       "knobs": {
        "resource.beltCol1": 4,
        "resource.beltCol2": 4,
@@ -60,9 +61,7 @@
      "rank": 3,
      "heat": 9,
      "params": {
-      "values": {
-       "min_clvl_potions": 14
-      },
+      "until_clvl": 14,
       "knobs": {
        "resource.beltCol1": 4,
        "resource.beltCol2": 4,
@@ -82,9 +81,7 @@
      "rank": 5,
      "heat": 15,
      "params": {
-      "values": {
-       "min_clvl_potions": 99
-      },
+      "until_clvl": 99,
       "knobs": {
        "resource.beltCol1": 4,
        "resource.beltCol2": 4,
@@ -121,9 +118,7 @@
      "rank": 1,
      "heat": 2,
      "params": {
-      "values": {
-       "death_limit": 3
-      }
+      "death_limit": 3
      },
      "reward": {
       "tally_pct": 5
@@ -134,9 +129,7 @@
      "rank": 3,
      "heat": 6,
      "params": {
-      "values": {
-       "death_limit": 2
-      }
+      "death_limit": 2
      },
      "reward": {
       "tally_pct": 25
@@ -147,9 +140,7 @@
      "rank": 5,
      "heat": 10,
      "params": {
-      "values": {
-       "death_limit": 1
-      }
+      "death_limit": 1
      },
      "reward": {
       "tally_pct": 75

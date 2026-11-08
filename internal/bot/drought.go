@@ -45,6 +45,9 @@ func (r *Runner) droughtStage(s *d2.Snapshot, now time.Time) int {
 	if r.slowField(o, p, now) {
 		return 2
 	}
+	if r.dryRecovery(o, now) {
+		return 1
+	}
 	need := m
 	if s2 := time.Duration(r.e.Tune.Bot.DroughtStage2Min) * time.Minute; o.droughtStage >= 1 && s2 > 0 {
 		need = min(m, s2) // g2e F3: after the first action the second follows soon, not a full limit later
@@ -78,6 +81,45 @@ func (r *Runner) slowField(o *observer, p *d2.Player, now time.Time) bool {
 	return n < t.DroughtSlowKills && now.Sub(o.droughtAt) >= w
 }
 
+// dryRecovery is the recovery pacing rule (palready): a recovery that farms gold in a field area and killed fewer than
+// RecoveryDryKills in the last RecoveryDryMin minutes has run the area dry (V live, realtime Paladin: 141 s since the
+// last kill in Blood Moor, the old rules ended a no-gain recovery only after 20 minutes). Caller holds obMu.
+func (r *Runner) dryRecovery(o *observer, now time.Time) bool {
+	t := r.e.Tune.Bot
+	w := time.Duration(t.RecoveryDryMin) * time.Minute
+	if w <= 0 || !o.recovering || o.fieldSince.IsZero() || now.Sub(o.fieldSince) < w || now.Sub(o.droughtAt) < w {
+		return false
+	}
+	n := 0
+	for _, k := range o.killTimes {
+		if now.Sub(k) < w {
+			n++
+		}
+	}
+	return n < t.RecoveryDryKills
+}
+
+// dryRecoveryLeave sends a dry recovery on: the area is skipped when the recovery has another eligible area, else a
+// fresh game follows (stage 2). It reports whether it acted.
+func (r *Runner) dryRecoveryLeave(s *d2.Snapshot) bool {
+	area := s.Player.Area
+	if r.d.Plan.IsTown(area) {
+		return false
+	}
+	d := time.Duration(r.e.Tune.Bot.RecoveryDrySkipMin) * time.Minute
+	r.skipArea(area, d, whyDryRecovery)
+	r.loop.stepArea = 0
+	if a, ok := r.recoveryArea(s); ok && a != area {
+		r.e.Log.Warn("recovery: area dry, moving on", "from", area, "to", a, "name", r.areaName(a))
+		return true
+	}
+	r.obMu.Lock()
+	delete(r.avoid, area) // nowhere else to go: do not strand the hero in town
+	delete(r.avoidWhy, area)
+	r.obMu.Unlock()
+	return false
+}
+
 // droughtCheck acts on a due drought. Stage 1 keeps the planner out of the current area for a while and re-plans
 // (the next route step); a goal that names its area cannot skip it, and a second drought in a row starts a fresh game.
 // It reports whether it acted (the caller then skips the rest of the step).
@@ -94,7 +136,12 @@ func (r *Runner) droughtCheck(ctx context.Context, s *d2.Snapshot, c control) bo
 	r.obMu.Unlock()
 	r.noteNokill("drought" + strconv.Itoa(stage))
 	r.e.Log.Warn("kill drought", "stage", stage, "area", area, "name", r.areaName(area), "minutes", int(since/time.Minute))
-	if stage == 1 && r.skipTargetFor(whyDrought, 4*r.navSkip()) {
+	if stage == 1 && r.recoveryActive() {
+		if r.dryRecoveryLeave(s) {
+			return true
+		}
+		stage = 2 // no other eligible area: a new game refills this one
+	} else if stage == 1 && r.skipTargetFor(whyDrought, 4*r.navSkip()) {
 		return true
 	}
 	if r.d.Cycler == nil || r.freshHold(s.Player) > 0 {
