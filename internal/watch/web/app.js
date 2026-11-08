@@ -376,7 +376,13 @@
   // "Go now": the new order replaces every open one (slice 1 has no queue).
   function send(body) {
     body.replace = true;
-    return post('/api/orders', body).then(function (j) { if (j && j.ok && j.order) toast('Order given: ' + j.order.text); });
+    return post('/api/orders', body).then(function (j) {
+      if (j && j.ok && j.order) { toast('Order given: ' + j.order.text); return; }
+      // Above the zone range the hero asks for a charter in tally; nothing was placed or charged yet.
+      if (j && j.code === 'charter-needed' && j.charter && window.confirm(j.charter.text + ' Pay ' + j.charter.price + ' tally for the charter?')) {
+        body.approve = true; return send(body);
+      }
+    });
   }
   function trapTab(ev) {
     if (ev.key === 'Escape' && !$('sheet').hidden) { closeSheet(); return; }
@@ -428,8 +434,20 @@
     });
   }
 
+  // The tally strip (TASK-129): one line from /api/tally, hidden while the route is missing or tally is off.
+  function renderTally(t) {
+    var box = $('tallystrip'); clear(box);
+    $('returnlink').hidden = !t; // the route exists only where the bot mounts the return screen
+    box.hidden = !t || !t.enabled;
+    if (box.hidden) return;
+    box.appendChild(el('b', '', t.strip));
+    if (t.error) box.appendChild(el('span', 'off', ' ' + t.error));
+  }
+  function refreshTally() { get('/api/tally').then(renderTally).catch(function () { renderTally(null); }); }
+
   function refresh() {
     if (pending) return; pending = true;
+    refreshTally();
     var reqs = [get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')];
     if (cfg.currency) reqs.push(get('/api/currency'));
     Promise.all(reqs)

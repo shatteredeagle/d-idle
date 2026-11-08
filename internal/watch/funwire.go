@@ -1,0 +1,328 @@
+package watch
+
+import (
+	"errors"
+	"fmt"
+	"net/http"
+	"strings"
+	"sync"
+
+	"d2lod-bot/internal/currency"
+	"d2lod-bot/internal/decide"
+	"d2lod-bot/internal/goals"
+)
+
+// The wiring of the fun loop (TASK-127 return screen, TASK-129 tally strip, TASK-130 Codex; docs/return-screen.md,
+// docs/tally-strip.md, docs/codex.md "Wiring"). Fun is what the bot builds once and feeds with every goals event;
+// ServeOptions.Fun mounts its routes on the two listeners.
+
+// Charter is the price of an order above the zone range, as the order sheet shows it.
+type Charter struct {
+	Area  string `json:"area"`
+	Price int64  `json:"price"`
+	Text  string `json:"text"`
+}
+
+// OrderPlacer takes an order with the charter sink in front of it; TallyStrip is the shipped one.
+type OrderPlacer interface {
+	PlaceOrder(r OrderRequest, approve bool) (Order, currency.Quote, error)
+}
+
+type placerBox struct{ p OrderPlacer }
+
+// SetOrderPlacer routes POST /api/orders through p (nil: straight to Give, the default).
+func (h *Hub) SetOrderPlacer(p OrderPlacer) {
+	if p == nil {
+		h.placer.Store(nil)
+		return
+	}
+	h.placer.Store(&placerBox{p})
+}
+
+// place gives an order, through the charter sink when one is set. The Charter is returned for any priced order.
+func (h *Hub) place(r OrderRequest, approve bool) (Order, *Charter, error) {
+	b := h.placer.Load()
+	if b == nil {
+		o, err := h.Give(r)
+		return o, nil, err
+	}
+	o, q, err := b.p.PlaceOrder(r, approve)
+	var ch *Charter
+	if q.Price > 0 {
+		ch = &Charter{Area: q.Area, Price: q.Price, Text: q.Text}
+	}
+	return o, ch, err
+}
+
+// FunConfig builds a Fun. Hub is required; every other part is optional and a missing part leaves its route off
+// (the return screen then shows the placeholder of that section).
+type FunConfig struct {
+	Hub     *Hub
+	Visit   *Visit  // nil: in memory
+	Speed   float64 // virtual seconds per wall second (Config.Speed)
+	Notes   NotesSink
+	Strip   *TallyStrip // nil: /api/tally says tally is off
+	Codex   *decide.Codex
+	Table   *decide.Firsts
+	Clock   decide.Clock
+	Tracker func(class string) (*decide.Tracker, error) // builds the Tracker once the hero's class is known
+}
+
+// Fun connects the three pieces to one running bot. Safe for concurrent use.
+type Fun struct {
+	Hub    *Hub
+	Away   *AwayLog
+	Return ReturnConfig
+	Strip  *TallyStrip
+
+	codex   *decide.Codex
+	table   *decide.Firsts
+	clock   decide.Clock
+	mkTrack func(string) (*decide.Tracker, error)
+
+	mu      sync.Mutex
+	tracker *decide.Tracker
+	pending []decide.FirstEvent // first-sight edges seen before the hero's class was known
+	errs    []string
+}
+
+// maxPendingFirsts bounds the edges kept while the class is unknown.
+const maxPendingFirsts = 200
+
+// NewFun makes the Fun, registers the return screen sections (tally, codex, quiet) and puts the charter sink in front
+// of the order route.
+func NewFun(c FunConfig) (*Fun, error) {
+	if c.Hub == nil {
+		return nil, errors.New("watch: Fun needs a Hub")
+	}
+	f := &Fun{Hub: c.Hub, Away: c.Hub.AwayLog(), Strip: c.Strip, codex: c.Codex, table: c.Table, clock: c.Clock, mkTrack: c.Tracker}
+	if (c.Codex == nil) != (c.Table == nil) || (c.Codex != nil && (c.Clock == nil || c.Tracker == nil)) {
+		return nil, errors.New("watch: the Codex needs its file, the table, a clock and a tracker factory together")
+	}
+	sec := DefaultSections()
+	sec.Register("tally", TallySection(c.Strip))
+	if c.Codex != nil {
+		sec.Register(CodexSectionID, CodexReturnSection(f.CodexSource()))
+	}
+	sec.Register("quiet", QuietSection(c.Hub))
+	if c.Visit == nil {
+		c.Visit = NewVisit("", nil)
+	}
+	f.Return = ReturnConfig{Hub: c.Hub, Events: f.Away, Visit: c.Visit, Speed: c.Speed, Sections: sec, Notes: c.Notes}
+	if c.Strip != nil {
+		c.Hub.SetOrderPlacer(c.Strip)
+	}
+	return f, nil
+}
+
+// CodexSource is the Codex view's source, nil without a Codex.
+func (f *Fun) CodexSource() CodexSource {
+	if f.codex == nil {
+		return nil
+	}
+	return CodexReader{Codex: f.codex, Table: f.table, Clock: f.clock}
+}
+
+// OnGoalEvent is the one hook feedHub calls for every goals event: the away log, the tally credits and the firsts.
+// Only edges the events carry are derived (kill by name, area change, drop quality, death killer); champion and shrine
+// have no reader behind goals.Event (docs/codex.md).
+func (f *Fun) OnGoalEvent(ev goals.Event) {
+	f.Away.OnGoalEvent(ev)
+	if f.Strip != nil {
+		f.Strip.OnEvent(ev)
+	}
+	if f.codex == nil {
+		return
+	}
+	hero := f.Hub.heroNow()
+	fe := decide.FirstEvent{Area: hero.Area, Clvl: hero.Level}
+	switch ev.Type {
+	case goals.EvKill:
+		fe.Kind, fe.Name = "monster", ev.Monster
+	case goals.EvAreaChange:
+		fe.Kind, fe.Name, fe.Area = "area", ev.Area, ev.Area
+	case goals.EvDrop:
+		if ev.Item == nil {
+			return
+		}
+		fe.Kind = "drop"
+		fe.Name, _ = rankOf(AwayEvent{Item: ev.Item.Name, Quality: ev.Item.Quality, Type: ev.Item.Type})
+	case goals.EvDeath:
+		fe.Kind, fe.Name = "death", ev.Monster
+	default:
+		return
+	}
+	if fe.Name == "" {
+		return
+	}
+	f.observe(fe)
+}
+
+// OnWaypoint is called where the bot learns that it lit a waypoint (Runner.SetWaypointHook). id is unique per touch.
+func (f *Fun) OnWaypoint(area, id string) {
+	if f.Strip != nil {
+		f.Strip.Waypoint(area, id)
+	}
+	if f.codex != nil {
+		hero := f.Hub.heroNow()
+		f.observe(decide.FirstEvent{Kind: "waypoint", Name: area, Area: area, Clvl: hero.Level})
+	}
+}
+
+func (f *Fun) fail(err error) {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if len(f.errs) < 20 {
+		f.errs = append(f.errs, err.Error())
+	}
+}
+
+// Errors lists what the wiring could not do (a Codex row that failed, an unknown class), oldest first.
+func (f *Fun) Errors() []string {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	return append([]string(nil), f.errs...)
+}
+
+func (f *Fun) tracking() *decide.Tracker {
+	f.mu.Lock()
+	defer f.mu.Unlock()
+	if f.tracker != nil {
+		return f.tracker
+	}
+	class := strings.ToLower(f.Hub.heroNow().Class)
+	if class == "" {
+		return nil // the status poll has not reported the character yet
+	}
+	t, err := f.mkTrack(class)
+	if err != nil {
+		if len(f.errs) < 20 {
+			f.errs = append(f.errs, err.Error())
+		}
+		return nil
+	}
+	f.tracker = t
+	return t
+}
+
+func (f *Fun) observe(e decide.FirstEvent) {
+	t := f.tracking()
+	if t == nil {
+		f.mu.Lock()
+		if f.mkTrack != nil && len(f.pending) < maxPendingFirsts {
+			f.pending = append(f.pending, e)
+		}
+		f.mu.Unlock()
+		return
+	}
+	f.mu.Lock()
+	queue := append(f.pending, e)
+	f.pending = nil
+	f.mu.Unlock()
+	for _, q := range queue {
+		if _, err := t.Observe(q); err != nil {
+			f.fail(err)
+		}
+	}
+}
+
+// Settle updates Codex entries whose thought closed (call it from the loop that polls the status).
+func (f *Fun) Settle() {
+	f.mu.Lock()
+	t := f.tracker
+	f.mu.Unlock()
+	if t != nil {
+		if err := t.Settle(); err != nil {
+			f.fail(err)
+		}
+	}
+}
+
+// Mount adds the routes to the viewer mux and returns the wrapper for the answer listener. Viewer: the return screen
+// and the /watch landing (GET only), /api/tally, /api/codex. Answer listener: the return screen's two POST routes.
+func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
+	rh := f.Return.ReturnHandler(live)
+	m.Handle("/watch", rh)
+	m.Handle("/api/thoughts", rh) // a poll of the live screen counts as a look (Visit)
+	for _, p := range ReturnRoutes {
+		m.Handle(p, rh)
+	}
+	if f.Strip != nil {
+		m.Handle("/api/tally", f.Strip.Handler())
+	} else {
+		m.Handle("/api/tally", tallyOff())
+	}
+	if src := f.CodexSource(); src != nil {
+		m.Handle(CodexRoute, CodexHandler(src))
+	}
+}
+
+// owns says whether a ViewRoutes entry is served by mountView instead (the landing redirect and the look tracking).
+func (f *Fun) owns(route string) bool { return route == "/watch" || route == "/api/thoughts" }
+
+func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
+	m := http.NewServeMux()
+	m.Handle("/", base)
+	ra := f.Return.ReturnAnswerHandler(o)
+	for _, p := range ReturnPostRoutes {
+		m.Handle(p, ra)
+	}
+	return m
+}
+
+func tallyOff() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			http.Error(w, "GET only", http.StatusMethodNotAllowed)
+			return
+		}
+		writeJSON(w, 200, &TallyView{Schema: tallySchema, Mode: currency.VanillaMode, Strip: "Tally is off in vanilla mode.", Recent: []TallyLine{}, Next: []NextBuy{}})
+	})
+}
+
+func (h *Hub) heroNow() HeroInfo {
+	h.mu.Lock()
+	defer h.mu.Unlock()
+	return h.hero
+}
+
+// TallySection is the return screen's tally section (replaces the placeholder). nil strip: it keeps the placeholder text.
+func TallySection(s *TallyStrip) ReturnSection {
+	return SectionFunc(func(*ReturnData) *SectionView {
+		v := &SectionView{ID: "tally", Title: "Tally", After: true, Placeholder: "Tally is not switched on."}
+		if s == nil {
+			return v
+		}
+		tv := s.View()
+		v.Lines = append(v.Lines, tv.Strip)
+		if tv.Error != "" {
+			v.Lines = append(v.Lines, tv.Error)
+		}
+		if tv.Last != nil {
+			v.Lines = append(v.Lines, fmt.Sprintf("Last trip: %+d (%d earned, %d spent)", tv.Last.Net, tv.Last.Credited, tv.Last.Spent))
+			for i, l := range tv.Last.Lines {
+				if i == 5 {
+					break
+				}
+				v.Lines = append(v.Lines, fmt.Sprintf("%+d %s", l.Amount, l.Why))
+			}
+		}
+		return v
+	})
+}
+
+// QuietSection says which questions the hero stopped asking while the player was away (TASK-137). Hidden when none.
+func QuietSection(h *Hub) ReturnSection {
+	return SectionFunc(func(d *ReturnData) *SectionView {
+		var lines []string
+		for _, l := range h.Journal(0, "quiet").Lines {
+			if l.Kind == "quiet" && l.T >= d.Since {
+				lines = append(lines, l.Text)
+			}
+		}
+		if len(lines) == 0 {
+			return nil
+		}
+		return &SectionView{ID: "quiet", Title: "Stopped asking", Lines: lines}
+	})
+}
