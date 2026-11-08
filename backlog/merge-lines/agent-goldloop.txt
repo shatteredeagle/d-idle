@@ -1,3 +1,0 @@
-BACKLOG: TASK-138 tester hero crawl: recovery stall rule and slow-field fresh game (docs/fresh-start-pace.md)
-INDEX: docs/fresh-start-pace.md - why a fresh tester hero crawled in Blood Moor (TASK-138)
-CHANGELOG: bot: a gold recovery that earns almost nothing at clvl 1 to 4 now ends as stalled, and a depleted early field starts a fresh game (knobs resource.recoveryStall*, bot.droughtSlow*)

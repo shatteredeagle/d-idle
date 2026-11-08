@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- bot: a gold recovery that earns almost nothing at clvl 1 to 4 now ends as stalled, and a depleted early field starts a fresh game (knobs resource.recoveryStall*, bot.droughtSlow*)
 - upstream PR #245 opened: a respawn after death refills life, mana and stamina (TASK-125)
 - the player screen now lands on a return screen after 20 minutes away, shows the tally strip, asks for a charter before an order above the zone range, and fills the Act 1 Codex from the bot's events (-ladder -watch)
 - Act 1 Codex: 37 firsts raise discovery questions through the decision store and fill a per-profile Codex (offline, not yet wired into the bot)

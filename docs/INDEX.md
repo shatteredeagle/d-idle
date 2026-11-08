@@ -809,3 +809,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/review-revive-refill-opus.md: Opus verification of the revive refill candidate (TASK-125): HOLDS, READY as r2 (test moved to its own file)
 - docs/codex.md | Act 1 Codex and firsts: table, tracker, /api/codex, reader status (TASK-130)
 - docs/research/pr-bundle-queue.md: fid-revive-refill row now OPEN as PR #245
+- docs/fresh-start-pace.md - why a fresh tester hero crawled in Blood Moor (TASK-138)
