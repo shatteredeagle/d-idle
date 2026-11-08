@@ -10,6 +10,7 @@ package watch
 import (
 	"errors"
 	"fmt"
+	"sort"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -74,6 +75,7 @@ type Hub struct {
 	video   *Video                          // nil: no game video
 	cur     atomic.Pointer[currency.Wallet] // nil: no currencies (vanilla; internal/watch/currency.go)
 	placer  atomic.Pointer[placerBox]       // nil: orders go straight to Give (no charter sink)
+	why     *Whyline                        // the reason line (whyline.go)
 	onClass func()                          // run when the hero's class becomes known (OnClass); guarded by mu
 
 	mu      sync.Mutex
@@ -108,6 +110,11 @@ func New(c Config) (*Hub, error) {
 	if c.Base == 0 {
 		h.base = c.Clock.Now()
 	}
+	wl, err := NewWhyline(func() float64 { return h.rel(h.cfg.Clock.Now()) })
+	if err != nil {
+		return nil, err
+	}
+	h.why = wl
 	c.Store.Subscribe(h.onEvent)
 	// A thought opened before the Hub existed is picked up here (the store's events are not replayed).
 	for _, t := range c.Store.OpenThoughts() {
@@ -116,6 +123,32 @@ func New(c Config) (*Hub, error) {
 		}
 	}
 	return h, nil
+}
+
+// Whyline is the hub's reason line.
+func (h *Hub) Whyline() *Whyline { return h.why }
+
+// oldestOpenQuestion is the text of the oldest open question, "" when none.
+func (h *Hub) oldestOpenQuestion() string {
+	h.mu.Lock()
+	ids := make([]int, 0, len(h.recs))
+	for id := range h.recs {
+		ids = append(ids, id)
+	}
+	h.mu.Unlock()
+	sort.Ints(ids)
+	for _, id := range ids {
+		if h.closedState(id) != "" {
+			continue
+		}
+		h.mu.Lock()
+		r := h.recs[id]
+		h.mu.Unlock()
+		if r != nil {
+			return r.info.Question
+		}
+	}
+	return ""
 }
 
 func (h *Hub) rel(t time.Duration) float64 { return secs(t - h.base) }

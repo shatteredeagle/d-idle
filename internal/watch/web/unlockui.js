@@ -32,6 +32,10 @@
       });
       while (ul.children.length > 300) ul.removeChild(ul.firstChild);
       if (stick) ul.scrollTop = ul.scrollHeight;
+      var wh = $('whyhist'), why = v.why || [];
+      $('t-whyhist').hidden = wh.hidden = why.length === 0;
+      clear(wh);
+      why.forEach(function (w) { wh.appendChild(el('li', '', Math.round(w.t) + ' s: ' + w.text)); });
       var tape = $('tape'), tv = v.tape || {};
       $('t-tape').hidden = tape.hidden = !tv.open;
       if (tv.open) {

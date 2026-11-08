@@ -160,6 +160,7 @@ func (r *Runner) farmStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 			r.emit(goals.Event{Type: goals.EvKill, Monster: run, Boss: true})
 		}
 	}
+	r.setWhy(WhyFarmRuns, "area", p.Area)
 	return r.do(ctx, c, StateClearing, "Farm runs: "+p.Area, 0, "farm runs", func(ctx context.Context) error {
 		r.bossRun.Store(true)
 		defer r.bossRun.Store(false)

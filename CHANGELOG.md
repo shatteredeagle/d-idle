@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- watch: a plain "why" line under the video says why the hero is doing what it does, with the last five reasons in the Chronicle
 - Fixed: the Paladin's stop-and-go travel (the bot read the game state three times over for every step); travel speed about doubled in the dev container
 - Fidelity oracle batch on upstream main 1453f853: belt, price, hit-recovery and cap differentials all 0 differ; one local PR candidate for the load gold clamp (docs only, nothing posted)
 - Live check of the watch panels and a multi-seed class pace re-measure (docs only; cards for the target bar, area names and an Amazon no-ammo deadlock)

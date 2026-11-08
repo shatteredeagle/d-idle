@@ -155,6 +155,11 @@ func (g *GoalsOrders) OnStatus(st goals.Status) {
 	}
 	kind, label := ActivityFromStatus(st)
 	g.Hub.Activity(kind, label)
+	hold := ""
+	if st.State == goals.RunnerIdle || st.State == goals.RunnerPaused {
+		hold = g.Hub.oldestOpenQuestion()
+	}
+	g.Hub.why.Observe(st.Why, st.Activity, st.GoalID, safeText(hold, 60))
 }
 
 // ActivityFromStatus maps the runner's status to an activity kind and label. U: the town-stall rule is a placeholder

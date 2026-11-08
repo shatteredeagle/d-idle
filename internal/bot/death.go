@@ -339,6 +339,7 @@ func (r *Runner) finishRecovery(ctx context.Context, snap *d2.Snapshot, c contro
 			plan.Poverty, plan.GearTier = true, r.e.Tune.Bot.PovertyTier
 			plan.Reason = "poverty rebuild after death"
 		}
+		r.setWhy(WhyAfterDeath)
 		if !r.do(ctx, c, StateRecovering, "Restocking after death", sec(r.cfg.TownTimeoutSec), "post-death chores", func(ctx context.Context) error {
 			_, err := r.d.Town.Chores(ctx, plan)
 			return err
@@ -351,6 +352,7 @@ func (r *Runner) finishRecovery(ctx context.Context, snap *d2.Snapshot, c contro
 		rec.tries++
 		rec.attempting = true
 		before := equipCount(snap)
+		r.setWhy(WhyDeathCorpse)
 		ok := r.do(ctx, c, StateRecovering, "Retrieving the corpse", sec(r.cfg.TravelTimeoutSec), "corpse", func(ctx context.Context) error {
 			return r.retrieveCorpse(ctx, rec.area, rec.pos)
 		})
@@ -429,6 +431,7 @@ func (r *Runner) sweepDeathGold(ctx context.Context, c control, rec *recovery) {
 		}
 	}
 	before := s.Player.Gold
+	r.setWhy(WhyDeathGold)
 	r.do(ctx, c, StateRecovering, "Sweeping the death spot for gold", sec(r.cfg.TravelTimeoutSec), "gold sweep", func(ctx context.Context) error {
 		return r.goldSweep(ctx, d.Area, d.Pos, there)
 	})

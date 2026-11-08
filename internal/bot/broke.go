@@ -186,6 +186,7 @@ func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 // recoveryStep replaces the campaign's quest step while recovery runs: one leveling slice in the recovery area.
 func (r *Runner) recoveryStep(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	n := snap.Player.Level + 1
+	r.setWhy(WhyFarmGold, "level", itoa(snap.Player.Level))
 	return r.do(ctx, c, StateClearing, "Recovery: farming gold", 40*time.Minute, "recovery", func(ctx context.Context) error {
 		err := taskActs{r, c}.LevelTo(ctx, n)
 		if err != nil && strings.Contains(err.Error(), noAreaMsg) {

@@ -240,6 +240,7 @@ func (r *Runner) guardedExit(ctx context.Context, snap *d2.Snapshot, c control) 
 	}
 	crowd := r.hostileNear(snap, guardCrowdRadius) >= guardCrowdN
 	r.e.Log.Info(fmt.Sprintf("guard: leaving guarded area %d first (%s)", p.Area, why), "name", r.areaName(p.Area), "crowd", crowd)
+	r.setWhy(WhyGuardExit, "why", why)
 	return r.do(ctx, c, StateResupplying, "Leaving a guarded area ("+why+")", sec(r.cfg.TownTimeoutSec), "guard exit", func(ctx context.Context) error {
 		if crowd {
 			if err := r.travelTo(ctx, int(task.RogueEncampment)); err == nil || ctx.Err() != nil {

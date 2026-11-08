@@ -86,6 +86,7 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		return true
 	}
 	if !inTown && c.spec.camp == nil && len(l.questPending) > 0 && r.d.Quester != nil && !r.e.Clock.Now().Before(l.claimSkipUntil) && r.hostileNear(snap, r.e.Tune.Bot.ClearRadius) == 0 {
+		r.setWhy(WhyClaimTrip)
 		if ok := r.do(ctx, c, StateResupplying, "Going to town to claim a quest reward", sec(r.cfg.TownTimeoutSec), "claim trip", r.d.Town.ToTown); ok {
 			return true
 		}
@@ -460,6 +461,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		if t.stage > 0 { // fell out of town mid-trip (portal taken early): start over from the field
 			t.stage = 0
 		}
+		r.setWhy(WhyTownTrip, "why", t.plan.Reason)
 		ok := r.do(ctx, c, StateResupplying, "Going to town ("+t.plan.Reason+")", town, "to town", r.d.Town.ToTown)
 		if !ok && strings.Contains(t.plan.Reason, resource.RecoveryKitReason) && r.State() == StateResupplying {
 			// a failed way home counts like failed chores: without it the same trip is due again on the next tick
@@ -479,6 +481,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 	switch t.stage {
 	case 0, 1:
 		t.stage = 1
+		r.setWhy(WhyTownChores, "why", t.plan.Reason)
 		ok := r.do(ctx, c, StateResupplying, "Chores in town ("+t.plan.Reason+")", town, "chores", func(ctx context.Context) error {
 			rep, err := r.d.Town.Chores(ctx, t.plan)
 			if err == nil {
@@ -546,6 +549,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		if r.gateField(snap, t) {
 			return true
 		}
+		r.setWhy(WhyBackToField)
 		ok := r.do(ctx, c, StateResupplying, "Returning to the field", sec(r.cfg.TravelTimeoutSec), "back to field", func(ctx context.Context) error {
 			err := r.d.Town.BackToField(ctx, t.returnTo)
 			if err == nil {
@@ -564,6 +568,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 // rest keeps the character safely in town (the idle goal, or a farm target that is a town).
 func (r *Runner) rest(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	if !snap.Player.InTown() {
+		r.setWhy(WhyToTown)
 		return r.do(ctx, c, StateResupplying, "Returning to town", sec(r.cfg.TownTimeoutSec), "to town", r.d.Town.ToTown)
 	}
 	if plan, _, ok := r.needChores(snap); ok && r.e.Clock.Now().Sub(r.getLastTrip()) >= sec(r.cfg.ResupplyCooldownSec) {
@@ -1007,6 +1012,7 @@ func rank(d string) int {
 func (r *Runner) noTarget(ctx context.Context, s *d2.Snapshot, c control) bool {
 	l := &r.loop
 	if !s.Player.InTown() {
+		r.setWhy(WhyAreaDone)
 		return r.do(ctx, c, StateResupplying, "Area done, returning to town", sec(r.cfg.TownTimeoutSec), "to town", r.d.Town.ToTown)
 	}
 	why := "the target area is cleared or too dangerous"
@@ -1044,6 +1050,7 @@ func (r *Runner) noTarget(ctx context.Context, s *d2.Snapshot, c control) bool {
 
 func (r *Runner) travel(ctx context.Context, s *d2.Snapshot, c control, target int) bool {
 	name := r.areaName(target)
+	r.setWhy(WhyWalk, "area", name, "level", itoa(s.Player.Level))
 	return r.do(ctx, c, StateTraveling, "Walking to "+name, sec(r.cfg.TravelTimeoutSec), "travel to "+name, func(ctx context.Context) error {
 		return r.travelTo(ctx, target)
 	})
@@ -1150,6 +1157,7 @@ const (
 // out of unexplored ground with nothing hostile left, the area counts as cleared for this game.
 func (r *Runner) sweep(ctx context.Context, s *d2.Snapshot, c control, area int) bool {
 	name := r.areaName(area)
+	r.setWhy(WhyFight, "area", name, "life", itoa(s.Player.LifePct()))
 	return r.do(ctx, c, StateClearing, "Fighting in "+name, sec(r.cfg.SweepTimeoutSec), "sweep "+name, func(ctx context.Context) error {
 		return r.sweepPass(ctx, area)
 	})
@@ -1499,6 +1507,7 @@ func (r *Runner) lowLifeGate(ctx context.Context, snap *d2.Snapshot, c control) 
 		}
 	}
 	var terr error
+	r.setWhy(WhyHealTrip, "life", itoa(p.LifePct()), "line", itoa(r.resumeLifePct()))
 	ok := r.do(ctx, c, StateResupplying, fmt.Sprintf("Going to town to heal (life %d%%)", p.LifePct()), sec(r.cfg.TownTimeoutSec), "heal trip", func(ctx context.Context) error {
 		terr = r.d.Town.ToTown(ctx)
 		return terr
@@ -1551,6 +1560,7 @@ func (r *Runner) lowLifeWait(why string) bool {
 		l.lowLifeUntil, l.healFails = time.Time{}, 0
 		return false
 	}
+	r.setWhy(WhyWaitHeal, "why", why)
 	r.setState(StateResupplying, why+"; retrying in "+l.lowLifeUntil.Sub(now).Round(time.Second).String())
 	r.e.Clock.Sleep(time.Duration(r.e.Tune.Bot.WatchMs) * time.Millisecond)
 	return true
