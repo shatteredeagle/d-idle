@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"time"
 
+	"d2lod-bot/internal/api"
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/currency"
 	"d2lod-bot/internal/data"
@@ -91,7 +92,24 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 			return decide.NewTracker(tbl, cat, st, cfg.Codex, clk, decide.Who{Class: class, Diff: "normal"})
 		}
 	}
-	return watch.NewFun(cfg)
+	pt, err := decide.ShippedPolicy(cat)
+	if err != nil {
+		return nil, err
+	}
+	cfg.Policy = &watch.PolicyConfig{Table: pt, Knobs: l.knobs}
+	f, err := watch.NewFun(cfg)
+	if err != nil {
+		return nil, err
+	}
+	if err := f.Policy.Reapply(); err != nil {
+		return nil, fmt.Errorf("policy sheet: %w", err)
+	}
+	return f, nil
+}
+
+// knobSetter is the policy sheet's knob path: the tuner's own edit (range checks, all or nothing, saved to tuning.json).
+func knobSetter(t *bot.Tuner) watch.KnobSetter {
+	return func(over map[string]*float64) error { return t.Edit(api.TuneEdit{Overrides: over}) }
 }
 
 func openCodex(stateDir, profile string) (*decide.Codex, error) {

@@ -239,6 +239,15 @@ type SectionView struct {
 	Lines       []string `json:"lines,omitempty"`
 	Placeholder string   `json:"placeholder,omitempty"` // shown when Lines is empty
 	After       bool     `json:"after,omitempty"`       // after the missed questions instead of before
+	// Buttons post a policy change to /api/policy (the sheet's 'change it back'); none for the other sections.
+	Buttons []SectionButton `json:"buttons,omitempty"`
+}
+
+// SectionButton is one button of a section: a policy row and the option it sets.
+type SectionButton struct {
+	Label  string `json:"label"`
+	Row    string `json:"row"`
+	Option string `json:"option"`
 }
 
 // ReturnSection is the plug-in point of the page (cards 129 tally, 131 proposals, 130 policy effects). Build reads the
@@ -1021,7 +1030,7 @@ var returnTmpl = template.Must(template.New("return").Funcs(template.FuncMap{"du
 <script src="/watch/return.js"></script>
 </body></html>
 {{define "sec"}}<section class="card" data-section="{{.ID}}" aria-label="{{.Title}}"><h2>{{.Title}}</h2>
-{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}</section>{{end}}`))
+{{if .Lines}}<ul>{{range .Lines}}<li>{{.}}</li>{{end}}</ul>{{else}}<p class="empty">{{.Placeholder}}</p>{{end}}{{if .Buttons}}<div class="row">{{range .Buttons}}<button type="button" class="btn small" data-act="policy" data-row="{{.Row}}" data-option="{{.Option}}">{{.Label}}</button>{{end}}</div>{{end}}</section>{{end}}`))
 
 type returnPage struct {
 	ReturnData
@@ -1051,11 +1060,12 @@ function base(){return fetch('/api/config',{cache:'no-store'}).then(function(r){
  if(c.answerBase)return c.answerBase;return location.protocol+'//'+location.hostname+':'+c.answerPort;});}
 function post(path,body){return base().then(function(b){return fetch(b+path,{method:'POST',credentials:'include',
  headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});}).then(function(r){return r.json();})
- .then(function(j){say(j.ok?'Done'+(j.answered?' ('+j.answered+' answered)':''):(j.error||'failed'));if(j.ok&&j.answered)setTimeout(function(){location.reload();},600);})
+ .then(function(j){say(j.ok?'Done'+(j.answered?' ('+j.answered+' answered)':''):(j.error||'failed'));if(j.ok&&(j.answered||j.changed))setTimeout(function(){location.reload();},600);})
  .catch(function(){say('the answer route is not reachable');});}
 document.addEventListener('click',function(e){var b=e.target.closest('button[data-act]');if(!b||b.disabled)return;
  var a=b.dataset.act;
  if(a==='answer')post('/api/return/answer-kind',{point:b.dataset.point,answer:b.dataset.answer});
  else if(a==='rule')post('/api/return/answer-kind',{point:b.dataset.point,yes:b.dataset.yes==='1'});
+ else if(a==='policy')post('/api/policy',{row:b.dataset.row,option:b.dataset.option});
  else if(a==='notes')post('/api/return/notes',{text:document.getElementById('notes').value});});
 })();`

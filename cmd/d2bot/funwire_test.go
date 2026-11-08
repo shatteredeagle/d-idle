@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -66,8 +67,10 @@ func TestFeedHubFunLoop(t *testing.T) {
 			ctx, cancel := context.WithCancel(context.Background())
 			t.Cleanup(cancel)
 			m := goalManager(t)
+			var knobCalls []map[string]*float64
 			lo := ladderOptions{on: true, watch: true, viewAddr: "127.0.0.1:0", answerAddr: "127.0.0.1:0",
-				currencyDir: filepath.Join(t.TempDir(), "currency")}
+				currencyDir: filepath.Join(t.TempDir(), "currency"),
+				knobs:       func(o map[string]*float64) error { knobCalls = append(knobCalls, o); return nil }}
 			if c.overlay {
 				lo.overlayDir = ov
 			}
@@ -105,6 +108,29 @@ func TestFeedHubFunLoop(t *testing.T) {
 			}
 			if code := httpDo(t, "GET", view+"/watch/return", nil, nil); code != 200 {
 				t.Errorf("/watch/return: %d", code)
+			}
+			// the policy sheet: the hero's class picks the rows, a change goes through the answer listener and the knob path
+			answer := "http://" + rig.Served.Answer.String()
+			var pv watch.PolicyView
+			if code := httpDo(t, "GET", view+"/api/policy", nil, &pv); code != 200 || pv.Class != strings.ToLower(class) || len(pv.Rows) < 10 {
+				t.Fatalf("policy sheet: %d %q rows %d", code, pv.Class, len(pv.Rows))
+			}
+			if code := httpDo(t, "POST", view+"/api/policy", map[string]string{"row": "repair", "option": "never"}, nil); code != 405 {
+				t.Errorf("POST on the viewer: %d", code)
+			}
+			if code := httpDo(t, "POST", answer+"/api/policy", map[string]string{"row": "repair", "option": "never"}, nil); code != 200 {
+				t.Errorf("policy change: %d", code)
+			}
+			if code := httpDo(t, "POST", answer+"/api/policy", map[string]string{"row": "belt", "option": "half"}, nil); code != 200 || len(knobCalls) != 1 || *knobCalls[0]["town.beltFillPct"] != 50 {
+				t.Errorf("knob option: %d %v", code, knobCalls)
+			}
+			if code := httpDo(t, "GET", view+"/api/policy", nil, &pv); code != 200 {
+				t.Fatal(code)
+			}
+			for _, r := range pv.Rows {
+				if (r.ID == "repair" && r.Current != "never") || (r.ID == "belt" && r.Current != "half") {
+					t.Errorf("row %s = %s", r.ID, r.Current)
+				}
 			}
 		})
 	}
