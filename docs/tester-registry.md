@@ -23,12 +23,12 @@ deploy/d2d-container/context.sh /tmp/ctx2 && nice -n 19 docker build --no-cache 
 ```
 Results (V, run 2026-11-08 on the worker host, 16 cores):
 - `smoke.sh` PASS with `PROFILE=tester`: tester dry run, build, ping, create + save, persist after restart, first-run wizard and watch token (mode 600), finished wizard skipped. That run reused Docker layers, so its 16 s build time is NOT a cold number. Image 410 MB.
-- COLD_RESULT_PLACEHOLDER
+- Cold build (`--no-cache`, nice 19, 4 jobs, vendored archives already cached, so download time excluded): context 2 s, `docker build` 370 s, image 409.7 MB (V). Both containers and the throwaway image were removed; the build cache was pruned.
 - The build context is 255 MB (fork source, vendored archives, our Go binaries).
 - One defect found and fixed: a transient download failure of the FFmpeg archive made `context.sh` report "sha256 mismatch" (the curl error was swallowed). `context.sh` now retries (5 times, all errors) and says "download of URL failed". The hash itself is right (V: sha256 of a fresh download equals the pin).
 - NOT proven: the hosted runner (4 vCPU, about 14 GB free disk before the cleanup step, S GitHub docs), `type=gha` cache behaviour, the ghcr push, the labels on a real registry page. U until the first run.
 
-Runner estimate (U): the same compile on 4 vCPU without the nice 19 handicap should take about the cold number above, times 1 to 2; the job limit is 120 min. Disk: context 255 MB, a few GB of build trees in the build stage, final image 410 MB; the cleanup step frees about 25 GB, so disk is not expected to bind (U). If it does the job fails with "no space left" and nothing is pushed.
+Runner estimate (U): the same compile on 4 vCPU without the nice 19 handicap should take about 6 to 12 minutes plus the cache export; the job limit is 120 min. Disk: context 255 MB, a few GB of build trees in the build stage, final image 410 MB; the cleanup step frees about 25 GB, so disk is not expected to bind (U). If it does the job fails with "no space left" and nothing is pushed.
 
 ## 3. What the user must do (in this order)
 
