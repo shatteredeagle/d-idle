@@ -2,9 +2,9 @@ package watch
 
 import (
 	"html/template"
+	"log"
 	"net"
 	"net/http"
-	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -118,7 +118,7 @@ func (a *Access) login(w http.ResponseWriter, r *http.Request, rec access.Record
 	h.Set("Cache-Control", "no-store")
 	h.Set("Content-Security-Policy", "default-src 'none'; style-src 'self'; img-src data:; form-action 'self'; base-uri 'none'; frame-ancestors 'none'")
 	h.Set("X-Content-Type-Options", "nosniff")
-	h.Set("Referrer-Policy", "no-referrer")
+	h.Set("Referrer-Policy", "same-origin")
 	render := func(code int, d loginData) {
 		h.Set("Content-Type", "text/html; charset=utf-8")
 		w.WriteHeader(code)
@@ -128,11 +128,10 @@ func (a *Access) login(w http.ResponseWriter, r *http.Request, rec access.Record
 	case http.MethodGet, http.MethodHead:
 		render(http.StatusOK, loginData{})
 	case http.MethodPost:
-		if o := r.Header.Get("Origin"); o != "" {
-			if u, err := url.Parse(o); err != nil || u.Host != r.Host {
-				http.Error(w, "forbidden origin", http.StatusForbidden)
-				return
-			}
+		if !access.SameOrigin(r) {
+			log.Printf("login: forbidden origin (Origin=%q Referer-set=%t Sec-Fetch-Site=%q Host=%q)", r.Header.Get("Origin"), r.Header.Get("Referer") != "", r.Header.Get("Sec-Fetch-Site"), r.Host)
+			http.Error(w, "forbidden origin", http.StatusForbidden)
+			return
 		}
 		key := ClientKey(r)
 		if ok, wait := a.Limiter.Allowed(key); !ok {

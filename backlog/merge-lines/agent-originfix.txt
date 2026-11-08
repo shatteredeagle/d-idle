@@ -1,0 +1,2 @@
+INDEX: docs/watch-origin.md: same-origin rule for login and setup POSTs (Origin null, Sec-Fetch-Site)
+CHANGELOG: Fix: watch login and setup wizard no longer answer 403 'forbidden origin' on Safari (Origin: null); Referrer-Policy is same-origin and the origin check also reads Sec-Fetch-Site and Referer.
