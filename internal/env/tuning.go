@@ -19,6 +19,7 @@ type Tuning struct {
 	// Resource is the mana/health policy (tuning_resource.go); its knobs are registered by cmd/d2bot.
 	Resource ResourceTuning
 	Ladder   LadderTuning
+	Senses   SensesTuning
 }
 
 // DefaultTuning returns the optimal profile.
@@ -35,6 +36,7 @@ func DefaultTuning() Tuning {
 		Route:    DefaultRouteTuning(),
 		Resource: DefaultResourceTuning(),
 		Ladder:   DefaultLadderTuning(),
+		Senses:   DefaultSensesTuning(),
 	}
 }
 
@@ -68,5 +70,6 @@ func Knobs() []Knob {
 	k = append(k, routeKnobs()...)
 	k = append(k, registeredKnobs()...)
 	k = append(k, ladderKnobs()...)
+	k = append(k, sensesKnobs()...)
 	return k
 }

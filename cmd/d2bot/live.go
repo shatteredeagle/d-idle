@@ -158,12 +158,14 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	o.ladder.knobs = knobSetter(tuner)
+	o.ladder.sensesTier = tune.Senses.Tier
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {
 		return err
 	}
 	defer lrig.StopRec()
 	useFun(lrig, runner, runID())
+	useSenses(lrig, e, log)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err

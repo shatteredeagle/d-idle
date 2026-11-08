@@ -601,6 +601,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-145 wizardclass: first-run wizard lists classes from the plandata tables (normal30, Sorceress via fallback), Paladin preselected, unknown class is an error naming it; docs/wizardclass.md
 - TASK-148 sensesmap: side-panel minimap v1 built offline (internal/senses, /api/senses, canvas panel); bot tick not wired, live not run
 - TASK-121 updrelease: d2sign (Ed25519), MANIFEST.json schema, release asset builder, DRAFT inert app-release workflow (offline, not run on GitHub)
+- TASK-144 sorcnormal30: Sorceress normal30 table (v3 rows 2-30, opt-in sorceress_normal30), wizard lists her as normal30
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

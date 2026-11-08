@@ -12,7 +12,7 @@ var unlockClasses = []string{"sorceress", "amazon", "assassin", "barbarian", "dr
 
 // The normal30 tables each class plays (and the Sorceress v3 table).
 var classTables = map[string][]string{
-	"sorceress":   {leveler.FallbackV3},
+	"sorceress":   {leveler.FallbackV3, "sorceress_normal30"},
 	"amazon":      {"amazon_bow_normal30", "amazon_javelin_normal30"},
 	"assassin":    {"assassin_fireblast_normal30"},
 	"barbarian":   {"barbarian_melee_normal30"},

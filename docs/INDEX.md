@@ -829,3 +829,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/pactnative.md - native difficulty levers on 1.14d: /players works offline and scales monster life, Hardcore creatable, Nightmare/Hell penalties and elite-count columns from the tables (TASK-170)
 - docs/pact-catalogue.md - the Pact catalogue data, loader and rules
 - docs/skill-unlocks.md - per-class skill unlock table, leveler rule, free-choice point (TASK-133)
+- docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
