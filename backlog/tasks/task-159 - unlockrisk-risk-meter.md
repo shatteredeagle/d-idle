@@ -24,6 +24,7 @@ owns:
   - "docs/unlock-risk.md"
 exclusive: []
 contracts: []
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run RiskMeterWired) pass; verdict against the bot's guards, two classes, unknown class/zone errors (TestRiskVerdictAgainstTheGuards, TestRiskUnlockByNearDeathGoldenTwoClasses, TestRiskUnknownClassAndZoneAreErrors, TestRiskMeterWiredToTheBotFacts). Fixtures only; NOT verified live. No viewer panel is built (route only). Stays open: AC #5 (live run, thresholds in risk.json are U) unticked."
 ---
 
 ## Description
@@ -34,4 +35,11 @@ Size: M
 Unlock: first near-death survived; ready / marginal / turn back before a boss. Not on the two-week playable path. Design note: docs/research/unlockables.md (a brainstorm, not a decision). Technical check: the meter must use the same numbers the bot uses (potions, life ratio, resists vs the zone).
 <!-- SECTION:DESCRIPTION:END -->
 
-result: built and tested offline on fixtures (docs/unlock-risk.md); NOT wired in cmd/d2bot, not verified live.
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 ladder row risk opens on near_death_survived (life under 25 percent then back to 50), offline (TestRiskUnlockByNearDeathGoldenTwoClasses)
+- [x] #2 verdict ready / marginal / turn back uses the bot's own numbers: guards, potions, life ratio, level, resist gap (TestRiskVerdictAgainstTheGuards, TestRiskVerdictLifeLevelResistAndCloseCalls)
+- [x] #3 GET /api/risk returns watch.risk/1, teaser only while locked; unknown class, zone or missing table row is an error naming it (TestRiskUnknownClassAndZoneAreErrors, TestRiskTableErrors, TestRiskMissingRowIsAnError)
+- [x] #4 cmd/d2bot wiring: Runner.RiskFacts feeds the meter and Fun.Settle opens the near-death moment (TestRiskMeterWiredToTheBotFacts, TASK-185); ResistGap is still always 0
+- [ ] #5 LIVE check on a real run: verdict matches what the bot does before a boss, thresholds checked (not run; the live panels check is pending)
+<!-- AC:END -->

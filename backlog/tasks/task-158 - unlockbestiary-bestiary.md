@@ -25,7 +25,7 @@ owns:
   - "docs/unlock-bestiary.md"
 exclusive: []
 contracts: []
-result: "Built and tested offline (go test ./internal/watch ./internal/unlock ./cmd/d2bot; golden payloads at 10 and 50 kills for Sorceress and Paladin, spoiler rule, replay, return section); not verified live or in a browser. Owns widened to funwire.go, web/, data/bestiary, ladder rows bestiary and bestiary_resists. Card tables come through FunConfig.Monsters; cmd/d2bot does not set it yet (flavour-only cards live), kind names unchecked against the real monstats (U). See docs/unlock-bestiary.md."
+result: "Offline proof 2026-11-08: go test ./internal/watch ./internal/unlock and ./cmd/d2bot (-run BestiaryWired|BestiaryWithout) pass; golden payloads at 10 and 50 kills, spoiler rule, replay, restart persistence (TestBestiaryGoldenTwoClasses, TestBestiarySpoilerRule, TestBestiaryReplayAndUnlisted, TestBestiaryWiredWithTableAndRestart). Fixtures only; NOT verified live or in a browser. Stays open: AC #5 (panel in a browser) and #6 (live run) unticked; kind names unchecked against the real monstats (U)."
 ---
 
 ## Description
@@ -35,3 +35,13 @@ Size: M
 
 Unlock: 10 kills of a kind opens its page, 50 kills show resist details; silhouettes for unmet kinds. Not on the two-week playable path. Design note: docs/research/unlockables.md (a brainstorm, not a decision). Technical check: do not tie to the Cain rescue (late for a Sorceress); scouting shows categories, not spoilers.
 <!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [x] #1 ladder rows bestiary (10 kills of any kind) and bestiary_resists (50 kills) exist and open on their trigger, offline (TestBestiaryGoldenTwoClasses, Sorceress and Paladin)
+- [x] #2 GET /api/bestiary returns watch.bestiary/1 with silhouette, met, card and full states by that kind's own kill count (TestBestiaryGoldenTwoClasses, TestBestiaryNoTablesAndShippedNotes)
+- [x] #3 spoiler rule: no resist or immunity field before the 50th kill of that kind and row bestiary_resists open (TestBestiarySpoilerRule on the raw JSON); replay never double-counts (TestBestiaryReplayAndUnlisted)
+- [x] #4 cmd/d2bot wiring: monster table through FunConfig.Monsters and kill counts persisted across a restart (TestBestiaryWiredWithTableAndRestart, TestBestiaryWithoutTablesIsFlavourOnly; docs/unlock-ladder.md wiring table, TASK-185)
+- [ ] #5 panel 'Cain's notes' renders correctly in a real browser (no browser check run yet)
+- [ ] #6 LIVE check on a real run: kills accumulate and cards open, kind names match the real monstats (not run; the live panels check is pending)
+<!-- AC:END -->
