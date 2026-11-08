@@ -71,6 +71,11 @@ func (h *Hub) Currency() *CurrencyView {
 		v.Strip = v.Text
 		return v
 	}
+	if w.Mode == currency.EventsMode {
+		v.Text = "Marks and the bank need the d.idle overlay; the tally runs without it (see the tally strip)."
+		v.Strip = v.Text
+		return v
+	}
 	v.Enabled = true
 	levels, err := w.Ledger.Levels()
 	if err != nil {

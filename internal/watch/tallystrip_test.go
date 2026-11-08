@@ -88,7 +88,7 @@ func TestTallyVanillaAndPost(t *testing.T) {
 	ta, _ := currency.NewTally(l, currency.DefaultTallyRows(), "Hero", "r1")
 	s, _ := NewTallyStrip(r.sim.Hub, w, ta, func(string) bool { return false })
 	feed(s, goals.Event{Type: goals.EvKill, Monster: "Fallen"})
-	if v := s.View(); v.Enabled || !strings.Contains(v.Strip, "vanilla") || v.Error != "" {
+	if v := s.View(); v.Enabled || !strings.Contains(v.Strip, "Tally is off") || v.Error != "" {
 		t.Errorf("vanilla view %+v", v)
 	}
 	rr := httptest.NewRecorder()

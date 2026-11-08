@@ -62,10 +62,10 @@ type Tuning struct {
 	TripWindowMin                                                            int
 	TripGoldFloor                                                            int
 
-	RecoveryOn, RecoveryKitGold, RecoveryTargetGold, RecoveryMaxMin, RecoveryCooldownMin, RecoveryPotionFloor, RecoveryManaFloor, RecoveryXPPick, RecoveryMaxAreaAbove int
-	RecoveryXPEarly, RecoveryKitGate, PovertySellMin                                                                                                                   int
-	KitGateLevel, KitMinHP, KitMinMP, KitTripCap                                                                                                                       int
-	BRAttempts, BRLevelGap                                                                                                                                             int
+	RecoveryOn, RecoveryKitGold, RecoveryTargetGold, RecoveryMaxMin, RecoveryCooldownMin, RecoveryStallMin, RecoveryStallGold, RecoveryStallHoldMin, RecoveryPotionFloor, RecoveryManaFloor, RecoveryXPPick, RecoveryMaxAreaAbove int
+	RecoveryXPEarly, RecoveryKitGate, PovertySellMin                                                                                                                                                                              int
+	KitGateLevel, KitMinHP, KitMinMP, KitTripCap                                                                                                                                                                                  int
+	BRAttempts, BRLevelGap                                                                                                                                                                                                        int
 }
 
 func DefaultTuning() Tuning { return FromEnv(env.DefaultTuning()) }
@@ -124,6 +124,9 @@ func Knobs() []env.Knob {
 		k("recoveryTargetGold", "Recovery target", "gold", "Recovery ends at this gold once the loot is sold. SME: 800-1000.", d.RecoveryTargetGold, 400, 2000, true),
 		k("recoveryMaxMin", "Recovery time cap", "min", "Longest recovery cycle; it ends at the cap even when the target is not reached. SME: 30-60.", d.RecoveryMaxMin, 10, 120, true),
 		k("recoveryCooldownMin", "Recovery cooldown", "min", "Minutes after a recovery before the next one may start.", d.RecoveryCooldownMin, 0, 120, true),
+		k("recoveryStallMin", "Recovery stall check", "min", "A recovery that gained under recoveryStallGold after this many minutes ends as stalled: at clvl 1 to 4 a plain kill drops a few gold, so the bar is out of reach for hours (V, tester realtime hour: 28 gold in 11 min) and the campaign never resumed. 0 = off.", d.RecoveryStallMin, 0, 120, true),
+		k("recoveryStallGold", "Recovery stall gold", "gold", "Gold a recovery must have gained after recoveryStallMin minutes to go on.", d.RecoveryStallGold, 20, 500, true),
+		k("recoveryStallHoldMin", "Recovery stall hold", "min", "Minutes after a stalled recovery during which a low kit does not start another one (a death streak still does).", d.RecoveryStallHoldMin, 0, 240, true),
 		k("recoveryPotionFloor", "Recovery potion floor", "count", "While recovering, town buys healing potions only up to this many in the belt (no mana, no rejuvenation) so the last gold stays for the kit. 0 = normal belt plan.", d.RecoveryPotionFloor, 0, 6, false),
 		k("recoveryXPPick", "Recovery area by XP", "0/1", "1 = a recovering Normal act 1 character farms the safe area with the best XP per kill for its level (gold per kill is the same everywhere, d2d); 0 = the plan area of a character povertyLevels lower.", d.RecoveryXPPick, 0, 1, true),
 		k("recoveryMaxAreaAbove", "Recovery area level above", "levels", "XP pick: the recovery area's monster level may be at most this many above the character level.", d.RecoveryMaxAreaAbove, 0, 4, false),
@@ -158,7 +161,7 @@ func FromEnv(t env.Tuning) Tuning {
 		GearGateMode: r.GearGateMode, GearRiskMedium: r.GearRiskMedium, GearRiskHigh: r.GearRiskHigh, GearDeathsHigh: r.GearDeathsHigh, EarlyGearMax: r.EarlyGearMax,
 		TripBudget: r.TripBudget, TripWindowMin: r.TripWindowMin, TripGoldFloor: r.TripGoldFloor,
 		RecoveryOn: r.RecoveryOn, RecoveryKitGold: r.RecoveryKitGold, RecoveryTargetGold: r.RecoveryTargetGold,
-		RecoveryMaxMin: r.RecoveryMaxMin, RecoveryCooldownMin: r.RecoveryCooldownMin, RecoveryPotionFloor: r.RecoveryPotionFloor, RecoveryManaFloor: r.RecoveryManaFloor, RecoveryXPPick: r.RecoveryXPPick, RecoveryMaxAreaAbove: r.RecoveryMaxAreaAbove, RecoveryXPEarly: r.RecoveryXPEarly, RecoveryKitGate: r.RecoveryKitGate, KitGateLevel: r.KitGateLevel, KitMinHP: r.KitMinHP, KitMinMP: r.KitMinMP, KitTripCap: r.KitTripCap, PovertySellMin: r.PovertySellMin, BRAttempts: r.BRAttempts, BRLevelGap: r.BRLevelGap,
+		RecoveryMaxMin: r.RecoveryMaxMin, RecoveryCooldownMin: r.RecoveryCooldownMin, RecoveryStallMin: r.RecoveryStallMin, RecoveryStallGold: r.RecoveryStallGold, RecoveryStallHoldMin: r.RecoveryStallHoldMin, RecoveryPotionFloor: r.RecoveryPotionFloor, RecoveryManaFloor: r.RecoveryManaFloor, RecoveryXPPick: r.RecoveryXPPick, RecoveryMaxAreaAbove: r.RecoveryMaxAreaAbove, RecoveryXPEarly: r.RecoveryXPEarly, RecoveryKitGate: r.RecoveryKitGate, KitGateLevel: r.KitGateLevel, KitMinHP: r.KitMinHP, KitMinMP: r.KitMinMP, KitTripCap: r.KitTripCap, PovertySellMin: r.PovertySellMin, BRAttempts: r.BRAttempts, BRLevelGap: r.BRLevelGap,
 	}
 }
 

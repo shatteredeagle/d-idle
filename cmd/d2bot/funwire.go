@@ -100,3 +100,9 @@ func openCodex(stateDir, profile string) (*decide.Codex, error) {
 	}
 	return decide.OpenCodex(stateDir, profile)
 }
+
+// currencyDirFor is the per-profile account ledger directory under the profile's state dir (the same for every
+// backend, so the tally survives a backend change).
+func currencyDirFor(stateDir string) string {
+	return envOr("D2BOT_CURRENCY_DIR", filepath.Join(stateDir, "currency"))
+}

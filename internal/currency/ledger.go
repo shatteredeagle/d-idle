@@ -27,11 +27,15 @@ const (
 	KindRefused = "refused" // closes a pending whose credit was refused after the fact (cheated)
 
 	VanillaMode = "vanilla"
-	genesis     = "genesis"
+	// EventsMode is a ledger without the d.idle overlay (vanilla d2d, game.exe): only the tally is kept, credited from
+	// observed events (docs/tally-strip.md). Bank actions, marks and every other currency need the overlay.
+	EventsMode = "events"
+	genesis    = "genesis"
 )
 
 var (
 	ErrVanilla         = errors.New("currency: refused, vanilla mode has no currencies")
+	ErrNeedsOverlay    = errors.New("currency: refused, this needs the d.idle overlay (events mode keeps only the tally)")
 	ErrCheated         = errors.New("currency: refused, the run has gameplay writes (cheated)")
 	ErrUnknownCurrency = errors.New("currency: unknown currency")
 	ErrUnknownRecipe   = errors.New("currency: unknown bank recipe")
@@ -114,6 +118,9 @@ func (l *Ledger) Registry() *Registry { return l.opt.Registry }
 func (l *Ledger) Mode() string { return l.opt.Mode }
 
 func (l *Ledger) vanilla() bool { return l.opt.Mode == VanillaMode }
+
+// events is the overlay-free mode: tally credits and spends only.
+func (l *Ledger) events() bool { return l.opt.Mode == EventsMode }
 
 func hashLine(b []byte) string { s := sha256.Sum256(b); return hex.EncodeToString(s[:]) }
 
@@ -366,6 +373,9 @@ func (l *Ledger) Append(e Entry) (Entry, error) {
 func (l *Ledger) appendLocked(st *state, e Entry) (Entry, error) {
 	if l.vanilla() {
 		return Entry{}, ErrVanilla
+	}
+	if l.events() && (e.Currency != "tally" || (e.Kind != KindCredit && e.Kind != KindGrant && e.Kind != KindSpend)) {
+		return Entry{}, fmt.Errorf("%w: %s of %q", ErrNeedsOverlay, e.Kind, e.Currency)
 	}
 	switch e.Kind {
 	case KindPending, KindVoid, KindRefused, KindCommit, KindCredit, KindGrant, KindSpend:

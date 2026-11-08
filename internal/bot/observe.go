@@ -73,11 +73,12 @@ type observer struct {
 	real          uint64    // progress that resets the failsafe ladder
 	killXPAt      time.Time // last kill or xp gain (drought watchdog); fieldSince: entry into the current non-town area
 	fieldSince    time.Time
-	droughtAt     time.Time // last drought action (drought.go)
-	droughtStage  int       // consecutive drought actions with no kill or XP gain in between
-	fsWhy         string    // short reason of the last failsafe ladder entry (minute line)
-	nkMech        string    // nokillfix mechanism that fired last since the last kill: rung3 | drought1 | drought2 | emptyfield (minute line)
-	progress      uint64    // monotonic progress counter (health endpoint)
+	droughtAt     time.Time   // last drought action (drought.go)
+	killTimes     []time.Time // recent kills for the slow-field rule (drought.go)
+	droughtStage  int         // consecutive drought actions with no kill or XP gain in between
+	fsWhy         string      // short reason of the last failsafe ladder entry (minute line)
+	nkMech        string      // nokillfix mechanism that fired last since the last kill: rung3 | drought1 | drought2 | emptyfield (minute line)
+	progress      uint64      // monotonic progress counter (health endpoint)
 	stuckReason   string
 	gold          int
 	lastDisarm    time.Time
@@ -652,6 +653,9 @@ func (r *Runner) observeKills(s *d2.Snapshot, now time.Time) {
 	}
 	o.bumpReal(now)
 	o.kills += len(kills)
+	for range kills {
+		o.killTimes = append(o.killTimes, now)
+	}
 	r.mu.Lock()
 	st := r.st
 	r.mu.Unlock()

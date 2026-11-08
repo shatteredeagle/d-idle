@@ -42,6 +42,9 @@ func (r *Runner) droughtStage(s *d2.Snapshot, now time.Time) int {
 		o.killXPAt = now // the window starts when the bot is active
 		return 0
 	}
+	if r.slowField(o, p, now) {
+		return 2
+	}
 	need := m
 	if s2 := time.Duration(r.e.Tune.Bot.DroughtStage2Min) * time.Minute; o.droughtStage >= 1 && s2 > 0 {
 		need = min(m, s2) // g2e F3: after the first action the second follows soon, not a full limit later
@@ -54,6 +57,25 @@ func (r *Runner) droughtStage(s *d2.Snapshot, now time.Time) int {
 		return 0
 	}
 	return o.droughtStage + 1
+}
+
+// slowField is the early-game depletion rule (TASK-138): the character has stood DroughtSlowMin minutes in this field
+// area below DroughtSlowMaxLevel and killed fewer than DroughtSlowKills in them. Caller holds obMu.
+func (r *Runner) slowField(o *observer, p *d2.Player, now time.Time) bool {
+	t := r.e.Tune.Bot
+	w := time.Duration(t.DroughtSlowMin) * time.Minute
+	if w <= 0 || t.DroughtSlowMaxLevel <= 0 || p.Level >= t.DroughtSlowMaxLevel || o.fieldSince.IsZero() || now.Sub(o.fieldSince) < w {
+		return false
+	}
+	n, keep := 0, o.killTimes[:0]
+	for _, k := range o.killTimes {
+		if now.Sub(k) < w {
+			n++
+			keep = append(keep, k)
+		}
+	}
+	o.killTimes = keep
+	return n < t.DroughtSlowKills && now.Sub(o.droughtAt) >= w
 }
 
 // droughtCheck acts on a due drought. Stage 1 keeps the planner out of the current area for a while and re-plans

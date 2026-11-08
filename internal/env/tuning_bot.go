@@ -81,8 +81,14 @@ type BotTuning struct {
 	// trip that failed for lack of a town portal before the hero leaves the game (240 or more = never, the old wait).
 	// DroughtStage2Min: virtual minutes after a stage 1 drought action before stage 2 (fresh game); 0 = DroughtMin.
 	// FreshAfterRecoverySec: no unplanned fresh game this long after a lost-game recovery (0 = off).
-	NoPortalWaitSec       int
-	DroughtStage2Min      int
+	NoPortalWaitSec  int
+	DroughtStage2Min int
+	// Slow field (TASK-138): fewer than DroughtSlowKills kills in DroughtSlowMin minutes, after that long in the same
+	// field area, below clvl DroughtSlowMaxLevel, starts a fresh game (a depleted early field refills only in a new
+	// game; stragglers kept the kill drought quiet). 0 for DroughtSlowMin or DroughtSlowMaxLevel = off.
+	DroughtSlowMin        int
+	DroughtSlowKills      int
+	DroughtSlowMaxLevel   int
 	FreshAfterRecoverySec int
 
 	// Mercenary chore (docs/merc-farm.md). Hiring clicks a verified dialog; reviving clicks an UNVERIFIED one, so it is off.
@@ -104,7 +110,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
-		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, FreshAfterRecoverySec: 180,
+		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -207,6 +213,12 @@ func botKnobs() []Knob {
 			Desc: "Virtual minutes without a kill or XP gain in a field area at healthy life before the bot leaves the area (second time in a row: a fresh game). Keep below the Gate 2 no-kill limit of 10. 0 is off."},
 		{Key: "bot.droughtStage2Min", Label: "Kill drought, second stage", Unit: "min", Default: 2, Min: 0, Max: 30, NoHandicap: true,
 			Desc: "Virtual minutes after the first drought action (leave the area) before the second (a fresh game). The old rule waited a full bot.droughtMin, which can never help under the Gate 2 limit of 10. 0 uses bot.droughtMin."},
+		{Key: "bot.droughtSlowMin", Label: "Slow field window", Unit: "min", Default: 10, Min: 0, Max: 60, NoHandicap: true,
+			Desc: "Early game: after this many minutes in one field area with fewer than bot.droughtSlowKills kills in them (a depleted Blood Moor gives a straggler every few minutes, which keeps bot.droughtMin quiet; V, tester realtime drill: 45 kills in 25 min, then one per 1 to 5 min) the bot starts a fresh game, which refills the field. 0 is off."},
+		{Key: "bot.droughtSlowKills", Label: "Slow field kills", Unit: "kills", Default: 3, Min: 1, Max: 30, NoHandicap: true,
+			Desc: "Kills the slow-field window must hold to go on in the same game."},
+		{Key: "bot.droughtSlowMaxLevel", Label: "Slow field below clvl", Unit: "level", Default: 10, Min: 0, Max: 40, NoHandicap: true,
+			Desc: "The slow-field rule applies below this clvl only (small early fields deplete; later levels clear on purpose). 0 is off."},
 		{Key: "bot.noPortalWaitSec", Label: "No portal: leave after", Unit: "s", Default: 20, Min: 0, Max: 240, NoHandicap: true,
 			Desc: "Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits."},
 		{Key: "bot.freshAfterRecoverySec", Label: "Quiet after recovery", Unit: "s", Default: 180, Min: 0, Max: 900, NoHandicap: true,
