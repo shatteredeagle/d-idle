@@ -27,6 +27,8 @@ contracts: []
 Size: S
 
 Why: direction review section 7 step 8. Done when: the draft is in the repo for the grill.
+
+Amended 2026-11-07 (ADR 0018): the loop is chosen (Expedition Ledger); the brief records the measured result of playsession2 (TASK-134) and replaces the ranking bullet in Current truth.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
