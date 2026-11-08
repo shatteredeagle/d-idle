@@ -41,7 +41,7 @@ func (r *Reader) Snapshot() (*d2.Snapshot, error) {
 	defer cancel()
 	t0 := time.Now()
 	res, err := r.Source.Read(ctx)
-	if snapStatsOn {
+	if snapStatsOn() {
 		noteSnap(3, time.Since(t0))
 	}
 	if err != nil {

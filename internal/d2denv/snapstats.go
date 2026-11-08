@@ -10,10 +10,10 @@ import (
 	"time"
 )
 
-// snapStatsOn: the dev image counts which caller asks for a full snapshot and how long each takes ("nav.trace
+// snapStatsOn (read at call time: main sets the env after init): the dev image counts which caller asks for a full snapshot and how long each takes ("nav.trace
 // snapcallers" lines, WALKSMOOTH2): Player(), UI() and Units() each cost a whole snapshot, so a background loop
 // that polls them slows every other reader (the channel answers one frame at a time).
-var snapStatsOn = os.Getenv("D2BOT_NAV_TRACE") == "1"
+func snapStatsOn() bool { return os.Getenv("D2BOT_NAV_TRACE") == "1" }
 
 var snapStats = struct {
 	mu sync.Mutex
