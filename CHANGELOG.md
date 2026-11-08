@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch screen: the game video now sits at the top of the main page (collapse, full screen) with the map beside it; the map draws the area you just left next to the current one.
 - nav: exit penalty radius now exceeds the mouth gate radius, fixing 'leveling area unreachable' on corridors near an unwanted exit (cpnav)
 - tools/smoke.sh and cmd/d2smoke: a 45-virtual-minute smoke with a one-line PASS/FAIL verdict per bot commit (not yet run live)
 - The player and tester profile ends the early gold-farm recovery sooner (stall check after 10 minutes, ends once the kit is affordable) and walks to town to sell junk less often; gate and soak defaults are unchanged.
