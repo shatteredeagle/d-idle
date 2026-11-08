@@ -172,7 +172,7 @@ type ladderRig struct {
 	Wallet *currency.Wallet // d.idle mode only: the bot reports the carried marks here (SetCarried) and banks through Wallet.Ledger
 	Rec    *watch.Session   // the play session's record (play.go); nil outside `d2bot play`
 	Video  *watch.Video
-	Pacts  *pactHolder // the Pacts return section (pactwire.go); nil when Pacts are off
+	Pacts  *pactHolder       // the Pacts return section (pactwire.go); nil when Pacts are off
 	Senses *senses.Publisher // side-panel minimap source (sensesfeed.go); nil when senses.tier is 0
 }
 
