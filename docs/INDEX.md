@@ -854,3 +854,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/unlock-orderqueue.md: order queue (TASK-161), up to three orders in turn, slots owned by the unlock ladder, optional tally purchase
 - docs/unlock-alerts.md - alerts and pings: rules, in-page channel, outbound interface (off), ladder row
 - docs/unlock-ladder.md - now lists every ladder row and the live wiring of bestiary, risk, order queue and atlas
+- docs/soaks/equipfail.md: why equip clicks failed in 7 of 8 class runs, fix and before/after numbers (TASK-182)

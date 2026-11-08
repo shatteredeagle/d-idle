@@ -1,3 +1,0 @@
-BACKLOG: TASK-182 equipfail: equip failures traced to unidentified magic items and the Amazon bow refused with Javelin and Buckler both worn; fixed and measured (docs/soaks/equipfail.md)
-INDEX: docs/soaks/equipfail.md: why equip clicks failed in 7 of 8 class runs, fix and before/after numbers (TASK-182)
-CHANGELOG: Fixed: the leveler no longer tries to wear unidentified magic items, and the bow-path Amazon takes the Buckler off before wearing a Short Bow instead of buying and selling it in a loop
