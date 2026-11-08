@@ -135,6 +135,17 @@ func (c *Chronicle) say(kind, wording string, n int, repl ...string) {
 	}
 }
 
+// Thought adds a line the hero thinks (a quest hint, TASK-197). It is not in the wording table: the text is the hero's own.
+func (c *Chronicle) Thought(text string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.n++
+	c.lines = append(c.lines, ChronicleLine{N: c.n, T: c.now(), Kind: "thought", Text: safeText(text, 200)})
+	if len(c.lines) > chronicleMax {
+		c.lines = append([]ChronicleLine(nil), c.lines[len(c.lines)-chronicleMax:]...)
+	}
+}
+
 // OnGoalEvent turns one goals event into a line. An event with a Seq at or below the highest seen is a replay and adds
 // nothing. Drops never name a quality: the identify reveal owns that.
 func (c *Chronicle) OnGoalEvent(ev goals.Event) {
