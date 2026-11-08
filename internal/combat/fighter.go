@@ -85,7 +85,6 @@ type Fighter struct {
 	auraChecked time.Time
 	auraRetryAt time.Time // a failed apply waits until here
 	lastRight   int       // right skill read after the last apply try (diagnosis)
-	auraSelects int       // selects sent by the id verb
 	auraArea    int
 	auraDirty   bool // death or area change: the aura must be applied again
 	necro       necroState

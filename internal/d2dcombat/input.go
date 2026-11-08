@@ -118,9 +118,3 @@ func (i *Input) Swing(skill int, w input.Point) error {
 	}
 	return err
 }
-
-// SelectAura puts an aura (a right-hand skill that works while selected) on the right button by skill id
-// ("cmd select <id> 0"). No hotkey, no cast: an aura is active as soon as it is the selected right skill.
-func (i *Input) SelectAura(skill int) error {
-	return i.C.CmdSelect(i.ctx, skill, false)
-}

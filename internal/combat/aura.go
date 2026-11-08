@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"d2lod-bot/internal/d2"
@@ -148,7 +149,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	}
 	// A hotkey press changes the aura at once when one is active; with none active the right click casts it.
 	for try := 0; try < 3; try++ {
-		if err := f.applyAura(snap, want); err != nil {
+		if err := f.applyAura(ctx, snap, want); err != nil {
 			return false, err
 		}
 		if err := f.sleep(ctx, 250*time.Millisecond); err != nil {
@@ -165,7 +166,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 			return true, nil
 		}
 	}
-	f.info("aura did not come up", "skill", want.Name, "id", want.ID, "right", f.lastRight, "selector", f.auraSelects)
+	f.info("aura did not come up", "skill", want.Name, "id", want.ID, "right", f.lastRight)
 	f.auraRetryAt = now.Add(auraRetryBackoff) // do not hammer the key when something blocks it
 	return false, nil
 }
@@ -174,18 +175,15 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 // dirty flag made every combat tick press the key again, 140 lines in 22 minutes).
 const auraRetryBackoff = 10 * time.Second
 
-// auraSelector is implemented by a backend that switches the aura by skill id (the d2d channel, "cmd select"). V live
-// (palready): on d2d the hotkey cast is "cmd skill <id> x y", which casts at the point and never changes the selected
-// right skill, so the aura never came up and the check failed on every fight start.
-type auraSelector interface {
-	SelectAura(skill int) error
-}
-
-// applyAura presses the aura's hotkey, or selects it by id on a backend that has no hotkeys.
-func (f *Fighter) applyAura(snap *d2.Snapshot, want SkillSpec) error {
-	if as, ok := f.e.In.(auraSelector); ok {
-		f.auraSelects++
-		return as.SelectAura(want.ID)
+// applyAura presses the aura's hotkey. On d2d there are no hotkeys: V live (palready, docs/palready.md) "cmd skill" casts
+// at the point and never changes the selected skill, and "cmd select" is accepted but leaves rskill unchanged even with
+// the picker open, so the aura is picked through the right skill popup (SetRight, read back from the state).
+func (f *Fighter) applyAura(ctx context.Context, snap *d2.Snapshot, want SkillSpec) error {
+	if f.D2D {
+		if err := f.SetRight(ctx, want.ID); err != nil && !errors.Is(err, ErrBindFailed) {
+			return err
+		}
+		return nil
 	}
 	p := snap.Player
 	return f.cast(snap, want, input.Point{X: p.X, Y: p.Y})

@@ -587,19 +587,32 @@ func TestRestAuraSwitchesUnlessAdjacent(t *testing.T) {
 
 // ---- aura on the d2d channel (palready) ----
 
-// d2dAura models the d2d channel: a hotkey cast is "cmd skill" at a point and never selects the aura; only
-// SelectAura (cmd select) puts it on the right button. fail makes the select a no-op (something blocks it).
+// d2dAura models the d2d channel: there are no hotkeys (the key and the cast do nothing to the selected skill), the
+// aura is picked through the right popup. fail makes the popup pick a no-op (something blocks it).
 type d2dAura struct {
 	*handGame
-	selects, casts int
-	fail           bool
+	popups int
+	opened bool
+	fail   bool
+	cells  func(id int) []input.Screen // where the popup shows a skill
 }
 
-func (g *d2dAura) CastAt(string, input.Point) error { g.casts++; return nil }
-func (g *d2dAura) SelectAura(id int) error {
-	g.selects++
-	if !g.fail {
-		g.p.RightSkill, g.aura = id, id
+func (g *d2dAura) CastAt(string, input.Point) error { return nil }
+func (g *d2dAura) Key(string) error                 { return nil }
+func (g *d2dAura) Click(b input.Button, x, y int, m ...input.Mod) error {
+	switch {
+	case b == input.Left && x == Popup.BtnX && y == Popup.BtnY:
+		g.opened = true
+		g.popups++
+	case g.opened:
+		g.opened = false
+		for _, id := range []int{98, 102} {
+			for _, c := range g.cells(id) {
+				if c.X == x && c.Y == y && !g.fail {
+					g.p.RightSkill, g.aura = id, id
+				}
+			}
+		}
 	}
 	return nil
 }
@@ -613,16 +626,16 @@ func TestAuraComesUpOnceOnD2D(t *testing.T) {
 		if tc.level < 13 { // a fresh Paladin knows the basic attack and Might only
 			g.p.Skills = []d2.Skill{{ID: 0, Level: 1}, {ID: 98, Level: 1}}
 		}
-		d := &d2dAura{handGame: g}
-		h.f.e.In = d
+		d := &d2dAura{handGame: g, cells: func(id int) []input.Screen { return h.f.popupCells(g.p, id) }}
+		h.f.e.In, h.f.D2D = d, true
 		g.aura, g.p.RightSkill = 0, 0
 		s, _ := g.snap()
 		for i := 0; i < 5; i++ {
 			h.f.KeepAura(context.Background(), s, nil, i == 0)
 			s, _ = g.snap()
 		}
-		if d.selects != 1 || d.casts != 0 || g.aura != tc.want {
-			t.Fatalf("level %d: selects %d casts %d aura %d (want %d)", tc.level, d.selects, d.casts, g.aura, tc.want)
+		if d.popups != 1 || g.aura != tc.want {
+			t.Fatalf("level %d: popup opened %d times, aura %d (want %d)", tc.level, d.popups, g.aura, tc.want)
 		}
 	}
 }
@@ -630,14 +643,14 @@ func TestAuraComesUpOnceOnD2D(t *testing.T) {
 // A blocked apply does not repeat on every tick (the 140 lines in 22 minutes): one round of tries, then the backoff.
 func TestAuraFailureBacksOff(t *testing.T) {
 	h, g := newHandGame(t)
-	d := &d2dAura{handGame: g, fail: true}
-	h.f.e.In = d
+	d := &d2dAura{handGame: g, fail: true, cells: func(id int) []input.Screen { return h.f.popupCells(g.p, id) }}
+	h.f.e.In, h.f.D2D = d, true
 	g.aura, g.p.RightSkill = 0, 0
 	s, _ := g.snap()
 	for i := 0; i < 20; i++ {
 		h.f.KeepAura(context.Background(), s, nil, true)
 	}
-	if d.selects > 3 {
-		t.Fatalf("%d selects in one backoff window", d.selects)
+	if d.popups > 3*2 { // SetRight tries every cell of the row, three rounds
+		t.Fatalf("%d popup opens in one backoff window", d.popups)
 	}
 }
