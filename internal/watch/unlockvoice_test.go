@@ -225,7 +225,11 @@ func TestParseVoiceLines(t *testing.T) {
 		{"few", func(c *VoiceLines) { k := c.Kinds["codex_area"]; k.Any = k.Any[:5]; c.Kinds["codex_area"] = k }, `"codex_area" needs 6`},
 		{"unknown kind", func(c *VoiceLines) { c.Kinds["boss_kill"] = VoiceKind{} }, `unknown kind "boss_kill"`},
 		{"missing kind", func(c *VoiceLines) { delete(c.Kinds, "codex_shrine") }, `"codex_shrine" is missing`},
-		{"class", func(c *VoiceLines) { k := c.Kinds["death_first"]; k.Classes = map[string][]string{"mage": {"x"}}; c.Kinds["death_first"] = k }, `unknown class "mage"`},
+		{"class", func(c *VoiceLines) {
+			k := c.Kinds["death_first"]
+			k.Classes = map[string][]string{"mage": {"x"}}
+			c.Kinds["death_first"] = k
+		}, `unknown class "mage"`},
 		{"placeholder", func(c *VoiceLines) { k := c.Kinds["death_first"]; k.Any[0] = "Hello {who}"; c.Kinds["death_first"] = k }, `unknown placeholder {who}`},
 	}
 	for _, c := range cases {
