@@ -1,6 +1,6 @@
 # Tally strip: credits from events, the strip, the charter sink
 
-> status: built offline 2026-11-07, TASK-129 (fun loop, ADR 0018, [research/fun-ideas.md](research/fun-ideas.md) sections 3.4 and 13 card 3). NOT verified live: nothing here has met a real game or a real journal. Ledger and registry design: [currency.md](currency.md).
+> status: built offline 2026-11-07 and wired into the bot by TASK-140 (see Wiring), TASK-129 (fun loop, ADR 0018, [research/fun-ideas.md](research/fun-ideas.md) sections 3.4 and 13 card 3). NOT verified live: nothing here has met a real game or a real journal. Ledger and registry design: [currency.md](currency.md).
 > Tags: **V** verified by a test in this repo (named); **U** unverified or a guess.
 
 Code: `internal/currency/tallyrows.go` (rows, credits, quote, charter spend, summary), `internal/currency/tallyrows.json` (the data), `internal/watch/tallystrip.go` (event hook, strip view, order flow). Off in vanilla mode (the ledger refuses; the view says so).
@@ -39,8 +39,17 @@ A charter is the price of a "go" order to an area above the hero's recommended r
 - A new credit: add the source to `registry.json` (`sources` and the `tally` currency's `sources` list), then the credit row to `tallyrows.json`; a new event kind also needs a case in `Tally.Credit` and the hook. `ParseTallyRows` rejects a row whose source is missing or pays another currency (V `TestTallyRowsErrorsNameTheRow`).
 - A zone: add `{area, min, max}`. A price: edit `charter.base` or the tiers.
 
+## Wiring (TASK-140, done)
+
+- Built in `cmd/d2bot/funwire.go` `newFun` when the profile has a d.idle wallet (`--overlay-dir`, d2d backend): `currency.NewTally(wallet.Ledger, DefaultTallyRows(), <store profile>, <run id>)` and `watch.NewTallyStrip`. The run id is `<D2BOT_RUN or run>-<unix start>`: the manager's sequence numbers restart with the process, so a new process must not reuse an old process's keys. Towns are told by name (`status.AreaName` of the five town ids).
+- `Fun.OnGoalEvent` calls `TallyStrip.OnEvent`. Waypoints: `Runner.SetWaypointHook` (internal/bot/waypoints.go) fires from `markTouched` the first time this runner touches a Normal waypoint; the save reader's older state is not reported (V by `TestWaypointHookFiresOncePerNormalWaypoint`, U live).
+- `GET /api/tally` on the viewer (GET only); the page header shows `strip` and hides it when tally is off. Without a wallet (vanilla) the route answers the "off in vanilla mode" view.
+- Orders: `Hub.SetOrderPlacer(strip)` puts `PlaceOrder` in front of `POST /api/orders` on the answer listener. In range and other kinds: free, 200. Above the zone range without `"approve":true`: 402 `charter-needed` with `charter {area, price, text}` (nothing placed, nothing charged); with it: charter booked after the order, 200; short balance: 402 `insufficient`. The page asks with `confirm()` and resends. While the hero's level is not yet known (before the first status poll) an order is refused as `bad-order` rather than priced on a guess.
+- The return screen's tally section prints the strip, the last trip's net and its first five lines.
+- Fixed on the way: the trip window started at a sub-second time while ledger stamps are whole seconds, so the first credit of a trip fell outside "this trip" (V `TestFeedHubFunLoop`).
+
 ## Not done
 
-- Not mounted: nothing registers `GET /api/tally` in `serve.go`, the web page has no header strip yet, and `GoalsOrders.OnEvent` does not call `TallyStrip.OnEvent`; the order route does not call `PlaceOrder`; the bot does not build a `Tally`. Those files are outside this task's `owns`.
-- Order slot 2 (`MaxOpenOrders` from a ledger value) and the first perk are not built; `next` lists registry upgrades that exist (unwired).
+- Order slot 2 (`MaxOpenOrders` from a ledger value) and the first perk are not built; `next` lists registry upgrades that exist (unwired). TASK-129 AC 2 stays open for that part.
+- Tally needs the d.idle overlay mode; a vanilla bot shows nothing credited by design.
 - U: every amount and price above; the pace (60 to 75 tally in hour one) is not measured.

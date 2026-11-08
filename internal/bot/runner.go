@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/event"
 	"d2lod-bot/internal/goals"
@@ -86,6 +87,9 @@ type Runner struct {
 	ch  chan goals.Event
 	bus *event.Bus
 	sub *event.Sub // bridge subscription (bus -> ch), nil without a bus
+
+	wpHook func(areaID int, name string) // SetWaypointHook
+	firsts *decide.Firsts                // SetLadderFirsts
 
 	lastStep atomic.Int64 // wall-clock unix nanos of the last finished loop iteration (heartbeat for the d2bot watchdog)
 

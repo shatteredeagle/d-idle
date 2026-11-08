@@ -157,6 +157,9 @@ svg.map { width: 100%; height: auto; display: block; }
 .curstrip .cur { white-space: nowrap; }
 .curstrip .cur b { font-variant-numeric: tabular-nums; }
 .curstrip .off { color: var(--muted); }
+.tallystrip { font-size: .9rem; white-space: nowrap; }
+.tallystrip[hidden] { display: none; }
+.tallystrip .off { color: var(--muted); }
 .spendrow { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; padding: 8px 0; border-top: 1px solid var(--line); }
 .spendrow .sp-main { flex: 1 1 14rem; min-width: 0; }
 .spendrow .sp-name { font-weight: 600; }

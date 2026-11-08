@@ -24,7 +24,7 @@ owns:
   - "docs/codex.md"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. Firsts table (37 rows), t0.first via Catalogue.WithFirsts, Codex file per profile, Tracker, /api/codex, docs/codex.md. AC2 open: the first-sight hook in internal/bot is not wired (bot is outside the owns); the codex page and two-class tests are done."
+result: "Table, tracker, Codex, /api/codex done; hook wired by TASK-140 from goal events (kill, area change, drop, death) plus the runner waypoint hook. Live smoke: 3 entries in the first minutes (Fallen, Blood Moor, Quill Rats), 2 questions asked, kill criterion (3 firsts in 10 min) met. champion and shrine readers still missing."
 ---
 
 ## Description
@@ -38,6 +38,6 @@ Why: ADR 0018 item 6, fun-ideas.md section 13 card 4; supersedes TASK-108 qdensi
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [x] #1 A first context flag in the catalogue; firsts table for Den and Corpsefire, Bishibosh, Blood Raven, plus the Shaman and the Cold Plains waypoint (event U); one discovery question each with the rule it teaches; build and class data stay in tables
-- [ ] #2 A first-sight hook on monster class ids and area ids in internal/bot; a Codex page counting entries; tests against two builds
+- [x] #2 A first-sight hook on monster class ids and area ids in internal/bot; a Codex page counting entries; tests against two builds
 - [x] #3 docs/codex.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->

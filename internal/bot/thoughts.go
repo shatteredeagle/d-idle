@@ -24,6 +24,11 @@ func (r *Runner) EnableLadder(stateDir, profile string, answers ladder.AnswerSou
 // sink is the bot log only, a nil source means no scripted player.
 type LadderWire func(st *decide.Store, cat *decide.Catalogue, clk decide.Clock) (ladder.Sink, ladder.AnswerSource, error)
 
+// SetLadderFirsts makes the ladder's catalogue carry the Act 1 firsts point (decide.Catalogue.WithFirsts), so a Codex
+// tracker can open discovery questions on the same store. Call it before EnableLadderWith; nil (the default) leaves the
+// shipped catalogue untouched.
+func (r *Runner) SetLadderFirsts(f *decide.Firsts) { r.firsts = f }
+
 // EnableLadderWith is EnableLadder with the sink and answer source built by wire after the store exists. Knob off: it
 // installs nothing and does not call wire.
 func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*ladder.Ladder, error) {
@@ -35,6 +40,11 @@ func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*l
 	cat, err := decide.Shipped()
 	if err != nil {
 		return nil, fmt.Errorf("bot: ladder: %w", err)
+	}
+	if r.firsts != nil {
+		if cat, err = cat.WithFirsts(r.firsts); err != nil {
+			return nil, fmt.Errorf("bot: ladder: %w", err)
+		}
 	}
 	var st *decide.Store
 	if stateDir == "" {
