@@ -373,3 +373,64 @@ func TestSlowFieldQuietCases(t *testing.T) {
 		t.Fatal("knob 0 is off")
 	}
 }
+
+// A recovery in a field that has run dry (palready): fewer than bot.recoveryDryKills kills in bot.recoveryDryMin minutes
+// moves it on after five minutes, long before the 20 minute stall rule and the 10 minute slow-field rule.
+func TestDryRecoveryLeavesTheField(t *testing.T) {
+	for _, cl := range nokillClasses {
+		t.Run(cl.String(), func(t *testing.T) {
+			g := droughtRig(t, cl, false)
+			g.w.set(func(w *world) { w.level = 2 })
+			g.r.obMu.Lock()
+			g.r.ob.recovering = true
+			g.r.obMu.Unlock()
+			g.r.loop.broke.on = true
+			kill := func() {
+				g.r.obMu.Lock()
+				now := g.r.e.Clock.Now()
+				g.r.ob.killXPAt = now
+				g.r.ob.killTimes = append(g.r.ob.killTimes, now)
+				g.r.obMu.Unlock()
+			}
+			for i := 0; i < 4; i++ { // one kill a minute: 4 in the first 4 minutes
+				kill()
+				if g.droughtStep(time.Minute) {
+					t.Fatalf("minute %d: too early", i+1)
+				}
+			}
+			if !g.droughtStep(90 * time.Second) {
+				t.Fatalf("4 kills in 5.5 minutes of recovery must leave the field (log %q)", g.w.log())
+			}
+		})
+	}
+}
+
+// A busy recovery field and a character that is not recovering are left alone.
+func TestDryRecoveryQuietCases(t *testing.T) {
+	g := droughtRig(t, d2.Sorceress, false)
+	g.w.set(func(w *world) { w.level = 2 })
+	g.r.obMu.Lock()
+	g.r.ob.recovering = true
+	g.r.obMu.Unlock()
+	g.r.loop.broke.on = true
+	for i := 0; i < 12; i++ { // 12 kills in 6 minutes
+		g.r.obMu.Lock()
+		now := g.r.e.Clock.Now()
+		g.r.ob.killXPAt = now
+		g.r.ob.killTimes = append(g.r.ob.killTimes, now)
+		g.r.obMu.Unlock()
+		if g.droughtStep(30 * time.Second) {
+			t.Fatalf("step %d: a busy field is kept", i)
+		}
+	}
+	g.r.loop.broke.on = false
+	g.r.e.Tune.Bot.DroughtSlowMin = 0 // only the dry rule is under test
+	g.r.obMu.Lock()
+	g.r.ob.recovering = false
+	g.r.ob.killTimes = nil
+	g.r.ob.killXPAt = g.r.e.Clock.Now().Add(10 * time.Minute)
+	g.r.obMu.Unlock()
+	if g.droughtStep(6 * time.Minute) {
+		t.Fatal("not recovering: the dry rule does not apply")
+	}
+}

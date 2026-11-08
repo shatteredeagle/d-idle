@@ -152,7 +152,7 @@ func (f *Fighter) SetRight(ctx context.Context, id int) error {
 	if p.RightSkill == id {
 		return nil
 	}
-	if key := f.keys[id]; key != "" {
+	if key := f.keys[id]; key != "" && !f.D2D { // d2d has pseudo keys only: the popup is the way
 		if err := f.e.In.Key(key); err != nil {
 			return err
 		}

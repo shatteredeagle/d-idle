@@ -1,0 +1,50 @@
+{
+ "schema": "watch.hall/1",
+ "heroes": [
+  {
+   "name": "Sorra",
+   "class": "sorceress",
+   "level": 18,
+   "kills": 1,
+   "killsBy": {
+    "Andariel": 1
+   },
+   "deaths": 0,
+   "gameSecs": 7200,
+   "wallSecs": 3600,
+   "bestItem": "-",
+   "cause": "retired",
+   "status": "retired",
+   "title": "Slayer of Andariel",
+   "flavour": "The Maiden of Anguish is dust, and the road east is open.",
+   "titles": [
+    "Slayer of Andariel",
+    "Archmage of the Hall",
+    "Wanderer of Sanctuary"
+   ],
+   "line": "Sorra the sorceress, level 18, Slayer of Andariel: 1 kills, 0 deaths, 2 h 00 min game time (1 h 00 min wall), best item -, retired",
+   "seq": 1
+  },
+  {
+   "name": "Paula",
+   "class": "paladin",
+   "level": 31,
+   "kills": 0,
+   "deaths": 1,
+   "gameSecs": 90000,
+   "wallSecs": 40000,
+   "bestItem": "-",
+   "cause": "killed by Mephisto",
+   "status": "dead",
+   "title": "Fallen Paladin",
+   "flavour": "He held the line until the line was gone.",
+   "titles": [
+    "Fallen Paladin",
+    "Remembered by the Fire"
+   ],
+   "line": "Paula the paladin, level 31, Fallen Paladin: 0 kills, 1 deaths, 25 h 00 min game time (11 h 07 min wall), best item -, killed by Mephisto",
+   "seq": 2
+  }
+ ],
+ "account": "1 retired, 1 fallen"
+}

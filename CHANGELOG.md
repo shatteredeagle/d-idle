@@ -8,6 +8,12 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Unlock ladder framework: per-profile unlocks from Codex firsts, level, quest and tally spend, with a reveal line and a return-screen section.
+- Self-update part 3: boot shim with automatic rollback and image changes (not yet run in a container)
+- bot-side Pacts: Blood Raven's Tithe and Andariel's Shadow through the tuner and policy sheet, away-consent record, off in gates and measured runs (TASK-167)
+- Paladin on d2d: the Might aura is now picked through the right skill popup and stays up instead of failing on every fight; a recovery in a dry field moves on after five minutes (knobs bot.recoveryDryMin, bot.recoveryDryKills, bot.recoveryDrySkipMin).
+- Self-update part 2: signed-release client (check, download, verify, side-by-side install, rollback marker) and a never-silent update banner on the watch screen
+- Hall of Fame page and optional retire after Andariel, with titles from a data table (ledger and UI only, no charm)
 - sensesmap: the watch screen minimap is now fed by the bot (knob senses.tier, default 1, needs -watch); view only.
 - Sorceress now has a normal30 leveling table (same rows as v3); the setup wizard lists her without the fallback note
 - per-class skill unlock tables for all seven classes, leveler unlock rule and the one free-choice point (TASK-132, TASK-133, TASK-143)
