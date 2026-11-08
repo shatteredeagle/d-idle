@@ -596,6 +596,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - PALADINSMOKE (TASK-142, live): fun-loop slices on a Paladin; slices answer, but the Paladin kills nothing in lockstep and 13 in 20 realtime minutes; cards TASK-175 palmelee (high), TASK-176 tallyempty, TASK-177 palpace, TASK-178 sessionwall; docs/paladinsmoke.md
 - smokefix: TASK-176 empty expedition credits no tally (trip_floor), TASK-178 session summary reports wall and game clocks, identity line, landing redirect once per absence
 - TASK-175 palmelee and TASK-177 palpace: Paladin melee fixed (d2d swings by unit id, a bare click never hit); lockstep clvl 9 / 1195 kills in 240 virtual minutes, realtime 62 kills clvl 2 in 20 min; docs/palmelee.md
+- fix folded titles on TASK-142 and TASK-175 (check.py was failing on main)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

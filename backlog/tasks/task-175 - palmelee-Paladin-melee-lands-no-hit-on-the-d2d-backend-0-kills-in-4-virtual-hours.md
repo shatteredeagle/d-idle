@@ -1,8 +1,6 @@
 ---
 id: TASK-175
-title: >-
-  palmelee: Paladin lands no hit in lockstep d2d (0 kills in 11 virtual hours);
-  realtime kills slowly
+title: 'palmelee: Paladin lands no hit in lockstep d2d (0 kills in 11 virtual hours); realtime kills slowly'
 status: Done
 assignee:
   - credit-runner
