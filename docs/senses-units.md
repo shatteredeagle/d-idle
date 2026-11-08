@@ -8,7 +8,7 @@ Design: `docs/research/info-unlocks.md`; ladder rows: `docs/senses-unlock.md`. V
 
 - Source is `d2.StateReader`, so game.exe (`d2.Reader`) and the d2d backend's reader work the same; offline tests use `internal/d2/fake`. No new reader was needed.
 - Kinds: `monster` (hostile, alive; red), `merc` (blue), `npc` (green), `player` (reserved, nothing fills it). Classification is `combat.FriendlyWhyOf` (NPC flag, hireling AI or class table). Summons and other friendlies are dropped, dead units (mode 0 or 12) are dropped. A new area starts with no units until the next feed.
-- Target: the monster under the cursor (`Snapshot.Hovered`; the bot aims the mouse at what it attacks). U that this equals the attack target in every fight.
+- Target: the monster the fighter is attacking now (`Fighter.Attacking`, set per fight-loop step against the ranked target, cleared when the fight ends; TASK-186). The d2d source never sets `Snapshot.Hovered` (V by the live check of 2026-11-08: no unit carried a target), so on d2d this is the only source; on game.exe `Hovered` still also flags a unit (U). Life on d2d: `MonsterInfo.LifePct` comes from the monster's HP cur/max in internal/d2dsrc/items.go (S, read in code; not yet seen falling live), so the bar needs no fake. Name and bar still appear only for Codex-met classes (tier 3 gate). Offline tests: `TestUnitSourceAttackTarget` (Sorceress, Paladin).
 
 ## What each tier sends (`publicUnits`; a locked field is absent from the bytes)
 

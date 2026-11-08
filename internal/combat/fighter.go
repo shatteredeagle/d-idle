@@ -49,6 +49,8 @@ type Fighter struct {
 	mv  Mover
 	cat Catalog
 
+	attacking atomic.Uint32 // unit id of the current attack target (Attacking)
+
 	povMu sync.Mutex
 	pov   poverty
 
