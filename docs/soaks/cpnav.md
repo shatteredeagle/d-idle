@@ -12,7 +12,7 @@ Not Assassin-specific: the same refusal appears in the Necromancer and Druid pac
 `TestGoToKeepsMouthGateDistanceFromUnwantedExit` (internal/nav/portal_exit_test.go) walks an open field past an unwanted exit and asserts the walked path keeps `mouthTriggerR`; before the fix it came within 12.4 and 13.9, after it passes. Nav takes no class, so the test is class-independent by construction; `go test -p 1 ./internal/nav` passes.
 
 ## Drill before and after (V)
-Command: `labrun orion --detach -- docs/probes/classpacing/run-class.sh TAG 6 7 6m assassin_fireblast_normal30`.
+Command: `labrun <worker> --detach -- docs/probes/classpacing/run-class.sh TAG 6 7 6m assassin_fireblast_normal30`.
 - Before (cpb, and the earlier ass1 / ass2): at clvl 5 `level plan: clvl 5 -> area 3`, then `nav mouth gate: click held` on {81 344} and `leveling area unreachable`.
 - After (cpc): `level plan: clvl 5 -> area 3 Cold Plains` followed by `Entered Cold Plains`; no `unwanted` line and no `leveling area unreachable` in the log.
 Other classes: the change only widens a cost disc around exits that are not the destination; their paths can shift by a few subtiles. Not re-run for them (UNVERIFIED live); the nav package tests pass.
