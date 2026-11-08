@@ -584,3 +584,60 @@ func TestRestAuraSwitchesUnlessAdjacent(t *testing.T) {
 		t.Fatalf("resting at 50%%: Prayer, got %d", g.aura)
 	}
 }
+
+// ---- aura on the d2d channel (palready) ----
+
+// d2dAura models the d2d channel: a hotkey cast is "cmd skill" at a point and never selects the aura; only
+// SelectAura (cmd select) puts it on the right button. fail makes the select a no-op (something blocks it).
+type d2dAura struct {
+	*handGame
+	selects, casts int
+	fail           bool
+}
+
+func (g *d2dAura) CastAt(string, input.Point) error { g.casts++; return nil }
+func (g *d2dAura) SelectAura(id int) error {
+	g.selects++
+	if !g.fail {
+		g.p.RightSkill, g.aura = id, id
+	}
+	return nil
+}
+
+// The aura is applied once through the select verb and then left alone, for the Might band (clvl 1) and the Holy
+// Fire band (clvl 13) of the paladin profile.
+func TestAuraComesUpOnceOnD2D(t *testing.T) {
+	for _, tc := range []struct{ level, want int }{{1, 98}, {13, 102}} {
+		h, g := newHandGame(t)
+		g.p.Level = tc.level
+		if tc.level < 13 { // a fresh Paladin knows the basic attack and Might only
+			g.p.Skills = []d2.Skill{{ID: 0, Level: 1}, {ID: 98, Level: 1}}
+		}
+		d := &d2dAura{handGame: g}
+		h.f.e.In = d
+		g.aura, g.p.RightSkill = 0, 0
+		s, _ := g.snap()
+		for i := 0; i < 5; i++ {
+			h.f.KeepAura(context.Background(), s, nil, i == 0)
+			s, _ = g.snap()
+		}
+		if d.selects != 1 || d.casts != 0 || g.aura != tc.want {
+			t.Fatalf("level %d: selects %d casts %d aura %d (want %d)", tc.level, d.selects, d.casts, g.aura, tc.want)
+		}
+	}
+}
+
+// A blocked apply does not repeat on every tick (the 140 lines in 22 minutes): one round of tries, then the backoff.
+func TestAuraFailureBacksOff(t *testing.T) {
+	h, g := newHandGame(t)
+	d := &d2dAura{handGame: g, fail: true}
+	h.f.e.In = d
+	g.aura, g.p.RightSkill = 0, 0
+	s, _ := g.snap()
+	for i := 0; i < 20; i++ {
+		h.f.KeepAura(context.Background(), s, nil, true)
+	}
+	if d.selects > 3 {
+		t.Fatalf("%d selects in one backoff window", d.selects)
+	}
+}

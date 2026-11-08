@@ -131,6 +131,9 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	if p.Area != f.auraArea {
 		f.auraDirty, f.auraArea = true, p.Area
 	}
+	if now.Before(f.auraRetryAt) { // a failed apply backs off even when the area or a death marks the aura dirty
+		return false, nil
+	}
 	if !force && !f.auraDirty && now.Sub(f.auraChecked) < ms(f.tune().AuraCheckMs) {
 		return false, nil
 	}
@@ -145,7 +148,7 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 	}
 	// A hotkey press changes the aura at once when one is active; with none active the right click casts it.
 	for try := 0; try < 3; try++ {
-		if err := f.cast(snap, want, input.Point{X: p.X, Y: p.Y}); err != nil {
+		if err := f.applyAura(snap, want); err != nil {
 			return false, err
 		}
 		if err := f.sleep(ctx, 250*time.Millisecond); err != nil {
@@ -162,8 +165,28 @@ func (f *Fighter) keepAura(ctx context.Context, snap *d2.Snapshot, tg *Target, f
 		}
 	}
 	f.info("aura did not come up", "skill", want.Name)
-	f.auraChecked = now.Add(10 * time.Second) // do not hammer the key when something blocks it
+	f.auraRetryAt = now.Add(auraRetryBackoff) // do not hammer the key when something blocks it
 	return false, nil
+}
+
+// auraRetryBackoff is how long a failed aura apply waits before the next try (V live, palready: without it the
+// dirty flag made every combat tick press the key again, 140 lines in 22 minutes).
+const auraRetryBackoff = 10 * time.Second
+
+// auraSelector is implemented by a backend that switches the aura by skill id (the d2d channel, "cmd select"). V live
+// (palready): on d2d the hotkey cast is "cmd skill <id> x y", which casts at the point and never changes the selected
+// right skill, so the aura never came up and the check failed on every fight start.
+type auraSelector interface {
+	SelectAura(skill int) error
+}
+
+// applyAura presses the aura's hotkey, or selects it by id on a backend that has no hotkeys.
+func (f *Fighter) applyAura(snap *d2.Snapshot, want SkillSpec) error {
+	if as, ok := f.e.In.(auraSelector); ok {
+		return as.SelectAura(want.ID)
+	}
+	p := snap.Player
+	return f.cast(snap, want, input.Point{X: p.X, Y: p.Y})
 }
 
 func hasBandAura(p *Profile) bool {
