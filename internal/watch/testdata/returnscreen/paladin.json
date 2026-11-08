@@ -1,0 +1,133 @@
+{
+ "schema": "watch.return/1",
+ "since": 0,
+ "now": 14400,
+ "class": "Paladin",
+ "headline": "Away 4 h 00 min. Your Paladin is level 15 in Cold Plains. 1 expedition, 1 death.",
+ "levelsGained": 2,
+ "deaths": [
+  "died in Den of Evil (cause not reported)"
+ ],
+ "drops": [
+  "Sigon's Gage (set)"
+ ],
+ "areas": [
+  "Stony Field"
+ ],
+ "quests": [],
+ "moments": [
+  {
+   "kind": "close",
+   "title": "Closest call",
+   "text": "Life fell to 12% in Den of Evil, with 0 healing potions in the belt and 3 enemies close."
+  },
+  {
+   "kind": "drop",
+   "title": "Best drop",
+   "text": "Sigon's Gage (set)."
+  },
+  {
+   "kind": "level",
+   "title": "Level up",
+   "text": "Level 13 to 15."
+  },
+  {
+   "kind": "stats",
+   "title": "What moved",
+   "text": "1 monster killed, 50 XP, 1 death, 0 potions drunk, 1 area entered."
+  }
+ ],
+ "trips": [
+  {
+   "n": 1,
+   "zones": [
+    "Stony Field"
+   ],
+   "start": 12,
+   "end": 55,
+   "kills": 1,
+   "xp": 50,
+   "gold": 0,
+   "drops": [
+    "Sigon's Gage (set)"
+   ],
+   "potions": 0,
+   "deaths": [],
+   "level": 15,
+   "bosses": [],
+   "open": false,
+   "headline": "Stony Field for 1 min"
+  }
+ ],
+ "missed": [
+  {
+   "point": "t0.retreat.drink",
+   "question": "Life is low: keep fighting, drink, run, portal or leave the game?",
+   "count": 2,
+   "contexts": [
+    "in act 1, no champion bonus, on Normal, life 26 to 49%, softcore hero, a healing potion at hand, with potions and a portal",
+    "in act 2, no champion bonus, on Normal, life 26 to 49%, softcore hero, a healing potion at hand, with potions and a portal"
+   ],
+   "choices": [
+    {
+     "id": "drink",
+     "label": "drink a potion (rejuvenation first when life is critical)"
+    },
+    {
+     "id": "run",
+     "label": "run away"
+    },
+    {
+     "id": "portal",
+     "label": "take a town portal"
+    },
+    {
+     "id": "leave",
+     "label": "leave the game"
+    },
+    {
+     "id": "fight",
+     "label": "keep fighting"
+    }
+   ],
+   "openAsk": 0,
+   "openRule": 0
+  },
+  {
+   "point": "t0.retreat.repeat",
+   "question": "Two retreats in a row in this area: stay or leave?",
+   "count": 1,
+   "contexts": [
+    "in act 1, on Normal, softcore hero"
+   ],
+   "choices": [
+    {
+     "id": "stay",
+     "label": "stay"
+    },
+    {
+     "id": "leave",
+     "label": "leave the area"
+    }
+   ],
+   "openAsk": 0,
+   "openRule": 0
+  }
+ ],
+ "sections": [
+  {
+   "id": "proposals",
+   "title": "Waiting for your yes",
+   "placeholder": "Nothing is waiting. The hero keeps farming where it is."
+  },
+  {
+   "id": "tally",
+   "title": "Tally",
+   "placeholder": "Tally is not switched on yet.",
+   "after": true
+  }
+ ],
+ "gaps": [
+  "Gold, waypoints lit and supply cost per trip have no event yet (shown as not reported)."
+ ]
+}
