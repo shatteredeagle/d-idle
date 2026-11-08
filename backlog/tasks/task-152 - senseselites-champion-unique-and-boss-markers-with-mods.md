@@ -1,10 +1,11 @@
 ---
 id: TASK-152
 title: 'senseselites: champion, unique and boss markers with mods'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:12:00Z'
+updated_date: '2026-11-08T10:40:00Z'
 labels:
   - watch
   - feature
