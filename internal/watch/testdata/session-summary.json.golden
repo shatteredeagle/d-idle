@@ -1,0 +1,79 @@
+{
+  "v": 1,
+  "session": "20261108T100000Z-human",
+  "commit": "abc1234",
+  "class": "sorceress",
+  "build": "build-sorceress",
+  "start": "2026-11-08T10:00:00Z",
+  "end": "2026-11-08T10:17:57Z",
+  "duration_s": 1077,
+  "questions": 2,
+  "answered": 1,
+  "faded": 1,
+  "rules_learned": 0,
+  "rules_revoked": 0,
+  "questions_per_10min": [
+    2,
+    0
+  ],
+  "fires_by": {
+    "default": 2
+  },
+  "fires_logged": 2,
+  "fires_suppressed": 0,
+  "answer_latency_median_ms": 10000,
+  "orders": 2,
+  "mean_sec_between_orders": 302,
+  "stayed_in_tab_min": 17.3,
+  "deaths": 1,
+  "xp_per_h": 12033,
+  "credits": 5,
+  "notes": "the first ten minutes were fun [removed]",
+  "first_10min": [
+    {
+      "t_s": 30,
+      "kind": "question",
+      "label": "t1.repair"
+    },
+    {
+      "t_s": 31,
+      "kind": "viewers"
+    },
+    {
+      "t_s": 41,
+      "kind": "answer"
+    },
+    {
+      "t_s": 46,
+      "kind": "order"
+    },
+    {
+      "t_s": 47,
+      "kind": "question",
+      "label": "t1.repair"
+    },
+    {
+      "t_s": 47,
+      "kind": "death"
+    },
+    {
+      "t_s": 92,
+      "kind": "fade"
+    },
+    {
+      "t_s": 300,
+      "kind": "sample"
+    },
+    {
+      "t_s": 347,
+      "kind": "notes"
+    },
+    {
+      "t_s": 348,
+      "kind": "order"
+    }
+  ],
+  "record_bytes": 1607,
+  "decision_bytes": 1257,
+  "decision_bytes_per_h": 4201
+}

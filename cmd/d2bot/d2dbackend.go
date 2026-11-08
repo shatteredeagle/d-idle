@@ -332,6 +332,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err != nil {
 		return err
 	}
+	defer lrig.StopRec()
 	useFun(lrig, runner, runID())
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
