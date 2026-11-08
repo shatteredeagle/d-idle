@@ -1,3 +1,0 @@
-BACKLOG: TASK-175 palmelee and TASK-177 palpace: Paladin melee fixed (d2d swings by unit id, a bare click never hit); lockstep clvl 9 / 1195 kills in 240 virtual minutes, realtime 62 kills clvl 2 in 20 min; docs/palmelee.md
-INDEX: docs/palmelee.md - why the Paladin never hit on d2d, the Swing fix, drill and realtime numbers
-CHANGELOG: Paladin now fights on the d2d backend: melee skills attack by unit id instead of a bare click that never landed

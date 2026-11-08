@@ -820,3 +820,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/pact-system.md - Pact system design note: opt-in challenge rules, heat, unlocks, catalogue, away safety (not a decision)
 - docs/adr/0019-pacts-and-unlocks-2026-11-07.md: Pacts, information unlocks and the unlock ladder (user, 2026-11-07)
 - docs/paladinsmoke.md - Paladin smoke of the fun-loop slices (TASK-142): pace, Codex firsts, slices, container numbers, defects
+- docs/palmelee.md - why the Paladin never hit on d2d, the Swing fix, drill and realtime numbers
