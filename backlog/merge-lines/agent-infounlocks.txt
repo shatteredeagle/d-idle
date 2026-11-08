@@ -1,0 +1,3 @@
+BACKLOG: information unlocks (senses for the watcher): TASK-148 sensesmap, TASK-149 sensesunlock, TASK-150 sensesvideo, TASK-151 sensesenemies, TASK-152 senseselites (m-4, Proposed, after the playable chain)
+INDEX: docs/research/info-unlocks.md - progressive view-only senses for the watcher (minimap, enemy dots, bars, elites), tier ladder, feasibility, cards TASK-148 to 152
+CHANGELOG: Design note and five proposed cards for information unlocks (watch-screen senses unlocked by Codex firsts and tally); docs only
