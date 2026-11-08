@@ -255,8 +255,8 @@ func TestRiskRouteZoneGuardAndMethod(t *testing.T) {
 	r, eng := riskRig(t, "Paladin", st)
 	eng.Observe(unlock.Event{Type: unlock.EvSeen, Name: RiskSeen})
 	st.facts.GuardWhy = "no merc, clvl 12 < 15"
-	v := riskOf(r, "?zone=Forgotten%20Tower")
-	if v.Verdict.Verdict != RiskTurnBack || v.Verdict.Zone != "Forgotten Tower" || !strings.Contains(strings.Join(v.Verdict.Reasons, "|"), "no merc") {
+	v := riskOf(r, "?zone=Black%20Marsh")
+	if v.Verdict.Verdict != RiskTurnBack || v.Verdict.Zone != "Black Marsh" || !strings.Contains(strings.Join(v.Verdict.Reasons, "|"), "no merc") {
 		t.Fatalf("%+v", v.Verdict)
 	}
 	if v := riskOf(r, "?zone=Nowhere"); v.Error == "" || v.Verdict != nil || !strings.Contains(v.Error, `"Nowhere"`) {
