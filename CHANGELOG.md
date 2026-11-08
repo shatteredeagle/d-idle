@@ -8,6 +8,10 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Decision ladder: a question is not asked again within 30 minutes of being asked or answered, an answered question's answer is reused meanwhile, and a key nobody answers three times in a row goes quiet with one journal line (knobs ladder.repeatCooldownMin, ladder.quietAfter).
+- Return screen (first slice): /watch/return summarises an away window as moments, expedition cards and missed questions with answer-once-for-all; section registry for tally and proposals; not wired into Serve yet.
+- tester container: fixed the ladder store name, save on stop, stop order, and reload of a saved hero (first live run); context.sh can build from the published fork tag
+- Tally credits from observed events, charter price for above-range trips and a tally strip view (offline, TASK-129)
 - Skill damage (SK02) differential re-run on current upstream main: 0 of 116,000 cases differ; the earlier fix is upstream (PR #146), no new PR
 - fid-vendor-price (TASK-76): price oracle re-run on upstream main 9c78f391, no reachable d2d price deviation left; tools/emu/fp_price_runs.sh and fp_clamp.py added; follow-on D9/D10 branch marked superseded
 - Research: game.exe's respawn refills life, mana and stamina to their maxima; d2d refilled life only. Candidate fix and oracle (390 of 408 cases differ before, 0 after) are built and wait for independent verification; nothing is posted upstream.

@@ -45,6 +45,8 @@ func (r *Runner) EnableLadderWith(stateDir, profile string, wire LadderWire) (*l
 	if err != nil {
 		return nil, fmt.Errorf("bot: ladder: %w", err)
 	}
+	lt := r.e.Tune.Ladder
+	st.SetRepeatPolicy(time.Duration(lt.RepeatCooldownMin)*time.Minute, lt.QuietAfter)
 	logSink := ladder.LogSink{Info: func(msg string, kv ...any) { r.e.Log.Info(msg, kv...) }}
 	sink, answers, err := wire(st, cat, clk)
 	if err != nil {
