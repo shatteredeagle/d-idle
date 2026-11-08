@@ -1,3 +1,0 @@
-BACKLOG: TASK-120 ghcrpublish PREP: inert tester-image workflow (workflow_dispatch + environment tester-publish), D2_IMAGE in compose.tester.yml, dry run on the worker host, docs/tester-registry.md; nothing published
-INDEX: docs/tester-registry.md - publish prep for the tester image on ghcr.io (what the user must do, GPL offer, risks, first-publish checklist)
-CHANGELOG: Prepared the (inert) workflow and docs to publish the tester image to ghcr.io; compose.tester.yml now reads D2_IMAGE
