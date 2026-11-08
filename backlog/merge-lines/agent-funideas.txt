@@ -1,2 +1,0 @@
-CHANGELOG: fun ideas: converged design doc (docs/research/fun-ideas.md): Expedition Ledger, Act 1 Codex, Legacy and the Hall; incremental-games research; user and SME answers applied; Blessings, level walls, gambling dropped
-INDEX: docs/research/fun-ideas.md: the converged d.idle loop (expeditions, tally, policy sheet, Codex, legacy charm) with the incremental-games research and the comparison of dropped ideas
