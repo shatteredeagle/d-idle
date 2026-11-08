@@ -53,11 +53,11 @@ V (tests): refuses a key file readable by group/others; refuses to sign anything
 
 ## The workflow (DRAFT, inert)
 
-Jobs: `build` (no secrets), `sign` (environment `app-release`, secret `D2SIGN_KEY`, prints the review summary into the job summary, verifies against the pinned public key), `publish` (skipped on dry run). It is inert: only `workflow_dispatch`, every job needs the repository variable `APP_RELEASE_ENABLED=true`, and the d2d build step deliberately fails until it is wired to the Dockerfile.d2d builder stage (TASK-120). U: nothing has run on GitHub.
+Jobs: `build` (no secrets), `sign` (environment `app-release`, secret `D2SIGN_PRIVATE_KEY`, prints the review summary into the job summary, verifies against the pinned public key), `publish` (skipped on dry run). It is inert: only `workflow_dispatch`, every job needs the repository variable `APP_RELEASE_ENABLED=true`, and the d2d build step deliberately fails until it is wired to the Dockerfile.d2d builder stage (TASK-120). U: nothing has run on GitHub.
 
 ### Turning it on (user steps, TASK-124; not done)
 
 1. Generate the pair with `d2sign keygen` on your machine; commit only the `.pub` as `deploy/d2d-container/pubkeys/current.pub` (the image bakes it).
-2. Settings > Environments > create `app-release`, add yourself as required reviewer, add the secret `D2SIGN_KEY` (the body of the `.key` file) to the environment only.
+2. Settings > Environments > create `app-release`, add yourself as required reviewer, add the secret `D2SIGN_PRIVATE_KEY` (the body of the `.key` file) to the environment only.
 3. Rulesets protecting tags `app-v*`, `tester-v*`, `release-*`; 2FA on the account.
 4. Only then set the repository variable `APP_RELEASE_ENABLED=true`. GitHub creates a missing environment without reviewers on first use, so the order matters.
