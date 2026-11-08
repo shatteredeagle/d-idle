@@ -1,7 +1,7 @@
 ---
 id: TASK-91
 title: 'fid-hit-recovery: oracle: player hit recovery during casts'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'

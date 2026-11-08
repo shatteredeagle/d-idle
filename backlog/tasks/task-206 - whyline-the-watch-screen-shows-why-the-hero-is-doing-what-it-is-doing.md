@@ -60,3 +60,4 @@ Why: viewers (and the user) should see the hero's own reason for what it does (d
 <!-- AC:END -->
 
 result: built and tested offline (fixtures, race-free tests, golden API for Sorceress and Paladin); NOT verified live or in a browser; see docs/whyline.md.
+Status sync (stays open): AC #5 (live check on the sandbox) is unticked.

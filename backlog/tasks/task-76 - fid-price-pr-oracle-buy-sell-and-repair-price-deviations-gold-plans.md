@@ -27,7 +27,7 @@ owns:
   - "docs/research/pr-price2-draft.md"
 exclusive: []
 contracts: []
-result: "ALREADY UPSTREAM, no PR candidate (2026-11-08, agent decomp5 re-run on upstream 1453f853): seed 7 buy 1 / sell 0 / repair 13 of 100,000 (the 2^31 overflow family at 26M+ prices, I unreachable), seed 1 0/0/16, tomes 0 of 144; docs/probes/fid/fid-price-pr.md. AC 1, 3, 4 stay open (before-numbers outdated, nothing to send, bot gold plan not touched). Offline emulator runs only."
+result: "ALREADY UPSTREAM, no PR candidate (2026-11-08, agent decomp5 re-run on upstream 1453f853): seed 7 buy 1 / sell 0 / repair 13 of 100,000 (the 2^31 overflow family at 26M+ prices, I unreachable), seed 1 0/0/16, tomes 0 of 144; docs/probes/fid/fid-price-pr.md. AC 1, 3, 4 stay open (before-numbers outdated, nothing to send, bot gold plan not touched). Offline emulator runs only. Status sync (stays open): AC #1, #3, #4 unticked, nothing to send upstream."
 ---
 
 ## Description
