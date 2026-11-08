@@ -16,6 +16,9 @@ ordinal: 115000
 card: "imgrepro"
 owns:
   - "deploy/d2d-container/context.sh"
+  - "deploy/d2d-container/Dockerfile.d2d"
+  - "deploy/d2d-container/tester_image_test.go"
+  - "docs/tester-live.md"
 exclusive: []
 contracts: []
 ---
