@@ -29,6 +29,7 @@ None for this card. D3 of fid-loadhp-trace.md (current life/mana do not follow a
 ## Bot findings
 
 B1 `internal/d2dsrc/player.go:160` and `:215` (`fixed`): the d2d side of the fidelity probe carries life, mana and stamina and their maxima as whole points shifted left by 8, so every fraction of the d2d unit is invisible to `cmd/d2fidprobe`. The probe can therefore never show a fraction difference on d2d; the load comparison needs the `dump stats` `raw` array (256ths) instead. Described, not changed (no Go edits in this task).
+**FIXED in TASK-207 (agent d2dsrcmana):** `playerStats` now takes life, mana, stamina and their maxima (stat ids 6..11, the only 24.8 values it fills) from `stats.raw` when `raw[id]>>8` equals the whole-point pair, else the old shift; `d2.Player.MaxMana` and `Stats.Fixed` stay whole points. Test `TestPlayerStatsKeepFraction` (Paladin 4992, Sorceress 25664, no raw, disagreeing raw). U: not re-run against a live lab binary.
 B2 `internal/fidprobe/sheet.go:172` (`load.*` floats from `p.Stats[6+i]/256`): correct for game.exe, a whole-point value for d2d, see B1.
 
 ## PR candidate

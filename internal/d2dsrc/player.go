@@ -212,7 +212,17 @@ func (b *builder) playerStats(pl *d2.Player, st, p obj) {
 	rp := b.rp
 	pl.Stats = d2.Stats{}
 	put := func(id int, v int) { pl.Stats[uint32(id)] = int32(v) }
-	fixed := func(id int, v int) { pl.Stats[uint32(id)] = int32(v) << 8 }
+	// stats.raw is the stat vector in 256ths indexed by stat id (V: dump_head_late.json, the 51200 = 200 life);
+	// the player pair is whole points (Stats::fixed >> 8), so a fraction such as max mana 19.5 (4992) lives only
+	// in raw, used when it matches the pair (TASK-207, fid-loadmaxmana-trace.md B1). Without raw the whole point is shifted up as before.
+	raw, rawOK := st.ints("raw")
+	fixed := func(id int, v int) {
+		if rawOK && id < len(raw) && raw[id]>>8 == v { // only when raw agrees with the whole-point pair
+			pl.Stats[uint32(id)] = int32(raw[id])
+			return
+		}
+		pl.Stats[uint32(id)] = int32(v) << 8
+	}
 	if rp.Has("player.life") {
 		fixed(d2.StatLife, pl.Life)
 		fixed(d2.StatMaxLife, pl.MaxLife)
