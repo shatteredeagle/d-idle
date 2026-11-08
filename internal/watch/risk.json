@@ -1,0 +1,9 @@
+{
+  "schema": "watch.risk/1",
+  "doc": "docs/unlock-risk.md. Thresholds of the hero risk meter that are not the bot's own numbers (those arrive in the facts). All U: judgment.",
+  "nearDeathPct": 25,
+  "recoverPct": 50,
+  "closeCallsMarginal": 2,
+  "closeCallWindowMin": 30,
+  "keep": 20
+}
