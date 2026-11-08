@@ -1,3 +1,0 @@
-BACKLOG: TASK-164 beltplan: belt plan knob (resource.beltPlan, beltCol1..4): mixed and all-mana belts bought, filled and kit-gated per plan; policy sheet potion mix applies through it (docs/belt-plan.md)
-INDEX: docs/belt-plan.md | belt plan knob: templates, column overrides, where the plan acts, safety floor | TASK-164
-CHANGELOG: Belt plan knob: players can choose mixed, all-mana, all-health or rejuvenation-only belts from the policy sheet; the shop, fill, loot pickup and kit gate follow the plan
