@@ -1,3 +1,0 @@
-BACKLOG: pactladder (TASK-181): Pacts use the shared unlock ladder; boss_kill trigger, pacts group, consent lines on the return screen
-INDEX: docs/pact-ui.md and docs/unlock-ladder.md updated for the Pact ladder entries
-CHANGELOG: Pact unlocks now run through the shared unlock ladder (Andariel kill, Baal in Normal); away-consent changes show on the return screen

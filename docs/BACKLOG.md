@@ -618,6 +618,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - status sync 2026-11-08: 19 tasks set Done, open tasks annotated, TASK-101 notes PR 242/245 merged upstream
 - TASK-157 unlockidreveal: identify reveal cards (face down, flip, colour and sound) on the unlock ladder; affixes need a reader that does not exist (offline tests, not live).
 - TASK-151 sensesenemies: unit dots, target bar and name on the senses panel (tiers 2 and 3), fixtures only; live checklist in docs/senses-units.md
+- pactladder (TASK-181): Pacts use the shared unlock ladder; boss_kill trigger, pacts group, consent lines on the return screen
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
