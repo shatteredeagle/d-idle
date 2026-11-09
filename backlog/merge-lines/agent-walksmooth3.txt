@@ -1,2 +1,0 @@
-BACKLOG: walksmooth3 (TASK-211): d2dview mux batches pipelined bot reads (snapshot 170 ms to 15 ms), d2d skips the left-skill popup for the basic attack
-CHANGELOG: Smoother walking and fighting: the container tap forwards a snapshot as one batch instead of ten round trips; out-of-mana melee heroes no longer stall trying to select the basic attack.
