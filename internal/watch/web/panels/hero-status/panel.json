@@ -1,0 +1,16 @@
+{
+  "schema": "watch.panel/1",
+  "id": "hero-status",
+  "title": "Hero status",
+  "band": "status",
+  "size": "s",
+  "priority": 0,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/uptime",
+  "poll": 0,
+  "unlock": "",
+  "skeleton": 0,
+  "owner": "uishell2",
+  "doc": "docs/ui-design-system.md"
+}

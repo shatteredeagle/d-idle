@@ -1,0 +1,3 @@
+@layer panels {
+  [data-panel="whyline"] .d-ticker { padding: var(--d-sp-1) var(--d-sp-2); border-inline-start: 3px solid var(--d-accent); background: var(--d-surface-1); border-radius: 0 var(--d-r-1) var(--d-r-1) 0; }
+}

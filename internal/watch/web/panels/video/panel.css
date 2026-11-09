@@ -1,0 +1,6 @@
+@layer panels {
+  [data-panel="video"] .frame { aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--d-video-bg); color: var(--d-video-text); border-radius: var(--d-r-2); overflow: hidden; }
+  [data-panel="video"] .shot { inline-size: 100%; block-size: 100%; object-fit: contain; }
+  [data-panel="video"]:fullscreen { overflow: auto; }
+  [data-panel="video"]:fullscreen .frame { block-size: calc(100% - 3rem); aspect-ratio: auto; }
+}

@@ -176,19 +176,26 @@ func TestWhylineAPIGolden(t *testing.T) {
 	}
 }
 
-// The line sits under the video card and above the tabs (the page is served as is).
-func TestWhylineElementBeforeTabs(t *testing.T) {
-	b, err := os.ReadFile("web/watch.html")
+// The line is a status-band panel of its own row (size l), a polite status region (web/panels/whyline).
+func TestWhylinePanelInTheStatusBand(t *testing.T) {
+	ms, err := Manifests()
 	if err != nil {
 		t.Fatal(err)
 	}
-	s := string(b)
-	g, y, n := strings.Index(s, `id="gamepane"`), strings.Index(s, `id="whyline"`), strings.Index(s, `id="views"`)
-	if g < 0 || y < 0 || n < 0 || !(g < y && y < n) {
-		t.Errorf("order game %d, whyline %d, tabs %d", g, y, n)
+	var found bool
+	for _, m := range ms {
+		if m.ID == "whyline" {
+			found = m.Band == "status" && m.Size == "l" && m.Endpoint == WhylineRoute
+		}
 	}
-	if !strings.Contains(s, `role="status"`) {
-		t.Error("whyline has no status role")
+	if !found {
+		t.Error("whyline must be a size-l status panel on " + WhylineRoute)
+	}
+	js, _ := os.ReadFile("web/panels/whyline/panel.js")
+	for _, want := range []string{"'role', 'status'", "'aria-live', 'polite'", "textContent"} {
+		if !strings.Contains(string(js), want) {
+			t.Errorf("whyline panel lacks %s", want)
+		}
 	}
 }
 
