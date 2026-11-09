@@ -1,0 +1,1 @@
+CHANGELOG: Paladin out of mana can fall back to the basic Attack swing again (the left popup cell for Attack was not found with the d2d skill dump)
