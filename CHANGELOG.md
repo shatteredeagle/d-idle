@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch UI mockups: inventory paper doll, style-guide token sheet and PNG renders at 1440x900, 1920x1080 and 390 wide (docs/mockups/ui/)
 - Watch screen: new top band (hero status, why line, links, theme) and a stage with the game video and the map side by side; ?mode=overlay shows the band alone for stream overlays
 - Watch screen: dark Diablo II theme is the default (light and auto stay on the theme button), denser spacing; new design tokens and components under the hood
 - Proposed watch UI design system and panel contract (docs/ui-design-system.md) with mockups under docs/mockups/ui/ and a regression plan; root cause of the unstyled gear strip recorded (page CSP style-src self blocks gear.js's injected style)

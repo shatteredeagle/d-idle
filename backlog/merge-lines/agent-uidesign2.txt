@@ -1,3 +1,0 @@
-BACKLOG: TASK-232 uidesign2: inventory mockup redone as a Diablo II paper doll (pips, BROKEN, PIN, upgrade hook, sell/keep marks), tokens.html redone as a style guide with computed contrast ratios, 27 PNG renders of every mockup from headless Chrome under Xvfb on the worker host; docs only
-INDEX: docs/mockups/ui/renders/ (PNG renders, all under 400 KB); docs/ui-design-system.md gains components 13 (paper doll) and 14 (cells)
-CHANGELOG: Watch UI mockups: inventory paper doll, style-guide token sheet and PNG renders at 1440x900, 1920x1080 and 390 wide (docs/mockups/ui/)

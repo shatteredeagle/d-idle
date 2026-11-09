@@ -660,6 +660,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-229 gearcsp: /watch gear strip styles moved from an injected style element (blocked by the page CSP) into app.css; guard test
 - TASK-230 uishell1: watch UI design tokens (dark default, dense), cascade layers, 12 components, tools/uilint in check.sh
 - TASK-231 uishell2: watch shell (shell.js, panel registry /watch/panels.json); status band, video+map stage and whyline are panels; old cards in a compatibility slot
+- TASK-232 uidesign2: inventory mockup redone as a Diablo II paper doll (pips, BROKEN, PIN, upgrade hook, sell/keep marks), tokens.html redone as a style guide with computed contrast ratios, 27 PNG renders of every mockup from headless Chrome under Xvfb on the worker host; docs only
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
