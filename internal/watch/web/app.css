@@ -168,15 +168,15 @@ svg.map { width: 100%; height: auto; display: block; }
 .spendrow .sp-cost { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .spendrow button:disabled { opacity: .55; cursor: not-allowed; }
 
-.gamerow { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
+.gamerow { display: flex; gap: 12px; align-items: flex-start; flex-wrap: nowrap; }
 .videotop { width: calc(100% - 32px); max-width: 840px; margin: 16px auto 0; box-sizing: border-box; }
 .videotop[hidden] { display: none; }
 .videotop.collapsed .gamerow { display: none; }
 .videotop:fullscreen { max-width: none; margin: 0; overflow: auto; }
-.videotop:fullscreen .gamerow #frame { flex: 0 1 440px; }
+.videotop:fullscreen .gamerow #frame { flex: 1 1 480px; }
 .gamerow #frame { flex: 0 1 440px; min-width: 0; aspect-ratio: 4 / 3; }
-@media (max-width: 899px) { .gamerow { flex-direction: column; flex-wrap: nowrap; } .gamerow #frame { flex: none; width: 100%; } .sensespanel { width: 100%; box-sizing: border-box; } }
-.sensespanel { flex: 0 0 auto; background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; }
+@media (max-width: 699px) { .gamerow { flex-direction: column; flex-wrap: nowrap; } .gamerow #frame { flex: none; width: 100%; } .sensespanel { width: 100%; box-sizing: border-box; } }
+.sensespanel { flex: 0 0 auto; width: 338px; box-sizing: border-box; overflow-wrap: anywhere; background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; }
 .sensespanel h3 { margin: 0; font-size: .9rem; }
 .sensespanel canvas { display: block; width: 320px; max-width: 100%; height: auto; background: var(--bg); border-radius: 6px; touch-action: none; cursor: grab; }
 .sensespanel .btnrow { display: inline-flex; gap: 4px; }

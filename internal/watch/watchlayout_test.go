@@ -106,7 +106,7 @@ func TestWatchCSSPanelsAndVideoSize(t *testing.T) {
 		t.Fatal(err)
 	}
 	css := string(b)
-	for _, want := range []string{":where(main) > .card { grid-column: span 6; }", ".gamerow #frame { flex: 0 1 440px;", ".videotop { width: calc(100% - 32px); max-width: 840px;"} {
+	for _, want := range []string{":where(main) > .card { grid-column: span 6; }", ".gamerow #frame { flex: 0 1 440px;", "max-width: 699px) { .gamerow { flex-direction", "flex-wrap: nowrap; }", ".sensespanel { flex: 0 0 auto; width: 338px;", ".videotop { width: calc(100% - 32px); max-width: 840px;"} {
 		if !strings.Contains(css, want) {
 			t.Errorf("app.css lacks %q", want)
 		}
