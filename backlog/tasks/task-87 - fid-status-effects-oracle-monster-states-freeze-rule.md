@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-status-effects.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "2026-11-08 decomp6: freeze rule (225,748), chill length (2 x 121,312), freeze end, Static Field equal (0 differences, V run); put rule of curses/Taunt/Attract still deviates (54,685 of 100,000, covstates2 D1-D5); poison and stun not re-run, AC 1 open; no PR candidate; doc docs/probes/fid/fid-status-effects.md; not verified live"
 ---
 
 ## Description
@@ -39,6 +39,6 @@ Done when: states: 149 untested rows; run the ones used by freeze/chill, curse, 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 states: 149 untested rows; run the ones used by freeze/chill, curse, poison, stun; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 Freeze rule 225,748 cases deviations C3 to C5 reduced by the proof PR (pr-freeze-proof.md)
-- [ ] #3 Ice Bolt chill vs cold-immune quirk checked
+- [x] #2 Freeze rule 225,748 cases deviations C3 to C5 reduced by the proof PR (pr-freeze-proof.md)
+- [x] #3 Ice Bolt chill vs cold-immune quirk checked
 <!-- AC:END -->
