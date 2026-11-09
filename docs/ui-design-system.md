@@ -194,7 +194,14 @@ Each component is a class `d-<name>` in `components.css` (`@layer components`), 
 | 11 | **Empty and Locked** `d-empty`, `d-locked` | empty: icon slot, one sentence, optional action; locked: dashed outline, silhouette title, teaser, price badge, Buy button when purchasable, "opens when ..." text otherwise | `data-price`, `data-purchasable` | `data-state locked/opening/open` (reveal) | every panel's empty state; the unlock ladder |
 | 12 | **Ticker** `d-ticker` | a single line that replaces its text (whyline, voice), `role=status aria-live=polite aria-atomic=true`, min 3 s hold, optional serif voice style | `data-voice` | `data-changed` | whyline, voice strip, Chronicle latest, kiosk headline |
 
-Inventory grid cells (`d-cells`) are a thirteenth, page-specific component for the inventory page: a CSS grid of `repeat(cols, var(--d-cell))` with items placed by `grid-area` set from the CSSOM (allowed under CSP), rarity colour as the cell's top rule, marks (sell, keep, pinned) as badges. It replaces the absolute-positioned 34 px cells.
+Two page components belong to the inventory page (mockup: [mockups/ui/inventory.html](mockups/ui/inventory.html); user feedback 2026-11-09: the equipment view must look like the in-game screen):
+
+| # | Component | Anatomy | Props | States | Notes |
+|---|---|---|---|---|---|
+| 13 | **Paper doll** `d-doll` + `d-slot2` | an 8 by 6 cell grid with `grid-template-areas` in the Diablo II arrangement: weapon (2x4, left hand), helm (2x2, top centre), amulet (1x1, right of the helm), body armour (2x3, under the helm), shield (2x4, right hand), gloves (2x2, bottom left), belt (2x1, under the armour), a ring either side of the belt (1x1), boots (2x2, bottom right); the frame is a dark stone surface with a gold hairline (`--d-gold-6`) and an inset shadow; an empty slot shows a dim silhouette label (`.sil`); a filled slot shows the item name in its rarity colour (`--q`), a durability row of six pips (`.dur`: green, amber under `warnPct`, red at 0) and the `cur/max` number, a `BROKEN` stamp overlay at 0, a `PIN` badge for a player-equipped slot, an upgrade arrow badge (`.up`) when the advisor has a better item in the pack | per slot `data-slot`, `data-filled`, `data-level ok/warn/bad`, `--q` (rarity token) | `.sel` (selected; the detail card sits beside the doll above 40 rem and under it below), focus ring, hover | the cell unit comes from the container (`min(52px, (100cqi - 7 gaps) / 8)`), so the doll is eight cells wide on a phone and fixed on a desktop (doll above the grids on narrow). Marks and the pin are badges, never colour alone |
+| 14 | **Cells** `d-cells` | a CSS grid of `repeat(cols, var(--d-cell))` for the backpack (10 by 4), the belt (columns from the belt plan) and the stash (6 by 8); items placed by `grid-area` set from the CSSOM (the one allowed inline write), rarity as the cell's top rule, marks as corner badges (`S` sell red, `K` keep green), the upgrade arrow on a pack item that beats a worn one | `--cols`, per item `--q`, `data-mark sell/keep` | `.sel` | replaces the absolute-positioned 34 px cells; the unit shrinks with the container so ten columns fit a phone |
+
+A `d-legend` row under the doll explains the badges in words. The detail card of the selected slot carries the long text (affixes, why worn, the upgrade hook sentence, Unpin and Repair now) so the slots stay small.
 
 ## 6. The panel contract
 
@@ -368,7 +375,7 @@ Go side: `internal/watch/panels.go` embeds `web/panels/**`, parses every `panel.
 | Update banner (`update.js`) | shell banner | Alert | shell | drops `style.cssText` |
 | Order toast + alert toasts | shell toasts | Toast | shell | one implementation |
 | Order sheet + reveal sheet | shell sheet | | shell | one implementation |
-| `/watch/inventory` (own palette, absolute cells) | `pages/inventory.html` | Cells, Card, Table, Badge, Button set, Alert | own page | durability as Meter per slot; the Repair block reuses the `gear` panel |
+| `/watch/inventory` (own palette, absolute cells, slot list) | `pages/inventory.html` | Paper doll, Cells, Card, List, Badge, Button set, Note | own page | the equipped list becomes the paper doll (component 13) with pips, BROKEN, PIN and upgrade badges; backpack, belt and stash are Cells; a Suggested upgrades card is the advisor hook; the Repair block reuses the `gear` panel |
 | `/watch/policy` | `pages/policy.html` | Card per row, Button group (options), Locked (locked options), Table (preview deltas) | own page | |
 | `/watch/return` | `pages/return.html` | Card, List, Stat tile row (headline numbers), Button set, textarea | own page, single column `l` | |
 | `/watch/pacts`, hall | `pages/pacts.html`, `pages/hall.html` | Table, Card, Badge | own page | shared tokens; theme toggle works |
