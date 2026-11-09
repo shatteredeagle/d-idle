@@ -1,11 +1,13 @@
 ---
 id: TASK-232
-title: 'uidesign2: inventory paper-doll mockup, tokens style guide, PNG renders of every mockup'
-status: Proposed
+title: >-
+  uidesign2: inventory paper-doll mockup, tokens style guide, PNG renders of
+  every mockup
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T19:32:00Z'
-updated_date: '2026-11-09T19:45:00Z'
+updated_date: '2026-11-09T19:59:00Z'
 labels:
   - watch
   - research
