@@ -18,6 +18,7 @@ owns:
   - "internal/combat/fight.go"
 exclusive: []
 contracts: []
+result: "mux batch fix measured live in the dev container (snapshot 170 to 15 ms); left-skill skip live-observed (no stall lines) but no discriminating unit test"
 ---
 
 ## Description
@@ -30,7 +31,7 @@ Paladin still jerky after approachfast. Done when snapshot cost and pause causes
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 mux batches pipelined bot lines (test)
-- [ ] #2 swinger backend skips SetLeft
-- [ ] #3 numbers in docs/walksmooth.md
+- [x] #1 mux batches pipelined bot lines (test)
+- [x] #2 swinger backend skips SetLeft
+- [x] #3 numbers in docs/walksmooth.md
 <!-- AC:END -->
