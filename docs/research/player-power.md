@@ -43,7 +43,7 @@ No per-area table of immunities, dominant damage types or champion affix exposur
 |---|---|---|---|
 | Enter an area (planner) | `progression-*.json` via `internal/bot/plan.go` | clvl vs `min_clvl` / `kit_clvl`; kit (4 potions + TP, `PickOptions.FullKit`) | skip step or level up (V `docs/bossgate.md` WP3) |
 | Boss quest go/no-go | `internal/task/gate.go` `bossGates` + `BossGate.NotReady` | clvl floor, healing potions, TP, mana potions (casters), antidotes, gold; Blood Raven class floors (9 caster / 8 melee, knobs `boss.brCasterLevel`/`brMeleeLevel`) | "not ready" -> chores trip or level step (V). Hard-coded table keyed by quest; only Burial, Tools, Tower, Andariel (V `internal/task/gate.go:160-168`) |
-| Route guard | `internal/task/route.go` `TowerWhy`, `RouteWhy`; `internal/bot/routeguard.go` | clvl, merc alive, max life, kit; Normal only | blocks Monastery road / Tower with a reason string and a log line (V) |
+| Route guard | `internal/task/route.go` `TowerWhy`, `RouteWhy`; `internal/bot/routeguard.go` | clvl, merc alive, max life, kit; Normal only | blocks Monastery road / Forgotten Tower with a reason string and a log line (V) |
 | Graded gear risk | `internal/resource/gear.go` `GearGate`, `internal/bot/geargate.go` | see 1.4 | low / medium / high; HIGH gates areas to the first field (V) |
 | In-fight abort/engage | `internal/resource/{preengage,abort,attack}.go` | life %, belt, merc, PackDanger (0..3) | proceed, rest, retreat, avoid, melee vs cast (V) |
 | Chicken/drink | stance knobs (`combat.chickenPct`, `drinkLifePct`, `kiteLifePct`) | life % | per stance Cautious/Balanced/Aggressive (V `docs/stance.md`) |
