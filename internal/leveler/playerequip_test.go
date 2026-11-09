@@ -45,4 +45,3 @@ func TestPlayerEquipPinsTheSlot(t *testing.T) {
 		}
 	}
 }
-

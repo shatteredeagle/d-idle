@@ -22,8 +22,10 @@ func (f *fakeInv) SetMark(id uint32, m string) error {
 	f.marks = append(f.marks, m)
 	return f.err
 }
-func (f *fakeInv) RequestEquip(id uint32, slot string) (any, error) { return map[string]any{"slot": slot}, f.err }
-func (f *fakeInv) Unpin(slot string) error                          { return f.err }
+func (f *fakeInv) RequestEquip(id uint32, slot string) (any, error) {
+	return map[string]any{"slot": slot}, f.err
+}
+func (f *fakeInv) Unpin(slot string) error { return f.err }
 
 func invPost(h http.Handler, path, body string, hdr map[string]string) *httptest.ResponseRecorder {
 	r := httptest.NewRequest("POST", path, strings.NewReader(body))
