@@ -1,11 +1,13 @@
 ---
 id: TASK-228
-title: 'uidesign: watch UI research, design system, mockups and regression test plan (docs only)'
-status: In Progress
+title: >-
+  uidesign: watch UI research, design system, mockups and regression test plan
+  (docs only)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T18:33:00Z'
-updated_date: '2026-11-09T18:59:00Z'
+updated_date: '2026-11-09T19:07:00Z'
 labels:
   - watch
   - research
