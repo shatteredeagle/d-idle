@@ -106,7 +106,7 @@ Determinism: fixed fonts (install the same system fonts on the worker host and n
 
 ### 4.3 Where it runs and how it gates
 
-- Nightly on the worker host and on `labrun orion -- tools/uishots.sh` before queueing a UI branch (`MERGEQ` preflight hook for branches whose `owns:` touches `internal/watch/web`); a UI PR whose diff touches goldens must include the updated PNGs (under 1 MB each by the hygiene rule; 1280 and 1920 shots are stored as 8-bit palette PNGs, well under that).
+- Nightly on the worker host and on `labrun <worker> -- tools/uishots.sh` (the worker host) before queueing a UI branch (`MERGEQ` preflight hook for branches whose `owns:` touches `internal/watch/web`); a UI PR whose diff touches goldens must include the updated PNGs (under 1 MB each by the hygiene rule; 1280 and 1920 shots are stored as 8-bit palette PNGs, well under that).
 - Separate tools module: no. Stdlib Go for the diff and contrast tool (`tools/uishots/diff.go`), shell for the orchestration; nothing new in `go.mod`.
 
 ## 5. Migration plan: ordered small PRs
