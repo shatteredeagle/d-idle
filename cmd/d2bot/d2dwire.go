@@ -99,13 +99,14 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 	s.task.Boss = bossKill(br, log.Info)
 	s.task.Farm = farmLoop(bg, br, log.Info)
 	if !cfg.NoLeveler {
-		s.leveler = leveler.New(e, leveler.Options{Build: cfg.LevelerBuild, PlanDir: cfg.PlanDir, Pause: ref.pause, Rebind: func(context.Context) error {
+		s.leveler = leveler.New(e, leveler.Options{Build: cfg.LevelerBuild, PlanDir: cfg.PlanDir, Pause: ref.pause, Pinned: ref.pinned, Rebind: func(context.Context) error {
 			_, err := rig.BindSkills()
 			return err
 		}})
 		s.gear = gearAdapter{l: s.leveler, v: townvendor.Vendor{T: tw}, e: e}
 		s.quester = questAdapter{t: tw, e: e}
 	}
+	wireInv(ref, tw, lt, s.leveler, db)
 	s.prepare = func(ctx context.Context) error {
 		applyClass(ctx, e.Snapshot, cb, tw, lt, cfg.LevelerBuild, db, log)
 		_, err := rig.BindSkills()

@@ -523,6 +523,9 @@ func (t *Town) foundGear(s *d2.Snapshot) (slots []gearSlot, units []d2.Unit) {
 		twoHander = t.base(*w) != nil && t.base(*w).TwoHanded
 	}
 	for _, g := range gearSlots {
+		if t.isPinned(g.body) {
+			continue // the player's choice stays
+		}
 		weapon := g.slot == "rArm"
 		cur, filled := 0, slotFilled(s.Inventory, g.body)
 		if filled && weapon {

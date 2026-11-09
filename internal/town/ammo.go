@@ -127,7 +127,7 @@ func (t *Town) equipTodo(class string, e gear.Equipped, pack map[string]d2.Unit)
 		return nil
 	}
 	launcher := e.Weapon
-	if t.ammoPath == "bow" && !e.Launcher() {
+	if t.ammoPath == "bow" && !e.Launcher() && !t.isPinned(d2.BodyRHand) {
 		for code, u := range pack {
 			if (gear.Equipped{Weapon: code}).Launcher() {
 				jobs = append(jobs, equipJob{u, "rArm", d2.BodyRHand})
@@ -139,7 +139,7 @@ func (t *Town) equipTodo(class string, e gear.Equipped, pack map[string]d2.Unit)
 	if (gear.Equipped{Weapon: launcher}).Launcher() {
 		if b, code, ok := gear.AmmoFor(launcher); ok {
 			quiverWorn := e.Offhand != "" && gear.IsA(gear.TypeOf(e.Offhand), b.Type)
-			if u, have := pack[code]; have && !quiverWorn {
+			if u, have := pack[code]; have && !quiverWorn && !t.isPinned(d2.BodyLHand) {
 				jobs = append(jobs, equipJob{u, "lArm", d2.BodyLHand})
 			}
 		}
