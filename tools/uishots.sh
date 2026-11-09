@@ -4,7 +4,8 @@
 # nice 19 (never the user's desktop), one PNG and one DOM dump per page, width and theme, then the DOM contract check
 # and a pixel diff against the golden set kept on the worker host (not in git: pictures change with every UI PR).
 #   tools/uishots.sh [--update] [--out DIR] [--only NAME]   --update makes this run the golden set
-# Exit: 0 ok, 1 a check failed, 2 a tool is missing. Hard limit 10 minutes; one run at a time (flock).
+# Exit: 0 ok, 1 a check failed, 2 a tool is missing. Every process has a hard limit; one run per port at a time (flock).
+# UISHOTS_PORT and UISHOTS_DISPLAY pick another port and private display; UISHOTS_GOLDEN another golden directory.
 set -u
 update=0 out=${TMPDIR:-/tmp}/uishots-$(id -u)/run only=
 while [ $# -gt 0 ]; do
@@ -18,13 +19,13 @@ done
 golden=${UISHOTS_GOLDEN:-$HOME/.cache/didle-uishots/golden}
 chrome=$(command -v google-chrome-stable || command -v chromium || command -v chromium-browser) || { echo "uishots: no Chrome or Chromium on this host" >&2; exit 2; }
 command -v Xvfb >/dev/null || { echo "uishots: no Xvfb on this host" >&2; exit 2; }
-exec 9>/tmp/uishots-$(id -u).lock
+port=${UISHOTS_PORT:-18941} disp=${UISHOTS_DISPLAY:-:241}
+exec 9>/tmp/uishots-$(id -u)-$port.lock
 flock -w 600 9 || { echo "uishots: another run holds the lock" >&2; exit 2; }
 cd "$(dirname "$0")/.." || exit 2
 bin=$(mktemp -d)
 trap 'kill $sp $xp 2>/dev/null; rm -rf "${bin:?}"' EXIT INT TERM
 go build -o "$bin/uishots" ./tools/uishots || exit 2
-port=${UISHOTS_PORT:-18941} disp=${UISHOTS_DISPLAY:-:241}
 timeout 600 nice -n 19 "$bin/uishots" serve -addr 127.0.0.1:$port >"$bin/serve.log" 2>&1 &
 sp=$!
 timeout 600 Xvfb $disp -screen 0 1920x1200x24 -nolisten tcp >/dev/null 2>&1 &
@@ -45,11 +46,11 @@ echo "$shots" | while read -r name w h q; do
 	[ -n "$only" ] && [ "$only" != "$name" ] && continue
 	url="http://127.0.0.1:$port/watch?$q"
 	prof=$(mktemp -d)
-	DISPLAY=$disp timeout 60 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --no-first-run \
+	DISPLAY=$disp timeout 40 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --no-first-run \
 		--user-data-dir="$prof" --force-device-scale-factor=1 --force-prefers-reduced-motion --disable-lcd-text \
-		--window-size="$w,$h" --virtual-time-budget=8000 --screenshot="$out/$name.png" "$url" >/dev/null 2>&1
-	DISPLAY=$disp timeout 60 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --no-first-run \
-		--user-data-dir="$prof" --window-size="$w,$h" --virtual-time-budget=8000 --dump-dom "$url" >"$out/$name.html" 2>/dev/null
+		--window-size="$w,$h" --virtual-time-budget=8000 --timeout=20000 --screenshot="$out/$name.png" "$url" >/dev/null 2>&1
+	DISPLAY=$disp timeout 40 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --no-first-run \
+		--user-data-dir="$prof" --window-size="$w,$h" --virtual-time-budget=8000 --timeout=20000 --dump-dom "$url" >"$out/$name.html" 2>/dev/null
 	rm -rf "${prof:?}"
 done
 rc=0

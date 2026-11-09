@@ -33,6 +33,9 @@ func serve(addr, class string) error {
 	view := sim.Hub.ViewHandler()
 	m := http.NewServeMux()
 	m.Handle("/", view)
+	// no live event stream: headless Chrome's virtual time waits for the network to go idle, and an open SSE request
+	// never does; the pages fall back to their polls
+	m.HandleFunc("/api/events", http.NotFound)
 	m.HandleFunc("/stream", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "image/jpeg")
 		w.Write(frame())
