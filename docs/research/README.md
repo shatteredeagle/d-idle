@@ -82,3 +82,6 @@ Every doc here tags claims V (run or read by the author), D (data table read), S
 - sk-melee2-trace.md: the plain Attack on the real d2d build (per-part differences, D7 and the shield, off-weapon ED); oracle tools/emu/sk_melee2.py, d2d test mode tools/emu/sk_melee2_test.cpp.
 - sk-nova-trace.md (SKNOVA, 2026-11-01): Frost Nova's 64-missile ring from the truncated tables at 0x6e1288 / 0x6e1388, reach 12-12.7 subtiles (V run); d2d hits a monster with every touching ring missile (D1, model ~6x); no PR candidate
 - sk-passives-trace.md: SKPASS, masteries / pierce / Warmth / Telekinesis / synergies / +skills (V read, D, I replay)
+
+## Watch UI and product design
+- [ui-design.md](ui-design.md) dashboard IA, idle and ARPG game UIs, design systems, CSS architecture, accessibility, responsive and motion research behind [../ui-design-system.md](../ui-design-system.md); finds the gear strip CSP break. current (TASK-228).

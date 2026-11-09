@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8"><title>d.idle watch (phone frame)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light">
+<style>
+/* ---- layer order: the only place it is declared ---- */
+@layer reset, tokens, shell, components, panels, utilities;
+
+@layer tokens {
+  :root {
+    --d-stone-1:#0d0b09;--d-stone-2:#14110e;--d-stone-3:#1c1813;--d-stone-4:#241f19;--d-stone-5:#2d2720;--d-stone-6:#3a322a;
+    --d-stone-7:#4a4036;--d-stone-8:#6a5c4d;--d-stone-9:#8c7b67;--d-stone-10:#a08f7a;--d-stone-11:#b9aa94;--d-stone-12:#ece2cf;
+    --d-gold-6:#5a4718;--d-gold-8:#8a6d22;--d-gold-9:#c7a44a;--d-gold-10:#dcb85e;--d-gold-11:#e6c76f;--d-gold-12:#f3e2a8;
+    --d-bg:var(--d-stone-1);--d-surface-0:var(--d-stone-2);--d-surface-1:var(--d-stone-3);--d-surface-2:var(--d-stone-4);--d-surface-3:var(--d-stone-5);
+    --d-line:var(--d-stone-6);--d-line-strong:var(--d-stone-7);--d-text:var(--d-stone-12);--d-text-2:var(--d-stone-11);--d-text-3:var(--d-stone-9);
+    --d-accent:var(--d-gold-9);--d-accent-text:var(--d-gold-11);--d-on-accent:#1a1408;--d-focus:#8db8ff;--d-ornament:var(--d-gold-8);
+    --d-good:#7cc47e;--d-on-good:#0c1a0d;--d-warn:#e3a93a;--d-on-warn:#1a1204;--d-bad:#ec7d6c;--d-on-bad:#1c0806;--d-info:#7ab0e8;--d-on-info:#06111c;
+    --d-life:#d2453a;--d-mana:#4f7fe0;--d-xp:var(--d-gold-9);--d-stamina:#c9b26a;
+    --d-q-normal:#e6ddc8;--d-q-low:#9d968a;--d-q-magic:#7f9fff;--d-q-rare:#f0dc5a;--d-q-set:#62c070;--d-q-unique:#d6ad5a;--d-q-crafted:#f0a040;
+    --d-font-display:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    --d-font-body:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --d-font-num:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --d-fs-0:clamp(.72rem,.7rem + .1vw,.78rem);--d-fs-1:clamp(.84rem,.8rem + .15vw,.9rem);--d-fs-2:clamp(.95rem,.9rem + .2vw,1.05rem);
+    --d-fs-3:clamp(1.05rem,1rem + .3vw,1.2rem);--d-fs-4:clamp(1.25rem,1.1rem + .6vw,1.6rem);--d-fs-5:clamp(1.6rem,1.3rem + 1.2vw,2.4rem);
+    --d-lh:1.45;--d-lh-tight:1.2;
+    --d-sp-1:4px;--d-sp-2:8px;--d-sp-3:12px;--d-sp-4:16px;--d-sp-5:24px;--d-sp-6:32px;
+    --d-r-1:4px;--d-r-2:8px;--d-r-3:12px;--d-r-round:999px;--d-bw:1px;--d-gap:var(--d-sp-4);--d-pad:var(--d-sp-4);
+    --d-shadow-1:0 1px 2px rgb(0 0 0/.4);--d-shadow-2:0 8px 24px rgb(0 0 0/.45);
+    --d-z-band:10;--d-z-sheet:20;--d-z-toast:30;--d-z-banner:40;
+    --d-dur-1:120ms;--d-dur-2:240ms;--d-dur-3:600ms;--d-ease:cubic-bezier(.2,0,0,1);
+    color-scheme:dark;
+  }
+  :root[data-theme="light"] {
+    --d-bg:#f3efe6;--d-surface-0:#ece6d8;--d-surface-1:#fffdf8;--d-surface-2:#f1ece1;--d-surface-3:#fff;
+    --d-line:#d6ccb8;--d-line-strong:#b9ad96;--d-text:#231e17;--d-text-2:#5e5547;--d-text-3:#8a8070;
+    --d-accent:#9a6407;--d-accent-text:#7a4f00;--d-on-accent:#fff;--d-focus:#1f5fd6;--d-ornament:#b5760f;
+    --d-good:#2f7d3a;--d-on-good:#fff;--d-warn:#9a6200;--d-on-warn:#fff;--d-bad:#b3342a;--d-on-bad:#fff;--d-info:#2a63a8;--d-on-info:#fff;
+    --d-q-normal:#3a3328;--d-q-low:#7d7669;--d-q-magic:#2f55c9;--d-q-rare:#8a6d00;--d-q-set:#2f8a3f;--d-q-unique:#8a5a10;--d-q-crafted:#b24a10;
+    color-scheme:light;
+  }
+  :root[data-density="compact"] { --d-pad:var(--d-sp-3); --d-fs-2:var(--d-fs-1); }
+  @media (prefers-reduced-motion: reduce) { :root { --d-dur-1:0ms; --d-dur-2:0ms; --d-dur-3:0ms; } }
+}
+
+@layer reset {
+  *,*::before,*::after { box-sizing:border-box; }
+  html { font:var(--d-fs-2)/var(--d-lh) var(--d-font-body); color:var(--d-text); background:var(--d-bg); }
+  body { margin:0; }
+  h1,h2,h3,p,ul,ol,figure { margin:0; }
+  ul,ol { padding:0; list-style:none; }
+  button,input,select,textarea { font:inherit; color:inherit; }
+  a { color:var(--d-accent-text); }
+  :focus-visible { outline:2px solid var(--d-focus); outline-offset:2px; }
+  img,svg,canvas { display:block; max-inline-size:100%; }
+  [hidden] { display:none; }
+}
+
+@layer shell {
+  .vp { container:vp / inline-size; background:var(--d-bg); }
+  .d-shell { --d-cols:1; display:grid; gap:var(--d-gap); padding:0 var(--d-gap) var(--d-gap);
+    grid-template-columns:repeat(var(--d-cols),minmax(0,1fr)); grid-template-areas:"status" "stage" "grid"; grid-template-rows:auto auto 1fr; }
+  .d-band-status { grid-area:status; position:sticky; inset-block-start:0; z-index:var(--d-z-band); margin:0 calc(-1*var(--d-gap));
+    padding:var(--d-sp-2) var(--d-gap); background:var(--d-surface-0); border-block-end:var(--d-bw) solid var(--d-line);
+    display:grid; grid-template-columns:auto 1fr auto; gap:var(--d-sp-2) var(--d-sp-4); align-items:center; }
+  .d-band-stage { grid-area:stage; display:grid; grid-template-columns:subgrid; gap:var(--d-gap); }
+  .d-band-grid { grid-area:grid; display:grid; grid-template-columns:subgrid; grid-auto-flow:dense; align-items:start; gap:var(--d-gap); }
+  .d-panel { grid-column:span 1; min-inline-size:0; container:panel / inline-size; }
+  .d-panel[data-size="m"] { grid-column:span min(2,var(--d-cols)); }
+  .d-panel[data-size="l"] { grid-column:1 / -1; }
+  .d-brand { display:flex; align-items:center; gap:var(--d-sp-2); font:600 var(--d-fs-3)/1 var(--d-font-display); letter-spacing:.02em; }
+  .d-brand i { inline-size:12px; block-size:12px; background:var(--d-accent); transform:rotate(45deg); border-radius:2px; }
+  .d-links { display:flex; gap:var(--d-sp-2); align-items:center; flex-wrap:wrap; justify-content:end; }
+  .d-rail { display:none; }
+  /* phone: one column, tab rail; the status band keeps two lines */
+  @container vp (width < 40rem) {
+    .d-shell { --d-cols:1; padding-block-end:calc(var(--d-gap) + 56px); }
+    .d-band-status { grid-template-columns:auto 1fr; }
+    .d-links { display:none; }
+    .d-band-status .d-whyline { grid-column:1 / -1; }
+    .d-rail { display:flex; position:fixed; inset-inline:0; inset-block-end:0; z-index:var(--d-z-band); background:var(--d-surface-0);
+      border-block-start:var(--d-bw) solid var(--d-line); }
+    .d-rail button { flex:1; min-block-size:56px; background:none; border:0; border-block-start:2px solid transparent; color:var(--d-text-2); font-size:var(--d-fs-1); }
+    .d-rail button[aria-selected="true"] { color:var(--d-accent-text); border-block-start-color:var(--d-accent); font-weight:650; }
+    .d-panel[data-tab]:not([data-tab~="hero"]) { display:none; } /* the mock shows the Hero tab */
+    .d-panel[data-size] { grid-column:span 1; }
+    .d-band-stage .d-panel[data-panel="map"] .d-card-body { display:none; } /* collapsed strip */
+  }
+  @container vp (40rem <= width < 64rem) { .d-shell { --d-cols:2; } .d-band-status { grid-template-columns:auto 1fr auto; } }
+  @container vp (64rem <= width < 90rem) { .d-shell { --d-cols:3; } }
+  @container vp (width >= 90rem) { .d-shell { --d-cols:4; } }
+  /* the phone frame used by the narrow mockup */
+  .frame { inline-size:390px; block-size:844px; overflow:auto; margin:var(--d-sp-5) auto; border:8px solid #000; border-radius:28px; position:relative; }
+  .frame .d-rail { position:sticky; }
+  .d-toasts { position:fixed; inset-block-start:var(--d-sp-3); inset-inline-end:var(--d-sp-3); z-index:var(--d-z-toast); display:grid; gap:var(--d-sp-2); max-inline-size:min(92vw,380px); }
+}
+
+@layer components {
+  .d-card { background:var(--d-surface-1); border:var(--d-bw) solid var(--d-line); border-radius:var(--d-r-3); padding:var(--d-pad); display:grid; gap:var(--d-sp-3); min-inline-size:0; }
+  .d-card[data-ornament] { border-block-start:2px solid var(--d-ornament); }
+  .d-card-head { display:flex; flex-wrap:wrap; align-items:center; gap:var(--d-sp-1) var(--d-sp-3); }
+  .d-card-head h2 { font:600 var(--d-fs-3)/var(--d-lh-tight) var(--d-font-display); margin-inline-end:auto; min-inline-size:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .d-card-head .meta { color:var(--d-text-2); font-size:var(--d-fs-1); }
+  .d-card-body { display:grid; gap:var(--d-sp-2); min-inline-size:0; }
+  .d-card-foot { display:flex; flex-wrap:wrap; gap:var(--d-sp-2); align-items:center; }
+  .d-card[data-state="loading"] .d-card-body > * { visibility:hidden; }
+  .d-skel { display:grid; gap:var(--d-sp-2); }
+  .d-skel i { display:block; block-size:.9em; border-radius:var(--d-r-1); background:var(--d-surface-2); }
+  .d-fold > .d-card-head h2::before { content:"\25BE  "; color:var(--d-text-3); }
+  .d-fold[aria-expanded="false"] > .d-card-head h2::before { content:"\25B8  "; }
+  .d-fold[aria-expanded="false"] > :not(.d-card-head) { display:none; }
+
+  .d-stat { display:grid; gap:2px; padding:var(--d-sp-2) var(--d-sp-3); background:var(--d-surface-2); border-radius:var(--d-r-2); min-inline-size:0; }
+  .d-stat .lbl { font-size:var(--d-fs-0); color:var(--d-text-2); text-transform:uppercase; letter-spacing:.06em; }
+  .d-stat .val { font:600 var(--d-fs-4)/1.1 var(--d-font-num); font-variant-numeric:tabular-nums; min-inline-size:var(--w,4ch); }
+  .d-stat .val small { font-size:var(--d-fs-1); color:var(--d-text-2); font-weight:400; margin-inline-start:.25em; }
+  .d-stat .delta { font-size:var(--d-fs-1); color:var(--d-text-2); font-variant-numeric:tabular-nums; }
+  .d-stat[data-trend="up"] .delta { color:var(--d-good); } .d-stat[data-trend="down"] .delta { color:var(--d-bad); }
+  .d-stat[data-changed] { box-shadow:inset 0 0 0 1px var(--d-accent); transition:box-shadow var(--d-dur-3) var(--d-ease); }
+  .d-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(7.5rem,1fr)); gap:var(--d-sp-2); }
+
+  .d-meter { display:grid; grid-template-columns:minmax(4ch,auto) 1fr auto; gap:var(--d-sp-2); align-items:center; font-size:var(--d-fs-1); }
+  .d-meter .lbl { color:var(--d-text-2); white-space:nowrap; }
+  .d-meter .track { block-size:10px; background:var(--d-surface-2); border-radius:var(--d-r-round); border:var(--d-bw) solid var(--d-line); overflow:hidden; }
+  .d-meter .fill { block-size:100%; background:var(--d-accent); border-radius:var(--d-r-round); transition:inline-size var(--d-dur-2) var(--d-ease); }
+  .d-meter .num { font-family:var(--d-font-num); font-variant-numeric:tabular-nums; min-inline-size:var(--w,5ch); text-align:end; }
+  .d-meter[data-kind="life"] .fill { background:var(--d-life); } .d-meter[data-kind="mana"] .fill { background:var(--d-mana); }
+  .d-meter[data-kind="xp"] .fill { background:var(--d-xp); } .d-meter[data-kind="fade"] .fill { background:var(--d-warn); }
+  .d-meter[data-kind="durability"][data-level="ok"] .fill { background:var(--d-good); }
+  .d-meter[data-level="warn"] .fill { background:var(--d-warn); } .d-meter[data-level="bad"] .fill { background:var(--d-bad); }
+  .d-meter[data-level="bad"] .num { color:var(--d-bad); font-weight:600; }
+  .d-meter.thin .track { block-size:6px; }
+
+  .d-strip { display:flex; flex-wrap:wrap; gap:var(--d-sp-1) var(--d-sp-2); font-size:var(--d-fs-1); }
+  .d-strip[data-nowrap] { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; mask-image:linear-gradient(90deg,#000 92%,transparent); }
+  .d-chip { display:inline-flex; gap:.4em; align-items:center; padding:2px var(--d-sp-2); border:var(--d-bw) solid var(--d-line); border-radius:var(--d-r-round); background:var(--d-surface-2); white-space:nowrap; }
+  .d-chip b { font-family:var(--d-font-num); font-variant-numeric:tabular-nums; font-weight:600; }
+  .d-chip[data-level="warn"] { border-color:var(--d-warn); color:var(--d-warn); } .d-chip[data-level="bad"] { border-color:var(--d-bad); color:var(--d-bad); }
+  .d-chip[data-level="ok"] { color:var(--d-good); } .d-chip[data-state="now"] { border-color:var(--d-accent); font-weight:650; }
+  .d-chip[aria-pressed="true"] { background:var(--d-accent); color:var(--d-on-accent); border-color:var(--d-accent); font-weight:650; }
+
+  .d-list { display:grid; font-size:var(--d-fs-1); }
+  .d-list li { display:grid; grid-template-columns:auto 1fr auto; gap:var(--d-sp-1) var(--d-sp-2); align-items:baseline; padding:var(--d-sp-2) 0; border-block-end:var(--d-bw) solid var(--d-line); overflow-wrap:anywhere; }
+  .d-list li:last-child { border-block-end:0; }
+  .d-list li > :first-child:empty { display:none; }
+  .d-list .t { color:var(--d-text-3); font-family:var(--d-font-num); font-variant-numeric:tabular-nums; font-size:var(--d-fs-0); }
+  .d-list .sub { grid-column:2 / -1; color:var(--d-text-2); font-size:var(--d-fs-0); }
+  .d-list[data-max] { max-block-size:var(--max,18rem); overflow:auto; }
+  .d-list li[data-kind="incident"] .txt { color:var(--d-bad); } .d-list li[data-kind="learned"] .txt { color:var(--d-good); }
+  .d-list li[data-kind="story"] .txt { color:var(--d-info); } .d-list li[data-kind="missed"] .txt { color:var(--d-warn); }
+  .d-list[data-voice] li .txt { font-family:var(--d-font-display); } .d-list li[data-kind="first"] .txt { color:var(--d-accent-text); }
+  .d-list li[data-kind="done"] { opacity:.7; }
+
+  .d-table { inline-size:100%; border-collapse:collapse; font-size:var(--d-fs-1); }
+  .d-table th,.d-table td { text-align:start; padding:var(--d-sp-1) var(--d-sp-2); border-block-end:var(--d-bw) solid var(--d-line); vertical-align:top; }
+  .d-table th { color:var(--d-text-2); font-weight:600; font-size:var(--d-fs-0); text-transform:uppercase; letter-spacing:.05em; }
+  .d-table .num { text-align:end; font-family:var(--d-font-num); font-variant-numeric:tabular-nums; }
+
+  .d-tabs { display:flex; gap:var(--d-sp-1); border-block-end:var(--d-bw) solid var(--d-line); }
+  .d-tabs button { background:none; border:0; border-block-end:2px solid transparent; padding:var(--d-sp-1) var(--d-sp-2); color:var(--d-text-2); font-size:var(--d-fs-1); min-block-size:36px; }
+  .d-tabs button[aria-selected="true"] { color:var(--d-text); border-block-end-color:var(--d-accent); font-weight:650; }
+
+  .d-note { display:flex; gap:var(--d-sp-2); align-items:start; padding:var(--d-sp-2) var(--d-sp-3); border-radius:var(--d-r-2); background:var(--d-surface-2); border-inline-start:4px solid var(--d-info); font-size:var(--d-fs-1); }
+  .d-note[data-sev="warn"] { border-inline-start-color:var(--d-warn); } .d-note[data-sev="alarm"] { border-inline-start-color:var(--d-bad); } .d-note[data-sev="good"] { border-inline-start-color:var(--d-good); }
+  .d-toast { display:flex; gap:var(--d-sp-2); align-items:center; justify-content:space-between; padding:var(--d-sp-2) var(--d-sp-3); border-radius:var(--d-r-2); background:var(--d-surface-3); border:var(--d-bw) solid var(--d-line); border-inline-start-width:5px; box-shadow:var(--d-shadow-2); font-size:var(--d-fs-1); }
+  .d-toast[data-sev="alarm"] { border-inline-start-color:var(--d-bad); } .d-toast[data-sev="good"] { border-inline-start-color:var(--d-good); } .d-toast[data-sev="warn"] { border-inline-start-color:var(--d-warn); }
+
+  .d-badge { display:inline-block; font-size:var(--d-fs-0); font-weight:650; letter-spacing:.04em; padding:1px 7px; border-radius:var(--d-r-round); border:var(--d-bw) solid var(--d-line); color:var(--d-text-2); white-space:nowrap; font-variant-numeric:tabular-nums; vertical-align:middle; }
+  .d-badge[data-tone="bad"] { color:var(--d-on-bad); background:var(--d-bad); border-color:var(--d-bad); }
+  .d-badge[data-tone="warn"] { color:var(--d-on-warn); background:var(--d-warn); border-color:var(--d-warn); }
+  .d-badge[data-tone="good"] { color:var(--d-on-good); background:var(--d-good); border-color:var(--d-good); }
+  .d-badge[data-tone="accent"] { color:var(--d-on-accent); background:var(--d-accent); border-color:var(--d-accent); }
+  .d-badge[data-tone="info"] { color:var(--d-on-info); background:var(--d-info); border-color:var(--d-info); }
+  .d-badge[data-tone^="q-"] { border-color:currentColor; }
+  .q-magic { color:var(--d-q-magic); } .q-rare { color:var(--d-q-rare); } .q-set { color:var(--d-q-set); } .q-unique { color:var(--d-q-unique); } .q-crafted { color:var(--d-q-crafted); } .q-normal { color:var(--d-q-normal); } .q-low { color:var(--d-q-low); }
+
+  .d-btn { display:inline-flex; flex-direction:column; align-items:start; justify-content:center; gap:1px; min-block-size:44px; min-inline-size:44px; padding:var(--d-sp-1) var(--d-sp-3); border:var(--d-bw) solid var(--d-line-strong); border-radius:var(--d-r-2); background:var(--d-surface-2); cursor:pointer; text-align:start; }
+  .d-btn:hover { border-color:var(--d-text-3); }
+  .d-btn[data-variant="primary"] { background:var(--d-accent); border-color:var(--d-accent); color:var(--d-on-accent); font-weight:650; }
+  .d-btn[data-variant="ghost"] { background:transparent; } .d-btn[data-variant="danger"] { color:var(--d-bad); }
+  .d-btn[data-size="sm"] { min-block-size:32px; min-inline-size:32px; padding:2px var(--d-sp-2); font-size:var(--d-fs-1); }
+  .d-btn:disabled { opacity:.5; cursor:not-allowed; }
+  .d-btn .does { font-size:var(--d-fs-0); color:var(--d-text-2); font-weight:400; }
+  .d-btn[data-variant="primary"] .does { color:inherit; opacity:.85; }
+  .d-btngroup { display:flex; flex-wrap:wrap; gap:var(--d-sp-2); }
+  .d-btngroup[data-segmented] .d-btn { border-radius:0; margin-inline-end:-1px; } .d-btngroup[data-segmented] .d-btn:first-child { border-start-start-radius:var(--d-r-2); border-end-start-radius:var(--d-r-2); } .d-btngroup[data-segmented] .d-btn:last-child { border-start-end-radius:var(--d-r-2); border-end-end-radius:var(--d-r-2); }
+  .d-btn[aria-pressed="true"] { background:var(--d-accent); color:var(--d-on-accent); border-color:var(--d-accent); font-weight:650; }
+
+  .d-empty { padding:var(--d-sp-4) var(--d-sp-2); text-align:center; color:var(--d-text-2); font-size:var(--d-fs-1); }
+  .d-locked { border:2px dashed var(--d-line-strong); background:transparent; color:var(--d-text-3); }
+  .d-locked .d-card-head h2 { color:var(--d-text-3); font-weight:500; }
+  .d-locked .d-card-head h2::before { content:"\1F512  "; filter:grayscale(1); opacity:.7; font-size:.8em; }
+  .d-locked .teaser { font-size:var(--d-fs-1); }
+
+  .d-ticker { font-size:var(--d-fs-2); line-height:var(--d-lh-tight); overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; }
+  .d-ticker b { color:var(--d-accent-text); margin-inline-end:.4em; font-weight:650; }
+  .d-ticker[data-voice] { font-family:var(--d-font-display); font-style:italic; color:var(--d-text-2); }
+  .d-ticker[data-changed] { animation:d-flash var(--d-dur-3) var(--d-ease); }
+  @keyframes d-flash { from { color:var(--d-accent-text); } to { color:inherit; } }
+
+  /* inventory cells (page component) */
+  .d-cells { --d-cell:40px; display:grid; grid-template-columns:repeat(var(--cols,10),var(--d-cell)); grid-auto-rows:var(--d-cell); gap:2px; background:var(--d-surface-0); padding:2px; border:var(--d-bw) solid var(--d-line); border-radius:var(--d-r-1); inline-size:max-content; max-inline-size:100%; overflow:auto; }
+  .d-cells .cell { background:var(--d-surface-2); border-radius:2px; }
+  .d-cells .item { background:var(--d-surface-3); border-radius:2px; border-block-start:3px solid var(--q,var(--d-q-normal)); font-size:var(--d-fs-0); padding:2px 4px; overflow:hidden; line-height:1.15; position:relative; cursor:pointer; }
+  .d-cells .item.sel { outline:2px solid var(--d-focus); outline-offset:-2px; }
+  .d-cells .item .mk { position:absolute; inset-block-end:2px; inset-inline-end:3px; font-size:.6rem; font-weight:700; }
+  .d-cells .item[data-mark="sell"] { box-shadow:inset 0 0 0 2px var(--d-bad); } .d-cells .item[data-mark="keep"] { box-shadow:inset 0 0 0 2px var(--d-good); }
+  .d-slots { display:grid; grid-template-columns:repeat(auto-fill,minmax(13rem,1fr)); gap:var(--d-sp-2); }
+  .d-slot { display:grid; gap:var(--d-sp-1); padding:var(--d-sp-2) var(--d-sp-3); background:var(--d-surface-2); border-radius:var(--d-r-2); border-inline-start:3px solid var(--q,var(--d-line)); font-size:var(--d-fs-1); }
+  .d-slot .nm { font-weight:600; } .d-slot .sl { font-size:var(--d-fs-0); color:var(--d-text-2); text-transform:uppercase; letter-spacing:.05em; }
+  .d-slot[data-pinned] { outline:1px solid var(--d-accent); }
+
+  /* the hero status tile (status band) */
+  .d-hero { display:grid; grid-template-columns:auto auto 1fr; gap:var(--d-sp-1) var(--d-sp-3); align-items:center; min-inline-size:0; }
+  .d-hero .state { font:650 var(--d-fs-3)/1 var(--d-font-display); letter-spacing:.06em; text-transform:uppercase; display:flex; gap:var(--d-sp-2); align-items:center; }
+  .d-hero .dot { inline-size:10px; block-size:10px; border-radius:50%; background:var(--d-good); box-shadow:0 0 0 3px color-mix(in srgb,var(--d-good) 25%,transparent); }
+  .d-hero .dot[data-level="bad"] { background:var(--d-bad); } .d-hero .dot[data-level="warn"] { background:var(--d-warn); }
+  .d-hero .where { color:var(--d-text-2); font-size:var(--d-fs-1); white-space:nowrap; }
+  .d-hero .vitals { display:grid; grid-template-columns:1fr 1fr auto; gap:var(--d-sp-3); align-items:center; min-inline-size:0; }
+  @container vp (width < 40rem) { .d-hero { grid-template-columns:1fr; } .d-hero .vitals { grid-template-columns:1fr 1fr; } .d-hero .vitals .gear { display:none; } }
+  .d-whyline { min-inline-size:0; grid-column:2 / -1; }
+
+  /* video and map stage panels */
+  .d-video { aspect-ratio:4/3; background:#000; border-radius:var(--d-r-2); display:grid; place-items:center; color:#8c7b67; position:relative; overflow:hidden; }
+  .d-video .orbs { position:absolute; inset-block-end:6%; inset-inline:12%; display:flex; justify-content:space-between; align-items:end; }
+  .d-video .orb { inline-size:12%; aspect-ratio:1; border-radius:50%; background:radial-gradient(circle at 40% 35%,#ff8a7a,#8a1a12 60%,#2a0604); box-shadow:0 0 0 3px #3a2a14; }
+  .d-video .orb.m { background:radial-gradient(circle at 40% 35%,#8fb0ff,#1d3c9a 60%,#060c22); }
+  .d-video .belt { display:grid; grid-template-columns:repeat(4,1fr); gap:3px; inline-size:30%; } .d-video .belt i { aspect-ratio:1; background:#2a2016; border:1px solid #5a4728; }
+  .d-video .fps { position:absolute; inset-block-start:6px; inset-inline-end:8px; font-size:var(--d-fs-0); color:#b9aa94; background:rgb(0 0 0/.5); padding:1px 6px; border-radius:var(--d-r-1); }
+  .d-map { aspect-ratio:1; background:var(--d-surface-0); border-radius:var(--d-r-2); inline-size:100%; }
+}
+
+@layer utilities { .d-sr-only { position:absolute; inline-size:1px; block-size:1px; overflow:hidden; clip-path:inset(50%); } .d-num { font-family:var(--d-font-num); font-variant-numeric:tabular-nums; } .d-muted { color:var(--d-text-2); } .d-row { display:flex; flex-wrap:wrap; gap:var(--d-sp-2); align-items:center; } .d-grow { margin-inline-end:auto; } .d-hint { color:var(--d-text-2); font-size:var(--d-fs-1); } }
+
+/* ---- panel files (each would be panels/<id>/panel.css; every selector starts with its root) ---- */
+@layer panels {
+  [data-panel="gear"] .slots { display:grid; gap:var(--d-sp-1); }
+  @container panel (width > 24rem) { [data-panel="gear"] .slots { grid-template-columns:1fr 1fr; column-gap:var(--d-sp-4); } }
+  [data-panel="hero-now"] .order { font-weight:650; font-size:var(--d-fs-3); }
+  [data-panel="orders-map"] svg text { fill:var(--d-text); font-size:11px; } [data-panel="orders-map"] svg .b { fill:var(--d-surface-2); stroke:var(--d-line-strong); stroke-width:1.5; rx:6; }
+  [data-panel="orders-map"] svg .here .b { stroke:var(--d-info); stroke-width:3; } [data-panel="orders-map"] svg .cur .b { stroke:var(--d-accent); stroke-width:3; } [data-panel="orders-map"] svg .hard .b { stroke:var(--d-warn); }
+  [data-panel="orders-map"] svg .edge { stroke:var(--d-line); stroke-width:2; } [data-panel="orders-map"] svg .edge.dg { stroke-dasharray:4 4; }
+  [data-panel="orders-map"] svg .lock { opacity:.5; }
+  [data-panel="thoughts"] .q { font-weight:600; }
+  [data-panel="thoughts"] .thought { display:grid; gap:var(--d-sp-2); padding:var(--d-sp-3); border:var(--d-bw) solid var(--d-line); border-inline-start:3px solid var(--d-accent); border-radius:var(--d-r-2); }
+  [data-panel="tally"] .bal { display:flex; align-items:baseline; gap:var(--d-sp-2); }
+}
+</style></head><body>
+<!-- Mockup of the proposed d.idle design system (docs/ui-design-system.md). Standalone: no requests, no scripts. The same markup as watch-wide.html inside a 390 px frame; container queries do the rest.
+     Inline style attributes in this file stand for the CSSOM writes the components make in production (meter fill widths, grid areas of inventory cells, panel-local custom properties); the production pages are served under style-src self and carry none. -->
+<div class="frame"><div class="vp"><div class="d-shell"><header class="d-band-status">
+ <div class="d-brand"><i></i>d.idle</div>
+ <div class="d-hero d-panel" data-panel="hero-status" data-size="s" data-tab="hero">
+  <span class="state"><span class="dot"></span>Fighting</span>
+  <span class="where">Booti, Sorceress lvl 9, Blood Moor</span>
+  <div class="vitals"><div class="d-meter thin" data-kind="life" role="meter" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" aria-label="life"><span class="lbl">life</span><span class="track"><span class="fill" style="inline-size:72%"></span></span><span class="num" style="--w:4ch">72%</span></div><div class="d-meter thin" data-kind="mana" role="meter" aria-valuenow="41" aria-valuemin="0" aria-valuemax="100" aria-label="mana"><span class="lbl">mana</span><span class="track"><span class="fill" style="inline-size:41%"></span></span><span class="num" style="--w:4ch">41%</span></div><span class="gear d-chip" data-level="warn">gear <b>worn</b></span></div>
+ </div>
+ 
+ <p class="d-ticker d-whyline d-panel" data-panel="whyline" data-size="l" data-tab="hero" role="status" aria-live="polite" aria-atomic="true"><b>Why</b>Fighting in Blood Moor, my life is 72%.</p>
+</header><div class="d-band-stage"><section class="d-card d-panel" data-panel="video" data-size="m" data-tab="hero" data-state="ready" aria-labelledby="t-video" ><div class="d-card-head"><h2 id="t-video">Game</h2><span class="meta">Blood Moor</span><span class="d-row"><button class="d-btn" data-size="sm">Collapse</button><button class="d-btn" data-size="sm">Full screen</button></span></div><div class="d-card-body"><div class="d-video"><span>live game window, 4:3, space reserved before the first frame</span><span class="fps">8 fps</span><div class="orbs"><i class="orb"></i><div class="belt"><i></i><i></i><i></i><i></i></div><i class="orb m"></i></div></div></div></section><section class="d-card d-panel" data-panel="map" data-size="s" data-tab="hero" data-state="ready" aria-labelledby="t-map" ><div class="d-card-head"><h2 id="t-map">Map</h2><span class="meta">Blood Moor + Cold Plains</span><span class="d-row"><button class="d-btn" data-size="sm" aria-label="Zoom in">+</button><button class="d-btn" data-size="sm" aria-label="Zoom out">&minus;</button></span></div><div class="d-card-body"><svg class="d-map" viewBox="0 0 200 200" role="img" aria-label="Top-down map of Blood Moor; the cross is the hero"><rect width="200" height="200" fill="#14110e"/><rect x="20" y="30" width="70" height="40" fill="#2d2720"/><rect x="40" y="70" width="110" height="60" fill="#2d2720"/><rect x="90" y="20" width="60" height="50" fill="#2d2720"/><rect x="60" y="130" width="80" height="45" fill="#2d2720"/><rect x="140" y="100" width="45" height="70" fill="#2d2720"/><rect x="10" y="110" width="50" height="30" fill="#2d2720"/><rect x="24" y="34" width="62" height="32" fill="#3a322a" opacity=".5"/><rect x="150" y="60" width="8" height="8" fill="#7ab0e8"/><path d="M70 150 l6 -8 l6 8 l-6 8z" fill="#c7a44a"/><circle cx="120" cy="90" r="3" fill="#ec7d6c"/><circle cx="128" cy="98" r="3" fill="#ec7d6c"/><circle cx="112" cy="104" r="3" fill="#ec7d6c"/><circle cx="70" cy="80" r="3" fill="#ec7d6c"/><circle cx="100" cy="100" r="4" fill="#4f7fe0"/><path d="M95 100h10M100 95v10" stroke="#ff6a5a" stroke-width="3"/></svg><p class="d-hint">Cross hero, blue dot merc, red dots monsters, diamond waypoint, square exit. Dimmer areas are next door.</p></div></section><section class="d-card d-panel" data-panel="hero-detail" data-size="s" data-tab="hero" data-state="ready" aria-labelledby="t-hero-detail" ><div class="d-card-head"><h2 id="t-hero-detail">Hero</h2></div><div class="d-card-body"><div class="d-stats"><div class="d-stat"><span class="lbl">level</span><span class="val" style="--w:4ch">9</span><span class="delta">+1 in 2.1k xp</span></div><div class="d-stat" data-trend="up"><span class="lbl">xp / h</span><span class="val" style="--w:4ch">14.2<small>k</small></span><span class="delta">&#9650; 8%</span></div><div class="d-stat"><span class="lbl">kills</span><span class="val" style="--w:4ch">412</span><span class="delta">this session</span></div><div class="d-stat"><span class="lbl">uptime</span><span class="val" style="--w:4ch">97.4<small>%</small></span><span class="delta">last 30 min 100%</span></div><div class="d-stat" data-trend="down"><span class="lbl">deaths</span><span class="val" style="--w:4ch">1</span><span class="delta">Cold Plains 12:03</span></div><div class="d-stat"><span class="lbl">gold</span><span class="val" style="--w:4ch">1 240</span><span class="delta">+180</span></div></div></div></section></div><main class="d-band-grid"><section class="d-card d-panel" data-panel="hero-now" data-size="m" data-tab="orders" data-state="ready" aria-labelledby="t-hero-now" ><div class="d-card-head"><h2 id="t-hero-now">Hero now</h2></div><div class="d-card-body"><p class="order">Farm Cold Plains for 30 min</p><div class="d-meter" data-kind="order" role="meter" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100" aria-label="order"><span class="lbl">order</span><span class="track"><span class="fill" style="inline-size:63%"></span></span><span class="num" style="--w:4ch">63%</span></div><p class="d-hint">about 11 min left. 38 kills, +2 140 xp since the order.</p><div class="d-strip" aria-label="Route"><span class="d-chip" data-level="ok">&#10003; Rogue Encampment</span><span class="d-chip" data-state="now">&#9654; Blood Moor</span><span class="d-chip">Cold Plains</span></div></div><div class="d-card-foot"><button class="d-btn" data-variant="danger">Cancel order</button><button class="d-btn">Come home<span class="does">cancel and rest in town</span></button></div></section><section class="d-card d-panel" data-panel="orders-map" data-size="m" data-tab="orders" data-state="ready" aria-labelledby="t-orders-map" ><div class="d-card-head"><h2 id="t-orders-map">Where to? Tap an area</h2><span class="d-row"><button class="d-btn" data-size="sm" aria-pressed="false">List view</button></span></div><div class="d-card-body"><svg viewBox="0 0 420 200" role="group" aria-label="Act 1 map" style="inline-size:100%;block-size:auto"><line class="edge" x1="60" y1="100" x2="160" y2="60"/><line class="edge" x1="160" y1="60" x2="260" y2="60"/><line class="edge dg" x1="160" y1="60" x2="160" y2="150"/><line class="edge" x1="260" y1="60" x2="360" y2="100"/><line class="edge dg" x1="260" y1="60" x2="300" y2="160"/><g class="here" transform="translate(8,78)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Rogue Encampment</text><text x="52" y="35" text-anchor="middle" fill="#b9aa94">&#9670; here</text></g><g class="cur" transform="translate(108,38)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Blood Moor</text><text x="52" y="35" text-anchor="middle">&#9654; order</text></g><g transform="translate(208,38)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Cold Plains</text><text x="52" y="35" text-anchor="middle">#1 queued</text></g><g class="hard" transform="translate(308,78)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Stony Field</text><text x="52" y="35" text-anchor="middle">&#9888; too hard</text></g><g transform="translate(108,128)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Den of Evil</text><text x="52" y="35" text-anchor="middle">&#10003; cleared</text></g><g class="lock" transform="translate(248,138)"><rect class="b" width="104" height="44"/><text x="52" y="19" text-anchor="middle">Burial Grounds</text><text x="52" y="35" text-anchor="middle">not yet</text></g></svg><div class="d-strip" aria-label="Legend"><span class="d-chip">&#9670; hero</span><span class="d-chip">&#9654; order</span><span class="d-chip">#n queued</span><span class="d-chip" data-level="warn">&#9888; too hard</span><span class="d-chip" data-level="ok">&#10003; cleared</span><span class="d-chip">dashed = dungeon</span></div></div></section><section class="d-card d-panel" data-panel="queue" data-size="s" data-tab="orders" data-state="ready" aria-labelledby="t-queue" ><div class="d-card-head"><h2 id="t-queue">Up next</h2><span class="meta">2 queued</span></div><div class="d-card-body"><ol class="d-list"><li><span class="d-badge">1</span><span class="txt">Farm Cold Plains for 30 min</span><button class="d-btn" data-size="sm" data-variant="danger" aria-label="Cancel: Farm Cold Plains">&#10005;</button></li><li><span class="d-badge">2</span><span class="txt">Rest in town</span><button class="d-btn" data-size="sm" data-variant="danger" aria-label="Cancel: Rest in town">&#10005;</button></li></ol></div></section><section class="d-card d-panel" data-panel="thoughts" data-size="m" data-tab="orders" data-state="ready" aria-labelledby="t-thoughts" ><div class="d-card-head"><h2 id="t-thoughts">Thoughts</h2></div><div class="d-card-body"><div class="d-tabs" role="tablist"><button role="tab" aria-selected="true">Questions <span class="d-badge" data-tone="warn">1</span></button><button role="tab" aria-selected="false">Feed</button></div><div class="thought"><p class="q">A rare ring dropped in Blood Moor.</p><p class="d-hint">Wear it now? It beats the worn ring on resistances; the bot would sell it.</p><p class="d-hint" style="color:var(--d-warn)">If you say nothing, it is sold at the next town visit.</p><div class="d-btngroup"><button class="d-btn" data-variant="primary">Wear it<span class="does">swap now, pin the slot</span></button><button class="d-btn">Keep in the pack<span class="does">never sold</span></button><button class="d-btn">Sell<span class="does">the rule you have</span></button></div><div class="d-meter thin" data-kind="fade" role="meter" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100" aria-label="fades"><span class="lbl">fades</span><span class="track"><span class="fill" style="inline-size:64%"></span></span><span class="num" style="--w:4ch">29 s</span></div></div></div></section><section class="d-card d-panel" data-panel="gear" data-size="s" data-tab="hero" data-state="ready" aria-labelledby="t-gear" ><div class="d-card-head"><h2 id="t-gear">Gear condition</h2><span class="meta">1 broken, 1 worn</span></div><div class="d-card-body"><div class="slots"><div class="d-meter" data-kind="durability" data-level="bad" role="meter" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="weapon"><span class="lbl">weapon</span><span class="track"><span class="fill" style="inline-size:0%"></span></span><span class="num" style="--w:6ch">0/18</span></div><div class="d-meter" data-kind="durability" data-level="warn" role="meter" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100" aria-label="torso"><span class="lbl">torso</span><span class="track"><span class="fill" style="inline-size:21%"></span></span><span class="num" style="--w:6ch">5/24</span></div><div class="d-meter" data-kind="durability" data-level="ok" role="meter" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" aria-label="head"><span class="lbl">head</span><span class="track"><span class="fill" style="inline-size:67%"></span></span><span class="num" style="--w:6ch">8/12</span></div><div class="d-meter" data-kind="durability" data-level="ok" role="meter" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100" aria-label="gloves"><span class="lbl">gloves</span><span class="track"><span class="fill" style="inline-size:92%"></span></span><span class="num" style="--w:6ch">11/12</span></div><div class="d-meter" data-kind="durability" data-level="ok" role="meter" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100" aria-label="boots"><span class="lbl">boots</span><span class="track"><span class="fill" style="inline-size:83%"></span></span><span class="num" style="--w:6ch">10/12</span></div><div class="d-meter" data-kind="durability" data-level="ok" role="meter" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="belt"><span class="lbl">belt</span><span class="track"><span class="fill" style="inline-size:100%"></span></span><span class="num" style="--w:6ch">12/12</span></div></div><div class="d-note" data-sev="alarm">Short Staff is broken. Repair costs at least 180 gold.</div></div><div class="d-card-foot"><button class="d-btn" data-variant="primary">Repair now<span class="does">at the next town visit</span></button><span class="d-hint">Mode: manual</span></div></section><section class="d-card d-panel" data-panel="tally" data-size="s" data-tab="hero" data-state="ready" aria-labelledby="t-tally" ><div class="d-card-head"><h2 id="t-tally">Tally and spend</h2></div><div class="d-card-body"><div class="bal"><div class="d-stat" data-trend="up"><span class="lbl">tally</span><span class="val" style="--w:4ch">42</span><span class="delta">+6 this expedition</span></div><div class="d-stat"><span class="lbl">gold</span><span class="val" style="--w:4ch">1 240</span></div></div><table class="d-table"><thead><tr><th>Upgrade</th><th class="num">Cost</th><th></th></tr></thead><tbody><tr><td>Alerts <span class="d-badge">locked</span><br><span class="d-hint">death, low life and gear alerts are free</span></td><td class="num">60 tally</td><td><button class="d-btn" data-size="sm" disabled>Buy</button></td></tr><tr><td>Loot markers on the map</td><td class="num">40 tally</td><td><button class="d-btn" data-size="sm">Buy</button></td></tr></tbody></table></div></section><section class="d-card d-panel d-locked" data-panel="risk" data-size="s" data-tab="hero" data-state="locked" aria-labelledby="t-risk"><div class="d-card-head"><h2 id="t-risk">Risk meter</h2></div><div class="d-card-body"><p class="teaser">How dangerous the next zone is for this hero.</p></div><div class="d-card-foot"><span class="d-hint">Opens when the hero survives a near death.</span></div></section><section class="d-card d-panel" data-panel="chronicle" data-size="m" data-tab="story" data-state="ready" aria-labelledby="t-chronicle" ><div class="d-card-head"><h2 id="t-chronicle">Chronicle</h2></div><div class="d-card-body"><div class="d-tabs" role="tablist"><button role="tab" aria-selected="true">Lines</button><button role="tab" aria-selected="false">Expeditions</button><button role="tab" aria-selected="false">Recent reasons</button></div><ul class="d-list" data-voice data-max style="--max:14rem"><li><span class="t">12:41</span><span class="txt">The Fallen came in a crowd; Booti answered with a Charged Bolt and the crowd thinned.</span></li><li data-kind="first"><span class="t">12:38</span><span class="txt">First champion met: a Fallen Shaman with Extra Strong.</span></li><li data-kind="boss"><span class="t">12:03</span><span class="txt">Blood Raven fell in the Burial Grounds. The rogues cheered.</span></li><li><span class="t">11:50</span><span class="txt">Unlocked: Waypoint atlas. Every waypoint the hero lights.</span></li></ul></div></section><section class="d-card d-panel" data-panel="journal" data-size="m" data-tab="story" data-state="ready" aria-labelledby="t-journal" ><div class="d-card-head"><h2 id="t-journal">Journal</h2><span class="meta">permanent</span></div><div class="d-card-body"><ul class="d-list" data-max style="--max:14rem"><li data-kind="incident"><span class="t">12:03</span><span class="txt">Died in Cold Plains to a Carver pack.</span><a href="#" class="d-hint">why?</a></li><li data-kind="learned"><span class="t">11:12</span><span class="txt">Learned a rule: in Act 1 always pick up rings and amulets.</span></li><li data-kind="missed"><span class="t">10:40</span><span class="txt">Missed question: a magic staff dropped; sold by the rule.</span></li><li data-kind="story"><span class="t">10:02</span><span class="txt">Took the Cold Plains waypoint.</span><a href="#" class="d-hint">why?</a></li></ul></div></section><section class="d-card d-panel" data-panel="voice" data-size="s" data-tab="story" data-state="ready" aria-labelledby="t-voice" ><div class="d-card-head"><h2 id="t-voice">Voice and diary</h2><span class="d-row"><button class="d-btn" data-size="sm" aria-pressed="false">Mute voice</button></span></div><div class="d-card-body"><p class="d-ticker" data-voice role="status" aria-live="polite">&ldquo;The Moor is quiet. I keep walking east; the cold is further than the map says.&rdquo;</p><ul class="d-list"><li><span class="t"></span><span class="txt"><b>Den of Evil cleared</b></span><span class="sub">A page in the diary: the dark was full of eyes, and then it was not.</span></li></ul></div></section><section class="d-card d-panel" data-panel="quests" data-size="s" data-tab="discover" data-state="ready" aria-labelledby="t-quests" ><div class="d-card-head"><h2 id="t-quests">Quests</h2><span class="meta">(normal)</span></div><div class="d-card-body"><ul class="d-list"><li data-kind="done"><span class="t"></span><span class="txt">Den of Evil <span class="d-badge" data-tone="good">done</span></span></li><li><span class="t"></span><span class="txt">Sisters&rsquo; Burial Grounds <span class="d-badge" data-tone="accent">cleared</span></span><span class="sub">Talk to Kashya for the reward.</span></li><li><span class="t"></span><span class="txt">The Search for Cain <span class="d-badge">started</span></span><span class="sub">Why: the Cold Plains waypoint is lit; the bot heads there next.</span></li></ul><p class="d-hint">3 more in Act 1 not given yet.</p></div></section><section class="d-card d-panel" data-panel="cards" data-size="s" data-tab="discover" data-state="ready" aria-labelledby="t-cards" ><div class="d-card-head"><h2 id="t-cards">Find cards</h2><span class="meta">flip to identify</span></div><div class="d-card-body"><ul class="d-list"><li><span class="t"></span><span class="txt q-rare">Rare: Raven Grip ring</span><button class="d-btn" data-size="sm">Show</button></li><li><span class="t"></span><span class="txt d-muted" style="font-style:italic">Unidentified item #4</span><button class="d-btn" data-size="sm" data-variant="primary">Flip</button></li></ul></div></section><section class="d-card d-panel d-fold" data-panel="bestiary" data-size="s" data-tab="discover" data-state="ready" aria-expanded="false" aria-labelledby="t-bestiary" ><div class="d-card-head"><h2 id="t-bestiary">Cain&rsquo;s notes</h2><span class="meta">2 of 14 met</span></div><div class="d-card-body"><ul class="d-list"><li><span class="t"></span><span class="txt"><b>Fallen</b> 23 kills, demon</span><span class="sub">Cowardly in packs; the shaman raises them. Tip: kill the shaman first.</span></li><li><span class="t"></span><span class="txt"><b>Zombie</b> 11 kills</span><span class="sub">9 more for its card.</span></li><li><span class="t"></span><span class="txt d-muted"><b>???</b> a beast you have not fought yet</span></li></ul></div></section><section class="d-card d-panel d-fold" data-panel="atlas" data-size="s" data-tab="discover" data-state="ready" aria-expanded="false" aria-labelledby="t-atlas" ><div class="d-card-head"><h2 id="t-atlas">Waypoint atlas</h2><span class="meta">2 of 9 lit</span></div><div class="d-card-body"><ol class="d-list"><li><span class="t">1</span><span class="txt"><b>Rogue Encampment</b></span></li><li><span class="t">2</span><span class="txt"><b>Cold Plains</b> <span class="d-badge" data-tone="accent">next</span></span></li><li><span class="t">3</span><span class="txt d-muted">An unlit waypoint</span></li></ol></div></section><section class="d-card d-panel d-locked" data-panel="orderqueue2" data-size="s" data-tab="orders" data-state="locked" aria-labelledby="t-orderqueue2"><div class="d-card-head"><h2 id="t-orderqueue2">Longer order queue</h2></div><div class="d-card-body"><p class="teaser">Queue up to three orders.</p></div><div class="d-card-foot"><span class="d-hint">Opens when Blood Raven&rsquo;s reward quest is done, or for 30 tally.</span></div></section><section class="d-card d-panel d-fold" data-panel="locked" data-size="s" data-tab="discover" data-state="ready" aria-expanded="false" aria-labelledby="t-locked" ><div class="d-card-head"><h2 id="t-locked">Still locked</h2><span class="meta">each opens by itself as the hero plays</span></div><div class="d-card-body"><ul class="d-list"><li><span class="t"></span><span class="txt d-muted"><b>Loot markers</b> on the map</span><span class="d-badge" data-tone="accent">40 tally</span></li><li><span class="t"></span><span class="txt d-muted"><b>Danger rating</b> on the map</span><span class="d-badge" data-tone="accent">80 tally</span></li><li><span class="t"></span><span class="txt d-muted"><b>Pact: Andariel&rsquo;s first kill</b></span><span class="sub">Opens when Andariel falls.</span></li></ul></div></section><section class="d-card d-panel d-fold" data-panel="rules" data-size="m" data-tab="settings" data-state="ready" aria-expanded="false" aria-labelledby="t-rules" ><div class="d-card-head"><h2 id="t-rules">Rules</h2><span class="d-row"><button class="d-btn" data-size="sm" data-variant="danger">Revoke all</button></span></div><div class="d-card-body"><p class="d-hint">Every rule the hero learned from you. A rule never revokes itself.</p><ul class="d-list"><li><span class="t"></span><span class="txt">In Act 1, always pick up rings and amulets <span class="d-badge">low</span></span><button class="d-btn" data-size="sm" data-variant="danger">Revoke</button></li><li><span class="t"></span><span class="txt">Retreat to town under 30% life <span class="d-badge" data-tone="warn">medium</span></span><button class="d-btn" data-size="sm" data-variant="danger">Revoke</button></li></ul></div></section><section class="d-card d-panel" data-panel="alerts" data-size="m" data-tab="settings" data-state="ready" aria-labelledby="t-alerts" ><div class="d-card-head"><h2 id="t-alerts">Alerts</h2><span class="meta">free rules only</span></div><div class="d-card-body"><ul class="d-list"><li data-kind="incident"><span class="t">12:03</span><span class="txt"><b>alarm</b> Died in Cold Plains.</span></li><li><span class="t">11:58</span><span class="txt"><b>warn</b> Life under 25% in Cold Plains.</span></li><li><span class="t">11:20</span><span class="txt"><b>warn</b> Short Staff is broken.</span></li></ul><div class="d-row"><label class="d-hint"><input type="checkbox"> Sound on a new alert</label><button class="d-btn" data-size="sm">Desktop notifications</button></div><p class="d-hint">Only death, low life and gear alerts are on. The full set costs 60 tally (see Tally).</p></div></section></main><nav class="d-rail" aria-label="Pages"><button aria-selected="true">Hero</button><button aria-selected="false">Orders <span class="d-badge" data-tone="warn">1</span></button><button aria-selected="false">Story</button><button aria-selected="false">Discover</button><button aria-selected="false">More <span class="d-badge" data-tone="bad">2</span></button></nav></div></div></div></body></html>
