@@ -90,32 +90,68 @@ var errUpstream = errors.New("tap: upstream d2d not reachable")
 
 // roundTrip sends one line upstream and returns the payload lines and the status line. Caller holds m.mu.
 func (m *Mux) roundTrip(line string) (lines []string, status string, err error) {
+	ls, sts, err := m.roundTrips([]string{line})
+	if err != nil {
+		return nil, "", err
+	}
+	return ls[0], sts[0], nil
+}
+
+// roundTrips sends the lines upstream in ONE write and reads one reply per line, in order. d2d dispatches every complete
+// line of its buffer in one frame (devctl.cpp Channel::pump), so a batch costs one frame; one line at a time costs a
+// frame each (WALKSMOOTH3). Caller holds m.mu.
+func (m *Mux) roundTrips(batch []string) (lines [][]string, status []string, err error) {
 	if m.conn == nil {
 		c, e := net.DialTimeout("unix", m.upstream, 2*time.Second)
 		if e != nil {
 			m.upErr.Store(e.Error())
-			return nil, "", errUpstream
+			return nil, nil, errUpstream
 		}
 		m.conn, m.rd = c, bufio.NewReaderSize(c, 1<<20)
 	}
-	if _, err = fmt.Fprintf(m.conn, "%s\n", line); err == nil {
-		for {
-			var l string
-			l, err = m.rd.ReadString('\n')
+	if _, err = m.conn.Write([]byte(strings.Join(batch, "\n") + "\n")); err == nil {
+		for range batch {
+			var pl []string
+			for {
+				var l string
+				l, err = m.rd.ReadString('\n')
+				if err != nil {
+					break
+				}
+				l = strings.TrimRight(l, "\r\n")
+				if l == "ok" || l == "err" || strings.HasPrefix(l, "ok ") || strings.HasPrefix(l, "err ") {
+					lines, status = append(lines, pl), append(status, l)
+					break
+				}
+				pl = append(pl, l)
+			}
 			if err != nil {
 				break
 			}
-			l = strings.TrimRight(l, "\r\n")
-			if l == "ok" || l == "err" || strings.HasPrefix(l, "ok ") || strings.HasPrefix(l, "err ") {
-				return lines, l, nil
-			}
-			lines = append(lines, l)
+		}
+		if err == nil {
+			return lines, status, nil
 		}
 	}
 	m.upErr.Store(err.Error())
 	m.conn.Close()
 	m.conn, m.rd = nil, nil
-	return nil, "", errUpstream
+	return nil, nil, errUpstream
+}
+
+// execBatch runs lines from the bot that carry no step (no pacing, no rewrite) as one upstream write.
+func (m *Mux) execBatch(batch []string) ([][]string, []string) {
+	m.mu.Lock()
+	m.botLines.Add(int64(len(batch)))
+	lines, st, err := m.roundTrips(batch)
+	m.mu.Unlock()
+	if err != nil {
+		lines, st = make([][]string, len(batch)), make([]string, len(batch))
+		for i := range st {
+			st[i] = "err " + err.Error()
+		}
+	}
+	return lines, st
 }
 
 // Exec runs one line from the bot (bot true) or the viewer.
@@ -222,15 +258,19 @@ func (m *Mux) client(c net.Conn, bot bool, shotDir string) {
 			return
 		}
 		line = strings.TrimRight(line, "\r\n")
-		var out strings.Builder
-		if !bot {
-			// forward exactly what readOnly judged, not the raw bytes
-			line = strings.Join(strings.Fields(line), " ")
+		if bot {
+			if !m.clientBatch(c, rd, line) {
+				return
+			}
+			continue
 		}
-		if !bot && !readOnly(line, shotDir) {
+		var out strings.Builder
+		// forward exactly what readOnly judged, not the raw bytes
+		line = strings.Join(strings.Fields(line), " ")
+		if !readOnly(line, shotDir) {
 			out.WriteString("err view: read-only viewer socket refuses '" + line + "'\n")
 		} else {
-			lines, st := m.Exec(line, bot)
+			lines, st := m.Exec(line, false)
 			for _, l := range lines {
 				out.WriteString(l + "\n")
 			}
@@ -240,4 +280,49 @@ func (m *Mux) client(c net.Conn, bot bool, shotDir string) {
 			return
 		}
 	}
+}
+
+const maxBotBatch = 32
+
+// clientBatch serves the bot line first and every further complete line already in rd. Lines without a step go
+// upstream together; a step line runs alone (pacing and rewrite are per step). Replies go back in order, in one write.
+func (m *Mux) clientBatch(c net.Conn, rd *bufio.Reader, first string) bool {
+	lines := []string{first}
+	for len(lines) < maxBotBatch && rd.Buffered() > 0 {
+		b, _ := rd.Peek(rd.Buffered())
+		if !strings.Contains(string(b), "\n") {
+			break
+		}
+		l, err := rd.ReadString('\n')
+		if err != nil {
+			break
+		}
+		lines = append(lines, strings.TrimRight(l, "\r\n"))
+	}
+	var out strings.Builder
+	put := func(pl []string, st string) {
+		for _, l := range pl {
+			out.WriteString(l + "\n")
+		}
+		out.WriteString(st + "\n")
+	}
+	for i := 0; i < len(lines); {
+		if strings.HasPrefix(lines[i], "step ") {
+			pl, st := m.Exec(lines[i], true)
+			put(pl, st)
+			i++
+			continue
+		}
+		j := i
+		for j < len(lines) && !strings.HasPrefix(lines[j], "step ") {
+			j++
+		}
+		pls, sts := m.execBatch(lines[i:j])
+		for k := range sts {
+			put(pls[k], sts[k])
+		}
+		i = j
+	}
+	_, err := c.Write([]byte(out.String()))
+	return err == nil
 }
