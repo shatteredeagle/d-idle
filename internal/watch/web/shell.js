@@ -21,6 +21,7 @@ function setupTheme() {
   const btn = document.getElementById('btn-theme');
   let theme = 'dark';
   try { theme = localStorage.getItem('d2theme') || 'dark'; } catch (e) { /* storage blocked */ }
+  if (/^(dark|light|auto)$/.test(qs.get('theme') || '')) theme = qs.get('theme'); // ?theme= for links and screenshots, not stored
   const apply = (t) => {
     if (t !== 'light' && t !== 'auto') t = 'dark';
     html.dataset.theme = t;
