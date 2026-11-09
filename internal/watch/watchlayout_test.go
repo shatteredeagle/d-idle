@@ -115,3 +115,19 @@ func TestWatchCSSPanelsAndVideoSize(t *testing.T) {
 		t.Error("the default two-per-row rule must come before the placed cards")
 	}
 }
+
+func TestWatchFoldableCards(t *testing.T) {
+	js, err := os.ReadFile("web/unlockui.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, id := range []string{"'rules'", "'lockedpane'", "'bestiarypane'", "'atlaspane'"} {
+		if !strings.Contains(string(js), id) {
+			t.Errorf("unlockui.js does not fold %s", id)
+		}
+	}
+	css, _ := os.ReadFile("web/app.css")
+	if !strings.Contains(string(css), ".card.folded >") {
+		t.Error("app.css lacks the .folded rule")
+	}
+}
