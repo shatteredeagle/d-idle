@@ -20,6 +20,7 @@ owns:
   - "cmd/d2bot/repairwire.go"
   - "internal/town/repairgate_test.go"
   - "docs/repair.md"
+  - "internal/watch/gearjs_test.go"
   - "internal/decide/policy_chores.json"
   - "internal/decide/testdata"
   - "data/unlocks/ladder.json"

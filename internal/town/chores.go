@@ -210,7 +210,8 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 		}
 		if est := t.repairEstimate(s); s.Player.Gold < est {
 			if requested {
-				g.Blocked(fmt.Sprintf("not enough gold: at least %d needed", est))
+				g.Short(est-s.Player.Gold, est)
+				t.e.Log.Info("repair requested but gold is short", "gold", s.Player.Gold, "estimate", est)
 			}
 			return false
 		}
@@ -408,6 +409,24 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"heal", plan.Heal, t.needHeal, func() error { return t.heal(ctx, a, &rep) }},
 		{"cube", plan.Cube, func(s *d2.Snapshot) bool { return t.needCube(s, plan) }, func() error { return t.cubeJobs(ctx, a, plan, &rep) }},
 		{"stash", plan.Stash || plan.Gold, func(s *d2.Snapshot) bool { return t.needStash(s, plan) }, func() error { return t.doStash(ctx, a, plan, &rep) }},
+	}
+	// A requested repair is paid before the supplies: it moves up behind the sale, so the potions and portal scroll
+	// cannot spend its gold first (repairmanual fix, user report 2026-11-09).
+	if g := t.repairGate; g != nil && g.Requested() {
+		ri, si := -1, -1
+		for i, st := range steps {
+			switch st.name {
+			case "repair":
+				ri = i
+			case "sell":
+				si = i
+			}
+		}
+		if ri > si && si >= 0 {
+			rs := steps[ri]
+			copy(steps[si+2:ri+1], steps[si+1:ri])
+			steps[si+1] = rs
+		}
 	}
 	for _, st := range steps {
 		if err := step(st.name, st.enabled, st.need, st.run); err != nil {
