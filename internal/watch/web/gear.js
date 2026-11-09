@@ -4,12 +4,6 @@
   'use strict';
   var top = document.querySelector('header.top');
   if (!top || document.getElementById('gearstrip')) return;
-  var st = document.createElement('style');
-  st.textContent = '#gearstrip{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.25rem .75rem;font-size:.85rem}' +
-    '#gearstrip .gslot{border:1px solid currentColor;border-radius:4px;padding:0 .35rem;opacity:.9}' +
-    '#gearstrip .gslot.warn{color:#d9a23b;font-weight:600}#gearstrip .gslot.broken{color:#e0533b;font-weight:700}' +
-    '#gearstrip .gnote{opacity:.75}';
-  document.head.appendChild(st);
   var box = document.createElement('div');
   box.id = 'gearstrip'; box.setAttribute('role', 'status'); box.setAttribute('aria-label', 'Gear condition'); box.hidden = true;
   top.insertAdjacentElement('afterend', box);
@@ -38,7 +32,10 @@
     box.hidden = false;
     box.appendChild(el('b', '', 'Gear'));
     gear.forEach(function (g) {
-      var s = el('span', 'gslot' + (g.broken ? ' broken' : g.warn ? ' warn' : ''), g.slot + ' ' + g.dur + '/' + g.max + (g.broken ? ' BROKEN' : ''));
+      var s = el('span', 'gslot' + (g.broken ? ' broken' : g.warn ? ' warn' : ''));
+      s.appendChild(el('span', 'gname', g.slot));
+      s.appendChild(el('span', 'gdur', g.dur + '/' + g.max));
+      if (g.broken) s.appendChild(el('span', 'gstate', 'BROKEN'));
       s.title = g.name + ' ' + g.pct + '%';
       box.appendChild(s);
     });

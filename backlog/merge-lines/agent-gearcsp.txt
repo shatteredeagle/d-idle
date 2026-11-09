@@ -1,0 +1,1 @@
+BACKLOG: TASK-229 gearcsp: /watch gear strip styles moved from an injected style element (blocked by the page CSP) into app.css; guard test
