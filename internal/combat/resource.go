@@ -48,7 +48,7 @@ func (f *Fighter) resSkills(p *d2.Player, tg *Target, order []SkillSpec, weakPac
 		out = append(out, resource.Skill{Name: sp.Name, Cost: sp.Cost, Ready: f.skillReady(sp)})
 	}
 	// A caster whose left skill is a spell can still swing when the pack is weak: the fight loop rebinds the left skill.
-	if p.LeftSkill == 0 || weakPack {
+	if p.LeftSkill == 0 || weakPack || f.profileFor(p).MeleeClass() {
 		out = append(out, resource.Skill{Name: meleeSpec().Name, Melee: true, Ready: true})
 	}
 	return out
@@ -107,6 +107,7 @@ func (f *Fighter) resInput(snap *d2.Snapshot, hs []Target, pack int, skills []re
 			}
 		}
 	}
+	in.MeleeClass = f.profileFor(p).MeleeClass()
 	in.PackDanger = f.packDanger(p, hs)
 	in.WeakPack = weakHostiles(p, hs, f.tune().FightRadius)
 	// The melee model is fed only when the tables, the wielded weapon and the pack are all known (melee.go).

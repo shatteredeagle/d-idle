@@ -562,3 +562,27 @@ func TestChainHomeDungeonLevels(t *testing.T) {
 		t.Error("an unknown area must not be walkable home")
 	}
 }
+
+// PACKFIGHT: a melee-profile class (Paladin) with an empty mana pool swings at once in a big pack, at no back-off
+// step; a caster (Sorceress, whose input has no melee skill) in the same pack still backs off. Deadly and low life flee.
+func TestMeleeClassSwingsInBigPackWithoutMana(t *testing.T) {
+	tu := DefaultTuning()
+	pal := Input{Class: d2.Paladin, MeleeClass: true, Life: 100, MaxLife: 100, Mana: 0, MaxMana: 30, Hostiles: 40, PackDanger: 2,
+		Skills: []Skill{{Name: "Smite", Cost: 2, Ready: true}, {Name: "Attack", Melee: true, Ready: true}}}
+	if d := AttackChoice(pal, tu); d.Kind != Melee {
+		t.Errorf("paladin in a pack of 40: %v, want melee", d)
+	}
+	sor := Input{Class: d2.Sorceress, Life: 100, MaxLife: 100, Mana: 0, MaxMana: 60, Hostiles: 40, PackDanger: 2,
+		Skills: []Skill{{Name: "Fire Bolt", Cost: 3, Ready: true}}}
+	if d := AttackChoice(sor, tu); d.Kind != Retreat {
+		t.Errorf("sorceress in a pack of 40: %v, want retreat", d)
+	}
+	pal.PackDanger = 3
+	if d := AttackChoice(pal, tu); d.Kind != Retreat {
+		t.Errorf("deadly pack: %v, want retreat", d)
+	}
+	pal.PackDanger, pal.Life = 2, 30
+	if d := AttackChoice(pal, tu); d.Kind != Retreat {
+		t.Errorf("low life: %v, want retreat", d)
+	}
+}
