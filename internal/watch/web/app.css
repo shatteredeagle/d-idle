@@ -24,9 +24,6 @@ button, input, select { font: inherit; color: inherit; }
 .top { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding: 10px 16px; background: var(--surface); border-bottom: 1px solid var(--line); }
 .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
 .brand-mark { width: 14px; height: 14px; background: var(--accent); transform: rotate(45deg); border-radius: 2px; }
-.mode { display: flex; align-items: center; gap: 8px; font-weight: 600; }
-.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
-.dot.ok { background: var(--good); } .dot.bad { background: var(--bad); } .dot.idle { background: var(--warn); }
 .tag { font-weight: 650; }
 .badge { display: inline-block; font-size: .72rem; font-weight: 650; text-transform: uppercase; letter-spacing: .05em; padding: 1px 7px; border-radius: 99px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
 .badge.bad { color: var(--bad); border-color: var(--bad); }
@@ -60,7 +57,6 @@ main .spend[hidden] { display: none !important; }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
 .card-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-bottom: 6px; }
 .card-head h2 { margin: 0 auto 0 0; }
-img#shot { max-width: 100%; width: 100%; height: auto; border-radius: 8px; background: #000; }
 
 .thought { border: 1px solid var(--line); border-radius: 9px; padding: 10px 12px; margin-bottom: 8px; background: var(--surface); box-shadow: inset 3px 0 0 var(--accent); }
 .thought.confirm { border-color: var(--warn); box-shadow: inset 3px 0 0 var(--warn); }
@@ -150,19 +146,6 @@ svg.map { width: 100%; height: auto; display: block; }
 .spendrow .sp-cost { font-variant-numeric: tabular-nums; white-space: nowrap; }
 .spendrow button:disabled { opacity: .55; cursor: not-allowed; }
 
-.gamerow { display: flex; gap: 12px; align-items: flex-start; flex-wrap: nowrap; }
-.videotop { width: calc(100% - 32px); max-width: 840px; margin: 16px auto 0; box-sizing: border-box; }
-.videotop[hidden] { display: none; }
-.videotop.collapsed .gamerow { display: none; }
-.videotop:fullscreen { max-width: none; margin: 0; overflow: auto; }
-.videotop:fullscreen .gamerow #frame { flex: 1 1 480px; }
-.gamerow #frame { flex: 0 1 440px; min-width: 0; aspect-ratio: 4 / 3; }
-@media (max-width: 699px) { .gamerow { flex-direction: column; flex-wrap: nowrap; } .gamerow #frame { flex: none; width: 100%; } .sensespanel { width: 100%; box-sizing: border-box; } }
-.sensespanel { flex: 0 0 auto; width: 338px; box-sizing: border-box; overflow-wrap: anywhere; background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; }
-.sensespanel h3 { margin: 0; font-size: .9rem; }
-.sensespanel canvas { display: block; width: 320px; max-width: 100%; height: auto; background: var(--bg); border-radius: 6px; touch-action: none; cursor: grab; }
-.sensespanel .btnrow { display: inline-flex; gap: 4px; }
-.sensespanel.min canvas, .sensespanel.min .hint { display: none; }
 
 /* unlockable panels (docs/unlock-ladder.md): hidden until the ladder opens them; locked ones are silhouettes */
 main [data-v][hidden] { display: none !important; }
@@ -174,9 +157,6 @@ main [data-v][hidden] { display: none !important; }
 .silhouettes li { opacity: .65; border-style: dashed; }
 .silhouettes li b { letter-spacing: .08em; }
 .voicestrip { margin: 6px 12px; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--surface2); font-family: Georgia, "Times New Roman", serif; font-style: italic; }
-.whyline { margin: 6px 12px; padding: 6px 10px; border-left: 3px solid var(--accent); background: var(--surface2); }
-.whyline[hidden] { display: none; }
-.whyline b { margin-right: 6px; }
 .voicestrip[hidden] { display: none; }
 .voicestrip q { quotes: "\201C" "\201D"; }
 .diary-list li b { display: block; font-style: normal; font-size: .8rem; color: var(--muted); }

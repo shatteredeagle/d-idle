@@ -395,17 +395,6 @@
     else if (!ev.shiftKey && document.activeElement === last) { ev.preventDefault(); first.focus(); }
   }
 
-  function renderUptime(u) {
-    $('state').textContent = u.label; $('state').className = 'tag ' + u.state;
-    $('uptime').textContent = u.uptimePct === null ? '-' : u.uptimePct.toFixed(1) + '%';
-    $('window').textContent = u.windowPct === null ? '' : '(last ' + Math.round(u.windowSec / 60) + ' min ' + u.windowPct.toFixed(1) + '%)';
-    $('dot').className = 'dot ' + (/^(death|recovery|stall)$/.test(u.state) ? 'bad' : u.state === 'idle' ? 'idle' : 'ok');
-    $('deaths').textContent = u.deaths ? u.deaths + ' death' + (u.deaths > 1 ? 's' : '') : '';
-    $('deaths').hidden = !u.deaths;
-    $('clock').textContent = 'time ' + mmss(u.now);
-    $('uptime').title = u.text;
-  }
-
   // ---- Currencies (d.idle mode only): header strip and the spend sheet shell. Nothing here buys anything yet. ----
   function renderCurrency(c) {
     var strip = $('curstrip'); clear(strip);
@@ -446,25 +435,16 @@
   }
   function refreshTally() { get('/api/tally').then(renderTally).catch(function () { renderTally(null); }); }
 
-  // The whyline: the hero's own reason for what it does, from /api/whyline (hidden while the route or a line is missing).
-  function renderWhy(v) {
-    var box = $('whyline');
-    box.hidden = !v || !v.text;
-    if (!box.hidden) $('whytext').textContent = v.text;
-  }
-  function refreshWhy() { get('/api/whyline').then(renderWhy).catch(function () { renderWhy(null); }); }
-
   function refresh() {
     if (pending) return; pending = true;
     refreshTally();
-    refreshWhy();
-    var reqs = [get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/uptime'), get('/api/orders'), get('/api/orders/map')];
+    var reqs = [get('/api/thoughts'), get('/api/journal?limit=100'), get('/api/rules'), get('/api/orders'), get('/api/orders/map')];
     if (cfg.currency) reqs.push(get('/api/currency'));
     Promise.all(reqs)
       .then(function (a) {
-        if (a[6]) renderCurrency(a[6]);
+        if (a[5]) renderCurrency(a[5]);
         th = a[0]; thoughtsAt = performance.now();
-        renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); renderUptime(a[3]); ord = a[4]; ordAt = performance.now(); om = a[5]; renderOrders();
+        renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); ord = a[3]; ordAt = performance.now(); om = a[4]; renderOrders();
       }).catch(function () { say('the viewer is not reachable'); })
       .then(function () { pending = false; });
   }
@@ -478,7 +458,7 @@
     mapList = !mapList; this.setAttribute('aria-pressed', mapList ? 'true' : 'false'); this.textContent = mapList ? 'Map view' : 'List view'; renderMap();
   });
 
-  // Phone tabs (the desktop grid shows every panel) and the theme toggle, same as the original dashboard.
+  // Phone tabs (the desktop grid shows every panel); the theme switch is the shell's (shell.js).
   Array.prototype.forEach.call(document.querySelectorAll('#views button'), function (b) {
     b.addEventListener('click', function () {
       $('main').dataset.view = b.dataset.view;
@@ -490,22 +470,6 @@
   // #orders, #thoughts, ... opens that tab (a link, a screenshot); the default is Orders.
   var hv = location.hash.slice(1), hb = document.querySelector('#views button[data-view="' + hv.replace(/[^a-z]/g, '') + '"]');
   if (hb && !hb.hidden) hb.click();
-  // Dark is the default theme (user, 2026-11-09); light and auto (follow the system) are the options. The value always
-  // lands on <html data-theme>, which tokens.css reads.
-  var theme = 'dark';
-  try { theme = localStorage.getItem('d2theme') || 'dark'; } catch (e) { /* storage blocked */ }
-  function applyTheme(t) {
-    if (t !== 'light' && t !== 'auto') t = 'dark';
-    document.documentElement.dataset.theme = t;
-    $('btn-theme').textContent = 'Theme: ' + t;
-  }
-  $('btn-theme').addEventListener('click', function () {
-    theme = { dark: 'light', light: 'auto', auto: 'dark' }[theme] || 'dark';
-    try { localStorage.setItem('d2theme', theme); } catch (e) { /* ignore */ }
-    applyTheme(theme);
-  });
-  applyTheme(theme);
-
   function live() {
     var last = 0;
     function poll() { get('/api/uptime').then(function (u) { if (u.seq !== last) { last = u.seq; refresh(); } }).catch(function () {}); }
@@ -517,43 +481,9 @@
     setInterval(poll, 5000); // safety net: a missed event costs at most 5 s
   }
 
-  // Game video: an MJPEG <img>. It shows only when the server offers a stream, and reconnects when the stream ends or
-  // is refused (viewer limit, capture restart). The token, if any, rides along from this page's own address.
-  function video(url) {
-    var shot = $('shot'), t = new URLSearchParams(location.search).get('t'), tries = 0;
-    var pane = $('gamepane'), col = $('video-collapse');
-    pane.hidden = false;
-    function collapse(on) {
-      pane.classList.toggle('collapsed', on); col.setAttribute('aria-pressed', String(on)); col.textContent = on ? 'Expand' : 'Collapse';
-      try { localStorage.setItem('d2videocollapsed', on ? '1' : '0'); } catch (e) { /* storage blocked */ }
-    }
-    var saved = null;
-    try { saved = localStorage.getItem('d2videocollapsed'); } catch (e) { /* storage blocked */ }
-    if (saved === '1') { pane.classList.add('collapsed'); col.setAttribute('aria-pressed', 'true'); col.textContent = 'Expand'; }
-    col.addEventListener('click', function () { collapse(!pane.classList.contains('collapsed')); });
-    $('video-full').addEventListener('click', function () {
-      if (document.fullscreenElement) document.exitFullscreen();
-      else if (pane.requestFullscreen) pane.requestFullscreen();
-    });
-    function connect() {
-      var q = [];
-      if (t) q.push('t=' + encodeURIComponent(t));
-      q.push('r=' + Date.now());
-      shot.src = url + '?' + q.join('&');
-    }
-    shot.addEventListener('load', function () { tries = 0; shot.hidden = false; $('noframe').hidden = true; });
-    shot.addEventListener('error', function () {
-      shot.hidden = true; $('noframe').hidden = false;
-      tries++; setTimeout(connect, Math.min(15000, 1000 * tries)); // backoff 1 s, 2 s ... capped at 15 s
-    });
-    $('noframe').hidden = false;
-    connect();
-  }
-
   get('/api/config').then(function (c) {
     cfg = c;
     answerBase = c.answerBase || (c.answerPort ? location.protocol + '//' + location.hostname + ':' + c.answerPort : '');
-    if (c.frameUrl) video(c.frameUrl);
     refresh(); live(); setInterval(tickCountdown, 250);
     setInterval(function () { if (activeOrder()) { if (!pending) refresh(); } }, 5000);
   }).catch(function () { say('the viewer is not reachable'); });

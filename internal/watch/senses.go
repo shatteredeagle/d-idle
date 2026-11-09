@@ -11,7 +11,7 @@ import (
 
 // SensesRoutes are the GET routes of the side-panel minimap (docs/senses-map.md). Mount them on the viewer behind the
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
-var SensesRoutes = []string{"/api/senses", "/watch/senses.js", "/watch/senses_units.js"}
+var SensesRoutes = []string{"/api/senses", "/watch/senses_units.js"}
 
 // Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
 // reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
@@ -154,7 +154,7 @@ func (s *Senses) Handler() http.Handler {
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
 		writeJSON(w, 200, s.ReplyNb(have, parseHave(r.URL.Query().Get("nb"))))
 	})
-	for route, file := range map[string]string{"/watch/senses.js": "web/senses.js", "/watch/senses_units.js": "web/senses_units.js"} {
+	for route, file := range map[string]string{"/watch/senses_units.js": "web/senses_units.js"} {
 		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
 			b, err := fs.ReadFile(webFS, file)
 			if err != nil {

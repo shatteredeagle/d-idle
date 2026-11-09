@@ -6,37 +6,28 @@
 <link rel="stylesheet" href="/watch/tokens.css">
 <link rel="stylesheet" href="/watch/reset.css">
 <link rel="stylesheet" href="/watch/app.css">
+<link rel="stylesheet" href="/watch/shell.css">
 <link rel="stylesheet" href="/watch/components.css">
 <link rel="stylesheet" href="/watch/utilities.css">
 </head><body>
-<header class="top">
- <div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
- <div class="mode" role="status" aria-live="polite"><span class="dot" id="dot"></span><span id="state" class="tag">connecting</span></div>
- <div class="up">uptime <b id="uptime">-</b> <small id="window"></small></div>
- <span id="deaths" class="badge bad" hidden></span>
- <div class="curstrip" id="curstrip" role="status" aria-label="Currencies" hidden></div>
- <div class="tallystrip" id="tallystrip" role="status" aria-label="Tally" hidden></div>
- <a class="muted" id="invlink" href="/watch/inventory">Inventory</a>
- <a class="muted" id="returnlink" href="/watch/return" hidden>Return screen</a>
- <span id="clock" class="muted"></span>
- <div class="tools"><button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button></div>
+<div class="d-shell">
+<header class="top d-band-status" data-band="status">
+ <div class="d-brand"><span class="d-brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
+ <div class="d-band-main">
+  <div class="curstrip" id="curstrip" role="status" aria-label="Currencies" hidden></div>
+  <div class="tallystrip" id="tallystrip" role="status" aria-label="Tally" hidden></div>
+ </div>
+ <nav class="d-links" aria-label="Other pages">
+  <a class="d-btn" data-size="sm" data-variant="ghost" id="invlink" href="/watch/inventory">Inventory</a>
+  <a class="d-btn" data-size="sm" data-variant="ghost" id="returnlink" href="/watch/return" hidden>Return screen</a>
+  <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button>
+ </nav>
 </header>
+<div class="d-band-stage" data-band="stage" hidden></div>
+<div class="d-band-grid" data-band="grid">
+<div class="d-compat">
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
-<section class="card game videotop" id="gamepane" aria-labelledby="t-game" hidden>
- <div class="card-head"><h2 id="t-game">Game</h2>
-  <span class="btnrow"><button class="btn small" id="video-full" type="button" aria-label="Full screen">Full screen</button><button class="btn small" id="video-collapse" type="button" aria-pressed="false" aria-controls="gamerow">Collapse</button></span></div>
- <div class="gamerow" id="gamerow">
-  <div id="frame"><img id="shot" alt="live game window" width="800" height="600" hidden><p id="noframe" class="empty" hidden>Waiting for the game picture...</p></div>
-  <aside class="sensespanel" id="sensespanel" aria-label="Area map" hidden>
-   <div class="card-head"><h3>Map <small id="sensesarea" class="muted"></small></h3>
-    <span class="btnrow"><button class="btn small" id="senses-zin" type="button" aria-label="Zoom in">+</button><button class="btn small" id="senses-zout" type="button" aria-label="Zoom out">-</button><button class="btn small" id="senses-hide" type="button" aria-pressed="true">Hide</button></span></div>
-   <canvas id="sensescanvas" width="320" height="320" role="img" aria-label="Top-down map of the area; the cross is the hero"></canvas>
-   <p class="hint" id="sensesnote"></p>
-  </aside>
- </div>
-</section>
-<p class="whyline" id="whyline" role="status" aria-live="polite" hidden><b>Why</b> <span id="whytext"></span></p>
 <nav class="views" id="views" aria-label="Pages">
  <button type="button" data-view="orders" aria-current="page">Orders</button>
  <button type="button" data-view="thoughts">Thoughts</button>
@@ -117,17 +108,20 @@
   <ul id="journal" class="log-list"></ul>
  </section>
 </main>
+</div>
+</div>
+</div>
 <div class="scrim" id="scrim" hidden></div>
-<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+<div id="toasts" class="toasts d-toasts" role="status" aria-live="polite"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden></div>
 <div class="sheet revealsheet" id="revealsheet" role="dialog" aria-modal="true" aria-labelledby="rv-title" hidden>
  <h2 id="rv-title"></h2><p id="rv-text"></p><p class="hint" id="rv-note"></p>
  <div class="btnrow"><button class="btn primary" id="rv-flip" type="button">Flip the card</button><button class="btn ghost" id="rv-close" type="button">Later</button></div>
 </div>
 <div class="toast" id="toast" role="status" hidden></div>
+<script type="module" src="/watch/shell.js"></script>
 <script src="/watch/app.js"></script>
 <script src="/watch/senses_units.js"></script>
-<script src="/watch/senses.js"></script>
 <script src="/watch/unlockui.js"></script>
 <script src="/watch/alerts.js"></script>
 <script src="/watch/gear.js"></script>

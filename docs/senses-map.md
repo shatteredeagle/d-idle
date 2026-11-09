@@ -4,13 +4,13 @@ Design: `docs/research/info-unlocks.md` (tier 1). View only: the panel reads a s
 
 ## Data flow
 
-d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, areaName, heroPos)` -> `Publisher.Snapshot()` -> `watch.Senses` -> `GET /api/senses` (poll about 2 Hz) -> `web/senses.js` canvas beside the video (top of `/watch`, not a tab since watchlayout).
+d2map `Tracker`/`LevelMap` (bot goroutine) -> `senses.Publisher.Observe(lm, areaName, heroPos)` -> `Publisher.Snapshot()` -> `watch.Senses` -> `GET /api/senses` (poll about 2 Hz) -> the `map` panel (`web/panels/map/panel.js`) in the stage band of the shell, beside the video.
 
 - `internal/senses`: `Map` (schema `watch.senses/1`: areaId, area, version, x0, y0, step, w, h, rle, exits[], waypoints[]), `Snapshot` (map + hero + optional units, empty until TASK-151), `Build`, `Encode`/`Decode`, `Publisher`.
 - Cells: 0 unknown, 1 walkable (BlockWalk clear, the Kolbot rule of d2map), 2 blocked. RLE is a flat `value,length` list in row-major order. A level longer than 256 subtiles is downsampled by an integer `step` (a block is walkable when any cell is).
 - Fog of war is server-side: `Publisher` keeps the visited 4-subtile blocks of every area for the session (radius `senses.RevealRadius`, 24 subtiles) and masks cells, exits and waypoints the hero has not been near. The map `version` bumps on each new reveal or grid change; the page caches by version (`?v=`) and receives the map only when it changed. Unseen geometry is never sent.
 - `Unlocker.Allowed(tier)` is the hook of the unlock ladder (TASK-149). Today `watch.FixedTier(n)`; n = 1 is the default, 0 is off. A locked tier's keys are absent from the JSON. A nil Unlocker is closed.
-- Mount: `watch.ServeOptions.Senses` adds `/api/senses` and `/watch/senses.js` to the viewer, behind the same gate as the other viewer routes (token or passcode; 401 without; GET and HEAD only).
+- Mount: `watch.ServeOptions.Senses` adds `/api/senses` and `/watch/senses_units.js` to the viewer (the map panel itself is served from `/watch/panels/map/` by the view handler), behind the same gate as the other viewer routes (token or passcode; 401 without; GET and HEAD only).
 - An area without geometry is an error naming the area id (`senses: no geometry for area N`), the previous snapshot is kept.
 
 ## Tags

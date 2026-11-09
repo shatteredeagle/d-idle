@@ -1,0 +1,12 @@
+@layer panels {
+  [data-panel="hero-status"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1) var(--d-sp-4); }
+  [data-panel="hero-status"] .state { display: flex; align-items: center; gap: var(--d-sp-2); font: 650 var(--d-fs-3)/1 var(--d-font-display); letter-spacing: .06em; text-transform: uppercase; }
+  [data-panel="hero-status"] .dot { flex: none; inline-size: 10px; block-size: 10px; border-radius: 50%; background: var(--d-text-3); }
+  [data-panel="hero-status"] .dot[data-level="ok"] { background: var(--d-good); }
+  [data-panel="hero-status"] .dot[data-level="warn"] { background: var(--d-warn); }
+  [data-panel="hero-status"] .dot[data-level="bad"] { background: var(--d-bad); }
+  [data-panel="hero-status"] .up { color: var(--d-text-2); font-size: var(--d-fs-1); white-space: nowrap; }
+  [data-panel="hero-status"] .up b { color: var(--d-text); font-weight: 600; }
+  [data-panel="hero-status"] .clock { color: var(--d-text-2); font-size: var(--d-fs-1); white-space: nowrap; }
+  [data-panel="hero-status"] .state .word { white-space: nowrap; }
+}

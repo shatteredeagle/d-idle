@@ -72,10 +72,14 @@ func (h *Hub) ViewHandler() http.Handler {
 			http.Redirect(w, r, "/watch"+queryOf(r), http.StatusFound)
 		case "/watch/app.js":
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
-		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/components.css", "/watch/utilities.css":
+		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/shell.css", "/watch/components.css", "/watch/utilities.css":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/css; charset=utf-8")(w, r)
+		case "/watch/shell.js":
+			asset("shell.js", "text/javascript; charset=utf-8")(w, r)
 		default:
-			http.NotFound(w, r)
+			if !servePanels(w, r, asset) {
+				http.NotFound(w, r)
+			}
 		}
 	})
 	m.Handle(WhylineRoute, h.why.Handler())

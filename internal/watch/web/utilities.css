@@ -1,7 +1,8 @@
-/* The four utilities (docs/ui-design-system.md section 8); nothing else goes here. */
+/* The four utilities (docs/ui-design-system.md section 8) and the hidden attribute, which must beat every component's
+   display value (a hidden badge stayed visible when this rule sat in the reset layer). */
 @layer utilities {
   .d-sr-only { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .d-num { font-family: var(--d-font-num); font-variant-numeric: tabular-nums; }
   .d-muted { color: var(--d-text-2); }
-  .d-hidden { display: none; }
+  .d-hidden, [hidden] { display: none; }
 }

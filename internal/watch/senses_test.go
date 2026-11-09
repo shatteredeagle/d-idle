@@ -111,7 +111,10 @@ func TestSensesServedBehindToken(t *testing.T) {
 	if out.Map == nil || out.Map.AreaID != 1 || len(out.Map.Exits) != 1 {
 		t.Fatalf("%+v", out)
 	}
-	if resp := mustGet(t, base+"/watch/senses.js?t=tok"); resp.StatusCode != 200 {
-		t.Fatal("senses.js", resp.StatusCode)
+	if resp := mustGet(t, base+"/watch/senses_units.js?t=tok"); resp.StatusCode != 200 {
+		t.Fatal("senses_units.js", resp.StatusCode)
+	}
+	if resp := mustGet(t, base+"/watch/panels/map/panel.js?t=tok"); resp.StatusCode != 200 {
+		t.Fatal("map panel", resp.StatusCode)
 	}
 }
