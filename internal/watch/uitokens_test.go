@@ -33,7 +33,7 @@ func TestDesignTokensDarkDefaultDense(t *testing.T) {
 	if !strings.Contains(string(app), "--bg: var(--d-bg)") || strings.Contains(string(app), "prefers-color-scheme") {
 		t.Error("app.css must map its palette onto the tokens and leave theme switching to tokens.css")
 	}
-	js, _ := os.ReadFile("web/app.js")
+	js, _ := os.ReadFile("web/shell.js")
 	if !strings.Contains(string(js), "localStorage.getItem('d2theme') || 'dark'") {
 		t.Error("the theme switch must default to dark")
 	}
@@ -43,7 +43,7 @@ func TestDesignTokensDarkDefaultDense(t *testing.T) {
 func TestDesignSystemAssetsServed(t *testing.T) {
 	r := newRig(t, "sorceress")
 	page := r.get("/watch", nil).Body.String()
-	for _, f := range []string{"tokens.css", "reset.css", "app.css", "components.css", "utilities.css"} {
+	for _, f := range []string{"tokens.css", "reset.css", "app.css", "shell.css", "components.css", "utilities.css"} {
 		w := r.get("/watch/"+f, nil)
 		if w.Code != 200 || !strings.HasPrefix(w.Header().Get("Content-Type"), "text/css") || !strings.Contains(w.Body.String(), "@layer") {
 			t.Errorf("/watch/%s: %d %q", f, w.Code, w.Header().Get("Content-Type"))

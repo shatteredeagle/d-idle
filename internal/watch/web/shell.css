@@ -1,0 +1,51 @@
+/* The shell (docs/ui-design-system.md section 4): bands, columns, placement by size class, overlays, modes. The only
+   media queries of the watch UI live here. Panels never position themselves; the shell does it from the manifest. */
+@layer shell {
+  .d-shell { --d-cols: 1; display: flex; flex-direction: column; gap: var(--d-gap); padding-block-end: var(--d-gap); min-block-size: 100dvh; }
+  @media (min-width: 40rem) { .d-shell { --d-cols: 2; } }
+  @media (min-width: 64rem) { .d-shell { --d-cols: 3; } }
+  @media (min-width: 90rem) { .d-shell { --d-cols: 4; } }
+
+  /* status band: brand, the inline status panels, the strips, the links; size-l status panels take their own row */
+  .d-band-status { position: sticky; inset-block-start: 0; z-index: var(--d-z-band); display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "brand main links"; align-items: center; gap: var(--d-sp-1) var(--d-sp-4); padding: var(--d-sp-2) var(--d-gap);
+    background: var(--d-surface-0); border-block-end: var(--d-bw) solid var(--d-line); }
+  .d-band-status > .d-brand { grid-area: brand; }
+  .d-band-status > .d-band-main { grid-area: main; display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1) var(--d-sp-4); min-inline-size: 0; }
+  .d-band-status > .d-links { grid-area: links; }
+  .d-band-status > .d-panel[data-size="l"] { grid-column: 1 / -1; }
+  @media (max-width: 39.99rem) {
+    .d-band-status { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "brand links" "main main"; }
+  }
+  .d-brand { display: flex; align-items: center; gap: var(--d-sp-2); }
+  .d-brand h1 { margin: 0; font: 600 var(--d-fs-3)/1 var(--d-font-display); letter-spacing: .02em; color: var(--d-accent-text); }
+  .d-brand-mark { inline-size: 12px; block-size: 12px; background: var(--d-accent); transform: rotate(45deg); border-radius: 2px; }
+  .d-links { display: flex; flex-wrap: wrap; justify-content: end; align-items: center; gap: var(--d-sp-2); }
+  .d-panel { min-inline-size: 0; container: panel / inline-size; }
+  .d-panel[hidden] { display: none; }
+
+  /* stage band: video and map, at most three columns wide so the picture stays a glance, centred */
+  .d-band-stage { --d-stage-cols: min(var(--d-cols), 3); display: grid; grid-template-columns: repeat(var(--d-stage-cols), minmax(0, 1fr));
+    gap: var(--d-gap); align-items: start; inline-size: 100%; max-inline-size: 72rem; margin-inline: auto; padding-inline: var(--d-gap); }
+  .d-band-stage[hidden] { display: none; }
+
+  /* grid band: every other panel by priority and size, dense packing; the compatibility slot spans the row */
+  .d-band-grid { display: grid; grid-template-columns: repeat(var(--d-cols), minmax(0, 1fr)); grid-auto-flow: row dense; align-items: start; gap: var(--d-gap); padding-inline: var(--d-gap); }
+  .d-band-grid > .d-compat { grid-column: 1 / -1; min-inline-size: 0; }
+
+  .d-band-stage > .d-panel, .d-band-grid > .d-panel { grid-column: span 1; }
+  .d-band-stage > .d-panel[data-size="m"], .d-band-grid > .d-panel[data-size="m"] { grid-column: span min(2, var(--d-cols)); }
+  .d-band-stage > .d-panel[data-size="l"], .d-band-grid > .d-panel[data-size="l"] { grid-column: 1 / -1; }
+
+  /* the shell's toast stack (ctx.toast); the old toasts share the element until their panels move */
+  .d-toasts { position: fixed; inset-block-start: var(--d-sp-3); inset-inline-end: var(--d-sp-3); z-index: var(--d-z-toast); display: grid; gap: var(--d-sp-2); max-inline-size: min(92vw, 380px); }
+
+  /* overlay mode (?mode=overlay, user 2026-11-09: the stream overlay is a mode of this shell): the status band alone on
+     a transparent page for an OBS browser source */
+  :root[data-mode="overlay"] { background: transparent; }
+  :root[data-mode="overlay"] body { background: transparent; }
+  :root[data-mode="overlay"] .d-shell > :not(.d-band-status) { display: none; }
+  :root[data-mode="overlay"] .d-band-status { position: static; grid-template-areas: "brand main"; grid-template-columns: auto minmax(0, 1fr); font-size: var(--d-fs-4); }
+  :root[data-mode="overlay"] .d-band-status > .d-links { display: none; }
+  :root[data-mode="overlay"] body > :not(.d-shell) { display: none; }
+}
