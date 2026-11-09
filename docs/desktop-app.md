@@ -1,6 +1,6 @@
 # Desktop app: d2idle-watch
 
-A small launcher so nobody has to remember the watch URL. Code: `apps/desktop` (own `go.mod`, standard library only, so the main module and `go vet ./...` are unaffected). Task: TASK-227. Workflow (draft, never run): `.github/workflows/desktop-app.yml`.
+A small launcher so nobody has to remember the watch URL. Code: `apps/desktop` (a package of the main module, standard library only; a nested go.mod made the merge gate's `go test -race ./apps/desktop` fail). Task: TASK-227. Workflow (draft, never run): `.github/workflows/desktop-app.yml`.
 
 ## Decision: Go launcher around a Chromium-family `--app` window
 
@@ -36,7 +36,7 @@ The watch login POST is accepted only when the request's Origin/Host matches `D2
 
 ## Build and test
 
-- Test: `cd apps/desktop && go vet ./... && go test -count=1 ./...` (the main module's `./...` does not include it).
+- Test: `cd apps/desktop && go vet ./... && go test -count=1 ./...`.
 - Build: `cd apps/desktop && CGO_ENABLED=0 go build -ldflags "-s -w" -o d2idle-watch .`; Windows: `GOOS=windows CGO_ENABLED=0 go build -ldflags "-s -w -H=windowsgui" -o d2idle-watch.exe .` (`windowsgui` hides the console window).
 - Smoke (fake browser, Xvfb, no window on any desktop): `cd apps/desktop && sh testdata/smoke.sh`.
 - Windows shortcut (manual): target `d2idle-watch.exe`, add jump arguments `--page inventory` in a copy of the shortcut.
