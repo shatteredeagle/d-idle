@@ -19,6 +19,7 @@ import (
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/mem"
+	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/town/belt"
 	"d2lod-bot/internal/town/hand"
 	"d2lod-bot/internal/town/panel"
@@ -54,6 +55,8 @@ type Town struct {
 
 	marks  ItemMarks      // the player's sell and keep marks (SetItemMarks)
 	pinned func(int) bool // the player's slot pins (SetPinned)
+
+	repairGate RepairGate // the player's repair policy (SetRepairGate); nil: the legacy durability rule
 
 	tpBought atomic.Int64 // scrolls bought since the minute line last took the count
 
@@ -154,6 +157,19 @@ type ItemMarks interface {
 
 // SetItemMarks installs the player's sell and keep marks; nil: none.
 func (t *Town) SetItemMarks(m ItemMarks) { t.marks = m }
+
+// RepairGate is the player's say over repairs (internal/repair.Controller): with a gate installed the town repairs only
+// when Permit says so, whatever the durability knobs and a Force plan say, and no repair trip is made unless the
+// permission comes from the mode and not from a one-off request.
+type RepairGate interface {
+	Permit(f repair.Facts) (ok, requested bool)
+	Blocked(reason string)
+	Repaired(now time.Time)
+	Failed(reason string)
+}
+
+// SetRepairGate installs the repair policy; nil restores the legacy rule (drills, soaks).
+func (t *Town) SetRepairGate(g RepairGate) { t.repairGate = g }
 
 // SetPinned installs the player's slot pins: a pinned body slot is never filled or replaced by the town's own gear logic.
 func (t *Town) SetPinned(f func(body int) bool) { t.pinned = f }

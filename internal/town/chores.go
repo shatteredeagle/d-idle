@@ -12,6 +12,7 @@ import (
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/loot"
+	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town/belt"
 	"d2lod-bot/internal/town/panel"
@@ -120,7 +121,7 @@ func (t *Town) tripReasons(s *d2.Snapshot) []tripReason {
 			add(false, "pack", "pack %d%% full", pct)
 		}
 	}
-	if pct, ok := t.lowestDurability(s); ok && pct < tn.TripRepairPct {
+	if pct, ok := t.lowestDurability(s); ok && pct < tn.TripRepairPct && t.repairTripAllowed(s) {
 		add(true, "durability", "equipment at %d%% durability", pct)
 	}
 	return out
@@ -202,8 +203,55 @@ func (t *Town) needScrolls(s *d2.Snapshot) bool {
 
 func (t *Town) needRepair(s *d2.Snapshot) bool {
 	pct, ok := t.lowestDurability(s)
+	if g := t.repairGate; g != nil {
+		permit, requested := g.Permit(t.repairFacts(s))
+		if !ok || !permit || pct >= 100 || t.repairLatched(s, pct) {
+			return false
+		}
+		if est := t.repairEstimate(s); s.Player.Gold < est {
+			if requested {
+				g.Blocked(fmt.Sprintf("not enough gold: at least %d needed", est))
+			}
+			return false
+		}
+		return true
+	}
 	return ok && t.repairDue(s, pct) && !t.repairLatched(s, pct) && s.Player.Gold >= t.repairEstimate(s)
 }
+
+// repairTripAllowed: without a gate the durability trip is as before; with one, a repair trip is made only for a mode
+// (never for a one-off "Repair now", which waits for the next visit: user decision 2026-11-09).
+func (t *Town) repairTripAllowed(s *d2.Snapshot) bool {
+	if t.repairGate == nil {
+		return true
+	}
+	permit, requested := t.repairGate.Permit(t.repairFacts(s))
+	return permit && !requested
+}
+
+// repairFacts reads the worn items for the repair gate: anything below full durability, anything at zero.
+func (t *Town) repairFacts(s *d2.Snapshot) repair.Facts {
+	f := repair.Facts{Now: t.e.Clock.Now()}
+	for _, u := range s.Inventory.Container(d2.ContEquipment) {
+		if dur, mx, ok := t.Durability(u); ok {
+			f.Damaged = f.Damaged || dur < mx
+			f.Broken = f.Broken || dur <= 0
+		}
+	}
+	return f
+}
+
+// Durability is the current and maximum durability of an item; ok false when it has none or it cannot be read.
+func (t *Town) Durability(u d2.Unit) (dur, mx int, ok bool) {
+	st, err := t.unitStats(u.Addr)
+	if err != nil || !st.Has(statMaxDurability) || st.Get(statMaxDurability) <= 0 {
+		return 0, 0, false
+	}
+	return int(st.Get(statDurability)), int(st.Get(statMaxDurability)), true
+}
+
+// RepairEstimate is repairEstimate for a snapshot (the watch screen's cost line; a lower bound, see repairEstimate).
+func (t *Town) RepairEstimate(s *d2.Snapshot) int { return t.repairEstimate(s) }
 
 // RepairDue is the legacy durability test: below the town.repairBelowPct knob.
 func RepairDue(pct, below int) bool { return pct < below }
@@ -298,7 +346,9 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		if err != nil {
 			return err
 		}
-		if !plan.Force && !need(cur) {
+		// the player's repair policy is not overridden by a Force plan
+		force := plan.Force && !(name == "repair" && t.repairGate != nil)
+		if !force && !need(cur) {
 			rep.add(name, false, "not needed", nil)
 			return nil
 		}
@@ -612,10 +662,17 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	if !ok {
 		t.logDurability("repair: not confirmed", s1, g0)
 		t.repairFail = repairLatch{set: true, gold: s1.Player.Gold, low: low0}
-		return fmt.Errorf("town: repair not confirmed (durability %d%% unchanged)", low0)
+		err := fmt.Errorf("town: repair not confirmed (durability %d%% unchanged)", low0)
+		if t.repairGate != nil {
+			t.repairGate.Failed(err.Error())
+		}
+		return err
 	}
 	rep.Repaired = true
 	t.repairFail = repairLatch{}
+	if t.repairGate != nil {
+		t.repairGate.Repaired(t.e.Clock.Now())
+	}
 	rep.Spent += g0 - s1.Player.Gold
 	return nil
 }
