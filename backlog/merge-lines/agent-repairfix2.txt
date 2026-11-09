@@ -1,1 +1,0 @@
-CHANGELOG: Repair now keeps its answer on screen (refused, waiting for gold: need N more), is paid before potions and scrolls, and is logged.
