@@ -223,3 +223,13 @@ h2.foldable::before { content: "\25BE "; color: var(--muted); }
 .card.folded h2.foldable::before { content: "\25B8 "; }
 .card.folded > :not(h2):not(.card-head) { display: none; }
 .card.folded .card-head > :not(h2) { display: none; }
+
+/* Gear condition strip (gear.js): wrapping chip list, never wider than its area. */
+#gearstrip { display: flex; flex-wrap: wrap; gap: .35rem .5rem; align-items: center; padding: .25rem .75rem; font-size: .85rem; max-width: 100%; min-width: 0; }
+#gearstrip[hidden] { display: none; }
+#gearstrip .gslot { display: inline-flex; flex-wrap: wrap; gap: .3rem; align-items: baseline; border: 1px solid var(--line); border-radius: 999px; padding: 1px .6rem; background: var(--surface); white-space: nowrap; }
+#gearstrip .gname { color: var(--muted); }
+#gearstrip .gdur { font-variant-numeric: tabular-nums; }
+#gearstrip .gslot.warn { border-color: var(--warn); color: var(--warn); font-weight: 600; }
+#gearstrip .gslot.broken { border-color: var(--bad); color: var(--bad); font-weight: 700; }
+#gearstrip .gnote { color: var(--muted); }
