@@ -1,10 +1,13 @@
 ---
 id: TASK-234
-title: 'uicommand: watch command centre above the fold, full-width stage, restyled cards, screenshot suite'
-status: In Progress
+title: >-
+  uicommand: watch command centre above the fold, full-width stage, restyled
+  cards, screenshot suite
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T20:16:00Z'
+updated_date: '2026-11-09T20:57:00Z'
 labels:
   - watch
   - feature
