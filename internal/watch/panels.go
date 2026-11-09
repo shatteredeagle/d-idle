@@ -44,7 +44,7 @@ type PanelsView struct {
 	Panels []PanelManifest `json:"panels"`
 }
 
-var bandOrder = map[string]int{"status": 0, "stage": 1, "grid": 2}
+var bandOrder = map[string]int{"status": 0, "stage": 1, "side": 2, "grid": 3}
 
 // Manifests parses every embedded panel manifest. It refuses unknown keys, an id that is not its directory, and a
 // band the shell does not have; the full rule set is tools/uilint's.
@@ -101,7 +101,7 @@ func servePanels(w http.ResponseWriter, r *http.Request, asset func(name, ctype 
 		if ms == nil {
 			ms = []PanelManifest{}
 		}
-		writeJSON(w, 200, PanelsView{Schema: "watch.panels/1", Bands: []string{"status", "stage", "grid"}, Panels: ms})
+		writeJSON(w, 200, PanelsView{Schema: "watch.panels/1", Bands: []string{"status", "stage", "side", "grid"}, Panels: ms})
 		return true
 	}
 	rest, ok := strings.CutPrefix(p, "/watch/panels/")

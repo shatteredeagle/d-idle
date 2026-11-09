@@ -1,0 +1,16 @@
+{
+  "schema": "watch.panel/1",
+  "id": "activity",
+  "title": "Doing now",
+  "band": "side",
+  "size": "m",
+  "priority": 0,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/hero",
+  "poll": 2,
+  "unlock": "",
+  "skeleton": 3,
+  "owner": "uicommand",
+  "doc": "docs/ui-design-system.md"
+}

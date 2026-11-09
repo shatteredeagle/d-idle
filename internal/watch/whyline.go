@@ -65,6 +65,7 @@ type Whyline struct {
 	now     func() float64
 	mu      sync.Mutex
 	cur     WhyEntry
+	curPar  map[string]string // the parameters of cur (the Why card renders its second line from them)
 	hist    []WhyEntry
 	count   map[string]int
 	seen    bool
@@ -154,6 +155,7 @@ func (w *Whyline) Observe(why goals.Why, activity, goalID, hold string) {
 	w.n++
 	changed := !w.seen || code != w.cur.Code
 	w.cur, w.seen = WhyEntry{T: t, Code: code, Text: text}, true
+	w.curPar = params
 	w.curGoal = goalID
 	if changed {
 		w.count[code]++
@@ -175,6 +177,13 @@ func (w *Whyline) View() WhylineView {
 		v.History = append(v.History, w.hist[i])
 	}
 	return v
+}
+
+// Detail is the current reason with its parameters (nil when none).
+func (w *Whyline) Detail() (WhyEntry, map[string]string) {
+	w.mu.Lock()
+	defer w.mu.Unlock()
+	return w.cur, w.curPar
 }
 
 // History is the last reasons, newest first (the Chronicle detail).

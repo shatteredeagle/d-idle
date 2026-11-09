@@ -35,12 +35,14 @@ type SimBuild struct {
 	Level    int // clvl shown on the map
 	// TowerFloor is the clvl below which the sim's guard closes the Forgotten Tower (data, like the bot's tuning).
 	TowerFloor int
+	// MaxLife and MaxMana are the pools the sim reports for the command centre (Life is a percent of MaxLife).
+	MaxLife, MaxMana int
 }
 
 // SimBuilds are the two builds of the scenarios: a softcore Sorceress and a hardcore Paladin.
 var SimBuilds = map[string]SimBuild{
-	"sorceress": {Class: d2.Sorceress, Life: 30, Danger: "2", Level: 6, TowerFloor: 16},
-	"paladin":   {Class: d2.Paladin, Hardcore: true, Life: 45, Danger: "3", Level: 12, TowerFloor: 14},
+	"sorceress": {Class: d2.Sorceress, Life: 30, Danger: "2", Level: 6, TowerFloor: 16, MaxLife: 120, MaxMana: 140},
+	"paladin":   {Class: d2.Paladin, Hardcore: true, Life: 45, Danger: "3", Level: 12, TowerFloor: 14, MaxLife: 260, MaxMana: 60},
 }
 
 // pointRetreat is the decision point the sim asks while fighting (the T0 retreat question of the shipped catalogue).
@@ -173,7 +175,9 @@ func (s *Sim) reportHeroLocked(label string) {
 	if s.herArea == simTown {
 		id = 1
 	}
-	s.Hub.SetHero(HeroInfo{Class: s.Build.Class.String(), Level: s.Build.Level, XP: s.xp, Area: s.herArea, AreaID: id, Activity: label})
+	b := s.Build
+	s.Hub.SetHero(HeroInfo{Class: b.Class.String(), Level: b.Level, XP: s.xp, Area: s.herArea, AreaID: id, Activity: label,
+		Name: "Simmy", Life: int(b.Life * float64(b.MaxLife) / 100), MaxLife: b.MaxLife, Mana: b.MaxMana * 3 / 4, MaxMana: b.MaxMana})
 }
 
 func (s *Sim) busyLocked() bool {

@@ -14,8 +14,6 @@
 <header class="top d-band-status" data-band="status">
  <div class="d-brand"><span class="d-brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
  <div class="d-band-main">
-  <div class="curstrip" id="curstrip" role="status" aria-label="Currencies" hidden></div>
-  <div class="tallystrip" id="tallystrip" role="status" aria-label="Tally" hidden></div>
  </div>
  <nav class="d-links" aria-label="Other pages">
   <a class="d-btn" data-size="sm" data-variant="ghost" id="invlink" href="/watch/inventory">Inventory</a>
@@ -23,7 +21,9 @@
   <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button>
  </nav>
 </header>
+<div class="d-main">
 <div class="d-band-stage" data-band="stage" hidden></div>
+<div class="d-band-side" data-band="side" aria-label="Command centre" hidden></div>
 <div class="d-band-grid" data-band="grid">
 <div class="d-compat">
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
@@ -111,6 +111,7 @@
 </div>
 </div>
 </div>
+</div>
 <div class="scrim" id="scrim" hidden></div>
 <div id="toasts" class="toasts d-toasts" role="status" aria-live="polite"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-title" hidden></div>
@@ -124,5 +125,4 @@
 <script src="/watch/senses_units.js"></script>
 <script src="/watch/unlockui.js"></script>
 <script src="/watch/alerts.js"></script>
-<script src="/watch/gear.js"></script>
 </body></html>

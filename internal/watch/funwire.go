@@ -646,6 +646,7 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 		}
 	}
 	if f.Inventory != nil {
+		f.Hub.SetGoldSource(goldFromInventory(f.Inventory))
 		for _, p := range InvRoutes {
 			m.Handle(p, f.Inventory.Handler())
 		}

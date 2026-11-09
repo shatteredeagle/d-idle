@@ -1,0 +1,24 @@
+{
+  "doc": "docs/ui-design-system.md section 15.2: the Why card's second line per whyline reason code (what would change the decision). Same {param} names as whyline.json; a code without an entry shows no second line.",
+  "codes": {
+    "quest_step": "A higher level or an order from you moves me off the quest path.",
+    "walk": "An order from you, or a level up that opens a better area, changes where I go.",
+    "fight": "Life under my retreat line sends me to town; an order from you ends the fight sooner.",
+    "town_trip": "Nothing changes this trip; I head out again when the chores are done.",
+    "town_chores": "Once the chores are done I go back out; an order from you picks where.",
+    "heal_trip": "Healing above {line}% sends me back out.",
+    "wait_heal": "A potion, a healer or time back above my line ends the wait.",
+    "claim_trip": "Once the reward is claimed I go back to the plan.",
+    "back_to_field": "An order from you would send me somewhere else first.",
+    "to_town": "An order from you gives me something to do outside.",
+    "area_done": "An order from you to stay would keep me here.",
+    "guard_exit": "A higher level or better gear makes this area safe again.",
+    "farm_runs": "An order from you, or enough of what I farm, ends the runs.",
+    "farm_gold": "Enough gold for what I need ends the farming.",
+    "after_death_restock": "Once restocked I go for my corpse.",
+    "after_death_corpse": "Once my corpse is back I return to the plan.",
+    "after_death_gold": "Once the spot is checked I return to the plan.",
+    "hold": "Your answer, yes or no, lets me go on.",
+    "activity": "An order from you changes what I do next."
+  }
+}

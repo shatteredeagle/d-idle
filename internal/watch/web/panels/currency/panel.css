@@ -1,0 +1,3 @@
+@layer panels {
+  [data-panel="currency"] .d-strip { gap: var(--d-sp-1); }
+}

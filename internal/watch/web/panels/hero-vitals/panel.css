@@ -1,0 +1,6 @@
+@layer panels {
+  [data-panel="hero-vitals"] .who { margin: 0; font: 600 var(--d-fs-2)/var(--d-lh-tight) var(--d-font-display); color: var(--d-accent-text); }
+  [data-panel="hero-vitals"] .bars { display: grid; gap: var(--d-sp-1); }
+  [data-panel="hero-vitals"] .d-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-panel="hero-vitals"] .d-stat .val { font-size: var(--d-fs-3); }
+}

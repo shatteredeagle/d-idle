@@ -75,10 +75,14 @@ func TestRepairRoutesGateAndReplyWithReasons(t *testing.T) {
 	}
 }
 
+// The gear panel of the command centre replaced the strip script on /watch (gear.js stays served until the cleanup PR).
 func TestGearScriptIsLinkedAndSafe(t *testing.T) {
 	html, err := webFS.ReadFile("web/watch.html")
-	if err != nil || !strings.Contains(string(html), `src="/watch/gear.js"`) {
-		t.Fatalf("watch.html does not load gear.js: %v", err)
+	if err != nil || strings.Contains(string(html), `src="/watch/gear.js"`) {
+		t.Fatalf("watch.html must not load gear.js next to the gear panel: %v", err)
+	}
+	if p, err := webFS.ReadFile("web/panels/gear/panel.js"); err != nil || !strings.Contains(string(p), "/api/repair/request") {
+		t.Fatalf("the gear panel lacks Repair now: %v", err)
 	}
 	js, _ := webFS.ReadFile("web/gear.js")
 	if strings.Contains(string(js), "innerHTML") {

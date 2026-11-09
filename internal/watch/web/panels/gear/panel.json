@@ -1,0 +1,16 @@
+{
+  "schema": "watch.panel/1",
+  "id": "gear",
+  "title": "Gear condition",
+  "band": "side",
+  "size": "s",
+  "priority": 3,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/repair",
+  "poll": 5,
+  "unlock": "",
+  "skeleton": 2,
+  "owner": "uicommand",
+  "doc": "docs/ui-design-system.md"
+}

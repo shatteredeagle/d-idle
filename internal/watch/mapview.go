@@ -17,6 +17,14 @@ type HeroInfo struct {
 	Activity string `json:"activity,omitempty"`
 	Known    bool   `json:"known"`
 	Title    string `json:"title,omitempty"` // the best Hall title earned so far (hall.go)
+	// Vitals for /api/hero (hero.go); not part of the orders map reply.
+	Name       string `json:"-"`
+	Difficulty string `json:"-"`
+	XPNext     int64  `json:"-"`
+	Life       int    `json:"-"`
+	MaxLife    int    `json:"-"`
+	Mana       int    `json:"-"`
+	MaxMana    int    `json:"-"`
 }
 
 // SetHero records the hero's state. Only a change a person can see (area, level, what it does) wakes the page; xp alone

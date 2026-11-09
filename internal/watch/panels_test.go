@@ -22,7 +22,7 @@ func TestPanelManifests(t *testing.T) {
 	if err := json.Unmarshal(b, &shell); err != nil {
 		t.Fatal(err)
 	}
-	routes := map[string]bool{}
+	routes := map[string]bool{"/api/tally": true} // mounted by Fun.mountView (funwire.go)
 	for _, list := range [][]string{ViewRoutes, SensesRoutes, RepairRoutes, UpdateRoutes, PolicyRoutes, ReturnRoutes, PactRoutes, InvRoutes} {
 		for _, r := range list {
 			routes[r] = true
