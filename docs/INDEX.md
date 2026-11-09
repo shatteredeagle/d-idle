@@ -75,6 +75,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [plan-v2.md](plan/plan-v2.md): Plan v2: enabling features and redesigned soak gates (planning session, 2026-10-30) (status: section 1 and the M-item order are from the morning of 2026-10-30; d2d is the primary backend (ADR 0009,...)
 - [roadmap.md](roadmap.md): Roadmap: milestones, work breakdown, operating rhythm (agent ROADMAP, 2026-10-31) (status: ADOPTED by the user on 2026-10-31: decisions D1 to D6 in section 8 are DECIDED. Card `roadmap`. Reviewed...)
 - [watch.md](watch.md): d2watch: view-only web viewer of the game instances (agent WATCH)
+- [ui-design-system.md](ui-design-system.md): d.idle watch UI design system (TASK-228, uidesign) (status: proposal (2026-11-09), docs and mockups only; nothing in `internal/watch` changed. Research and sources:...)
+- [ui-regression-plan.md](ui-regression-plan.md): Watch UI regression tests and migration plan (TASK-228, uidesign) (status: proposal (2026-11-09), nothing here is built. Design: ui-design-system.md. Research: research/ui-design.md...)
 
 ## Engine and fidelity: d2d, differentials, upstream PRs, deviations
 
