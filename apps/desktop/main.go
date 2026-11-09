@@ -86,6 +86,10 @@ func run(args []string) error {
 		return err
 	}
 	// The window polls every 3 s; a hidden window may be throttled to about once a minute, hence the long idle.
-	s.Serve(context.Background(), ln, 3*time.Minute)
+	idle := 3 * time.Minute
+	if d, err := time.ParseDuration(os.Getenv("D2IDLE_SHELL_IDLE")); err == nil {
+		idle = d // tests only
+	}
+	s.Serve(context.Background(), ln, idle)
 	return nil
 }

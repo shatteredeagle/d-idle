@@ -1,0 +1,44 @@
+# Builds and tests the d2idle-watch desktop launcher (apps/desktop, docs/desktop-app.md) for Linux and Windows and
+# uploads the binaries as workflow artifacts. It publishes nothing: no release, no tag, no secret.
+# Draft: written 2026-11-09, never run.
+name: desktop-app
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ["apps/desktop/**", ".github/workflows/desktop-app.yml"]
+  push:
+    branches: [main]
+    paths: ["apps/desktop/**", ".github/workflows/desktop-app.yml"]
+permissions:
+  contents: read
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - {os: ubuntu-latest, goos: linux, ldflags: "-s -w", out: d2idle-watch}
+          - {os: windows-latest, goos: windows, ldflags: "-s -w -H=windowsgui", out: d2idle-watch.exe}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.3"
+          cache: false
+      - run: gofmt -l . | tee /dev/stderr | (! read)
+        if: matrix.goos == 'linux'
+      - run: go vet ./...
+      - run: go test -count=1 ./...
+      - name: build
+        env:
+          CGO_ENABLED: "0"
+        run: go build -trimpath -ldflags "${{ matrix.ldflags }}" -o ${{ matrix.out }} .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: d2idle-watch-${{ matrix.goos }}
+          path: apps/desktop/${{ matrix.out }}
+          if-no-files-found: error
