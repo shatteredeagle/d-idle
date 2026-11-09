@@ -1,10 +1,11 @@
 ---
 id: TASK-229
 title: 'gearcsp: gear strip styles move to app.css (CSP blocked the injected style)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T19:03:00Z'
+updated_date: '2026-11-09T19:19:00Z'
 labels:
   - watch
   - bug
