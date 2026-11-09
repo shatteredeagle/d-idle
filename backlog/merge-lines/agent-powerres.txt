@@ -1,3 +1,0 @@
-BACKLOG: TASK-214 powerres: player power vs area danger research doc (repo audit, community survey, readiness-check proposal with 9 proposed cards)
-INDEX: docs/research/player-power.md - player power vs area danger: no single number exists; community checklists; proposed per-threat readiness check (agent powerres, 2026-11-09)
-CHANGELOG: Research note on measuring player power against area danger and a proposed readiness check (docs/research/player-power.md)
