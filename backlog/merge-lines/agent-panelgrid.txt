@@ -1,0 +1,2 @@
+BACKLOG: TASK-215 watch: unplaced panels two per row (were 90 px columns), game video at half size with minimap beside it
+CHANGELOG: /watch panels no longer squeezed into narrow columns; the game video is half size with the minimap beside it
