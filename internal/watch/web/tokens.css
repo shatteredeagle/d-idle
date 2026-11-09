@@ -1,0 +1,96 @@
+/* d.idle design tokens (docs/ui-design-system.md section 3). The layer order is declared here and nowhere else.
+   Default theme: dark (Diablo II gold on near-black, user 2026-11-09); data-theme="light" and "auto" are options.
+   Default density: dense (user 2026-11-09); data-density="comfortable" restores the roomier values. */
+@layer reset, tokens, shell, components, panels, utilities;
+
+@layer tokens {
+  :root {
+    --d-stone-1: #0d0b09; --d-stone-2: #14110e; --d-stone-3: #1c1813; --d-stone-4: #241f19;
+    --d-stone-5: #2d2720; --d-stone-6: #3a322a; --d-stone-7: #4a4036; --d-stone-8: #6a5c4d;
+    --d-stone-9: #8c7b67; --d-stone-10: #a08f7a; --d-stone-11: #b9aa94; --d-stone-12: #ece2cf;
+    --d-gold-6: #5a4718; --d-gold-8: #8a6d22; --d-gold-9: #c7a44a; --d-gold-10: #dcb85e;
+    --d-gold-11: #e6c76f; --d-gold-12: #f3e2a8;
+
+    --d-bg: var(--d-stone-1);
+    --d-surface-0: var(--d-stone-2);
+    --d-surface-1: var(--d-stone-3);
+    --d-surface-2: var(--d-stone-4);
+    --d-surface-3: var(--d-stone-5);
+    --d-line: var(--d-stone-6);
+    --d-line-strong: var(--d-stone-7);
+    --d-text: var(--d-stone-12);
+    --d-text-2: var(--d-stone-11);
+    --d-text-3: var(--d-stone-9);
+    --d-accent: var(--d-gold-9);
+    --d-accent-text: var(--d-gold-11);
+    --d-on-accent: #1a1408;
+    --d-focus: #8db8ff;
+    --d-ornament: var(--d-gold-8);
+    --d-scrim: rgb(0 0 0 / .5);
+    --d-mask: #000;
+    --d-video-bg: #000;
+    --d-video-text: var(--d-stone-9);
+
+    --d-good: #7cc47e; --d-on-good: #0c1a0d;
+    --d-warn: #e3a93a; --d-on-warn: #1a1204;
+    --d-bad: #ec7d6c; --d-on-bad: #1c0806;
+    --d-info: #7ab0e8; --d-on-info: #06111c;
+
+    --d-life: #d2453a; --d-mana: #4f7fe0; --d-xp: var(--d-gold-9); --d-stamina: #c9b26a;
+
+    --d-q-normal: #e6ddc8; --d-q-low: #9d968a; --d-q-magic: #7f9fff; --d-q-rare: #f0dc5a;
+    --d-q-set: #62c070; --d-q-unique: #d6ad5a; --d-q-crafted: #f0a040; --d-q-runeword: #d6ad5a;
+
+    --d-font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    --d-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    --d-font-num: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --d-fs-0: clamp(.72rem, .7rem + .1vw, .78rem);
+    --d-fs-1: clamp(.84rem, .8rem + .15vw, .9rem);
+    --d-fs-2: clamp(.95rem, .9rem + .2vw, 1.05rem);
+    --d-fs-3: clamp(1.05rem, 1rem + .3vw, 1.2rem);
+    --d-fs-4: clamp(1.25rem, 1.1rem + .6vw, 1.6rem);
+    --d-fs-5: clamp(1.6rem, 1.3rem + 1.2vw, 2.4rem);
+    --d-lh: 1.45; --d-lh-tight: 1.2;
+
+    --d-sp-1: 4px; --d-sp-2: 8px; --d-sp-3: 12px; --d-sp-4: 16px; --d-sp-5: 24px; --d-sp-6: 32px;
+    --d-r-1: 4px; --d-r-2: 8px; --d-r-3: 12px; --d-r-round: 999px; --d-bw: 1px;
+    /* dense is the default: gap and padding one step down from the comfortable values */
+    --d-gap: var(--d-sp-3);
+    --d-pad: var(--d-sp-3);
+    --d-pad-dense: var(--d-sp-2);
+    --d-row-pad: var(--d-sp-1);
+    --d-shadow-1: 0 1px 2px rgb(0 0 0 / .4);
+    --d-shadow-2: 0 8px 24px rgb(0 0 0 / .45);
+    --d-z-band: 10; --d-z-sheet: 20; --d-z-toast: 30; --d-z-banner: 40;
+    --d-dur-1: 120ms; --d-dur-2: 240ms; --d-dur-3: 600ms; --d-ease: cubic-bezier(.2, 0, 0, 1);
+    color-scheme: dark;
+  }
+  :root[data-density="comfortable"] { --d-gap: var(--d-sp-4); --d-pad: var(--d-sp-4); --d-pad-dense: var(--d-sp-3); --d-row-pad: var(--d-sp-2); }
+  :root[data-theme="light"] {
+    --d-bg: #f3efe6; --d-surface-0: #ece6d8; --d-surface-1: #fffdf8; --d-surface-2: #f1ece1; --d-surface-3: #fff;
+    --d-line: #d6ccb8; --d-line-strong: #b9ad96; --d-text: #231e17; --d-text-2: #5e5547; --d-text-3: #8a8070;
+    --d-accent: #9a6407; --d-accent-text: #7a4f00; --d-on-accent: #fff; --d-focus: #1f5fd6; --d-ornament: #b5760f;
+    --d-good: #2f7d3a; --d-on-good: #fff; --d-warn: #9a6200; --d-on-warn: #fff; --d-bad: #b3342a; --d-on-bad: #fff;
+    --d-info: #2a63a8; --d-on-info: #fff; --d-life: #c0352b; --d-mana: #2f62c9; --d-xp: #b5760f;
+    --d-q-normal: #3a3328; --d-q-low: #7d7669; --d-q-magic: #2f55c9; --d-q-rare: #8a6d00; --d-q-set: #2f8a3f;
+    --d-q-unique: #8a5a10; --d-q-crafted: #b24a10; --d-q-runeword: #8a5a10;
+    --d-shadow-1: 0 1px 2px rgb(40 30 10 / .08), 0 4px 14px rgb(40 30 10 / .06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: light) {
+    :root[data-theme="auto"] {
+      --d-bg: #f3efe6; --d-surface-0: #ece6d8; --d-surface-1: #fffdf8; --d-surface-2: #f1ece1; --d-surface-3: #fff;
+      --d-line: #d6ccb8; --d-line-strong: #b9ad96; --d-text: #231e17; --d-text-2: #5e5547; --d-text-3: #8a8070;
+      --d-accent: #9a6407; --d-accent-text: #7a4f00; --d-on-accent: #fff; --d-focus: #1f5fd6; --d-ornament: #b5760f;
+      --d-good: #2f7d3a; --d-on-good: #fff; --d-warn: #9a6200; --d-on-warn: #fff; --d-bad: #b3342a; --d-on-bad: #fff;
+      --d-info: #2a63a8; --d-on-info: #fff; --d-life: #c0352b; --d-mana: #2f62c9; --d-xp: #b5760f;
+      --d-q-normal: #3a3328; --d-q-low: #7d7669; --d-q-magic: #2f55c9; --d-q-rare: #8a6d00; --d-q-set: #2f8a3f;
+      --d-q-unique: #8a5a10; --d-q-crafted: #b24a10; --d-q-runeword: #8a5a10;
+      --d-shadow-1: 0 1px 2px rgb(40 30 10 / .08), 0 4px 14px rgb(40 30 10 / .06);
+      color-scheme: light;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :root { --d-dur-1: 0ms; --d-dur-2: 0ms; --d-dur-3: 0ms; }
+  }
+}

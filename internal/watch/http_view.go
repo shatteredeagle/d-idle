@@ -8,6 +8,7 @@ import (
 	"io/fs"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -71,8 +72,8 @@ func (h *Hub) ViewHandler() http.Handler {
 			http.Redirect(w, r, "/watch"+queryOf(r), http.StatusFound)
 		case "/watch/app.js":
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
-		case "/watch/app.css":
-			asset("app.css", "text/css; charset=utf-8")(w, r)
+		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/components.css", "/watch/utilities.css":
+			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/css; charset=utf-8")(w, r)
 		default:
 			http.NotFound(w, r)
 		}

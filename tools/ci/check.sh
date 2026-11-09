@@ -43,6 +43,9 @@ python3 -I tools/contracts/test_check.py >/dev/null 2>&1 || bad "tools/contracts
 # --- no decompiled game code or game data tables (docs/process/gamecode-guard.md) ---
 tools/ci/gamecode_guard.sh || fail=1
 
+# --- watch UI panel contract: layered CSS, panel scope, no inline styles (tools/uilint, docs/ui-regression-plan.md) ---
+go run ./tools/uilint >/dev/null 2>&1 || { go run ./tools/uilint; bad "tools/uilint (watch UI panel contract)"; }
+
 [ "${1:-}" = "--hygiene-only" ] && { [ $fail = 0 ] && echo "hygiene ok"; exit $fail; }
 
 # --- gofmt ---

@@ -490,14 +490,17 @@
   // #orders, #thoughts, ... opens that tab (a link, a screenshot); the default is Orders.
   var hv = location.hash.slice(1), hb = document.querySelector('#views button[data-view="' + hv.replace(/[^a-z]/g, '') + '"]');
   if (hb && !hb.hidden) hb.click();
-  var theme = 'auto';
-  try { theme = localStorage.getItem('d2theme') || 'auto'; } catch (e) { /* storage blocked */ }
+  // Dark is the default theme (user, 2026-11-09); light and auto (follow the system) are the options. The value always
+  // lands on <html data-theme>, which tokens.css reads.
+  var theme = 'dark';
+  try { theme = localStorage.getItem('d2theme') || 'dark'; } catch (e) { /* storage blocked */ }
   function applyTheme(t) {
-    if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; else delete document.documentElement.dataset.theme;
-    $('btn-theme').textContent = 'Theme: ' + (t === 'light' || t === 'dark' ? t : 'auto');
+    if (t !== 'light' && t !== 'auto') t = 'dark';
+    document.documentElement.dataset.theme = t;
+    $('btn-theme').textContent = 'Theme: ' + t;
   }
   $('btn-theme').addEventListener('click', function () {
-    theme = { auto: 'light', light: 'dark', dark: 'auto' }[theme] || 'auto';
+    theme = { dark: 'light', light: 'auto', auto: 'dark' }[theme] || 'dark';
     try { localStorage.setItem('d2theme', theme); } catch (e) { /* ignore */ }
     applyTheme(theme);
   });

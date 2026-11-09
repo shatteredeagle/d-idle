@@ -1,0 +1,11 @@
+# Known violations of the panel contract in the pre-shell watch UI (docs/ui-regression-plan.md section 5, PR 2).
+# One `file rule` per line, paths relative to internal/watch/web (go:<file> for Go templates). This list only shrinks:
+# a migration PR that fixes a file removes its lines; the last line goes with PR 8 (uicleanup).
+app.css css-element-only-in-reset
+app.css css-no-colour-literal
+app.css css-no-id
+app.css css-no-important
+app.js js-no-inline-style
+update.js js-no-inline-style
+go:invui.go html-no-style-element
+go:pactui.go html-no-style-element

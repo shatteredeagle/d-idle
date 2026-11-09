@@ -1,34 +1,16 @@
+/* Compatibility CSS of the pre-shell watch screen (docs/ui-design-system.md section 10): the old names map onto the
+   design tokens (tokens.css), so the old cards follow the dark default and the theme switch. Shrinks panel by panel. */
+@layer shell {
 :root {
-  --bg: #f3efe6; --surface: #fffdf8; --surface2: #ece6d8; --line: #d6ccb8;
-  --text: #231e17; --muted: #685f50; --accent: #b5760f; --accent-text: #7a4f00; --on-accent: #fff;
-  --good: #2f7d3a; --warn: #9a6200; --bad: #b3342a; --info: #2a63a8;
-  --life: #c0352b; --mana: #2f62c9; --xp: #b5760f; --focus: #1f5fd6;
-  --q-normal: #8b8579; --q-magic: #3d6fd0; --q-rare: #b89300; --q-set: #2f8a3f; --q-unique: #b5600f; --q-crafted: #c2552b;
-  --shadow: 0 1px 2px rgba(40,30,10,.08), 0 4px 14px rgba(40,30,10,.06);
+  --bg: var(--d-bg); --surface: var(--d-surface-1); --surface2: var(--d-surface-2); --line: var(--d-line);
+  --text: var(--d-text); --muted: var(--d-text-2); --accent: var(--d-accent); --accent-text: var(--d-accent-text); --on-accent: var(--d-on-accent);
+  --good: var(--d-good); --warn: var(--d-warn); --bad: var(--d-bad); --info: var(--d-info);
+  --life: var(--d-life); --mana: var(--d-mana); --xp: var(--d-xp); --focus: var(--d-focus);
+  --q-normal: var(--d-q-low); --q-magic: var(--d-q-magic); --q-rare: var(--d-q-rare); --q-set: var(--d-q-set); --q-unique: var(--d-q-unique); --q-crafted: var(--d-q-crafted);
+  --shadow: var(--d-shadow-1);
   --radius: 10px;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #14110f; --surface: #1e1a17; --surface2: #29231e; --line: #3b332b;
-    --text: #ece4d6; --muted: #a99f8f; --accent: #d9a441; --accent-text: #e6b95c; --on-accent: #1a1408;
-    --good: #78c27d; --warn: #e3a93a; --bad: #ec7d6c; --info: #7ab0e8;
-    --life: #d2453a; --mana: #4f7fe0; --xp: #d9a441; --focus: #8db8ff;
-    --q-normal: #9d968a; --q-magic: #6f9bf0; --q-rare: #e0c030; --q-set: #62c070; --q-unique: #e08a3c; --q-crafted: #e8734a;
-    --shadow: 0 1px 2px rgba(0,0,0,.4);
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #14110f; --surface: #1e1a17; --surface2: #29231e; --line: #3b332b;
-  --text: #ece4d6; --muted: #a99f8f; --accent: #d9a441; --accent-text: #e6b95c; --on-accent: #1a1408;
-  --good: #78c27d; --warn: #e3a93a; --bad: #ec7d6c; --info: #7ab0e8;
-  --life: #d2453a; --mana: #4f7fe0; --xp: #d9a441; --focus: #8db8ff;
-  --q-normal: #9d968a; --q-magic: #6f9bf0; --q-rare: #e0c030; --q-set: #62c070; --q-unique: #e08a3c; --q-crafted: #e8734a;
-  --shadow: 0 1px 2px rgba(0,0,0,.4);
-}
 * { box-sizing: border-box; }
-html { color-scheme: light dark; }
-:root[data-theme="light"] { color-scheme: light; }
-:root[data-theme="dark"] { color-scheme: dark; }
 body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 h1, h2 { margin: 0; font-weight: 650; }
 h1 { font-size: 1.15rem; letter-spacing: .02em; }
@@ -233,3 +215,4 @@ h2.foldable::before { content: "\25BE "; color: var(--muted); }
 #gearstrip .gslot.warn { border-color: var(--warn); color: var(--warn); font-weight: 600; }
 #gearstrip .gslot.broken { border-color: var(--bad); color: var(--bad); font-weight: 700; }
 #gearstrip .gnote { color: var(--muted); }
+}

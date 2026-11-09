@@ -1,6 +1,6 @@
 # d.idle watch UI design system (TASK-228, uidesign)
 
-> status: proposal (2026-11-09), docs and mockups only; nothing in `internal/watch` changed. Research and sources: [research/ui-design.md](research/ui-design.md). Mockups: [mockups/ui/](mockups/ui/). Test and migration plan: [ui-regression-plan.md](ui-regression-plan.md). Decisions the user still owns are in section 13; until taken, the safe defaults named there stand.
+> status: accepted design (user decisions 2026-11-09 in section 13), being implemented in small PRs (section 15). Research and sources: [research/ui-design.md](research/ui-design.md). Mockups: [mockups/ui/](mockups/ui/). Test and migration plan: [ui-regression-plan.md](ui-regression-plan.md). Decisions the user still owns are in section 13; until taken, the safe defaults named there stand.
 
 ## 1. Why a system, in one paragraph
 
@@ -386,15 +386,23 @@ A panel whose `unlock` is closed renders as `d-locked` at size `s` in its own fu
 - Titles truncate with an ellipsis on one line at size `s`, wrap to two lines at `m`, and the full text is in `title=` and the accessible name.
 - Numbers: `--d-font-num`, `tabular-nums`, right-aligned in tables, suffixes above 99,999, a thin space as the thousands separator below that.
 
-## 13. Open decisions (safe default named; the mockups use the default)
+## 13. Decisions (user, 2026-11-09) and the remaining safe defaults
 
-1. **Palette direction.** Default here: the dark D2 palette (section 3.1) as the default theme, light kept and tested. The user's 2026-11-05 decision chose the light-first dashboard look; this proposal reverses the default and keeps both. Needs a yes.
-2. **Density.** Default: comfortable, with the `data-density="compact"` switch available in the theme menu. Alternative: compact by default for the laptop and wide breakpoints.
-3. **Stream overlay shares the shell?** Default: yes, `?mode=overlay` renders the status band alone from the same code. Alternative: a separate tiny page with its own CSS (less risk of the shell's chrome leaking into OBS, more duplication).
-4. **Display face.** Default: system serif. Alternative: self-host Exocet if the user holds a licence (it is a commercial Emigre face; the research found conflicting claims about free use).
-5. **Phone level 2.** Default: a bottom tab rail with five tabs. Alternative: one long scroll with folds (fewer taps, more scrolling).
-6. **Hero status data.** Default: compose it from `/api/uptime`, `/api/senses`, `/api/repair` and the status poll on the client. Alternative: one `GET /api/hero` on the viewer that returns the four facts (cleaner, needs a small Go change in the first migration PR).
+1. **Palette direction: dark is the default** (user, 2026-11-09). The dark D2 palette (section 3.1) is the default theme; light and auto (follow the system) stay as options on the theme button and are tested. This reverses the light-first default of 2026-11-05 (docs/research/watch-screen-design.md section 7) for the default only; no ADR edit was made, proposed ADR text is in section 14.
+2. **Density: dense** (user, 2026-11-09). `tokens.css` ships the dense values as the default (`--d-gap` and `--d-pad` at `--d-sp-3`, list rows at `--d-sp-1`); `data-density="comfortable"` on `<html>` restores the roomier values.
+3. **Stream overlay shares the shell** (user, 2026-11-09): `?mode=overlay` is a layout mode of the same shell and design system, not a separate page (PR 13).
+4. **Display face** (open, safe default): system serif. Exocet is not shipped (licence unclear).
+5. **Phone level 2** (open, safe default): the bottom tab rail with five tabs.
+6. **Hero status data** (open, safe default): composed on the client from the existing endpoints (`/api/uptime` first); no `/api/hero` endpoint until the user asks for it.
 
 ## 14. Proposed ADR text (for the coordinator or the user's grill session; not written to docs/adr/)
 
-> ADR 00NN: Watch UI design system and panel contract. The watch screen and its pages are built on a token layer, a shell that owns layout and overlays, a component catalogue, and a panel contract: a feature ships as `web/panels/<id>/{panel.json,panel.css,panel.js}` and is placed by the shell from its manifest. Panels never position themselves, never define colours, never use media queries, never write inline styles (the page CSP `style-src 'self'` stays). CSS is layered (`reset, tokens, shell, components, panels, utilities`); `tools/uilint` fails CI on a rule outside a layer, a selector outside a panel's scope, a colour literal outside tokens, or an invalid manifest. Default theme: dark, Diablo II palette; light theme kept. Decision owner: user. Supersedes the look-and-feel line of 2026-11-05 in docs/research/watch-screen-design.md section 7 for the palette default only.
+> ADR 00NN: Watch UI design system and panel contract. The watch screen and its pages are built on a token layer, a shell that owns layout and overlays, a component catalogue, and a panel contract: a feature ships as `web/panels/<id>/{panel.json,panel.css,panel.js}` and is placed by the shell from its manifest. Panels never position themselves, never define colours, never use media queries, never write inline styles (the page CSP `style-src 'self'` stays). CSS is layered (`reset, tokens, shell, components, panels, utilities`); `tools/uilint` fails CI on a rule outside a layer, a selector outside a panel's scope, a colour literal outside tokens, or an invalid manifest. Default theme: dark, Diablo II palette; light and auto kept; dense density by default; the stream overlay is a mode of the same shell. Decision owner: user (2026-11-09). Supersedes the look-and-feel line of 2026-11-05 in docs/research/watch-screen-design.md section 7 for the palette default only.
+
+## 15. Implementation status
+
+Order and scope from [ui-regression-plan.md](ui-regression-plan.md) section 5; each step is its own branch and card.
+
+| Step | Branch | What landed | Verified |
+|---|---|---|---|
+| tokens, layers, components, linter | `agent/uishell1` | `web/tokens.css` (layer order, dark default, dense), `reset.css`, `components.css` (the twelve components), `utilities.css`; `app.css` wrapped in `@layer shell` with its old palette names mapped onto the tokens, so the old cards follow the theme; `tools/uilint` with an allow-list of today's violations, run by `tools/ci/check.sh`; the policy and return pages load `tokens.css` | `go test ./tools/uilint ./internal/watch`; not looked at in a browser by the agent |
