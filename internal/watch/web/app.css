@@ -217,3 +217,9 @@ main [data-v][hidden] { display: none !important; }
 .toast.warn { border-left-color: #d90; }
 .toast.alarm { border-left-color: var(--bad); }
 .alert-list .alert.alarm b { color: var(--bad); }
+/* foldable cards (unlockui.js): the title is the toggle, .folded keeps only the title row */
+h2.foldable { cursor: pointer; }
+h2.foldable::before { content: "\25BE "; color: var(--muted); }
+.card.folded h2.foldable::before { content: "\25B8 "; }
+.card.folded > :not(h2):not(.card-head) { display: none; }
+.card.folded .card-head > :not(h2) { display: none; }

@@ -200,3 +200,21 @@
   }
   tick();
 })();
+
+// Fold the rarely used cards: clicking or pressing Enter on the title toggles .folded (CSS hides the rest of the card).
+// Rules stays open; the three discovery cards start folded. Layout only, no data is touched.
+(function () {
+  var cards = [['rules', false], ['lockedpane', true], ['bestiarypane', true], ['atlaspane', true]];
+  cards.forEach(function (c) {
+    var card = document.getElementById(c[0]) || document.querySelector('.card.' + c[0]);
+    var h = card && card.querySelector('h2');
+    if (!h) return;
+    h.tabIndex = 0;
+    h.setAttribute('role', 'button');
+    h.classList.add('foldable');
+    function set(f) { card.classList.toggle('folded', f); h.setAttribute('aria-expanded', String(!f)); }
+    set(c[1] && window.innerWidth >= 900); // on narrow screens each card is its own page, so it starts open
+    h.addEventListener('click', function () { set(!card.classList.contains('folded')); });
+    h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); set(!card.classList.contains('folded')); } });
+  });
+})();
