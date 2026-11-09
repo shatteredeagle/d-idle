@@ -14,14 +14,24 @@
       return c.answerBase ? c.answerBase : location.protocol + '//' + location.hostname + ':' + c.answerPort;
     });
   }
+  // The last answer to a click stays on screen until the next click: an error must not vanish with the next redraw.
+  var feedback = '', busy = false;
   function post(path) {
     return base().then(function (u) {
       return fetch(u + path, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: '{}' });
-    }).then(function (r) { return r.json(); });
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (j) {
+        if (!r.ok || !j.ok) throw new Error((j && j.error) || ('the answer route said HTTP ' + r.status));
+        return j;
+      });
+    });
   }
   function reqText(q) {
     if (!q) return '';
-    if (q.state === 'requested') return 'Repair requested: done at the next town visit.' + (q.note ? ' (' + q.note + ')' : '');
+    if (q.state === 'requested') {
+      if (q.short) return 'Repair requested, waiting for gold: need ' + q.short + ' more (' + q.need + ' in all).';
+      return 'Repair requested: done at the next town visit.' + (q.note ? ' (' + q.note + ')' : '');
+    }
     if (q.state === 'done') return 'Repair done.';
     return '';
   }
@@ -43,21 +53,24 @@
     var pending = v.request && v.request.state === 'requested';
     var b = el('button', 'btn small', pending ? 'Cancel repair' : 'Repair now'); b.type = 'button';
     b.addEventListener('click', function () {
-      b.disabled = true;
-      post(pending ? '/api/repair/cancel' : '/api/repair/request').then(function (j) {
-        if (!j.ok) box.appendChild(el('span', 'gnote', j.error || 'failed'));
-        else load();
-      }).catch(function () { b.disabled = false; });
+      if (busy) return;
+      busy = true; b.disabled = true; feedback = 'Sending...';
+      post(pending ? '/api/repair/cancel' : '/api/repair/request').then(function () {
+        feedback = pending ? 'Repair request cancelled.' : 'Repair requested: the hero repairs at its next town visit.';
+      }, function (e) {
+        feedback = 'Not sent: ' + e.message;
+      }).then(function () { busy = false; load(); });
     });
     box.appendChild(b);
     var t = reqText(v.request); if (t) box.appendChild(el('span', 'gnote', t));
+    if (feedback) box.appendChild(el('span', 'gnote gfeedback', feedback));
     if (v.worst) box.appendChild(el('span', 'gnote', v.worst));
   }
   function load() {
     fetch('/api/repair', { cache: 'no-store', credentials: 'same-origin' }).then(function (r) {
       if (!r.ok) throw new Error(String(r.status));
       return r.json();
-    }).then(draw, function () { box.hidden = true; });
+    }).then(draw, function (e) { box.hidden = false; box.textContent = ''; box.appendChild(el('span', 'gnote', 'Gear status unavailable: ' + e.message)); });
   }
   load(); setInterval(load, 5000);
 })();

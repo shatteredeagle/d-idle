@@ -164,6 +164,8 @@ func (t *Town) SetItemMarks(m ItemMarks) { t.marks = m }
 type RepairGate interface {
 	Permit(f repair.Facts) (ok, requested bool)
 	Blocked(reason string)
+	Short(missing, need int) // a requested repair waits for gold: missing more, need in all
+	Requested() bool         // the player's Repair now is pending
 	Repaired(now time.Time)
 	Failed(reason string)
 }
