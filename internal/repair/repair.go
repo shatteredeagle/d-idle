@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log/slog"
 	"os"
 	"path/filepath"
 	"sync"
@@ -46,6 +47,8 @@ type Request struct {
 	At    int64  `json:"at"`
 	Done  int64  `json:"doneAt,omitempty"`
 	Note  string `json:"note,omitempty"`
+	Short int    `json:"short,omitempty"` // gold still missing for the repair (0 = not waiting for gold)
+	Need  int    `json:"need,omitempty"`  // the estimate it waits for
 }
 
 type stored struct {
@@ -174,6 +177,7 @@ func (r *Controller) Request() (Request, error) {
 	defer r.mu.Unlock()
 	req := Request{State: StateRequested, At: r.c.Now().Unix()}
 	r.st.Request = &req
+	slog.Info("repair requested by the player")
 	return req, r.saveLocked()
 }
 
@@ -185,6 +189,7 @@ func (r *Controller) Cancel() error {
 		return &Refusal{"none", "no repair is requested"}
 	}
 	r.st.Request = nil
+	slog.Info("repair request cancelled by the player")
 	return r.saveLocked()
 }
 
@@ -230,6 +235,24 @@ func (r *Controller) Blocked(reason string) {
 	}
 }
 
+// Short notes that a requested repair waits for gold: missing more, need in all. It stays requested.
+func (r *Controller) Short(missing, need int) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if q := r.st.Request; q != nil && q.State == StateRequested && (q.Short != missing || q.Need != need) {
+		q.Short, q.Need = missing, need
+		q.Note = fmt.Sprintf("waiting for gold: need %d more", missing)
+		_ = r.saveLocked()
+	}
+}
+
+// Requested says whether a repair request is pending.
+func (r *Controller) Requested() bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.st.Request != nil && r.st.Request.State == StateRequested
+}
+
 // Repaired records a finished Repair All (the town confirmed durability rose).
 func (r *Controller) Repaired(now time.Time) {
 	r.mu.Lock()
@@ -237,6 +260,7 @@ func (r *Controller) Repaired(now time.Time) {
 	r.st.LastRepair = now.Unix()
 	if r.st.Request != nil && r.st.Request.State == StateRequested {
 		r.st.Request.State, r.st.Request.Done, r.st.Request.Note = StateDone, now.Unix(), ""
+		r.st.Request.Short, r.st.Request.Need = 0, 0
 	}
 	_ = r.saveLocked()
 }

@@ -63,3 +63,7 @@ V (run here): `go test -count=1 ./internal/repair ./internal/decide ./internal/w
 4. Request with too little gold: stays requested with the note. Request with undamaged gear: refused.
 5. Policy sheet: Every hour is disabled with its price; buy `repair_hour` with enough tally, choose it, a repair happens at a visit after an hour.
 6. Equip an item from the inventory page (pins the slot), then repair: the item stays worn and pinned.
+
+## Fix 2026-11-09 (live report: Repair now did nothing)
+
+Cause not proven (U): the bot logged no request at all, so a click that failed at the browser (auth, origin, a non-JSON error) vanished silently, and a request that did arrive could lose its gold to the potions and portal scroll bought first. Changes: the request and cancel are logged (`repair requested by the player`); gear.js keeps the last answer on screen ("Not sent: <reason>" including the HTTP status for a non-JSON error, V `TestGearJSShowsFeedbackForRefusalAndHTTPError` in a stub DOM under node); a requested repair moves up behind the sale in the town chore order, before ammo, belt and shop (U here: `TestRepairRequestedIsPaidBeforeSupplies` needs the game tables); when gold is short the request stays open and shows "waiting for gold: need N more" (V `TestShortKeepsRequestOpenWithAmount`), with a town log line. Choice: gold is not held back from potions when the repair cannot be paid anyway.

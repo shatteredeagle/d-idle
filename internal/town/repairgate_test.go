@@ -117,3 +117,32 @@ func TestRepairModeMakesTheTripManualDoesNot(t *testing.T) {
 		t.Error("always mode did not send the hero to town for durability")
 	}
 }
+
+// A requested repair is paid before the potions: with just enough gold for the repair, the shop does not spend it first.
+func TestRepairRequestedIsPaidBeforeSupplies(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		r, c := gated(t, class, "manual")
+		r.W.Player.Gold = 180
+		damage(r, 0)
+		c.Request()
+		plan := townPlan()
+		rep, err := r.T.Chores(t.Context(), plan)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !rep.Repaired {
+			t.Errorf("%v: requested repair lost to the supplies: %+v bought %v", class, rep.Steps, rep.Bought)
+		}
+	}
+}
+
+func TestRepairRequestShortOfGoldSaysHowMuch(t *testing.T) {
+	r, c := gated(t, d2.Paladin, "manual")
+	r.W.Player.Gold = 1
+	damage(r, 0)
+	c.Request()
+	run(t, r)
+	if q := c.View().Request; q == nil || q.Short <= 0 || q.State != repair.StateRequested {
+		t.Errorf("request %+v", q)
+	}
+}
