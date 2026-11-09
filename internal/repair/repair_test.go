@@ -266,3 +266,20 @@ func TestPendingRequestDoesNotBeatNever(t *testing.T) {
 		t.Error("a pending request overrode the Pact")
 	}
 }
+
+func TestShortKeepsRequestOpenWithAmount(t *testing.T) {
+	r, _ := New(Config{Gear: gearFor("paladin", map[string]int{"rhand": 0}), Now: func() time.Time { return t0 }})
+	r.Request()
+	r.Short(41, 116)
+	v := r.View().Request
+	if v.State != StateRequested || v.Short != 41 || v.Need != 116 || !strings.Contains(v.Note, "need 41 more") {
+		t.Fatalf("%+v", v)
+	}
+	if !r.Requested() {
+		t.Error("request closed")
+	}
+	r.Repaired(t0)
+	if v := r.View().Request; v.State != StateDone || v.Short != 0 {
+		t.Errorf("after repair %+v", v)
+	}
+}
