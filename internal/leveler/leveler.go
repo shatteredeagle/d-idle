@@ -39,6 +39,9 @@ type Options struct {
 	Progress *Progress
 	// Snapshot replaces env.Snapshot for the hand (tests with the simulated town).
 	Snapshot func() (*d2.Snapshot, error)
+	// Pinned says whether the player pinned the body slot (watch screen, docs/inventory-ui.md); a pinned slot is never
+	// swapped or shopped for. Nil: no pins.
+	Pinned func(body int) bool
 }
 
 func (l *Leveler) newHand() *hand.Hand {

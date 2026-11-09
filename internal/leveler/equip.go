@@ -46,6 +46,9 @@ func (l *Leveler) gearState(s *d2.Snapshot) (eq map[int]Cand, pack []Cand) {
 		case d2.ContEquipment:
 			c := l.cand(s.Player, u)
 			c.Usable = true // worn is by definition usable; its score is what matters
+			if l.o.Pinned != nil && l.o.Pinned(u.Item.Body) {
+				c.Score = pinnedScore // the player put it there (docs/inventory-ui.md): no swap may take the slot
+			}
 			eq[u.Item.Body] = c
 			if u.Item.Body == d2.BodyAltR || u.Item.Body == d2.BodyAltL {
 				alt[u.Item.Body] = c

@@ -637,6 +637,17 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) []d2.Unit {
 		if u.Item.Flags&d2.FlagStartItem != 0 {
 			continue
 		}
+		// The player's marks come before the pickit: "keep" is never sold, "sell" goes at this visit unless the item is
+		// one that must never be sold (quest items, the Cube, keys, tomes).
+		switch t.markOf(u) {
+		case "keep":
+			continue
+		case "sell":
+			if NeverSellReason(t.base(u), u) == "" {
+				out = append(out, u)
+				continue
+			}
+		}
 		v := t.judge.EvaluateUnit(u)
 		if v.NeedID && !u.Item.Identified() {
 			// The identify step ran before this and could not read it (no scroll, no gold): a full pack must not hold
