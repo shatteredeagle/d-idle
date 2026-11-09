@@ -1,3 +1,0 @@
-BACKLOG: TASK-228 uidesign: watch UI research, design system proposal (tokens, shell, 12 components, panel contract, migration table), 8 standalone mockups and a regression test plan (uilint, golden DOM, screenshot suite); docs only, 13 migration PRs proposed
-INDEX: docs/ui-design-system.md and docs/ui-regression-plan.md added (build_index.py run); docs/research/ui-design.md listed in docs/research/README.md; docs/mockups/ui/ (static HTML)
-CHANGELOG: Proposed watch UI design system and panel contract (docs/ui-design-system.md) with mockups under docs/mockups/ui/ and a regression plan; root cause of the unstyled gear strip recorded (page CSP style-src self blocks gear.js's injected style)

@@ -889,3 +889,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/player-power.md - player power vs area danger: no single number exists; community checklists; proposed per-threat readiness check (agent powerres, 2026-11-09)
 - docs/repair.md - manual gear repair, Repair now, repair modes on the unlock ladder (TASK-226)
 - docs/desktop-app.md - desktop launcher for the watch page: stack decision, same-origin rule, build and test (area: watch)
+- docs/ui-design-system.md and docs/ui-regression-plan.md added (build_index.py run); docs/research/ui-design.md listed in docs/research/README.md; docs/mockups/ui/ (static HTML)
