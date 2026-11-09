@@ -54,6 +54,7 @@ type Input struct {
 	TripsRecent   int // finished town trips inside the trip-budget window (Tuning.TripWindowMin)
 	IdleTrips     int // consecutive town trips that bought nothing (no gold); reset by a sale or a purchase
 	Class         d2.Class
+	MeleeClass    bool // the combat profile fights with the weapon (Melee block): the free basic attack ends its ladder, so running out of mana never means backing off
 	Diff          d2.Difficulty
 	Area          int
 	Poor          bool // poverty mode: no gold to refill potions
