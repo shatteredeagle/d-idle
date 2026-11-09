@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-xp-award.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "AC1 proven (0 of 219,790 lines, real rules::kill_exp vs FUN_0057e2f0, upstream 7557a54d, V run). AC2 live read not done. Doc docs/probes/fid/fid-xp-award.md. Not verified live."
 ---
 
 ## Description
@@ -37,6 +37,6 @@ Done when: Re-run the xp-award grid (119,790 lines) against current main; expect
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Re-run the xp-award grid (119,790 lines) against current main; expected 0 differ (tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR)
+- [x] #1 Re-run the xp-award grid (119,790 lines) against current main; expected 0 differ (tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR)
 - [ ] #2 Live read of XP before/after a Fallen, Zombie and Dark Hunter kill at clvl 4 to 6 on game.exe (read-only); expected 18/33/known values of docs/research/xp-award-trace.md exactly
 <!-- AC:END -->
