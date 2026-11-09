@@ -1,0 +1,1 @@
+CHANGELOG: Paladin and other melee classes no longer back off from a big pack when mana runs out; they swing the weapon at once.
