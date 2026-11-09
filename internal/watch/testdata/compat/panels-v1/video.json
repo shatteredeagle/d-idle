@@ -1,0 +1,19 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "video",
+  "title": "Game",
+  "band": "stage",
+  "size": "m",
+  "minSize": "m",
+  "maxSize": "l",
+  "priority": 0,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "",
+  "poll": 0,
+  "unlock": "",
+  "skeleton": 0,
+  "owner": "uishell2",
+  "doc": "docs/watch-screen.md"
+}

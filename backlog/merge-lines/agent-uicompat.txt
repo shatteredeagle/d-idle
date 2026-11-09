@@ -1,0 +1,3 @@
+BACKLOG: uicompat: watch UI compatibility promise (versioned manifests, endpoints, data attributes, token names), manifest version field, golden compatibility fixtures
+INDEX: docs/ui-design-system.md section 0: the watch UI compatibility promise; internal/watch/testdata/compat/ holds its golden fixtures (only added to)
+CHANGELOG: Watch screen: the layout and panel formats are now versioned public contracts; saved layouts and panels keep loading in later versions

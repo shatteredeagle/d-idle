@@ -11,7 +11,7 @@ import (
 const goodTokens = `@layer reset, tokens, shell, components, panels, utilities;
 @layer tokens { :root { --d-text: #eee; --d-bg: #000; --d-sp-2: 8px; } }`
 
-const goodManifest = `{"schema":"watch.panel/1","id":"probe","title":"Probe","band":"grid","size":"s","minSize":"s","maxSize":"m",
+const goodManifest = `{"schema":"watch.panel/1","version":1,"id":"probe","title":"Probe","band":"grid","size":"s","minSize":"s","maxSize":"m",
 "priority":10,"tab":"hero","defaultOpen":true,"endpoint":"/api/probe","poll":5,"unlock":"","skeleton":2,"owner":"uishell","doc":"docs/x.md"}`
 
 // good is a tree with one valid panel; each case below changes or adds one file.
@@ -103,6 +103,8 @@ func TestEveryRuleFires(t *testing.T) {
 		{"js-no-query-outside-root", "panels/probe/panel.js", "export function mount(root) {\n  document.getElementById('x');\n}\n"},
 		{"manifest-schema", "panels/probe/panel.json", strings.Replace(goodManifest, `"doc"`, `"extra":1,"doc"`, 1)},
 		{"manifest-schema", "panels/probe/panel.json", strings.Replace(goodManifest, `watch.panel/1`, `watch.panel/2`, 1)},
+		{"manifest-version", "panels/probe/panel.json", strings.Replace(goodManifest, `"version":1,`, ``, 1)},
+		{"manifest-version", "panels/probe/panel.json", strings.Replace(goodManifest, `"version":1,`, `"version":0,`, 1)},
 		{"manifest-id", "panels/probe/panel.json", strings.Replace(goodManifest, `"id":"probe"`, `"id":"Probe"`, 1)},
 		{"manifest-size", "panels/probe/panel.json", strings.Replace(goodManifest, `"maxSize":"m"`, `"maxSize":"x"`, 1)},
 		{"manifest-size", "panels/probe/panel.json", strings.Replace(goodManifest, `"minSize":"s"`, `"minSize":"l"`, 1)},

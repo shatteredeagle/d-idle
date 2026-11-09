@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "map",
+  "title": "Map",
+  "band": "side",
+  "size": "s",
+  "priority": 2,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/senses",
+  "poll": 0.5,
+  "unlock": "",
+  "skeleton": 0,
+  "owner": "uishell2",
+  "doc": "docs/senses-map.md"
+}
