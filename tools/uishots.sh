@@ -1,5 +1,5 @@
 #!/bin/sh
-# Watch UI screenshot suite (docs/ui-regression-plan.md section 4). Runs ON the worker host (labrun orion -- tools/uishots.sh):
+# Watch UI screenshot suite (docs/ui-regression-plan.md section 4). Runs ON the worker host (through labrun):
 # a frozen fixture viewer (go run ./tools/uishots serve), headless google-chrome-stable on a private Xvfb display at
 # nice 19 (never the user's desktop), one PNG and one DOM dump per page, width and theme, then the DOM contract check
 # and a pixel diff against the golden set kept on the worker host (not in git: pictures change with every UI PR).

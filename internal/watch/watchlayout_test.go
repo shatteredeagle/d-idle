@@ -109,7 +109,7 @@ func TestWatchCSSPanelsAndStageSize(t *testing.T) {
 		}
 	}
 	sh, _ := os.ReadFile("web/shell.css")
-	for _, want := range []string{"grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)", "grid-column: span min(2, var(--d-cols))"} {
+	for _, want := range []string{"grid-column: 1 / span 7", "grid-column: 8 / -1; grid-row: 1 / span 4", "grid-column: span min(2, var(--d-cols))"} {
 		if !strings.Contains(string(sh), want) {
 			t.Errorf("shell.css lacks %q", want)
 		}
