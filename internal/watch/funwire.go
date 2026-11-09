@@ -141,6 +141,8 @@ type Fun struct {
 	Pacts *PactAPI
 	// Inventory mounts the inventory page routes (invapi.go); set it before Serve, nil: no routes.
 	Inventory *InvAPI
+	// Repair mounts the gear condition and Repair now routes (repairapi.go); set it before Serve, nil: no routes.
+	Repair *RepairAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 
@@ -648,6 +650,11 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 			m.Handle(p, f.Inventory.Handler())
 		}
 	}
+	if f.Repair != nil {
+		for _, p := range RepairRoutes {
+			m.Handle(p, f.Repair.Handler())
+		}
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -692,6 +699,11 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	if f.Inventory != nil {
 		for _, p := range InvPostRoutes {
 			m.Handle(p, f.Inventory.PostHandler(o))
+		}
+	}
+	if f.Repair != nil {
+		for _, p := range RepairPostRoutes {
+			m.Handle(p, f.Repair.PostHandler(o))
 		}
 	}
 	if f.Policy != nil {

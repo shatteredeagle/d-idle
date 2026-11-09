@@ -48,6 +48,9 @@ type PolicyOption struct {
 	Says    string `json:"says,omitempty"`
 	Applies string `json:"applies,omitempty"`
 	Note    string `json:"note,omitempty"`
+	// Unlock names the unlock ladder row (data/unlocks/ladder.json) that opens the option; empty: always available.
+	// The sheet refuses a locked option and shows what it costs.
+	Unlock string `json:"unlock,omitempty"`
 }
 
 // KnobsFor is the knob values the option sets for a class: Knobs with the class's ClassKnobs on top. An option with

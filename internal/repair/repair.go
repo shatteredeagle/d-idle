@@ -108,6 +108,22 @@ func NewWithTable(c Config, t *Table) (*Controller, error) {
 	return r, nil
 }
 
+// Bind sets the mode source (the policy row's current option) and the ladder test once they exist; nil keeps the
+// default mode and leaves every mode open (no ladder to buy from).
+func (r *Controller) Bind(mode func() string, allowed func(string) bool) {
+	r.mu.Lock()
+	r.c.Mode, r.c.Allowed = mode, allowed
+	r.mu.Unlock()
+}
+
+// Gear is the worn-gear reading (nil without a reader).
+func (r *Controller) Gear() []Cond {
+	if r.c.Gear == nil {
+		return nil
+	}
+	return r.c.Gear()
+}
+
 // Table is the modes table.
 func (r *Controller) Table() *Table { return r.t }
 
@@ -115,8 +131,9 @@ func (r *Controller) Table() *Table { return r.t }
 // unknown acts as manual, so a hand-edited policy file can never buy a mode.
 func (r *Controller) ModeID() string {
 	id := r.t.Default
-	if r.c.Mode != nil {
-		if v := r.c.Mode(); v != "" {
+	mode, _ := r.sources()
+	if mode != nil {
+		if v := mode(); v != "" {
 			id = v
 		}
 	}
@@ -128,7 +145,14 @@ func (r *Controller) ModeID() string {
 }
 
 func (r *Controller) open(m *Mode) bool {
-	return m.Unlock == "" || r.c.Allowed == nil || r.c.Allowed(m.Unlock)
+	_, allowed := r.sources()
+	return m.Unlock == "" || allowed == nil || allowed(m.Unlock)
+}
+
+func (r *Controller) sources() (func() string, func(string) bool) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.c.Mode, r.c.Allowed
 }
 
 // Request asks for a repair at the next town visit. Refused (with a reason line) when the readings show nothing damaged.

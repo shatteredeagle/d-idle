@@ -37,7 +37,7 @@ func newInvDesk(stateDir string, d *display, ref *runnerRef) error {
 		return err
 	}
 	ref.inv = desk
-	return nil
+	return newRepair(stateDir, d, ref)
 }
 
 // pinned is leveler.Options.Pinned; safe before the desk exists.
@@ -54,6 +54,7 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		return
 	}
 	d := ref.inv
+	wireRepair(ref, tw)
 	if tw != nil {
 		tw.SetItemMarks(d)
 		tw.SetPinned(d.Pinned)

@@ -250,6 +250,9 @@ func (t *Town) Durability(u d2.Unit) (dur, mx int, ok bool) {
 	return int(st.Get(statDurability)), int(st.Get(statMaxDurability)), true
 }
 
+// ItemName is the display name of an item (the repair readings use it).
+func (t *Town) ItemName(u d2.Unit) string { return t.nameOf(u) }
+
 // RepairEstimate is repairEstimate for a snapshot (the watch screen's cost line; a lower bound, see repairEstimate).
 func (t *Town) RepairEstimate(s *d2.Snapshot) int { return t.repairEstimate(s) }
 

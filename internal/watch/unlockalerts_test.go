@@ -64,8 +64,8 @@ func TestAlertRulesShippedAndErrors(t *testing.T) {
 			free[r.ID] = true
 		}
 	}
-	if !free["death"] || !free["low_life"] || len(free) != 2 {
-		t.Fatalf("free rules must be exactly death and low_life: %v", free)
+	if !free["death"] || !free["low_life"] || !free["gear_low"] || !free["gear_broken"] || len(free) != 4 {
+		t.Fatalf("free rules must be exactly death, low_life, gear_low and gear_broken: %v", free)
 	}
 	for _, r := range rt.Rules {
 		for c := range r.ClassText {
@@ -514,8 +514,8 @@ func TestShippedLadderHasTheAlertsRow(t *testing.T) {
 	// every shipped rule is reachable from a free path or the row; the free ones never name the row
 	rt, _ := ShippedAlertRules()
 	for _, r := range rt.Rules {
-		if r.Free && r.Event != "death" && r.Event != "low_life" {
-			t.Errorf("rule %s: only death and low life may be free", r.ID)
+		if r.Free && r.Event != "death" && r.Event != "low_life" && r.Event != "gear_low" && r.Event != "gear_broken" {
+			t.Errorf("rule %s: only death, low life and the two gear alerts may be free", r.ID)
 		}
 	}
 }

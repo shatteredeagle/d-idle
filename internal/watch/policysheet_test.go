@@ -48,16 +48,37 @@ type polRig struct {
 	dir    string
 }
 
+// legacyRepairTable is the shipped table with the repair row as it was before docs/repair.md: rule options on t1.repair,
+// which the machinery tests below rely on. The shipped repair row has its own tests (repairapi_test.go).
+func legacyRepairTable(t *testing.T, cat *decide.Catalogue) *decide.PolicyTable {
+	t.Helper()
+	tbl, err := decide.ShippedPolicy(cat)
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile("../decide/testdata/policy_repair_legacy.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	old, err := decide.ParsePolicy(b, cat)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, r := range tbl.Rows {
+		if r.ID == "repair" {
+			tbl.Rows[i] = old.Rows[0]
+		}
+	}
+	return tbl
+}
+
 func newPolRig(t *testing.T, class string, withKnobs bool) *polRig {
 	t.Helper()
 	cat, err := decide.Shipped()
 	if err != nil {
 		t.Fatal(err)
 	}
-	tbl, err := decide.ShippedPolicy(cat)
-	if err != nil {
-		t.Fatal(err)
-	}
+	tbl := legacyRepairTable(t, cat)
 	r := &polRig{t: t, cat: cat, tbl: tbl, class: class, dir: t.TempDir()}
 	r.store, err = decide.Open(r.dir, "pol", cat, &decide.ManualClock{})
 	if err != nil {

@@ -91,6 +91,22 @@
       }
     },
     {
+      "id": "gear_low",
+      "event": "gear_low",
+      "severity": "warn",
+      "free": true,
+      "cooldownSecs": 1800,
+      "text": "Worn gear is getting thin: {item} (lowest {pct} percent). Press Repair now on the Inventory page when you are ready."
+    },
+    {
+      "id": "gear_broken",
+      "event": "gear_broken",
+      "severity": "alarm",
+      "free": true,
+      "cooldownSecs": 900,
+      "text": "Gear has broken: {item}. It gives no protection until it is repaired. Press Repair now on the Inventory page."
+    },
+    {
       "id": "back_in_town",
       "event": "town",
       "severity": "info",

@@ -1,9 +1,34 @@
 package decide
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
+
+// legacyRepair is the shipped table with the repair row of before docs/repair.md (rule options on t1.repair): the
+// policy machinery tests need a row whose options answer a ladder point.
+func legacyRepair(t *testing.T, cat *Catalogue) *PolicyTable {
+	t.Helper()
+	tbl, err := ShippedPolicy(cat)
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, err := os.ReadFile("testdata/policy_repair_legacy.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	old, err := ParsePolicy(b, cat)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for i, r := range tbl.Rows {
+		if r.ID == "repair" {
+			tbl.Rows[i] = old.Rows[0]
+		}
+	}
+	return tbl
+}
 
 func TestShippedPolicyTable(t *testing.T) {
 	cat := mustCat(t)
@@ -76,7 +101,7 @@ func TestRowsForClass(t *testing.T) {
 // A policy answers before any card, for both builds, survives a reload and a later option replaces it.
 func TestPolicyAnswersAndPersists(t *testing.T) {
 	cat := mustCat(t)
-	tbl, _ := ShippedPolicy(cat)
+	tbl := legacyRepair(t, cat)
 	dir := t.TempDir()
 	s, err := Open(dir, "pol", cat, &ManualClock{})
 	if err != nil {
@@ -136,7 +161,7 @@ func TestPolicyAnswersAndPersists(t *testing.T) {
 // The "low" option is a two-rule list: the first match wins.
 func TestPolicyFirstRuleWins(t *testing.T) {
 	cat := mustCat(t)
-	tbl, _ := ShippedPolicy(cat)
+	tbl := legacyRepair(t, cat)
 	s, _ := New(cat, "pol", &ManualClock{})
 	row, _ := tbl.Row("repair")
 	low, _ := row.Option("low")

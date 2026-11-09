@@ -19,7 +19,8 @@ type display struct {
 	hub *status.Hub
 	tr  *telemetry.Tracker
 	cat bot.Catalog
-	run *bot.Runner // set after the runner exists
+	run *bot.Runner                                // set after the runner exists
+	dur func(u d2.Unit) (dur, maxDur int, ok bool) // worn-item durability (repairwire.go); nil: not read
 }
 
 func newDisplay(cat bot.Catalog) *display {
@@ -211,6 +212,11 @@ func (i invSource) Inventory() status.InventoryData {
 		case d2.ContEquipment:
 			if k, ok := bodySlot[u.Item.Body]; ok {
 				c := it
+				if i.d.dur != nil {
+					if dur, mx, ok := i.d.dur(u); ok {
+						c.Dur, c.MaxDur = dur, mx
+					}
+				}
 				out.Equipment[k] = &c
 			}
 		case d2.ContInventory:
