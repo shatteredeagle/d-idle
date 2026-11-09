@@ -662,6 +662,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-231 uishell2: watch shell (shell.js, panel registry /watch/panels.json); status band, video+map stage and whyline are panels; old cards in a compatibility slot
 - TASK-232 uidesign2: inventory mockup redone as a Diablo II paper doll (pips, BROKEN, PIN, upgrade hook, sell/keep marks), tokens.html redone as a style guide with computed contrast ratios, 27 PNG renders of every mockup from headless Chrome under Xvfb on the worker host; docs only
 - TASK-235 layouteditor: standalone draggable layout editor for the watch screen (docs/mockups/ui/editor.html): real sample panels on a 12-column grid, drag/resize/keyboard, a layout per viewport, presets, undo, autosave, export/import of the watch.layout/1 manifest; manifest documented in docs/ui-design-system.md 6.4; migration PR 14 added
+- uicommand: watch command centre above the fold (hero vitals, doing now, Why card, gear, tally, marks) beside a full-width stage; /api/hero; screenshot suite tools/uishots.sh
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

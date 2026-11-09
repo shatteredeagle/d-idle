@@ -894,3 +894,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - internal/watch/web/panels/: watch UI panel modules (panel.json, panel.css, panel.js) placed by web/shell.js (docs/ui-design-system.md sections 4 and 6)
 - docs/mockups/ui/renders/ (PNG renders, all under 400 KB); docs/ui-design-system.md gains components 13 (paper doll) and 14 (cells)
 - docs/mockups/ui/editor.html and renders/editor-*.png; docs/ui-design-system.md section 6.4 Layout manifest; docs/ui-regression-plan.md PR 14 uilayout
+- tools/uishots.sh and tools/uishots/: watch UI screenshot suite (headless Chrome on a private Xvfb on the worker host, frozen fixture viewer, DOM check, pixel diff)

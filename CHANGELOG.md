@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch screen: a command centre beside the game video (hero life, mana, xp and gold, what it is doing, a three-line Why, gear condition with Repair now, tally); the video and map fill their columns; the cards below use the new look
 - Watch UI mockups: a draggable layout editor (editor.html) that exports the layout manifest the shell will read (watch.layout/1)
 - Paladin and other melee classes no longer back off from a big pack when mana runs out; they swing the weapon at once.
 - Repair now keeps its answer on screen (refused, waiting for gold: need N more), is paid before potions and scrolls, and is logged.

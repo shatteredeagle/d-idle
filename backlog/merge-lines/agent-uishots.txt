@@ -1,3 +1,0 @@
-BACKLOG: uicommand: watch command centre above the fold (hero vitals, doing now, Why card, gear, tally, marks) beside a full-width stage; /api/hero; screenshot suite tools/uishots.sh
-INDEX: tools/uishots.sh and tools/uishots/: watch UI screenshot suite (headless Chrome on a private Xvfb on the worker host, frozen fixture viewer, DOM check, pixel diff)
-CHANGELOG: Watch screen: a command centre beside the game video (hero life, mana, xp and gold, what it is doing, a three-line Why, gear condition with Repair now, tally); the video and map fill their columns; the cards below use the new look
