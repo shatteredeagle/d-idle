@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-missile-monster.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "Partial: launch record 60,000 cases x 36 rows 0 differ on real build (V run); to-hit gate merged upstream; block gate still open on d2d (V read); 371-row count not closed. AC1 not ticked. Doc docs/probes/fid/fid-missile-monster.md. Not verified live."
 ---
 
 ## Description

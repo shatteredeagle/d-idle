@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-boss-skills.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "Partial: boss_deaths ok and boss_level only the explained lifeless family (V run); boss skills have no differential (table side only). No AC ticked. Doc docs/probes/fid/fid-boss-skills.md. Not verified live."
 ---
 
 ## Description

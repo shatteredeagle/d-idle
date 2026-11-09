@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-teleport.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "AC2 proven (destination rule 0 differ, 2 x 20000 cases on real build, V run). AC1 not proven (refused-hop mana V read both sides, differential not built); AC3 live not done. Doc docs/probes/fid/fid-teleport.md. Not verified live."
 ---
 
 ## Description
@@ -39,6 +39,6 @@ Done when: D3/D4 mana on a refused hop compared; tolerance: 0 differing cases in
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 D3/D4 mana on a refused hop compared; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 D1/D2 batch 2 proof table finalised
+- [x] #2 D1/D2 batch 2 proof table finalised
 - [ ] #3 Live: one Teleport to a blocked target on a clvl 18 character reads mana unchanged, if the maintainer wants it
 <!-- AC:END -->
