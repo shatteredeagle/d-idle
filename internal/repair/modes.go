@@ -17,6 +17,9 @@ type Mode struct {
 	OnBreak   bool   `json:"onBreak,omitempty"`   // repair when any worn item is broken
 	EverySecs int    `json:"everySecs,omitempty"` // repair when this long has passed since the last repair
 	Always    bool   `json:"always,omitempty"`    // repair whenever anything is damaged
+	BelowPct  int    `json:"belowPct,omitempty"`  // repair when the lowest worn item is under this durability percent
+	Never     bool   `json:"never,omitempty"`     // never repairs, a request is refused (a Pact's promise)
+	Hidden    bool   `json:"hidden,omitempty"`    // set by a Pact only: not offered on the sheet, needs no unlock
 }
 
 // Table is the parsed modes file.
@@ -54,11 +57,11 @@ func ParseTable(b []byte) (*Table, error) {
 			return nil, fmt.Errorf("repair: modes: a mode without id or label")
 		case seen[m.ID]:
 			return nil, fmt.Errorf("repair: modes: duplicate mode %q", m.ID)
-		case m.ID != t.Default && !m.OnBreak && m.EverySecs <= 0 && !m.Always:
-			return nil, fmt.Errorf("repair: modes: mode %q has no test (onBreak, everySecs or always)", m.ID)
+		case m.ID != t.Default && !m.OnBreak && m.EverySecs <= 0 && !m.Always && m.BelowPct <= 0 && !m.Never:
+			return nil, fmt.Errorf("repair: modes: mode %q has no test (onBreak, everySecs, always, belowPct or never)", m.ID)
 		case m.ID == t.Default && (m.OnBreak || m.EverySecs > 0 || m.Always || m.Unlock != ""):
 			return nil, fmt.Errorf("repair: modes: the default mode %q must be manual (no test, no unlock)", m.ID)
-		case m.ID != t.Default && m.Unlock == "":
+		case m.ID != t.Default && m.Unlock == "" && !m.Hidden:
 			return nil, fmt.Errorf("repair: modes: mode %q needs an unlock row", m.ID)
 		}
 		seen[m.ID] = true

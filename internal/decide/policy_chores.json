@@ -8,7 +8,9 @@
        {"id": "break", "label": "When an item breaks", "unlock": "repair_break", "applies": "part", "note": "Repairs at the next town visit after an item reaches zero durability; the hero heads to town on the usual durability trip (docs/repair.md)."},
        {"id": "hour", "label": "Every hour", "unlock": "repair_hour", "applies": "part", "note": "Repairs at a town visit once an hour has passed since the last repair (docs/repair.md)."},
        {"id": "half", "label": "Every half hour", "unlock": "repair_half", "applies": "part", "note": "Repairs at a town visit once half an hour has passed since the last repair (docs/repair.md)."},
-       {"id": "always", "label": "Always (every town visit)", "unlock": "repair_always", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}], "applies": "part", "note": "Repairs any damaged gear at every town visit (docs/repair.md)."}
+       {"id": "always", "label": "Always (every town visit)", "unlock": "repair_always", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}], "applies": "part", "note": "Repairs any damaged gear at every town visit (docs/repair.md)."},
+       {"id": "low", "label": "Pact: repair only under 20 percent durability", "hidden": true, "rules": [{"point": "t1.repair", "when": {"durability": "lt20"}, "answer": "repair"}, {"point": "t1.repair", "answer": "skip"}]},
+       {"id": "never", "label": "Pact: never repair", "hidden": true, "rules": [{"point": "t1.repair", "answer": "skip"}]}
      ],
      "effect": [{"counter": "repairs", "label": "repairs"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
 

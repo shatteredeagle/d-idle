@@ -231,9 +231,10 @@ func (t *Town) repairTripAllowed(s *d2.Snapshot) bool {
 
 // repairFacts reads the worn items for the repair gate: anything below full durability, anything at zero.
 func (t *Town) repairFacts(s *d2.Snapshot) repair.Facts {
-	f := repair.Facts{Now: t.e.Clock.Now()}
+	f := repair.Facts{Now: t.e.Clock.Now(), Lowest: 100}
 	for _, u := range s.Inventory.Container(d2.ContEquipment) {
 		if dur, mx, ok := t.Durability(u); ok {
+			f.Lowest = min(f.Lowest, dur*100/mx)
 			f.Damaged = f.Damaged || dur < mx
 			f.Broken = f.Broken || dur <= 0
 		}

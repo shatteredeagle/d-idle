@@ -35,6 +35,7 @@ type Cond struct {
 // Facts is what the town knows at a visit.
 type Facts struct {
 	Now     time.Time
+	Lowest  int  // lowest worn durability percent, 0..100
 	Damaged bool // any worn item below full durability
 	Broken  bool // any worn item at zero
 }
@@ -157,6 +158,9 @@ func (r *Controller) sources() (func() string, func(string) bool) {
 
 // Request asks for a repair at the next town visit. Refused (with a reason line) when the readings show nothing damaged.
 func (r *Controller) Request() (Request, error) {
+	if m, err := r.t.Mode(r.ModeID()); err == nil && m.Never {
+		return Request{}, &Refusal{"pact", "a Pact forbids repairs"}
+	}
 	if r.c.Gear != nil {
 		damaged := false
 		for _, g := range r.c.Gear() {
@@ -194,16 +198,20 @@ func (r *Controller) Permit(f Facts) (ok, requested bool) {
 	pending := r.st.Request != nil && r.st.Request.State == StateRequested
 	last := r.st.LastRepair
 	r.mu.Unlock()
-	if pending {
-		return true, true
-	}
 	m, err := r.t.Mode(r.ModeID())
 	if err != nil {
 		return false, false
 	}
+	if pending && !m.Never {
+		return true, true
+	}
 	switch {
+	case m.Never:
+		return false, false
 	case m.Always:
 		return true, false
+	case m.BelowPct > 0:
+		return f.Lowest < m.BelowPct, false
 	case m.OnBreak:
 		return f.Broken, false
 	case m.EverySecs > 0:
@@ -281,6 +289,9 @@ func (r *Controller) View() View {
 	v := View{Schema: 1, Mode: cur, WarnPct: r.t.WarnPct, Modes: []ModeView{}, Gear: []Cond{}}
 	for i := range r.t.Modes {
 		m := &r.t.Modes[i]
+		if m.Hidden && m.ID != cur {
+			continue
+		}
 		v.Modes = append(v.Modes, ModeView{ID: m.ID, Label: m.Label, Current: m.ID == cur, Locked: !r.open(m)})
 	}
 	if r.c.InTown != nil {

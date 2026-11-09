@@ -569,6 +569,9 @@ func (p *PolicySheet) View() (PolicyView, error) {
 		cur := p.current(r)
 		rv := PolicyRowView{ID: r.ID, Label: r.Label, Help: r.Help, Current: cur, Default: r.Default, Changed: cur != r.Default, Options: []PolicyOptionView{}}
 		for _, o := range r.Options {
+			if o.Hidden && o.ID != cur {
+				continue
+			}
 			ov := PolicyOptionView{ID: o.ID, Label: o.Label, Current: o.ID == cur, Default: o.ID == r.Default, Suboptimal: o.Suboptimal,
 				Risk: o.Risk, Applies: o.Applies, Note: o.Note}
 			for _, ru := range o.Rules {

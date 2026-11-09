@@ -6,7 +6,7 @@
   {
    "id": "repair",
    "label": "Repair gear",
-   "help": "When the hero repairs its gear in town. Repair costs gold; broken gear stops protecting.",
+   "help": "When the hero repairs its gear in town.",
    "current": "default",
    "default": "default",
    "changed": false,

@@ -26,7 +26,7 @@ func TestShippedTable(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if tb.Default != "manual" || len(tb.Modes) != 5 {
+	if tb.Default != "manual" || len(tb.Modes) != 7 {
 		t.Fatalf("table: %+v", tb)
 	}
 	for _, id := range []string{"manual", "break", "hour", "half", "always"} {
@@ -224,5 +224,45 @@ func TestPersistence(t *testing.T) {
 	}
 	if ok, req := r2.Permit(Facts{Now: t0, Damaged: true}); !ok || !req {
 		t.Error("request lost across a restart")
+	}
+}
+
+// A Pact sets the hidden modes (data/pacts/pacts.json): never refuses even a request, low repairs under its percent.
+func TestPactModes(t *testing.T) {
+	mode := "never"
+	r, _ := New(Config{Mode: func() string { return mode }, Allowed: open()})
+	if r.ModeID() != "never" {
+		t.Fatalf("hidden mode needs no unlock: %s", r.ModeID())
+	}
+	var ref *Refusal
+	if _, err := r.Request(); !errors.As(err, &ref) || ref.Code != "pact" {
+		t.Errorf("request under never: %v", err)
+	}
+	if ok, _ := r.Permit(Facts{Now: t0, Damaged: true, Broken: true, Lowest: 0}); ok {
+		t.Error("never repaired")
+	}
+	mode = "low"
+	if ok, _ := r.Permit(Facts{Now: t0, Damaged: true, Lowest: 25}); ok {
+		t.Error("low repaired at 25")
+	}
+	if ok, _ := r.Permit(Facts{Now: t0, Damaged: true, Lowest: 19}); !ok {
+		t.Error("low did not repair at 19")
+	}
+	for _, m := range r.View().Modes {
+		if m.ID == "never" || m.ID == "hour" && m.Locked == false {
+			t.Errorf("view lists %+v", m)
+		}
+	}
+}
+
+func TestPendingRequestDoesNotBeatNever(t *testing.T) {
+	mode := "manual"
+	r, _ := New(Config{Mode: func() string { return mode }, Now: func() time.Time { return t0 }})
+	if _, err := r.Request(); err != nil {
+		t.Fatal(err)
+	}
+	mode = "never" // a Pact starts after the request
+	if ok, _ := r.Permit(Facts{Now: t0, Damaged: true}); ok {
+		t.Error("a pending request overrode the Pact")
 	}
 }
