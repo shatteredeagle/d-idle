@@ -1,0 +1,12 @@
+/* Element defaults: the only file with bare element selectors (docs/ui-design-system.md section 9). Kept small on
+   purpose: the compatibility CSS (app.css) still styles the old cards, so margins and lists are not reset here. */
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { color-scheme: dark light; background: var(--d-bg); color: var(--d-text); }
+  body { margin: 0; font: var(--d-fs-2)/var(--d-lh) var(--d-font-body); }
+  button, input, select, textarea { font: inherit; color: inherit; }
+  img, svg, canvas, video { max-inline-size: 100%; }
+  a { color: var(--d-accent-text); }
+  :focus-visible { outline: 2px solid var(--d-focus); outline-offset: 2px; }
+  [hidden] { display: none; }
+}

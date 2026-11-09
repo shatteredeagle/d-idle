@@ -1033,7 +1033,7 @@ var returnTmpl = template.Must(template.New("return").Funcs(template.FuncMap{"du
 }}).Parse(`<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><title>d.idle - while you were away</title>
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light dark">
-<link rel="icon" href="data:,"><link rel="stylesheet" href="/watch/app.css"><link rel="stylesheet" href="/watch/return.css">
+<link rel="icon" href="data:,"><link rel="stylesheet" href="/watch/tokens.css"><link rel="stylesheet" href="/watch/app.css"><link rel="stylesheet" href="/watch/return.css">
 </head><body>
 <header class="top"><div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
 <a class="btn primary" href="/watch?live=1">Go to the live screen</a></header>

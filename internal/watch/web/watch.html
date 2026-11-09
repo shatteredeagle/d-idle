@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><title>d.idle watch screen</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="dark light">
 <link rel="icon" href="data:,">
+<link rel="stylesheet" href="/watch/tokens.css">
+<link rel="stylesheet" href="/watch/reset.css">
 <link rel="stylesheet" href="/watch/app.css">
+<link rel="stylesheet" href="/watch/components.css">
+<link rel="stylesheet" href="/watch/utilities.css">
 </head><body>
 <header class="top">
  <div class="brand"><span class="brand-mark" aria-hidden="true"></span><h1>d.idle</h1></div>
@@ -15,7 +19,7 @@
  <a class="muted" id="invlink" href="/watch/inventory">Inventory</a>
  <a class="muted" id="returnlink" href="/watch/return" hidden>Return screen</a>
  <span id="clock" class="muted"></span>
- <div class="tools"><button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: auto</button></div>
+ <div class="tools"><button class="btn ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button></div>
 </header>
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
