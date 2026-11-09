@@ -1,3 +1,0 @@
-BACKLOG: TASK-235 layouteditor: standalone draggable layout editor for the watch screen (docs/mockups/ui/editor.html): real sample panels on a 12-column grid, drag/resize/keyboard, a layout per viewport, presets, undo, autosave, export/import of the watch.layout/1 manifest; manifest documented in docs/ui-design-system.md 6.4; migration PR 14 added
-INDEX: docs/mockups/ui/editor.html and renders/editor-*.png; docs/ui-design-system.md section 6.4 Layout manifest; docs/ui-regression-plan.md PR 14 uilayout
-CHANGELOG: Watch UI mockups: a draggable layout editor (editor.html) that exports the layout manifest the shell will read (watch.layout/1)
