@@ -895,3 +895,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/mockups/ui/renders/ (PNG renders, all under 400 KB); docs/ui-design-system.md gains components 13 (paper doll) and 14 (cells)
 - docs/mockups/ui/editor.html and renders/editor-*.png; docs/ui-design-system.md section 6.4 Layout manifest; docs/ui-regression-plan.md PR 14 uilayout
 - tools/uishots.sh and tools/uishots/: watch UI screenshot suite (headless Chrome on a private Xvfb on the worker host, frozen fixture viewer, DOM check, pixel diff)
+- docs/ui-design-system.md section 0: the watch UI compatibility promise; internal/watch/testdata/compat/ holds its golden fixtures (only added to)
