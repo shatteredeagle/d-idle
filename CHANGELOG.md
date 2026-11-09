@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fidelity oracle batch 2 on upstream main a5b970d5: missile, status, monster-move and boss-mod differentials; two local PR candidates (Lightning one unit a frame, Cold Enchanted chill length), nothing posted
 - Combat approach steps read the position only between full snapshots (faster short steps).
 - policy preview now has data: each fight records its lowest life percent and the away log keeps close and drop events across restarts (previewfeed)
 - The policy sheet shows a preview card ("if this had been on for the last hour...") with Save and Cancel before a row changes; rows without recorded evidence say so.

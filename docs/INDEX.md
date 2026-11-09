@@ -878,3 +878,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/walksmooth.md: walksmooth2 section (measured causes, trace lines, fix)
 - docs/whyline.md - why-line under the video card: reason codes, templates, hold rules
 - docs/policy-preview.md - policy preview (dry run before saving a policy row), honesty rule, which rows support it
+- docs/probes/fid/fid-missile-player.md | TASK-83 player missile flight, reach, roll, Nova and the Lightning pierce deviation (2026-11-08)
+- docs/probes/fid/fid-status-effects.md | TASK-87 freeze, chill, freeze end equal; curse put rule deviation (2026-11-08)
+- docs/probes/fid/fid-monster-move.md | TASK-82 monster velocity, pathers, the 77-point path (2026-11-08)
+- docs/probes/fid/fid-boss-mods.md | TASK-85 unique / champion / superunique mods re-run, Cold Enchanted chill length (2026-11-08)
