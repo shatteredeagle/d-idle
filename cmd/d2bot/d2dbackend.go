@@ -267,6 +267,9 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	bus := event.NewBus(instanceID(o), nil)
 	nv := be.Navigator()
 	ref := &runnerRef{}
+	if err := newInvDesk(ip.State(), disp, ref); err != nil {
+		return err
+	}
 	seams := d2dSeams // tests may preset single seams; the real stack fills the rest
 	charName := o.char
 	if charName == "" {
@@ -303,6 +306,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	installMercSeam(&seams)
 	fighter, town, loot := be.Behaviors(seams, nv)
 	deps.Fighter, deps.Town = fighter, town
+	deps.PlayerGear = playerGear(ref)
 	if loot != nil {
 		deps.Loot = loot
 	}
@@ -333,6 +337,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	o.ladder.knobs = knobSetter(tuner)
+	o.ladder.inv = invAPI(ref.inv)
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
 	o.ladder.riskFacts = runner.RiskFacts

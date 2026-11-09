@@ -139,6 +139,8 @@ type Fun struct {
 	Alerts *Alerts
 	// Pacts mounts the Pact routes (pactapi.go); set it before Serve, nil: no routes.
 	Pacts *PactAPI
+	// Inventory mounts the inventory page routes (invapi.go); set it before Serve, nil: no routes.
+	Inventory *InvAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 
@@ -641,6 +643,11 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 			m.Handle(p, f.Pacts.Handler())
 		}
 	}
+	if f.Inventory != nil {
+		for _, p := range InvRoutes {
+			m.Handle(p, f.Inventory.Handler())
+		}
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -680,6 +687,11 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	if f.Pacts != nil {
 		for _, p := range PactPostRoutes {
 			m.Handle(p, f.Pacts.PostHandler(o))
+		}
+	}
+	if f.Inventory != nil {
+		for _, p := range InvPostRoutes {
+			m.Handle(p, f.Inventory.PostHandler(o))
 		}
 	}
 	if f.Policy != nil {

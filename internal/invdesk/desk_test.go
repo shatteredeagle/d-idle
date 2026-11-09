@@ -1,0 +1,196 @@
+package invdesk
+
+import (
+	"context"
+	"errors"
+	"path/filepath"
+	"testing"
+
+	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/status"
+)
+
+// fakeEq is a class table: which item classes (unit Class numbers) each hero class may wear, and which slot they fit.
+type fakeEq struct {
+	class   d2.Class
+	allowed map[d2.Class]map[int]bool
+	slot    map[int]int
+	worn    []uint32
+	busy    bool
+}
+
+func (f *fakeEq) CheckPlayerEquip(s *d2.Snapshot, id uint32, body int) (string, error) {
+	for _, u := range s.Inventory.Items {
+		if u.ID != id {
+			continue
+		}
+		if !f.allowed[s.Player.Class][u.Class] {
+			return "thing", errors.New("restricted to another class")
+		}
+		if f.slot[u.Class] != body {
+			return "thing", errors.New("does not fit that slot")
+		}
+		return "thing", nil
+	}
+	return "", errors.New("not in the backpack")
+}
+
+func (f *fakeEq) PlayerEquip(ctx context.Context, id uint32, body int) error {
+	if f.busy {
+		return errors.New("leveler: a fight is on")
+	}
+	f.worn = append(f.worn, id)
+	return nil
+}
+
+func rig(t *testing.T, class d2.Class, area int) (*Desk, *fakeEq, *d2.Snapshot) {
+	t.Helper()
+	snap := &d2.Snapshot{Player: &d2.Player{Class: class, Area: area}, Inventory: &d2.Inventory{Items: []d2.Unit{
+		{ID: 1, Class: 10, Item: &d2.Item{Where: d2.ContInventory, Quality: 4, ILvl: 5}}, // a sword
+		{ID: 2, Class: 11, Item: &d2.Item{Where: d2.ContInventory, Quality: 2}},          // a wand-like item for casters
+		{ID: 3, Class: 12, Item: &d2.Item{Where: d2.ContStash}},                          // stash item
+		{ID: 4, Class: 99, Item: &d2.Item{Where: d2.ContInventory}},                      // quest-like item
+		{ID: 5, Class: 13, Item: &d2.Item{Where: d2.ContEquipment, Body: d2.BodyTorso}},  // worn armor
+	}}}
+	eq := &fakeEq{allowed: map[d2.Class]map[int]bool{
+		d2.Paladin:   {10: true},
+		d2.Sorceress: {11: true},
+	}, slot: map[int]int{10: d2.BodyRHand, 11: d2.BodyRHand}}
+	d, err := New(Config{
+		Path: filepath.Join(t.TempDir(), StateFile),
+		Snap: func() *d2.Snapshot { return snap },
+		Inventory: func() status.InventoryData {
+			return status.InventoryData{Inventory: []status.Item{{ID: 1, Code: "10"}, {ID: 2, Code: "11"}, {ID: 4}}}
+		},
+		SellBlock: func(u d2.Unit) string {
+			if u.Class == 99 {
+				return "quest item"
+			}
+			return ""
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	d.SetEquipper(eq)
+	return d, eq, snap
+}
+
+const town1, field = 1, 2 // Rogue Encampment, Blood Moor
+
+func TestMarksAndRefusals(t *testing.T) {
+	d, _, _ := rig(t, d2.Paladin, town1)
+	u1 := d2.Unit{ID: 1, Class: 10, Item: &d2.Item{Quality: 4, ILvl: 5}}
+	if err := d.SetMark(1, MarkSell); err != nil {
+		t.Fatal(err)
+	}
+	if got := d.MarkOf(u1); got != MarkSell {
+		t.Errorf("mark %q", got)
+	}
+	// a reused id of another item does not inherit the mark
+	if got := d.MarkOf(d2.Unit{ID: 1, Class: 77, Item: &d2.Item{}}); got != "" {
+		t.Errorf("foreign item got mark %q", got)
+	}
+	for _, c := range []struct {
+		id   uint32
+		mark string
+		kind string
+	}{{3, MarkSell, "place"}, {4, MarkSell, "never"}, {1, "dump", "mark"}, {42, MarkKeep, "item"}} {
+		err := d.SetMark(c.id, c.mark)
+		var r *Refusal
+		if !errors.As(err, &r) || r.Kind() != c.kind {
+			t.Errorf("SetMark(%d,%q) = %v, want refusal %s", c.id, c.mark, err, c.kind)
+		}
+	}
+	if err := d.SetMark(3, MarkKeep); err != nil { // keep works anywhere
+		t.Error(err)
+	}
+	if err := d.SetMark(1, ""); err != nil || d.MarkOf(u1) != "" {
+		t.Errorf("clear: %v", err)
+	}
+}
+
+func TestEquipRequestPinsAndOnlyUnpinEnds(t *testing.T) {
+	for _, c := range []struct {
+		class     d2.Class
+		good, bad uint32
+	}{{d2.Paladin, 1, 2}, {d2.Sorceress, 2, 1}} {
+		t.Run(c.class.String(), func(t *testing.T) {
+			d, eq, _ := rig(t, c.class, town1)
+			var r *Refusal
+			if _, err := d.RequestEquip(c.bad, "rhand"); !errors.As(err, &r) || r.Kind() != "requirements" {
+				t.Fatalf("other class's item: %v", err)
+			}
+			if _, err := d.RequestEquip(c.good, "head"); !errors.As(err, &r) || r.Kind() != "requirements" {
+				t.Fatalf("wrong slot: %v", err)
+			}
+			if _, err := d.RequestEquip(c.good, "elbow"); !errors.As(err, &r) || r.Kind() != "slot" {
+				t.Fatalf("unknown slot: %v", err)
+			}
+			if _, err := d.RequestEquip(3, "rhand"); !errors.As(err, &r) || r.Kind() != "place" {
+				t.Fatalf("stash item: %v", err)
+			}
+			if _, err := d.RequestEquip(c.good, "rhand"); err != nil {
+				t.Fatal(err)
+			}
+			if d.Pending() != 1 || d.Pinned(d2.BodyRHand) {
+				t.Fatal("queued but not yet pinned")
+			}
+			if lines := d.RunPending(context.Background()); len(lines) != 1 || len(eq.worn) != 1 || eq.worn[0] != c.good {
+				t.Fatalf("run: %v worn %v", lines, eq.worn)
+			}
+			if !d.Pinned(d2.BodyRHand) || d.Pending() != 0 {
+				t.Fatal("slot not pinned after the equip")
+			}
+			// a pin never expires by itself: more queue runs, reloads and views leave it
+			d.RunPending(context.Background())
+			d2x, err := New(Config{Path: d.c.Path})
+			if err != nil || !d2x.Pinned(d2.BodyRHand) {
+				t.Fatalf("pin lost on reload: %v", err)
+			}
+			if err := d.Unpin("lhand"); !errors.As(err, &r) || r.Kind() != "pin" {
+				t.Errorf("unpin of a free slot: %v", err)
+			}
+			if err := d.Unpin("rhand"); err != nil || d.Pinned(d2.BodyRHand) {
+				t.Errorf("unpin: %v", err)
+			}
+		})
+	}
+}
+
+func TestEquipRefusedOutsideTownAndFailureDoesNotPin(t *testing.T) {
+	d, eq, snap := rig(t, d2.Paladin, field)
+	var r *Refusal
+	if _, err := d.RequestEquip(1, "rhand"); !errors.As(err, &r) || r.Kind() != "town" {
+		t.Fatalf("field: %v", err)
+	}
+	snap.Player.Area = town1
+	if _, err := d.RequestEquip(1, "rhand"); err != nil {
+		t.Fatal(err)
+	}
+	eq.busy = true // a fight: the request waits, nothing pinned
+	if lines := d.RunPending(context.Background()); len(lines) != 1 || d.Pending() != 1 || d.Pinned(d2.BodyRHand) {
+		t.Fatalf("busy: %v pending %d", lines, d.Pending())
+	}
+	eq.busy = false
+	if len(d.RunPending(context.Background())) != 1 || !d.Pinned(d2.BodyRHand) {
+		t.Fatal("retry did not equip")
+	}
+}
+
+func TestViewListsMarksPinsAndWearableSlots(t *testing.T) {
+	d, _, _ := rig(t, d2.Sorceress, town1)
+	if err := d.SetMark(2, MarkKeep); err != nil {
+		t.Fatal(err)
+	}
+	v := d.View()
+	if !v.InTown || v.Class != "Sorceress" || len(v.Backpack) != 3 {
+		t.Fatalf("view %+v", v)
+	}
+	if v.Backpack[1].Mark != MarkKeep || len(v.Backpack[1].CanWear) != 1 || v.Backpack[1].CanWear[0] != "rhand" {
+		t.Errorf("item 2: %+v", v.Backpack[1])
+	}
+	if len(v.Backpack[0].CanWear) != 0 {
+		t.Errorf("a Sorceress may not wear item 1: %+v", v.Backpack[0].CanWear)
+	}
+}
