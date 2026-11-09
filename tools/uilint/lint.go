@@ -464,9 +464,9 @@ func (l *Linter) lintManifests(files []string) {
 			if !contains(list, m.ID) {
 				l.add(f, 1, "manifest-band", "%s is not a %s panel in shell.json", m.ID, m.Band)
 			}
-		case "grid":
+		case "grid", "side":
 		default:
-			l.add(f, 1, "manifest-band", "band %q (status, stage or grid)", m.Band)
+			l.add(f, 1, "manifest-band", "band %q (status, stage, side or grid)", m.Band)
 		}
 		if p := *m.Priority; p < 0 || p > 999 {
 			l.add(f, 1, "manifest-priority", "priority %d outside 0 to 999", p)

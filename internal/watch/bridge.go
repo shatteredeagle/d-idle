@@ -146,7 +146,8 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 // is still being counted, which only a kill ends.
 func (g *GoalsOrders) OnStatus(st goals.Status) {
 	c := st.Character
-	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: c.XP, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity})
+	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: c.XP, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity,
+		Name: c.Name, Difficulty: c.Difficulty, XPNext: c.XPNext, Life: c.Life, MaxLife: c.MaxLife, Mana: c.Mana, MaxMana: c.MaxMana})
 	g.mu.Lock()
 	lost := g.lost
 	g.mu.Unlock()

@@ -29,7 +29,7 @@
   .d-meter { display: grid; grid-template-columns: minmax(4ch, auto) 1fr auto; gap: var(--d-sp-2); align-items: center; font-size: var(--d-fs-1); min-inline-size: 0; }
   .d-meter .lbl { color: var(--d-text-2); white-space: nowrap; }
   .d-meter .track { block-size: 10px; background: var(--d-surface-2); border-radius: var(--d-r-round); border: var(--d-bw) solid var(--d-line); overflow: hidden; }
-  .d-meter .fill { display: block; block-size: 100%; inline-size: 0; background: var(--d-accent); border-radius: var(--d-r-round); transition: inline-size var(--d-dur-2) var(--d-ease); }
+  .d-meter .fill { display: block; block-size: 100%; inline-size: var(--fill, 0%); background: var(--d-accent); border-radius: var(--d-r-round); transition: inline-size var(--d-dur-2) var(--d-ease); }
   .d-meter .num { font-family: var(--d-font-num); font-variant-numeric: tabular-nums; min-inline-size: var(--w, 5ch); text-align: end; }
   .d-meter[data-kind="life"] .fill { background: var(--d-life); }
   .d-meter[data-kind="mana"] .fill { background: var(--d-mana); }

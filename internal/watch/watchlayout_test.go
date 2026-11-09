@@ -88,18 +88,20 @@ func TestMapPanelStitchedWorldAndNeighbourCache(t *testing.T) {
 }
 
 // Unplaced cards must not fall into single columns of the 12-column grid (they were ~90 px wide). The stage band
-// keeps the picture a glance: at most three columns, centred.
+// fills the left 7 of 12 columns and the command centre the right 5 (user layout feedback 2026-11-09).
 func TestWatchCSSPanelsAndStageSize(t *testing.T) {
 	b, err := os.ReadFile("web/app.css")
 	if err != nil {
 		t.Fatal(err)
 	}
 	css := string(b)
-	if !strings.Contains(css, ":where(main) > .card { grid-column: span 6; }") {
-		t.Error("app.css lacks the two-per-row default")
+	for _, want := range []string{".d-compat, .d-compat > main { display: contents; }", ".d-compat > main > .card { grid-column: span 1; }"} {
+		if !strings.Contains(css, want) {
+			t.Errorf("app.css lacks %q (the old cards are cells of the shell grid)", want)
+		}
 	}
-	if strings.Index(css, ":where(main) > .card") > strings.Index(css, ".rules { grid-column: 1 / 6; }") {
-		t.Error("the default two-per-row rule must come before the placed cards")
+	if strings.Contains(css, "repeat(12, 1fr)") {
+		t.Error("the old 12-column main grid is back")
 	}
 	for _, gone := range []string{".gamerow", ".videotop", ".sensespanel", ".whyline"} {
 		if strings.Contains(css, gone) {
@@ -107,7 +109,7 @@ func TestWatchCSSPanelsAndStageSize(t *testing.T) {
 		}
 	}
 	sh, _ := os.ReadFile("web/shell.css")
-	for _, want := range []string{"--d-stage-cols: min(var(--d-cols), 3)", "max-inline-size: 72rem", "grid-column: span min(2, var(--d-cols))"} {
+	for _, want := range []string{"grid-template-columns: minmax(0, 7fr) minmax(0, 5fr)", "grid-template-columns: minmax(0, 2fr) minmax(0, 1fr)", "grid-column: span min(2, var(--d-cols))"} {
 		if !strings.Contains(string(sh), want) {
 			t.Errorf("shell.css lacks %q", want)
 		}

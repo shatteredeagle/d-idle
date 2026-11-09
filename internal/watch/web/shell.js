@@ -4,7 +4,7 @@
 
 const SAFETY_POLL = 5000; // a missed SSE event costs at most this long
 const FAIL_WAIT = 4000;   // after a failed fetch
-const MAX_FAILS = 5;      // then the panel stops polling (route absent or the bot gone)
+const MAX_FAILS = 5;      // 404 or 401 this often in a row: the route is not mounted, stop polling it
 
 const html = document.documentElement;
 const qs = new URLSearchParams(location.search);
@@ -36,6 +36,46 @@ function setupTheme() {
   const mode = qs.get('mode');
   if (mode === 'overlay') html.dataset.mode = mode;
 }
+
+// ---- component factories (components.css): panels build their DOM with these and textContent only ----
+const ui = {
+  // a d-meter; set(pct, text, level) moves the fill through a custom property (allowed under style-src 'self')
+  meter(kind, label) {
+    const m = el('div', 'd-meter');
+    m.dataset.kind = kind;
+    m.setAttribute('role', 'meter');
+    m.setAttribute('aria-valuemin', '0');
+    m.setAttribute('aria-valuemax', '100');
+    m.setAttribute('aria-label', label);
+    const track = el('span', 'track'), fill = el('span', 'fill'), num = el('span', 'num');
+    track.appendChild(fill);
+    m.append(el('span', 'lbl', label), track, num);
+    return {
+      root: m,
+      set(pct, text, level) {
+        const p = Math.max(0, Math.min(100, pct || 0));
+        fill.style.setProperty('--fill', p + '%');
+        m.setAttribute('aria-valuenow', String(Math.round(p)));
+        num.textContent = text;
+        if (level) m.dataset.level = level; else delete m.dataset.level;
+      },
+    };
+  },
+  chip(text, level) { const c = el('span', 'd-chip', text); if (level) c.dataset.level = level; return c; },
+  badge(text, tone) { const b = el('span', 'd-badge', text); if (tone) b.dataset.tone = tone; return b; },
+  btn(text, opts) {
+    const b = el('button', 'd-btn', text);
+    b.type = 'button';
+    Object.assign(b.dataset, opts || {});
+    return b;
+  },
+  stat(label) {
+    const s = el('div', 'd-stat'), val = el('span', 'val'), delta = el('span', 'delta');
+    s.append(el('span', 'lbl', label), val, delta);
+    return { root: s, set(v, d) { val.textContent = v; delta.textContent = d || ''; } };
+  },
+  clear(n) { while (n.firstChild) n.removeChild(n.firstChild); },
+};
 
 // ---- toasts ----
 function toast(sev, text) {
@@ -104,7 +144,7 @@ function place(bands, m, root) {
 
 // A band with no visible panel is hidden (the stage disappears when there is neither video nor map).
 function syncBand(band) {
-  if (!band || !band.matches('.d-band-stage')) return;
+  if (!band || !band.matches('.d-band-stage, .d-band-side')) return;
   band.hidden = !band.querySelector(':scope > .d-panel:not([hidden])');
 }
 
@@ -142,11 +182,12 @@ function makeScheduler() {
     }).catch((e) => {
       s.fails++;
       if (s.api.update) keepFocus(s.root, () => s.api.update(null, { status: e.status || 0, fails: s.fails }));
-      if (s.fails >= MAX_FAILS) s.stopped = true;
+      // a route that is not mounted stops polling; anything else (503 while the bot starts, a network blip) retries slower
+      if (s.fails >= MAX_FAILS && (e.status === 404 || e.status === 401)) s.stopped = true;
     }).then(() => {
       s.inflight = false;
       const p = s.m.poll > 0 ? s.m.poll * 1000 : SAFETY_POLL;
-      s.next = performance.now() + (s.fails ? Math.max(p, FAIL_WAIT) : p);
+      s.next = performance.now() + (s.fails ? Math.min(30000, Math.max(p, FAIL_WAIT * s.fails)) : p);
       syncBand(s.root.parentElement);
     });
   }
@@ -175,7 +216,7 @@ function makeCtx(m, parts, cfg, answerBase, timers) {
   return {
     id: m.id, config: cfg, token: qs.get('t') || '',
     body: parts.body, meta: parts.meta, actions: parts.actions,
-    el, store, toast,
+    el, ui, store, toast,
     hide(on) { parts.root.hidden = !!on; syncBand(parts.root.parentElement); },
     state(st) { parts.root.dataset.state = st; },
     later(fn, ms) { const t = setTimeout(() => { timers.delete(t); fn(); }, ms); timers.add(t); return t; },

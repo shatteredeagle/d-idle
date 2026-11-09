@@ -107,7 +107,7 @@ func TestEveryRuleFires(t *testing.T) {
 		{"manifest-size", "panels/probe/panel.json", strings.Replace(goodManifest, `"maxSize":"m"`, `"maxSize":"x"`, 1)},
 		{"manifest-size", "panels/probe/panel.json", strings.Replace(goodManifest, `"minSize":"s"`, `"minSize":"l"`, 1)},
 		{"manifest-band", "panels/probe/panel.json", strings.Replace(goodManifest, `"band":"grid"`, `"band":"status"`, 1)},
-		{"manifest-band", "panels/probe/panel.json", strings.Replace(goodManifest, `"band":"grid"`, `"band":"side"`, 1)},
+		{"manifest-band", "panels/probe/panel.json", strings.Replace(goodManifest, `"band":"grid"`, `"band":"aside"`, 1)},
 		{"manifest-priority", "panels/probe/panel.json", strings.Replace(goodManifest, `"priority":10`, `"priority":1000`, 1)},
 		{"manifest-tab", "panels/probe/panel.json", strings.Replace(goodManifest, `"tab":"hero"`, `"tab":"misc"`, 1)},
 		{"manifest-endpoint", "panels/probe/panel.json", strings.Replace(goodManifest, `/api/probe`, `/watch/probe`, 1)},

@@ -1,0 +1,7 @@
+@layer panels {
+  [data-panel="activity"] .now { margin: 0; font: 650 var(--d-fs-4)/var(--d-lh-tight) var(--d-font-display); color: var(--d-text); overflow-wrap: anywhere; }
+  [data-panel="activity"] .goal { display: grid; gap: var(--d-sp-1); padding: var(--d-sp-2) var(--d-sp-3); background: var(--d-surface-2); border-radius: var(--d-r-2); border-inline-start: 3px solid var(--d-accent); }
+  [data-panel="activity"] .gtext { margin: 0; font-weight: 650; }
+  [data-panel="activity"] .d-hint { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-1); }
+  [data-panel="activity"] .sub { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-0); text-transform: uppercase; letter-spacing: .06em; }
+}

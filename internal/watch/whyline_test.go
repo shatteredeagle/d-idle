@@ -176,25 +176,24 @@ func TestWhylineAPIGolden(t *testing.T) {
 	}
 }
 
-// The line is a status-band panel of its own row (size l), a polite status region (web/panels/whyline).
-func TestWhylinePanelInTheStatusBand(t *testing.T) {
+// The reason is the Why card of the command centre (side band, /api/hero), no longer a line in the top band.
+func TestWhyCardInTheCommandCentre(t *testing.T) {
 	ms, err := Manifests()
 	if err != nil {
 		t.Fatal(err)
 	}
-	var found bool
 	for _, m := range ms {
-		if m.ID == "whyline" {
-			found = m.Band == "status" && m.Size == "l" && m.Endpoint == WhylineRoute
+		if m.Band == "status" && m.ID != "hero-status" {
+			t.Errorf("%s in the top band", m.ID)
+		}
+		if m.ID == "why" && (m.Band != "side" || m.Endpoint != HeroRoute) {
+			t.Errorf("why: band %s endpoint %s", m.Band, m.Endpoint)
 		}
 	}
-	if !found {
-		t.Error("whyline must be a size-l status panel on " + WhylineRoute)
-	}
-	js, _ := os.ReadFile("web/panels/whyline/panel.js")
-	for _, want := range []string{"'role', 'status'", "'aria-live', 'polite'", "textContent"} {
+	js, _ := os.ReadFile("web/panels/why/panel.js")
+	for _, want := range []string{"'Would change it'", "textContent"} {
 		if !strings.Contains(string(js), want) {
-			t.Errorf("whyline panel lacks %s", want)
+			t.Errorf("why panel lacks %s", want)
 		}
 	}
 }

@@ -397,7 +397,7 @@
 
   // ---- Currencies (d.idle mode only): header strip and the spend sheet shell. Nothing here buys anything yet. ----
   function renderCurrency(c) {
-    var strip = $('curstrip'); clear(strip);
+    var strip = $('curstrip') || el('div'); clear(strip); // the strip moved into the currency panel (side band)
     strip.hidden = false; $('tab-spend').hidden = !c.enabled; $('spendpane').hidden = !c.enabled;
     if (!c.enabled) { strip.appendChild(el('span', 'off', c.text)); return; }
     if (c.error) strip.appendChild(el('span', 'off', c.error));
@@ -426,7 +426,7 @@
 
   // The tally strip (TASK-129): one line from /api/tally, hidden while the route is missing or tally is off.
   function renderTally(t) {
-    var box = $('tallystrip'); clear(box);
+    var box = $('tallystrip') || el('div'); clear(box); // the strip moved into the tally panel (side band)
     $('returnlink').hidden = !t; // the route exists only where the bot mounts the return screen
     box.hidden = !t || !t.enabled;
     if (box.hidden) return;
