@@ -1,3 +1,0 @@
-BACKLOG: TASK-230 uishell1: watch UI design tokens (dark default, dense), cascade layers, 12 components, tools/uilint in check.sh
-INDEX: tools/uilint: the watch UI panel-contract linter (docs/ui-regression-plan.md section 2); allow-list in tools/uilint/allow.txt
-CHANGELOG: Watch screen: dark Diablo II theme is the default (light and auto stay on the theme button), denser spacing; new design tokens and components under the hood
