@@ -106,12 +106,12 @@ func TestWatchCSSPanelsAndVideoSize(t *testing.T) {
 		t.Fatal(err)
 	}
 	css := string(b)
-	for _, want := range []string{":where(main) > .card { grid-column: 1 / -1; }", ".gamerow #frame { flex: 0 1 440px;", ".videotop { width: calc(100% - 32px); max-width: 840px;"} {
+	for _, want := range []string{":where(main) > .card { grid-column: span 6; }", ".gamerow #frame { flex: 0 1 440px;", ".videotop { width: calc(100% - 32px); max-width: 840px;"} {
 		if !strings.Contains(css, want) {
 			t.Errorf("app.css lacks %q", want)
 		}
 	}
 	if strings.Index(css, ":where(main) > .card") > strings.Index(css, ".rules { grid-column: 1 / 6; }") {
-		t.Error("the default full-row rule must come before the placed cards")
+		t.Error("the default two-per-row rule must come before the placed cards")
 	}
 }

@@ -72,7 +72,7 @@ main .spend[hidden] { display: none !important; }
   main { grid-template-columns: repeat(12, 1fr); }
   .o-map { grid-column: 1 / 6; grid-row: 1 / 4; } .o-now { grid-column: 6 / 13; grid-row: 1; } .o-queue { grid-column: 6 / 13; grid-row: 2; }
   .thoughts { grid-column: 6 / 10; grid-row: 3; }
-  :where(main) > .card { grid-column: 1 / -1; } /* panels without a placement below (chronicle, diary, quests, atlas, alerts ...) get a full row, not one of 12 columns */
+  :where(main) > .card { grid-column: span 6; } /* panels without a placement below (chronicle, diary, quests, atlas, alerts ...) sit two per row, not one of 12 columns */
   .rules { grid-column: 1 / 6; } .journal { grid-column: 6 / 13; } .spend { grid-column: 1 / 13; }
 }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
