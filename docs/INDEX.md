@@ -888,3 +888,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/inventory-ui.md - inventory page on the watch screen: marks, player equip, pins (TASK-212)
 - docs/research/player-power.md - player power vs area danger: no single number exists; community checklists; proposed per-threat readiness check (agent powerres, 2026-11-09)
 - docs/repair.md - manual gear repair, Repair now, repair modes on the unlock ladder (TASK-226)
+- docs/desktop-app.md - desktop launcher for the watch page: stack decision, same-origin rule, build and test (area: watch)
