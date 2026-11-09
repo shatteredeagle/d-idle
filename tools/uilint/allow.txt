@@ -6,7 +6,6 @@ app.css css-no-colour-literal
 app.css css-no-id
 app.css css-no-important
 app.js js-no-inline-style
-gear.js js-no-inline-style
 update.js js-no-inline-style
 go:invui.go html-no-style-element
 go:pactui.go html-no-style-element
