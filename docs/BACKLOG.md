@@ -654,6 +654,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-216..TASK-224 (Proposed): readiness cards ready-audit, ready-area-table, ready-model, ready-wire-gates, ready-meter, ready-whyline, ready-bossrows, ready-policy, ready-calibrate (TASK-214 follow-ups, docs/research/player-power.md Part 3.4)
 - TASK-215 watch: unplaced panels two per row (were 90 px columns), game video at half size with minimap beside it
 - repairmanual (TASK-226): repair is manual by default (Repair now), durability on the inventory page and a gear strip on /watch, policy row repair with four unlockable modes (docs/repair.md)
+- TASK-225 watch: Rules, Still locked, Cain's notes and Waypoint atlas cards fold by title click (discovery cards start folded at 900 px and wider)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

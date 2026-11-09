@@ -1,2 +1,0 @@
-BACKLOG: TASK-225 watch: Rules, Still locked, Cain's notes and Waypoint atlas cards fold by title click (discovery cards start folded at 900 px and wider)
-CHANGELOG: /watch: collapsible Rules, Still locked, Cain's notes and Waypoint atlas cards
