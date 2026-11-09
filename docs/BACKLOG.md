@@ -652,6 +652,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - walksmooth3 (TASK-211): d2dview mux batches pipelined bot reads (snapshot 170 ms to 15 ms), d2d skips the left-skill popup for the basic attack
 - TASK-214 powerres: player power vs area danger research doc (repo audit, community survey, readiness-check proposal with 9 proposed cards)
 - TASK-216..TASK-224 (Proposed): readiness cards ready-audit, ready-area-table, ready-model, ready-wire-gates, ready-meter, ready-whyline, ready-bossrows, ready-policy, ready-calibrate (TASK-214 follow-ups, docs/research/player-power.md Part 3.4)
+- TASK-215 watch: unplaced panels two per row (were 90 px columns), game video at half size with minimap beside it
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
