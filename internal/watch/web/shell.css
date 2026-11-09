@@ -22,6 +22,8 @@
   .d-brand-mark { inline-size: 12px; block-size: 12px; background: var(--d-accent); transform: rotate(45deg); border-radius: 2px; }
   .d-links { display: flex; flex-wrap: wrap; justify-content: end; align-items: center; gap: var(--d-sp-2); }
   .d-panel { min-inline-size: 0; container: panel / inline-size; }
+  /* an inline-size container has no content width of its own, so a status-band panel grows into the free space */
+  .d-band-main > .d-panel { flex: 1 1 auto; }
   .d-panel[hidden] { display: none; }
 
   /* stage band: video and map, at most three columns wide so the picture stays a glance, centred */

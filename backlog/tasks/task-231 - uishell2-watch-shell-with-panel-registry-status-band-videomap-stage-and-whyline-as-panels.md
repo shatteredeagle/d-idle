@@ -18,6 +18,7 @@ owns:
   - "internal/watch/web/shell.css"
   - "internal/watch/web/shell.js"
   - "internal/watch/web/shell.json"
+  - "internal/watch/web/utilities.css"
   - "internal/watch/web/panels/"
   - "internal/watch/panels.go"
   - "internal/watch/panels_test.go"
