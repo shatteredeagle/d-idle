@@ -1,10 +1,13 @@
 ---
 id: TASK-236
-title: 'uicompat: watch UI compatibility promise, manifest version, golden compatibility fixtures'
-status: In Progress
+title: >-
+  uicompat: watch UI compatibility promise, manifest version, golden
+  compatibility fixtures
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T20:58:00Z'
+updated_date: '2026-11-09T21:14:00Z'
 labels:
   - watch
   - feature
