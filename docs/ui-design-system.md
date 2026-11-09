@@ -262,6 +262,44 @@ May not: write to any element outside its root; use `document.querySelector` (th
 
 The DOM the shell and the components produce is the test surface and the hook for screenshots and golden files: `data-panel`, `data-size`, `data-state`, `data-tab`, `data-sev`, `data-tone`, `data-kind`, `data-level`, `data-changed`, `data-key` (stable identity of a row or button for focus keeping and goldens). Classes are for styling only and may change; data attributes are a contract and change only with a schema bump in the manifest `schema`.
 
+### 6.4 Layout manifest (`watch.layout/1`)
+
+The panel manifest (6.1) says what a panel is; the layout manifest says where it sits. It is optional: without one the shell places panels by band, priority and size class (4.3). With one, the shell uses the explicit grid positions below and the manifest priorities only for panels the layout does not mention (they are packed after the placed ones). User request 2026-11-09: the same file is produced by the draggable editor [mockups/ui/editor.html](mockups/ui/editor.html) ("Export JSON" / "Copy layout JSON"), so a layout designed on the mockup is the layout the real shell loads (migration PR 14 in [ui-regression-plan.md](ui-regression-plan.md)).
+
+```json
+{
+  "schema": "watch.layout/1",
+  "cols": 12,
+  "rowHeight": 48,
+  "density": "dense",
+  "theme": "dark",
+  "breakpoints": {
+    "wide": { "width": 1920, "cols": 12, "panels": [
+      { "id": "video", "band": "stage", "col": 1, "row": 1, "colSpan": 7, "rowSpan": 10, "collapsed": false, "order": 0 },
+      { "id": "hero-status", "band": "status", "col": 8, "row": 1, "colSpan": 5, "rowSpan": 3, "collapsed": false, "order": 1 }
+    ] },
+    "laptop": { "width": 1280, "cols": 12, "panels": [] },
+    "tablet": { "width": 768, "cols": 12, "panels": [] },
+    "phone": { "width": 390, "cols": 12, "panels": [] },
+    "overlay": { "width": 1920, "cols": 12, "panels": [] }
+  }
+}
+```
+
+| Key | Meaning | Rule |
+|---|---|---|
+| `schema` | `watch.layout/1` | the shell refuses another value |
+| `cols`, `rowHeight` | the grid: 12 columns everywhere; one row is 48 px (40 in overlay) plus the gap | fixed in v1; a breakpoint may override `cols` |
+| `density`, `theme` | the editor's toggles; the shell applies them as `data-density` and `data-theme` defaults, the user's own theme choice wins | optional |
+| `breakpoints.<name>` | `phone`, `tablet`, `laptop`, `wide`, `overlay`: the shell picks by the same media queries as 4.2; a missing breakpoint falls back to the next wider one, then to manifest placement | each has `width` (informative), `cols`, `panels` |
+| `panels[].id` | a panel manifest id | unknown ids are ignored with one console warning; `uilint` fails them |
+| `panels[].band` | `status`, `stage` or `grid` (copied from the panel manifest; informative, the position wins) | must equal the panel manifest's band |
+| `col`, `row`, `colSpan`, `rowSpan` | 1-based grid position and spans; `col + colSpan - 1 <= cols`; `rowSpan` is ignored for a collapsed panel (one row) | panels must not overlap within a breakpoint (`uilint`; the editor pushes an overlapping drop down) |
+| `collapsed` | header only | boolean |
+| `order` | reading and tab order, 0 first; the editor derives it from row then column | integers, unique within the breakpoint |
+
+The shell maps a position onto its own grid with `grid-column: col / span colSpan; grid-row: row / span rowSpan` on the panel root and `grid-auto-rows: rowHeight`; nothing inside a panel changes, which is why the editor can show the real sample cards. The editor keeps three presets (`mockup`, the layout of section 7; `live`, today's `app.css` placement; `command`, stage left with vitals, activity and goals in a right-hand column), autosaves to `localStorage`, imports and exports this file, and writes a text summary ("Hero vitals: cols 8-12, rows 1-3, right top") for chat.
+
 ## 7. Information hierarchy
 
 Level 1 (always visible, the `status` and `stage` bands): hero status tile (state word, area, life and mana meters, gear word), whyline ticker, alerts count, video, map. Level 2 (the `grid`, one tap on a phone): Hero now and the order map, Up next, Thoughts, condition (gear, tally and spend, risk), story (Chronicle, Journal, Diary, Voice), discovery (Quests, Find cards, Cain's notes, Atlas, Still locked), Rules, Alerts list. Pages: Inventory, Policy sheet, Return screen, Pacts, Hall, each a `d-shell` with the same status band and a `main` of cards.
