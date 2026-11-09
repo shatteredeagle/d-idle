@@ -97,3 +97,21 @@ func TestSensesJSStitchedWorldAndNeighbourCache(t *testing.T) {
 		t.Fatalf("%v\n%s", err, out)
 	}
 }
+
+// Unplaced cards must not fall into single columns of the 12-column grid (they were ~90 px wide), and the video
+// is about half size with the minimap beside it.
+func TestWatchCSSPanelsAndVideoSize(t *testing.T) {
+	b, err := os.ReadFile("web/app.css")
+	if err != nil {
+		t.Fatal(err)
+	}
+	css := string(b)
+	for _, want := range []string{":where(main) > .card { grid-column: 1 / -1; }", ".gamerow #frame { flex: 0 1 440px;", ".videotop { width: calc(100% - 32px); max-width: 840px;"} {
+		if !strings.Contains(css, want) {
+			t.Errorf("app.css lacks %q", want)
+		}
+	}
+	if strings.Index(css, ":where(main) > .card") > strings.Index(css, ".rules { grid-column: 1 / 6; }") {
+		t.Error("the default full-row rule must come before the placed cards")
+	}
+}

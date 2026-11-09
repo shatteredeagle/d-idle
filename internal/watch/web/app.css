@@ -72,6 +72,7 @@ main .spend[hidden] { display: none !important; }
   main { grid-template-columns: repeat(12, 1fr); }
   .o-map { grid-column: 1 / 6; grid-row: 1 / 4; } .o-now { grid-column: 6 / 13; grid-row: 1; } .o-queue { grid-column: 6 / 13; grid-row: 2; }
   .thoughts { grid-column: 6 / 10; grid-row: 3; }
+  :where(main) > .card { grid-column: 1 / -1; } /* panels without a placement below (chronicle, diary, quests, atlas, alerts ...) get a full row, not one of 12 columns */
   .rules { grid-column: 1 / 6; } .journal { grid-column: 6 / 13; } .spend { grid-column: 1 / 13; }
 }
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; box-shadow: var(--shadow); min-width: 0; }
@@ -168,11 +169,12 @@ svg.map { width: 100%; height: auto; display: block; }
 .spendrow button:disabled { opacity: .55; cursor: not-allowed; }
 
 .gamerow { display: flex; gap: 12px; align-items: flex-start; flex-wrap: wrap; }
-.videotop { width: calc(100% - 32px); max-width: 1248px; margin: 16px auto 0; box-sizing: border-box; }
+.videotop { width: calc(100% - 32px); max-width: 840px; margin: 16px auto 0; box-sizing: border-box; }
 .videotop[hidden] { display: none; }
 .videotop.collapsed .gamerow { display: none; }
 .videotop:fullscreen { max-width: none; margin: 0; overflow: auto; }
-.gamerow #frame { flex: 1 1 480px; min-width: 0; aspect-ratio: 4 / 3; }
+.videotop:fullscreen .gamerow #frame { flex: 0 1 440px; }
+.gamerow #frame { flex: 0 1 440px; min-width: 0; aspect-ratio: 4 / 3; }
 @media (max-width: 899px) { .gamerow { flex-direction: column; flex-wrap: nowrap; } .gamerow #frame { flex: none; width: 100%; } .sensespanel { width: 100%; box-sizing: border-box; } }
 .sensespanel { flex: 0 0 auto; background: var(--surface2); border: 1px solid var(--line); border-radius: var(--radius); padding: 8px; }
 .sensespanel h3 { margin: 0; font-size: .9rem; }
