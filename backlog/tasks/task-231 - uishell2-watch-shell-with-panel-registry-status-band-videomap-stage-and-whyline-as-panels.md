@@ -37,6 +37,7 @@ owns:
   - "docs/senses-map.md"
 exclusive: []
 contracts: []
+result: "Shell (shell.js/css, panels.json registry), status band (hero-status, whyline), stage (video, map) as panel modules; other cards unchanged in the compatibility slot; ?mode=overlay. Verified: go test ./internal/watch (manifests, routes, node tests of video and map panels), uilint, whole-repo vet+test on the worker host, sim viewer in Firefox on a private display. Preview deployed to the sandbox container; video and map not seen in a browser by the agent (the sim has neither). Build-specific: none."
 ---
 
 ## Description
@@ -49,9 +50,9 @@ Second migration step (docs/ui-regression-plan.md section 5, PR 4 and the status
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 shell.js places panels from /watch/panels.json (manifests embedded from web/panels/*/panel.json) into the status, stage and grid bands, with one fetch scheduler (SSE change plus per-panel polls), focus keeping and a ctx API
-- [ ] #2 the status band (hero status, links, theme), the video and map stage and the whyline are panel modules; the pre-shell markup and code for them are gone
-- [ ] #3 every other card works unchanged in the compatibility slot of the grid band (no endpoint or behaviour change)
-- [ ] #4 ?mode=overlay renders the status band alone (overlay is a mode of the shell)
-- [ ] #5 uilint passes, node tests of the video and map panels pass, preview deployed to the sandbox container
+- [x] #1 shell.js places panels from /watch/panels.json (manifests embedded from web/panels/*/panel.json) into the status, stage and grid bands, with one fetch scheduler (SSE change plus per-panel polls), focus keeping and a ctx API
+- [x] #2 the status band (hero status, links, theme), the video and map stage and the whyline are panel modules; the pre-shell markup and code for them are gone
+- [x] #3 every other card works unchanged in the compatibility slot of the grid band (no endpoint or behaviour change)
+- [x] #4 ?mode=overlay renders the status band alone (overlay is a mode of the shell)
+- [x] #5 uilint passes, node tests of the video and map panels pass, preview deployed to the sandbox container
 <!-- AC:END -->
