@@ -102,7 +102,7 @@ a { color: var(--accent-text); }
 .o-now .btn, .o-queue .btn, .o-map .btn, .sheet .btn, .chip { min-height: 44px; min-width: 44px; }
 .legend { display: flex; flex-wrap: wrap; gap: var(--d-sp-1) var(--d-sp-2); font-size: var(--d-fs-1); margin: var(--d-sp-1) 0 var(--d-sp-2); }
 .legend span { padding: 2px var(--d-sp-2); border: 1px solid var(--line); border-radius: var(--d-r-round); background: var(--surface2); white-space: nowrap; }
-svg.map { width: 100%; height: auto; display: block; }
+svg.map { width: 100%; height: auto; max-height: 30rem; display: block; }
 .edge { stroke: var(--line); stroke-width: 2; fill: none; } .edge.dg { stroke-dasharray: 4 4; }
 .node { cursor: pointer; }
 .node rect.b { fill: var(--surface2); stroke: var(--d-line-strong); stroke-width: 1.5; }
