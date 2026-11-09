@@ -71,6 +71,15 @@ func AttackChoice(in Input, t Tuning) AttackDecision {
 			return AttackDecision{Kind: Free, Skill: s, Reason: "free skill"}
 		}
 	}
+	// A melee class swings whatever the pack size: backing off from a pack it is built to fight in the middle of
+	// (live 2026-11-09: 18 back-off runs of ~40 s each at 14-120 hostiles, then it swung anyway) only loses time.
+	if in.MeleeClass && in.hasMelee() && in.LifePct() >= t.MeleeMinLifePct && in.PackDanger < 3 {
+		for _, s := range in.Skills {
+			if s.Melee {
+				return AttackDecision{Kind: Melee, Skill: s, Reason: "out of mana, melee class swings"}
+			}
+		}
+	}
 	if in.hasMelee() && in.LifePct() >= t.MeleeMinLifePct && (in.Hostiles <= in.meleePack(t) || in.weak()) && in.PackDanger < 2 {
 		for _, s := range in.Skills {
 			if s.Melee {
