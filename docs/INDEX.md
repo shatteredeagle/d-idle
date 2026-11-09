@@ -883,3 +883,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/fid/fid-monster-move.md | TASK-82 monster velocity, pathers, the 77-point path (2026-11-08)
 - docs/probes/fid/fid-boss-mods.md | TASK-85 unique / champion / superunique mods re-run, Cold Enchanted chill length (2026-11-08)
 - docs/probes/fid/fid-xp-award.md, fid-missile-monster.md, fid-boss-skills.md, fid-teleport.md - decomp7 oracle re-runs on upstream main 7557a54d (matrix rows ST10, MA10, MA06, SK-TELE)
+- docs/inventory-ui.md - inventory page on the watch screen: marks, player equip, pins (TASK-212)

@@ -1,3 +1,0 @@
-BACKLOG: TASK-212 invui: watch inventory page with sell/keep marks, player equip and permanent slot pins (offline-tested, not live); TASK-213 upgradeadvisor card (Proposed)
-INDEX: docs/inventory-ui.md - inventory page on the watch screen: marks, player equip, pins (TASK-212)
-CHANGELOG: Watch screen: inventory page with sell and keep marks, equip requests done in town, and slot pins the bot never undoes
