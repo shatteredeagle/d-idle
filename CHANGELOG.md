@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Paladin out of mana can fall back to the basic Attack swing again (the left popup cell for Attack was not found with the d2d skill dump)
 - Watch screen: inventory page with sell and keep marks, equip requests done in town, and slot pins the bot never undoes
 - Fidelity oracle docs for kill experience, Teleport, monster missiles and boss death/level (re-run on current upstream; no new d2d deviation proven, the refused-Teleport mana and the missile block gate stay open as read-only findings).
 - Fidelity oracle batch 2 on upstream main a5b970d5: missile, status, monster-move and boss-mod differentials; two local PR candidates (Lightning one unit a frame, Cold Enchanted chill length), nothing posted
