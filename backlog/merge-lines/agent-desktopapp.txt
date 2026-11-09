@@ -1,0 +1,3 @@
+BACKLOG: desktopapp: d2idle-watch desktop launcher (Go + Chromium app window, apps/desktop, TASK-227); real-browser check still open
+INDEX: docs/desktop-app.md - desktop launcher for the watch page: stack decision, same-origin rule, build and test (area: watch)
+CHANGELOG: New small desktop launcher (apps/desktop) that remembers the game address and opens the watch page in its own window; draft CI workflow, not run
