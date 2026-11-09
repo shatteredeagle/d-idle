@@ -89,6 +89,16 @@ func (r *Runner) gearStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 	if r.d.Gear == nil || !p.InTown() {
 		return false
 	}
+	if pg := r.d.PlayerGear; pg != nil && pg.Pending() > 0 {
+		// The player's own equips come first and ignore the check interval; the town is the calm point.
+		r.do(ctx, c, StateInTown, "Gear: player equip", sec(r.cfg.TownTimeoutSec), "gear", func(ctx context.Context) error {
+			for _, line := range pg.RunPending(ctx) {
+				r.e.Log.Info("player " + line)
+			}
+			return ctx.Err()
+		})
+		return true
+	}
 	t := r.e.Tune.Bot
 	now := r.e.Clock.Now()
 	if !l.gearAt.IsZero() && now.Sub(l.gearAt) < time.Duration(t.GearCheckSec)*time.Second {

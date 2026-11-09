@@ -68,6 +68,7 @@ type ladderOptions struct {
 	// proposals: the zone proposer's inputs (docs/proposezone.md), set by the backend from the runner and the tuning
 	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
 	proposalFacts func() watch.ProposalFacts
+	inv           *watch.InvAPI // the inventory page routes (invwire.go); nil: none
 	// riskFacts is the hero risk meter's reader (bot.Runner.RiskFacts); nil: no meter. monsters is the monster table
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
@@ -249,6 +250,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 			return nil, nil, err
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
+		rig.Fun.Inventory = l.inv
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}

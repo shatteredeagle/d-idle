@@ -28,13 +28,15 @@ type Deps struct {
 	Loot    Looter // nil: no pickup, no verdicts
 	Catalog Catalog
 	Plan    *Plan
-	Health  Health    // nil: game loss is inferred from unreadable memory
-	Cycler  Cycler    // nil: no fresh games, no re-entry after a chicken exit
-	Corpse  Corpse    // nil: click-the-spot default
-	Leveler Leveler   // nil: points are not spent
-	Gear    Gear      // nil: no equip, no gear shopping
-	Quester Quester   // nil: quest rewards are not claimed
-	Task    *TaskDeps // nil: campaign goals are refused at Start
+	Health  Health  // nil: game loss is inferred from unreadable memory
+	Cycler  Cycler  // nil: no fresh games, no re-entry after a chicken exit
+	Corpse  Corpse  // nil: click-the-spot default
+	Leveler Leveler // nil: points are not spent
+	Gear    Gear    // nil: no equip, no gear shopping
+	// PlayerGear runs the player's queued equips at the gear step (in town); nil: none.
+	PlayerGear PlayerGear
+	Quester    Quester   // nil: quest rewards are not claimed
+	Task       *TaskDeps // nil: campaign goals are refused at Start
 	// Prepare runs once, in a game with nothing hostile near, before the first goal action (hotkey binding). A failure is
 	// retried up to three times, then the bot carries on without.
 	Prepare func(ctx context.Context) error

@@ -124,6 +124,9 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	disp := newDisplay(cat)
 	bus := event.NewBus(instanceID(o), nil)
 	ref := &runnerRef{}
+	if err := newInvDesk(ip.State(), disp, ref); err != nil {
+		return err
+	}
 	bh, err := buildBehaviors(ctx, e, o, gameDir, db, charName, log, cfg, ref)
 	if err != nil {
 		return err
@@ -137,7 +140,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 			restart = func(ctx context.Context) error { return rc.Recycle(ctx, "failsafe restart") }
 		}
 	}
-	runner, err := bot.New(e, bot.Deps{Recycle: recycleDep(rc), RecycleDue: recycleDue(rc), Restart: restart, Mover: bh.Mover, Fighter: bh.Fighter, Town: bh.Town, Loot: bh.Loot, Cycler: bh.Cycler, Leveler: bh.Leveler, Gear: bh.Gear, Quester: bh.Quester, Task: bh.Task, SavedExp: savedExpDep(saveDirOf(ctx, o), charName), Prepare: bh.prepare, Catalog: cat,
+	runner, err := bot.New(e, bot.Deps{Recycle: recycleDep(rc), RecycleDue: recycleDue(rc), Restart: restart, Mover: bh.Mover, Fighter: bh.Fighter, Town: bh.Town, Loot: bh.Loot, Cycler: bh.Cycler, Leveler: bh.Leveler, Gear: bh.Gear, PlayerGear: playerGear(ref), Quester: bh.Quester, Task: bh.Task, SavedExp: savedExpDep(saveDirOf(ctx, o), charName), Prepare: bh.prepare, Catalog: cat,
 		Health: g.health, OnSnapshot: disp.OnSnapshot, Bus: bus}, cfg)
 	if err != nil {
 		return err
@@ -159,6 +162,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		return err
 	}
 	o.ladder.knobs = knobSetter(tuner)
+	o.ladder.inv = invAPI(ref.inv)
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
 	o.ladder.riskFacts = runner.RiskFacts

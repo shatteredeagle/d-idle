@@ -184,6 +184,12 @@ type Leveler interface {
 	Spend(ctx context.Context, snap *d2.Snapshot) error
 }
 
+// PlayerGear performs the equips the player queued on the watch screen (docs/inventory-ui.md); optional (Deps.PlayerGear).
+type PlayerGear interface {
+	Pending() int
+	RunPending(ctx context.Context) []string
+}
+
 // Gear equips and buys weapons and armor for the build. Optional. (leveler.Leveler through an adapter)
 type Gear interface {
 	// PendingSwaps is the pure check: how many equip swaps from the pack would Equip make?

@@ -15,6 +15,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/launch"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/leveler/townvendor"
@@ -26,7 +27,10 @@ import (
 var errNeedTables = errors.New("live play needs the game tables (data.Open failed): set --gamedir / D2BOT_GAMEDIR")
 
 // runnerRef lets the behaviors (built before the Runner) call into it: the leveler's Pause hook.
-type runnerRef struct{ p atomic.Pointer[bot.Runner] }
+type runnerRef struct {
+	p   atomic.Pointer[bot.Runner]
+	inv *invdesk.Desk // the inventory page desk (invwire.go); nil until newInvDesk
+}
 
 // beat stamps the runner's watchdog heartbeat (a finished sub-step of a long restart); no-op before the runner exists.
 func (r *runnerRef) beat() {
@@ -116,9 +120,10 @@ func buildBehaviors(ctx context.Context, e *env.Env, o options, gameDir string, 
 	br := newBossRunner(bg)
 	bh.Task.Boss = bossKill(br, e.Log.Info)
 	bh.Task.Farm = farmLoop(bg, br, e.Log.Info)
+	var lv *leveler.Leveler
 	if !cfg.NoLeveler {
 		// New attack skills need a hotkey: the fighter binds what it knows after every spend that learned a skill.
-		lv := leveler.New(e, leveler.Options{Build: cfg.LevelerBuild, PlanDir: cfg.PlanDir, Pause: ref.pause, Rebind: func(ctx context.Context) error {
+		lv = leveler.New(e, leveler.Options{Build: cfg.LevelerBuild, PlanDir: cfg.PlanDir, Pause: ref.pause, Pinned: ref.pinned, Rebind: func(ctx context.Context) error {
 			bctx, cancel := gclock.WithTimeout(ctx, 2*time.Minute)
 			defer cancel()
 			return cb.EnsureHotkeys(bctx)
@@ -127,6 +132,7 @@ func buildBehaviors(ctx context.Context, e *env.Env, o options, gameDir string, 
 		bh.Gear = gearAdapter{l: lv, v: townvendor.Vendor{T: tw}, e: e}
 		bh.Quester = questAdapter{t: tw, e: e}
 	}
+	wireInv(ref, tw, lt, lv, db)
 	return bh, nil
 }
 
