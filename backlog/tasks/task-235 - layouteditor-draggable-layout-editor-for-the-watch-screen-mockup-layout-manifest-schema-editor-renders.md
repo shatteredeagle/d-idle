@@ -1,11 +1,13 @@
 ---
 id: TASK-235
-title: 'layouteditor: draggable layout editor for the watch screen mockup, layout manifest schema, editor renders'
-status: Proposed
+title: >-
+  layouteditor: draggable layout editor for the watch screen mockup, layout
+  manifest schema, editor renders
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T20:24:00Z'
-updated_date: '2026-11-09T20:29:00Z'
+updated_date: '2026-11-09T20:39:00Z'
 labels:
   - watch
   - research
