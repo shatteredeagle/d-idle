@@ -1,3 +1,0 @@
-BACKLOG: repairmanual (TASK-226): repair is manual by default (Repair now), durability on the inventory page and a gear strip on /watch, policy row repair with four unlockable modes (docs/repair.md)
-INDEX: docs/repair.md - manual gear repair, Repair now, repair modes on the unlock ladder (TASK-226)
-CHANGELOG: The hero no longer repairs gear on its own by default: watch the gear condition on the inventory page and the watch screen and press Repair now; automatic repair modes are unlockable on the policy sheet.

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The hero no longer repairs gear on its own by default: watch the gear condition on the inventory page and the watch screen and press Repair now; automatic repair modes are unlockable on the policy sheet.
 - /watch panels no longer squeezed into narrow columns; the game video is half size with the minimap beside it
 - Research note on measuring player power against area danger and a proposed readiness check (docs/research/player-power.md)
 - Smoother walking and fighting: the container tap forwards a snapshot as one batch instead of ten round trips; out-of-mana melee heroes no longer stall trying to select the basic attack.
