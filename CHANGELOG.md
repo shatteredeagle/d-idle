@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- /watch panels no longer squeezed into narrow columns; the game video is half size with the minimap beside it
+- Research note on measuring player power against area danger and a proposed readiness check (docs/research/player-power.md)
 - Smoother walking and fighting: the container tap forwards a snapshot as one batch instead of ten round trips; out-of-mana melee heroes no longer stall trying to select the basic attack.
 - Paladin out of mana can fall back to the basic Attack swing again (the left popup cell for Attack was not found with the d2d skill dump)
 - Watch screen: inventory page with sell and keep marks, equip requests done in town, and slot pins the bot never undoes

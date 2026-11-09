@@ -1,10 +1,13 @@
 ---
 id: TASK-211
-title: 'walksmooth3: batch the bot reads in the d2dview mux, no left-skill popup on d2d'
-status: Proposed
+title: >-
+  walksmooth3: batch the bot reads in the d2dview mux, no left-skill popup on
+  d2d
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T13:52:00Z'
+updated_date: '2026-11-09T14:29:00Z'
 labels:
   - bot
   - bot-fix
