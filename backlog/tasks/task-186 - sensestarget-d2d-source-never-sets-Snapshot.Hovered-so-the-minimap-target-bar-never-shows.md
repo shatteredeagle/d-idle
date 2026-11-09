@@ -16,8 +16,12 @@ card: "sensestarget"
 owns:
   - "internal/d2dsrc"
   - "cmd/d2bot/sensesunits.go"
+  - "cmd/d2bot/sensesfeed.go"
+  - "internal/combat/fight.go"
+  - "internal/combat/fighter.go"
 exclusive: []
 contracts: []
+result: "Offline only. unitSource.Attacking (fed by combat.Fighter.Attacking) flags the attacked monster; d2d has per-monster HP (cur/max) so lifePct needs no fake. Not verified live: no live lockstep poll showing lifePct falling."
 ---
 
 ## Description
@@ -30,6 +34,6 @@ Live check of 2026-11-08 (docs/probes/panelslive.md, docs/panels-live.md): 169 u
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 On the d2d backend the monster the bot attacks is flagged Target in /api/senses (name and lifePct for a Codex-met class)
+- [x] #1 On the d2d backend the monster the bot attacks is flagged Target in /api/senses (name and lifePct for a Codex-met class)
 - [ ] #2 Test with two classes (Sorceress, Paladin) and a live lockstep poll shows lifePct falling during a fight
 <!-- AC:END -->

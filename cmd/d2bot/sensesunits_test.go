@@ -163,7 +163,7 @@ func TestSensesFeedUnitsThrottleAndRace(t *testing.T) {
 
 func TestUseSensesNoUnitsWithoutReader(t *testing.T) {
 	e := &env.Env{}
-	useSenses(&ladderRig{Senses: &senses.Publisher{}}, e, slog.Default())
+	useSenses(&ladderRig{Senses: &senses.Publisher{}}, e, nil, slog.Default())
 	if e.OnObserve == nil {
 		t.Fatal("hook not set")
 	}
@@ -192,6 +192,32 @@ func TestUnitSourceReusesTheWalkersSnapshot(t *testing.T) {
 		unitSource{Read: rf, Cat: unitCat(), ModName: modName}.Units()
 		if rf.reads != 1 {
 			t.Fatalf("%v: without a recent snapshot one fresh read is expected, got %d", class, rf.reads)
+		}
+	}
+}
+
+// TASK-186: d2d never sets Snapshot.Hovered; the fighter's attack target flags the unit instead.
+func TestUnitSourceAttackTarget(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		snap := snapOf(class, false, 0) // no hover, as on d2d
+		var att uint32
+		src := unitSource{Read: &fake.Reader{Snap: snap}, Cat: unitCat(), Attacking: func() uint32 { return att }}
+		for _, m := range src.Units() {
+			if m.Target {
+				t.Fatalf("%v: target flagged outside a fight: %+v", class, m)
+			}
+		}
+		att = 3
+		us := src.Units()
+		if u, _ := byID(us, 3); !u.Target || u.LifePct != 100 || u.Name == "" {
+			t.Fatalf("%v: attacked unit: %+v", class, u)
+		}
+		if u, _ := byID(us, 1); u.Target {
+			t.Fatalf("%v: other unit flagged: %+v", class, u)
+		}
+		att = 2 // an NPC id never becomes a target
+		if u, _ := byID(src.Units(), 2); u.Target {
+			t.Fatalf("%v: npc flagged: %+v", class, u)
 		}
 	}
 }

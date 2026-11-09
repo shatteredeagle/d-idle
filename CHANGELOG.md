@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Combat approach steps read the position only between full snapshots (faster short steps).
+- policy preview now has data: each fight records its lowest life percent and the away log keeps close and drop events across restarts (previewfeed)
 - The policy sheet shows a preview card ("if this had been on for the last hour...") with Save and Cancel before a row changes; rows without recorded evidence say so.
 - watch: a plain "why" line under the video says why the hero is doing what it does, with the last five reasons in the Chronicle
 - Fixed: the Paladin's stop-and-go travel (the bot read the game state three times over for every step); travel speed about doubled in the dev container

@@ -54,7 +54,9 @@ type stateSource interface {
 // drives the character, and nav is the one calling Tracker.Update.
 type Navigator struct {
 	// Trace turns on the "nav.trace" click-timing lines (trace.go): off in production, on in the dev image.
-	Trace               bool
+	Trace bool
+	// NoFastPoll turns off the position-only polls of GoTo walks (APPROACHFAST); a rollback knob and the test baseline.
+	NoFastPoll          bool
 	obsSnapMs, obsUpdMs int64        // cost of the last observe(), for the trace
 	gateRefused         atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
 	peakRung            atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
@@ -465,7 +467,7 @@ func emptyPathErr() error {
 // GoTo walks to p on the current level.
 func (n *Navigator) GoTo(ctx context.Context, p input.Point) error {
 	t := n.tune()
-	return n.walk(ctx, func(*obs) (input.Point, float64, error) { return p, t.ArriveTolerance, nil }, walkOpts{escape: true})
+	return n.walk(ctx, func(*obs) (input.Point, float64, error) { return p, t.ArriveTolerance, nil }, walkOpts{escape: true, fastPoll: true})
 }
 
 // unitTolerance is how close GoToUnit gets: inside interact range of NPCs and objects.

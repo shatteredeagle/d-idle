@@ -42,7 +42,7 @@ Counts carry the running total, so a repeated event can never count twice. Repla
 | `orderqueue3` | ui | Deckard Cain rescued (`search_for_cain` 3), or 75 tally | `docs/unlock-orderqueue.md` |
 | `senses_map` .. `senses_hero` | senses, tiers 1 to 7 | map: first area or level 2; dots, bars: first monster; elites: first champion or a named boss; loot (40 tally) and danger (80 tally) are bought; hero: level 12 or Andariel | `docs/senses-unlock.md` |
 | `pact_andariel_first_kill`, `pact_baal_normal` | pacts | the first Andariel kill; Baal killed on Normal | `docs/pact-ui.md` |
-| alerts | ui | not merged yet: no row in the table | (TASK for alerts) |
+| `alerts` | ui | bought with 60 tally (`tally_spend`) | `docs/unlock-alerts.md` |
 
 ## Wiring in the live bot (TASK-185, `cmd/d2bot/funwire.go`)
 

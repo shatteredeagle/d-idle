@@ -20,7 +20,9 @@ Table: `internal/decide/preview_rows.json` (one entry per policy row; a row with
 
 The `sell` row has no preview because no sell or gold event is recorded; the pickup list of `whites` is the nearest honest thing and its note says so.
 
-U, the main gap: nothing feeds `close` events to the away log yet (`AwayLog.OnGoalEvent` drops that type; the fight telemetry line `fight ... minlife=` of `internal/combat/dodge.go` is the source a wiring card would use). Until then the live stance preview answers "not enough events"; the numbers above are proven on fixtures only. The preview is built so that wiring the emitter is all that is missing.
+The feed (card previewfeed, V by `TestFightFeedToPolicyPreview`, `TestRealFightCallsOnFightOnce`, `TestAwaySpoolSurvivesRestart`, fixtures only): `combat.Fighter.OnFight` gets one `FightEnd` per finished fight (the data of the `fight ... minlife=` telemetry line; fights under `FightMinSec` (3) seconds with no damage are skipped, so at most one event per fight). `cmd/d2bot/previewfeed.go` turns it into an away-log event `{"kind":"close","lifePct":<lowest life percent>,"areaId":N,"area":"..","potions":N,"sec":N,"damage":N,"left":"chicken|portal|"}`; it is wired in both backends next to `useFun`. The class is not in the event: the sheet reads it from the hero. Pickups needed no new emitter: the existing `drop` goals events already reach the away log (`AwayLog.OnGoalEvent`, item name, quality, type). Close and drop events are also appended to `away-spool.jsonl` in the ladder state directory (`internal/watch/awayspool.go`: at most 24 h are read back at start and moved onto the new time base through a `wall` stamp; spooling stops at 1 MB until the next start), so "based on N events in the last X minutes" is real after a restart. The feed is passive: it reads telemetry the fighter already keeps and changes no decision, knob or gate.
+
+U, remaining: the page and the live preview were not run against a live bot; the d2d backend wiring is by construction (the same `combat.Fighter`), not run.
 
 ## Hide but log
 
@@ -38,4 +40,4 @@ Code: `internal/decide/preview.go` (pure `PreviewSpecs.Preview`), `internal/watc
 
 ## Built vs verified
 
-Built and tested offline: two classes (Paladin, Sorceress) with different stance numbers, known deltas from synthetic logs, empty history, unknown row, option and class, bounded list, a race test, the gates, golden JSON. NOT verified: the page in a browser (script parsed with `node` only), the preview on a live session (no emitter for `close` events yet), any causal reading.
+Built and tested offline: two classes (Paladin, Sorceress) with different stance numbers, known deltas from synthetic logs, empty history, unknown row, option and class, bounded list, a race test, the gates, golden JSON. NOT verified: the page in a browser (script parsed with `node` only), the preview on a live session (the emitter is built, only fixtures run it), any causal reading.

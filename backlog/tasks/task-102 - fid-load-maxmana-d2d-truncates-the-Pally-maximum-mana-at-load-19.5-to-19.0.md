@@ -20,7 +20,7 @@ owns:
   - "docs/research/fid-loadmaxmana-trace.md"
 exclusive: []
 contracts: []
-result: "NO DEVIATION in d2d (2026-11-08, agent decomp5): d2d holds the Paladin max mana 4992 (19.5) after World::enter and update_fighters (test_game --load-d2s on upstream 1453f853 and e36922ea, V run); the 19.0 was the bot reader (internal/d2dsrc/player.go:215, whole points << 8). Trace docs/research/fid-loadmaxmana-trace.md. No PR candidate. AC boxes stay open: there is no d2d cause. Offline, nothing live."
+result: "NO DEVIATION in d2d (2026-11-08, agent decomp5): d2d holds the Paladin max mana 4992 (19.5) after World::enter and update_fighters (test_game --load-d2s on upstream 1453f853 and e36922ea, V run); the 19.0 was the bot reader (internal/d2dsrc/player.go:215, whole points << 8). Trace docs/research/fid-loadmaxmana-trace.md. No PR candidate. AC boxes stay open: there is no d2d cause. Offline, nothing live. Status sync (stays open): AC #1 to #3 have no d2d cause; follow-up is the bot reader card d2dsrcmana."
 ---
 
 ## Description

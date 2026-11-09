@@ -164,11 +164,15 @@ func (f *Fighter) Kill(ctx context.Context, unitID uint32) error {
 	return nil
 }
 
+// Attacking is the unit id the fighter is engaging now, 0 outside a fight. Safe from other goroutines (the senses feed).
+func (f *Fighter) Attacking() uint32 { return f.attacking.Load() }
+
 // noProgressMax is how many fight-loop iterations may pass without the clock moving before the loop forces a sleep.
 const noProgressMax = 40
 
 func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (res ClearResult, err error) {
 	start := f.now()
+	defer f.attacking.Store(0)
 	var ft FightTelemetry
 	var st *fightState
 	defer func() { // runs after the Elapsed defer below
@@ -178,6 +182,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			ft.Novas, ft.Forced = st.novas, st.forced
 			f.info(ft.Finish(res))
 			f.addFight(&ft, st, res)
+			f.noteFightEnd(&ft, res, err)
 		}
 	}()
 	defer func() { res.Elapsed = f.now().Sub(start) }()
@@ -361,6 +366,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		tg := ranked[0]
 		f.refineResists(&tg, p.Difficulty)
+		f.attacking.Store(tg.Unit.ID)
 		if err = f.engage(ctx, snap, tg, sp, st); err != nil {
 			return
 		}

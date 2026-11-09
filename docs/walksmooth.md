@@ -50,3 +50,25 @@ Observe 400 ms instead of 850 (snapcallers: the minimap reader is gone, the guar
 ### Left over (not fixed here)
 - Fork evidence: d2d answers one channel line per frame (16.6 ms each) even for a pipelined batch; a pump that dispatches every complete line per frame would make a snapshot about 17 ms instead of 170 ms. Card for the fork (no upstream posting): `Channel::pump` dispatch all complete lines per frame in realtime (the lab4 build did it for lockstep only, docs/d2d-pace.md).
 - Short walks (one waypoint, 5 subtiles) cost about 2 s each: observe, plan, click, observe. Combat approach steps call `GoTo` once per step; a cheaper position-only poll during a walk (one `debug players` instead of a snapshot) would cut the poll to 17 ms. Not done: the guard and the monster signature need the snapshot.
+
+## approachfast (TASK-209, 2026-11-08): position-only polls inside GoTo walks
+Tags: V = measured in the dev container (hero Doofer), S = read in code, U = unverified.
+
+### Before (V, 60 minutes of `nav.trace leg` lines, after the walksmooth2 deploy; 476 legs)
+- Combat legs shorter than 10 subtiles (28): median 1.08 s, mean 1.49 s, 2.7 polls, observe mean 218 ms, so about 0.6 s of a 1.5 s step was observing; 17 clicks per 100 subtiles (median). Combat legs of 10 subtiles or more (33): median 3.0 s, 9.9 polls. Whole sample: 17 clicks per 100 subtiles, 21 stalls, 22 `nav stuck` lines.
+- A full snapshot is still about 150 to 200 ms (`snapcallers`: walker observe mean 170 to 195 ms, max 350 to 700 ms).
+
+### What exists on the channel (S)
+No new verb is needed. `d2dworld.World.Update` (the walker's second call in every observe) is already ONE `debug level` line: level id, position, size (one d2d frame, about 17 ms; rooms are refetched only when due). So the position-only poll is the world update alone.
+
+### Change
+`Navigator.observeFast` (`internal/nav/walk.go`): between two FULL reads a `GoTo` walk (`walkOpts.fastPoll`, fixed goal, no `stopWhen`, no unit following) calls only `World.Update` and moves the player in a copy of the last full observation (delta of the world position, so the coordinate frame cannot drift). Monster list, life, UI and the guard input are those of the last full read, at most `fullPollEvery` (500 ms) old. A full read is taken at the start of every walk, when the level or map changed, when the position jumped by more than 40 subtiles, when the character stood still for two polls (the stuck ladder and the stall trace need real data), after the panel close and at the start of every stuck-ladder rung. The stuck detector, the arrival test and the stop-short logic work on the polled position unchanged. Roam, explore, exit and unit walks keep full reads. `Navigator.NoFastPoll` is the rollback and the test baseline; `nav.trace leg` carries `fastPolls`. Class-free: no class, skill or build data involved.
+Tests (`internal/nav/approachfast_test.go`): full snapshots per approach step Paladin melee (6 subtiles, walk speed) 5 to 1, Sorceress ranged (12 subtiles, run speed) 8 to 2; the stuck detector still returns `ErrStuck` for both; one full read per 500 ms on a long walk; `go test -race ./internal/nav` clean.
+
+### Fork card (not done here, private fork only)
+`Channel::pump` dispatches one complete line per d2d frame (V: every verb averages 16.6 ms, also the eight lines of a pipelined batch), so a snapshot costs about 10 frames. Request: dispatch every complete line of the input buffer per frame in realtime (as the lab4 build already does for lockstep, docs/d2d-pace.md); a snapshot would drop from about 170 ms to about 20 ms and make the whole fast-poll split unnecessary. No upstream posting.
+
+### After (V, same container, 11 minutes after the deploy of main 0.0.261108211221; `nav.trace leg`)
+- 121 legs, 766 polls of which 131 were position-only (17 percent; most legs are short, so their first poll is the full one). No `nav stuck` line, 7 stalls (before: 21 in 476 legs).
+- Combat legs under 10 subtiles (15 samples, few): median 1.0 s (before 1.08 s), observe mean 167 ms (before 218). Combat legs of 10 subtiles or more (15): observe mean 127 ms (before 220), median duration unchanged (2.95 s: speed bound). Clicks per 100 subtiles 16.0 over all legs (before 17.1).
+- Reading: the long approach legs gain (observe about 40 percent cheaper); a one-waypoint step is dominated by its first, full observe plus the fighter's own snapshot just before it, so the 2 s per step does not go away with fast polls alone. Next steps, not done: (1) start a `GoTo` from the fighter's snapshot (`Reader.Recent`, about 100 ms old) instead of reading again; (2) the fork card above (one line per frame), which makes every full read about 20 ms.
