@@ -16,6 +16,7 @@ h1,h2{font-weight:600}a{color:#d9b25f}.note{color:#9a8f78;font-size:.85rem}.err{
 button{font:inherit;cursor:pointer}table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid #2b261c;padding:.2rem .4rem;text-align:left;vertical-align:top}</style></head>
 <body><h1>Inventory</h1><p><a href="/watch?live=1">Live screen</a></p><p id="note" class="note"></p><div id="msg" class="err" role="status"></div>
 <h2>Equipped</h2><div id="equip" class="slots"></div>
+<h2>Repair</h2><div id="repair" class="slot"></div>
 <p class="note">Wearing something from here pins the slot: the bot will not swap it back. Unpin it to hand the slot back.</p>
 <h2>Backpack</h2><div id="pack"></div><div id="detail"></div>
 <h2>Belt</h2><div id="belt"></div>
@@ -34,7 +35,7 @@ function post(path,body){return base().then(function(u){return fetch(u+path,{met
  .then(function(){say('');load();},function(e){say(e.message);});}
 function name(it){return (it.name||it.code)+(it.ethereal?' (eth)':'')+(it.identified?'':' (unidentified)');}
 function badges(e,it){if(it.mark)e.appendChild(el('span','badge '+it.mark,it.mark==='sell'?'to sell':'keep'));}
-function lines(it){var o=[];if(it.level)o.push('item level '+it.level);if(it.sockets)o.push(it.sockets+' sockets');(it.props||[]).forEach(function(p){o.push(p);});return o;}
+function lines(it){var o=[];if(it.maxDur)o.push('durability '+it.dur+'/'+it.maxDur+(it.dur<=0?' (broken)':''));if(it.level)o.push('item level '+it.level);if(it.sockets)o.push(it.sockets+' sockets');(it.props||[]).forEach(function(p){o.push(p);});return o;}
 function grid(box,items,cols,rows,unit){box.textContent='';var g=el('div','grid');g.style.width=cols*unit+'px';g.style.height=rows*unit+'px';
  items.forEach(function(it){var c=el('div','cell q-'+it.quality+(it.mark?' '+it.mark:'')+(sel&&sel.id===it.id?' sel':''));
   c.style.left=it.x*unit+'px';c.style.top=it.y*unit+'px';c.style.width=Math.max(it.w,1)*unit+'px';c.style.height=Math.max(it.h,1)*unit+'px';
@@ -68,6 +69,15 @@ function draw(v){last=v;document.getElementById('note').textContent=(v.note||'')
  detail(v);
  var q=document.getElementById('queue');q.textContent='';var rows=(v.queue||[]).concat(v.recent||[]);
  if(!rows.length)q.appendChild(el('p','note','Nothing queued.'));else{var t=el('table');rows.forEach(function(r){var tr=el('tr');[r.name,r.slot,r.state,r.reason||''].forEach(function(x){tr.appendChild(el('td','',x));});t.appendChild(tr);});q.appendChild(t);}}
-function load(){fetch('/api/inventory',{cache:'no-store'}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'error');return j;});}).then(draw,function(e){say(e.message);});}
+function drawRepair(v){var b=document.getElementById('repair');b.textContent='';
+ var q=v.request,pend=q&&q.state==='requested';
+ b.appendChild(el('div','','Repair mode: '+((v.modes||[]).filter(function(m){return m.current;}).map(function(m){return m.label;})[0]||v.mode)+' (change it on the policy sheet)'));
+ if(v.worst)b.appendChild(el('div',v.worst.indexOf('Broken')===0?'err':'note',v.worst));
+ if(v.estimate)b.appendChild(el('div','note','Repair All costs at least '+v.estimate+' gold.'));
+ if(q)b.appendChild(el('div','note',q.state==='requested'?'Requested: the hero repairs at its next town visit.'+(q.note?' ('+q.note+')':''):q.state==='done'?'Last request: done.':'Last request: '+q.state));
+ var bt=el('button','',pend?'Cancel repair':'Repair now');bt.type='button';
+ bt.addEventListener('click',function(){post(pend?'/api/repair/cancel':'/api/repair/request',{});});b.appendChild(bt);}
+function loadRepair(){fetch('/api/repair',{cache:'no-store'}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'error');return j;});}).then(drawRepair,function(e){document.getElementById('repair').textContent=e.message;});}
+function load(){loadRepair();fetch('/api/inventory',{cache:'no-store'}).then(function(r){return r.json().then(function(j){if(!r.ok)throw new Error(j.error||'error');return j;});}).then(draw,function(e){say(e.message);});}
 load();setInterval(load,4000);
 })();`

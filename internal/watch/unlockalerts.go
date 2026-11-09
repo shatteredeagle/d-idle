@@ -20,6 +20,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/repair"
 )
 
 // Alerts and pings (TASK-162, docs/unlock-alerts.md). A rules table (data/alerts/rules.json) turns events the watch
@@ -42,14 +43,16 @@ const (
 
 // Alert event kinds the code can raise. The table must use only these.
 var alertEvents = map[string][]string{
-	"drop":       {"item", "quality", "area", "hero"},
-	"death":      {"monster", "area", "level", "hero"},
-	"low_life":   {"pct", "area", "hero"},
-	"kill":       {"monster", "area", "hero"},
-	"level_up":   {"level", "hero"},
-	"town":       {"area", "hero"},
-	"pact_pause": {"reason", "hero"},
-	"proposal":   {"from", "to", "hero"},
+	"drop":        {"item", "quality", "area", "hero"},
+	"death":       {"monster", "area", "level", "hero"},
+	"low_life":    {"pct", "area", "hero"},
+	"gear_low":    {"item", "pct", "hero"},
+	"gear_broken": {"item", "hero"},
+	"kill":        {"monster", "area", "hero"},
+	"level_up":    {"level", "hero"},
+	"town":        {"area", "hero"},
+	"pact_pause":  {"reason", "hero"},
+	"proposal":    {"from", "to", "hero"},
 }
 
 var alertSeverities = []string{"info", "good", "warn", "alarm"}
@@ -388,6 +391,7 @@ type Alerts struct {
 
 	proposals func() []decide.Proposal
 	incidents func() []JournalLine
+	gear      func() []repair.Cond // worn gear readings (SetGear); nil: no gear alerts
 
 	mu       sync.Mutex
 	seq      uint64
@@ -397,6 +401,7 @@ type Alerts struct {
 	lastArea int
 	seenProp map[int]bool
 	seenInc  map[string]bool
+	gearSeen map[string]string // slot -> "low" or "broken" once told
 	errs     []string
 	wg       sync.WaitGroup
 	slots    chan struct{}
@@ -420,7 +425,7 @@ func NewAlerts(u *Unlocks, c AlertsConfig, now func() float64, class func() stri
 		return nil, err
 	}
 	a := &Alerts{u: u, rules: rules, now: now, class: class, out: c.Outbound, last: map[string]float64{},
-		seenProp: map[int]bool{}, seenInc: map[string]bool{}, slots: make(chan struct{}, alertsMaxInflight)}
+		seenProp: map[int]bool{}, seenInc: map[string]bool{}, gearSeen: map[string]string{}, slots: make(chan struct{}, alertsMaxInflight)}
 	if c.Outbound.Enabled {
 		a.sender = c.Sender
 		if a.sender == nil {
@@ -613,8 +618,52 @@ func (a *Alerts) OnLife(pct int, area string) {
 	a.Emit(AlertEvent{Kind: "low_life", Pct: pct, Area: areaOr(area)})
 }
 
+// SetGear connects the worn-gear readings (repair.Controller): a slot that falls under the warn percent or breaks raises
+// gear_low or gear_broken once, and again only after it was repaired.
+func (a *Alerts) SetGear(f func() []repair.Cond) { a.gear = f }
+
+func (a *Alerts) tickGear() {
+	if a.gear == nil {
+		return
+	}
+	var low, broken []string
+	lowest := 100
+	a.mu.Lock()
+	for _, c := range a.gear() {
+		state := ""
+		switch {
+		case c.Broken:
+			state = "broken"
+		case c.Warn:
+			state = "low"
+		}
+		if state == "" {
+			delete(a.gearSeen, c.Slot)
+			continue
+		}
+		if a.gearSeen[c.Slot] == state || (state == "low" && a.gearSeen[c.Slot] == "broken") {
+			continue
+		}
+		a.gearSeen[c.Slot] = state
+		if state == "broken" {
+			broken = append(broken, c.Name)
+		} else {
+			low = append(low, c.Name)
+			lowest = min(lowest, c.Pct)
+		}
+	}
+	a.mu.Unlock()
+	if len(broken) > 0 {
+		a.Emit(AlertEvent{Kind: "gear_broken", Item: safeText(strings.Join(broken, ", "), 120)})
+	}
+	if len(low) > 0 {
+		a.Emit(AlertEvent{Kind: "gear_low", Item: safeText(strings.Join(low, ", "), 120), Pct: lowest})
+	}
+}
+
 // Tick looks for the two signals that have no event: a new pending proposal and a Pact pause. Call it from Settle.
 func (a *Alerts) Tick() {
+	a.tickGear()
 	if a.proposals != nil {
 		for _, p := range a.proposals() {
 			a.mu.Lock()

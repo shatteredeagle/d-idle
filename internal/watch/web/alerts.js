@@ -67,7 +67,7 @@
   }
 
   function paintState(v) {
-    $('alertsstate').textContent = v.open ? '(on)' : '(death and low life only)';
+    $('alertsstate').textContent = v.open ? '(on)' : '(death, low life and gear only)';
     var tz = $('alertsteaser'); clear(tz);
     tz.hidden = v.open;
     if (!v.open) {
