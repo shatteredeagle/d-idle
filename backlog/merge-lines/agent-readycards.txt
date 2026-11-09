@@ -1,1 +1,0 @@
-BACKLOG: TASK-216..TASK-224 (Proposed): readiness cards ready-audit, ready-area-table, ready-model, ready-wire-gates, ready-meter, ready-whyline, ready-bossrows, ready-policy, ready-calibrate (TASK-214 follow-ups, docs/research/player-power.md Part 3.4)
