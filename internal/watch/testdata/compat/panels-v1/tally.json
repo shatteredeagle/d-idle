@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "tally",
+  "title": "Tally",
+  "band": "side",
+  "size": "s",
+  "priority": 5,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/tally",
+  "poll": 0,
+  "unlock": "",
+  "skeleton": 2,
+  "owner": "uicommand",
+  "doc": "docs/ui-design-system.md"
+}

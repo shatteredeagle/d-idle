@@ -2,6 +2,8 @@
 
 > status: proposal (2026-11-09), nothing here is built. Design: [ui-design-system.md](ui-design-system.md). Research: [research/ui-design.md](research/ui-design.md). Tags: V verified by reading the code named, U not run (every tool in this doc is unbuilt; flags marked U were not checked against a binary).
 
+Compatibility: the layout and panel manifests, the data-attribute API, the endpoints and the token names are versioned public contracts (the promise and its rules: [ui-design-system.md section 0](ui-design-system.md); user decision 2026-11-09). The compatibility test (`internal/watch/compat_test.go`, golden fixtures under `internal/watch/testdata/compat/`, only ever added to) is a fourth check next to the three below and blocks a merge the same way.
+
 ## 1. Three checks, one gate
 
 | Check | Catches | Runs where | Blocks merge? |
@@ -20,7 +22,7 @@ Package `tools/uilint` (`go run ./tools/uilint [-fix=false] [dir]`, exit 1 on fi
 
 | Rule | Check |
 |---|---|
-| `manifest-schema` | `schema == "watch.panel/1"`; unknown keys refused; required keys present (`id`, `title`, `band`, `size`, `priority`, `tab`, `endpoint` or `poll == 0` with `endpoint == ""` only for `status`-band shell panels, `owner`, `doc`) |
+| `manifest-schema` | `schema == "watch.panel/1"`; unknown keys refused here (the loaders ignore them, compatibility promise); required keys present (`id`, `title`, `band`, `size`, `priority`, `tab`, `endpoint` or `poll == 0` with `endpoint == ""` only for `status`-band shell panels, `owner`, `doc`) |
 | `manifest-id` | `id` matches `^[a-z][a-z0-9-]*$`, equals the directory name, unique |
 | `manifest-size` | `size`, `minSize`, `maxSize` in `{s, m, l}` and ordered |
 | `manifest-band` | `band` in `{status, stage, grid}`; `status` and `stage` ids come from a fixed list in `shell.json` |
@@ -30,6 +32,7 @@ Package `tools/uilint` (`go run ./tools/uilint [-fix=false] [dir]`, exit 1 on fi
 | `manifest-unlock` | empty or an id in `data/unlocks/ladder.json` |
 | `manifest-doc` | `doc` exists in the tree |
 | `manifest-orphan` | every `panels/<id>/` has a manifest; every manifest has `panel.css` and `panel.js` |
+| `manifest-version` | `version` is an integer from 1 (the panel's revision; compatibility promise, design doc section 0) |
 
 ### 2.2 CSS rules
 

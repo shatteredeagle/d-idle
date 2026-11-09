@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "why",
+  "title": "Why",
+  "band": "side",
+  "size": "m",
+  "priority": 4,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/hero",
+  "poll": 2,
+  "unlock": "",
+  "skeleton": 2,
+  "owner": "uicommand",
+  "doc": "docs/ui-design-system.md"
+}

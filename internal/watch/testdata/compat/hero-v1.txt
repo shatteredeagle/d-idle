@@ -1,0 +1,19 @@
+# top-level fields of GET /api/hero (watch.hero/1): each stays in the reply (fields are only added)
+schema
+known
+life
+maxLife
+mana
+maxMana
+xp
+xpLevel
+xpNext
+xpPct
+gold
+stashGold
+state
+stateLabel
+activity
+goal
+queue
+why

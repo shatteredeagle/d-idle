@@ -2,6 +2,28 @@
 
 > status: accepted design (user decisions 2026-11-09 in section 13), being implemented in small PRs (section 15). Research and sources: [research/ui-design.md](research/ui-design.md). Mockups: [mockups/ui/](mockups/ui/). Test and migration plan: [ui-regression-plan.md](ui-regression-plan.md). Decisions the user still owns are in section 13; until taken, the safe defaults named there stand.
 
+## 0. Compatibility promise (user decision 2026-11-09)
+
+The user approved the current mockup layout ([mockups/ui/watch-wide.html](mockups/ui/watch-wide.html) and the presets of the layout editor [mockups/ui/editor.html](mockups/ui/editor.html), which stays the supported layout tool) and asked that compatibility is not broken in the future. These are versioned public contracts:
+
+| Contract | Version marker | Where |
+|---|---|---|
+| Layout manifest | `schema: "watch.layout/N"` | section 6.4; files exported by the editor |
+| Panel manifest | `schema: "watch.panel/N"` plus `version` (integer, the panel's own revision) | section 6.1; `web/panels/<id>/panel.json` |
+| Panel data-attribute API | the panel manifest `schema` | section 6.3 (`data-panel`, `data-size`, `data-state`, `data-tab`, `data-sev`, `data-tone`, `data-kind`, `data-level`, `data-changed`, `data-key`) |
+| Endpoints | the reply's `schema` field (`watch.hero/1`, `whyline/1`, ...) | every `GET /api/...` a panel reads |
+| CSS token names | the `--d-*` custom-property names | `web/tokens.css` (section 3) |
+
+Rules (every UI change keeps them):
+
+1. **Additive or migrated.** A change adds; it does not rename, remove or change the meaning of what exists. When it must, it ships with a migration in the same PR.
+2. **Old files keep loading.** A layout or panel manifest written today loads in every later version; loaders ignore fields they do not know (the shell and `internal/watch.Manifests` do; `tools/uilint` stays strict for files in this repo so typos are caught).
+3. **Renamed tokens keep an alias** (`--d-old: var(--d-new)`) for at least one release.
+4. **Removed panels leave a stub**: the directory and manifest stay, the panel renders an empty or "moved" state, so a saved layout that names it still loads.
+5. **No endpoint shape change without a version bump** of its `schema`; fields are only added. A panel that needs a different shape reads a new endpoint or a new schema version.
+6. **New features ship as new panels**, not as edits to existing ones (one new directory and one manifest; the shell places it).
+7. **Enforced by tests:** `internal/watch/compat_test.go` loads the golden manifests of `internal/watch/testdata/compat/` (today's panel manifests, a layout manifest exported by the editor), checks every v1 token name is still defined, every v1 panel id still has a directory, and every v1 field of `/api/hero` is still in the reply; `tools/uilint` requires the manifest `version`. A test that fails here means a breaking change: add the alias, stub or version instead of updating the fixture. Fixtures are only added to, never edited.
+
 ## 1. Why a system, in one paragraph
 
 The watch screen grew one panel per card, each with its own markup, CSS and grid rule, so every new panel edited the layout of the last one and the page is now a header that wraps three deep, a gear strip with no spacing (its injected `<style>` is blocked by the page's own CSP), three fixed widths that fight on a laptop, two toasts, two sheets and three palettes. The fix is not another pass over `app.css`. It is a shell that owns layout, tokens that own look, a short component catalogue that owns behaviour, and a panel contract under which a feature ships as one self-contained module that the shell places. After that, adding a feature touches one new directory and one line in a manifest, and the regression suite in the plan doc proves the rest of the page did not move.
@@ -218,6 +240,7 @@ panels/<id>/panel.js     export function mount(root, ctx) -> { update(data), des
 ```json
 {
   "schema": "watch.panel/1",
+  "version": 1,
   "id": "gear",
   "title": "Gear condition",
   "band": "grid",
@@ -238,6 +261,7 @@ panels/<id>/panel.js     export function mount(root, ctx) -> { update(data), des
 
 | Key | Meaning | Checked by the linter |
 |---|---|---|
+| `version` | the panel's own revision, an integer from 1; raised when its DOM or data attributes change (compatibility promise, section 0) | integer >= 1 (`manifest-version`) |
 | `id` | directory name, `[a-z][a-z0-9-]*`, unique | equals the directory, unique across panels |
 | `title` | the card title, plain text | non-empty, no HTML |
 | `band` | `status`, `stage` or `grid` | `status` and `stage` hold only the ids the shell lists (hero status, whyline, alerts count; video, map) |
@@ -255,6 +279,8 @@ Writes are not in the manifest: a panel posts to the answer origin through `ctx.
 ### 6.2 What a panel may and may not do
 
 May: build DOM with the component factories and `textContent`; read tokens; set `data-*` on its own elements; read its container width with `@container`; expose panel-local custom properties under `--p-<id>-*`; request `ctx.sheet`, `ctx.toast`, `ctx.banner`; store a preference under `ctx.store(key)` (prefixed by panel id).
+
+Compatibility (section 0), the checklist for every panel PR: [ ] the change is additive or carries a migration; [ ] a new feature is a new panel, not an edit of an existing one; [ ] the manifest `version` is raised when the panel's DOM or data attributes change; [ ] no endpoint field, token name or data attribute is renamed or removed (alias, stub or schema bump instead); [ ] `go test ./internal/watch -run Compat` passes without editing a fixture.
 
 May not: write to any element outside its root; use `document.querySelector` (the shell hands it `root`); use `setInterval`, `fetch`, `EventSource` (the scheduler does); write `style` attributes or inject `<style>`; use media queries, `!important`, ids, element or global selectors, unlayered CSS, `position: fixed/sticky`, fixed `width` or `height` on its root, colours other than tokens; set `aria-live` on more than one element.
 
@@ -473,3 +499,7 @@ The first preview showed only a black page with the video and map in a narrow ce
 | `currency` | `/api/currency` | the currency chips, only in d.idle mode (the "needs the d.idle overlay" note is no longer shown at the top) |
 
 The whyline is no longer in the top band (the top band holds the hero status word, uptime, deaths, clock and the links). The pre-shell cards (Hero now, Where to, Up next, Thoughts, Rules, Journal, Chronicle, ...) are cells of the shell's grid band with the component look (cards, serif titles, chips, dense lists), in the mockup's order. The screenshot suite (`tools/uishots.sh`, `tools/uishots/`) renders a frozen fixture viewer with headless Chrome on the worker host and keeps its golden set there.
+
+### 15.3 Compatibility promise in code (branch `agent/uicompat`)
+
+Section 0 is enforced: every `panel.json` carries `version: 1` (`uilint` rule `manifest-version`); `internal/watch.Manifests` and the new `ParseLayout` (`internal/watch/layout.go`, `watch.layout/1`, not yet read by the shell) ignore unknown keys; `internal/watch/compat_test.go` loads the golden files of `internal/watch/testdata/compat/` (the v1 panel manifests, the editor's mockup-preset export made by running the editor's own preset code in node, the v1 token names, the v1 fields of `/api/hero`).

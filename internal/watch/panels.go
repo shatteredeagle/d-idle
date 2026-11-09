@@ -1,7 +1,6 @@
 package watch
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/fs"
@@ -18,6 +17,7 @@ import (
 // PanelManifest is one web/panels/<id>/panel.json.
 type PanelManifest struct {
 	Schema      string  `json:"schema"`
+	Version     int     `json:"version"` // the panel's own revision; raised when its DOM or data attributes change
 	ID          string  `json:"id"`
 	Title       string  `json:"title"`
 	Band        string  `json:"band"`
@@ -46,8 +46,8 @@ type PanelsView struct {
 
 var bandOrder = map[string]int{"status": 0, "stage": 1, "side": 2, "grid": 3}
 
-// Manifests parses every embedded panel manifest. It refuses unknown keys, an id that is not its directory, and a
-// band the shell does not have; the full rule set is tools/uilint's.
+// Manifests parses every embedded panel manifest. It refuses an id that is not its directory and a band the shell
+// does not have; the full rule set is tools/uilint's.
 func Manifests() ([]PanelManifest, error) {
 	dirs, err := fs.ReadDir(webFS, "web/panels")
 	if err != nil {
@@ -62,17 +62,9 @@ func Manifests() ([]PanelManifest, error) {
 		if err != nil {
 			return nil, fmt.Errorf("panel %s: %w", d.Name(), err)
 		}
-		var m PanelManifest
-		dec := json.NewDecoder(bytes.NewReader(b))
-		dec.DisallowUnknownFields()
-		if err := dec.Decode(&m); err != nil {
-			return nil, fmt.Errorf("panel %s: %w", d.Name(), err)
-		}
-		if m.Schema != panelSchema || m.ID != d.Name() {
-			return nil, fmt.Errorf("panel %s: schema %q id %q", d.Name(), m.Schema, m.ID)
-		}
-		if _, ok := bandOrder[m.Band]; !ok {
-			return nil, fmt.Errorf("panel %s: band %q", m.ID, m.Band)
+		m, err := parseManifest(b, d.Name())
+		if err != nil {
+			return nil, err
 		}
 		out = append(out, m)
 	}
@@ -87,6 +79,22 @@ func Manifests() ([]PanelManifest, error) {
 		return a.ID < b.ID
 	})
 	return out, nil
+}
+
+// parseManifest reads one panel.json. Unknown keys are ignored (compatibility promise, docs/ui-design-system.md
+// section 0: a manifest written by a later version still loads); tools/uilint is the strict check for this repo.
+func parseManifest(b []byte, dir string) (PanelManifest, error) {
+	var m PanelManifest
+	if err := json.Unmarshal(b, &m); err != nil {
+		return m, fmt.Errorf("panel %s: %w", dir, err)
+	}
+	if m.Schema != panelSchema || m.ID != dir {
+		return m, fmt.Errorf("panel %s: schema %q id %q", dir, m.Schema, m.ID)
+	}
+	if _, ok := bandOrder[m.Band]; !ok {
+		return m, fmt.Errorf("panel %s: band %q", m.ID, m.Band)
+	}
+	return m, nil
 }
 
 // servePanels answers /watch/panels.json and /watch/panels/<id>/panel.{js,css}; it reports false for other paths.

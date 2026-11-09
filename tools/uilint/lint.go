@@ -367,6 +367,7 @@ func stripJSComment(s string) string {
 // Manifest is a panel's panel.json (docs/ui-design-system.md section 6.1).
 type Manifest struct {
 	Schema      string  `json:"schema"`
+	Version     *int    `json:"version"`
 	ID          string  `json:"id"`
 	Title       string  `json:"title"`
 	Band        string  `json:"band"`
@@ -434,6 +435,9 @@ func (l *Linter) lintManifests(files []string) {
 		if m.Priority == nil || m.DefaultOpen == nil || m.Endpoint == nil {
 			l.add(f, 1, "manifest-schema", "missing priority, defaultOpen or endpoint")
 			continue
+		}
+		if m.Version == nil || *m.Version < 1 {
+			l.add(f, 1, "manifest-version", "version must be an integer from 1 (the panel's revision; compatibility promise, docs/ui-design-system.md section 0)")
 		}
 		if strings.ContainsAny(m.Title, "<>&") {
 			l.add(f, 1, "manifest-schema", "title holds markup")

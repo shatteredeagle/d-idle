@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "currency",
+  "title": "Marks",
+  "band": "side",
+  "size": "s",
+  "priority": 6,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/currency",
+  "poll": 0,
+  "unlock": "",
+  "skeleton": 1,
+  "owner": "uicommand",
+  "doc": "docs/ui-design-system.md"
+}
