@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
@@ -227,5 +228,29 @@ func TestGearAlertsOncePerChange(t *testing.T) {
 	v = alertsOf(r, 0)
 	if len(v.Alerts) != 2 || v.Alerts[1].Rule != "gear_broken" || !strings.Contains(v.Alerts[1].Text, "Sword") {
 		t.Fatalf("broken: %+v", v.Alerts)
+	}
+}
+
+// The page CSP is style-src 'self': a <style> element injected by script is blocked and the strip loses its layout
+// (the "Gearhead 0/18 BROKENtorso" bug). Embedded JS must not create style elements or set style attributes.
+func TestEmbeddedJSInjectsNoStyle(t *testing.T) {
+	ents, err := webFS.ReadDir("web")
+	if err != nil {
+		t.Fatal(err)
+	}
+	bad := regexp.MustCompile(`createElement\(\s*['"]style['"]|setAttribute\(\s*['"]style['"]|insertAdjacentHTML|<style|\sstyle\s*=`)
+	n := 0
+	for _, e := range ents {
+		if !strings.HasSuffix(e.Name(), ".js") {
+			continue
+		}
+		n++
+		b, _ := webFS.ReadFile("web/" + e.Name())
+		if m := bad.Find(b); m != nil {
+			t.Errorf("web/%s: %q is blocked by the page CSP; put the rule in app.css", e.Name(), m)
+		}
+	}
+	if n == 0 {
+		t.Fatal("no embedded js found")
 	}
 }
