@@ -4,7 +4,7 @@
   "title": "Hero",
   "band": "side",
   "size": "m",
-  "priority": 0,
+  "priority": 1,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/hero",

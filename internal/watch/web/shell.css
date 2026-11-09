@@ -26,13 +26,13 @@
   .d-band-main > .d-panel { flex: 1 1 auto; }
   .d-panel[hidden] { display: none; }
 
-  /* top area (user layout feedback 2026-11-09): the stage (video and map) fills the left 7 of 12 columns, the command
-     centre (side band) the right 5, both edge to edge; under 900 px they stack, stage first */
+  /* top area (user layout feedback 2026-11-09): the stage (the game video, edge to edge) fills the left 7 of 12 columns,
+     the command centre (side band: what the hero does, vitals, map, gear, why, tally) the right 5; under 900 px they
+     stack, stage first */
   .d-band-top { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--d-gap); padding-inline: var(--d-gap); align-items: start; }
   @media (min-width: 56.25rem) { .d-band-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
   .d-band-top > [hidden] + .d-band-side, .d-band-top > .d-band-side:only-child { grid-column: 1 / -1; }
   .d-band-stage { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--d-gap); align-items: start; min-inline-size: 0; }
-  @media (min-width: 40rem) { .d-band-stage { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } }
   .d-band-stage[hidden], .d-band-side[hidden] { display: none; }
   .d-band-side { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); grid-auto-flow: row dense; gap: var(--d-gap); align-items: start; min-inline-size: 0; }
   .d-band-side > .d-panel { grid-column: span 1; }

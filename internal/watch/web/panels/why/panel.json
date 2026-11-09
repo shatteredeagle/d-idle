@@ -4,7 +4,7 @@
   "title": "Why",
   "band": "side",
   "size": "m",
-  "priority": 2,
+  "priority": 4,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/hero",

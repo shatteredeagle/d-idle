@@ -4,7 +4,7 @@
   "title": "Marks",
   "band": "side",
   "size": "s",
-  "priority": 5,
+  "priority": 6,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/currency",

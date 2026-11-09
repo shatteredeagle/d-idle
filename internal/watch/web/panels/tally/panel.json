@@ -4,7 +4,7 @@
   "title": "Tally",
   "band": "side",
   "size": "s",
-  "priority": 4,
+  "priority": 5,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/tally",

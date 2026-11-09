@@ -4,7 +4,7 @@
   "title": "Doing now",
   "band": "side",
   "size": "m",
-  "priority": 1,
+  "priority": 0,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/hero",
