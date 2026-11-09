@@ -37,7 +37,7 @@ export function mount(root, ctx) {
   [[zin, 'Zoom in', 'zin'], [zout, 'Zoom out', 'zout'], [hide, 'Hide the map', 'hide']].forEach(([b, label, key]) => {
     b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = key; b.setAttribute('aria-label', label);
   });
-  hide.setAttribute('aria-pressed', 'true');
+  hide.setAttribute('aria-expanded', 'true');
   ctx.actions.append(zin, zout, hide);
   ctx.hide(true);
 
@@ -112,7 +112,7 @@ export function mount(root, ctx) {
     const min = !cv.hidden;
     cv.hidden = min; note.hidden = min;
     hide.textContent = min ? 'Show' : 'Hide';
-    hide.setAttribute('aria-pressed', String(!min));
+    hide.setAttribute('aria-expanded', String(!min));
   });
   cv.addEventListener('pointerdown', (ev) => { drag = { x: ev.clientX, y: ev.clientY }; cv.setPointerCapture(ev.pointerId); });
   cv.addEventListener('pointerup', () => { drag = null; });

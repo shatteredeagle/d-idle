@@ -54,6 +54,11 @@ main .spend[hidden] { display: none !important; }
 .d-compat > main > .card { grid-column: span 1; }
 .d-compat > main > :is(.o-now, .o-map, .thoughts, .rules, .journal, .chronicle, .alerts) { grid-column: span min(2, var(--d-cols)); }
 .d-compat > main > .spend { grid-column: 1 / -1; }
+@media (min-width: 56.25rem) {
+  .d-compat > main > .card { grid-column: span 5; }
+  .d-compat > main > :is(.o-now, .o-map, .thoughts, .rules, .journal, .chronicle, .alerts) { grid-column: span 7; }
+  .d-compat > main > .spend { grid-column: 1 / -1; }
+}
 .d-compat > main > .o-now { order: 10; } .d-compat > main > .o-queue { order: 12; } .d-compat > main > .o-map { order: 14; }
 .d-compat > main > .thoughts { order: 20; } .d-compat > main > .spend { order: 40; } .d-compat > main > .chronicle { order: 50; }
 .d-compat > main > .diary { order: 52; } .d-compat > main > .journal { order: 60; } .d-compat > main > .quests { order: 70; }

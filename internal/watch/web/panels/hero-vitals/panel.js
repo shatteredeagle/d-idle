@@ -22,7 +22,6 @@ export function mount(root, ctx) {
       if (!h) { ctx.hide(true); return; }
       ctx.hide(false);
       if (!h.known) { who.textContent = 'Waiting for the first look at the hero.'; return; }
-      ctx.meta.textContent = h.area || '';
       who.textContent = [h.name, h.class, h.level ? 'level ' + h.level : '', h.difficulty].filter(Boolean).join(' · ');
       life.set(h.maxLife ? (100 * h.life) / h.maxLife : 0, h.maxLife ? h.life + '/' + h.maxLife : '-', lifeLevel(h.life, h.maxLife));
       mana.set(h.maxMana ? (100 * h.mana) / h.maxMana : 0, h.maxMana ? h.mana + '/' + h.maxMana : '-');

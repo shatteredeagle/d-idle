@@ -16,8 +16,9 @@ export function mount(root, ctx) {
     update(h) {
       if (!h) { ctx.hide(true); return; }
       ctx.hide(false);
-      now.textContent = h.activity || h.stateLabel || 'Waiting for the hero.';
-      ctx.meta.textContent = h.stateLabel || '';
+      const line = h.activity || h.stateLabel || 'Waiting for the hero.';
+      now.textContent = line.charAt(0).toUpperCase() + line.slice(1);
+      ctx.meta.textContent = h.area || '';
       const g = h.goal;
       if (g) {
         goal.hidden = false;
