@@ -1,3 +1,0 @@
-BACKLOG: TASK-231 uishell2: watch shell (shell.js, panel registry /watch/panels.json); status band, video+map stage and whyline are panels; old cards in a compatibility slot
-INDEX: internal/watch/web/panels/: watch UI panel modules (panel.json, panel.css, panel.js) placed by web/shell.js (docs/ui-design-system.md sections 4 and 6)
-CHANGELOG: Watch screen: new top band (hero status, why line, links, theme) and a stage with the game video and the map side by side; ?mode=overlay shows the band alone for stream overlays

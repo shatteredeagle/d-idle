@@ -659,6 +659,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-228 uidesign: watch UI research, design system proposal (tokens, shell, 12 components, panel contract, migration table), 8 standalone mockups and a regression test plan (uilint, golden DOM, screenshot suite); docs only, 13 migration PRs proposed
 - TASK-229 gearcsp: /watch gear strip styles moved from an injected style element (blocked by the page CSP) into app.css; guard test
 - TASK-230 uishell1: watch UI design tokens (dark default, dense), cascade layers, 12 components, tools/uilint in check.sh
+- TASK-231 uishell2: watch shell (shell.js, panel registry /watch/panels.json); status band, video+map stage and whyline are panels; old cards in a compatibility slot
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

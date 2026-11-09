@@ -891,3 +891,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/desktop-app.md - desktop launcher for the watch page: stack decision, same-origin rule, build and test (area: watch)
 - docs/ui-design-system.md and docs/ui-regression-plan.md added (build_index.py run); docs/research/ui-design.md listed in docs/research/README.md; docs/mockups/ui/ (static HTML)
 - tools/uilint: the watch UI panel-contract linter (docs/ui-regression-plan.md section 2); allow-list in tools/uilint/allow.txt
+- internal/watch/web/panels/: watch UI panel modules (panel.json, panel.css, panel.js) placed by web/shell.js (docs/ui-design-system.md sections 4 and 6)
