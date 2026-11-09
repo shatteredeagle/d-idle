@@ -1,13 +1,16 @@
 {
   "version": 1,
   "rows": [
-    {"id": "repair", "label": "Repair gear", "default": "default",
-     "help": "When the hero repairs its gear in town. Repair costs gold; broken gear stops protecting.",
+    {"id": "repair", "label": "Repair gear", "default": "manual",
+     "help": "When the hero repairs its gear in town. Repair costs gold; broken gear stops protecting. By default the hero never repairs on its own: watch the gear on the Inventory page and press Repair now, and the hero repairs at its next town visit. The other modes are bought on the unlock ladder. The hero never swaps or unpins gear to repair it.",
      "options": [
-       {"id": "default", "label": "Repair under 30 percent durability (today's rule)"},
-       {"id": "low", "label": "Repair only under 20 percent", "rules": [{"point": "t1.repair", "when": {"durability": "lt20"}, "answer": "repair"}, {"point": "t1.repair", "answer": "skip"}]},
-       {"id": "always", "label": "Repair every town visit", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}]},
-       {"id": "never", "label": "Never repair", "suboptimal": true, "risk": "Gear wears out; defence and damage fall until it breaks.", "rules": [{"point": "t1.repair", "answer": "skip"}]}
+       {"id": "manual", "label": "Manual: only when you press Repair now", "applies": "part", "note": "Acts in the town chores (internal/town gate); the legacy durability knobs no longer repair or send the hero to town while a gate is installed (docs/repair.md)."},
+       {"id": "break", "label": "When an item breaks", "unlock": "repair_break", "applies": "part", "note": "Repairs at the next town visit after an item reaches zero durability; the hero heads to town on the usual durability trip (docs/repair.md)."},
+       {"id": "hour", "label": "Every hour", "unlock": "repair_hour", "applies": "part", "note": "Repairs at a town visit once an hour has passed since the last repair (docs/repair.md)."},
+       {"id": "half", "label": "Every half hour", "unlock": "repair_half", "applies": "part", "note": "Repairs at a town visit once half an hour has passed since the last repair (docs/repair.md)."},
+       {"id": "always", "label": "Always (every town visit)", "unlock": "repair_always", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}], "applies": "part", "note": "Repairs any damaged gear at every town visit (docs/repair.md)."},
+       {"id": "low", "label": "Pact: repair only under 20 percent durability", "hidden": true, "rules": [{"point": "t1.repair", "when": {"durability": "lt20"}, "answer": "repair"}, {"point": "t1.repair", "answer": "skip"}]},
+       {"id": "never", "label": "Pact: never repair", "hidden": true, "rules": [{"point": "t1.repair", "answer": "skip"}]}
      ],
      "effect": [{"counter": "repairs", "label": "repairs"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]},
 

@@ -18,8 +18,10 @@ type Item struct {
 	Filled     int      `json:"filled,omitempty"`
 	Level      int      `json:"level,omitempty"`
 	Identified bool     `json:"identified"`
-	Props      []string `json:"props,omitempty"` // tooltip lines
-	X          int      `json:"x"`               // grid cell (belt: column, row)
+	Dur        int      `json:"dur,omitempty"`    // current durability (worn items; 0 with MaxDur > 0 means broken)
+	MaxDur     int      `json:"maxDur,omitempty"` // maximum durability, 0 = the item has none or it was not read
+	Props      []string `json:"props,omitempty"`  // tooltip lines
+	X          int      `json:"x"`                // grid cell (belt: column, row)
 	Y          int      `json:"y"`
 	W          int      `json:"w"`
 	H          int      `json:"h"`

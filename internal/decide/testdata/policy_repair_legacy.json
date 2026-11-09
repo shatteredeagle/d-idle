@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "doc": "The repair row as it was before docs/repair.md (rule options on t1.repair). Tests of the policy machinery use it in place of the shipped row, which is now the manual/unlock row.",
+  "rows": [
+    {"id": "repair", "label": "Repair gear", "default": "default",
+     "help": "When the hero repairs its gear in town.",
+     "options": [
+       {"id": "default", "label": "Repair under 30 percent durability (today's rule)"},
+       {"id": "low", "label": "Repair only under 20 percent", "rules": [{"point": "t1.repair", "when": {"durability": "lt20"}, "answer": "repair"}, {"point": "t1.repair", "answer": "skip"}]},
+       {"id": "always", "label": "Repair every town visit", "suboptimal": true, "risk": "Pays for repairs that are not needed yet.", "rules": [{"point": "t1.repair", "answer": "repair"}]},
+       {"id": "never", "label": "Never repair", "suboptimal": true, "risk": "Gear wears out; defence and damage fall until it breaks.", "rules": [{"point": "t1.repair", "answer": "skip"}]}
+     ],
+     "effect": [{"counter": "repairs", "label": "repairs"}, {"counter": "deaths", "label": "deaths"}, {"counter": "deaths_dry", "label": "deaths with no potion drunk just before", "heuristic": true}]}
+  ]
+}

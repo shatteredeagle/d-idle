@@ -21,6 +21,7 @@ import (
 	"d2lod-bot/internal/leveler/townvendor"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/nav"
+	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/town"
 )
 
@@ -29,7 +30,9 @@ var errNeedTables = errors.New("live play needs the game tables (data.Open faile
 // runnerRef lets the behaviors (built before the Runner) call into it: the leveler's Pause hook.
 type runnerRef struct {
 	p   atomic.Pointer[bot.Runner]
-	inv *invdesk.Desk // the inventory page desk (invwire.go); nil until newInvDesk
+	inv *invdesk.Desk             // the inventory page desk (invwire.go); nil until newInvDesk
+	rep *repair.Controller        // the repair policy and request (repairwire.go); nil until newRepair
+	tw  atomic.Pointer[town.Town] // set by wireRepair, read by the gear readings
 }
 
 // beat stamps the runner's watchdog heartbeat (a finished sub-step of a long restart); no-op before the runner exists.

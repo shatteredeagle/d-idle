@@ -281,6 +281,30 @@
       "reveal": {"title": "Alerts and pings", "text": "The hero tells you when something happens: a unique drop, a boss kill, a level, a return to town, a Pact pause or a proposal waiting. Death and low life are always told.", "teaser": "Costs tally."}
     },
     {
+      "id": "repair_break", "group": "ui",
+      "trigger": {"kind": "tally_spend"},
+      "price": 30,
+      "reveal": {"title": "Repair when an item breaks", "text": "The hero repairs its gear at the next town visit after something it wears breaks. Policy sheet, row Repair gear.", "teaser": "Costs tally."}
+    },
+    {
+      "id": "repair_hour", "group": "ui",
+      "trigger": {"kind": "tally_spend"},
+      "price": 50,
+      "reveal": {"title": "Repair every hour", "text": "The hero repairs its gear at a town visit once an hour. Policy sheet, row Repair gear.", "teaser": "Costs tally."}
+    },
+    {
+      "id": "repair_half", "group": "ui",
+      "trigger": {"kind": "tally_spend"},
+      "price": 70,
+      "reveal": {"title": "Repair every half hour", "text": "The hero repairs its gear at a town visit every half hour. Policy sheet, row Repair gear.", "teaser": "Costs tally."}
+    },
+    {
+      "id": "repair_always", "group": "ui",
+      "trigger": {"kind": "tally_spend"},
+      "price": 90,
+      "reveal": {"title": "Always repair", "text": "The hero repairs damaged gear at every town visit. Policy sheet, row Repair gear.", "teaser": "Costs tally."}
+    },
+    {
       "id": "orderqueue", "group": "ui",
       "trigger": {"kind": "quest_stage", "args": {"quest": "den_of_evil", "min": 2}},
       "reveal": {"title": "Order queue, first slot", "text": "One order may now wait behind the running one: give an order and the hero goes on to the next when it ends. A queue never overrides the hero's own guard and stops when the hero dies.", "teaser": "Clear the Den of Evil."}

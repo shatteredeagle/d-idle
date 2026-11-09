@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "doc": "docs/repair.md. Repair modes of the policy row repair (internal/decide/policy_chores.json uses the same ids). Exactly one visible mode has no unlock and it is the default; the other visible ones are priced rows of the unlock ladder (data/unlocks/ladder.json, group ui). Prices there are U guesses. Hidden modes are set only by a Pact (data/pacts/pacts.json, Griswold's Debt) and are not offered on the sheet.",
+  "warnPct": 30,
+  "default": "manual",
+  "modes": [
+    {"id": "manual", "label": "Manual: only when you press Repair now"},
+    {"id": "break", "label": "When an item breaks", "unlock": "repair_break", "onBreak": true},
+    {"id": "hour", "label": "Every hour", "unlock": "repair_hour", "everySecs": 3600},
+    {"id": "half", "label": "Every half hour", "unlock": "repair_half", "everySecs": 1800},
+    {"id": "always", "label": "Always (every town visit)", "unlock": "repair_always", "always": true},
+    {"id": "low", "label": "Pact: repair only under 20 percent durability", "hidden": true, "belowPct": 20},
+    {"id": "never", "label": "Pact: never repair", "hidden": true, "never": true}
+  ]
+}

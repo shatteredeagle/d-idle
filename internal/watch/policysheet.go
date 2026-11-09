@@ -36,6 +36,7 @@ var (
 	ErrPolicyRow     = errors.New("watch: unknown policy row")
 	ErrPolicyOption  = errors.New("watch: unknown policy option")
 	ErrPolicyScope   = errors.New("watch: policy row is not for this class")
+	ErrPolicyLocked  = errors.New("watch: policy option is locked")
 )
 
 // KnobSetter edits tuning knobs by key; a nil value resets the knob to the profile value (bot.Tuner.Edit, api.TuneEdit).
@@ -60,6 +61,9 @@ type PolicySheet struct {
 	now    func() float64
 	events *AwayLog
 	knobs  KnobSetter
+	// lock tells whether an option's unlock row is open and, when it is not, what it costs and its teaser; nil: every
+	// option is open (no unlock ladder).
+	lock func(id string) (open bool, price int64, teaser string)
 
 	// starts gives the option ids a class starts on (plandata.Chores); nil reads the embedded table.
 	starts func(class string) (map[string]string, error)
@@ -189,6 +193,9 @@ func (p *PolicySheet) Set(rowID, optID string) (PolicyChange, bool, error) {
 	if err != nil {
 		return PolicyChange{}, false, fmt.Errorf("%w %q of row %q", ErrPolicyOption, safeText(optID, 40), row.ID)
 	}
+	if lk, price, _ := p.locked(opt); lk && p.current(row) != opt.ID {
+		return PolicyChange{}, false, fmt.Errorf("%w: %q of row %q needs the unlock %q (%d tally)", ErrPolicyLocked, opt.ID, row.ID, opt.Unlock, price)
+	}
 	return p.set(row, opt, true)
 }
 
@@ -315,6 +322,20 @@ func (p *PolicySheet) EnsureStart() error {
 		return p.Reapply()
 	}
 	return nil
+}
+
+// SetUnlocker connects the options that name an unlock row (decide.PolicyOption.Unlock) to the ladder.
+func (p *PolicySheet) SetUnlocker(f func(id string) (open bool, price int64, teaser string)) {
+	p.lock = f
+}
+
+// locked says whether the option is behind an unlock row that is not open yet.
+func (p *PolicySheet) locked(o *decide.PolicyOption) (bool, int64, string) {
+	if o.Unlock == "" || p.lock == nil {
+		return false, 0, ""
+	}
+	open, price, teaser := p.lock(o.Unlock)
+	return !open, price, teaser
 }
 
 // SetStarts replaces the source of the class's starting options (nil: the embedded table). The bot sets one that gives
@@ -498,6 +519,12 @@ type PolicyOptionView struct {
 	Note       string   `json:"note,omitempty"`
 	Rules      []string `json:"rules,omitempty"`
 	Knobs      []string `json:"knobs,omitempty"`
+	// Locked options sit behind an unlock row (docs/repair.md): Unlock is its id, Price the cost in tally and Teaser the
+	// ladder's hint. The page offers a buy button instead of a choice.
+	Locked bool   `json:"locked,omitempty"`
+	Unlock string `json:"unlock,omitempty"`
+	Price  int64  `json:"price,omitempty"`
+	Teaser string `json:"teaser,omitempty"`
 }
 
 type PolicyEffectView struct {
@@ -542,6 +569,9 @@ func (p *PolicySheet) View() (PolicyView, error) {
 		cur := p.current(r)
 		rv := PolicyRowView{ID: r.ID, Label: r.Label, Help: r.Help, Current: cur, Default: r.Default, Changed: cur != r.Default, Options: []PolicyOptionView{}}
 		for _, o := range r.Options {
+			if o.Hidden && o.ID != cur {
+				continue
+			}
 			ov := PolicyOptionView{ID: o.ID, Label: o.Label, Current: o.ID == cur, Default: o.ID == r.Default, Suboptimal: o.Suboptimal,
 				Risk: o.Risk, Applies: o.Applies, Note: o.Note}
 			for _, ru := range o.Rules {
@@ -552,6 +582,9 @@ func (p *PolicySheet) View() (PolicyView, error) {
 				return PolicyView{}, kerr
 			}
 			ov.Says = o.Says
+			if lk, price, teaser := p.locked(&o); lk {
+				ov.Locked, ov.Unlock, ov.Price, ov.Teaser = true, o.Unlock, price, teaser
+			}
 			ks := make([]string, 0, len(kv))
 			for k, val := range kv {
 				ks = append(ks, fmt.Sprintf("%s = %v", k, val))
@@ -763,6 +796,8 @@ func (p *PolicySheet) PolicyAnswerHandler(o AnswerOptions) http.Handler {
 			fail(http.StatusBadRequest, "option", err.Error(), opts...)
 		case errors.Is(err, ErrPolicyScope):
 			fail(http.StatusBadRequest, "scope", err.Error())
+		case errors.Is(err, ErrPolicyLocked):
+			fail(http.StatusForbidden, "locked", err.Error())
 		case errors.Is(err, ErrPolicyNoClass):
 			fail(http.StatusServiceUnavailable, "class", err.Error())
 		case errors.Is(err, ErrPolicyNoKnobs):
@@ -788,7 +823,7 @@ var policyTmpl = template.Must(template.New("policy").Parse(`<!DOCTYPE html>
 <p class="hint">{{.Legend}}</p></section>
 {{range .Rows}}<section class="card" data-row="{{.ID}}" aria-labelledby="row-{{.ID}}"><h2 id="row-{{.ID}}">{{.Label}}</h2><p>{{.Help}}</p>
 <div class="opts">{{$row := .ID}}{{range .Options}}<div class="opt{{if .Current}} cur{{end}}">
-<button type="button" class="btn small{{if .Current}} primary{{end}}" data-act="policy" data-row="{{$row}}" data-option="{{.ID}}" {{if .Current}}aria-pressed="true"{{else}}aria-pressed="false"{{end}}>{{.Label}}</button>
+{{if .Locked}}<button type="button" class="btn small" disabled aria-disabled="true">{{.Label}}</button> <span class="badge">locked</span> <span class="hint">{{.Teaser}}{{if .Price}} Costs {{.Price}} tally.{{end}}</span> <button type="button" class="btn small" data-act="buy" data-unlock="{{.Unlock}}">Unlock{{if .Price}} ({{.Price}} tally){{end}}</button>{{else}}<button type="button" class="btn small{{if .Current}} primary{{end}}" data-act="policy" data-row="{{$row}}" data-option="{{.ID}}" {{if .Current}}aria-pressed="true"{{else}}aria-pressed="false"{{end}}>{{.Label}}</button>{{end}}
 {{if .Says}}<span class="hint">{{.Says}}</span>{{end}}{{if .Default}}<span class="badge">default</span>{{end}}{{if .Suboptimal}}<span class="badge">your call</span> <span class="hint">{{.Risk}}</span>{{end}}
 {{if .Applies}}<span class="badge">{{if eq .Applies "record"}}not wired yet{{else}}partly wired{{end}}</span> <span class="hint">{{.Note}}</span>{{end}}
 </div>{{end}}</div>
@@ -838,7 +873,11 @@ function render(row,option,label,j){var b=box(row);b.textContent='';b.hidden=fal
  var sv=el('button','btn small primary','Save');sv.type='button';sv.onclick=function(){save(row,option);};
  var cn=el('button','btn small','Cancel');cn.type='button';cn.onclick=function(){close(row);say('');};
  b.appendChild(sv);b.appendChild(cn);}
-document.addEventListener('click',function(e){var b=e.target.closest('button[data-act="policy"]');if(!b||b.disabled)return;
+document.addEventListener('click',function(e){var u=e.target.closest('button[data-act="buy"]');
+ if(u&&!u.disabled){u.disabled=true;post('/api/unlocks/buy',{id:u.dataset.unlock}).then(function(j){
+  say(j.ok?'Unlocked':(j.error||'failed'));if(j.ok)setTimeout(function(){location.reload();},500);else u.disabled=false;})
+  .catch(function(){say('the answer route is not reachable');u.disabled=false;});return;}
+ var b=e.target.closest('button[data-act="policy"]');if(!b||b.disabled)return;
  var row=b.dataset.row,option=b.dataset.option;if(b.getAttribute('aria-pressed')==='true')return;
  say('Computing the preview...');
  post('/api/policy/preview',{row:row,option:option}).then(function(j){say('');render(row,option,b.textContent,j);})
