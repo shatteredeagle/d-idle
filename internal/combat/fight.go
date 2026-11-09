@@ -704,7 +704,10 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 
 	tr.inShot = true
 
-	if spec.Hand == HandLeft && p.LeftSkill != spec.ID {
+	// A swinger backend (d2d) attacks by skill id, so the left hand need not hold the skill. Selecting it through the popup
+	// failed for the basic attack (id 0 has no popup cell), the fighter returned without acting and re-read every tick:
+	// 100 lost ticks in 4 minutes of a Paladin out of mana (V live, WALKSMOOTH3).
+	if _, swings := f.e.In.(swinger); !swings && spec.Hand == HandLeft && p.LeftSkill != spec.ID {
 		if err := f.SetLeft(ctx, spec.ID); err != nil {
 			if ctx.Err() != nil {
 				return ctx.Err()

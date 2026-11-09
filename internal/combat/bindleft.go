@@ -29,19 +29,41 @@ var LeftPopup = LeftPopupGeometry{BtnX: 140, BtnY: 578, Col0X: 104, ColDX: 49, R
 // leftCells returns the candidate screen cells of skill id in the left popup, most likely first: the cell the
 // tree position predicts (row, then column order within the ListRow), then the rest of its row.
 func (f *Fighter) leftCells(p *d2.Player, id int) []input.Screen {
-	row, ok := f.listRows[id]
-	if !ok || row < 0 {
-		return nil
-	}
 	type ent struct{ id, row, tr, tc int }
 	byRow := map[int][]ent{}
+	haveAttack := false
 	for _, sk := range p.Skills {
 		def := f.cat.Skill(sk.ID)
 		r, ok := f.listRows[sk.ID]
 		if def == nil || !ok || r < 0 || !(def.LeftSkill || sk.ID == 0) {
 			continue
 		}
+		haveAttack = haveAttack || sk.ID == 0
 		byRow[r] = append(byRow[r], ent{sk.ID, r, def.Row, def.Column})
+	}
+	row, ok := f.listRows[id]
+	// The basic Attack is on every class's popup (bottom row, first column) but the d2d dump lists only trained skills
+	// and the selected one, so it is absent from p.Skills while another skill is selected (live: a Paladin out of mana
+	// never swung: "skill 0 has no left popup cell"). VERIFIED LIVE for the Paladin popup (geometry comment above);
+	// other classes U, the tree order puts it first in its row for all of them.
+	if !haveAttack {
+		ar, aok := f.listRows[0]
+		if !aok || ar < 0 {
+			ar = 1 << 30
+			for r := range byRow {
+				ar = min(ar, r)
+			}
+			if ar == 1<<30 {
+				ar = 0
+			}
+		}
+		byRow[ar] = append(byRow[ar], ent{0, ar, -1, -1})
+		if id == 0 {
+			row, ok = ar, true
+		}
+	}
+	if !ok || row < 0 {
+		return nil
 	}
 	if _, ok := byRow[row]; !ok {
 		return nil

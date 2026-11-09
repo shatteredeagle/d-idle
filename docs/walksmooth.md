@@ -72,3 +72,23 @@ Tests (`internal/nav/approachfast_test.go`): full snapshots per approach step Pa
 - 121 legs, 766 polls of which 131 were position-only (17 percent; most legs are short, so their first poll is the full one). No `nav stuck` line, 7 stalls (before: 21 in 476 legs).
 - Combat legs under 10 subtiles (15 samples, few): median 1.0 s (before 1.08 s), observe mean 167 ms (before 218). Combat legs of 10 subtiles or more (15): observe mean 127 ms (before 220), median duration unchanged (2.95 s: speed bound). Clicks per 100 subtiles 16.0 over all legs (before 17.1).
 - Reading: the long approach legs gain (observe about 40 percent cheaper); a one-waypoint step is dominated by its first, full observe plus the fighter's own snapshot just before it, so the 2 s per step does not go away with fast polls alone. Next steps, not done: (1) start a `GoTo` from the fighter's snapshot (`Reader.Recent`, about 100 ms old) instead of reading again; (2) the fork card above (one line per frame), which makes every full read about 20 ms.
+
+## walksmooth3 (TASK-211, 2026-11-09): the snapshot cost was in our own tap, not in d2d
+Tags: V = measured in the dev container (hero Doofer, realtime d2d), S = read in code, U = unverified.
+
+### Before (V, 4 minutes of `nav.trace` after the approachfast deploy, 37 legs)
+- Snapshot callers (`snapcallers`, per 30 s): the fighter's own read 70 to 111 reads at 158 to 178 ms mean = 11 to 17 s of every 30 s (35 to 55 percent of the wall time inside snapshots), guard 7 to 29 reads at 190 to 360 ms, nav observe 7 to 29 reads at 190 to 250 ms. Roam legs: 25 legs, median 1.0 s for 0 to 6 subtiles, observe mean 228 ms. Combat GoTo legs: median 1.28 s, observe 183 ms.
+- Cause 1 (V by the verb table, S by code): the bot sends the 8 to 9 reads of a snapshot in one write (Prefetch) and the fork's `Channel::pump` dispatches every complete line of its buffer in one frame (S, `components/devctl/devctl.cpp`; the earlier "one line per frame" reading was wrong). But in the container the bot talks to `d2dview`'s mux (`/run/d2d/d2d.sock.ctl`), which read ONE line, did a locked round trip to d2d, then read the next. d2d therefore saw one line per pump and answered one per frame: every verb averaged 16.6 ms, a snapshot about 10 frames. No fork change is needed (the card for `Channel::pump` in the earlier sections is withdrawn).
+- Cause 2 (V, log): a Paladin out of mana (28 max mana, Smite) falls to the basic attack. `SetLeft(0)` through the popup fails ("skill 0 has no left popup cell"), `engage` returned without acting, so the fighter re-read and tried again: 32 log lines plus about 100 suppressed repeats in 4 minutes, roughly 55 of 240 s standing still. On d2d the swing is addressed by skill id (`Swing`, V palmelee) and the left hand does not matter.
+
+### Change
+1. `cmd/d2dview/mux.go`: the bot connection forwards every complete line already buffered as ONE upstream write (`clientBatch`, `roundTrips`, up to 32 lines, replies in order, one write back). `step` lines still run alone (pacing and the watch-mode rewrite are per step); the viewer socket is unchanged. Test: `TestBotBatchGoesUpstreamInOneWrite`.
+2. `internal/combat/fight.go`: a backend with a `swinger` (d2d) does not call `SetLeft`. Class-free. Only the existing swing tests cover it (U: a discriminating unit test was not written; the fake popup finds a cell for skill 0).
+
+### After (V, same container, 3.8 minutes after the deploy of this branch; another agent's deploy replaced it 3 minutes later)
+- Snapshot 10 to 23 ms mean (fighter read 10 ms, nav observe 17 to 19 ms, guard 18 to 37 ms), was 158 to 360 ms. Engage legs: observe mean 36 ms (was 190); click gap median 333 ms; no "left skill not selectable" line (was 13 in the 4 minutes before the deploy). Kills 17 in 3.8 minutes (13 in the 3.7 minutes before; small samples, town trips in both).
+- Not measured: whole-run walk speed per leg after the change (the sample is short and half town legs). Check after the next long run: `nav.trace leg` speed and `snapcallers`.
+
+### Left over
+- Roam still starts each leg with two full reads (roam, then the walk); at 20 ms each this is small now. A seed observation would save one.
+- The earlier "fork card" is not needed; the d2d build in the container is not the cause.

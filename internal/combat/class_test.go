@@ -654,3 +654,30 @@ func TestAuraFailureBacksOff(t *testing.T) {
 		t.Fatalf("%d popup opens in one backoff window", d.popups)
 	}
 }
+
+// The d2d dump lists only trained skills and the selected one, so Attack (skill 0) is missing from Player.Skills while
+// another left skill is selected; the fallback to the basic swing must still find its popup cell.
+func TestSetLeftAttackWhenDumpOmitsIt(t *testing.T) {
+	for _, tc := range []struct {
+		name string
+		rows map[int]int
+	}{
+		{"attack row known", map[int]int{0: 0, 106: 1, 107: 1, 112: 1, 114: 1, 102: 3, 98: 2}},
+		{"attack row unknown", map[int]int{106: 5, 107: 5, 112: 5, 114: 5, 102: 8, 98: 7}},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			h, g := newHandGame(t)
+			h.f.SetListRows(tc.rows)
+			var sk []d2.Skill
+			for _, s := range g.p.Skills {
+				if s.ID != 0 {
+					sk = append(sk, s)
+				}
+			}
+			g.p.Skills, g.p.LeftSkill = sk, 112
+			if err := h.f.SetLeft(context.Background(), 0); err != nil || g.p.LeftSkill != 0 {
+				t.Fatalf("Attack: %v left %d", err, g.p.LeftSkill)
+			}
+		})
+	}
+}

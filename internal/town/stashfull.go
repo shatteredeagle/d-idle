@@ -7,6 +7,7 @@ import (
 	"sort"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/town/hand"
 )
@@ -24,10 +25,27 @@ var neverSell = func() map[string]bool {
 	return m
 }()
 
+// NeverSellReason says why an item can never be sold, whatever the player marks ("" = it may be): quest items, the
+// Cube, keys, tomes and the character's start kit. b may be nil (unknown base: refused).
+func NeverSellReason(b *data.ItemBase, u d2.Unit) string {
+	switch {
+	case b == nil:
+		return "unknown item"
+	case u.Item != nil && u.Item.Flags&d2.FlagStartItem != 0:
+		return "start item"
+	case neverSell[b.Code] || b.Type == "key":
+		return "quest item, key or tome"
+	}
+	return ""
+}
+
 // sellProtected reports whether u must not be sold or dropped to make stash or pack room: quest items, keys, tomes,
 // anything the Cube chore consumes (gems, runes), keep verdicts, and everything at or above ValuableMinPrio
 // (runes, gems, uniques, good charms), which is what a wanted runeword's runes and the pickit's best finds are.
 func (t *Town) sellProtected(u d2.Unit, v loot.Verdict) bool {
+	if t.markOf(u) == "keep" {
+		return true
+	}
 	if v.Action == loot.Keep || v.Tier == "S" || v.Prio >= t.e.Tune.Loot.ValuableMinPrio {
 		return true
 	}

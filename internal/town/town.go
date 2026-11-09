@@ -52,6 +52,9 @@ type Town struct {
 	judge Judge
 	h     *hand.Hand
 
+	marks  ItemMarks      // the player's sell and keep marks (SetItemMarks)
+	pinned func(int) bool // the player's slot pins (SetPinned)
+
 	tpBought atomic.Int64 // scrolls bought since the minute line last took the count
 
 	lastVisit Visit // measurement of the last NPC open (skip.go)
@@ -141,6 +144,27 @@ func (t *Town) plan(p *d2.Player) belt.Band {
 func (t *Town) planHasHealing(p *d2.Player) bool {
 	b := t.plan(p)
 	return b.Capacity(belt.HP, belt.Columns) > 0 || b.Capacity(belt.RV, belt.Columns) > 0
+}
+
+// ItemMarks carries the player's per-item decisions from the watch screen (docs/inventory-ui.md).
+type ItemMarks interface {
+	// MarkOf is "sell" (sold at the next vendor visit), "keep" (never sold or dropped by the town) or "".
+	MarkOf(u d2.Unit) string
+}
+
+// SetItemMarks installs the player's sell and keep marks; nil: none.
+func (t *Town) SetItemMarks(m ItemMarks) { t.marks = m }
+
+// SetPinned installs the player's slot pins: a pinned body slot is never filled or replaced by the town's own gear logic.
+func (t *Town) SetPinned(f func(body int) bool) { t.pinned = f }
+
+func (t *Town) isPinned(body int) bool { return t.pinned != nil && t.pinned(body) }
+
+func (t *Town) markOf(u d2.Unit) string {
+	if t.marks == nil || u.Item == nil {
+		return ""
+	}
+	return t.marks.MarkOf(u)
 }
 
 // SetJudge replaces the item judge.
