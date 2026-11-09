@@ -1,10 +1,13 @@
 ---
 id: TASK-231
-title: 'uishell2: watch shell with panel registry; status band, video+map stage and whyline as panels'
-status: In Progress
+title: >-
+  uishell2: watch shell with panel registry; status band, video+map stage and
+  whyline as panels
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T19:27:00Z'
+updated_date: '2026-11-09T19:56:00Z'
 labels:
   - watch
   - feature
