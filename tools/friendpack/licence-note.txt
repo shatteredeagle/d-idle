@@ -1,0 +1,20 @@
+d.idle friends pack: what you are getting and what you are agreeing to
+
+1. Source code. This pack contains a program (d2d) that is licensed GPL-3.0-or-later, and the bot that drives it.
+   The corresponding source is in the src/ folder of this pack and the licence texts are in licenses/. If you
+   pass the pack or the image on, you must pass the source and these notices on with it. A written offer for the
+   source is in licenses/SOURCE.txt.
+2. No game data. Nothing from Blizzard Entertainment is included: no game files, no art, no sounds, no keys.
+   You must own a copy of Diablo II: Lord of Destruction (1.14d) and point the installer at your own folder.
+   That folder is mounted read-only; nothing is ever written to it. Art shown on the watch page is read from
+   your own copy on your own machine at run time. Do not publish screenshots or recordings of the art or share
+   the cache or data volume.
+3. Trademarks. Diablo II is a trademark of Blizzard Entertainment. This project is not affiliated with or
+   endorsed by Blizzard Entertainment.
+4. Privacy. Nothing is sent anywhere except the update check, which asks the update source named in .env (if
+   any) for a signed release list; it sees your IP address and a "didle-updater/<version>" user agent. Set
+   D2BOT_UPDATE_CHECK=off in .env to switch it off. Updates are installed only after a signature check against a
+   key baked into the image, and only when you ask.
+5. No warranty. This is a beta for a few friends. It can fail. Your hero lives in a Docker volume on your
+   machine; stopping with ./didle stop saves it.
+6. Sharing. This pack is private. Do not post it publicly or forward it without asking the person who sent it.
