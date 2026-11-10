@@ -30,6 +30,7 @@ button, input, select { font: inherit; color: inherit; }
 .badge[hidden], .banner[hidden] { display: none; }
 .btn, button { border: 1px solid var(--d-line-strong); background: var(--surface2); border-radius: var(--d-r-2); padding: var(--d-sp-1) var(--d-sp-3); cursor: pointer; min-height: 36px; }
 .btn:hover, button:hover:not(:disabled) { border-color: var(--d-text-3); }
+a.btn { text-decoration: none; display: inline-block; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); font-weight: 650; }
 .btn.danger { color: var(--bad); }
 .btn.ghost { background: transparent; }
