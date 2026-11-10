@@ -1,11 +1,13 @@
 ---
 id: TASK-272
-title: "friendfeed: D2BOT_UPDATE_FEED, a user-controlled https feed for non-dev images with pinned keys"
-status: Proposed
+title: >-
+  friendfeed: D2BOT_UPDATE_FEED, a user-controlled https feed for non-dev images
+  with pinned keys
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:56:00Z'
-updated_date: '2026-11-10T21:57:00Z'
+updated_date: '2026-11-10T22:26:00Z'
 labels:
   - bot
   - feature
