@@ -1,10 +1,13 @@
 ---
 id: TASK-244
-title: 'dollart: real D2 art on the inventory paper doll, read at runtime from the user''s MPQs'
-status: Proposed
+title: >-
+  dollart: real D2 art on the inventory paper doll, read at runtime from the
+  user's MPQs
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T15:47:00Z'
+updated_date: '2026-11-10T16:57:00Z'
 labels:
   - watch
   - feature
