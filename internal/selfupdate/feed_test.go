@@ -76,3 +76,32 @@ func TestFeedUnsignedRefused(t *testing.T) {
 		t.Fatalf("unsigned accepted: %v", err)
 	}
 }
+
+// Two pinned keys (beta for the friends' feed, current for GitHub releases): a manifest signed by either verifies,
+// one signed by neither is refused. The fake signs with f.pub's private half.
+func TestFeedTwoPinnedKeys(t *testing.T) {
+	other, _, _ := GenerateKey(rand.Reader)
+	unknown, _, _ := GenerateKey(rand.Reader)
+	for _, tc := range []struct {
+		name string
+		keys func(signer ed25519.PublicKey) []ed25519.PublicKey
+		ok   bool
+	}{
+		{"signed by beta (first pinned)", func(s ed25519.PublicKey) []ed25519.PublicKey { return []ed25519.PublicKey{s, other} }, true},
+		{"signed by current (second pinned)", func(s ed25519.PublicKey) []ed25519.PublicKey { return []ed25519.PublicKey{other, s} }, true},
+		{"signed by an unknown key", func(ed25519.PublicKey) []ed25519.PublicKey { return []ed25519.PublicKey{other, unknown} }, false},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			f := newFake(t)
+			f.publish("0.4.0", 5, nil)
+			e := feedEngine(t, f, tc.keys(f.pub)...)
+			err := e.Check(ctx)
+			if tc.ok && (err != nil || e.Status().Available == nil) {
+				t.Fatalf("refused: %v", err)
+			}
+			if !tc.ok && (!errors.Is(err, ErrBadSignature) || e.Status().Available != nil) {
+				t.Fatalf("accepted: %v", err)
+			}
+		})
+	}
+}

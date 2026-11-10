@@ -88,7 +88,7 @@ func TestPackFileListAndChecksums(t *testing.T) {
 	sort.Strings(got)
 	want := []string{"README.txt", "RELEASE_NOTES.md", "SHA256SUMS", "UPDATE_FEED", "VERSION", "compose.yml", "didle", "guide/friend-guide.md",
 		"image/IMAGE_TAG", "image/didle-image.tar.gz", "install.sh", "licenses/GPL-3.0.txt", "licenses/NOTICE", "licenses/SOURCE.txt",
-		"licenses/THIRD_PARTY.md", "licenses/licence-note.txt", "pubkeys/beta.pub", "src/BUILD.txt", "src/d-idle-<commit>.tar.gz",
+		"licenses/THIRD_PARTY.md", "licenses/licence-note.txt", "pubkeys/beta.pub", "pubkeys/current.pub", "src/BUILD.txt", "src/d-idle-<commit>.tar.gz",
 		"src/d2d-didle-0123456789ab.tar.gz"}
 	if strings.Join(got, "\n") != strings.Join(want, "\n") {
 		t.Fatalf("file list\n got %v\nwant %v", got, want)

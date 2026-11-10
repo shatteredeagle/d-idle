@@ -57,7 +57,7 @@ Jobs: `build` (no secrets), `sign` (environment `app-release`, secret `D2SIGN_PR
 
 ### Turning it on (user steps, TASK-124; not done)
 
-1. Generate the pair with `d2sign keygen` on your machine; commit only the `.pub` as `deploy/d2d-container/pubkeys/current.pub` (the image bakes it).
+1. Generate the pair with `d2sign keygen` on your machine; commit only the `.pub` as `deploy/d2d-container/pubkeys/current.pub` (the image bakes it). GitHub releases are signed with this key. The friends' feed (docs/friend-feed.md) is signed with the second pinned key, `pubkeys/beta.pub`; the image and updater accept either (`pubkeys/*.pub`, no limit enforced in code; the design keeps two).
 2. Settings > Environments > create `app-release`, add yourself as required reviewer, add the secret `D2SIGN_PRIVATE_KEY` (the body of the `.key` file) to the environment only.
 3. Rulesets protecting tags `app-v*`, `tester-v*`, `release-*`; 2FA on the account.
 4. Only then set the repository variable `APP_RELEASE_ENABLED=true`. GitHub creates a missing environment without reviewers on first use, so the order matters.
