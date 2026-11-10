@@ -21,7 +21,6 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
-
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
@@ -208,8 +207,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.reactionMs | 0 | 0..300 | ms | 300 | 1 | Extra delay before reacting to low life or a chicken condition. |
 | bot.resupplyPotions | 2 | 2..4 | potions | 4 | 2 | Healing potions left in the belt that trigger a town trip. Higher means more trips. |
 | bot.invFullPct | 85 | 40..85 | % | 40 | 2 | Share of occupied inventory cells that triggers a town trip. Lower means more trips. |
-| bot.levelMargin | 0 | 0..8 | levels | 8 | 7 | Levels above a step's enter level the planner requires. Higher is safer but slower. |
-| bot.leaveSlack | 0 | 0..6 | levels | 6 | 5 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
+| bot.levelMargin | 0 | 0..8 | levels | 8 | 8 | Levels above a step's enter level the planner requires. Higher is safer but slower. |
+| bot.leaveSlack | 0 | 0..6 | levels | 6 | 6 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
 | bot.corpseRetries | 1 | 0..1 | count | 0 | 1 | Max attempts to recover the corpse after a softcore death. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
 | bot.clearRadius | 30 | 12..45 | subtiles | 12 | 13 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
@@ -273,8 +272,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| boss.andarielMinLevel | 17 | 12..22 | levels | 17 | 7 | Character level at which the Normal campaign attempts Andariel without a living merc (a dead or unknown merc counts as none; this replaces the old +2 for a dead merc); the kit gate (potions, town portal, at least 2 antidotes) applies on top. Interim (ADR 0011): 17. 22 is the old hold, 17 equals the old 15 plus 2 for a dead merc. |
-| boss.andarielMinLevelMerc | 15 | 12..22 | levels | 15 | 3 | The same floor with a living merc. Interim (ADR 0011): 15 (the old floor). |
+| boss.andarielMinLevel | 0 | 0..22 | levels | 0 | 5 | Override of the per-class Andariel level floor without a living merc (a dead or unknown merc counts as none); 0 = the class row (internal/plandata/boss_levels.go; Paladin 16, recommended 17, and a warning below the recommended level instead of a wall). The kit gate (potions, town portal, at least 2 antidotes) applies on top. 22 is the old hold. |
+| boss.andarielMinLevelMerc | 0 | 0..22 | levels | 0 | 1 | The same override with a living merc; 0 = the class row (Paladin 14, recommended 15). |
 | boss.andarielHold | 1 | 0..1 | bool | 1 | 2 | 1: the campaign does not enter Andariel unattended (log: boss: held for andariel (unattended hold ...)) until the throwaway fight of card m3-andariel has won once; the level farms instead. Set 0 after that win. Attended runs (bossrun) are not affected. ADR 0011 gate 3. |
 | boss.brCasterLevel | 9 | 6..14 | levels | 9 | 0 | Character level a Sorceress, Druid or Amazon needs before the campaign attempts Blood Raven (the free Rogue). SME: below 8 it is a death trap, 9 with the kit is the first clean try. |
 | boss.brMeleeLevel | 8 | 6..14 | levels | 8 | 0 | Same floor for the Necromancer (skeletons and Clay Golem do physical damage, her 0 percent resist) and the melee classes. |

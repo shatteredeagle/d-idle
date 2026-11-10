@@ -1,0 +1,3 @@
+BACKLOG: TASK-252 smepace: docs/sme/pace-and-formulas.md (Act 1 pace, XP, kit, mana lookup)
+INDEX: docs/sme/pace-and-formulas.md: standing pace and formula lookup for d2-sme consults
+CHANGELOG: docs: standing SME pace and formula lookup page (TASK-252)
