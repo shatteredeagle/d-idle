@@ -1,10 +1,13 @@
 ---
 id: TASK-267
-title: 'sorcready: Sorceress friends-readiness offline work packages (profile avoid list, class-pick test, early-game SME proposal)'
-status: Proposed
+title: >-
+  sorcready: Sorceress friends-readiness offline work packages (profile avoid
+  list, class-pick test, early-game SME proposal)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:46:00Z'
+updated_date: '2026-11-10T19:55:00Z'
 labels:
   - bot
   - feature

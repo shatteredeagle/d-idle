@@ -35,16 +35,16 @@ func (b BossTuning) AndarielLowFloor() int {
 }
 
 func DefaultBossTuning() BossTuning {
-	return BossTuning{AndarielMinLevel: DefaultAndarielMinLevel, AndarielMinLevelMerc: DefaultAndarielMinLevelMerc, AndarielHold: 1, BRCasterLevel: 9, BRMeleeLevel: 8, BRPotions: 4, BRManaPotions: 2,
+	return BossTuning{AndarielHold: 1, BRCasterLevel: 9, BRMeleeLevel: 8, BRPotions: 4, BRManaPotions: 2,
 		BRTPCharges: 2, BRGold: 250, BRMaxRetreats: 2}
 }
 
 func bossKnobs() []Knob {
 	return []Knob{
-		{Key: "boss.andarielMinLevel", Label: "Andariel level floor (no merc)", Unit: "levels", Default: DefaultAndarielMinLevel, Min: 12, Max: 22, HigherIsBetter: true, NoHandicap: true,
-			Desc: "Character level at which the Normal campaign attempts Andariel without a living merc (a dead or unknown merc counts as none; this replaces the old +2 for a dead merc); the kit gate (potions, town portal, at least 2 antidotes) applies on top. Interim (ADR 0011): 17. 22 is the old hold, 17 equals the old 15 plus 2 for a dead merc."},
-		{Key: "boss.andarielMinLevelMerc", Label: "Andariel level floor (living merc)", Unit: "levels", Default: DefaultAndarielMinLevelMerc, Min: 12, Max: 22, HigherIsBetter: true, NoHandicap: true,
-			Desc: "The same floor with a living merc. Interim (ADR 0011): 15 (the old floor)."},
+		{Key: "boss.andarielMinLevel", Label: "Andariel level floor (no merc)", Unit: "levels", Default: 0, Min: 0, Max: 22, HigherIsBetter: true, NoHandicap: true,
+			Desc: "Override of the per-class Andariel level floor without a living merc (a dead or unknown merc counts as none); 0 = the class row (internal/plandata/boss_levels.go; Paladin 16, recommended 17, and a warning below the recommended level instead of a wall). The kit gate (potions, town portal, at least 2 antidotes) applies on top. 22 is the old hold."},
+		{Key: "boss.andarielMinLevelMerc", Label: "Andariel level floor (living merc)", Unit: "levels", Default: 0, Min: 0, Max: 22, HigherIsBetter: true, NoHandicap: true,
+			Desc: "The same override with a living merc; 0 = the class row (Paladin 14, recommended 15)."},
 		{Key: "boss.andarielHold", Label: "Andariel: no unattended attempt yet", Unit: "bool", Default: 1, Min: 0, Max: 1, NoHandicap: true,
 			Desc: "1: the campaign does not enter Andariel unattended (log: boss: held for andariel (unattended hold ...)) until the throwaway fight of card m3-andariel has won once; the level farms instead. Set 0 after that win. Attended runs (bossrun) are not affected. ADR 0011 gate 3."},
 		{Key: "boss.brCasterLevel", Label: "Blood Raven floor (Sorc/Druid/Ama)", Unit: "levels", Default: 9, Min: 6, Max: 14, HigherIsBetter: true, NoHandicap: true,
