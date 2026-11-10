@@ -215,16 +215,34 @@
       return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'error'); return j; });
     });
   }
-  // artProbe: art is on only when the server says available and the panel frame really loads (a frame that does not
-  // load would leave the slot layout without its background), and never in the stream overlay.
+  // The art layer never delays the first paint: load() draws the plain cells at once, the probe runs beside it and
+  // switches art on (re-drawing the doll and the cells) when /api/art says available and the panel frame really
+  // loads (a frame that does not load would leave the slot layout without its background). Never in the overlay.
+  // While the server prepares the icons ("extracting") a small line shows the count; art already works then,
+  // each icon is decoded on demand.
+  function artLine(a) {
+    var host = $('equipmeta') && $('equipmeta').parentNode; if (!host) return;
+    var n = $('artmeta');
+    if (!a || a.state !== 'extracting') { if (n) n.hidden = true; return; }
+    if (!n) { n = el('span', 'meta'); n.id = 'artmeta'; host.appendChild(n); }
+    n.hidden = false; n.textContent = 'preparing art ' + (a.done || 0) + '/' + (a.total || 0);
+  }
   function artProbe() {
-    if (/(^|[?&])mode=overlay(&|$)/.test(location.search)) return Promise.resolve(false);
-    return getJSON('/api/art').then(function (a) {
-      if (!a || !a.available) return false;
-      return new Promise(function (ok) {
-        var i = new Image(); i.onload = function () { ok(true); }; i.onerror = function () { ok(false); }; i.src = '/watch/art/panel-inv.png';
-      });
-    }).catch(function () { return false; });
+    if (/(^|[?&])mode=overlay(&|$)/.test(location.search)) return;
+    var turnOn = function () {
+      if (art.on) return;
+      var i = new Image();
+      i.onload = function () { art.on = true; drawn = ''; if (last) draw(last); };
+      i.src = '/watch/art/panel-inv.png';
+    };
+    var poll = function () {
+      getJSON('/api/art').then(function (a) {
+        if (!a || !a.available) { artLine(null); return; }
+        artLine(a); turnOn();
+        if (a.state === 'extracting') setTimeout(poll, 3000);
+      }, function () { artLine(null); });
+    };
+    poll();
   }
   function load() {
     getJSON('/api/repair').then(drawRepair, function (e) { $('repair').textContent = e.message; });
@@ -234,5 +252,5 @@
     window.__invTest({ dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; } });
     return;
   }
-  artProbe().then(function (on) { art.on = on; load(); setInterval(load, 4000); });
+  load(); artProbe(); setInterval(load, 4000);
 })();

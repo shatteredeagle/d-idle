@@ -74,3 +74,34 @@ Tests: `go test -count=1 -p 1 ./internal/data` (two bases, unique override, set,
 - U, needs a live item read: that `ItemData+0x28` is the unique/set id and that the id is the `uniqueitems.txt` row (separator counted). Wrong ids fall back to the base icon. Checklist: on a throwaway character holding a unique and a set item, read `FileIndex`, take that row of `uniqueitems.txt`/`setitems.txt`, compare its `code` and name with the item.
 - U: which of `invchar.dc6`/`invchar6.dc6` the game draws; ring box pixels beyond the table (rings are not in `inventory.txt`'s listed slots by name; V that the `rHand`/`lHand` boxes sit on the ring frames).
 - Not built (out of v1 scope, safe defaults taken): PL2 colour tints, ring/amulet/charm/jewel variant graphics (the plain `invfile` is drawn), socket overlays, art in the stream overlay, a per-page `art: off|on` setting.
+
+## Speed and pre-extraction (TASK-268)
+
+Report: the inventory page was slow with art on. Measured (V, worker host, real 1.14d install through a private symlink dir with the three archives, read-only, `D2ART_INSTALL=<dir> go test -count=1 -v -run 'TestRealColdWarm|TestRealExtractAll' ./internal/art`, 2026-11-10; archives already in the page cache):
+
+| step | time |
+|---|---|
+| `art.Open` (3 archives, Patch_D2 SHA-256, palette), once per process | 6 to 8 ms |
+| cold `panel-inv` (4 DC6 frames, compose, PNG) | 13 to 14 ms |
+| cold decode + PNG + cache write, 30 typical icons | 24 to 27 ms (about 1 ms each) |
+| warm, memory / disk (after restart) | 6 us / 0.3 ms for 31 keys |
+| `Extract` of 349 icons from the archive, then second run | 129 ms, then 0.6 ms |
+
+So the server side is not the cause: the MPQ handles stay open, decode is about 1 ms an icon, and the art routes already carry `ETag` and `Cache-Control: private, max-age=86400`. The cause is the page waterfall in `inventory.js` (read from the code, S for the exact wall time in the sandbox, no browser run): the art probe ran before anything else, `GET /api/art` (which decodes the panel) then the panel image, and only then `GET /api/inventory` and `/api/repair`, then one request per icon (about 30 to 40). The first paint therefore waited for three serial round trips through the tunnel and proxy, and art stayed on the critical path. Container logs hold no art request timings (V: `docker logs` has no `watch/art` lines), so the real round trip time of the sandbox is U.
+
+Fix (additive, art off path unchanged): `load()` runs first and draws the plain cells; `artProbe()` runs beside it and re-draws with art when `/api/art` says available and the panel frame loads (`TestInventoryPageDoesNotWaitOnArt`). All icons are also ready before the first request:
+
+- `art.Keys(db.InvFiles())`: panel, the eight slot silhouettes and every icon name the tables can produce (`(*DB).InvFiles`: base `invfile`/`uniqueinvfile`/`setinvfile` plus unique and set overrides).
+- `(*Store).Extract(ctx, keys, report)`: decodes what is not in `<data>/cache/art/<stamp>/` yet, idempotent (a cached key costs one stat), keeps nothing in memory, counts art the install lacks as `missing` (the page keeps its drawn cell for those).
+- `d2bot art extract [--gamedir DIR] [--data DIR]` is the one command: prints `art: N/M` progress and `art ready: N images, K without art`; without an install or archives it says so (error names "drawn cells") and exits 1; nothing is written outside `<data>/cache/art` (and the tables cache).
+- Automatic: `artSource` starts the same extraction in the background at every start (first start, wizard first run, and after an update: a changed Patch_D2 or archive size is a new cache stamp, a changed table set only adds new icons). It never blocks start-up or the page; a request during the run decodes its own key on demand.
+- `GET /api/art` gained `state` (`unavailable|idle|extracting|ready`) and `done`, `total`, `missing`; the schema name stays `watch.art/1`. While `extracting` the page shows "preparing art done/total" beside the equipment header and polls every 3 s.
+- Guards unchanged: the cache is only under the data dir, no embed, no image layer (`tools/ci/check.sh` art guard, `TestEmbeddedWebHasNoArt`).
+- Onboarding text (for the install guide and wizard first-run, proposed): "The first start prepares the item pictures from your own Diablo II files in the background (a few seconds); the inventory page shows plain boxes until it finishes. To do it by hand: `d2bot art extract`." Dev update path: after a deploy run `d2bot art extract` in the container once (also done automatically at start), see docs/dev-update.md.
+- Not done: ETag without hashing the body per request (the SHA of a 1 KB PNG is microseconds, not worth a change); `immutable` (keys are not content-versioned, a patched install changes the bytes under the same URL, so `max-age` stays); a sprite or batch endpoint (the pictures are tiny, and 30 requests are only a problem when each waits behind the probe chain, which is gone).
+
+### Warm repeat loads still 1 to 2 s (user measurement, same card)
+
+Cause found in the code path, not the art: every `GET /api/inventory` (page load and then every 4 s poll) ran `Desk.View`, which called the loot judge `EvaluateUnit` once per carried item for the "why" line. `EvaluateUnit` reads a fresh snapshot (`l.snap()`, on the d2d backend `Reader.Snapshot`: the `state` verb plus `FillMissiles`, the `debug missiles` verb) every time. V (code reading plus a test that counts the reads): 30 items mean about 30 snapshot reads per request. V (d2dtrace lines of the sandbox container, 2026-11-10): `state` mean 15.7 ms (max 1.17 s), `debug missiles` mean 15.5 ms, so about 0.9 s per request when idle and more when the bot's own ticks queue on the same control socket; that matches the 1 to 2 s. It also loaded the control socket the bot plays through, on every poll. The icon requests are not the cost: art responses carry `Cache-Control: private, max-age=86400` and `ETag`, so a repeat load issues them from the browser cache (S: no browser run here).
+
+Fix: `loot.(*Looter).EvaluatorFor(snapshot)` builds the verdict context once and reads nothing; `invdesk.Desk.SetWhyFor` binds it once per `View` (`TestWhyForBuiltOncePerView`, `TestEvaluatorForMatchesEvaluateUnit`: same verdicts, zero game reads); `cmd/d2bot/invwire.go` uses it. `watch.InvAPI` also serves one built view body for 1.5 s to concurrent polls and drops it on any inventory POST (`TestInventoryViewIsSharedAndDroppedByPost`). Expected after: the inventory reply is CPU only (U for the wall time, needs a live container; the check is `curl -w '%{time_total}'` of `/api/inventory` before and after the deploy). Remaining cost per view, not changed: `CheckPlayerEquip` for ten slots per backpack item (in-memory, no game read). Layout of the page (about 100 cells) is not a cost worth measuring: the drawn cells paint from the first `/api/inventory` reply, art joins when `/api/art` says so.

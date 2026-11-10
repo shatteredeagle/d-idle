@@ -38,12 +38,13 @@ type Equipper interface {
 
 // Config wires the desk to the bot.
 type Config struct {
-	Path      string                      // state file; empty: nothing is persisted
-	Inventory func() status.InventoryData // the existing watch/status item snapshot
-	Snap      func() *d2.Snapshot         // the runner's newest snapshot
-	Why       func(u d2.Unit) string      // optional: the item goals engine's reason line (loot verdict)
-	SellBlock func(u d2.Unit) string      // optional: why an item can never be sold ("" = it may be)
-	Advice    func(it status.Item) string // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
+	Path      string                                      // state file; empty: nothing is persisted
+	Inventory func() status.InventoryData                 // the existing watch/status item snapshot
+	Snap      func() *d2.Snapshot                         // the runner's newest snapshot
+	Why       func(u d2.Unit) string                      // optional: the item goals engine's reason line (loot verdict)
+	WhyFor    func(s *d2.Snapshot) func(u d2.Unit) string // optional, wins over Why: binds the reason source to ONE snapshot, built once per View
+	SellBlock func(u d2.Unit) string                      // optional: why an item can never be sold ("" = it may be)
+	Advice    func(it status.Item) string                 // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
 	Now       func() time.Time
 }
 
@@ -114,6 +115,14 @@ func (d *Desk) SetEquipper(e Equipper) { d.mu.Lock(); d.eq = e; d.mu.Unlock() }
 
 // SetWhy installs the reason-line source after the looter exists.
 func (d *Desk) SetWhy(f func(u d2.Unit) string) { d.mu.Lock(); d.c.Why = f; d.mu.Unlock() }
+
+// SetWhyFor installs a reason source that is bound to one snapshot per View. Use it when the verdict needs a game
+// read: Why alone would read the game once per item on every page poll (TASK-268: about 30 reads, 1 s on d2d).
+func (d *Desk) SetWhyFor(f func(s *d2.Snapshot) func(u d2.Unit) string) {
+	d.mu.Lock()
+	d.c.WhyFor = f
+	d.mu.Unlock()
+}
 
 // SetSellBlock installs the never-sell test after the town exists.
 func (d *Desk) SetSellBlock(f func(u d2.Unit) string) { d.mu.Lock(); d.c.SellBlock = f; d.mu.Unlock() }
@@ -407,6 +416,10 @@ func (d *Desk) View() View {
 		v.Note = "waiting for the first look at the hero"
 	}
 	v.Gold, v.StashGold = data.Gold, data.StashGold
+	why := d.c.Why
+	if d.c.WhyFor != nil {
+		why = d.c.WhyFor(s)
+	}
 	decorate := func(it status.Item, place string) ItemView {
 		iv := ItemView{Item: it}
 		u, _, ok := d.unit(it.ID)
@@ -418,8 +431,8 @@ func (d *Desk) View() View {
 				iv.Mark = m.Mark
 			}
 		}
-		if d.c.Why != nil {
-			iv.Why = d.c.Why(u)
+		if why != nil {
+			iv.Why = why(u)
 		}
 		if d.c.Advice != nil {
 			iv.Advice = d.c.Advice(it)

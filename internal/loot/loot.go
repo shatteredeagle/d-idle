@@ -186,6 +186,16 @@ func (l *Looter) EvaluateUnit(u d2.Unit) Verdict {
 	return l.EvaluateWith(u, c)
 }
 
+// EvaluatorFor is EvaluateUnit bound to the snapshot s: the context is built once and no game read happens per
+// item, so a page that judges every carried item costs one pass over the data, not one snapshot read per item.
+func (l *Looter) EvaluatorFor(s *d2.Snapshot) func(u d2.Unit) Verdict {
+	c := Ctx{CLvl: 1}
+	if s != nil && s.State == d2.StateInGame && s.Player != nil {
+		c = l.ctxFrom(s)
+	}
+	return func(u d2.Unit) Verdict { return l.EvaluateWith(u, c) }
+}
+
 // EvaluateWith is EvaluateUnit with an explicit context (no snapshot read).
 func (l *Looter) EvaluateWith(u d2.Unit, c Ctx) Verdict {
 	if u.Item == nil {
