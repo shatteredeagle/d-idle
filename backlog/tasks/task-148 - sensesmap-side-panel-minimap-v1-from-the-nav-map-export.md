@@ -1,7 +1,7 @@
 ---
 id: TASK-148
 title: 'sensesmap: side-panel minimap v1 from the nav map export'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:11:00Z'
