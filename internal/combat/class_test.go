@@ -172,23 +172,40 @@ func TestPaladinBands(t *testing.T) {
 			return false
 		}
 	}
-	// BUILDV2: Sacrifice is never in the order (it costs life per hit and is only the Zeal prerequisite)
-	if o := pr.AttackNames(10, has("Zeal")); o[0] != "Smite" || o[len(o)-1] != "Attack" {
+	// palprofile: before Zeal the free plain Attack is the whole order; Sacrifice (life cost) and Smite are never
+	// ranked (SME 2026-11-10: prerequisites only)
+	if o := pr.AttackNames(10, has("Zeal")); len(o) != 1 || o[0] != "Attack" {
 		t.Fatalf("below clvl 12: %v", o)
 	}
 	if o := pr.AttackNames(13, has("Zeal")); o[0] != "Zeal" || o[len(o)-1] != "Attack" {
 		t.Fatalf("%v", o)
 	}
-	if o := pr.AttackNames(13, has()); o[0] != "Smite" {
-		t.Fatalf("Zeal not learned: %v", o)
-	}
 	if o := pr.AttackNames(30, has("Zeal", "Blessed Hammer")); o[0] != "Blessed Hammer" {
 		t.Fatalf("%v", o)
 	}
+	if o := pr.AttackNames(13, has()); o[0] != "Attack" {
+		t.Fatalf("Zeal not learned: %v", o)
+	}
 	for _, lv := range []int{1, 10, 13, 30} {
 		for _, n := range pr.AttackNames(lv, has("Zeal", "Blessed Hammer", "Sacrifice")) {
-			if n == "Sacrifice" {
-				t.Errorf("clvl %d: Sacrifice in the attack order", lv)
+			if n == "Smite" || n == "Sacrifice" {
+				t.Errorf("clvl %d: %s ranked: %v", lv, n, pr.AttackNames(lv, has("Zeal", "Blessed Hammer")))
+			}
+		}
+	}
+	// the Zeal band is Zeal then Attack
+	if o := pr.AttackNames(13, has("Zeal")); o[len(o)-1] != "Attack" || o[0] != "Zeal" || len(o) != 2 {
+		t.Fatalf("%v", o)
+	}
+	// the Sorceress is unchanged: Blizzard band first, Attack never ranked above a spell
+	sor := ProfileFor(d2.Sorceress, BuildBlizzard)
+	if o := sor.AttackNames(30, has("Blizzard")); o[0] != "Blizzard" {
+		t.Fatalf("sorceress %v", o)
+	}
+	for _, lv := range []int{1, 12, 30} {
+		for _, n := range sor.AttackNames(lv, has("Blizzard", "Fire Bolt", "Ice Bolt")) {
+			if n == "Sacrifice" || n == "Smite" {
+				t.Errorf("sorceress clvl %d ranks %s", lv, n)
 			}
 		}
 	}

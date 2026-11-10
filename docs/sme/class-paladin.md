@@ -21,7 +21,7 @@ Points: 1 per clvl from 2 plus 4 per difficulty; 47 at clvl 40 on our timeline. 
 
 ## 2. Skills, synergies, per-level numbers (T)
 
-Added damage per hit unless marked /s. Mana shown at skill level 1/10/20. Auras have no mana cost.
+Added damage per hit unless marked /s. Mana shown at skill level 1/10/20. Most auras cost no mana, but Prayer does (1/2.7/4.6 in the table below; SME 2026-11-10, S) and it stops mana regeneration while it heals, so it is a rest aura only (palprofile, `docs/palprofile.md`).
 
 | skill | clvl | prereqs | mana L1/L10/L20 | added dmg L1 / L10 / L20 (type) | synergy |
 |---|---|---|---|---|---|
