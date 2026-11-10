@@ -26,7 +26,7 @@ type LootTuning struct {
 func DefaultLootTuning() LootTuning {
 	return LootTuning{
 		PickRadius: 30, PickStrictness: 1, PickTries: 3, WalkDist: 4, ConfirmMs: 1500, GapMs: 150,
-		GoldMinStack: 10, GoldPileShare: 50, FreeCellsKeep: 2, PotionBuffer: 0, RejuvSpare: 3, LowGoldBelow: 2000, MinValuePerCell: 100, ValuableMinGold: 1500, ValuableMinPrio: 70, CarryValuables: 0, MaxPerCall: 30,
+		GoldMinStack: 10, GoldPileShare: 50, FreeCellsKeep: 2, PotionBuffer: 2, RejuvSpare: 3, LowGoldBelow: 2000, MinValuePerCell: 100, ValuableMinGold: 1500, ValuableMinPrio: 70, CarryValuables: 0, MaxPerCall: 30,
 		PoorGoldBelow: 300, PoorMinSell: 6,
 	}
 }

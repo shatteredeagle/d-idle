@@ -14,6 +14,7 @@ import (
 
 func newLooter(t *testing.T) (*loot.Looter, *sim.Rig) {
 	r := sim.NewRig(t)
+	r.Env.Tune.Loot.PotionBuffer = 0 // the tests below were written for no pack buffer; TestDefaultPackBuffer covers the default
 	l := loot.New(r.Env, r.Mv)
 	l.UseSource(r.W.Snapshot, r.W.UnitStats)
 	return l, r
