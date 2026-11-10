@@ -1,1 +1,0 @@
-INDEX: docs/killloop.md - where the seconds per kill go on the sandbox Paladin (ranked waits, area xp/h)
