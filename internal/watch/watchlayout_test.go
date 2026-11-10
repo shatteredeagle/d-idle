@@ -134,6 +134,12 @@ func TestWatchFoldableCards(t *testing.T) {
 
 // The inventory page is on the design system: the shared stylesheets and top band, no inline <style> (the page CSP
 // refused it and the page rendered unstyled), and the durability of a broken item reads 0, not undefined.
+// DOM goldens of the inventory page: ready with art off (byte-identical to the page before the art layer), ready with
+// art on, empty, error and an image that fails to load (testdata/inventory_dom_*.txt; UPDATE=1 rewrites them).
+func TestInventoryDOMGoldens(t *testing.T) {
+	runNode(t, "testdata/inventory_dom.js", "web/inventory.js")
+}
+
 func TestInventoryPageOnTheShell(t *testing.T) {
 	for _, want := range []string{`href="/watch/tokens.css"`, `href="/watch/shell.css"`, `href="/watch/components.css"`, `href="/watch/inventory.css"`,
 		`data-band="status"`, `id="btn-theme"`, `class="d-doll"`, `id="pack"`, `src="/watch/shell.js"`, `src="/watch/inventory.js"`} {
