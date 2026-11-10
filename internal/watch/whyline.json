@@ -43,6 +43,9 @@
     "farm_gold": {"params": ["level"], "say": [
       "Short of gold: levelling up from level {level} until I can afford what I need.",
       "Out of money, so I am farming gold at level {level}."]},
+    "farm_user": {"params": ["area", "have", "want"], "say": [
+      "Farming gold on your order: {have} of {want} in {area}.",
+      "You asked for gold: {have} of {want} so far, farming {area}."]},
     "saving_for": {"params": ["area", "item", "need"], "say": [
       "Saving for {item}, {need} gold to go, fighting in {area} meanwhile.",
       "Short of gold: {need} more for {item}. Fighting in {area}."]},

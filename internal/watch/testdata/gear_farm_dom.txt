@@ -1,0 +1,6 @@
+no farm field (old bot): panel shown; button (hidden); repair "Repair now"; line (hidden)
+off: panel shown; button "Farm gold"; repair "Repair now"; line (hidden)
+on, short of the target: panel shown; button "Stop farming"; repair "Repair now"; line "Farming gold on your order: 40 of 190 in Blood Moor."
+on, target reached: panel shown; button "Stop farming"; repair "Repair now"; line "Farming gold on your order: 200 of 190 reached, still farming in Blood Moor until you stop."
+ended by itself: panel shown; button "Farm gold"; repair "Repair now"; line "Farming gold stopped: level 1 is below the first safe zone"
+no gear, farm on: panel shown; button "Stop farming"; repair "Repair now"; line "Farming gold on your order: choosing a zone."

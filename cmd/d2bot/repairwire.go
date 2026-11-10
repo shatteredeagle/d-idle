@@ -5,7 +5,9 @@ import (
 	"path/filepath"
 	"time"
 
+	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/town"
@@ -36,6 +38,13 @@ func newRepair(stateDir string, d *display, ref *runnerRef) error {
 		return err
 	}
 	ref.rep = c
+	gcfg := ""
+	if stateDir != "" {
+		gcfg = filepath.Join(stateDir, goldfarm.StateFile)
+	}
+	if ref.gf, err = goldfarm.New(gcfg, time.Now); err != nil {
+		return err
+	}
 	if d != nil {
 		d.dur = func(u d2.Unit) (int, int, bool) {
 			if tw := ref.tw.Load(); tw != nil {
@@ -116,7 +125,7 @@ func wireRepair(ref *runnerRef, tw *town.Town) {
 
 // bindRepair connects the controller to the policy sheet (the mode is the row's current option), the unlock ladder
 // (a mode is open when its row is), the alerts (gear alerts) and the routes. No-op without a controller or a Fun.
-func bindRepair(f *watch.Fun, c *repair.Controller) {
+func bindRepair(f *watch.Fun, c *repair.Controller, gf *goldfarm.Controller) {
 	if f == nil || c == nil {
 		return
 	}
@@ -147,15 +156,59 @@ func bindRepair(f *watch.Fun, c *repair.Controller) {
 		f.Alerts.SetGear(c.Gear)
 	}
 	api := watch.NewRepairAPI()
-	api.Bind(repairAdapter{c})
+	api.Bind(repairAdapter{c, gf})
 	f.Repair = api
+	if gf != nil {
+		fa := watch.NewGoldFarmAPI()
+		fa.Bind(farmAdapter{gf})
+		f.GoldFarm = fa
+	}
 }
 
-// repairAdapter lets the watch routes talk to the controller without importing it.
-type repairAdapter struct{ c *repair.Controller }
+// wireGoldFarm gives the runner the Farm gold order. A named run (D2BOT_RUN) never farms on an order: measured runs
+// stay comparable, like the repair gate.
+func wireGoldFarm(ref *runnerRef, r *bot.Runner) {
+	if ref == nil || ref.gf == nil || r == nil || os.Getenv("D2BOT_RUN") != "" {
+		return
+	}
+	r.SetGoldFarm(ref.gf, ref.estimate)
+}
 
-func (a repairAdapter) View() any             { return a.c.View() }
+// repairAdapter lets the watch routes talk to the controller without importing it. The reply carries the Farm gold
+// status as one additive field, so the gear panel needs no second poll.
+type repairAdapter struct {
+	c  *repair.Controller
+	gf *goldfarm.Controller
+}
+
+type repairWithFarm struct {
+	repair.View
+	Farm *goldfarm.View `json:"farm,omitempty"`
+}
+
+func (a repairAdapter) View() any {
+	v := repairWithFarm{View: a.c.View()}
+	if a.gf != nil {
+		f := a.gf.View()
+		v.Farm = &f
+	}
+	return v
+}
 func (a repairAdapter) Request() (any, error) { return a.c.Request() }
 func (a repairAdapter) Cancel() error         { return a.c.Cancel() }
 
-var _ watch.RepairDesk = repairAdapter{}
+// farmAdapter is the Farm gold desk of the watch routes.
+type farmAdapter struct{ c *goldfarm.Controller }
+
+func (a farmAdapter) View() any { return a.c.View() }
+func (a farmAdapter) Set(on bool) error {
+	if on {
+		return a.c.Start()
+	}
+	return a.c.Stop()
+}
+
+var (
+	_ watch.RepairDesk   = repairAdapter{}
+	_ watch.GoldFarmDesk = farmAdapter{}
+)

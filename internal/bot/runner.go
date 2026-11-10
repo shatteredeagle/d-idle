@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/readiness"
 	"errors"
 	"fmt"
@@ -92,6 +93,10 @@ type Runner struct {
 	ch  chan goals.Event
 	bus *event.Bus
 	sub *event.Sub // bridge subscription (bus -> ch), nil without a bus
+
+	gf       *goldfarm.Controller // the player's Farm gold order (SetGoldFarm); nil: no order
+	gfRepair func() int           // gold Repair All would cost now
+	gfArea   int                  // last farm zone logged
 
 	wpHook func(areaID int, name string) // SetWaypointHook
 	firsts *decide.Firsts                // SetLadderFirsts
