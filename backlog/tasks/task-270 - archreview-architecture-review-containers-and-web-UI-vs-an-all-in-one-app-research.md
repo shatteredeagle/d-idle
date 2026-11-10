@@ -20,6 +20,7 @@ owns:
   - "backlog/merge-lines/agent-archreview.txt"
 exclusive: []
 contracts: []
+result: "Docs only (docs/research/architecture-review-2026-11-10.md); nothing built, deployed or run live. Verified by commands: Go cross-builds per OS (one OS-specific package, internal/launch), d2d CI matrix and the Windows devctl stub at the shipped pin, sandbox image layers and resource use, Docker Desktop requirements. Recommendation: hybrid (one release layout, native per OS plus the container as one packaging), hosted beta first; open questions in section 1, proposed decision text in section 12. Whole-repo gate on the worker host exit 0."
 ---
 
 ## Description
@@ -27,11 +28,11 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Size: M. Why: the user asked whether the containerized path with a web UI should give way to an all-in-one app for an idle game, sunk cost ignored. Done when: the research doc answers with a matrix, costs, risks, migration plan and open questions, and the whole-repo gate passes.
+Why: the user asked whether the containerized path with a web UI should give way to an all-in-one app for an idle game, sunk cost ignored. Done when: the research doc answers with a matrix, costs, risks, migration plan and open questions, and the whole-repo gate passes.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docs/research/architecture-review-2026-11-10.md gives the questions, the decision matrix (A status quo, B native all-in-one, C hybrid, D others), costs in PRs and agent-hours, risks, a migration plan and proposed decision text, every claim tagged V/S/U
-- [ ] #2 feasibility facts are tested, not guessed: Go cross-builds per OS, d2d platform support and control channel, container contents and resource use, Docker Desktop requirements
+- [x] #1 docs/research/architecture-review-2026-11-10.md gives the questions, the decision matrix (A status quo, B native all-in-one, C hybrid, D others), costs in PRs and agent-hours, risks, a migration plan and proposed decision text, every claim tagged V/S/U
+- [x] #2 feasibility facts are tested, not guessed: Go cross-builds per OS, d2d platform support and control channel, container contents and resource use, Docker Desktop requirements
 <!-- AC:END -->
