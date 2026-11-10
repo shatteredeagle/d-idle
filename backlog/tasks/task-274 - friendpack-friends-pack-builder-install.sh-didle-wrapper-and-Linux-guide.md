@@ -1,10 +1,11 @@
 ---
 id: TASK-274
 title: 'friendpack: friends pack builder, install.sh, didle wrapper and Linux guide'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T22:17:00Z'
+updated_date: '2026-11-10T22:45:00Z'
 labels:
   - container
   - feature
