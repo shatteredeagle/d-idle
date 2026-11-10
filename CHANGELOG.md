@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Research note on showing real game art in the inventory paper doll (docs only)
 - watch UI: polls no longer reset page scroll (redraws keep page and inner scroll offsets; focus restore uses preventScroll)
 - Fewer area ping-pongs: the border-loop breaker trips after 5 crossings and skips a repeat offender for longer each time
 - Fidelity oracle batch 4 (decomp8): waypoint/town portal, Act 1 layouts and vendor stock equal game.exe on upstream 83fc7ba1; offline emulator runs only

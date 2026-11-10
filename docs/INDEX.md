@@ -904,3 +904,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/fid/fid-layout-act1.md | layouts of 34 more Act 1 levels, game.exe against d2d, 0 differ (TASK-80)
 - docs/probes/fid/fid-stock-oracle.md | vendor stock generation 0 differ, refresh rule partly read (TASK-77)
 - docs/areathrash.md - area thrash, cave-mouth holds, Dark Wood exit analysis
+- docs/research/paperdoll-art.md: real Diablo II art for the /watch/inventory paper doll (runtime extraction from the user install, MPQ file map, licence, PR plan)
