@@ -1,11 +1,11 @@
 ---
 id: TASK-265
 title: 'electronplan: design the Electron rebuild of the d.idle desktop launcher'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:36:00Z'
-updated_date: '2026-11-10T18:39:00Z'
+updated_date: '2026-11-10T20:33:00Z'
 labels:
   - docs
   - research
