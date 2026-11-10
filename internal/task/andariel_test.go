@@ -1,10 +1,12 @@
 package task_test
 
 import (
+	"strconv"
 	"strings"
 	"testing"
 
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/plandata"
 	"d2lod-bot/internal/task"
 )
 
@@ -114,5 +116,48 @@ func TestAndarielLines(t *testing.T) {
 	got := task.AndarielLine(andyWorld(d+1, func(w *task.World) { w.HasTP = false }))
 	if !strings.HasPrefix(got, "boss: andariel gate pass clvl=18 kit=short(") || !strings.Contains(got, "no town portal") {
 		t.Errorf("short line %q", got)
+	}
+}
+
+// TestAndarielWarnsBelowRecommended: the class row makes the level a warning band, not a wall. Between the floor and the
+// recommended level the gate passes and says why; below the floor it still holds. Paladin and Sorceress rows.
+func TestAndarielWarnsBelowRecommended(t *testing.T) {
+	g, _ := task.GateFor(task.QAndariel)
+	for _, class := range []string{"paladin", "sorceress"} {
+		row, err := plandata.BossLevels(plandata.GateAndariel, class)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, merc := range []bool{false, true} {
+			floor, rec := row.Floor, row.Recommended
+			if merc {
+				floor, rec = row.FloorMerc, row.RecommendedMerc
+			}
+			at := func(lvl int) task.World {
+				return andyWorld(lvl, func(w *task.World) {
+					w.AndarielMinLevel, w.AndarielMinLevelMerc = row.Floor, row.FloorMerc
+					w.AndarielRec, w.AndarielRecMerc = row.Recommended, row.RecommendedMerc
+					w.HasMerc, w.MercKnown, w.MercAlive = merc, merc, merc
+				})
+			}
+			if why := g.NotReady(at(floor - 1)); !strings.Contains(why, "clvl") {
+				t.Errorf("%s merc=%v clvl %d: %q, want the floor to hold", class, merc, floor-1, why)
+			}
+			w := at(floor)
+			if why := g.NotReady(w); why != "" {
+				t.Errorf("%s merc=%v clvl %d: not ready %q", class, merc, floor, why)
+			}
+			if warn := task.AndarielWarn(w); !strings.Contains(warn, "going on below the recommended level") {
+				t.Errorf("%s merc=%v clvl %d: warn %q", class, merc, floor, warn)
+			} else if want := "level " + strconv.Itoa(rec); !strings.Contains(warn, want) {
+				t.Errorf("warn %q lacks %q", warn, want)
+			}
+			if line := task.AndarielLine(w); !strings.Contains(line, "gate pass") || !strings.Contains(line, "warning: going on below") {
+				t.Errorf("%s merc=%v line %q", class, merc, line)
+			}
+			if warn := task.AndarielWarn(at(rec)); warn != "" {
+				t.Errorf("%s merc=%v at the recommended level: %q", class, merc, warn)
+			}
+		}
 	}
 }

@@ -10,12 +10,12 @@ import (
 
 // floorWorld is a Normal character with the ADR 0011 knob defaults, the full kit and a merc state.
 func floorWorld(lvl int, merc string, mut func(*task.World)) task.World {
-	rt, bt := env.DefaultRouteTuning(), env.DefaultBossTuning()
+	rt := env.DefaultRouteTuning()
 	w := task.World{Act: 1, Difficulty: "normal", Level: lvl, Gold: 500, Potions: 5, HasTP: true, ManaPotions: 3, Antidotes: 2,
 		RouteMinLevel: rt.MonasteryMinLevel, RouteMinLevelMerc: rt.MonasteryMinLevelMerc,
 		TowerMinLevel: rt.TowerMinLevel, TowerMinLevelMerc: rt.TowerMinLevelMerc, TowerNeedsMerc: rt.TowerNeedsMerc != 0,
 		TowerMinLife: rt.TowerMinLife, TowerMinLevelNoLife: rt.TowerMinLevelNoLife,
-		AndarielMinLevel: bt.AndarielMinLevel, AndarielMinLevelMerc: bt.AndarielMinLevelMerc,
+		AndarielMinLevel: env.DefaultAndarielMinLevel, AndarielMinLevelMerc: env.DefaultAndarielMinLevelMerc,
 		Quests: map[string]task.QuestState{}}
 	switch merc {
 	case "alive":

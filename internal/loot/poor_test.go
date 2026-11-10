@@ -87,9 +87,9 @@ func TestSmallGoldPileOnlySkippedWhenNotPoor(t *testing.T) {
 
 func TestPickReportSummary(t *testing.T) {
 	rep := loot.PickReport{Seen: 3, Picked: []loot.Picked{{}}, GoldGained: 7,
-		Skipped: []loot.Skipped{{Why: "no room"}, {Why: "no room"}}}
+		Skipped: []loot.Skipped{{Why: "no room", Name: "Cap"}, {Why: "no room", Name: "Sash"}}}
 	got := rep.Summary()
-	if !strings.Contains(got, "3 seen, picked 1, skipped 2 (2x no room), gold +7") {
+	if !strings.Contains(got, "3 seen, picked 1, skipped 2 (2x no room: Cap, Sash), gold +7") {
 		t.Fatal(got)
 	}
 }

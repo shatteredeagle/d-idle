@@ -8,6 +8,11 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tools: dev-reset.sh / dev-sandbox.sh reset the dev play sandbox to a fresh hero with a reversible archive
+- Andariel level gate is a per-class data row (Paladin 17 / 15 with merc recommended) with a warning below the recommended level instead of a wall (TASK-250)
+- tools/firsthour.sh: read-only first-hour metric row from sandbox logs (docs/first-hour.md)
+- Agent reading diet: AGENTS.md mandatory reading is START-HERE, the task and the area doc; memory doc, glossary and the long backlog-howto are on demand
+- Loot: scroll pickup stops when the tome is full, low-tier potions skipped by clvl (data table), loot summary names skipped items
 - Added a Farm gold / Stop farming button to the gear panel of /watch (POST /api/farmgold): the hero farms a safe zone one rung below its level until told to stop; persists across restarts (not run live yet)
 - loot.potionBuffer default 2: the bot keeps two spare potions per kind beyond a full belt
 - watch: the shell poll scheduler aborts a stalled request and cannot be wedged by one panel (minimap freeze hardening, TASK-261)
