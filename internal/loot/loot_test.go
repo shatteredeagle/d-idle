@@ -397,7 +397,7 @@ func TestPotionWantByBuildAndDifficulty(t *testing.T) {
 	w.Player.Level = 40
 	w.Add("hp1", d2.ContBelt, 0, 0) // room left on the belt, so only the plan's columns decide
 	w.Add("hp1", d2.ContBelt, 3, 0)
-	mp := w.NewItem("mp3", 2)
+	mp := w.NewItem("mp4", 2) // above the Nightmare tier floor at clvl 40
 	want := func() bool { return l.EvaluateUnit(mp).Rule == "healing and mana" }
 
 	// Normal is unchanged by the build: the Barbarian has no mana column.
