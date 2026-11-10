@@ -903,3 +903,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/probes/fid/fid-wp-tp-pr.md | waypoint refusal window and Town Portal read, d2d against game.exe, 0 differ on 83fc7ba1 (TASK-95)
 - docs/probes/fid/fid-layout-act1.md | layouts of 34 more Act 1 levels, game.exe against d2d, 0 differ (TASK-80)
 - docs/probes/fid/fid-stock-oracle.md | vendor stock generation 0 differ, refresh rule partly read (TASK-77)
+- docs/areathrash.md - area thrash, cave-mouth holds, Dark Wood exit analysis

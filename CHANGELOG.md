@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fewer area ping-pongs: the border-loop breaker trips after 5 crossings and skips a repeat offender for longer each time
 - Fidelity oracle batch 4 (decomp8): waypoint/town portal, Act 1 layouts and vendor stock equal game.exe on upstream 83fc7ba1; offline emulator runs only
 - The hero now talks to the Act 1 quest givers in the Rogue Encampment (Kashya, Charsi) when their quest is available and its level is reached, instead of waiting for the plan to reach them; D2BOT_QUEST_GIVERS=0 turns it off
 - The hero no longer flips in and out of poverty per potion, a melee Paladin stops buying 60 gold mana potions before healing, and the Why card says what it is saving for.
