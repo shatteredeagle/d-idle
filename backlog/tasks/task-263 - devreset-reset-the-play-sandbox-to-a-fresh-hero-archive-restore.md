@@ -21,6 +21,7 @@ owns:
   - "docs/dev-reset.md"
 exclusive: []
 contracts: []
+result: "Scratch drill passed (V); not run on the real sandbox; VERSION and URL lines and the hero wait unverified live. CLI only."
 ---
 
 ## Description
