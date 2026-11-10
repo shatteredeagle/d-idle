@@ -919,3 +919,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/dev-reset.md: reset the play sandbox to a fresh hero, archive and restore (TASK-263)
 - docs/sorceress-early.md - Sorceress clvl 1-12 SME proposal, wizard/table finding, live measurement plan (TASK-267)
 - docs/sorceress-early.md - section 7: sorcready2 applied decisions (Sorceress normal30 default, Warmth, cold line, class-table guard)
+- research/legal-note.md - GPL, Blizzard EULA posture, art on streams, pre-friend-copy checklist (TASK-257)
