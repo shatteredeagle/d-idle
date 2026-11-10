@@ -1,3 +1,0 @@
-BACKLOG: pursuers: wanders turn and fight when followed at healthy life (TASK-260), docs/pursuers.md
-INDEX: docs/pursuers.md - the hero that walks on with followers; nav.pursuit rule and the log evidence
-CHANGELOG: Explore, roam and exit walks now turn and fight when a monster follows the hero at healthy life (nav.pursuitRadius, nav.pursuitPolls, nav.pursuitMinLifePct)

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Explore, roam and exit walks now turn and fight when a monster follows the hero at healthy life (nav.pursuitRadius, nav.pursuitPolls, nav.pursuitMinLifePct)
 - fix: the art paper doll had zero width on wide inventory cards (percentage width in a max-content column); it now has a fixed 320 px width
 - Paladin attack order is now data: plain Attack before Zeal, Smite no longer ranked over Attack
 - Board true-up: closed merged cards, parked blocked ones, added the first-hour and beta-path cards; docs/live-checks.md lists the live debt (TASK-253)
