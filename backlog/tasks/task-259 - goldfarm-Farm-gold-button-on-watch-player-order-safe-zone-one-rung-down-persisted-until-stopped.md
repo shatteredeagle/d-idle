@@ -53,5 +53,5 @@ Why: the sandbox poverty loop (a poor hero cycling the same zones); the player w
 - [x] #1 Farm gold button and status line on the gear panel, POST/GET /api/farmgold, persisted state
 - [x] #2 Safe zone one rung down as plan data, Sorceress and Paladin tests
 - [x] #3 Why line, log line, area-thrash and poverty interaction documented and tested offline
-- [ ] #4 Whole-repo gate on the worker host, merge queued
+- [x] #4 Whole-repo gate on the worker host, merge queued
 <!-- AC:END -->
