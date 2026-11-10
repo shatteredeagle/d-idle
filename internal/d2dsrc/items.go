@@ -38,6 +38,9 @@ func (b *builder) items(ctx context.Context, nodump bool) error {
 		}
 		b.addItem(u)
 	}
+	if b.s.o.Tooltips {
+		b.attachTips(ctx)
+	}
 	b.rp.derived("inventory.stash", "dump loc \"stash\" (V that the fork writes it; U whether stash items are listed while the stash is closed)")
 	b.rp.unknown("inventory.item_flags", "only identified/ethereal/socketed/runeword; no start-item or other flag bits")
 	return nil

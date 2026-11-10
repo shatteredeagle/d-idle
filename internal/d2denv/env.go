@@ -83,7 +83,7 @@ func Build(ctx context.Context, cfg Config) (*Backend, error) {
 	if cfg.Data != nil {
 		tables = d2dsrc.NewDBTables(cfg.Data)
 	}
-	src := d2dsrc.New(c, d2dsrc.Options{Tables: tables, BuffStates: true, Logf: func(f string, a ...any) { cfg.Log.Info("d2dsrc", "msg", sprintf(f, a...)) }})
+	src := d2dsrc.New(c, d2dsrc.Options{Tables: tables, BuffStates: true, Tooltips: true, Logf: func(f string, a ...any) { cfg.Log.Info("d2dsrc", "msg", sprintf(f, a...)) }})
 	rd := NewReader(src)
 	clk := &LateClock{c: c, ctx: ctx}
 	ctl := d2dinput.New(c)
