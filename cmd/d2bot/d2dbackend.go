@@ -264,6 +264,10 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		cat = bot.NewDataCatalog(db)
 	}
 	disp := newDisplay(cat)
+	disp.tips.set(db, func(id uint32) ([]string, int, bool) {
+		ex, ok := be.Reader.ItemExtra(id)
+		return ex.Tooltip, ex.Sockets, ok
+	})
 	bus := event.NewBus(instanceID(o), nil)
 	nv := be.Navigator()
 	ref := &runnerRef{}

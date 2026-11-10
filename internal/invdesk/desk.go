@@ -377,6 +377,10 @@ type ItemView struct {
 	Advice  string   `json:"advice,omitempty"`  // upgrade suggestion hook (card upgradeadvisor); empty today
 }
 
+// ViewSchema is the version of the /api/inventory reply: 2 added the optional item fields tip, base and sell (the item
+// tooltip, docs/inventory-tooltip.md). Version 1 readers keep working: nothing was renamed or removed.
+const ViewSchema = 2
+
 // View is the inventory page's data.
 type View struct {
 	Schema    int                  `json:"schema"`
@@ -399,7 +403,7 @@ type View struct {
 func (d *Desk) View() View {
 	d.mu.Lock()
 	defer d.mu.Unlock()
-	v := View{Schema: 1, Equipment: map[string]*ItemView{}, Pins: append([]Pin{}, d.st.Pins...), Queue: append([]Request{}, d.st.Queue...), Recent: append([]Request{}, d.st.Recent...)}
+	v := View{Schema: ViewSchema, Equipment: map[string]*ItemView{}, Pins: append([]Pin{}, d.st.Pins...), Queue: append([]Request{}, d.st.Queue...), Recent: append([]Request{}, d.st.Recent...)}
 	sort.Slice(v.Pins, func(i, j int) bool { return v.Pins[i].Slot < v.Pins[j].Slot })
 	if d.c.Inventory == nil {
 		v.Note = "inventory is not available"

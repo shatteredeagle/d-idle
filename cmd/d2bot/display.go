@@ -17,11 +17,12 @@ import (
 
 // display wires the live display (internal/status hub at /live/) and the telemetry tracker to the runner.
 type display struct {
-	hub *status.Hub
-	tr  *telemetry.Tracker
-	cat bot.Catalog
-	run *bot.Runner                                // set after the runner exists
-	dur func(u d2.Unit) (dur, maxDur int, ok bool) // worn-item durability (repairwire.go); nil: not read
+	hub  *status.Hub
+	tr   *telemetry.Tracker
+	cat  bot.Catalog
+	run  *bot.Runner                                // set after the runner exists
+	tips itemTips                                   // tooltip facts (itemtipwire.go)
+	dur  func(u d2.Unit) (dur, maxDur int, ok bool) // worn-item durability (repairwire.go); nil: not read
 }
 
 func newDisplay(cat bot.Catalog) *display {
@@ -234,6 +235,7 @@ func (i invSource) Inventory() status.InventoryData {
 			}
 			it.Art = itemArt(i.d.cat, u)
 		}
+		i.d.tips.fill(&it, u)
 		switch u.Item.Where {
 		case d2.ContEquipment:
 			if k, ok := bodySlot[u.Item.Body]; ok {

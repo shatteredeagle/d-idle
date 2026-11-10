@@ -1,0 +1,22 @@
+/* Item tooltip of the inventory page (docs/inventory-tooltip.md): a black translucent panel with centred text in the
+   display font stack, coloured by quality like in the game. Tokens only; placed by a transform set from inventory-tip.js. */
+@layer components {
+  .inv-tip { position: fixed; inset: 0 auto auto 0; z-index: var(--d-z-sheet); box-sizing: border-box; inline-size: max-content; max-inline-size: min(22rem, calc(100% - 2 * var(--d-sp-2)));
+    padding: var(--d-sp-2) var(--d-sp-3); background: var(--d-tip-bg); border: var(--d-bw) solid var(--d-tip-line); border-radius: var(--d-r-1);
+    box-shadow: var(--d-shadow-2); color: var(--d-tip-text); font: var(--d-fs-1)/var(--d-lh) var(--d-font-display); text-align: center; pointer-events: none; overflow-wrap: anywhere; }
+  .inv-tip[hidden] { display: none; }
+  .inv-tip .tip-name { font-weight: 700; font-size: var(--d-fs-2); color: var(--tq, var(--d-tip-q-normal)); }
+  .inv-tip .tip-name.q-low { --tq: var(--d-tip-q-low); } .inv-tip .tip-name.q-normal, .inv-tip .tip-name.q-superior { --tq: var(--d-tip-q-normal); }
+  .inv-tip .tip-name.q-magic { --tq: var(--d-tip-q-magic); } .inv-tip .tip-name.q-rare { --tq: var(--d-tip-q-rare); }
+  .inv-tip .tip-name.q-set { --tq: var(--d-tip-q-set); } .inv-tip .tip-name.q-unique, .inv-tip .tip-name.q-runeword { --tq: var(--d-tip-q-unique); }
+  .inv-tip .tip-name.q-crafted { --tq: var(--d-tip-q-crafted); }
+  .inv-tip .tip-line[data-k="type"], .inv-tip .tip-line[data-k="base"], .inv-tip .tip-line[data-k="req"] { color: var(--d-tip-text); }
+  .inv-tip .tip-line[data-k="prop"] { color: var(--d-tip-q-magic); }
+  .inv-tip .tip-line[data-k="sock"], .inv-tip .tip-line[data-k="eth"], .inv-tip .tip-line[data-k="note"], .inv-tip .tip-line[data-k="meta"] { color: var(--d-tip-dim); }
+  .inv-tip .tip-line[data-k="bad"] { color: var(--d-tip-bad); }
+  .inv-tip .tip-badges { display: flex; justify-content: center; gap: var(--d-sp-1); margin-block-start: var(--d-sp-1); }
+  .inv-tip .tip-badge { font: 700 .65rem/1.4 var(--d-font-body); padding: 0 var(--d-sp-1); border-radius: 2px; background: var(--d-tip-line); color: var(--d-tip-text); }
+  .inv-tip .tip-badge[data-badge="sell"] { background: var(--d-bad); color: var(--d-on-bad); }
+  .inv-tip .tip-badge[data-badge="keep"] { background: var(--d-good); color: var(--d-on-good); }
+  .inv-tip .tip-badge[data-badge="pin"] { background: var(--d-accent); color: var(--d-on-accent); }
+}
