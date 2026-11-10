@@ -1,10 +1,13 @@
 ---
 id: TASK-275
-title: 'feedpublish: feed-publish.sh and d2feed, a host-agnostic static feed tree with client verification'
-status: Proposed
+title: >-
+  feedpublish: feed-publish.sh and d2feed, a host-agnostic static feed tree with
+  client verification
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T22:52:00Z'
+updated_date: '2026-11-10T23:06:00Z'
 labels:
   - container
   - feature
