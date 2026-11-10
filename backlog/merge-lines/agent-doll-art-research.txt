@@ -1,0 +1,2 @@
+INDEX: docs/research/paperdoll-art.md: real Diablo II art for the /watch/inventory paper doll (runtime extraction from the user install, MPQ file map, licence, PR plan)
+CHANGELOG: Research note on showing real game art in the inventory paper doll (docs only)
