@@ -1,7 +1,7 @@
 ---
 id: TASK-210
 title: 'nowpn: Paladin cannot fall back to the basic Attack swing (no left popup cell)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T13:50:00Z'
@@ -31,3 +31,5 @@ Why: live Paladin (clvl 10, mana 0) logged "left skill not selectable Attack: sk
 - [x] #1 Attack (skill 0) is found in the left popup although the d2d dump omits it from Player.Skills
 - [x] #2 Unit test fails before, passes after
 <!-- AC:END -->
+
+result: fixed in internal/combat/bindleft.go (leftCells synthesizes Attack), offline test only (fails before, passes after); not verified live.

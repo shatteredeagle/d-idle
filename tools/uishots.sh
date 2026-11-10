@@ -32,19 +32,27 @@ timeout 600 Xvfb $disp -screen 0 1920x1200x24 -nolisten tcp >/dev/null 2>&1 &
 xp=$!
 sleep 2
 mkdir -p "$out" && rm -f "$out"/*.png "$out"/*.html
-# name width height query
-shots="watch-390-dark 390 844 theme=dark
-watch-390-light 390 844 theme=light
-watch-768-dark 768 1024 theme=dark
-watch-1280-dark 1280 800 theme=dark
-watch-1440-dark 1440 900 theme=dark
-watch-1440-light 1440 900 theme=light
-watch-1440full-dark 1440 2600 theme=dark
-watch-1920-dark 1920 1080 theme=dark
-overlay-1920-dark 1920 160 theme=dark&mode=overlay"
+# name width height path?query
+shots="watch-390-dark 390 844 watch?theme=dark
+watch-390-light 390 844 watch?theme=light
+watch-768-dark 768 1024 watch?theme=dark
+watch-1280-dark 1280 800 watch?theme=dark
+watch-1440-dark 1440 900 watch?theme=dark
+watch-1440-light 1440 900 watch?theme=light
+watch-1440full-dark 1440 2600 watch?theme=dark
+watch-1920-dark 1920 1080 watch?theme=dark
+overlay-1920-dark 1920 160 watch?theme=dark&mode=overlay
+inventory-390-dark 390 844 watch/inventory?theme=dark
+inventory-390full-dark 390 2400 watch/inventory?theme=dark
+inventory-1440-dark 1440 900 watch/inventory?theme=dark
+inventory-1440-light 1440 900 watch/inventory?theme=light
+policy-390-dark 390 1600 watch/policy?theme=dark
+policy-1440-dark 1440 900 watch/policy?theme=dark
+return-390-dark 390 1600 watch/return?theme=dark
+return-1440-dark 1440 900 watch/return?theme=dark"
 echo "$shots" | while read -r name w h q; do
 	[ -n "$only" ] && [ "$only" != "$name" ] && continue
-	url="http://127.0.0.1:$port/watch?$q"
+	url="http://127.0.0.1:$port/$q"
 	prof=$(mktemp -d)
 	DISPLAY=$disp timeout 40 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --hide-scrollbars --no-first-run \
 		--user-data-dir="$prof" --force-device-scale-factor=1 --force-prefers-reduced-motion --disable-lcd-text \

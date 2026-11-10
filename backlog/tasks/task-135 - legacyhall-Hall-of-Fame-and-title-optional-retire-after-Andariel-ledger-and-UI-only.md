@@ -1,7 +1,7 @@
 ---
 id: TASK-135
 title: 'legacyhall: Hall of Fame and title, optional retire after Andariel (ledger and UI only)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:27:00Z'

@@ -1,7 +1,7 @@
 ---
 id: TASK-208
 title: 'previewfeed: record fight life lows and pickups for the policy preview'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T20:34:00Z'

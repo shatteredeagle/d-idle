@@ -1,0 +1,19 @@
+/* Inventory page layout (docs/ui-design-system.md section 10, mockups/ui/inventory.html): one column on a phone, the
+   paper doll and its detail beside the backpack from 64rem. Page layout only; the doll and cells are components. */
+@layer shell {
+  .inv-page { display: grid; gap: var(--d-gap); padding: 0 var(--d-gap) var(--d-gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 64rem) {
+    .inv-page { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+    .inv-equip { grid-row: span 2; }
+  }
+  .inv-page > .d-card { container: panel / inline-size; min-inline-size: 0; }
+  .inv-page > .d-note { grid-column: 1 / -1; margin: 0; }
+  .inv-doll-wrap { display: grid; gap: var(--d-sp-3); align-items: start; }
+  @container panel (width > 40rem) { .inv-doll-wrap { grid-template-columns: max-content minmax(0, 1fr); } }
+  .inv-detail { display: grid; gap: var(--d-sp-2); padding: var(--d-sp-3); background: var(--d-surface-2); border-radius: var(--d-r-2); font-size: var(--d-fs-1); min-inline-size: 0; overflow-wrap: anywhere; }
+  .inv-detail:empty { display: none; }
+  .inv-detail h3 { margin: 0; font: 600 var(--d-fs-3)/var(--d-lh-tight) var(--d-font-display); color: var(--q, var(--d-text)); }
+  .inv-detail p { margin: 0; }
+  .inv-repair-body { display: grid; gap: var(--d-sp-2); font-size: var(--d-fs-1); }
+  .inv-repair-body p { margin: 0; }
+}
