@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The hero now talks to the Act 1 quest givers in the Rogue Encampment (Kashya, Charsi) when their quest is available and its level is reached, instead of waiting for the plan to reach them; D2BOT_QUEST_GIVERS=0 turns it off
 - The hero no longer flips in and out of poverty per potion, a melee Paladin stops buying 60 gold mana potions before healing, and the Why card says what it is saving for.
 - Melee classes keep the basic attack when the shield for Smite is missing instead of ignoring every monster; per-fight fight.tick summary line.
 - New read-only /api/readiness endpoint: per-threat pass/warn/fail checks and a traffic light for the hero against an area (level, resists, life, immunities, kit); risk meter resist gap is now live

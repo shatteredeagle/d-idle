@@ -899,3 +899,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - research/beta-readiness-review.md: friends-beta play review from the sandbox log and docs
 - docs/readiness.md - readiness model: per-threat checks for a hero against an area (TASK-217, TASK-218)
 - docs/killloop.md - where the seconds per kill go on the sandbox Paladin (ranked waits, area xp/h)
+- docs/quest-givers.md - the hero visits quest givers in town when a quest is available (TASK-243)
