@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"fmt"
 	"slices"
 	"strings"
 	"time"
@@ -346,7 +347,9 @@ func (f *Fighter) lowMana(ctx context.Context, snap *d2.Snapshot, tg Target, ord
 		if f.mv != nil {
 			if pt, found := awayPoint(me, pts, hostileMissiles(snap), f.tune().KiteRetreat, f.valid); found {
 				st.backoffs++
-				f.info("out of mana: backing off", "to", pt, "why", d.Reason, "step", st.backoffs)
+				st.backoffsAll++
+				st.retreatWhy = fmt.Sprintf("%s (meleeClass=%t life=%d%% danger=%d hostiles=%d)", d.Reason, in.MeleeClass, in.LifePct(), in.PackDanger, in.Hostiles)
+				f.info("out of mana: backing off", "to", pt, "why", d.Reason, "step", st.backoffs, "meleeClass", in.MeleeClass, "life", in.LifePct(), "danger", in.PackDanger, "hostiles", in.Hostiles, "hasMelee", hasMeleeSkill(in.Skills))
 				return SkillSpec{}, false, f.move(ctx, pt)
 			}
 		}
@@ -498,4 +501,13 @@ func eliteFacts(cand []Target) []any {
 		kind = strings.Join(ws, " and ") + " " + kind
 	}
 	return []any{"monster", t.Name, "packkind", kind, "distance", int(t.Dist/5 + 0.5)}
+}
+
+func hasMeleeSkill(ss []resource.Skill) bool {
+	for _, s := range ss {
+		if s.Melee {
+			return true
+		}
+	}
+	return false
 }

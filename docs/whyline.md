@@ -27,6 +27,7 @@ Not from the page and not invented in the watch layer. The bot already decides a
 | `claim_trip`, `back_to_field`, `to_town`, `area_done` | trip and rest paths | none |
 | `guard_exit` | route guard | why |
 | `farm_runs`, `farm_gold` | farm and broke recovery | area, level |
+| `saving_for` | `sweep` while poor (`resource.SavingFor`: portal scroll, then healing potions, then a requested repair) | area, item, need |
 | `after_death_restock`, `after_death_corpse`, `after_death_gold` | death recovery | none |
 | `hold` (watch only) | an open question and a bot that is idle or paused, with no reason of its own | question |
 | `activity` (watch only) | the bot gave no code: the activity text as is ("Now: ...") | activity |

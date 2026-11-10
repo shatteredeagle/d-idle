@@ -15,6 +15,7 @@
     "guard_exit": "A higher level or better gear makes this area safe again.",
     "farm_runs": "An order from you, or enough of what I farm, ends the runs.",
     "farm_gold": "Enough gold for what I need ends the farming.",
+    "saving_for": "Once the gold covers it I shop for it; selling loot gets there sooner.",
     "after_death_restock": "Once restocked I go for my corpse.",
     "after_death_corpse": "Once my corpse is back I return to the plan.",
     "after_death_gold": "Once the spot is checked I return to the plan.",
