@@ -169,3 +169,14 @@ func (r *Reader) UnitStats(id uint32) (d2.Stats, error) {
 // ReadStatList and ReadBaseStatList take a stat list pointer in the memory backend; here the pointer is the unit id.
 func (r *Reader) ReadStatList(id uint32) (d2.Stats, error)     { return r.UnitStats(id) }
 func (r *Reader) ReadBaseStatList(id uint32) (d2.Stats, error) { return r.UnitStats(id) }
+
+// ItemExtra returns what the last snapshot knew about a carried item beyond d2.Item (tooltip lines, socket count).
+func (r *Reader) ItemExtra(id uint32) (d2dsrc.ItemExtra, bool) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if r.last == nil {
+		return d2dsrc.ItemExtra{}, false
+	}
+	ex, ok := r.last.Extras.Items[id]
+	return ex, ok
+}

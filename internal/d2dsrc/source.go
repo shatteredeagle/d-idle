@@ -50,6 +50,8 @@ type Options struct {
 	// mapped to States.txt ids by buffSkillState): one more verb in the read batch. Off by default; a binary without the
 	// verb switches it off after one note. Without it the bot recasts its armors on the clock alone.
 	BuffStates bool
+	// Tooltips fetches the stock "items" verb (cached, tooltips.go) so ItemExtra.Tooltip carries the game's own item text.
+	Tooltips bool
 }
 
 // Source reads snapshots from one d2d socket.
@@ -71,6 +73,7 @@ type Source struct {
 	}
 	wmu    sync.Mutex // warned is touched by every reader goroutine (runner, quest source, merc, town)
 	warned map[string]bool
+	tips   tipCache
 	noBuff atomic.Bool // the binary answered an error to `debug states`: stop asking
 }
 
@@ -135,6 +138,7 @@ type ItemExtra struct {
 	Sockets     int    // socket count, -1 unknown
 	Label       string // ground label
 	Unique, Set int
+	Tooltip     []string // the game's tooltip lines (Options.Tooltips), name first; nil when not fetched
 }
 
 // MercExtra is merc state beyond the Unit.

@@ -185,6 +185,8 @@
   }
   function paint(v) {
     last = v;
+    // hands the view to the item tooltip (inventory-tip.js); the stub page of the DOM goldens has no events
+    if (typeof CustomEvent === 'function' && document.dispatchEvent) document.dispatchEvent(new CustomEvent('d2:inventory', { detail: v }));
     doll(v);
     cells('pack', v.backpack || [], 10, 4);
     cells('belt', v.belt || [], 4, 1);

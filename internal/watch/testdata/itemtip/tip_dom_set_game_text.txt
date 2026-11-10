@@ -1,0 +1,7 @@
+div.inv-tip [role=tooltip]
+  div.q-set.tip-name [] "Verdant Belt"
+  div.tip-line [data-k=prop] "Belt"
+  div.tip-line [data-k=base] "Defense: 18"
+  div.tip-line [data-k=prop] "+30 to Life"
+  div.tip-line [data-k=meta] "Item level: 28"
+  div.tip-line [data-k=meta] "Sells for at least 260 gold"
