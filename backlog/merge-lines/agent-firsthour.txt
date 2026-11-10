@@ -1,3 +1,0 @@
-BACKLOG: TASK-245 firsthour: tools/firsthour.sh + cmd/d2firsthour compute the fresh-hero first-hour row (clvl, kills, gold, chickens, zone entries, shuttles, poverty stalls, restarts, build stamp) from container logs into docs/probes/firsthour.md; fixture-tested, the daily rows still need live runs.
-INDEX: docs/first-hour.md - the first-hour daily table tool (TASK-245)
-CHANGELOG: tools/firsthour.sh: read-only first-hour metric row from sandbox logs (docs/first-hour.md)
