@@ -910,3 +910,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/live-checks.md - open live checks of closed cards, one row each (TASK-253)
 - docs/palprofile.md - Paladin attack order data change and what the profile format cannot express
 - docs/pursuers.md - the hero that walks on with followers; nav.pursuit rule and the log evidence
+- docs/lootskip.md: why ground potions were skipped, decided pickup rule

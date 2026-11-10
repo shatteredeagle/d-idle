@@ -1,3 +1,0 @@
-BACKLOG: lootskip: potion pickup finding, pack buffer default 2 (docs/lootskip.md, TASK-258)
-INDEX: docs/lootskip.md: why ground potions were skipped, decided pickup rule
-CHANGELOG: loot.potionBuffer default 2: the bot keeps two spare potions per kind beyond a full belt
