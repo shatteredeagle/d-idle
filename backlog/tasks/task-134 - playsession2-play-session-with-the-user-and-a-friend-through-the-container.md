@@ -1,10 +1,11 @@
 ---
 id: TASK-134
 title: 'playsession2: play session with the user and a friend through the container'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - container
   - drill
@@ -43,3 +44,9 @@ Why: ADR 0018, fun-ideas.md section 13 card 6; replaces the H1 to H4 sessions of
 - [ ] #1 One 4-hour unattended realtime run through the tester container with the four cards merged (proposezone if merged); writes after start 0 stated; session record written
 - [ ] #2 The user reads the return screen and sets policies; then the same with the first friend; three sentences each and the H1 to H4 numbers of the direction review logged; verdict: would I leave it running tonight
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed as superseded in the 2026-11-10 true-up: folded into the sessions card (see TASK-246), one record format docs/session-record.md.
+<!-- SECTION:NOTES:END -->

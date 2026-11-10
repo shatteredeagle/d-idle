@@ -1,11 +1,11 @@
 ---
 id: TASK-164
 title: 'beltplan: belt plan knob for mixed and mana-only belts'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:18:00Z'
-updated_date: '2026-11-08T03:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -49,3 +49,9 @@ Why: the policy sheet options 'potion mix' and 'belt fill' only moved drink line
 - [x] #4 table tests for each template, two classes, default regression, unknown template error
 - [ ] #5 live drill all mana (or skipped with reason)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

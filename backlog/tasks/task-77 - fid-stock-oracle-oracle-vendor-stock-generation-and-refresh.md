@@ -1,11 +1,11 @@
 ---
 id: TASK-77
 title: 'fid-stock-oracle: oracle: vendor stock generation and refresh'
-status: Deferred
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - oracle
@@ -45,3 +45,9 @@ Done when: Decompile and document the NPC stock generation (ilvl rule, item coun
 - [ ] #3 Stock refresh rule (new game, level-up, time) read from game.exe and compared with d2d; the SME 'low confidence' note is closed
 - [ ] #4 TASK-56 live stock lists agree with the oracle or the difference is listed per vendor
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

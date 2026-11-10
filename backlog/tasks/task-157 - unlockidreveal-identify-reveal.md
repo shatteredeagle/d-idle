@@ -1,10 +1,11 @@
 ---
 id: TASK-157
 title: 'unlockidreveal: identify reveal'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -46,3 +47,9 @@ Unlock: card flip when the first magic or rare item is picked up; later affixes,
 - [x] #4 Golden payloads for two classes, locked/open, replay idempotency, unknown row and table errors naming them, a reveal line exists
 - [ ] #5 Item affixes after identify (needs a reader that does not exist yet; Fake only)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

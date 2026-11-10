@@ -1,10 +1,11 @@
 ---
 id: TASK-160
 title: 'unlockatlas: waypoint atlas'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -45,3 +46,9 @@ Unlock: first waypoint taken; lit nodes, silhouettes for locked, the hero's prop
 - [ ] #5 atlas panel renders in a real browser (not run)
 - [ ] #6 LIVE check on a real run: nodes light as waypoints are taken (not run; the live panels check is pending)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

@@ -1,10 +1,11 @@
 ---
 id: TASK-129
 title: 'tallystrip: tally credited from observed events, strip and charter sink rows'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:26:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -38,3 +39,9 @@ Why: ADR 0018 item 1 (the tally ledger side is un-paused as part of the loop; th
 - [ ] #2 Strip on the watch header and the return screen; a spend sheet listing the next three buys (charter, order slot 2, first perk) with ledger spend; sinks wired: order slot 2 (MaxOpenOrders from a ledger-read value) and one perk that is an existing knob row
 - [x] #3 docs/tally-strip.md says built vs verified live; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

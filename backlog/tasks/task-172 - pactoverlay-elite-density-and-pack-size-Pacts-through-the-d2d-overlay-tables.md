@@ -1,10 +1,11 @@
 ---
 id: TASK-172
 title: 'pactoverlay: elite density and pack size Pacts through the d2d overlay tables'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:34:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - research
@@ -34,3 +35,9 @@ Size: L. Parked. Not on the two-week playable path. Design note: docs/research/p
 - [ ] #1 Research which table drives elite chance and pack size (Levels.txt, MonStats.txt, SuperUniques.txt): read from extracted game data
 - [ ] #2 d2d overlay write path designed; game.exe mod-data layer needs the user's go
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: first Pacts need Andariel killed on a live hero.
+<!-- SECTION:NOTES:END -->

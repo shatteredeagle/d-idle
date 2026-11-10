@@ -1,10 +1,11 @@
 ---
 id: TASK-123
 title: 'updboot: boot shim, automatic rollback and update drills'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:28:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - container
   - drill
@@ -43,5 +44,11 @@ Tier 2 part 3 of docs/research/self-update-design.md sections 3.8, 3.9, 5.
 - [x] #2 entrypoint/Dockerfile follow-up (thin launcher, release carries mode logic) written as a patch for TASK-31 owners
 - [ ] #3 worker host drills: update, bad update rolls back, hash mismatch refused, bad signature refused, offline, image upgrade over newer release; result says verified live or not, writes after start 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->
 
 result: "offline only; AC3 (container drills) NOT run, written as a checklist in docs/self-update-drill.md. cmd/didleboot (select, probation, crash loop, rollback, image.json) tested with a fake clock and probes, real shell launchers, and an end-to-end drill with the real updater. Dockerfile/context.sh changed directly (entrypoint.sh untouched, existing static tests pass; AC2 applied rather than left as a patch). Owns widened to the Dockerfile, context.sh, internal/selfupdate (Gate, Layout.Rollback, manifest kept in releases) and tools/release (ships entrypoint.sh in the bin tarball). Unverified: d2dping clock in realtime mode, tini signal path, real image build. Status sync 2026-11-08 (stays open): AC3 container drills not run."

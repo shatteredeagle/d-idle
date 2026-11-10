@@ -1,11 +1,11 @@
 ---
 id: TASK-173
-title: 'pactnightmare: the Pact of Nightmares, same hero into Nightmare after Baal in Normal'
-status: Proposed
+title: "pactnightmare: the Pact of Nightmares, same hero into Nightmare after Baal in Normal"
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:34:00Z'
-updated_date: '2026-11-08T04:02:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -45,4 +45,6 @@ Size: L. Parked: needs the bot past Act 1. Not on the two-week playable path. De
 
 <!-- SECTION:NOTES:BEGIN -->
 Unlocks at Baal killed in Normal; same hero; ONE Pact (user 2026-11-07, ADR 0019).
+
+Parked in the 2026-11-10 true-up: first Pacts need Andariel killed on a live hero.
 <!-- SECTION:NOTES:END -->

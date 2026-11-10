@@ -1,10 +1,11 @@
 ---
 id: TASK-126
 title: 'learnedbrain: tiny answer-prediction model experiment'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:44:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - research
@@ -51,3 +52,9 @@ Out of scope: a reinforcement-learned policy, until the fun target is set and d2
 - [ ] #3 Only if a baseline beats the rule defaults by the pre-written margin: one small MLP, quantised to ints, with a Go stdlib inference sketch (no runtime deps) and a determinism check on two hosts
 - [ ] #4 Verdict written in one day: adds value or not, with the stop condition that applied; no RL policy work; leakcheck 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

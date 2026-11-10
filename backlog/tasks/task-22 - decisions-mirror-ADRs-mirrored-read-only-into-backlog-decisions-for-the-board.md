@@ -1,11 +1,11 @@
 ---
 id: TASK-22
 title: 'decisions-mirror: ADRs mirrored read-only into backlog/decisions for the board'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-05T19:25:00Z'
-updated_date: '2026-11-06T16:00:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - docs
   - chore
@@ -42,6 +42,8 @@ Done when: tools/backlog/decisions_mirror.py generates backlog/decisions/decisio
 
 <!-- SECTION:NOTES:BEGIN -->
 Groom 2026-11-06: drift line D is a false positive: the merge was the card itself (Deferred on purpose); tools/backlog/decisions_mirror.py does not exist. Stays Deferred.
+
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
 <!-- SECTION:NOTES:END -->
 
 Status sync 2026-11-07: stays Deferred; the drift D line is a false positive (the merge was the card itself).

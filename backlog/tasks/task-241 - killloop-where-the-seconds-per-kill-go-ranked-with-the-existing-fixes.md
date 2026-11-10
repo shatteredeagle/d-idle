@@ -1,10 +1,11 @@
 ---
 id: TASK-241
 title: 'killloop: where the seconds per kill go, ranked, with the existing fixes'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T01:36:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - docs
   - research
@@ -33,3 +34,9 @@ result: analysis only, no code change; the sandbox binary lacked TASK-210 and pa
 - [x] #1 Rank the waits per kill from the sandbox log
 - [x] #2 Report xp/h per area and compare with d2d pacing docs
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

@@ -1,11 +1,11 @@
 ---
 id: TASK-115
 title: 'qqueue: questions queue for the player''s return; remove the 45 s fade (D2)'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
-updated_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -41,3 +41,9 @@ Deferred 2026-11-07 (ADR 0018): folded into returnscreen (TASK-127, missed quest
 - [ ] #2 Test against two builds; go vet and go test -p 1 of internal/decide; docs say built vs verified live
 - [ ] #3 Contract file is new only if the card owner decides; otherwise drop it from owns
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed as superseded in the 2026-11-10 true-up: folded into the return screen by ADR 0018.
+<!-- SECTION:NOTES:END -->
