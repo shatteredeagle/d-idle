@@ -25,7 +25,7 @@ owns:
   - "docs/probes/fid/fid-stock-oracle.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "decomp8 2026-11-09, offline only (not verified live): stock asks 0 differ in 40,800 lines (400 seeds x 17 vendors x 6 jobs) and 14,400 offer lines on upstream 83fc7ba1; AC 1 partly (affix rolls hooked), AC 3 partly (first-open generation read; flag setters +0x23/+0x27 untraced), AC 4 live lists not done; docs/probes/fid/fid-stock-oracle.md"
 ---
 
 ## Description
@@ -41,7 +41,7 @@ Done when: Decompile and document the NPC stock generation (ilvl rule, item coun
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
 - [ ] #1 Decompile and document the NPC stock generation (ilvl rule, item count, magic affixes) for Akara, Charsi, Gheed, Kashya in docs/probes/fid/fid-stock-oracle.md
-- [ ] #2 Oracle differential of stock generation d2d vs game.exe on 30 seeds; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #2 Oracle differential of stock generation d2d vs game.exe on 30 seeds; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
 - [ ] #3 Stock refresh rule (new game, level-up, time) read from game.exe and compared with d2d; the SME 'low confidence' note is closed
 - [ ] #4 TASK-56 live stock lists agree with the oracle or the difference is listed per vendor
 <!-- AC:END -->

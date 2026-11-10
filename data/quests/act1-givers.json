@@ -1,0 +1,18 @@
+{
+ "schema": "quests.givers/1",
+ "doc": "docs/quest-givers.md",
+ "note": "Act 1 quest givers the hero visits in town (the campaign planner, internal/task/givers.go). Ids, levels and availability are joined from act1-hints.json by quest id, so each number has one owner. accept = talk to the giver when the quest is not given yet, available and the hero's level is reached; turnin = talk when the objective is met and the reward is not claimed. Den of Evil is absent on purpose: its own handler opens with the Akara talk. Tags: SRC read in the repo, U unverified live (docs/quest-givers.md checklist).",
+ "givers": [
+  {
+   "quest": "sisters_burial",
+   "npc": "Kashya",
+   "accept": {"pick": "quest", "title": "Ask Kashya what troubles the rogues", "why": "Kashya has a task for the hero", "verified": "U"},
+   "turnin": {"pick": "reward", "title": "Report to Kashya", "why": "Kashya is waiting to hear about Blood Raven", "verified": "SRC"}
+  },
+  {
+   "quest": "tools_of_the_trade",
+   "npc": "Charsi",
+   "accept": {"pick": "quest", "title": "Ask Charsi about her troubles", "why": "Charsi has a task for the hero", "verified": "U"}
+  }
+ ]
+}

@@ -23,7 +23,7 @@ owns:
   - "docs/probes/fid/fid-wp-tp-pr.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "decomp8 2026-11-09, offline only (not verified live): waypoint refusal 0 differ in 2 x 140,002 cases and Town Portal read 0 differ in 2 x 108,000 on upstream 83fc7ba1 (V run); AC 1 (39-bit mask not compared) and AC 2 (portal position, expiry, skill-bar path not run) stay open; AC 3 recorded; docs/probes/fid/fid-wp-tp-pr.md"
 ---
 
 ## Description
@@ -40,5 +40,5 @@ Done when: Waypoint trace and wp_refuse.py re-run; 39-bit mask, refusal window; 
 <!-- AC:BEGIN -->
 - [ ] #1 Waypoint trace and wp_refuse.py re-run; 39-bit mask, refusal window; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
 - [ ] #2 Town portal: tome use, scroll count, portal pos 0.6 cells south, expiry; deviations listed with PR state
-- [ ] #3 Shim R06 (act 3-5 coordinates) removal condition recorded
+- [x] #3 Shim R06 (act 3-5 coordinates) removal condition recorded
 <!-- AC:END -->
