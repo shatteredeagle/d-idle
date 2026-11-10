@@ -1,2 +1,0 @@
-BACKLOG: TASK-276 beta signing key pinned beside the release key (pubkeys/beta.pub), feed-publish default pins beta.pub, friendpack bakes both keys; first feed release dry-run verified (no upload)
-CHANGELOG: Update feed is now signed with a separate beta key; the image pins both the beta and the release key
