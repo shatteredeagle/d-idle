@@ -912,3 +912,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/pursuers.md - the hero that walks on with followers; nav.pursuit rule and the log evidence
 - docs/lootskip.md: why ground potions were skipped, decided pickup rule
 - docs/goldfarm.md - Farm gold order (target amount, safe zone as plan data, endpoint, interaction with poverty and the area breaker)
+- docs/research/sorceress-table-plan.md: the Sorceress normal30 table already exists (TASK-144); what is still missing for a friends Sorceress, data vs Go, work packages and estimate (SORCPLAN)
+- docs/agents/brief-template.md: the 12-line agent brief template

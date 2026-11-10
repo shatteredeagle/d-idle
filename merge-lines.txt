@@ -1,3 +1,6 @@
 BACKLOG: TASK-264 friendplan: friends beta tarball install and update design (docs/research/friend-build.md)
 INDEX: research/friend-build.md: friends beta pack, one-command install, signed update model, release steps (TASK-264)
 CHANGELOG: Research: friends beta build plan (private signed tarball with source, install script, update through the signed-release engine); docs only
+BACKLOG: TASK-252 smepace: docs/sme/pace-and-formulas.md (Act 1 pace, XP, kit, mana lookup)
+INDEX: docs/sme/pace-and-formulas.md: standing pace and formula lookup for d2-sme consults
+CHANGELOG: docs: standing SME pace and formula lookup page (TASK-252)
