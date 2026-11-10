@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- tools: dev-reset.sh / dev-sandbox.sh reset the dev play sandbox to a fresh hero with a reversible archive
 - Andariel level gate is a per-class data row (Paladin 17 / 15 with merc recommended) with a warning below the recommended level instead of a wall (TASK-250)
 - tools/firsthour.sh: read-only first-hour metric row from sandbox logs (docs/first-hour.md)
 - Agent reading diet: AGENTS.md mandatory reading is START-HERE, the task and the area doc; memory doc, glossary and the long backlog-howto are on demand
