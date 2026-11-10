@@ -188,7 +188,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | loot.goldMinStack | 10 | 0..2000 | gold | 2000 | 4 | Ignore gold piles smaller than this (a ceiling: see goldPileShare). |
 | loot.goldPileShare | 50 | 0..100 | percent | 100 | 2 | The min-pile bar never skips more than this share of the area's piles: pile size is ilvl to 6 ilvl - 1 coins (treasure-trace section 4), so Blood Moor piles (1..5) would all fall under 10. 0 keeps the flat bar. |
 | loot.freeCellsKeep | 2 | 0..12 | cells | 0 | 1 | Inventory cells that must stay free after a pickup. |
-| loot.potionBuffer | 0 | 0..10 | count | 0 | 2 | Extra needed-type potions carried in the pack beyond the belt. |
+| loot.potionBuffer | 2 | 0..10 | count | 0 | 2 | Extra needed-type potions carried in the pack beyond the belt. |
 | loot.rejuvSpare | 3 | 0..6 | count | 0 | 4 | Rejuvenation potions carried in total (belt plus pack); more are left on the ground or sold, Full Rejuvenation preferred over regular. Pack ones are moved to a free belt slot in town so the belt hotkey can drink them. |
 | loot.lowGoldBelow | 2000 | 0..1e+05 | gold | 1e+05 | 1 | Below this gold, also pick items worth selling. |
 | loot.minValuePerCell | 100 | 0..5000 | gold | 5000 | 1 | Sell value per cell an item needs to be picked in low-gold mode. |
