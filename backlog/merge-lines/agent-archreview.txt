@@ -1,3 +1,0 @@
-BACKLOG: TASK-270 archreview: architecture review of the containerized path versus an all-in-one app (docs/research/architecture-review-2026-11-10.md): hybrid recommended, hosted beta first
-INDEX: docs/research/architecture-review-2026-11-10.md: review of containers plus web UI versus a native all-in-one app; decision matrix, costs, risks, migration plan; recommends one release layout with native and container packagings and a hosted beta first
-CHANGELOG: docs: architecture review of the containerized path versus an all-in-one app (TASK-270); recommendation hybrid with a hosted beta first

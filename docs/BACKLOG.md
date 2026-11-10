@@ -688,6 +688,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - beltplantest: mana buy rule (TASK-240) no longer blocks a mana column the player chose (Barbarian all-mana, Paladin 1:1); D2_MPQ_DIR lets the town sim tests run with real tables (TASK-266)
 - TASK-257 legalnote: one-page legal/risk note for the first friend copy (docs/research/legal-note.md)
 - TASK-269 itemtip: D2-style item tooltip on /watch/inventory (hover, tap, focus), API schema 2 with optional tip/base/sell item fields, d2d tooltip text carried from the items verb; offline only, magic properties have no structured source (docs/inventory-tooltip.md)
+- TASK-270 archreview: architecture review of the containerized path versus an all-in-one app (docs/research/architecture-review-2026-11-10.md): hybrid recommended, hosted beta first
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

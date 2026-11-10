@@ -922,3 +922,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - research/legal-note.md - GPL, Blizzard EULA posture, art on streams, pre-friend-copy checklist (TASK-257)
 - docs/research/desktop-electron.md - Electron rebuild of the desktop launcher: version, security posture, packaging, layout, licences, effort (area: watch)
 - docs/inventory-tooltip.md: item tooltip on the inventory page, data audit, what is missing, behaviour
+- docs/research/architecture-review-2026-11-10.md: review of containers plus web UI versus a native all-in-one app; decision matrix, costs, risks, migration plan; recommends one release layout with native and container packagings and a hosted beta first
