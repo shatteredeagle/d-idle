@@ -172,9 +172,9 @@ func TestPaladinBands(t *testing.T) {
 			return false
 		}
 	}
-	// palprofile: before Zeal the zero-mana Sacrifice leads and the basic Attack follows; Smite is never ranked
-	// (SME 2026-11-10: it is only the Charge prerequisite)
-	if o := pr.AttackNames(10, has("Zeal")); len(o) != 2 || o[0] != "Sacrifice" || o[1] != "Attack" {
+	// palprofile: before Zeal the free plain Attack is the whole order; Sacrifice (life cost) and Smite are never
+	// ranked (SME 2026-11-10: prerequisites only)
+	if o := pr.AttackNames(10, has("Zeal")); len(o) != 1 || o[0] != "Attack" {
 		t.Fatalf("below clvl 12: %v", o)
 	}
 	if o := pr.AttackNames(13, has("Zeal")); o[0] != "Zeal" || o[len(o)-1] != "Attack" {
@@ -183,17 +183,17 @@ func TestPaladinBands(t *testing.T) {
 	if o := pr.AttackNames(30, has("Zeal", "Blessed Hammer")); o[0] != "Blessed Hammer" {
 		t.Fatalf("%v", o)
 	}
-	if o := pr.AttackNames(13, has()); o[0] != "Sacrifice" {
+	if o := pr.AttackNames(13, has()); o[0] != "Attack" {
 		t.Fatalf("Zeal not learned: %v", o)
 	}
 	for _, lv := range []int{1, 10, 13, 30} {
 		for _, n := range pr.AttackNames(lv, has("Zeal", "Blessed Hammer", "Sacrifice")) {
-			if n == "Smite" {
-				t.Errorf("clvl %d: Smite ranked over Attack: %v", lv, pr.AttackNames(lv, has("Zeal", "Blessed Hammer")))
+			if n == "Smite" || n == "Sacrifice" {
+				t.Errorf("clvl %d: %s ranked: %v", lv, n, pr.AttackNames(lv, has("Zeal", "Blessed Hammer")))
 			}
 		}
 	}
-	// the Zeal bands keep Sacrifice out (life cost per swing) and Attack last
+	// the Zeal band is Zeal then Attack
 	if o := pr.AttackNames(13, has("Zeal")); o[len(o)-1] != "Attack" || o[0] != "Zeal" || len(o) != 2 {
 		t.Fatalf("%v", o)
 	}

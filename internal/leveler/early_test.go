@@ -424,8 +424,8 @@ func TestBuildV2PaladinSequence(t *testing.T) {
 		}
 	}
 	att := usableAttack("paladin", d2.Paladin, 13, snaps[13].skills, kit)
-	if len(att) < 2 || att[0] != "Zeal" || att[1] != "Smite" {
-		t.Errorf("clvl 13 order %v, want Zeal, Smite, Attack", att)
+	if len(att) != 2 || att[0] != "Zeal" || att[1] != "Attack" {
+		t.Errorf("clvl 13 order %v, want Zeal, Attack (palprofile: Smite not ranked)", att)
 	}
 }
 

@@ -55,7 +55,7 @@ func TestAttackStaysWhenGearRulesOutTheBuildSkill(t *testing.T) {
 // A swinger backend needs no popup rows to attack with a skill that is not on the left hand.
 func TestSwingerNeedsNoListRowsForOffHandSkill(t *testing.T) {
 	h, g := newHandGame(t)
-	g.p.Level, g.p.LeftSkill = 10, 107 // Sacrifice is on the left; the clvl 10 Paladin list is Sacrifice, Attack, so Attack is the off-hand skill
+	g.p.Level, g.p.LeftSkill = 10, 107 // Sacrifice is on the left; the clvl 10 Paladin list is just Attack, the off-hand skill
 	h.f.SetListRows(nil)
 	h.f.e.In = &d2dClick{handGame: g}
 	found := false

@@ -1,3 +1,3 @@
-BACKLOG: palprofile (TASK-254) Paladin attack order as profile data: Sacrifice then Attack before Zeal, Smite no longer ranked; Prayer already rest-only; offline only
+BACKLOG: palprofile (TASK-254) Paladin attack order as profile data: plain Attack before Zeal (Sacrifice stays a prerequisite), Smite no longer ranked; Prayer already rest-only; offline only
 INDEX: docs/palprofile.md - Paladin attack order data change and what the profile format cannot express
-CHANGELOG: Paladin attack order is now data: Sacrifice and Attack before Zeal, Smite no longer ranked over Attack
+CHANGELOG: Paladin attack order is now data: plain Attack before Zeal, Smite no longer ranked over Attack

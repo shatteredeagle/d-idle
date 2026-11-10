@@ -8,10 +8,10 @@ Source: the SME consult in `docs/research/project-review-2026-11-10.md` section 
 |---|---|---|
 | clvl 18 and Blessed Hammer | Blessed Hammer, Zeal, Smite, Attack | Blessed Hammer, Zeal, Attack |
 | clvl 12 and Zeal | Zeal, Smite, Attack | Zeal, Attack |
-| below (default) | Smite, Attack | Sacrifice, Attack |
+| below (default) | Smite, Attack | Attack |
 
 - Smite is no longer ranked at all: a 2-mana shield attack kept only as the Charge prerequisite (S). With Attack always last and free, ranking Smite over it was the "mana short" defect; dropping it is the data form of "Smite not over Attack".
-- Sacrifice leads only before Zeal (zero mana, big damage bonus, costs life per hit, S). Once Zeal is learned it is out of the order again, as BUILDV2 wanted, because the life cost matters most when the hero is strong enough to be hit a lot. The existing `melee.retreatLifePct` (40) guards the life cost (U: not measured).
+- Reading of the brief: "Sacrifice before Zeal" is the skill-point order (Sacrifice is the Zeal prerequisite; the build tables already take it at clvl 3, V `TestBuildV2PaladinSequence`), not an attack rung. Sacrifice costs life per hit (S), so it stays out of the order, as BUILDV2 and `TestPalProbeLadderAlongBothTables` already require. Before Zeal the order is plain Attack under Might (zero mana). Open choice for the user: if the SME meant Sacrifice as an attack rung, add it to the default band; the tests then change in `internal/leveler`.
 - The Sorceress profile is untouched; `TestPaladinBands` checks it still leads with Blizzard and ranks neither Sacrifice nor Smite (V).
 
 ## Prayer while fighting: no data change (V by reading `internal/combat/aura.go`)
