@@ -1,0 +1,2 @@
+INDEX: docs/paperdoll-art-build.md - paper doll game art as built (internal/art, endpoints, UI), read at runtime from the user's MPQs
+CHANGELOG: internal/art: runtime DC6 to PNG decoder with disk cache for the inventory paper doll (not wired yet, no art ships)
