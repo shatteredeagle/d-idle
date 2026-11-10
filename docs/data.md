@@ -177,7 +177,7 @@ shrines, monpreset, pettype, npc.
   (damage scaling is `min + (lvl-1)*step` style per-level fields plus synergy percentages).
 - Class ids: `CharClass.ID` is the row order in charstats (Amazon 0 .. Assassin 6), matching the game's class numbering
   (UNVERIFIED against live memory; the MEM agent reads the real value).
-- Tests that read real MPQs: `go test ./internal/data/...` (needs `/tmp/d2mpq` with d2data.mpq, d2exp.mpq, Patch_D2.mpq and Game.exe;
+- Tests that read real MPQs: `go test ./internal/data/...` (needs `/tmp/d2mpq`, or the directory in `$D2_MPQ_DIR` for the town sim tests, with d2data.mpq, d2exp.mpq, Patch_D2.mpq and Game.exe;
   copied from the worker host with scp). `-short` skips the slow full-archive decode in the mpq package.
 
 ## Inventory icon names and game art (TASK-244)
