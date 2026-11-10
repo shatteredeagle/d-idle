@@ -143,6 +143,8 @@ type Fun struct {
 	Pacts *PactAPI
 	// Inventory mounts the inventory page routes (invapi.go); set it before Serve, nil: no routes.
 	Inventory *InvAPI
+	// Art mounts /api/art and /watch/art/<key>.png (artapi.go); set it before Serve, nil: no routes, the page keeps its drawn cells.
+	Art *ArtAPI
 	// Repair mounts the gear condition and Repair now routes (repairapi.go); set it before Serve, nil: no routes.
 	Repair *RepairAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
@@ -654,6 +656,11 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 		f.Hub.SetGoldSource(goldFromInventory(f.Inventory))
 		for _, p := range InvRoutes {
 			m.Handle(p, f.Inventory.Handler())
+		}
+	}
+	if f.Art != nil {
+		for _, p := range ArtRoutes {
+			m.Handle(p, f.Art.Handler())
 		}
 	}
 	if f.Repair != nil {

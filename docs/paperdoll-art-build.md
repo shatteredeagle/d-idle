@@ -43,3 +43,11 @@ Tests: `go test -count=1 -p 1 ./internal/data` (two bases, unique override, set,
 - V (offline, real tables, `TestRealInvFile`): the id as a row index of `uniqueitems.txt` (separator row counted) lands on the right base item for the three names checked (The Gnasher 0 hax, The Stone of Jordan 122 rin, Harlequin Crest 249 uap). S: this matches what community save editors use. Not proven without an item read.
 - Safety: a wrong id can only produce the base icon (the resolver ignores an override row on another base), never another item's art.
 - Live checklist (needs a game, not run): on a throwaway character holding a unique and a set item (the item JSON path or the memory path), read `FileIndex` of the item, look up `uniqueitems.txt` row at that index, and confirm its `code` equals the item's base code and the name equals the item's name.
+
+## PR D: endpoints
+
+- `GET /api/art` -> `{"schema":"watch.art/1","available":bool,"panel":"doll"}` (`no-store`). `available` is true when the store can serve the panel frame (`panel-inv`); false without an install, with unreadable archives, or no source bound.
+- `GET /watch/art/<key>.png` (also HEAD) -> `image/png`, `Cache-Control: private, max-age=86400`, `ETag` (hash of the bytes, `If-None-Match` answers 304), `X-Content-Type-Options: nosniff`. A key outside the grammar of PR A (`art.ValidKey`) is 404 before any archive lookup, so traversal strings never reach the store; a missing icon or any decode trouble is the same plain 404 with no reason text (the page then removes just that image and keeps its drawn cell). POST is 405.
+- Mounted by `watch.Fun` (`Fun.Art`, set from `cmd/d2bot` for both backends with `<data>/cache/art` as the cache) on the viewer mux, so the viewer's token and passcode gate applies exactly as for `/api/inventory`. The inventory page CSP already allows `img-src 'self' data:` (V: `policyCSP`, `internal/watch/policysheet.go`); no CSP change, and the gate pages (`img-src data:`) are untouched.
+- Nothing is embedded or stored: the PNG exists only in memory and in the data-volume cache.
+- Tests: `go test -count=1 -p 1 -run Art ./internal/watch` (fake source, no game files): bad keys and traversal strings (source never consulted), headers, 304, HEAD, POST, available true/false for no source, failing source (no leaked path) and unbound, Fun mounts the routes only when `Art` is set.
