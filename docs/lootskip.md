@@ -19,3 +19,8 @@
 
 ## Also proposed
 - Name the skipped item in the `loot:` summary for potions (the log could not answer the question above).
+
+## The ground Cap (screenshot, Blood Moor)
+- V (log): the hero wears "1:Cap" in every `sell: worn before/after` line (16:14 to 17:06), so the Cap was never taken off by the bot; the broken Cap of the Repair panel is the worn one. `inventory contents` at 16:18 held a spare `cap x1`, and the bot sold Caps in town (sell: sold Cap 19/32/9 gold). No log line names a Cap among "item left on the ground" (78 such lines, none a Cap): not a pack-full skip.
+- S (code + log shape): a plain (normal quality) Cap evaluates to "drop [C] plain or inferior item" (seen in the loot summaries); a Cap the hero sold or dropped earlier on the same ground is then ignored by design. Whether this ground Cap was the hero's own dropped one or a fresh drop cannot be told: the loot summary does not name skipped items (see "Also proposed").
+- U: no evidence of a re-target loop or a failed pick on it.
