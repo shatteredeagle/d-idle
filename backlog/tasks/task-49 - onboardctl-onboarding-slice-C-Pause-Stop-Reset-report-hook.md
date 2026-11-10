@@ -22,6 +22,7 @@ owns:
   - "docs/onboarding-controls.md"
 exclusive: []
 contracts: []
+result: "Superseded by TASK-27 (2026-11-10 true-up). Pause, Stop and Reset not carried. Not verified live."
 ---
 
 ## Description

@@ -22,6 +22,7 @@ owns:
   - "docs/tester-guide.md"
 exclusive: []
 contracts: []
+result: "Re-scoped 2026-11-10 (trueup2): install path, absorbs the tester guide and first-stranger checklist of TASK-26; docs/tester-guide.md added to owns. Not built, not verified live."
 ---
 
 ## Description

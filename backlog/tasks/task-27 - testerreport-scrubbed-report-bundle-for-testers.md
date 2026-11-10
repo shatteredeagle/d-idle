@@ -21,6 +21,7 @@ owns:
   - "docs/first-session.md"
 exclusive: []
 contracts: []
+result: "Re-scoped 2026-11-10 (trueup2): exportable feedback record, absorbs the report-preview hook of TASK-49; docs/first-session.md added to owns for the known-broken table. Not built, not verified live."
 ---
 
 ## Description

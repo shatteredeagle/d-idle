@@ -21,6 +21,7 @@ owns:
   - "docs/tester-guide.md"
 exclusive: []
 contracts: []
+result: "Superseded by TASK-29 (2026-11-10 true-up). No work done on this card; its guide and checklist criteria moved to TASK-29. Not verified live."
 ---
 
 ## Description

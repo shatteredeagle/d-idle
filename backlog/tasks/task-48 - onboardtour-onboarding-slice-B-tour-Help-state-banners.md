@@ -21,6 +21,7 @@ owns:
   - "docs/onboarding-tour.md"
 exclusive: []
 contracts: []
+result: "Re-scoped 2026-11-10 (trueup2): in-app explain (tour, Help, banners); welcome card stays TASK-247. Not built, not verified live."
 ---
 
 ## Description
