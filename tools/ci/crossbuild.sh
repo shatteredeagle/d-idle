@@ -4,7 +4,7 @@
 # Usage: tools/ci/crossbuild.sh [--quick]   (--quick: only windows/amd64 and darwin/arm64)
 # Env: CROSSBUILD_PKGS overrides the package list.
 set -u
-cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)"
+cd "$(dirname "$0")/../.."
 pkgs=${CROSSBUILD_PKGS:-"./cmd/d2bot ./cmd/d2dsetup ./cmd/d2dview ./cmd/didleboot ./deploy/d2d-container/d2dping ./apps/desktop"}
 targets="linux/amd64 linux/arm64 windows/amd64 darwin/arm64 darwin/amd64"
 [ "${1:-}" = --quick ] && targets="windows/amd64 darwin/arm64"
