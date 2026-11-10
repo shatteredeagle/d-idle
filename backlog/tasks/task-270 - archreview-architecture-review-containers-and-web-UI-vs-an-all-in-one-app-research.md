@@ -1,10 +1,13 @@
 ---
 id: TASK-270
-title: 'archreview: architecture review, containers and web UI vs an all-in-one app (research)'
-status: Proposed
+title: >-
+  archreview: architecture review, containers and web UI vs an all-in-one app
+  (research)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:21:00Z'
+updated_date: '2026-11-10T21:51:00Z'
 labels:
   - docs
   - research
