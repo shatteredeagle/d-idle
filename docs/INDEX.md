@@ -900,3 +900,6 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/readiness.md - readiness model: per-threat checks for a hero against an area (TASK-217, TASK-218)
 - docs/killloop.md - where the seconds per kill go on the sandbox Paladin (ranked waits, area xp/h)
 - docs/quest-givers.md - the hero visits quest givers in town when a quest is available (TASK-243)
+- docs/probes/fid/fid-wp-tp-pr.md | waypoint refusal window and Town Portal read, d2d against game.exe, 0 differ on 83fc7ba1 (TASK-95)
+- docs/probes/fid/fid-layout-act1.md | layouts of 34 more Act 1 levels, game.exe against d2d, 0 differ (TASK-80)
+- docs/probes/fid/fid-stock-oracle.md | vendor stock generation 0 differ, refresh rule partly read (TASK-77)

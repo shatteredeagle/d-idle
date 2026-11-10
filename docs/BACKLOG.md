@@ -670,6 +670,9 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-217/218 readiness model slice A: internal/readiness area table and evaluator (checks as data rows, sorceress and paladin), /api/readiness, live ResistGap for the risk meter; offline only, resist basis is an explicit input (TASK-216 open), gates untouched (docs/readiness.md)
 - poverty: poverty entry band, mana buys by class mana use, saving_for whyline, sell marks count for the sell trip (fun killer 4)
 - TASK-243 quest givers in town: the campaign visits Kashya and Charsi when their quest is available (table data/quests/act1-givers.json joined to the hint table, class families, opt-in, off in named runs); offline only, live checklist in docs/quest-givers.md
+- TASK-95 fid-wp-tp-pr oracle rerun: waypoint refusal 0 differ (2 x 140,002) and Town Portal read 0 differ (2 x 108,000) on upstream 83fc7ba1; mask, portal position and expiry still open (docs/probes/fid/fid-wp-tp-pr.md)
+- TASK-80 fid-layout-act1: all Act 1 levels 5-7 and 9-39 equal game.exe on upstream 83fc7ba1 (tiles, units, seeds, monsters; seeds 1..30 and two 32-bit ranges); same-save first load open (docs/probes/fid/fid-layout-act1.md)
+- TASK-77 fid-stock-oracle: vendor stock asks 0 differ in 40,800 lines and 14,400 offer lines; refresh flags read only partly, live lists open (docs/probes/fid/fid-stock-oracle.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
