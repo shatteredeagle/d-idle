@@ -27,6 +27,7 @@ owns:
   - "internal/leveler/buildv3_test.go"
   - "internal/leveler/palzeal_test.go"
   - "internal/leveler/unlocks_test.go"
+  - "internal/leveler/early_test.go"
   - "internal/plandata/build-sorceress_normal30.json"
   - "internal/plandata/unlocks-sorceress.json"
   - "internal/plandata/sorcnormal30_test.go"
