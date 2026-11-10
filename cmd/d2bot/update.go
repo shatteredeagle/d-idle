@@ -20,7 +20,7 @@ import (
 //
 // Env: D2BOT_UPDATE_CHECK=off|0|false|no switches every outbound call off (the inbox still works), manual keeps the
 // buttons but starts no daily check (internal/selfupdate/dev.go);
-// D2BOT_UPDATE_DIR (default /data/didle), D2BOT_UPDATE_KEYS (default /opt/didle/pubkeys, *.pub), D2BOT_IMAGE_ABI.
+// D2BOT_UPDATE_FEED (https feed of your own, keys stay the baked ones), D2BOT_UPDATE_DIR (default /data/didle), D2BOT_UPDATE_KEYS (default /opt/didle/pubkeys, *.pub), D2BOT_IMAGE_ABI.
 const (
 	defaultUpdateDir  = "/data/didle"
 	defaultUpdateKeys = "/opt/didle/pubkeys"
@@ -38,11 +38,18 @@ func newUpdater(shutdown func() error) *selfupdate.Engine {
 	}
 	keys := loadPubKeys(envOr("D2BOT_UPDATE_KEYS", defaultUpdateKeys))
 	client := &selfupdate.Client{UserAgent: "didle-updater/" + version}
+	devSource := false
 	// DEV images only (DIDLE_DEV=1): a LAN source and one more trusted key (docs/dev-update.md)
 	if dev, err := selfupdate.DevFromEnv(os.Getenv); err != nil {
 		slog.Warn("update: dev source ignored", "err", err)
 	} else if dev != nil {
-		keys, client = append(keys, dev.Keys...), dev.Client("didle-updater/"+version)
+		keys, client, devSource = append(keys, dev.Keys...), dev.Client("didle-updater/"+version), true
+	}
+	// Any image: an optional https feed of the user's own. Replaces the GitHub host, adds no key (internal/selfupdate/feed.go).
+	if feed, err := selfupdate.FeedFromEnv(os.Getenv); err != nil {
+		slog.Warn("update: feed ignored", "err", err)
+	} else if feed != nil && !devSource {
+		client = feed.Client("didle-updater/" + version)
 	}
 	if len(keys) == 0 {
 		return nil
