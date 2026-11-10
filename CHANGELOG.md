@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- friends pack builder (tools/friendpack): private tarball with image, source, licences, install.sh, ./didle wrapper and a Linux guide (TASK-274)
 - D2BOT_UPDATE_FEED: a non-dev image can read signed updates from a user-controlled https feed; keys stay the baked ones (TASK-272)
 - Go side cross-builds for windows and darwin (launch lifecycle tagged, tools/ci/crossbuild.sh and a ci crossbuild job) (TASK-273)
 - docs: architecture review of the containerized path versus an all-in-one app (TASK-270); recommendation hybrid with a hosted beta first
