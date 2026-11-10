@@ -1,2 +1,0 @@
-CHANGELOG: feed-publish.sh and cmd/d2feed: build, verify with the real update client, withdraw and upload a static update feed tree; runbook in docs/friend-feed.md (TASK-275)
-INDEX: docs/friend-feed.md - now also the release runbook, rollback and static server snippets

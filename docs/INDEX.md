@@ -925,3 +925,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/architecture-review-2026-11-10.md: review of containers plus web UI versus a native all-in-one app; decision matrix, costs, risks, migration plan; recommends one release layout with native and container packagings and a hosted beta first
 - docs/friend-feed.md - D2BOT_UPDATE_FEED, user-controlled update feed with pinned keys
 - docs/friend-guide.md - Linux install guide for the friends pack (install, didle commands, licence note, publisher build)
+- docs/friend-feed.md - now also the release runbook, rollback and static server snippets
