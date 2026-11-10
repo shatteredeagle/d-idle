@@ -1,10 +1,11 @@
 ---
 id: TASK-250
 title: 'actplan: clvl-17 floor as a price or per-class data row'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-10T19:19:00Z'
 labels:
   - bot
   - feature
