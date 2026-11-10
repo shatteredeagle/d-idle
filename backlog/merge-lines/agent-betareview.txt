@@ -1,0 +1,3 @@
+BACKLOG: TASK-238 Beta readiness play review (docs/research/beta-readiness-review.md): top 10 fun killers, first-30-minutes script, proposed cards listed not created
+INDEX: research/beta-readiness-review.md: friends-beta play review from the sandbox log and docs
+CHANGELOG: Beta readiness review added (docs only)
