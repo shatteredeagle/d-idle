@@ -1,0 +1,3 @@
+BACKLOG: TASK-256 contextdiet: agent reading order cut to START-HERE, task, area doc (138 KB to 19 KB standing reading); 12-line brief template; per-area digest still open
+INDEX: docs/agents/brief-template.md: the 12-line agent brief template
+CHANGELOG: Agent reading diet: AGENTS.md mandatory reading is START-HERE, the task and the area doc; memory doc, glossary and the long backlog-howto are on demand
