@@ -11,7 +11,7 @@ import (
 // other answer routes (origin list, token or passcode cookie, JSON only, small body). The desk is late-bound.
 
 var (
-	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js"}
+	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css"}
 	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin"}
 )
 
@@ -57,15 +57,20 @@ func (a *InvAPI) Handler() http.Handler {
 		pactHdr(w, "text/html; charset=utf-8")
 		io.WriteString(w, invPage)
 	})
-	m.HandleFunc("/watch/inventory.js", func(w http.ResponseWriter, r *http.Request) {
-		b, err := webFS.ReadFile("web/inventory.js")
-		if err != nil {
-			http.NotFound(w, r)
-			return
-		}
-		pactHdr(w, "text/javascript; charset=utf-8")
-		w.Write(b)
-	})
+	static := func(file, ctype string) {
+		m.HandleFunc("/watch/"+file, func(w http.ResponseWriter, r *http.Request) {
+			b, err := webFS.ReadFile("web/" + file)
+			if err != nil {
+				http.NotFound(w, r)
+				return
+			}
+			pactHdr(w, ctype)
+			w.Write(b)
+		})
+	}
+	static("inventory.js", "text/javascript; charset=utf-8")
+	static("inventory-tip.js", "text/javascript; charset=utf-8") // the item tooltip (docs/inventory-tooltip.md)
+	static("inventory-tip.css", "text/css; charset=utf-8")
 	return readOnly(m)
 }
 

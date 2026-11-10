@@ -2,6 +2,7 @@ package invdesk
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"path/filepath"
 	"testing"
@@ -192,5 +193,39 @@ func TestViewListsMarksPinsAndWearableSlots(t *testing.T) {
 	}
 	if len(v.Backpack[0].CanWear) != 0 {
 		t.Errorf("a Sorceress may not wear item 1: %+v", v.Backpack[0].CanWear)
+	}
+}
+
+// The tooltip fields of status.Item pass through the view untouched (schema 2, additive): an item that carries none of
+// them marshals without them, one that does carries them for both classes' desks.
+func TestViewCarriesTooltipFields(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		d, _, _ := rig(t, class, town1)
+		d.c.Inventory = func() status.InventoryData {
+			return status.InventoryData{Inventory: []status.Item{
+				{ID: 1, Code: "10", Tip: []string{"Sword", "One-Hand Damage: 2 to 4"}, Sell: 20, Base: &status.ItemBase{Name: "Sword", MinDam: 2, MaxDam: 4}},
+				{ID: 2, Code: "11"},
+			}}
+		}
+		v := d.View()
+		if v.Schema != 2 {
+			t.Errorf("%v: schema %d", class, v.Schema)
+		}
+		b, err := json.Marshal(v.Backpack)
+		if err != nil {
+			t.Fatal(err)
+		}
+		var items []map[string]any
+		if err := json.Unmarshal(b, &items); err != nil {
+			t.Fatal(err)
+		}
+		if _, ok := items[0]["tip"]; !ok || items[0]["sell"] != float64(20) || items[0]["base"] == nil {
+			t.Errorf("%v: item 1 lost its tooltip fields: %v", class, items[0])
+		}
+		for _, k := range []string{"tip", "base", "sell"} {
+			if _, ok := items[1][k]; ok {
+				t.Errorf("%v: item 2 must not carry %s", class, k)
+			}
+		}
 	}
 }

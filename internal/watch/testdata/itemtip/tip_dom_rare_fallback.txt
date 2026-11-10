@@ -1,0 +1,10 @@
+div.inv-tip [role=tooltip]
+  div.q-rare.tip-name [] "Jade Ring"
+  div.tip-line [data-k=type] "Ring"
+  div.tip-line [data-k=prop] "+24 to Life"
+  div.tip-line [data-k=prop] "+10% Faster Cast Rate"
+  div.tip-line [data-k=prop] "Fire Resist +22%"
+  div.tip-line [data-k=meta] "Item level: 30"
+  div.tip-line [data-k=meta] "Sells for at least 150 gold"
+  div.tip-badges []
+    span.tip-badge [data-badge=sell] "SELL"

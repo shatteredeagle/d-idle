@@ -44,6 +44,11 @@
     --d-q-normal: #e6ddc8; --d-q-low: #9d968a; --d-q-magic: #7f9fff; --d-q-rare: #f0dc5a;
     --d-q-set: #62c070; --d-q-unique: #d6ad5a; --d-q-crafted: #f0a040; --d-q-runeword: #d6ad5a;
 
+    /* item tooltip (inventory page): a black translucent panel in every theme, so its text colours do not follow the theme */
+    --d-tip-bg: rgb(0 0 0 / .9); --d-tip-line: #5a5242; --d-tip-text: #e6ddc8; --d-tip-dim: #9d968a; --d-tip-bad: #ec7d6c;
+    --d-tip-q-normal: #f4efe2; --d-tip-q-low: #9d968a; --d-tip-q-magic: #7f9fff; --d-tip-q-rare: #f0dc5a;
+    --d-tip-q-set: #62c070; --d-tip-q-unique: #d6ad5a; --d-tip-q-crafted: #f0a040;
+
     --d-font-display: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
     --d-font-body: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
     --d-font-num: ui-monospace, "SF Mono", Menlo, Consolas, monospace;

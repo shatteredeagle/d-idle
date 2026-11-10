@@ -1,0 +1,22 @@
+{"schema":1,"inTown":true,"class":"paladin","gold":1200,"stashGold":0,
+ "equipment":{"rhand":{"id":8,"code":"2hs","name":"Gloom Edge","quality":"unique","identified":true,"level":42,"dur":30,"maxDur":40,"sell":2400,"x":0,"y":0,"w":2,"h":4,
+   "base":{"name":"Two-Handed Sword","minDam":8,"maxDam":20,"twoMinDam":8,"twoMaxDam":20,"twoHanded":true,"reqStr":35,"reqDex":27,"reqLvl":0,"speed":-10,"maxSockets":4,"dur":50},
+   "props":["+15% Increased Attack Speed","Adds 3 to 9 Fire Damage"]}},
+ "backpack":[
+  {"id":1,"code":"cap","name":"Skull Cap","quality":"magic","identified":true,"level":12,"x":0,"y":0,"w":2,"h":2,"sell":30,
+   "tip":["Archer's Skull Cap of the Whale","Defense: 9","Durability: 12 of 12","Required Level: 5","+15 to Life","+8 to Strength"],"mark":"keep"},
+  {"id":2,"code":"rin","name":"Jade Ring","quality":"rare","identified":true,"level":30,"x":2,"y":0,"w":1,"h":1,"sell":150,"mark":"sell",
+   "props":["+24 to Life","+10% Faster Cast Rate","Fire Resist +22%"],"base":{"name":"Ring"}},
+  {"id":3,"code":"amu","name":"Eye Of Dusk","quality":"unique","identified":true,"level":40,"x":3,"y":0,"w":1,"h":1,"sell":500,
+   "tip":["Eye Of Dusk","Amulet","+2 to All Skills","+20 to Mana","Required Level: 25"]},
+  {"id":4,"code":"lbt","name":"Verdant Belt","quality":"set","identified":true,"level":28,"x":4,"y":0,"w":2,"h":1,"sell":260,
+   "tip":["Verdant Belt","Belt","Defense: 18","+30 to Life"]},
+  {"id":5,"code":"gts","name":"Great Sword","quality":"rare","identified":false,"level":33,"x":6,"y":0,"w":2,"h":3,"sell":80,
+   "base":{"name":"Great Sword","minDam":9,"maxDam":14,"twoHanded":true,"reqStr":43,"reqDex":27,"maxSockets":6,"dur":50,"speed":10}},
+  {"id":6,"code":"plt","name":"Plate Mail","quality":"normal","ethereal":true,"sockets":3,"filled":1,"identified":true,"level":20,"dur":40,"maxDur":60,"x":0,"y":2,"w":2,"h":3,"sell":120,
+   "base":{"name":"Plate Mail","minAC":60,"maxAC":70,"reqStr":65,"maxSockets":3,"dur":60}},
+  {"id":7,"code":"buc","name":"Buckler","quality":"low","identified":true,"level":3,"x":2,"y":1,"w":2,"h":2,"sell":2,
+   "base":{"name":"Buckler","minAC":4,"maxAC":6,"block":30,"reqStr":12,"dur":20}},
+  {"id":9,"code":"wnd","name":"Wand","quality":"magic","identified":true,"level":9,"x":4,"y":1,"w":1,"h":2,"sell":10,"base":{"name":"Wand"}}
+ ],
+ "stash":[],"belt":[],"pins":[{"slot":"rhand","id":8,"name":"Gloom Edge","since":1}],"queue":[],"recent":[]}

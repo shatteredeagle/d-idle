@@ -122,6 +122,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	charName() // read it now, while the game is up
 	disp := newDisplay(cat)
+	disp.tips.set(db, nil)
 	bus := event.NewBus(instanceID(o), nil)
 	ref := &runnerRef{}
 	if err := newInvDesk(ip.State(), disp, ref); err != nil {

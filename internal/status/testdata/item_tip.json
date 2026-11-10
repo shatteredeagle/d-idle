@@ -1,0 +1,25 @@
+{
+ "id": 1,
+ "code": "cap",
+ "name": "Cap",
+ "quality": "magic",
+ "sockets": 2,
+ "level": 12,
+ "identified": true,
+ "tip": [
+  "Skull Cap",
+  "Defense: 9"
+ ],
+ "base": {
+  "name": "Skull Cap",
+  "minAC": 2,
+  "maxAC": 5,
+  "maxSockets": 2,
+  "dur": 12
+ },
+ "sell": 30,
+ "x": 0,
+ "y": 0,
+ "w": 2,
+ "h": 2
+}
