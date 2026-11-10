@@ -1,8 +1,6 @@
 ---
 id: TASK-254
-title: >-
-  palprofile: Paladin attack order as profile data (Attack and Sacrifice, no
-  Smite, Prayer rest-only)
+title: "palprofile-data: Paladin attack order as profile data (Attack and Sacrifice, no Smite, Prayer rest-only)"
 status: Done
 assignee:
   - credit-runner
@@ -14,7 +12,7 @@ labels:
 dependencies: []
 priority: medium
 ordinal: 183000
-card: "palprofile"
+card: "palprofile-data"
 owns:
   - "internal/combat/classdata/profiles.json"
   - "internal/combat/class_test.go"
