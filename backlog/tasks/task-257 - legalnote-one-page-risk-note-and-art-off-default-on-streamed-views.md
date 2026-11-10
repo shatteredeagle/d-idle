@@ -17,6 +17,7 @@ owns:
   - "docs/legal-note.md"
 exclusive: []
 contracts: []
+result: "docs/research/legal-note.md written (V EULA rev. 2024-03-21, Video Policy, Legal FAQ); overlay already art-free (internal/watch/web/inventory.js, read only); docs only, not legal advice"
 ---
 
 ## Description
@@ -29,5 +30,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 one-page note (GPL source offer, EULA posture) and art off by default on streamed views
+- [x] #1 one-page note (GPL source offer, EULA posture) and art off by default on streamed views
 <!-- AC:END -->
