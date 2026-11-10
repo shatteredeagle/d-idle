@@ -60,3 +60,17 @@ Tests: `go test -count=1 -p 1 ./internal/data` (two bases, unique override, set,
 - CSS: component 13a in `web/components.css` (inside the existing layer, tokens only, no `!important`, no inline style; `tools/uilint` passes). JS writes only existing CSSOM-whitelisted properties.
 - DOM goldens (`internal/watch/testdata/inventory_dom_*.txt`, fixture `inventory-art-view.json`; `UPDATE=1 node testdata/inventory_dom.js web/inventory.js` rewrites): `ready_off`, `empty` and `error` were generated from the page as it was before this PR and are byte-identical to the art-layer version (art off changes nothing); `ready_on`, `empty_on` and `image_fails` cover art on with fixture URLs only. No image is fetched in tests and no screenshot with art is kept anywhere.
 - Not done: the I/II weapon-swap tabs, jewel/ring/charm variants, PL2 tints (v1 scope), a layout-editor entry for the art mode, a mockup update for component 13a (mockups stay art-free; the drawn doll is unchanged).
+
+## PR F: guard rails
+
+- `tools/ci/check.sh` fails on any tracked or untracked `*.dc6`, `*.dcc`, `*.dt1` file and on PNGs under `internal/watch/web/`, `*/web/art/` or `*/cache/art/`.
+- `TestEmbeddedWebHasNoArt` (`internal/watch`): the embedded web tree has no art directory and no image or game file, so no release binary carries art. `TestPackageHoldsNoArt` (`internal/art`): no `go:embed` and no art-like file in the package.
+- The container build already aborts on `.mpq` in its context (`docs/d2d-container/licensing.md`); the art cache is created at runtime inside the data volume, never in an image layer. THIRD_PARTY.md has the row; `docs/data.md` points here.
+- Posture (not legal advice, from the research doc): runtime extraction from the owner's own install, shown to the owner and to viewers they let in, is the posture the bot already has for the tables; redistribution is what is forbidden. A public stream of `/watch/inventory` would show Blizzard art; the stream overlay (`?mode=overlay`) is art-free until the user decides. Do not share the data volume, the cache directory or screenshots of the art-rendered page.
+
+## Verification summary (what ran, what did not)
+
+- V (worker host, real 1.14d install, read-only, no game running): DC6 decode and PNG of item icons, slot silhouettes and the composed panel (`TestRealArt`); icon names exist for all 1977 class/quality resolutions (`TestRealInvFile`); equipment slot geometry shared by all seven classes (`TestRealPanelGeometry`); one visual check of the page with real art (rendered once and discarded).
+- U, needs a live item read: that `ItemData+0x28` is the unique/set id and that the id is the `uniqueitems.txt` row (separator counted). Wrong ids fall back to the base icon. Checklist: on a throwaway character holding a unique and a set item, read `FileIndex`, take that row of `uniqueitems.txt`/`setitems.txt`, compare its `code` and name with the item.
+- U: which of `invchar.dc6`/`invchar6.dc6` the game draws; ring box pixels beyond the table (rings are not in `inventory.txt`'s listed slots by name; V that the `rHand`/`lHand` boxes sit on the ring frames).
+- Not built (out of v1 scope, safe defaults taken): PL2 colour tints, ring/amulet/charm/jewel variant graphics (the plain `invfile` is drawn), socket overlays, art in the stream overlay, a per-page `art: off|on` setting.
