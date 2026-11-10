@@ -1,11 +1,18 @@
 package watch
 
 import (
+	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
 	"sync"
+	"time"
 )
+
+// invViewTTL is how long one built /api/inventory body is served again. Building the view judges every carried item
+// and checks ten slots per backpack item, so several open pages (or a page and the overlay) must not each repeat it
+// (TASK-268). A POST on the inventory routes drops it at once, so the page sees its own change.
+var invViewTTL = 1500 * time.Millisecond
 
 // The inventory page (docs/inventory-ui.md): GET on the viewer, POST on the answer listener with the same gates as the
 // other answer routes (origin list, token or passcode cookie, JSON only, small body). The desk is late-bound.
@@ -33,11 +40,31 @@ type invRefusal interface {
 type InvAPI struct {
 	mu sync.Mutex
 	d  InvDesk
+
+	cmu    sync.Mutex // held while the view is built, so concurrent polls share one build
+	cached []byte
+	at     time.Time
+}
+
+func (a *InvAPI) drop() { a.cmu.Lock(); a.cached = nil; a.cmu.Unlock() }
+
+func (a *InvAPI) viewJSON(d InvDesk) ([]byte, error) {
+	a.cmu.Lock()
+	defer a.cmu.Unlock()
+	if a.cached != nil && time.Since(a.at) < invViewTTL {
+		return a.cached, nil
+	}
+	b, err := json.Marshal(d.View())
+	if err != nil {
+		return nil, err
+	}
+	a.cached, a.at = append(b, '\n'), time.Now()
+	return a.cached, nil
 }
 
 func NewInvAPI() *InvAPI { return &InvAPI{} }
 
-func (a *InvAPI) Bind(d InvDesk) { a.mu.Lock(); a.d = d; a.mu.Unlock() }
+func (a *InvAPI) Bind(d InvDesk) { a.mu.Lock(); a.d = d; a.mu.Unlock(); a.drop() }
 
 func (a *InvAPI) desk() InvDesk { a.mu.Lock(); defer a.mu.Unlock(); return a.d }
 
@@ -50,8 +77,16 @@ func (a *InvAPI) Handler() http.Handler {
 			writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "the inventory page is off or the hero is not known yet"})
 			return
 		}
-		w.Header().Set("Cache-Control", "no-store")
-		writeJSON(w, 200, d.View())
+		b, err := a.viewJSON(d)
+		if err != nil {
+			writeJSON(w, http.StatusInternalServerError, policyReply{Code: "internal", Error: "could not build the inventory"})
+			return
+		}
+		h := w.Header()
+		h.Set("Content-Type", "application/json; charset=utf-8")
+		h.Set("Cache-Control", "no-store")
+		h.Set("X-Content-Type-Options", "nosniff")
+		w.Write(b)
 	})
 	m.HandleFunc("/watch/inventory", func(w http.ResponseWriter, r *http.Request) {
 		pactHdr(w, "text/html; charset=utf-8")
@@ -92,6 +127,7 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 			writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "the inventory page is off or the hero is not known yet"})
 			return
 		}
+		defer a.drop()
 		var (
 			err error
 			res any

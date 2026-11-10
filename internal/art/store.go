@@ -2,6 +2,7 @@ package art
 
 import (
 	"bytes"
+	"context"
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
@@ -14,6 +15,7 @@ import (
 	"regexp"
 	"strings"
 	"sync"
+	"sync/atomic"
 
 	"d2lod-bot/internal/data/mpq"
 )
@@ -61,6 +63,12 @@ type Store struct {
 
 	mu  sync.Mutex
 	mem map[string][]byte
+
+	pmu     sync.Mutex // guards prog
+	prog    Progress
+	running atomic.Bool
+	cancel  context.CancelFunc
+	wg      sync.WaitGroup
 }
 
 // Open opens the install's archives (patch_d2.mpq optional, d2data.mpq and d2exp.mpq required) and
@@ -120,6 +128,10 @@ func Open(installDir, cacheDir string) (*Store, error) {
 
 // Close releases the archives.
 func (s *Store) Close() {
+	if s.cancel != nil {
+		s.cancel()
+	}
+	s.wg.Wait()
 	for _, a := range s.archives {
 		a.Close()
 	}
@@ -176,6 +188,18 @@ func (s *Store) PNG(key string) ([]byte, error) {
 			return b, nil
 		}
 	}
+	b, err := s.encode(key)
+	if err != nil {
+		return nil, err
+	}
+	if s.dir != "" {
+		writeAtomic(filepath.Join(s.dir, key+".png"), b)
+	}
+	s.remember(key, b)
+	return b, nil
+}
+
+func (s *Store) encode(key string) ([]byte, error) {
 	img, err := s.render(key)
 	if err != nil {
 		return nil, err
@@ -184,12 +208,7 @@ func (s *Store) PNG(key string) ([]byte, error) {
 	if err := png.Encode(&buf, img); err != nil {
 		return nil, err
 	}
-	b = buf.Bytes()
-	if s.dir != "" {
-		writeAtomic(filepath.Join(s.dir, key+".png"), b)
-	}
-	s.remember(key, b)
-	return b, nil
+	return buf.Bytes(), nil
 }
 
 func (s *Store) remember(key string, b []byte) {

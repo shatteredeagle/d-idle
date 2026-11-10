@@ -69,3 +69,7 @@ The drill hooks are `tools/dev-update.sh --fault badsig|unsigned|tamper|hash|cra
 ## Switching a running player container (decision for the owner, nothing here does it)
 
 Create the DEV image, then recreate the container ONCE from it with the three variables. The data volume is untouched (hero, watch token, access file, wizard state); the game directory stays a read-only mount. The bot is stopped the normal way (character saved) and started again, a one to three minute warm-up like any restart. Keep the same published ports and watch origin. After that every change is one command.
+
+## Warm the item art after a deploy (TASK-268)
+
+The inventory page's game art is prepared in the background at every start of `d2bot` (`<data>/cache/art`, from the owner's own install, docs/paperdoll-art-build.md). After a dev update there is nothing to do; to warm it on purpose or to see a count run `d2bot art extract` inside the container (idempotent, a finished cache costs a few milliseconds). `/api/art` reports `state` and `done/total` while it runs.
