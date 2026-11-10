@@ -127,6 +127,8 @@ type Fun struct {
 	Hints *QuestHints
 	// Risk is nil unless the ladder has the row "risk" and FunConfig.Risk is set (TASK-159).
 	Risk *RiskMeter
+	// Readiness serves GET /api/readiness (internal/readiness, TASK-218), read-only; set it before Serve, nil: no route.
+	Readiness http.Handler
 	// Queue is nil unless FunConfig.OrderQueue is set and the ladder has the slot rows (TASK-161).
 	Queue *OrderQueue
 	// Reveal is nil unless the ladder has the rows "idreveal" and "idreveal_later" (TASK-157).
@@ -617,6 +619,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	}
 	if f.Risk != nil {
 		m.Handle(RiskRoute, f.Risk.Handler())
+	}
+	if f.Readiness != nil {
+		m.Handle("/api/readiness", f.Readiness) // readiness.Route
 	}
 	if f.Queue != nil {
 		m.Handle(OrderQueueRoute, f.Queue.Handler())

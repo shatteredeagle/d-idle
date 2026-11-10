@@ -1157,7 +1157,11 @@ const (
 // out of unexplored ground with nothing hostile left, the area counts as cleared for this game.
 func (r *Runner) sweep(ctx context.Context, s *d2.Snapshot, c control, area int) bool {
 	name := r.areaName(area)
-	r.setWhy(WhyFight, "area", name, "life", itoa(s.Player.LifePct()))
+	if sv := r.savingFor(s); sv.Item != "" {
+		r.setWhy(WhySavingFor, "area", name, "item", sv.Item, "need", itoa(sv.Need))
+	} else {
+		r.setWhy(WhyFight, "area", name, "life", itoa(s.Player.LifePct()))
+	}
 	return r.do(ctx, c, StateClearing, "Fighting in "+name, sec(r.cfg.SweepTimeoutSec), "sweep "+name, func(ctx context.Context) error {
 		return r.sweepPass(ctx, area)
 	})

@@ -178,6 +178,9 @@ func (t *Town) SetPinned(f func(body int) bool) { t.pinned = f }
 
 func (t *Town) isPinned(body int) bool { return t.pinned != nil && t.pinned(body) }
 
+// MarkOf is the player's mark ("sell", "keep" or "") for u, for callers that count what a town visit would sell.
+func (t *Town) MarkOf(u d2.Unit) string { return t.markOf(u) }
+
 func (t *Town) markOf(u d2.Unit) string {
 	if t.marks == nil || u.Item == nil {
 		return ""

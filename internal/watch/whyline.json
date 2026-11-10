@@ -43,6 +43,9 @@
     "farm_gold": {"params": ["level"], "say": [
       "Short of gold: levelling up from level {level} until I can afford what I need.",
       "Out of money, so I am farming gold at level {level}."]},
+    "saving_for": {"params": ["area", "item", "need"], "say": [
+      "Saving for {item}, {need} gold to go, fighting in {area} meanwhile.",
+      "Short of gold: {need} more for {item}. Fighting in {area}."]},
     "after_death_restock": {"params": [], "say": [
       "I died, so I am restocking in town before anything else.",
       "Back from a death: buying supplies first."]},

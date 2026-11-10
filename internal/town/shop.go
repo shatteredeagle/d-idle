@@ -278,7 +278,8 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 	// HPFirst. The classes come from resource.ManaNeed, the belt columns from the plan: a build without a mana column has
 	// want[MP] == 0 and shops exactly as before.
 	r := t.e.Tune.Resource
-	caster := resource.ManaNeed(s.Player.Class) >= 2
+	manaNeed := resource.ManaNeed(s.Player.Class)
+	caster := manaNeed >= 2
 	hpHave := bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
 	mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)
 	// buyKind buys up to limit potions of kind k; it returns true when the visit is over (budget).
@@ -305,6 +306,13 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 			it, ok := t.pickPotion(stock, src, band.MaxTier(src), budget)
 			if ok && k == belt.MP && cur.Player.Gold-t.base(it).Cost < t.manaReserve(cur) {
 				break // mana never eats the gold of one healing potion and one portal scroll
+			}
+			if ok && k == belt.MP {
+				rt := resource.FromEnv(*t.e.Tune)
+				if !resource.ManaBuyOK(resource.ManaBuy(manaNeed, rt), rt, cur.Player.Gold, t.base(it).Cost, t.healingCarried(cur), boughtMana(rep.Bought)) {
+					t.e.Log.Info("shop: mana potion skipped", "gold", cur.Player.Gold, "price", t.base(it).Cost, "healing", t.healingCarried(cur), "manaNeed", manaNeed)
+					break // little mana use: healing and the kit first
+				}
 			}
 			if !ok {
 				if _, sold := t.pickPotion(stock, src, band.MaxTier(src), 1<<30); sold {
