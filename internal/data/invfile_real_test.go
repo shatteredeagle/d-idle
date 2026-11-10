@@ -64,3 +64,47 @@ func TestRealInvFile(t *testing.T) {
 		}
 	}
 }
+
+// TestRealPanelGeometry logs the equipment slot boxes of every player inventory.txt row relative to the panel
+// origin (the numbers docs/paperdoll-art-build.md and web/components.css use for the art layout) and checks
+// that all classes share them.
+func TestRealPanelGeometry(t *testing.T) {
+	inst := os.Getenv("D2ART_INSTALL")
+	if inst == "" {
+		inst = realInstall
+	}
+	if _, err := os.Stat(inst); err != nil {
+		t.Skip("no real install")
+	}
+	db, err := Open(inst, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	var ref *Inventory
+	for _, c := range []string{"Amazon", "Sorceress", "Necromancer", "Paladin", "Barbarian", "Druid", "Assassin"} {
+		var v *Inventory
+		for _, x := range db.Inventories {
+			if x.Class == c {
+				v = x
+			}
+		}
+		if v == nil {
+			t.Fatalf("no inventory row %s", c)
+		}
+		if ref == nil {
+			ref = v
+			t.Logf("panel %+v grid %+v cell %dx%d (%dx%d cells)", v.Panel, v.GridRect, v.CellW, v.CellH, v.Cols, v.Rows)
+			for _, s := range slotNames {
+				r := v.Slots[s]
+				t.Logf("%-6s x %3d y %3d w %2d h %2d (panel-relative)", s, r.Left-v.Panel.Left, r.Top-v.Panel.Top, r.Right-r.Left, r.Bottom-r.Top)
+			}
+			t.Logf("grid   x %3d y %3d", v.GridRect.Left-v.Panel.Left, v.GridRect.Top-v.Panel.Top)
+		}
+		for s, r := range ref.Slots {
+			o := v.Slots[s]
+			if o.Left-v.Panel.Left != r.Left-ref.Panel.Left || o.Top-v.Panel.Top != r.Top-ref.Panel.Top || o.Right-o.Left != r.Right-r.Left || o.Bottom-o.Top != r.Bottom-r.Top {
+				t.Errorf("%s slot %s differs from %s", c, s, ref.Class)
+			}
+		}
+	}
+}

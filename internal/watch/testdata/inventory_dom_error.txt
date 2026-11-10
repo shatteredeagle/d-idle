@@ -1,0 +1,10 @@
+== equipmeta
+div []
+== equip
+div []
+== pack
+div []
+== belt
+div []
+== msg
+div [] "inventory unavailable"

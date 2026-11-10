@@ -14,6 +14,8 @@ while IFS= read -r -d '' f; do
   [ -e "$f" ] || continue
   case "$f" in
     *.mpq|*.MPQ|*.d2s|*.D2S|*.key|*.KEY) bad "forbidden file type: $f" ;;
+    *.dc6|*.DC6|*.dcc|*.DCC|*.dt1|*.DT1) bad "game art file: $f (the watch art is read from the user's install at runtime, docs/paperdoll-art-build.md)" ;;
+    internal/watch/web/*.png|internal/watch/web/*/*.png|*/web/art/*|*/cache/art/*) bad "art image in the tree: $f (art is never committed or embedded, docs/paperdoll-art-build.md)" ;;
     data/global/excel/*.txt|*/data/global/excel/*.txt) bad "extracted game table: $f" ;;
   esac
   case "$f" in

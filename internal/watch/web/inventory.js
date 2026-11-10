@@ -2,12 +2,18 @@
 // backpack, belt and stash as cell grids, a detail card for the selected item, the repair card and the equip queue.
 // Reads GET /api/inventory and GET /api/repair; writes go to the answer listener. Text through textContent only; the
 // only inline style writes are grid areas (CSSOM, allowed under style-src 'self').
+// Game art (docs/paperdoll-art-build.md) is an optional layer: when GET /api/art says available and the panel frame
+// loads, the doll and the cells get <img> icons from /watch/art/<key>.png; any failure leaves the drawn cells, which
+// stay the default path. Not used with ?mode=overlay (the stream view).
 (function () {
   'use strict';
   var $ = function (id) { return document.getElementById(id); };
   var sel = null, last = null;
   var SLOTS = ['head', 'neck', 'torso', 'rhand', 'lhand', 'rring', 'lring', 'belt', 'feet', 'gloves'];
   var LABEL = { head: 'helm', neck: 'amulet', torso: 'armour', rhand: 'weapon', lhand: 'shield', rring: 'ring', lring: 'ring', belt: 'belt', feet: 'boots', gloves: 'gloves' };
+  var SLOTART = { head: 'helm', neck: 'amulet', torso: 'armor', rhand: 'weapon', lhand: 'weapon', rring: 'ring', lring: 'ring', belt: 'belt', feet: 'boots', gloves: 'gloves' };
+  var ART_NAME = /^[a-z0-9_]{1,16}$/;
+  var art = { on: false };
   var WARN_PCT = 30; // pips turn amber under this share of the maximum (the legend says so)
 
   function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; }
@@ -36,6 +42,13 @@
     (it.props || []).forEach(function (p) { o.push(p); });
     return o;
   }
+  // artImg adds a game-art <img> to host; when it fails to load the image goes away and the host reverts to its drawn look.
+  function artImg(host, cls, key) {
+    var i = el('img', cls); i.setAttribute('alt', ''); i.setAttribute('src', '/watch/art/' + key + '.png');
+    host.dataset.shown = '';
+    i.addEventListener('error', function () { host.removeChild(i); delete host.dataset.shown; });
+    host.appendChild(i);
+  }
   function qual(e, it) { if (it.quality) e.classList.add('q-' + it.quality); }
   function button(text, fn, disabled, opts) {
     var b = el('button', 'd-btn', text); b.type = 'button'; b.dataset.size = 'sm';
@@ -48,11 +61,17 @@
   // ---- paper doll ----
   function doll(v) {
     var box = $('equip'); clear(box);
+    if (art.on) { box.dataset.art = ''; var f = el('img', 'art-panel'); f.setAttribute('alt', ''); f.setAttribute('src', '/watch/art/panel-inv.png'); box.appendChild(f); } else delete box.dataset.art;
     var pins = {}; (v.pins || []).forEach(function (p) { pins[p.slot] = p; });
     var broken = 0, worn = 0;
     SLOTS.forEach(function (s) {
       var it = v.equipment && v.equipment[s];
       var b = el('button', 'd-slot2'); b.type = 'button'; b.dataset.slot = s; b.dataset.key = 'slot-' + s;
+      // the icon goes first so the durability pips, PIN and BROKEN stay above it
+      if (art.on) {
+        if (it && it.art && ART_NAME.test(it.art)) artImg(b, 'ico', 'item-' + it.art);
+        else if (!it) artImg(b, 'ghost', 'slot-' + SLOTART[s]);
+      }
       b.appendChild(el('span', 'sil', LABEL[s]));
       if (it) {
         b.dataset.filled = ''; qual(b, it);
@@ -92,6 +111,7 @@
       var b = el('button', 'item'); b.type = 'button'; qual(b, it); b.dataset.key = 'item-' + it.id; b.dataset.h = String(h);
       b.style.gridArea = (it.y + 1) + ' / ' + (it.x + 1) + ' / span ' + h + ' / span ' + w;
       b.textContent = name(it); b.title = name(it);
+      if (art.on && it.art && ART_NAME.test(it.art)) artImg(b, 'ico', 'item-' + it.art);
       if (it.mark) { b.dataset.mark = it.mark; b.appendChild(el('span', 'mk', it.mark === 'sell' ? 'S' : 'K')); }
       if (sel && sel.id === it.id) b.classList.add('sel');
       b.addEventListener('click', function () { sel = { id: it.id }; draw(last); });
@@ -195,10 +215,24 @@
       return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || 'error'); return j; });
     });
   }
+  // artProbe: art is on only when the server says available and the panel frame really loads (a frame that does not
+  // load would leave the slot layout without its background), and never in the stream overlay.
+  function artProbe() {
+    if (/(^|[?&])mode=overlay(&|$)/.test(location.search)) return Promise.resolve(false);
+    return getJSON('/api/art').then(function (a) {
+      if (!a || !a.available) return false;
+      return new Promise(function (ok) {
+        var i = new Image(); i.onload = function () { ok(true); }; i.onerror = function () { ok(false); }; i.src = '/watch/art/panel-inv.png';
+      });
+    }).catch(function () { return false; });
+  }
   function load() {
     getJSON('/api/repair').then(drawRepair, function (e) { $('repair').textContent = e.message; });
     getJSON('/api/inventory').then(draw, function (e) { say(e.message); });
   }
-  if (typeof window !== 'undefined' && window.__invTest) { window.__invTest({ dur: dur, level: level, lines: lines }); return; }
-  load(); setInterval(load, 4000);
+  if (typeof window !== 'undefined' && window.__invTest) {
+    window.__invTest({ dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; } });
+    return;
+  }
+  artProbe().then(function (on) { art.on = on; load(); setInterval(load, 4000); });
 })();

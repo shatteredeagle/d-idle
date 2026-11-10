@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- CI and tests now refuse game art (DC6 or art PNGs) in the tree or the embedded web files; THIRD_PARTY and docs/data.md describe the runtime-only art path
+- /watch/inventory shows the game's own paper doll and item icons when the install is readable (read at runtime, never shipped, off in the stream overlay); falls back to the drawn cells otherwise
+- watch: GET /api/art (watch.art/1) and GET /watch/art/<key>.png serve game art decoded at request time from the user's own install; 404 and available:false without one, nothing ships
 - status.Item gains an optional art field (icon name resolved from the item tables); empty when unknown, so nothing changes for existing consumers
 - internal/data: invfile, uniqueinvfile, setinvfile columns and DB.InvFile icon-name resolver (table cache schema 4), for the paper doll art
 - internal/art: runtime DC6 to PNG decoder with disk cache for the inventory paper doll (not wired yet, no art ships)

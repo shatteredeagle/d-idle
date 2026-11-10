@@ -338,6 +338,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
+	o.ladder.art = artSource(o.gameDir, o.data)
 	o.ladder.repair = ref.rep
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
