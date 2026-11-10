@@ -165,6 +165,19 @@ func ManaBuy(need int, t Tuning) ManaBuyRule {
 	return ManaBuyRule{}
 }
 
+// ForPlan adapts the rule to the player's own belt plan. A mana column the player chose (a non-default spec) is filled
+// for any class, as PlanBuys does, but healing still comes first and the kit stays affordable: the healing floor is
+// capped at what the plan's healing columns hold (healingCap; 0 for an all-mana belt, which asks for none), and the
+// per-visit cap goes, because the plan decides the count.
+func (r ManaBuyRule) ForPlan(spec PlanSpec, healingCap int) ManaBuyRule {
+	if spec.IsDefault() {
+		return r
+	}
+	r.Allow, r.MaxPerVisit = true, 0
+	r.MinHealing = min(r.MinHealing, healingCap)
+	return r
+}
+
 // ManaBuyOK applies the rule to one purchase of a potion costing price, with haveHealing healing potions carried and
 // bought mana potions already bought this visit.
 func ManaBuyOK(r ManaBuyRule, t Tuning, gold, price, haveHealing, bought int) bool {

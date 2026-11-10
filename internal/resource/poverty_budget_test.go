@@ -68,3 +68,31 @@ func TestSavingForOrder(t *testing.T) {
 		t.Errorf("nothing missing: %+v", s)
 	}
 }
+
+// A belt plan the player chose overrides the class default for mana (Barbarian: never; Paladin: after HPFirst healing),
+// but the default plan keeps the class rule.
+func TestManaBuyForPlan(t *testing.T) {
+	tn := DefaultTuning()
+	allMana := PlanSpec{Template: 3}
+	oneToOne := PlanSpec{Template: 5}
+	for _, c := range []struct {
+		name       string
+		need       int
+		spec       PlanSpec
+		healingCap int
+		healing    int
+		want       bool
+	}{
+		{"barbarian default plan", 0, PlanSpec{}, 4, 0, false},
+		{"barbarian all mana", 0, allMana, 0, 0, true},
+		{"paladin default plan, no healing", 1, PlanSpec{}, 3, 0, false},
+		{"paladin 1:1, belt healing full", 1, oneToOne, 2, 2, true},
+		{"paladin 1:1, healing short", 1, oneToOne, 2, 1, false},
+		{"sorceress default plan", 2, PlanSpec{}, 2, 0, true},
+	} {
+		r := ManaBuy(c.need, tn).ForPlan(c.spec, c.healingCap)
+		if got := ManaBuyOK(r, tn, 1500, 60, c.healing, 0); got != c.want {
+			t.Errorf("%s: ManaBuyOK %v, want %v (%+v)", c.name, got, c.want, r)
+		}
+	}
+}

@@ -1,0 +1,2 @@
+BACKLOG: beltplantest: mana buy rule (TASK-240) no longer blocks a mana column the player chose (Barbarian all-mana, Paladin 1:1); D2_MPQ_DIR lets the town sim tests run with real tables (TASK-266)
+CHANGELOG: Fix: a player-chosen belt plan with mana columns now buys mana potions for every class (Barbarian all-mana bought nothing, Paladin 1:1 stalled below the healing floor).
