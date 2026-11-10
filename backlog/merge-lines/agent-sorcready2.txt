@@ -1,2 +1,0 @@
-INDEX: docs/sorceress-early.md - section 7: sorcready2 applied decisions (Sorceress normal30 default, Warmth, cold line, class-table guard)
-CHANGELOG: A fresh Sorceress now levels on sorceress_normal30 with a Warmth point at clvl 2 and a cold line (Ice Blast, Glacial Spike) from clvl 12 instead of Lightning and Chain Lightning, which are broken on d2d; the bot refuses a table that belongs to another class (TASK-267)
