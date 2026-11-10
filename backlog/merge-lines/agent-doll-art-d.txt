@@ -1,1 +1,0 @@
-CHANGELOG: watch: GET /api/art (watch.art/1) and GET /watch/art/<key>.png serve game art decoded at request time from the user's own install; 404 and available:false without one, nothing ships
