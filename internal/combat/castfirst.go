@@ -30,6 +30,9 @@ const (
 func (st *fightState) noteCast(now time.Time) {
 	st.casts++
 	st.lastCastAt = now
+	if st.casts == 1 && !st.t0.IsZero() {
+		st.firstCast = now.Sub(st.t0)
+	}
 }
 
 // evadeOK says whether a non-cast movement (dodge, sidestep, back-off, keep-range) may take this tick: only when the
@@ -238,4 +241,26 @@ func (f *Fighter) noTarget(hs []Target, st *fightState, sp fightSpec) {
 	if near > 0 {
 		f.info("no target in scope", "near", near, "avoid", avoid, "blacklisted", black, "ignoredEarlier", memo, "yield", sp.yield)
 	}
+}
+
+// fightTick logs the one compact per-fight summary that tells the attack fraction: engage ticks, attacks issued,
+// moves (approach, kite, dodge, back-off), seconds to the first attack, kills per minute and the latest retreat reason.
+func (f *Fighter) fightTick(ft *FightTelemetry, st *fightState, start time.Time, res ClearResult) {
+	el := f.now().Sub(start)
+	first := -1.0
+	if st.casts > 0 {
+		first = st.firstCast.Seconds()
+	}
+	moves := st.approach + st.kitesAll + st.dodges + st.mdodges + st.backoffsAll
+	f.info("fight.tick", "ticks", st.ticks, "attacks", st.casts, "moves", moves, "backoffs", st.backoffsAll,
+		"approaches", st.approach, "kites", st.kitesAll, "dodges", st.dodges+st.mdodges, "maxHostiles", st.maxHostiles,
+		"firstAttackSec", first, "sec", int(el.Seconds()), "kills", res.Kills, "killsPerMin", perMin(res.Kills, el),
+		"retreat", st.retreatWhy, "lastNoCast", st.lastNoCast)
+}
+
+func perMin(n int, d time.Duration) float64 {
+	if d <= 0 {
+		return 0
+	}
+	return float64(n) / d.Minutes()
 }
