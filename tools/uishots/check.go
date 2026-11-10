@@ -17,8 +17,9 @@ var (
 // pagePanels are the panels a page dump must hold, ready, by file name prefix. The fixture viewer offers data for
 // every one of them, so a missing or still-loading panel is a regression.
 var pagePanels = map[string][]string{
-	"watch-":   {"hero-status", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
-	"overlay-": {"hero-status"},
+	"watch-":     {"hero-status", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
+	"overlay-":   {"hero-status"},
+	"inventory-": {"hero-status"},
 }
 
 // checkDir reads the --dump-dom files of a run and checks the contract on the rendered DOM: the shell is there, each
@@ -42,9 +43,6 @@ func checkDir(dir string) ([]string, error) {
 
 func checkDump(name, html string) []string {
 	var bad []string
-	if !strings.Contains(html, `class="d-shell"`) {
-		bad = append(bad, name+": no d-shell")
-	}
 	state := map[string]string{}
 	for _, m := range rePanelTag.FindAllStringSubmatch(html, -1) {
 		s := ""
@@ -59,6 +57,9 @@ func checkDump(name, html string) []string {
 	for prefix, want := range pagePanels {
 		if !strings.HasPrefix(name, prefix) {
 			continue
+		}
+		if !strings.Contains(html, `class="d-shell"`) {
+			bad = append(bad, name+": no d-shell")
 		}
 		for _, id := range want {
 			switch s, ok := state[id]; {

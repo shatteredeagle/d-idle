@@ -58,8 +58,13 @@ func (a *InvAPI) Handler() http.Handler {
 		io.WriteString(w, invPage)
 	})
 	m.HandleFunc("/watch/inventory.js", func(w http.ResponseWriter, r *http.Request) {
+		b, err := webFS.ReadFile("web/inventory.js")
+		if err != nil {
+			http.NotFound(w, r)
+			return
+		}
 		pactHdr(w, "text/javascript; charset=utf-8")
-		io.WriteString(w, invJS)
+		w.Write(b)
 	})
 	return readOnly(m)
 }

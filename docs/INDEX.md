@@ -896,3 +896,5 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/mockups/ui/editor.html and renders/editor-*.png; docs/ui-design-system.md section 6.4 Layout manifest; docs/ui-regression-plan.md PR 14 uilayout
 - tools/uishots.sh and tools/uishots/: watch UI screenshot suite (headless Chrome on a private Xvfb on the worker host, frozen fixture viewer, DOM check, pixel diff)
 - docs/ui-design-system.md section 0: the watch UI compatibility promise; internal/watch/testdata/compat/ holds its golden fixtures (only added to)
+- research/beta-readiness-review.md: friends-beta play review from the sandbox log and docs
+- docs/readiness.md - readiness model: per-threat checks for a hero against an area (TASK-217, TASK-218)
