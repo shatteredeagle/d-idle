@@ -496,6 +496,23 @@ func (n needsOf) freeCells() int {
 	return cells
 }
 
+// TomeCap is how many scrolls a tome of town portal or identify holds (S: D2 rules; town.tomeCap is the same number).
+const TomeCap = 20
+
+const statQuantity = 70 // the tome's scroll count; an empty tome has no stat list at all (town.qty, V live i4)
+
+// tomeQty reads a tome's scroll count; an unreadable or missing stat counts as empty so the scroll is still taken.
+func (n needsOf) tomeQty(u d2.Unit) int {
+	if n.l.stats == nil || u.Addr == 0 {
+		return 0
+	}
+	st, err := n.l.stats(u.Addr)
+	if err != nil || !st.Has(statQuantity) {
+		return 0
+	}
+	return int(st.Get(statQuantity))
+}
+
 type needsOf struct {
 	l *Looter
 	s *d2.Snapshot
@@ -509,6 +526,12 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 		k := belt.PotionKind(b)
 		if k == belt.None {
 			return false
+		}
+		if k != belt.RV {
+			// SME EXP (docs/lootskip.md): a tier below the floor is not worth a belt box or a pack cell.
+			if floor, _ := PotionTierFloor(p.Class, p.Level, p.Difficulty); belt.Tier(b) < floor {
+				return false
+			}
 		}
 		st := belt.Read(db, inv)
 		band := belt.PlanForBuild(p.Class, p.Level, p.Difficulty, n.l.build) // same plan the shop buys by, else mana-hungry classes pick up the wrong kind
@@ -540,19 +563,21 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 		if b.Code == "isc" {
 			tome = "ibk"
 		}
-		have, tomes := 0, 0
+		have := 0
+		var tomeU *d2.Unit
 		for _, u := range inv.Container(d2.ContInventory) {
 			if bb := n.l.base(u.Class); bb != nil {
 				switch bb.Code {
 				case b.Code:
 					have++
 				case tome:
-					tomes++
+					u := u
+					tomeU = &u
 				}
 			}
 		}
-		if tomes > 0 {
-			return true // a tome with room takes any number of scrolls; a full tome just refuses the click
+		if tomeU != nil {
+			return n.tomeQty(*tomeU) < TomeCap // user rule: only until the tome is full, no loose scrolls beside it
 		}
 		// No tome: scrolls do not stack, each takes a cell, so carry only the shopping target (a pack of 20 loose
 		// scrolls was half the backpack).

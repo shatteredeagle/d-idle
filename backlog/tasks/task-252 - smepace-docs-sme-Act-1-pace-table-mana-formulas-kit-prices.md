@@ -14,7 +14,7 @@ priority: low
 ordinal: 190000
 card: "smepace"
 owns:
-  - "docs/sme/act1-pace.md"
+  - "docs/sme/pace-and-formulas.md"
 exclusive: []
 contracts: []
 ---
@@ -29,5 +29,7 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 one docs/sme page with the Act 1 pace table (clvl by beat), mana formulas and kit prices
+- [x] #1 one docs/sme page with the Act 1 pace table (clvl by beat), mana formulas and kit prices
 <!-- AC:END -->
+
+result: docs/sme/pace-and-formulas.md written (renamed from act1-pace.md per the brief; owns updated). Docs only, not verified live; tags SRC/EXP per page; Prayer mana and Smite cost fetched from the Amazon Basin wiki 2026-11-10.
