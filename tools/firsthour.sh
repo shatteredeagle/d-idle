@@ -8,7 +8,7 @@
 set -u
 . "$(dirname "$0")/env.sh"
 here=$(cd "$(dirname "$0")/.." && pwd); cd "$here" || exit 2
-container=${D2_SANDBOX_CONTAINER:-d2idle} class= log= pass=()
+container=${D2_SANDBOX_CONTAINER:-d2play-20261108} class= log= pass=()
 while [ $# -gt 0 ]; do
 	case $1 in
 	--class) class=$2; shift ;;

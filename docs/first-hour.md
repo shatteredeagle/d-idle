@@ -15,3 +15,6 @@ The tag table is the header of probes/firsthour.md (V read from a log line, S a 
 - U: the shuttle rule (A,B,A over three consecutive non-town entries) and its cap are a proposal; town ids 1, 40, 75, 103, 109 are S.
 - Session record and ledger files of the data volume are not read: the log carries every number above; no credential-bearing path is touched.
 - docs/dev-reset.md (agent/devreset) was not merged when this was written; the reset gives the fresh hero whose first `d2bot start` line starts the hour. No file overlap.
+
+## Live format check (2026-11-10, read-only `docker logs` of the sandbox container, V)
+All five line kinds match docs/lifelog.md as JSON slog (`d2bot start` with `version`, `minute` with `clvl kills gold deaths restarts stashGold`, `zone entry` `area`, `safety decision` `action=chicken`, `poverty mode: on|off`); the parser needed no change. The log holds 18 `d2bot start` lines over the container life and the hero was clvl 10 mid-session, so the dry run failed loudly as designed ("not a fresh hero"). Use `--start` for the fresh hero's first moment after a reset; the default (first start line) only fits a log that begins at the reset. `kills` in `minute` is a running total (V: 2850 at clvl 10), so the reset-summing rule only matters across restarts.
