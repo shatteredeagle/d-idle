@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/readiness"
 	"errors"
 	"fmt"
 	"runtime/debug"
@@ -83,6 +84,8 @@ type control struct {
 // Runner is the real goals.Runner: a state machine driven by a tick loop on d2.Snapshot. Create it with New, start
 // its goroutine with Run, and hand it to goals.New. See docs/bot.md.
 type Runner struct {
+	readiness *readiness.Evaluator // nil: no readiness model wired (TASK-218)
+
 	e   *env.Env
 	d   Deps
 	cfg Config
@@ -570,7 +573,7 @@ func (r *Runner) compile(g goals.Goal) (goalSpec, error) {
 		if r.d.Task == nil {
 			return spec, errors.New("task layer not wired (Deps.Task is nil)")
 		}
-		spec.camp = task.Template(p.Template, p.Cain).WithRogueClaim()
+		spec.camp = r.withQuestGivers(task.Template(p.Template, p.Cain).WithRogueClaim())
 		if spec.camp == nil {
 			return spec, fmt.Errorf("unknown campaign template %q", p.Template)
 		}

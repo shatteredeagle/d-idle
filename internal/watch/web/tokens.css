@@ -30,6 +30,9 @@
     --d-mask: #000;
     --d-video-bg: #000;
     --d-video-text: var(--d-stone-9);
+    --d-broken-bg: rgb(28 8 6 / .7);
+    --d-inset-deep: inset 0 0 0 1px rgb(0 0 0 / .6), inset 0 0 24px rgb(0 0 0 / .5);
+    --d-inset-slot: inset 0 1px 0 rgb(255 255 255 / .04), inset 0 -6px 12px rgb(0 0 0 / .45);
 
     --d-good: #7cc47e; --d-on-good: #0c1a0d;
     --d-warn: #e3a93a; --d-on-warn: #1a1204;

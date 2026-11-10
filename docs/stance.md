@@ -38,3 +38,12 @@ User report: the Paladin sits in a big group and clicks around without attacking
 - Cause 3 (not changed, U): `swing held: the click would walk into a cave mouth` 126 times (swing suppressed near a cave mouth).
 - Gear: no rule in internal/combat, resource or bot reads item durability as a reason to avoid melee (grep: durability appears only in the town repair code). U whether zero damage slowed the kills.
 - Not live verified: the fix is tested offline only.
+
+## Pack fight, second pass (card packfight2, 2026-11-09 evening)
+
+Logs since the first fix (about 5 h, build 4273099 and later). V = counted in the container log.
+
+- V: the first fix did not stop the back-offs: 665 `backing off` lines, 570 `back-off cap, melee`, mostly at 80 to 160 of about 176 life. Cause of that is U (inputs were not logged); the line now carries `meleeClass`, `life`, `danger`, `hostiles`, `hasMelee`, and every fight ends with a `fight.tick` line (ticks, attacks, moves, backoffs, maxHostiles, firstAttackSec, killsPerMin, retreat reason, lastNoCast). Not yet seen live: a later deploy by another agent replaced the build before it fought.
+- V by log + code: `combat no attack skill bound` 397 times and `ignoring target` 398 times in one hour (23:00 UTC), `left 97` (Smite), `known` = Might, Prayer, Sacrifice, Smite (no Attack). Cause: `gearFilter` drops Smite when no shield is worn (gear.json: Smite needs a shield, V), and the skill dump does not list the basic attack, so the attack list was empty and every target was ignored (the hero walks around the pack). Fixed in `attackSkills`: the profile's `Attack` entry is synthesised when the dump omits it, and a swinger backend (d2d) no longer needs popup list rows to use a skill that is not on the left hand (the fight loop swings by skill id). Tests `TestAttackStaysWhenGearRulesOutTheBuildSkill` (Paladin, Barbarian; needs the gear tables) and `TestSwingerNeedsNoListRowsForOffHandSkill`.
+- Not changed, U: why the shield was missing (broken or unequipped; poverty/town agents own that).
+- After Zeal (clvl 12): 10 kills in 29 s in one fight, `killsPerMin` 16 in the health line (V, 01:35 UTC).

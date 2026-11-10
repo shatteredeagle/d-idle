@@ -48,24 +48,29 @@ type seenUnit struct {
 }
 
 type fightState struct {
-	tracks    map[uint32]*track
-	seen      map[uint32]seenUnit
-	blacklist map[uint32]bool
-	avoided   map[uint32]bool
-	stalled   bool // the no-progress watchdog already logged in this fight
-	ignored   []Ignored
-	lastExp   uint32
-	haveExp   bool
-	pendingXP int64
-	dodges    int
-	mdodges   int // missile sidesteps (knob combat.missileDodge)
-	kites     int // retreat steps in the current burst; resets after 10 quiet seconds
-	lastKite  time.Time
-	casts     int // attack casts of this fight (telemetry)
-	kitesAll  int // kite steps of this fight (telemetry)
-	approach  int // approach/firing-position moves of this fight (telemetry)
-	novas     int
-	forced    int
+	tracks      map[uint32]*track
+	seen        map[uint32]seenUnit
+	blacklist   map[uint32]bool
+	avoided     map[uint32]bool
+	stalled     bool // the no-progress watchdog already logged in this fight
+	ignored     []Ignored
+	lastExp     uint32
+	haveExp     bool
+	pendingXP   int64
+	dodges      int
+	mdodges     int // missile sidesteps (knob combat.missileDodge)
+	kites       int // retreat steps in the current burst; resets after 10 quiet seconds
+	lastKite    time.Time
+	casts       int // attack casts of this fight (telemetry)
+	kitesAll    int // kite steps of this fight (telemetry)
+	approach    int // approach/firing-position moves of this fight (telemetry)
+	novas       int
+	forced      int
+	ticks       int           // engage ticks (fight.tick telemetry)
+	backoffsAll int           // out-of-mana back-off steps of the whole fight
+	firstCast   time.Duration // fight start to the first attack, -1 until one
+	retreatWhy  string        // reason code of the latest back-off
+	maxHostiles int
 
 	// cast-first loop (castfirst.go)
 	lastCastAt time.Time // last attack cast of this fight (start of the fight until the first one)
@@ -180,6 +185,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			ft.Dodges = st.dodges + st.mdodges
 			ft.Casts, ft.Kites, ft.Approaches = st.casts, st.kitesAll, st.approach
 			ft.Novas, ft.Forced = st.novas, st.forced
+			f.fightTick(&ft, st, start, res)
 			f.info(ft.Finish(res))
 			f.addFight(&ft, st, res)
 			f.noteFightEnd(&ft, res, err)
@@ -335,6 +341,8 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			f.noTarget(hs, st, sp)
 			break
 		}
+		st.ticks++
+		st.maxHostiles = max(st.maxHostiles, len(cand))
 		if handled, cerr := f.castFirst(ctx, snap, cand, st); handled || cerr != nil {
 			if cerr != nil {
 				return res, cerr

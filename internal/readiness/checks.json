@@ -1,0 +1,80 @@
+{
+ "schema": "readiness.checks/1",
+ "doc": "docs/readiness.md. Every number is U (judgment, to be calibrated by TASK-224 style replays) unless a note says V. A check fails when its value is below failBelow (or above failAbove) and warns past the warn line.",
+ "classes": {
+  "sorceress": {"damage": ["fire", "cold", "lightning"]},
+  "paladin": {"damage": ["physical", "magic", "fire"]}
+ },
+ "checks": [
+  {
+   "id": "level", "kind": "level_gap", "threat": "area level",
+   "diff": {
+    "normal": {"warnGap": 2, "failGap": 6},
+    "nightmare": {"warnGap": 5, "failGap": 10},
+    "hell": {"warnGap": 8, "failGap": 14}
+   },
+   "class": {
+    "sorceress": {"nightmare": {"warnGap": 4}, "hell": {"warnGap": 7}}
+   }
+  },
+  {
+   "id": "resist", "kind": "resist_floor", "threat": "elemental damage and enchanted packs",
+   "diff": {
+    "normal": {"warnBelow": -20, "failBelow": -60, "cap": 75, "poison": 0},
+    "nightmare": {"warnBelow": 10, "failBelow": -20, "cap": 75, "poison": 0},
+    "hell": {"warnBelow": 25, "failBelow": 0, "cap": 75, "poison": 1}
+   }
+  },
+  {
+   "id": "life", "kind": "life_vs_hit", "threat": "burst damage",
+   "diff": {
+    "normal": {"warnHits": 4, "failHits": 2, "eliteDamagePct": 90},
+    "nightmare": {"warnHits": 5, "failHits": 3, "eliteDamagePct": 75},
+    "hell": {"warnHits": 6, "failHits": 3, "eliteDamagePct": 66}
+   },
+   "class": {
+    "paladin": {"hell": {"warnHits": 5}}
+   }
+  },
+  {
+   "id": "defence", "kind": "hit_chance", "threat": "melee and ranged attacks",
+   "diff": {
+    "normal": {"warnPct": 90, "failPct": 95},
+    "nightmare": {"warnPct": 85, "failPct": 95},
+    "hell": {"warnPct": 80, "failPct": 95}
+   }
+  },
+  {
+   "id": "damage", "kind": "time_to_kill", "threat": "area monster life",
+   "diff": {
+    "normal": {"warnSeconds": 6, "failSeconds": 20, "eliteLifeMult": 3},
+    "nightmare": {"warnSeconds": 8, "failSeconds": 25, "eliteLifeMult": 2.5},
+    "hell": {"warnSeconds": 10, "failSeconds": 30, "eliteLifeMult": 2}
+   }
+  },
+  {
+   "id": "immunity", "kind": "immunity_cover", "threat": "immune monsters",
+   "diff": {
+    "normal": {"eliteWarn": 0},
+    "nightmare": {"eliteWarn": 1},
+    "hell": {"eliteWarn": 1}
+   }
+  },
+  {
+   "id": "potions", "kind": "kit", "threat": "recovery",
+   "diff": {
+    "normal": {"warnPotions": 2, "failPotions": 0},
+    "nightmare": {"warnPotions": 4, "failPotions": 1},
+    "hell": {"warnPotions": 6, "failPotions": 2}
+   }
+  },
+  {
+   "id": "repair", "kind": "durability", "threat": "broken gear",
+   "diff": {
+    "normal": {"warnPct": 30, "failPct": 10},
+    "nightmare": {"warnPct": 35, "failPct": 15},
+    "hell": {"warnPct": 40, "failPct": 20}
+   }
+  }
+ ]
+}

@@ -785,12 +785,18 @@ func (f *Fighter) attackSkills(p *d2.Player) []SkillSpec {
 	var out []SkillSpec
 	for _, name := range pr.AttackNames(p.Level, func(n string) bool { _, ok := known[n]; return ok }) {
 		sp, ok := known[name]
+		if !ok && name == meleeSpec().Name {
+			// The skill dump may omit the basic attack (live 2026-11-09: known had no Attack), yet it is always usable
+			// and is the only attack left when gear rules out the build's skill (Smite needs a shield).
+			sp, ok = meleeSpec(), true
+		}
 		if !ok {
 			continue
 		}
 		if sp.Hand == HandLeft {
 			if p.LeftSkill != sp.ID {
-				if len(f.listRows) == 0 || f.now().Before(f.leftFail[sp.ID]) {
+				// A swinger backend attacks by skill id: the left hand need not hold it (fight.go), so no popup rows are needed.
+				if _, swings := f.e.In.(swinger); !swings && (len(f.listRows) == 0 || f.now().Before(f.leftFail[sp.ID])) {
 					continue
 				}
 				if sp.Cost > 0 {

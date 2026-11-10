@@ -12,3 +12,8 @@ var JSON []byte
 //
 //go:embed act1-hints.json
 var HintsJSON []byte
+
+// GiversJSON is act1-givers.json, the quest givers the campaign visits in town (docs/quest-givers.md).
+//
+//go:embed act1-givers.json
+var GiversJSON []byte

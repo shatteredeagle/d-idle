@@ -18,7 +18,14 @@ type Poverty struct {
 // does not flap).
 func PovertyCheck(in Input, t Tuning, was bool) Poverty {
 	cost := KitCost(t)
-	incomplete := !in.HasTP || in.Belt.HP+in.Belt.RV < t.HPFirst
+	healing := in.Belt.HP + in.Belt.RV
+	incomplete := !in.HasTP || healing < t.HPFirst
+	if !was {
+		// Entry needs an empty healing belt (or no portal): one potion drunk below HPFirst is the normal run of a
+		// fight, not poverty. Exit still needs the full HPFirst, so the two edges are a band, not one line (the 53
+		// flips of the 11.7 h sandbox log came from one potion more or less).
+		incomplete = !in.HasTP || healing < min(t.HPFirst, 1)
+	}
 	miss := max(cost-in.Gold, 0)
 	switch {
 	case !incomplete:
@@ -32,8 +39,8 @@ func PovertyCheck(in Input, t Tuning, was bool) Poverty {
 	if !in.HasTP {
 		why += ", no town portal"
 	}
-	if in.Belt.HP+in.Belt.RV < t.HPFirst {
-		why += fmt.Sprintf(", %d healing potions", in.Belt.HP+in.Belt.RV)
+	if healing < t.HPFirst {
+		why += fmt.Sprintf(", %d healing potions", healing)
 	}
 	return Poverty{On: true, Reason: why, Missing: miss}
 }
@@ -104,4 +111,70 @@ func KitShortfall(hasTP bool, hp, mp int, t Tuning) int {
 // GearBudget caps a gear-shop budget so that gold minus the kit shortfall is never spent on gear.
 func GearBudget(budget, gold, shortfall int) int {
 	return max(min(budget, gold-shortfall), 0)
+}
+
+// Saving is what a poor character is saving for: the first thing of the must-have order it cannot afford yet.
+type Saving struct {
+	Item string // "a town portal scroll", "healing potions", "the repair"; "" = nothing is missing
+	Need int    // gold still missing for Item
+}
+
+// SavingFor walks the must-have order (town portal scroll, healing potions up to HPFirst, a requested repair of
+// repairNeed gold; 0 = none) and names the first one the gold does not cover. The order is the one BuyKit and the repair
+// gate spend in, so the whyline says what the next coin goes to.
+func SavingFor(in Input, t Tuning, repairNeed int) Saving {
+	gold := in.Gold
+	if !in.HasTP {
+		if gold < t.KitTPGold {
+			return Saving{"a town portal scroll", t.KitTPGold - gold}
+		}
+		gold -= t.KitTPGold
+	}
+	if n := max(t.HPFirst-in.Belt.HP-in.Belt.RV, 0); n > 0 && t.KitPotionGold > 0 {
+		if c := n * t.KitPotionGold; gold < c {
+			return Saving{"healing potions", c - gold}
+		}
+		gold -= n * t.KitPotionGold
+	}
+	if repairNeed > gold {
+		return Saving{"the repair", repairNeed - gold}
+	}
+	return Saving{}
+}
+
+// ManaBuyRule says how a class with mana need `need` (ManaNeed) may buy mana potions. Data, not a class check: the
+// need levels are the class trait table (types.go ManaNeed).
+type ManaBuyRule struct {
+	Allow       bool // false: never buy mana potions (a melee class that casts nothing)
+	MinHealing  int  // healing potions (belt, pack) required before the first mana potion
+	KeepKit     bool // the purchase must leave the whole minimal kit affordable (KitCost)
+	MaxPerVisit int  // cap per visit (0 = the belt plan decides)
+}
+
+// ManaBuy is the rule for a mana need level. The Sorceress group keeps its old behaviour (the belt plan and the
+// manaReserve of the shop decide); a class with little mana use buys a mana potion only after the healing floor is met
+// and only when a full kit stays affordable (sandbox log: a Paladin with 30 max mana bought 60 gold mana potions at 21
+// gold left while its healing belt was short).
+func ManaBuy(need int, t Tuning) ManaBuyRule {
+	switch {
+	case need >= 2:
+		return ManaBuyRule{Allow: true}
+	case need == 1:
+		return ManaBuyRule{Allow: true, MinHealing: t.HPFirst, KeepKit: true, MaxPerVisit: 2}
+	}
+	return ManaBuyRule{}
+}
+
+// ManaBuyOK applies the rule to one purchase of a potion costing price, with haveHealing healing potions carried and
+// bought mana potions already bought this visit.
+func ManaBuyOK(r ManaBuyRule, t Tuning, gold, price, haveHealing, bought int) bool {
+	switch {
+	case !r.Allow, haveHealing < r.MinHealing:
+		return false
+	case r.MaxPerVisit > 0 && bought >= r.MaxPerVisit:
+		return false
+	case r.KeepKit && gold-price < KitCost(t):
+		return false
+	}
+	return true
 }
