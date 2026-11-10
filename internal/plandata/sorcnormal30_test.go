@@ -30,7 +30,7 @@ func TestSorceressNormal30Loads(t *testing.T) {
 // sorcready2 (user decisions 2026-11-10): the table is v3 with Warmth at clvl 2 (Charged Bolt from clvl 3) and a cold
 // line from clvl 12 instead of Lightning and Chain Lightning (known broken on d2d). Stats are v3's; rows 3..11 and 18
 // (Teleport) are v3's skills.
-func TestSorceressNormal30IsV3WithWarmthAndColdLine(t *testing.T) {
+func TestSorcNormal30RowsVsV3(t *testing.T) {
 	n, err := leveler.LoadBuild(sorcNormal30, "")
 	if err != nil {
 		t.Fatal(err)
