@@ -33,7 +33,7 @@ User request: test the first hour from scratch. CLI only (no web UI: the contain
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 dev-sandbox.sh reset archives then fresh hero, refuses without --yes
-- [ ] #2 restore puts an archive back, list shows archives
-- [ ] #3 scratch drill passes; docs/dev-reset.md written
+- [x] #1 dev-sandbox.sh reset archives then fresh hero, refuses without --yes
+- [x] #2 restore puts an archive back, list shows archives
+- [x] #3 scratch drill passes; docs/dev-reset.md written
 <!-- AC:END -->
