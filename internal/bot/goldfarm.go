@@ -28,15 +28,16 @@ const (
 	RungTooLow                  // the first field of the plan is above the character's level: no safe zone at all
 )
 
-// FarmRung is the farm zone one rung below the zone Pick would choose for level: the plan's own order says what the
-// level is ready for, the zone before it is one the character clearly out-levels. A level that Pick puts on the first
-// zone farms that zone. Excluded zones (o.Exclude) and thin-kit zones are skipped and the search walks further down.
-// Data only: the zone list, entry levels and the melee entry are the plan's, no class is named (Pick is told Melee by
-// the caller from the class traits).
-func (p *Plan) FarmRung(diff string, level int, o PickOptions) (Step, RungState) {
+// FarmRung is the farm zone one rung below the zone Pick would choose for level among the zones that may be farmed at
+// all (static: the safe list, never changes during a game): the plan's own order says what the level is ready for, the
+// zone before it is one the character out-levels. A level that Pick puts on the first zone farms that zone. Zones in
+// o.Exclude (cleared, avoided, guarded: they change minute by minute) and thin-kit zones are skipped and the search
+// walks further down. Data only: the zone list, entry levels and the melee entry are the plan's, no class is named
+// (the caller tells Pick Melee from the class traits).
+func (p *Plan) FarmRung(diff string, level int, o PickOptions, static map[int]bool) (Step, RungState) {
 	var list []Step
 	for _, s := range p.Steps[diff] {
-		if p.IsTown(s.Area) || o.Acts != nil && !o.Acts[p.Act(s.Area)] {
+		if p.IsTown(s.Area) || static[s.Area] || o.Acts != nil && !o.Acts[p.Act(s.Area)] {
 			continue
 		}
 		list = append(list, s)
@@ -54,7 +55,7 @@ func (p *Plan) FarmRung(diff string, level int, o PickOptions) (Step, RungState)
 		return Step{}, RungTooLow
 	}
 	free := o
-	free.Exclude, free.Cleared, free.Floor, free.XP = nil, nil, 0, nil
+	free.Exclude, free.Cleared, free.Floor, free.XP = static, nil, 0, nil
 	idx := -1
 	if cur, ok := p.Pick(diff, level, free); ok {
 		for i, s := range list {
@@ -97,7 +98,7 @@ func (r *Runner) goldFarmTarget(s *d2.Snapshot) (area int, ok, stop bool) {
 			state = RungNone
 		}
 	} else {
-		ex := map[int]bool{}
+		ex, static := map[int]bool{}, map[int]bool{}
 		for a := range r.loop.cleared {
 			ex[a] = true
 		}
@@ -105,11 +106,24 @@ func (r *Runner) goldFarmTarget(s *d2.Snapshot) (area int, ok, stop bool) {
 			ex[a] = true
 		}
 		r.guardedAreas(s, ex)
+		if diff == "normal" && p.Act == 0 { // the same safe list a broke character farms (safeTier)
+			for _, ps := range r.d.Plan.Steps[diff] {
+				static[ps.Area] = !safeTier[ps.Area]
+			}
+		}
 		if healing, _, known := r.beltAndInv(s); known && healing < 2 {
 			ex[areaDenOfEvil] = true
 		}
 		t := r.e.Tune.Bot
-		st, state = r.d.Plan.FarmRung(diff, p.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class)})
+		st, state = r.d.Plan.FarmRung(diff, p.Level, PickOptions{Margin: t.LevelMargin, Slack: t.LeaveSlack, Acts: r.allowedActs(s), Exclude: ex, FullKit: r.fullKit(s), Melee: MeleeTank(p.Class)}, static)
+		if !r.resInput(s).HasTP && state == RungOK {
+			// no portal: the walk home only works from the first field of the act (as starveArea)
+			if first, ok := r.starveStep(s, diff); ok && !ex[first] {
+				st = Step{Area: first}
+			} else {
+				state = RungNone
+			}
+		}
 	}
 	switch state {
 	case RungTooLow:
