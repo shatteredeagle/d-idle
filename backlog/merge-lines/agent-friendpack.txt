@@ -1,0 +1,2 @@
+CHANGELOG: friends pack builder (tools/friendpack): private tarball with image, source, licences, install.sh, ./didle wrapper and a Linux guide (TASK-274)
+INDEX: docs/friend-guide.md - Linux install guide for the friends pack (install, didle commands, licence note, publisher build)

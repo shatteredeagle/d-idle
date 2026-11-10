@@ -1,0 +1,37 @@
+# Friends pack compose file. Derived from deploy/d2d-container/compose.tester.yml (same limits, same read-only
+# game mount); the ports are variables so install.sh --port can avoid a clash (the bot listens on the same numbers
+# inside, because the watch page reaches the answer route on the same host at the answer port).
+# Values come from .env, written by install.sh. The watch token lives in the data volume, never in a file here.
+services:
+  d2dbot:
+    image: ${D2_IMAGE:?run ./install.sh first}
+    pull_policy: never
+    command: ["tester"]
+    environment:
+      TESTER: "1"
+      D2D_MODE: realtime
+      D2D_NAME: ${D2D_NAME:-D2dbot}
+      D2D_CLASS: ${D2D_CLASS:-1}
+      D2BOT_GOALS: ${D2BOT_GOALS:-campaign:normal_act1}
+      # the exact page URL(s) printed by install.sh (comma list, first one is shown to you); other origins get 403
+      D2BOT_WATCH_ORIGIN: ${D2_WATCH_ORIGIN:?run ./install.sh first}
+      D2SETUP_ADDR: 0.0.0.0:${D2_WATCH_PORT:-8891}
+      D2BOT_WATCH_ADDR: 0.0.0.0:${D2_WATCH_PORT:-8891}
+      D2BOT_WATCH_ANSWER_ADDR: 0.0.0.0:${D2_ANSWER_PORT:-8892}
+      # optional signed-update feed of the person who sent you this pack; empty = the default source. Keys are baked in the image.
+      D2BOT_UPDATE_FEED: ${D2BOT_UPDATE_FEED:-}
+      D2BOT_UPDATE_CHECK: ${D2BOT_UPDATE_CHECK:-on}
+    volumes:
+      - ${D2_GAME_DIR:?run ./install.sh first}:/game:ro
+      - d2dbot-data:/data
+    ports:
+      - "${D2_PUBLISH:-127.0.0.1}:${D2_WATCH_PORT:-8891}:${D2_WATCH_PORT:-8891}"
+      - "${D2_PUBLISH:-127.0.0.1}:${D2_ANSWER_PORT:-8892}:${D2_ANSWER_PORT:-8892}"
+    stop_grace_period: 45s
+    restart: unless-stopped
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 3g
+    cpus: 2
+volumes:
+  d2dbot-data:
