@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- New read-only /api/readiness endpoint: per-threat pass/warn/fail checks and a traffic light for the hero against an area (level, resists, life, immunities, kit); risk meter resist gap is now live
 - Beta readiness review added (docs only)
 - Inventory page: dark theme and the same top band as the live screen, a Diablo II style paper doll with durability pips and BROKEN stamps, backpack, belt and stash as tidy cell grids; broken items no longer show "undefined" durability
 - Watch screen: the layout and panel formats are now versioned public contracts; saved layouts and panels keep loading in later versions

@@ -1,3 +1,0 @@
-BACKLOG: TASK-217/218 readiness model slice A: internal/readiness area table and evaluator (checks as data rows, sorceress and paladin), /api/readiness, live ResistGap for the risk meter; offline only, resist basis is an explicit input (TASK-216 open), gates untouched (docs/readiness.md)
-INDEX: docs/readiness.md - readiness model: per-threat checks for a hero against an area (TASK-217, TASK-218)
-CHANGELOG: New read-only /api/readiness endpoint: per-threat pass/warn/fail checks and a traffic light for the hero against an area (level, resists, life, immunities, kit); risk meter resist gap is now live
