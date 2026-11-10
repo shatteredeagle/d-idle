@@ -88,6 +88,11 @@ func (c dataCatalog) Item(class int) (ItemMeta, bool) {
 	return m, true
 }
 
+// InvFile is the inventory icon name of an item (data.DB.InvFile); ok is false when the tables do not name one.
+func (c dataCatalog) InvFile(class int, q data.InvQuality, fileIndex int) (string, bool) {
+	return c.db.InvFile(class, q, fileIndex)
+}
+
 func (c dataCatalog) Monster(class int) (MonsterMeta, bool) {
 	if c.db == nil {
 		return MonsterMeta{}, false

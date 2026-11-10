@@ -8,6 +8,7 @@ import (
 
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/event"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/status"
@@ -183,6 +184,30 @@ func (c charSource) Character() status.CharacterData {
 	return out
 }
 
+// iconCatalog is the optional icon-name side of the catalog (bot.NewDataCatalog implements it; test fakes do not,
+// so their items carry no art).
+type iconCatalog interface {
+	InvFile(class int, q data.InvQuality, fileIndex int) (string, bool)
+}
+
+// itemArt is the icon name for an item unit, "" when the catalog cannot say. The unique or set id is the item's
+// FileIndex (U: its memory offset, internal/d2/items.go; the d2d source path sets it from the item JSON).
+func itemArt(cat bot.Catalog, u d2.Unit) string {
+	ic, ok := cat.(iconCatalog)
+	if !ok || u.Item == nil {
+		return ""
+	}
+	q := data.InvPlain
+	switch u.Item.Quality {
+	case d2.QualityUnique:
+		q = data.InvUnique
+	case d2.QualitySet:
+		q = data.InvSet
+	}
+	name, _ := ic.InvFile(u.Class, q, u.Item.FileIndex)
+	return name
+}
+
 type invSource struct{ d *display }
 
 var bodySlot = map[int]string{1: "head", 2: "neck", 3: "torso", 4: "rhand", 5: "lhand", 6: "rring", 7: "lring", 8: "belt", 9: "feet", 10: "gloves"}
@@ -207,6 +232,7 @@ func (i invSource) Inventory() status.InventoryData {
 			if m, ok := i.d.cat.Item(u.Class); ok {
 				it.W, it.H = max(m.W, 1), max(m.H, 1)
 			}
+			it.Art = itemArt(i.d.cat, u)
 		}
 		switch u.Item.Where {
 		case d2.ContEquipment:

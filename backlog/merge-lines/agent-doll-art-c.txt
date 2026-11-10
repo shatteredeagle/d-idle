@@ -1,0 +1,1 @@
+CHANGELOG: status.Item gains an optional art field (icon name resolved from the item tables); empty when unknown, so nothing changes for existing consumers
