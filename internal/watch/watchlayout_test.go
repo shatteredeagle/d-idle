@@ -131,3 +131,18 @@ func TestWatchFoldableCards(t *testing.T) {
 		t.Error("app.css lacks the .folded rule")
 	}
 }
+
+// The inventory page is on the design system: the shared stylesheets and top band, no inline <style> (the page CSP
+// refused it and the page rendered unstyled), and the durability of a broken item reads 0, not undefined.
+func TestInventoryPageOnTheShell(t *testing.T) {
+	for _, want := range []string{`href="/watch/tokens.css"`, `href="/watch/shell.css"`, `href="/watch/components.css"`, `href="/watch/inventory.css"`,
+		`data-band="status"`, `id="btn-theme"`, `class="d-doll"`, `id="pack"`, `src="/watch/shell.js"`, `src="/watch/inventory.js"`} {
+		if !strings.Contains(invPage, want) {
+			t.Errorf("inventory page lacks %s", want)
+		}
+	}
+	if strings.Contains(invPage, "<style") || strings.Contains(invPage, "style=") {
+		t.Error("inventory page has inline styles")
+	}
+	runNode(t, "testdata/inventory_logic.js", "web/inventory.js")
+}

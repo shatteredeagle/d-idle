@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"io"
 	"log/slog"
+	"net/http"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -75,6 +76,7 @@ type ladderOptions struct {
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
 	monsters                               watch.MonsterTables
+	readiness                              http.Handler // GET /api/readiness (readywire.go); nil: none
 	awayMin, repeatCooldownMin, quietAfter int
 }
 
@@ -253,6 +255,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
 		rig.Fun.Inventory = l.inv
+		rig.Fun.Readiness = l.readiness
 		bindRepair(rig.Fun, l.repair)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
