@@ -42,6 +42,7 @@ func (r *Runner) fillRoute(w *task.World, class d2.Class, p *d2.Player) {
 	if changed {
 		r.e.Log.Info(line)
 	}
+	r.fillAndariel(w, class)
 	r.noteFloors(*w)
 }
 
@@ -64,7 +65,6 @@ func (r *Runner) noteFloors(w task.World) {
 	if w.Difficulty != "" && w.Difficulty != "normal" {
 		return
 	}
-	w.AndarielMinLevel, w.AndarielMinLevelMerc = r.e.Tune.Boss.AndarielMinLevel, r.e.Tune.Boss.AndarielMinLevelMerc
 	var lines []string
 	for _, g := range []struct {
 		name  string

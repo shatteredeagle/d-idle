@@ -26,11 +26,14 @@ var (
 	dbErr  error
 )
 
-// RealDB opens the game tables from /tmp/d2mpq (copied from the install, see docs/data.md); the test is
-// skipped when they are absent.
+// RealDB opens the game tables from $D2_MPQ_DIR, default /tmp/d2mpq (copied from the install, see docs/data.md); the
+// test is skipped when they are absent.
 func RealDB(t testing.TB) *data.DB {
 	t.Helper()
-	const inst = "/tmp/d2mpq"
+	inst := os.Getenv("D2_MPQ_DIR")
+	if inst == "" {
+		inst = "/tmp/d2mpq"
+	}
 	if _, err := os.Stat(inst + "/d2data.mpq"); err != nil {
 		t.Skip("no game tables at " + inst)
 	}

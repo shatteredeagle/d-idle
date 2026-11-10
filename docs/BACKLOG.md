@@ -683,6 +683,9 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-259 goldfarm: Farm gold button on /watch, safe zone one rung down, persists until Stop farming (offline only)
 - lootscrolls (TASK-262): scrolls only until tome full, potion tier floor as data, skipped items named in loot line
 - TASK-256 contextdiet: agent reading order cut to START-HERE, task, area doc (138 KB to 19 KB standing reading); 12-line brief template; per-area digest still open
+- TASK-245 firsthour: tools/firsthour.sh + cmd/d2firsthour compute the fresh-hero first-hour row (clvl, kills, gold, chickens, zone entries, shuttles, poverty stalls, restarts, build stamp) from container logs into docs/probes/firsthour.md; fixture-tested, the daily rows still need live runs.
+- devreset (TASK-263): tools/dev-sandbox.sh reset|restore|list and tools/dev-reset.sh, archive and fresh hero for a DEV sandbox, docs/dev-reset.md
+- beltplantest: mana buy rule (TASK-240) no longer blocks a mana column the player chose (Barbarian all-mana, Paladin 1:1); D2_MPQ_DIR lets the town sim tests run with real tables (TASK-266)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
