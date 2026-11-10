@@ -22,7 +22,7 @@ owns:
   - "docs/probes/fid/fid-layout-act1.md"
 exclusive: []
 contracts: []
-result: "paused by direction review D1/D4/D5, 2026-11-07 (docs/research/direction-review.md section 6)"
+result: "decomp8 2026-11-09, offline only (not verified live): ids 5-7 and 9-39 equal game.exe on upstream 83fc7ba1, tiles/units/seeds/monsters, seeds 1..30 and two 32-bit ranges, 0 differ (170 + 340 comparisons, 13,497 + 9,184 populated rooms); Lut Gholein now equal; AC 3 (same-save first load) open, needs a game; docs/probes/fid/fid-layout-act1.md"
 ---
 
 ## Description
@@ -37,8 +37,8 @@ Done when: Extend the seedspawn oracle to Burial Grounds, Cave 1/2, Dark Wood, B
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Extend the seedspawn oracle to Burial Grounds, Cave 1/2, Dark Wood, Black Marsh, Tamoe Highland, Outer Cloister, Barracks/Jail, Catacombs 1-4, Forgotten Tower, Crypt, Mausoleum, Tristram; map seeds 1..30; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
-- [ ] #2 Per-area result table in docs/probes/fid/fid-layout-act1.md (cases, differ, fix state)
+- [x] #1 Extend the seedspawn oracle to Burial Grounds, Cave 1/2, Dark Wood, Black Marsh, Tamoe Highland, Outer Cloister, Barracks/Jail, Catacombs 1-4, Forgotten Tower, Crypt, Mausoleum, Tristram; map seeds 1..30; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
+- [x] #2 Per-area result table in docs/probes/fid/fid-layout-act1.md (cases, differ, fix state)
 - [ ] #3 Same-save check (scenario 8, Stony Field) first-load monster/object list equals on a pinned seed
-- [ ] #4 Lut Gholein tile mismatch (act 2) recorded as an open row, not fixed here
+- [x] #4 Lut Gholein tile mismatch (act 2) recorded as an open row, not fixed here
 <!-- AC:END -->

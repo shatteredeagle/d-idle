@@ -1,0 +1,7 @@
+BACKLOG: TASK-95 fid-wp-tp-pr oracle rerun: waypoint refusal 0 differ (2 x 140,002) and Town Portal read 0 differ (2 x 108,000) on upstream 83fc7ba1; mask, portal position and expiry still open (docs/probes/fid/fid-wp-tp-pr.md)
+BACKLOG: TASK-80 fid-layout-act1: all Act 1 levels 5-7 and 9-39 equal game.exe on upstream 83fc7ba1 (tiles, units, seeds, monsters; seeds 1..30 and two 32-bit ranges); same-save first load open (docs/probes/fid/fid-layout-act1.md)
+BACKLOG: TASK-77 fid-stock-oracle: vendor stock asks 0 differ in 40,800 lines and 14,400 offer lines; refresh flags read only partly, live lists open (docs/probes/fid/fid-stock-oracle.md)
+INDEX: docs/probes/fid/fid-wp-tp-pr.md | waypoint refusal window and Town Portal read, d2d against game.exe, 0 differ on 83fc7ba1 (TASK-95)
+INDEX: docs/probes/fid/fid-layout-act1.md | layouts of 34 more Act 1 levels, game.exe against d2d, 0 differ (TASK-80)
+INDEX: docs/probes/fid/fid-stock-oracle.md | vendor stock generation 0 differ, refresh rule partly read (TASK-77)
+CHANGELOG: Fidelity oracle batch 4 (decomp8): waypoint/town portal, Act 1 layouts and vendor stock equal game.exe on upstream 83fc7ba1; offline emulator runs only
