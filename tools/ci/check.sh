@@ -57,5 +57,8 @@ out=$(gofmt -l $(git ls-files -co --exclude-standard '*.go') 2>&1)
 # --- vet ---
 go vet ./... || bad "go vet"
 
+# Opt-in (CROSSBUILD=1): windows+darwin vet/build of the shipped binaries; the full matrix is the ci.yml crossbuild job.
+if [ "${CROSSBUILD:-}" = 1 ]; then tools/ci/crossbuild.sh --quick || fail=1; fi
+
 [ $fail = 0 ] && echo "check ok"
 exit $fail

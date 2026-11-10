@@ -16,7 +16,7 @@ func Wire(cfg Config, g *Game, h *Helper, newInput func() Input, muteCmd []strin
 	k.Kill = func() error {
 		if ps, err := ListProcs(); err == nil {
 			for _, p := range FindImage(ps, "blizzarderror.exe") {
-				_ = syscall.Kill(p.PID, syscall.SIGKILL)
+				_ = sysKill(p.PID, syscall.SIGKILL)
 			}
 		}
 		return g.Shutdown(5 * time.Second)

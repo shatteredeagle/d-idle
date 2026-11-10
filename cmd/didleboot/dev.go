@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"syscall"
 
 	"d2lod-bot/internal/selfupdate"
 )
@@ -40,7 +39,7 @@ func signalShim(layout selfupdate.Layout) error {
 	if err != nil || !strings.Contains(string(cmdline), "boot") {
 		return fmt.Errorf("pid %d is not the boot shim", pid)
 	}
-	return syscall.Kill(pid, syscall.SIGHUP)
+	return sendHUP(pid)
 }
 
 func devEngine(img Image, layout selfupdate.Layout) (*selfupdate.Engine, string, error) {
