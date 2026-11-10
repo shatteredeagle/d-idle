@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- status.Item gains an optional art field (icon name resolved from the item tables); empty when unknown, so nothing changes for existing consumers
 - internal/data: invfile, uniqueinvfile, setinvfile columns and DB.InvFile icon-name resolver (table cache schema 4), for the paper doll art
 - internal/art: runtime DC6 to PNG decoder with disk cache for the inventory paper doll (not wired yet, no art ships)
 - Research note on showing real game art in the inventory paper doll (docs only)
