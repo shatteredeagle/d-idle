@@ -36,18 +36,19 @@ const (
 
 var itemKey = regexp.MustCompile(`^item-([a-z0-9_]{1,16})$`)
 
-// slotFiles maps slot-<name> keys to a panel silhouette file and frame. Frame choices are checked in
-// TestRealArt against the install (docs/paperdoll-art-build.md).
+// slotFiles maps slot-<name> keys to a panel silhouette file and frame. VERIFIED by rendering the real
+// frames and looking at them: inv_helm_glove frame 0 is the glove, 1 the helm; inv_ring_amulet frame 0 is
+// the amulet, 1 the ring.
 var slotFiles = map[string]struct {
 	file  string
 	frame int
 }{
 	"armor":  {"inv_armor.dc6", 0},
 	"weapon": {"inv_weapons.dc6", 0},
-	"helm":   {"inv_helm_glove.dc6", 0},
-	"gloves": {"inv_helm_glove.dc6", 1},
-	"ring":   {"inv_ring_amulet.dc6", 0},
-	"amulet": {"inv_ring_amulet.dc6", 1},
+	"helm":   {"inv_helm_glove.dc6", 1},
+	"gloves": {"inv_helm_glove.dc6", 0},
+	"ring":   {"inv_ring_amulet.dc6", 1},
+	"amulet": {"inv_ring_amulet.dc6", 0},
 	"belt":   {"inv_belt.dc6", 0},
 	"boots":  {"inv_boots.dc6", 0},
 }
