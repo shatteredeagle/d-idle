@@ -1,10 +1,11 @@
 ---
 id: TASK-263
 title: 'devreset: reset the play sandbox to a fresh hero (archive, restore)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:33:00Z'
+updated_date: '2026-11-10T19:26:00Z'
 labels:
   - ops
   - feature
