@@ -1,10 +1,11 @@
 ---
 id: TASK-269
 title: 'itemtip: D2-style item tooltip on the inventory page'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:02:00Z'
+updated_date: '2026-11-10T21:38:00Z'
 labels:
   - watch
   - feature
