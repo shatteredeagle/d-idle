@@ -1,2 +1,0 @@
-BACKLOG: poverty: poverty entry band, mana buys by class mana use, saving_for whyline, sell marks count for the sell trip (fun killer 4)
-CHANGELOG: The hero no longer flips in and out of poverty per potion, a melee Paladin stops buying 60 gold mana potions before healing, and the Why card says what it is saving for.
