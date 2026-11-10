@@ -24,7 +24,7 @@ func skillsOf(ids ...int) []d2.Skill {
 	return out
 }
 
-// Below clvl 12 (no Zeal) the ladder is Smite then Attack; a held button is for Zeal only.
+// Below clvl 12 (no Zeal) the ladder is Sacrifice then Attack (palprofile); a held button is for Zeal only.
 func TestPalProbeHoldClickIsZealOnly(t *testing.T) {
 	h, g := newHandGame(t)
 	g.p.Level = 10
@@ -42,8 +42,8 @@ func TestPalProbeHoldClickIsZealOnly(t *testing.T) {
 	if g.holds != 0 {
 		t.Fatalf("Smite and Attack are clicks, got %d holds", g.holds)
 	}
-	if g.p.LeftSkill != 112 {
-		t.Fatalf("Smite must be the left skill at clvl 10, got %d", g.p.LeftSkill)
+	if g.p.LeftSkill != 107 {
+		t.Fatalf("Sacrifice must be the left skill at clvl 10, got %d", g.p.LeftSkill)
 	}
 }
 
