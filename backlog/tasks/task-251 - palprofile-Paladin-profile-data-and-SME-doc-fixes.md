@@ -1,7 +1,7 @@
 ---
 id: TASK-251
 title: 'palprofile: Paladin profile data and SME doc fixes'
-status: Proposed
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
@@ -19,6 +19,7 @@ owns:
   - "internal/combat/classdata"
 exclusive: []
 contracts: []
+result: "Superseded by TASK-254 (card palprofile-data, merged as #502): the profile data change landed there. Not verified live."
 ---
 
 ## Description

@@ -1,14 +1,16 @@
 ---
 id: TASK-26
-title: "testerdocs: d2d tester guide and first-stranger checklist"
-status: Proposed
+title: 'testerdocs: d2d tester guide and first-stranger checklist'
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-06T14:27:00Z'
+updated_date: '2026-11-10T17:11:00Z'
 labels:
   - docs
   - chore
   - tester
+  - parked
 milestone: m-1
 dependencies:
   - TASK-31
@@ -19,16 +21,16 @@ owns:
   - "docs/tester-guide.md"
 exclusive: []
 contracts: []
+result: "Superseded by TASK-29 (2026-11-10 true-up). No work done on this card; its guide and checklist criteria moved to TASK-29. Not verified live."
 ---
 
 ## Description
 
 <!-- SECTION:DESCRIPTION:BEGIN -->
+Superseded (2026-11-10 true-up): the tester guide and first-stranger checklist are now acceptance criteria of TASK-29 (install path). This card is closed without work; its owns list is kept for history.
 Size: S
-
-Slice 1 (d2d route), reworked from the Wine version: docs/container.md (Wine) is no longer touched; the checklist lives in the guide. Depends on testerd2dimage (TASK-31); final pass after testerlive. Estimate 4 h.
-
-Done when: docs/tester-guide.md: prerequisites, the MPQ files to bring, compose route, token, wizard, watch URL and...; the first-stranger checklist with pass criteria (compose, wizard, card, answer, order, video, restart,... (acceptance criteria below).
+Why: m-1 beta re-cut, see docs/research/project-review-2026-11-10.md sections 3.3 and 5.
+Done when: superseded by TASK-29.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
