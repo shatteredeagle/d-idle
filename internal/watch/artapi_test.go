@@ -170,3 +170,39 @@ func TestFunMountsArt(t *testing.T) {
 }
 
 func jsonDecode(s string, v any) error { return json.NewDecoder(strings.NewReader(s)).Decode(v) }
+
+type progArt struct {
+	fakeArt
+	p art.Progress
+}
+
+func (f *progArt) Progress() art.Progress { return f.p }
+
+// /api/art carries the extraction state and counts; unavailable art says so; a source without progress is ready.
+func TestArtStateAndCounts(t *testing.T) {
+	api := NewArtAPI()
+	h := api.Handler()
+	get := func() ArtReply {
+		var v ArtReply
+		if err := jsonDecode(artGet(h, "GET", "/api/art", nil).Body.String(), &v); err != nil {
+			t.Fatal(err)
+		}
+		return v
+	}
+	if v := get(); v.State != "unavailable" {
+		t.Errorf("unbound: %+v", v)
+	}
+	pa := &progArt{fakeArt: fakeArt{imgs: map[string][]byte{"panel-inv": []byte("p")}}, p: art.Progress{State: art.StateExtracting, Done: 120, Total: 1500}}
+	api.Bind(pa)
+	if v := get(); !v.Available || v.State != "extracting" || v.Done != 120 || v.Total != 1500 {
+		t.Errorf("extracting: %+v", v)
+	}
+	pa.p = art.Progress{State: art.StateReady, Done: 1500, Total: 1500, Missing: 3}
+	if v := get(); v.State != "ready" || v.Missing != 3 {
+		t.Errorf("ready: %+v", v)
+	}
+	api.Bind(&fakeArt{imgs: map[string][]byte{"panel-inv": []byte("p")}})
+	if v := get(); v.State != "ready" || v.Total != 0 {
+		t.Errorf("no progress side: %+v", v)
+	}
+}

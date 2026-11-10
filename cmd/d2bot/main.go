@@ -173,6 +173,13 @@ func main() {
 		}
 		return
 	}
+	if len(args) > 0 && args[0] == "art" {
+		if err := artMain(args[1:], os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, "d2bot:", err)
+			os.Exit(1)
+		}
+		return
+	}
 	if len(args) > 0 && args[0] == "play" {
 		var err error
 		if args, err = playArgs(args[1:]); err != nil {

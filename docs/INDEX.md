@@ -921,3 +921,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/sorceress-early.md - section 7: sorcready2 applied decisions (Sorceress normal30 default, Warmth, cold line, class-table guard)
 - research/legal-note.md - GPL, Blizzard EULA posture, art on streams, pre-friend-copy checklist (TASK-257)
 - docs/research/desktop-electron.md - Electron rebuild of the desktop launcher: version, security posture, packaging, layout, licences, effort (area: watch)
+- docs/inventory-tooltip.md: item tooltip on the inventory page, data audit, what is missing, behaviour

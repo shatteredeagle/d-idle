@@ -86,3 +86,36 @@ func TestInventoryRoutesGateAndReplyWithReasons(t *testing.T) {
 		t.Errorf("viewer accepts POST: %d", w.Code)
 	}
 }
+
+type countInv struct {
+	fakeInv
+	views int
+}
+
+func (c *countInv) View() any { c.views++; return map[string]any{"schema": 1, "n": c.views} }
+
+// One built view is shared by polls inside the TTL; a POST drops it so the page sees its own change at once.
+func TestInventoryViewIsSharedAndDroppedByPost(t *testing.T) {
+	api := NewInvAPI()
+	c := &countInv{}
+	api.Bind(c)
+	get := func() string {
+		w := httptest.NewRecorder()
+		api.Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/inventory", nil))
+		if w.Code != 200 || w.Header().Get("Cache-Control") != "no-store" || !strings.Contains(w.Header().Get("Content-Type"), "json") {
+			t.Fatalf("%d %v", w.Code, w.Header())
+		}
+		return w.Body.String()
+	}
+	a, b := get(), get()
+	if a != b || c.views != 1 {
+		t.Errorf("polls inside the TTL rebuilt the view: %d builds", c.views)
+	}
+	post := api.PostHandler(AnswerOptions{Token: "tok", Origins: []string{"http://ok.test"}})
+	if w := invPost(post, "/api/inventory/mark", `{"id":1,"mark":"sell"}`, map[string]string{"Authorization": "Bearer tok"}); w.Code != 200 {
+		t.Fatal(w.Code)
+	}
+	if get() == a || c.views != 2 {
+		t.Errorf("a POST must drop the cached view (%d builds)", c.views)
+	}
+}

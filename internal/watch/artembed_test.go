@@ -47,3 +47,20 @@ func TestArtDollHasDefiniteWidth(t *testing.T) {
 		}
 	}
 }
+
+// The art layer must never sit on the critical path of the first paint: the page loads the inventory at once and
+// probes the art beside it (TASK-268: the old probe chain /api/art, panel image, then /api/inventory was three
+// serial round trips before anything drew).
+func TestInventoryPageDoesNotWaitOnArt(t *testing.T) {
+	b, err := webFS.ReadFile("web/inventory.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	js := string(b)
+	if strings.Contains(js, "artProbe().then") {
+		t.Error("the first load waits for the art probe")
+	}
+	if !strings.Contains(js, "load(); artProbe();") {
+		t.Error("load() must start before and independent of artProbe()")
+	}
+}

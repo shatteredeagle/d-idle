@@ -264,6 +264,10 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		cat = bot.NewDataCatalog(db)
 	}
 	disp := newDisplay(cat)
+	disp.tips.set(db, func(id uint32) ([]string, int, bool) {
+		ex, ok := be.Reader.ItemExtra(id)
+		return ex.Tooltip, ex.Sockets, ok
+	})
 	bus := event.NewBus(instanceID(o), nil)
 	nv := be.Navigator()
 	ref := &runnerRef{}
@@ -339,7 +343,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
-	o.ladder.art = artSource(o.gameDir, o.data)
+	o.ladder.art = artSource(o.gameDir, o.data, db)
 	o.ladder.repair, o.ladder.farm = ref.rep, ref.gf
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts

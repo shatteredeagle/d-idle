@@ -122,6 +122,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	charName() // read it now, while the game is up
 	disp := newDisplay(cat)
+	disp.tips.set(db, nil)
 	bus := event.NewBus(instanceID(o), nil)
 	ref := &runnerRef{}
 	if err := newInvDesk(ip.State(), disp, ref); err != nil {
@@ -164,7 +165,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
-	o.ladder.art = artSource(gameDir, o.data)
+	o.ladder.art = artSource(gameDir, o.data, db)
 	o.ladder.repair, o.ladder.farm = ref.rep, ref.gf
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts

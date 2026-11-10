@@ -46,21 +46,46 @@ func (a *ArtAPI) source() ArtSource {
 	return nil
 }
 
-// ArtReply is the /api/art body. Panel names the paper-doll panel the art belongs to.
+// ArtProgress is the optional second side of an ArtSource: the state of the pre-extraction of every icon
+// (*art.Store implements it). Without it the reply carries no counts.
+type ArtProgress interface {
+	Progress() art.Progress
+}
+
+// ArtReply is the /api/art body. Panel names the paper-doll panel the art belongs to. State is unavailable (no art,
+// drawn cells stay), extracting (icons are being prepared in the background; art already works, Done of Total are
+// ready), ready or idle (no extraction was started). Fields added to watch.art/1: state, done, total, missing.
 type ArtReply struct {
 	Schema    string `json:"schema"`
 	Available bool   `json:"available"`
 	Panel     string `json:"panel"`
+	State     string `json:"state"`
+	Done      int    `json:"done,omitempty"`
+	Total     int    `json:"total,omitempty"`
+	Missing   int    `json:"missing,omitempty"`
 }
 
 // Handler serves both routes; mount it on every ArtRoutes entry.
 func (a *ArtAPI) Handler() http.Handler {
 	m := http.NewServeMux()
 	m.HandleFunc("/api/art", func(w http.ResponseWriter, r *http.Request) {
-		writeJSON(w, 200, ArtReply{Schema: ArtSchema, Available: a.available(), Panel: "doll"})
+		writeJSON(w, 200, a.reply())
 	})
 	m.HandleFunc("/watch/art/", a.image)
 	return readOnly(m)
+}
+
+func (a *ArtAPI) reply() ArtReply {
+	r := ArtReply{Schema: ArtSchema, Available: a.available(), Panel: "doll", State: "unavailable"}
+	if !r.Available {
+		return r
+	}
+	r.State = art.StateReady
+	if p, ok := a.source().(ArtProgress); ok {
+		pr := p.Progress()
+		r.State, r.Done, r.Total, r.Missing = pr.State, pr.Done, pr.Total, pr.Missing
+	}
+	return r
 }
 
 // available is true when the source can serve the panel frame, the one image every page view needs.

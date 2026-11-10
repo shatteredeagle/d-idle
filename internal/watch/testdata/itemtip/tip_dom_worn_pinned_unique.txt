@@ -1,0 +1,14 @@
+div.inv-tip [role=tooltip]
+  div.q-unique.tip-name [] "Gloom Edge"
+  div.tip-line [data-k=type] "Two-Handed Sword"
+  div.tip-line [data-k=base] "Two-Hand damage: 8 to 20"
+  div.tip-line [data-k=base] "Base weapon speed: -10"
+  div.tip-line [data-k=base] "Durability: 30 of 40"
+  div.tip-line [data-k=req] "Required strength: 35"
+  div.tip-line [data-k=req] "Required dexterity: 27"
+  div.tip-line [data-k=prop] "+15% Increased Attack Speed"
+  div.tip-line [data-k=prop] "Adds 3 to 9 Fire Damage"
+  div.tip-line [data-k=meta] "Item level: 42"
+  div.tip-line [data-k=meta] "Sells for at least 2400 gold"
+  div.tip-badges []
+    span.tip-badge [data-badge=pin] "PIN"

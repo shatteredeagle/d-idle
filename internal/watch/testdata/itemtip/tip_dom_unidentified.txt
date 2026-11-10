@@ -1,0 +1,10 @@
+div.inv-tip [role=tooltip]
+  div.q-rare.tip-name [] "Great Sword"
+  div.tip-line [data-k=base] "Two-Hand damage: 9 to 14"
+  div.tip-line [data-k=base] "Base weapon speed: 10"
+  div.tip-line [data-k=base] "Durability: 50"
+  div.tip-line [data-k=req] "Required strength: 43"
+  div.tip-line [data-k=req] "Required dexterity: 27"
+  div.tip-line [data-k=bad] "Unidentified"
+  div.tip-line [data-k=meta] "Item level: 33"
+  div.tip-line [data-k=meta] "Sells for 80 gold"
