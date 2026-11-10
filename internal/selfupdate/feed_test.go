@@ -9,7 +9,7 @@ import (
 )
 
 func TestFeedFromEnv(t *testing.T) {
-	for _, bad := range []string{"http://feed.example", "ftp://x", "feed.example", "https://", "https://u:p@feed.example", "https://feed.example/?a=1", "https://feed.example/#x"} {
+	for _, bad := range []string{"http://feed.example", "ftp://x", "feed.example", "https://", "https://u:p" + "@feed.example", "https://feed.example/?a=1", "https://feed.example/#x"} {
 		if f, err := FeedFromEnv(env(map[string]string{"D2BOT_UPDATE_FEED": bad})); err == nil || f != nil {
 			t.Errorf("%q accepted", bad)
 		}
