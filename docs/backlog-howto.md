@@ -2,6 +2,18 @@
 
 > status: STAGE 3 done (openspec/ removed, tag `openspec-final`; contracts in `docs/contracts/`; the copier and ledger scan run only on that tag). Original text: STAGE 1 of docs/process/openspec-removal-plan.md (migration only). The 12 active and 5 parked cards were COPIED into `backlog/tasks/` on 2026-11-04. `openspec/`, `cmd/changecheck`, CI, the merge scripts and the pre-push hook are unchanged and still authoritative; `docs/cards.md` stays the interim list until stage 2. Tags: V verified in this job (ran the binary on the files), S from the trial report (Backlog.md 1.55.3), U unverified.
 
+## For agents (one page; read this, the rest is on demand)
+
+- Your task is `backlog/tasks/task-<n> - <slug>.md` (the brief names it; `backlog task <n> --plain` also works). Read its keys `owns:`, `exclusive:`, `contracts:` and the acceptance criteria. Edit only paths under `owns:`; use only resources under `exclusive:`; change a contract only if `contracts:` names it. Need more: say so in your report.
+- Create a task only when the brief says so: `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> --ac ".."` (closed label set below; keep the title under 80 characters).
+- Tick criteria with `backlog task edit <n> --check-ac <k>` (or the checkbox by hand), fill `result:` by hand (say verified live or not). After ANY CLI edit run `git diff` (expect quote-style noise) and `python3 -I tools/backlog/check.py`; a folded `title: >-` breaks the checker, rewrite it as one quoted line.
+- Never run `backlog init`, `archive` or `delete`; never edit another task's file or the status; the coordinator closes tasks at merge.
+- Shared files (BACKLOG.md, INDEX.md, CHANGELOG.md, OWNERS, STATUS.md) are not yours: put lines in `backlog/merge-lines/<branch>.txt` as `BACKLOG: ..`, `INDEX: ..`, `CHANGELOG: ..`.
+- Before reporting: `python3 -I tools/backlog/check.py`, `python3 -I tools/contracts/check.py`, `python3 tools/merge_lines_check.py --changed`.
+- Brief shape you will receive: `docs/agents/brief-template.md`.
+
+---
+
 ## What is where
 
 - `backlog/config.yml`: project `d.idle`, statuses Proposed, Deferred, In Progress, Done; labels: see "Labels and fields" below; `auto_commit: false`. V

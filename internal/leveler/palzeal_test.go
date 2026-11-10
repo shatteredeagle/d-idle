@@ -24,7 +24,7 @@ func TestZealotLiteSelectableByName(t *testing.T) {
 
 func TestSelectionUnchangedForAllClasses(t *testing.T) {
 	cases := []struct{ class, def, endgame, fresh, existing string }{
-		{"sorceress", "fallback", "sorceress_blizzard_endgame90", FallbackV2, "fallback"},
+		{"sorceress", "fallback", "sorceress_blizzard_endgame90", SorceressNormal30, "fallback"},
 		{"paladin", "paladin-normal30", "paladin_hammerdin_endgame90", PaladinV2, "paladin-normal30"},
 		{"necromancer", "necromancer_summoner_normal30", "necromancer_summoner_endgame90", "necromancer_summoner_normal30", "necromancer_summoner_normal30"},
 		{"amazon", "amazon_bow_normal30", "amazon_multishot_endgame90", "amazon_bow_normal30", "amazon_bow_normal30"},

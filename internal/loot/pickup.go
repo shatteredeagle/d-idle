@@ -92,9 +92,9 @@ func (l *Looter) PickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 
 // Summary is the one-line "loot: N seen, picked M, skipped K (reasons), gold +G" text of a PickUp call.
 func (r PickReport) Summary() string {
-	why := map[string]int{}
+	why := map[string][]string{}
 	for _, sk := range r.Skipped {
-		why[sk.Why]++
+		why[sk.Why] = append(why[sk.Why], sk.Name)
 	}
 	keys := make([]string, 0, len(why))
 	for k := range why {
@@ -103,9 +103,18 @@ func (r PickReport) Summary() string {
 	sort.Strings(keys)
 	parts := make([]string, len(keys))
 	for i, k := range keys {
-		parts[i] = fmt.Sprintf("%dx %s", why[k], k)
+		parts[i] = fmt.Sprintf("%dx %s: %s", len(why[k]), k, nameList(why[k]))
 	}
 	return fmt.Sprintf("loot: %d seen, picked %d, skipped %d (%s), gold +%d", r.Seen, len(r.Picked), len(r.Skipped), strings.Join(parts, "; "), r.GoldGained)
+}
+
+// nameList names at most three skipped items, the rest as a count, so the line answers "which item was skipped".
+func nameList(names []string) string {
+	const show = 3
+	if len(names) <= show {
+		return strings.Join(names, ", ")
+	}
+	return fmt.Sprintf("%s, +%d more", strings.Join(names[:show], ", "), len(names)-show)
 }
 
 func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {

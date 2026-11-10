@@ -326,7 +326,7 @@ func TestBuildV2SorceressSequence(t *testing.T) {
 		}
 		// the 5th skill point (4 level points + Den) is Frozen Armor, whichever level it arrives at
 		want := map[int]string{
-			2: "Charged Bolt=1", 3: "Charged Bolt=2",
+			2: "Warmth=1", 3: "Charged Bolt=1 Warmth=1", // sorcready2: the fresh Sorceress table is sorceress_normal30
 		}
 		for lv, w := range want {
 			if denAt > lv {
@@ -335,7 +335,7 @@ func TestBuildV2SorceressSequence(t *testing.T) {
 				}
 			}
 		}
-		if got := skillString(snaps[15].skills); got != "Charged Bolt=12 Frost Nova=1 Frozen Armor=1 Telekinesis=1" {
+		if got := skillString(snaps[15].skills); got != "Charged Bolt=7 Frost Nova=1 Frozen Armor=1 Ice Blast=3 Ice Bolt=1 Telekinesis=1 Warmth=1" {
 			t.Errorf("den at %d clvl 15: %q", denAt, got)
 		}
 		if skillAt(snaps, 15, "Static Field") != 0 {
@@ -344,11 +344,11 @@ func TestBuildV2SorceressSequence(t *testing.T) {
 	}
 	snaps, _ := replay(t, "sorceress", 15, 5)
 	for lv, w := range map[int]string{
-		4:  "Charged Bolt=3",
-		5:  "Charged Bolt=4 Frozen Armor=1",
-		6:  "Charged Bolt=4 Frost Nova=1 Frozen Armor=1",
-		10: "Charged Bolt=8 Frost Nova=1 Frozen Armor=1",
-		11: "Charged Bolt=8 Frost Nova=1 Frozen Armor=1 Telekinesis=1",
+		4:  "Charged Bolt=2 Warmth=1",
+		5:  "Charged Bolt=3 Frozen Armor=1 Warmth=1",
+		6:  "Charged Bolt=3 Frost Nova=1 Frozen Armor=1 Warmth=1",
+		10: "Charged Bolt=7 Frost Nova=1 Frozen Armor=1 Warmth=1",
+		11: "Charged Bolt=7 Frost Nova=1 Frozen Armor=1 Telekinesis=1 Warmth=1",
 	} {
 		if got := skillString(snaps[lv].skills); got != w {
 			t.Errorf("clvl %d: %q, want %q", lv, got, w)

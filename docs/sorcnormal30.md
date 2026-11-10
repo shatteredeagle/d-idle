@@ -1,5 +1,7 @@
 # Sorceress normal30 table (TASK-144, card sorcnormal30)
 
+> status: since TASK-267 (sorcready2) the table is no longer v3-identical: Warmth at clvl 2, a cold line from clvl 12 (profile `sorceress/cold`), and it is the default of a fresh Sorceress. Current rows and reasons: [sorceress-early.md](sorceress-early.md) section 7. The text below describes the TASK-144 state.
+
 Status: BUILT, offline-tested. NOT verified live.
 
 ## What it is

@@ -102,6 +102,19 @@ func andarielFloor(w World) int {
 	return f
 }
 
+// AndarielWarn is the why-line of a character that passes the Andariel level floor but is under the class's recommended
+// level: a warning, not a wall ("" = at or over it, or no recommendation).
+func AndarielWarn(w World) string {
+	rec := w.AndarielRec
+	if routeMercOK(w) && w.AndarielRecMerc > 0 {
+		rec = min(rec, w.AndarielRecMerc)
+	}
+	if rec <= 0 || w.Level >= rec || w.Level < andarielFloor(w) {
+		return ""
+	}
+	return fmt.Sprintf("going on below the recommended level %d (clvl %d, merc=%s)", rec, w.Level, MercState(w))
+}
+
 // andarielHeld reports the unattended hold: the campaign may not enter Andariel while the knob is on, the fight has not
 // been won once (ADR 0011 gate 3) and she is not dead.
 func andarielHeld(w World) bool {
@@ -149,7 +162,11 @@ func AndarielLine(w World) string {
 	if why := g.kitShort(w); why != "" {
 		kit = "short(" + why + ")"
 	}
-	return fmt.Sprintf("boss: andariel gate pass clvl=%d kit=%s", w.Level, kit)
+	line := fmt.Sprintf("boss: andariel gate pass clvl=%d kit=%s", w.Level, kit)
+	if warn := AndarielWarn(w); warn != "" {
+		line += " warning: " + warn
+	}
+	return line
 }
 
 // bossGates is keyed by quest id. Numbers: Burial Grounds is the Soaky soak case (V, 2026-10-29 log 11:05 to 11:12: clvl

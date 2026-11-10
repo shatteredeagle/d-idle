@@ -1,0 +1,1 @@
+INDEX: docs/research/desktop-electron.md - Electron rebuild of the desktop launcher: version, security posture, packaging, layout, licences, effort (area: watch)

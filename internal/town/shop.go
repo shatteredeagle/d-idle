@@ -282,6 +282,8 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 	caster := manaNeed >= 2
 	hpHave := bs.Count[belt.HP] + bs.Count[belt.RV] + belt.PackCount(t.e.Data, s.Inventory, belt.HP)
 	mpHave := bs.Count[belt.MP] + belt.PackCount(t.e.Data, s.Inventory, belt.MP)
+	// The player's own plan (a template or column override) outranks the class default: see ManaBuyRule.ForPlan.
+	manaRule := resource.ManaBuy(manaNeed, resource.FromEnv(*t.e.Tune)).ForPlan(resource.SpecOfEnv(r), band.Capacity(belt.HP, bs.Slots)+band.Capacity(belt.RV, bs.Slots))
 	// buyKind buys up to limit potions of kind k; it returns true when the visit is over (budget).
 	buyKind := func(k belt.Kind, limit int) (bool, error) {
 		src := k
@@ -309,7 +311,7 @@ func (t *Town) buyPotions(ctx context.Context, npc d2.Unit, floor int, rep *Chor
 			}
 			if ok && k == belt.MP {
 				rt := resource.FromEnv(*t.e.Tune)
-				if !resource.ManaBuyOK(resource.ManaBuy(manaNeed, rt), rt, cur.Player.Gold, t.base(it).Cost, t.healingCarried(cur), boughtMana(rep.Bought)) {
+				if !resource.ManaBuyOK(manaRule, rt, cur.Player.Gold, t.base(it).Cost, t.healingCarried(cur), boughtMana(rep.Bought)) {
 					t.e.Log.Info("shop: mana potion skipped", "gold", cur.Player.Gold, "price", t.base(it).Cost, "healing", t.healingCarried(cur), "manaNeed", manaNeed)
 					break // little mana use: healing and the kit first
 				}
