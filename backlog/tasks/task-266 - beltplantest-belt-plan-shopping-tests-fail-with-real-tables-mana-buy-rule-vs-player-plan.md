@@ -1,10 +1,13 @@
 ---
 id: TASK-266
-title: 'beltplantest: belt plan shopping tests fail with real tables (mana buy rule vs player plan)'
-status: Proposed
+title: >-
+  beltplantest: belt plan shopping tests fail with real tables (mana buy rule vs
+  player plan)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:40:00Z'
+updated_date: '2026-11-10T19:36:00Z'
 labels:
   - bot
   - bug
