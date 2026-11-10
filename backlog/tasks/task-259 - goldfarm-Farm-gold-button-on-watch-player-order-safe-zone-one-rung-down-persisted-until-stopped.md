@@ -1,10 +1,13 @@
 ---
 id: TASK-259
-title: 'goldfarm: Farm gold button on /watch (player order, safe zone one rung down, persisted until stopped)'
-status: Proposed
+title: >-
+  goldfarm: Farm gold button on /watch (player order, safe zone one rung down,
+  persisted until stopped)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T17:27:00Z'
+updated_date: '2026-11-10T18:18:00Z'
 labels:
   - bot
   - bot-fix
