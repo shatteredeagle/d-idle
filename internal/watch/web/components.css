@@ -181,6 +181,34 @@
     border-radius: var(--d-r-1); background: var(--d-accent); color: var(--d-on-accent); }
   .d-slot2:hover, .d-slot2.sel { outline: 2px solid var(--d-focus); outline-offset: -2px; }
 
+  /* 13a Paper doll with game art (docs/paperdoll-art-build.md): an optional layer. inventory.js sets data-art on the doll
+     only when /api/art is available and the panel frame loaded; without it none of these rules match and the drawn doll
+     above stays. The frame is the equipment half of the game's own inventory panel (320 by 432, cropped to 246 high) and
+     the slots sit where inventory.txt puts them (panel-relative pixels, V against the real tables: --x --y --w --h; rings
+     are not in the table and are read off the panel image, U to the pixel). */
+  .d-doll[data-art] { display: block; position: relative; overflow: hidden; padding: 0; border: 0; aspect-ratio: 320 / 246; inline-size: min(100%, 320px); }
+  .d-doll[data-art] .art-panel { position: absolute; inset-block-start: 0; inset-inline-start: 0; inline-size: 100%; block-size: auto; pointer-events: none; }
+  .d-doll[data-art] .d-slot2 { position: absolute; display: block; padding: 0; background: transparent; border-color: transparent; box-shadow: none;
+    inset-inline-start: calc(var(--x) / 320 * 100%); inset-block-start: calc(var(--y) / 246 * 100%);
+    inline-size: calc(var(--w) / 320 * 100%); block-size: calc(var(--h) / 246 * 100%); }
+  .d-doll[data-art] .d-slot2[data-slot="head"] { --x: 135; --y: 8; --w: 54; --h: 51; }
+  .d-doll[data-art] .d-slot2[data-slot="neck"] { --x: 209; --y: 35; --w: 23; --h: 24; }
+  .d-doll[data-art] .d-slot2[data-slot="torso"] { --x: 133; --y: 77; --w: 56; --h: 82; }
+  .d-doll[data-art] .d-slot2[data-slot="rhand"] { --x: 20; --y: 47; --w: 55; --h: 112; }
+  .d-doll[data-art] .d-slot2[data-slot="lhand"] { --x: 251; --y: 47; --w: 55; --h: 112; }
+  .d-doll[data-art] .d-slot2[data-slot="gloves"] { --x: 21; --y: 181; --w: 54; --h: 53; }
+  .d-doll[data-art] .d-slot2[data-slot="belt"] { --x: 136; --y: 179; --w: 52; --h: 25; }
+  .d-doll[data-art] .d-slot2[data-slot="feet"] { --x: 252; --y: 182; --w: 54; --h: 52; }
+  .d-doll[data-art] .d-slot2[data-slot="rring"] { --x: 95; --y: 180; --w: 23; --h: 24; }
+  .d-doll[data-art] .d-slot2[data-slot="lring"] { --x: 209; --y: 180; --w: 23; --h: 24; }
+  .d-doll[data-art] .d-slot2[data-filled] { border-color: transparent; }
+  .d-doll[data-art] .d-slot2 .ico, .d-doll[data-art] .d-slot2 .ghost { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: contain; pointer-events: none; }
+  .d-doll[data-art] .d-slot2 .ghost { opacity: .4; }
+  .d-doll[data-art] .d-slot2[data-shown] .sil, .d-doll[data-art] .d-slot2[data-shown] .nm, .d-doll[data-art] .d-slot2 .num { display: none; }
+  .d-doll[data-art] .d-slot2 .dur { position: absolute; inset-inline: 2px; inset-block-end: 2px; margin: 0; }
+  .d-doll[data-art] .d-slot2 .pin { font-size: .5rem; padding: 0 2px; }
+  .d-doll[data-art] .d-slot2 .broken { font-size: .6rem; }
+
   /* 14 Cells (inventory page): backpack 10 by 4, belt, stash 6 by 8. Items take their grid area from the CSSOM
      (style.gridArea, the one allowed inline write); labels wrap inside the item and never overlap the next one. */
   .d-cells { --cols: 10; --cell-size: min(46px, calc((100cqi - (var(--cols) - 1) * 2px - 6px) / var(--cols))); display: grid;
@@ -192,6 +220,8 @@
     border: 0; border-block-start: 3px solid var(--q, var(--d-q-normal)); padding: 2px 3px; font-size: .62rem; line-height: 1.15; color: var(--q, var(--d-text));
     text-align: start; cursor: pointer; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; }
   .d-cells .item[data-h="1"] { -webkit-line-clamp: 2; }
+  .d-cells .item[data-shown] { font-size: 0; padding: 0; background: var(--d-surface-2); }
+  .d-cells .item .ico { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: contain; pointer-events: none; }
   .d-cells .item.sel { outline: 2px solid var(--d-focus); outline-offset: -2px; }
   .d-cells .item[data-mark="sell"] { box-shadow: inset 0 0 0 2px var(--d-bad); }
   .d-cells .item[data-mark="keep"] { box-shadow: inset 0 0 0 2px var(--d-good); }
