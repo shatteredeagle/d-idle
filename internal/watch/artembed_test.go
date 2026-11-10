@@ -33,3 +33,17 @@ func TestEmbeddedWebHasNoArt(t *testing.T) {
 		t.Fatalf("walked only %d entries: is the embed empty?", n)
 	}
 }
+
+// The art doll sits in a max-content grid column on wide cards: a percentage-only inline-size resolves to 0 there and
+// the doll vanished (sandbox report 2026-11-10). It needs a definite width.
+func TestArtDollHasDefiniteWidth(t *testing.T) {
+	b, err := webFS.ReadFile("web/components.css")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, line := range strings.Split(string(b), "\n") {
+		if strings.Contains(line, ".d-doll[data-art] {") && !strings.Contains(line, "inline-size: 320px") {
+			t.Errorf("art doll lacks a definite inline-size: %s", line)
+		}
+	}
+}

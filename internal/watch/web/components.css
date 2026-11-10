@@ -186,7 +186,7 @@
      above stays. The frame is the equipment half of the game's own inventory panel (320 by 432, cropped to 246 high) and
      the slots sit where inventory.txt puts them (panel-relative pixels, V against the real tables: --x --y --w --h; rings
      are not in the table and are read off the panel image, U to the pixel). */
-  .d-doll[data-art] { display: block; position: relative; overflow: hidden; padding: 0; border: 0; aspect-ratio: 320 / 246; inline-size: min(100%, 320px); }
+  .d-doll[data-art] { display: block; position: relative; overflow: hidden; padding: 0; border: 0; aspect-ratio: 320 / 246; inline-size: 320px; max-inline-size: 100%; }
   .d-doll[data-art] .art-panel { position: absolute; inset-block-start: 0; inset-inline-start: 0; inline-size: 100%; block-size: auto; pointer-events: none; }
   .d-doll[data-art] .d-slot2 { position: absolute; display: block; padding: 0; background: transparent; border-color: transparent; box-shadow: none;
     inset-inline-start: calc(var(--x) / 320 * 100%); inset-block-start: calc(var(--y) / 246 * 100%);
