@@ -1,10 +1,11 @@
 ---
 id: TASK-213
-title: 'upgradeadvisor: unlockable watch feature that suggests gear upgrades, never equips them'
-status: Proposed
+title: "upgradeadvisor: unlockable watch feature that suggests gear upgrades, never equips them"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T13:53:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -35,3 +36,9 @@ Hook point: invdesk.Config.Advice(item) fills ItemView.Advice, drawn under the i
 - [ ] #4 T3: further advice (socket count, runeword hints, upgrade by cube recipe) from runeword and recipe data, each line tagged with its source
 - [ ] #5 Never equips or unpins: suggestions only (user decision 2026-11-09); a pinned slot still shows suggestions, marked as such; two-class tests (Sorceress, Paladin)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

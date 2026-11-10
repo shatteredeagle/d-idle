@@ -1,13 +1,15 @@
 ---
 id: TASK-204
-title: 'amazonammo: Amazon with no javelins and no gold stands idle swinging, 40 chickens in 30 minutes'
-status: Proposed
+title: "amazonammo: Amazon with no javelins and no gold stands idle swinging, 40 chickens in 30 minutes"
+status: Deferred
 assignee:
   - pro-runner
 created_date: '2026-11-08T17:23:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - bug
+  - parked
 milestone: m-4
 dependencies: []
 priority: high
@@ -33,3 +35,9 @@ Found by panelslive (docs/soaks/classpacing2.md): lockstep Amazon seed 13 sat at
 - [ ] #1 An Amazon whose javelin stack is empty and gold is under a bow's price still gets XP (melee fallback, or a gold step) and does not loop chicken and town
 - [ ] #2 Test with two classes (Amazon plus one non-thrower) for the no-ammo path
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: classes other than Paladin and Sorceress wait (class order).
+<!-- SECTION:NOTES:END -->

@@ -1,10 +1,11 @@
 ---
 id: TASK-43
 title: 'playsession: one command for a LAN play session'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - ops
   - feature
@@ -38,3 +39,9 @@ Done when: tools/play-session.sh: one command; prints the watch URL and token fi
 - [ ] #2 A dry-run mode prints the exact commands; a shell test covers dry-run and the refusal; docs/play-session.md has stop and cleanup
 - [ ] #3 Says verified live or not; any live check is a ready-to-run checklist
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed as superseded in the 2026-11-10 true-up: folded into the sessions card (see TASK-246).
+<!-- SECTION:NOTES:END -->

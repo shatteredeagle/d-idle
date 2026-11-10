@@ -1,10 +1,11 @@
 ---
 id: TASK-158
 title: 'unlockbestiary: bestiary'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -45,3 +46,9 @@ Unlock: 10 kills of a kind opens its page, 50 kills show resist details; silhoue
 - [ ] #5 panel 'Cain's notes' renders correctly in a real browser (no browser check run yet)
 - [ ] #6 LIVE check on a real run: kills accumulate and cards open, kind names match the real monstats (not run; the live panels check is pending)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

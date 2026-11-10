@@ -1,11 +1,11 @@
 ---
 id: TASK-108
-title: 'qdensity: question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating)'
-status: Deferred
+title: "qdensity: question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating)"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
-updated_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -41,3 +41,9 @@ Deferred 2026-11-07 (ADR 0018): superseded by codexfirsts (TASK-130); question d
 - [ ] #2 The t0.area.toohard question is gated to within two areas of the Forgotten Tower; test
 - [ ] #3 docs/t0-variants.md says built vs verified live; go vet and go test -p 1 of internal/decide; leakcheck 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed as superseded in the 2026-11-10 true-up: folded into the return screen by ADR 0018.
+<!-- SECTION:NOTES:END -->

@@ -1,15 +1,17 @@
 ---
 id: TASK-36
 title: 't0fight: engineered drill for a fight-time question and a learned answer'
-status: Proposed
+status: Deferred
 assignee:
   - live-agent
 created_date: '2026-11-06T16:02:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - drill
   - ladder
   - T0
+  - parked
 dependencies: []
 priority: high
 ordinal: 36000
@@ -39,3 +41,9 @@ Done when: Drill sets up low life or an elite pack by SETUP writes before d2chea
 - [ ] #2 A fight-time question opens mid-fight and is answered in the field; the hero keeps fighting while it is open (no pause); log lines show thought and answer
 - [ ] #3 A second run after a learned answer behaves differently (rulesLearned > 0 and the action changes) on two builds; result says verified live or not
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: ladder mechanism waits for the re-scope of TASK-19.
+<!-- SECTION:NOTES:END -->

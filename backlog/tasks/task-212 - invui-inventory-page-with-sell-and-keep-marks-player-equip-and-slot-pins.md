@@ -1,10 +1,11 @@
 ---
 id: TASK-212
 title: 'invui: inventory page with sell and keep marks, player equip and slot pins'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T13:53:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -60,3 +61,9 @@ Player inventory control on the watch screen. Done when the page, marks, equip a
 - [ ] #4 A player equip pins the slot; the bot never undoes it; only the player's unpin ends a pin
 - [ ] #5 POST routes use the answer listener gates; two-class tests; live drill checklist in docs/inventory-ui.md
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

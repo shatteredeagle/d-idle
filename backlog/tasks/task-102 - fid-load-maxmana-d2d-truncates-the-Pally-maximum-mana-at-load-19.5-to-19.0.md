@@ -1,10 +1,11 @@
 ---
 id: TASK-102
 title: 'fid-load-maxmana: d2d truncates the Pally maximum mana at load (19.5 to 19.0)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:49:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -39,3 +40,9 @@ Joins the bundle "character load and stats" with TASK-101 (docs/research/pr-bund
 - [ ] #2 Reproduced in a d2d unit test with a Paladin clvl 4 stat block (raw 4992)
 - [ ] #3 Fold into the pilot PR or a second PR; draft only
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

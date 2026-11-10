@@ -1,0 +1,3 @@
+BACKLOG: board true-up 2026-11-10: 58 cards closed (live checks moved to docs/live-checks.md), 16 parked, 12 new cards TASK-245..257 (TASK-253)
+INDEX: docs/live-checks.md - open live checks of closed cards, one row each (TASK-253)
+CHANGELOG: Board true-up: closed merged cards, parked blocked ones, added the first-hour and beta-path cards; docs/live-checks.md lists the live debt (TASK-253)

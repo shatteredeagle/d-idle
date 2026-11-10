@@ -1,11 +1,11 @@
 ---
 id: TASK-80
 title: 'fid-layout-act1: oracle: layouts of the other Act 1 areas'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - oracle
@@ -42,3 +42,9 @@ Done when: Extend the seedspawn oracle to Burial Grounds, Cave 1/2, Dark Wood, B
 - [ ] #3 Same-save check (scenario 8, Stony Field) first-load monster/object list equals on a pinned seed
 - [x] #4 Lut Gholein tile mismatch (act 2) recorded as an open row, not fixed here
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

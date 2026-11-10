@@ -1,10 +1,11 @@
 ---
 id: TASK-195
 title: 'mapreveal: later zones stay hidden on the minimap until found or unlocked'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T16:53:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -36,3 +37,9 @@ User request 2026-11-08: the minimap should hide or fade out later zones and rev
 - [ ] #3 tests with two classes: an unvisited area is absent from /api/senses and the atlas payload; reveal on first visit and on waypoint seen
 - [ ] #4 live check on a real run: later zones stay hidden until entered
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

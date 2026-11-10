@@ -1,10 +1,11 @@
 ---
 id: TASK-113
 title: 'friendsfb: friends feedback via the tester container'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - docs
   - research
@@ -43,3 +44,9 @@ Why: direction review section 7 step 7 with the user's clarification of 2026-11-
 - [ ] #1 One page: how a friend gets the built container, runs it with their own game files, plays a realtime session and sends back the scrubbed report plus three sentences (tester cards TASK-25 to 29, 31 to 33)
 - [ ] #2 No hostnames, IPs or names; leakcheck 0; says friend feedback is the H1/H3/H4 audience for the design brief v1
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

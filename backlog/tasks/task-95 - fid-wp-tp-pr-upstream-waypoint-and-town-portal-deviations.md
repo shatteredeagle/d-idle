@@ -1,11 +1,11 @@
 ---
 id: TASK-95
 title: 'fid-wp-tp-pr: upstream: waypoint and town portal deviations'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -42,3 +42,9 @@ Done when: Waypoint trace and wp_refuse.py re-run; 39-bit mask, refusal window; 
 - [ ] #2 Town portal: tome use, scroll count, portal pos 0.6 cells south, expiry; deviations listed with PR state
 - [x] #3 Shim R06 (act 3-5 coordinates) removal condition recorded
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

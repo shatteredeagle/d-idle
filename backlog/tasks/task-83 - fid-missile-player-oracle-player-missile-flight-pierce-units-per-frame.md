@@ -1,11 +1,11 @@
 ---
 id: TASK-83
 title: 'fid-missile-player: oracle: player missile flight, pierce, units per frame'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - oracle
@@ -41,3 +41,9 @@ Done when: Harness for missile flight: speed, range, collision per frame for Cha
 - [ ] #2 Lightning and Chain Lightning piercing and hop (SK12) compared; Frost Nova units-per-frame (SK08, folded in D1)
 - [x] #3 classdata/skills.json ranges 10/20/25 confirmed against the oracle
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

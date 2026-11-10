@@ -1,10 +1,11 @@
 ---
 id: TASK-133
-title: 'skillunlocks: per-class skill unlock table, leveler rule and the one free-choice point'
-status: Proposed
+title: "skillunlocks: per-class skill unlock table, leveler rule and the one free-choice point"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -43,3 +44,9 @@ Note 2026-11-07: this card owns the Sorceress unlock file; the other six classes
 - [x] #2 The player may spend ONE free-choice point on a Codex-unlocked skill that the build table skips, shown with its consequence; the buildv3 replay test shows no refused row
 - [ ] #3 Codex skill icons light up on the unlock; docs/skill-unlocks.md says built vs verified live and uses only levels checked by skillreqcheck; go vet and go test -p 1 of the touched packages; leakcheck 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

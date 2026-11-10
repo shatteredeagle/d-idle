@@ -1,10 +1,11 @@
 ---
 id: TASK-124
-title: 'updkey: generate the signing key and set up the CI environment, secret and tag protection'
-status: Proposed
+title: "updkey: generate the signing key and set up the CI environment, secret and tag protection"
+status: Done
 assignee:
   - user
 created_date: '2026-11-07T23:28:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - ops
   - chore
@@ -42,3 +43,9 @@ User steps (GitHub settings, repo shatteredeagle/d-idle):
 - [ ] #1 key pair generated offline by cmd/d2sign on the user machine; private key pasted into the `app-release` environment secret (not repo-wide), backup place named, public key handed to the image build (no secret in the repo)
 - [ ] #2 GitHub settings done: environment `app-release` with the user as required reviewer, tag ruleset on `tester-v*` and `release-*`, 2FA confirmed; docs/self-update-keys.md states rotation (image rebuild needed) and revocation (signed REVOKED file, minimum version)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

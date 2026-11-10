@@ -1,10 +1,11 @@
 ---
 id: TASK-162
 title: 'unlockalerts: alerts and pings'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -48,3 +49,9 @@ Unlock: tally spend on a charter; phone or desktop notifications on a unique, de
 - [ ] #6 alerts toasts and notification centre render in a real browser (not run)
 - [ ] #7 LIVE check on a real run: alerts appear for real events (not run; the live panels check is pending)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

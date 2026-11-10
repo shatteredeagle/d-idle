@@ -1,11 +1,11 @@
 ---
 id: TASK-82
 title: 'fid-monster-move: oracle: monster velocity, pathing, stuck cases'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - oracle
@@ -42,3 +42,9 @@ Done when: Velocity oracle (walk-speed-trace.md) re-run; tolerance: 0 differing 
 - [ ] #2 Path finding: 11 verified/6 ported/63 untouched functions: port and compare the 6 ported ones; list the rest
 - [x] #3 The 77-subtile path stop reproduced and the original behaviour read from game.exe
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

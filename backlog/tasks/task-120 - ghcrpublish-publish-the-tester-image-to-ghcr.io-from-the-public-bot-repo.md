@@ -1,10 +1,11 @@
 ---
 id: TASK-120
 title: 'ghcrpublish: publish the tester image to ghcr.io from the public bot repo'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:28:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - container
   - feature
@@ -43,3 +44,9 @@ Tier 1 of docs/research/self-update-design.md (user decision 2026-11-07). Friend
 - [ ] #2 compose.friends.yml with image tag variable, explicit pull_policy, optional Watchtower label documented with its risks; docs/registry-publish.md holds the publishing plan, the one-time package-public step and the release body template with the GPL source offer
 - [ ] #3 dry run on the worker host proves the public-source build (fork tag checkout) gives a working image (TASK-25 smoke); result says verified live or not
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

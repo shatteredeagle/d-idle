@@ -1,10 +1,11 @@
 ---
 id: TASK-242
 title: 'areathrash: escalating border-loop breaker, cave ping-pong analysis'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T01:41:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - bug
@@ -37,3 +38,9 @@ result: offline only, NOT verified live. Breaker fix unit tested (TestBorderLoop
 - [x] #2 Border-loop breaker trips faster and its skip escalates per area, unit tested
 - [x] #3 Dark Wood exit and cave-mouth hold causes explained (arrival bounce)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

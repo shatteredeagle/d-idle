@@ -1,10 +1,11 @@
 ---
 id: TASK-53
 title: 'abmerc: paired A/B of the merc revive reserve; A/B standard'
-status: In Progress
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-06T22:36:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - ops
   - feature
@@ -45,3 +46,9 @@ Done when: Harness (prep tool, one-run script, driver, analysis with tests) for 
 - [ ] #3 Run plan (wall hours, slot hours, earliest start) written; the full 16-run A/B recorded when the host allows
 - [x] #4 Rule in docs/backlog-howto.md and docs/ab-design.md: strategy changes get a paired A/B before the long gate
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

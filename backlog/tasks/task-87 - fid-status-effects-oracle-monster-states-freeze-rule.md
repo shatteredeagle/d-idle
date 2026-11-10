@@ -1,11 +1,11 @@
 ---
 id: TASK-87
 title: 'fid-status-effects: oracle: monster states, freeze rule'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:04:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - oracle
@@ -42,3 +42,9 @@ Done when: states: 149 untested rows; run the ones used by freeze/chill, curse, 
 - [x] #2 Freeze rule 225,748 cases deviations C3 to C5 reduced by the proof PR (pr-freeze-proof.md)
 - [x] #3 Ice Bolt chill vs cold-immune quirk checked
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->
