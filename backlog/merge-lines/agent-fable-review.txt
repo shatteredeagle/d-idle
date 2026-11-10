@@ -1,3 +1,0 @@
-INDEX: - research/project-review-2026-11-10.md: whole-project review and true-up 2026-11-10 (Fable): ranked steering, the week since the 11-03 review, backlog true-up lists, research fit, beta exit criteria, efficiency and token recommendations, open questions
-CHANGELOG: docs: project review and true-up 2026-11-10 (docs/research/project-review-2026-11-10.md); research only, nothing decided
-BACKLOG: REVIEW-2026-11-10: true-up lists for the coordinator in docs/research/project-review-2026-11-10.md section 3 (close 40 merged cards with live checks moved to a live-check list, park 20, merge duplicates, 9 missing cards); the measurement cards TASK-107, 110, 112, 114 are the open m-4 priority
