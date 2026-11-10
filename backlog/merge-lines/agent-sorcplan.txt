@@ -1,0 +1,1 @@
+INDEX: docs/research/sorceress-table-plan.md: the Sorceress normal30 table already exists (TASK-144); what is still missing for a friends Sorceress, data vs Go, work packages and estimate (SORCPLAN)
