@@ -1,7 +1,7 @@
 ---
 id: TASK-191
 title: 'stancelever: player-tunable fight stance row on the policy sheet'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T15:22:00Z'
