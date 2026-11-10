@@ -1,0 +1,1 @@
+BACKLOG: status sync 2026-11-09 of the drift report: TASK-122, 135, 148, 184, 187, 191, 208, 210, 214 closed (all boxes proven); TASK-39 back to Proposed
