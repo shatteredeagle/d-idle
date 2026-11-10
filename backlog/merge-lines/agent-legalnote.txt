@@ -1,2 +1,0 @@
-BACKLOG: TASK-257 legalnote: one-page legal/risk note for the first friend copy (docs/research/legal-note.md)
-INDEX: research/legal-note.md - GPL, Blizzard EULA posture, art on streams, pre-friend-copy checklist (TASK-257)
