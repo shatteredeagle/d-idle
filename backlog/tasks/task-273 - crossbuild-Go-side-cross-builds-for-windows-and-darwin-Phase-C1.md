@@ -1,10 +1,11 @@
 ---
 id: TASK-273
 title: 'crossbuild: Go side cross-builds for windows and darwin (Phase C1)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:58:00Z'
+updated_date: '2026-11-10T22:15:00Z'
 labels:
   - bot
   - chore
