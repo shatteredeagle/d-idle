@@ -908,3 +908,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/paperdoll-art-build.md - paper doll game art as built (internal/art, endpoints, UI), read at runtime from the user's MPQs
 - research/project-review-2026-11-10.md: whole-project review and true-up 2026-11-10 (Fable): ranked steering, the week since the 11-03 review, backlog true-up lists, research fit, beta exit criteria, efficiency and token recommendations, open questions
 - docs/live-checks.md - open live checks of closed cards, one row each (TASK-253)
+- docs/palprofile.md - Paladin attack order data change and what the profile format cannot express

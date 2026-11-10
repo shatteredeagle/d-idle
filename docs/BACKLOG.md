@@ -676,6 +676,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - areathrash (TASK-242): border-loop breaker escalates (5 crossings, skip 3..48 min); cave shuttle analysis in docs/areathrash.md
 - REVIEW-2026-11-10: true-up lists for the coordinator in docs/research/project-review-2026-11-10.md section 3 (close 40 merged cards with live checks moved to a live-check list, park 20, merge duplicates, 9 missing cards); the measurement cards TASK-107, 110, 112, 114 are the open m-4 priority
 - board true-up 2026-11-10: 58 cards closed (live checks moved to docs/live-checks.md), 16 parked, 12 new cards TASK-245..257 (TASK-253)
+- palprofile (TASK-254) Paladin attack order as profile data: plain Attack before Zeal (Sacrifice stays a prerequisite), Smite no longer ranked; Prayer already rest-only; offline only
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
