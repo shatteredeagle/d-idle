@@ -11,7 +11,7 @@ import (
 
 func load(t *testing.T) []line {
 	t.Helper()
-	f, err := os.Open("testdata/hour.log")
+	f, err := os.Open("testdata/hour.txt")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,13 +55,13 @@ func TestFailsLoudly(t *testing.T) {
 
 func TestDryRunAndAppend(t *testing.T) {
 	var out, errw bytes.Buffer
-	if rc := run([]string{"-log", "testdata/hour.log", "-class", "paladin", "-dry-run"}, nil, &out, &errw); rc != 0 {
+	if rc := run([]string{"-log", "testdata/hour.txt", "-class", "paladin", "-dry-run"}, nil, &out, &errw); rc != 0 {
 		t.Fatalf("rc %d %s", rc, errw.String())
 	}
 	tab := filepath.Join(t.TempDir(), "p", "firsthour.md")
 	out.Reset()
 	for i := 0; i < 2; i++ {
-		if rc := run([]string{"-log", "testdata/hour.log", "-class", "paladin", "-table", tab}, nil, &out, &errw); rc != 0 {
+		if rc := run([]string{"-log", "testdata/hour.txt", "-class", "paladin", "-table", tab}, nil, &out, &errw); rc != 0 {
 			t.Fatalf("rc %d %s", rc, errw.String())
 		}
 	}
@@ -69,7 +69,7 @@ func TestDryRunAndAppend(t *testing.T) {
 	if n := strings.Count(string(b), "| 2026-11-10 |"); n != 2 || !strings.HasPrefix(string(b), "# First hour") {
 		t.Errorf("table:\n%s", b)
 	}
-	if rc := run([]string{"-log", "testdata/hour.log"}, nil, &out, &errw); rc != 2 {
+	if rc := run([]string{"-log", "testdata/hour.txt"}, nil, &out, &errw); rc != 2 {
 		t.Errorf("missing -class: rc %d", rc)
 	}
 }

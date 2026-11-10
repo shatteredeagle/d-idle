@@ -3,7 +3,7 @@
 Why: the headline metric of the project review (docs/research/project-review-2026-11-10.md, R2, sections 3 and 5): a fresh hero, 60 realtime minutes at 1x, one row a day in [probes/firsthour.md](probes/firsthour.md). TASK-245.
 
 ## Use
-- Fixture dry run (V: unit tests, `go test ./cmd/d2firsthour`): `tools/firsthour.sh --class paladin --log cmd/d2firsthour/testdata/hour.log --dry-run`.
+- Fixture dry run (V: unit tests, `go test ./cmd/d2firsthour`): `tools/firsthour.sh --class paladin --log cmd/d2firsthour/testdata/hour.txt --dry-run`.
 - Real run, after the sandbox hero has played 60 minutes from a reset (U: not run live; no game was started): `tools/firsthour.sh --class paladin` fetches `docker logs $D2_SANDBOX_CONTAINER` through the worker host, computes the row, appends it. `--start RFC3339` names the hero's first moment when the container log holds older heroes; the default is the first `d2bot start` line.
 - Exit 1 means the log does not hold a full fresh hour (shorter than 60 min minus 90 s, first minute line above clvl 2, no minute lines, no version stamp); nothing is written. It never guesses.
 

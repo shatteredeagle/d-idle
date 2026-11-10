@@ -2,7 +2,7 @@
 # TASK-245: append the fresh-hero first-hour row to docs/probes/firsthour.md (docs/first-hour.md). Read-only on the
 # sandbox: `docker logs` of the container, nothing else (no data volume, no credentials).
 # usage: tools/firsthour.sh --class paladin [--container NAME] [--start RFC3339] [--dry-run] [--log FILE]
-#   --log FILE   read a saved log instead of the container (the dry-run fixture: cmd/d2firsthour/testdata/hour.log)
+#   --log FILE   read a saved log instead of the container (the dry-run fixture: cmd/d2firsthour/testdata/hour.txt)
 # env: D2_LABRUN_HOST (local.env) names the worker host that runs docker; D2_SANDBOX_CONTAINER the default container.
 # Exit: 0 row computed (and written unless --dry-run), 1 the log does not hold a full fresh hour, 2 usage or fetch error.
 set -u
