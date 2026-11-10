@@ -1,2 +1,0 @@
-CHANGELOG: D2BOT_UPDATE_FEED: a non-dev image can read signed updates from a user-controlled https feed; keys stay the baked ones (TASK-272)
-INDEX: docs/friend-feed.md - D2BOT_UPDATE_FEED, user-controlled update feed with pinned keys
