@@ -1,0 +1,3 @@
+BACKLOG: TASK-243 quest givers in town: the campaign visits Kashya and Charsi when their quest is available (table data/quests/act1-givers.json joined to the hint table, class families, opt-in, off in named runs); offline only, live checklist in docs/quest-givers.md
+INDEX: docs/quest-givers.md - the hero visits quest givers in town when a quest is available (TASK-243)
+CHANGELOG: The hero now talks to the Act 1 quest givers in the Rogue Encampment (Kashya, Charsi) when their quest is available and its level is reached, instead of waiting for the plan to reach them; D2BOT_QUEST_GIVERS=0 turns it off

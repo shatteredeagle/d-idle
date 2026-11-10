@@ -570,7 +570,7 @@ func (r *Runner) compile(g goals.Goal) (goalSpec, error) {
 		if r.d.Task == nil {
 			return spec, errors.New("task layer not wired (Deps.Task is nil)")
 		}
-		spec.camp = task.Template(p.Template, p.Cain).WithRogueClaim()
+		spec.camp = r.withQuestGivers(task.Template(p.Template, p.Cain).WithRogueClaim())
 		if spec.camp == nil {
 			return spec, fmt.Errorf("unknown campaign template %q", p.Template)
 		}

@@ -86,6 +86,11 @@ type Campaign struct {
 	// Difficulty is the difficulty the campaign plays in ("" = any, the Normal templates). A world in another
 	// difficulty gets a Stuck plan until the bot has switched (nightmare.go).
 	Difficulty string
+
+	// Quest givers in town (givers.go); nil: off.
+	givers     *GiverTable
+	giverClass func() string
+	giverErr   func(error)
 }
 
 // Act1Options tunes the Normal Act 1 template.
@@ -142,6 +147,9 @@ func (c *Campaign) complete(w World, s Session, q string) bool {
 func (c *Campaign) Plan(w World, s Session) Plan {
 	if c.wrongDifficulty(w) {
 		return Plan{Stuck: true, Why: "wrong difficulty: the " + c.Name + " campaign needs " + c.Difficulty}
+	}
+	if p, ok := c.giverPlan(w, s); ok {
+		return p
 	}
 	lowest, stuck, kitOnly, denWait := 0, "", true, false
 	for _, e := range c.Entries {

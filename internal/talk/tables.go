@@ -99,7 +99,9 @@ var Paths = map[[2]string][]string{
 	// docs/quest.md "Akara dialog by quest state"): clicking a second row only hit the neighbouring lines.
 	{task.NPCAkara, "reward"}:  {"Talk"},
 	{task.NPCKashya, "reward"}: {"Talk"},
-	{task.NPCCharsi, "quest"}:  {"Talk"},
+	// The quest giver visit (docs/quest-givers.md): the first Talk with Kashya is the plain line (U live, same shape as her reward Talk).
+	{task.NPCKashya, "quest"}: {"Talk"},
+	{task.NPCCharsi, "quest"}: {"Talk"},
 	// Akara reads the Scroll of Inifuss on the plain Talk with it in the pack (S, docs/quest.md check 4); Charsi takes the
 	// Malus the same way (S, check 3). Both are U live. The imbue item pick follows in Talk (town.Imbue).
 	{task.NPCAkara, "bark"}:        {"Talk"},
