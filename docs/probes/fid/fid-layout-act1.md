@@ -45,7 +45,7 @@ Kinds of `diff_drlg.py`: `tiles` (rooms and tile picks), `units` (preset units a
 | 38 | Tristram | 30/30 | 30/30 | 30/30 | 337 of 337 | 20/20 (10 + 10) each | 0 |
 | 39 | Moo Moo Farm | 30/30 | 30/30 | 30/30 | 1,124 of 1,124 | 20/20 (10 + 10) each | 0 |
 
-Sum: 170 result lines on seeds 1..30 (34 levels x 5 lines: tiles, units, seeds, monsters rooms, monsters seeds), 340 on the ranges, **0 differ**; every line is "N/N". Level 20 (Tower 2) has no populated rooms on either side (a maze of presets, the Forgotten Tower's entry level); its three other kinds equal. A compare with an empty dump would also say "match", so one dump per kind was looked at: `d8_dump.sh 1 6` prints 7,992 lines (Black Marsh tile grids), level 9 3,636 lines (54 rooms of 8 x 8 preset tiles), level 17 2,751 lines: the dumps are real, not empty (V run).
+Sum: 170 result lines on seeds 1..30 (34 levels x 5 lines: tiles, units, seeds, monsters rooms, monsters seeds), 340 on the ranges, **0 differ**; every line is "N/N". Level 20 (Tower 2) has no populated rooms on either side (why it has none was not traced; I that it is a preset-only level); its three other kinds equal. A compare with an empty dump would also say "match", so one dump per kind was looked at: `d8_dump.sh 1 6` prints 7,992 lines (Black Marsh tile grids), level 9 3,636 lines (54 rooms of 8 x 8 preset tiles), level 17 2,751 lines: the dumps are real, not empty (V run).
 
 Before: MA04 said "0 verified / 102 ported" for the outdoor levels (the matrix, 2026-11-06) and seedspawn-trace.md covered 5 levels. Now 34 more are verified; the monster counts are the number of rooms with spawns (not units).
 
