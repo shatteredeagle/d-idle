@@ -17,6 +17,18 @@
     var m = Math.floor(s / 60), r = s % 60;
     return (neg ? '-' : '') + m + ':' + (r < 10 ? '0' : '') + r;
   }
+  // A redraw empties lists and refills them; an emptied scroll box snaps to the top and the page can jump with it.
+  // Remember the page and every inner scroll box's offset, redraw, put them back.
+  function keepScroll(fn) {
+    var x = window.scrollX, y = window.scrollY, boxes = [];
+    Array.prototype.forEach.call(document.querySelectorAll('main *, aside *, section *'), function (n) {
+      if (n.scrollTop > 0 || n.scrollLeft > 0) boxes.push([n, n.scrollTop, n.scrollLeft]);
+    });
+    try { fn(); } finally {
+      boxes.forEach(function (b) { if (b[0].isConnected) { b[0].scrollTop = b[1]; b[0].scrollLeft = b[2]; } });
+      if (window.scrollX !== x || window.scrollY !== y) window.scrollTo(x, y);
+    }
+  }
   function say(t) { $('msg').textContent = t || ''; $('msgbar').hidden = !t; }
 
   function get(path) {
@@ -306,16 +318,19 @@
   }
 
   // A redraw keeps keyboard focus: the same index of button in the same card gets it back.
+  var ordersDrawn = '';
   function renderOrders() {
     var ae = document.activeElement, keep = null;
     ['now', 'queue', 'maparea'].forEach(function (id) {
       var box = $(id), items = box.querySelectorAll('button, [role=button]');
       for (var i = 0; i < items.length; i++) if (items[i] === ae) keep = [id, i];
     });
+    var sig = JSON.stringify([ord, om, mapList]); if (sig === ordersDrawn) return; // unchanged: keep the DOM and scroll
+    ordersDrawn = sig;
     renderNow(); renderQueue(); renderMap();
     if (keep) {
       var items2 = $(keep[0]).querySelectorAll('button, [role=button]');
-      if (items2[keep[1]] && $('sheet').hidden) items2[keep[1]].focus();
+      if (items2[keep[1]] && $('sheet').hidden) items2[keep[1]].focus({ preventScroll: true });
     }
   }
 
@@ -442,9 +457,11 @@
     if (cfg.currency) reqs.push(get('/api/currency'));
     Promise.all(reqs)
       .then(function (a) {
+        keepScroll(function () {
         if (a[5]) renderCurrency(a[5]);
         th = a[0]; thoughtsAt = performance.now();
         renderThoughts(); renderFeed(th.feed); renderJournal(a[1]); renderRules(a[2]); ord = a[3]; ordAt = performance.now(); om = a[4]; renderOrders();
+        });
       }).catch(function () { say('the viewer is not reachable'); })
       .then(function () { pending = false; });
   }

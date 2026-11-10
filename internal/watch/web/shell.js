@@ -152,10 +152,14 @@ function syncBand(band) {
 function keepFocus(root, fn) {
   const a = document.activeElement;
   const key = a && root.contains(a) && a.dataset ? a.dataset.key : '';
+  const x = window.scrollX, y = window.scrollY, boxes = [];
+  for (const n of root.querySelectorAll('*')) if (n.scrollTop > 0) boxes.push([n, n.scrollTop]);
   fn();
+  for (const [n, t] of boxes) if (n.isConnected) n.scrollTop = t;
+  if (window.scrollX !== x || window.scrollY !== y) window.scrollTo(x, y);
   if (key && !root.contains(document.activeElement)) {
     const b = root.querySelector('[data-key="' + CSS.escape(key) + '"]');
-    if (b) b.focus();
+    if (b) b.focus({ preventScroll: true }); // a poll must never scroll the page
   }
 }
 

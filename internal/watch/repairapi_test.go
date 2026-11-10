@@ -258,3 +258,37 @@ func TestEmbeddedJSInjectsNoStyle(t *testing.T) {
 		t.Fatal("no embedded js found")
 	}
 }
+
+// A poll must not move the page: focus restored after a redraw scrolls the element into view (the "scroll keeps
+// resetting" bug), so every programmatic focus in the polling scripts passes preventScroll. The modal sheet and
+// reveal dialog focus (user-initiated, once) are allowed to scroll.
+func TestPollingJSFocusKeepsScroll(t *testing.T) {
+	re := regexp.MustCompile(`\.focus\(([^)]*)\)`)
+	for _, name := range []string{"shell.js", "inventory.js", "gear.js"} {
+		b, err := webFS.ReadFile("web/" + name)
+		if err != nil {
+			t.Fatal(err)
+		}
+		for _, m := range re.FindAllSubmatch(b, -1) {
+			if !strings.Contains(string(m[1]), "preventScroll") {
+				t.Errorf("web/%s: %s scrolls the page on a poll; use focus({ preventScroll: true })", name, m[0])
+			}
+		}
+	}
+	b, _ := webFS.ReadFile("web/app.js")
+	if !strings.Contains(string(b), "items2[keep[1]].focus({ preventScroll: true })") {
+		t.Error("web/app.js: renderOrders must restore focus with preventScroll")
+	}
+}
+
+// Redraws that empty and refill lists must restore the page and inner scroll offsets (#journal is a scroll box).
+func TestRedrawKeepsScrollOffsets(t *testing.T) {
+	app, _ := webFS.ReadFile("web/app.js")
+	if !strings.Contains(string(app), "keepScroll(function () {") || !strings.Contains(string(app), "renderJournal(a[1])") {
+		t.Error("web/app.js: refresh must run its renders inside keepScroll")
+	}
+	sh, _ := webFS.ReadFile("web/shell.js")
+	if !strings.Contains(string(sh), "window.scrollTo(x, y)") || !strings.Contains(string(sh), "n.scrollTop = t") {
+		t.Error("web/shell.js: keepFocus must restore page and inner scroll offsets")
+	}
+}

@@ -1,0 +1,1 @@
+CHANGELOG: watch UI: polls no longer reset page scroll (redraws keep page and inner scroll offsets; focus restore uses preventScroll)
