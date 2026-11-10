@@ -19,3 +19,14 @@ The watch inventory page can show Diablo II's own art, read at runtime from the 
 
 - `go test -count=1 -p 1 ./internal/art` (synthetic archive built with `mpq.Build`, no game files).
 - Real install, read-only (skips without it): `D2ART_INSTALL=<install dir> go test -count=1 -v -run TestRealArt ./internal/art` (V on the worker host, 2026-11-10).
+
+## PR B: icon names from the tables (`internal/data`)
+
+- `ItemBase` gains `InvFile`, `UniqueInvFile`, `SetInvFile`; `UniqueItem` and `SetItem` gain `InvFile` and `Row`. `schemaVersion` 3 to 4 so existing table caches re-extract (an old cache has no icon columns).
+- `(*DB).InvFile(class, quality, fileIndex) (name, ok)` with `InvPlain|InvUnique|InvSet`; result is lower case without extension. Order: unique -> `uniqueitems.invfile`, else base `uniqueinvfile`, else base `invfile`; set -> `setitems.invfile`, else base `setinvfile`, else base `invfile`; everything else -> base `invfile` (U: the game's exact rule; it is what the columns say).
+- Guard: an override row whose `code` is not the item's own base code is ignored, so a wrong id can only show the base icon, never another item's.
+- `Row` is the data row in the txt, the "Expansion" separator counted (the table has 404 data rows, 401 loaded). U: that the unique id an item carries is this row index. Evidence: V on the real install (2026-11-10, `TestRealInvFile`): The Gnasher is row 0 (base hax), The Stone of Jordan row 122 (rin), Harlequin Crest row 249 (uap), each on the right base; this is consistent with the id being the row index but does not prove it (no item data was read; reading the id from a live item stays on the live checklist below).
+- V (same test): all 1977 (class x plain/unique/set) resolutions name a file that exists in the three archives (0 missing); 140 of 401 uniques carry an `invfile`; `setitems` carries none in this install (127 rows), as the research doc found. One placeholder unique row (Larzuk's Champion) has no `code`.
+- Unknown variants (rings, amulets, charms, jewels show several looks in game): v1 always draws the plain `invfile`; the variant graphic index is not read (PL2 tints and variants are out of scope).
+
+Tests: `go test -count=1 -p 1 ./internal/data` (two bases, unique override, set, rune, gem, "Expansion" row counting, schema-bumped extraction); real install `D2ART_INSTALL=<dir> go test -count=1 -v -run TestRealInvFile ./internal/data` (skips without).
