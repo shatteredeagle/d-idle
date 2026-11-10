@@ -1,0 +1,1 @@
+CHANGELOG: CI and tests now refuse game art (DC6 or art PNGs) in the tree or the embedded web files; THIRD_PARTY and docs/data.md describe the runtime-only art path

@@ -179,3 +179,7 @@ shrines, monpreset, pettype, npc.
   (UNVERIFIED against live memory; the MEM agent reads the real value).
 - Tests that read real MPQs: `go test ./internal/data/...` (needs `/tmp/d2mpq` with d2data.mpq, d2exp.mpq, Patch_D2.mpq and Game.exe;
   copied from the worker host with scp). `-short` skips the slow full-archive decode in the mpq package.
+
+## Inventory icon names and game art (TASK-244)
+
+`weapons.txt`, `armor.txt` and `misc.txt` rows now carry `InvFile`, `UniqueInvFile`, `SetInvFile` (misc has no set column), `uniqueitems.txt` and `setitems.txt` rows carry `InvFile` and `Row` (data row, the "Expansion" separator counted); `(*DB).InvFile(class, quality, fileIndex)` resolves the icon name. The table cache schema is 4. The pictures themselves are not part of the tables: `internal/art` decodes `data\global\items\<name>.dc6` and the panel files from the same archives at request time. Details, verification tags and the live checklist: [paperdoll-art-build.md](paperdoll-art-build.md). Art is never extracted into the table cache, committed or embedded.
