@@ -1,11 +1,11 @@
 {
  "build": "sorceress_normal30",
  "class": "sorceress",
- "combat": "lightning",
+ "combat": "cold",
  "selector": "sorceress_normal30",
  "schema": "per-clvl allocation applied on level-up (clvl = new level). skills: skill points spent that level. Quest points (see quest_points) are spent immediately on top; unspent quest points follow 'quest_point_policy'.",
  "respec": null,
- "note": "TASK-144 sorcnormal30. Normal-difficulty leveling table for clvl 2..30, the Sorceress counterpart of the other classes' *_normal30 files. Rows 2-30 are the approved BUILDV3 rows (build-fallback-lightning-v3.json, SME rows, user-approved 2026-11-01) copied unchanged; docs/buildv3.md. The Charged Bolt, Lightning, Chain Lightning line is kept on purpose: docs/research/class-early-game.md section 1 names a Fire Bolt / Ice Bolt / Fire Ball path (EXP, UNSURE), but the approved v3 table is what the gates measure and a different line needs a user decision (open choice, docs/sorcnormal30.md). Rows are a priority list: the leveler spends a point on the next row it may legally take, so a row sits where it is legal when the point arrives. Skill clvl requirements V from the real tables (docs/research/skill-req-check.md): Frozen Armor 1, Frost Nova 6 (see that doc), Lightning 12, Teleport 18, Chain Lightning 18. Unlock schedule: docs/skill-unlocks.md, unlocks-sorceress.json (nothing here locks later than Bishibosh). Selected by name (levelerBuild sorceress_normal30); the default Sorceress table (SelectBuild) is unchanged.",
+ "note": "TASK-267 sorcready2 (user decisions 2026-11-10): rows 2-11 are the approved BUILDV3 rows except clvl 2 spends the point on Warmth (Charged Bolt starts at clvl 3, one point fewer by clvl 11); from clvl 12 the table follows a cold line (Ice Bolt 12, Ice Blast 13-23, Teleport 18, Glacial Spike 24-29, Blizzard 30) because Lightning and Chain Lightning are known broken on d2d (docs/capabilities.md). Row order for clvl 12..30 is the d2-sme consult of 2026-11-10 (EXP), see docs/sorceress-early.md. Combat line: profile sorceress/cold. Rows are a priority list: the leveler spends a point on the next row it may legally take. Selected by name (levelerBuild sorceress_normal30) and, since sorcready2, the default of a fresh Sorceress (leveler.SelectBuild).",
  "rows": [
   {
    "clvl": 2,
@@ -15,7 +15,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Warmth",
      "points": 1
     }
    ]
@@ -149,7 +149,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Lightning",
+     "skill": "Ice Bolt",
      "points": 1
     }
    ]
@@ -162,7 +162,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -175,7 +175,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -188,7 +188,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -201,7 +201,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -214,7 +214,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Charged Bolt",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -240,7 +240,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -253,7 +253,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -266,7 +266,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -279,7 +279,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -292,7 +292,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Ice Blast",
      "points": 1
     }
    ]
@@ -305,7 +305,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -318,7 +318,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -331,7 +331,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -344,7 +344,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -357,7 +357,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -370,7 +370,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Glacial Spike",
      "points": 1
     }
    ]
@@ -383,7 +383,7 @@
    "energy": 0,
    "skills": [
     {
-     "skill": "Chain Lightning",
+     "skill": "Blizzard",
      "points": 1
     }
    ]

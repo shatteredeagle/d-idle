@@ -40,8 +40,8 @@ func TestPlanForClassJoinsCombatAndLeveler(t *testing.T) {
 		owned map[string]int
 		lv    string
 	}{
-		{d2.Sorceress, 1, nil, "fallback-lightning-v2"},
-		{d2.Sorceress, 4, map[string]int{"Charged Bolt": 3}, "fallback-lightning-v2"},
+		{d2.Sorceress, 1, nil, "sorceress_normal30"},
+		{d2.Sorceress, 4, map[string]int{"Charged Bolt": 3}, "sorceress_normal30"},
 		{d2.Sorceress, 12, map[string]int{"Charged Bolt": 9, "Static Field": 1}, "fallback"},
 		{d2.Paladin, 1, nil, "paladin-normal30-v2"},
 		{d2.Paladin, 9, map[string]int{"Might": 3, "Holy Fire": 3}, "paladin-normal30"},
@@ -50,7 +50,11 @@ func TestPlanForClassJoinsCombatAndLeveler(t *testing.T) {
 		if p.LevelerBuild != c.lv {
 			t.Errorf("%s clvl %d: table %q, want %q", c.class, c.lvl, p.LevelerBuild, c.lv)
 		}
-		if c.class == d2.Sorceress && p.CombatBuild != combat.BuildLightning {
+		want := combat.BuildLightning // the legacy "fallback" table; sorceress_normal30 names the cold line
+		if c.lv == "sorceress_normal30" {
+			want = combat.Build("cold")
+		}
+		if c.class == d2.Sorceress && p.CombatBuild != want {
 			t.Errorf("sorceress %s: combat build %v", c.lv, p.CombatBuild)
 		}
 	}

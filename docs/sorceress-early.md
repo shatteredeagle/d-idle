@@ -1,6 +1,6 @@
 # Sorceress early game (clvl 1 to 12) and friends readiness (TASK-267, sorcready, 2026-11-10)
 
-> status: proposal plus two applied data changes. The user-approved v3 table is NOT changed. Tags: V verified here (file or test named), S the SME's secondary reading, U unverified. Source plan: `agent/sorcplan` `docs/research/sorceress-table-plan.md` (not yet on main when written).
+> status: sections 1 to 6 are the sorcready findings (superseded where section 7 says so). Section 7 records the user decisions of 2026-11-10 and what sorcready2 applied. Tags: V verified here (file or test named), S the SME's secondary reading, U unverified. Source plan: `agent/sorcplan` `docs/research/sorceress-table-plan.md` (not yet on main when written).
 
 ## 1. Does the wizard's Sorceress pick use sorceress_normal30? No (V)
 - The wizard writes `wizard.env` with `D2D_NAME`, `D2D_CLASS` (d2d index) and `D2BOT_GOALS` only (`cmd/d2dsetup/wizard.go` `finishLocked`; asserted in `cmd/d2dsetup/d2dsetup_test.go`). No leveler table is written, and the bot has no env or flag for `levelerBuild` (only the config key, `internal/bot/config.go`).
@@ -48,3 +48,14 @@ tools/firsthour.sh --class sorceress [--start <RFC3339 of the first d2bot start 
 tools/dev-sandbox.sh restore --to d2play-20261108 --from last --yes   # when the Paladin hero is wanted back
 ```
 Offline-simulated alternative: `tools/smoke.sh --class sorceress --minutes 45 --record`. Log each created hero in `docs/probes/test-characters.md`. Exit code 1 of firsthour means not a full fresh hour; nothing is written.
+
+## 7. User decisions of 2026-11-10 and what sorcready2 applied (V by tests unless marked)
+| decision | applied |
+|---|---|
+| Q1 fresh Sorceress defaults to `sorceress_normal30` | `leveler.freshBuild` now names it (`leveler.SorceressNormal30`); a character that owns a skill the new table never takes in rows up to clvl 15 (Static Field) keeps the old `fallback` table, as before. The wizard still writes no table: the default does the selection. `planForClass` refuses a table of another class, error names the class, the table and the owning class (`TestPlanForClassRefusesAnotherClassesTable`, Paladin and Sorceress, both directions) |
+| Q2 Warmth at clvl 2 | row 2 spends the point on Warmth; Charged Bolt starts at clvl 3 (one point fewer by clvl 11); `TestSorcNormal30RowsVsV3` |
+| Q3 cold line from clvl 12 | rows: Ice Bolt 12, Ice Blast 13 to 17 and 19 to 23, Teleport 18 (kept), Glacial Spike 24 to 29, Blizzard 30; stats are v3's. Order from the d2-sme consult (EXP; the synergy percentages in `class-sorceress.md` disagree, +15 against +8 per level, so U until read from skills.txt). New profile `sorceress/cold` (the table's `combat` key): Ice Blast, Glacial Spike, Ice Bolt, Charged Bolt once Ice Blast is learned, else Charged Bolt, Ice Bolt; Blizzard is never ranked (SME: not before clvl 30). `avoid` lists Chain Lightning and Lightning in both the cold and the lightning profile (`TestColdProfileBands`, `TestAvoidListIsPerProfile`). The unlock ladder `unlocks-sorceress.json` makes Warmth, Ice Blast and Glacial Spike free (they were locked behind Blood Raven, Countess and Andariel; the ladder is not wired into the runner, `TestNoBuildRowIsRefusedByAnUnlock`) |
+| Q4 exit criterion | Not code. The Sorceress is not offered to friends until three consecutive daily fresh first-hour records (section 6) are at or above the smoke floors of `data/smoke/rules.json` (clvl 2 at minute 20, 3 at minute 45) |
+
+d2d caveat (S, `docs/probes/fid/fid-boss-mods.md` E2): a Cold Enchanted unique's chill is one frame on d2d (5 s in game.exe), so d2d under-rates those uniques; do not tune Frozen Armor or kiting on d2d chill data. U: nothing past clvl 12 has played live; the cold rows have never run, and cold-immune packs have no fallback beyond Charged Bolt and the merc (SME: rare in Normal).
+Not changed: the `fallback-lightning-v2` and `v3` tables and the `lightning` profile stay for existing characters and explicit names.
