@@ -28,6 +28,13 @@ owns:
   - "cmd/d2bot/d2dbackend.go"
   - "cmd/d2bot/live.go"
   - "cmd/d2bot/main.go"
+  - "cmd/d2bot/invwire.go"
+  - "internal/invdesk/desk.go"
+  - "internal/invdesk/desk_test.go"
+  - "internal/loot/loot.go"
+  - "internal/loot/evaluatorfor_test.go"
+  - "internal/watch/invapi.go"
+  - "internal/watch/invapi_test.go"
 exclusive: []
 contracts: []
 ---
@@ -37,7 +44,7 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: the inventory page was slow with art on. Measured cause: not the server (open 7 ms, 30 cold icons 25 ms) but the page waterfall (probe chain before the first load). Done: load first, art beside it, background pre-extraction, d2bot art extract, state on /api/art. Result: measured V on the worker host with the real install; the page in a browser and the sandbox round trip time are not run (U); not deployed.
+Why: the inventory page was slow with art on. Measured causes: art decode is not it (open 7 ms, 30 cold icons 25 ms); the page waterfall (probe chain before the first load) and, on every poll, GET /api/inventory judging each item through a fresh game snapshot read (about 30 reads, state 15.7 ms + missiles 15.5 ms each on d2d). Done: load first, art beside it, background pre-extraction, d2bot art extract, state on /api/art. Result: measured V on the worker host with the real install; the page in a browser and the sandbox round trip time are not run (U); not deployed.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria

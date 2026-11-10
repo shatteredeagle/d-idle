@@ -194,3 +194,21 @@ func TestViewListsMarksPinsAndWearableSlots(t *testing.T) {
 		t.Errorf("a Sorceress may not wear item 1: %+v", v.Backpack[0].CanWear)
 	}
 }
+
+// The reason source is bound once per View, not once per item (TASK-268: a per-item game read cost about 1 s).
+func TestWhyForBuiltOncePerView(t *testing.T) {
+	d, _, _ := rig(t, d2.Paladin, town1)
+	built, judged := 0, 0
+	d.SetWhyFor(func(s *d2.Snapshot) func(u d2.Unit) string {
+		built++
+		return func(u d2.Unit) string { judged++; return "why" }
+	})
+	v := d.View()
+	if built != 1 || judged < 3 || v.Backpack[0].Why != "why" {
+		t.Errorf("built %d judged %d why %q", built, judged, v.Backpack[0].Why)
+	}
+	d.View()
+	if built != 2 {
+		t.Errorf("built %d after two views", built)
+	}
+}

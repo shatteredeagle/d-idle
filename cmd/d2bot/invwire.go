@@ -63,7 +63,10 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		d.SetEquipper(lv)
 	}
 	if lt != nil {
-		d.SetWhy(func(u d2.Unit) string { return lt.EvaluateUnit(u).String() })
+		d.SetWhyFor(func(s *d2.Snapshot) func(u d2.Unit) string {
+			ev := lt.EvaluatorFor(s) // one context per page view; EvaluateUnit would read the game once per item
+			return func(u d2.Unit) string { return ev(u).String() }
+		})
 	}
 	if db != nil {
 		d.SetSellBlock(func(u d2.Unit) string {
