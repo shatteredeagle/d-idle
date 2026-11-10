@@ -97,9 +97,11 @@ type UniqueItem struct {
 	LevelReq int
 	Code     string // base item code
 	Props    []Prop
+	Row      int    // data row in uniqueitems.txt, the "Expansion" separator row counted: the unique id an item carries (U, docs/paperdoll-art-build.md)
+	InvFile  string // invfile: icon override, empty = the base item's uniqueinvfile
 }
 
-var uniqueCols = append([]string{"index", "version", "enabled", "ladder", "rarity", "lvl", "lvl req", "code"}, propCols("prop#", "par#", "min#", "max#", 12)...)
+var uniqueCols = append([]string{"index", "version", "enabled", "ladder", "rarity", "lvl", "lvl req", "code", "invfile"}, propCols("prop#", "par#", "min#", "max#", 12)...)
 
 func loadUniques(t *Table) []*UniqueItem {
 	var out []*UniqueItem
@@ -112,7 +114,7 @@ func loadUniques(t *Table) []*UniqueItem {
 		out = append(out, &UniqueItem{
 			Index: idx, Enabled: r.Bool("enabled"), Ladder: r.Bool("ladder"), Rarity: r.Int("rarity"),
 			Level: r.Int("lvl"), LevelReq: r.Int("lvl req"), Code: r.Str("code"),
-			Props: readProps(r, "prop#", "par#", "min#", "max#", 12),
+			Props: readProps(r, "prop#", "par#", "min#", "max#", 12), Row: i, InvFile: r.Str("invfile"),
 		})
 	}
 	return out
@@ -129,9 +131,11 @@ type SetItem struct {
 	LevelReq int
 	Rarity   int
 	Props    []Prop
+	Row      int    // data row in setitems.txt (the set id an item carries, U)
+	InvFile  string // invfile: icon override, empty = the base item's setinvfile
 }
 
-var setItemCols = append([]string{"index", "set", "item", "rarity", "lvl", "lvl req"}, propCols("prop#", "par#", "min#", "max#", 9)...)
+var setItemCols = append([]string{"index", "set", "item", "rarity", "lvl", "lvl req", "invfile"}, propCols("prop#", "par#", "min#", "max#", 9)...)
 
 func loadSetItems(t *Table) []*SetItem {
 	var out []*SetItem
@@ -143,7 +147,7 @@ func loadSetItems(t *Table) []*SetItem {
 		}
 		out = append(out, &SetItem{
 			Index: idx, Set: r.Str("set"), Code: r.Str("item"), Level: r.Int("lvl"), LevelReq: r.Int("lvl req"), Rarity: r.Int("rarity"),
-			Props: readProps(r, "prop#", "par#", "min#", "max#", 9),
+			Props: readProps(r, "prop#", "par#", "min#", "max#", 9), Row: i, InvFile: r.Str("invfile"),
 		})
 	}
 	return out

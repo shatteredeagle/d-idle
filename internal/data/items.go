@@ -100,6 +100,9 @@ type ItemBase struct {
 	Len   int
 	Stat1 string
 	Calc1 string
+	// Inventory icon names (data\global\items\<name>.dc6): invfile, uniqueinvfile, setinvfile. Empty when the
+	// column is absent (misc.txt has no setinvfile). Case as in the table; the archive is case-insensitive.
+	InvFile, UniqueInvFile, SetInvFile string
 }
 
 var itemCols = []string{
@@ -108,6 +111,7 @@ var itemCols = []string{
 	"quest", "useable", "throwable", "belt", "autobelt", "normcode", "ubercode", "ultracode",
 	"mindam", "maxdam", "2handmindam", "2handmaxdam", "2handed", "wclass", "StrBonus", "DexBonus", "minac", "maxac", "block",
 	"pSpell", "state", "len", "stat1", "calc1",
+	"invfile", "uniqueinvfile", "setinvfile",
 }
 
 func loadItemBases(t *Table, kind ItemKind) []*ItemBase {
@@ -132,6 +136,7 @@ func loadItemBases(t *Table, kind ItemKind) []*ItemBase {
 			TwoHanded: r.Bool("2handed"), WClass: r.Str("wclass"), StrBonus: r.Int("StrBonus"), DexBonus: r.Int("DexBonus"),
 			MinAC: r.Int("minac"), MaxAC: r.Int("maxac"), Block: r.Int("block"),
 			Spell: r.Str("pSpell"), State: r.Str("state"), Len: r.Int("len"), Stat1: r.Str("stat1"), Calc1: r.Str("calc1"),
+			InvFile: r.Str("invfile"), UniqueInvFile: r.Str("uniqueinvfile"), SetInvFile: r.Str("setinvfile"),
 		}
 		out = append(out, b)
 	}

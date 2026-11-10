@@ -1,0 +1,1 @@
+CHANGELOG: internal/data: invfile, uniqueinvfile, setinvfile columns and DB.InvFile icon-name resolver (table cache schema 4), for the paper doll art
