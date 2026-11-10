@@ -1,1 +1,0 @@
-CHANGELOG: Melee classes keep the basic attack when the shield for Smite is missing instead of ignoring every monster; per-fight fight.tick summary line.
