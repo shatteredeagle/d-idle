@@ -1,2 +1,0 @@
-BACKLOG: uiinv: inventory page on the shell with the Diablo II paper doll and cell grids; broken items read 0/max BROKEN; policy and return checked at 390 px
-CHANGELOG: Inventory page: dark theme and the same top band as the live screen, a Diablo II style paper doll with durability pips and BROKEN stamps, backpack, belt and stash as tidy cell grids; broken items no longer show "undefined" durability

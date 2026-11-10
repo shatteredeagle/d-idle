@@ -665,6 +665,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - uicommand: watch command centre above the fold (hero vitals, doing now, Why card, gear, tally, marks) beside a full-width stage; /api/hero; screenshot suite tools/uishots.sh
 - uicompat: watch UI compatibility promise (versioned manifests, endpoints, data attributes, token names), manifest version field, golden compatibility fixtures
 - status sync 2026-11-09 of the drift report: TASK-122, 135, 148, 184, 187, 191, 208, 210, 214 closed (all boxes proven); TASK-39 back to Proposed
+- uiinv: inventory page on the shell with the Diablo II paper doll and cell grids; broken items read 0/max BROKEN; policy and return checked at 390 px
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
