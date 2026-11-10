@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Beta readiness review added (docs only)
 - Inventory page: dark theme and the same top band as the live screen, a Diablo II style paper doll with durability pips and BROKEN stamps, backpack, belt and stash as tidy cell grids; broken items no longer show "undefined" durability
 - Watch screen: the layout and panel formats are now versioned public contracts; saved layouts and panels keep loading in later versions
 - Watch screen: a command centre beside the game video (hero life, mana, xp and gold, what it is doing, a three-line Why, gear condition with Repair now, tally); the video and map fill their columns; the cards below use the new look
