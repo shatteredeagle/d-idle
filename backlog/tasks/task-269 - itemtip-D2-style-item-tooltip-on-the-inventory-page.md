@@ -39,7 +39,7 @@ owns:
   - "internal/watch/web/tokens.css"
 exclusive: []
 contracts: []
-result: "pending"
+result: "Offline only, not verified live or in a browser. Tooltip component on /watch/inventory (hover, tap, focus, Escape, viewport placement, no scroll calls), API schema 2 with optional tip, base and sell item fields, d2d item text carried from the stock items verb. Magic properties have no structured source (game.exe: base facts and a note only), see docs/inventory-tooltip.md. Whole-repo gate on the worker host exit 0."
 ---
 
 ## Description
@@ -55,5 +55,5 @@ Why: TODO. Done when: TODO.
 - [x] #1 Item data audit written, missing data listed
 - [x] #2 Hover, tap and focus tooltip on all item cells and doll slots with quality colours
 - [x] #3 API gains optional tip fields; golden fixtures; compat unchanged
-- [ ] #4 Tests: Go, JS pattern, DOM goldens, uilint, whole-repo gate
+- [x] #4 Tests: Go, JS pattern, DOM goldens, uilint, whole-repo gate
 <!-- AC:END -->

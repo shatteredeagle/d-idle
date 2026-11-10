@@ -5,7 +5,7 @@
  "backpack":[
   {"id":1,"code":"cap","name":"Skull Cap","quality":"magic","identified":true,"level":12,"x":0,"y":0,"w":2,"h":2,"sell":30,
    "tip":["Archer's Skull Cap of the Whale","Defense: 9","Durability: 12 of 12","Required Level: 5","+15 to Life","+8 to Strength"],"mark":"keep"},
-  {"id":2,"code":"rin","name":"Jade Ring","quality":"rare","identified":true,"level":30,"x":2,"y":0,"w":1,"h":1,"sell":150,"mark":"sell",
+  {"id":2,"code":"rin","name":"Coral Ring","quality":"rare","identified":true,"level":30,"x":2,"y":0,"w":1,"h":1,"sell":150,"mark":"sell",
    "props":["+24 to Life","+10% Faster Cast Rate","Fire Resist +22%"],"base":{"name":"Ring"}},
   {"id":3,"code":"amu","name":"Eye Of Dusk","quality":"unique","identified":true,"level":40,"x":3,"y":0,"w":1,"h":1,"sell":500,
    "tip":["Eye Of Dusk","Amulet","+2 to All Skills","+20 to Mana","Required Level: 25"]},

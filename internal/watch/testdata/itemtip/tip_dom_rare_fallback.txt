@@ -1,5 +1,5 @@
 div.inv-tip [role=tooltip]
-  div.q-rare.tip-name [] "Jade Ring"
+  div.q-rare.tip-name [] "Coral Ring"
   div.tip-line [data-k=type] "Ring"
   div.tip-line [data-k=prop] "+24 to Life"
   div.tip-line [data-k=prop] "+10% Faster Cast Rate"
