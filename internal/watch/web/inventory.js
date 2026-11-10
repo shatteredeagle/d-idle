@@ -145,10 +145,13 @@
   }
 
   // the page redraws every 4 s; the focused slot, item or button is found again by its data-key
+  var drawn = '';
   function draw(v) {
+    var sig = JSON.stringify(v); if (sig === drawn) return; // unchanged: leave the DOM, focus and scroll alone
+    drawn = sig;
     var a = document.activeElement, key = a && a.dataset ? a.dataset.key : '';
     paint(v);
-    if (key && document.activeElement !== a) { var n = document.querySelector('[data-key="' + key + '"]'); if (n) n.focus(); }
+    if (key && document.activeElement !== a) { var n = document.querySelector('[data-key="' + key + '"]'); if (n) n.focus({ preventScroll: true }); }
   }
   function paint(v) {
     last = v;

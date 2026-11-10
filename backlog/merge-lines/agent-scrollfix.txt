@@ -1,0 +1,1 @@
+CHANGELOG: watch UI: polls no longer reset page scroll (focus restore uses preventScroll; unchanged inventory not redrawn)

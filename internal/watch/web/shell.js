@@ -155,7 +155,7 @@ function keepFocus(root, fn) {
   fn();
   if (key && !root.contains(document.activeElement)) {
     const b = root.querySelector('[data-key="' + CSS.escape(key) + '"]');
-    if (b) b.focus();
+    if (b) b.focus({ preventScroll: true }); // a poll must never scroll the page
   }
 }
 

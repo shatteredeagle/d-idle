@@ -306,16 +306,19 @@
   }
 
   // A redraw keeps keyboard focus: the same index of button in the same card gets it back.
+  var ordersDrawn = '';
   function renderOrders() {
     var ae = document.activeElement, keep = null;
     ['now', 'queue', 'maparea'].forEach(function (id) {
       var box = $(id), items = box.querySelectorAll('button, [role=button]');
       for (var i = 0; i < items.length; i++) if (items[i] === ae) keep = [id, i];
     });
+    var sig = JSON.stringify([ord, om, mapList]); if (sig === ordersDrawn) return; // unchanged: keep the DOM and scroll
+    ordersDrawn = sig;
     renderNow(); renderQueue(); renderMap();
     if (keep) {
       var items2 = $(keep[0]).querySelectorAll('button, [role=button]');
-      if (items2[keep[1]] && $('sheet').hidden) items2[keep[1]].focus();
+      if (items2[keep[1]] && $('sheet').hidden) items2[keep[1]].focus({ preventScroll: true });
     }
   }
 
