@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The Sorceress lightning combat profile no longer ranks Chain Lightning and Lightning (known broken on d2d); a new optional profile avoid list does it (TASK-267)
 - Fix: a player-chosen belt plan with mana columns now buys mana potions for every class (Barbarian all-mana bought nothing, Paladin 1:1 stalled below the healing floor).
 - tools: dev-reset.sh / dev-sandbox.sh reset the dev play sandbox to a fresh hero with a reversible archive
 - Andariel level gate is a per-class data row (Paladin 17 / 15 with merc recommended) with a warning below the recommended level instead of a wall (TASK-250)

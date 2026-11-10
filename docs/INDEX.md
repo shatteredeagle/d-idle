@@ -917,3 +917,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/first-hour.md - the first-hour daily table tool (TASK-245)
 - docs/act-plan.md - per-class recommended and floor levels for the Andariel gate (TASK-250)
 - docs/dev-reset.md: reset the play sandbox to a fresh hero, archive and restore (TASK-263)
+- docs/sorceress-early.md - Sorceress clvl 1-12 SME proposal, wizard/table finding, live measurement plan (TASK-267)
