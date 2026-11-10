@@ -126,6 +126,9 @@ type World struct {
 	AndarielMinLevel int
 	// AndarielMinLevelMerc is the floor with a living merc (Tuning.Boss.AndarielMinLevelMerc); 0 = the no-merc floor.
 	AndarielMinLevelMerc int
+	// AndarielRec and AndarielRecMerc are the class's recommended levels (plandata.BossLevels); below them the gate still
+	// passes but AndarielWarn says so. 0 = no recommendation (no warning).
+	AndarielRec, AndarielRecMerc int
 	// AndarielHold: no unattended Andariel attempt before the throwaway fight has won once (Tuning.Boss.AndarielHold); false = off.
 	AndarielHold bool
 	Antidotes    int // antidote potions in belt and pack

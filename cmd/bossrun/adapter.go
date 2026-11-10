@@ -16,6 +16,7 @@ import (
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/nav"
+	"d2lod-bot/internal/plandata"
 )
 
 // COPY of cmd/d2bot/boss.go (package main cannot be imported), minus bossKill/mapBossErr. When the d2bot adapter changes,
@@ -332,5 +333,8 @@ func andarielFloor(e *env.Env) int {
 		return 0
 	}
 	// the script check cannot see the merc: it takes the lower floor, the campaign gate (internal/task) decides
-	return e.Tune.Boss.AndarielLowFloor()
+	if f := e.Tune.Boss.AndarielLowFloor(); f > 0 {
+		return f
+	}
+	return plandata.LowestFloor(plandata.GateAndariel) // no knob: the lowest class row, the campaign gate decides per class
 }
