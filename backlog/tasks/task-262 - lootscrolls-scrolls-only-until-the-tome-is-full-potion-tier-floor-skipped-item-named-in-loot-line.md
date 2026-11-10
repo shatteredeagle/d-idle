@@ -1,10 +1,13 @@
 ---
 id: TASK-262
-title: 'lootscrolls: scrolls only until the tome is full, potion tier floor, skipped item named in loot line'
-status: Proposed
+title: >-
+  lootscrolls: scrolls only until the tome is full, potion tier floor, skipped
+  item named in loot line
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:32:00Z'
+updated_date: '2026-11-10T18:48:00Z'
 labels:
   - bot
   - feature
