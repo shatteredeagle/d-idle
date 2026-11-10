@@ -16,6 +16,10 @@ const d2dCommit = "0123456789abcdef0123456789abcdef01234567"
 
 func need(t *testing.T, tools ...string) {
 	t.Helper()
+	// the builder ships the bot source with git archive; a synced copy whose .git link is broken cannot do that
+	if b, err := exec.Command("git", "rev-parse", "--verify", "HEAD").CombinedOutput(); err != nil {
+		t.Skipf("no usable git repository here: %s", b)
+	}
 	for _, n := range append(tools, "bash", "tar", "gzip", "git", "sha256sum") {
 		if _, err := exec.LookPath(n); err != nil {
 			t.Skipf("%s not available", n)
