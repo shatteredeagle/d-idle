@@ -1,7 +1,7 @@
 ---
 id: TASK-214
 title: 'powerres: player power vs area danger research'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T13:57:00Z'
@@ -28,5 +28,7 @@ Docs-only research. Done when the doc is merged.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 docs/research/player-power.md audits what exists, surveys community tools, proposes a readiness check and cards
+- [x] #1 docs/research/player-power.md audits what exists, surveys community tools, proposes a readiness check and cards
 <!-- AC:END -->
+
+result: research doc docs/research/player-power.md (repo audit, community survey, readiness-check proposal); docs only, merged with the readiness cards.

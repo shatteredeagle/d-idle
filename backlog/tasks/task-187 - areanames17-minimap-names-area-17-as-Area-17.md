@@ -1,7 +1,7 @@
 ---
 id: TASK-187
 title: 'areanames17: minimap names area 17 as ''Area 17'''
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T14:50:00Z'

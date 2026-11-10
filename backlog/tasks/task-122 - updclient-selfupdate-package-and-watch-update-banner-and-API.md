@@ -1,7 +1,7 @@
 ---
 id: TASK-122
 title: 'updclient: selfupdate package and watch update banner and API'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T23:28:00Z'

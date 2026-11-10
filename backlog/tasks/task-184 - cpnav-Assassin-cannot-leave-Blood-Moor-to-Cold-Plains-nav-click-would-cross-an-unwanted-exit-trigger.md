@@ -1,7 +1,7 @@
 ---
 id: TASK-184
 title: 'cpnav: Assassin cannot leave Blood Moor to Cold Plains (nav: click would cross an unwanted exit trigger)'
-status: Proposed
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T11:07:00Z'

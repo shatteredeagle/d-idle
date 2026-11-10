@@ -52,6 +52,7 @@ func serve(addr, class string) error {
 	// the unit layer script of the map lives behind the senses routes; a Senses with no source still serves it
 	units := (&watch.Senses{}).Handler()
 	m.Handle("/watch/senses_units.js", units)
+	mountPages(m, sim, class)
 	log.Printf("uishots: fixture viewer on http://%s/watch (%s, frozen)", addr, class)
 	return http.ListenAndServe(addr, m)
 }
