@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Added a Farm gold / Stop farming button to the gear panel of /watch (POST /api/farmgold): the hero farms a safe zone one rung below its level until told to stop; persists across restarts (not run live yet)
 - loot.potionBuffer default 2: the bot keeps two spare potions per kind beyond a full belt
 - watch: the shell poll scheduler aborts a stalled request and cannot be wedged by one panel (minimap freeze hardening, TASK-261)
 - Explore, roam and exit walks now turn and fight when a monster follows the hero at healthy life (nav.pursuitRadius, nav.pursuitPolls, nav.pursuitMinLifePct)

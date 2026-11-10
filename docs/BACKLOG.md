@@ -680,6 +680,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-26 and TASK-49 closed (Deferred, parked) as superseded: the tester guide moves into TASK-29 (install path), the report-preview hook into TASK-27 (feedback export); Pause/Stop/Reset not carried (not in the beta exit criteria). Kept: TASK-29 install path, TASK-27 exportable feedback record, TASK-48 in-app tour and state banners (beta explain). Welcome card stays TASK-247. Source: docs/research/project-review-2026-11-10.md sections 3.3 and 5.
 - pursuers: wanders turn and fight when followed at healthy life (TASK-260), docs/pursuers.md
 - lootskip: potion pickup finding, pack buffer default 2 (docs/lootskip.md, TASK-258)
+- TASK-259 goldfarm: Farm gold button on /watch, safe zone one rung down, persists until Stop farming (offline only)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

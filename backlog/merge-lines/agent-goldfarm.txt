@@ -1,3 +1,0 @@
-BACKLOG: TASK-259 goldfarm: Farm gold button on /watch, safe zone one rung down, persists until Stop farming (offline only)
-INDEX: docs/goldfarm.md - Farm gold order (target amount, safe zone as plan data, endpoint, interaction with poverty and the area breaker)
-CHANGELOG: Added a Farm gold / Stop farming button to the gear panel of /watch (POST /api/farmgold): the hero farms a safe zone one rung below its level until told to stop; persists across restarts (not run live yet)
