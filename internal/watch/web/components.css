@@ -133,6 +133,8 @@
   .d-locked .teaser { font-size: var(--d-fs-1); }
   .d-locked[data-state="opening"] { transition: opacity var(--d-dur-2) var(--d-ease); }
 
+  .d-hint { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-1); }
+
   /* 12 Ticker */
   .d-ticker { margin: 0; font-size: var(--d-fs-2); line-height: var(--d-lh-tight); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow-wrap: anywhere; }
   .d-ticker b { color: var(--d-accent-text); margin-inline-end: .4em; font-weight: 650; }
