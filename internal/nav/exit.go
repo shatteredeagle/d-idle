@@ -109,7 +109,7 @@ func (n *Navigator) ExitTo(ctx context.Context, levelNo int) error {
 				return err
 			}
 		}
-		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return g.at, 2, nil }, walkOpts{})
+		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return g.at, 2, nil }, walkOpts{pursuit: true})
 		// Standing next to a tile exit (the return tile of the level we arrived by) the planner has nothing to walk: that
 		// is "arrived", the push and step-off below take it from here (D2DLOOP r4, V live: Den of Evil, "no path: empty
 		// path" five times in a row, then the failsafe ladder).

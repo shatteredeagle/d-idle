@@ -25,6 +25,7 @@ type walkOpts struct {
 	onPlan     func(planResult) // test and debug hook
 	escape     bool             // a stalled walk tries the Escape hook (town portal) before it gives up (GoTo, GoToUnit)
 	oneClick   bool             // click the goal itself while it is in line of sight (the step away from a cave mouth, FIXMOUTH3)
+	pursuit    bool             // a wander: monsters that keep following within nav.pursuitRadius hand the walk over to the fight (pursuit.go)
 	flee       *fleeState       // the step away from a cave mouth: re-checked on every replan (FIXMOUTH4)
 }
 
@@ -64,6 +65,7 @@ type walkState struct {
 	method     string     // the last recovery tried; reported once the character moves again
 	fights     int        // stuck-ladder fight hand-overs of this walk (stuckfight.go)
 	why        string     // reason of the last plan, for the border log
+	followed   int        // consecutive observations with a monster inside nav.pursuitRadius (pursuit.go)
 	escTried   bool       // the Escape hook ran (or was refused) during this walk
 }
 
@@ -232,6 +234,14 @@ func (n *Navigator) walk(ctx context.Context, tgt func(*obs) (input.Point, float
 			full = nil // the panel state of the old read is stale now
 			n.clk.Sleep(t.Poll())
 			continue
+		}
+
+		if wo.pursuit {
+			if done, err := n.pursuit(ctx, o, &w); err != nil {
+				return err
+			} else if done {
+				continue
+			}
 		}
 
 		// --- plan
