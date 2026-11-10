@@ -8,7 +8,7 @@ const ids = ['equip', 'pack', 'belt', 'stash', 'packmeta', 'stashmeta', 'equipme
 
 function mk(tag) {
   const e = { tag, className: '', dataset: {}, children: [], textContent: '', attrs: {}, listeners: {}, style: {}, hidden: false, title: '', type: '' };
-  e.classList = { add(c) { e.className = (e.className + ' ' + c).trim(); }, contains(c) { return e.className.split(/\s+/).includes(c); } };
+  e.classList = { add(c) { e.className = (e.className + ' ' + c).trim(); }, contains(c) { return e.className.split(/\s+/).includes(c); }, remove(c) { e.className = e.className.split(/\s+/).filter((x) => x && x !== c).join(' '); } };
   Object.defineProperty(e, 'firstChild', { get() { return e.children[0] || null; } });
   e.appendChild = (k) => { e.children.push(k); return k; };
   e.removeChild = (k) => { e.children = e.children.filter((x) => x !== k); return k; };
@@ -32,7 +32,21 @@ function page(src) {
   const els = {};
   ids.forEach((i) => { els[i] = mk('div'); });
   let h = null;
-  const document = { getElementById: (i) => els[i], createElement: mk, activeElement: null, querySelector: () => null };
+  const document = { getElementById: (i) => els[i], createElement: mk, activeElement: null,
+    // just enough of the selector grammar the page uses: "a.b.c, .d.e" and [data-key="k"]
+    querySelectorAll(sel) {
+      const out = [];
+      const walk = (e) => { if (sel.split(',').some((part) => matches(e, part.trim()))) out.push(e); e.children.forEach(walk); };
+      ids.forEach((i) => walk(els[i]));
+      return out;
+    },
+    querySelector(sel) { return document.querySelectorAll(sel)[0] || null; } };
+  const matches = (e, part) => {
+    const k = /^\[data-key="(.*)"\]$/.exec(part);
+    if (k) return e.dataset.key === k[1];
+    const cls = part.split('.').slice(1);
+    return cls.length > 0 && cls.every((c) => e.classList.contains(c));
+  };
   const ctx = { document, console, JSON, Math, Object, Array, String, Promise, fetch: () => Promise.reject(new Error('no network in the stub')), setInterval() {}, location: { search: '' }, Image: function () {}, window: { __invTest: (x) => { h = x; } } };
   ctx.window.window = ctx.window;
   vm.runInNewContext(src.replace("typeof window !== 'undefined' && window.__invTest", 'window.__invTest'), ctx);
@@ -58,6 +72,22 @@ const states = {
   },
 };
 let bad = 0;
+// a click only moves the selection: the detail card follows and the grids are NOT rebuilt (the page skips an unchanged view)
+{
+  const p = page(src);
+  if (p.h.select) {
+    p.h.paint(view);
+    const firstCell = p.els.pack.children[0], items = p.els.pack.children.filter((c) => c.dataset.key && c.dataset.key.startsWith('item-'));
+    items[0].fire('click');
+    assert.ok(items[0].classList.contains('sel'), 'clicked item is highlighted');
+    assert.ok(p.els.detail.children.length > 0 && p.els.detail.children[0].tag === 'h3', 'detail card shows the item');
+    const first = p.els.detail.children[0].textContent;
+    items[1].fire('click');
+    assert.ok(!items[0].classList.contains('sel') && items[1].classList.contains('sel'), 'selection moved');
+    assert.notStrictEqual(p.els.detail.children[0].textContent, first, 'detail card changed');
+    assert.strictEqual(p.els.pack.children[0], firstCell, 'grid was rebuilt by a click');
+  }
+}
 for (const [name, run] of Object.entries(states)) {
   if (name === 'error' && !page(src).h.say) continue; // old pages have no say() hook: the error state only exists once the hook does
   const p = page(src);

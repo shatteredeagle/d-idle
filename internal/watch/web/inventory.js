@@ -91,7 +91,7 @@
       if (pins[s]) b.appendChild(el('span', 'pin', 'PIN'));
       if (sel && sel.slot === s) b.classList.add('sel');
       b.setAttribute('aria-label', LABEL[s] + ': ' + (it ? name(it) : 'empty') + (pins[s] ? ', pinned' : ''));
-      b.addEventListener('click', function () { sel = { slot: s }; draw(last); });
+      b.addEventListener('click', function () { select({ slot: s }); });
       box.appendChild(b);
     });
     var bits = [];
@@ -114,9 +114,19 @@
       if (art.on && it.art && ART_NAME.test(it.art)) artImg(b, 'ico', 'item-' + it.art);
       if (it.mark) { b.dataset.mark = it.mark; b.appendChild(el('span', 'mk', it.mark === 'sell' ? 'S' : 'K')); }
       if (sel && sel.id === it.id) b.classList.add('sel');
-      b.addEventListener('click', function () { sel = { id: it.id }; draw(last); });
+      b.addEventListener('click', function () { select({ id: it.id }); });
       box.appendChild(b);
     });
+  }
+
+  // select moves the highlight and redraws the detail card only. draw() skips an unchanged view (its signature ignores
+  // the selection), and a full paint would rebuild the grids and lose focus and scroll for a click.
+  function select(next) {
+    sel = next;
+    Array.prototype.forEach.call(document.querySelectorAll('.d-slot2.sel, .item.sel'), function (n) { n.classList.remove('sel'); });
+    var key = next.slot ? 'slot-' + next.slot : 'item-' + next.id;
+    var n = document.querySelector('[data-key="' + key + '"]'); if (n) n.classList.add('sel');
+    if (last) detail(last);
   }
 
   // ---- detail card of the selected slot or item ----
@@ -249,7 +259,7 @@
     getJSON('/api/inventory').then(draw, function (e) { say(e.message); });
   }
   if (typeof window !== 'undefined' && window.__invTest) {
-    window.__invTest({ dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; } });
+    window.__invTest({ select: select, dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; } });
     return;
   }
   load(); artProbe(); setInterval(load, 4000);

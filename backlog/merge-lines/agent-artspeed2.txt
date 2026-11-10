@@ -1,0 +1,1 @@
+CHANGELOG: Inventory page: selecting an item or slot always refreshes the detail card (TASK-271)
