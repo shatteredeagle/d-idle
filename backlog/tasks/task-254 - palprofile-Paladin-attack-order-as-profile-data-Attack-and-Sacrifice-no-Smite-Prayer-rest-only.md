@@ -1,10 +1,13 @@
 ---
 id: TASK-254
-title: 'palprofile: Paladin attack order as profile data (Attack and Sacrifice, no Smite, Prayer rest-only)'
-status: Proposed
+title: >-
+  palprofile: Paladin attack order as profile data (Attack and Sacrifice, no
+  Smite, Prayer rest-only)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-10T17:15:00Z'
 labels:
   - bot
   - bot-fix
