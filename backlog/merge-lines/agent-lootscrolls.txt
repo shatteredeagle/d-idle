@@ -1,0 +1,2 @@
+BACKLOG: lootscrolls (TASK-262): scrolls only until tome full, potion tier floor as data, skipped items named in loot line
+CHANGELOG: Loot: scroll pickup stops when the tome is full, low-tier potions skipped by clvl (data table), loot summary names skipped items
