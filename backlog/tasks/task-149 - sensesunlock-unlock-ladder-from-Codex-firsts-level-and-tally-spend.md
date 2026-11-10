@@ -1,10 +1,11 @@
 ---
 id: TASK-149
 title: 'sensesunlock: unlock ladder from Codex firsts, level and tally spend'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:12:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -45,3 +46,9 @@ Design: docs/research/info-unlocks.md. Not on the two-week playable path (return
 - [x] #3 Return screen shows a New sense notice; the unlock raises no question
 - [ ] #4 Tier 5/6 spend rows registered in the tally ledger registry (with the tallystrip owner)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

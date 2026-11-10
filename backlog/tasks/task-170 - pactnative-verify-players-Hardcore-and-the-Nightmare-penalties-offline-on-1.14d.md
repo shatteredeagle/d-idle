@@ -1,11 +1,11 @@
 ---
 id: TASK-170
-title: 'pactnative: verify /players, Hardcore and the Nightmare penalties offline on 1.14d'
-status: Proposed
+title: "pactnative: verify /players, Hardcore and the Nightmare penalties offline on 1.14d"
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T03:34:00Z'
-updated_date: '2026-11-08T04:02:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - research
@@ -45,4 +45,6 @@ Size: S. Needs the live agent. Not on the two-week playable path. Design note: d
 
 <!-- SECTION:NOTES:BEGIN -->
 Decides whether /players Pacts exist (ADR 0019).
+
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
 <!-- SECTION:NOTES:END -->

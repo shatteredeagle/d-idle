@@ -1,10 +1,11 @@
 ---
 id: TASK-227
 title: 'desktopapp: d2idle-watch desktop launcher for the watch page'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T18:28:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -37,3 +38,9 @@ User request 2026-11-09. Done when the launcher builds for Linux and Windows and
 - [ ] #4 Real Chromium or Edge app-mode window verified (needs a machine with one)
 - [x] #5 CI workflow written, not run
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

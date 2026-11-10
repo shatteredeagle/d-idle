@@ -1,11 +1,11 @@
 ---
 id: TASK-76
 title: 'fid-price-pr: oracle: buy, sell and repair price deviations, gold plans'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-08T00:29:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -47,3 +47,9 @@ Done when: Price oracle re-run on current main: buy differs 39,626/100,000, sell
 - [ ] #3 PR draft with the differential proof in docs/probes/fid/fid-price-pr.md; send only on the user's go
 - [ ] #4 VN06: re-calibrate the early gold plan (sell 50 %) and show the plan numbers unchanged or listed (bot side)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

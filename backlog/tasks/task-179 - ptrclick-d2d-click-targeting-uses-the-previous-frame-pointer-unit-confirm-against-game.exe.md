@@ -1,10 +1,11 @@
 ---
 id: TASK-179
-title: 'ptrclick: d2d click-targeting uses the previous frame pointer unit; confirm against game.exe'
-status: Proposed
+title: "ptrclick: d2d click-targeting uses the previous frame pointer unit; confirm against game.exe"
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T05:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - probe
@@ -39,3 +40,9 @@ Why: the Paladin melee fix (docs/palmelee.md, docs/palpace.md) showed that a bar
 - [ ] #4 If DEVIATION: upstream PR route written as a differential against original game.exe code per docs/process/upstream-pr-standard.md and queued in docs/research/pr-bundle-queue.md by the coordinator; if HARNESS ONLY: the click verb change (hover motion frame before press) or the documented rule 'use cmd skill ... unit' is recorded
 - [ ] #5 Bot answer recorded: done, Input.Swing in internal/d2dcombat/input.go sends cmd skill <id> x y <unit> left (palmelee, docs/palmelee.md); no bot change needed whatever the verdict
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

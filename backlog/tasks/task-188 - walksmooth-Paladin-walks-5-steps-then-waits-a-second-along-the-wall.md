@@ -1,10 +1,11 @@
 ---
 id: TASK-188
 title: 'walksmooth: Paladin walks 5 steps then waits a second along the wall'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T15:20:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - bug
@@ -37,3 +38,9 @@ User feedback 2026-11-08: stop-and-go walk out of the start area. Done when smoo
 - [x] #2 fix with regression test (two classes)
 - [x] #3 before/after movement smoothness measured (offline sim only, not live)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

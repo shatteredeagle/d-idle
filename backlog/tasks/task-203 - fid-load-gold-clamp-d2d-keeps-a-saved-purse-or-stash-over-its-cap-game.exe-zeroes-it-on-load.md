@@ -1,10 +1,11 @@
 ---
 id: TASK-203
-title: 'fid-load-gold-clamp: d2d keeps a saved purse or stash over its cap, game.exe zeroes it on load'
-status: Proposed
+title: "fid-load-gold-clamp: d2d keeps a saved purse or stash over its cap, game.exe zeroes it on load"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T17:15:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -37,3 +38,9 @@ Found by TASK-79 (docs/probes/fid/fid-inv-limits.md): FUN_0056af80 puts gold and
 - [ ] #1 Candidate branch local/fid-load-gold-clamp (fork remote, commit 42d40b09) re-verified by the independent Opus verifier
 - [ ] #2 Draft with Claims table in docs/research/pr-load-gold-draft.md; opened only on the user's go
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

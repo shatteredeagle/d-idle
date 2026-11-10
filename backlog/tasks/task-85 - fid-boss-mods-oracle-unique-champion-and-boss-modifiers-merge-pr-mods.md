@@ -1,11 +1,11 @@
 ---
 id: TASK-85
 title: 'fid-boss-mods: oracle: unique, champion and boss modifiers (merge pr-mods)'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-07T21:55:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -39,3 +39,9 @@ Done when: pr-mods evidence re-run on current main (157,618 cases); expected 0 d
 - [x] #1 pr-mods evidence re-run on current main (157,618 cases); expected 0 differ after the fix; tolerance: 0 differing cases in the oracle run; a deviation becomes a docs/d2d-deviations.md entry or an upstream PR
 - [x] #2 At most two untraced immunities (Corpsefire, Bishibosh, Rakanishu, Treehead, Blood Raven) traced and compared
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

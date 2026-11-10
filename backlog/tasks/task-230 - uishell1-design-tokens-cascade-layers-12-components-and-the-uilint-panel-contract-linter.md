@@ -1,10 +1,11 @@
 ---
 id: TASK-230
-title: 'uishell1: design tokens, cascade layers, 12 components and the uilint panel-contract linter'
-status: In Progress
+title: "uishell1: design tokens, cascade layers, 12 components and the uilint panel-contract linter"
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-09T19:12:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -51,3 +52,9 @@ First migration step of docs/ui-regression-plan.md section 5 (PR 2 and PR 3 ther
 - [x] #4 tools/uilint implements the rules of the regression plan section 2 with a failing fixture per rule and runs in tools/ci/check.sh with an allow-list
 - [x] #5 preview deployed to the sandbox container
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

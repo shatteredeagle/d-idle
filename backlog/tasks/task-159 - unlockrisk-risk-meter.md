@@ -1,10 +1,11 @@
 ---
 id: TASK-159
 title: 'unlockrisk: risk meter'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T03:16:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -43,3 +44,9 @@ Unlock: first near-death survived; ready / marginal / turn back before a boss. N
 - [x] #4 cmd/d2bot wiring: Runner.RiskFacts feeds the meter and Fun.Settle opens the near-death moment (TestRiskMeterWiredToTheBotFacts, TASK-185); ResistGap is still always 0
 - [ ] #5 LIVE check on a real run: verdict matches what the bot does before a boss, thresholds checked (not run; the live panels check is pending)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

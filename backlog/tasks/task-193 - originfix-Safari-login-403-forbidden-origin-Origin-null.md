@@ -1,10 +1,11 @@
 ---
 id: TASK-193
 title: 'originfix: Safari login 403 forbidden origin (Origin null)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T16:22:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - bug
@@ -38,3 +39,9 @@ Why: TODO. Done when: TODO.
 - [ ] #1 SameOrigin helper with table tests; login and setup use it; Referrer-Policy same-origin
 - [ ] #2 deployed to the dev container and curl-verified
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

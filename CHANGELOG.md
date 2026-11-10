@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Board true-up: closed merged cards, parked blocked ones, added the first-hour and beta-path cards; docs/live-checks.md lists the live debt (TASK-253)
+- docs: project review and true-up 2026-11-10 (docs/research/project-review-2026-11-10.md); research only, nothing decided
 - CI and tests now refuse game art (DC6 or art PNGs) in the tree or the embedded web files; THIRD_PARTY and docs/data.md describe the runtime-only art path
 - /watch/inventory shows the game's own paper doll and item icons when the install is readable (read at runtime, never shipped, off in the stream overlay); falls back to the drawn cells otherwise
 - watch: GET /api/art (watch.art/1) and GET /watch/art/<key>.png serve game art decoded at request time from the user's own install; 404 and available:false without one, nothing ships

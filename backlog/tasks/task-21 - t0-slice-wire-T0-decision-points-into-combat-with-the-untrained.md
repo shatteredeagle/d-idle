@@ -1,16 +1,17 @@
 ---
 id: TASK-21
-title: "t0-slice: wire T0 decision points into combat with the untrained default"
-status: In Progress
+title: 't0-slice: wire T0 decision points into combat with the untrained default'
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-05T00:00:00Z'
-updated_date: '2026-11-05T00:00:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
   - ladder
   - T0
+  - parked
 dependencies: []
 priority: high
 ordinal: 21000
@@ -60,6 +61,11 @@ Done when: Hook points placed behind the store interface; with no rule file the 
 - [x] #5 go vet and go test -p 1 of the packages; leakcheck 0; docs/t0-slice.md; say verified live or not
 <!-- AC:END -->
 
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: ADR 0017 D2 replaced the fade; re-scope to a question queue for the return screen or keep parked.
+<!-- SECTION:NOTES:END -->
 
 Notes 2026-11-05 (integ): `d2bot -ladder [-ladder-profile NAME|holdout:SEED]` calls `bot.EnableLadderWith` after the Runner is built (default off, nothing changes without the flag); store under the instance state dir; drill command for the real bot in docs/probes/t0drill.md (Phase B, integrated path). Offline tested only; AC 2 and 3 stay open until the live run.
 

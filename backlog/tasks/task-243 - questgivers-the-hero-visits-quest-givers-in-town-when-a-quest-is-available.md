@@ -1,10 +1,11 @@
 ---
 id: TASK-243
 title: 'questgivers: the hero visits quest givers in town when a quest is available'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T01:43:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
@@ -37,3 +38,9 @@ Slice B of the friends beta (user choice 2026-11-09). Done when the decision log
 - [x] #1 Table-driven quest givers (data/quests/act1-givers.json joined to the hint table), class-generic, unknown class is an error naming it; tests for Paladin and Sorceress
 - [x] #2 Campaign visits the giver in town when the quest is not given, available and the family level is reached; no repeat per session, Normal only, opt-in; live part marked U with a checklist in docs/quest-givers.md
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

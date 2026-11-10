@@ -1,10 +1,11 @@
 ---
 id: TASK-147
-title: 'classpacing: measured early-game timing per class (clvl by minute, six normal30 builds, lockstep)'
-status: Proposed
+title: "classpacing: measured early-game timing per class (clvl by minute, six normal30 builds, lockstep)"
+status: Done
 assignee:
   - live-agent
 created_date: '2026-11-08T03:03:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - drill
@@ -38,3 +39,9 @@ Why: the veteran table is an estimate, not measured; the return screen's recomme
 - [x] #2 docs/soaks/classpacing.md compares measured pace with the veteran estimate of docs/research/class-early-game.md section 5 and gives the per-class minutes by zone as data for the recommended-level table
 - [x] #3 leakcheck 0
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

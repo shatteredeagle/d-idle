@@ -674,6 +674,8 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-80 fid-layout-act1: all Act 1 levels 5-7 and 9-39 equal game.exe on upstream 83fc7ba1 (tiles, units, seeds, monsters; seeds 1..30 and two 32-bit ranges); same-save first load open (docs/probes/fid/fid-layout-act1.md)
 - TASK-77 fid-stock-oracle: vendor stock asks 0 differ in 40,800 lines and 14,400 offer lines; refresh flags read only partly, live lists open (docs/probes/fid/fid-stock-oracle.md)
 - areathrash (TASK-242): border-loop breaker escalates (5 crossings, skip 3..48 min); cave shuttle analysis in docs/areathrash.md
+- REVIEW-2026-11-10: true-up lists for the coordinator in docs/research/project-review-2026-11-10.md section 3 (close 40 merged cards with live checks moved to a live-check list, park 20, merge duplicates, 9 missing cards); the measurement cards TASK-107, 110, 112, 114 are the open m-4 priority
+- board true-up 2026-11-10: 58 cards closed (live checks moved to docs/live-checks.md), 16 parked, 12 new cards TASK-245..257 (TASK-253)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

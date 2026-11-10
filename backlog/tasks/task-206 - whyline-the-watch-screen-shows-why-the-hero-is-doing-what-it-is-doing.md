@@ -1,10 +1,11 @@
 ---
 id: TASK-206
 title: 'whyline: the watch screen shows why the hero is doing what it is doing'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-08T19:51:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - watch
   - feature
@@ -58,6 +59,12 @@ Why: viewers (and the user) should see the hero's own reason for what it does (d
 - [x] #4 tests: templates, hold, two classes, golden API JSON, page order, race; session summary has reason code counts only
 - [ ] #5 verified on the live sandbox (needs the passphrase for the page; API fields by curl)
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->
 
 result: built and tested offline (fixtures, race-free tests, golden API for Sorceress and Paladin); NOT verified live or in a browser; see docs/whyline.md.
 Status sync (stays open): AC #5 (live check on the sandbox) is unticked.

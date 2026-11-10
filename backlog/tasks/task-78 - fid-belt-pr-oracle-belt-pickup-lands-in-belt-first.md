@@ -1,11 +1,11 @@
 ---
 id: TASK-78
 title: 'fid-belt-pr: oracle: belt pickup lands in belt first'
-status: Deferred
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-07T18:03:00Z'
-updated_date: '2026-11-08T17:18:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - upstream-pr
@@ -42,3 +42,9 @@ Done when: Belt PR evidence pack (pr-belt-evidence-pack.md) re-run on current ma
 - [x] #2 Autobelt and belt size/column data checked for belt base types in the plan (belt sizes tie to belt base)
 - [ ] #3 After the fix: shim R04 removed from the bot or kept with a removal condition in docs/d2d-deviations.md
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Closed in the 2026-11-10 true-up (docs/research/project-review-2026-11-10.md section 3.1): merged, offline acceptance proven; open live checks moved to docs/live-checks.md (TASK-253).
+<!-- SECTION:NOTES:END -->

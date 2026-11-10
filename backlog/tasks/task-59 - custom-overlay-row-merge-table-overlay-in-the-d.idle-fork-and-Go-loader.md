@@ -1,10 +1,11 @@
 ---
 id: TASK-59
 title: 'custom-overlay: row-merge table overlay in the d.idle fork and Go loader'
-status: In Progress
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-07T03:01:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - feature
@@ -12,6 +13,7 @@ labels:
   - d2d-loot
   - metacurrency
   - T5
+  - parked
 milestone: m-3
 dependencies: []
 priority: medium
@@ -45,3 +47,9 @@ Done when: Overlay hook in Stack::try_read, flag-gated, vanilla hashes unchanged
 - [ ] #1 Overlay hook in Stack::try_read, flag-gated, vanilla hashes unchanged
 - [x] #2 Go data loader applies the same fragments and stamps them
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: paused by D4 (metacurrency).
+<!-- SECTION:NOTES:END -->

@@ -5,6 +5,7 @@ status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-08T00:27:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - d2d
   - feature
@@ -37,3 +38,9 @@ Amendment 2026-11-07 (class generic, classcharm): charm tiers are per-class data
 - [ ] #1 The overlay probe proves the charm row (Misc code) loads in d2d, and the user has approved the game.exe side
 - [ ] #2 Tier I to V charm (flat life, mana, resistances, modest magic find; SME values UNVERIFIED) granted at hero creation from the account milestones; if the probe fails, the grant path only
 <!-- AC:END -->
+
+## Implementation Notes
+
+<!-- SECTION:NOTES:BEGIN -->
+Parked in the 2026-11-10 true-up: Hall/legacy charm waits for a live hero that reaches it.
+<!-- SECTION:NOTES:END -->

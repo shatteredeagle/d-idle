@@ -1,16 +1,17 @@
 ---
 id: TASK-19
 title: "decision-point-store: learn-by-doing store: answers, streaks, rules, fading thoughts"
-status: In Progress
+status: Deferred
 assignee:
   - credit-runner
 created_date: '2026-11-05T00:00:00Z'
-updated_date: '2026-11-05T00:00:00Z'
+updated_date: '2026-11-10T16:54:00Z'
 labels:
   - bot
   - feature
   - ladder
   - T0
+  - parked
 dependencies: []
 priority: high
 ordinal: 19000
@@ -53,6 +54,10 @@ Done when: Failing tests first: streak table (N by risk, reset on a different an
 
 ## Implementation Notes
 
+<!-- SECTION:NOTES:BEGIN -->
 Offline slice built in internal/decide (Pro job dpstore; notes in docs/research/decision-point-store-notes.md). Tests prove AC 1 to 3 (streaks, fades, not sure, confirm, revoke, replay, persistence, two classes, errors naming the culprit, 5 answer profiles, random-script invariants). AC 4: the default rule file covers 9 points fully, 4 partly, 10 not; gaps named in the notes, so the ADR 0016 gate stays open. AC 5: docs/decision-points.md is not written yet. Stage-2 urgency is only an interface. Nothing wired into combat; no live proof yet, so status stays In Progress until the T0 slice proves it live. Not verified live.
 
 Catalogue v3 (job dpsplits): default parity closed for t0.retreat.drink, t0.unique.fight and t2.mercenary, proven by TestDefaultParityNumericPoints which calls resource.PotionPolicy and AbortFight (and the minEngageLifePct and mercHireMinGold knob values) at every integer life percent and gold 0..3000, both builds: 0 mismatches, 0 band-interior splits. t0.area.toohard clvl 14 (72 contexts) stays open: adding merc takes the key from 216 to 432 contexts, so it waits for an owner decision (drop levelgap or accept); the ADR 0016 gate stays open until then. Not verified live.
+
+Parked in the 2026-11-10 true-up: ADR 0017 D2 replaced the fade with the queue; re-scope to a question queue for the return screen or keep parked.
+<!-- SECTION:NOTES:END -->
