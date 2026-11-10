@@ -30,3 +30,16 @@ The watch inventory page can show Diablo II's own art, read at runtime from the 
 - Unknown variants (rings, amulets, charms, jewels show several looks in game): v1 always draws the plain `invfile`; the variant graphic index is not read (PL2 tints and variants are out of scope).
 
 Tests: `go test -count=1 -p 1 ./internal/data` (two bases, unique override, set, rune, gem, "Expansion" row counting, schema-bumped extraction); real install `D2ART_INSTALL=<dir> go test -count=1 -v -run TestRealInvFile ./internal/data` (skips without).
+
+## PR C: `status.Item.art` and the display wiring
+
+- `status.Item` gains `art` (`omitempty`): the lower-case icon name, so the page asks `/watch/art/item-<art>.png`. Empty when the catalog cannot name one; the page then keeps the drawn cell. `invdesk.ItemView` embeds `status.Item`, so `/api/inventory` carries it with no other change; the reply `schema` stays (a field was added, none changed).
+- `cmd/d2bot` `itemArt` resolves it from the item's class, quality and `FileIndex` through the optional `iconCatalog` side of the data catalog (`bot.NewDataCatalog` implements `InvFile`; test fakes do not, so their items carry no art and existing goldens do not change).
+- Tests (two item families, a staff and a scepter, with unique and set fallbacks): `go test -count=1 -p 1 -run 'ItemArt|StatusItemArt' ./cmd/d2bot`.
+
+### FileIndex: what is verified
+
+- U: the memory offset `ItemData+0x28` (`internal/d2/items.go` `idFileIdx`) is the unique or set id of the item. It was never read from a live unique item (no game this run). The d2d source path (`internal/d2dsrc/items.go`) takes the id from the item JSON `unique` and `set` fields, which is the game's own id and the same number space.
+- V (offline, real tables, `TestRealInvFile`): the id as a row index of `uniqueitems.txt` (separator row counted) lands on the right base item for the three names checked (The Gnasher 0 hax, The Stone of Jordan 122 rin, Harlequin Crest 249 uap). S: this matches what community save editors use. Not proven without an item read.
+- Safety: a wrong id can only produce the base icon (the resolver ignores an override row on another base), never another item's art.
+- Live checklist (needs a game, not run): on a throwaway character holding a unique and a set item (the item JSON path or the memory path), read `FileIndex` of the item, look up `uniqueitems.txt` row at that index, and confirm its `code` equals the item's base code and the name equals the item's name.
