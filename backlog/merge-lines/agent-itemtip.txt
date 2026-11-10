@@ -1,3 +1,0 @@
-BACKLOG: TASK-269 itemtip: D2-style item tooltip on /watch/inventory (hover, tap, focus), API schema 2 with optional tip/base/sell item fields, d2d tooltip text carried from the items verb; offline only, magic properties have no structured source (docs/inventory-tooltip.md)
-INDEX: docs/inventory-tooltip.md: item tooltip on the inventory page, data audit, what is missing, behaviour
-CHANGELOG: Inventory page: hovering, tapping or focusing an item shows a D2-style tooltip (quality colours, base stats, requirements, sell value, marks); the inventory API gains optional tip, base and sell fields (schema 2)
