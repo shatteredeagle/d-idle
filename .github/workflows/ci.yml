@@ -46,6 +46,17 @@ jobs:
       - name: go vet (leakcheck; the whole repo is vetted in the test job)
         run: go vet ./cmd/leakcheck
 
+  crossbuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.27.3"
+      - name: Cross-build matrix (vet + build, CGO off; tools/ci/crossbuild.sh)
+        run: tools/ci/crossbuild.sh
+
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
