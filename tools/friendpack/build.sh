@@ -3,7 +3,7 @@
 # and never touches the real signing key; it writes ONE tarball and a checksum file next to it.
 #   tools/friendpack/build.sh --version 0.1.0 --image NAME:TAG --d2d-src FILE --d2d-commit SHA --out DIR
 #       [--image-tar FILE]   a ready `docker save` file (default: docker save NAME:TAG | gzip -n)
-#       [--pubkey FILE]      public key shown in the pack (default: the key baked into the image tree)
+#       [--pubkey FILE]      public key shown in the pack (default: every key baked into the image tree, pubkeys/*.pub; with this flag only FILE, as beta.pub)
 #       [--feed URL]         https update feed written into the pack (empty: the image default)
 #       [--bot-ref REF]      commit of this repo to ship as source (default HEAD)
 # The pack itself is checked by SHA256SUMS; releases the bot downloads later are signed (cmd/d2sign) and checked in the image.
@@ -29,9 +29,11 @@ if [ -n "$feed" ]; then [[ $feed == https://* ]] || { echo "--feed must be https
 
 here=$(cd "$(dirname "$0")" && pwd)
 repo=$(git -C "$here" rev-parse --show-toplevel)
-[ -n "$pubkey" ] || pubkey=$repo/deploy/d2d-container/pubkeys/current.pub
-[ -f "$pubkey" ] || { echo "public key not found: $pubkey" >&2; exit 2; }
-if grep -q 'PRIVATE' "$pubkey"; then echo "that is not a public key file" >&2; exit 2; fi
+if [ -n "$pubkey" ]; then pubkeys=("$pubkey"); else pubkeys=("$repo"/deploy/d2d-container/pubkeys/*.pub); fi
+for k in "${pubkeys[@]}"; do
+	[ -f "$k" ] || { echo "public key not found: $k" >&2; exit 2; }
+	if grep -q 'PRIVATE' "$k"; then echo "that is not a public key file" >&2; exit 2; fi
+done
 botcommit=$(git -C "$repo" rev-parse --short=12 "$botref")
 d2dshort=${d2dcommit:0:12}
 
@@ -49,7 +51,11 @@ install -m 0644 "$here/compose.yml" "$here/README.txt" "$root/"
 echo "$version" >"$root/VERSION"
 echo "$image" >"$root/image/IMAGE_TAG"
 printf '%s\n' "$feed" >"$root/UPDATE_FEED"
-install -m 0644 "$pubkey" "$root/pubkeys/beta.pub"
+if [ -n "$pubkey" ]; then
+	install -m 0644 "$pubkey" "$root/pubkeys/beta.pub"
+else
+	for k in "${pubkeys[@]}"; do install -m 0644 "$k" "$root/pubkeys/$(basename "$k")"; done
+fi
 install -m 0644 "$here/licence-note.txt" "$root/licenses/licence-note.txt"
 install -m 0644 "$repo/docs/friend-guide.md" "$root/guide/friend-guide.md"
 

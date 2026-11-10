@@ -3,7 +3,7 @@
 # into a directory, checks it with the real update client and the pinned public key, and only then runs YOUR upload
 # step. No host, credential or key is stored here; a private key path is only ever passed to d2sign.
 #   tools/release/feed-publish.sh --release DIR --base-url https://feed.example/d2 --out DIR
-#       [--pub FILE]        pinned public key (default deploy/d2d-container/pubkeys/current.pub)
+#       [--pub FILE]        pinned public key (default deploy/d2d-container/pubkeys/beta.pub; the feed is signed with the beta key)
 #       [--sign-key FILE]   sign MANIFEST.json with d2sign first when MANIFEST.json.sig is missing
 #       [--repo owner/name] API path inside the tree (default: the client's default repo)
 #       [--upload]          after a green verify, run the upload step below
@@ -28,7 +28,7 @@ while [ $# -gt 0 ]; do
 	esac
 done
 [ -n "$base" ] && [ -n "$out" ] || { echo "--base-url (or D2_FEED_BASE_URL) and --out are required" >&2; exit 2; }
-[ -n "$pub" ] || pub=$repo_root/deploy/d2d-container/pubkeys/current.pub
+[ -n "$pub" ] || pub=$repo_root/deploy/d2d-container/pubkeys/beta.pub
 repoflag=()
 [ -z "$repo" ] || repoflag=(-repo "$repo")
 d2feed() { (cd "$repo_root" && go run ./cmd/d2feed "$@"); }

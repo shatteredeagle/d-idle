@@ -10,7 +10,7 @@ A normal (non-DEV) image reads releases from GitHub. Setting `D2BOT_UPDATE_FEED=
 - DEV images with `D2BOT_UPDATE_URL` keep that source; the feed is ignored there.
 - `D2BOT_UPDATE_CHECK=off|manual` and the banner and Update button are unchanged: one engine.
 
-Hosting (U, the user's choice): any static HTTPS host works (object storage, a web server directory). The publisher copies signed release assets there; the feed script is a later PR (friend-build.md section 8). The beta signing key stays outside the repo (section 5.2).
+Hosting (U, the user's choice): any static HTTPS host works (object storage, a web server directory). The publisher copies signed release assets there; the feed script is a later PR (friend-build.md section 8). The beta signing key stays outside the repo (section 5.2). Two keys are pinned in the image: `pubkeys/beta.pub` signs this feed, `pubkeys/current.pub` signs GitHub releases (its private half is held offline by the owner). The updater accepts a manifest signed by either and refuses any other key (V TestFeedTwoPinnedKeys, TestSignVerify); the key count is not asserted anywhere else, `TestPinnedKeysBothPresent` checks both files parse and differ.
 
 ## Release runbook (TASK-275)
 
@@ -23,7 +23,7 @@ Tree written (V cmd/d2feed tests): `repos/<owner>/<repo>/releases` (the GitHub A
 1. Notes first: the CHANGELOG section for the version must exist (rule: every release has notes). The manifest `notes` field carries the text the friend sees.
 2. Build the assets and the unsigned manifest: `tools/release/app-assets.sh --version 0.4.0 --seq 17 --issued <UTC time> --out REL --d2d-bin PATH --channel beta ...` (docs/self-update-release.md). `--channel` is where "bump channel" happens: a beta feed carries `beta` manifests only; the client does not filter by it (U, friend-build.md section 6). `seq` must rise with every release.
 3. Read `d2sign summary -in REL/MANIFEST.json` (file names, sizes, sources) before signing.
-4. Publish and verify: `tools/release/feed-publish.sh --release REL --base-url https://FEED/d2 --out FEEDTREE --sign-key /path/outside/the/repo/beta.key` (the real beta key; without `--sign-key` the script refuses a release with no `MANIFEST.json.sig`). It verifies signature, file hashes and REVOKED, adds the release, then runs the real client against the tree with the pinned key (`--pub`, default the key in `deploy/d2d-container/pubkeys/`). Nothing is uploaded yet.
+4. Publish and verify: `tools/release/feed-publish.sh --release REL --base-url https://FEED/d2 --out FEEDTREE --sign-key /path/outside/the/repo/beta.key` (the real beta key; without `--sign-key` the script refuses a release with no `MANIFEST.json.sig`). It verifies signature, file hashes and REVOKED, adds the release, then runs the real client against the tree with the pinned key (`--pub`, default `deploy/d2d-container/pubkeys/beta.pub`). Nothing is uploaded yet.
 5. Upload: rerun with `--upload`. Set one of `D2_FEED_UPLOAD_CMD` (a hook, run as `sh -c "$D2_FEED_UPLOAD_CMD" feed-upload TREE`) or `D2_FEED_RSYNC_DEST` (an rsync destination; assets go first, the list last, never `--delete`) in the environment or the gitignored `local.env`. No host or credential is in the repo.
 6. Canary: your own container takes the release first (`./didle update`), ten minutes of play, then tell the friends.
 
