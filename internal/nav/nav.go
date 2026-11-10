@@ -119,6 +119,7 @@ type Navigator struct {
 	field        *Field
 	fieldKey     fieldKey
 	black        []blocked
+	pursuitAt    time.Time    // earliest next pursuit hand-over (pursuit.go)
 	hard         []blocked    // cells the planner must not cross for a while (stuckmem.go)
 	spots        []*stuckSpot // recent stalls (stuckmem.go)
 	walkSeq      int
