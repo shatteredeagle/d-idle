@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fix: a player-chosen belt plan with mana columns now buys mana potions for every class (Barbarian all-mana bought nothing, Paladin 1:1 stalled below the healing floor).
 - tools: dev-reset.sh / dev-sandbox.sh reset the dev play sandbox to a fresh hero with a reversible archive
 - Andariel level gate is a per-class data row (Paladin 17 / 15 with merc recommended) with a warning below the recommended level instead of a wall (TASK-250)
 - tools/firsthour.sh: read-only first-hour metric row from sandbox logs (docs/first-hour.md)
