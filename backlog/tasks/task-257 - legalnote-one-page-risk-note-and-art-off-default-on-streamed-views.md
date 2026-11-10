@@ -1,10 +1,11 @@
 ---
 id: TASK-257
 title: 'legalnote: one-page risk note and art-off default on streamed views'
-status: Proposed
+status: Done
 assignee:
   - user
 created_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-10T20:30:00Z'
 labels:
   - docs
   - research
