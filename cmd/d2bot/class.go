@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
 	"strings"
 	"sync/atomic"
@@ -34,6 +35,12 @@ func planForClass(c d2.Class, cfgBuild string, level int, owned map[string]int) 
 		lb = leveler.SelectBuild(strings.ToLower(c.String()), level, owned)
 	}
 	cp := classPlan{Class: c, LevelerBuild: lb, CombatBuild: combat.BuildBlizzard} // the id every class has always carried
+	// A table written for another class is refused here too (the leveler refuses it at spend time, after the fighter
+	// has already taken that class's combat line).
+	if bd, err := leveler.LoadBuild(lb, ""); err == nil && !strings.EqualFold(bd.Class, c.String()) {
+		cp.Err = fmt.Errorf("class %s was given table %q which belongs to class %s", c, lb, bd.Class)
+		return cp
+	}
 	switch {
 	case leveler.TableCombat(lb) != "":
 		cp.CombatBuild = combat.Build(leveler.TableCombat(lb)) // the table names its combat profile

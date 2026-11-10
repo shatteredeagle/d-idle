@@ -44,7 +44,53 @@
   },
   {
    "class": "sorceress",
+   "build": "cold",
+   "bands": [
+    {
+     "requires": "Ice Blast",
+     "attack": [
+      "Ice Blast",
+      "Glacial Spike",
+      "Ice Bolt",
+      "Charged Bolt"
+     ]
+    },
+    {
+     "attack": [
+      "Charged Bolt",
+      "Ice Bolt"
+     ]
+    }
+   ],
+   "avoid": [
+    "Chain Lightning",
+    "Lightning"
+   ],
+   "buffs": [
+    [
+     "Frozen Armor",
+     "Shiver Armor",
+     "Chilling Armor"
+    ],
+    [
+     "Energy Shield"
+    ]
+   ],
+   "layout": {
+    "Static Field": "f1",
+    "Teleport": "f2",
+    "Frozen Armor": "f3",
+    "Charged Bolt": "f4",
+    "Ice Blast": "f5",
+    "Ice Bolt": "f6",
+    "Glacial Spike": "f7",
+    "Frost Nova": "f8"
+   }
+  },
+  {
+   "class": "sorceress",
    "build": "lightning",
+   "avoid": ["Chain Lightning", "Lightning"],
    "bands": [
     {
      "minLevel": 0,

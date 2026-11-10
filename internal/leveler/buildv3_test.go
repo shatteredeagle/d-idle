@@ -117,8 +117,8 @@ func TestBuildV3SpentInTableOrder(t *testing.T) {
 // The legacy and v2 tables are not touched by BUILDV3: v2 stays the default of a fresh Sorceress and Soaky's table
 // (Static Field at clvl 6) is still selected for a character that owns Static Field.
 func TestBuildV3IsOptIn(t *testing.T) {
-	if got := SelectBuild("sorceress", 1, nil); got != FallbackV2 {
-		t.Errorf("fresh sorceress default %q, want %q until the live soak flips it", got, FallbackV2)
+	if got := SelectBuild("sorceress", 1, nil); got != SorceressNormal30 {
+		t.Errorf("fresh sorceress default %q, want %q (sorcready2, user decision 2026-11-10)", got, SorceressNormal30)
 	}
 	if got := SelectBuild("sorceress", 12, map[string]int{"Charged Bolt": 9, "Static Field": 1}); got != "fallback" {
 		t.Errorf("Static Field owner: %q", got)

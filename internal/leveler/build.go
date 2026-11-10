@@ -241,13 +241,15 @@ const (
 	FallbackV2 = "fallback-lightning-v2"
 	FallbackV3 = "fallback-lightning-v3"
 	PaladinV2  = "paladin-normal30-v2"
+	// SorceressNormal30 is the fresh Sorceress table since sorcready2 (user decision 2026-11-10; it replaced FallbackV2).
+	SorceressNormal30 = "sorceress_normal30"
 )
 
 // v2Rows is the last clvl whose rows the BUILDV2 tables changed.
 const v2Rows = 15
 
 // freshBuild is the BUILDV2 table of a class that has one; a fresh character gets it, an existing one keeps its table.
-var freshBuild = map[string]string{"sorceress": FallbackV2, "paladin": PaladinV2}
+var freshBuild = map[string]string{"sorceress": SorceressNormal30, "paladin": PaladinV2}
 
 // OwnedSkills maps the skills the player owns to their levels by skills.txt name (nil without tables).
 func OwnedSkills(db *data.DB, p *d2.Player) map[string]int {

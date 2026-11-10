@@ -1,19 +1,16 @@
 {
   "class": "sorceress",
-  "doc": "Skill unlocks by quest or find (ADR 0018 item 6, docs/skill-unlocks.md). A skill not listed is free; its level requirement from Skills.txt still applies (docs/research/skill-req-check.md). Events: quest:<id>, waypoint:<area>, boss:<superunique>, item:<kind>, clvl:<n>, alternatives joined by '|'. tag S: veteran schedule (docs/research/class-early-game.md section 2), event placement not measured; U: unsure. Fire Bolt, Charged Bolt, Ice Bolt, Frozen Armor, Lightning and Chain Lightning are never locked.",
-  "mustFree": ["Fire Bolt", "Charged Bolt", "Ice Bolt", "Frozen Armor", "Lightning", "Chain Lightning", "Lightning Mastery"],
+  "doc": "Skill unlocks by quest or find (ADR 0018 item 6, docs/skill-unlocks.md). A skill not listed is free; its level requirement from Skills.txt still applies (docs/research/skill-req-check.md). Events: quest:<id>, waypoint:<area>, boss:<superunique>, item:<kind>, clvl:<n>, alternatives joined by '|'. tag S: veteran schedule (docs/research/class-early-game.md section 2), event placement not measured; U: unsure. Fire Bolt, Charged Bolt, Ice Bolt, Frozen Armor, Lightning and Chain Lightning are never locked. sorcready2 (user decision 2026-11-10): Warmth, Ice Blast and Glacial Spike are free too, because the Sorceress normal30 table spends points on them at clvl 2, 13 and 24.",
+  "mustFree": ["Fire Bolt", "Charged Bolt", "Ice Bolt", "Frozen Armor", "Lightning", "Chain Lightning", "Lightning Mastery", "Warmth", "Ice Blast", "Glacial Spike"],
   "unlocks": [
     {"skill": "Frost Nova", "event": "quest:den_of_evil", "codex": "corpsefire", "tag": "S", "note": "Den cleared; the v3 row is clvl 6, the Den is cleared at clvl 3 to 6. If the Den is skipped the point flows to Charged Bolt."},
     {"skill": "Static Field", "event": "boss:bishibosh|waypoint:cold_plains", "codex": "bishibosh", "tag": "S", "note": "Not in the v3 table: available as the free-choice point only."},
     {"skill": "Telekinesis", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S", "note": "v3 row at clvl 11, Blood Raven is dead at clvl 6 to 8 (S)."},
-    {"skill": "Warmth", "event": "boss:blood_raven", "codex": "blood_raven", "tag": "S", "note": "Not in v3: free-choice point only."},
-    {"skill": "Ice Blast", "event": "boss:countess", "codex": "countess", "tag": "S"},
     {"skill": "Fire Wall", "event": "boss:countess", "codex": "countess", "tag": "S"},
     {"skill": "Blaze", "event": "boss:countess", "codex": "countess", "tag": "S"},
     {"skill": "Inferno", "event": "quest:rescue_cain", "tag": "U", "note": "Cain rescued: no Codex first yet, quest id U."},
     {"skill": "Fire Ball", "event": "quest:rescue_cain", "tag": "U"},
     {"skill": "Teleport", "event": "waypoint:catacombs_2", "codex": "wp_catacombs_2", "tag": "S", "note": "Not Andariel (the SME's event): Teleport has reqlevel 18 and v3 spends it at 18 while the Catacombs run at clvl 14 to 17; the waypoint is lit before clvl 18 so no v3 row is refused, and Teleport is not needed to reach Andariel. docs/research/skill-req-check.md."},
-    {"skill": "Glacial Spike", "event": "boss:andariel", "codex": "andariel", "tag": "S"},
     {"skill": "Nova", "event": "boss:andariel", "codex": "andariel", "tag": "S"}
   ]
 }
