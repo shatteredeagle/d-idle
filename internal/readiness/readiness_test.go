@@ -296,3 +296,22 @@ func TestHandler(t *testing.T) {
 		t.Fatal(w.Code)
 	}
 }
+
+func TestResistGap(t *testing.T) {
+	ev := testEval(t)
+	for _, class := range []string{"sorceress", "paladin"} {
+		h := hero(class, "hell", 90)
+		h.Resist = Resists{Fire: 75, Cold: 75, Lightning: 75, Poison: 75}
+		// raw 75 - 100 = -25; the Hell warn line is 25, so 50 points short
+		if g, err := ev.ResistGap(h); err != nil || g != 50 {
+			t.Errorf("%s raw gap %d err %v, want 50", class, g, err)
+		}
+		h.Basis = ResistWithPenalty
+		if g, _ := ev.ResistGap(h); g != 0 {
+			t.Errorf("%s shown 75 has no gap, got %d", class, g)
+		}
+	}
+	if _, err := ev.ResistGap(hero("druid", "hell", 90)); err == nil || !strings.Contains(err.Error(), "druid") {
+		t.Fatalf("unknown class must be named: %v", err)
+	}
+}

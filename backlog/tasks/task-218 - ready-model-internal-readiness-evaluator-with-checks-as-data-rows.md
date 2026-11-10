@@ -18,6 +18,7 @@ owns:
   - "internal/readiness/"
 exclusive: []
 contracts: []
+result: "Offline only, NOT verified live. Evaluator, checks.json rows, /api/readiness, ResistGap into the risk meter. Resist basis is an explicit input (ResistRaw default, U) with tests for both cases; AC 3 stays open until TASK-216 settles it. Also touched outside owns, tiny: internal/bot (readinessfacts.go, runner.go, riskfacts.go), internal/watch/funwire.go (one field, one route), cmd/d2bot (readywire.go and 3 lines). Docs: docs/readiness.md."
 ---
 
 ## Description
@@ -30,7 +31,7 @@ Source: docs/research/player-power.md Part 3.4 (TASK-214 follow-up). One pass/wa
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 internal/readiness evaluator, checks above as data rows per class and difficulty; unknown class/table is an error naming it; table-driven tests for Sorceress and Paladin; no new class literals in Go
-- [ ] #2 Build flexibility: checks, floors and boss rows are data (per class and difficulty), no class or skill literal in Go; tests run with Paladin and Sorceress; an unknown class or table is an error naming it
+- [x] #1 internal/readiness evaluator, checks above as data rows per class and difficulty; unknown class/table is an error naming it; table-driven tests for Sorceress and Paladin; no new class literals in Go
+- [x] #2 Build flexibility: checks, floors and boss rows are data (per class and difficulty), no class or skill literal in Go; tests run with Paladin and Sorceress; an unknown class or table is an error naming it
 - [ ] #3 Open question settled first: whether Player.Resist already includes the difficulty penalty (TODO in internal/combat/hard.go) is taken from the ready-audit result and the resist logic here uses that answer; a test covers both possible cases of the ambiguity until it is settled
 <!-- AC:END -->

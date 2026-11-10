@@ -333,21 +333,23 @@ func runCheck(kind string, p params, h Hero, d int, cr classRow, ad AreaDiff) (s
 	return Skip, "unknown check kind " + kind // ParseChecks rejects these
 }
 
-// resistCheck applies the difficulty penalty only when the numbers are raw (ResistRaw). The displayed value caps at
-// cap before the penalty; a floor of -100 is the game's.
-func resistCheck(p params, h Hero, d int) (string, string) {
+// worstResist is the lowest effective resist among the counted elements. It applies the difficulty penalty only when
+// the numbers are raw (ResistRaw); raw numbers cap at cap before the penalty, and the game's floor is -100.
+func worstResist(p params, h Hero, d int) (int, string) {
 	pen := [3]int{0, -40, -100}[d]
 	if h.Basis == ResistWithPenalty {
 		pen = 0
 	}
 	cap := int(p["cap"])
-	type el struct {
+	els := []struct {
 		name string
 		v    int
-	}
-	els := []el{{"fire", h.Resist.Fire}, {"cold", h.Resist.Cold}, {"lightning", h.Resist.Lightning}}
+	}{{"fire", h.Resist.Fire}, {"cold", h.Resist.Cold}, {"lightning", h.Resist.Lightning}}
 	if p["poison"] > 0 {
-		els = append(els, el{"poison", h.Resist.Poison})
+		els = append(els, struct {
+			name string
+			v    int
+		}{"poison", h.Resist.Poison})
 	}
 	worst, wname := math.MaxInt, ""
 	for _, e := range els {
@@ -360,12 +362,39 @@ func resistCheck(p params, h Hero, d int) (string, string) {
 			worst, wname = v, e.name
 		}
 	}
+	return worst, wname
+}
+
+func resistCheck(p params, h Hero, d int) (string, string) {
+	worst, wname := worstResist(p, h, d)
 	st := grade(float64(worst), p["warnBelow"], p["failBelow"], true)
 	basis := "raw numbers plus the penalty"
 	if h.Basis == ResistWithPenalty {
 		basis = "numbers as shown"
 	}
 	return st, fmt.Sprintf("%s resist %d%% is the lowest (%s; warn below %.0f, fail below %.0f)", wname, worst, basis, p["warnBelow"], p["failBelow"])
+}
+
+// ResistGap is how many resist points the hero lacks to reach the warn line of the resist row for its class and
+// difficulty (0 = none). It feeds the risk meter's ResistGap (internal/watch/unlockrisk.go). area only selects the
+// difficulty's data today; the row has no per-area floor yet.
+func (e *Evaluator) ResistGap(h Hero) (int, error) {
+	class := strings.ToLower(strings.TrimSpace(h.Class))
+	if _, ok := e.checks.Classes[class]; !ok {
+		return 0, fmt.Errorf("readiness: no check data for class %q", h.Class)
+	}
+	d, err := diffIndex(h.Difficulty)
+	if err != nil {
+		return 0, err
+	}
+	for _, row := range e.checks.Checks {
+		if row.Kind == "resist_floor" {
+			p := merged(row, class, diffNames[d])
+			worst, _ := worstResist(p, h, d)
+			return max(0, int(p["warnBelow"])-worst), nil
+		}
+	}
+	return 0, nil
 }
 
 // hitChance is the usual D2 formula (S): 200*AR/(AR+DEF) * mlvl/(mlvl+clvl), clamped to 5..95 percent.
