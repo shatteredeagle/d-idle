@@ -1,10 +1,11 @@
 ---
 id: TASK-264
 title: 'friendplan: friends beta tarball install and update design (research)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T18:36:00Z'
+updated_date: '2026-11-10T19:44:00Z'
 labels:
   - container
   - research
