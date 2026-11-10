@@ -1,1 +1,0 @@
-CHANGELOG: /watch/inventory shows the game's own paper doll and item icons when the install is readable (read at runtime, never shipped, off in the stream overlay); falls back to the drawn cells otherwise
