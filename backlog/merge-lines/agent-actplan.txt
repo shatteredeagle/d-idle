@@ -1,2 +1,0 @@
-CHANGELOG: Andariel level gate is a per-class data row (Paladin 17 / 15 with merc recommended) with a warning below the recommended level instead of a wall (TASK-250)
-INDEX: docs/act-plan.md - per-class recommended and floor levels for the Andariel gate (TASK-250)
