@@ -1250,27 +1250,55 @@ func (r *Runner) preferWaypointRun(area int) bool {
 // Border-loop breaker: crossings of an area border that the walk did not want, counted over a minute. d2d puts the
 // character inside a cave mouth's trigger area on every return, so a mouth the walk cannot leave sideways turned into a
 // shuttle between two levels at 10 Hz for hours (D2DLOOP r24, V live: Cold Plains and Cave Level 1, 30 % of an 8 h run).
-// After borderLoopCrossings in borderLoopWindow the target area is skipped for borderLoopSkip so the planner picks another.
+// After borderLoopCrossings in borderLoopWindow the target area is skipped so the planner picks another. The skip
+// doubles for each repeat within borderLoopMemory, up to borderLoopDoublings (docs/areathrash.md: the sandbox day had
+// 18 breaker trips for Cave Level 1 and 0 kills there; a flat 3 minute skip came back 18 times).
 const (
-	borderLoopCrossings = 10
+	borderLoopCrossings = 5
 	borderLoopWindow    = time.Minute
 	borderLoopSkip      = 3 * time.Minute
+	borderLoopDoublings = 4
+	borderLoopMemory    = 2 * time.Hour
 )
+
+// crossStamp is one unwanted border crossing toward target.
+type crossStamp struct {
+	at     time.Time
+	target int
+}
+
+// loopStamp is how often the breaker tripped for an area and when it last did.
+type loopStamp struct {
+	n  int
+	at time.Time
+}
 
 func (r *Runner) noteCrossing(target int) {
 	now := r.e.Clock.Now()
 	r.obMu.Lock()
 	keep := r.crossLog[:0]
-	for _, t := range r.crossLog {
-		if now.Sub(t) < borderLoopWindow {
-			keep = append(keep, t)
+	same := 1
+	for _, c := range r.crossLog {
+		if now.Sub(c.at) < borderLoopWindow {
+			keep = append(keep, c)
+			if c.target == target {
+				same++
+			}
 		}
 	}
-	r.crossLog = append(keep, now)
-	loop := len(r.crossLog) >= borderLoopCrossings
-	if loop {
+	r.crossLog = append(keep, crossStamp{now, target})
+	if same >= borderLoopCrossings {
 		r.crossLog = nil
-		r.skipAreaLocked(target, borderLoopSkip, "border-loop")
+		if r.loopTrips == nil {
+			r.loopTrips = map[int]loopStamp{}
+		}
+		l := r.loopTrips[target]
+		if now.Sub(l.at) > borderLoopMemory {
+			l.n = 0
+		}
+		d := borderLoopSkip << min(l.n, borderLoopDoublings)
+		r.loopTrips[target] = loopStamp{n: l.n + 1, at: now}
+		r.skipAreaLocked(target, d, "border-loop")
 	}
 	r.obMu.Unlock()
 }
