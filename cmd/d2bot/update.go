@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
-	"syscall"
 	"time"
 
 	"d2lod-bot/internal/selfupdate"
@@ -86,7 +85,7 @@ func loadPubKeys(dir string) []ed25519.PublicKey {
 // the process to stop with SIGTERM, the same path `docker stop` takes (hero saved, d2d quit in managed mode); the
 // container's restart policy then brings the new release up.
 func startUpdater(ctx context.Context) watch.Updater {
-	e := newUpdater(func() error { return syscall.Kill(os.Getpid(), syscall.SIGTERM) })
+	e := newUpdater(signalSelfTerm)
 	if e == nil {
 		return nil
 	}

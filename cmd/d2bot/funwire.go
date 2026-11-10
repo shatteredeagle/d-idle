@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"syscall"
 	"time"
 
 	"d2lod-bot/internal/api"
@@ -251,7 +250,7 @@ func currencyDirFor(stateDir string) string {
 
 // stopSelf is the bot's graceful shutdown: SIGTERM to this process, the path `docker stop` and the updater take (hero
 // saved, d2d quit in managed mode; docs/tester-live.md). A seam for tests.
-var stopSelf = func() error { return syscall.Kill(os.Getpid(), syscall.SIGTERM) }
+var stopSelf = func() error { return signalSelfTerm() }
 
 // newHallConfig wires the Hall of Fame (docs/hall-of-fame.md "Wiring"): the ledger of the account, the shipped title
 // table, the hero's facts from the status poll and the shutdown path. nil (no error) without an account ledger or a

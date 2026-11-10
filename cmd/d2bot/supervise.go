@@ -190,7 +190,7 @@ func runChild(ctx context.Context, self string, args, env []string, log *slog.Lo
 	cmd := exec.Command(self, args...)
 	cmd.Env = env
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = nil, os.Stdout, os.Stderr
-	cmd.SysProcAttr = &syscall.SysProcAttr{Pdeathsig: syscall.SIGTERM}
+	setPdeathsig(cmd)
 	if err := startFromLockedThread(cmd); err != nil {
 		log.Error("supervise: cannot start the child", "err", err)
 		return 127

@@ -455,12 +455,12 @@ func LockHeld(id string) bool {
 		if err != nil {
 			continue
 		}
-		err = syscall.Flock(int(f.Fd()), syscall.LOCK_EX|syscall.LOCK_NB)
+		busy, err := tryFlock(f)
 		if err == nil {
-			syscall.Flock(int(f.Fd()), syscall.LOCK_UN)
+			unFlock(f)
 		}
 		f.Close()
-		if err == syscall.EWOULDBLOCK {
+		if busy {
 			return true
 		}
 	}
@@ -483,7 +483,7 @@ func lockFiles(ps []string, wait time.Duration) (func(), error) {
 	var held []*os.File
 	release := func() {
 		for i := len(held) - 1; i >= 0; i-- {
-			syscall.Flock(int(held[i].Fd()), syscall.LOCK_UN)
+			unFlock(held[i])
 			held[i].Close()
 		}
 	}
@@ -499,7 +499,7 @@ func lockFiles(ps []string, wait time.Duration) (func(), error) {
 			return nil, err
 		}
 		for {
-			err := syscall.Flock(int(f.Fd()), syscall.LOCK_EX|syscall.LOCK_NB)
+			_, err := tryFlock(f)
 			if err == nil {
 				held = append(held, f)
 				break

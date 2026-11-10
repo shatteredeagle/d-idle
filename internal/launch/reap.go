@@ -47,10 +47,10 @@ func (o ReapOpts) norm() ReapOpts {
 		o.UID = os.Getuid()
 	}
 	if o.Kill == nil {
-		o.Kill = func(pid int) error { return syscall.Kill(pid, syscall.SIGTERM) }
+		o.Kill = func(pid int) error { return sysKill(pid, syscall.SIGTERM) }
 	}
 	if o.Kill9 == nil {
-		o.Kill9 = func(pid int) error { return syscall.Kill(pid, syscall.SIGKILL) }
+		o.Kill9 = func(pid int) error { return sysKill(pid, syscall.SIGKILL) }
 	}
 	if o.TermWait == 0 {
 		o.TermWait = 3 * time.Second
