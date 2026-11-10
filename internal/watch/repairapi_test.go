@@ -280,3 +280,15 @@ func TestPollingJSFocusKeepsScroll(t *testing.T) {
 		t.Error("web/app.js: renderOrders must restore focus with preventScroll")
 	}
 }
+
+// Redraws that empty and refill lists must restore the page and inner scroll offsets (#journal is a scroll box).
+func TestRedrawKeepsScrollOffsets(t *testing.T) {
+	app, _ := webFS.ReadFile("web/app.js")
+	if !strings.Contains(string(app), "keepScroll(function () {") || !strings.Contains(string(app), "renderJournal(a[1])") {
+		t.Error("web/app.js: refresh must run its renders inside keepScroll")
+	}
+	sh, _ := webFS.ReadFile("web/shell.js")
+	if !strings.Contains(string(sh), "window.scrollTo(x, y)") || !strings.Contains(string(sh), "n.scrollTop = t") {
+		t.Error("web/shell.js: keepFocus must restore page and inner scroll offsets")
+	}
+}
