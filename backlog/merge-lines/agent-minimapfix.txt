@@ -1,0 +1,1 @@
+CHANGELOG: watch: the shell poll scheduler aborts a stalled request and cannot be wedged by one panel (minimap freeze hardening, TASK-261)
