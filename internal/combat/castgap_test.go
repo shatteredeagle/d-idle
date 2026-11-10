@@ -71,6 +71,11 @@ func TestCastGapFallbackAndOverride(t *testing.T) {
 // so a command is the start of a cast.
 func lightningHarness(t testing.TB, mods ...func(*env.Tuning)) *harness {
 	h := newHarness(t, mods...)
+	// the shipped profile avoids Lightning (known broken on d2d); this test is about the cast gap, so lift it here
+	pr := ProfileFor(d2.Sorceress, BuildLightning)
+	saved := pr.Avoid
+	pr.Avoid = nil
+	t.Cleanup(func() { pr.Avoid = saved })
 	c := testCatalog()
 	c.Skills[49] = &data.Skill{ID: 49, Key: "Lightning", Name: "Lightning", EType: "ltng", Mana: 8, MinMana: 1}
 	h.f.SetCatalog(c)

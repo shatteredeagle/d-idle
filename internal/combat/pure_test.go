@@ -192,12 +192,8 @@ func TestAttackOrder(t *testing.T) {
 	if o := attackOrder(BuildBlizzard, 30, func(string) bool { return false }); o[0] != "Charged Bolt" {
 		t.Fatalf("no respec yet: %v", o)
 	}
-	if o := attackOrder(BuildLightning, 30, has()); o[0] != "Chain Lightning" {
-		t.Fatalf("fallback build: %v", o)
-	}
-	// BUILDV3: the profile's Chain Lightning band is gated by the learned skill, not by a clvl literal, so a table that
-	// learns it at clvl 19 attacks with it from then on; a table that has not learned it keeps the Charged Bolt band
-	// until clvl 26 (the older band, unchanged) and never falls below it.
+	// sorcready: Chain Lightning and Lightning are known broken on d2d (docs/capabilities.md), so the lightning
+	// profile lists them under "avoid" and ranks them never; the bands behind them are what plays.
 	learned := func(names ...string) func(string) bool {
 		return func(n string) bool {
 			for _, x := range names {
@@ -208,14 +204,23 @@ func TestAttackOrder(t *testing.T) {
 			return false
 		}
 	}
-	if o := attackOrder(BuildLightning, 19, learned("Charged Bolt", "Lightning", "Chain Lightning")); o[0] != "Chain Lightning" {
-		t.Fatalf("clvl 19 with Chain Lightning learned: %v", o)
+	for _, c := range []struct {
+		lvl   int
+		known func(string) bool
+	}{{30, has()}, {19, learned("Charged Bolt", "Lightning", "Chain Lightning")}, {26, learned("Charged Bolt")}, {12, has()}} {
+		o := attackOrder(BuildLightning, c.lvl, c.known)
+		if len(o) == 0 || o[0] != "Charged Bolt" {
+			t.Fatalf("clvl %d lightning profile: %v", c.lvl, o)
+		}
+		for _, n := range o {
+			if n == "Chain Lightning" || n == "Lightning" {
+				t.Fatalf("clvl %d ranks the avoided %s: %v", c.lvl, n, o)
+			}
+		}
 	}
-	if o := attackOrder(BuildLightning, 22, learned("Charged Bolt")); o[0] != "Charged Bolt" {
-		t.Fatalf("clvl 22 without Chain Lightning: %v", o)
-	}
-	if o := attackOrder(BuildLightning, 26, learned("Charged Bolt")); o[0] != "Chain Lightning" {
-		t.Fatalf("clvl 26 keeps the older level band: %v", o)
+	// the avoid list is data: a profile without it (Paladin, Sorceress blizzard) ranks every band entry
+	if o := attackOrder(BuildBlizzard, 30, has()); len(o) != 6 {
+		t.Fatalf("blizzard: %v", o)
 	}
 }
 

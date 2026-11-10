@@ -45,3 +45,6 @@ After a bot merge: `tools/smoke.sh --commit <merged sha> --class paladin,sorcere
 - Built, V offline: the judge, the rules loader, the record writer and the exit codes (`go test ./internal/smoke`), `tools/smoke.sh --dry-run`.
 - U (never run live): both shell scripts end to end; the exact log field and event names assumed for questions (`msg` `question`, attribute `key`/`thought`) and for level (`level` `ERROR` of slog JSON); the session directory (`<data>/sessions`); the wall-time estimate; that `d2cheat runstart` plus `ledger --since-run` works with a smoke character name.
 First live checklist: `tools/smoke.sh --class paladin --record`, then read the log under `~/d2d-lab/smoke/logs` on the worker host for the minute lines and fix any name in the rules file.
+
+## Sorceress first-hour measurement (sorcready, TASK-267)
+The Sorceress rows above (clvl 2 at minute 20, 3 at minute 45) are unchanged. The live plan for three fresh Sorceress first hours (reset, 60 realtime minutes, `tools/firsthour.sh --class sorceress`) is in [sorceress-early.md](sorceress-early.md) section 6; not run (U). The lightning profile now avoids Chain Lightning and Lightning, so a smoke run past clvl 19 no longer exercises them.
