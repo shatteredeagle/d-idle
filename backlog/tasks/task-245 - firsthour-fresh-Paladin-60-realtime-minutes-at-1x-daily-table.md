@@ -15,8 +15,12 @@ ordinal: 183000
 card: "firsthour"
 owns:
   - "docs/first-hour.md"
+  - "cmd/d2firsthour/"
+  - "tools/firsthour.sh"
+  - "docs/probes/firsthour.md"
 exclusive: []
 contracts: []
+result: "tooling built and fixture-tested (cmd/d2firsthour, tools/firsthour.sh); NOT run live, no daily rows yet; AC1 stays open"
 ---
 
 ## Description
