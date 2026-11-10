@@ -182,7 +182,7 @@ Drills before the first copy leaves the machine (V = must be run, not yet run): 
 2. Confirm the small client change of section 5.4 (a feed URL in a non-DEV image, key still pinned)? Without it the friend build can only update from GitHub, which means publishing first.
 3. Beta key custody for the interim: local signing on your machine until the GitHub environment exists, or wait for the environment?
 4. One key for beta and stable, or a beta key that is retired when the public image ships?
-5. Where does the feed live (a Tower directory behind a tunnel is the obvious choice) and may friends' IPs be visible there?
+5. Where does the feed live (a directory on a home server behind a tunnel is the obvious choice) and may friends' IPs be visible there?
 6. GPL: is a source tarball in the pack enough for a private circle of two friends until the legal note is read (TASK-257), or do you want the reviewer named first (S docs/tester-licence.md section 6)?
 
 ## 13. Proposed ADR text (for the coordinator or the grill session; NOT written to docs/adr or decisions.md)
