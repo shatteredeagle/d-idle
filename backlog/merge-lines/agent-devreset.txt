@@ -1,0 +1,3 @@
+BACKLOG: devreset (TASK-263): tools/dev-sandbox.sh reset|restore|list and tools/dev-reset.sh, archive and fresh hero for a DEV sandbox, docs/dev-reset.md
+INDEX: docs/dev-reset.md: reset the play sandbox to a fresh hero, archive and restore (TASK-263)
+CHANGELOG: tools: dev-reset.sh / dev-sandbox.sh reset the dev play sandbox to a fresh hero with a reversible archive
