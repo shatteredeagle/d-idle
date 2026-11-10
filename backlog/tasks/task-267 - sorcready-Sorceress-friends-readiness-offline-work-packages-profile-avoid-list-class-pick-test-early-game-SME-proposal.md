@@ -21,9 +21,21 @@ owns:
   - "internal/combat/pure_test.go"
   - "internal/combat/castgap_test.go"
   - "cmd/d2bot/sorcready_test.go"
+  - "cmd/d2bot/class.go"
+  - "cmd/d2bot/class_test.go"
+  - "internal/leveler/build.go"
+  - "internal/leveler/buildv3_test.go"
+  - "internal/leveler/palzeal_test.go"
+  - "internal/leveler/unlocks_test.go"
+  - "internal/plandata/build-sorceress_normal30.json"
+  - "internal/plandata/unlocks-sorceress.json"
+  - "internal/plandata/sorcnormal30_test.go"
+  - "docs/plan/data/build-sorceress_normal30.json"
+  - "docs/plan/data/unlocks-sorceress.json"
+  - "docs/sorcnormal30.md"
 exclusive: []
 contracts: []
-result: "Offline only, not verified live. Wizard pick does NOT select sorceress_normal30 (fresh Sorceress plays fallback-lightning-v2; tested). Lightning profile now avoids Chain Lightning and Lightning (generic avoid field, tests Sorceress and Paladin). Table unchanged; SME proposal and open questions in docs/sorceress-early.md. Live plan documented, not run."
+result: "Offline only, not verified live. Follow-up sorcready2 applies the user decisions of 2026-11-10: fresh Sorceress defaults to sorceress_normal30; planForClass refuses another class's table (error names both classes); Warmth at clvl 2; cold line from clvl 12 (Ice Bolt, Ice Blast, Teleport 18, Glacial Spike, Blizzard 30) with a new sorceress/cold profile; Lightning and Chain Lightning avoided in lightning and cold profiles. Exit criterion: three fresh first-hour records before friends get her (docs/sorceress-early.md). Row order is an EXP d2-sme consult."
 ---
 
 ## Description

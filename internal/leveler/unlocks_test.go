@@ -258,8 +258,8 @@ func TestFreeChoicePoint(t *testing.T) {
 	if _, ok := names["Static Field"]; !ok {
 		t.Fatalf("Static Field missing: %v", got)
 	}
-	if _, ok := names["Warmth"]; !ok {
-		t.Fatalf("Warmth missing: %v", got)
+	if _, ok := names["Warmth"]; ok {
+		t.Fatal("Warmth is free since sorcready2 (the normal30 table spends clvl 2 on it), not a free choice")
 	}
 	if _, ok := names["Frost Nova"]; ok {
 		t.Fatal("Frost Nova is in the build table, not a free choice")
