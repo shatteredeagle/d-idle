@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"slices"
 	"strings"
 	"sync"
 
@@ -71,10 +72,13 @@ type MeleeParams struct {
 
 // Profile is the combat profile of a class (and Sorceress build).
 type Profile struct {
-	Class  string            `json:"class"`
-	Build  string            `json:"build"`
-	Bands  []Band            `json:"bands"`
-	Aura   []AuraPref        `json:"aura"`
+	Class string     `json:"class"`
+	Build string     `json:"build"`
+	Bands []Band     `json:"bands"`
+	Aura  []AuraPref `json:"aura"`
+	// Avoid names attack skills the profile never ranks even when learned (a skill known broken on the d2d build in
+	// use, docs/capabilities.md); the bands stay as the game plays them, so removing the entry restores the order.
+	Avoid  []string          `json:"avoid"`
 	Buffs  [][]string        `json:"buffs"`
 	Layout map[string]string `json:"layout"`
 	Melee  *MeleeParams      `json:"melee"`
@@ -256,10 +260,20 @@ func (p *Profile) band(clvl int, known func(string) bool) *Band {
 
 // AttackNames is the preference list of attack skill names at a character level.
 func (p *Profile) AttackNames(clvl int, known func(string) bool) []string {
-	if b := p.band(clvl, known); b != nil {
+	b := p.band(clvl, known)
+	if b == nil {
+		return nil
+	}
+	if len(p.Avoid) == 0 {
 		return b.Attack
 	}
-	return nil
+	out := make([]string, 0, len(b.Attack))
+	for _, n := range b.Attack {
+		if !slices.Contains(p.Avoid, n) {
+			out = append(out, n)
+		}
+	}
+	return out
 }
 
 // AuraLadder is the aura preference list of the active band (the profile's list when the band has none).

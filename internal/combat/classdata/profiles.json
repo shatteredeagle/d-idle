@@ -45,6 +45,7 @@
   {
    "class": "sorceress",
    "build": "lightning",
+   "avoid": ["Chain Lightning", "Lightning"],
    "bands": [
     {
      "minLevel": 0,
