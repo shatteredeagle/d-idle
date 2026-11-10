@@ -37,7 +37,7 @@ type OSSystem struct{}
 
 func (OSSystem) Procs() ([]Proc, error)                 { return ListProcs() }
 func (OSSystem) Marker(pid int) string                  { return mem.ProcInstance(pid) }
-func (OSSystem) Signal(pid int, s syscall.Signal) error { return syscall.Kill(pid, s) }
+func (OSSystem) Signal(pid int, s syscall.Signal) error { return sysKill(pid, s) }
 func (OSSystem) Exists(path string) bool                { _, err := os.Stat(path); return err == nil }
 
 func (OSSystem) Run(ctx context.Context, env []string, dir, name string, args ...string) ([]byte, error) {
@@ -58,7 +58,7 @@ func (OSSystem) Spawn(env []string, dir, logPath, name string, args ...string) e
 	c := exec.Command(name, args...)
 	c.Env, c.Dir = env, dir
 	c.Stdout, c.Stderr = lf, lf
-	c.SysProcAttr = &syscall.SysProcAttr{Setsid: true}
+	setSession(c)
 	if err := c.Start(); err != nil {
 		return err
 	}

@@ -7,7 +7,6 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
-	"syscall"
 )
 
 // Env returns the environment for a Proton invocation. Proton is run directly (no umu): it only needs
@@ -41,7 +40,7 @@ func (c Config) ProtonCmd(ctx context.Context, cwd, verb string, args ...string)
 	cmd.Dir = cwd
 	cmd.Env = c.Env()
 	// Own process group: a ^C in the app's terminal must not hit Wine directly; we shut it down ourselves.
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	setGroup(cmd)
 	return cmd
 }
 
@@ -100,10 +99,7 @@ func NewSpawner() *Spawner {
 
 // Start starts cmd from the locked thread with Pdeathsig=SIGTERM (cmd.SysProcAttr must be set).
 func (s *Spawner) Start(cmd *exec.Cmd) error {
-	if cmd.SysProcAttr == nil {
-		cmd.SysProcAttr = &syscall.SysProcAttr{}
-	}
-	cmd.SysProcAttr.Pdeathsig = syscall.SIGTERM
+	setPdeathsig(cmd)
 	r := spawnReq{cmd, make(chan error, 1)}
 	s.reqs <- r
 	return <-r.done

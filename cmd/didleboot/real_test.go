@@ -109,7 +109,7 @@ func TestRealSweepsLeftoverChildren(t *testing.T) {
 		t.Fatal(err)
 	}
 	pid, _ := strconv.Atoi(strings.TrimSpace(string(raw)))
-	if err := syscall.Kill(pid, 0); err == nil {
+	if p, _ := os.FindProcess(pid); p.Signal(syscall.Signal(0)) == nil {
 		// still there: is it a zombie of a reaped group? (no init in the test: give the kernel a moment)
 		time.Sleep(300 * time.Millisecond)
 		if b, _ := os.ReadFile("/proc/" + strconv.Itoa(pid) + "/stat"); !strings.Contains(string(b), ") Z") && len(b) > 0 {

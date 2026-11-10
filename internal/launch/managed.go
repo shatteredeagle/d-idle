@@ -121,7 +121,7 @@ func (m *Managed) Stop(grace time.Duration) error {
 	if !ok {
 		return nil
 	}
-	_ = syscall.Kill(p.PID, syscall.SIGTERM)
+	_ = sysKill(p.PID, syscall.SIGTERM)
 	deadline := time.Now().Add(grace)
 	for time.Now().Before(deadline) {
 		if _, ok := m.Find(); !ok {
@@ -129,7 +129,7 @@ func (m *Managed) Stop(grace time.Duration) error {
 		}
 		time.Sleep(200 * time.Millisecond)
 	}
-	_ = syscall.Kill(p.PID, syscall.SIGKILL)
+	_ = sysKill(p.PID, syscall.SIGKILL)
 	time.Sleep(500 * time.Millisecond)
 	if _, ok := m.Find(); ok {
 		return errors.New(m.Image + " survived SIGKILL")
@@ -158,7 +158,6 @@ func Reap() {
 		if _, mine := owned.Load(p.PID); mine {
 			continue
 		}
-		var ws syscall.WaitStatus
-		syscall.Wait4(p.PID, &ws, syscall.WNOHANG, nil)
+		wait4NoHang(p.PID)
 	}
 }

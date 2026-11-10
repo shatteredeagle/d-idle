@@ -5,7 +5,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"syscall"
 	"time"
 )
 
@@ -30,9 +29,7 @@ func (z *ZombieReaper) Scan() []int {
 	}
 	if z.Wait == nil {
 		z.Wait = func(pid int) error {
-			var ws syscall.WaitStatus
-			_, err := syscall.Wait4(pid, &ws, syscall.WNOHANG, nil)
-			return err
+			return wait4NoHang(pid)
 		}
 	}
 	now := map[int]bool{}

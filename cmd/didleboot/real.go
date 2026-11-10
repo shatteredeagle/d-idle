@@ -30,25 +30,6 @@ func (c *osChild) Exited() (int, bool) { c.mu.Lock(); defer c.mu.Unlock(); retur
 func (c *osChild) Terminate()          { c.cmd.Process.Signal(syscall.SIGTERM) }
 func (c *osChild) Kill()               { c.cmd.Process.Kill() }
 
-// sweepGroup ends whatever the launcher left behind in its process group (VERIFIED LIVE, TASK-192: the setup wizard
-// keeps running when the launcher shell is terminated, and then holds its port against the next start). TERM first,
-// KILL after the grace. The launcher itself was terminated alone and in order (bot before tap), so this only sees
-// leftovers.
-func sweepGroup(pgid int, grace time.Duration) {
-	alive := func() bool { return syscall.Kill(-pgid, 0) == nil }
-	if !alive() {
-		return
-	}
-	syscall.Kill(-pgid, syscall.SIGTERM)
-	for end := time.Now().Add(grace); time.Now().Before(end) && alive(); {
-		time.Sleep(100 * time.Millisecond)
-	}
-	if alive() {
-		syscall.Kill(-pgid, syscall.SIGKILL)
-		time.Sleep(200 * time.Millisecond)
-	}
-}
-
 type osRunner struct {
 	args []string
 	env  []string
@@ -59,7 +40,7 @@ type osRunner struct {
 func (r osRunner) Start(rel Release) (Child, error) {
 	cmd := exec.Command(rel.Entry, r.args...)
 	cmd.Stdin, cmd.Stdout, cmd.Stderr = os.Stdin, os.Stdout, os.Stderr
-	path := rel.BinDir + ":" + rel.D2DDir + ":" + os.Getenv("PATH")
+	path := rel.BinDir + string(os.PathListSeparator) + rel.D2DDir + string(os.PathListSeparator) + os.Getenv("PATH")
 	cmd.Env = append(append([]string{}, r.env...), "PATH="+path, "DIDLE_RELEASE="+rel.Version, "DIDLE_RELEASE_DIR="+rel.BinDir)
 	// a bot-only release (dev loop) carries no d2d: keep the baked one
 	if _, err := os.Stat(filepath.Join(rel.D2DDir, "d2d")); err == nil {
@@ -69,7 +50,7 @@ func (r osRunner) Start(rel Release) (Child, error) {
 		// the baked layout: binaries in /opt/d2lod, d2d in /opt/d2d (PATH of the image already has both)
 		cmd.Env = append(append([]string{}, r.env...), "DIDLE_RELEASE="+rel.Version)
 	}
-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true} // its own group, so the leftovers can be swept (below)
+	setOwnGroup(cmd) // its own group, so the leftovers can be swept (proc_unix.go)
 	if err := cmd.Start(); err != nil {
 		return nil, err
 	}
