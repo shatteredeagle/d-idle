@@ -72,18 +72,19 @@ type TaskDeps struct {
 
 // taskState is the campaign bookkeeping of the Run goroutine (loop.task) plus the report the manager reads.
 type taskState struct {
-	ex       *task.Executor
-	gen      uint64
-	err      error // sentinel error an action hit (portal opened, left the game ...) for r.do to react to
-	wp       map[int]bool
-	killed   map[string]bool
-	scene    int            // number of new games seen when killed/wp were last reset
-	pseudo   map[string]int // pseudo items the actions set for this game (staff placed, book read, orb smashed)
-	done     bool
-	lastRep  time.Time
-	blocks   int             // consecutive planning blocks (no eligible area, quest not ready), see planningBlock
-	refused  map[string]bool // refusals already logged (noteStepRefused)
-	andyLine string          // last Andariel gate line logged (noteAndariel)
+	ex         *task.Executor
+	gen        uint64
+	err        error // sentinel error an action hit (portal opened, left the game ...) for r.do to react to
+	wp         map[int]bool
+	killed     map[string]bool
+	scene      int            // number of new games seen when killed/wp were last reset
+	pseudo     map[string]int // pseudo items the actions set for this game (staff placed, book read, orb smashed)
+	done       bool
+	lastRep    time.Time
+	blocks     int             // consecutive planning blocks (no eligible area, quest not ready), see planningBlock
+	refused    map[string]bool // refusals already logged (noteStepRefused)
+	andyLine   string          // last Andariel gate line logged (noteAndariel)
+	andyRowErr string          // last class-row error logged by fillAndariel (once per text)
 }
 
 type taskReport struct {
@@ -306,7 +307,8 @@ func (e taskEnv) World(ctx context.Context) (task.World, error) {
 	in := r.resInput(s)
 	w.Potions += in.Belt.PackHP + in.Belt.PackRV // World.Potions says belt and pack
 	w.HasTP, w.ManaPotions = in.HasTP, in.Belt.MP
-	w.AndarielMinLevel, w.AndarielMinLevelMerc, w.AndarielHold = r.e.Tune.Boss.AndarielMinLevel, r.e.Tune.Boss.AndarielMinLevelMerc, r.e.Tune.Boss.AndarielHold != 0
+	r.fillAndariel(&w, p.Class)
+	w.AndarielHold = r.e.Tune.Boss.AndarielHold != 0
 	w.Antidotes = r.antidotes(s)
 	if task.MercAlive != nil {
 		w.MercAlive, w.MercKnown = task.MercAlive()

@@ -18,6 +18,7 @@ owns:
   - "internal/plandata"
 exclusive: []
 contracts: []
+result: "Andariel level gate is a per-class plandata row (recommended and floor, merc and no merc) with a below-recommended warning; knobs are overrides; Paladin and Sorceress tests; offline only, NOT verified live; other gates, the leave-zone rule and the wizard mark not done (docs/act-plan.md)"
 ---
 
 ## Description
@@ -30,5 +31,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 floor is a price or a per-class data row, leave a zone six levels under the hero and take the next story step; wizard marks unproven classes; tests on Sorceress and Paladin
+- [x] #1 floor is a price or a per-class data row, leave a zone six levels under the hero and take the next story step; wizard marks unproven classes; tests on Sorceress and Paladin
 <!-- AC:END -->
