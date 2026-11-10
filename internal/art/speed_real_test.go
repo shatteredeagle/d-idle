@@ -1,6 +1,7 @@
 package art
 
 import (
+	"context"
 	"sort"
 	"strings"
 	"testing"
@@ -69,6 +70,9 @@ func TestRealColdWarm(t *testing.T) {
 		}
 	}
 	t.Logf("cold %d keys: %v", len(keys), total)
+	if total > 2*time.Second {
+		t.Errorf("cold decode of a typical inventory took %v", total)
+	}
 
 	t1 := time.Now()
 	for _, k := range keys {
@@ -86,4 +90,30 @@ func TestRealColdWarm(t *testing.T) {
 	}
 	t.Logf("warm disk %d keys: %v", len(keys), time.Since(t3))
 	s2.Close()
+}
+
+// TestRealExtractAll times the whole pre-extraction of every icon the archive holds (the key set the tables name
+// is a subset of it), then a second run.
+func TestRealExtractAll(t *testing.T) {
+	dir := realInstall(t)
+	names := realItemKeys(t, dir, 340)
+	var inv []string
+	for _, k := range names {
+		inv = append(inv, strings.TrimPrefix(k, "item-"))
+	}
+	s, err := Open(dir, t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer s.Close()
+	keys := Keys(inv)
+	t0 := time.Now()
+	p, err := s.Extract(context.Background(), keys, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Logf("extract %d keys (%d missing): %v", p.Total, p.Missing, time.Since(t0))
+	t1 := time.Now()
+	s.Extract(context.Background(), keys, nil)
+	t.Logf("second run: %v", time.Since(t1))
 }
