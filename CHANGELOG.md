@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Inventory page: selecting an item or slot always refreshes the detail card (TASK-271)
 - Inventory page: hovering, tapping or focusing an item shows a D2-style tooltip (quality colours, base stats, requirements, sell value, marks); the inventory API gains optional tip, base and sell fields (schema 2)
 - Inventory page: game art no longer delays the first paint; item art is prepared in the background at start (d2bot art extract to do it by hand), /api/art reports its progress (TASK-268)
 - A fresh Sorceress now levels on sorceress_normal30 with a Warmth point at clvl 2 and a cold line (Ice Blast, Glacial Spike) from clvl 12 instead of Lightning and Chain Lightning, which are broken on d2d; the bot refuses a table that belongs to another class (TASK-267)
