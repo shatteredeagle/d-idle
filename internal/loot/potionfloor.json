@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "note": "Lowest healing/mana potion tier worth picking up (SME advice EXP, docs/lootskip.md). Rows are picked by difficulty and class: the highest fromLevel <= clvl wins, at equal fromLevel a row naming the class wins. Rejuvenation is not tiered here.",
+  "rows": [
+    {"difficulty": "Normal", "fromLevel": 1, "minTier": 1},
+    {"difficulty": "Normal", "fromLevel": 13, "minTier": 2},
+    {"difficulty": "Normal", "fromLevel": 26, "minTier": 3},
+    {"difficulty": "Nightmare", "fromLevel": 1, "minTier": 3},
+    {"difficulty": "Nightmare", "fromLevel": 40, "minTier": 4},
+    {"difficulty": "Hell", "fromLevel": 1, "minTier": 4}
+  ]
+}
