@@ -165,3 +165,38 @@ func TestNavSkipOnRouteHopDoesNotBanTheWalk(t *testing.T) {
 		}
 	}
 }
+
+// The breaker trips on a few crossings of one target, and each repeat within the memory doubles the skip up to the cap.
+func TestBorderLoopSkipEscalates(t *testing.T) {
+	g := soakyRig(t, 2)
+	trip := func(target int) time.Duration {
+		for i := 0; i < borderLoopCrossings; i++ {
+			g.r.noteCrossing(target)
+		}
+		return g.r.avoid[target].Sub(g.clock.Now())
+	}
+	want := borderLoopSkip
+	for i := 0; i <= borderLoopDoublings+2; i++ {
+		got := trip(9)
+		if got != want {
+			t.Fatalf("trip %d: skip %v, want %v", i+1, got, want)
+		}
+		if i < borderLoopDoublings {
+			want *= 2
+		}
+		g.clock.Sleep(got + time.Second)
+	}
+	// crossings of two different targets never add up
+	g2 := soakyRig(t, 2)
+	for i := 0; i < borderLoopCrossings; i++ {
+		g2.r.noteCrossing(3 + i%2)
+	}
+	if len(g2.r.avoid) != 0 {
+		t.Fatalf("mixed targets tripped: %v", g2.r.avoid)
+	}
+	// a long quiet spell forgets the repeats
+	g.clock.Sleep(borderLoopMemory + time.Minute)
+	if got := trip(9); got != borderLoopSkip {
+		t.Fatalf("after the memory: %v", got)
+	}
+}

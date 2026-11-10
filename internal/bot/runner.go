@@ -131,7 +131,8 @@ type Runner struct {
 	avoidWhy       map[int]string          // producer of each avoid entry (areaskip.go), guarded by obMu
 	targetFailLast map[int]targetFailStamp // time and skip of the last failure per target, guarded by obMu
 	targetFails    map[int]int             // consecutive failed walks to a leveling target (areaskip.go), guarded by obMu
-	crossLog       []time.Time             // recent "walked over an area border" re-plans (noteCrossing), guarded by obMu
+	crossLog       []crossStamp            // recent "walked over an area border" re-plans (noteCrossing), guarded by obMu
+	loopTrips      map[int]loopStamp       // border-loop breaker trips per target area (noteCrossing), guarded by obMu
 	hmu            sync.Mutex              // lastError and ladderStep
 	lastError      string
 	ladder         int

@@ -1,0 +1,3 @@
+BACKLOG: areathrash (TASK-242): border-loop breaker escalates (5 crossings, skip 3..48 min); cave shuttle analysis in docs/areathrash.md
+INDEX: docs/areathrash.md - area thrash, cave-mouth holds, Dark Wood exit analysis
+CHANGELOG: Fewer area ping-pongs: the border-loop breaker trips after 5 crossings and skips a repeat offender for longer each time
