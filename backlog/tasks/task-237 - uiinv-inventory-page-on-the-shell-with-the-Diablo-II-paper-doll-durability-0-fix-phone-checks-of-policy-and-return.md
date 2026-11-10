@@ -1,10 +1,13 @@
 ---
 id: TASK-237
-title: 'uiinv: inventory page on the shell with the Diablo II paper doll; durability 0 fix; phone checks of policy and return'
-status: In Progress
+title: >-
+  uiinv: inventory page on the shell with the Diablo II paper doll; durability 0
+  fix; phone checks of policy and return
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T01:22:00Z'
+updated_date: '2026-11-10T01:40:00Z'
 labels:
   - watch
   - bug
