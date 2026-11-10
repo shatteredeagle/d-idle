@@ -191,6 +191,14 @@ func (r *Runner) updateStarvation(s *d2.Snapshot) bool {
 	return v.On
 }
 
+// savingFor names what a poor hero is saving for (resource.SavingFor); empty when it is not poor.
+func (r *Runner) savingFor(s *d2.Snapshot) resource.Saving {
+	if !r.inPoverty() {
+		return resource.Saving{}
+	}
+	return resource.SavingFor(r.resInput(s), resource.FromEnv(*r.e.Tune), 0)
+}
+
 func (r *Runner) inPoverty() bool {
 	r.obMu.Lock()
 	defer r.obMu.Unlock()
@@ -248,6 +256,17 @@ func (r *Runner) sellable(s *d2.Snapshot) int {
 		v := r.d.Loot.Evaluate(*u.Item)
 		if ue != nil {
 			v = ue.EvaluateUnit(*u, s.Player.Level, s.Player.Gold)
+		}
+		// The player's marks from the inventory screen decide first: a marked item is sold (or kept) at the next visit
+		// whatever the looter thinks, so "nothing worth a sell trip" must count it.
+		if m, ok := r.d.Town.(interface{ MarkOf(d2.Unit) string }); ok {
+			switch m.MarkOf(*u) {
+			case "sell":
+				n++
+				continue
+			case "keep":
+				continue
+			}
 		}
 		if v == VerdictSell {
 			n++
