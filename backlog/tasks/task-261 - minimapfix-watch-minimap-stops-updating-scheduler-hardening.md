@@ -17,6 +17,7 @@ owns:
   - "internal/watch/minimapfix_test.go"
 exclusive: []
 contracts: []
+result: "scheduler hardened (fetch abort 8 s, safe catch, safe tick); root cause not reproduced offline (headless render dpr 1 and 2 updates fine); not verified live"
 ---
 
 ## Description
@@ -24,7 +25,7 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Why: user reports the minimap stale. Done when: a stalled or throwing panel cannot freeze polling.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
