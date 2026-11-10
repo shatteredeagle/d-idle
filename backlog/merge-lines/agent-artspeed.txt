@@ -1,1 +1,0 @@
-CHANGELOG: Inventory page: game art no longer delays the first paint; item art is prepared in the background at start (d2bot art extract to do it by hand), /api/art reports its progress (TASK-268)
