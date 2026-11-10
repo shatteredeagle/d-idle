@@ -21,13 +21,14 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 
 <!-- knobdump:begin -->
+
 ### nav.*
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | nav.pathQuality | 1 | 0.1..1 | 0..1 | 0.1 | 1 | 1 = shortest, smoothed paths. Lower values make paths longer and wobblier (inflated A* heuristic, no smoothing below 0.5, sideways waypoint jitter) but still reach the goal. |
 | nav.sloppiness | 8 | 0..14 | subtiles | 14 | 1 | Largest sideways displacement of a waypoint at path quality 0; scaled by (1 - quality). |
-| nav.waypointSpacing | 8 | 4..24 | subtiles | 4 | 3 | Distance between walking clicks. Smaller spacing follows the path more exactly but clicks more often. |
+| nav.waypointSpacing | 8 | 4..24 | subtiles | 4 | 5 | Distance between walking clicks. Smaller spacing follows the path more exactly but clicks more often. |
 | nav.arriveTolerance | 2 | 1.5..6 | subtiles | 6 | 3 | A walk ends within this distance of the goal. |
 | nav.pollMs | 100 | 50..400 | ms | 400 | accessor | Observation period while walking; larger values react later to stops and monsters. |
 | nav.replanMs | 1500 | 500..8000 | ms | 8000 | accessor | Earliest time a changed map or monster layout triggers a new plan. |
@@ -53,6 +54,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | nav.teleMinLeg | 13 | 0..120 | subtiles | 13 | 6 | A hop is skipped unless it skips more than this much of the planned walking path: running speed times the measured time of a hop (0.5625 x 18 ticks = 10, DRILLS24) plus a margin of 3 (docs/teletune2.md). 0 hops whenever mana allows. |
 | nav.teleEscapeReservePct | 15 | 0..90 | % | 15 | 1 | After a walk stalled at the character's spot, a hop ignores the minimum leg and may spend mana down to this share of max mana (never above nav.teleReservePct): leaving a pocket beats keeping mana for fights. Default: about three casts of a 5 to 8 mana attack on a 150 pool (UNSURE). |
 | nav.stuckFightLifePct | 60 | 0..100 | % | 60 | 1 | A walk stalled for the second rung of the stuck ladder or later, with hostiles inside the fight radius and life below this share, hands control to the fight (or the town portal once the fights are used up) instead of side-stepping on (Gate 2 g2c seed 13 died walking the ladder through a boss pack). 0 switches it off. |
+| nav.pursuitRadius | 10 | 0..20 | subtiles | 10 | 2 | An explore, roam or exit walk with a living monster this close for nav.pursuitPolls observations in a row stops and hands over to the fight (the Yield hook) instead of walking on with it behind (d2play 2026-11-10: the Paladin walked away from two followers at full life). Class generic; the fight decides attack or retreat. 0 switches it off. |
+| nav.pursuitPolls | 4 | 1..20 | count | 4 | 1 | How many observations in a row (nav.pollMs apart) a monster must stay within nav.pursuitRadius before the walk turns to fight; a monster the hero outruns or passes does not count. |
+| nav.pursuitMinLifePct | 50 | 0..100 | % | 50 | 1 | The pursuit rule only turns the walk to fight at or above this life share; below it the safety guard, potions and the stuck ladder decide. |
 
 ### combat.*
 
@@ -343,7 +347,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.retreatDanger | 2 | 1..3 | level | 3 | 1 | Pack danger at which resting happens out of sight. |
 | resource.hpReserve | 1 | 0..4 | count | 0 | 1 | Healing potions kept for emergencies, not spent on engaging. |
 | resource.economyManaPct | 40 | 10..70 | % | 10 | 1 | Below this mana percent the cheapest attack skill is used. |
-| resource.meleeMinLifePct | 50 | 30..80 | % | 30 | 2 | Life percent needed for the melee fallback when out of mana. |
+| resource.meleeMinLifePct | 50 | 30..80 | % | 30 | 3 | Life percent needed for the melee fallback when out of mana. |
 | resource.meleeMaxPack | 3 | 1..6 | count | 6 | 3 | Largest hostile count the melee fallback accepts. |
 | resource.lowManaWaitMs | 700 | 300..2000 | ms | 2000 | 2 | Wait when out of mana and nothing else is possible. |
 | resource.waitMaxSec | 8 | 2..30 | s | 30 | local var | Longest stretch of waiting for mana inside a fight before retreating. |
@@ -352,7 +356,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.poorGold | 150 | 50..500 | gold | 50 | 1 | Below this gold life potions come before mana potions. |
 | resource.reserveGold | 30 | 0..200 | gold | 0 | 2 | Never spend below this on potions. |
 | resource.potionGoldPct | 80 | 30..100 | % | 30 | 1 | Share of spendable gold potions may take when not poor. |
-| resource.hpFirst | 3 | 1..6 | count | 1 | 9 | Healing potions bought before any mana potion. |
+| resource.hpFirst | 3 | 1..6 | count | 1 | 12 | Healing potions bought before any mana potion. |
 | resource.mpFirst | 2 | 0..6 | count | 0 | 3 | Mana potions bought for casters after the first healing potions. |
 | resource.tripHPMin | 1 | 0..4 | count | 0 | 2 | Town trip when healing potions are at or below this. |
 | resource.tripMPMin | 0 | 0..4 | count | 0 | 1 | Town trip (casters) when mana potions are at or below this. |
@@ -361,8 +365,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.tripHealPct | 50 | 25..80 | % | 25 | 1 | Life percent below which a character that cannot regenerate goes to town for free healing. |
 | resource.mercDeadPack | 2 | 1..6 | count | 6 | 1 | Hostiles at which a fight is left once the merc is dead. |
 | resource.fleeLifePct | 50 | 30..80 | % | 30 | 1 | Life percent below which a character with no healing potion and no portal breaks away from hostiles instead of trading blows. |
-| resource.kitTPGold | 100 | 50..200 | gold | 50 | 8 | Price of one town portal scroll, for the minimal-kit cost. |
-| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 11 | Price of the cheapest healing potion, for the minimal-kit cost. |
+| resource.kitTPGold | 100 | 50..200 | gold | 50 | 11 | Price of one town portal scroll, for the minimal-kit cost. |
+| resource.kitPotionGold | 30 | 20..100 | gold | 20 | 14 | Price of the cheapest healing potion, for the minimal-kit cost. |
 | resource.povertyMargin | 60 | 0..300 | gold | 0 | 1 | Gold above the minimal kit cost at which poverty mode ends. |
 | resource.retreatBelt | 0 | 0..3 | count | 0 | 2 | In a fight with life under the drink line and at most this many healing potions left, leave (portal, or walk home near town) instead of drinking. 0 = off. |
 | resource.retreatCountPack | 1 | 0..1 | 0/1 | 0 | 1 | 1 = spare healing/rejuvenation potions in the backpack (up to the free belt slots) count towards retreatBelt, so a full pack does not trigger a retreat; 0 = belt only. |

@@ -4,6 +4,7 @@
 
 const SAFETY_POLL = 5000; // a missed SSE event costs at most this long
 const FAIL_WAIT = 4000;   // after a failed fetch
+const FETCH_TIMEOUT = 8000; // ms; a panel request older than this is aborted
 const MAX_FAILS = 5;      // 404 or 401 this often in a row: the route is not mounted, stop polling it
 
 const html = document.documentElement;
@@ -176,7 +177,11 @@ function makeScheduler() {
   function run(s) {
     s.inflight = true;
     const q = s.api.query ? s.api.query() : '';
-    fetch(s.m.endpoint + q, { cache: 'no-store', credentials: 'same-origin' }).then((r) => {
+    // A stalled request (a proxy, the browser's per-host connection cap behind the video and event streams) must not
+    // hold the slot for ever: abort it, count a failure and poll again.
+    const ac = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ac ? setTimeout(() => ac.abort(), FETCH_TIMEOUT) : 0;
+    fetch(s.m.endpoint + q, { cache: 'no-store', credentials: 'same-origin', signal: ac ? ac.signal : undefined }).then((r) => {
       if (!r.ok) { const e = new Error('status ' + r.status); e.status = r.status; throw e; }
       return r.json();
     }).then((d) => {
@@ -185,10 +190,12 @@ function makeScheduler() {
       if (s.root.dataset.state === 'loading') s.root.dataset.state = 'ready';
     }).catch((e) => {
       s.fails++;
-      if (s.api.update) keepFocus(s.root, () => s.api.update(null, { status: e.status || 0, fails: s.fails }));
+      // a throw here would skip the slot release below and freeze the panel for good
+      try { if (s.api.update) keepFocus(s.root, () => s.api.update(null, { status: e.status || 0, fails: s.fails })); } catch (e2) { /* keep polling */ }
       // a route that is not mounted stops polling; anything else (503 while the bot starts, a network blip) retries slower
       if (s.fails >= MAX_FAILS && (e.status === 404 || e.status === 401)) s.stopped = true;
     }).then(() => {
+      clearTimeout(timer);
       s.inflight = false;
       const p = s.m.poll > 0 ? s.m.poll * 1000 : SAFETY_POLL;
       s.next = performance.now() + (s.fails ? Math.min(30000, Math.max(p, FAIL_WAIT * s.fails)) : p);
@@ -197,7 +204,8 @@ function makeScheduler() {
   }
   function tick() {
     const now = performance.now();
-    slots.forEach((s) => { if (due(s, now)) run(s); });
+    // one panel throwing must neither stop the other polls nor the loop itself
+    slots.forEach((s) => { try { if (due(s, now)) run(s); } catch (e) { s.inflight = false; s.fails++; s.next = now + FAIL_WAIT; } });
     changed = false;
     setTimeout(tick, 250);
   }

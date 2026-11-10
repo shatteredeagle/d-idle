@@ -37,6 +37,9 @@ type NavTuning struct {
 	TeleMinLeg           float64 // a hop is declined unless it skips more than this much of the planned walk (subtiles)
 	TeleEscapeReservePct float64 // after a walk stall the leg rule is off and this smaller reserve (% of max mana) applies
 	StuckFightLifePct    float64 // stuck ladder at rung 2 or more with hostiles in fight radius and life below this %: fight (or town portal) instead of side-stepping on; 0 = off
+	PursuitRadius        float64 // a wander (explore, roam, exit walk) with a living non-NPC monster this close for PursuitPolls observations in a row hands over to the fight (Yield); 0 = off
+	PursuitPolls         float64 // consecutive observations a monster must stay within PursuitRadius before the wander turns to fight
+	PursuitMinLifePct    float64 // the pursuit rule applies at or above this % life (below it the safety guard and the stuck ladder decide)
 	CautionRadius        float64 // CorpseApproach stops when a living monster is this close (subtiles); its paths avoid monsters at twice the usual radius
 }
 
@@ -45,7 +48,7 @@ func DefaultNavTuning() NavTuning {
 		PathQuality: 1, Sloppiness: 8, WaypointSpacing: 8, ArriveTolerance: 2, PollMs: 100, ReplanMs: 1500,
 		StuckMs: 1200, MaxRecoveries: 6, WallClearance: 3, WallWeight: 0.75, MonsterRadius: 8, MonsterPenalty: 6,
 		ExploreInformed: true, ExploreBucket: 10, WalkTimeoutSec: 120, ExploreTimeoutSec: 300, ExitPush: 8,
-		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60,
+		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60, PursuitRadius: 10, PursuitPolls: 4, PursuitMinLifePct: 50,
 		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 0, BadEdgeTTLSec: 300,
 	}
 }
@@ -134,5 +137,11 @@ func navKnobs() []Knob {
 			Desc: "After a walk stalled at the character's spot, a hop ignores the minimum leg and may spend mana down to this share of max mana (never above nav.teleReservePct): leaving a pocket beats keeping mana for fights. Default: about three casts of a 5 to 8 mana attack on a 150 pool (UNSURE)."},
 		{Key: "nav.stuckFightLifePct", Label: "Stuck ladder fight life", Unit: "%", Default: d.StuckFightLifePct, Min: 0, Max: 100, HigherIsBetter: true, NoHandicap: true,
 			Desc: "A walk stalled for the second rung of the stuck ladder or later, with hostiles inside the fight radius and life below this share, hands control to the fight (or the town portal once the fights are used up) instead of side-stepping on (Gate 2 g2c seed 13 died walking the ladder through a boss pack). 0 switches it off."},
+		{Key: "nav.pursuitRadius", Label: "Pursuit: turn and fight radius", Unit: "subtiles", Default: d.PursuitRadius, Min: 0, Max: 20, NoHandicap: true,
+			Desc: "An explore, roam or exit walk with a living monster this close for nav.pursuitPolls observations in a row stops and hands over to the fight (the Yield hook) instead of walking on with it behind (d2play 2026-11-10: the Paladin walked away from two followers at full life). Class generic; the fight decides attack or retreat. 0 switches it off."},
+		{Key: "nav.pursuitPolls", Label: "Pursuit: observations", Unit: "count", Default: d.PursuitPolls, Min: 1, Max: 20, NoHandicap: true,
+			Desc: "How many observations in a row (nav.pollMs apart) a monster must stay within nav.pursuitRadius before the walk turns to fight; a monster the hero outruns or passes does not count."},
+		{Key: "nav.pursuitMinLifePct", Label: "Pursuit: minimum life", Unit: "%", Default: d.PursuitMinLifePct, Min: 0, Max: 100, NoHandicap: true,
+			Desc: "The pursuit rule only turns the walk to fight at or above this life share; below it the safety guard, potions and the stuck ladder decide."},
 	}
 }

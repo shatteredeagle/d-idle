@@ -87,7 +87,7 @@ func (n *Navigator) explore(ctx context.Context, done func() bool, hint *input.P
 			return done() || !isFrontier(o.lm, fr.pos)
 		}
 		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return fr.pos, 3, nil },
-			walkOpts{stopWhen: stop, timeout: 90 * time.Second})
+			walkOpts{stopWhen: stop, timeout: 90 * time.Second, pursuit: true})
 		switch {
 		case err == nil:
 		case errors.Is(err, ErrStuck), errors.Is(err, ErrNoPath), errors.Is(err, ErrTimeout):

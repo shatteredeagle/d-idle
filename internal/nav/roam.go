@@ -226,7 +226,7 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 			return done() || c.seen[pick]
 		}
 		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return target, 3, nil },
-			walkOpts{stopWhen: stop, timeout: 90 * time.Second})
+			walkOpts{stopWhen: stop, timeout: 90 * time.Second, pursuit: true})
 		switch {
 		case err == nil:
 			if !done() {
