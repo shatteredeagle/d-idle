@@ -682,6 +682,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - lootskip: potion pickup finding, pack buffer default 2 (docs/lootskip.md, TASK-258)
 - TASK-259 goldfarm: Farm gold button on /watch, safe zone one rung down, persists until Stop farming (offline only)
 - lootscrolls (TASK-262): scrolls only until tome full, potion tier floor as data, skipped items named in loot line
+- TASK-256 contextdiet: agent reading order cut to START-HERE, task, area doc (138 KB to 19 KB standing reading); 12-line brief template; per-area digest still open
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
