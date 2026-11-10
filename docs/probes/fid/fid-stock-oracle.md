@@ -30,7 +30,7 @@ game.exe (V read, `d8_callers.sh 576980`: three call sites, 0x578bcb, 0x579116, 
 | FUN_00578b30 (entry 0x578b30) | looks the NPC up (`FUN_00535f10` -> record `esi`), `edi = esi + 0x20`. At 0x578bbc: **`cmp byte [edi], 0; jne` skip, else `FUN_00576980(player, record)` (0x578bcb) and `[edi] = 1`**. So the stock is made once per NPC per game, at the first interaction; a second open finds the flag and keeps the stock. The next flag `[edi+1]` does the same for the hire list: `FUN_00576070` only for NPC classes 0x96, 0x203, 0xc6, 0xfc (0x578bd9..0x578bff), then `[edi+1] = 1` | V read |
 | 0x579105..0x579116 (a function ending at 0x579124, entry before 0x5790c0) | if `[record+0x23] != 0`: `[esi] = 0`, regenerate with `FUN_00576980`, `[esi] = 1` | V read; what sets `[+0x23]` (the only byte store `[reg+0x23] = 0` found is at 0x56a12b; no store of 1 found by the sweep) U |
 | 0x57949e..0x5794c7 (the open-trade path, calls `FUN_00578b30` at 0x579475 first) | if `[record+0x27] != 0` (and the trade flags of the packet are set, for NPC classes other than 0x96, 0x203, 0xc6): `[record+7] = 0`, `FUN_00536d10`, `FUN_00576980`, `[edi] = 1` | V read; the setters of `[+0x27] = 1` in the binary (sweep `byte ptr [reg + 0x27], 1`): 0x5b8b17 and 0x5bbce7, in other functions whose structs were not identified (a buyback or inventory-change flag is plausible, I) U |
-| a 4-minute timer | the earlier seed-study item 7.3 claim ("rerolls every 4 minutes"): **no timer read in the three paths above**; the sweep found no `GetTickCount`-driven vendor loop here (U: the sweep was for the two flags only) | U |
+| a 4-minute timer | the earlier seed-study item 7.3 claim ("rerolls every 4 minutes"): **no timer read in the three paths above**; a search for other code that clears or sets the flags, or a tick-driven vendor loop, was NOT done beyond the two flag sweeps | U |
 
 d2d (V read, `components/game/world/commands.cpp` lines 50-60 on 83fc7ba1, `d8_src.sh`): `cmd::OpenTrade` takes `stocks.find(trade->npc)`; found: the kept stock is shown again (mode 0, first tab); not found: `open_store(...)` generates it on the proxy seed and the result is kept. The Gamble tab (`trade->gamble`) is generated fresh on every open (`open_gamble`). `OpenHire` regenerates `hire_list(act())` on every open (comment "ten offers (FUN_00576070)"). So:
 
@@ -56,7 +56,7 @@ No game ran here. The TASK-56 live stock read (vendor probe, fidprobe phase 2) i
 
 ## Bot findings
 
-B1: any bot assumption that stock never changes after the first visit holds in d2d and in game.exe's normal path; a re-roll in game.exe after some NPC event (D2) is not excluded (U), so a plan that buys the same item across visits should re-read the vendor list (the bot does, `internal/town`; not re-read for the file:line here). No code changed.
+B1: any bot assumption that stock never changes after the first visit holds in d2d and in game.exe's normal path; a re-roll in game.exe after some NPC event (D2) is not excluded (U), so a plan that buys the same item across visits should re-read the vendor list (whether the bot does was not checked, U). No code changed.
 
 ## PR candidate
 
