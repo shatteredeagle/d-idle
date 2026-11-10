@@ -14,6 +14,7 @@ import (
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/launch"
@@ -31,6 +32,7 @@ var errNeedTables = errors.New("live play needs the game tables (data.Open faile
 type runnerRef struct {
 	p   atomic.Pointer[bot.Runner]
 	inv *invdesk.Desk             // the inventory page desk (invwire.go); nil until newInvDesk
+	gf  *goldfarm.Controller      // the Farm gold order (repairwire.go); nil until newRepair
 	rep *repair.Controller        // the repair policy and request (repairwire.go); nil until newRepair
 	tw  atomic.Pointer[town.Town] // set by wireRepair, read by the gear readings
 }

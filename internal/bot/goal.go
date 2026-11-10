@@ -104,6 +104,9 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 		return r.farmStep(ctx, snap, c)
 	}
 	if c.spec.camp != nil {
+		if r.goldFarmOn() {
+			return r.goldFarmStep(ctx, snap, c) // the player's order: farm gold until told to stop (docs/goldfarm.md)
+		}
 		if r.recoveryActive() && !r.gearVerdict(snap).Gated {
 			return r.recoveryStep(ctx, snap, c) // the quest step waits until the purse is filled again
 		}
@@ -823,6 +826,14 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 	p := s.Player
 	switch c.spec.kind {
 	case goals.ReachLevel:
+		if r.goldFarmOn() {
+			if a, ok, stop := r.goldFarmTarget(s); stop {
+				return 0, false
+			} else if ok {
+				l.stepArea = 0
+				return a, true
+			}
+		}
 		if r.recoveryActive() && !r.gearVerdict(s).Gated {
 			r.updateStarvation(s)
 			r.pushPoverty(true, recoveryPackDanger) // after updateStarvation, which pushes the lean 0
@@ -1157,7 +1168,9 @@ const (
 // out of unexplored ground with nothing hostile left, the area counts as cleared for this game.
 func (r *Runner) sweep(ctx context.Context, s *d2.Snapshot, c control, area int) bool {
 	name := r.areaName(area)
-	if sv := r.savingFor(s); sv.Item != "" {
+	if have, want, on := r.goldFarmNumbers(s); on {
+		r.setWhy(WhyFarmUser, "area", name, "have", itoa(have), "want", itoa(want))
+	} else if sv := r.savingFor(s); sv.Item != "" {
 		r.setWhy(WhySavingFor, "area", name, "item", sv.Item, "need", itoa(sv.Need))
 	} else {
 		r.setWhy(WhyFight, "area", name, "life", itoa(s.Player.LifePct()))

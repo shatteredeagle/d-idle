@@ -147,6 +147,8 @@ type Fun struct {
 	Art *ArtAPI
 	// Repair mounts the gear condition and Repair now routes (repairapi.go); set it before Serve, nil: no routes.
 	Repair *RepairAPI
+	// GoldFarm mounts the Farm gold order routes (goldfarmapi.go); set it before Serve, nil: no routes.
+	GoldFarm *GoldFarmAPI
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 
@@ -668,6 +670,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 			m.Handle(p, f.Repair.Handler())
 		}
 	}
+	if f.GoldFarm != nil {
+		m.Handle(GoldFarmRoute, f.GoldFarm.Handler())
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -718,6 +723,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 		for _, p := range RepairPostRoutes {
 			m.Handle(p, f.Repair.PostHandler(o))
 		}
+	}
+	if f.GoldFarm != nil {
+		m.Handle(GoldFarmRoute, f.GoldFarm.PostHandler(o))
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))

@@ -147,6 +147,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	disp.run = runner
 	ref.p.Store(runner)
+	wireGoldFarm(ref, runner)
 	m, err := goals.New(goals.Options{Runner: runner, Path: ip.Goals(), Chain: taskChain(runner.LastSnapshot),
 		Logf: func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }})
 	if err != nil {
@@ -164,7 +165,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
 	o.ladder.art = artSource(gameDir, o.data)
-	o.ladder.repair = ref.rep
+	o.ladder.repair, o.ladder.farm = ref.rep, ref.gf
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
 	o.ladder.riskFacts = runner.RiskFacts

@@ -27,6 +27,7 @@ const (
 	WhyFarmRuns    = "farm_runs"     // area
 	WhyFarmGold    = "farm_gold"     // level
 	WhySavingFor   = "saving_for"    // area, item, need (poverty: the first must-have the gold does not cover)
+	WhyFarmUser    = "farm_user"     // area, have, want (the player's Farm gold order)
 	WhyAfterDeath  = "after_death_restock"
 	WhyDeathCorpse = "after_death_corpse"
 	WhyDeathGold   = "after_death_gold"
@@ -34,7 +35,7 @@ const (
 
 // whyCodes lists every code above (a test compares it with the template table).
 var whyCodes = []string{WhyQuestStep, WhyWalk, WhyFight, WhyTownTrip, WhyTownChores, WhyHealTrip, WhyWaitHeal, WhyClaimTrip,
-	WhyBackToField, WhyToTown, WhyAreaDone, WhyGuardExit, WhyFarmRuns, WhyFarmGold, WhySavingFor, WhyAfterDeath, WhyDeathCorpse, WhyDeathGold}
+	WhyBackToField, WhyToTown, WhyAreaDone, WhyGuardExit, WhyFarmRuns, WhyFarmGold, WhyFarmUser, WhySavingFor, WhyAfterDeath, WhyDeathCorpse, WhyDeathGold}
 
 // setWhy announces the reason for the activity the next setLocked sets. Parameters are key, value pairs.
 func (r *Runner) setWhy(code string, kv ...string) {

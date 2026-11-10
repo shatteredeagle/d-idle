@@ -185,9 +185,14 @@ func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 
 // recoveryStep replaces the campaign's quest step while recovery runs: one leveling slice in the recovery area.
 func (r *Runner) recoveryStep(ctx context.Context, snap *d2.Snapshot, c control) bool {
-	n := snap.Player.Level + 1
 	r.setWhy(WhyFarmGold, "level", itoa(snap.Player.Level))
-	return r.do(ctx, c, StateClearing, "Recovery: farming gold", 40*time.Minute, "recovery", func(ctx context.Context) error {
+	return r.levelSlice(ctx, snap, c, "Recovery: farming gold", "recovery")
+}
+
+// levelSlice is one leveling slice whose area choice (target0) is a farm: recovery and the player's Farm gold order.
+func (r *Runner) levelSlice(ctx context.Context, snap *d2.Snapshot, c control, label, tag string) bool {
+	n := snap.Player.Level + 1
+	return r.do(ctx, c, StateClearing, label, 40*time.Minute, tag, func(ctx context.Context) error {
 		err := taskActs{r, c}.LevelTo(ctx, n)
 		if err != nil && strings.Contains(err.Error(), noAreaMsg) {
 			// no farm area is eligible (bans after deaths): that is a planning block, not a fault. Wait at home until a ban ends.

@@ -22,6 +22,7 @@ import (
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/ladder"
 	"d2lod-bot/internal/launch"
 	"d2lod-bot/internal/overlay"
@@ -70,9 +71,10 @@ type ladderOptions struct {
 	// proposals: the zone proposer's inputs (docs/proposezone.md), set by the backend from the runner and the tuning
 	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
 	proposalFacts func() watch.ProposalFacts
-	inv           *watch.InvAPI      // the inventory page routes (invwire.go); nil: none
-	art           watch.ArtSource    // the game art of the install (artwire.go); nil: /api/art says available:false
-	repair        *repair.Controller // the repair policy (repairwire.go); nil: none
+	inv           *watch.InvAPI        // the inventory page routes (invwire.go); nil: none
+	art           watch.ArtSource      // the game art of the install (artwire.go); nil: /api/art says available:false
+	repair        *repair.Controller   // the repair policy (repairwire.go); nil: none
+	farm          *goldfarm.Controller // the Farm gold order (repairwire.go); nil: none
 	// riskFacts is the hero risk meter's reader (bot.Runner.RiskFacts); nil: no meter. monsters is the monster table
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
@@ -258,7 +260,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Fun.Inventory = l.inv
 		rig.Fun.Art = artAPI(l.art)
 		rig.Fun.Readiness = l.readiness
-		bindRepair(rig.Fun, l.repair)
+		bindRepair(rig.Fun, l.repair, l.farm)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}
