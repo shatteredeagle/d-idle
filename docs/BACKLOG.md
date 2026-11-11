@@ -691,6 +691,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-270 archreview: architecture review of the containerized path versus an all-in-one app (docs/research/architecture-review-2026-11-10.md): hybrid recommended, hosted beta first
 - TASK-276 beta signing key pinned beside the release key (pubkeys/beta.pub), feed-publish default pins beta.pub, friendpack bakes both keys; first feed release dry-run verified (no upload)
 - beta010: first beta release 0.1.0 (beta, seq 1) cut offline: image, signed feed tree and friends pack built, not uploaded (TASK-277)
+- gearplayer: bot never equips, swaps or buys equipment by default (resource.gearDecisions=player); advice and onboarding prompt only (TASK-280)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

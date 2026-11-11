@@ -54,7 +54,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 		// combat emits Kill and Potion, loot emits Drop through env.Emit (docs/combat.md, docs/town.md): do not count twice
 		cfg.DisableObserve = []string{"kill", "drop", "potion"}
 	}
-	cfg = withPlayerTuning(cfg, o.ladder)
+	cfg = withGearPolicy(withPlayerTuning(cfg, o.ladder))
 	tune, warns, err := cfg.BuildTuning()
 	if err != nil {
 		return err

@@ -51,6 +51,7 @@ type ResourceTuning struct {
 	GearRiskMedium int // risk points at which gear risk is medium
 	GearRiskHigh   int // risk points at which gear risk is high and the field is closed
 	GearDeathsHigh int // deaths in the hour or in one area from which deaths add gear risk
+	GearDecisions  int // who makes equipment decisions: 0 = the player (the bot never equips, swaps or buys gear), 1 = the bot (legacy; drills, soaks, measured runs, the Gear Sets unlock); docs/gear-policy.md
 	EarlyGearMax   int // below this clvl armor is ignored and only weapon-dependent classes need a weapon (docs/sme/early-gear-policy.md); 0 = off
 	TripBudget     int // finished town trips allowed per TripWindowMin before a thin belt no longer sends the bot home; 0 = no budget
 	TripWindowMin  int // minutes the trip budget looks back
@@ -119,3 +120,7 @@ func registeredKnobs() []Knob {
 	}
 	return k
 }
+
+// BotDecidesGear says whether the bot may make equipment decisions (equip, swap, buy gear, fill an empty slot):
+// gear.decisions = bot. The default is the player (docs/gear-policy.md).
+func (r ResourceTuning) BotDecidesGear() bool { return r.GearDecisions != 0 }

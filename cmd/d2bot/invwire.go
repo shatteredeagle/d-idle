@@ -9,6 +9,7 @@ import (
 	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/loot"
+	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/town"
 	"d2lod-bot/internal/watch"
 )
@@ -22,6 +23,18 @@ import (
 func newInvDesk(stateDir string, d *display, ref *runnerRef) error {
 	cfg := invdesk.Config{
 		Inventory: invSource{d}.Inventory,
+		Advice: func(it status.Item) string {
+			if r := ref.p.Load(); r != nil {
+				return r.GearAdviceFor(it.ID)
+			}
+			return ""
+		},
+		Prompt: func() string {
+			if r := ref.p.Load(); r != nil {
+				return r.GearPrompt()
+			}
+			return ""
+		},
 		Snap: func() *d2.Snapshot {
 			if r := ref.p.Load(); r != nil {
 				return r.LastSnapshot()

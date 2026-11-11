@@ -1,6 +1,7 @@
 package resource
 
 import (
+	"strings"
 	"testing"
 
 	"d2lod-bot/internal/d2"
@@ -117,5 +118,37 @@ func TestNeedsWeapon(t *testing.T) {
 		if NeedsWeapon(c) != want {
 			t.Errorf("%v: want %v", c, want)
 		}
+	}
+}
+
+func TestPlayerGate(t *testing.T) {
+	tn := DefaultGearTune()
+	tn.Player = true
+	pal := GearInput{Level: 12, Gold: 900, Potions: 4, MaxLife: 200, Act: 1, NeedWeapon: true}
+	sorc := GearInput{Level: 20, Gold: 900, Potions: 4, MaxLife: 100, Act: 1, Caster: true}
+	for name, in := range map[string]GearInput{"paladin": pal, "sorceress": sorc} {
+		// nothing worn at all: never gated, never a rebuy, shown as medium with the reason
+		v := GearGate(in, 150, tn)
+		if v.Gated || v.CanRebuy || v.Risk != RiskMedium || !v.Naked && name == "paladin" {
+			t.Errorf("%s unarmed: %+v", name, v)
+		}
+		if name == "paladin" && !strings.Contains(v.Reason, "no weapon equipped") {
+			t.Errorf("%s reason %q", name, v.Reason)
+		}
+		// the same hero under the bot policy keeps the old behaviour
+		old := GearGate(in, 150, DefaultGearTune())
+		if name == "paladin" && (!old.Gated || !old.CanRebuy) {
+			t.Errorf("legacy paladin: %+v", old)
+		}
+		// geared: identical to the legacy verdict
+		in.Weapon, in.Body = true, true
+		if a, b := GearGate(in, 150, tn), GearGate(in, 150, DefaultGearTune()); a.Risk != b.Risk || a.Gated != b.Gated {
+			t.Errorf("%s geared: %+v vs %+v", name, a, b)
+		}
+	}
+	// other dangers still gate under the player policy
+	pal.Gold, pal.Potions = 0, 0
+	if v := GearGate(pal, 150, tn); !v.Gated {
+		t.Errorf("no potions and no gold must still gate: %+v", v)
 	}
 }

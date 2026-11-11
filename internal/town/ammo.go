@@ -92,6 +92,22 @@ func AmmoPlan(class, path string, e gear.Equipped, pack map[string]bool) []gear.
 	return out
 }
 
+// ammoPlan is AmmoPlan under the gear policy. When the player owns equipment the plan restocks ammo for the launcher or
+// thrown stack that is already worn and never buys a bow or a quiver for an empty slot.
+func (t *Town) ammoPlan(class string, e gear.Equipped, pack map[string]bool) []gear.Purchase {
+	plan := AmmoPlan(class, t.ammoPath, e, pack)
+	if t.botGear() {
+		return plan
+	}
+	var out []gear.Purchase
+	for _, p := range plan {
+		if p.Why == "ammo low" || p.Why == "thrown stack low" {
+			out = append(out, p)
+		}
+	}
+	return out
+}
+
 // ammoTodo is the chore's need check: something to buy or a bow/quiver in the pack that should be worn.
 func (t *Town) ammoTodo(s *d2.Snapshot) bool {
 	if s == nil || s.Player == nil || s.Inventory == nil {
@@ -107,7 +123,7 @@ func (t *Town) ammoTodo(s *d2.Snapshot) bool {
 		codes[c] = true
 	}
 	class := s.Player.Class.String()
-	if len(AmmoPlan(class, t.ammoPath, e, codes)) > 0 {
+	if len(t.ammoPlan(class, e, codes)) > 0 {
 		return true
 	}
 	return len(t.equipTodo(class, e, pk)) > 0
@@ -123,7 +139,7 @@ type equipJob struct {
 // matching quiver into the left hand when the launcher has none.
 func (t *Town) equipTodo(class string, e gear.Equipped, pack map[string]d2.Unit) []equipJob {
 	var jobs []equipJob
-	if gear.ClassCode(class) != "ama" {
+	if gear.ClassCode(class) != "ama" || !t.botGear() {
 		return nil
 	}
 	launcher := e.Weapon
@@ -160,7 +176,7 @@ func (t *Town) buyAmmo(ctx context.Context, a *Act, rep *ChoreReport) error {
 		codes[c] = true
 	}
 	class := s.Player.Class.String()
-	buys := AmmoPlan(class, t.ammoPath, e, codes)
+	buys := t.ammoPlan(class, e, codes)
 	var first error
 	if len(buys) > 0 {
 		first = t.buyFrom(ctx, a, buys, rep)
@@ -342,7 +358,7 @@ const bowTripGold = 150
 
 // wantsBow says whether the character is a bow-path Amazon with no launcher worn or in the pack and the gold to buy one.
 func (t *Town) wantsBow(s *d2.Snapshot) bool {
-	if t.ammoPath != "bow" || s.Player.Class != d2.Amazon || s.Player.Gold < bowTripGold {
+	if !t.botGear() || t.ammoPath != "bow" || s.Player.Class != d2.Amazon || s.Player.Gold < bowTripGold {
 		return false
 	}
 	e, ok := t.gearOf(s)
