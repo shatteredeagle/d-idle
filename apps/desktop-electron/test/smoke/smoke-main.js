@@ -19,6 +19,15 @@ async function until(fn, what, ms = 15000) {
   throw new Error('timeout: ' + what);
 }
 
+// A window that is "up" but white shows one colour only; real content (text on a page) has several.
+async function assertNotBlank(wc, what) {
+  await sleep(300);
+  const bmp = (await wc.capturePage()).toBitmap();
+  const colours = new Set();
+  for (let i = 0; i + 3 < bmp.length && colours.size < 3; i += 4 * 7) colours.add(bmp.readUInt32LE(i));
+  assert.ok(colours.size > 1, `${what} is blank (one uniform colour)`);
+}
+
 async function main() {
   const other = { hits: 0 };
   const B = await listen((_q, r) => { other.hits++; r.end('other'); });
@@ -32,6 +41,20 @@ async function main() {
     r.end(page('hello ' + q.url));
   });
   const C = await listen((_q, r) => { r.writeHead(503); r.end('warming'); });
+  // D: answers the probe, but the first two page loads (navigations) die like a LAN load blocked by the macOS Local
+  // Network permission; later loads work. The window must show the helper with a message, never stay blank.
+  let dDocs = 0;
+  const D = await listen((q, r) => {
+    if (q.headers['sec-fetch-dest'] === 'document' && ++dDocs <= 2) return q.socket.destroy();
+    if (q.url === '/watch') { r.writeHead(302, { location: '/login' }); return r.end(); }
+    r.end(page('recovered ' + q.url));
+  });
+  const E = await listen((q, r) => {
+    if (q.headers['sec-fetch-dest'] === 'document') return; // never answers: a silent stall
+    r.writeHead(302, { location: '/login' }); r.end();
+  });
+  const addrE = `127.0.0.1:${E.address().port}`;
+  const addrD = `127.0.0.1:${D.address().port}`;
   const addrA = `127.0.0.1:${A.address().port}`;
   const originA = `http://${addrA}`;
   const addrC = `127.0.0.1:${C.address().port}`;
@@ -52,7 +75,7 @@ async function main() {
   const fakeAutostart = { supported: true, get: () => autostartOn, set: (v) => { autostartOn = v; } };
 
   const userData = fs.mkdtempSync(path.join(os.tmpdir(), 'd2e-smoke-'));
-  const ctx = await require('../../src/app').start({ argv: ['--address', addrA, '--page', 'inventory'], userData, noSingleInstance: true, autostart: fakeAutostart, updateFeed: `http://127.0.0.1:${feedPort}`, updateKeys: [publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')], updateDelayMs: 100 });
+  const ctx = await require('../../src/app').start({ argv: ['--address', addrA, '--page', 'inventory'], userData, logFile: path.join(userData, 'main.log'), noSingleInstance: true, stallMs: 4000, autostart: fakeAutostart, updateFeed: `http://127.0.0.1:${feedPort}`, updateKeys: [publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')], updateDelayMs: 100 });
   assert.ok(ctx, 'app started');
   const game = ctx.gameView.webContents;
   const helper = ctx.helperView.webContents;
@@ -62,6 +85,8 @@ async function main() {
   });
   assert.equal(game.getURL(), originA + '/watch/inventory', 'opens the requested page on the exact origin');
   console.log('ok opens', game.getURL());
+  await assertNotBlank(game, 'game view');
+  console.log('ok game view is not blank');
 
   assert.deepEqual(await game.executeJavaScript('[typeof window.d2idle, typeof require, typeof process, typeof module]'), ['undefined', 'undefined', 'undefined', 'undefined'], 'game page sees no bridge and no node');
   console.log('ok game view has no preload and no node');
@@ -92,6 +117,8 @@ async function main() {
   let r = await helper.executeJavaScript(`window.d2idle.saveAddress(${JSON.stringify(addrC)})`);
   assert.equal(r.status, 'warming');
   assert.equal(ctx.gameShown, false, 'helper is shown while the game is warming up');
+  await assertNotBlank(helper, 'helper view');
+  console.log('ok helper view is not blank');
   r = await helper.executeJavaScript(`window.d2idle.saveAddress('ftp://x:1')`);
   assert.match(r.error, /http/);
   console.log('ok warming and bad address');
@@ -99,6 +126,29 @@ async function main() {
   assert.equal(r.status, 'up');
   await until(() => ctx.gameShown, 'game shown again');
   console.log('ok back up');
+
+  // Failed first load: message in the helper, helper visible, game view hidden, then an automatic retry opens the page.
+  r = await helper.executeJavaScript(`window.d2idle.saveAddress(${JSON.stringify(addrD)})`);
+  await until(() => ctx.retryPending, 'first load failure noticed');
+  assert.equal(ctx.gameShown, false, 'blank game view is not shown after a failed load');
+  assert.equal(ctx.helperView.getVisible(), true, 'helper is visible after a failed load');
+  assert.equal(ctx.gameView.getVisible(), false);
+  await until(async () => /Waiting for the server/.test(await helper.executeJavaScript(`document.getElementById('error').textContent`)), 'helper shows the waiting message');
+  assert.equal(await helper.executeJavaScript(`document.getElementById('error').hidden`), false);
+  await until(() => ctx.gameShown && ctx.gameView.webContents.getURL().includes('/watch') && !ctx.gameView.webContents.isLoading(), 'automatic retry opens the page', 30000);
+  assert.equal(await ctx.gameView.webContents.executeJavaScript('document.body.innerText.length > 0'), true, 'page body is not blank');
+  assert.equal(ctx.retryPending, false);
+  assert.ok(dDocs >= 3, 'the page was retried without a relaunch');
+  assert.match(fs.readFileSync(ctx.logFile, 'utf8'), /game load failed/, 'the failure is in the log');
+  console.log('ok failed load shows helper, retries, recovers');
+  // Silent stall: no event at all; the watchdog must show the helper with a message.
+  await helper.executeJavaScript(`window.d2idle.saveAddress(${JSON.stringify(addrE)})`);
+  await until(() => ctx.retryPending && !ctx.gameShown && ctx.helperView.getVisible(), 'stalled load shows the helper', 12000);
+  assert.match(ctx.loadMessage, /no answer after 4 s/);
+  await assertNotBlank(helper, 'helper view during a stall');
+  console.log('ok silent stall shows the helper');
+  await helper.executeJavaScript(`window.d2idle.saveAddress(${JSON.stringify(addrA)})`);
+  await until(() => ctx.gameShown && ctx.gameView.webContents.getURL().startsWith(originA), 'back on server A');
 
   const cfgPath = path.join(userData, 'config.json');
   const mode = fs.statSync(cfgPath).mode & 0o777;

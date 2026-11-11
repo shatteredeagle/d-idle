@@ -57,6 +57,8 @@ mac:
   hardenedRuntime: false
   gatekeeperAssess: false
   notarize: false
+  extendInfo:
+    NSLocalNetworkUsageDescription: d.idle watch connects to your d.idle server on your local network.
 dmg:
   artifactName: d2idle-watch-${version}-mac-universal.dmg
   sign: false

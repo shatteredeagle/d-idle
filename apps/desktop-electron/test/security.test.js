@@ -73,7 +73,7 @@ test('helper CSP and page meta are strict and agree', () => {
   assert.match(sec.HELPER_CSP, /connect-src 'none'/);
   assert.doesNotMatch(sec.HELPER_CSP, /unsafe-|\*/);
   const html = fs.readFileSync(path.join(__dirname, '../src/helper/index.html'), 'utf8');
-  assert.ok(html.includes(`content="${sec.HELPER_CSP}"`), 'meta CSP must equal HELPER_CSP');
+  assert.ok(html.includes(`content="${sec.HELPER_CSP.replace(" frame-ancestors 'none';", '')}"`), 'meta CSP equals HELPER_CSP minus frame-ancestors (header-only)');
   assert.doesNotMatch(html, /<script(?![^>]*src=)/i, 'no inline script');
   assert.doesNotMatch(html, /\son\w+=/i, 'no inline handlers');
 });
