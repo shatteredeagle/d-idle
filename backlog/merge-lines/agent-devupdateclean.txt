@@ -1,0 +1,2 @@
+BACKLOG: TASK-281 dev-update.sh empties the worker .devupdate-src before each send so deleted files cannot linger; regression test tools/dev-update-clean-test.sh
+CHANGELOG: dev-update no longer leaves deleted files in the worker source copy
