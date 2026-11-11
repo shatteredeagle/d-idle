@@ -9,7 +9,24 @@ function pageItems(h) {
 }
 
 // appMenuTemplate is the native application menu (plain data, so tests can read it without Electron).
-function appMenuTemplate(h) {
+// On macOS the first menu is the app menu (About, Hide, Quit with Cmd+Q) and Edit gives Copy/Paste their shortcuts.
+function appMenuTemplate(h, platform = process.platform) {
+  if (platform === 'darwin') {
+    return [
+      { role: 'appMenu' },
+      {
+        label: 'Pages',
+        submenu: [
+          ...pageItems(h),
+          { type: 'separator' },
+          { label: 'Change address', click: () => h.changeAddress() },
+          { label: 'Reload', accelerator: 'CmdOrCtrl+R', click: () => h.reload() },
+        ],
+      },
+      { role: 'editMenu' },
+      { role: 'windowMenu' },
+    ];
+  }
   return [
     {
       label: 'd.idle',
