@@ -23,6 +23,7 @@ owns:
   - "docs/START-HERE.md"
 exclusive: []
 contracts: []
+result: "rules-short.md, brief template, dispatcher brief (public and ops), 9 ops agent definitions, deploy-window.sh + offline test, research-consumer WARN in check.py, 7 digests, coordinator-efficiency.md. Offline, not verified live."
 ---
 
 ## Description
@@ -35,9 +36,9 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 rules-short.md, brief template, dispatcher brief, agent definitions updated
-- [ ] #2 deploy-window helper and dev-update rule
-- [ ] #3 research-consumer WARN in check.py
-- [ ] #4 docs/digest per-area digests linked from START-HERE and INDEX
-- [ ] #5 coordinator-efficiency.md
+- [x] #1 rules-short.md, brief template, dispatcher brief, agent definitions updated
+- [x] #2 deploy-window helper and dev-update rule
+- [x] #3 research-consumer WARN in check.py
+- [x] #4 docs/digest per-area digests linked from START-HERE and INDEX
+- [x] #5 coordinator-efficiency.md
 <!-- AC:END -->

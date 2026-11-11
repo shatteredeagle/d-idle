@@ -26,6 +26,6 @@
 ## Always (details in AGENTS.md)
 8. Own worktree and branch `agent/<name>`; commit often; never push, never `git stash`, never pkill, never edit docs/adr, GLOSSARY.md, docs/decisions.md unless named.
 9. Commit trailers: Co-Authored-By, Claude-Session, Change. Shared-file lines go in `backlog/merge-lines/<branch>.txt`.
-10. Processes only through `tools/agentrun.sh`; reap before the report. Whole-repo go test/vet only via `labrun orion`.
+10. Processes only through `tools/agentrun.sh`; reap before the report. Whole-repo go test/vet only via `labrun` on the worker host.
 11. Tag claims V (say how), S or U. No live game unless the brief names the instance.
 12. Cap: at most 6 agents run at once (docs/process/coordinator-efficiency.md).

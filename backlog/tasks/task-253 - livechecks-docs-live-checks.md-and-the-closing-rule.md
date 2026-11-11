@@ -1,11 +1,11 @@
 ---
 id: TASK-253
 title: 'livechecks: docs/live-checks.md and the closing rule'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
-updated_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-11T16:21:00Z'
 labels:
   - docs
   - chore
