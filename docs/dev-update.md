@@ -77,3 +77,12 @@ The inventory page's game art is prepared in the background at every start of `d
 ## Deleted files (TASK-281)
 
 `labrun --send` is a plain rsync without `--delete` (S: read in the labrun source), so a file removed from the repo used to survive in the worker copy of `.devupdate-src` (a stale `subreaper.go` collided with `subreaper_linux.go`: `IsSubreaper redeclared`). The driver now runs `labrun HOST -- rm -rf .devupdate-src` before the send, so the worker copy mirrors the extracted tree exactly. Regression test (S, offline, fake labrun, scratch repo, never the sandbox): `tools/dev-update-clean-test.sh` deploys tree A with a file, then tree B without it, and checks it is gone and absent from the build input. Not run against a real worker host (U).
+
+## Deploy windows (TASK-310)
+
+Every deploy restarts the bot and contaminates the play record (18 release swaps in 11.7 hours, review 2026-11-10 section 2). So sandbox deploys are batched:
+
+- A deploy is due when at least 2 PRs have merged to main since the last deploy, or a request is pending. Otherwise the coordinator does not deploy; at most about two windows a day.
+- The coordinator may always deploy when the user asks: `tools/play-sandbox/deploy-window.sh request <why>` then `run`, or `run --now`.
+- Helper: `tools/play-sandbox/deploy-window.sh status|request|check|run --to <container> [--now] [--dry-run] [-- dev-update args]`. `run` calls `tools/dev-update.sh`, records the deployed commit and the time (state in `~/.cache/didle-dev/deploy-window`, override `D2_DEPLOY_STATE`) and clears the requests. Offline test (S, scratch repo, no sandbox): `tools/play-sandbox/deploy-window-test.sh`. Not run against a real sandbox (U).
+- Stamp the session record with the deployed build (the version `dev-update.sh` prints) so a log analysis can exclude the restart.
