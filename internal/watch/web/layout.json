@@ -60,34 +60,24 @@
           "order": 4
         },
         {
-          "id": "gear",
+          "id": "hero-detail",
           "col": 1,
           "row": 31,
           "colSpan": 12,
-          "rowSpan": 4,
-          "band": "grid",
+          "rowSpan": 5,
+          "band": "stage",
           "collapsed": false,
           "order": 5
         },
         {
-          "id": "tally",
+          "id": "gear",
           "col": 1,
-          "row": 35,
+          "row": 36,
           "colSpan": 12,
-          "rowSpan": 3,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 6
-        },
-        {
-          "id": "currency",
-          "col": 1,
-          "row": 38,
-          "colSpan": 12,
-          "rowSpan": 2,
-          "band": "side",
-          "collapsed": false,
-          "order": 7
         },
         {
           "id": "now",
@@ -97,7 +87,7 @@
           "rowSpan": 6,
           "band": "grid",
           "collapsed": false,
-          "order": 8
+          "order": 7
         },
         {
           "id": "orders-map",
@@ -107,14 +97,24 @@
           "rowSpan": 10,
           "band": "grid",
           "collapsed": false,
+          "order": 8
+        },
+        {
+          "id": "tally",
+          "col": 1,
+          "row": 56,
+          "colSpan": 12,
+          "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
           "order": 9
         },
         {
           "id": "queue",
           "col": 1,
-          "row": 56,
+          "row": 60,
           "colSpan": 12,
-          "rowSpan": 4,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 10
@@ -122,7 +122,7 @@
         {
           "id": "thoughts",
           "col": 1,
-          "row": 60,
+          "row": 63,
           "colSpan": 12,
           "rowSpan": 4,
           "band": "grid",
@@ -130,12 +130,12 @@
           "order": 11
         },
         {
-          "id": "chronicle",
+          "id": "currency",
           "col": 1,
-          "row": 64,
+          "row": 67,
           "colSpan": 12,
-          "rowSpan": 5,
-          "band": "grid",
+          "rowSpan": 2,
+          "band": "side",
           "collapsed": false,
           "order": 12
         },
@@ -150,59 +150,59 @@
           "order": 13
         },
         {
-          "id": "diary",
+          "id": "chronicle",
           "col": 1,
           "row": 74,
           "colSpan": 12,
-          "rowSpan": 4,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 14
         },
         {
-          "id": "quests",
+          "id": "cards",
           "col": 1,
-          "row": 78,
+          "row": 79,
           "colSpan": 12,
-          "rowSpan": 5,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 15
         },
         {
-          "id": "cards",
+          "id": "bestiary",
           "col": 1,
-          "row": 83,
+          "row": 82,
           "colSpan": 12,
-          "rowSpan": 3,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 16
         },
         {
-          "id": "bestiary",
+          "id": "diary",
           "col": 1,
-          "row": 86,
+          "row": 87,
           "colSpan": 12,
-          "rowSpan": 5,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 17
         },
         {
-          "id": "atlas",
+          "id": "quests",
           "col": 1,
           "row": 91,
           "colSpan": 12,
-          "rowSpan": 4,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 18
         },
         {
-          "id": "locked",
+          "id": "rules",
           "col": 1,
-          "row": 95,
+          "row": 96,
           "colSpan": 12,
           "rowSpan": 4,
           "band": "grid",
@@ -210,9 +210,9 @@
           "order": 19
         },
         {
-          "id": "rules",
+          "id": "atlas",
           "col": 1,
-          "row": 99,
+          "row": 100,
           "colSpan": 12,
           "rowSpan": 4,
           "band": "grid",
@@ -220,11 +220,11 @@
           "order": 20
         },
         {
-          "id": "alerts",
+          "id": "locked",
           "col": 1,
-          "row": 103,
+          "row": 104,
           "colSpan": 12,
-          "rowSpan": 5,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 21
@@ -238,6 +238,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 22
+        },
+        {
+          "id": "alerts",
+          "col": 1,
+          "row": 111,
+          "colSpan": 12,
+          "rowSpan": 5,
+          "band": "grid",
+          "collapsed": false,
+          "order": 23
         }
       ]
     },
@@ -296,6 +306,16 @@
           "order": 4
         },
         {
+          "id": "hero-detail",
+          "col": 7,
+          "row": 18,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "stage",
+          "collapsed": false,
+          "order": 5
+        },
+        {
           "id": "gear",
           "col": 7,
           "row": 5,
@@ -303,27 +323,7 @@
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
-          "order": 5
-        },
-        {
-          "id": "tally",
-          "col": 7,
-          "row": 18,
-          "colSpan": 6,
-          "rowSpan": 3,
-          "band": "grid",
-          "collapsed": false,
           "order": 6
-        },
-        {
-          "id": "currency",
-          "col": 7,
-          "row": 21,
-          "colSpan": 6,
-          "rowSpan": 2,
-          "band": "side",
-          "collapsed": false,
-          "order": 7
         },
         {
           "id": "now",
@@ -333,7 +333,7 @@
           "rowSpan": 6,
           "band": "grid",
           "collapsed": false,
-          "order": 8
+          "order": 7
         },
         {
           "id": "orders-map",
@@ -343,14 +343,24 @@
           "rowSpan": 10,
           "band": "grid",
           "collapsed": false,
-          "order": 9
+          "order": 8
         },
         {
-          "id": "queue",
+          "id": "tally",
           "col": 1,
           "row": 39,
           "colSpan": 6,
           "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
+          "order": 9
+        },
+        {
+          "id": "queue",
+          "col": 7,
+          "row": 39,
+          "colSpan": 6,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 10
@@ -358,7 +368,7 @@
         {
           "id": "thoughts",
           "col": 7,
-          "row": 39,
+          "row": 42,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -366,18 +376,18 @@
           "order": 11
         },
         {
-          "id": "chronicle",
+          "id": "currency",
           "col": 1,
-          "row": 43,
+          "row": 27,
           "colSpan": 6,
-          "rowSpan": 5,
-          "band": "grid",
+          "rowSpan": 2,
+          "band": "side",
           "collapsed": false,
           "order": 12
         },
         {
           "id": "journal",
-          "col": 7,
+          "col": 1,
           "row": 43,
           "colSpan": 6,
           "rowSpan": 5,
@@ -386,59 +396,59 @@
           "order": 13
         },
         {
-          "id": "diary",
-          "col": 1,
-          "row": 48,
+          "id": "chronicle",
+          "col": 7,
+          "row": 46,
           "colSpan": 6,
-          "rowSpan": 4,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 14
         },
         {
-          "id": "quests",
-          "col": 7,
+          "id": "cards",
+          "col": 1,
           "row": 48,
           "colSpan": 6,
-          "rowSpan": 5,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 15
         },
         {
-          "id": "cards",
+          "id": "bestiary",
           "col": 1,
-          "row": 52,
+          "row": 51,
           "colSpan": 6,
-          "rowSpan": 3,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 16
         },
         {
-          "id": "bestiary",
+          "id": "diary",
           "col": 7,
-          "row": 53,
+          "row": 51,
           "colSpan": 6,
-          "rowSpan": 5,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 17
         },
         {
-          "id": "atlas",
-          "col": 1,
+          "id": "quests",
+          "col": 7,
           "row": 55,
           "colSpan": 6,
-          "rowSpan": 4,
+          "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 18
         },
         {
-          "id": "locked",
-          "col": 7,
-          "row": 58,
+          "id": "rules",
+          "col": 1,
+          "row": 56,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -446,9 +456,9 @@
           "order": 19
         },
         {
-          "id": "rules",
+          "id": "atlas",
           "col": 1,
-          "row": 59,
+          "row": 60,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -456,11 +466,11 @@
           "order": 20
         },
         {
-          "id": "alerts",
+          "id": "locked",
           "col": 7,
-          "row": 62,
+          "row": 60,
           "colSpan": 6,
-          "rowSpan": 5,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 21
@@ -468,12 +478,22 @@
         {
           "id": "spend",
           "col": 1,
-          "row": 63,
+          "row": 64,
           "colSpan": 6,
           "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 22
+        },
+        {
+          "id": "alerts",
+          "col": 7,
+          "row": 64,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "grid",
+          "collapsed": false,
+          "order": 23
         }
       ]
     },
@@ -532,34 +552,24 @@
           "order": 4
         },
         {
-          "id": "gear",
+          "id": "hero-detail",
           "col": 10,
           "row": 5,
           "colSpan": 3,
-          "rowSpan": 4,
-          "band": "grid",
+          "rowSpan": 5,
+          "band": "stage",
           "collapsed": false,
           "order": 5
         },
         {
-          "id": "tally",
+          "id": "gear",
           "col": 10,
-          "row": 9,
+          "row": 10,
           "colSpan": 3,
-          "rowSpan": 3,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 6
-        },
-        {
-          "id": "currency",
-          "col": 10,
-          "row": 12,
-          "colSpan": 3,
-          "rowSpan": 2,
-          "band": "side",
-          "collapsed": false,
-          "order": 7
         },
         {
           "id": "now",
@@ -569,7 +579,7 @@
           "rowSpan": 6,
           "band": "grid",
           "collapsed": false,
-          "order": 8
+          "order": 7
         },
         {
           "id": "orders-map",
@@ -579,37 +589,57 @@
           "rowSpan": 10,
           "band": "grid",
           "collapsed": false,
-          "order": 9
+          "order": 8
         },
         {
-          "id": "queue",
+          "id": "tally",
           "col": 1,
           "row": 20,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
+          "order": 9
+        },
+        {
+          "id": "currency",
+          "col": 1,
+          "row": 24,
+          "colSpan": 3,
+          "rowSpan": 2,
+          "band": "side",
+          "collapsed": false,
           "order": 10
         },
         {
-          "id": "thoughts",
+          "id": "queue",
           "col": 4,
           "row": 20,
           "colSpan": 3,
-          "rowSpan": 4,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 11
         },
         {
+          "id": "thoughts",
+          "col": 4,
+          "row": 23,
+          "colSpan": 3,
+          "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
+          "order": 12
+        },
+        {
           "id": "chronicle",
           "col": 1,
-          "row": 24,
+          "row": 27,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 12
+          "order": 13
         },
         {
           "id": "journal",
@@ -619,27 +649,27 @@
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 13
+          "order": 14
         },
         {
           "id": "diary",
           "col": 1,
-          "row": 29,
+          "row": 32,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
-          "order": 14
+          "order": 15
         },
         {
           "id": "quests",
           "col": 4,
-          "row": 29,
+          "row": 32,
           "colSpan": 3,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 15
+          "order": 16
         },
         {
           "id": "cards",
@@ -649,7 +679,7 @@
           "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
-          "order": 16
+          "order": 17
         },
         {
           "id": "bestiary",
@@ -659,27 +689,27 @@
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 17
+          "order": 18
         },
         {
           "id": "atlas",
           "col": 1,
-          "row": 34,
-          "colSpan": 3,
-          "rowSpan": 4,
-          "band": "grid",
-          "collapsed": false,
-          "order": 18
-        },
-        {
-          "id": "locked",
-          "col": 4,
-          "row": 34,
+          "row": 36,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 19
+        },
+        {
+          "id": "locked",
+          "col": 4,
+          "row": 37,
+          "colSpan": 3,
+          "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
+          "order": 20
         },
         {
           "id": "rules",
@@ -689,17 +719,17 @@
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
-          "order": 20
+          "order": 21
         },
         {
           "id": "alerts",
           "col": 1,
-          "row": 38,
+          "row": 41,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 21
+          "order": 22
         },
         {
           "id": "spend",
@@ -709,7 +739,7 @@
           "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
-          "order": 22
+          "order": 23
         }
       ]
     },
@@ -768,34 +798,24 @@
           "order": 4
         },
         {
-          "id": "gear",
+          "id": "hero-detail",
           "col": 10,
           "row": 5,
           "colSpan": 3,
-          "rowSpan": 4,
-          "band": "grid",
+          "rowSpan": 5,
+          "band": "stage",
           "collapsed": false,
           "order": 5
         },
         {
-          "id": "tally",
+          "id": "gear",
           "col": 10,
-          "row": 9,
+          "row": 10,
           "colSpan": 3,
-          "rowSpan": 3,
+          "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 6
-        },
-        {
-          "id": "currency",
-          "col": 10,
-          "row": 12,
-          "colSpan": 3,
-          "rowSpan": 2,
-          "band": "side",
-          "collapsed": false,
-          "order": 7
         },
         {
           "id": "now",
@@ -805,7 +825,7 @@
           "rowSpan": 6,
           "band": "grid",
           "collapsed": false,
-          "order": 8
+          "order": 7
         },
         {
           "id": "orders-map",
@@ -815,37 +835,57 @@
           "rowSpan": 10,
           "band": "grid",
           "collapsed": false,
-          "order": 9
+          "order": 8
         },
         {
-          "id": "queue",
+          "id": "tally",
           "col": 1,
           "row": 20,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
+          "order": 9
+        },
+        {
+          "id": "currency",
+          "col": 1,
+          "row": 24,
+          "colSpan": 3,
+          "rowSpan": 2,
+          "band": "side",
+          "collapsed": false,
           "order": 10
         },
         {
-          "id": "thoughts",
+          "id": "queue",
           "col": 4,
           "row": 20,
           "colSpan": 3,
-          "rowSpan": 4,
+          "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
           "order": 11
         },
         {
+          "id": "thoughts",
+          "col": 4,
+          "row": 23,
+          "colSpan": 3,
+          "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
+          "order": 12
+        },
+        {
           "id": "chronicle",
           "col": 1,
-          "row": 24,
+          "row": 27,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 12
+          "order": 13
         },
         {
           "id": "journal",
@@ -855,27 +895,27 @@
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 13
+          "order": 14
         },
         {
           "id": "diary",
           "col": 1,
-          "row": 29,
+          "row": 32,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
-          "order": 14
+          "order": 15
         },
         {
           "id": "quests",
           "col": 4,
-          "row": 29,
+          "row": 32,
           "colSpan": 3,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 15
+          "order": 16
         },
         {
           "id": "cards",
@@ -885,7 +925,7 @@
           "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
-          "order": 16
+          "order": 17
         },
         {
           "id": "bestiary",
@@ -895,27 +935,27 @@
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 17
+          "order": 18
         },
         {
           "id": "atlas",
           "col": 1,
-          "row": 34,
-          "colSpan": 3,
-          "rowSpan": 4,
-          "band": "grid",
-          "collapsed": false,
-          "order": 18
-        },
-        {
-          "id": "locked",
-          "col": 4,
-          "row": 34,
+          "row": 36,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
           "order": 19
+        },
+        {
+          "id": "locked",
+          "col": 4,
+          "row": 37,
+          "colSpan": 3,
+          "rowSpan": 4,
+          "band": "grid",
+          "collapsed": false,
+          "order": 20
         },
         {
           "id": "rules",
@@ -925,17 +965,17 @@
           "rowSpan": 4,
           "band": "grid",
           "collapsed": false,
-          "order": 20
+          "order": 21
         },
         {
           "id": "alerts",
           "col": 1,
-          "row": 38,
+          "row": 41,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
-          "order": 21
+          "order": 22
         },
         {
           "id": "spend",
@@ -945,7 +985,7 @@
           "rowSpan": 3,
           "band": "grid",
           "collapsed": false,
-          "order": 22
+          "order": 23
         }
       ]
     },

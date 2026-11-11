@@ -1,0 +1,2 @@
+<div>
+  <a class="d-badge" data-key="alerts" data-tone="bad" href="#alertspane" title="Life under 25% in Blood Moor."> "alerts 2"

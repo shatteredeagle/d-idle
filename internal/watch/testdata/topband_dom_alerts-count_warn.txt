@@ -1,0 +1,2 @@
+<div>
+  <a class="d-badge" data-key="alerts" data-tone="warn" href="#alertspane" title="Short Staff is broken."> "alerts 1"

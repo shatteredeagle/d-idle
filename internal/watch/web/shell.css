@@ -24,6 +24,7 @@
   .d-panel { min-inline-size: 0; container: panel / inline-size; }
   /* an inline-size container has no content width of its own, so a status-band panel grows into the free space */
   .d-band-main > .d-panel { flex: 1 1 auto; }
+  .d-band-main > .d-panel[data-size="m"] { flex: 4 1 18rem; } /* the meters get the room, the badges share the rest */
   .d-panel[hidden] { display: none; }
 
   /* main area (user layout feedback 2026-11-09): one grid for the stage, the command centre and every card, so nothing
