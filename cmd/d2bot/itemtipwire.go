@@ -28,6 +28,11 @@ func (t *itemTips) fill(it *status.Item, u d2.Unit) {
 			}
 		}
 	}
+	t.fillBase(it, u)
+}
+
+// fillBase adds the base-type facts and the sell price (no tooltip lookup by unit id).
+func (t *itemTips) fillBase(it *status.Item, u d2.Unit) {
 	if t.db == nil || u.Class < 0 || u.Class >= len(t.db.Items) || t.db.Items[u.Class] == nil {
 		return
 	}
