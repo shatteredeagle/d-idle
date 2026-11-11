@@ -931,3 +931,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/research/merc-gear.md: merc gear policy, d2d hireling screen, merc doll UI and action model
 - docs/inventory-actions.md - inventory page item action menu: request model, open opportunity, trash primitive, API schema 3, live checks
 - docs/ui-design-system.md section 15.6: the top band panels and the hero stats tile
+- docs/desktop-electron.md - the Electron desktop app: layout, run/test/build, security posture, findings (TASK-289)
