@@ -1,0 +1,8 @@
+div.inv-tip [role=tooltip]
+  div.q-unique.tip-name [] "Eye Of Dusk"
+  div.tip-line [data-k=prop] "Amulet"
+  div.tip-line [data-k=prop] "+2 to All Skills"
+  div.tip-line [data-k=prop] "+20 to Mana"
+  div.tip-line [data-k=base] "Required Level: 25"
+  div.tip-line [data-k=meta] "Item level: 40"
+  div.tip-line [data-k=meta] "Sells for at least 500 gold"

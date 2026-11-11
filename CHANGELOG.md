@@ -8,6 +8,14 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-335 campaign0: campaign spine data (data/campaign/normal.json), internal/campaign loader, readiness bands, next-chapter decision, docs/campaign.md (gate on worker host exit 0) <!--sg:agent/campaign0-->
+- watch: the game video no longer freezes: it reconnects after 3 s without a frame, pauses in a hidden tab and resumes on return, shows reconnecting or stream down with Retry; a vanished viewer frees its slot <!--sg:agent/videoresume-->
+- TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed) <!--sg:agent/decomp10-->
+- TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory <!--sg:agent/nopins-->
+- Queued player commands now interrupt the bot's walk at a safe moment instead of waiting for it to stand still <!--sg:agent/playerprio-->
+- Watch minimap: trail coloured by what the bot is doing, event markers and an activity share line <!--sg:agent/maphistory-->
+- watch: the game's mouse pointer is no longer drawn into the video (needs the rebuilt d2d image) <!--sg:agent/nocursor-->
+- TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h <!--sg:agent/xpreadout-->
 - TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones <!--sg:agent/lootmemory-->
 - decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline <!--sg:agent/decomp9-->
 - watch: fixed cards staying on grey loading bars while the bot was fine <!--sg:agent/uifix-->

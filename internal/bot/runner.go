@@ -152,6 +152,7 @@ type Runner struct {
 	selfStop       bool                 // paused by the death-rate rule, guarded by mu
 	merc           mercState            // sticky merc knowledge and chore backoff (resource.go)
 	drank          atomic.Int64         // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
+	playerCancelNs atomic.Int64         // clock of the last guard interrupt for a player command (playerDue)
 	noTP           atomic.Bool          // the running task step has Constraints.NoTownPortal: no safety portal, no trip
 	farmMu         sync.Mutex           // guards farm
 	farm           farmProgress         // runs goal progress across farmStep restarts (farm.go)
@@ -215,6 +216,7 @@ type loopState struct {
 	pointsFails      int
 	pointsFailLvl    int
 	gearAt           time.Time
+	playerWhyAt      time.Time // last "waits for a safe moment" log line (noteDelayed)
 	errandSkipUntil  time.Time // no errand trip before this (errandTripStep)
 	playerActAt      time.Time // last attempt of the player's queued item actions (playerActionStep)
 	// repair trip (repairtrip.go): when the wait for a safe moment began, retreat steps taken, loot pass done, no attempt before

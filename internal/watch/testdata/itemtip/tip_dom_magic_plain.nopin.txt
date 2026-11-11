@@ -1,0 +1,5 @@
+div.inv-tip [role=tooltip]
+  div.q-magic.tip-name [] "Wand"
+  div.tip-line [data-k=note] "Magic properties are not read on this backend."
+  div.tip-line [data-k=meta] "Item level: 9"
+  div.tip-line [data-k=meta] "Sells for at least 10 gold"

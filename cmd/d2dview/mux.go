@@ -270,7 +270,7 @@ func (m *Mux) client(c net.Conn, bot bool, shotDir string) {
 		var out strings.Builder
 		// forward exactly what readOnly judged, not the raw bytes
 		line = strings.Join(strings.Fields(line), " ")
-		if !readOnly(line, shotDir) && !(m.FeedPath != "" && feedVerb(line, m.FeedPath)) {
+		if !readOnly(line, shotDir) && !(m.FeedPath != "" && feedVerb(line, m.FeedPath)) && !cursorVerb(line) {
 			out.WriteString("err view: read-only viewer socket refuses '" + line + "'\n")
 		} else {
 			lines, st := m.Exec(line, false)
@@ -299,6 +299,12 @@ func feedVerb(line, path string) bool {
 	every, err1 := strconv.Atoi(f[2])
 	lease, err2 := strconv.Atoi(f[3])
 	return err1 == nil && err2 == nil && every >= 1 && every <= 250 && lease >= 100 && lease <= 60000
+}
+
+// cursorVerb allows the fork's `cursor on|off` on the viewer socket: it only decides whether the pointer sprite is
+// drawn into the frame (docs/viewer-fps.md section 8); input and game state are untouched.
+func cursorVerb(line string) bool {
+	return line == "cursor off" || line == "cursor on"
 }
 
 const maxBotBatch = 32
