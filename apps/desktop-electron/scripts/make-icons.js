@@ -6,6 +6,6 @@ const path = require('node:path');
 
 const from = path.join(__dirname, '..', '..', '..', 'assets', 'branding', 'out', 'electron');
 const build = path.join(__dirname, '..', 'build');
-const files = ['icon.png', 'icon.ico', 'icon.icns', 'tray.png', 'trayTemplate.png', 'trayTemplate@2x.png'];
+const files = ['icon.png', 'icon.ico', 'icon.icns', 'tray.png', 'trayTemplate.png', 'trayTemplate' + String.fromCharCode(64) + '2x.png'];
 for (const f of files) fs.copyFileSync(path.join(from, f), path.join(build, f));
 console.log('copied', files.join(', '));

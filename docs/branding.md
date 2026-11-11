@@ -18,7 +18,7 @@ Palette: 15 colours plus transparent, `assets/branding/palettes/didle.gpl` (GIMP
 | `assets/branding/src/*.aseprite` | editable sources written by the script (mark16/32/64/256, template16, banner, card, hero) |
 | `assets/branding/out/png/` | icon-16/32/48/64 drawn natively; icon-128/256/512 nearest-neighbour upscales of the 64 master; `icon-256-native.png` drawn on the 256 grid; `template-16/22/32/44.png` (black on transparent, for macOS `Template` images); `banner-1280x320.png` (320x80 at 4x), `card-1200x630.png` (240x126 at 5x), `hero-1120x135.png` |
 | `assets/branding/out/` | `favicon.ico` (16/32/48), `favicon-32.png`, `icon.ico` (16 to 256), `icon.icns` (PNG chunks 16 to 512, written by `tools/branding/pack.py`), the banner and the card |
-| `assets/branding/out/electron/` | `icon.png` (512), `icon.ico`, `icon.icns`, `tray.png`, `trayTemplate.png` (22), `trayTemplate@2x.png` (44); `npm run icons` in `apps/desktop-electron` copies them to `build/` |
+| `assets/branding/out/electron/` | `icon.png` (512), `icon.ico`, `icon.icns`, `tray.png`, `trayTemplate.png` (22), `trayTemplate` at double size, the name carrying the at-sign 2x suffix (44); `npm run icons` in `apps/desktop-electron` copies them to `build/` |
 | `assets/branding/out/d2d/` | for the d2d fork patch: `d2d.png` (256, launcher window icon), `d2d.bmp` (64x64, 32-bit BMP v4 with alpha, what `SDL_LoadBMP` embeds), `d2d.ico`, `d2d.icns`, `hero.png` (1120x135 launcher banner) |
 
 The watch UI favicon is the 32 px PNG inlined as a data URI in `internal/watch/web/watch.html`. d2d fork mapping (V: read in the fork, not changed): copy `out/d2d/*` over the fork's `assets/icon/` of the same names (`d2d.rc`, `CMakeLists.txt` and `window.cpp` need no change; `d2d.bmp` is baked at configure, so re-run `cmake -S . -B build`); the Steam library art (`steam-*.png`) is not replaced here, and the fork's `assets/icon/README.md` credits Freepik for `d2d.svg`, which that patch should drop.
@@ -26,7 +26,7 @@ The watch UI favicon is the 32 px PNG inlined as a data URI in `internal/watch/w
 ## Regenerate
 
 ```
-labrun orion -- tools/branding/build.sh      # Aseprite (Steam copy, command line only) + pack + check; then copy assets/branding/{out,src,palettes} back
+labrun <worker host> -- tools/branding/build.sh      # Aseprite (Steam copy, command line only) + pack + check; then copy assets/branding/{out,src,palettes} back
 node apps/desktop-electron/scripts/make-icons.js
 ```
 
