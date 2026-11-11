@@ -110,6 +110,7 @@
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
 | xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | nocursor | proposed | - | `cmd/d2dview`<br>`docs/viewer-fps.md`<br>`backlog/merge-lines/agent-nocursor.txt` | `fork-branch:d2d.lab3-nocursor` |
+| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -166,6 +167,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 65a697cd 11-11 14:32 `Merge agent/maphistory: TASK-324 maphistory: activity-coloured trail, event markers, activity percent legend` (maphistory)
+- 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
 - f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
 - 29687388 11-11 14:27 `Merge branch 'main' into nocursor` (-)
 - 609bc88e 11-11 14:22 `Merge agent/xpreadout: TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h` (xpreadout)
@@ -174,6 +177,4 @@
 - 1750ecc4 11-11 14:16 `Merge branch 'main' into sellmarks2` (-)
 - 0c372bbc 11-11 14:11 `Merge origin/main into agent/nocursor` (-)
 - 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
-- 770941f7 11-11 14:07 `Merge branch 'main' into lootmemory` (-)
-- 3ba8ecde 11-11 14:04 `Merge agent/decomp9: decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline` (decomp9)
 <!-- statusgen:end -->
