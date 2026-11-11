@@ -1,0 +1,8 @@
+div.inv-tip [role=tooltip]
+  div.q-low.tip-name [] "Buckler"
+  div.tip-line [data-k=base] "Base defense: 4 to 6"
+  div.tip-line [data-k=base] "Base chance to block: 30%"
+  div.tip-line [data-k=base] "Durability: 20"
+  div.tip-line [data-k=req] "Required strength: 12"
+  div.tip-line [data-k=meta] "Item level: 3"
+  div.tip-line [data-k=meta] "Sells for 2 gold"

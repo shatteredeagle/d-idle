@@ -24,7 +24,7 @@
   function range(a, b) { return a === b ? String(a) : a + ' to ' + b; }
 
   // build returns {cls, lines: [{k, t}], badges: [text]} for one item. slot is the doll slot key or ''.
-  function build(it, slot, pins) {
+  function build(it, slot) {
     var L = [], has = function (re) { return L.some(function (l) { return re.test(l.t); }); };
     var add = function (k, t) { if (t) L.push({ k: k, t: t }); };
     var b = it.base || null, tip = it.tip || [];
@@ -65,7 +65,6 @@
     var badges = [];
     if (it.mark === 'sell') badges.push('SELL');
     if (it.mark === 'keep') badges.push('KEEP');
-    if (slot && (pins || []).some(function (p) { return p.slot === slot; })) badges.push('PIN');
     return { cls: nameClass(it), title: title, lines: L, badges: badges };
   }
 
@@ -125,7 +124,7 @@
   function show(key, how) {
     var f = find(key);
     if (!f || !f.it) { hide(); return; }
-    var t = build(f.it, f.slot, view.pins), sig = JSON.stringify(t);
+    var t = build(f.it, f.slot), sig = JSON.stringify(t);
     var n = ensure(), a = anchorOf(key);
     if (a) { if (a.removeAttribute) a.removeAttribute('title'); a.setAttribute('aria-describedby', TIP_ID); }
     if (openKey && openKey !== key) { var o = anchorOf(openKey); if (o) o.removeAttribute('aria-describedby'); }

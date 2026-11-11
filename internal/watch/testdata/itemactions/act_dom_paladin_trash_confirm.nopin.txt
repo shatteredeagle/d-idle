@@ -1,0 +1,8 @@
+div.inv-act [aria-label=Actions for Broad Sword role=menu data-mode=pop]
+  div.act-title.q-magic [] "Broad Sword"
+  button.act [role=menuitem data-act=equip-rhand] "Equip"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-confirm= data-danger=] "Confirm: trash it"
+  div.act-note [role=status]
+  button.act [role=menuitem data-act=back] "Keep it"

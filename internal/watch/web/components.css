@@ -177,8 +177,6 @@
   .d-slot2[data-level="bad"] .num { color: var(--d-bad); font-weight: 700; }
   .d-slot2 .broken { position: absolute; inset: 0 0 38% 0; display: grid; place-items: center; background: var(--d-broken-bg); color: var(--d-bad);
     font: 800 var(--d-fs-1)/1 var(--d-font-display); letter-spacing: .12em; text-transform: uppercase; transform: rotate(-18deg); pointer-events: none; }
-  .d-slot2 .pin { position: absolute; inset-block-start: 2px; inset-inline-end: 3px; font-size: .65rem; font-weight: 700; line-height: 1; padding: 1px 4px;
-    border-radius: var(--d-r-1); background: var(--d-accent); color: var(--d-on-accent); }
   .d-slot2:hover, .d-slot2.sel { outline: 2px solid var(--d-focus); outline-offset: -2px; }
 
   /* 13a Paper doll with game art (docs/paperdoll-art-build.md): an optional layer. inventory.js sets data-art on the doll
@@ -206,7 +204,6 @@
   .d-doll[data-art] .d-slot2 .ghost { opacity: .4; }
   .d-doll[data-art] .d-slot2[data-shown] .sil, .d-doll[data-art] .d-slot2[data-shown] .nm, .d-doll[data-art] .d-slot2 .num { display: none; }
   .d-doll[data-art] .d-slot2 .dur { position: absolute; inset-inline: 2px; inset-block-end: 2px; margin: 0; }
-  .d-doll[data-art] .d-slot2 .pin { font-size: .5rem; padding: 0 2px; }
   .d-doll[data-art] .d-slot2 .broken { font-size: .6rem; }
 
   /* 14 Cells (inventory page): backpack 10 by 4, belt, stash 6 by 8. Items take their grid area from the CSSOM
@@ -229,7 +226,7 @@
   .d-cells .item[data-mark="sell"] .mk { color: var(--d-bad); } .d-cells .item[data-mark="keep"] .mk { color: var(--d-good); }
   .d-legend { display: flex; flex-wrap: wrap; gap: var(--d-sp-1) var(--d-sp-3); font-size: var(--d-fs-0); color: var(--d-text-2); }
   .d-legend b { display: inline-block; min-inline-size: 1.1em; text-align: center; border-radius: 2px; padding: 0 3px; margin-inline-end: .3em; font-size: .65rem; }
-  .d-legend .lg-pin { background: var(--d-accent); color: var(--d-on-accent); } .d-legend .lg-sell { background: var(--d-bad); color: var(--d-on-bad); }
+  .d-legend .lg-sell { background: var(--d-bad); color: var(--d-on-bad); }
   .d-legend .lg-keep { background: var(--d-good); color: var(--d-on-good); }
   .q-magic { --q: var(--d-q-magic); } .q-rare { --q: var(--d-q-rare); } .q-set { --q: var(--d-q-set); } .q-unique { --q: var(--d-q-unique); }
   .q-crafted { --q: var(--d-q-crafted); } .q-runeword { --q: var(--d-q-runeword); } .q-low { --q: var(--d-q-low); }

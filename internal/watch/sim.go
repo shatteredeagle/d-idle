@@ -176,7 +176,7 @@ func (s *Sim) reportHeroLocked(label string) {
 		id = 1
 	}
 	b := s.Build
-	s.Hub.SetHero(HeroInfo{Class: b.Class.String(), Level: b.Level, XP: s.xp, Area: s.herArea, AreaID: id, Activity: label,
+	s.Hub.SetHero(HeroInfo{Class: b.Class.String(), Level: b.Level, XP: simXP(b.Level, s.xp), Area: s.herArea, AreaID: id, Activity: label,
 		Name: "Simmy", Life: int(b.Life * float64(b.MaxLife) / 100), MaxLife: b.MaxLife, Mana: b.MaxMana * 3 / 4, MaxMana: b.MaxMana})
 }
 
@@ -349,3 +349,6 @@ func (s *Sim) Run(ctx context.Context, speed float64, period time.Duration) {
 		}
 	}
 }
+
+// simXP gives the simulator's in-level experience as the total the real bot reports.
+func simXP(level int, rel int64) int64 { xp, _ := AbsoluteXP(level, rel, 0); return xp }

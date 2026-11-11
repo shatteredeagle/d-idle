@@ -5,6 +5,7 @@ import (
 	"sync"
 
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/telemetry"
 )
 
 // This file is the seam to the real bot (docs/research/watch-screen-design.md, "Bot integration"): orders become goals
@@ -146,8 +147,9 @@ func (g *GoalsOrders) OnGoalEvent(ev goals.Event) {
 // is still being counted, which only a kill ends.
 func (g *GoalsOrders) OnStatus(st goals.Status) {
 	c := st.Character
-	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: c.XP, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity,
-		Name: c.Name, Difficulty: c.Difficulty, XPNext: c.XPNext, Life: c.Life, MaxLife: c.MaxLife, Mana: c.Mana, MaxMana: c.MaxMana})
+	xp, xpNext := AbsoluteXP(c.Level, c.XP, c.XPNext)
+	g.Hub.SetHero(HeroInfo{Class: c.Class, Level: c.Level, XP: xp, Area: c.Area, AreaID: c.AreaID, Activity: st.Activity,
+		Name: c.Name, Difficulty: c.Difficulty, XPNext: xpNext, Life: c.Life, MaxLife: c.MaxLife, Mana: c.Mana, MaxMana: c.MaxMana})
 	g.mu.Lock()
 	lost := g.lost
 	g.mu.Unlock()
@@ -175,4 +177,19 @@ func ActivityFromStatus(st goals.Status) (kind, label string) {
 	default:
 		return KindIdle, label
 	}
+}
+
+// AbsoluteXP turns the runner's character experience into totals. goals.Character carries the experience gained inside
+// the current level (rel) and the width of the level (span); the screen works with the totals the game shows
+// (experience.txt, V: telemetry.DefaultExpForLevel is dumped from the real tables). An unknown level keeps the inputs.
+func AbsoluteXP(level int, rel, span int64) (xp, next int64) {
+	base, ok := telemetry.DefaultExpForLevel(level)
+	if !ok {
+		return rel, span
+	}
+	xp = int64(base) + rel
+	if span > 0 {
+		next = int64(base) + span
+	}
+	return xp, next
 }

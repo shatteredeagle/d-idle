@@ -1,0 +1,9 @@
+div.inv-tip [role=tooltip]
+  div.q-low.tip-name [] "Plate Mail"
+  div.tip-line [data-k=base] "Base defense: 60 to 70"
+  div.tip-line [data-k=base] "Durability: 40 of 60"
+  div.tip-line [data-k=req] "Required strength: 65"
+  div.tip-line [data-k=eth] "Ethereal (cannot be repaired)"
+  div.tip-line [data-k=sock] "Socketed (1/3)"
+  div.tip-line [data-k=meta] "Item level: 20"
+  div.tip-line [data-k=meta] "Sells for 120 gold"
