@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"d2lod-bot/internal/d2"
 )
@@ -159,9 +158,7 @@ func (t *Town) PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error {
 	}
 	// Close on a context that survives a cancel: a safety interrupt or a fight cancels ctx mid-action, and the panels
 	// must still close and the identify cursor and any held item must be released (the requests go back to queued).
-	cctx, stop := context.WithTimeout(context.WithoutCancel(ctx), 10*time.Second)
-	defer stop()
-	if cerr := t.h.CloseAll(cctx); cerr != nil {
+	if cerr := t.h.CloseAll(context.WithoutCancel(ctx)); cerr != nil {
 		t.e.Log.Warn("town: closing panels after the player's identify failed", "err", cerr)
 	}
 	return errs
