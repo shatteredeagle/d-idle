@@ -1,0 +1,2 @@
+BACKLOG: maptrail2 coverage grid no longer truncated to the west strip; uniform downsample, status counts agree
+CHANGELOG: Watch minimap: the coverage grid now covers the whole zone
