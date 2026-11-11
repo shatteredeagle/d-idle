@@ -935,3 +935,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/desktop-electron.md - now also covers the tray, autostart, hide-to-tray and the update check (TASK-290)
 - docs/ui-design-system.md section 15.7: finishing polish, the gear prompt note, what is still open from the mockup
 - docs/desktop-electron.md macOS section (build, install steps, Gatekeeper workaround)
+- docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview

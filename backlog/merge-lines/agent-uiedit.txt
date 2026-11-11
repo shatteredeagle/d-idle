@@ -1,3 +1,0 @@
-BACKLOG: uiedit (TASK-292): Edit layout drops a panel into any free cells (hidden panels reserve nothing) and previews a drag, resize or key move live with push-down; Escape reverts
-INDEX: docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview
-CHANGELOG: watch: in Edit layout a panel now drops exactly into free space, and while you drag the other panels move out of the way; Escape puts everything back
