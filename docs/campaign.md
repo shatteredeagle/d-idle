@@ -60,7 +60,7 @@ Decision rules, Guided mode:
 
 Modes: Guided (default) follows the spine; Free returns `free` and the caller runs today's planner (the task campaign floors); Orders returns `orders`: only the player's orders, otherwise the hero farms its current safe zone. In every mode the player's manual orders come first (docs/inventory-actions.md priority ladder: safety, then player commands, then the plan); the plan never undoes an order.
 
-Safety walls stay: the Monastery and Tower route guards, the Andariel unattended hold, the kit gates and the chicken rules live in internal/task and still apply under a Go. A band is advice; a wall is safety.
+Safety walls stay: the Monastery road guard and the tower guard, the Andariel unattended hold, the kit gates and the chicken rules live in internal/task and still apply under a Go. A band is advice; a wall is safety.
 
 ## 5. Stage 1: planner integration (TASK-337)
 
