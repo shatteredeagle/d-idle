@@ -103,6 +103,7 @@
 | repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | queuespeed | proposed | - | `docs/process/queuespeed.md` | - |
+| uifit | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/panels`<br>`internal/watch/panels.go`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uilint`<br>`tools/uishots`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uifit.txt` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -159,6 +160,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
+- 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
 - 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
 - 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
 - 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
@@ -167,6 +170,4 @@
 - 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
 - c9eb634c 11-11 12:50 `Merge branch 'main' into qprofile` (-)
 - 3c97ca09 11-11 12:46 `Merge agent/identify2: sync main` (identify2)
-- b1a79744 11-11 12:40 `Merge agent/uiedit2: TASK-306 uiedit2: game picture fits its panel, aspect-locked; every card editable with hide/show` (uiedit2)
-- 62073587 11-11 12:39 `Merge branch 'main' into uiedit2` (-)
 <!-- statusgen:end -->
