@@ -24,6 +24,7 @@ const invPage = `<!DOCTYPE html>
 </header>
 <main class="inv-page" id="inv">
  <p class="d-note" data-sev="alarm" id="msg" role="status" hidden></p>
+ <p class="d-note" data-sev="info" id="gearprompt" role="note" hidden></p>
  <section class="d-card inv-equip" aria-labelledby="t-equip">
   <div class="d-card-head"><h2 id="t-equip">Equipped</h2><span class="meta" id="equipmeta"></span></div>
   <div class="inv-doll-wrap"><div class="d-doll" id="equip" role="group" aria-label="Paper doll"></div><div class="inv-detail" id="detail"></div></div>
