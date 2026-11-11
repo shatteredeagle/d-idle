@@ -60,16 +60,6 @@
           "order": 4
         },
         {
-          "id": "hero-detail",
-          "col": 1,
-          "row": 31,
-          "colSpan": 12,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 5
-        },
-        {
           "id": "gear",
           "col": 1,
           "row": 36,
@@ -304,16 +294,6 @@
           "band": "stage",
           "collapsed": false,
           "order": 4
-        },
-        {
-          "id": "hero-detail",
-          "col": 7,
-          "row": 18,
-          "colSpan": 6,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 5
         },
         {
           "id": "gear",
@@ -552,16 +532,6 @@
           "order": 4
         },
         {
-          "id": "hero-detail",
-          "col": 10,
-          "row": 5,
-          "colSpan": 3,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 5
-        },
-        {
           "id": "gear",
           "col": 10,
           "row": 10,
@@ -796,16 +766,6 @@
           "band": "stage",
           "collapsed": false,
           "order": 4
-        },
-        {
-          "id": "hero-detail",
-          "col": 10,
-          "row": 5,
-          "colSpan": 3,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 5
         },
         {
           "id": "gear",

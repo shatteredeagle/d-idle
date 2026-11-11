@@ -2,7 +2,7 @@
   "status": ["hero-status", "hero-meters", "alerts-count"],
   "stage": ["video"],
   "layout": {
-    "aliases": {"hero-status": "hero-vitals", "whyline": "why", "hero-now": "now", "voice": "diary"},
+    "aliases": {"hero-status": "hero-vitals", "hero-detail": "hero-vitals", "whyline": "why", "hero-now": "now", "voice": "diary"},
     "compat": ["now", "queue", "orders-map", "thoughts", "rules", "journal", "spend", "chronicle", "diary", "quests", "cards", "locked", "bestiary", "atlas", "alerts"],
     "reserved": ["risk"],
     "fit": ["now", "queue", "orders-map", "thoughts", "rules", "journal", "spend", "chronicle", "diary", "quests", "cards", "locked", "bestiary", "atlas", "alerts"]
