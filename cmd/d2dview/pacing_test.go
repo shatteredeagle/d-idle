@@ -189,8 +189,8 @@ func okD2D(t *testing.T) string {
 // sandbox flags (-fps 25, back-off 4, q72, 800x600) and one /stream.mjpg client stamping arrivals. Long (8 s); the
 // numbers go to docs/viewer-fps.md section 7. Run: go test -run PacingEndToEnd -v ./cmd/d2dview
 func TestPacingEndToEnd(t *testing.T) {
-	if testing.Short() {
-		t.Skip("8 s pacing run")
+	if testing.Short() || raceOn {
+		t.Skip("8 s pacing run; timing is meaningless under -race")
 	}
 	up := okD2D(t)
 	mux := NewMux(up)
@@ -266,11 +266,12 @@ func TestPacingEndToEnd(t *testing.T) {
 		wall = append(wall, ms(at[i].Sub(at[i-1])))
 		gg = append(gg, float64(game[i]-game[i-1]))
 	}
-	t.Logf("every=%d src=%v cost=%v fps=%.1f", fr.every, fr.srcPeriod, fr.costEMA, float64(len(wall))/at[len(at)-1].Sub(at[0]).Seconds())
+	every := fr.Stats.everyHint.Load() // the sampler's own fields belong to its goroutine
+	t.Logf("every=%d fps=%.1f", every, float64(len(wall))/at[len(at)-1].Sub(at[0]).Seconds())
 	t.Logf("arrival gap ms: %s", summary(wall))
 	t.Logf("game-time gap ms: %s", summary(gg))
-	if fr.every < 2 {
-		t.Fatalf("divisor %d on a 60 Hz source at -fps 25", fr.every)
+	if every < 2 {
+		t.Fatalf("divisor %d on a 60 Hz source at -fps 25", every)
 	}
 	for _, g := range gg {
 		if int(g) != int(gg[0]) && int(g) != 2*int(gg[0]) { // a skipped frame doubles a gap, nothing in between
