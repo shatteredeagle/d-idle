@@ -105,6 +105,11 @@ export function eventText(ev, now) {
   return (ev.t || ev.k) + (f ? ', ' + f.sec + ' s fight, life ' + f.life + '% (min ' + f.min + '%), end=' + (f.end || '?') + ', ' + f.kills + (f.kills === 1 ? ' kill' : ' kills') : '');
 }
 
+// The export link; the token (when the page has one) rides the query like the other routes.
+export function exportHref(token) {
+  return '/api/history/export' + (token ? '?t=' + encodeURIComponent(token) : '');
+}
+
 // ---- Heat layers ----
 export const HEAT_MODES = ['off', 'kills', 'time', 'damage'];
 const HEAT_COL = { kills: 2, time: 3, damage: 4 }; // index of the count in a heat cell [x, y, kills, dwell s, damage]
@@ -274,6 +279,21 @@ export function mount(root, ctx) {
   [[playBtn, 'play', 'Play the trail'], [spdBtn, 'speed', 'Replay speed']].forEach(([b, key, label]) => { b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = key; b.setAttribute('aria-label', label); });
   tl.append(ribbon, range, playBtn, spdBtn, scrubLine);
   tl.hidden = true;
+  // Export: the picture as a PNG (canvas toBlob) and the history as JSON from GET /api/history/export (a plain link, the
+  // browser sends the session cookie; the file holds positions and counts only, no credentials).
+  const pngBtn = ctx.el('button', 'd-btn', 'Export PNG'), jsonLink = ctx.el('a', 'd-btn', 'Export JSON');
+  pngBtn.type = 'button'; pngBtn.dataset.size = 'sm'; pngBtn.dataset.key = 'export-png'; pngBtn.setAttribute('aria-label', 'Save the map as a PNG picture');
+  jsonLink.dataset.size = 'sm'; jsonLink.dataset.key = 'export-json'; jsonLink.setAttribute('aria-label', 'Save the map history as a JSON file for a bug report');
+  jsonLink.href = exportHref(ctx.token); jsonLink.download = 'didle-map-history.json';
+  pngBtn.addEventListener('click', () => {
+    if (typeof cv.toBlob !== 'function') return;
+    cv.toBlob((blob) => {
+      if (!blob || typeof URL === 'undefined' || !URL.createObjectURL) return;
+      const a = ctx.el('a'), u = URL.createObjectURL(blob);
+      a.href = u; a.download = 'didle-map.png'; a.click();
+      if (ctx.later) ctx.later(() => URL.revokeObjectURL(u), 1000);
+    }, 'image/png');
+  });
   const card = ctx.el('div', 'fight-card'), cardClose = ctx.el('button', 'd-btn', 'Close');
   cardClose.type = 'button'; cardClose.dataset.size = 'sm'; cardClose.dataset.key = 'card-close'; cardClose.setAttribute('aria-label', 'Close the fight card');
   card.hidden = true;
@@ -287,7 +307,7 @@ export function mount(root, ctx) {
   cardClose.addEventListener('click', () => { card.hidden = true; });
   const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
   ctx.body.append(covLine, heatLine, legend, share, tip, card, tl);
-  ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, ...winBtns);
+  ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, pngBtn, jsonLink, ...winBtns);
   covText();
   let combatHits = [], wantHeat = 0, scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
