@@ -1,0 +1,3 @@
+BACKLOG: TASK-298 identify: inventory identify commands (item, buy scrolls with reserve, identify all at Cain) queued for the bot; API schema 5; built offline, nothing verified live (docs/inventory-actions.md)
+INDEX: docs/inventory-actions.md: identify commands section (research, API schema 5, live checks 8 to 12)
+CHANGELOG: Inventory page: Identify in the item menu, Buy identify scrolls and Identify all (Cain) commands, queued like the other item actions (offline only)

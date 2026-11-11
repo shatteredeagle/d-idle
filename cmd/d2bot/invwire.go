@@ -2,6 +2,8 @@ package main
 
 import (
 	"path/filepath"
+	"sync"
+	"time"
 
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
@@ -10,6 +12,7 @@ import (
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/status"
+	"d2lod-bot/internal/task"
 	"d2lod-bot/internal/town"
 	"d2lod-bot/internal/watch"
 )
@@ -72,6 +75,10 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		tw.SetItemMarks(d)
 		tw.SetPinned(d.Pinned)
 	}
+	if tw != nil {
+		d.SetServices(tw)
+		d.SetCainOpen(cainOpen(ref))
+	}
 	if lv != nil {
 		d.SetEquipper(lv)
 		d.SetTrasher(lv)
@@ -95,6 +102,48 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		}
 		d.SetSellBlock(never)
 		d.SetTrashBlock(never) // quest items, keys, tomes and the start kit are never trashed either
+	}
+}
+
+var _ invdesk.Services = (*town.Town)(nil)
+
+// cainOpenTTL is how long the quest answer is reused: the page polls every few seconds and the reader stats the save.
+const cainOpenTTL = 5 * time.Second
+
+// cainOpen says whether Deckard Cain is rescued: the Search for Cain quest reads Done for the hero's difficulty
+// (memory first, then the save; V that the words exist, docs/saves.md), or Cain stands in the town the hero is in (a
+// monster of his classes; U live). Either one opens the "Identify all (Cain)" command.
+func cainOpen(ref *runnerRef) func(*d2.Snapshot) bool {
+	var (
+		mu   sync.Mutex
+		at   time.Time
+		diff = -1
+		done bool
+	)
+	return func(s *d2.Snapshot) bool {
+		if s == nil || s.Player == nil {
+			return false
+		}
+		if s.Player.InTown() {
+			for i := range s.Monsters {
+				if m := &s.Monsters[i]; m.Alive() && town.IsCainClass(m.Class) {
+					return true
+				}
+			}
+		}
+		r := ref.p.Load()
+		if r == nil {
+			return false
+		}
+		mu.Lock()
+		defer mu.Unlock()
+		if now := time.Now(); diff != int(s.Player.Difficulty) || now.Sub(at) > cainOpenTTL {
+			diff, at, done = int(s.Player.Difficulty), now, false
+			if v, ok := r.QuestView(diff); ok {
+				done = v.Quests[task.QCain].Stage == task.StageDone
+			}
+		}
+		return done
 	}
 }
 

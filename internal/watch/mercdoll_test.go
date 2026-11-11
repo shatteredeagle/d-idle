@@ -45,7 +45,7 @@ func TestMercFixturesDecodeIntoView(t *testing.T) {
 			}
 			continue
 		}
-		if v.Merc == nil || v.Merc.State != want[name] || v.Schema != invdesk.ViewSchema {
+		if v.Merc == nil || v.Merc.State != want[name] || v.Schema < 4 || v.Schema > invdesk.ViewSchema { // the fixtures are schema 4 files: they must keep decoding
 			t.Errorf("%s: %+v schema %d", name, v.Merc, v.Schema)
 		}
 	}

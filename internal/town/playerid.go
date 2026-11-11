@@ -43,6 +43,9 @@ func init() {
 	}
 }
 
+// IsCainClass reports whether a monster class is one of Deckard Cain's (acts.go lists them per act).
+func IsCainClass(class int) bool { return hasClass(cain, class) }
+
 func (t *Town) fightNear(s *d2.Snapshot) bool {
 	if s.Player.InTown() {
 		return false

@@ -31,10 +31,14 @@ func TestItemActionsJSNeverScrollsOrInjects(t *testing.T) {
 			t.Errorf("focus call without preventScroll: %s", m)
 		}
 	}
-	for _, want := range []string{"'Escape'", "ArrowDown", `role', 'menu'`, "menuitem", "aria-disabled", "d2:inventory", "style.transform", "/api/inventory/trash", "/api/inventory/cancel", "confirm: true", "EXTENSION POINT", "data-slot"} {
+	for _, want := range []string{"'Escape'", "ArrowDown", `role', 'menu'`, "menuitem", "aria-disabled", "d2:inventory", "style.transform", "/api/inventory/trash", "/api/inventory/cancel", "confirm: true", "EXTENSION POINT", "data-slot", "/api/inventory/identify", "/api/inventory/buyid", "/api/inventory/cain", "opens when Cain is rescued", "d-locked", "aria-label"} {
 		if !strings.Contains(src, want) {
 			t.Errorf("web/inventory-actions.js lacks %q", want)
 		}
+	}
+	// the errand strip never rebuilds on a poll (a typed count must survive) and the page has its mount point
+	if !strings.Contains(invPage, `id="errands"`) {
+		t.Error("inventory page lacks the errands mount point")
 	}
 	css, _ := webFS.ReadFile("web/inventory-actions.css")
 	for _, want := range []string{"@layer components", "position: fixed", `data-mode="sheet"`, "var(--d-focus)", "var(--d-surface-2)"} {

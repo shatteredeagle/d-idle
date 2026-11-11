@@ -30,3 +30,19 @@
   [data-state="done"] .act-st, [data-state="done"] .t { color: var(--d-good); }
   [data-state="doing"] .act-st, [data-state="doing"] .t { color: var(--d-warn); }
 }
+
+/* The two town errands above the queue card (schema 5). Tokens only, no media query: the strip wraps by itself. */
+@layer components {
+  .inv-errands { display: grid; gap: var(--d-sp-3); padding-block-end: var(--d-sp-3); }
+  .inv-errands[hidden], .inv-errands .err-cain[hidden] { display: none; }
+  .inv-errands .err-buy { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-2); }
+  .inv-errands .err-buy .err-hint { flex-basis: 100%; }
+  .inv-errands .err-count { color: var(--d-text-2); font-size: var(--d-fs-0); }
+  .inv-errands .err-n { box-sizing: border-box; inline-size: 5rem; min-block-size: 2.5rem; padding: 0 var(--d-sp-2); font: inherit; color: var(--d-text);
+    background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line); border-radius: var(--d-r-1); }
+  .inv-errands .err-n:focus-visible { outline: 2px solid var(--d-focus); outline-offset: 2px; }
+  .inv-errands .err-cain { display: grid; justify-items: start; gap: var(--d-sp-1); padding: var(--d-sp-2); }
+  .inv-errands .err-hint, .inv-errands .err-note { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-0); overflow-wrap: anywhere; }
+  .inv-errands .err-cain.d-locked .err-hint { color: var(--d-text-3); }
+  .inv-errands .err-note:empty { display: none; }
+}

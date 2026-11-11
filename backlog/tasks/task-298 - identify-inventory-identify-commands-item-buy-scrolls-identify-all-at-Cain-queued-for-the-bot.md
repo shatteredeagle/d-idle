@@ -27,6 +27,10 @@ owns:
   - "internal/town/playerid.go"
   - "internal/town/playerid_test.go"
   - "internal/town/npc.go"
+  - "internal/watch/invui.go"
+  - "internal/watch/mercdoll_test.go"
+  - "internal/town/identify.go"
+  - "internal/town/playerid_sim_test.go"
 exclusive: []
 contracts: []
 ---

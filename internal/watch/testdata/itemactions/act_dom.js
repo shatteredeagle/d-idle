@@ -85,6 +85,18 @@ for (const cls of ['paladin', 'sorceress']) {
   check('queue_card', ser(p.boxes.queue, 0) + 'title ' + p.boxes['t-queue'].textContent + '\n');
 }
 
+// ---- identify commands (schema 5): the menu entry, the errand strip and the queue card, own fixture act_view_identify.json
+const idViews = JSON.parse(fs.readFileSync(path.join(dir, 'act_view_identify.json'), 'utf8'));
+for (const cls of ['paladin', 'sorceress']) {
+  for (const [name, key] of Object.entries({ ring: 'item-1', jewel: 'item-9', identified: 'item-2', stash: 'item-3', worn: 'slot-torso' })) {
+    const p = page(src); p.h.init(); p.h.onView(idViews[cls]); p.h.open(key);
+    check('identify_' + cls + '_' + name, ser(p.h.state().node, 0));
+  }
+  const p = page(src); p.h.init(); p.h.onView(idViews[cls]); p.h.renderErrands(); p.h.renderQueue();
+  check('errands_' + cls, ser(p.boxes.errands, 0));
+  check('queue_card_identify_' + cls, ser(p.boxes.queue, 0));
+}
+
 // ---- behaviour
 const flush = () => new Promise((r) => setImmediate(r));
 (async () => {
@@ -133,6 +145,52 @@ const flush = () => new Promise((r) => setImmediate(r));
     p.h.onView(JSON.parse(JSON.stringify(views[cls]))); assert.strictEqual(node.children[0], firstChild, 'unchanged poll rebuilt the menu');
     const gone = JSON.parse(JSON.stringify(views[cls])); gone.backpack = gone.backpack.filter((x) => x.id !== 3); p.h.onView(gone);
     assert.strictEqual(p.h.state().key, '');
+  }
+  // ---- identify commands: what a click sends, what stays local
+  for (const cls of ['paladin', 'sorceress']) {
+    cur = cls; const p = page(src); p.h.init();
+    const fire = (t, e) => (p.docL[t] || []).forEach((f) => f(e));
+    p.h.onView(idViews[cls]); p.h.renderErrands();
+    const sent = (re) => p.fetched.filter((f) => re.test(f.u));
+    const e = p.h.errands();
+    // the Identify entry posts the item id; a refused one (no tool, stash) sends nothing and says why
+    fire('click', { target: p.getA('item-9') });
+    const idBtn = () => p.h.state().node.querySelectorAll().find((b) => b.dataset.act === 'identify');
+    if (cls === 'paladin') {
+      assert.ok(!idBtn().hasAttribute('aria-disabled'));
+      idBtn().listeners.click[0](); await flush(); await flush();
+      const r = sent(/\/api\/inventory\/identify/); assert.ok(r.length === 1 && JSON.parse(r[0].body).id === 9, JSON.stringify(p.fetched));
+    } else {
+      assert.strictEqual(idBtn().attrs['aria-disabled'], 'true'); idBtn().listeners.click[0]();
+      assert.strictEqual(sent(/\/api\/inventory\/identify/).length, 0, 'a refused identify must not be sent');
+    }
+    fire('keydown', { key: 'Escape' });
+    // an identified item has no Identify entry at all
+    fire('click', { target: p.getA('item-2') });
+    assert.ok(!p.h.state().node.querySelectorAll().some((b) => b.dataset.act === 'identify'));
+    fire('keydown', { key: 'Escape' });
+    // buy: a typed count is sent, an empty box means 0 (fill the tome), nonsense is refused locally
+    const before = p.fetched.length;
+    e.count.value = '12'; e.buy.listeners.click[0](); await flush(); await flush();
+    const b1 = sent(/\/api\/inventory\/buyid/);
+    if (cls === 'paladin') {
+      assert.ok(b1.length === 1 && JSON.parse(b1[0].body).count === 12, JSON.stringify(p.fetched.slice(before)));
+      e.count.value = ''; e.buy.listeners.click[0](); await flush(); await flush();
+      assert.strictEqual(JSON.parse(sent(/\/api\/inventory\/buyid/)[1].body).count, 0);
+      e.count.value = '99'; e.buy.listeners.click[0]();
+      assert.strictEqual(sent(/\/api\/inventory\/buyid/).length, 2, 'out of range must stay local');
+      assert.ok(e.note.textContent.length > 0);
+    }
+    // Cain: open posts, locked sends nothing and shows the teaser
+    e.cain.listeners.click[0](); await flush(); await flush();
+    if (cls === 'paladin') { assert.strictEqual(sent(/\/api\/inventory\/cain/).length, 1); assert.strictEqual(e.wrap.dataset.state, 'open'); }
+    else { assert.strictEqual(sent(/\/api\/inventory\/cain/).length, 0); assert.strictEqual(e.wrap.dataset.state, 'locked'); assert.ok(/opens when Cain is rescued/.test(e.note.textContent)); assert.ok(/\bd-locked\b/.test(e.wrap.className)); }
+    // a poll with unchanged data keeps what the player typed and rebuilds nothing
+    e.count.value = '7'; const kids = e.box.children.length;
+    p.h.onView(JSON.parse(JSON.stringify(idViews[cls]))); p.h.renderErrands();
+    assert.strictEqual(e.count.value, '7'); assert.strictEqual(e.box.children.length, kids);
+    // no identify block (an older bot): the strip stays hidden
+    const old = JSON.parse(JSON.stringify(idViews[cls])); delete old.identify; p.h.onView(old); p.h.renderErrands(); assert.strictEqual(e.box.hidden, true);
   }
   // placement stays inside the viewport
   const pl = page(src).h.place;
