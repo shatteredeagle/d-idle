@@ -205,7 +205,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if len(cfg.DisableObserve) == 0 {
 		cfg.DisableObserve = []string{"kill", "drop", "potion"}
 	}
-	cfg = withPlayerTuning(cfg, o.ladder)
+	cfg = withGearPolicy(withPlayerTuning(cfg, o.ladder))
 	tune, warns, err := cfg.BuildTuning()
 	if err != nil {
 		return err

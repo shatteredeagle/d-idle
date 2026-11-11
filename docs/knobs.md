@@ -375,6 +375,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | resource.gearRiskMedium | 3 | 1..10 | points | 10 | 0 | Risk points at which gear risk is medium (logged, rebuy priority). |
 | resource.gearRiskHigh | 6 | 2..20 | points | 20 | 0 | Risk points at which gear risk is high and only the first field is open. |
 | resource.gearDeathsHigh | 4 | 2..10 | deaths | 2 | 0 | Deaths in the hour or in one area from which deaths add gear risk. Dying is normal: a few change nothing. |
+| resource.gearDecisions | 0 | 0..1 | 0/1 | 1 | 0 | 0 = the player: the bot never equips, swaps or buys equipment and never fills an empty slot (it only advises); 1 = the bot (legacy: drills, soaks, measured runs set it through D2BOT_RUN, and the Gear Sets unlock). Potions, scrolls, keys, ammo, repair, selling and pickup are not equipment and do not change. docs/gear-policy.md. |
 | resource.earlyGearMax | 15 | 0..40 | level | 0 | 3 | Below this level armor is ignored (worn only if it drops and is better, never bought, never a trip or gate reason) and a weapon matters only for Amazon, Paladin, Barbarian, Assassin. 0 = off (old rebuy and gate). docs/sme/early-gear-policy.md. |
 | resource.tripBudget | 3 | 0..10 | trips | 0 | 3 | Finished town trips allowed per window before a thin belt no longer sends the bot home (it drinks and fights on). 0 = no budget. |
 | resource.tripWindowMin | 10 | 1..60 | min | 1 | 3 | Minutes the trip budget looks back. |
