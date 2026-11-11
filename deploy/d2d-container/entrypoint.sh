@@ -54,7 +54,7 @@ if [ "$mode" = tester ]; then
 	# the tap and d2bot share one token through the environment (not ps, not a file); it is new at every start
 	[ -n "${D2DVIEW_TOKEN:-}" ] || D2DVIEW_TOKEN=$(head -c 24 /dev/urandom | od -An -tx1 | tr -d ' \n')
 	export D2DVIEW_TOKEN
-	tapjpeg=-jpeg
+	tapjpeg="-jpeg ${D2DVIEW_FLAGS:-}"  # D2DVIEW_FLAGS: extra tap flags, e.g. "-fps 25 -feed /dev/shm/d2dview/frames.ring" (docs/viewer-fps.md)
 	mode=bot
 	tester=1
 fi

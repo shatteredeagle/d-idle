@@ -1,0 +1,3 @@
+BACKLOG: TASK-299 viewerfps2: frame feed deployed to the sandbox (image devp2, fork 80cc7adc): 21.6 fps delivered vs 5.9, bot pace not lower, kept; numbers in docs/viewer-fps.md section 6
+INDEX: docs/viewer-fps.md section 6: sandbox A/B of the d2d frame feed (before/after table, rollback)
+CHANGELOG: Viewer video on the sandbox now runs at about 21 fps (was 6) through the d2d frame feed; tap flags via D2DVIEW_FLAGS
