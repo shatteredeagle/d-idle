@@ -77,6 +77,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.crowdAdjacent | 8 | 3..12 | subtiles | 12 | 5 | A hostile within this distance (centre to centre) is in melee reach and counts as adjacent: three or more make a town portal cast a non-escape (potion, else leave the game) and a crowd 'surrounded'. Default 8 from the live zombie reads (drills11), UNVERIFIED for other monsters. |
 | combat.crowdAbandonN | 15 | 0..30 | count | 30 | 2 | Hostiles within 8 subtiles on a travel or quest walk that make the bot abandon the walk at once, retreat 20+ subtiles and open a portal. 0 turns it off. |
 | combat.potionGapMs | 1000 | 900..3000 | ms | 3000 | 4 | Minimum time between healing or mana potions. |
+| combat.potionEmergencyPct | 30 | 10..50 | % | 10 | 2 | Below this life percent a healing potion is drunk even while an earlier one is still working. Above it the bot drinks again only for a higher tier: the game adds a same-tier drink to the running effect (longer, not faster; fid-potions.md Q5). |
 | combat.rejuvGapMs | 300 | 250..1500 | ms | 1500 | 1 | Minimum time between rejuvenation potions. |
 | combat.reactionMs | 120 | 40..700 | ms | 700 | 1 | Delay before the bot acts on a survival event. |
 | combat.pollMs | 60 | 30..400 | ms | 400 | 13 | How often the fight loop looks at the game. |
