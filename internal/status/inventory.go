@@ -59,6 +59,21 @@ type InventoryData struct {
 	Gold      int              `json:"gold"`
 	StashGold int              `json:"stashGold"`
 	BeltRows  int              `json:"beltRows"`
+	Merc      *MercInv         `json:"merc,omitempty"`
+}
+
+// MercInv is the hired merc as the inventory page shows him (docs/research/merc-gear.md). Nil in InventoryData means the
+// backend cannot read the merc at all (the page then hides the merc doll).
+type MercInv struct {
+	Hired     bool             `json:"hired"`
+	Alive     bool             `json:"alive"`
+	Class     int              `json:"class,omitempty"` // monstats class 271, 338, 359, 561; 0 unknown
+	Level     int              `json:"level,omitempty"`
+	Str       int              `json:"str,omitempty"`
+	Dex       int              `json:"dex,omitempty"`
+	LifePct   int              `json:"lifePct,omitempty"`
+	GearKnown bool             `json:"gearKnown"`           // the backend listed what he wears: an empty Equipment then means nothing worn
+	Equipment map[string]*Item `json:"equipment,omitempty"` // keys mhead, mtorso, mrhand, mlhand
 }
 
 type InventorySource interface{ Inventory() InventoryData }

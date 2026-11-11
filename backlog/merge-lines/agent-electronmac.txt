@@ -1,3 +1,0 @@
-BACKLOG: TASK-291 electronmac: Electron app on macOS, universal dmg+zip (unsigned, personal), template tray icon, Dock/Cmd+Q/menu behaviours, macos CI job
-INDEX: docs/desktop-electron.md macOS section (build, install steps, Gatekeeper workaround)
-CHANGELOG: d.idle watch desktop app builds for macOS (universal dmg and zip, unsigned, LAN personal use)

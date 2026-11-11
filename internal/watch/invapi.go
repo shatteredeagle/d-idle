@@ -18,7 +18,7 @@ var invViewTTL = 1500 * time.Millisecond
 // other answer routes (origin list, token or passcode cookie, JSON only, small body). The desk is late-bound.
 
 var (
-	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-actions.js", "/watch/inventory-actions.css"}
+	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-actions.js", "/watch/inventory-actions.css", "/watch/inventory-merc.js", "/watch/inventory-merc.css"}
 	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel"}
 )
 
@@ -110,6 +110,8 @@ func (a *InvAPI) Handler() http.Handler {
 	static("inventory-tip.css", "text/css; charset=utf-8")
 	static("inventory-actions.js", "text/javascript; charset=utf-8") // the item action menu (docs/inventory-actions.md)
 	static("inventory-actions.css", "text/css; charset=utf-8")
+	static("inventory-merc.js", "text/javascript; charset=utf-8") // the merc doll (docs/research/merc-gear.md)
+	static("inventory-merc.css", "text/css; charset=utf-8")
 	return readOnly(m)
 }
 

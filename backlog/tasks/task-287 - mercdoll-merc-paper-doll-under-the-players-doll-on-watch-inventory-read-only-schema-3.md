@@ -16,8 +16,14 @@ owns:
   - "internal/watch/web/inventory-merc.js"
   - "internal/watch/web/inventory-merc.css"
   - "internal/watch/testdata"
+  - "internal/watch/invui.go"
+  - "internal/watch/invapi.go"
+  - "internal/watch/mercdoll_test.go"
+  - "docs/inventory-ui.md"
+  - "docs/live-checks.md"
 exclusive: []
 contracts: []
+result: "Offline only, not seen in a browser (2026-11-10): schema 3 merc block is TASK-286; this adds inventory-merc.js/.css (card under the hero doll, states none, ready, dead, unknown, absent hides it), page and route wiring, golden views and DOM goldens (node), TestMercFixturesDecodeIntoView, TestMercDollRoutesAndRules. No merc actions. Live-checks row: docs/live-checks.md TASK-287 #3."
 ---
 
 ## Description
@@ -30,7 +36,7 @@ Stage A of docs/research/merc-gear.md (TASK-283), the UI. No merc actions (stage
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 watch.inventory schema 3 with additive optional merc block
-- [ ] #2 d-doll under the hero doll with states none, dead, ready, unknown; no actions
-- [ ] #3 Golden fixtures and DOM tests
+- [x] #1 watch.inventory schema 3 with additive optional merc block
+- [x] #2 d-doll under the hero doll with states none, dead, ready, unknown; no actions
+- [x] #3 Golden fixtures and DOM tests
 <!-- AC:END -->

@@ -1,0 +1,19 @@
+div []
+  details.inv-merc-fold [data-remember=merc-doll] open
+    summary [] "Mercenary"
+    div.inv-merc-body []
+      div.inv-merc-head []
+        h3 [] "Mercenary"
+        span.meta [] "level 17, Str 60, Dex 50"
+      p.d-note [data-sev=warn] "Mercenary is dead: revive first; gear cannot be changed while he is dead."
+      div.d-doll [aria-label=Mercenary paper doll role=group data-owner=merc data-state=dead]
+        div.d-slot2 [aria-label=helm: empty data-owner=merc data-slot=mhead] title="helm: empty"
+          span.sil [] "helm"
+        div.d-slot2.q-normal [aria-label=armour: Leather Armor data-filled= data-owner=merc data-slot=mtorso] title="Leather Armor, durability 10/12"
+          span.sil [] "armour"
+          span.nm [] "Leather Armor"
+        div.d-slot2 [aria-label=weapon: empty data-owner=merc data-slot=mrhand] title="weapon: empty"
+          span.sil [] "weapon"
+        div.d-slot2 [aria-label=shield: empty data-owner=merc data-slot=mlhand] title="shield: empty"
+          span.sil [] "shield"
+      p.d-hint [] "Read only: the bot makes no equipment decision for your mercenary, and equipping him from this page is not built yet."

@@ -265,3 +265,63 @@ func TestCompatLayoutFixturesLoad(t *testing.T) {
 		}
 	}
 }
+
+// The editor's move in node: the minimap-sized panel drops exactly into free cells (hidden panels reserve nothing),
+// overlap pushes down and cascades, a preview never changes the layout it started from, a drop back is a no-op.
+func TestLayoutMoveJS(t *testing.T) {
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Skip("node not available")
+	}
+	if out, err := exec.Command(node, "testdata/layout_move.js", "web/layout.js", "web/layout.json").CombinedOutput(); err != nil {
+		t.Fatalf("%v\n%s", err, out)
+	}
+}
+
+// The live preview of the editor: it is computed from the committed cells every time (so going back is free), it is
+// dropped on Escape, on a release outside the grid and on pointercancel, Enter commits a keyboard preview, the slide
+// honours reduced motion, and nothing but Save reaches the stored layout. The normal page never loads any of it.
+func TestLayoutEditPreviewContract(t *testing.T) {
+	b, err := webFS.ReadFile("web/layoutedit.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	js := string(b)
+	for _, want := range []string{"moveItem(base, id, rect, cols)", "prefers-reduced-motion: reduce", "k === 'Escape'", "k === 'Enter'", "'pointercancel', cancel",
+		"if (keep) commit(next); else revert();", "main.dataset.preview = id", "delete main.dataset.preview"} {
+		if !strings.Contains(js, want) {
+			t.Errorf("layoutedit.js lacks %q", want)
+		}
+	}
+	if n := strings.Count(js, "api.save("); n != 1 {
+		t.Errorf("api.save is called from %d places; only the Save button may store the layout", n)
+	}
+	if strings.Contains(js, "api.preview(") {
+		t.Error("a preview must not go through the shell's layout object")
+	}
+	css, _ := webFS.ReadFile("web/shell.css")
+	for _, want := range []string{`[data-flip="go"] { transition: transform var(--d-dur-2) var(--d-ease); }`, ".d-main[data-preview]"} {
+		if !strings.Contains(string(css), want) {
+			t.Errorf("shell.css lacks %q", want)
+		}
+	}
+	for _, sel := range regexp.MustCompile(`(?m)^\s*(\S[^{]*(data-flip|data-preview|data-editcell)[^{]*)\{`).FindAllStringSubmatch(string(css), -1) {
+		if !strings.Contains(sel[1], "[data-editing]") && !strings.Contains(sel[1], "[data-preview]") {
+			t.Errorf("an edit-mode rule applies to the normal page: %s", sel[1])
+		}
+	}
+}
+
+// The editor driven in a stub DOM (node): a pointer drag previews live and pushes panels down, a drop commits, Escape,
+// a release outside the grid and pointercancel revert, the keyboard previews until Enter, Save posts the unchanged
+// export format, Done leaves no trace.
+func TestLayoutEditJS(t *testing.T) {
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Skip("node not available")
+	}
+	out, err := exec.Command(node, "testdata/layout_edit.js", "web/layout.js", "web/layoutedit.js").CombinedOutput()
+	if err != nil || !strings.Contains(string(out), "ok") {
+		t.Fatalf("%v\n%s", err, out)
+	}
+}
