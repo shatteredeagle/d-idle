@@ -4,10 +4,12 @@ import (
 	"bufio"
 	"bytes"
 	"context"
+	"fmt"
 	"image"
 	"image/color"
 	"image/jpeg"
 	"image/png"
+	"io"
 	"math/rand"
 	"net/http"
 	"net/http/httptest"
@@ -177,7 +179,7 @@ func TestTapCaptureStartErrors(t *testing.T) {
 	if _, err := c(t.Context()); err == nil {
 		t.Fatal("garbage accepted")
 	}
-	for _, o := range []TapOptions{{URL: ""}, {URL: "ftp://x"}, {URL: "http://x", FPS: 7}, {URL: "http://x", FPS: -1}} {
+	for _, o := range []TapOptions{{URL: ""}, {URL: "ftp://x"}, {URL: "http://x", FPS: 31}, {URL: "http://x", FPS: -1}} {
 		if _, err := TapCapture(o); err == nil {
 			t.Errorf("accepted %+v", o)
 		}
@@ -380,4 +382,110 @@ func waitClosed(t *testing.T, ch <-chan []byte) {
 			t.Fatal("channel not closed")
 		}
 	}
+}
+
+// streamTap serves /stream.mjpg like cmd/d2dview: one multipart part per frame sent on frames.
+func streamTap(t *testing.T, token string, frames <-chan []byte) (*httptest.Server, *atomic.Int64) {
+	t.Helper()
+	var opens atomic.Int64
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/stream.mjpg" {
+			http.NotFound(w, r)
+			return
+		}
+		if token != "" && r.Header.Get("Authorization") != "Bearer "+token {
+			http.Error(w, "unauthorized", http.StatusUnauthorized)
+			return
+		}
+		opens.Add(1)
+		w.Header().Set("Content-Type", "multipart/x-mixed-replace; boundary=f")
+		fl := w.(http.Flusher)
+		for {
+			select {
+			case <-r.Context().Done():
+				return
+			case f, ok := <-frames:
+				if !ok {
+					return
+				}
+				fmt.Fprintf(w, "--f\r\nContent-Type: image/jpeg\r\nContent-Length: %d\r\nX-Frame-Game-Ms: 1\r\n\r\n", len(f))
+				w.Write(f)
+				io.WriteString(w, "\r\n")
+				fl.Flush()
+			}
+		}
+	}))
+	t.Cleanup(srv.Close)
+	return srv, &opens
+}
+
+func TestTapCaptureRelaysTheStreamAtItsOwnRate(t *testing.T) {
+	frames := make(chan []byte)
+	srv, opens := streamTap(t, "tok", frames)
+	c, err := TapCapture(TapOptions{URL: srv.URL, Token: "tok"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	go func() {
+		for i := 0; i < 30; i++ {
+			frames <- jpegOf(t, color.RGBA{uint8(i), 0, 0, 255})
+			time.Sleep(20 * time.Millisecond) // 50 fps, faster than the old 6 fps poll cap
+		}
+	}()
+	ch, err := c(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := 0
+	deadline := time.After(3 * time.Second)
+	for got < 25 {
+		select {
+		case <-ch:
+			got++
+		case <-deadline:
+			t.Fatalf("only %d of 30 parts relayed", got)
+		}
+	}
+	if opens.Load() != 1 {
+		t.Fatalf("stream opened %d times", opens.Load())
+	}
+	// a wrong token is an error, not a fallback to polling
+	bad, _ := TapCapture(TapOptions{URL: srv.URL, Token: "nope"})
+	if _, err := bad(t.Context()); err == nil || !strings.Contains(err.Error(), "token") {
+		t.Fatalf("bad token: %v", err)
+	}
+}
+
+func TestTapCaptureStreamCapAndIdleEnd(t *testing.T) {
+	frames := make(chan []byte)
+	srv, _ := streamTap(t, "", frames)
+	c, _ := TapCapture(TapOptions{URL: srv.URL, FPS: 10, Idle: 300 * time.Millisecond})
+	stop := make(chan struct{})
+	go func() {
+		for i := 0; ; i++ {
+			select {
+			case frames <- jpegOf(t, color.RGBA{uint8(i), 0, 0, 255}):
+			case <-stop:
+				return
+			}
+			time.Sleep(10 * time.Millisecond)
+		}
+	}()
+	ch, err := c(t.Context())
+	if err != nil {
+		t.Fatal(err)
+	}
+	t0, n := time.Now(), 0
+	for time.Since(t0) < time.Second {
+		select {
+		case <-ch:
+			n++
+		case <-time.After(time.Second):
+		}
+	}
+	if n > 14 || n < 6 {
+		t.Fatalf("cap 10 fps passed %d frames in 1 s", n)
+	}
+	close(stop) // the tap stalls: the capture ends after Idle, the page reconnects
+	waitClosed(t, ch)
 }

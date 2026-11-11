@@ -508,9 +508,9 @@ func TestWatchVideoSourceTap(t *testing.T) {
 		t.Fatalf("a video must exist but not run before a viewer: %v %v", v, err)
 	}
 	for name, mod := range map[string]func(*ladderOptions){
-		"fps above the tap rate": func(l *ladderOptions) { l.videoFPS = 7 },
-		"unknown source":         func(l *ladderOptions) { l.videoSource = "vnc" },
-		"bad url":                func(l *ladderOptions) { l.tapURL = "127.0.0.1:8893" },
+		"fps above the tap cap": func(l *ladderOptions) { l.videoFPS = 31 },
+		"unknown source":        func(l *ladderOptions) { l.videoSource = "vnc" },
+		"bad url":               func(l *ladderOptions) { l.tapURL = "127.0.0.1:8893" },
 	} {
 		l := ok
 		mod(&l)
