@@ -1,11 +1,20 @@
 # Independent verification of upstream PR candidates 1 and 2 (2026-11-11)
 
-> status: WIP (agent prverify). Verdicts below are filled as the runs finish.
+> status: current, 2026-11-11 (TASK-340, agent prverify). Both candidates NEEDS-WORK; nothing is cleared for posting yet. Consumer: TASK-45 (the PR-posting card).
 
 Verifier: d2-reviewer (Opus), singly, read-mostly. Material: `docs/upstream/pr-queue.md` and `docs/upstream/drafts/*.md` on branch `agent/prprep` (tip 49cfd0f1), the private fork on the worker host. Tags: V read (disassembly read here), V run (run here), S / U.
 
 ## Setup (V run)
 - Upstream main moved since the prep: `962ffce2` (2026-11-11, #414 trace docs and an Imbue include fix), not `b6b59ae9`. Both branches rebase onto it with no conflict (detached worktrees `~/d2d-lab/wt-pv-light`, `~/d2d-lab/wt-pv-cold`, script `~/d2d-lab/pv/pv_setup.sh`): Lightning `9e756c76` (oracle) + `4b80e1e2` (claim); Cold `8c327675` (oracle) + `37bd27ad` (claim).
+
+## Summary and required actions
+
+| Candidate | Verdict | Required before posting | Then post |
+|---|---|---|---|
+| 1 Lightning (`fid/missile-last-unit-r2` 89059e2d) | NEEDS-WORK | narrow the new branch to `srv_do == 1` rows (or prove the srvdofunc 3 standing rows), name the affected skills (Lightning, Lightning Fury, Inferno, Bone Spear, Arctic Blast) in the body and commit; state the cross-subtile unit-order residual with its count; drop `SK6_REVERSE`; fix the 2,584 / 1,192 count | a new `-r3` branch, re-verified (differential both seeds, Bone Spear variant, ctest) |
+| 2 Cold Enchanted (`fid/cold-enchanted-length-r3` 1b4036a3) | NEEDS-WORK, one fix | make the oracle commit compile (`boss.elem_len` there, `boss_elem_length` in the claim); then it is a PASS on the evidence here | a new `-r4` branch; a re-check is only a build of each commit plus the two runs |
+
+Both branches rebase cleanly on upstream main 962ffce2. Candidate 1's oracle commit builds on its own (V run).
 
 ## Candidate 1: Lightning, one unit a frame, last unit skipped (`fid/missile-last-unit-r2`, 89059e2d)
 
