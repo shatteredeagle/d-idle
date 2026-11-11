@@ -1,10 +1,13 @@
 ---
 id: TASK-307
-title: 'identify2: identify runs at the next safe moment anywhere, batched, with priority; errands trigger a trip home'
-status: Proposed
+title: >-
+  identify2: identify runs at the next safe moment anywhere, batched, with
+  priority; errands trigger a trip home
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T16:04:00Z'
+updated_date: '2026-11-11T18:10:00Z'
 labels:
   - bot
   - feature

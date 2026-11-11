@@ -160,7 +160,6 @@ docs/first-hour.md  live-agent  firsthour
 docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
-docs/inventory-actions.md  credit-runner  identify2
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
@@ -197,19 +196,14 @@ docs/sme/pace-and-formulas.md  credit-runner  smepace
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
-docs/whyline.md  credit-runner  identify2
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
-internal/bot/goal.go  credit-runner  identify2
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
-internal/bot/playeraction.go  credit-runner  identify2
-internal/bot/playeraction_test.go  credit-runner  identify2
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
-internal/bot/runner.go  credit-runner  identify2
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/yield.go  credit-runner  aggression2
@@ -229,7 +223,6 @@ internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
-internal/invdesk  credit-runner  identify2
 internal/invdesk  credit-runner  standstill
 internal/invdesk/desk.go  credit-runner  artspeed
 internal/invdesk/desk_test.go  credit-runner  artspeed
@@ -260,9 +253,6 @@ internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
 internal/town/chores.go  credit-runner  repairtrip
-internal/town/playerid.go  credit-runner  identify2
-internal/town/playerid_sim_test.go  credit-runner  identify2
-internal/town/playerid_test.go  credit-runner  identify2
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
 internal/watch  credit-runner  firstminutes
@@ -300,9 +290,7 @@ internal/watch/web/panels/gear  credit-runner  repairtrip
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.js  credit-runner  minimapfix
-internal/watch/whyline.json  credit-runner  identify2
 internal/watch/whyline.json  credit-runner  repairtrip
-internal/watch/whyline_test.go  credit-runner  identify2
 internal/watch/whyline_test.go  credit-runner  repairtrip
 tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack
