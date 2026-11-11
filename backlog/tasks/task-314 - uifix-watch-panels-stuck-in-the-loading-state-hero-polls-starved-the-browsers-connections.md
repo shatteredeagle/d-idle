@@ -1,10 +1,13 @@
 ---
 id: TASK-314
-title: 'uifix: watch panels stuck in the loading state (hero polls starved the browser''s connections)'
-status: Proposed
+title: >-
+  uifix: watch panels stuck in the loading state (hero polls starved the
+  browser's connections)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:31:00Z'
+updated_date: '2026-11-11T18:47:00Z'
 labels:
   - watch
   - bug
