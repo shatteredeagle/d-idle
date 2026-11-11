@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch minimap: the coverage grid now covers the whole zone
 - Watch minimap: hero trail and an optional exploration coverage grid (TASK-296)
 - Fixed: the gold-farm order no longer walks the hero out of the Den of Evil mid fight when one potion is drunk (enter with 2 belt potions, stay with 1)
 - d2dview: /api/frames video counters, -jpeg-quality, -frame-half, -frame-backoff and -feed (d2d fork framefeed ring) flags; faster JPEG re-encode
