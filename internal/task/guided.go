@@ -17,7 +17,7 @@ type Guide struct {
 	Opts  func() campaign.Opts       // time, veto window, farm budget, readiness checks
 	// OnDecision gets every decision with the progress it was made from (the bot persists Observe, queues the floor
 	// question, writes the Chronicle).
-	OnDecision func(campaign.Decision, campaign.Progress)
+	OnDecision func(campaign.Decision, campaign.Progress, campaign.Opts)
 }
 
 // WithGuide makes c follow g in Normal Act 1 (nil g: the plain floor planner).
@@ -72,7 +72,7 @@ func (c *Campaign) guidedPlan(w World, s Session) (Plan, bool) {
 		return Plan{Stuck: true, Why: "campaign: " + err.Error()}, true
 	}
 	if g.OnDecision != nil {
-		g.OnDecision(d, p)
+		g.OnDecision(d, p, o)
 	}
 	ch := g.Spine.Chapter(d.Chapter)
 	switch d.Action {
@@ -167,4 +167,9 @@ func StepLevelFor(n int, chapter string) Step {
 		s.Title = fmt.Sprintf("Level up to %d for %s", n, chapter)
 	}
 	return s
+}
+
+// NewGuide is the guide of a journey controller; class gives the lowercased class name of the hero.
+func NewGuide(c *campaign.Controller, class func() string) *Guide {
+	return &Guide{Spine: c.Spine(), State: c.State, Class: class, Opts: c.Opts, OnDecision: c.Decided}
 }

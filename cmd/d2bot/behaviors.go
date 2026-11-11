@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"d2lod-bot/internal/campaign"
 	"d2lod-bot/internal/gclock"
 	"errors"
 	"log/slog"
@@ -35,6 +36,7 @@ type runnerRef struct {
 	gf  *goldfarm.Controller      // the Farm gold order (repairwire.go); nil until newRepair
 	rep *repair.Controller        // the repair policy and request (repairwire.go); nil until newRepair
 	tw  atomic.Pointer[town.Town] // set by wireRepair, read by the gear readings
+	jc  *campaign.Controller      // the guided journey (journeywire.go); nil until wireJourney
 }
 
 // beat stamps the runner's watchdog heartbeat (a finished sub-step of a long restart); no-op before the runner exists.

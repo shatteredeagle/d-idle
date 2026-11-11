@@ -19,6 +19,15 @@ owns:
   - "internal/bot/guided.go"
   - "internal/bot/guided_test.go"
   - "internal/campaign/"
+  - "internal/task/campaign.go"
+  - "internal/bot/runner.go"
+  - "cmd/d2bot/journeywire.go"
+  - "cmd/d2bot/behaviors.go"
+  - "cmd/d2bot/live.go"
+  - "cmd/d2bot/d2dbackend.go"
+  - "docs/campaign.md"
+  - "docs/inventory-actions.md"
+  - "docs/quest-givers.md"
 exclusive: []
 contracts: []
 ---

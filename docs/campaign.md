@@ -64,9 +64,12 @@ Safety walls stay: the Monastery road guard and the tower guard, the Andariel un
 
 ## 5. Stage 1: planner integration (TASK-337)
 
-- A `task.Planner` adapter (Guided) maps the decision to plans: go = the chapter's quest handler nodes; farm = a level step whose title names the chapter ("Level up to 13 for Charsi's hammer", visible budget) and whose area is the farm zone; ask = the same level step plus a return-screen question (the question queue); free = the old `Campaign.Plan`.
-- `state/campaign.json` per hero (`campaign.Store`), knobs for `AskWait` and `FarmBudget`.
-- Readiness checks for the chapter area come from the bot's readiness evaluator.
+- `task.Campaign.WithGuide(*task.Guide)` (internal/task/guided.go): in Normal Act 1, after the town quest givers, the spine picks the plan. Go = the chapter's quest handler (`quest.<id>`), or a waypoint or level step for chapters without a quest; farm and ask = a `level.N` step titled "Level up to N for <chapter>" (the status line and the Why line show it); Orders mode = a level step at the current level plus one; Free mode, Act 2 and later, Nightmare and Hell, and a finished spine hand over to the floor planner (the Act 2 hop stays there).
+- The floor planner's per-quest floors (`Entry.floor`: Den kit floor, Blood Raven class and wait level, route guard, tower guard, Andariel class row and unattended hold) are the chapter's safety wall (`Opts.Wall`): a wall above the data floor raises floor and recommended, so a band never sends the hero into a walk the guards refuse.
+- Floor-planner entries without a chapter (the free Rogue claim) still run first when due.
+- A quest the executor blocked this session is held for the session only (a copy of the state; the persisted intents are unchanged).
+- `campaign.Controller` (internal/campaign/controller.go): per-hero state in `<state>/campaign.json`, `Decided` runs Observe and saves, `Apply` takes the player's requests (intent, go now, answer, goAt, mode), `View` is the API body. `cmd/d2bot/journeywire.go` builds it (veto window 10 min, floor offer after 30 min of a level step; U, constants until they become knobs) and `bot.Runner.SetJourney` installs it. A named run (`D2BOT_RUN`: gates, soaks, drills) never gets the guide, so measured runs keep the floor planner.
+- The level step's area is still the bot's own level planner (progression table, danger, bans); the spine's farm table only names a zone when the bot has none. The floor question is shown on the Journey strip (stage 2); routing it through the return-screen question queue (decide catalogue point) is a follow-up card because the catalogue is a shared registry.
 
 ## 6. Stage 2: API, Journey strip, nudges (TASK-338)
 

@@ -320,6 +320,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err == nil {
 		ref.p.Store(runner)
 		wireGoldFarm(ref, runner)
+		wireJourney(ip.State(), ref, runner, log.Info)
 		emit.bind(e.Emit)
 		e.Emit = emit.send
 	}
