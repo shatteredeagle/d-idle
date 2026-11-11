@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- watch: life and mana with numbers and an alerts badge in the top band; a Hero stats tile with level, gold, resistances and the readiness light
 - The bot no longer strips a mercenary's gear before a replacing hire; it waits until the player has taken it off (resource.gearDecisions=player)
 - Inventory page: click an item for a menu (equip, mark for sale, keep, trash); the bot performs queued actions at a calm moment, in town or in the field; trash drops the item on the ground and the pickup leaves it alone.
 - dev-update no longer leaves deleted files in the worker source copy
