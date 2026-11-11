@@ -73,7 +73,7 @@ func TestVerbLines(t *testing.T) {
 			[]string{"cmd skill 54 32.1 14.1 5"}},
 		{"interact npc", func(c *Controller) error {
 			return c.Interact(input.Target{Type: 1, ID: d2dsrc.NPCIDBase + 3})
-		}, append(append([]string{}, prime...), "cmd interact 3")},
+		}, []string{"debug level", "click 400 300", "cmd interact 3"}},
 		{"interact item", func(c *Controller) error { return c.Interact(input.Target{Type: 4, ID: 17}) }, []string{"cmd pickup 17"}},
 		{"interact monster", func(c *Controller) error {
 			return c.Interact(input.Target{Type: 1, ID: 5, Pos: input.Point{X: 65, Y: 147}})
