@@ -145,7 +145,9 @@ cmd/d2bot/sensesfeed.go  credit-runner  maptrail
 cmd/d2bot/sensesfeed_test.go  credit-runner  maptrail
 cmd/d2firsthour/  live-agent  firsthour
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
+docs/START-HERE.md  credit-runner  processrules
 docs/agents  credit-runner  contextdiet
+docs/agents  credit-runner  processrules
 docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
@@ -154,6 +156,8 @@ docs/desktop-app.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronmac2
 docs/dev-update.md  credit-runner  artspeed
+docs/dev-update.md  credit-runner  processrules
+docs/digest  credit-runner  processrules
 docs/first-hour.md  live-agent  firsthour
 docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
@@ -172,6 +176,8 @@ docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
+docs/process/coordinator-efficiency.md  credit-runner  processrules
+docs/process/dispatcher-brief.md  credit-runner  processrules
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-hints.md  live-agent  questdrill
 docs/reconnect-ux.md  credit-runner  reconnectux
@@ -265,7 +271,9 @@ internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.js  credit-runner  minimapfix
+tools/backlog/check.py  credit-runner  processrules
 tools/firsthour.sh  live-agent  firsthour
+tools/play-sandbox  credit-runner  processrules
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maptrail
 # END GENERATED OWNERS

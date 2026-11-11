@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-310 processrules: rules-short, brief rules, deploy windows, research WARN, digests, coordinator checklist <!--sg:agent/processrules-->
 - TASK-253 autodone: drift report as a CI warning, live-checks closing rule automatic (auto-Done on, catch-up applied) <!--sg:agent/autodone-->
 - TASK-255 sharedgen: shared files generated at merge (BACKLOG, CHANGELOG, OWNERS block, STATUS block, INDEX), dry run, agents write no shared-file lines <!--sg:agent/sharedgen-->
 - Fix: the hero finishes a pack it was pulled into instead of walking on after 4 s; fight log lines show why each fight ended

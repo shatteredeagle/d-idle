@@ -121,6 +121,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [d2dctl.md](d2dctl.md): d2dctl: Go client for the d2d control channel
 - [data.md](data.md): internal/data: static game tables
 - [decomp-queue.md](decomp-queue.md): Decomp lane: ranked queue and rules (status: current, 2026-10-31 (agent DECOMPBELT created it; the user started the lane: "start decomp lane"). The...)
+
+`digest/`
+
+- [d2d-fork-lab.md](digest/d2d-fork-lab.md): Digest: d2d fork and lab (status: current (TASK-310 digest; the area doc is the authority).)
 - [forkarmor.md](forkarmor.md): FORKARMOR: the private fork carries the Frozen Armor freeze-rule fix (card forkarmor, 2026-11-01) (status: current. Branch `lab-armorhit` of the private d2d fork, lab binary `bin/d2d.lab-armorhit` on the worker...)
 - [forkcheats.md](forkcheats.md): FORKCHEATS: test cheats added to the lab binary (card forkcheats, 2026-10-31) (status: current. The verbs exist in the lab d2d binary as of 2026-10-31 (the patches live in the private fork, not...)
 - [forkdbg.md](forkdbg.md): FORKDBG: lab-only debug verbs for the live skill drills (card forkdbg, 2026-11-01) (status: current. The verbs exist in the lab d2d binary built from the private fork branch `lab-debug-skills`...)
@@ -290,6 +294,15 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
 - [dev-update.md](dev-update.md): Dev-loop update: new bot builds in a running container, no image rebuild (status: CURRENT. Task: TASK-192 (devupdate). Builds on the merged updater (docs/self-update-release.md,...)
 - [difficulty.md](difficulty.md): Difficulty: Normal -> Nightmare -> Hell (levels, resists, immunities, affixes, detection work list)
+
+`digest/`
+
+- [bot-loop-goals.md](digest/bot-loop-goals.md): Digest: bot loop and goals (status: current (TASK-310 digest; the area doc is the authority).)
+- [combat.md](digest/combat.md): Digest: combat (status: current (TASK-310 digest; the area doc is the authority).)
+- [merge-ci-process.md](digest/merge-ci-process.md): Digest: merge, CI and process (status: current (TASK-310 digest; the area doc is the authority).)
+- [nav.md](digest/nav.md): Digest: navigation (status: current (TASK-310 digest; the area doc is the authority).)
+- [town-economy-loot.md](digest/town-economy-loot.md): Digest: town, economy and loot (status: current (TASK-310 digest; the area doc is the authority).)
+- [watch-ui.md](digest/watch-ui.md): Digest: watch, viewer and player UI (status: current (TASK-310 digest; the area doc is the authority).)
 - [drillsfix.md](drillsfix.md): drillsfix: stash (DS) and tome (TM) drill repairs
 - [earlygame.md](earlygame.md): Early game: a fresh character, clvl 1 to 12 (agent EARLYGAME, 2026-10-30)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
@@ -501,10 +514,11 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `agents/`
 
-- [brief-template.md](agents/brief-template.md): Agent brief template (12 lines) (status: current (TASK-256, user approved the reading diet 2026-11-10; source:...)
+- [brief-template.md](agents/brief-template.md): Agent brief template (12 lines) (status: current (TASK-256, TASK-310; user approved the reading diet 2026-11-10; source:...)
 - [claude-tracing-guide.md](agents/claude-tracing-guide.md): Tracing claims about Diablo II 1.14d with Claude: a practical guide (status: current (card claudeguide, 2026-11-01). Written at the maintainer's request for people who use Claude...)
 - [domain.md](agents/domain.md): Domain docs: single-context
 - [issue-tracker.md](agents/issue-tracker.md): Issue tracker: Backlog.md tasks (status: current since OpenSpec removal stage 4. Work is tracked as Backlog.md tasks...)
+- [rules-short.md](agents/rules-short.md): Agent rules, short (stable path; every brief links this file) (status: current (TASK-310). Replaces the per-session "overnight-rules" scratchpad file that was missing in later...)
 - [triage-labels.md](agents/triage-labels.md): Triage labels
 - [api-agent-cookbook.md](api-agent-cookbook.md): API-credit runner cookbook: command forms that work (status: current (card apicookbook). Evidence (V): the stream logs of seven decomposition jobs on the API-credit...)
 - [backlog-howto.md](backlog-howto.md): Backlog board (Backlog.md) - how to use it (status: STAGE 3 done (openspec/ removed, tag `openspec-final`; contracts in `docs/contracts/`; the copier and...)
@@ -548,6 +562,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [cleanup-plan-20261105.md](process/cleanup-plan-20261105.md): Whole-project cleanup plan (read-only inventory, 2026-11-05) (status: proposal. Nothing in this pass deleted, renamed or pushed anything. Full lists:...)
 - [coderabbit-prescan.md](process/coderabbit-prescan.md): CodeRabbit pre-scan runbook (d-idle repo and the d2decomped fork) (status: current, card crsetup, 2026-11-02. Owner go given 2026-11-02. Nothing here runs until the owner installs...)
 - [contracts-after-openspec.md](process/contracts-after-openspec.md): Contracts after OpenSpec: design (status: PROPOSAL, 2026-11-04 (job contractsdesign, docs only). Nothing here is applied. It refines stages 3 to 5...)
+- [coordinator-efficiency.md](process/coordinator-efficiency.md): Coordinator efficiency checklist (status: current (TASK-310; source: docs/research/project-review-2026-11-10.md section 6 and...)
 - [credit.md](process/credit.md): Credit for work carried upstream (status: current (card creditkit, approved by the maintainer 2026-11-02).)
 - [d2d-worker-host.md](process/d2d-worker-host.md): d2d worker host (status: moved to the private ops repo (d2lod-ops, `docs/process/d2d-worker-host.md`). Not part of the public tree.)
 - [d2dfarm.md](process/d2dfarm.md): d2dfarm: distributed d2d test nodes (status: v1 (ssh push). Spec: `openspec/changes/d2dfarm/specs/d2d-farm/spec.md`. Tags: V = run, U = not run. Hidden...)
