@@ -51,7 +51,13 @@ jobs:
         env:
           D2IDLE_UPDATE_FEED: ${{ vars.D2IDLE_UPDATE_FEED }}
       - run: npx electron-builder ${{ matrix.args }} --publish never
-      - run: cd dist && sha256sum *.AppImage *.deb *.exe 2>/dev/null | tee SHA256SUMS
+      # Only the artifact types this OS builds exist; an unmatched glob must not fail the step.
+      - run: |
+          cd dist
+          shopt -s nullglob
+          files=(*.AppImage *.deb *.exe *.dmg *.zip)
+          [ ${#files[@]} -gt 0 ] || { echo "no artifacts in dist"; exit 1; }
+          sha256sum "${files[@]}" | tee SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: d2idle-watch-${{ matrix.name }}
