@@ -226,3 +226,36 @@ func TestParseQuote(t *testing.T) {
 		}
 	}
 }
+
+// The fork's merc gear patch: level, stats and worn items reach merc.MercState (synthetic dumps in the patch's
+// format: U against a live d2d).
+func TestMercGearDump(t *testing.T) {
+	st := state(t, fixture(t, "dump_head_merc_desert.json"), nil)
+	if !st.Known || !st.Owned || !st.Alive || st.Class != merc.ClassDesert || st.Level != 17 || st.Str != 60 || st.Dex != 50 || !st.StatsKnown || !st.GearKnown {
+		t.Fatalf("desert: %+v", st)
+	}
+	if h, w := st.Gear[merc.SlotHelm], st.Gear[merc.SlotWeapon]; h == nil || h.Name != "Skull Cap" || h.W != 2 || h.H != 2 || w == nil || w.Name != "Spear" || w.Cells() != 8 ||
+		st.Gear[merc.SlotArmor] != nil || st.Gear[merc.SlotShield] != nil {
+		t.Errorf("gear %+v", st.Gear)
+	}
+	if !merc.GearBlocksReplace(st) {
+		t.Error("a geared merc must block a replacing hire")
+	}
+	dead := state(t, fixture(t, "dump_head_merc_dead.json"), nil)
+	if !dead.Owned || dead.Alive || dead.Level != 17 || dead.Gear[merc.SlotArmor] == nil || dead.Gear[merc.SlotArmor].Name != "Leather Armor" {
+		t.Errorf("dead keeps gear: %+v", dead)
+	}
+	none := state(t, fixture(t, "dump_head_merc_none.json"), nil)
+	if !none.Known || none.Owned || none.Level != 0 {
+		t.Errorf("none: %+v", none)
+	}
+	// a bare, read merc may be replaced; an unread one blocks (stock d2d has no gear list)
+	bare := st
+	bare.Gear = [merc.NumSlots]*merc.Item{}
+	if merc.GearBlocksReplace(bare) {
+		t.Error("a bare merc whose gear was read must not block")
+	}
+	if !merc.GearBlocksReplace(state(t, fixture(t, "dump_head_late.json"), nil)) {
+		t.Error("stock dump: gear unread, must block")
+	}
+}

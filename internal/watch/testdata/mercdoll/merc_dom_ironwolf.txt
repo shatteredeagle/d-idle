@@ -1,0 +1,17 @@
+div []
+  details.inv-merc-fold [data-remember=merc-doll] open
+    summary [] "Mercenary"
+    div.inv-merc-body []
+      div.inv-merc-head []
+        h3 [] "Iron Wolf"
+        span.meta [] "level 23, Str 80, Dex 70, life 100%"
+      div.d-doll [aria-label=Mercenary paper doll role=group data-owner=merc data-state=ready]
+        div.d-slot2 [aria-label=helm: empty data-owner=merc data-slot=mhead] title="helm: empty"
+          span.sil [] "helm"
+        div.d-slot2 [aria-label=armour: empty data-owner=merc data-slot=mtorso] title="armour: empty"
+          span.sil [] "armour"
+        div.d-slot2 [aria-label=weapon: empty data-owner=merc data-slot=mrhand] title="weapon: one-handed sword: empty"
+          span.sil [] "weapon"
+        div.d-slot2 [aria-label=shield: empty data-owner=merc data-slot=mlhand] title="shield: empty"
+          span.sil [] "shield"
+      p.d-hint [] "Read only: the bot makes no equipment decision for your mercenary, and equipping him from this page is not built yet."

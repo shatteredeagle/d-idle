@@ -1,0 +1,6 @@
+div []
+  details.inv-merc-fold [data-remember=merc-doll] closed
+    summary [] "Mercenary"
+    div.inv-merc-body []
+      p.d-empty [] "No mercenary hired"
+      p.d-hint [] "Hire one in Act 1 (free after Blood Raven) or Act 2."
