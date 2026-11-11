@@ -76,3 +76,17 @@ Material: `fid/missile-last-unit-r3` (5effaf98, oracle f724f9ee) and `fid/cold-e
 ### Upstream since 62732598 (V run)
 - upstream main is now `59d3b59e` (42 commits later). Both branches rebase with no conflict (`git merge-tree` clean; rebased heads Lightning 43a6d375 + 522b0950, Cold 7b6a43e6 + 0a01b455).
 - Nothing upstream fixes or touches the same code: `git log -S` over the range finds no change to `last_hit`, `struck` or `elem_len` logic; no new commit in `components/game/fight/`, `light_pierce.py` or `umod_stats.py`. Touches to the same files are neighbours: `gamedata.hpp` (cf8a346a MonEquip), `ai.cpp` / `uniques.hpp` / `monsters.md` (78cbb348 MonEquip gear: `make_boss` gains a `gear` parameter; #371's MonUMod 21 / 35 / 40-42 commits). `make_boss`'s element line, the one the claim edits, is unchanged upstream.
+
+### Every commit builds alone (V run)
+Full `ninja` (all 1,203 targets, `D2D_WERROR=OFF`) at each commit of each branch, as pushed and rebased, plus upstream `59d3b59e`: all rc 0 (f724f9ee, 5effaf98, 4945679c, 30713b60; rebased 43a6d375, 522b0950, 7b6a43e6, 0a01b455). The first pass's Cold blocker (oracle commit did not compile) is resolved.
+
+### Differentials reproduce (V run, own scripts, clean worktrees)
+Lightning, `test_light_pierce --light-hit SEED 400` against `light_pierce.py`, 1,192 casts each side every run; identical as pushed and rebased:
+
+| | seed 1 | seed 7 | seed 13 |
+|---|---|---|---|
+| parent: casts whose hit totals (T line) differ | 44 | 43 | 47 |
+| parent: casts with any per-frame (H) or total difference | 53 | 54 | 54 |
+| claim | 0 | 0 | 0 |
+
+Cold Enchanted, `umod_stats.py N SEED` against `test_umod_stats --umod-stats` (seed 1 N 100000 = 157,618 cases; seed 9 N 50000 = 107,618), identical as pushed and rebased. The prep's classifier (`pp_cold_count.py`) on my compare files gives the draft's table exactly (7,869 / 3,124 / 5,657 / 2,290 to 0 / 1,625 / 5,657 / 248; seed 9 4,745 / 1,591 / 3,732 / 1,154 to 0 / 828 / 3,732 / 135). My classifier: Cold only 9,636 to 0 (seed 9: 5,629 to 0); Cold with Fire / Lightning 3,647 to 1,873 (1,861 to 963); minions 5,657 unchanged (3,732); no Cold mod 0 / 0.
