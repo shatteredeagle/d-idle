@@ -24,6 +24,7 @@ owns:
   - "tools/emu/d10_*"
 exclusive: []
 contracts: []
+result: "Five card docs and batch6.md; V run oracles d10_stam (80,000 cases, 0 mismatch), d10_pot (40,000 cases, 0 mismatch), d10_roll (Zeal rollback, 63 cases). One deviation (Zeal strike spacing), game side V run; no PR candidate. Offline, not verified live (2026-11-11, agent decomp10)."
 ---
 
 ## Description
@@ -36,7 +37,7 @@ Why: batch 5 left potions, stamina, identify, gold and Zeal open. Done when: the
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 five card docs and batch6.md with deviations table
-- [ ] #2 oracle scripts d10_* run on the worker host
-- [ ] #3 queued for merge
+- [x] #1 five card docs and batch6.md with deviations table
+- [x] #2 oracle scripts d10_* run on the worker host
+- [x] #3 queued for merge
 <!-- AC:END -->
