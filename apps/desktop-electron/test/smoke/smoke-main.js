@@ -8,8 +8,6 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const { app, BaseWindow } = require('electron');
 
-if (process.env.D2E_SMOKE_NO_SANDBOX) app.commandLine.appendSwitch('no-sandbox'); // CI container without userns only
-
 const listen = (handler) => new Promise((res) => { const s = http.createServer(handler); s.listen(0, '127.0.0.1', () => res(s)); });
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function until(fn, what, ms = 15000) {
