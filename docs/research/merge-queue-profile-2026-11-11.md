@@ -22,10 +22,10 @@ Tags: V = verified (how), S = secondary (derived from another number), U = unver
 | time per item (started to finished) | median 286 s, p90 401 s, max 432 s |
 | docs-only items (20) | median 108 s, p90 313 s |
 | code items (74) | median 289 s, p90 412 s |
-| items merged with `ci: pending` at push (no-wait path) | all 94; later resolved green 90, red 2, via-later-head 1, n/a 1 |
+| final `ci` value of the 94 merged items | green 90, red 2, green via a later head 1, n/a 1 |
 | batched (docs fast path) | 6 of 94 |
 | items with `--after` | 7 of 104 |
-| auto-Done follow-up commits | 52 pushed ("status sync (auto)"), 33 skipped by rule, 14 not yet evaluated |
+| auto-Done follow-up commits | 52 pushed ("status sync (auto)"), 38 skipped by rule (no task, boxes open, already Done), 14 not yet evaluated |
 | main CI (`ci` workflow) duration, 74 green runs | median 279 s, p90 321 s |
 | main CI cancelled runs | 22, of which 21 in one burst at 11:24 EST (a mass push, not the queue) |
 
@@ -47,18 +47,18 @@ Code item, median 289 s; docs item, median 108 s. `merge.sh` order: mergeq CI ch
 | `go build ./...` (local, herdr box) | 10-30 s | 60 s | U |
 | leakcheck again + hygiene | 25 + 30 s | 90 s | S: CI 24 s and 31 s |
 | push | 2-5 s | 10 s | S |
-| CI wait inside merge.sh | 0 (no-wait) | 0 | V: `MERGE_CI_POLLS=0` path, all items merged with ci pending |
+| CI wait inside merge.sh | 0 (no-wait) | 0 | S: the `MERGE_CI_POLLS=0` path of docs/mergefast.md 2b; item results carry `CI for <head>: pending` |
 | docs-only: leakcheck + hygiene only | 60-90 s | | consistent with the measured 108 s median |
 
 Leakcheck runs three times for a code item (mergeq preflight, the gate, then CI); hygiene runs twice (gate, CI). The sum of the estimates is about 250-330 s, which matches the measured 289 s median, so the split is plausible but U until `MERGE_TIMINGS=1` is on.
 
 ## 4. Top 5 time sinks
 
-1. **Stale red hold: 58 holds, about 4.7 h, as long as 290 s per item between consecutive items (V by code and log).** `red_hold()` (mergeq.py) returns every merged item whose recorded `result.ci` is `red`, and returns nothing only when the tip of main is green at that instant. Three items are recorded `red` forever (#344 from 11-07, #545 and #551 from 11-10). So after EVERY push, until its CI turns green (about 280 s), `ci` is forced to `red`, `pending_ok` is false and the next item waits for the full CI run. This silently disables `MERGEQ_NOWAIT_CODE`/`MERGEQ_DOCS_NOWAIT` since #551. The 56 gaps with a queued successor have median 290 s, equal to the median CI duration (279 s); that is the evidence.
+1. **Stale red hold: 58 holds, about 4.7 h, about 290 s lost between consecutive items (V by code and log).** `red_hold()` (mergeq.py) returns every merged item whose recorded `result.ci` is `red`, and returns nothing only when the tip of main is green at that instant. Three items are recorded `red` forever (#344 from 11-07, #545 and #551 from 11-10). So after EVERY push, until its CI turns green (about 280 s), `ci` is forced to `red`, `pending_ok` is false and the next item waits for the full CI run. This silently disables `MERGEQ_NOWAIT_CODE`/`MERGEQ_DOCS_NOWAIT` since #551. The 56 gaps with a queued successor have median 290 s, equal to the median CI duration (279 s); that is the evidence.
 2. **A different workflow holds the queue: `desktop-electron` smoke (V).** `ci_state()` asks `gh run list` for headSha, status and conclusion only, no workflow name, so a failure of `desktop-electron` (path-triggered extra workflow, step `npm run smoke` with `D2E_SMOKE_NO_SANDBOX=1`) counts as main red. Three failures (02:04Z, 02:47Z, 04:06Z on 11-11) caused two real holds of 72 and 141 min (3.6 h) and the two permanent red marks of sink 1. The code did not break; a smoke test did.
 3. **The code item itself, 289 s median (S split).** Whole-repo gate on the worker host plus the same hygiene checks that CI repeats after the push. Queue capacity today is one item per about 580 s (run 289 + gap 290); with sink 1 gone it is one per about 300 s.
 4. **Follow-up pushes (V).** 52 auto-Done commits in 48 h. Each is pushed after the item's CI resolved green, produces a new head that is not in `pushed_heads`, so `pending_ok` (`sha in heads`) is false and the next item waits for that head's CI too (about 280 s) if it arrives during that window. They also add 52 CI runs (cancel-in-progress limits the waste). The generated shared-file commit is no longer separate (since sharedgen: 5 `shared files (generated)` commits only in 48 h; it rides in the merge).
-5. **Failures and reruns (V).** 14 failed attempts in 48 h (7 conflicts, 3 gates, 2 infra lock, 2 CI-red marks), each costs a full item time (60-290 s) plus the hold; 7 of them were `merge-lines`/`task` file conflicts that sharedgen and the no-lines rule have since removed (S, not yet re-measured).
+5. **Failures and reruns (V).** 14 failed attempts in 48 h (7 conflicts, 3 gates, 2 infra lock; plus the 2 CI-red marks, which were merged items), each costs a full item time (60-290 s) plus the hold; 7 of them were `merge-lines`/`task` file conflicts that sharedgen and the no-lines rule have since removed (S, not yet re-measured).
 
 Not a sink: the 33 h of empty-queue gaps (demand limited). Docs-only batching works (6 items batched) but docs items are only 20 of 94.
 
