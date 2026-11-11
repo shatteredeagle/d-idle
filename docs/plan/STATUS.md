@@ -108,6 +108,7 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
+| playerprio | proposed | - | `internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`internal/bot/loop.go`<br>`internal/bot/state.go`<br>`internal/bot/runner.go`<br>`internal/town/playerid.go`<br>`docs/inventory-actions.md` | - |
 | xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
@@ -166,6 +167,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e75a9384 11-11 14:42 `Merge agent/playerprio: TASK-321 playerprio: player commands interrupt walks at a safe moment, behind safety` (playerprio)
+- 6530d54d 11-11 14:41 `Merge branch 'main' into playerprio` (-)
 - 65a697cd 11-11 14:32 `Merge agent/maphistory: TASK-324 maphistory: activity-coloured trail, event markers, activity percent legend` (maphistory)
 - 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
 - f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
@@ -174,6 +177,4 @@
 - b9d81697 11-11 14:21 `Merge branch 'main' into xpreadout` (-)
 - 80ce67bf 11-11 14:17 `Merge agent/sellmarks2: TASK-308 sellmarks2: fix sell-marks town test fixture (fails with real tables)` (sellmarks2)
 - 1750ecc4 11-11 14:16 `Merge branch 'main' into sellmarks2` (-)
-- 0c372bbc 11-11 14:11 `Merge origin/main into agent/nocursor` (-)
-- 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
 <!-- statusgen:end -->

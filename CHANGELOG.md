@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Queued player commands now interrupt the bot's walk at a safe moment instead of waiting for it to stand still <!--sg:agent/playerprio-->
 - Watch minimap: trail coloured by what the bot is doing, event markers and an activity share line <!--sg:agent/maphistory-->
 - watch: the game's mouse pointer is no longer drawn into the video (needs the rebuilt d2d image) <!--sg:agent/nocursor-->
 - TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h <!--sg:agent/xpreadout-->
