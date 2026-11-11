@@ -155,6 +155,7 @@ async function start(opts = {}) {
     cfg.address = origin;
     config.save(userData, cfg);
     gameView.webContents.session.clearCache().catch(() => {});
+    showHelper();
     shell.setAddress(origin);
     await shell.tick();
     return shell.state;
