@@ -1,0 +1,10 @@
+div.inv-act [aria-label=Actions for Plate Mail role=menu data-mode=pop]
+  div.act-title.q-normal [] "Plate Mail"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "it cannot be worn right now"
+  button.act [aria-disabled=true role=menuitem data-act=stash data-off=] "Move to stash"
+  div.act-why [data-for=stash] "the stash has no free spot for it"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-danger=] "Trash"
+  div.act-note [role=status]
