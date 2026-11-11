@@ -40,6 +40,8 @@ type NavTuning struct {
 	PursuitRadius        float64 // a wander (explore, roam, exit walk) with a living non-NPC monster this close for PursuitPolls observations in a row hands over to the fight (Yield); 0 = off
 	PursuitPolls         float64 // consecutive observations a monster must stay within PursuitRadius before the wander turns to fight
 	PursuitMinLifePct    float64 // the pursuit rule applies at or above this % life (below it the safety guard and the stuck ladder decide)
+	RoamSpacing          float64 // distance between roam coverage points on a fully known level (subtiles); the grid is made when the level is first roamed
+	RoamCover            float64 // a coverage point counts as visited when the hero comes within this Chebyshev radius (clamped to RoamSpacing)
 	CautionRadius        float64 // CorpseApproach stops when a living monster is this close (subtiles); its paths avoid monsters at twice the usual radius
 }
 
@@ -48,7 +50,7 @@ func DefaultNavTuning() NavTuning {
 		PathQuality: 1, Sloppiness: 8, WaypointSpacing: 8, ArriveTolerance: 2, PollMs: 100, ReplanMs: 1500,
 		StuckMs: 1200, MaxRecoveries: 6, WallClearance: 3, WallWeight: 0.75, MonsterRadius: 8, MonsterPenalty: 6,
 		ExploreInformed: true, ExploreBucket: 10, WalkTimeoutSec: 120, ExploreTimeoutSec: 300, ExitPush: 8,
-		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60, PursuitRadius: 10, PursuitPolls: 4, PursuitMinLifePct: 50,
+		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, RoamSpacing: 7, RoamCover: 5, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60, PursuitRadius: 10, PursuitPolls: 4, PursuitMinLifePct: 50,
 		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 0, BadEdgeTTLSec: 300,
 	}
 }
@@ -129,6 +131,10 @@ func navKnobs() []Knob {
 			Desc: "A level link or gate that a walk failed on is routed around for this long (game time), and forgotten at once when the game is re-entered; a link the level map itself shows is never marked. 0 restores the old behaviour: marks last for the rest of the run, and a character cut off from a gate it can see is not walked out of its pocket (townwedge)."},
 		{Key: "nav.cautionRadius", Label: "Corpse approach caution", Unit: "subtiles", Default: d.CautionRadius, Min: 8, Max: 40, HigherIsBetter: true,
 			Desc: "A corpse run stops and reports when a living monster comes this close; its paths avoid monsters at twice the usual radius."},
+		{Key: "nav.roamSpacing", Label: "Roam point spacing", Unit: "subtiles", Default: d.RoamSpacing, Min: 5, Max: 30, HigherIsBetter: false, NoHandicap: true,
+			Desc: "Distance between the coverage points a fully known level is roamed by (d2d). Fewer, farther points mean shorter clears; the bot fights whatever comes within its clear radius on the way. Read when a level is first roamed. docs/roamspacing.md."},
+		{Key: "nav.roamCover", Label: "Roam visit radius", Unit: "subtiles", Default: d.RoamCover, Min: 3, Max: 20, HigherIsBetter: false, NoHandicap: true,
+			Desc: "A coverage point counts as visited when the hero comes within this radius (Chebyshev); clamped to nav.roamSpacing so a visit can never skip a whole grid cell. docs/roamspacing.md."},
 		{Key: "nav.teleReservePct", Label: "Teleport mana reserve", Unit: "%", Default: d.TeleReservePct, Min: 0, Max: 90, HigherIsBetter: true, NoHandicap: true,
 			Desc: "A Teleport hop is skipped (the walk goes on, no waiting for mana) when the mana after it would be below this share of max mana, so fights are not starved. Default: about eight casts of a 5 to 8 mana attack on a 150 mana pool (UNSURE, docs/teletune.md)."},
 		{Key: "nav.teleMinLeg", Label: "Teleport minimum leg", Unit: "subtiles", Default: d.TeleMinLeg, Min: 0, Max: 120, HigherIsBetter: false, NoHandicap: true,

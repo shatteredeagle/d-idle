@@ -28,11 +28,13 @@ type CoverageView struct {
 
 // CoverageView returns the roam coverage of the current level; ok is false when roaming is not in use (nothing built).
 func (n *Navigator) CoverageView() (CoverageView, bool) {
+	n.covMu.Lock()
+	defer n.covMu.Unlock()
 	c := n.cov
 	if c == nil || len(c.pts) == 0 {
 		return CoverageView{}, false
 	}
-	v := CoverageView{Level: c.level, Spacing: roamSpacing, Cover: roamCover, Legs: c.legs, Held: c.held, Explored: true,
+	v := CoverageView{Level: c.level, Spacing: c.spacing, Cover: c.cover, Legs: c.legs, Held: c.held, Explored: true,
 		Pts: make([]CoverPoint, len(c.pts))}
 	for i, p := range c.pts {
 		st := CoverUnseen

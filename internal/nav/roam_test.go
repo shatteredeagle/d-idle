@@ -196,3 +196,60 @@ func TestMouthStepDebugLines(t *testing.T) {
 		}
 	}
 }
+
+// A detour outside the roam walk (a fight, a pickup) marks the points it passes: NotePosition from the bot observer.
+func TestNotePositionMarksDetourPoints(t *testing.T) {
+	s, n := newKnown(t, openField(2000, 2000, 120, 120), input.Point{X: 2010, Y: 2010}, true)
+	_ = n.Explore(ctxT(t), func() bool { return len(s.clicks) > 0 })
+	v, ok := n.CoverageView()
+	if !ok {
+		t.Fatal("no coverage")
+	}
+	changed := 0
+	n.SetOnCoverChange(func() { changed++ })
+	// run a line 20 subtiles off the start, as a chase would, without any roam call
+	var want []int
+	for x := 2010; x <= 2100; x += 2 {
+		n.NotePosition(v.Level, input.Point{X: x, Y: 2060})
+		n.NotePosition(v.Level, input.Point{X: x, Y: 2060}) // same spot twice: no work, no callback
+	}
+	n.NotePosition(v.Level+1, input.Point{X: 2000, Y: 2000}) // another level: ignored
+	v2, _ := n.CoverageView()
+	for i, p := range v2.Pts {
+		near := false
+		for x := 2010; x <= 2100; x += 2 {
+			if max(abs(p.X-x), abs(p.Y-2060)) <= v.Cover {
+				near = true
+			}
+		}
+		if near {
+			want = append(want, i)
+			if p.State != CoverSeen {
+				t.Fatalf("point %v near the detour is %s", p, p.State)
+			}
+		} else if p.State == CoverSeen && v.Pts[i].State != CoverSeen {
+			t.Fatalf("point %v far from the detour was marked", p)
+		}
+	}
+	if len(want) == 0 || changed == 0 {
+		t.Fatalf("detour touched %d points, %d callbacks", len(want), changed)
+	}
+	// the roam goes on and walks to no point the detour covered
+	n.Explore(ctxT(t), nil)
+	if vis, tot := n.Coverage(); vis != tot {
+		t.Fatalf("coverage %d/%d", vis, tot)
+	}
+}
+
+// Knobs: spacing and cover follow the tuning, cover is clamped to spacing, and the view reports them.
+func TestRoamKnobsReachTheView(t *testing.T) {
+	for _, sp := range []float64{7, 16} {
+		s, n := newKnown(t, openField(2000, 2000, 120, 120), input.Point{X: 2010, Y: 2010}, true)
+		tuningOf(n).Nav.RoamSpacing, tuningOf(n).Nav.RoamCover = sp, 40
+		_ = n.Explore(ctxT(t), func() bool { return len(s.clicks) > 0 })
+		v, ok := n.CoverageView()
+		if !ok || v.Spacing != int(sp) || v.Cover != int(sp) {
+			t.Fatalf("spacing %v: view %+v", sp, v)
+		}
+	}
+}
