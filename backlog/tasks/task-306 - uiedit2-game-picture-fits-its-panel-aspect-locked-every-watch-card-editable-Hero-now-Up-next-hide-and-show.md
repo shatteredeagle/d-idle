@@ -1,10 +1,13 @@
 ---
 id: TASK-306
-title: 'uiedit2: game picture fits its panel (aspect-locked), every watch card editable (Hero now, Up next), hide and show'
-status: Proposed
+title: >-
+  uiedit2: game picture fits its panel (aspect-locked), every watch card
+  editable (Hero now, Up next), hide and show
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T15:56:00Z'
+updated_date: '2026-11-11T17:50:00Z'
 labels:
   - watch
   - bug
