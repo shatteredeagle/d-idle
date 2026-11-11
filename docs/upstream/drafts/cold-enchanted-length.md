@@ -59,7 +59,7 @@ uv run python umod_stats.py --compare /tmp/game.tsv /tmp/d2d.tsv | grep cold_len
 
 - [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (oracle commit first, claim second)
 - [x] The finding in `docs/research/re/monsters.md`
-- [ ] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 1 WARN (`umod_stats.py:16`: FUN_005a1910 is not a function entry in `game-functions.tsv`; to be fixed in the oracle's docstring before posting)
+- [x] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 0 WARN (the one earlier WARN, FUN_005a1910 in the oracle's docstring, was fixed: LAB_005a1910)
 - [x] `python3 tools/presubmit.py --quick --base upstream/main`: see the result line at the end of this file (run by `pp_cold_push.sh`)
 
 Agent: Claude Code
