@@ -11,8 +11,7 @@ files:
   - src/**
   - build/icon.png
   - build/tray.png
-  - build/trayTemplate.png
-  - build/trayTemplate@2x.png
+  - build/trayTemplate*.png
   - build/feed.json
 asarUnpack: []
 directories:
@@ -48,13 +47,13 @@ linux:
       Return: {Name: Return screen, Exec: d2idle-watch --page return}
       Setup: {Name: Change address, Exec: d2idle-watch --setup}
 mac:
-  # Unsigned personal build: no identity, no hardened runtime, no notarisation (Gatekeeper workaround in docs/desktop-electron.md).
+  # Unsigned personal build: ad-hoc signature only (Apple Silicon kills a binary with no signature at all),  no hardened runtime, no notarisation (Gatekeeper workaround in docs/desktop-electron.md).
   target:
     - {target: dmg, arch: [universal]}
     - {target: zip, arch: [universal]}
   icon: build/icon.icns
   category: public.app-category.games
-  identity: null
+  identity: "-"
   hardenedRuntime: false
   gatekeeperAssess: false
   notarize: false

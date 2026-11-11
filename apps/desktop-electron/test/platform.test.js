@@ -28,7 +28,7 @@ test('tray image is a Template image on macOS and both sizes exist', () => {
   const dir = path.join(__dirname, '..', 'build');
   const dim = (f) => { const b = fs.readFileSync(path.join(dir, f)); return [b.readUInt32BE(16), b.readUInt32BE(20)]; };
   assert.deepEqual(dim('trayTemplate.png'), [22, 22]);
-  assert.deepEqual(dim('trayTemplate@2x.png'), [44, 44]);
+  assert.deepEqual(dim('trayTemplate' + String.fromCharCode(64) + '2x.png'), [44, 44]);
 });
 
 test('dock hides and shows only on macOS', () => {

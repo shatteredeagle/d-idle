@@ -89,7 +89,7 @@ test('shell state machine', async () => {
 test('menu has the four pages, change address, reload, quit', () => {
   const calls = [];
   const h = { openPage: (n) => calls.push(n), changeAddress: () => calls.push('addr'), reload: () => calls.push('reload'), quit: () => calls.push('quit') };
-  const items = appMenuTemplate(h)[0].submenu.filter((i) => i.click);
+  const items = appMenuTemplate(h, 'linux')[0].submenu.filter((i) => i.click);
   assert.deepEqual(items.map((i) => i.label), ['Watch', 'Inventory', 'Policy', 'Return screen', 'Change address', 'Reload', 'Quit']);
   items.forEach((i) => i.click());
   assert.deepEqual(calls, ['watch', 'inventory', 'policy', 'return', 'addr', 'reload', 'quit']);

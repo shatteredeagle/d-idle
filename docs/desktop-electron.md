@@ -43,9 +43,9 @@ Two views: helper (local `d2idle-app://helper/`, the only preload, 4 invoke chan
 
 Personal build for a MacBook, unsigned, LAN only, never published. UNIVERSAL (arm64 + x64), so the CPU of the Mac does not matter. Tags: V = run (how), U = unverified.
 
-Build: `npm run dist:mac` on a Mac (Node only, no Xcode; V on the Mac mini via `labrun macmini -- sh apps/desktop-electron/scripts/scratch.sh ...`), or the `package-mac` job of `.github/workflows/desktop-electron.yml` (`macos-latest`, `--publish never`, no signing env, artifact `d2idle-watch-macos-universal`; U: never run on GitHub). Output: `dist/d2idle-watch-<version>-mac-universal.dmg` and `.zip`. Config: `mac:` in `electron-builder.yml` (`identity: null`, `hardenedRuntime: false`, `notarize: false`, icon `build/icon.icns`).
+Build: `npm run dist:mac` on a Mac (Node only, no Xcode; V on the Mac mini via the worker lab tool), or the `package-mac` job of `.github/workflows/desktop-electron.yml` (`macos-latest`, `--publish never`, no signing env, artifact `d2idle-watch-macos-universal`; U: never run on GitHub). Output: `dist/d2idle-watch-<version>-mac-universal.dmg` and `.zip`. Config: `mac:` in `electron-builder.yml` (`identity: "-"` = ad-hoc signature only, because Apple Silicon kills a binary with no signature (V: the first build with `identity: null` died with Killed: 9 on the Mac mini); `hardenedRuntime: false`, `notarize: false`, icon `build/icon.icns`).
 
-Icons come from `build/icon.svg` (the eye, no game art) through `scripts/make-icons.js`: `icon.icns` (128 to 1024 px, PNG entries) and the menu bar template image `build/trayTemplate.png` (22 px) plus `trayTemplate@2x.png` (44 px), black on transparent from `build/tray-template.svg`; the `Template` suffix makes macOS recolour it for light, dark and active menu bars (U: not seen on a real menu bar).
+Icons come from `build/icon.svg` (the eye, no game art) through `scripts/make-icons.js`: `icon.icns` (128 to 1024 px, PNG entries) and the menu bar template image `build/trayTemplate.png` (22 px) plus its double-size sibling (44 px), black on transparent from `build/tray-template.svg`; the `Template` suffix makes macOS recolour it for light, dark and active menu bars (U: not seen on a real menu bar).
 
 Behaviour on macOS (code in `src/platform.js`, `src/menu.js`; V by unit tests, U on a real Mac):
 - Closing the window hides it (even when "Closing the window hides it to the tray" is off, the window must survive) and hides the Dock icon; opening it from the menu bar icon or clicking the Dock icon brings both back. `window-all-closed` does not quit while the tray exists. Cmd+Q (app menu Quit) really quits.
@@ -57,10 +57,10 @@ Behaviour on macOS (code in `src/platform.js`, `src/menu.js`; V by unit tests, U
 1. Download the dmg from the LAN link in the build report (it works only on the home network). Check the sha256 with `shasum -a 256 <file>` against the report.
 2. Open the dmg and drag `d2idle-watch` onto Applications.
 3. First launch: Gatekeeper blocks unsigned apps. Either right-click the app in Applications, choose Open, then Open again; or run `xattr -dr com.apple.quarantine /Applications/d2idle-watch.app` in Terminal and start it normally.
-4. Set the address: the app asks on first start; type `orion.lan.birbhub.com:8891` (the watch server on the LAN). Or start with the flag: `/Applications/d2idle-watch.app/Contents/MacOS/d2idle-watch --address orion.lan.birbhub.com:8891`. To change it later use Pages > Change address, or `--setup`.
+4. Set the address: the app asks on first start; type `<watch-host>:8891` (the LAN host name of the watch server, given in the build report). Or start with the flag: `/Applications/d2idle-watch.app/Contents/MacOS/d2idle-watch --address <watch-host>:8891`. To change it later use Pages > Change address, or `--setup`.
 5. It only works on the home network: there is no remote-access plan yet, so away from home the helper shows "not reachable".
 
-Not verified: the menu bar icon rendering, the Gatekeeper dialogs, the login item prompt, behaviour on the MacBook itself (the Mac mini smoke is headless, see the build report).
+V on the Mac mini (Apple M4, headless over ssh): the universal app has x86_64 and arm64 slices, `codesign --verify --deep --strict` passes (ad-hoc), `hdiutil verify` of the dmg passes, the packaged app starts, stays up 12 s and probes a fake local server (`GET /watch`), `npm test` passes (macOS runs the menu test with the Linux layout). Not verified: the x64 slice running (no Intel Mac or Rosetta check), the menu bar icon rendering, the Gatekeeper dialogs, the login item prompt, behaviour on the MacBook itself (the Mac mini smoke is headless, see the build report).
 
 ## Findings
 

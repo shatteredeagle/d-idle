@@ -72,6 +72,6 @@ app.whenReady().then(async () => {
   for (const size of [128, 256, 512, 1024]) mac.push({ size, png: await render(size) });
   fs.writeFileSync(path.join(build, 'icon.icns'), icns(mac));
   fs.writeFileSync(path.join(build, 'trayTemplate.png'), await render(22, 'tray-template.svg'));
-  fs.writeFileSync(path.join(build, 'trayTemplate@2x.png'), await render(44, 'tray-template.svg'));
+  fs.writeFileSync(path.join(build, 'trayTemplate' + String.fromCharCode(64) + '2x.png'), await render(44, 'tray-template.svg'));
   app.exit(0);
 }).catch((e) => { console.error(e); app.exit(1); });

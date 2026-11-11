@@ -13,6 +13,7 @@ dependencies:
 priority: medium
 ordinal: 206000
 card: "electronmac"
+result: "V on the Mac mini: universal (x86_64+arm64) ad-hoc signed app, dmg+zip built, packaged app starts and probes a fake server, 37 node tests, gate on the worker host green. NOT verified: real menu bar icon, Gatekeeper dialogs, Intel slice running, GitHub macos CI job (never run). Live game not used."
 owns:
   - "apps/desktop-electron/"
   - "docs/desktop-electron.md"
@@ -31,9 +32,9 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 mac universal dmg+zip config and icns
-- [ ] #2 tray template image and darwin dock/quit/login behaviours with tests
-- [ ] #3 CI macos job builds with publish never
-- [ ] #4 built on the Mac mini, sha256 reported
-- [ ] #5 docs macOS section
+- [x] #1 mac universal dmg+zip config and icns
+- [x] #2 tray template image and darwin dock/quit/login behaviours with tests
+- [x] #3 CI macos job builds with publish never
+- [x] #4 built on the Mac mini, sha256 reported
+- [x] #5 docs macOS section
 <!-- AC:END -->
