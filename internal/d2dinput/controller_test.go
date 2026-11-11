@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"reflect"
+	"math"
 	"strings"
 	"testing"
 	"time"
@@ -41,7 +42,7 @@ func rig(t *testing.T, fix fake.Fixtures) (*Controller, *fake.Server) {
 
 // Each case: one call, the exact lines the channel must see (priming click and "debug level" included).
 func TestVerbLines(t *testing.T) {
-	prime := []string{"debug level", "click 400 300"}
+	prime := []string{"debug level", "click 494 340"}
 	cases := []struct {
 		name string
 		call func(c *Controller) error
@@ -153,7 +154,7 @@ func TestPrimeOncePerLevel(t *testing.T) {
 	if err := c.Move(input.Point{X: 160, Y: 70}); err != nil {
 		t.Fatal(err)
 	}
-	if ls := srv.Lines(); ls[len(ls)-2] != "click 400 300" {
+	if ls := srv.Lines(); !strings.HasPrefix(ls[len(ls)-2], "click ") {
 		t.Fatalf("no kick after level change: %q", ls)
 	}
 }
@@ -178,7 +179,7 @@ func TestMoveToStuck(t *testing.T) {
 	kicks, moves := 0, 0
 	for _, l := range srv.Lines() {
 		switch {
-		case l == "click 400 300":
+		case strings.HasPrefix(l, "click "):
 			kicks++
 		case strings.HasPrefix(l, "cmd move"):
 			moves++
@@ -248,5 +249,27 @@ func TestInteractFieldObject(t *testing.T) {
 	ls := srv.Lines()
 	if ls[len(ls)-1] != "cmd interact 7" {
 		t.Fatalf("%q", ls)
+	}
+}
+
+// The priming click of a move never lands on the player's feet (400,~290): on a fresh arrival the return warp unit stands
+// there and the click would enter it (docs/passagebounce.md). It goes toward the move target, kickReach pixels out, for
+// targets in every direction.
+func TestKickAvoidsThePlayersFeet(t *testing.T) {
+	c := New(nil)
+	for _, to := range [][2]float64{{35, 14}, {26, 14}, {30.7, 20}, {30.7, 8}, {35, 20}, {26, 8}} {
+		x, y, ok := c.kickToward(30.7, 13.7, to[0], to[1])
+		if !ok {
+			t.Fatalf("target %v: no kick point", to)
+		}
+		if d := math.Hypot(float64(x)-c.X.PlayerX, float64(y)-c.X.PlayerY); d < kickReach-60 {
+			t.Fatalf("target %v: kick (%d,%d) only %.0f px from the player", to, x, y, d)
+		}
+		if y >= c.X.PanelTop || x < 0 || x >= c.X.ViewW {
+			t.Fatalf("target %v: kick (%d,%d) outside the play area", to, x, y)
+		}
+	}
+	if _, _, ok := c.kickToward(30.7, 13.7, 30.7, 13.7); ok {
+		t.Fatal("a target on the player must fall back to the default click")
 	}
 }

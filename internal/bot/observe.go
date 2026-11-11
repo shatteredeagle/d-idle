@@ -51,6 +51,8 @@ type observer struct {
 	// goldPickupMin is the field gold picked up since the last minute line.
 	goldPickupMin int64
 	dead          bool
+	arrivals      int // area changes since start and how many were arrival bounces (noteArrival)
+	bounces       int
 	arrived       arrival // how the character came into the current area (noteArrival, loop.go noteBounce)
 	portalFrom    int     // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
 	lastGood      struct {
