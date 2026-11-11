@@ -1,0 +1,71 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "head",
+   "name": "Cap",
+   "dur": 80,
+   "max": 100,
+   "pct": 80
+  },
+  {
+   "slot": "rhand",
+   "name": "Staff",
+   "dur": 40,
+   "max": 100,
+   "pct": 40
+  },
+  {
+   "slot": "torso",
+   "name": "Robe",
+   "dur": 70,
+   "max": 100,
+   "pct": 70
+  }
+ ],
+ "estimate": 200,
+ "trip": {
+  "state": "farm",
+  "button": {
+   "action": "request",
+   "label": "Farm until repair",
+   "enabled": true
+  },
+  "line": "need 160 more gold (have 100, estimate 200)",
+  "gold": 100,
+  "estimate": 200,
+  "need": 260,
+  "kind": "farm",
+  "maxTrips": 2
+ }
+}

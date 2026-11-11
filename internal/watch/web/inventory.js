@@ -223,14 +223,20 @@
 
   function drawRepair(v) {
     var b = $('repair'); clear(b);
-    var q = v.request, pend = q && q.state === 'requested';
+    var q = v.request, pend = q && q.state === 'requested', t = v.trip;
     var mode = (v.modes || []).filter(function (m) { return m.current; }).map(function (m) { return m.label; })[0] || v.mode;
     b.appendChild(el('p', 'd-muted', 'Repair mode: ' + mode + ' (change it on the policy sheet)'));
     if (v.worst) { var w = el('p', 'd-note', v.worst); w.dataset.sev = v.worst.indexOf('Broken') === 0 || /broken/i.test(v.worst) ? 'alarm' : 'warn'; b.appendChild(w); }
-    if (v.estimate) b.appendChild(el('p', '', 'Repair All costs at least ' + v.estimate + ' gold.'));
-    if (q) b.appendChild(el('p', 'd-muted', q.state === 'requested' ? 'Requested: the hero repairs at its next town visit.' + (q.note ? ' (' + q.note + ')' : '') : q.state === 'done' ? 'Last request: done.' : 'Last request: ' + q.state));
+    if (v.estimate && !t) b.appendChild(el('p', '', 'Repair All costs at least ' + v.estimate + ' gold.'));
+    if (t) {
+      b.appendChild(el('p', 'd-muted', 'Repair All costs at least ' + (t.estimate || 0) + ' gold; with the margin ' + (t.need || 0) + ', you have ' + (t.gold || 0) + '.'));
+      var tl = el('p', t.state === 'failed' || t.state === 'cancelled' ? 'd-note' : '', t.line || ''); tl.dataset.state = t.state; tl.hidden = !t.line; b.appendChild(tl);
+    } else if (q) b.appendChild(el('p', 'd-muted', q.state === 'requested' ? 'Requested: the hero repairs at its next town visit.' + (q.note ? ' (' + q.note + ')' : '') : q.state === 'done' ? 'Last request: done.' : 'Last request: ' + q.state));
     var bar = el('div', 'd-btngroup');
-    bar.appendChild(button(pend ? 'Cancel repair' : 'Repair now', function () { post(pend ? '/api/repair/cancel' : '/api/repair/request', {}); }, false, { key: 'repair', variant: pend ? 'ghost' : 'primary' }));
+    var bt = t && t.button ? t.button : { label: pend ? 'Cancel repair' : 'Repair now', enabled: true, action: pend ? 'cancel' : 'request' };
+    var rb = button(bt.label, function () { if (bt.action !== 'none') post(bt.action === 'cancel' ? '/api/repair/cancel' : '/api/repair/request', {}); }, !bt.enabled, { key: 'repair', variant: bt.action === 'cancel' ? 'ghost' : 'primary', state: t ? t.state : 'idle' });
+    if (bt.reason) rb.title = bt.reason;
+    bar.appendChild(rb);
     b.appendChild(bar);
   }
 
@@ -273,7 +279,7 @@
     getJSON('/api/inventory').then(draw, function (e) { say(e.message); });
   }
   if (typeof window !== 'undefined' && window.__invTest) {
-    window.__invTest({ select: select, dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; } });
+    window.__invTest({ select: select, dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; }, drawRepair: drawRepair });
     return;
   }
   load(); artProbe(); setInterval(load, 4000);
