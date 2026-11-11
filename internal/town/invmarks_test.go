@@ -114,7 +114,7 @@ func TestSellMarksRunOnAnyTripAndSurviveRenumbering(t *testing.T) {
 			r.W.Add("hp1", d2.ContInventory, 1, 0)
 			m := &reconMarks{mark: "sell", cell: [2]int{0, 0}, id: a.ID + 1000} // the id the mark was saved with
 			r.T.SetItemMarks(m)
-			if _, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true}); err != nil {
+			if _, err := r.T.Chores(context.Background(), town.ChorePlan{Heal: true}); err != nil {
 				t.Fatal(err)
 			}
 			if n := countCode(r, "hp1"); n != 1 {
