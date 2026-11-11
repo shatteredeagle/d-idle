@@ -84,7 +84,6 @@
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | smepace | proposed | - | `docs/sme/pace-and-formulas.md` | - |
 | livechecks | proposed | - | `docs/live-checks.md` | - |
-| sharedgen | proposed | - | `tools/sharedgen`<br>`tools/ci`<br>`AGENTS.md`<br>`docs/agents/brief-template.md`<br>`docs/backlog-howto.md`<br>`docs/START-HERE.md` | - |
 | contextdiet | proposed | - | `docs/agents` | - |
 | lootskip | proposed | - | `internal/loot`<br>`docs/lootskip.md`<br>`internal/env/tuning_loot.go` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |

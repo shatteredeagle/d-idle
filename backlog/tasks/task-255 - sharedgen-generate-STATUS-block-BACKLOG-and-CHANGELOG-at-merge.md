@@ -1,10 +1,11 @@
 ---
 id: TASK-255
 title: 'sharedgen: generate STATUS block, BACKLOG and CHANGELOG at merge'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-11T16:37:00Z'
 labels:
   - ops
   - chore
