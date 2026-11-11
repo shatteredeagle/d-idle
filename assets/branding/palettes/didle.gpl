@@ -1,0 +1,19 @@
+GIMP Palette
+Name: didle
+Columns: 5
+# d.idle brand palette: 15 colours from internal/watch/web/tokens.css; original, CC0 1.0
+ 13  11   9  ink
+ 28  24  19  plate
+ 36  31  25  plate-hi
+ 58  50  42  border
+106  92  77  dim
+140 123 103  mid
+185 170 148  light
+236 226 207  pale
+ 90  71  24  gold-0
+138 109  34  gold-1
+199 164  74  gold-2
+220 184  94  gold-3
+243 226 168  gold-4
+ 20  17  14  deep
+ 45  39  32  plate-2
