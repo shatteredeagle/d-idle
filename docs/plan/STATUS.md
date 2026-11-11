@@ -108,6 +108,7 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
+| lootmemory | proposed | - | `internal/loot/memory.go`<br>`internal/loot/memory_test.go`<br>`internal/loot/export_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/pickup.go`<br>`internal/env/tuning_loot.go`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`docs/lootmemory.md`<br>`docs/knobs.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -164,6 +165,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
+- 770941f7 11-11 14:07 `Merge branch 'main' into lootmemory` (-)
 - 3ba8ecde 11-11 14:04 `Merge agent/decomp9: decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline` (decomp9)
 - 9ce60add 11-11 14:03 `Merge branch 'main' into decomp9` (-)
 - a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
@@ -172,6 +175,4 @@
 - 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
 - 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
 - 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
-- c7da022e 11-11 12:58 `Merge branch 'main' into identify2` (-)
-- 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
 <!-- statusgen:end -->
