@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The inventory API reports the hired mercenary and what he wears (schema 3, read only; needs the fork build with the merc dump patch)
 - Desktop: new Electron app apps/desktop-electron (portable AppImage/deb and Windows installer+portable via CI) with its own window, offline/warming screen and locked navigation; the Go launcher stays as a fallback
 - watch: life and mana with numbers and an alerts badge in the top band; a Hero stats tile with level, gold, resistances and the readiness light
 - The bot no longer strips a mercenary's gear before a replacing hire; it waits until the player has taken it off (resource.gearDecisions=player)
