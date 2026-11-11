@@ -186,7 +186,6 @@ docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/merc-gear.md  credit-runner  mercgear
-docs/research/merge-queue-profile-2026-11-11.md  credit-runner  qprofile
 docs/research/mocks/return.html  credit-runner  returnmock
 docs/research/return-screen.md  credit-runner  returnmock
 docs/research/upstream-next.md  credit-runner  upstream-next
