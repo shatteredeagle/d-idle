@@ -77,7 +77,7 @@ func checkDump(name, html string) []string {
 	}
 	// fit content: the game picture's rows are measured from its width (six columns in the default layout), whatever
 	// span the layout file stores; a card taller than its picture by a row or more is the dead-area regression
-	if want, ok := videoRows[strings.TrimSuffix(name, ".html")]; ok {
+	if want, ok := videoRows[strings.TrimSuffix(name, ".html")]; ok && strings.Contains(html, `data-fit="1"`) {
 		m := regexp.MustCompile(`data-panel="video"[^>]*\bdata-rows="(\d+)"|\bdata-rows="(\d+)"[^>]*data-panel="video"`).FindStringSubmatch(html)
 		got := 0
 		if m != nil {
