@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/senses"
@@ -116,5 +117,39 @@ func TestSensesServedBehindToken(t *testing.T) {
 	}
 	if resp := mustGet(t, base+"/watch/panels/map/panel.js?t=tok"); resp.StatusCode != 200 {
 		t.Fatal("map panel", resp.StatusCode)
+	}
+}
+
+type trailSrc struct {
+	SensesSource
+	pts []senses.TrailPoint
+	now time.Time
+}
+
+func (s trailSrc) TrailOf() ([]senses.TrailPoint, int, time.Time, bool) { return s.pts, 1, s.now, true }
+
+// The trail is additive: present with ages relative to ts, absent for a source without one and under a closed tier.
+func TestSensesTrailPayload(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	src := trailSrc{SensesSource: sensesFixture(t), now: now, pts: []senses.TrailPoint{
+		{At: now.Add(-30 * time.Second), X: 1, Y: 1, Area: 1, Entry: true},
+		{At: now.Add(-1500 * time.Millisecond), X: 3, Y: 1, Area: 1},
+	}}
+	w := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+	golden(t, "senses-trail", w.Body.String())
+	var m map[string]json.RawMessage
+	json.Unmarshal(w.Body.Bytes(), &m)
+	want := `[{"ago":30000,"x":1,"y":1,"e":true},{"ago":1500,"x":3,"y":1}]`
+	if string(m["trail"]) != want || string(m["trail_area"]) != "1" || string(m["ts"]) != strconv.FormatInt(now.UnixMilli(), 10) {
+		t.Fatalf("trail %s area %s ts %s", m["trail"], m["trail_area"], m["ts"])
+	}
+	if _, r := getReply(t, (&Senses{Src: struct{ SensesSource }{sensesFixture(t)}, Lock: FixedTier(1)}).Handler(), "/api/senses"); r.Trail != nil || r.Ts != 0 {
+		t.Fatal("a source without a trail adds no keys")
+	}
+	w = httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(0)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+	if strings.Contains(w.Body.String(), "trail") {
+		t.Fatal("closed tier leaks the trail")
 	}
 }
