@@ -19,7 +19,7 @@ var invViewTTL = 1500 * time.Millisecond
 
 var (
 	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-actions.js", "/watch/inventory-actions.css", "/watch/inventory-merc.js", "/watch/inventory-merc.css"}
-	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel"}
+	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel", "/api/inventory/identify", "/api/inventory/buyid", "/api/inventory/cain"}
 )
 
 // InvDesk is what the routes need from the bot side (internal/invdesk.Desk through invAdapter in cmd/d2bot).
@@ -30,6 +30,10 @@ type InvDesk interface {
 	Unpin(slot string) error
 	RequestTrash(id uint32, confirm bool) (any, error) // schema 3: drop a backpack item on the ground
 	Cancel(id uint32, kind string) error               // schema 3: withdraw a queued request
+	// Schema 5: the identify commands (docs/inventory-actions.md). The errands name no item.
+	RequestIdentify(id uint32) (any, error)
+	RequestBuyID(n int) (any, error)
+	RequestCain() (any, error)
 }
 
 // invRefusal is an error that carries a short code; the routes reply 409 with it and the reason line.
@@ -123,6 +127,8 @@ type invBody struct {
 	// request of cancel (default equip).
 	Confirm bool   `json:"confirm"`
 	Kind    string `json:"kind"`
+	// schema 5: how many scrolls buyid asks for (0 = fill the tome); optional.
+	Count int `json:"count"`
 	// Target is reserved for the mercenary stage ("merc"); today only "" and "hero" are accepted.
 	Target string `json:"target"`
 }
@@ -157,6 +163,12 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 			err = d.Unpin(b.Slot)
 		case "/api/inventory/trash":
 			res, err = d.RequestTrash(b.ID, b.Confirm)
+		case "/api/inventory/identify":
+			res, err = d.RequestIdentify(b.ID)
+		case "/api/inventory/buyid":
+			res, err = d.RequestBuyID(b.Count)
+		case "/api/inventory/cain":
+			res, err = d.RequestCain()
 		case "/api/inventory/cancel":
 			err = d.Cancel(b.ID, b.Kind)
 		default:

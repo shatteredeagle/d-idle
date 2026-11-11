@@ -111,6 +111,11 @@ func (a invAdapter) RequestTrash(id uint32, confirm bool) (any, error) {
 	return a.d.RequestTrash(id, confirm)
 }
 func (a invAdapter) Cancel(id uint32, kind string) error { return a.d.Cancel(id, kind) }
+func (a invAdapter) RequestIdentify(id uint32) (any, error) {
+	return a.d.RequestIdentify(id)
+}
+func (a invAdapter) RequestBuyID(n int) (any, error) { return a.d.RequestBuyID(n) }
+func (a invAdapter) RequestCain() (any, error)       { return a.d.RequestCain() }
 
 var _ watch.InvDesk = invAdapter{}
 

@@ -13,8 +13,24 @@ type fakeInv struct {
 	err      error
 	trashed  []bool
 	canceled []string
+	calls    []string // schema 5 routes called
+	count    int
 }
 type refusal struct{ msg string }
+
+func (f *fakeInv) RequestIdentify(id uint32) (any, error) {
+	f.calls = append(f.calls, "identify")
+	return map[string]any{"kind": "identify", "id": id}, f.err
+}
+func (f *fakeInv) RequestBuyID(n int) (any, error) {
+	f.calls = append(f.calls, "buyid")
+	f.count = n
+	return map[string]any{"kind": "buyid"}, f.err
+}
+func (f *fakeInv) RequestCain() (any, error) {
+	f.calls = append(f.calls, "cain")
+	return map[string]any{"kind": "cain"}, f.err
+}
 
 func (r refusal) Error() string { return r.msg }
 func (r refusal) Kind() string  { return "town" }
@@ -180,4 +196,47 @@ func containsAll(list []string, want ...string) bool {
 		}
 	}
 	return true
+}
+
+// Schema 5 routes: identify an item, buy scrolls with an optional count, the Cain errand; same gates as the others, a
+// refusal is a 409 with its code, and an old client that never sends count still works.
+func TestInventoryIdentifyRoutes(t *testing.T) {
+	api := NewInvAPI()
+	f := &fakeInv{}
+	api.Bind(f)
+	post := api.PostHandler(AnswerOptions{Token: "tok", Origins: []string{"http://ok.test"}})
+	auth := map[string]string{"Authorization": "Bearer tok"}
+	for path, body := range map[string]string{"/api/inventory/identify": `{"id":7}`, "/api/inventory/buyid": `{"count":12}`, "/api/inventory/cain": `{}`} {
+		if w := invPost(post, path, body, nil); w.Code != 401 {
+			t.Errorf("%s without a token: %d", path, w.Code)
+		}
+		if w := invPost(post, path, body, auth); w.Code != 200 {
+			t.Errorf("%s: %d %s", path, w.Code, w.Body)
+		}
+	}
+	if len(f.calls) != 3 {
+		t.Errorf("calls %v", f.calls)
+	}
+	if f.count != 12 {
+		t.Errorf("count %d, want 12", f.count)
+	}
+	if w := invPost(post, "/api/inventory/buyid", `{}`, auth); w.Code != 200 || f.count != 0 {
+		t.Errorf("buyid without count: %d count %d", w.Code, f.count)
+	}
+	f.err = refusal{"opens when Cain is rescued"}
+	if w := invPost(post, "/api/inventory/cain", `{}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), "Cain") {
+		t.Errorf("refusal: %d %s", w.Code, w.Body)
+	}
+	if w := invPost(post, "/api/inventory/identify", `{"id":1,"target":"merc"}`, auth); w.Code != 409 {
+		t.Errorf("merc target must stay refused: %d", w.Code)
+	}
+	for _, p := range []string{"/api/inventory/identify", "/api/inventory/buyid", "/api/inventory/cain"} {
+		found := false
+		for _, r := range InvPostRoutes {
+			found = found || r == p
+		}
+		if !found {
+			t.Errorf("%s missing from InvPostRoutes", p)
+		}
+	}
 }
