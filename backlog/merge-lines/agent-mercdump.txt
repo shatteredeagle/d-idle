@@ -1,2 +1,0 @@
-BACKLOG: TASK-286 mercdump: private-fork dump of the merc's worn items, level, Str, Dex (d2d.lab5-mercdump f64db72a, compiled, not run) and the bot read into MercState, status.MercInv and invdesk schema 3; live check row added
-CHANGELOG: The inventory API reports the hired mercenary and what he wears (schema 3, read only; needs the fork build with the merc dump patch)
