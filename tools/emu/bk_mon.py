@@ -137,8 +137,7 @@ def cmp(gpath, dpath):
         tot += 1
         if st20 != tb:
             rows['stat20 != ToBlock'] = rows.get('stat20 != ToBlock', 0) + 1
-            if len(samples) < 25:
-                samples.append((name, diff, 'STAT20', st20, 'ToBlock', tb))
+            print('STAT20 differs:', name, 'diff', diff, 'game stat20', st20, 'ToBlock column', tb)
         if chance != exp:
             bad += 1
             capd += (exp > 75 and chance == 75)
