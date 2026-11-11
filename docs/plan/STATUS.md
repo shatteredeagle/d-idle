@@ -108,7 +108,9 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
-| lootmemory | proposed | - | `internal/loot/memory.go`<br>`internal/loot/memory_test.go`<br>`internal/loot/export_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/pickup.go`<br>`internal/env/tuning_loot.go`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`docs/lootmemory.md`<br>`docs/knobs.md` | - |
+| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
+| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
+| nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -165,14 +167,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
-- 770941f7 11-11 14:07 `Merge branch 'main' into lootmemory` (-)
-- 3ba8ecde 11-11 14:04 `Merge agent/decomp9: decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline` (decomp9)
-- 9ce60add 11-11 14:03 `Merge branch 'main' into decomp9` (-)
-- a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
-- 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
-- 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
-- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
-- 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
-- 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
+- a9c8502d 11-11 14:49 `Merge agent/nopins: TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory` (nopins)
+- 2b66ad4a 11-11 14:48 `Merge branch 'main' into nopins` (-)
+- e75a9384 11-11 14:42 `Merge agent/playerprio: TASK-321 playerprio: player commands interrupt walks at a safe moment, behind safety` (playerprio)
+- 6530d54d 11-11 14:41 `Merge branch 'main' into playerprio` (-)
+- 65a697cd 11-11 14:32 `Merge agent/maphistory: TASK-324 maphistory: activity-coloured trail, event markers, activity percent legend` (maphistory)
+- 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
+- f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
+- 29687388 11-11 14:27 `Merge branch 'main' into nocursor` (-)
+- 609bc88e 11-11 14:22 `Merge agent/xpreadout: TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h` (xpreadout)
+- b9d81697 11-11 14:21 `Merge branch 'main' into xpreadout` (-)
 <!-- statusgen:end -->

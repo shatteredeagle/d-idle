@@ -18,5 +18,4 @@
   .inv-tip .tip-badge { font: 700 .65rem/1.4 var(--d-font-body); padding: 0 var(--d-sp-1); border-radius: 2px; background: var(--d-tip-line); color: var(--d-tip-text); }
   .inv-tip .tip-badge[data-badge="sell"] { background: var(--d-bad); color: var(--d-on-bad); }
   .inv-tip .tip-badge[data-badge="keep"] { background: var(--d-good); color: var(--d-on-good); }
-  .inv-tip .tip-badge[data-badge="pin"] { background: var(--d-accent); color: var(--d-on-accent); }
 }

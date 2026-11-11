@@ -52,7 +52,10 @@ type Frames struct {
 	Half    bool    // halve width and height before the JPEG encode
 	Backoff float64 // next sample waits at least Backoff x the last sample's cost (0: no back-off)
 	Feed    string  // ring path for the framefeed verb ("": screenshots only)
-	Stats   *frameStats
+	// HideCursor asks the fork's `cursor off` verb for frames without the game's pointer sprite (the bot's pointer
+	// rests mid-screen; docs/viewer-fps.md section 8). A d2d without the verb is left alone, silently.
+	HideCursor bool
+	Stats      *frameStats
 
 	mu   sync.RWMutex
 	cur  Frame
@@ -69,6 +72,8 @@ type Frames struct {
 	ringAt    time.Time // last time the ring moved
 	feedOn    time.Time // last framefeed lease renewal (zero: off)
 	feedFail  bool      // this d2d has no framefeed verb
+	cursorAt  time.Time // last `cursor off` sent (it is sent again now and then: a restarted d2d draws the pointer again)
+	cursorOld bool      // this d2d has no cursor verb
 	lastStats time.Time
 	every     int           // publish divisor sent to d2d (one frame in every)
 	pending   int           // a divisor proposed by the last renewal, applied when the next one agrees (hysteresis)
@@ -148,6 +153,7 @@ func (f *Frames) feeding() bool { return f.Feed != "" && !f.feedFail && !f.feedO
 
 // sample produces at most one frame and returns what it cost the shared box (the back-off input).
 func (f *Frames) sample(ctx context.Context) (time.Duration, error) {
+	f.hideCursor(ctx)
 	if f.Feed == "" || f.feedFail {
 		return f.grab(ctx)
 	}
@@ -168,6 +174,24 @@ func (f *Frames) sample(ctx context.Context) (time.Duration, error) {
 		return f.grab(ctx)
 	}
 	return cost, err
+}
+
+// cursorEvery is how often `cursor off` is sent again: the switch lives in the d2d process, so a restarted d2d shows
+// its pointer for at most this long.
+const cursorEvery = 10 * time.Second
+
+// hideCursor keeps the game's pointer out of the frames (HideCursor). The verb only skips a draw: the pointer, the
+// item in hand and every click work as before, so nothing here can change the game. Errors never stop a frame.
+func (f *Frames) hideCursor(ctx context.Context) {
+	if !f.HideCursor || f.cursorOld || (!f.cursorAt.IsZero() && time.Since(f.cursorAt) < cursorEvery) {
+		return
+	}
+	f.cursorAt = time.Now()
+	cctx, cancel := context.WithTimeout(ctx, 2*time.Second)
+	defer cancel()
+	if _, err := f.c.Do(cctx, "cursor off"); err != nil && strings.Contains(err.Error(), "unknown verb") {
+		f.cursorOld = true // an older d2d: it draws its pointer, and we do not ask again
+	}
 }
 
 // feedLease starts or renews the ring: d2d stops publishing by itself when the lease runs out (viewer gone).

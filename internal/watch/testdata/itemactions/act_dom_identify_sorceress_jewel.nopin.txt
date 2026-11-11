@@ -1,0 +1,10 @@
+div.inv-act [aria-label=Actions for Jewel role=menu data-mode=pop]
+  div.act-title.q-magic [] "Jewel"
+  button.act [aria-disabled=true role=menuitem data-act=identify data-off=] "Identify"
+  div.act-why [data-for=identify] "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "it cannot be worn right now"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-danger=] "Trash"
+  div.act-note [role=status]
