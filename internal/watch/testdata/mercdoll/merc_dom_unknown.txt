@@ -1,0 +1,8 @@
+div []
+  details.inv-merc-fold [data-remember=merc-doll] open
+    summary [] "Mercenary"
+    div.inv-merc-body []
+      div.inv-merc-head []
+        h3 [] "Rogue Scout"
+        span.meta [] "level 9, life 55%"
+      p.d-hint [] "Equipment unreadable on this backend."

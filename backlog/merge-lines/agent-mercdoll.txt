@@ -1,0 +1,2 @@
+BACKLOG: TASK-287 mercdoll: merc paper doll under the hero doll on /watch/inventory (read only, schema 3 block, own js/css, DOM goldens); stage A of TASK-283 is complete with TASK-285, TASK-286; stages B and C (actions, target merc) wait for the player-side action queue
+CHANGELOG: The inventory page shows your mercenary and what he wears below your paper doll (read only for now)
