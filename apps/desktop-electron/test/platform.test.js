@@ -57,3 +57,29 @@ test('icns file is well formed', () => {
   for (let o = 8; o < b.length; o += b.readUInt32BE(o + 4)) types.push(b.toString('ascii', o, o + 4));
   assert.deepEqual(types, ['ic07', 'ic08', 'ic09', 'ic10']);
 });
+
+test('retry backoff grows and is capped; macOS message names Local Network', () => {
+  const r = require('../src/retry');
+  assert.deepEqual([0, 1, 2, 3, 4, 9].map(r.backoffMs), [3000, 6000, 12000, 24000, 30000, 30000]);
+  assert.equal(r.isRealFailure(-3), false);
+  assert.equal(r.isRealFailure(-102), true);
+  assert.match(r.loadFailureMessage('darwin', 'ERR_ADDRESS_UNREACHABLE'), /Local Network/);
+  assert.match(r.loadFailureMessage('linux', 'x'), /retries by itself/);
+  assert.doesNotMatch(r.loadFailureMessage('linux', 'x'), /Local Network/);
+});
+
+test('log folders per platform', () => {
+  const l = require('../src/logs');
+  assert.equal(l.logDir('darwin', {}, '/h'), '/h/Library/Logs/d2idle-watch');
+  assert.equal(l.logDir('linux', {}, '/h'), '/h/.local/state/d2idle-watch');
+  assert.equal(l.logDir('linux', { XDG_STATE_HOME: '/s' }, '/h'), '/s/d2idle-watch');
+  assert.equal(l.logPath('darwin', {}, '/h'), '/h/Library/Logs/d2idle-watch/main.log');
+  assert.match(l.logDir('win32', { APPDATA: 'C:\\A' }, 'C:\\h').replace(/\\/g, '/'), /d2idle-watch\/logs$/);
+});
+
+test('args: chromium switches pass, --debug is ours, typos still fail', () => {
+  const { parseArgs } = require('../src/args');
+  assert.equal(parseArgs(['--enable-logging=stderr', '--v=1', '--disable-gpu', '--remote-debugging-port=9222', '--debug']).debug, true);
+  assert.throws(() => parseArgs(['--enable-loging']), /unknown argument/);
+  assert.throws(() => parseArgs(['--no-sandbox']), /unknown argument/);
+});

@@ -12,19 +12,19 @@ const keys = require('../src/update-keys');
 
 const AT = String.fromCharCode(64); // built so the leak scanner does not read the userinfo test as an address
 
-const handlers = (calls) => ({ openPage: (n) => calls.push('page:' + n), show: () => calls.push('show'), toggleAutostart: () => calls.push('auto'), toggleHideToTray: () => calls.push('hide'), checkUpdate: () => calls.push('check'), showUpdate: () => calls.push('showupdate'), quit: () => calls.push('quit') });
+const handlers = (calls) => ({ openPage: (n) => calls.push('page:' + n), show: () => calls.push('show'), toggleAutostart: () => calls.push('auto'), toggleHideToTray: () => calls.push('hide'), checkUpdate: () => calls.push('check'), showUpdate: () => calls.push('showupdate'), quit: () => calls.push('quit'), openLogFolder: () => calls.push('log') });
 
 test('tray menu: open, pages, status line, update, toggles, quit', () => {
   const calls = [];
   const t = trayMenuTemplate({ state: { status: 'up', address: 'http://h:8891' }, autostart: true, hideToTray: false, update: { available: false } }, handlers(calls));
   const labels = t.filter((i) => i.label).map((i) => i.label);
-  assert.deepEqual(labels, ['Open', 'Pages', 'Online (h:8891)', 'Check for updates', 'Start with the system', 'Closing the window hides it to the tray', 'Quit']);
+  assert.deepEqual(labels, ['Open', 'Pages', 'Online (h:8891)', 'Check for updates', 'Start with the system', 'Closing the window hides it to the tray', 'Open log folder', 'Quit']);
   assert.deepEqual(t[1].submenu.map((i) => i.label), ['Watch', 'Inventory', 'Policy', 'Return screen']);
   assert.equal(t[3].enabled, false, 'status line is not clickable');
   assert.equal(t.find((i) => i.label === 'Start with the system').checked, true);
   assert.equal(t.find((i) => (i.label || '').startsWith('Closing')).checked, false);
-  for (const i of [t[0], ...t[1].submenu, t.find((x) => x.label === 'Check for updates'), t.find((x) => x.label === 'Start with the system'), t.find((x) => (x.label || '').startsWith('Closing')), t.at(-1)]) i.click();
-  assert.deepEqual(calls, ['show', 'page:watch', 'page:inventory', 'page:policy', 'page:return', 'check', 'auto', 'hide', 'quit']);
+  for (const i of [t[0], ...t[1].submenu, t.find((x) => x.label === 'Check for updates'), t.find((x) => x.label === 'Start with the system'), t.find((x) => (x.label || '').startsWith('Closing')), t.find((x) => x.label === 'Open log folder'), t.at(-1)]) i.click();
+  assert.deepEqual(calls, ['show', 'page:watch', 'page:inventory', 'page:policy', 'page:return', 'check', 'auto', 'hide', 'log', 'quit']);
 });
 
 test('tray menu shows an available update', () => {

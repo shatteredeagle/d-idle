@@ -38,11 +38,11 @@ test('config: window size is bounds-checked', () => {
 });
 
 test('args', () => {
-  assert.deepEqual(parseArgs([]), { setup: false, print: false, hidden: false, address: '', page: '' });
+  assert.deepEqual(parseArgs([]), { setup: false, print: false, hidden: false, debug: false, address: '', page: '' });
   assert.equal(parseArgs(['--hidden']).hidden, true);
-  assert.deepEqual(parseArgs(['--setup', '--page', 'inventory', '--address', 'H:8891', '--print']), { setup: true, print: true, hidden: false, address: 'http://h:8891', page: 'inventory' });
+  assert.deepEqual(parseArgs(['--setup', '--page', 'inventory', '--address', 'H:8891', '--print']), { setup: true, print: true, hidden: false, debug: false, address: 'http://h:8891', page: 'inventory' });
   assert.equal(parseArgs(['--page=policy']).page, 'policy');
-  for (const bad of [['--page', 'x'], ['--page'], ['--address'], ['--address', 'ftp://x:1'], ['--remote-debugging-port=9222'], ['--inspect'], ['--no-sandbox'], ['stray']]) {
+  for (const bad of [['--page', 'x'], ['--page'], ['--address'], ['--address', 'ftp://x:1'], ['--inspect'], ['--no-sandbox'], ['stray']]) {
     assert.throws(() => parseArgs(bad), undefined, bad.join(' '));
   }
   assert.deepEqual(userArgs(['electron', '.', '--setup'], false), ['--setup']);

@@ -27,6 +27,7 @@ function trayMenuTemplate(v, h) {
     { type: 'separator' },
     { label: 'Start with the system', type: 'checkbox', checked: !!v.autostart, click: () => h.toggleAutostart() },
     { label: 'Closing the window hides it to the tray', type: 'checkbox', checked: !!v.hideToTray, click: () => h.toggleHideToTray() },
+    { label: 'Open log folder', click: () => h.openLogFolder() },
     { type: 'separator' },
     { label: 'Quit', click: () => h.quit() },
   );

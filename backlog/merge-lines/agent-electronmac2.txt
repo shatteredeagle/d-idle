@@ -1,0 +1,2 @@
+BACKLOG: TASK-294 electronmac2: macOS first-run fixes (Local Network usage text, no blank window on failed or stalled load, --debug log file, Chromium switch passthrough)
+CHANGELOG: d.idle watch desktop app: a failed or stalled page load shows a message and retries instead of a white window; --debug log and Open log folder
