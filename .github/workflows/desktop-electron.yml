@@ -30,7 +30,7 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y xvfb
         working-directory: .
       # The hosted runner restricts unprivileged user namespaces, so the smoke run needs --no-sandbox there (test only).
-      - run: D2E_SMOKE_NO_SANDBOX=1 xvfb-run -a npm run smoke
+      - run: D2E_SMOKE_NO_SANDBOX=1 npm run smoke
   # Unsigned personal macOS build (universal arm64+x64). No signing or notarisation env, nothing published.
   package-mac:
     needs: test
