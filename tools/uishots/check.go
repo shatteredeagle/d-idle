@@ -94,7 +94,7 @@ func checkDump(name, html string) []string {
 	return bad
 }
 
-var reConsole = regexp.MustCompile(`CONSOLE\(\d+\)\] "([^"]*)`)
+var reConsole = regexp.MustCompile(`CONSOLE[:(]\d+\)?\] "([^"]*)`) // Chrome writes CONSOLE:12] or CONSOLE(12)] by version
 
 // checkConsole reports the uncaught errors a page logged (Chrome's --enable-logging lines).
 func checkConsole(name, log string) []string {
