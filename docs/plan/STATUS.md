@@ -114,6 +114,7 @@
 | potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
 | runstate | proposed | - | `internal/d2dinput/run.go` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
+| videoresume | proposed | - | `internal/watch/web/panels/video`<br>`internal/watch/testdata/video_panel.js`<br>`internal/watch/video.go`<br>`internal/watch/web/mjpeg.js`<br>`internal/watch/http_view.go`<br>`internal/watch/testdata/panel_harness.js`<br>`internal/watch/videoresume_test.go`<br>`docs/viewer-fps.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -170,6 +171,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 88a8bd9a 11-11 15:25 `Merge agent/videoresume: TASK-336 videoresume: watch video recovers by itself (stall watchdog, backoff, hidden-tab pause, Retry, d2video hook), dead viewers freed by a per-part write deadline` (videoresume)
+- 69394eea 11-11 15:24 `Merge branch 'main' into videoresume` (-)
 - 201c990d 11-11 14:58 `Merge agent/decomp10: TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed)` (decomp10)
 - e4be4021 11-11 14:57 `Merge branch 'main' into decomp10` (-)
 - a9c8502d 11-11 14:49 `Merge agent/nopins: TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory` (nopins)
@@ -178,6 +181,4 @@
 - 6530d54d 11-11 14:41 `Merge branch 'main' into playerprio` (-)
 - 65a697cd 11-11 14:32 `Merge agent/maphistory: TASK-324 maphistory: activity-coloured trail, event markers, activity percent legend` (maphistory)
 - 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
-- f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
-- 29687388 11-11 14:27 `Merge branch 'main' into nocursor` (-)
 <!-- statusgen:end -->
