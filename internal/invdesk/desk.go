@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/status"
 )
 
@@ -387,8 +388,9 @@ type ItemView struct {
 }
 
 // ViewSchema is the version of the /api/inventory reply: 2 added the optional item fields tip, base and sell (the item
-// tooltip, docs/inventory-tooltip.md). Version 1 readers keep working: nothing was renamed or removed.
-const ViewSchema = 2
+// tooltip, docs/inventory-tooltip.md); 3 added the optional merc block (docs/research/merc-gear.md). Older readers keep
+// working: nothing was renamed or removed.
+const ViewSchema = 3
 
 // View is the inventory page's data.
 type View struct {
@@ -407,6 +409,31 @@ type View struct {
 	Recent    []Request            `json:"recent"`
 	Note      string               `json:"note,omitempty"`
 	Prompt    string               `json:"prompt,omitempty"` // docs/gear-policy.md: tells the player equipment is theirs to manage
+	Merc      *MercView            `json:"merc,omitempty"`   // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
+}
+
+// Merc states of MercView.State.
+const (
+	MercNone    = "none"    // nobody is employed
+	MercReady   = "ready"   // employed and alive, gear read
+	MercDead    = "dead"    // employed, dead (gear is shown, not changeable)
+	MercUnknown = "unknown" // employed, but the backend cannot list his gear
+)
+
+// MercView is the merc doll's data (read only in stage A: no merc action exists yet).
+type MercView struct {
+	State     string               `json:"state"`
+	Owned     bool                 `json:"owned"`
+	Alive     bool                 `json:"alive"`
+	Class     int                  `json:"class,omitempty"`
+	Kind      string               `json:"kind,omitempty"` // rogue, desert, ironwolf, barbarian
+	Level     int                  `json:"level,omitempty"`
+	Str       int                  `json:"str,omitempty"`
+	Dex       int                  `json:"dex,omitempty"`
+	LifePct   int                  `json:"lifePct,omitempty"`
+	Slots     []string             `json:"slots,omitempty"` // the slots this kind can use; the page greys the others
+	Equipment map[string]*ItemView `json:"equipment"`
+	Note      string               `json:"note,omitempty"`
 }
 
 // View reads the snapshot and decorates it. Without a snapshot the lists are empty and Note says so.
@@ -443,6 +470,9 @@ func (d *Desk) View() View {
 	}
 	decorate := func(it status.Item, place string) ItemView {
 		iv := ItemView{Item: it}
+		if place == "mercworn" {
+			return iv // his own id space: no marks, pins or advice by id (stage A is read only)
+		}
 		u, _, ok := d.unit(it.ID)
 		if !ok {
 			return iv
@@ -476,6 +506,7 @@ func (d *Desk) View() View {
 			v.Equipment[k] = &iv
 		}
 	}
+	v.Merc = mercView(data.Merc, decorate)
 	for _, it := range data.Inventory {
 		v.Backpack = append(v.Backpack, decorate(it, "pack"))
 	}
@@ -493,3 +524,31 @@ func (d *Desk) View() View {
 
 // Kind is the short machine code of the refusal (item, place, never, town, requirements, slot, pin, mark, off).
 func (r *Refusal) Kind() string { return r.Code }
+
+// mercView turns the status block into the page's view. Items are decorated like the worn ones (tip, base, sell).
+func mercView(m *status.MercInv, decorate func(status.Item, string) ItemView) *MercView {
+	if m == nil {
+		return nil
+	}
+	v := &MercView{State: MercNone, Equipment: map[string]*ItemView{}}
+	if !m.Hired {
+		return v
+	}
+	v.Owned, v.Alive, v.Class, v.Level, v.Str, v.Dex, v.LifePct = true, m.Alive, m.Class, m.Level, m.Str, m.Dex, m.LifePct
+	v.Kind, v.Slots = merc.KindName(m.Class), merc.WearableKeys(m.Class)
+	for k, it := range m.Equipment {
+		if it != nil {
+			iv := decorate(*it, "mercworn")
+			v.Equipment[k] = &iv
+		}
+	}
+	switch {
+	case !m.GearKnown:
+		v.State, v.Note = MercUnknown, "Equipment unreadable on this backend."
+	case !m.Alive:
+		v.State, v.Note = MercDead, "Mercenary is dead: revive first; gear cannot be changed while he is dead."
+	default:
+		v.State = MercReady
+	}
+	return v
+}

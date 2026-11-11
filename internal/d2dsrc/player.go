@@ -451,7 +451,8 @@ func (b *builder) mercSheet(m obj, present, dead bool) *d2.MercSheet {
 	}
 	typ, _ := m.int("type")
 	if !present && !dead && typ == 0 {
-		return nil // no merc employed
+		b.snap.Merc = &d2.MercSheet{} // read, and nobody is employed
+		return nil
 	}
 	sh := &d2.MercSheet{Hired: true, Alive: present && !dead, Level: level, Type: typ}
 	sh.Str, _ = m.int("str")
