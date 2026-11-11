@@ -24,6 +24,10 @@ type VideoOptions struct {
 	MaxViewers int           // default 3
 	MaxFrame   int           // bytes; larger frames are dropped; default 512 KiB
 	Linger     time.Duration // how long the capture outlives the last viewer; default 5 s
+	// WriteTimeout bounds each part's write: a viewer that stopped reading without closing (a sleeping phone, a dead
+	// link) is dropped and frees its viewer slot instead of holding it forever; default 10 s. The servers have no
+	// global WriteTimeout (it would cut every long stream after N seconds); this per-part deadline replaces it.
+	WriteTimeout time.Duration
 }
 
 // Video is the shared frame source behind /stream and /shot.jpg.
@@ -53,6 +57,9 @@ func NewVideo(o VideoOptions) (*Video, error) {
 	}
 	if o.Linger <= 0 {
 		o.Linger = 5 * time.Second
+	}
+	if o.WriteTimeout <= 0 {
+		o.WriteTimeout = 10 * time.Second
 	}
 	return &Video{o: o, subs: map[chan []byte]struct{}{}}, nil
 }
@@ -170,7 +177,9 @@ func (v *Video) handleStream(w http.ResponseWriter, r *http.Request) {
 	h.Set("X-Content-Type-Options", "nosniff")
 	w.WriteHeader(http.StatusOK)
 	fl.Flush() // headers now: the page sees the stream open before the first frame exists
+	rc := http.NewResponseController(w)
 	write := func(f []byte) bool {
+		rc.SetWriteDeadline(time.Now().Add(v.o.WriteTimeout))
 		var b bytes.Buffer
 		fmt.Fprintf(&b, "--%s\r\nContent-Type: image/jpeg\r\nContent-Length: %d\r\n\r\n", boundary, len(f))
 		b.Write(f)
