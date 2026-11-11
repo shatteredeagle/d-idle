@@ -1,10 +1,13 @@
 ---
 id: TASK-308
-title: 'sellmarks: player sell marks are sold at the next town visit even after item ids changed'
-status: Proposed
+title: >-
+  sellmarks: player sell marks are sold at the next town visit even after item
+  ids changed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T16:07:00Z'
+updated_date: '2026-11-11T17:36:00Z'
 labels:
   - bot
   - bug

@@ -199,7 +199,6 @@ internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
-internal/bot/leveling.go  credit-runner  sellmarks
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/repairtrip.go  credit-runner  repairtrip
@@ -223,7 +222,6 @@ internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
-internal/invdesk  credit-runner  sellmarks
 internal/invdesk  credit-runner  standstill
 internal/invdesk/desk.go  credit-runner  artspeed
 internal/invdesk/desk_test.go  credit-runner  artspeed
@@ -253,7 +251,6 @@ internal/resource/tuning.go  live-agent  recoverypace
 internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
-internal/town  credit-runner  sellmarks
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
@@ -286,7 +283,6 @@ internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory.js  credit-runner  artspeed
 internal/watch/web/inventory.js  credit-runner  artspeed2
 internal/watch/web/inventory.js  credit-runner  repairtrip
-internal/watch/web/inventory.js  credit-runner  sellmarks
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels/gear  credit-runner  repairtrip
