@@ -19,6 +19,7 @@ owns:
 exclusive:
   - "fork-branch:d2d.lab3-framefeed"
 contracts: []
+result: stage 1 d2dview knobs and /api/frames counters plus the ring reader with fallbacks (offline tests), fork framefeed verb d2d.lab3-framefeed 80cc7adc pushed, built and unit-tested on the worker host; NOT verified live (no deploy, no live d2d run). Sandbox measured read-only at 4.3 fps. Not build-specific.
 ---
 
 ## Description
@@ -31,9 +32,9 @@ User requirement 2026-11-10: the viewer's live game video at least 50 percent of
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 measure the sandbox video path (fps, ms per shot, bytes, CPU) read-only
-- [ ] #2 stage 1: d2dview knobs (back-off, JPEG quality, half scale) and frame counters on /api/frames and a log line
-- [ ] #3 fork verb prototype framefeed (shared ring, no PNG) committed and pushed to the private fork remote
-- [ ] #4 d2dview reads the ring with fallback to screenshot, offline tests
-- [ ] #5 docs/viewer-fps.md with measurements, design, risks, staged PRs
+- [x] #1 measure the sandbox video path (fps, ms per shot, bytes, CPU) read-only
+- [x] #2 stage 1: d2dview knobs (back-off, JPEG quality, half scale) and frame counters on /api/frames and a log line
+- [x] #3 fork verb prototype framefeed (shared ring, no PNG) committed and pushed to the private fork remote
+- [x] #4 d2dview reads the ring with fallback to screenshot, offline tests
+- [x] #5 docs/viewer-fps.md with measurements, design, risks, staged PRs
 <!-- AC:END -->
