@@ -3,11 +3,11 @@ id: TASK-290
 title: >-
   electrontray: Electron app tray icon, autostart, hide-to-tray, signed update
   check
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:31:00Z'
-updated_date: '2026-11-11T01:31:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature
