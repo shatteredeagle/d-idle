@@ -1,0 +1,37 @@
+# Packaging for the d.idle watch app (docs/desktop-electron.md). Never publishes: scripts pass --publish never.
+appId: org.d2idle.watch
+productName: d2idle-watch
+copyright: GPL-3.0-or-later, see THIRD_PARTY.md
+artifactName: d2idle-watch-${version}-${os}-${arch}.${ext}
+compression: maximum
+electronLanguages: [en-US]
+afterPack: build/after-pack.js
+files:
+  - package.json
+  - src/**
+  - build/icon.png
+asarUnpack: []
+directories:
+  buildResources: build
+  output: dist
+win:
+  target: [{target: nsis, arch: [x64]}, {target: portable, arch: [x64]}]
+  icon: build/icon.ico
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  artifactName: d2idle-watch-setup-${version}-x64.exe
+portable:
+  artifactName: d2idle-watch-${version}-x64-portable.exe
+linux:
+  target: [AppImage, deb]
+  category: Game
+  icon: build/icon.png
+  executableName: d2idle-watch
+  maintainer: d.idle contributors
+  synopsis: d.idle watch
+mac:
+  target: [{target: zip, arch: [arm64, x64]}]
+  icon: build/icon.png
+  identity: null
