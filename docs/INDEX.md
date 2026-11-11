@@ -928,3 +928,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/friend-feed.md - now also the release runbook, rollback and static server snippets
 - docs/gear-policy.md: the player decides equipment, what the bot does and does not do, onboarding prompt, Gear Sets unlock hook
 - docs/ui-design-system.md section 15.5: the layout manifest in the shell (ids, placement, routes, Edit layout)
+- docs/research/merc-gear.md: merc gear policy, d2d hireling screen, merc doll UI and action model

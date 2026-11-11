@@ -694,6 +694,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - gearplayer: bot never equips, swaps or buys equipment by default (resource.gearDecisions=player); advice and onboarding prompt only (TASK-280)
 - uilayout (TASK-279): the watch shell places panels from a watch.layout/1 manifest; GET/POST /api/layout with a per-profile copy; Edit layout mode on /watch; uilint layout rules
 - TASK-281 dev-update.sh empties the worker .devupdate-src before each send so deleted files cannot linger; regression test tools/dev-update-clean-test.sh
+- TASK-283 mercgear research: merc gear follows the player-decides rule, merc paper doll design (docs/research/merc-gear.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

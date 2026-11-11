@@ -1,2 +1,0 @@
-BACKLOG: TASK-283 mercgear research: merc gear follows the player-decides rule, merc paper doll design (docs/research/merc-gear.md)
-INDEX: docs/research/merc-gear.md: merc gear policy, d2d hireling screen, merc doll UI and action model
