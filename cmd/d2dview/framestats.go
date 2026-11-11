@@ -27,11 +27,21 @@ type FrameStats struct {
 	Half        bool    `json:"half"`
 	Backoff     float64 `json:"backoff"`
 	TargetFPS   float64 `json:"targetFps"`
+	Every       int     `json:"every"`    // ring: one frame published per this many d2d draws
+	SourceHz    float64 `json:"sourceHz"` // ring: d2d's measured draw rate
+	FeedWanted  bool    `json:"feedWanted"`
+	// Degraded is set when the ring was asked for but the window ran on screenshots or under half the game's 25 fps;
+	// the log line says "DEGRADED" so it shows without a client.
+	Degraded bool `json:"degraded"`
 }
 
 func (s FrameStats) String() string {
-	return fmt.Sprintf("frames %s: %.1f fps over %.0fs (%d frames, %.1f parts/s), grab %.1f ms avg %.1f max, encode %.1f ms, %d bytes, %dx%d, d2dview cpu %.1f%%",
-		s.Source, s.FPS, s.WindowSec, s.Frames, s.PartsPerSec, s.GrabMSAvg, s.GrabMSMax, s.EncodeMSAvg, s.BytesAvg, s.Width, s.Height, s.CPUPct)
+	d := ""
+	if s.Degraded {
+		d = "DEGRADED "
+	}
+	return d + fmt.Sprintf("frames %s (every %d of %.0f Hz): %.1f fps over %.0fs (%d frames, %.1f parts/s), grab %.1f ms avg %.1f max, encode %.1f ms, %d bytes, %dx%d, d2dview cpu %.1f%%",
+		s.Source, s.Every, s.SourceHz, s.FPS, s.WindowSec, s.Frames, s.PartsPerSec, s.GrabMSAvg, s.GrabMSMax, s.EncodeMSAvg, s.BytesAvg, s.Width, s.Height, s.CPUPct)
 }
 
 type frameStats struct {
@@ -82,6 +92,7 @@ func (s *frameStats) roll(now time.Time, base FrameStats) (FrameStats, bool) {
 		out.BytesAvg = s.bytes / s.n
 	}
 	out.GrabMSMax = ms(s.grabMx)
+	out.Degraded = out.FeedWanted && (out.Source != "framefeed" || out.FPS < 12.5)
 	s.last, s.ready = out, true
 	s.start, s.cpu0, s.n, s.grab, s.grabMx, s.enc, s.bytes = now, cpu, 0, 0, 0, 0, 0
 	return out, true

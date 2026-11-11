@@ -104,7 +104,8 @@ func (f *Frames) watching() bool {
 func (f *Frames) Current() Frame { f.mu.RLock(); defer f.mu.RUnlock(); return f.cur }
 
 func (f *Frames) knobs() FrameStats {
-	return FrameStats{Quality: f.Quality, Half: f.Half, Backoff: f.Backoff, TargetFPS: f.fps}
+	return FrameStats{Quality: f.Quality, Half: f.Half, Backoff: f.Backoff, TargetFPS: f.fps, Every: f.every,
+		SourceHz: float64(time.Second) / float64(f.srcPeriod), FeedWanted: f.Feed != ""}
 }
 
 func (f *Frames) Run(ctx context.Context) {
@@ -136,7 +137,7 @@ func (f *Frames) Run(ctx context.Context) {
 			gap = time.Second
 		}
 		next = t0.Add(gap)
-		if st, ok := f.Stats.roll(time.Now(), f.knobs()); ok && st.Frames > 0 && time.Since(f.lastStats) >= 30*time.Second {
+		if st, ok := f.Stats.roll(time.Now(), f.knobs()); ok && (st.Frames > 0 || st.Degraded) && time.Since(f.lastStats) >= 30*time.Second {
 			f.lastStats = time.Now()
 			log.Printf("d2dview: %s", st)
 		}

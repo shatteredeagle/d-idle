@@ -133,3 +133,21 @@ func TestEventsWithoutFrames(t *testing.T) {
 }
 
 func itoa64(n int64) string { return strconv.FormatInt(n, 10) }
+
+func TestDegradedFlag(t *testing.T) {
+	s := newFrameStats(time.Second)
+	t0 := s.start
+	for i := 0; i < 5; i++ {
+		s.add("screenshot", 50*time.Millisecond, 0, 1000, 800, 600)
+	}
+	st, _ := s.roll(t0.Add(time.Second), FrameStats{FeedWanted: true})
+	if !st.Degraded || !strings.HasPrefix(st.String(), "DEGRADED") {
+		t.Fatalf("%+v", st)
+	}
+	for i := 0; i < 20; i++ {
+		s.add("framefeed", time.Millisecond, 9*time.Millisecond, 1000, 800, 600)
+	}
+	if st, _ := s.roll(t0.Add(2*time.Second), FrameStats{FeedWanted: true}); st.Degraded {
+		t.Fatalf("%+v", st)
+	}
+}
