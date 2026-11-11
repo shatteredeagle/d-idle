@@ -1,0 +1,11 @@
+{
+ "schema": 1,
+ "mode": "manual",
+ "modes": [{"id": "manual", "label": "Manual: only when you press Repair now", "current": true}],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [{"slot": "torso", "name": "Plate", "dur": 7, "max": 100, "pct": 7, "warn": true}],
+ "estimate": 116,
+ "request": {"state": "requested", "at": 1800000000, "note": "n", "short": 41, "need": 116},
+ "worst": "Low durability: Plate 7%"
+}

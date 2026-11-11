@@ -11,6 +11,7 @@ import (
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/ladder"
+	"d2lod-bot/internal/repair"
 	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/town"
 )
@@ -45,6 +46,9 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 	}
 	if l.trip != nil {
 		return r.advanceTrip(ctx, snap, c)
+	}
+	if r.repairTripStep(ctx, snap, c) {
+		return true
 	}
 	if r.beltFillStep(ctx, snap) {
 		return true
@@ -170,9 +174,12 @@ type trip struct {
 	returnTo   int
 	stage      int // 0 go home, 1 chores, 2 settle, 3 back to the field
 	emergency  bool
-	startGold  int // gold when the trip was first advanced (in the field for most trips), for the trip log line
-	startBasis int // the policy's gold (stash included while no healing potion) at that moment, for the in-town latch
-	restocks   int // extra shop rounds the field gate asked for in this town visit (max gateRestocks)
+	startGold  int  // gold when the trip was first advanced (in the field for most trips), for the trip log line
+	startBasis int  // the policy's gold (stash included while no healing potion) at that moment, for the in-town latch
+	restocks   int  // extra shop rounds the field gate asked for in this town visit (max gateRestocks)
+	repair     bool // the player's Repair now trip (repairtrip.go): phases, guards and the log of durability before and after
+	begun      bool // the request's trip was started (repairBegin)
+	repairTry  int  // chore rounds at the smith in this trip
 }
 
 // antidotes counts antidote potions in belt and pack (0 without a catalog).
@@ -484,11 +491,21 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		t.startGold = p.Gold
 		t.startBasis = r.resInput(snap).Gold
 	}
+	if t.repair && !t.begun {
+		if !r.repairBegin(snap, t) {
+			return false // not now: the request stays queued and the normal play goes on
+		}
+		r.rep.SetPhase(repair.PhaseGoing, "")
+	}
 	if !p.InTown() && t.stage < 3 {
 		if t.stage > 0 { // fell out of town mid-trip (portal taken early): start over from the field
 			t.stage = 0
 		}
-		r.setWhy(WhyTownTrip, "why", t.plan.Reason)
+		if t.repair {
+			r.setWhy(WhyRepairTrip, "step", "going home")
+		} else {
+			r.setWhy(WhyTownTrip, "why", t.plan.Reason)
+		}
 		ok := r.do(ctx, c, StateResupplying, "Going to town ("+t.plan.Reason+")", town, "to town", r.d.Town.ToTown)
 		if !ok && strings.Contains(t.plan.Reason, resource.RecoveryKitReason) && r.State() == StateResupplying {
 			// a failed way home counts like failed chores: without it the same trip is due again on the next tick
@@ -500,6 +517,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			// no portal, no scroll, no luck: give the trip up (the cooldown keeps it from being retried at once)
 			if l.failures >= 1 {
 				r.e.Log.Warn("town trip abandoned", "reason", t.plan.Reason)
+				r.repairTripEnd(t, "could not get to town")
 				l.trip, l.failures = nil, 0
 			}
 		}
@@ -508,7 +526,12 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 	switch t.stage {
 	case 0, 1:
 		t.stage = 1
-		r.setWhy(WhyTownChores, "why", t.plan.Reason)
+		if t.repair {
+			r.rep.SetPhase(repair.PhaseRepairing, "")
+			r.setWhy(WhyRepairTrip, "step", "repairing in town")
+		} else {
+			r.setWhy(WhyTownChores, "why", t.plan.Reason)
+		}
 		ok := r.do(ctx, c, StateResupplying, "Chores in town ("+t.plan.Reason+")", town, "chores", func(ctx context.Context) error {
 			rep, err := r.d.Town.Chores(ctx, t.plan)
 			if err == nil {
@@ -539,6 +562,9 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 				l.trip, l.failures = nil, 0
 			}
 		}
+		if ok && t.repair && r.repairRetry(t) {
+			return true // the smith did not work this round: one more, then the request keeps its state
+		}
 		if ok {
 			t.stage = 2
 			if s := r.latest(); s != nil {
@@ -568,6 +594,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		if t.returnTo != 0 {
 			t.stage = 3
 		} else {
+			r.repairTripEnd(t, "")
 			l.trip = nil
 			l.needBuff = true
 		}
@@ -576,7 +603,11 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 		if r.gateField(snap, t) {
 			return true
 		}
-		r.setWhy(WhyBackToField)
+		if t.repair {
+			r.setWhy(WhyRepairTrip, "step", "returning to the field")
+		} else {
+			r.setWhy(WhyBackToField)
+		}
 		ok := r.do(ctx, c, StateResupplying, "Returning to the field", sec(r.cfg.TravelTimeoutSec), "back to field", func(ctx context.Context) error {
 			err := r.d.Town.BackToField(ctx, t.returnTo)
 			if err == nil {
@@ -585,6 +616,7 @@ func (r *Runner) advanceTrip(ctx context.Context, snap *d2.Snapshot, c control) 
 			return err
 		})
 		if ok || l.failures > 1 {
+			r.repairTripEnd(t, "")
 			l.trip = nil // on repeated failure travel() walks back by itself
 			l.needBuff = true
 		}
@@ -1196,7 +1228,9 @@ const (
 // out of unexplored ground with nothing hostile left, the area counts as cleared for this game.
 func (r *Runner) sweep(ctx context.Context, s *d2.Snapshot, c control, area int) bool {
 	name := r.areaName(area)
-	if have, want, on := r.goldFarmNumbers(s); on {
+	if code, kv, ok := r.repairWhy(s); ok {
+		r.setWhy(code, kv...)
+	} else if have, want, on := r.goldFarmNumbers(s); on {
 		r.setWhy(WhyFarmUser, "area", name, "have", itoa(have), "want", itoa(want))
 	} else if sv := r.savingFor(s); sv.Item != "" {
 		r.setWhy(WhySavingFor, "area", name, "item", sv.Item, "need", itoa(sv.Need))

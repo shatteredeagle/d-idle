@@ -28,6 +28,7 @@ type Table struct {
 	Doc     string `json:"doc"`
 	WarnPct int    `json:"warnPct"`
 	Default string `json:"default"`
+	Trip    Trip   `json:"trip"`
 	Modes   []Mode `json:"modes"`
 }
 
@@ -46,6 +47,10 @@ func ParseTable(b []byte) (*Table, error) {
 	var t Table
 	if err := json.Unmarshal(b, &t); err != nil {
 		return nil, fmt.Errorf("repair: modes: %w", err)
+	}
+	t.Trip.fill()
+	if err := t.Trip.check(); err != nil {
+		return nil, err
 	}
 	if t.WarnPct <= 0 || t.WarnPct >= 100 {
 		return nil, fmt.Errorf("repair: modes: warnPct %d is not in 1..99", t.WarnPct)

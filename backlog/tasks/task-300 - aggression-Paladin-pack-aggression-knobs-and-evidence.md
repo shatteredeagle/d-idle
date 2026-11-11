@@ -1,10 +1,11 @@
 ---
 id: TASK-300
 title: 'aggression: Paladin pack aggression knobs and evidence'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T14:40:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - docs
   - chore

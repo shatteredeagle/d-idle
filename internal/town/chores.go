@@ -209,6 +209,9 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 			return false
 		}
 		if est := t.repairEstimate(s); s.Player.Gold < est {
+			if requested && t.repairStashGap(s, est) > 0 && s.Player.Gold+s.Player.StashGold >= est {
+				return true // the stash pays the rest: repair() withdraws it first
+			}
 			if requested {
 				g.Short(est-s.Player.Gold, est)
 				t.e.Log.Info("repair requested but gold is short", "gold", s.Player.Gold, "estimate", est)
@@ -218,6 +221,23 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 		return true
 	}
 	return ok && t.repairDue(s, pct) && !t.repairLatched(s, pct) && s.Player.Gold >= t.repairEstimate(s)
+}
+
+// goldNeeder is the optional part of the repair gate that knows how much gold a repair wants for an estimate (the
+// estimate is a lower bound: estimate x the margin of modes.json).
+type goldNeeder interface{ NeedGold(estimate int) int }
+
+// repairStashGap is the gold to take out of the stash for a requested repair: up to the gate's need (the estimate x the
+// margin, else the estimate), never more than the stash holds. 0 when nothing is to be moved or the input cannot move gold.
+func (t *Town) repairStashGap(s *d2.Snapshot, est int) int {
+	if _, can := t.e.In.(goldMover); !can || t.repairGate == nil || s.Player.StashGold <= 0 {
+		return 0
+	}
+	need := est
+	if g, ok := t.repairGate.(goldNeeder); ok {
+		need = max(g.NeedGold(est), est)
+	}
+	return min(max(need-s.Player.Gold, 0), s.Player.StashGold)
 }
 
 // repairTripAllowed: without a gate the durability trip is as before; with one, a repair trip is made only for a mode
@@ -697,6 +717,20 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	s0, err := t.current()
 	if err != nil {
 		return err
+	}
+	if t.repairGate != nil && t.repairGate.Requested() {
+		if est := t.repairEstimate(s0); s0.Player.Gold < est {
+			n := t.repairStashGap(s0, est)
+			if n <= 0 {
+				return fmt.Errorf("town: repair needs %d gold, the pack has %d", est, s0.Player.Gold)
+			}
+			if err := t.withdrawAmount(ctx, a, s0, n, "for the repair"); err != nil {
+				return err
+			}
+			if s0, err = t.current(); err != nil {
+				return err
+			}
+		}
 	}
 	g0 := s0.Player.Gold
 	low0, _ := t.lowestDurability(s0)

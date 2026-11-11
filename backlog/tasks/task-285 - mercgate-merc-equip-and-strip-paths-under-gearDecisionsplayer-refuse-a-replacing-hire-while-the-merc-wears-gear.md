@@ -1,10 +1,13 @@
 ---
 id: TASK-285
-title: 'mercgate: merc equip and strip paths under gearDecisions=player, refuse a replacing hire while the merc wears gear'
-status: Proposed
+title: >-
+  mercgate: merc equip and strip paths under gearDecisions=player, refuse a
+  replacing hire while the merc wears gear
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:05:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - bot
   - feature

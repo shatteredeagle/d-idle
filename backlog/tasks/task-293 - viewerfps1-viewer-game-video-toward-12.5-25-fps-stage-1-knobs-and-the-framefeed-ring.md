@@ -1,10 +1,13 @@
 ---
 id: TASK-293
-title: 'viewerfps1: viewer game video toward 12.5-25 fps, stage 1 knobs and the framefeed ring'
-status: Proposed
+title: >-
+  viewerfps1: viewer game video toward 12.5-25 fps, stage 1 knobs and the
+  framefeed ring
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T02:23:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - bot
   - feature
