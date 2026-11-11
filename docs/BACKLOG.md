@@ -726,6 +726,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - qprofile: merge queue profile and safe speedups (TASK-313, merged 2026-11-11, acceptance 2 of 2): Read-only profile written; per-phase seconds are estimates (MERGE_TIMINGS off); not verified live; go test timing job skipped (gate active). <!--sg:agent/qprofile-->
 - identify2 identify runs at the next safe moment anywhere, batched, ahead of equip and trash; town errands trigger a trip home (offline only) <!--sg:agent/identify2-->
 - queuespeed: implement the safe merge-queue speedups from the 2026-11-11 profile (stale red hold, electron workflow, auto-Done head, gate trims) (TASK-312, merged 2026-11-11, acceptance 3 of 4): Steps 1 to 3 implemented in the ops repo (tools/mergeq.py, branch queuespeed of the ops repo; tests in tools/tests/test_mergeq.py against a scratch bare repo with fake runs), MERGE_TIMINGS=1 set in the worker env file ... <!--sg:agent/queuespeed-->
+- uifix (TASK-314): watch panels no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address, one event stream per page <!--sg:agent/uifix-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

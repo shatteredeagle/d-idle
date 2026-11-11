@@ -77,6 +77,7 @@ export function plan(layout, width, mode, conf, targets, edit) {
     const colSpan = Math.max(1, Math.min(bp.cols, e.colSpan | 0)), col = Math.max(1, Math.min(bp.cols - colSpan + 1, e.col | 0));
     const it = { id, col, row: Math.max(1, e.row | 0), colSpan, rowSpan: Math.max(1, e.rowSpan | 0), collapsed: !!e.collapsed, order: e.order | 0, placed: true };
     // an entry with hidden: true is a panel the user switched off in the editor: no cell, and the shell hides it
+    if (known[id].rows) it.rowSpan = known[id].rows; // fit content: the stored span is not used (below)
     if (e.hidden) { off.push(id); if (edit) kept.push(Object.assign(it, { hidden: true, off: true })); continue; }
     if (known[id].hidden) { if (edit) kept.push(Object.assign(it, { hidden: true })); continue; }
     placeNear(items, it); // a file with overlapping entries (the editor's presets have some) still loads: push down
@@ -88,7 +89,7 @@ export function plan(layout, width, mode, conf, targets, edit) {
   const flow = bpName === 'phone' || bpName === 'tablet';
   for (const t of targets) {
     if (used[t.id] || t.hidden) continue;
-    const [w, h] = SPAN[t.size] || SPAN.s;
+    const [w, h0] = SPAN[t.size] || SPAN.s, h = t.rows || h0;
     const it = { id: t.id, col: 1, row: maxRow + 1, colSpan: flow && bpName === 'phone' ? bp.cols : Math.min(bp.cols, flow ? Math.max(w, 6) : w), rowSpan: h, collapsed: false, order: ++maxOrder, placed: false };
     placeFrom(items, it, bp.cols, maxRow + 1);
     items.push(it);
@@ -169,4 +170,27 @@ export function setOff(items, id, on, cols) {
 export function sameCells(a, b) {
   const key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan, !!i.collapsed, !!i.off].join();
   return a.length === b.length && a.map(key).sort().join('|') === b.map(key).sort().join('|');
+}
+
+// ---- fit content: a panel's rows come from what it shows, not from the file ----
+// A panel that declares fit (panel.json "fit": true; the pre-shell cards through shell.json) takes the rows its
+// rendered content needs at the width the layout gives it. The stored rowSpan stays in the file (old files and editor
+// exports load unchanged, and a loader without this reads it as before) but is not used for such a panel: a span
+// taller than the content left a dead area in the card (the game picture is 4:3 of its width, whatever was saved).
+export function fitRows(heightPx, rowh, gap) {
+  return Math.max(1, Math.ceil((heightPx - 0.5 + gap) / (rowh + gap))); // half a pixel of rounding never costs a row
+}
+
+// The height a card needs: from its top edge to the bottom of its lowest visible child, plus its own bottom padding
+// and border. cs is the card's computed style. 0 when nothing is visible in it.
+export function contentHeight(n, cs) {
+  const top = n.getBoundingClientRect().top;
+  let bottom = top, any = false;
+  for (const c of n.children) {
+    if (c.hidden || !c.getClientRects || !c.getClientRects().length) continue;
+    bottom = Math.max(bottom, c.getBoundingClientRect().bottom);
+    any = true;
+  }
+  if (!any) return 0;
+  return bottom - top + (parseFloat(cs.paddingBottom) || 0) + (parseFloat(cs.borderBottomWidth) || 0);
 }

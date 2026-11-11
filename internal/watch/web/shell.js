@@ -2,7 +2,7 @@
 // fetch scheduler (the SSE change event plus per-panel polls), focus keeping across updates, and the ctx a panel gets.
 // Text only through textContent; no inline styles (the page CSP is style-src 'self').
 
-import { plan, breakpointFor } from '/watch/layout.js';
+import { plan, breakpointFor, fitRows, contentHeight } from '/watch/layout.js';
 
 const SAFETY_POLL = 5000; // a missed SSE event costs at most this long
 const FAIL_WAIT = 4000;   // after a failed fetch
@@ -105,6 +105,7 @@ function makeRoot(m) {
   root.dataset.size = m.size;
   root.dataset.tab = m.tab;
   root.dataset.state = 'loading';
+  if (m.fit) root.dataset.fit = '1'; // its rows follow its content (layout.js fitRows)
   const parts = { root, body: root, head: null, meta: null, actions: null };
   if (card) {
     const head = el('div', 'd-card-head');
@@ -176,17 +177,28 @@ function makeScheduler() {
     if (s.m.poll === 0 && changed) return true;
     return now >= s.next;
   }
+  // One request per address at a time, whoever asks: five panels read /api/hero, and five requests every two seconds
+  // (each slow when the bot is busy) held the browser's few connections per host next to the video and event streams,
+  // so every other panel and card starved in its loading state. Panels that are due together share one reply.
+  const flying = new Map();
+  function load(url) {
+    let p = flying.get(url);
+    if (p) return p;
+    const ac = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ac ? setTimeout(() => ac.abort(), FETCH_TIMEOUT) : 0;
+    p = fetch(url, { cache: 'no-store', credentials: 'same-origin', signal: ac ? ac.signal : undefined }).then((r) => {
+      if (!r.ok) { const e = new Error('status ' + r.status); e.status = r.status; throw e; }
+      return r.json();
+    }).finally(() => { clearTimeout(timer); flying.delete(url); });
+    flying.set(url, p);
+    return p;
+  }
   function run(s) {
     s.inflight = true;
     const q = s.api.query ? s.api.query() : '';
     // A stalled request (a proxy, the browser's per-host connection cap behind the video and event streams) must not
     // hold the slot for ever: abort it, count a failure and poll again.
-    const ac = typeof AbortController === 'function' ? new AbortController() : null;
-    const timer = ac ? setTimeout(() => ac.abort(), FETCH_TIMEOUT) : 0;
-    fetch(s.m.endpoint + q, { cache: 'no-store', credentials: 'same-origin', signal: ac ? ac.signal : undefined }).then((r) => {
-      if (!r.ok) { const e = new Error('status ' + r.status); e.status = r.status; throw e; }
-      return r.json();
-    }).then((d) => {
+    load(s.m.endpoint + q).then((d) => {
       s.fails = 0;
       keepFocus(s.root, () => s.api.update && s.api.update(d));
       if (s.root.dataset.state === 'loading') s.root.dataset.state = 'ready';
@@ -197,7 +209,6 @@ function makeScheduler() {
       // a route that is not mounted stops polling; anything else (503 while the bot starts, a network blip) retries slower
       if (s.fails >= MAX_FAILS && (e.status === 404 || e.status === 401)) s.stopped = true;
     }).then(() => {
-      clearTimeout(timer);
       s.inflight = false;
       const p = s.m.poll > 0 ? s.m.poll * 1000 : SAFETY_POLL;
       s.next = performance.now() + (s.fails ? Math.min(30000, Math.max(p, FAIL_WAIT * s.fails)) : p);
@@ -212,7 +223,8 @@ function makeScheduler() {
     setTimeout(tick, 250);
   }
   if (window.EventSource) {
-    const es = new EventSource('/api/events');
+    // the page's one event stream: app.js opens it on /watch (window.d2events), the other pages get their own here
+    const es = window.d2events || (window.d2events = new EventSource('/api/events'));
     es.addEventListener('change', () => { changed = true; });
   }
   return { add(s) { s.next = 0; s.fails = 0; slots.push(s); }, start: tick };
@@ -223,7 +235,7 @@ function makeScheduler() {
 // loads one of the editor's presets instead and ?layout=none keeps the manifest placement. Every panel root in the
 // main area and every pre-shell card (data-lid) is a target; the plan (layout.js) says where each goes. Without a
 // layout, or for a breakpoint the file does not cover, nothing is set and the manifest rules of shell.css place.
-const lay = { layout: null, conf: {}, targets: new Map(), plan: null, main: null, editor: null, bp: '', warned: false };
+const lay = { layout: null, conf: {}, targets: new Map(), plan: null, main: null, editor: null, bp: '', warned: false, rows: new Map(), fitAt: 0, fitQueued: false };
 const COMPAT_M = '.o-now, .o-map, .thoughts, .rules, .journal, .chronicle, .alerts';
 
 function layoutTargets() {
@@ -232,12 +244,40 @@ function layoutTargets() {
   lay.main.querySelectorAll('.d-panel[data-panel], [data-lid]').forEach((n) => {
     const id = n.dataset.panel || n.dataset.lid;
     lay.targets.set(id, n);
-    out.push({ id, size: n.dataset.size || (n.matches(COMPAT_M) ? 'm' : 's'), hidden: n.hidden });
+    out.push({ id, size: n.dataset.size || (n.matches(COMPAT_M) ? 'm' : 's'), hidden: n.hidden, rows: n.dataset.fit ? lay.rows.get(id) : 0 });
   });
   return out;
 }
 
-function applyLayout() {
+// Fit content: measure what every fit panel needs at its present width; true when a span changed (the caller plans
+// again). Only on the grid breakpoints (the flow ones have no fixed rows) and never while the editor owns the cells.
+function measureFit() {
+  const p = lay.plan;
+  if (!p || p.flow || p.bp === 'overlay' || lay.editor) return false;
+  const gap = parseFloat(getComputedStyle(lay.main).rowGap) || 0;
+  let changed = false;
+  for (const it of p.items) {
+    const n = lay.targets.get(it.id);
+    if (!n || !n.dataset.fit || it.hidden || it.collapsed || n.hidden) continue;
+    const h = contentHeight(n, getComputedStyle(n));
+    if (!h) continue;
+    const rows = fitRows(h, p.rowHeight, gap);
+    n.dataset.rows = String(rows);
+    if (lay.rows.get(it.id) !== rows) { lay.rows.set(it.id, rows); changed = true; }
+  }
+  return changed;
+}
+// Content changes (a poll redraws a card, the picture collapses, the window is resized) ask for a new fit; at most
+// one measure per 300 ms, and a new plan only when a span really changed.
+function scheduleFit() {
+  if (lay.fitQueued || lay.editor) return;
+  lay.fitQueued = true;
+  const run = () => { lay.fitQueued = false; lay.fitAt = performance.now(); if (measureFit()) applyLayout(1); };
+  const wait = 300 - (performance.now() - lay.fitAt);
+  if (wait > 0) setTimeout(() => requestAnimationFrame(run), wait); else requestAnimationFrame(run);
+}
+
+function applyLayout(pass) {
   const main = lay.main;
   if (!main) return;
   const targets = layoutTargets();
@@ -263,6 +303,9 @@ function applyLayout() {
     lay.warned = true;
     console.warn('watch layout: no panel for ' + p.unknown.join(', ') + ' (ignored)');
   }
+  // the widths are set: measure the fit panels and, when a span changed, plan once more (twice at most: the content
+  // height depends on the width only, so the second plan is final)
+  if ((pass || 0) < 2 && measureFit()) applyLayout((pass || 0) + 1);
 }
 
 async function loadLayout() {
@@ -288,6 +331,7 @@ function setupLayout(conf, layout, answerBase) {
   lay.conf = conf || {};
   lay.layout = layout;
   if (!lay.main) return;
+  for (const id of lay.conf.fit || []) { const n = lay.main.querySelector('[data-lid="' + id + '"]'); if (n) n.dataset.fit = '1'; }
   if (layout && layout.density === 'comfortable' && !html.dataset.density) html.dataset.density = 'comfortable';
   if (layout) {
     // the strips of the pre-shell page (voice line, message banner, phone tabs) are full-width rows without a grid
@@ -300,8 +344,13 @@ function setupLayout(conf, layout, answerBase) {
   // a panel that hides or opens (a 404 route, an unlock) changes which targets are packed
   let queued = false;
   const again = () => { queued = false; if (!lay.editor) applyLayout(); };
-  new MutationObserver((ms) => { if (!queued && ms.some((m) => m.target.matches('.d-panel[data-panel], [data-lid]'))) { queued = true; requestAnimationFrame(again); } })
-    .observe(lay.main, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  new MutationObserver((ms) => {
+    if (lay.editor) return;
+    if (!queued && ms.some((m) => m.type === 'attributes' && m.target.matches('.d-panel[data-panel], [data-lid]'))) { queued = true; requestAnimationFrame(again); }
+    else scheduleFit(); // a card redrew itself or folded something: its content height may have changed
+  }).observe(lay.main, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ['hidden'] });
+  if (typeof ResizeObserver === 'function') new ResizeObserver(scheduleFit).observe(lay.main);
+  document.addEventListener('fullscreenchange', scheduleFit);
   window.addEventListener('resize', () => {
     if (breakpointFor(window.innerWidth, html.dataset.mode || '') === lay.bp) return;
     if (lay.editor) lay.editor.stop();

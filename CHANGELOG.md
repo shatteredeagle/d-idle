@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- watch: fixed cards staying on grey loading bars while the bot was fine <!--sg:agent/uifix-->
 - TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight <!--sg:agent/queuespeed-->
 - Identify commands run at the next safe moment with priority; buy-scrolls and Cain errands send the hero home when safe <!--sg:agent/identify2-->
 - queue profile: where merge time goes and safe speedups (TASK-313) <!--sg:agent/qprofile-->

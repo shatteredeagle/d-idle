@@ -491,7 +491,9 @@
     var last = 0;
     function poll() { get('/api/uptime').then(function (u) { if (u.seq !== last) { last = u.seq; refresh(); } }).catch(function () {}); }
     if (window.EventSource) {
-      var es = new EventSource('/api/events');
+      // one event stream per page: the shell (shell.js, loaded after this script) listens on the same one. Every
+      // long-lived request counts against the browser's six connections per host, next to the video stream.
+      var es = window.d2events = new EventSource('/api/events');
       es.addEventListener('change', refresh);
       es.onerror = function () { setTimeout(poll, 1000); };
     } else setInterval(poll, 2000);

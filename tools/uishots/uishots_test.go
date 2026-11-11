@@ -74,3 +74,32 @@ func TestFixtures(t *testing.T) {
 		t.Fatal("frame is not a JPEG")
 	}
 }
+
+func TestCheckConsole(t *testing.T) {
+	log := `[1:2:INFO:CONSOLE(12)] "watch layout: no panel for risk (ignored)", source: http://x/watch/shell.js (12)
+[1:2:INFO:CONSOLE:7] "Uncaught (in promise) ReferenceError: x is not defined", source: http://x/watch/shell.js (7)
+[1:2:INFO:CONSOLE(40)] "Uncaught TypeError: Cannot read properties of null (reading 'x')", source: http://x/watch/panels/gear/panel.js (40)
+[1:2:INFO:CONSOLE(0)] "Failed to load resource: the server responded with a status of 404 (Not Found)", source: http://x/api/events (0)`
+	bad := checkConsole("watch-1440-dark.html", log)
+	if len(bad) != 2 || !strings.Contains(bad[0], "ReferenceError") || !strings.Contains(bad[1], "Uncaught TypeError") {
+		t.Fatalf("got %v", bad)
+	}
+}
+
+func TestCheckVideoFit(t *testing.T) {
+	page := func(rows string) string {
+		return `<div class="d-shell"><section class="d-card d-panel" data-panel="video" data-size="m" data-state="ready" data-fit="1"` + rows + `></section></div>`
+	}
+	saved := pagePanels
+	defer func() { pagePanels = saved }()
+	pagePanels = map[string][]string{}
+	for rows, bad := range map[string]bool{` data-rows="13"`: false, ` data-rows="12"`: false, ` data-rows="17"`: true, ` data-rows="9"`: true, ``: true} {
+		got := checkDump("watch-1920-dark.html", page(rows))
+		if (len(got) > 0) != bad {
+			t.Errorf("rows %q: %v", rows, got)
+		}
+	}
+	if got := checkDump("watch-390-dark.html", page(``)); len(got) != 0 {
+		t.Errorf("a flow breakpoint has no fitted rows: %v", got)
+	}
+}

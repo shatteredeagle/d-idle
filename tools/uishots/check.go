@@ -37,6 +37,10 @@ func checkDir(dir string) ([]string, error) {
 			return bad, err
 		}
 		bad = append(bad, checkDump(filepath.Base(n), string(b))...)
+		// the browser's console next to the dump (uishots.sh): an uncaught exception in a page script is a failure
+		if lg, err := os.ReadFile(strings.TrimSuffix(n, ".html") + ".log"); err == nil {
+			bad = append(bad, checkConsole(filepath.Base(n), string(lg))...)
+		}
 	}
 	return bad, nil
 }
@@ -71,6 +75,18 @@ func checkDump(name, html string) []string {
 	if strings.Contains(name, "-editdrag") && !strings.Contains(html, `data-preview="map"`) {
 		bad = append(bad, name+": no drag preview on the page")
 	}
+	// fit content: the game picture's rows are measured from its width (six columns in the default layout), whatever
+	// span the layout file stores; a card taller than its picture by a row or more is the dead-area regression
+	if want, ok := videoRows[strings.TrimSuffix(name, ".html")]; ok && strings.Contains(html, `data-fit="1"`) {
+		m := regexp.MustCompile(`data-panel="video"[^>]*\bdata-rows="(\d+)"|\bdata-rows="(\d+)"[^>]*data-panel="video"`).FindStringSubmatch(html)
+		got := 0
+		if m != nil {
+			fmt.Sscan(m[1]+m[2], &got)
+		}
+		if got < want-1 || got > want {
+			bad = append(bad, fmt.Sprintf("%s: the video panel spans %d rows, its picture needs %d", name, got, want))
+		}
+	}
 	for prefix, want := range pagePanels {
 		if !strings.HasPrefix(name, prefix) {
 			continue
@@ -89,3 +105,19 @@ func checkDump(name, html string) []string {
 	}
 	return bad
 }
+
+var reConsole = regexp.MustCompile(`CONSOLE[:(]\d+\)?\] "([^"]*)`) // Chrome writes CONSOLE:12] or CONSOLE(12)] by version
+
+// checkConsole reports the uncaught errors a page logged (Chrome's --enable-logging lines).
+func checkConsole(name, log string) []string {
+	var bad []string
+	for _, m := range reConsole.FindAllStringSubmatch(log, -1) {
+		if strings.Contains(m[1], "Uncaught") {
+			bad = append(bad, fmt.Sprintf("%s: console: %s", name, m[1]))
+		}
+	}
+	return bad
+}
+
+// videoRows are the rows a six-column game picture needs (4:3 plus the card head) at the width of each default shot.
+var videoRows = map[string]int{"watch-1280-dark": 9, "watch-1440-dark": 10, "watch-1920-dark": 13, "watch-1920full-dark": 13}
