@@ -111,6 +111,10 @@
 | xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
+| fid-batch6 | in-progress | - | `docs/probes/fid/batch6.md`<br>`docs/probes/fid/fid-potions.md`<br>`docs/probes/fid/fid-stamina.md`<br>`docs/probes/fid/fid-identify.md`<br>`docs/probes/fid/fid-gold.md`<br>`docs/probes/fid/fid-zeal.md`<br>`tools/emu/d10_*` | - |
+| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
+| runstate | proposed | - | `internal/d2dinput/run.go` | - |
+| zealdiff | proposed | - | `tools/emu/zd_*` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -167,6 +171,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 201c990d 11-11 14:58 `Merge agent/decomp10: TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed)` (decomp10)
+- e4be4021 11-11 14:57 `Merge branch 'main' into decomp10` (-)
 - a9c8502d 11-11 14:49 `Merge agent/nopins: TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory` (nopins)
 - 2b66ad4a 11-11 14:48 `Merge branch 'main' into nopins` (-)
 - e75a9384 11-11 14:42 `Merge agent/playerprio: TASK-321 playerprio: player commands interrupt walks at a safe moment, behind safety` (playerprio)
@@ -175,6 +181,4 @@
 - 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
 - f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
 - 29687388 11-11 14:27 `Merge branch 'main' into nocursor` (-)
-- 609bc88e 11-11 14:22 `Merge agent/xpreadout: TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h` (xpreadout)
-- b9d81697 11-11 14:21 `Merge branch 'main' into xpreadout` (-)
 <!-- statusgen:end -->

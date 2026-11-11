@@ -735,6 +735,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - maphistory: activity-coloured trail, event markers (kill, damage, potion, loot, level-up, death), fight summaries, 30 min window, activity share line; offline only <!--sg:agent/maphistory-->
 - playerprio player commands (identify, equip, trash, errands, repair now) interrupt roam and travel walks at a safe moment; offline only <!--sg:agent/playerprio-->
 - nopins: remove the obsolete Pin display from the paper doll and inventory (TASK-325, merged 2026-11-11, acceptance 0 of 3): PIN badge, legend chip, Unpin button/menu entry and tooltip badge removed; pins and /api/inventory/unpin kept as deprecated; new .nopin goldens added; not verified live. <!--sg:agent/nopins-->
+- fid-batch6: decomp batch 6 potions, stamina, identify, gold, Zeal (TASK-327, merged 2026-11-11, acceptance 3 of 3): Five card docs and batch6.md; V run oracles d10_stam (80,000 cases, 0 mismatch), d10_pot (40,000 cases, 0 mismatch), d10_roll (Zeal rollback, 63 cases). One deviation (Zeal strike spacing), game side V run; no PR candidate. ... <!--sg:agent/decomp10-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

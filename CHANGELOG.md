@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed) <!--sg:agent/decomp10-->
 - TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory <!--sg:agent/nopins-->
 - Queued player commands now interrupt the bot's walk at a safe moment instead of waiting for it to stand still <!--sg:agent/playerprio-->
 - Watch minimap: trail coloured by what the bot is doing, event markers and an activity share line <!--sg:agent/maphistory-->
