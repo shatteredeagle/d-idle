@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -50,9 +51,41 @@ type InvAPI struct {
 	cmu    sync.Mutex // held while the view is built, so concurrent polls share one build
 	cached []byte
 	at     time.Time
+
+	// last is the newest built view, kept past the TTL for readers that must never wait for a build (/api/hero's
+	// gold); building says a background refresh for them is under way.
+	last     atomic.Pointer[invBuilt]
+	building atomic.Bool
 }
 
-func (a *InvAPI) drop() { a.cmu.Lock(); a.cached = nil; a.cmu.Unlock() }
+type invBuilt struct {
+	b  []byte
+	at time.Time
+}
+
+// viewNoWait returns the newest built view without ever building one on the caller's goroutine: a stale or missing
+// view starts one refresh in the background and the caller gets what there is (nil before the first build).
+// /api/hero is polled by several panels; building the inventory view for each of those requests (it judges every
+// carried item) made them slow enough to hold the browser's few connections and starve the whole page.
+func (a *InvAPI) viewNoWait() []byte {
+	d := a.desk()
+	if d == nil {
+		return nil
+	}
+	cur := a.last.Load()
+	if (cur == nil || time.Since(cur.at) >= invViewTTL) && a.building.CompareAndSwap(false, true) {
+		go func() {
+			defer a.building.Store(false)
+			_, _ = a.viewJSON(d)
+		}()
+	}
+	if cur == nil {
+		return nil
+	}
+	return cur.b
+}
+
+func (a *InvAPI) drop() { a.cmu.Lock(); a.cached = nil; a.cmu.Unlock(); a.last.Store(nil) }
 
 func (a *InvAPI) viewJSON(d InvDesk) ([]byte, error) {
 	a.cmu.Lock()
@@ -65,6 +98,7 @@ func (a *InvAPI) viewJSON(d InvDesk) ([]byte, error) {
 		return nil, err
 	}
 	a.cached, a.at = append(b, '\n'), time.Now()
+	a.last.Store(&invBuilt{b: a.cached, at: a.at})
 	return a.cached, nil
 }
 

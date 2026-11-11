@@ -31,7 +31,7 @@ sp=$!
 timeout 600 Xvfb $disp -screen 0 1920x1200x24 -nolisten tcp >/dev/null 2>&1 &
 xp=$!
 sleep 2
-mkdir -p "$out" && rm -f "$out"/*.png "$out"/*.html
+mkdir -p "$out" && rm -f "$out"/*.png "$out"/*.html "$out"/*.log
 # name width height path?query
 shots="watch-390-dark 390 844 watch?theme=dark
 watch-390-light 390 844 watch?theme=light
@@ -68,7 +68,7 @@ echo "$shots" | while read -r name w h q; do
 		--user-data-dir="$prof" --force-device-scale-factor=1 --force-prefers-reduced-motion --disable-lcd-text \
 		--window-size="$w,$h" --virtual-time-budget=8000 --timeout=20000 --screenshot="$out/$name.png" "$url" >/dev/null 2>&1
 	DISPLAY=$disp timeout 40 nice -n 19 "$chrome" --headless=new --no-sandbox --disable-gpu --no-first-run \
-		--user-data-dir="$prof" --window-size="$w,$h" --virtual-time-budget=8000 --timeout=20000 --dump-dom "$url" >"$out/$name.html" 2>/dev/null
+		--user-data-dir="$prof" --window-size="$w,$h" --virtual-time-budget=8000 --timeout=20000 --enable-logging=stderr --v=0 --dump-dom "$url" >"$out/$name.html" 2>"$out/$name.log"
 	rm -rf "${prof:?}"
 done
 rc=0

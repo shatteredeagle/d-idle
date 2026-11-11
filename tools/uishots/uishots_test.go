@@ -74,3 +74,13 @@ func TestFixtures(t *testing.T) {
 		t.Fatal("frame is not a JPEG")
 	}
 }
+
+func TestCheckConsole(t *testing.T) {
+	log := `[1:2:INFO:CONSOLE(12)] "watch layout: no panel for risk (ignored)", source: http://x/watch/shell.js (12)
+[1:2:INFO:CONSOLE(40)] "Uncaught TypeError: Cannot read properties of null (reading 'x')", source: http://x/watch/panels/gear/panel.js (40)
+[1:2:INFO:CONSOLE(0)] "Failed to load resource: the server responded with a status of 404 (Not Found)", source: http://x/api/events (0)`
+	bad := checkConsole("watch-1440-dark.html", log)
+	if len(bad) != 1 || !strings.Contains(bad[0], "Uncaught TypeError") {
+		t.Fatalf("got %v", bad)
+	}
+}
