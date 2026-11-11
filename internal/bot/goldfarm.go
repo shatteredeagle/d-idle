@@ -111,7 +111,7 @@ func (r *Runner) goldFarmTarget(s *d2.Snapshot) (area int, ok, stop bool) {
 				static[ps.Area] = !safeTier[ps.Area]
 			}
 		}
-		if healing, _, known := r.beltAndInv(s); known && healing < 2 {
+		if r.denKitShort(s) {
 			ex[areaDenOfEvil] = true
 		}
 		t := r.e.Tune.Bot
