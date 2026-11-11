@@ -205,3 +205,27 @@ func TestCheckNowAgainstDevDir(t *testing.T) {
 		t.Fatalf("rollback to base left current %q", layout.CurrentVersion())
 	}
 }
+
+// Drill finding: a second shim must not take over boot.pid of a running one.
+func TestOtherShimRunning(t *testing.T) {
+	l := selfupdate.Layout{Root: t.TempDir()}
+	alive := func(pid int) ([]byte, error) { return []byte("/opt/didle/boot\x00"), nil }
+	dead := func(pid int) ([]byte, error) { return nil, os.ErrNotExist }
+	other := func(pid int) ([]byte, error) { return []byte("sleep\x0060\x00"), nil }
+	if _, ok := otherShimRunning(l, 50, alive); ok {
+		t.Error("no pid file: reported a shim")
+	}
+	os.WriteFile(pidFile(l), []byte("4242\n"), 0o644)
+	if pid, ok := otherShimRunning(l, 50, alive); !ok || pid != 4242 {
+		t.Errorf("live shim not seen: %d %v", pid, ok)
+	}
+	if _, ok := otherShimRunning(l, 4242, alive); ok {
+		t.Error("our own pid counted as another shim (restart of the container reuses the file)")
+	}
+	if _, ok := otherShimRunning(l, 50, dead); ok {
+		t.Error("stale pid (process gone) blocked the start")
+	}
+	if _, ok := otherShimRunning(l, 50, other); ok {
+		t.Error("pid reused by another program blocked the start")
+	}
+}
