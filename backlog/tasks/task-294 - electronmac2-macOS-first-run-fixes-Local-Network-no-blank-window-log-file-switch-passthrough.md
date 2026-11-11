@@ -13,6 +13,7 @@ dependencies:
 priority: medium
 ordinal: 207000
 card: "electronmac2"
+result: "V: 40 node tests, worker-host smoke (failed load, silent stall, non-blank pixel checks), universal ad-hoc signed dmg+zip rebuilt on the Mac mini with NSLocalNetworkUsageDescription, packaged app logs lifecycle with --debug. NOT verified: real Local Network prompt flow, pixels on a real Mac (no display capture over ssh). Live game not used."
 owns:
   - "apps/desktop-electron/"
   - "docs/desktop-electron.md"
