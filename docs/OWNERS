@@ -129,6 +129,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/desktop-electron.yml  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronmac2
+backlog/merge-lines/agent-uifit.txt  credit-runner  uifit
 cmd/d2bot/artcmd.go  credit-runner  artspeed
 cmd/d2bot/artcmd_test.go  credit-runner  artspeed
 cmd/d2bot/artwire.go  credit-runner  artspeed
@@ -168,6 +169,10 @@ docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
 docs/plan/STATUS.md  credit-runner  statusrefresh
+docs/probes/fid/batch5.md  credit-runner  fid-batch5
+docs/probes/fid/fid-pal-attack.md  credit-runner  fid-pal-attack
+docs/probes/fid/fid-repair-wear.md  credit-runner  fid-repair-wear
+docs/probes/fid/fid-revive-mode.md  credit-runner  fid-revive-mode
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
@@ -196,6 +201,7 @@ docs/sme/pace-and-formulas.md  credit-runner  smepace
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
+docs/ui-design-system.md  credit-runner  uifit
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip
@@ -262,7 +268,10 @@ internal/watch/artapi_test.go  credit-runner  artspeed
 internal/watch/artembed_test.go  credit-runner  artspeed
 internal/watch/invapi.go  credit-runner  artspeed
 internal/watch/invapi_test.go  credit-runner  artspeed
+internal/watch/layout.go  credit-runner  uifit
+internal/watch/layout_test.go  credit-runner  uifit
 internal/watch/minimapfix_test.go  credit-runner  minimapfix
+internal/watch/panels.go  credit-runner  uifit
 internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
 internal/watch/senses.go  credit-runner  maptrail
@@ -270,6 +279,7 @@ internal/watch/senses.go  credit-runner  maptrail2
 internal/watch/senses_stitch_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
+internal/watch/testdata  credit-runner  uifit
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
@@ -284,15 +294,24 @@ internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory.js  credit-runner  artspeed
 internal/watch/web/inventory.js  credit-runner  artspeed2
 internal/watch/web/inventory.js  credit-runner  repairtrip
+internal/watch/web/layout.js  credit-runner  uifit
+internal/watch/web/layoutedit.js  credit-runner  uifit
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
+internal/watch/web/panels  credit-runner  uifit
 internal/watch/web/panels/gear  credit-runner  repairtrip
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
+internal/watch/web/shell.css  credit-runner  uifit
 internal/watch/web/shell.js  credit-runner  minimapfix
+internal/watch/web/shell.js  credit-runner  uifit
+internal/watch/web/shell.json  credit-runner  uifit
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
+tools/emu/d9_*  credit-runner  fid-batch5
 tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack
+tools/uilint  credit-runner  uifit
+tools/uishots  credit-runner  uifit
 tools/uishots/serve.go  credit-runner  maptrail
 # END GENERATED OWNERS

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline <!--sg:agent/decomp9-->
 - watch: fixed cards staying on grey loading bars while the bot was fine <!--sg:agent/uifix-->
 - TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight <!--sg:agent/queuespeed-->
 - Identify commands run at the next safe moment with priority; buy-scrolls and Cain errands send the hero home when safe <!--sg:agent/identify2-->
