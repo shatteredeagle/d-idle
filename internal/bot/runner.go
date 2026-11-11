@@ -4,6 +4,7 @@ import (
 	"context"
 	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/readiness"
+	"d2lod-bot/internal/repair"
 	"errors"
 	"fmt"
 	"runtime/debug"
@@ -97,6 +98,7 @@ type Runner struct {
 	gf       *goldfarm.Controller // the player's Farm gold order (SetGoldFarm); nil: no order
 	gfRepair func() int           // gold Repair All would cost now
 	gfArea   int                  // last farm zone logged
+	rep      *repair.Controller   // the player's Repair now request (SetRepairTrip); nil: no repair trips
 
 	wpHook func(areaID int, name string) // SetWaypointHook
 	firsts *decide.Firsts                // SetLadderFirsts
@@ -212,34 +214,39 @@ type loopState struct {
 	pointsFailLvl    int
 	gearAt           time.Time
 	playerActAt      time.Time // last attempt of the player's queued item actions (playerActionStep)
-	shopLevel        int
-	shopGold         int
-	starved          bool
-	broke            brokeState                                // recovery phase (broke.go)
-	br               brState                                   // Blood Raven attempt budget (broke.go)
-	brWorldFn        func(context.Context) (task.World, error) // tests: replaces the world the Blood Raven gate reads
-	starveNote       bool
-	rebuyBar         int    // gold needed before the next gear rebuy trip
-	gearNote         bool   // the gear gate was logged for this spell
-	floorNote        string // last effective-floor lines logged (noteFloors)
-	routeNote        string // last route guard / imbue verdict logged (one line per change)
-	run              *LevelRun
-	questPending     map[string]bool
-	questDone        map[string]bool
-	questTries       map[string]int // sweeps that ended with the quest objective still open
-	hold             areaHold       // hysteresis of the planner's area choice
-	claimSkipUntil   time.Time      // no claim trip before this (the last one failed)
-	beltFillNext     time.Time      // no belt fill attempt before this
-	diffBan          map[string]time.Time
-	forceTrip        bool
-	healFails        int         // failed heal attempts while below the resume line; reset when life is back above it
-	noPortalSince    time.Time   // first heal-trip failure for lack of a town portal in this stretch (noPortalLeave)
-	recoveredAt      time.Time   // end of the last lost-game recovery (freshHold)
-	lowLifeUntil     time.Time   // end of the current low-life wait (lowLifeWait); zero when not waiting
-	reentries        []time.Time // recent re-entries after a chicken (notInGame), pruned to reentryWindow
-	futile           bool
-	futilePos        input.Point
-	futileUntil      time.Time
+	// repair trip (repairtrip.go): when the wait for a safe moment began, retreat steps taken, loot pass done, no attempt before
+	repairWaitSince time.Time
+	repairRetreats  int
+	repairLooted    bool
+	repairRetryAt   time.Time
+	shopLevel       int
+	shopGold        int
+	starved         bool
+	broke           brokeState                                // recovery phase (broke.go)
+	br              brState                                   // Blood Raven attempt budget (broke.go)
+	brWorldFn       func(context.Context) (task.World, error) // tests: replaces the world the Blood Raven gate reads
+	starveNote      bool
+	rebuyBar        int    // gold needed before the next gear rebuy trip
+	gearNote        bool   // the gear gate was logged for this spell
+	floorNote       string // last effective-floor lines logged (noteFloors)
+	routeNote       string // last route guard / imbue verdict logged (one line per change)
+	run             *LevelRun
+	questPending    map[string]bool
+	questDone       map[string]bool
+	questTries      map[string]int // sweeps that ended with the quest objective still open
+	hold            areaHold       // hysteresis of the planner's area choice
+	claimSkipUntil  time.Time      // no claim trip before this (the last one failed)
+	beltFillNext    time.Time      // no belt fill attempt before this
+	diffBan         map[string]time.Time
+	forceTrip       bool
+	healFails       int         // failed heal attempts while below the resume line; reset when life is back above it
+	noPortalSince   time.Time   // first heal-trip failure for lack of a town portal in this stretch (noPortalLeave)
+	recoveredAt     time.Time   // end of the last lost-game recovery (freshHold)
+	lowLifeUntil    time.Time   // end of the current low-life wait (lowLifeWait); zero when not waiting
+	reentries       []time.Time // recent re-entries after a chicken (notInGame), pruned to reentryWindow
+	futile          bool
+	futilePos       input.Point
+	futileUntil     time.Time
 	// empty-area leave (emptyArea): the area watched, its kill count and the time it last changed
 	emptyArea  int
 	emptyKills int

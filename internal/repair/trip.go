@@ -357,7 +357,7 @@ func (r *Controller) BeginTrip(now time.Time) error {
 	}
 	q.Trips++
 	q.TripAt, q.DurBefore, q.DurAfter = now.Unix(), low, 0
-	q.Phase, q.Note = PhaseGoing, ""
+	q.Phase, q.Note, q.Short, q.Need = PhaseGoing, "", 0, 0
 	slog.Info("repair trip begins", "trip", q.Trips, "of", r.t.Trip.MaxTrips, "durabilityPct", low)
 	return r.saveLocked()
 }
@@ -380,7 +380,7 @@ func (r *Controller) EndTrip(now time.Time, repaired, short bool, reason string)
 		r.endLocked(StateDone, "", now, false)
 	case short && q.FarmLegs < r.t.Trip.FarmLegs:
 		q.FarmLegs++
-		q.Kind, q.Phase, q.Note, q.Have, q.Target = KindFarm, PhaseFarming, "", 0, 0
+		q.Kind, q.Phase, q.Note, q.Have, q.Target, q.Short, q.Need = KindFarm, PhaseFarming, "", 0, 0, 0, 0
 		slog.Info("repair trip: gold short at the smith, farming first", "reason", reason)
 		_ = r.saveLocked()
 	case short:
@@ -427,3 +427,22 @@ func firstNonEmpty(a, b string) string {
 
 // Table returns the trip knobs.
 func (r *Controller) TripCfg() Trip { return r.t.Trip }
+
+// AbortTrip drops a trip that never reached the smith (a monster came, an emergency trip took over): it does not count
+// against MaxTrips and the request waits queued.
+func (r *Controller) AbortTrip(note string) {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if !r.pendingLocked() {
+		return
+	}
+	q := r.st.Request
+	if q.Trips > 0 && q.Phase != PhaseQueued && q.Phase != PhaseWaiting && q.Phase != PhaseFarming {
+		q.Trips--
+	}
+	q.Phase, q.Note = PhaseQueued, note
+	_ = r.saveLocked()
+}
+
+// NeedGold is the gold a repair wants for this estimate (the town withdraws that much from the stash).
+func (r *Controller) NeedGold(estimate int) int { return r.t.Trip.Need(estimate) }

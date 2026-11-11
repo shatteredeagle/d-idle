@@ -46,6 +46,15 @@
     "farm_user": {"params": ["area", "have", "want"], "say": [
       "Farming gold on your order: {have} of {want} in {area}.",
       "You asked for gold: {have} of {want} so far, farming {area}."]},
+    "repair_wait": {"params": ["why"], "say": [
+      "Repair trip queued: {why}.",
+      "Waiting for a safe moment to go and repair: {why}."]},
+    "repair_trip": {"params": ["step"], "say": [
+      "Repair trip: {step}.",
+      "On the repair trip you asked for: {step}."]},
+    "repair_farm": {"params": ["area", "have", "want"], "say": [
+      "Farming for the repair you asked for: {have} of {want} in {area}.",
+      "Earning the gold for your repair first: {have} of {want}, farming {area}."]},
     "saving_for": {"params": ["area", "item", "need"], "say": [
       "Saving for {item}, {need} gold to go, fighting in {area} meanwhile.",
       "Short of gold: {need} more for {item}. Fighting in {area}."]},

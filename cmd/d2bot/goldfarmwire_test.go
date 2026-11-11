@@ -22,7 +22,7 @@ func TestRepairViewCarriesFarmAndTheOrderPersists(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := (farmAdapter{gf}).Set(true); err != nil {
+	if err := (farmAdapter{gf, nil}).Set(true); err != nil {
 		t.Fatal(err)
 	}
 	b, _ := json.Marshal(repairAdapter{rc, gf}.View())
