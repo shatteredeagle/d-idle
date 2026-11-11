@@ -1,7 +1,7 @@
 @layer panels {
-  [data-panel="hero-meters"] { display: flex; align-items: center; gap: var(--d-sp-1) var(--d-sp-4); }
-  [data-panel="hero-meters"] .where { color: var(--d-text-2); font-size: var(--d-fs-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-inline-size: 0; }
-  [data-panel="hero-meters"] .d-meter { flex: 1 1 9rem; max-inline-size: 15rem; --w: 7ch; }
+  [data-panel="hero-meters"] { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1) var(--d-sp-4); }
+  [data-panel="hero-meters"] .where { flex: 0 1 auto; color: var(--d-text-2); font-size: var(--d-fs-1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-inline-size: 0; }
+  [data-panel="hero-meters"] .d-meter { flex: 1 1 9rem; min-inline-size: 9rem; max-inline-size: 15rem; --w: 7ch; }
   [data-panel="hero-meters"] .d-meter.thin .track { block-size: 6px; }
-  @container panel (width < 34rem) { [data-panel="hero-meters"] .where { display: none; } }
+  @container panel (width < 44rem) { [data-panel="hero-meters"] .where { display: none; } }
 }

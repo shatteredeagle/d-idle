@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d.idle watch desktop app: a failed or stalled page load shows a message and retries instead of a white window; --debug log and Open log folder
+- watch: in Edit layout a panel now drops exactly into free space, and while you drag the other panels move out of the way; Escape puts everything back
+- d.idle watch desktop app builds for macOS (universal dmg and zip, unsigned, LAN personal use)
+- inventory: the page says in a note above the equipment that gear is yours to manage, and warns when no weapon is equipped
+- Desktop app: tray icon with page shortcuts and a reachability status, start with the system, hide to tray, and a check-only update notice from the signed feed
+- The inventory page shows your mercenary and what he wears below your paper doll (read only for now)
+- The inventory API reports the hired mercenary and what he wears (schema 3, read only; needs the fork build with the merc dump patch)
 - Desktop: new Electron app apps/desktop-electron (portable AppImage/deb and Windows installer+portable via CI) with its own window, offline/warming screen and locked navigation; the Go launcher stays as a fallback
 - watch: life and mana with numbers and an alerts badge in the top band; a Hero stats tile with level, gold, resistances and the readiness light
 - The bot no longer strips a mercenary's gear before a replacing hire; it waits until the player has taken it off (resource.gearDecisions=player)

@@ -699,6 +699,13 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-285 mercgate: a replacing merc hire is refused while the merc wears gear (player-only gear policy, TASK-283 stage A1); TASK-286 mercdump and TASK-287 mercdoll follow
 - uitopband (TASK-284): life and mana meters and an alerts badge in the top band, a hero stats tile (level, next level, gold, resistances, readiness light); /api/hero gains a stats block
 - electronapp (TASK-289): Electron desktop app skeleton in apps/desktop-electron (sandboxed helper and game views, navigation lock, config/CLI parity, AppImage+deb, CI job); tray and update check follow in electrontray
+- TASK-286 mercdump: private-fork dump of the merc's worn items, level, Str, Dex (d2d.lab5-mercdump f64db72a, compiled, not run) and the bot read into MercState, status.MercInv and invdesk schema 3; live check row added
+- TASK-287 mercdoll: merc paper doll under the hero doll on /watch/inventory (read only, schema 3 block, own js/css, DOM goldens); stage A of TASK-283 is complete with TASK-285, TASK-286; stages B and C (actions, target merc) wait for the player-side action queue
+- electrontray (TASK-290): Electron app tray icon, autostart (--hidden), hide-to-tray and a check-only signed update check; needs real-desktop verification
+- uipolish (TASK-288): watch layout polish (tablet rows, top band meter widths) and the gear-policy prompt note on the inventory page
+- TASK-291 electronmac: Electron app on macOS, universal dmg+zip (unsigned, personal), template tray icon, Dock/Cmd+Q/menu behaviours, macos CI job
+- uiedit (TASK-292): Edit layout drops a panel into any free cells (hidden panels reserve nothing) and previews a drag, resize or key move live with push-down; Escape reverts
+- TASK-294 electronmac2: macOS first-run fixes (Local Network usage text, no blank window on failed or stalled load, --debug log file, Chromium switch passthrough)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
