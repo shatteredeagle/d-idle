@@ -73,9 +73,12 @@ Safety walls stay: the Monastery road guard and the tower guard, the Andariel un
 
 ## 6. Stage 2: API, Journey strip, nudges (TASK-338)
 
-- `GET /api/campaign` (schema campaign/1 view: chapters with band, intent, done/skipped, the decision, ETA) and `POST /api/campaign/intent` (intent, go now, goAt, mode; same-origin and session gate). Goldens added, none changed.
-- One new panel module `journey` (panel.json, versioned, tokens only): chapters as a horizontal path with done, current, ready, too early, skipped markers; tap for reward, readiness, Go now, Skip, Hold, Ask/Auto. The Up next card and the Why line read the same state; a compact form in the top band tooltip.
-- Nudges, never locks: the Up next card shows the next chapter, its band, an ETA from the level pace and Go now; a progress meter for the level step; the floor offer after the budget; completed chapters write Chronicle entries and drive ladder unlocks (Cain rescued: the "Identify all (Cain)" command already reads the quest state).
+- `GET /api/campaign` (`internal/watch/campaign.go`, body `campaign.View`, schema `campaign/1`): mode, goAt, level, the decision, the level meter (`from`, `to`, `pct` 0..1, `etaSeconds`), the veto window, and per chapter id, title, area, kind, optional, reward, why, state (done, skipped, held, current, next, open, waiting), band, floor, recommended, reasons, intent, asked. Goldens: `internal/watch/testdata/campaign/view-*.json` (Paladin clvl 12, Sorceress clvl 7).
+- `POST /api/campaign/intent` on the answer listener (the policy gate: same origin, session token, JSON, unknown fields refused): one of `{chapter, intent}`, `{chapter, goNow}`, `{chapter, answer}`, `{goAt}`, `{mode}`; the reply carries the new view. 503 `off` until the bot bound the controller.
+- Panel module `journey` (`internal/watch/web/panels/journey/`, manifest version 1, tokens only, fit, side band, placed at the end of `web/layout.json` from `tools/uishots/layout-rows.json`): the chapters as a numbered path (`data-state`, `data-band`, `data-key` per step), the Up next block (next chapter, band, the decision's Why, the level meter with ETA, buttons), and a detail block for a tapped chapter (reward, band with reasons, Go now, Skip for optional chapters, Hold or Resume, Ask first or Auto; Go now and Not yet when the floor question is open). DOM golden: `testdata/campaign/journey_dom.txt`.
+- The Why line reads the same state: the level step title names the chapter (stage 1). The meter comes from the experience table (`telemetry.DefaultExpForLevel`) and the rate since the target was set (`cmd/d2bot/journeywire.go`).
+- Not built (follow-up cards): the floor question in the return-screen question queue (a decide catalogue point), the compact top band tooltip (an edit of the hero-status panel: a panel family change), Chronicle lines and unlock-ladder triggers on a chapter done (`Controller.OnDone` only logs today; the ladder has a `quest_stage` trigger kind, so Cain rescued can open "Identify all" through data), and knobs for the veto window and farm budget. Wiring them needs owners of `data/unlocks/ladder.json`, `internal/decide` and the chronicle.
+- Layout: adding the panel re-packs the tablet placement of the `alerts` card (the generator pairs half-width cards); the other breakpoints only gain the new panel.
 
 ## 7. Build-specific parts
 
@@ -92,3 +95,4 @@ Only data: the class rows of `levels`, `classIntent` and the Andariel row in pla
 2. Guided mode on a fresh Paladin: chapter order start, Cold Plains WP, Den, Blood Raven, Cain, Charsi, Countess, Andariel; Why lines name the chapter; writes after start 0.
 3. Ask flow: Blood Raven at the floor queues a question; no answer for `AskWait` goes; a no farms until the next level.
 4. Go now on a too-early chapter goes with a warning line; Skip and Hold survive a bot restart (state/campaign.json).
+5. The Journey panel on the watch screen: the path matches the hero's quests, Skip/Hold/Go now buttons post and the strip updates, the meter moves with XP, the panel fits at 390 and 1440 px (uishots on the worker host).

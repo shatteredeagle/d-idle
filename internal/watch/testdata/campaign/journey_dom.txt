@@ -1,0 +1,13 @@
+paladin: meta "4 of 8"
+  path start=done/comfortable cold_plains_wp=done/comfortable den_of_evil=done/comfortable blood_raven=done/comfortable find_cain=current/comfortable countess=open/ready tools_of_the_trade=open/ready andariel=open/too_early
+  up next "Find Deckard Cain: comfortable" why "next chapter: Find Deckard Cain. Rescuing Cain in Tristram makes identifying free." meter (hidden)
+  buttons Skip, Hold, Ask first
+  detail (hidden)
+  tap andariel: "Andariel (Catacombs Level 4)" | "too early (floor 16, recommended 17); clvl 12 < floor 16" | Go now, Hold, Auto
+sorceress: meta "4 of 8"
+  path start=done/comfortable cold_plains_wp=done/comfortable den_of_evil=done/comfortable blood_raven=next/too_early find_cain=waiting/too_early countess=waiting/too_early tools_of_the_trade=skipped/too_early andariel=waiting/too_early
+  up next "Blood Raven: too early" why "Farming Cold Plains for level 10 to unlock Blood Raven" meter "62% level 7 to 10: 62%, about 25 min"
+  buttons Go now, Hold, Auto
+  detail (hidden)
+  tap andariel: "Andariel (Catacombs Level 4)" | "too early (floor 17, recommended 18); clvl 7 < floor 17" | Go now, Hold, Auto
+posts /api/campaign/intent {"chapter":"andariel","goNow":true} ; /api/campaign/intent {"chapter":"find_cain","intent":"skip"} ; /api/campaign/intent {"chapter":"andariel","goNow":true} ; /api/campaign/intent {"chapter":"blood_raven","goNow":true}
