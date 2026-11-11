@@ -1,0 +1,3 @@
+BACKLOG: electronapp (TASK-289): Electron desktop app skeleton in apps/desktop-electron (sandboxed helper and game views, navigation lock, config/CLI parity, AppImage+deb, CI job); tray and update check follow in electrontray
+INDEX: docs/desktop-electron.md - the Electron desktop app: layout, run/test/build, security posture, findings (TASK-289)
+CHANGELOG: Desktop: new Electron app apps/desktop-electron (portable AppImage/deb and Windows installer+portable via CI) with its own window, offline/warming screen and locked navigation; the Go launcher stays as a fallback
