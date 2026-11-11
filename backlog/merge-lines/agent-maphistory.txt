@@ -1,2 +1,0 @@
-BACKLOG: maphistory: activity-coloured trail, event markers (kill, damage, potion, loot, level-up, death), fight summaries, 30 min window, activity share line; offline only
-CHANGELOG: Watch minimap: trail coloured by what the bot is doing, event markers and an activity share line

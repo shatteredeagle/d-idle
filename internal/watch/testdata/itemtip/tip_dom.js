@@ -58,7 +58,7 @@ const view = JSON.parse(fs.readFileSync(path.join(dir, 'tip_view.json'), 'utf8')
 const src = fs.readFileSync(process.argv[2], 'utf8');
 let bad = 0;
 const check = (name, got) => {
-  const file = path.join(dir, 'tip_dom_' + name + '.txt');
+  const file = path.join(dir, 'tip_dom_' + name + '.nopin.txt');
   if (process.env.UPDATE) { fs.writeFileSync(file, got); return; }
   if (!fs.existsSync(file)) { console.error('missing golden ' + file); bad++; return; }
   if (fs.readFileSync(file, 'utf8') !== got) { console.error('tooltip differs from ' + file + '\n' + got); bad++; }

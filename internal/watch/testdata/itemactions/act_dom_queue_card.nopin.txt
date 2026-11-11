@@ -1,0 +1,20 @@
+div []
+  ul.d-list []
+    li [data-state=doing]
+      span.t [] "doing"
+      span.txt [] "Trash Wand"
+    li [data-state=queued]
+      span.t [] "queued"
+      span.txt [] "Equip Ring in right ring"
+      button.act.act-cancel [data-key=cancel-equip-3] "Cancel"
+    li [data-state=failed]
+      span.t [] "failed"
+      span.txt [] "Equip Broad Sword in right hand"
+      span.sub [] "item 1 did not reach slot rhand"
+    li [data-state=done]
+      span.t [] "done"
+      span.txt [] "Trash Rock"
+    li [data-state=cancelled]
+      span.t [] "cancelled"
+      span.txt [] "Trash Jewel"
+title Item actions

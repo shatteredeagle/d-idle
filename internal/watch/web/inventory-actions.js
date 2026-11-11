@@ -1,6 +1,6 @@
 // Item action menu of the inventory page (docs/inventory-actions.md, docs/ui-design-system.md components 13 and 14):
 // click, tap or press Enter on an item (backpack, stash, belt, a worn slot) and a small menu offers Equip, Mark for
-// sale, Keep, Trash, Identify and Unpin. A choice QUEUES an action the bot performs at its next open opportunity; this file never
+// sale, Keep, Trash, and Identify. A choice QUEUES an action the bot performs at its next open opportunity; this file never
 // touches the game. A phone gets the same menu as a bottom sheet. The queue card is redrawn here with the states
 // queued, doing, done, failed and cancelled, a reason line, the result of a finished errand and a Cancel button for a
 // queued request. Above the queue sit the two town errands (docs/inventory-actions.md, schema 5): "Buy identify scrolls"
@@ -47,7 +47,7 @@
   // model builds the menu of one item: {title, cls, rows: [{text, state, cancel}], entries: [{act, label, reason, slot}]}.
   // An entry with a reason is shown but not available. The server checks everything again.
   function model(f) {
-    var it = f.it, v = view, pinned = f.slot && (v.pins || []).some(function (p) { return p.slot === f.slot; });
+    var it = f.it, v = view;
     var reqs = requestsFor(it.id), trashQ = reqs.some(function (r) { return kindOf(r) === 'trash'; });
     var m = { target: 'hero', /* the menu structure is per target: the mercenary stage adds its own entries */ title: it.name || it.code || 'item', cls: 'q-' + (it.quality || 'normal'), id: it.id, rows: [], entries: [] };
     reqs.forEach(function (r) { m.rows.push({ text: verb(r), state: r.state, kind: kindOf(r), cancel: r.state === 'queued' }); });
@@ -74,7 +74,6 @@
     var tr = { act: 'trash', label: confirming ? 'Confirm: trash it' : 'Trash', reason: it.noTrash || (trashQ ? 'it is already queued to be trashed' : '') };
     if (confirming && !tr.reason) tr.confirm = true;
     m.entries.push(tr);
-    if (pinned) m.entries.push({ act: 'unpin', slot: f.slot, label: 'Unpin slot', reason: '' });
     return m;
   }
 
@@ -108,7 +107,6 @@
       case 'equip': closeMenu(true); equip(m.id, e.slot); return;
       case 'sell': { var it = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: it.mark === 'sell' ? '' : 'sell' }); return; }
       case 'keep': { var k = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: k.mark === 'keep' ? '' : 'keep' }); return; }
-      case 'unpin': closeMenu(true); post('/api/inventory/unpin', { slot: e.slot }); return;
       case 'identify': closeMenu(true); identify(m.id); return;
       case 'trash':
         if (!e.confirm) { confirming = true; draw(true); return; } // the first click only asks

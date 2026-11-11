@@ -1,10 +1,13 @@
 ---
 id: TASK-320
-title: 'lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones'
-status: Proposed
+title: >-
+  lootmemory: remember drops beyond the pickup radius and walk back for
+  worthwhile ones
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:55:00Z'
+updated_date: '2026-11-11T19:21:00Z'
 labels:
   - bot
   - feature
