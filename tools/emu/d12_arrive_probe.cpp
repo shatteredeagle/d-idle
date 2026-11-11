@@ -67,7 +67,7 @@ static int levels(unsigned seed, const fs::path& out) {
     auto data = load(seed);
     if (!data || !data->patched) { std::printf("FAIL: no patched data\n"); return 1; }
     fs::create_directories(out);
-    std::ofstream cases(out / "cases.tsv"), fa(out / "A.tsv"), fb(out / "B.tsv"), trig(out / "trigger.tsv");
+    std::ofstream cases(out / "cases.tsv"), fa(out / "A.tsv"), fb(out / "B.tsv"), fc(out / "C.tsv"), trig(out / "trigger.tsv");
     trig << "seed\tfrom\tto\tslot\tunit_x\tunit_y\tfree_at_unit\tA_dx\tA_dy\tB_dx\tB_dy\texit_dx\texit_dy\tclose_A\tclose_exit\tin_box_A\tin_box_exit\tclicks_in_box_A\tclicks_in_box_exit\tclicks\n";
     constexpr int kGrid = 200, kHalf = 100;
     int cid = 0;
@@ -96,6 +96,14 @@ static int levels(unsigned seed, const fs::path& out) {
             fa << cid << " 1 " << ax - ox << " " << ay - oy << "\n";
             const auto b = dest->warp_spot(ux, uy);
             if (b) fb << cid << " 1 " << b->first - ox << " " << b->second - oy << "\n"; else fb << cid << " 0 - -\n";
+            {   // C = World::warp_arrival (the fix candidate); absent in the unfixed tree: build with -DD12_FIXED
+#ifdef D12_FIXED
+                const auto c = World::warp_arrival(*dest, back->unit_x, back->unit_y);
+                fc << cid << " 1 " << sub(c.first) - ox << " " << sub(c.second) - oy << "\n";
+#else
+                fc << cid << " 0 - -\n";
+#endif
+            }
             // the walk of ExitWalk (cells) from the arrival spot, then the trigger measure
             const float exit_x = a.first + back->exit_x, exit_y = a.second + back->exit_y;
             const bool free_unit = !dest->unit_blocked(back->unit_x, back->unit_y);
