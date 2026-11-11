@@ -252,7 +252,8 @@ function applyLayout() {
   for (const it of p.items) {
     const n = lay.targets.get(it.id);
     if (!n) continue;
-    n.style.gridColumn = it.col + ' / span ' + it.colSpan;
+    // flow: the span and the order only, so cards fill each row left to right whatever is hidden by a phone tab
+    n.style.gridColumn = p.flow ? 'span ' + it.colSpan : it.col + ' / span ' + it.colSpan;
     if (p.flow) n.style.order = String(it.order);
     else n.style.gridRow = it.row + ' / span ' + (it.collapsed ? 1 : it.rowSpan);
     if (it.collapsed) n.dataset.collapsed = '1';
