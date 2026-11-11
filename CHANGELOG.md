@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- invdesk: fixed a self-deadlock (View held its lock while the equip check called Pinned) that froze the whole bot (TASK-278)
 - Release 0.1.0-beta (first private beta, channel beta, seq 1): friends pack with image, source and licences, signed update feed tree; notes in docs/friend-guide.md (TASK-277)
 - Update feed is now signed with a separate beta key; the image pins both the beta and the release key
 - feed-publish.sh and cmd/d2feed: build, verify with the real update client, withdraw and upload a static update feed tree; runbook in docs/friend-feed.md (TASK-275)

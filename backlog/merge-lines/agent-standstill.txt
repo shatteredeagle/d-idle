@@ -1,1 +1,0 @@
-CHANGELOG: invdesk: fixed a self-deadlock (View held its lock while the equip check called Pinned) that froze the whole bot (TASK-278)
