@@ -1,10 +1,13 @@
 ---
 id: TASK-280
-title: 'gearplayer: the player decides equipment, the bot only advises (gear.decisions)'
-status: Proposed
+title: >-
+  gearplayer: the player decides equipment, the bot only advises
+  (gear.decisions)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T00:43:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - bot
   - feature
