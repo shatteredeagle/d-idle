@@ -1,2 +1,0 @@
-BACKLOG: beta010: first beta release 0.1.0 (beta, seq 1) cut offline: image, signed feed tree and friends pack built, not uploaded (TASK-277)
-CHANGELOG: Release 0.1.0-beta (first private beta, channel beta, seq 1): friends pack with image, source and licences, signed update feed tree; notes in docs/friend-guide.md (TASK-277)
