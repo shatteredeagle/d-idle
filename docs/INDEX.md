@@ -936,3 +936,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/ui-design-system.md section 15.7: finishing polish, the gear prompt note, what is still open from the mockup
 - docs/desktop-electron.md macOS section (build, install steps, Gatekeeper workaround)
 - docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview
+- docs/viewer-fps.md: viewer game video fps, sandbox measurements, framefeed ring design and staged plan (TASK-293)

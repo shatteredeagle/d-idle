@@ -1,3 +1,0 @@
-BACKLOG: TASK-293 viewerfps1: viewer video measured at 4.3 fps (PNG screenshot on d2d's game thread); stage 1 d2dview knobs and /api/frames counters, stage 2 fork framefeed ring prototype (docs/viewer-fps.md)
-INDEX: docs/viewer-fps.md: viewer game video fps, sandbox measurements, framefeed ring design and staged plan (TASK-293)
-CHANGELOG: d2dview: /api/frames video counters, -jpeg-quality, -frame-half, -frame-backoff and -feed (d2d fork framefeed ring) flags; faster JPEG re-encode

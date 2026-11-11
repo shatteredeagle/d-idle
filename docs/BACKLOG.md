@@ -706,6 +706,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-291 electronmac: Electron app on macOS, universal dmg+zip (unsigned, personal), template tray icon, Dock/Cmd+Q/menu behaviours, macos CI job
 - uiedit (TASK-292): Edit layout drops a panel into any free cells (hidden panels reserve nothing) and previews a drag, resize or key move live with push-down; Escape reverts
 - TASK-294 electronmac2: macOS first-run fixes (Local Network usage text, no blank window on failed or stalled load, --debug log file, Chromium switch passthrough)
+- TASK-293 viewerfps1: viewer video measured at 4.3 fps (PNG screenshot on d2d's game thread); stage 1 d2dview knobs and /api/frames counters, stage 2 fork framefeed ring prototype (docs/viewer-fps.md)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
