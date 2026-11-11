@@ -11,6 +11,7 @@ const { Shell, POLL_MS } = require('./state');
 const { appMenuTemplate } = require('./menu');
 const { trayMenuTemplate } = require('./tray');
 const { createAutostart } = require('./autostart');
+const plat = require('./platform');
 const { checkForUpdate, builtinFeed } = require('./update');
 
 const HELPER_DIR = path.join(__dirname, 'helper');
@@ -180,7 +181,7 @@ async function start(opts = {}) {
     ctx.tray.setToolTip('d.idle watch: ' + ctx.trayTemplate[3].label);
   }
   if (!opts.noTray) {
-    const img = nativeImage.createFromPath(path.join(__dirname, '..', 'build', 'tray.png'));
+    const img = nativeImage.createFromPath(path.join(__dirname, '..', 'build', plat.trayImageName(process.platform)));
     ctx.tray = new Tray(img.isEmpty() ? nativeImage.createEmpty() : img);
     ctx.tray.on('click', () => ctx.api.show());
   }
@@ -197,6 +198,8 @@ async function start(opts = {}) {
     refreshTray();
   }
 
+  const dock = plat.dockControl(app);
+
   // Actions shared by the menu, second instances and the tray.
   ctx.api = {
     openPage(name) {
@@ -207,7 +210,7 @@ async function start(opts = {}) {
     },
     changeAddress() { showHelper(); shell.state = { ...shell.state, status: 'setup' }; push(); ctx.api.show(); },
     reload() { if (ctx.gameShown) gameView.webContents.reload(); else shell.tick(); },
-    show() { if (win.isMinimized()) win.restore(); win.show(); win.focus(); },
+    show() { dock.show(); if (win.isMinimized()) win.restore(); win.show(); win.focus(); },
     quit() { ctx.quitting = true; app.quit(); },
     toggleAutostart() {
       try { autostart.set(!autostart.get()); } catch (e) { dialog.showErrorBox('Start with the system', String(e.message || e)); }
@@ -227,7 +230,7 @@ async function start(opts = {}) {
       });
     },
   };
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenuTemplate(ctx.api)));
+  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenuTemplate(ctx.api, process.platform)));
 
   app.on('second-instance', (_e, argv) => {
     try {
@@ -252,11 +255,12 @@ async function start(opts = {}) {
     saveTimer.unref?.();
   });
   win.on('close', (e) => {
-    if (!ctx.quitting && ctx.tray && hideToTray()) { e.preventDefault(); win.hide(); }
+    if (plat.hideOnClose({ platform: process.platform, hasTray: !!ctx.tray, hideToTray: hideToTray(), quitting: ctx.quitting })) { e.preventDefault(); win.hide(); dock.hide(); }
   });
   win.on('closed', () => { ctx.closed = true; });
   app.on('before-quit', () => { ctx.quitting = true; });
-  app.on('window-all-closed', () => app.quit());
+  app.on('window-all-closed', () => { if (plat.quitOnAllClosed(process.platform, !!ctx.tray)) app.quit(); });
+  app.on('activate', () => ctx.api.show()); // macOS: Dock icon click
 
   await helperView.webContents.loadURL(sec.HELPER_URL);
   shell.setAddress(cfg.address || '');
@@ -264,6 +268,7 @@ async function start(opts = {}) {
   push();
   refreshTray();
   if (!(args.hidden && ctx.tray)) win.show();
+  else dock.hide();
   if (!args.setup && cfg.address) shell.tick();
   // Poll fast while the helper is shown; slowly while the game page is up, so the tray status stays current.
   let n = 0;

@@ -31,6 +31,33 @@ jobs:
         working-directory: .
       # The hosted runner restricts unprivileged user namespaces, so the smoke run needs --no-sandbox there (test only).
       - run: D2E_SMOKE_NO_SANDBOX=1 xvfb-run -a npm run smoke
+  # Unsigned personal macOS build (universal arm64+x64). No signing or notarisation env, nothing published.
+  package-mac:
+    needs: test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: "24"
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      # The universal build needs both Electron binaries; electron-builder downloads the second one itself.
+      - run: node node_modules/electron/install.js
+      - run: node scripts/write-feed.js
+        env:
+          D2IDLE_UPDATE_FEED: ${{ vars.D2IDLE_UPDATE_FEED }}
+      - run: npx electron-builder --mac dmg zip --universal --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+      - run: cd dist && shasum -a 256 *.dmg *.zip | tee SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: d2idle-watch-macos-universal
+          path: |
+            apps/desktop-electron/dist/*.dmg
+            apps/desktop-electron/dist/*.zip
+            apps/desktop-electron/dist/SHA256SUMS
+          if-no-files-found: error
   package:
     needs: test
     strategy:
