@@ -22,7 +22,11 @@
   <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button>
  </nav>
 </header>
-<div class="d-strips">
+<div class="d-main">
+<div class="d-band-stage" data-band="stage" hidden></div>
+<div class="d-band-side" data-band="side" aria-label="Command centre" hidden></div>
+<div class="d-band-grid" data-band="grid">
+<div class="d-compat">
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
 <nav class="views" id="views" aria-label="Pages">
@@ -39,12 +43,6 @@
  <button type="button" data-view="atlas" id="tab-atlas" hidden>Atlas</button>
  <button type="button" data-view="alerts" id="tab-alerts" hidden>Alerts <span id="alertbadge" class="badge" hidden></span></button>
 </nav>
-</div>
-<div class="d-main">
-<div class="d-band-stage" data-band="stage" hidden></div>
-<div class="d-band-side" data-band="side" aria-label="Command centre" hidden></div>
-<div class="d-band-grid" data-band="grid">
-<div class="d-compat">
 <main id="main" data-view="orders">
  <section class="card thoughts" data-lid="thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
   <div id="thoughts"></div>

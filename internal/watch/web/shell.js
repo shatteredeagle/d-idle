@@ -292,6 +292,13 @@ function setupLayout(conf, layout, answerBase) {
   lay.layout = layout;
   if (!lay.main) return;
   if (layout && layout.density === 'comfortable' && !html.dataset.density) html.dataset.density = 'comfortable';
+  if (layout) {
+    // the strips of the pre-shell page (voice line, message banner, phone tabs) are full-width rows without a grid
+    // position; under a layout they sit above the main area instead of falling into a hole of the grid
+    const strips = el('div', 'd-strips');
+    lay.main.querySelectorAll('.d-compat > :not(main)').forEach((n) => strips.appendChild(n));
+    lay.main.parentElement.insertBefore(strips, lay.main);
+  }
   applyLayout();
   // a panel that hides or opens (a 404 route, an unlock) changes which targets are packed
   let queued = false;
@@ -350,7 +357,7 @@ async function start() {
   try { cfg = await (await fetch('/api/config', { cache: 'no-store' })).json(); } catch (e) { /* the old code says so */ }
   const answerBase = cfg.answerBase || (cfg.answerPort ? location.protocol + '//' + location.hostname + ':' + cfg.answerPort : '');
   let list = [], conf = {};
-  const layoutReq = loadLayout();
+  const layoutReq = document.querySelector('.d-compat') ? loadLayout() : null; // the other pages share this shell without a layout
   try {
     const pv = await (await fetch('/watch/panels.json', { cache: 'no-store' })).json();
     list = pv.panels || [];

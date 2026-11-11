@@ -23,6 +23,12 @@ const fromPreset = (name, bp) => {
 };
 const out = 'internal/watch/web/';
 fs.mkdirSync(out + 'layouts', { recursive: true });
+// argv[3]: also write the raw exports (overlaps and all) there, as the editor's Export JSON gives them (compat fixtures)
+if (process.argv[3]) for (const name of Object.keys(PRESETS)) {
+  const o = blank(); Object.keys(BPS).forEach((bp) => { o.breakpoints[bp].panels = ctx.x.fromPreset(name, bp); });
+  const f = process.argv[3] + '/layout-v1-' + name + '.json';
+  if (!fs.existsSync(f)) fs.writeFileSync(f, JSON.stringify(o, null, 2) + '\n'); // fixtures are only added, never rewritten
+}
 for (const name of Object.keys(PRESETS)) {
   const o = blank(); Object.keys(BPS).forEach((bp) => { o.breakpoints[bp].panels = fromPreset(name, bp); });
   fs.writeFileSync(out + 'layouts/' + name + '.json', JSON.stringify(o, null, 2) + '\n');
