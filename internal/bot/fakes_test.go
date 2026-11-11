@@ -291,6 +291,7 @@ type fakeFighter struct {
 	actErr       error
 	clearErr     error
 	clearNothing bool
+	clearGone    bool // the target died before Clear looked: killed 0, nothing set aside
 	onAct        func(a SafetyAction)
 }
 
@@ -300,6 +301,9 @@ func (f *fakeFighter) Clear(ctx context.Context, o ClearOpts) (ClearResult, erro
 		f.clearErr = nil
 		f.w.set(func(w *world) { w.area = 1 }) // the portal was taken
 		return ClearResult{}, err
+	}
+	if f.clearGone {
+		return ClearResult{}, nil
 	}
 	if f.clearNothing { // unreachable monsters: the fighter kills nothing
 		return ClearResult{Remaining: 1}, nil

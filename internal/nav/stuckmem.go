@@ -193,7 +193,10 @@ func (n *Navigator) ResetStallMemory() {
 	n.spots, n.hard, n.badGates, n.noExit = nil, nil, nil, nil
 	n.teleBad = map[[2]int]int{}
 	n.teleFails, n.teleWhy, n.teleDeclined = 0, "", false
-	n.cov, n.visited, n.failed, n.mouthFails = nil, map[[2]int]bool{}, map[[2]int]int{}, nil
+	n.covMu.Lock()
+	n.cov = nil
+	n.covMu.Unlock()
+	n.visited, n.failed, n.mouthFails = map[[2]int]bool{}, map[[2]int]int{}, nil
 	n.escaping = false
 	n.invalidate()
 }

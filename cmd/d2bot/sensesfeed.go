@@ -89,6 +89,9 @@ func useSensesCoverage(rig *ladderRig, e *env.Env, mover any) {
 		prev(lm, pos)
 		pub.SetCoverage(coverageFor(nv))
 	}
+	if h, ok := mover.(interface{ SetOnCoverChange(func()) }); ok {
+		h.SetOnCoverChange(func() { pub.SetCoverage(coverageFor(nv)) }) // detour positions flip cells at once
+	}
 }
 
 func coverageFor(nv coverageView) senses.Coverage {

@@ -60,7 +60,9 @@ type Navigator struct {
 	obsSnapMs, obsUpdMs int64        // cost of the last observe(), for the trace
 	gateRefused         atomic.Int32 // clicks the mouth gate refused since the last TakeGateRefusals (observability only)
 	peakRung            atomic.Int32 // highest stuck-ladder rung since the last TakePeakRung (observability only)
-	cov                 *coverage    // roam state (roam.go); nil on backends that reveal unknown cells
+	cov                 *coverage    // roam state (roam.go); nil on backends that reveal unknown cells. covMu guards cov and its seen/failed/legs/held: NotePosition runs on the bot observer goroutine
+	covMu               sync.Mutex
+	onCover             func() // called (no lock held) when NotePosition marked a point; set by SetOnCoverChange
 	// Guard, if set, runs on every observation while walking. A non-nil error stops the walk and is returned
 	// (wrapped with ErrAborted). The bot uses it for "life low or monster near: stop".
 	Guard func(*d2.Snapshot) error

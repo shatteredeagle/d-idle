@@ -1186,6 +1186,10 @@ func (r *Runner) travelTo(ctx context.Context, target int) error {
 const (
 	futileMoveAway = 40
 	futileFor      = 90 * time.Second
+	// futileGoneFor is the window when the Clear found nothing to set aside (Remaining 0): the hostile that made the
+	// sweep call Clear died or left in between, so nothing was unreachable and a long window would only blind the
+	// sweep to the next pack, a shaman's revive or a returning fleer.
+	futileGoneFor = 3 * time.Second
 )
 
 // sweep is one pass in the target area: buff, fight what is near, pick up, explore toward more. When exploration runs
@@ -1245,7 +1249,11 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 		}
 		if res.Killed == 0 {
 			if s := r.latest(); s != nil {
-				l.futile, l.futilePos, l.futileUntil = true, input.Point{X: s.Player.X, Y: s.Player.Y}, r.e.Clock.Now().Add(futileFor)
+				window := futileFor
+				if res.Remaining == 0 {
+					window = futileGoneFor
+				}
+				l.futile, l.futilePos, l.futileUntil = true, input.Point{X: s.Player.X, Y: s.Player.Y}, r.e.Clock.Now().Add(window)
 				r.e.Log.Info("clear killed nothing; moving on", "remaining", res.Remaining, "x", s.Player.X, "y", s.Player.Y)
 			}
 			r.pause(ctx, time.Duration(r.e.Tune.Bot.TickMs)*time.Millisecond)
