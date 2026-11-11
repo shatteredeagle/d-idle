@@ -70,7 +70,7 @@ Branch `fid/warp-arrival-r1`, commit **feba9539**, pushed to the private forge r
 
 Before: 25 to 26 of 52 real arrivals and 10,265 of 20,000 synthetic cases differ. After: the probe built against the patched tree calls `World::warp_arrival` itself: **0 of 52 differ on seeds 5, 82 and 7** (`d12_fixrun.sh`). The synthetic run of the helper is the `warp_spot` row (0 of 20,000), since the helper is `warp_spot` plus a fallback. Not run: the full `use_warp` through a `World` (the probe calls the helper, not the glue), the d2d unit tests on the patched tree (U). **It does not stop the bounce** (Q3). Independent verifier (d2-reviewer) must check it before any upstream step; no upstream text drafted.
 
-Sandbox rebuild steps: on the worker host `git -C ~/d2d-lab/wt-decomp12fix log -1` is feba9539; `cmake --build ~/d2d-lab/build-decomp12fix -j 6 --target d2d` (the fork's d2d target; `d12_fixrun.sh` built only `game`), then copy the binary as the lab docs (docs/d2d-fork.md) describe. The bounce will still be there.
+Sandbox rebuild steps: on the worker host the scratch worktree wt-decomp12fix under the lab directory (`git log -1`) is feba9539; `cmake --build build-decomp12fix -j 6 --target d2d` in the lab directory (the fork's d2d target; `d12_fixrun.sh` built only `game`), then copy the binary as the lab docs (docs/d2d-fork.md) describe. The bounce will still be there.
 
 ## Drill recipe (lab, nothing run here)
 
