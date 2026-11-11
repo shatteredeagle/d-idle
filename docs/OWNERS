@@ -184,6 +184,7 @@ docs/research/merc-gear.md  credit-runner  mercgear
 docs/research/mocks/return.html  credit-runner  returnmock
 docs/research/return-screen.md  credit-runner  returnmock
 docs/research/upstream-next.md  credit-runner  upstream-next
+docs/research/usage-2026-11-11.md  credit-runner  usageview
 docs/senses-map.md  credit-runner  maptrail
 docs/senses-map.md  credit-runner  maptrail2
 docs/session-record.md  live-agent  sessions
@@ -191,6 +192,7 @@ docs/sme/pace-and-formulas.md  credit-runner  smepace
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
+docs/usage.md  credit-runner  usageview
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/nokill_test.go  credit-runner  freshstart
@@ -268,4 +270,5 @@ internal/watch/web/shell.js  credit-runner  minimapfix
 tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maptrail
+tools/usage  credit-runner  usageview
 # END GENERATED OWNERS

@@ -485,6 +485,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [unlock-questlog.md](unlock-questlog.md): Quest log (TASK-156, unlockquestlog)
 - [unlock-risk.md](unlock-risk.md): Hero risk meter (TASK-159, unlockrisk)
 - [unlock-voice.md](unlock-voice.md): Hero voice and diary (TASK-155, unlockvoice)
+- [usage.md](usage.md): Usage view (`tools/usage/usage.py`) (status: current (TASK-309; source: docs/research/project-review-2026-11-10.md section 6.1 and 6.3 item 5).)
 - [viewer-fps.md](viewer-fps.md): Viewer game video at 12.5 to 25 fps (card viewerfps1, TASK-293, 2026-11-10)
 - [walksmooth.md](walksmooth.md): walksmooth: the stop-and-go walk (TASK-188) (status: offline fix merged-ready, NOT proven live. Tags: V verified (how stated), S read in code, U unverified.)
 - [watch-origin.md](watch-origin.md): Same-origin rule for state-changing requests (watch login, setup wizard)
