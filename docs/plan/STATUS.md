@@ -104,6 +104,12 @@
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | queuespeed | proposed | - | `docs/process/queuespeed.md` | - |
 | uifit | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/panels`<br>`internal/watch/panels.go`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uilint`<br>`tools/uishots`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uifit.txt` | - |
+| fid-revive-mode | in-progress | - | `docs/probes/fid/fid-revive-mode.md` | - |
+| fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
+| fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
+| fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
+| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
+| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -160,14 +166,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
-- 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
-- 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
-- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
-- 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
-- 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
-- c7da022e 11-11 12:58 `Merge branch 'main' into identify2` (-)
-- 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
-- c9eb634c 11-11 12:50 `Merge branch 'main' into qprofile` (-)
-- 3c97ca09 11-11 12:46 `Merge agent/identify2: sync main` (identify2)
+- 65a697cd 11-11 14:32 `Merge agent/maphistory: TASK-324 maphistory: activity-coloured trail, event markers, activity percent legend` (maphistory)
+- 422671ef 11-11 14:32 `Merge branch 'main' into maphistory` (-)
+- f246d0f4 11-11 14:28 `Merge agent/nocursor: nocursor: the watch video shows no game pointer: d2dview asks the fork for cursor off by default and falls back silently on an older d2d (TASK-323)` (nocursor)
+- 29687388 11-11 14:27 `Merge branch 'main' into nocursor` (-)
+- 609bc88e 11-11 14:22 `Merge agent/xpreadout: TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h` (xpreadout)
+- b9d81697 11-11 14:21 `Merge branch 'main' into xpreadout` (-)
+- 80ce67bf 11-11 14:17 `Merge agent/sellmarks2: TASK-308 sellmarks2: fix sell-marks town test fixture (fails with real tables)` (sellmarks2)
+- 1750ecc4 11-11 14:16 `Merge branch 'main' into sellmarks2` (-)
+- 0c372bbc 11-11 14:11 `Merge origin/main into agent/nocursor` (-)
+- 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
 <!-- statusgen:end -->

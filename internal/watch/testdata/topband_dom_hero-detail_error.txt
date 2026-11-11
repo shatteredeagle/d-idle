@@ -18,6 +18,7 @@
         <span class="lbl"> "stash"
         <span class="val">
         <span class="delta">
+    <p class="d-hint xp">
     <div class="d-strip res" aria-label="Resistances">
       <span class="d-chip" data-key="fire">
         "fire "

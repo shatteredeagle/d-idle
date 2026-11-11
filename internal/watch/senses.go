@@ -73,6 +73,24 @@ type SenseTrailPoint struct {
 	X     int   `json:"x"`
 	Y     int   `json:"y"`
 	E     bool  `json:"e,omitempty"`
+	A     uint8 `json:"a,omitempty"` // activity code (TrailLegend), 0 is walking
+}
+
+// SenseEvent is one history event on the trail: Ago ms before Ts, K the kind, T the text, Big for a boss or unique kill,
+// F the summary of the fight it belonged to when known.
+type SenseEvent struct {
+	AgoMS int64             `json:"ago"`
+	X     int               `json:"x"`
+	Y     int               `json:"y"`
+	K     string            `json:"k"`
+	T     string            `json:"t,omitempty"`
+	Big   bool              `json:"big,omitempty"`
+	F     *senses.FightInfo `json:"f,omitempty"`
+}
+
+// EventSource is an optional part of a SensesSource: the history events of the current area.
+type EventSource interface {
+	EventsOf() []senses.Event
 }
 
 // Senses serves GET /api/senses. It only reads the source; nothing it does reaches the bot.
@@ -97,6 +115,11 @@ type SensesReply struct {
 	Trail     []SenseTrailPoint `json:"trail,omitempty"`
 	TrailArea int               `json:"trail_area,omitempty"`
 	Ts        int64             `json:"ts,omitempty"`
+	// TrailWindowS is the longest window the ring holds, TrailLegend names the activity codes of the points (index =
+	// code), Events are the history markers of the current area.
+	TrailWindowS int          `json:"trail_window_s,omitempty"`
+	TrailLegend  []string     `json:"trail_legend,omitempty"`
+	Events       []SenseEvent `json:"events,omitempty"`
 	// Coverage is the roam coverage grid of the current area (tier 1, additive), absent when the bot is not roaming.
 	Coverage *SenseCoverage `json:"coverage,omitempty"`
 	Waiting  bool           `json:"waiting,omitempty"`
@@ -186,8 +209,14 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 		if ts, ok := s.Src.(TrailSource); ok {
 			if pts, area, now, ok := ts.TrailOf(); ok && len(pts) > 0 {
 				r.TrailArea, r.Ts = area, now.UnixMilli()
+				r.TrailWindowS, r.TrailLegend = int(senses.TrailRetention.Seconds()), senses.ActivityNames[:]
+				if es, ok := s.Src.(EventSource); ok {
+					for _, e := range es.EventsOf() {
+						r.Events = append(r.Events, SenseEvent{AgoMS: now.Sub(e.At).Milliseconds(), X: e.X, Y: e.Y, K: e.Kind, T: e.Text, Big: e.Big, F: e.Fight})
+					}
+				}
 				for _, p := range pts {
-					r.Trail = append(r.Trail, SenseTrailPoint{AgoMS: now.Sub(p.At).Milliseconds(), X: p.X, Y: p.Y, E: p.Entry})
+					r.Trail = append(r.Trail, SenseTrailPoint{AgoMS: now.Sub(p.At).Milliseconds(), X: p.X, Y: p.Y, E: p.Entry, A: p.Act})
 				}
 			}
 		}

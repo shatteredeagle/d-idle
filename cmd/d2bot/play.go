@@ -134,7 +134,8 @@ func playSessionConfig(l ladderOptions, stateDir string, st *decide.Store, cat *
 		}
 		sc.Vitals = func() watch.Vitals {
 			c := status().Character
-			v := watch.Vitals{XP: c.XP}
+			xp, _ := watch.AbsoluteXP(c.Level, c.XP, 0)
+			v := watch.Vitals{XP: xp}
 			if c.MaxLife > 0 {
 				v.LifePct = float64(int(1000*float64(c.Life)/float64(c.MaxLife)+0.5)) / 10
 			}
