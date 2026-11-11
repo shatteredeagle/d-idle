@@ -124,9 +124,29 @@ def check(tasks_dir):
     return findings
 
 
+RESEARCH_SINCE = "2026-11-11"  # the rule is new: older research tasks are not warned about
+
+
+def warnings(tasks_dir):
+    """WARN lines (never failures): a research task created since RESEARCH_SINCE must name its consumer
+    card ('Consumer: <card or TASK-n>' in the description), docs/process/coordinator-efficiency.md."""
+    out = []
+    for f in sorted(Path(tasks_dir).glob("task-*.md")):
+        fm = parse(f)
+        if not fm or "research" not in fm["_lists"].get("labels", []):
+            continue
+        if str(fm.get("created_date", ""))[:10] < RESEARCH_SINCE:
+            continue
+        if not re.search(r"(?i)consumer:?\s*\S", f.read_text()):
+            out.append(f"{f.name}: research task has no named consumer card (add 'Consumer: <card>' to the description, or make the result a section of an existing doc)")
+    return out
+
+
 def main(argv):
     d = argv[1] if len(argv) > 1 else str(Path(__file__).resolve().parents[2] / "backlog/tasks")
     findings = check(d)
+    for x in warnings(d):
+        print("WARN", x)
     for x in findings:
         print("FAIL", x)
     print(f"backlog check: {len(findings)} finding(s)")

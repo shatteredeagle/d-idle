@@ -20,6 +20,15 @@
 3. The coordinator queues the branch in the merge queue; it runs the gate set and merges to `main`. The shared files (BACKLOG, CHANGELOG, INDEX, OWNERS, STATUS block) are generated at merge from your task card and the queue summary; you do not write them.
 4. Anything about the private d2d fork or lab binary goes to the private fork the same day; nothing is posted to GitHub without the user's go.
 
+## Area digests
+Start here for your area; each digest is at most 80 lines (purpose, key files, invariants, gotchas, what to read next). The area doc stays the authority.
+- [digest/bot-loop-goals.md](digest/bot-loop-goals.md): runner, guard, goals
+- [digest/combat.md](digest/combat.md), [digest/nav.md](digest/nav.md)
+- [digest/town-economy-loot.md](digest/town-economy-loot.md): chores, pickit, currency
+- [digest/watch-ui.md](digest/watch-ui.md): viewers and the watch screen
+- [digest/d2d-fork-lab.md](digest/d2d-fork-lab.md): the engine fork and the lab
+- [digest/merge-ci-process.md](digest/merge-ci-process.md): tasks, merge, CI
+
 ## The six most-read docs
 1. [../AGENTS.md](../AGENTS.md): the binding rules.
 2. [plan/STATUS.md](plan/STATUS.md): where we are.
