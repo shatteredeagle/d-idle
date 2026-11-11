@@ -1,2 +1,0 @@
-BACKLOG: TASK-302 viewerfps3: the watch screen video relays the tap stream (was a 4 fps /frame poll), the tap sends evenly spaced frames (every 3rd 60 Hz draw, 20 fps, 50 game ms), docs/viewer-fps.md section 7
-CHANGELOG: watch: the game video follows the tap's own frame rate (relays /stream.mjpg instead of polling /frame at 4 fps); d2dview: evenly paced frames, X-Frame-Game-Ms, /api/frames degraded flag
