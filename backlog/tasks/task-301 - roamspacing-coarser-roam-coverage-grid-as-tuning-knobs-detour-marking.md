@@ -1,10 +1,11 @@
 ---
 id: TASK-301
 title: 'roamspacing: coarser roam coverage grid as tuning knobs, detour marking'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T14:55:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - bot
   - feature
