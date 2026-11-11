@@ -1,10 +1,11 @@
 ---
 id: TASK-309
 title: 'usageview: one usage view across all runners and projects'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T16:12:00Z'
+updated_date: '2026-11-11T16:54:00Z'
 labels:
   - ops
   - chore
