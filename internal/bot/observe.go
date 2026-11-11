@@ -52,7 +52,7 @@ type observer struct {
 	goldPickupMin int64
 	dead          bool
 	arrived       arrival // how the character came into the current area (noteArrival, loop.go noteBounce)
-	portalFrom    int // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
+	portalFrom    int     // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
 	lastGood      struct {
 		area int
 		pos  input.Point
