@@ -44,7 +44,7 @@ Code item, median 289 s; docs item, median 108 s. `merge.sh` order: mergeq CI ch
 | real merge + sharedgen | 5-10 s | 20 s | S |
 | `go-whole` (labrun, `go vet ./... && go test -short -p 4 ./...`) | 100-160 s | 250 s | S: CI test job is 272 s total (vet 50, tests 166 at -p 2) |
 | `go-race` on touched packages (labrun) | 15-60 s | 120 s | U, depends on the package |
-| `go build ./...` (local, herdr box) | 10-30 s | 60 s | U |
+| `go build ./...` (local, on the small box) | 10-30 s | 60 s | U |
 | leakcheck again + hygiene | 25 + 30 s | 90 s | S: CI 24 s and 31 s |
 | push | 2-5 s | 10 s | S |
 | CI wait inside merge.sh | 0 (no-wait) | 0 | S: the `MERGE_CI_POLLS=0` path of docs/mergefast.md 2b; item results carry `CI for <head>: pending` |
@@ -94,7 +94,7 @@ Expected result of 1 to 3: cycle from about 580 s to about 290 s per item in a b
 
 ## 7. Ready-to-run checklist for the missing measurements (no game, worker host)
 
-1. `labrun orion -- top -bn2 -d1` shows idle plus nice at least 25 percent AND `tools/mergeq.sh status` shows no running gate.
-2. `labrun orion -- nice -n 19 sh -c 'go test -short -count=1 -p 4 -json ./... > /tmp/qp.json'` from inside a clean worktree at origin/main; then sum `Elapsed` per package: `python3 -I -c` over the `pass`/`fail` lines with `Test` unset.
+1. `labrun WORKER -- top -bn2 -d1` shows idle plus nice at least 25 percent AND `tools/mergeq.sh status` shows no running gate.
+2. `labrun WORKER -- nice -n 19 sh -c 'go test -short -count=1 -p 4 -json ./... > /tmp/qp.json'` from inside a clean worktree at origin/main; then sum `Elapsed` per package: `python3 -I -c` over the `pass`/`fail` lines with `Test` unset.
 3. Repeat twice to separate flaky tests from load noise; list the 10 slowest packages and any test that fails once in three.
 4. Enable `MERGE_TIMINGS=1` (step 4 above) and compare against section 3.
