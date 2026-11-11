@@ -926,3 +926,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/friend-feed.md - D2BOT_UPDATE_FEED, user-controlled update feed with pinned keys
 - docs/friend-guide.md - Linux install guide for the friends pack (install, didle commands, licence note, publisher build)
 - docs/friend-feed.md - now also the release runbook, rollback and static server snippets
+- docs/gear-policy.md: the player decides equipment, what the bot does and does not do, onboarding prompt, Gear Sets unlock hook
