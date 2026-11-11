@@ -66,7 +66,8 @@ def png(out, n): return open(f"{out}/png/{n}", "rb").read()
 def wr(out, rel, data):
     p = f"{out}/{rel}"; os.makedirs(os.path.dirname(p), exist_ok=True); open(p, "wb").write(data)
 
-ICNS = [("icp4", 16), ("icp5", 32), ("ic11", 32), ("ic12", 64), ("ic07", 128), ("ic13", 256), ("ic08", 256), ("ic14", 512), ("ic09", 512)]
+ICNS = [("icp4", 16), ("icp5", 32), ("ic11", 32), ("ic12", 64), ("ic07", 128), ("ic13", 256), ("ic08", 256), ("ic14", 512), ("ic09", 512), ("ic10", 1024)]
+ICNS_ELECTRON = [("ic07", 128), ("ic08", 256), ("ic09", 512), ("ic10", 1024)]  # the layout apps/desktop-electron/test/platform.test.js pins
 ICO_SIZES = [16, 32, 48, 64, 128, 256]
 
 def pack(out):
@@ -79,7 +80,7 @@ def pack(out):
     wr(out, "icon.ico", ico_win); wr(out, "icon.icns", icns_all)
     wr(out, "favicon-32.png", icon(32))
     # Electron: build/icon.png (512), icon.ico, icon.icns, tray.png (32), trayTemplate (22) and @2x (44)
-    for rel, data in [("electron/icon.png", icon(512)), ("electron/icon.ico", ico_win), ("electron/icon.icns", icns_all),
+    for rel, data in [("electron/icon.png", icon(512)), ("electron/icon.ico", ico_win), ("electron/icon.icns", icns([(t, icon(n)) for t, n in ICNS_ELECTRON])),
                       ("electron/tray.png", icon(32)), ("electron/trayTemplate.png", png(out, "template-22.png")),
                       ("electron/trayTemplate@2x.png", png(out, "template-44.png"))]:
         wr(out, rel, data)
@@ -94,7 +95,7 @@ def pack(out):
 def check(out):
     bad = []
     want = {"icon-16.png": 16, "icon-32.png": 32, "icon-48.png": 48, "icon-64.png": 64, "icon-128.png": 128, "icon-256.png": 256,
-            "icon-256-native.png": 256, "icon-512.png": 512, "template-16.png": 16, "template-22.png": 22, "template-32.png": 32, "template-44.png": 44}
+            "icon-256-native.png": 256, "icon-512.png": 512, "icon-1024.png": 1024, "template-16.png": 16, "template-22.png": 22, "template-32.png": 32, "template-44.png": 44}
     for n, s in want.items():
         w, h, rows = read_png(f"{out}/png/{n}")
         if (w, h) != (s, s): bad.append(f"{n}: {w}x{h}, want {s}")

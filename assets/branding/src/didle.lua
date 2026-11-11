@@ -233,7 +233,7 @@ saveSource(masters[64], "mark64.aseprite")
 saveSource(masters[16], "mark16.aseprite")
 for _, n in ipairs({ 16, 32, 48, 64 }) do savePng(masters[n], 1, "icon-" .. n .. ".png") end
 -- nearest-neighbour upscales of the 64 master
-for _, f in ipairs({ 2, 4, 8 }) do savePng(masters[64], f, "icon-" .. 64 * f .. ".png") end
+for _, f in ipairs({ 2, 4, 8, 16 }) do savePng(masters[64], f, "icon-" .. 64 * f .. ".png") end
 -- native 256: drawn on the 256 grid with finer outline and dithered facets
 local big = canvas(256, 256); mark(big, 0, 0, 256, { detail = true })
 saveSource(big, "mark256.aseprite")

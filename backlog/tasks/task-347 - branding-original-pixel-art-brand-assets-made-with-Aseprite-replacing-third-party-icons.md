@@ -22,7 +22,9 @@ owns:
   - "internal/watch/web/watch.html"
   - "README.md"
   - "docs/friend-guide.md"
+  - "docs/desktop-electron.md"
 exclusive: []
+result: "Pixel-art set drawn in assets/branding/src/didle.lua with Aseprite 1.3.18 batch on the worker host (V: ran, viewed 16/32/48/256/banner/card); packed by tools/branding/pack.py; Electron, watch favicon, README, friend guide wired; d2d set in out/d2d for the fork patch (fork not touched, not built). CC0 1.0 artwork. Not verified: real macOS menu bar, Windows shell, d2d build."
 contracts: []
 ---
 
@@ -36,8 +38,8 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Aseprite scripts generate the mark, icons, ico/icns, banner and card
-- [ ] #2 build.sh regenerates and verifies sizes and palette
-- [ ] #3 Electron, watch favicon, README, friend guide use the new assets
-- [ ] #4 d2d icon set (png, bmp, ico, icns, hero) ready for the fork patch
+- [x] #1 Aseprite scripts generate the mark, icons, ico/icns, banner and card
+- [x] #2 build.sh regenerates and verifies sizes and palette
+- [x] #3 Electron, watch favicon, README, friend guide use the new assets
+- [x] #4 d2d icon set (png, bmp, ico, icns, hero) ready for the fork patch
 <!-- AC:END -->
