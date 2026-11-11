@@ -411,6 +411,9 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 			o.mons, o.inv, o.belt, o.invInit = map[uint32]monTrack{}, map[uint32]itemTrack{}, map[uint32]itemTrack{}, false
 			o.area, o.dead = 0, false
 			o.savedNew = true
+			if lm, ok := r.d.Loot.(lootMemory); ok {
+				lm.ResetMemory() // unit ids are per game
+			}
 		}
 		o.menuSince = time.Time{}
 	}
@@ -813,6 +816,9 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 	r.noteTrail(s, now)
 	if m, ok := r.d.Mover.(interface{ NotePosition(int, input.Point) }); ok && !p.InTown() {
 		m.NotePosition(p.Area, input.Point{X: p.X, Y: p.Y}) // roam coverage: ground passed on any detour counts as seen
+	}
+	if lm, ok := r.d.Loot.(lootMemory); ok {
+		lm.ObserveGround(s)
 	}
 	a := aliveInfo{gold: p.Gold, stashGold: p.StashGold, level: p.Level, difficulty: p.Difficulty, kit: r.kitOf(s), hostiles: r.hostileNear(s, r.e.Tune.Combat.FightRadius)}
 	o.noteHP(p, a.hostiles)
