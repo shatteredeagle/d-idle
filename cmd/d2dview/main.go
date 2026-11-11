@@ -40,7 +40,11 @@ func main() {
 	shots := flag.String("shots", fmt.Sprintf("/tmp/d2dview-%d", os.Getuid()), "private dir on the d2d host where screenshots are written")
 	botAPI := flag.String("bot-api", "", "bot API base URL (read-only GET /api/v1/status), e.g. http://localhost:8080")
 	watchSpeed := flag.Float64("watch-speed", 8, "watch mode: max virtual seconds per wall second (0: render every step, no limit)")
-	jpegOut := flag.Bool("jpeg", false, "re-encode frames as JPEG (less bandwidth, about 25 ms CPU per frame); default passes d2d's PNG through")
+	jpegOut := flag.Bool("jpeg", false, "re-encode screenshot frames as JPEG (less bandwidth, CPU here); default passes d2d's PNG through (the -feed ring always sends JPEG)")
+	jpegQ := flag.Int("jpeg-quality", 72, "JPEG quality 10-95 of re-encoded frames")
+	half := flag.Bool("frame-half", false, "halve frame width and height before the JPEG encode (a quarter of the bytes and encode CPU; implies JPEG)")
+	backoff := flag.Float64("frame-backoff", 4, "the next frame waits at least this many times the last frame's cost (screenshot: the verb's wall time inside d2d; -feed: our read and encode); 0 off")
+	feedPath := flag.String("feed", "", "frame ring file for the d2d fork's framefeed verb (docs/viewer-fps.md), e.g. /dev/shm/d2dview/frames.ring (keep it on tmpfs); empty: screenshots only; a d2d without the verb falls back to screenshots")
 	badgeFlag := flag.String("badge", envOr("D2DVIEW_BADGE", Backend), "header badge text of the stream page and the /api/pub backend field (env D2DVIEW_BADGE)")
 	var wo watchOpts
 	flag.BoolVar(&wo.on, "watch", false, "serve the player screen on /watch (read-only GET routes here; answers on -watch-answer-addr); without -upstream it runs on the simulated runner alone")
@@ -89,6 +93,15 @@ func main() {
 		return
 	}
 	mux := NewMux(*upstream)
+	if *feedPath != "" {
+		if !filepath.IsAbs(*feedPath) || strings.Contains(*feedPath, "..") || strings.ContainsAny(*feedPath, " \t") {
+			log.Fatal("d2dview: -feed needs an absolute path without spaces or ..")
+		}
+		if err := os.MkdirAll(filepath.Dir(*feedPath), 0o700); err != nil {
+			log.Fatal(err)
+		}
+		mux.FeedPath = *feedPath
+	}
 	viewSock := *upstream + ".view"
 	if *botSock != "" {
 		ln, err := mux.Serve(*botSock, true, "")
@@ -115,7 +128,8 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		frames.JPEG = *jpegOut
+		frames.JPEG, frames.Half, frames.Backoff, frames.Feed = *jpegOut, *half, max(*backoff, 0), *feedPath
+		frames.Quality = min(max(*jpegQ, 10), 95)
 		feed.fr = frames
 		go frames.Run(ctx)
 	}
@@ -163,6 +177,7 @@ func (s *server) routes() http.Handler {
 	m.HandleFunc("/map.png", s.mapPNG)
 	m.HandleFunc("/frame", s.frame)
 	m.HandleFunc("/stream.mjpg", s.stream)
+	m.HandleFunc("/api/frames", s.frameStats)
 	m.HandleFunc("/api/mode", s.setMode)
 	s.mountWatch(m)
 	return s.auth(m)
@@ -214,7 +229,24 @@ func (s *server) events(w http.ResponseWriter, r *http.Request) {
 		b, _ := json.Marshal(sn)
 		fmt.Fprintf(w, "data: %s\n\n", b)
 		fl.Flush()
+		s.frames.Stats.parts.Add(1)
 	}
+}
+
+// frameStats is GET /api/frames: the last completed 10 s window of the game video (FrameStats), 204 before the first.
+func (s *server) frameStats(w http.ResponseWriter, r *http.Request) {
+	if s.frames == nil {
+		http.NotFound(w, r)
+		return
+	}
+	st, ok := s.frames.Stats.lastWindow()
+	if !ok {
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Cache-Control", "no-store")
+	json.NewEncoder(w).Encode(st)
 }
 
 func (s *server) mapPNG(w http.ResponseWriter, r *http.Request) {

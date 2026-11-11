@@ -129,14 +129,14 @@ func TestFramesGrab(t *testing.T) {
 	fr.JPEG = true
 	defer os.Remove("/tmp/shots/shot.png")
 	os.Remove("/tmp/shots/shot.png")
-	if err := fr.grab(context.Background()); err == nil {
+	if _, err := fr.grab(context.Background()); err == nil {
 		t.Fatal("expected a read error")
 	}
 	var buf bytes.Buffer
 	png.Encode(&buf, image.NewRGBA(image.Rect(0, 0, 8, 6)))
 	os.WriteFile("/tmp/shots/shot.png", buf.Bytes(), 0o600)
 	mux.ticks.Store(40)
-	if err := fr.grab(context.Background()); err != nil {
+	if _, err := fr.grab(context.Background()); err != nil {
 		t.Fatal(err)
 	}
 	if c := fr.Current(); c.Seq != 1 || c.Ticks != 40 || len(c.Data) < 100 || c.Type != "image/jpeg" {
