@@ -240,14 +240,8 @@ function layoutTargets() {
 function applyLayout() {
   const main = lay.main;
   if (!main) return;
-  const all = layoutTargets();
-  const named = new Set();
-  if (lay.layout) Object.values(lay.layout.breakpoints || {}).forEach((b) => (b.panels || []).forEach((e) => named.add(e.id)));
-  const alias = lay.conf.aliases || {};
-  const isNamed = (id) => named.has(id) || Object.keys(alias).some((a) => alias[a] === id && named.has(a));
-  // a hidden panel the layout names keeps its place (nothing moves when it opens); a hidden one it does not name is left out
-  const targets = all.filter((t) => !t.hidden || isNamed(t.id));
-  const p = lay.layout ? plan(lay.layout, window.innerWidth, html.dataset.mode || '', lay.conf, targets) : null;
+  const targets = layoutTargets();
+  const p = lay.layout ? plan(lay.layout, window.innerWidth, html.dataset.mode || '', lay.conf, targets, !!lay.editor) : null;
   lay.plan = p;
   lay.bp = breakpointFor(window.innerWidth, html.dataset.mode || '');
   lay.targets.forEach((n) => { n.style.gridColumn = ''; n.style.gridRow = ''; n.style.order = ''; delete n.dataset.collapsed; });
@@ -257,6 +251,7 @@ function applyLayout() {
   main.style.setProperty('--l-rowh', p.rowHeight + 'px');
   for (const it of p.items) {
     const n = lay.targets.get(it.id);
+    if (!n) continue;
     n.style.gridColumn = it.col + ' / span ' + it.colSpan;
     if (p.flow) n.style.order = String(it.order);
     else n.style.gridRow = it.row + ' / span ' + (it.collapsed ? 1 : it.rowSpan);
@@ -318,6 +313,8 @@ function setupLayout(conf, layout, answerBase) {
     let mod;
     try { mod = await import('/watch/layoutedit.js'); } catch (e) { toast('alarm', 'The layout editor did not load.'); return; }
     const saved = lay.layout;
+    lay.editor = { stop() {} }; // from here the plan keeps hidden panels in their cells
+    applyLayout();
     lay.editor = mod.start({
       el, toast, main: lay.main, targets: lay.targets, layout: saved,
       plan: () => lay.plan,

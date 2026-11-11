@@ -73,4 +73,15 @@ for (const f of process.argv.slice(3)) {
   const again = L.plan(saved, 1920, '', conf, page), key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan, i.collapsed].join();
   eq(again.items.map(key).sort(), q.items.map(key).sort());
 }
+// a hidden panel takes no cell and an empty band closes up; the editor keeps both
+{
+  const e = (id, col, row, w, h, order) => ({ id, band: 'grid', col, row, colSpan: w, rowSpan: h, collapsed: false, order });
+  const layout = { schema: 'watch.layout/1', cols: 12, rowHeight: 48, breakpoints: { wide: { width: 1920, cols: 12, panels: [e('video', 1, 1, 12, 2, 0), e('map', 1, 3, 12, 3, 1), e('gear', 1, 6, 6, 2, 2)] } } };
+  const pg = [{ id: 'video', size: 'm' }, { id: 'map', size: 's', hidden: true }, { id: 'gear', size: 's' }];
+  const p = L.plan(layout, 1920, '', conf, pg);
+  eq(p.items.map((i) => [i.id, i.row]), [['video', 1], ['gear', 3]]);
+  eq(p.unknown, []);
+  const q = L.plan(layout, 1920, '', conf, pg, true);
+  eq(q.items.map((i) => [i.id, i.row]), [['video', 1], ['map', 3], ['gear', 6]]);
+}
 console.log('ok');

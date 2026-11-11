@@ -56,7 +56,9 @@ const SPAN = { s: [3, 5], m: [6, 6], l: [12, 6] }; // columns and rows of a pane
 // null when no breakpoint applies (the shell then places by manifest), else
 // { name, cols, rowHeight, flow, items: [{id, col, row, colSpan, rowSpan, collapsed, order, placed}], unknown: [ids] }.
 // flow (phone and tablet): rows are not fixed, the shell uses order and the column span and lets the rows flow.
-export function plan(layout, width, mode, conf, targets) {
+// A hidden target (a locked feature, a route that is off) takes no cell and rows left empty close up, so the page has
+// no dead bands; with edit set (the editor) hidden targets keep their cells and nothing closes up.
+export function plan(layout, width, mode, conf, targets, edit) {
   const bpName = breakpointFor(width, mode);
   const bp = pickBreakpoint(layout, bpName);
   if (!bp) return null;
@@ -70,6 +72,7 @@ export function plan(layout, width, mode, conf, targets) {
     if (!id || !known[id]) { if (!reserved.includes(e.id)) unknown.push(e.id); continue; }
     if (used[id]) continue; // the first entry wins when an alias and its target are both named
     used[id] = true;
+    if (known[id].hidden && !edit) continue;
     const colSpan = Math.max(1, Math.min(bp.cols, e.colSpan | 0)), col = Math.max(1, Math.min(bp.cols - colSpan + 1, e.col | 0));
     const it = { id, col, row: Math.max(1, e.row | 0), colSpan, rowSpan: Math.max(1, e.rowSpan | 0), collapsed: !!e.collapsed, order: e.order | 0, placed: true };
     placeNear(items, it); // a file with overlapping entries (the editor's presets have some) still loads: push down
@@ -80,11 +83,19 @@ export function plan(layout, width, mode, conf, targets) {
   // panels the layout does not mention are packed after the placed ones, in page order
   const flow = bpName === 'phone' || bpName === 'tablet';
   for (const t of targets) {
-    if (used[t.id]) continue;
+    if (used[t.id] || (t.hidden && !edit)) continue;
     const [w, h] = SPAN[t.size] || SPAN.s;
     const it = { id: t.id, col: 1, row: maxRow + 1, colSpan: flow && bpName === 'phone' ? bp.cols : Math.min(bp.cols, flow ? Math.max(w, 6) : w), rowSpan: h, collapsed: false, order: ++maxOrder, placed: false };
     placeFrom(items, it, bp.cols, maxRow + 1);
     items.push(it);
+  }
+  if (!edit && !flow) { // close rows no panel occupies
+    const busy = {};
+    for (const it of items) for (let r = it.row; r < it.row + (it.collapsed ? 1 : it.rowSpan); r++) busy[r] = true;
+    const shift = {};
+    let gone = 0;
+    for (let r = 1; r <= maxRow + 400; r++) { if (!busy[r] && r <= maxRow) gone++; shift[r] = gone; }
+    for (const it of items) it.row -= shift[it.row] || 0;
   }
   return { name: bp.name, bp: bpName, cols: bp.cols, rowHeight: bpName === 'overlay' ? 40 : (layout.rowHeight || 48), flow, items, unknown };
 }
