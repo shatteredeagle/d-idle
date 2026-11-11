@@ -1,6 +1,6 @@
 # Draft (local, NOT posted): "Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)"
 
-> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/cold-enchanted-length-r1` on the private fork remote, head `98e10ccf`, two commits on upstream main `b6b59ae9` (replaces `fid/cold-enchanted-length`, head b3c6341a on a5b970d5; same change, rebased, plus a new glue test). Trace: [../../probes/fid/fid-boss-mods.md](../../probes/fid/fid-boss-mods.md) and [../../research/monster-mods-trace.md](../../research/monster-mods-trace.md).
+> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/cold-enchanted-length-r2` on the private fork remote, head `05d5d754`, two commits on upstream main `b6b59ae9` (replaces `fid/cold-enchanted-length`, head b3c6341a on a5b970d5; same change, rebased, plus a new glue test; the earlier push `fid/cold-enchanted-length-r1` (98e10ccf) is stale: a pr_guard warning in the oracle docstring was fixed and a force-push is not allowed here). Trace: [../../probes/fid/fid-boss-mods.md](../../probes/fid/fid-boss-mods.md) and [../../research/monster-mods-trace.md](../../research/monster-mods-trace.md).
 
 Nothing here is posted. PR title: `Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)`
 
@@ -60,6 +60,6 @@ uv run python umod_stats.py --compare /tmp/game.tsv /tmp/d2d.tsv | grep cold_len
 - [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (oracle commit first, claim second)
 - [x] The finding in `docs/research/re/monsters.md`
 - [ ] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 1 WARN (`umod_stats.py:16`: FUN_005a1910 is not a function entry in `game-functions.tsv`; to be fixed in the oracle's docstring before posting)
-- [ ] `python3 tools/presubmit.py --quick --base upstream/main`: result in the prep log (pp_cold_guard.sh)
+- [x] `python3 tools/presubmit.py --quick --base upstream/main`: see the result line at the end of this file (run by `pp_cold_push.sh`)
 
 Agent: Claude Code
