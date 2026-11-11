@@ -378,6 +378,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		return nil
 	}
 
+	marked := t.markedSell(s)
+	junkToo := plan.Sell && t.tune().SellJunk != 0
 	steps := []struct {
 		name    string
 		enabled bool
@@ -387,7 +389,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"identify", plan.Identify, t.identifyNeeded, func() error { return t.identify(ctx, a, &rep) }},
 		// before sell: a naked character wears what it found instead of selling it (G1 attempt 6)
 		{"equip", true, t.needEquipFound, func() error { _, err := t.EquipFound(ctx); return err }},
-		{"sell", plan.Sell && t.tune().SellJunk != 0, t.needSell, func() error { return t.sell(ctx, a, &rep) }},
+		// the player's sell marks always run, whatever the trip was for (live 2026-11-11: potion and kit trips skipped it)
+		{"sell", plan.Sell && t.tune().SellJunk != 0 || marked > 0, t.needSell, func() error { return t.sellVisit(ctx, a, &rep, marked, junkToo) }},
 		// before shop: the bow is the Amazon's only attack, potions are cheap to skip (live i3: shop spent 450 of 500 gold first)
 		{"ammo", plan.Ammo, t.ammoTodo, func() error { return t.buyAmmo(ctx, a, &rep) }},
 		// the repair vendor's chores run back to back so his window opens once per trip. The belt purchase keeps its own
@@ -593,6 +596,35 @@ func (t *Town) logKit(rep *ChoreReport, err error) {
 	t.e.Log.Info("shop: visit", "bought", rep.Bought, "spent", rep.Spent, "broke", rep.Broke, "err", err,
 		"gold", s.Player.Gold, "beltHP", st.Count[belt.HP], "beltMP", st.Count[belt.MP], "beltRV", st.Count[belt.RV],
 		"beltSlots", st.Slots, "tp", tp, "tome", tome)
+}
+
+// sellVisit runs the sell chore and logs what the player's marks came to: marked in the pack at the start, sold, left.
+// junkToo false: the trip did not ask for the pickit's junk, only the marked items are sold.
+func (t *Town) sellVisit(ctx context.Context, a *Act, rep *ChoreReport, marked int, junkToo bool) error {
+	sold0 := rep.Sold
+	t.sellMarksOnly = !junkToo
+	defer func() { t.sellMarksOnly = false }()
+	err := t.sell(ctx, a, rep)
+	left, reason := 0, ""
+	if s, e := t.current(); e == nil {
+		left = t.markedSell(s)
+	}
+	switch {
+	case err != nil:
+		reason = err.Error()
+	case left > 0:
+		reason = "no vendor of this act would buy them"
+	}
+	t.e.Log.Info(fmt.Sprintf("sell: %d marked, %d sold, %d not sold (%s)", marked, rep.Sold-sold0, left, orNone(reason)),
+		"marked", marked, "sold", rep.Sold-sold0, "notSold", left)
+	return err
+}
+
+func orNone(s string) string {
+	if s == "" {
+		return "none"
+	}
+	return s
 }
 
 // sell visits the act's vendors in order until nothing sellable is left.

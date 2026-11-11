@@ -205,7 +205,8 @@
     gearPrompt(v.prompt);
     $('packmeta').textContent = '10 by 4';
     $('stashmeta').textContent = (v.stashGold || v.stashGold === 0 ? 'gold ' + v.stashGold : '');
-    $('note').textContent = (v.note || '') + (v.class ? v.class + ', gold on the hero ' + v.gold : '');
+    $('note').textContent = (v.note || '') + (v.class ? v.class + ', gold on the hero ' + v.gold : '') +
+      (v.sellPending ? (v.class ? ', ' : '') + v.sellPending + ' marked for sale, sold at the next town visit' : '');
     detail(v);
     var q = $('queue'); clear(q);
     var rows = (v.queue || []).concat(v.recent || []);
