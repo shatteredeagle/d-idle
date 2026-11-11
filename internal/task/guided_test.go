@@ -24,6 +24,7 @@ func guidedWorld(lvl int, done ...string) task.World {
 		Quests: map[string]task.QuestState{}, WPs: map[task.Area]bool{task.ColdPlains: true}}
 	for _, q := range done {
 		w.Quests[q] = task.QuestState{Stage: task.StageDone, Ev: task.EvMemory}
+		w.MercKnown = w.MercKnown || q == task.QBurialMerc // the Rogue was claimed and is dead now (the live hero)
 	}
 	return w
 }
@@ -115,5 +116,18 @@ func TestGuidedHandsOverAfterAct1(t *testing.T) {
 	w.Act = 2
 	if p := c.Plan(w, nil); !strings.HasPrefix(p.ID, "quest.") || p.Group == task.QAndariel {
 		t.Errorf("act 2: %q", p.ID)
+	}
+}
+
+// Blood Raven done, no merc ever employed: the Rogue chapter runs the claim; a claimed Rogue that died does not.
+func TestGuidedClaimsTheRogue(t *testing.T) {
+	c := task.NormalAct1(task.Act1Options{}).WithRogueClaim().WithGuide(guide(t, "paladin", campaign.NewHeroState()))
+	w := guidedWorld(12, task.QDen, task.QBurial)
+	if p := c.Plan(w, nil); p.Group != task.QBurialMerc || len(p.Nodes) == 0 {
+		t.Fatalf("no merc: %q %q", p.ID, p.Why)
+	}
+	w.MercKnown = true
+	if p := c.Plan(w, nil); p.Group == task.QBurialMerc {
+		t.Fatalf("dead Rogue claimed again: %q", p.ID)
 	}
 }

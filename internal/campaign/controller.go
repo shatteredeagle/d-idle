@@ -2,6 +2,7 @@ package campaign
 
 import (
 	"fmt"
+	"slices"
 	"sync"
 	"time"
 )
@@ -23,6 +24,8 @@ type Controller struct {
 	AskWait, FarmBudget time.Duration
 	// OnDone is called (outside the lock) with chapters first seen done: the Chronicle line and the unlock ladder.
 	OnDone func(hero string, ids []string)
+	// DefaultGoAt is the policy of a hero that never chose one (knob campaign.goAtFloor; "" = recommended).
+	DefaultGoAt GoAt
 	// OnError gets a failed save (nil: dropped; the next change saves again).
 	OnError func(error)
 	// Pace gives the level meter of a farm step: share of the way from the current level to the target and the
@@ -55,7 +58,25 @@ func (c *Controller) Spine() *Spine { return c.spine }
 func (c *Controller) State() *HeroState {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	return c.store.Hero(c.hero()).clone()
+	h := c.store.Hero(c.hero()).clone()
+	if h.GoAt == "" {
+		h.GoAt = c.DefaultGoAt
+	}
+	return h
+}
+
+// Unlocked reports whether a done chapter of the current hero opens feature (a chapter's unlocks list).
+func (c *Controller) Unlocked(feature string) bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	h := c.store.Hero(c.hero())
+	for i := range c.spine.Chapters {
+		ch := &c.spine.Chapters[i]
+		if _, done := h.Done[ch.ID]; done && slices.Contains(ch.Unlocks, feature) {
+			return true
+		}
+	}
+	return false
 }
 
 // Opts are the decision options at the controller's clock.

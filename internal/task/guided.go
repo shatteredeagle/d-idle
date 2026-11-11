@@ -100,7 +100,7 @@ func (c *Campaign) guidedPlan(w World, s Session) (Plan, bool) {
 func (c *Campaign) guideInputs(w World, s Session) (campaign.Progress, *campaign.HeroState) {
 	g := c.guide
 	p := campaign.Progress{Hero: campaign.Hero{Class: g.Class(), Level: w.Level, Merc: routeMercOK(w)},
-		Quests: map[string]bool{}, Waypoints: map[int]bool{}}
+		Quests: map[string]bool{}, Waypoints: map[int]bool{}, MercOwned: w.HasMerc || w.MercKnown}
 	for a, ok := range w.WPs {
 		p.Waypoints[int(a)] = ok
 	}
@@ -118,6 +118,9 @@ func (c *Campaign) guideInputs(w World, s Session) (campaign.Progress, *campaign
 		}
 		if s == nil {
 			continue
+		}
+		if ch.Done.Merc && s.Finished(grp) {
+			p.MercOwned = true // the claim ran and found nothing to claim (no merc reader): do not repeat it this session
 		}
 		if wp := ch.Done.Waypoint; wp > 0 && s.Finished(grp) {
 			p.Waypoints[wp] = true // the waypoint step is optional: a finished group without proof counts

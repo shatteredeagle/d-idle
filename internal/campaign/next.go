@@ -10,6 +10,7 @@ type Progress struct {
 	Hero
 	Quests    map[string]bool // task-layer quest ids that are done
 	Waypoints map[int]bool    // area ids whose waypoint is known
+	MercOwned bool            // a merc is employed, alive or dead
 }
 
 // IsDone reports whether chapter c is done for p.
@@ -19,6 +20,8 @@ func (c *Chapter) IsDone(p Progress) bool {
 		return p.Quests[c.Done.Quest]
 	case c.Done.Waypoint > 0:
 		return p.Waypoints[c.Done.Waypoint]
+	case c.Done.Merc:
+		return p.MercOwned || p.Merc
 	}
 	return p.Level >= c.Done.Level
 }
