@@ -53,10 +53,10 @@ Why: user decision 2026-11-11, manual repair becomes a trip. Done when: docs/rep
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Button state from live pack gold vs estimate x1.3 (Repair now / Farm until repair / disabled with reason), additive watch.repair schema 2
-- [ ] #2 Repair trip: safe moment, loot, portal only when clear, scroll-less walk home, smith, back through own portal, in-town shortcut, failure keeps request open
-- [ ] #3 Farm until repair: farm order to repairNeed x1.3 + kit + margin, then trip, then ends itself; progress line
-- [ ] #4 Guards: cooldown, max 2 trips, auto-cancel, cancel button, persisted, one active request
-- [ ] #5 UI: panel and inventory card states, DOM goldens, compat fixture, uilint; Paladin and Sorceress tests
+- [x] #1 Button state from live pack gold vs estimate x1.3 (Repair now / Farm until repair / disabled with reason), additive watch.repair schema 2
+- [x] #2 Repair trip: safe moment, loot, portal only when clear, scroll-less walk home, smith, back through own portal, in-town shortcut, failure keeps request open
+- [x] #3 Farm until repair: farm order to repairNeed x1.3 + kit + margin, then trip, then ends itself; progress line
+- [x] #4 Guards: cooldown, max 2 trips, auto-cancel, cancel button, persisted, one active request
+- [x] #5 UI: panel and inventory card states, DOM goldens, compat fixture, uilint; Paladin and Sorceress tests
 - [ ] #6 Whole-repo gate on the worker host, merge queued
 <!-- AC:END -->

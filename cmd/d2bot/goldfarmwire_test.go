@@ -32,7 +32,7 @@ func TestRepairViewCarriesFarmAndTheOrderPersists(t *testing.T) {
 			On bool `json:"on"`
 		} `json:"farm"`
 	}
-	if err := json.Unmarshal(b, &got); err != nil || got.Schema != 1 || got.Farm == nil || !got.Farm.On {
+	if err := json.Unmarshal(b, &got); err != nil || got.Schema != 2 || got.Farm == nil || !got.Farm.On {
 		t.Fatalf("%s %v", b, err)
 	}
 	gf2, _ := goldfarm.New(filepath.Join(dir, goldfarm.StateFile), time.Now)

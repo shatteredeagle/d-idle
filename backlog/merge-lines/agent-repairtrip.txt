@@ -1,0 +1,3 @@
+BACKLOG: TASK-303 repairtrip: Repair now is a trip (safe moment, portal or walk home, smith, back) and Farm until repair; button from live gold; watch.repair schema 2; offline only, live checks in docs/repair.md
+INDEX: docs/repair.md: the repair trip section (TASK-303)
+CHANGELOG: Repair now makes a repair trip at the next safe moment; Farm until repair earns the gold first (offline tested, not live)
