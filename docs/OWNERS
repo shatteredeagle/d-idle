@@ -166,7 +166,9 @@ docs/first-hour.md  live-agent  firsthour
 docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
+docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  playerprio
+docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
@@ -208,6 +210,7 @@ docs/sme/pace-and-formulas.md  credit-runner  smepace
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
+docs/ui-design-system.md  credit-runner  nopins
 docs/ui-design-system.md  credit-runner  uifit
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
@@ -288,10 +291,12 @@ internal/watch/hero.go  credit-runner  xpreadout
 internal/watch/hub.go  credit-runner  xpreadout
 internal/watch/invapi.go  credit-runner  artspeed
 internal/watch/invapi_test.go  credit-runner  artspeed
+internal/watch/invui.go  credit-runner  nopins
 internal/watch/layout.go  credit-runner  uifit
 internal/watch/layout_test.go  credit-runner  uifit
 internal/watch/mapview.go  credit-runner  xpreadout
 internal/watch/minimapfix_test.go  credit-runner  minimapfix
+internal/watch/nopins_test.go  credit-runner  nopins
 internal/watch/panels.go  credit-runner  uifit
 internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
@@ -309,6 +314,9 @@ internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/inventory_dom.js  credit-runner  artspeed2
+internal/watch/testdata/inventory_dom.js  credit-runner  nopins
+internal/watch/testdata/itemactions/act_dom.js  credit-runner  nopins
+internal/watch/testdata/itemtip/tip_dom.js  credit-runner  nopins
 internal/watch/testdata/map_panel.js  credit-runner  maphistory
 internal/watch/testdata/map_panel.js  credit-runner  maptrail
 internal/watch/testdata/map_panel.js  credit-runner  maptrail2
@@ -319,8 +327,12 @@ internal/watch/testdata/senses-trail.json  credit-runner  maptrail
 internal/watch/testdata/topband_dom.js  credit-runner  xpreadout
 internal/watch/testdata/topband_dom_hero-detail_*.txt  credit-runner  xpreadout
 internal/watch/web/gear.js  credit-runner  repairtrip
+internal/watch/web/inventory-actions.js  credit-runner  nopins
+internal/watch/web/inventory-tip.css  credit-runner  nopins
+internal/watch/web/inventory-tip.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  artspeed
 internal/watch/web/inventory.js  credit-runner  artspeed2
+internal/watch/web/inventory.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  repairtrip
 internal/watch/web/layout.js  credit-runner  uifit
 internal/watch/web/layoutedit.js  credit-runner  uifit

@@ -734,6 +734,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - nocursor (TASK-323): the watch video shows no game pointer: fork verb cursor off (private fork commit c418e235), d2dview asks for it by default and falls back silently on an older d2d <!--sg:agent/nocursor-->
 - maphistory: activity-coloured trail, event markers (kill, damage, potion, loot, level-up, death), fight summaries, 30 min window, activity share line; offline only <!--sg:agent/maphistory-->
 - playerprio player commands (identify, equip, trash, errands, repair now) interrupt roam and travel walks at a safe moment; offline only <!--sg:agent/playerprio-->
+- nopins: remove the obsolete Pin display from the paper doll and inventory (TASK-325, merged 2026-11-11, acceptance 0 of 3): PIN badge, legend chip, Unpin button/menu entry and tooltip badge removed; pins and /api/inventory/unpin kept as deprecated; new .nopin goldens added; not verified live. <!--sg:agent/nopins-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
