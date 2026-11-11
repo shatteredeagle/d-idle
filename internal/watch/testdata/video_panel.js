@@ -1,7 +1,9 @@
 // Runs web/panels/video/panel.js against a stub DOM: shown only with a stream, reconnect backoff, collapse memory,
 // full screen on the panel. Usage: node video_panel.js path/to/panel.js
 const assert = require('assert'), { load, shellCtx } = require('./panel_harness.js');
-const P = load(process.argv[2]);
+const path = require('path');
+const M = load(path.join(path.dirname(process.argv[2]), '../../mjpeg.js'));
+const P = load(process.argv[2], M);
 // no stream: the panel hides itself
 { const t = []; const { root, c } = shellCtx({}, {}, t); P.mount(root, c); assert.strictEqual(c.hidden, true); }
 const store = {}, timers = [];
@@ -29,7 +31,7 @@ full.fire('click'); assert.ok(root.fullscreen, 'full screen asks the panel');
   let now = 0, id = 0, opens = 0, closes = 0, onFrame = null, onEnd = null;
   const q = new Map(), states = [];
   const fire = (ms) => { now += ms; for (const [k, t] of [...q]) if (t.at <= now) { q.delete(k); t.fn(); } };
-  const ctl = P.videoController({
+  const ctl = M.videoController({
     open(f, e) { opens++; onFrame = f; onEnd = e; return () => { closes++; }; },
     later(fn, ms) { q.set(++id, { fn, at: now + ms }); return id; },
     cancel(k) { q.delete(k); },
@@ -67,11 +69,11 @@ full.fire('click'); assert.ok(root.fullscreen, 'full screen asks the panel');
 // the part parser: Content-Length framed parts in arbitrary chunks
 {
   const parts = [];
-  const p = P.partParser((b, t) => parts.push([Buffer.from(b).toString(), t]));
+  const p = M.partParser((b, t) => parts.push([Buffer.from(b).toString(), t]));
   const msg = '--f\r\nContent-Type: image/jpeg\r\nContent-Length: 5\r\nX-Frame-Ticks: 3\r\n\r\nAAAAA\r\n--f\r\nContent-Type: image/png\r\nContent-Length: 3\r\n\r\nBBB\r\n';
   const bytes = Buffer.from(msg);
   for (let i = 0; i < bytes.length; i += 7) p.push(new Uint8Array(bytes.subarray(i, i + 7)));
   assert.deepStrictEqual(parts, [['AAAAA', 'image/jpeg'], ['BBB', 'image/png']]);
-  assert.throws(() => P.partParser(() => {}).push(new Uint8Array(Buffer.from('--f\r\nContent-Type: image/jpeg\r\n\r\nxx'))), /Content-Length/);
+  assert.throws(() => M.partParser(() => {}).push(new Uint8Array(Buffer.from('--f\r\nContent-Type: image/jpeg\r\n\r\nxx'))), /Content-Length/);
 }
 console.log('ok');

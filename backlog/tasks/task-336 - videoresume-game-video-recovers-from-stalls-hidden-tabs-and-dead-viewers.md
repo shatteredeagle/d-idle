@@ -17,6 +17,9 @@ owns:
   - "internal/watch/web/panels/video"
   - "internal/watch/testdata/video_panel.js"
   - "internal/watch/video.go"
+  - "internal/watch/web/mjpeg.js"
+  - "internal/watch/http_view.go"
+  - "internal/watch/testdata/panel_harness.js"
   - "internal/watch/videoresume_test.go"
   - "docs/viewer-fps.md"
 exclusive: []

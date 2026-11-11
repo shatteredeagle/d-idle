@@ -74,7 +74,7 @@ func (h *Hub) ViewHandler() http.Handler {
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
 		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/shell.css", "/watch/components.css", "/watch/utilities.css", "/watch/inventory.css":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/css; charset=utf-8")(w, r)
-		case "/watch/shell.js", "/watch/layout.js", "/watch/layoutedit.js":
+		case "/watch/shell.js", "/watch/layout.js", "/watch/layoutedit.js", "/watch/mjpeg.js":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/javascript; charset=utf-8")(w, r)
 		case "/watch/layouts/mockup.json", "/watch/layouts/live.json", "/watch/layouts/command.json":
 			// the editor's three presets, for ?layout=<name> (the screenshot suite renders them)

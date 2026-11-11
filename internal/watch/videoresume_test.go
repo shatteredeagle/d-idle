@@ -6,6 +6,7 @@ import (
 	"net"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"time"
 )
@@ -79,4 +80,20 @@ func TestVideoDropsAViewerThatStoppedReading(t *testing.T) {
 		time.Sleep(20 * time.Millisecond)
 	}
 	waitFor(t, "capture stopped", func() bool { return !v.Running() })
+}
+
+// The stream reader module is served next to the panels (the panel imports ../../mjpeg.js), with a JS type.
+func TestMJPEGModuleServed(t *testing.T) {
+	r := newRig(t, "sorceress")
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	sv, err := r.sim.Hub.Serve(ctx, ServeOptions{ViewAddr: "127.0.0.1:0", AnswerAddr: "127.0.0.1:0", Token: "tok"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp := mustGet(t, "http://"+sv.View.String()+"/watch/mjpeg.js?t=tok")
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 || !strings.Contains(resp.Header.Get("Content-Type"), "javascript") {
+		t.Fatalf("%d %q", resp.StatusCode, resp.Header.Get("Content-Type"))
+	}
 }

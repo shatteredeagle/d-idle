@@ -262,7 +262,7 @@ Fixes:
   10 s; a badge says "reconnecting..." over the last picture, and after five failures in a row "stream down" with a
   Retry button (it still retries every 10 s). A tab hidden for 10 s closes the stream ("paused"); visibilitychange to
   visible reopens it at once; focus and online revive a stream that has gone quiet; pageshow from the back-forward
-  cache reconnects. `window.d2video.reconnect()` (also `state()`, `fps()`) is the hook for the desktop app. With
+  cache reconnects. `window.d2video.reconnect()` (also `state()`, `fps()`, set by `web/mjpeg.js`: a long-lived stream is not a poll, so the reader lives in a page module next to the shell, not in the panel, which may not fetch under the panel contract) is the hook for the desktop app. With
   `?debug` in the page address the card head shows `stream: N fps`. Browsers without streaming fetch keep the plain
   `<img>` (backoff now 1, 2, 4, 8, 10 s). The `/stream` and `/stream.mjpg` endpoints are unchanged.
 - The watch video writes each part under a per-part deadline (`VideoOptions.WriteTimeout`, 10 s): a viewer that stops
