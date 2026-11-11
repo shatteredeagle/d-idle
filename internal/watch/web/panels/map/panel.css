@@ -4,9 +4,9 @@
   [data-panel="map"] .trail-legend { color: var(--d-text-3, var(--d-text-2)); }
   [data-panel="map"] .cover-line[hidden] { display: none; }
   [data-panel="map"] .trail-share:empty { display: none; }
-  [data-panel="map"] .timeline { display: grid; gap: var(--d-s-1, 4px); }
+  [data-panel="map"] .timeline { display: grid; gap: var(--d-sp-1); }
   [data-panel="map"] .timeline[hidden] { display: none; }
-  [data-panel="map"] .ribbon { inline-size: 100%; block-size: 14px; border-radius: var(--d-r-1, 3px); background: var(--d-bg); }
+  [data-panel="map"] .ribbon { inline-size: 100%; block-size: 14px; border-radius: var(--d-r-1); background: var(--d-bg); }
   [data-panel="map"] .scrub { inline-size: 100%; accent-color: var(--d-accent); }
   [data-panel="map"] .trail-tip:empty { display: none; }
   [data-panel="map"] [aria-pressed="true"] { background: var(--d-accent); color: var(--d-accent-text); }

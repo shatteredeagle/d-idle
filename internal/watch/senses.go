@@ -120,6 +120,9 @@ type SensesReply struct {
 	TrailWindowS int          `json:"trail_window_s,omitempty"`
 	TrailLegend  []string     `json:"trail_legend,omitempty"`
 	Events       []SenseEvent `json:"events,omitempty"`
+	// History is the timeline sample ring, only when the caller asks (?hist=1: the panel sends it while its timeline is
+	// open, every few polls), so the 2 Hz poll stays small.
+	History *HistoryReply `json:"history,omitempty"`
 	// Coverage is the roam coverage grid of the current area (tier 1, additive), absent when the bot is not roaming.
 	Coverage *SenseCoverage `json:"coverage,omitempty"`
 	Waiting  bool           `json:"waiting,omitempty"`
@@ -290,7 +293,12 @@ func (s *Senses) Handler() http.Handler {
 			return
 		}
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
-		writeJSON(w, 200, s.ReplyNb(have, parseHave(r.URL.Query().Get("nb"))))
+		rep := s.ReplyNb(have, parseHave(r.URL.Query().Get("nb")))
+		if r.URL.Query().Get("hist") == "1" && len(rep.Tiers) > 0 && !rep.Waiting {
+			h := s.History()
+			rep.History = &h
+		}
+		writeJSON(w, 200, rep)
 	})
 	m.HandleFunc("/api/history", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
