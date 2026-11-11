@@ -32,3 +32,28 @@ Verifier: d2-reviewer (Opus), singly, read-mostly. Material: `docs/upstream/pr-q
 3. **LOW: `SK6_REVERSE` / "decomp6" in `light_pierce.py`** (line 132): an env knob and a name from our lab workflow in an upstream oracle. Remove it or describe it neutrally.
 4. **LOW: number mismatch.** `docs/research/re/missiles.md` (the claim commit) says "check 2,584 casts"; the README row and the draft run N 400 = 1,192. Make them agree.
 5. **LOW: commit message names `FUN_005a8850`** (first commit); the address is the filter entry 0x5a8850, not a function start (the draft correctly says "the filter at 0x5a8850").
+
+## Candidate 2: Cold Enchanted chill length (`fid/cold-enchanted-length-r3`, 1b4036a3)
+
+**Verdict: NEEDS-WORK (one mechanical fix, then PASS).** The claim is right and fully proven for the cases it names; the first commit does not compile on its own.
+
+### What holds
+- V read, FUN_005a1c70 (0x5a1c70..0x5a1dee): the unit's level (stat 0xc via FUN_00625480) is taken as at least 1 and at most MonLvl rows − 1 (0x5a1ce5..0x5a1d1c, rows at tables +0xb74); cold min / max (stats 0x36 / 0x37) = MonLvl damage x the MonUMod percent rows (0x1c / 0x1f with the boss flag, 0x10 / 0x13 without); then stat 0x38 += level x 5 + 100 (`lea eax, [eax+eax*4+0x64]`, 0x5a1dcd, through the adder FUN_006272b0). So the length is ADDED, and the 110 cap is the MonLvl table size (111 rows, V run), not an unknown: the draft's "clamp source (U)" is resolved.
+- V run, edge levels through game.exe's own FUN_005a2120 (`~/d2d-lab/pv/pv_cold_levels.py`, umod_stats' harness with the base level forced to 0..200): every case equals 100 + 5 x min(max(final level, 1), 110), the final level including the unique's level add (+3); uniques, minions, Cold with Fire before or after, all 60 cases.
+- V run, the differential on the rebased tree (`pv_cold.sh`; grouping by my own classifier `coldclass.py`, not the prep's):
+
+| cold_len mismatches | seed 1, 157,618 cases: parent | claim | seed 9, 87,618 cases: parent | claim |
+|---|---|---|---|---|
+| champion / unique / super unique, Cold Enchanted, no Fire / Lightning Enchanted | 9,636 of 9,636 | 0 | 4,044 of 4,044 | 0 |
+| Cold together with Fire or Lightning Enchanted | 3,647 of 3,647 | 1,873 | 1,069 of 1,069 | 566 |
+| minions of a Cold Enchanted boss | 5,657 of 5,657 | 5,657 | 2,900 of 2,900 | 2,900 |
+| no Cold Enchanted | 0 | 0 | 0 | 0 |
+
+  The remaining rows are the two pre-existing deviations the draft names (d2d keeps one element per boss, the last Enchanted mod; minions carry no mods). The prep's 7,869 differs from my 9,636 by grouping only (it split off multi-mod rows); its claim-side 1,625 + 248 = my 1,873.
+- V run, `test_boss_cold_length` (real `make_boss`): fails on the parent (the `dur` assertion), passes on the claim. Full `ctest -j8` on the claim: the same 4 data-set failures as candidate 1's parent and claim (`test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4`), everything else passes or skips; `test_game`, `test_monsters` pass.
+- Hygiene: pr_guard 0 FAIL / 0 WARN (V run); no private or fork-only content (V grep). Overlap: #371 (unique mods 21, 35, 40-42) and #401 (`ai.cpp`) touch neighbouring files with no semantic overlap (`gh pr diff`, no `elem_len` / FUN_005a1c70 lines). No upstream PR or commit has this fix.
+
+### Findings
+1. **HIGH (blocks posting as is): the oracle commit `511d907d` does not build.** `tests/monsters/test_umod_stats.cpp` there calls `boss_elem_length`, which only the claim commit adds (`error: 'boss_elem_length' was not declared`, V run on 8c327675, the rebased twin). So "the oracle first, it shows the difference on the parent" is not true of the commits as pushed, and the prep's parent numbers cannot have come from that commit. Fix: in the oracle commit print `boss.elem_len` (what `make_boss` used before); the claim commit switches that line to `boss_elem_length(boss, level)`. With exactly that throwaway edit the parent numbers above are produced. Push as a new branch name (`-r4`), never a force-push.
+2. **LOW: the cap is data.** `std::min(level, 110)` in `boss_elem_length`: game.exe caps at MonLvl rows − 1. Either take the row count from the loaded MonLvl table or keep 110 with the comment "MonLvl's last row (FUN_005a1c70 0x5a1cf5..0x5a1d1c)" and drop the "the oracle shows" wording. Also the floor of 1 (level 0 counts as 1) is not modelled; no reachable boss has level 0 (S), say so or add `std::max(level, 1)`.
+3. **LOW: the draft's honest limits** should replace "clamp 110 source (U)" with the read above, and say the length is added to whatever 0x38 the unit had (Ghostly's 150 too: d2d's single `elem_len` keeps whichever mod comes last; whether a real boss carries both is U).
