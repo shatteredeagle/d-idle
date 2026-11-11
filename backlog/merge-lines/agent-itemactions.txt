@@ -1,3 +1,0 @@
-BACKLOG: TASK-282 itemactions: inventory item action menu (equip, mark for sale, trash) queued for the bot, offline only, nothing verified live (docs/inventory-actions.md)
-INDEX: docs/inventory-actions.md - inventory page item action menu: request model, open opportunity, trash primitive, API schema 3, live checks
-CHANGELOG: Inventory page: click an item for a menu (equip, mark for sale, keep, trash); the bot performs queued actions at a calm moment, in town or in the field; trash drops the item on the ground and the pickup leaves it alone.
