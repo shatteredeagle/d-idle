@@ -1,0 +1,20 @@
+{
+ "schema": 3,
+ "inTown": true,
+ "class": "Paladin",
+ "gold": 1200,
+ "stashGold": 50,
+ "equipment": {},
+ "backpack": [],
+ "stash": [],
+ "belt": [],
+ "pins": [],
+ "queue": [],
+ "recent": [],
+ "merc": {
+  "state": "none",
+  "owned": false,
+  "alive": false,
+  "equipment": {}
+ }
+}

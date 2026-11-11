@@ -1,0 +1,26 @@
+/* Merc paper doll (inventory-merc.js, docs/research/merc-gear.md): the hero doll's look on a 8 by 5 grid, four slots.
+   Drawn mode only; game art for the merc panel (a new key) is a later change. */
+@layer components {
+  .inv-merc { margin-block-start: var(--d-sp-3); }
+  .inv-merc-fold > summary { cursor: pointer; font: 600 var(--d-fs-2)/var(--d-lh-tight) var(--d-font-display); }
+  .inv-merc-body { display: grid; gap: var(--d-sp-2); padding-block-start: var(--d-sp-2); }
+  .inv-merc-body p { margin: 0; }
+  .inv-merc-head { display: flex; flex-wrap: wrap; gap: var(--d-sp-1) var(--d-sp-3); align-items: baseline; }
+  .inv-merc-head h3 { margin: 0; font: 600 var(--d-fs-3)/var(--d-lh-tight) var(--d-font-display); }
+  .d-doll[data-owner="merc"] { grid-template-rows: none; grid-auto-rows: var(--cell);
+    grid-template-areas:
+      "mrhand mrhand . mhead  mhead  . mlhand mlhand"
+      "mrhand mrhand . mhead  mhead  . mlhand mlhand"
+      "mrhand mrhand . mtorso mtorso . mlhand mlhand"
+      "mrhand mrhand . mtorso mtorso . mlhand mlhand"
+      ".      .      . mtorso mtorso . .      ."; }
+  .d-doll[data-owner="merc"][data-state="dead"] { opacity: .7; }
+  .d-slot2[data-owner="merc"] { cursor: default; }
+  .d-slot2[data-slot="mhead"] { grid-area: mhead; } .d-slot2[data-slot="mtorso"] { grid-area: mtorso; }
+  .d-slot2[data-slot="mrhand"] { grid-area: mrhand; } .d-slot2[data-slot="mlhand"] { grid-area: mlhand; }
+  .d-slot2[data-state="na"] { opacity: .45; border-style: dashed; box-shadow: none; }
+  .d-slot2[data-state="na"] .d-badge { position: absolute; inset-block-start: 2px; inset-inline-end: 3px; }
+  .d-doll[data-owner="merc"] .d-slot2 .ico, .d-doll[data-owner="merc"] .d-slot2 .ghost { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: contain; pointer-events: none; }
+  .d-doll[data-owner="merc"] .d-slot2 .ghost { opacity: .4; }
+  .d-doll[data-owner="merc"] .d-slot2[data-shown] .sil, .d-doll[data-owner="merc"] .d-slot2[data-shown] .nm { display: none; }
+}
