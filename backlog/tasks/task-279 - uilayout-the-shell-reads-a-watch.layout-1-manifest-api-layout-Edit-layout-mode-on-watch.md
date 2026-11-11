@@ -1,10 +1,13 @@
 ---
 id: TASK-279
-title: 'uilayout: the shell reads a watch.layout/1 manifest, /api/layout, Edit layout mode on /watch'
-status: Proposed
+title: >-
+  uilayout: the shell reads a watch.layout/1 manifest, /api/layout, Edit layout
+  mode on /watch
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T00:07:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature

@@ -2,6 +2,7 @@ package combat
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"sort"
 	"time"
@@ -255,7 +256,7 @@ func (f *Fighter) fightTick(ft *FightTelemetry, st *fightState, start time.Time,
 	f.info("fight.tick", "ticks", st.ticks, "attacks", st.casts, "moves", moves, "backoffs", st.backoffsAll,
 		"approaches", st.approach, "kites", st.kitesAll, "dodges", st.dodges+st.mdodges, "maxHostiles", st.maxHostiles,
 		"firstAttackSec", first, "sec", int(el.Seconds()), "kills", res.Kills, "killsPerMin", perMin(res.Kills, el),
-		"retreat", st.retreatWhy, "lastNoCast", st.lastNoCast)
+		"retreat", st.retreatWhy, "lastNoCast", st.lastNoCast, "end", ft.End, "remaining", ft.Remaining)
 }
 
 func perMin(n int, d time.Duration) float64 {
@@ -263,4 +264,35 @@ func perMin(n int, d time.Duration) float64 {
 		return 0
 	}
 	return float64(n) / d.Minutes()
+}
+
+// noteEnd records how a fight ended and what was left: end is cleared (nothing alive in scope), the loop exit that
+// stopped it with hostiles left (timeout, noTargets = all ignored or avoided, rankEmpty, targetGone), or the
+// survival result (dead, townPortal, chicken, error). remaining counts hostiles in scope on the last look, ignored
+// ones included: remaining above 0 with end=noTargets is the "left the rest alive" case.
+func (f *Fighter) noteEnd(ft *FightTelemetry, st *fightState, sp fightSpec, s *d2.Snapshot, err error) {
+	if s != nil && s.Player != nil {
+		for _, h := range Hostiles(s, f.hostileCtx(s.Player)) {
+			if f.inRange(h, sp, s.Player) {
+				ft.Remaining++
+			}
+		}
+		ft.LifePct, ft.ManaPct = pct(s.Player.Life, s.Player.MaxLife), pct(s.Player.Mana, s.Player.MaxMana)
+	}
+	switch {
+	case errors.Is(err, ErrDead):
+		ft.End = "dead"
+	case errors.Is(err, ErrTownPortal):
+		ft.End = "townPortal"
+	case errors.Is(err, ErrChicken):
+		ft.End = "chicken"
+	case err != nil:
+		ft.End = "error"
+	case st.endWhy == "noTargets" && ft.Remaining == 0, st.endWhy == "" && ft.Remaining == 0:
+		ft.End = "cleared"
+	case st.endWhy == "":
+		ft.End = "unknown"
+	default:
+		ft.End = st.endWhy
+	}
 }

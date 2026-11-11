@@ -1,11 +1,10 @@
 ---
 id: TASK-252
 title: 'smepace: docs/sme Act 1 pace table, mana formulas, kit prices'
-status: Done
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
-updated_date: '2026-11-11T16:21:00Z'
 labels:
   - docs
   - research

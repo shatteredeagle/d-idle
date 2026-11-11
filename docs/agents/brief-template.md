@@ -17,6 +17,8 @@ Fill one line each; leave out a line that does not apply.
 11. Report length: under 250 words unless stated.
 12. Trailers: `Claude-Session: <url>`, `Change: <card>`. Rules: `~/code/d2lod-bot/docs/agents/rules-short.md`.
 
+Do not ask for shared-file lines (BACKLOG, CHANGELOG, INDEX, OWNERS, STATUS): the merge generates them from the task card, so line 3 (the task) must name a card whose title, `result:` and acceptance boxes the agent keeps true. A line 12 `Change:` trailer is optional.
+
 ## Brief size budget
 - The brief is at most 12 lines and about 250 words. Paths, not pasted content. If the brief needs more, the task file is missing detail: put it in the task.
 - Name the model when it is not Sonnet (see the table in rules-short.md). Haiku for mechanical, Opus singly, Fable only on the user's word.

@@ -1,10 +1,13 @@
 ---
 id: TASK-291
-title: 'electronmac: Electron app macOS universal dmg+zip, template tray, darwin behaviours, CI job'
-status: Proposed
+title: >-
+  electronmac: Electron app macOS universal dmg+zip, template tray, darwin
+  behaviours, CI job
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:47:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature

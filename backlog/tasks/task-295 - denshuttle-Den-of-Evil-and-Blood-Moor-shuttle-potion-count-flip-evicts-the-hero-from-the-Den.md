@@ -1,10 +1,13 @@
 ---
 id: TASK-295
-title: 'denshuttle: Den of Evil and Blood Moor shuttle: potion-count flip evicts the hero from the Den'
-status: Proposed
+title: >-
+  denshuttle: Den of Evil and Blood Moor shuttle: potion-count flip evicts the
+  hero from the Den
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T02:33:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - bot
   - bot-fix

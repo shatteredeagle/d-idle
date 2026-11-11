@@ -1,10 +1,13 @@
 ---
 id: TASK-298
-title: 'identify: inventory identify commands (item, buy scrolls, identify all at Cain) queued for the bot'
-status: Proposed
+title: >-
+  identify: inventory identify commands (item, buy scrolls, identify all at
+  Cain) queued for the bot
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T13:46:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - watch
   - feature

@@ -1,2 +1,0 @@
-INDEX: [digest/](digest/bot-loop-goals.md): seven area digests (bot loop, combat, nav, town and loot, watch UI, d2d fork and lab, merge and CI), each at most 80 lines; linked from START-HERE (TASK-310).
-INDEX: docs/agents/rules-short.md, docs/process/coordinator-efficiency.md, tools/play-sandbox/deploy-window.sh (deploy windows)
