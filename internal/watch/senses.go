@@ -58,6 +58,9 @@ type SenseCoverage struct {
 	Cover  int      `json:"cover"`
 	Cells  [][3]int `json:"cells"`
 	Total  int      `json:"total"`
+	Drawn  int      `json:"drawn"`
+	Seen   int      `json:"seen"`
+	Failed int      `json:"failed"`
 	Target *[2]int  `json:"target,omitempty"`
 	State  string   `json:"state"`
 	Legs   int      `json:"legs"`
@@ -170,7 +173,7 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 		r.Hero = &h
 		if cs, ok := s.Src.(CoverageSource); ok {
 			if c, ok := cs.CoverageOf(); ok {
-				sc := &SenseCoverage{Area: c.Area, Cell: c.Cell, Cover: c.Cover, Cells: c.Cells, Total: c.Total, State: "roaming", Legs: c.Legs, Held: c.Held}
+				sc := &SenseCoverage{Area: c.Area, Cell: c.Cell, Cover: c.Cover, Cells: c.Cells, Total: c.Total, Drawn: c.Drawn, Seen: c.Seen, Failed: c.Failed, State: "roaming", Legs: c.Legs, Held: c.Held}
 				if c.Explored {
 					sc.State = "explored"
 				}

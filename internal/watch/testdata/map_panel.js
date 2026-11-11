@@ -34,6 +34,7 @@ assert.ok(P.trailAlpha(0, 60000) > P.trailAlpha(30000, 60000) && P.trailAlpha(60
 assert.notStrictEqual(P.trailSig(plan, 60000, 2), P.trailSig(P.trailPlan(tr, 30000), 30000, 2), 'window change redraws');
 assert.strictEqual(P.trailSig(plan, 60000, 2), P.trailSig(P.trailPlan(tr.slice(), 60000), 60000, 2), 'same trail, same signature: no redraw');
 assert.strictEqual(P.coverSummary({ state: 'roaming', total: 118, legs: 17, cells: [[0, 0, 1], [1, 1, 1], [2, 2, 2], [3, 3, 0]] }), 'roam: 2/118 points seen, 1 failed, leg 17');
+assert.strictEqual(P.coverSummary({ state: 'roaming', total: 1593, drawn: 800, seen: 119, failed: 0, legs: 126, cells: [[0, 0, 0]] }), 'roam: 119/1593 points seen, 0 failed, leg 126, drawing 800 of 1593');
 assert.strictEqual(P.coverSummary(null), '');
 {
   const store = { trailwin: '30000' }, timers = [], calls = [];

@@ -85,10 +85,10 @@ func TestCoverageOnlyForCurrentArea(t *testing.T) {
 		t.Fatal(err)
 	}
 	cells := make([][3]int, MaxCoverCells+5)
-	p.SetCoverage(Coverage{Area: 1, Cells: cells})
+	p.SetCoverage(Coverage{Area: 1, Cell: 8, Cells: cells})
 	c, ok := p.CoverageOf()
-	if !ok || len(c.Cells) != MaxCoverCells {
-		t.Fatalf("cap: %v %d", ok, len(c.Cells))
+	if !ok || len(c.Cells) != MaxCoverCells || c.Total != len(cells) || c.Drawn != MaxCoverCells || c.Cell != 16 {
+		t.Fatalf("cap: %v %d drawn %d total %d cell %d", ok, len(c.Cells), c.Drawn, c.Total, c.Cell)
 	}
 	p.SetCoverage(Coverage{Area: 2, Cells: cells})
 	if _, ok := p.CoverageOf(); ok {
@@ -97,5 +97,47 @@ func TestCoverageOnlyForCurrentArea(t *testing.T) {
 	p.SetCoverage(Coverage{})
 	if _, ok := p.CoverageOf(); ok {
 		t.Fatal("empty clears")
+	}
+}
+
+// Regression (live Blood Moor, 1593 roam points sorted left to right): the grid must span the whole zone, and a
+// downsample must keep the full extent instead of truncating to the west strip.
+func TestCoverageSpansWholeZone(t *testing.T) {
+	p := &Publisher{now: func() time.Time { return t0 }}
+	lm := &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	if err := p.Observe(lm, "T", d2map.Point{X: 1, Y: 1}); err != nil {
+		t.Fatal(err)
+	}
+	build := func(n int) [][3]int { // a 40-column synthetic level, points sorted by x then y like nav.samplePoints
+		var cs [][3]int
+		for i := 0; i < n; i++ {
+			cs = append(cs, [3]int{i / 40 * 7, i % 40 * 7, i % 3 % 2})
+		}
+		return cs
+	}
+	for _, n := range []int{1593, 5000} {
+		cs := build(n)
+		p.SetCoverage(Coverage{Area: 1, Cell: 7, Cells: cs})
+		c, _ := p.CoverageOf()
+		maxX := cs[len(cs)-1][0]
+		got := 0
+		for _, q := range c.Cells {
+			got = max(got, q[0])
+		}
+		if got < maxX-14 || c.Total != n || c.Drawn != len(c.Cells) || c.Drawn > MaxCoverCells {
+			t.Fatalf("n=%d: east edge %d of %d, %+v", n, got, maxX, c.Drawn)
+		}
+		if n == 1593 && (c.Drawn != n || c.Cell != 7) {
+			t.Fatalf("a level under the cap is published whole: %d cell %d", c.Drawn, c.Cell)
+		}
+		seen := 0
+		for _, q := range cs {
+			if q[2] == CoverSeen {
+				seen++
+			}
+		}
+		if c.Seen != seen {
+			t.Fatalf("seen counts all points: %d vs %d", c.Seen, seen)
+		}
 	}
 }
