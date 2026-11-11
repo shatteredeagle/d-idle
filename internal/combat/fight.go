@@ -193,6 +193,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			f.info(ft.Finish(res))
 			f.addFight(&ft, st, res)
 			f.noteFightEnd(&ft, res, err)
+			f.noteSummary(&ft, res, err)
 		}
 	}()
 	defer func() { res.Elapsed = f.now().Sub(start) }()

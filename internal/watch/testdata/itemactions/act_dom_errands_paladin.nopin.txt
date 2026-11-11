@@ -1,0 +1,10 @@
+div [aria-label=Identify commands role=group]
+  div.err-buy []
+    label.err-count [for=err-n] "Scrolls"
+    input.err-n [aria-label=How many identify scrolls to buy (empty fills the tome) inputmode=numeric max=20 min=0 placeholder=fill (15) step=1 type=number]
+    button.act [data-act=buyid] "Buy identify scrolls"
+    p.d-hint.err-hint [] "Tome of Identify: 5 of 20, 1 loose scroll. Never spends below the repair and potion reserve."
+  div.err-cain [data-state=open]
+    button.act [data-act=cain] "Identify all (Cain)"
+    p.d-hint.err-hint.teaser [] "4 unidentified items carried. Free: no scroll is used."
+  p.d-hint.err-note [role=status]

@@ -1,0 +1,30 @@
+div []
+  ul.d-list []
+    li [data-state=queued]
+      span.t [] "queued"
+      span.txt [] "Identify Magic Ring"
+      button.act.act-cancel [data-key=cancel-identify-1] "Cancel"
+    li [data-state=queued]
+      span.t [] "queued"
+      span.txt [] "Buy 12 identify scrolls"
+      span.sub [] "waits until the hero is in town"
+      button.act.act-cancel [data-key=cancel-buyid-0] "Cancel"
+    li [data-state=doing]
+      span.t [] "doing"
+      span.txt [] "Identify all at Deckard Cain"
+    li [data-state=done]
+      span.t [] "done"
+      span.txt [] "Fill the Tome of Identify"
+      span.sub [] "bought 12 for 600 gold, short of gold for the other 3"
+    li [data-state=done]
+      span.t [] "done"
+      span.txt [] "Identify all at Deckard Cain"
+      span.sub [] "Deckard Cain identified 3 items for free"
+    li [data-state=failed]
+      span.t [] "failed"
+      span.txt [] "Identify Jewel"
+      span.sub [] "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+    li [data-state=failed]
+      span.t [] "failed"
+      span.txt [] "Buy identify scrolls"
+      span.sub [] "short of gold: nothing could be bought above the repair and kit reserve"

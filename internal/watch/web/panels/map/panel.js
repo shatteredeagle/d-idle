@@ -27,7 +27,7 @@ export function nbParam(cache) {
 }
 
 // Trail windows (ms) the selector offers; the default is one minute. A stored value outside the list is ignored.
-export const TRAIL_WINDOWS = [30000, 60000, 300000];
+export const TRAIL_WINDOWS = [30000, 60000, 300000, 1800000];
 export const STALL_MS = 3000;
 
 export function trailWindow(stored) {
@@ -47,10 +47,45 @@ export function trailPlan(trail, win) {
   return { pts, stalls };
 }
 
+// Activity colours: tokens of the design system, so the dark map and the stream overlay both read them. Index = the
+// `a` code of a trail point (legend order of the payload: walk, combat, town, farm, flee, rest).
+export const ACT_TOKEN = ['--d-info', '--d-bad', '--d-accent', '--d-good', '--d-warn', '--d-text-2'];
+export const ACT_FALLBACK = ['#7ab0e8', '#ec7d6c', '#c7a44a', '#6fbf73', '#e0a030', '#a89d8a'];
+const ACT_NAME = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+
+// Share of the window per activity, and 'stall' for the time spent standing still over STALL_MS, as one line:
+// 'walk 41% | combat 33% | stall 5%'. Time of a sample runs until the next sample (the newest runs to the reply).
+export function activityShare(plan, names) {
+  const nm = names && names.length ? names : ACT_NAME, tot = {}, P = plan.pts;
+  let all = 0;
+  for (let i = 0; i < P.length; i++) {
+    const dur = P[i].ago - (i + 1 < P.length ? P[i + 1].ago : 0);
+    if (dur <= 0 || (P[i + 1] && P[i + 1].e)) continue;
+    const key = dur > STALL_MS ? 'stall' : (nm[P[i].a || 0] || 'walk');
+    tot[key] = (tot[key] || 0) + dur; all += dur;
+  }
+  if (!all) return '';
+  return Object.keys(tot).sort((a, b) => tot[b] - tot[a]).map((k) => k + ' ' + Math.round(tot[k] * 100 / all) + '%').join(' \u00b7 ');
+}
+
+// The Events filter: 'key' marks kills, level-ups, deaths and big loot; 'all' every event; 'off' none.
+export const EVENT_MODES = ['key', 'all', 'off'];
+export function eventShown(ev, mode) {
+  if (mode === 'off') return false;
+  if (mode === 'all') return ev.k !== 'fight';
+  return ev.k === 'kill' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
+}
+
+// The tooltip text of an event, with its fight summary when the server knew one.
+export function eventText(ev) {
+  const f = ev.f;
+  return (ev.t || ev.k) + (f ? ', ' + f.sec + ' s fight, life ' + f.life + '% (min ' + f.min + '%), end=' + (f.end || '?') + ', ' + f.kills + (f.kills === 1 ? ' kill' : ' kills') : '');
+}
+
 // Cheap change test: the plan is redrawn only when this string moves.
-export function trailSig(plan, win, area) {
+export function trailSig(plan, win, area, ne) {
   const l = plan.pts[plan.pts.length - 1];
-  return [area, win, plan.pts.length, l ? l.x + ',' + l.y + ',' + (plan.stalls.length ? plan.stalls[plan.stalls.length - 1].ms : 0) : '-'].join('|');
+  return [area, win, ne || 0, plan.pts.length, l ? l.x + ',' + l.y + ',' + (plan.stalls.length ? plan.stalls[plan.stalls.length - 1].ms : 0) : '-'].join('|');
 }
 
 // Fade: the newest end is opaque, the oldest end of the window is faint (never invisible).
@@ -89,7 +124,7 @@ export function mount(root, ctx) {
   let win = 60000;
   try { win = trailWindow(tstore.get()); } catch (e) { /* storage blocked */ }
   const winBtns = TRAIL_WINDOWS.map((ms) => {
-    const b = ctx.el('button', 'd-btn', ms < 60000 ? '30 s' : ms === 60000 ? '1 min' : '5 min');
+    const b = ctx.el('button', 'd-btn', ms < 60000 ? '30 s' : ms < 1800000 ? ms / 60000 + ' min' : '30 min');
     b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = 'trail-' + ms; b.setAttribute('aria-label', 'Trail window ' + b.textContent);
     return b;
   });
@@ -111,11 +146,22 @@ export function mount(root, ctx) {
     covBtn.setAttribute('aria-pressed', String(covOn));
     covText(); draw();
   });
-  const legend = ctx.el('p', 'note trail-legend'), tip = ctx.el('p', 'note trail-tip');
-  ctx.body.append(covLine, legend, tip);
-  ctx.actions.append(covBtn, ...winBtns);
+  const evStore = ctx.store('events');
+  let evMode = 'key';
+  try { const v = evStore.get(); if (EVENT_MODES.indexOf(v) >= 0) evMode = v; } catch (e) { /* storage blocked */ }
+  const evBtn = ctx.el('button', 'd-btn', 'Events: ' + evMode);
+  evBtn.type = 'button'; evBtn.dataset.size = 'sm'; evBtn.dataset.key = 'events'; evBtn.setAttribute('aria-label', 'Event markers on the trail: key events, all, or off');
+  evBtn.addEventListener('click', () => {
+    evMode = EVENT_MODES[(EVENT_MODES.indexOf(evMode) + 1) % EVENT_MODES.length];
+    try { evStore.set(evMode); } catch (e) { /* storage blocked */ }
+    evBtn.textContent = 'Events: ' + evMode;
+    draw();
+  });
+  const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
+  ctx.body.append(covLine, legend, share, tip);
+  ctx.actions.append(covBtn, evBtn, ...winBtns);
   covText();
-  let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [];
+  let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
   function setWindow(ms) {
     win = ms;
     try { tstore.set(String(ms)); } catch (e) { /* storage blocked */ }
@@ -125,8 +171,9 @@ export function mount(root, ctx) {
   function replan(force) {
     plan = trailPlan(trail, win);
     winBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(TRAIL_WINDOWS[i] === win)));
-    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (bright is newest, dots are stops over 3 s, ticks are zone entries).' : '';
-    const s = trailSig(plan, win, trailArea);
+    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (blue walk, red combat, gold town, green farm, orange flee, grey rest; white dots are stops over 3 s, ticks are zone entries).' : '';
+    share.textContent = activityShare(plan, legendNames);
+    const s = trailSig(plan, win, trailArea, evs.length);
     if (force || s !== sig) { sig = s; draw(); }
   }
 
@@ -207,39 +254,61 @@ export function mount(root, ctx) {
   }
   // The trail sits under the hero cross and the units. Each segment is stroked on its own so its alpha follows its age.
   function drawTrail(at) {
-    stallHits = [];
+    stallHits = []; evHits = [];
     if (!plan.pts.length) return;
-    const col = css('--d-info', '#7ab0e8'), warn = css('--d-warn', '#e0a030'), P = plan.pts;
+    const P = plan.pts, col = (k) => css(ACT_TOKEN[k] || ACT_TOKEN[0], ACT_FALLBACK[k] || ACT_FALLBACK[0]);
     g.save();
-    g.lineWidth = 2; g.lineCap = 'round'; g.strokeStyle = col;
+    g.lineCap = 'round';
     for (let i = 1; i < P.length; i++) {
       if (P[i].e) continue;
-      const a = at(P[i - 1]), b = at(P[i]);
-      g.globalAlpha = trailAlpha((P[i - 1].ago + P[i].ago) / 2, win);
+      const k = P[i].a || 0, a = at(P[i - 1]), b = at(P[i]);
+      g.strokeStyle = col(k); g.lineWidth = k === 1 ? 4 : 2; // combat is the thick red segment
+      g.globalAlpha = k === 1 ? Math.max(0.6, trailAlpha((P[i - 1].ago + P[i].ago) / 2, win)) : trailAlpha((P[i - 1].ago + P[i].ago) / 2, win);
       g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
     }
-    g.globalAlpha = 1; g.strokeStyle = col; g.lineWidth = 2;
-    P.forEach((p) => {
-      if (!p.e) return;
-      const a = at(p); // zone entry: a short tick across the path
-      g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke();
+    g.globalAlpha = 1; g.lineWidth = 2;
+    P.forEach((p, i) => {
+      const a = at(p);
+      if (p.e) { g.strokeStyle = col(0); g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke(); }
+      if ((p.a || 0) === 1 && (i === 0 || (P[i - 1].a || 0) !== 1)) { // a fight starts: small crossed swords
+        g.strokeStyle = col(1); g.lineWidth = 2;
+        g.beginPath(); g.moveTo(a[0] - 5, a[1] - 5); g.lineTo(a[0] + 5, a[1] + 5); g.moveTo(a[0] + 5, a[1] - 5); g.lineTo(a[0] - 5, a[1] + 5); g.stroke();
+        g.beginPath(); g.moveTo(a[0] - 3, a[1] + 1); g.lineTo(a[0] + 3, a[1] + 1); g.stroke();
+      }
     });
-    g.fillStyle = warn;
+    g.fillStyle = css('--d-text', '#eee');
     plan.stalls.forEach((s) => {
       const a = at(s);
       g.globalAlpha = trailAlpha(s.ago, win);
       g.beginPath(); g.arc(a[0], a[1], 3, 0, 6.2832); g.fill();
-      stallHits.push({ x: a[0], y: a[1], ms: s.ms });
+      stallHits.push({ x: a[0], y: a[1], text: 'Stood still ' + (s.ms / 1000).toFixed(1) + ' s here.' });
     });
+    g.globalAlpha = 1;
+    evs.forEach((e) => { if (e.ago <= win && eventShown(e, evMode)) drawEvent(at(e), e); });
     g.restore();
+  }
+  // Glyphs by kind, bigger when the event matters (boss or unique kill, level-up, death).
+  function drawEvent(a, e) {
+    const r = (e.big || e.k === 'levelup' || e.k === 'death') ? 6 : 4, x = a[0], y = a[1];
+    g.lineWidth = 2; g.lineCap = 'round';
+    switch (e.k) {
+      case 'kill': g.strokeStyle = css('--d-bad', '#ec7d6c'); g.beginPath(); g.moveTo(x - r, y - r); g.lineTo(x + r, y + r); g.moveTo(x + r, y - r); g.lineTo(x - r, y + r); g.stroke(); break;
+      case 'death': g.strokeStyle = css('--d-text', '#eee'); g.fillStyle = css('--d-bad', '#ec7d6c'); g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.fill(); g.stroke(); break;
+      case 'damage': g.fillStyle = css('--d-warn', '#e0a030'); g.beginPath(); g.moveTo(x, y - r); g.lineTo(x + r, y + r); g.lineTo(x - r, y + r); g.closePath(); g.fill(); break;
+      case 'potion': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y + 1, r - 1, 0, 6.2832); g.moveTo(x, y - r + 1); g.lineTo(x, y - r - 2); g.stroke(); break;
+      case 'loot': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.arc(x, y, r - 1, 0, 6.2832); g.fill(); break;
+      case 'levelup': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); for (let i = 0; i < 10; i++) { const rr = i % 2 ? r / 2 : r, an = i * Math.PI / 5 - Math.PI / 2; g.lineTo(x + rr * Math.cos(an), y + rr * Math.sin(an)); } g.closePath(); g.fill(); break;
+      default: return;
+    }
+    evHits.push({ x, y, text: eventText(e) });
   }
   // Hover or tap on a stop dot names how long the hero stood there.
   function showStall(ev) {
     const r = cv.getBoundingClientRect(), q = cv.width / (r.width || cv.width);
     const px = (ev.clientX - (r.left || 0)) * q, py = (ev.clientY - (r.top || 0)) * q;
     let best = null, bd = 12 * (window.devicePixelRatio || 1);
-    stallHits.forEach((h) => { const d = Math.hypot(h.x - px, h.y - py); if (d <= bd) { bd = d; best = h; } });
-    tip.textContent = best ? 'Stood still ' + (best.ms / 1000).toFixed(1) + ' s here.' : '';
+    evHits.concat(stallHits).forEach((h) => { const d = Math.hypot(h.x - px, h.y - py); if (d <= bd) { bd = d; best = h; } });
+    tip.textContent = best ? best.text : '';
     cv.title = tip.textContent;
   }
   // Neighbours arrive with their map only when the page lacks that version.
@@ -291,7 +360,7 @@ export function mount(root, ctx) {
       units = r.units || [];
       cov = r.coverage && r.coverage.area === (map && map.areaId) ? r.coverage : null;
       covText();
-      if (r.trail) { trail = r.trail; trailArea = r.trail_area || 0; } else if (!r.waiting) { trail = []; }
+      if (r.trail) { trail = r.trail; trailArea = r.trail_area || 0; evs = r.events || []; legendNames = r.trail_legend || []; } else if (!r.waiting) { trail = []; evs = []; }
       note.textContent = r.waiting ? 'Waiting for the first area...' : 'Legend: cross hero, diamond waypoint, square exit' +
         (nbs.length ? '; dimmer areas are the ones next door' : '') + '. Fog clears as the hero walks.';
       replan(true);
