@@ -1,7 +1,7 @@
 ---
 id: TASK-319
 title: 'fid-batch5: decomp batch 5 summary: deviations table and recommended bot changes'
-status: Proposed
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:51:00Z'
@@ -19,6 +19,7 @@ owns:
   - "tools/emu/d9_*"
 exclusive: []
 contracts: []
+result: "Batch summary docs/probes/fid/batch5.md with deviations table and proposed bot changes; tools d9_*. Offline (2026-11-11, agent decomp9)."
 ---
 
 ## Description
@@ -31,6 +32,6 @@ Consumer: TASK-142 and TASK-226 (the recommendations).
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 batch5.md with deviations table and proposed bot changes
-- [ ] #2 queued for merge
+- [x] #1 batch5.md with deviations table and proposed bot changes
+- [x] #2 queued for merge
 <!-- AC:END -->
