@@ -1,10 +1,13 @@
 ---
 id: TASK-310
-title: 'processrules: agent sizing, brief rules, deploy windows, research hygiene, efficiency checklist'
-status: Proposed
+title: >-
+  processrules: agent sizing, brief rules, deploy windows, research hygiene,
+  efficiency checklist
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T16:12:00Z'
+updated_date: '2026-11-11T17:11:00Z'
 labels:
   - docs
   - chore
