@@ -1,10 +1,13 @@
 ---
 id: TASK-311
-title: 'docsarchive: archive finished research docs older than 7 days with no inbound link'
-status: Proposed
+title: >-
+  docsarchive: archive finished research docs older than 7 days with no inbound
+  link
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T16:12:00Z'
+updated_date: '2026-11-11T17:02:00Z'
 labels:
   - docs
   - chore
