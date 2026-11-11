@@ -41,17 +41,19 @@ export function partParser(onPart) {
 
 // videoController is the connection logic without the DOM: o.open(onFrame, onEnd) starts a stream and returns its
 // close function; o.later(fn, ms) / o.cancel(id) are the timers; o.state(name) reports connecting, live,
-// reconnecting, down or paused; o.now() is the clock. stall 0 turns the watchdog off (the <img> fallback cannot see
+// reconnecting, down or paused; o.now() is the clock. o.stall (ms, or a function giving them) 0 turns the watchdog off (the <img> fallback cannot see
 // frames).
 export function videoController(o) {
-  const stall = o.stall === undefined ? 3000 : o.stall, hideAfter = o.hideAfter || 10000, downAfter = o.downAfter || 5;
+  const stallMs = () => (typeof o.stall === 'function' ? o.stall() : o.stall === undefined ? 3000 : o.stall);
+  const hideAfter = o.hideAfter || 10000, downAfter = o.downAfter || 5;
   let close = null, gen = 0, tries = 0, stallT = 0, retryT = 0, hideT = 0, hidden = false, last = 0, state = '';
   const stamps = [];
   const set = (s) => { if (s !== state) { state = s; o.state(s); } };
   const cancel = (t) => { if (t) o.cancel(t); return 0; };
   function arm() {
     stallT = cancel(stallT);
-    if (stall && !hidden && close) stallT = o.later(() => { stallT = 0; fail(); }, stall);
+    const ms = stallMs();
+    if (ms && !hidden && close) stallT = o.later(() => { stallT = 0; fail(); }, ms);
   }
   function drop() {
     gen++;
@@ -92,7 +94,7 @@ export function videoController(o) {
     // fps over the last 2 s of frames
     fps() { const n = stamps.length; return n < 2 ? 0 : (1000 * (n - 1)) / Math.max(1, stamps[n - 1] - stamps[0]); },
     // focus, pageshow, online: a stream that still delivers frames is left alone
-    wake() { if (hidden) return; if (state === 'live' && (!stall || o.now() - last < stall)) return; reconnect(); },
+    wake() { if (hidden) return; if (state === 'live' && (!stallMs() || o.now() - last < stallMs())) return; reconnect(); },
     visibility(isHidden) {
       if (isHidden) {
         hidden = true;

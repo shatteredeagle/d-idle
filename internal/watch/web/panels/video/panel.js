@@ -55,7 +55,7 @@ export function mount(root, ctx) {
   }
 
   // fetch path: each part becomes an object URL on the <img>; while one decodes only the newest waits (latest wins)
-  const streaming = streamingSupported();
+  let streaming = streamingSupported(), blobErrs = 0;
   let shown = '', busy = false, pending = null;
   function show(bytes, type) {
     if (busy) { pending = [bytes, type]; return; }
@@ -80,11 +80,16 @@ export function mount(root, ctx) {
     return () => { imgEnd = imgFrame = null; };
   }
   shot.addEventListener('load', () => {
-    if (streaming) decoded(); else if (imgFrame) imgFrame();
+    if (streaming) { blobErrs = 0; decoded(); } else if (imgFrame) imgFrame();
     shot.hidden = false; wait.hidden = true;
   });
   shot.addEventListener('error', () => {
-    if (streaming) { decoded(); return; }
+    if (streaming) {
+      decoded();
+      // frames that never decode (a page policy without blob: images): fall back to the browser's own MJPEG <img>
+      if (++blobErrs >= 3) { streaming = false; ctl.reconnect(); }
+      return;
+    }
     shot.hidden = true; wait.hidden = false;
     if (imgEnd) imgEnd();
   });
@@ -92,8 +97,8 @@ export function mount(root, ctx) {
   const timers = new Map();
   let tick = 0;
   const ctl = videoController({
-    stall: streaming ? 3000 : 0,
-    open: streaming ? openFetch : openImg,
+    stall: () => (streaming ? 3000 : 0),
+    open: (onFrame, onEnd) => (streaming ? openFetch(onFrame, onEnd) : openImg(onFrame, onEnd)),
     later(fn, ms) { const id = ++tick; timers.set(id, true); ctx.later(() => { if (timers.delete(id)) fn(); }, ms); return id; },
     cancel(id) { timers.delete(id); },
     now: () => Date.now(),

@@ -25,7 +25,7 @@ var VideoRoutes = []string{"/stream", "/shot.jpg"}
 
 // pageCSP: scripts and styles only from this origin, no inline code; the page talks to its own origin and, for the
 // answer route, to another port of the same host, so connect-src allows http(s) generally.
-const pageCSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' http: https:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+const pageCSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' http: https:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" // blob: the video panel shows each streamed frame as an object URL
 
 func writeJSON(w http.ResponseWriter, code int, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")

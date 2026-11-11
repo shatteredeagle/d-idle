@@ -268,6 +268,7 @@ Fixes:
 - The watch video writes each part under a per-part deadline (`VideoOptions.WriteTimeout`, 10 s): a viewer that stops
   reading is dropped and frees its slot, and the capture stops after the linger; a live stream renews the deadline at
   every part, so it lives as long as it is read (`TestVideoStreamOutlivesTheWriteDeadline`).
+- The page CSP allows `blob:` images (each streamed frame is an object URL); frames that never decode fall back to the plain `<img>` after three errors.
 - Tests: node `testdata/video_panel.js` (fake clock: stall, backoff, down and Retry, hidden then closed, visible then
   reopened, wake on a stale stream, the part parser on 7-byte chunks), Go `videoresume_test.go`.
 
