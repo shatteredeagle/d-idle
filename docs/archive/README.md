@@ -12,3 +12,11 @@ Their internal facts were tagged V/S/U when written and are not re-verified. Pat
 - `BACKLOG-2026-10-30.md` : the backlog before the 2026-10-31 trim (current list: [../BACKLOG.md](../BACKLOG.md)).
 - `research/` : finished upstream PR drafts (posted PRs #134, #135, #136; executed review replies; superseded draft v1). Index with status: [../research/README.md](../research/README.md).
 - `merc-farm.md`, `sandbox.md` : superseded or paused-path docs (doctrim, 2026-10-31); the old path keeps a stub.
+
+## Research archive, 2026-11-11 (TASK-311)
+
+Rule (docs/process/coordinator-efficiency.md, rule 8): research older than 7 days with no inbound link (README and INDEX lists do not count) and a finished one-off purpose is moved here with `git mv`; a one-line stub stays at the old path so no link breaks. Nothing is deleted.
+
+Candidates found: 39 research docs older than 7 days with no inbound link by file name. Archived (15, verifier and review one-off reports and one historical note): verify-alignment2, verify-dmgroll4, verifycovmissiles-trace, verifyitemweapons, verifylevelsareas, verifypalaura, verifypalskill2, verifyskamazon-trace, verifyskdruid, verifyteleroom-trace, verifywaypoint2-trace, review-batch2-C-opus, review-community-prs-20261102, review-pr180-20261103, redivivus-sister-project.
+
+Kept on purpose: PR bodies, drafts and evidence packs not yet posted (the upstream batches still use them), verifiers named by another doc (verify-smiteblock, verifypaldur), tool examples, run analyses and docs with a `current` status banner or that decisions link to. Re-run the check later: a doc qualifies when `git grep -F <file name>` finds no file other than the doc itself, the research README, INDEX, CHANGELOG, BACKLOG and STATUS.

@@ -1,0 +1,70 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "lhand",
+   "name": "Shield",
+   "dur": 90,
+   "max": 100,
+   "pct": 90
+  },
+  {
+   "slot": "rhand",
+   "name": "Sword",
+   "dur": 40,
+   "max": 100,
+   "pct": 40
+  },
+  {
+   "slot": "torso",
+   "name": "Plate",
+   "dur": 70,
+   "max": 100,
+   "pct": 70
+  }
+ ],
+ "estimate": 200,
+ "trip": {
+  "state": "ready",
+  "button": {
+   "action": "request",
+   "label": "Repair now",
+   "enabled": true
+  },
+  "gold": 300,
+  "estimate": 200,
+  "need": 260,
+  "kind": "repair",
+  "maxTrips": 2
+ }
+}

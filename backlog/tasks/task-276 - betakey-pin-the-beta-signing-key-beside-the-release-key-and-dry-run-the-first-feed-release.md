@@ -1,10 +1,13 @@
 ---
 id: TASK-276
-title: 'betakey: pin the beta signing key beside the release key and dry-run the first feed release'
-status: Proposed
+title: >-
+  betakey: pin the beta signing key beside the release key and dry-run the first
+  feed release
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T23:47:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - container
   - feature

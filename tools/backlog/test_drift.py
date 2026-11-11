@@ -95,6 +95,14 @@ class Drift(unittest.TestCase):
         r = subprocess.run([sys.executable, "-I", drift.__file__, "--repo", str(self.r), "--ref", "main"], capture_output=True, text=True)
         self.assertEqual((r.returncode, r.stdout), (0, ""))
 
+    def test_summary_is_a_warning_only(self):
+        self.put(1, "one", "Proposed", [1, 1])
+        self.commit("t")
+        r = subprocess.run([sys.executable, "-I", drift.__file__, "--repo", str(self.r), "--ref", "main", "--summary"], capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0)
+        self.assertTrue(r.stdout.startswith("WARN drift: 1 finding(s) (A all boxes ticked but open 1"), r.stdout)
+        self.assertIn("WARN drift: A TASK-1", r.stdout)
+
     def test_no_tasks_dir(self):
         d = tempfile.mkdtemp()
         subprocess.run(["git", "init", "-q", d], check=True)

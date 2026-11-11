@@ -17,7 +17,7 @@ owns:
   - "docs/agents"
 exclusive: []
 contracts: []
-result: "Reading order cut in AGENTS.md (START-HERE, task, area doc; memory doc, glossary, contracts README, full backlog-howto on demand); one-page For agents section at top of docs/backlog-howto.md; docs/agents/brief-template.md (12 lines); ops repo d2-decomp and dispatcher-brief updated. Standing reading 138 KB before, 19 KB after (AGENTS 15.0, START-HERE 4.3, For agents section 1.5; wc -c). NOT done: the two-page per-area digest (AC 1 second half), so AC 1 stays open. Docs only, not verified live."
+result: "Digests now in docs/digest/ (TASK-310). Reading order cut in AGENTS.md (START-HERE, task, area doc; memory doc, glossary, contracts README, full backlog-howto on demand); one-page For agents section at top of docs/backlog-howto.md; docs/agents/brief-template.md (12 lines); ops repo d2-decomp and dispatcher-brief updated. Standing reading 138 KB before, 19 KB after (AGENTS 15.0, START-HERE 4.3, For agents section 1.5; wc -c). NOT done: the two-page per-area digest (AC 1 second half), so AC 1 stays open. Docs only, not verified live."
 ---
 
 ## Description
@@ -30,5 +30,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 reading order cut to START-HERE, task, area doc; a two-page digest of memory facts and glossary terms per area
+- [x] #1 reading order cut to START-HERE, task, area doc; a two-page digest of memory facts and glossary terms per area
 <!-- AC:END -->

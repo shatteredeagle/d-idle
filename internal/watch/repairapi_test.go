@@ -1,9 +1,11 @@
 package watch
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"regexp"
 	"strings"
 	"testing"
@@ -290,5 +292,87 @@ func TestRedrawKeepsScrollOffsets(t *testing.T) {
 	sh, _ := webFS.ReadFile("web/shell.js")
 	if !strings.Contains(string(sh), "window.scrollTo(x, y)") || !strings.Contains(string(sh), "n.scrollTop = t") {
 		t.Error("web/shell.js: keepFocus must restore page and inner scroll offsets")
+	}
+}
+
+// The repair reply only grows: every field of the schema 1 reply (testdata/compat/repair-v1.json, never edited) is in
+// today's reply, the old gear panel logic still finds state/note/short/need, and the new fields sit beside them.
+func TestRepairReplyKeepsEverySchema1Field(t *testing.T) {
+	var v1 map[string]any
+	b, err := os.ReadFile("testdata/compat/repair-v1.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(b, &v1); err != nil {
+		t.Fatal(err)
+	}
+	gear := func() []repair.Cond {
+		c, _ := repair.Classify("torso", "Plate", 7, 100, 30)
+		return []repair.Cond{c}
+	}
+	rc, err := repair.New(repair.Config{Gear: gear, Estimate: func() int { return 116 }, Gold: func() int { return 75 }})
+	if err != nil {
+		t.Fatal(err)
+	}
+	rc.Request()
+	rc.Short(41, 116)
+	rc.SetPhase(repair.PhaseQueued, "n")
+	cur, _ := json.Marshal(rc.View())
+	var now map[string]any
+	if err := json.Unmarshal(cur, &now); err != nil {
+		t.Fatal(err)
+	}
+	var walk func(path string, old, cur any)
+	walk = func(path string, old, cur any) {
+		switch o := old.(type) {
+		case map[string]any:
+			c, ok := cur.(map[string]any)
+			if !ok {
+				t.Errorf("%s: not an object any more", path)
+				return
+			}
+			for k, ov := range o {
+				cv, ok := c[k]
+				if !ok {
+					t.Errorf("%s.%s was removed (a breaking change: add a schema version instead)", path, k)
+					continue
+				}
+				walk(path+"."+k, ov, cv)
+			}
+		case []any:
+			c, ok := cur.([]any)
+			if !ok || len(c) == 0 || len(o) == 0 {
+				return
+			}
+			walk(path+"[0]", o[0], c[0])
+		}
+	}
+	walk("view", v1, now)
+	if now["schema"].(float64) < 2 || now["trip"] == nil {
+		t.Errorf("schema 2 must carry the trip: %v", now["schema"])
+	}
+}
+
+// The gear panel's repair part against the controller's own replies, both classes (node, skipped without it).
+func TestGearPanelRepairTripDOMGolden(t *testing.T) {
+	runNode(t, "testdata/gear_repairtrip_dom.js", "web/panels/gear/panel.js")
+}
+
+// The inventory page's repair card for the same replies.
+func TestInventoryRepairCardDOMGolden(t *testing.T) {
+	runNode(t, "testdata/inventory_repair_dom.js", "web/inventory.js")
+}
+
+// A refusal of the new kind answers 409 with its code, like the old ones.
+func TestRepairRoutesAnswerTheNewRefusals(t *testing.T) {
+	for _, code := range []string{"active", "cooldown", "pact"} {
+		f := &fakeRepair{err: &repair.Refusal{Code: code, Reason: "r " + code}}
+		api := NewRepairAPI()
+		api.Bind(f)
+		post := api.PostHandler(AnswerOptions{Token: "tok"})
+		w := invPost(post, "/api/repair/request", `{}`, map[string]string{"Authorization": "Bearer tok"})
+		if w.Code != 409 || !strings.Contains(w.Body.String(), code) {
+			t.Errorf("%s: %d %s", code, w.Code, w.Body.String())
+		}
 	}
 }

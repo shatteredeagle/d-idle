@@ -3,6 +3,7 @@
   "doc": "docs/repair.md. Repair modes of the policy row repair (internal/decide/policy_chores.json uses the same ids). Exactly one visible mode has no unlock and it is the default; the other visible ones are priced rows of the unlock ladder (data/unlocks/ladder.json, group ui). Prices there are U guesses. Hidden modes are set only by a Pact (data/pacts/pacts.json, Griswold's Debt) and are not offered on the sheet.",
   "warnPct": 30,
   "default": "manual",
+  "trip": {"goldMult": 1.3, "cooldownSecs": 1200, "maxTrips": 2, "safeWaitSecs": 60, "portalClearTiles": 10, "farmLegs": 1, "elitePotionMin": 2},
   "modes": [
     {"id": "manual", "label": "Manual: only when you press Repair now"},
     {"id": "break", "label": "When an item breaks", "unlock": "repair_break", "onBreak": true},

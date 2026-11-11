@@ -51,18 +51,21 @@
     });
     if (v.estimate) box.appendChild(el('span', 'gnote', 'repair costs at least ' + v.estimate + ' gold'));
     var pending = v.request && v.request.state === 'requested';
-    var b = el('button', 'btn small', pending ? 'Cancel repair' : 'Repair now'); b.type = 'button';
+    var tb = v.trip && v.trip.button; // schema 2 (docs/repair.md, the repair trip): the button and the line come from the bot
+    var cancel = tb ? tb.action === 'cancel' : pending;
+    var b = el('button', 'btn small', tb ? tb.label : (pending ? 'Cancel repair' : 'Repair now')); b.type = 'button';
+    if (tb && !tb.enabled) { b.disabled = true; b.title = tb.reason || ''; }
     b.addEventListener('click', function () {
-      if (busy) return;
+      if (busy || (tb && !tb.enabled)) return;
       busy = true; b.disabled = true; feedback = 'Sending...';
-      post(pending ? '/api/repair/cancel' : '/api/repair/request').then(function () {
-        feedback = pending ? 'Repair request cancelled.' : 'Repair requested: the hero repairs at its next town visit.';
+      post(cancel ? '/api/repair/cancel' : '/api/repair/request').then(function () {
+        feedback = cancel ? 'Repair request cancelled.' : 'Repair requested: the hero goes at the next safe moment.';
       }, function (e) {
         feedback = 'Not sent: ' + e.message;
       }).then(function () { busy = false; load(); });
     });
     box.appendChild(b);
-    var t = reqText(v.request); if (t) box.appendChild(el('span', 'gnote', t));
+    var t = v.trip ? v.trip.line : reqText(v.request); if (t) box.appendChild(el('span', 'gnote', t));
     if (feedback) box.appendChild(el('span', 'gnote gfeedback', feedback));
     if (v.worst) box.appendChild(el('span', 'gnote', v.worst));
   }
