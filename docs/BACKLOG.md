@@ -711,6 +711,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-296 maptrail: minimap hero trail (30 s / 1 min / 5 min, stall dots, zone ticks) and roam coverage layer, additive /api/senses keys, panel map v2; offline only
 - maptrail2 coverage grid no longer truncated to the west strip; uniform downsample, status counts agree
 - TASK-298 identify: inventory identify commands (item, buy scrolls with reserve, identify all at Cain) queued for the bot; API schema 5; built offline, nothing verified live (docs/inventory-actions.md)
+- TASK-299 viewerfps2: frame feed deployed to the sandbox (image devp2, fork 80cc7adc): 21.6 fps delivered vs 5.9, bot pace not lower, kept; numbers in docs/viewer-fps.md section 6
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

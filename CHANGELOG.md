@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Viewer video on the sandbox now runs at about 21 fps (was 6) through the d2d frame feed; tap flags via D2DVIEW_FLAGS
 - Inventory page: Identify in the item menu, Buy identify scrolls and Identify all (Cain) commands, queued like the other item actions (offline only)
 - Watch minimap: the coverage grid now covers the whole zone
 - Watch minimap: hero trail and an optional exploration coverage grid (TASK-296)
