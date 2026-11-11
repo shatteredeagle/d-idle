@@ -61,3 +61,19 @@ Update with the hero standing in town: the bot is stopped to swap the release, a
 ## Building the pack (publisher)
 
 `tools/friendpack/build.sh --version X.Y.Z --image NAME:TAG --d2d-src FORK_SOURCE.tar.gz --d2d-commit SHA --out DIR [--feed https://...]` writes `didle-friends-X.Y.Z.tar.gz` and its `.sha256`. It saves the image with `docker save`, adds the bot source of the shipped commit and the d2d fork source tarball you give it, licences, THIRD_PARTY.md, a written offer, the install script, `./didle` and this guide, refuses any game, art or key file, and writes `SHA256SUMS` (d2sign signs release manifests only, so the pack itself is covered by the checksums and the private route it travels; the real signing key stays outside the repo and is never used here). The pack is reproducible (sorted names, zero mtime, `gzip -n`). Handing it over is a private act by the user; nothing here publishes anything.
+
+## What is in 0.1.0-beta (release notes)
+
+First private beta (version 0.1.0, update channel `beta`, release number 1). What you get: one hero that plays Diablo II: Lord of Destruction 1.14d by itself, offline, in a container, on your own game files. You watch it on a web page (live view, inventory with tooltips, hero stats, goals) and answer its occasional questions; you can change its goals and belt plan from the page. Classes with a levelling table: Sorceress (the reference build, cold line from level 12), Paladin (default in the setup page), and the other classes the setup page lists. It runs on a d2d engine (an open-source reimplementation of the game), not on the original game.
+
+What it is and is not (honest limits, from `docs/capabilities.md`):
+
+- Only Normal difficulty, early Act 1 (about character level 1 to 13) has been run unattended; nothing beyond has been played. Other classes had short runs only.
+- The unattended soak test of the ladder (Gate 1) has NOT passed, and the experience rate is well below the original game. Expect slow levelling and sometimes a long stay in Blood Moor gold farming (open card recovery pace).
+- Known broken: Chain Lightning and Lightning behave differently from the real game on d2d, so the default Sorceress plan uses the cold line instead; Teleport, Energy Shield and some skill rules on d2d differ from the real game; deaths happen and recovering from poverty after one is slow.
+- Not yet run live or only partly: the all-mana belt plan, the Farm gold button, the minimap on a real level, phone alerts (none).
+- Not tested: updating while the hero is fighting (update in town), Windows and macOS (Linux only).
+
+How to update: `./didle update` asks the update source (the address in `UPDATE_FEED`) for a signed release, shows the version and applies it after you type `y`. Only a release signed by the beta key built into the image is accepted; a bad start rolls back by itself; your hero and token are untouched.
+
+How to report: `./didle report` writes `didle-report-<time>.tar.gz` (logs and state with tokens and paths removed). Send it to the person who gave you the pack, with one line on what you saw (time, what the hero was doing, a screenshot of the page without any game art if you can).
