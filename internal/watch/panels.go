@@ -31,8 +31,10 @@ type PanelManifest struct {
 	Poll        float64 `json:"poll"` // seconds; 0 = on the SSE change event plus the shell's safety poll
 	Unlock      string  `json:"unlock"`
 	Skeleton    int     `json:"skeleton"`
-	Owner       string  `json:"owner"`
-	Doc         string  `json:"doc"`
+	// Fit: the panel's rows under a layout follow its rendered content, not the stored rowSpan (web/layout.js fitRows).
+	Fit   bool   `json:"fit,omitempty"`
+	Owner string `json:"owner"`
+	Doc   string `json:"doc"`
 }
 
 const panelSchema = "watch.panel/1"

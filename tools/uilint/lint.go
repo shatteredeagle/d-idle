@@ -382,6 +382,7 @@ type Manifest struct {
 	Poll        float64 `json:"poll"`
 	Unlock      string  `json:"unlock"`
 	Skeleton    int     `json:"skeleton"`
+	Fit         bool    `json:"fit"`
 	Owner       string  `json:"owner"`
 	Doc         string  `json:"doc"`
 }
