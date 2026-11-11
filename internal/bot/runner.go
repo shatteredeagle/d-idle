@@ -211,6 +211,7 @@ type loopState struct {
 	pointsFails      int
 	pointsFailLvl    int
 	gearAt           time.Time
+	errandSkipUntil  time.Time // no errand trip before this (errandTripStep)
 	playerActAt      time.Time // last attempt of the player's queued item actions (playerActionStep)
 	shopLevel        int
 	shopGold         int

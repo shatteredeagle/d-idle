@@ -55,9 +55,9 @@
     "after_death_corpse": {"params": [], "say": [
       "I died, so I am going back for my corpse and its items.",
       "Fetching my corpse: my gear is still lying there."]},
-    "player_items": {"params": [], "say": [
-      "Doing what you asked on the inventory page: wearing, or dropping, an item.",
-      "Handling the item actions you queued on the inventory page."]},
+    "player_items": {"params": ["what"], "say": [
+      "Doing what you asked on the inventory page ({what}).",
+      "Handling the item actions you queued on the inventory page ({what})."]},
     "after_death_gold": {"params": [], "say": [
       "Checking the spot where I died for dropped gold.",
       "Sweeping my death spot for gold."]},

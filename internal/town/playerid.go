@@ -101,31 +101,70 @@ func (t *Town) CheckPlayerIdentify(s *d2.Snapshot, id uint32) (string, error) {
 	return "", errors.New("the item is not in the backpack or worn")
 }
 
-// PlayerIdentify identifies item id with a scroll or the tome. The caller picks the moment (in town, or in the field
-// with nothing hostile near); a fight close by returns ErrFight and nothing is clicked.
-func (t *Town) PlayerIdentify(ctx context.Context, id uint32) error {
+// PlayerIdentifyBatch identifies the items in one inventory-open: the panel is opened once, every item is read in turn
+// and the panels close at the end. One error per id (nil = identified). Without a scroll or tome every entry fails at
+// once with ErrNoIDTool (fail fast, no clicking). A fight close by returns ErrFight for the items not yet done, so the
+// caller puts them back to queued. The caller picks the moment (town, or the field with nothing hostile near).
+func (t *Town) PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error {
+	errs := make([]error, len(ids))
+	fail := func(from int, err error) []error {
+		for i := from; i < len(ids); i++ {
+			errs[i] = err
+		}
+		return errs
+	}
 	s, err := t.h.Fresh()
+	if err == nil && (s.Player == nil || s.Inventory == nil) {
+		err = errNoHero
+	}
 	if err != nil {
-		return err
+		return fail(0, err)
 	}
-	if s.Player == nil || s.Inventory == nil {
-		return errNoHero
+	if _, ok := t.idTool(s); !ok {
+		return fail(0, ErrNoIDTool)
 	}
-	if t.fightNear(s) {
-		return ErrFight
+	for i, id := range ids {
+		if err := ctx.Err(); err != nil {
+			fail(i, err)
+			break
+		}
+		if s, err = t.h.Fresh(); err != nil {
+			fail(i, err)
+			break
+		}
+		if t.fightNear(s) {
+			fail(i, ErrFight)
+			break
+		}
+		u, ok := findIn(s.Inventory, id)
+		switch {
+		case !ok:
+			errs[i] = errors.New("the item is not in the backpack or worn")
+		case u.Item.Identified():
+			errs[i] = nil // identified meanwhile: the request's goal is met
+		default:
+			if _, ok := t.idTool(s); !ok {
+				fail(i, ErrNoIDTool)
+				i = len(ids)
+				break
+			}
+			if errs[i] = t.identifyOne(ctx, u); errs[i] == nil {
+				t.e.Log.Info("player identify", "item", t.nameOf(u))
+			}
+		}
+		if i >= len(ids) {
+			break
+		}
 	}
-	if _, err := t.CheckPlayerIdentify(s, id); err != nil {
-		return err
-	}
-	u, _ := findIn(s.Inventory, id)
-	err = t.identifyOne(ctx, u)
 	if cerr := t.h.CloseAll(ctx); cerr != nil {
 		t.e.Log.Warn("town: closing panels after the player's identify failed", "err", cerr)
 	}
-	if err == nil {
-		t.e.Log.Info("player identify", "item", t.nameOf(u))
-	}
-	return err
+	return errs
+}
+
+// PlayerIdentify identifies one item (a batch of one).
+func (t *Town) PlayerIdentify(ctx context.Context, id uint32) error {
+	return t.PlayerIdentifyBatch(ctx, []uint32{id})[0]
 }
 
 // IdentifyTools reports the Tome of Identify (scrolls in it, -1 without a tome), its capacity and the loose scrolls.

@@ -38,7 +38,7 @@ func TestWhyTemplates(t *testing.T) {
 		"town_chores": p("why", "selling"), "heal_trip": p("life", "40", "line", "50"), "wait_heal": p("why", "no potion"),
 		"guard_exit": p("why", "too many"), "farm_runs": p("area", "Mausoleum"), "farm_gold": p("level", "9"), "saving_for": p("area", "Blood Moor", "item", "healing potions", "need", "40"),
 		"farm_user": p("area", "Stony Field", "have", "40", "want", "190"),
-		"hold":      p("question", "the shrine"), "activity": p("activity", "Fighting"),
+		"hold":      p("question", "the shrine"), "activity": p("activity", "Fighting"), "player_items": p("what", "identify"),
 	}
 	for _, code := range WhyCodes() {
 		for v := 0; v < 2; v++ {

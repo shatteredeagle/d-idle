@@ -589,6 +589,7 @@ func (d *Desk) Pending() int {
 	inTown := d.heroInTown()
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	d.expireStaleLocked()
 	n := 0
 	for _, r := range d.st.Queue {
 		if r.State == StateQueued && (inTown || !isErrand(r.kind())) {
@@ -607,16 +608,24 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 	for ctx.Err() == nil {
 		inTown := d.heroInTown() // the snapshot callback runs unlocked
 		d.mu.Lock()
+		d.expireStaleLocked()
 		i := -1
 		for j, r := range d.st.Queue {
-			if r.State == StateQueued && d.runnableLocked(r, inTown) {
+			if r.State == StateQueued && d.runnableLocked(r, inTown) && (i < 0 || priority(r.kind()) < priority(d.st.Queue[i].kind())) {
 				i = j
-				break
 			}
 		}
 		if i < 0 {
 			d.mu.Unlock()
 			break
+		}
+		if d.st.Queue[i].kind() == KindIdentify { // all queued identifies in one inventory-open
+			sv := d.sv
+			d.mu.Unlock()
+			if d.runIdentifyBatch(ctx, sv, &out) {
+				break
+			}
+			continue
 		}
 		r, eq, tr, sv := d.st.Queue[i], d.eq, d.tr, d.sv
 		d.st.Queue[i].State = StateDoing
@@ -632,8 +641,6 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			if s := d.snap(); err == nil && s != nil && s.Player != nil {
 				hx, hy = s.Player.X, s.Player.Y
 			}
-		case KindIdentify:
-			err = sv.PlayerIdentify(ctx, r.ID)
 		case KindBuyID:
 			result, err = sv.BuyIdentify(ctx, r.Count)
 		case KindCain:
@@ -663,8 +670,6 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			case KindTrash:
 				d.noteTrashedLocked(r, hx, hy)
 				out = append(out, fmt.Sprintf("trash %s done, on the ground and ignored by the looter", r.Name))
-			case KindIdentify:
-				out = append(out, fmt.Sprintf("identify %s done", r.Name))
 			case KindBuyID, KindCain:
 				out = append(out, fmt.Sprintf("%s done: %s", r.kind(), result))
 			default:

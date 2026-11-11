@@ -17,6 +17,7 @@ import (
 type fakeSv struct {
 	tome, scrolls                               int // tome -1: none
 	identified                                  []uint32
+	batches                                     []int // size of each identify call: one call per run, not one per item
 	bought                                      []int
 	cained                                      int
 	idErr, buyErr, cainErr, checkErr, cainCheck error
@@ -30,15 +31,20 @@ func (f *fakeSv) CheckPlayerIdentify(s *d2.Snapshot, id uint32) (string, error) 
 	}
 	return "thing", nil
 }
-func (f *fakeSv) PlayerIdentify(ctx context.Context, id uint32) error {
+func (f *fakeSv) PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error {
+	f.batches = append(f.batches, len(ids))
 	if f.during != nil {
 		f.during()
 	}
-	if f.idErr != nil {
-		return f.idErr
+	errs := make([]error, len(ids))
+	for i, id := range ids {
+		if f.idErr != nil {
+			errs[i] = f.idErr
+			continue
+		}
+		f.identified = append(f.identified, id)
 	}
-	f.identified = append(f.identified, id)
-	return nil
+	return errs
 }
 func (f *fakeSv) IdentifyTools(s *d2.Snapshot) (int, int, int) { return f.tome, 20, f.scrolls }
 func (f *fakeSv) CheckBuyIdentify(s *d2.Snapshot, n int) (string, error) {
@@ -367,5 +373,97 @@ func TestViewSchema5IdentifyGolden(t *testing.T) {
 				t.Errorf("%v: key %q missing", class, k)
 			}
 		}
+	}
+}
+
+// Priority: a queued identify runs before an equip and a trash that were asked earlier, and the errands come last; all
+// queued identifies share ONE call (one inventory-open).
+func TestIdentifyPriorityAndBatch(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		d, sv, snap := idRig(t, class, town1, true)
+		d.SetTrasher(&fakeTr{snap: snap})
+		var order []string
+		sv.during = func() { order = append(order, "identify") }
+		good := map[d2.Class]uint32{d2.Paladin: 1, d2.Sorceress: 2}[class]
+		snap.Inventory.Items[0].Item.Flags |= d2.FlagIdentified // item 1 equippable for the Paladin
+		snap.Inventory.Items[1].Item.Flags |= d2.FlagIdentified
+		if _, err := d.RequestEquip(good, "rhand"); err != nil {
+			t.Fatal(err)
+		}
+		if _, err := d.RequestCain(); code(err) != "requirements" && err != nil {
+			t.Fatal(err)
+		}
+		if _, err := d.RequestBuyID(3); err != nil {
+			t.Fatal(err)
+		}
+		// two unidentified items: a worn one (5) and a fresh backpack one (9)
+		snap.Inventory.Items = append(snap.Inventory.Items, d2.Unit{ID: 9, Class: 14, Item: &d2.Item{Where: d2.ContInventory, Quality: 4}})
+		for _, id := range []uint32{5, 9} {
+			if _, err := d.RequestIdentify(id); err != nil {
+				t.Fatalf("%v: %v", class, err)
+			}
+		}
+		if k := d.NextKind(); k != KindIdentify {
+			t.Fatalf("%v: next kind %q, want identify first", class, k)
+		}
+		lines := d.RunPending(context.Background())
+		if len(sv.batches) != 1 || sv.batches[0] != 2 {
+			t.Fatalf("%v: batches %v, want one call with two items", class, sv.batches)
+		}
+		if len(sv.bought) != 1 || len(lines) < 4 {
+			t.Fatalf("%v: lines %v", class, lines)
+		}
+		// identify lines come before the equip line and the errand line
+		pos := map[string]int{}
+		for i, l := range lines {
+			for _, k := range []string{"identify", "equip", "buyid"} {
+				if strings.HasPrefix(l, k) && pos[k] == 0 {
+					pos[k] = i + 1
+				}
+			}
+		}
+		if !(pos["identify"] < pos["equip"] && pos["equip"] < pos["buyid"]) {
+			t.Fatalf("%v: order %v (%v)", class, lines, pos)
+		}
+	}
+}
+
+// A fight puts the whole batch back to queued; after the bound with no safe moment the request fails with a reason;
+// a missing tool fails fast.
+func TestIdentifyFightBoundAndNoTool(t *testing.T) {
+	d, sv, _ := idRig(t, d2.Paladin, field, false)
+	now := time.Unix(1_800_000_000, 0)
+	d.c.Now = func() time.Time { return now }
+	if _, err := d.RequestIdentify(1); err != nil {
+		t.Fatal(err)
+	}
+	sv.idErr = errors.New("town: a fight is on")
+	d.RunPending(context.Background())
+	if v := d.View(); len(v.Queue) != 1 || v.Queue[0].State != StateQueued {
+		t.Fatalf("fight must postpone: %+v", v.Queue)
+	}
+	now = now.Add(IdentifySafeWait + time.Second)
+	if n := d.Pending(); n != 0 {
+		t.Fatalf("pending %d after the bound", n)
+	}
+	if v := d.View(); len(v.Queue) != 0 || v.Recent[0].State != StateFailed || !strings.Contains(v.Recent[0].Reason, "no safe moment") {
+		t.Fatalf("bound: %+v", v.Recent)
+	}
+	sv.idErr = errors.New(NoToolReason)
+	if _, err := d.RequestIdentify(1); err != nil {
+		t.Fatal(err)
+	}
+	d.RunPending(context.Background())
+	if v := d.View(); v.Recent[0].State != StateFailed || !strings.Contains(v.Recent[0].Reason, "Buy identify scrolls") {
+		t.Fatalf("no tool: %+v", v.Recent[0])
+	}
+	if d.ErrandsWaiting() != 0 {
+		t.Error("no errand queued")
+	}
+	if _, err := d.RequestBuyID(2); err != nil {
+		t.Fatal(err)
+	}
+	if d.ErrandsWaiting() != 1 {
+		t.Error("errand not counted")
 	}
 }
