@@ -1,10 +1,13 @@
 ---
 id: TASK-323
-title: 'nocursor: the watch video shows no game pointer (fork verb cursor off, d2dview asks for it)'
-status: Proposed
+title: >-
+  nocursor: the watch video shows no game pointer (fork verb cursor off, d2dview
+  asks for it)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:10:00Z'
+updated_date: '2026-11-11T19:38:00Z'
 labels:
   - watch
   - feature

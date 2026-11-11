@@ -109,7 +109,6 @@
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
 | xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
-| nocursor | proposed | - | `cmd/d2dview`<br>`docs/viewer-fps.md`<br>`backlog/merge-lines/agent-nocursor.txt` | `fork-branch:d2d.lab3-nocursor` |
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
