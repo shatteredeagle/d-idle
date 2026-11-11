@@ -31,6 +31,7 @@ owns:
   - "internal/watch/mercdoll_test.go"
   - "internal/town/identify.go"
   - "internal/town/playerid_sim_test.go"
+  - "tools/uishots/pages.go"
 exclusive: []
 contracts: []
 result: "Built offline, NOT verified live: identify item, buy scrolls (reserve, tome fill) and Cain errand with desk, town, API schema 5, UI and goldens; click paths and Cain menu line are U, town sim tests skip without game tables. Live checks 8 to 12 in docs/inventory-actions.md."
