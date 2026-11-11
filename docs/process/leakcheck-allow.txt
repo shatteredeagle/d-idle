@@ -9,6 +9,8 @@ path cmd/leakcheck/**
 path docs/process/leakcheck-allow.txt
 path tools/publish/sanitize.py
 path tools/publish/tests/**
+# npm lockfile of the Electron app: integrity hashes look like secrets to the scanner
+path apps/desktop-electron/package-lock.json
 
 # public identity: the GitHub handle and the commit identities
 str shatteredeagle
