@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Items marked for sale on the Inventory page are now sold at the next town visit even after a game restart renumbered them, on any kind of trip; the page header shows how many are pending <!--sg:agent/sellmarks-->
 - Repair now makes a repair trip at the next safe moment; Farm until repair earns the gold first (offline tested, not live) <!--sg:agent/repairtrip-->
 - TASK-310 processrules: rules-short, brief rules, deploy windows, research WARN, digests, coordinator checklist <!--sg:agent/processrules-->
 - TASK-253 autodone: drift report as a CI warning, live-checks closing rule automatic (auto-Done on, catch-up applied) <!--sg:agent/autodone-->
