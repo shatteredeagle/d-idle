@@ -1,5 +1,7 @@
 # ROAMLEG: a mouth-gate hold is not a failed roam target
 
+> See also docs/roamspacing.md: the roam grid is now the knobs `nav.roamSpacing`/`nav.roamCover` (default 16/10, was 7/5).
+
 > status: offline fix, tests pass, verified live in DRILLS23 (docs/probes/drills/README.md): 0 failed legs (was 50), 11 step-aways per run (was 62).
 
 ## Finding (V, DRILLS21 in docs/probes/drills/README.md, logs `2026-11-01-drills21-*.txt`)

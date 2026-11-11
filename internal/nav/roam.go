@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2map"
+	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/input"
 )
 
@@ -18,11 +19,10 @@ import (
 type fullyKnown interface{ FullyKnown() bool }
 
 const (
-	// roamSpacing is the distance between coverage points: about the monster wake/aggro radius (S: ~7 cells in
-	// 1.14d), so one visit per point wakes everything of its region. U: not measured on d2d.
+	// roamSpacing and roamCover are the LEGACY point spacing and visit radius (the first-pass guess of 2026-10-30,
+	// superseded by docs/roamspacing.md); the live values are the knobs nav.roamSpacing and nav.roamCover.
 	roamSpacing = 7
-	// roamCover is how close the character must come for a point to count as visited.
-	roamCover = 5
+	roamCover   = 5
 	// roamPasses caps the legs of one level at roamPasses times the number of points, so it cannot roam forever.
 	roamPasses = 3
 )
@@ -30,17 +30,22 @@ const (
 // coverage is the roam state of one level of one game. It survives across Explore calls (the bot fights between
 // legs and calls Explore again), and is rebuilt when the level map changes (new game).
 type coverage struct {
-	lm     *d2map.LevelMap // identity of the level in this game (d2dworld swaps the Grid inside it on refresh)
-	level  int
-	pts    []input.Point
-	seen   []bool
-	failed []bool
-	held   int // legs the mouth gate held on this level (ROAMLEG); not a target problem, see docs/roamleg.md
-	legs   int
-	tgt    input.Point // the point of the leg being walked, for CoverageView only
-	hasTgt bool
+	lm      *d2map.LevelMap // identity of the level in this game (d2dworld swaps the Grid inside it on refresh)
+	level   int
+	pts     []input.Point
+	seen    []bool
+	failed  []bool
+	held    int // legs the mouth gate held on this level (ROAMLEG); not a target problem, see docs/roamleg.md
+	legs    int
+	spacing int // the grid of pts and the visit radius, fixed when the points were made (knobs read at that time)
+	cover   int
+	tgt     input.Point // the point of the leg being walked, for CoverageView only
+	hasTgt  bool
+	noted   bool // notedAt is the last position NotePosition used
+	notedAt input.Point
 }
 
+// visited counts the seen points; covMu must be held.
 func (c *coverage) visited() int {
 	k := 0
 	for i := range c.pts {
@@ -54,6 +59,8 @@ func (c *coverage) visited() int {
 // Coverage reports how many coverage points of the current level were visited and how many there are
 // (0, 0 when roaming is not in use).
 func (n *Navigator) Coverage() (visited, total int) {
+	n.covMu.Lock()
+	defer n.covMu.Unlock()
 	if n.cov == nil {
 		return 0, 0
 	}
@@ -66,7 +73,7 @@ func (n *Navigator) fullyKnown() bool {
 }
 
 // samplePoints picks one reachable walkable cell per spacing x spacing block (the one closest to the block centre).
-func samplePoints(f *Field, dist []int32) []input.Point {
+func samplePoints(f *Field, dist []int32, spacing int) []input.Point {
 	type pick struct {
 		i int32
 		d int
@@ -77,8 +84,8 @@ func samplePoints(f *Field, dist []int32) []input.Point {
 			continue
 		}
 		x, y := f.pt(int32(i))
-		b := [2]int{floorDiv(x, roamSpacing), floorDiv(y, roamSpacing)}
-		c := abs(x-(b[0]*roamSpacing+roamSpacing/2)) + abs(y-(b[1]*roamSpacing+roamSpacing/2))
+		b := [2]int{floorDiv(x, spacing), floorDiv(y, spacing)}
+		c := abs(x-(b[0]*spacing+spacing/2)) + abs(y-(b[1]*spacing+spacing/2))
 		if p, ok := best[b]; !ok || c < p.d {
 			best[b] = pick{int32(i), c}
 		}
@@ -148,11 +155,49 @@ next:
 	return out
 }
 
-func (c *coverage) mark(p input.Point) {
+// roamParams are the spacing and visit radius from the knobs, clamped so cover <= spacing and both are >= 1.
+func roamParams(t env.NavTuning) (spacing, cover int) {
+	spacing = max(1, int(math.Round(t.RoamSpacing)))
+	cover = min(spacing, max(1, int(math.Round(t.RoamCover))))
+	return
+}
+
+// mark flags every point within the visit radius of p; covMu must be held. It reports whether any point changed.
+func (c *coverage) mark(p input.Point) (changed bool) {
 	for i, q := range c.pts {
-		if !c.seen[i] && max(abs(q.X-p.X), abs(q.Y-p.Y)) <= roamCover {
+		if !c.seen[i] && max(abs(q.X-p.X), abs(q.Y-p.Y)) <= c.cover {
 			c.seen[i] = true
+			changed = true
 		}
+	}
+	return
+}
+
+func (n *Navigator) markPos(c *coverage, p input.Point) {
+	n.covMu.Lock()
+	c.mark(p)
+	n.covMu.Unlock()
+}
+
+// SetOnCoverChange registers f, called after NotePosition changed the coverage (the minimap republishes it).
+func (n *Navigator) SetOnCoverChange(f func()) { n.onCover = f }
+
+// NotePosition marks the coverage points within the visit radius of pos as seen, whatever the hero is doing (fighting,
+// picking up, travelling): ground passed during a detour counts as covered, so the roam does not walk back to it. It is
+// safe to call from any goroutine, does nothing without a coverage of this level, and allocates nothing.
+func (n *Navigator) NotePosition(level int, pos input.Point) {
+	n.covMu.Lock()
+	c := n.cov
+	if c == nil || c.level != level || (c.noted && max(abs(pos.X-c.notedAt.X), abs(pos.Y-c.notedAt.Y)) < 1) {
+		n.covMu.Unlock()
+		return
+	}
+	c.noted, c.notedAt = true, pos
+	changed := c.mark(pos)
+	f := n.onCover
+	n.covMu.Unlock()
+	if changed && f != nil {
+		f()
 	}
 }
 
@@ -162,6 +207,8 @@ var ErrRoamHeld = fmt.Errorf("%w: roam leg held by the mouth gate", ErrExplored)
 
 // RoamHeld reports the legs held by the mouth gate on the current level (0 when roaming is not in use).
 func (n *Navigator) RoamHeld() int {
+	n.covMu.Lock()
+	defer n.covMu.Unlock()
 	if n.cov == nil {
 		return 0
 	}
@@ -196,15 +243,17 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 			return ErrExplored
 		}
 		dist := floodHops(f, sx, sy)
+		n.covMu.Lock()
 		c := n.cov
+		sp, cv := roamParams(t)
 		if c == nil || c.lm != o.lm {
-			pts := dropNearExits(samplePoints(f, dist), o.lm.Exits)
-			c = &coverage{lm: o.lm, level: o.level, pts: pts, seen: make([]bool, len(pts)), failed: make([]bool, len(pts))}
+			pts := dropNearExits(samplePoints(f, dist, sp), o.lm.Exits)
+			c = &coverage{lm: o.lm, level: o.level, spacing: sp, cover: cv, pts: pts, seen: make([]bool, len(pts)), failed: make([]bool, len(pts))}
 			n.cov = c
-			n.log.Info("roam: coverage points", "level", o.level, "points", len(pts), "exits", len(o.lm.Exits))
+			n.log.Info("roam: coverage points", "level", o.level, "points", len(pts), "spacing", sp, "cover", cv, "exits", len(o.lm.Exits))
 		}
 		c.mark(o.pos)
-		pick, bestD := -1, int32(0)
+		pick, bestD := -1, int32(0) // covMu is held through the pick
 		for i, p := range c.pts {
 			if c.seen[i] || c.failed[i] {
 				continue
@@ -218,34 +267,46 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 			}
 		}
 		if pick < 0 || c.legs >= roamPasses*len(c.pts)+roamPasses {
-			n.log.Info("roam: done", "visited", c.visited(), "points", len(c.pts), "legs", c.legs)
+			vis, legs := c.visited(), c.legs
+			n.covMu.Unlock()
+			n.log.Info("roam: done", "visited", vis, "points", len(c.pts), "legs", legs)
 			return ErrExplored
 		}
 		c.legs++
 		target := c.pts[pick]
 		c.tgt, c.hasTgt = target, true
+		n.covMu.Unlock()
 		stop := func(o *obs) bool {
+			n.covMu.Lock()
 			c.mark(o.pos)
-			return done() || c.seen[pick]
+			s := c.seen[pick]
+			n.covMu.Unlock()
+			return done() || s
 		}
 		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return target, 3, nil },
 			walkOpts{stopWhen: stop, timeout: 90 * time.Second, pursuit: true})
+		n.covMu.Lock()
 		c.hasTgt = false
 		switch {
 		case err == nil:
 			if !done() {
 				c.seen[pick] = true
 			}
+			n.covMu.Unlock()
 		case errors.Is(err, ErrMouthGate):
 			// ROAMLEG: the gate refuses to move the character nearer the exit from where it stands. Every other target
 			// would fail the same way, so end the episode and keep the target.
 			c.held++
-			n.log.Debug("roam: held by the mouth gate, ending the episode", "to", target, "held", c.held, "legs", c.legs)
+			held, legs := c.held, c.legs
+			n.covMu.Unlock()
+			n.log.Debug("roam: held by the mouth gate, ending the episode", "to", target, "held", held, "legs", legs)
 			return fmt.Errorf("%w: roam held by the mouth gate at %v", ErrRoamHeld, o.pos)
 		case errors.Is(err, ErrStuck), errors.Is(err, ErrNoPath), errors.Is(err, ErrTimeout):
 			c.failed[pick] = true
+			n.covMu.Unlock()
 			n.log.Info("roam leg failed", "to", target, "err", err)
 		default:
+			n.covMu.Unlock()
 			return err
 		}
 	}

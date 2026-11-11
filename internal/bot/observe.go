@@ -811,6 +811,9 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 		o.curve = o.curve[1:]
 	}
 	r.noteTrail(s, now)
+	if m, ok := r.d.Mover.(interface{ NotePosition(int, input.Point) }); ok && !p.InTown() {
+		m.NotePosition(p.Area, input.Point{X: p.X, Y: p.Y}) // roam coverage: ground passed on any detour counts as seen
+	}
 	a := aliveInfo{gold: p.Gold, stashGold: p.StashGold, level: p.Level, difficulty: p.Difficulty, kit: r.kitOf(s), hostiles: r.hostileNear(s, r.e.Tune.Combat.FightRadius)}
 	o.noteHP(p, a.hostiles)
 	if mc := d2.FindMerc(s); mc.Present {

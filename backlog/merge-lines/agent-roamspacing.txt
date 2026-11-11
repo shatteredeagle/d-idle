@@ -1,0 +1,3 @@
+BACKLOG: TASK-301 roamspacing: roam coverage grid is now knobs nav.roamSpacing/nav.roamCover (default 16/10, was 7/5), NotePosition marks detours, docs/roamspacing.md
+INDEX: docs/roamspacing.md - roam coverage spacing study, new defaults, detour marking
+CHANGELOG: The roam clear uses a coarser coverage grid (16/10 instead of 7/5, knobs nav.roamSpacing and nav.roamCover); ground passed while fighting now counts as covered
