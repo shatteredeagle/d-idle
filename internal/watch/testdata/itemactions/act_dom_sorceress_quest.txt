@@ -1,0 +1,10 @@
+div.inv-act [aria-label=Actions for Horadric Scroll role=menu data-mode=pop]
+  div.act-title.q-normal [] "Horadric Scroll"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "it cannot be worn"
+  button.act [aria-disabled=true role=menuitem data-act=sell data-off=] "Mark for sale"
+  div.act-why [data-for=sell] "this item is never sold"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [aria-disabled=true role=menuitem data-act=trash data-danger= data-off=] "Trash"
+  div.act-why [data-for=trash] "this item is never trashed (quest item)"
+  div.act-note [role=status]

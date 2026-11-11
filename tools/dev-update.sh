@@ -38,6 +38,11 @@ fi
 url=http://$D2_WORKER_HOST:${DIDLE_DEV_PORT:-18899}
 log=$(mktemp)
 trap 'rm -f "$log"' EXIT
+# labrun --send is a plain rsync without --delete: a file removed from the repo would survive in the worker copy of .devupdate-src
+# (TASK-281: IsSubreaper redeclared). Empty it on the host first so the copy mirrors the extracted tree exactly.
+if [ ${#send[@]} -gt 0 ]; then
+	labrun "${D2_LABRUN_HOST:?set D2_LABRUN_HOST in local.env (the labrun machine name)}" -- rm -rf .devupdate-src >"$log" 2>&1 || { echo "ERROR cannot clean the worker copy of .devupdate-src"; tail -5 "$log" >&2; exit 1; }
+fi
 labrun "${D2_LABRUN_HOST:?set D2_LABRUN_HOST in local.env (the labrun machine name)}" ${send[@]+"${send[@]}"} -- tools/dev-update-host.sh --url "$url" --src "$src" ${host[@]+"${host[@]}"} >"$log" 2>&1
 rc=$?
 if [ "$verbose" = 1 ]; then grep -v '^DEVUPDATE' "$log" >&2; fi

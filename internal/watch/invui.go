@@ -10,7 +10,7 @@ const invPage = `<!DOCTYPE html>
 <meta name="color-scheme" content="dark light"><title>d.idle - inventory</title><link rel="icon" href="data:,">
 <link rel="stylesheet" href="/watch/tokens.css"><link rel="stylesheet" href="/watch/reset.css"><link rel="stylesheet" href="/watch/shell.css">
 <link rel="stylesheet" href="/watch/components.css"><link rel="stylesheet" href="/watch/inventory.css"><link rel="stylesheet" href="/watch/utilities.css">
-<link rel="stylesheet" href="/watch/inventory-tip.css">
+<link rel="stylesheet" href="/watch/inventory-tip.css"><link rel="stylesheet" href="/watch/inventory-actions.css">
 </head><body>
 <div class="d-shell">
 <header class="top d-band-status" data-band="status">
@@ -47,7 +47,7 @@ const invPage = `<!DOCTYPE html>
   <div class="d-cells" id="stash"></div>
  </section>
  <section class="d-card inv-queue" aria-labelledby="t-queue">
-  <div class="d-card-head"><h2 id="t-queue">Equip requests</h2></div>
+  <div class="d-card-head"><h2 id="t-queue">Item actions</h2></div>
   <div id="queue"></div>
  </section>
 </main>
@@ -55,4 +55,5 @@ const invPage = `<!DOCTYPE html>
 <div id="toasts" class="d-toasts" role="status" aria-live="polite"></div>
 <script type="module" src="/watch/shell.js"></script>
 <script src="/watch/inventory.js"></script>
-<script src="/watch/inventory-tip.js"></script></body></html>`
+<script src="/watch/inventory-tip.js"></script>
+<script src="/watch/inventory-actions.js"></script></body></html>`

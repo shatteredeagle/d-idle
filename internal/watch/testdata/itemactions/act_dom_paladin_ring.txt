@@ -1,0 +1,12 @@
+div.inv-act [aria-label=Actions for Ring role=menu data-mode=pop]
+  div.act-title.q-rare [] "Ring"
+  div.act-state [data-kind=equip data-state=queued]
+    span.act-st [] "queued"
+    span.act-tx [] "Equip Ring in right ring"
+    button.act.act-cancel [role=menuitem data-act=cancel] "Cancel"
+  button.act [role=menuitem data-act=equip-rring] "Equip (right ring)"
+  button.act [role=menuitem data-act=equip-lring] "Equip (left ring)"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-danger=] "Trash"
+  div.act-note [role=status]
