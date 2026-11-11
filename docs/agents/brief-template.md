@@ -17,4 +17,6 @@ Fill one line each; leave out a line that does not apply.
 11. Report length (lines or words).
 12. Trailers: `Claude-Session: <url>`, `Change: <card>`.
 
+Do not ask for shared-file lines (BACKLOG, CHANGELOG, INDEX, OWNERS, STATUS): the merge generates them from the task card, so line 3 (the task) must name a card whose title, `result:` and acceptance boxes the agent keeps true. A line 12 `Change:` trailer is optional.
+
 Do not list the standing reading (START-HERE, backlog-howto, memory doc, glossary): AGENTS.md says what is mandatory and what is on demand.

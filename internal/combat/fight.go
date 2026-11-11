@@ -48,29 +48,31 @@ type seenUnit struct {
 }
 
 type fightState struct {
-	tracks      map[uint32]*track
-	seen        map[uint32]seenUnit
-	blacklist   map[uint32]bool
-	avoided     map[uint32]bool
-	stalled     bool // the no-progress watchdog already logged in this fight
-	ignored     []Ignored
-	lastExp     uint32
-	haveExp     bool
-	pendingXP   int64
-	dodges      int
-	mdodges     int // missile sidesteps (knob combat.missileDodge)
-	kites       int // retreat steps in the current burst; resets after 10 quiet seconds
-	lastKite    time.Time
-	casts       int // attack casts of this fight (telemetry)
-	kitesAll    int // kite steps of this fight (telemetry)
-	approach    int // approach/firing-position moves of this fight (telemetry)
-	novas       int
-	forced      int
-	ticks       int           // engage ticks (fight.tick telemetry)
-	backoffsAll int           // out-of-mana back-off steps of the whole fight
-	firstCast   time.Duration // fight start to the first attack, -1 until one
-	retreatWhy  string        // reason code of the latest back-off
-	maxHostiles int
+	fallbackSaid bool   // the melee kill-first fallback was logged this fight
+	endWhy       string // loop exit that ended the fight (noteEnd)
+	tracks       map[uint32]*track
+	seen         map[uint32]seenUnit
+	blacklist    map[uint32]bool
+	avoided      map[uint32]bool
+	stalled      bool // the no-progress watchdog already logged in this fight
+	ignored      []Ignored
+	lastExp      uint32
+	haveExp      bool
+	pendingXP    int64
+	dodges       int
+	mdodges      int // missile sidesteps (knob combat.missileDodge)
+	kites        int // retreat steps in the current burst; resets after 10 quiet seconds
+	lastKite     time.Time
+	casts        int // attack casts of this fight (telemetry)
+	kitesAll     int // kite steps of this fight (telemetry)
+	approach     int // approach/firing-position moves of this fight (telemetry)
+	novas        int
+	forced       int
+	ticks        int           // engage ticks (fight.tick telemetry)
+	backoffsAll  int           // out-of-mana back-off steps of the whole fight
+	firstCast    time.Duration // fight start to the first attack, -1 until one
+	retreatWhy   string        // reason code of the latest back-off
+	maxHostiles  int
 
 	// cast-first loop (castfirst.go)
 	lastCastAt time.Time // last attack cast of this fight (start of the fight until the first one)
@@ -180,8 +182,10 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	defer f.attacking.Store(0)
 	var ft FightTelemetry
 	var st *fightState
-	defer func() { // runs after the Elapsed defer below
+	var endSnap *d2.Snapshot // the last look, for the end-of-fight telemetry
+	defer func() {           // runs after the Elapsed defer below
 		if ft.Area != 0 && st != nil {
+			f.noteEnd(&ft, st, sp, endSnap, err)
 			ft.Dodges = st.dodges + st.mdodges
 			ft.Casts, ft.Kites, ft.Approaches = st.casts, st.kitesAll, st.approach
 			ft.Novas, ft.Forced = st.novas, st.forced
@@ -221,6 +225,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		if f.now().After(sp.deadline) {
 			res.TimedOut = true
+			st.endWhy = "timeout"
 			break
 		}
 		if snap == nil {
@@ -228,6 +233,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 				return
 			}
 		}
+		endSnap = snap
 		p := snap.Player
 		if isDead(p) {
 			f.buffAt = map[int]time.Time{}
@@ -316,6 +322,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			}
 			if len(cand) == 0 {
 				if st.blacklist[sp.only] || st.everSeen || f.now().Sub(start) > 2*time.Second {
+					st.endWhy = "targetGone"
 					break
 				}
 				if err = f.sleep(ctx, ms(t.PollMs)); err != nil {
@@ -339,6 +346,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		if len(cand) == 0 {
 			f.noTarget(hs, st, sp)
+			st.endWhy = "noTargets"
 			break
 		}
 		st.ticks++
@@ -360,8 +368,19 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			snap = nil
 			continue
 		}
-		ranked := Rank(cand, t.TargetQuality, f.rng.Float64())
+		melee := f.profileFor(p).MeleeClass()
+		ranked := RankFor(cand, t.TargetQuality, f.rng.Float64(), melee)
+		if melee && !st.fallbackSaid && len(ranked) > 0 {
+			for _, c := range cand {
+				if c.KillFast && c.Dist > meleeKillFastReach && !ranked[0].KillFast {
+					st.fallbackSaid = true
+					f.info("target fallback: "+c.Name+" out of melee reach, attacking nearest "+ranked[0].Name, "dist", int(c.Dist))
+					break
+				}
+			}
+		}
 		if len(ranked) == 0 {
+			st.endWhy = "rankEmpty"
 			break
 		}
 		// a careless fighter loses ticks
@@ -389,6 +408,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	// one last look so the final kill is counted
 	if s, e := f.read(ctx); e == nil {
 		f.noteKills(s, Hostiles(s, f.hostileCtx(s.Player)), st, &res)
+		endSnap = s
 	}
 	return res, nil
 }
