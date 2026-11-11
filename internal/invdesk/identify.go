@@ -77,7 +77,6 @@ func (d *Desk) runnableLocked(r Request, inTown bool) bool {
 	return d.eq != nil
 }
 
-
 func (d *Desk) services() (Services, func(*d2.Snapshot) bool) {
 	d.mu.Lock()
 	defer d.mu.Unlock()
