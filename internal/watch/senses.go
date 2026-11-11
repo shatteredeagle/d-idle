@@ -134,6 +134,20 @@ type HistorySource interface {
 	SamplesOf() ([]senses.Sample, time.Time)
 }
 
+// HeatSource is an optional part of a SensesSource: the density cells of the current area.
+type HeatSource interface {
+	HeatOf() ([]senses.HeatPoint, int)
+}
+
+// HeatBlock is the `heat` key of /api/history?heat=1: Cells are [x, y, kills, dwell seconds, damage points] of the
+// current area, Cell the side in subtiles.
+type HeatBlock struct {
+	Area  int      `json:"area"`
+	Cell  int      `json:"cell"`
+	Kinds []string `json:"kinds"`
+	Cells [][5]int `json:"cells"`
+}
+
 // HistoryReply is /api/history (watch.history/1): the timeline samples, newest last, ages in ms before Ts. It is
 // fetched by the map panel when its scrubber is open, not on every poll.
 type HistoryReply struct {
@@ -141,6 +155,7 @@ type HistoryReply struct {
 	Ts      int64           `json:"ts"`
 	Legend  []string        `json:"legend"`
 	Samples []HistorySample `json:"samples"`
+	Heat    *HeatBlock      `json:"heat,omitempty"`
 }
 
 // HistorySample: l and m are life and mana percent, a the activity code, w the whyline code, ar the area id.
@@ -158,7 +173,7 @@ type HistorySample struct {
 const historySchema = "watch.history/1"
 
 // History builds the reply; Lock gates it like the map (tier 1).
-func (s *Senses) History() HistoryReply {
+func (s *Senses) History(withHeat bool) HistoryReply {
 	r := HistoryReply{Schema: historySchema, Legend: senses.ActivityNames[:], Samples: []HistorySample{}}
 	if s.Lock == nil || !s.Lock.Allowed(1) {
 		return r
@@ -166,6 +181,13 @@ func (s *Senses) History() HistoryReply {
 	hs, ok := s.Src.(HistorySource)
 	if !ok {
 		return r
+	}
+	if hb, ok := s.Src.(HeatSource); ok && withHeat {
+		pts, area := hb.HeatOf()
+		r.Heat = &HeatBlock{Area: area, Cell: senses.HeatCell, Kinds: []string{"kills", "time", "damage"}, Cells: [][5]int{}}
+		for _, p := range pts {
+			r.Heat.Cells = append(r.Heat.Cells, [5]int{p.X, p.Y, p.Kills, p.DwellS, p.Dmg})
+		}
 	}
 	smp, now := hs.SamplesOf()
 	r.Ts = now.UnixMilli()
@@ -297,7 +319,7 @@ func (s *Senses) Handler() http.Handler {
 			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
-		writeJSON(w, 200, s.History())
+		writeJSON(w, 200, s.History(r.URL.Query().Get("heat") == "1"))
 	})
 	for route, file := range map[string]string{"/watch/senses_units.js": "web/senses_units.js"} {
 		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {

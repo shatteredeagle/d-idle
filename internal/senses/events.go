@@ -101,6 +101,9 @@ func (p *Publisher) AddEvent(kind, text string, big bool, f *FightInfo) {
 	if !p.have {
 		return
 	}
+	if kind == EvKill {
+		p.heat.cell(p.areaNo, p.snap.Hero.X, p.snap.Hero.Y).kills++
+	}
 	p.events.Add(Event{At: p.clock(), X: p.snap.Hero.X, Y: p.snap.Hero.Y, Area: p.areaNo, Kind: kind, Text: text, Big: big, Fight: f})
 }
 

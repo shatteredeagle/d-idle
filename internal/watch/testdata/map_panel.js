@@ -57,6 +57,12 @@ assert.strictEqual(P.trailWindow('1800000'), 1800000, 'the 30 min window is reme
   assert.strictEqual(P.scrubText(smp[1], ['walk', 'combat'], 3000), '3.0 s ago: combat (fight), life 62%, mana 40%, level 5, xp 960');
   assert.strictEqual(P.scrubText(null, [], 0), 'now: no sample');
 }
+assert.strictEqual(P.heatMax([[0, 0, 3, 12, 40], [7, 0, 0, 2, 0]], 'time'), 12);
+assert.strictEqual(P.heatMax([[0, 0, 3, 12, 40]], 'off'), 0);
+assert.strictEqual(P.heatAlpha(0, 10), 0, 'empty cells draw nothing');
+assert.ok(P.heatAlpha(10, 10) > P.heatAlpha(1, 10) && P.heatAlpha(10, 10) <= 0.7 + 1e-9, 'brighter where more happened');
+assert.strictEqual(P.heatLegend('kills', 3), 'Heat kills: from 1 to 3 kills per cell (dark to bright).');
+assert.strictEqual(P.heatLegend('off', 3), '');
 assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
 assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
 assert.strictEqual(P.eventShown({ k: 'potion' }, 'key'), false, 'potions only in all');
@@ -71,7 +77,7 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   c2.store = (k) => ({ get: () => (k in store ? store[k] : null), set: (v) => { store[k] = v; } });
   const a2 = P.mount(r2, c2);
   const btn = (key) => c2.actions.children.find((b) => b.dataset.key === key);
-  assert.ok(btn('events') && btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
+  assert.ok(btn('heat') && btn('events') && btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
   a2.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail: tr,
     coverage: { area: 2, cell: 8, cover: 5, total: 2, state: 'roaming', legs: 3, target: [12, 1], cells: [[12, 1, 0], [14, 1, 1]] } });
   assert.strictEqual(btn('coverage').attrs['aria-pressed'], 'false', 'coverage is off by default');
@@ -83,6 +89,8 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   assert.strictEqual(btn('events').textContent, 'Events: all');
   a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail_legend: ['walk', 'combat'], trail: [{ ago: 5000, x: 9, y: 1 }, { ago: 3000, x: 10, y: 1, a: 1 }, { ago: 0, x: 11, y: 1, a: 1 }], events: [{ ago: 1000, x: 10, y: 1, k: 'kill', t: 'Fallen killed' }] });
   assert.ok(/combat/.test(c2.body.children[4].textContent), 'the share line names combat: ' + c2.body.children[4].textContent);
+  btn('heat').fire('click');
+  assert.strictEqual(store.heat, 'kills', 'the heat layer cycles and is remembered');
   btn('timeline').fire('click');
   assert.strictEqual(btn('timeline').attrs['aria-pressed'], 'true', 'the timeline opens');
   const tlEl = c2.body.children[c2.body.children.length - 1], rng = tlEl.children[1];

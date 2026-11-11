@@ -82,6 +82,28 @@ export function eventText(ev) {
   return (ev.t || ev.k) + (f ? ', ' + f.sec + ' s fight, life ' + f.life + '% (min ' + f.min + '%), end=' + (f.end || '?') + ', ' + f.kills + (f.kills === 1 ? ' kill' : ' kills') : '');
 }
 
+// ---- Heat layers ----
+export const HEAT_MODES = ['off', 'kills', 'time', 'damage'];
+const HEAT_COL = { kills: 2, time: 3, damage: 4 }; // index of the count in a heat cell [x, y, kills, dwell s, damage]
+
+export function heatMax(cells, mode) {
+  const i = HEAT_COL[mode];
+  let m = 0;
+  if (i) (cells || []).forEach((c) => { if (c[i] > m) m = c[i]; });
+  return m;
+}
+
+// Square-root scale: a few busy cells do not wash out the rest. 0 draws nothing.
+export function heatAlpha(v, max) {
+  return v > 0 && max > 0 ? 0.12 + 0.58 * Math.sqrt(v / max) : 0;
+}
+
+export function heatLegend(mode, max) {
+  if (mode === 'off') return '';
+  const unit = mode === 'kills' ? ' kills' : mode === 'time' ? ' s' : ' life points';
+  return 'Heat ' + mode + ': from 1 to ' + max + unit + ' per cell (dark to bright).';
+}
+
 // ---- Timeline (scrubber and replay) ----
 // Activity segments of the visible window for the ribbon: {a, t0, t1} with t = ms ago (t0 older).
 export function ribbonSegs(pts) {
@@ -205,6 +227,27 @@ export function mount(root, ctx) {
     evBtn.textContent = 'Events: ' + evMode;
     draw();
   });
+  const heatStore = ctx.store('heat');
+  let heatMode = 'off', heat = null;
+  try { const v = heatStore.get(); if (HEAT_MODES.indexOf(v) >= 0) heatMode = v; } catch (e) { /* storage blocked */ }
+  const heatBtn = ctx.el('button', 'd-btn', 'Heat: ' + heatMode), heatLine = ctx.el('p', 'note heat-line');
+  heatBtn.type = 'button'; heatBtn.dataset.size = 'sm'; heatBtn.dataset.key = 'heat'; heatBtn.setAttribute('aria-label', 'Heat layer: kills, time spent or damage taken, per cell');
+  function heatText() { heatLine.textContent = heatLegend(heatMode, heat ? heatMax(heat.cells, heatMode) : 0); heatLine.hidden = heatMode === 'off'; }
+  function loadHeat() {
+    if (typeof fetch !== 'function' || heatMode === 'off') return;
+    fetch('/api/history?heat=1' + (ctx.token ? '&t=' + encodeURIComponent(ctx.token) : ''), { cache: 'no-store', credentials: 'same-origin' })
+      .then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && j.heat) { heat = j.heat; heatText(); draw(); } }).catch(() => {});
+    if (ctx.later) ctx.later(loadHeat, 5000);
+  }
+  heatBtn.addEventListener('click', () => {
+    const was = heatMode;
+    heatMode = HEAT_MODES[(HEAT_MODES.indexOf(heatMode) + 1) % HEAT_MODES.length];
+    try { heatStore.set(heatMode); } catch (e) { /* storage blocked */ }
+    heatBtn.textContent = 'Heat: ' + heatMode;
+    heatText(); draw();
+    if (was === 'off') loadHeat();
+  });
+  heatText();
   const tlBtn = ctx.el('button', 'd-btn', 'Timeline');
   tlBtn.type = 'button'; tlBtn.dataset.size = 'sm'; tlBtn.dataset.key = 'timeline'; tlBtn.setAttribute('aria-label', 'Show the timeline: scrub and replay the trail'); tlBtn.setAttribute('aria-pressed', 'false');
   const ribbon = ctx.el('canvas', 'ribbon'), range = ctx.el('input', 'scrub'), playBtn = ctx.el('button', 'd-btn', 'Play'), spdBtn = ctx.el('button', 'd-btn', '1x');
@@ -215,8 +258,9 @@ export function mount(root, ctx) {
   tl.append(ribbon, range, playBtn, spdBtn, scrubLine);
   tl.hidden = true;
   const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
-  ctx.body.append(covLine, legend, share, tip, tl);
-  ctx.actions.append(covBtn, evBtn, tlBtn, ...winBtns);
+  ctx.body.append(covLine, heatLine, legend, share, tip, tl);
+  ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, ...winBtns);
+  if (heatMode !== 'off') loadHeat();
   covText();
   let scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, histTimer = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
@@ -333,6 +377,7 @@ export function mount(root, ctx) {
     g.globalAlpha = 1;
     drawArea(map, cells, 0, 0, v);
     const at = (p) => [v.ox + (p.x + 0.5) * v.k, v.oy + (p.y + 0.5) * v.k];
+    drawHeat(at);
     drawCoverage(at);
     drawTrail(at);
     if (scrub !== null) {
@@ -345,6 +390,20 @@ export function mount(root, ctx) {
       g.beginPath(); g.moveTo(h[0] - 7, h[1]); g.lineTo(h[0] + 7, h[1]); g.moveTo(h[0], h[1] - 7); g.lineTo(h[0], h[1] + 7); g.stroke();
     }
     if (window.sensesUnitsDraw && units.length) window.sensesUnitsDraw(g, at, units, css, cv);
+  }
+  // The heat grid sits under the coverage grid: translucent squares of the same cell size, brighter where more happened.
+  function drawHeat(at) {
+    if (heatMode === 'off' || !heat || !heat.cells || heat.area !== (map && map.areaId)) return;
+    const i = HEAT_COL[heatMode], max = heatMax(heat.cells, heatMode), side = (heat.cell || 7) * view().k;
+    g.save();
+    g.fillStyle = css('--d-bad', '#ec7d6c');
+    heat.cells.forEach((c) => {
+      const al = heatAlpha(c[i], max);
+      if (!al) return;
+      const a = at({ x: c[0], y: c[1] });
+      g.globalAlpha = al; g.fillRect(a[0] - 0.5 * view().k, a[1] - 0.5 * view().k, side, side);
+    });
+    g.restore();
   }
   // The coverage grid sits under the trail: faint outline unseen, tinted fill seen, red outline and a slash failed, a ring
   // on the current target. Static on purpose (no pulse), so reduced motion needs nothing special.

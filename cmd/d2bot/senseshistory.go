@@ -94,7 +94,7 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 			pc := c.Life * 100 / c.MaxLife
 			if lastLife >= 0 && lastLife-pc >= damageDropPct && time.Since(lastDmg) > 2*time.Second {
 				lastDmg = time.Now()
-				pub.AddEvent(senses.EvDamage, fmt.Sprintf("Life %d%% to %d%%", lastLife, pc), false, nil)
+				pub.AddDamage(lastLife-pc, fmt.Sprintf("Life %d%% to %d%%", lastLife, pc))
 			}
 			lastLife = pc
 		}
