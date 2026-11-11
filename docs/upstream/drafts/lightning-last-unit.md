@@ -1,37 +1,41 @@
 # Draft (local, NOT posted): "Lightning hits one unit a frame and skips the last (FUN_005ae1f0)"
 
-> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/missile-last-unit-r2` on the private fork remote, head `89059e2d`, two commits on upstream main `b6b59ae9`. Replaces the older `fid/missile-last-unit` (head f45e45c8, base a5b970d5), which does not apply to current main and had a scope problem (see "Honest limits"). Trace: [../../probes/fid/fid-missile-player.md](../../probes/fid/fid-missile-player.md).
+> status: r3, ready for the verifier's second pass (prprep2, 2026-11-11). Branch `fid/missile-last-unit-r3` on the private fork remote, head `5effaf98`, two commits on upstream main `62732598`. Supersedes `-r1` (b7954bd0) and `-r2` (89059e2d), both stale on the remote (no force-push). Verifier report: [../verification-2026-11-11.md](../verification-2026-11-11.md) (NEEDS-WORK on r2; its fixes are applied here). Trace: [../../probes/fid/fid-missile-player.md](../../probes/fid/fid-missile-player.md).
 
 Nothing here is posted. PR title: `Lightning hits one unit a frame and skips the last (FUN_005ae1f0)`
 
 ## What changes
 
-A missile whose Missiles.txt row has LastCollide and neither NextHit nor Pierce (in the player's skill set that is `lightningbolt`, Lightning) struck every monster it touched, once each per cast (the `struck` list). game.exe's collision handler FUN_005ae1f0 hands the missile ONE unit a frame (the first unit FUN_005a8730 passes, in the order FUN_00641cb0 found them) and passes every unit except the one the missile struck last; the hit (FUN_005adf10) makes that unit the last. So a monster the bolt left for another can be struck again, and two monsters in one frame take two frames.
+A player missile whose Missiles.txt row has srvdofunc 1, LastCollide, and neither NextHit nor Pierce struck every monster it touched, once each per cast (the `struck` list). game.exe's handler for srvdofunc 1 (table at `0x73c768`, entry 1 = `jmp 0x5ae1f0`) hands the missile ONE unit a frame (the first unit FUN_005a8730 passes) and passes every unit except the one the missile struck last; the hit (FUN_005adf10) makes that unit the last. A monster the bolt left for another can be struck again, and two monsters in one frame take two frames.
 
-`Fight::skill_missile_hits` now keeps `last_hit` for these rows the way it already does for NextHit rows (#158), with no `struck` entry; `Fight::world` ends the missile's frame at the hit. Two commits: the oracle and its d2d side first (they exist and fail on the parent), then the claim (a few lines in two files, one doc paragraph in `docs/research/re/missiles.md`).
+`MissileInfo::last_unit_rule()` names the rows (`last_collide && !next_hit && !pierce && srv_do == 1`). `Fight::skill_missile_hits` keeps `last_hit` for them as it does for NextHit rows (#158), with no `struck` entry; `Fight::world` ends the missile's frame at the hit. Two commits: the oracle with its d2d side (they fail on the parent), then the claim (three code files, one doc section).
+
+### Skills this reaches
+
+Derived from Skills.txt and Missiles.txt (`tools/emu/pp_skills.sh`, rows with CollideKill empty so the missile survives its hit): the player skills whose missile is such a row are Lightning (`lightningbolt`), Lightning Fury's bolts (`furylightning`, same flags), Inferno (`infernoflame1`), Bone Spear (`bonespear`) and Arctic Blast (`arcticblast1`). The same table scan also lists rows of Meteor (`meteorcenter`), Howl, Molten Boulder, and four Assassin trap / strike sub-missiles; whether d2d reaches those through `skill_missile_hits` was not checked (U). Firebolt-class rows (CollideKill 1) end on their first hit, so nothing changes for them. The independent verifier ran Bone Spear (a variant of the test with its row): the parent differs from game.exe on 12 T lines (16 casts) on seed 1, the claim on 0 (verifier's V run).
+
+NOT touched, on purpose: Pierce rows (arrows, javelins, Blessed Hammer: their charge rule is #225's and their oracle needs ToHit and hit / damage functions) and srvdofunc 3 rows (Blizzard shards, Poison Explosion, Poison and Plague Javelin clouds: they stand at velocity 0, d2d strikes them through `standing_struck`, and what FUN_005ae480 / FUN_0064cb90 do for a standing missile with several units in reach was not run).
 
 ## Evidence from game.exe 1.14d
 
 | Address | What it shows |
 |---|---|
-| `FUN_005ae1f0` | per frame, after FUN_00641cb0 found a unit in the subtiles the missile entered: the first unit the filter passes is handed to FUN_005adf10 and the frame is over |
-| `FUN_005a8730` (called from `0x5a8850`) | the filter: passes every unit but `FUN_0064a470` (the missile's last unit); a NextHit row also tests state 0x56 |
+| `0x73c768` entry 1 -> `FUN_005ae1f0` | the missile srvdofunc 1 handler (read from the loaded image, verifier) |
+| `FUN_005ae1f0` | per frame: range minus 1, then for each subtile the move entered, FUN_00641cb0 through the filter; the first unit found goes to FUN_005adf10 and the function returns |
+| filter at `0x5a8850` -> `FUN_005a8730` | passes every unit but `FUN_0064a470` (the missile's last unit); a NextHit row also tests state 0x56 |
 | `FUN_005adf10` `0x5adfae` | the hit: `FUN_0064a400` makes this unit the missile's last unit |
-| Missiles.txt `lightningbolt` | LastCollide 1, NextHit empty, Pierce empty (D, `tools/emu/mpq-table.sh missiles`) |
+| Missiles.txt `lightningbolt` | LastCollide 1, NextHit empty, Pierce empty, CollideKill empty, srvdofunc 1 (D) |
 
-## Counted differentials (V run, the worker host)
+## Counted differentials (V run, the worker host, tree = upstream `62732598` plus the branch)
 
-`tools/emu/light_pierce.py` runs game.exe's real filter `0x5a8850` -> FUN_005a8730 and the hit FUN_005adf10 (plus FUN_005adb00, FUN_0064a470, FUN_0064a400; owner, hostility, stat getters and the damage roll hooked) on the contacts d2d's own Lightning flight produced. `test_light_pierce --light-hit SEED N` runs d2d's real `Fight::fire` / `Fight::world` / `skill_missile_hits` on packs of 1..6 standing monsters, sizes 1..3, 8 headings, levels 1..20, boundary cases plus random packs, and prints the contacts and the hits per monster.
+`tools/emu/light_pierce.py` runs game.exe's real filter and hit (FUN_005a8730, FUN_005adf10, FUN_005adb00, FUN_0064a470, FUN_0064a400; owner, hostility, stat getters and the damage roll hooked) on the contacts d2d's own Lightning flight produced. `test_light_pierce --light-hit SEED 400` runs d2d's real `Fight::fire` / `Fight::world` / `skill_missile_hits` on packs of 1..6 standing monsters, sizes 1..3, 8 headings, levels 1..20; each seed is 1,192 casts. A cast that differs prints one T line from each side, so casts = T lines / 2.
 
-| Run (rebased tree, upstream `b6b59ae9`) | Casts | Casts that differ from game.exe |
-|---|---|---|
-| parent (oracle commit only), seed 1, N 400 | 1192 | 44 |
-| parent, seed 7, N 400 | 1192 | 43 |
-| with the claim, seed 1, N 400 | 1192 | 0 |
-| with the claim, seed 7, N 400 | 1192 | 0 |
-| neighbour: `test_next_hit --next-hit 1 400` against `next_hit.py` (NextHit rows, #158) | 598 | 0 |
+| Tree | seed 1 | seed 7 | seed 13 |
+|---|---|---|---|
+| parent (oracle commit only): casts that differ of 1,192 | 44 | 43 | 47 |
+| with the claim | 0 | 0 | 0 |
 
-Run log and scripts of this prep: `tools/emu/pp_light.sh before|after SEED N` (the before run builds the parent), `pp_light_all.sh`.
+Neighbour: `test_next_hit --next-hit 1 400` against `next_hit.py` (NextHit rows, #158): 0 of 598. `test_game_missiles` (the #225 pierce test), `test_game`, `test_monsters`, `test_combat`: rc 0 on the claim.
 
 ## How to re-check
 
@@ -44,20 +48,17 @@ uv run python light_pierce.py /tmp/d2d.txt > /tmp/g.txt
 grep -E '^[HT]' /tmp/d2d.txt | diff /tmp/g.txt - && echo same
 ```
 
-`test_game_missiles`, `test_monsters`, `test_combat` and `test_game` pass with the change (rc 0, run with the 1.14d data and patch installer).
-
 ## Honest limits (to put in the body)
 
-- Scope. The change is limited to rows with LastCollide and without Pierce. The same FUN_005a8730 filter serves the Pierce rows too (arrows, javelins, Blessed Hammer), but their oracle needs ToHit and the hit and damage functions, which `light_pierce.py` refuses, and their charges are a different rule (FUN_005ada80, #225). They keep d2d's `struck` list. The older version of this branch applied the rule to every LastCollide row and broke `test_game_missiles` (the #225 pierce-charge test hits one monster repeatedly, line 734 on the current tree); narrowing it to `!pierce` is the fix and is what is proven here. A follow-up would extend the oracle to the arrow rows.
-- Which unit goes first when two units are found in one subtile is the monster order here; game.exe's is its room's unit list (not read). The earlier trace (fid-missile-player.md) found the two structural counts unchanged in either contact order; that was not re-run on this tree.
-- The Chain Lightning part (NextHit rows) is #158's and untouched.
-- Overlap check (read-only `gh`, 2026-11-11): the open #426 (Holy Bolt heals a pet) is the only open PR touching `components/game/fight/missiles.cpp`; a textual overlap is not expected (a different function).
+- Which unit of a frame goes first. The oracle replays d2d's contacts in d2d's monster-index order and takes the first the filter passes; game.exe walks the subtiles the missile entered in path order. With the contacts re-ordered along the heading (the verifier's approximate path order, a throwaway variant) the claim differs from game.exe in 18 T lines (19 casts) on seed 1 and 15 on seed 7, against 37 T lines for the parent: the change moves d2d closer, not to equal, when several monsters sit in different subtiles of one frame. Making `Fight::world` order the frame's candidates along the flight is a possible follow-up (not done here).
+- Pierce rows and srvdofunc 3 rows keep the `struck` list (see above); extending the oracle to them is a follow-up.
+- Overlap check (read-only `gh`, 2026-11-11): the open #426 (`fight/missiles.cpp`, a different function) and #405 (`re/missiles.md`, a different section); a textual rebase at most.
 
 ## Checklist
 
-- [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (the oracle commit first, the claim second)
+- [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (oracle commit first, claim second; the oracle commit builds on its own)
 - [x] The finding in `docs/research/re/missiles.md`
 - [x] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 0 WARN
-- [x] `python3 tools/presubmit.py --quick --base upstream/main` (on the head before the README row fix, which changes no code): 0 FAIL, 4 WARN (sibling unit kinds and hit paths: the change is a player skill missile on monsters only; doc-claims line 547 "every unit" is the FUN_005a8730 filter text; build skipped by `--quick`, built by hand above)
+- [ ] `python3 tools/presubmit.py --quick --base upstream/main` on r3: run it before posting (the earlier head had 0 FAIL, 4 WARN)
 
 Agent: Claude Code

@@ -4,7 +4,7 @@ export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HO
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-cold4; B=$HOME/d2d-lab/build-pp-cold4; O=$HOME/d2d-lab/pp-cold4; mkdir -p $O
 cd $T
-for seed in 1 9; do n=100000; [ $seed = 9 ] && n=50000; cd $T/tools/emu; [ -s $O/game-$seed.tsv ] || uv run python umod_stats.py $n $seed > $O/game-$seed.tsv 2>/dev/null; done
+for seed in 1 9; do n=100000; [ $seed = 9 ] && n=50000; cd $T/tools/emu; [ -s $O/game-$seed.tsv ] || uv run python umod_stats.py $n $seed > $O/game-$seed.tsv 2>$O/game-$seed.err; done
 cmp() { # label seed
   cd $T/tools/emu; $B/tests/test_umod_stats --umod-stats $O/game-$2.tsv > $O/$1-$2.d2d && uv run python umod_stats.py --compare $O/game-$2.tsv $O/$1-$2.d2d 2>&1 | grep -v WARNING > $O/$1-$2.full
   echo "$1 seed $2: $(head -1 $O/$1-$2.full)"; python3 $HERE/pp_cold_count.py $O/$1-$2.full
