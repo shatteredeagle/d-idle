@@ -50,7 +50,7 @@ func DefaultNavTuning() NavTuning {
 		PathQuality: 1, Sloppiness: 8, WaypointSpacing: 8, ArriveTolerance: 2, PollMs: 100, ReplanMs: 1500,
 		StuckMs: 1200, MaxRecoveries: 6, WallClearance: 3, WallWeight: 0.75, MonsterRadius: 8, MonsterPenalty: 6,
 		ExploreInformed: true, ExploreBucket: 10, WalkTimeoutSec: 120, ExploreTimeoutSec: 300, ExitPush: 8,
-		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, RoamSpacing: 7, RoamCover: 5, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60, PursuitRadius: 10, PursuitPolls: 4, PursuitMinLifePct: 50,
+		LoadWaitSec: 20, PanelWaitMs: 2500, CautionRadius: 20, RoamSpacing: 16, RoamCover: 10, TeleReservePct: 40, TeleMinLeg: 13, TeleEscapeReservePct: 15, StuckFightLifePct: 60, PursuitRadius: 10, PursuitPolls: 4, PursuitMinLifePct: 50,
 		UseWaypoints: true, WpMinDistance: 2, WpCooldownSec: 0, BadEdgeTTLSec: 300,
 	}
 }

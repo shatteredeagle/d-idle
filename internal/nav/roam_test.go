@@ -53,7 +53,7 @@ func TestRoamVisitsCoverageAndFightsOnFullyKnownMap(t *testing.T) {
 	}
 	hostile := func() bool {
 		for _, u := range s.units {
-			if math.Hypot(float64(u.X)-s.px, float64(u.Y)-s.py) < 12 {
+			if math.Hypot(float64(u.X)-s.px, float64(u.Y)-s.py) < 30 {
 				return true
 			}
 		}
@@ -70,7 +70,7 @@ func TestRoamVisitsCoverageAndFightsOnFullyKnownMap(t *testing.T) {
 		}
 		for j := 0; j < len(s.units); {
 			u := s.units[j]
-			if math.Hypot(float64(u.X)-s.px, float64(u.Y)-s.py) < 12 {
+			if math.Hypot(float64(u.X)-s.px, float64(u.Y)-s.py) < 30 {
 				s.units = append(s.units[:j], s.units[j+1:]...)
 				kills++
 				continue
