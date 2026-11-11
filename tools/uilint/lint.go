@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"d2lod-bot/internal/watch"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -60,7 +61,7 @@ func init() {
 	}
 }
 
-var styleWriteOK = map[string]bool{"gridArea": true, "gridColumn": true, "gridRow": true, "transform": true}
+var styleWriteOK = map[string]bool{"gridArea": true, "gridColumn": true, "gridRow": true, "order": true, "transform": true}
 
 var rootSizeProps = map[string]bool{"width": true, "height": true, "min-width": true, "max-width": true, "min-height": true,
 	"max-height": true, "inline-size": true, "block-size": true, "min-inline-size": true, "max-inline-size": true,
@@ -328,7 +329,7 @@ func (l *Linter) lintJS(f, s string) {
 		}
 		for _, m := range reStyleWrite.FindAllStringSubmatch(code, -1) {
 			if !styleWriteOK[m[1]] && m[1] != "cssText" {
-				l.add(f, n, "js-no-inline-style", ".style.%s write (allowed: gridArea, gridColumn, gridRow, transform, setProperty('--...'))", m[1])
+				l.add(f, n, "js-no-inline-style", ".style.%s write (allowed: gridArea, gridColumn, gridRow, order, transform, setProperty('--...'))", m[1])
 			}
 		}
 		for _, m := range reSetProp.FindAllStringSubmatch(code, -1) {
@@ -387,8 +388,9 @@ type Manifest struct {
 
 // ShellConf is web/shell.json: the fixed panel ids of the status and stage bands.
 type ShellConf struct {
-	Status []string `json:"status"`
-	Stage  []string `json:"stage"`
+	Status []string         `json:"status"`
+	Stage  []string         `json:"stage"`
+	Layout watch.LayoutConf `json:"layout"`
 }
 
 var (
@@ -510,6 +512,39 @@ func (l *Linter) lintManifests(files []string) {
 	for _, e := range ents {
 		if e.IsDir() && !dirs[e.Name()] {
 			l.add("panels/"+e.Name(), 0, "manifest-orphan", "panel directory without panel.json")
+		}
+	}
+	l.lintLayouts(shell.Layout, dirs)
+}
+
+// lintLayouts checks layout.json and layouts/*.json (watch.layout/1, docs/ui-design-system.md section 6.4): the file
+// parses, every id is a panel, an alias, a compat card or a reserved id of shell.json, nothing overlaps within a
+// breakpoint, spans stay inside the columns, order is unique.
+func (l *Linter) lintLayouts(c watch.LayoutConf, panels map[string]bool) {
+	known := func(id string) bool {
+		_, alias := c.Aliases[id]
+		return panels[id] || alias || contains(c.Compat, id) || contains(c.Reserved, id)
+	}
+	for a, to := range c.Aliases {
+		if !panels[to] && !contains(c.Compat, to) {
+			l.add("shell.json", 1, "layout-alias", "alias %s points at %s, which is neither a panel nor a compat card", a, to)
+		}
+	}
+	files, _ := filepath.Glob(filepath.Join(l.Root, "layouts", "*.json"))
+	files = append(files, filepath.Join(l.Root, "layout.json"))
+	for _, f := range files {
+		b, err := os.ReadFile(f)
+		if err != nil {
+			continue // a tree without a layout places by manifest
+		}
+		rel, _ := filepath.Rel(l.Root, f)
+		rel = filepath.ToSlash(rel)
+		m, err := watch.ParseLayout(b)
+		if err == nil {
+			err = m.Check(known)
+		}
+		if err != nil {
+			l.add(rel, 1, "layout-manifest", "%v", err)
 		}
 	}
 }
