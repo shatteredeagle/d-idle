@@ -86,9 +86,11 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 	e.OnObserve = func(lm *d2map.LevelMap, pos d2map.Point) {
 		st := status()
 		attacking := f != nil && f.Attacking() != 0
-		pub.SetActivity(activityFor(st.Why.Code, attacking, looting != nil && looting()))
+		act := activityFor(st.Why.Code, attacking, looting != nil && looting())
+		pub.SetActivity(act)
 		prev(lm, pos)
 		if c := st.Character; c.MaxLife > 0 {
+			pub.AddSample(senses.Sample{Life: c.Life * 100 / c.MaxLife, Mana: pct(c.Mana, c.MaxMana), Act: act, Why: st.Why.Code, Level: c.Level, XP: c.XP})
 			pc := c.Life * 100 / c.MaxLife
 			if lastLife >= 0 && lastLife-pc >= damageDropPct && time.Since(lastDmg) > 2*time.Second {
 				lastDmg = time.Now()
@@ -128,4 +130,11 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 			}
 		}()
 	}
+}
+
+func pct(v, max int) int {
+	if max <= 0 {
+		return 0
+	}
+	return v * 100 / max
 }

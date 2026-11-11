@@ -185,3 +185,30 @@ func TestSensesCoveragePayload(t *testing.T) {
 		t.Fatal("explored state")
 	}
 }
+
+type histSrc struct {
+	SensesSource
+	s   []senses.Sample
+	now time.Time
+}
+
+func (h histSrc) SamplesOf() ([]senses.Sample, time.Time) { return h.s, h.now }
+
+func TestSensesHistoryEndpoint(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	src := histSrc{SensesSource: sensesFixture(t), now: now, s: []senses.Sample{
+		{At: now.Add(-10 * time.Second), Life: 100, Mana: 80, Area: 1, Act: senses.ActWalk, Why: "walk", Level: 5, XP: 900},
+		{At: now.Add(-2 * time.Second), Life: 62, Mana: 40, Area: 1, Act: senses.ActCombat, Why: "fight", Level: 5, XP: 960}}}
+	get := func(tier int) string {
+		w := httptest.NewRecorder()
+		(&Senses{Src: src, Lock: FixedTier(tier)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/history", nil))
+		return w.Body.String()
+	}
+	golden(t, "history", get(1))
+	if strings.Contains(get(0), `"l":`) {
+		t.Fatal("a closed tier must not leak samples")
+	}
+	if g := get(1); !strings.Contains(g, `"samples":[{`) {
+		t.Fatal(g)
+	}
+}

@@ -12,7 +12,7 @@ import (
 
 // SensesRoutes are the GET routes of the side-panel minimap (docs/senses-map.md). Mount them on the viewer behind the
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
-var SensesRoutes = []string{"/api/senses", "/watch/senses_units.js"}
+var SensesRoutes = []string{"/api/senses", "/api/history", "/watch/senses_units.js"}
 
 // Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
 // reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
@@ -127,6 +127,52 @@ type SensesReply struct {
 	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
 	Locked []SenseLock `json:"locked,omitempty"`
 	Next   *SenseLock  `json:"next,omitempty"`
+}
+
+// HistorySource is an optional part of a SensesSource: the sample ring of the timeline.
+type HistorySource interface {
+	SamplesOf() ([]senses.Sample, time.Time)
+}
+
+// HistoryReply is /api/history (watch.history/1): the timeline samples, newest last, ages in ms before Ts. It is
+// fetched by the map panel when its scrubber is open, not on every poll.
+type HistoryReply struct {
+	Schema  string          `json:"schema"`
+	Ts      int64           `json:"ts"`
+	Legend  []string        `json:"legend"`
+	Samples []HistorySample `json:"samples"`
+}
+
+// HistorySample: l and m are life and mana percent, a the activity code, w the whyline code, ar the area id.
+type HistorySample struct {
+	AgoMS int64  `json:"ago"`
+	L     int    `json:"l"`
+	M     int    `json:"m"`
+	A     uint8  `json:"a,omitempty"`
+	W     string `json:"w,omitempty"`
+	Lv    int    `json:"lv,omitempty"`
+	XP    int64  `json:"xp,omitempty"`
+	Ar    int    `json:"ar"`
+}
+
+const historySchema = "watch.history/1"
+
+// History builds the reply; Lock gates it like the map (tier 1).
+func (s *Senses) History() HistoryReply {
+	r := HistoryReply{Schema: historySchema, Legend: senses.ActivityNames[:], Samples: []HistorySample{}}
+	if s.Lock == nil || !s.Lock.Allowed(1) {
+		return r
+	}
+	hs, ok := s.Src.(HistorySource)
+	if !ok {
+		return r
+	}
+	smp, now := hs.SamplesOf()
+	r.Ts = now.UnixMilli()
+	for _, v := range smp {
+		r.Samples = append(r.Samples, HistorySample{AgoMS: now.Sub(v.At).Milliseconds(), L: v.Life, M: v.Mana, A: v.Act, W: v.Why, Lv: v.Level, XP: v.XP, Ar: v.Area})
+	}
+	return r
 }
 
 // SenseNeighbour is a neighbour area in the current area's coordinate space: add DX, DY to its subtile coordinates.
@@ -245,6 +291,13 @@ func (s *Senses) Handler() http.Handler {
 		}
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
 		writeJSON(w, 200, s.ReplyNb(have, parseHave(r.URL.Query().Get("nb"))))
+	})
+	m.HandleFunc("/api/history", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		writeJSON(w, 200, s.History())
 	})
 	for route, file := range map[string]string{"/watch/senses_units.js": "web/senses_units.js"} {
 		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
