@@ -938,3 +938,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview
 - docs/viewer-fps.md: viewer game video fps, sandbox measurements, framefeed ring design and staged plan (TASK-293)
 - docs/denshuttle.md: Den of Evil / Blood Moor shuttle, sandbox hour analysis and the potion entry/stay gap (TASK-295)
+- docs/inventory-actions.md: identify commands section (research, API schema 5, live checks 8 to 12)
