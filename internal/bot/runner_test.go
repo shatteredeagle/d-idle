@@ -1121,3 +1121,31 @@ func TestBeatStampsHeartbeat(t *testing.T) {
 		t.Fatal("Beat did not stamp")
 	}
 }
+
+// A Clear that finds nothing because its target died in between (killed 0, remaining 0) must not blind the sweep for
+// the 90 s futile window (live d2play-20261108: 'clear killed nothing' remaining 0 after almost every kill, then the
+// hero walked on ignoring the next Fallen until it was followed). Class-generic: no class is involved in the sweep.
+func TestGoneTargetClearOnlyShortlySuppressesHostiles(t *testing.T) {
+	for _, cl := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		t.Run(cl.String(), func(t *testing.T) {
+			goneTargetClear(t, cl)
+		})
+	}
+}
+
+func goneTargetClear(t *testing.T, cl d2.Class) {
+	g := newRig(t)
+	g.fight.clearGone = true
+	g.mover.exploreFn = blockExplore
+	g.w.set(func(w *world) { w.area, w.class = 2, cl })
+	g.w.addMonster(7, 10, 5, 0)
+	g.run()
+	defer g.finish()
+	g.r.Start(farm("Blood Moor"))
+	g.waitFor("first clear", func() bool { return g.w.count("clear") > 0 })
+	n, t0 := g.w.count("clear"), g.clock.Now()
+	g.waitFor("clears again", func() bool { return g.w.count("clear") > n })
+	if d := g.clock.Now().Sub(t0); d > 30*time.Second {
+		t.Fatalf("second Clear came %v after the first: the sweep ignored the hostile for a long futile window", d)
+	}
+}
