@@ -81,14 +81,17 @@
   .d-main[data-editing] [data-editcell] { position: relative; overflow: hidden; min-block-size: 0; cursor: default; padding-block-start: calc(var(--d-pad) + 1.6rem); }
   .d-main[data-editing] [data-editcell]:focus { outline: 2px solid var(--d-focus); outline-offset: 2px; }
   .d-main[data-editing] [data-editcell][data-drag] { opacity: .85; z-index: 5; box-shadow: var(--d-shadow-2); }
+  /* the slide of a pushed panel: placed at its old spot by a transform (data-flip="from"), then released ("go");
+     the duration token is 0 under prefers-reduced-motion and the editor skips the slide there */
+  .d-main[data-editing] [data-editcell][data-flip="from"] { transition: none; }
+  .d-main[data-editing] [data-editcell][data-flip="go"] { transition: transform var(--d-dur-2) var(--d-ease); }
+  .d-main[data-preview] [data-editcell]:is([data-drag], :focus) { outline: 2px dashed var(--d-accent); outline-offset: 2px; }
   .d-edithandle { position: absolute; inset-block-start: 0; inset-inline: 0; z-index: 3; display: flex; align-items: center; gap: var(--d-sp-2); padding: 2px var(--d-sp-2); background: var(--d-surface-3);
     border-block-end: var(--d-bw) solid var(--d-line-strong); font-size: var(--d-fs-0); color: var(--d-text-2); cursor: grab; user-select: none; touch-action: none; }
   .d-edithandle b { color: var(--d-text); margin-inline-end: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .d-edithandle .pos { font-family: var(--d-font-num); white-space: nowrap; }
   .d-editrs { position: absolute; inset-block-end: 0; inset-inline-end: 0; z-index: 3; inline-size: 18px; block-size: 18px; cursor: nwse-resize; touch-action: none;
     background: linear-gradient(135deg, transparent 50%, var(--d-accent) 50%); }
-  .d-editghost { pointer-events: none; border: 2px dashed var(--d-accent); border-radius: var(--d-r-3); z-index: 4; }
-  .d-editghost[data-bad] { border-color: var(--d-bad); }
   .d-editbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-2) var(--d-sp-3); margin-inline: var(--d-gap); padding: var(--d-sp-2) var(--d-sp-3); background: var(--d-surface-3);
     border: var(--d-bw) solid var(--d-accent); border-radius: var(--d-r-2); font-size: var(--d-fs-1); }
   .d-editbar .what { font-weight: 650; }
