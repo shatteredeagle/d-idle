@@ -1,0 +1,96 @@
+{
+ "schema": 5,
+ "inTown": false,
+ "class": "Paladin",
+ "gold": 0,
+ "stashGold": 0,
+ "equipment": {},
+ "backpack": [
+  {
+   "id": 1,
+   "code": "10",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "canSell": true,
+   "canWear": [
+    "rhand"
+   ],
+   "noTrash": "trashing is not available on this bot"
+  },
+  {
+   "id": 2,
+   "code": "11",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "canSell": true,
+   "noWear": "restricted to another class",
+   "noTrash": "trashing is not available on this bot"
+  },
+  {
+   "id": 4,
+   "code": "",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "noWear": "restricted to another class",
+   "noSell": "this item is never sold",
+   "noTrash": "trashing is not available on this bot"
+  }
+ ],
+ "stash": null,
+ "belt": null,
+ "pins": [],
+ "queue": [
+  {
+   "id": 0,
+   "kind": "buyid",
+   "name": "Buy identify scrolls",
+   "state": "queued",
+   "reason": "waits until the hero is in town",
+   "at": 1800000000,
+   "count": 12
+  },
+  {
+   "id": 0,
+   "kind": "cain",
+   "name": "Identify all at Deckard Cain",
+   "state": "queued",
+   "reason": "waits until the hero is in town",
+   "at": 1800000000
+  }
+ ],
+ "recent": [
+  {
+   "id": 1,
+   "kind": "identify",
+   "name": "thing",
+   "state": "done",
+   "at": 1800000000,
+   "print": "10/4/5"
+  }
+ ],
+ "identify": {
+  "tool": "tome",
+  "tome": 5,
+  "tomeCap": 20,
+  "scrolls": 0,
+  "unid": 3,
+  "buyDefault": 15,
+  "buyMax": 20,
+  "cain": "open"
+ }
+}

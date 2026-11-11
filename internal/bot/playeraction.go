@@ -50,3 +50,12 @@ func (r *Runner) playerActionStep(ctx context.Context, snap *d2.Snapshot, c cont
 	})
 	return true
 }
+
+// QuestView is the quest reader's view for a difficulty (memory first, then the save); ok is false without a reader or
+// when nothing is known. The watch page's "Identify all (Cain)" command reads it to see whether the Search for Cain is done.
+func (r *Runner) QuestView(diff int) (QuestView, bool) {
+	if r.d.Task == nil || r.d.Task.Quests == nil {
+		return QuestView{}, false
+	}
+	return r.d.Task.Quests.Read(diff)
+}

@@ -31,6 +31,11 @@ const (
 	// Request kinds. An empty Kind (state files and clients of API schema 2) means equip.
 	KindEquip = "equip"
 	KindTrash = "trash"
+	// Schema 5: identify one item, and two town errands that name no item (ID 0): buy identify scrolls, and have
+	// Deckard Cain identify everything (docs/inventory-actions.md).
+	KindIdentify = "identify"
+	KindBuyID    = "buyid"
+	KindCain     = "cain"
 	// Request states: queued -> doing -> done | failed; cancelled only from queued.
 	StateQueued, StateDoing, StateDone, StateFailed, StateCancelled = "queued", "doing", "done", "failed", "cancelled"
 	// TrashTTL is how long a trashed item stays on the looter's ignore list (a dropped item lies in the area until the
@@ -66,9 +71,12 @@ type Config struct {
 	SellBlock func(u d2.Unit) string                      // optional: why an item can never be sold ("" = it may be)
 	// TrashBlock is the same for trash (quest items, keys, tomes, the start kit); nil: nothing is blocked here.
 	TrashBlock func(u d2.Unit) string
-	Advice     func(it status.Item) string // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
-	Prompt     func() string               // optional: the gear-policy prompt for the page (onboarding, no weapon); must not call back into the desk
-	Now        func() time.Time
+	// CainOpen says whether Deckard Cain is rescued (the Search for Cain quest done, or Cain seen in town); nil: the
+	// "Identify all (Cain)" command is not offered at all.
+	CainOpen func(s *d2.Snapshot) bool
+	Advice   func(it status.Item) string // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
+	Prompt   func() string               // optional: the gear-policy prompt for the page (onboarding, no weapon); must not call back into the desk
+	Now      func() time.Time
 }
 
 // Desk holds the player's decisions. All methods are safe for concurrent use.
@@ -77,6 +85,7 @@ type Desk struct {
 	mu sync.Mutex
 	eq Equipper
 	tr Trasher
+	sv Services
 	st state
 }
 
@@ -109,6 +118,10 @@ type Request struct {
 	Reason string `json:"reason,omitempty"`
 	At     int64  `json:"at"`
 	Print  string `json:"print,omitempty"` // fingerprint of the item when it was queued (trash: feeds the ignore list)
+	// Schema 5. Count is the number of scrolls the player asked for (buyid; 0 = fill the tome); Result is what a done
+	// request did, in a sentence ("bought 12, short of gold for the rest").
+	Count  int    `json:"count,omitempty"`
+	Result string `json:"result,omitempty"`
 }
 
 func (r Request) kind() string {
@@ -567,16 +580,18 @@ func (d *Desk) Unpin(slot string) error {
 	return d.saveLocked()
 }
 
-// Pending is the number of queued player actions (bot.PlayerGear).
+// Pending is the number of queued player actions the bot could start now (bot.PlayerGear): the town errands count only
+// while the hero is in town, so the bot does not report "doing what you asked" for a request that must wait.
 func (d *Desk) Pending() int {
 	if d == nil {
 		return 0
 	}
+	inTown := d.heroInTown()
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	n := 0
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued {
+		if r.State == StateQueued && (inTown || !isErrand(r.kind())) {
 			n++
 		}
 	}
@@ -590,10 +605,11 @@ func (d *Desk) Pending() int {
 func (d *Desk) RunPending(ctx context.Context) []string {
 	var out []string
 	for ctx.Err() == nil {
+		inTown := d.heroInTown() // the snapshot callback runs unlocked
 		d.mu.Lock()
 		i := -1
 		for j, r := range d.st.Queue {
-			if r.State == StateQueued {
+			if r.State == StateQueued && d.runnableLocked(r, inTown) {
 				i = j
 				break
 			}
@@ -602,23 +618,27 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			d.mu.Unlock()
 			break
 		}
-		r, eq, tr := d.st.Queue[i], d.eq, d.tr
-		if r.kind() == KindTrash && tr == nil || r.kind() == KindEquip && eq == nil {
-			d.mu.Unlock()
-			break
-		}
+		r, eq, tr, sv := d.st.Queue[i], d.eq, d.tr, d.sv
 		d.st.Queue[i].State = StateDoing
 		_ = d.saveLocked()
 		d.mu.Unlock()
 
 		var err error
 		var hx, hy int
-		if r.kind() == KindTrash {
+		result := ""
+		switch r.kind() {
+		case KindTrash:
 			err = d.perform(r, func() error { return tr.PlayerTrash(ctx, r.ID) })
 			if s := d.snap(); err == nil && s != nil && s.Player != nil {
 				hx, hy = s.Player.X, s.Player.Y
 			}
-		} else {
+		case KindIdentify:
+			err = sv.PlayerIdentify(ctx, r.ID)
+		case KindBuyID:
+			result, err = sv.BuyIdentify(ctx, r.Count)
+		case KindCain:
+			result, err = sv.CainIdentify(ctx)
+		default:
 			err = eq.PlayerEquip(ctx, r.ID, SlotBody[r.Slot])
 		}
 
@@ -637,14 +657,20 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 		if err != nil {
 			r.State, r.Reason = StateFailed, err.Error()
 			out = append(out, fmt.Sprintf("%s %s failed: %v", r.kind(), r.Name, err))
-		} else if r.kind() == KindTrash {
-			r.State = StateDone
-			d.noteTrashedLocked(r, hx, hy)
-			out = append(out, fmt.Sprintf("trash %s done, on the ground and ignored by the looter", r.Name))
 		} else {
-			r.State = StateDone
-			d.pinLocked(Pin{Slot: r.Slot, ID: r.ID, Name: r.Name, Since: d.c.Now().Unix()})
-			out = append(out, fmt.Sprintf("equip %s -> %s done, slot pinned", r.Name, r.Slot))
+			r.State, r.Result = StateDone, result
+			switch r.kind() {
+			case KindTrash:
+				d.noteTrashedLocked(r, hx, hy)
+				out = append(out, fmt.Sprintf("trash %s done, on the ground and ignored by the looter", r.Name))
+			case KindIdentify:
+				out = append(out, fmt.Sprintf("identify %s done", r.Name))
+			case KindBuyID, KindCain:
+				out = append(out, fmt.Sprintf("%s done: %s", r.kind(), result))
+			default:
+				d.pinLocked(Pin{Slot: r.Slot, ID: r.ID, Name: r.Name, Since: d.c.Now().Unix()})
+				out = append(out, fmt.Sprintf("equip %s -> %s done, slot pinned", r.Name, r.Slot))
+			}
 		}
 		d.recentLocked(r)
 		_ = d.saveLocked()
@@ -677,9 +703,9 @@ func (d *Desk) perform(r Request, do func() error) error {
 	return do()
 }
 
-// isBusy matches leveler.ErrBusy without importing the leveler.
+// isBusy matches leveler.ErrBusy and town.ErrFight without importing the leveler.
 func isBusy(err error) bool {
-	return err != nil && err.Error() == "leveler: a fight is on"
+	return err != nil && (err.Error() == "leveler: a fight is on" || err.Error() == "town: a fight is on")
 }
 
 func (d *Desk) pinLocked(p Pin) {
@@ -722,14 +748,18 @@ type ItemView struct {
 	NoWear  string `json:"noWear,omitempty"`  // backpack items with no slot that takes them
 	NoSell  string `json:"noSell,omitempty"`  // not a backpack item, or never sold
 	NoTrash string `json:"noTrash,omitempty"` // see trashWhy
+	// Schema 5: set only on an unidentified item that cannot be identified now (the reason); empty on an identified item
+	// (identifying it is refused) and on an unidentified one that can be.
+	NoIdentify string `json:"noIdentify,omitempty"`
 }
 
 // ViewSchema is the version of the /api/inventory reply: 2 added the optional item fields tip, base and sell (the item
 // tooltip, docs/inventory-tooltip.md); 3 added the item fields noWear, noSell and noTrash and the request fields kind
 // and print, and the request states doing and cancelled (the action menu, docs/inventory-actions.md); 4 added the
-// optional merc block (docs/research/merc-gear.md). Older readers keep working: nothing was renamed or removed, the new
+// optional merc block (docs/research/merc-gear.md); 5 added the optional identify block, the item field noIdentify and the
+// request kinds identify, buyid and cain with the fields count and result (the identify commands). Older readers keep working: nothing was renamed or removed, the new
 // fields are optional.
-const ViewSchema = 4
+const ViewSchema = 5
 
 // View is the inventory page's data.
 type View struct {
@@ -747,8 +777,9 @@ type View struct {
 	Queue     []Request            `json:"queue"`
 	Recent    []Request            `json:"recent"`
 	Note      string               `json:"note,omitempty"`
-	Prompt    string               `json:"prompt,omitempty"` // docs/gear-policy.md: tells the player equipment is theirs to manage
-	Merc      *MercView            `json:"merc,omitempty"`   // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
+	Prompt    string               `json:"prompt,omitempty"`   // docs/gear-policy.md: tells the player equipment is theirs to manage
+	Identify  *IdentifyView        `json:"identify,omitempty"` // schema 5: the identify commands' state; nil = no town backend
+	Merc      *MercView            `json:"merc,omitempty"`     // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
 }
 
 // Merc states of MercView.State.
@@ -780,7 +811,7 @@ func (d *Desk) View() View {
 	// State is copied under the lock and the callbacks run after it is released: the equip check reaches Pinned
 	// through the leveler and d.mu is not reentrant (live deadlock 2026-11-10: the whole bot froze).
 	d.mu.Lock()
-	c, eq := d.c, d.eq
+	c, eq, sv := d.c, d.eq, d.sv
 	marks := append([]markRec(nil), d.st.Marks...)
 	v := View{Schema: ViewSchema, Equipment: map[string]*ItemView{}, Pins: append([]Pin{}, d.st.Pins...), Queue: append([]Request{}, d.st.Queue...), Recent: append([]Request{}, d.st.Recent...)}
 	d.mu.Unlock()
@@ -800,6 +831,16 @@ func (d *Desk) View() View {
 		v.Note = "waiting for the first look at the hero"
 	}
 	v.Gold, v.StashGold = data.Gold, data.StashGold
+	hasTool := false
+	if sv != nil && s != nil && s.Inventory != nil {
+		v.Identify = d.identifyView(sv, c.CainOpen, s)
+		hasTool = v.Identify.Tool != "none"
+	}
+	for i, r := range v.Queue { // a town errand cannot start in the field: say so on the queue card
+		if isErrand(r.kind()) && r.State == StateQueued && !v.InTown && r.Reason == "" {
+			v.Queue[i].Reason = WaitsForTown
+		}
+	}
 	why := c.Why
 	if c.WhyFor != nil {
 		why = c.WhyFor(s)
@@ -857,6 +898,9 @@ func (d *Desk) View() View {
 		}
 		if _, why := d.trashWhy(u); why != "" {
 			iv.NoTrash = why
+		}
+		if sv != nil && !it.Identified {
+			_, iv.NoIdentify = identifyWhy(u, hasTool)
 		}
 		return iv
 	}

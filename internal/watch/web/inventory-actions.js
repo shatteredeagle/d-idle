@@ -1,8 +1,10 @@
 // Item action menu of the inventory page (docs/inventory-actions.md, docs/ui-design-system.md components 13 and 14):
 // click, tap or press Enter on an item (backpack, stash, belt, a worn slot) and a small menu offers Equip, Mark for
-// sale, Keep, Trash and Unpin. A choice QUEUES an action the bot performs at its next open opportunity; this file never
+// sale, Keep, Trash, Identify and Unpin. A choice QUEUES an action the bot performs at its next open opportunity; this file never
 // touches the game. A phone gets the same menu as a bottom sheet. The queue card is redrawn here with the states
-// queued, doing, done, failed and cancelled, a reason line and a Cancel button for a queued request.
+// queued, doing, done, failed and cancelled, a reason line, the result of a finished errand and a Cancel button for a
+// queued request. Above the queue sit the two town errands (docs/inventory-actions.md, schema 5): "Buy identify scrolls"
+// with a count box (empty = fill the tome) and "Identify all (Cain)", a locked tile with its teaser until Cain is rescued.
 // Input: the view /api/inventory sends, handed over by inventory.js as a 'd2:inventory' event on document (the same
 // feed the item tooltip uses). Text goes in through textContent only; nothing scrolls the page (focus is always taken
 // with preventScroll) and the menu is position: fixed.
@@ -33,7 +35,14 @@
   }
   function requestsFor(id) { return (view && view.queue || []).filter(function (r) { return r.id === id; }); }
   function kindOf(r) { return r.kind || 'equip'; }
-  function verb(r) { return kindOf(r) === 'trash' ? 'Trash ' + r.name : 'Equip ' + r.name + ' in ' + slotLabel(r.slot); }
+  function verb(r) {
+    switch (kindOf(r)) {
+      case 'trash': return 'Trash ' + r.name;
+      case 'identify': return 'Identify ' + r.name;
+      case 'buyid': case 'cain': return r.name; // the server words the errand
+    }
+    return 'Equip ' + r.name + ' in ' + slotLabel(r.slot);
+  }
 
   // model builds the menu of one item: {title, cls, rows: [{text, state, cancel}], entries: [{act, label, reason, slot}]}.
   // An entry with a reason is shown but not available. The server checks everything again.
@@ -42,6 +51,11 @@
     var reqs = requestsFor(it.id), trashQ = reqs.some(function (r) { return kindOf(r) === 'trash'; });
     var m = { target: 'hero', /* the menu structure is per target: the mercenary stage adds its own entries */ title: it.name || it.code || 'item', cls: 'q-' + (it.quality || 'normal'), id: it.id, rows: [], entries: [] };
     reqs.forEach(function (r) { m.rows.push({ text: verb(r), state: r.state, kind: kindOf(r), cancel: r.state === 'queued' }); });
+    // identify: offered on an unidentified item only; the server refuses an identified one
+    if (it.identified === false) {
+      var idQ = reqs.some(function (r) { return kindOf(r) === 'identify'; });
+      m.entries.push({ act: 'identify', label: 'Identify', reason: it.noIdentify || (idQ ? 'it is already queued to be identified' : '') || (trashQ ? 'it is queued to be trashed: cancel that first' : '') });
+    }
     // equip
     if (f.place === 'pack') {
       var can = it.canWear || [];
@@ -74,7 +88,7 @@
     return base().then(function (u) {
       return fetch(u + path, { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.error || ('error ' + r.status)); return j; }); })
-      .then(function () { say(''); return refresh(); }, function (e) { say(e.message); setNote(e.message); });
+      .then(function () { say(''); errNote(''); return refresh(); }, function (e) { say(e.message); setNote(e.message); errNote(e.message); });
   }
   function refresh() {
     return fetch('/api/inventory', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(onView, function () {});
@@ -83,6 +97,9 @@
   function equip(id, slot) { return post('/api/inventory/equip', { id: id, slot: slot || '' }); }
   function trash(id) { return post('/api/inventory/trash', { id: id, confirm: true }); }
   function cancel(id, kind) { return post('/api/inventory/cancel', { id: id, kind: kind || 'equip' }); }
+  function identify(id) { return post('/api/inventory/identify', { id: id }); }
+  function buyIdentify(n) { return post('/api/inventory/buyid', { count: n || 0 }); }
+  function cainIdentify() { return post('/api/inventory/cain', {}); }
 
   function run(e, m) {
     if (e.reason) { setNote(e.reason); return; }
@@ -92,6 +109,7 @@
       case 'sell': { var it = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: it.mark === 'sell' ? '' : 'sell' }); return; }
       case 'keep': { var k = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: k.mark === 'keep' ? '' : 'keep' }); return; }
       case 'unpin': closeMenu(true); post('/api/inventory/unpin', { slot: e.slot }); return;
+      case 'identify': closeMenu(true); identify(m.id); return;
       case 'trash':
         if (!e.confirm) { confirming = true; draw(true); return; } // the first click only asks
         closeMenu(true); trash(m.id); return;
@@ -188,13 +206,14 @@
     var t = document.getElementById('t-queue'); if (t) t.textContent = 'Item actions';
     clear(q);
     var rows = (view.queue || []).concat(view.recent || []);
-    if (!rows.length) { q.appendChild(el('p', 'd-hint', 'Nothing queued. Click an item to equip, sell or trash it.')); return; }
+    if (!rows.length) { q.appendChild(el('p', 'd-hint', 'Nothing queued. Click an item to equip, sell, identify or trash it.')); return; }
     var ul = el('ul', 'd-list');
     rows.forEach(function (r) {
       var li = el('li'); li.dataset.state = r.state;
       li.appendChild(el('span', 't', r.state));
       li.appendChild(el('span', 'txt', verb(r)));
       if (r.reason) li.appendChild(el('span', 'sub', r.reason));
+      if (r.result) li.appendChild(el('span', 'sub', r.result));
       if (r.state === 'queued') {
         var c = el('button', 'act act-cancel', 'Cancel'); c.type = 'button'; c.dataset.key = 'cancel-' + kindOf(r) + '-' + r.id;
         c.addEventListener('click', function () { cancel(r.id, kindOf(r)); });
@@ -205,11 +224,70 @@
     q.appendChild(ul);
   }
 
+  // ---- town errands (above the queue) ----
+  var errBox = null, errNoteEl = null, errCount = null, errBuy = null, errBuyHint = null, errCainWrap = null, errCain = null, errCainHint = null, errDirty = false, errSig = '';
+  function errNote(t) { if (errNoteEl) errNoteEl.textContent = t || ''; }
+  function offBtn(b, reason) { if (reason) { b.setAttribute('aria-disabled', 'true'); b.dataset.off = ''; } else { b.removeAttribute('aria-disabled'); delete b.dataset.off; } }
+  function ensureErrands() {
+    if (errBox) return errBox;
+    var box = document.getElementById('errands'); if (!box) return null;
+    errBox = box; box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Identify commands');
+    var buy = el('div', 'err-buy');
+    var lab = el('label', 'err-count', 'Scrolls'); lab.setAttribute('for', 'err-n');
+    errCount = el('input', 'err-n'); errCount.id = 'err-n'; errCount.setAttribute('type', 'number'); errCount.setAttribute('min', '0'); errCount.setAttribute('max', '20'); errCount.setAttribute('step', '1'); errCount.setAttribute('inputmode', 'numeric'); errCount.setAttribute('aria-label', 'How many identify scrolls to buy (empty fills the tome)');
+    errCount.addEventListener('input', function () { errDirty = true; });
+    errBuy = el('button', 'act', 'Buy identify scrolls'); errBuy.type = 'button'; errBuy.dataset.act = 'buyid';
+    errBuy.addEventListener('click', function () {
+      var why = errBuy.hasAttribute('aria-disabled') ? errBuyHint.textContent : '';
+      if (why) { errNote(why); return; }
+      var raw = String(errCount.value === undefined ? '' : errCount.value).trim(), n = raw === '' ? 0 : Number(raw);
+      var max = (view && view.identify && view.identify.buyMax) || 20;
+      if (!(n >= 0 && n <= max && Math.floor(n) === n)) { errNote('Pick a whole number from 1 to ' + max + ', or leave it empty to fill the tome.'); return; }
+      buyIdentify(n);
+    });
+    errBuyHint = el('p', 'd-hint err-hint'); buy.appendChild(lab); buy.appendChild(errCount); buy.appendChild(errBuy); buy.appendChild(errBuyHint);
+    errCainWrap = el('div', 'err-cain'); errCainWrap.dataset.state = 'ready';
+    errCain = el('button', 'act', 'Identify all (Cain)'); errCain.type = 'button'; errCain.dataset.act = 'cain';
+    errCain.addEventListener('click', function () {
+      if (errCain.hasAttribute('aria-disabled')) { errNote(errCainHint.textContent); return; }
+      cainIdentify();
+    });
+    errCainHint = el('p', 'd-hint err-hint teaser'); errCainWrap.appendChild(errCain); errCainWrap.appendChild(errCainHint);
+    errNoteEl = el('p', 'd-hint err-note'); errNoteEl.setAttribute('role', 'status');
+    box.appendChild(buy); box.appendChild(errCainWrap); box.appendChild(errNoteEl);
+    return box;
+  }
+  // renderErrands updates the strip in place (no rebuild: a number being typed must survive the 4 s poll).
+  function renderErrands() {
+    var id = view && view.identify;
+    if (!ensureErrands()) return;
+    errBox.hidden = !id;
+    if (!id) return;
+    var sig = JSON.stringify(id);
+    if (sig === errSig) return;
+    errSig = sig;
+    errCount.setAttribute('placeholder', id.tome >= 0 ? 'fill (' + id.buyDefault + ')' : 'fill');
+    if (!errDirty) errCount.value = '';
+    var have = id.tome >= 0 ? 'Tome of Identify: ' + id.tome + ' of ' + id.tomeCap : 'No Tome of Identify';
+    errBuyHint.textContent = id.buyWhy || (have + ', ' + id.scrolls + ' loose scroll' + (id.scrolls === 1 ? '' : 's') + '. Never spends below the repair and potion reserve.');
+    offBtn(errBuy, id.buyWhy);
+    errCainWrap.hidden = !id.cain;
+    if (id.cain === 'locked') {
+      errCainWrap.className = 'err-cain d-locked'; errCainWrap.dataset.state = 'locked';
+      errCainHint.textContent = id.cainWhy || 'opens when Cain is rescued';
+      offBtn(errCain, id.cainWhy || 'locked');
+    } else if (id.cain) {
+      errCainWrap.className = 'err-cain'; errCainWrap.dataset.state = 'open';
+      errCainHint.textContent = id.cainWhy || (id.unid + ' unidentified item' + (id.unid === 1 ? '' : 's') + ' carried. Free: no scroll is used.');
+      offBtn(errCain, id.cainWhy);
+    }
+  }
+
   // ---- events ----
   function onView(v) {
     view = v;
     // inventory.js redraws the queue card right after it hands the view over; redraw ours once that call has returned
-    Promise.resolve().then(renderQueue);
+    Promise.resolve().then(function () { renderQueue(); renderErrands(); });
     if (openKey) draw(true);
   }
   function keyOf(target) {
@@ -244,11 +322,11 @@
     window.addEventListener('scroll', function () { if (openKey && menu && !menu.hidden) position(); }, { passive: true });
   }
 
-  var api = { equip: equip, trash: trash, cancel: cancel, open: openMenu, close: function () { closeMenu(false); } };
+  var api = { equip: equip, trash: trash, cancel: cancel, identify: identify, buyIdentify: buyIdentify, cainIdentify: cainIdentify, open: openMenu, close: function () { closeMenu(false); } };
   if (typeof window !== 'undefined') window.d2InvActions = api;
   if (typeof window !== 'undefined' && window.__actTest) {
     window.__actTest({ init: init, onView: onView, model: model, find: find, open: openMenu, close: closeMenu, place: place,
-      state: function () { return { key: openKey, node: menu, confirming: confirming, sheet: sheet }; }, renderQueue: renderQueue, setSheet: function (s) { sheet = !!s; } });
+      state: function () { return { key: openKey, node: menu, confirming: confirming, sheet: sheet }; }, renderQueue: renderQueue, renderErrands: renderErrands, errands: function () { return { box: errBox, count: errCount, buy: errBuy, cain: errCain, wrap: errCainWrap, note: errNoteEl }; }, setSheet: function (s) { sheet = !!s; } });
     return;
   }
   init();

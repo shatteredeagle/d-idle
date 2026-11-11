@@ -96,3 +96,6 @@ func (fixtureDesk) RequestEquip(uint32, string) (any, error) { return nil, errFi
 func (fixtureDesk) Unpin(string) error                       { return errFixture }
 func (fixtureDesk) RequestTrash(uint32, bool) (any, error)   { return nil, errFixture }
 func (fixtureDesk) Cancel(uint32, string) error              { return errFixture }
+func (fixtureDesk) RequestIdentify(uint32) (any, error)      { return nil, errFixture }
+func (fixtureDesk) RequestBuyID(int) (any, error)            { return nil, errFixture }
+func (fixtureDesk) RequestCain() (any, error)                { return nil, errFixture }

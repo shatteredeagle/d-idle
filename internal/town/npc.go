@@ -23,6 +23,7 @@ const (
 	EntryGamble
 	EntryCancel
 	EntryResurrect // hireling NPC with a dead merc (U: never seen live)
+	EntryIdentify  // Deckard Cain's second line after the rescue (U: never seen live, playerid.go)
 )
 
 // NPCMenu places the dialog lines. The box floats above the NPC and is anchored at its bottom: the last line
@@ -338,6 +339,8 @@ func (e Entry) String() string {
 		return "gamble"
 	case EntryCancel:
 		return "cancel"
+	case EntryIdentify:
+		return "identify"
 	}
 	return fmt.Sprintf("entry%d", int(e))
 }

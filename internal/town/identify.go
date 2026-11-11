@@ -7,6 +7,8 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/town/hand"
+	"d2lod-bot/internal/town/panel"
 )
 
 // idTool finds an identify scroll or tome in the pack.
@@ -95,6 +97,20 @@ func (t *Town) buyIDScrolls(ctx context.Context, a *Act, n int, rep *ChoreReport
 	return fmt.Errorf("town: npc %d does not sell identify scrolls", npc.Class)
 }
 
+// identifyPoint is where the identify cursor clicks: the item's cell in the pack, or the centre of its doll slot when it
+// is worn (U live: a worn item is read through the slot rectangle of the inventory panel).
+func identifyPoint(h *hand.Hand, lay *panel.Layout, u d2.Unit) (panel.Pt, error) {
+	if u.Item != nil && u.Item.Where == d2.ContEquipment {
+		r, ok := lay.Slots[hand.SlotName(u.Item.Body)]
+		if !ok {
+			return panel.Pt{}, fmt.Errorf("town: no slot rectangle for body location %d", u.Item.Body)
+		}
+		return r.Center(), nil
+	}
+	w, hh := h.Size(u)
+	return lay.Inventory.ItemCenter(u.X, u.Y, w, hh), nil
+}
+
 func (t *Town) identifyOne(ctx context.Context, target d2.Unit) error {
 	for try := 0; try < t.tune().MoveTries; try++ {
 		s, err := t.h.OpenInventory(ctx)
@@ -117,8 +133,11 @@ func (t *Town) identifyOne(ctx context.Context, target d2.Unit) error {
 			return err
 		}
 		t.sleep(t.tune().ClickSettleMs)
-		w, hh := t.h.Size(cur)
-		if err := t.e.In.Click(input.Left, lay.Inventory.ItemCenter(cur.X, cur.Y, w, hh).X, lay.Inventory.ItemCenter(cur.X, cur.Y, w, hh).Y); err != nil {
+		click, err := identifyPoint(t.h, lay, cur)
+		if err != nil {
+			return err
+		}
+		if err := t.e.In.Click(input.Left, click.X, click.Y); err != nil {
 			return err
 		}
 		_, done, err := t.h.Wait(ctx, t.uiTimeout(), func(s *d2.Snapshot) bool {

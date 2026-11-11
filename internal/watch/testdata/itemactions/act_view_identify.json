@@ -1,0 +1,301 @@
+{
+ "paladin": {
+  "schema": 5,
+  "inTown": false,
+  "class": "Paladin",
+  "gold": 900,
+  "stashGold": 0,
+  "equipment": {
+   "torso": {
+    "id": 6,
+    "code": "x6",
+    "name": "Plate Mail",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "",
+    "noSell": "only backpack items are sold"
+   }
+  },
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Magic Ring",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": ""
+   },
+   {
+    "id": 2,
+    "code": "x2",
+    "name": "Wand",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true
+   },
+   {
+    "id": 9,
+    "code": "x9",
+    "name": "Jewel",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": ""
+   }
+  ],
+  "stash": [
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Strange Amulet",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "only backpack and worn items are identified: move it to the backpack first"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "queue": [
+   {
+    "id": 1,
+    "kind": "identify",
+    "name": "Magic Ring",
+    "state": "queued",
+    "at": 1
+   },
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Buy 12 identify scrolls",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 2,
+    "count": 12
+   },
+   {
+    "id": 0,
+    "kind": "cain",
+    "name": "Identify all at Deckard Cain",
+    "state": "doing",
+    "at": 3
+   }
+  ],
+  "recent": [
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Fill the Tome of Identify",
+    "state": "done",
+    "at": 4,
+    "result": "bought 12 for 600 gold, short of gold for the other 3"
+   },
+   {
+    "id": 0,
+    "kind": "cain",
+    "name": "Identify all at Deckard Cain",
+    "state": "done",
+    "at": 5,
+    "result": "Deckard Cain identified 3 items for free"
+   },
+   {
+    "id": 9,
+    "kind": "identify",
+    "name": "Jewel",
+    "state": "failed",
+    "reason": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)",
+    "at": 6
+   },
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Buy identify scrolls",
+    "state": "failed",
+    "reason": "short of gold: nothing could be bought above the repair and kit reserve",
+    "at": 7
+   }
+  ],
+  "identify": {
+   "tool": "tome",
+   "tome": 5,
+   "tomeCap": 20,
+   "scrolls": 1,
+   "unid": 4,
+   "buyDefault": 15,
+   "buyMax": 20,
+   "cain": "open"
+  }
+ },
+ "sorceress": {
+  "schema": 5,
+  "inTown": false,
+  "class": "Sorceress",
+  "gold": 900,
+  "stashGold": 0,
+  "equipment": {
+   "torso": {
+    "id": 6,
+    "code": "x6",
+    "name": "Plate Mail",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)",
+    "noSell": "only backpack items are sold"
+   }
+  },
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Magic Ring",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+   },
+   {
+    "id": 2,
+    "code": "x2",
+    "name": "Wand",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true
+   },
+   {
+    "id": 9,
+    "code": "x9",
+    "name": "Jewel",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+   }
+  ],
+  "stash": [
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Strange Amulet",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noIdentify": "only backpack and worn items are identified: move it to the backpack first"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "queue": [
+   {
+    "id": 1,
+    "kind": "identify",
+    "name": "Magic Ring",
+    "state": "queued",
+    "at": 1
+   },
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Buy 12 identify scrolls",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 2,
+    "count": 12
+   },
+   {
+    "id": 0,
+    "kind": "cain",
+    "name": "Identify all at Deckard Cain",
+    "state": "doing",
+    "at": 3
+   }
+  ],
+  "recent": [
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Fill the Tome of Identify",
+    "state": "done",
+    "at": 4,
+    "result": "bought 12 for 600 gold, short of gold for the other 3"
+   },
+   {
+    "id": 0,
+    "kind": "cain",
+    "name": "Identify all at Deckard Cain",
+    "state": "done",
+    "at": 5,
+    "result": "Deckard Cain identified 3 items for free"
+   },
+   {
+    "id": 9,
+    "kind": "identify",
+    "name": "Jewel",
+    "state": "failed",
+    "reason": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)",
+    "at": 6
+   },
+   {
+    "id": 0,
+    "kind": "buyid",
+    "name": "Buy identify scrolls",
+    "state": "failed",
+    "reason": "short of gold: nothing could be bought above the repair and kit reserve",
+    "at": 7
+   }
+  ],
+  "identify": {
+   "tool": "none",
+   "tome": -1,
+   "tomeCap": 20,
+   "scrolls": 0,
+   "unid": 4,
+   "buyDefault": 0,
+   "buyMax": 20,
+   "cain": "locked",
+   "cainWhy": "opens when Cain is rescued"
+  }
+ }
+}

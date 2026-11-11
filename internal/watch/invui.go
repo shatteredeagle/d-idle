@@ -50,6 +50,7 @@ const invPage = `<!DOCTYPE html>
  </section>
  <section class="d-card inv-queue" aria-labelledby="t-queue">
   <div class="d-card-head"><h2 id="t-queue">Item actions</h2></div>
+  <div class="inv-errands" id="errands" hidden></div>
   <div id="queue"></div>
  </section>
 </main>
