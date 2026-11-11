@@ -19,7 +19,8 @@ type builder struct {
 	lvl  *d2dctl.LevelInfo
 	// origin in subtiles added to positions when Options.AddOrigin
 	ox, oy int
-	held   string // dump ui held: base code of the item on the cursor
+	held   string               // dump ui held: base code of the item on the cursor
+	mercEx map[uint32]ItemExtra // facts of the merc's worn items (dumpItem loc "merc")
 }
 
 func (b *builder) pos(cx, cy float64) (int, int) {
@@ -395,11 +396,12 @@ func (b *builder) merc(m obj) {
 	}
 	rp.have("merc.present")
 	dead, _ := m.bool("dead")
+	sheet := b.mercSheet(m, present, dead)
 	if !present {
 		// d2d drops the unit about 120 steps after the death but keeps header.merc_dead: the merc is still owned and
 		// can be revived (V read devctl_dump.hpp, hirereader B2). There is no unit to add.
 		if dead {
-			b.res.Extras.Merc = &MercExtra{Dead: true}
+			b.res.Extras.Merc = &MercExtra{Dead: true, Gear: b.mercEx}
 		}
 		return
 	}
@@ -427,11 +429,51 @@ func (b *builder) merc(m obj) {
 		}
 		rp.have("merc.life")
 	}
-	rp.unknown("merc.level", "not in dump")
-	rp.unknown("merc.name", "not in dump")
+	if sheet != nil {
+		u.Monster.Level = sheet.Level
+	} else {
+		rp.unknown("merc.level", "not in dump (stock d2d, or the fork without the merc gear patch)")
+	}
+	rp.unknown("merc.name", "only the name id (name_id) is in the dump, not the text")
 	rp.unknown("merc.aura", "not in dump")
-	b.res.Extras.Merc = &MercExtra{Code: code, Dead: dead}
+	b.res.Extras.Merc = &MercExtra{Code: code, Dead: dead, Gear: b.mercEx}
 	b.snap.Monsters = append(b.snap.Monsters, u)
+}
+
+// mercSheet reads the fork's merc gear patch fields (level, str, dex, exp, type, name_id, items) into Snapshot.Merc.
+// nil when the dump has none (stock d2d, or a fork without the patch) or no merc is employed. V offline on the dump
+// fixtures; the field names are the patch's own (docs/merc-gear.md), U against a live d2d.
+func (b *builder) mercSheet(m obj, present, dead bool) *d2.MercSheet {
+	rp := b.rp
+	level, ok := m.int("level")
+	if !ok {
+		return nil
+	}
+	typ, _ := m.int("type")
+	if !present && !dead && typ == 0 {
+		b.snap.Merc = &d2.MercSheet{} // read, and nobody is employed
+		return nil
+	}
+	sh := &d2.MercSheet{Hired: true, Alive: present && !dead, Level: level, Type: typ}
+	sh.Str, _ = m.int("str")
+	sh.Dex, _ = m.int("dex")
+	sh.Exp, _ = m.int("exp")
+	sh.NameID, _ = m.int("name_id")
+	rp.have("merc.level", "merc.stats")
+	if _, ok := m["items"]; ok {
+		sh.GearKnown = true
+		b.mercEx = map[uint32]ItemExtra{}
+		for _, it := range m.list("items") {
+			if u, ok := b.dumpItem(it); ok {
+				sh.Gear = append(sh.Gear, u)
+			}
+		}
+		rp.have("merc.gear")
+	} else {
+		rp.unknown("merc.gear", "merc section has no items array")
+	}
+	b.snap.Merc = sh
+	return sh
 }
 
 // degradedHead is the stock-d2d path: state + level + attack verbs only. It fills what they carry and

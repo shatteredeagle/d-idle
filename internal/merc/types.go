@@ -94,6 +94,9 @@ type MercState struct {
 	Str, Dex   int
 	StatsKnown bool
 	Gear       [NumSlots]*Item
+	// GearKnown: the backend read what the merc wears (an empty Gear then means nothing worn). False: not read, so
+	// an empty Gear says nothing.
+	GearKnown bool
 	// FreeCells is the free inventory space of the player (for the strip plan), -1 unknown.
 	FreeCells int
 }

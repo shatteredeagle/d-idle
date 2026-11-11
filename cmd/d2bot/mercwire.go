@@ -196,16 +196,17 @@ type mercWire struct {
 	lastLine time.Time
 	lastDec  string
 
-	lutDone    map[lutKey]bool          // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
-	statePath  string                   // where lutDone is kept across restarts ("" = memory only); mercStatePath at construction
-	loaded     map[string]bool          // characters whose entry was read from statePath
-	winLogged  map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
-	farmOn     bool
-	budget     merc.FarmBudget // time budget and cooldown of the gold farm
-	skipLogAt  time.Time       // last revive refusal written (logSkip)
-	quoteLogAt time.Time       // last unreadable-quote line written (once per town visit)
-	shortFirst bool            // the pre-shop revive was refused for gold (the chores then sell junk first)
-	waitNeed   int             // need of the last logged `merc: gold wait`; 0 = none pending
+	gearRefused map[lutKey]bool          // a replacing hire was refused for worn merc gear; quiet until he is bare (mu)
+	lutDone     map[lutKey]bool          // the swap decision of the first Lut Gholein visit is final (hired, or declined for good)
+	statePath   string                   // where lutDone is kept across restarts ("" = memory only); mercStatePath at construction
+	loaded      map[string]bool          // characters whose entry was read from statePath
+	winLogged   map[merc.Difficulty]bool // `merc: hire window` is written once per difficulty
+	farmOn      bool
+	budget      merc.FarmBudget // time budget and cooldown of the gold farm
+	skipLogAt   time.Time       // last revive refusal written (logSkip)
+	quoteLogAt  time.Time       // last unreadable-quote line written (once per town visit)
+	shortFirst  bool            // the pre-shop revive was refused for gold (the chores then sell junk first)
+	waitNeed    int             // need of the last logged `merc: gold wait`; 0 = none pending
 }
 
 func newMercWire(e *env.Env, rd merc.Reader, rev Reviver, cat bot.Catalog) *mercWire {
@@ -560,6 +561,9 @@ func (w *mercWire) HireStep(ctx context.Context, s *d2.Snapshot) string {
 	if w.lutIsDone(name, c.Difficulty) {
 		return ""
 	}
+	if w.gearRefused[lutKey{name, c.Difficulty}] && st.Owned && !w.e.Tune.Resource.BotDecidesGear() && merc.GearBlocksReplace(st) {
+		return "" // already told the player; the window stays closed until the merc is bare
+	}
 	c.FirstLutVisit = true
 	offers, err := w.hirer.Window(ctx)
 	if err != nil {
@@ -617,6 +621,20 @@ func (w *mercWire) HireStep(ctx context.Context, s *d2.Snapshot) string {
 			w.lutMark(name, c.Difficulty)
 		}
 		return "merc hire skipped: " + why
+	}
+	if st.Owned && !w.e.Tune.Resource.BotDecidesGear() && merc.GearBlocksReplace(st) {
+		// The player decides equipment (docs/gear-policy.md): the bot never strips the merc, and a hire destroys his gear.
+		w.mu.Lock()
+		if w.gearRefused == nil {
+			w.gearRefused = map[lutKey]bool{}
+		}
+		first := !w.gearRefused[lutKey{name, c.Difficulty}]
+		w.gearRefused[lutKey{name, c.Difficulty}] = true
+		w.mu.Unlock()
+		if first {
+			w.log.Info(merc.Prefix + "replace skipped (" + merc.ReasonGearWorn + ")")
+		}
+		return "merc replace skipped: " + merc.ReasonGearWorn
 	}
 	if bestDec.StripFirst {
 		plan := merc.PlanStrip(st, st.FreeCells)

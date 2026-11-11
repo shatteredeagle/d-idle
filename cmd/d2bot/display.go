@@ -211,6 +211,36 @@ func itemArt(cat bot.Catalog, u d2.Unit) string {
 
 type invSource struct{ d *display }
 
+// mercSlotKey names a merc's worn item by the d2s body location (1 head, 3 torso, 4 right hand, 5 left hand).
+var mercSlotKey = map[int]string{d2.BodyHead: "mhead", d2.BodyTorso: "mtorso", d2.BodyRHand: "mrhand", d2.BodyLHand: "mlhand"}
+
+// mercInv is the merc block of the inventory page. nil when the snapshot carries no merc read and shows no merc unit
+// either (the page then hides the merc doll); a merc unit without a read says so with GearKnown false.
+func mercInv(s *d2.Snapshot, mk func(d2.Unit, bool) status.Item) *status.MercInv {
+	fm := d2.FindMerc(s)
+	sh := s.Merc
+	switch {
+	case sh != nil && !sh.Hired:
+		return &status.MercInv{}
+	case sh == nil && !fm.Present:
+		return nil
+	case sh == nil:
+		return &status.MercInv{Hired: true, Alive: fm.Alive, Class: fm.Class, Level: fm.Level, LifePct: fm.LifePct}
+	}
+	m := &status.MercInv{Hired: true, Alive: sh.Alive, Class: fm.Class, Level: sh.Level, Str: sh.Str, Dex: sh.Dex, LifePct: fm.LifePct,
+		GearKnown: sh.GearKnown, Equipment: map[string]*status.Item{}}
+	for _, u := range sh.Gear {
+		if u.Item == nil {
+			continue
+		}
+		if k, ok := mercSlotKey[u.Item.Body]; ok {
+			it := mk(u, true)
+			m.Equipment[k] = &it
+		}
+	}
+	return m
+}
+
 var bodySlot = map[int]string{1: "head", 2: "neck", 3: "torso", 4: "rhand", 5: "lhand", 6: "rring", 7: "lring", 8: "belt", 9: "feet", 10: "gloves"}
 
 func (i invSource) Inventory() status.InventoryData {
@@ -223,10 +253,7 @@ func (i invSource) Inventory() status.InventoryData {
 		return out
 	}
 	out.Gold, out.StashGold = s.Player.Gold, s.Player.StashGold
-	for _, u := range s.Inventory.Items {
-		if u.Item == nil {
-			continue
-		}
+	mk := func(u d2.Unit, merc bool) status.Item {
 		it := status.Item{ID: u.ID, Code: fmt.Sprint(u.Class), Name: i.d.itemName(u), Quality: qualityName(u.Item.Quality), Ethereal: u.Item.Ethereal(),
 			Level: u.Item.ILvl, Identified: u.Item.Identified(), X: u.Item.GX, Y: u.Item.GY, W: 1, H: 1}
 		if i.d.cat != nil {
@@ -235,7 +262,18 @@ func (i invSource) Inventory() status.InventoryData {
 			}
 			it.Art = itemArt(i.d.cat, u)
 		}
-		i.d.tips.fill(&it, u)
+		if merc {
+			i.d.tips.fillBase(&it, u) // the merc's item ids are their own id space: no tooltip lookup by id
+		} else {
+			i.d.tips.fill(&it, u)
+		}
+		return it
+	}
+	for _, u := range s.Inventory.Items {
+		if u.Item == nil {
+			continue
+		}
+		it := mk(u, false)
 		switch u.Item.Where {
 		case d2.ContEquipment:
 			if k, ok := bodySlot[u.Item.Body]; ok {
@@ -257,5 +295,6 @@ func (i invSource) Inventory() status.InventoryData {
 			out.Belt = append(out.Belt, it)
 		}
 	}
+	out.Merc = mercInv(s, mk)
 	return out
 }

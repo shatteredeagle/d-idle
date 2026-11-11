@@ -1,0 +1,24 @@
+div []
+  details.inv-merc-fold [data-remember=merc-doll] open
+    summary [] "Mercenary"
+    div.inv-merc-body []
+      div.inv-merc-head []
+        h3 [] "Desert Guard"
+        span.meta [] "level 17, Str 60, Dex 50, life 81%"
+      div.d-doll [aria-label=Mercenary paper doll role=group data-owner=merc data-state=ready]
+        div.d-slot2.q-magic [aria-label=helm: Skull Cap data-filled= data-owner=merc data-shown= data-slot=mhead] title="Skull Cap, durability 12/12, item level 12"
+          img.ico [alt= src=/watch/art/item-cap.png]
+          span.sil [] "helm"
+          span.nm [] "Skull Cap"
+        div.d-slot2 [aria-label=armour: empty data-owner=merc data-shown= data-slot=mtorso] title="armour: empty"
+          img.ghost [alt= src=/watch/art/slot-armor.png]
+          span.sil [] "armour"
+        div.d-slot2.q-normal [aria-label=weapon: Spear data-filled= data-owner=merc data-shown= data-slot=mrhand] title="Spear, durability 0/24"
+          img.ico [alt= src=/watch/art/item-spear.png]
+          span.sil [] "weapon"
+          span.nm [] "Spear"
+          span.broken [] "Broken"
+        div.d-slot2 [aria-label=No shield for a Desert Guard data-owner=merc data-slot=mlhand data-state=na] title="No shield for a Desert Guard"
+          span.sil [] "shield"
+          span.d-badge [] "n/a"
+      p.d-hint [] "Read only: the bot makes no equipment decision for your mercenary, and equipping him from this page is not built yet."

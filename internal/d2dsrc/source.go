@@ -136,6 +136,7 @@ type ItemExtra struct {
 	Qty         int
 	Dur, MaxDur int
 	Sockets     int    // socket count, -1 unknown
+	W, H        int    // inventory footprint in cells, 0 = not in the dump
 	Label       string // ground label
 	Unique, Set int
 	Tooltip     []string // the game's tooltip lines (Options.Tooltips), name first; nil when not fetched
@@ -145,6 +146,8 @@ type ItemExtra struct {
 type MercExtra struct {
 	Code string
 	Dead bool
+	// Worn item facts by Unit.ID of Snapshot.Merc.Gear (a separate id space from Items).
+	Gear map[uint32]ItemExtra
 }
 
 // Result is one snapshot with its provenance.

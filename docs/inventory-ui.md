@@ -1,5 +1,7 @@
 # Inventory page on the watch screen (TASK-212, invui)
 
+> status: the item action menu (equip, sell mark, trash, queue states, field equips) is in [inventory-actions.md](inventory-actions.md); where it differs from the equip rules below (equip is no longer town only), that doc wins.
+
 Page `/watch/inventory` (link in the watch header), data `GET /api/inventory`, writes `POST /api/inventory/{mark,equip,unpin}` on the answer listener. Tags: V verified by the offline tests named, U unverified (needs a live run or game tables).
 
 ## What it shows
@@ -33,3 +35,11 @@ V (run here): `go test ./internal/invdesk ./internal/watch -run Inventory` (mark
 3. In town request a better armor from the pack: expect "player equip ... done, slot pinned" in the log, item worn, cursor empty; then drop a better piece into the pack and visit town again: it stays unworn. Unpin, visit again: the bot may swap.
 4. Request from the field: refusal "not in town". Request a Paladin-only item on another class: refusal with the requirement.
 5. Restart the bot: marks and pins are still there.
+
+## Merc doll (TASK-287, stage A of docs/research/merc-gear.md; read only)
+Tags: V verified offline (test named), U unverified (nothing was run live or in a real browser).
+- `GET /api/inventory` is schema 4 (3 is the action menu): an additive, optional `merc` block (`invdesk.MercView`: `state` none, ready, dead or unknown; `owned`, `alive`, `class`, `kind`, `level`, `str`, `dex`, `lifePct`, `slots` (the slots this kind can use), `equipment` keyed `mhead`, `mtorso`, `mrhand`, `mlhand`, `note`). A schema 2 reader ignores it; a reply without it (a backend that cannot read a merc) hides the card (V `merc_dom.js` state `absent`, `TestMercFixturesDecodeIntoView`).
+- Files: `internal/watch/web/inventory-merc.js` and `.css`, loaded by the page after `inventory.js`; it follows the `d2:inventory` event and does not edit `inventory.js`. The card sits under the hero doll (`#merc-doll`), a `details` fold that is open while a merc is hired. The doll is a `d-doll` with `data-owner="merc"` and four `d-slot2` (`data-slot` mhead, mtorso, mrhand, mlhand); a slot the kind cannot use is `data-state="na"` with an n/a badge (Desert Guard, Rogue and Barbarian have no shield). Game art is the optional layer of the hero doll: item icons `item-<art>` and the ghost keys `slot-helm`, `slot-armor`, `slot-weapon` (V golden `desert_art`; a failing image reverts to the drawn slot; the merc panel frame key is not built).
+- No actions: no equip, take-off, mark or pin for the merc (stage B and C, `target: merc` in the action queue of the player-side card); the bot makes no merc equipment decision (docs/gear-policy.md). Merc items get no marks, pins or advice (V `TestViewMercBlock`).
+- Tooltips: merc items carry the base-type facts, no d2d tooltip text yet (the fork dump prints only the first text line; a verb that prints the merc item text is a follow-up, U). The slot `title` shows name, durability and item level.
+- Goldens: `internal/watch/testdata/inventory_merc_*.json` (views) and `testdata/mercdoll/merc_dom_*.txt` (DOM); `UPDATE=1 node testdata/mercdoll/merc_dom.js web/inventory-merc.js` rewrites the latter. Live by eye (docs/live-checks.md, TASK-287): the card in a real browser at phone and desktop width, light and dark, with a hired merc from the fork build.

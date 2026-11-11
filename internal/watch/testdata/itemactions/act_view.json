@@ -1,0 +1,356 @@
+{
+ "paladin": {
+  "schema": 3,
+  "inTown": false,
+  "class": "Paladin",
+  "gold": 100,
+  "stashGold": 0,
+  "equipment": {
+   "torso": {
+    "id": 6,
+    "code": "x6",
+    "name": "Plate Mail",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   }
+  },
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Broad Sword",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "canWear": [
+     "rhand"
+    ]
+   },
+   {
+    "id": 2,
+    "code": "x2",
+    "name": "Wand",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noWear": "restricted to another class"
+   },
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Ring",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "canWear": [
+     "rring",
+     "lring"
+    ]
+   },
+   {
+    "id": 4,
+    "code": "x4",
+    "name": "Horadric Scroll",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noWear": "it cannot be worn",
+    "noSell": "this item is never sold",
+    "noTrash": "this item is never trashed (quest item)"
+   },
+   {
+    "id": 8,
+    "code": "x8",
+    "name": "Jewel",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "mark": "keep",
+    "canSell": true,
+    "noTrash": "it is marked keep: clear the keep mark first",
+    "noWear": "it cannot be worn"
+   },
+   {
+    "id": 7,
+    "code": "x7",
+    "name": "Gem",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noWear": "it cannot be worn"
+   }
+  ],
+  "stash": [
+   {
+    "id": 5,
+    "code": "x5",
+    "name": "Skull Cap",
+    "quality": "unique",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noWear": "move it to the backpack first",
+    "noSell": "only backpack items are sold",
+    "noTrash": "only backpack items are trashed: move it to the backpack first"
+   }
+  ],
+  "belt": [],
+  "pins": [
+   {
+    "slot": "torso",
+    "id": 6,
+    "name": "Plate Mail",
+    "since": 1
+   }
+  ],
+  "queue": [
+   {
+    "id": 2,
+    "kind": "trash",
+    "name": "Wand",
+    "state": "doing",
+    "at": 1,
+    "print": "1/2/0"
+   },
+   {
+    "id": 3,
+    "kind": "equip",
+    "slot": "rring",
+    "name": "Ring",
+    "state": "queued",
+    "at": 2
+   }
+  ],
+  "recent": [
+   {
+    "id": 1,
+    "slot": "rhand",
+    "name": "Broad Sword",
+    "state": "failed",
+    "reason": "item 1 did not reach slot rhand",
+    "at": 0
+   },
+   {
+    "id": 9,
+    "kind": "trash",
+    "name": "Rock",
+    "state": "done",
+    "at": 0
+   },
+   {
+    "id": 8,
+    "kind": "trash",
+    "name": "Jewel",
+    "state": "cancelled",
+    "at": 0
+   }
+  ]
+ },
+ "sorceress": {
+  "schema": 3,
+  "inTown": false,
+  "class": "Sorceress",
+  "gold": 100,
+  "stashGold": 0,
+  "equipment": {
+   "torso": {
+    "id": 6,
+    "code": "x6",
+    "name": "Plate Mail",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   }
+  },
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Broad Sword",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noWear": "restricted to another class"
+   },
+   {
+    "id": 2,
+    "code": "x2",
+    "name": "Wand",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "canWear": [
+     "rhand"
+    ]
+   },
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Ring",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "canWear": [
+     "rring",
+     "lring"
+    ]
+   },
+   {
+    "id": 4,
+    "code": "x4",
+    "name": "Horadric Scroll",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noWear": "it cannot be worn",
+    "noSell": "this item is never sold",
+    "noTrash": "this item is never trashed (quest item)"
+   },
+   {
+    "id": 8,
+    "code": "x8",
+    "name": "Jewel",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "mark": "keep",
+    "canSell": true,
+    "noTrash": "it is marked keep: clear the keep mark first",
+    "noWear": "it cannot be worn"
+   },
+   {
+    "id": 7,
+    "code": "x7",
+    "name": "Gem",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "noWear": "it cannot be worn"
+   }
+  ],
+  "stash": [
+   {
+    "id": 5,
+    "code": "x5",
+    "name": "Skull Cap",
+    "quality": "unique",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "noWear": "move it to the backpack first",
+    "noSell": "only backpack items are sold",
+    "noTrash": "only backpack items are trashed: move it to the backpack first"
+   }
+  ],
+  "belt": [],
+  "pins": [
+   {
+    "slot": "torso",
+    "id": 6,
+    "name": "Plate Mail",
+    "since": 1
+   }
+  ],
+  "queue": [
+   {
+    "id": 2,
+    "kind": "trash",
+    "name": "Wand",
+    "state": "doing",
+    "at": 1,
+    "print": "1/2/0"
+   },
+   {
+    "id": 3,
+    "kind": "equip",
+    "slot": "rring",
+    "name": "Ring",
+    "state": "queued",
+    "at": 2
+   }
+  ],
+  "recent": [
+   {
+    "id": 1,
+    "slot": "rhand",
+    "name": "Broad Sword",
+    "state": "failed",
+    "reason": "item 1 did not reach slot rhand",
+    "at": 0
+   },
+   {
+    "id": 9,
+    "kind": "trash",
+    "name": "Rock",
+    "state": "done",
+    "at": 0
+   },
+   {
+    "id": 8,
+    "kind": "trash",
+    "name": "Jewel",
+    "state": "cancelled",
+    "at": 0
+   }
+  ]
+ }
+}

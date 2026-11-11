@@ -74,6 +74,10 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 	}
 	if lv != nil {
 		d.SetEquipper(lv)
+		d.SetTrasher(lv)
+	}
+	if lt != nil {
+		lt.SetIgnore(d.Ignored) // items the player trashed stay on the ground
 	}
 	if lt != nil {
 		d.SetWhyFor(func(s *d2.Snapshot) func(u d2.Unit) string {
@@ -82,13 +86,15 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		})
 	}
 	if db != nil {
-		d.SetSellBlock(func(u d2.Unit) string {
+		never := func(u d2.Unit) string {
 			var b *data.ItemBase
 			if u.Class >= 0 && u.Class < len(db.Items) {
 				b = db.Items[u.Class]
 			}
 			return town.NeverSellReason(b, u)
-		})
+		}
+		d.SetSellBlock(never)
+		d.SetTrashBlock(never) // quest items, keys, tomes and the start kit are never trashed either
 	}
 }
 
@@ -101,6 +107,10 @@ func (a invAdapter) Unpin(slot string) error           { return a.d.Unpin(slot) 
 func (a invAdapter) RequestEquip(id uint32, slot string) (any, error) {
 	return a.d.RequestEquip(id, slot)
 }
+func (a invAdapter) RequestTrash(id uint32, confirm bool) (any, error) {
+	return a.d.RequestTrash(id, confirm)
+}
+func (a invAdapter) Cancel(id uint32, kind string) error { return a.d.Cancel(id, kind) }
 
 var _ watch.InvDesk = invAdapter{}
 

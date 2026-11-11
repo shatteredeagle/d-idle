@@ -61,6 +61,10 @@ func (h *Hub) AnswerHandler(o AnswerOptions) http.Handler {
 		"/api/orders/cancel": h.postCancel,
 	}
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == LayoutRoute { // its own gate: a layout file is larger than maxBody
+			h.postLayout(o, w, r)
+			return
+		}
 		origin := r.Header.Get("Origin")
 		allowed := origin != "" && containsStr(o.Origins, origin)
 		if allowed {
