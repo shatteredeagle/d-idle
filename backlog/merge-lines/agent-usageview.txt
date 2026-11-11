@@ -1,0 +1,1 @@
+INDEX: docs/usage.md and tools/usage/usage.py: one read-only usage view across all project directories; first 7-day table in docs/research/usage-2026-11-11.md
