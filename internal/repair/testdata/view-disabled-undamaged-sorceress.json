@@ -1,0 +1,71 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "head",
+   "name": "Cap",
+   "dur": 100,
+   "max": 100,
+   "pct": 100
+  },
+  {
+   "slot": "rhand",
+   "name": "Staff",
+   "dur": 100,
+   "max": 100,
+   "pct": 100
+  },
+  {
+   "slot": "torso",
+   "name": "Robe",
+   "dur": 100,
+   "max": 100,
+   "pct": 100
+  }
+ ],
+ "estimate": 200,
+ "trip": {
+  "state": "disabled",
+  "button": {
+   "action": "none",
+   "label": "Repair now",
+   "enabled": false,
+   "reason": "nothing worn is damaged"
+  },
+  "line": "nothing worn is damaged",
+  "gold": 100,
+  "estimate": 200,
+  "need": 260,
+  "maxTrips": 2
+ }
+}

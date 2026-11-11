@@ -127,8 +127,8 @@ func TestBlockedKeepsRequestAndCancel(t *testing.T) {
 	if err := r.Cancel(); err != nil {
 		t.Fatal(err)
 	}
-	if r.View().Request != nil {
-		t.Error("cancel kept the request")
+	if q := r.View().Request; q == nil || q.State != StateCancel || r.Requested() {
+		t.Errorf("cancel must close the request and keep it as cancelled: %+v", q)
 	}
 	if err := r.Cancel(); err == nil {
 		t.Error("second cancel must be refused")

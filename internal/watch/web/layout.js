@@ -67,7 +67,7 @@ export function plan(layout, width, mode, conf, targets, edit) {
   const aliases = (conf && conf.aliases) || {}, reserved = (conf && conf.reserved) || [];
   const known = {};
   targets.forEach((t) => { known[t.id] = t; });
-  const items = [], used = {}, unknown = [], kept = [];
+  const items = [], used = {}, unknown = [], kept = [], off = [];
   let maxRow = 0, maxOrder = -1;
   for (const e of bp.panels) {
     const id = known[e.id] ? e.id : aliases[e.id];
@@ -76,6 +76,8 @@ export function plan(layout, width, mode, conf, targets, edit) {
     used[id] = true;
     const colSpan = Math.max(1, Math.min(bp.cols, e.colSpan | 0)), col = Math.max(1, Math.min(bp.cols - colSpan + 1, e.col | 0));
     const it = { id, col, row: Math.max(1, e.row | 0), colSpan, rowSpan: Math.max(1, e.rowSpan | 0), collapsed: !!e.collapsed, order: e.order | 0, placed: true };
+    // an entry with hidden: true is a panel the user switched off in the editor: no cell, and the shell hides it
+    if (e.hidden) { off.push(id); if (edit) kept.push(Object.assign(it, { hidden: true, off: true })); continue; }
     if (known[id].hidden) { if (edit) kept.push(Object.assign(it, { hidden: true })); continue; }
     placeNear(items, it); // a file with overlapping entries (the editor's presets have some) still loads: push down
     items.push(it);
@@ -100,14 +102,16 @@ export function plan(layout, width, mode, conf, targets, edit) {
     }
   }
   items.push(...kept);
-  return { name: bp.name, bp: bpName, cols: bp.cols, rowHeight: bpName === 'overlay' ? 40 : (layout.rowHeight || 48), flow, items, unknown };
+  return { name: bp.name, bp: bpName, cols: bp.cols, rowHeight: bpName === 'overlay' ? 40 : (layout.rowHeight || 48), flow, items, unknown, off };
 }
 
 // The entries of a plan as a breakpoint's panels array (what the editor saves), order from row then column.
 export function toPanels(items, bands) {
-  return items.slice().sort((a, b) => a.row - b.row || a.col - b.col).map((it, i) => ({
-    id: it.id, band: (bands && bands[it.id]) || 'grid', col: it.col, row: it.row, colSpan: it.colSpan, rowSpan: it.rowSpan, collapsed: !!it.collapsed, order: i,
-  }));
+  return items.slice().sort((a, b) => a.row - b.row || a.col - b.col).map((it, i) => {
+    const o = { id: it.id, band: (bands && bands[it.id]) || 'grid', col: it.col, row: it.row, colSpan: it.colSpan, rowSpan: it.rowSpan, collapsed: !!it.collapsed, order: i };
+    if (it.off) o.hidden = true; // only a switched-off panel carries the key, so other entries are as the mockup editor writes them
+    return o;
+  });
 }
 
 // ---- the editor's move: push down, cascade, close up (a dashboard grid) ----
@@ -137,17 +141,32 @@ export function moveItem(items, id, rect, cols) {
       if (b !== it && hits(a, b)) { b.row = a.row + rows(a); queue.push(b); }
     }
   }
+  rise(vis, it);
+  return out;
+}
+
+function rise(vis, first) {
   const done = [];
-  for (const x of vis.slice().sort((p, q) => p.row - q.row || (p === it ? -1 : q === it ? 1 : 0) || p.col - q.col)) {
+  for (const x of vis.slice().sort((p, q) => p.row - q.row || (p === first ? -1 : q === first ? 1 : 0) || p.col - q.col)) {
     const m = occ(done);
     while (x.row > 1 && free(m, x.col, x.row - 1, x.colSpan, rows(x))) x.row--;
     done.push(x);
   }
-  return out;
+}
+
+// setOff(items, id, on, cols): the layout after the user hides (on) or shows a panel. A hidden panel keeps its cells in
+// the file and reserves nothing; the others rise into its room. Shown again it takes its cells back and pushes down.
+export function setOff(items, id, on, cols) {
+  const out = items.map((i) => Object.assign({}, i));
+  const it = out.find((i) => i.id === id);
+  if (!it || (it.hidden && !it.off)) return out; // a panel the page itself hides is not the user's to switch
+  if (on) { it.off = true; it.hidden = true; rise(out.filter((i) => !i.hidden)); return out; }
+  delete it.off; delete it.hidden;
+  return moveItem(out, id, {}, cols);
 }
 
 // Whether two layouts put every panel on the same cells (the editor: is there anything to commit).
 export function sameCells(a, b) {
-  const key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan, !!i.collapsed].join();
+  const key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan, !!i.collapsed, !!i.off].join();
   return a.length === b.length && a.map(key).sort().join('|') === b.map(key).sort().join('|');
 }

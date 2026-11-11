@@ -1,10 +1,13 @@
 ---
 id: TASK-282
-title: 'itemactions: inventory item actions menu (equip, mark for sale, trash) queued for the bot'
-status: Proposed
+title: >-
+  itemactions: inventory item actions menu (equip, mark for sale, trash) queued
+  for the bot
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T00:53:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature

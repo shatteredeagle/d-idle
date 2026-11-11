@@ -53,8 +53,9 @@ type Town struct {
 	judge Judge
 	h     *hand.Hand
 
-	marks  ItemMarks      // the player's sell and keep marks (SetItemMarks)
-	pinned func(int) bool // the player's slot pins (SetPinned)
+	sellMarksOnly bool           // set while a visit sells the player's marks but not the pickit's junk
+	marks         ItemMarks      // the player's sell and keep marks (SetItemMarks)
+	pinned        func(int) bool // the player's slot pins (SetPinned)
 
 	repairGate RepairGate // the player's repair policy (SetRepairGate); nil: the legacy durability rule
 
@@ -153,6 +154,35 @@ func (t *Town) planHasHealing(p *d2.Player) bool {
 type ItemMarks interface {
 	// MarkOf is "sell" (sold at the next vendor visit), "keep" (never sold or dropped by the town) or "".
 	MarkOf(u d2.Unit) string
+}
+
+// markKeeper is the optional half of ItemMarks: re-attaching marks to renumbered items and dropping the mark of a
+// sold one (invdesk.Desk).
+type markKeeper interface {
+	Reconcile(items []d2.Unit) int
+	Forget(id uint32)
+}
+
+// ReconcileMarks re-attaches the player's marks to the items they belong to when item ids changed (game restart).
+func (t *Town) ReconcileMarks(s *d2.Snapshot) {
+	if k, ok := t.marks.(markKeeper); ok && s != nil && s.Inventory != nil {
+		k.Reconcile(s.Inventory.Items)
+	}
+}
+
+// markedSell counts the pack items the player marked "sell" (never-sell items excluded).
+func (t *Town) markedSell(s *d2.Snapshot) int {
+	if t.marks == nil || s == nil || s.Inventory == nil {
+		return 0
+	}
+	t.ReconcileMarks(s)
+	n := 0
+	for _, u := range s.Inventory.Container(d2.ContInventory) {
+		if u.Item != nil && t.markOf(u) == "sell" && NeverSellReason(t.base(u), u) == "" {
+			n++
+		}
+	}
+	return n
 }
 
 // SetItemMarks installs the player's sell and keep marks; nil: none.

@@ -24,6 +24,7 @@ func newRepair(stateDir string, d *display, ref *runnerRef) error {
 	cfg := repair.Config{
 		Gear:     func() []repair.Cond { return ref.gear() },
 		Estimate: ref.estimate,
+		Gold:     ref.gold,
 		InTown: func() bool {
 			s := ref.snap()
 			return s != nil && s.Player != nil && s.Player.InTown()
@@ -103,6 +104,14 @@ func sortConds(c []repair.Cond) {
 	}
 }
 
+// gold is the live pack gold of the newest snapshot (the stash is not counted); -1 when there is none.
+func (r *runnerRef) gold() int {
+	if s := r.snap(); s != nil && s.Player != nil {
+		return s.Player.Gold
+	}
+	return -1
+}
+
 // estimate is the gold Repair All would cost now (a lower bound), 0 when unknown.
 func (r *runnerRef) estimate() int {
 	tw, s := r.tw.Load(), r.snap()
@@ -160,7 +169,7 @@ func bindRepair(f *watch.Fun, c *repair.Controller, gf *goldfarm.Controller) {
 	f.Repair = api
 	if gf != nil {
 		fa := watch.NewGoldFarmAPI()
-		fa.Bind(farmAdapter{gf})
+		fa.Bind(farmAdapter{gf, c})
 		f.GoldFarm = fa
 	}
 }
@@ -172,6 +181,7 @@ func wireGoldFarm(ref *runnerRef, r *bot.Runner) {
 		return
 	}
 	r.SetGoldFarm(ref.gf, ref.estimate)
+	r.SetRepairTrip(ref.rep)
 }
 
 // repairAdapter lets the watch routes talk to the controller without importing it. The reply carries the Farm gold
@@ -194,16 +204,39 @@ func (a repairAdapter) View() any {
 	}
 	return v
 }
-func (a repairAdapter) Request() (any, error) { return a.c.Request() }
-func (a repairAdapter) Cancel() error         { return a.c.Cancel() }
 
-// farmAdapter is the Farm gold desk of the watch routes.
-type farmAdapter struct{ c *goldfarm.Controller }
+// Request is the Repair now button; a request that has to farm first also switches the Farm gold order on for itself.
+func (a repairAdapter) Request() (any, error) {
+	q, err := a.c.Request()
+	if err == nil && q.Kind == repair.KindFarm && a.gf != nil {
+		err = a.gf.StartForRepair()
+	}
+	return q, err
+}
+
+// Cancel withdraws the request and the farm order it owns.
+func (a repairAdapter) Cancel() error {
+	err := a.c.Cancel()
+	if a.gf != nil {
+		_ = a.gf.StopForRepair()
+	}
+	return err
+}
+
+// farmAdapter is the Farm gold desk of the watch routes. Stopping an order a repair request owns withdraws the request
+// too (one Stop farming means stop).
+type farmAdapter struct {
+	c   *goldfarm.Controller
+	rep *repair.Controller
+}
 
 func (a farmAdapter) View() any { return a.c.View() }
 func (a farmAdapter) Set(on bool) error {
 	if on {
 		return a.c.Start()
+	}
+	if a.rep != nil && a.c.ForRepair() {
+		_ = a.rep.Cancel()
 	}
 	return a.c.Stop()
 }

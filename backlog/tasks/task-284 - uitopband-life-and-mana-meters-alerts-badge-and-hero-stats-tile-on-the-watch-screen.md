@@ -1,10 +1,13 @@
 ---
 id: TASK-284
-title: 'uitopband: life and mana meters, alerts badge and hero stats tile on the watch screen'
-status: Proposed
+title: >-
+  uitopband: life and mana meters, alerts badge and hero stats tile on the watch
+  screen
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:04:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature

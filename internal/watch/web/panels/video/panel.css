@@ -1,6 +1,9 @@
 @layer panels {
-  [data-panel="video"] .frame { aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--d-video-bg); color: var(--d-video-text); border-radius: var(--d-r-2); overflow: hidden; }
-  [data-panel="video"] .shot { inline-size: 100%; block-size: 100%; object-fit: contain; }
+  /* the frame is 4:3 of the panel width when the cell is as tall as its content, and the whole body when the layout
+     gives the cell a height; the picture is contained and centred in it either way */
+  [data-panel="video"] .d-card-body { grid-template-rows: minmax(0, 1fr); }
+  [data-panel="video"] .frame { aspect-ratio: 4 / 3; min-block-size: 0; display: grid; place-items: center; background: var(--d-video-bg); color: var(--d-video-text); border-radius: var(--d-r-2); overflow: hidden; }
+  [data-panel="video"] .shot { inline-size: 100%; block-size: 100%; min-block-size: 0; object-fit: contain; object-position: center; }
   [data-panel="video"]:fullscreen { overflow: auto; }
   [data-panel="video"]:fullscreen .frame { block-size: calc(100% - 3rem); aspect-ratio: auto; }
 }

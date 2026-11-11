@@ -42,22 +42,101 @@
 | task (backlog/tasks) | status | agent | owns | exclusive |
 |---|---|---|---|---|
 | m3-act1run | deferred | m3-act1run | `docs/act1-run.md`<br>`docs/probes/act1run/**` | `soak-slot:3` |
-| fixbelt | in-progress | fixbelt | `docs/fixbelt.md`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/bot/broke.go`<br>`internal/bot/area_ban_test.go` | - |
-| fixprogress | in-progress | fixprogress | `docs/fixprogress.md`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/fixprogress_test.go` | - |
-| ledgerkey | in-progress | snaplib | `internal/cheat/ledger.go`<br>`internal/cheat/ledgerkey.go`<br>`internal/cheat/ledgerkey_test.go`<br>`cmd/d2cheat/main.go` | - |
-| d2d-container-soak | proposed | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
-| d2dmesh | deferred | meshdesign | `cmd/d2dnode/**`<br>`internal/d2dmesh/**`<br>`docs/d2d-mesh.md` | - |
-| stream-grid | deferred | streambuild | `tools/publish/**`<br>`docs/streamctl-grid.md` | - |
+| fid-matrix-refresh | deferred | - | `docs/probes/fid/fid-matrix-refresh.md` | - |
+| fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
+| fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
+| h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
+| h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
+| designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
+| dietarchive | proposed | - | `docs/archive`<br>`docs/research/README.md` | - |
+| dietrule | proposed | - | `docs/backlog-howto.md` | - |
+| d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
+| legacycharm | deferred | - | `docs/research/legacy-charm.md` | - |
+| freshstart | proposed | - | `docs/fresh-start-pace.md`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/resource/tuning.go`<br>`internal/env/tuning_resource.go`<br>`internal/bot/broke.go`<br>`docs/knobs.md`<br>`internal/bot/drought.go`<br>`internal/bot/observe.go`<br>`internal/bot/nokill_test.go`<br>`internal/env/tuning_bot.go`<br>`cmd/d2bot/resource_test.go` | - |
+| sensesvideo | deferred | - | `docs/research/senses-video.md` | - |
 | m2-roam | deferred | m2-roam | `internal/nav/roam.go`<br>`internal/nav/roam_test.go`<br>`internal/nav/exit.go`<br>`internal/nav/exit_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/emptyarea_test.go`<br>`docs/roam.md` | `soak-slot:3` |
+| unlockhall | deferred | - | `internal/watch/unlockhall.go`<br>`internal/watch/unlockhall_test.go` | - |
 | m2-tripwp | deferred | m2-tripwp | `internal/town/trip.go`<br>`internal/town/trip_test.go`<br>`internal/bot/waypoints_test.go`<br>`docs/tripwp.md`<br>`docs/probes/tripwp/**` | `soak-slot:3` |
+| pacthall | deferred | - | `internal/watch/pacthall.go`<br>`internal/watch/pacthall_test.go` | - |
+| pactoverlay | deferred | - | `docs/research/pact-overlay.md` | - |
+| pactnightmare | deferred | - | `internal/pact/nightmare.go`<br>`internal/pact/nightmare_test.go` | - |
+| recoverypace | in-progress | - | `docs/soaks/recoverypace.md`<br>`docs/probes/recoverypace/`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/playertuning_test.go`<br>`internal/resource/recovery.go`<br>`internal/resource/recovery_test.go`<br>`internal/resource/tuning.go`<br>`internal/env/tuning_resource.go`<br>`docs/knobs.md` | - |
+| decision-point-store | deferred | decision-point-store | `internal/decide/**`<br>`docs/decision-points.md`<br>`docs/research/decision-point-store-spec.md`<br>`docs/research/decision-point-sme-review.md` | - |
+| questdrill | proposed | - | `docs/quest-hints.md` | - |
 | m3-andariel | deferred | m3-andariel | `internal/boss/act1.go`<br>`internal/boss/andariel_d2d_test.go`<br>`docs/andariel.md`<br>`docs/probes/andariel/**` | `soak-slot:3` |
-| m3-merc | proposed | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
+| amazonammo | deferred | - | `internal/combat`<br>`internal/leveler` | - |
+| t0-slice | deferred | t0-slice | `internal/decide/t0/**`<br>`internal/ladder/**`<br>`internal/env/tuning_ladder.go`<br>`internal/town/ladder_test.go`<br>`internal/drill/t0.go`<br>`internal/drill/t0_test.go`<br>`cmd/d2drill/t0_lab.go`<br>`cmd/d2drill/t0_lab_test.go`<br>`docs/probes/t0drill.md`<br>`internal/bot/thoughts.go`<br>`internal/bot/thoughts_test.go`<br>`internal/combat/thoughtshook.go`<br>`docs/t0-slice.md` | - |
+| ready-audit | proposed | - | `docs/probes/ready-audit.md` | - |
+| ready-area-table | proposed | - | `internal/readiness/areatable.go`<br>`internal/readiness/areatable_test.go` | - |
+| ready-model | proposed | - | `internal/readiness/` | - |
+| ready-wire-gates | deferred | - | `internal/bot/riskfacts.go`<br>`internal/bot/geargate.go`<br>`internal/task/gate.go` | - |
+| ready-meter | deferred | - | `internal/watch/unlockrisk.go`<br>`internal/watch/unlockrisk_test.go` | - |
+| ready-whyline | deferred | - | `internal/bot/whyline.go`<br>`internal/bot/whyline_test.go` | - |
+| ready-bossrows | deferred | - | `internal/readiness/bossrows.go`<br>`internal/readiness/bossrows_test.go` | - |
+| ready-policy | deferred | - | `internal/watch/funwire.go` | - |
+| ready-calibrate | deferred | - | `docs/probes/ready-calibrate.md` | - |
+| firsthour | proposed | - | `docs/first-hour.md`<br>`cmd/d2firsthour/`<br>`tools/firsthour.sh`<br>`docs/probes/firsthour.md` | - |
+| sessions | proposed | - | `docs/session-record.md` | - |
+| firstminutes | proposed | - | `docs/first-minutes.md`<br>`internal/watch` | - |
+| awaydrill | proposed | - | `docs/away-drill.md` | - |
+| reconnectux | proposed | - | `docs/reconnect-ux.md`<br>`internal/watch` | - |
+| palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
+| smepace | proposed | - | `docs/sme/pace-and-formulas.md` | - |
+| contextdiet | proposed | - | `docs/agents` | - |
+| lootskip | proposed | - | `internal/loot`<br>`docs/lootskip.md`<br>`internal/env/tuning_loot.go` | - |
+| testerdocs | deferred | - | `docs/tester-guide.md` | - |
+| pursuers | proposed | - | `internal/nav/pursuit.go`<br>`internal/nav/pursuit_test.go`<br>`docs/pursuers.md`<br>`internal/nav/walk.go`<br>`internal/nav/roam.go`<br>`internal/nav/explore.go`<br>`internal/nav/exit.go`<br>`internal/nav/nav.go`<br>`internal/env/tuning_nav.go`<br>`docs/knobs.md` | - |
+| minimapfix | proposed | - | `internal/watch/web/shell.js`<br>`internal/watch/minimapfix_test.go` | - |
+| artspeed | proposed | - | `internal/art`<br>`internal/watch/artapi.go`<br>`internal/watch/artapi_test.go`<br>`internal/watch/web/inventory.js`<br>`internal/data/invfiles.go`<br>`cmd/d2bot/artwire.go`<br>`cmd/d2bot/artcmd.go`<br>`docs/paperdoll-art-build.md`<br>`docs/dev-update.md`<br>`internal/data/invfiles_test.go`<br>`internal/watch/artembed_test.go`<br>`cmd/d2bot/artcmd_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/invwire.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/desk_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/evaluatorfor_test.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go` | - |
+| testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`docs/first-session.md` | - |
+| artspeed2 | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/testdata/inventory_dom.js` | - |
+| standstill | proposed | - | `internal/invdesk` | - |
+| testerlicence | in-progress | - | `docs/tester-licence.md` | - |
+| mercgear | proposed | - | `docs/research/merc-gear.md` | - |
+| electronapp | proposed | - | `apps/desktop-electron/`<br>`docs/desktop-electron.md`<br>`.github/workflows/desktop-electron.yml`<br>`docs/desktop-app.md` | - |
+| testerpack | proposed | - | `tools/tester-pack.sh`<br>`docs/tester-guide.md` | - |
+| electronmac2 | proposed | - | `apps/desktop-electron/`<br>`docs/desktop-electron.md` | - |
+| maptrail | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/nav/covview.go`<br>`internal/nav/covview_test.go`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/senses_stitch_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/watch/testdata/senses-coverage.json`<br>`internal/nav/roam.go`<br>`cmd/d2bot/sensesfeed.go`<br>`cmd/d2bot/sensesfeed_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
+| maptrail2 | proposed | - | `internal/senses/coverage.go`<br>`internal/senses/trail_test.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-coverage.json`<br>`docs/senses-map.md` | - |
+| m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
+| repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
+| aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
+| uiedit2 | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/panels/video`<br>`internal/watch/web/layout.json`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uiedit2.txt` | - |
+| ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
+| dpwire | deferred | - | `docs/dp-wiring.md` | - |
+| t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
+| ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
+| ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
+| earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
-| armorhit | in-progress | armorhit | `docs/research/pr-armorhit-proof.md`<br>`docs/research/pr-armorhit-draft.md`<br>`docs/research/pr-bundle-queue.md`<br>`tools/emu/armor_hit.py`<br>`tools/emu/armor_hit_mode.inc` | `fork-branch:fix/armor-hit` |
-| nexthit | in-progress | nexthit | `docs/research/pr-nexthit-proof.md`<br>`docs/research/pr-nexthit-draft.md`<br>`tools/emu/next_hit.py`<br>`tools/emu/next_hit_mode.inc`<br>`tools/emu/next_hit_summary.py` | `fork-branch:fix/nexthit` |
-| skmiss | in-progress | skmiss | `docs/research/sk-missile-trace.md`<br>`tools/emu/sk_missile_hit.py`<br>`tools/emu/sk_missile_hit_test.cpp`<br>`docs/decomp-queue.md`<br>`docs/BACKLOG.md`<br>`docs/INDEX.md` | `fork-branch:fix/missile-roll-top` |
-| skresistfix | in-progress | skresistfix | `docs/research/pr-curseimmune-draft.md`<br>`docs/research/pr-curseimmune-proof.md` | `fork-branch:fix/curse-immune` |
-| m1-liveproof | in-progress | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
+| tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
+| upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
+| statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
+| ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
+| onboardtour | proposed | - | `internal/watch/web/onboarding.js`<br>`internal/watch/web/onboarding.css`<br>`docs/onboarding-tour.md` | - |
+| onboardctl | deferred | - | `internal/watch/control.go`<br>`internal/watch/control_test.go`<br>`docs/onboarding-controls.md` | - |
+| fidprobe-vendor | proposed | - | `internal/fidvendor`<br>`docs/research/fidelity-vendor-probe.md` | - |
+| custom-overlay | deferred | - | `docs/research/custom-overlay-spec.md`<br>`docs/overlay.md`<br>`docs/research/custom-items.md`<br>`internal/overlay/`<br>`internal/data/`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/d2dbackend_test.go` | - |
+| custom-item-1 | deferred | - | `docs/research/custom-item-1.md` | - |
+| currency-rows | deferred | - | `data/overlay/didle-v1/`<br>`internal/overlay/didlev1_test.go`<br>`internal/loot/currencymark_test.go`<br>`internal/loot/pickit_starter.json`<br>`docs/research/currency-rows.md`<br>`docs/probes/currency1.md`<br>`docs/probes/currency1-drill.py`<br>`docs/overlay.md` | - |
+| currency-slice | deferred | - | `internal/currencyflow/`<br>`docs/probes/currency-drill.md` | - |
+| fid-probe-readers | deferred | - | `docs/probes/fid/fid-probe-readers.md` | - |
+| fid-probe-equip | deferred | - | `docs/probes/fid/fid-probe-equip.md` | - |
+| fid-probe-regen-speed | deferred | - | `docs/probes/fid/fid-probe-regen-speed.md` | - |
+| fid-transitions | deferred | - | `docs/probes/fid/fid-transitions.md` | - |
+| fid-missile-monster | deferred | - | `docs/probes/fid/fid-missile-monster.md` | - |
+| fid-boss-skills | deferred | - | `docs/probes/fid/fid-boss-skills.md` | - |
+| fid-sorc-upstream | deferred | - | `docs/probes/fid/fid-sorc-upstream.md` | - |
+| m1-liveproof | deferred | drills | `docs/basics-audit.md`<br>`docs/basics-live.md`<br>`docs/primitives.md`<br>`docs/probes/basics/**`<br>`cmd/d2drill/**`<br>`internal/drill/**`<br>`docs/probes/drills/**` | `soak-slot:0` |
+| fid-teleport | deferred | - | `docs/probes/fid/fid-teleport.md` | - |
+| fid-lab-rebase | deferred | - | `docs/probes/fid/fid-lab-rebase.md` | - |
+| fid-quest-den-raven | deferred | - | `docs/probes/fid/fid-quest-den-raven.md` | - |
+| fid-quest-andariel | deferred | - | `docs/probes/fid/fid-quest-andariel.md` | - |
+| fid-death | deferred | - | `docs/probes/fid/fid-death.md` | - |
+| fid-gatea-ab | deferred | - | `docs/probes/fid/fid-gatea-ab.md` | - |
+| fid-adapter-rows | deferred | - | `docs/probes/fid/fid-adapter-rows.md` | - |
+| fid-lowvalue | deferred | - | `docs/probes/fid/fid-lowvalue.md` | - |
 
 ### Gates
 - contract [act1-campaign](../contracts/act1-campaign.md): 9 requirements
@@ -80,14 +159,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 22dfa4e7 11-04 18:09 `Merge origin/main into removestage3` (-)
-- 6d3acc9f 11-04 17:57 `Merge agent/esfollow: record #198 follow-up commit (CodeRabbit nullopt guard)` (esfollow)
-- bfa50177 11-04 17:51 `Merge agent/nsbody: nsbody: PR body draft, no-shield damage reduction order` (nsbody)
-- 24695402 11-04 17:50 `Merge branch 'main' into nsbody` (-)
-- 4f6e7c7c 11-04 17:49 `Merge origin/main into removestage3` (-)
-- 81eeb8cf 11-04 17:47 `Merge agent/contractsdesign: contracts after OpenSpec: design` (contractsdesign)
-- 92a209d2 11-04 17:24 `Merge agent/removestage2b: remove tools/openspec.sh (stage 2b)` (removestage2b)
-- c1df347e 11-04 17:23 `Merge branch 'main' into none` (-)
-- 43cc7bc0 11-04 17:22 `Merge agent/esopened: record upstream PR: Energy Shield absorb order` (esopened)
-- ef606495 11-04 17:21 `Merge branch 'main' into esopened` (-)
+- b1a79744 11-11 12:40 `Merge agent/uiedit2: TASK-306 uiedit2: game picture fits its panel, aspect-locked; every card editable with hide/show` (uiedit2)
+- 62073587 11-11 12:39 `Merge branch 'main' into uiedit2` (-)
+- a68259e7 11-11 12:25 `Merge agent/sellmarks: TASK-308 sellmarks: player sell marks follow renumbered items, sell chore always runs for marks, per-visit sell log` (sellmarks)
+- 51b1519e 11-11 12:24 `Merge branch 'main' into sellmarks` (-)
+- 7978f296 11-11 12:12 `Merge agent/repairtrip: TASK-303 repairtrip: Repair now as a safe-moment portal trip; Farm until repair when gold is short` (repairtrip)
+- 92d0d0d0 11-11 12:11 `Merge branch 'main' into repairtrip` (-)
+- 8459908f 11-11 12:05 `Merge agent/processrules: TASK-310 processrules: rules-short, brief rules, deploy windows, research WARN, digests, coordinator checklist` (processrules)
+- b48e7488 11-11 12:05 `Merge branch 'main' into processrules` (-)
+- 2460c828 11-11 11:59 `Merge agent/processrules: sync main` (processrules)
+- 9f262f74 11-11 11:58 `Merge agent/docsarchive: TASK-311 docsarchive: archive 15 finished research reports with stubs` (docsarchive)
 <!-- statusgen:end -->

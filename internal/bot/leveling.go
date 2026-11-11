@@ -252,6 +252,9 @@ func (r *Runner) sellable(s *d2.Snapshot) int {
 		return 0
 	}
 	n := 0
+	if rc, ok := r.d.Town.(interface{ ReconcileMarks(*d2.Snapshot) }); ok {
+		rc.ReconcileMarks(s)
+	}
 	ue, _ := r.d.Loot.(UnitEvaluator)
 	for i := range s.Inventory.Items {
 		u := &s.Inventory.Items[i]

@@ -1,0 +1,78 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "head",
+   "name": "Cap",
+   "dur": 80,
+   "max": 100,
+   "pct": 80
+  },
+  {
+   "slot": "rhand",
+   "name": "Staff",
+   "dur": 40,
+   "max": 100,
+   "pct": 40
+  },
+  {
+   "slot": "torso",
+   "name": "Robe",
+   "dur": 70,
+   "max": 100,
+   "pct": 70
+  }
+ ],
+ "estimate": 200,
+ "request": {
+  "state": "requested",
+  "at": 1800000000,
+  "note": "finishing the pack first, 12 s of 60",
+  "kind": "repair",
+  "phase": "waiting"
+ },
+ "trip": {
+  "state": "waiting",
+  "button": {
+   "action": "cancel",
+   "label": "Cancel repair",
+   "enabled": true
+  },
+  "line": "Repair queued: waiting for a safe moment (finishing the pack first, 12 s of 60).",
+  "gold": 300,
+  "estimate": 200,
+  "need": 260,
+  "kind": "repair",
+  "maxTrips": 2
+ }
+}

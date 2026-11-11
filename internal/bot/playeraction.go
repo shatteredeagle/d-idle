@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/repair"
 )
 
 // playerActionGap is the shortest time between two attempts of the player's queued item actions after one was
@@ -28,10 +29,10 @@ func (r *Runner) safeMoment(snap *d2.Snapshot) (time.Time, bool) {
 		return now, false
 	case heroMoving(snap.Player):
 		return now, false // stand still first: the click path needs a quiet hero
-	case r.hostileNear(snap, r.e.Tune.Bot.ClearRadius) > 0:
-		return now, false
 	}
-	return now, true
+	// the one safe-moment rule (repairSafeMoment, repairtrip.go): nothing hostile in reach, the fighter's ignore list not applied
+	act, _ := repairSafeMoment(safeIn{Fight: r.hostileNear(snap, r.e.Tune.Bot.ClearRadius), Close: r.hostileWithin(snap, r.e.Tune.Bot.ClearRadius)}, repair.Trip{})
+	return now, act == safeGo
 }
 
 // playerKinds is the optional part of PlayerGear the Why line and the errand trip read.
