@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <!-- macOS menu bar template image: black on transparent (macOS recolours it). Same eye as icon.svg, no tile. -->
-  <path d="M16 128 C54 62 98 36 128 36 C158 36 202 62 240 128 C202 194 158 220 128 220 C98 220 54 194 16 128 Z" fill="none" stroke="#000" stroke-width="22" stroke-linejoin="round"/>
-  <circle cx="128" cy="128" r="44" fill="#000"/>
-</svg>

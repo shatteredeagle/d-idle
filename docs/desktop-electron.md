@@ -12,7 +12,7 @@ User decision 2026-11-10: build the desktop app on Electron (portable) with the 
 
 ## Layout
 
-`apps/desktop-electron/`: `src/` (app.js wiring, security.js pure rules, address.js, config.js, args.js, probe.js, state.js, menu.js, helper/ with the only preload), `test/` (node:test, smoke/), `build/` (icon.svg, generated icon.png/icon.ico/tray.png, fuses, afterPack), `electron-builder.yml`, `scripts/` (make-icons.js, scratch.sh). A stub `go.mod` makes `go list ./...` of the main module ignore the folder (V: research doc experiment). Root `go.mod` untouched.
+`apps/desktop-electron/`: `src/` (app.js wiring, security.js pure rules, address.js, config.js, args.js, probe.js, state.js, menu.js, helper/ with the only preload), `test/` (node:test, smoke/), `build/` (icons copied from assets/branding/out/electron, fuses, afterPack), `electron-builder.yml`, `scripts/` (make-icons.js, scratch.sh). A stub `go.mod` makes `go list ./...` of the main module ignore the folder (V: research doc experiment). Root `go.mod` untouched.
 
 ## Run, test, build
 
@@ -21,7 +21,7 @@ User decision 2026-11-10: build the desktop app on Electron (portable) with the 
 - Unit tests: `npm test` (V: 32 tests, no display). Smoke (real Electron under Xvfb against fake local servers): `npm run smoke` (V on the worker host).
 - Packages: `npm run dist:linux` (AppImage + deb, V built on the worker host), `npm run dist:win` (NSIS + portable; U: runs on the Windows CI runner only, never run). Fuses read back from the packaged binary (V: `npx @electron/fuses read`): RunAsNode, NodeCliInspect, NODE_OPTIONS off, OnlyLoadAppFromAsar and embedded asar integrity on.
 - On the worker host use `sh apps/desktop-electron/scripts/scratch.sh <cmd>` so `node_modules` survives labrun's re-sync.
-- Icons: original artwork `build/icon.svg` (an eye; no game art). Regenerate with `xvfb-run -a -s '-screen 0 1280x1024x24' npx electron scripts/make-icons.js` (V).
+- Icons: original pixel art (assets/branding, docs/branding.md); `npm run icons` copies the packed set into build/ (V).
 
 ## Security posture (V by tests unless noted)
 
@@ -29,7 +29,7 @@ Two views: helper (local `d2idle-app://helper/`, the only preload, 4 invoke chan
 
 ## Tray and update check (TASK-290)
 
-- Tray: icon `build/tray.png` (from icon.svg), menu = Open, Pages (Watch, Inventory, Policy, Return screen), a disabled status line, Check for updates / Update available, Start with the system, "Closing the window hides it to the tray", Quit. The status line is reachability only (Online, Warming up, Offline plus the address): the watch pages need the login and the watch server has no token-less endpoint with the hero name or level (V: grep of `internal/watch` routes; `/healthz` is the d2d control server's), so nothing more is shown. Left click opens the window. The status is polled every 3 s while the helper shows and every 15 s while the game page is up.
+- Tray: icon `build/tray.png` (32 px), menu = Open, Pages (Watch, Inventory, Policy, Return screen), a disabled status line, Check for updates / Update available, Start with the system, "Closing the window hides it to the tray", Quit. The status line is reachability only (Online, Warming up, Offline plus the address): the watch pages need the login and the watch server has no token-less endpoint with the hero name or level (V: grep of `internal/watch` routes; `/healthz` is the d2d control server's), so nothing more is shown. Left click opens the window. The status is polled every 3 s while the helper shows and every 15 s while the game page is up.
 - Hide to tray: closing the window hides it while a tray exists (`hideToTray` in config.json, default true, toggled from the tray menu); Quit really quits; a second start focuses the window. U: on Linux there is no way to know whether a tray host exists (GNOME needs the AppIndicator extension; KDE works): with no host a hidden window is reachable only by starting the app again, which restores it. Turn the toggle off there.
 - Single instance: second start with `--page`/`--setup` navigates the running window (V by code path, not smoked).
 - Autostart: Linux writes `~/.config/autostart/d2idle-watch.desktop` (Exec = the AppImage file when run from one, else the binary, plus `--hidden`); Windows and macOS use `setLoginItemSettings` with `--hidden` (Electron has no login item on Linux). `--hidden` starts in the tray when a tray exists.
@@ -45,7 +45,7 @@ Personal build for a MacBook, unsigned, LAN only, never published. UNIVERSAL (ar
 
 Build: `npm run dist:mac` on a Mac (Node only, no Xcode; V on the Mac mini via the worker lab tool), or the `package-mac` job of `.github/workflows/desktop-electron.yml` (`macos-latest`, `--publish never`, no signing env, artifact `d2idle-watch-macos-universal`; U: never run on GitHub). Output: `dist/d2idle-watch-<version>-mac-universal.dmg` and `.zip`. Config: `mac:` in `electron-builder.yml` (`identity: "-"` = ad-hoc signature only, because Apple Silicon kills a binary with no signature (V: the first build with `identity: null` died with Killed: 9 on the Mac mini); `hardenedRuntime: false`, `notarize: false`, icon `build/icon.icns`).
 
-Icons come from `build/icon.svg` (the eye, no game art) through `scripts/make-icons.js`: `icon.icns` (128 to 1024 px, PNG entries) and the menu bar template image `build/trayTemplate.png` (22 px) plus its double-size sibling (44 px), black on transparent from `build/tray-template.svg`; the `Template` suffix makes macOS recolour it for light, dark and active menu bars (U: not seen on a real menu bar).
+Icons are the project pixel-art set (assets/branding/out/electron, copied by `scripts/make-icons.js`): `icon.icns` (128 to 1024 px, PNG entries) and the menu bar template image `build/trayTemplate.png` (22 px) plus its double-size sibling (44 px), black on transparent; the `Template` suffix makes macOS recolour it for light, dark and active menu bars (U: not seen on a real menu bar).
 
 Behaviour on macOS (code in `src/platform.js`, `src/menu.js`; V by unit tests, U on a real Mac):
 - Closing the window hides it (even when "Closing the window hides it to the tray" is off, the window must survive) and hides the Dock icon; opening it from the menu bar icon or clicking the Dock icon brings both back. `window-all-closed` does not quit while the tray exists. Cmd+Q (app menu Quit) really quits.
