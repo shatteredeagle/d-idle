@@ -16,6 +16,7 @@ owns:
   - "docs/upstream/verification-2026-11-11.md"
 exclusive: []
 contracts: []
+result: "docs/upstream/verification-2026-11-11.md Second pass: both PASS after mechanical edits (Lightning: stray next_hit.py comment, unused import os, cast-count wording; Cold: commit must say test_umod_stats changed; both: blank line before Agent trailer, post rebased on upstream 59d3b59e). All first-pass findings resolved; every commit builds alone as pushed and rebased; numbers reproduce exactly (Lightning 44/43/47 to 0, Cold 7869 to 0 prep grouping); ctest same 4 video-MPQ failures as upstream. presubmit and path-order re-run not done. Offline, not live."
 ---
 
 ## Description
@@ -28,9 +29,9 @@ Second independent Opus pass after the prep applied the first pass's fixes (TASK
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Each first-pass finding re-checked as resolved or not on the r3 and r4 heads
-- [ ] #2 Every commit of both PR branches builds alone, as pushed and rebased on current upstream main
-- [ ] #3 Both differentials re-run on clean worktrees, all seeds, parent and claim; ctest on the claims against upstream main
-- [ ] #4 Diff hygiene, upstream contribution rules, upstream overlap since 62732598, single topic checked
-- [ ] #5 Second-pass section with verdicts and post-ready data in docs/upstream/verification-2026-11-11.md
+- [x] #1 Each first-pass finding re-checked as resolved or not on the r3 and r4 heads
+- [x] #2 Every commit of both PR branches builds alone, as pushed and rebased on current upstream main
+- [x] #3 Both differentials re-run on clean worktrees, all seeds, parent and claim; ctest on the claims against upstream main
+- [x] #4 Diff hygiene, upstream contribution rules, upstream overlap since 62732598, single topic checked
+- [x] #5 Second-pass section with verdicts and post-ready data in docs/upstream/verification-2026-11-11.md
 <!-- AC:END -->
