@@ -47,11 +47,12 @@ type GearInput struct {
 
 // GearTune are the graded-model knobs.
 type GearTune struct {
-	Mode       int // GateHard or GateGraded
-	MediumAt   int // risk points at which risk is medium
-	HighAt     int // risk points at which risk is high (gated)
-	DeathsHigh int // deaths in the last hour (or in one area) from which deaths add risk
-	EarlyMax   int // below this clvl armor never counts and a weapon only for classes that need one; 0 = policy off
+	Mode       int  // GateHard or GateGraded
+	MediumAt   int  // risk points at which risk is medium
+	HighAt     int  // risk points at which risk is high (gated)
+	DeathsHigh int  // deaths in the last hour (or in one area) from which deaths add risk
+	EarlyMax   int  // below this clvl armor never counts and a weapon only for classes that need one; 0 = policy off
+	Player     bool // gear.decisions = player: a missing weapon or body armor is the player's to fix; it is shown (medium risk) but never gates and never earns a rebuy trip
 }
 
 // DefaultGearTune are the shipped defaults.
@@ -84,6 +85,9 @@ func GearGate(in GearInput, rebuyGold int, t GearTune) GearVerdict {
 	missB := !in.Body && !early && !(in.Caster && d == 0)
 	missW := !in.Weapon && !(early && !in.NeedWeapon)
 	v := GearVerdict{Naked: missW || missB}
+	if t.Player {
+		return playerGate(in, rebuyGold, t, v, missW, missB)
+	}
 	if t.Mode == GateHard {
 		return hardGate(in, rebuyGold, v, missW, missB)
 	}
@@ -184,4 +188,35 @@ func hardGate(in GearInput, rebuyGold int, v GearVerdict, missW, missB bool) Gea
 		v.Reason += fmt.Sprintf(" (%d gold covers a rebuy)", in.Gold)
 	}
 	return v
+}
+
+// playerGate is GearGate when the player owns equipment (docs/gear-policy.md): a missing weapon or body armor adds no
+// points (nothing here may close the field over a slot only the player fills) and never earns a rebuy, but it keeps the
+// risk at medium so the readiness line shows it, and the reason names it.
+func playerGate(in GearInput, rebuyGold int, t GearTune, v GearVerdict, missW, missB bool) GearVerdict {
+	t.Player = false
+	// The rest of the model runs as if the slots were filled.
+	in.Weapon, in.Body = true, true
+	out := GearGate(in, rebuyGold, t)
+	out.Naked, out.CanRebuy = v.Naked, false
+	out.Reason = strings.TrimSuffix(out.Reason, fmt.Sprintf(" (%d gold covers a rebuy)", in.Gold))
+	var note []string
+	if missW {
+		note = append(note, "no weapon equipped")
+	}
+	if missB {
+		note = append(note, "no body armor equipped")
+	}
+	if len(note) > 0 {
+		if out.Risk < RiskMedium {
+			out.Risk = RiskMedium
+		}
+		if out.Reason == "kit fine" {
+			out.Reason = ""
+		} else {
+			out.Reason += ", "
+		}
+		out.Reason += strings.Join(note, ", ") + " (yours to equip)"
+	}
+	return out
 }
