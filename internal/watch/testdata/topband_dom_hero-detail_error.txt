@@ -1,0 +1,36 @@
+<section hidden>
+  <span class="meta">
+  <div class="d-card-body">
+    <div class="d-stats">
+      <div class="d-stat">
+        <span class="lbl"> "level"
+        <span class="val">
+        <span class="delta">
+      <div class="d-stat">
+        <span class="lbl"> "next level"
+        <span class="val">
+        <span class="delta">
+      <div class="d-stat">
+        <span class="lbl"> "gold"
+        <span class="val">
+        <span class="delta">
+      <div class="d-stat">
+        <span class="lbl"> "stash"
+        <span class="val">
+        <span class="delta">
+    <div class="d-strip res" aria-label="Resistances">
+      <span class="d-chip" data-key="fire">
+        "fire "
+        <b>
+      <span class="d-chip" data-key="cold">
+        "cold "
+        <b>
+      <span class="d-chip" data-key="light">
+        "light "
+        <b>
+      <span class="d-chip" data-key="poison">
+        "poison "
+        <b>
+    <p class="ready">
+      <span class="d-chip" data-key="readiness">
+      <span class="d-hint">

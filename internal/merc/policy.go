@@ -4,18 +4,20 @@ import "strings"
 
 // Reasons are the stable words in Decision.Reason and in the log lines (logs.go); harness code may grep them.
 const (
-	ReasonOK            = "ok"
-	ReasonUnknown       = "unknown"
-	ReasonNotAtKashya   = "not at kashya"
-	ReasonQuestOpen     = "blood raven not done"
-	ReasonOwned         = "merc owned"
-	ReasonNotOwned      = "no merc owned"
-	ReasonAlive         = "alive"
-	ReasonFreePending   = "free rogue pending"
-	ReasonFreeOnly      = "free rogue only"
-	ReasonClass         = "class not planned"
-	ReasonAura          = "aura not wanted"
-	ReasonNoBetter      = "no better aura"
+	ReasonOK          = "ok"
+	ReasonUnknown     = "unknown"
+	ReasonNotAtKashya = "not at kashya"
+	ReasonQuestOpen   = "blood raven not done"
+	ReasonOwned       = "merc owned"
+	ReasonNotOwned    = "no merc owned"
+	ReasonAlive       = "alive"
+	ReasonFreePending = "free rogue pending"
+	ReasonFreeOnly    = "free rogue only"
+	ReasonClass       = "class not planned"
+	ReasonAura        = "aura not wanted"
+	ReasonNoBetter    = "no better aura"
+	// ReasonGearWorn: the player decides equipment, so a replacing hire waits until the merc is bare.
+	ReasonGearWorn      = "merc wears gear: unequip your merc first"
 	ReasonGold          = "gold"
 	ReasonKit           = "kit"
 	ReasonCap           = "revive cap"
@@ -193,6 +195,10 @@ func ShouldReplace(cur MercState, o HireOffer, c Ctx) Decision {
 	d.StripFirst = cur.Alive && hasGear(cur)
 	return d
 }
+
+// GearBlocksReplace says whether a replacing hire must wait under the player-only gear policy: the merc wears gear
+// (a hire destroys it), or what he wears was not read (so nothing says it is safe).
+func GearBlocksReplace(s MercState) bool { return hasGear(s) || !s.GearKnown }
 
 func hasGear(s MercState) bool {
 	for _, it := range s.Gear {

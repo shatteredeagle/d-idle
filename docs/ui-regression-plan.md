@@ -1,6 +1,6 @@
 # Watch UI regression tests and migration plan (TASK-228, uidesign)
 
-> status: proposal (2026-11-09), nothing here is built. Design: [ui-design-system.md](ui-design-system.md). Research: [research/ui-design.md](research/ui-design.md). Tags: V verified by reading the code named, U not run (every tool in this doc is unbuilt; flags marked U were not checked against a binary).
+> status: proposal (2026-11-09); built so far: see [ui-design-system.md](ui-design-system.md) section 15 (row 14 `uilayout` is section 15.5). Design: [ui-design-system.md](ui-design-system.md). Research: [research/ui-design.md](research/ui-design.md). Tags: V verified by reading the code named, U not run (every tool in this doc is unbuilt; flags marked U were not checked against a binary).
 
 Compatibility: the layout and panel manifests, the data-attribute API, the endpoints and the token names are versioned public contracts (the promise and its rules: [ui-design-system.md section 0](ui-design-system.md); user decision 2026-11-09). The compatibility test (`internal/watch/compat_test.go`, golden fixtures under `internal/watch/testdata/compat/`, only ever added to) is a fourth check next to the three below and blocks a merge the same way.
 

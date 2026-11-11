@@ -17,3 +17,4 @@ activity
 goal
 queue
 why
+stats
