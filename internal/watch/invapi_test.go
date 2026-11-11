@@ -154,6 +154,12 @@ func TestInventoryTrashAndCancelRoutes(t *testing.T) {
 	if w := invPost(post, "/api/inventory/cancel", `{"id":1}`, bad); w.Code != 403 || len(f.canceled) != 1 {
 		t.Errorf("cancel from a foreign origin: %d", w.Code)
 	}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true,"target":"merc"}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), `"target"`) || len(f.trashed) != 2 {
+		t.Errorf("merc target is reserved: %d %s", w.Code, w.Body)
+	}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true,"target":"hero"}`, auth); w.Code != 200 {
+		t.Errorf("hero target: %d", w.Code)
+	}
 	f.err = refusal{"it is marked keep"}
 	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), "marked keep") {
 		t.Errorf("refusal: %d %s", w.Code, w.Body)

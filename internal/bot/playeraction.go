@@ -11,9 +11,14 @@ import (
 // postponed (a fight started under the click path).
 const playerActionGap = 10 * time.Second
 
+// Player modes while the hero walks or runs (U: the numbers are the game's player mode table, 2 walk, 3 run, 6 town
+// walk; not yet seen in a live capture of this bot). Any other mode, including an unfilled 0, counts as standing.
+func heroMoving(p *d2.Player) bool { return p.Mode == 2 || p.Mode == 3 || p.Mode == 6 }
+
 // playerActionStep performs the item actions the player queued on the watch page (docs/inventory-actions.md): equip a
 // backpack item, trash a backpack item. The OPEN OPPORTUNITY is the same predicate as the points step: in town, or in
-// the field while no hostile is within the clear radius (hostileNear; no fight is on). The click path checks again
+// the field while no hostile is within the clear radius (hostileNear; no fight is on), no town trip is running (the
+// trip owns the hero) and the hero is not walking or running. The click path checks again
 // (leveler.busy) and postpones the request when a monster is close. It never undoes anything: a worn item stays pinned,
 // a trashed one stays dropped. It reports whether it acted.
 func (r *Runner) playerActionStep(ctx context.Context, snap *d2.Snapshot, c control) bool {
@@ -28,6 +33,9 @@ func (r *Runner) playerActionStep(ctx context.Context, snap *d2.Snapshot, c cont
 	now := r.e.Clock.Now()
 	if !l.playerActAt.IsZero() && now.Sub(l.playerActAt) < playerActionGap {
 		return false
+	}
+	if heroMoving(snap.Player) {
+		return false // stand still first: the click path needs a quiet hero
 	}
 	if r.hostileNear(snap, r.e.Tune.Bot.ClearRadius) > 0 {
 		return false

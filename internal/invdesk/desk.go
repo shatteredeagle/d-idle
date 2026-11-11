@@ -96,8 +96,11 @@ type Pin struct {
 // Request is a queued or finished player action on one item (API schema 3 added kind and print; a request without a
 // kind is an equip).
 type Request struct {
-	ID     uint32 `json:"id"`
-	Kind   string `json:"kind,omitempty"` // equip (default) or trash
+	ID   uint32 `json:"id"`
+	Kind string `json:"kind,omitempty"` // equip (default) or trash
+	// Target is who acts or is dressed: "" or "hero" today. "merc" is reserved for the mercenary stage (docs/research/merc-gear.md);
+	// the watch route refuses any other value with code "target" until that stage exists.
+	Target string `json:"target,omitempty"`
 	Slot   string `json:"slot,omitempty"` // equip only
 	Name   string `json:"name"`
 	State  string `json:"state"` // queued, doing, done, failed, cancelled

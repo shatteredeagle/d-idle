@@ -121,6 +121,8 @@ type invBody struct {
 	// request of cancel (default equip).
 	Confirm bool   `json:"confirm"`
 	Kind    string `json:"kind"`
+	// Target is reserved for the mercenary stage ("merc"); today only "" and "hero" are accepted.
+	Target string `json:"target"`
 }
 
 // PostHandler serves the POST routes.
@@ -133,6 +135,10 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 		d := a.desk()
 		if d == nil {
 			writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "the inventory page is off or the hero is not known yet"})
+			return
+		}
+		if b.Target != "" && b.Target != "hero" {
+			writeJSON(w, http.StatusConflict, policyReply{Code: "target", Error: "only the hero can be targeted for now"})
 			return
 		}
 		defer a.drop()
