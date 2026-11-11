@@ -1,3 +1,0 @@
-BACKLOG: TASK-295 denshuttle: Den/Blood Moor shuttle cause found (farm target flipped out of the Den when a drink dropped belt healing below 2; 9 min cascade of bans and bounced walks in the sandbox hour); entry/stay gap fix offline, live proof pending
-INDEX: docs/denshuttle.md: Den of Evil / Blood Moor shuttle, sandbox hour analysis and the potion entry/stay gap (TASK-295)
-CHANGELOG: Fixed: the gold-farm order no longer walks the hero out of the Den of Evil mid fight when one potion is drunk (enter with 2 belt potions, stay with 1)

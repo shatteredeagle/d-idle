@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fixed: the gold-farm order no longer walks the hero out of the Den of Evil mid fight when one potion is drunk (enter with 2 belt potions, stay with 1)
 - d2dview: /api/frames video counters, -jpeg-quality, -frame-half, -frame-backoff and -feed (d2d fork framefeed ring) flags; faster JPEG re-encode
 - d.idle watch desktop app: a failed or stalled page load shows a message and retries instead of a white window; --debug log and Open log folder
 - watch: in Edit layout a panel now drops exactly into free space, and while you drag the other panels move out of the way; Escape puts everything back
