@@ -11,7 +11,7 @@ const { Shell, POLL_MS } = require('./state');
 const { appMenuTemplate } = require('./menu');
 const { trayMenuTemplate } = require('./tray');
 const { createAutostart } = require('./autostart');
-const { checkForUpdate } = require('./update');
+const { checkForUpdate, builtinFeed } = require('./update');
 
 const HELPER_DIR = path.join(__dirname, 'helper');
 const MIN = { width: 900, height: 600 };
@@ -188,7 +188,7 @@ async function start(opts = {}) {
   // Update check: check only. It tells the user a newer version exists; it never downloads or installs anything.
   async function runUpdateCheck(manual) {
     try {
-      ctx.update = await checkForUpdate({ feed: opts.updateFeed, keys: opts.updateKeys, fetchFn, currentVersion: app.getVersion() });
+      ctx.update = await checkForUpdate({ feed: opts.updateFeed || cfg.updateFeed || builtinFeed(), keys: opts.updateKeys, fetchFn, currentVersion: app.getVersion() });
       if (manual && !ctx.update.available) await dialog.showMessageBox({ type: 'info', message: 'd.idle watch is up to date.' });
     } catch (e) {
       ctx.updateError = String(e.message || e);
@@ -269,7 +269,7 @@ async function start(opts = {}) {
   let n = 0;
   ctx.timer = setInterval(() => { if (!ctx.gameShown || ++n % 5 === 0) shell.tick(); }, POLL_MS);
   ctx.timer.unref?.();
-  if (cfg.updateCheck !== false && !opts.noUpdate) {
+  if (cfg.updateCheck !== false && !opts.noUpdate && (opts.updateFeed || cfg.updateFeed || builtinFeed())) {
     setTimeout(() => runUpdateCheck(false), opts.updateDelayMs ?? 15000).unref?.();
     setInterval(() => runUpdateCheck(false), UPDATE_EVERY_MS).unref?.();
   }

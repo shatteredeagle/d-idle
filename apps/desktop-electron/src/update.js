@@ -4,9 +4,10 @@
 // github.com, and never follows a redirect (an asset or redirect on another host is refused).
 // Feed shape and manifest rules are the bot updater's (internal/selfupdate, docs/friend-feed.md, docs/self-update-release.md).
 const crypto = require('node:crypto');
+const fs = require('node:fs');
+const path = require('node:path');
 const defaultKeys = require('./update-keys');
 
-const FEED = 'https://updates.birbhub.com';
 const REPO = 'shatteredeagle/d-idle'; // DefaultRepo of internal/selfupdate
 const TAG_PREFIX = 'desktop-v';
 const MAX_LIST = 4 << 20;
@@ -52,7 +53,8 @@ async function getCapped(fetchFn, url, max, host) {
 
 // checkForUpdate resolves to {available:false} or {available:true, version, notes}; it throws on any failure (the
 // caller ignores failures: no feed yet, offline). opts: feed, repo, keys, fetchFn, currentVersion.
-async function checkForUpdate({ feed = FEED, repo = REPO, keys = defaultKeys, fetchFn, currentVersion }) {
+async function checkForUpdate({ feed, repo = REPO, keys = defaultKeys, fetchFn, currentVersion }) {
+  if (!feed) throw new Error('no update feed configured');
   const u = new URL(feed);
   if (u.protocol !== 'https:' && !(u.protocol === 'http:' && (u.hostname === '127.0.0.1' || u.hostname === 'localhost'))) throw new Error('feed must be https');
   if (u.username || u.password || u.search || u.hash) throw new Error('bad feed address');
@@ -79,4 +81,16 @@ async function checkForUpdate({ feed = FEED, repo = REPO, keys = defaultKeys, fe
   return { available: true, version: m.version, notes: String(m.notes || '').slice(0, 600) };
 }
 
-module.exports = { FEED, REPO, TAG_PREFIX, parseVersion, compareVersions, verifySignature, checkForUpdate };
+// builtinFeed reads build/feed.json, written at package time from D2IDLE_UPDATE_FEED (scripts/write-feed.js). The feed
+// host is a deployment value and is not in the repo; without one (and without a "updateFeed" key in config.json) the
+// check is simply off.
+function builtinFeed(file = path.join(__dirname, '..', 'build', 'feed.json')) {
+  try {
+    const v = JSON.parse(fs.readFileSync(file, 'utf8')).feed;
+    return typeof v === 'string' ? v : '';
+  } catch (e) {
+    return '';
+  }
+}
+
+module.exports = { builtinFeed, REPO, TAG_PREFIX, parseVersion, compareVersions, verifySignature, checkForUpdate };

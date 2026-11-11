@@ -15,8 +15,8 @@
     "smoke": "node test/smoke/run.js",
     "icons": "electron scripts/make-icons.js",
     "pack": "electron-builder --dir --publish never",
-    "dist:linux": "electron-builder --linux AppImage deb --publish never",
-    "dist:win": "electron-builder --win nsis portable --publish never"
+    "dist:linux": "node scripts/write-feed.js && electron-builder --linux AppImage deb --publish never",
+    "dist:win": "node scripts/write-feed.js && electron-builder --win nsis portable --publish never"
   },
   "devDependencies": {
     "@electron/fuses": "2.1.3",

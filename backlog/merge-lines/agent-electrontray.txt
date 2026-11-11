@@ -1,0 +1,3 @@
+BACKLOG: electrontray (TASK-290): Electron app tray icon, autostart (--hidden), hide-to-tray and a check-only signed update check; needs real-desktop verification
+INDEX: docs/desktop-electron.md - now also covers the tray, autostart, hide-to-tray and the update check (TASK-290)
+CHANGELOG: Desktop app: tray icon with page shortcuts and a reachability status, start with the system, hide to tray, and a check-only update notice from the signed feed

@@ -47,6 +47,9 @@ jobs:
           node-version: "24"
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: node node_modules/electron/install.js
+      - run: node scripts/write-feed.js
+        env:
+          D2IDLE_UPDATE_FEED: ${{ vars.D2IDLE_UPDATE_FEED }}
       - run: npx electron-builder ${{ matrix.args }} --publish never
       - run: cd dist && sha256sum *.AppImage *.deb *.exe 2>/dev/null | tee SHA256SUMS
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
