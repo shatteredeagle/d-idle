@@ -1,6 +1,6 @@
 {
   "schema": "watch.panel/1",
-  "version": 2,
+  "version": 3,
   "id": "video",
   "title": "Game",
   "band": "stage",
@@ -14,6 +14,7 @@
   "poll": 0,
   "unlock": "",
   "skeleton": 0,
+  "fit": true,
   "owner": "uishell2",
   "doc": "docs/watch-screen.md"
 }

@@ -85,3 +85,21 @@ func TestCheckConsole(t *testing.T) {
 		t.Fatalf("got %v", bad)
 	}
 }
+
+func TestCheckVideoFit(t *testing.T) {
+	page := func(rows string) string {
+		return `<div class="d-shell"><section class="d-card d-panel" data-panel="video" data-size="m" data-state="ready" data-fit="1"` + rows + `></section></div>`
+	}
+	saved := pagePanels
+	defer func() { pagePanels = saved }()
+	pagePanels = map[string][]string{}
+	for rows, bad := range map[string]bool{` data-rows="13"`: false, ` data-rows="12"`: false, ` data-rows="17"`: true, ` data-rows="9"`: true, ``: true} {
+		got := checkDump("watch-1920-dark.html", page(rows))
+		if (len(got) > 0) != bad {
+			t.Errorf("rows %q: %v", rows, got)
+		}
+	}
+	if got := checkDump("watch-390-dark.html", page(``)); len(got) != 0 {
+		t.Errorf("a flow breakpoint has no fitted rows: %v", got)
+	}
+}
