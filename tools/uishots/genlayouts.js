@@ -50,4 +50,13 @@ const o = blank(); Object.keys(BPS).forEach((bp) => { o.breakpoints[bp].panels =
   const done = [];
   for (const p of ps) { ctx.x.place(done, p); done.push(p); }
 }
+// wide: the game picture is 4:3, so six columns of a 1920 px window need 13 rows (9 at laptop width); its row
+// neighbours grow with it and everything below moves down by the difference
+{
+  const ps = o.breakpoints.wide.panels, v = ps.find((p) => p.id === 'video'), grow = 13 - v.rowSpan, end = v.row + v.rowSpan;
+  for (const p of ps) {
+    if (p.row >= end) p.row += grow;
+    else if (p.row + p.rowSpan === end) p.rowSpan += grow; // ends level with the picture: stays level
+  }
+}
 fs.writeFileSync(out + 'layout.json', JSON.stringify(o, null, 2) + '\n');

@@ -782,7 +782,7 @@
           "col": 1,
           "row": 5,
           "colSpan": 6,
-          "rowSpan": 9,
+          "rowSpan": 13,
           "band": "stage",
           "collapsed": false,
           "order": 3
@@ -792,7 +792,7 @@
           "col": 7,
           "row": 5,
           "colSpan": 3,
-          "rowSpan": 9,
+          "rowSpan": 13,
           "band": "stage",
           "collapsed": false,
           "order": 4
@@ -812,7 +812,7 @@
           "col": 10,
           "row": 10,
           "colSpan": 3,
-          "rowSpan": 4,
+          "rowSpan": 8,
           "band": "grid",
           "collapsed": false,
           "order": 6
@@ -820,7 +820,7 @@
         {
           "id": "now",
           "col": 1,
-          "row": 14,
+          "row": 18,
           "colSpan": 6,
           "rowSpan": 6,
           "band": "grid",
@@ -830,7 +830,7 @@
         {
           "id": "orders-map",
           "col": 7,
-          "row": 14,
+          "row": 18,
           "colSpan": 6,
           "rowSpan": 10,
           "band": "grid",
@@ -840,7 +840,7 @@
         {
           "id": "tally",
           "col": 1,
-          "row": 20,
+          "row": 24,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
@@ -850,7 +850,7 @@
         {
           "id": "currency",
           "col": 1,
-          "row": 24,
+          "row": 28,
           "colSpan": 3,
           "rowSpan": 2,
           "band": "side",
@@ -860,7 +860,7 @@
         {
           "id": "queue",
           "col": 4,
-          "row": 20,
+          "row": 24,
           "colSpan": 3,
           "rowSpan": 3,
           "band": "grid",
@@ -870,7 +870,7 @@
         {
           "id": "thoughts",
           "col": 4,
-          "row": 23,
+          "row": 27,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
@@ -880,7 +880,7 @@
         {
           "id": "chronicle",
           "col": 1,
-          "row": 27,
+          "row": 31,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -890,7 +890,7 @@
         {
           "id": "journal",
           "col": 7,
-          "row": 24,
+          "row": 28,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -900,7 +900,7 @@
         {
           "id": "diary",
           "col": 1,
-          "row": 32,
+          "row": 36,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
@@ -910,7 +910,7 @@
         {
           "id": "quests",
           "col": 4,
-          "row": 32,
+          "row": 36,
           "colSpan": 3,
           "rowSpan": 5,
           "band": "grid",
@@ -920,7 +920,7 @@
         {
           "id": "cards",
           "col": 7,
-          "row": 29,
+          "row": 33,
           "colSpan": 3,
           "rowSpan": 3,
           "band": "grid",
@@ -930,7 +930,7 @@
         {
           "id": "bestiary",
           "col": 10,
-          "row": 29,
+          "row": 33,
           "colSpan": 3,
           "rowSpan": 5,
           "band": "grid",
@@ -940,7 +940,7 @@
         {
           "id": "atlas",
           "col": 1,
-          "row": 36,
+          "row": 40,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
@@ -950,7 +950,7 @@
         {
           "id": "locked",
           "col": 4,
-          "row": 37,
+          "row": 41,
           "colSpan": 3,
           "rowSpan": 4,
           "band": "grid",
@@ -960,7 +960,7 @@
         {
           "id": "rules",
           "col": 7,
-          "row": 34,
+          "row": 38,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -970,7 +970,7 @@
         {
           "id": "alerts",
           "col": 1,
-          "row": 41,
+          "row": 45,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -980,7 +980,7 @@
         {
           "id": "spend",
           "col": 7,
-          "row": 38,
+          "row": 42,
           "colSpan": 6,
           "rowSpan": 3,
           "band": "grid",

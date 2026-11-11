@@ -1,11 +1,13 @@
 // Game video (stage band): an MJPEG <img> shown only when the server offers a stream (/api/config frameUrl). It
 // reconnects when the stream ends or is refused (viewer limit, capture restart) with a backoff of 1 s, 2 s ... capped
 // at 15 s; the token, if any, rides along from the page address. Collapse is remembered, full screen asks the panel.
+// The picture always fits its box: it keeps 4:3, scales to the width and the height the cell gives and sits centred.
 export function backoff(tries) { return Math.min(15000, 1000 * tries); }
 
 export function mount(root, ctx) {
   const url = ctx.config && ctx.config.frameUrl;
   if (!url) { ctx.hide(true); return {}; }
+  root.dataset.aspect = '4/3'; // the layout editor keeps the cell in the picture's shape (panel version 2)
   const frame = ctx.el('div', 'frame');
   const shot = ctx.el('img', 'shot');
   shot.alt = 'live game window';

@@ -93,6 +93,101 @@ type markRec struct {
 	ID    uint32 `json:"id"`
 	Print string `json:"print"` // class/quality/ilvl: a reused id of another item does not inherit the mark
 	Mark  string `json:"mark"`
+	// Class and the grid cell let Reconcile find the item again when its id changed (a game restart gives new ids)
+	// or its print changed (identified). Marks saved before this field existed have Class 0 and match by print only.
+	Class int    `json:"class,omitempty"` // base row + 1, 0 for a legacy mark
+	ILvl  int    `json:"ilvl,omitempty"`
+	Where string `json:"where,omitempty"`
+	GX    int    `json:"gx,omitempty"`
+	GY    int    `json:"gy,omitempty"`
+}
+
+func newMarkRec(u d2.Unit, mark string) markRec {
+	m := markRec{ID: u.ID, Print: fingerprint(u), Mark: mark, Class: u.Class + 1}
+	if u.Item != nil {
+		m.ILvl = u.Item.ILvl
+		m.Where, m.GX, m.GY = u.Item.Where.String(), u.Item.GX, u.Item.GY
+	}
+	return m
+}
+
+// Reconcile re-attaches the player's marks to the items they were put on after an item id changed (item ids belong
+// to one game session: a restart renumbers the whole pack, live 2026-11-11: marked items stayed in the bag, never
+// sold) or after the print changed (identify). A mark whose id is gone is moved to the unmarked item of the same
+// base at the same grid cell; marks of items that are no longer carried stay until the player clears them. It also
+// follows an item that moved in the pack. Returns the number of marks that changed.
+func (d *Desk) Reconcile(items []d2.Unit) int {
+	if d == nil {
+		return 0
+	}
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	byID := map[uint32]int{}
+	for i, u := range items {
+		if u.Item != nil {
+			byID[u.ID] = i
+		}
+	}
+	taken := map[int]bool{}
+	var orphans []int
+	changed := 0
+	for mi := range d.st.Marks {
+		m := &d.st.Marks[mi]
+		if i, ok := byID[m.ID]; ok && markFits(*m, items[i]) {
+			taken[i] = true
+			n := newMarkRec(items[i], m.Mark)
+			if n != *m {
+				*m = n
+				changed++
+			}
+			continue
+		}
+		orphans = append(orphans, mi)
+	}
+	for _, mi := range orphans {
+		m := &d.st.Marks[mi]
+		for i, u := range items {
+			if taken[i] || u.Item == nil || !markFits(*m, u) || u.Item.Where.String() != m.Where || u.Item.GX != m.GX || u.Item.GY != m.GY {
+				continue
+			}
+			taken[i] = true
+			*m = newMarkRec(u, m.Mark)
+			changed++
+			break
+		}
+	}
+	if changed > 0 {
+		_ = d.saveLocked()
+	}
+	return changed
+}
+
+// markFits: the item is still the one the mark was put on. The base must agree; the print may differ once it is
+// identified, never for a legacy mark (Class 0) which has only the print.
+func markFits(m markRec, u d2.Unit) bool {
+	if m.Class == 0 {
+		return m.Print == fingerprint(u)
+	}
+	return m.Class == u.Class+1 && (m.Print == fingerprint(u) || u.Item != nil && m.ILvl == u.Item.ILvl)
+}
+
+// Forget drops the mark of an item that left the pack (sold).
+func (d *Desk) Forget(id uint32) {
+	if d == nil {
+		return
+	}
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	kept := d.st.Marks[:0]
+	for _, m := range d.st.Marks {
+		if m.ID != id {
+			kept = append(kept, m)
+		}
+	}
+	if len(kept) != len(d.st.Marks) {
+		d.st.Marks = kept
+		_ = d.saveLocked()
+	}
 }
 
 // Pin is a slot the player filled; the bot's own gear logic leaves it alone until the player unpins it. A pin has no
@@ -233,7 +328,7 @@ func (d *Desk) MarkOf(u d2.Unit) string {
 	d.mu.Lock()
 	defer d.mu.Unlock()
 	for _, m := range d.st.Marks {
-		if m.ID == u.ID && m.Print == fingerprint(u) {
+		if m.ID == u.ID && markFits(m, u) {
 			return m.Mark
 		}
 	}
@@ -313,7 +408,7 @@ func (d *Desk) SetMark(id uint32, mark string) error {
 	}
 	d.st.Marks = kept
 	if mark != "" {
-		d.st.Marks = append(d.st.Marks, markRec{ID: id, Print: fingerprint(u), Mark: mark})
+		d.st.Marks = append(d.st.Marks, newMarkRec(u, mark))
 	}
 	return d.saveLocked()
 }
@@ -589,6 +684,7 @@ func (d *Desk) Pending() int {
 	inTown := d.heroInTown()
 	d.mu.Lock()
 	defer d.mu.Unlock()
+	d.expireStaleLocked()
 	n := 0
 	for _, r := range d.st.Queue {
 		if r.State == StateQueued && (inTown || !isErrand(r.kind())) {
@@ -607,16 +703,24 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 	for ctx.Err() == nil {
 		inTown := d.heroInTown() // the snapshot callback runs unlocked
 		d.mu.Lock()
+		d.expireStaleLocked()
 		i := -1
 		for j, r := range d.st.Queue {
-			if r.State == StateQueued && d.runnableLocked(r, inTown) {
+			if r.State == StateQueued && d.runnableLocked(r, inTown) && (i < 0 || priority(r.kind()) < priority(d.st.Queue[i].kind())) {
 				i = j
-				break
 			}
 		}
 		if i < 0 {
 			d.mu.Unlock()
 			break
+		}
+		if d.st.Queue[i].kind() == KindIdentify { // all queued identifies in one inventory-open
+			sv := d.sv
+			d.mu.Unlock()
+			if d.runIdentifyBatch(ctx, sv, &out) {
+				break
+			}
+			continue
 		}
 		r, eq, tr, sv := d.st.Queue[i], d.eq, d.tr, d.sv
 		d.st.Queue[i].State = StateDoing
@@ -632,8 +736,6 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			if s := d.snap(); err == nil && s != nil && s.Player != nil {
 				hx, hy = s.Player.X, s.Player.Y
 			}
-		case KindIdentify:
-			err = sv.PlayerIdentify(ctx, r.ID)
 		case KindBuyID:
 			result, err = sv.BuyIdentify(ctx, r.Count)
 		case KindCain:
@@ -663,8 +765,6 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			case KindTrash:
 				d.noteTrashedLocked(r, hx, hy)
 				out = append(out, fmt.Sprintf("trash %s done, on the ground and ignored by the looter", r.Name))
-			case KindIdentify:
-				out = append(out, fmt.Sprintf("identify %s done", r.Name))
 			case KindBuyID, KindCain:
 				out = append(out, fmt.Sprintf("%s done: %s", r.kind(), result))
 			default:
@@ -763,23 +863,24 @@ const ViewSchema = 5
 
 // View is the inventory page's data.
 type View struct {
-	Schema    int                  `json:"schema"`
-	InTown    bool                 `json:"inTown"`
-	Class     string               `json:"class,omitempty"`
-	Gold      int                  `json:"gold"`
-	StashGold int                  `json:"stashGold"`
-	Equipment map[string]*ItemView `json:"equipment"`
-	Backpack  []ItemView           `json:"backpack"`
-	Stash     []ItemView           `json:"stash"`
-	Belt      []ItemView           `json:"belt"`
-	Cube      []ItemView           `json:"cube,omitempty"`
-	Pins      []Pin                `json:"pins"`
-	Queue     []Request            `json:"queue"`
-	Recent    []Request            `json:"recent"`
-	Note      string               `json:"note,omitempty"`
-	Prompt    string               `json:"prompt,omitempty"`   // docs/gear-policy.md: tells the player equipment is theirs to manage
-	Identify  *IdentifyView        `json:"identify,omitempty"` // schema 5: the identify commands' state; nil = no town backend
-	Merc      *MercView            `json:"merc,omitempty"`     // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
+	Schema      int                  `json:"schema"`
+	InTown      bool                 `json:"inTown"`
+	Class       string               `json:"class,omitempty"`
+	Gold        int                  `json:"gold"`
+	SellPending int                  `json:"sellPending,omitempty"` // backpack items marked "sell" that the next town visit sells
+	StashGold   int                  `json:"stashGold"`
+	Equipment   map[string]*ItemView `json:"equipment"`
+	Backpack    []ItemView           `json:"backpack"`
+	Stash       []ItemView           `json:"stash"`
+	Belt        []ItemView           `json:"belt"`
+	Cube        []ItemView           `json:"cube,omitempty"`
+	Pins        []Pin                `json:"pins"`
+	Queue       []Request            `json:"queue"`
+	Recent      []Request            `json:"recent"`
+	Note        string               `json:"note,omitempty"`
+	Prompt      string               `json:"prompt,omitempty"`   // docs/gear-policy.md: tells the player equipment is theirs to manage
+	Identify    *IdentifyView        `json:"identify,omitempty"` // schema 5: the identify commands' state; nil = no town backend
+	Merc        *MercView            `json:"merc,omitempty"`     // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
 }
 
 // Merc states of MercView.State.
@@ -812,7 +913,6 @@ func (d *Desk) View() View {
 	// through the leveler and d.mu is not reentrant (live deadlock 2026-11-10: the whole bot froze).
 	d.mu.Lock()
 	c, eq, sv := d.c, d.eq, d.sv
-	marks := append([]markRec(nil), d.st.Marks...)
 	v := View{Schema: ViewSchema, Equipment: map[string]*ItemView{}, Pins: append([]Pin{}, d.st.Pins...), Queue: append([]Request{}, d.st.Queue...), Recent: append([]Request{}, d.st.Recent...)}
 	d.mu.Unlock()
 	sort.Slice(v.Pins, func(i, j int) bool { return v.Pins[i].Slot < v.Pins[j].Slot })
@@ -825,6 +925,12 @@ func (d *Desk) View() View {
 	if c.Snap != nil {
 		s = c.Snap()
 	}
+	if s != nil && s.Inventory != nil {
+		d.Reconcile(s.Inventory.Items)
+	}
+	d.mu.Lock()
+	marks := append([]markRec(nil), d.st.Marks...)
+	d.mu.Unlock()
 	if s != nil && s.Player != nil {
 		v.InTown, v.Class = s.Player.InTown(), s.Player.Class.String()
 	} else {
@@ -858,7 +964,7 @@ func (d *Desk) View() View {
 			return iv
 		}
 		for _, m := range marks {
-			if m.ID == it.ID && m.Print == fingerprint(u) {
+			if m.ID == it.ID && markFits(m, u) {
 				iv.Mark = m.Mark
 			}
 		}
@@ -912,7 +1018,11 @@ func (d *Desk) View() View {
 	}
 	v.Merc = mercView(data.Merc, decorate)
 	for _, it := range data.Inventory {
-		v.Backpack = append(v.Backpack, decorate(it, "pack"))
+		iv := decorate(it, "pack")
+		if iv.Mark == MarkSell {
+			v.SellPending++
+		}
+		v.Backpack = append(v.Backpack, iv)
 	}
 	for _, it := range data.Stash {
 		v.Stash = append(v.Stash, decorate(it, "stash"))

@@ -72,3 +72,57 @@ func TestNeverSellReasonIsClassIndependent(t *testing.T) {
 		t.Error("an unknown item must be refused")
 	}
 }
+
+// reconMarks is a marks store whose ids are stale: Reconcile moves them to the item at the same cell, the way
+// invdesk.Desk does after a game restart.
+type reconMarks struct {
+	mark   string
+	cell   [2]int
+	id     uint32
+	forgot []uint32
+}
+
+func (m *reconMarks) MarkOf(u d2.Unit) string {
+	if u.ID == m.id {
+		return m.mark
+	}
+	return ""
+}
+
+func (m *reconMarks) Reconcile(items []d2.Unit) int {
+	for _, u := range items {
+		if u.Item != nil && u.Item.Where == d2.ContInventory && u.Item.GX == m.cell[0] && u.Item.GY == m.cell[1] {
+			m.id = u.ID
+		}
+	}
+	return 1
+}
+
+func (m *reconMarks) Forget(id uint32) { m.forgot = append(m.forgot, id) }
+
+// A marked item is sold by a visit whose plan did not ask for a sale (a kit or potion trip), the pickit's junk stays,
+// and the mark follows the item to its new id (live 2026-11-11: marked items stayed in the pack). Two classes.
+func TestSellMarksRunOnAnyTripAndSurviveRenumbering(t *testing.T) {
+	geartest.Need(t)
+	for _, tc := range []struct {
+		name  string
+		class d2.Class
+	}{{"paladin", d2.Paladin}, {"sorceress", d2.Sorceress}} {
+		t.Run(tc.name, func(t *testing.T) {
+			r := earlyRig(t, tc.class, 9)
+			a := r.W.Add("hp1", d2.ContInventory, 0, 0)
+			r.W.Add("hp1", d2.ContInventory, 1, 0)
+			m := &reconMarks{mark: "sell", cell: [2]int{0, 0}, id: a.ID + 1000} // the id the mark was saved with
+			r.T.SetItemMarks(m)
+			if _, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true}); err != nil {
+				t.Fatal(err)
+			}
+			if n := countCode(r, "hp1"); n != 1 {
+				t.Errorf("%d potions left, want 1 (the marked one sold on a trip that did not ask for a sale)", n)
+			}
+			if len(m.forgot) != 1 {
+				t.Errorf("forgot %v, want the sold item's mark dropped", m.forgot)
+			}
+		})
+	}
+}

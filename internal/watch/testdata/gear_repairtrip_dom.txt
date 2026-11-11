@@ -1,0 +1,30 @@
+cancelled-auto-paladin: button "Repair now" off state=cancelled why="the last repair request failed or was cancelled by the bot: try again in 20 min"; line "Repair cancelled: still short of gold after farming (need 300, have 120)" state=cancelled
+cancelled-auto-sorceress: button "Repair now" off state=cancelled why="the last repair request failed or was cancelled by the bot: try again in 20 min"; line "Repair cancelled: still short of gold after farming (need 300, have 120)" state=cancelled
+cancelled-paladin: button "Repair now" on state=cancelled; line "Repair cancelled." state=cancelled
+cancelled-sorceress: button "Repair now" on state=cancelled; line "Repair cancelled." state=cancelled
+disabled-pact-paladin: button "Repair now" off state=disabled why="a Pact forbids repairs"; line "a Pact forbids repairs" state=disabled
+disabled-pact-sorceress: button "Repair now" off state=disabled why="a Pact forbids repairs"; line "a Pact forbids repairs" state=disabled
+disabled-undamaged-paladin: button "Repair now" off state=disabled why="nothing worn is damaged"; line "nothing worn is damaged" state=disabled
+disabled-undamaged-sorceress: button "Repair now" off state=disabled why="nothing worn is damaged"; line "nothing worn is damaged" state=disabled
+done-paladin: button "Repair now" on state=done; line "Repair done: durability 40% to 100%." state=done
+done-sorceress: button "Repair now" on state=done; line "Repair done: durability 40% to 100%." state=done
+failed-paladin: button "Repair now" off state=failed why="the last repair request failed or was cancelled by the bot: try again in 20 min"; line "Repair failed: repair not confirmed" state=failed
+failed-sorceress: button "Repair now" off state=failed why="the last repair request failed or was cancelled by the bot: try again in 20 min"; line "Repair failed: repair not confirmed" state=failed
+farm-paladin: button "Farm until repair" on state=farm; line "need 160 more gold (have 100, estimate 200)" state=farm
+farm-sorceress: button "Farm until repair" on state=farm; line "need 160 more gold (have 100, estimate 200)" state=farm
+farming-paladin: button "Cancel" on state=farming; line "farming for repair: 140 of 300" state=farming
+farming-sorceress: button "Cancel" on state=farming; line "farming for repair: 140 of 300" state=farming
+going-paladin: button "Cancel repair" on state=going; line "Repair trip: going home." state=going
+going-sorceress: button "Cancel repair" on state=going; line "Repair trip: going home." state=going
+queued-paladin: button "Cancel repair" on state=queued; line "Repair queued." state=queued
+queued-sorceress: button "Cancel repair" on state=queued; line "Repair queued." state=queued
+ready-paladin: button "Repair now" on state=ready; line (hidden) state=ready
+ready-sorceress: button "Repair now" on state=ready; line (hidden) state=ready
+repairing-paladin: button "Cancel repair" on state=repairing; line "Repair trip: repairing in town." state=repairing
+repairing-sorceress: button "Cancel repair" on state=repairing; line "Repair trip: repairing in town." state=repairing
+returning-paladin: button "Cancel repair" on state=returning; line "Repair trip: returning to the field." state=returning
+returning-sorceress: button "Cancel repair" on state=returning; line "Repair trip: returning to the field." state=returning
+waiting-paladin: button "Cancel repair" on state=waiting; line "Repair queued: waiting for a safe moment (finishing the pack first, 12 s of 60)." state=waiting
+waiting-sorceress: button "Cancel repair" on state=waiting; line "Repair queued: waiting for a safe moment (finishing the pack first, 12 s of 60)." state=waiting
+old bot, requested: button "Cancel repair" on state=requested; line "Repair requested: done at the next town visit." state=requested
+old bot, idle: button "Repair now" on state=idle; line (hidden) state=idle

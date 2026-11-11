@@ -1,11 +1,11 @@
 ---
 id: TASK-313
 title: 'qprofile: merge queue profile and safe speedups'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T17:14:00Z'
-updated_date: '2026-11-11T17:16:00Z'
+updated_date: '2026-11-11T17:56:00Z'
 labels:
   - ops
   - research
