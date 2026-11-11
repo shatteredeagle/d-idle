@@ -591,7 +591,7 @@ func (d *Desk) Pending() int {
 	defer d.mu.Unlock()
 	n := 0
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued && d.runnableLocked(r, inTown) {
+		if r.State == StateQueued && (inTown || !isErrand(r.kind())) {
 			n++
 		}
 	}

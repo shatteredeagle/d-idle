@@ -11,14 +11,14 @@ import (
 	"d2lod-bot/internal/d2"
 )
 
-// Compatibility of /api/inventory (docs/ui-design-system.md section 0, docs/inventory-actions.md): schema 3 and 4 only add (the view_schema3 goldens are kept as history; schema 4 adds the merc block).
+// Compatibility of /api/inventory (docs/ui-design-system.md section 0, docs/inventory-actions.md): schema 3, 4 and 5 only add (the view_schema3 and view_schema4 goldens are kept as history; schema 4 added the merc block, schema 5 the identify block, see identify_test.go).
 // The golden files are the view of a fixed scenario with a queued, a done and a cancelled request; UPDATE=1 rewrites
 // them, and an existing one must never be edited by hand to make a test pass (add a field, do not rename one).
 var v2Keys = []string{"schema", "inTown", "class", "gold", "stashGold", "equipment", "backpack", "stash", "belt", "pins", "queue", "recent"}
 var v2ItemKeys = []string{"id", "code"}
 var v2RequestKeys = []string{"id", "slot", "name", "state", "at"}
 
-func TestViewSchema4Golden(t *testing.T) {
+func TestViewSchema5Golden(t *testing.T) {
 	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
 		d, _, _ := trashRig(t, class, field)
 		now := time.Unix(1_800_000_000, 0)
@@ -45,7 +45,7 @@ func TestViewSchema4Golden(t *testing.T) {
 			t.Fatal(err)
 		}
 		b = append(b, '\n')
-		path := filepath.Join("testdata", "view_schema4_"+class.String()+".json")
+		path := filepath.Join("testdata", "view_schema5_"+class.String()+".json")
 		if os.Getenv("UPDATE") != "" {
 			if err := os.WriteFile(path, b, 0o644); err != nil {
 				t.Fatal(err)
