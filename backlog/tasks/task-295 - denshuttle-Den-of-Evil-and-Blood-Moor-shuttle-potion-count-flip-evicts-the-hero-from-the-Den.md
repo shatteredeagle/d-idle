@@ -35,5 +35,5 @@ Sandbox hour 2026-11-11: 106 zone entries, 81 of them Den/Blood Moor bounces. Do
 <!-- AC:BEGIN -->
 - [x] #1 Cause explained with log evidence for 5 cycles (docs/denshuttle.md)
 - [x] #2 Den entry and stay potion counts have a gap, both classes tested
-- [ ] #3 Whole-repo gate green on the worker host
+- [x] #3 Whole-repo gate green on the worker host
 <!-- AC:END -->
