@@ -100,6 +100,7 @@
 | maptrail | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/nav/covview.go`<br>`internal/nav/covview_test.go`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/senses_stitch_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/watch/testdata/senses-coverage.json`<br>`internal/nav/roam.go`<br>`cmd/d2bot/sensesfeed.go`<br>`cmd/d2bot/sensesfeed_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | maptrail2 | proposed | - | `internal/senses/coverage.go`<br>`internal/senses/trail_test.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-coverage.json`<br>`docs/senses-map.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
+| repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
@@ -157,6 +158,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 7978f296 11-11 12:12 `Merge agent/repairtrip: TASK-303 repairtrip: Repair now as a safe-moment portal trip; Farm until repair when gold is short` (repairtrip)
+- 92d0d0d0 11-11 12:11 `Merge branch 'main' into repairtrip` (-)
 - 8459908f 11-11 12:05 `Merge agent/processrules: TASK-310 processrules: rules-short, brief rules, deploy windows, research WARN, digests, coordinator checklist` (processrules)
 - b48e7488 11-11 12:05 `Merge branch 'main' into processrules` (-)
 - 2460c828 11-11 11:59 `Merge agent/processrules: sync main` (processrules)
@@ -165,6 +168,4 @@
 - 5a7a627d 11-11 11:48 `Merge agent/usageview: TASK-309 usageview: tools/usage/usage.py, docs/usage.md, 7-day usage record` (usageview)
 - 8ca3d503 11-11 11:47 `Merge branch 'main' into usageview` (-)
 - f5ed8308 11-11 11:38 `Merge agent/autodone: TASK-253 autodone: drift report as a CI warning, live-checks closing rule automatic (auto-Done on, catch-up applied)` (autodone)
-- 57a8e19f 11-11 11:37 `Merge branch 'main' into autodone` (-)
-- c8f4e5b9 11-11 11:31 `Merge agent/sharedgen: TASK-255 sharedgen: shared files generated at merge (BACKLOG, CHANGELOG, OWNERS block, STATUS block, INDEX), dry run, agents write no shared-file lines` (sharedgen)
 <!-- statusgen:end -->
