@@ -1,0 +1,86 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "head",
+   "name": "Cap",
+   "dur": 80,
+   "max": 100,
+   "pct": 80
+  },
+  {
+   "slot": "rhand",
+   "name": "Staff",
+   "dur": 40,
+   "max": 100,
+   "pct": 40
+  },
+  {
+   "slot": "torso",
+   "name": "Robe",
+   "dur": 70,
+   "max": 100,
+   "pct": 70
+  }
+ ],
+ "estimate": 200,
+ "request": {
+  "state": "requested",
+  "at": 1800000000,
+  "kind": "farm",
+  "phase": "farming",
+  "farmLegs": 1,
+  "have": 140,
+  "target": 300,
+  "area": "Stony Field"
+ },
+ "trip": {
+  "state": "farming",
+  "button": {
+   "action": "cancel",
+   "label": "Cancel",
+   "enabled": true
+  },
+  "line": "farming for repair: 140 of 300",
+  "gold": 140,
+  "estimate": 200,
+  "need": 260,
+  "kind": "farm",
+  "maxTrips": 2,
+  "progress": {
+   "have": 140,
+   "target": 300,
+   "area": "Stony Field"
+  }
+ }
+}

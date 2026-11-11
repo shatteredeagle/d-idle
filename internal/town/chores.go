@@ -209,6 +209,9 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 			return false
 		}
 		if est := t.repairEstimate(s); s.Player.Gold < est {
+			if requested && t.repairStashGap(s, est) > 0 && s.Player.Gold+s.Player.StashGold >= est {
+				return true // the stash pays the rest: repair() withdraws it first
+			}
 			if requested {
 				g.Short(est-s.Player.Gold, est)
 				t.e.Log.Info("repair requested but gold is short", "gold", s.Player.Gold, "estimate", est)
@@ -218,6 +221,23 @@ func (t *Town) needRepair(s *d2.Snapshot) bool {
 		return true
 	}
 	return ok && t.repairDue(s, pct) && !t.repairLatched(s, pct) && s.Player.Gold >= t.repairEstimate(s)
+}
+
+// goldNeeder is the optional part of the repair gate that knows how much gold a repair wants for an estimate (the
+// estimate is a lower bound: estimate x the margin of modes.json).
+type goldNeeder interface{ NeedGold(estimate int) int }
+
+// repairStashGap is the gold to take out of the stash for a requested repair: up to the gate's need (the estimate x the
+// margin, else the estimate), never more than the stash holds. 0 when nothing is to be moved or the input cannot move gold.
+func (t *Town) repairStashGap(s *d2.Snapshot, est int) int {
+	if _, can := t.e.In.(goldMover); !can || t.repairGate == nil || s.Player.StashGold <= 0 {
+		return 0
+	}
+	need := est
+	if g, ok := t.repairGate.(goldNeeder); ok {
+		need = max(g.NeedGold(est), est)
+	}
+	return min(max(need-s.Player.Gold, 0), s.Player.StashGold)
 }
 
 // repairTripAllowed: without a gate the durability trip is as before; with one, a repair trip is made only for a mode
@@ -378,6 +398,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		return nil
 	}
 
+	marked := t.markedSell(s)
+	junkToo := plan.Sell && t.tune().SellJunk != 0
 	steps := []struct {
 		name    string
 		enabled bool
@@ -387,7 +409,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"identify", plan.Identify, t.identifyNeeded, func() error { return t.identify(ctx, a, &rep) }},
 		// before sell: a naked character wears what it found instead of selling it (G1 attempt 6)
 		{"equip", true, t.needEquipFound, func() error { _, err := t.EquipFound(ctx); return err }},
-		{"sell", plan.Sell && t.tune().SellJunk != 0, t.needSell, func() error { return t.sell(ctx, a, &rep) }},
+		// the player's sell marks always run, whatever the trip was for (live 2026-11-11: potion and kit trips skipped it)
+		{"sell", plan.Sell && t.tune().SellJunk != 0 || marked > 0, t.needSell, func() error { return t.sellVisit(ctx, a, &rep, marked, junkToo) }},
 		// before shop: the bow is the Amazon's only attack, potions are cheap to skip (live i3: shop spent 450 of 500 gold first)
 		{"ammo", plan.Ammo, t.ammoTodo, func() error { return t.buyAmmo(ctx, a, &rep) }},
 		// the repair vendor's chores run back to back so his window opens once per trip. The belt purchase keeps its own
@@ -595,6 +618,35 @@ func (t *Town) logKit(rep *ChoreReport, err error) {
 		"beltSlots", st.Slots, "tp", tp, "tome", tome)
 }
 
+// sellVisit runs the sell chore and logs what the player's marks came to: marked in the pack at the start, sold, left.
+// junkToo false: the trip did not ask for the pickit's junk, only the marked items are sold.
+func (t *Town) sellVisit(ctx context.Context, a *Act, rep *ChoreReport, marked int, junkToo bool) error {
+	sold0 := rep.Sold
+	t.sellMarksOnly = !junkToo
+	defer func() { t.sellMarksOnly = false }()
+	err := t.sell(ctx, a, rep)
+	left, reason := 0, ""
+	if s, e := t.current(); e == nil {
+		left = t.markedSell(s)
+	}
+	switch {
+	case err != nil:
+		reason = err.Error()
+	case left > 0:
+		reason = "no vendor of this act would buy them"
+	}
+	t.e.Log.Info(fmt.Sprintf("sell: %d marked, %d sold, %d not sold (%s)", marked, rep.Sold-sold0, left, orNone(reason)),
+		"marked", marked, "sold", rep.Sold-sold0, "notSold", left)
+	return err
+}
+
+func orNone(s string) string {
+	if s == "" {
+		return "none"
+	}
+	return s
+}
+
 // sell visits the act's vendors in order until nothing sellable is left.
 func (t *Town) sell(parent context.Context, a *Act, rep *ChoreReport) error {
 	// One sell chore never takes longer than SellMaxS (a vendor click loop that does not converge must not eat the
@@ -665,6 +717,20 @@ func (t *Town) repair(ctx context.Context, a *Act, rep *ChoreReport) error {
 	s0, err := t.current()
 	if err != nil {
 		return err
+	}
+	if t.repairGate != nil && t.repairGate.Requested() {
+		if est := t.repairEstimate(s0); s0.Player.Gold < est {
+			n := t.repairStashGap(s0, est)
+			if n <= 0 {
+				return fmt.Errorf("town: repair needs %d gold, the pack has %d", est, s0.Player.Gold)
+			}
+			if err := t.withdrawAmount(ctx, a, s0, n, "for the repair"); err != nil {
+				return err
+			}
+			if s0, err = t.current(); err != nil {
+				return err
+			}
+		}
 	}
 	g0 := s0.Player.Gold
 	low0, _ := t.lowestDurability(s0)

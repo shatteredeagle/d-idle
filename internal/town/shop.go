@@ -641,6 +641,7 @@ func (t *Town) sellable(s *d2.Snapshot, lay *panel.Layout) []d2.Unit {
 // sellableIf is sellable with the "pack is full" decision made by the caller (MakeRoom forces it).
 func (t *Town) sellableIf(s *d2.Snapshot, full bool) []d2.Unit {
 	var out []d2.Unit
+	t.ReconcileMarks(s)
 	kept := map[string]int{}
 	rvOver := t.rejuvOverCap(s)
 	for _, u := range s.Inventory.Container(d2.ContInventory) {
@@ -657,6 +658,9 @@ func (t *Town) sellableIf(s *d2.Snapshot, full bool) []d2.Unit {
 				out = append(out, u)
 				continue
 			}
+		}
+		if t.sellMarksOnly {
+			continue
 		}
 		v := t.judge.EvaluateUnit(u)
 		if v.NeedID && !u.Item.Identified() {
@@ -794,6 +798,9 @@ func (t *Town) sellTo(ctx context.Context, list []d2.Unit, rep *ChoreReport) (re
 			continue
 		}
 		rep.Sold++
+		if k, ok := t.marks.(markKeeper); ok {
+			k.Forget(u.ID)
+		}
 		rep.Earned += after.Player.Gold - g0
 		t.e.Log.Info("sell: sold", "item", t.nameOf(fresh), "gold", after.Player.Gold-g0)
 	}

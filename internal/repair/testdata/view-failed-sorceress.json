@@ -1,0 +1,82 @@
+{
+ "schema": 2,
+ "mode": "manual",
+ "modes": [
+  {
+   "id": "manual",
+   "label": "Manual: only when you press Repair now",
+   "current": true
+  },
+  {
+   "id": "break",
+   "label": "When an item breaks",
+   "current": false
+  },
+  {
+   "id": "hour",
+   "label": "Every hour",
+   "current": false
+  },
+  {
+   "id": "half",
+   "label": "Every half hour",
+   "current": false
+  },
+  {
+   "id": "always",
+   "label": "Always (every town visit)",
+   "current": false
+  }
+ ],
+ "warnPct": 30,
+ "inTown": false,
+ "gear": [
+  {
+   "slot": "head",
+   "name": "Cap",
+   "dur": 80,
+   "max": 100,
+   "pct": 80
+  },
+  {
+   "slot": "rhand",
+   "name": "Staff",
+   "dur": 40,
+   "max": 100,
+   "pct": 40
+  },
+  {
+   "slot": "torso",
+   "name": "Robe",
+   "dur": 70,
+   "max": 100,
+   "pct": 70
+  }
+ ],
+ "estimate": 200,
+ "request": {
+  "state": "failed",
+  "at": 1800000000,
+  "doneAt": 1800001260,
+  "note": "repair not confirmed",
+  "kind": "repair",
+  "trips": 2,
+  "tripAt": 1800001260,
+  "durBefore": 40,
+  "durAfter": 40
+ },
+ "trip": {
+  "state": "failed",
+  "button": {
+   "action": "none",
+   "label": "Repair now",
+   "enabled": false,
+   "reason": "the last repair request failed or was cancelled by the bot: try again in 20 min"
+  },
+  "line": "Repair failed: repair not confirmed",
+  "gold": 300,
+  "estimate": 200,
+  "need": 260,
+  "maxTrips": 2
+ }
+}

@@ -720,6 +720,9 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - sharedgen: generate STATUS block, BACKLOG and CHANGELOG at merge (TASK-255, merged 2026-11-11, acceptance 4 of 5): Offline: unit tests, merge.sh case 19 and a rehearsal on a scratch bare repo; not verified live <!--sg:agent/sharedgen-->
 - livechecks: docs/live-checks.md and the closing rule (TASK-253, merged 2026-11-11, acceptance 3 of 3): Auto-Done on in the worker; scan applied; offline tests; live-check rows are unverified by nature <!--sg:agent/autodone-->
 - processrules: agent sizing, brief rules, deploy windows, research hygiene, efficiency checklist (TASK-310, merged 2026-11-11, acceptance 5 of 5): rules-short.md, brief template, dispatcher brief (public and ops), 9 ops agent definitions, deploy-window.sh + offline test, research-consumer WARN in check.py, 7 digests, coordinator-efficiency.md. Offline, not verified live. <!--sg:agent/processrules-->
+- TASK-303 repairtrip: Repair now is a trip (safe moment, portal or walk home, smith, back) and Farm until repair; button from live gold; watch.repair schema 2; offline only, live checks in docs/repair.md <!--sg:agent/repairtrip-->
+- TASK-308 sellmarks: player sell marks follow renumbered items (game restart), sell chore always runs for marks, per-visit sell log line, pending count on the Inventory page <!--sg:agent/sellmarks-->
+- uiedit2 (TASK-306): the game picture fits and centres in its panel and is aspect-locked in Edit layout; Hero now, Up next and every other card can be moved, resized and hidden or shown <!--sg:agent/uiedit2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

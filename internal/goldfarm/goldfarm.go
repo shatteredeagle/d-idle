@@ -45,6 +45,7 @@ type View struct {
 	Reached bool   `json:"reached,omitempty"` // Have >= Want: still farming until told to stop
 	Note    string `json:"note,omitempty"`    // a hold reason, or why the order ended by itself
 	Text    string `json:"text"`              // the one-line status for the button
+	For     string `json:"for,omitempty"`     // who gave the order: "" the player's Farm gold button, "repair" a Farm until repair request
 }
 
 type stored struct {
@@ -53,6 +54,7 @@ type stored struct {
 	StartSet bool   `json:"startSet,omitempty"`
 	Start    int    `json:"start,omitempty"`
 	Ended    string `json:"ended,omitempty"` // why the last order stopped by itself
+	For      string `json:"for,omitempty"`   // "repair": started by a repair request (docs/repair.md), it ends with that request
 }
 
 // Controller holds the switch. Safe for concurrent use.
@@ -113,6 +115,42 @@ func (c *Controller) Start() error {
 	return c.save()
 }
 
+// ForRepair says the order belongs to a Farm until repair request: the target carries the repair x margin and the order
+// ends itself when the request does.
+func (c *Controller) ForRepair() bool {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	return c.st.On && c.st.For == "repair"
+}
+
+// StartForRepair gives the order on behalf of a repair request. An order the player already gave is taken over as
+// repair-owned, which keeps the single status line honest; it ends with the request.
+func (c *Controller) StartForRepair() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if c.st.On && c.st.For == "repair" {
+		return nil
+	}
+	if !c.st.On {
+		c.st = stored{On: true, Since: c.now().Unix()}
+		c.cur = Status{}
+	}
+	c.st.For = "repair"
+	return c.save()
+}
+
+// StopForRepair ends the order only when a repair request owns it (the player's own Farm gold order goes on).
+func (c *Controller) StopForRepair() error {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	if !c.st.On || c.st.For != "repair" {
+		return nil
+	}
+	c.st = stored{}
+	c.cur = Status{}
+	return c.save()
+}
+
 // Stop withdraws the order (idempotent).
 func (c *Controller) Stop() error {
 	c.mu.Lock()
@@ -152,7 +190,7 @@ func (c *Controller) Report(s Status) {
 func (c *Controller) View() View {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	v := View{Schema: 1, On: c.st.On, Since: c.st.Since}
+	v := View{Schema: 1, On: c.st.On, Since: c.st.Since, For: c.st.For}
 	if !c.st.On {
 		v.Note = c.st.Ended
 		v.Text = "Not farming gold."
@@ -162,6 +200,10 @@ func (c *Controller) View() View {
 		return v
 	}
 	s := c.cur
+	lead := "Farming gold on your order"
+	if c.st.For == "repair" {
+		lead = "Farming for a repair"
+	}
 	v.Area, v.Have, v.Want, v.Note = s.Area, s.Have, s.Want, s.Note
 	if c.st.StartSet {
 		v.Earned = max(s.Have-c.st.Start, 0)
@@ -169,13 +211,13 @@ func (c *Controller) View() View {
 	v.Reached = s.Want > 0 && s.Have >= s.Want
 	switch {
 	case s.Note != "":
-		v.Text = "Farming gold on your order: " + s.Note
+		v.Text = lead + ": " + s.Note
 	case s.Area == "":
-		v.Text = "Farming gold on your order: choosing a zone."
+		v.Text = lead + ": choosing a zone."
 	case v.Reached:
-		v.Text = fmt.Sprintf("Farming gold on your order: %d of %d reached, still farming in %s until you stop.", s.Have, s.Want, s.Area)
+		v.Text = fmt.Sprintf(lead+": %d of %d reached, still farming in %s until you stop.", s.Have, s.Want, s.Area)
 	default:
-		v.Text = fmt.Sprintf("Farming gold on your order: %d of %d in %s.", s.Have, s.Want, s.Area)
+		v.Text = fmt.Sprintf(lead+": %d of %d in %s.", s.Have, s.Want, s.Area)
 	}
 	return v
 }

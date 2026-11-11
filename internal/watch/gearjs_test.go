@@ -52,7 +52,7 @@ function tick(){return new Promise(function(r){setTimeout(r,20);});}
 		t.Fatalf("%v: %s", err, b)
 	}
 	s := string(b)
-	for _, want := range []string{"Not sent: nothing worn is damaged", "Not sent: the answer route said HTTP 403", "Repair requested: the hero repairs at its next town visit", "waiting for gold: need 41 more"} {
+	for _, want := range []string{"Not sent: nothing worn is damaged", "Not sent: the answer route said HTTP 403", "Repair requested: the hero goes at the next safe moment", "waiting for gold: need 41 more"} {
 		if !strings.Contains(s, want) {
 			t.Errorf("missing %q in %s", want, s)
 		}

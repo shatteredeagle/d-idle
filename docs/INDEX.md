@@ -440,7 +440,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [questmem.md](questmem.md): In-memory quest and waypoint data (agent MEMQUEST, V-05)
 - [readiness.md](readiness.md): Readiness model: is this hero ready for that area (status: slice A of the friends beta (cards TASK-217 area table, TASK-218 model, TASK-220 meter feed in part)....)
 - [recovery.md](recovery.md): Recovery phase (broke character)
-- [repair.md](repair.md): Manual repair (TASK-226, repairmanual)
+- [repair.md](repair.md): Manual repair (TASK-226, repairmanual) and the repair trip (TASK-303, repairtrip) (status: since 2026-11-11 "Repair now" is a TRIP, not a wait for the next town visit (user decision, section "The...)
 - [resource.md](resource.md): Resource policy: internal/resource (agent RESOURCE)
 - [restloop.md](restloop.md): restloop (archived)
 - [retreatdrill.md](retreatdrill.md): retreatdrill: the P29 retreat action executed live (designed, offline-tested, not run)

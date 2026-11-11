@@ -152,6 +152,9 @@ func (r *Runner) goldFarmFigures(s *d2.Snapshot) (have, want, repair int) {
 	if r.gfRepair != nil {
 		repair = r.gfRepair()
 	}
+	if r.rep != nil && r.gf != nil && r.gf.ForRepair() {
+		repair = r.rep.TripCfg().Need(repair) // a Farm until repair request: the estimate is a lower bound
+	}
 	return s.Player.Gold + s.Player.StashGold, goldfarm.Want(repair, resource.FromEnv(*r.e.Tune)), repair
 }
 
