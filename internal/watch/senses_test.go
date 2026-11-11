@@ -221,4 +221,13 @@ func TestSensesHistoryEndpoint(t *testing.T) {
 	if g := get(1); !strings.Contains(g, `"samples":[{`) {
 		t.Fatal(g)
 	}
+	// the panel gets the ring through the senses poll, only when it asks
+	sw := func(q string) string {
+		w := httptest.NewRecorder()
+		(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses"+q, nil))
+		return w.Body.String()
+	}
+	if strings.Contains(sw(""), `"history"`) || !strings.Contains(sw("?hist=1"), `"history":{"schema":"watch.history/1"`) {
+		t.Fatal("history rides /api/senses only with ?hist=1")
+	}
 }

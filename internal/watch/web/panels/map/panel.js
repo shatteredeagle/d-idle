@@ -262,7 +262,7 @@ export function mount(root, ctx) {
   ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, ...winBtns);
   if (heatMode !== 'off') loadHeat();
   covText();
-  let scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, histTimer = 0;
+  let scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
   function setWindow(ms) {
     win = ms;
@@ -293,12 +293,6 @@ export function mount(root, ctx) {
     });
     if (scrub !== null) { rg.fillStyle = css('--d-text', '#eee'); rg.fillRect((1 - scrub / win) * ribbon.width - 1, 0, 2, ribbon.height); }
   }
-  function loadHistory() {
-    if (typeof fetch !== 'function' || tl.hidden) return;
-    fetch('/api/history' + (ctx.token ? '?t=' + encodeURIComponent(ctx.token) : ''), { cache: 'no-store', credentials: 'same-origin' })
-      .then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && j.samples) { hist = j; scrubText_(); } }).catch(() => {});
-    if (ctx.later) histTimer = ctx.later(loadHistory, 5000);
-  }
   function setPlaying(on) {
     playing = on; playBtn.textContent = on ? 'Pause' : 'Play';
     if (on && scrub === null) scrubTo(win);
@@ -318,7 +312,7 @@ export function mount(root, ctx) {
   tlBtn.addEventListener('click', () => {
     tl.hidden = !tl.hidden;
     tlBtn.setAttribute('aria-pressed', String(!tl.hidden));
-    if (tl.hidden) { setPlaying(false); scrubTo(null); } else { loadHistory(); drawRibbon(); scrubText_(); }
+    if (tl.hidden) { setPlaying(false); scrubTo(null); } else { wantHist = 0; drawRibbon(); scrubText_(); }
   });
   range.addEventListener('input', () => { setPlaying(false); scrubTo(agoOfRange()); });
   playBtn.addEventListener('click', () => setPlaying(!playing));
@@ -524,7 +518,10 @@ export function mount(root, ctx) {
 
   return {
     query() {
-      return '?v=' + version + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
+      // the timeline's samples ride the poll every 10th time (about 5 s), and at once when it opens
+      const due = !tl.hidden && (polls++ % 10 === 0 || wantHist === 0);
+      if (due) wantHist = 1;
+      return '?v=' + version + (due ? '&hist=1' : '') + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
     },
     update(r) {
       if (!r || !r.tiers_unlocked || r.tiers_unlocked.indexOf(1) < 0) { ctx.hide(true); return; }
@@ -533,6 +530,7 @@ export function mount(root, ctx) {
         map = r.map; cells = decode(map); version = r.version; panX = panY = 0;
         ctx.meta.textContent = map.area || ('area ' + map.areaId);
       }
+      if (r.history && r.history.samples) { hist = r.history; if (!tl.hidden) scrubText_(); }
       hero = r.hero || hero;
       takeNeighbours(r.neighbours);
       units = r.units || [];
