@@ -94,3 +94,5 @@ var errFixture = errors.New("the fixture viewer does not write")
 func (fixtureDesk) SetMark(uint32, string) error             { return errFixture }
 func (fixtureDesk) RequestEquip(uint32, string) (any, error) { return nil, errFixture }
 func (fixtureDesk) Unpin(string) error                       { return errFixture }
+func (fixtureDesk) RequestTrash(uint32, bool) (any, error)   { return nil, errFixture }
+func (fixtureDesk) Cancel(uint32, string) error              { return errFixture }

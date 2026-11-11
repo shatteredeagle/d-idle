@@ -8,6 +8,9 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The bot no longer strips a mercenary's gear before a replacing hire; it waits until the player has taken it off (resource.gearDecisions=player)
+- Inventory page: click an item for a menu (equip, mark for sale, keep, trash); the bot performs queued actions at a calm moment, in town or in the field; trash drops the item on the ground and the pickup leaves it alone.
+- dev-update no longer leaves deleted files in the worker source copy
 - watch: the page layout comes from a layout manifest (the approved mockup layout by default); "Edit layout" on /watch lets you drag, resize and save your own; files exported by the mockup editor load unchanged
 - The bot no longer equips, swaps or buys gear on its own; it suggests upgrades on the Inventory page. Knob resource.gearDecisions=1 restores the old behaviour.
 - invdesk: fixed a self-deadlock (View held its lock while the equip check called Pinned) that froze the whole bot (TASK-278)

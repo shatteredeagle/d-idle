@@ -1,5 +1,7 @@
 # Inventory page on the watch screen (TASK-212, invui)
 
+> status: the item action menu (equip, sell mark, trash, queue states, field equips) is in [inventory-actions.md](inventory-actions.md); where it differs from the equip rules below (equip is no longer town only), that doc wins.
+
 Page `/watch/inventory` (link in the watch header), data `GET /api/inventory`, writes `POST /api/inventory/{mark,equip,unpin}` on the answer listener. Tags: V verified by the offline tests named, U unverified (needs a live run or game tables).
 
 ## What it shows
