@@ -519,3 +519,15 @@ Section 6.4 is built. What the code does where 6.4 left room (V = covered by `go
 - **Edit layout** (pictures seen for the mode; drag, resize and keys U in a real browser): the button in the top band imports `web/layoutedit.js` (never loaded otherwise; `?edit=1` opens the page in the mode). Cells get a handle bar and a resize corner, rows are fixed like in the mockup editor; arrows move the focused cell, Shift+arrows resize, C collapses, Delete sends it to the end; Save posts the manifest, Reset to default drops the stored copy, Done leaves without saving. It edits the breakpoint of the window width and needs a laptop or wide window (the narrow breakpoints are shaped in the mockup editor).
 - **Lint** (V): `tools/uilint` rules `layout-manifest` (schema, known ids, no overlap per breakpoint, spans inside the columns, unique order) for `layout.json` and `layouts/*.json`, and `layout-alias`. `style.order` joined the CSSOM whitelist of section 9 rule 3 (the shell sets it on the flow breakpoints).
 - **Files**: `tools/uishots/genlayouts.js` runs the editor's own preset code and writes the presets (with the push-down applied) and `web/layout.json` from `tools/uishots/layout-rows.json`; the raw exports are the compat fixtures `testdata/compat/layout-v1-{mockup,live,command}.json`.
+
+### 15.6 The top band and the hero stats tile (branch `agent/uitopband`, TASK-284)
+
+The pieces of the approved mockup's status band that were missing, as three new panels (compatibility rule 6: no existing panel was edited):
+
+| Panel | Band | Endpoint | Shows |
+|---|---|---|---|
+| `hero-meters` | status | `/api/hero` | who and where in one line (dropped when the band is narrow), thin life and mana meters with `cur/max`; life turns amber under 50 percent and red under 25 |
+| `alerts-count` | status | `/api/alerts` | a badge "alerts N", red when one of them is an alarm, a link to the Alerts card; not shown with no alert or with the alerts route off |
+| `hero-detail` | side | `/api/hero` | level, the way to the next level, gold on the hero and in the stash, the four resistances (a negative one is marked) and the readiness light for the hero's area with its first reason |
+
+`/api/hero` (`watch.hero/1`) gained one field, `stats` (`{resists: {fire, cold, light, poison}, readiness: {light, area, reason} | null}`), null until the bot reports it (`Hub.SetHeroStatsSource`; `cmd/d2bot/readywire.go` reads the runner's newest snapshot and the readiness model, read-only). No defence rating: the bot does not read one (U whether the snapshot could carry it). Decision 6 of section 13 stands otherwise. The top band gives the hero status and the meters a line together from laptop width and stacks them on a phone. Verified: `go test ./internal/watch` (the stats block for Sorceress and Paladin, node DOM goldens `testdata/topband_dom_*.txt`) and headless pictures on the worker host with fixture data; not seen with a live bot.
