@@ -213,6 +213,7 @@ type loopState struct {
 	pointsFails      int
 	pointsFailLvl    int
 	gearAt           time.Time
+	errandSkipUntil  time.Time // no errand trip before this (errandTripStep)
 	playerActAt      time.Time // last attempt of the player's queued item actions (playerActionStep)
 	// repair trip (repairtrip.go): when the wait for a safe moment began, retreat steps taken, loot pass done, no attempt before
 	repairWaitSince time.Time

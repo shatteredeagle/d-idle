@@ -2,6 +2,9 @@ package invdesk
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"time"
 
 	"d2lod-bot/internal/d2"
 )
@@ -16,6 +19,10 @@ import (
 // NoToolReason is shown on an Identify entry when the pack holds no scroll and no tome.
 const NoToolReason = "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
 
+// IdentifySafeWait is how long a queued identify waits for a safe moment (the repair trip's bound, repair.Trip.SafeWaitSecs):
+// after it the request fails with a reason and the player asks again.
+const IdentifySafeWait = 60 * time.Second
+
 // WaitsForTown is the reason line of a queued errand while the hero is in the field.
 const WaitsForTown = "waits until the hero is in town"
 
@@ -27,7 +34,9 @@ const CainTeaser = "opens when Cain is rescued"
 type Services interface {
 	// CheckPlayerIdentify says why backpack or worn item id cannot be identified now (nil: it can); name is its name.
 	CheckPlayerIdentify(s *d2.Snapshot, id uint32) (name string, err error)
-	PlayerIdentify(ctx context.Context, id uint32) error
+	// PlayerIdentifyBatch identifies the items in one inventory-open (the panel is not reopened per item) and returns one
+	// error per id (nil = identified). Without a scroll or tome every entry fails at once with the hint to buy scrolls.
+	PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error
 	// IdentifyTools reports the Tome of Identify (scrolls in it, -1 without a tome), its capacity and the loose scrolls.
 	IdentifyTools(s *d2.Snapshot) (tome, tomeCap, scrolls int)
 	// CheckBuyIdentify validates n (0 = fill the tome, or the default without one) and names the errand.
@@ -232,4 +241,114 @@ func (d *Desk) identifyView(sv Services, open func(*d2.Snapshot) bool, s *d2.Sna
 		}
 	}
 	return v
+}
+
+// Priority ranks the queued kinds: an identify (a scroll read, seconds) goes before equip and trash, those before the
+// town errands. Lower runs first.
+func priority(kind string) int {
+	switch kind {
+	case KindIdentify:
+		return 0
+	case KindBuyID, KindCain:
+		return 2
+	}
+	return 1
+}
+
+// expireStale fails the queued identifies that found no safe moment within IdentifySafeWait of being asked. Called with
+// the lock held by Pending, which the bot asks every tick.
+func (d *Desk) expireStaleLocked() {
+	now := d.c.Now()
+	q := d.st.Queue[:0:0]
+	for _, r := range d.st.Queue {
+		if r.kind() == KindIdentify && r.State == StateQueued && now.Sub(time.Unix(r.At, 0)) > IdentifySafeWait {
+			r.State, r.Reason = StateFailed, fmt.Sprintf("no safe moment within %d s (monsters close or the hero was busy): ask again", int(IdentifySafeWait/time.Second))
+			d.recentLocked(r)
+			continue
+		}
+		q = append(q, r)
+	}
+	if len(q) != len(d.st.Queue) {
+		d.st.Queue = q
+		_ = d.saveLocked()
+	}
+}
+
+// NextKind is the kind of the request the bot would run first now ("" = none); the Why line names it.
+func (d *Desk) NextKind() string {
+	inTown := d.heroInTown()
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	best, k := 99, ""
+	for _, r := range d.st.Queue {
+		if r.State == StateQueued && (inTown || !isErrand(r.kind())) && priority(r.kind()) < best {
+			best, k = priority(r.kind()), r.kind()
+		}
+	}
+	return k
+}
+
+// ErrandsWaiting is the number of queued town errands; the bot goes home for them at its next safe moment.
+func (d *Desk) ErrandsWaiting() int {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	n := 0
+	for _, r := range d.st.Queue {
+		if r.State == StateQueued && isErrand(r.kind()) && d.sv != nil {
+			n++
+		}
+	}
+	return n
+}
+
+// runIdentifyBatch performs every queued identify in one call and settles each request. It reports whether the run
+// must stop (a fight or a cancelled context put requests back to queued).
+func (d *Desk) runIdentifyBatch(ctx context.Context, sv Services, out *[]string) (stop bool) {
+	d.mu.Lock()
+	var batch []Request
+	for i := range d.st.Queue {
+		if r := d.st.Queue[i]; r.State == StateQueued && r.kind() == KindIdentify {
+			d.st.Queue[i].State = StateDoing
+			batch = append(batch, r)
+		}
+	}
+	_ = d.saveLocked()
+	d.mu.Unlock()
+	ids := make([]uint32, len(batch))
+	for i, r := range batch {
+		ids[i] = r.ID
+	}
+	errs := sv.PlayerIdentifyBatch(ctx, ids)
+
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	for i, r := range batch {
+		var err error
+		if i < len(errs) {
+			err = errs[i]
+		} else {
+			err = context.Canceled
+		}
+		j := d.findLocked(r.ID, r.kind())
+		if j < 0 {
+			continue
+		}
+		if errors.Is(err, context.Canceled) || errors.Is(err, context.DeadlineExceeded) || isBusy(err) {
+			d.st.Queue[j].State = StateQueued
+			*out = append(*out, fmt.Sprintf("identify %s postponed: %v", r.Name, err))
+			stop = true
+			continue
+		}
+		d.st.Queue = append(d.st.Queue[:j:j], d.st.Queue[j+1:]...)
+		if err != nil {
+			r.State, r.Reason = StateFailed, err.Error()
+			*out = append(*out, fmt.Sprintf("identify %s failed: %v", r.Name, err))
+		} else {
+			r.State = StateDone
+			*out = append(*out, fmt.Sprintf("identify %s done", r.Name))
+		}
+		d.recentLocked(r)
+	}
+	_ = d.saveLocked()
+	return stop
 }

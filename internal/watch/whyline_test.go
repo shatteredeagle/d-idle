@@ -40,7 +40,7 @@ func TestWhyTemplates(t *testing.T) {
 		"farm_user":   p("area", "Stony Field", "have", "40", "want", "190"),
 		"repair_wait": p("why", "finishing the pack first, 12 s of 60"), "repair_trip": p("step", "repairing in town"),
 		"repair_farm": p("area", "Stony Field", "have", "140", "want", "300"),
-		"hold":        p("question", "the shrine"), "activity": p("activity", "Fighting"),
+		"hold":        p("question", "the shrine"), "activity": p("activity", "Fighting"), "player_items": p("what", "identify"),
 	}
 	for _, code := range WhyCodes() {
 		for v := 0; v < 2; v++ {

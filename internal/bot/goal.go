@@ -35,7 +35,7 @@ func (r *Runner) runGoal(ctx context.Context, snap *d2.Snapshot, c control) bool
 	if r.pointsStep(ctx, snap, c) {
 		return true
 	}
-	if r.playerActionStep(ctx, snap, c) {
+	if r.playerActionStep(ctx, snap, c) || r.errandTripStep(ctx, snap, c) {
 		return true
 	}
 	if c.spec.kind == goals.Idle {
