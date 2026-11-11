@@ -129,6 +129,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 .github/workflows/desktop-electron.yml  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronmac2
+backlog/merge-lines/agent-nocursor.txt  credit-runner  nocursor
 backlog/merge-lines/agent-uifit.txt  credit-runner  uifit
 cmd/d2bot/artcmd.go  credit-runner  artspeed
 cmd/d2bot/artcmd_test.go  credit-runner  artspeed
@@ -147,6 +148,7 @@ cmd/d2bot/repairwire.go  credit-runner  repairtrip
 cmd/d2bot/resource_test.go  credit-runner  freshstart
 cmd/d2bot/sensesfeed.go  credit-runner  maptrail
 cmd/d2bot/sensesfeed_test.go  credit-runner  maptrail
+cmd/d2dview  credit-runner  nocursor
 cmd/d2firsthour/  live-agent  firsthour
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/agents  credit-runner  contextdiet
@@ -203,6 +205,7 @@ docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  uifit
+docs/viewer-fps.md  credit-runner  nocursor
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip

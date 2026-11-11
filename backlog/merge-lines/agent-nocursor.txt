@@ -1,3 +1,0 @@
-BACKLOG: nocursor (TASK-323): the watch video shows no game pointer: fork verb cursor off (private fork commit c418e235), d2dview asks for it by default and falls back silently on an older d2d
-INDEX: docs/viewer-fps.md section 8: no game pointer in the picture (fork verb, viewer flag, image rebuild steps)
-CHANGELOG: watch: the game's mouse pointer is no longer drawn into the video (needs the rebuilt d2d image)

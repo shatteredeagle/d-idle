@@ -731,6 +731,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones (TASK-320, merged 2026-11-11, acceptance 3 of 4): Built and tested offline on Sorceress and Paladin (sim, game tables on the worker host); NOT verified live. Build-specific: nothing (class-generic, knobs loot.mem*). <!--sg:agent/lootmemory-->
 - TASK-308 sellmarks2: the sell-marks town test fixture no longer lets the belt fill take the unmarked potion (fails with real tables, passes now) <!--sg:agent/sellmarks2-->
 - xpreadout: the XP readout shows totals and progress (bot sends in-level XP) (TASK-322, merged 2026-11-11, acceptance 3 of 3) <!--sg:agent/xpreadout-->
+- nocursor (TASK-323): the watch video shows no game pointer: fork verb cursor off (private fork commit c418e235), d2dview asks for it by default and falls back silently on an older d2d <!--sg:agent/nocursor-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
