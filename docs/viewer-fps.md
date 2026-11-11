@@ -171,3 +171,62 @@ stream, the stats and the watch port (303 to login).
 Rollback (the old tap and old d2d, nothing else changes): `sh ~/play-build-20261108/up.sh old` on the worker host (compose
 with `D2_IMAGE=d2dbot:devp1`, without `feed.yml`), then one dev-update to settle the release. Files: ops repo
 `docs/play-sandbox.md`.
+
+## 7. Frame pacing and the 1-2 fps report (card viewerfps3, TASK-302, 2026-11-11)
+
+User reports: "smoother, but still not smooth", then "looks sub 1-2 FPS". Measured read-only at 15:00Z with
+`cmd/d2dview/jitterprobe` (a static probe copied into the container's /tmp, run with the tap token from d2dview's
+environment, never printed, removed after; one /stream.mjpg client plus the ring header polled every 1 ms, 60 s).
+
+| what (sandbox, image devp2, `-fps 25 -feed`) | value | tag |
+|---|---|---|
+| d2d draw/publish rate in real time | 60.0 Hz (not 25): gap p50 16.9 ms, p99 17.5, max 21.2, sd 0.5; game ms advance 1.000 x wall; no lumps | V |
+| tap stream to a loopback client | 24.2 fps, 77 KB/part, 1.9 MB/s | V |
+| stream arrival gaps | p50 41.0, p90 41.8, p99 62.1, max 83.3 ms; 68 of 1453 over 60 ms, 7 over 80, 0 over 120 | V |
+| what the user's page shows | NOT this stream: the tester watch screen (8891) gets its video from d2bot's `watch.TapCapture`, which polled the tap's `/frame` at `DefaultTapFPS` 4 (max 6) and skipped unchanged frames | V by code and the running flags (`D2BOT_WATCH_VIDEO_SOURCE=tap`, no fps set) |
+
+Findings:
+1. The "1-2 fps" is the watch-screen path: at most 4 polls a second of `/frame`, each a fresh HTTP request, over the
+   user's link; whatever the tap delivers, the page cannot exceed 4 fps (S for the exact 1-2: the 8891 stream needs the
+   watch token, not read).
+2. The judder on the tap stream: the sampler ran on its own timer (`max(40 ms, 4 x 10.4 ms encode)` = about 41.6 ms)
+   against a 16.7 ms source, so consecutive frames were 33 or 50 ms of game time apart (2 or 3 draws), in an aliasing
+   pattern; plus up to 20 ms extra from the stream loop's sleep-poll (S, arithmetic from the measured rates).
+3. Not causes (V): the ring (no missed publishes, no stalls), d2d's draw cadence, the 14:32 restart (a tuning agent)
+   and the 14:53 event (a normal chicken "Save and Exit": the managed bot restarts d2d, the socket is recreated; the
+   feed lease is renewed every second, so the ring came back by itself, as the 24 fps at 15:00 shows).
+
+Fixes (this card; d2bot and d2dview only, a dev-update deploys them, no image rebuild):
+- `watch.TapCapture` relays the tap's `/stream.mjpg` (one long request, every part as it arrives, latest wins when the
+  page lags; `--watch-video-fps` is now an optional cap of 1 to 30; 15 s without a part ends the stream and the page
+  reconnects). A tap without `/stream.mjpg` (404) is still polled on `/frame` at 4 fps. Tests: `TestTapCaptureRelays
+  TheStreamAtItsOwnRate`, `TestTapCaptureStreamCapAndIdleEnd` and the old polling tests (fallback).
+- d2dview picks d2d's publish divisor so frames are evenly spaced in game time: the smallest whole number of 60 Hz draws
+  that fits both `-fps` and the back-off budget of its own encode (25 fps with a 9-10 ms encode and back-off 4: every 3rd
+  draw = 20 fps, each 50 game ms). The source period is measured from the ring's game ms; a change needs two lease
+  renewals in a row. The sampler checks the ring header every 3 ms (a 64-byte read) and encodes a frame as soon as it
+  appears, so the send cadence is the draw cadence.
+- `/stream.mjpg` sends each frame the moment it is published (a notify channel instead of the 20 ms sleep), flushes
+  its headers at once, sets a 10 s write deadline per part, and adds `X-Frame-Game-Ms` to each part (additive).
+- `/api/frames` gains `every`, `sourceHz`, `feedWanted` and `degraded` (ring asked for but the window ran on screenshots
+  or under 12.5 fps); the 30 s log line starts with `DEGRADED` then.
+- Bug fixed on the way: the stream-parts counter of card viewerfps1 sat in the `/events` handler (it counted SSE events,
+  and would have crashed `/events` on a tap started with `-fps 0`); it is in the stream handler now.
+
+After (offline, V on the worker host, `go test -run PacingEndToEnd -v ./cmd/d2dview`: a 60 Hz ring writer, the sandbox
+flags, 800x600 frames, one stream client, first quarter skipped): every 3rd draw, 20.0 fps, arrival gaps p50 49.8,
+p90 50.8, p99 53.2, max 53.2 ms; game-time gaps exactly 50 ms (p99 50). Live after numbers: U until the coordinator
+deploys (checklist below).
+
+For 30 fps (every 2nd draw, 33 ms) the encode budget must reach about 33 ms: `-frame-backoff 3` (about 30 percent of a
+core for video instead of 25) or `-frame-half` (2.8 ms encode). Bot pace first: keep 4 unless the A/B shows room.
+
+Deploy check (coordinator): dev-update the sandbox (d2bot and d2dview change, the fork does not), then
+1. `jitterprobe` as above (ring plus stream): expect `every 3`, 20 fps, stream gaps p99 under 60 ms, part game-ms gaps
+   all 50; `/api/frames` `degraded` false.
+2. The watch screen's game video: look at it (or count parts on the 8891 `/stream` with the watch token): 20 fps
+   instead of 4. A remote viewer on a slow link gets 1.5 MB/s; if that lags, set `D2BOT_WATCH_VIDEO_FPS=10` (a cap).
+3. d2bot CPU: the relay passes JPEG through (no re-encode); expect no more than before.
+
+Next (not done): a canvas player with a 2-3 frame jitter buffer on the watch page (only if the browser's `<img>`
+multipart display still looks uneven after this), and per-client half size for phones (stage 3 in section 4).

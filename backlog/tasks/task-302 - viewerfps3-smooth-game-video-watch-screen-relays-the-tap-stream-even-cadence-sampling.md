@@ -22,6 +22,7 @@ owns:
   - "docs/viewer-fps.md"
 exclusive: []
 contracts: []
+result: watch video relays the tap stream instead of a 4 fps /frame poll; tap frames evenly spaced (every 3rd 60 Hz draw, 20 fps, game gaps 50 ms, arrival p99 53 ms offline on the worker host); sandbox before measured read-only (tap 24.2 fps, gaps p99 62 ms, d2d draws 60 Hz); NOT verified live after (no deploy). Not build-specific.
 ---
 
 ## Description
@@ -34,9 +35,9 @@ User 2026-11-11: stream smoother but not smooth, then sub 1-2 fps. Done when the
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 measure pacing on the sandbox read-only: ring publish gaps, stream arrival gaps, the watch path
-- [ ] #2 watch screen game video relays the tap's /stream.mjpg instead of polling /frame at 4 fps
-- [ ] #3 tap samples on an even divisor of the source rate, notifies stream clients, stamps game ms
-- [ ] #4 offline tests; whole-repo gate on the worker host
-- [ ] #5 docs/viewer-fps.md section 7 with before numbers and the deploy check
+- [x] #1 measure pacing on the sandbox read-only: ring publish gaps, stream arrival gaps, the watch path
+- [x] #2 watch screen game video relays the tap's /stream.mjpg instead of polling /frame at 4 fps
+- [x] #3 tap samples on an even divisor of the source rate, notifies stream clients, stamps game ms
+- [x] #4 offline tests; whole-repo gate on the worker host
+- [x] #5 docs/viewer-fps.md section 7 with before numbers and the deploy check
 <!-- AC:END -->
