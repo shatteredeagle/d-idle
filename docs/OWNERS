@@ -167,7 +167,6 @@ docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/gear-policy.md  credit-runner  nopins
-docs/inventory-actions.md  credit-runner  playerprio
 docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
@@ -216,16 +215,11 @@ internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
-internal/bot/loop.go  credit-runner  playerprio
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
-internal/bot/playeraction.go  credit-runner  playerprio
-internal/bot/playeraction_test.go  credit-runner  playerprio
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
-internal/bot/runner.go  credit-runner  playerprio
 internal/bot/runner.go  credit-runner  repairtrip
-internal/bot/state.go  credit-runner  playerprio
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/yield.go  credit-runner  aggression2
 internal/bot/yield_test.go  credit-runner  aggression2
@@ -278,7 +272,6 @@ internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
 internal/town/chores.go  credit-runner  repairtrip
-internal/town/playerid.go  credit-runner  playerprio
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
 internal/watch  credit-runner  firstminutes

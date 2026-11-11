@@ -1,10 +1,13 @@
 ---
 id: TASK-321
-title: 'playerprio: player commands rank right behind safety and interrupt roam, explore and travel walks'
-status: Proposed
+title: >-
+  playerprio: player commands rank right behind safety and interrupt roam,
+  explore and travel walks
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:07:00Z'
+updated_date: '2026-11-11T19:54:00Z'
 labels:
   - bot
   - bug
