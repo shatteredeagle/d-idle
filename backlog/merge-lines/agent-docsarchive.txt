@@ -1,0 +1,1 @@
+INDEX: docs/archive/README.md lists the 2026-11-11 research archive (15 finished verifier and review reports, stubs left in docs/research)
