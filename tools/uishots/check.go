@@ -57,6 +57,9 @@ func checkDump(name, html string) []string {
 	if strings.Contains(name, "-edit") && (!strings.Contains(html, `class="d-editbar"`) || !strings.Contains(html, `data-editcell="1"`) || !strings.Contains(html, `class="d-edithandle"`)) {
 		bad = append(bad, name+": Edit layout did not start (no edit bar or no editable cells)")
 	}
+	if strings.Contains(name, "-editdrag") && !strings.Contains(html, `data-preview="map"`) {
+		bad = append(bad, name+": no drag preview on the page")
+	}
 	for prefix, want := range pagePanels {
 		if !strings.HasPrefix(name, prefix) {
 			continue

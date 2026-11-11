@@ -932,3 +932,8 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/inventory-actions.md - inventory page item action menu: request model, open opportunity, trash primitive, API schema 3, live checks
 - docs/ui-design-system.md section 15.6: the top band panels and the hero stats tile
 - docs/desktop-electron.md - the Electron desktop app: layout, run/test/build, security posture, findings (TASK-289)
+- docs/desktop-electron.md - now also covers the tray, autostart, hide-to-tray and the update check (TASK-290)
+- docs/ui-design-system.md section 15.7: finishing polish, the gear prompt note, what is still open from the mockup
+- docs/desktop-electron.md macOS section (build, install steps, Gatekeeper workaround)
+- docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview
+- docs/viewer-fps.md: viewer game video fps, sandbox measurements, framefeed ring design and staged plan (TASK-293)

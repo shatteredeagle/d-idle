@@ -53,6 +53,7 @@ func item(id int, code, name, q string, x, y, w, h int, extra map[string]any) ma
 func (fixtureDesk) View() any {
 	return map[string]any{
 		"schema": 1, "inTown": true, "class": "Sorceress", "gold": 1240, "stashGold": 5300,
+		"prompt": "No weapon equipped. Equip one on the Inventory page; the bot will not do it for you.",
 		"equipment": map[string]any{
 			"rhand":  item(1, "sst", "Short Staff", "normal", 0, 0, 1, 3, map[string]any{"maxDur": 18}),
 			"head":   item(2, "cap", "Cap", "normal", 0, 0, 2, 2, map[string]any{"dur": 8, "maxDur": 12}),

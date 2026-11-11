@@ -38,4 +38,16 @@ const rows = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
 for (const r of rows) if (!byId[r[0]]) byId[r[0]] = { id: r[0], band: r[5] || 'grid' };
 PRESETS.real = rows.map((r) => r.slice(0, 5));
 const o = blank(); Object.keys(BPS).forEach((bp) => { o.breakpoints[bp].panels = fromPreset('real', bp); });
+// tablet: a half-width panel left alone on its row (the next one is full width) takes the whole row
+{
+  const ps = o.breakpoints.tablet.panels;
+  let half = null;
+  for (const p of ps) {
+    if (p.colSpan === 12) { if (half) half.colSpan = 12; half = null; } else half = half ? null : p;
+  }
+  if (half) half.colSpan = 12;
+  ps.forEach((p) => { p.col = 1; p.row = 1; });
+  const done = [];
+  for (const p of ps) { ctx.x.place(done, p); done.push(p); }
+}
 fs.writeFileSync(out + 'layout.json', JSON.stringify(o, null, 2) + '\n');
