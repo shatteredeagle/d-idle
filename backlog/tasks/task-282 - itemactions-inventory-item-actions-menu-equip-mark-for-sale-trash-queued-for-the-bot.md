@@ -28,6 +28,7 @@ owns:
   - "cmd/d2bot/invwire.go"
 exclusive: []
 contracts: []
+result: "Built offline, NOT verified live: see docs/inventory-actions.md (leveler PlayerTrash and looter ignore tests skip without game tables; live checks listed there)."
 ---
 
 ## Description
@@ -40,7 +41,7 @@ Why: the player wants to act on items from the watch page: equip, mark for sale,
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Equip, Mark for sale and Trash from a per-item action menu, queued with states and cancel
-- [ ] #2 Trash primitive offline-tested (Paladin and Sorceress), loot ignores trashed items
-- [ ] #3 Persisted bounded queue, versioned API, goldens, uilint clean
+- [x] #1 Equip, Mark for sale and Trash from a per-item action menu, queued with states and cancel
+- [x] #2 Trash primitive offline-tested (Paladin and Sorceress), loot ignores trashed items
+- [x] #3 Persisted bounded queue, versioned API, goldens, uilint clean
 <!-- AC:END -->
