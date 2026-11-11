@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- d.idle watch desktop app: a failed or stalled page load shows a message and retries instead of a white window; --debug log and Open log folder
 - watch: in Edit layout a panel now drops exactly into free space, and while you drag the other panels move out of the way; Escape puts everything back
 - d.idle watch desktop app builds for macOS (universal dmg and zip, unsigned, LAN personal use)
 - inventory: the page says in a note above the equipment that gear is yours to manage, and warns when no weapon is equipped

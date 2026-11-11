@@ -705,6 +705,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - uipolish (TASK-288): watch layout polish (tablet rows, top band meter widths) and the gear-policy prompt note on the inventory page
 - TASK-291 electronmac: Electron app on macOS, universal dmg+zip (unsigned, personal), template tray icon, Dock/Cmd+Q/menu behaviours, macos CI job
 - uiedit (TASK-292): Edit layout drops a panel into any free cells (hidden panels reserve nothing) and previews a drag, resize or key move live with push-down; Escape reverts
+- TASK-294 electronmac2: macOS first-run fixes (Local Network usage text, no blank window on failed or stalled load, --debug log file, Chromium switch passthrough)
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
