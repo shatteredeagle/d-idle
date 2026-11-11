@@ -161,7 +161,6 @@ docs/fresh-start-pace.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
-docs/live-checks.md  credit-runner  livechecks
 docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
@@ -266,9 +265,6 @@ internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.js  credit-runner  minimapfix
-tools/backlog/drift.py  credit-runner  livechecks
-tools/backlog/test_drift.py  credit-runner  livechecks
-tools/ci/check.sh  credit-runner  livechecks
 tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maptrail

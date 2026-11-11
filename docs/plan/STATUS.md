@@ -83,7 +83,6 @@
 | reconnectux | proposed | - | `docs/reconnect-ux.md`<br>`internal/watch` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | smepace | proposed | - | `docs/sme/pace-and-formulas.md` | - |
-| livechecks | proposed | - | `docs/live-checks.md`<br>`tools/backlog/drift.py`<br>`tools/backlog/test_drift.py`<br>`tools/ci/check.sh` | - |
 | contextdiet | proposed | - | `docs/agents` | - |
 | lootskip | proposed | - | `internal/loot`<br>`docs/lootskip.md`<br>`internal/env/tuning_loot.go` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
