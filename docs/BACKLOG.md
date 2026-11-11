@@ -724,6 +724,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-308 sellmarks: player sell marks follow renumbered items (game restart), sell chore always runs for marks, per-visit sell log line, pending count on the Inventory page <!--sg:agent/sellmarks-->
 - uiedit2 (TASK-306): the game picture fits and centres in its panel and is aspect-locked in Edit layout; Hero now, Up next and every other card can be moved, resized and hidden or shown <!--sg:agent/uiedit2-->
 - qprofile: merge queue profile and safe speedups (TASK-313, merged 2026-11-11, acceptance 2 of 2): Read-only profile written; per-phase seconds are estimates (MERGE_TIMINGS off); not verified live; go test timing job skipped (gate active). <!--sg:agent/qprofile-->
+- identify2 identify runs at the next safe moment anywhere, batched, ahead of equip and trash; town errands trigger a trip home (offline only) <!--sg:agent/identify2-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

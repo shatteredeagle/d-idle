@@ -1,3 +1,0 @@
-BACKLOG: identify2 identify runs at the next safe moment anywhere, batched, ahead of equip and trash; town errands trigger a trip home (offline only)
-INDEX: docs/inventory-actions.md: priority and safe moment section
-CHANGELOG: Identify commands run at the next safe moment with priority; buy-scrolls and Cain errands send the hero home when safe

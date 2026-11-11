@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Identify commands run at the next safe moment with priority; buy-scrolls and Cain errands send the hero home when safe <!--sg:agent/identify2-->
 - queue profile: where merge time goes and safe speedups (TASK-313) <!--sg:agent/qprofile-->
 - watch: the game picture always fills its panel without dead space; in Edit layout every card (also Hero now and Up next) can be moved, resized and hidden <!--sg:agent/uiedit2-->
 - Items marked for sale on the Inventory page are now sold at the next town visit even after a game restart renumbered them, on any kind of trip; the page header shows how many are pending <!--sg:agent/sellmarks-->
