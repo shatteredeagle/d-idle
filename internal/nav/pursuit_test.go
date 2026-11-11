@@ -57,3 +57,34 @@ func TestWanderTurnsToFightWhenFollowed(t *testing.T) {
 		})
 	}
 }
+
+// A pack 13 subtiles behind the hero is outside the default radius (10) and inside a raised one (16): the knob decides
+// how far the hero looks while it runs (sandbox tuning 2026-11-11). Class free like the rule above.
+func TestPursuitRadiusKnobWidensTheLookout(t *testing.T) {
+	for _, tc := range []struct {
+		radius float64
+		yields int
+	}{{10, 0}, {16, 1}} {
+		s := newSim(openField(1000, 1000, 200, 60), input.Point{X: 1010, Y: 1030})
+		behind := func(s *sim) {
+			p := s.pos()
+			s.units = []d2.Unit{{ID: 9, Type: d2.TypeMonster, X: p.X - 13, Y: p.Y, Mode: d2.MonModeStand}}
+		}
+		s.onStep = func(s *sim) {
+			if len(s.units) > 0 {
+				behind(s)
+			}
+		}
+		behind(s)
+		n := s.navigator()
+		n.e.Tune.Nav.PursuitRadius = tc.radius
+		yields := 0
+		n.Yield = func(ctx context.Context, near []d2.Unit) error { yields++; s.units = nil; return nil }
+		if err := n.walk(ctxT(t), func(*obs) (input.Point, float64, error) { return input.Point{X: 1150, Y: 1030}, 3, nil }, walkOpts{pursuit: true}); err != nil {
+			t.Fatal(err)
+		}
+		if yields != tc.yields {
+			t.Errorf("radius %v: yields %d, want %d", tc.radius, yields, tc.yields)
+		}
+	}
+}

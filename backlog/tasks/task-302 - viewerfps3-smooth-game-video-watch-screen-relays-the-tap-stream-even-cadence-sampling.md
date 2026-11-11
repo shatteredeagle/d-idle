@@ -1,10 +1,13 @@
 ---
 id: TASK-302
-title: 'viewerfps3: smooth game video, watch screen relays the tap stream, even-cadence sampling'
-status: Proposed
+title: >-
+  viewerfps3: smooth game video, watch screen relays the tap stream,
+  even-cadence sampling
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T14:57:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - bot
   - bug

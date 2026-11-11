@@ -2,7 +2,7 @@
 
 One row per acceptance box that was still open when its card closed (true-up 2026-11-10, docs/research/project-review-2026-11-10.md section 3.1). A card closes when its code and docs are merged and its offline acceptance is proven; live debt lives here so it stays visible. None of these rows has been run live (U) unless the date column says so.
 
-Closing rule: a card closes when merged with offline acceptance proven; every open live or by-eye box moves to a row below (card, what to verify, how), with the original box left unticked in the card file. When a row is run, fill the date seen and the owner role; do not delete it.
+Closing rule: a card closes when merged with offline acceptance proven; every open live or by-eye box moves to a row below (card, what to verify, how), with the original box left unticked in the card file. Since 2026-11-11 the merge does this itself: when a branch merges with CI green, `tools/auto_done.py` (ops repo, MERGEQ_AUTO_DONE=1) writes one row here for every unticked box that only asks for a live check ('verified live', 'live check', 'live drill', 'real browser', ...; at least one other box must be ticked) and sets the card Done; a card with any other unticked box stays open and `mergeq status` says why (docs/merging-generated.md). When a row is run, fill the date seen and the owner role; do not delete it.
 
 | Card | Box | What to verify | How | Seen (date, role) |
 |---|---|---|---|---|
@@ -99,3 +99,4 @@ Closing rule: a card closes when merged with offline acceptance proven; every op
 | TASK-61 metacurrency | #3 | First slice defined with estimate, dependencies and proposed tasks | live drill on the sandbox, fresh hero, per docs/research/metacurrency-design.md | open |
 | TASK-286 mercdump | #1 | `dump merc` on the fork branch `d2d.lab5-mercdump` lists level, str, dex, exp, type and the worn items; they match the hireling screen; a dead merc keeps his list; hired-but-away is told from no merc | live drill on the sandbox, a fresh hero with a hired merc (cheat gold for the hire, ledger entry), per docs/merc-wire.md | open |
 | TASK-287 mercdoll | #3 | The merc card under the hero doll in a real browser (phone and desktop width, light and dark): states none, ready, dead, unknown; slots and n/a badges for each hired kind; item icons with art on | by eye on the sandbox with the fork build of TASK-286 and a hired merc, per docs/inventory-ui.md | open |
+| TASK-255 sharedgen | #5 | live check: the first real merge through the generator (the merge of this branch) shows its generated lines on main | live drill on the sandbox, fresh hero, per the card result | open |

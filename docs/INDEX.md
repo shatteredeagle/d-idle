@@ -27,6 +27,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [0014-memory-writes-allowed-no-crutch.md](adr/0014-memory-writes-allowed-no-crutch.md): 0014: Memory may be read and written; the bot may never depend on writes
 - [0015-goals-acceptance-on-game-exe.md](adr/0015-goals-acceptance-on-game-exe.md): 0015: Acceptance is game.exe, d2d is the lab; six goals G-A to G-F
 - [0016-automation-ladder.md](adr/0016-automation-ladder.md): 0016: Automation is the progression: the tier ladder T0 to T5 replaces the gates as the ranking of work
+- [0017-direction-fun-first-2026-11-07.md](adr/0017-direction-fun-first-2026-11-07.md): 0017: Direction for the next two weeks: find the fun first
+- [0018-fun-loop-expedition-ledger-2026-11-07.md](adr/0018-fun-loop-expedition-ledger-2026-11-07.md): 0018: d.idle's loop is the Expedition Ledger; Act 1 content is the Codex; carry-over is a Hall of Fame first
+- [0019-pacts-and-unlocks-2026-11-07.md](adr/0019-pacts-and-unlocks-2026-11-07.md): 0019: Pacts are opt-in challenge rules with meta rewards; information and watch features unlock progressively
 - [adr/README.md](adr/README.md): Architecture decision records
 - [decisions.md](decisions.md): Decisions (user, with date)
 
@@ -75,8 +78,6 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [plan-v2.md](plan/plan-v2.md): Plan v2: enabling features and redesigned soak gates (planning session, 2026-10-30) (status: section 1 and the M-item order are from the morning of 2026-10-30; d2d is the primary backend (ADR 0009,...)
 - [roadmap.md](roadmap.md): Roadmap: milestones, work breakdown, operating rhythm (agent ROADMAP, 2026-10-31) (status: ADOPTED by the user on 2026-10-31: decisions D1 to D6 in section 8 are DECIDED. Card `roadmap`. Reviewed...)
 - [watch.md](watch.md): d2watch: view-only web viewer of the game instances (agent WATCH)
-- [ui-design-system.md](ui-design-system.md): d.idle watch UI design system (TASK-228, uidesign) (status: proposal (2026-11-09), docs and mockups only; nothing in `internal/watch` changed. Research and sources:...)
-- [ui-regression-plan.md](ui-regression-plan.md): Watch UI regression tests and migration plan (TASK-228, uidesign) (status: proposal (2026-11-09), nothing here is built. Design: ui-design-system.md. Research: research/ui-design.md...)
 
 ## Engine and fidelity: d2d, differentials, upstream PRs, deviations
 
@@ -98,7 +99,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [d2d-economy.md](d2d-economy.md): Economy of a fresh character on d2d (agent ECONOMY, 2026-10-30) (status: the "Needs a G1/G2 check" section is retired (ADR 0013, amended by ADR 0015); verify on d2d through the...)
 - [d2d-exit.md](d2d-exit.md): d2d bot: "no exit to Blood Moor" (agent D2DEXIT, 2026-10-30)
 - [d2d-fidelity.md](d2d-fidelity.md): d2d fidelity checklist (agent D2DFIDELITY, 2026-10-30)
-- [d2d-fork.md](d2d-fork.md): d2d private fork: lockstep clock and `dump` verb (agent D2DFORK, 2026-10-30)
+- [d2d-fork.md](d2d-fork.md): d2d fork (private on the forge, published as the GitHub fork d2d-didle from 2026-11-07, ADR 0003...
 - [d2d-gaps.md](d2d-gaps.md): d2d fidelity gaps: cause analysis (agent D2DTOGGLE, 2026-10-30) (status: partly superseded: casts per kill (docs/research/gap-casts-per-kill.md), XP per kill...)
 - [d2d-lab.md](d2d-lab.md): d2d lab binary (private fork, on the worker host) (status: partly stale: the current lab binary is d2d.lab5 (docs/d2d-fork.md, docs/d2d-loop.md); the lab2/lab3...)
 - [d2d-lab6.md](d2d-lab6.md): d2d lab6 (private fork rebase, agent FORKREBASE, 2026-10-30) (status: current record of the lab6 build. Overview in docs/d2d-fork.md section "lab6". Patch content stays on the...)
@@ -120,6 +121,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [d2dctl.md](d2dctl.md): d2dctl: Go client for the d2d control channel
 - [data.md](data.md): internal/data: static game tables
 - [decomp-queue.md](decomp-queue.md): Decomp lane: ranked queue and rules (status: current, 2026-10-31 (agent DECOMPBELT created it; the user started the lane: "start decomp lane"). The...)
+
+`digest/`
+
+- [d2d-fork-lab.md](digest/d2d-fork-lab.md): Digest: d2d fork and lab (status: current (TASK-310 digest; the area doc is the authority).)
 - [forkarmor.md](forkarmor.md): FORKARMOR: the private fork carries the Frozen Armor freeze-rule fix (card forkarmor, 2026-11-01) (status: current. Branch `lab-armorhit` of the private d2d fork, lab binary `bin/d2d.lab-armorhit` on the worker...)
 - [forkcheats.md](forkcheats.md): FORKCHEATS: test cheats added to the lab binary (card forkcheats, 2026-10-31) (status: current. The verbs exist in the lab d2d binary as of 2026-10-31 (the patches live in the private fork, not...)
 - [forkdbg.md](forkdbg.md): FORKDBG: lab-only debug verbs for the live skill drills (card forkdbg, 2026-11-01) (status: current. The verbs exist in the lab d2d binary built from the private fork branch `lab-debug-skills`...)
@@ -127,6 +132,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [forknext.md](forknext.md): FORKNEXT: the private fork carries the NextHit fix (card forknext, 2026-11-01) (status: current. Branch `lab-nexthit` of the private d2d fork, lab binary `bin/d2d.lab-nexthit` on the worker...)
 - [forkrebase.md](forkrebase.md): FORKREBASE: the private fork stack rebuilt on upstream main 52362d52 (card forkrebase, 2026-11-01) (status: current. Branches `lab2-debug-skills`, `lab2-armorhit`, `lab2-freezeresume` of the private d2d fork...)
 - [hastpdump.md](hastpdump.md): inv-tp-dump: why HasTP differs per area
+- [inventory-actions.md](inventory-actions.md): Inventory item actions (TASK-282, itemactions; identify commands TASK-298)
+- [inventory-tooltip.md](inventory-tooltip.md): Item tooltip on the inventory page (TASK-269, itemtip)
+- [inventory-ui.md](inventory-ui.md): Inventory page on the watch screen (TASK-212, invui) (status: the item action menu (equip, sell mark, trash, queue states, field equips) is in inventory-actions.md;...)
 - [inventory.md](inventory.md): Inventory and stash policy (INVSTASH audit, 2026-10-30)
 - [killgap.md](killgap.md): KILLGAP: where the seconds per kill go on d2d (2026-10-30) (status: current. Tags: V = measured by this change on hidden d2d (fresh uncheated Sorceress, 4 seeds x 2 virtual...)
 - [map.md](map.md): d2map: world map reader (agent MAP)
@@ -170,6 +178,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [mechanics-items-drops.md](sme/mechanics-items-drops.md): D2 SME KB: items, treasure classes, magic find, gold and shops (classic LoD 1.14d)
 - [mechanics-progression.md](sme/mechanics-progression.md): D2 SME KB: progression (XP, levels, areas, difficulty, resists), classic LoD 1.14d
 - [mercenary.md](sme/mercenary.md): Mercenaries in classic LoD 1.14d: SME reference for the hire/keep-alive bot (MERCRESEARCH, 2026-10-30)
+- [pace-and-formulas.md](sme/pace-and-formulas.md): D2 LoD 1.14d pace and formula lookup (Normal Act 1 to Act 2 gate; Paladin and Sorceress)
 - [pace-tables.md](sme/pace-tables.md): Pace tables: human and speedrun reference for soak milestones (classic LoD 1.14d, offline single player)
 - [play-act-route.md](sme/play-act-route.md): Play patterns 1: a human route through all five acts
 - [play-bot-pitfalls.md](sme/play-bot-pitfalls.md): Play patterns 4: what automation gets wrong in Diablo II, and where our bot differs from a human
@@ -187,19 +196,24 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [docs/README.md](README.md): docs/: where to start
 - [START-HERE.md](START-HERE.md): START HERE (status: current (cleanup batch B, 2026-11-05). One page; not a second index. The full map by area is INDEX.md.)
 - [ab-design.md](ab-design.md): A/B protocol for bot changes on d2d (change m2-abdesign) (status: current. Tags: V = computed from committed data with `tools/ab/paired.py`, U = inference. Contract:...)
+- [ab-merc.md](ab-merc.md): abmerc: paired A/B of the merc revive reserve (late-start variant) (status: harness proven by a dry run (2026-11-06); the full 16-run A/B has NOT been run. Design: docs/ab-design.md...)
+- [act-plan.md](act-plan.md): Act plan: per-class recommended levels (TASK-250, card actplan) (status: current. Replaces the hard-coded "level up to 17" Andariel hold (ADR 0011 interim 15 / 17).)
 - [act1check.md](act1check.md): Act 1 check: log lines and report section
 - [act2.md](act2.md): Normal Act 2 (agent ACT2, offline)
 - [act3.md](act3.md): Normal Act 3 plan (agent ACT3PLAN, docs only) - also holds the shared work list for Acts 3-5 (status: OFFLINE PLAN: never run live; 250+ code commits since this was last touched (doc audit 2026-10-30). Treat...)
 - [act4.md](act4.md): Normal Act 4 plan (agent ACT3PLAN, docs only) (status: OFFLINE PLAN: never run live; 400+ code commits since this was last touched (doc audit 2026-10-30). Treat...)
 - [act5.md](act5.md): Normal Act 5 plan (agent ACT3PLAN, docs only) (status: OFFLINE PLAN: never run live; 460+ code commits since this was last touched (doc audit 2026-10-30). Treat...)
 - [actbot.md](actbot.md): ACTBOT and ACT45BOT: Acts 2-5 wiring in cmd/d2bot (offline, nothing run live)
+- [aggression.md](aggression.md): Paladin aggression in big packs (2026-11-11)
 - [andarielgate.md](andarielgate.md): Gate 2 seed 11: why Andariel was never attempted (status: analysis, no code change. Tags: V = counted from the run log on the worker host (read-only), S = from code...)
 - [andarielplan.md](andarielplan.md): Plan for card m3-andariel: the throwaway Andariel fight (status: plan, offline, nothing verified live. Tags: V = read in this tree or counted from a recorded log (file...)
 - [andarielsme.md](andarielsme.md): Andariel fight: the SME version and the user decisions (2026-11-04) (status: decisions recorded offline, nothing verified live. Tags: experience = SME judgement from play, V =...)
 - [api.md](api.md): Goal manager, Runner contract and HTTP API
 - [areametrics.md](areametrics.md): Per-area gold and XP log (change areametrics)
+- [areathrash.md](areathrash.md): Area thrash, cave-mouth holds and the Dark Wood exit (fun killer 5) (status: analysis V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Source:...)
 - [armorcut.md](armorcut.md): armorcut: a Frozen Armor recast cut in a fight (card armorcut) (status: current, offline fix, awaits the live proof. Tags: V = verified (read in a log or test), S = read in code...)
 - [basics-audit.md](basics-audit.md): Basics audit: town and inventory scenarios against the code (agent BASICSAUDIT, 2026-10-31) (status: current. Offline audit for the milestone in BACKLOG.md section 0. Read-only on production code; no game,...)
+- [belt-plan.md](belt-plan.md): Belt plan knob (TASK-164) (status: built and tested offline; the live drill is below. Tags: V = proven by a test in this tree, S = from a...)
 - [beltfill.md](beltfill.md): Belt fill (BELTFILL)
 - [boss.md](boss.md): Boss scripts: internal/boss (agent BOSSRUNS) (status: partly stale (2026-10-30). Andariel's level floor is the knob `boss.andarielMinLevel` (docs/knobs.md,...)
 - [bot-small.md](bot-small.md): Bot small fixes (change botsmall) (status: notes of one small change card; offline only, nothing here is verified live.)
@@ -213,6 +227,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [champions.md](champions.md): Champions are elite, not bosses (status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d...)
 - [chargedbolt.md](chargedbolt.md): Charged Bolt per-bolt damage on d2d (card chargedbolt, 2026-11-04) (status: current. Evidence: docs/probes/sksmoke/2026-11-04-SK-cb.txt, .json, -raw.txt. Tag: compared to table on...)
 - [cheats.md](cheats.md): Cheats: logged test cheats (agent CHEAT)
+- [classchores.md](classchores.md): Per-class chore defaults (TASK-146, card classchores) (status: built and tested offline; not run against a live bot. Tags: V = proven by a test in this tree, EXP =...)
 
 `classes/`
 
@@ -230,6 +245,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [smoke-necromancer.md](classes/smoke-necromancer.md): Necromancer smoke test (agent CLASSNEC, 2026-10-28)
 - [smoke-paladin.md](classes/smoke-paladin.md): Paladin smoke test (agent CLASSPAL, 2026-10-28)
 - [codefix67.md](codefix67.md): codefix67: F6 and F7 of codereview1
+- [codex.md](codex.md): The Act 1 Codex and its firsts (TASK-130) (status: built and tested offline (fixtures and a synthesized run) and wired into the bot by TASK-140 (see Wiring);...)
 - [combat.md](combat.md): Combat: internal/combat (agent COMBAT) (status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d...)
 - [combatspin.md](combatspin.md): combatspin: the one spin that survived NAVSTALL
 
@@ -269,13 +285,30 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [town-basics.md](contracts/town-basics.md): town-basics contract (status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none)
 - [upstream-pr.md](contracts/upstream-pr.md): upstream-pr contract (status: reconciled 2026-11-04 against docs/process/spec-ledger-20261104.md; pending deltas: none)
 - [coverage.md](coverage.md): Test coverage and unattended-run gaps
+- [currency.md](currency.md): Currencies: registry, ledger and the bank operation (status: implemented offline, 2026-11-06, TASK-62. NOT verified live: nothing here has met a real game. The...)
 - [deathautopsy.md](deathautopsy.md): deathautopsy (archived)
 - [deathspiral.md](deathspiral.md): Death spiral guards (G1 attempt 1, 2026-10-29)
+- [denshuttle.md](denshuttle.md): Den of Evil <-> Blood Moor shuttle (TASK-295) (status: cause V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Follows docs/areathrash.md (same d2d...)
+- [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
+- [desktop-electron.md](desktop-electron.md): Desktop app on Electron: d2idle-watch (status: built, not yet run on real desktops (TASK-289 skeleton, TASK-290 tray, autostart, hide-to-tray, update...)
+- [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
+- [dev-update.md](dev-update.md): Dev-loop update: new bot builds in a running container, no image rebuild (status: CURRENT. Task: TASK-192 (devupdate). Builds on the merged updater (docs/self-update-release.md,...)
 - [difficulty.md](difficulty.md): Difficulty: Normal -> Nightmare -> Hell (levels, resists, immunities, affixes, detection work list)
+
+`digest/`
+
+- [bot-loop-goals.md](digest/bot-loop-goals.md): Digest: bot loop and goals (status: current (TASK-310 digest; the area doc is the authority).)
+- [combat.md](digest/combat.md): Digest: combat (status: current (TASK-310 digest; the area doc is the authority).)
+- [merge-ci-process.md](digest/merge-ci-process.md): Digest: merge, CI and process (status: current (TASK-310 digest; the area doc is the authority).)
+- [nav.md](digest/nav.md): Digest: navigation (status: current (TASK-310 digest; the area doc is the authority).)
+- [town-economy-loot.md](digest/town-economy-loot.md): Digest: town, economy and loot (status: current (TASK-310 digest; the area doc is the authority).)
+- [watch-ui.md](digest/watch-ui.md): Digest: watch, viewer and player UI (status: current (TASK-310 digest; the area doc is the authority).)
 - [drillsfix.md](drillsfix.md): drillsfix: stash (DS) and tome (TM) drill repairs
 - [earlygame.md](earlygame.md): Early game: a fresh character, clvl 1 to 12 (agent EARLYGAME, 2026-10-30)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
+- [first-hour.md](first-hour.md): First hour: the daily table tool
+- [first-session.md](first-session.md): First play session guide (TASK-134) (status: written 2026-11-08 from docs on main only. Nothing here was run for this guide. Tags: V verified live (as...)
 - [fixbank.md](fixbank.md): FIXBANK: gold deposit and repair gold (card fix-bank) (status: current. Findings of the D3 drills (docs/probes/drills/2026-10-31-d3.txt); live proof is a drill rerun.)
 - [fixbelt.md](fixbelt.md): fixbelt: the Gate 1 rerun belt window
 - [fixbelt2.md](fixbelt2.md): fixbelt2: why potions stayed in the pack (post-fix soak 1) (status: code on branch agent/fixbelt2; live proof pending (drill variants below).)
@@ -316,25 +349,40 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [fixtelekey.md](fixtelekey.md): FIXTELEKEY: Teleport capability from the character's skills (status: card fixtelekey, offline, not verified live. Source: BUILDFLEX audit row 5 / seam S3...)
 - [fixwp.md](fixwp.md): FIXWP: waypoint primitive fixes (card fix-wp, P23) (status: partly superseded: W3 (the 10 s wait) is removed, default 0 (docs/wpcooldown.md). Findings W1 to W4 of...)
 - [floormeasure.md](floormeasure.md): Route-guard floor measurement (Gate 2 seeds 11, 12, 13) (status: measurement only. It feeds the SME floor design (per-zone data floors plus a raise-only death loop); it...)
+
+`fork-publication/`
+
+- [FORK-README.md](fork-publication/FORK-README.md): d2d-didle: the d.idle fork of d2d
+- [PUBLISHED.md](fork-publication/PUBLISHED.md): d.idle fork: published (phase 2b)
 - [fresh-character.md](fresh-character.md): Fresh-character soak path (plan-v2 M1)
+- [fresh-start-pace.md](fresh-start-pace.md): Fresh start pace: why the tester hero crawled in Blood Moor (TASK-138) (status: diagnosis and fix 2026-11-07. Tags: V verified live (how stated), S read in code, U unverified. Evidence...)
+- [friend-feed.md](friend-feed.md): Friend feed: D2BOT_UPDATE_FEED (status: BUILT offline (TASK-272, 2026-11-10); never run against a real feed. Design: docs/research/friend-build.md...)
+- [friend-guide.md](friend-guide.md): d.idle friends pack: install guide (Linux) (status: BUILT offline (TASK-274, 2026-11-10); the install script was run once on the worker host in a scratch...)
 - [friendly.md](friendly.md): Friendly units (FRIENDLY)
+- [gear-policy.md](gear-policy.md): Gear policy: the player decides equipment (TASK gearplayer)
 - [gear.md](gear.md): Gear and ammo model (agent GEAR, package `internal/gear`)
 - [geninv.md](geninv.md): Run invariants and holdout seeds (card gen-invariants, 2026-10-31) (status: current. Code: `internal/d2dsoakstat/invariants.go`, `invreport.go`; spec: soak-gates (Per-seed...)
+- [goldfarm.md](goldfarm.md): Farm gold (the player's order; fix for the poverty loop) (status: built and tested offline (fixtures, stub DOM). Nothing ran live. Tags: V proven by a test named here, S...)
 - [goldfloor.md](goldfloor.md): Gold floor: where gold comes from and goes (agent GOLDFLOOR, 2026-10-31) (status: analysis, read-only on the soaks. Card: `openspec/changes/goldfloor` (proposed). Tags: V = read from the...)
+- [hall-of-fame.md](hall-of-fame.md): Hall of Fame and the retire question (TASK-135) (status: built offline (fixtures and fakes). Nothing here is verified against a live game. Ledger and UI only: no...)
 - [heldlog.md](heldlog.md): Held-for-Andariel log line
 - [hirefixlive.md](hirefixlive.md): hirefixlive: PaidHire follows the real menu flow (offline, 2026-11-04) (status: current. Tags: V = verified, S = secondary, U = unverified. Not run live: this change is offline only.)
 - [input.md](input.md): Input: helper, client, transform (agent INPUT)
 - [items.md](items.md): Items, economy and runewords for the offline bot (agent ITEMRESEARCH)
 - [killcredit.md](killcredit.md): Kill credit and hits per cast (change killcredit)
 - [killfix.md](killfix.md): KILLFIX: removing the two top kill-gap causes on d2d (2026-10-30) (status: current. Tags: V = measured on hidden d2d (fresh uncheated Sorceress, 2 virtual hours per run, parallel...)
+- [killloop.md](killloop.md): killloop: where the seconds per kill go on the sandbox Paladin (2026-11-09 log) (status: analysis, no code change. Tags: V = measured from the sandbox log (11.7 h, 2201 `killtime` lines,...)
 - [kitstall.md](kitstall.md): kitstall: baseline `kit` lane i2 stall (Sorceress, clvl 3)
 - [knobs.md](knobs.md): Knobs and settings reference
+- [lab-verbs.md](lab-verbs.md): Lab verbs: the `--lab-verbs` gate of the private d2d fork (status: current (TASK-42, 2026-11-06). Tags: V = read in the fork commit or run on the worker host, U = unverified.)
 - [leakhunt.md](leakhunt.md): fd growth hunt (agent LEAKHUNT, VERIFIED LIVE on the worker host i3, 2026-10-28)
 - [leveler.md](leveler.md): leveler: points, gear and the leveling loop (agent LEVELER)
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
+- [live-checks.md](live-checks.md): Live checks still open
 - [logfields.md](logfields.md): Log fields for the per-skill soak report (change logfields)
 - [loot-charms.md](loot-charms.md): Charms, runes and gems on a sell visit (status: current (card m1-loot, agent m1loot, 2026-10-31). Rule source: user decision D4 and the d2-sme; shared...)
+- [lootskip.md](lootskip.md): LOOTSKIP: why ground potions were left (card lootskip) (status: current. Source: container log of the sandbox soak (Paladin clvl 10 to 14, build 0.0.261110171517),...)
 - [merc-farm.md](merc-farm.md): Mercenaries and post-campaign farming (research, MERCRESEARCH, 2026-10-29) (status: ARCHIVED 2026-10-31 (doctrim): superseded by docs/merc.md, docs/merc-wire.md, docs/sme/mercenary.md and...)
 - [merc-wire.md](merc-wire.md): Merc wiring (agent MERCWIRE)
 - [merc.md](merc.md): Mercenary policy (internal/merc)
@@ -351,8 +399,22 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [noareameasure.md](noareameasure.md): noareameasure: XP per area, the picker's excluded set and the kit at the Gate 2 seed 13 block (status: corrected 2026-11-04 per the SME review (docs/noareacards2.md): section 5 band 5.08% (not 1.95%), Cave 2...)
 - [npc-skip.md](npc-skip.md): NPC greeting skip (internal/town/skip.go, cmd/npcprobe)
 - [npc.md](npc.md): NPC interaction (town/npc.go, cmd/d2bot/task.go)
+- [onboarding-slice-a.md](onboarding-slice-a.md): Onboarding slice A: setup stepper, go-ahead and access (status: BUILT offline (task TASK-44, card onboardA, 2026-11-06). Design and mock:...)
+- [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
+- [pact-away.md](pact-away.md): Pact away safety (TASK-169) (status: built and tested offline with fakes and httptest; NOT run against a live bot or a browser. Design:...)
+- [pact-botside.md](pact-botside.md): Bot-side Pacts (TASK-167) (status: built and tested offline with fakes; NOT run against a live bot. Design: `docs/research/pact-system.md` (a...)
+- [pact-catalogue.md](pact-catalogue.md): Pact catalogue (TASK-166) (status: data, loader and rules built and tested offline; no bot reads it yet (TASK-167 is the first consumer)....)
+- [pact-ui.md](pact-ui.md): Pact offer UI (TASK-168) (status: built and tested offline (Go tests, httptest); the page script was NOT run in a browser and nothing ran...)
+- [paladinsmoke.md](paladinsmoke.md): Paladin smoke: the fun-loop slices live on a Paladin (TASK-142) (status: run 2026-11-07 (EST 22:18 to 23:20), worker host, hidden lab slot and one container. Tags: V verified live...)
 - [palfix.md](palfix.md): PALFIX: the Paladin fix cards
+- [palmelee.md](palmelee.md): palmelee: why the Paladin never hit (TASK-175) and what is left of the pace (TASK-177) (status: fixed and measured 2026-11-08 (EST). Tags: V verified live (how stated), S read in code, U unverified....)
+- [palpace.md](palpace.md): palpace: realtime Paladin pace (TASK-177) (status: see docs/palmelee.md (the melee fix, the realtime run and the corrected expectation); this file is the...)
+- [palprofile.md](palprofile.md): palprofile: Paladin attack order as data (2026-11-10)
+- [palready.md](palready.md): palready: Might aura once per fight, recovery leaves a dry field (TASK-180) (status: aura fixed and verified live 2026-11-08 (EST); dry-recovery rule proven offline only (it did not fire in...)
 - [palsme.md](palsme.md): PALSME: SME review of the Paladin tables
+- [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
+- [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
+- [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)
 
 `prior-art/`
 
@@ -370,34 +432,80 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [results.md](progression/results.md): Live results (one line per check: id, date, instance, value seen, new tag)
 - [tasklayer.md](progression/tasklayer.md): Task layer: step graph with preconditions
 - [verification.md](progression/verification.md): Ranked live-verification list (progression)
+- [proposezone.md](proposezone.md): The hero proposes the next zone (TASK-131) (status: built and tested offline on fixtures 2026-11-07 (ADR 0018, decision F3). wired into `cmd/d2bot` 2026-11-08...)
+- [pursuers.md](pursuers.md): Pursuers: the hero that walks on with monsters behind it (card pursuers) (status: rule built and tested offline (internal/nav/pursuit_test.go); NOT run live. V = counted in the container...)
+- [quest-givers.md](quest-givers.md): Quest givers in town (TASK-243) (status: decision logic, table and fixtures built and tested offline; the live part is U (checklist below). Tags:...)
+- [quest-hints.md](quest-hints.md): Quest hints in town (TASK-197) (status: built and tested offline (fixtures, no game). Tags: V verified by the tests named, SRC read in the repo,...)
 - [quest.md](quest.md): Quest layer: internal/quest (agent QUESTS, offline)
 - [questmem.md](questmem.md): In-memory quest and waypoint data (agent MEMQUEST, V-05)
+- [readiness.md](readiness.md): Readiness model: is this hero ready for that area (status: slice A of the friends beta (cards TASK-217 area table, TASK-218 model, TASK-220 meter feed in part)....)
 - [recovery.md](recovery.md): Recovery phase (broke character)
+- [repair.md](repair.md): Manual repair (TASK-226, repairmanual)
 - [resource.md](resource.md): Resource policy: internal/resource (agent RESOURCE)
 - [restloop.md](restloop.md): restloop (archived)
 - [retreatdrill.md](retreatdrill.md): retreatdrill: the P29 retreat action executed live (designed, offline-tested, not run)
 - [retreatfix.md](retreatfix.md): retreatfix: RT.drink setup life and RT.portal bound
 - [retreatlive.md](retreatlive.md): retreatlive: RT.drink and RT.portal run live on d2d (2026-11-04)
 - [retreatlive2.md](retreatlive2.md): retreatlive2: RT.drink and RT.portal rerun after retreatfix (2026-11-04)
+- [return-screen.md](return-screen.md): The return screen (TASK-127) (status: first slice, built and tested on fixtures and now WIRED into the bot (TASK-140,...)
 - [roamleg.md](roamleg.md): ROAMLEG: a mouth-gate hold is not a failed roam target (status: offline fix, tests pass, verified live in DRILLS23 (docs/probes/drills/README.md): 0 failed legs (was 50),...)
+- [roamspacing.md](roamspacing.md): Roam coverage spacing (TASK-301) (status: CURRENT. Tags: V = measured (log read-only, or the simulator run in this worktree on the worker host), S =...)
 - [running.md](running.md): How to run d.idle (status: current as of 2026-11-01 (card readmedocs; Teleport and `--build` note added by card capdocs). Every...)
 - [scenarios.md](scenarios.md): Scenario corpus
+- [self-update-client.md](self-update-client.md): Self-update client (Tier 2, part 2) (status: CURRENT for the code; nothing here has run against real GitHub or in a real container. Design:...)
+- [self-update-drill.md](self-update-drill.md): Self-update boot shim and drills (Tier 2, part 3) (status: CURRENT for the code; the container drills below are a CHECKLIST that has NOT been run (no image was...)
+- [self-update-release.md](self-update-release.md): Self-update release format and signing (Tier 2, part 1) (status: CURRENT for the format and tools; the workflow `.github/workflows/app-release.yml` is a DRAFT and inert...)
+- [senses-map.md](senses-map.md): Side-panel minimap v1 (TASK-148, sensesmap)
+- [senses-units.md](senses-units.md): Senses tiers 2 and 3: enemy dots, target bar and name (TASK-151, sensesenemies)
+- [senses-unlock.md](senses-unlock.md): Senses unlock ladder (TASK-149, sensesunlock)
+- [session-record.md](session-record.md): Session record and decision dataset (status: BUILT offline, fixtures only (TASK-106). Tags: V verified live, S fixture or code, U unverified. Nothing...)
+- [skill-unlocks.md](skill-unlocks.md): Skill unlocks by quest or find (TASK-133) (status: engine and Sorceress table built and tested offline (fixtures and the real tables on the worker host);...)
 - [skmeleebot.md](skmeleebot.md): SKMELEEBOT: the plain Attack in the resource policy (status: current (2026-11-01). Offline: no game, no d2d slot. Source: docs/research/sk-melee-trace.md (B1 to B4),...)
 - [skmeleewire.md](skmeleewire.md): SKMELEEWIRE: the melee model fed from the live snapshot (status: current (2026-11-01). Offline: no game, no d2d slot. Follows docs/skmeleebot.md (the model) and...)
 - [skmeleewire2.md](skmeleewire2.md): SKMELEEWIRE2: d2d gear and weapon fields into the melee model (status: current (2026-11-01). Offline. Follows docs/skmeleewire.md; source fields docs/forkdbg.md "dump stats gear...)
 - [skresistbot.md](skresistbot.md): SKRESISTBOT: the bot's monster-resistance model after the trace
 - [sksmoke-tools.md](sksmoke-tools.md): SK drill tools (card sksmoke-a1)
+- [smoke.md](smoke.md): Smoke: a one-line verdict per bot change (TASK-111) (status: built and unit-tested offline (U live: never run on the game yet). It is the regression floor while Gate 2...)
+- [sorceress-early.md](sorceress-early.md): Sorceress early game (clvl 1 to 12) and friends readiness (TASK-267, sorcready, 2026-11-10) (status: sections 1 to 6 are the sorcready findings (superseded where section 7 says so). Section 7 records the...)
+- [sorcnormal30.md](sorcnormal30.md): Sorceress normal30 table (TASK-144, card sorcnormal30) (status: since TASK-267 (sorcready2) the table is no longer v3-identical: Warmth at clvl 2, a cold line from clvl...)
+- [stance.md](stance.md): Fight stance (cards stancefix, stancelever) (status: built and tested offline; NOT run in a live game. Tags: V = proven by a test in this tree or by a log...)
 - [summon.md](summon.md): Necromancer upkeep (internal/combat/necro.go)
+- [t0-slice.md](t0-slice.md): T0 slice (TASK-21, phase A3: offline) (status: phase A3 is code and tests only (A3 wires the four T0 fight-time points on top of the five T1 points of...)
+- [tally-strip.md](tally-strip.md): Tally strip: credits from events, the strip, the charter sink (status: built offline 2026-11-07 and wired into the bot by TASK-140 (see Wiring), TASK-129 (fun loop, ADR 0018,...)
 - [task.md](task.md): Task layer (internal/task) and how the bot wires it (agent TASKLAYER)
 - [teletune.md](teletune.md): teletune: when a Teleport hop is worth it (status: card teletune, verified live in DRILLS24 (docs/probes/drills/README.md; per-hop time 18 ticks, not 33 or...)
 - [teletune2.md](teletune2.md): teletune2: path-aware hops, stall escape, break-even at 18 ticks (status: offline, awaits the live legs below. Builds on docs/teletune.md (whose 64 tick break-even this replaces)...)
 - [teletune3.md](teletune3.md): TELETUNE3: the border leg, the stall escape, the stall memory between drills (status: offline work of card teletune3; the live proof is the DRILLS26 recipe below (not run). Follows...)
+- [tester-imgrepro.md](tester-imgrepro.md): Tester image from public inputs (TASK-139) (status: 2026-11-07. Tags: V verified (how stated), S secondary, U unverified. Closes defect D9 of...)
+- [tester-licence.md](tester-licence.md): Tester pack: GPL notices, SOURCE.txt and the written offer for the d.idle fork (TASK-28) (status: DRAFT, phase 1 of the fork publication (2026-11-07). Not legal advice; "GPLv3 section" references are the...)
+- [tester-live.md](tester-live.md): Tester container: first end-to-end run (TASK-25) (status: run 2026-11-07 on the worker host. Tags: V verified live (how stated), U unverified. Slice 1 (d2d route)...)
+- [tester-realtime.md](tester-realtime.md): Tester build: realtime check (TASK-33, gap G6) (status: first audit and one realtime session, 2026-11-07. Tags: V verified live (how stated), S read in code only,...)
+- [tester-registry.md](tester-registry.md): Tester image on ghcr.io: publish prep (TASK-120) (status: PREPARED, 2026-11-08. NOTHING is published: no workflow has run, no package exists, no tag or environment...)
 - [tomefix.md](tomefix.md): Tome stat 70 false-empty audit (tomefix) (status: current, offline only, NOT verified live. Tags: V = read in code or run as a test here, S = inference, U =...)
 - [tomestat.md](tomestat.md): Tome stat 70 lost in the field (tomestat) (status: current. Tags: V = counted in the Gate 2 log or read in code, S = inference from code, U = unverified live.)
 - [town.md](town.md): Town and loot: internal/town, internal/loot (agent TOWN)
 - [townshop.md](townshop.md): Town resupply in Gate 2 (townshop) (status: current. Tags: V = counted in the Gate 2 bot log (read-only), S = code, U = unverified.)
 - [townwedge.md](townwedge.md): townwedge: the permanent town-exit wedge (status: fix merged with card townwedge. Tags: VERIFIED = log line or test, INFERRED = reading. Evidence:...)
+- [ui-design-system.md](ui-design-system.md): d.idle watch UI design system (TASK-228, uidesign) (status: accepted design (user decisions 2026-11-09 in section 13), being implemented in small PRs (section 15)....)
+- [ui-regression-plan.md](ui-regression-plan.md): Watch UI regression tests and migration plan (TASK-228, uidesign) (status: proposal (2026-11-09); built so far: see ui-design-system.md section 15 (row 14 `uilayout` is section...)
+- [unlock-alerts.md](unlock-alerts.md): Alerts and pings (TASK-162, unlockalerts)
+- [unlock-atlas.md](unlock-atlas.md): Waypoint atlas (TASK-160, unlockatlas)
+- [unlock-bestiary.md](unlock-bestiary.md): Cain's notes, the bestiary (TASK-158, unlockbestiary)
+- [unlock-chronicle.md](unlock-chronicle.md): Chronicle (TASK-154, unlockchronicle)
+- [unlock-idreveal.md](unlock-idreveal.md): Identify reveal (TASK-157, unlockidreveal)
+- [unlock-ladder.md](unlock-ladder.md): Unlock ladder (TASK-153, unlockladder)
+- [unlock-orderqueue.md](unlock-orderqueue.md): Order queue (TASK-161, unlockorderqueue)
+- [unlock-questlog.md](unlock-questlog.md): Quest log (TASK-156, unlockquestlog)
+- [unlock-risk.md](unlock-risk.md): Hero risk meter (TASK-159, unlockrisk)
+- [unlock-voice.md](unlock-voice.md): Hero voice and diary (TASK-155, unlockvoice)
+- [usage.md](usage.md): Usage view (`tools/usage/usage.py`) (status: current (TASK-309; source: docs/research/project-review-2026-11-10.md section 6.1 and 6.3 item 5).)
+- [viewer-fps.md](viewer-fps.md): Viewer game video at 12.5 to 25 fps (card viewerfps1, TASK-293, 2026-11-10)
+- [walksmooth.md](walksmooth.md): walksmooth: the stop-and-go walk (TASK-188) (status: offline fix merged-ready, NOT proven live. Tags: V verified (how stated), S read in code, U unverified.)
+- [watch-origin.md](watch-origin.md): Same-origin rule for state-changing requests (watch login, setup wizard)
+- [watch-screen.md](watch-screen.md): Watch screen (TASK-20) (status: offline on the simulated runner; not verified live. Design, contract and API needs:...)
 - [waypoints.md](waypoints.md): Waypoints (agent WPUSE, 2026-10-30) (status: partly superseded: the 10 s arrival wait described below is gone (`nav.wpCooldownSec` defaults to 0,...)
+- [whyline.md](whyline.md): Whyline: why the hero does what it does (TASK-206) (status: built and tested offline (fixtures, no game). V = proven by a test named here, U = not run live. Card...)
+- [wizardclass.md](wizardclass.md): wizardclass: the first-run wizard offers classes from the plan tables (TASK-145)
 - [wpcooldown.md](wpcooldown.md): Waypoint arrival cooldown removed (card wpcooldown) (status: current.)
 
 ## Ops and merge: merge queue, process, CI, worktrees, tooling
@@ -406,16 +514,17 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `agents/`
 
+- [brief-template.md](agents/brief-template.md): Agent brief template (12 lines) (status: current (TASK-256, TASK-310; user approved the reading diet 2026-11-10; source:...)
 - [claude-tracing-guide.md](agents/claude-tracing-guide.md): Tracing claims about Diablo II 1.14d with Claude: a practical guide (status: current (card claudeguide, 2026-11-01). Written at the maintainer's request for people who use Claude...)
 - [domain.md](agents/domain.md): Domain docs: single-context
 - [issue-tracker.md](agents/issue-tracker.md): Issue tracker: Backlog.md tasks (status: current since OpenSpec removal stage 4. Work is tracked as Backlog.md tasks...)
+- [rules-short.md](agents/rules-short.md): Agent rules, short (stable path; every brief links this file) (status: current (TASK-310). Replaces the per-session "overnight-rules" scratchpad file that was missing in later...)
 - [triage-labels.md](agents/triage-labels.md): Triage labels
 - [api-agent-cookbook.md](api-agent-cookbook.md): API-credit runner cookbook: command forms that work (status: current (card apicookbook). Evidence (V): the stream logs of seven decomposition jobs on the API-credit...)
 - [backlog-howto.md](backlog-howto.md): Backlog board (Backlog.md) - how to use it (status: STAGE 3 done (openspec/ removed, tag `openspec-final`; contracts in `docs/contracts/`; the copier and...)
 - [boardhost.md](boardhost.md): Status board host (status: moved to the private ops repo (d2lod-ops, `docs/boardhost.md`). Not part of the public tree.)
 - [botlogs.md](botlogs.md): Countable guard lines
 - [branding.md](branding.md): d.idle branding (status: DECIDED. The user chose the cursor concept on 2026-11-01 ("brand: cursor"). The final set is in...)
-- [cards.md](cards.md): Cards (status: OpenSpec is retired for new work (user, 2026-11-04); cards are moving to Backlog.md (docs/decisions.md...)
 - [ci.md](ci.md): CI (GitHub Actions) (status: CI is `.github/workflows/ci.yml` on GitHub (`shatteredeagle/d-idle`, branch `main`). The earlier...)
 - [container.md](container.md): Real Diablo II 1.14d headless in the container (agent CONTAINERGAME, VERIFIED 2026-10-28/29 on the worker... (status: STALE: Wine container work is PAUSED (docs/decisions.md); d2d is the primary backend (ADR 0009,...)
 
@@ -453,6 +562,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [cleanup-plan-20261105.md](process/cleanup-plan-20261105.md): Whole-project cleanup plan (read-only inventory, 2026-11-05) (status: proposal. Nothing in this pass deleted, renamed or pushed anything. Full lists:...)
 - [coderabbit-prescan.md](process/coderabbit-prescan.md): CodeRabbit pre-scan runbook (d-idle repo and the d2decomped fork) (status: current, card crsetup, 2026-11-02. Owner go given 2026-11-02. Nothing here runs until the owner installs...)
 - [contracts-after-openspec.md](process/contracts-after-openspec.md): Contracts after OpenSpec: design (status: PROPOSAL, 2026-11-04 (job contractsdesign, docs only). Nothing here is applied. It refines stages 3 to 5...)
+- [coordinator-efficiency.md](process/coordinator-efficiency.md): Coordinator efficiency checklist (status: current (TASK-310; source: docs/research/project-review-2026-11-10.md section 6 and...)
 - [credit.md](process/credit.md): Credit for work carried upstream (status: current (card creditkit, approved by the maintainer 2026-11-02).)
 - [d2d-worker-host.md](process/d2d-worker-host.md): d2d worker host (status: moved to the private ops repo (d2lod-ops, `docs/process/d2d-worker-host.md`). Not part of the public tree.)
 - [d2dfarm.md](process/d2dfarm.md): d2dfarm: distributed d2d test nodes (status: v1 (ssh push). Spec: `openspec/changes/d2dfarm/specs/d2d-farm/spec.md`. Tags: V = run, U = not run. Hidden...)
@@ -538,13 +648,38 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [record.md](probes/baseline-runs/20261102/record.md): Baseline runs 20261102 (set late) (status: generated by tools/baseline-run.sh collect (ops repo). Runbook: docs/process/baseline-runs.md. Tags: V =...)
 
+`probes/`
+
+- [classpacing.md](probes/classpacing.md): classpacing probe (status: see `docs/soaks/classpacing.md` (the result doc of TASK-147); scripts and per-minute data are in...)
+- [currency1.md](probes/currency1.md): Probe: currency slice 1, the Raven's Mark rows (TASK-63) (status: UNVERIFIED live, 2026-11-06. Offline checks passed; the live run was not started because Gate 2 seeds were...)
+
 `probes/drills/`
 
 - [drills/README.md](probes/drills/README.md): Live primitive drills (card m1-liveproof, harness cmd/d2drill + internal/drill) (status: DRILLS5 (2026-10-31, last section): live proofs of the merged fixes (fix-bank, fix-obj, fix-price,...)
 - [hover-audit.md](probes/drills/hover-audit.md): Hover blind-spot audit (agent DRILLS3, 2026-10-31, card m1-liveproof) (status: current. Why: under the lab's `--lockstep` d2d resolves "what is under the cursor" only while it draws a...)
 
+`probes/fid/`
+
+- [fid-belt-pr.md](probes/fid/fid-belt-pr.md): fid-belt-pr (TASK-78, matrix row IT09): belt pickup lands in the belt first, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **NO DEVIATION on current upstream main; ALREADY...)
+- [fid-boss-mods.md](probes/fid/fid-boss-mods.md): fid-boss-mods (TASK-85, matrix row MA06): unique, champion and superunique modifiers, d2d against game.exe (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **pr-mods is MERGED upstream (#157 and the...)
+- [fid-boss-skills.md](probes/fid/fid-boss-skills.md): fid-boss-skills (TASK-86, matrix row MA06 neighbour): boss skills and death mods, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet), PARTIAL. Result: the boss **death handler (MonUMod 22 /...)
+- [fid-hit-recovery.md](probes/fid/fid-hit-recovery.md): fid-hit-recovery (TASK-91, matrix row SK16): player hit recovery, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **NO DEVIATION in the covered paths on current...)
+- [fid-inv-limits.md](probes/fid/fid-inv-limits.md): fid-inv-limits (TASK-79, matrix row IT10): purse cap, stash cap, grid sizes, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: caps and grids EQUAL; **one real d2d deviation...)
+- [fid-layout-act1.md](probes/fid/fid-layout-act1.md): fid-layout-act1 (TASK-80, matrix row MA04): layouts of the other Act 1 areas, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **0 differences in every Act 1 level of Levels.txt...)
+- [fid-missile-monster.md](probes/fid/fid-missile-monster.md): fid-missile-monster (TASK-84, matrix row MA10): monster missiles and ranged attackers, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **AC #1 partly proven.** The launch record...)
+- [fid-missile-player.md](probes/fid/fid-missile-player.md): fid-missile-player (TASK-83, matrix rows SK03 SK12 SK08): player missiles, d2d against game.exe,... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **flight, range, roll and the Nova ring are equal...)
+- [fid-monster-move.md](probes/fid/fid-monster-move.md): fid-monster-move (TASK-82, matrix row MA12): monster velocity, pathing, the 77-point path, d2d against... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **the velocity deviation of the earlier trace (F08,...)
+- [fid-price-pr.md](probes/fid/fid-price-pr.md): fid-price-pr (TASK-76, matrix rows VN01 VN02 VN03 IT08 VN06): vendor prices, d2d against game.exe,... (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **ALREADY UPSTREAM, no PR candidate.** The first...)
+- [fid-skill-damage-pr.md](probes/fid/fid-skill-damage-pr.md): fid-skill-damage-pr (TASK-89, matrix row SK02): player skill damage, d2d against game.exe (status: finished 2026-11-07 by agent fidskilldmg (Sonnet). Result: **no PR candidate, because every proven...)
+- [fid-status-effects.md](probes/fid/fid-status-effects.md): fid-status-effects (TASK-87, matrix rows MA11 SK08): monster states, the freeze and chill rule, d2d... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **freeze rule C3/C4/C5, chill length, freeze end...)
+- [fid-stock-oracle.md](probes/fid/fid-stock-oracle.md): fid-stock-oracle (TASK-77, matrix rows VN04 VN05): vendor stock generation and refresh, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **stock generation (which item codes are asked, how...)
+- [fid-teleport.md](probes/fid/fid-teleport.md): fid-teleport (TASK-90, matrix row SK-TELE / TS): Teleport destination, refusal and mana, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **destination rule (range by room, blocked target...)
+- [fid-wp-tp-pr.md](probes/fid/fid-wp-tp-pr.md): fid-wp-tp-pr (TASK-95, matrix rows PR06 PR07): waypoint and town portal, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **both oracles are 0 differ on current upstream...)
+- [fid-xp-award.md](probes/fid/fid-xp-award.md): fid-xp-award (TASK-75, matrix row ST10): XP per kill and the level-difference penalty, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **AC #1 proven: 0 differences in 119,790 grid lines...)
+
 `probes/`
 
+- [fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe (same-save probe, slice 1) (status: first live run done 2026-11-07 (scenarios 1 to 4, see the last section); the recipe below is VERIFIED LIVE...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
 `probes/navsoak/`
@@ -565,9 +700,16 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `probes/`
 
+- [pactnative.md](probes/pactnative.md): pactnative: do the native difficulty levers work offline on 1.14d? (TASK-170) (status: probe result of 2026-11-08 (overnight, one hidden instance). Facts for the Pact design note...)
+- [paladin-smoke.md](probes/paladin-smoke.md): Paladin smoke (pointer) (status: current. The results of TASK-142 are in `docs/paladinsmoke.md` (the card's owned file); the run scripts,...)
+- [panels-live.md](probes/panels-live.md): Live check of the watch panels against real lockstep runs (panelslive) (status: measured 2026-11-08 (EST). Tags: V verified live (how stated), S code reading, U unverified. Evidence is a...)
 - [postfix-soak1.md](probes/postfix-soak1.md): postfix-soak1: first soak on the fixed bot, Gate 1 shape (2026-10-31) (status: current. Read-only analysis of one finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill)....)
 - [postfix-soak2-analysis.md](probes/postfix-soak2-analysis.md): postfix-soak2 analysis: root causes of F1 to F6, the walking share and a ranked fix-card list (card... (status: current. Offline study of the finished Gate 1 soak 2 (postfix-soak2.md, origin/main 0b0bdb2, one seed, 2 h...)
 - [postfix-soak2.md](probes/postfix-soak2.md): postfix-soak2: Gate 1 of the d2d gate ladder on current main (2026-10-31) (status: current. One finished hidden d2d soak (exit 0, 120 wall min, one injected d2d kill), n=1 seed, not a...)
+- [ptrclick.md](probes/ptrclick.md): ptrclick: is d2d's click-targeting a deviation from game.exe, or only our harness? (TASK-179) (status: plan, nothing run live. Tags: V verified (how stated), S read in code, U unverified. Card:...)
+- [shortdrills.md](probes/shortdrills.md): Short live drills for the g2e/g2f fixes (card shortdrills) (status: current (2026-11-06). Tags: V = run live on the worker host, S = secondary, U = unverified.)
+- [t0drill.md](probes/t0drill.md): T0 drill: phase B commands (NOT run in phase A)
+- [test-characters.md](probes/test-characters.md): Test characters created by agents (provenance log) (status: current. One line per character an agent created on a lab slot or in a container (PROVENANCE RULE of the...)
 - [waits-audit.md](probes/waits-audit.md): Waits audit: wall-clock waits for the game (card waits-audit) (status: current. Offline audit of every wait in the bot, the d2d wiring and the d2d backends; fixes in the same...)
 - [sentinel.md](sentinel.md): Sentinel: layer 2 failsafes (agent SENTINEL)
 - [soak-analysis.md](soak-analysis.md): Soaky soak analysis (SOAKANALYSIS, 2026-10-29) (status: SUPERSEDED in part: pre-fix baseline; the approved death rule is plan-v2 section 10.2 and...)
@@ -577,6 +719,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `soaks/`
 
+- [classpacing.md](soaks/classpacing.md): classpacing: measured early-game pace per class (TASK-147) (status: measured 2026-11-08 (EST), first 90 virtual minutes, lockstep d2d. Tags: V verified live (how stated), S...)
+- [classpacing2.md](soaks/classpacing2.md): classpacing2: multi-seed class pace re-measure (panelslive) (status: measured 2026-11-08 (EST), lockstep d2d, 90 virtual minutes per run (6 wall minutes; a run stops at 55 to...)
+- [cpnav.md](soaks/cpnav.md): cpnav: Assassin could not reach Cold Plains (TASK-184)
+- [equipfail.md](soaks/equipfail.md): equipfail: why the equip clicks failed (TASK-182) (status: fixed and measured 2026-11-08 (EST), lockstep d2d, 5 wall minutes per run (about 90 virtual). Tags: V...)
 - [gate1-20261101-1625.md](soaks/gate1-20261101-1625.md): Gate 1 run (2026-11-01): NOT PASSED (status: current. One finished hidden d2d soak (0 virtual minutes = 0.0 virtual h in 0 wall min, 0 injected d2d...)
 - [gate1-20261101.md](soaks/gate1-20261101.md): Gate 1 run (2026-11-01): NOT PASSED (status: current. One finished hidden d2d soak (1480 virtual minutes = 24.7 virtual h in 120 wall min, 1 injected...)
 - [gate1-20261102-1939.md](soaks/gate1-20261102-1939.md): Gate 1 run (2026-11-02), run id gate1-20261102-1939: NOT PASSED (status: current. One finished hidden d2d soak (1182 virtual minutes = 19.7 virtual h in 120 wall min, 1 injected...)
@@ -610,15 +756,39 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [gate2-20261102.md](soaks/gate2-20261102.md): Gate 2 run (2026-11-02): NOT PASSED (status: current. One finished hidden d2d soak (2811 virtual minutes = 46.9 virtual h in 480 wall min, 1 injected...)
 - [gate2-multiseed-20261104-2254-g2b.md](soaks/gate2-multiseed-20261104-2254-g2b.md): Gate 2 multi-seed run 20261104-2254-g2b: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1816 virtual minutes (30.3 virtual h)...)
 - [gate2-multiseed-20261105-0733-g2c.md](soaks/gate2-multiseed-20261105-0733-g2c.md): Gate 2 multi-seed run 20261105-0733-g2c: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 2024 virtual minutes (33.7 virtual h)...)
+- [gate2-multiseed-20261105-1607-g2d.md](soaks/gate2-multiseed-20261105-1607-g2d.md): Gate 2 multi-seed run 20261105-1607-g2d: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1889 virtual minutes (31.5 virtual h)...)
+- [gate2-multiseed-20261106-0225-g2e.md](soaks/gate2-multiseed-20261106-0225-g2e.md): Gate 2 multi-seed run 20261106-0225-g2e: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1632 virtual minutes (27.2 virtual h)...)
+- [gate2-multiseed-20261106-1626-g2f.md](soaks/gate2-multiseed-20261106-1626-g2f.md): Gate 2 multi-seed run 20261106-1626-g2f: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1580 virtual minutes (26.3 virtual h)...)
+- [gate2-multiseed-20261107-0150-g2g.md](soaks/gate2-multiseed-20261107-0150-g2g.md): Gate 2 multi-seed run 20261107-0150-g2g: NOT PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1699 virtual minutes (28.3 virtual h)...)
+- [gate2-multiseed-20261107-0953-g2g2.md](soaks/gate2-multiseed-20261107-0953-g2g2.md): Gate 2 multi-seed run 20261107-0953-g2g2: PASSED (indicative: 2 seed(s), a real claim needs 5) (status: current. 2 finished hidden d2d soaks (seeds 19, 21), each cut to 2237 virtual minutes (37.3 virtual h) so...)
+- [gate2-multiseed-20261107-1811-g2h.md](soaks/gate2-multiseed-20261107-1811-g2h.md): Gate 2 multi-seed run 20261107-1811-g2h: PASSED (indicative: 3 seed(s), a real claim needs 5) (status: current. 3 finished hidden d2d soaks (seeds 11, 13, 17), each cut to 1780 virtual minutes (29.7 virtual h)...)
 - [gate2-s11-20261103-1954-g2a.md](soaks/gate2-s11-20261103-1954-g2a.md): Gate 2 run (2026-11-03): NOT PASSED (status: current. One finished hidden d2d soak (2313 virtual minutes = 38.5 virtual h in 480 wall min, 1 injected...)
 - [gate2-s11-20261104-1451-g2b.md](soaks/gate2-s11-20261104-1451-g2b.md): Gate 2 run (2026-11-04): NOT PASSED (status: current. One finished hidden d2d soak (1816 virtual minutes = 30.3 virtual h in 480 wall min, 1 injected...)
 - [gate2-s11-20261104-2331-g2c.md](soaks/gate2-s11-20261104-2331-g2c.md): Gate 2 run (2026-11-04): PASSED (status: current. One finished hidden d2d soak (2326 virtual minutes = 38.8 virtual h in 480 wall min, 1 injected...)
+- [gate2-s11-20261105-0805-g2d.md](soaks/gate2-s11-20261105-0805-g2d.md): Gate 2 run (2026-11-05): NOT PASSED (status: current. One finished hidden d2d soak (1889 virtual minutes = 31.5 virtual h in 480 wall min, 1 injected...)
+- [gate2-s11-20261105-1823-g2e.md](soaks/gate2-s11-20261105-1823-g2e.md): Gate 2 run (2026-11-05): NOT PASSED (status: current. One finished hidden d2d soak (1632 virtual minutes = 27.2 virtual h in 480 wall min, 1 injected...)
+- [gate2-s11-20261106-0822-g2f.md](soaks/gate2-s11-20261106-0822-g2f.md): Gate 2 run (2026-11-06): PASSED (status: current. One finished hidden d2d soak (1580 virtual minutes = 26.3 virtual h in 480 wall min, 1 injected...)
+- [gate2-s11-20261106-1728-g2g.md](soaks/gate2-s11-20261106-1728-g2g.md): Gate 2 run (2026-11-06): PASSED (status: current. One finished hidden d2d soak (1963 virtual minutes = 32.7 virtual h in 479 wall min, 1 injected...)
+- [gate2-s11-20261107-1008-g2h.md](soaks/gate2-s11-20261107-1008-g2h.md): Gate 2 run (2026-11-07): PASSED (status: current. One finished hidden d2d soak (1780 virtual minutes = 29.7 virtual h in 480 wall min, 1 injected...)
 - [gate2-s12-20261103-2210-g2v.md](soaks/gate2-s12-20261103-2210-g2v.md): Gate 2 run (2026-11-03): NOT PASSED (status: current. One finished hidden d2d soak (2740 virtual minutes = 45.7 virtual h in 480 wall min, 1 injected...)
 - [gate2-s13-20261103-2211-g2v.md](soaks/gate2-s13-20261103-2211-g2v.md): Gate 2 run (2026-11-03): NOT PASSED (status: current. One finished hidden d2d soak (15483 virtual minutes = 258.1 virtual h in 480 wall min, 1 injected...)
 - [gate2-s13-20261104-1452-g2b.md](soaks/gate2-s13-20261104-1452-g2b.md): Gate 2 run (2026-11-04): NOT PASSED (status: current. One finished hidden d2d soak (2207 virtual minutes = 36.8 virtual h in 480 wall min, 1 injected...)
 - [gate2-s13-20261104-2332-g2c.md](soaks/gate2-s13-20261104-2332-g2c.md): Gate 2 run (2026-11-04): NOT PASSED (status: current. One finished hidden d2d soak (10274 virtual minutes = 171.2 virtual h in 480 wall min, 1 injected...)
+- [gate2-s13-20261105-0806-g2d.md](soaks/gate2-s13-20261105-0806-g2d.md): Gate 2 run (2026-11-05): PASSED (status: current. One finished hidden d2d soak (2463 virtual minutes = 41.0 virtual h in 480 wall min, 1 injected...)
+- [gate2-s13-20261105-1823-g2e.md](soaks/gate2-s13-20261105-1823-g2e.md): Gate 2 run (2026-11-05): NOT PASSED (status: current. One finished hidden d2d soak (2178 virtual minutes = 36.3 virtual h in 480 wall min, 1 injected...)
+- [gate2-s13-20261106-0823-g2f.md](soaks/gate2-s13-20261106-0823-g2f.md): Gate 2 run (2026-11-06): PASSED (status: current. One finished hidden d2d soak (2103 virtual minutes = 35.0 virtual h in 480 wall min, 1 injected...)
+- [gate2-s13-20261106-1728-g2g.md](soaks/gate2-s13-20261106-1728-g2g.md): Gate 2 run (2026-11-06): NOT PASSED (status: current. One finished hidden d2d soak (2414 virtual minutes = 40.2 virtual h in 480 wall min, 1 injected...)
+- [gate2-s13-20261107-1007-g2h.md](soaks/gate2-s13-20261107-1007-g2h.md): Gate 2 run (2026-11-07): PASSED (status: current. One finished hidden d2d soak (2379 virtual minutes = 39.6 virtual h in 480 wall min, 1 injected...)
 - [gate2-s17-20261104-1453-g2b.md](soaks/gate2-s17-20261104-1453-g2b.md): Gate 2 run (2026-11-04): NOT PASSED (status: current. One finished hidden d2d soak (1972 virtual minutes = 32.9 virtual h in 480 wall min, 1 injected...)
 - [gate2-s17-20261104-2332-g2c.md](soaks/gate2-s17-20261104-2332-g2c.md): Gate 2 run (2026-11-04): PASSED (status: current. One finished hidden d2d soak (2024 virtual minutes = 33.7 virtual h in 480 wall min, 1 injected...)
+- [gate2-s17-20261105-0806-g2d.md](soaks/gate2-s17-20261105-0806-g2d.md): Gate 2 run (2026-11-05): NOT PASSED (status: current. One finished hidden d2d soak (1980 virtual minutes = 33.0 virtual h in 480 wall min, 1 injected...)
+- [gate2-s17-20261105-1823-g2e.md](soaks/gate2-s17-20261105-1823-g2e.md): Gate 2 run (2026-11-05): NOT PASSED (status: current. One finished hidden d2d soak (1789 virtual minutes = 29.8 virtual h in 479 wall min, 1 injected...)
+- [gate2-s17-20261106-0823-g2f.md](soaks/gate2-s17-20261106-0823-g2f.md): Gate 2 run (2026-11-06): NOT PASSED (status: current. One finished hidden d2d soak (1697 virtual minutes = 28.3 virtual h in 479 wall min, 1 injected...)
+- [gate2-s17-20261106-1729-g2g.md](soaks/gate2-s17-20261106-1729-g2g.md): Gate 2 run (2026-11-06): NOT PASSED (status: current. One finished hidden d2d soak (1699 virtual minutes = 28.3 virtual h in 480 wall min, 1 injected...)
+- [gate2-s17-20261107-1008-g2h.md](soaks/gate2-s17-20261107-1008-g2h.md): Gate 2 run (2026-11-07): PASSED (status: current. One finished hidden d2d soak (1899 virtual minutes = 31.6 virtual h in 480 wall min, 1 injected...)
+- [gate2-s19-20261107-0151-g2g2.md](soaks/gate2-s19-20261107-0151-g2g2.md): Gate 2 run (2026-11-07): PASSED (status: current. One finished hidden d2d soak (2237 virtual minutes = 37.3 virtual h in 480 wall min, 1 injected...)
+- [gate2-s21-20261107-0151-g2g2.md](soaks/gate2-s21-20261107-0151-g2g2.md): Gate 2 run (2026-11-07): PASSED (status: current. One finished hidden d2d soak (2986 virtual minutes = 49.8 virtual h in 480 wall min, 1 injected...)
+- [recoverypace.md](soaks/recoverypace.md): recoverypace: the early-game gold loop (TASK-183) (status: measured 2026-11-08 (EST), lockstep d2d, `d2bot play` (ladder on = player profile), lab verbs off, writes...)
 - [soakskills.md](soakskills.md): Soak report: per-skill fields (change soakskills)
 - [soakstall.md](soakstall.md): Soak stall: area ping-pong without kills (run gate1-20261101-1704)
 - [stallfatal.md](stallfatal.md): Stall, ladder rung 4 and "the game is gone" (soaks 2026-10-29)
@@ -712,11 +882,15 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `archive/`
 
+- [redivivus-sister-project.md](archive/redivivus-sister-project.md): Redivivus (jaenster/redivivus): what it is and what it means for us (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [restloop.md](archive/restloop.md): Sorceress rest loop on i4 (diagnosis from the log, no game)
+- [review-batch2-C-opus.md](archive/review-batch2-C-opus.md): Review: batch C (mana on the action frame, the scheduler tick, the armor group), independent Opus check (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [review-community-prs-20261102.md](archive/review-community-prs-20261102.md): Review of community PRs 19 (PALAURA), 22 (PALDUR) and 23 (PALSKILL), 2026-11-02 (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [review-day.md](archive/review-day.md): Review: merges ffecf16..f3b7a45 (2026-10-29, REVIEW2)
 - [review-evening.md](archive/review-evening.md): Review: evening merges 51c18d9..ee33d7d (agent REVIEW3, 2026-10-29)
 - [review-night.md](archive/review-night.md): Review: night merges (0ba00fe..b068c2a)
 - [review-overnight.md](archive/review-overnight.md): Merge-risk review: overnight / 24 h soak (master a5ff398)
+- [review-pr180-20261103.md](archive/review-pr180-20261103.md): Review of upstream PR 180 (private) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 
 `archive/review/`
 
@@ -730,6 +904,17 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `archive/`
 
 - [sandbox.md](archive/sandbox.md): Wine mount sandbox (agent SANDBOX) (status: ARCHIVED 2026-10-31 (doctrim): moved here from its old path (a stub remains there). The status line below...)
+- [verify-alignment2.md](archive/verify-alignment2.md): Verification of alignment2-trace.md: alignment (stat 0xac) and the undead-blow gate (card verifyalign,... (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verify-dmgroll4.md](archive/verify-dmgroll4.md): Fourth verifier: monster damage roll r4 (DMGROLL, `local/batch2-monsterdmg-r4` 9ea2afe9) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifycovmissiles-trace.md](archive/verifycovmissiles-trace.md): Independent verification: the missiles coverage first pass (covmissiles-trace.md) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyitemweapons.md](archive/verifyitemweapons.md): Verification of the weapon-bases first pass (verifyitemweapons) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifylevelsareas.md](archive/verifylevelsareas.md): VERIFYLEVELSAREAS: independent check of levelsareas-trace.md (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifypalaura.md](archive/verifypalaura.md): VERIFYPALAURA: independent re-check of `palaura-trace.md` (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifypalskill2.md](archive/verifypalskill2.md): Verify PALSKILL: independent re-check of the Smite, Zeal and Sacrifice trace (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyskamazon-trace.md](archive/verifyskamazon-trace.md): Independent verification: SKAMAZON (first-pass Amazon trace) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyskdruid.md](archive/verifyskdruid.md): Independent verification of SKDRUID (Druid skills 221..250, calc aspect) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyteleroom-trace.md](archive/verifyteleroom-trace.md): VERIFY-TELEPORT-ROOM: independent re-check of the Teleport room rule (card verifyteleroom) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifywaypoint2-trace.md](archive/verifywaypoint2-trace.md): Verify the waypoint refusal claim, second pass (agent verifywaypoint2, 2026-11-02) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [wave2.md](archive/wave2.md): Wave 2: contracts between agents
 
 ## Root documents
@@ -743,202 +928,3 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [/README.md](../README.md): d2lod-bot (d.idle)
 
 <!-- END GENERATED INDEX -->
-- docs/t0-slice.md - T0 slice phase A: wired points, refusals with witnesses, API changes wanted from internal/decide
-- docs/probes/t0drill.md - T0 drill phase B commands (not run)
-- docs/t0-slice.md - ladder T0 slice: five wired town points, parity grids, seams, waiting list
-- research/watch-screen-design.md - watch screen layout, JSON contract, bot integration, API needs (TASK-20)
-- watch-screen.md - how to run the watch screen on d2dview (TASK-20)
-- docs/t0-slice.md: phase A3, T0 fight-time points wired
-- docs/t0-slice.md: how to run the ladder and the watch screen on the real bot (d2bot -ladder -watch)
-- docs/soaks/gate2-multiseed-20261105-1607-g2d.md: Gate 2 multi-seed run 20261105-1607-g2d (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
-- docs/research/watch-screen-design.md section 8 Game video (d2bot --watch-video)
-- docs/research/orders-ux-design.md - orders UX design: map, order sheet, queue, guard conflict, 3 slices; mock docs/research/mocks/orders.html
-- docs/research/orders-ux-design.md section 11: orders UX slice 1 as built, guard behaviour, area graph differences
-- docs/soaks/gate2-multiseed-20261106-0225-g2e.md: Gate 2 multi-seed run 20261106-0225-g2e (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
-- docs/research/tester-build-plan.md: gap list, slice plan and open questions for a friend running d.idle in the Wine container (game-dir mode only)
-- docs/research/tester-build-plan.md revised: d2d first, d.idle fork shipped with its source, Wine plan as appendix
-- docs/d2d-view.md section "Game video from the tap" (d2bot --watch-video-source tap, the /frame sampler finding, tap port 8893)
-- docs/d2d-container/README.md - tester profile, env table, first run, lab-verb gating finding
-- cmd/d2dsetup/README.md :: d2d tester first-run wizard (data check, character, goals, start)
-- docs/research/onboarding-ux-design.md and docs/research/mocks/onboarding.html: onboarding flow for the d2d tester build (inspired by Palimpsest); design plus mock
-- docs/research/backlog-groom-2026-11-06.md: backlog audit (every task, verdicts, label scheme, causes of the stray labels and the folded title, new tasks, proposed removals)
-- docs/onboarding-slice-a.md | onboarding slice A: setup stepper, go-ahead, passcode or token access, reset command
-- docs/research/mocks/friends-preview.html - one-file clickable preview of the d.idle flow for friends feedback (fake data)
-- docs/soaks/gate2-multiseed-20261106-1626-g2f.md: Gate 2 multi-seed run 20261106-1626-g2f (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
-- docs/research/g2f-diagnosis.md - Gate 2 g2f diagnosis: seed 17 merc economy, seeds 11/13 compared, early death 13, tp field, mouthRef, needs the user
-- docs/lab-verbs.md: the fork --lab-verbs gate (which debug verbs are gated, who passes the flag, proof)
-- docs/research/fidelity-matrix.md and docs/research/fidelity-probe-design.md: what the bot depends on versus game.exe, how each row is verified, same-save probe design
-- docs/ab-merc.md: paired A/B of the merc revive reserve (late-start variant), run plan
-- docs/probes/shortdrills.md: short live drills for the g2e/g2f fixes (cmd/d2drill -group E1)
-- docs/research/custom-items.md: custom items and drop-table overlays on d2d, two-mode rule, first-item proposal
-- docs/research/metacurrency-design.md - per-character and account-wide currencies from custom items: registry, storage, sources, sinks, first slice
-- docs/research/metacurrency-design.md now approved by the user 2026-11-06
-- docs/overlay.md - table overlay file format, keys per table, mode stamp (d.idle mode)
-- docs/research/currency-rows.md - Raven's Mark overlay rows, rate and bank recipe (TASK-63); docs/probes/currency1.md - currency slice 1 live acceptance (pending)
-- docs/currency.md - currencies: registry file, ledger format, bank operation, watch screen block
-- docs/soaks/gate2-multiseed-20261107-0150-g2g.md: Gate 2 multi-seed run 20261107-0150-g2g (NOT PASSED (indicative: 3 seed(s), a real claim needs 5)), per-seed criteria, d2dsoak output
-- docs/research/g2g-diagnosis.md: Gate 2 g2g wave 1 failure diagnosis (merc economy, NOKILL/BELT causes, ranked fixes)
-- docs/probes/shortdrills.md: drill 7, scroll before gear and equip failure (g2g seed 17 S1, seed 13 E1)
-- docs/research/fork-publication-scan.md; docs/fork-publication/FORK-README.md; docs/tester-licence.md
-- docs/fork-publication/PUBLISHED.md - where the d.idle fork is published, refs, tags, rename incident
-- [probes/fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe and first-live-run checklist (status: unverified until the first live run)
-- docs/research/g2g-five-seed.md: Gate 2 g2g combined five-seed verdict (waves 1 and 2), belt re-judge of wave 1, merc numbers, paired comparison with g2f
-- docs/soaks/gate2-multiseed-20261107-0953-g2g2.md: Gate 2 g2g wave 2 record (seeds 19, 21), per-seed criteria, d2dsoak output
-- docs/research/fidelity-cards.md: backlog map of the fidelity cards (card, matrix rows, kind, d2d area, live, size, deps, label counts)
-- docs/research/fidelity-probe-run1.md - fidelity probe runs 1 and 2: per-scenario results, classified mismatches, candidate upstream PRs
-- research: [direction-review.md](research/direction-review.md): 2026-11-07 review of product direction, foundation, process cost, design hypotheses, player-experience pass, stop list, two-week plan, risks, decisions for the user
-- docs/adr/0017-direction-fun-first-2026-11-07.md - direction for the next two weeks (decisions D1 to D5 of the direction review)
-- docs/research/fid-loadhp-trace.md | life and mana at load, d2d against game.exe, pilot fix and test design
-- docs/research/pr-load-life-mana-draft.md | DRAFT NOT POSTED: keep saved life and mana at load
-- docs/research/pr-bundle-queue.md: upstream rules as of 2026-11-07 and the fidelity-fix bundle entries
-- docs/research/fid-loadhp-trace.md - character load of life/mana/stamina: game.exe addresses, oracle result, client whole-point copy (TASK-101)
-- docs/research/review-load-life-mana-opus.md: independent Opus verification of the load life/mana candidate r2 (TASK-101): loader claim holds (incl. live stat callback), limits for after-load rescale, d2d refresh clamp, life-0 saves
-- docs/research/g2h-wave3a.md: Gate 2 wave 3a (g2h) vs g2g per seed, merc numbers, three-fix proof checklist, reload-heal caveat
-- docs/soaks/gate2-multiseed-20261107-1811-g2h.md: Gate 2 multi-seed run g2h (PASSED, indicative: 3 seeds), per-seed criteria, d2dsoak output
-- docs/research/self-update-design.md - self-update design for the tester container: ghcr publishing plan, signed in-app updater, rollback, threat model, phases, open decisions (user decision 2026-11-07)
-- docs/research/decision-dataset.md: decision dataset schema v1 (JSONL per decision-point firing, privacy, size estimate); logged by the session record (TASK-106)
-- docs/research/fun-ideas.md: the converged d.idle loop (expeditions, tally, policy sheet, Codex, legacy charm) with the incremental-games research and the comparison of dropped ideas
-- docs/research/fun-ideas.md: now the final design-conversation doc: decisions so far, skill-unlock reconciliation, prototype plan, ADR-ready block
-- docs/adr/0018-fun-loop-expedition-ledger-2026-11-07.md - the Expedition Ledger loop, Act 1 Codex, Hall of Fame (ADR 0018)
-- docs/research/fid-revive-refill.md | what game.exe's respawn refills (life, mana, stamina to the maxima) and d2d's Fight::revive; oracle, deviations, drill recipe (TASK-125)
-- docs/research/pr-revive-refill-draft.md | PR draft: a respawn after death refills life, mana and stamina (candidate, unverified, not opened)
-- docs/research/fid-vendor-price-trace.md - vendor buy/sell/repair/quote prices, game.exe vs upstream main 9c78f391 (negative result, counted differentials, VN03 tomes, drill recipe)
-- docs/probes/fid/fid-skill-damage-pr.md: skill damage (SK02) re-run on upstream main, all proven deviations already merged, no PR candidate (TASK-89)
-- docs/tally-strip.md - tally sources, charter sink, strip and summary (TASK-129)
-- docs/tester-live.md - first end-to-end run of the tester container, MPQ answer, defects, 1 h realtime session; docs/tester-realtime.md - lockstep assumption audit for realtime
-- docs/return-screen.md - the return screen: what it shows, data sources, sections registry, wiring.
-- docs/tester-imgrepro.md - tester image from public inputs: vendored input versions, hashes, licences, sentry decision, proof
-- docs/research/review-revive-refill-opus.md: Opus verification of the revive refill candidate (TASK-125): HOLDS, READY as r2 (test moved to its own file)
-- docs/codex.md | Act 1 Codex and firsts: table, tracker, /api/codex, reader status (TASK-130)
-- docs/research/pr-bundle-queue.md: fid-revive-refill row now OPEN as PR #245
-- docs/fresh-start-pace.md - why a fresh tester hero crawled in Blood Moor (TASK-138)
-- docs/session-record.md: session record, decision dataset files, `d2bot play` and `d2bot sessions export`
-- docs/policy-sheet.md: the chores policy sheet, its table, effect counters, return-screen cards, built vs verified, gaps
-- docs/research/class-early-game.md: per-class early game, veteran estimate (unlocks, chores, charms, pacing), not measured
-- docs/research/info-unlocks.md - progressive view-only senses for the watcher (minimap, enemy dots, bars, elites), tier ladder, feasibility, cards TASK-148 to 152
-- docs/research/unlockables.md - unlockable features brainstorm: the ten, first-40-minutes schedule, patterns, cautions (not a decision)
-- docs/belt-plan.md | belt plan knob: templates, column overrides, where the plan acts, safety floor | TASK-164
-- [proposezone.md](proposezone.md): the hero proposes the next zone, away rule, answer routes, charter on accept (status: built offline, not wired)
-- docs/research/pact-system.md - Pact system design note: opt-in challenge rules, heat, unlocks, catalogue, away safety (not a decision)
-- docs/adr/0019-pacts-and-unlocks-2026-11-07.md: Pacts, information unlocks and the unlock ladder (user, 2026-11-07)
-- docs/paladinsmoke.md - Paladin smoke of the fun-loop slices (TASK-142): pace, Codex firsts, slices, container numbers, defects
-- docs/palmelee.md - why the Paladin never hit on d2d, the Swing fix, drill and realtime numbers
-- docs/probes/ptrclick.md - d2d left-click uses last frame hover unit: harness or deviation, probe plan (TASK-179)
-- docs/senses-map.md - side-panel minimap: data flow, schema, fog, tier hook, live checklist
-- docs/research/skill-req-check.md - SME skill clvl requirements checked against the tables (TASK-132)
-- docs/self-update-release.md - signed app release manifest, d2sign tool, asset builder and the inert workflow draft
-- docs/classchores.md - per-class chore defaults data and how the policy sheet reads them
-- docs/probes/pactnative.md - native difficulty levers on 1.14d: /players works offline and scales monster life, Hardcore creatable, Nightmare/Hell penalties and elite-count columns from the tables (TASK-170)
-- docs/pact-catalogue.md - the Pact catalogue data, loader and rules
-- docs/skill-unlocks.md - per-class skill unlock table, leveler rule, free-choice point (TASK-133)
-- docs/sorcnormal30.md - Sorceress normal30 table, selection, open choice
-- docs/hall-of-fame.md - Hall of Fame, titles and the optional retire after Andariel (watch)
-- docs/self-update-client.md - self-update client package, watch update API and banner, env switches
-- docs/palready.md - Might aura on d2d and the dry-recovery rule (TASK-180)
-- docs/pact-botside.md - the Pact controller on the bot: levers, safe zones, consent, off switch
-- docs/self-update-drill.md - boot shim, rollback rules, image changes and the worker-host drill checklist
-- docs/unlock-ladder.md: the shared unlock framework (trigger table, persistence, reveal, API)
-- docs/tester-registry.md - publish prep for the tester image on ghcr.io (what the user must do, GPL offer, risks, first-publish checklist)
-- docs/pact-away.md - Pact away safety: presence, consent API, life floor, Hardcore flag
-- docs/pact-ui.md - Pact offer UI: routes, view model, unlock, cost-and-paid section
-- docs/unlock-chronicle.md - Chronicle: kill and loot feed in D2 words, timeline tape (TASK-154)
-- docs/unlock-voice.md - Hero voice and diary: a line per milestone, data table, mute (TASK-155)
-- docs/senses-unlock.md: the senses tiers on the unlock ladder (table, precedence with senses.tier, gating)
-- docs/unlock-questlog.md - Quest log: Act 1 quests with objective and reason, from the existing quest events (TASK-156)
-- docs/unlock-idreveal.md - Identify reveal: face-down cards for magic and rare finds, flip to reveal, what the bot does with unidentified items (TASK-157)
-- docs/senses-units.md: senses units (enemy dots, target bar, elite markers), data flow, tier privacy, live checklist
-- docs/pact-ui.md and docs/unlock-ladder.md updated for the Pact ladder entries
-- internal/decide/champmods.json: monster modifier id to display name table for the senses elite markers
-- docs/unlock-bestiary.md - Cain's notes bestiary (TASK-158): cards per monster kind, 10 and 50 kill steps
-- docs/soaks/classpacing.md - measured early-game pace per class (TASK-147)
-- docs/unlock-atlas.md - waypoint atlas (TASK-160): lit and silhouette Act 1 waypoints, the hero's proposed next zone
-- docs/unlock-risk.md: hero risk meter (TASK-159), a ready / marginal / turn-back verdict from the bot's own guard, kit and life lines
-- docs/unlock-orderqueue.md: order queue (TASK-161), up to three orders in turn, slots owned by the unlock ladder, optional tally purchase
-- docs/unlock-alerts.md - alerts and pings: rules, in-page channel, outbound interface (off), ladder row
-- docs/unlock-ladder.md - now lists every ladder row and the live wiring of bestiary, risk, order queue and atlas
-- docs/soaks/equipfail.md: why equip clicks failed in 7 of 8 class runs, fix and before/after numbers (TASK-182)
-- docs/first-session.md: first play session guide (start, screens, wired vs fixtures table, 30 minute run sheet, baseline sessions, troubleshooting, known broken, for a friend) (TASK-134)
-- docs/soaks/recoverypace.md - recoverypace: why the early game is a gold loop, the fix and the before/after drill (TASK-183)
-- docs/smoke.md - smoke run: how to run, rules, cost, difference from Gate 1/2 (tools area)
-- docs/senses-map.md: contiguous areas section (adjacency table, derived offset)
-- docs/walksmooth.md - walksmooth: the stop-and-go walk, evidence from the user's session log, fix and tests (TASK-188)
-- docs/stance.md - fight stance row and the 2026-11-08 Paladin feedback diagnosis
-- docs/dev-update.md :: dev-loop update, a new bot build in a running container without an image rebuild (TASK-192)
-- docs/watch-origin.md: same-origin rule for login and setup POSTs (Origin null, Sec-Fetch-Site)
-- docs/research/update-surface.md: update surface review: layered image inventory with measured sizes, platform ABI contract, migrations, A/B stage-0 shim, root-key delegation, phased cards P1-P4
-- docs/research/incremental-arpg.md: deep pass on idle/incremental ARPG-like games, top mechanics to borrow, anti-patterns, proposed cards
-- docs/quest-hints.md - quest hints in town: the rule, the table with verified tags, the live drill checklist
-- docs/research/incremental-arpg.md: second pass: walled games read (Godville, Melvor, IdleOn, Idle Champions), why people watch bots, loot-filter and return-screen precedents, 3 new cards
-- docs/probes/panels-live.md - live check of the watch APIs against lockstep Paladin and Sorceress runs
-- docs/soaks/classpacing2.md - seven classes x seeds 7, 11, 13, 90 virtual minutes, mean and range, gate-tuning Paladin arm
-- docs/research/fid-loadmaxmana-trace.md | TASK-102 trace: the Paladin max mana at load, d2d keeps 4992, the 19.0 was the bot reader (2026-11-08)
-- docs/probes/fid/fid-price-pr.md | TASK-76 price oracle re-run on upstream 1453f853, already upstream (2026-11-08)
-- docs/probes/fid/fid-belt-pr.md | TASK-78 belt pickup and shift-click oracle, 780,000 cases 0 differ (2026-11-08)
-- docs/probes/fid/fid-inv-limits.md | TASK-79 purse and stash caps, grids, and the load gold clamp deviation (2026-11-08)
-- docs/probes/fid/fid-hit-recovery.md | TASK-91 get-hit length, decision, drawn frames, FHR breakpoint table (2026-11-08)
-- docs/research/pr-load-gold-draft.md | TASK-203 local PR draft: a saved purse or stash over its cap is 0 on entering a game (2026-11-08)
-- docs/walksmooth.md: walksmooth2 section (measured causes, trace lines, fix)
-- docs/whyline.md - why-line under the video card: reason codes, templates, hold rules
-- docs/policy-preview.md - policy preview (dry run before saving a policy row), honesty rule, which rows support it
-- docs/probes/fid/fid-missile-player.md | TASK-83 player missile flight, reach, roll, Nova and the Lightning pierce deviation (2026-11-08)
-- docs/probes/fid/fid-status-effects.md | TASK-87 freeze, chill, freeze end equal; curse put rule deviation (2026-11-08)
-- docs/probes/fid/fid-monster-move.md | TASK-82 monster velocity, pathers, the 77-point path (2026-11-08)
-- docs/probes/fid/fid-boss-mods.md | TASK-85 unique / champion / superunique mods re-run, Cold Enchanted chill length (2026-11-08)
-- docs/probes/fid/fid-xp-award.md, fid-missile-monster.md, fid-boss-skills.md, fid-teleport.md - decomp7 oracle re-runs on upstream main 7557a54d (matrix rows ST10, MA10, MA06, SK-TELE)
-- docs/inventory-ui.md - inventory page on the watch screen: marks, player equip, pins (TASK-212)
-- docs/research/player-power.md - player power vs area danger: no single number exists; community checklists; proposed per-threat readiness check (agent powerres, 2026-11-09)
-- docs/repair.md - manual gear repair, Repair now, repair modes on the unlock ladder (TASK-226)
-- docs/desktop-app.md - desktop launcher for the watch page: stack decision, same-origin rule, build and test (area: watch)
-- docs/ui-design-system.md and docs/ui-regression-plan.md added (build_index.py run); docs/research/ui-design.md listed in docs/research/README.md; docs/mockups/ui/ (static HTML)
-- tools/uilint: the watch UI panel-contract linter (docs/ui-regression-plan.md section 2); allow-list in tools/uilint/allow.txt
-- internal/watch/web/panels/: watch UI panel modules (panel.json, panel.css, panel.js) placed by web/shell.js (docs/ui-design-system.md sections 4 and 6)
-- docs/mockups/ui/renders/ (PNG renders, all under 400 KB); docs/ui-design-system.md gains components 13 (paper doll) and 14 (cells)
-- docs/mockups/ui/editor.html and renders/editor-*.png; docs/ui-design-system.md section 6.4 Layout manifest; docs/ui-regression-plan.md PR 14 uilayout
-- tools/uishots.sh and tools/uishots/: watch UI screenshot suite (headless Chrome on a private Xvfb on the worker host, frozen fixture viewer, DOM check, pixel diff)
-- docs/ui-design-system.md section 0: the watch UI compatibility promise; internal/watch/testdata/compat/ holds its golden fixtures (only added to)
-- research/beta-readiness-review.md: friends-beta play review from the sandbox log and docs
-- docs/readiness.md - readiness model: per-threat checks for a hero against an area (TASK-217, TASK-218)
-- docs/killloop.md - where the seconds per kill go on the sandbox Paladin (ranked waits, area xp/h)
-- docs/quest-givers.md - the hero visits quest givers in town when a quest is available (TASK-243)
-- docs/probes/fid/fid-wp-tp-pr.md | waypoint refusal window and Town Portal read, d2d against game.exe, 0 differ on 83fc7ba1 (TASK-95)
-- docs/probes/fid/fid-layout-act1.md | layouts of 34 more Act 1 levels, game.exe against d2d, 0 differ (TASK-80)
-- docs/probes/fid/fid-stock-oracle.md | vendor stock generation 0 differ, refresh rule partly read (TASK-77)
-- docs/areathrash.md - area thrash, cave-mouth holds, Dark Wood exit analysis
-- docs/research/paperdoll-art.md: real Diablo II art for the /watch/inventory paper doll (runtime extraction from the user install, MPQ file map, licence, PR plan)
-- docs/paperdoll-art-build.md - paper doll game art as built (internal/art, endpoints, UI), read at runtime from the user's MPQs
-- research/project-review-2026-11-10.md: whole-project review and true-up 2026-11-10 (Fable): ranked steering, the week since the 11-03 review, backlog true-up lists, research fit, beta exit criteria, efficiency and token recommendations, open questions
-- docs/live-checks.md - open live checks of closed cards, one row each (TASK-253)
-- docs/palprofile.md - Paladin attack order data change and what the profile format cannot express
-- docs/pursuers.md - the hero that walks on with followers; nav.pursuit rule and the log evidence
-- docs/lootskip.md: why ground potions were skipped, decided pickup rule
-- docs/goldfarm.md - Farm gold order (target amount, safe zone as plan data, endpoint, interaction with poverty and the area breaker)
-- docs/research/sorceress-table-plan.md: the Sorceress normal30 table already exists (TASK-144); what is still missing for a friends Sorceress, data vs Go, work packages and estimate (SORCPLAN)
-- docs/agents/brief-template.md: the 12-line agent brief template
-- docs/first-hour.md - the first-hour daily table tool (TASK-245)
-- docs/act-plan.md - per-class recommended and floor levels for the Andariel gate (TASK-250)
-- docs/dev-reset.md: reset the play sandbox to a fresh hero, archive and restore (TASK-263)
-- docs/sorceress-early.md - Sorceress clvl 1-12 SME proposal, wizard/table finding, live measurement plan (TASK-267)
-- docs/sorceress-early.md - section 7: sorcready2 applied decisions (Sorceress normal30 default, Warmth, cold line, class-table guard)
-- research/legal-note.md - GPL, Blizzard EULA posture, art on streams, pre-friend-copy checklist (TASK-257)
-- docs/research/desktop-electron.md - Electron rebuild of the desktop launcher: version, security posture, packaging, layout, licences, effort (area: watch)
-- docs/inventory-tooltip.md: item tooltip on the inventory page, data audit, what is missing, behaviour
-- docs/research/architecture-review-2026-11-10.md: review of containers plus web UI versus a native all-in-one app; decision matrix, costs, risks, migration plan; recommends one release layout with native and container packagings and a hosted beta first
-- docs/friend-feed.md - D2BOT_UPDATE_FEED, user-controlled update feed with pinned keys
-- docs/friend-guide.md - Linux install guide for the friends pack (install, didle commands, licence note, publisher build)
-- docs/friend-feed.md - now also the release runbook, rollback and static server snippets
-- docs/gear-policy.md: the player decides equipment, what the bot does and does not do, onboarding prompt, Gear Sets unlock hook
-- docs/ui-design-system.md section 15.5: the layout manifest in the shell (ids, placement, routes, Edit layout)
-- docs/research/merc-gear.md: merc gear policy, d2d hireling screen, merc doll UI and action model
-- docs/inventory-actions.md - inventory page item action menu: request model, open opportunity, trash primitive, API schema 3, live checks
-- docs/ui-design-system.md section 15.6: the top band panels and the hero stats tile
-- docs/desktop-electron.md - the Electron desktop app: layout, run/test/build, security posture, findings (TASK-289)
-- docs/desktop-electron.md - now also covers the tray, autostart, hide-to-tray and the update check (TASK-290)
-- docs/ui-design-system.md section 15.7: finishing polish, the gear prompt note, what is still open from the mockup
-- docs/desktop-electron.md macOS section (build, install steps, Gatekeeper workaround)
-- docs/ui-design-system.md section 15.8: Edit layout drop bug and the live push-down preview
-- docs/viewer-fps.md: viewer game video fps, sandbox measurements, framefeed ring design and staged plan (TASK-293)
-- docs/denshuttle.md: Den of Evil / Blood Moor shuttle, sandbox hour analysis and the potion entry/stay gap (TASK-295)
-- docs/inventory-actions.md: identify commands section (research, API schema 5, live checks 8 to 12)
-- docs/viewer-fps.md section 6: sandbox A/B of the d2d frame feed (before/after table, rollback)
-- docs/aggression.md: Paladin pack aggression evidence, detection audit, futile-window fix, knob before/after
-- docs/roamspacing.md - roam coverage spacing study, new defaults, detour marking

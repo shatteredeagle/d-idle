@@ -1,10 +1,13 @@
 ---
 id: TASK-292
-title: 'uiedit: layout editor drops into any free cells and previews a drag live with push-down'
-status: Proposed
+title: >-
+  uiedit: layout editor drops into any free cells and previews a drag live with
+  push-down
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T02:13:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - watch
   - bug

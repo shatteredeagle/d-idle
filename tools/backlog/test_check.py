@@ -26,6 +26,17 @@ class T(unittest.TestCase):
     def test_clean(self):
         self.assertEqual(self.run_dir([task(1, "a"), task(2, "b", "Deferred", ("ops", "chore", "parked"), asg="", size=False)]), [])
 
+    def test_research_consumer_warning(self):
+        old = task(1, "a", labels=("docs", "research"), extra="created_date: '2026-11-01T00:00:00Z'\n")
+        new = task(2, "b", labels=("docs", "research"), extra="created_date: '2026-11-12T00:00:00Z'\n")
+        ok = new.replace("why", "Consumer: TASK-9").replace("TASK-2", "TASK-3").replace('"b:', '"c:')
+        with tempfile.TemporaryDirectory() as d:
+            for i, t in enumerate([old, new, ok], 1):
+                (Path(d) / f"task-{i} - x.md").write_text(t)
+            w = check.warnings(d)
+        self.assertEqual(len(w), 1)
+        self.assertIn("task-2", w[0])
+
     def test_duplicate_task_id(self):
         out = self.run_dir([task(5, "a"), task(5, "b")])
         self.assertEqual(len(out), 1)

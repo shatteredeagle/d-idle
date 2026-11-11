@@ -715,6 +715,11 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - aggression (TASK-300): sweep futile window was 90 s after a Clear that found nothing because its target died (remaining 0), blinding the hero to the next pack and shaman revives; now 3 s; evidence and knob changes in docs/aggression.md
 - TASK-301 roamspacing: roam coverage grid is now knobs nav.roamSpacing/nav.roamCover (default 16/10, was 7/5), NotePosition marks detours, docs/roamspacing.md
 - TASK-302 viewerfps3: the watch screen video relays the tap stream (was a 4 fps /frame poll), the tap sends evenly spaced frames (every 3rd 60 Hz draw, 20 fps, 50 game ms), docs/viewer-fps.md section 7
+- roammemory: roam coverage is remembered per level for the whole game (docs/roamspacing.md)
+- aggression2 (TASK-305): the nav pack hand-over cleared once for 4 s and the walk ran on with the pack alive; now repeats while hostiles die; waypoint walk yields to followers; fight lines carry end, remaining, life, mana
+- sharedgen: generate STATUS block, BACKLOG and CHANGELOG at merge (TASK-255, merged 2026-11-11, acceptance 4 of 5): Offline: unit tests, merge.sh case 19 and a rehearsal on a scratch bare repo; not verified live <!--sg:agent/sharedgen-->
+- livechecks: docs/live-checks.md and the closing rule (TASK-253, merged 2026-11-11, acceptance 3 of 3): Auto-Done on in the worker; scan applied; offline tests; live-check rows are unverified by nature <!--sg:agent/autodone-->
+- processrules: agent sizing, brief rules, deploy windows, research hygiene, efficiency checklist (TASK-310, merged 2026-11-11, acceptance 5 of 5): rules-short.md, brief template, dispatcher brief (public and ops), 9 ops agent definitions, deploy-window.sh + offline test, research-consumer WARN in check.py, 7 digests, coordinator-efficiency.md. Offline, not verified live. <!--sg:agent/processrules-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

@@ -8,6 +8,7 @@ One line per finding, "<code> TASK-N <card> [<status>]: <what>":
   B  status Done but some acceptance box is unticked
   C  In Progress, owns: paths exist, no commit on --ref (or HEAD) touched them in the last --days days
   D  a merge subject on --ref names the task (Merge agent/<card>, or task-N / TASK-N) but the task is not Done
+--summary prints the one-line CI form (tools/ci/check.sh; a warning only, the exit code is always 0).
 Standard library only. docs/backlog-howto.md, "Drift report".
 """
 import argparse
@@ -89,9 +90,18 @@ def main(argv):
     ap.add_argument("--repo", default=".")
     ap.add_argument("--ref", default="origin/main")
     ap.add_argument("--days", type=int, default=14)
+    ap.add_argument("--summary", action="store_true", help="CI warning form: counts per code and the first findings, prefixed 'WARN drift'")
     a = ap.parse_args(argv)
-    for ln in report(a.repo, a.ref, a.days):
-        print(ln)
+    lines = report(a.repo, a.ref, a.days)
+    if not a.summary:
+        for ln in lines:
+            print(ln)
+        return 0
+    counts = {c: sum(1 for ln in lines if ln.startswith(c + " ")) for c in "ABCD"}
+    print("WARN drift: %d finding(s) (A all boxes ticked but open %d, B Done with open boxes %d, C In Progress idle %d, D merged but not Done %d); "
+          "full list: python3 -I tools/backlog/drift.py" % (len(lines), counts["A"], counts["B"], counts["C"], counts["D"]))
+    for ln in lines[:5]:
+        print("WARN drift: " + ln)
     return 0
 
 

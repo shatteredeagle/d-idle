@@ -8,8 +8,8 @@
 - Create a task only when the brief says so: `python3 -I tools/backlog/new_task.py "<card>: <what>" --card <card> --owns <path> --component <c> --kind <k> --ac ".."` (closed label set below; keep the title under 80 characters).
 - Tick criteria with `backlog task edit <n> --check-ac <k>` (or the checkbox by hand), fill `result:` by hand (say verified live or not). After ANY CLI edit run `git diff` (expect quote-style noise) and `python3 -I tools/backlog/check.py`; a folded `title: >-` breaks the checker, rewrite it as one quoted line.
 - Never run `backlog init`, `archive` or `delete`; never edit another task's file or the status; the coordinator closes tasks at merge.
-- Shared files (BACKLOG.md, INDEX.md, CHANGELOG.md, OWNERS, STATUS.md) are not yours: put lines in `backlog/merge-lines/<branch>.txt` as `BACKLOG: ..`, `INDEX: ..`, `CHANGELOG: ..`.
-- Before reporting: `python3 -I tools/backlog/check.py`, `python3 -I tools/contracts/check.py`, `python3 tools/merge_lines_check.py --changed`.
+- Shared files (BACKLOG.md, INDEX.md, CHANGELOG.md, OWNERS, STATUS.md) are not yours and need no lines from you: the merge step generates them from your card (`title`, `result:`, ticked boxes, `owns:`), the queue summary and the branch name (`tools/sharedgen/sharedgen.py`). Keep the card true instead. A `backlog/merge-lines/<branch>.txt` (`BACKLOG: ..`, `CHANGELOG: ..`) is still accepted and then replaces the generated line; `INDEX:` lines are ignored (INDEX.md is built from the docs' own titles). Boxes that only ask for a live check may stay unticked: at merge they move to `docs/live-checks.md` and the card still closes; any other unticked box keeps it open.
+- Before reporting: `python3 -I tools/backlog/check.py`, `python3 -I tools/contracts/check.py` (and `python3 tools/merge_lines_check.py --changed` only if you wrote a legacy merge-lines file).
 - Brief shape you will receive: `docs/agents/brief-template.md`.
 
 ---
