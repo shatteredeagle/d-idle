@@ -431,6 +431,7 @@ func newRig(t *testing.T, mutate ...func(*Config, *Deps, *env.Tuning)) *rig {
 	clk := newClock()
 	tune := env.DefaultTuning()
 	tune.Campaign.DenMinLevelCaster, tune.Campaign.DenMinLevelMelee = 1, 1 // the Den flow tests start a clvl 2 Sorceress; the gate has its own tests
+	tune.Resource.GearDecisions = 1                                        // the old gear tests pin the bot-decides policy; the player policy has its own tests
 	tune.Resource.EarlyGearMax = 0                                         // the gate tests pin the full rules; early-gear tests set it back
 	in := input.NewFake(input.Point{})
 	e := &env.Env{ID: "t1", Log: slog.New(slog.NewTextHandler(io.Discard, nil)), In: nil, Tune: &tune, Clock: clk}

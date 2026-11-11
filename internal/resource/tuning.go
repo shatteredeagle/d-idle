@@ -57,10 +57,10 @@ type Tuning struct {
 	ManaPaysCasts    int
 	MinFieldBeltPct  int
 
-	GearGateMode, GearRiskMedium, GearRiskHigh, GearDeathsHigh, EarlyGearMax int
-	TripBudget                                                               int
-	TripWindowMin                                                            int
-	TripGoldFloor                                                            int
+	GearGateMode, GearRiskMedium, GearRiskHigh, GearDeathsHigh, EarlyGearMax, GearDecisions int
+	TripBudget                                                                              int
+	TripWindowMin                                                                           int
+	TripGoldFloor                                                                           int
 
 	RecoveryOn, RecoveryKitGold, RecoveryTargetGold, RecoveryMaxMin, RecoveryCooldownMin, RecoveryStallMin, RecoveryStallGold, RecoveryStallHoldMin, RecoveryPotionFloor, RecoveryManaFloor, RecoveryXPPick, RecoveryMaxAreaAbove int
 	RecoveryXPEarly, RecoveryKitGate, PovertySellMin, RecoveryEndOnKit                                                                                                                                                            int
@@ -116,6 +116,7 @@ func Knobs() []env.Knob {
 		k("gearRiskMedium", "Gear risk medium at", "points", "Risk points at which gear risk is medium (logged, rebuy priority).", d.GearRiskMedium, 1, 10, false),
 		k("gearRiskHigh", "Gear risk high at", "points", "Risk points at which gear risk is high and only the first field is open.", d.GearRiskHigh, 2, 20, false),
 		k("gearDeathsHigh", "Deaths that add gear risk", "deaths", "Deaths in the hour or in one area from which deaths add gear risk. Dying is normal: a few change nothing.", d.GearDeathsHigh, 2, 10, true),
+		k("gearDecisions", "Who decides equipment", "0/1", "0 = the player: the bot never equips, swaps or buys equipment and never fills an empty slot (it only advises); 1 = the bot (legacy: drills, soaks, measured runs set it through D2BOT_RUN, and the Gear Sets unlock). Potions, scrolls, keys, ammo, repair, selling and pickup are not equipment and do not change. docs/gear-policy.md.", d.GearDecisions, 0, 1, false),
 		k("earlyGearMax", "Early gear below clvl", "level", "Below this level armor is ignored (worn only if it drops and is better, never bought, never a trip or gate reason) and a weapon matters only for Amazon, Paladin, Barbarian, Assassin. 0 = off (old rebuy and gate). docs/sme/early-gear-policy.md.", d.EarlyGearMax, 0, 40, true),
 		k("tripBudget", "Trip budget", "trips", "Finished town trips allowed per window before a thin belt no longer sends the bot home (it drinks and fights on). 0 = no budget.", d.TripBudget, 0, 10, true),
 		k("tripWindowMin", "Trip budget window", "min", "Minutes the trip budget looks back.", d.TripWindowMin, 1, 60, true),
@@ -165,7 +166,7 @@ func FromEnv(t env.Tuning) Tuning {
 		MercDeadPack: r.MercDeadPack,
 		FleeLifePct:  r.FleeLifePct, KitTPGold: r.KitTPGold, KitPotionGold: r.KitPotionGold, PovertyMargin: r.PovertyMargin, PovertyLevels: r.PovertyLevels,
 		RetreatBelt: r.RetreatBelt, RetreatCountPack: r.RetreatCountPack, ManaPaysCasts: r.ManaPaysCasts, MinFieldBeltPct: r.MinFieldBeltPct,
-		GearGateMode: r.GearGateMode, GearRiskMedium: r.GearRiskMedium, GearRiskHigh: r.GearRiskHigh, GearDeathsHigh: r.GearDeathsHigh, EarlyGearMax: r.EarlyGearMax,
+		GearGateMode: r.GearGateMode, GearRiskMedium: r.GearRiskMedium, GearRiskHigh: r.GearRiskHigh, GearDeathsHigh: r.GearDeathsHigh, EarlyGearMax: r.EarlyGearMax, GearDecisions: r.GearDecisions,
 		TripBudget: r.TripBudget, TripWindowMin: r.TripWindowMin, TripGoldFloor: r.TripGoldFloor,
 		RecoveryOn: r.RecoveryOn, RecoveryKitGold: r.RecoveryKitGold, RecoveryTargetGold: r.RecoveryTargetGold,
 		RecoveryMaxMin: r.RecoveryMaxMin, RecoveryCooldownMin: r.RecoveryCooldownMin, RecoveryStallMin: r.RecoveryStallMin, RecoveryStallGold: r.RecoveryStallGold, RecoveryStallHoldMin: r.RecoveryStallHoldMin, RecoveryPotionFloor: r.RecoveryPotionFloor, RecoveryManaFloor: r.RecoveryManaFloor, RecoveryXPPick: r.RecoveryXPPick, RecoveryMaxAreaAbove: r.RecoveryMaxAreaAbove, RecoveryXPEarly: r.RecoveryXPEarly, RecoveryKitGate: r.RecoveryKitGate, KitGateLevel: r.KitGateLevel, KitMinHP: r.KitMinHP, KitMinMP: r.KitMinMP, KitTripCap: r.KitTripCap, PovertySellMin: r.PovertySellMin, RecoveryEndOnKit: r.RecoveryEndOnKit, BRAttempts: r.BRAttempts, BRLevelGap: r.BRLevelGap,
@@ -175,5 +176,8 @@ func FromEnv(t env.Tuning) Tuning {
 
 // Gear is the graded gear-gate tuning.
 func (t Tuning) Gear() GearTune {
-	return GearTune{Mode: t.GearGateMode, MediumAt: t.GearRiskMedium, HighAt: t.GearRiskHigh, DeathsHigh: t.GearDeathsHigh, EarlyMax: t.EarlyGearMax}
+	return GearTune{Mode: t.GearGateMode, MediumAt: t.GearRiskMedium, HighAt: t.GearRiskHigh, DeathsHigh: t.GearDeathsHigh, EarlyMax: t.EarlyGearMax, Player: t.GearDecisions == 0}
 }
+
+// BotDecidesGear says whether the bot may make equipment decisions (gear.decisions = bot). The default is the player.
+func (t Tuning) BotDecidesGear() bool { return t.GearDecisions != 0 }

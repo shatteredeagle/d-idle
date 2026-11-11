@@ -366,6 +366,9 @@ type Swap struct {
 	Old  *Cand // what the slot holds now, nil when empty
 }
 
+// SlotName is the short name of the body slot ("weapon", "body armor", ...).
+func (s Swap) SlotName() string { return slotName[s.Slot] }
+
 func (s Swap) String() string {
 	old := "empty"
 	if s.Old != nil {

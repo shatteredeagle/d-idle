@@ -20,7 +20,7 @@ func (t *Town) beltBuyReserve() int {
 // nothing is not repeated until the gold has grown by FutileGoldStep.
 func (t *Town) needBelt(s *d2.Snapshot) bool {
 	tn := t.tune()
-	if tn.BeltBuyLevel <= 0 || s.Player == nil || s.Player.Level < tn.BeltBuyLevel || s.Inventory == nil {
+	if !t.botGear() || tn.BeltBuyLevel <= 0 || s.Player == nil || s.Player.Level < tn.BeltBuyLevel || s.Inventory == nil {
 		return false
 	}
 	if belt.Slots(t.e.Data, s.Inventory) >= 3*belt.Columns {

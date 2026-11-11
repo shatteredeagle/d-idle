@@ -291,6 +291,20 @@ type gearAdapter struct {
 }
 
 func (a gearAdapter) PendingSwaps(s *d2.Snapshot) int { return len(a.l.SwapsFor(s)) }
+
+// GearHints is the pure read of what a swap pass would do, as text for the player (bot.GearAdvisor).
+func (a gearAdapter) GearHints(s *d2.Snapshot) []bot.GearHint {
+	var out []bot.GearHint
+	for _, sw := range a.l.SwapsFor(s) {
+		why := "fills your empty " + sw.SlotName() + " slot"
+		if sw.Old != nil {
+			why = "better than your " + sw.Old.Name + " in the " + sw.SlotName() + " slot"
+		}
+		out = append(out, bot.GearHint{ID: sw.Item.Unit.ID, Text: sw.Item.Name + ": " + why})
+	}
+	return out
+}
+
 func (a gearAdapter) Equip(ctx context.Context) (bot.GearReport, error) {
 	r := a.l.Equip(ctx)
 	err := r.Err

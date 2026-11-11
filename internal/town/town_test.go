@@ -26,7 +26,8 @@ func newRig(t *testing.T) *rig { return newRigAt(t, 0, 0) }
 // newRigAt shifts the whole town by (dx,dy) subtiles: another game seed puts the Rogue Encampment elsewhere.
 func newRigAt(t *testing.T, dx, dy int) *rig {
 	r := &rig{Rig: sim.NewRig(t)}
-	r.Env.Tune.Resource.EarlyGearMax = 0 // the rebuy tests pin the full rebuy; early-gear tests set it back
+	r.Env.Tune.Resource.GearDecisions = 1 // the old equip and rebuy tests pin the bot-decides policy; gearplayer_test.go covers the player policy
+	r.Env.Tune.Resource.EarlyGearMax = 0  // the rebuy tests pin the full rebuy; early-gear tests set it back
 	w := r.W
 	w.Player.Gold = 3000
 	w.Player.Strength, w.Player.Dexterity = 30, 30

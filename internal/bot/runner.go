@@ -135,6 +135,7 @@ type Runner struct {
 	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
 	noMLvlSeen     map[int]bool            // xp rank warnings already logged (area*4+difficulty), guarded by obMu
 	decMu          sync.Mutex              // decisions
+	gearAdv        gearAdvice              // pure-read equipment advice for the player (gearadvice.go)
 	decisions      []decisionNote          // last planner/runner decisions for the planner dump (deathrule.go)
 	avoidWhy       map[int]string          // producer of each avoid entry (areaskip.go), guarded by obMu
 	targetFailLast map[int]targetFailStamp // time and skip of the last failure per target, guarded by obMu
