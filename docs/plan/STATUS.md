@@ -102,6 +102,7 @@
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
+| uiedit2 | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/panels/video`<br>`internal/watch/web/layout.json`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uiedit2.txt` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -158,6 +159,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b1a79744 11-11 12:40 `Merge agent/uiedit2: TASK-306 uiedit2: game picture fits its panel, aspect-locked; every card editable with hide/show` (uiedit2)
+- 62073587 11-11 12:39 `Merge branch 'main' into uiedit2` (-)
 - a68259e7 11-11 12:25 `Merge agent/sellmarks: TASK-308 sellmarks: player sell marks follow renumbered items, sell chore always runs for marks, per-visit sell log` (sellmarks)
 - 51b1519e 11-11 12:24 `Merge branch 'main' into sellmarks` (-)
 - 7978f296 11-11 12:12 `Merge agent/repairtrip: TASK-303 repairtrip: Repair now as a safe-moment portal trip; Farm until repair when gold is short` (repairtrip)
@@ -166,6 +169,4 @@
 - b48e7488 11-11 12:05 `Merge branch 'main' into processrules` (-)
 - 2460c828 11-11 11:59 `Merge agent/processrules: sync main` (processrules)
 - 9f262f74 11-11 11:58 `Merge agent/docsarchive: TASK-311 docsarchive: archive 15 finished research reports with stubs` (docsarchive)
-- 9909ccb9 11-11 11:57 `Merge branch 'main' into docsarchive` (-)
-- 5a7a627d 11-11 11:48 `Merge agent/usageview: TASK-309 usageview: tools/usage/usage.py, docs/usage.md, 7-day usage record` (usageview)
 <!-- statusgen:end -->
