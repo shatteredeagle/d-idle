@@ -44,6 +44,7 @@ func main() {
 	jpegQ := flag.Int("jpeg-quality", 72, "JPEG quality 10-95 of re-encoded frames")
 	half := flag.Bool("frame-half", false, "halve frame width and height before the JPEG encode (a quarter of the bytes and encode CPU; implies JPEG)")
 	backoff := flag.Float64("frame-backoff", 4, "the next frame waits at least this many times the last frame's cost (screenshot: the verb's wall time inside d2d; -feed: our read and encode); 0 off")
+	hideCursor := flag.Bool("hide-cursor", true, "ask the d2d fork (verb `cursor off`) to leave the game's pointer sprite out of the frames; a d2d without the verb is left as it is")
 	feedPath := flag.String("feed", "", "frame ring file for the d2d fork's framefeed verb (docs/viewer-fps.md), e.g. /dev/shm/d2dview/frames.ring (keep it on tmpfs); empty: screenshots only; a d2d without the verb falls back to screenshots")
 	badgeFlag := flag.String("badge", envOr("D2DVIEW_BADGE", Backend), "header badge text of the stream page and the /api/pub backend field (env D2DVIEW_BADGE)")
 	var wo watchOpts
@@ -129,6 +130,7 @@ func main() {
 			log.Fatal(err)
 		}
 		frames.JPEG, frames.Half, frames.Backoff, frames.Feed = *jpegOut, *half, max(*backoff, 0), *feedPath
+		frames.HideCursor = *hideCursor
 		frames.Quality = min(max(*jpegQ, 10), 95)
 		feed.fr = frames
 		go frames.Run(ctx)
