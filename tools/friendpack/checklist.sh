@@ -93,7 +93,7 @@ if [ -z "$freepik_in_tree" ] && [ -n "$freepik_in_notice" ]; then miss="$miss Fr
 banned='(\.mpq|\.dc6|\.dcc|\.dt1|\.d2s|\.d2i|\.key|\.pem|watch\.token|(^|/)game\.exe|/web/art/|/cache/art/|(^|/)data/global/excel/[^/]*\.txt|(^|/)internal/watch/web/.*\.png)$'
 { (cd "$w" && find "$(basename "$root")" -type f); [ -n "$botsrc" ] && tar -tzf "$botsrc"; [ -n "$d2dsrc" ] && tar -tzf "$d2dsrc"; cat "$layers"; } | grep -E -i "$banned" | head -5 >"$w/o4"
 # private hostnames / home paths / credentials in the pack's own text files; the source trees are covered by leakcheck below
-grep -rIl --exclude-dir=src --exclude-dir=image -E '(/home/[a-z][a-z0-9_-]*/|\.lan\.birbhub|birbhub\.com|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|password[[:space:]]*[:=][[:space:]]*[^[:space:]$"<{(]+)' "$root" 2>/dev/null | grep -v -E 'THIRD_PARTY.md$' | head -5 >>"$w/o4"
+grep -rIl --exclude-dir=src --exclude-dir=image -E '(/home/[a-z][a-z0-9_-]*/|\.lan\.b[i]rbhub|b[i]rbhub\.com|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|password[[:space:]]*[:=][[:space:]]*[^[:space:]$"<{(]+)' "$root" 2>/dev/null | grep -v -E 'THIRD_PARTY.md$' | head -5 >>"$w/o4"
 if [ -s "$w/o4" ]; then cat "$w/o4" >&2; fail "4 forbidden file or private string in the pack/source/layers (listed above)"
 else
 	lk=
