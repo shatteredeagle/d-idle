@@ -1,5 +1,7 @@
 # nav: walking, exits, waypoints, exploration (agent NAV)
 
+> Roam coverage spacing and the detour marking: docs/roamspacing.md.
+
 ## API summary (package `internal/nav`, `nav.New(e *env.Env) *Navigator`)
 
 Implements the `Mover` contract of docs/archive/wave2.md. All coordinates are `input.Point` subtiles. One goroutine drives a Navigator;
