@@ -77,3 +77,25 @@ func TestPublisherRecordsTrail(t *testing.T) {
 		t.Fatalf("%v %d %+v", ok, area, pts)
 	}
 }
+
+func TestCoverageOnlyForCurrentArea(t *testing.T) {
+	p := &Publisher{now: func() time.Time { return t0 }}
+	lm := &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	if err := p.Observe(lm, "T", d2map.Point{X: 1, Y: 1}); err != nil {
+		t.Fatal(err)
+	}
+	cells := make([][3]int, MaxCoverCells+5)
+	p.SetCoverage(Coverage{Area: 1, Cells: cells})
+	c, ok := p.CoverageOf()
+	if !ok || len(c.Cells) != MaxCoverCells {
+		t.Fatalf("cap: %v %d", ok, len(c.Cells))
+	}
+	p.SetCoverage(Coverage{Area: 2, Cells: cells})
+	if _, ok := p.CoverageOf(); ok {
+		t.Fatal("coverage of another area must not show")
+	}
+	p.SetCoverage(Coverage{})
+	if _, ok := p.CoverageOf(); ok {
+		t.Fatal("empty clears")
+	}
+}

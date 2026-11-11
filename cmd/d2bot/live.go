@@ -184,6 +184,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	useFun(lrig, runner, runID())
 	useFightFeed(lrig, bh.combat, ldir, log)
 	useSenses(lrig, e, bh.combat, log)
+	useSensesCoverage(lrig, e, bh.Mover)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err

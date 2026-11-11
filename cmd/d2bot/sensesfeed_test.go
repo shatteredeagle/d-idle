@@ -9,6 +9,7 @@ import (
 
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/nav"
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/watch"
 )
@@ -139,4 +140,20 @@ func TestSensesFeedRace(t *testing.T) {
 	}
 	close(stop)
 	wg.Wait()
+}
+
+type fakeCover struct{ v nav.CoverageView }
+
+func (f fakeCover) CoverageView() (nav.CoverageView, bool) { return f.v, len(f.v.Pts) > 0 }
+
+func TestCoverageFor(t *testing.T) {
+	c := coverageFor(fakeCover{nav.CoverageView{Level: 2, Spacing: 8, Cover: 5, Legs: 3, Held: 1,
+		Pts:    []nav.CoverPoint{{X: 1, Y: 2, State: nav.CoverSeen}, {X: 9, Y: 2, State: nav.CoverFailed}, {X: 17, Y: 2, State: nav.CoverUnseen}},
+		Target: &nav.CoverPoint{X: 17, Y: 2}}})
+	if c.Area != 2 || c.Total != 3 || c.Cells[0] != [3]int{1, 2, senses.CoverSeen} || c.Cells[1][2] != senses.CoverFailed || c.Cells[2][2] != senses.CoverUnseen || c.Target.X != 17 || c.Legs != 3 {
+		t.Fatalf("%+v", c)
+	}
+	if got := coverageFor(fakeCover{}); len(got.Cells) != 0 {
+		t.Fatal("no roam, no cells")
+	}
 }

@@ -153,3 +153,31 @@ func TestSensesTrailPayload(t *testing.T) {
 		t.Fatal("closed tier leaks the trail")
 	}
 }
+
+type coverSrc struct {
+	SensesSource
+	c  senses.Coverage
+	ok bool
+}
+
+func (s coverSrc) CoverageOf() (senses.Coverage, bool) { return s.c, s.ok }
+
+// The coverage key is additive: golden for a roaming level, absent when there is none or the tier is closed.
+func TestSensesCoveragePayload(t *testing.T) {
+	c := senses.Coverage{Area: 1, Cell: 8, Cover: 5, Total: 3, Legs: 2, Held: 1, Target: &senses.Point{X: 3, Y: 1},
+		Cells: [][3]int{{1, 1, senses.CoverSeen}, {2, 1, senses.CoverFailed}, {3, 1, senses.CoverUnseen}}}
+	get := func(src SensesSource, tier int) string {
+		w := httptest.NewRecorder()
+		(&Senses{Src: src, Lock: FixedTier(tier)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+		return w.Body.String()
+	}
+	base := struct{ SensesSource }{sensesFixture(t)}
+	golden(t, "senses-coverage", get(coverSrc{SensesSource: base, c: c, ok: true}, 1))
+	if strings.Contains(get(coverSrc{SensesSource: base}, 1), "coverage") || strings.Contains(get(coverSrc{SensesSource: base, c: c, ok: true}, 0), "coverage") {
+		t.Fatal("coverage leaked")
+	}
+	c.Explored = true
+	if !strings.Contains(get(coverSrc{SensesSource: base, c: c, ok: true}, 1), `"state":"explored"`) {
+		t.Fatal("explored state")
+	}
+}

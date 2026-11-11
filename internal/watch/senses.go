@@ -45,6 +45,25 @@ type TrailSource interface {
 	TrailOf() (pts []senses.TrailPoint, area int, now time.Time, ok bool)
 }
 
+// CoverageSource is an optional part of a SensesSource: the navigator's roam coverage of the current area.
+type CoverageSource interface {
+	CoverageOf() (senses.Coverage, bool)
+}
+
+// SenseCoverage is the additive coverage key of /api/senses: Cells are [x, y, state] (0 unseen, 1 seen, 2 failed),
+// State is "roaming" or "explored", Total counts the points before the cap.
+type SenseCoverage struct {
+	Area   int      `json:"area"`
+	Cell   int      `json:"cell"`
+	Cover  int      `json:"cover"`
+	Cells  [][3]int `json:"cells"`
+	Total  int      `json:"total"`
+	Target *[2]int  `json:"target,omitempty"`
+	State  string   `json:"state"`
+	Legs   int      `json:"legs"`
+	Held   int      `json:"held,omitempty"`
+}
+
 // SenseTrailPoint is one trail sample: AgoMS is its age at the reply's Ts, E marks the entry into the area.
 type SenseTrailPoint struct {
 	AgoMS int64 `json:"ago"`
@@ -75,7 +94,9 @@ type SensesReply struct {
 	Trail     []SenseTrailPoint `json:"trail,omitempty"`
 	TrailArea int               `json:"trail_area,omitempty"`
 	Ts        int64             `json:"ts,omitempty"`
-	Waiting   bool              `json:"waiting,omitempty"`
+	// Coverage is the roam coverage grid of the current area (tier 1, additive), absent when the bot is not roaming.
+	Coverage *SenseCoverage `json:"coverage,omitempty"`
+	Waiting  bool           `json:"waiting,omitempty"`
 	// Locked lists the tiers not open yet (titles and hints only) and Next is the lowest of them; both are present only
 	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
 	Locked []SenseLock `json:"locked,omitempty"`
@@ -147,6 +168,18 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 		}
 		h := snap.Hero
 		r.Hero = &h
+		if cs, ok := s.Src.(CoverageSource); ok {
+			if c, ok := cs.CoverageOf(); ok {
+				sc := &SenseCoverage{Area: c.Area, Cell: c.Cell, Cover: c.Cover, Cells: c.Cells, Total: c.Total, State: "roaming", Legs: c.Legs, Held: c.Held}
+				if c.Explored {
+					sc.State = "explored"
+				}
+				if c.Target != nil {
+					sc.Target = &[2]int{c.Target.X, c.Target.Y}
+				}
+				r.Coverage = sc
+			}
+		}
 		if ts, ok := s.Src.(TrailSource); ok {
 			if pts, area, now, ok := ts.TrailOf(); ok && len(pts) > 0 {
 				r.TrailArea, r.Ts = area, now.UnixMilli()

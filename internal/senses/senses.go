@@ -178,6 +178,7 @@ type Publisher struct {
 	visitNo uint64
 	skipped []error
 	trail   Trail
+	cover   Coverage
 	now     func() time.Time // test clock; nil is time.Now
 }
 
