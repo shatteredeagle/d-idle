@@ -37,6 +37,10 @@ func checkDir(dir string) ([]string, error) {
 			return bad, err
 		}
 		bad = append(bad, checkDump(filepath.Base(n), string(b))...)
+		// the browser's console next to the dump (uishots.sh): an uncaught exception in a page script is a failure
+		if lg, err := os.ReadFile(strings.TrimSuffix(n, ".html") + ".log"); err == nil {
+			bad = append(bad, checkConsole(filepath.Base(n), string(lg))...)
+		}
 	}
 	return bad, nil
 }
@@ -85,6 +89,19 @@ func checkDump(name, html string) []string {
 			case s == "loading":
 				bad = append(bad, fmt.Sprintf("%s: panel %s still loading", name, id))
 			}
+		}
+	}
+	return bad
+}
+
+var reConsole = regexp.MustCompile(`CONSOLE[:(]\d+\)?\] "([^"]*)`) // Chrome writes CONSOLE:12] or CONSOLE(12)] by version
+
+// checkConsole reports the uncaught errors a page logged (Chrome's --enable-logging lines).
+func checkConsole(name, log string) []string {
+	var bad []string
+	for _, m := range reConsole.FindAllStringSubmatch(log, -1) {
+		if strings.Contains(m[1], "Uncaught") {
+			bad = append(bad, fmt.Sprintf("%s: console: %s", name, m[1]))
 		}
 	}
 	return bad

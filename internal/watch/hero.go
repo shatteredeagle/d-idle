@@ -210,15 +210,12 @@ func (h *Hub) heroHandler() http.HandlerFunc {
 }
 
 // goldFromInventory reads gold from the inventory desk's view (cmd/d2bot binds an internal/invdesk.Desk, whose view
-// carries gold and stashGold).
+// carries gold and stashGold). The gold is at most one inventory TTL plus one build old.
 func goldFromInventory(a *InvAPI) GoldSource {
 	return func() (int, int, bool) {
-		d := a.desk()
-		if d == nil {
-			return 0, 0, false
-		}
-		b, err := json.Marshal(d.View())
-		if err != nil {
+		// never build the inventory view here: /api/hero must answer at once (invapi.go viewNoWait)
+		b := a.viewNoWait()
+		if b == nil {
 			return 0, 0, false
 		}
 		var g struct {

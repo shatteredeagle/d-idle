@@ -176,17 +176,28 @@ function makeScheduler() {
     if (s.m.poll === 0 && changed) return true;
     return now >= s.next;
   }
+  // One request per address at a time, whoever asks: five panels read /api/hero, and five requests every two seconds
+  // (each slow when the bot is busy) held the browser's few connections per host next to the video and event streams,
+  // so every other panel and card starved in its loading state. Panels that are due together share one reply.
+  const flying = new Map();
+  function load(url) {
+    let p = flying.get(url);
+    if (p) return p;
+    const ac = typeof AbortController === 'function' ? new AbortController() : null;
+    const timer = ac ? setTimeout(() => ac.abort(), FETCH_TIMEOUT) : 0;
+    p = fetch(url, { cache: 'no-store', credentials: 'same-origin', signal: ac ? ac.signal : undefined }).then((r) => {
+      if (!r.ok) { const e = new Error('status ' + r.status); e.status = r.status; throw e; }
+      return r.json();
+    }).finally(() => { clearTimeout(timer); flying.delete(url); });
+    flying.set(url, p);
+    return p;
+  }
   function run(s) {
     s.inflight = true;
     const q = s.api.query ? s.api.query() : '';
     // A stalled request (a proxy, the browser's per-host connection cap behind the video and event streams) must not
     // hold the slot for ever: abort it, count a failure and poll again.
-    const ac = typeof AbortController === 'function' ? new AbortController() : null;
-    const timer = ac ? setTimeout(() => ac.abort(), FETCH_TIMEOUT) : 0;
-    fetch(s.m.endpoint + q, { cache: 'no-store', credentials: 'same-origin', signal: ac ? ac.signal : undefined }).then((r) => {
-      if (!r.ok) { const e = new Error('status ' + r.status); e.status = r.status; throw e; }
-      return r.json();
-    }).then((d) => {
+    load(s.m.endpoint + q).then((d) => {
       s.fails = 0;
       keepFocus(s.root, () => s.api.update && s.api.update(d));
       if (s.root.dataset.state === 'loading') s.root.dataset.state = 'ready';
@@ -197,7 +208,6 @@ function makeScheduler() {
       // a route that is not mounted stops polling; anything else (503 while the bot starts, a network blip) retries slower
       if (s.fails >= MAX_FAILS && (e.status === 404 || e.status === 401)) s.stopped = true;
     }).then(() => {
-      clearTimeout(timer);
       s.inflight = false;
       const p = s.m.poll > 0 ? s.m.poll * 1000 : SAFETY_POLL;
       s.next = performance.now() + (s.fails ? Math.min(30000, Math.max(p, FAIL_WAIT * s.fails)) : p);
@@ -212,7 +222,8 @@ function makeScheduler() {
     setTimeout(tick, 250);
   }
   if (window.EventSource) {
-    const es = new EventSource('/api/events');
+    // the page's one event stream: app.js opens it on /watch (window.d2events), the other pages get their own here
+    const es = window.d2events || (window.d2events = new EventSource('/api/events'));
     es.addEventListener('change', () => { changed = true; });
   }
   return { add(s) { s.next = 0; s.fails = 0; slots.push(s); }, start: tick };

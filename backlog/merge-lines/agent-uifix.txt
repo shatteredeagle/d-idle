@@ -1,0 +1,3 @@
+BACKLOG: uifix (TASK-314): watch panels no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address, one event stream per page
+INDEX: docs/ui-design-system.md section 15.10: panels stuck loading, diagnosis and fix
+CHANGELOG: watch: fixed cards staying on grey loading bars while the bot was fine
