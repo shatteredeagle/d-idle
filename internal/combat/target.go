@@ -311,7 +311,15 @@ func ResistsFromStats(st d2.Stats, mon *data.Monster, diff d2.Difficulty) [6]int
 // Targets the danger table says to avoid are dropped (counted by the caller via len difference).
 // quality (0-100) is the handicap knob: with probability (100-quality)% the best target is replaced by the nearest one;
 // roll is a uniform [0,1) draw supplied by the caller so this stays deterministic.
-func Rank(ts []Target, quality int, roll float64) []Target {
+func Rank(ts []Target, quality int, roll float64) []Target { return RankFor(ts, quality, roll, false) }
+
+// meleeKillFastReach is how far a melee class goes out of its way for a kill-first caster (a shaman): beyond it the
+// nearest monster comes first, because the walk to a shaman behind its pack circles the pack and never swings
+// (live d2play-20261108, trail layer: loops around 12 Fallen). Ranged classes cast over the pack and keep the bonus.
+const meleeKillFastReach = 8
+
+// RankFor is Rank with the class kind: melee drops the kill-first bonus of a target farther than meleeKillFastReach.
+func RankFor(ts []Target, quality int, roll float64, melee bool) []Target {
 	out := make([]Target, 0, len(ts))
 	for _, t := range ts {
 		if !t.Avoid {
@@ -320,7 +328,7 @@ func Rank(ts []Target, quality int, roll float64) []Target {
 	}
 	score := func(t *Target) float64 {
 		s := -t.Dist
-		if t.KillFast {
+		if t.KillFast && !(melee && t.Dist > meleeKillFastReach) {
 			s += 3000
 		}
 		if t.Elite && t.Dist < 25 {

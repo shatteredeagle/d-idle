@@ -1,10 +1,11 @@
 ---
 id: TASK-304
 title: 'roammemory: roam coverage remembered per level for the whole game'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T15:54:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - bot
   - feature

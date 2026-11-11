@@ -120,6 +120,10 @@ type FightTelemetry struct {
 	Forced     int // casts forced by the watchdog
 	Damage     int // sum of life drops between samples (healing is not netted out)
 	MinLifePct int
+	End        string // why the fight ended (see noteEnd), empty until it did
+	Remaining  int    // hostiles still alive in the clear scope at the end
+	LifePct    int    // life and mana share at the end
+	ManaPct    int
 	last       int
 	have       bool
 }
@@ -149,7 +153,8 @@ func (t *FightTelemetry) Sample(p *d2.Player) {
 // Finish copies the counters of a ClearResult and returns the telemetry line.
 func (t *FightTelemetry) Finish(res ClearResult) string {
 	t.Kills, t.Potions = res.Kills, res.Potions
-	return t.Line(res.Elapsed)
+	// end reason and what was left ride behind the stable Line fields (older parsers read key=value pairs)
+	return fmt.Sprintf("%s end=%s remaining=%d life=%d mana=%d", t.Line(res.Elapsed), t.End, t.Remaining, t.LifePct, t.ManaPct)
 }
 
 // Line is a single key=value log line, stable for the soak report parser.

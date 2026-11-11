@@ -255,7 +255,7 @@ func (n *Navigator) openWaypoint(ctx context.Context) error {
 			// panel, and the next walk click lands on the panel's first row (VERIFIED LIVE: Cold Plains, the character
 			// was sent to the Rogue Encampment). Stop inside interact range like GoToUnit does.
 			pp := input.Point{X: p.Pos.X, Y: p.Pos.Y}
-			if err := n.walk(ctx, func(*obs) (input.Point, float64, error) { return pp, unitTolerance + 1, nil }, walkOpts{}); err != nil {
+			if err := n.walk(ctx, func(*obs) (input.Point, float64, error) { return pp, unitTolerance + 1, nil }, walkOpts{pursuit: true}); err != nil {
 				return err
 			}
 			if o, err = n.observeWait(ctx); err != nil {

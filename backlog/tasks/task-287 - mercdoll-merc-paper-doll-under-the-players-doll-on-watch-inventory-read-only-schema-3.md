@@ -1,10 +1,13 @@
 ---
 id: TASK-287
-title: 'mercdoll: merc paper doll under the player''s doll on /watch/inventory, read only, schema 3'
-status: Proposed
+title: >-
+  mercdoll: merc paper doll under the player's doll on /watch/inventory, read
+  only, schema 3
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:05:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - watch
   - feature

@@ -1,10 +1,11 @@
 ---
 id: TASK-281
 title: 'devupdateclean: dev-update mirrors deleted files on the worker copy'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T00:52:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - ops
   - bug
