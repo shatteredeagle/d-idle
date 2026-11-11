@@ -867,11 +867,15 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `archive/`
 
+- [redivivus-sister-project.md](archive/redivivus-sister-project.md): Redivivus (jaenster/redivivus): what it is and what it means for us (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [restloop.md](archive/restloop.md): Sorceress rest loop on i4 (diagnosis from the log, no game)
+- [review-batch2-C-opus.md](archive/review-batch2-C-opus.md): Review: batch C (mana on the action frame, the scheduler tick, the armor group), independent Opus check (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [review-community-prs-20261102.md](archive/review-community-prs-20261102.md): Review of community PRs 19 (PALAURA), 22 (PALDUR) and 23 (PALSKILL), 2026-11-02 (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [review-day.md](archive/review-day.md): Review: merges ffecf16..f3b7a45 (2026-10-29, REVIEW2)
 - [review-evening.md](archive/review-evening.md): Review: evening merges 51c18d9..ee33d7d (agent REVIEW3, 2026-10-29)
 - [review-night.md](archive/review-night.md): Review: night merges (0ba00fe..b068c2a)
 - [review-overnight.md](archive/review-overnight.md): Merge-risk review: overnight / 24 h soak (master a5ff398)
+- [review-pr180-20261103.md](archive/review-pr180-20261103.md): Review of upstream PR 180 (private) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 
 `archive/review/`
 
@@ -885,6 +889,17 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `archive/`
 
 - [sandbox.md](archive/sandbox.md): Wine mount sandbox (agent SANDBOX) (status: ARCHIVED 2026-10-31 (doctrim): moved here from its old path (a stub remains there). The status line below...)
+- [verify-alignment2.md](archive/verify-alignment2.md): Verification of alignment2-trace.md: alignment (stat 0xac) and the undead-blow gate (card verifyalign,... (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verify-dmgroll4.md](archive/verify-dmgroll4.md): Fourth verifier: monster damage roll r4 (DMGROLL, `local/batch2-monsterdmg-r4` 9ea2afe9) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifycovmissiles-trace.md](archive/verifycovmissiles-trace.md): Independent verification: the missiles coverage first pass (covmissiles-trace.md) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyitemweapons.md](archive/verifyitemweapons.md): Verification of the weapon-bases first pass (verifyitemweapons) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifylevelsareas.md](archive/verifylevelsareas.md): VERIFYLEVELSAREAS: independent check of levelsareas-trace.md (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifypalaura.md](archive/verifypalaura.md): VERIFYPALAURA: independent re-check of `palaura-trace.md` (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifypalskill2.md](archive/verifypalskill2.md): Verify PALSKILL: independent re-check of the Smite, Zeal and Sacrifice trace (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyskamazon-trace.md](archive/verifyskamazon-trace.md): Independent verification: SKAMAZON (first-pass Amazon trace) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyskdruid.md](archive/verifyskdruid.md): Independent verification of SKDRUID (Druid skills 221..250, calc aspect) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifyteleroom-trace.md](archive/verifyteleroom-trace.md): VERIFY-TELEPORT-ROOM: independent re-check of the Teleport room rule (card verifyteleroom) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
+- [verifywaypoint2-trace.md](archive/verifywaypoint2-trace.md): Verify the waypoint refusal claim, second pass (agent verifywaypoint2, 2026-11-02) (status: archived 2026-11-11 (TASK-311, docs/process/coordinator-efficiency.md rule 8): finished one-off report, no...)
 - [wave2.md](archive/wave2.md): Wave 2: contracts between agents
 
 ## Root documents

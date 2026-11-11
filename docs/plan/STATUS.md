@@ -101,6 +101,7 @@
 | maptrail2 | proposed | - | `internal/senses/coverage.go`<br>`internal/senses/trail_test.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-coverage.json`<br>`docs/senses-map.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
+| docsarchive | proposed | - | `docs/archive`<br>`docs/research` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -157,6 +158,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9f262f74 11-11 11:58 `Merge agent/docsarchive: TASK-311 docsarchive: archive 15 finished research reports with stubs` (docsarchive)
+- 9909ccb9 11-11 11:57 `Merge branch 'main' into docsarchive` (-)
 - 5a7a627d 11-11 11:48 `Merge agent/usageview: TASK-309 usageview: tools/usage/usage.py, docs/usage.md, 7-day usage record` (usageview)
 - 8ca3d503 11-11 11:47 `Merge branch 'main' into usageview` (-)
 - f5ed8308 11-11 11:38 `Merge agent/autodone: TASK-253 autodone: drift report as a CI warning, live-checks closing rule automatic (auto-Done on, catch-up applied)` (autodone)
@@ -165,6 +168,4 @@
 - 2aabc094 11-11 11:30 `Merge branch 'main' into sharedgen` (-)
 - 3e025df8 11-11 11:10 `Merge agent/aggression2: TASK-305 aggression2: pack hand-over keeps fighting, end-reason telemetry, waypoint pursuit` (aggression2)
 - 234a84d6 11-11 11:10 `Merge branch 'main' into aggression2` (-)
-- f541d3fa 11-11 11:00 `Merge agent/roammemory: TASK-304 roammemory: roam coverage remembered per level for the whole game` (roammemory)
-- 96475b4f 11-11 10:33 `Merge agent/viewerfps3: TASK-302 viewerfps3: watch video relays the tap stream (was 4 fps), evenly paced tap frames, X-Frame-Game-Ms, degraded flag` (viewerfps3)
 <!-- statusgen:end -->

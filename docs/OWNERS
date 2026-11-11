@@ -148,6 +148,7 @@ deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/agents  credit-runner  contextdiet
 docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
+docs/archive  credit-runner  docsarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/desktop-app.md  credit-runner  electronapp
@@ -175,6 +176,7 @@ docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-hints.md  live-agent  questdrill
 docs/reconnect-ux.md  credit-runner  reconnectux
+docs/research  credit-runner  docsarchive
 docs/research/README.md  credit-runner  dietarchive
 docs/research/design-brief-v1.md  credit-runner  designbrief
 docs/research/earlydeath13.md  pro-runner  earlydeath13
