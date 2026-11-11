@@ -253,3 +253,39 @@ func TestRoamKnobsReachTheView(t *testing.T) {
 		}
 	}
 }
+
+// Roam memory is per level and per game: A -> B -> A keeps A's seen points, two levels are independent, and a new game
+// (new LevelMap values) starts empty. Nav has no class data, so the Paladin and the Sorceress behave the same.
+func TestRoamMemoryPerLevelAndGame(t *testing.T) {
+	_, n := newKnown(t, openField(2000, 2000, 120, 120), input.Point{X: 2010, Y: 2010}, true)
+	o, err := n.observe()
+	if err != nil {
+		t.Fatal(err)
+	}
+	mk := func(no int, lm *d2map.LevelMap) *coverage {
+		pts := []input.Point{{X: 1, Y: 1}, {X: 40, Y: 1}}
+		return &coverage{lm: lm, level: no, spacing: 16, cover: 10, pts: pts, seen: make([]bool, 2), failed: make([]bool, 2)}
+	}
+	a, b := &d2map.LevelMap{No: 2, Grid: o.lm.Grid}, &d2map.LevelMap{No: 3, Grid: o.lm.Grid}
+	n.covs = map[int]*coverage{2: mk(2, a), 3: mk(3, b)}
+	n.selectCov(a)
+	n.NotePosition(2, input.Point{X: 1, Y: 1})
+	n.selectCov(b) // B: nothing seen, A untouched
+	if v, _ := n.CoverageView(); v.Level != 3 || v.Pts[0].State != CoverUnseen {
+		t.Fatalf("level B shows %+v", v)
+	}
+	n.NotePosition(2, input.Point{X: 40, Y: 1}) // a note for another level than the current one is ignored
+	n.selectCov(a)                              // back in A: the seen point is still seen, the overlay payload shows it
+	v, ok := n.CoverageView()
+	if !ok || v.Level != 2 || v.Pts[0].State != CoverSeen || v.Pts[1].State != CoverUnseen {
+		t.Fatalf("A after re-entry: %+v", v)
+	}
+	a2 := &d2map.LevelMap{No: 2, Grid: o.lm.Grid} // new game: same level number, new map value
+	n.selectCov(a2)
+	if _, ok := n.CoverageView(); ok || n.covs[2] != nil {
+		t.Fatal("a new game kept the old coverage")
+	}
+	if n.covs[3] == nil {
+		t.Fatal("level B memory dropped by A's reset")
+	}
+}

@@ -1,0 +1,2 @@
+BACKLOG: roammemory: roam coverage is remembered per level for the whole game (docs/roamspacing.md)
+CHANGELOG: The bot no longer re-roams a level it already covered after a town trip or zone change; the minimap coverage keeps the seen cells on re-entry
