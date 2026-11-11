@@ -34,8 +34,8 @@ class Oracle:
         e.w32(self.unit + 0x20, low)
         e.w32(self.unit + 0x24, high)
         if stat > 0:
-            half = (e.call(0x45c3e0, stat, ecx=self.unit + 0x20) & 0xFFFFFFFF) >> 1
-            if (e.call(0x45c390, 100, ecx=self.unit + 0x20) & 0xFFFFFFFF) < half:
+            half = (e.call(0x45c3e0, ecx=self.unit + 0x20, edx=stat) & 0xFFFFFFFF) >> 1
+            if (e.call(0x45c390, ecx=self.unit + 0x20, edx=100) & 0xFFFFFFFF) < half:
                 v *= 2
         return v, e.r32(self.unit + 0x20), e.r32(self.unit + 0x24)
 
