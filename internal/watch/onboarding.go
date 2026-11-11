@@ -49,6 +49,8 @@ type OnboardingStep struct {
 	Label string `json:"label"`
 	Hint  string `json:"hint,omitempty"`
 	Href  string `json:"href,omitempty"`
+	// TickOnOpen: following the link ticks the step (a target on this page that no request shows).
+	TickOnOpen bool `json:"tickOnOpen,omitempty"`
 }
 
 // LoadOnboardingTexts parses the embedded texts and checks the step ids.
@@ -88,7 +90,9 @@ type OnboardingConfig struct {
 	Hero    func() string          // the hero's name; "" while unknown
 	Signals func() map[string]bool // steps the bot's own state shows as done
 	Away    func() (time.Duration, bool)
-	Now     func() time.Time
+	// Art says how far the item pictures are (internal/art progress); "" state: not known.
+	Art func() (state string, done, total int)
+	Now func() time.Time
 }
 
 // Onboarding is the state and the routes. Safe for concurrent use.
@@ -189,6 +193,13 @@ type OnboardingAway struct {
 	Seconds float64 `json:"seconds"`
 }
 
+// OnboardingArt is the "preparing art" state (docs/paperdoll-art-build.md).
+type OnboardingArt struct {
+	State string `json:"state"`
+	Done  int    `json:"done"`
+	Total int    `json:"total"`
+}
+
 // OnboardingView is GET /api/onboarding.
 type OnboardingView struct {
 	Schema      string               `json:"schema"`
@@ -201,6 +212,7 @@ type OnboardingView struct {
 	Done        int                  `json:"done"`
 	Steps       []OnboardingStepView `json:"steps"`
 	Away        OnboardingAway       `json:"away"`
+	Art         *OnboardingArt       `json:"art,omitempty"` // only while the pictures are being prepared
 	Texts       OnboardingTexts      `json:"texts"`
 }
 
@@ -209,6 +221,12 @@ func (o *Onboarding) View() OnboardingView {
 	var sig map[string]bool
 	if o.cfg.Signals != nil {
 		sig = o.cfg.Signals()
+	}
+	var art *OnboardingArt
+	if o.cfg.Art != nil {
+		if st, d, n := o.cfg.Art(); st == "extracting" {
+			art = &OnboardingArt{State: st, Done: d, Total: n}
+		}
 	}
 	o.mu.Lock()
 	defer o.mu.Unlock()
@@ -223,7 +241,7 @@ func (o *Onboarding) View() OnboardingView {
 		o.saveLocked()
 	}
 	h := o.st.Heroes[k]
-	v := OnboardingView{Schema: onboardingSchema, Boot: o.boot, Hero: k, ShowWelcome: !h.WelcomeDismissed, Collapsed: h.Collapsed, Texts: o.texts}
+	v := OnboardingView{Schema: onboardingSchema, Boot: o.boot, Hero: k, ShowWelcome: !h.WelcomeDismissed, Collapsed: h.Collapsed, Texts: o.texts, Art: art}
 	if k == "_" {
 		v.Hero = ""
 	}
@@ -369,4 +387,16 @@ func onboardingSignals(l *AwayLog) map[string]bool {
 		}
 	}
 	return out
+}
+
+// artProgress reads the extraction state without decoding anything (ArtAPI.reply would probe the panel image).
+func artProgress(a *ArtAPI) (string, int, int) {
+	if a == nil {
+		return "", 0, 0
+	}
+	if p, ok := a.source().(ArtProgress); ok {
+		pr := p.Progress()
+		return pr.State, pr.Done, pr.Total
+	}
+	return "", 0, 0
 }

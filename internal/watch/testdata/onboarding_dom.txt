@@ -1,0 +1,639 @@
+== fresh hero: panel shown; meta "0 of 5 done"
+  div.banners (hidden)
+  div.welcome
+    section.welcome-card
+      h3.- "Welcome. Your hero plays by itself."
+      ul.lines
+        li.- "d.idle plays your Diablo II hero for you: it fights, loots, heals and walks town. You watch, and you decide what matters."
+        li.- "It does not touch your gear or your gold. You equip what you find and you decide what to buy; selling junk is yours to mark."
+        li.- "Worn gear is repaired with one button, and you can order any area on the map when you want the hero somewhere else."
+        li.- "The Journey strip shows the path ahead. You never have to follow it."
+        li.- "Policies are the rules the hero lives by: open the policy sheet and pick how careful it should be."
+      div.btnrow
+        a.d-btn [welcome-inventory] href=/watch/inventory "Open Inventory"
+        a.d-btn [welcome-policy] href=/watch/policy "Open Policy"
+        a.d-btn [welcome-journey] href=#journey "Show the Journey"
+        button.d-btn [welcome-dismiss] "Got it, hide this"
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "0 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+          button.d-btn [tick-fight] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== after dismiss and the journey click: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+          button.d-btn [tick-fight] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== checklist folded: panel shown; meta "2 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "2 of 5 done"
+        button.d-btn [check-fold] "Show the list"
+== two steps done, welcome dismissed: panel shown; meta "2 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "2 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== all done: panel hidden; meta ""
+== all done, Help open: panel shown; meta ""
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help
+    div.help-card
+      button.d-btn [help-welcome] "Show the welcome card again"
+      button.d-btn [help-list] "Show the first 30 minutes list again"
+      button.d-btn [help-close] "Close"
+  div.art (hidden)
+  div.list (hidden)
+== all done, list brought back: panel shown; meta "5 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "5 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      p.d-note "All done. The list is gone; Help brings it back."
+      ol.steps
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+== route off (404): panel hidden; meta ""
+== one failed poll: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== two failed polls: panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=warn
+      span.msg "Reconnecting to your hero..."
+      span.hint "The page lost the bot. It keeps trying; nothing you did is lost."
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== bot starting (503): panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=warn
+      span.msg "Reconnecting to your hero..."
+      span.hint "The page lost the bot. It keeps trying; nothing you did is lost."
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== recovered: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== first load, one failure: panel hidden; meta ""
+== first load, two failures: panel shown; meta ""
+  div.banners
+    div.d-note sev=warn
+      span.msg "Reconnecting to your hero..."
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list (hidden)
+== bot restarted: panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=info
+      span.msg "The bot restarted. Your hero is picking up where it stopped."
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== restart banner gone: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== away 2h 14m: panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=info
+      span.msg "Your hero was away for 2h 14m: see the Return screen"
+      a.d-btn [banner-away] href=/watch/return "Return screen"
+      button.d-btn [banner-away-x] "Dismiss"
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== away banner stays after the look is counted: panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=info
+      span.msg "Your hero was away for 2h 14m: see the Return screen"
+      a.d-btn [banner-away] href=/watch/return "Return screen"
+      button.d-btn [banner-away-x] "Dismiss"
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== away dismissed: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== stream reconnecting: panel shown; meta "1 of 5 done"
+  div.banners
+    div.d-note sev=warn
+      span.msg "The video stream is reconnecting. It retries by itself."
+      button.d-btn [banner-stream] "Retry now"
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== stream back: panel shown; meta "1 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art (hidden)
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "1 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=1
+          span.tick "done"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"
+== preparing art: panel shown; meta "0 of 5 done"
+  div.banners (hidden)
+  div.welcome (hidden)
+  div.help (hidden)
+  div.art
+    p.d-note sev=info "Preparing the item pictures from your own game files (120 of 349). The inventory shows plain boxes until it is done; nothing to do."
+  div.list
+    section.check
+      div.check-head
+        h3.- "Your first 30 minutes"
+        span.meta "0 of 5 done"
+        button.d-btn [check-fold] "Hide the list"
+      ol.steps
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-equip] href=/watch/inventory "Equip your starter gear"
+          span.hint "The hero never equips for you. The inventory page tells you what is worth wearing."
+          button.d-btn [tick-equip] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-policy] href=/watch/policy "Check the policy sheet"
+          span.hint "Each row is a rule the hero follows. The defaults are safe."
+          button.d-btn [tick-policy] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
+          button.d-btn [tick-fight] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          span.hint "The path through the game, one chapter at a time."
+          button.d-btn [tick-journey] "Mark done"
+        li.step done=0
+          span.tick "to do"
+          a.d-btn name [step-junk] href=/watch/inventory "Mark junk for sale"
+          span.hint "Mark an item in the inventory and the hero sells it on the next town visit."
+          button.d-btn [tick-junk] "Mark done"

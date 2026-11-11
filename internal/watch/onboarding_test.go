@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 	"time"
 
+	onboardingdata "d2lod-bot/data/onboarding"
 	"d2lod-bot/internal/goals"
 )
 
@@ -163,5 +165,74 @@ func TestOnboardingTextsPlain(t *testing.T) {
 		if strings.Contains(string(b), bad) {
 			t.Errorf("texts contain %q", bad)
 		}
+	}
+}
+
+// The panel against a stub DOM (node, skipped without it): welcome, checklist states, Help, reconnect banners.
+// UPDATE=1 rewrites testdata/onboarding_dom.txt.
+func TestOnboardingPanelDOMGolden(t *testing.T) {
+	runNode(t, "testdata/onboarding_dom.js", "web/panels/onboarding/panel.js")
+}
+
+// Page patterns of the panel: text only, CSP safe (no inline handler, style or script), and no focus or scroll jump on a
+// poll. The only scroll is the one a click on Help asks for.
+func TestOnboardingPanelPatterns(t *testing.T) {
+	b, err := webFS.ReadFile("web/panels/onboarding/panel.js")
+	if err != nil {
+		t.Fatal(err)
+	}
+	src := string(b)
+	for _, bad := range []string{"innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval(", "new Function", "onclick", "javascript:",
+		"setAttribute('style'", ".style.", "cssText", "scrollTo(", "location.", "window.open", "fetch(", "setTimeout(", "setInterval(", "document.getElementById", "document.querySelector"} {
+		if strings.Contains(src, bad) {
+			t.Errorf("panel.js uses %q", bad)
+		}
+	}
+	for _, m := range regexp.MustCompile(`\.focus\([^)]*\)`).FindAllString(src, -1) {
+		if !strings.Contains(m, "preventScroll") {
+			t.Errorf("focus without preventScroll: %s", m)
+		}
+	}
+	if n := strings.Count(src, "scrollIntoView"); n != 2 { // the guard and the call, both inside the d2help handler
+		t.Errorf("scrollIntoView appears %d times", n)
+	}
+	i := strings.Index(src, "scrollIntoView")
+	h := strings.Index(src, "'d2help'")
+	if h < 0 || i < h || i-h > 400 {
+		t.Error("scrollIntoView must sit inside the d2help handler")
+	}
+	// every box is built through the key helper so the shell can give the focus back after a poll
+	if strings.Count(src, "dataset.key") < 2 {
+		t.Error("buttons and links need data-key for the shell's focus keeping")
+	}
+	css, _ := webFS.ReadFile("web/panels/onboarding/panel.css")
+	if regexp.MustCompile(`#[0-9a-fA-F]{3,8}\b|rgb\(`).Match(css) {
+		t.Error("panel.css uses a colour literal; use tokens")
+	}
+	shell, _ := webFS.ReadFile("web/shell.js")
+	if !strings.Contains(string(shell), "'btn-help'") || !strings.Contains(string(shell), "'d2help'") {
+		t.Error("shell.js does not wire the Help button to the d2help event")
+	}
+	page, _ := webFS.ReadFile("web/watch.html")
+	if !strings.Contains(string(page), `id="btn-help"`) || strings.Contains(string(page), "onclick") {
+		t.Error("watch.html needs the Help button and no inline handlers")
+	}
+}
+
+// The step ids the Go side latches and the texts name stay the same set, and every link goes to a page of this server.
+func TestOnboardingStepsMatchLatches(t *testing.T) {
+	txt, err := LoadOnboardingTexts(onboardingdata.JSON)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var ids []string
+	for _, s := range txt.Steps {
+		ids = append(ids, s.ID)
+		if s.Href != "" && !strings.HasPrefix(s.Href, "/watch") && !strings.HasPrefix(s.Href, "#") {
+			t.Errorf("step %s links to %s", s.ID, s.Href)
+		}
+	}
+	if got := strings.Join(ids, ","); got != "equip,policy,fight,journey,junk" {
+		t.Errorf("steps %s: onboardingSignals, Observe and opened latch these ids", got)
 	}
 }

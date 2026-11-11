@@ -412,6 +412,9 @@ async function start() {
     conf = pv.layout || {};
   } catch (e) { return; }
   const sched = makeScheduler();
+  // the Help button opens the onboarding panel's Help entries (panels/onboarding), which listens for this event
+  const helpBtn = document.getElementById('btn-help');
+  if (helpBtn) helpBtn.addEventListener('click', () => window.dispatchEvent(new Event('d2help')));
   // every root exists before the first module loads, so the layout places the whole page at once
   const made = [];
   for (const m of list) {

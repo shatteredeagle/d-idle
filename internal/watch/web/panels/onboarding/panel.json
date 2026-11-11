@@ -1,0 +1,18 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "onboarding",
+  "title": "Getting started",
+  "band": "side",
+  "size": "l",
+  "priority": 8,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/onboarding",
+  "poll": 3,
+  "unlock": "",
+  "skeleton": 0,
+  "fit": true,
+  "owner": "onboarding",
+  "doc": "docs/onboarding.md"
+}

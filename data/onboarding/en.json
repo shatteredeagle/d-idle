@@ -33,7 +33,7 @@
     {"id": "equip", "label": "Equip your starter gear", "hint": "The hero never equips for you. The inventory page tells you what is worth wearing.", "href": "/watch/inventory"},
     {"id": "policy", "label": "Check the policy sheet", "hint": "Each row is a rule the hero follows. The defaults are safe.", "href": "/watch/policy"},
     {"id": "fight", "label": "Watch your first fight", "hint": "It ticks by itself after the first kill. Watch the video or the Thoughts feed.", "href": "#video"},
-    {"id": "journey", "label": "Open the Journey strip", "hint": "The path through the game, one chapter at a time.", "href": "#journey"},
+    {"id": "journey", "label": "Open the Journey strip", "hint": "The path through the game, one chapter at a time.", "href": "#journey", "tickOnOpen": true},
     {"id": "junk", "label": "Mark junk for sale", "hint": "Mark an item in the inventory and the hero sells it on the next town visit.", "href": "/watch/inventory"}
   ],
   "reconnect": {
