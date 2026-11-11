@@ -1,1 +1,0 @@
-BACKLOG: TASK-308 sellmarks2: the sell-marks town test fixture no longer lets the belt fill take the unmarked potion (fails with real tables, passes now)
