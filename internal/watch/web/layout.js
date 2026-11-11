@@ -56,8 +56,8 @@ const SPAN = { s: [3, 5], m: [6, 6], l: [12, 6] }; // columns and rows of a pane
 // null when no breakpoint applies (the shell then places by manifest), else
 // { name, cols, rowHeight, flow, items: [{id, col, row, colSpan, rowSpan, collapsed, order, placed}], unknown: [ids] }.
 // flow (phone and tablet): rows are not fixed, the shell uses order and the column span and lets the rows flow.
-// A hidden target (a locked feature, a route that is off) takes no cell and rows left empty close up, so the page has
-// no dead bands; with edit set (the editor) hidden targets keep their cells and nothing closes up.
+// A hidden target (a locked feature, a route that is off) takes no cell and the panels under it rise into the room, so the
+// page has no dead bands; with edit set (the editor) hidden targets keep their cells and nothing rises.
 export function plan(layout, width, mode, conf, targets, edit) {
   const bpName = breakpointFor(width, mode);
   const bp = pickBreakpoint(layout, bpName);
@@ -89,13 +89,13 @@ export function plan(layout, width, mode, conf, targets, edit) {
     placeFrom(items, it, bp.cols, maxRow + 1);
     items.push(it);
   }
-  if (!edit && !flow) { // close rows no panel occupies
-    const busy = {};
-    for (const it of items) for (let r = it.row; r < it.row + (it.collapsed ? 1 : it.rowSpan); r++) busy[r] = true;
-    const shift = {};
-    let gone = 0;
-    for (let r = 1; r <= maxRow + 400; r++) { if (!busy[r] && r <= maxRow) gone++; shift[r] = gone; }
-    for (const it of items) it.row -= shift[it.row] || 0;
+  if (!edit && !flow) { // each panel rises in its own columns into the room a hidden one left
+    const done = [];
+    for (const it of items.slice().sort((x, y) => x.row - y.row || x.col - y.col)) {
+      const m = occ(done), h = it.collapsed ? 1 : it.rowSpan;
+      while (it.row > 1 && free(m, it.col, it.row - 1, it.colSpan, h)) it.row--;
+      done.push(it);
+    }
   }
   return { name: bp.name, bp: bpName, cols: bp.cols, rowHeight: bpName === 'overlay' ? 40 : (layout.rowHeight || 48), flow, items, unknown };
 }

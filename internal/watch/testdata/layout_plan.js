@@ -49,8 +49,10 @@ for (const f of process.argv.slice(3)) {
   assert.strictEqual(at('diary').placed, true);
   eq(p.unknown, [], 'risk and hero-detail are reserved, not unknown');
   assert.strictEqual(p.rowHeight, 48);
-  const last = Math.max(...p.items.filter((i) => i.placed).map((i) => i.row + i.rowSpan - 1));
-  for (const i of p.items.filter((i) => !i.placed)) assert.ok(i.row > last, i.id + ' is packed after the placed panels');
+  // in the editor nothing rises: panels the file does not name are packed after the placed ones
+  const e = L.plan(layout, 1920, '', conf, page, true);
+  const last = Math.max(...e.items.filter((i) => i.placed).map((i) => i.row + i.rowSpan - 1));
+  for (const i of e.items.filter((i) => !i.placed)) assert.ok(i.row > last, i.id + ' is packed after the placed panels');
 }
 
 // unknown ids are reported once and ignored; a missing breakpoint falls back to the next wider; none: null

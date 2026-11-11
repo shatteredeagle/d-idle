@@ -48,6 +48,7 @@ watch-1440-nolayout 1440 2600 watch?theme=dark&layout=none
 watch-1920-mockup 1920 2400 watch?theme=dark&layout=mockup
 watch-1920-live 1920 2800 watch?theme=dark&layout=live
 watch-1920-command 1920 2600 watch?theme=dark&layout=command
+watch-1920-edit 1920 2400 watch?theme=dark&edit=1
 overlay-1920-dark 1920 160 watch?theme=dark&mode=overlay
 inventory-390-dark 390 844 watch/inventory?theme=dark
 inventory-390full-dark 390 2400 watch/inventory?theme=dark

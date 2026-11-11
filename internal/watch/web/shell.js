@@ -324,6 +324,7 @@ function setupLayout(conf, layout, answerBase) {
       done(l) { lay.editor = null; lay.layout = l || saved; applyLayout(); },
     });
   });
+  if (qs.get('edit') === '1') btn.click(); // a link (and the screenshot suite) can open the page in Edit layout
 }
 
 // ---- ctx and mounting ----
