@@ -14,6 +14,9 @@ async function probe(fetchFn, origin, timeoutMs = 3000) {
     if (res.body && typeof res.body.cancel === 'function') res.body.cancel().catch(() => {});
     return res.status >= 500 ? 'warming' : 'up';
   } catch (e) {
+    // V (smoke test, Electron 45 on the worker host): net.fetch with redirect:'manual' REJECTS on a 3xx instead of
+    // returning an opaque redirect. A redirect means the server answered (login redirect), so it is up.
+    if (/redirect was cancelled/i.test(String(e && e.message))) return 'up';
     return 'down';
   }
 }

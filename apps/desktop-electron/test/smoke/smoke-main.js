@@ -41,7 +41,9 @@ async function main() {
   const game = ctx.gameView.webContents;
   const helper = ctx.helperView.webContents;
 
-  await until(() => ctx.gameShown && game.getURL().startsWith(originA) && !game.isLoading(), 'game page shown');
+  await until(() => ctx.gameShown && game.getURL().startsWith(originA) && !game.isLoading(), 'game page shown').catch((e) => {
+    throw new Error(`${e.message} (state ${JSON.stringify(ctx.shell.state)}, url ${game.getURL()})`);
+  });
   assert.equal(game.getURL(), originA + '/watch/inventory', 'opens the requested page on the exact origin');
   console.log('ok opens', game.getURL());
 

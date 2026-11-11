@@ -55,6 +55,7 @@ test('probe: up, login redirect is up, 5xx warming, error down', async () => {
   assert.equal(await probe(mk(404), 'http://h:1'), 'up');
   assert.equal(await probe(mk(502), 'http://h:1'), 'warming');
   assert.equal(await probe(async () => { throw new Error('refused'); }, 'http://h:1'), 'down');
+  assert.equal(await probe(async () => { throw new Error('Redirect was cancelled'); }, 'http://h:1'), 'up', 'Electron rejects manual redirects');
   let seen;
   await probe(async (u, init) => { seen = [u, init]; return { status: 200 }; }, 'http://h:1');
   assert.equal(seen[0], 'http://h:1/watch');
