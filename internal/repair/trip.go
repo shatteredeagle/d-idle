@@ -446,3 +446,15 @@ func (r *Controller) AbortTrip(note string) {
 
 // NeedGold is the gold a repair wants for this estimate (the town withdraws that much from the stash).
 func (r *Controller) NeedGold(estimate int) int { return r.t.Trip.Need(estimate) }
+
+// TripWait is how long until the open request may make another trip (0: now). The bot asks before it looks for a
+// safe moment, so the reason of the last failed trip stays on the page during the cooldown.
+func (r *Controller) TripWait(now time.Time) time.Duration {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	if !r.pendingLocked() || r.st.Request.Trips == 0 {
+		return 0
+	}
+	left := time.Duration(r.t.Trip.CooldownSecs)*time.Second - now.Sub(time.Unix(r.st.Request.TripAt, 0))
+	return max(left, 0)
+}

@@ -172,6 +172,9 @@ func (r *Runner) repairTripStep(ctx context.Context, snap *d2.Snapshot, c contro
 	if !l.repairRetryAt.IsZero() && now.Before(l.repairRetryAt) {
 		return false
 	}
+	if rc.TripWait(now) > 0 {
+		return false // the last trip failed: its reason stays on the page until the cooldown is over
+	}
 	tcfg := rc.TripCfg()
 	if p.InTown() { // no portal: straight to the smith
 		return r.startRepairTrip(ctx, snap, c, 0)
