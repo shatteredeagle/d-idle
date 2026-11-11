@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Fix: the hero finishes a pack it was pulled into instead of walking on after 4 s; fight log lines show why each fight ended
 - The bot no longer re-roams a level it already covered after a town trip or zone change; the minimap coverage keeps the seen cells on re-entry
 - watch: the game video follows the tap's own frame rate (relays /stream.mjpg instead of polling /frame at 4 fps); d2dview: evenly paced frames, X-Frame-Game-Ms, /api/frames degraded flag
 - The roam clear uses a coarser coverage grid (16/10 instead of 7/5, knobs nav.roamSpacing and nav.roamCover); ground passed while fighting now counts as covered
