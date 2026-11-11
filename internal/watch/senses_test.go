@@ -123,8 +123,11 @@ func TestSensesServedBehindToken(t *testing.T) {
 type trailSrc struct {
 	SensesSource
 	pts []senses.TrailPoint
+	evs []senses.Event
 	now time.Time
 }
+
+func (s trailSrc) EventsOf() []senses.Event { return s.evs }
 
 func (s trailSrc) TrailOf() ([]senses.TrailPoint, int, time.Time, bool) { return s.pts, 1, s.now, true }
 
@@ -133,14 +136,15 @@ func TestSensesTrailPayload(t *testing.T) {
 	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
 	src := trailSrc{SensesSource: sensesFixture(t), now: now, pts: []senses.TrailPoint{
 		{At: now.Add(-30 * time.Second), X: 1, Y: 1, Area: 1, Entry: true},
-		{At: now.Add(-1500 * time.Millisecond), X: 3, Y: 1, Area: 1},
-	}}
+		{At: now.Add(-1500 * time.Millisecond), X: 3, Y: 1, Area: 1, Act: senses.ActCombat},
+	}, evs: []senses.Event{{At: now.Add(-1 * time.Second), X: 3, Y: 1, Area: 1, Kind: senses.EvKill, Text: "Fallen Shaman killed", Big: false,
+		Fight: &senses.FightInfo{End: "clear", Kills: 1, MinLife: 88, Life: 92, Sec: 2.1}}}}
 	w := httptest.NewRecorder()
 	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
 	golden(t, "senses-trail", w.Body.String())
 	var m map[string]json.RawMessage
 	json.Unmarshal(w.Body.Bytes(), &m)
-	want := `[{"ago":30000,"x":1,"y":1,"e":true},{"ago":1500,"x":3,"y":1}]`
+	want := `[{"ago":30000,"x":1,"y":1,"e":true},{"ago":1500,"x":3,"y":1,"a":1}]`
 	if string(m["trail"]) != want || string(m["trail_area"]) != "1" || string(m["ts"]) != strconv.FormatInt(now.UnixMilli(), 10) {
 		t.Fatalf("trail %s area %s ts %s", m["trail"], m["trail_area"], m["ts"])
 	}

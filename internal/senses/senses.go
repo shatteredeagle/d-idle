@@ -178,6 +178,8 @@ type Publisher struct {
 	visitNo uint64
 	skipped []error
 	trail   Trail
+	act     uint8
+	events  Events
 	cover   Coverage
 	now     func() time.Time // test clock; nil is time.Now
 }
@@ -229,7 +231,7 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 		sv = map[block]struct{}{}
 		p.seen[lm.No] = sv
 	}
-	p.trail.Add(p.clock(), lm.No, hero.X, hero.Y)
+	p.trail.Add(p.clock(), lm.No, hero.X, hero.Y, p.act)
 	grew := reveal(sv, hero)
 	changed := !p.have || lm.No != p.areaNo
 	if !grew && !changed && lm.Grid.Version() == p.areaVer {

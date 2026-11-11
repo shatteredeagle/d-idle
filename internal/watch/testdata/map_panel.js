@@ -36,19 +36,40 @@ assert.strictEqual(P.trailSig(plan, 60000, 2), P.trailSig(P.trailPlan(tr.slice()
 assert.strictEqual(P.coverSummary({ state: 'roaming', total: 118, legs: 17, cells: [[0, 0, 1], [1, 1, 1], [2, 2, 2], [3, 3, 0]] }), 'roam: 2/118 points seen, 1 failed, leg 17');
 assert.strictEqual(P.coverSummary({ state: 'roaming', total: 1593, drawn: 800, seen: 119, failed: 0, legs: 126, cells: [[0, 0, 0]] }), 'roam: 119/1593 points seen, 0 failed, leg 126, drawing 800 of 1593');
 assert.strictEqual(P.coverSummary(null), '');
+// ---- activity share, events, windows ----
+assert.strictEqual(P.trailWindow('1800000'), 1800000, 'the 30 min window is remembered');
+{
+  const hist = [{ ago: 20000, x: 1, y: 1, a: 0 }, { ago: 10000, x: 2, y: 1, a: 1 }, { ago: 8000, x: 3, y: 1, a: 1 }, { ago: 6000, x: 4, y: 1, a: 2 }, { ago: 0, x: 5, y: 1, a: 2 }];
+  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+  assert.strictEqual(P.activityShare(P.trailPlan(hist, 60000), names), 'stall 80% \u00b7 combat 20%', 'gaps over 3 s count as stall, the rest by activity');
+  assert.strictEqual(P.activityShare(P.trailPlan(hist.map((p, i) => Object.assign({}, p, { ago: 4000 - i * 1000 })), 60000), names), 'combat 50% \u00b7 walk 25% \u00b7 town 25%');
+}
+assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
+assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
+assert.strictEqual(P.eventShown({ k: 'potion' }, 'key'), false, 'potions only in all');
+assert.strictEqual(P.eventShown({ k: 'potion' }, 'all'), true);
+assert.strictEqual(P.eventShown({ k: 'kill' }, 'off'), false);
+assert.strictEqual(P.eventShown({ k: 'loot', big: true }, 'key'), true);
+assert.strictEqual(P.eventText({ k: 'kill', t: 'Fallen Shaman killed', f: { sec: 2.1, life: 92, min: 88, end: 'clear', kills: 1 } }), 'Fallen Shaman killed, 2.1 s fight, life 92% (min 88%), end=clear, 1 kill');
+assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
 {
   const store = { trailwin: '30000' }, timers = [], calls = [];
   const { root: r2, c: c2 } = shellCtx({}, store, timers);
   c2.store = (k) => ({ get: () => (k in store ? store[k] : null), set: (v) => { store[k] = v; } });
   const a2 = P.mount(r2, c2);
   const btn = (key) => c2.actions.children.find((b) => b.dataset.key === key);
-  assert.ok(btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
+  assert.ok(btn('events') && btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
   a2.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail: tr,
     coverage: { area: 2, cell: 8, cover: 5, total: 2, state: 'roaming', legs: 3, target: [12, 1], cells: [[12, 1, 0], [14, 1, 1]] } });
   assert.strictEqual(btn('coverage').attrs['aria-pressed'], 'false', 'coverage is off by default');
   btn('coverage').fire('click');
   assert.strictEqual(store.coverage, '1', 'the toggle is remembered');
   assert.ok(/roam: 1\/2 points seen/.test(c2.body.children[2].textContent), c2.body.children[2].textContent);
+  btn('events').fire('click');
+  assert.strictEqual(store.events, 'all', 'the events filter cycles key, all, off and is remembered');
+  assert.strictEqual(btn('events').textContent, 'Events: all');
+  a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail_legend: ['walk', 'combat'], trail: [{ ago: 5000, x: 9, y: 1 }, { ago: 3000, x: 10, y: 1, a: 1 }, { ago: 0, x: 11, y: 1, a: 1 }], events: [{ ago: 1000, x: 10, y: 1, k: 'kill', t: 'Fallen killed' }] });
+  assert.ok(/combat/.test(c2.body.children[4].textContent), 'the share line names combat: ' + c2.body.children[4].textContent);
   btn('trail-300000').fire('click');
   assert.strictEqual(store.trailwin, '300000', 'the window is remembered');
   assert.strictEqual(btn('trail-300000').attrs['aria-pressed'], 'true');
