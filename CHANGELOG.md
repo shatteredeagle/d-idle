@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- The roam clear uses a coarser coverage grid (16/10 instead of 7/5, knobs nav.roamSpacing and nav.roamCover); ground passed while fighting now counts as covered
 - Fix: the sweep no longer ignores hostiles for 90 s after a Clear whose target had already died
 - Viewer video on the sandbox now runs at about 21 fps (was 6) through the d2d frame feed; tap flags via D2DVIEW_FLAGS
 - Inventory page: Identify in the item menu, Buy identify scrolls and Identify all (Cain) commands, queued like the other item actions (offline only)
