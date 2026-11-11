@@ -71,3 +71,21 @@ func FindMerc(s *Snapshot) Merc {
 	}
 	return m
 }
+
+// MercSheet is what a backend reads about the hired merc beyond the unit: his own level and stats, and what he wears.
+// Only the d2d fork's dump has it (the lab fork patch "merc gear"; U live, docs/merc-gear.md); the memory reader of
+// the original game leaves Snapshot.Merc nil. Gear units use Where ContEquipment and Body 1 head, 3 torso, 4 right
+// hand, 5 left hand, in their own id space (never mixed into Inventory.Items).
+type MercSheet struct {
+	Hired bool // a merc is employed: present, dead, or a hireling type is set (U for the type test)
+	Alive bool
+	Level int
+	// Str and Dex are the hireling table's own values for his level; the gear's bonus is not added (U live).
+	Str, Dex int
+	Exp      int
+	Type     int // hireling.txt row id
+	NameID   int
+	// GearKnown: the backend listed what he wears, so an empty Gear means nothing worn.
+	GearKnown bool
+	Gear      []Unit
+}

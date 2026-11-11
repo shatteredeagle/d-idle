@@ -1,0 +1,93 @@
+{
+ "schema": 4,
+ "inTown": false,
+ "class": "Sorceress",
+ "gold": 0,
+ "stashGold": 0,
+ "equipment": {},
+ "backpack": [
+  {
+   "id": 1,
+   "code": "10",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "canSell": true,
+   "noWear": "restricted to another class"
+  },
+  {
+   "id": 2,
+   "code": "11",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "canSell": true,
+   "canWear": [
+    "rhand"
+   ]
+  },
+  {
+   "id": 4,
+   "code": "",
+   "name": "",
+   "quality": "",
+   "identified": false,
+   "x": 0,
+   "y": 0,
+   "w": 0,
+   "h": 0,
+   "noWear": "restricted to another class",
+   "noSell": "this item is never sold",
+   "noTrash": "this item is never trashed (quest item)"
+  }
+ ],
+ "stash": null,
+ "belt": null,
+ "pins": [
+  {
+   "slot": "rhand",
+   "id": 2,
+   "name": "thing",
+   "since": 1800000000
+  }
+ ],
+ "queue": [
+  {
+   "id": 2,
+   "kind": "equip",
+   "slot": "rhand",
+   "name": "thing",
+   "state": "queued",
+   "at": 1800000000,
+   "print": "11/2/0"
+  }
+ ],
+ "recent": [
+  {
+   "id": 2,
+   "kind": "equip",
+   "slot": "rhand",
+   "name": "thing",
+   "state": "cancelled",
+   "at": 1800000000,
+   "print": "11/2/0"
+  },
+  {
+   "id": 2,
+   "kind": "equip",
+   "slot": "rhand",
+   "name": "thing",
+   "state": "done",
+   "at": 1800000000,
+   "print": "11/2/0"
+  }
+ ]
+}

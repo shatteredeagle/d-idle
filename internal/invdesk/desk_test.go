@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/merc"
 	"d2lod-bot/internal/status"
 )
 
@@ -240,5 +241,50 @@ func TestWhyForBuiltOncePerView(t *testing.T) {
 	d.View()
 	if built != 2 {
 		t.Errorf("built %d after two views", built)
+	}
+}
+
+// The merc block (schema 3): its four states, the legal slots per kind, and that his items skip marks and pins by id
+// (their own id space). Both hero classes, since the block must not depend on the player's class.
+func TestViewMercBlock(t *testing.T) {
+	cap := &status.Item{ID: 1, Code: "5", Name: "Cap", Quality: "normal", W: 2, H: 2} // same id as a pack item on purpose
+	cases := []struct {
+		name  string
+		m     *status.MercInv
+		state string
+		slots int
+		items int
+	}{
+		{"backend cannot read", nil, "", 0, 0},
+		{"nobody hired", &status.MercInv{}, MercNone, 0, 0},
+		{"desert ready", &status.MercInv{Hired: true, Alive: true, Class: merc.ClassDesert, Level: 17, GearKnown: true, Equipment: map[string]*status.Item{"mhead": cap}}, MercReady, 3, 1},
+		{"ironwolf ready", &status.MercInv{Hired: true, Alive: true, Class: merc.ClassIronWolf, GearKnown: true}, MercReady, 4, 0},
+		{"rogue dead", &status.MercInv{Hired: true, Class: merc.ClassRogue, GearKnown: true, Equipment: map[string]*status.Item{"mhead": cap}}, MercDead, 3, 1},
+		{"gear unread", &status.MercInv{Hired: true, Alive: true, Class: merc.ClassRogue}, MercUnknown, 3, 0},
+	}
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for _, c := range cases {
+			d, _, _ := rig(t, class, town1)
+			m := c.m
+			d.c.Inventory = func() status.InventoryData {
+				return status.InventoryData{Inventory: []status.Item{{ID: 1, Code: "10"}}, Merc: m}
+			}
+			v := d.View()
+			if c.m == nil {
+				if v.Merc != nil {
+					t.Errorf("%v %s: want no merc block", class, c.name)
+				}
+				continue
+			}
+			if v.Merc == nil || v.Merc.State != c.state || len(v.Merc.Slots) != c.slots || len(v.Merc.Equipment) != c.items {
+				t.Fatalf("%v %s: %+v", class, c.name, v.Merc)
+			}
+			if h := v.Merc.Equipment["mhead"]; h != nil && (h.Mark != "" || h.CanSell || len(h.CanWear) != 0 || h.Name != "Cap") {
+				t.Errorf("%v %s: merc item decorated like a pack item: %+v", class, c.name, h)
+			}
+			if _, err := json.Marshal(v); err != nil {
+				t.Fatal(err)
+			}
+		}
 	}
 }
