@@ -1,0 +1,3 @@
+BACKLOG: aggression2 (TASK-305): the nav pack hand-over cleared once for 4 s and the walk ran on with the pack alive; now repeats while hostiles die; waypoint walk yields to followers; fight lines carry end, remaining, life, mana
+INDEX: docs/aggression.md: round 2, hand-over timeout root cause, end-reason telemetry
+CHANGELOG: Fix: the hero finishes a pack it was pulled into instead of walking on after 4 s; fight log lines show why each fight ended
