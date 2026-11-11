@@ -248,8 +248,14 @@ type stashInv struct {
 	n       int
 }
 
-func (s *stashInv) RequestStash(id uint32) (any, error) { s.calls = append(s.calls, "stash"); return nil, s.err }
-func (s *stashInv) RequestTake(id uint32) (any, error)  { s.calls = append(s.calls, "take"); return nil, s.err }
+func (s *stashInv) RequestStash(id uint32) (any, error) {
+	s.calls = append(s.calls, "stash")
+	return nil, s.err
+}
+func (s *stashInv) RequestTake(id uint32) (any, error) {
+	s.calls = append(s.calls, "take")
+	return nil, s.err
+}
 func (s *stashInv) RequestGold(d bool, n int) (any, error) {
 	s.calls = append(s.calls, "gold")
 	s.deposit, s.n = d, n
