@@ -1,0 +1,60 @@
+{
+ "schema": 4,
+ "inTown": true,
+ "class": "Paladin",
+ "gold": 1200,
+ "stashGold": 50,
+ "equipment": {},
+ "backpack": [],
+ "stash": [],
+ "belt": [],
+ "pins": [],
+ "queue": [],
+ "recent": [],
+ "merc": {
+  "state": "ready",
+  "owned": true,
+  "alive": true,
+  "class": 338,
+  "kind": "desert",
+  "level": 17,
+  "str": 60,
+  "dex": 50,
+  "lifePct": 81,
+  "slots": [
+   "mhead",
+   "mtorso",
+   "mrhand"
+  ],
+  "equipment": {
+   "mhead": {
+    "id": 9001,
+    "code": "10",
+    "name": "Skull Cap",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 2,
+    "h": 2,
+    "dur": 12,
+    "maxDur": 12,
+    "level": 12,
+    "art": "cap"
+   },
+   "mrhand": {
+    "id": 9002,
+    "code": "11",
+    "name": "Spear",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 2,
+    "h": 2,
+    "maxDur": 24,
+    "art": "spear"
+   }
+  }
+ }
+}

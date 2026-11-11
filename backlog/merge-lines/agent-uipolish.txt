@@ -1,3 +1,0 @@
-BACKLOG: uipolish (TASK-288): watch layout polish (tablet rows, top band meter widths) and the gear-policy prompt note on the inventory page
-INDEX: docs/ui-design-system.md section 15.7: finishing polish, the gear prompt note, what is still open from the mockup
-CHANGELOG: inventory: the page says in a note above the equipment that gear is yours to manage, and warns when no weapon is equipped

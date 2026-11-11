@@ -1,0 +1,30 @@
+{
+ "schema": 4,
+ "inTown": true,
+ "class": "Paladin",
+ "gold": 1200,
+ "stashGold": 50,
+ "equipment": {},
+ "backpack": [],
+ "stash": [],
+ "belt": [],
+ "pins": [],
+ "queue": [],
+ "recent": [],
+ "merc": {
+  "state": "unknown",
+  "owned": true,
+  "alive": true,
+  "class": 271,
+  "kind": "rogue",
+  "level": 9,
+  "lifePct": 55,
+  "slots": [
+   "mhead",
+   "mtorso",
+   "mrhand"
+  ],
+  "equipment": {},
+  "note": "Equipment unreadable on this backend."
+ }
+}

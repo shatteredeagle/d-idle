@@ -133,6 +133,8 @@ func (b *builder) dumpItem(it obj) (d2.Unit, bool) {
 		m.Where, m.Page, m.NodePage = d2.ContCube, 3, 1
 	case "cursor":
 		m.Where, u.Mode = d2.ContCursor, d2.ItemModeCursor
+	case "merc": // worn by the merc (the dump's merc section); only mercGear asks for it
+		m.Where, m.Body, m.NodePage, u.Mode = d2.ContEquipment, slot, 3, d2.ItemModeEquipped
 	default:
 		rp.unknown("item.loc", fmt.Sprintf("loc %q not understood", loc))
 		return d2.Unit{}, false
@@ -145,9 +147,15 @@ func (b *builder) dumpItem(it obj) (d2.Unit, bool) {
 	if n, ok := it.int("sockets"); ok {
 		ex.Sockets = n
 	}
+	ex.W, _ = it.int("w")
+	ex.H, _ = it.int("h")
 	ex.Dur, ex.MaxDur, _ = it.pair("dur")
 	ex.Unique, ex.Set = uniq, set
-	b.res.Extras.Items[u.ID] = ex
+	if loc == "merc" {
+		b.mercEx[u.ID] = ex
+	} else {
+		b.res.Extras.Items[u.ID] = ex
+	}
 	rp.have("item.code", "item.pos", "item.quality", "item.ilvl", "item.flags")
 	return u, true
 }

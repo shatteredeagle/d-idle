@@ -20,6 +20,7 @@ type Snapshot struct {
 	Screen    Point
 	Viewport  Point
 	Hovered   Hover
+	Merc      *MercSheet // the hired merc's level, stats and worn items; nil = not read (d2d dump only)
 }
 
 // Snapshot reads the whole state. It is consistent in the sense that the player (address, id, area)

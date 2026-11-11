@@ -6,6 +6,8 @@
 // (d2dsrc marks merc.level, merc.name, merc.aura unknown; docs/d2d-probes.md section 4: no verb lists merc gear).
 // So State is Known with owned/alive/class(RG only)/life, and Level 0, Aura "", StatsKnown false, Gear nil: the policy
 // then fails closed on everything that needs those (revive without a level estimate, gear, requirements).
+// The d2d fork with the merc gear patch adds level, Str, Dex and the worn items to the dump (Snapshot.Merc): then
+// StatsKnown and GearKnown are true.
 package d2dmerc
 
 import (
@@ -76,5 +78,26 @@ func FromResult(res *d2dsrc.Result) merc.MercState {
 	if out.Alive && res.Report.Has("merc.life") {
 		out.LifePct = max(d2.FindMerc(res.Snap).LifePct, 1)
 	}
+	if sh := res.Snap.Merc; sh != nil {
+		// The fork's merc gear patch (V offline on the fixtures, U live): his own level and stats, what he wears.
+		out.Level, out.Str, out.Dex, out.StatsKnown = sh.Level, sh.Str, sh.Dex, true
+		out.GearKnown = sh.GearKnown
+		for _, u := range sh.Gear {
+			if u.Item == nil {
+				continue
+			}
+			slot, ok := mercSlot[u.Item.Body]
+			if !ok {
+				continue
+			}
+			ex := res.Extras.Merc.Gear[u.ID]
+			out.Gear[slot] = &merc.Item{Name: ex.Name, Base: ex.Code, Sockets: max(ex.Sockets, 0), Ethereal: u.Item.Ethereal(),
+				Identified: u.Item.Identified(), Broken: ex.MaxDur > 0 && ex.Dur == 0, W: ex.W, H: ex.H}
+		}
+	}
 	return out
 }
+
+// mercSlot maps the d2s body location of a merc's worn item to a merc.Slot: 1 head, 3 torso, 4 right hand, 5 left hand
+// (V d2d source tests/test_d2s.cpp asserts these four; which hand holds a shield is S).
+var mercSlot = map[int]merc.Slot{d2.BodyHead: merc.SlotHelm, d2.BodyTorso: merc.SlotArmor, d2.BodyRHand: merc.SlotWeapon, d2.BodyLHand: merc.SlotShield}

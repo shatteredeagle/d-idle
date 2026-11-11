@@ -2,16 +2,21 @@
 const path = require('node:path');
 const fs = require('node:fs');
 const electron = require('electron');
-const { app, BaseWindow, WebContentsView, Menu, protocol, session, ipcMain } = electron;
+const { app, BaseWindow, WebContentsView, Menu, Tray, nativeImage, dialog, protocol, session, ipcMain } = electron;
 const config = require('./config');
 const { parseArgs, userArgs } = require('./args');
 const { normalizeAddress, pageURL } = require('./address');
 const sec = require('./security');
 const { Shell, POLL_MS } = require('./state');
 const { appMenuTemplate } = require('./menu');
+const { trayMenuTemplate } = require('./tray');
+const { createAutostart } = require('./autostart');
+const plat = require('./platform');
+const { checkForUpdate, builtinFeed } = require('./update');
 
 const HELPER_DIR = path.join(__dirname, 'helper');
 const MIN = { width: 900, height: 600 };
+const UPDATE_EVERY_MS = 24 * 60 * 60 * 1000;
 
 // start runs the whole app and resolves to a context object (the smoke test inspects it; nothing else does).
 // opts.argv overrides process.argv (tests), opts.userData overrides the data dir (tests).
@@ -57,7 +62,7 @@ async function start(opts = {}) {
   protocol.registerSchemesAsPrivileged([{ scheme: sec.HELPER_SCHEME, privileges: { standard: true, secure: true } }]);
   await app.whenReady();
 
-  const ctx = { userData, cfg, args, window: null, helperView: null, gameView: null, shell: null, pendingPage: args.page || 'watch', gameShown: false };
+  const ctx = { userData, cfg, args, window: null, helperView: null, gameView: null, shell: null, pendingPage: args.page || 'watch', gameShown: false, quitting: false, tray: null, update: { available: false } };
 
   // Default-deny permissions on the sessions we use.
   const gameSession = session.fromPartition('persist:d2idle');
@@ -134,6 +139,7 @@ async function start(opts = {}) {
   const push = () => { if (!helperView.webContents.isDestroyed()) helperView.webContents.send('d2idle:state', shell.state); };
   function onState(s) {
     push();
+    refreshTray();
     if (s.status === 'up' && !ctx.gameShown) showGame();
     if (opts.onState) opts.onState(s);
   }
@@ -163,7 +169,38 @@ async function start(opts = {}) {
   handle('d2idle:retry', () => shell.tick());
   handle('d2idle:openPage', (name) => { ctx.api.openPage(String(name)); });
 
-  // Actions shared by the menu, second instances and (PR2) the tray.
+  // Tray: icon, menu with the pages, a reachability line, autostart and hide-to-tray toggles, update check.
+  const autostart = (opts.autostart) || createAutostart(app);
+  const hideToTray = () => cfg.hideToTray !== false;
+  function refreshTray() {
+    if (!ctx.tray || ctx.tray.isDestroyed()) return;
+    let on = false;
+    try { on = autostart.get(); } catch (e) { /* unreadable: show unchecked */ }
+    ctx.trayTemplate = trayMenuTemplate({ state: shell.state, autostart: on, hideToTray: hideToTray(), update: ctx.update }, ctx.api);
+    ctx.tray.setContextMenu(Menu.buildFromTemplate(ctx.trayTemplate));
+    ctx.tray.setToolTip('d.idle watch: ' + ctx.trayTemplate[3].label);
+  }
+  if (!opts.noTray) {
+    const img = nativeImage.createFromPath(path.join(__dirname, '..', 'build', plat.trayImageName(process.platform)));
+    ctx.tray = new Tray(img.isEmpty() ? nativeImage.createEmpty() : img);
+    ctx.tray.on('click', () => ctx.api.show());
+  }
+
+  // Update check: check only. It tells the user a newer version exists; it never downloads or installs anything.
+  async function runUpdateCheck(manual) {
+    try {
+      ctx.update = await checkForUpdate({ feed: opts.updateFeed || cfg.updateFeed || builtinFeed(), keys: opts.updateKeys, fetchFn, currentVersion: app.getVersion() });
+      if (manual && !ctx.update.available) await dialog.showMessageBox({ type: 'info', message: 'd.idle watch is up to date.' });
+    } catch (e) {
+      ctx.updateError = String(e.message || e);
+      if (manual) await dialog.showMessageBox({ type: 'info', message: 'Could not check for updates.', detail: ctx.updateError });
+    }
+    refreshTray();
+  }
+
+  const dock = plat.dockControl(app);
+
+  // Actions shared by the menu, second instances and the tray.
   ctx.api = {
     openPage(name) {
       pageURL('http://x', name); // throws on an unknown page
@@ -173,10 +210,27 @@ async function start(opts = {}) {
     },
     changeAddress() { showHelper(); shell.state = { ...shell.state, status: 'setup' }; push(); ctx.api.show(); },
     reload() { if (ctx.gameShown) gameView.webContents.reload(); else shell.tick(); },
-    show() { if (win.isMinimized()) win.restore(); win.show(); win.focus(); },
-    quit() { app.quit(); },
+    show() { dock.show(); if (win.isMinimized()) win.restore(); win.show(); win.focus(); },
+    quit() { ctx.quitting = true; app.quit(); },
+    toggleAutostart() {
+      try { autostart.set(!autostart.get()); } catch (e) { dialog.showErrorBox('Start with the system', String(e.message || e)); }
+      refreshTray();
+    },
+    toggleHideToTray() {
+      cfg.hideToTray = !hideToTray();
+      try { config.save(userData, cfg); } catch (e) { /* keep the in-memory setting */ }
+      refreshTray();
+    },
+    checkUpdate: () => runUpdateCheck(true),
+    showUpdate() {
+      dialog.showMessageBox({
+        type: 'info',
+        message: `d.idle watch ${ctx.update.version} is available.`,
+        detail: `${ctx.update.notes}\n\nGet the new build from where you got this one. This app downloads and installs nothing.`.trim(),
+      });
+    },
   };
-  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenuTemplate(ctx.api)));
+  Menu.setApplicationMenu(Menu.buildFromTemplate(appMenuTemplate(ctx.api, process.platform)));
 
   app.on('second-instance', (_e, argv) => {
     try {
@@ -200,17 +254,31 @@ async function start(opts = {}) {
     }, 800);
     saveTimer.unref?.();
   });
+  win.on('close', (e) => {
+    if (plat.hideOnClose({ platform: process.platform, hasTray: !!ctx.tray, hideToTray: hideToTray(), quitting: ctx.quitting })) { e.preventDefault(); win.hide(); dock.hide(); }
+  });
   win.on('closed', () => { ctx.closed = true; });
-  app.on('window-all-closed', () => app.quit());
+  app.on('before-quit', () => { ctx.quitting = true; });
+  app.on('window-all-closed', () => { if (plat.quitOnAllClosed(process.platform, !!ctx.tray)) app.quit(); });
+  app.on('activate', () => ctx.api.show()); // macOS: Dock icon click
 
   await helperView.webContents.loadURL(sec.HELPER_URL);
   shell.setAddress(cfg.address || '');
   if (args.setup) shell.state = { ...shell.state, status: 'setup' };
   push();
-  win.show();
+  refreshTray();
+  if (!(args.hidden && ctx.tray)) win.show();
+  else dock.hide();
   if (!args.setup && cfg.address) shell.tick();
-  ctx.timer = setInterval(() => { if (!ctx.gameShown || opts.keepPolling) shell.tick(); }, POLL_MS);
+  // Poll fast while the helper is shown; slowly while the game page is up, so the tray status stays current.
+  let n = 0;
+  ctx.timer = setInterval(() => { if (!ctx.gameShown || ++n % 5 === 0) shell.tick(); }, POLL_MS);
   ctx.timer.unref?.();
+  if (cfg.updateCheck !== false && !opts.noUpdate && (opts.updateFeed || cfg.updateFeed || builtinFeed())) {
+    setTimeout(() => runUpdateCheck(false), opts.updateDelayMs ?? 15000).unref?.();
+    setInterval(() => runUpdateCheck(false), UPDATE_EVERY_MS).unref?.();
+  }
+  ctx.runUpdateCheck = runUpdateCheck;
   return ctx;
 }
 
