@@ -10,6 +10,7 @@ files:
   - package.json
   - src/**
   - build/icon.png
+  - build/tray.png
 asarUnpack: []
 directories:
   buildResources: build
@@ -29,8 +30,20 @@ linux:
   category: Game
   icon: build/icon.png
   executableName: d2idle-watch
+  syncDesktopName: true
   maintainer: d.idle contributors
   synopsis: d.idle watch
+  desktop:
+    entry:
+      Name: d.idle watch
+      Comment: Watch your d.idle hero
+      StartupWMClass: d2idle-watch
+      Actions: Inventory;Policy;Return;Setup;
+    desktopActions:
+      Inventory: {Name: Inventory, Exec: d2idle-watch --page inventory}
+      Policy: {Name: Policy, Exec: d2idle-watch --page policy}
+      Return: {Name: Return screen, Exec: d2idle-watch --page return}
+      Setup: {Name: Change address, Exec: d2idle-watch --setup}
 mac:
   target: [{target: zip, arch: [arm64, x64]}]
   icon: build/icon.png
