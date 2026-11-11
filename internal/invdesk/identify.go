@@ -65,14 +65,18 @@ func (d *Desk) runnableLocked(r Request, inTown bool) bool {
 	case KindTrash:
 		return d.tr != nil
 	case KindIdentify:
+		if r.Place == PlaceStash {
+			return d.stashSvLocked() != nil && inTown
+		}
 		return d.sv != nil
 	case KindBuyID, KindCain:
 		return d.sv != nil && inTown
+	case KindStash, KindTake, KindGold:
+		return d.stashSvLocked() != nil && inTown
 	}
 	return d.eq != nil
 }
 
-func isErrand(kind string) bool { return kind == KindBuyID || kind == KindCain }
 
 func (d *Desk) services() (Services, func(*d2.Snapshot) bool) {
 	d.mu.Lock()
@@ -106,6 +110,9 @@ func (d *Desk) RequestIdentify(id uint32) (Request, error) {
 	}
 	if u.Item.Identified() {
 		return Request{}, refuse("identified", "it is identified already")
+	}
+	if u.Item.Where == d2.ContStash && d.stashSv() != nil {
+		return d.requestStashIdentify(id, u, s) // in place, in town
 	}
 	if code, why := identifyWhy(u, true); code != "" {
 		return Request{}, refuse(code, "%s", why)
@@ -245,12 +252,12 @@ func (d *Desk) identifyView(sv Services, open func(*d2.Snapshot) bool, s *d2.Sna
 
 // Priority ranks the queued kinds: an identify (a scroll read, seconds) goes before equip and trash, those before the
 // town errands. Lower runs first.
-func priority(kind string) int {
-	switch kind {
-	case KindIdentify:
-		return 0
-	case KindBuyID, KindCain:
+func priority(r Request) int {
+	switch {
+	case r.errand():
 		return 2
+	case r.kind() == KindIdentify:
+		return 0
 	}
 	return 1
 }
@@ -261,7 +268,7 @@ func (d *Desk) expireStaleLocked() {
 	now := d.c.Now()
 	q := d.st.Queue[:0:0]
 	for _, r := range d.st.Queue {
-		if r.kind() == KindIdentify && r.State == StateQueued && now.Sub(time.Unix(r.At, 0)) > IdentifySafeWait {
+		if r.kind() == KindIdentify && r.Place != PlaceStash && r.State == StateQueued && now.Sub(time.Unix(r.At, 0)) > IdentifySafeWait {
 			r.State, r.Reason = StateFailed, fmt.Sprintf("no safe moment within %d s (monsters close or the hero was busy): ask again", int(IdentifySafeWait/time.Second))
 			d.recentLocked(r)
 			continue
@@ -281,8 +288,11 @@ func (d *Desk) NextKind() string {
 	defer d.mu.Unlock()
 	best, k := 99, ""
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued && (inTown || !isErrand(r.kind())) && priority(r.kind()) < best {
-			best, k = priority(r.kind()), r.kind()
+		if r.State == StateQueued && (inTown || !r.errand()) && priority(r) < best {
+			best, k = priority(r), r.kind()
+			if r.isStashJob() {
+				k = "stash" // the Why line's `what`
+			}
 		}
 	}
 	return k
@@ -294,7 +304,7 @@ func (d *Desk) ErrandsWaiting() int {
 	defer d.mu.Unlock()
 	n := 0
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued && isErrand(r.kind()) && d.sv != nil {
+		if r.State == StateQueued && r.errand() && d.sv != nil {
 			n++
 		}
 	}
@@ -307,7 +317,7 @@ func (d *Desk) runIdentifyBatch(ctx context.Context, sv Services, out *[]string)
 	d.mu.Lock()
 	var batch []Request
 	for i := range d.st.Queue {
-		if r := d.st.Queue[i]; r.State == StateQueued && r.kind() == KindIdentify {
+		if r := d.st.Queue[i]; r.State == StateQueued && r.kind() == KindIdentify && r.Place != PlaceStash {
 			d.st.Queue[i].State = StateDoing
 			batch = append(batch, r)
 		}
