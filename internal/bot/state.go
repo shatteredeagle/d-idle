@@ -35,6 +35,7 @@ var (
 	errStepTimeout = errors.New("bot: action timed out")
 	errGuardPanic  = errors.New("bot: guard panicked, action cancelled")
 	errPoints      = errors.New("bot: unspent points, calm moment")
+	errPlayer      = errors.New("bot: a player command is ready at a safe moment")
 )
 
 // safetyInterrupt cancels an action so the main loop can carry out the fighter's decision.

@@ -363,6 +363,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	useFightFeed(lrig, feedFighter, ldir, log)
 	useSenses(lrig, be.Env, feedFighter, log)
 	useSensesCoverage(lrig, be.Env, nv)
+	useSensesHistory(ctx, lrig, be.Env, feedFighter, m, runner.Status)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err

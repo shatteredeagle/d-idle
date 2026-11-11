@@ -156,7 +156,9 @@ func (t *Town) PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error {
 			break
 		}
 	}
-	if cerr := t.h.CloseAll(ctx); cerr != nil {
+	// Close on a context that survives a cancel: a safety interrupt or a fight cancels ctx mid-action, and the panels
+	// must still close and the identify cursor and any held item must be released (the requests go back to queued).
+	if cerr := t.h.CloseAll(context.WithoutCancel(ctx)); cerr != nil {
 		t.e.Log.Warn("town: closing panels after the player's identify failed", "err", cerr)
 	}
 	return errs

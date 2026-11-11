@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"strings"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/telemetry"
 )
@@ -35,9 +36,10 @@ type HeroView struct {
 	Mana       int       `json:"mana"`
 	MaxMana    int       `json:"maxMana"`
 	XP         int64     `json:"xp"`
-	XPLevel    int64     `json:"xpLevel"` // experience at the start of this level (0 when unknown)
-	XPNext     int64     `json:"xpNext"`  // experience at the next level (0 when unknown)
-	XPPct      *float64  `json:"xpPct"`   // progress through this level
+	XPLevel    int64     `json:"xpLevel"`   // experience at the start of this level (0 when unknown)
+	XPNext     int64     `json:"xpNext"`    // experience at the next level (0 when unknown)
+	XPPct      *float64  `json:"xpPct"`     // progress through this level
+	XPPerHour  *float64  `json:"xpPerHour"` // experience per hour since the first sample; null while it builds up
 	Gold       *int      `json:"gold"`
 	StashGold  *int      `json:"stashGold"`
 	State      string    `json:"state"`
@@ -96,6 +98,9 @@ type HeroWhy struct {
 	Next   string `json:"next"`
 }
 
+// xpRateWarm is how long XP/h waits for its first reading; a rate over seconds is noise.
+const xpRateWarm = 2 * time.Minute
+
 //go:embed whychange.json
 var whyChangeJSON []byte
 
@@ -121,6 +126,7 @@ func (h *Hub) Hero() HeroView {
 	ov := h.OrdersView()
 	h.mu.Lock()
 	hi, gold, stats := h.hero, h.gold, h.stats
+	from, fromT, seen, now := h.xpFrom, h.xpFromT, h.xpSeen, h.cfg.Clock.Now()
 	h.mu.Unlock()
 	v := HeroView{Schema: heroSchema, Known: hi.Known || hi.Class != "", Name: safeText(hi.Name, 40), Class: hi.Class, Level: hi.Level,
 		Difficulty: hi.Difficulty, Area: hi.Area, Life: hi.Life, MaxLife: hi.MaxLife, Mana: hi.Mana, MaxMana: hi.MaxMana,
@@ -136,6 +142,10 @@ func (h *Hub) Hero() HeroView {
 	if v.XPNext > v.XPLevel && v.XP >= v.XPLevel {
 		p := float64(int(1000*float64(v.XP-v.XPLevel)/float64(v.XPNext-v.XPLevel))) / 10
 		v.XPPct = &p
+	}
+	if el := (now - fromT).Hours(); seen && el >= xpRateWarm.Hours() && hi.XP > from {
+		r := float64(int(float64(hi.XP-from) / el))
+		v.XPPerHour = &r
 	}
 	if gold != nil {
 		if g, s, ok := gold(); ok {

@@ -2,6 +2,15 @@
 // the readiness light for the hero's area, from GET /api/hero. The stats block is null until the bot reports it; the
 // tile then shows the basics alone.
 const num = (n) => (n === null || n === undefined ? '-' : Number(n).toLocaleString('en-US').replace(/,/g, ' '));
+const commas = (n) => Number(n).toLocaleString('en-US');
+// xpText is the progress line: "XP 79,451 / 82,000 (97%)", the rate when known; null while the hero's experience is not reported.
+export function xpText(h) {
+  if (!h || !Number.isFinite(h.xp) || !h.xpNext || h.xp < 0) return null;
+  const pct = Number.isFinite(h.xpPct) ? ' (' + Math.floor(h.xpPct) + '%)' : '';
+  const rate = Number.isFinite(h.xpPerHour) && h.xpPerHour > 0 ? ' · ' + commas(Math.round(h.xpPerHour)) + ' xp/h' : ' · xp/h measuring';
+  return 'XP ' + commas(h.xp) + ' / ' + commas(h.xpNext) + pct + rate;
+}
+
 export const LIGHTS = { green: ['ok', 'ready'], amber: ['warn', 'risky'], red: ['bad', 'not ready'] };
 
 export function resistLevel(v) {
@@ -27,7 +36,8 @@ export function mount(root, ctx) {
   light.dataset.key = 'readiness';
   const why = ctx.el('span', 'd-hint');
   ready.append(light, why);
-  ctx.body.append(stats, res, ready);
+  const xpLine = ctx.el('p', 'd-hint xp');
+  ctx.body.append(stats, xpLine, res, ready);
   return {
     update(h) {
       if (!h) { ctx.hide(true); return; }
@@ -36,6 +46,9 @@ export function mount(root, ctx) {
       lvl.set(h.level ? String(h.level) : '-', h.name || '');
       const left = h.xpNext && h.xp <= h.xpNext ? h.xpNext - h.xp : null;
       xp.set(h.xpPct === null || h.xpPct === undefined ? '-' : h.xpPct.toFixed(1) + '%', left === null ? '' : num(left) + ' xp to go');
+      const xt = xpText(h);
+      xpLine.textContent = xt || '';
+      xpLine.hidden = !xt;
       gold.set(num(h.gold), h.gold === null ? 'not reported' : 'on the hero');
       stash.set(num(h.stashGold), h.stashGold === null ? 'not reported' : 'in the stash');
       const s = h.stats;

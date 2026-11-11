@@ -44,7 +44,7 @@ function dump(e, ind) {
 }
 
 const hero = { schema: 'watch.hero/1', known: true, name: 'Pally', class: 'Paladin', level: 9, difficulty: 'normal', area: 'Blood Moor', life: 30, maxLife: 150, mana: 41, maxMana: 60,
-  xp: 15000, xpLevel: 12000, xpNext: 18000, xpPct: 50, gold: 1240, stashGold: 5300, state: 'fight', stateLabel: 'fighting', activity: 'Fighting', goal: null, queue: [], why: {},
+  xp: 15000, xpLevel: 12000, xpNext: 18000, xpPct: 50, xpPerHour: 12345, gold: 1240, stashGold: 5300, state: 'fight', stateLabel: 'fighting', activity: 'Fighting', goal: null, queue: [], why: {},
   stats: { resists: { fire: 12, cold: 30, light: -8, poison: 5 }, readiness: { light: 'amber', area: 'Blood Moor', reason: 'Lightning resistance is under the line.' } } };
 const bare = Object.assign({}, hero, { name: 'Sorc', class: 'Sorceress', maxLife: 0, maxMana: 0, xpPct: null, xpNext: 0, gold: null, stashGold: null, stats: null });
 const alerts = { alerts: [{ seq: 1, severity: 'warn', text: 'Short Staff is broken.' }, { seq: 2, severity: 'alarm', text: 'Life under 25% in Blood Moor.' }] };
@@ -72,6 +72,13 @@ for (const id of Object.keys(cases)) {
 {
   const M = load(path.join(dir, 'hero-meters', 'panel.js')), D = load(path.join(dir, 'hero-detail', 'panel.js')), A = load(path.join(dir, 'alerts-count', 'panel.js'));
   assert.strictEqual(M.level(30, 150), 'bad'); assert.strictEqual(M.level(60, 150), 'warn'); assert.strictEqual(M.level(140, 150), ''); assert.strictEqual(M.level(0, 0), '');
+  {
+    const t = D.xpText({ xp: 79451, xpLevel: 72144, xpNext: 90180, xpPct: 40.4, xpPerHour: 12345.6 });
+    assert.strictEqual(t, 'XP 79,451 / 90,180 (40%) · 12,346 xp/h');
+    assert.strictEqual(D.xpText({ xp: 100, xpNext: 500, xpPct: 20 }), 'XP 100 / 500 (20%) · xp/h measuring');
+    assert.strictEqual(D.xpText({ xp: 0, xpNext: 0 }), null); assert.strictEqual(D.xpText(null), null);
+    for (const h of [{ xp: 5, xpNext: 9, xpPct: null, xpPerHour: null }, { xp: 79451, xpNext: 82000, xpPct: 97.1, xpPerHour: NaN }]) assert.ok(!/NaN|undefined|null| - /.test(D.xpText(h)), D.xpText(h));
+  }
   assert.strictEqual(D.resistLevel(-8), 'bad'); assert.strictEqual(D.resistLevel(12), ''); assert.strictEqual(D.resistLevel(30), '');
   assert.strictEqual(A.tone(alerts.alerts), 'bad'); assert.strictEqual(A.tone([alerts.alerts[0]]), 'warn');
 }
