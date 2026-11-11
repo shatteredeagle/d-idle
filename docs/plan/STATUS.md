@@ -104,6 +104,10 @@
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | queuespeed | proposed | - | `docs/process/queuespeed.md` | - |
 | uifit | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/panels`<br>`internal/watch/panels.go`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uilint`<br>`tools/uishots`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uifit.txt` | - |
+| fid-revive-mode | in-progress | - | `docs/probes/fid/fid-revive-mode.md` | - |
+| fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
+| fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
+| fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -160,6 +164,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3ba8ecde 11-11 14:04 `Merge agent/decomp9: decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline` (decomp9)
+- 9ce60add 11-11 14:03 `Merge branch 'main' into decomp9` (-)
 - a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
 - 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
 - 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
@@ -168,6 +174,4 @@
 - 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
 - c7da022e 11-11 12:58 `Merge branch 'main' into identify2` (-)
 - 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
-- c9eb634c 11-11 12:50 `Merge branch 'main' into qprofile` (-)
-- 3c97ca09 11-11 12:46 `Merge agent/identify2: sync main` (identify2)
 <!-- statusgen:end -->
