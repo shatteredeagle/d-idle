@@ -1,0 +1,8 @@
+div.inv-act [aria-label=Actions for Broad Sword role=menu data-mode=pop]
+  div.act-title.q-magic [] "Broad Sword"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "restricted to another class"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-danger=] "Trash"
+  div.act-note [role=status]

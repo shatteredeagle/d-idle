@@ -20,7 +20,7 @@ User decision 2026-11-10 ("Fully player-only"): the bot never makes equipment de
 | repair | b | unchanged, manual (docs/repair.md) |
 | sell and stash by the player's marks, pickup (`loot`) | c, d | unchanged (the pickit still keeps a weapon or armor for an empty slot; picking up is not equipping) |
 | the player's own equip requests and pins (docs/inventory-ui.md) | player | unchanged: `leveler.PlayerEquip` runs at the gear step |
-| mercenary gear (`internal/merc`) | n/a | not the hero's equipment; unchanged (U: the user may want the same rule, say so) |
+| mercenary gear (`internal/merc`, user 2026-11-10: same rule) | a | the bot makes no merc equipment decision. `merc.EquipIfBetter` has no caller (V grep). A REPLACING hire while the merc wears gear (or while his gear is unread, `MercState.GearKnown` false) is refused: `merc: replace skipped (merc wears gear: unequip your merc first)`, the window stays closed until he is bare; the bot never strips him (`mercWire.HireStep`, `merc.GearBlocksReplace`). `resource.gearDecisions=1` keeps the old strip-then-hire for drills and named runs. V offline: `TestHireStepRefusesWhileMercWearsGear` (Sorceress and Paladin, Rogue and Desert Guard). U live: the hire path itself is dormant on d2d (no `Hirer`) |
 | `hand.EnsureMainSet` (press `w` back to the main weapon set) | n/a | unchanged: it undoes a game-side set swap, it chooses nothing |
 
 Tests: `internal/resource` (TestPlayerGate), `internal/town` (TestPlayerPolicy*), `internal/bot` (TestGearStepPlayer*), run for Paladin and Sorceress.
