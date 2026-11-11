@@ -9,8 +9,10 @@ import (
 )
 
 type fakeInv struct {
-	marks []string
-	err   error
+	marks    []string
+	err      error
+	trashed  []bool
+	canceled []string
 }
 type refusal struct{ msg string }
 
@@ -26,6 +28,14 @@ func (f *fakeInv) RequestEquip(id uint32, slot string) (any, error) {
 	return map[string]any{"slot": slot}, f.err
 }
 func (f *fakeInv) Unpin(slot string) error { return f.err }
+func (f *fakeInv) RequestTrash(id uint32, confirm bool) (any, error) {
+	f.trashed = append(f.trashed, confirm)
+	return map[string]any{"kind": "trash"}, f.err
+}
+func (f *fakeInv) Cancel(id uint32, kind string) error {
+	f.canceled = append(f.canceled, kind)
+	return f.err
+}
 
 func invPost(h http.Handler, path, body string, hdr map[string]string) *httptest.ResponseRecorder {
 	r := httptest.NewRequest("POST", path, strings.NewReader(body))
@@ -118,4 +128,50 @@ func TestInventoryViewIsSharedAndDroppedByPost(t *testing.T) {
 	if get() == a || c.views != 2 {
 		t.Errorf("a POST must drop the cached view (%d builds)", c.views)
 	}
+}
+
+// Schema 3 routes: trash needs the same gates, carries the confirm flag, cancel names the kind; an old client that only
+// knows mark, equip and unpin is unaffected.
+func TestInventoryTrashAndCancelRoutes(t *testing.T) {
+	api := NewInvAPI()
+	f := &fakeInv{}
+	api.Bind(f)
+	post := api.PostHandler(AnswerOptions{Token: "tok", Origins: []string{"http://ok.test"}})
+	auth := map[string]string{"Authorization": "Bearer tok"}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true}`, auth); w.Code != 200 || len(f.trashed) != 1 || !f.trashed[0] {
+		t.Errorf("trash: %d %s", w.Code, w.Body)
+	}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1}`, auth); w.Code != 200 || f.trashed[1] {
+		t.Errorf("trash without confirm must reach the desk as false: %d", w.Code)
+	}
+	if w := invPost(post, "/api/inventory/cancel", `{"id":1,"kind":"trash"}`, auth); w.Code != 200 || f.canceled[0] != "trash" {
+		t.Errorf("cancel: %d %v", w.Code, f.canceled)
+	}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true}`, nil); w.Code != 401 || len(f.trashed) != 2 {
+		t.Errorf("trash without a token: %d", w.Code)
+	}
+	bad := map[string]string{"Authorization": "Bearer tok", "Origin": "http://evil.test"}
+	if w := invPost(post, "/api/inventory/cancel", `{"id":1}`, bad); w.Code != 403 || len(f.canceled) != 1 {
+		t.Errorf("cancel from a foreign origin: %d", w.Code)
+	}
+	f.err = refusal{"it is marked keep"}
+	if w := invPost(post, "/api/inventory/trash", `{"id":1,"confirm":true}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), "marked keep") {
+		t.Errorf("refusal: %d %s", w.Code, w.Body)
+	}
+	if !containsAll(InvPostRoutes, "/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin") {
+		t.Error("a v1 route was removed from InvPostRoutes")
+	}
+}
+
+func containsAll(list []string, want ...string) bool {
+	for _, w := range want {
+		found := false
+		for _, x := range list {
+			found = found || x == w
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
 }
