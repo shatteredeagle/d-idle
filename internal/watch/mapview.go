@@ -37,6 +37,9 @@ func (h *Hub) SetHero(in HeroInfo) {
 	was := h.hero
 	in.Title = was.Title
 	h.hero = in
+	if now := h.cfg.Clock.Now(); in.XP > 0 && (!h.xpSeen || in.XP < h.xpFrom) {
+		h.xpFrom, h.xpFromT, h.xpSeen = in.XP, now, true // first sample, or the character changed
+	}
 	if in.Area != was.Area || in.AreaID != was.AreaID || in.Level != was.Level || in.Activity != was.Activity || in.Known != was.Known {
 		h.notifyLocked()
 	}

@@ -93,6 +93,9 @@ type Hub struct {
 	hero    HeroInfo
 	cleared map[int]bool  // game area ids known to be cleared (MarkCleared)
 	xp0     map[int]int64 // order id -> hero xp when the order started
+	xpFrom  int64         // first total experience seen (the XP/h baseline)
+	xpFromT time.Duration // when it was seen
+	xpSeen  bool
 }
 
 // New makes a Hub and subscribes it to the store.
