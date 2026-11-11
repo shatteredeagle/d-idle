@@ -4,6 +4,7 @@
   "layout": {
     "aliases": {"hero-status": "hero-vitals", "whyline": "why", "hero-now": "now", "voice": "diary"},
     "compat": ["now", "queue", "orders-map", "thoughts", "rules", "journal", "spend", "chronicle", "diary", "quests", "cards", "locked", "bestiary", "atlas", "alerts"],
-    "reserved": ["risk"]
+    "reserved": ["risk"],
+    "fit": ["now", "queue", "orders-map", "thoughts", "rules", "journal", "spend", "chronicle", "diary", "quests", "cards", "locked", "bestiary", "atlas", "alerts"]
   }
 }
