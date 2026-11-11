@@ -194,8 +194,8 @@ func (d *Desk) SetMark(id uint32, mark string) error {
 	if mark != "" && mark != MarkSell && mark != MarkKeep {
 		return refuse("mark", "mark is %q, %q or empty", MarkSell, MarkKeep)
 	}
-	d.mu.Lock()
-	defer d.mu.Unlock()
+	// Callbacks (Snap, SellBlock) run unlocked: they can reach Pinned/MarkOf through the town and the leveler, and d.mu
+	// is not reentrant (live deadlock 2026-11-10: the whole bot froze).
 	u, _, ok := d.unit(id)
 	if !ok {
 		return refuse("item", "that item is not in the inventory any more")
@@ -204,12 +204,17 @@ func (d *Desk) SetMark(id uint32, mark string) error {
 		if u.Item.Where != d2.ContInventory {
 			return refuse("place", "only backpack items are sold: move it to the backpack first")
 		}
-		if d.c.SellBlock != nil {
-			if why := d.c.SellBlock(u); why != "" {
+		d.mu.Lock()
+		sb := d.c.SellBlock
+		d.mu.Unlock()
+		if sb != nil {
+			if why := sb(u); why != "" {
 				return refuse("never", "this item is never sold (%s)", why)
 			}
 		}
 	}
+	d.mu.Lock()
+	defer d.mu.Unlock()
 	kept := d.st.Marks[:0]
 	for _, m := range d.st.Marks {
 		if m.ID != id {
@@ -231,8 +236,9 @@ func (d *Desk) RequestEquip(id uint32, slot string) (Request, error) {
 		return Request{}, refuse("slot", "unknown slot %q", slot)
 	}
 	d.mu.Lock()
-	defer d.mu.Unlock()
-	if d.eq == nil {
+	eq := d.eq
+	d.mu.Unlock()
+	if eq == nil {
 		return Request{}, refuse("off", "equipping is not available on this bot")
 	}
 	u, s, ok := d.unit(id)
@@ -245,10 +251,12 @@ func (d *Desk) RequestEquip(id uint32, slot string) (Request, error) {
 	if u.Item.Where != d2.ContInventory {
 		return Request{}, refuse("place", "only backpack items can be equipped: move it to the backpack first")
 	}
-	name, err := d.eq.CheckPlayerEquip(s, id, body)
+	name, err := eq.CheckPlayerEquip(s, id, body) // unlocked, see SetMark
 	if err != nil {
 		return Request{}, refuse("requirements", "%v", err)
 	}
+	d.mu.Lock()
+	defer d.mu.Unlock()
 	r := Request{ID: id, Slot: slot, Name: name, State: "queued", At: d.c.Now().Unix()}
 	q := d.st.Queue[:0]
 	for _, x := range d.st.Queue {
@@ -403,18 +411,22 @@ type View struct {
 
 // View reads the snapshot and decorates it. Without a snapshot the lists are empty and Note says so.
 func (d *Desk) View() View {
+	// State is copied under the lock and the callbacks run after it is released: the equip check reaches Pinned
+	// through the leveler and d.mu is not reentrant (live deadlock 2026-11-10: the whole bot froze).
 	d.mu.Lock()
-	defer d.mu.Unlock()
+	c, eq := d.c, d.eq
+	marks := append([]markRec(nil), d.st.Marks...)
 	v := View{Schema: ViewSchema, Equipment: map[string]*ItemView{}, Pins: append([]Pin{}, d.st.Pins...), Queue: append([]Request{}, d.st.Queue...), Recent: append([]Request{}, d.st.Recent...)}
+	d.mu.Unlock()
 	sort.Slice(v.Pins, func(i, j int) bool { return v.Pins[i].Slot < v.Pins[j].Slot })
-	if d.c.Inventory == nil {
+	if c.Inventory == nil {
 		v.Note = "inventory is not available"
 		return v
 	}
-	data := d.c.Inventory()
+	data := c.Inventory()
 	var s *d2.Snapshot
-	if d.c.Snap != nil {
-		s = d.c.Snap()
+	if c.Snap != nil {
+		s = c.Snap()
 	}
 	if s != nil && s.Player != nil {
 		v.InTown, v.Class = s.Player.InTown(), s.Player.Class.String()
@@ -422,9 +434,9 @@ func (d *Desk) View() View {
 		v.Note = "waiting for the first look at the hero"
 	}
 	v.Gold, v.StashGold = data.Gold, data.StashGold
-	why := d.c.Why
-	if d.c.WhyFor != nil {
-		why = d.c.WhyFor(s)
+	why := c.Why
+	if c.WhyFor != nil {
+		why = c.WhyFor(s)
 	}
 	if d.c.Prompt != nil {
 		v.Prompt = d.c.Prompt()
@@ -435,7 +447,7 @@ func (d *Desk) View() View {
 		if !ok {
 			return iv
 		}
-		for _, m := range d.st.Marks {
+		for _, m := range marks {
 			if m.ID == it.ID && m.Print == fingerprint(u) {
 				iv.Mark = m.Mark
 			}
@@ -443,14 +455,14 @@ func (d *Desk) View() View {
 		if why != nil {
 			iv.Why = why(u)
 		}
-		if d.c.Advice != nil {
-			iv.Advice = d.c.Advice(it)
+		if c.Advice != nil {
+			iv.Advice = c.Advice(it)
 		}
 		if place == "pack" {
-			iv.CanSell = d.c.SellBlock == nil || d.c.SellBlock(u) == ""
-			if d.eq != nil && s != nil {
+			iv.CanSell = c.SellBlock == nil || c.SellBlock(u) == ""
+			if eq != nil && s != nil {
 				for _, k := range status.EquipSlots {
-					if _, err := d.eq.CheckPlayerEquip(s, it.ID, SlotBody[k]); err == nil {
+					if _, err := eq.CheckPlayerEquip(s, it.ID, SlotBody[k]); err == nil {
 						iv.CanWear = append(iv.CanWear, k)
 					}
 				}
