@@ -47,6 +47,9 @@ jobs:
           node-version: "24"
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: node node_modules/electron/install.js
+      - run: node scripts/write-feed.js
+        env:
+          D2IDLE_UPDATE_FEED: ${{ vars.D2IDLE_UPDATE_FEED }}
       - run: npx electron-builder ${{ matrix.args }} --publish never
       # Only the artifact types this OS builds exist; an unmatched glob must not fail the step.
       - run: |

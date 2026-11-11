@@ -6,6 +6,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const assert = require('node:assert/strict');
+const crypto = require('node:crypto');
 const { app, BaseWindow } = require('electron');
 
 const listen = (handler) => new Promise((res) => { const s = http.createServer(handler); s.listen(0, '127.0.0.1', () => res(s)); });
@@ -33,8 +34,23 @@ async function main() {
   const originA = `http://${addrA}`;
   const addrC = `127.0.0.1:${C.address().port}`;
 
+  // Fake signed update feed (test key; the app is told to trust it only through opts.updateKeys).
+  const { publicKey, privateKey } = crypto.generateKeyPairSync('ed25519');
+  const manifest = Buffer.from(JSON.stringify({ schema: 1, version: '99.0.0', seq: 1, notes: 'smoke' }));
+  let feedPort;
+  const F = await listen((q, r) => {
+    const base = `http://127.0.0.1:${feedPort}/dl`;
+    if (q.url.includes('/releases')) return r.end(JSON.stringify([{ tag_name: 'desktop-v99.0.0', assets: [{ name: 'MANIFEST.json', browser_download_url: base + '/MANIFEST.json' }, { name: 'MANIFEST.json.sig', browser_download_url: base + '/MANIFEST.json.sig' }] }]));
+    if (q.url.endsWith('MANIFEST.json')) return r.end(manifest);
+    if (q.url.endsWith('.sig')) return r.end(crypto.sign(null, manifest, privateKey).toString('base64') + '\n');
+    r.writeHead(404); r.end();
+  });
+  feedPort = F.address().port;
+  let autostartOn = false;
+  const fakeAutostart = { supported: true, get: () => autostartOn, set: (v) => { autostartOn = v; } };
+
   const userData = fs.mkdtempSync(path.join(os.tmpdir(), 'd2e-smoke-'));
-  const ctx = await require('../../src/app').start({ argv: ['--address', addrA, '--page', 'inventory'], userData, noSingleInstance: true });
+  const ctx = await require('../../src/app').start({ argv: ['--address', addrA, '--page', 'inventory'], userData, noSingleInstance: true, autostart: fakeAutostart, updateFeed: `http://127.0.0.1:${feedPort}`, updateKeys: [publicKey.export({ format: 'der', type: 'spki' }).subarray(-32).toString('base64')], updateDelayMs: 100 });
   assert.ok(ctx, 'app started');
   const game = ctx.gameView.webContents;
   const helper = ctx.helperView.webContents;
@@ -88,6 +104,33 @@ async function main() {
   if (process.platform !== 'win32') assert.equal(mode, 0o600);
   console.log('ok config 0600');
   assert.equal(other.hits, 0);
+
+  // Tray: constructed (Xvfb has no tray host, so only the API object and the menu template are checked).
+  assert.ok(ctx.tray && !ctx.tray.isDestroyed(), 'tray constructed');
+  const labels = () => ctx.trayTemplate.filter((i) => i.label).map((i) => i.label);
+  assert.ok(labels().includes(`Online (${addrA})`), 'status line: ' + labels());
+  await until(() => ctx.update.available, 'update check');
+  assert.equal(ctx.update.version, '99.0.0');
+  assert.ok(labels().includes('Update available: 99.0.0'), 'tray shows the update');
+  console.log('ok tray menu and signed update check');
+
+  ctx.api.toggleAutostart();
+  assert.equal(autostartOn, true);
+  assert.ok(ctx.trayTemplate.find((i) => i.label === 'Start with the system').checked);
+  console.log('ok autostart toggle');
+
+  // Closing hides to the tray; the window is not destroyed, and Open brings it back.
+  ctx.window.close();
+  await sleep(300);
+  assert.equal(ctx.window.isDestroyed(), false);
+  assert.equal(ctx.window.isVisible(), false, 'hidden to tray');
+  ctx.api.show();
+  assert.equal(ctx.window.isVisible(), true);
+  ctx.api.toggleHideToTray();
+  assert.equal(JSON.parse(fs.readFileSync(cfgPath, 'utf8')).hideToTray, false);
+  ctx.api.toggleHideToTray();
+  assert.equal(JSON.parse(fs.readFileSync(cfgPath, 'utf8')).hideToTray, true);
+  console.log('ok hide to tray');
   console.log('SMOKE PASS');
 }
 
