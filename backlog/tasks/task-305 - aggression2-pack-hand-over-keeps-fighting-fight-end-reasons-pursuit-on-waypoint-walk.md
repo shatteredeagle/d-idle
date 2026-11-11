@@ -13,6 +13,8 @@ priority: medium
 ordinal: 211000
 card: "aggression2"
 owns:
+  - "internal/combat/target.go"
+  - "internal/combat/rank_shaman_test.go"
   - "docs/aggression.md"
   - "internal/bot/yield.go"
   - "internal/bot/yield_test.go"
