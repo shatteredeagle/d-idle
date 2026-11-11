@@ -162,11 +162,9 @@ docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  freshstart
-docs/knobs.md  credit-runner  lootmemory
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
 docs/live-checks.md  credit-runner  repairtrip
-docs/lootmemory.md  credit-runner  lootmemory
 docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
@@ -206,12 +204,10 @@ docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  uifit
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
-internal/bot/goal.go  credit-runner  lootmemory
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
-internal/bot/observe.go  credit-runner  lootmemory
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  repairtrip
@@ -227,7 +223,6 @@ internal/combat/target.go  credit-runner  aggression2
 internal/data/invfiles.go  credit-runner  artspeed
 internal/data/invfiles_test.go  credit-runner  artspeed
 internal/env/tuning_bot.go  credit-runner  freshstart
-internal/env/tuning_loot.go  credit-runner  lootmemory
 internal/env/tuning_loot.go  credit-runner  lootskip
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
@@ -239,12 +234,7 @@ internal/invdesk/desk.go  credit-runner  artspeed
 internal/invdesk/desk_test.go  credit-runner  artspeed
 internal/loot  credit-runner  lootskip
 internal/loot/evaluatorfor_test.go  credit-runner  artspeed
-internal/loot/export_test.go  credit-runner  lootmemory
 internal/loot/loot.go  credit-runner  artspeed
-internal/loot/loot.go  credit-runner  lootmemory
-internal/loot/memory.go  credit-runner  lootmemory
-internal/loot/memory_test.go  credit-runner  lootmemory
-internal/loot/pickup.go  credit-runner  lootmemory
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maptrail
 internal/nav/exit.go  credit-runner  pursuers

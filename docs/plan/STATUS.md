@@ -108,7 +108,6 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
-| lootmemory | proposed | - | `internal/loot/memory.go`<br>`internal/loot/memory_test.go`<br>`internal/loot/export_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/pickup.go`<br>`internal/env/tuning_loot.go`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`docs/lootmemory.md`<br>`docs/knobs.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
