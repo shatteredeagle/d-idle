@@ -63,6 +63,21 @@ assert.strictEqual(P.heatAlpha(0, 10), 0, 'empty cells draw nothing');
 assert.ok(P.heatAlpha(10, 10) > P.heatAlpha(1, 10) && P.heatAlpha(10, 10) <= 0.7 + 1e-9, 'brighter where more happened');
 assert.strictEqual(P.heatLegend('kills', 3), 'Heat kills: from 1 to 3 kills per cell (dark to bright).');
 assert.strictEqual(P.heatLegend('off', 3), '');
+{
+  const fe = { k: 'fight', ago: 12000, x: 1, y: 1, f: { sec: 2.1, end: 'clear', kills: 3, damage: 14, min: 88, life: 92, potions: 1, casts: 20, kites: 2, approach: 4 } };
+  const lines = P.fightCardLines(fe);
+  assert.strictEqual(lines[0], 'Fight ended 12 s ago, lasted 2.1 s');
+  assert.strictEqual(lines[1], 'End: clear');
+  assert.strictEqual(lines[2], '3 kills, damage 14 life points, lowest life 88% (ended at 92%)');
+  assert.strictEqual(lines[3], '1 potions, 20 casts, 2 kites, 4 approaches');
+  assert.strictEqual(P.fightCardLines({ k: 'kill' }).length, 0, 'no summary, no card');
+  assert.strictEqual(P.fightAt([fe], 13500), fe, 'a combat sample inside the fight finds it');
+  assert.strictEqual(P.fightAt([fe], 40000), null, 'one far away does not');
+  assert.strictEqual(P.eventText({ k: 'ignore', t: 'Ignoring Fallen', s: 90, ago: 30000 }), 'Ignoring Fallen, 60 s of 90 s left');
+  assert.strictEqual(P.eventShown({ k: 'ignore' }, 'key'), true, 'failures are key events');
+  assert.strictEqual(P.eventShown({ k: 'yield' }, 'key'), false);
+  assert.strictEqual(P.eventShown({ k: 'yield' }, 'all'), true);
+}
 assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
 assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
 assert.strictEqual(P.eventShown({ k: 'potion' }, 'key'), false, 'potions only in all');

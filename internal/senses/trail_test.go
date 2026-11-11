@@ -234,3 +234,18 @@ func TestHeatCap(t *testing.T) {
 		t.Fatalf("the busiest cells survive the cap: %d", len(got))
 	}
 }
+
+func TestAddEventAtMergesRepeats(t *testing.T) {
+	clock := t0
+	p := &Publisher{now: func() time.Time { return clock }}
+	lm := &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	p.Observe(lm, "T", d2map.Point{X: 1, Y: 1})
+	p.AddEventAt(EvIgnore, "Ignoring Fallen", 3, 1, 90)
+	clock = t0.Add(time.Second)
+	p.AddEventAt(EvIgnore, "Ignoring Fallen", 3, 1, 90) // same place, within 5 s: merged
+	p.AddEventAt(EvRoamFail, "failed", 3, 1, 0)         // another kind: kept
+	evs := p.EventsOf()
+	if len(evs) != 2 || evs[0].X != 3 || evs[0].Secs != 90 {
+		t.Fatalf("%+v", evs)
+	}
+}

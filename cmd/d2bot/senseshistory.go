@@ -70,14 +70,19 @@ func safeName(s, def string) string {
 
 func fightInfo(s combat.FightSummary) *senses.FightInfo {
 	return &senses.FightInfo{End: s.End, Kills: s.Kills, Damage: s.Damage, MinLife: s.MinLifePct, Life: s.LifePct, Sec: float64(int(s.Sec*10)) / 10,
-		Potions: s.Potions, Casts: s.Casts, Approach: s.Approaches, Left: s.Left}
+		Potions: s.Potions, Casts: s.Casts, Approach: s.Approaches, Left: s.Left, Kites: s.Kites, Dodges: s.Dodges}
 }
 
 // useSensesHistory feeds the trail's activity colour, the event markers and the fight summaries (docs/senses-map.md
 // "History"). The activity and a life-drop marker ride the OnObserve hook (nav goroutine, 2 Hz, chained after
 // useSenses); kills, loot, potions, level-ups and deaths come from the goal manager's event stream; a finished fight
 // comes from the fighter's OnSummary. Read-only: nothing here reaches the bot.
-func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat.Fighter, m *goals.Manager, status func() goals.Status, looting func() bool) {
+// failureSetter is the navigator's OnFailure installer (nav.Navigator.SetOnFailure).
+type failureSetter interface {
+	SetOnFailure(func(kind, text string, x, y int))
+}
+
+func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat.Fighter, m *goals.Manager, status func() goals.Status, looting func() bool, mover any) {
 	if rig == nil || rig.Senses == nil || e == nil || e.OnObserve == nil || status == nil {
 		return
 	}
@@ -99,7 +104,18 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 			lastLife = pc
 		}
 	}
+	if fs, ok := mover.(failureSetter); ok {
+		fs.SetOnFailure(func(kind, text string, x, y int) { pub.AddEventAt(kind, text, x, y, 0) })
+	}
 	if f != nil {
+		f.OnNote = func(n combat.Note) {
+			switch {
+			case n.HasPos:
+				pub.AddEventAt(n.Kind, n.Text, n.X, n.Y, n.Secs)
+			default:
+				pub.AddEvent(n.Kind, n.Text, false, nil)
+			}
+		}
 		f.OnSummary = func(s combat.FightSummary) {
 			fi := fightInfo(s)
 			pub.AddEvent(senses.EvFight, fmt.Sprintf("Fight: %d kills in %.1f s, end=%s, life min %d%%", s.Kills, s.Sec, s.End, s.MinLifePct), false, fi)
