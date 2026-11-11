@@ -21,6 +21,7 @@ owns:
   - "docs/viewer-fps.md"
 exclusive: []
 contracts: []
+result: page stall watchdog, backoff reconnect, hidden-tab pause and resume, Retry, window.d2video hook (node tests on a fake clock); per-part write deadline frees a dead viewer (Go test fails without it); no server timeout found. NOT verified live (no deploy).
 ---
 
 ## Description
@@ -33,8 +34,8 @@ User 2026-11-11: the video freezes if it sits too long. Done when the page recov
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 page: stall watchdog with backoff reconnect, reconnecting and stream-down badges, Retry
-- [ ] #2 page: hidden tab closes the stream after 10 s, visible/focus/pageshow/online reopen it; window.d2video.reconnect()
-- [ ] #3 server: per-part write deadline frees a dead viewer's slot; no global timeouts
-- [ ] #4 node and Go tests
+- [x] #1 page: stall watchdog with backoff reconnect, reconnecting and stream-down badges, Retry
+- [x] #2 page: hidden tab closes the stream after 10 s, visible/focus/pageshow/online reopen it; window.d2video.reconnect()
+- [x] #3 server: per-part write deadline frees a dead viewer's slot; no global timeouts
+- [x] #4 node and Go tests
 <!-- AC:END -->

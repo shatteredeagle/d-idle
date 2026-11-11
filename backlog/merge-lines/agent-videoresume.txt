@@ -1,0 +1,2 @@
+BACKLOG: TASK-336 videoresume: the watch game video recovers by itself (stall watchdog, reconnect backoff, hidden-tab pause, Retry, window.d2video.reconnect hook) and a dead viewer no longer holds a slot (per-part write deadline)
+CHANGELOG: watch: the game video no longer freezes: it reconnects after 3 s without a frame, pauses in a hidden tab and resumes on return, shows reconnecting or stream down with Retry; a vanished viewer frees its slot
