@@ -1,5 +1,5 @@
 """decomp9 (worker host): list the instructions of game.exe 1.14d that touch unit flag word +0xc4 with a mask containing the given bits.
-    python d9_flagscan.py 0x20000 0x4000000        (needs D2_MPQ_DIR with bin/game.exe; capstone)"""
+    python d9_flagscan.py 0x20000 0x4000000        (run with the upstream tools/emu venv; needs D2_MPQ_DIR with bin/game.exe; capstone)"""
 import os, sys, pefile
 from capstone import Cs, CS_ARCH_X86, CS_MODE_32
 pe = pefile.PE(os.path.join(os.environ["D2_MPQ_DIR"], "bin", "game.exe"), fast_load=True)
