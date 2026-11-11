@@ -317,7 +317,7 @@ func (s *Senses) Handler() http.Handler {
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
 		rep := s.ReplyNb(have, parseHave(r.URL.Query().Get("nb")))
 		if r.URL.Query().Get("hist") == "1" && len(rep.Tiers) > 0 && !rep.Waiting {
-			h := s.History()
+			h := s.History(r.URL.Query().Get("heat") == "1")
 			rep.History = &h
 		}
 		writeJSON(w, 200, rep)

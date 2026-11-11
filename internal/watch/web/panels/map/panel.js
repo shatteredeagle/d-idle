@@ -233,19 +233,13 @@ export function mount(root, ctx) {
   const heatBtn = ctx.el('button', 'd-btn', 'Heat: ' + heatMode), heatLine = ctx.el('p', 'note heat-line');
   heatBtn.type = 'button'; heatBtn.dataset.size = 'sm'; heatBtn.dataset.key = 'heat'; heatBtn.setAttribute('aria-label', 'Heat layer: kills, time spent or damage taken, per cell');
   function heatText() { heatLine.textContent = heatLegend(heatMode, heat ? heatMax(heat.cells, heatMode) : 0); heatLine.hidden = heatMode === 'off'; }
-  function loadHeat() {
-    if (typeof fetch !== 'function' || heatMode === 'off') return;
-    fetch('/api/history?heat=1' + (ctx.token ? '&t=' + encodeURIComponent(ctx.token) : ''), { cache: 'no-store', credentials: 'same-origin' })
-      .then((r) => (r.ok ? r.json() : null)).then((j) => { if (j && j.heat) { heat = j.heat; heatText(); draw(); } }).catch(() => {});
-    if (ctx.later) ctx.later(loadHeat, 5000);
-  }
   heatBtn.addEventListener('click', () => {
     const was = heatMode;
     heatMode = HEAT_MODES[(HEAT_MODES.indexOf(heatMode) + 1) % HEAT_MODES.length];
     try { heatStore.set(heatMode); } catch (e) { /* storage blocked */ }
     heatBtn.textContent = 'Heat: ' + heatMode;
     heatText(); draw();
-    if (was === 'off') loadHeat();
+    if (was === 'off') wantHeat = 0; // ask for the cells at the next poll
   });
   heatText();
   const tlBtn = ctx.el('button', 'd-btn', 'Timeline');
@@ -260,9 +254,8 @@ export function mount(root, ctx) {
   const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
   ctx.body.append(covLine, heatLine, legend, share, tip, tl);
   ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, ...winBtns);
-  if (heatMode !== 'off') loadHeat();
   covText();
-  let scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
+  let wantHeat = 0, scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
   function setWindow(ms) {
     win = ms;
@@ -519,9 +512,9 @@ export function mount(root, ctx) {
   return {
     query() {
       // the timeline's samples ride the poll every 10th time (about 5 s), and at once when it opens
-      const due = !tl.hidden && (polls++ % 10 === 0 || wantHist === 0);
-      if (due) wantHist = 1;
-      return '?v=' + version + (due ? '&hist=1' : '') + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
+      const heatOn = heatMode !== 'off', due = (!tl.hidden || heatOn) && (polls++ % 10 === 0 || wantHist === 0 || wantHeat === 0);
+      if (due) { wantHist = 1; wantHeat = 1; }
+      return '?v=' + version + (due ? '&hist=1' + (heatOn ? '&heat=1' : '') : '') + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
     },
     update(r) {
       if (!r || !r.tiers_unlocked || r.tiers_unlocked.indexOf(1) < 0) { ctx.hide(true); return; }
@@ -530,7 +523,10 @@ export function mount(root, ctx) {
         map = r.map; cells = decode(map); version = r.version; panX = panY = 0;
         ctx.meta.textContent = map.area || ('area ' + map.areaId);
       }
-      if (r.history && r.history.samples) { hist = r.history; if (!tl.hidden) scrubText_(); }
+      if (r.history && r.history.samples) {
+        hist = r.history; if (!tl.hidden) scrubText_();
+        if (r.history.heat) { heat = r.history.heat; heatText(); }
+      }
       hero = r.hero || hero;
       takeNeighbours(r.neighbours);
       units = r.units || [];
