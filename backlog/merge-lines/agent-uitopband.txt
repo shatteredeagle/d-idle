@@ -1,0 +1,3 @@
+BACKLOG: uitopband (TASK-284): life and mana meters and an alerts badge in the top band, a hero stats tile (level, next level, gold, resistances, readiness light); /api/hero gains a stats block
+INDEX: docs/ui-design-system.md section 15.6: the top band panels and the hero stats tile
+CHANGELOG: watch: life and mana with numbers and an alerts badge in the top band; a Hero stats tile with level, gold, resistances and the readiness light

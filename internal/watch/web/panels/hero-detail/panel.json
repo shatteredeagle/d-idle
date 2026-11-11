@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "hero-detail",
+  "title": "Hero stats",
+  "band": "side",
+  "size": "s",
+  "priority": 7,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/hero",
+  "poll": 2,
+  "unlock": "",
+  "skeleton": 3,
+  "owner": "uitopband",
+  "doc": "docs/ui-design-system.md"
+}

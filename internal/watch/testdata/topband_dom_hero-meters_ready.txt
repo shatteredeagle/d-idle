@@ -1,0 +1,10 @@
+<div>
+  <span class="where"> "Pally, Paladin lvl 9, Blood Moor"
+  <div class="d-meter thin" data-key="life" data-kind="life" data-level="bad" aria-label="life" aria-valuenow="20" role="meter">
+    <span class="lbl"> "life"
+    <span class="track">
+    <span class="num"> "30/150"
+  <div class="d-meter thin" data-key="mana" data-kind="mana" aria-label="mana" aria-valuenow="68" role="meter">
+    <span class="lbl"> "mana"
+    <span class="track">
+    <span class="num"> "41/60"

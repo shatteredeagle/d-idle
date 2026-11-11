@@ -30,6 +30,10 @@ func serve(addr, class string) error {
 	}
 	sim.Hub.Whyline().Observe(goals.Why{Code: "fight", Params: map[string]string{"area": "Blood Moor", "life": "72"}}, "Fighting in Blood Moor", "g1", "")
 	sim.Hub.SetGoldSource(func() (int, int, bool) { return 1240, 5300, true })
+	sim.Hub.SetHeroStatsSource(func() (watch.HeroStats, bool) {
+		return watch.HeroStats{Resists: watch.HeroResists{Fire: 12, Cold: 30, Light: -8, Poison: 5},
+			Readiness: &watch.HeroReadiness{Light: "amber", Area: "Blood Moor", Reason: "Lightning resistance is under the line for this area."}}, true
+	})
 	view := sim.Hub.ViewHandler()
 	m := http.NewServeMux()
 	m.Handle("/", view)
@@ -48,6 +52,12 @@ func serve(addr, class string) error {
 			w.Write(b)
 		})
 	}
+	m.HandleFunc("/api/alerts", func(w http.ResponseWriter, r *http.Request) {
+		js(w, map[string]any{"schema": "watch.alerts/1", "open": false, "seq": 2, "alerts": []any{
+			map[string]any{"seq": 1, "t": 12, "rule": "gear", "kind": "gear", "severity": "warn", "free": true, "text": "Short Staff is broken."},
+			map[string]any{"seq": 2, "t": 20, "rule": "life", "kind": "life", "severity": "alarm", "free": true, "text": "Life under 25% in Blood Moor."}},
+			"outbound": map[string]any{"enabled": false, "consent": ""}, "notifications": map[string]any{}})
+	})
 	m.HandleFunc("/api/senses", func(w http.ResponseWriter, r *http.Request) { js(w, sensesFixture()) })
 	// the unit layer script of the map lives behind the senses routes; a Senses with no source still serves it
 	units := (&watch.Senses{}).Handler()

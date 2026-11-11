@@ -1,0 +1,36 @@
+<section>
+  <span class="meta"> "Paladin · normal"
+  <div class="d-card-body">
+    <div class="d-stats">
+      <div class="d-stat">
+        <span class="lbl"> "level"
+        <span class="val"> "9"
+        <span class="delta"> "Pally"
+      <div class="d-stat">
+        <span class="lbl"> "next level"
+        <span class="val"> "50.0%"
+        <span class="delta"> "3 000 xp to go"
+      <div class="d-stat">
+        <span class="lbl"> "gold"
+        <span class="val"> "1 240"
+        <span class="delta"> "on the hero"
+      <div class="d-stat">
+        <span class="lbl"> "stash"
+        <span class="val"> "5 300"
+        <span class="delta"> "in the stash"
+    <div class="d-strip res" aria-label="Resistances">
+      <span class="d-chip" data-key="fire">
+        "fire "
+        <b> "12%"
+      <span class="d-chip" data-key="cold">
+        "cold "
+        <b> "30%"
+      <span class="d-chip" data-key="light" data-level="bad">
+        "light "
+        <b> "-8%"
+      <span class="d-chip" data-key="poison">
+        "poison "
+        <b> "5%"
+    <p class="ready">
+      <span class="d-chip" data-key="readiness" data-level="warn"> "risky for Blood Moor"
+      <span class="d-hint"> "Lightning resistance is under the line."
