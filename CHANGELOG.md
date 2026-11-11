@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Desktop app: tray icon with page shortcuts and a reachability status, start with the system, hide to tray, and a check-only update notice from the signed feed
 - The inventory page shows your mercenary and what he wears below your paper doll (read only for now)
 - The inventory API reports the hired mercenary and what he wears (schema 3, read only; needs the fork build with the merc dump patch)
 - Desktop: new Electron app apps/desktop-electron (portable AppImage/deb and Windows installer+portable via CI) with its own window, offline/warming screen and locked navigation; the Go launcher stays as a fallback
