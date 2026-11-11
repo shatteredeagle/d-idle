@@ -53,6 +53,9 @@ type LayoutPanel struct {
 	RowSpan   int    `json:"rowSpan"`
 	Collapsed bool   `json:"collapsed"`
 	Order     int    `json:"order"`
+	// Hidden is a panel the user switched off in Edit layout: it keeps its cells in the file and takes none on the
+	// page. Added after the first v1 files; absent means shown, and a loader that does not know it shows the panel.
+	Hidden bool `json:"hidden,omitempty"`
 }
 
 // layoutBreakpoints are the names the shell knows.
@@ -107,6 +110,9 @@ func (l LayoutManifest) Check(known func(id string) bool) error {
 				return fmt.Errorf("layout %s: order %d used by %s and %s", name, p.Order, o, p.ID)
 			}
 			orders[p.Order] = p.ID
+			if p.Hidden {
+				continue // reserves nothing
+			}
 			rows := p.RowSpan
 			if p.Collapsed || rows < 1 {
 				rows = 1

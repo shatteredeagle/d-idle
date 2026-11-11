@@ -244,11 +244,12 @@ function applyLayout() {
   const p = lay.layout ? plan(lay.layout, window.innerWidth, html.dataset.mode || '', lay.conf, targets, !!lay.editor) : null;
   lay.plan = p;
   lay.bp = breakpointFor(window.innerWidth, html.dataset.mode || '');
-  lay.targets.forEach((n) => { n.style.gridColumn = ''; n.style.gridRow = ''; n.style.order = ''; delete n.dataset.collapsed; });
+  lay.targets.forEach((n) => { n.style.gridColumn = ''; n.style.gridRow = ''; n.style.order = ''; delete n.dataset.collapsed; delete n.dataset.layoutOff; });
   if (!p || p.bp === 'overlay') { delete main.dataset.layout; return; }
   main.dataset.layout = p.flow ? 'flow' : 'grid';
   main.style.setProperty('--l-cols', String(p.cols));
   main.style.setProperty('--l-rowh', p.rowHeight + 'px');
+  for (const id of p.off) { const n = lay.targets.get(id); if (n) n.dataset.layoutOff = '1'; } // switched off in the editor
   for (const it of p.items) {
     const n = lay.targets.get(it.id);
     if (!n || it.hidden) continue;

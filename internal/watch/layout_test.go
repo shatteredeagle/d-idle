@@ -287,7 +287,7 @@ func TestLayoutEditPreviewContract(t *testing.T) {
 		t.Fatal(err)
 	}
 	js := string(b)
-	for _, want := range []string{"moveItem(base, id, rect, cols)", "prefers-reduced-motion: reduce", "k === 'Escape'", "k === 'Enter'", "'pointercancel', cancel",
+	for _, want := range []string{"moveItem(base, id, locked(id, rect), cols)", "prefers-reduced-motion: reduce", "k === 'Escape'", "k === 'Enter'", "'pointercancel', cancel",
 		"if (keep) commit(next); else revert();", "main.dataset.preview = id", "delete main.dataset.preview"} {
 		if !strings.Contains(js, want) {
 			t.Errorf("layoutedit.js lacks %q", want)
@@ -306,7 +306,8 @@ func TestLayoutEditPreviewContract(t *testing.T) {
 		}
 	}
 	for _, sel := range regexp.MustCompile(`(?m)^\s*(\S[^{]*(data-flip|data-preview|data-editcell)[^{]*)\{`).FindAllStringSubmatch(string(css), -1) {
-		if !strings.Contains(sel[1], "[data-editing]") && !strings.Contains(sel[1], "[data-preview]") {
+		// .d-editframe exists only while the editor runs
+		if !strings.Contains(sel[1], "[data-editing]") && !strings.Contains(sel[1], "[data-preview]") && !strings.Contains(sel[1], ".d-editframe") {
 			t.Errorf("an edit-mode rule applies to the normal page: %s", sel[1])
 		}
 	}
@@ -323,5 +324,107 @@ func TestLayoutEditJS(t *testing.T) {
 	out, err := exec.Command(node, "testdata/layout_edit.js", "web/layout.js", "web/layoutedit.js").CombinedOutput()
 	if err != nil || !strings.Contains(string(out), "ok") {
 		t.Fatalf("%v\n%s", err, out)
+	}
+}
+
+// Every card on /watch is a layout target: each pre-shell <section> carries a data-lid that shell.json lists, each
+// panel outside the top band is placed by the default layout, and the editor frames them all the same way (the frame
+// test is testdata/layout_edit.js). What is not a card stays out on purpose: the top band and the strips above the grid.
+func TestEveryWatchCardIsALayoutTarget(t *testing.T) {
+	page, _ := webFS.ReadFile("web/watch.html")
+	lc, err := shellLayoutConf()
+	if err != nil {
+		t.Fatal(err)
+	}
+	secs := regexp.MustCompile(`<section\b[^>]*>`).FindAll(page, -1)
+	if len(secs) < 10 {
+		t.Fatalf("only %d sections found on the page", len(secs))
+	}
+	lid := regexp.MustCompile(`data-lid="([a-z0-9-]+)"`)
+	seen := map[string]bool{}
+	for _, s := range secs {
+		m := lid.FindSubmatch(s)
+		switch {
+		case m == nil:
+			t.Errorf("a card without a layout id cannot be edited: %s", s)
+		case !containsStr(lc.Compat, string(m[1])):
+			t.Errorf("data-lid %q is not in the compat list of shell.json", m[1])
+		case seen[string(m[1])]:
+			t.Errorf("data-lid %q twice", m[1])
+		default:
+			seen[string(m[1])] = true
+		}
+	}
+	for _, id := range lc.Compat {
+		if !seen[id] {
+			t.Errorf("shell.json lists the card %q, the page has none", id)
+		}
+	}
+	js, _ := webFS.ReadFile("web/shell.js")
+	if !strings.Contains(string(js), `querySelectorAll('.d-panel[data-panel], [data-lid]')`) {
+		t.Error("shell.js must take every panel root and every data-lid card as a layout target")
+	}
+	ed, _ := webFS.ReadFile("web/layoutedit.js")
+	if regexp.MustCompile(`\bn\.(append|appendChild|prepend|insertBefore)\(`).Match(ed) {
+		t.Error("the editor must not put its handle inside a panel: a card that redraws itself wipes it")
+	}
+}
+
+// The game picture always fits its panel: contained and centred in a frame that is 4:3 of the width when the cell
+// is as tall as its content and the whole body when the layout gives the cell a height; the card head is never
+// squeezed; the panel tells the editor its shape.
+func TestVideoPictureFitsItsPanel(t *testing.T) {
+	css, _ := webFS.ReadFile("web/panels/video/panel.css")
+	for _, want := range []string{"aspect-ratio: 4 / 3", "object-fit: contain", "object-position: center", "grid-template-rows: minmax(0, 1fr)", "min-block-size: 0"} {
+		if !strings.Contains(string(css), want) {
+			t.Errorf("video panel.css lacks %q", want)
+		}
+	}
+	sh, _ := webFS.ReadFile("web/shell.css")
+	for _, want := range []string{`.d-main[data-layout="grid"] .d-panel.d-card > .d-card-head { flex: none; }`, `.d-main[data-layout="grid"] .d-panel.d-card > .d-card-body { flex: 1 1 auto; min-block-size: 0; }`} {
+		if !strings.Contains(string(sh), want) {
+			t.Errorf("shell.css lacks %q", want)
+		}
+	}
+	js, _ := webFS.ReadFile("web/panels/video/panel.js")
+	if !strings.Contains(string(js), "root.dataset.aspect = '4/3'") {
+		t.Error("the video panel must declare its aspect for the editor")
+	}
+	// the default layout gives the picture rows that match 4:3 at the width of each breakpoint (within one row)
+	raw, _ := webFS.ReadFile("web/layout.json")
+	l, err := ParseLayout(raw)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for bp, width := range map[string]float64{"laptop": 1280, "wide": 1920} {
+		for _, p := range l.Breakpoints[bp].Panels {
+			if p.ID != "video" {
+				continue
+			}
+			colw := (width - 24 - 11*12) / 12
+			need := (62 + (float64(p.ColSpan)*colw+float64(p.ColSpan-1)*12-24)*3/4 + 12) / 60
+			if d := float64(p.RowSpan) - need; d < -0.01 || d > 1 {
+				t.Errorf("%s: video spans %d rows, 4:3 needs %.1f", bp, p.RowSpan, need)
+			}
+		}
+	}
+}
+
+// hidden: true on an entry is additive: old files (no key) load as before, a hidden entry reserves nothing.
+func TestLayoutHiddenEntry(t *testing.T) {
+	l, err := ParseLayout([]byte(`{"schema":"watch.layout/1","cols":12,"breakpoints":{"wide":{"cols":12,"panels":[
+		{"id":"a","col":1,"row":1,"colSpan":6,"rowSpan":3,"order":0,"hidden":true},{"id":"b","col":1,"row":1,"colSpan":6,"rowSpan":3,"order":1}]}}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !l.Breakpoints["wide"].Panels[0].Hidden || l.Breakpoints["wide"].Panels[1].Hidden {
+		t.Errorf("hidden not read: %+v", l.Breakpoints["wide"].Panels)
+	}
+	if err := l.Check(nil); err != nil {
+		t.Errorf("a hidden entry must not count as an overlap: %v", err)
+	}
+	b, _ := json.Marshal(l.Breakpoints["wide"].Panels[1])
+	if strings.Contains(string(b), "hidden") {
+		t.Errorf("a shown entry must not grow a hidden key: %s", b)
 	}
 }
