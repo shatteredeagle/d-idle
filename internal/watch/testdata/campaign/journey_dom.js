@@ -19,13 +19,13 @@ for (const cls of ['paladin', 'sorceress']) {
   c.post = (p, b) => { posts.push(p + ' ' + JSON.stringify(b)); return Promise.resolve({ ok: true }); };
   const inst = P.mount(root, c);
   inst.update(view);
-  const [pathEl, up, det] = c.body.children;
+  const [pathEl, up, det, note] = c.body.children;
   out += cls + ': meta ' + JSON.stringify(c.meta.textContent) + '\n';
   out += '  path ' + pathEl.children.map((li) => li.dataset.key + '=' + li.dataset.state + (li.dataset.band ? '/' + li.dataset.band : '')).join(' ') + '\n';
   const [, upTitle, upWhy, bar, upBtns] = up.children;
   out += '  up next ' + txt(upTitle) + ' why ' + txt(upWhy) + ' meter ' + txt(bar) + '\n';
   out += '  buttons ' + upBtns.children.map((b) => b.textContent).join(', ') + '\n';
-  out += '  detail ' + (det.hidden ? '(hidden)' : 'shown') + '\n';
+  out += '  detail ' + (det.hidden ? '(hidden)' : 'shown') + ' note ' + txt(note) + '\n';
   pathEl.children[pathEl.children.length - 1].children[0].fire('click'); // tap Andariel
   const [, , det2] = c.body.children;
   const [dt, dx, db, dbtns] = det2.children;

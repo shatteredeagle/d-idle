@@ -142,6 +142,8 @@ func cainOpen(ref *runnerRef) func(*d2.Snapshot) bool {
 			if v, ok := r.QuestView(diff); ok {
 				done = v.Quests[task.QCain].Stage == task.StageDone
 			}
+			// the guided journey saw the Find Cain chapter done (a chapter's unlocks list, data/campaign/normal.json)
+			done = done || (ref.jc != nil && ref.jc.Unlocked(journeyIdentifyCain))
 		}
 		return done
 	}

@@ -65,6 +65,19 @@ func (c *Controller) State() *HeroState {
 	return h
 }
 
+// AddOnDone chains f after the current OnDone; safe while the planner runs.
+func (c *Controller) AddOnDone(f func(hero string, ids []string)) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	prev := c.OnDone
+	c.OnDone = func(hero string, ids []string) {
+		if prev != nil {
+			prev(hero, ids)
+		}
+		f(hero, ids)
+	}
+}
+
 // Unlocked reports whether a done chapter of the current hero opens feature (a chapter's unlocks list).
 func (c *Controller) Unlocked(feature string) bool {
 	c.mu.Lock()

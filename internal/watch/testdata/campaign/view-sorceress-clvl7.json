@@ -89,6 +89,19 @@
    "intent": "ask"
   },
   {
+   "id": "rogue",
+   "title": "Claim the Rogue",
+   "area": "Rogue Encampment",
+   "kind": "chore",
+   "reward": "a Rogue archer fights at the hero's side (revived at Kashya when she falls)",
+   "why": "Kashya gives one free Rogue for Blood Raven: claim her before the harder chapters.",
+   "state": "waiting",
+   "band": "comfortable",
+   "floor": 1,
+   "recommended": 1,
+   "intent": "auto"
+  },
+  {
    "id": "find_cain",
    "title": "Find Deckard Cain",
    "area": "Tristram",

@@ -12,12 +12,8 @@ import (
 	"d2lod-bot/internal/watch"
 )
 
-// Guided journey timing (docs/campaign.md section 4; U: judgment, not yet knobs). journeyAskWait is the veto window of
-// the floor question (no answer = yes), journeyFarmBudget the level-step time after which the hero offers to go at the floor.
-const (
-	journeyAskWait    = 10 * time.Minute
-	journeyFarmBudget = 30 * time.Minute
-)
+// journeyIdentifyCain is the feature a done chapter opens for the "Identify all (Cain)" command.
+const journeyIdentifyCain = "identify_cain"
 
 // newJourney builds the guided-journey controller with its per-hero state in stateDir (docs/campaign.md); "" keeps it
 // in memory. The hero key is the character name of the newest snapshot.
@@ -47,7 +43,7 @@ func newJourney(stateDir string, ref *runnerRef) (*campaign.Controller, error) {
 	if err != nil {
 		return nil, err
 	}
-	jc.AskWait, jc.FarmBudget = journeyAskWait, journeyFarmBudget
+	// AskWait, FarmBudget and DefaultGoAt come from the campaign.journey* knobs (bot.Runner.SetJourney)
 	jc.Pace = journeyPace(func() (int, uint32, bool) {
 		if s := ref.snap(); s != nil && s.Player != nil {
 			return s.Player.Level, s.Player.Exp, true
@@ -99,6 +95,7 @@ func wireJourney(stateDir string, ref *runnerRef, r *bot.Runner, logf func(msg s
 }
 
 // bindJourney mounts GET /api/campaign and POST /api/campaign/intent on the watch screen (docs/campaign.md section 6).
+// A chapter done also writes the Chronicle and feed line and tells the unlock ladder (watch.Fun.ChapterDone).
 func bindJourney(f *watch.Fun, jc *campaign.Controller) {
 	if f == nil || jc == nil {
 		return
@@ -106,4 +103,12 @@ func bindJourney(f *watch.Fun, jc *campaign.Controller) {
 	api := watch.NewCampaignAPI()
 	api.Bind(jc)
 	f.Campaign = api
+	sp := jc.Spine()
+	jc.AddOnDone(func(_ string, ids []string) {
+		for _, id := range ids {
+			if ch := sp.Chapter(id); ch != nil {
+				f.ChapterDone(ch.ID, ch.Title, ch.Reward)
+			}
+		}
+	})
 }

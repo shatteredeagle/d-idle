@@ -43,6 +43,7 @@
     "merc":       {"kind": "enum", "values": ["alive", "dead", "none"]},
     "slot":       {"kind": "enum", "values": ["armor", "weapon", "jewelry"]},
     "quest":      {"kind": "enum", "values": ["tools", "cain"]},
+    "chapter":    {"kind": "enum", "values": ["start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "countess", "tools_of_the_trade", "andariel"]},
     "potiontier": {"kind": "enum", "values": ["minor", "light", "normal", "greater"]},
     "held":       {"kind": "enum", "values": ["none", "hp", "rv"]},
     "champbonus": {"kind": "enum", "values": ["none", "early"], "absent": "none"},
@@ -240,6 +241,12 @@
      "answers": [{"id": "hire", "label": "hire or revive now"}, {"id": "wait", "label": "wait for gold"}],
      "contextKeys": ["mercgold", "merc", "kit"],
      "riskTable": [{"match": {}, "class": "normal"}],
-     "default": [{"when": {"merc": "alive"}, "answer": "wait"}, {"when": {"mercgold": "ge400"}, "answer": "hire"}, {"when": {}, "answer": "wait"}]}
+     "default": [{"when": {"merc": "alive"}, "answer": "wait"}, {"when": {"mercgold": "ge400"}, "answer": "hire"}, {"when": {}, "answer": "wait"}]},
+    {"id": "t1.journey.floor", "tier": 1,
+     "question": "The next chapter is ready at its floor, under the recommended level: go now or level first?",
+     "answers": [{"id": "go", "label": "go now"}, {"id": "level", "label": "level first"}],
+     "contextKeys": ["chapter"],
+     "riskTable": [{"match": {}, "class": "normal"}],
+     "default": [{"when": {}, "answer": "go"}]}
   ]
 }
