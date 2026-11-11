@@ -25,12 +25,12 @@ Tags: V read (disassembly read in this run), S (upstream proof: `re/quests-act1.
 
 - B1 `internal/town/chores.go:155-166` `needIdentify` scans `ContInventory` only. Cain would also identify the cube and worn items (Q1/Q2), and one request covers all; for the Cain errand (TASK-298) the cheap path is one request when the rescue is done (free) or when `100 x n` is affordable (all or nothing: with less gold than `100 x n`, remove items from the pack first or split by value).
 - B2 `internal/town/identify.go:33-58` identifies one item at a time with a tool: one scroll or one tome charge per item (Q3). The scroll purchase `buyIDScrolls` counts `len(todo)`: correct by Q3.
-- B3 `internal/town/acts.go:37` lists Cain's npc ids per act (146, 244, 245, 246, 265, 520); camp Cain 265 is present before the rescue, so the 100-per-item price applies there (Q2). Nothing in the town code reads the quest bit; the price is therefore unknown to the planner: expose the quest 4 bit to `idScrollNeed` decisions (U whether the snapshot has it).
+- B3 `internal/town/acts.go:37` lists Cain's npc ids per act (146, 244, 245, 246, 265, 520); the camp Cain (265) is not in the Rogue Encampment before the Tristram rescue (d2d-fidelity.md 6), while the Act 2 Cain stands in Lut Gholein without a spawn gate (quests-act1.md 1089): so an unrescued Cain is first usable in Act 2, at 100 gold per item (Q2). Nothing in the town code reads the quest bit; the price is therefore unknown to the planner: expose the quest 4 bit to `idScrollNeed` decisions (U whether the snapshot has it).
 - B4 the bot's check "an item is a likely valuable" (`internal/town/basicsfix.go:15`) saves scrolls; at 100 gold per item Cain is dearer than a 25-gold scroll before the rescue; after it Cain is free, so there the knob should say "use Cain".
 
 ## Drill recipe (fork verbs, not run)
 
-R1: lab d2d, `debug unid` (unidentify every carried item, `docs/forkcheats.md`), visit camp Cain before the rescue: expect the entry "Identify Items: N x 100" and nothing identified at gold below 100 N. R2: put one unidentified item on the belt (hp slot cannot hold it, so use a charm... skip: item must be 1x1 belt-legal: not possible); D1 stays a read. R3: tome of identify with `charges` seen in `dump items` before and after one identify: -1.
+R1: lab d2d, `debug unid` (unidentify every carried item, `docs/forkcheats.md`), start in Act 2 (rescue not done) and talk to Cain in Lut Gholein: expect the entry "Identify Items: N x 100" and nothing identified at gold below 100 N. R2: tome of identify with `charges` seen in `dump items` before and after one identify: -1.
 
 ## Matrix proposal
 
