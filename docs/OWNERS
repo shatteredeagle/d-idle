@@ -141,6 +141,7 @@ cmd/d2bot/ladder.go  live-agent  recoverypace
 cmd/d2bot/live.go  credit-runner  artspeed
 cmd/d2bot/live.go  credit-runner  maptrail
 cmd/d2bot/main.go  credit-runner  artspeed
+cmd/d2bot/play.go  credit-runner  xpreadout
 cmd/d2bot/playertuning_test.go  live-agent  recoverypace
 cmd/d2bot/repairwire.go  credit-runner  repairtrip
 cmd/d2bot/resource_test.go  credit-runner  freshstart
@@ -266,10 +267,14 @@ internal/watch  credit-runner  reconnectux
 internal/watch/artapi.go  credit-runner  artspeed
 internal/watch/artapi_test.go  credit-runner  artspeed
 internal/watch/artembed_test.go  credit-runner  artspeed
+internal/watch/bridge.go  credit-runner  xpreadout
+internal/watch/hero.go  credit-runner  xpreadout
+internal/watch/hub.go  credit-runner  xpreadout
 internal/watch/invapi.go  credit-runner  artspeed
 internal/watch/invapi_test.go  credit-runner  artspeed
 internal/watch/layout.go  credit-runner  uifit
 internal/watch/layout_test.go  credit-runner  uifit
+internal/watch/mapview.go  credit-runner  xpreadout
 internal/watch/minimapfix_test.go  credit-runner  minimapfix
 internal/watch/panels.go  credit-runner  uifit
 internal/watch/repairapi.go  credit-runner  repairtrip
@@ -279,6 +284,7 @@ internal/watch/senses.go  credit-runner  maptrail2
 internal/watch/senses_stitch_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
+internal/watch/sim.go  credit-runner  xpreadout
 internal/watch/testdata  credit-runner  uifit
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
@@ -290,6 +296,8 @@ internal/watch/testdata/map_panel.js  credit-runner  maptrail2
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail2
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
+internal/watch/testdata/topband_dom.js  credit-runner  xpreadout
+internal/watch/testdata/topband_dom_hero-detail_*.txt  credit-runner  xpreadout
 internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory.js  credit-runner  artspeed
 internal/watch/web/inventory.js  credit-runner  artspeed2
@@ -300,6 +308,7 @@ internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels  credit-runner  uifit
 internal/watch/web/panels/gear  credit-runner  repairtrip
+internal/watch/web/panels/hero-detail  credit-runner  xpreadout
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.css  credit-runner  uifit
@@ -308,6 +317,7 @@ internal/watch/web/shell.js  credit-runner  uifit
 internal/watch/web/shell.json  credit-runner  uifit
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
+internal/watch/xpreadout_test.go  credit-runner  xpreadout
 tools/emu/d9_*  credit-runner  fid-batch5
 tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack

@@ -108,6 +108,7 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
+| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -164,6 +165,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 609bc88e 11-11 14:22 `Merge agent/xpreadout: TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h` (xpreadout)
+- b9d81697 11-11 14:21 `Merge branch 'main' into xpreadout` (-)
 - 80ce67bf 11-11 14:17 `Merge agent/sellmarks2: TASK-308 sellmarks2: fix sell-marks town test fixture (fails with real tables)` (sellmarks2)
 - 1750ecc4 11-11 14:16 `Merge branch 'main' into sellmarks2` (-)
 - 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
@@ -172,6 +175,4 @@
 - 9ce60add 11-11 14:03 `Merge branch 'main' into decomp9` (-)
 - a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
 - 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
-- 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
-- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
 <!-- statusgen:end -->

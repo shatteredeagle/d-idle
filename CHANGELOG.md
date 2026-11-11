@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-322 xpreadout: /api/hero shows total XP and progress (bot sent in-level XP), hero-detail XP line and xp/h <!--sg:agent/xpreadout-->
 - TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones <!--sg:agent/lootmemory-->
 - decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline <!--sg:agent/decomp9-->
 - watch: fixed cards staying on grey loading bars while the bot was fine <!--sg:agent/uifix-->
