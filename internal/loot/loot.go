@@ -96,6 +96,8 @@ type Looter struct {
 
 	leftBehind atomic.Int64 // valuable items the last pickup left for lack of room (LeftBehind)
 
+	ignore atomic.Pointer[func(d2.Unit) bool] // ground items the player trashed (SetIgnore)
+
 	build string // leveler build name; with the snapshot's difficulty it picks the belt columns (SetBuild)
 
 	// Seams for tests.

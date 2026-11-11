@@ -1,0 +1,2 @@
+<div hidden>
+  <a class="d-badge" data-key="alerts" href="#alertspane">

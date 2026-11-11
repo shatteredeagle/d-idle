@@ -23,7 +23,9 @@
   .d-links { display: flex; flex-wrap: wrap; justify-content: end; align-items: center; gap: var(--d-sp-2); }
   .d-panel { min-inline-size: 0; container: panel / inline-size; }
   /* an inline-size container has no content width of its own, so a status-band panel grows into the free space */
-  .d-band-main > .d-panel { flex: 1 1 auto; }
+  .d-band-main > .d-panel { flex: 1 1 22rem; }
+  .d-band-main > .d-panel[data-size="m"] { flex: 1 1 16rem; }
+  .d-band-main > .d-panel[data-panel="alerts-count"] { flex: 0 0 6.5rem; } /* a badge: its own width, never a line of its own share */
   .d-panel[hidden] { display: none; }
 
   /* main area (user layout feedback 2026-11-09): one grid for the stage, the command centre and every card, so nothing
@@ -66,6 +68,8 @@
      only, rows flow. */
   .d-main[data-layout] { grid-template-columns: repeat(var(--l-cols, 12), minmax(0, 1fr)); grid-auto-flow: row; }
   .d-main[data-layout="grid"] { grid-auto-rows: minmax(var(--l-rowh, 48px), auto); align-items: stretch; }
+  .d-main[data-layout="flow"] { align-items: stretch; }
+  .d-main[data-layout="flow"] :is(.d-card, .card) { align-content: start; }
   .d-main[data-layout] > .d-band-stage:not([hidden]), .d-main[data-layout] > .d-band-side:not([hidden]) { display: contents; }
   .d-main[data-layout="grid"] :is(.d-card, .card) { align-content: start; }
   .d-main[data-layout] .d-panel[data-collapsed] > :not(.d-card-head) { display: none; }

@@ -18,8 +18,8 @@ var invViewTTL = 1500 * time.Millisecond
 // other answer routes (origin list, token or passcode cookie, JSON only, small body). The desk is late-bound.
 
 var (
-	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-merc.js", "/watch/inventory-merc.css"}
-	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin"}
+	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-actions.js", "/watch/inventory-actions.css", "/watch/inventory-merc.js", "/watch/inventory-merc.css"}
+	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel"}
 )
 
 // InvDesk is what the routes need from the bot side (internal/invdesk.Desk through invAdapter in cmd/d2bot).
@@ -28,6 +28,8 @@ type InvDesk interface {
 	SetMark(id uint32, mark string) error
 	RequestEquip(id uint32, slot string) (any, error)
 	Unpin(slot string) error
+	RequestTrash(id uint32, confirm bool) (any, error) // schema 3: drop a backpack item on the ground
+	Cancel(id uint32, kind string) error               // schema 3: withdraw a queued request
 }
 
 // invRefusal is an error that carries a short code; the routes reply 409 with it and the reason line.
@@ -106,6 +108,8 @@ func (a *InvAPI) Handler() http.Handler {
 	static("inventory.js", "text/javascript; charset=utf-8")
 	static("inventory-tip.js", "text/javascript; charset=utf-8") // the item tooltip (docs/inventory-tooltip.md)
 	static("inventory-tip.css", "text/css; charset=utf-8")
+	static("inventory-actions.js", "text/javascript; charset=utf-8") // the item action menu (docs/inventory-actions.md)
+	static("inventory-actions.css", "text/css; charset=utf-8")
 	static("inventory-merc.js", "text/javascript; charset=utf-8") // the merc doll (docs/research/merc-gear.md)
 	static("inventory-merc.css", "text/css; charset=utf-8")
 	return readOnly(m)
@@ -115,9 +119,15 @@ type invBody struct {
 	ID   uint32 `json:"id"`
 	Mark string `json:"mark"`
 	Slot string `json:"slot"`
+	// schema 3 (all optional, so old clients keep working): confirm is required by trash; kind picks the queued
+	// request of cancel (default equip).
+	Confirm bool   `json:"confirm"`
+	Kind    string `json:"kind"`
+	// Target is reserved for the mercenary stage ("merc"); today only "" and "hero" are accepted.
+	Target string `json:"target"`
 }
 
-// PostHandler serves the three POST routes.
+// PostHandler serves the POST routes.
 func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var b invBody
@@ -127,6 +137,10 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 		d := a.desk()
 		if d == nil {
 			writeJSON(w, http.StatusServiceUnavailable, policyReply{Code: "off", Error: "the inventory page is off or the hero is not known yet"})
+			return
+		}
+		if b.Target != "" && b.Target != "hero" {
+			writeJSON(w, http.StatusConflict, policyReply{Code: "target", Error: "only the hero can be targeted for now"})
 			return
 		}
 		defer a.drop()
@@ -141,6 +155,10 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 			res, err = d.RequestEquip(b.ID, b.Slot)
 		case "/api/inventory/unpin":
 			err = d.Unpin(b.Slot)
+		case "/api/inventory/trash":
+			res, err = d.RequestTrash(b.ID, b.Confirm)
+		case "/api/inventory/cancel":
+			err = d.Cancel(b.ID, b.Kind)
 		default:
 			http.NotFound(w, r)
 			return
