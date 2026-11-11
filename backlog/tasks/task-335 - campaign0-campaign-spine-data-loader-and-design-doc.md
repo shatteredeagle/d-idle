@@ -1,10 +1,11 @@
 ---
 id: TASK-335
 title: 'campaign0: campaign spine data, loader and design doc'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:09:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - bot
   - feature

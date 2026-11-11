@@ -1,11 +1,13 @@
 ---
 id: TASK-108
-title: "qdensity: question-density variant as data (ladder catalogue variants, fade 45 to 90 s, Forgotten Tower question gating)"
-status: Done
+title: >-
+  qdensity: question-density variant as data (ladder catalogue variants, fade 45
+  to 90 s, Forgotten Tower question gating)
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-07T21:56:00Z'
-updated_date: '2026-11-10T16:54:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - bot
   - feature
@@ -46,4 +48,6 @@ Deferred 2026-11-07 (ADR 0018): superseded by codexfirsts (TASK-130); question d
 
 <!-- SECTION:NOTES:BEGIN -->
 Closed as superseded in the 2026-11-10 true-up: folded into the return screen by ADR 0018.
+
+Driftfix 2026-11-11: reopened; Done had open offline boxes that no live-check row covers and the card result does not show them built.
 <!-- SECTION:NOTES:END -->

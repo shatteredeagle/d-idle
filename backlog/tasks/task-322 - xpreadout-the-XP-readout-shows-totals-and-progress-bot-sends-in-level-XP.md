@@ -1,10 +1,11 @@
 ---
 id: TASK-322
 title: 'xpreadout: the XP readout shows totals and progress (bot sends in-level XP)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:09:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - watch
   - bug
