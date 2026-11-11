@@ -21,6 +21,11 @@ type LootTuning struct {
 	MaxPerCall      int // pickups per PickUp call
 	PoorGoldBelow   int // below this gold the looter takes every gold pile and any junk weapon or armor worth PoorMinSell (a naked, broke character earns its rebuy that way)
 	PoorMinSell     int // estimated sell value an item needs to be picked in poor mode
+	MemEnabled      int // 1: remember wanted drops beyond the pickup radius and walk back for them (docs/lootmemory.md)
+	MemMinGold      int // smallest remembered gold pile worth a walk-back at clvl 1; it grows by 10 percent per clvl
+	MemMaxDist      int // remembered drops farther than this (subtiles, straight line) are left
+	MemMaxTrips     int // walk-back trips per visit of an area
+	MemCap          int // remembered drops kept at most (lowest value evicted)
 }
 
 func DefaultLootTuning() LootTuning {
@@ -28,6 +33,7 @@ func DefaultLootTuning() LootTuning {
 		PickRadius: 30, PickStrictness: 1, PickTries: 3, WalkDist: 4, ConfirmMs: 1500, GapMs: 150,
 		GoldMinStack: 10, GoldPileShare: 50, FreeCellsKeep: 2, PotionBuffer: 2, RejuvSpare: 3, LowGoldBelow: 2000, MinValuePerCell: 100, ValuableMinGold: 1500, ValuableMinPrio: 70, CarryValuables: 0, MaxPerCall: 30,
 		PoorGoldBelow: 300, PoorMinSell: 6,
+		MemEnabled: 1, MemMinGold: 20, MemMaxDist: 120, MemMaxTrips: 6, MemCap: 64,
 	}
 }
 
@@ -58,5 +64,10 @@ func lootKnobs() []Knob {
 		lootK("poorGoldBelow", "Poor mode below", "gold", "Below this gold every gold pile and junk weapon or armor worth selling is picked.", d.PoorGoldBelow, 0, 10000, false),
 		lootK("poorMinSell", "Poor mode min sell value", "gold", "Estimated sell value a junk item needs to be picked in poor mode.", d.PoorMinSell, 0, 500, false),
 		lootK("maxPerCall", "Pickups per call", "count", "Upper bound on pickups in one PickUp call.", d.MaxPerCall, 1, 100, true),
+		lootK("memEnabled", "Loot memory", "0/1", "1: remember wanted drops beyond the pickup radius and walk back for them at quiet moments.", d.MemEnabled, 0, 1, true),
+		lootK("memMinGold", "Loot memory: min gold", "gold", "Smallest remembered gold pile worth a walk-back at clvl 1; the bar grows by 10 percent per character level.", d.MemMinGold, 0, 5000, false),
+		lootK("memMaxDist", "Loot memory: max distance", "subtiles", "Remembered drops farther away than this are not fetched.", d.MemMaxDist, 20, 400, true),
+		lootK("memMaxTrips", "Loot memory: trips per area", "count", "Walk-back trips per visit of an area.", d.MemMaxTrips, 0, 30, true),
+		lootK("memCap", "Loot memory: size", "count", "Remembered drops kept at most; the lowest value is evicted.", d.MemCap, 4, 512, true),
 	}
 }
