@@ -183,3 +183,47 @@ func TestRunBeliefHealIgnoresSeparateMoves(t *testing.T) {
 		t.Fatalf("%d run keys, want 1", k)
 	}
 }
+
+// Exact run state (fid-stamina.md Q2/Q4): a fall is running, a walking-rate rise is walking, nothing proves nothing.
+func TestClassifyStep(t *testing.T) {
+	const max = 36352 // walk +71 per tick, stand +142
+	cases := []struct {
+		name            string
+		prev, cur, tick int
+		want            stepKind
+	}{
+		{"run light armor, 100 ticks", 30000, 26000, 100, stepRun},
+		{"run heavy armor", 30000, 22000, 100, stepRun},
+		{"assassin run", 30000, 27000, 100, stepRun},
+		{"walk regen", 10000, 10000 + 71*25, 25, stepWalk},
+		{"stand regen is not a walk", 10000, 10000 + 142*25, 25, stepUnknown},
+		{"at the cap", max, max, 25, stepUnknown},
+		{"stuck at zero", 0, 0, 25, stepUnknown},
+		{"no time", 100, 50, 0, stepUnknown},
+	}
+	for _, c := range cases {
+		if got := classifyStep(c.prev, c.cur, max, c.tick); got != c.want {
+			t.Errorf("%s: %v, want %v", c.name, got, c.want)
+		}
+	}
+}
+
+func TestStamTrackObserve(t *testing.T) {
+	var s stamTrack
+	t0 := time.Unix(1000, 0)
+	if k := s.observe(t0, 30000, 36352, false); k != stepUnknown {
+		t.Fatalf("first sample: %v", k)
+	}
+	if k := s.observe(t0.Add(time.Second), 26000, 36352, false); k != stepRun {
+		t.Fatalf("drain: %v", k)
+	}
+	if k := s.observe(t0.Add(3*time.Second), 26000+71*50, 36352, false); k != stepUnknown {
+		t.Fatalf("a gap over driftChain must not classify: %v", k)
+	}
+	if k := s.observe(t0.Add(4*time.Second), 26000+71*50+71*25, 36352, false); k != stepWalk {
+		t.Fatalf("walk regen: %v", k)
+	}
+	if k := s.observe(t0.Add(5*time.Second), 1, 36352, true); k != stepUnknown {
+		t.Fatalf("town: %v", k)
+	}
+}
