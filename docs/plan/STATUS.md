@@ -83,7 +83,7 @@
 | reconnectux | proposed | - | `docs/reconnect-ux.md`<br>`internal/watch` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | smepace | proposed | - | `docs/sme/pace-and-formulas.md` | - |
-| livechecks | proposed | - | `docs/live-checks.md` | - |
+| livechecks | proposed | - | `docs/live-checks.md`<br>`tools/backlog/drift.py`<br>`tools/backlog/test_drift.py`<br>`tools/ci/check.sh` | - |
 | contextdiet | proposed | - | `docs/agents` | - |
 | lootskip | proposed | - | `internal/loot`<br>`docs/lootskip.md`<br>`internal/env/tuning_loot.go` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
@@ -158,6 +158,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- f5ed8308 11-11 11:38 `Merge agent/autodone: TASK-253 autodone: drift report as a CI warning, live-checks closing rule automatic (auto-Done on, catch-up applied)` (autodone)
+- 57a8e19f 11-11 11:37 `Merge branch 'main' into autodone` (-)
 - c8f4e5b9 11-11 11:31 `Merge agent/sharedgen: TASK-255 sharedgen: shared files generated at merge (BACKLOG, CHANGELOG, OWNERS block, STATUS block, INDEX), dry run, agents write no shared-file lines` (sharedgen)
 - 2aabc094 11-11 11:30 `Merge branch 'main' into sharedgen` (-)
 - 3e025df8 11-11 11:10 `Merge agent/aggression2: TASK-305 aggression2: pack hand-over keeps fighting, end-reason telemetry, waypoint pursuit` (aggression2)
@@ -166,6 +168,4 @@
 - 96475b4f 11-11 10:33 `Merge agent/viewerfps3: TASK-302 viewerfps3: watch video relays the tap stream (was 4 fps), evenly paced tap frames, X-Frame-Game-Ms, degraded flag` (viewerfps3)
 - 1ba6a0c4 11-11 10:22 `Merge branch 'main' into viewerfps3` (-)
 - 51393ac2 11-11 10:10 `Merge agent/roamspacing: TASK-301 roamspacing: roam grid knobs 16/10 (was 7/5), detour marking` (roamspacing)
-- c19e6bf5 11-11 10:10 `Merge branch 'main' into roamspacing` (-)
-- 25afcbcf 11-11 09:58 `Merge agent/aggression: TASK-300 aggression: short futile window after a gone-target Clear` (aggression)
 <!-- statusgen:end -->
