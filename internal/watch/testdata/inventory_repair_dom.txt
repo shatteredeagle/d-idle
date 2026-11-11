@@ -1,0 +1,203 @@
+== cancelled-auto-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p.d-note [data-state=cancelled] "Repair cancelled: still short of gold after farming (need 300, have 120)"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=cancelled data-variant=primary] "Repair now" title="the last repair request failed or was cancelled by the bot: try again in 20 min" disabled
+== cancelled-auto-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p.d-note [data-state=cancelled] "Repair cancelled: still short of gold after farming (need 300, have 120)"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=cancelled data-variant=primary] "Repair now" title="the last repair request failed or was cancelled by the bot: try again in 20 min" disabled
+== cancelled-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p.d-note [data-state=cancelled] "Repair cancelled."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=cancelled data-variant=primary] "Repair now"
+== cancelled-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p.d-note [data-state=cancelled] "Repair cancelled."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=cancelled data-variant=primary] "Repair now"
+== disabled-pact-paladin
+div []
+  p.d-muted [] "Repair mode: Pact: never repair (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=disabled] "a Pact forbids repairs"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=disabled data-variant=primary] "Repair now" title="a Pact forbids repairs" disabled
+== disabled-pact-sorceress
+div []
+  p.d-muted [] "Repair mode: Pact: never repair (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=disabled] "a Pact forbids repairs"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=disabled data-variant=primary] "Repair now" title="a Pact forbids repairs" disabled
+== disabled-undamaged-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=disabled] "nothing worn is damaged"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=disabled data-variant=primary] "Repair now" title="nothing worn is damaged" disabled
+== disabled-undamaged-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=disabled] "nothing worn is damaged"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=disabled data-variant=primary] "Repair now" title="nothing worn is damaged" disabled
+== done-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=done] "Repair done: durability 40% to 100%."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=done data-variant=primary] "Repair now"
+== done-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=done] "Repair done: durability 40% to 100%."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=done data-variant=primary] "Repair now"
+== failed-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p.d-note [data-state=failed] "Repair failed: repair not confirmed"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=failed data-variant=primary] "Repair now" title="the last repair request failed or was cancelled by the bot: try again in 20 min" disabled
+== failed-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p.d-note [data-state=failed] "Repair failed: repair not confirmed"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=failed data-variant=primary] "Repair now" title="the last repair request failed or was cancelled by the bot: try again in 20 min" disabled
+== farm-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=farm] "need 160 more gold (have 100, estimate 200)"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=farm data-variant=primary] "Farm until repair"
+== farm-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 100."
+  p [data-state=farm] "need 160 more gold (have 100, estimate 200)"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=farm data-variant=primary] "Farm until repair"
+== farming-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 140."
+  p [data-state=farming] "farming for repair: 140 of 300"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=farming data-variant=ghost] "Cancel"
+== farming-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 140."
+  p [data-state=farming] "farming for repair: 140 of 300"
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=farming data-variant=ghost] "Cancel"
+== going-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=going] "Repair trip: going home."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=going data-variant=ghost] "Cancel repair"
+== going-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=going] "Repair trip: going home."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=going data-variant=ghost] "Cancel repair"
+== queued-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=queued] "Repair queued."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=queued data-variant=ghost] "Cancel repair"
+== queued-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=queued] "Repair queued."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=queued data-variant=ghost] "Cancel repair"
+== ready-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=ready] hidden
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=ready data-variant=primary] "Repair now"
+== ready-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=ready] hidden
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=ready data-variant=primary] "Repair now"
+== repairing-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=repairing] "Repair trip: repairing in town."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=repairing data-variant=ghost] "Cancel repair"
+== repairing-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=repairing] "Repair trip: repairing in town."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=repairing data-variant=ghost] "Cancel repair"
+== returning-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=returning] "Repair trip: returning to the field."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=returning data-variant=ghost] "Cancel repair"
+== returning-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=returning] "Repair trip: returning to the field."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=returning data-variant=ghost] "Cancel repair"
+== waiting-paladin
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=waiting] "Repair queued: waiting for a safe moment (finishing the pack first, 12 s of 60)."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=waiting data-variant=ghost] "Cancel repair"
+== waiting-sorceress
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p.d-muted [] "Repair All costs at least 200 gold; with the margin 260, you have 300."
+  p [data-state=waiting] "Repair queued: waiting for a safe moment (finishing the pack first, 12 s of 60)."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=waiting data-variant=ghost] "Cancel repair"
+== old bot, requested
+div []
+  p.d-muted [] "Repair mode: Manual: only when you press Repair now (change it on the policy sheet)"
+  p [] "Repair All costs at least 200 gold."
+  p.d-muted [] "Requested: the hero repairs at its next town visit."
+  div.d-btngroup []
+    button.d-btn [data-key=repair data-size=sm data-state=idle data-variant=ghost] "Cancel repair"

@@ -10,11 +10,12 @@ import (
 )
 
 type rig struct {
-	r    *Controller
-	now  time.Time
-	gold int
-	est  int
-	mode string
+	r     *Controller
+	now   time.Time
+	gold  int
+	est   int
+	mode  string
+	class string
 }
 
 func newRig(t *testing.T, class string, path string) *rig {
