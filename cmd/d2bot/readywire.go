@@ -7,6 +7,7 @@ import (
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/readiness"
+	"d2lod-bot/internal/watch"
 )
 
 // wireReadiness builds the read-only readiness model (docs/readiness.md): the area table derived from the game tables,
@@ -33,4 +34,26 @@ func wireReadiness(runner *bot.Runner, db *data.DB) http.Handler {
 	}
 	runner.SetReadiness(ev)
 	return readiness.Handler(ev, runner.ReadinessHero)
+}
+
+// heroStats is the stats block of /api/hero (the hero stats tile of the watch screen): the resistances of the
+// runner's newest snapshot and the readiness light for the area the hero stands in. Read-only.
+func heroStats(runner *bot.Runner) watch.HeroStatsSource {
+	if runner == nil {
+		return nil
+	}
+	return func() (watch.HeroStats, bool) {
+		h, here, ok := runner.ReadinessHero()
+		if !ok {
+			return watch.HeroStats{}, false
+		}
+		s := watch.HeroStats{Resists: watch.HeroResists{Fire: h.Resist.Fire, Cold: h.Resist.Cold, Light: h.Resist.Lightning, Poison: h.Resist.Poison}}
+		if rep, ok := runner.ReadinessHere(); ok {
+			s.Readiness = &watch.HeroReadiness{Light: rep.Light, Area: here}
+			if len(rep.Reasons) > 0 {
+				s.Readiness.Reason = rep.Reasons[0]
+			}
+		}
+		return s, true
+	}
 }

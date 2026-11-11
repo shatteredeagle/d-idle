@@ -1,0 +1,7 @@
+@layer panels {
+  [data-panel="hero-detail"] .d-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  [data-panel="hero-detail"] .d-stat .val { font-size: var(--d-fs-3); }
+  [data-panel="hero-detail"] .ready { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--d-sp-1) var(--d-sp-2); }
+  [data-panel="hero-detail"] .ready .d-hint { color: var(--d-text-2); font-size: var(--d-fs-1); overflow-wrap: anywhere; }
+  @container panel (width > 30rem) { [data-panel="hero-detail"] .d-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+}

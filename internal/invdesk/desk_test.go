@@ -159,14 +159,9 @@ func TestEquipRequestPinsAndOnlyUnpinEnds(t *testing.T) {
 	}
 }
 
-func TestEquipRefusedOutsideTownAndFailureDoesNotPin(t *testing.T) {
-	d, eq, snap := rig(t, d2.Paladin, field)
-	var r *Refusal
-	if _, err := d.RequestEquip(1, "rhand"); !errors.As(err, &r) || r.Kind() != "town" {
-		t.Fatalf("field: %v", err)
-	}
-	snap.Player.Area = town1
-	if _, err := d.RequestEquip(1, "rhand"); err != nil {
+func TestEquipQueuesInTheFieldAndFailureDoesNotPin(t *testing.T) {
+	d, eq, _ := rig(t, d2.Paladin, field)
+	if _, err := d.RequestEquip(1, "rhand"); err != nil { // the open opportunity is the bot's call, not a refusal
 		t.Fatal(err)
 	}
 	eq.busy = true // a fight: the request waits, nothing pinned
@@ -208,7 +203,7 @@ func TestViewCarriesTooltipFields(t *testing.T) {
 			}}
 		}
 		v := d.View()
-		if v.Schema != 2 {
+		if v.Schema != ViewSchema {
 			t.Errorf("%v: schema %d", class, v.Schema)
 		}
 		b, err := json.Marshal(v.Backpack)

@@ -1,0 +1,10 @@
+<div hidden>
+  <span class="where">
+  <div class="d-meter thin" data-key="life" data-kind="life" aria-label="life" role="meter">
+    <span class="lbl"> "life"
+    <span class="track">
+    <span class="num">
+  <div class="d-meter thin" data-key="mana" data-kind="mana" aria-label="mana" role="meter">
+    <span class="lbl"> "mana"
+    <span class="track">
+    <span class="num">

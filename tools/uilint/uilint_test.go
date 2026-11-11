@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"sort"
@@ -194,5 +195,44 @@ func TestRepoTreeWithAllowList(t *testing.T) {
 		if !allow[f.File+" "+f.Rule] {
 			t.Errorf("not allow-listed: %v", f)
 		}
+	}
+}
+
+// layout.json and the presets are checked against the panels and the layout block of shell.json.
+func TestLayoutManifestRules(t *testing.T) {
+	lay := func(panels string) string {
+		return `{"schema":"watch.layout/1","cols":12,"rowHeight":48,"breakpoints":{"wide":{"width":1920,"cols":12,"panels":[` + panels + `]}}}`
+	}
+	p := func(id string, col, row, w, h, order int) string {
+		return fmt.Sprintf(`{"id":%q,"band":"grid","col":%d,"row":%d,"colSpan":%d,"rowSpan":%d,"collapsed":false,"order":%d}`, id, col, row, w, h, order)
+	}
+	shell := `{"status":[],"stage":[],"layout":{"aliases":{"old":"probe"},"compat":["now"],"reserved":["later"]}}`
+	cases := []struct {
+		name, file, body, rule string
+	}{
+		{"good", "layout.json", lay(p("probe", 1, 1, 6, 3, 0) + "," + p("now", 7, 1, 6, 3, 1) + "," + p("later", 1, 4, 3, 3, 2)), ""},
+		{"alias", "layouts/x.json", lay(p("old", 1, 1, 6, 3, 0)), ""},
+		{"unknown id", "layout.json", lay(p("nope", 1, 1, 6, 3, 0)), "layout-manifest"},
+		{"overlap", "layout.json", lay(p("probe", 1, 1, 6, 3, 0) + "," + p("now", 6, 2, 6, 3, 1)), "layout-manifest"},
+		{"outside the columns", "layouts/x.json", lay(p("probe", 8, 1, 6, 3, 0)), "layout-manifest"},
+		{"order twice", "layout.json", lay(p("probe", 1, 1, 6, 3, 0) + "," + p("now", 7, 1, 6, 3, 0)), "layout-manifest"},
+		{"schema", "layout.json", `{"schema":"watch.layout/2"}`, "layout-manifest"},
+	}
+	for _, c := range cases {
+		files := good()
+		files["shell.json"] = shell
+		files[c.file] = c.body
+		var got []string
+		for _, f := range run(t, files) {
+			got = append(got, f.Rule)
+		}
+		if c.rule == "" && len(got) != 0 || c.rule != "" && (len(got) != 1 || got[0] != c.rule) {
+			t.Errorf("%s: findings %v, want %q", c.name, got, c.rule)
+		}
+	}
+	files := good()
+	files["shell.json"] = `{"status":[],"stage":[],"layout":{"aliases":{"old":"gone"}}}`
+	if fs := run(t, files); len(fs) != 1 || fs[0].Rule != "layout-alias" {
+		t.Errorf("an alias to nothing: %v", fs)
 	}
 }

@@ -19,6 +19,7 @@
     "after_death_restock": "Once restocked I go for my corpse.",
     "after_death_corpse": "Once my corpse is back I return to the plan.",
     "after_death_gold": "Once the spot is checked I return to the plan.",
+    "player_items": "Once the queued item actions are done I go back to the plan; you can cancel a queued one on the inventory page.",
     "hold": "Your answer, yes or no, lets me go on.",
     "activity": "An order from you changes what I do next."
   }

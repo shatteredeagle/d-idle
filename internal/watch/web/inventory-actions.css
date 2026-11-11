@@ -1,0 +1,32 @@
+/* Item action menu of the inventory page (docs/inventory-actions.md): a small popover beside the clicked item on a wide
+   screen, a bottom sheet on a phone (the script sets data-mode; no media query here). Tokens only; placed by a transform
+   set from inventory-actions.js. */
+@layer components {
+  .inv-act-scrim { position: fixed; inset: 0; z-index: var(--d-z-sheet); background: var(--d-scrim); }
+  .inv-act-scrim[hidden], .inv-act[hidden] { display: none; }
+  .inv-act { position: fixed; inset: 0 auto auto 0; z-index: calc(var(--d-z-sheet) + 1); box-sizing: border-box; display: grid; gap: var(--d-sp-1);
+    inline-size: max-content; min-inline-size: 12rem; max-inline-size: min(20rem, calc(100% - 2 * var(--d-sp-2)));
+    padding: var(--d-sp-2); background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line-strong); border-radius: var(--d-r-2);
+    box-shadow: var(--d-shadow-2); color: var(--d-text); font: var(--d-fs-1)/var(--d-lh) var(--d-font-body); overflow-wrap: anywhere; }
+  .inv-act[data-mode="sheet"] { inset: auto 0 0 0; inline-size: auto; max-inline-size: none; min-inline-size: 0; border-radius: var(--d-r-3) var(--d-r-3) 0 0;
+    padding: var(--d-sp-3) var(--d-sp-4) var(--d-sp-5); max-block-size: 80vh; overflow-y: auto; }
+  .inv-act .act-title { font: 600 var(--d-fs-2)/var(--d-lh-tight) var(--d-font-display); color: var(--q, var(--d-text)); padding-block-end: var(--d-sp-1); }
+  .inv-act .act-title.q-magic { --q: var(--d-q-magic); } .inv-act .act-title.q-rare { --q: var(--d-q-rare); }
+  .inv-act .act-title.q-set { --q: var(--d-q-set); } .inv-act .act-title.q-unique, .inv-act .act-title.q-runeword { --q: var(--d-q-unique); }
+  .inv-act .act-title.q-crafted { --q: var(--d-q-crafted); } .inv-act .act-title.q-low { --q: var(--d-q-low); }
+  .act { font: inherit; color: var(--d-text); background: var(--d-surface-3); border: var(--d-bw) solid var(--d-line); border-radius: var(--d-r-1);
+    padding: var(--d-sp-2) var(--d-sp-3); min-block-size: 2.5rem; text-align: start; cursor: pointer; }
+  .act:hover { border-color: var(--d-accent); }
+  .act:focus-visible { outline: 2px solid var(--d-focus); outline-offset: 2px; }
+  .act[aria-disabled="true"] { color: var(--d-text-3); cursor: not-allowed; border-style: dashed; }
+  .act[data-danger]:not([aria-disabled="true"]) { border-color: var(--d-bad); }
+  .act[data-confirm] { background: var(--d-bad); color: var(--d-on-bad); }
+  .act-cancel { min-block-size: 0; padding: 0 var(--d-sp-2); margin-inline-start: var(--d-sp-2); }
+  .inv-act .act-why, .inv-act .act-note { color: var(--d-text-3); font-size: var(--d-fs-0); margin-block-start: calc(-1 * var(--d-sp-1)); }
+  .inv-act .act-note:empty { display: none; }
+  .inv-act .act-state { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1); font-size: var(--d-fs-0); }
+  .act-st { font-weight: 700; text-transform: uppercase; color: var(--d-info); }
+  [data-state="failed"] .act-st, [data-state="failed"] .t { color: var(--d-bad); }
+  [data-state="done"] .act-st, [data-state="done"] .t { color: var(--d-good); }
+  [data-state="doing"] .act-st, [data-state="doing"] .t { color: var(--d-warn); }
+}

@@ -34,6 +34,20 @@ func (r *Runner) ReadinessHero() (readiness.Hero, string, bool) {
 	}, r.areaName(p.Area), true
 }
 
+// ReadinessHere is the readiness report for the area the hero stands in; false without an evaluator, a snapshot or a
+// row for the area (a town has none).
+func (r *Runner) ReadinessHere() (readiness.Report, bool) {
+	if r.readiness == nil {
+		return readiness.Report{}, false
+	}
+	h, here, ok := r.ReadinessHero()
+	if !ok {
+		return readiness.Report{}, false
+	}
+	rep, err := r.readiness.Evaluate(h, here)
+	return rep, err == nil
+}
+
 // readinessResistGap is the risk meter's ResistGap: 0 without an evaluator, an unknown class or a failed read.
 func (r *Runner) readinessResistGap() int {
 	if r.readiness == nil {

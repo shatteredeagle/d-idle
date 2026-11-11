@@ -94,6 +94,13 @@ test('app.js wires the locks (static check of the wiring)', () => {
   assert.doesNotMatch(src, /nodeIntegration:\s*true|contextIsolation:\s*false/);
 });
 
+test('the shipped app never disables the sandbox (only the CI smoke runner passes --no-sandbox)', () => {
+  for (const f of ['main.js', 'app.js', 'security.js']) {
+    const src = fs.readFileSync(path.join(__dirname, '../src', f), 'utf8');
+    assert.doesNotMatch(src, /no-sandbox|ELECTRON_DISABLE_SANDBOX|sandbox:\s*false/, f);
+  }
+});
+
 test('fuses: run-as-node and inspect off, asar only on', () => {
   assert.equal(fuses.RunAsNode, false);
   assert.equal(fuses.EnableNodeCliInspectArguments, false);

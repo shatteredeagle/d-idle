@@ -68,6 +68,7 @@ func testWire(t *testing.T, rd merc.Reader, rev Reviver) (*mercWire, *bytes.Buff
 	dt := env.DefaultTuning()
 	tune := &dt
 	tune.Merc.Enabled = 1
+	tune.Resource.GearDecisions = 1 // legacy: the older tests strip a geared merc; the player-only gate has its own test
 	e := &env.Env{Tune: tune, Log: slog.New(slog.NewTextHandler(&buf, nil))}
 	w := newMercWire(e, rd, rev, fakeCat{})
 	c := &clock{time.Unix(1000, 0)}
@@ -1156,3 +1157,45 @@ func TestKitFollowsBeltPlan(t *testing.T) {
 		}
 	}
 }
+
+// Under the player-only gear policy the bot never strips the merc: a replacing hire is refused while he wears gear
+// (or while what he wears is unread), and goes ahead once the player has taken it off. Two hero classes, two mercs.
+func TestHireStepRefusesWhileMercWearsGear(t *testing.T) {
+	desertDef := merc.MercState{Known: true, Owned: true, Alive: true, Class: merc.ClassDesert, Aura: "Prayer", Level: 12, FreeCells: 30, GearKnown: true,
+		Gear: [merc.NumSlots]*merc.Item{merc.SlotWeapon: {Name: "Spear", W: 2, H: 4}}}
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		for name, st := range map[string]merc.MercState{"rogue worn": withKnown(rogueWithGear()), "desert worn": desertDef, "rogue unread": rogueWithGear()} {
+			rd := &fakeReader{st: st}
+			w, buf, _ := testWire(t, rd, nil)
+			w.e.Tune.Resource.GearDecisions = 0 // the default: the player decides
+			h := &fakeHirer{rows: desertRows, paid: 400}
+			w.hirer = h
+			s := lutSnap(5000)
+			s.Player.Class = class
+			got := w.HireStep(context.Background(), s)
+			if !strings.Contains(got, "unequip your merc first") || len(h.hired) != 0 || len(h.stripped) != 0 {
+				t.Fatalf("%v %s: %q hired %v stripped %v", class, name, got, h.hired, h.stripped)
+			}
+			if h.closed != 1 {
+				t.Errorf("%v %s: window left open", class, name)
+			}
+			// asked again while still geared: one log line, window not read again
+			if again := w.HireStep(context.Background(), s); again != "" || h.closed != 1 {
+				t.Errorf("%v %s: second visit %q closed %d", class, name, again, h.closed)
+			}
+			if n := strings.Count(buf.String(), "replace skipped"); n != 1 {
+				t.Errorf("%v %s: %d refusal lines\n%s", class, name, n, buf)
+			}
+			// the player takes it off: the hire goes ahead, nothing stripped by the bot
+			bare := st
+			bare.Gear, bare.GearKnown = [merc.NumSlots]*merc.Item{}, true
+			rd.set(bare)
+			w.curAt = time.Time{} // drop the cached state
+			if got := w.HireStep(context.Background(), s); got != "merc hired" || len(h.stripped) != 0 {
+				t.Fatalf("%v %s: after unequip %q stripped %v\n%s", class, name, got, h.stripped, buf)
+			}
+		}
+	}
+}
+
+func withKnown(s merc.MercState) merc.MercState { s.GearKnown = true; return s }

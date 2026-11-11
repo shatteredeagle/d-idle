@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "alerts-count",
+  "title": "Alerts",
+  "band": "status",
+  "size": "s",
+  "priority": 2,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/alerts",
+  "poll": 5,
+  "unlock": "",
+  "skeleton": 0,
+  "owner": "uitopband",
+  "doc": "docs/ui-design-system.md"
+}

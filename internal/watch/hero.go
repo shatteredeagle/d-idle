@@ -46,7 +46,38 @@ type HeroView struct {
 	Goal       *HeroGoal `json:"goal"`
 	Queue      []string  `json:"queue"`
 	Why        HeroWhy   `json:"why"`
+	// Stats is null until the bot reports it (SetHeroStatsSource); added for the hero stats tile (TASK-284).
+	Stats *HeroStats `json:"stats"`
 }
+
+// HeroStats are the hero's defences: the resistances as the game shows them and, when the readiness model is on, its
+// light for the area the hero is in. No defence rating: the bot does not read one.
+type HeroStats struct {
+	Resists   HeroResists    `json:"resists"`
+	Readiness *HeroReadiness `json:"readiness"`
+}
+
+// HeroResists are the four resistances in percent.
+type HeroResists struct {
+	Fire   int `json:"fire"`
+	Cold   int `json:"cold"`
+	Light  int `json:"light"`
+	Poison int `json:"poison"`
+}
+
+// HeroReadiness is the readiness light (docs/readiness.md) for the hero's own area: green, amber or red, and the
+// first reason when it is not green.
+type HeroReadiness struct {
+	Light  string `json:"light"`
+	Area   string `json:"area,omitempty"`
+	Reason string `json:"reason,omitempty"`
+}
+
+// HeroStatsSource reports the hero's defences; ok is false while they are not read.
+type HeroStatsSource func() (HeroStats, bool)
+
+// SetHeroStatsSource sets where /api/hero reads the stats block from (nil: the block stays null).
+func (h *Hub) SetHeroStatsSource(f HeroStatsSource) { h.mu.Lock(); h.stats = f; h.mu.Unlock() }
 
 // HeroGoal is the order under way.
 type HeroGoal struct {
@@ -89,7 +120,7 @@ func (h *Hub) Hero() HeroView {
 	up := h.Uptime()
 	ov := h.OrdersView()
 	h.mu.Lock()
-	hi, gold := h.hero, h.gold
+	hi, gold, stats := h.hero, h.gold, h.stats
 	h.mu.Unlock()
 	v := HeroView{Schema: heroSchema, Known: hi.Known || hi.Class != "", Name: safeText(hi.Name, 40), Class: hi.Class, Level: hi.Level,
 		Difficulty: hi.Difficulty, Area: hi.Area, Life: hi.Life, MaxLife: hi.MaxLife, Mana: hi.Mana, MaxMana: hi.MaxMana,
@@ -109,6 +140,16 @@ func (h *Hub) Hero() HeroView {
 	if gold != nil {
 		if g, s, ok := gold(); ok {
 			v.Gold, v.StashGold = &g, &s
+		}
+	}
+	if stats != nil {
+		if s, ok := stats(); ok {
+			if s.Readiness != nil {
+				r := *s.Readiness
+				r.Area, r.Reason = safeText(r.Area, 60), safeText(r.Reason, 160)
+				s.Readiness = &r
+			}
+			v.Stats = &s
 		}
 	}
 	for _, o := range ov.Orders {
