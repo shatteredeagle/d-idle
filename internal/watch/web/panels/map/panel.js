@@ -26,6 +26,48 @@ export function nbParam(cache) {
   return Object.keys(cache).map((k) => k + ':' + cache[k].version).join(',');
 }
 
+// Trail windows (ms) the selector offers; the default is one minute. A stored value outside the list is ignored.
+export const TRAIL_WINDOWS = [30000, 60000, 300000];
+export const STALL_MS = 3000;
+
+export function trailWindow(stored) {
+  const n = Number(stored);
+  return TRAIL_WINDOWS.indexOf(n) >= 0 ? n : 60000;
+}
+
+// Cuts the reply's trail (ago = age in ms at the reply, oldest first) to the window and finds the stalls: a gap longer
+// than STALL_MS between two samples (the server only samples when the position changed), and the newest sample if the
+// hero has stood there that long. Entry samples break the line and carry a tick.
+export function trailPlan(trail, win) {
+  const pts = (trail || []).filter((p) => p.ago <= win), stalls = [];
+  for (let i = 0; i < pts.length; i++) {
+    const next = i + 1 < pts.length ? pts[i + 1].ago : 0, gap = pts[i].ago - next;
+    if (gap > STALL_MS && !(pts[i + 1] && pts[i + 1].e)) stalls.push({ x: pts[i].x, y: pts[i].y, ms: gap, ago: next });
+  }
+  return { pts, stalls };
+}
+
+// Cheap change test: the plan is redrawn only when this string moves.
+export function trailSig(plan, win, area) {
+  const l = plan.pts[plan.pts.length - 1];
+  return [area, win, plan.pts.length, l ? l.x + ',' + l.y + ',' + (plan.stalls.length ? plan.stalls[plan.stalls.length - 1].ms : 0) : '-'].join('|');
+}
+
+// Fade: the newest end is opaque, the oldest end of the window is faint (never invisible).
+export function trailAlpha(ago, win) {
+  return Math.max(0.15, 1 - 0.85 * Math.min(1, ago / win));
+}
+
+// The coverage status line: 'roam: 41/118 points seen, 3 failed, leg 17'. cov is the /api/senses coverage block.
+export function coverSummary(cov) {
+  if (!cov || !cov.cells || !cov.cells.length) return '';
+  let seen = 0, failed = 0;
+  cov.cells.forEach((c) => { if (c[2] === 1) seen++; else if (c[2] === 2) failed++; });
+  const n = cov.total || cov.cells.length;
+  return (cov.state === 'explored' ? 'explored: ' : 'roam: ') + seen + '/' + n + ' points seen, ' + failed + ' failed, leg ' + (cov.legs || 0) +
+    (cov.held ? ', held ' + cov.held : '');
+}
+
 export function mount(root, ctx) {
   const cv = ctx.el('canvas', 'cv');
   cv.width = 320; cv.height = 320;
@@ -40,6 +82,52 @@ export function mount(root, ctx) {
   hide.setAttribute('aria-expanded', 'true');
   ctx.actions.append(zin, zout, hide);
   ctx.hide(true);
+
+  // Trail: the window selector (remembered per viewer), the legend line and the stall read-out.
+  const tstore = ctx.store('trailwin');
+  let win = 60000;
+  try { win = trailWindow(tstore.get()); } catch (e) { /* storage blocked */ }
+  const winBtns = TRAIL_WINDOWS.map((ms) => {
+    const b = ctx.el('button', 'd-btn', ms < 60000 ? '30 s' : ms === 60000 ? '1 min' : '5 min');
+    b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = 'trail-' + ms; b.setAttribute('aria-label', 'Trail window ' + b.textContent);
+    return b;
+  });
+  const covStore = ctx.store('coverage');
+  let covOn = false;
+  try { covOn = covStore.get() === '1'; } catch (e) { /* storage blocked */ }
+  const covBtn = ctx.el('button', 'd-btn', 'Coverage');
+  covBtn.type = 'button'; covBtn.dataset.size = 'sm'; covBtn.dataset.key = 'coverage'; covBtn.setAttribute('aria-label', 'Show the exploration coverage grid');
+  covBtn.setAttribute('aria-pressed', String(covOn));
+  const covLine = ctx.el('p', 'note cover-line');
+  let cov = null;
+  function covText() {
+    covLine.textContent = covOn ? (coverSummary(cov) || 'Coverage: the bot is not roaming this area.') : '';
+    covLine.hidden = !covOn;
+  }
+  covBtn.addEventListener('click', () => {
+    covOn = !covOn;
+    try { covStore.set(covOn ? '1' : '0'); } catch (e) { /* storage blocked */ }
+    covBtn.setAttribute('aria-pressed', String(covOn));
+    covText(); draw();
+  });
+  const legend = ctx.el('p', 'note trail-legend'), tip = ctx.el('p', 'note trail-tip');
+  ctx.body.append(covLine, legend, tip);
+  ctx.actions.append(covBtn, ...winBtns);
+  covText();
+  let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [];
+  function setWindow(ms) {
+    win = ms;
+    try { tstore.set(String(ms)); } catch (e) { /* storage blocked */ }
+    replan(true);
+  }
+  winBtns.forEach((b, i) => b.addEventListener('click', () => setWindow(TRAIL_WINDOWS[i])));
+  function replan(force) {
+    plan = trailPlan(trail, win);
+    winBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(TRAIL_WINDOWS[i] === win)));
+    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (bright is newest, dots are stops over 3 s, ticks are zone entries).' : '';
+    const s = trailSig(plan, win, trailArea);
+    if (force || s !== sig) { sig = s; draw(); }
+  }
 
   const g = cv.getContext('2d');
   let map = null, cells = null, hero = null, units = [], version = 0, nbs = [];
@@ -85,12 +173,73 @@ export function mount(root, ctx) {
     g.globalAlpha = 1;
     drawArea(map, cells, 0, 0, v);
     const at = (p) => [v.ox + (p.x + 0.5) * v.k, v.oy + (p.y + 0.5) * v.k];
+    drawCoverage(at);
+    drawTrail(at);
     if (hero) {
       const h = at(hero);
       g.strokeStyle = css('--d-bad', '#ec7d6c'); g.lineWidth = 3;
       g.beginPath(); g.moveTo(h[0] - 7, h[1]); g.lineTo(h[0] + 7, h[1]); g.moveTo(h[0], h[1] - 7); g.lineTo(h[0], h[1] + 7); g.stroke();
     }
     if (window.sensesUnitsDraw && units.length) window.sensesUnitsDraw(g, at, units, css, cv);
+  }
+  // The coverage grid sits under the trail: faint outline unseen, tinted fill seen, red outline and a slash failed, a ring
+  // on the current target. Static on purpose (no pulse), so reduced motion needs nothing special.
+  function drawCoverage(at) {
+    if (!covOn || !cov || !cov.cells) return;
+    const half = (cov.cell || 8) / 2 * view().k, side = half * 2;
+    g.save();
+    g.lineWidth = 1;
+    cov.cells.forEach((c) => {
+      const a = at({ x: c[0], y: c[1] }), x = a[0] - half, y = a[1] - half;
+      if (c[2] === 1) { g.globalAlpha = 0.28; g.fillStyle = css('--d-good', '#6fbf73'); g.fillRect(x, y, side, side); }
+      else if (c[2] === 2) {
+        g.globalAlpha = 0.9; g.strokeStyle = css('--d-bad', '#ec7d6c'); g.strokeRect(x, y, side, side);
+        g.beginPath(); g.moveTo(x, y + side); g.lineTo(x + side, y); g.stroke();
+      } else { g.globalAlpha = 0.35; g.strokeStyle = css('--d-text-2', '#a89d8a'); g.strokeRect(x, y, side, side); }
+    });
+    if (cov.target) {
+      const a = at({ x: cov.target[0], y: cov.target[1] });
+      g.globalAlpha = 1; g.lineWidth = 2; g.strokeStyle = css('--d-accent', '#c7a44a');
+      g.beginPath(); g.arc(a[0], a[1], Math.max(6, half * 0.7), 0, 6.2832); g.stroke();
+    }
+    g.restore();
+  }
+  // The trail sits under the hero cross and the units. Each segment is stroked on its own so its alpha follows its age.
+  function drawTrail(at) {
+    stallHits = [];
+    if (!plan.pts.length) return;
+    const col = css('--d-info', '#7ab0e8'), warn = css('--d-warn', '#e0a030'), P = plan.pts;
+    g.save();
+    g.lineWidth = 2; g.lineCap = 'round'; g.strokeStyle = col;
+    for (let i = 1; i < P.length; i++) {
+      if (P[i].e) continue;
+      const a = at(P[i - 1]), b = at(P[i]);
+      g.globalAlpha = trailAlpha((P[i - 1].ago + P[i].ago) / 2, win);
+      g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
+    }
+    g.globalAlpha = 1; g.strokeStyle = col; g.lineWidth = 2;
+    P.forEach((p) => {
+      if (!p.e) return;
+      const a = at(p); // zone entry: a short tick across the path
+      g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke();
+    });
+    g.fillStyle = warn;
+    plan.stalls.forEach((s) => {
+      const a = at(s);
+      g.globalAlpha = trailAlpha(s.ago, win);
+      g.beginPath(); g.arc(a[0], a[1], 3, 0, 6.2832); g.fill();
+      stallHits.push({ x: a[0], y: a[1], ms: s.ms });
+    });
+    g.restore();
+  }
+  // Hover or tap on a stop dot names how long the hero stood there.
+  function showStall(ev) {
+    const r = cv.getBoundingClientRect(), q = cv.width / (r.width || cv.width);
+    const px = (ev.clientX - (r.left || 0)) * q, py = (ev.clientY - (r.top || 0)) * q;
+    let best = null, bd = 12 * (window.devicePixelRatio || 1);
+    stallHits.forEach((h) => { const d = Math.hypot(h.x - px, h.y - py); if (d <= bd) { bd = d; best = h; } });
+    tip.textContent = best ? 'Stood still ' + (best.ms / 1000).toFixed(1) + ' s here.' : '';
+    cv.title = tip.textContent;
   }
   // Neighbours arrive with their map only when the page lacks that version.
   function takeNeighbours(list) {
@@ -114,9 +263,10 @@ export function mount(root, ctx) {
     hide.textContent = min ? 'Show' : 'Hide';
     hide.setAttribute('aria-expanded', String(!min));
   });
-  cv.addEventListener('pointerdown', (ev) => { drag = { x: ev.clientX, y: ev.clientY }; cv.setPointerCapture(ev.pointerId); });
+  cv.addEventListener('pointerdown', (ev) => { showStall(ev); drag = { x: ev.clientX, y: ev.clientY }; cv.setPointerCapture(ev.pointerId); });
   cv.addEventListener('pointerup', () => { drag = null; });
   cv.addEventListener('pointermove', (ev) => {
+    if (!drag) showStall(ev);
     if (!drag || !map || !zoom) return;
     const q = cv.width / cv.getBoundingClientRect().width, k = view().k;
     panX -= (ev.clientX - drag.x) * q / k; panY -= (ev.clientY - drag.y) * q / k;
@@ -138,9 +288,12 @@ export function mount(root, ctx) {
       hero = r.hero || hero;
       takeNeighbours(r.neighbours);
       units = r.units || [];
+      cov = r.coverage && r.coverage.area === (map && map.areaId) ? r.coverage : null;
+      covText();
+      if (r.trail) { trail = r.trail; trailArea = r.trail_area || 0; } else if (!r.waiting) { trail = []; }
       note.textContent = r.waiting ? 'Waiting for the first area...' : 'Legend: cross hero, diamond waypoint, square exit' +
         (nbs.length ? '; dimmer areas are the ones next door' : '') + '. Fog clears as the hero walks.';
-      draw();
+      replan(true);
     },
   };
 }

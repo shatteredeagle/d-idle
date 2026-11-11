@@ -39,7 +39,8 @@ func stitchPair(t *testing.T) *senses.Publisher {
 func TestSensesStitchedGolden(t *testing.T) {
 	p := stitchPair(t)
 	w := httptest.NewRecorder()
-	(&Senses{Src: p, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+	// the v1 golden stays as it was: a source without a trail answers without the additive keys
+	(&Senses{Src: struct{ SensesSource }{p}, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
 	golden(t, "senses-stitched", w.Body.String())
 }
 

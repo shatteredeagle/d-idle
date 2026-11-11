@@ -9,6 +9,7 @@ import (
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/nav"
 	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
 )
@@ -68,4 +69,46 @@ func sensesFeedUnits(pub *senses.Publisher, now func() time.Time, log *slog.Logg
 			pub.SetUnits(us.Units(), senses.Point{X: pos.X, Y: pos.Y})
 		}
 	}
+}
+
+// coverageView is what the navigator offers the minimap (nav.Navigator.CoverageView).
+type coverageView interface {
+	CoverageView() (nav.CoverageView, bool)
+}
+
+// useSensesCoverage adds the roam coverage grid to the senses feed (docs/senses-map.md "Coverage"). It chains onto the
+// OnObserve hook useSenses set, so it runs on the navigator's goroutine, the only one that may read the roam state.
+// mover that is not a *nav.Navigator (stubs) leaves the feed as it was.
+func useSensesCoverage(rig *ladderRig, e *env.Env, mover any) {
+	nv, ok := mover.(coverageView)
+	if rig == nil || rig.Senses == nil || e == nil || e.OnObserve == nil || !ok {
+		return
+	}
+	prev, pub := e.OnObserve, rig.Senses
+	e.OnObserve = func(lm *d2map.LevelMap, pos d2map.Point) {
+		prev(lm, pos)
+		pub.SetCoverage(coverageFor(nv))
+	}
+}
+
+func coverageFor(nv coverageView) senses.Coverage {
+	v, ok := nv.CoverageView()
+	if !ok {
+		return senses.Coverage{}
+	}
+	c := senses.Coverage{Area: v.Level, Cell: v.Spacing, Cover: v.Cover, Total: len(v.Pts), Explored: v.Explored, Legs: v.Legs, Held: v.Held}
+	for _, p := range v.Pts {
+		st := senses.CoverUnseen
+		switch p.State {
+		case nav.CoverSeen:
+			st = senses.CoverSeen
+		case nav.CoverFailed:
+			st = senses.CoverFailed
+		}
+		c.Cells = append(c.Cells, [3]int{p.X, p.Y, st})
+	}
+	if v.Target != nil {
+		c.Target = &senses.Point{X: v.Target.X, Y: v.Target.Y}
+	}
+	return c
 }

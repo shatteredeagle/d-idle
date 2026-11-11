@@ -6,6 +6,7 @@ package senses
 import (
 	"fmt"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/d2map"
 )
@@ -176,6 +177,9 @@ type Publisher struct {
 	visits  map[int]*visit // last fogged map of each area of the session
 	visitNo uint64
 	skipped []error
+	trail   Trail
+	cover   Coverage
+	now     func() time.Time // test clock; nil is time.Now
 }
 
 // SetAdjacency sets the table of areas that are stitched into one canvas; nil turns stitching off (the default).
@@ -225,6 +229,7 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 		sv = map[block]struct{}{}
 		p.seen[lm.No] = sv
 	}
+	p.trail.Add(p.clock(), lm.No, hero.X, hero.Y)
 	grew := reveal(sv, hero)
 	changed := !p.have || lm.No != p.areaNo
 	if !grew && !changed && lm.Grid.Version() == p.areaVer {
@@ -279,4 +284,20 @@ func (p *Publisher) Snapshot() (Snapshot, bool) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	return p.snap, p.have
+}
+
+func (p *Publisher) clock() time.Time {
+	if p.now != nil {
+		return p.now()
+	}
+	return time.Now()
+}
+
+// TrailOf returns the trail of the current area (oldest first) and the time it was read; ok is false before the
+// first observation.
+func (p *Publisher) TrailOf() (pts []TrailPoint, area int, now time.Time, ok bool) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	now = p.clock()
+	return p.trail.Area(now, p.areaNo), p.areaNo, now, p.have
 }

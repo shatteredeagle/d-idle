@@ -1,0 +1,2 @@
+BACKLOG: TASK-296 maptrail: minimap hero trail (30 s / 1 min / 5 min, stall dots, zone ticks) and roam coverage layer, additive /api/senses keys, panel map v2; offline only
+CHANGELOG: Watch minimap: hero trail and an optional exploration coverage grid (TASK-296)

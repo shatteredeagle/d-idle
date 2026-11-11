@@ -37,6 +37,8 @@ type coverage struct {
 	failed []bool
 	held   int // legs the mouth gate held on this level (ROAMLEG); not a target problem, see docs/roamleg.md
 	legs   int
+	tgt    input.Point // the point of the leg being walked, for CoverageView only
+	hasTgt bool
 }
 
 func (c *coverage) visited() int {
@@ -221,12 +223,14 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 		}
 		c.legs++
 		target := c.pts[pick]
+		c.tgt, c.hasTgt = target, true
 		stop := func(o *obs) bool {
 			c.mark(o.pos)
 			return done() || c.seen[pick]
 		}
 		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return target, 3, nil },
 			walkOpts{stopWhen: stop, timeout: 90 * time.Second, pursuit: true})
+		c.hasTgt = false
 		switch {
 		case err == nil:
 			if !done() {

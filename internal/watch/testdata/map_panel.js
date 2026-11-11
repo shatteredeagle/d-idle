@@ -24,4 +24,40 @@ api.update({ tiers_unlocked: [1], version: 2, hero: { x: 19, y: 1 } });
 assert.ok(!/nb=/.test(api.query()), 'a neighbour that disappeared is dropped from the cache: ' + api.query());
 api.update(null, { status: 404 });
 assert.strictEqual(c.hidden, true, 'a missing route hides the map');
+// ---- trail and coverage layers ----
+assert.strictEqual(P.trailWindow('30000'), 30000); assert.strictEqual(P.trailWindow('7'), 60000, 'unknown window falls back to 1 min'); assert.strictEqual(P.trailWindow(null), 60000);
+const tr = [{ ago: 90000, x: 1, y: 1 }, { ago: 50000, x: 2, y: 1 }, { ago: 40000, x: 9, y: 9, e: true }, { ago: 10000, x: 10, y: 9 }, { ago: 500, x: 11, y: 9 }];
+const plan = P.trailPlan(tr, 60000);
+assert.strictEqual(plan.pts.length, 4, 'points older than the window are cut');
+assert.strictEqual(JSON.stringify(plan.stalls.map((s) => [s.x, s.y, s.ms])), JSON.stringify([[9, 9, 30000], [10, 9, 9500]]), 'a gap over 3 s is a stall; a gap into a zone entry is not');
+assert.ok(P.trailAlpha(0, 60000) > P.trailAlpha(30000, 60000) && P.trailAlpha(60000, 60000) >= 0.15, 'newest is brightest, oldest still visible');
+assert.notStrictEqual(P.trailSig(plan, 60000, 2), P.trailSig(P.trailPlan(tr, 30000), 30000, 2), 'window change redraws');
+assert.strictEqual(P.trailSig(plan, 60000, 2), P.trailSig(P.trailPlan(tr.slice(), 60000), 60000, 2), 'same trail, same signature: no redraw');
+assert.strictEqual(P.coverSummary({ state: 'roaming', total: 118, legs: 17, cells: [[0, 0, 1], [1, 1, 1], [2, 2, 2], [3, 3, 0]] }), 'roam: 2/118 points seen, 1 failed, leg 17');
+assert.strictEqual(P.coverSummary(null), '');
+{
+  const store = { trailwin: '30000' }, timers = [], calls = [];
+  const { root: r2, c: c2 } = shellCtx({}, store, timers);
+  c2.store = (k) => ({ get: () => (k in store ? store[k] : null), set: (v) => { store[k] = v; } });
+  const a2 = P.mount(r2, c2);
+  const btn = (key) => c2.actions.children.find((b) => b.dataset.key === key);
+  assert.ok(btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
+  a2.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail: tr,
+    coverage: { area: 2, cell: 8, cover: 5, total: 2, state: 'roaming', legs: 3, target: [12, 1], cells: [[12, 1, 0], [14, 1, 1]] } });
+  assert.strictEqual(btn('coverage').attrs['aria-pressed'], 'false', 'coverage is off by default');
+  btn('coverage').fire('click');
+  assert.strictEqual(store.coverage, '1', 'the toggle is remembered');
+  assert.ok(/roam: 1\/2 points seen/.test(c2.body.children[2].textContent), c2.body.children[2].textContent);
+  btn('trail-300000').fire('click');
+  assert.strictEqual(store.trailwin, '300000', 'the window is remembered');
+  assert.strictEqual(btn('trail-300000').attrs['aria-pressed'], 'true');
+  // the coverage of another area is not shown
+  a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, coverage: { area: 9, cell: 8, total: 1, state: 'roaming', cells: [[1, 1, 0]] } });
+  assert.ok(/not roaming/.test(c2.body.children[2].textContent));
+  // storage that throws must not break the panel
+  const bad = shellCtx({}, {}, []);
+  bad.c.store = () => ({ get() { throw new Error('blocked'); }, set() { throw new Error('blocked'); } });
+  const a3 = P.mount(bad.root, bad.c);
+  a3.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail: tr });
+}
 console.log('ok');
