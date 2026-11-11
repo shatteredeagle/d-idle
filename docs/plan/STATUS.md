@@ -159,6 +159,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
+- 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
 - 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
 - c7da022e 11-11 12:58 `Merge branch 'main' into identify2` (-)
 - 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
@@ -167,6 +169,4 @@
 - b1a79744 11-11 12:40 `Merge agent/uiedit2: TASK-306 uiedit2: game picture fits its panel, aspect-locked; every card editable with hide/show` (uiedit2)
 - 62073587 11-11 12:39 `Merge branch 'main' into uiedit2` (-)
 - a68259e7 11-11 12:25 `Merge agent/sellmarks: TASK-308 sellmarks: player sell marks follow renumbered items, sell chore always runs for marks, per-visit sell log` (sellmarks)
-- 51b1519e 11-11 12:24 `Merge branch 'main' into sellmarks` (-)
-- 7978f296 11-11 12:12 `Merge agent/repairtrip: TASK-303 repairtrip: Repair now as a safe-moment portal trip; Farm until repair when gold is short` (repairtrip)
 <!-- statusgen:end -->
