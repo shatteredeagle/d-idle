@@ -18,14 +18,11 @@
  <nav class="d-links" aria-label="Other pages">
   <a class="d-btn" data-size="sm" data-variant="ghost" id="invlink" href="/watch/inventory">Inventory</a>
   <a class="d-btn" data-size="sm" data-variant="ghost" id="returnlink" href="/watch/return" hidden>Return screen</a>
+  <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-layout" type="button">Edit layout</button>
   <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button>
  </nav>
 </header>
-<div class="d-main">
-<div class="d-band-stage" data-band="stage" hidden></div>
-<div class="d-band-side" data-band="side" aria-label="Command centre" hidden></div>
-<div class="d-band-grid" data-band="grid">
-<div class="d-compat">
+<div class="d-strips">
 <div id="voicestrip" class="voicestrip" hidden><q id="voicetext"></q> <button class="btn ghost small" id="voicemute" type="button" aria-pressed="false">Mute voice</button></div>
 <div id="msgbar" class="banner" hidden><span id="msg" role="alert"></span></div>
 <nav class="views" id="views" aria-label="Pages">
@@ -42,58 +39,64 @@
  <button type="button" data-view="atlas" id="tab-atlas" hidden>Atlas</button>
  <button type="button" data-view="alerts" id="tab-alerts" hidden>Alerts <span id="alertbadge" class="badge" hidden></span></button>
 </nav>
+</div>
+<div class="d-main">
+<div class="d-band-stage" data-band="stage" hidden></div>
+<div class="d-band-side" data-band="side" aria-label="Command centre" hidden></div>
+<div class="d-band-grid" data-band="grid">
+<div class="d-compat">
 <main id="main" data-view="orders">
- <section class="card thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
+ <section class="card thoughts" data-lid="thoughts" data-v="thoughts" aria-labelledby="t-thoughts"><h2 id="t-thoughts">Thoughts</h2>
   <div id="thoughts"></div>
   <ul id="feed" class="log-list"></ul>
  </section>
- <section class="card o-now" data-v="orders" aria-labelledby="t-now" id="now"></section>
- <section class="card o-map" data-v="orders" aria-labelledby="t-map">
+ <section class="card o-now" data-lid="now" data-v="orders" aria-labelledby="t-now" id="now"></section>
+ <section class="card o-map" data-lid="orders-map" data-v="orders" aria-labelledby="t-map">
   <div class="card-head"><h2 id="t-map">Where to? Tap an area</h2>
    <button class="btn" id="viewtoggle" type="button" aria-pressed="false">List view</button></div>
   <div class="legend" aria-label="Legend"><span>&#9670; hero is here</span><span>&#9654; current order</span><span>#n queued</span><span>&#9888; too hard now</span><span>&#10003; cleared</span><span>dashed = dungeon</span></div>
   <div id="maparea"><svg class="map" id="svg" role="group" aria-label="Act 1 map"></svg><div class="maplist" id="maplist" hidden></div></div>
   <p class="hint" id="mapnote"></p>
  </section>
- <section class="card o-queue" data-v="orders" aria-labelledby="t-q" id="queue"></section>
- <section class="card rules" data-v="rules" aria-labelledby="t-rules">
+ <section class="card o-queue" data-lid="queue" data-v="orders" aria-labelledby="t-q" id="queue"></section>
+ <section class="card rules" data-lid="rules" data-v="rules" aria-labelledby="t-rules">
   <div class="card-head"><h2 id="t-rules">Rules</h2><button class="btn danger small" id="revokeall" type="button">Revoke all</button></div>
   <p class="hint">Every rule the hero learned from you. A rule never revokes itself.</p>
   <ul id="rules" class="log-list"></ul>
  </section>
- <section class="card spend" id="spendpane" data-v="spend" hidden aria-labelledby="t-spend"><h2 id="t-spend">Spend</h2>
+ <section class="card spend" data-lid="spend" id="spendpane" data-v="spend" hidden aria-labelledby="t-spend"><h2 id="t-spend">Spend</h2>
   <p class="hint" id="spendtext"></p>
   <ul id="spendlist" class="log-list"></ul>
  </section>
- <section class="card chronicle" id="chroniclepane" data-v="chronicle" hidden aria-labelledby="t-chron"><h2 id="t-chron">Chronicle</h2>
+ <section class="card chronicle" data-lid="chronicle" id="chroniclepane" data-v="chronicle" hidden aria-labelledby="t-chron"><h2 id="t-chron">Chronicle</h2>
   <ul id="chronlines" class="log-list chron" aria-live="off"></ul>
   <h3 id="t-tape" hidden>Run timeline</h3>
   <ol id="tape" class="tape" hidden></ol>
   <h3 id="t-whyhist" hidden>Recent reasons</h3>
   <ol id="whyhist" class="tape" hidden></ol>
  </section>
- <section class="card diary" id="diarypane" data-v="diary" hidden aria-labelledby="t-diary"><h2 id="t-diary">Diary <small class="muted">(one page per milestone)</small></h2>
+ <section class="card diary" data-lid="diary" id="diarypane" data-v="diary" hidden aria-labelledby="t-diary"><h2 id="t-diary">Diary <small class="muted">(one page per milestone)</small></h2>
   <ol id="diarylist" class="log-list diary-list"></ol>
  </section>
- <section class="card quests" id="questspane" data-v="quests" hidden aria-labelledby="t-quests"><h2 id="t-quests">Quests <small class="muted" id="questdiff"></small></h2>
+ <section class="card quests" data-lid="quests" id="questspane" data-v="quests" hidden aria-labelledby="t-quests"><h2 id="t-quests">Quests <small class="muted" id="questdiff"></small></h2>
   <ul id="questlist" class="log-list quest-list"></ul>
   <p class="hint" id="questmore"></p>
  </section>
- <section class="card cards" id="cardspane" data-v="cards" hidden aria-labelledby="t-cards"><h2 id="t-cards">Find cards <small class="muted">(flip to identify)</small></h2>
+ <section class="card cards" data-lid="cards" id="cardspane" data-v="cards" hidden aria-labelledby="t-cards"><h2 id="t-cards">Find cards <small class="muted">(flip to identify)</small></h2>
   <label class="hint"><input type="checkbox" id="revealsound" checked> Play a sound on the flip</label>
   <ul id="cardlist" class="log-list card-list"></ul>
  </section>
- <section class="card silhouettes" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
+ <section class="card silhouettes" data-lid="locked" id="lockedpane" data-v="journal" hidden aria-labelledby="t-locked"><h2 id="t-locked">Still locked <small class="muted">(each opens by itself as the hero plays)</small></h2>
   <ul id="lockedlist" class="log-list"></ul>
  </section>
- <section class="card bestiary" id="bestiarypane" data-v="bestiary" hidden aria-labelledby="t-bestiary"><h2 id="t-bestiary">Cain's notes <small class="muted" id="bestiarycount"></small></h2>
+ <section class="card bestiary" data-lid="bestiary" id="bestiarypane" data-v="bestiary" hidden aria-labelledby="t-bestiary"><h2 id="t-bestiary">Cain's notes <small class="muted" id="bestiarycount"></small></h2>
   <ul id="bestiarylist" class="log-list bestiary-list"></ul>
  </section>
- <section class="card atlas" id="atlaspane" data-v="atlas" hidden aria-labelledby="t-atlas"><h2 id="t-atlas">Waypoint atlas <small class="muted" id="atlascount"></small></h2>
+ <section class="card atlas" data-lid="atlas" id="atlaspane" data-v="atlas" hidden aria-labelledby="t-atlas"><h2 id="t-atlas">Waypoint atlas <small class="muted" id="atlascount"></small></h2>
   <p class="hint" id="atlasnext"></p>
   <ol id="atlaslist" class="log-list atlas-list"></ol>
  </section>
- <section class="card alerts" id="alertspane" data-v="alerts" hidden aria-labelledby="t-alerts"><h2 id="t-alerts">Alerts <small class="muted" id="alertsstate"></small></h2>
+ <section class="card alerts" data-lid="alerts" id="alertspane" data-v="alerts" hidden aria-labelledby="t-alerts"><h2 id="t-alerts">Alerts <small class="muted" id="alertsstate"></small></h2>
   <p class="hint" id="alertsteaser" hidden></p>
   <div class="row">
    <label class="hint"><input type="checkbox" id="alertsound"> Play a sound on a new alert</label>
@@ -104,7 +107,7 @@
   <h3>Outbound</h3>
   <p class="hint" id="alertconsent"></p>
  </section>
- <section class="card journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
+ <section class="card journal" data-lid="journal" data-v="journal" aria-labelledby="t-journal"><h2 id="t-journal">Journal <small class="muted">(permanent; missed questions stay here)</small></h2>
   <ul id="journal" class="log-list"></ul>
  </section>
 </main>

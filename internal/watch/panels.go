@@ -42,6 +42,8 @@ type PanelsView struct {
 	Schema string          `json:"schema"`
 	Bands  []string        `json:"bands"`
 	Panels []PanelManifest `json:"panels"`
+	// Layout is how the ids of a layout manifest map onto the page (web/shell.json, layout.go).
+	Layout LayoutConf `json:"layout"`
 }
 
 var bandOrder = map[string]int{"status": 0, "stage": 1, "side": 2, "grid": 3}
@@ -109,7 +111,8 @@ func servePanels(w http.ResponseWriter, r *http.Request, asset func(name, ctype 
 		if ms == nil {
 			ms = []PanelManifest{}
 		}
-		writeJSON(w, 200, PanelsView{Schema: "watch.panels/1", Bands: []string{"status", "stage", "side", "grid"}, Panels: ms})
+		lc, _ := shellLayoutConf()
+		writeJSON(w, 200, PanelsView{Schema: "watch.panels/1", Bands: []string{"status", "stage", "side", "grid"}, Panels: ms, Layout: lc})
 		return true
 	}
 	rest, ok := strings.CutPrefix(p, "/watch/panels/")
