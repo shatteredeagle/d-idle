@@ -279,7 +279,7 @@
           "id": "activity",
           "col": 1,
           "row": 5,
-          "colSpan": 6,
+          "colSpan": 12,
           "rowSpan": 4,
           "band": "side",
           "collapsed": false,
@@ -318,7 +318,7 @@
         {
           "id": "gear",
           "col": 7,
-          "row": 5,
+          "row": 23,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -327,8 +327,8 @@
         },
         {
           "id": "now",
-          "col": 7,
-          "row": 23,
+          "col": 1,
+          "row": 27,
           "colSpan": 6,
           "rowSpan": 6,
           "band": "grid",
@@ -338,7 +338,7 @@
         {
           "id": "orders-map",
           "col": 1,
-          "row": 29,
+          "row": 33,
           "colSpan": 12,
           "rowSpan": 10,
           "band": "grid",
@@ -347,8 +347,8 @@
         },
         {
           "id": "tally",
-          "col": 1,
-          "row": 39,
+          "col": 7,
+          "row": 27,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -357,8 +357,8 @@
         },
         {
           "id": "queue",
-          "col": 7,
-          "row": 39,
+          "col": 1,
+          "row": 43,
           "colSpan": 6,
           "rowSpan": 3,
           "band": "grid",
@@ -368,7 +368,7 @@
         {
           "id": "thoughts",
           "col": 7,
-          "row": 42,
+          "row": 43,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -377,8 +377,8 @@
         },
         {
           "id": "currency",
-          "col": 1,
-          "row": 27,
+          "col": 7,
+          "row": 31,
           "colSpan": 6,
           "rowSpan": 2,
           "band": "side",
@@ -388,7 +388,7 @@
         {
           "id": "journal",
           "col": 1,
-          "row": 43,
+          "row": 46,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -398,7 +398,7 @@
         {
           "id": "chronicle",
           "col": 7,
-          "row": 46,
+          "row": 47,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -408,7 +408,7 @@
         {
           "id": "cards",
           "col": 1,
-          "row": 48,
+          "row": 51,
           "colSpan": 6,
           "rowSpan": 3,
           "band": "grid",
@@ -417,8 +417,8 @@
         },
         {
           "id": "bestiary",
-          "col": 1,
-          "row": 51,
+          "col": 7,
+          "row": 52,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -427,8 +427,8 @@
         },
         {
           "id": "diary",
-          "col": 7,
-          "row": 51,
+          "col": 1,
+          "row": 54,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -438,7 +438,7 @@
         {
           "id": "quests",
           "col": 7,
-          "row": 55,
+          "row": 57,
           "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
@@ -448,7 +448,7 @@
         {
           "id": "rules",
           "col": 1,
-          "row": 56,
+          "row": 58,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -458,7 +458,7 @@
         {
           "id": "atlas",
           "col": 1,
-          "row": 60,
+          "row": 62,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -468,7 +468,7 @@
         {
           "id": "locked",
           "col": 7,
-          "row": 60,
+          "row": 62,
           "colSpan": 6,
           "rowSpan": 4,
           "band": "grid",
@@ -478,7 +478,7 @@
         {
           "id": "spend",
           "col": 1,
-          "row": 64,
+          "row": 66,
           "colSpan": 6,
           "rowSpan": 3,
           "band": "grid",
@@ -487,9 +487,9 @@
         },
         {
           "id": "alerts",
-          "col": 7,
-          "row": 64,
-          "colSpan": 6,
+          "col": 1,
+          "row": 69,
+          "colSpan": 12,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
