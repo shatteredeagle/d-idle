@@ -179,6 +179,21 @@ func (n *Navigator) markPos(c *coverage, p input.Point) {
 	n.covMu.Unlock()
 }
 
+// selectCov makes the remembered coverage of lm's level the current one (nil when the level was not roamed in this
+// game). The memory is per level and lives as long as the game: leaving for town, another zone or a portal trip and
+// coming back keeps every point seen. A new game is detected by the level map identity: the world builds new
+// LevelMap values per game, so an entry whose map differs is stale and dropped. Nav has no class or build data.
+func (n *Navigator) selectCov(lm *d2map.LevelMap) {
+	n.covMu.Lock()
+	defer n.covMu.Unlock()
+	c := n.covs[lm.No]
+	if c != nil && c.lm != lm {
+		delete(n.covs, lm.No)
+		c = nil
+	}
+	n.cov = c
+}
+
 // SetOnCoverChange registers f, called after NotePosition changed the coverage (the minimap republishes it).
 func (n *Navigator) SetOnCoverChange(f func()) { n.onCover = f }
 
@@ -244,14 +259,18 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 		}
 		dist := floodHops(f, sx, sy)
 		n.covMu.Lock()
-		c := n.cov
+		c := n.covs[o.lm.No]
 		sp, cv := roamParams(t)
 		if c == nil || c.lm != o.lm {
 			pts := dropNearExits(samplePoints(f, dist, sp), o.lm.Exits)
 			c = &coverage{lm: o.lm, level: o.level, spacing: sp, cover: cv, pts: pts, seen: make([]bool, len(pts)), failed: make([]bool, len(pts))}
-			n.cov = c
+			if n.covs == nil {
+				n.covs = map[int]*coverage{}
+			}
+			n.covs[o.lm.No] = c
 			n.log.Info("roam: coverage points", "level", o.level, "points", len(pts), "spacing", sp, "cover", cv, "exits", len(o.lm.Exits))
 		}
+		n.cov = c
 		c.mark(o.pos)
 		pick, bestD := -1, int32(0) // covMu is held through the pick
 		for i, p := range c.pts {
