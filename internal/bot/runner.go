@@ -103,6 +103,8 @@ type Runner struct {
 	wpHook func(areaID int, name string) // SetWaypointHook
 	firsts *decide.Firsts                // SetLadderFirsts
 
+	lootWalk atomic.Bool // true while walkBackLoot runs (LootWalking, for the watch minimap)
+
 	lastStep atomic.Int64 // wall-clock unix nanos of the last finished loop iteration (heartbeat for the d2bot watchdog)
 
 	mu          sync.Mutex // control and status

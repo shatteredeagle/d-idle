@@ -40,7 +40,7 @@ assert.strictEqual(P.coverSummary(null), '');
 assert.strictEqual(P.trailWindow('1800000'), 1800000, 'the 30 min window is remembered');
 {
   const hist = [{ ago: 20000, x: 1, y: 1, a: 0 }, { ago: 10000, x: 2, y: 1, a: 1 }, { ago: 8000, x: 3, y: 1, a: 1 }, { ago: 6000, x: 4, y: 1, a: 2 }, { ago: 0, x: 5, y: 1, a: 2 }];
-  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest', 'loot'];
   assert.strictEqual(P.activityShare(P.trailPlan(hist, 60000), names), 'stall 80% \u00b7 combat 20%', 'gaps over 3 s count as stall, the rest by activity');
   assert.strictEqual(P.activityShare(P.trailPlan(hist.map((p, i) => Object.assign({}, p, { ago: 4000 - i * 1000 })), 60000), names), 'combat 50% \u00b7 walk 25% \u00b7 town 25%');
 }

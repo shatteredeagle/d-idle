@@ -49,9 +49,9 @@ export function trailPlan(trail, win) {
 
 // Activity colours: tokens of the design system, so the dark map and the stream overlay both read them. Index = the
 // `a` code of a trail point (legend order of the payload: walk, combat, town, farm, flee, rest).
-export const ACT_TOKEN = ['--d-info', '--d-bad', '--d-accent', '--d-good', '--d-warn', '--d-text-2'];
-export const ACT_FALLBACK = ['#7ab0e8', '#ec7d6c', '#c7a44a', '#6fbf73', '#e0a030', '#a89d8a'];
-const ACT_NAME = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+export const ACT_TOKEN = ['--d-info', '--d-bad', '--d-accent', '--d-good', '--d-warn', '--d-text-2', '--d-good'];
+export const ACT_FALLBACK = ['#7ab0e8', '#ec7d6c', '#c7a44a', '#6fbf73', '#e0a030', '#a89d8a', '#6fbf73'];
+const ACT_NAME = ['walk', 'combat', 'town', 'farm', 'flee', 'rest', 'loot'];
 
 // Share of the window per activity, and 'stall' for the time spent standing still over STALL_MS, as one line:
 // 'walk 41% | combat 33% | stall 5%'. Time of a sample runs until the next sample (the newest runs to the reply).
@@ -73,7 +73,7 @@ export const EVENT_MODES = ['key', 'all', 'off'];
 export function eventShown(ev, mode) {
   if (mode === 'off') return false;
   if (mode === 'all') return ev.k !== 'fight';
-  return ev.k === 'kill' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
+  return ev.k === 'kill' || ev.k === 'chicken' || ev.k === 'portal' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
 }
 
 // The tooltip text of an event, with its fight summary when the server knew one.
@@ -171,7 +171,7 @@ export function mount(root, ctx) {
   function replan(force) {
     plan = trailPlan(trail, win);
     winBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(TRAIL_WINDOWS[i] === win)));
-    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (blue walk, red combat, gold town, green farm, orange flee, grey rest; white dots are stops over 3 s, ticks are zone entries).' : '';
+    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (blue walk, red combat, gold town, green farm, dashed green loot walk-back, orange flee, grey rest; white dots are stops over 3 s, ticks are zone entries).' : '';
     share.textContent = activityShare(plan, legendNames);
     const s = trailSig(plan, win, trailArea, evs.length);
     if (force || s !== sig) { sig = s; draw(); }
@@ -262,11 +262,11 @@ export function mount(root, ctx) {
     for (let i = 1; i < P.length; i++) {
       if (P[i].e) continue;
       const k = P[i].a || 0, a = at(P[i - 1]), b = at(P[i]);
-      g.strokeStyle = col(k); g.lineWidth = k === 1 ? 4 : 2; // combat is the thick red segment
+      g.strokeStyle = col(k); g.lineWidth = k === 1 ? 4 : 2; g.setLineDash(k === 6 ? [4, 3] : []); // loot walk-back is dashed green // combat is the thick red segment
       g.globalAlpha = k === 1 ? Math.max(0.6, trailAlpha((P[i - 1].ago + P[i].ago) / 2, win)) : trailAlpha((P[i - 1].ago + P[i].ago) / 2, win);
       g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
     }
-    g.globalAlpha = 1; g.lineWidth = 2;
+    g.globalAlpha = 1; g.lineWidth = 2; g.setLineDash([]);
     P.forEach((p, i) => {
       const a = at(p);
       if (p.e) { g.strokeStyle = col(0); g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke(); }
@@ -298,6 +298,9 @@ export function mount(root, ctx) {
       case 'potion': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y + 1, r - 1, 0, 6.2832); g.moveTo(x, y - r + 1); g.lineTo(x, y - r - 2); g.stroke(); break;
       case 'loot': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.arc(x, y, r - 1, 0, 6.2832); g.fill(); break;
       case 'levelup': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); for (let i = 0; i < 10; i++) { const rr = i % 2 ? r / 2 : r, an = i * Math.PI / 5 - Math.PI / 2; g.lineTo(x + rr * Math.cos(an), y + rr * Math.sin(an)); } g.closePath(); g.fill(); break;
+      case 'chicken': g.strokeStyle = css('--d-warn', '#e0a030'); g.lineWidth = 3; g.beginPath(); g.moveTo(x - r, y - r); g.lineTo(x + r, y + r); g.moveTo(x + r, y - r); g.lineTo(x - r, y + r); g.stroke(); break;
+      case 'portal': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.arc(x, y, r / 2, 0, 6.2832); g.stroke(); break;
+      case 'waypoint': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.moveTo(x, y - r); g.lineTo(x + r, y); g.lineTo(x, y + r); g.lineTo(x - r, y); g.closePath(); g.fill(); break;
       default: return;
     }
     evHits.push({ x, y, text: eventText(e) });

@@ -10,13 +10,16 @@ const (
 
 // Event kinds.
 const (
-	EvKill    = "kill"
-	EvDamage  = "damage"
-	EvPotion  = "potion"
-	EvLoot    = "loot"
-	EvLevelUp = "levelup"
-	EvDeath   = "death"
-	EvFight   = "fight"
+	EvKill     = "kill"
+	EvDamage   = "damage"
+	EvPotion   = "potion"
+	EvLoot     = "loot"
+	EvLevelUp  = "levelup"
+	EvDeath    = "death"
+	EvFight    = "fight"
+	EvChicken  = "chicken"
+	EvPortal   = "portal"
+	EvWaypoint = "waypoint"
 )
 
 // FightInfo is the compact fight summary an event may carry (combat.FightSummary, copied by the wiring).
