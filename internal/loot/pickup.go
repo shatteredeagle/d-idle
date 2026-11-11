@@ -377,6 +377,9 @@ func (l *Looter) candidates(s *d2.Snapshot, o PickOpts, failed map[uint32]int) (
 		if u.Item == nil || u.Mode != d2.ItemModeGround {
 			continue
 		}
+		if l.ignored(u) {
+			continue // the player trashed it from the watch page: not a skip worth a report line either
+		}
 		name := l.itemName(u)
 		skip := func(why string) { skipped = append(skipped, Skipped{ID: u.ID, Name: name, Why: why}) }
 		if failed[u.ID] >= 2 {

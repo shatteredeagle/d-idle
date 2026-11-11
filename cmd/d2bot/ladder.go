@@ -79,7 +79,8 @@ type ladderOptions struct {
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
 	monsters                               watch.MonsterTables
-	readiness                              http.Handler // GET /api/readiness (readywire.go); nil: none
+	readiness                              http.Handler          // GET /api/readiness (readywire.go); nil: none
+	heroStats                              watch.HeroStatsSource // the stats block of /api/hero (readywire.go); nil: none
 	awayMin, repeatCooldownMin, quietAfter int
 }
 
@@ -260,6 +261,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Fun.Inventory = l.inv
 		rig.Fun.Art = artAPI(l.art)
 		rig.Fun.Readiness = l.readiness
+		hub.SetHeroStatsSource(l.heroStats)
 		bindRepair(rig.Fun, l.repair, l.farm)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself

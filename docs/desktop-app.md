@@ -1,5 +1,7 @@
 # Desktop app: d2idle-watch
 
+> status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron` (docs/desktop-electron.md, user decision 2026-11-10).
+
 A small launcher so nobody has to remember the watch URL. Code: `apps/desktop` (a package of the main module, standard library only; a nested go.mod made the merge gate's `go test -race ./apps/desktop` fail). Task: TASK-227. Workflow (draft, never run): `.github/workflows/desktop-app.yml`.
 
 ## Decision: Go launcher around a Chromium-family `--app` window

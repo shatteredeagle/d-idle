@@ -1,2 +1,0 @@
-BACKLOG: TASK-285 mercgate: a replacing merc hire is refused while the merc wears gear (player-only gear policy, TASK-283 stage A1); TASK-286 mercdump and TASK-287 mercdoll follow
-CHANGELOG: The bot no longer strips a mercenary's gear before a replacing hire; it waits until the player has taken it off (resource.gearDecisions=player)

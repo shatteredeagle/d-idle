@@ -31,11 +31,12 @@ const (
 	WhyAfterDeath  = "after_death_restock"
 	WhyDeathCorpse = "after_death_corpse"
 	WhyDeathGold   = "after_death_gold"
+	WhyPlayerItems = "player_items" // none (the item actions the player queued on the inventory page)
 )
 
 // whyCodes lists every code above (a test compares it with the template table).
 var whyCodes = []string{WhyQuestStep, WhyWalk, WhyFight, WhyTownTrip, WhyTownChores, WhyHealTrip, WhyWaitHeal, WhyClaimTrip,
-	WhyBackToField, WhyToTown, WhyAreaDone, WhyGuardExit, WhyFarmRuns, WhyFarmGold, WhyFarmUser, WhySavingFor, WhyAfterDeath, WhyDeathCorpse, WhyDeathGold}
+	WhyBackToField, WhyToTown, WhyAreaDone, WhyGuardExit, WhyFarmRuns, WhyFarmGold, WhyFarmUser, WhySavingFor, WhyAfterDeath, WhyDeathCorpse, WhyDeathGold, WhyPlayerItems}
 
 // setWhy announces the reason for the activity the next setLocked sets. Parameters are key, value pairs.
 func (r *Runner) setWhy(code string, kv ...string) {

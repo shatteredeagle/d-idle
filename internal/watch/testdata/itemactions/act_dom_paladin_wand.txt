@@ -1,0 +1,12 @@
+div.inv-act [aria-label=Actions for Wand role=menu data-mode=pop]
+  div.act-title.q-normal [] "Wand"
+  div.act-state [data-kind=trash data-state=doing]
+    span.act-st [] "doing"
+    span.act-tx [] "Trash Wand"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "restricted to another class"
+  button.act [role=menuitem data-act=sell] "Mark for sale"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [aria-disabled=true role=menuitem data-act=trash data-danger= data-off=] "Trash"
+  div.act-why [data-for=trash] "it is already queued to be trashed"
+  div.act-note [role=status]
