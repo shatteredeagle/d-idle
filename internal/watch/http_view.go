@@ -18,7 +18,7 @@ var webFS embed.FS
 // Routes of the read-only side (mounted on d2dview). Every one is GET (HEAD) only. The game video routes (VideoRoutes)
 // are not in this list: d2dview has its own /stream, so only the bot's own listener (Serve) mounts them.
 var ViewRoutes = []string{"/watch", "/watch/", "/api/thoughts", "/api/journal", "/api/rules", "/api/uptime", "/api/orders", "/api/orders/map",
-	"/api/why", WhylineRoute, "/api/config", "/api/events", "/api/currency", HeroRoute}
+	"/api/why", WhylineRoute, "/api/config", "/api/events", "/api/currency", HeroRoute, LayoutRoute}
 
 // VideoRoutes are served by ViewHandler only when a Video is set (Serve mounts them for d2bot -watch-video).
 var VideoRoutes = []string{"/stream", "/shot.jpg"}
@@ -74,8 +74,11 @@ func (h *Hub) ViewHandler() http.Handler {
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
 		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/shell.css", "/watch/components.css", "/watch/utilities.css", "/watch/inventory.css":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/css; charset=utf-8")(w, r)
-		case "/watch/shell.js":
-			asset("shell.js", "text/javascript; charset=utf-8")(w, r)
+		case "/watch/shell.js", "/watch/layout.js", "/watch/layoutedit.js":
+			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/javascript; charset=utf-8")(w, r)
+		case "/watch/layouts/mockup.json", "/watch/layouts/live.json", "/watch/layouts/command.json":
+			// the editor's three presets, for ?layout=<name> (the screenshot suite renders them)
+			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "application/json; charset=utf-8")(w, r)
 		default:
 			if !servePanels(w, r, asset) {
 				http.NotFound(w, r)
@@ -84,6 +87,7 @@ func (h *Hub) ViewHandler() http.Handler {
 	})
 	m.Handle(WhylineRoute, h.why.Handler())
 	m.HandleFunc(HeroRoute, h.heroHandler())
+	m.HandleFunc(LayoutRoute, h.layoutHandler())
 	m.HandleFunc("/api/thoughts", func(w http.ResponseWriter, r *http.Request) { writeJSON(w, 200, h.Thoughts()) })
 	m.HandleFunc("/api/journal", func(w http.ResponseWriter, r *http.Request) {
 		limit, _ := strconv.Atoi(r.URL.Query().Get("limit"))

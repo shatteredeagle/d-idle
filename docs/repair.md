@@ -1,6 +1,6 @@
 # Manual repair (TASK-226, repairmanual)
 
-User decision 2026-11-09: repairing gear is not automatic at first. The player tracks it (inventory page, gear strip on the watch screen) and tells the hero to repair. Automatic repair (once an hour, every half hour, when an item breaks, always) comes later as unlockable features. Tags: V verified by the offline test named, U unverified (needs a live run), S secondary.
+User decision 2026-11-09: repairing gear is not automatic at first. The player tracks it (inventory page, gear strip on the watch screen) and tells the hero to repair. Repair stays manual and is not an equipment decision (docs/gear-policy.md). Automatic repair (once an hour, every half hour, when an item breaks, always) comes later as unlockable features. Tags: V verified by the offline test named, U unverified (needs a live run), S secondary.
 
 ## What changed in the bot
 

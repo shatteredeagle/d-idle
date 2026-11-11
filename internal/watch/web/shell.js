@@ -2,6 +2,8 @@
 // fetch scheduler (the SSE change event plus per-panel polls), focus keeping across updates, and the ctx a panel gets.
 // Text only through textContent; no inline styles (the page CSP is style-src 'self').
 
+import { plan, breakpointFor } from '/watch/layout.js';
+
 const SAFETY_POLL = 5000; // a missed SSE event costs at most this long
 const FAIL_WAIT = 4000;   // after a failed fetch
 const FETCH_TIMEOUT = 8000; // ms; a panel request older than this is aborted
@@ -216,6 +218,115 @@ function makeScheduler() {
   return { add(s) { s.next = 0; s.fails = 0; slots.push(s); }, start: tick };
 }
 
+// ---- layout manifest (docs/ui-design-system.md section 6.4) ----
+// The layout in force comes from GET /api/layout (web/layout.json, or the profile's stored copy); ?layout=<preset>
+// loads one of the editor's presets instead and ?layout=none keeps the manifest placement. Every panel root in the
+// main area and every pre-shell card (data-lid) is a target; the plan (layout.js) says where each goes. Without a
+// layout, or for a breakpoint the file does not cover, nothing is set and the manifest rules of shell.css place.
+const lay = { layout: null, conf: {}, targets: new Map(), plan: null, main: null, editor: null, bp: '', warned: false };
+const COMPAT_M = '.o-now, .o-map, .thoughts, .rules, .journal, .chronicle, .alerts';
+
+function layoutTargets() {
+  const out = [];
+  lay.targets.clear();
+  lay.main.querySelectorAll('.d-panel[data-panel], [data-lid]').forEach((n) => {
+    const id = n.dataset.panel || n.dataset.lid;
+    lay.targets.set(id, n);
+    out.push({ id, size: n.dataset.size || (n.matches(COMPAT_M) ? 'm' : 's'), hidden: n.hidden });
+  });
+  return out;
+}
+
+function applyLayout() {
+  const main = lay.main;
+  if (!main) return;
+  const targets = layoutTargets();
+  const p = lay.layout ? plan(lay.layout, window.innerWidth, html.dataset.mode || '', lay.conf, targets, !!lay.editor) : null;
+  lay.plan = p;
+  lay.bp = breakpointFor(window.innerWidth, html.dataset.mode || '');
+  lay.targets.forEach((n) => { n.style.gridColumn = ''; n.style.gridRow = ''; n.style.order = ''; delete n.dataset.collapsed; });
+  if (!p || p.bp === 'overlay') { delete main.dataset.layout; return; }
+  main.dataset.layout = p.flow ? 'flow' : 'grid';
+  main.style.setProperty('--l-cols', String(p.cols));
+  main.style.setProperty('--l-rowh', p.rowHeight + 'px');
+  for (const it of p.items) {
+    const n = lay.targets.get(it.id);
+    if (!n) continue;
+    n.style.gridColumn = it.col + ' / span ' + it.colSpan;
+    if (p.flow) n.style.order = String(it.order);
+    else n.style.gridRow = it.row + ' / span ' + (it.collapsed ? 1 : it.rowSpan);
+    if (it.collapsed) n.dataset.collapsed = '1';
+  }
+  if (p.unknown.length && !lay.warned) {
+    lay.warned = true;
+    console.warn('watch layout: no panel for ' + p.unknown.join(', ') + ' (ignored)');
+  }
+}
+
+async function loadLayout() {
+  const want = qs.get('layout') || '';
+  if (want === 'none') return null;
+  const url = /^(mockup|live|command)$/.test(want) ? '/watch/layouts/' + want + '.json' : '/api/layout';
+  try {
+    const r = await fetch(url, { cache: 'no-store', credentials: 'same-origin' });
+    if (!r.ok) return null;
+    const l = await r.json();
+    return l && l.schema === 'watch.layout/1' ? l : null; // another schema: this shell does not read it
+  } catch (e) { return null; }
+}
+
+function postJSON(answerBase, path, body) {
+  return fetch(answerBase + path, {
+    method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}),
+  }).then((r) => r.json()).catch(() => { toast('alarm', 'the answer route is not reachable'); return null; });
+}
+
+function setupLayout(conf, layout, answerBase) {
+  lay.main = document.querySelector('.d-main');
+  lay.conf = conf || {};
+  lay.layout = layout;
+  if (!lay.main) return;
+  if (layout && layout.density === 'comfortable' && !html.dataset.density) html.dataset.density = 'comfortable';
+  if (layout) {
+    // the strips of the pre-shell page (voice line, message banner, phone tabs) are full-width rows without a grid
+    // position; under a layout they sit above the main area instead of falling into a hole of the grid
+    const strips = el('div', 'd-strips');
+    lay.main.querySelectorAll('.d-compat > :not(main)').forEach((n) => strips.appendChild(n));
+    lay.main.parentElement.insertBefore(strips, lay.main);
+  }
+  applyLayout();
+  // a panel that hides or opens (a 404 route, an unlock) changes which targets are packed
+  let queued = false;
+  const again = () => { queued = false; if (!lay.editor) applyLayout(); };
+  new MutationObserver((ms) => { if (!queued && ms.some((m) => m.target.matches('.d-panel[data-panel], [data-lid]'))) { queued = true; requestAnimationFrame(again); } })
+    .observe(lay.main, { subtree: true, attributes: true, attributeFilter: ['hidden'] });
+  window.addEventListener('resize', () => {
+    if (breakpointFor(window.innerWidth, html.dataset.mode || '') === lay.bp) return;
+    if (lay.editor) lay.editor.stop();
+    applyLayout();
+  });
+  const btn = document.getElementById('btn-layout');
+  if (!btn) return;
+  btn.addEventListener('click', async () => {
+    if (lay.editor) return;
+    if (!lay.plan || lay.plan.flow) { toast('info', lay.layout ? 'Edit layout needs a window at least 1024 px wide.' : 'No layout is loaded.'); return; }
+    let mod;
+    try { mod = await import('/watch/layoutedit.js'); } catch (e) { toast('alarm', 'The layout editor did not load.'); return; }
+    const saved = lay.layout;
+    lay.editor = { stop() {} }; // from here the plan keeps hidden panels in their cells
+    applyLayout();
+    lay.editor = mod.start({
+      el, toast, main: lay.main, targets: lay.targets, layout: saved,
+      plan: () => lay.plan,
+      preview(l) { lay.layout = l; applyLayout(); return lay.plan; },
+      save: (l) => postJSON(answerBase, '/api/layout', { layout: l }),
+      reset: () => postJSON(answerBase, '/api/layout', { reset: true }),
+      done(l) { lay.editor = null; lay.layout = l || saved; applyLayout(); },
+    });
+  });
+  if (qs.get('edit') === '1') btn.click(); // a link (and the screenshot suite) can open the page in Edit layout
+}
+
 // ---- ctx and mounting ----
 function makeCtx(m, parts, cfg, answerBase, timers) {
   const store = (key) => {
@@ -232,11 +343,7 @@ function makeCtx(m, parts, cfg, answerBase, timers) {
     hide(on) { parts.root.hidden = !!on; syncBand(parts.root.parentElement); },
     state(st) { parts.root.dataset.state = st; },
     later(fn, ms) { const t = setTimeout(() => { timers.delete(t); fn(); }, ms); timers.add(t); return t; },
-    post(path, body) {
-      return fetch(answerBase + path, {
-        method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}),
-      }).then((r) => r.json()).catch(() => { toast('alarm', 'the answer route is not reachable'); return null; });
-    },
+    post: (path, body) => postJSON(answerBase, path, body),
   };
 }
 
@@ -247,12 +354,22 @@ async function start() {
   let cfg = {};
   try { cfg = await (await fetch('/api/config', { cache: 'no-store' })).json(); } catch (e) { /* the old code says so */ }
   const answerBase = cfg.answerBase || (cfg.answerPort ? location.protocol + '//' + location.hostname + ':' + cfg.answerPort : '');
-  let list = [];
-  try { list = (await (await fetch('/watch/panels.json', { cache: 'no-store' })).json()).panels || []; } catch (e) { return; }
+  let list = [], conf = {};
+  const layoutReq = document.querySelector('.d-compat') ? loadLayout() : null; // the other pages share this shell without a layout
+  try {
+    const pv = await (await fetch('/watch/panels.json', { cache: 'no-store' })).json();
+    list = pv.panels || [];
+    conf = pv.layout || {};
+  } catch (e) { return; }
   const sched = makeScheduler();
+  // every root exists before the first module loads, so the layout places the whole page at once
+  const made = [];
   for (const m of list) {
     const parts = makeRoot(m);
-    if (!place(bands, m, parts.root)) continue;
+    if (place(bands, m, parts.root)) made.push([m, parts]);
+  }
+  setupLayout(conf, await layoutReq, answerBase);
+  for (const [m, parts] of made) {
     const css = el('link');
     css.rel = 'stylesheet'; css.href = '/watch/panels/' + m.id + '/panel.css';
     document.head.appendChild(css);

@@ -71,6 +71,7 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	run := runID()
 	cfg := watch.FunConfig{Hub: hub, Speed: 1, Notes: notes}
 	if stateDir != "" {
+		hub.SetLayoutPath(filepath.Join(stateDir, "layout-"+l.storeProfile()+".json"))
 		cfg.Visit = watch.NewVisit(filepath.Join(stateDir, "visit.json"), nil)
 	}
 	if wallet != nil && wallet.Ledger != nil {

@@ -138,6 +138,11 @@ func (t *Town) reject(s *d2.Snapshot, g gearSlot, b *data.ItemBase) string {
 	return ""
 }
 
+// botGear says whether the bot may make equipment decisions (resource.gearDecisions = 1); by default the player does
+// (docs/gear-policy.md). Equipment is weapons, armor, shields, helms, belts, gloves, boots, launchers and quivers; potions,
+// scrolls, keys, ammo, repair, selling and pickup are not.
+func (t *Town) botGear() bool { return t.e.Tune.Resource.BotDecidesGear() }
+
 func isRequirement(why string) bool { return why == rejStr || why == rejDex || why == rejLevel }
 
 // Rebuy is poverty mode after a death: buy the potions the belt plan wants first, then the cheapest viable
@@ -181,7 +186,7 @@ func (t *Town) Rebuy(ctx context.Context, budget int) (RebuyReport, error) {
 	// Weapon and body armor come before any potion: a character without them dies in the first fight, and the cheapest
 	// of each costs a fraction of one potion round (DEATHSPIRAL, V: Soaky died four times with neither). Potions follow,
 	// then the lesser slots.
-	if todo := missing(s, 1); len(todo) > 0 {
+	if todo := missing(s, 1); len(todo) > 0 && t.botGear() {
 		t.rebuyGear(ctx, a, todo, startGold-budget, &out)
 		if s, err = t.current(); err != nil {
 			return out, err
@@ -197,7 +202,7 @@ func (t *Town) Rebuy(ctx context.Context, budget int) (RebuyReport, error) {
 			return out, err
 		}
 	}
-	if todo := missing(s, 3); len(todo) > 0 {
+	if todo := missing(s, 3); len(todo) > 0 && t.botGear() {
 		t.rebuyGear(ctx, a, todo, startGold-budget, &out)
 	}
 	slices.Sort(out.Blocked)
@@ -587,6 +592,9 @@ func (t *Town) foundGear(s *d2.Snapshot) (slots []gearSlot, units []d2.Unit) {
 // EquipFound wears gear that was picked up for an empty weapon or body armor slot (the loot pickit keeps it for that,
 // loot.nakedRule). It returns the names equipped.
 func (t *Town) EquipFound(ctx context.Context) ([]string, error) {
+	if !t.botGear() {
+		return nil, nil
+	}
 	s, err := t.current()
 	if err != nil {
 		return nil, err
@@ -610,6 +618,9 @@ func (t *Town) EquipFound(ctx context.Context) ([]string, error) {
 }
 
 func (t *Town) needEquipFound(s *d2.Snapshot) bool {
+	if !t.botGear() {
+		return false
+	}
 	slots, _ := t.foundGear(s)
 	return len(slots) > 0
 }
@@ -617,6 +628,9 @@ func (t *Town) needEquipFound(s *d2.Snapshot) bool {
 // needWeaponFound is the only found-gear reason that justifies a trip of its own: a class that needs a weapon has none
 // on and one lies in the pack. Armor is worn when the character is in town anyway.
 func (t *Town) needWeaponFound(s *d2.Snapshot) bool {
+	if !t.botGear() {
+		return false
+	}
 	if !resource.NeedsWeapon(s.Player.Class) {
 		return false
 	}
