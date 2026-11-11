@@ -3,8 +3,8 @@ package d2dinput
 import (
 	"context"
 	"errors"
-	"reflect"
 	"math"
+	"reflect"
 	"strings"
 	"testing"
 	"time"
