@@ -1327,9 +1327,8 @@ const (
 	bounceWindow  = 2 * time.Minute
 )
 
-func (r *Runner) noteBounce(area int, now time.Time) {
-	r.obMu.Lock()
-	defer r.obMu.Unlock()
+// noteBounce runs from observe, which holds obMu.
+func (r *Runner) noteBounceLocked(area int, now time.Time) {
 	keep := r.bounceLog[:0]
 	same := 1
 	for _, c := range r.bounceLog {

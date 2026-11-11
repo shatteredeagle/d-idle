@@ -46,14 +46,14 @@ type arrival struct {
 
 // noteArrival runs at an area change, before o.area moves on. It logs where the character stands on arrival and, when
 // the stay in the area it is leaving was a bounce (straight back where it came from within bounceMaxStay, neither side a
-// town), says so with the position it left from and counts it (noteBounce).
+// town), says so with the position it left from and counts it (noteBounceLocked).
 func (r *Runner) noteArrival(o *observer, p *d2.Player, now time.Time) {
 	prev := o.arrived
 	if o.area != 0 && !prev.at.IsZero() && p.Area == prev.from && !r.d.Plan.IsTown(o.area) && !r.d.Plan.IsTown(p.Area) {
 		if stay := now.Sub(prev.at); stay < bounceMaxStay {
 			r.e.Log.Info("arrival bounce", "area", o.area, "name", r.areaName(o.area), "back", p.Area,
 				"stayMs", stay.Milliseconds(), "arrivedAt", prev.pos, "leftFrom", o.pos)
-			r.noteBounce(o.area, now)
+			r.noteBounceLocked(o.area, now)
 		}
 	}
 	o.arrived = arrival{from: o.area, at: now, pos: input.Point{X: p.X, Y: p.Y}}
