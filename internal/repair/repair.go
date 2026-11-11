@@ -20,6 +20,7 @@ const (
 	StateRequested = "requested"
 	StateDone      = "done"
 	StateFailed    = "failed"
+	// StateCancel (see trip.go) is a request the player or the bot withdrew.
 )
 
 // Cond is the condition of one worn item.
@@ -49,11 +50,25 @@ type Request struct {
 	Note  string `json:"note,omitempty"`
 	Short int    `json:"short,omitempty"` // gold still missing for the repair (0 = not waiting for gold)
 	Need  int    `json:"need,omitempty"`  // the estimate it waits for
+
+	// The repair trip (schema 2, trip.go). All omitted in files and replies of the old shape.
+	Kind      string `json:"kind,omitempty"`      // KindRepair or KindFarm, fixed by the live gold at the click
+	Phase     string `json:"phase,omitempty"`     // while State is requested
+	Trips     int    `json:"trips,omitempty"`     // trips made so far
+	TripAt    int64  `json:"tripAt,omitempty"`    // start of the last trip
+	FarmLegs  int    `json:"farmLegs,omitempty"`  // farm legs begun
+	Have      int    `json:"have,omitempty"`      // farm leg counter
+	Target    int    `json:"target,omitempty"`    // farm leg target
+	Area      string `json:"area,omitempty"`      // zone being farmed
+	DurBefore int    `json:"durBefore,omitempty"` // lowest worn durability percent at the trip start
+	DurAfter  int    `json:"durAfter,omitempty"`  // and after
+	Auto      bool   `json:"auto,omitempty"`      // withdrawn by the bot, not by the player
 }
 
 type stored struct {
 	Request    *Request `json:"request,omitempty"`
 	LastRepair int64    `json:"lastRepair,omitempty"`
+	LastEnd    int64    `json:"lastEnd,omitempty"` // when the last request ended (done, failed or cancelled)
 }
 
 // Refusal is an error with a short code and a reason line for the player (the routes answer 409 with them).
@@ -69,6 +84,7 @@ type Config struct {
 	Allowed  func(unlock string) bool // ladder test; nil: every mode is open
 	Gear     func() []Cond            // worn items with durability (the bot reads it); nil: no readings
 	Estimate func() int               // gold Repair All would cost now (a lower bound); nil: unknown
+	Gold     func() int               // live gold in the pack (not the stash); nil: unknown
 	InTown   func() bool
 	Now      func() time.Time
 }
@@ -108,8 +124,25 @@ func NewWithTable(c Config, t *Table) (*Controller, error) {
 		if err := json.Unmarshal(b, &r.st); err != nil {
 			return nil, fmt.Errorf("repair: %s: %w", c.Path, err)
 		}
+		r.st.restart()
 	}
 	return r, nil
+}
+
+// restart makes a request loaded from the file safe to resume: the trip itself lived in memory, so a phase that was
+// mid-trip starts over (a hero already in town goes straight to the smith); a request whose repair was paid is done.
+func (s *stored) restart() {
+	q := s.Request
+	if q == nil || q.State != StateRequested {
+		return
+	}
+	switch q.Phase {
+	case PhaseReturning:
+		q.State, q.Phase = StateDone, ""
+		s.LastEnd = max(s.LastEnd, q.Done)
+	case PhaseGoing, PhaseRepairing, PhaseWaiting:
+		q.Phase = PhaseQueued
+	}
 }
 
 // Bind sets the mode source (the policy row's current option) and the ladder test once they exist; nil keeps the
@@ -159,26 +192,40 @@ func (r *Controller) sources() (func() string, func(string) bool) {
 	return r.c.Mode, r.c.Allowed
 }
 
-// Request asks for a repair at the next town visit. Refused (with a reason line) when the readings show nothing damaged.
+// Request is the "Repair now" button. The live pack gold decides the kind: enough for the estimate x goldMult makes a
+// repair trip, less makes a farm leg first. Refused with a reason line when a Pact forbids repairs, nothing worn is
+// damaged, a request is already open, or the last one ended less than the cooldown ago.
 func (r *Controller) Request() (Request, error) {
-	if m, err := r.t.Mode(r.ModeID()); err == nil && m.Never {
-		return Request{}, &Refusal{"pact", "a Pact forbids repairs"}
+	if r.pending() {
+		return Request{}, &Refusal{"active", "a repair request is already open"}
 	}
-	if r.c.Gear != nil {
-		damaged := false
-		for _, g := range r.c.Gear() {
-			damaged = damaged || g.Pct < 100
+	b, kind, need, gold, _ := r.idleButton()
+	if !b.Enabled {
+		code := "undamaged"
+		switch {
+		case b.Reason == "a Pact forbids repairs":
+			code = "pact"
+		case b.Action == "none" && r.damaged():
+			code = "cooldown"
 		}
-		if !damaged {
-			return Request{}, &Refusal{"undamaged", "nothing worn is damaged"}
-		}
+		return Request{}, &Refusal{code, b.Reason}
 	}
 	r.mu.Lock()
 	defer r.mu.Unlock()
-	req := Request{State: StateRequested, At: r.c.Now().Unix()}
+	now := r.c.Now()
+	req := Request{State: StateRequested, At: now.Unix(), Kind: kind, Phase: PhaseQueued}
+	if kind == KindFarm {
+		req.Phase, req.FarmLegs, req.Target, req.Have = PhaseFarming, 1, need, gold
+	}
 	r.st.Request = &req
-	slog.Info("repair requested by the player")
+	slog.Info("repair requested by the player", "kind", kind, "gold", gold, "need", need)
 	return req, r.saveLocked()
+}
+
+func (r *Controller) pending() bool {
+	r.mu.Lock()
+	defer r.mu.Unlock()
+	return r.pendingLocked()
 }
 
 // Cancel withdraws a pending request.
@@ -188,9 +235,9 @@ func (r *Controller) Cancel() error {
 	if r.st.Request == nil || r.st.Request.State != StateRequested {
 		return &Refusal{"none", "no repair is requested"}
 	}
-	r.st.Request = nil
-	slog.Info("repair request cancelled by the player")
-	return r.saveLocked()
+	slog.Info("repair request cancelled by the player", "phase", r.st.Request.Phase)
+	r.endLocked(StateCancel, "", r.c.Now(), false)
+	return nil
 }
 
 // Permit says whether this town visit may repair. requested is true when the player's request is the reason (then the
@@ -258,9 +305,13 @@ func (r *Controller) Repaired(now time.Time) {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	r.st.LastRepair = now.Unix()
-	if r.st.Request != nil && r.st.Request.State == StateRequested {
-		r.st.Request.State, r.st.Request.Done, r.st.Request.Note = StateDone, now.Unix(), ""
-		r.st.Request.Short, r.st.Request.Need = 0, 0
+	if q := r.st.Request; q != nil && q.State == StateRequested {
+		if q.Phase == PhaseRepairing { // on a trip: done once the hero is back in the field (EndTrip)
+			q.Phase, q.Note, q.Short, q.Need = PhaseReturning, "", 0, 0
+			q.Done = now.Unix()
+		} else {
+			r.endLocked(StateDone, "", now, false)
+		}
 	}
 	_ = r.saveLocked()
 }
@@ -296,7 +347,7 @@ type ModeView struct {
 
 // View is GET /api/repair.
 type View struct {
-	Schema   int        `json:"schema"`
+	Schema   int        `json:"schema"` // 2 since the repair trip: `trip` and `gold` are new, every v1 field is unchanged
 	Mode     string     `json:"mode"`
 	Modes    []ModeView `json:"modes"`
 	WarnPct  int        `json:"warnPct"`
@@ -305,12 +356,13 @@ type View struct {
 	Estimate int        `json:"estimate,omitempty"` // gold, a lower bound; 0 = unknown or nothing to repair
 	Request  *Request   `json:"request,omitempty"`
 	Worst    string     `json:"worst,omitempty"` // one line for the alert and the strip: "" when all is well
+	Trip     *TripView  `json:"trip,omitempty"`  // schema 2: the button state and the trip's phase
 }
 
 // View reads the gear and the request.
 func (r *Controller) View() View {
 	cur := r.ModeID()
-	v := View{Schema: 1, Mode: cur, WarnPct: r.t.WarnPct, Modes: []ModeView{}, Gear: []Cond{}}
+	v := View{Schema: 2, Mode: cur, WarnPct: r.t.WarnPct, Modes: []ModeView{}, Gear: []Cond{}}
 	for i := range r.t.Modes {
 		m := &r.t.Modes[i]
 		if m.Hidden && m.ID != cur {
@@ -334,6 +386,8 @@ func (r *Controller) View() View {
 	}
 	r.mu.Unlock()
 	v.Worst = Worst(v.Gear)
+	tv := r.tripView()
+	v.Trip = &tv
 	return v
 }
 
