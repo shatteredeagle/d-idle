@@ -1,10 +1,11 @@
 ---
 id: TASK-327
 title: 'fid-batch6: decomp batch 6 potions, stamina, identify, gold, Zeal'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T19:21:00Z'
+updated_date: '2026-11-11T20:24:00Z'
 labels:
   - d2d
   - oracle
