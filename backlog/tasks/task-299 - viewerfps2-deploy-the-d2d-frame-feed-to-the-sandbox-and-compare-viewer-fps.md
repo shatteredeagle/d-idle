@@ -1,10 +1,11 @@
 ---
 id: TASK-299
 title: 'viewerfps2: deploy the d2d frame feed to the sandbox and compare viewer fps'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T14:29:00Z'
+updated_date: '2026-11-11T16:25:00Z'
 labels:
   - container
   - drill

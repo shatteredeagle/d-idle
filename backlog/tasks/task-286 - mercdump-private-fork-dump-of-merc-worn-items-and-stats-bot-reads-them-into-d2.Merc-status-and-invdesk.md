@@ -1,10 +1,13 @@
 ---
 id: TASK-286
-title: 'mercdump: private-fork dump of merc worn items and stats, bot reads them into d2.Merc, status and invdesk'
-status: Proposed
+title: >-
+  mercdump: private-fork dump of merc worn items and stats, bot reads them into
+  d2.Merc, status and invdesk
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T01:05:00Z'
+updated_date: '2026-11-11T16:24:00Z'
 labels:
   - d2d
   - feature
