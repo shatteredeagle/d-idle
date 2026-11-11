@@ -1,3 +1,0 @@
-BACKLOG: aggression (TASK-300): sweep futile window was 90 s after a Clear that found nothing because its target died (remaining 0), blinding the hero to the next pack and shaman revives; now 3 s; evidence and knob changes in docs/aggression.md
-INDEX: docs/aggression.md: Paladin pack aggression evidence, detection audit, futile-window fix, knob before/after
-CHANGELOG: Fix: the sweep no longer ignores hostiles for 90 s after a Clear whose target had already died
