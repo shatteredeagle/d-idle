@@ -53,3 +53,8 @@ User feedback 2026-11-08: the minimap showed only the current area. Now the last
 ## Area names (TASK-187)
 
 `internal/status/areas.go` names every Act 1 area id 1..39 with the in-game names (Burial Grounds 17, Crypt 18, Tower Cellar Level 1..5 = 21..25, Catacombs Level 1..4 = 34..37, Tristram 38). Status: id 17 V live (d2d panels run, 2026-11-08); the rest S (Levels.txt order, equal to internal/plandata/areas.json and the goals catalog; no extracted Levels.txt in this checkout). An id without a name reads `Unknown area (id N)`. Test: `TestAreaNameAct1Complete`.
+
+## Trail and coverage (TASK-296, maptrail)
+- Trail (V offline): `senses.Trail` keeps hero samples (at most one per 250 ms, only when the position changed, 5 min, cap 1200). `/api/senses` adds `trail: [{ago ms, x, y, e?}]` (current area, oldest first; `e` marks a zone entry), `trail_area`, `ts`. The panel draws it under the hero (windows 30 s / 1 min / 5 min kept in localStorage `d2maptrailwin`), dots where a gap between samples exceeds 3 s (hover or tap shows the duration), ticks at zone entries.
+- Coverage (V offline, U live): `nav.Navigator.CoverageView()` is a read-only copy of the roam points (`seen`, `failed`, current leg target, legs, held); `cmd/d2bot/sensesfeed.go useSensesCoverage` hands it to `Publisher.SetCoverage` from the OnObserve hook (nav goroutine). `/api/senses` adds `coverage: {area, cell, cover, cells:[[x,y,0|1|2]], total, target, state, legs, held}` only when the roam level is the hero's level. The `Coverage` button toggles the grid (off by default). Only roam state is shown; the frontier explore of explore.go has no accessor (U).
+- Not verified: live bot, coverage and hero in the same coordinate frame (U, both level-relative by the code reading).

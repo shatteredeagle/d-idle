@@ -58,6 +58,16 @@ export function trailAlpha(ago, win) {
   return Math.max(0.15, 1 - 0.85 * Math.min(1, ago / win));
 }
 
+// The coverage status line: 'roam: 41/118 points seen, 3 failed, leg 17'. cov is the /api/senses coverage block.
+export function coverSummary(cov) {
+  if (!cov || !cov.cells || !cov.cells.length) return '';
+  let seen = 0, failed = 0;
+  cov.cells.forEach((c) => { if (c[2] === 1) seen++; else if (c[2] === 2) failed++; });
+  const n = cov.total || cov.cells.length;
+  return (cov.state === 'explored' ? 'explored: ' : 'roam: ') + seen + '/' + n + ' points seen, ' + failed + ' failed, leg ' + (cov.legs || 0) +
+    (cov.held ? ', held ' + cov.held : '');
+}
+
 export function mount(root, ctx) {
   const cv = ctx.el('canvas', 'cv');
   cv.width = 320; cv.height = 320;
@@ -82,9 +92,28 @@ export function mount(root, ctx) {
     b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = 'trail-' + ms; b.setAttribute('aria-label', 'Trail window ' + b.textContent);
     return b;
   });
+  const covStore = ctx.store('coverage');
+  let covOn = false;
+  try { covOn = covStore.get() === '1'; } catch (e) { /* storage blocked */ }
+  const covBtn = ctx.el('button', 'd-btn', 'Coverage');
+  covBtn.type = 'button'; covBtn.dataset.size = 'sm'; covBtn.dataset.key = 'coverage'; covBtn.setAttribute('aria-label', 'Show the exploration coverage grid');
+  covBtn.setAttribute('aria-pressed', String(covOn));
+  const covLine = ctx.el('p', 'note cover-line');
+  let cov = null;
+  function covText() {
+    covLine.textContent = covOn ? (coverSummary(cov) || 'Coverage: the bot is not roaming this area.') : '';
+    covLine.hidden = !covOn;
+  }
+  covBtn.addEventListener('click', () => {
+    covOn = !covOn;
+    try { covStore.set(covOn ? '1' : '0'); } catch (e) { /* storage blocked */ }
+    covBtn.setAttribute('aria-pressed', String(covOn));
+    covText(); draw();
+  });
   const legend = ctx.el('p', 'note trail-legend'), tip = ctx.el('p', 'note trail-tip');
-  ctx.body.append(legend, tip);
-  ctx.actions.append(...winBtns);
+  ctx.body.append(covLine, legend, tip);
+  ctx.actions.append(covBtn, ...winBtns);
+  covText();
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [];
   function setWindow(ms) {
     win = ms;
@@ -144,6 +173,7 @@ export function mount(root, ctx) {
     g.globalAlpha = 1;
     drawArea(map, cells, 0, 0, v);
     const at = (p) => [v.ox + (p.x + 0.5) * v.k, v.oy + (p.y + 0.5) * v.k];
+    drawCoverage(at);
     drawTrail(at);
     if (hero) {
       const h = at(hero);
@@ -151,6 +181,28 @@ export function mount(root, ctx) {
       g.beginPath(); g.moveTo(h[0] - 7, h[1]); g.lineTo(h[0] + 7, h[1]); g.moveTo(h[0], h[1] - 7); g.lineTo(h[0], h[1] + 7); g.stroke();
     }
     if (window.sensesUnitsDraw && units.length) window.sensesUnitsDraw(g, at, units, css, cv);
+  }
+  // The coverage grid sits under the trail: faint outline unseen, tinted fill seen, red outline and a slash failed, a ring
+  // on the current target. Static on purpose (no pulse), so reduced motion needs nothing special.
+  function drawCoverage(at) {
+    if (!covOn || !cov || !cov.cells) return;
+    const half = (cov.cell || 8) / 2 * view().k, side = half * 2;
+    g.save();
+    g.lineWidth = 1;
+    cov.cells.forEach((c) => {
+      const a = at({ x: c[0], y: c[1] }), x = a[0] - half, y = a[1] - half;
+      if (c[2] === 1) { g.globalAlpha = 0.28; g.fillStyle = css('--d-good', '#6fbf73'); g.fillRect(x, y, side, side); }
+      else if (c[2] === 2) {
+        g.globalAlpha = 0.9; g.strokeStyle = css('--d-bad', '#ec7d6c'); g.strokeRect(x, y, side, side);
+        g.beginPath(); g.moveTo(x, y + side); g.lineTo(x + side, y); g.stroke();
+      } else { g.globalAlpha = 0.35; g.strokeStyle = css('--d-text-2', '#a89d8a'); g.strokeRect(x, y, side, side); }
+    });
+    if (cov.target) {
+      const a = at({ x: cov.target[0], y: cov.target[1] });
+      g.globalAlpha = 1; g.lineWidth = 2; g.strokeStyle = css('--d-accent', '#c7a44a');
+      g.beginPath(); g.arc(a[0], a[1], Math.max(6, half * 0.7), 0, 6.2832); g.stroke();
+    }
+    g.restore();
   }
   // The trail sits under the hero cross and the units. Each segment is stroked on its own so its alpha follows its age.
   function drawTrail(at) {
@@ -236,6 +288,8 @@ export function mount(root, ctx) {
       hero = r.hero || hero;
       takeNeighbours(r.neighbours);
       units = r.units || [];
+      cov = r.coverage && r.coverage.area === (map && map.areaId) ? r.coverage : null;
+      covText();
       if (r.trail) { trail = r.trail; trailArea = r.trail_area || 0; } else if (!r.waiting) { trail = []; }
       note.textContent = r.waiting ? 'Waiting for the first area...' : 'Legend: cross hero, diamond waypoint, square exit' +
         (nbs.length ? '; dimmer areas are the ones next door' : '') + '. Fog clears as the hero walks.';

@@ -2,6 +2,7 @@
   [data-panel="map"] .cv { display: block; inline-size: 100%; aspect-ratio: 1; block-size: auto; background: var(--d-bg); border-radius: var(--d-r-2); touch-action: none; cursor: grab; }
   [data-panel="map"] .note { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-0); overflow-wrap: anywhere; }
   [data-panel="map"] .trail-legend { color: var(--d-text-3, var(--d-text-2)); }
+  [data-panel="map"] .cover-line[hidden] { display: none; }
   [data-panel="map"] .trail-tip:empty { display: none; }
   [data-panel="map"] [aria-pressed="true"] { background: var(--d-accent); color: var(--d-accent-text); }
 }
