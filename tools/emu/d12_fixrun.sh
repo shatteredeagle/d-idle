@@ -1,20 +1,12 @@
 #!/bin/bash
 # decomp12 (worker host): the fix candidate. Branch fid/warp-arrival-r1 of the fork in its own worktree off upstream main,
-# patched by d12_fix.py (committed once), built, then the levels differential with the probe built -DD12_FIXED.
+# patched by d12_fix.py (committed by hand afterwards), built, then the levels differential with the probe built -DD12_FIXED.
 export PATH=$HOME/.local/bin:$PATH
 here=$(cd "$(dirname "$0")" && pwd)
 R=$HOME/d2d-lab/wt-decomp12; T=$HOME/d2d-lab/wt-decomp12fix; B=$HOME/d2d-lab/build-decomp12fix
 if [ ! -d $T ]; then
   git -C $R worktree add -b fid/warp-arrival-r1 $T 8d7b89f1 || exit 1
   python3 $here/d12_fix.py $T || exit 1
-  git -C $T add -A
-  git -C $T -c user.name=Claude -c user.email=noreply@anthropic.com commit -q -m "game: a warp lands on FUN_0064e7b0's spot (Level::warp_spot), not nearest_free's ring order
-
-World::arrive searched the free spot round the other side's warp unit with Level::nearest_free
-(a square ring, scan order i,-ring / i,ring / -ring,i / ring,i, first free wins, gives up at 199).
-FUN_00554ea0 -> FUN_0064e7b0 -> FUN_0064dea0 takes the free subtile of least |dx| + |dy| in the first
-ring that has one, rings 1 to 49. Level::warp_spot is that rule (Teleport proof, 0 of 20,000 differ).
-use_warp now lands through World::warp_arrival; waypoints, portals and quest arrivals are not touched." || exit 1
 fi
 git -C $T log --oneline -1
 [ -f $B/CMakeCache.txt ] || nice -n 19 cmake -S $T -B $B -DCMAKE_BUILD_TYPE=Release > $B.cmake.log 2>&1
