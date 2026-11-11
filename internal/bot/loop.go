@@ -399,7 +399,7 @@ func (r *Runner) do(ctx context.Context, c control, st State, activity string, t
 		r.setLastTrip(r.e.Clock.Now())
 	case errors.Is(err, ErrLeftGame):
 		// the menus are handled by the next step
-	case errors.Is(cause, errNewGoal), errors.Is(cause, errStop), errors.Is(cause, errPause), errors.Is(cause, errTripDue), errors.Is(cause, errPoints), errors.Is(cause, errReplan), errors.Is(cause, errDied), errors.Is(cause, errLeftGame):
+	case errors.Is(cause, errNewGoal), errors.Is(cause, errStop), errors.Is(cause, errPause), errors.Is(cause, errTripDue), errors.Is(cause, errPoints), errors.Is(cause, errPlayer), errors.Is(cause, errReplan), errors.Is(cause, errDied), errors.Is(cause, errLeftGame):
 		// the next step re-reads control and the snapshot
 	case errors.Is(cause, errStuck):
 		if !l.inLadder {
@@ -1015,6 +1015,11 @@ func (r *Runner) guardOnce(ctx context.Context, cancel context.CancelCauseFunc, 
 		if why := r.replanCause(snap, st); why != "" {
 			r.e.Log.Info("action cancelled: re-plan", "why", why, "area", snap.Player.Area, "level", snap.Player.Level)
 			cancel(errReplan)
+			return true
+		}
+		// the player's commands rank right behind safety: they preempt the roam, explore and travel walks (and the bot's own points step)
+		if (st == StateClearing || st == StateTraveling) && r.playerDue(snap, now) {
+			cancel(errPlayer)
 			return true
 		}
 		if (st == StateClearing || st == StateTraveling) && r.pointsDue(snap, now) {
