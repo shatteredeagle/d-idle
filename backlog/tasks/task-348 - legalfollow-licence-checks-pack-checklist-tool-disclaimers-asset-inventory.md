@@ -22,6 +22,7 @@ owns:
   - "README.md"
 exclusive: []
 contracts: []
+result: "Tyniann licence read and verified (ideas only); checklist.sh + test wired in build.sh; disclaimers added; docs/friend-assets.md; Freepik icon replaced on private fork fork-only/icon-original a392bcbd (pushed, not booted); not verified live"
 ---
 
 ## Description
@@ -34,9 +35,9 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Tyniann licence verified and recorded in THIRD_PARTY.md
-- [ ] #2 tools/friendpack/checklist.sh + test, wired into build.sh (consumer: tools/friendpack/build.sh)
-- [ ] #3 Disclaimer lines in README.md, docs/friend-guide.md, pack README
-- [ ] #4 docs/friend-assets.md inventory; legal-decisions doc; overlay.art proposal in paperdoll-art-build.md
-- [ ] #5 Freepik icon replaced in the private fork and pushed, or exact patch steps recorded
+- [x] #1 Tyniann licence verified and recorded in THIRD_PARTY.md
+- [x] #2 tools/friendpack/checklist.sh + test, wired into build.sh (consumer: tools/friendpack/build.sh)
+- [x] #3 Disclaimer lines in README.md, docs/friend-guide.md, pack README
+- [x] #4 docs/friend-assets.md inventory; legal-decisions doc; overlay.art proposal in paperdoll-art-build.md
+- [x] #5 Freepik icon replaced in the private fork and pushed, or exact patch steps recorded
 <!-- AC:END -->
