@@ -2,7 +2,7 @@
 
 One row per acceptance box that was still open when its card closed (true-up 2026-11-10, docs/research/project-review-2026-11-10.md section 3.1). A card closes when its code and docs are merged and its offline acceptance is proven; live debt lives here so it stays visible. None of these rows has been run live (U) unless the date column says so.
 
-Closing rule: a card closes when merged with offline acceptance proven; every open live or by-eye box moves to a row below (card, what to verify, how), with the original box left unticked in the card file. When a row is run, fill the date seen and the owner role; do not delete it.
+Closing rule: a card closes when merged with offline acceptance proven; every open live or by-eye box moves to a row below (card, what to verify, how), with the original box left unticked in the card file. Since 2026-11-11 the merge does this itself: when a branch merges with CI green, `tools/auto_done.py` (ops repo, MERGEQ_AUTO_DONE=1) writes one row here for every unticked box that only asks for a live check ('verified live', 'live check', 'live drill', 'real browser', ...; at least one other box must be ticked) and sets the card Done; a card with any other unticked box stays open and `mergeq status` says why (docs/merging-generated.md). When a row is run, fill the date seen and the owner role; do not delete it.
 
 | Card | Box | What to verify | How | Seen (date, role) |
 |---|---|---|---|---|
