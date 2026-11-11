@@ -148,8 +148,13 @@ func sensesFixture() map[string]any {
 		// a synthetic trail (ages in ms; a 9 s stall at 14,6) and roam coverage, so the pictures show both layers
 		"ts": 1000000, "trail_area": 2, "trail": []any{
 			map[string]any{"ago": 55000, "x": 4, "y": 5, "e": true}, map[string]any{"ago": 48000, "x": 9, "y": 6},
-			map[string]any{"ago": 40000, "x": 14, "y": 6}, map[string]any{"ago": 31000, "x": 19, "y": 6},
-			map[string]any{"ago": 20000, "x": 22, "y": 6}, map[string]any{"ago": 8000, "x": 24, "y": 6}},
+			map[string]any{"ago": 40000, "x": 14, "y": 6}, map[string]any{"ago": 31000, "x": 19, "y": 6, "a": 1},
+			map[string]any{"ago": 20000, "x": 22, "y": 6, "a": 1}, map[string]any{"ago": 8000, "x": 24, "y": 6, "a": 3}},
+		"trail_window_s": 1800, "trail_legend": []string{"walk", "combat", "town", "farm", "flee", "rest"},
+		"events": []any{
+			map[string]any{"ago": 25000, "x": 20, "y": 6, "k": "kill", "t": "Fallen killed", "f": map[string]any{"end": "clear", "kills": 2, "min": 88, "life": 92, "sec": 2.1}},
+			map[string]any{"ago": 21000, "x": 22, "y": 6, "k": "kill", "t": "Fallen Shaman killed", "big": true},
+			map[string]any{"ago": 12000, "x": 23, "y": 6, "k": "loot", "t": "Picked up Cap"}},
 		"coverage": map[string]any{"area": 2, "cell": 8, "cover": 5, "total": 8, "state": "roaming", "legs": 5, "held": 0, "target": []int{33, 6},
 			"cells": [][3]int{{6, 6, 1}, {14, 6, 1}, {22, 6, 1}, {24, 12, 2}, {30, 6, 0}, {33, 6, 0}, {40, 8, 0}, {8, 22, 0}}},
 		"units": []any{
