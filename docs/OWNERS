@@ -152,12 +152,14 @@ cmd/d2bot/sensesfeed_test.go  credit-runner  maptrail
 cmd/d2bot/senseshistory.go  credit-runner  maphistory
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistory
 cmd/d2firsthour/  live-agent  firsthour
+data/campaign/  credit-runner  campaign0
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/agents  credit-runner  contextdiet
 docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
+docs/campaign.md  credit-runner  campaign0
 docs/desktop-app.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronmac2
@@ -216,6 +218,8 @@ internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
+internal/bot/guided.go  credit-runner  campaign1
+internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/repairtrip.go  credit-runner  repairtrip
@@ -224,6 +228,8 @@ internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/yield.go  credit-runner  aggression2
 internal/bot/yield_test.go  credit-runner  aggression2
+internal/campaign/  credit-runner  campaign0
+internal/campaign/  credit-runner  campaign1
 internal/combat/castfirst.go  credit-runner  aggression2
 internal/combat/dodge.go  credit-runner  aggression2
 internal/combat/dodge_test.go  credit-runner  aggression2
@@ -275,6 +281,8 @@ internal/senses  credit-runner  maphistory
 internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
+internal/task/guided.go  credit-runner  campaign1
+internal/task/guided_test.go  credit-runner  campaign1
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
@@ -284,6 +292,8 @@ internal/watch/artapi.go  credit-runner  artspeed
 internal/watch/artapi_test.go  credit-runner  artspeed
 internal/watch/artembed_test.go  credit-runner  artspeed
 internal/watch/bridge.go  credit-runner  xpreadout
+internal/watch/campaign.go  credit-runner  campaign2
+internal/watch/campaign_test.go  credit-runner  campaign2
 internal/watch/hero.go  credit-runner  xpreadout
 internal/watch/http_view.go  credit-runner  videoresume
 internal/watch/hub.go  credit-runner  xpreadout
@@ -307,6 +317,7 @@ internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
 internal/watch/sim.go  credit-runner  xpreadout
 internal/watch/testdata  credit-runner  uifit
+internal/watch/testdata/campaign/  credit-runner  campaign2
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
@@ -344,6 +355,7 @@ internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels  credit-runner  uifit
 internal/watch/web/panels/gear  credit-runner  repairtrip
 internal/watch/web/panels/hero-detail  credit-runner  xpreadout
+internal/watch/web/panels/journey/  credit-runner  campaign2
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
