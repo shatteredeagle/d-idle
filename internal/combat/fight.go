@@ -48,6 +48,7 @@ type seenUnit struct {
 }
 
 type fightState struct {
+	endWhy      string // loop exit that ended the fight (noteEnd)
 	tracks      map[uint32]*track
 	seen        map[uint32]seenUnit
 	blacklist   map[uint32]bool
@@ -180,8 +181,10 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	defer f.attacking.Store(0)
 	var ft FightTelemetry
 	var st *fightState
-	defer func() { // runs after the Elapsed defer below
+	var endSnap *d2.Snapshot // the last look, for the end-of-fight telemetry
+	defer func() {           // runs after the Elapsed defer below
 		if ft.Area != 0 && st != nil {
+			f.noteEnd(&ft, st, sp, endSnap, err)
 			ft.Dodges = st.dodges + st.mdodges
 			ft.Casts, ft.Kites, ft.Approaches = st.casts, st.kitesAll, st.approach
 			ft.Novas, ft.Forced = st.novas, st.forced
@@ -221,6 +224,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		if f.now().After(sp.deadline) {
 			res.TimedOut = true
+			st.endWhy = "timeout"
 			break
 		}
 		if snap == nil {
@@ -228,6 +232,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 				return
 			}
 		}
+		endSnap = snap
 		p := snap.Player
 		if isDead(p) {
 			f.buffAt = map[int]time.Time{}
@@ -316,6 +321,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			}
 			if len(cand) == 0 {
 				if st.blacklist[sp.only] || st.everSeen || f.now().Sub(start) > 2*time.Second {
+					st.endWhy = "targetGone"
 					break
 				}
 				if err = f.sleep(ctx, ms(t.PollMs)); err != nil {
@@ -339,6 +345,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		if len(cand) == 0 {
 			f.noTarget(hs, st, sp)
+			st.endWhy = "noTargets"
 			break
 		}
 		st.ticks++
@@ -362,6 +369,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		}
 		ranked := Rank(cand, t.TargetQuality, f.rng.Float64())
 		if len(ranked) == 0 {
+			st.endWhy = "rankEmpty"
 			break
 		}
 		// a careless fighter loses ticks
@@ -389,6 +397,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 	// one last look so the final kill is counted
 	if s, e := f.read(ctx); e == nil {
 		f.noteKills(s, Hostiles(s, f.hostileCtx(s.Player)), st, &res)
+		endSnap = s
 	}
 	return res, nil
 }
