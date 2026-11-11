@@ -1,0 +1,36 @@
+---
+id: TASK-319
+title: 'fid-batch5: decomp batch 5 summary: deviations table and recommended bot changes'
+status: Proposed
+assignee:
+  - credit-runner
+created_date: '2026-11-11T18:51:00Z'
+labels:
+  - d2d
+  - oracle
+  - d2d-combat
+  - fidelity
+dependencies: []
+priority: medium
+ordinal: 220000
+card: "fid-batch5"
+owns:
+  - "docs/probes/fid/batch5.md"
+  - "tools/emu/d9_*"
+exclusive: []
+contracts: []
+---
+
+## Description
+
+<!-- SECTION:DESCRIPTION:BEGIN -->
+Size: M
+
+Consumer: TASK-142 and TASK-226 (the recommendations).
+<!-- SECTION:DESCRIPTION:END -->
+
+## Acceptance Criteria
+<!-- AC:BEGIN -->
+- [ ] #1 batch5.md with deviations table and proposed bot changes
+- [ ] #2 queued for merge
+<!-- AC:END -->
