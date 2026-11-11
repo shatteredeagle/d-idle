@@ -1,0 +1,2 @@
+BACKLOG: TASK-308 sellmarks: player sell marks follow renumbered items (game restart), sell chore always runs for marks, per-visit sell log line, pending count on the Inventory page
+CHANGELOG: Items marked for sale on the Inventory page are now sold at the next town visit even after a game restart renumbered them, on any kind of trip; the page header shows how many are pending
