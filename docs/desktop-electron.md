@@ -39,6 +39,29 @@ Two views: helper (local `d2idle-app://helper/`, the only preload, 4 invoke chan
 - Config keys now: `address`, optional `window` {width,height}, `hideToTray`, `updateCheck`, `updateFeed`; unknown keys are kept.
 - V (smoke under Xvfb, no tray host there): `Tray` constructs, the menu template has the expected items and states, the update flow works against a signed fake feed, the autostart toggle and hide-to-tray behave. U: an actual tray icon on KDE or Windows.
 
+## macOS (TASK-291)
+
+Personal build for a MacBook, unsigned, LAN only, never published. UNIVERSAL (arm64 + x64), so the CPU of the Mac does not matter. Tags: V = run (how), U = unverified.
+
+Build: `npm run dist:mac` on a Mac (Node only, no Xcode; V on the Mac mini via `labrun macmini -- sh apps/desktop-electron/scripts/scratch.sh ...`), or the `package-mac` job of `.github/workflows/desktop-electron.yml` (`macos-latest`, `--publish never`, no signing env, artifact `d2idle-watch-macos-universal`; U: never run on GitHub). Output: `dist/d2idle-watch-<version>-mac-universal.dmg` and `.zip`. Config: `mac:` in `electron-builder.yml` (`identity: null`, `hardenedRuntime: false`, `notarize: false`, icon `build/icon.icns`).
+
+Icons come from `build/icon.svg` (the eye, no game art) through `scripts/make-icons.js`: `icon.icns` (128 to 1024 px, PNG entries) and the menu bar template image `build/trayTemplate.png` (22 px) plus `trayTemplate@2x.png` (44 px), black on transparent from `build/tray-template.svg`; the `Template` suffix makes macOS recolour it for light, dark and active menu bars (U: not seen on a real menu bar).
+
+Behaviour on macOS (code in `src/platform.js`, `src/menu.js`; V by unit tests, U on a real Mac):
+- Closing the window hides it (even when "Closing the window hides it to the tray" is off, the window must survive) and hides the Dock icon; opening it from the menu bar icon or clicking the Dock icon brings both back. `window-all-closed` does not quit while the tray exists. Cmd+Q (app menu Quit) really quits.
+- Menu bar: standard app menu (About, Hide, Quit), Pages (Watch, Inventory, Policy, Return screen, Change address, Reload with Cmd+R), Edit (copy and paste work) and Window roles.
+- Start with the system: `setLoginItemSettings({openAtLogin, args: ['--hidden']})`, so it starts in the menu bar. On a first start macOS may ask to allow the login item in System Settings.
+
+### Install on the MacBook (steps for the user)
+
+1. Download the dmg from the LAN link in the build report (it works only on the home network). Check the sha256 with `shasum -a 256 <file>` against the report.
+2. Open the dmg and drag `d2idle-watch` onto Applications.
+3. First launch: Gatekeeper blocks unsigned apps. Either right-click the app in Applications, choose Open, then Open again; or run `xattr -dr com.apple.quarantine /Applications/d2idle-watch.app` in Terminal and start it normally.
+4. Set the address: the app asks on first start; type `orion.lan.birbhub.com:8891` (the watch server on the LAN). Or start with the flag: `/Applications/d2idle-watch.app/Contents/MacOS/d2idle-watch --address orion.lan.birbhub.com:8891`. To change it later use Pages > Change address, or `--setup`.
+5. It only works on the home network: there is no remote-access plan yet, so away from home the helper shows "not reachable".
+
+Not verified: the menu bar icon rendering, the Gatekeeper dialogs, the login item prompt, behaviour on the MacBook itself (the Mac mini smoke is headless, see the build report).
+
 ## Findings
 
 - V (smoke): Electron 45 `ses.fetch(..., {redirect: 'manual'})` REJECTS on a 3xx ("Redirect was cancelled") instead of returning an opaque redirect; the probe treats that as up (a login redirect counts as up).
@@ -46,4 +69,4 @@ Two views: helper (local `d2idle-app://helper/`, the only preload, 4 invoke chan
 
 ## Not done
 
-macOS build and signing; real-desktop checks of the tray, autostart on Windows and the installers; desktop releases in the feed publisher; code signing; THIRD_PARTY.md entry for the Electron bundle (proposed line in the PR report); `docs/OWNERS` line `apps/desktop-electron/` (coordinator).
+macOS signing and notarisation; real-desktop checks of the tray, autostart on Windows and the installers; desktop releases in the feed publisher; code signing; THIRD_PARTY.md entry for the Electron bundle (proposed line in the PR report); `docs/OWNERS` line `apps/desktop-electron/` (coordinator).
