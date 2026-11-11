@@ -18,6 +18,7 @@ owns:
   - "internal/watch/tapcapture.go"
   - "internal/watch/tapcapture_test.go"
   - "cmd/d2bot/ladder.go"
+  - "cmd/d2bot/ladder_test.go"
   - "docs/viewer-fps.md"
 exclusive: []
 contracts: []
