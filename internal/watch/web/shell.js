@@ -251,7 +251,7 @@ function applyLayout() {
   main.style.setProperty('--l-rowh', p.rowHeight + 'px');
   for (const it of p.items) {
     const n = lay.targets.get(it.id);
-    if (!n) continue;
+    if (!n || it.hidden) continue;
     // flow: the span and the order only, so cards fill each row left to right whatever is hidden by a phone tab
     n.style.gridColumn = p.flow ? 'span ' + it.colSpan : it.col + ' / span ' + it.colSpan;
     if (p.flow) n.style.order = String(it.order);
@@ -314,10 +314,10 @@ function setupLayout(conf, layout, answerBase) {
     let mod;
     try { mod = await import('/watch/layoutedit.js'); } catch (e) { toast('alarm', 'The layout editor did not load.'); return; }
     const saved = lay.layout;
-    lay.editor = { stop() {} }; // from here the plan keeps hidden panels in their cells
+    lay.editor = { stop() {} }; // from here the plan carries the hidden panels along (flagged) and the editor owns the cells
     applyLayout();
     lay.editor = mod.start({
-      el, toast, main: lay.main, targets: lay.targets, layout: saved,
+      el, toast, main: lay.main, targets: lay.targets, layout: saved, demo: qs.get('drag') || '',
       plan: () => lay.plan,
       preview(l) { lay.layout = l; applyLayout(); return lay.plan; },
       save: (l) => postJSON(answerBase, '/api/layout', { layout: l }),

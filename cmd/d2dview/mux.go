@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"sync/atomic"
@@ -19,6 +20,8 @@ import (
 // read verb (about 50 us on lab5, V docs/d2d-pace.md).
 type Mux struct {
 	upstream string
+	// FeedPath is the frame ring the viewer socket may start with the framefeed verb ("" refuses the verb); set before Serve.
+	FeedPath string
 	// Pace and RenderEvery switch the watch mode (see Mode): they only touch "step" lines of the bot.
 	mode atomic.Pointer[Mode]
 
@@ -267,7 +270,7 @@ func (m *Mux) client(c net.Conn, bot bool, shotDir string) {
 		var out strings.Builder
 		// forward exactly what readOnly judged, not the raw bytes
 		line = strings.Join(strings.Fields(line), " ")
-		if !readOnly(line, shotDir) {
+		if !readOnly(line, shotDir) && !(m.FeedPath != "" && feedVerb(line, m.FeedPath)) {
 			out.WriteString("err view: read-only viewer socket refuses '" + line + "'\n")
 		} else {
 			lines, st := m.Exec(line, false)
@@ -280,6 +283,22 @@ func (m *Mux) client(c net.Conn, bot bool, shotDir string) {
 			return
 		}
 	}
+}
+
+// feedVerb allows the fork's framefeed verb on the viewer socket for exactly the configured ring path: start or
+// renew ("framefeed PATH EVERY LEASE_MS") and stop ("framefeed off"). It only copies drawn frames into that file
+// (docs/viewer-fps.md); it changes no game state and draws nothing extra.
+func feedVerb(line, path string) bool {
+	f := strings.Fields(line)
+	if len(f) == 2 && f[0] == "framefeed" && f[1] == "off" {
+		return true
+	}
+	if len(f) != 4 || f[0] != "framefeed" || f[1] != path {
+		return false
+	}
+	every, err1 := strconv.Atoi(f[2])
+	lease, err2 := strconv.Atoi(f[3])
+	return err1 == nil && err2 == nil && every >= 1 && every <= 250 && lease >= 100 && lease <= 60000
 }
 
 const maxBotBatch = 32

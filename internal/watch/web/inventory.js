@@ -183,6 +183,17 @@
     paint(v);
     if (key && document.activeElement !== a) { var n = document.querySelector('[data-key="' + key + '"]'); if (n) n.focus({ preventScroll: true }); }
   }
+  // The gear-policy prompt (docs/gear-policy.md, View.prompt): a note above the equipment that is there while the desk
+  // sends it and gone when it stops (the state dismisses it, not a button). The no-weapon text is the warning kind.
+  function promptSev(text) { return /^No weapon/.test(text) ? 'warn' : 'info'; }
+  function gearPrompt(text) {
+    var n = $('gearprompt');
+    if (!n) return;
+    text = text || '';
+    if (n.textContent !== text) n.textContent = text; // unchanged text is not rewritten: no reflow on a poll
+    n.dataset.sev = promptSev(text);
+    n.hidden = !text;
+  }
   function paint(v) {
     last = v;
     // hands the view to the item tooltip (inventory-tip.js); the stub page of the DOM goldens has no events
@@ -191,6 +202,7 @@
     cells('pack', v.backpack || [], 10, 4);
     cells('belt', v.belt || [], 4, 1);
     cells('stash', v.stash || [], 6, 8);
+    gearPrompt(v.prompt);
     $('packmeta').textContent = '10 by 4';
     $('stashmeta').textContent = (v.stashGold || v.stashGold === 0 ? 'gold ' + v.stashGold : '');
     $('note').textContent = (v.note || '') + (v.class ? v.class + ', gold on the hero ' + v.gold : '');

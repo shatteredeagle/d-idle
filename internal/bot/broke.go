@@ -163,7 +163,7 @@ func (r *Runner) recoveryArea(s *d2.Snapshot) (int, bool) {
 			}
 		}
 	}
-	if healing, _, known := r.beltAndInv(s); known && healing < 2 {
+	if r.denKitShort(s) {
 		ex[areaDenOfEvil] = true // a dungeon needs a potion buffer
 	}
 	if diff == "normal" && s.Player.Act == 0 && r.e.Tune.Resource.RecoveryXPPick != 0 {

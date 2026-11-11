@@ -219,6 +219,27 @@ func (r *Runner) beltAndInv(s *d2.Snapshot) (healing int, fullPct int, known boo
 	return healing, cells * 100 / invCells, true
 }
 
+// denPotionEntry is the belt healing count the Den needs to be entered; denPotionStay is the count below which a hero
+// already inside leaves it (docs/denshuttle.md: drinking the second to last potion in the Den flipped the farm target to
+// Blood Moor mid fight, and every crossing of that mouth is a d2d arrival bounce).
+const (
+	denPotionEntry = 2
+	denPotionStay  = 1
+)
+
+// denKitShort reports that the potion buffer rule keeps the hero out of the Den now. It has a gap between entering and
+// staying so one drink inside the Den does not turn the target around.
+func (r *Runner) denKitShort(s *d2.Snapshot) bool {
+	healing, _, known := r.beltAndInv(s)
+	if !known {
+		return false
+	}
+	if s.Player.Area == areaDenOfEvil {
+		return healing < denPotionStay
+	}
+	return healing < denPotionEntry
+}
+
 // denYieldGap is how many levels below its Den floor a character may be when the floor yields.
 const denYieldGap = 1
 
@@ -902,7 +923,7 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 		r.guardedAreasNoFarm(s, ex)
 		t := r.e.Tune.Bot
 		diff := difficultyName(p.Difficulty)
-		if healing, _, known := r.beltAndInv(s); known && healing < 2 && diff == "normal" {
+		if r.denKitShort(s) && diff == "normal" {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
 		pick := func() (Step, bool) {

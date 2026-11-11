@@ -49,10 +49,9 @@ for (const f of process.argv.slice(3)) {
   assert.strictEqual(at('diary').placed, true);
   eq(p.unknown, [], 'risk and hero-detail are reserved, not unknown');
   assert.strictEqual(p.rowHeight, 48);
-  // in the editor nothing rises: panels the file does not name are packed after the placed ones
-  const e = L.plan(layout, 1920, '', conf, page, true);
-  const last = Math.max(...e.items.filter((i) => i.placed).map((i) => i.row + i.rowSpan - 1));
-  for (const i of e.items.filter((i) => !i.placed)) assert.ok(i.row > last, i.id + ' is packed after the placed panels');
+  // the editor sees the cells of the normal page
+  const e = L.plan(layout, 1920, '', conf, page, true), key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan].join();
+  eq(e.items.map(key), p.items.map(key));
 }
 
 // unknown ids are reported once and ignored; a missing breakpoint falls back to the next wider; none: null
@@ -83,7 +82,9 @@ for (const f of process.argv.slice(3)) {
   const p = L.plan(layout, 1920, '', conf, pg);
   eq(p.items.map((i) => [i.id, i.row]), [['video', 1], ['gear', 3]]);
   eq(p.unknown, []);
+  // the editor: the same cells; the hidden panel comes along at its file position (it is saved again) and reserves nothing
   const q = L.plan(layout, 1920, '', conf, pg, true);
-  eq(q.items.map((i) => [i.id, i.row]), [['video', 1], ['map', 3], ['gear', 6]]);
+  eq(q.items.map((i) => [i.id, i.row, !!i.hidden]), [['video', 1, false], ['gear', 3, false], ['map', 3, true]]);
+  eq(L.toPanels(q.items, {}).map((x) => x.id).sort(), ['gear', 'map', 'video']);
 }
 console.log('ok');

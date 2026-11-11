@@ -1,0 +1,38 @@
+{
+ "schema": 4,
+ "inTown": true,
+ "class": "Paladin",
+ "gold": 1200,
+ "stashGold": 50,
+ "equipment": {},
+ "backpack": [],
+ "stash": [],
+ "belt": [],
+ "pins": [],
+ "queue": [],
+ "recent": [],
+ "merc": {
+  "state": "dead",
+  "owned": true,
+  "alive": false,
+  "level": 17,
+  "str": 60,
+  "dex": 50,
+  "equipment": {
+   "mtorso": {
+    "id": 9003,
+    "code": "12",
+    "name": "Leather Armor",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 2,
+    "h": 2,
+    "dur": 10,
+    "maxDur": 12
+   }
+  },
+  "note": "Mercenary is dead: revive first; gear cannot be changed while he is dead."
+ }
+}

@@ -73,7 +73,7 @@ test('helper CSP and page meta are strict and agree', () => {
   assert.match(sec.HELPER_CSP, /connect-src 'none'/);
   assert.doesNotMatch(sec.HELPER_CSP, /unsafe-|\*/);
   const html = fs.readFileSync(path.join(__dirname, '../src/helper/index.html'), 'utf8');
-  assert.ok(html.includes(`content="${sec.HELPER_CSP}"`), 'meta CSP must equal HELPER_CSP');
+  assert.ok(html.includes(`content="${sec.HELPER_CSP.replace(" frame-ancestors 'none';", '')}"`), 'meta CSP equals HELPER_CSP minus frame-ancestors (header-only)');
   assert.doesNotMatch(html, /<script(?![^>]*src=)/i, 'no inline script');
   assert.doesNotMatch(html, /\son\w+=/i, 'no inline handlers');
 });
@@ -92,6 +92,13 @@ test('app.js wires the locks (static check of the wiring)', () => {
   }
   assert.doesNotMatch(src, /shell\.openExternal|crashReporter|remote-debugging|--no-sandbox/, 'forbidden calls');
   assert.doesNotMatch(src, /nodeIntegration:\s*true|contextIsolation:\s*false/);
+});
+
+test('the shipped app never disables the sandbox (only the CI smoke runner passes --no-sandbox)', () => {
+  for (const f of ['main.js', 'app.js', 'security.js']) {
+    const src = fs.readFileSync(path.join(__dirname, '../src', f), 'utf8');
+    assert.doesNotMatch(src, /no-sandbox|ELECTRON_DISABLE_SANDBOX|sandbox:\s*false/, f);
+  }
 });
 
 test('fuses: run-as-node and inspect off, asar only on', () => {
