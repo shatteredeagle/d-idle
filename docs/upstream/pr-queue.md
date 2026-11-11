@@ -37,7 +37,7 @@ Open upstream PRs of ours today: none (the last ones, #242 load life and mana an
 
 ## 3b. Test suite note
 
-On the worker host `ctest -j8` (with `D2_MPQ_DIR` and the 1.14d patch installer set) has 4 failures that also fail on the parent, because the video MPQs are missing there: `test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4` (verifier, and re-checked for r3 / r4 in the prep log below).
+On the worker host `ctest -j8` (with `D2_MPQ_DIR` and the 1.14d patch installer set) has 4 failures that also fail on the parent, because the video MPQs are missing there: `test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4` (verifier on r2 / r1; re-checked 2026-11-11 on clean builds of r3 and r4: 235 of 239 and 236 of 240 pass or skip, the same 4 fail, nothing else).
 
 ## 4. Reproduce on the worker host
 
