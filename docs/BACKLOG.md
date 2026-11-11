@@ -716,6 +716,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-301 roamspacing: roam coverage grid is now knobs nav.roamSpacing/nav.roamCover (default 16/10, was 7/5), NotePosition marks detours, docs/roamspacing.md
 - TASK-302 viewerfps3: the watch screen video relays the tap stream (was a 4 fps /frame poll), the tap sends evenly spaced frames (every 3rd 60 Hz draw, 20 fps, 50 game ms), docs/viewer-fps.md section 7
 - roammemory: roam coverage is remembered per level for the whole game (docs/roamspacing.md)
+- aggression2 (TASK-305): the nav pack hand-over cleared once for 4 s and the walk ran on with the pack alive; now repeats while hostiles die; waypoint walk yields to followers; fight lines carry end, remaining, life, mana
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

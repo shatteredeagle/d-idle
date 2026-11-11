@@ -70,3 +70,19 @@ Checked in code (S) and in the log (V):
 ## Fix (rule, class-generic)
 
 `futileFor` (90 s) now applies only when Clear set something aside (`Remaining` above 0, i.e. skipped or avoided units: really unreachable or immune). When Remaining is 0 the window is `futileGoneFor` (3 s). Test `TestGoneTargetClearOnlyShortlySuppressesHostiles` (Sorceress and Paladin; fails with the old window: second Clear came 90 s later). Not live verified.
+
+## Round 2 (2026-11-11 evening): runs away at full life, leaves the pack alive
+
+Log: `docker logs d2play-20261108` goes back to 14:23 UTC (container recreate), 27.7k lines, covering the deploys of 0.0.261111152719 and 0.0.261111153902 (V).
+
+- Which activity owned the straight run (V): the 15:51 walk was `roam` inside `sweepPass` (clearing) and the later one `travelTo` -> `ExitTo` (goal "Farm Burial Grounds", 320 subtiles in 25 s, no stop). Exit, roam and explore walks already have the pursuit yield (`walkOpts.pursuit`, radius 10, 4 polls); the waypoint walk had none (fixed: `pursuit: true`). Monsters were seen by the bot (hostile() filters are not the cause: kills of the same kinds follow, 1 `ignoring target` and no `no target in scope` in 27k lines).
+- Pursuit only counts monsters within 10 subtiles; dots 10 to 15 away while running at about 10 subtiles per second are never "followers". Sandbox `nav.pursuitRadius` 10 to 16 and `nav.pursuitPolls` 4 to 3 (backup `~/play-backup-20261108/tuning-pre-aggression2.json`, no prior override).
+- ROOT CAUSE of "kills 2 or 3, then leaves the rest" (V): the nav hand-over (`packYield`, cmd/d2bot/behaviors.go) calls `Clear` with a 4 s timeout ONCE and the walk then continues. 48 of 108 big fights (maxHostiles at least 5; sec histogram of fight.tick) ended at exactly sec=4. Fix: `bot.PackYield` repeats the clear while hostiles stay within the radius and the count falls (stops after two rounds without a kill, at most 10 rounds). Tests: `TestPackYieldKeepsFightingUntilThePackIsDead` (Paladin and Sorceress snapshots), `TestPackYieldStopsWhenNothingDies`.
+- Fight end reasons are now logged on the `combat fight` and `combat fight.tick` lines: `end=cleared|timeout|noTargets|rankEmpty|targetGone|dead|townPortal|chicken|error`, `remaining` (hostiles in scope at the end, ignored ones included), `life`, `mana`. `end=noTargets remaining>0` means everything left was ignored or avoided.
+- Checked and not the cause in the data (V): `retreat` was empty in all 108 big fights; no `backing off`, no kite; mana-based waits cannot trigger for a melee profile (`MeleeClass`, code, S); `maxApproaches` never logged an `ignoring target` for approach. Pre-deploy fights had no end reason (U for the shares of timeout vs noTargets); read the new `end=` field after deploy.
+
+## Round 3: circling a pack for the shaman (user screenshot, trail layer)
+
+- Cause (S, code; consistent with the picture): `combat.Rank` gives a kill-first caster (`killFirstNames`: shaman and others) +3000, more than the +1500 for anything within 6 subtiles, so a melee hero walks around a 12-Fallen pack to reach a shaman standing behind it. Walk legs `Fighter.move` with approaches high and attacks low fit it; not measured in the log (U: only the picture and the code).
+- Fix: `RankFor(..., melee)`: a melee profile (`MeleeClass()`, data from the profile) drops the kill-first bonus beyond `meleeKillFastReach` (8 subtiles) and swings at the nearest; ranged classes keep it. A line `target fallback: <shaman> out of melee reach, attacking nearest <name>` is logged once per fight. Test `TestRankShamanBehindThePack` (Paladin melee: nearest; Sorceress ranged: shaman; shaman at 6: first for both).
+- U: sticky-target hysteresis was not added (the +1500 for targets within 6 already holds the chosen target while it is close); no ring-of-12 movement simulation (offline ranking test only).

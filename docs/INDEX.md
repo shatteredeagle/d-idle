@@ -942,3 +942,4 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - docs/viewer-fps.md section 6: sandbox A/B of the d2d frame feed (before/after table, rollback)
 - docs/aggression.md: Paladin pack aggression evidence, detection audit, futile-window fix, knob before/after
 - docs/roamspacing.md - roam coverage spacing study, new defaults, detour marking
+- docs/aggression.md: round 2, hand-over timeout root cause, end-reason telemetry
