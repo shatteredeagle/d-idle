@@ -17,12 +17,12 @@ owns:
   - "docs/upstream/"
   - "tools/emu/pp_*"
 exclusive:
-  - "fork-branch:fid/missile-last-unit-r2"
-  - "fork-branch:fid/cold-enchanted-length-r3"
+  - "fork-branch:fid/missile-last-unit-r3"
+  - "fork-branch:fid/cold-enchanted-length-r4"
   - "upstream-pr:lightning-last-unit"
   - "upstream-pr:cold-enchanted-length"
 contracts: []
-result: "Audit and two candidates prepared (2026-11-11, agent prprep): fid/missile-last-unit-r2 (89059e2d) and fid/cold-enchanted-length-r3 (1b4036a3) rebased on upstream b6b59ae9, differentials re-run (V run: Lightning 44 of 1192 casts differ before, 0 after; Cold Enchanted cold-only 7869 mismatches before, 0 after), drafts and docs/upstream/pr-queue.md written; ready for the independent verifier; nothing posted; no live game."
+result: "Audit and two candidates prepared (2026-11-11, agent prprep): fid/missile-last-unit-r3 (5effaf98) and fid/cold-enchanted-length-r4 (30713b60) rebased on upstream b6b59ae9, differentials re-run (V run: Lightning 44 of 1192 casts differ before, 0 after; Cold Enchanted cold-only 7869 mismatches before, 0 after), drafts and docs/upstream/pr-queue.md written; verifier round 1 NEEDS-WORK applied (r3 / r4: srv_do == 1 scope, oracle commit builds alone, 3 seeds, ctest same 4 data-set failures as the parent); ready for the verifier's second pass; nothing posted; no live game."
 ---
 
 ## Description
