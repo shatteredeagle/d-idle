@@ -229,7 +229,6 @@ func (s *server) events(w http.ResponseWriter, r *http.Request) {
 		b, _ := json.Marshal(sn)
 		fmt.Fprintf(w, "data: %s\n\n", b)
 		fl.Flush()
-		s.frames.Stats.parts.Add(1)
 	}
 }
 
@@ -288,19 +287,33 @@ func (s *server) stream(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "multipart/x-mixed-replace; boundary=f")
 	w.Header().Set("Cache-Control", "no-store")
+	fl.Flush() // headers now: a client sees the stream open before the first frame exists
+	rc := http.NewResponseController(w)
 	var seq int64
 	for r.Context().Err() == nil {
 		s.frames.Touch()
-		f := s.frames.Current()
-		if f.Seq == seq || f.Data == nil {
-			time.Sleep(20 * time.Millisecond)
-			continue
+		f, newer := s.frames.Next()
+		if f.Seq != seq && f.Data != nil {
+			// Sent the moment it is published (no poll delay); a slow client blocks only its own handler and then
+			// skips to the newest frame (latest wins). A client stuck for 10 s is dropped.
+			seq = f.Seq
+			rc.SetWriteDeadline(time.Now().Add(10 * time.Second))
+			fmt.Fprintf(w, "--f\r\nContent-Type: %s\r\nContent-Length: %d\r\nX-Frame-Ticks: %d\r\n", f.Type, len(f.Data), f.Ticks)
+			if f.GameMS >= 0 {
+				fmt.Fprintf(w, "X-Frame-Game-Ms: %d\r\n", f.GameMS)
+			}
+			fmt.Fprint(w, "\r\n")
+			w.Write(f.Data)
+			fmt.Fprint(w, "\r\n")
+			fl.Flush()
+			s.frames.Stats.parts.Add(1)
 		}
-		seq = f.Seq
-		fmt.Fprintf(w, "--f\r\nContent-Type: %s\r\nContent-Length: %d\r\nX-Frame-Ticks: %d\r\n\r\n", f.Type, len(f.Data), f.Ticks)
-		w.Write(f.Data)
-		fmt.Fprint(w, "\r\n")
-		fl.Flush()
+		select {
+		case <-newer:
+		case <-r.Context().Done():
+			return
+		case <-time.After(time.Second): // keeps the sampler awake (Touch) while no frame comes
+		}
 	}
 }
 

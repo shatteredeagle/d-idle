@@ -24,11 +24,17 @@ type Frame struct {
 	Type   string // image/png (as d2d wrote it, no CPU here) or image/jpeg
 	Ticks  int64  // bot ticks stepped since the previous sampled frame (the N of "1 frame per N virtual ticks")
 	WallMS int    // wall time the grab took (screenshot verb, or the ring read)
+	GameMS int64  // game time of the frame (ring source; -1 for screenshots)
 	At     time.Time
 }
 
-// d2dFPS is the frame rate of d2d in real time (the game's 25 frames a second); the ring's publish divisor comes from it.
-const d2dFPS = 25
+const (
+	// srcGuess is d2d's draw period until the ring has measured it: real-time d2d draws at 60 Hz (V, ring publish gaps
+	// 16.9 ms p50, sd 0.5, on the sandbox 2026-11-11; the game logic itself runs at 25).
+	srcGuess = time.Second / 60
+	// feedPoll is how often the ring header is checked; d2d's publish divisor sets the cadence, this only bounds the delay.
+	feedPoll = 3 * time.Millisecond
+)
 
 // Frames samples game pictures, only while someone watches the stream (Touch). Two sources:
 //   - screenshot (any d2d): the verb makes d2d encode a PNG on its game thread and write a file, so the next sample
@@ -64,6 +70,12 @@ type Frames struct {
 	feedOn    time.Time // last framefeed lease renewal (zero: off)
 	feedFail  bool      // this d2d has no framefeed verb
 	lastStats time.Time
+	every     int           // publish divisor sent to d2d (one frame in every)
+	pending   int           // a divisor proposed by the last renewal, applied when the next one agrees (hysteresis)
+	srcPeriod time.Duration // d2d's draw period, measured from the ring's game ms
+	ringMS    uint64        // game ms of the last ring frame
+	costEMA   time.Duration // read+encode cost, smoothed
+	notify    chan struct{} // closed at every publish (stream clients wait on it)
 }
 
 func NewFrames(viewSock string, mux *Mux, dir string, fps float64) (*Frames, error) {
@@ -71,7 +83,14 @@ func NewFrames(viewSock string, mux *Mux, dir string, fps float64) (*Frames, err
 		return nil, err
 	}
 	return &Frames{c: d2dctl.New(viewSock, d2dctl.Options{Timeout: 5 * time.Second}), mux: mux, dir: dir, fps: fps,
-		Quality: 72, Backoff: 4, Stats: newFrameStats(10 * time.Second)}, nil
+		Quality: 72, Backoff: 4, Stats: newFrameStats(10 * time.Second), srcPeriod: srcGuess, notify: make(chan struct{})}, nil
+}
+
+// Next returns the newest frame and a channel closed when a newer one is published.
+func (f *Frames) Next() (Frame, <-chan struct{}) {
+	f.mu.RLock()
+	defer f.mu.RUnlock()
+	return f.cur, f.notify
 }
 
 func (f *Frames) Touch() { f.mu.Lock(); f.seen = time.Now().UnixNano(); f.mu.Unlock() }
@@ -108,6 +127,11 @@ func (f *Frames) Run(ctx context.Context) {
 		t0 := time.Now()
 		cost, err := f.sample(ctx)
 		gap := max(base, time.Duration(f.Backoff*float64(cost)))
+		if f.feeding() {
+			// The ring paces itself (d2d publishes every f.every-th drawn frame, chosen so the encode fits the
+			// back-off): poll the header often so a frame is sent at the cadence it was drawn, not at our timer's.
+			gap = feedPoll
+		}
 		if err != nil {
 			gap = time.Second
 		}
@@ -118,6 +142,8 @@ func (f *Frames) Run(ctx context.Context) {
 		}
 	}
 }
+
+func (f *Frames) feeding() bool { return f.Feed != "" && !f.feedFail && !f.feedOn.IsZero() }
 
 // sample produces at most one frame and returns what it cost the shared box (the back-off input).
 func (f *Frames) sample(ctx context.Context) (time.Duration, error) {
@@ -148,7 +174,7 @@ func (f *Frames) feedLease(ctx context.Context) error {
 	if !f.feedOn.IsZero() && time.Since(f.feedOn) < time.Second {
 		return nil
 	}
-	every := max(1, int(math.Round(d2dFPS/f.fps)))
+	every := f.divisor()
 	cctx, cancel := context.WithTimeout(ctx, 3*time.Second)
 	defer cancel()
 	if _, err := f.c.Do(cctx, fmt.Sprintf("framefeed %s %d 3000", f.Feed, every)); err != nil {
@@ -161,8 +187,25 @@ func (f *Frames) feedLease(ctx context.Context) error {
 	if f.feedOn.IsZero() {
 		f.ringAt = time.Now()
 	}
-	f.feedOn = time.Now()
+	f.feedOn, f.every = time.Now(), every
 	return nil
+}
+
+// divisor picks d2d's publish divisor: the smallest whole number of draws whose period fits both the -fps target and
+// the back-off budget of our own encode. A whole number keeps the frames evenly spaced in game time (60 Hz draws at
+// 25 fps would alternate 33 and 50 ms of game time, which reads as judder). A change needs two renewals in a row.
+func (f *Frames) divisor() int {
+	target := max(time.Duration(float64(time.Second)/f.fps), time.Duration(f.Backoff*float64(f.costEMA)))
+	k := max(1, int(math.Ceil(0.95*float64(target)/float64(f.srcPeriod))))
+	if f.every == 0 {
+		return k
+	}
+	if k != f.every && k == f.pending {
+		f.pending = 0
+		return k
+	}
+	f.pending = k
+	return f.every
 }
 
 func (f *Frames) feedOff() {
@@ -174,6 +217,7 @@ func (f *Frames) feedOff() {
 		f.ring.Close()
 		f.ring = nil
 	}
+	f.every, f.pending = 0, 0
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	f.c.Do(ctx, "framefeed off")
@@ -188,19 +232,37 @@ func (f *Frames) grabRing() (cost time.Duration, fresh bool, err error) {
 			return 0, false, nil // d2d creates it at its next drawn frame
 		}
 	}
+	var hb [ringHdr]byte // header first: most polls find no new frame and must stay cheap
+	if _, err := f.ring.ReadAt(hb[:], 0); err != nil {
+		return time.Since(t0), false, nil
+	}
+	if h, err := parseRingHeader(hb[:]); err != nil || h.Seq == 0 || h.Seq == f.ringSeq {
+		return time.Since(t0), false, nil
+	}
 	h, pix, err := readRing(f.ring, f.ringBuf)
 	f.ringBuf = pix
 	if err != nil || h.Seq == 0 || h.Seq == f.ringSeq {
 		return time.Since(t0), false, err
 	}
-	f.ringSeq, f.ringAt = h.Seq, time.Now()
+	if h.Seq > f.ringSeq && h.GameMS > f.ringMS && f.every > 0 && f.ringSeq > 0 {
+		p := time.Duration(h.GameMS-f.ringMS) * time.Millisecond / time.Duration((h.Seq-f.ringSeq)*uint64(f.every))
+		if p >= 5*time.Millisecond && p <= 100*time.Millisecond {
+			f.srcPeriod = (f.srcPeriod*7 + p) / 8
+		}
+	}
+	f.ringSeq, f.ringMS, f.ringAt = h.Seq, h.GameMS, time.Now()
 	read := time.Since(t0)
 	img := &image.RGBA{Pix: pix, Stride: h.Stride, Rect: image.Rect(0, 0, h.W, h.H)}
 	data, err := encodeJPEG(&f.enc, img, f.Half, f.Quality)
 	if err != nil {
 		return time.Since(t0), false, err
 	}
-	f.publish(data, "image/jpeg", read)
+	f.publish(data, "image/jpeg", read, int64(h.GameMS))
+	if c := time.Since(t0); f.costEMA == 0 {
+		f.costEMA = c
+	} else {
+		f.costEMA = (f.costEMA*7 + c) / 8
+	}
 	f.Stats.add("framefeed", read, time.Since(t0)-read, len(data), h.W>>b2i(f.Half), h.H>>b2i(f.Half))
 	return time.Since(t0), true, nil
 }
@@ -236,18 +298,20 @@ func (f *Frames) grab(ctx context.Context) (time.Duration, error) {
 		typ = "image/jpeg"
 		w, h = img.Bounds().Dx()>>b2i(f.Half), img.Bounds().Dy()>>b2i(f.Half)
 	}
-	f.publish(data, typ, took)
+	f.publish(data, typ, took, -1)
 	f.Stats.add("screenshot", took, time.Since(t1), len(data), w, h)
 	return took, nil
 }
 
-func (f *Frames) publish(data []byte, typ string, took time.Duration) {
+func (f *Frames) publish(data []byte, typ string, took time.Duration, gameMS int64) {
 	ticks := f.mux.ticks.Load()
 	f.mu.Lock()
 	f.Got++
 	f.Dur = took
-	f.cur = Frame{Seq: f.Got, Data: data, Type: typ, Ticks: ticks - f.last, WallMS: int(took / time.Millisecond), At: time.Now()}
+	f.cur = Frame{Seq: f.Got, Data: data, Type: typ, Ticks: ticks - f.last, WallMS: int(took / time.Millisecond), GameMS: gameMS, At: time.Now()}
 	f.last = ticks
+	close(f.notify)
+	f.notify = make(chan struct{})
 	f.mu.Unlock()
 }
 
