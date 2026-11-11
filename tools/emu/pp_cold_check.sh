@@ -7,4 +7,3 @@ for t in test_boss_cold_length test_monsters test_game; do timeout 900 $B/tests/
 cd tools/emu
 uv run python boss_level.py compare $O/bl.tsv $O/bl.g $O/bl.d 2>&1 | grep -v WARNING | tail -4
 cd $T; python3 tools/pr_guard.py upstream/main HEAD 2>&1 | tail -1
-git ls-remote forgejo fid/cold-enchanted-length-r1 | cut -c1-12

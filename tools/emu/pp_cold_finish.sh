@@ -18,4 +18,4 @@ uv run python boss_level.py gen 100000 20261108 > $O/bl.tsv && uv run python bos
 cd $T
 timeout 1500 python3 tools/presubmit.py --quick --base upstream/main 2>&1 | grep -vE '^ok' | tail -12
 python3 tools/pr_guard.py upstream/main HEAD 2>&1 | tail -2
-git push forgejo fid/cold-enchanted-length-r1 2>&1 | tail -1; git rev-parse HEAD
+git rev-parse HEAD   # the push to the private remote was done by hand
