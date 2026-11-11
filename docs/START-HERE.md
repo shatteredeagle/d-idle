@@ -17,7 +17,7 @@
 ## How work flows
 1. A job is a Backlog.md task in `backlog/tasks/` (keys `owns:`, `exclusive:`, `contracts:`; see [backlog-howto.md](backlog-howto.md) and [process/contracts-after-openspec.md](process/contracts-after-openspec.md)).
 2. You work on your own branch `agent/<name>` in your own worktree, only inside the paths you own, and commit often. Agents never push.
-3. The coordinator queues the branch in the merge queue; it runs the gate set and merges to `main`. Your shared-file lines go in `backlog/merge-lines/<branch>.txt`.
+3. The coordinator queues the branch in the merge queue; it runs the gate set and merges to `main`. The shared files (BACKLOG, CHANGELOG, INDEX, OWNERS, STATUS block) are generated at merge from your task card and the queue summary; you do not write them.
 4. Anything about the private d2d fork or lab binary goes to the private fork the same day; nothing is posted to GitHub without the user's go.
 
 ## The six most-read docs
