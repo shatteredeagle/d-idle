@@ -138,6 +138,8 @@ type LayoutConf struct {
 	Aliases  map[string]string `json:"aliases"`
 	Compat   []string          `json:"compat"`
 	Reserved []string          `json:"reserved"`
+	// Fit are the pre-shell cards whose rows follow their content (the panels say so in panel.json).
+	Fit []string `json:"fit,omitempty"`
 }
 
 var shellLayoutConf = sync.OnceValues(func() (LayoutConf, error) {
