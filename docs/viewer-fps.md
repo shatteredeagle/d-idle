@@ -130,3 +130,44 @@ Deploy and compare (sandbox, coordinator only):
 3. Stage 2 image (d2d from `d2d.lab3-framefeed`, `-fps 25 -feed /dev/shm/d2dview/frames.ring`): expect `source
    framefeed`, fps 20 to 25, d2d CPU down, d2dview up to about 25 percent; d2bot kills/min not lower than step 1.
 4. If d2dview's share is too high on the single CPU: `-frame-half` or `-jpeg-quality 50`, or `-fps 15`.
+
+## 6. Deploy and A/B on the sandbox (card viewerfps2, TASK-299, 2026-11-11 EST)
+
+Tags: V = measured on the sandbox container. KEPT: the frame feed stays deployed.
+
+What was deployed (V): image `d2dbot:devp2` = `context.sh` with fork commit `80cc7adc` (`d2d.lab3-framefeed`) and
+`--build-arg DEV=1`, built on the worker host at low CPU share; the old image `d2dbot:devp1` is kept for rollback.
+`entrypoint.sh` now passes `$D2DVIEW_FLAGS` to the tap in tester mode (this card). The sandbox compose got a fourth file
+`feed.yml` (`shm_size: 128m`, `D2DVIEW_FLAGS=-fps 25 -feed /dev/shm/d2dview/frames.ring`). The container was recreated
+through compose (volume `d2play-data`, game mount, ports and hero untouched; the bot saved and quit normally).
+The running dev release in the volume brings its own `bin/entrypoint.sh`, so the new flags only took effect after one
+`tools/dev-update.sh --to d2play-20261108` (UPDATED 0.0.261111065511 -> 0.0.261111142718 in 13 s): after any image swap run a
+dev-update, otherwise the old release's entrypoint ignores `D2DVIEW_FLAGS`. The dev updater itself still works (V).
+
+| what (full size 800x600, JPEG q72) | BEFORE (stock verb path, `-fps 6`) | AFTER (`framefeed`, `-fps 25`) |
+|---|---|---|
+| delivered to a stream client | n/a (sampled 5.9 fps, `/api/frames`; 4.3 fps in section 1) | 21.6 fps (3896 parts in 180 s, one client), 1.9 MB/s |
+| sampler fps, 10 s windows | 5.9 | mean 21.2 (18 windows; 18.1 to 24.1, one start-up window 10.5) |
+| grab / encode per frame | 30.9 ms (max 49) / 17.8 ms | 0.18 ms / 10.2 ms |
+| JPEG size | 82 KB | 90 KB |
+| d2d CPU (core share) | 24.4 percent | 20.5 percent |
+| d2dview CPU | 11.3 percent (while watched, own log) | 21.4 percent |
+| d2bot CPU | 10.0 percent | 29.3 percent (fighting, see below) |
+| kills per minute (`combat kill` lines) | 5.4 (70 min) | 10.0 (3 min) |
+| nav legs per minute | 9.6 (70 min) | 10.3 (3 min) |
+| nav stalls per minute (per kill) | 4.4 (0.8) | 10.0 (1.0) |
+
+Method: before = read-only 60 s on the old image (CPU from `/proc/<pid>/stat`, `/api/frames`, d2dview log line) plus the
+bot log of the previous 70 min; after = a 180 s run of `ab.sh` (a perl client on `/stream.mjpg` counting parts, `/api/frames`
+every 10 s, CPU deltas, bot log of the same window). The bot pace is NOT a controlled comparison: the old window was mostly
+town chores, the new one a fight stretch, so kills, d2bot CPU and stalls are higher for that reason (stalls per kill are
+close). What it shows: the feed did not slow the bot (kills and legs per minute equal or higher). Container total about
+70 percent of its one-core limit. Decision rule (>= 12.5 fps and pace within 10 percent): met, KEPT; `-frame-half` not needed.
+Two things to know: (1) the container exited cleanly and restarted once at 09:32 EST during the first after run
+(bot stop in town, save and quit, docker restart policy, no kill or stop event; cause not found, not this card's commands;
+the hero came back, the second run is after it); (2) the page's own viewer was not looked at by the card (U), only the
+stream, the stats and the watch port (303 to login).
+
+Rollback (the old tap and old d2d, nothing else changes): `sh ~/play-build-20261108/up.sh old` on the worker host (compose
+with `D2_IMAGE=d2dbot:devp1`, without `feed.yml`), then one dev-update to settle the release. Files: ops repo
+`docs/play-sandbox.md`.
