@@ -241,7 +241,8 @@ for (const how of ['escape', 'outside', 'cancel']) {
   const colw = (1200 - 11 * 12) / 12, rowsFor = (span) => Math.max(2, Math.ceil((60 + (span * colw + (span - 1) * 12) * 3 / 4 + 12) / (48 + 12)));
   const shell = setup;
   const t = shell({ aspect: { video: '4/3' } });
-  assert.ok(t.handle('video').children.some((c) => c.className === 'lock' && c.textContent === '4:3'), 'the handle says the panel is aspect-locked');
+  assert.ok(t.handle('video').children.some((c) => c.className === 'lock' && c.textContent === '4:3' && !c.hidden), 'the handle says the panel is aspect-locked');
+  assert.ok(t.handle('map').children.some((c) => c.className === 'lock' && c.hidden), 'and says nothing on a free panel');
   t.corner('video').fire('pointerdown', { clientX: 590, clientY: 230 });
   t.corner('video').fire('pointermove', { clientX: 390, clientY: 230 }); // two columns narrower, the pointer does not move down
   eq(t.at('video').slice(2), [4, rowsFor(4)], 'narrower: the rows follow');

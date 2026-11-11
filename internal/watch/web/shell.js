@@ -326,7 +326,6 @@ function setupLayout(conf, layout, answerBase) {
       done(l) { lay.editor = null; lay.layout = l || saved; applyLayout(); },
     });
   });
-  if (qs.get('edit') === '1') btn.click(); // a link (and the screenshot suite) can open the page in Edit layout
 }
 
 // ---- ctx and mounting ----
@@ -391,6 +390,9 @@ async function start() {
   }
   Object.values(bands).forEach(syncBand);
   sched.start();
+  // a link (and the screenshot suite) can open the page in Edit layout, once every panel is mounted
+  const edit = document.getElementById('btn-layout');
+  if (edit && qs.get('edit') === '1') edit.click();
 }
 
 start();

@@ -84,7 +84,7 @@
   /* Edit layout mode (layoutedit.js): fixed rows like the mockup editor, a handle bar and a resize corner per cell */
   .d-main[data-editing] { grid-auto-rows: var(--l-rowh, 48px); background-image: linear-gradient(to right, var(--d-line) 1px, transparent 1px), linear-gradient(to bottom, var(--d-line) 1px, transparent 1px);
     background-size: calc((100% - 2 * var(--d-gap) + var(--d-gap)) / var(--l-cols, 12)) calc(var(--l-rowh, 48px) + var(--d-gap)); background-position: calc(var(--d-gap) - 1px) -1px; padding-block-end: calc(var(--l-rowh, 48px) * 4); }
-  .d-main[data-editing] [data-editcell] { position: relative; overflow: hidden; min-block-size: 0; cursor: default; padding-block-start: calc(var(--d-pad) + 1.6rem); }
+  .d-main[data-editing] [data-editcell] { position: relative; overflow: hidden; min-block-size: 0; cursor: default; padding-block-start: calc(1.75rem + var(--d-sp-2)); }
   .d-main[data-editing] [data-editcell]:focus { outline: 2px solid var(--d-focus); outline-offset: 2px; }
   .d-main[data-editing] [data-editcell][data-drag] { opacity: .85; z-index: 5; box-shadow: var(--d-shadow-2); }
   /* the slide of a pushed panel: placed at its old spot by a transform (data-flip="from"), then released ("go");
@@ -96,7 +96,7 @@
      one frame per cell, a grid item on the same cells, above it */
   .d-editframe { position: relative; z-index: 3; pointer-events: none; min-inline-size: 0; min-block-size: 0; }
   .d-editframe[hidden] { display: none; }
-  .d-edithandle { position: absolute; inset-block-start: 0; inset-inline: 0; pointer-events: auto; display: flex; align-items: center; gap: var(--d-sp-2); padding: 2px var(--d-sp-2); background: var(--d-surface-3);
+  .d-edithandle { position: absolute; inset-block-start: 0; inset-inline: 0; pointer-events: auto; box-sizing: border-box; block-size: 1.75rem; display: flex; align-items: center; gap: var(--d-sp-2); padding: 0 var(--d-sp-2); background: var(--d-surface-3);
     border: var(--d-bw) solid var(--d-line-strong); border-radius: var(--d-r-3) var(--d-r-3) 0 0; font-size: var(--d-fs-0); color: var(--d-text-2); cursor: grab; user-select: none; touch-action: none; }
   .d-edithandle b { color: var(--d-text); margin-inline-end: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .d-edithandle .pos, .d-edithandle .lock { font-family: var(--d-font-num); white-space: nowrap; }

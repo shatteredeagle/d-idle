@@ -47,6 +47,8 @@ export function start(api) {
       n.setAttribute('aria-label', it.id + ', column ' + it.col + ' span ' + it.colSpan + ', row ' + it.row + ' span ' + it.rowSpan);
       if (!f) continue;
       f.style.gridColumn = col; f.style.gridRow = row;
+      f.lock.textContent = (n.dataset.aspect || '').replace('/', ':'); // read late: a panel may mount after the editor opened
+      f.lock.hidden = !n.dataset.aspect;
       f.pos.textContent = 'c' + it.col + ' w' + it.colSpan + ' r' + it.row + ' h' + it.rowSpan;
     }
     shown = items;
@@ -182,8 +184,9 @@ export function start(api) {
     hide.type = 'button';
     hide.setAttribute('aria-label', 'Hide ' + it0.id);
     handle.append(el('b', '', it0.id));
-    if (n.dataset.aspect) { const l = el('span', 'lock', n.dataset.aspect.replace('/', ':')); l.title = 'Aspect-locked: the height follows the width'; handle.append(l); }
-    handle.append(frame.pos, hide);
+    frame.lock = el('span', 'lock');
+    frame.lock.title = 'Aspect-locked: the height follows the width';
+    handle.append(frame.lock, frame.pos, hide);
     rs.title = 'Resize';
     frame.append(handle, rs);
     main.appendChild(frame);

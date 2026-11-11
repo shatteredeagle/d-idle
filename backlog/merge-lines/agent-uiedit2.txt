@@ -1,0 +1,3 @@
+BACKLOG: uiedit2 (TASK-306): the game picture fits and centres in its panel and is aspect-locked in Edit layout; Hero now, Up next and every other card can be moved, resized and hidden or shown
+INDEX: docs/ui-design-system.md section 15.9: edit frames outside the panels, hide and show, the aspect-locked game picture
+CHANGELOG: watch: the game picture always fills its panel without dead space; in Edit layout every card (also Hero now and Up next) can be moved, resized and hidden
