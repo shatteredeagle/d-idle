@@ -1,0 +1,3 @@
+BACKLOG: uilayout (TASK-279): the watch shell places panels from a watch.layout/1 manifest; GET/POST /api/layout with a per-profile copy; Edit layout mode on /watch; uilint layout rules
+INDEX: docs/ui-design-system.md section 15.5: the layout manifest in the shell (ids, placement, routes, Edit layout)
+CHANGELOG: watch: the page layout comes from a layout manifest (the approved mockup layout by default); "Edit layout" on /watch lets you drag, resize and save your own; files exported by the mockup editor load unchanged

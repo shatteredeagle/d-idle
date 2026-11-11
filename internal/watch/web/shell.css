@@ -74,7 +74,7 @@
   /* Edit layout mode (layoutedit.js): fixed rows like the mockup editor, a handle bar and a resize corner per cell */
   .d-main[data-editing] { grid-auto-rows: var(--l-rowh, 48px); background-image: linear-gradient(to right, var(--d-line) 1px, transparent 1px), linear-gradient(to bottom, var(--d-line) 1px, transparent 1px);
     background-size: calc((100% - 2 * var(--d-gap) + var(--d-gap)) / var(--l-cols, 12)) calc(var(--l-rowh, 48px) + var(--d-gap)); background-position: calc(var(--d-gap) - 1px) -1px; padding-block-end: calc(var(--l-rowh, 48px) * 4); }
-  .d-main[data-editing] [data-editcell] { position: relative; overflow: hidden; min-block-size: 0; cursor: default; }
+  .d-main[data-editing] [data-editcell] { position: relative; overflow: hidden; min-block-size: 0; cursor: default; padding-block-start: calc(var(--d-pad) + 1.6rem); }
   .d-main[data-editing] [data-editcell]:focus { outline: 2px solid var(--d-focus); outline-offset: 2px; }
   .d-main[data-editing] [data-editcell][data-drag] { opacity: .85; z-index: 5; box-shadow: var(--d-shadow-2); }
   .d-edithandle { position: absolute; inset-block-start: 0; inset-inline: 0; z-index: 3; display: flex; align-items: center; gap: var(--d-sp-2); padding: 2px var(--d-sp-2); background: var(--d-surface-3);
