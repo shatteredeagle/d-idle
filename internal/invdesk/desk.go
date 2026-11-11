@@ -45,6 +45,7 @@ type Config struct {
 	WhyFor    func(s *d2.Snapshot) func(u d2.Unit) string // optional, wins over Why: binds the reason source to ONE snapshot, built once per View
 	SellBlock func(u d2.Unit) string                      // optional: why an item can never be sold ("" = it may be)
 	Advice    func(it status.Item) string                 // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
+	Prompt    func() string                               // optional: the gear-policy prompt for the page (onboarding, no weapon); must not call back into the desk
 	Now       func() time.Time
 }
 
@@ -397,6 +398,7 @@ type View struct {
 	Queue     []Request            `json:"queue"`
 	Recent    []Request            `json:"recent"`
 	Note      string               `json:"note,omitempty"`
+	Prompt    string               `json:"prompt,omitempty"` // docs/gear-policy.md: tells the player equipment is theirs to manage
 }
 
 // View reads the snapshot and decorates it. Without a snapshot the lists are empty and Note says so.
@@ -423,6 +425,9 @@ func (d *Desk) View() View {
 	why := d.c.Why
 	if d.c.WhyFor != nil {
 		why = d.c.WhyFor(s)
+	}
+	if d.c.Prompt != nil {
+		v.Prompt = d.c.Prompt()
 	}
 	decorate := func(it status.Item, place string) ItemView {
 		iv := ItemView{Item: it}

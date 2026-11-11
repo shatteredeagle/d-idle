@@ -99,6 +99,11 @@ func (r *Runner) gearStep(ctx context.Context, snap *d2.Snapshot, c control) boo
 		})
 		return true
 	}
+	if !r.e.Tune.Resource.BotDecidesGear() {
+		// The player owns equipment (docs/gear-policy.md): no equip, swap or buy here, only the advice line.
+		r.adviseGear(snap)
+		return false
+	}
 	t := r.e.Tune.Bot
 	now := r.e.Clock.Now()
 	if !l.gearAt.IsZero() && now.Sub(l.gearAt) < time.Duration(t.GearCheckSec)*time.Second {
