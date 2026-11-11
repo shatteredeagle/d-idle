@@ -1,6 +1,6 @@
 # Draft (local, NOT posted): "Lightning hits one unit a frame and skips the last (FUN_005ae1f0)"
 
-> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/missile-last-unit-r1` on the private fork remote, head `b7954bd0`, two commits on upstream main `b6b59ae9`. Replaces the older `fid/missile-last-unit` (head f45e45c8, base a5b970d5), which does not apply to current main and had a scope problem (see "Honest limits"). Trace: [../../probes/fid/fid-missile-player.md](../../probes/fid/fid-missile-player.md).
+> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/missile-last-unit-r2` on the private fork remote, head `89059e2d`, two commits on upstream main `b6b59ae9`. Replaces the older `fid/missile-last-unit` (head f45e45c8, base a5b970d5), which does not apply to current main and had a scope problem (see "Honest limits"). Trace: [../../probes/fid/fid-missile-player.md](../../probes/fid/fid-missile-player.md).
 
 Nothing here is posted. PR title: `Lightning hits one unit a frame and skips the last (FUN_005ae1f0)`
 
@@ -58,6 +58,6 @@ grep -E '^[HT]' /tmp/d2d.txt | diff /tmp/g.txt - && echo same
 - [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (the oracle commit first, the claim second)
 - [x] The finding in `docs/research/re/missiles.md`
 - [x] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 0 WARN
-- [x] `python3 tools/presubmit.py --quick --base upstream/main`: 0 FAIL, 4 WARN (sibling unit kinds and hit paths: the change is a player skill missile on monsters only; doc-claims line 547 "every unit" is the FUN_005a8730 filter text; build skipped by `--quick`, built by hand above)
+- [x] `python3 tools/presubmit.py --quick --base upstream/main` (on the head before the README row fix, which changes no code): 0 FAIL, 4 WARN (sibling unit kinds and hit paths: the change is a player skill missile on monsters only; doc-claims line 547 "every unit" is the FUN_005a8730 filter text; build skipped by `--quick`, built by hand above)
 
 Agent: Claude Code

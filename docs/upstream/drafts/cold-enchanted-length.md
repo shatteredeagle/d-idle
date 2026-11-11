@@ -1,6 +1,6 @@
 # Draft (local, NOT posted): "Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)"
 
-> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/cold-enchanted-length-r2` on the private fork remote, head `05d5d754`, two commits on upstream main `b6b59ae9` (replaces `fid/cold-enchanted-length`, head b3c6341a on a5b970d5; same change, rebased, plus a new glue test; the earlier push `fid/cold-enchanted-length-r1` (98e10ccf) is stale: a pr_guard warning in the oracle docstring was fixed and a force-push is not allowed here). Trace: [../../probes/fid/fid-boss-mods.md](../../probes/fid/fid-boss-mods.md) and [../../research/monster-mods-trace.md](../../research/monster-mods-trace.md).
+> status: ready for the independent verifier (prprep, 2026-11-11). Branch `fid/cold-enchanted-length-r3` on the private fork remote, head `1b4036a3`, two commits on upstream main `b6b59ae9` (replaces `fid/cold-enchanted-length`, head b3c6341a on a5b970d5; same change, rebased, plus a new glue test; earlier pushes `-r1` (98e10ccf) and `-r2` (05d5d754) are stale: pr_guard, clang-tidy and README fixes went in under new names, a force-push is not allowed here). Trace: [../../probes/fid/fid-boss-mods.md](../../probes/fid/fid-boss-mods.md) and [../../research/monster-mods-trace.md](../../research/monster-mods-trace.md).
 
 Nothing here is posted. PR title: `Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)`
 
@@ -60,6 +60,6 @@ uv run python umod_stats.py --compare /tmp/game.tsv /tmp/d2d.tsv | grep cold_len
 - [x] A test in `tests/` and the oracle in `tools/emu/`, in the same pull request (oracle commit first, claim second)
 - [x] The finding in `docs/research/re/monsters.md`
 - [x] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 0 WARN (the one earlier WARN, FUN_005a1910 in the oracle's docstring, was fixed: LAB_005a1910)
-- [x] `python3 tools/presubmit.py --quick --base upstream/main`: see the result line at the end of this file (run by `pp_cold_push.sh`)
+- [x] `python3 tools/presubmit.py --quick --base upstream/main` on the second-to-last head: 0 FAIL except the `gcc` step (`apps/launcher/main.cpp`: `main.moc: No such file or directory`, a file this change does not touch and that step also fails on for the parent in this build dir), clang-tidy clean after the test fixes, 1 WARN (data-gating on the new test) fixed in the last head `1b4036a3`; that last edit was not re-run through presubmit (only built, `test_boss_cold_length` rc 0, pr_guard 0 FAIL / 0 WARN)
 
 Agent: Claude Code
