@@ -96,8 +96,8 @@ export function start(api) {
     const a = /^(\d+)\/(\d+)$/.exec(n.dataset.aspect || '');
     if (!a) return 0;
     const m = metrics(), cs = getComputedStyle(n), body = n.querySelector('.d-card-body');
-    const pad = parseFloat(cs.paddingLeft) || 0, editPad = (parseFloat(cs.paddingTop) || 0) - (parseFloat(cs.paddingBottom) || 0);
-    let chrome = body ? n.offsetHeight - body.offsetHeight - editPad : NaN; // everything of the card that is not the picture
+    const pad = parseFloat(cs.paddingLeft) || 0;
+    let chrome = body ? n.offsetHeight - body.offsetHeight : NaN; // everything of the card that is not the picture
     if (!(chrome >= 0)) chrome = 60;
     const w = span * m.colw + (span - 1) * m.gap - 2 * pad;
     return Math.max(2, Math.ceil((chrome + (w * a[2]) / a[1] + m.gap) / (m.rowh + m.gap)));
