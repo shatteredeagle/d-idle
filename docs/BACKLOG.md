@@ -717,6 +717,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - TASK-302 viewerfps3: the watch screen video relays the tap stream (was a 4 fps /frame poll), the tap sends evenly spaced frames (every 3rd 60 Hz draw, 20 fps, 50 game ms), docs/viewer-fps.md section 7
 - roammemory: roam coverage is remembered per level for the whole game (docs/roamspacing.md)
 - aggression2 (TASK-305): the nav pack hand-over cleared once for 4 s and the walk ran on with the pack alive; now repeats while hostiles die; waypoint walk yields to followers; fight lines carry end, remaining, life, mana
+- sharedgen: generate STATUS block, BACKLOG and CHANGELOG at merge (TASK-255, merged 2026-11-11, acceptance 4 of 5): Offline: unit tests, merge.sh case 19 and a rehearsal on a scratch bare repo; not verified live <!--sg:agent/sharedgen-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
