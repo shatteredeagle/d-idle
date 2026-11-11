@@ -33,6 +33,7 @@ owns:
   - "internal/town/playerid_sim_test.go"
 exclusive: []
 contracts: []
+result: "Built offline, NOT verified live: identify item, buy scrolls (reserve, tome fill) and Cain errand with desk, town, API schema 5, UI and goldens; click paths and Cain menu line are U, town sim tests skip without game tables. Live checks 8 to 12 in docs/inventory-actions.md."
 ---
 
 ## Description
@@ -47,7 +48,7 @@ Why: identify is a player command, not an equipment decision. Done when: the thr
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Item menu Identify, header buttons Buy identify scrolls and Identify all (Cain), queue states and cancel
-- [ ] #2 Town primitives: identify one item, buy scrolls with reserve, Cain identify all (offline tests, live checks listed)
-- [ ] #3 API schema 5 additive with golden fixtures, DOM goldens, uilint clean
+- [x] #1 Item menu Identify, header buttons Buy identify scrolls and Identify all (Cain), queue states and cancel
+- [x] #2 Town primitives: identify one item, buy scrolls with reserve, Cain identify all (offline tests, live checks listed)
+- [x] #3 API schema 5 additive with golden fixtures, DOM goldens, uilint clean
 <!-- AC:END -->
