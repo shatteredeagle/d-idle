@@ -102,7 +102,7 @@ func TestFightTelemetry(t *testing.T) {
 	}
 	ft.Dodges = 2
 	got := ft.Finish(ClearResult{Kills: 7, Potions: 2, Elapsed: 12 * time.Second})
-	want := "fight area=3 diff=1 danger=2 kills=7 damage=70 minlife=40 potions=2 dodges=2 sec=12 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00"
+	want := "fight area=3 diff=1 danger=2 kills=7 damage=70 minlife=40 potions=2 dodges=2 sec=12 casts=0 kites=0 approaches=0 novas=0 forced=0 castsPerSec=0.00 end= remaining=0 life=0 mana=0"
 	if got != want {
 		t.Fatalf("\n got %s\nwant %s", got, want)
 	}
