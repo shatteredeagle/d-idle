@@ -6,7 +6,12 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/env"
 )
+
+func withEffectRule(tu *env.Tuning) {
+	tu.Combat.PotionEmergencyPct = env.DefaultCombatTuning().PotionEmergencyPct
+}
 
 func countDrinks(h *harness) int { return h.s.drinks["healing"] }
 
@@ -61,7 +66,7 @@ func TestHealingEffectMergesLikeTheGame(t *testing.T) {
 // Over a fight at a steady 45 percent life one potion is drunk per effect, not one per second, for two builds.
 func TestNoSameTierRedrinkWhileWorking(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
-		h := newHarness(t)
+		h := newHarness(t, withEffectRule)
 		h.s.class = class
 		h.s.stock(itHP1, 0, 12)
 		n := holdLife(t, h, 45, 10) // an hp1 works 7.68 s
@@ -73,7 +78,7 @@ func TestNoSameTierRedrinkWhileWorking(t *testing.T) {
 
 func TestEmergencyStillDrinksWhileWorking(t *testing.T) {
 	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
-		h := newHarness(t)
+		h := newHarness(t, withEffectRule)
 		h.s.class = class
 		h.s.stock(itHP1, 0, 12)
 		holdLife(t, h, 45, 1)
@@ -85,7 +90,7 @@ func TestEmergencyStillDrinksWhileWorking(t *testing.T) {
 
 // A higher tier in the belt is allowed while a weaker potion works, and it is the lowest tier above the working one.
 func TestHigherTierAllowedWhileWorking(t *testing.T) {
-	h := newHarness(t)
+	h := newHarness(t, withEffectRule)
 	h.s.stock(itHP1, 0, 3)
 	h.s.stock(itHP3, 1, 3)
 	holdLife(t, h, 45, 1) // lowest tier first: hp1 (column 1)
