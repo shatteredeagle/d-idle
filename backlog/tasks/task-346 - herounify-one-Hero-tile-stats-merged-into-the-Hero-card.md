@@ -31,7 +31,7 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Hero and Hero stats are one panel (hero-vitals); hero-detail is an alias, layouts with both show one tile
-- [ ] #2 DOM goldens ready/nostats/error, alias tests, uilint and compat green
-- [ ] #3 uishots at 5 breakpoints viewed
+- [x] #1 Hero and Hero stats are one panel (hero-vitals); hero-detail is an alias, layouts with both show one tile
+- [x] #2 DOM goldens ready/nostats/error, alias tests, uilint and compat green
+- [x] #3 uishots at 5 breakpoints viewed
 <!-- AC:END -->
