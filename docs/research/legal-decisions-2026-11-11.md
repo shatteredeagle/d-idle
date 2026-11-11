@@ -24,4 +24,4 @@
 - Tyniann: LICENSE read from github.com/Tyniann/d2r-offline-farming-bot (V, GitHub API, 2026-11-11): THIRD_PARTY.md row and UNVERIFIED line replaced.
 - Checklist tool: tools/friendpack/checklist.sh + test in tools/friendpack/pack_test.go; wired as the last step of build.sh (`--force` to proceed on FAIL).
 - Disclaimer line in README.md, docs/friend-guide.md and the pack README.txt; the pack NOTICE now lists the third-party components.
-- Open: the GPL reviewer (the user), the Freepik icon patch (see docs/friend-assets.md), the fork `LEGAL.md` still names the Freepik skull for launcher-only files.
+- Freepik icon replaced with the branding task's original pixel art on the private fork branch `fork-only/icon-original` (commit a392bcbd, pushed). Open: build and boot d2d from it once, the GPL reviewer (the user), the fork `LEGAL.md` still names the Freepik skull for the launcher-only Steam art.
