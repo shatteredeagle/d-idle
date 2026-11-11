@@ -45,20 +45,21 @@ func (s FrameStats) String() string {
 }
 
 type frameStats struct {
-	window time.Duration
-	parts  atomic.Int64
-	mu     sync.Mutex
-	start  time.Time
-	cpu0   time.Duration
-	n      int
-	grab   time.Duration
-	grabMx time.Duration
-	enc    time.Duration
-	bytes  int
-	w, h   int
-	src    string
-	last   FrameStats
-	ready  bool
+	window    time.Duration
+	parts     atomic.Int64
+	everyHint atomic.Int64 // the ring divisor in force (for tests and fakes that play the d2d side)
+	mu        sync.Mutex
+	start     time.Time
+	cpu0      time.Duration
+	n         int
+	grab      time.Duration
+	grabMx    time.Duration
+	enc       time.Duration
+	bytes     int
+	w, h      int
+	src       string
+	last      FrameStats
+	ready     bool
 }
 
 func newFrameStats(window time.Duration) *frameStats {

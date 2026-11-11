@@ -3,10 +3,13 @@ package main
 import (
 	"bufio"
 	"context"
+	"fmt"
+	"net"
 	"net/http"
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"strings"
 	"testing"
@@ -150,4 +153,136 @@ func TestDegradedFlag(t *testing.T) {
 	if st, _ := s.roll(t0.Add(2*time.Second), FrameStats{FeedWanted: true}); st.Degraded {
 		t.Fatalf("%+v", st)
 	}
+}
+
+// okD2D answers every line with "ok 800 600": enough of a d2d for the framefeed lease.
+func okD2D(t *testing.T) string {
+	t.Helper()
+	p := filepath.Join(t.TempDir(), "up.sock")
+	ln, err := net.Listen("unix", p)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() { ln.Close() })
+	go func() {
+		for {
+			c, err := ln.Accept()
+			if err != nil {
+				return
+			}
+			go func() {
+				defer c.Close()
+				rd := bufio.NewReader(c)
+				for {
+					if _, err := rd.ReadString('\n'); err != nil {
+						return
+					}
+					c.Write([]byte("ok 800 600\n"))
+				}
+			}()
+		}
+	}()
+	return p
+}
+
+// TestPacingEndToEnd drives the whole tap path: a 60 Hz ring writer (as real-time d2d), the sampler with the
+// sandbox flags (-fps 25, back-off 4, q72, 800x600) and one /stream.mjpg client stamping arrivals. Long (8 s); the
+// numbers go to docs/viewer-fps.md section 7. Run: go test -run PacingEndToEnd -v ./cmd/d2dview
+func TestPacingEndToEnd(t *testing.T) {
+	if testing.Short() {
+		t.Skip("8 s pacing run")
+	}
+	up := okD2D(t)
+	mux := NewMux(up)
+	dir := t.TempDir()
+	mux.FeedPath = filepath.Join(dir, "frames.ring")
+	view := filepath.Join(dir, "view.sock")
+	ln, err := mux.Serve(view, false, dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer ln.Close()
+	fr, err := NewFrames(view, mux, dir, 25)
+	if err != nil {
+		t.Fatal(err)
+	}
+	fr.Feed = mux.FeedPath
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	// the d2d side: draws at 60 Hz, publishes every `every`-th draw as framefeed would (every read from the lease line
+	// is not visible here, so the writer follows the sampler's own choice)
+	go func() {
+		w, _ := os.OpenFile(fr.Feed, os.O_RDWR|os.O_CREATE, 0o600)
+		defer w.Close()
+		pix := testFrame(800, 600)
+		tk := time.NewTicker(time.Second / 60)
+		defer tk.Stop()
+		for draw := uint64(1); ctx.Err() == nil; draw++ {
+			<-tk.C
+			every := uint64(max(1, fr.Stats.everyHint.Load()))
+			if draw%every == 0 {
+				pix[int(draw)%len(pix)]++ // a different picture each frame
+				writeRing(w, 800, 600, pix, draw, draw*1000/60)
+			}
+		}
+	}()
+	go fr.Run(ctx)
+	s := &server{frames: fr, mux: mux}
+	srv := httptest.NewServer(http.HandlerFunc(s.stream))
+	defer srv.Close()
+	req, _ := http.NewRequestWithContext(ctx, "GET", srv.URL, nil)
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer resp.Body.Close()
+	rd := bufio.NewReader(resp.Body)
+	var at []time.Time
+	var game []int64
+	end := time.Now().Add(8 * time.Second)
+	for time.Now().Before(end) {
+		gms, n := int64(-1), 0
+		for {
+			l, err := rd.ReadString('\n')
+			if err != nil {
+				t.Fatal(err)
+			}
+			if l == "\r\n" && n > 0 {
+				break
+			}
+			if v, ok := strings.CutPrefix(l, "X-Frame-Game-Ms: "); ok {
+				gms, _ = strconv.ParseInt(strings.TrimSpace(v), 10, 64)
+			}
+			if v, ok := strings.CutPrefix(l, "Content-Length: "); ok {
+				n, _ = strconv.Atoi(strings.TrimSpace(v))
+			}
+		}
+		rd.Discard(n + 2)
+		at, game = append(at, time.Now()), append(game, gms)
+	}
+	at, game = at[len(at)/4:], game[len(game)/4:] // skip the start (divisor settling)
+	var wall, gg []float64
+	for i := 1; i < len(at); i++ {
+		wall = append(wall, ms(at[i].Sub(at[i-1])))
+		gg = append(gg, float64(game[i]-game[i-1]))
+	}
+	t.Logf("every=%d src=%v cost=%v fps=%.1f", fr.every, fr.srcPeriod, fr.costEMA, float64(len(wall))/at[len(at)-1].Sub(at[0]).Seconds())
+	t.Logf("arrival gap ms: %s", summary(wall))
+	t.Logf("game-time gap ms: %s", summary(gg))
+	if fr.every < 2 {
+		t.Fatalf("divisor %d on a 60 Hz source at -fps 25", fr.every)
+	}
+	for _, g := range gg {
+		if int(g) != int(gg[0]) && int(g) != 2*int(gg[0]) { // a skipped frame doubles a gap, nothing in between
+			t.Fatalf("uneven game-time spacing: %v", gg)
+		}
+	}
+}
+
+func summary(g []float64) string {
+	s := append([]float64(nil), g...)
+	sort.Float64s(s)
+	n := len(s)
+	q := func(p float64) float64 { return s[min(n-1, int(p*float64(n)))] }
+	return fmt.Sprintf("n=%d p50=%.1f p90=%.1f p99=%.1f max=%.1f", n, q(.5), q(.9), q(.99), s[n-1])
 }

@@ -189,6 +189,7 @@ func (f *Frames) feedLease(ctx context.Context) error {
 		f.ringAt = time.Now()
 	}
 	f.feedOn, f.every = time.Now(), every
+	f.Stats.everyHint.Store(int64(every))
 	return nil
 }
 
