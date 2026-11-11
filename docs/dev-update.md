@@ -73,3 +73,7 @@ Create the DEV image, then recreate the container ONCE from it with the three va
 ## Warm the item art after a deploy (TASK-268)
 
 The inventory page's game art is prepared in the background at every start of `d2bot` (`<data>/cache/art`, from the owner's own install, docs/paperdoll-art-build.md). After a dev update there is nothing to do; to warm it on purpose or to see a count run `d2bot art extract` inside the container (idempotent, a finished cache costs a few milliseconds). `/api/art` reports `state` and `done/total` while it runs.
+
+## Deleted files (TASK-281)
+
+`labrun --send` is a plain rsync without `--delete` (S: read in the labrun source), so a file removed from the repo used to survive in the worker copy of `.devupdate-src` (a stale `subreaper.go` collided with `subreaper_linux.go`: `IsSubreaper redeclared`). The driver now runs `labrun HOST -- rm -rf .devupdate-src` before the send, so the worker copy mirrors the extracted tree exactly. Regression test (S, offline, fake labrun, scratch repo, never the sandbox): `tools/dev-update-clean-test.sh` deploys tree A with a file, then tree B without it, and checks it is gone and absent from the build input. Not run against a real worker host (U).

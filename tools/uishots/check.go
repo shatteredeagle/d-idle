@@ -17,7 +17,7 @@ var (
 // pagePanels are the panels a page dump must hold, ready, by file name prefix. The fixture viewer offers data for
 // every one of them, so a missing or still-loading panel is a regression.
 var pagePanels = map[string][]string{
-	"watch-":     {"hero-status", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
+	"watch-":     {"hero-status", "hero-meters", "alerts-count", "hero-detail", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
 	"overlay-":   {"hero-status"},
 	"inventory-": {"hero-status"},
 }
@@ -53,6 +53,9 @@ func checkDump(name, html string) []string {
 		if s == "error" {
 			bad = append(bad, fmt.Sprintf("%s: panel %s is in the error state", name, m[1]))
 		}
+	}
+	if strings.Contains(name, "-edit") && (!strings.Contains(html, `class="d-editbar"`) || !strings.Contains(html, `data-editcell="1"`) || !strings.Contains(html, `class="d-edithandle"`)) {
+		bad = append(bad, name+": Edit layout did not start (no edit bar or no editable cells)")
 	}
 	for prefix, want := range pagePanels {
 		if !strings.HasPrefix(name, prefix) {

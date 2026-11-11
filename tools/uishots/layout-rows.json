@@ -1,0 +1,5 @@
+[["hero-vitals",1,1,4,4,"side"],["why",5,1,4,4,"side"],["activity",9,1,4,4,"side"],
+ ["video",1,5,6,9,"stage"],["map",7,5,3,9,"side"],["hero-detail",10,5,3,5,"side"],["gear",10,10,3,4,"side"],
+ ["now",1,14,6,6],["orders-map",7,14,6,10],["tally",1,20,3,4,"side"],["currency",1,24,3,2,"side"],["queue",4,20,3,3],["thoughts",4,23,3,4],
+ ["chronicle",1,27,6,5],["journal",7,24,6,5],["diary",1,32,3,4],["quests",4,32,3,5],["cards",7,29,3,3],["bestiary",10,29,3,5],
+ ["atlas",1,36,3,4],["locked",4,37,3,4],["rules",7,34,6,4],["alerts",1,41,6,5],["spend",7,38,6,3]]

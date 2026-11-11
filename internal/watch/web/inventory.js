@@ -168,7 +168,7 @@
           b.title = ok ? 'queue this equip' : 'not possible right now';
           bar.appendChild(b);
         });
-        if (!v.inTown) d.appendChild(el('p', 'd-muted', 'The hero is not in town: equip works in town only.'));
+        if (!v.inTown) d.appendChild(el('p', 'd-muted', 'Out in the field the bot wears it when nothing hostile is near.'));
       }
     }
     if (bar.firstChild) d.appendChild(bar);

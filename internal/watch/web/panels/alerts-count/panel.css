@@ -1,0 +1,4 @@
+@layer panels {
+  [data-panel="alerts-count"] { display: flex; justify-content: end; }
+  [data-panel="alerts-count"] .d-badge { text-decoration: none; }
+}
