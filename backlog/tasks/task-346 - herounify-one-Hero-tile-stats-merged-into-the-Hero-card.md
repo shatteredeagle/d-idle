@@ -12,6 +12,7 @@ dependencies: []
 priority: medium
 ordinal: 228000
 card: "herounify"
+result: "Hero and Hero stats merged into hero-vitals (v3); hero-detail aliased (mergedInto, shell.json) and dropped from layout.json; node goldens, alias tests, whole-repo gate exit 0, uishots viewed at 5 widths. Not verified live. No merc, build or defence fields in the hero endpoint, so not on the tile."
 owns:
   - "internal/watch/web/panels/hero-vitals"
   - "internal/watch/web/panels/hero-detail"
