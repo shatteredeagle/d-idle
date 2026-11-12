@@ -179,6 +179,7 @@ docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
 docs/live-checks.md  credit-runner  repairtrip
+docs/locks.md  credit-runner  lockscan
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  firstminutes
 docs/onboarding.md  credit-runner  reconnectux
@@ -240,15 +241,19 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/lifelog.go  credit-runner  arrivalsettle
 internal/bot/lifelog.go  credit-runner  passagebounce
+internal/bot/lockguard_test.go  credit-runner  lockscan
+internal/bot/lockorder_test.go  credit-runner  lockscan
 internal/bot/loop.go  credit-runner  passagebounce
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  arrivalsettle
 internal/bot/observe.go  credit-runner  exploredpct
 internal/bot/observe.go  credit-runner  freshstart
+internal/bot/observe.go  credit-runner  lockscan
 internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
+internal/bot/runner.go  credit-runner  lockscan
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  passagebounce
 internal/bot/runner.go  credit-runner  repairtrip

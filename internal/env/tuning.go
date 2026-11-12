@@ -20,6 +20,7 @@ type Tuning struct {
 	Resource ResourceTuning
 	Ladder   LadderTuning
 	Senses   SensesTuning
+	Invdesk  InvdeskTuning
 }
 
 // DefaultTuning returns the optimal profile.
@@ -37,6 +38,7 @@ func DefaultTuning() Tuning {
 		Resource: DefaultResourceTuning(),
 		Ladder:   DefaultLadderTuning(),
 		Senses:   DefaultSensesTuning(),
+		Invdesk:  DefaultInvdeskTuning(),
 	}
 }
 
@@ -71,5 +73,6 @@ func Knobs() []Knob {
 	k = append(k, registeredKnobs()...)
 	k = append(k, ladderKnobs()...)
 	k = append(k, sensesKnobs()...)
+	k = append(k, invdeskKnobs()...)
 	return k
 }

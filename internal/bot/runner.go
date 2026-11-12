@@ -135,7 +135,8 @@ type Runner struct {
 
 	tpd            tpDumper // inv-tp-dump rate limit (tpdump.go)
 	obMu           sync.Mutex
-	tpBuyMin       int // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
+	healthMu       sync.Mutex // serialises Health.Step, which runs outside obMu (see healthProbe)
+	tpBuyMin       int        // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
 	ob             observer
 	dlog           *deathLog               // guarded by obMu
 	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
