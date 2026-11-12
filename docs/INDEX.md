@@ -727,6 +727,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `probes/`
 
 - [fidprobe.md](probes/fidprobe.md): d2fidprobe run recipe (same-save probe, slice 1) (status: first live run done 2026-11-07 (scenarios 1 to 4, see the last section); the recipe below is VERIFIED LIVE...)
+- [hour1-analysis-2026-11-12.md](probes/hour1-analysis-2026-11-12.md): Fresh Paladin first hour: where the 60 minutes went (2026-11-12) (status: analysis, no code changed. Source: the sandbox bot log from the reset (build 0.0.261112021709), window...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
 `probes/navsoak/`
