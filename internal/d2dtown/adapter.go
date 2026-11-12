@@ -306,12 +306,21 @@ func (h hoverFirst) Click(b input.Button, x, y int, mods ...input.Mod) error {
 // d2dinput does one-shot become the walks that actually arrive: an NPC, the stash chest or the waypoint through
 // ApproachNPC (side-steps around the camp's obstacles), a portal through EnterPortal (a click on its sprite, V).
 func Input(in input.Controller, c *d2dctl.Client) input.Controller {
-	return townInput{HoverFirst(in), c}
+	return townInput{HoverFirst(in), c, in}
 }
 
 type townInput struct {
 	input.Controller
-	c *d2dctl.Client
+	c   *d2dctl.Client
+	raw input.Controller // the controller under the hover wrapper (it may offer DropClick)
+}
+
+// DropClick forwards to the d2d controller's mouse-press drop (input.WorldDropper); a controller without one clicks.
+func (t townInput) DropClick(w input.Point) error {
+	if wd, ok := t.raw.(input.WorldDropper); ok {
+		return wd.DropClick(w)
+	}
+	return t.Controller.ClickWorld(w)
 }
 
 // BeltPut is the d2d way to put a pack potion into the belt (town.beltPutter).

@@ -344,3 +344,37 @@ func TestPrimeAsksForWarps(t *testing.T) {
 		t.Fatalf("kick %q lands %.2f cells from the warp", ls[2], d)
 	}
 }
+
+// DropClick is a mouse press projected from the hero's screen spot, not "cmd move" (the d2d drop bug: an item on the
+// cursor only drops on a real press).
+func TestDropClickPressesTheMouse(t *testing.T) {
+	c, srv := rig(t, fake.Sample()) // the hero stands at cell 30.7 13.7
+	hx, hy := 30.7, 13.7
+	for _, off := range [][2]int{{2, 2}, {-2, 2}, {2, -2}, {0, 3}} {
+		w := input.Point{X: int(hx*5) + off[0], Y: int(hy*5) + off[1]}
+		if err := c.DropClick(w); err != nil {
+			t.Fatal(err)
+		}
+	}
+	var clicks []string
+	for _, l := range srv.Lines() {
+		if strings.HasPrefix(l, "cmd move") {
+			t.Fatalf("a walk order was sent: %q", l)
+		}
+		if strings.HasPrefix(l, "click ") {
+			clicks = append(clicks, l)
+		}
+	}
+	if len(clicks) != 4 {
+		t.Fatalf("clicks %v", clicks)
+	}
+	for _, l := range clicks {
+		var x, y int
+		if _, err := fmt.Sscanf(l, "click %d %d", &x, &y); err != nil || x < 300 || x > 500 || y < 250 || y > 350 {
+			t.Errorf("%q is not near the hero (400, 292)", l)
+		}
+	}
+	if clicks[0] == clicks[1] {
+		t.Error("different offsets must give different spots")
+	}
+}

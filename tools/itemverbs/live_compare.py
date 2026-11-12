@@ -16,6 +16,7 @@ ap = argparse.ArgumentParser()
 ap.add_argument("--bot", required=True); ap.add_argument("--d2d", required=True); ap.add_argument("--game", required=True)
 ap.add_argument("--out", required=True); ap.add_argument("--classes", default="2,1"); ap.add_argument("--seed", default="3")
 ap.add_argument("--port", type=int, default=18420); ap.add_argument("--probe", action="store_true")
+ap.add_argument("--modes", default="click,verb"); ap.add_argument("--steps", default="", help="comma list of step-name prefixes to run (default all)")
 args = ap.parse_args()
 os.makedirs(args.out, exist_ok=True)
 TOKEN = "ivtoken-0123456789abcdef"
@@ -163,7 +164,9 @@ def step(name, path, body):
 def scenario():
     """The same steps in both modes. A step whose item is missing is recorded as skipped (and differs between modes then)."""
     out = []
+    only = [x for x in args.steps.split(",") if x]
     def do(name, path, pick, extra=None):
+        if only and not any(name.startswith(o) for o in only): return
         v = view()
         it = pick(v)
         if it is None:
@@ -216,7 +219,8 @@ if __name__ == "__main__":
     diffs = 0
     table = []
     for cls in [int(c) for c in args.classes.split(",")]:
-        traces = {m: run_mode(root, cls, m) for m in ("click", "verb")}
+        traces = {m: run_mode(root, cls, m) for m in args.modes.split(",")}
+        if len(traces) < 2: print(json.dumps(traces)[:3000]); continue
         for a, b in zip(traces["click"], traces["verb"]):
             same = {k: a.get(k) for k in ("step", "http", "refused", "state", "result", "skipped")} == {k: b.get(k) for k in ("step", "http", "refused", "state", "result", "skipped")}
             diffs += 0 if same else 1

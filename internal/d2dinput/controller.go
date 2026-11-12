@@ -311,6 +311,24 @@ func (c *Controller) primeToward(to *[2]float64) error {
 // ClickWorld starts "cmd move" toward w and returns at once.
 func (c *Controller) ClickWorld(w input.Point) error { return c.Move(w) }
 
+// DropClick presses the mouse on the screen spot of world point w (docs/design/item-verbs.md, TASK dropfix). ClickWorld on
+// d2d is "cmd move": a walk order, not a mouse press, so an item on the cursor never dropped (V live 2026-11-12: all
+// town.dropTries ground clicks failed and the item went back to the pack, on two classes; a real "click 400 300" with the
+// item held dropped it at the feet, V headless). The hero stands at screen (400, 292) (V: where a dropped item showed in
+// the ground list) and a subtile is 16 by 8 pixels on screen (S: a 160x80 tile, five subtiles a side), so the spot is
+// projected from the offset to the hero's cell and kept inside the playfield.
+func (c *Controller) DropClick(w input.Point) error {
+	l, err := c.C.Level(c.ctx())
+	if err != nil {
+		return err
+	}
+	cx, cy := c.cell(w)
+	dx, dy := (cx-l.X)*5, (cy-l.Y)*5
+	x := math.Min(math.Max(400+(dx-dy)*16, 40), 760)
+	y := math.Min(math.Max(292+(dx+dy)*8, 60), 480)
+	return c.C.Click(c.ctx(), int(math.Round(x)), int(math.Round(y)))
+}
+
 // Move is ClickWorld by its semantic name.
 func (c *Controller) Move(w input.Point) error {
 	t0 := c.clk().Now()
