@@ -18,6 +18,8 @@ owns:
   - "tools/friendpack/build.sh"
   - "tools/friendpack/checklist.sh"
   - "deploy/d2d-container/context.sh"
+  - "tools/friendpack/compose.yml"
+  - "cmd/d2bot/main.go"
 exclusive:
   - "fork-branch:fork-only/icon-original"
 contracts: []
