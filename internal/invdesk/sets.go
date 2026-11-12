@@ -26,6 +26,8 @@ const (
 	// MaxApplySteps bounds the requests one Apply queues (they do not count against MaxQueue).
 	MaxApplySteps = 24
 	MaxSetName    = 24
+	// SetsLadderID is the row of the unlock ladder (data/unlocks/ladder.json) that opens the feature.
+	SetsLadderID = "gearsets"
 )
 
 // SetItem is the identity of one remembered item: the same family as the sell marks (docs/inventory-ui.md). The id is
@@ -117,19 +119,31 @@ type SetPreview struct {
 
 // maxSets is the knob invdesk.maxSets (Config.MaxSets).
 func (d *Desk) maxSets() int {
-	if d.c.MaxSets != nil {
-		if n := d.c.MaxSets(); n > 0 {
+	d.mu.Lock()
+	f := d.c.MaxSets
+	d.mu.Unlock()
+	if f != nil {
+		if n := f(); n > 0 {
 			return n
 		}
 	}
 	return DefaultMaxSets
 }
 
+// SetMaxSets installs the knob invdesk.maxSets.
+func (d *Desk) SetMaxSets(f func() int) { d.mu.Lock(); d.c.MaxSets = f; d.mu.Unlock() }
+
+// SetSetsGate installs the unlock gate after the desk exists (the ladder is opened later than the desk).
+func (d *Desk) SetSetsGate(g func() (bool, string)) { d.mu.Lock(); d.c.SetsGate = g; d.mu.Unlock() }
+
 func (d *Desk) setsOpen() (bool, string) {
-	if d.c.SetsGate == nil {
+	d.mu.Lock()
+	g := d.c.SetsGate
+	d.mu.Unlock()
+	if g == nil {
 		return true, ""
 	}
-	return d.c.SetsGate()
+	return g()
 }
 
 func (d *Desk) setsGuard() error {

@@ -45,3 +45,30 @@ func TestPlayerEquipPinsTheSlot(t *testing.T) {
 		}
 	}
 }
+
+// A worn item comes off into the backpack through the click path; asking for an item that is not worn is refused; the
+// two-hander rule used to order a set apply reads the base. Two classes (docs/gearsets.md).
+func TestPlayerUnequipTakesTheItemOff(t *testing.T) {
+	geartest.Need(t)
+	for _, cls := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		r, _, us := equipRig(t, "amu")
+		r.W.Player.Class = cls
+		lv := leveler.New(r.Env, leveler.Options{Snapshot: r.W.Snapshot})
+		if err := lv.PlayerUnequip(context.Background(), us[0].ID); !errors.Is(err, leveler.ErrNotWorn) {
+			t.Fatalf("%v: unequip of a pack item: %v", cls, err)
+		}
+		if err := lv.PlayerEquip(context.Background(), us[0].ID, d2.BodyNeck); err != nil {
+			t.Fatalf("%v: %v", cls, err)
+		}
+		if err := lv.PlayerUnequip(context.Background(), us[0].ID); err != nil {
+			t.Fatalf("%v: %v", cls, err)
+		}
+		if _, ok := worn(r.W, us[0].ID); ok {
+			t.Fatalf("%v: still worn", cls)
+		}
+		s, _ := r.W.Snapshot()
+		if lv.IsTwoHanded(s, us[0].ID) {
+			t.Errorf("%v: an amulet is not a two-hander", cls)
+		}
+	}
+}

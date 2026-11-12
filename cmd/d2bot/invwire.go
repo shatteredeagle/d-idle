@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"path/filepath"
 	"sync"
 	"time"
@@ -8,12 +9,14 @@ import (
 	"d2lod-bot/internal/bot"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/data"
+	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/task"
 	"d2lod-bot/internal/town"
+	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
 )
 
@@ -82,6 +85,8 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 	if lv != nil {
 		d.SetEquipper(lv)
 		d.SetTrasher(lv)
+		d.SetUnequipper(lv)
+		d.SetHands(lv)
 	}
 	if lt != nil {
 		lt.SetIgnore(d.Ignored) // items the player trashed stay on the ground
@@ -174,6 +179,22 @@ func (a invAdapter) RequestGold(deposit bool, n int) (any, error) {
 	return a.d.RequestGold(deposit, n)
 }
 
+// The schema 7 part (docs/gearsets.md): unequip, the merc as a target and the player's gear sets.
+func (a invAdapter) RequestUnequip(slot, target string) (any, error) {
+	return a.d.RequestUnequipFor(slot, target)
+}
+func (a invAdapter) RequestEquipFor(id uint32, slot, target string) (any, error) {
+	return a.d.RequestEquipFor(id, slot, target)
+}
+func (a invAdapter) SaveSet(name, target string) (any, error) { return a.d.SaveSet(name, target) }
+func (a invAdapter) RenameSet(id, name string) error          { return a.d.RenameSet(id, name) }
+func (a invAdapter) DeleteSet(id string) error                { return a.d.DeleteSet(id) }
+func (a invAdapter) PreviewSet(id string) (any, error)        { return a.d.PreviewSet(id) }
+func (a invAdapter) ApplySet(id string) (any, error)          { return a.d.ApplySet(id) }
+func (a invAdapter) CancelApply(group string) error           { return a.d.CancelApply(group) }
+func (a invAdapter) SetSetsGate(g func() (bool, string))      { a.d.SetSetsGate(g) }
+
+var _ watch.InvGearDesk = invAdapter{}
 var _ watch.InvDesk = invAdapter{}
 var _ watch.InvStashDesk = invAdapter{}
 
@@ -193,4 +214,49 @@ func playerGear(ref *runnerRef) bot.PlayerGear {
 		return nil
 	}
 	return ref.inv
+}
+
+// setsGate is the unlock of the gear sets (ladder row `gearsets`, docs/gearsets.md): open when the row is open, when there
+// is no ladder at all, or on a DEV image / sandbox (DIDLE_DEV=1, the existing dev switch, docs/dev-update.md). A ladder
+// that lacks the row keeps the feature off, like every other ui row.
+func setsGate(eng *unlock.Engine, getenv func(string) string) func() (bool, string) {
+	return func() (bool, string) {
+		if getenv("DIDLE_DEV") == "1" || eng == nil {
+			return true, ""
+		}
+		if eng.Allowed(invdesk.SetsLadderID) {
+			return true, ""
+		}
+		for _, s := range eng.States("ui") {
+			if s.ID == invdesk.SetsLadderID {
+				return false, s.Teaser
+			}
+		}
+		return false, "Gear sets are not part of this ladder"
+	}
+}
+
+// bindSetsGate gives the inventory page's desk the unlock gate once the ladder exists.
+func bindSetsGate(api *watch.InvAPI, fun *watch.Fun) {
+	if api == nil {
+		return
+	}
+	var eng *unlock.Engine
+	if fun != nil && fun.Unlocks != nil {
+		eng = fun.Unlocks.Engine
+	}
+	api.SetSetsGate(setsGate(eng, os.Getenv))
+}
+
+// wireSets reads the knob invdesk.maxSets at call time (a changed knob applies to the next save).
+func wireSets(ref *runnerRef, e *env.Env) {
+	if ref == nil || ref.inv == nil || e == nil {
+		return
+	}
+	ref.inv.SetMaxSets(func() int {
+		if e.Tune == nil {
+			return 0
+		}
+		return e.Tune.Invdesk.MaxSets
+	})
 }
