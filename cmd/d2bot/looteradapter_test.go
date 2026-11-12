@@ -59,3 +59,22 @@ func TestRecoveryPickupThroughTheAdapter(t *testing.T) {
 	}
 	rl.SetRecovering(false)
 }
+
+// The loot memory and the gold priority reach the runner only through the adapter (the walk-back of TASK-320 never ran
+// in production because the adapter hid these methods): the runner's optional interfaces must be found on it.
+func TestAdapterExposesLootMemoryAndGold(t *testing.T) {
+	var lt bot.Looter = looterAdapter{}
+	if _, ok := lt.(interface {
+		ObserveGround(*d2.Snapshot)
+		ResetMemory()
+		WalkBack(context.Context, func() bool, func(n, gold int, first string)) (int, error)
+	}); !ok {
+		t.Fatal("looterAdapter hides the loot memory (ObserveGround/ResetMemory/WalkBack)")
+	}
+	if _, ok := lt.(interface {
+		GoldNear(*d2.Snapshot, int) bool
+		GoldLedger() (seen, picked, gold, abandoned int)
+	}); !ok {
+		t.Fatal("looterAdapter hides the gold priority (GoldNear/GoldLedger)")
+	}
+}

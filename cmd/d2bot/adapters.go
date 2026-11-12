@@ -53,7 +53,7 @@ type fighterAdapter struct{ f *combat.Fighter }
 func (a fighterAdapter) IsIgnored(id uint32, dist float64) bool { return a.f.IsIgnored(id, dist) }
 
 func (a fighterAdapter) Clear(ctx context.Context, o bot.ClearOpts) (bot.ClearResult, error) {
-	res, err := a.f.Clear(ctx, combat.ClearOpts{Radius: o.Radius})
+	res, err := a.f.Clear(ctx, combat.ClearOpts{Radius: o.Radius, Interlude: o.Interlude})
 	return bot.ClearResult{Killed: res.Kills, Remaining: res.Skipped + res.Avoided}, mapCombatErr(err)
 }
 func (a fighterAdapter) Kill(ctx context.Context, id uint32) error {
@@ -200,8 +200,21 @@ func (a townAdapter) NeedsTrip(s *d2.Snapshot) (bool, string) { return a.t.Needs
 type looterAdapter struct{ l *loot.Looter }
 
 func (a looterAdapter) PickUp(ctx context.Context, o bot.PickOpts) (bot.PickReport, error) {
-	r, err := a.l.PickUp(ctx, loot.PickOpts{Radius: o.Radius, Names: o.Names})
-	return bot.PickReport{Picked: len(r.Picked), Skipped: len(r.Skipped)}, err
+	r, err := a.l.PickUp(ctx, loot.PickOpts{Radius: o.Radius, Names: o.Names, GoldOnly: o.GoldOnly, Abort: o.Abort, Max: o.Max})
+	return bot.PickReport{Picked: len(r.Picked), Skipped: len(r.Skipped), Gold: r.GoldGained}, err
+}
+
+// The loot memory and gold priority seams the runner asserts on (bot.lootMemory, bot.goldLooter). Without these the
+// walk-back of docs/lootmemory.md never ran in production (the adapter hid the Looter's methods).
+func (a looterAdapter) ObserveGround(s *d2.Snapshot) { a.l.ObserveGround(s) }
+func (a looterAdapter) ResetMemory()                 { a.l.ResetMemory() }
+func (a looterAdapter) WalkBack(ctx context.Context, abort func() bool, why func(n, gold int, first string)) (int, error) {
+	return a.l.WalkBack(ctx, abort, why)
+}
+func (a looterAdapter) GoldNear(s *d2.Snapshot, dist int) bool { return a.l.GoldNear(s, dist) }
+func (a looterAdapter) GoldLedger() (seen, picked, gold, abandoned int) {
+	g := a.l.GoldLedger()
+	return g.Seen, g.Picked, g.Gold, g.Abandoned
 }
 
 // LeftBehind and ClearLeftBehind feed the runner's "loot: pack full" trip reason.

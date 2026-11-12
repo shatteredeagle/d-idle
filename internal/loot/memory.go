@@ -41,18 +41,20 @@ type lootMem struct {
 	judged map[uint32]bool // ids already evaluated (kept or rejected), so a tick costs nothing for known units
 	area   int             // area of the last snapshot
 	trips  map[int]int     // walk-back trips since the hero entered the area
+	gfail  map[uint32]int  // failed pickup rounds per gold pile (goldprio.go)
+	gold   GoldLedger
 }
 
 func (m *lootMem) init() {
 	if m.items == nil {
-		m.items, m.judged, m.trips = map[uint32]*memItem{}, map[uint32]bool{}, map[int]int{}
+		m.items, m.judged, m.trips, m.gfail = map[uint32]*memItem{}, map[uint32]bool{}, map[int]int{}, map[uint32]int{}
 	}
 }
 
 // ResetMemory forgets everything: a new game starts, unit ids are not comparable across games.
 func (l *Looter) ResetMemory() {
 	l.mem.mu.Lock()
-	l.mem.items, l.mem.judged, l.mem.trips, l.mem.area = nil, nil, nil, 0
+	l.mem.items, l.mem.judged, l.mem.trips, l.mem.gfail, l.mem.area, l.mem.gold = nil, nil, nil, nil, 0, GoldLedger{}
 	l.mem.mu.Unlock()
 }
 
@@ -90,6 +92,9 @@ func (l *Looter) ObserveGround(s *d2.Snapshot) {
 	m.init()
 	area := s.Player.Area
 	if area != m.area {
+		if m.area != 0 {
+			m.noteAreaLeft(m.area)
+		}
 		m.area = area
 		delete(m.trips, area) // a new visit of this area
 	}
@@ -130,6 +135,7 @@ func (l *Looter) ObserveGround(s *d2.Snapshot) {
 			if cc.Stats != nil && it.gold < l.goldBar(s) {
 				continue
 			}
+			m.gold.Seen++
 		} else {
 			it.value = SellValue(l.e.Data, b, u.Item, MaxBuyOf(s.Player))
 			if v.Prio >= t.ValuableMinPrio {
@@ -180,6 +186,9 @@ func (l *Looter) forget(id uint32) {
 func (l *Looter) worth(it *memItem, clvl int) bool {
 	t := &l.e.Tune.Loot
 	if it.gold > 0 {
+		if t.GoldPriority != 0 {
+			return true // the pile passed the pickit's bar when it was seen
+		}
 		return float64(it.gold) >= float64(t.MemMinGold)*(1+0.1*float64(max(clvl-1, 0)))
 	}
 	return it.wanted || it.value >= t.ValuableMinGold
@@ -208,7 +217,9 @@ func (l *Looter) WalkBack(ctx context.Context, abort func() bool, why func(n, go
 		area := s.Player.Area
 		l.mem.mu.Lock()
 		l.mem.init()
-		if l.mem.trips[area] >= t.MemMaxTrips {
+		trips0 := l.mem.trips[area]
+		goldOnly := trips0 >= t.MemMaxTrips // gold is exempt from the trip cap up to four times the cap (goldPriority)
+		if goldOnly && (t.GoldPriority == 0 || trips0 >= 4*max(t.MemMaxTrips, 1)) {
 			l.mem.mu.Unlock()
 			break
 		}
@@ -216,7 +227,13 @@ func (l *Looter) WalkBack(ctx context.Context, abort func() bool, why func(n, go
 		bestD := math.MaxFloat64
 		n, g := 0, 0
 		for _, it := range l.mem.items {
-			if it.area != area || it.fails >= 2 || !l.worth(it, s.Player.Level) {
+			if it.area != area || !l.worth(it, s.Player.Level) {
+				continue
+			}
+			if it.fails >= 2 && (it.gold == 0 || t.GoldPriority == 0 || it.fails >= max(t.GoldRetries, 1)) {
+				continue
+			}
+			if goldOnly && it.gold == 0 {
 				continue
 			}
 			d := math.Hypot(float64(it.x-s.Player.X), float64(it.y-s.Player.Y))
@@ -256,7 +273,7 @@ func (l *Looter) WalkBack(ctx context.Context, abort func() bool, why func(n, go
 				l.mem.mu.Lock()
 				if it := l.mem.items[cp.id]; it != nil {
 					it.fails++
-					if it.fails >= 2 {
+					if it.fails >= 2 && (it.gold == 0 || t.GoldPriority == 0 || it.fails >= max(t.GoldRetries, 1)) {
 						delete(l.mem.items, cp.id)
 					}
 				}

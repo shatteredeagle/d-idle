@@ -160,7 +160,8 @@ func TestMemoryMaxTrips(t *testing.T) {
 	l, w := memRig(t, d2.Paladin, 1)
 	w.Player.Gold = 5000
 	l.Env().Tune.Loot.MemMaxTrips = 2
-	for i := 0; i < 4; i++ { // 30 apart: each needs its own trip
+	l.Env().Tune.Loot.GoldPriority = 0 // gold is exempt from the cap under the priority (goldprio_test.go)
+	for i := 0; i < 4; i++ {           // 30 apart: each needs its own trip
 		pile(w, 6060+30*i, 4930, 80)
 	}
 	observe(t, l, w)
