@@ -154,6 +154,7 @@ cmd/d2bot/sensesfeed.go  credit-runner  maptrail
 cmd/d2bot/sensesfeed_test.go  credit-runner  maptrail
 cmd/d2bot/senseshistory.go  credit-runner  maphistory
 cmd/d2bot/senseshistory.go  credit-runner  maphistoryA
+cmd/d2bot/senseshistory.go  credit-runner  maphistoryB
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistory
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryA
 cmd/d2firsthour/  live-agent  firsthour
@@ -208,6 +209,7 @@ docs/research/return-screen.md  credit-runner  returnmock
 docs/research/upstream-next.md  credit-runner  upstream-next
 docs/senses-map.md  credit-runner  maphistory
 docs/senses-map.md  credit-runner  maphistoryA
+docs/senses-map.md  credit-runner  maphistoryB
 docs/senses-map.md  credit-runner  maptrail
 docs/senses-map.md  credit-runner  maptrail2
 docs/session-record.md  live-agent  sessions
@@ -283,6 +285,7 @@ internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
 internal/senses  credit-runner  maphistory
 internal/senses  credit-runner  maphistoryA
+internal/senses  credit-runner  maphistoryB
 internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
@@ -314,11 +317,13 @@ internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
 internal/watch/senses.go  credit-runner  maphistory
 internal/watch/senses.go  credit-runner  maphistoryA
+internal/watch/senses.go  credit-runner  maphistoryB
 internal/watch/senses.go  credit-runner  maptrail
 internal/watch/senses.go  credit-runner  maptrail2
 internal/watch/senses_stitch_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maphistory
 internal/watch/senses_test.go  credit-runner  maphistoryA
+internal/watch/senses_test.go  credit-runner  maphistoryB
 internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
 internal/watch/sim.go  credit-runner  xpreadout
@@ -328,6 +333,7 @@ internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.txt  credit-runner  repairtrip
+internal/watch/testdata/history-heat.json  credit-runner  maphistoryB
 internal/watch/testdata/history.json  credit-runner  maphistoryA
 internal/watch/testdata/inventory_dom.js  credit-runner  artspeed2
 internal/watch/testdata/inventory_dom.js  credit-runner  nopins
@@ -335,6 +341,7 @@ internal/watch/testdata/itemactions/act_dom.js  credit-runner  nopins
 internal/watch/testdata/itemtip/tip_dom.js  credit-runner  nopins
 internal/watch/testdata/map_panel.js  credit-runner  maphistory
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryA
+internal/watch/testdata/map_panel.js  credit-runner  maphistoryB
 internal/watch/testdata/map_panel.js  credit-runner  maptrail
 internal/watch/testdata/map_panel.js  credit-runner  maptrail2
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail
@@ -362,6 +369,7 @@ internal/watch/web/panels/hero-detail  credit-runner  xpreadout
 internal/watch/web/panels/journey/  credit-runner  campaign2
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maphistoryA
+internal/watch/web/panels/map  credit-runner  maphistoryB
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.css  credit-runner  uifit
