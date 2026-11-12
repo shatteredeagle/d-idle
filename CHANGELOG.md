@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0) <!--sg:agent/campaign2-->
 - decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block <!--sg:agent/decomp11-->
 - TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold <!--sg:agent/stashactions-->
 - TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0) <!--sg:agent/campaign1-->
