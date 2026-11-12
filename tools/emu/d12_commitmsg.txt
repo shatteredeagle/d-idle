@@ -1,0 +1,8 @@
+game: a warp lands on FUN_0064e7b0's spot (Level::warp_spot), not nearest_free's ring order
+
+World::arrive searched the free spot round the other side's warp unit with
+Level::nearest_free (square ring, scan order i,-ring / i,ring / -ring,i / ring,i, first free
+wins, gives up at ring 199). FUN_00554ea0 -> FUN_0064e7b0 -> FUN_0064dea0 takes the free
+subtile of least |dx| + |dy| in the first ring that has one, rings 1 to 49. Level::warp_spot
+is that rule (Teleport proof, 0 of 20,000 differ). use_warp now lands through
+World::warp_arrival; waypoints, portals and quest arrivals are not touched.
