@@ -198,7 +198,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | loot.valuableMinPrio | 70 | 1..100 | prio | 100 | 5 | Items whose pickit rule prio is at least this are valuables. |
 | loot.carryValuables | 0 | 0..20 | count | 0 | 1 | Valuables allowed in the pack outside town (insurance: the rest stay in the stash). |
 | loot.poorGoldBelow | 300 | 0..1e+04 | gold | 1e+04 | 1 | Below this gold every gold pile and junk weapon or armor worth selling is picked. |
-| loot.poorMinSell | 6 | 0..500 | gold | 500 | 2 | Estimated sell value a junk item needs to be picked in poor mode. |
+| loot.poorMinSell | 20 | 0..500 | gold | 500 | 2 | Estimated sell value a junk item needs to be picked in poor mode. |
 | loot.maxPerCall | 30 | 1..100 | count | 1 | 1 | Upper bound on pickups in one PickUp call. |
 | loot.memEnabled | 1 | 0..1 | 0/1 | 0 | 2 | 1: remember wanted drops beyond the pickup radius and walk back for them at quiet moments. |
 | loot.memMinGold | 20 | 0..5000 | gold | 5000 | 1 | Smallest remembered gold pile worth a walk-back at clvl 1; the bar grows by 10 percent per character level. |
@@ -268,6 +268,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.noPortalWaitSec | 20 | 0..240 | s | 20 | 1 | Low life, no potion and the way to town fails because there is no town portal (and no walk back for this area): seconds after the first such failure before the hero leaves the game, which restarts it in town. 240 keeps the old two minute waits. |
 | bot.freshAfterRecoverySec | 180 | 0..900 | s | 180 | 1 | No unplanned fresh game (no target left, drought) this long after a lost-game recovery, unless life is below the resume line. A second restart right after the recovery fails the Gate 2 fault criterion. 0 is off. |
 | bot.emptyFieldSec | 150 | 0..900 | s | 150 | 1 | A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off. |
+| bot.clearIdleMin | 3 | 0..30 | min | 3 | 1 | A leveling area where the hero has killed nothing for this long counts as cleared, so the planner moves on to the next area (a human leaves an emptied field). 0 is off. |
 | bot.failsafePauseMaxSec | 3600 | 300..1.44e+04 | s | 3600 | 1 | Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress. |
 | bot.mercRetryMin | 10 | 1..60 | min | 10 | 1 | Minutes between merc chore attempts; a failed hire or revive is not retried sooner. |
 | bot.mercHireMinGold | 400 | 0..2000 | gold | 400 | 1 | Gold in Act 2 town below which no hire is attempted. |

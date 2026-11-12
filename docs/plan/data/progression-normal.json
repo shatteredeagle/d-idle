@@ -22,6 +22,7 @@
    "farm": true,
    "name": "Cold Plains",
    "enter_clvl": 5,
+   "melee_enter_clvl": 4,
    "kit_clvl": 4,
    "early_gap": 1,
    "leave_clvl": 10,

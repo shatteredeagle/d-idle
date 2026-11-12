@@ -260,6 +260,7 @@ type loopState struct {
 	emptyArea  int
 	emptyKills int
 	emptySince time.Time
+	levelSlice bool // the running sweep belongs to a leveling slice (taskActs.LevelTo): bot.clearIdleMin applies
 	// failed explores per area since the last kill (exploreGaveUp)
 	exploreFails map[int]exploreFail
 	pp           pingPong // area ping-pong guard (noteArea)

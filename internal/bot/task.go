@@ -934,6 +934,8 @@ func (a taskActs) LevelTo(ctx context.Context, n int) error {
 	}
 	r.clearTargetFails(target) // standing in the target proves it is reachable
 	r.setTargetArea(target)
+	r.loop.levelSlice = true // emptyAreaLeave: bot.clearIdleMin applies to leveling slices only
+	defer func() { r.loop.levelSlice = false }()
 	return a.tag(r.sweepPass(ctx, target))
 }
 
