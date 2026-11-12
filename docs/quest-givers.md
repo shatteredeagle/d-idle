@@ -18,6 +18,7 @@ Where it shows: the plan's step title and reason go to the whyline (`quest_step`
 - `internal/task/givers.go`: `GiverTable.Errands(world, class)` (pure), `Campaign.WithQuestGivers` (opt-in, like `WithRogueClaim`), `Campaign.giverPlan` at the top of `Plan`. A visit is one optional talk step in its own group `givers.<quest>.<kind>`: it never blocks the chain, never repeats in a session (executor `Finished`), is skipped when blocked, when the campaign does not include the quest (e.g. `SkipTools`) or skips it (`skipWhy`), and outside Normal or the Rogue Encampment.
 - Class generic: the class family comes from the hint table's `families` (data); an unknown class is an error naming it, reported once in the log, and makes no visit (V `TestGiverUnknownClassIsReported`). Tests run Paladin (melee) and Sorceress (caster) at the two levels (V `TestGiverVisitByClassFamily`).
 - `internal/talk/tables.go`: one row, `{Kashya, "quest"}: Talk` (U live).
+- The guided journey (docs/campaign.md) runs after the giver visits: `Campaign.Plan` asks `giverPlan` first, then the spine.
 - Switch: `internal/bot/givers.go`. On for the player's game; off in a named run (`D2BOT_RUN`) and with `D2BOT_QUEST_GIVERS=0`.
 
 ## Limits (U)

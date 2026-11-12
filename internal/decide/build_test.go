@@ -116,8 +116,8 @@ func TestUrgencyStageHook(t *testing.T) {
 
 func TestCatalogueShape(t *testing.T) {
 	c := mustCat(t)
-	if len(c.Points) != 25 {
-		t.Fatalf("%d points, spec says 25", len(c.Points))
+	if len(c.Points) != 26 {
+		t.Fatalf("%d points, spec says 25 plus t1.journey.floor (docs/campaign.md)", len(c.Points))
 	}
 	tiers := map[int]int{}
 	for _, p := range c.Points {

@@ -1,0 +1,290 @@
+{
+ "paladin": {
+  "schema": 6,
+  "inTown": false,
+  "class": "Paladin",
+  "gold": 5000,
+  "stashGold": 20000,
+  "equipment": {},
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Magic Ring",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "stash"
+   },
+   {
+    "id": 7,
+    "code": "x7",
+    "name": "Plate Mail",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "stash",
+    "noStash": "the stash has no free spot for it"
+   }
+  ],
+  "stash": [
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Rare Sword",
+    "quality": "rare",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take"
+   },
+   {
+    "id": 5,
+    "code": "x5",
+    "name": "Great Helm",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take",
+    "noStash": "the backpack has no free spot for it: make room first"
+   },
+   {
+    "id": 6,
+    "code": "x6",
+    "name": "Strange Amulet",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take",
+    "noIdentify": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "stashOps": {
+   "depositMax": 5000,
+   "withdrawMax": 20000
+  },
+  "identify": {
+   "tool": "tome",
+   "tome": 4,
+   "tomeCap": 20,
+   "scrolls": 0,
+   "unid": 0,
+   "buyDefault": 16,
+   "buyMax": 20,
+   "cain": "open",
+   "cainWhy": ""
+  },
+  "queue": [
+   {
+    "id": 3,
+    "kind": "identify",
+    "place": "stash",
+    "name": "Rare Sword",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 1
+   },
+   {
+    "id": 1,
+    "kind": "stash",
+    "name": "Magic Ring",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 2
+   },
+   {
+    "id": 0,
+    "kind": "gold",
+    "op": "deposit",
+    "name": "Deposit 1000 gold",
+    "state": "doing",
+    "count": 1000,
+    "at": 3
+   }
+  ],
+  "recent": [
+   {
+    "id": 5,
+    "kind": "take",
+    "name": "Great Helm",
+    "state": "done",
+    "at": 0
+   },
+   {
+    "id": 0,
+    "kind": "gold",
+    "op": "withdraw",
+    "name": "Withdraw 50 gold",
+    "state": "failed",
+    "reason": "no gold mover",
+    "count": 50,
+    "at": 0
+   }
+  ]
+ },
+ "sorceress": {
+  "schema": 6,
+  "inTown": false,
+  "class": "Sorceress",
+  "gold": 5000,
+  "stashGold": 20000,
+  "equipment": {},
+  "backpack": [
+   {
+    "id": 1,
+    "code": "x1",
+    "name": "Magic Ring",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "stash"
+   },
+   {
+    "id": 7,
+    "code": "x7",
+    "name": "Plate Mail",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "stash",
+    "noStash": "the stash has no free spot for it"
+   }
+  ],
+  "stash": [
+   {
+    "id": 3,
+    "code": "x3",
+    "name": "Rare Sword",
+    "quality": "rare",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take"
+   },
+   {
+    "id": 5,
+    "code": "x5",
+    "name": "Great Helm",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take",
+    "noStash": "the backpack has no free spot for it: make room first"
+   },
+   {
+    "id": 6,
+    "code": "x6",
+    "name": "Strange Amulet",
+    "quality": "magic",
+    "identified": false,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 1,
+    "canSell": true,
+    "stashOp": "take",
+    "noIdentify": "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "stashOps": {
+   "depositMax": 5000,
+   "withdrawMax": 20000
+  },
+  "identify": {
+   "tool": "tome",
+   "tome": 4,
+   "tomeCap": 20,
+   "scrolls": 0,
+   "unid": 0,
+   "buyDefault": 16,
+   "buyMax": 20,
+   "cain": "locked",
+   "cainWhy": "opens when Cain is rescued"
+  },
+  "queue": [
+   {
+    "id": 3,
+    "kind": "identify",
+    "place": "stash",
+    "name": "Rare Sword",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 1
+   },
+   {
+    "id": 1,
+    "kind": "stash",
+    "name": "Magic Ring",
+    "state": "queued",
+    "reason": "waits until the hero is in town",
+    "at": 2
+   },
+   {
+    "id": 0,
+    "kind": "gold",
+    "op": "deposit",
+    "name": "Deposit 1000 gold",
+    "state": "doing",
+    "count": 1000,
+    "at": 3
+   }
+  ],
+  "recent": [
+   {
+    "id": 5,
+    "kind": "take",
+    "name": "Great Helm",
+    "state": "done",
+    "at": 0
+   },
+   {
+    "id": 0,
+    "kind": "gold",
+    "op": "withdraw",
+    "name": "Withdraw 50 gold",
+    "state": "failed",
+    "reason": "no gold mover",
+    "count": 50,
+    "at": 0
+   }
+  ]
+ }
+}

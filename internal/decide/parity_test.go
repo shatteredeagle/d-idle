@@ -74,6 +74,8 @@ func legacyDefault(point string, f map[string]string) (ans, split string) {
 		return "weapon", "" // U no code path reads the answer (TASK-197)
 	case "t1.quest.cain":
 		return "do", "" // U the campaign plan does the chain
+	case "t1.journey.floor":
+		return "go", "" // V the guided journey goes when the veto window passes unanswered (docs/campaign.md)
 	case "t2.repeat":
 		return "again", "" // V the goal order count decides
 	case "t2.failstreak":
@@ -108,8 +110,8 @@ func TestDefaultParity(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if len(cat.Points) != 25 {
-		t.Fatalf("%d points, the golden table has 25", len(cat.Points))
+	if len(cat.Points) != 26 {
+		t.Fatalf("%d points, the golden table has 26", len(cat.Points))
 	}
 	var match, mismatch, split, oracle int
 	perPoint := map[string]int{}

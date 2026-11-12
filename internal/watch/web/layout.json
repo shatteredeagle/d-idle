@@ -238,6 +238,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 23
+        },
+        {
+          "id": "journey",
+          "col": 1,
+          "row": 116,
+          "colSpan": 12,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 24
         }
       ]
     },
@@ -467,13 +477,23 @@
         },
         {
           "id": "alerts",
-          "col": 1,
-          "row": 69,
-          "colSpan": 12,
+          "col": 7,
+          "row": 66,
+          "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 23
+        },
+        {
+          "id": "journey",
+          "col": 1,
+          "row": 69,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 24
         }
       ]
     },
@@ -710,6 +730,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 23
+        },
+        {
+          "id": "journey",
+          "col": 7,
+          "row": 41,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 24
         }
       ]
     },
@@ -946,6 +976,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 23
+        },
+        {
+          "id": "journey",
+          "col": 7,
+          "row": 45,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 24
         }
       ]
     },

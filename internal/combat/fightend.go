@@ -71,3 +71,19 @@ func (f *Fighter) noteSummary(ft *FightTelemetry, res ClearResult, err error) {
 	}
 	f.OnSummary(s)
 }
+
+// Note is a passive remark of the fighter for the watch minimap: Kind is "ignore", "fallback" or "yield", Secs the
+// length of an ignore window, X and Y the unit's place when HasPos.
+type Note struct {
+	Kind   string
+	Text   string
+	X, Y   int
+	HasPos bool
+	Secs   int
+}
+
+func (f *Fighter) note(n Note) {
+	if f.OnNote != nil {
+		f.OnNote(n)
+	}
+}

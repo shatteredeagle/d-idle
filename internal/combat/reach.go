@@ -82,6 +82,8 @@ func (f *Fighter) ignore(st *fightState, tg Target, why IgnoreReason, detail str
 	}
 	f.ignores[tg.Unit.ID] = rec
 	st.ignored = append(st.ignored, rec.Ignored)
+	f.note(Note{Kind: "ignore", Text: "Ignoring " + tg.Name + " (" + string(why) + ")", X: tg.Unit.X, Y: tg.Unit.Y, HasPos: true,
+		Secs: int(rec.until.Sub(f.now()).Seconds())})
 	f.info("ignoring target", "monster", tg.Name, "id", tg.Unit.ID, "why", string(why), "detail", detail, "dist", int(tg.Dist))
 }
 

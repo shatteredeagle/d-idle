@@ -1,5 +1,5 @@
 {
-  "status": ["hero-status", "hero-meters", "alerts-count"],
+  "status": ["hero-status", "hero-meters", "alerts-count", "journey-chip"],
   "stage": ["video"],
   "layout": {
     "aliases": {"hero-status": "hero-vitals", "hero-detail": "hero-vitals", "whyline": "why", "hero-now": "now", "voice": "diary"},

@@ -166,22 +166,26 @@ type block struct{ x, y int32 }
 // last snapshot and the visited blocks of every area of the session (fog of war: the map shows only what the hero has
 // been near). Safe for concurrent use; it never blocks the caller on a reader.
 type Publisher struct {
-	mu      sync.Mutex
-	snap    Snapshot
-	have    bool
-	areaVer uint64 // grid version the map was built from
-	seq     uint64
-	areaNo  int
-	seen    map[int]map[block]struct{}
-	adj     *Adjacency     // nil: no stitching
-	visits  map[int]*visit // last fogged map of each area of the session
-	visitNo uint64
-	skipped []error
-	trail   Trail
-	act     uint8
-	events  Events
-	cover   Coverage
-	now     func() time.Time // test clock; nil is time.Now
+	mu                     sync.Mutex
+	snap                   Snapshot
+	have                   bool
+	areaVer                uint64 // grid version the map was built from
+	seq                    uint64
+	areaNo                 int
+	seen                   map[int]map[block]struct{}
+	adj                    *Adjacency     // nil: no stitching
+	visits                 map[int]*visit // last fogged map of each area of the session
+	visitNo                uint64
+	skipped                []error
+	trail                  Trail
+	act                    uint8
+	events                 Events
+	samples                Samples
+	heat                   Heat
+	heatAt                 time.Time
+	heatArea, heatX, heatY int
+	cover                  Coverage
+	now                    func() time.Time // test clock; nil is time.Now
 }
 
 // SetAdjacency sets the table of areas that are stitched into one canvas; nil turns stitching off (the default).
@@ -232,6 +236,7 @@ func (p *Publisher) Observe(lm *d2map.LevelMap, area string, hero d2map.Point) e
 		p.seen[lm.No] = sv
 	}
 	p.trail.Add(p.clock(), lm.No, hero.X, hero.Y, p.act)
+	p.observeHeat(lm.No, levelID(lm), p.clock(), hero.X, hero.Y)
 	grew := reveal(sv, hero)
 	changed := !p.have || lm.No != p.areaNo
 	if !grew && !changed && lm.Grid.Version() == p.areaVer {
