@@ -77,6 +77,7 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 	}
 	if tw != nil {
 		d.SetServices(tw)
+		d.SetTidyFor(tw.TidyWhyFor)
 		d.SetCainOpen(cainOpen(ref))
 	}
 	if lv != nil {

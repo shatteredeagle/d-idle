@@ -68,7 +68,10 @@ type Config struct {
 	Snap      func() *d2.Snapshot                         // the runner's newest snapshot
 	Why       func(u d2.Unit) string                      // optional: the item goals engine's reason line (loot verdict)
 	WhyFor    func(s *d2.Snapshot) func(u d2.Unit) string // optional, wins over Why: binds the reason source to ONE snapshot, built once per View
-	SellBlock func(u d2.Unit) string                      // optional: why an item can never be sold ("" = it may be)
+	// TidyFor binds the tidy policy line ("Will stash: rune") to one snapshot per View; it gets the item's mark so it
+	// never calls back into the desk. nil: no tidy line.
+	TidyFor   func(s *d2.Snapshot) func(u d2.Unit, mark string) string
+	SellBlock func(u d2.Unit) string // optional: why an item can never be sold ("" = it may be)
 	// TrashBlock is the same for trash (quest items, keys, tomes, the start kit); nil: nothing is blocked here.
 	TrashBlock func(u d2.Unit) string
 	// CainOpen says whether Deckard Cain is rescued (the Search for Cain quest done, or Cain seen in town); nil: the
@@ -329,6 +332,13 @@ func (d *Desk) SetWhy(f func(u d2.Unit) string) { d.mu.Lock(); d.c.Why = f; d.mu
 func (d *Desk) SetWhyFor(f func(s *d2.Snapshot) func(u d2.Unit) string) {
 	d.mu.Lock()
 	d.c.WhyFor = f
+	d.mu.Unlock()
+}
+
+// SetTidyFor installs the tidy tooltip source.
+func (d *Desk) SetTidyFor(f func(s *d2.Snapshot) func(u d2.Unit, mark string) string) {
+	d.mu.Lock()
+	d.c.TidyFor = f
 	d.mu.Unlock()
 }
 
@@ -876,6 +886,7 @@ type ItemView struct {
 	status.Item
 	Mark    string   `json:"mark,omitempty"`
 	Why     string   `json:"why,omitempty"`
+	Tidy    string   `json:"tidy,omitempty"` // additive: what the tidy policy will do with a backpack item (docs/tidy.md)
 	CanSell bool     `json:"canSell,omitempty"`
 	CanWear []string `json:"canWear,omitempty"` // backpack items: slots a request would be accepted for right now
 	Advice  string   `json:"advice,omitempty"`  // upgrade suggestion hook (card upgradeadvisor); empty today
@@ -998,6 +1009,10 @@ func (d *Desk) View() View {
 	if d.c.Prompt != nil {
 		v.Prompt = d.c.Prompt()
 	}
+	var tidyWhy func(u d2.Unit, mark string) string
+	if c.TidyFor != nil {
+		tidyWhy = c.TidyFor(s)
+	}
 	decorate := func(it status.Item, place string) ItemView {
 		iv := ItemView{Item: it}
 		if place == "mercworn" {
@@ -1014,6 +1029,9 @@ func (d *Desk) View() View {
 		}
 		if why != nil {
 			iv.Why = why(u)
+		}
+		if tidyWhy != nil && place == "pack" {
+			iv.Tidy = tidyWhy(u, iv.Mark)
 		}
 		if c.Advice != nil {
 			iv.Advice = c.Advice(it)

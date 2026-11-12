@@ -34,8 +34,9 @@ var qualityNames = map[int]string{d2.QualityLow: "low", d2.QualityNormal: "norma
 var placeNames = map[d2.Container]string{d2.ContInventory: "pack", d2.ContStash: "stash", d2.ContEquipment: "equipment",
 	d2.ContBelt: "belt", d2.ContCube: "cube", d2.ContCursor: "cursor", d2.ContGround: "ground"}
 
-// TidyFacts builds the policy facts of one unit. maxBuy caps the sell estimate (loot.MaxBuyOf).
-func (t *Town) TidyFacts(u d2.Unit, maxBuy int) tidy.Facts {
+// TidyFacts builds the policy facts of one unit. maxBuy caps the sell estimate (loot.MaxBuyOf); mark is the player's
+// mark, passed in so the inventory page (which holds the desk lock) never calls back into the desk.
+func (t *Town) TidyFacts(u d2.Unit, maxBuy int, mark string) tidy.Facts {
 	f := tidy.Facts{Place: "unknown"}
 	if u.Item == nil {
 		return f
@@ -44,7 +45,7 @@ func (t *Town) TidyFacts(u d2.Unit, maxBuy int) tidy.Facts {
 	f.Quality = qualityNames[u.Item.Quality]
 	f.Identified, f.Ethereal = u.Item.Identified(), u.Item.Ethereal()
 	f.StartItem = u.Item.Flags&d2.FlagStartItem != 0
-	f.Mark = t.markOf(u)
+	f.Mark = mark
 	b := t.base(u)
 	if b == nil {
 		f.Place = "unknown" // an unknown base is never touched
@@ -70,16 +71,23 @@ func (t *Town) tidyCtx(s *d2.Snapshot) tidy.Ctx {
 	return c
 }
 
-// TidyWhy is the tooltip line of one unit ("Will stash: rune"), or "" when tidying is off or the unit is not offered.
-func (t *Town) TidyWhy(s *d2.Snapshot, u d2.Unit) string {
-	if t.tune().TidyEnabled == 0 || s == nil || s.Player == nil || u.Item == nil {
-		return ""
+// TidyWhyFor binds the tooltip line to one snapshot: the returned func answers "Will stash: rune" for a backpack unit
+// and its mark, "" for everything else or when tidying is off. The grid fill is read once, not per item.
+func (t *Town) TidyWhyFor(s *d2.Snapshot) func(u d2.Unit, mark string) string {
+	if t.tune().TidyEnabled == 0 || s == nil || s.Player == nil || s.Inventory == nil {
+		return nil
 	}
 	p, err := tidyPolicy()
 	if err != nil {
-		return ""
+		return nil
 	}
-	return p.Decide(t.TidyFacts(u, loot.MaxBuyOf(s.Player)), t.tidyCtx(s)).Why
+	c, maxBuy := t.tidyCtx(s), loot.MaxBuyOf(s.Player)
+	return func(u d2.Unit, mark string) string {
+		if u.Item == nil || u.Item.Where != d2.ContInventory {
+			return ""
+		}
+		return p.Decide(t.TidyFacts(u, maxBuy, mark), c).Why
+	}
 }
 
 // tidyPlan is the stash and drop actions of the pack now, capped at TidyMaxActions.
@@ -97,7 +105,7 @@ func (t *Town) tidyPlan(s *d2.Snapshot) ([]tidy.Entry, map[uint32]d2.Unit, tidy.
 		if u.Item == nil || t.stashRefused[u.ID] {
 			continue
 		}
-		items = append(items, tidy.Item{ID: u.ID, Facts: t.TidyFacts(u, maxBuy)})
+		items = append(items, tidy.Item{ID: u.ID, Facts: t.TidyFacts(u, maxBuy, t.markOf(u))})
 		byID[u.ID] = u
 	}
 	return p.Plan(items, c, t.tune().TidyMaxActions), byID, c, nil
@@ -140,7 +148,7 @@ func (t *Town) tidyPass(ctx context.Context, a *Act, rep *ChoreReport) error {
 	}
 	if p, perr := tidyPolicy(); perr == nil {
 		for _, u := range s.Inventory.Container(d2.ContInventory) {
-			if u.Item != nil && p.Decide(t.TidyFacts(u, loot.MaxBuyOf(s.Player)), c).Action == tidy.Sell {
+			if u.Item != nil && p.Decide(t.TidyFacts(u, loot.MaxBuyOf(s.Player), t.markOf(u)), c).Action == tidy.Sell {
 				nSell++
 			}
 		}
