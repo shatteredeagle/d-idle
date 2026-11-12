@@ -19,7 +19,7 @@ owns:
   - "docs/wiring.md"
 exclusive: []
 contracts: []
-result: "see docs/wiring.md"
+result: "Fixed hidden-method gaps: fighterAdapter.SetPoverty, townAdapter ForgetBelt/PlannedSpend/UseWeapon/ReconcileMarks/MarkOf, mercTown hiding BeltFiller and the same parts, d2denv.Reader.ItemName; loot memory fixed by goldprio. cmd/d2bot/wiring_test.go fails when an adapter hides an optional method. Open gaps in docs/wiring.md (selfupdate IdleSafe, dead knob kiteLifePct, Hell rules). Verified offline and by sandbox log grep, not live-tested after the fix"
 ---
 
 ## Description
