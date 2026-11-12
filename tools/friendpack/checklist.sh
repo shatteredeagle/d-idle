@@ -97,7 +97,8 @@ banned='(\.mpq|\.dc6|\.dcc|\.dt1|\.d2s|\.d2i|\.key|\.pem|watch\.token|(^|/)game\
 # the layer listing drops the public CA root store of the Ubuntu base (etc/ssl/certs, usr/lib/ssl, usr/share/ca-certificates: .pem root certificates, no private keys)
 { (cd "$w" && find "$(basename "$root")" -type f); [ -n "$botsrc" ] && tar -tzf "$botsrc"; [ -n "$d2dsrc" ] && tar -tzf "$d2dsrc"; grep -E -v '^(etc/ssl/certs|usr/lib/ssl|usr/share/ca-certificates)/' "$layers"; } | grep -E -i "$banned" | head -5 >"$w/o4"
 # UPDATE_FEED (the public https update feed the sender chose) is the one file allowed to name a host; it must be https
-[ ! -s "$root/UPDATE_FEED" ] || grep -q -E '^https://[^ /]+(/[^ ]*)?$' "$root/UPDATE_FEED" || echo 'UPDATE_FEED is not a plain https URL' >>"$w/o4"
+feedtxt=$(tr -d '[:space:]' <"$root/UPDATE_FEED" 2>/dev/null || true)
+[ -z "$feedtxt" ] || printf '%s\n' "$feedtxt" | grep -q -E '^https://[^ /]+(/[^ ]*)?$' || echo 'UPDATE_FEED is not a plain https URL' >>"$w/o4"
 # private hostnames / home paths / credentials in the pack's own text files; the source trees are covered by leakcheck below
 grep -rIl --exclude-dir=src --exclude-dir=image --exclude=UPDATE_FEED -E '(/home/[a-z][a-z0-9_-]*/|\.lan\.b[i]rbhub|b[i]rbhub\.com|BEGIN (RSA |OPENSSH |EC )?PRIVATE KEY|password[[:space:]]*[:=][[:space:]]*[^[:space:]$"<{(]+)' "$root" 2>/dev/null | grep -v -E 'THIRD_PARTY.md$' | head -5 >>"$w/o4"
 if [ -s "$w/o4" ]; then cat "$w/o4" >&2; fail "4 forbidden file or private string in the pack/source/layers (listed above)"
