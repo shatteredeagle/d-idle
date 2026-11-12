@@ -60,7 +60,7 @@ Act 1 (levels 1..39, 52 arrivals a seed, 28 of them with the unit subtile blocke
 ## 4. Builds and hygiene (V run)
 - Full `ninja` (all targets, `D2D_WERROR=OFF`) at each commit alone: `8d7b89f1`, `feba9539`, `c9b4c06e`, `f0e8b396`: all rc 0.
 - `pr_guard.py HEAD~1` on the rebased claim: 0 FAIL, 0 WARN; `--sorted`: 0 FAIL.
-- PRESUBMIT_LINE
+- `presubmit.py --quick --base c9b4c06e` on the rebased claim (with its build): 0 FAIL, 3 WARN: `test-gap` (no test changed: finding 1), `docs-sync` (no .md changed: finding 3), `build` skipped (--quick). GCC `-Wshadow -Wconversion -Werror` and clang-tidy on 173 TUs: ok.
 - The diff (2 files, 12 added lines) holds no host, path, fork verb or lab word (V read). One topic, minimal.
 
 ## 5. What was not done
