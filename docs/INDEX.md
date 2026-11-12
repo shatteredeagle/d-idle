@@ -507,6 +507,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [tester-live.md](tester-live.md): Tester container: first end-to-end run (TASK-25) (status: run 2026-11-07 on the worker host. Tags: V verified live (how stated), U unverified. Slice 1 (d2d route)...)
 - [tester-realtime.md](tester-realtime.md): Tester build: realtime check (TASK-33, gap G6) (status: first audit and one realtime session, 2026-11-07. Tags: V verified live (how stated), S read in code only,...)
 - [tester-registry.md](tester-registry.md): Tester image on ghcr.io: publish prep (TASK-120) (status: PREPARED, 2026-11-08. NOTHING is published: no workflow has run, no package exists, no tag or environment...)
+- [tidy.md](tidy.md): Auto pack and stash tidying (TASK-381)
 - [tomefix.md](tomefix.md): Tome stat 70 false-empty audit (tomefix) (status: current, offline only, NOT verified live. Tags: V = read in code or run as a test here, S = inference, U =...)
 - [tomestat.md](tomestat.md): Tome stat 70 lost in the field (tomestat) (status: current. Tags: V = counted in the Gate 2 log or read in code, S = inference from code, U = unverified live.)
 - [town.md](town.md): Town and loot: internal/town, internal/loot (agent TOWN)

@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into TASK-381 <!--sg:agent/tidy-->
 - gearsets: drag gear onto the paper doll and player-defined gear sets <!--sg:agent/gearsets-->
 - Merge branch 'main' into TASK-382 <!--sg:agent/mapfog-->
 - warp-arrival r2 second verification: PASS <!--sg:agent/prverify4-->
