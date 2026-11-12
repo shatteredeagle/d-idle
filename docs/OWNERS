@@ -239,7 +239,6 @@ docs/ui-design-system.md  credit-runner  nopins
 docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prprep
-docs/upstream/verification-warp-arrival-r2-2026-11-12.md  credit-runner  prverify4
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
 internal/bot/areaskip_test.go  credit-runner  passagebounce

@@ -1,10 +1,11 @@
 ---
 id: TASK-376
 title: 'prverify4: second verification of warp-arrival r2 (fid/warp-arrival-r2)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T19:27:00Z'
+updated_date: '2026-11-12T20:39:00Z'
 labels:
   - d2d
   - research

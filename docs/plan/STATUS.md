@@ -122,7 +122,6 @@
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
 | hourfix2 | proposed | - | `docs/hourfix2.md`<br>`internal/bot/goal.go` | - |
-| prverify4 | proposed | - | `docs/upstream/verification-warp-arrival-r2-2026-11-12.md` | - |
 | goldprio | proposed | - | `internal/loot`<br>`internal/bot/goldprio.go`<br>`internal/bot/goldprio_test.go`<br>`docs/goldprio.md`<br>`cmd/d2bot/adapters.go`<br>`cmd/d2bot/looteradapter_test.go`<br>`internal/combat/interlude_test.go`<br>`internal/combat/fight.go`<br>`internal/combat/types.go`<br>`internal/bot/goal.go`<br>`internal/bot/contracts.go`<br>`internal/bot/runner.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
