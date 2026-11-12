@@ -56,3 +56,41 @@ func TestItemEquipReplies(t *testing.T) {
 		t.Fatalf("adapter: %v %v", noop, err)
 	}
 }
+
+func TestStage2Verbs(t *testing.T) {
+	ctx := context.Background()
+	s, c := startStub(t, map[string]string{
+		"item move 5 stash -1 -1": "move id=5 slot=0 displaced=-1 at=2,3\nok\n",
+		"item move 6 stash 0 0":   "err far the stash opens only at the chest\n",
+		"item identify 7":         "identify id=7 slot=0 displaced=9 at=-1,-1\nok\n",
+		"item identify 8 9":       "noop slot=0 at=-1,-1\nok\n",
+		"item drop 4":             "drop id=4 slot=0 displaced=-1 at=-1,-1\nok\n",
+		"gold deposit 600":        "gold bank=600 carried=400\nok\n",
+		"gold withdraw 5":         "err limit you carry at most level x 10,000 gold\n",
+	}, nil)
+	if r, err := c.ItemMove(ctx, 5, "stash", -1, -1); err != nil || r.AtCol != 2 || r.AtRow != 3 {
+		t.Fatalf("move: %+v %v", r, err)
+	}
+	var ref *ItemRefused
+	if _, err := c.ItemMove(ctx, 6, "stash", 0, 0); !errors.As(err, &ref) || ref.Code != ItemErrFar {
+		t.Fatalf("far: %v", err)
+	}
+	if r, err := c.ItemIdentify(ctx, 7, 0); err != nil || r.Displaced != 9 {
+		t.Fatalf("identify: %+v %v", r, err)
+	}
+	if r, err := c.ItemIdentify(ctx, 8, 9); err != nil || !r.Noop {
+		t.Fatalf("identify with: %+v %v", r, err)
+	}
+	if _, err := c.ItemDrop(ctx, 4); err != nil {
+		t.Fatal(err)
+	}
+	if b, g, err := c.GoldStash(ctx, 600, true); err != nil || b != 600 || g != 400 {
+		t.Fatalf("gold: %d %d %v", b, g, err)
+	}
+	if _, _, err := c.GoldStash(ctx, 5, false); !errors.As(err, &ref) || ref.Code != ItemErrLimit {
+		t.Fatalf("limit: %v", err)
+	}
+	if len(s.seen) != 7 {
+		t.Fatalf("sent %v", s.seen)
+	}
+}

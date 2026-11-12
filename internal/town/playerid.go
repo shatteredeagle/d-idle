@@ -148,6 +148,14 @@ func (t *Town) PlayerIdentifyBatch(ctx context.Context, ids []uint32) []error {
 				i = len(ids)
 				break
 			}
+			if t.mover != nil {
+				if done, verr := t.mover.Identify(ctx, id); done {
+					if errs[i] = verr; verr == nil {
+						t.e.Log.Info("player identify", "item", t.nameOf(u), "how", "verb")
+					}
+					continue
+				}
+			}
 			if errs[i] = t.identifyOne(ctx, u); errs[i] == nil {
 				t.e.Log.Info("player identify", "item", t.nameOf(u))
 			}
