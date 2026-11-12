@@ -1058,9 +1058,18 @@ func (r *Runner) minuteLine(s *d2.Snapshot, p *d2.Player, now time.Time) {
 	r.e.Log.Info("minute", append([]any{"area", p.Area, "explored", expPct, "clvl", p.Level, "xp", p.Exp, "kills", r.lifetimeKills(p.Name), "killsGame", o.kills, "deaths", o.deaths,
 		"potions", kit.BeltHP, "mana", kit.BeltMP, "packHP", packHP, "packMP", packMP, "beltBoxes", beltBoxes, "potionsUsed", int(r.drank.Load()), "tp", tp,
 		"gold", p.Gold, "stashGold", p.StashGold, "restarts", restartCount(o.newGames, o.plannedGames, o.recycles, o.lostRestarts), "xpRisk", o.xpAtRiskLocked(r.d.SavedExp), "xpLost", o.xpLost, "rung", rung, "goal", goal, "step", step,
-		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin}, append(r.failsafeKV(o), r.runKV()...)...)...)
+		"state", group, "rstate", rstate, "life", p.Life, "maxLife", p.MaxLife, "mp", p.Mana, "maxMana", p.MaxMana, "table", r.buildName(p), "invPct", invPct, "dmgTaken", o.hp.dmg, "hpMinPct", o.takeHPMin(), "armor", combat.ArmorState(p), "goldPickup", o.goldPickupMin,
+		"arrivals", o.arrivals, "bounces", o.bounces, "bouncesPer100", bouncesPer100(o.bounces, o.arrivals)}, append(r.failsafeKV(o), r.runKV()...)...)...)
 	o.goldPickupMin = 0
 	r.noteGoldNextMinute(p.Gold, now)
+}
+
+// bouncesPer100 is arrival bounces per 100 arrivals since start (docs/bounce3.md), one decimal; 0 before any arrival.
+func bouncesPer100(bounces, arrivals int) float64 {
+	if arrivals == 0 {
+		return 0
+	}
+	return math.Round(1000*float64(bounces)/float64(arrivals)) / 10
 }
 
 // runKV is the run-toggle belief and stamina for the minute line when the input reports them (the d2d controller
