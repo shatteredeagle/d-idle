@@ -23,6 +23,7 @@
 #include <array>
 #include <cassert>
 #include <cmath>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <exception>
@@ -131,14 +132,14 @@ int main(int argc, char** argv) try {
     // The whole use_warp on seed 5: the hero stands on the warp unit of `from`, takes the warp to `to`, and lands on the other
     // side's unit subtile + (dx, dy). The unit's subtile is blocked in all three, so nearest_free's ring order puts the hero
     // one subtile off (FUN_0064dea0's answers: the oracle on the destination's collision, tools/emu/sk_tele_spot.py, S).
-    const auto take = [&](int from, int to) {
-        const Level* source = data->level(from);
+    const auto take = [&](int origin, int target) {
+        const Level* source = data->level(origin);
         assert(source && source->ds1.width() > 0);
-        const auto warp_at = std::ranges::find_if(source->warps, [&](const Level::Warp& warp) { return warp.destination == to; });
+        const auto warp_at = std::ranges::find_if(source->warps, [&](const Level::Warp& warp) { return warp.destination == target; });
         assert(warp_at != source->warps.end());
-        const Level* destination = data->level(to);
+        const Level* destination = data->level(target);
         assert(destination && destination->ds1.width() > 0);
-        const auto back = std::ranges::find_if(destination->warps, [&](const Level::Warp& other) { return other.destination == from && other.pair == warp_at->pair; });
+        const auto back = std::ranges::find_if(destination->warps, [&](const Level::Warp& other) { return other.destination == origin && other.pair == warp_at->pair; });
         assert(back != destination->warps.end());
         if (world.level != source) world.arrive(source, warp_at->unit_x, warp_at->unit_y, "test");
         world.actor->player.x = warp_at->unit_x; world.actor->player.y = warp_at->unit_y;
@@ -147,9 +148,9 @@ int main(int argc, char** argv) try {
         world.use_warp();
         return std::tuple{ world.level == destination, subtile(world.actor->player.x) - subtile(back->unit_x), subtile(world.actor->player.y) - subtile(back->unit_y) };
     };
-    for (const auto& [from, to, want_x, want_y] : { std::array{ 10, 5, 1, 0 }, std::array{ 15, 11, 0, 1 }, std::array{ 17, 18, 0, 1 } }) {
-        const auto [reached, dx, dy] = take(from, to);
-        std::printf("warp %d to %d: hero %+d %+d from the unit\n", from, to, dx, dy);
+    for (const auto& [origin, target, want_x, want_y] : { std::array{ 10, 5, 1, 0 }, std::array{ 15, 11, 0, 1 }, std::array{ 17, 18, 0, 1 } }) {
+        const auto [reached, dx, dy] = take(origin, target);
+        std::printf("warp %d to %d: hero %+d %+d from the unit\n", origin, target, dx, dy);
         assert(reached && dx == want_x && dy == want_y);
     }
 
