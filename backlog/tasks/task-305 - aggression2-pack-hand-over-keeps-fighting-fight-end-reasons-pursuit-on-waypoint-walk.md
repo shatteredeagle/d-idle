@@ -1,10 +1,13 @@
 ---
 id: TASK-305
-title: 'aggression2: pack hand-over keeps fighting, fight end reasons, pursuit on waypoint walk'
-status: Proposed
+title: >-
+  aggression2: pack hand-over keeps fighting, fight end reasons, pursuit on
+  waypoint walk
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T15:56:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - bot
   - bot-fix

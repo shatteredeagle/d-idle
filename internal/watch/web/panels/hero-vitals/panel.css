@@ -3,4 +3,6 @@
   [data-panel="hero-vitals"] .bars { display: grid; gap: var(--d-sp-1); }
   [data-panel="hero-vitals"] .d-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   [data-panel="hero-vitals"] .d-stat .val { font-size: var(--d-fs-3); }
+  [data-panel="hero-vitals"] .ready { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--d-sp-1) var(--d-sp-2); }
+  [data-panel="hero-vitals"] .ready .d-hint { color: var(--d-text-2); font-size: var(--d-fs-1); overflow-wrap: anywhere; }
 }

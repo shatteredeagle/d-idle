@@ -13,6 +13,7 @@
 (function () {
   'use strict';
   var MENU_ID = 'inv-act';
+  var TRIP = 'waiting for a trip home'; // the stash is reached only in town: the bot walks home at the next safe moment
   var LABEL = { head: 'helm', neck: 'amulet', torso: 'armour', rhand: 'right hand', lhand: 'left hand', rring: 'right ring', lring: 'left ring', belt: 'belt', feet: 'boots', gloves: 'gloves' };
   var view = null, menu = null, scrim = null, openKey = '', openSig = '', confirming = false, kbd = false, sheet = false;
 
@@ -38,8 +39,10 @@
   function verb(r) {
     switch (kindOf(r)) {
       case 'trash': return 'Trash ' + r.name;
-      case 'identify': return 'Identify ' + r.name;
-      case 'buyid': case 'cain': return r.name; // the server words the errand
+      case 'identify': return r.place === 'stash' ? 'Identify ' + r.name + ' in the stash' : 'Identify ' + r.name;
+      case 'stash': return 'Move ' + r.name + ' to the stash';
+      case 'take': return 'Take ' + r.name + ' out of the stash';
+      case 'buyid': case 'cain': case 'gold': return r.name; // the server words the errand
     }
     return 'Equip ' + r.name + ' in ' + slotLabel(r.slot);
   }
@@ -50,7 +53,11 @@
     var it = f.it, v = view;
     var reqs = requestsFor(it.id), trashQ = reqs.some(function (r) { return kindOf(r) === 'trash'; });
     var m = { target: 'hero', /* the menu structure is per target: the mercenary stage adds its own entries */ title: it.name || it.code || 'item', cls: 'q-' + (it.quality || 'normal'), id: it.id, rows: [], entries: [] };
-    reqs.forEach(function (r) { m.rows.push({ text: verb(r), state: r.state, kind: kindOf(r), cancel: r.state === 'queued' }); });
+    reqs.forEach(function (r) {
+      var row = { text: verb(r), state: r.state, kind: kindOf(r), cancel: r.state === 'queued' };
+      if (r.state === 'queued' && (r.place === 'stash' || kindOf(r) === 'stash' || kindOf(r) === 'take') && r.reason) row.text += ' (' + TRIP + ')';
+      m.rows.push(row);
+    });
     // identify: offered on an unidentified item only; the server refuses an identified one
     if (it.identified === false) {
       var idQ = reqs.some(function (r) { return kindOf(r) === 'identify'; });
@@ -65,6 +72,12 @@
       });
     } else {
       m.entries.push({ act: 'equip', label: 'Equip', reason: f.place === 'worn' ? 'it is already worn' : (it.noWear || 'move it to the backpack first') });
+    }
+    // stash moves (schema 6): "Move to stash" for a backpack item, "Take out" for a stash item. A stash job of the item is
+    // queued once; an identify of a stash item runs in place, so it needs no take-out.
+    if (it.stashOp === 'stash' || it.stashOp === 'take') {
+      var busy = reqs.some(function (r) { return kindOf(r) === 'stash' || kindOf(r) === 'take' || (kindOf(r) === 'identify' && r.place === 'stash'); });
+      m.entries.push({ act: it.stashOp, label: it.stashOp === 'stash' ? 'Move to stash' : 'Take out', reason: it.noStash || (busy ? 'a stash action for it is already queued' : '') || (trashQ ? 'it is queued to be trashed: cancel that first' : '') });
     }
     // sell and keep marks
     var sold = it.mark === 'sell';
@@ -99,6 +112,9 @@
   function identify(id) { return post('/api/inventory/identify', { id: id }); }
   function buyIdentify(n) { return post('/api/inventory/buyid', { count: n || 0 }); }
   function cainIdentify() { return post('/api/inventory/cain', {}); }
+  function stash(id) { return post('/api/inventory/stash', { id: id }); }
+  function take(id) { return post('/api/inventory/take', { id: id }); }
+  function gold(op, n) { return post('/api/inventory/gold', { op: op, count: n }); }
 
   function run(e, m) {
     if (e.reason) { setNote(e.reason); return; }
@@ -108,6 +124,8 @@
       case 'sell': { var it = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: it.mark === 'sell' ? '' : 'sell' }); return; }
       case 'keep': { var k = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: k.mark === 'keep' ? '' : 'keep' }); return; }
       case 'identify': closeMenu(true); identify(m.id); return;
+      case 'stash': closeMenu(true); stash(m.id); return;
+      case 'take': closeMenu(true); take(m.id); return;
       case 'trash':
         if (!e.confirm) { confirming = true; draw(true); return; } // the first click only asks
         closeMenu(true); trash(m.id); return;
@@ -211,6 +229,7 @@
       li.appendChild(el('span', 't', r.state));
       li.appendChild(el('span', 'txt', verb(r)));
       if (r.reason) li.appendChild(el('span', 'sub', r.reason));
+      if (r.state === 'queued' && r.reason && isStashJob(r)) { li.dataset.trip = 'home'; li.appendChild(el('span', 'sub', TRIP)); }
       if (r.result) li.appendChild(el('span', 'sub', r.result));
       if (r.state === 'queued') {
         var c = el('button', 'act act-cancel', 'Cancel'); c.type = 'button'; c.dataset.key = 'cancel-' + kindOf(r) + '-' + r.id;
@@ -220,6 +239,45 @@
       ul.appendChild(li);
     });
     q.appendChild(ul);
+  }
+
+  function isStashJob(r) { var k = kindOf(r); return k === 'stash' || k === 'take' || k === 'gold' || (k === 'identify' && r.place === 'stash'); }
+
+  // ---- stash gold (schema 6): an amount box with Deposit and Withdraw, updated in place like the errand strip ----
+  var gBox = null, gAmt = null, gDep = null, gWd = null, gHint = null, gSig = '', gDirty = false;
+  function ensureGold() {
+    if (gBox) return gBox;
+    var host = document.getElementById('stashgold'); if (!host) return null;
+    gBox = host; host.setAttribute('role', 'group'); host.setAttribute('aria-label', 'Stash gold');
+    var lab = el('label', 'err-count', 'Gold'); lab.setAttribute('for', 'sg-n');
+    gAmt = el('input', 'err-n'); gAmt.id = 'sg-n'; gAmt.setAttribute('type', 'number'); gAmt.setAttribute('min', '1'); gAmt.setAttribute('step', '1'); gAmt.setAttribute('inputmode', 'numeric'); gAmt.setAttribute('aria-label', 'How much gold to move');
+    gAmt.addEventListener('input', function () { gDirty = true; });
+    gDep = el('button', 'act', 'Deposit gold'); gDep.type = 'button'; gDep.dataset.act = 'deposit';
+    gWd = el('button', 'act', 'Withdraw gold'); gWd.type = 'button'; gWd.dataset.act = 'withdraw';
+    [[gDep, 'deposit', 'depositMax', 'noDeposit'], [gWd, 'withdraw', 'withdrawMax', 'noWithdraw']].forEach(function (c) {
+      c[0].addEventListener('click', function () {
+        var o = view && view.stashOps || {}, why = o[c[3]], n = Number(String(gAmt.value).trim());
+        if (why) { errNote(why); return; }
+        if (!(n >= 1 && Math.floor(n) === n && n <= o[c[2]])) { errNote('Enter a whole amount from 1 to ' + o[c[2]] + '.'); return; }
+        gDirty = false; gold(c[1], n);
+      });
+    });
+    gHint = el('p', 'd-hint err-hint');
+    host.appendChild(lab); host.appendChild(gAmt); host.appendChild(gDep); host.appendChild(gWd); host.appendChild(gHint);
+    return host;
+  }
+  function renderGold() {
+    var o = view && view.stashOps;
+    if (!ensureGold()) return;
+    gBox.hidden = !o;
+    if (!o) return;
+    var sig = JSON.stringify(o) + '|' + view.gold + '|' + view.stashGold;
+    if (sig === gSig) return;
+    gSig = sig;
+    if (!gDirty) gAmt.value = '';
+    gAmt.setAttribute('max', String(Math.max(o.depositMax, o.withdrawMax, 1)));
+    gHint.textContent = 'Backpack ' + view.gold + ' gold, stash ' + view.stashGold + ' gold. The stash opens only in town: the hero walks home at the next safe moment.';
+    offBtn(gDep, o.noDeposit); offBtn(gWd, o.noWithdraw);
   }
 
   // ---- town errands (above the queue) ----
@@ -261,7 +319,7 @@
     if (!ensureErrands()) return;
     errBox.hidden = !id;
     if (!id) return;
-    var sig = JSON.stringify(id);
+    var sig = JSON.stringify(id) + (view.stashOps ? 's' : '');
     if (sig === errSig) return;
     errSig = sig;
     errCount.setAttribute('placeholder', id.tome >= 0 ? 'fill (' + id.buyDefault + ')' : 'fill');
@@ -279,13 +337,29 @@
       errCainHint.textContent = id.cainWhy || (id.unid + ' unidentified item' + (id.unid === 1 ? '' : 's') + ' carried. Free: no scroll is used.');
       offBtn(errCain, id.cainWhy);
     }
+    // with the stash backend: say what Cain's Identify covers (S: the decomp finding, docs/inventory-actions.md)
+    if (view.stashOps && id.cain) errCainHint.textContent += ' Covers the backpack, cube and worn items, not the stash: identify a stash item from its own menu.';
+  }
+
+  // markPending flags the grid cells of items that wait in the queue (a stash move, a take-out, an identify): the cell gets
+  // data-pending=<kind>, styled as a dashed outline in inventory-actions.css. Cells of settled requests are cleared.
+  var pendingKeys = [];
+  function markPending() {
+    pendingKeys.forEach(function (k) { var a = anchorOf(k); if (a && a.dataset) delete a.dataset.pending; });
+    pendingKeys = [];
+    ((view && view.queue) || []).forEach(function (r) {
+      if (!r.id || (r.state !== 'queued' && r.state !== 'doing')) return;
+      var k = 'item-' + r.id, a = anchorOf(k);
+      if (a && a.dataset) { a.dataset.pending = kindOf(r); pendingKeys.push(k); }
+    });
   }
 
   // ---- events ----
   function onView(v) {
     view = v;
+    markPending();
     // inventory.js redraws the queue card right after it hands the view over; redraw ours once that call has returned
-    Promise.resolve().then(function () { renderQueue(); renderErrands(); });
+    Promise.resolve().then(function () { renderQueue(); renderErrands(); renderGold(); });
     if (openKey) draw(true);
   }
   function keyOf(target) {
@@ -320,11 +394,11 @@
     window.addEventListener('scroll', function () { if (openKey && menu && !menu.hidden) position(); }, { passive: true });
   }
 
-  var api = { equip: equip, trash: trash, cancel: cancel, identify: identify, buyIdentify: buyIdentify, cainIdentify: cainIdentify, open: openMenu, close: function () { closeMenu(false); } };
+  var api = { stash: stash, take: take, gold: gold, equip: equip, trash: trash, cancel: cancel, identify: identify, buyIdentify: buyIdentify, cainIdentify: cainIdentify, open: openMenu, close: function () { closeMenu(false); } };
   if (typeof window !== 'undefined') window.d2InvActions = api;
   if (typeof window !== 'undefined' && window.__actTest) {
     window.__actTest({ init: init, onView: onView, model: model, find: find, open: openMenu, close: closeMenu, place: place,
-      state: function () { return { key: openKey, node: menu, confirming: confirming, sheet: sheet }; }, renderQueue: renderQueue, renderErrands: renderErrands, errands: function () { return { box: errBox, count: errCount, buy: errBuy, cain: errCain, wrap: errCainWrap, note: errNoteEl }; }, setSheet: function (s) { sheet = !!s; } });
+      state: function () { return { key: openKey, node: menu, confirming: confirming, sheet: sheet }; }, renderQueue: renderQueue, renderErrands: renderErrands, renderGold: renderGold, goldBox: function () { return { box: gBox, amt: gAmt, dep: gDep, wd: gWd, hint: gHint }; }, errands: function () { return { box: errBox, count: errCount, buy: errBuy, cain: errCain, wrap: errCainWrap, note: errNoteEl }; }, setSheet: function (s) { sheet = !!s; } });
     return;
   }
   init();

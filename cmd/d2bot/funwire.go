@@ -14,6 +14,7 @@ import (
 	"d2lod-bot/internal/data"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/senses"
 	"d2lod-bot/internal/status"
 	"d2lod-bot/internal/unlock"
 	"d2lod-bot/internal/watch"
@@ -42,7 +43,12 @@ func useFun(rig *ladderRig, r *bot.Runner, run string) {
 	if rig == nil || rig.Fun == nil {
 		return
 	}
-	r.SetWaypointHook(func(id int, name string) { rig.Fun.OnWaypoint(name, fmt.Sprintf("%s:wp:%d", run, id)) })
+	r.SetWaypointHook(func(id int, name string) {
+		rig.Fun.OnWaypoint(name, fmt.Sprintf("%s:wp:%d", run, id))
+		if rig.Senses != nil {
+			rig.Senses.AddEvent(senses.EvWaypoint, "Touched the "+name+" waypoint", false, nil)
+		}
+	})
 }
 
 // townNames are the five towns by the names the bot prints in area_change events (U beyond Act 1: the tally strip
@@ -73,6 +79,7 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if stateDir != "" {
 		hub.SetLayoutPath(filepath.Join(stateDir, "layout-"+l.storeProfile()+".json"))
 		cfg.Visit = watch.NewVisit(filepath.Join(stateDir, "visit.json"), nil)
+		cfg.OnboardingPath = filepath.Join(stateDir, "onboarding.json")
 	}
 	if wallet != nil && wallet.Ledger != nil {
 		tally, err := currency.NewTally(wallet.Ledger, currency.DefaultTallyRows(), l.storeProfile(), run)

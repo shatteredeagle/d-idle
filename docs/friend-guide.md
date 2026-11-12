@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/branding/out/banner-1280x320.png" alt="d.idle" width="480"></p>
+
 # d.idle friends pack: install guide (Linux)
 
 > status: BUILT offline (TASK-274, 2026-11-10); the install script was run once on the worker host in a scratch folder with a throwaway project, ports and fake game files (see the card result), never by a friend. Plan: docs/research/friend-build.md. Windows and macOS are not supported in this version.
@@ -13,6 +15,8 @@ This is a private beta for a few friends. The pack is a single file, `didle-frie
 ## Licence note (read before you install)
 
 The pack carries the GPL-3.0 program d2d and the bot that drives it, with their source (`src/`) and licences (`licenses/`). It contains nothing from Blizzard Entertainment: no game files, no art, no keys. Art shown on the watch page is read from your own game folder on your own machine at run time; never post screenshots of it or share the data volume. Diablo II is a trademark of Blizzard Entertainment; this project is not affiliated with it. If you pass the pack on, the source and notices go with it. The installer shows `licenses/licence-note.txt` and asks for a `y` once per version. This is a plain description, not legal advice.
+
+**In short:** not affiliated with or endorsed by Blizzard Entertainment; bring your own legally owned Diablo II 1.14d game files; offline only (no Battle.net); GPL-3.0-or-later; no warranty.
 
 ## Install
 
@@ -31,6 +35,10 @@ http://localhost:8891/setup.html?t=<your token>
 Open exactly that address. The token in it is your password for the page; do not share it. `./didle status` prints the address again at any time. The page address must be the one printed (the bot only accepts answers from that origin; a different host name gives a 403). The setup asks you for a hero name, class and goals, then there is a 1 to 3 minute warm-up before the hero walks out.
 
 Options: `--port N` (watch page on N, answers on N+1, for when 8891 is busy), `--host NAME` (also publish on the LAN and accept the page at `http://NAME:PORT`), `--project NAME` (compose project name, default `didle`).
+
+## First 30 minutes
+
+Open the watch page (`./didle status` prints the address). A welcome card explains in five lines what the bot does and what stays yours; "Got it, hide this" removes it, and the Help button at the top brings it back. Under it is a short checklist that ticks itself as you go: equip your starter gear (the hero never equips for you), check the policy sheet, watch your first fight, open the Journey strip, mark some junk for sale. If the page loses the bot it says "Reconnecting to your hero..." and keeps trying; after you were away it points you to the Return screen. While the item pictures are prepared from your own game files, the list says so (a few seconds). Details and the wording file: [onboarding.md](onboarding.md).
 
 ## Every day
 

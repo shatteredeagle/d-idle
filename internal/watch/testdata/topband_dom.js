@@ -1,4 +1,4 @@
-// DOM goldens of the top-band panels (hero-meters, alerts-count, hero-detail) in a stub DOM: each state is rendered
+// DOM goldens of the top-band panels (hero-meters, alerts-count, hero-detail, hero-vitals) in a stub DOM: each state is rendered
 // through the panel's own mount/update and compared with testdata/topband_dom_<panel>_<state>.txt (UPDATE=1 rewrites).
 // Usage: node topband_dom.js path/to/web/panels
 const assert = require('assert'), fs = require('fs'), path = require('path'), { load, mk } = require('./panel_harness.js');
@@ -51,6 +51,7 @@ const alerts = { alerts: [{ seq: 1, severity: 'warn', text: 'Short Staff is brok
 const cases = {
   'hero-meters': { bare: true, states: { ready: hero, unreported: bare, unknown: { known: false }, error: null } },
   'alerts-count': { bare: true, states: { ready: alerts, warn: { alerts: [alerts.alerts[0]] }, empty: { alerts: [] }, error: null } },
+  'hero-vitals': { bare: false, states: { ready: hero, nostats: bare, error: null } },
   'hero-detail': { bare: false, states: { ready: hero, nostats: bare, error: null } },
 };
 let bad = 0;
@@ -70,7 +71,7 @@ for (const id of Object.keys(cases)) {
 }
 // rules behind the pictures
 {
-  const M = load(path.join(dir, 'hero-meters', 'panel.js')), D = load(path.join(dir, 'hero-detail', 'panel.js')), A = load(path.join(dir, 'alerts-count', 'panel.js'));
+  const M = load(path.join(dir, 'hero-meters', 'panel.js')), D = load(path.join(dir, 'hero-detail', 'panel.js')), A = load(path.join(dir, 'alerts-count', 'panel.js')), V = load(path.join(dir, 'hero-vitals', 'panel.js'));
   assert.strictEqual(M.level(30, 150), 'bad'); assert.strictEqual(M.level(60, 150), 'warn'); assert.strictEqual(M.level(140, 150), ''); assert.strictEqual(M.level(0, 0), '');
   {
     const t = D.xpText({ xp: 79451, xpLevel: 72144, xpNext: 90180, xpPct: 40.4, xpPerHour: 12345.6 });
@@ -78,6 +79,13 @@ for (const id of Object.keys(cases)) {
     assert.strictEqual(D.xpText({ xp: 100, xpNext: 500, xpPct: 20 }), 'XP 100 / 500 (20%) · xp/h measuring');
     assert.strictEqual(D.xpText({ xp: 0, xpNext: 0 }), null); assert.strictEqual(D.xpText(null), null);
     for (const h of [{ xp: 5, xpNext: 9, xpPct: null, xpPerHour: null }, { xp: 79451, xpNext: 82000, xpPct: 97.1, xpPerHour: NaN }]) assert.ok(!/NaN|undefined|null| - /.test(D.xpText(h)), D.xpText(h));
+  }
+  {
+    assert.strictEqual(V.xpText({ xp: 79451, xpLevel: 72144, xpNext: 90180, xpPct: 40.4, xpPerHour: 12345.6 }), '79,451 / 90,180 (40%)');
+    assert.strictEqual(V.rateText({ xpPerHour: 12345.6 }), '12,346 xp/h'); assert.strictEqual(V.rateText({ xpPerHour: null }), 'xp/h measuring');
+    assert.strictEqual(V.xpText({ xp: 0, xpNext: 0 }), null); assert.strictEqual(V.xpText(null), null);
+    for (const h of [{ xp: 5, xpNext: 9, xpPct: null, xpPerHour: null }, { xp: 79451, xpNext: 82000, xpPct: 97.1, xpPerHour: NaN }]) assert.ok(!/NaN|undefined|null/.test(V.xpText(h) + V.rateText(h)));
+    assert.strictEqual(V.resistLevel(-8), 'bad'); assert.strictEqual(V.resistLevel(12), ''); assert.strictEqual(V.lifeLevel(30, 150), 'bad');
   }
   assert.strictEqual(D.resistLevel(-8), 'bad'); assert.strictEqual(D.resistLevel(12), ''); assert.strictEqual(D.resistLevel(30), '');
   assert.strictEqual(A.tone(alerts.alerts), 'bad'); assert.strictEqual(A.tone([alerts.alerts[0]]), 'warn');

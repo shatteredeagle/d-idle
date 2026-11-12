@@ -28,7 +28,7 @@ func TestClaimNeeded(t *testing.T) {
 		{"blood raven alive", claimWorld(task.StageStarted, nil), false},
 		{"merc employed", claimWorld(task.StageDone, func(w *task.World) { w.HasMerc = true }), false},
 		{"merc reader says alive", claimWorld(task.StageDone, func(w *task.World) { w.MercKnown, w.MercAlive = true, true }), false},
-		{"merc reader says dead", claimWorld(task.StageDone, func(w *task.World) { w.MercKnown = true }), true},
+		{"employed merc dead (revive, no second claim)", claimWorld(task.StageDone, func(w *task.World) { w.MercKnown = true }), false},
 		{"act 2", claimWorld(task.StageDone, func(w *task.World) { w.Act = 2 }), false},
 		{"nightmare", claimWorld(task.StageDone, func(w *task.World) { w.Difficulty = "nightmare" }), false},
 	}

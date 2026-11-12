@@ -53,6 +53,7 @@ type Controller struct {
 	runHeals   int       // run-key presses made because stamina never drained while running was believed (run.go)
 	chainStart time.Time // start of the current chain of moves at full stamina
 	lastMoveAt time.Time
+	stam       stamTrack // previous stamina sample for the exact run/walk classification (run.go)
 }
 
 // New returns a Controller with default transform and polling.

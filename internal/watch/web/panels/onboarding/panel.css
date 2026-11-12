@@ -1,0 +1,19 @@
+@layer panels {
+  [data-panel="onboarding"] .banners, [data-panel="onboarding"] .welcome, [data-panel="onboarding"] .help, [data-panel="onboarding"] .art, [data-panel="onboarding"] .list { display: grid; gap: var(--d-sp-2); min-inline-size: 0; }
+  [data-panel="onboarding"] .banners[hidden], [data-panel="onboarding"] .welcome[hidden], [data-panel="onboarding"] .help[hidden], [data-panel="onboarding"] .art[hidden], [data-panel="onboarding"] .list[hidden] { display: none; }
+  [data-panel="onboarding"] .d-note { flex-wrap: wrap; align-items: center; }
+  [data-panel="onboarding"] .d-note .msg { font-weight: 650; margin-inline-end: auto; }
+  [data-panel="onboarding"] .hint { color: var(--d-text-2); font-size: var(--d-fs-1); }
+  [data-panel="onboarding"] h3 { margin: 0; font: 600 var(--d-fs-2)/var(--d-lh-tight) var(--d-font-display); }
+  [data-panel="onboarding"] .lines { margin: 0; padding-inline-start: var(--d-sp-4); display: grid; gap: var(--d-sp-1); font-size: var(--d-fs-1); }
+  [data-panel="onboarding"] .btnrow, [data-panel="onboarding"] .help-card { display: flex; flex-wrap: wrap; gap: var(--d-sp-2); }
+  [data-panel="onboarding"] .welcome-card, [data-panel="onboarding"] .check { display: grid; gap: var(--d-sp-2); }
+  [data-panel="onboarding"] .check-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1) var(--d-sp-3); }
+  [data-panel="onboarding"] .check-head .meta { color: var(--d-text-2); font-size: var(--d-fs-1); margin-inline-end: auto; }
+  [data-panel="onboarding"] .steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--d-sp-2); }
+  [data-panel="onboarding"] .step { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--d-sp-1) var(--d-sp-3); min-inline-size: 0; }
+  [data-panel="onboarding"] .step .tick { font-size: var(--d-fs-0); font-weight: 650; letter-spacing: .04em; color: var(--d-text-3); min-inline-size: 4.5ch; }
+  [data-panel="onboarding"] .step[data-done="1"] .tick { color: var(--d-good); }
+  [data-panel="onboarding"] .step[data-done="1"] .name { color: var(--d-text-2); text-decoration: line-through; }
+  [data-panel="onboarding"] .step .name { font-weight: 600; }
+}

@@ -1,11 +1,11 @@
 ---
 id: TASK-283
 title: 'mercgear: research merc gear policy and merc doll UI design'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T00:53:00Z'
-updated_date: '2026-11-11T00:56:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - docs
   - research

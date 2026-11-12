@@ -32,9 +32,11 @@ type PanelManifest struct {
 	Unlock      string  `json:"unlock"`
 	Skeleton    int     `json:"skeleton"`
 	// Fit: the panel's rows under a layout follow its rendered content, not the stored rowSpan (web/layout.js fitRows).
-	Fit   bool   `json:"fit,omitempty"`
-	Owner string `json:"owner"`
-	Doc   string `json:"doc"`
+	Fit bool `json:"fit,omitempty"`
+	// MergedInto: the panel now lives inside another one (its id is an alias in web/shell.json); the shell does not mount it.
+	MergedInto string `json:"mergedInto,omitempty"`
+	Owner      string `json:"owner"`
+	Doc        string `json:"doc"`
 }
 
 const panelSchema = "watch.panel/1"

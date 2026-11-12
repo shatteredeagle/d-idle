@@ -1,10 +1,11 @@
 ---
 id: TASK-336
 title: 'videoresume: game video recovers from stalls, hidden tabs and dead viewers'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:10:00Z'
+updated_date: '2026-11-12T00:01:00Z'
 labels:
   - watch
   - bug

@@ -1,10 +1,11 @@
 ---
 id: TASK-271
 title: 'artspeed2: inventory selection redraws the detail card without a grid rebuild'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:24:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - watch
   - bug
