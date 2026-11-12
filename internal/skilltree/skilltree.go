@@ -36,6 +36,31 @@ type Hero struct {
 	Points    map[int]Points // by skill id; a skill the hero has no entry for has 0 points
 }
 
+// Grid geometry in logical units. The page draws a tree as a 3 column by 6 row board of TreeW by TreeH units and scales
+// the whole board (tiles and lines) together, so nothing is measured in the browser: a tile's position and the end
+// points of the prerequisite lines come from these constants only. Row and column are skilldesc SkillRow (1 to 6) and
+// SkillColumn (1 to 3) as the table has them (V: read from the real 1.14d tables for the Paladin, Necromancer and
+// Druid, every skill has its own cell).
+const (
+	Cols, Rows   = 3, 6
+	CellW, CellH = 100, 84
+	TileSize     = 64
+	TreeW        = Cols * CellW
+	TreeH        = Rows * CellH
+)
+
+// Link is one prerequisite line between two tiles of the same tree, from the edge midpoint of the required tile to the
+// edge midpoint of the dependent one (bottom to top when the rows differ, side to side in the same row).
+type Link struct {
+	From int  `json:"from"` // skill id of the required skill
+	To   int  `json:"to"`
+	X1   int  `json:"x1"`
+	Y1   int  `json:"y1"`
+	X2   int  `json:"x2"`
+	Y2   int  `json:"y2"`
+	Have bool `json:"have"` // the required skill has a hard point
+}
+
 // Prereq is one required skill.
 type Prereq struct {
 	ID   int    `json:"id"`
@@ -47,8 +72,12 @@ type Prereq struct {
 type Node struct {
 	ID       int      `json:"id"`
 	Name     string   `json:"name"`
-	Row      int      `json:"row"`            // 1 to 6, top to bottom
-	Col      int      `json:"col"`            // 1 to 3
+	Row      int      `json:"row"` // 1 to 6, top to bottom
+	Col      int      `json:"col"` // 1 to 3
+	X        int      `json:"x"`   // tile rectangle in grid units (TreeW by TreeH board)
+	Y        int      `json:"y"`
+	W        int      `json:"w"`
+	H        int      `json:"h"`
 	Icon     string   `json:"icon,omitempty"` // art key (internal/art), "" when the class has no icon file
 	ReqLevel int      `json:"reqLevel"`
 	MaxLevel int      `json:"maxLevel"`
@@ -72,7 +101,15 @@ type Node struct {
 type Tree struct {
 	Tab   int    `json:"tab"` // skilldesc SkillPage, 1 to 3
 	Spent int    `json:"spent"`
+	W     int    `json:"w"` // board size in grid units
+	H     int    `json:"h"`
 	Nodes []Node `json:"nodes"`
+	Links []Link `json:"links,omitempty"`
+}
+
+// tileRect is the tile of cell (row, col): centred in its cell.
+func tileRect(row, col int) (x, y int) {
+	return (col-1)*CellW + (CellW-TileSize)/2, (row-1)*CellH + (CellH-TileSize)/2
 }
 
 // View is the body of GET /api/skills.
@@ -164,7 +201,7 @@ func Build(t Tables, h Hero, iconKey func(s *data.Skill) string) View {
 	for _, s := range mine {
 		pt := h.Points[s.ID]
 		n := Node{
-			ID: s.ID, Name: nameOf(s), Row: s.Row, Col: s.Column, ReqLevel: s.ReqLevel, MaxLevel: s.MaxLevel,
+			ID: s.ID, Name: nameOf(s), Row: s.Row, Col: s.Column, W: TileSize, H: TileSize, ReqLevel: s.ReqLevel, MaxLevel: s.MaxLevel,
 			Passive: s.Passive, Aura: s.Aura, Base: pt.Base, Bonus: pt.Bonus, Level: pt.Base + pt.Bonus,
 			Short: text(s.ShortKey), Long: text(s.LongKey),
 		}
@@ -176,6 +213,7 @@ func Build(t Tables, h Hero, iconKey func(s *data.Skill) string) View {
 				n.Prereqs = append(n.Prereqs, Prereq{ID: p.ID, Name: nameOf(p), Have: h.Points[p.ID].Base >= 1})
 			}
 		}
+		n.X, n.Y = tileRect(s.Row, s.Column)
 		n.CanAdd, n.Why = CanAdd(s, h, byKey)
 		// state: what the player sees. locked = cannot learn it yet (level or prerequisite), whatever the points.
 		switch {
@@ -203,7 +241,7 @@ func Build(t Tables, h Hero, iconKey func(s *data.Skill) string) View {
 		}
 		tr := pages[s.Page]
 		if tr == nil {
-			tr = &Tree{Tab: s.Page}
+			tr = &Tree{Tab: s.Page, W: TreeW, H: TreeH}
 			pages[s.Page] = tr
 		}
 		tr.Nodes = append(tr.Nodes, n)
@@ -218,10 +256,41 @@ func Build(t Tables, h Hero, iconKey func(s *data.Skill) string) View {
 			}
 			return a.Col < b.Col
 		})
+		tr.Links = links(tr.Nodes)
 		v.Trees = append(v.Trees, *tr)
 	}
 	sort.Slice(v.Trees, func(i, j int) bool { return v.Trees[i].Tab < v.Trees[j].Tab })
 	return v
+}
+
+// links makes one Link per prerequisite whose required skill sits in the same tree.
+func links(nodes []Node) []Link {
+	at := map[int]Node{}
+	for _, n := range nodes {
+		at[n.ID] = n
+	}
+	var out []Link
+	for _, n := range nodes {
+		for _, p := range n.Prereqs {
+			a, ok := at[p.ID]
+			if !ok {
+				continue
+			}
+			l := Link{From: a.ID, To: n.ID, Have: p.Have}
+			switch {
+			case a.Row < n.Row:
+				l.X1, l.Y1, l.X2, l.Y2 = a.X+a.W/2, a.Y+a.H, n.X+n.W/2, n.Y
+			case a.Row > n.Row:
+				l.X1, l.Y1, l.X2, l.Y2 = a.X+a.W/2, a.Y, n.X+n.W/2, n.Y+n.H
+			case a.Col < n.Col:
+				l.X1, l.Y1, l.X2, l.Y2 = a.X+a.W, a.Y+a.H/2, n.X, n.Y+n.H/2
+			default:
+				l.X1, l.Y1, l.X2, l.Y2 = a.X, a.Y+a.H/2, n.X+n.W, n.Y+n.H/2
+			}
+			out = append(out, l)
+		}
+	}
+	return out
 }
 
 func lockedBy(s *data.Skill, h Hero, byKey map[string]*data.Skill) bool {
