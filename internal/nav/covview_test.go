@@ -27,3 +27,14 @@ func TestCoverageView(t *testing.T) {
 		t.Fatalf("%+v", v)
 	}
 }
+
+func TestOnFailureIsPassive(t *testing.T) {
+	n := &Navigator{}
+	n.noteFail("roamfail", "x", 1, 2) // no observer: nothing happens
+	var got []string
+	n.SetOnFailure(func(kind, text string, x, y int) { got = append(got, kind) })
+	n.noteFail("gatehold", "held", 3, 4)
+	if len(got) != 1 || got[0] != "gatehold" {
+		t.Fatal(got)
+	}
+}

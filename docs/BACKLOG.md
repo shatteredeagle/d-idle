@@ -736,6 +736,12 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - playerprio player commands (identify, equip, trash, errands, repair now) interrupt roam and travel walks at a safe moment; offline only <!--sg:agent/playerprio-->
 - nopins: remove the obsolete Pin display from the paper doll and inventory (TASK-325, merged 2026-11-11, acceptance 0 of 3): PIN badge, legend chip, Unpin button/menu entry and tooltip badge removed; pins and /api/inventory/unpin kept as deprecated; new .nopin goldens added; not verified live. <!--sg:agent/nopins-->
 - fid-batch6: decomp batch 6 potions, stamina, identify, gold, Zeal (TASK-327, merged 2026-11-11, acceptance 3 of 3): Five card docs and batch6.md; V run oracles d10_stam (80,000 cases, 0 mismatch), d10_pot (40,000 cases, 0 mismatch), d10_roll (Zeal rollback, 63 cases). One deviation (Zeal strike spacing), game side V run; no PR candidate. ... <!--sg:agent/decomp10-->
+- TASK-336 videoresume: the watch game video recovers by itself (stall watchdog, reconnect backoff, hidden-tab pause, Retry, window.d2video.reconnect hook) and a dead viewer no longer holds a slot (per-part write deadline) <!--sg:agent/videoresume-->
+- campaign0: campaign spine data, loader and design doc (TASK-335, merged 2026-11-11, acceptance 4 of 4): spine + loader + bands + decision + state, tests Paladin and Sorceress; not verified live <!--sg:agent/campaign0-->
+- maphistoryA: map timeline (ribbon, scrubber, replay), /api/history, chicken portal waypoint markers, loot walk-back activity; offline only <!--sg:agent/maphistoryA-->
+- maphistoryB: map heat layers (kills, time spent, damage taken) per area, cells of the coverage size; offline only <!--sg:agent/maphistoryB-->
+- maphistoryC: map fight cards and failure markers (roam leg failed, gate hold, ignore window, target fallback, nav yield); offline only <!--sg:agent/maphistoryC-->
+- maphistoryD: map session export (PNG and JSON, GET /api/history/export) for bug reports; offline only <!--sg:agent/maphistoryD-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

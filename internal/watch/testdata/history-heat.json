@@ -1,0 +1,1 @@
+{"schema":"watch.history/1","ts":1767225660000,"legend":["walk","combat","town","farm","flee","rest","loot"],"samples":[{"ago":10000,"l":100,"m":80,"w":"walk","lv":5,"xp":900,"ar":1},{"ago":2000,"l":62,"m":40,"a":1,"w":"fight","lv":5,"xp":960,"ar":1}],"heat":{"area":1,"cell":7,"kinds":["kills","time","damage"],"cells":[[0,0,3,12,40],[7,0,0,2,0]]}}

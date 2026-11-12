@@ -15,7 +15,7 @@ function mk(tag) {
   return e;
 }
 function load(file, extra) {
-  const src = fs.readFileSync(file, 'utf8').replace(/^export /gm, '');
+  const src = fs.readFileSync(file, 'utf8').replace(/^export /gm, '').replace(/^import .*$/gm, ''); // imports come in through extra
   const names = [...src.matchAll(/^function (\w+)/gm)].map((m) => m[1]);
   const document = { fullscreenElement: null, exitFullscreen() {} };
   const ctx = Object.assign({ document, Math, Object, JSON, Date, Uint8Array, encodeURIComponent, console,
