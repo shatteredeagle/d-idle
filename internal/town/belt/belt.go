@@ -159,16 +159,28 @@ func (s State) Total() int {
 // Free slots.
 func (s State) Free() int { return s.Slots - s.Total() }
 
-// Slots returns the number of belt slots granted by the equipped belt (4 when none is worn).
+// Slots returns the number of belt slots granted by the equipped belt (4 when none is worn), never fewer than the boxes
+// the belt items already occupy. V (sandbox log 2026-11-12, docs/beltfix.md): a hero whose belt read as 4 slots held six
+// potions in boxes 0,1,2,4,5,6; the negative free count (4-6) made the fill and the pickup rule see "no room" for good, so
+// healing potions never reached the empty column 3. Where the 8 boxes came from is U (the equipment read showed no belt).
 func Slots(db *data.DB, inv *d2.Inventory) int {
+	n := Columns
 	if inv != nil {
 		if u := inv.Equipped(d2.BodyBelt); u != nil && u.Class >= 0 && u.Class < len(db.Items) {
 			if b := db.BeltByIndex(db.Items[u.Class].BeltIndex); b != nil && b.Slots >= Columns {
-				return b.Slots
+				n = b.Slots
+			}
+		}
+		for _, u := range inv.Container(d2.ContBelt) {
+			if u.Item == nil {
+				continue
+			}
+			if box := u.Item.GY*Columns + u.Item.GX; box >= n && box < 4*Columns {
+				n = (box/Columns + 1) * Columns
 			}
 		}
 	}
-	return Columns
+	return n
 }
 
 // Read summarises the belt of inv.
@@ -356,17 +368,56 @@ func WillBelt(db *data.DB, inv *d2.Inventory, k Kind) bool {
 	return ok
 }
 
-// PlaceFor is Place that keeps one empty column back for every planned kind that has no column on the belt yet. The game
-// puts a potion into the first empty column whatever the plan says, so a third healing column opened early leaves the
-// mana potions no box for good (post-fix soak 1: 42 of 47 failed fills were mana potions on an 8-box belt whose planned mana
-// column had been taken by healing potions). A kind with no column of its own may always open one. Report: docs/fixbelt2.md.
+// PlaceFor is Place under the layout rule: a potion may open an EMPTY column only while enough empty columns stay for
+// the planned columns the other kinds are still missing (band columns minus the columns they hold), and a kind that
+// already holds all its planned columns opens no more. The game puts a potion into the first empty column whatever the
+// plan says, so unguarded pickups let mana take every column and healing never gets one (post-fix soak 1: 42 of 47 failed
+// fills were mana potions on an 8-box belt whose planned mana column healing had taken; sandbox 2026-11-12: six mana
+// potions in three columns, no healing box, docs/beltfix.md). A kind with no column of its own may always open one.
+// Joining an existing column is never refused. The columns per kind are the band's data (class and build), not a constant.
 func PlaceFor(slots int, items []Placed, k Kind, b Band) (int, bool) {
 	box, ok := Place(slots, items, k)
 	if !ok {
 		return 0, false
 	}
-	var colKind [Columns]Kind
+	held, empty := heldColumns(slots, items)
+	if box%Columns < Columns && columnHeld(slots, items, box%Columns) {
+		return box, true // joins a column that already exists
+	}
+	if held[k] == 0 {
+		return box, true
+	}
+	if pc := b.planCols(k); pc > 0 && held[k] >= pc {
+		return 0, false // the plan's columns for this kind are full
+	}
+	reserve := 0
+	for _, j := range []Kind{HP, MP, RV} {
+		if j != k {
+			reserve += max(0, b.planCols(j)-held[j])
+		}
+	}
+	if empty > reserve {
+		return box, true
+	}
+	return 0, false
+}
+
+// planCols is the number of band columns that hold kind k.
+func (b Band) planCols(k Kind) int {
+	n := 0
+	for _, c := range b.Cols {
+		if c == k {
+			n++
+		}
+	}
+	return n
+}
+
+// heldColumns counts the belt columns by the kind of their bottom item and the empty columns.
+func heldColumns(slots int, items []Placed) (held map[Kind]int, empty int) {
+	held = map[Kind]int{}
 	var bottom [Columns]int
+	var colKind [Columns]Kind
 	for c := range bottom {
 		bottom[c] = -1
 	}
@@ -378,31 +429,67 @@ func PlaceFor(slots int, items []Placed, k Kind, b Band) (int, bool) {
 			bottom[c], colKind[c] = p.Box, p.Kind
 		}
 	}
-	if bottom[box%Columns] >= 0 {
-		return box, true // joins a column that already exists
-	}
-	has := map[Kind]bool{}
-	empty := 0
 	for c := range bottom {
 		if bottom[c] < 0 {
 			empty++
 		} else {
-			has[colKind[c]] = true
+			held[colKind[c]]++
 		}
 	}
-	if !has[k] {
-		return box, true
-	}
-	missing := 0
-	for _, j := range []Kind{HP, MP, RV} {
-		if j != k && !has[j] && b.Capacity(j, slots) > 0 {
-			missing++
+	return held, empty
+}
+
+func columnHeld(slots int, items []Placed, c int) bool {
+	for _, p := range items {
+		if p.Box >= 0 && p.Box < slots && p.Box%Columns == c {
+			return true
 		}
 	}
-	if empty > missing {
-		return box, true
+	return false
+}
+
+// Surplus finds the belt column to empty so that a potion of the starved kind k gets a column: among the columns of the
+// OTHER kinds that hold more columns than the band plans for them, the one with the fewest potions (ties: the right-most).
+// It returns that column's boxes top first (a column is emptied from the top) and its kind. ok is false when k already
+// fits (PlaceFor says yes) or no kind has a column to spare, so a plan the player set on purpose (all mana) is never
+// "repaired" and a belt with nothing to give is left alone. Hysteresis: only columns above the plan are offered, and
+// PlaceFor refuses to refill them, so a repaired belt does not flip back.
+func Surplus(slots int, items []Placed, k Kind, b Band) (boxes []int, from Kind, ok bool) {
+	if _, fits := PlaceFor(slots, items, k, b); fits {
+		return nil, None, false
 	}
-	return 0, false
+	held, _ := heldColumns(slots, items)
+	bestCol, bestN := -1, 1<<30
+	for c := Columns - 1; c >= 0; c-- {
+		var kind Kind
+		bottom, n := -1, 0
+		for _, p := range items {
+			if p.Box < 0 || p.Box >= slots || p.Box%Columns != c {
+				continue
+			}
+			n++
+			if bottom < 0 || p.Box < bottom {
+				bottom, kind = p.Box, p.Kind
+			}
+		}
+		if n == 0 || kind == k || kind == None || held[kind] <= b.planCols(kind) {
+			continue
+		}
+		if n < bestN {
+			bestCol, bestN, from = c, n, kind
+		}
+	}
+	if bestCol < 0 {
+		return nil, None, false
+	}
+	for box := bestCol + (slots/Columns-1)*Columns; box >= bestCol; box -= Columns {
+		for _, p := range items {
+			if p.Box == box {
+				boxes = append(boxes, box)
+			}
+		}
+	}
+	return boxes, from, len(boxes) > 0
 }
 
 // WillBeltFor is WillBelt with PlaceFor's reserve: a ground potion the game would put in a column the plan keeps for
