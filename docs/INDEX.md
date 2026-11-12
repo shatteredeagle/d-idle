@@ -293,7 +293,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `design/`
 
-- [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus one built slice (equip, unequip, `caps`), 2026-11-12. User decision 2026-11-12 (popup): go for...)
+- [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and...)
 - [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
 - [desktop-electron.md](desktop-electron.md): Desktop app on Electron: d2idle-watch (status: built, not yet run on real desktops (TASK-289 skeleton, TASK-290 tray, autostart, hide-to-tray, update...)
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)

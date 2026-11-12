@@ -133,8 +133,10 @@ cmd/d2bot/d2dbackend.go  credit-runner  maphistory
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryA
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryC
 cmd/d2bot/d2dbackend.go  credit-runner  maptrail
+cmd/d2bot/d2dwire.go  credit-runner  itemverbs2
 cmd/d2bot/funwire.go  credit-runner  maphistoryA
 cmd/d2bot/goldfarmwire_test.go  credit-runner  repairtrip
+cmd/d2bot/invverbs.go  credit-runner  itemverbs2
 cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  credit-runner  exploredpct
 cmd/d2bot/ladder.go  live-agent  recoverypace
@@ -165,6 +167,7 @@ docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
+docs/design/item-verbs.md  credit-runner  itemverbs2
 docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
@@ -276,6 +279,8 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
 internal/combat/reach.go  credit-runner  maphistoryC
+internal/d2dctl/item_verbs.go  credit-runner  itemverbs2
+internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs2
 internal/d2dctl/verbs.go  credit-runner  arrivalsettle
 internal/d2dinput/controller.go  credit-runner  arrivalsettle
 internal/d2dinput/controller_test.go  credit-runner  arrivalsettle
@@ -293,6 +298,11 @@ internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
+internal/invdesk/desk.go  credit-runner  itemverbs2
+internal/invdesk/identify.go  credit-runner  itemverbs2
+internal/invdesk/mover.go  credit-runner  itemverbs2
+internal/invdesk/mover_test.go  credit-runner  itemverbs2
+internal/invdesk/stash.go  credit-runner  itemverbs2
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
@@ -328,7 +338,10 @@ internal/task/campaign.go  credit-runner  campaign1
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/town/chores.go  credit-runner  repairtrip
+internal/town/playerid.go  credit-runner  itemverbs2
+internal/town/playerstash.go  credit-runner  itemverbs2
 internal/town/repairtrip_test.go  credit-runner  repairtrip
+internal/town/town.go  credit-runner  itemverbs2
 internal/town/town.go  credit-runner  repairtrip
 internal/watch/hero.go  credit-runner  exploredpct
 internal/watch/heroexplored_test.go  credit-runner  exploredpct
@@ -421,6 +434,8 @@ tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/checklist.sh  credit-runner  cut010b
 tools/friendpack/checklist.sh  credit-runner  cutfix
+tools/itemverbs/compare_items.py  credit-runner  itemverbs2
+tools/itemverbs/diff_d2d.py  credit-runner  itemverbs2
 tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maphistory

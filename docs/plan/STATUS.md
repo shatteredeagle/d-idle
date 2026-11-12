@@ -120,6 +120,7 @@
 | lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
+| itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -173,6 +174,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
+- 116de9a0 11-12 12:14 `Merge branch 'main' into TASK-371` (-)
 - d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
 - 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
 - 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
@@ -181,6 +184,4 @@
 - f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
 - 0ddb833c 11-12 11:55 `Merge agent/lockscan: lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365)` (lockscan)
 - 5803c6df 11-12 11:54 `Merge branch 'main' into lockscan` (-)
-- 913089d8 11-12 11:50 `Merge agent/itemverbs: Merge branch 'main' into TASK-367` (itemverbs)
-- 4893add4 11-12 11:49 `Merge branch 'main' into TASK-367` (-)
 <!-- statusgen:end -->
