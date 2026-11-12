@@ -91,9 +91,9 @@ def api(method, path, body=None):
 def start_bot(work, name, verbs):
     env = dict(os.environ, D2BOT_INSTANCE="iv", D2D_RUN="on", D2D_BIN=args.d2d, D2D_DATA=args.game)
     cfg = os.path.join(work, "config.json")
-    json.dump({"tuning": {"invdesk.verbs": 1 if verbs else 0}}, open(cfg, "w"))
+    json.dump({"tuning": {"invdesk.verbs": 1 if verbs else 0, "town.sellJunk": 0, "town.stashGoldBase": 1000000, "town.stashGoldPerLvl": 0}}, open(cfg, "w"))
     cmd = [args.bot, "--backend", "d2d", "--managed", "--d2d-class", "-1", "--char", name, "--seed", args.seed, "--toggle", "autoloot=off,autoparty=off",
-           "--d2d-args", "--lab-verbs", "--d2d-linkwait", "60s", "--gamedir", args.game, "--d2d-data", args.game, "--data", work,
+           "--d2d-args", "--item-verbs", "--d2d-linkwait", "60s", "--gamedir", args.game, "--d2d-data", args.game, "--data", work,
            "--d2d-sock", work + "/d2d.sock", "--addr", f"127.0.0.1:{args.port}", "--token", "api" + TOKEN, "--config", cfg, "--run-for", "1500s", "--stop-game",
            "--ladder", "--watch", "--watch-addr", f"127.0.0.1:{args.port+1}", "--watch-answer-addr", f"127.0.0.1:{args.port+2}",
            "--watch-origin", f"http://127.0.0.1:{args.port+1}", "--watch-token", TOKEN + "w"]
