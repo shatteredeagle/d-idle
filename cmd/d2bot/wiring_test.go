@@ -27,6 +27,9 @@ import (
 	"d2lod-bot/internal/leveler"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/nav"
+	"d2lod-bot/internal/senses"
+	"d2lod-bot/internal/town"
+	"d2lod-bot/internal/watch"
 )
 
 // prodTypes lists, per Deps slot, every concrete type cmd/d2bot can hand the runner (live path and d2d path,
@@ -290,3 +293,16 @@ func TestMercTownForwardsTheOptionalTownParts(t *testing.T) {
 		t.Error("no weapon swap on the inner town must be an error")
 	}
 }
+
+// Compile-time guards for optional parts that only a type assertion elsewhere would notice (watch, invdesk).
+var (
+	_ watch.SensesSource    = (*senses.Publisher)(nil)
+	_ watch.TrailSource     = (*senses.Publisher)(nil)
+	_ watch.CoverageSource  = (*senses.Publisher)(nil)
+	_ watch.EventSource     = (*senses.Publisher)(nil)
+	_ watch.HistorySource   = (*senses.Publisher)(nil)
+	_ watch.HeatSource      = (*senses.Publisher)(nil)
+	_ watch.Teaser          = watch.LadderUnlocker{}
+	_ watch.UnitGate        = watch.LadderUnlocker{}
+	_ invdesk.StashServices = (*town.Town)(nil)
+)
