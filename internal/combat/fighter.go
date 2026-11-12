@@ -66,7 +66,8 @@ type Fighter struct {
 
 	keys          map[int]string // skill id -> verified F-key
 	lastDrink     map[PotionKind]time.Time
-	manaChickenAt time.Time // last chicken caused by the mana-burn watch (hard.go)
+	heal          healEffect // the healing potion still working (potioneffect.go)
+	manaChickenAt time.Time  // last chicken caused by the mana-burn watch (hard.go)
 	lastCast      time.Time
 	clog          castLog // log-only cast outcome tracking (castlog.go)
 	lastCastName  string  // skill of lastCast: the gap before the next cast covers ITS cast length
@@ -239,7 +240,7 @@ func (f *Fighter) Safety(snap *d2.Snapshot) SafetyAction {
 	in := SafetyInput{
 		InTown: p.InTown(), Life: p.Life, Max: p.MaxLife, Mana: p.Mana, MMax: p.MaxMana, Diff: p.Difficulty,
 		Belt:       BeltOf(snap.Inventory, f.cat),
-		HealReady:  ready(PotionHealing, t.PotionGapMs),
+		HealReady:  ready(PotionHealing, t.PotionGapMs) && f.healAllowed(now, pct(p.Life, p.MaxLife), BeltOf(snap.Inventory, f.cat)),
 		ManaReady:  ready(PotionMana, t.PotionGapMs),
 		RejuvReady: ready(PotionRejuv, t.RejuvGapMs),
 		Tune:       t,
@@ -327,7 +328,15 @@ func (f *Fighter) drink(ctx context.Context, a SafetyAction) error {
 	belt := BeltOf(snap.Inventory, f.cat)
 	// an emergency takes the strongest potion, a scratch the weakest
 	best := a == DrinkRejuv || pct(snap.Player.Life, snap.Player.MaxLife) < f.tune().DrinkRejuvPct
+	lp := pct(snap.Player.Life, snap.Player.MaxLife)
 	col, ok := belt.ColumnFor(kind, best)
+	if kind == PotionHealing && f.heal.active(f.now()) && lp >= f.tune().PotionEmergencyPct {
+		// a potion is still working: only a higher tier is worth it, the lowest of those
+		if col, ok = belt.ColumnAbove(kind, f.heal.Tier); !ok {
+			f.log().Debug("combat potion: one is still working, waiting", "tier", f.heal.Tier)
+			return nil
+		}
+	}
 	if !ok {
 		return ErrNoPotion
 	}
@@ -335,6 +344,9 @@ func (f *Fighter) drink(ctx context.Context, a SafetyAction) error {
 		return err
 	}
 	f.lastDrink[kind] = f.now()
+	if kind == PotionHealing {
+		f.heal = f.heal.drink(f.now(), belt.Cols[col].Tier, snap.Player.Class)
+	}
 	f.info("potion", "kind", kind.String(), "col", col+1, "life", snap.Player.Life, "mana", snap.Player.Mana)
 	f.emit(goals.Event{Type: goals.EvPotion, Potion: kind.String(),
 		Message: "Drank a " + kind.String() + " potion at " + strconv.Itoa(pct(snap.Player.Life, snap.Player.MaxLife)) + "% life"})
@@ -451,6 +463,9 @@ func (f *Fighter) drinkIfDue(ctx context.Context) {
 		return
 	}
 	if at, ok := f.lastDrink[PotionHealing]; ok && f.now().Sub(at) < ms(t.PotionGapMs) {
+		return
+	}
+	if !f.healAllowed(f.now(), pct(p.Life, p.MaxLife), BeltOf(snap.Inventory, f.cat)) {
 		return
 	}
 	for _, h := range Hostiles(snap, f.hostileCtx(p)) {
