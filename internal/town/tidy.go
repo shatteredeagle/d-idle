@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/gclock"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/tidy"
 	"d2lod-bot/internal/town/hand"
@@ -157,7 +158,7 @@ func (t *Town) tidyPass(ctx context.Context, a *Act, rep *ChoreReport) error {
 	t.e.Log.Info("tidy: plan", "stash", nStash, "drop", nDrop, "sell_left_to_vendor", nSell, "pack_pct", c.PackFullPct, "stash_pct", c.StashFullPct)
 	done := map[string]int{}
 	parent := ctx
-	ctx, cancel := context.WithTimeout(ctx, tidyPassCap)
+	ctx, cancel := gclock.WithTimeout(ctx, tidyPassCap)
 	defer cancel()
 	defer func() { _ = t.h.CloseAll(parent) }()
 	var rerr error
