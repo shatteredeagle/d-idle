@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-345 upstream PR verification second pass <!--sg:agent/prverify2-->
 - TASK-342 grill queue: paste-ready decisions and glossary text <!--sg:agent/grillqueue-->
 - TASK-340 upstream PR verification: candidates 1 and 2 <!--sg:agent/prverify-->
 - TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0) <!--sg:agent/campaign3-->

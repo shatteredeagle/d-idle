@@ -124,6 +124,7 @@
 | prverify | proposed | - | `docs/upstream/verification-2026-11-11.md` | - |
 | campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
 | grillqueue | in-progress | - | `docs/process/grill-queue-2026-11-11.md` | - |
+| prverify2 | proposed | - | `docs/upstream/verification-2026-11-11.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -179,14 +180,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- dc51638e 11-11 20:00 `Merge agent/prverify2: TASK-345 upstream PR verification second pass` (prverify2)
 - fb4f84dc 11-11 20:00 `Merge agent/grillqueue: TASK-342 grill queue: paste-ready decisions and glossary text` (grillqueue)
 - 689873e3 11-11 20:00 `Merge agent/prverify: TASK-340 upstream PR verification: candidates 1 and 2` (prverify)
+- 95423563 11-11 19:58 `Merge branch 'main' into prverify2` (-)
 - ccb33fa2 11-11 19:58 `Merge branch 'main' into grillqueue` (-)
 - b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
 - 1cb99ab3 11-11 19:51 `Merge agent/campaign3: TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0)` (campaign3)
 - ef854395 11-11 19:51 `Merge branch 'main' into campaign3` (-)
 - 13ecd224 11-11 19:45 `Merge agent/campaign2: TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0)` (campaign2)
 - 36e7e2a3 11-11 19:45 `Merge branch 'main' into campaign2` (-)
-- 3c3dabbf 11-11 19:41 `Merge agent/decomp11: decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block` (decomp11)
-- f9da730e 11-11 19:40 `Merge branch 'main' into decomp11` (-)
 <!-- statusgen:end -->
