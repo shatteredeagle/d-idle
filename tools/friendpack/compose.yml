@@ -33,5 +33,8 @@ services:
     security_opt: ["no-new-privileges:true"]
     mem_limit: 3g
     cpus: 2
+    logging:
+      driver: json-file
+      options: {max-size: "20m", max-file: "3"}
 volumes:
   d2dbot-data:
