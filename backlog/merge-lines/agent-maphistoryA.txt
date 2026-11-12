@@ -1,0 +1,2 @@
+BACKLOG: maphistoryA: map timeline (ribbon, scrubber, replay), /api/history, chicken portal waypoint markers, loot walk-back activity; offline only
+CHANGELOG: Watch minimap: timeline scrubber and replay

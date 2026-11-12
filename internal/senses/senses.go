@@ -180,6 +180,7 @@ type Publisher struct {
 	trail   Trail
 	act     uint8
 	events  Events
+	samples Samples
 	cover   Coverage
 	now     func() time.Time // test clock; nil is time.Now
 }

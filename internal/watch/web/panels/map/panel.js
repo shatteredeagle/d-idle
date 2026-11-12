@@ -49,9 +49,9 @@ export function trailPlan(trail, win) {
 
 // Activity colours: tokens of the design system, so the dark map and the stream overlay both read them. Index = the
 // `a` code of a trail point (legend order of the payload: walk, combat, town, farm, flee, rest).
-export const ACT_TOKEN = ['--d-info', '--d-bad', '--d-accent', '--d-good', '--d-warn', '--d-text-2'];
-export const ACT_FALLBACK = ['#7ab0e8', '#ec7d6c', '#c7a44a', '#6fbf73', '#e0a030', '#a89d8a'];
-const ACT_NAME = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+export const ACT_TOKEN = ['--d-info', '--d-bad', '--d-accent', '--d-good', '--d-warn', '--d-text-2', '--d-good'];
+export const ACT_FALLBACK = ['#7ab0e8', '#ec7d6c', '#c7a44a', '#6fbf73', '#e0a030', '#a89d8a', '#6fbf73'];
+const ACT_NAME = ['walk', 'combat', 'town', 'farm', 'flee', 'rest', 'loot'];
 
 // Share of the window per activity, and 'stall' for the time spent standing still over STALL_MS, as one line:
 // 'walk 41% | combat 33% | stall 5%'. Time of a sample runs until the next sample (the newest runs to the reply).
@@ -73,7 +73,7 @@ export const EVENT_MODES = ['key', 'all', 'off'];
 export function eventShown(ev, mode) {
   if (mode === 'off') return false;
   if (mode === 'all') return ev.k !== 'fight';
-  return ev.k === 'kill' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
+  return ev.k === 'kill' || ev.k === 'chicken' || ev.k === 'portal' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
 }
 
 // The tooltip text of an event, with its fight summary when the server knew one.
@@ -81,6 +81,54 @@ export function eventText(ev) {
   const f = ev.f;
   return (ev.t || ev.k) + (f ? ', ' + f.sec + ' s fight, life ' + f.life + '% (min ' + f.min + '%), end=' + (f.end || '?') + ', ' + f.kills + (f.kills === 1 ? ' kill' : ' kills') : '');
 }
+
+// ---- Timeline (scrubber and replay) ----
+// Activity segments of the visible window for the ribbon: {a, t0, t1} with t = ms ago (t0 older).
+export function ribbonSegs(pts) {
+  const out = [];
+  for (let i = 0; i < pts.length; i++) {
+    const t1 = i + 1 < pts.length ? pts[i + 1].ago : 0, a = pts[i].a || 0;
+    if (pts[i].ago <= t1 || (pts[i + 1] && pts[i + 1].e)) continue;
+    const last = out[out.length - 1];
+    if (last && last.a === a && last.t1 === pts[i].ago) last.t1 = t1; else out.push({ a, t0: pts[i].ago, t1 });
+  }
+  return out;
+}
+
+// The hero position at `ago` ms before the reply, interpolated along the trail; null when the trail has no such time.
+export function posAt(pts, ago) {
+  if (!pts.length || ago > pts[0].ago) return null;
+  for (let i = 0; i < pts.length; i++) {
+    const t1 = i + 1 < pts.length ? pts[i + 1].ago : 0;
+    if (ago <= pts[i].ago && ago >= t1) {
+      const nxt = pts[i + 1];
+      if (!nxt || nxt.e || pts[i].ago === t1) return { x: pts[i].x, y: pts[i].y };
+      const f = (pts[i].ago - ago) / (pts[i].ago - t1);
+      return { x: pts[i].x + (nxt.x - pts[i].x) * f, y: pts[i].y + (nxt.y - pts[i].y) * f };
+    }
+  }
+  return null;
+}
+
+// The sample of the history nearest to `ago` ms before trailTs (samples carry ages relative to histTs).
+export function sampleAt(samples, histTs, trailTs, ago) {
+  let best = null, bd = Infinity;
+  (samples || []).forEach((s) => {
+    const d = Math.abs((trailTs - (histTs - s.ago)) - ago);
+    if (d < bd) { bd = d; best = s; }
+  });
+  return bd <= 6000 ? best : null;
+}
+
+// One line for the scrubber: what the bot was doing and its state then.
+export function scrubText(sample, names, ago) {
+  const when = ago <= 0 ? 'now' : (ago / 1000).toFixed(ago < 10000 ? 1 : 0) + ' s ago';
+  if (!sample) return when + ': no sample';
+  const nm = (names && names[sample.a || 0]) || ACT_NAME[sample.a || 0] || 'walk';
+  return when + ': ' + nm + (sample.w ? ' (' + sample.w + ')' : '') + ', life ' + sample.l + '%, mana ' + sample.m + '%' + (sample.lv ? ', level ' + sample.lv : '') + (sample.xp ? ', xp ' + sample.xp : '');
+}
+
+export const REPLAY_SPEEDS = [1, 4, 16];
 
 // Cheap change test: the plan is redrawn only when this string moves.
 export function trailSig(plan, win, area, ne) {
@@ -157,10 +205,20 @@ export function mount(root, ctx) {
     evBtn.textContent = 'Events: ' + evMode;
     draw();
   });
+  const tlBtn = ctx.el('button', 'd-btn', 'Timeline');
+  tlBtn.type = 'button'; tlBtn.dataset.size = 'sm'; tlBtn.dataset.key = 'timeline'; tlBtn.setAttribute('aria-label', 'Show the timeline: scrub and replay the trail'); tlBtn.setAttribute('aria-pressed', 'false');
+  const ribbon = ctx.el('canvas', 'ribbon'), range = ctx.el('input', 'scrub'), playBtn = ctx.el('button', 'd-btn', 'Play'), spdBtn = ctx.el('button', 'd-btn', '1x');
+  const tl = ctx.el('div', 'timeline'), scrubLine = ctx.el('p', 'note scrub-line');
+  ribbon.width = 320; ribbon.height = 14; ribbon.setAttribute('role', 'img'); ribbon.setAttribute('aria-label', 'Activity ribbon over the visible window');
+  range.type = 'range'; range.min = '0'; range.max = '1000'; range.value = '1000'; range.setAttribute('aria-label', 'Scrub the trail in time');
+  [[playBtn, 'play', 'Play the trail'], [spdBtn, 'speed', 'Replay speed']].forEach(([b, key, label]) => { b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = key; b.setAttribute('aria-label', label); });
+  tl.append(ribbon, range, playBtn, spdBtn, scrubLine);
+  tl.hidden = true;
   const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
-  ctx.body.append(covLine, legend, share, tip);
-  ctx.actions.append(covBtn, evBtn, ...winBtns);
+  ctx.body.append(covLine, legend, share, tip, tl);
+  ctx.actions.append(covBtn, evBtn, tlBtn, ...winBtns);
   covText();
+  let scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
   function setWindow(ms) {
     win = ms;
@@ -168,11 +226,59 @@ export function mount(root, ctx) {
     replan(true);
   }
   winBtns.forEach((b, i) => b.addEventListener('click', () => setWindow(TRAIL_WINDOWS[i])));
+  // Scrubber: the range maps the window left (oldest) to right (now); null means live.
+  function agoOfRange() { return Math.round(win * (1 - Number(range.value) / 1000)); }
+  function scrubTo(ago) {
+    scrub = ago === null || ago <= 0 ? null : Math.min(ago, win);
+    range.value = String(scrub === null ? 1000 : Math.round((1 - scrub / win) * 1000));
+    scrubText_();
+    draw();
+  }
+  function scrubText_() {
+    const ago = scrub === null ? 0 : scrub;
+    scrubLine.textContent = scrubText(hist && sampleAt(hist.samples, hist.ts, trailTs, ago), hist && hist.legend, ago);
+  }
+  function drawRibbon() {
+    const rg = ribbon.getContext('2d');
+    ribbon.width = Math.max(1, Math.round((ribbon.clientWidth || 320) * (window.devicePixelRatio || 1)));
+    rg.clearRect(0, 0, ribbon.width, ribbon.height);
+    ribbonSegs(plan.pts).forEach((sg) => {
+      const x0 = (1 - sg.t0 / win) * ribbon.width, x1 = (1 - sg.t1 / win) * ribbon.width;
+      rg.fillStyle = css(ACT_TOKEN[sg.a] || ACT_TOKEN[0], ACT_FALLBACK[sg.a] || ACT_FALLBACK[0]);
+      rg.fillRect(x0, 0, Math.max(1, x1 - x0), ribbon.height);
+    });
+    if (scrub !== null) { rg.fillStyle = css('--d-text', '#eee'); rg.fillRect((1 - scrub / win) * ribbon.width - 1, 0, 2, ribbon.height); }
+  }
+  function setPlaying(on) {
+    playing = on; playBtn.textContent = on ? 'Pause' : 'Play';
+    if (on && scrub === null) scrubTo(win);
+    if (on) tick();
+  }
+  // Replay: one step every 200 ms (1 s under reduced motion), advancing speed x the elapsed time.
+  function tick() {
+    if (!playing || !ctx.later) return;
+    const calm = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches, dt = calm ? 1000 : 200;
+    ctx.later(() => {
+      if (!playing) return;
+      const next = (scrub === null ? 0 : scrub) - dt * speed;
+      if (next <= 0) { scrubTo(null); setPlaying(false); return; }
+      scrubTo(next); tick();
+    }, dt);
+  }
+  tlBtn.addEventListener('click', () => {
+    tl.hidden = !tl.hidden;
+    tlBtn.setAttribute('aria-pressed', String(!tl.hidden));
+    if (tl.hidden) { setPlaying(false); scrubTo(null); } else { wantHist = 0; drawRibbon(); scrubText_(); }
+  });
+  range.addEventListener('input', () => { setPlaying(false); scrubTo(agoOfRange()); });
+  playBtn.addEventListener('click', () => setPlaying(!playing));
+  spdBtn.addEventListener('click', () => { speed = REPLAY_SPEEDS[(REPLAY_SPEEDS.indexOf(speed) + 1) % REPLAY_SPEEDS.length]; spdBtn.textContent = speed + 'x'; });
   function replan(force) {
     plan = trailPlan(trail, win);
     winBtns.forEach((b, i) => b.setAttribute('aria-pressed', String(TRAIL_WINDOWS[i] === win)));
-    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (blue walk, red combat, gold town, green farm, orange flee, grey rest; white dots are stops over 3 s, ticks are zone entries).' : '';
+    legend.textContent = plan.pts.length ? 'Trail: last ' + (win >= 60000 ? win / 60000 + ' min' : win / 1000 + ' s') + ' (blue walk, red combat, gold town, green farm, dashed green loot walk-back, orange flee, grey rest; white dots are stops over 3 s, ticks are zone entries).' : '';
     share.textContent = activityShare(plan, legendNames);
+    if (!tl.hidden) { drawRibbon(); scrubText_(); }
     const s = trailSig(plan, win, trailArea, evs.length);
     if (force || s !== sig) { sig = s; draw(); }
   }
@@ -223,6 +329,10 @@ export function mount(root, ctx) {
     const at = (p) => [v.ox + (p.x + 0.5) * v.k, v.oy + (p.y + 0.5) * v.k];
     drawCoverage(at);
     drawTrail(at);
+    if (scrub !== null) {
+      const sp = posAt(plan.pts, scrub);
+      if (sp) { const a = at(sp); g.strokeStyle = css('--d-accent', '#c7a44a'); g.lineWidth = 3; g.beginPath(); g.arc(a[0], a[1], 8, 0, 6.2832); g.stroke(); }
+    }
     if (hero) {
       const h = at(hero);
       g.strokeStyle = css('--d-bad', '#ec7d6c'); g.lineWidth = 3;
@@ -262,11 +372,11 @@ export function mount(root, ctx) {
     for (let i = 1; i < P.length; i++) {
       if (P[i].e) continue;
       const k = P[i].a || 0, a = at(P[i - 1]), b = at(P[i]);
-      g.strokeStyle = col(k); g.lineWidth = k === 1 ? 4 : 2; // combat is the thick red segment
+      g.strokeStyle = col(k); g.lineWidth = k === 1 ? 4 : 2; g.setLineDash(k === 6 ? [4, 3] : []); // loot walk-back is dashed green // combat is the thick red segment
       g.globalAlpha = k === 1 ? Math.max(0.6, trailAlpha((P[i - 1].ago + P[i].ago) / 2, win)) : trailAlpha((P[i - 1].ago + P[i].ago) / 2, win);
       g.beginPath(); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); g.stroke();
     }
-    g.globalAlpha = 1; g.lineWidth = 2;
+    g.globalAlpha = 1; g.lineWidth = 2; g.setLineDash([]);
     P.forEach((p, i) => {
       const a = at(p);
       if (p.e) { g.strokeStyle = col(0); g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke(); }
@@ -298,6 +408,9 @@ export function mount(root, ctx) {
       case 'potion': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y + 1, r - 1, 0, 6.2832); g.moveTo(x, y - r + 1); g.lineTo(x, y - r - 2); g.stroke(); break;
       case 'loot': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.arc(x, y, r - 1, 0, 6.2832); g.fill(); break;
       case 'levelup': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); for (let i = 0; i < 10; i++) { const rr = i % 2 ? r / 2 : r, an = i * Math.PI / 5 - Math.PI / 2; g.lineTo(x + rr * Math.cos(an), y + rr * Math.sin(an)); } g.closePath(); g.fill(); break;
+      case 'chicken': g.strokeStyle = css('--d-warn', '#e0a030'); g.lineWidth = 3; g.beginPath(); g.moveTo(x - r, y - r); g.lineTo(x + r, y + r); g.moveTo(x + r, y - r); g.lineTo(x - r, y + r); g.stroke(); break;
+      case 'portal': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.arc(x, y, r / 2, 0, 6.2832); g.stroke(); break;
+      case 'waypoint': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.moveTo(x, y - r); g.lineTo(x + r, y); g.lineTo(x, y + r); g.lineTo(x - r, y); g.closePath(); g.fill(); break;
       default: return;
     }
     evHits.push({ x, y, text: eventText(e) });
@@ -346,7 +459,10 @@ export function mount(root, ctx) {
 
   return {
     query() {
-      return '?v=' + version + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
+      // the timeline's samples ride the poll every 10th time (about 5 s), and at once when it opens
+      const due = !tl.hidden && (polls++ % 10 === 0 || wantHist === 0);
+      if (due) wantHist = 1;
+      return '?v=' + version + (due ? '&hist=1' : '') + (Object.keys(nbCache).length ? '&nb=' + encodeURIComponent(nbParam(nbCache)) : '');
     },
     update(r) {
       if (!r || !r.tiers_unlocked || r.tiers_unlocked.indexOf(1) < 0) { ctx.hide(true); return; }
@@ -355,12 +471,13 @@ export function mount(root, ctx) {
         map = r.map; cells = decode(map); version = r.version; panX = panY = 0;
         ctx.meta.textContent = map.area || ('area ' + map.areaId);
       }
+      if (r.history && r.history.samples) { hist = r.history; if (!tl.hidden) scrubText_(); }
       hero = r.hero || hero;
       takeNeighbours(r.neighbours);
       units = r.units || [];
       cov = r.coverage && r.coverage.area === (map && map.areaId) ? r.coverage : null;
       covText();
-      if (r.trail) { trail = r.trail; trailArea = r.trail_area || 0; evs = r.events || []; legendNames = r.trail_legend || []; } else if (!r.waiting) { trail = []; evs = []; }
+      if (r.trail) { trail = r.trail; trailTs = r.ts || 0; trailArea = r.trail_area || 0; evs = r.events || []; legendNames = r.trail_legend || []; } else if (!r.waiting) { trail = []; evs = []; }
       note.textContent = r.waiting ? 'Waiting for the first area...' : 'Legend: cross hero, diamond waypoint, square exit' +
         (nbs.length ? '; dimmer areas are the ones next door' : '') + '. Fog clears as the hero walks.';
       replan(true);

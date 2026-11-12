@@ -11,15 +11,18 @@ import (
 func TestActivityFor(t *testing.T) {
 	for code, want := range map[string]uint8{"walk": senses.ActWalk, "fight": senses.ActCombat, "town_chores": senses.ActTown, "farm_gold": senses.ActFarm,
 		"guard_exit": senses.ActFlee, "wait_heal": senses.ActRest, "": senses.ActWalk, "never_heard_of_it": senses.ActWalk} {
-		if got := activityFor(code, false); got != want {
+		if got := activityFor(code, false, false); got != want {
 			t.Errorf("%q: %d, want %d", code, got, want)
 		}
 	}
-	if activityFor("town_trip", true) != senses.ActCombat {
+	if activityFor("town_trip", true, false) != senses.ActCombat {
 		t.Error("a fighter with a target is combat whatever the plan says")
 	}
+	if activityFor("walk", false, true) != senses.ActLoot || activityFor("walk", true, true) != senses.ActCombat {
+		t.Error("loot walk-back is its own activity, combat still wins")
+	}
 	// every code of the whyline has a mapping decision: the enum stays inside the legend
-	if len(senses.ActivityNames) != 6 {
+	if len(senses.ActivityNames) != 7 {
 		t.Fatal("legend and enum out of step")
 	}
 }

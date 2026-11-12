@@ -17,9 +17,12 @@ const damageDropPct = 15
 
 // activityFor maps what the runner says it is doing (the whyline code of docs/whyline) and whether the fighter has a
 // target onto a trail activity code. The codes are the ones of internal/watch/whyline.json; an unknown code is a walk.
-func activityFor(whyCode string, attacking bool) uint8 {
+func activityFor(whyCode string, attacking, looting bool) uint8 {
 	if attacking {
 		return senses.ActCombat
+	}
+	if looting {
+		return senses.ActLoot
 	}
 	switch whyCode {
 	case "fight":
@@ -74,7 +77,7 @@ func fightInfo(s combat.FightSummary) *senses.FightInfo {
 // "History"). The activity and a life-drop marker ride the OnObserve hook (nav goroutine, 2 Hz, chained after
 // useSenses); kills, loot, potions, level-ups and deaths come from the goal manager's event stream; a finished fight
 // comes from the fighter's OnSummary. Read-only: nothing here reaches the bot.
-func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat.Fighter, m *goals.Manager, status func() goals.Status) {
+func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat.Fighter, m *goals.Manager, status func() goals.Status, looting func() bool) {
 	if rig == nil || rig.Senses == nil || e == nil || e.OnObserve == nil || status == nil {
 		return
 	}
@@ -83,9 +86,11 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 	e.OnObserve = func(lm *d2map.LevelMap, pos d2map.Point) {
 		st := status()
 		attacking := f != nil && f.Attacking() != 0
-		pub.SetActivity(activityFor(st.Why.Code, attacking))
+		act := activityFor(st.Why.Code, attacking, looting != nil && looting())
+		pub.SetActivity(act)
 		prev(lm, pos)
 		if c := st.Character; c.MaxLife > 0 {
+			pub.AddSample(senses.Sample{Life: c.Life * 100 / c.MaxLife, Mana: pct(c.Mana, c.MaxMana), Act: act, Why: st.Why.Code, Level: c.Level, XP: c.XP})
 			pc := c.Life * 100 / c.MaxLife
 			if lastLife >= 0 && lastLife-pc >= damageDropPct && time.Since(lastDmg) > 2*time.Second {
 				lastDmg = time.Now()
@@ -98,6 +103,12 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 		f.OnSummary = func(s combat.FightSummary) {
 			fi := fightInfo(s)
 			pub.AddEvent(senses.EvFight, fmt.Sprintf("Fight: %d kills in %.1f s, end=%s, life min %d%%", s.Kills, s.Sec, s.End, s.MinLifePct), false, fi)
+			switch s.Left {
+			case "chicken":
+				pub.AddEvent(senses.EvChicken, fmt.Sprintf("Chickened at %d%% life", s.LifePct), true, fi)
+			case "portal":
+				pub.AddEvent(senses.EvPortal, fmt.Sprintf("Town portal at %d%% life", s.LifePct), true, fi)
+			}
 		}
 	}
 	if m != nil {
@@ -119,4 +130,11 @@ func useSensesHistory(ctx context.Context, rig *ladderRig, e *env.Env, f *combat
 			}
 		}()
 	}
+}
+
+func pct(v, max int) int {
+	if max <= 0 {
+		return 0
+	}
+	return v * 100 / max
 }

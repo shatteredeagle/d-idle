@@ -183,3 +183,16 @@ func TestEventsCapAndRetention(t *testing.T) {
 		t.Fatalf("retention: %d", len(got))
 	}
 }
+
+func TestSamplesEveryAndCap(t *testing.T) {
+	var r Samples
+	if !r.Add(Sample{At: t0}) || r.Add(Sample{At: t0.Add(time.Second)}) || !r.Add(Sample{At: t0.Add(2 * time.Second)}) {
+		t.Fatal("one sample per SampleEvery")
+	}
+	for i := 0; i < SampleCap+10; i++ {
+		r.Add(Sample{At: t0.Add(time.Duration(10+i*2) * time.Second), Life: i})
+	}
+	if len(r.s) != SampleCap || r.s[len(r.s)-1].Life != SampleCap+9 {
+		t.Fatalf("cap keeps the newest: %d", len(r.s))
+	}
+}

@@ -40,9 +40,22 @@ assert.strictEqual(P.coverSummary(null), '');
 assert.strictEqual(P.trailWindow('1800000'), 1800000, 'the 30 min window is remembered');
 {
   const hist = [{ ago: 20000, x: 1, y: 1, a: 0 }, { ago: 10000, x: 2, y: 1, a: 1 }, { ago: 8000, x: 3, y: 1, a: 1 }, { ago: 6000, x: 4, y: 1, a: 2 }, { ago: 0, x: 5, y: 1, a: 2 }];
-  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest', 'loot'];
   assert.strictEqual(P.activityShare(P.trailPlan(hist, 60000), names), 'stall 80% \u00b7 combat 20%', 'gaps over 3 s count as stall, the rest by activity');
   assert.strictEqual(P.activityShare(P.trailPlan(hist.map((p, i) => Object.assign({}, p, { ago: 4000 - i * 1000 })), 60000), names), 'combat 50% \u00b7 walk 25% \u00b7 town 25%');
+}
+{
+  const pts = [{ ago: 10000, x: 0, y: 0, a: 0 }, { ago: 6000, x: 4, y: 0, a: 1 }, { ago: 2000, x: 8, y: 0, a: 1 }, { ago: 0, x: 8, y: 2, a: 0 }];
+  assert.strictEqual(JSON.stringify(P.ribbonSegs(pts)), JSON.stringify([{ a: 0, t0: 10000, t1: 6000 }, { a: 1, t0: 6000, t1: 0 }]), 'ribbon: walk, then the two combat samples merged');
+  assert.strictEqual(JSON.stringify(P.posAt(pts, 8000)), JSON.stringify({ x: 2, y: 0 }), 'interpolated between samples');
+  assert.strictEqual(P.posAt(pts, 20000), null, 'before the trail there is no position');
+  assert.strictEqual(P.posAt(pts, 0).y, 2);
+  const smp = [{ ago: 9000, l: 100, m: 80, a: 0, w: 'walk', lv: 5 }, { ago: 3000, l: 62, m: 40, a: 1, w: 'fight', lv: 5, xp: 960 }];
+  assert.strictEqual(P.sampleAt(smp, 1000, 1000, 3200).l, 62, 'nearest sample, same clock');
+  assert.strictEqual(P.sampleAt(smp, 1000, 1000, 40000), null, 'too far from any sample');
+  assert.strictEqual(P.sampleAt(smp, 5000, 1000, 3200).l, 100, 'history fetched later: ages are rebased through the server clocks');
+  assert.strictEqual(P.scrubText(smp[1], ['walk', 'combat'], 3000), '3.0 s ago: combat (fight), life 62%, mana 40%, level 5, xp 960');
+  assert.strictEqual(P.scrubText(null, [], 0), 'now: no sample');
 }
 assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
 assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
@@ -70,6 +83,16 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   assert.strictEqual(btn('events').textContent, 'Events: all');
   a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail_legend: ['walk', 'combat'], trail: [{ ago: 5000, x: 9, y: 1 }, { ago: 3000, x: 10, y: 1, a: 1 }, { ago: 0, x: 11, y: 1, a: 1 }], events: [{ ago: 1000, x: 10, y: 1, k: 'kill', t: 'Fallen killed' }] });
   assert.ok(/combat/.test(c2.body.children[4].textContent), 'the share line names combat: ' + c2.body.children[4].textContent);
+  btn('timeline').fire('click');
+  assert.strictEqual(btn('timeline').attrs['aria-pressed'], 'true', 'the timeline opens');
+  const tlEl = c2.body.children[c2.body.children.length - 1], rng = tlEl.children[1];
+  rng.value = '500'; rng.fire('input');
+  assert.ok(/ago|now/.test(tlEl.children[4].textContent), 'scrubbing writes the readout: ' + tlEl.children[4].textContent);
+  tlEl.children[2].fire('click');
+  assert.strictEqual(tlEl.children[2].textContent, 'Pause');
+  tlEl.children[2].fire('click');
+  btn('timeline').fire('click');
+  assert.strictEqual(tlEl.hidden, true);
   btn('trail-300000').fire('click');
   assert.strictEqual(store.trailwin, '300000', 'the window is remembered');
   assert.strictEqual(btn('trail-300000').attrs['aria-pressed'], 'true');
