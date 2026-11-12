@@ -78,6 +78,8 @@ assert.strictEqual(P.heatLegend('off', 3), '');
   assert.strictEqual(P.eventShown({ k: 'yield' }, 'key'), false);
   assert.strictEqual(P.eventShown({ k: 'yield' }, 'all'), true);
 }
+assert.strictEqual(P.exportHref('a b'), '/api/history/export?t=a%20b');
+assert.strictEqual(P.exportHref(''), '/api/history/export');
 assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
 assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
 assert.strictEqual(P.eventShown({ k: 'potion' }, 'key'), false, 'potions only in all');
@@ -104,6 +106,9 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   assert.strictEqual(btn('events').textContent, 'Events: all');
   a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail_legend: ['walk', 'combat'], trail: [{ ago: 5000, x: 9, y: 1 }, { ago: 3000, x: 10, y: 1, a: 1 }, { ago: 0, x: 11, y: 1, a: 1 }], events: [{ ago: 1000, x: 10, y: 1, k: 'kill', t: 'Fallen killed' }] });
   assert.ok(/combat/.test(c2.body.children[4].textContent), 'the share line names combat: ' + c2.body.children[4].textContent);
+  assert.strictEqual(btn('export-json').href, '/api/history/export?t=tok', 'the JSON export is a link to the export route');
+  assert.strictEqual(btn('export-json').download, 'didle-map-history.json');
+  btn('export-png').fire('click'); // a stub canvas has no toBlob: nothing happens, no throw
   btn('heat').fire('click');
   assert.strictEqual(store.heat, 'kills', 'the heat layer cycles and is remembered');
   assert.ok(/hist=1&heat=1/.test(a2.query()), 'the heat cells ride the next poll: ' + a2.query());

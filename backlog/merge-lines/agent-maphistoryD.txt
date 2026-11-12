@@ -1,0 +1,2 @@
+BACKLOG: maphistoryD: map session export (PNG and JSON, GET /api/history/export) for bug reports; offline only
+CHANGELOG: Watch minimap: export the map as a PNG and the history as JSON

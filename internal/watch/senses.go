@@ -7,12 +7,13 @@ import (
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/buildinfo"
 	"d2lod-bot/internal/senses"
 )
 
 // SensesRoutes are the GET routes of the side-panel minimap (docs/senses-map.md). Mount them on the viewer behind the
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
-var SensesRoutes = []string{"/api/senses", "/api/history", "/watch/senses_units.js"}
+var SensesRoutes = []string{"/api/senses", "/api/history", "/api/history/export", "/watch/senses_units.js"}
 
 // Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
 // reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
@@ -176,6 +177,24 @@ type HistorySample struct {
 
 const historySchema = "watch.history/1"
 
+// ExportReply is GET /api/history/export (watch.history.export/1): what a bug report or the report subcommand needs to
+// see where the hero went and what it did: the map and hero, the trail with its activity codes, the events (fights
+// are the events of kind fight), the coverage grid, the sample ring and the heat cells, plus the build. It holds no
+// credentials, tokens or host names: positions, counts and the build stamp only.
+type ExportReply struct {
+	Schema  string       `json:"schema"`
+	Build   string       `json:"build"`
+	Senses  SensesReply  `json:"senses"`
+	History HistoryReply `json:"history"`
+}
+
+// Export builds the export; a closed tier gives empty parts like the other routes.
+func (s *Senses) Export() ExportReply {
+	r := s.ReplyNb(0, nil)
+	r.Neighbours = nil // the stitched neighbours are large and the report only needs the current area
+	return ExportReply{Schema: "watch.history.export/1", Build: buildinfo.Current(), Senses: r, History: s.History(true)}
+}
+
 // History builds the reply; Lock gates it like the map (tier 1).
 func (s *Senses) History(withHeat bool) HistoryReply {
 	r := HistoryReply{Schema: historySchema, Legend: senses.ActivityNames[:], Samples: []HistorySample{}}
@@ -322,6 +341,14 @@ func (s *Senses) Handler() http.Handler {
 			rep.History = &h
 		}
 		writeJSON(w, 200, rep)
+	})
+	m.HandleFunc("/api/history/export", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		w.Header().Set("Content-Disposition", `attachment; filename="didle-map-history.json"`)
+		writeJSON(w, 200, s.Export())
 	})
 	m.HandleFunc("/api/history", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodHead {
