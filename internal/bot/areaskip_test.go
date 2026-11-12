@@ -315,3 +315,14 @@ func TestTownDepth(t *testing.T) {
 		}
 	}
 }
+
+func TestBouncesPer100(t *testing.T) {
+	for _, c := range []struct {
+		b, a int
+		want float64
+	}{{0, 0, 0}, {34, 99, 34.3}, {48, 105, 45.7}, {0, 12, 0}} {
+		if got := bouncesPer100(c.b, c.a); got != c.want {
+			t.Fatalf("%d/%d: %v, want %v", c.b, c.a, got, c.want)
+		}
+	}
+}
