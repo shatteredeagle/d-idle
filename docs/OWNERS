@@ -241,7 +241,6 @@ docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  nopins
 docs/ui-design-system.md  credit-runner  uifit
-docs/upstream/verification-2026-11-11.md  credit-runner  prverify2
 docs/whyline.md  credit-runner  stashactions
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart

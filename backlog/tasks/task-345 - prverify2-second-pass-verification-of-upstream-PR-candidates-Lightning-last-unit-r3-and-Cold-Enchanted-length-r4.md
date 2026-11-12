@@ -1,10 +1,13 @@
 ---
 id: TASK-345
-title: 'prverify2: second-pass verification of upstream PR candidates Lightning last unit (r3) and Cold Enchanted length (r4)'
-status: Proposed
+title: >-
+  prverify2: second-pass verification of upstream PR candidates Lightning last
+  unit (r3) and Cold Enchanted length (r4)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:16:00Z'
+updated_date: '2026-11-12T01:06:00Z'
 labels:
   - d2d
   - readonly
