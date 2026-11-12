@@ -1,10 +1,11 @@
 ---
 id: TASK-382
 title: 'mapfog: overlay layers only where the hero has explored'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T20:23:00Z'
+updated_date: '2026-11-12T20:52:00Z'
 labels:
   - watch
   - feature

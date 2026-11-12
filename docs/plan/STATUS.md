@@ -126,7 +126,6 @@
 | bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | gearsets | proposed | - | `internal/invdesk`<br>`internal/leveler/playerunequip.go`<br>`internal/leveler/playerequip_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-drag.js`<br>`internal/watch/web/inventory-sets.js`<br>`internal/watch/web/inventory-sets.css`<br>`internal/watch/web/inventory.js`<br>`internal/watch/testdata/gearsets`<br>`internal/watch/gearsets_test.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/testdata/itemactions`<br>`data/unlocks/ladder.json`<br>`internal/env/tuning_invdesk.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/gearsets_test.go`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/knobs.md`<br>`docs/gear-policy.md`<br>`docs/inventory-actions.md`<br>`docs/gearsets.md` | - |
-| mapfog | proposed | - | `docs/mapfog.md`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/testdata/map_panel.js`<br>`tools/uishots` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |

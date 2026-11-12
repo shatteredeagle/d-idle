@@ -201,7 +201,6 @@ docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
 docs/live-checks.md  credit-runner  repairtrip
 docs/locks.md  credit-runner  lockscan
-docs/mapfog.md  credit-runner  mapfog
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  firstminutes
 docs/onboarding.md  credit-runner  reconnectux
@@ -361,7 +360,6 @@ internal/resource/recovery.go  live-agent  recoverypace
 internal/resource/recovery_test.go  live-agent  recoverypace
 internal/resource/tuning.go  credit-runner  freshstart
 internal/resource/tuning.go  live-agent  recoverypace
-internal/senses  credit-runner  mapfog
 internal/senses  credit-runner  maphistory
 internal/senses  credit-runner  maphistoryA
 internal/senses  credit-runner  maphistoryB
@@ -395,7 +393,6 @@ internal/watch/onboarding.go  credit-runner  reconnectux
 internal/watch/onboarding_test.go  credit-runner  firstminutes
 internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
-internal/watch/senses.go  credit-runner  mapfog
 internal/watch/senses.go  credit-runner  maphistory
 internal/watch/senses.go  credit-runner  maphistoryA
 internal/watch/senses.go  credit-runner  maphistoryB
@@ -427,7 +424,6 @@ internal/watch/testdata/inventory_dom.js  credit-runner  nopins
 internal/watch/testdata/itemactions  credit-runner  gearsets
 internal/watch/testdata/itemactions/act_dom.js  credit-runner  nopins
 internal/watch/testdata/itemtip/tip_dom.js  credit-runner  nopins
-internal/watch/testdata/map_panel.js  credit-runner  mapfog
 internal/watch/testdata/map_panel.js  credit-runner  maphistory
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryA
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryB
@@ -461,7 +457,6 @@ internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels/activity/panel.js  credit-runner  exploredpct
 internal/watch/web/panels/gear  credit-runner  repairtrip
-internal/watch/web/panels/map  credit-runner  mapfog
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maphistoryA
 internal/watch/web/panels/map  credit-runner  maphistoryB
@@ -491,7 +486,6 @@ tools/itemverbs/diff_d2d.py  credit-runner  itemverbs2
 tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots  credit-runner  gearsets
-tools/uishots  credit-runner  mapfog
 tools/uishots.sh  credit-runner  gearsets
 tools/uishots/serve.go  credit-runner  maphistory
 tools/uishots/serve.go  credit-runner  maptrail
