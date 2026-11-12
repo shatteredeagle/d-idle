@@ -1,10 +1,11 @@
 ---
 id: TASK-364
 title: 'hour1: first-hour analysis of the fresh Paladin (2026-11-12)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:16:00Z'
+updated_date: '2026-11-12T16:26:00Z'
 labels:
   - docs
   - research

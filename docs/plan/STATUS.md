@@ -117,7 +117,6 @@
 | cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
-| hour1 | proposed | - | `docs/probes/hour1-analysis-2026-11-12.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
