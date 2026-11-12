@@ -112,8 +112,8 @@
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
 | maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
-| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
-| runstate | proposed | - | `internal/d2dinput/run.go` | - |
+| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go`<br>`internal/combat/potioneffect.go`<br>`internal/combat/potioneffect_test.go`<br>`internal/env/tuning_combat.go`<br>`docs/potions.md`<br>`docs/knobs.md` | - |
+| runstate | proposed | - | `internal/d2dinput/run.go`<br>`internal/d2dinput/controller.go` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
 | maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
 | maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
@@ -180,6 +180,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 12450fd1 11-11 20:02 `Merge agent/potionfix: TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state` (potionfix)
+- 8688c065 11-11 20:01 `Merge branch 'main' into potionfix` (-)
 - dc51638e 11-11 20:00 `Merge agent/prverify2: TASK-345 upstream PR verification second pass` (prverify2)
 - fb4f84dc 11-11 20:00 `Merge agent/grillqueue: TASK-342 grill queue: paste-ready decisions and glossary text` (grillqueue)
 - 689873e3 11-11 20:00 `Merge agent/prverify: TASK-340 upstream PR verification: candidates 1 and 2` (prverify)
@@ -188,6 +190,4 @@
 - b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
 - 1cb99ab3 11-11 19:51 `Merge agent/campaign3: TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0)` (campaign3)
 - ef854395 11-11 19:51 `Merge branch 'main' into campaign3` (-)
-- 13ecd224 11-11 19:45 `Merge agent/campaign2: TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0)` (campaign2)
-- 36e7e2a3 11-11 19:45 `Merge branch 'main' into campaign2` (-)
 <!-- statusgen:end -->

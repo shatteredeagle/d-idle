@@ -194,11 +194,13 @@ docs/knobs.md  credit-runner  campaign3
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
+docs/knobs.md  pro-runner  potiondrink
 docs/live-checks.md  credit-runner  repairtrip
 docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
 docs/plan/STATUS.md  credit-runner  statusrefresh
+docs/potions.md  pro-runner  potiondrink
 docs/probes/fid/batch5.md  credit-runner  fid-batch5
 docs/probes/fid/fid-pal-attack.md  credit-runner  fid-pal-attack
 docs/probes/fid/fid-repair-wear.md  credit-runner  fid-repair-wear
@@ -277,9 +279,12 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
 internal/combat/fighter.go  pro-runner  potiondrink
+internal/combat/potioneffect.go  pro-runner  potiondrink
+internal/combat/potioneffect_test.go  pro-runner  potiondrink
 internal/combat/rank_shaman_test.go  credit-runner  aggression2
 internal/combat/reach.go  credit-runner  maphistoryC
 internal/combat/target.go  credit-runner  aggression2
+internal/d2dinput/controller.go  pro-runner  runstate
 internal/d2dinput/run.go  pro-runner  runstate
 internal/data/invfiles.go  credit-runner  artspeed
 internal/data/invfiles_test.go  credit-runner  artspeed
@@ -288,6 +293,7 @@ internal/decide/catalogue.json  credit-runner  campaign3
 internal/decide/default_rules.json  credit-runner  campaign3
 internal/decide/parity_test.go  credit-runner  campaign3
 internal/env/tuning_bot.go  credit-runner  freshstart
+internal/env/tuning_combat.go  pro-runner  potiondrink
 internal/env/tuning_loot.go  credit-runner  lootskip
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
