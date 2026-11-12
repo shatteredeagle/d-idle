@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-340 upstream PR verification: candidates 1 and 2 <!--sg:agent/prverify-->
 - TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0) <!--sg:agent/campaign3-->
 - TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0) <!--sg:agent/campaign2-->
 - decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block <!--sg:agent/decomp11-->

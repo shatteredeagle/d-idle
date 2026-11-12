@@ -121,6 +121,7 @@
 | campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
 | stashactions | proposed | - | `internal/invdesk`<br>`internal/town/playerstash.go`<br>`internal/town/playerstash_test.go`<br>`internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-actions.css`<br>`internal/watch/testdata/itemactions`<br>`docs/inventory-actions.md`<br>`docs/whyline.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
+| prverify | proposed | - | `docs/upstream/verification-2026-11-11.md` | - |
 | campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -177,6 +178,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 689873e3 11-11 20:00 `Merge agent/prverify: TASK-340 upstream PR verification: candidates 1 and 2` (prverify)
+- b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
 - 1cb99ab3 11-11 19:51 `Merge agent/campaign3: TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0)` (campaign3)
 - ef854395 11-11 19:51 `Merge branch 'main' into campaign3` (-)
 - 13ecd224 11-11 19:45 `Merge agent/campaign2: TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0)` (campaign2)
@@ -185,6 +188,4 @@
 - f9da730e 11-11 19:40 `Merge branch 'main' into decomp11` (-)
 - 429fd1d2 11-11 19:34 `Merge agent/stashactions: TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold` (stashactions)
 - d6c186b0 11-11 19:33 `Merge branch 'main' into stashactions` (-)
-- 9bdfdf5c 11-11 19:27 `Merge agent/campaign1: TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0)` (campaign1)
-- 1f588b61 11-11 19:26 `Merge branch 'main' into campaign1` (-)
 <!-- statusgen:end -->

@@ -747,6 +747,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/decomp11: decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block (merged 2026-11-11): docs only; emulator differentials; no PR candidate <!--sg:agent/decomp11-->
 - campaign2: campaign API, Journey strip panel and Up next nudges (TASK-338, merged 2026-11-11, acceptance 4 of 4): API + journey panel + meter; return-screen question, top band tooltip, Chronicle/ladder hooks open; not verified live <!--sg:agent/campaign2-->
 - campaign3: journey questions, top band chip, chapter events, knobs, Rogue (TASK-341, merged 2026-11-11, acceptance 5 of 5): see card; not verified live <!--sg:agent/campaign3-->
+- prverify: independent verification of upstream PR candidates Lightning last unit and Cold Enchanted length (TASK-340, merged 2026-11-11, acceptance 4 of 4): docs/upstream/verification-2026-11-11.md: both candidates NEEDS-WORK, nothing cleared for posting. Lightning (89059e2d): rule and lightningbolt proof reproduce (44/43 to 0 of 1192, seed 13 too ... <!--sg:agent/prverify-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
