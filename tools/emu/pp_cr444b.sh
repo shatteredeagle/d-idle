@@ -33,4 +33,4 @@ $G commit -q -m "tools: the Lightning oracle command stops on a skipped test or 
 
 Agent: Claude Code"
 python3 tools/pr_guard.py upstream/main HEAD 2>&1 | tail -1
-git push ghfork fid/missile-last-unit-r4 2>&1 | tail -1; git push forgejo fid/missile-last-unit-r4 2>&1 | tail -1; git rev-parse HEAD
+git push ghfork fid/missile-last-unit-r4 2>&1 | tail -1; git push "${PRIV:?private remote}" fid/missile-last-unit-r4 2>&1 | tail -1; git rev-parse HEAD
