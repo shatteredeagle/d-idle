@@ -1,10 +1,11 @@
 ---
 id: TASK-383
 title: 'itemverbs3: live comparison, sandbox image prep, ADR final text'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T20:40:00Z'
+updated_date: '2026-11-12T21:14:00Z'
 labels:
   - d2d
   - feature
