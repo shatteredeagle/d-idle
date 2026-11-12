@@ -19,7 +19,9 @@ def d2d(binary, level, ias, wsm, ticks, weapon):
     out = subprocess.run([binary, "106", str(level), str(ias), str(wsm), str(ticks), weapon], capture_output=True, text=True, timeout=300).stdout
     rate = int(re.search(r"R ias \S+ wsm \S+ rate (\d+)", out).group(1))
     anim = re.search(r"^A (\d+) (\d+)", out, re.M)
-    gaps = [int(g) for g in re.findall(r"^S gap (\d+)", out, re.M)]
+    cast = out.split("\nA ")[1] if "\nA " in out else out      # the first cast only: a gap across two casts is the idle tick between them
+    cast = cast.split("\nA ")[0]
+    gaps = [int(g) for g in re.findall(r"^S gap (\d+)", cast, re.M)]
     first = re.search(r"first (\d+)", out)
     return rate, int(anim.group(1)), int(anim.group(2)) // 40, gaps, int(first.group(1))
 

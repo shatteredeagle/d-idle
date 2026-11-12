@@ -86,17 +86,21 @@ int main(int argc, char** argv) try {
     a.player_combat.ias = ias; a.player_combat.wsm = wsm;   // the swing length is attack_ticks(frames, speed, ias, wsm) (set_pmode)
     std::printf("R ias %d wsm %d rate %d\n", ias, wsm, d2d::rules::attack_speed(256, ias, wsm, 0));
     const int mana0 = a.character.stats.values[d2d::d2s::kMana];
-    int last_mode = -9; bool last_struck = false; int last_kicks = -9; int n_strikes = 0; int first = -1, prev = -1;
+    std::uint32_t last_mode_ms = 0; int last_mode = -9; bool last_struck = false; int last_kicks = -9; int n_strikes = 0; int first = -1, prev = -1;
     for (int t = 0; t < ticks; ++t) {
         now += kTickMs;
         world.fight.monsters[0].next_act = ~0u;
         world.fight.world(true, now, 0.04f, crowd);
         (void)world.fight.engage(now);                 // World::tick order: engage (starts the swing), then player_modes
         (void)world.fight.player_modes(true, now, 0.04f);
+        // A strike is pstruck rising, or (a fix that restarts the swing inside the strike call, so pstruck is false again by now) the same attack mode
+        // with a new start time while the last swing had not struck yet. A new swing after a struck one is not a strike.
+        const bool restarted = a.pmode >= 0 && a.pmode == last_mode && a.player.mode_ms != last_mode_ms && !last_struck;
+        if ((a.pstruck && !last_struck) || restarted) { ++n_strikes; if (first < 0) first = t; if (prev >= 0) std::printf("S gap %d\n", t - prev); prev = t; }
+        last_mode_ms = a.player.mode_ms;
         if (a.pmode != last_mode && a.pmode >= 0 && last_mode < 0) std::printf("A %d %d\n", int(world.fight.player_anim(a.pmode).frames), int(world.fight.player_anim(a.pmode).action_ms()));
         if (a.pmode != last_mode || a.pstruck != last_struck || a.kicks_left != last_kicks) {
             std::printf("E %d %s mode %d struck %d kicks_left %d prate %.3f life %d\n", t, (a.pstruck && !last_struck) ? "STRIKE" : "edge", a.pmode, int(a.pstruck), a.kicks_left, a.prate, world.fight.monsters[0].hit_points);
-            if (a.pstruck && !last_struck) { ++n_strikes; if (first < 0) first = t; if (prev >= 0) std::printf("S gap %d\n", t - prev); prev = t; }
             last_mode = a.pmode; last_struck = a.pstruck; last_kicks = a.kicks_left;
         }
     }
