@@ -57,7 +57,7 @@ type CombatTuning struct {
 	// Positioning.
 	KiteEnabled     int // 1 = back away from melee monsters that get too close
 	KiteDistance    int // back away when a melee monster is closer than this
-	KiteLifePct     int // kite only below this life % (elites trigger it at any life)
+	KiteLifePct     int // step back from a single melee monster only below this life % and falling (60 = the rule's old constant)
 	KiteMaxSteps    int // retreat steps per target before standing and fighting
 	KiteRetreat     int // how far one retreat step goes
 	DodgeRadius     int // step away from hostile missiles closer than this
@@ -88,7 +88,7 @@ func DefaultCombatTuning() CombatTuning {
 		PotionGapMs: 1000, PotionEmergencyPct: 30, RejuvGapMs: 300, ReactionMs: 120, PollMs: 60,
 		TargetQuality: 100, RangeMargin: 3, ClearRadius: 40, FightRadius: 22, MaxTargetSec: 45, NoProgressSec: 12, ClearMaxSec: 180,
 		CastGapMs: 650, CastPerSkill: 1, CastMarginMs: 90, CastFCR: 0, LowManaWaitMs: 700, StaticCasts: 4, StaticCastsBR: 0, StaticFloorNorm: 25, StaticFloorNM: 33, StaticFloorHell: 50, NovaManaFloor: 25,
-		KiteEnabled: 1, KiteDistance: 10, KiteLifePct: 70, KiteMaxSteps: 6, KiteRetreat: 12, DodgeRadius: 4, MissileDodge: 0, ThreatDodge: 0, DodgeReactMs: 400, ShooterKillMin: 0, RunnerGuard: 1, StandOK: 0, CurseRetreatPct: 60, MaxApproaches: 12, ReachSec: 15, IgnoreMemorySec: 90,
+		KiteEnabled: 1, KiteDistance: 10, KiteLifePct: 60, KiteMaxSteps: 6, KiteRetreat: 12, DodgeRadius: 4, MissileDodge: 0, ThreatDodge: 0, DodgeReactMs: 400, ShooterKillMin: 0, RunnerGuard: 1, StandOK: 0, CurseRetreatPct: 60, MaxApproaches: 12, ReachSec: 15, IgnoreMemorySec: 90,
 		BuffRecastSec: 150, BuffMarginSec: 6, AuraCheckMs: 1500, LeftFailSec: 60,
 	}
 }
@@ -137,7 +137,7 @@ func combatKnobs() []Knob {
 		k("novaManaFloor", "Frost Nova mana floor", "mana", "Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts.", float64(d.NovaManaFloor), 0, 60, false),
 		k("kiteEnabled", "Kite melee monsters", "bool", "1 backs away from melee monsters that get close.", float64(d.KiteEnabled), 0, 1, true),
 		k("kiteDistance", "Kite distance", "subtiles", "Back away when a melee monster is closer than this.", float64(d.KiteDistance), 4, 20, true),
-		k("kiteLifePct", "Kite below life", "%", "Kite normal monsters only below this life percent.", float64(d.KiteLifePct), 40, 100, true),
+		k("kiteLifePct", "Kite below life", "%", "Step back from a single melee monster only below this life percent (and falling).", float64(d.KiteLifePct), 40, 100, true),
 		k("kiteMaxSteps", "Kite steps per target", "count", "Retreat steps per target before standing to fight.", float64(d.KiteMaxSteps), 0, 12, true),
 		k("kiteRetreat", "Kite step length", "subtiles", "Length of one retreat step.", float64(d.KiteRetreat), 6, 20, true),
 		k("dodgeRadius", "Missile dodge radius", "subtiles", "Step away from hostile missiles closer than this.", float64(d.DodgeRadius), 0, 8, true),
