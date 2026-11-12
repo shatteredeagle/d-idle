@@ -12,6 +12,7 @@ dependencies: []
 priority: medium
 ordinal: 237000
 card: "hourfix"
+result: "Five first-hour fixes (cave-side bounce skip, bot.clearIdleMin 3, claimed Den not re-run, melee Cold Plains at clvl 4 with Den first, loot.poorMinSell 20) with tests; estimated 15+ min of the hour; NOT verified live."
 owns:
   - "docs/hourfix.md"
   - "internal/bot/loop.go"
@@ -39,10 +40,10 @@ Fixes from docs/probes/hour1-analysis-2026-11-12.md. Done when each fix has a te
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 bounce skip takes the cave, not the transit area
-- [ ] #2 bot.clearIdleMin ends an idle leveling field
-- [ ] #3 a claimed Den is no quest run again
-- [ ] #4 melee Cold Plains at clvl 4, Den first
-- [ ] #5 poorMinSell 20
+- [x] #1 bounce skip takes the cave, not the transit area
+- [x] #2 bot.clearIdleMin ends an idle leveling field
+- [x] #3 a claimed Den is no quest run again
+- [x] #4 melee Cold Plains at clvl 4, Den first
+- [x] #5 poorMinSell 20
 - [ ] #6 whole-repo gate, race, checks green
 <!-- AC:END -->
