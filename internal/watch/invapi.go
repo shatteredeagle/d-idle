@@ -20,7 +20,7 @@ var invViewTTL = 1500 * time.Millisecond
 
 var (
 	InvRoutes     = []string{"/api/inventory", "/watch/inventory", "/watch/inventory.js", "/watch/inventory-tip.js", "/watch/inventory-tip.css", "/watch/inventory-actions.js", "/watch/inventory-actions.css", "/watch/inventory-merc.js", "/watch/inventory-merc.css"}
-	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel", "/api/inventory/identify", "/api/inventory/buyid", "/api/inventory/cain"}
+	InvPostRoutes = []string{"/api/inventory/mark", "/api/inventory/equip", "/api/inventory/unpin", "/api/inventory/trash", "/api/inventory/cancel", "/api/inventory/identify", "/api/inventory/buyid", "/api/inventory/cain", "/api/inventory/stash", "/api/inventory/take", "/api/inventory/gold"}
 )
 
 // InvDesk is what the routes need from the bot side (internal/invdesk.Desk through invAdapter in cmd/d2bot).
@@ -35,6 +35,14 @@ type InvDesk interface {
 	RequestIdentify(id uint32) (any, error)
 	RequestBuyID(n int) (any, error)
 	RequestCain() (any, error)
+}
+
+// InvStashDesk is the optional schema 6 part of the desk: the stash actions. A desk without it answers those routes with
+// code "off".
+type InvStashDesk interface {
+	RequestStash(id uint32) (any, error) // backpack item -> stash
+	RequestTake(id uint32) (any, error)  // stash item -> backpack
+	RequestGold(deposit bool, n int) (any, error)
 }
 
 // invRefusal is an error that carries a short code; the routes reply 409 with it and the reason line.
@@ -163,6 +171,8 @@ type invBody struct {
 	Kind    string `json:"kind"`
 	// schema 5: how many scrolls buyid asks for (0 = fill the tome); optional.
 	Count int `json:"count"`
+	// schema 6: gold moves: op is "deposit" or "withdraw", count the amount.
+	Op string `json:"op"`
 	// Target is reserved for the mercenary stage ("merc"); today only "" and "hero" are accepted.
 	Target string `json:"target"`
 }
@@ -203,6 +213,24 @@ func (a *InvAPI) PostHandler(o AnswerOptions) http.Handler {
 			res, err = d.RequestBuyID(b.Count)
 		case "/api/inventory/cain":
 			res, err = d.RequestCain()
+		case "/api/inventory/stash", "/api/inventory/take", "/api/inventory/gold":
+			sd, ok := d.(InvStashDesk)
+			if !ok {
+				writeJSON(w, http.StatusConflict, policyReply{Code: "off", Error: "the stash actions are not available on this bot"})
+				return
+			}
+			switch r.URL.Path {
+			case "/api/inventory/stash":
+				res, err = sd.RequestStash(b.ID)
+			case "/api/inventory/take":
+				res, err = sd.RequestTake(b.ID)
+			default:
+				if b.Op != "deposit" && b.Op != "withdraw" {
+					writeJSON(w, http.StatusConflict, policyReply{Code: "op", Error: "op must be deposit or withdraw"})
+					return
+				}
+				res, err = sd.RequestGold(b.Op == "deposit", b.Count)
+			}
 		case "/api/inventory/cancel":
 			err = d.Cancel(b.ID, b.Kind)
 		default:

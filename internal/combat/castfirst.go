@@ -240,6 +240,9 @@ func (f *Fighter) noTarget(hs []Target, st *fightState, sp fightSpec) {
 		}
 	}
 	if near > 0 {
+		if sp.yield {
+			f.note(Note{Kind: "yield", Text: "Nothing to engage in scope: navigation yields"})
+		}
 		f.info("no target in scope", "near", near, "avoid", avoid, "blacklisted", black, "ignoredEarlier", memo, "yield", sp.yield)
 	}
 }

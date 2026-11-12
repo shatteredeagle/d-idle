@@ -25,7 +25,7 @@ var VideoRoutes = []string{"/stream", "/shot.jpg"}
 
 // pageCSP: scripts and styles only from this origin, no inline code; the page talks to its own origin and, for the
 // answer route, to another port of the same host, so connect-src allows http(s) generally.
-const pageCSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' http: https:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'"
+const pageCSP = "default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; connect-src 'self' http: https:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'" // blob: the video panel shows each streamed frame as an object URL
 
 func writeJSON(w http.ResponseWriter, code int, v any) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
@@ -74,7 +74,7 @@ func (h *Hub) ViewHandler() http.Handler {
 			asset("app.js", "text/javascript; charset=utf-8")(w, r)
 		case "/watch/app.css", "/watch/tokens.css", "/watch/reset.css", "/watch/shell.css", "/watch/components.css", "/watch/utilities.css", "/watch/inventory.css":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/css; charset=utf-8")(w, r)
-		case "/watch/shell.js", "/watch/layout.js", "/watch/layoutedit.js":
+		case "/watch/shell.js", "/watch/layout.js", "/watch/layoutedit.js", "/watch/mjpeg.js":
 			asset(strings.TrimPrefix(r.URL.Path, "/watch/"), "text/javascript; charset=utf-8")(w, r)
 		case "/watch/layouts/mockup.json", "/watch/layouts/live.json", "/watch/layouts/command.json":
 			// the editor's three presets, for ?layout=<name> (the screenshot suite renders them)

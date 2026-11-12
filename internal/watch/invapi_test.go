@@ -240,3 +240,66 @@ func TestInventoryIdentifyRoutes(t *testing.T) {
 		}
 	}
 }
+
+// stashInv adds the schema 6 stash part to fakeInv.
+type stashInv struct {
+	*fakeInv
+	deposit bool
+	n       int
+}
+
+func (s *stashInv) RequestStash(id uint32) (any, error) {
+	s.calls = append(s.calls, "stash")
+	return nil, s.err
+}
+func (s *stashInv) RequestTake(id uint32) (any, error) {
+	s.calls = append(s.calls, "take")
+	return nil, s.err
+}
+func (s *stashInv) RequestGold(d bool, n int) (any, error) {
+	s.calls = append(s.calls, "gold")
+	s.deposit, s.n = d, n
+	return nil, s.err
+}
+
+func TestInventoryStashRoutes(t *testing.T) {
+	auth := map[string]string{"Authorization": "Bearer tok"}
+	opts := AnswerOptions{Token: "tok", Origins: []string{"http://ok.test"}}
+	// a desk without the stash part answers code off
+	plain := NewInvAPI()
+	plain.Bind(&fakeInv{})
+	if w := invPost(plain.PostHandler(opts), "/api/inventory/stash", `{"id":1}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), `"off"`) {
+		t.Errorf("no stash part: %d %s", w.Code, w.Body)
+	}
+	f := &stashInv{fakeInv: &fakeInv{}}
+	api := NewInvAPI()
+	api.Bind(f)
+	post := api.PostHandler(opts)
+	for path, body := range map[string]string{"/api/inventory/stash": `{"id":7}`, "/api/inventory/take": `{"id":7}`, "/api/inventory/gold": `{"op":"withdraw","count":250}`} {
+		if w := invPost(post, path, body, nil); w.Code != 401 {
+			t.Errorf("%s without a token: %d", path, w.Code)
+		}
+		if w := invPost(post, path, body, auth); w.Code != 200 {
+			t.Errorf("%s: %d %s", path, w.Code, w.Body)
+		}
+	}
+	if len(f.calls) != 3 || f.deposit || f.n != 250 {
+		t.Errorf("calls %v deposit %v n %d", f.calls, f.deposit, f.n)
+	}
+	if w := invPost(post, "/api/inventory/gold", `{"op":"burn","count":1}`, auth); w.Code != 409 {
+		t.Errorf("bad op: %d", w.Code)
+	}
+	f.err = refusal{"the backpack has no free spot for it: make room first"}
+	if w := invPost(post, "/api/inventory/take", `{"id":7}`, auth); w.Code != 409 || !strings.Contains(w.Body.String(), "make room") {
+		t.Errorf("refusal: %d %s", w.Code, w.Body)
+	}
+	for _, p := range []string{"/api/inventory/stash", "/api/inventory/take", "/api/inventory/gold"} {
+		found := false
+		for _, r := range InvPostRoutes {
+			found = found || r == p
+		}
+		if !found {
+			t.Errorf("%s missing from InvPostRoutes", p)
+		}
+	}
+}
