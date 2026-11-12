@@ -177,6 +177,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3c3dabbf 11-11 19:41 `Merge agent/decomp11: decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block` (decomp11)
+- f9da730e 11-11 19:40 `Merge branch 'main' into decomp11` (-)
 - 429fd1d2 11-11 19:34 `Merge agent/stashactions: TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold` (stashactions)
 - d6c186b0 11-11 19:33 `Merge branch 'main' into stashactions` (-)
 - 9bdfdf5c 11-11 19:27 `Merge agent/campaign1: TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0)` (campaign1)
@@ -185,6 +187,4 @@
 - 5eb2988e 11-11 19:21 `Merge branch 'main' into maphistoryD` (-)
 - 7aa2f4d7 11-11 19:15 `Merge agent/maphistoryC: TASK-333 maphistoryC: map fight cards and failure markers` (maphistoryC)
 - f7d625ae 11-11 19:14 `Merge branch 'main' into maphistoryC` (-)
-- ea07a993 11-11 19:09 `Merge agent/maphistoryB: TASK-331 maphistoryB: map heat layers for kills, time spent and damage` (maphistoryB)
-- 844549be 11-11 19:08 `Merge branch 'main' into maphistoryB` (-)
 <!-- statusgen:end -->

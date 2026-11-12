@@ -744,6 +744,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - maphistoryD: map session export (PNG and JSON, GET /api/history/export) for bug reports; offline only <!--sg:agent/maphistoryD-->
 - campaign1: guided planner, modes, intents, persisted journey state (TASK-337, merged 2026-11-11, acceptance 3 of 4): guided planner + controller + wiring; floor question via return-screen queue still open; not verified live <!--sg:agent/campaign1-->
 - stashactions: move items between pack and stash, identify in place, deposit and withdraw gold (TASK-339, merged 2026-11-11, acceptance 6 of 6): Built offline, NOT verified live: stash moves, in-place identify of stash items, gold deposit and withdraw as town errands sharing one stash visit; fakes and node goldens for Paladin and Sorceress. <!--sg:agent/stashactions-->
+- agent/decomp11: decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block (merged 2026-11-11): docs only; emulator differentials; no PR candidate <!--sg:agent/decomp11-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
