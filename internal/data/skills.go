@@ -19,6 +19,8 @@ type Skill struct {
 	Page                           int    // skilldesc SkillPage (1-3 tab), 0 if none
 	Row                            int    // skilldesc SkillRow (1-6)
 	Column                         int    // skilldesc SkillColumn (1-3)
+	IconCel                        int    // skilldesc IconCel: icon number in the class's skill icon DC6 (two frames per icon)
+	ShortKey, LongKey              string // skilldesc "str short" / "str long": string-table keys of the descriptions
 	ReqLevel                       int
 	MaxLevel                       int
 	ReqSkills                      [3]string
@@ -67,18 +69,18 @@ var skillCols = []string{
 	"auralencalc", "calc1", "calc2", "calc3", "calc4", "Param1", "Param2", "Param3", "Param4", "Param5", "Param6", "Param7", "Param8",
 }
 
-var skillDescCols = []string{"skilldesc", "SkillPage", "SkillRow", "SkillColumn", "str name"}
+var skillDescCols = []string{"skilldesc", "SkillPage", "SkillRow", "SkillColumn", "IconCel", "str name", "str short", "str long"}
 
 func loadSkills(t, desc *Table) []*Skill {
 	type d struct {
-		page, row, col int
-		name           string
+		page, row, col, cel int
+		name, short, long   string
 	}
 	descs := map[string]d{}
 	if desc != nil {
 		for i := 0; i < desc.Len(); i++ {
 			r := desc.Row(i)
-			descs[strings.ToLower(r.Str("skilldesc"))] = d{r.Int("SkillPage"), r.Int("SkillRow"), r.Int("SkillColumn"), r.Str("str name")}
+			descs[strings.ToLower(r.Str("skilldesc"))] = d{r.Int("SkillPage"), r.Int("SkillRow"), r.Int("SkillColumn"), r.Int("IconCel"), r.Str("str name"), r.Str("str short"), r.Str("str long")}
 		}
 	}
 	var out []*Skill
@@ -118,7 +120,8 @@ func loadSkills(t, desc *Table) []*Skill {
 			s.Param[k] = r.Int("Param" + itoa(k+1))
 		}
 		if dd, ok := descs[strings.ToLower(s.DescKey)]; ok {
-			s.Page, s.Row, s.Column = dd.page, dd.row, dd.col
+			s.Page, s.Row, s.Column, s.IconCel = dd.page, dd.row, dd.col, dd.cel
+			s.ShortKey, s.LongKey = dd.short, dd.long
 			s.Name = dd.name // string key until the DB resolves it
 		}
 		out = append(out, s)
