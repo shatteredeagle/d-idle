@@ -118,7 +118,6 @@
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
 | lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
-| itemverbs | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/verbs.go`<br>`internal/invdesk/verbs_test.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/env/tuning_invdesk.go`<br>`internal/env/tuning.go`<br>`internal/invdesk/desk.go`<br>`internal/d2dctl/fake/fake.go`<br>`docs/knobs.md` | `fork-branch:fork-only/itemverbs` |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |

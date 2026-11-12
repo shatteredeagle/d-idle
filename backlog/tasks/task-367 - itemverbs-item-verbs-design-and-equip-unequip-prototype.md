@@ -1,10 +1,11 @@
 ---
 id: TASK-367
 title: 'itemverbs: item verbs design and equip/unequip prototype'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:32:00Z'
+updated_date: '2026-11-12T17:01:00Z'
 labels:
   - d2d
   - feature

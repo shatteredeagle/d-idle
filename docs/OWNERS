@@ -165,7 +165,6 @@ docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
-docs/design/item-verbs.md  credit-runner  itemverbs
 docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
@@ -177,7 +176,6 @@ docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  exploredpct
 docs/knobs.md  credit-runner  freshstart
-docs/knobs.md  credit-runner  itemverbs
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
 docs/live-checks.md  credit-runner  repairtrip
@@ -269,9 +267,6 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
 internal/combat/reach.go  credit-runner  maphistoryC
-internal/d2dctl/fake/fake.go  credit-runner  itemverbs
-internal/d2dctl/item_verbs.go  credit-runner  itemverbs
-internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs
 internal/d2dctl/verbs.go  credit-runner  arrivalsettle
 internal/d2dinput/controller.go  credit-runner  arrivalsettle
 internal/d2dinput/controller_test.go  credit-runner  arrivalsettle
@@ -280,18 +275,13 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
-internal/env/tuning.go  credit-runner  itemverbs
 internal/env/tuning_bot.go  credit-runner  exploredpct
 internal/env/tuning_bot.go  credit-runner  freshstart
-internal/env/tuning_invdesk.go  credit-runner  itemverbs
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
-internal/invdesk/desk.go  credit-runner  itemverbs
-internal/invdesk/verbs.go  credit-runner  itemverbs
-internal/invdesk/verbs_test.go  credit-runner  itemverbs
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
