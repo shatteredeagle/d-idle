@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // test-links: game
 // ZEALDIFF (decomp13, TASK-330 d2d side): drive the REAL d2d Fight with a Paladin Zeal swing on a passive dummy and print, per tick,
-// the strike edge (actor->pstruck rising) and the mode edges. Usage: zd_zeal_test SKILL LEVEL [IAS [WSM [TICKS [WEAPON]]]]
+// the strike edge (actor->pstruck rising) and the mode edges. Usage: zg_zeal_test SKILL LEVEL [IAS [WSM [TICKS [WEAPON]]]]
 //   WEAPON = an item code put in the main hand before the character enters (picks the swing animation: sword class, thrust, staff ...).
 //   prints `E <tick> <what> <mode> <pstruck> <kicks_left>`; `W <weapon code> <prate>`; `A <frames> <action ms>`; `S gap N`; `M <mana before> <mana after>`.
 // The game.exe side is tools/emu/d10_roll.py (FUN_00553b10 natively).
@@ -29,7 +29,7 @@
 using namespace d2d::game;
 
 int main(int argc, char** argv) try {
-    if (argc < 3) { std::printf("SKIP: zd_zeal_test SKILL LEVEL [IAS [WSM [TICKS]]]\n"); return D2D_TEST_SKIPPED; }
+    if (argc < 3) { std::printf("SKIP: zg_zeal_test SKILL LEVEL [IAS [WSM [TICKS]]]\n"); return D2D_TEST_SKIPPED; }
     const int skill_id = std::atoi(argv[1]), level = std::atoi(argv[2]);
     const int ias = argc > 3 ? std::atoi(argv[3]) : 0, wsm = argc > 4 ? std::atoi(argv[4]) : 0;
     const int ticks = argc > 5 ? std::atoi(argv[5]) : 200;

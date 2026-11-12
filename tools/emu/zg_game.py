@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Zeal strike gap, game side: FUN_00553b10 (the swing rollback that srvdofunc 13 reaches through FUN_0056e210 with Skills Param2 = 100)
 run natively in the emulator, on a hand-built unit and the event scheduler hooked (FUN_00540e60 clear, FUN_005417d0 add).
-    zd_game.py FRAMES:ACTION:RATE [..]   -> `G frames F action A rate R next-strike K swing-end E full-swing S`
+    zg_game.py FRAMES:ACTION:RATE [..]   -> `G frames F action A rate R next-strike K swing-end E full-swing S`
 FRAMES / ACTION = the AnimData record's frame count and action frame (flag 1); RATE = the per-tick rate (256 = one frame a tick).
 next-strike = ticks from the strike to the next action event; swing-end = ticks to the type-1 event; full-swing = ceil(256 x frames / rate).
 Unit fields (+0x44 start tick << 8, +0x48 length frames x 256, +0x4c rate, +0x50 record, flags from +0x10) are the reading of
