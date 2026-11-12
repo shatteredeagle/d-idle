@@ -1,0 +1,5 @@
+div#gearsets []
+  div.sets-title []
+    h3 [] "Gear sets"
+  div.d-locked.sets-locked [data-state=locked]
+    p.d-hint.teaser [] "Reach level 15."

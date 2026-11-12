@@ -76,18 +76,23 @@ type Config struct {
 	CainOpen func(s *d2.Snapshot) bool
 	Advice   func(it status.Item) string // optional hook for upgrade suggestions (card upgradeadvisor); nil: none
 	Prompt   func() string               // optional: the gear-policy prompt for the page (onboarding, no weapon); must not call back into the desk
+	// SetsGate is the unlock of the Gear Sets feature (docs/gearsets.md); nil = open. MaxSets is the knob invdesk.maxSets.
+	SetsGate SetsGate
+	MaxSets  func() int
 	Now      func() time.Time
 }
 
 // Desk holds the player's decisions. All methods are safe for concurrent use.
 type Desk struct {
-	c   Config
-	mu  sync.Mutex
-	eq  Equipper
-	tr  Trasher
-	how HowSource
-	sv  Services
-	st  state
+	c     Config
+	mu    sync.Mutex
+	eq    Equipper
+	tr    Trasher
+	how   HowSource
+	sv    Services
+	un    Unequipper
+	hands HandsInfo
+	st    state
 }
 
 type markRec struct {
@@ -224,6 +229,11 @@ type Request struct {
 	Op    string `json:"op,omitempty"`
 	// How an equip was done: "verb" (the backend's item verb) or "click" (the click path); empty for other kinds and old files.
 	How string `json:"how,omitempty"`
+	// Schema 7 (gear sets, docs/gearsets.md): the steps of one Apply share Group (and GroupName, the set's name) and run
+	// in Seq order; a failed or cancelled step ends the rest of its group. Empty on every other request.
+	Group     string `json:"group,omitempty"`
+	GroupName string `json:"groupName,omitempty"`
+	Seq       int    `json:"seq,omitempty"`
 }
 
 func (r Request) kind() string {
@@ -248,6 +258,10 @@ type state struct {
 	Queue   []Request  `json:"queue,omitempty"` // persisted since schema 3; a "doing" entry found at load failed with the restart
 	Recent  []Request  `json:"recent,omitempty"`
 	Trashed []trashRec `json:"trashed,omitempty"`
+	// Gear sets (schema 7, docs/gearsets.md): the player's saved sets. SetsSchema is 1 once the file holds sets; a file
+	// without these keys loads as no sets.
+	Sets       []GearSet `json:"sets,omitempty"`
+	SetsSchema int       `json:"setsSchema,omitempty"`
 }
 
 // New makes the desk and loads the state file (a missing file is an empty state; a damaged one is an error).
@@ -475,11 +489,11 @@ func (d *Desk) RequestEquip(id uint32, slot string) (Request, error) {
 	r := Request{ID: id, Kind: KindEquip, Slot: slot, Name: name, State: StateQueued, At: d.c.Now().Unix(), Print: fingerprint(u)}
 	q := d.st.Queue[:0:0]
 	for _, x := range d.st.Queue {
-		if x.State == StateDoing || x.kind() != KindEquip || x.Slot != slot && x.ID != id {
+		if x.State == StateDoing || x.Group != "" || x.kind() != KindEquip || x.Slot != slot && x.ID != id {
 			q = append(q, x)
 		}
 	}
-	if len(q) >= MaxQueue {
+	if singles(q) >= MaxQueue {
 		return Request{}, refuse("full", "%d actions are already waiting: cancel one first", MaxQueue)
 	}
 	d.st.Queue = append(q, r)
@@ -616,6 +630,9 @@ func (d *Desk) Cancel(id uint32, kind string) error {
 		d.st.Queue = append(d.st.Queue[:i:i], d.st.Queue[i+1:]...)
 		x.State = StateCancelled
 		d.recentLocked(x)
+		if x.Group != "" { // one step of a set apply: the rest of the apply would make no sense
+			d.endGroupLocked(x.Group, "cancelled with the rest of the apply")
+		}
 		return d.saveLocked()
 	}
 	return refuse("item", "that request is not queued any more")
@@ -709,7 +726,7 @@ func (d *Desk) Pending() int {
 	d.expireStaleLocked()
 	n := 0
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued && (inTown || !r.errand()) {
+		if r.State == StateQueued && (inTown || !r.errand()) && !d.groupBlockedLocked(r) {
 			n++
 		}
 	}
@@ -765,6 +782,8 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			if s := d.snap(); err == nil && s != nil && s.Player != nil {
 				hx, hy = s.Player.X, s.Player.Y
 			}
+		case KindUnequip:
+			err = d.performUnequip(ctx, r)
 		case KindBuyID:
 			result, err = sv.BuyIdentify(ctx, r.Count)
 		case KindCain:
@@ -802,10 +821,16 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 				out = append(out, fmt.Sprintf("trash %s done, on the ground and ignored by the looter", r.Name))
 			case KindBuyID, KindCain:
 				out = append(out, fmt.Sprintf("%s done: %s", r.kind(), result))
+			case KindUnequip:
+				d.dropPinLocked(r.Slot)
+				out = append(out, fmt.Sprintf("unequip %s from %s done", r.Name, r.Slot))
 			default:
 				d.pinLocked(Pin{Slot: r.Slot, ID: r.ID, Name: r.Name, Since: d.c.Now().Unix()})
 				out = append(out, fmt.Sprintf("equip %s -> %s done, slot pinned%s", r.Name, r.Slot, howSuffix(r.How)))
 			}
+		}
+		if err != nil && r.Group != "" {
+			d.endGroupLocked(r.Group, "stopped: "+r.Name+" failed")
 		}
 		d.recentLocked(r)
 		_ = d.saveLocked()
@@ -880,9 +905,14 @@ type ItemView struct {
 	CanWear []string `json:"canWear,omitempty"` // backpack items: slots a request would be accepted for right now
 	Advice  string   `json:"advice,omitempty"`  // upgrade suggestion hook (card upgradeadvisor); empty today
 	// Schema 3: why an action is not offered (empty = it is), for the action menu on the page.
-	NoWear  string `json:"noWear,omitempty"`  // backpack items with no slot that takes them
-	NoSell  string `json:"noSell,omitempty"`  // not a backpack item, or never sold
-	NoTrash string `json:"noTrash,omitempty"` // see trashWhy
+	NoWear string `json:"noWear,omitempty"` // backpack items with no slot that takes them
+	// Schema 7: why a drop on each refused slot would be refused (slot -> reason; slots in CanWear are absent). The drag
+	// and drop of the doll colours every slot from CanWear and this map: one server-side rule, the Equip button's.
+	NoWearSlot map[string]string `json:"noWearSlot,omitempty"`
+	// Schema 7: a worn item: why taking it off is refused now (the pack has no spot for it); empty = it can come off.
+	NoUnequip string `json:"noUnequip,omitempty"`
+	NoSell    string `json:"noSell,omitempty"`  // not a backpack item, or never sold
+	NoTrash   string `json:"noTrash,omitempty"` // see trashWhy
 	// Schema 5: set only on an unidentified item that cannot be identified now (the reason); empty on an identified item
 	// (identifying it is refused) and on an unidentified one that can be.
 	NoIdentify string `json:"noIdentify,omitempty"`
@@ -896,9 +926,11 @@ type ItemView struct {
 // tooltip, docs/inventory-tooltip.md); 3 added the item fields noWear, noSell and noTrash and the request fields kind
 // and print, and the request states doing and cancelled (the action menu, docs/inventory-actions.md); 4 added the
 // optional merc block (docs/research/merc-gear.md); 5 added the optional identify block, the item field noIdentify and the
-// request kinds identify, buyid and cain with the fields count and result (the identify commands); 6 added the item fields stashOp and noStash, the stashOps block and the request kinds stash, take and gold (docs/inventory-actions.md, stash actions). Older readers keep working: nothing was renamed or removed, the new
+// request kinds identify, buyid and cain with the fields count and result (the identify commands); 7 added the item fields
+// noWearSlot and noUnequip, the sets block, the request kind unequip and the request fields group, groupName and seq
+// (drag and drop, gear sets, docs/gearsets.md); 6 added the item fields stashOp and noStash, the stashOps block and the request kinds stash, take and gold (docs/inventory-actions.md, stash actions). Older readers keep working: nothing was renamed or removed, the new
 // fields are optional.
-const ViewSchema = 6
+const ViewSchema = 7
 
 // View is the inventory page's data.
 type View struct {
@@ -920,6 +952,7 @@ type View struct {
 	Prompt      string               `json:"prompt,omitempty"`   // docs/gear-policy.md: tells the player equipment is theirs to manage
 	StashOps    *StashOpsView        `json:"stashOps,omitempty"` // schema 6: the stash gold controls; nil = no stash backend
 	Identify    *IdentifyView        `json:"identify,omitempty"` // schema 5: the identify commands' state; nil = no town backend
+	Sets        *SetsView            `json:"sets,omitempty"`     // schema 7: the player's gear sets; nil = no inventory source
 	Merc        *MercView            `json:"merc,omitempty"`     // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
 }
 
@@ -945,6 +978,9 @@ type MercView struct {
 	Slots     []string             `json:"slots,omitempty"` // the slots this kind can use; the page greys the others
 	Equipment map[string]*ItemView `json:"equipment"`
 	Note      string               `json:"note,omitempty"`
+	// ActWhy (schema 7) is why a drop on his slots is refused now ("" = it is not): the bot has no executor for his gear
+	// yet, so today it is always set while he is employed.
+	ActWhy string `json:"actWhy,omitempty"`
 }
 
 // View reads the snapshot and decorates it. Without a snapshot the lists are empty and Note says so.
@@ -1033,6 +1069,12 @@ func (d *Desk) View() View {
 					case why == nil || !isNoSlot(err):
 						why = err
 					}
+					if err != nil {
+						if iv.NoWearSlot == nil {
+							iv.NoWearSlot = map[string]string{}
+						}
+						iv.NoWearSlot[k] = err.Error()
+					}
 				}
 				if len(iv.CanWear) == 0 && why != nil {
 					iv.NoWear = why.Error()
@@ -1042,6 +1084,8 @@ func (d *Desk) View() View {
 			}
 		} else if place != "worn" {
 			iv.NoWear = "move it to the backpack first"
+		} else {
+			iv.NoUnequip = unequipWhy(data, it)
 		}
 		if place != "pack" {
 			iv.NoSell = "only backpack items are sold"
@@ -1064,6 +1108,10 @@ func (d *Desk) View() View {
 		}
 	}
 	v.Merc = mercView(data.Merc, decorate)
+	if v.Merc != nil && v.Merc.Owned {
+		v.Merc.ActWhy = d.mercWhy(data)
+	}
+	v.Sets = d.setsView()
 	for _, it := range data.Inventory {
 		iv := decorate(it, "pack")
 		if iv.Mark == MarkSell {

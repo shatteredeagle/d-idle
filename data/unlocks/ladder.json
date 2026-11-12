@@ -57,6 +57,21 @@
       }
     },
     {
+      "id": "gearsets",
+      "group": "ui",
+      "trigger": {
+        "kind": "level",
+        "args": {
+          "min": 15
+        }
+      },
+      "reveal": {
+        "title": "Gear sets",
+        "text": "Save what the hero wears as a named set and put it back on from the inventory page. Only you apply a set: the bot never changes gear by itself.",
+        "teaser": "Reach level 15."
+      }
+    },
+    {
       "id": "pact_andariel_first_kill",
       "group": "pacts",
       "trigger": {

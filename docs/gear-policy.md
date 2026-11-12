@@ -4,7 +4,7 @@ User decision 2026-11-10 ("Fully player-only"): the bot never makes equipment de
 
 ## The knob
 `resource.gearDecisions` (docs/knobs.md): `0` = player (default), `1` = bot (legacy). The brief called it `gear.decisions`; the knob groups are a closed set, so it lives in `resource`. Go: `env.ResourceTuning.BotDecidesGear()`.
-- `cmd/d2bot/gearpolicy.go` (`withGearPolicy`) lays `1` under the config for a measured or drill run (`D2BOT_RUN` set) or `D2BOT_GEAR=bot`; an explicit `resource.gearDecisions` in the config wins. The Gear Sets unlock will set the same knob (hook: the policy sheet row, not yet written).
+- `cmd/d2bot/gearpolicy.go` (`withGearPolicy`) lays `1` under the config for a measured or drill run (`D2BOT_RUN` set) or `D2BOT_GEAR=bot`; an explicit `resource.gearDecisions` in the config wins. The Gear Sets unlock does NOT set it (docs/gearsets.md): sets are applied only by the player.
 - Library and test default is player. Tests that exercise the old paths set `GearDecisions = 1` (helper in each package's tests).
 
 ## What the bot does and does not do
@@ -41,4 +41,6 @@ Fights use whatever is in the right hand; with nothing the hero punches (`combat
 `Desk.View` holds `d.mu` and calls `leveler.CheckPlayerEquip`, which reaches `Desk.Pinned` (the same lock). The fix is agent/standstill (card for that deadlock); this branch does not duplicate it. The advice added here reads a cache and cannot re-enter the desk.
 
 ## Unlock hook for Gear Sets
-Set `resource.gearDecisions` to `1` (a policy-sheet row bound to the unlock). Nothing else needs to change: every path above reads `BotDecidesGear()`.
+> status: SUPERSEDED by docs/gearsets.md (TASK-380, user go 2026-11-12). Gear Sets are sets the PLAYER saves and applies with a click; the unlock (ladder row `gearsets`) opens that panel only and NEVER sets `resource.gearDecisions`: the bot still makes no equipment decision. The text below is the old plan and stays only as history.
+
+(Old plan, not built:) Set `resource.gearDecisions` to `1` (a policy-sheet row bound to the unlock). Nothing else needs to change: every path above reads `BotDecidesGear()`.

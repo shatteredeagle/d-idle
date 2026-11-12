@@ -1,0 +1,516 @@
+{
+ "paladin": {
+  "schema": 7,
+  "inTown": true,
+  "class": "Paladin",
+  "gold": 100,
+  "stashGold": 0,
+  "equipment": {
+   "rhand": {
+    "id": 1,
+    "code": "sword",
+    "name": "Short Sword",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noUnequip": "",
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   },
+   "lhand": {
+    "id": 2,
+    "code": "shield",
+    "name": "Buckler",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   },
+   "torso": {
+    "id": 6,
+    "code": "plate",
+    "name": "Plate Mail",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noUnequip": "the backpack has no free spot for it: make room first",
+    "noTrash": "it is worn: take it off first"
+   }
+  },
+  "backpack": [
+   {
+    "id": 3,
+    "code": "helm",
+    "name": "Cap",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [
+     "head"
+    ],
+    "noWearSlot": {
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "does not fit that slot",
+     "lhand": "does not fit that slot",
+     "rring": "does not fit that slot",
+     "lring": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 4,
+    "code": "ring",
+    "name": "Ring A",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [
+     "rring",
+     "lring"
+    ],
+    "noWearSlot": {
+     "head": "does not fit that slot",
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "does not fit that slot",
+     "lhand": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 5,
+    "code": true,
+    "name": "War Staff",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [],
+    "noWear": "a two-handed weapon and a shield cannot be worn together; take the other one off first",
+    "noWearSlot": {
+     "head": "does not fit that slot",
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "a two-handed weapon and a shield cannot be worn together; take the other one off first",
+     "lhand": "does not fit that slot",
+     "rring": "does not fit that slot",
+     "lring": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 7,
+    "code": "scroll",
+    "name": "Horadric Scroll",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "it cannot be worn",
+    "noTrash": "this item is never trashed (quest item)",
+    "noSell": "this item is never sold",
+    "noWearSlot": {
+     "head": "it cannot be worn",
+     "neck": "it cannot be worn",
+     "torso": "it cannot be worn",
+     "rhand": "it cannot be worn",
+     "lhand": "it cannot be worn",
+     "rring": "it cannot be worn",
+     "lring": "it cannot be worn",
+     "belt": "it cannot be worn",
+     "feet": "it cannot be worn",
+     "gloves": "it cannot be worn"
+    },
+    "stashOp": "stash"
+   },
+   {
+    "id": 9,
+    "code": "gem",
+    "name": "Gem",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "it cannot be worn",
+    "noWearSlot": {
+     "head": "it cannot be worn",
+     "neck": "it cannot be worn",
+     "torso": "it cannot be worn",
+     "rhand": "it cannot be worn",
+     "lhand": "it cannot be worn",
+     "rring": "it cannot be worn",
+     "lring": "it cannot be worn",
+     "belt": "it cannot be worn",
+     "feet": "it cannot be worn",
+     "gloves": "it cannot be worn"
+    },
+    "stashOp": "stash",
+    "canSell": true
+   }
+  ],
+  "stash": [
+   {
+    "id": 8,
+    "code": "axe",
+    "name": "Axe",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "move it to the backpack first",
+    "stashOp": "take"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "queue": [],
+  "recent": [],
+  "stashOps": {
+   "depositMax": 100,
+   "withdrawMax": 0
+  },
+  "merc": {
+   "state": "ready",
+   "owned": true,
+   "alive": true,
+   "class": 338,
+   "kind": "desert",
+   "level": 10,
+   "slots": [
+    "mhead",
+    "mtorso",
+    "mrhand"
+   ],
+   "equipment": {
+    "mhead": {
+     "id": 1001,
+     "code": "helm",
+     "name": "Merc Helm",
+     "quality": "magic",
+     "identified": true,
+     "x": 0,
+     "y": 0,
+     "w": 1,
+     "h": 2
+    }
+   },
+   "actWhy": "the bot cannot change the mercenary's gear yet: the sets you save for him are kept, and you equip him by hand"
+  },
+  "sets": {
+   "schema": 1,
+   "open": true,
+   "max": 8,
+   "sets": [
+    {
+     "id": "gs-1",
+     "name": "Sword and board",
+     "target": "hero",
+     "saved": 1800000001,
+     "slots": [
+      {
+       "slot": "rhand",
+       "name": "Short Sword",
+       "code": "sword"
+      },
+      {
+       "slot": "lhand",
+       "name": "Buckler",
+       "code": "shield"
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "sorceress": {
+  "schema": 7,
+  "inTown": true,
+  "class": "Sorceress",
+  "gold": 100,
+  "stashGold": 0,
+  "equipment": {
+   "rhand": {
+    "id": 1,
+    "code": "staff",
+    "name": "Short Staff",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noUnequip": "",
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   },
+   "lhand": {
+    "id": 2,
+    "code": "orb",
+    "name": "Orb",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noSell": "only backpack items are sold",
+    "noTrash": "it is worn: take it off first"
+   },
+   "torso": {
+    "id": 6,
+    "code": "plate",
+    "name": "Plate Mail",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noUnequip": "the backpack has no free spot for it: make room first",
+    "noTrash": "it is worn: take it off first"
+   }
+  },
+  "backpack": [
+   {
+    "id": 3,
+    "code": "helm",
+    "name": "Cap",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [
+     "head"
+    ],
+    "noWearSlot": {
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "does not fit that slot",
+     "lhand": "does not fit that slot",
+     "rring": "does not fit that slot",
+     "lring": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 4,
+    "code": "ring",
+    "name": "Ring A",
+    "quality": "rare",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [
+     "rring",
+     "lring"
+    ],
+    "noWearSlot": {
+     "head": "does not fit that slot",
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "does not fit that slot",
+     "lhand": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 5,
+    "code": true,
+    "name": "Maul",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "canWear": [],
+    "noWear": "a two-handed weapon and a shield cannot be worn together; take the other one off first",
+    "noWearSlot": {
+     "head": "does not fit that slot",
+     "neck": "does not fit that slot",
+     "torso": "does not fit that slot",
+     "rhand": "a two-handed weapon and a shield cannot be worn together; take the other one off first",
+     "lhand": "does not fit that slot",
+     "rring": "does not fit that slot",
+     "lring": "does not fit that slot",
+     "belt": "does not fit that slot",
+     "feet": "does not fit that slot",
+     "gloves": "does not fit that slot"
+    },
+    "canSell": true
+   },
+   {
+    "id": 7,
+    "code": "scroll",
+    "name": "Horadric Scroll",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "it cannot be worn",
+    "noTrash": "this item is never trashed (quest item)",
+    "noSell": "this item is never sold",
+    "noWearSlot": {
+     "head": "it cannot be worn",
+     "neck": "it cannot be worn",
+     "torso": "it cannot be worn",
+     "rhand": "it cannot be worn",
+     "lhand": "it cannot be worn",
+     "rring": "it cannot be worn",
+     "lring": "it cannot be worn",
+     "belt": "it cannot be worn",
+     "feet": "it cannot be worn",
+     "gloves": "it cannot be worn"
+    },
+    "stashOp": "stash"
+   },
+   {
+    "id": 9,
+    "code": "gem",
+    "name": "Gem",
+    "quality": "normal",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "it cannot be worn",
+    "noWearSlot": {
+     "head": "it cannot be worn",
+     "neck": "it cannot be worn",
+     "torso": "it cannot be worn",
+     "rhand": "it cannot be worn",
+     "lhand": "it cannot be worn",
+     "rring": "it cannot be worn",
+     "lring": "it cannot be worn",
+     "belt": "it cannot be worn",
+     "feet": "it cannot be worn",
+     "gloves": "it cannot be worn"
+    },
+    "stashOp": "stash",
+    "canSell": true
+   }
+  ],
+  "stash": [
+   {
+    "id": 8,
+    "code": "axe",
+    "name": "Axe",
+    "quality": "magic",
+    "identified": true,
+    "x": 0,
+    "y": 0,
+    "w": 1,
+    "h": 2,
+    "noWear": "move it to the backpack first",
+    "stashOp": "take"
+   }
+  ],
+  "belt": [],
+  "pins": [],
+  "queue": [],
+  "recent": [],
+  "stashOps": {
+   "depositMax": 100,
+   "withdrawMax": 0
+  },
+  "merc": {
+   "state": "ready",
+   "owned": true,
+   "alive": true,
+   "class": 338,
+   "kind": "desert",
+   "level": 10,
+   "slots": [
+    "mhead",
+    "mtorso",
+    "mrhand"
+   ],
+   "equipment": {
+    "mhead": {
+     "id": 1001,
+     "code": "helm",
+     "name": "Merc Helm",
+     "quality": "magic",
+     "identified": true,
+     "x": 0,
+     "y": 0,
+     "w": 1,
+     "h": 2
+    }
+   },
+   "actWhy": "the bot cannot change the mercenary's gear yet: the sets you save for him are kept, and you equip him by hand"
+  },
+  "sets": {
+   "schema": 1,
+   "open": true,
+   "max": 8,
+   "sets": [
+    {
+     "id": "gs-1",
+     "name": "Sword and board",
+     "target": "hero",
+     "saved": 1800000001,
+     "slots": [
+      {
+       "slot": "rhand",
+       "name": "Short Staff",
+       "code": "staff"
+      },
+      {
+       "slot": "lhand",
+       "name": "Orb",
+       "code": "orb"
+      }
+     ]
+    }
+   ]
+  }
+ }
+}

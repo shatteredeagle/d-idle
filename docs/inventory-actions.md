@@ -28,7 +28,7 @@ Unchanged (docs/inventory-ui.md); one click from the menu.
 
 ## UI (`web/inventory-actions.js`, `.css`)
 Own module, listens to the `d2:inventory` event and delegates clicks, so `inventory.js` is unchanged apart from one hint text and the queue card heading. Menu is `role=menu`, entries `role=menuitem`, refused entries stay focusable with `aria-disabled` and a visible reason; arrows, Home, End, Tab cycle, Escape closes and returns focus; every `focus()` passes `preventScroll`; the popover is `position: fixed` placed by a transform, the sheet layout is a `data-mode` flag (no media query). The page's grid refreshes on its own 4 s poll; the menu and the queue card refresh at once. V: `TestItemActionsDOMGoldens` (node: 14 menu states for both classes, trash confirm, queue card, keyboard, sheet, poll stability), `TestItemActionsJSNeverScrollsOrInjects`, `go run ./tools/uilint` clean.
-Extension point for drag and drop onto the doll (later pass): doll buttons already carry `data-slot` and `data-key="slot-<slot>"`; a drop handler calls `window.d2InvActions.equip(itemId, slot)`.
+Drag and drop onto the doll, the Take off entry, and the player's gear sets are built (schema 7): docs/gearsets.md. The doll buttons carry `data-slot` and `data-key="slot-<slot>"`; the drop handler (`web/inventory-drag.js`) calls `window.d2InvActions.equip(itemId, slot, target)`.
 
 ## Identify commands (TASK-298, API schema 5)
 Identifying is a player-commanded action, not an equipment decision (docs/gear-policy.md): the bot never identifies on this path unless the player asks. Three requests, queued like the others (queued, doing, done or failed with a reason, cancel while queued, persisted, a `doing` entry found at load is reported failed):
