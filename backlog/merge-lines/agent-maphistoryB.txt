@@ -1,2 +1,0 @@
-BACKLOG: maphistoryB: map heat layers (kills, time spent, damage taken) per area, cells of the coverage size; offline only
-CHANGELOG: Watch minimap: heat layers for kills, time spent and damage taken
