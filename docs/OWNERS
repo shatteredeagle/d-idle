@@ -215,6 +215,7 @@ docs/senses-map.md  credit-runner  maphistory
 docs/senses-map.md  credit-runner  maphistoryA
 docs/senses-map.md  credit-runner  maphistoryB
 docs/senses-map.md  credit-runner  maphistoryC
+docs/senses-map.md  credit-runner  maphistoryD
 docs/senses-map.md  credit-runner  maptrail
 docs/senses-map.md  credit-runner  maptrail2
 docs/session-record.md  live-agent  sessions
@@ -333,6 +334,7 @@ internal/watch/senses.go  credit-runner  maphistory
 internal/watch/senses.go  credit-runner  maphistoryA
 internal/watch/senses.go  credit-runner  maphistoryB
 internal/watch/senses.go  credit-runner  maphistoryC
+internal/watch/senses.go  credit-runner  maphistoryD
 internal/watch/senses.go  credit-runner  maptrail
 internal/watch/senses.go  credit-runner  maptrail2
 internal/watch/senses_stitch_test.go  credit-runner  maptrail
@@ -340,6 +342,7 @@ internal/watch/senses_test.go  credit-runner  maphistory
 internal/watch/senses_test.go  credit-runner  maphistoryA
 internal/watch/senses_test.go  credit-runner  maphistoryB
 internal/watch/senses_test.go  credit-runner  maphistoryC
+internal/watch/senses_test.go  credit-runner  maphistoryD
 internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
 internal/watch/sim.go  credit-runner  xpreadout
@@ -349,6 +352,7 @@ internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.txt  credit-runner  repairtrip
+internal/watch/testdata/history-export.json  credit-runner  maphistoryD
 internal/watch/testdata/history-heat.json  credit-runner  maphistoryB
 internal/watch/testdata/history.json  credit-runner  maphistoryA
 internal/watch/testdata/inventory_dom.js  credit-runner  artspeed2
@@ -359,6 +363,7 @@ internal/watch/testdata/map_panel.js  credit-runner  maphistory
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryA
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryB
 internal/watch/testdata/map_panel.js  credit-runner  maphistoryC
+internal/watch/testdata/map_panel.js  credit-runner  maphistoryD
 internal/watch/testdata/map_panel.js  credit-runner  maptrail
 internal/watch/testdata/map_panel.js  credit-runner  maptrail2
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail
@@ -389,6 +394,7 @@ internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maphistoryA
 internal/watch/web/panels/map  credit-runner  maphistoryB
 internal/watch/web/panels/map  credit-runner  maphistoryC
+internal/watch/web/panels/map  credit-runner  maphistoryD
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
 internal/watch/web/shell.css  credit-runner  uifit

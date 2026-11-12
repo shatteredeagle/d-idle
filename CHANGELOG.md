@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Watch minimap: export the map as a PNG and the history as JSON <!--sg:agent/maphistoryD-->
 - Watch minimap: fight cards and failure markers <!--sg:agent/maphistoryC-->
 - Watch minimap: heat layers for kills, time spent and damage taken <!--sg:agent/maphistoryB-->
 - Watch minimap: timeline scrubber and replay <!--sg:agent/maphistoryA-->
