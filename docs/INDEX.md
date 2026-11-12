@@ -373,6 +373,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [friendly.md](friendly.md): Friendly units (FRIENDLY)
 - [gear-policy.md](gear-policy.md): Gear policy: the player decides equipment (TASK gearplayer)
 - [gear.md](gear.md): Gear and ammo model (agent GEAR, package `internal/gear`)
+- [gearsets.md](gearsets.md): Drag and drop onto the doll, and gear sets (TASK-380, gearsets)
 - [geninv.md](geninv.md): Run invariants and holdout seeds (card gen-invariants, 2026-10-31) (status: current. Code: `internal/d2dsoakstat/invariants.go`, `invreport.go`; spec: soak-gates (Per-seed...)
 - [goldfarm.md](goldfarm.md): Farm gold (the player's order; fix for the poverty loop) (status: built and tested offline (fixtures, stub DOM). Nothing ran live. Tags: V proven by a test named here, S...)
 - [goldfloor.md](goldfloor.md): Gold floor: where gold comes from and goes (agent GOLDFLOOR, 2026-10-31) (status: analysis, read-only on the soaks. Card: `openspec/changes/goldfloor` (proposed). Tags: V = read from the...)
