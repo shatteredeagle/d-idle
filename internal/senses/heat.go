@@ -110,7 +110,13 @@ func (p *Publisher) AddDamage(pct int, text string) {
 func (p *Publisher) HeatOf() ([]HeatPoint, int) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	return p.heat.Area(p.areaNo), p.areaNo
+	var out []HeatPoint
+	for _, h := range p.heat.Area(p.areaNo) {
+		if p.revealedLocked(p.areaNo, h.X, h.Y) {
+			out = append(out, h)
+		}
+	}
+	return out, p.areaNo
 }
 
 func levelID(lm any) string { return fmt.Sprintf("%p", lm) }

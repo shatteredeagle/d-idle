@@ -8,6 +8,7 @@ import (
 	"image/jpeg"
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"time"
 
@@ -58,11 +59,30 @@ func serve(addr, class string) error {
 			map[string]any{"seq": 2, "t": 20, "rule": "life", "kind": "life", "severity": "alarm", "free": true, "text": "Life under 25% in Blood Moor."}},
 			"outbound": map[string]any{"enabled": false, "consent": ""}, "notifications": map[string]any{}})
 	})
-	m.HandleFunc("/api/senses", func(w http.ResponseWriter, r *http.Request) { js(w, sensesFixture()) })
+	if fogStage != "" {
+		pub, err := fogPublisher(fogStage)
+		if err != nil {
+			return err
+		}
+		m.Handle("/api/senses", (&watch.Senses{Src: pub, Lock: watch.FixedTier(1)}).Handler())
+	} else {
+		m.HandleFunc("/api/senses", func(w http.ResponseWriter, r *http.Request) { js(w, sensesFixture()) })
+	}
 	// the unit layer script of the map lives behind the senses routes; a Senses with no source still serves it
 	units := (&watch.Senses{}).Handler()
 	m.Handle("/watch/senses_units.js", units)
 	mountPages(m, sim, class)
+	if fogStage != "" { // the Coverage layer is off by default; the demo needs it on
+		inner := http.Handler(m)
+		m = http.NewServeMux()
+		m.HandleFunc("/watch/panels/map/panel.js", func(w http.ResponseWriter, r *http.Request) {
+			rec := httptest.NewRecorder()
+			inner.ServeHTTP(rec, r)
+			w.Header().Set("Content-Type", "text/javascript; charset=utf-8")
+			w.Write(bytes.Replace(rec.Body.Bytes(), []byte("covOn = covStore.get() === '1';"), []byte("covOn = true;"), 1))
+		})
+		m.Handle("/", inner)
+	}
 	log.Printf("uishots: fixture viewer on http://%s/watch (%s, frozen)", addr, class)
 	return http.ListenAndServe(addr, m)
 }

@@ -138,6 +138,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [inventory.md](inventory.md): Inventory and stash policy (INVSTASH audit, 2026-10-30)
 - [killgap.md](killgap.md): KILLGAP: where the seconds per kill go on d2d (2026-10-30) (status: current. Tags: V = measured by this change on hidden d2d (fresh uncheated Sorceress, 4 seeds x 2 virtual...)
 - [map.md](map.md): d2map: world map reader (agent MAP)
+- [mapfog.md](mapfog.md): Map fog for the overlay layers (mapfog)
 - [mem.md](mem.md): Memory layer: internal/mem, internal/d2, cmd/d2snap
 - [memfd.md](memfd.md): memfd: passing the game-memory descriptor between processes (WP-MEMFD)
 - [nowall.md](nowall.md): NOWALL: campaign stall escalation (status: implemented on agent/nowall (card nowall). Verified offline only; no live run.)
