@@ -376,6 +376,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [hall-of-fame.md](hall-of-fame.md): Hall of Fame and the retire question (TASK-135) (status: built offline (fixtures and fakes). Nothing here is verified against a live game. Ledger and UI only: no...)
 - [heldlog.md](heldlog.md): Held-for-Andariel log line
 - [hirefixlive.md](hirefixlive.md): hirefixlive: PaidHire follows the real menu flow (offline, 2026-11-04) (status: current. Tags: V = verified, S = secondary, U = unverified. Not run live: this change is offline only.)
+- [hourfix.md](hourfix.md): hourfix: first-hour time sinks (TASK-368)
 - [input.md](input.md): Input: helper, client, transform (agent INPUT)
 - [items.md](items.md): Items, economy and runewords for the offline bot (agent ITEMRESEARCH)
 - [killcredit.md](killcredit.md): Kill credit and hits per cast (change killcredit)

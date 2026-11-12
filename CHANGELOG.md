@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20) <!--sg:agent/hourfix-->
 - lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365) <!--sg:agent/lockscan-->
 - Merge branch 'main' into TASK-367 <!--sg:agent/itemverbs-->
 - hour1: first-hour analysis of the fresh Paladin (TASK-364) <!--sg:agent/hour1-->
