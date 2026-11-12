@@ -169,6 +169,7 @@ cmd/d2bot/senseshistory_test.go  credit-runner  maphistory
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryA
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryC
 cmd/d2firsthour/  live-agent  firsthour
+cmd/didleboot  credit-runner  frienddrills2
 data/campaign/  credit-runner  campaign3
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/agents  credit-runner  contextdiet
@@ -187,6 +188,7 @@ docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/friend-drills.md  credit-runner  frienddrills
+docs/friend-drills.md  credit-runner  frienddrills2
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-actions.md  credit-runner  stashactions
