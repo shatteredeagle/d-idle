@@ -1757,12 +1757,17 @@ type lootMemory interface {
 	WalkBack(ctx context.Context, abort func() bool, why func(n, gold int, first string)) (int, error)
 }
 
+// LootWalking reports whether the runner is walking back for remembered drops now. Safe from other goroutines.
+func (r *Runner) LootWalking() bool { return r.lootWalk.Load() }
+
 // walkBackLoot fetches remembered drops at a quiet moment (nothing hostile near). A hostile showing up aborts it.
 func (r *Runner) walkBackLoot(ctx context.Context, area int, hostile func() bool) {
 	lm, ok := r.d.Loot.(lootMemory)
 	if !ok || ctx.Err() != nil {
 		return
 	}
+	r.lootWalk.Store(true)
+	defer r.lootWalk.Store(false)
 	_, err := lm.WalkBack(ctx, hostile, func(n, gold int, first string) {
 		what := first
 		if gold > 0 {

@@ -18,11 +18,12 @@ const (
 	ActFarm                // farming orders
 	ActFlee                // guard exits, danger
 	ActRest                // healing, waiting
+	ActLoot                // walking back for remembered drops
 	actCount
 )
 
 // ActivityNames is the legend of the activity codes, indexed by code.
-var ActivityNames = [...]string{"walk", "combat", "town", "farm", "flee", "rest"}
+var ActivityNames = [...]string{"walk", "combat", "town", "farm", "flee", "rest", "loot"}
 
 // TrailPoint is one sample of the hero position. Entry marks the first sample after the hero came into the area.
 type TrailPoint struct {

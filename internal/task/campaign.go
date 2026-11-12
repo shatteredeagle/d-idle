@@ -91,6 +91,8 @@ type Campaign struct {
 	givers     *GiverTable
 	giverClass func() string
 	giverErr   func(error)
+
+	guide *Guide // the guided journey (guided.go); nil: the floor planner alone
 }
 
 // Act1Options tunes the Normal Act 1 template.
@@ -149,6 +151,9 @@ func (c *Campaign) Plan(w World, s Session) Plan {
 		return Plan{Stuck: true, Why: "wrong difficulty: the " + c.Name + " campaign needs " + c.Difficulty}
 	}
 	if p, ok := c.giverPlan(w, s); ok {
+		return p
+	}
+	if p, ok := c.guidedPlan(w, s); ok {
 		return p
 	}
 	lowest, stuck, kitOnly, denWait := 0, "", true, false
