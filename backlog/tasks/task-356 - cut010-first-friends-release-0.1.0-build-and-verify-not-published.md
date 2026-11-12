@@ -1,10 +1,11 @@
 ---
 id: TASK-356
 title: 'cut010: first friends release 0.1.0 (build and verify, not published)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T03:59:00Z'
+updated_date: '2026-11-12T04:58:00Z'
 labels:
   - container
   - chore
