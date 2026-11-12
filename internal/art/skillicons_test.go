@@ -24,12 +24,12 @@ func TestRealSkillIcon(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer s.Close()
-	for _, k := range []string{"skill-pal-0", "skill-sor-0", "skill-ass-5"} {
+	for _, k := range []string{"skill-pal-0", "skill-sor-0", "skill-pal-58", "skill-ass-12"} {
 		if b, err := s.PNG(k); err != nil || len(b) < 100 {
 			t.Errorf("%s: %v (%d bytes)", k, err, len(b))
 		}
 	}
-	if _, err := s.PNG("skill-pal-200"); err == nil {
+	if _, err := s.PNG("skill-pal-60"); err == nil {
 		t.Error("a cel past the file must be not found")
 	}
 }

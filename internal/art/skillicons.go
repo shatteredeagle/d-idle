@@ -8,9 +8,10 @@ import (
 )
 
 // Skill icons: key skill-<charclass>-<cel>, e.g. skill-pal-4, the icon IconCel 4 of the class's icon file. The
-// charclass is the skills.txt code, the cel is skilldesc.txt IconCel. Each DC6 holds two frames per icon (V: the
-// Paladin, Sorceress and Assassin files hold 60 frames for 30 skills, read from the real install); the first of the
-// pair is used (U: that it is the unpressed one, to be looked at in a browser).
+// charclass is the skills.txt code, the cel is skilldesc.txt IconCel, which is already the frame number: the values
+// step by two (0, 2, 4 ... 58 for the Paladin, V read from the real tables) because each icon has two frames, and the
+// files hold 60 frames for 30 skills (V). The even frame is used; that it is the unpressed look is U (a browser check
+// of the page showed a plausible, undimmed icon).
 const skillDir = `data\global\ui\SPELLS\`
 
 var skillKey = regexp.MustCompile(`^skill-([a-z]{3})-([0-9]{1,3})$`)
@@ -45,8 +46,8 @@ func (s *Store) renderSkill(key string) (image.Image, error) {
 	if err != nil {
 		return nil, err
 	}
-	if 2*cel >= len(fr) {
+	if cel >= len(fr) {
 		return nil, fmt.Errorf("%w: %s cel %d", ErrNotFound, skillFiles[m[1]], cel)
 	}
-	return fr[2*cel].Image(s.pal), nil
+	return fr[cel].Image(s.pal), nil
 }

@@ -18,6 +18,7 @@ const invPage = `<!DOCTYPE html>
  <div class="d-band-main"></div>
  <nav class="d-links" aria-label="Other pages">
   <a class="d-btn" data-size="sm" data-variant="ghost" href="/watch?live=1">Live screen</a>
+  <a class="d-btn" data-size="sm" data-variant="ghost" href="/watch/skills">Skills</a>
   <a class="d-btn" data-size="sm" data-variant="ghost" href="/watch/policy">Policy</a>
   <button class="d-btn" data-size="sm" data-variant="ghost" id="btn-theme" type="button" aria-label="Switch colour theme">Theme: dark</button>
  </nav>

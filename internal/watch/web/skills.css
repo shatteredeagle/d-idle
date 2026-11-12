@@ -4,8 +4,11 @@
   .sk-page { display: grid; gap: var(--d-gap); padding: 0 var(--d-gap) var(--d-gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
   .sk-trees { display: grid; gap: var(--d-gap); grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); }
   .sk-trees > .d-card { min-inline-size: 0; }
-  .sk-lg[data-state="locked"] { border-style: dashed; }
-  .sk-lg { display: inline-block; inline-size: .9rem; block-size: .9rem; border: 2px solid var(--sk-edge); border-radius: 2px; margin-inline-end: var(--d-sp-1); vertical-align: -.1em; background: var(--sk-bg); }
+  .sk-lg[data-state="locked"] { border-style: dashed; --sk-edge: var(--d-line); }
+  .sk-lg[data-state="learned"] { --sk-edge: var(--d-accent); }
+  .sk-lg[data-state="learnable"] { --sk-edge: var(--d-line-strong); }
+  .sk-lg[data-state="bonus"] { --sk-edge: var(--d-good); }
+  .sk-lg { --sk-bg: var(--d-surface-3); display: inline-block; inline-size: .9rem; block-size: .9rem; border: 2px solid var(--sk-edge); border-radius: 2px; margin-inline-end: var(--d-sp-1); vertical-align: -.1em; background: var(--sk-bg); }
   .sk-board { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 4.25rem; gap: var(--d-sp-2); justify-items: center; align-items: center; padding: var(--d-sp-2); background: var(--d-surface-2); border-radius: var(--d-r-2); }
   .sk-arrows { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; pointer-events: none; overflow: visible; }
   .sk-arrows line { stroke: var(--d-line-strong); stroke-width: 2; }
