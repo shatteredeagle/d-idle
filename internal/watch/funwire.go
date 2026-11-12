@@ -95,6 +95,8 @@ type FunConfig struct {
 	// BestiaryPath keeps the kill counts of the bestiary across restarts ("" = in memory). With Monsters set, kinds the
 	// table lacks are skipped and named in Fun.Errors (not fatal).
 	BestiaryPath string
+	// OnboardingPath keeps the welcome card and checklist state (state/onboarding.json, keyed by hero); "" = in memory.
+	OnboardingPath string
 }
 
 // PolicyConfig is what the sheet needs from the process: the table (decide.ShippedPolicy) and the knob path (nil: options
@@ -149,7 +151,9 @@ type Fun struct {
 	Repair *RepairAPI
 	// GoldFarm mounts the Farm gold order routes (goldfarmapi.go); set it before Serve, nil: no routes.
 	GoldFarm *GoldFarmAPI
-	Campaign *CampaignAPI // the guided journey (campaign.go); nil: no routes
+	// Onboarding is the welcome card, first-30-minutes checklist and reconnect data (onboarding.go); always set by NewFun.
+	Onboarding *Onboarding
+	Campaign   *CampaignAPI // the guided journey (campaign.go); nil: no routes
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 
@@ -180,6 +184,12 @@ func NewFun(c FunConfig) (*Fun, error) {
 	if c.Visit == nil {
 		c.Visit = NewVisit("", nil)
 	}
+	ob, err := NewOnboarding(OnboardingConfig{Path: c.OnboardingPath, Hero: func() string { return c.Hub.heroNow().Name },
+		Signals: func() map[string]bool { return onboardingSignals(f.Away) }, Away: c.Visit.awayOK, Art: func() (string, int, int) { return artProgress(f.Art) }})
+	if err != nil {
+		return nil, err
+	}
+	f.Onboarding = ob
 	sec := DefaultSections()
 	sec.Register("tally", TallySection(c.Strip))
 	if c.Codex != nil {
@@ -680,9 +690,14 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
+			if p == "/watch/policy" {
+				m.Handle(p, f.Onboarding.opened("policy", ph)) // opening the sheet ticks its checklist step
+				continue
+			}
 			m.Handle(p, ph)
 		}
 	}
+	m.Handle(OnboardingRoute, f.Onboarding.Handler())
 }
 
 // owns says whether a ViewRoutes entry is served by mountView instead (the landing redirect and the look tracking).
@@ -691,6 +706,7 @@ func (f *Fun) owns(route string) bool { return route == "/watch" || route == "/a
 func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	m := http.NewServeMux()
 	m.Handle("/", base)
+	m.Handle(OnboardingRoute, f.Onboarding.PostHandler(o))
 	ra := f.Return.ReturnAnswerHandler(o)
 	for _, p := range ReturnPostRoutes {
 		m.Handle(p, ra)
@@ -738,7 +754,7 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))
 		m.Handle(PolicyPreviewRoute, f.Policy.PolicyPreviewHandler(o))
 	}
-	return m
+	return f.Onboarding.Observe(m)
 }
 
 func tallyOff() http.Handler {
