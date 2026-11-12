@@ -12,7 +12,7 @@ import (
 var sampleFacts = decide.Situation{"life": "28", "area": "Cold Plains", "potions": "1", "hostiles": "2", "pack": "cursing champion pack",
 	"dest": "the Forgotten Tower", "floor": "14", "herolevel": "9", "retreats": "2", "packkind": "cursing champion pack", "monster": "Bishibosh",
 	"distance": "14", "tripgold": "45", "have": "2", "want": "6", "kit": "THIN", "item": "a rune", "packused": "85", "gold": "300",
-	"durability": "22", "run": "quest", "deaths": "3", "boss": "Andariel", "merc": "dead"}
+	"durability": "22", "run": "quest", "deaths": "3", "boss": "Andariel", "merc": "dead", "chapter": "blood_raven"}
 
 // TestEveryPointHasACard: every point of the shipped catalogue has a headline and a generic line, a plain phrase for
 // each of its answers (and none for answers it does not have), and every placeholder resolves to a known fact.

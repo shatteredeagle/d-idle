@@ -193,6 +193,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			f.info(ft.Finish(res))
 			f.addFight(&ft, st, res)
 			f.noteFightEnd(&ft, res, err)
+			f.noteSummary(&ft, res, err)
 		}
 	}()
 	defer func() { res.Elapsed = f.now().Sub(start) }()
@@ -374,6 +375,7 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 			for _, c := range cand {
 				if c.KillFast && c.Dist > meleeKillFastReach && !ranked[0].KillFast {
 					st.fallbackSaid = true
+					f.note(Note{Kind: "fallback", Text: "Target fallback: " + c.Name + " out of reach, attacking " + ranked[0].Name, X: c.Unit.X, Y: c.Unit.Y, HasPos: true})
 					f.info("target fallback: "+c.Name+" out of melee reach, attacking nearest "+ranked[0].Name, "dist", int(c.Dist))
 					break
 				}

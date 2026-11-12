@@ -1,0 +1,11 @@
+div.inv-tip [role=tooltip]
+  div.q-magic.tip-name [] "Archer's Skull Cap of the Whale"
+  div.tip-line [data-k=base] "Defense: 9"
+  div.tip-line [data-k=base] "Durability: 12 of 12"
+  div.tip-line [data-k=base] "Required Level: 5"
+  div.tip-line [data-k=prop] "+15 to Life"
+  div.tip-line [data-k=prop] "+8 to Strength"
+  div.tip-line [data-k=meta] "Item level: 12"
+  div.tip-line [data-k=meta] "Sells for at least 30 gold"
+  div.tip-badges []
+    span.tip-badge [data-badge=keep] "KEEP"

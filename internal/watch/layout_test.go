@@ -375,15 +375,16 @@ func TestEveryWatchCardIsALayoutTarget(t *testing.T) {
 // squeezed; the panel tells the editor its shape.
 func TestVideoPictureFitsItsPanel(t *testing.T) {
 	css, _ := webFS.ReadFile("web/panels/video/panel.css")
-	for _, want := range []string{"aspect-ratio: 4 / 3", "object-fit: contain", "object-position: center", "grid-template-rows: minmax(0, 1fr)", "min-block-size: 0"} {
+	for _, want := range []string{"aspect-ratio: 4 / 3", "object-fit: contain", "object-position: center", "min-block-size: 0"} {
 		if !strings.Contains(string(css), want) {
 			t.Errorf("video panel.css lacks %q", want)
 		}
 	}
-	sh, _ := webFS.ReadFile("web/shell.css")
-	for _, want := range []string{`.d-main[data-layout="grid"] .d-panel.d-card > .d-card-head { flex: none; }`, `.d-main[data-layout="grid"] .d-panel.d-card > .d-card-body { flex: 1 1 auto; min-block-size: 0; }`} {
+	// the card's height comes from its width: the panel declares fit, so its rows are measured, never the stored span
+	sh, _ := webFS.ReadFile("web/shell.js")
+	for _, want := range []string{"if (m.fit) root.dataset.fit = '1'", "function measureFit()", "contentHeight(n, getComputedStyle(n))", "new ResizeObserver(scheduleFit)", "'fullscreenchange', scheduleFit"} {
 		if !strings.Contains(string(sh), want) {
-			t.Errorf("shell.css lacks %q", want)
+			t.Errorf("shell.js lacks %q", want)
 		}
 	}
 	js, _ := webFS.ReadFile("web/panels/video/panel.js")
@@ -426,5 +427,57 @@ func TestLayoutHiddenEntry(t *testing.T) {
 	b, _ := json.Marshal(l.Breakpoints["wide"].Panels[1])
 	if strings.Contains(string(b), "hidden") {
 		t.Errorf("a shown entry must not grow a hidden key: %s", b)
+	}
+}
+
+// Fit content: every panel of the main area and every pre-shell card declares it, so no card keeps a stored span
+// taller than what it shows; the manifest key is additive (a manifest without it loads, with the stored spans).
+func TestPanelsFitTheirContent(t *testing.T) {
+	ms, err := Manifests()
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, m := range ms {
+		if (m.Band == "side" || m.Band == "stage") && !m.Fit {
+			t.Errorf("panel %s does not fit its content", m.ID)
+		}
+		if m.Band == "status" && m.Fit {
+			t.Errorf("panel %s is in the top band; fit is for the grid", m.ID)
+		}
+	}
+	lc, _ := shellLayoutConf()
+	for _, id := range lc.Compat {
+		if !containsStr(lc.Fit, id) {
+			t.Errorf("the card %s does not fit its content (shell.json layout.fit)", id)
+		}
+	}
+	old, _ := os.ReadFile("testdata/compat/panels-v1/video.json")
+	if m, err := parseManifest(old, "video"); err != nil || m.Fit {
+		t.Errorf("a v1 manifest must load without fit: %v %+v", err, m)
+	}
+	var pv PanelsView
+	newRig(t, "paladin").get("/watch/panels.json", &pv)
+	if len(pv.Layout.Fit) == 0 {
+		t.Error("/watch/panels.json does not carry the fit list")
+	}
+	fit := 0
+	for _, m := range pv.Panels {
+		if m.Fit {
+			fit++
+		}
+	}
+	if fit == 0 {
+		t.Error("/watch/panels.json does not carry the fit flag")
+	}
+}
+
+// The fit in node: a video panel 600 px wide whose stored span is far too tall renders with no empty area.
+func TestLayoutFitJS(t *testing.T) {
+	node, err := exec.LookPath("node")
+	if err != nil {
+		t.Skip("node not available")
+	}
+	if out, err := exec.Command(node, "testdata/layout_fit.js", "web/layout.js").CombinedOutput(); err != nil {
+		t.Fatalf("%v\n%s", err, out)
 	}
 }

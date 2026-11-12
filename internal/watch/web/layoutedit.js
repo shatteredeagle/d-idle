@@ -47,8 +47,8 @@ export function start(api) {
       n.setAttribute('aria-label', it.id + ', column ' + it.col + ' span ' + it.colSpan + ', row ' + it.row + ' span ' + it.rowSpan);
       if (!f) continue;
       f.style.gridColumn = col; f.style.gridRow = row;
-      f.lock.textContent = (n.dataset.aspect || '').replace('/', ':'); // read late: a panel may mount after the editor opened
-      f.lock.hidden = !n.dataset.aspect;
+      f.lock.textContent = n.dataset.aspect ? n.dataset.aspect.replace('/', ':') : n.dataset.fit ? 'fit' : ''; // read late: a panel may mount after the editor opened
+      f.lock.hidden = !f.lock.textContent;
       f.pos.textContent = 'c' + it.col + ' w' + it.colSpan + ' r' + it.row + ' h' + it.rowSpan;
     }
     shown = items;
@@ -104,7 +104,9 @@ export function start(api) {
   }
   function locked(id, rect) {
     const n = cellOf(id), o = get(base, id);
-    if (!n || !o || !n.dataset.aspect || (rect.collapsed !== undefined)) return rect;
+    if (!n || !o || rect.collapsed !== undefined) return rect;
+    // a fit panel's rows are its content's (the shell measures them again on Done); only the picture knows its rows from the width
+    if (!n.dataset.aspect) return n.dataset.fit && rect.rowSpan !== undefined ? Object.assign({}, rect, { rowSpan: o.rowSpan }) : rect;
     const rows = aspectRows(n, rect.colSpan || o.colSpan);
     return rows ? Object.assign({}, rect, { rowSpan: rows }) : rect;
   }
@@ -185,7 +187,7 @@ export function start(api) {
     hide.setAttribute('aria-label', 'Hide ' + it0.id);
     handle.append(el('b', '', it0.id));
     frame.lock = el('span', 'lock');
-    frame.lock.title = 'Aspect-locked: the height follows the width';
+    frame.lock.title = 'The height follows the content (4:3: the width)';
     handle.append(frame.lock, frame.pos, hide);
     rs.title = 'Resize';
     frame.append(handle, rs);

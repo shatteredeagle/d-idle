@@ -98,6 +98,8 @@ type Looter struct {
 
 	ignore atomic.Pointer[func(d2.Unit) bool] // ground items the player trashed (SetIgnore)
 
+	mem lootMem // drops seen beyond the pickup radius (memory.go)
+
 	build string // leveler build name; with the snapshot's difficulty it picks the belt columns (SetBuild)
 
 	// Seams for tests.

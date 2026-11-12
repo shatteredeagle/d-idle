@@ -13,6 +13,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	journey "d2lod-bot/internal/campaign"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/decide"
 	"d2lod-bot/internal/env"
@@ -96,12 +97,15 @@ type Runner struct {
 	sub *event.Sub // bridge subscription (bus -> ch), nil without a bus
 
 	gf       *goldfarm.Controller // the player's Farm gold order (SetGoldFarm); nil: no order
+	journey  *journey.Controller  // the guided journey (SetJourney, guided.go); nil: the floor planner alone
 	gfRepair func() int           // gold Repair All would cost now
 	gfArea   int                  // last farm zone logged
 	rep      *repair.Controller   // the player's Repair now request (SetRepairTrip); nil: no repair trips
 
 	wpHook func(areaID int, name string) // SetWaypointHook
 	firsts *decide.Firsts                // SetLadderFirsts
+
+	lootWalk atomic.Bool // true while walkBackLoot runs (LootWalking, for the watch minimap)
 
 	lastStep atomic.Int64 // wall-clock unix nanos of the last finished loop iteration (heartbeat for the d2bot watchdog)
 
@@ -150,6 +154,7 @@ type Runner struct {
 	selfStop       bool                 // paused by the death-rate rule, guarded by mu
 	merc           mercState            // sticky merc knowledge and chore backoff (resource.go)
 	drank          atomic.Int64         // potions drunk, counted from every EvPotion event (combat emits them live; the observer's own diff is off there)
+	playerCancelNs atomic.Int64         // clock of the last guard interrupt for a player command (playerDue)
 	noTP           atomic.Bool          // the running task step has Constraints.NoTownPortal: no safety portal, no trip
 	farmMu         sync.Mutex           // guards farm
 	farm           farmProgress         // runs goal progress across farmStep restarts (farm.go)
@@ -213,6 +218,7 @@ type loopState struct {
 	pointsFails      int
 	pointsFailLvl    int
 	gearAt           time.Time
+	playerWhyAt      time.Time // last "waits for a safe moment" log line (noteDelayed)
 	errandSkipUntil  time.Time // no errand trip before this (errandTripStep)
 	playerActAt      time.Time // last attempt of the player's queued item actions (playerActionStep)
 	// repair trip (repairtrip.go): when the wait for a safe moment began, retreat steps taken, loot pass done, no attempt before
@@ -589,7 +595,7 @@ func (r *Runner) compile(g goals.Goal) (goalSpec, error) {
 		if r.d.Task == nil {
 			return spec, errors.New("task layer not wired (Deps.Task is nil)")
 		}
-		spec.camp = r.withQuestGivers(task.Template(p.Template, p.Cain).WithRogueClaim())
+		spec.camp = r.withQuestGivers(task.Template(p.Template, p.Cain).WithRogueClaim()).WithGuide(r.journeyGuide())
 		if spec.camp == nil {
 			return spec, fmt.Errorf("unknown campaign template %q", p.Template)
 		}

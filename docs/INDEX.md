@@ -132,7 +132,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [forknext.md](forknext.md): FORKNEXT: the private fork carries the NextHit fix (card forknext, 2026-11-01) (status: current. Branch `lab-nexthit` of the private d2d fork, lab binary `bin/d2d.lab-nexthit` on the worker...)
 - [forkrebase.md](forkrebase.md): FORKREBASE: the private fork stack rebuilt on upstream main 52362d52 (card forkrebase, 2026-11-01) (status: current. Branches `lab2-debug-skills`, `lab2-armorhit`, `lab2-freezeresume` of the private d2d fork...)
 - [hastpdump.md](hastpdump.md): inv-tp-dump: why HasTP differs per area
-- [inventory-actions.md](inventory-actions.md): Inventory item actions (TASK-282, itemactions; identify commands TASK-298)
+- [inventory-actions.md](inventory-actions.md): Inventory item actions (TASK-282, itemactions; identify commands TASK-298; stash actions TASK-339)
 - [inventory-tooltip.md](inventory-tooltip.md): Item tooltip on the inventory page (TASK-269, itemtip)
 - [inventory-ui.md](inventory-ui.md): Inventory page on the watch screen (TASK-212, invui) (status: the item action menu (equip, sell mark, trash, queue states, field equips) is in inventory-actions.md;...)
 - [inventory.md](inventory.md): Inventory and stash policy (INVSTASH audit, 2026-10-30)
@@ -223,6 +223,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [builder.md](builder.md): Linux builder (build host for fork binaries) (status: current. Specifics (container name, template, limits, host) are in the private ops repo,...)
 - [builds-endgame.md](builds-endgame.md): Endgame builds (clvl 2-90, Normal -> Nightmare -> Hell), one per class (agent BUILDS80)
 - [buildv3.md](buildv3.md): BUILDV3: the fresh Sorceress skill table, rewritten to the order the leveler follows (status: table shipped OPT-IN by name (`fallback-lightning-v3`); the default of a fresh Sorceress stays...)
+- [campaign.md](campaign.md): Campaign: the guided journey (status: current (TASK-335 stage 0: spine, loader, bands, decision, state; stage 1 planner: TASK-337; stage 2 API...)
 - [capabilities.md](capabilities.md): What the current build can and cannot do (status: refreshed 2026-11-01 (card capdocs, docs only; first written by card readmedocs; nothing here was run...)
 - [champions.md](champions.md): Champions are elite, not bosses (status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d...)
 - [chargedbolt.md](chargedbolt.md): Charged Bolt per-bolt damage on d2d (card chargedbolt, 2026-11-04) (status: current. Evidence: docs/probes/sksmoke/2026-11-04-SK-cb.txt, .json, -raw.txt. Tag: compared to table on...)
@@ -356,6 +357,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [PUBLISHED.md](fork-publication/PUBLISHED.md): d.idle fork: published (phase 2b)
 - [fresh-character.md](fresh-character.md): Fresh-character soak path (plan-v2 M1)
 - [fresh-start-pace.md](fresh-start-pace.md): Fresh start pace: why the tester hero crawled in Blood Moor (TASK-138) (status: diagnosis and fix 2026-11-07. Tags: V verified live (how stated), S read in code, U unverified. Evidence...)
+- [friend-drills.md](friend-drills.md): Friend pack pre-release drills (D1 to D6) (status: RUN 2026-11-11 on the worker host, scratch project `drill-friend`, ports 18991 (feed), 18992/18993 (page,...)
 - [friend-feed.md](friend-feed.md): Friend feed: D2BOT_UPDATE_FEED (status: BUILT offline (TASK-272, 2026-11-10); never run against a real feed. Design: docs/research/friend-build.md...)
 - [friend-guide.md](friend-guide.md): d.idle friends pack: install guide (Linux) (status: BUILT offline (TASK-274, 2026-11-10); the install script was run once on the worker host in a scratch...)
 - [friendly.md](friendly.md): Friendly units (FRIENDLY)
@@ -382,6 +384,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [live-checks.md](live-checks.md): Live checks still open
 - [logfields.md](logfields.md): Log fields for the per-skill soak report (change logfields)
 - [loot-charms.md](loot-charms.md): Charms, runes and gems on a sell visit (status: current (card m1-loot, agent m1loot, 2026-10-31). Rule source: user decision D4 and the d2-sme; shared...)
+- [lootmemory.md](lootmemory.md): Loot memory (status: current (TASK-320). Code: `internal/loot/memory.go`; hooks in `internal/bot/observe.go` and `goal.go`...)
 - [lootskip.md](lootskip.md): LOOTSKIP: why ground potions were left (card lootskip) (status: current. Source: container log of the sandbox soak (Paladin clvl 10 to 14, build 0.0.261110171517),...)
 - [merc-farm.md](merc-farm.md): Mercenaries and post-campaign farming (research, MERCRESEARCH, 2026-10-29) (status: ARCHIVED 2026-10-31 (doctrim): superseded by docs/merc.md, docs/merc-wire.md, docs/sme/mercenary.md and...)
 - [merc-wire.md](merc-wire.md): Merc wiring (agent MERCWIRE)
@@ -415,6 +418,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
 - [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
 - [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)
+- [potions.md](potions.md): Potions: how the bot drinks (card potiondrink, TASK-328)
 
 `prior-art/`
 
@@ -498,6 +502,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [unlock-questlog.md](unlock-questlog.md): Quest log (TASK-156, unlockquestlog)
 - [unlock-risk.md](unlock-risk.md): Hero risk meter (TASK-159, unlockrisk)
 - [unlock-voice.md](unlock-voice.md): Hero voice and diary (TASK-155, unlockvoice)
+
+`upstream/`
+
+- [verification-2026-11-11.md](upstream/verification-2026-11-11.md): Independent verification of upstream PR candidates 1 and 2 (2026-11-11) (status: current, 2026-11-11 (TASK-340, agent prverify). Both candidates NEEDS-WORK; nothing is cleared for posting...)
 - [usage.md](usage.md): Usage view (`tools/usage/usage.py`) (status: current (TASK-309; source: docs/research/project-review-2026-11-10.md section 6.1 and 6.3 item 5).)
 - [viewer-fps.md](viewer-fps.md): Viewer game video at 12.5 to 25 fps (card viewerfps1, TASK-293, 2026-11-10)
 - [walksmooth.md](walksmooth.md): walksmooth: the stop-and-go walk (TASK-188) (status: offline fix merged-ready, NOT proven live. Tags: V verified (how stated), S read in code, U unverified.)
@@ -572,6 +580,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [feed-after-events.md](process/feed-after-events.md): Feed after events (status: current rule (card feeds, 2026-11-01). The helper is `tools/discord/feed.py`; details in...)
 - [gamecode-guard.md](process/gamecode-guard.md): Game-code guard, labpath class, path scrubber
 - [grill-agent.md](process/grill-agent.md): The grill agent: one command to be interviewed
+- [grill-queue-2026-11-11.md](process/grill-queue-2026-11-11.md): Grill queue 2026-11-11: paste-ready decisions, ADR drafts and glossary text (status: input for the user's next grill session (TASK-342). Docs only. Nothing here is written to...)
 - [grill-workflow.md](process/grill-workflow.md): Grill workflow: deciding with the user in a dedicated session (status: the "create change cards with changecheck new" step is retired for new work (OpenSpec retired, user...)
 - [guarded-proposals.md](process/guarded-proposals.md): Guarded-file proposals from the roadmap decisions (2026-10-31) (status: APPLIED 2026-10-31 by card grillapply: the decisions index has the lines, the milestones/WIP ADR is ADR...)
 - [hooks.md](process/hooks.md): Hooks (change card `hooks`) (status: current since OpenSpec removal stage 5 (2026-11-04): changecheck and `openspec/` are gone; the pre-push...)
@@ -661,22 +670,37 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `probes/fid/`
 
+- [batch5.md](probes/fid/batch5.md): Decomp batch 5 (agent decomp9, 2026-11-11): summary (status: finished, offline (emulator on the worker host; no game, no live d2d, nothing pushed or posted, no fork...)
+- [batch6.md](probes/fid/batch6.md): Decomp batch 6 (agent decomp10, 2026-11-11): summary (status: finished, offline (emulator on the worker host; no game, no live d2d, nothing pushed or posted, no fork...)
+- [batch7.md](probes/fid/batch7.md): Decomp batch 7 (agent decomp11, 2026-11-11): summary (status: finished, offline (emulator on the worker host; no game, no live d2d, nothing pushed or posted, no fork...)
 - [fid-belt-pr.md](probes/fid/fid-belt-pr.md): fid-belt-pr (TASK-78, matrix row IT09): belt pickup lands in the belt first, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **NO DEVIATION on current upstream main; ALREADY...)
 - [fid-boss-mods.md](probes/fid/fid-boss-mods.md): fid-boss-mods (TASK-85, matrix row MA06): unique, champion and superunique modifiers, d2d against game.exe (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **pr-mods is MERGED upstream (#157 and the...)
 - [fid-boss-skills.md](probes/fid/fid-boss-skills.md): fid-boss-skills (TASK-86, matrix row MA06 neighbour): boss skills and death mods, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet), PARTIAL. Result: the boss **death handler (MonUMod 22 /...)
+- [fid-chain-lightning-hop.md](probes/fid/fid-chain-lightning-hop.md): fid-chain-lightning-hop (decomp batch 7, matrix row SK12): Chain Lightning hop target selection and damage... (status: finished 2026-11-11 by agent decomp11 (Sonnet), offline (emulator on the worker host; no game, no d2d...)
+- [fid-gold.md](probes/fid/fid-gold.md): fid-gold: gold drop and gold pickup, game.exe vs d2d vs the bot (status: finished 2026-11-11 by agent decomp10 (Sonnet), offline. Result: **the drop side was already V run...)
 - [fid-hit-recovery.md](probes/fid/fid-hit-recovery.md): fid-hit-recovery (TASK-91, matrix row SK16): player hit recovery, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **NO DEVIATION in the covered paths on current...)
+- [fid-identify.md](probes/fid/fid-identify.md): fid-identify: Deckard Cain, scrolls and tomes, what needs identifying, game.exe vs d2d vs the bot (status: finished 2026-11-11 by agent decomp10 (Sonnet), offline. Result: **the Cain rule is already V read...)
 - [fid-inv-limits.md](probes/fid/fid-inv-limits.md): fid-inv-limits (TASK-79, matrix row IT10): purse cap, stash cap, grid sizes, d2d against game.exe (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: caps and grids EQUAL; **one real d2d deviation...)
 - [fid-layout-act1.md](probes/fid/fid-layout-act1.md): fid-layout-act1 (TASK-80, matrix row MA04): layouts of the other Act 1 areas, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **0 differences in every Act 1 level of Levels.txt...)
 - [fid-missile-monster.md](probes/fid/fid-missile-monster.md): fid-missile-monster (TASK-84, matrix row MA10): monster missiles and ranged attackers, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **AC #1 partly proven.** The launch record...)
 - [fid-missile-player.md](probes/fid/fid-missile-player.md): fid-missile-player (TASK-83, matrix rows SK03 SK12 SK08): player missiles, d2d against game.exe,... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **flight, range, roll and the Nova ring are equal...)
+- [fid-monster-block.md](probes/fid/fid-monster-block.md): fid-monster-block (decomp batch 7): the block chance of a monster that is hit, game.exe against d2d (status: finished 2026-11-11 by agent decomp11 (Sonnet), offline (emulator on the worker host; no game, no live...)
 - [fid-monster-move.md](probes/fid/fid-monster-move.md): fid-monster-move (TASK-82, matrix row MA12): monster velocity, pathing, the 77-point path, d2d against... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **the velocity deviation of the earlier trace (F08,...)
+- [fid-pal-attack.md](probes/fid/fid-pal-attack.md): fid-pal-attack (TASK-318, matrix rows SK04 SK16 and the Paladin skill rows): Paladin Attack and Zeal... (status: finished 2026-11-11 by agent decomp9 (Sonnet), offline. Result: **swing speed and mana for Attack, Smite...)
+- [fid-path-stuck.md](probes/fid/fid-path-stuck.md): fid-path-stuck (decomp batch 7, matrix row MA12): game.exe pathing against d2d, and what the bot relies on... (status: finished 2026-11-11 by agent decomp11 (Sonnet), offline (emulator on the worker host; no game, no live...)
+- [fid-poison-stun.md](probes/fid/fid-poison-stun.md): fid-poison-stun (decomp batch 7, matrix rows SK08 / MA11 neighbours): poison stacking and stun end, d2d... (status: finished 2026-11-11 by agent decomp11 (Sonnet), offline (emulator on the worker host; no game, no live...)
+- [fid-potions.md](probes/fid/fid-potions.md): fid-potions (matrix row ST05): healing, mana and rejuvenation potions, game.exe vs d2d vs the bot (status: finished 2026-11-11 by agent decomp10 (Sonnet), offline. Result: **d2d's potion arithmetic equals game.exe...)
 - [fid-price-pr.md](probes/fid/fid-price-pr.md): fid-price-pr (TASK-76, matrix rows VN01 VN02 VN03 IT08 VN06): vendor prices, d2d against game.exe,... (status: finished 2026-11-08 by agent decomp5 (Sonnet). Result: **ALREADY UPSTREAM, no PR candidate.** The first...)
+- [fid-repair-wear.md](probes/fid/fid-repair-wear.md): fid-repair-wear (TASK-317, matrix row IT08): repair cost and durability loss, sized for the repair trip (status: finished 2026-11-11 by agent decomp9 (Sonnet), offline. Result: **the 1.14d repair formula and the wear...)
+- [fid-revive-mode.md](probes/fid/fid-revive-mode.md): fid-revive-mode (TASK-316, matrix rows MA08, MA13): what a Fallen Shaman does to a corpse, and the Fallen... (status: finished 2026-11-11 by agent decomp9 (Sonnet), offline (emulator on the worker host, no game, no live...)
 - [fid-skill-damage-pr.md](probes/fid/fid-skill-damage-pr.md): fid-skill-damage-pr (TASK-89, matrix row SK02): player skill damage, d2d against game.exe (status: finished 2026-11-07 by agent fidskilldmg (Sonnet). Result: **no PR candidate, because every proven...)
+- [fid-stamina.md](probes/fid/fid-stamina.md): fid-stamina (matrix row ST08): walk and run speed, stamina drain and regeneration, game.exe vs d2d vs the bot (status: finished 2026-11-11 by agent decomp10 (Sonnet), offline. Result: **d2d's stamina drain and regeneration...)
 - [fid-status-effects.md](probes/fid/fid-status-effects.md): fid-status-effects (TASK-87, matrix rows MA11 SK08): monster states, the freeze and chill rule, d2d... (status: finished 2026-11-08 by agent decomp6 (Sonnet). Result: **freeze rule C3/C4/C5, chill length, freeze end...)
 - [fid-stock-oracle.md](probes/fid/fid-stock-oracle.md): fid-stock-oracle (TASK-77, matrix rows VN04 VN05): vendor stock generation and refresh, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **stock generation (which item codes are asked, how...)
 - [fid-teleport.md](probes/fid/fid-teleport.md): fid-teleport (TASK-90, matrix row SK-TELE / TS): Teleport destination, refusal and mana, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **destination rule (range by room, blocked target...)
 - [fid-wp-tp-pr.md](probes/fid/fid-wp-tp-pr.md): fid-wp-tp-pr (TASK-95, matrix rows PR06 PR07): waypoint and town portal, d2d against game.exe (status: finished 2026-11-09 by agent decomp8 (Sonnet). Result: **both oracles are 0 differ on current upstream...)
 - [fid-xp-award.md](probes/fid/fid-xp-award.md): fid-xp-award (TASK-75, matrix row ST10): XP per kill and the level-difference penalty, d2d against game.exe (status: finished 2026-11-09 by agent decomp7 (Sonnet). Result: **AC #1 proven: 0 differences in 119,790 grid lines...)
+- [fid-zeal.md](probes/fid/fid-zeal.md): fid-zeal: the spacing of Zeal strikes, game.exe vs d2d (batch 5 left it unresolved) (status: finished 2026-11-11 by agent decomp10 (Sonnet), offline. Result: **game.exe restarts the swing after every...)
 
 `probes/`
 

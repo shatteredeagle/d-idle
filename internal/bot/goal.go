@@ -1301,6 +1301,7 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 		}
 	}
 	if !hostile() {
+		r.walkBackLoot(ctx, area, hostile)
 		if r.emptyAreaLeave(area) {
 			return nil
 		}
@@ -1313,6 +1314,9 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 		}
 		if r.loop.cleared[area] && r.loop.emptyArea == 0 {
 			return nil // left as empty (emptyAreaLeave logged it)
+		}
+		if !hostile() {
+			r.walkBackLoot(ctx, area, hostile) // end of the roam leg, before the area counts as cleared
 		}
 		if !hostile() {
 			finish := l.run != nil && l.run.Area == area
@@ -1743,4 +1747,35 @@ func levelPlanLine(level int, st Step, margin, slack int) string {
 		why = fmt.Sprintf("below every entry level, first eligible (enters at %d)", st.EnterLvl)
 	}
 	return fmt.Sprintf("level plan: clvl %d -> area %d %s (%s)", level, st.Area, st.Name, why)
+}
+
+// lootMemory is the optional part of a Looter that remembers drops beyond the pickup radius (loot.Looter,
+// docs/lootmemory.md).
+type lootMemory interface {
+	ObserveGround(s *d2.Snapshot)
+	ResetMemory()
+	WalkBack(ctx context.Context, abort func() bool, why func(n, gold int, first string)) (int, error)
+}
+
+// LootWalking reports whether the runner is walking back for remembered drops now. Safe from other goroutines.
+func (r *Runner) LootWalking() bool { return r.lootWalk.Load() }
+
+// walkBackLoot fetches remembered drops at a quiet moment (nothing hostile near). A hostile showing up aborts it.
+func (r *Runner) walkBackLoot(ctx context.Context, area int, hostile func() bool) {
+	lm, ok := r.d.Loot.(lootMemory)
+	if !ok || ctx.Err() != nil {
+		return
+	}
+	r.lootWalk.Store(true)
+	defer r.lootWalk.Store(false)
+	_, err := lm.WalkBack(ctx, hostile, func(n, gold int, first string) {
+		what := first
+		if gold > 0 {
+			what = itoa(gold) + " gold / " + first
+		}
+		r.e.Log.Info("loot_memory: going back for "+what, "drops", n, "area", r.areaName(area))
+	})
+	if err != nil && ctx.Err() == nil {
+		r.e.Log.Warn("loot_memory: walk back failed", "err", err)
+	}
 }

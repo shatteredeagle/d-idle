@@ -73,11 +73,6 @@
   .d-main[data-layout] > .d-band-stage:not([hidden]), .d-main[data-layout] > .d-band-side:not([hidden]) { display: contents; }
   .d-main[data-layout="grid"] :is(.d-card, .card) { align-content: start; }
   .d-main[data-layout] [data-layout-off] { display: none; }
-  /* a card fills its cell: the body takes the height the head leaves, so content that can scale (the game picture)
-     uses the whole box instead of leaving it empty */
-  .d-main[data-layout="grid"] .d-panel.d-card { display: flex; flex-direction: column; }
-  .d-main[data-layout="grid"] .d-panel.d-card > .d-card-head { flex: none; }
-  .d-main[data-layout="grid"] .d-panel.d-card > .d-card-body { flex: 1 1 auto; min-block-size: 0; }
   .d-main[data-layout] .d-panel[data-collapsed] > :not(.d-card-head) { display: none; }
   .d-main[data-layout] .card[data-collapsed] > :not(.card-head, h2) { display: none; }
 

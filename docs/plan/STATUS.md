@@ -103,7 +103,26 @@
 | repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
 | aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | queuespeed | proposed | - | `docs/process/queuespeed.md` | - |
+| uifit | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/panels`<br>`internal/watch/panels.go`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uilint`<br>`tools/uishots`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uifit.txt` | - |
+| fid-revive-mode | in-progress | - | `docs/probes/fid/fid-revive-mode.md` | - |
+| fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
+| fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
+| fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
+| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
+| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
+| nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
+| maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go`<br>`internal/combat/potioneffect.go`<br>`internal/combat/potioneffect_test.go`<br>`internal/env/tuning_combat.go`<br>`docs/potions.md`<br>`docs/knobs.md` | - |
+| runstate | proposed | - | `internal/d2dinput/run.go`<br>`internal/d2dinput/controller.go` | - |
+| zealdiff | proposed | - | `tools/emu/zd_*` | - |
+| maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
+| maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
+| campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
+| stashactions | proposed | - | `internal/invdesk`<br>`internal/town/playerstash.go`<br>`internal/town/playerstash_test.go`<br>`internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-actions.css`<br>`internal/watch/testdata/itemactions`<br>`docs/inventory-actions.md`<br>`docs/whyline.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
+| campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
+| frienddrills | proposed | - | `docs/friend-drills.md`<br>`tools/friendpack/didle` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -159,14 +178,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
-- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
-- 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
-- 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
-- c7da022e 11-11 12:58 `Merge branch 'main' into identify2` (-)
-- 80218986 11-11 12:51 `Merge agent/qprofile: queue profile: where merge time goes and safe speedups (TASK-313)` (qprofile)
-- c9eb634c 11-11 12:50 `Merge branch 'main' into qprofile` (-)
-- 3c97ca09 11-11 12:46 `Merge agent/identify2: sync main` (identify2)
-- b1a79744 11-11 12:40 `Merge agent/uiedit2: TASK-306 uiedit2: game picture fits its panel, aspect-locked; every card editable with hide/show` (uiedit2)
-- 62073587 11-11 12:39 `Merge branch 'main' into uiedit2` (-)
+- e9c488c4 11-11 20:10 `Merge agent/frienddrills: TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix` (frienddrills)
+- 45e40c4a 11-11 20:09 `Merge branch 'main' into frienddrills` (-)
+- 12450fd1 11-11 20:02 `Merge agent/potionfix: TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state` (potionfix)
+- 8688c065 11-11 20:01 `Merge branch 'main' into potionfix` (-)
+- dc51638e 11-11 20:00 `Merge agent/prverify2: TASK-345 upstream PR verification second pass` (prverify2)
+- fb4f84dc 11-11 20:00 `Merge agent/grillqueue: TASK-342 grill queue: paste-ready decisions and glossary text` (grillqueue)
+- 689873e3 11-11 20:00 `Merge agent/prverify: TASK-340 upstream PR verification: candidates 1 and 2` (prverify)
+- 95423563 11-11 19:58 `Merge branch 'main' into prverify2` (-)
+- ccb33fa2 11-11 19:58 `Merge branch 'main' into grillqueue` (-)
+- b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
 <!-- statusgen:end -->

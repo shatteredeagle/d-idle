@@ -62,12 +62,11 @@
   function doll(v) {
     var box = $('equip'); clear(box);
     if (art.on) { box.dataset.art = ''; var f = el('img', 'art-panel'); f.setAttribute('alt', ''); f.setAttribute('src', '/watch/art/panel-inv.png'); box.appendChild(f); } else delete box.dataset.art;
-    var pins = {}; (v.pins || []).forEach(function (p) { pins[p.slot] = p; });
     var broken = 0, worn = 0;
     SLOTS.forEach(function (s) {
       var it = v.equipment && v.equipment[s];
       var b = el('button', 'd-slot2'); b.type = 'button'; b.dataset.slot = s; b.dataset.key = 'slot-' + s;
-      // the icon goes first so the durability pips, PIN and BROKEN stay above it
+      // the icon goes first so the durability pips and BROKEN stay above it
       if (art.on) {
         if (it && it.art && ART_NAME.test(it.art)) artImg(b, 'ico', 'item-' + it.art);
         else if (!it) artImg(b, 'ghost', 'slot-' + SLOTART[s]);
@@ -88,9 +87,8 @@
         }
         b.title = name(it) + (d ? ', durability ' + d.cur + '/' + d.max : '');
       } else b.title = LABEL[s] + ': empty';
-      if (pins[s]) b.appendChild(el('span', 'pin', 'PIN'));
       if (sel && sel.slot === s) b.classList.add('sel');
-      b.setAttribute('aria-label', LABEL[s] + ': ' + (it ? name(it) : 'empty') + (pins[s] ? ', pinned' : ''));
+      b.setAttribute('aria-label', LABEL[s] + ': ' + (it ? name(it) : 'empty'));
       b.addEventListener('click', function () { select({ slot: s }); });
       box.appendChild(b);
     });
@@ -136,7 +134,6 @@
     var it = null, slot = sel.slot || '';
     if (slot) it = v.equipment && v.equipment[slot];
     else [v.backpack, v.stash, v.belt].forEach(function (l) { (l || []).forEach(function (x) { if (x.id === sel.id) it = x; }); });
-    var pinned = slot && (v.pins || []).some(function (p) { return p.slot === slot; });
     if (!it) {
       d.appendChild(el('h3', '', slot ? LABEL[slot] + ': empty' : 'Gone'));
       if (!slot) sel = null;
@@ -147,10 +144,6 @@
       if (it.advice) d.appendChild(el('p', '', it.advice));
     }
     var bar = el('div', 'd-btngroup');
-    if (pinned) {
-      d.appendChild(el('p', 'd-muted', 'Pinned by you: the bot leaves this slot alone.'));
-      bar.appendChild(button('Unpin', function () { post('/api/inventory/unpin', { slot: slot }); }, false, { key: 'unpin' }));
-    }
     if (it && !slot) {
       var inPack = (v.backpack || []).some(function (x) { return x.id === it.id; });
       bar.appendChild(button(it.mark === 'sell' ? 'Clear sell mark' : 'Mark for sale', function () {
