@@ -19,6 +19,7 @@ owns:
   - "docs/wiring.md"
 exclusive: []
 contracts: []
+result: "see docs/wiring.md"
 ---
 
 ## Description
@@ -31,8 +32,8 @@ Why: the loot memory never ran in production because looterAdapter hid its metho
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Static audit of optional-interface assertions and nil-able hooks, orphan and unread-knob lists
-- [ ] #2 Production-wiring matrix test fails when an adapter hides an optional method
-- [ ] #3 Wiring gaps found are fixed with tests or listed with cause in docs/wiring.md
-- [ ] #4 Live-log grep separates no-opportunity from unwired
+- [x] #1 Static audit of optional-interface assertions and nil-able hooks, orphan and unread-knob lists
+- [x] #2 Production-wiring matrix test fails when an adapter hides an optional method
+- [x] #3 Wiring gaps found are fixed with tests or listed with cause in docs/wiring.md
+- [x] #4 Live-log grep separates no-opportunity from unwired
 <!-- AC:END -->
