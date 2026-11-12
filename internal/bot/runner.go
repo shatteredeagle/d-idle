@@ -135,7 +135,8 @@ type Runner struct {
 
 	tpd            tpDumper // inv-tp-dump rate limit (tpdump.go)
 	obMu           sync.Mutex
-	tpBuyMin       int // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
+	healthMu       sync.Mutex // serialises Health.Step, which runs outside obMu (see healthProbe)
+	tpBuyMin       int        // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
 	ob             observer
 	dlog           *deathLog               // guarded by obMu
 	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
@@ -259,6 +260,7 @@ type loopState struct {
 	emptyArea  int
 	emptyKills int
 	emptySince time.Time
+	levelSlice bool // the running sweep belongs to a leveling slice (taskActs.LevelTo): bot.clearIdleMin applies
 	// failed explores per area since the last kill (exploreGaveUp)
 	exploreFails map[int]exploreFail
 	pp           pingPong // area ping-pong guard (noteArea)

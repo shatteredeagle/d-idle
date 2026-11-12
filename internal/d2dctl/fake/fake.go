@@ -33,6 +33,10 @@ type Fixtures struct {
 	Quest    string // rest of "debug quest <q> show"
 	Attack   string
 	Passives string
+	// Caps is the fork's "caps" list (comma separated); empty: the verb is unknown, like stock d2d.
+	Caps string
+	// ItemReply is the first payload line of "item ..." (e.g. "equip id=5 slot=4 displaced=-1 at=-1,-1" or "noop slot=4 at=-1,-1"); ItemErr is an "err" text instead.
+	ItemReply, ItemErr string
 }
 
 // Options model misbehaviour.
@@ -235,6 +239,16 @@ func (s *Server) handle(line string) (reply string, ignored, quit bool) {
 		return fmt.Sprintf("frame=%d game_ms=%d tick=%d\nok\n", s.frame+s.tick, s.tick*40, s.tick), false, false
 	case "clock":
 		return fmt.Sprintf("lockstep=1 scale=1 frame=%d stepped=%d game_ms=%d tick=%d pending=0 render_steps=0\nok\n", s.frame+s.tick, s.tick, s.tick*40, s.tick), false, false
+	case "caps":
+		if s.Fix.Caps == "" {
+			return "err unknown verb caps\n", false, false
+		}
+		return "caps=" + s.Fix.Caps + "\nok\n", false, false
+	case "item":
+		if s.Fix.ItemErr != "" {
+			return "err " + s.Fix.ItemErr + "\n", false, false
+		}
+		return s.Fix.ItemReply + "\nok\n", false, false
 	case "info":
 		s.frame += 7
 		return fmt.Sprintf("w=800 h=600 frame=%d\nok\n", s.frame), false, false
