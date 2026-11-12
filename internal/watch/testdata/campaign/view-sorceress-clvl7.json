@@ -1,0 +1,159 @@
+{
+ "schema": "campaign/1",
+ "difficulty": "normal",
+ "mode": "guided",
+ "goAt": "recommended",
+ "level": 7,
+ "decision": {
+  "action": "farm",
+  "chapter": "blood_raven",
+  "title": "Blood Raven",
+  "quest": "sisters_burial",
+  "readiness": {
+   "chapter": "blood_raven",
+   "band": "too_early",
+   "floor": 9,
+   "recommended": 10,
+   "reasons": [
+    "clvl 7 \u003c floor 9"
+   ]
+  },
+  "farm": {
+   "area": "Cold Plains",
+   "areaId": 3,
+   "mlvl": 2
+  },
+  "level": 10,
+  "why": "Farming Cold Plains for level 10 to unlock Blood Raven"
+ },
+ "meter": {
+  "from": 7,
+  "to": 10,
+  "pct": 0.62,
+  "etaSeconds": 1500
+ },
+ "chapters": [
+  {
+   "id": "start",
+   "title": "A new hero",
+   "area": "Blood Moor",
+   "kind": "chore",
+   "reward": "first kills, first potions; the hero learns the road out of camp",
+   "why": "Every hero starts in the Blood Moor: easy kills, first level-ups.",
+   "state": "done",
+   "band": "comfortable",
+   "floor": 1,
+   "recommended": 1,
+   "intent": "auto"
+  },
+  {
+   "id": "cold_plains_wp",
+   "title": "Cold Plains waypoint",
+   "area": "Cold Plains",
+   "kind": "unlock",
+   "reward": "the first waypoint: fast travel out of camp",
+   "why": "The Cold Plains waypoint saves the long walk on every trip.",
+   "state": "done",
+   "band": "comfortable",
+   "floor": 2,
+   "recommended": 3,
+   "intent": "auto"
+  },
+  {
+   "id": "den_of_evil",
+   "title": "Den of Evil",
+   "area": "Den of Evil",
+   "kind": "quest",
+   "reward": "Akara's free skill point (and a respec later)",
+   "why": "Akara gives a free skill point for clearing the Den of Evil.",
+   "state": "done",
+   "band": "comfortable",
+   "floor": 5,
+   "recommended": 6,
+   "intent": "auto"
+  },
+  {
+   "id": "blood_raven",
+   "title": "Blood Raven",
+   "area": "Burial Grounds",
+   "kind": "boss",
+   "reward": "Kashya's free Rogue mercenary",
+   "why": "Killing Blood Raven earns a free Rogue mercenary from Kashya.",
+   "state": "next",
+   "band": "too_early",
+   "floor": 9,
+   "recommended": 10,
+   "reasons": [
+    "clvl 7 \u003c floor 9"
+   ],
+   "intent": "ask"
+  },
+  {
+   "id": "find_cain",
+   "title": "Find Deckard Cain",
+   "area": "Tristram",
+   "kind": "quest",
+   "optional": true,
+   "reward": "Cain identifies items for free; Tristram opens as a farm zone",
+   "why": "Rescuing Cain in Tristram makes identifying free.",
+   "state": "waiting",
+   "band": "too_early",
+   "floor": 9,
+   "recommended": 11,
+   "reasons": [
+    "clvl 7 \u003c floor 9"
+   ],
+   "intent": "auto"
+  },
+  {
+   "id": "countess",
+   "title": "The Countess",
+   "area": "Tower Cellar Level 5",
+   "kind": "boss",
+   "optional": true,
+   "reward": "the Countess drops runes and gold (no quest reward in Normal)",
+   "why": "The Countess drops the first runes.",
+   "state": "waiting",
+   "band": "too_early",
+   "floor": 11,
+   "recommended": 14,
+   "reasons": [
+    "clvl 7 \u003c floor 11"
+   ],
+   "intent": "ask"
+  },
+  {
+   "id": "tools_of_the_trade",
+   "title": "Charsi's hammer",
+   "area": "Barracks",
+   "kind": "quest",
+   "optional": true,
+   "reward": "Charsi imbues one item with magic properties",
+   "why": "Bringing the Horadric Malus back to Charsi earns a free imbue.",
+   "state": "skipped",
+   "band": "too_early",
+   "floor": 10,
+   "recommended": 13,
+   "reasons": [
+    "clvl 7 \u003c floor 10"
+   ],
+   "intent": "skip"
+  },
+  {
+   "id": "andariel",
+   "title": "Andariel",
+   "area": "Catacombs Level 4",
+   "kind": "boss",
+   "reward": "Act 1 done: the road to Lut Gholein and Act 2",
+   "why": "Andariel guards the way east; killing her opens Act 2.",
+   "state": "waiting",
+   "band": "too_early",
+   "floor": 17,
+   "recommended": 18,
+   "reasons": [
+    "clvl 7 \u003c floor 17"
+   ],
+   "intent": "ask"
+  }
+ ]
+}
