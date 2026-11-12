@@ -82,6 +82,7 @@ type ladderOptions struct {
 	riskFacts                              func(zone string) watch.RiskFacts
 	monsters                               watch.MonsterTables
 	readiness                              http.Handler          // GET /api/readiness (readywire.go); nil: none
+	explored                               watch.ExploredSource  // the explored share of /api/hero (Runner.Explored); nil: none
 	heroStats                              watch.HeroStatsSource // the stats block of /api/hero (readywire.go); nil: none
 	awayMin, repeatCooldownMin, quietAfter int
 }
@@ -264,6 +265,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Fun.Art = artAPI(l.art)
 		rig.Fun.Readiness = l.readiness
 		hub.SetHeroStatsSource(l.heroStats)
+		hub.SetExploredSource(l.explored)
 		bindRepair(rig.Fun, l.repair, l.farm)
 		bindJourney(rig.Fun, l.journey)
 		if src == nil {

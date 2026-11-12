@@ -151,10 +151,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.npcStopDist | 4 | 2..10 | subtiles | 10 | 1 | Distance from an NPC at which the walk ends and the click starts. |
 | town.npcOpenTries | 3 | 1..6 | count | 1 | 2 | Attempts to open an NPC dialog before the chore is skipped. |
 | town.uiTimeoutMs | 2500 | 800..8000 | ms | 800 | 2 | Wait for a panel flag after a click. |
-| town.clickSettleMs | 150 | 40..800 | ms | 800 | 7 | Pause after a UI click before memory is re-read. |
+| town.clickSettleMs | 150 | 40..800 | ms | 800 | 9 | Pause after a UI click before memory is re-read. |
 | town.dropTries | 6 | 1..8 | count | 1 | 1 | Ground clicks tried, each on another cell beside the character, to drop a held item (then a free pack cell, then the failsafe). |
 | town.cursorStuckMax | 3 | 1..8 | count | 1 | 2 | Pack spots tried to put a held item away (a refused spot is skipped); after this many failed clears in a row loot drops the item on the ground without trying the pack. |
-| town.moveTries | 3 | 1..6 | count | 1 | 3 | Attempts to move one item between grids (each verified in memory). |
+| town.moveTries | 3 | 1..6 | count | 1 | 4 | Attempts to move one item between grids (each verified in memory). |
 | town.portalSettle | 4500 | 1000..8000 | ms | 8000 | 1 | Wait after arriving in an area before using a portal. |
 | town.portalReuseDist | 40 | 0..100 | subtiles | 0 | 1 | ToTown walks into an open portal this close instead of reading a scroll. |
 | town.portalClickFails | 2 | 1..6 | count | 6 | 1 | BackToField drops a town portal id after this many failed entries (click without level change) and falls back to a fresh portal, then the waypoint, then the walk. |
@@ -220,6 +220,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.corpseRetries | 1 | 0..1 | count | 0 | 1 | Max attempts to recover the corpse after a softcore death. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
 | bot.clearRadius | 30 | 12..45 | subtiles | 12 | 21 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
+| bot.exploredPct | 100 | 30..100 | % | 100 | 2 | Share of a zone's roam coverage points the hero must have visited before a clear run calls the zone explored and moves on (the planner then takes the next area or a fresh game). 100 visits every point (the old behaviour). Quest and boss runs always explore everything. Needs a roaming (fully known map) backend; others ignore it. docs/exploredpct.md. |
 | bot.corpseValueMin | 1000 | 1..2e+04 | gold | 2e+04 | 4 | Estimated value of the gear on the corpse below which it is abandoned. Higher abandons more. |
 | bot.spiralDeaths | 4 | 3..8 | deaths | 8 | 4 | Deaths in one area within the spiral window that make the bot avoid that area (one fewer when the area is clearly too high for the level or the character died with no potions and no gold). Dying is normal: the default allows three deaths on the same goal. Higher tolerates more. |
 | bot.dangerBanMin | 20 | 5..120 | min | 120 | 1 | How long the spiral breaker keeps the character out of an area. Longer stalls the goal more. |

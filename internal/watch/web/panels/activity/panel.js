@@ -18,7 +18,10 @@ export function mount(root, ctx) {
       ctx.hide(false);
       const line = h.activity || h.stateLabel || 'Waiting for the hero.';
       now.textContent = line.charAt(0).toUpperCase() + line.slice(1);
-      ctx.meta.textContent = h.area || '';
+      const ex = h.explored;
+      ctx.meta.textContent = (h.area || '') + (ex && ex.total > 0
+        ? (h.area ? ' - ' : '') + 'Explored ' + ex.pct + '%' + (ex.threshold < 100 ? ' (moves on at ' + ex.threshold + '%)' : '')
+        : '');
       const g = h.goal;
       if (g) {
         goal.hidden = false;

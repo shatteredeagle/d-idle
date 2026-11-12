@@ -50,7 +50,24 @@ type HeroView struct {
 	Why        HeroWhy   `json:"why"`
 	// Stats is null until the bot reports it (SetHeroStatsSource); added for the hero stats tile (TASK-284).
 	Stats *HeroStats `json:"stats"`
+	// Explored is the roam coverage of the current zone (additive, absent in town or without a roaming backend).
+	Explored *HeroExplored `json:"explored,omitempty"`
 }
+
+// HeroExplored is how much of the zone the roam visited: Pct is whole percent, Threshold the share (bot.exploredPct)
+// at which a clear run moves on.
+type HeroExplored struct {
+	Visited   int `json:"visited"`
+	Total     int `json:"total"`
+	Pct       int `json:"pct"`
+	Threshold int `json:"threshold"`
+}
+
+// ExploredSource reads the zone coverage for /api/hero (ok false: none).
+type ExploredSource func() (visited, total, pct, threshold int, ok bool)
+
+// SetExploredSource sets where /api/hero reads the explored share from (nil: the key is left out).
+func (h *Hub) SetExploredSource(f ExploredSource) { h.mu.Lock(); h.explored = f; h.mu.Unlock() }
 
 // HeroStats are the hero's defences: the resistances as the game shows them and, when the readiness model is on, its
 // light for the area the hero is in. No defence rating: the bot does not read one.
@@ -125,7 +142,7 @@ func (h *Hub) Hero() HeroView {
 	up := h.Uptime()
 	ov := h.OrdersView()
 	h.mu.Lock()
-	hi, gold, stats := h.hero, h.gold, h.stats
+	hi, gold, stats, expl := h.hero, h.gold, h.stats, h.explored
 	from, fromT, seen, now := h.xpFrom, h.xpFromT, h.xpSeen, h.cfg.Clock.Now()
 	h.mu.Unlock()
 	v := HeroView{Schema: heroSchema, Known: hi.Known || hi.Class != "", Name: safeText(hi.Name, 40), Class: hi.Class, Level: hi.Level,
@@ -160,6 +177,11 @@ func (h *Hub) Hero() HeroView {
 				s.Readiness = &r
 			}
 			v.Stats = &s
+		}
+	}
+	if expl != nil {
+		if vis, tot, pct, th, ok := expl(); ok && tot > 0 {
+			v.Explored = &HeroExplored{Visited: vis, Total: tot, Pct: pct, Threshold: th}
 		}
 	}
 	for _, o := range ov.Orders {
