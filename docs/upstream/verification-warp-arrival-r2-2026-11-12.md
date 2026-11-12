@@ -17,7 +17,7 @@ PASS. Every required edit of the first pass is applied and true (table below); a
 | 3 | drlg.md | DONE. "Taking a warp" now has the two searches (flag 1 at 0x555144..0x555157, flag 0 via FUN_00554ea0 at 0x5551bc, refusal 0x5551c3), the ring rule and range; the table row says "diffed (`tools/emu/sk_tele_spot.py warp`)". Matches the first pass's own reading of FUN_005550b0 / FUN_0064dea0 | V read |
 | 4 | refuse, no fallback | DONE. `warp_arrival` returns `std::optional`; on nullopt `use_warp` logs `no free spot within 49 subtiles ... the warp is not taken` and returns. `take_warp` is cleared earlier (`actor->take_warp = -1` before the sewer gate), nothing else has been mutated, `arrive` is not called, so hero, level, merc and pets stay. The test asserts level, position and `take_warp < 0` | V read, V run |
 | 5 | cite FUN_005550b0 | DONE in `world.hpp` comment, commit subject, drlg.md | V read |
-| 6 | commit format | DONE. Both commits: author and committer the user's GitHub noreply identity, subjects 46 and 66 characters, 3 and 2 body lines, blank line, `Agent: Claude Code`; no Co-Authored-By or Claude/Cursor trailers | V run (`git log --format`) |
+| 6 | commit format | DONE. Both commits: author and committer the user's GitHub noreply identity, subjects 48 (oracle) and 66 (claim) characters, 2 and 3 body lines, blank line, `Agent: Claude Code`; no Co-Authored-By or Claude/Cursor trailers | V run (`git log --format`) |
 | 7, 8 | disclose residual, units' bit | DONE in the draft's limits | V read |
 
 ## Numbers on new seeds (V run, seeds not used by the author or the first pass)
@@ -39,7 +39,8 @@ PASS. Every required edit of the first pass is applied and true (table below); a
 - Full `ninja` (all targets, `D2D_WERROR=OFF`) at each commit alone: `c9b4c06e`, `688e53ed`, `24e8ac4f`: rc 0.
 - `pr_guard.py c9b4c06e HEAD`: 0 FAIL, 0 WARN; on the oracle commit alone 0 / 0; `--sorted c9b4c06e`: 0 FAIL. (Against the lab clone's stale `origin/main` `--sorted` reports a `units.md` row not in this diff; ignore.)
 - `presubmit.py --quick --base c9b4c06e`: 0 FAIL, 1 WARN (`build` skipped by `--quick`); GCC `-Wshadow -Wconversion -Werror` and clang-tidy on 174 TUs ok; ruff ok.
-CTEST_PLACEHOLDER
+- Full `presubmit.py --base c9b4c06e` on the claim: 1 FAIL, `strict-build` (the host's GCC 16.2 with `-Werror`: `-Warray-bounds` in `apps/d2d/ui.cpp` and `tests/test_d2s.cpp`, files this branch does not touch). The same two TUs compiled from the parent's sources with the same command fail the same way: pre-existing on upstream main with this compiler, not the branch (CI builds in its own container). Not a blocker; if the PR body lists presubmit, say "--quick: 0 FAIL" as the draft already does.
+- `ctest -j8` (D2_MPQ_DIR and the 1.14d installer): parent 273 tests, claim 274 (the new `test_warp_arrival` passes); the same 4 failures on both, `test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4` (no video MPQs on this box), as #444 / #445 and the first pass.
 - Lab content: the diff has no `lockstep`, `devctl`, `framefeed`, lab verb, cheat, host, path or name (grep over `git diff c9b4c06e 24e8ac4f`, 0 hits). The test's default data dir `~/Workspace/private/diablo2` is upstream's own convention (`test_akara_decipher.cpp` and others).
 - One topic, minimal: code 11 added lines in `world.hpp`, 6 added and 1 removed in `travel.cpp`; one caller changes (`use_warp`); waypoints, portals, quest arrivals and `arrive`'s own `nearest_free` untouched.
 
@@ -52,7 +53,7 @@ CTEST_PLACEHOLDER
 ## Edits (LOW, draft only; the branch needs none)
 1. Draft "What changes": "5 in `world/travel.cpp`" is 6 added, 1 removed. Say "6 added lines (1 removed)".
 2. Draft numbers: optional, add this pass's new seeds (synthetic 613: 11,352 before, 0 after; Act 1 seeds 101, 2027, 9001: 25 / 26 / 25 before, 0 after; Acts 2-5 seed 77: 94 of 139 before, 2 after, the same two residuals). Not needed for posting.
-3. Opinion (S): the commit bodies are three and two lines but each about 150 characters; upstream's rule is lines, not width, so it passes; a maintainer may prefer wrapping. Leave as is.
+3. Opinion (S): the commit bodies are three and two lines but up to 153 characters; upstream's rule is lines, not width, so it passes; a maintainer may prefer wrapping. Leave as is.
 4. Opinion (S): the refusal test writes through `data->level(5)`'s `mutable` `walk` and leaves Dark Wood fully blocked for the rest of the process. It is the last step of `main`, so harmless; CodeRabbit may comment. If it does, copy the level or restore the vector.
 
 ## Not done

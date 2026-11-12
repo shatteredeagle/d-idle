@@ -16,6 +16,7 @@ owns:
   - "docs/upstream/verification-warp-arrival-r2-2026-11-12.md"
 exclusive: []
 contracts: []
+result: "PASS: warp-arrival r2 verified offline on the worker host (new seeds 613 synthetic, 101/2027/9001 Act 1, 77 Acts 2-5: 0 differ after except the 2 named residuals); test fails on parent behaviour; two LOW draft wording edits; nothing posted; not live"
 ---
 
 ## Description
@@ -23,14 +24,14 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Why: the user's standing rule, an independent verifier must PASS before an upstream post; second pass on fid/warp-arrival-r2. Done when: the verdict doc is on main.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Every edit of the first verifier checked on r2 (V)
-- [ ] #2 Numbers re-run on new seeds (Act 1 x3, synthetic 20,000, Acts 2-5)
-- [ ] #3 Hygiene: builds per commit, presubmit, pr_guard, leakcheck, ctest vs upstream
-- [ ] #4 Upstream state checked (main, overlapping PRs, open-PR count)
-- [ ] #5 Verdict doc docs/upstream/verification-warp-arrival-r2-2026-11-12.md
+- [x] #1 Every edit of the first verifier checked on r2 (V)
+- [x] #2 Numbers re-run on new seeds (Act 1 x3, synthetic 20,000, Acts 2-5)
+- [x] #3 Hygiene: builds per commit, presubmit, pr_guard, leakcheck, ctest vs upstream
+- [x] #4 Upstream state checked (main, overlapping PRs, open-PR count)
+- [x] #5 Verdict doc docs/upstream/verification-warp-arrival-r2-2026-11-12.md
 <!-- AC:END -->
