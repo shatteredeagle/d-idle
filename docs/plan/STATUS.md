@@ -122,6 +122,7 @@
 | stashactions | proposed | - | `internal/invdesk`<br>`internal/town/playerstash.go`<br>`internal/town/playerstash_test.go`<br>`internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-actions.css`<br>`internal/watch/testdata/itemactions`<br>`docs/inventory-actions.md`<br>`docs/whyline.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
+| frienddrills | proposed | - | `docs/friend-drills.md`<br>`tools/friendpack/didle` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -177,6 +178,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- e9c488c4 11-11 20:10 `Merge agent/frienddrills: TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix` (frienddrills)
+- 45e40c4a 11-11 20:09 `Merge branch 'main' into frienddrills` (-)
 - 12450fd1 11-11 20:02 `Merge agent/potionfix: TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state` (potionfix)
 - 8688c065 11-11 20:01 `Merge branch 'main' into potionfix` (-)
 - dc51638e 11-11 20:00 `Merge agent/prverify2: TASK-345 upstream PR verification second pass` (prverify2)
@@ -185,6 +188,4 @@
 - 95423563 11-11 19:58 `Merge branch 'main' into prverify2` (-)
 - ccb33fa2 11-11 19:58 `Merge branch 'main' into grillqueue` (-)
 - b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
-- 1cb99ab3 11-11 19:51 `Merge agent/campaign3: TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0)` (campaign3)
-- ef854395 11-11 19:51 `Merge branch 'main' into campaign3` (-)
 <!-- statusgen:end -->

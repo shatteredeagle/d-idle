@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix <!--sg:agent/frienddrills-->
 - TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state <!--sg:agent/potionfix-->
 - TASK-345 upstream PR verification second pass <!--sg:agent/prverify2-->
 - TASK-342 grill queue: paste-ready decisions and glossary text <!--sg:agent/grillqueue-->

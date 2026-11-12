@@ -186,6 +186,7 @@ docs/first-hour.md  live-agent  firsthour
 docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
+docs/friend-drills.md  credit-runner  frienddrills
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-actions.md  credit-runner  stashactions
@@ -458,6 +459,7 @@ internal/watch/xpreadout_test.go  credit-runner  xpreadout
 tools/emu/d9_*  credit-runner  fid-batch5
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
+tools/friendpack/didle  credit-runner  frienddrills
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint  credit-runner  uifit
 tools/uishots  credit-runner  uifit
