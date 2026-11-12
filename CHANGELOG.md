@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- mapnodes: Underground Pass, Monastery Gate, Outer Cloister orderable on the watch map <!--sg:agent/mapnodes-->
 - TASK-352 prpost: posted PRs 444 and 445, bodies, queue <!--sg:agent/prpost-->
 - TASK-351 arrivalsettle: priming click no longer lands on the return warp (kick toward move target), arrival/bounce counters; stacked on passagebounce <!--sg:agent/arrivalsettle-->
 - TASK-247 TASK-249 onboarding: welcome card, first-30-minutes checklist, reconnect banner <!--sg:agent/onboarding-->
