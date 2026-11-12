@@ -186,8 +186,9 @@ func TestWhyCardInTheCommandCentre(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, m := range ms {
-		// the top band holds the hero status, the life and mana meters and the alerts badge (TASK-284), never the reason
-		if m.Band == "status" && m.ID != "hero-status" && m.ID != "hero-meters" && m.ID != "alerts-count" {
+		// the top band holds the hero status, the life and mana meters, the alerts badge (TASK-284) and the journey chip
+		// (docs/campaign.md), never the reason
+		if m.Band == "status" && m.ID != "hero-status" && m.ID != "hero-meters" && m.ID != "alerts-count" && m.ID != "journey-chip" {
 			t.Errorf("%s in the top band", m.ID)
 		}
 		if m.ID == "why" && (m.Band != "side" || m.Endpoint != HeroRoute) {

@@ -29,6 +29,7 @@ func journeyDesk(t *testing.T, class string, lvl int, done ...string) *campaign.
 	p := campaign.Progress{Hero: campaign.Hero{Class: class, Level: lvl}, Quests: map[string]bool{}, Waypoints: map[int]bool{3: true}}
 	for _, q := range done {
 		p.Quests[q] = true
+		p.MercOwned = p.MercOwned || q == "sisters_burial" // the Rogue was claimed and is dead (the live hero, 2026-11-11)
 	}
 	o := jc.Opts()
 	d, err := s.Next(p, jc.State(), o)
@@ -126,4 +127,9 @@ func TestJourneyPanelDOM(t *testing.T) {
 	defer os.Remove(filepath.Join("testdata", "campaign", "view-paladin.tmp.json"))
 	defer os.Remove(filepath.Join("testdata", "campaign", "view-sorceress.tmp.json"))
 	runNode(t, "testdata/campaign/journey_dom.js", "web/panels/journey/panel.js")
+}
+
+// The top band chip of the journey (node, skipped without it).
+func TestJourneyChipLine(t *testing.T) {
+	runNode(t, "testdata/campaign/journey_chip.js", "web/panels/journey-chip/panel.js")
 }

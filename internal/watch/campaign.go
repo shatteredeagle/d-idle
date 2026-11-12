@@ -83,3 +83,35 @@ func short(s string, n int) string {
 	}
 	return s
 }
+
+// ChapterDone tells the watch screen that a journey chapter is done (docs/campaign.md section 6): a Chronicle line of
+// kind "chapter", a story line in the feed and journal ("Chapter done: Blood Raven (Kashya's free Rogue mercenary)"),
+// and the unlock ladder's "seen" event "chapter:<id>", so a ladder entry can open on a chapter through data.
+func (f *Fun) ChapterDone(id, title, reward string) {
+	if f == nil {
+		return
+	}
+	text := "Chapter done: " + title
+	if reward != "" {
+		text += " (" + reward + ")"
+	}
+	if f.Chronicle != nil {
+		f.Chronicle.chapter(text)
+	}
+	if f.Hub != nil {
+		f.Hub.Note("story", text)
+	}
+	if f.Unlocks != nil {
+		f.Unlocks.Seen("chapter:" + id)
+	}
+}
+
+func (c *Chronicle) chapter(text string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+	c.n++
+	c.lines = append(c.lines, ChronicleLine{N: c.n, T: c.now(), Kind: "chapter", Text: safeText(text, 200)})
+	if len(c.lines) > chronicleMax {
+		c.lines = append([]ChronicleLine(nil), c.lines[len(c.lines)-chronicleMax:]...)
+	}
+}

@@ -1,6 +1,6 @@
 # Campaign: the guided journey
 
-> status: current (TASK-335 stage 0: spine, loader, bands, decision, state; stage 1 planner: TASK-337; stage 2 API and Journey strip: TASK-338). Nothing here is verified live.
+> status: current (TASK-335 stage 0: spine, loader, bands, decision, state; stage 1 planner: TASK-337; stage 2 API and Journey strip: TASK-338; stage 3 questions, chip, chapter events, knobs, Rogue: TASK-341). Nothing here is verified live.
 
 User direction 2026-11-11 ("Guided journey"): "How do we guide the player through the campaign? Currently I am just letting the bot level and farm aimlessly. ... New Character -> Den of Evil -> Blood Raven -> etc. We shouldn't FORCE the players to do anything, but progression should generally follow the game." Default path: all Act 1 quests, each optional-flagged so the player can skip.
 
@@ -80,6 +80,14 @@ Safety walls stay: the Monastery road guard and the tower guard, the Andariel un
 - Not built (follow-up cards): the floor question in the return-screen question queue (a decide catalogue point), the compact top band tooltip (an edit of the hero-status panel: a panel family change), Chronicle lines and unlock-ladder triggers on a chapter done (`Controller.OnDone` only logs today; the ladder has a `quest_stage` trigger kind, so Cain rescued can open "Identify all" through data), and knobs for the veto window and farm budget. Wiring them needs owners of `data/unlocks/ladder.json`, `internal/decide` and the chronicle.
 - Layout: adding the panel re-packs the tablet placement of the `alerts` card (the generator pairs half-width cards); the other breakpoints only gain the new panel.
 
+## 6a. Stage 3 (TASK-341)
+
+- **The Rogue (live hero, 2026-11-11, read-only container log).** The free Rogue was claimed earlier and is dead: `merc: seen class=0 alive=false`, `merc: revive skipped (gold) price=600 gold=46 need=650` (1260 earlier), and every half hour the planner sent the hero home for "Claim the free Rogue", where `merc: claim skipped (merc owned)` ended the step. Cause: `task.ClaimNeeded` treated an employed dead merc like no merc. Fixed: `MercKnown` is set only for an employed merc (`merc.AliveHook`), so ClaimNeeded is false for it; the revive stays the merc policy's town step (needs gold). The spine gained the chapter `rogue` ("Claim the Rogue", done rule `merc`: a merc employed, alive or dead) after Blood Raven; the Journey panel (version 2) shows a standing note while the employed merc is dead.
+- **Questions.** The floor question (ask decision) also goes to the ladder queue as decision point `t1.journey.floor` (answers go, level; context field `chapter`; card text in `internal/watch/cardtext.go`), so the return screen shows it next to the Journey panel's Go now / Not yet. The ladder's legacy answer is "level": only a player's go (or a rule taught from it) sends the hero; no answer is the journey's own veto window. Asked at most once a minute per chapter.
+- **Top band.** Panel `journey-chip` (status band, version 1): "<chapter>: <band>, next: <chapter>", toned by band, links to the Journey panel's title.
+- **Chapter done.** `watch.Fun.ChapterDone`: a Chronicle line of kind `chapter`, a story line in the feed and journal ("Chapter done: Blood Raven (Kashya's free Rogue mercenary)"), and the unlock ladder event `seen` with `chapter:<id>` (a ladder entry opens on a chapter through data: trigger kind `seen`, args what `chapter:find_cain`). A chapter's `unlocks` list opens watch features: Find Cain opens `identify_cain`, an extra condition of the "Identify all (Cain)" command next to the quest word and Cain in town (`cmd/d2bot/invwire.go`).
+- **Knobs.** `campaign.journeyAskWaitMin` (10), `campaign.journeyFarmBudgetMin` (30), `campaign.journeyGoAtFloor` (0); read by `bot.Runner.SetJourney`; the hero's own policy row wins over the default.
+
 ## 7. Build-specific parts
 
 Only data: the class rows of `levels`, `classIntent` and the Andariel row in plandata. No class literal in Go; an unknown class with `levelsFrom` is an error.
@@ -95,4 +103,6 @@ Only data: the class rows of `levels`, `classIntent` and the Andariel row in pla
 2. Guided mode on a fresh Paladin: chapter order start, Cold Plains WP, Den, Blood Raven, Cain, Charsi, Countess, Andariel; Why lines name the chapter; writes after start 0.
 3. Ask flow: Blood Raven at the floor queues a question; no answer for `AskWait` goes; a no farms until the next level.
 4. Go now on a too-early chapter goes with a warning line; Skip and Hold survive a bot restart (state/campaign.json).
+6. The Rogue: after a gold farm the merc policy revives her (log `merc: revive`), zone entries show `merc: alive`, no more `Claim the free Rogue` trips.
+7. The floor question appears on the return screen and a go there sends the hero.
 5. The Journey panel on the watch screen: the path matches the hero's quests, Skip/Hold/Go now buttons post and the strip updates, the meter moves with XP, the panel fits at 390 and 1440 px (uishots on the worker host).

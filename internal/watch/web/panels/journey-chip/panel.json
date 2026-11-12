@@ -1,0 +1,17 @@
+{
+  "schema": "watch.panel/1",
+  "version": 1,
+  "id": "journey-chip",
+  "title": "Journey",
+  "band": "status",
+  "size": "s",
+  "priority": 3,
+  "tab": "hero",
+  "defaultOpen": true,
+  "endpoint": "/api/campaign",
+  "poll": 10,
+  "unlock": "",
+  "skeleton": 0,
+  "owner": "campaign3",
+  "doc": "docs/campaign.md"
+}

@@ -2,6 +2,7 @@
 // waiting, skipped, held), the Up next block (next chapter, its readiness band, the level meter with an ETA, Go now) and
 // a detail block for the tapped chapter (reward, readiness, Go now, Skip, Hold, Ask or Auto), from GET /api/campaign.
 // Every button posts one request to /api/campaign/intent. Nothing is ever locked: Go now is offered on every open chapter.
+// Version 2 adds the standing note under the path (the reply's `note`: a claimed merc that is dead).
 const BAND = { too_early: 'too early', ready: 'ready at the floor', comfortable: 'comfortable' };
 const LEVEL = { too_early: 'bad', ready: 'warn', comfortable: '' };
 
@@ -58,7 +59,9 @@ export function mount(root, ctx) {
   const detBand = ctx.el('p', 'd-hint');
   const detBtns = ctx.el('div', 'btns');
   det.append(detTitle, detText, detBand, detBtns);
-  ctx.body.append(path, up, det);
+  const note = ctx.el('p', 'd-hint');
+  note.dataset.role = 'note';
+  ctx.body.append(path, up, det, note);
   let sel = '', last = null;
   const send = (body, b) => {
     b.disabled = true;
@@ -104,6 +107,8 @@ export function mount(root, ctx) {
       if (v.meter) bar.set(Math.round((v.meter.pct || 0) * 100), etaText(v.meter), LEVEL[n.band] || '');
       buttons(upBtns, n);
     }
+    note.textContent = v.note || '';
+    note.hidden = !v.note;
     const c = cs.find((x) => x.id === sel);
     det.hidden = !c;
     if (c) {

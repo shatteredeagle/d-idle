@@ -53,6 +53,8 @@ type View struct {
 	Meter      *Meter        `json:"meter,omitempty"`
 	AskWaitSec int           `json:"askWaitSeconds,omitempty"`
 	Chapters   []ChapterView `json:"chapters"`
+	// Note is a standing remark the strip shows (a claimed merc that is dead); "" = none.
+	Note string `json:"note,omitempty"`
 }
 
 // View is the journey of the current hero from the last decision's inputs.
@@ -60,7 +62,14 @@ func (c *Controller) View() View {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	h := c.store.Hero(c.hero())
-	v := View{Schema: ViewSchema, Difficulty: c.spine.Difficulty, Mode: h.Mode, GoAt: h.GoAt, Level: c.lastProg.Level,
+	goAt := h.GoAt
+	if goAt == "" {
+		goAt = c.DefaultGoAt
+	}
+	if goAt == "" {
+		goAt = GoRecommended
+	}
+	v := View{Schema: ViewSchema, Difficulty: c.spine.Difficulty, Mode: h.Mode, GoAt: goAt, Level: c.lastProg.Level,
 		AskWaitSec: int(c.AskWait / time.Second), Chapters: []ChapterView{}}
 	if c.seen {
 		d := c.last
@@ -76,6 +85,9 @@ func (c *Controller) View() View {
 		}
 	}
 	p := c.lastProg
+	if c.seen && p.MercOwned && !p.Merc {
+		v.Note = "The merc is dead: Kashya revives her in town when the purse holds the price."
+	}
 	sat := func(id string) bool {
 		ch := c.spine.Chapter(id)
 		return ch.IsDone(p) || h.Intent(ch, p.Class) == Skip
