@@ -66,3 +66,60 @@ Both branches rebase cleanly on upstream main 962ffce2. Candidate 1's oracle com
 1. **HIGH (blocks posting as is): the oracle commit `511d907d` does not build.** `tests/monsters/test_umod_stats.cpp` there calls `boss_elem_length`, which only the claim commit adds (`error: 'boss_elem_length' was not declared`, V run on 8c327675, the rebased twin). So "the oracle first, it shows the difference on the parent" is not true of the commits as pushed, and the prep's parent numbers cannot have come from that commit. Fix: in the oracle commit print `boss.elem_len` (what `make_boss` used before); the claim commit switches that line to `boss_elem_length(boss, level)`. With exactly that throwaway edit the parent numbers above are produced. Push as a new branch name (`-r4`), never a force-push.
 2. **LOW: the cap is data.** `std::min(level, 110)` in `boss_elem_length`: game.exe caps at MonLvl rows − 1. Either take the row count from the loaded MonLvl table or keep 110 with the comment "MonLvl's last row (FUN_005a1c70 0x5a1cf5..0x5a1d1c)" and drop the "the oracle shows" wording. Also the floor of 1 (level 0 counts as 1) is not modelled; no reachable boss has level 0 (S), say so or add `std::max(level, 1)`.
 3. **LOW: the draft's honest limits** should replace "clamp 110 source (U)" with the read above, and say the length is added to whatever 0x38 the unit had (Ghostly's 150 too: d2d's single `elem_len` keeps whichever mod comes last; whether a real boss carries both is U).
+
+## Second pass (TASK-345, agent prverify2, 2026-11-11)
+
+> status: second pass done. Both candidates PASS after three mechanical edits each that leave the code and the numbers unchanged (listed below). `presubmit --quick` on the rebased heads and the path-order and other-skill variants were stopped before they finished: NOT run in this pass.
+
+Material: `fid/missile-last-unit-r3` (5effaf98, oracle f724f9ee) and `fid/cold-enchanted-length-r4` (30713b60, oracle 4945679c), both on upstream `62732598`; drafts and queue on `agent/prprep2` (be3a1888). Own harness on the worker host (`~/d2d-lab/pv2/pv2_*.sh`, clean detached worktrees `wt-pv2-{light,cold}` as pushed and `wt-pv2-{lightR,coldR}` rebased on current upstream main), not the prep's scripts.
+
+### Upstream since 62732598 (V run)
+- upstream main is now `59d3b59e` (42 commits later). Both branches rebase with no conflict (`git merge-tree` clean; rebased heads Lightning 43a6d375 + 522b0950, Cold 7b6a43e6 + 0a01b455).
+- Nothing upstream fixes or touches the same code: `git log -S` over the range finds no change to `last_hit`, `struck` or `elem_len` logic; no new commit in `components/game/fight/`, `light_pierce.py` or `umod_stats.py`. Touches to the same files are neighbours: `gamedata.hpp` (cf8a346a MonEquip), `ai.cpp` / `uniques.hpp` / `monsters.md` (78cbb348 MonEquip gear: `make_boss` gains a `gear` parameter; #371's MonUMod 21 / 35 / 40-42 commits). `make_boss`'s element line, the one the claim edits, is unchanged upstream.
+
+### Every commit builds alone (V run)
+Full `ninja` (all 1,203 targets, `D2D_WERROR=OFF`) at each commit of each branch, as pushed and rebased, plus upstream `59d3b59e`: all rc 0 (f724f9ee, 5effaf98, 4945679c, 30713b60; rebased 43a6d375, 522b0950, 7b6a43e6, 0a01b455). The first pass's Cold blocker (oracle commit did not compile) is resolved.
+
+### Differentials reproduce (V run, own scripts, clean worktrees)
+Lightning, `test_light_pierce --light-hit SEED 400` against `light_pierce.py`, 1,192 casts each side every run; identical as pushed and rebased:
+
+| | seed 1 | seed 7 | seed 13 |
+|---|---|---|---|
+| parent: casts whose hit totals (T line) differ | 44 | 43 | 47 |
+| parent: casts with any per-frame (H) or total difference | 53 | 54 | 54 |
+| claim | 0 | 0 | 0 |
+
+Cold Enchanted, `umod_stats.py N SEED` against `test_umod_stats --umod-stats` (seed 1 N 100000 = 157,618 cases; seed 9 N 50000 = 107,618), identical as pushed and rebased. The prep's classifier (`pp_cold_count.py`) on my compare files gives the draft's table exactly (7,869 / 3,124 / 5,657 / 2,290 to 0 / 1,625 / 5,657 / 248; seed 9 4,745 / 1,591 / 3,732 / 1,154 to 0 / 828 / 3,732 / 135). My classifier: Cold only 9,636 to 0 (seed 9: 5,629 to 0); Cold with Fire / Lightning 3,647 to 1,873 (1,861 to 963); minions 5,657 unchanged (3,732); no Cold mod 0 / 0.
+
+### Tests (V run)
+- `ctest -j8` on upstream `59d3b59e`, rebased Lightning and rebased Cold: the same 4 failures on all three (`test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4`). The log shows `no d2video.mpq` / `no d2xvideo.mpq`, which supports the missing-video-MPQ explanation. The skipped sets differ only by the new oracle-mode tests (`test_light_pierce`, `test_umod_stats`). `test_boss_cold_length` passes on the claim and aborts at its assertion (line 46) on the oracle commit (the test file is copied in to run it).
+- `pr_guard` (base HEAD~2): 0 FAIL / 0 WARN on lightR, cold and coldR. The as-pushed Lightning run was taken while the harness had the worktree checked out elsewhere, so it is not valid. Its diff is the same as lightR's apart from the base.
+
+### First-pass findings
+| # | Finding | Now |
+|---|---|---|
+| L1 HIGH scope | narrowed to `srv_do == 1` (`MissileInfo::last_unit_rule()`); body, commit and missiles.md name Lightning, Lightning Fury, Inferno, Bone Spear, Arctic Blast; srvdofunc 3 and Pierce rows keep `struck` | resolved (V read) |
+| L2 MEDIUM unit order | stated in the draft's limits with 18 / 15 vs 37 T lines | resolved as disclosure; the numbers are r2's, re-run on r3 not done (code identical for `lightningbolt`) |
+| L3 LOW SK6_REVERSE | removed | resolved, but `import os` in light_pierce.py is now unused (new LOW) |
+| L4 LOW 2,584 | missiles.md says 1,192 | resolved |
+| L5 LOW FUN_005a8850 | commit says "the filter at 0x5a8850" | resolved |
+| C1 HIGH oracle commit build | builds alone (as pushed and rebased) | resolved (V run) |
+| C2 LOW cap | comment cites 0x5a1cf5..0x5a1d1c, floor 1 modelled; 110 still a literal | partly resolved (see C-b) |
+| C3 LOW limits | draft rewritten | resolved |
+
+### New findings (all LOW, mechanical)
+- L-a `tests/game/test_light_pierce.cpp:65` says "tools/emu/next_hit.py replays the F lines"; it should say `light_pierce.py`.
+- L-b `tools/emu/light_pierce.py:37` `import os` is unused since SK6_REVERSE went (ruff / CodeRabbit will flag it).
+- L-c Draft table header: "casts that differ" = casts whose hit totals differ (44 / 43 / 47); 53 / 54 / 54 casts differ in any per-frame line. Also drop "so casts = T lines / 2" (that is wrong for the T-only count).
+- C-a The claim commit changes `test_umod_stats` (switches it to `boss_elem_length`) without saying so. Upstream AGENTS.md section 2: "a test changes only in the same commit as the behaviour it checks, and the commit says why". Add a body line.
+- C-b `std::clamp(level, 1, 110)` is a literal. The neighbour `poison_hit` upstream takes `game_data.monsters.lvl.size() - 1`. Suggest passing the cap, or clamping in `make_boss` the same way (optional; CodeRabbit is likely to raise it).
+- Both: put a blank line before `Agent: Claude Code` in the commit messages. Upstream's commits carry it as a trailer after a blank line; ours sit inside the body.
+- Both: post the branches rebased on current upstream main (`59d3b59e`). Upstream AGENTS.md section 6 says keep the branch current, the rebase is clean, and the numbers above hold rebased.
+
+## Second-pass verdicts
+| Candidate | Verdict | Post as |
+|---|---|---|
+| 1 Lightning | PASS after L-a, L-b, L-c and the trailer blank line (a new `-r4` branch rebased on 59d3b59e; rebuild plus a seed-1 re-run is enough) | title `Lightning hits one unit a frame and skips the last (FUN_005ae1f0)`, body = the draft from "What changes" to "Checklist" plus `Agent: Claude Code`, base `psi29a/d2decomped` main |
+| 2 Cold Enchanted | PASS after C-a and the trailer blank line (C-b optional) (`-r5` rebased on 59d3b59e) | title `Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)`, body = the draft's sections plus `Agent: Claude Code` |
+
+Command shape (after the user's go only; nothing was posted): `git push ghfork <branch>` then `gh pr create -R psi29a/d2decomped --base main --head shatteredeagle:<branch> --title "<title>" --body-file <filled template>`. Run `python3 tools/presubmit.py --quick --base upstream/main` on the final heads first (not run here). Both are one subsystem each (player missiles; monster mods), a two-commit oracle-then-claim shape, and about 400 / 340 added lines, which fits CodeRabbit's limits.
