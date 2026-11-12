@@ -21,6 +21,7 @@ owns:
   - "tools/uishots"
 exclusive: []
 contracts: []
+result: "Coverage points, target, events and heat in blocks the hero has not explored are withheld server-side (additive hidden key); verified offline and by headless render, not live."
 ---
 
 ## Description
