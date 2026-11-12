@@ -113,7 +113,7 @@ func TestClaimedDenIsNotARunAgain(t *testing.T) {
 	if len(g.r.loop.questPending) != 0 {
 		t.Fatalf("a claimed quest went pending: %v", g.r.loop.questPending)
 	}
-	g.w.set(func(w *world) { w.level = 5 })
+	g.w.set(func(w *world) { w.level = 4 })
 	g.r.poll()
 	s := g.r.latest()
 	if a, ok := g.r.target0(s, levelGoalControl()); ok && a == areaDenOfEvil {

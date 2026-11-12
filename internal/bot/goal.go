@@ -986,6 +986,15 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				step, ok = pick()
 			}
 		}
+		if ok && step.Area != areaDenOfEvil && diff == "normal" && !ex[areaDenOfEvil] && !r.questClaimed("den_of_evil") {
+			// The Den is always taken before the fields behind it (a melee class enters Cold Plains at clvl 4, the Den
+			// leaves at 6): data order alone would pick the later step in the overlap (hourfix).
+			for _, ds := range r.d.Plan.Steps[diff] {
+				if ds.Area == areaDenOfEvil && ds.enter(MeleeTank(p.Class))+t.LevelMargin <= p.Level && p.Level <= ds.LeaveLvl+t.LeaveSlack {
+					step = ds
+				}
+			}
+		}
 		for ok {
 			d := r.d.Plan.EntryAllowed(diff, p.Level, step.Area, nil)
 			if d.OK {
