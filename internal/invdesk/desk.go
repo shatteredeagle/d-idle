@@ -217,6 +217,10 @@ type Request struct {
 	// request did, in a sentence ("bought 12, short of gold for the rest").
 	Count  int    `json:"count,omitempty"`
 	Result string `json:"result,omitempty"`
+	// Schema 6 (stash actions): Place "stash" marks an identify of an item that lies in the stash (done in place, in
+	// town); Op is "deposit" or "withdraw" on a gold request.
+	Place string `json:"place,omitempty"`
+	Op    string `json:"op,omitempty"`
 }
 
 func (r Request) kind() string {
@@ -687,7 +691,7 @@ func (d *Desk) Pending() int {
 	d.expireStaleLocked()
 	n := 0
 	for _, r := range d.st.Queue {
-		if r.State == StateQueued && (inTown || !isErrand(r.kind())) {
+		if r.State == StateQueued && (inTown || !r.errand()) {
 			n++
 		}
 	}
@@ -706,13 +710,20 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 		d.expireStaleLocked()
 		i := -1
 		for j, r := range d.st.Queue {
-			if r.State == StateQueued && d.runnableLocked(r, inTown) && (i < 0 || priority(r.kind()) < priority(d.st.Queue[i].kind())) {
+			if r.State == StateQueued && d.runnableLocked(r, inTown) && (i < 0 || priority(r) < priority(d.st.Queue[i])) {
 				i = j
 			}
 		}
 		if i < 0 {
 			d.mu.Unlock()
 			break
+		}
+		if q := d.st.Queue[i]; q.isStashJob() { // every queued stash job shares one visit
+			d.mu.Unlock()
+			if d.runStashBatch(ctx, &out) {
+				break
+			}
+			continue
 		}
 		if d.st.Queue[i].kind() == KindIdentify { // all queued identifies in one inventory-open
 			sv := d.sv
@@ -851,15 +862,19 @@ type ItemView struct {
 	// Schema 5: set only on an unidentified item that cannot be identified now (the reason); empty on an identified item
 	// (identifying it is refused) and on an unidentified one that can be.
 	NoIdentify string `json:"noIdentify,omitempty"`
+	// Schema 6: the stash move this item offers ("stash" for a backpack item, "take" for a stash item; empty when the
+	// bot has no stash backend or the item lies elsewhere) and, when it is refused now, the reason.
+	StashOp string `json:"stashOp,omitempty"`
+	NoStash string `json:"noStash,omitempty"`
 }
 
 // ViewSchema is the version of the /api/inventory reply: 2 added the optional item fields tip, base and sell (the item
 // tooltip, docs/inventory-tooltip.md); 3 added the item fields noWear, noSell and noTrash and the request fields kind
 // and print, and the request states doing and cancelled (the action menu, docs/inventory-actions.md); 4 added the
 // optional merc block (docs/research/merc-gear.md); 5 added the optional identify block, the item field noIdentify and the
-// request kinds identify, buyid and cain with the fields count and result (the identify commands). Older readers keep working: nothing was renamed or removed, the new
+// request kinds identify, buyid and cain with the fields count and result (the identify commands); 6 added the item fields stashOp and noStash, the stashOps block and the request kinds stash, take and gold (docs/inventory-actions.md, stash actions). Older readers keep working: nothing was renamed or removed, the new
 // fields are optional.
-const ViewSchema = 5
+const ViewSchema = 6
 
 // View is the inventory page's data.
 type View struct {
@@ -879,6 +894,7 @@ type View struct {
 	Recent      []Request            `json:"recent"`
 	Note        string               `json:"note,omitempty"`
 	Prompt      string               `json:"prompt,omitempty"`   // docs/gear-policy.md: tells the player equipment is theirs to manage
+	StashOps    *StashOpsView        `json:"stashOps,omitempty"` // schema 6: the stash gold controls; nil = no stash backend
 	Identify    *IdentifyView        `json:"identify,omitempty"` // schema 5: the identify commands' state; nil = no town backend
 	Merc        *MercView            `json:"merc,omitempty"`     // schema 3: the hired merc and what he wears; nil = the backend cannot read a merc
 }
@@ -938,12 +954,16 @@ func (d *Desk) View() View {
 	}
 	v.Gold, v.StashGold = data.Gold, data.StashGold
 	hasTool := false
+	ssv, _ := sv.(StashServices)
+	if ssv != nil && s != nil && s.Inventory != nil {
+		v.StashOps = stashOpsView(s, data.Gold, data.StashGold)
+	}
 	if sv != nil && s != nil && s.Inventory != nil {
 		v.Identify = d.identifyView(sv, c.CainOpen, s)
 		hasTool = v.Identify.Tool != "none"
 	}
 	for i, r := range v.Queue { // a town errand cannot start in the field: say so on the queue card
-		if isErrand(r.kind()) && r.State == StateQueued && !v.InTown && r.Reason == "" {
+		if r.errand() && r.State == StateQueued && !v.InTown && r.Reason == "" {
 			v.Queue[i].Reason = WaitsForTown
 		}
 	}
@@ -1007,6 +1027,9 @@ func (d *Desk) View() View {
 		}
 		if sv != nil && !it.Identified {
 			_, iv.NoIdentify = identifyWhy(u, hasTool)
+		}
+		if ssv != nil && s != nil {
+			stashItemView(&iv, ssv, s, place, hasTool)
 		}
 		return iv
 	}

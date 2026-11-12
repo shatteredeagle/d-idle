@@ -53,6 +53,9 @@ type stateSource interface {
 // Navigator implements the Mover contract of docs/archive/wave2.md. It is not safe for concurrent use: one goroutine
 // drives the character, and nav is the one calling Tracker.Update.
 type Navigator struct {
+	// OnFailure is the passive failure observer of roam.go (kind roamfail or gatehold, text, target position).
+	OnFailure func(kind, text string, x, y int)
+
 	// Trace turns on the "nav.trace" click-timing lines (trace.go): off in production, on in the dev image.
 	Trace bool
 	// NoFastPoll turns off the position-only polls of GoTo walks (APPROACHFAST); a rollback knob and the test baseline.

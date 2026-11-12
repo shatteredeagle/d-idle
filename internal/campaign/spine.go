@@ -62,6 +62,7 @@ type Done struct {
 	Quest    string `json:"quest,omitempty"`    // the task-layer quest id is done
 	Waypoint int    `json:"waypoint,omitempty"` // the waypoint of this area id is known
 	Level    int    `json:"level,omitempty"`    // the hero has reached this level
+	Merc     bool   `json:"merc,omitempty"`     // the hero employs a merc, alive or dead (the free Rogue is claimed once)
 }
 
 // Chapter is one step of the spine.
@@ -83,6 +84,8 @@ type Chapter struct {
 	Checks      []string          `json:"checks,omitempty"`     // internal/readiness check ids that cap the band
 	Intent      Intent            `json:"intent,omitempty"`     // default intent ("" = auto)
 	ClassIntent map[string]Intent `json:"classIntent,omitempty"`
+	// Unlocks names watch features a done chapter opens (Controller.Unlocked; the unlock ladder sees "chapter:<id>").
+	Unlocks []string `json:"unlocks,omitempty"`
 }
 
 // FarmZone is a place the bot levels in while the next chapter is too early.
@@ -164,13 +167,13 @@ func (s *Spine) validate(v Validator) error {
 			}
 		}
 		n := 0
-		for _, set := range []bool{c.Done.Quest != "", c.Done.Waypoint > 0, c.Done.Level > 0} {
+		for _, set := range []bool{c.Done.Quest != "", c.Done.Waypoint > 0, c.Done.Level > 0, c.Done.Merc} {
 			if set {
 				n++
 			}
 		}
 		if n != 1 {
-			return bad("done needs exactly one of quest, waypoint, level")
+			return bad("done needs exactly one of quest, waypoint, level, merc")
 		}
 		for _, q := range []string{c.Quest, c.Done.Quest} {
 			if q != "" && v.Quest != nil && !v.Quest(q) {

@@ -71,6 +71,20 @@
    "intent": "ask"
   },
   {
+   "id": "rogue",
+   "title": "Claim the Rogue",
+   "act": 1,
+   "area": "Rogue Encampment",
+   "areaId": 1,
+   "kind": "chore",
+   "quest": "sisters_burial_merc",
+   "requires": ["blood_raven"],
+   "done": {"merc": true},
+   "reward": "a Rogue archer fights at the hero's side (revived at Kashya when she falls)",
+   "why": "Kashya gives one free Rogue for Blood Raven: claim her before the harder chapters.",
+   "levels": {"default": {"floor": 1, "recommended": 1}}
+  },
+  {
    "id": "find_cain",
    "title": "Find Deckard Cain",
    "act": 1,
@@ -84,7 +98,8 @@
    "reward": "Cain identifies items for free; Tristram opens as a farm zone",
    "why": "Rescuing Cain in Tristram makes identifying free.",
    "levels": {"default": {"floor": 9, "recommended": 11}},
-   "checks": ["level", "potions", "life"]
+   "checks": ["level", "potions", "life"],
+   "unlocks": ["identify_cain"]
   },
   {
    "id": "countess",
