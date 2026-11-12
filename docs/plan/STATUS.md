@@ -109,7 +109,6 @@
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | arrivalsettle | proposed | - | `internal/d2dctl/verbs.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dinput/run_test.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`docs/passagebounce.md` | - |
 | prpost | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r4`<br>`fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
-| mapnodes | proposed | - | `internal/watch/mapdata.go`<br>`internal/watch/mapnodes_test.go`<br>`internal/watch/ordersmap_test.go`<br>`internal/watch/testdata` | - |
 | exploredpct | proposed | - | `docs/exploredpct.md`<br>`internal/bot/exploredpct.go`<br>`internal/bot/exploredpct_test.go`<br>`internal/watch/heroexplored_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/live.go`<br>`docs/knobs.md`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`internal/env/tuning_bot.go`<br>`internal/watch/hero.go`<br>`internal/watch/hub.go`<br>`internal/watch/web/panels/activity/panel.js` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
