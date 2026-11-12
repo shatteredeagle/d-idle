@@ -75,6 +75,9 @@ type Looter interface {
 // ClearOpts asks the fighter to kill everything hostile within Radius subtiles of the player.
 type ClearOpts struct {
 	Radius int
+	// Interlude is the combat.ClearOpts hook of the same name: called between survival and the next target with the
+	// nearest hostile's distance and the pack danger; true means it acted.
+	Interlude func(ctx context.Context, snap *d2.Snapshot, nearest float64, danger int) bool
 }
 
 // ClearResult reports one sweep.
@@ -141,12 +144,18 @@ type PickOpts struct {
 	Radius int
 	// Names are items taken whatever the pickit says (quest items, by display name); empty = the pickit alone.
 	Names []string
+	// GoldOnly takes gold piles and nothing else; Abort stops the call between items when it returns true; Max bounds
+	// the pickups (0 = the tuned bound). Used by the gold grab (docs/goldprio.md).
+	GoldOnly bool
+	Abort    func() bool
+	Max      int
 }
 
 // PickReport reports one pickup pass.
 type PickReport struct {
 	Picked  int
 	Skipped int
+	Gold    int // coins gained by piles
 }
 
 // UnitEvaluator is an optional Looter capability: judge a pack item with its base row and the player's gold, so junk gear

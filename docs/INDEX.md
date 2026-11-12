@@ -221,6 +221,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [bot.md](bot.md): bot: the core that ties the layers together (agent BOT)
 - [botsupply.md](botsupply.md): Bot supply: per-kill rates and where the code reads them (status: current (card botsupply, 2026-11-02). Offline; not verified live. Source: docs/research/treasure-trace.md...)
 - [botthreat.md](botthreat.md): botthreat: missile threat model, shooter priority, runner guard (status: current. Offline only (mem.Fake / table-driven tests); no live run. Findings come from...)
+- [bounce3.md](bounce3.md): bounce3: the warp arrival bounce, root cause and fix (status: current (TASK card bounce3). Supersedes the cause sections of passagebounce.md, fixdenbounce.md and the...)
 - [builder.md](builder.md): Linux builder (build host for fork binaries) (status: current. Specifics (container name, template, limits, host) are in the private ops repo,...)
 - [builds-endgame.md](builds-endgame.md): Endgame builds (clvl 2-90, Normal -> Nightmare -> Hell), one per class (agent BUILDS80)
 - [buildv3.md](buildv3.md): BUILDV3: the fresh Sorceress skill table, rewritten to the order the leveler follows (status: table shipped OPT-IN by name (`fallback-lightning-v3`); the default of a fresh Sorceress stays...)
@@ -374,10 +375,12 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [geninv.md](geninv.md): Run invariants and holdout seeds (card gen-invariants, 2026-10-31) (status: current. Code: `internal/d2dsoakstat/invariants.go`, `invreport.go`; spec: soak-gates (Per-seed...)
 - [goldfarm.md](goldfarm.md): Farm gold (the player's order; fix for the poverty loop) (status: built and tested offline (fixtures, stub DOM). Nothing ran live. Tags: V proven by a test named here, S...)
 - [goldfloor.md](goldfloor.md): Gold floor: where gold comes from and goes (agent GOLDFLOOR, 2026-10-31) (status: analysis, read-only on the soaks. Card: `openspec/changes/goldfloor` (proposed). Tags: V = read from the...)
+- [goldprio.md](goldprio.md): Gold priority (TASK-377) (status: current. Code: `internal/loot/goldprio.go`, `internal/bot/goldprio.go`, hook in `internal/combat/fight.go`...)
 - [hall-of-fame.md](hall-of-fame.md): Hall of Fame and the retire question (TASK-135) (status: built offline (fixtures and fakes). Nothing here is verified against a live game. Ledger and UI only: no...)
 - [heldlog.md](heldlog.md): Held-for-Andariel log line
 - [hirefixlive.md](hirefixlive.md): hirefixlive: PaidHire follows the real menu flow (offline, 2026-11-04) (status: current. Tags: V = verified, S = secondary, U = unverified. Not run live: this change is offline only.)
 - [hourfix.md](hourfix.md): hourfix: first-hour time sinks (TASK-368)
+- [hourfix2.md](hourfix2.md): hourfix2: the Den-mouth shuttle of the second fresh hour (2026-11-12 17:35)
 - [input.md](input.md): Input: helper, client, transform (agent INPUT)
 - [items.md](items.md): Items, economy and runewords for the offline bot (agent ITEMRESEARCH)
 - [killcredit.md](killcredit.md): Kill credit and hits per cast (change killcredit)
@@ -543,6 +546,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [watch-screen.md](watch-screen.md): Watch screen (TASK-20) (status: offline on the simulated runner; not verified live. Design, contract and API needs:...)
 - [waypoints.md](waypoints.md): Waypoints (agent WPUSE, 2026-10-30) (status: partly superseded: the 10 s arrival wait described below is gone (`nav.wpCooldownSec` defaults to 0,...)
 - [whyline.md](whyline.md): Whyline: why the hero does what it does (TASK-206) (status: built and tested offline (fixtures, no game). V = proven by a test named here, U = not run live. Card...)
+- [wiring.md](wiring.md): Production wiring audit (TASK-379) (status: current. Written 2026-11-12 after the loot memory was found never running in production (`looterAdapter`...)
 - [wizardclass.md](wizardclass.md): wizardclass: the first-run wizard offers classes from the plan tables (TASK-145)
 - [wpcooldown.md](wpcooldown.md): Waypoint arrival cooldown removed (card wpcooldown) (status: current.)
 
@@ -768,6 +772,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [t0drill.md](probes/t0drill.md): T0 drill: phase B commands (NOT run in phase A)
 - [test-characters.md](probes/test-characters.md): Test characters created by agents (provenance log) (status: current. One line per character an agent created on a lab slot or in a container (PROVENANCE RULE of the...)
 - [waits-audit.md](probes/waits-audit.md): Waits audit: wall-clock waits for the game (card waits-audit) (status: current. Offline audit of every wait in the bot, the d2d wiring and the d2d backends; fixes in the same...)
+- [warp-sandbox-2026-11-12.md](probes/warp-sandbox-2026-11-12.md): Warp-arrival fix on the play sandbox (devp4), 2026-11-12
 - [sentinel.md](sentinel.md): Sentinel: layer 2 failsafes (agent SENTINEL)
 - [soak-analysis.md](soak-analysis.md): Soaky soak analysis (SOAKANALYSIS, 2026-10-29) (status: SUPERSEDED in part: pre-fix baseline; the approved death rule is plan-v2 section 10.2 and...)
 - [soak-hosts.md](soak-hosts.md): Soak hosts (status: moved to the private ops repo (d2lod-ops, `docs/soak-hosts.md`). Not part of the public tree.)

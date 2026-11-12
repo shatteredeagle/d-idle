@@ -120,3 +120,18 @@ func TestClaimedDenIsNotARunAgain(t *testing.T) {
 		t.Fatalf("the claimed Den was picked again")
 	}
 }
+
+// The cached step area (same clvl) must not keep the Den alive after the reward was taken (hourfix2, V log 2026-11-12
+// 17:34: the hero left town for the Den three minutes after the claim and then shuttled at its mouth).
+func TestCachedDenPickDropsAfterTheClaim(t *testing.T) {
+	q := &fakeQuests{}
+	g := denRig(t, q)
+	g.w.set(func(w *world) { w.level = 4 })
+	g.r.poll()
+	q.set(task.QDen, task.QuestState{Stage: task.StageDone, Ev: task.EvMemory})
+	g.r.loop.stepArea, g.r.loop.stepLevel = areaDenOfEvil, 4
+	s := g.r.latest()
+	if a, ok := g.r.target0(s, levelGoalControl()); ok && a == areaDenOfEvil {
+		t.Fatal("the cached Den pick survived the claim")
+	}
+}

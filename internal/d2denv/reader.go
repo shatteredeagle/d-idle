@@ -180,3 +180,11 @@ func (r *Reader) ItemExtra(id uint32) (d2dsrc.ItemExtra, bool) {
 	ex, ok := r.last.Extras.Items[id]
 	return ex, ok
 }
+
+// ItemName is the display name of a carried item incl. affixes ("Sturdy Cap of the Fox") from the dump's name field, ""
+// when unknown. town finds it by type assertion (affixNamer) and then resolves magic-item level requirements exactly
+// instead of by margin (docs/gear-gate.md EQUIPREQ). U live: the exact path has not run on d2d yet.
+func (r *Reader) ItemName(id uint32) string {
+	ex, _ := r.ItemExtra(id)
+	return ex.Name
+}

@@ -937,6 +937,9 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				return a, true
 			}
 		}
+		if l.stepArea == areaDenOfEvil && p.Difficulty == d2.Normal && r.questClaimed("den_of_evil") {
+			l.stepArea = 0 // the cached Den pick outlived its claim: 2026-11-12 17:34 walked back into the Den after the reward (hourfix2)
+		}
 		if l.stepArea != 0 && l.stepLevel == p.Level && !l.cleared[l.stepArea] && !r.banned(l.stepArea) {
 			return l.stepArea, true
 		}
@@ -1283,7 +1286,7 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 		r.touchWaypointHere(ctx)
 	}
 	if hostile() {
-		res, err := r.d.Fighter.Clear(ctx, ClearOpts{Radius: radius})
+		res, err := r.d.Fighter.Clear(ctx, ClearOpts{Radius: radius, Interlude: r.goldGrab})
 		if err != nil {
 			return err
 		}
@@ -1315,20 +1318,38 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 	if !hostile() {
 		r.walkBackLoot(ctx, area, hostile)
 		if r.emptyAreaLeave(area) {
+			r.goldBeforeLeaving(ctx, area, radius, hostile)
 			return nil
 		}
-		// Explore (a roam) runs for minutes until a hostile shows: the empty-area check must run inside it.
-		if err := r.d.Mover.Explore(ctx, func() bool { return hostile() || r.emptyAreaLeave(area) || r.exploredEnough(area) }); err != nil {
+		if r.goldInReach(radius) {
+			l.goldIdleUntil = r.e.Clock.Now().Add(goldIdleFor) // the pickup above took nothing it could reach; roam on
+		}
+		// Explore (a roam) runs for minutes until a hostile shows: the empty-area check must run inside it. A pile that
+		// shows up on the way ends the leg too (goldprio): the next pass picks it up before the roam goes on.
+		goldStop := false
+		if err := r.d.Mover.Explore(ctx, func() bool {
+			if hostile() || r.emptyAreaLeave(area) || r.exploredEnough(area) {
+				return true
+			}
+			goldStop = r.goldInReach(radius)
+			return goldStop
+		}); err != nil {
 			if r.exploreGaveUp(ctx, area, err) {
+				r.goldBeforeLeaving(ctx, area, radius, hostile)
 				return nil
 			}
 			return fmt.Errorf("explore: %w", err)
 		}
+		if goldStop && !hostile() {
+			return nil // the sweep is called again and its pickup takes the pile
+		}
 		if r.loop.cleared[area] && r.loop.emptyArea == 0 {
+			r.goldBeforeLeaving(ctx, area, radius, hostile)
 			return nil // left as empty (emptyAreaLeave logged it)
 		}
 		if !hostile() {
 			r.walkBackLoot(ctx, area, hostile) // end of the roam leg, before the area counts as cleared
+			r.goldBeforeLeaving(ctx, area, radius, hostile)
 		}
 		if !hostile() {
 			finish := l.run != nil && l.run.Area == area
