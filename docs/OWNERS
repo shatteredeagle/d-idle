@@ -179,6 +179,7 @@ docs/bounce3.md  pro-runner  bounce3
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
 docs/design/item-verbs.md  credit-runner  itemverbs2
+docs/design/item-verbs.md  credit-runner  itemverbs3
 docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
@@ -215,8 +216,10 @@ docs/play-session.md  credit-runner  playsession
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
+docs/probes/itemverbs-live-2026-11-12.md  credit-runner  itemverbs3
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
+docs/probes/test-characters.md  credit-runner  itemverbs3
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/process/queuespeed.md  credit-runner  queuespeed
@@ -340,6 +343,7 @@ internal/invdesk/desk.go  credit-runner  itemverbs2
 internal/invdesk/desk.go  credit-runner  tidy
 internal/invdesk/identify.go  credit-runner  itemverbs2
 internal/invdesk/mover.go  credit-runner  itemverbs2
+internal/invdesk/mover.go  credit-runner  itemverbs3
 internal/invdesk/mover_test.go  credit-runner  itemverbs2
 internal/invdesk/stash.go  credit-runner  itemverbs2
 internal/leveler/playerequip_test.go  credit-runner  gearsets
@@ -384,7 +388,9 @@ internal/tidy  credit-runner  tidy
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  tidy
 internal/town/playerid.go  credit-runner  itemverbs2
+internal/town/playerid.go  credit-runner  itemverbs3
 internal/town/playerstash.go  credit-runner  itemverbs2
+internal/town/playerstash.go  credit-runner  itemverbs3
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/tidy.go  credit-runner  tidy
 internal/town/tidy_test.go  credit-runner  tidy
@@ -495,7 +501,10 @@ tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/checklist.sh  credit-runner  cut010b
 tools/friendpack/checklist.sh  credit-runner  cutfix
 tools/itemverbs/compare_items.py  credit-runner  itemverbs2
+tools/itemverbs/compare_items.py  credit-runner  itemverbs3
 tools/itemverbs/diff_d2d.py  credit-runner  itemverbs2
+tools/itemverbs/diff_d2d.py  credit-runner  itemverbs3
+tools/itemverbs/live_compare.py  credit-runner  itemverbs3
 tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots  credit-runner  gearsets

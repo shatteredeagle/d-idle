@@ -127,6 +127,7 @@
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | gearsets | proposed | - | `internal/invdesk`<br>`internal/leveler/playerunequip.go`<br>`internal/leveler/playerequip_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-drag.js`<br>`internal/watch/web/inventory-sets.js`<br>`internal/watch/web/inventory-sets.css`<br>`internal/watch/web/inventory.js`<br>`internal/watch/testdata/gearsets`<br>`internal/watch/gearsets_test.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/testdata/itemactions`<br>`data/unlocks/ladder.json`<br>`internal/env/tuning_invdesk.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/gearsets_test.go`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/knobs.md`<br>`docs/gear-policy.md`<br>`docs/inventory-actions.md`<br>`docs/gearsets.md` | - |
 | tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
+| itemverbs3 | proposed | - | `docs/design/item-verbs.md`<br>`docs/probes/itemverbs-live-2026-11-12.md`<br>`docs/probes/test-characters.md`<br>`tools/itemverbs/live_compare.py`<br>`tools/itemverbs/compare_items.py`<br>`tools/itemverbs/diff_d2d.py`<br>`internal/invdesk/mover.go`<br>`internal/town/playerstash.go`<br>`internal/town/playerid.go` | `fork-branch:fork-only/sandbox-itemverbs`<br>`fork-branch:fork-only/itemverbs` |
 | prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -180,6 +181,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b745c240 11-12 16:06 `Merge agent/itemverbs3: Merge branch 'main' into TASK-383` (itemverbs3)
+- 251fed97 11-12 16:05 `Merge branch 'main' into TASK-383` (-)
 - 5e88d93d 11-12 16:01 `Merge agent/prpost3: Merge branch 'main' into TASK-384` (prpost3)
 - c3c10a43 11-12 16:00 `Merge branch 'main' into TASK-384` (-)
 - e4368829 11-12 15:53 `Merge agent/tidy: Merge branch 'main' into TASK-381` (tidy)
@@ -188,6 +191,4 @@
 - 47a8676b 11-12 15:46 `Merge branch 'main' into TASK-380` (-)
 - da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
 - 0b34934f 11-12 15:39 `Merge branch 'main' into TASK-382` (-)
-- 735fc5da 11-12 15:38 `Merge origin/main into gearsets` (-)
-- dc24856b 11-12 15:35 `Merge agent/prverify4: warp-arrival r2 second verification: PASS` (prverify4)
 <!-- statusgen:end -->
