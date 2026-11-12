@@ -955,6 +955,9 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 		r.guardedAreasNoFarm(s, ex)
 		t := r.e.Tune.Bot
 		diff := difficultyName(p.Difficulty)
+		if diff == "normal" && r.questClaimed("den_of_evil") {
+			ex[areaDenOfEvil] = true // the reward is taken: the Den is no quest run any more (hourfix)
+		}
 		if r.denKitShort(s) && diff == "normal" {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
