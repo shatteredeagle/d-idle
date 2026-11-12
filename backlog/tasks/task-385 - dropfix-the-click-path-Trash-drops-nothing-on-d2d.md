@@ -19,6 +19,7 @@ owns:
   - "internal/d2dtown/adapter.go"
   - "internal/d2dtown/adapter_dropclick_test.go"
   - "internal/town/hand/drop.go"
+  - "docs/probes/itemverbs-live-2026-11-12.md"
 exclusive: []
 contracts: []
 result: "Cause: on d2d ClickWorld is cmd move (a walk order), so the held item never dropped; all town.dropTries clicks failed. Fix: input.WorldDropper/DropClick presses the mouse at the hero-relative screen spot (hero at 400,292, V). Unit tests in d2dinput and d2dtown; verified live on throwaway Paladin and Sorceress: the click-path trash now drops (done, 25 s) where it failed before."
