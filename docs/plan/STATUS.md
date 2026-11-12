@@ -174,6 +174,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- cd482ec4 11-12 13:11 `Merge agent/archify: TASK-373 archify: tools/arch import-graph diagrams (overview, packages, drift) + docs/arch.md` (archify)
 - ee48fcff 11-12 12:49 `Merge agent/prverify3: TASK-366 prverify3: warp-arrival candidate verification, NEEDS-WORK (docs only)` (prverify3)
 - c97dd79f 11-12 12:48 `Merge branch 'main' into prverify3` (-)
 - da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
@@ -183,5 +184,4 @@
 - 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
 - 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
 - b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
-- f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
 <!-- statusgen:end -->
