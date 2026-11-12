@@ -80,9 +80,9 @@
 | ready-calibrate | deferred | - | `docs/probes/ready-calibrate.md` | - |
 | firsthour | proposed | - | `docs/first-hour.md`<br>`cmd/d2firsthour/`<br>`tools/firsthour.sh`<br>`docs/probes/firsthour.md` | - |
 | sessions | proposed | - | `docs/session-record.md` | - |
-| firstminutes | proposed | - | `docs/first-minutes.md`<br>`internal/watch` | - |
+| firstminutes | proposed | - | `docs/onboarding.md`<br>`data/onboarding`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding`<br>`internal/watch/testdata/onboarding_dom.js`<br>`internal/watch/onboarding_test.go` | - |
 | awaydrill | proposed | - | `docs/away-drill.md` | - |
-| reconnectux | proposed | - | `docs/reconnect-ux.md`<br>`internal/watch` | - |
+| reconnectux | proposed | - | `docs/onboarding.md`<br>`internal/watch/onboarding.go`<br>`internal/watch/web/panels/onboarding` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
 | pursuers | proposed | - | `internal/nav/pursuit.go`<br>`internal/nav/pursuit_test.go`<br>`docs/pursuers.md`<br>`internal/nav/walk.go`<br>`internal/nav/roam.go`<br>`internal/nav/explore.go`<br>`internal/nav/exit.go`<br>`internal/nav/nav.go`<br>`internal/env/tuning_nav.go`<br>`docs/knobs.md` | - |
@@ -163,14 +163,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 221266fa 11-11 20:47 `Merge agent/onboarding: TASK-247 TASK-249 onboarding: welcome card, first-30-minutes checklist, reconnect banner` (onboarding)
+- 0644eac5 11-11 20:46 `Merge branch 'main' into onboarding` (-)
 - b2dc041e 11-11 20:42 `Merge agent/decomp12: TASK-350 decomp: warp arrival position and exit trigger arming (d2d arrival bounce)` (decomp12)
 - 26a166b9 11-11 20:41 `Merge branch 'main' into decomp12` (-)
 - debde062 11-11 20:40 `Merge agent/driftfix: driftfix: backlog true-up of drift rows A/B/D` (driftfix)
 - f21d133b 11-11 20:40 `Merge branch 'main' into driftfix` (-)
+- 8ae0ac19 11-11 20:38 `Merge agent/onboarding: sync main` (onboarding)
 - 7b780252 11-11 20:38 `Merge agent/driftfix: sync main` (driftfix)
 - 27c1d008 11-11 20:33 `Merge agent/passagebounce: TASK-349 passagebounce: per-area arrival-bounce counter trips the escalating skip (Passage, Crypt, caves), arrival/bounce log lines` (passagebounce)
 - 45b69024 11-11 20:32 `Merge branch 'main' into passagebounce` (-)
-- a71be511 11-11 20:31 `Merge agent/branding: TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons` (branding)
-- 4913eeac 11-11 20:30 `Merge branch 'main' into branding` (-)
-- b9d88065 11-11 20:26 `Merge agent/legalfollow: TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers` (legalfollow)
 <!-- statusgen:end -->

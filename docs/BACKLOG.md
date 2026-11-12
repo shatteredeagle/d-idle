@@ -760,6 +760,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - passagebounce: arrival bounce stops the planner routing through the area (TASK-349, merged 2026-11-11, acceptance 3 of 4): Root cause (V, 3 h sandbox log): d2d fires the return exit of the Underground Passage and the Crypt about 0.2 s after the first move order whatever its direction (arrival bounce, 160 of 166 Passage arrivals) ... <!--sg:agent/passagebounce-->
 - agent/driftfix: driftfix: backlog true-up of drift rows A/B/D (merged 2026-11-11) <!--sg:agent/driftfix-->
 - TASK-350 decomp12: warp arrival spot differs from game.exe (nearest_free vs FUN_0064dea0, V run), fix candidate on the private fork; arrival bounce cause still U (docs/probes/fid/fid-warp-arrival.md) <!--sg:agent/decomp12-->
+- firstminutes: welcome card and first-30-minutes text on /watch (TASK-247, merged 2026-11-11, acceptance 3 of 4): BUILT offline 2026-11-11 (branch agent/onboarding): panel web/panels/onboarding, /api/onboarding, data/onboarding/en.json, docs/onboarding.md. Tests: Go state/endpoints, node DOM golden, pattern tests, uilint. Not verified live or in a browser. <!--sg:agent/onboarding-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

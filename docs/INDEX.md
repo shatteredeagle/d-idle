@@ -404,6 +404,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [npc-skip.md](npc-skip.md): NPC greeting skip (internal/town/skip.go, cmd/npcprobe)
 - [npc.md](npc.md): NPC interaction (town/npc.go, cmd/d2bot/task.go)
 - [onboarding-slice-a.md](onboarding-slice-a.md): Onboarding slice A: setup stepper, go-ahead and access (status: BUILT offline (task TASK-44, card onboardA, 2026-11-06). Design and mock:...)
+- [onboarding.md](onboarding.md): Onboarding on /watch: welcome card, first 30 minutes, reconnect banners (status: BUILT offline (TASK-247 firstminutes, TASK-249 reconnectux, 2026-11-11). Node DOM goldens and Go tests...)
 - [overlay.md](overlay.md): Table overlay (d.idle mode): file format and rules (status: implemented, 2026-11-06, TASK-59. Fork side `--overlay-dir` on branch `d2d.lab4-overlay` of the private...)
 - [pact-away.md](pact-away.md): Pact away safety (TASK-169) (status: built and tested offline with fakes and httptest; NOT run against a live bot or a browser. Design:...)
 - [pact-botside.md](pact-botside.md): Bot-side Pacts (TASK-167) (status: built and tested offline with fakes; NOT run against a live bot. Design: `docs/research/pact-system.md` (a...)
