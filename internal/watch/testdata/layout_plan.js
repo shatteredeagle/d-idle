@@ -5,7 +5,7 @@ const assert = require('assert'), fs = require('fs'), { load } = require('./pane
 const L = load(process.argv[2]);
 // values from the vm context have their own Array prototype, so compare as JSON
 const eq = (a, b, msg) => assert.strictEqual(JSON.stringify(a), JSON.stringify(b), msg);
-const conf = { aliases: { 'hero-status': 'hero-vitals', whyline: 'why', 'hero-now': 'now', voice: 'diary' }, compat: [], reserved: ['risk', 'hero-detail'] };
+const conf = { aliases: { 'hero-status': 'hero-vitals', 'hero-detail': 'hero-vitals', whyline: 'why', 'hero-now': 'now', voice: 'diary' }, compat: [], reserved: ['risk'] };
 const page = ['video', 'activity', 'hero-vitals', 'map', 'gear', 'why', 'tally', 'currency', 'thoughts', 'now', 'orders-map', 'queue', 'rules', 'spend', 'chronicle',
   'diary', 'quests', 'cards', 'locked', 'bestiary', 'atlas', 'alerts', 'journal'].map((id) => ({ id, size: 's' }));
 
@@ -47,11 +47,26 @@ for (const f of process.argv.slice(3)) {
   eq([at('now').col, at('now').row, at('now').colSpan], [1, 13, 6]);
   eq([at('video').col, at('video').row, at('video').colSpan, at('video').rowSpan], [1, 4, 6, 9]);
   assert.strictEqual(at('diary').placed, true);
-  eq(p.unknown, [], 'risk and hero-detail are reserved, not unknown');
+  eq(p.unknown, [], 'risk is reserved, hero-detail is an alias of hero-vitals, nothing is unknown');
   assert.strictEqual(p.rowHeight, 48);
   // the editor sees the cells of the normal page
   const e = L.plan(layout, 1920, '', conf, page, true), key = (i) => [i.id, i.col, i.row, i.colSpan, i.rowSpan].join();
   eq(e.items.map(key), p.items.map(key));
+}
+
+// the merged Hero tile: the old Hero stats id resolves to hero-vitals; a layout naming both shows one tile at the first
+// position, and a hidden flag on the alias alone switches the merged tile off
+{
+  const one = (id, extra) => Object.assign({ id, band: 'side', col: 1, row: 1, colSpan: 4, rowSpan: 4, collapsed: false, order: 0 }, extra);
+  const mk = (...ps) => ({ schema: 'watch.layout/1', cols: 12, rowHeight: 48, breakpoints: { wide: { width: 1920, cols: 12, panels: ps } } });
+  const at = (p, id) => p.items.filter((i) => i.id === id);
+  let p = L.plan(mk(one('hero-vitals'), one('hero-detail', { col: 9, row: 9, order: 1 })), 1920, '', conf, page);
+  eq(at(p, 'hero-vitals').map((i) => [i.col, i.row]), [[1, 1]]); eq(p.unknown, []);
+  p = L.plan(mk(one('hero-detail', { col: 5, row: 2 }), one('hero-vitals', { order: 1 })), 1920, '', conf, page);
+  eq(at(p, 'hero-vitals').map((i) => [i.col, i.row]), [[5, 1]], 'the first entry wins (it rises into the free room)');
+  p = L.plan(mk(one('hero-detail', { hidden: true })), 1920, '', conf, page);
+  eq(p.off, ['hero-vitals'], 'a hidden alias hides the merged tile');
+  assert.strictEqual(at(p, 'hero-vitals').length, 0);
 }
 
 // unknown ids are reported once and ignored; a missing breakpoint falls back to the next wider; none: null
