@@ -10,6 +10,7 @@
   function el(t, c, x) { var e = document.createElement(t); if (c) e.className = c; if (x !== undefined) e.textContent = x; return e; }
   function clear(n) { while (n.firstChild) n.removeChild(n.firstChild); }
   function say(t) { var m = $('msg'); m.textContent = t || ''; m.hidden = !t; }
+  function pct(v, of) { return (Math.round(v / of * 10000) / 100) + '%'; }
   function num(x) { return Math.round(x * 100) / 100; }
   function abbr(n) { return n.split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3).toUpperCase(); }
 
@@ -56,8 +57,9 @@
     for (var i = 0; i < d.length; i++) d[i].removeAttribute('aria-describedby');
   }
 
-  function tile(n, allocOn) {
-    var d = el('div', 'sk-tile sk-r' + n.row + ' sk-c' + n.col);
+  function tile(n, allocOn, tr) {
+    var d = el('div', 'sk-tile');
+    d.style.setProperty('--l', pct(n.x, tr.w)); d.style.setProperty('--t', pct(n.y, tr.h)); d.style.setProperty('--w', pct(n.w, tr.w));
     d.tabIndex = 0; d.setAttribute('role', 'group'); d.setAttribute('data-state', n.state); d.setAttribute('data-id', n.id);
     d.setAttribute('aria-label', n.name + ', level ' + n.base + (n.bonus ? ' plus ' + n.bonus : '') + ' of ' + n.maxLevel + (n.state === 'locked' ? ', locked' : ''));
     if (allocOn && n.canAdd) d.setAttribute('data-act', '1');
@@ -90,25 +92,26 @@
   }
 
   var SVGNS = 'http://www.w3.org/2000/svg';
-  // arrows draws one line per prerequisite, from the centre bottom of the required tile to the centre top of the skill.
-  function arrows(board, tree) {
-    var old = board.querySelector('.sk-arrows'); if (old) old.remove();
-    var svg = document.createElementNS(SVGNS, 'svg'); svg.setAttribute('class', 'sk-arrows'); svg.setAttribute('aria-hidden', 'true');
-    var br = board.getBoundingClientRect(), pos = {};
-    var tiles = board.querySelectorAll('.sk-tile');
-    for (var i = 0; i < tiles.length; i++) { var r = tiles[i].getBoundingClientRect(); pos[tiles[i].getAttribute('data-id')] = { cx: r.left - br.left + r.width / 2, top: r.top - br.top, bot: r.bottom - br.top }; }
-    tree.nodes.forEach(function (n) {
-      (n.prereqs || []).forEach(function (p) {
-        var a = pos[p.id], b = pos[n.id]; if (!a || !b) return; // a prerequisite in another tree has no arrow here
-        var ln = document.createElementNS(SVGNS, 'line'), have = p.have ? '1' : '0';
-        ln.setAttribute('x1', a.cx); ln.setAttribute('y1', a.bot); ln.setAttribute('x2', b.cx); ln.setAttribute('y2', b.top - 3); ln.setAttribute('data-have', have);
-        svg.appendChild(ln);
-        var hd = document.createElementNS(SVGNS, 'polygon'); hd.setAttribute('data-have', have);
-        hd.setAttribute('points', (b.cx - 4) + ',' + (b.top - 7) + ' ' + (b.cx + 4) + ',' + (b.top - 7) + ' ' + b.cx + ',' + (b.top - 1));
-        svg.appendChild(hd);
-      });
+  // arrows draws the prerequisite lines from the numbers the server sent (edge midpoints of the two tiles, grid units).
+  // One SVG with the board's own viewBox, stretched to the board like the tiles are: nothing is measured, so the first
+  // paint is final and a resize or a late image changes nothing.
+  function arrows(tree) {
+    var svg = document.createElementNS(SVGNS, 'svg');
+    svg.setAttribute('class', 'sk-arrows'); svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('viewBox', '0 0 ' + tree.w + ' ' + tree.h); svg.setAttribute('preserveAspectRatio', 'none');
+    (tree.links || []).forEach(function (l) {
+      var have = l.have ? '1' : '0', ln = document.createElementNS(SVGNS, 'line');
+      ['x1', 'y1', 'x2', 'y2'].forEach(function (k) { ln.setAttribute(k, l[k]); });
+      ln.setAttribute('data-have', have); ln.setAttribute('data-from', l.from); ln.setAttribute('data-to', l.to);
+      svg.appendChild(ln);
+      var hd = document.createElementNS(SVGNS, 'polygon'), dx = l.x2 - l.x1, dy = l.y2 - l.y1, len = Math.sqrt(dx * dx + dy * dy) || 1;
+      var ux = dx / len, uy = dy / len, bx = l.x2 - ux * 9, by = l.y2 - uy * 9;
+      var r2 = function (v) { return Math.round(v * 100) / 100; };
+      hd.setAttribute('points', r2(l.x2) + ',' + r2(l.y2) + ' ' + r2(bx - uy * 4.5) + ',' + r2(by + ux * 4.5) + ' ' + r2(bx + uy * 4.5) + ',' + r2(by - ux * 4.5));
+      hd.setAttribute('data-have', have);
+      svg.appendChild(hd);
     });
-    board.insertBefore(svg, board.firstChild);
+    return svg;
   }
 
   function render(v) {
@@ -126,17 +129,11 @@
       head.appendChild(h); head.appendChild(el('span', 'meta', tr.spent + ' point' + (tr.spent === 1 ? '' : 's') + ' spent'));
       card.appendChild(head);
       var board = el('div', 'sk-board'); board.setAttribute('role', 'group'); board.setAttribute('aria-label', 'Skills of tree ' + (i + 1));
-      tr.nodes.forEach(function (n) { board.appendChild(tile(n, v.allocate)); });
+      board.appendChild(arrows(tr));
+      tr.nodes.forEach(function (n) { board.appendChild(tile(n, v.allocate, tr)); });
       card.appendChild(board); host.appendChild(card);
-      arrows(board, tr);
-      board._tree = tr;
     });
   }
-  function redraw() {
-    var bs = document.querySelectorAll('.sk-board');
-    for (var i = 0; i < bs.length; i++) if (bs[i]._tree) arrows(bs[i], bs[i]._tree);
-  }
-
   function load(force) {
     return fetch('/api/skills', { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error(r.status === 503 ? 'The skills page is off or the hero is not known yet.' : 'Could not read the skill trees (' + r.status + ').');
@@ -149,6 +146,5 @@
   }
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') hideTip(); });
   document.addEventListener('click', function (e) { if (!e.target.closest || !e.target.closest('.sk-tile')) hideTip(); });
-  window.addEventListener('resize', redraw);
   load(); setInterval(load, 5000);
 })();

@@ -108,3 +108,48 @@ func TestUnavailable(t *testing.T) {
 		}
 	}
 }
+
+// Every skill has its own cell, tiles stay inside the board, and every prerequisite line starts and ends on the edge
+// midpoint of its two tiles (the page draws these numbers and measures nothing).
+func TestLayoutAndLinks(t *testing.T) {
+	tb := fixture()
+	for _, c := range []struct{ code, name string }{{"sor", "Sorceress"}, {"pal", "Paladin"}} {
+		v := Build(tb, Hero{ClassCode: c.code, ClassName: c.name, Level: 30, Unspent: 1, Points: map[int]Points{36: {Base: 1}, 97: {Base: 1}}}, nil)
+		for _, tr := range v.Trees {
+			cells := map[[2]int]string{}
+			byID := map[int]Node{}
+			for _, n := range tr.Nodes {
+				k := [2]int{n.Row, n.Col}
+				if o, dup := cells[k]; dup {
+					t.Errorf("%s: %s and %s share cell %v", c.code, o, n.Name, k)
+				}
+				cells[k] = n.Name
+				byID[n.ID] = n
+				if n.X < 0 || n.Y < 0 || n.X+n.W > tr.W || n.Y+n.H > tr.H || n.Row < 1 || n.Row > Rows || n.Col < 1 || n.Col > Cols {
+					t.Errorf("%s: %s outside the board: %+v", c.code, n.Name, n)
+				}
+			}
+			for _, l := range tr.Links {
+				a, b := byID[l.From], byID[l.To]
+				mids := func(n Node) [4][2]int { // top, bottom, left, right edge midpoints
+					return [4][2]int{{n.X + n.W/2, n.Y}, {n.X + n.W/2, n.Y + n.H}, {n.X, n.Y + n.H/2}, {n.X + n.W, n.Y + n.H/2}}
+				}
+				in := func(p [2]int, n Node) bool {
+					for _, m := range mids(n) {
+						if m == p {
+							return true
+						}
+					}
+					return false
+				}
+				if !in([2]int{l.X1, l.Y1}, a) || !in([2]int{l.X2, l.Y2}, b) {
+					t.Errorf("%s: link %s -> %s is not edge midpoint to edge midpoint: %+v", c.code, a.Name, b.Name, l)
+				}
+			}
+		}
+	}
+	v := Build(tb, Hero{ClassCode: "pal", Level: 30, Points: map[int]Points{97: {Base: 1}}}, nil)
+	if l := v.Trees[0].Links; len(l) != 2 || !l[0].Have || l[0].Y1 >= l[0].Y2 {
+		t.Errorf("links: %+v", l)
+	}
+}
