@@ -1,6 +1,9 @@
 package tidy
 
-import "testing"
+import (
+	"testing"
+	"time"
+)
 
 func pol(t *testing.T) *Policy {
 	t.Helper()
@@ -121,5 +124,61 @@ func TestParseRejects(t *testing.T) {
 		if _, err := Parse([]byte(s)); err == nil {
 			t.Errorf("%s accepted", s)
 		}
+	}
+}
+
+// Over every quality, identified state and a spread of types, with a junk value and a full pack: a drop only ever
+// happens for a low, normal or superior item that no stash row wants.
+func TestDropNeverTouchesMagicOrBetterOrUnidentified(t *testing.T) {
+	p := pol(t)
+	stashTypes := map[string]bool{"rune": true, "gem0": true, "mcha": true, "jewl": true}
+	for _, q := range []string{"low", "normal", "superior", "magic", "rare", "set", "unique", "crafted"} {
+		for _, id := range []bool{false, true} {
+			for _, typ := range []string{"club", "swor", "armo", "ring", "amul", "circ", "rune", "gem0", "mcha", "jewl", "misc"} {
+				f := pack(Facts{Type: typ, Quality: q, Identified: id, SellValue: 1})
+				d := p.Decide(f, Ctx{PackFullPct: 100})
+				if d.Action != Drop {
+					continue
+				}
+				if q != "low" && q != "normal" && q != "superior" || stashTypes[typ] {
+					t.Errorf("%s id=%v %s: dropped (%s)", q, id, typ, d.Why)
+				}
+			}
+		}
+	}
+	// below the full-pack line nothing drops at all
+	if d := p.Decide(pack(Facts{Type: "club", Quality: "normal", SellValue: 1}), Ctx{PackFullPct: 84}); d.Action == Drop {
+		t.Error("dropped from a pack under 85 percent")
+	}
+}
+
+func TestDropsIgnoreByIDOrSpotAndExpire(t *testing.T) {
+	now := time.Unix(1000, 0)
+	d := NewDrops(func() time.Time { return now })
+	d.Note(7, "12/2/5", 6000, 4900)
+	cases := []struct {
+		name  string
+		id    uint32
+		print string
+		x, y  int
+		want  bool
+	}{
+		{"same id", 7, "12/2/5", 6100, 4900, true},
+		{"new id, same kind near the spot", 99, "12/2/5", 6004, 4896, true},
+		{"same kind far away", 99, "12/2/5", 6100, 4900, false},
+		{"other kind at the spot (gold, a rune)", 98, "r03/2/1", 6000, 4900, false},
+	}
+	for _, c := range cases {
+		if got := d.Ignored(c.id, c.print, c.x, c.y); got != c.want {
+			t.Errorf("%s: %v", c.name, got)
+		}
+	}
+	now = now.Add(3 * time.Hour)
+	if d.Ignored(7, "12/2/5", 6000, 4900) {
+		t.Error("an old drop is still ignored")
+	}
+	var nilDrops *Drops
+	if nilDrops.Ignored(1, "x", 0, 0) {
+		t.Error("nil memory ignores")
 	}
 }

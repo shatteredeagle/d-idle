@@ -17,7 +17,7 @@
   {"name": "rare jewelry", "match": {"types": ["ring", "amul", "circ"], "qualities": ["rare", "crafted"]}, "action": "stash", "reason": "rare jewelry or circlet"},
   {"name": "magic jewelry", "match": {"types": ["ring", "amul"], "qualities": ["magic"]}, "action": "stash", "reason": "magic jewelry (identify it from the menu)"},
   {"name": "socketed bases", "match": {"minSockets": 4, "qualities": ["normal", "superior"]}, "action": "stash", "reason": "4+ socket base"},
-  {"name": "pure junk", "match": {"belowSell": 20, "minPackFull": 85}, "action": "drop", "reason": "worth under 20 gold and the pack is full"},
+  {"name": "pure junk", "match": {"belowSell": 20, "minPackFull": 85, "qualities": ["low", "normal", "superior"]}, "action": "drop", "reason": "worth under 20 gold and the pack is full"},
   {"name": "sellable", "match": {"minSell": 20}, "action": "sell", "reason": "vendor junk"}
  ]
 }

@@ -24,6 +24,7 @@ owns:
   - "internal/town/chores.go"
   - "internal/town/town.go"
   - "docs/knobs.md"
+  - "internal/loot/ignore_test.go"
 exclusive: []
 contracts: []
 result: "offline only, NOT verified live. Policy table + Tidy chore (stash/drop) + tooltip field + 3 knobs, wired via wireInv (test in cmd/d2bot). Town sim tests skip without game tables (U). Build-specific part: policy.json overrides per class (Amazon javelins)."

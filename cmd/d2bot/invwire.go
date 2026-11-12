@@ -85,7 +85,8 @@ func wireInv(ref *runnerRef, tw *town.Town, lt *loot.Looter, lv *leveler.Leveler
 		d.SetTrasher(lv)
 	}
 	if lt != nil {
-		lt.SetIgnore(d.Ignored) // items the player trashed stay on the ground
+		// items the player trashed and items the Tidy chore dropped stay on the ground (no drop-pickup loop)
+		lt.SetIgnore(func(u d2.Unit) bool { return d.Ignored(u) || tw.TidyDropped(u) })
 	}
 	if lt != nil {
 		d.SetWhyFor(func(s *d2.Snapshot) func(u d2.Unit) string {

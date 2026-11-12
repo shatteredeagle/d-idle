@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"sync"
+	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/loot"
@@ -155,17 +156,26 @@ func (t *Town) tidyPass(ctx context.Context, a *Act, rep *ChoreReport) error {
 	}
 	t.e.Log.Info("tidy: plan", "stash", nStash, "drop", nDrop, "sell_left_to_vendor", nSell, "pack_pct", c.PackFullPct, "stash_pct", c.StashFullPct)
 	done := map[string]int{}
+	parent := ctx
+	ctx, cancel := context.WithTimeout(ctx, tidyPassCap)
+	defer cancel()
+	defer func() { _ = t.h.CloseAll(parent) }()
+	var rerr error
 	if nStash > 0 {
-		if err := t.tidyStash(ctx, a, plan, byID, done); err != nil {
-			return err
-		}
+		rerr = t.tidyStash(ctx, a, plan, byID, done)
 	}
-	if nDrop > 0 {
-		if err := t.tidyDrop(ctx, plan, byID, done); err != nil {
-			return err
-		}
+	if nDrop > 0 && rerr == nil {
+		rerr = t.tidyDrop(ctx, plan, byID, done)
 	}
 	rep.Tidied += done["stash"] + done["drop"]
+	// the 120 s cap is a normal end of the pass, not a failed chore; a cancelled parent or a real error is returned
+	if errors.Is(rerr, context.DeadlineExceeded) && parent.Err() == nil {
+		t.e.Log.Info("tidy: pass cap reached", "cap", tidyPassCap.String())
+		rerr = nil
+	}
+	if rerr != nil {
+		return rerr
+	}
 	t.e.Log.Info("tidy: done", "stashed", done["stash"], "dropped", done["drop"], "refused", done["refused"], "stopped", done["stopped"])
 	return nil
 }
@@ -179,7 +189,6 @@ func (t *Town) tidyStash(ctx context.Context, a *Act, plan []tidy.Entry, byID ma
 	if err := t.openStash(ctx, a); err != nil {
 		return err
 	}
-	defer func() { _ = t.h.CloseAll(ctx) }()
 	for _, e := range plan {
 		if e.Action != tidy.Stash {
 			continue
@@ -246,6 +255,7 @@ func (t *Town) tidyDrop(ctx context.Context, plan []tidy.Entry, byID map[uint32]
 			continue
 		}
 		done["drop"]++
+		t.tidyDrops.Note(u.ID, tidyPrint(u), s.Player.X, s.Player.Y)
 		t.e.Log.Info("tidy: dropped", "item", t.nameOf(u), "why", e.Why)
 	}
 	return nil
@@ -277,4 +287,23 @@ func (t *Town) dropOne(ctx context.Context, s *d2.Snapshot, u d2.Unit) error {
 		return fmt.Errorf("item %d is still in the pack", u.ID)
 	}
 	return nil
+}
+
+// tidyPassCap is the SME's hard cap for one tidy pass.
+const tidyPassCap = 120 * time.Second
+
+func tidyPrint(u d2.Unit) string {
+	if u.Item == nil {
+		return ""
+	}
+	return fmt.Sprintf("%d/%d/%d", u.Class, u.Item.Quality, u.Item.ILvl)
+}
+
+// TidyDropped is the looter's skip test for items this chore threw away (loot.Looter.SetIgnore, together with the
+// desk's player-trash test). Without it the pickup would fetch the junk again on the next pass.
+func (t *Town) TidyDropped(u d2.Unit) bool {
+	if t == nil || u.Item == nil {
+		return false
+	}
+	return t.tidyDrops.Ignored(u.ID, tidyPrint(u), u.X, u.Y)
 }

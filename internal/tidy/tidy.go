@@ -189,10 +189,23 @@ func (p *Policy) Decide(f Facts, c Ctx) Decision {
 			if a == Stash && p.StashMaxPct > 0 && c.StashFullPct >= p.StashMaxPct {
 				return Decision{Keep, r.Name, "Kept: the stash is full (" + r.Reason + ")"}
 			}
+			if a == Drop && !dropSafe(f) {
+				return Decision{Ignore, r.Name, "Tidy leaves it: magic or better, or unidentified, is never dropped"}
+			}
 			return Decision{a, r.Name, why(a, r, f)}
 		}
 	}
 	return Decision{Ignore, "default", "Tidy leaves it: no rule"}
+}
+
+// dropSafe is the code-level floor under every drop row: only low, normal and superior items are ever thrown away, and
+// only identified-or-white ones; a magic, rare, set, unique or crafted item, or an unidentified one, never is.
+func dropSafe(f Facts) bool {
+	switch f.Quality {
+	case "low", "normal", "superior":
+		return true
+	}
+	return false
 }
 
 func why(a Action, r Row, f Facts) string {

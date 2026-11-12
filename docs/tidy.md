@@ -22,17 +22,17 @@ A pure policy table (`internal/tidy/policy.json`, loaded by `internal/tidy`) ans
 | rare/crafted ring, amulet, circlet | stash | |
 | magic ring, amulet | stash | identify from the menu |
 | white/superior base, 4+ sockets | stash | |
-| anything worth < 20 gold | drop | only when the pack is >= 85 percent full |
+| low/normal/superior item worth < 20 gold | drop | only when the pack is >= 85 percent full; code floor `dropSafe`: magic, rare, set, unique, crafted are never dropped (V `TestDropNeverTouchesMagicOrBetterOrUnidentified`, table over qualities, identified state and types) |
 | anything worth >= 20 gold | sell | the sell chore runs it |
 | Amazon override: javelins | keep | throwing build; other classes sell them (V `TestPerClassOverride`) |
 Stash action is withheld (item stays in the pack) once the stash is 90 percent full (`stashMaxPct`); the existing `relieveStash` owns that case. Unidentified magic weapons and armor sell as is (no identify scrolls spent: SME). The sell floor 20 equals `loot.poorMinSell` (hourfix); it lives in the table, not in a knob, because per-class rows may differ.
 Item type codes (`rune`, `gem*`, `ring`, `amul`, `circ`, `jewl`, `scha`/`mcha`/`lcha`, `jave`/`ajav`) are S from the repo's own pickit and tables, U against the live `ItemBase.Type` strings.
 
 ## When a pass runs
-`Chores` plan with `Stash` or `Sell` set (every ordinary town visit), the knob `town.tidyEnabled` 1, and `needTidy`: something to stash, or drops planned while the pack is at least `town.tidyMinPackPct` (60) full. No dedicated tidy trip: SME says never spend a portal just to tidy; the existing triggers (`town.tripPackUsedPct` 80, sell items, potions) bring the hero home. A stash visit by the player's own request is unchanged.
+`Chores` plan with `Stash` or `Sell` set (every ordinary town visit), the knob `town.tidyEnabled` 1, and `needTidy`: something to stash, or drops planned while the pack is at least `town.tidyMinPackPct` (60) full. No dedicated tidy trip (the chore only runs inside a visit that is already happening): SME says never spend a portal just to tidy; the existing triggers (`town.tripPackUsedPct` 80, sell items, potions) bring the hero home. A stash visit by the player's own request is unchanged.
 
 ## Safety valve
-`town.tidyMaxActions` (12) stash plus drop actions per pass, stash first (best sell value first), drops last (cheapest first). Abort on a nearby fight (`fightNear`) or life under half, on a cancelled context, and after two failed drops (a drop whose item stayed in the pack). A held cursor is never left: `DropCursor` puts a failed drop back into the pack. Player commands keep priority: the chore runs inside the town visit, which the guard interrupts like any chore (priority ladder in docs/inventory-actions.md, unchanged) and the player's queue runs at the next safe moment.
+`town.tidyMaxActions` (12) stash plus drop actions per pass, stash first (best sell value first), drops last (cheapest first). Hard cap 120 s per pass (`tidyPassCap`; reaching it ends the pass normally, logged `tidy: pass cap reached`). Abort on a nearby fight (`fightNear`) or life under half, on a cancelled context, and after two failed drops (a drop whose item stayed in the pack). A held cursor is never left: `DropCursor` puts a failed drop back into the pack. Player commands keep priority: the chore runs inside the town visit, which the guard interrupts like any chore (priority ladder in docs/inventory-actions.md, unchanged) and the player's queue runs at the next safe moment.
 
 ## Cost (S, SME)
 Target one pass 60 to 90 s, hard cap 120 s; the chore budget `town.choreBudgetS` (150) still bounds the whole visit. Stashing uses the stash visit's open panel (one open per pass); a drop costs one pick-up plus one ground click. The hourfix target (town 5 to 8 percent of the hour) is not measured here (U).
@@ -60,4 +60,4 @@ V: `internal/tidy` (table, equipment, marks, start kit and quest, two-class over
 5. Fight in the camp during a pass: pass stops (`stopped` count).
 6. Stash at 90+ percent: no stash actions, items stay in the pack ("Kept: the stash is full").
 7. Time the tidy chore with the log timestamps; target under 90 s, town share of the hour.
-Known gap (U): a dropped junk item may be picked up again by the looter (`poorMinSell` 20 keeps most of it on the ground, but the loot ignore list is fed by the player's trash only).
+Drop-pickup loop (closed): drops are remembered by `tidy.Drops` (id plus print, or the same print within 12 subtiles of the drop spot, 2 h, 64 entries) and `wireInv` feeds them to `Looter.SetIgnore` together with the player's trashes. V `TestDropsIgnoreByIDOrSpotAndExpire`; looter test `TestPickUpLeavesTidyDrops` (Sorceress and Paladin, gold/other items still picked) skips without game tables (U).
