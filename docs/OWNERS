@@ -182,6 +182,7 @@ docs/friend-checklist-0.1.0.md  credit-runner  cut010d
 docs/gear-policy.md  credit-runner  nopins
 docs/goldprio.md  credit-runner  goldprio
 docs/hourfix.md  credit-runner  hourfix
+docs/hourfix2.md  credit-runner  hourfix2
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  exploredpct
@@ -252,6 +253,7 @@ internal/bot/exploredpct_test.go  credit-runner  exploredpct
 internal/bot/goal.go  credit-runner  exploredpct
 internal/bot/goal.go  credit-runner  goldprio
 internal/bot/goal.go  credit-runner  hourfix
+internal/bot/goal.go  credit-runner  hourfix2
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip

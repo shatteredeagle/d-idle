@@ -121,6 +121,7 @@
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
+| hourfix2 | proposed | - | `docs/hourfix2.md`<br>`internal/bot/goal.go` | - |
 | goldprio | proposed | - | `internal/loot`<br>`internal/bot/goldprio.go`<br>`internal/bot/goldprio_test.go`<br>`docs/goldprio.md`<br>`cmd/d2bot/adapters.go`<br>`cmd/d2bot/looteradapter_test.go`<br>`internal/combat/interlude_test.go`<br>`internal/combat/fight.go`<br>`internal/combat/types.go`<br>`internal/bot/goal.go`<br>`internal/bot/contracts.go`<br>`internal/bot/runner.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
 | wiring | in-progress | - | `cmd/d2bot/wiring_test.go`<br>`cmd/d2bot/townforward.go`<br>`tools/wiringaudit`<br>`docs/wiring.md` | - |
@@ -177,6 +178,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 1780ed9f 11-12 15:28 `Merge agent/hourfix2: hourfix2: Den-mouth shuttle (cached Den pick, far priming click)` (hourfix2)
+- 51904ea2 11-12 15:27 `Merge branch 'main' into TASK-374` (-)
 - 5271cbca 11-12 15:23 `Merge agent/wiring: Merge branch 'main' into TASK-379` (wiring)
 - 13aa1292 11-12 15:21 `Merge branch 'main' into TASK-379` (-)
 - 719f2761 11-12 15:16 `Merge origin/main into wiring` (-)
@@ -185,6 +188,4 @@
 - 68384b47 11-12 15:00 `Merge agent/goldprio: goldprio: doc, knobs table, task card` (goldprio)
 - b707e894 11-12 14:20 `Merge agent/warpsandbox: Merge branch 'main' into warpsandbox` (warpsandbox)
 - 491f9a98 11-12 14:20 `Merge branch 'main' into warpsandbox` (-)
-- dfd4d8a0 11-12 13:52 `Merge agent/prwarp: Merge branch 'main' into TASK-372` (prwarp)
-- 078ebedf 11-12 13:51 `Merge branch 'main' into TASK-372` (-)
 <!-- statusgen:end -->
