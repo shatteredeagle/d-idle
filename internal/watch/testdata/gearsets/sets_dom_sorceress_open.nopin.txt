@@ -1,0 +1,21 @@
+div#gearsets []
+  div.sets-title []
+    h3 [] "Gear sets"
+    span.meta [] "1 of 8"
+  p.d-hint [] "Save what you wear now and put it back on later. A set goes on only when you click Apply; the bot never changes your gear. An item that is gone is skipped, never replaced by another."
+  div.sets-save []
+    label.sets-lab [for=sets-new] "Name"
+    input.sets-name#sets-new [maxlength=24 placeholder=e.g. Fire damage type=text]
+    button.act [data-act=save-hero] "Save what the hero wears"
+    button.act [data-act=save-merc] "Save what the mercenary wears"
+  ul.sets-list []
+    li.sets-set [data-set=gs-1 data-target=hero]
+      div.sets-head []
+        span.nm [] "Sword and board"
+        span.meta [] "hero, 2 items"
+      p.d-muted.sets-items [] "weapon: Short Staff, shield: Orb"
+      div.d-btngroup []
+        button.act [data-act=apply] "Apply..."
+        button.act [data-act=rename] "Rename"
+        button.act [data-act=delete] "Delete"
+  p.d-hint.sets-note [role=status]
