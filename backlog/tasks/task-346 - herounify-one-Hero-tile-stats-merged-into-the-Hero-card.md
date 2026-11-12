@@ -1,10 +1,11 @@
 ---
 id: TASK-346
 title: 'herounify: one Hero tile (stats merged into the Hero card)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:23:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - watch
   - feature

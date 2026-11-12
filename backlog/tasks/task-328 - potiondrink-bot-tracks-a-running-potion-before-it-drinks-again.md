@@ -1,10 +1,11 @@
 ---
 id: TASK-328
 title: 'potiondrink: bot tracks a running potion before it drinks again'
-status: Proposed
+status: Done
 assignee:
   - pro-runner
 created_date: '2026-11-11T19:21:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - bot
   - bot-fix

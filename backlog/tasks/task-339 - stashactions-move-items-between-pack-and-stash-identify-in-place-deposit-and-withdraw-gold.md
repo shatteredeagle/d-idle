@@ -1,10 +1,13 @@
 ---
 id: TASK-339
-title: 'stashactions: move items between pack and stash, identify in place, deposit and withdraw gold'
-status: Proposed
+title: >-
+  stashactions: move items between pack and stash, identify in place, deposit
+  and withdraw gold
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:26:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - watch
   - feature

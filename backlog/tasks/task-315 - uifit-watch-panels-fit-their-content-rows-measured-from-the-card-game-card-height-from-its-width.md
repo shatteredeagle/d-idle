@@ -1,10 +1,13 @@
 ---
 id: TASK-315
-title: 'uifit: watch panels fit their content (rows measured from the card, game card height from its width)'
-status: Proposed
+title: >-
+  uifit: watch panels fit their content (rows measured from the card, game card
+  height from its width)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:50:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - watch
   - bug

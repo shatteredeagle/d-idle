@@ -1,10 +1,11 @@
 ---
 id: TASK-329
 title: 'runstate: infer run or walk from exact stamina deltas'
-status: Proposed
+status: Done
 assignee:
   - pro-runner
 created_date: '2026-11-11T19:21:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - bot
   - bot-fix

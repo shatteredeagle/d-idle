@@ -1,10 +1,11 @@
 ---
 id: TASK-256
 title: 'contextdiet: agent reading order cut to START-HERE, task, area doc'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T16:55:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - docs
   - chore
