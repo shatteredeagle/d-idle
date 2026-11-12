@@ -116,6 +116,7 @@
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
+| prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
@@ -170,6 +171,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c45203f5 11-12 10:11 `Merge agent/prpost2: TASK-363 prpost2: CodeRabbit round on PR 445` (prpost2)
+- 81388b05 11-12 10:10 `Merge branch 'main' into prpost2` (-)
 - 8671d3fb 11-12 10:09 `Merge agent/cut010d: 0.1.0 re-cut on the art-clean fork commit (not uploaded)` (cut010d)
 - ae36367f 11-12 09:48 `Merge agent/cut010c: 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361)` (cut010c)
 - af6a4753 11-12 09:45 `Merge origin/main into cut010c` (-)
@@ -178,6 +181,4 @@
 - 664ac37b 11-11 23:47 `Merge branch 'main' into cut010` (-)
 - 96a6eed4 11-11 23:33 `Merge agent/lockfix: lockfix: deadlock covMu/obMu (TASK-358)` (lockfix)
 - 8925fad2 11-11 23:15 `Merge agent/skilltrees2: Skills page: layout and lines from grid constants, no measuring (TASK-357)` (skilltrees2)
-- a2564e6e 11-11 22:28 `Merge agent/skilltrees: Skills page: read-only class skill trees, tooltips, points, 501 allocate stub (TASK-355)` (skilltrees)
-- e1282ce2 11-11 22:27 `Merge branch 'main' into skilltrees` (-)
 <!-- statusgen:end -->
