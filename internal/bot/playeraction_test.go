@@ -9,6 +9,7 @@ import (
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/env"
+	"d2lod-bot/internal/goals"
 )
 
 // fakePlayerGear counts queued actions like invdesk.Desk does; RunPending logs a call and empties the queue.
@@ -63,7 +64,12 @@ type errandGear struct {
 	w    *world
 	done atomic.Bool
 	kind string
+	r    *Runner // when set, RunPending records the Why line it runs under
+	why  atomic.Value
 }
+
+// ErrandKind names the waiting errand for the Why line of the trip home ("stash" for a stash job).
+func (f *errandGear) ErrandKind() string { return f.kind }
 
 func (f *errandGear) Pending() int {
 	if f.done.Load() || f.w.area != 1 {
@@ -73,6 +79,15 @@ func (f *errandGear) Pending() int {
 }
 func (f *errandGear) RunPending(ctx context.Context) []string {
 	f.w.call("player-actions")
+	if f.r != nil {
+		f.r.mu.Lock()
+		w := f.r.why
+		if f.r.pendingWhy.Code != "" {
+			w = f.r.pendingWhy
+		}
+		f.why.Store(w)
+		f.r.mu.Unlock()
+	}
 	f.done.Store(true)
 	return []string{"buyid done"}
 }
@@ -229,5 +244,27 @@ func TestPlayerDueNeedsAQuietFieldAndNoTrip(t *testing.T) {
 		if _, ok, why := g.r.safeMoment(snap()); ok || why == "" {
 			t.Fatalf("%v: safeMoment %v %q during a fight", class, ok, why)
 		}
+	}
+}
+
+// A queued stash job takes the hero home like any errand and the Why line says what=stash (Paladin and Sorceress).
+func TestStashErrandGoesHomeWithTheStashWhy(t *testing.T) {
+	for _, class := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		g := newRig(t, func(c *Config, d *Deps, tu *env.Tuning) {})
+		g.w.set(func(w *world) { w.class, w.area = class, 2 })
+		eg := &errandGear{w: g.w, kind: "stash", r: g.r}
+		g.r.d.PlayerGear = eg
+		g.mover.exploreFn = blockExplore
+		g.run()
+		g.r.Start(reach(10))
+		g.waitFor("stash job done in town", func() bool { return eg.done.Load() })
+		if g.w.count("totown") < 1 {
+			t.Fatalf("%v: never went home", class)
+		}
+		w, _ := eg.why.Load().(goals.Why)
+		if w.Code != WhyPlayerItems || w.Params["what"] != "stash" {
+			t.Fatalf("%v: why %+v", class, w)
+		}
+		g.finish()
 	}
 }

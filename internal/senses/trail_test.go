@@ -183,3 +183,69 @@ func TestEventsCapAndRetention(t *testing.T) {
 		t.Fatalf("retention: %d", len(got))
 	}
 }
+
+func TestSamplesEveryAndCap(t *testing.T) {
+	var r Samples
+	if !r.Add(Sample{At: t0}) || r.Add(Sample{At: t0.Add(time.Second)}) || !r.Add(Sample{At: t0.Add(2 * time.Second)}) {
+		t.Fatal("one sample per SampleEvery")
+	}
+	for i := 0; i < SampleCap+10; i++ {
+		r.Add(Sample{At: t0.Add(time.Duration(10+i*2) * time.Second), Life: i})
+	}
+	if len(r.s) != SampleCap || r.s[len(r.s)-1].Life != SampleCap+9 {
+		t.Fatalf("cap keeps the newest: %d", len(r.s))
+	}
+}
+
+func TestHeatKillsDwellDamageAndReset(t *testing.T) {
+	clock := t0
+	p := &Publisher{now: func() time.Time { return clock }}
+	grid := func() *d2map.LevelMap {
+		return &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	}
+	lm := grid()
+	for i := 0; i < 5; i++ { // 5 observations 500 ms apart on one cell
+		clock = t0.Add(time.Duration(i) * 500 * time.Millisecond)
+		p.Observe(lm, "T", d2map.Point{X: 2, Y: 1})
+	}
+	p.AddEvent(EvKill, "x killed", false, nil)
+	p.AddDamage(20, "hurt")
+	pts, area := p.HeatOf()
+	if area != 1 || len(pts) != 1 || pts[0].Kills != 1 || pts[0].Dmg != 20 || pts[0].DwellS != 2 {
+		t.Fatalf("%+v", pts)
+	}
+	if pts[0].X != 0 || pts[0].Y != 0 {
+		t.Fatalf("cells are HeatCell-aligned: %+v", pts[0])
+	}
+	p.Observe(grid(), "T", d2map.Point{X: 2, Y: 1}) // a new level object is a new game
+	if pts, _ := p.HeatOf(); len(pts) != 0 {
+		t.Fatalf("heat of the area resets with its level object: %+v", pts)
+	}
+}
+
+func TestHeatCap(t *testing.T) {
+	var h Heat
+	for i := 0; i < MaxHeatCells+50; i++ {
+		h.cell(1, (i%100)*HeatCell, (i/100)*HeatCell).kills = 1
+	}
+	h.cell(1, 0, 0).kills = 99
+	got := h.Area(1)
+	if len(got) != MaxHeatCells || got[0].Kills != 99 {
+		t.Fatalf("the busiest cells survive the cap: %d", len(got))
+	}
+}
+
+func TestAddEventAtMergesRepeats(t *testing.T) {
+	clock := t0
+	p := &Publisher{now: func() time.Time { return clock }}
+	lm := &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	p.Observe(lm, "T", d2map.Point{X: 1, Y: 1})
+	p.AddEventAt(EvIgnore, "Ignoring Fallen", 3, 1, 90)
+	clock = t0.Add(time.Second)
+	p.AddEventAt(EvIgnore, "Ignoring Fallen", 3, 1, 90) // same place, within 5 s: merged
+	p.AddEventAt(EvRoamFail, "failed", 3, 1, 0)         // another kind: kept
+	evs := p.EventsOf()
+	if len(evs) != 2 || evs[0].X != 3 || evs[0].Secs != 90 {
+		t.Fatalf("%+v", evs)
+	}
+}

@@ -168,7 +168,14 @@ func (a invAdapter) RequestIdentify(id uint32) (any, error) {
 func (a invAdapter) RequestBuyID(n int) (any, error) { return a.d.RequestBuyID(n) }
 func (a invAdapter) RequestCain() (any, error)       { return a.d.RequestCain() }
 
+func (a invAdapter) RequestStash(id uint32) (any, error) { return a.d.RequestStash(id) }
+func (a invAdapter) RequestTake(id uint32) (any, error)  { return a.d.RequestTake(id) }
+func (a invAdapter) RequestGold(deposit bool, n int) (any, error) {
+	return a.d.RequestGold(deposit, n)
+}
+
 var _ watch.InvDesk = invAdapter{}
+var _ watch.InvStashDesk = invAdapter{}
 
 // invAPI is what newFun mounts: nil when there is no desk.
 func invAPI(d *invdesk.Desk) *watch.InvAPI {
