@@ -50,8 +50,6 @@ var prodTypes = map[string][]any{
 // key: Slot/Type/InterfaceSource -> reason.
 var absent = map[string]string{
 	"Town/mercTown/MercTown": "the merc policy wiring (merc.enabled=1, mercwire.go) replaces the legacy hire/revive chore",
-	"Loot/looterAdapter/lootMemory": "FIXED by agent/goldprio (#637, adapter forwards ObserveGround/WalkBack/ResetMemory); " +
-		"this entry goes stale when it merges",
 }
 
 type method struct {

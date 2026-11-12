@@ -14,13 +14,13 @@ The runner reaches many features through optional-interface type assertions on i
 | compile-time guards | `wiring_test.go` bottom | `senses.Publisher` as watch sources, `town.Town` as `invdesk.StashServices`, `LadderUnlocker` as Teaser and UnitGate. |
 | `go run ./tools/wiringaudit asserts\|knobs\|orphans` | `tools/wiringaudit` | Syntactic audit lists (comma-ok assertions, tuning fields never selected, funcs whose name has no non-test reference). Noisy by design: read it, do not gate on it. |
 
-Allowlist (`absent` in the test) holds the two intended gaps; a stale entry only logs.
+Allowlist (`absent` in the test) holds the one intended gap (legacy merc chore under the merc policy wiring, S: mercwire.go); a stale entry only logs.
 
 ## Findings
 
 | # | Gap | Cause | Status |
 |---|---|---|---|
-| 1 | Loot memory (`lootMemory`: ObserveGround, WalkBack, ResetMemory) | `looterAdapter` exposes only listed methods | FIXED by agent/goldprio (#637), not duplicated; test allowlists it until that merges |
+| 1 | Loot memory (`lootMemory`: ObserveGround, WalkBack, ResetMemory) | `looterAdapter` exposes only listed methods | FIXED by agent/goldprio (#637, merged), not duplicated; the matrix test covers it now |
 | 2 | `fighterAdapter` hid `SetPoverty` | named-field adapter | FIXED here: the poverty verdict now reaches combat (`resource.PreEngage`) |
 | 3 | `townAdapter` hid `ForgetBelt`, `PlannedSpend`, `UseWeapon`, `ReconcileMarks`, `MarkOf` | same | FIXED (`cmd/d2bot/townforward.go`). Effects that were off: belt-full memory kept across games, trip floor ignored planned spend, quest steps that swap a weapon failed "the town module cannot swap weapons", sell marks not reconciled after a restart |
 | 4 | `mercTown` (installed whenever `merc.enabled=1`, which production has) hid `BeltFiller`, `ForgetBelt`, `PlannedSpend`, `UseWeapon`, `ReconcileMarks`, `MarkOf` | embeds the `Townsman` interface | FIXED (forwards). V live-log: 0 `belt fill` lines in 75 min of the sandbox log while 135 `loot: potion skip` lines said potions were waiting in the pack |
@@ -38,7 +38,7 @@ Allowlist (`absent` in the test) holds the two intended gaps; a stale entry only
 | Feature | Shipped in | Production hook | Proof | Status |
 |---|---|---|---|---|
 | Recovery pickup, left-behind count, UnitEvaluator | loot, bot | `looterAdapter` methods, guards in behaviors.go | matrix test; V log `recovery: loot` 7, `loot:` summaries 44 | OK |
-| Loot memory walk-back | loot/memory.go | `Deps.Loot.(lootMemory)` | matrix test; V log 0 `loot_memory:` | FIXED elsewhere (goldprio) |
+| Loot memory walk-back | loot/memory.go | `Deps.Loot.(lootMemory)` | matrix test; V log 0 `loot_memory:` | FIXED (goldprio, merged) |
 | Roam coverage, NotePosition, TakePeakRung, TakeGateRefusals, CanTeleport, Coverage | nav, bot | `moverAdapter` embeds `*nav.Navigator` | matrix test; V log `roam: coverage points` 10, minute `explored` > 0 in 47 of 73 lines | OK |
 | `bot.exploredPct` early stop | bot/exploredpct.go | Mover.Coverage | knob default 100, V log 0 `explored enough` = no opportunity | OK (no opportunity) |
 | PackYield | bot, nav | `nv.Yield = packYield` (both paths) | `TestBuildD2DStackHookups`; V log `nav stalled by monsters, yielding` 70 | OK |
@@ -60,7 +60,7 @@ Allowlist (`absent` in the test) holds the two intended gaps; a stale entry only
 | Task deps (dialog, objects, cube, hire, claim, boss, farm, quests) | bot/task | `newTaskDeps`, `buildD2DStack` | `TestBuildD2DStackHookups` | OK on d2d; live path lacks ClaimMerc |
 | Self-update guards | selfupdate | `newUpdater` | S read | UNWIRED (finding 6) |
 | Hell rules | combat, resource | none | S doc | UNWIRED, dormant (finding 8) |
-| Gold ledger, loot gold priority | goldprio | not on main yet | n/a | pending #637 |
+| Gold ledger, loot gold priority | goldprio | not on main yet | n/a | merged (#637), not yet deployed |
 | Potion tracking (#601) | n/a | not found by name in this audit | U | not checked |
 | Clear-idle (`bot.clearIdleMin`) | bot | runner field | V log 0 lines, needs an idle leveling field: no opportunity | OK (U) |
 | Repair trip begin/done, farm-target reached | repair | `ref.rep` | needs a player repair request: V log 0 = no opportunity | OK (U) |
