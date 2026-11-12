@@ -220,10 +220,11 @@ func (d *Desk) SaveSet(name, target string) (GearSet, error) {
 	if len(gs.Slots) == 0 {
 		return GearSet{}, refuse("empty", "nothing is worn, so there is nothing to save")
 	}
+	limit := d.maxSets() // takes the lock itself
 	d.mu.Lock()
 	defer d.mu.Unlock()
-	if len(d.st.Sets) >= d.maxSets() {
-		return GearSet{}, refuse("full", "%d sets are saved: delete one first", d.maxSets())
+	if len(d.st.Sets) >= limit {
+		return GearSet{}, refuse("full", "%d sets are saved: delete one first", limit)
 	}
 	if d.nameTakenLocked(name, "") {
 		return GearSet{}, refuse("name", "a set called %q exists: pick another name", name)

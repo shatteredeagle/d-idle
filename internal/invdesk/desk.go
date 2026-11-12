@@ -978,6 +978,9 @@ type MercView struct {
 	Slots     []string             `json:"slots,omitempty"` // the slots this kind can use; the page greys the others
 	Equipment map[string]*ItemView `json:"equipment"`
 	Note      string               `json:"note,omitempty"`
+	// ActWhy (schema 7) is why a drop on his slots is refused now ("" = it is not): the bot has no executor for his gear
+	// yet, so today it is always set while he is employed.
+	ActWhy string `json:"actWhy,omitempty"`
 }
 
 // View reads the snapshot and decorates it. Without a snapshot the lists are empty and Note says so.
@@ -1105,6 +1108,9 @@ func (d *Desk) View() View {
 		}
 	}
 	v.Merc = mercView(data.Merc, decorate)
+	if v.Merc != nil && v.Merc.Owned {
+		v.Merc.ActWhy = d.mercWhy(data)
+	}
 	v.Sets = d.setsView()
 	for _, it := range data.Inventory {
 		iv := decorate(it, "pack")

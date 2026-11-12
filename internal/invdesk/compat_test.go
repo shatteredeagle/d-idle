@@ -106,6 +106,9 @@ func asSchema6(v View) View { v = strip7(v); v.Schema = 6; return v }
 // strip7 clears what schema 7 added to the view, so the older goldens keep proving that nothing else moved.
 func strip7(v View) View {
 	v.Sets = nil
+	if v.Merc != nil {
+		v.Merc.ActWhy = ""
+	}
 	for _, l := range [][]ItemView{v.Backpack, v.Stash, v.Belt, v.Cube} {
 		for i := range l {
 			l[i].NoWearSlot, l[i].NoUnequip = nil, ""
