@@ -1,10 +1,13 @@
 ---
 id: TASK-358
-title: 'lockfix: roam done() and NotePosition no longer nest covMu and obMu (sandbox deadlock)'
-status: Proposed
+title: >-
+  lockfix: roam done() and NotePosition no longer nest covMu and obMu (sandbox
+  deadlock)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T04:29:00Z'
+updated_date: '2026-11-12T04:45:00Z'
 labels:
   - bot
   - bug
