@@ -152,14 +152,12 @@ cmd/d2bot/sensesfeed_test.go  credit-runner  maptrail
 cmd/d2bot/senseshistory.go  credit-runner  maphistory
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistory
 cmd/d2firsthour/  live-agent  firsthour
-data/campaign/  credit-runner  campaign0
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/agents  credit-runner  contextdiet
 docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
-docs/campaign.md  credit-runner  campaign0
 docs/desktop-app.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronmac2
@@ -227,7 +225,6 @@ internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/yield.go  credit-runner  aggression2
 internal/bot/yield_test.go  credit-runner  aggression2
-internal/campaign/  credit-runner  campaign0
 internal/campaign/  credit-runner  campaign1
 internal/combat/castfirst.go  credit-runner  aggression2
 internal/combat/dodge.go  credit-runner  aggression2

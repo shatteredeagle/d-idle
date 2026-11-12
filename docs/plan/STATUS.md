@@ -114,7 +114,6 @@
 | potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
 | runstate | proposed | - | `internal/d2dinput/run.go` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
-| campaign0 | in-progress | - | `docs/campaign.md`<br>`data/campaign/`<br>`internal/campaign/` | - |
 | campaign1 | proposed | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/` | - |
 | campaign2 | proposed | - | `internal/watch/campaign.go`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/`<br>`internal/watch/web/panels/journey/` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
