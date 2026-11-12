@@ -434,6 +434,12 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | senses.tier | 1 | 0..1 | tier | 1 | 2 | Highest senses tier the watch screen shows beside the video (needs --watch). 1: the fogged map of the area and the hero (docs/senses-map.md). 0: no panel and no /api/senses. The panel only reads what the bot already knows; bot inputs are identical either way. TASK-148. |
+
+### invdesk.*
+
+| key | default | range | unit | worst (rookie) | readers | what it changes |
+|---|---|---|---|---|---|---|
+| invdesk.verbs | 0 | 0..1 | bool | 0 | 0 | 1: a player's equip command goes through the private fork's item verbs (the server's own item handlers) when the connected d2d advertises them in caps; the click path stays the fallback and the oracle. 0 (default): always the click path. Off until the user has seen it work live (docs/design/item-verbs.md). |
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)
