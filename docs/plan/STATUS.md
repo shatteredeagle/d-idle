@@ -125,6 +125,7 @@
 | campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
 | frienddrills | proposed | - | `docs/friend-drills.md`<br>`tools/friendpack/didle` | - |
 | frienddrills2 | proposed | - | `docs/friend-drills.md`<br>`cmd/didleboot` | - |
+| herounify | proposed | - | `internal/watch/web/panels/hero-vitals`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/web/layout.json`<br>`internal/watch/web/shell.json` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -180,6 +181,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 78090ba8 11-11 20:18 `Merge agent/herounify: TASK-346 herounify: one Hero tile (stats merged into the Hero card)` (herounify)
+- 25e3d70f 11-11 20:17 `Merge branch 'main' into herounify` (-)
 - 71de8e00 11-11 20:14 `Merge agent/frienddrills2: TASK-344 frienddrills2: live drills D3/D4/D7 with real game files pass (docs/friend-drills.md), shim refuses a second boot.pid owner (gate on worker host exit 0; stacked on agent/frienddrills #603)` (frienddrills2)
 - 29520e11 11-11 20:13 `Merge branch 'main' into frienddrills2` (-)
 - a5e4aa14 11-11 20:12 `Merge agent/prprep2: TASK-332 round 2: Lightning r3 and Cold r4 drafts, queue, scripts` (prprep2)
@@ -188,6 +191,4 @@
 - 45e40c4a 11-11 20:09 `Merge branch 'main' into frienddrills` (-)
 - 12450fd1 11-11 20:02 `Merge agent/potionfix: TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state` (potionfix)
 - 8688c065 11-11 20:01 `Merge branch 'main' into potionfix` (-)
-- dc51638e 11-11 20:00 `Merge agent/prverify2: TASK-345 upstream PR verification second pass` (prverify2)
-- fb4f84dc 11-11 20:00 `Merge agent/grillqueue: TASK-342 grill queue: paste-ready decisions and glossary text` (grillqueue)
 <!-- statusgen:end -->

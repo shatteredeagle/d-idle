@@ -435,12 +435,15 @@ internal/watch/web/inventory.js  credit-runner  artspeed2
 internal/watch/web/inventory.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  repairtrip
 internal/watch/web/layout.js  credit-runner  uifit
+internal/watch/web/layout.json  credit-runner  herounify
 internal/watch/web/layoutedit.js  credit-runner  uifit
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels  credit-runner  uifit
 internal/watch/web/panels/gear  credit-runner  repairtrip
+internal/watch/web/panels/hero-detail  credit-runner  herounify
 internal/watch/web/panels/hero-detail  credit-runner  xpreadout
+internal/watch/web/panels/hero-vitals  credit-runner  herounify
 internal/watch/web/panels/journey-chip/  credit-runner  campaign3
 internal/watch/web/panels/journey/  credit-runner  campaign3
 internal/watch/web/panels/map  credit-runner  maphistory
@@ -454,6 +457,7 @@ internal/watch/web/shell.css  credit-runner  uifit
 internal/watch/web/shell.js  credit-runner  minimapfix
 internal/watch/web/shell.js  credit-runner  uifit
 internal/watch/web/shell.json  credit-runner  campaign3
+internal/watch/web/shell.json  credit-runner  herounify
 internal/watch/web/shell.json  credit-runner  uifit
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  campaign3
