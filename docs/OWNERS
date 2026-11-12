@@ -213,7 +213,6 @@ docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  nopins
 docs/ui-design-system.md  credit-runner  uifit
-docs/viewer-fps.md  credit-runner  videoresume
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  repairtrip
@@ -295,7 +294,6 @@ internal/watch/bridge.go  credit-runner  xpreadout
 internal/watch/campaign.go  credit-runner  campaign2
 internal/watch/campaign_test.go  credit-runner  campaign2
 internal/watch/hero.go  credit-runner  xpreadout
-internal/watch/http_view.go  credit-runner  videoresume
 internal/watch/hub.go  credit-runner  xpreadout
 internal/watch/invapi.go  credit-runner  artspeed
 internal/watch/invapi_test.go  credit-runner  artspeed
@@ -329,16 +327,12 @@ internal/watch/testdata/itemtip/tip_dom.js  credit-runner  nopins
 internal/watch/testdata/map_panel.js  credit-runner  maphistory
 internal/watch/testdata/map_panel.js  credit-runner  maptrail
 internal/watch/testdata/map_panel.js  credit-runner  maptrail2
-internal/watch/testdata/panel_harness.js  credit-runner  videoresume
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail
 internal/watch/testdata/senses-coverage.json  credit-runner  maptrail2
 internal/watch/testdata/senses-trail.json  credit-runner  maphistory
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
 internal/watch/testdata/topband_dom.js  credit-runner  xpreadout
 internal/watch/testdata/topband_dom_hero-detail_*.txt  credit-runner  xpreadout
-internal/watch/testdata/video_panel.js  credit-runner  videoresume
-internal/watch/video.go  credit-runner  videoresume
-internal/watch/videoresume_test.go  credit-runner  videoresume
 internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory-actions.js  credit-runner  nopins
 internal/watch/web/inventory-tip.css  credit-runner  nopins
@@ -349,7 +343,6 @@ internal/watch/web/inventory.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  repairtrip
 internal/watch/web/layout.js  credit-runner  uifit
 internal/watch/web/layoutedit.js  credit-runner  uifit
-internal/watch/web/mjpeg.js  credit-runner  videoresume
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
 internal/watch/web/panels  credit-runner  uifit
@@ -359,7 +352,6 @@ internal/watch/web/panels/journey/  credit-runner  campaign2
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maptrail
 internal/watch/web/panels/map  credit-runner  maptrail2
-internal/watch/web/panels/video  credit-runner  videoresume
 internal/watch/web/shell.css  credit-runner  uifit
 internal/watch/web/shell.js  credit-runner  minimapfix
 internal/watch/web/shell.js  credit-runner  uifit
