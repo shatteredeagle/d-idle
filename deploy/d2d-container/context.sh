@@ -7,6 +7,7 @@
 # archives pinned by sha256 below. Nothing comes from a local build directory.
 # Env: FORK_URL=https://github.com/shatteredeagle/d2d-didle  (default) git URL or local path to take the d2d source from
 #      VENDOR_CACHE=dir  keep the downloaded archives between runs (default $TMPDIR/d2d-vendor-cache); every file is re-hashed
+#      APP_VERSION=x.y.z  stamp the Go binaries with that version (release builds; also pass --build-arg APP_VERSION to docker build)
 #      PREBUILT=path to a d2d binary: skip the source stage (build with --build-arg D2D_SRC=prebuilt)
 # The fork source stays in CTX (a build artifact); this repo never holds it (GPL, docs/d2d-container/licensing.md).
 # No *.mpq or Blizzard file may enter CTX: .dockerignore excludes them and the script fails if one is found.
@@ -45,7 +46,8 @@ cp "$repo/deploy/d2d-container/entrypoint.sh" "$ctx/entrypoint.sh"
 printf '*.mpq\n*.MPQ\n*.d2s\n*.exe\n.git\nvendor-archives\n' > "$ctx/.dockerignore"
 
 # our Go side (CGO off: static, runs on any libc)
-(cd "$repo" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath -o "$ctx/bin/" \
+# APP_VERSION=x.y.z stamps main.version, the base release the updater compares with (unstamped it reads "dev", which also turns the dev traces on)
+(cd "$repo" && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -trimpath ${APP_VERSION:+-ldflags "-X main.version=$APP_VERSION"} -o "$ctx/bin/" \
 	./cmd/d2bot ./cmd/d2dsoak ./cmd/d2dview ./cmd/d2dsetup ./cmd/didleboot ./deploy/d2d-container/d2dping)
 # trusted release public keys (*.pub, up to two: current and next; the private key is never in the repo)
 mkdir -p "$ctx/pubkeys"

@@ -15,6 +15,9 @@ card: "cut010"
 owns:
   - "docs/releases/0.1.0.md"
   - "docs/friend-checklist-0.1.0.md"
+  - "tools/friendpack/build.sh"
+  - "tools/friendpack/checklist.sh"
+  - "deploy/d2d-container/context.sh"
 exclusive:
   - "fork-branch:fork-only/icon-original"
 contracts: []
