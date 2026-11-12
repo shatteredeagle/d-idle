@@ -46,9 +46,11 @@
 | fid-poison-res-diag | proposed | - | `docs/research/fid-poisonres-trace.md` | - |
 | fid-fixtures | proposed | - | `docs/probes/test-characters.md` | - |
 | h1baseline | proposed | - | `docs/probes/h1-baseline.md` | - |
+| qdensity | proposed | - | `internal/decide/variants.go`<br>`internal/decide/variants_test.go`<br>`docs/t0-variants.md` | - |
 | returnmock | proposed | - | `docs/research/mocks/return.html`<br>`docs/research/return-screen.md` | - |
 | h3verdict | proposed | - | `docs/probes/h3-verdict.md` | - |
 | designbrief | proposed | - | `docs/research/design-brief-v1.md` | - |
+| qqueue | proposed | - | `internal/decide/queue.go`<br>`internal/decide/queue_test.go`<br>`docs/contracts/decision-queue.md` | - |
 | dietarchive | proposed | - | `docs/archive`<br>`docs/research/README.md` | - |
 | dietrule | proposed | - | `docs/backlog-howto.md` | - |
 | d2d-container-soak | deferred | d2d-container-soak | `docs/d2d-container-soak.md` | `soak-slot:1` |
@@ -82,43 +84,28 @@
 | awaydrill | proposed | - | `docs/away-drill.md` | - |
 | reconnectux | proposed | - | `docs/reconnect-ux.md`<br>`internal/watch` | - |
 | palprofile | deferred | - | `docs/sme/class-paladin.md`<br>`docs/sme/class-early-game.md`<br>`internal/combat/classdata` | - |
-| smepace | proposed | - | `docs/sme/pace-and-formulas.md` | - |
-| contextdiet | proposed | - | `docs/agents` | - |
-| lootskip | proposed | - | `internal/loot`<br>`docs/lootskip.md`<br>`internal/env/tuning_loot.go` | - |
 | testerdocs | deferred | - | `docs/tester-guide.md` | - |
 | pursuers | proposed | - | `internal/nav/pursuit.go`<br>`internal/nav/pursuit_test.go`<br>`docs/pursuers.md`<br>`internal/nav/walk.go`<br>`internal/nav/roam.go`<br>`internal/nav/explore.go`<br>`internal/nav/exit.go`<br>`internal/nav/nav.go`<br>`internal/env/tuning_nav.go`<br>`docs/knobs.md` | - |
 | minimapfix | proposed | - | `internal/watch/web/shell.js`<br>`internal/watch/minimapfix_test.go` | - |
-| artspeed | proposed | - | `internal/art`<br>`internal/watch/artapi.go`<br>`internal/watch/artapi_test.go`<br>`internal/watch/web/inventory.js`<br>`internal/data/invfiles.go`<br>`cmd/d2bot/artwire.go`<br>`cmd/d2bot/artcmd.go`<br>`docs/paperdoll-art-build.md`<br>`docs/dev-update.md`<br>`internal/data/invfiles_test.go`<br>`internal/watch/artembed_test.go`<br>`cmd/d2bot/artcmd_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/main.go`<br>`cmd/d2bot/invwire.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/desk_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/evaluatorfor_test.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go` | - |
 | testerreport | proposed | - | `deploy/d2d-container/tester-report.sh`<br>`docs/first-session.md` | - |
-| artspeed2 | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/testdata/inventory_dom.js` | - |
-| standstill | proposed | - | `internal/invdesk` | - |
 | testerlicence | in-progress | - | `docs/tester-licence.md` | - |
-| mercgear | proposed | - | `docs/research/merc-gear.md` | - |
-| electronapp | proposed | - | `apps/desktop-electron/`<br>`docs/desktop-electron.md`<br>`.github/workflows/desktop-electron.yml`<br>`docs/desktop-app.md` | - |
 | testerpack | proposed | - | `tools/tester-pack.sh`<br>`docs/tester-guide.md` | - |
-| electronmac2 | proposed | - | `apps/desktop-electron/`<br>`docs/desktop-electron.md` | - |
 | maptrail | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/nav/covview.go`<br>`internal/nav/covview_test.go`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/senses_stitch_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/watch/testdata/senses-coverage.json`<br>`internal/nav/roam.go`<br>`cmd/d2bot/sensesfeed.go`<br>`cmd/d2bot/sensesfeed_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | maptrail2 | proposed | - | `internal/senses/coverage.go`<br>`internal/senses/trail_test.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-coverage.json`<br>`docs/senses-map.md` | - |
 | m3-merc | deferred | m3-merc | `internal/merc/**`<br>`internal/bot/merc_test.go`<br>`docs/merc-d2d.md`<br>`docs/probes/merc/**` | `soak-slot:3` |
 | repairtrip | proposed | - | `docs/repair.md`<br>`docs/live-checks.md`<br>`internal/repair`<br>`internal/goldfarm`<br>`internal/bot/repairtrip.go`<br>`internal/bot/repairtrip_test.go`<br>`internal/bot/goal.go`<br>`internal/bot/goldfarm.go`<br>`internal/bot/runner.go`<br>`internal/bot/whyline.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`internal/town/repairtrip_test.go`<br>`internal/watch/repairapi.go`<br>`internal/watch/repairapi_test.go`<br>`internal/watch/web/panels/gear`<br>`internal/watch/web/inventory.js`<br>`internal/watch/web/gear.js`<br>`internal/watch/testdata/gear_repairtrip_dom.js`<br>`internal/watch/testdata/gear_repairtrip_dom.txt`<br>`internal/watch/testdata/gear_farm_dom.txt`<br>`internal/watch/testdata/compat`<br>`internal/watch/whyline.json`<br>`internal/watch/whyline_test.go`<br>`cmd/d2bot/repairwire.go`<br>`cmd/d2bot/goldfarmwire_test.go` | - |
-| aggression2 | proposed | - | `internal/combat/target.go`<br>`internal/combat/rank_shaman_test.go`<br>`docs/aggression.md`<br>`internal/bot/yield.go`<br>`internal/bot/yield_test.go`<br>`internal/combat/castfirst.go`<br>`internal/combat/dodge.go`<br>`internal/combat/dodge_test.go`<br>`internal/combat/fight.go`<br>`internal/nav/waypoint.go`<br>`internal/nav/pursuit_test.go` | - |
 | queuespeed | proposed | - | `docs/process/queuespeed.md` | - |
-| uifit | proposed | - | `internal/watch/web/layout.js`<br>`internal/watch/web/shell.js`<br>`internal/watch/web/shell.css`<br>`internal/watch/web/shell.json`<br>`internal/watch/web/layoutedit.js`<br>`internal/watch/web/panels`<br>`internal/watch/panels.go`<br>`internal/watch/layout.go`<br>`internal/watch/layout_test.go`<br>`internal/watch/testdata`<br>`tools/uilint`<br>`tools/uishots`<br>`docs/ui-design-system.md`<br>`backlog/merge-lines/agent-uifit.txt` | - |
-| fid-revive-mode | in-progress | - | `docs/probes/fid/fid-revive-mode.md` | - |
-| fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
-| fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
-| fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
-| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
-| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
-| runstate | proposed | - | `internal/d2dinput/run.go` | - |
+| maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
-| campaign0 | in-progress | - | `docs/campaign.md`<br>`data/campaign/`<br>`internal/campaign/` | - |
-| videoresume | proposed | - | `internal/watch/web/panels/video`<br>`internal/watch/testdata/video_panel.js`<br>`internal/watch/video.go`<br>`internal/watch/web/mjpeg.js`<br>`internal/watch/http_view.go`<br>`internal/watch/testdata/panel_harness.js`<br>`internal/watch/videoresume_test.go`<br>`docs/viewer-fps.md` | - |
-| campaign1 | proposed | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/` | - |
-| campaign2 | proposed | - | `internal/watch/campaign.go`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/`<br>`internal/watch/web/panels/journey/` | - |
+| maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
+| prprep | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r3`<br>`fork-branch:fid/cold-enchanted-length-r4`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
+| maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
+| campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
+| passagebounce | proposed | - | `internal/bot/loop.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/areaskip_test.go`<br>`docs/passagebounce.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -126,6 +113,7 @@
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
+| playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
 | statusrefresh | proposed | - | `docs/plan/STATUS.md` | - |
 | ordersux3 | deferred | - | `internal/watch/mapdata.go`<br>`internal/watch/web/**`<br>`docs/orders-slice3.md` | - |
@@ -174,14 +162,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- cb630bdc 11-11 15:30 `Merge agent/campaign0: TASK-335 campaign0: campaign spine data (data/campaign/normal.json), internal/campaign loader, readiness bands, next-chapter decision, docs/campaign.md (gate on worker host exit 0)` (campaign0)
-- 4aec356a 11-11 15:29 `Merge branch 'main' into campaign0` (-)
-- 88a8bd9a 11-11 15:25 `Merge agent/videoresume: TASK-336 videoresume: watch video recovers by itself (stall watchdog, backoff, hidden-tab pause, Retry, d2video hook), dead viewers freed by a per-part write deadline` (videoresume)
-- 69394eea 11-11 15:24 `Merge branch 'main' into videoresume` (-)
-- 201c990d 11-11 14:58 `Merge agent/decomp10: TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed)` (decomp10)
-- e4be4021 11-11 14:57 `Merge branch 'main' into decomp10` (-)
-- a9c8502d 11-11 14:49 `Merge agent/nopins: TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory` (nopins)
-- 2b66ad4a 11-11 14:48 `Merge branch 'main' into nopins` (-)
-- e75a9384 11-11 14:42 `Merge agent/playerprio: TASK-321 playerprio: player commands interrupt walks at a safe moment, behind safety` (playerprio)
-- 6530d54d 11-11 14:41 `Merge branch 'main' into playerprio` (-)
+- debde062 11-11 20:40 `Merge agent/driftfix: driftfix: backlog true-up of drift rows A/B/D` (driftfix)
+- f21d133b 11-11 20:40 `Merge branch 'main' into driftfix` (-)
+- 7b780252 11-11 20:38 `Merge agent/driftfix: sync main` (driftfix)
+- 27c1d008 11-11 20:33 `Merge agent/passagebounce: TASK-349 passagebounce: per-area arrival-bounce counter trips the escalating skip (Passage, Crypt, caves), arrival/bounce log lines` (passagebounce)
+- 45b69024 11-11 20:32 `Merge branch 'main' into passagebounce` (-)
+- a71be511 11-11 20:31 `Merge agent/branding: TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons` (branding)
+- 4913eeac 11-11 20:30 `Merge branch 'main' into branding` (-)
+- b9d88065 11-11 20:26 `Merge agent/legalfollow: TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers` (legalfollow)
+- 36c31d1c 11-11 20:26 `Merge branch 'main' into legalfollow` (-)
+- 78090ba8 11-11 20:18 `Merge agent/herounify: TASK-346 herounify: one Hero tile (stats merged into the Hero card)` (herounify)
 <!-- statusgen:end -->

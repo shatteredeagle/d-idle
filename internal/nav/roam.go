@@ -319,14 +319,27 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 			held, legs := c.held, c.legs
 			n.covMu.Unlock()
 			n.log.Debug("roam: held by the mouth gate, ending the episode", "to", target, "held", held, "legs", legs)
+			n.noteFail("gatehold", "Roam leg held by the mouth gate", target.X, target.Y)
 			return fmt.Errorf("%w: roam held by the mouth gate at %v", ErrRoamHeld, o.pos)
 		case errors.Is(err, ErrStuck), errors.Is(err, ErrNoPath), errors.Is(err, ErrTimeout):
 			c.failed[pick] = true
 			n.covMu.Unlock()
 			n.log.Info("roam leg failed", "to", target, "err", err)
+			n.noteFail("roamfail", "Roam leg failed: "+err.Error(), target.X, target.Y)
 		default:
 			n.covMu.Unlock()
 			return err
 		}
 	}
 }
+
+// OnFailure, when set, is told of roam legs that failed or were held by the mouth gate (the watch minimap's failure
+// markers). Passive: it runs on the navigator's goroutine and must not block or call back into the navigator.
+func (n *Navigator) noteFail(kind, text string, x, y int) {
+	if n.OnFailure != nil {
+		n.OnFailure(kind, text, x, y)
+	}
+}
+
+// SetOnFailure installs OnFailure (a method so wiring can reach it through an interface).
+func (n *Navigator) SetOnFailure(fn func(kind, text string, x, y int)) { n.OnFailure = fn }

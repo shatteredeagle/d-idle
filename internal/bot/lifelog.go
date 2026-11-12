@@ -1,6 +1,9 @@
 package bot
 
 import (
+	"time"
+
+	"d2lod-bot/internal/input"
 	"fmt"
 
 	"d2lod-bot/internal/d2"
@@ -32,4 +35,27 @@ func (r *Runner) zoneEntry(s *d2.Snapshot, p *d2.Player) {
 	k := r.kitOf(s)
 	r.e.Log.Info("zone entry", "area", p.Area, "clvl", p.Level, "life", fmt.Sprintf("%d/%d", p.Life, p.MaxLife),
 		"heal", k.BeltHP+k.PackHP, "mana", fmt.Sprintf("%d/%d", p.Mana, p.MaxMana), "tome", k.TownPortals, "merc", mercWord(s))
+}
+
+// arrival is how the character came into the current area.
+type arrival struct {
+	from int
+	at   time.Time
+	pos  input.Point
+}
+
+// noteArrival runs at an area change, before o.area moves on. It logs where the character stands on arrival and, when
+// the stay in the area it is leaving was a bounce (straight back where it came from within bounceMaxStay, neither side a
+// town), says so with the position it left from and counts it (noteBounceLocked).
+func (r *Runner) noteArrival(o *observer, p *d2.Player, now time.Time) {
+	prev := o.arrived
+	if o.area != 0 && !prev.at.IsZero() && p.Area == prev.from && !r.d.Plan.IsTown(o.area) && !r.d.Plan.IsTown(p.Area) {
+		if stay := now.Sub(prev.at); stay < bounceMaxStay {
+			r.e.Log.Info("arrival bounce", "area", o.area, "name", r.areaName(o.area), "back", p.Area,
+				"stayMs", stay.Milliseconds(), "arrivedAt", prev.pos, "leftFrom", o.pos)
+			r.noteBounceLocked(o.area, now)
+		}
+	}
+	o.arrived = arrival{from: o.area, at: now, pos: input.Point{X: p.X, Y: p.Y}}
+	r.e.Log.Info("arrival", "area", p.Area, "from", o.area, "x", p.X, "y", p.Y)
 }

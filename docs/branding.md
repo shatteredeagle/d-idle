@@ -2,6 +2,44 @@
 
 > status: DECIDED. The user chose the cursor concept on 2026-11-01 ("brand: cursor"). The final set is in `assets/branding/final/` (cards `brand`, `brandfinal`). Nothing is applied to any public surface yet: see the checklist. The ready-to-apply in-repo set is on branch `agent/brandapply` (card `brandapply`), not merged.
 
+> status update 2026-11-11 (TASK-347): the app and repo icons, favicon, README banner and social card are now the ORIGINAL PIXEL-ART set below, made with Aseprite; the vector "cursor" set further down is kept as archive and is no longer used by the Electron app, the watch favicon or the README.
+
+# Pixel-art brand set (current)
+
+Mark: a small gold diamond (the d.idle header glyph) with a dark hourglass cut into it (idle = waiting), on a rounded stone plate. Wordmark: lowercase `d.idle` in a hand-drawn 5x7 pixel font (a 3x5 font for the tagline); both fonts are drawn as strings in the script, no licensed font. No game art or likeness, no third-party artwork.
+
+Palette: 15 colours plus transparent, `assets/branding/palettes/didle.gpl` (GIMP format, loads in Aseprite), every colour taken from `internal/watch/web/tokens.css` (stone ramp for the plate, gold ramp for the gem). Every opaque pixel of every output uses only these colours (`pack.py --check` fails otherwise).
+
+## Files
+
+| Path | What |
+|---|---|
+| `assets/branding/src/didle.lua` | the whole set, drawn in code; run by Aseprite in batch mode |
+| `assets/branding/src/*.aseprite` | editable sources written by the script (mark16/32/64/256, template16, banner, card, hero) |
+| `assets/branding/out/png/` | icon-16/32/48/64 drawn natively; icon-128/256/512 nearest-neighbour upscales of the 64 master; `icon-256-native.png` drawn on the 256 grid; `template-16/22/32/44.png` (black on transparent, for macOS `Template` images); `banner-1280x320.png` (320x80 at 4x), `card-1200x630.png` (240x126 at 5x), `hero-1120x135.png` |
+| `assets/branding/out/` | `favicon.ico` (16/32/48), `favicon-32.png`, `icon.ico` (16 to 256), `icon.icns` (PNG chunks 16 to 512, written by `tools/branding/pack.py`), the banner and the card |
+| `assets/branding/out/electron/` | `icon.png` (512), `icon.ico`, `icon.icns`, `tray.png`, `trayTemplate.png` (22), `trayTemplate` at double size, the name carrying the at-sign 2x suffix (44); `npm run icons` in `apps/desktop-electron` copies them to `build/` |
+| `assets/branding/out/d2d/` | for the d2d fork patch: `d2d.png` (256, launcher window icon), `d2d.bmp` (64x64, 32-bit BMP v4 with alpha, what `SDL_LoadBMP` embeds), `d2d.ico`, `d2d.icns`, `hero.png` (1120x135 launcher banner) |
+
+The watch UI favicon is the 32 px PNG inlined as a data URI in `internal/watch/web/watch.html`. d2d fork mapping (V: read in the fork, not changed): copy `out/d2d/*` over the fork's `assets/icon/` of the same names (`d2d.rc`, `CMakeLists.txt` and `window.cpp` need no change; `d2d.bmp` is baked at configure, so re-run `cmake -S . -B build`); the Steam library art (`steam-*.png`) is not replaced here, and the fork's `assets/icon/README.md` credits Freepik for `d2d.svg`, which that patch should drop.
+
+## Regenerate
+
+```
+labrun <worker host> -- tools/branding/build.sh      # Aseprite (Steam copy, command line only) + pack + check; then copy assets/branding/{out,src,palettes} back
+node apps/desktop-electron/scripts/make-icons.js
+```
+
+`build.sh` runs `aseprite -b --script-param out=... --script-param src=... --script-param pal=... --script assets/branding/src/didle.lua` (the `--script-param` flags must precede `--script`), then `pack.py` (ico, icns, bmp, per-consumer folders; stdlib Python) and `pack.py --check` (sizes, 15-colour limit, no partial alpha, template images pure black, expected files present). Preview the small sizes: `python3 -I tools/branding/pack.py --preview assets/branding/out sheet.png`.
+
+## Licence
+
+The artwork in `assets/branding/` (script, sources, outputs, palette) is original work of the project, released under CC0 1.0 (public domain dedication) so anyone may reuse it; the generation scripts are GPL-3.0-or-later like the rest of the repo. Nothing in it derives from Aseprite's or any third party's artwork (Aseprite is used only as the drawing tool). [U: licence choice made by the branding agent; the owner confirms.]
+
+---
+
+# Earlier vector set (archive)
+
 The name is always written with a lowercase d: **d.idle**, never "D.idle". The repo is `d2lod-bot`, the public repo `d-idle`.
 
 ## Decision

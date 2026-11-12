@@ -1,11 +1,11 @@
 ---
 id: TASK-43
 title: 'playsession: one command for a LAN play session'
-status: Done
+status: Proposed
 assignee:
   - credit-runner
 created_date: '2026-11-06T16:02:00Z'
-updated_date: '2026-11-10T16:54:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - ops
   - feature
@@ -44,4 +44,6 @@ Done when: tools/play-session.sh: one command; prints the watch URL and token fi
 
 <!-- SECTION:NOTES:BEGIN -->
 Closed as superseded in the 2026-11-10 true-up: folded into the sessions card (see TASK-246).
+
+Driftfix 2026-11-11: reopened; Done had open offline boxes that no live-check row covers and the card result does not show them built.
 <!-- SECTION:NOTES:END -->

@@ -41,6 +41,9 @@
   .inv-errands .err-n { box-sizing: border-box; inline-size: 5rem; min-block-size: 2.5rem; padding: 0 var(--d-sp-2); font: inherit; color: var(--d-text);
     background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line); border-radius: var(--d-r-1); }
   .inv-errands .err-n:focus-visible { outline: 2px solid var(--d-focus); outline-offset: 2px; }
+  .inv-errands.inv-stashgold:not([hidden]) { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-2); }
+  .inv-errands.inv-stashgold .err-hint { flex-basis: 100%; }
+  [data-pending] { outline: 2px dashed var(--d-focus); outline-offset: -2px; }
   .inv-errands .err-cain { display: grid; justify-items: start; gap: var(--d-sp-1); padding: var(--d-sp-2); }
   .inv-errands .err-hint, .inv-errands .err-note { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-0); overflow-wrap: anywhere; }
   .inv-errands .err-cain.d-locked .err-hint { color: var(--d-text-3); }

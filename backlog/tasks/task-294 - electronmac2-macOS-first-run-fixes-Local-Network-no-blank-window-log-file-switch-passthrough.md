@@ -1,10 +1,13 @@
 ---
 id: TASK-294
-title: 'electronmac2: macOS first-run fixes (Local Network, no blank window, log file, switch passthrough)'
-status: Proposed
+title: >-
+  electronmac2: macOS first-run fixes (Local Network, no blank window, log file,
+  switch passthrough)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T02:24:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - watch
   - bug

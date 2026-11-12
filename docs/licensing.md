@@ -19,4 +19,4 @@ d2lod-bot is free software under the GNU General Public License, version 3 or (a
 ## Open questions (for the user)
 
 * Answered (user, 2026-10-30, ADR 0010 addendum): the lockstep patches stay in the private downstream fork until upstream wants them (then an opt-in PR); the repo is going public soon (readiness audit: docs/research/public-readiness-audit.md).
-* Tyniann licence text is still unverified (THIRD_PARTY.md).
+* Tyniann licence text verified 2026-11-11 (THIRD_PARTY.md): view/fork/study/short quotes allowed, no product redistribution; we take ideas only.
