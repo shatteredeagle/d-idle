@@ -374,6 +374,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [geninv.md](geninv.md): Run invariants and holdout seeds (card gen-invariants, 2026-10-31) (status: current. Code: `internal/d2dsoakstat/invariants.go`, `invreport.go`; spec: soak-gates (Per-seed...)
 - [goldfarm.md](goldfarm.md): Farm gold (the player's order; fix for the poverty loop) (status: built and tested offline (fixtures, stub DOM). Nothing ran live. Tags: V proven by a test named here, S...)
 - [goldfloor.md](goldfloor.md): Gold floor: where gold comes from and goes (agent GOLDFLOOR, 2026-10-31) (status: analysis, read-only on the soaks. Card: `openspec/changes/goldfloor` (proposed). Tags: V = read from the...)
+- [goldprio.md](goldprio.md): Gold priority (TASK-377) (status: current. Code: `internal/loot/goldprio.go`, `internal/bot/goldprio.go`, hook in `internal/combat/fight.go`...)
 - [hall-of-fame.md](hall-of-fame.md): Hall of Fame and the retire question (TASK-135) (status: built offline (fixtures and fakes). Nothing here is verified against a live game. Ledger and UI only: no...)
 - [heldlog.md](heldlog.md): Held-for-Andariel log line
 - [hirefixlive.md](hirefixlive.md): hirefixlive: PaidHire follows the real menu flow (offline, 2026-11-04) (status: current. Tags: V = verified, S = secondary, U = unverified. Not run live: this change is offline only.)

@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"time"
 
+	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/input"
 )
 
@@ -65,6 +66,10 @@ type ClearOpts struct {
 	Timeout time.Duration // 0 = tuning default
 	// Yield marks a call from a walk stalled by monsters: earlier ignore decisions are not applied, the nearest hostile is fought.
 	Yield bool
+	// Interlude, when set, is called once per fight tick after survival and before a target is chosen, with the
+	// distance of the nearest hostile and the pack danger. true means it acted (the snapshot is stale). The bot uses
+	// it for the gold grab (docs/goldprio.md); it must decide quickly and never leave the fight stuck.
+	Interlude func(ctx context.Context, snap *d2.Snapshot, nearest float64, danger int) bool
 }
 
 // ClearResult reports what a Clear (or Kill) did.
