@@ -114,6 +114,8 @@
 | skilltrees2 | proposed | - | `internal/skilltree`<br>`internal/watch/web/skills.js`<br>`internal/watch/web/skills.css`<br>`internal/watch/skillsapi_test.go`<br>`internal/watch/testdata/skills_paladin.json`<br>`internal/watch/testdata/skills_sorceress.json`<br>`docs/skilltrees.md` | - |
 | cut010b | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md`<br>`tools/friendpack/checklist.sh` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
+| cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
+| cut010c | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md`<br>`tools/release/app-assets.sh` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
@@ -168,6 +170,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ae36367f 11-12 09:48 `Merge agent/cut010c: 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361)` (cut010c)
+- af6a4753 11-12 09:45 `Merge origin/main into cut010c` (-)
 - f196438a 11-12 09:22 `Merge agent/cut010b: friends release 0.1.0 re-cut after the lock fix: new pack, checklist record, UPDATE_FEED set (TASK-359)` (cut010b)
 - fe4d3f6a 11-11 23:47 `Merge agent/cut010: first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356)` (cut010)
 - 664ac37b 11-11 23:47 `Merge branch 'main' into cut010` (-)
@@ -176,6 +180,4 @@
 - a2564e6e 11-11 22:28 `Merge agent/skilltrees: Skills page: read-only class skill trees, tooltips, points, 501 allocate stub (TASK-355)` (skilltrees)
 - e1282ce2 11-11 22:27 `Merge branch 'main' into skilltrees` (-)
 - 483ab935 11-11 22:22 `Merge origin/main into skilltrees` (-)
-- 1232109a 11-11 22:16 `Merge agent/exploredpct: bot.exploredPct knob + explored share in watch UI (TASK-354)` (exploredpct)
-- dc1a4917 11-11 22:15 `Merge branch 'main' into exploredpct` (-)
 <!-- statusgen:end -->
