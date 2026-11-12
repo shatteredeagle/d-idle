@@ -3,9 +3,11 @@ package combat
 import (
 	"context"
 	"errors"
+	"strconv"
 	"time"
 
 	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 )
 
@@ -109,6 +111,8 @@ func (f *Fighter) drinkFromPack(ctx context.Context, snap *d2.Snapshot, kind Pot
 				f.heal = f.heal.drink(f.now(), f.cat.Item(it.Class).Tier, snap.Player.Class)
 			}
 			f.info("potion: pack drink", "kind", kind.String(), "tier", f.cat.Item(it.Class).Tier, "life", snap.Player.Life, "max", snap.Player.MaxLife)
+			f.emit(goals.Event{Type: goals.EvPotion, Potion: kind.String(),
+				Message: "Drank a " + kind.String() + " potion from the pack at " + strconv.Itoa(pct(snap.Player.Life, snap.Player.MaxLife)) + "% life"})
 			return nil
 		}
 	}
