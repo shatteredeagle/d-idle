@@ -1139,3 +1139,10 @@ func howSuffix(how string) string {
 	}
 	return " (how=" + how + ")"
 }
+
+// HasTidy reports whether the tidy tooltip source is installed (the wiring test in cmd/d2bot reads it).
+func (d *Desk) HasTidy() bool {
+	d.mu.Lock()
+	defer d.mu.Unlock()
+	return d.c.TidyFor != nil
+}

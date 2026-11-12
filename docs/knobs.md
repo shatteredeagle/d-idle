@@ -162,6 +162,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.greetingSkip | 0 | 0..3 | mode | 3 | 2 | How the first-contact greeting is skipped when the menu is not open 1 s after the click: 0 wait it out (greetingWaitS), 1 click the NPC again, 2 Esc then click again, 3 left click on the NPC tile without hover. docs/npc-skip.md. |
 | town.futileGoldStep | 100 | 0..5000 | gold | 5000 | 4 | After a town visit could not fix a trip reason, do not ask again until gold grew by this. |
 | town.futileMinutes | 10 | 0..120 | min | 120 | 3 | A trip reason a visit left unfixed is not raised again for this long. |
+| town.tidyEnabled | 1 | 0..1 | 0/1 | 1 | 2 | 1: the Tidy chore stashes by the tidy policy table and drops pure junk from a full pack; it never touches equipment or marked items (docs/tidy.md). |
+| town.tidyMaxActions | 12 | 1..40 | count | 40 | 1 | Most stash and drop actions of one tidy pass (safety valve). |
+| town.tidyMinPackPct | 60 | 20..100 | % | 100 | 1 | A tidy pass drops junk only when the backpack is at least this full. |
 | town.spareKeep | 4 | 0..30 | count | 0 | 1 | A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted). |
 | town.sellMaxS | 60 | 15..300 | s | 15 | 2 | Time the sell chore alone may take before it is cut off. |
 | town.potionsFirst | 1 | 0..1 | bool | 0 | 2 | 1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old). |
