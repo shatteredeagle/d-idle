@@ -304,11 +304,14 @@ func (n *Navigator) roam(ctx context.Context, done func() bool) error {
 		}
 		err = n.walk(ctx, func(*obs) (input.Point, float64, error) { return target, 3, nil },
 			walkOpts{stopWhen: stop, timeout: 90 * time.Second, pursuit: true})
+		// done is a bot callback (it reads the bot's snapshot under obMu, which the observer holds while it calls
+		// NotePosition): never call it with covMu held (deadlock found 2026-11-11). Lock order: covMu is a leaf.
+		legDone := err == nil && done()
 		n.covMu.Lock()
 		c.hasTgt = false
 		switch {
 		case err == nil:
-			if !done() {
+			if !legDone {
 				c.seen[pick] = true
 			}
 			n.covMu.Unlock()
