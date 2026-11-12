@@ -76,6 +76,10 @@ var toCombat = map[bot.SafetyAction]combat.SafetyAction{
 func (a fighterAdapter) LastPortalCast() combat.PortalCast              { return a.f.LastPortalCast() }
 func (a fighterAdapter) RecentCasts(w time.Duration) (int, map[int]int) { return a.f.RecentCasts(w) }
 
+// SetPoverty hands the poverty verdict to combat's engage decision (bot.povertySetter); the wrapper hid it, so a
+// potion-less character never skipped the packs it cannot afford (docs/wiring.md).
+func (a fighterAdapter) SetPoverty(poor bool, maxPackDanger int) { a.f.SetPoverty(poor, maxPackDanger) }
+
 // SetWalking tells the fighter the bot is on a travel or quest walk (the crowd-abandon rule applies to walks).
 func (a fighterAdapter) SetWalking(on bool) { a.f.SetWalking(on) }
 

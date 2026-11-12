@@ -3,6 +3,7 @@ package d2dinput
 import (
 	"context"
 	"errors"
+	"fmt"
 	"math"
 	"reflect"
 	"strings"
@@ -42,7 +43,7 @@ func rig(t *testing.T, fix fake.Fixtures) (*Controller, *fake.Server) {
 
 // Each case: one call, the exact lines the channel must see (priming click and "debug level" included).
 func TestVerbLines(t *testing.T) {
-	prime := []string{"debug level", "click 494 340"}
+	prime := []string{"debug level", "debug warps", "click 494 340"}
 	cases := []struct {
 		name string
 		call func(c *Controller) error
@@ -73,7 +74,7 @@ func TestVerbLines(t *testing.T) {
 			[]string{"cmd skill 54 32.1 14.1 5"}},
 		{"interact npc", func(c *Controller) error {
 			return c.Interact(input.Target{Type: 1, ID: d2dsrc.NPCIDBase + 3})
-		}, []string{"debug level", "click 400 300", "cmd interact 3"}},
+		}, []string{"debug level", "debug warps", "click 400 300", "cmd interact 3"}},
 		{"interact item", func(c *Controller) error { return c.Interact(input.Target{Type: 4, ID: 17}) }, []string{"cmd pickup 17"}},
 		{"interact monster", func(c *Controller) error {
 			return c.Interact(input.Target{Type: 1, ID: 5, Pos: input.Point{X: 65, Y: 147}})
@@ -271,5 +272,75 @@ func TestKickAvoidsThePlayersFeet(t *testing.T) {
 	}
 	if _, _, ok := c.kickToward(30.7, 13.7, 30.7, 13.7); ok {
 		t.Fatal("a target on the player must fall back to the default click")
+	}
+}
+
+// bounce3 (docs/bounce3.md): the arrival geometry of the repro (tools/bounce3/repro.sh, Cave Level 1 -> Cold Plains,
+// seed 3, V): the hero lands 0.63 cells from the return warp (cell 43,20). The old placement (kickReach pixels toward
+// a target 4 cells straight away) clicked 1.68 cells from the warp centre, inside d2d's take radius: the hero went
+// straight back. The kick must land outside warpTakeR+kickWarpMargin of every warp, with or without a target.
+func TestKickLeavesTheReturnWarpAlone(t *testing.T) {
+	c := New(nil)
+	px, py := 44.1, 20.3
+	warps := []d2dctl.Warp{{X: 43, Y: 20, To: 9}, {X: 80, Y: 70, To: 4}}
+	cell := func(x, y int) (float64, float64) {
+		wx, wy := c.X.ScreenToWorldF([2]float64{px * 5, py * 5}, float64(x), float64(y))
+		return wx / 5, wy / 5
+	}
+	warpDist := func(x, y int) float64 {
+		cx, cy := cell(x, y)
+		return math.Hypot(43.5-cx, 20.5-cy)
+	}
+	ax, ay := px-43.5, py-20.5
+	d := math.Hypot(ax, ay)
+	to := [2]float64{px + ax/d*4, py + ay/d*4}
+	// The old rule, kept as the regression's witness: kickReach toward the target.
+	sx, sy := c.X.WorldToScreenF([2]float64{px * 5, py * 5}, to[0]*5, to[1]*5)
+	k := math.Hypot(sx-c.X.PlayerX, sy-c.X.PlayerY)
+	ox, oy := int(c.X.PlayerX+(sx-c.X.PlayerX)/k*kickReach), int(c.X.PlayerY+(sy-c.X.PlayerY)/k*kickReach)
+	if wd := warpDist(ox, oy); wd >= warpTakeR {
+		t.Fatalf("witness: the old kick lands %.2f cells from the warp; the repro had it inside %v", wd, warpTakeR)
+	}
+	targets := []*[2]float64{&to, nil, {43.5, 20.5}, {px + 4, py}, {px, py - 4}, {px - 3, py + 3}}
+	for _, tg := range targets {
+		x, y, wd, ok := c.kickSafe(px, py, tg, warps)
+		if !ok {
+			t.Fatalf("target %v: no kick", tg)
+		}
+		if got := warpDist(x, y); got < warpTakeR+kickWarpMargin || math.Abs(got-wd) > 0.05 {
+			t.Fatalf("target %v: kick (%d,%d) %.2f cells from the warp (reported %.2f)", tg, x, y, got, wd)
+		}
+		if y >= c.X.PanelTop || x < 0 || x >= c.X.ViewW {
+			t.Fatalf("target %v: kick (%d,%d) outside the play area", tg, x, y)
+		}
+	}
+	if c.feetSafe(px, py, warps) {
+		t.Fatal("the feet of a fresh arrival are inside the return warp's radius")
+	}
+	if !c.feetSafe(px, py, warps[1:]) {
+		t.Fatal("feet far from every warp must keep the default click")
+	}
+}
+
+// The priming click of a level change goes through "debug warps" and lands clear of the warp the hero stands by.
+func TestPrimeAsksForWarps(t *testing.T) {
+	fix := fake.Sample()
+	fix.Level = "3 44.10 20.30 80 80 0 0"
+	fix.Warps = []string{"0\t43.0\t20.0\t9"}
+	c, srv := rig(t, fix)
+	if err := c.InteractNPC(2); err != nil {
+		t.Fatal(err)
+	}
+	ls := srv.Lines()
+	if len(ls) != 4 || ls[1] != "debug warps" || !strings.HasPrefix(ls[2], "click ") || ls[3] != "cmd interact 2" {
+		t.Fatalf("lines %q", ls)
+	}
+	var x, y int
+	if _, err := fmt.Sscanf(ls[2], "click %d %d", &x, &y); err != nil {
+		t.Fatal(err)
+	}
+	wx, wy := c.X.ScreenToWorldF([2]float64{44.1 * 5, 20.3 * 5}, float64(x), float64(y))
+	if d := math.Hypot(43.5-wx/5, 20.5-wy/5); d < warpTakeR+kickWarpMargin {
+		t.Fatalf("kick %q lands %.2f cells from the warp", ls[2], d)
 	}
 }

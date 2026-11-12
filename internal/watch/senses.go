@@ -66,6 +66,7 @@ type SenseCoverage struct {
 	State  string   `json:"state"`
 	Legs   int      `json:"legs"`
 	Held   int      `json:"held,omitempty"`
+	Hidden int      `json:"hidden,omitempty"` // points withheld: not explored yet (docs/mapfog.md)
 }
 
 // SenseTrailPoint is one trail sample: AgoMS is its age at the reply's Ts, E marks the entry into the area.
@@ -287,7 +288,7 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 		r.Hero = &h
 		if cs, ok := s.Src.(CoverageSource); ok {
 			if c, ok := cs.CoverageOf(); ok {
-				sc := &SenseCoverage{Area: c.Area, Cell: c.Cell, Cover: c.Cover, Cells: c.Cells, Total: c.Total, Drawn: c.Drawn, Seen: c.Seen, Failed: c.Failed, State: "roaming", Legs: c.Legs, Held: c.Held}
+				sc := &SenseCoverage{Area: c.Area, Cell: c.Cell, Cover: c.Cover, Cells: c.Cells, Total: c.Total, Drawn: c.Drawn, Seen: c.Seen, Failed: c.Failed, State: "roaming", Legs: c.Legs, Held: c.Held, Hidden: c.Hidden}
 				if c.Explored {
 					sc.State = "explored"
 				}

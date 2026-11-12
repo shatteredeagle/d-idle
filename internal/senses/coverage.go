@@ -29,6 +29,7 @@ type Coverage struct {
 	Explored bool
 	Legs     int
 	Held     int
+	Hidden   int // points withheld because the hero has not explored them yet (docs/mapfog.md)
 }
 
 // SetCoverage stores the latest coverage; a zero Cells list clears it. Called from the nav goroutine at about 2 Hz.
@@ -59,12 +60,32 @@ func (p *Publisher) SetCoverage(c Coverage) {
 	p.cover = c
 }
 
-// CoverageOf returns the coverage when it belongs to the area the hero is in now.
+// CoverageOf returns the coverage when it belongs to the area the hero is in now. Points (and the target) in blocks
+// the hero has not explored yet are withheld, so the roam grid never shows where unexplored ground is; Seen, Failed
+// and Total still count every point (aggregates only), Hidden says how many were withheld.
 func (p *Publisher) CoverageOf() (Coverage, bool) {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	if !p.have || len(p.cover.Cells) == 0 || p.cover.Area != p.areaNo {
 		return Coverage{}, false
 	}
-	return p.cover, true
+	c := p.cover
+	c.Cells = make([][3]int, 0, len(p.cover.Cells))
+	for _, q := range p.cover.Cells {
+		if p.revealedLocked(p.areaNo, q[0], q[1]) {
+			c.Cells = append(c.Cells, q)
+		}
+	}
+	c.Hidden = len(p.cover.Cells) - len(c.Cells)
+	c.Drawn = len(c.Cells)
+	if c.Target != nil && !p.revealedLocked(p.areaNo, c.Target.X, c.Target.Y) {
+		c.Target = nil
+	}
+	return c, true
+}
+
+// revealedLocked reports whether the hero has explored the fog block holding (x, y) of an area. Holding p.mu.
+func (p *Publisher) revealedLocked(area, x, y int) bool {
+	_, ok := p.seen[area][block{int32(floorDiv(x)), int32(floorDiv(y))}]
+	return ok
 }

@@ -140,6 +140,7 @@ func buildBehaviors(ctx context.Context, e *env.Env, o options, gameDir string, 
 		bh.Quester = questAdapter{t: tw, e: e}
 	}
 	wireInv(ref, tw, lt, lv, db)
+	wireSets(ref, e)
 	return bh, nil
 }
 

@@ -1,0 +1,46 @@
+/* Gear sets panel and the drag and drop of the inventory page (inventory-sets.js, inventory-drag.js, docs/gearsets.md).
+   Tokens only; no media query: the rows wrap by themselves. The drop colours are data-drop (a slot or grid a held item
+   may or may not go to) and data-over (the one under the pointer), set by the script from the server's own rule. */
+@layer components {
+  .inv-sets { margin-block-start: var(--d-sp-3); display: grid; gap: var(--d-sp-2); }
+  .inv-sets[hidden] { display: none; }
+  .inv-sets p { margin: 0; }
+  .sets-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--d-sp-2); }
+  .sets-title h3 { margin: 0; font: 600 var(--d-fs-3)/var(--d-lh-tight) var(--d-font-display); }
+  .sets-save { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-2); }
+  .sets-lab { color: var(--d-text-2); font-size: var(--d-fs-0); }
+  .sets-name { box-sizing: border-box; inline-size: 12rem; max-inline-size: 100%; min-block-size: 2.5rem; padding: 0 var(--d-sp-2); font: inherit; color: var(--d-text);
+    background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line); border-radius: var(--d-r-1); }
+  .sets-name:focus-visible { outline: 2px solid var(--d-focus); outline-offset: 2px; }
+  .sets-list, .sets-rows, .sets-steps { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--d-sp-2); }
+  .sets-steps { list-style: decimal inside; gap: var(--d-sp-1); font-size: var(--d-fs-0); }
+  .sets-set { display: grid; gap: var(--d-sp-1); padding: var(--d-sp-2); background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line); border-radius: var(--d-r-2); }
+  .sets-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--d-sp-1) var(--d-sp-3); }
+  .sets-head .nm { font-weight: 600; }
+  .sets-items { font-size: var(--d-fs-0); overflow-wrap: anywhere; }
+  .sets-preview { display: grid; gap: var(--d-sp-2); padding-block-start: var(--d-sp-2); border-block-start: var(--d-bw) dashed var(--d-line); }
+  .sets-rows li { display: flex; flex-wrap: wrap; gap: var(--d-sp-1) var(--d-sp-3); font-size: var(--d-fs-0); }
+  .sets-rows .sl { color: var(--d-text-3); min-inline-size: 5.5rem; }
+  .sets-rows .why { flex-basis: 100%; color: var(--d-text-3); }
+  .sets-rows li[data-status="worn"] .st, .sets-rows li[data-status="pack"] .st { color: var(--d-good); }
+  .sets-rows li[data-status="stash"] .st, .sets-rows li[data-status="elsewhere"] .st { color: var(--d-warn); }
+  .sets-rows li[data-status="missing"] .st, .sets-rows li[data-status="blocked"] .st { color: var(--d-bad); }
+  .sets-why, .sets-note { color: var(--d-text-2); font-size: var(--d-fs-0); }
+  .sets-note:empty { display: none; }
+  .sets-locked { padding: var(--d-sp-2); }
+
+  /* drag and drop */
+  [data-dragging] { user-select: none; -webkit-user-select: none; }
+  [data-drop="ok"] { outline: 2px solid var(--d-good); outline-offset: -2px; }
+  [data-drop="no"] { outline: 2px dashed var(--d-bad); outline-offset: -2px; }
+  [data-over="ok"] { outline: 4px solid var(--d-good); outline-offset: -4px; }
+  [data-over="no"] { outline: 4px dashed var(--d-bad); outline-offset: -4px; }
+  .inv-ghost { position: fixed; inset: 0 auto auto 0; z-index: calc(var(--d-z-sheet) + 2); pointer-events: none; display: grid; gap: 2px; max-inline-size: 16rem;
+    padding: var(--d-sp-1) var(--d-sp-2); background: var(--d-surface-2); border: var(--d-bw) solid var(--d-line-strong); border-radius: var(--d-r-1);
+    box-shadow: var(--d-shadow-2); color: var(--d-text); font-size: var(--d-fs-0); will-change: transform; }
+  .inv-ghost[data-state="ok"] { border-color: var(--d-good); }
+  .inv-ghost[data-state="no"] { border-color: var(--d-bad); }
+  .inv-ghost .g-name { font-weight: 600; }
+  .inv-ghost .g-why { color: var(--d-text-2); }
+  .inv-ghost .g-why:empty { display: none; }
+}

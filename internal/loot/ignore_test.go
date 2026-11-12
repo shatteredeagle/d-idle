@@ -2,10 +2,13 @@ package loot_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/loot"
+	"d2lod-bot/internal/tidy"
 )
 
 // An item the player trashed lies on the ground and is not picked up again; the same kind of item elsewhere still is.
@@ -35,6 +38,32 @@ func TestPickUpLeavesTrashedItems(t *testing.T) {
 		l.SetIgnore(nil)
 		if rep, _ = l.PickUp(context.Background(), loot.PickOpts{}); len(rep.Picked) != 1 {
 			t.Errorf("%v: without the ignore the item is picked up: %+v", cls, rep.Picked)
+		}
+	}
+}
+
+// Tidy drops: the looter leaves an item the Tidy chore threw away (by print near the spot) and still takes the rune
+// beside it. Two classes; needs game tables like the test above (U on a box without them).
+func TestPickUpLeavesTidyDrops(t *testing.T) {
+	for _, cls := range []d2.Class{d2.Sorceress, d2.Paladin} {
+		l, r := newLooter(t)
+		w := r.W
+		dress(w)
+		w.Player.Class = cls
+		w.Player.Gold = 5000
+		junk := w.AddGround("r03", 2, 6030, 4930)
+		wanted := w.AddGround("r04", 2, 6021, 4931)
+		drops := tidy.NewDrops(time.Now)
+		drops.Note(junk.ID+1000, fmt.Sprintf("%d/%d/%d", junk.Class, junk.Item.Quality, junk.Item.ILvl), junk.X+3, junk.Y)
+		l.SetIgnore(func(u d2.Unit) bool {
+			return u.Item != nil && drops.Ignored(u.ID, fmt.Sprintf("%d/%d/%d", u.Class, u.Item.Quality, u.Item.ILvl), u.X, u.Y)
+		})
+		rep, err := l.PickUp(context.Background(), loot.PickOpts{})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(rep.Picked) != 1 || rep.Picked[0].ID != wanted.ID || len(w.Ground) != 1 || w.Ground[0].ID != junk.ID {
+			t.Fatalf("%v: picked %+v ground %d", cls, rep.Picked, len(w.Ground))
 		}
 	}
 }

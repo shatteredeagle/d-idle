@@ -288,3 +288,24 @@ func TestViewMercBlock(t *testing.T) {
 		}
 	}
 }
+
+// The tidy line is additive: bound once per View, set on backpack items only, and it receives the item's mark.
+func TestTidyForFillsBackpackItemsOnly(t *testing.T) {
+	for _, cls := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		d, _, _ := rig(t, cls, town1)
+		built := 0
+		d.SetTidyFor(func(s *d2.Snapshot) func(u d2.Unit, mark string) string {
+			built++
+			return func(u d2.Unit, mark string) string { return "Will stash: test" }
+		})
+		v := d.View()
+		if built != 1 || len(v.Backpack) == 0 || v.Backpack[0].Tidy != "Will stash: test" {
+			t.Fatalf("%v: built %d backpack %+v", cls, built, v.Backpack)
+		}
+		for _, it := range v.Stash {
+			if it.Tidy != "" {
+				t.Errorf("%v: stash item carries a tidy line", cls)
+			}
+		}
+	}
+}

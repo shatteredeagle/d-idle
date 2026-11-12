@@ -8,8 +8,9 @@
 // Input: the view /api/inventory sends, handed over by inventory.js as a 'd2:inventory' event on document (the same
 // feed the item tooltip uses). Text goes in through textContent only; nothing scrolls the page (focus is always taken
 // with preventScroll) and the menu is position: fixed.
-// EXTENSION POINT (a later pass, not built): drag an item onto a doll slot. Every doll slot button carries data-slot
-// and data-key="slot-<slot>"; a drop handler would call window.d2InvActions.equip(itemId, slot) below.
+// EXTENSION POINT, used since the drag and drop pass (web/inventory-drag.js, docs/gearsets.md): every doll slot carries
+// data-slot (and data-key="slot-<slot>" on the hero's); a drop calls the public API at the end of this file: equip(id,
+// slot, target), unequip(slot, target), and trashConfirm(key) for a trash (the same confirm step as the menu).
 (function () {
   'use strict';
   var MENU_ID = 'inv-act';
@@ -37,14 +38,16 @@
   function requestsFor(id) { return (view && view.queue || []).filter(function (r) { return r.id === id; }); }
   function kindOf(r) { return r.kind || 'equip'; }
   function verb(r) {
+    var pre = r.groupName ? 'Set "' + r.groupName + '": ' : '';
     switch (kindOf(r)) {
+      case 'unequip': return pre + 'Take off ' + r.name + ' (' + slotLabel(r.slot) + ')';
       case 'trash': return 'Trash ' + r.name;
       case 'identify': return r.place === 'stash' ? 'Identify ' + r.name + ' in the stash' : 'Identify ' + r.name;
       case 'stash': return 'Move ' + r.name + ' to the stash';
-      case 'take': return 'Take ' + r.name + ' out of the stash';
+      case 'take': return pre + 'Take ' + r.name + ' out of the stash';
       case 'buyid': case 'cain': case 'gold': return r.name; // the server words the errand
     }
-    return 'Equip ' + r.name + ' in ' + slotLabel(r.slot);
+    return pre + 'Equip ' + r.name + ' in ' + slotLabel(r.slot);
   }
 
   // model builds the menu of one item: {title, cls, rows: [{text, state, cancel}], entries: [{act, label, reason, slot}]}.
@@ -72,6 +75,10 @@
       });
     } else {
       m.entries.push({ act: 'equip', label: 'Equip', reason: f.place === 'worn' ? 'it is already worn' : (it.noWear || 'move it to the backpack first') });
+      if (f.place === 'worn') { // schema 7: take it off into the backpack (also what dragging it onto the pack does)
+        var offQ = reqs.some(function (r) { return kindOf(r) === 'unequip'; });
+        m.entries.push({ act: 'unequip', slot: f.slot, label: 'Take off', reason: it.noUnequip || (offQ ? 'it is already queued to come off' : '') });
+      }
     }
     // stash moves (schema 6): "Move to stash" for a backpack item, "Take out" for a stash item. A stash job of the item is
     // queued once; an identify of a stash item runs in place, so it needs no take-out.
@@ -103,10 +110,15 @@
       .then(function () { say(''); errNote(''); return refresh(); }, function (e) { say(e.message); setNote(e.message); errNote(e.message); });
   }
   function refresh() {
-    return fetch('/api/inventory', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(onView, function () {});
+    return fetch('/api/inventory', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (v) {
+      onView(v);
+      // the poll of inventory.js is every 4 s; our own change shows at once in the modules that listen (drag, sets)
+      if (typeof CustomEvent === 'function' && document.dispatchEvent) document.dispatchEvent(new CustomEvent('d2:inventory-fresh', { detail: v }));
+    }, function () {});
   }
   // The public calls, also the hook of the later drag and drop pass.
-  function equip(id, slot) { return post('/api/inventory/equip', { id: id, slot: slot || '' }); }
+  function equip(id, slot, target) { var b = { id: id, slot: slot || '' }; if (target && target !== 'hero') b.target = target; return post('/api/inventory/equip', b); }
+  function unequip(slot, target) { var b = { slot: slot }; if (target && target !== 'hero') b.target = target; return post('/api/inventory/unequip', b); }
   function trash(id) { return post('/api/inventory/trash', { id: id, confirm: true }); }
   function cancel(id, kind) { return post('/api/inventory/cancel', { id: id, kind: kind || 'equip' }); }
   function identify(id) { return post('/api/inventory/identify', { id: id }); }
@@ -121,6 +133,7 @@
     if (e.act !== 'trash') confirming = false;
     switch (e.act) {
       case 'equip': closeMenu(true); equip(m.id, e.slot); return;
+      case 'unequip': closeMenu(true); unequip(e.slot); return;
       case 'sell': { var it = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: it.mark === 'sell' ? '' : 'sell' }); return; }
       case 'keep': { var k = find(openKey).it; closeMenu(true); post('/api/inventory/mark', { id: m.id, mark: k.mark === 'keep' ? '' : 'keep' }); return; }
       case 'identify': closeMenu(true); identify(m.id); return;
@@ -394,7 +407,10 @@
     window.addEventListener('scroll', function () { if (openKey && menu && !menu.hidden) position(); }, { passive: true });
   }
 
-  var api = { stash: stash, take: take, gold: gold, equip: equip, trash: trash, cancel: cancel, identify: identify, buyIdentify: buyIdentify, cainIdentify: cainIdentify, open: openMenu, close: function () { closeMenu(false); } };
+  // trashConfirm opens the item's menu already on the confirm step (the drag of a tile outside every grid): the same two
+  // clicks as the menu, so a drop alone never trashes.
+  function trashConfirm(key) { openMenu(key); if (!openKey) return; var f = find(key); if (f && f.it && !f.it.noTrash) { confirming = true; draw(true); } }
+  var api = { post: post, base: base, refresh: refresh, stash: stash, take: take, gold: gold, equip: equip, unequip: unequip, trashConfirm: trashConfirm, say: say, note: setNote, trash: trash, cancel: cancel, identify: identify, buyIdentify: buyIdentify, cainIdentify: cainIdentify, open: openMenu, close: function () { closeMenu(false); } };
   if (typeof window !== 'undefined') window.d2InvActions = api;
   if (typeof window !== 'undefined' && window.__actTest) {
     window.__actTest({ init: init, onView: onView, model: model, find: find, open: openMenu, close: closeMenu, place: place,

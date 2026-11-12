@@ -21,6 +21,7 @@ import (
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/mem"
 	"d2lod-bot/internal/repair"
+	"d2lod-bot/internal/tidy"
 	"d2lod-bot/internal/town/belt"
 	"d2lod-bot/internal/town/hand"
 	"d2lod-bot/internal/town/panel"
@@ -99,6 +100,7 @@ type Town struct {
 	stashFull        bool                                     // stash gold is at the cap (one log line per fill)
 	stashCapSeen     int                                      // stash gold at the last refused deposit (0 = none seen)
 	stashLeft        []d2.Unit                                // pack items the last stashItems could not fit
+	tidyDrops        *tidy.Drops                              // items the Tidy chore dropped, for the looter's ignore test
 	stashRefused     map[uint32]bool                          // pack items a full stash refused and relieveStash could not place
 	cubeBlocked      string                                   // state signature after a cube chore found no pack room
 	shopClass        int                                      // class of the NPC whose trade window is open (0 = none): chores of one NPC share it
@@ -111,7 +113,7 @@ type Town struct {
 
 // New builds the Townsman. It creates its own loot.Looter as the Judge; use SetJudge to share one.
 func New(e *env.Env, mv Mover) *Town {
-	t := &Town{e: e, mv: mv, h: hand.New(e), sellByCursor: true}
+	t := &Town{e: e, mv: mv, h: hand.New(e), sellByCursor: true, tidyDrops: tidy.NewDrops(func() time.Time { return e.Clock.Now() })}
 	t.judge = loot.New(e, mv)
 	t.owner = t.readOwner
 	return t
@@ -276,6 +278,7 @@ type ChoreReport struct {
 	Earned     int
 	Sold       int
 	Stashed    int
+	Tidied     int // stash and drop actions of the Tidy chore (docs/tidy.md)
 	Identified int
 	Healed     bool
 	Repaired   bool

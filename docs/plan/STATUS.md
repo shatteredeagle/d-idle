@@ -121,8 +121,13 @@
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
+| hourfix2 | proposed | - | `docs/hourfix2.md`<br>`internal/bot/goal.go` | - |
 | goldprio | proposed | - | `internal/loot`<br>`internal/bot/goldprio.go`<br>`internal/bot/goldprio_test.go`<br>`docs/goldprio.md`<br>`cmd/d2bot/adapters.go`<br>`cmd/d2bot/looteradapter_test.go`<br>`internal/combat/interlude_test.go`<br>`internal/combat/fight.go`<br>`internal/combat/types.go`<br>`internal/bot/goal.go`<br>`internal/bot/contracts.go`<br>`internal/bot/runner.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
+| bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
+| gearsets | proposed | - | `internal/invdesk`<br>`internal/leveler/playerunequip.go`<br>`internal/leveler/playerequip_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-drag.js`<br>`internal/watch/web/inventory-sets.js`<br>`internal/watch/web/inventory-sets.css`<br>`internal/watch/web/inventory.js`<br>`internal/watch/testdata/gearsets`<br>`internal/watch/gearsets_test.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/testdata/itemactions`<br>`data/unlocks/ladder.json`<br>`internal/env/tuning_invdesk.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/gearsets_test.go`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/knobs.md`<br>`docs/gear-policy.md`<br>`docs/inventory-actions.md`<br>`docs/gearsets.md` | - |
+| tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
+| prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
@@ -175,14 +180,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 68384b47 11-12 15:00 `Merge agent/goldprio: goldprio: doc, knobs table, task card` (goldprio)
-- b707e894 11-12 14:20 `Merge agent/warpsandbox: Merge branch 'main' into warpsandbox` (warpsandbox)
-- 491f9a98 11-12 14:20 `Merge branch 'main' into warpsandbox` (-)
-- dfd4d8a0 11-12 13:52 `Merge agent/prwarp: Merge branch 'main' into TASK-372` (prwarp)
-- 078ebedf 11-12 13:51 `Merge branch 'main' into TASK-372` (-)
-- cd482ec4 11-12 13:11 `Merge agent/archify: TASK-373 archify: tools/arch import-graph diagrams (overview, packages, drift) + docs/arch.md` (archify)
-- ee48fcff 11-12 12:49 `Merge agent/prverify3: TASK-366 prverify3: warp-arrival candidate verification, NEEDS-WORK (docs only)` (prverify3)
-- c97dd79f 11-12 12:48 `Merge branch 'main' into prverify3` (-)
-- da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
-- 116de9a0 11-12 12:14 `Merge branch 'main' into TASK-371` (-)
+- 5e88d93d 11-12 16:01 `Merge agent/prpost3: Merge branch 'main' into TASK-384` (prpost3)
+- c3c10a43 11-12 16:00 `Merge branch 'main' into TASK-384` (-)
+- e4368829 11-12 15:53 `Merge agent/tidy: Merge branch 'main' into TASK-381` (tidy)
+- e058c15d 11-12 15:52 `Merge branch 'main' into TASK-381` (-)
+- d27166d9 11-12 15:47 `Merge agent/gearsets: gearsets: drag gear onto the paper doll and player-defined gear sets` (gearsets)
+- 47a8676b 11-12 15:46 `Merge branch 'main' into TASK-380` (-)
+- da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
+- 0b34934f 11-12 15:39 `Merge branch 'main' into TASK-382` (-)
+- 735fc5da 11-12 15:38 `Merge origin/main into gearsets` (-)
+- dc24856b 11-12 15:35 `Merge agent/prverify4: warp-arrival r2 second verification: PASS` (prverify4)
 <!-- statusgen:end -->

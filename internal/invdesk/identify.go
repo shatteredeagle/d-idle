@@ -61,9 +61,14 @@ func (d *Desk) heroInTown() bool {
 // runnableLocked says whether the bot could start r now: the needed backend is installed and, for a town errand, the
 // hero is in town. inTown is read before the lock is taken (the snapshot callback must run unlocked).
 func (d *Desk) runnableLocked(r Request, inTown bool) bool {
+	if d.groupBlockedLocked(r) {
+		return false
+	}
 	switch r.kind() {
 	case KindTrash:
 		return d.tr != nil
+	case KindUnequip:
+		return d.un != nil
 	case KindIdentify:
 		if r.Place == PlaceStash {
 			return d.stashSvLocked() != nil && inTown
@@ -181,7 +186,7 @@ func (d *Desk) RequestCain() (Request, error) {
 
 // enqueueLocked stamps and appends a new request (bounded by MaxQueue) and saves.
 func (d *Desk) enqueueLocked(r Request) (Request, error) {
-	if len(d.st.Queue) >= MaxQueue {
+	if singles(d.st.Queue) >= MaxQueue {
 		return Request{}, refuse("full", "%d actions are already waiting: cancel one first", MaxQueue)
 	}
 	r.State, r.At = StateQueued, d.c.Now().Unix()
