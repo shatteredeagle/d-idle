@@ -145,6 +145,8 @@ type Fun struct {
 	Pacts *PactAPI
 	// Inventory mounts the inventory page routes (invapi.go); set it before Serve, nil: no routes.
 	Inventory *InvAPI
+	// Skills mounts the read-only skill tree page (skillsapi.go, docs/skilltrees.md); nil: no routes.
+	Skills *SkillsAPI
 	// Art mounts /api/art and /watch/art/<key>.png (artapi.go); set it before Serve, nil: no routes, the page keeps its drawn cells.
 	Art *ArtAPI
 	// Repair mounts the gear condition and Repair now routes (repairapi.go); set it before Serve, nil: no routes.
@@ -671,6 +673,11 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 			m.Handle(p, f.Inventory.Handler())
 		}
 	}
+	if f.Skills != nil {
+		for _, p := range SkillsRoutes {
+			m.Handle(p, f.Skills.Handler())
+		}
+	}
 	if f.Art != nil {
 		for _, p := range ArtRoutes {
 			m.Handle(p, f.Art.Handler())
@@ -737,6 +744,11 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	if f.Inventory != nil {
 		for _, p := range InvPostRoutes {
 			m.Handle(p, f.Inventory.PostHandler(o))
+		}
+	}
+	if f.Skills != nil {
+		for _, p := range SkillsPostRoutes {
+			m.Handle(p, f.Skills.PostHandler(o))
 		}
 	}
 	if f.Repair != nil {

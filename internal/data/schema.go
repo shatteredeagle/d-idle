@@ -2,7 +2,7 @@ package data
 
 // schemaVersion is stamped into the cache. Bump it whenever the column lists
 // or the cache layout change, so old caches are re-extracted.
-const schemaVersion = 4
+const schemaVersion = 5
 
 type tableSpec struct {
 	name     string // file name under data\global\excel\, without .txt

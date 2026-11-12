@@ -73,6 +73,7 @@ type ladderOptions struct {
 	// before startLadder. facts nil: no proposals. A scripted player (--ladder-profile) never gets them.
 	proposalFacts func() watch.ProposalFacts
 	inv           *watch.InvAPI        // the inventory page routes (invwire.go); nil: none
+	skills        *watch.SkillsAPI     // the skill tree page routes (skillswire.go); nil: none
 	art           watch.ArtSource      // the game art of the install (artwire.go); nil: /api/art says available:false
 	repair        *repair.Controller   // the repair policy (repairwire.go); nil: none
 	farm          *goldfarm.Controller // the Farm gold order (repairwire.go); nil: none
@@ -262,6 +263,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
 		rig.Fun.Inventory = l.inv
+		rig.Fun.Skills = l.skills
 		rig.Fun.Art = artAPI(l.art)
 		rig.Fun.Readiness = l.readiness
 		hub.SetHeroStatsSource(l.heroStats)

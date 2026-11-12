@@ -166,6 +166,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	}
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
+	o.ladder.skills = skillsAPI(db, ref)
 	o.ladder.art = artSource(gameDir, o.data, db)
 	o.ladder.repair, o.ladder.farm, o.ladder.journey = ref.rep, ref.gf, ref.jc
 	o.ladder.sensesTier = tune.Senses.Tier
