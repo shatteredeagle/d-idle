@@ -530,6 +530,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [cold-enchanted-length-body.md](upstream/bodies/cold-enchanted-length-body.md): cold-enchanted-length-body
 - [lightning-last-unit-body.md](upstream/bodies/lightning-last-unit-body.md): lightning-last-unit-body
+- [warp-arrival-body.md](upstream/bodies/warp-arrival-body.md): warp-arrival-body
 
 `upstream/drafts/`
 
