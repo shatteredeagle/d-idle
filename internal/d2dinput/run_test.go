@@ -60,7 +60,7 @@ func TestMoveWithoutPolicySendsNoKey(t *testing.T) {
 	if err := c.Move(input.Point{X: 175, Y: 70}); err != nil {
 		t.Fatal(err)
 	}
-	want := []string{"debug level", "click 400 300", "cmd move 35.1 14.1"}
+	want := []string{"debug level", "click 494 340", "cmd move 35.1 14.1"}
 	if got := srv.Lines(); !reflect.DeepEqual(got, want) {
 		t.Fatalf("lines %q, want %q", got, want)
 	}

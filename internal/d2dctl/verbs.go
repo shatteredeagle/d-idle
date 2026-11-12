@@ -55,6 +55,17 @@ func (c *Client) Kick(ctx context.Context) error {
 	return err
 }
 
+// KickAt is Kick with the click at client pixel (x, y). The default Kick clicks (400,300), the player's own feet,
+// which on arrival in a cave is the return warp unit: the click is read as "enter that warp" and the hero is back
+// where it came from 0.2 s later (docs/passagebounce.md, V: all arrivals bounced, whatever the following move).
+func (c *Client) KickAt(ctx context.Context, x, y int) error {
+	_, err := c.Do(ctx, fmt.Sprintf("click %d %d", x, y))
+	if err == nil {
+		c.kickPending.Store(false)
+	}
+	return err
+}
+
 // NeedsKick reports whether a warp-like verb ran since the last Kick.
 func (c *Client) NeedsKick() bool { return c.kickPending.Load() }
 

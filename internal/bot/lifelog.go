@@ -53,9 +53,12 @@ func (r *Runner) noteArrival(o *observer, p *d2.Player, now time.Time) {
 		if stay := now.Sub(prev.at); stay < bounceMaxStay {
 			r.e.Log.Info("arrival bounce", "area", o.area, "name", r.areaName(o.area), "back", p.Area,
 				"stayMs", stay.Milliseconds(), "arrivedAt", prev.pos, "leftFrom", o.pos)
+			o.bounces++
 			r.noteBounceLocked(o.area, now)
 		}
 	}
+	o.arrivals++
 	o.arrived = arrival{from: o.area, at: now, pos: input.Point{X: p.X, Y: p.Y}}
-	r.e.Log.Info("arrival", "area", p.Area, "from", o.area, "x", p.X, "y", p.Y)
+	r.e.Log.Info("arrival", "area", p.Area, "from", o.area, "x", p.X, "y", p.Y,
+		"arrivals", o.arrivals, "bounces", o.bounces) // cumulative since start: bounces/arrivals is the rate to compare per build
 }

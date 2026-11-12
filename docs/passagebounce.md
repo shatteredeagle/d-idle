@@ -8,7 +8,10 @@ Live bug 2026-11-11 (sandbox hero, clvl 13): "keeps going into the Underground P
 - Not a planner flip-flop and not roam: the Crypt shows `roam: coverage points 71, exits 1`, so dropNearExits does not empty it. The planner wants Dark Wood (campaign "Inifuss tree") or, once there, Stony Field, and both routes cross the Passage.
 - Why the breaker did not hold: it only counted `exploring crossed an area border` in the clearing state (replanCause). The travel walks end with `left level 10 for 5 but ended in 4` and never reached it; `area skipped ... unreachable` skips targets, not the bounced area. State is also lost on a bot restart (three in this window).
 
-## Fix
+## Update: the real cause is the bot's priming click (arrivalsettle)
+d2d's arrival spot and warp boxes are not at fault (decomp12, fid-warp-arrival.md). The first `cmd move` after a level change is preceded by `Kick`, a screen click at (400,300) = the player's own feet; on a fresh arrival the return warp unit stands there, so the kick enters it (S from code, matches: bounce about 0.2 s after the first order whatever its direction, a minority of arrivals pass). d2d's `cmd move` takes world cells, so no stale mapping exists. Fix: `Controller.primeToward` clicks `kickReach` (110) pixels from the player toward the move target (`Client.KickAt`), logged as `nav.trace kick`. The settle wait asked for is not added: bot decision latency after an arrival is already 0.7 to 1.2 s (V, log). Measure: the `arrival` line carries cumulative `arrivals` and `bounces` (rate = bounces/arrivals); expect it to fall from 88-97 % in the Passage. Not verified live. The #609 breaker stays as the safety net.
+
+## Fix (breaker, passagebounce)
 `noteArrival` (lifelog.go, called at each area change) logs `arrival area from x y` and, when a stay under 4 s ended by going straight back (neither side town), `arrival bounce` with the arrival and leave positions, and `noteBounce` (loop.go) counts it keyed by the bounced AREA. 3 within 2 min skip that area with the escalating border-loop skip (3, 6, 12, 24, 48 min); routes through a skipped area are banned for the planner (goal.go routeBan), so a target behind the Passage is dropped instead of retried. Class independent, no class data; test `TestArrivalBounceSkipsTheBouncedArea`.
 
 ## Not fixed / next
