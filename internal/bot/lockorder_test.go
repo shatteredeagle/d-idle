@@ -67,3 +67,24 @@ func TestPollNeverHoldsObMuAcrossHealthStep(t *testing.T) {
 		t.Fatal("poll did not finish")
 	}
 }
+
+// TestExpectGameExitOffKeepsObMuFreeDuringHealthStep: ending the planned-exit bracket drops a pending exit through
+// Health.Step; that probe must not run under obMu.
+func TestExpectGameExitOffKeepsObMuFreeDuringHealthStep(t *testing.T) {
+	bh := &blockingHealth{in: make(chan struct{}, 1), release: make(chan struct{})}
+	g := newRig(t, func(_ *Config, d *Deps, _ *env.Tuning) { d.Health = bh })
+	finished := make(chan struct{})
+	go func() { g.r.expectGameExit(false); close(finished) }()
+	select {
+	case <-bh.in:
+	case <-time.After(2 * time.Second):
+		t.Fatal("Health.Step was not reached")
+	}
+	within(t, "LastSnapshot while expectGameExit probes", func() { g.r.LastSnapshot() })
+	close(bh.release)
+	select {
+	case <-finished:
+	case <-time.After(2 * time.Second):
+		t.Fatal("expectGameExit did not finish")
+	}
+}

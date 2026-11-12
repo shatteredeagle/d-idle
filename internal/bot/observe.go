@@ -317,15 +317,22 @@ func restartCount(newGames, planned, recycles, lost int) int {
 }
 
 func (r *Runner) expectGameExit(on bool) {
+	if !on && r.d.Health != nil {
+		// An exit the guard did not get to poll during the bracket would otherwise latch right after it as an unplanned
+		// loss (and spend the restart budget a second time): read and drop it now, before taking obMu (Health.Step is
+		// foreign code and may ping the game; a recovered panic must not leave a lock held, hence the closure).
+		func() {
+			r.healthMu.Lock()
+			defer r.healthMu.Unlock()
+			r.d.Health.Step(r.e.Clock.Now())
+		}()
+	}
 	r.obMu.Lock()
-	defer r.obMu.Unlock() // Health.Step is foreign code: a recovered panic must not leave obMu locked
+	defer r.obMu.Unlock()
 	r.ob.expectExit = on
 	if !on {
 		r.ob.gone, r.ob.errSince = nil, time.Time{}
-		// An exit the guard did not get to poll during the bracket would otherwise latch right after it as an unplanned
-		// loss (and spend the restart budget a second time): read and drop it now.
 		if r.d.Health != nil {
-			r.d.Health.Step(r.e.Clock.Now())
 			r.ob.lastHealth = r.e.Clock.Now()
 		}
 	}
