@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/readiness"
 	"d2lod-bot/internal/repair"
@@ -138,6 +139,7 @@ type Runner struct {
 	healthMu       sync.Mutex // serialises Health.Step, which runs outside obMu (see healthProbe)
 	tpBuyMin       int        // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
 	ob             observer
+	deathW         combat.DeathWeights     // lessons of Nightmare/Hell deaths, guarded by obMu (deathweights.go)
 	dlog           *deathLog               // guarded by obMu
 	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
 	noMLvlSeen     map[int]bool            // xp rank warnings already logged (area*4+difficulty), guarded by obMu

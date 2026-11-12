@@ -80,6 +80,9 @@ func (a fighterAdapter) RecentCasts(w time.Duration) (int, map[int]int) { return
 // potion-less character never skipped the packs it cannot afford (docs/wiring.md).
 func (a fighterAdapter) SetPoverty(poor bool, maxPackDanger int) { a.f.SetPoverty(poor, maxPackDanger) }
 
+// SetDeathWeights hands the Nightmare/Hell death lessons to targeting (bot.deathWeightSetter).
+func (a fighterAdapter) SetDeathWeights(w combat.DeathWeights) { a.f.SetDeathWeights(w) }
+
 // SetWalking tells the fighter the bot is on a travel or quest walk (the crowd-abandon rule applies to walks).
 func (a fighterAdapter) SetWalking(on bool) { a.f.SetWalking(on) }
 
