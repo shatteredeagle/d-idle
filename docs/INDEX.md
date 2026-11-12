@@ -290,6 +290,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [deathautopsy.md](deathautopsy.md): deathautopsy (archived)
 - [deathspiral.md](deathspiral.md): Death spiral guards (G1 attempt 1, 2026-10-29)
 - [denshuttle.md](denshuttle.md): Den of Evil <-> Blood Moor shuttle (TASK-295) (status: cause V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Follows docs/areathrash.md (same d2d...)
+
+`design/`
+
+- [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus one built slice (equip, unequip, `caps`), 2026-11-12. User decision 2026-11-12 (popup): go for...)
 - [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
 - [desktop-electron.md](desktop-electron.md): Desktop app on Electron: d2idle-watch (status: built, not yet run on real desktops (TASK-289 skeleton, TASK-290 tray, autostart, hide-to-tray, update...)
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
