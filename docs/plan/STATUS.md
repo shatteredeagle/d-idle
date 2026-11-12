@@ -121,6 +121,7 @@
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | mine2 | proposed | - | `docs/research/awesome-diablo-mining-2-2026-11-12.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
+| mine1 | in-progress | - | `docs/research/awesome-diablo-mining-1-2026-11-12.md`<br>`docs/research/d2-name-map-2026-11-12.md`<br>`docs/research/item-packets-2026-11-12.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -174,7 +175,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
 - 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
+- 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
 - 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
 - b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
 - f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
@@ -182,6 +185,4 @@
 - 5803c6df 11-12 11:54 `Merge branch 'main' into lockscan` (-)
 - 913089d8 11-12 11:50 `Merge agent/itemverbs: Merge branch 'main' into TASK-367` (itemverbs)
 - 4893add4 11-12 11:49 `Merge branch 'main' into TASK-367` (-)
-- 562b5d75 11-12 11:45 `Merge branch 'main' into TASK-368` (-)
-- 3634c7ba 11-12 11:29 `Merge branch 'main' into lockscan` (-)
 <!-- statusgen:end -->
