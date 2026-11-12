@@ -1,0 +1,54 @@
+div#gearsets []
+  div.sets-title []
+    h3 [] "Gear sets"
+    span.meta [] "1 of 8"
+  p.d-hint [] "Save what you wear now and put it back on later. A set goes on only when you click Apply; the bot never changes your gear. An item that is gone is skipped, never replaced by another."
+  div.sets-save []
+    label.sets-lab [for=sets-new] "Name"
+    input.sets-name#sets-new [maxlength=24 placeholder=e.g. Fire damage type=text]
+    button.act [data-act=save-hero] "Save what the hero wears"
+    button.act [data-act=save-merc] "Save what the mercenary wears"
+  ul.sets-list []
+    li.sets-set [data-set=gs-1 data-target=hero]
+      div.sets-head []
+        span.nm [] "Sword and board"
+        span.meta [] "hero, 2 items"
+      p.d-muted.sets-items [] "weapon: Short Sword, shield: Buckler"
+      div.d-btngroup []
+        button.act [data-act=apply] "Apply..."
+        button.act [data-act=rename] "Rename"
+        button.act [data-act=delete] "Delete"
+      div.sets-preview [aria-label=Preview of Sword and board role=group]
+        ul.sets-rows []
+          li [data-status=pack]
+            span.sl [] "weapon"
+            span.nm [] "Short Sword"
+            span.st [] "in the backpack"
+          li [data-status=stash]
+            span.sl [] "shield"
+            span.nm [] "Buckler"
+            span.st [] "in the stash"
+          li [data-status=missing]
+            span.sl [] "helm"
+            span.nm [] "Great Helm"
+            span.st [] "missing"
+            span.why [] "not found in the backpack, stash or worn: skipped, nothing is substituted"
+          li [data-status=blocked]
+            span.sl [] "right ring"
+            span.nm [] "Ring A"
+            span.st [] "cannot be worn"
+            span.why [] "restricted to another class"
+          li [data-status=elsewhere]
+            span.sl [] "left ring"
+            span.nm [] "Ring B"
+            span.st [] "worn in another slot (right ring)"
+        p.d-muted [] "Steps, in this order:"
+        ol.sets-steps []
+          li [] "Take off Ring B (right ring): worn in another slot"
+          li [] "Take out of the stash Buckler: from the stash, in town"
+          li [] "Equip Short Sword (weapon)"
+        p.d-note [] "1 item is not found and skipped. Nothing is put in its place."
+        div.d-btngroup []
+          button.act [data-act=apply-go] "Apply now"
+          button.act [data-act=apply-close] "Close"
+  p.d-hint.sets-note [role=status]

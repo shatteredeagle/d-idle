@@ -107,6 +107,7 @@ func buildD2DStack(ctx context.Context, o options, be *d2denv.Backend, nv *nav.N
 		s.quester = questAdapter{t: tw, e: e}
 	}
 	wireInv(ref, tw, lt, s.leveler, db)
+	wireSets(ref, e)
 	wireItemVerbs(ref, tw, s.leveler, be.Client, e)
 	s.prepare = func(ctx context.Context) error {
 		applyClass(ctx, e.Snapshot, cb, tw, lt, cfg.LevelerBuild, db, log)

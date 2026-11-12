@@ -168,8 +168,10 @@
   }
 
   // the page redraws every 4 s; the focused slot, item or button is found again by its data-key
-  var drawn = '';
+  var drawn = '', held = null;
   function draw(v) {
+    // a drag in progress (inventory-drag.js) keeps its tiles: the newest view waits and is painted when the drag ends
+    if (document.body && document.body.hasAttribute && document.body.hasAttribute('data-dragging')) { held = v; return; }
     var sig = JSON.stringify(v); if (sig === drawn) return; // unchanged: leave the DOM, focus and scroll alone
     drawn = sig;
     var a = document.activeElement, key = a && a.dataset ? a.dataset.key : '';
@@ -276,5 +278,6 @@
     window.__invTest({ select: select, dur: dur, level: level, lines: lines, paint: paint, say: say, setArt: function (on) { art.on = !!on; }, drawRepair: drawRepair });
     return;
   }
+  document.addEventListener('d2:dragend', function () { if (held) { var v = held; held = null; draw(v); } });
   load(); artProbe(); setInterval(load, 4000);
 })();

@@ -1,0 +1,23 @@
+{
+ "comment": "Tidy policy (docs/tidy.md). Rows are tried in order, the first match wins; overrides.<Class> rows come first. Marks, equipment, quest items and the start kit are handled in code before any row. SME source: 2026-11-12 consult (EXP).",
+ "stashMaxPct": 90,
+ "overrides": {
+  "Amazon": [
+   {"name": "javelins", "match": {"types": ["jave", "ajav"]}, "action": "keep", "reason": "throwing weapon of the build"}
+  ]
+ },
+ "rows": [
+  {"name": "tomes and scrolls", "match": {"codes": ["tbk", "ibk", "tsc", "isc", "key"]}, "action": "keep", "reason": "tome, scroll or key"},
+  {"name": "potions", "match": {"types": ["hpot", "mpot", "rpot", "spot", "apot", "wpot"]}, "action": "keep", "reason": "potion (the belt and the shop own the count)"},
+  {"name": "runes", "match": {"types": ["rune"]}, "action": "stash", "reason": "rune"},
+  {"name": "gems", "match": {"typePrefixes": ["gem", "skul"]}, "action": "stash", "reason": "gem"},
+  {"name": "charms", "match": {"types": ["scha", "mcha", "lcha"]}, "action": "stash", "reason": "charm"},
+  {"name": "jewels", "match": {"types": ["jewl"]}, "action": "stash", "reason": "jewel"},
+  {"name": "unique and set", "match": {"qualities": ["unique", "set"]}, "action": "stash", "reason": "unique or set item"},
+  {"name": "rare jewelry", "match": {"types": ["ring", "amul", "circ"], "qualities": ["rare", "crafted"]}, "action": "stash", "reason": "rare jewelry or circlet"},
+  {"name": "magic jewelry", "match": {"types": ["ring", "amul"], "qualities": ["magic"]}, "action": "stash", "reason": "magic jewelry (identify it from the menu)"},
+  {"name": "socketed bases", "match": {"minSockets": 4, "qualities": ["normal", "superior"]}, "action": "stash", "reason": "4+ socket base"},
+  {"name": "pure junk", "match": {"belowSell": 20, "minPackFull": 85, "qualities": ["low", "normal", "superior"]}, "action": "drop", "reason": "worth under 20 gold and the pack is full"},
+  {"name": "sellable", "match": {"minSell": 20}, "action": "sell", "reason": "vendor junk"}
+ ]
+}

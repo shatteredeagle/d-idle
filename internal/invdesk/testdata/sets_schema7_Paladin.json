@@ -1,0 +1,97 @@
+{
+ "sets": {
+  "schema": 1,
+  "open": true,
+  "max": 8,
+  "sets": [
+   {
+    "id": "gs-1",
+    "name": "Sword and board",
+    "target": "hero",
+    "saved": 1800000001,
+    "slots": [
+     {
+      "slot": "rhand",
+      "name": "Short Sword",
+      "code": "sword",
+      "quality": "magic"
+     },
+     {
+      "slot": "lhand",
+      "name": "Buckler",
+      "code": "shield",
+      "quality": "magic"
+     }
+    ]
+   },
+   {
+    "id": "gs-2",
+    "name": "Spare",
+    "target": "hero",
+    "saved": 1800000002,
+    "slots": [
+     {
+      "slot": "rhand",
+      "name": "Short Sword",
+      "code": "sword",
+      "quality": "magic"
+     },
+     {
+      "slot": "lhand",
+      "name": "Buckler",
+      "code": "shield",
+      "quality": "magic"
+     },
+     {
+      "slot": "head",
+      "name": "Great Helm",
+      "code": "helm",
+      "quality": "magic"
+     }
+    ]
+   }
+  ]
+ },
+ "preview": {
+  "setId": "gs-2",
+  "name": "Spare",
+  "target": "hero",
+  "slots": [
+   {
+    "slot": "rhand",
+    "name": "Short Sword",
+    "now": "War Staff",
+    "status": "pack",
+    "id": 1
+   },
+   {
+    "slot": "lhand",
+    "name": "Buckler",
+    "status": "pack",
+    "id": 2
+   },
+   {
+    "slot": "head",
+    "name": "Great Helm",
+    "status": "missing",
+    "why": "not found in the backpack, stash or worn: skipped, nothing is substituted"
+   }
+  ],
+  "steps": [
+   {
+    "op": "equip",
+    "id": 1,
+    "slot": "rhand",
+    "name": "Short Sword"
+   },
+   {
+    "op": "equip",
+    "id": 2,
+    "slot": "lhand",
+    "name": "Buckler"
+   }
+  ],
+  "missing": 1,
+  "ready": true
+ }
+}

@@ -239,7 +239,7 @@ func (d *Desk) runStashBatch(ctx context.Context, out *[]string) (stop bool) {
 	var plan StashPlan
 	for i := range d.st.Queue {
 		r := d.st.Queue[i]
-		if r.State != StateQueued || !r.isStashJob() {
+		if r.State != StateQueued || !r.isStashJob() || d.groupBlockedLocked(r) {
 			continue
 		}
 		d.st.Queue[i].State = StateDoing
@@ -292,6 +292,9 @@ func (d *Desk) runStashBatch(ctx context.Context, out *[]string) (stop bool) {
 		if err != nil {
 			r.State, r.Reason = StateFailed, err.Error()
 			*out = append(*out, fmt.Sprintf("%s %s failed: %v", r.kind(), r.Name, err))
+			if r.Group != "" {
+				d.endGroupLocked(r.Group, "stopped: "+r.Name+" failed")
+			}
 		} else {
 			r.State, r.Result = StateDone, result
 			r.How = d.howFor(r)
