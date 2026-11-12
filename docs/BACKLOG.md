@@ -740,6 +740,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - campaign0: campaign spine data, loader and design doc (TASK-335, merged 2026-11-11, acceptance 4 of 4): spine + loader + bands + decision + state, tests Paladin and Sorceress; not verified live <!--sg:agent/campaign0-->
 - maphistoryA: map timeline (ribbon, scrubber, replay), /api/history, chicken portal waypoint markers, loot walk-back activity; offline only <!--sg:agent/maphistoryA-->
 - maphistoryB: map heat layers (kills, time spent, damage taken) per area, cells of the coverage size; offline only <!--sg:agent/maphistoryB-->
+- maphistoryC: map fight cards and failure markers (roam leg failed, gate hold, ignore window, target fallback, nav yield); offline only <!--sg:agent/maphistoryC-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.
