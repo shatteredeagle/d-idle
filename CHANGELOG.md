@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- dropfix: probe doc note, owns <!--sg:agent/dropfix-->
 - Merge branch 'main' into TASK-383 <!--sg:agent/itemverbs3-->
 - Merge branch 'main' into TASK-384 <!--sg:agent/prpost3-->
 - Merge branch 'main' into TASK-381 <!--sg:agent/tidy-->

@@ -128,6 +128,7 @@
 | gearsets | proposed | - | `internal/invdesk`<br>`internal/leveler/playerunequip.go`<br>`internal/leveler/playerequip_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-drag.js`<br>`internal/watch/web/inventory-sets.js`<br>`internal/watch/web/inventory-sets.css`<br>`internal/watch/web/inventory.js`<br>`internal/watch/testdata/gearsets`<br>`internal/watch/gearsets_test.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/testdata/itemactions`<br>`data/unlocks/ladder.json`<br>`internal/env/tuning_invdesk.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/d2dwire.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/gearsets_test.go`<br>`tools/uishots`<br>`tools/uishots.sh`<br>`docs/knobs.md`<br>`docs/gear-policy.md`<br>`docs/inventory-actions.md`<br>`docs/gearsets.md` | - |
 | tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
 | prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
+| dropfix | proposed | - | `internal/d2dinput/controller.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/input/controller.go`<br>`internal/d2dtown/adapter.go`<br>`internal/d2dtown/adapter_dropclick_test.go`<br>`internal/town/hand/drop.go`<br>`docs/probes/itemverbs-live-2026-11-12.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
@@ -180,6 +181,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 313b4aaf 11-12 17:32 `Merge agent/dropfix: dropfix: probe doc note, owns` (dropfix)
 - b745c240 11-12 16:06 `Merge agent/itemverbs3: Merge branch 'main' into TASK-383` (itemverbs3)
 - 251fed97 11-12 16:05 `Merge branch 'main' into TASK-383` (-)
 - 5e88d93d 11-12 16:01 `Merge agent/prpost3: Merge branch 'main' into TASK-384` (prpost3)
@@ -189,5 +191,4 @@
 - d27166d9 11-12 15:47 `Merge agent/gearsets: gearsets: drag gear onto the paper doll and player-defined gear sets` (gearsets)
 - 47a8676b 11-12 15:46 `Merge branch 'main' into TASK-380` (-)
 - da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
-- 0b34934f 11-12 15:39 `Merge branch 'main' into TASK-382` (-)
 <!-- statusgen:end -->

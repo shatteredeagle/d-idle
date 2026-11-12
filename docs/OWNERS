@@ -215,6 +215,7 @@ docs/play-session.md  credit-runner  playsession
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
+docs/probes/itemverbs-live-2026-11-12.md  credit-runner  dropfix
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
 docs/probes/test-characters.md  live-agent  fid-fixtures
@@ -317,8 +318,12 @@ internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs2
 internal/d2dctl/verbs.go  credit-runner  arrivalsettle
 internal/d2dinput  pro-runner  bounce3
 internal/d2dinput/controller.go  credit-runner  arrivalsettle
+internal/d2dinput/controller.go  credit-runner  dropfix
 internal/d2dinput/controller_test.go  credit-runner  arrivalsettle
+internal/d2dinput/controller_test.go  credit-runner  dropfix
 internal/d2dinput/run_test.go  credit-runner  arrivalsettle
+internal/d2dtown/adapter.go  credit-runner  dropfix
+internal/d2dtown/adapter_dropclick_test.go  credit-runner  dropfix
 internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
@@ -335,6 +340,7 @@ internal/env/tuning_resource.go  live-agent  recoverypace
 internal/env/tuning_town.go  credit-runner  tidy
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
+internal/input/controller.go  credit-runner  dropfix
 internal/invdesk  credit-runner  gearsets
 internal/invdesk/desk.go  credit-runner  itemverbs2
 internal/invdesk/desk.go  credit-runner  tidy
@@ -383,6 +389,7 @@ internal/task/guided_test.go  credit-runner  campaign1
 internal/tidy  credit-runner  tidy
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  tidy
+internal/town/hand/drop.go  credit-runner  dropfix
 internal/town/playerid.go  credit-runner  itemverbs2
 internal/town/playerstash.go  credit-runner  itemverbs2
 internal/town/repairtrip_test.go  credit-runner  repairtrip
