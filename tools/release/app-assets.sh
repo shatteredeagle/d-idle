@@ -1,18 +1,19 @@
 #!/usr/bin/env bash
 # Build the unsigned app release asset set (docs/self-update-release.md).
 #   tools/release/app-assets.sh --version 0.4.0 --seq 17 --issued 2026-11-20T00:00:00Z \
+#       [--source-text FILE: use FILE as SOURCE.txt instead of the default text]
 #       --out DIR --d2d-bin PATH_TO_D2D [--overlay DIR] [--notes TEXT] [--src-bot REF] [--src-d2d REF] ...
 # Output in DIR: one tar.gz per component, SOURCE.txt, MANIFEST.json (unsigned).
 # Tarballs are reproducible (sorted names, zero mtime, root owner, gzip -n).
 # Needs GNU tar. Signing is a separate job: the approval-gated one in .github/workflows/app-release.yml.
 set -euo pipefail
 
-version= seq= issued= out= d2d= overlay= notes= srcbot= srcd2d= minimage=1 botapi=1 d2dctl=1 dataschema=1 channel=stable
+version= seq= issued= out= d2d= overlay= notes= srcbot= srcd2d= minimage=1 botapi=1 d2dctl=1 dataschema=1 channel=stable srctext=
 while [ $# -gt 0 ]; do
 	case "$1" in
 	--version) version=$2 ;; --seq) seq=$2 ;; --issued) issued=$2 ;; --out) out=$2 ;;
 	--d2d-bin) d2d=$2 ;; --overlay) overlay=$2 ;; --notes) notes=$2 ;;
-	--src-bot) srcbot=$2 ;; --src-d2d) srcd2d=$2 ;; --channel) channel=$2 ;;
+	--src-bot) srcbot=$2 ;; --source-text) srctext=$2 ;; --src-d2d) srcd2d=$2 ;; --channel) channel=$2 ;;
 	--min-image) minimage=$2 ;; --bot-api) botapi=$2 ;; --d2d-ctl) d2dctl=$2 ;; --data-schema) dataschema=$2 ;;
 	*) echo "unknown flag $1" >&2; exit 2 ;;
 	esac
@@ -45,6 +46,10 @@ pack "$out/didle-bin-v$version-linux-amd64.tar.gz" "$stage/bin"
 pack "$out/didle-d2d-v$version-linux-amd64.tar.gz" "$stage/d2d"
 pack "$out/didle-data-v$version.tar.gz" "$stage/data"
 
+if [ -n "$srctext" ]; then
+	[ -f "$srctext" ] || { echo "source text not found: $srctext" >&2; exit 2; }
+	cp "$srctext" "$out/SOURCE.txt"
+else
 cat >"$out/SOURCE.txt" <<TXT
 d.idle app release $version
 bot source: https://github.com/shatteredeagle/d-idle at $srcbot
@@ -52,6 +57,7 @@ d2d source (GPL-3.0-or-later): https://github.com/shatteredeagle/d2d-didle at $s
 The corresponding source of every binary in this release is available at the two
 locations above; docs/tester-licence.md section 4 holds the written offer.
 TXT
+fi
 
 (cd "$repo" && go run ./cmd/d2sign manifest -dir "$out" -version "$version" -seq "$seq" -issued "$issued" \
 	-channel "$channel" -notes "$notes" -min-image "$minimage" -bot-api "$botapi" -d2d-ctl "$d2dctl" -data-schema "$dataschema" \

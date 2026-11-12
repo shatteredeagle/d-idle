@@ -18,3 +18,5 @@
 | PASS | 7 no Battle.net URL in the bot Go source; pack and image names carry no Blizzard marks |
 
 Manual (not automatable): the user reviews GPL compliance with this list; the private link and the tarball hash are sent separately; no public fork.
+
+Feed copy of the sources (2026-11-12): the d2d and bot tarballs are also hosted on the feed; the same item 4 scan covers them (they are the tarballs inside the pack).
