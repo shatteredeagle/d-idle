@@ -506,6 +506,11 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [unlock-risk.md](unlock-risk.md): Hero risk meter (TASK-159, unlockrisk)
 - [unlock-voice.md](unlock-voice.md): Hero voice and diary (TASK-155, unlockvoice)
 
+`upstream/bodies/`
+
+- [cold-enchanted-length-body.md](upstream/bodies/cold-enchanted-length-body.md): cold-enchanted-length-body
+- [lightning-last-unit-body.md](upstream/bodies/lightning-last-unit-body.md): lightning-last-unit-body
+
 `upstream/drafts/`
 
 - [cold-enchanted-length.md](upstream/drafts/cold-enchanted-length.md): Draft (local, NOT posted): "Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)" (status: r4, ready for the verifier's second pass (prprep2, 2026-11-11). Branch `fid/cold-enchanted-length-r4` on...)

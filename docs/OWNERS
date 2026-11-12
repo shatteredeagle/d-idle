@@ -211,6 +211,7 @@ docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  nopins
+docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prprep
 internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/drought.go  credit-runner  freshstart
@@ -358,6 +359,7 @@ internal/watch/web/panels/onboarding  credit-runner  reconnectux
 internal/watch/web/shell.js  credit-runner  minimapfix
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
+tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
