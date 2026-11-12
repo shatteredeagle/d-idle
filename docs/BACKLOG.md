@@ -767,6 +767,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - exploredpct: configurable explored share before the bot moves on, shown in the watch UI (TASK-354, merged 2026-11-11, acceptance 3 of 3): bot.exploredPct (default 100, 30..100) ends a clear roam early via exploredEnough in sweepPass; /api/hero explored block, activity panel header, minute line; unit-tested, NOT verified live. Decision: nav roam() ErrExplored -> bot sweepPass cleared[area]. <!--sg:agent/exploredpct-->
 - skilltrees: Skills page with class trees, tooltips, points (read only) (TASK-355, merged 2026-11-11, acceptance 5 of 5) <!--sg:agent/skilltrees-->
 - skilltrees2: Skills page layout from grid constants, no measuring (TASK-357, merged 2026-11-11, acceptance 4 of 4) <!--sg:agent/skilltrees2-->
+- lockfix: roam done() and NotePosition no longer nest covMu and obMu (sandbox deadlock) (TASK-358, merged 2026-11-11, acceptance 3 of 3): roam() no longer calls done() under covMu (V: regression test fails on old code); observe defers NotePosition until obMu is released, so the two locks never nest. ... <!--sg:agent/lockfix-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

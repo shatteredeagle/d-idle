@@ -240,6 +240,7 @@ internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  arrivalsettle
 internal/bot/observe.go  credit-runner  exploredpct
 internal/bot/observe.go  credit-runner  freshstart
+internal/bot/observe.go  credit-runner  lockfix
 internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
@@ -281,9 +282,11 @@ internal/nav/nav.go  credit-runner  maphistoryC
 internal/nav/nav.go  credit-runner  pursuers
 internal/nav/pursuit.go  credit-runner  pursuers
 internal/nav/pursuit_test.go  credit-runner  pursuers
+internal/nav/roam.go  credit-runner  lockfix
 internal/nav/roam.go  credit-runner  maphistoryC
 internal/nav/roam.go  credit-runner  maptrail
 internal/nav/roam.go  credit-runner  pursuers
+internal/nav/roam_test.go  credit-runner  lockfix
 internal/nav/walk.go  credit-runner  pursuers
 internal/readiness/  credit-runner  ready-model
 internal/readiness/areatable.go  credit-runner  ready-area-table
