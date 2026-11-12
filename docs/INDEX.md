@@ -533,6 +533,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 - [pr-queue.md](upstream/pr-queue.md): Upstream PR queue (d2d fidelity fixes against game.exe 1.14d) (status: current, 2026-11-11 (card TASK-332, agent prprep). Audit of every local candidate against upstream main...)
 - [verification-2026-11-11.md](upstream/verification-2026-11-11.md): Independent verification of upstream PR candidates 1 and 2 (2026-11-11) (status: current, 2026-11-11 (TASK-340, agent prverify). Both candidates NEEDS-WORK; nothing is cleared for posting...)
+- [verification-warp-arrival-2026-11-12.md](upstream/verification-warp-arrival-2026-11-12.md): Independent verification of the warp-arrival fork candidate (2026-11-12) (status: current, 2026-11-12 (TASK-366, agent prverify3). Verdict **NEEDS-WORK**: the rule and the code change are...)
 - [usage.md](usage.md): Usage view (`tools/usage/usage.py`) (status: current (TASK-309; source: docs/research/project-review-2026-11-10.md section 6.1 and 6.3 item 5).)
 - [viewer-fps.md](viewer-fps.md): Viewer game video at 12.5 to 25 fps (card viewerfps1, TASK-293, 2026-11-10)
 - [walksmooth.md](walksmooth.md): walksmooth: the stop-and-go walk (TASK-188) (status: offline fix merged-ready, NOT proven live. Tags: V verified (how stated), S read in code, U unverified.)

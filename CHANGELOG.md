@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-366 prverify3: warp-arrival candidate verification, NEEDS-WORK (docs only) <!--sg:agent/prverify3-->
 - Merge branch 'main' into TASK-371 <!--sg:agent/itemverbs2-->
 - Merge branch 'main' into TASK-370 <!--sg:agent/mine1-->
 - Merge branch 'main' into TASK-369 <!--sg:agent/mine2-->

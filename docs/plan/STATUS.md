@@ -118,6 +118,7 @@
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
 | lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
+| prverify3 | in-progress | - | `docs/upstream/verification-warp-arrival-2026-11-12.md` | - |
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
@@ -174,6 +175,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- ee48fcff 11-12 12:49 `Merge agent/prverify3: TASK-366 prverify3: warp-arrival candidate verification, NEEDS-WORK (docs only)` (prverify3)
+- c97dd79f 11-12 12:48 `Merge branch 'main' into prverify3` (-)
 - da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
 - 116de9a0 11-12 12:14 `Merge branch 'main' into TASK-371` (-)
 - d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
@@ -182,6 +185,4 @@
 - 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
 - b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
 - f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
-- 0ddb833c 11-12 11:55 `Merge agent/lockscan: lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365)` (lockscan)
-- 5803c6df 11-12 11:54 `Merge branch 'main' into lockscan` (-)
 <!-- statusgen:end -->
