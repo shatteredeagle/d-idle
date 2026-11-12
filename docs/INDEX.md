@@ -545,6 +545,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [watch-screen.md](watch-screen.md): Watch screen (TASK-20) (status: offline on the simulated runner; not verified live. Design, contract and API needs:...)
 - [waypoints.md](waypoints.md): Waypoints (agent WPUSE, 2026-10-30) (status: partly superseded: the 10 s arrival wait described below is gone (`nav.wpCooldownSec` defaults to 0,...)
 - [whyline.md](whyline.md): Whyline: why the hero does what it does (TASK-206) (status: built and tested offline (fixtures, no game). V = proven by a test named here, U = not run live. Card...)
+- [wiring.md](wiring.md): Production wiring audit (TASK-379) (status: current. Written 2026-11-12 after the loot memory was found never running in production (`looterAdapter`...)
 - [wizardclass.md](wizardclass.md): wizardclass: the first-run wizard offers classes from the plan tables (TASK-145)
 - [wpcooldown.md](wpcooldown.md): Waypoint arrival cooldown removed (card wpcooldown) (status: current.)
 
