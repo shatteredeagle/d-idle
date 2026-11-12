@@ -468,6 +468,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [senses-unlock.md](senses-unlock.md): Senses unlock ladder (TASK-149, sensesunlock)
 - [session-record.md](session-record.md): Session record and decision dataset (status: BUILT offline, fixtures only (TASK-106). Tags: V verified live, S fixture or code, U unverified. Nothing...)
 - [skill-unlocks.md](skill-unlocks.md): Skill unlocks by quest or find (TASK-133) (status: engine and Sorceress table built and tested offline (fixtures and the real tables on the worker host);...)
+- [skilltrees.md](skilltrees.md): Skills page: the hero's skill trees on the watch screen (TASK-355, skilltrees) (status: current 2026-11-11. Read only. Tags: V verified (say how), S secondary, U unverified.)
 - [skmeleebot.md](skmeleebot.md): SKMELEEBOT: the plain Attack in the resource policy (status: current (2026-11-01). Offline: no game, no d2d slot. Source: docs/research/sk-melee-trace.md (B1 to B4),...)
 - [skmeleewire.md](skmeleewire.md): SKMELEEWIRE: the melee model fed from the live snapshot (status: current (2026-11-01). Offline: no game, no d2d slot. Follows docs/skmeleebot.md (the model) and...)
 - [skmeleewire2.md](skmeleewire2.md): SKMELEEWIRE2: d2d gear and weapon fields into the melee model (status: current (2026-11-01). Offline. Follows docs/skmeleewire.md; source fields docs/forkdbg.md "dump stats gear...)
