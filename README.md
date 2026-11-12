@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/branding/final/header-1280x640.png" alt="d.idle" width="640"></p>
+<p align="center"><img src="assets/branding/out/banner-1280x320.png" alt="d.idle" width="640"></p>
 
 # d2lod-bot (d.idle)
 

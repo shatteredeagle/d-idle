@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/branding/out/banner-1280x320.png" alt="d.idle" width="480"></p>
+
 # d.idle friends pack: install guide (Linux)
 
 > status: BUILT offline (TASK-274, 2026-11-10); the install script was run once on the worker host in a scratch folder with a throwaway project, ports and fake game files (see the card result), never by a friend. Plan: docs/research/friend-build.md. Windows and macOS are not supported in this version.

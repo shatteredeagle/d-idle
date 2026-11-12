@@ -13,7 +13,7 @@
     "start": "electron .",
     "test": "node --test test/*.test.js",
     "smoke": "node test/smoke/run.js",
-    "icons": "electron scripts/make-icons.js",
+    "icons": "node scripts/make-icons.js",
     "pack": "electron-builder --dir --publish never",
     "dist:linux": "node scripts/write-feed.js && electron-builder --linux AppImage deb --publish never",
     "dist:mac": "node scripts/write-feed.js && electron-builder --mac dmg zip --universal --publish never",
