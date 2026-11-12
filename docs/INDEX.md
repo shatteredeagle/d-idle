@@ -578,6 +578,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [feed-after-events.md](process/feed-after-events.md): Feed after events (status: current rule (card feeds, 2026-11-01). The helper is `tools/discord/feed.py`; details in...)
 - [gamecode-guard.md](process/gamecode-guard.md): Game-code guard, labpath class, path scrubber
 - [grill-agent.md](process/grill-agent.md): The grill agent: one command to be interviewed
+- [grill-queue-2026-11-11.md](process/grill-queue-2026-11-11.md): Grill queue 2026-11-11: paste-ready decisions, ADR drafts and glossary text (status: input for the user's next grill session (TASK-342). Docs only. Nothing here is written to...)
 - [grill-workflow.md](process/grill-workflow.md): Grill workflow: deciding with the user in a dedicated session (status: the "create change cards with changecheck new" step is retired for new work (OpenSpec retired, user...)
 - [guarded-proposals.md](process/guarded-proposals.md): Guarded-file proposals from the roadmap decisions (2026-10-31) (status: APPLIED 2026-10-31 by card grillapply: the decisions index has the lines, the milestones/WIP ADR is ADR...)
 - [hooks.md](process/hooks.md): Hooks (change card `hooks`) (status: current since OpenSpec removal stage 5 (2026-11-04): changecheck and `openspec/` are gone; the pre-push...)
