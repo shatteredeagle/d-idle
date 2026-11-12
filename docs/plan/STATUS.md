@@ -110,6 +110,7 @@
 | arrivalsettle | proposed | - | `internal/d2dctl/verbs.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dinput/run_test.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`docs/passagebounce.md` | - |
 | prpost | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r4`<br>`fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
 | mapnodes | proposed | - | `internal/watch/mapdata.go`<br>`internal/watch/mapnodes_test.go`<br>`internal/watch/ordersmap_test.go`<br>`internal/watch/testdata` | - |
+| exploredpct | proposed | - | `docs/exploredpct.md`<br>`internal/bot/exploredpct.go`<br>`internal/bot/exploredpct_test.go`<br>`internal/watch/heroexplored_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/live.go`<br>`docs/knobs.md`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`internal/env/tuning_bot.go`<br>`internal/watch/hero.go`<br>`internal/watch/hub.go`<br>`internal/watch/web/panels/activity/panel.js` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -165,6 +166,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 1232109a 11-11 22:16 `Merge agent/exploredpct: bot.exploredPct knob + explored share in watch UI (TASK-354)` (exploredpct)
+- dc1a4917 11-11 22:15 `Merge branch 'main' into exploredpct` (-)
 - 55514cbc 11-11 22:11 `Merge agent/mapnodes: mapnodes: Underground Pass, Monastery Gate, Outer Cloister orderable on the watch map` (mapnodes)
 - 6c5e3df3 11-11 21:02 `Merge agent/prpost: TASK-352 prpost: posted PRs 444 and 445, bodies, queue` (prpost)
 - 39f58c84 11-11 21:01 `Merge branch 'main' into prpost` (-)
@@ -173,6 +176,4 @@
 - 221266fa 11-11 20:47 `Merge agent/onboarding: TASK-247 TASK-249 onboarding: welcome card, first-30-minutes checklist, reconnect banner` (onboarding)
 - 0644eac5 11-11 20:46 `Merge branch 'main' into onboarding` (-)
 - b2dc041e 11-11 20:42 `Merge agent/decomp12: TASK-350 decomp: warp arrival position and exit trigger arming (d2d arrival bounce)` (decomp12)
-- 26a166b9 11-11 20:41 `Merge branch 'main' into decomp12` (-)
-- debde062 11-11 20:40 `Merge agent/driftfix: driftfix: backlog true-up of drift rows A/B/D` (driftfix)
 <!-- statusgen:end -->

@@ -128,6 +128,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
+cmd/d2bot/d2dbackend.go  credit-runner  exploredpct
 cmd/d2bot/d2dbackend.go  credit-runner  maphistory
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryA
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryC
@@ -135,8 +136,10 @@ cmd/d2bot/d2dbackend.go  credit-runner  maptrail
 cmd/d2bot/funwire.go  credit-runner  maphistoryA
 cmd/d2bot/goldfarmwire_test.go  credit-runner  repairtrip
 cmd/d2bot/journeywire.go  credit-runner  campaign1
+cmd/d2bot/ladder.go  credit-runner  exploredpct
 cmd/d2bot/ladder.go  live-agent  recoverypace
 cmd/d2bot/live.go  credit-runner  campaign1
+cmd/d2bot/live.go  credit-runner  exploredpct
 cmd/d2bot/live.go  credit-runner  maphistory
 cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
@@ -161,12 +164,14 @@ docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
+docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-ui.md  credit-runner  nopins
+docs/knobs.md  credit-runner  exploredpct
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  live-agent  recoverypace
@@ -215,6 +220,9 @@ docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prprep
 internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/drought.go  credit-runner  freshstart
+internal/bot/exploredpct.go  credit-runner  exploredpct
+internal/bot/exploredpct_test.go  credit-runner  exploredpct
+internal/bot/goal.go  credit-runner  exploredpct
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
 internal/bot/goldfarm.go  credit-runner  repairtrip
@@ -225,6 +233,7 @@ internal/bot/lifelog.go  credit-runner  passagebounce
 internal/bot/loop.go  credit-runner  passagebounce
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  arrivalsettle
+internal/bot/observe.go  credit-runner  exploredpct
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/repairtrip.go  credit-runner  repairtrip
@@ -251,6 +260,7 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/env/tuning_bot.go  credit-runner  exploredpct
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
@@ -291,6 +301,9 @@ internal/task/guided_test.go  credit-runner  campaign1
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
+internal/watch/hero.go  credit-runner  exploredpct
+internal/watch/heroexplored_test.go  credit-runner  exploredpct
+internal/watch/hub.go  credit-runner  exploredpct
 internal/watch/invui.go  credit-runner  nopins
 internal/watch/mapdata.go  credit-runner  mapnodes
 internal/watch/mapnodes_test.go  credit-runner  mapnodes
@@ -350,6 +363,7 @@ internal/watch/web/inventory.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  repairtrip
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
+internal/watch/web/panels/activity/panel.js  credit-runner  exploredpct
 internal/watch/web/panels/gear  credit-runner  repairtrip
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maphistoryA
