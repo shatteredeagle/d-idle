@@ -20,6 +20,7 @@ type BeltFillReport struct {
 	Moved    int
 	Dragged  int // of Moved, how many needed the drag-and-drop fallback
 	Failed   int
+	Repaired int // belt potions moved out to the pack to free a column (beltrepair.go)
 	Before   belt.State
 	After    belt.State
 	Attempts int
@@ -89,12 +90,40 @@ func (t *Town) beltFillCandidates(s *d2.Snapshot) []d2.Unit {
 }
 
 // NeedsBeltFill is the pure check: the pack holds potions the belt has room and plan for.
-func (t *Town) NeedsBeltFill(s *d2.Snapshot) bool { return len(t.beltFillCandidates(s)) > 0 }
+func (t *Town) NeedsBeltFill(s *d2.Snapshot) bool {
+	if len(t.beltFillCandidates(s)) > 0 {
+		return true
+	}
+	_, _, _, repair := t.beltRepair(s) // BELTFIX: a belt with no column for a planned kind (docs/beltfix.md)
+	return repair
+}
 
 // FillBelt moves pack potions to free belt slots by shift-click (drag and drop when shift-click does nothing) and
 // re-reads the belt after every move. It opens the backpack itself and closes it again. Safe in town and, with no
 // hostile near, in the field. The returned error is the last move failure, if any move failed.
 func (t *Town) FillBelt(ctx context.Context) (BeltFillReport, error) {
+	rep, err := t.fillBelt(ctx)
+	if err != nil || rep.Moved == 0 {
+		return rep, err
+	}
+	// BELTFIX: the first pass may have taken the last free column; if a planned kind still has pack potions and no column,
+	// free a surplus one and fill again (once: the second pass does not loop back).
+	if s, e := t.current(); e == nil {
+		if _, _, _, ok := t.beltRepair(s); ok {
+			r2, err2 := t.fillBelt(ctx)
+			rep.Moved += r2.Moved
+			rep.Dragged += r2.Dragged
+			rep.Failed += r2.Failed
+			rep.Repaired += r2.Repaired
+			rep.Attempts += r2.Attempts
+			rep.After = r2.After
+			return rep, err2
+		}
+	}
+	return rep, err
+}
+
+func (t *Town) fillBelt(ctx context.Context) (BeltFillReport, error) {
 	var rep BeltFillReport
 	s, err := t.current()
 	if err != nil {
@@ -103,7 +132,8 @@ func (t *Town) FillBelt(ctx context.Context) (BeltFillReport, error) {
 	cand := t.beltFillCandidates(s)
 	rep.Before = belt.Read(t.e.Data, s.Inventory)
 	rep.After = rep.Before
-	if len(cand) == 0 {
+	_, _, _, repair := t.beltRepair(s)
+	if len(cand) == 0 && !repair {
 		return rep, nil
 	}
 	s, err = t.h.OpenInventory(ctx)
@@ -114,6 +144,12 @@ func (t *Town) FillBelt(ctx context.Context) (BeltFillReport, error) {
 	lay, err := t.layout(s)
 	if err != nil {
 		return rep, err
+	}
+	if repair {
+		t.repairBelt(ctx, lay, &rep)
+		if s, err = t.current(); err != nil {
+			return rep, err
+		}
 	}
 	// F9 (BELTFIX): the candidate ids come from the snapshot read with the pack open, not the one from before the open: right
 	// after a re-entry the first read can carry ids the game no longer lists.
@@ -167,7 +203,7 @@ func (t *Town) FillBelt(ctx context.Context) (BeltFillReport, error) {
 	}
 	t.e.Log.Info(fmt.Sprintf("belt: moved %d potions from pack (hp %d->%d mp %d->%d rv %d->%d)", rep.Moved,
 		rep.Before.Count[belt.HP], rep.After.Count[belt.HP], rep.Before.Count[belt.MP], rep.After.Count[belt.MP], rep.Before.Count[belt.RV], rep.After.Count[belt.RV]),
-		"rv", rep.After.Count[belt.RV], "dragged", rep.Dragged, "failed", rep.Failed)
+		"rv", rep.After.Count[belt.RV], "dragged", rep.Dragged, "failed", rep.Failed, "repaired", rep.Repaired)
 	return rep, last
 }
 

@@ -23,6 +23,7 @@ type World struct {
 	DB  *data.DB
 	Lay *panel.Layout
 
+	BeltRows   int  // rows of the belt grid for belt-box clicks (0 = 1, the four-box rig belt)
 	NoAutoBelt bool // d2d: a bought or picked potion lands in the pack, never in the belt
 
 	Player  d2.Player
