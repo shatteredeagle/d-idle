@@ -1,10 +1,11 @@
 ---
 id: TASK-369
 title: 'mine2: awesome-diablo mining 2 (leveling data, tooltips, UI, servers)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:46:00Z'
+updated_date: '2026-11-12T17:14:00Z'
 labels:
   - docs
   - research

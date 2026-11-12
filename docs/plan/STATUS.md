@@ -119,7 +119,6 @@
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
 | lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
-| mine2 | proposed | - | `docs/research/awesome-diablo-mining-2-2026-11-12.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | mine1 | in-progress | - | `docs/research/awesome-diablo-mining-1-2026-11-12.md`<br>`docs/research/d2-name-map-2026-11-12.md`<br>`docs/research/item-packets-2026-11-12.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
