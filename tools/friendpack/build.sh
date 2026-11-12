@@ -84,10 +84,16 @@ BUILD
 # licences and notices
 install -m 0644 "$repo/LICENSE" "$root/licenses/GPL-3.0.txt"
 install -m 0644 "$repo/THIRD_PARTY.md" "$root/licenses/THIRD_PARTY.md"
-# the Freepik line is written only while the d2d tree still carries that icon (replaced icon: no attribution needed)
-freepik=
+# Freepik: the window icon line only while d2d.svg still carries the Freepik icon; once the window icon is original pixel art
+# (fork-only/icon-original) the line is about the Steam launcher art that stays in the source tree (not built into d2d)
+freepik= steamart=
 iconpath=$(tar -tzf "$d2dsrc" 2>/dev/null | grep -E 'assets/icon/d2d\.svg$' | head -1 || true)
-if [ -n "$iconpath" ] && tar -xzOf "$d2dsrc" "$iconpath" 2>/dev/null | grep -q -i freepik; then freepik=1; fi
+svgtext= legaltext= hassteam=
+[ -z "$iconpath" ] || svgtext=$(tar -xzOf "$d2dsrc" "$iconpath" 2>/dev/null || true)
+legaltext=$(tar -xzOf "$d2dsrc" --wildcards '*/LEGAL.md' 2>/dev/null || true)
+hassteam=$(tar -tzf "$d2dsrc" 2>/dev/null | grep -E 'assets/icon/steam-[a-z]+\.(svg|png)$' | head -1 || true)
+if printf '%s' "$svgtext" | grep -q -i 'designed by.*freepik\|dgim-studio'; then freepik=1
+elif [ -n "$hassteam" ] && printf '%s' "$legaltext" | grep -q -i 'dgim-studio'; then steamart=1; fi
 {
 cat <<'NOTICE'
 d2d (d.idle fork)
@@ -104,6 +110,8 @@ Third-party components keep their own licences (full list: THIRD_PARTY.md in thi
 NOTICE
 if [ -n "$freepik" ]; then
 	echo 'The d2d window icon (goat skull and pentagram) is "Designed by dgim-studio / Freepik", used under the Freepik licence.'
+elif [ -n "$steamart" ]; then
+	echo 'The d2d window icon is original pixel art (GPL). The Steam launcher art in the d2d source tree (assets/icon/steam-*, not built into d2d or the image) shows a goat skull "Designed by dgim-studio / Freepik", used under the Freepik licence.'
 fi
 } >"$root/licenses/NOTICE"
 d2dsha=$(sha256sum "$d2dsrc" | cut -d' ' -f1)
