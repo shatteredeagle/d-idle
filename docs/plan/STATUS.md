@@ -119,6 +119,7 @@
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
 | lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
+| mine2 | proposed | - | `docs/research/awesome-diablo-mining-2-2026-11-12.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
@@ -173,6 +174,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
+- 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
 - b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
 - f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
 - 0ddb833c 11-12 11:55 `Merge agent/lockscan: lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365)` (lockscan)
@@ -181,6 +184,4 @@
 - 4893add4 11-12 11:49 `Merge branch 'main' into TASK-367` (-)
 - 562b5d75 11-12 11:45 `Merge branch 'main' into TASK-368` (-)
 - 3634c7ba 11-12 11:29 `Merge branch 'main' into lockscan` (-)
-- 77f18d46 11-12 11:21 `Merge agent/hour1: hour1: first-hour analysis of the fresh Paladin (TASK-364)` (hour1)
-- c45203f5 11-12 10:11 `Merge agent/prpost2: TASK-363 prpost2: CodeRabbit round on PR 445` (prpost2)
 <!-- statusgen:end -->
