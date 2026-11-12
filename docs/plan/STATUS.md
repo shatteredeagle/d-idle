@@ -118,7 +118,7 @@
 | maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
 | maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
 | maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
-| campaign1 | proposed | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/` | - |
+| campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
 | campaign2 | proposed | - | `internal/watch/campaign.go`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/`<br>`internal/watch/web/panels/journey/` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
@@ -176,6 +176,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 9bdfdf5c 11-11 19:27 `Merge agent/campaign1: TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0)` (campaign1)
+- 1f588b61 11-11 19:26 `Merge branch 'main' into campaign1` (-)
 - b54ba019 11-11 19:21 `Merge agent/maphistoryD: TASK-334 maphistoryD: map session export as PNG and JSON (/api/history/export)` (maphistoryD)
 - 5eb2988e 11-11 19:21 `Merge branch 'main' into maphistoryD` (-)
 - 7aa2f4d7 11-11 19:15 `Merge agent/maphistoryC: TASK-333 maphistoryC: map fight cards and failure markers` (maphistoryC)
@@ -184,6 +186,4 @@
 - 844549be 11-11 19:08 `Merge branch 'main' into maphistoryB` (-)
 - b8b3b91f 11-11 19:02 `Merge agent/maphistoryA: TASK-326 maphistoryA: map timeline scrubber and replay, /api/history, chicken portal waypoint markers, loot walk-back activity` (maphistoryA)
 - c6c37ee1 11-11 19:01 `Merge branch 'main' into maphistoryA` (-)
-- 3fa034be 11-11 15:39 `Merge agent/maphistoryD: sync main` (maphistoryD)
-- e8b7fec8 11-11 15:39 `Merge agent/maphistoryC: sync main` (maphistoryC)
 <!-- statusgen:end -->

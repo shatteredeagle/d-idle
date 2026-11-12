@@ -742,6 +742,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - maphistoryB: map heat layers (kills, time spent, damage taken) per area, cells of the coverage size; offline only <!--sg:agent/maphistoryB-->
 - maphistoryC: map fight cards and failure markers (roam leg failed, gate hold, ignore window, target fallback, nav yield); offline only <!--sg:agent/maphistoryC-->
 - maphistoryD: map session export (PNG and JSON, GET /api/history/export) for bug reports; offline only <!--sg:agent/maphistoryD-->
+- campaign1: guided planner, modes, intents, persisted journey state (TASK-337, merged 2026-11-11, acceptance 3 of 4): guided planner + controller + wiring; floor question via return-screen queue still open; not verified live <!--sg:agent/campaign1-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

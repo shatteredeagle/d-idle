@@ -133,7 +133,9 @@ backlog/merge-lines/agent-uifit.txt  credit-runner  uifit
 cmd/d2bot/artcmd.go  credit-runner  artspeed
 cmd/d2bot/artcmd_test.go  credit-runner  artspeed
 cmd/d2bot/artwire.go  credit-runner  artspeed
+cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  artspeed
+cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  maphistory
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryA
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryC
@@ -141,8 +143,10 @@ cmd/d2bot/d2dbackend.go  credit-runner  maptrail
 cmd/d2bot/funwire.go  credit-runner  maphistoryA
 cmd/d2bot/goldfarmwire_test.go  credit-runner  repairtrip
 cmd/d2bot/invwire.go  credit-runner  artspeed
+cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  live-agent  recoverypace
 cmd/d2bot/live.go  credit-runner  artspeed
+cmd/d2bot/live.go  credit-runner  campaign1
 cmd/d2bot/live.go  credit-runner  maphistory
 cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
@@ -168,6 +172,7 @@ docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
+docs/campaign.md  credit-runner  campaign1
 docs/desktop-app.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronmac2
@@ -177,6 +182,7 @@ docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/gear-policy.md  credit-runner  nopins
+docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
@@ -199,6 +205,7 @@ docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/process/queuespeed.md  credit-runner  queuespeed
 docs/pursuers.md  credit-runner  pursuers
+docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
 docs/reconnect-ux.md  credit-runner  reconnectux
 docs/repair.md  credit-runner  repairtrip
@@ -236,6 +243,7 @@ internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
+internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  repairtrip
@@ -304,6 +312,7 @@ internal/senses  credit-runner  maphistoryC
 internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
+internal/task/campaign.go  credit-runner  campaign1
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/town/chores.go  credit-runner  repairtrip
