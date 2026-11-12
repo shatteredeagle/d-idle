@@ -1,10 +1,11 @@
 ---
 id: TASK-348
 title: 'legalfollow: licence checks, pack checklist tool, disclaimers, asset inventory'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:33:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - docs
   - chore

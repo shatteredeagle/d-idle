@@ -1,10 +1,13 @@
 ---
 id: TASK-347
-title: 'branding: original pixel-art brand assets made with Aseprite, replacing third-party icons'
-status: Proposed
+title: >-
+  branding: original pixel-art brand assets made with Aseprite, replacing
+  third-party icons
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:31:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - docs
   - chore

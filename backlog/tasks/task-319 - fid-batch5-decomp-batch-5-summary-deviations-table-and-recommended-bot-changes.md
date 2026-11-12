@@ -1,10 +1,13 @@
 ---
 id: TASK-319
-title: 'fid-batch5: decomp batch 5 summary: deviations table and recommended bot changes'
-status: In Progress
+title: >-
+  fid-batch5: decomp batch 5 summary: deviations table and recommended bot
+  changes
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:51:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - d2d
   - oracle

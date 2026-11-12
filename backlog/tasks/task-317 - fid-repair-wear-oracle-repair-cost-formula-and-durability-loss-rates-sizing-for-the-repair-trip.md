@@ -1,10 +1,13 @@
 ---
 id: TASK-317
-title: 'fid-repair-wear: oracle: repair cost formula and durability loss rates, sizing for the repair trip'
-status: In Progress
+title: >-
+  fid-repair-wear: oracle: repair cost formula and durability loss rates, sizing
+  for the repair trip
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:50:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - d2d
   - oracle

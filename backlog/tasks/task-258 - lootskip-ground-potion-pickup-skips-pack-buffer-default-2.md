@@ -1,10 +1,11 @@
 ---
 id: TASK-258
 title: 'lootskip: ground potion pickup skips, pack buffer default 2'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T17:27:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - bot
   - bug
