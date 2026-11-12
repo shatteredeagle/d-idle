@@ -1,6 +1,6 @@
 # Draft (local, NOT posted): "A warp lands on the free subtile nearest its unit, as FUN_005550b0"
 
-> status: r2, ready for the second verifier pass (prwarp, TASK-372, 2026-11-12). Branch `fid/warp-arrival-r2` on the private fork remote, head `HEAD_HASH`, two commits on upstream main `c9b4c06e`: oracle `ORACLE_HASH`, claim `CLAIM_HASH`. Supersedes `fid/warp-arrival-r1` (feba9539, stale on the remote, never force-pushed). First verifier (TASK-366): [../verification-warp-arrival-2026-11-12.md](../verification-warp-arrival-2026-11-12.md), NEEDS-WORK on r1; every edit it asked for is applied here (list at the end). Claim doc: [../../probes/fid/fid-warp-arrival.md](../../probes/fid/fid-warp-arrival.md).
+> status: r2, ready for the second verifier pass (prwarp, TASK-372, 2026-11-12). Branch `fid/warp-arrival-r2` on the private fork remote, head `24e8ac4f`, two commits on upstream main `c9b4c06e`: oracle `688e53ed`, claim `24e8ac4f`. Supersedes `fid/warp-arrival-r1` (feba9539, stale on the remote, never force-pushed). First verifier (TASK-366): [../verification-warp-arrival-2026-11-12.md](../verification-warp-arrival-2026-11-12.md), NEEDS-WORK on r1; every edit it asked for is applied here (list at the end). Claim doc: [../../probes/fid/fid-warp-arrival.md](../../probes/fid/fid-warp-arrival.md).
 
 Nothing here is posted. PR title: `A warp lands on the free subtile nearest its unit, as FUN_005550b0`
 
@@ -74,9 +74,9 @@ uv run python sk_tele_spot.py diff /tmp/game.tsv /tmp/d2d.tsv /tmp/cases.tsv
 
 - [x] A test in `tests/` citing the game.exe addresses, and the oracle in `tools/emu/`, in the same pull request (oracle commit first and building alone, claim second)
 - [x] The finding in `docs/research/re/drlg.md` ("Taking a warp", and the table row now "diffed")
-- [x] `python3 tools/pr_guard.py upstream/main HEAD`: PRGUARD_LINE
-- [x] `python3 tools/presubmit.py --quick --base upstream/main`: PRESUBMIT_LINE
-- [x] `ctest -j8` on the full build: CTEST_LINE
+- [x] `python3 tools/pr_guard.py upstream/main HEAD`: 0 FAIL, 0 WARN (`--sorted`: 0 FAIL)
+- [x] `python3 tools/presubmit.py --quick --base upstream/main`: 0 FAIL, 1 WARN (build skipped by `--quick`; built, tested and run by hand)
+- [x] `ctest -j8` on the full build: the same 4 failures as upstream main on my box (`test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4`: no video MPQs here), nothing else; each commit builds alone, all targets
 
 ---
 

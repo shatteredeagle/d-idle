@@ -1,5 +1,5 @@
 set -e
-S=~/labrun/herdr/code/d2lod-wt/prwarp/tools/emu/pw; W=~/d2d-lab/wt-pw
+S=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd); W=~/d2d-lab/wt-pw
 cd $W
 git branch -f fid/warp-arrival-r2-old fid/warp-arrival-r2
 git checkout -q -B fid/warp-arrival-r2 6151f74e
