@@ -73,12 +73,35 @@ export const EVENT_MODES = ['key', 'all', 'off'];
 export function eventShown(ev, mode) {
   if (mode === 'off') return false;
   if (mode === 'all') return ev.k !== 'fight';
-  return ev.k === 'kill' || ev.k === 'chicken' || ev.k === 'portal' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
+  return ev.k === 'roamfail' || ev.k === 'gatehold' || ev.k === 'ignore' || ev.k === 'kill' || ev.k === 'chicken' || ev.k === 'portal' || ev.k === 'levelup' || ev.k === 'death' || (ev.k === 'loot' && !!ev.big);
+}
+
+// The lines of a fight card from a fight event (k 'fight', f the summary, ago the end of the fight).
+export function fightCardLines(ev) {
+  const f = ev && ev.f;
+  if (!f) return [];
+  const lines = ['Fight ended ' + (ev.ago / 1000).toFixed(ev.ago < 10000 ? 1 : 0) + ' s ago, lasted ' + f.sec + ' s', 'End: ' + (f.end || '?') + (f.left ? ', left by ' + f.left : ''),
+    f.kills + (f.kills === 1 ? ' kill' : ' kills') + ', damage ' + (f.damage || 0) + ' life points, lowest life ' + f.min + '% (ended at ' + f.life + '%)'];
+  const bits = [];
+  [['potions', 'potions'], ['casts', 'casts'], ['kites', 'kites'], ['approach', 'approaches'], ['dodges', 'dodges']].forEach(([k, n]) => { if (f[k]) bits.push(f[k] + ' ' + n); });
+  if (bits.length) lines.push(bits.join(', '));
+  return lines;
+}
+
+// The fight event that covers a combat sample `ago` ms old (the fight ended at ev.ago and began f.sec earlier).
+export function fightAt(evs, ago) {
+  let best = null;
+  (evs || []).forEach((e) => {
+    if (e.k !== 'fight' || !e.f) return;
+    if (ago >= e.ago - 2000 && ago <= e.ago + e.f.sec * 1000 + 2000 && (!best || e.ago < best.ago)) best = e;
+  });
+  return best;
 }
 
 // The tooltip text of an event, with its fight summary when the server knew one.
-export function eventText(ev) {
+export function eventText(ev, now) {
   const f = ev.f;
+  if (ev.s) return (ev.t || ev.k) + ', ' + Math.max(0, Math.round(ev.s - (now === undefined ? ev.ago : now) / 1000)) + ' s of ' + ev.s + ' s left';
   return (ev.t || ev.k) + (f ? ', ' + f.sec + ' s fight, life ' + f.life + '% (min ' + f.min + '%), end=' + (f.end || '?') + ', ' + f.kills + (f.kills === 1 ? ' kill' : ' kills') : '');
 }
 
@@ -251,11 +274,22 @@ export function mount(root, ctx) {
   [[playBtn, 'play', 'Play the trail'], [spdBtn, 'speed', 'Replay speed']].forEach(([b, key, label]) => { b.type = 'button'; b.dataset.size = 'sm'; b.dataset.key = key; b.setAttribute('aria-label', label); });
   tl.append(ribbon, range, playBtn, spdBtn, scrubLine);
   tl.hidden = true;
+  const card = ctx.el('div', 'fight-card'), cardClose = ctx.el('button', 'd-btn', 'Close');
+  cardClose.type = 'button'; cardClose.dataset.size = 'sm'; cardClose.dataset.key = 'card-close'; cardClose.setAttribute('aria-label', 'Close the fight card');
+  card.hidden = true;
+  function openCard(ev) {
+    const lines = fightCardLines(ev);
+    if (!lines.length) return;
+    const rows = lines.map((l) => ctx.el('p', 'note', l));
+    if (card.replaceChildren) card.replaceChildren(...rows, cardClose); else { card.children = []; card.append(...rows, cardClose); }
+    card.hidden = false;
+  }
+  cardClose.addEventListener('click', () => { card.hidden = true; });
   const legend = ctx.el('p', 'note trail-legend'), share = ctx.el('p', 'note trail-share'), tip = ctx.el('p', 'note trail-tip');
-  ctx.body.append(covLine, heatLine, legend, share, tip, tl);
+  ctx.body.append(covLine, heatLine, legend, share, tip, card, tl);
   ctx.actions.append(covBtn, heatBtn, evBtn, tlBtn, ...winBtns);
   covText();
-  let wantHeat = 0, scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
+  let combatHits = [], wantHeat = 0, scrub = null, hist = null, playing = false, speed = 1, trailTs = 0, polls = 0, wantHist = 0;
   let trail = [], trailArea = 0, plan = { pts: [], stalls: [] }, sig = '', stallHits = [], evs = [], evHits = [], legendNames = [];
   function setWindow(ms) {
     win = ms;
@@ -416,7 +450,7 @@ export function mount(root, ctx) {
   }
   // The trail sits under the hero cross and the units. Each segment is stroked on its own so its alpha follows its age.
   function drawTrail(at) {
-    stallHits = []; evHits = [];
+    stallHits = []; evHits = []; combatHits = [];
     if (!plan.pts.length) return;
     const P = plan.pts, col = (k) => css(ACT_TOKEN[k] || ACT_TOKEN[0], ACT_FALLBACK[k] || ACT_FALLBACK[0]);
     g.save();
@@ -432,6 +466,7 @@ export function mount(root, ctx) {
     P.forEach((p, i) => {
       const a = at(p);
       if (p.e) { g.strokeStyle = col(0); g.beginPath(); g.moveTo(a[0] - 4, a[1] - 4); g.lineTo(a[0] + 4, a[1] + 4); g.stroke(); }
+      if ((p.a || 0) === 1) combatHits.push({ x: a[0], y: a[1], ago: p.ago });
       if ((p.a || 0) === 1 && (i === 0 || (P[i - 1].a || 0) !== 1)) { // a fight starts: small crossed swords
         g.strokeStyle = col(1); g.lineWidth = 2;
         g.beginPath(); g.moveTo(a[0] - 5, a[1] - 5); g.lineTo(a[0] + 5, a[1] + 5); g.moveTo(a[0] + 5, a[1] - 5); g.lineTo(a[0] - 5, a[1] + 5); g.stroke();
@@ -463,9 +498,18 @@ export function mount(root, ctx) {
       case 'chicken': g.strokeStyle = css('--d-warn', '#e0a030'); g.lineWidth = 3; g.beginPath(); g.moveTo(x - r, y - r); g.lineTo(x + r, y + r); g.moveTo(x + r, y - r); g.lineTo(x - r, y + r); g.stroke(); break;
       case 'portal': g.strokeStyle = css('--d-info', '#7ab0e8'); g.beginPath(); g.arc(x, y, r, 0, 6.2832); g.arc(x, y, r / 2, 0, 6.2832); g.stroke(); break;
       case 'waypoint': g.fillStyle = css('--d-accent', '#c7a44a'); g.beginPath(); g.moveTo(x, y - r); g.lineTo(x + r, y); g.lineTo(x, y + r); g.lineTo(x - r, y); g.closePath(); g.fill(); break;
+      case 'roamfail': g.strokeStyle = css('--d-bad', '#ec7d6c'); g.strokeRect(x - r + 1, y - r + 1, 2 * r - 2, 2 * r - 2); break;
+      case 'gatehold': g.fillStyle = css('--d-warn', '#e0a030'); g.fillRect(x - r + 1, y - r + 1, 2 * r - 2, 2 * r - 2); break;
+      case 'ignore': { // hatched circle; the arc is the share of the ignore window still to run
+        const left = e.s ? Math.max(0, 1 - e.ago / 1000 / e.s) : 1;
+        g.strokeStyle = css('--d-warn', '#e0a030'); g.beginPath(); g.arc(x, y, r + 2, 0, 6.2832 * left); g.stroke();
+        g.lineWidth = 1; g.beginPath(); g.moveTo(x - r, y + r); g.lineTo(x + r, y - r); g.moveTo(x - r, y); g.lineTo(x, y - r); g.moveTo(x, y + r); g.lineTo(x + r, y); g.stroke(); break;
+      }
+      case 'fallback': g.fillStyle = css('--d-text-2', '#a89d8a'); g.beginPath(); g.moveTo(x - r, y - r); g.lineTo(x + r, y - r); g.lineTo(x, y + r); g.closePath(); g.fill(); break;
+      case 'yield': g.strokeStyle = css('--d-text-2', '#a89d8a'); g.beginPath(); g.moveTo(x - r, y); g.lineTo(x + r, y); g.stroke(); break;
       default: return;
     }
-    evHits.push({ x, y, text: eventText(e) });
+    evHits.push({ x, y, text: eventText(e), ev: e });
   }
   // Hover or tap on a stop dot names how long the hero stood there.
   function showStall(ev) {
@@ -474,6 +518,13 @@ export function mount(root, ctx) {
     let best = null, bd = 12 * (window.devicePixelRatio || 1);
     evHits.concat(stallHits).forEach((h) => { const d = Math.hypot(h.x - px, h.y - py); if (d <= bd) { bd = d; best = h; } });
     tip.textContent = best ? best.text : '';
+    if (best && best.ev && best.ev.f) openCard(best.ev);
+    else if (!best) {
+      let cb = null, cd = 10 * (window.devicePixelRatio || 1);
+      combatHits.forEach((h) => { const d = Math.hypot(h.x - px, h.y - py); if (d <= cd) { cd = d; cb = h; } });
+      const fe = cb && fightAt(evs, cb.ago);
+      if (fe) openCard(fe);
+    }
     cv.title = tip.textContent;
   }
   // Neighbours arrive with their map only when the page lacks that version.

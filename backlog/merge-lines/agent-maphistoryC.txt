@@ -1,0 +1,2 @@
+BACKLOG: maphistoryC: map fight cards and failure markers (roam leg failed, gate hold, ignore window, target fallback, nav yield); offline only
+CHANGELOG: Watch minimap: fight cards and failure markers

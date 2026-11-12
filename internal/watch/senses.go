@@ -85,6 +85,7 @@ type SenseEvent struct {
 	K     string            `json:"k"`
 	T     string            `json:"t,omitempty"`
 	Big   bool              `json:"big,omitempty"`
+	S     int               `json:"s,omitempty"` // seconds the event window lasts (an ignore); the panel counts it down
 	F     *senses.FightInfo `json:"f,omitempty"`
 }
 
@@ -283,7 +284,7 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 				r.TrailWindowS, r.TrailLegend = int(senses.TrailRetention.Seconds()), senses.ActivityNames[:]
 				if es, ok := s.Src.(EventSource); ok {
 					for _, e := range es.EventsOf() {
-						r.Events = append(r.Events, SenseEvent{AgoMS: now.Sub(e.At).Milliseconds(), X: e.X, Y: e.Y, K: e.Kind, T: e.Text, Big: e.Big, F: e.Fight})
+						r.Events = append(r.Events, SenseEvent{AgoMS: now.Sub(e.At).Milliseconds(), X: e.X, Y: e.Y, K: e.Kind, T: e.Text, Big: e.Big, S: e.Secs, F: e.Fight})
 					}
 				}
 				for _, p := range pts {

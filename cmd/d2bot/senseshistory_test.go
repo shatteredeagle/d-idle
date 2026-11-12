@@ -5,6 +5,7 @@ import (
 
 	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/goals"
+	"d2lod-bot/internal/nav"
 	"d2lod-bot/internal/senses"
 )
 
@@ -42,4 +43,9 @@ func TestHistoryEvent(t *testing.T) {
 	if fi.End != "clear" || fi.Sec != 2.1 || fi.MinLife != 88 {
 		t.Fatalf("%+v", fi)
 	}
+}
+
+func TestNavigatorTakesTheFailureHook(t *testing.T) {
+	var _ failureSetter = (*nav.Navigator)(nil)
+	var _ failureSetter = moverAdapter{}
 }

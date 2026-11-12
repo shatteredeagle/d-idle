@@ -231,3 +231,16 @@ func TestSensesHistoryEndpoint(t *testing.T) {
 		t.Fatal("history rides /api/senses only with ?hist=1")
 	}
 }
+
+func TestSensesFailureEventPayload(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	src := trailSrc{SensesSource: sensesFixture(t), now: now, pts: []senses.TrailPoint{{At: now, X: 1, Y: 1, Area: 1, Entry: true}},
+		evs: []senses.Event{{At: now.Add(-30 * time.Second), X: 3, Y: 1, Area: 1, Kind: senses.EvIgnore, Text: "Ignoring Fallen (unreachable)", Secs: 90},
+			{At: now.Add(-5 * time.Second), X: 2, Y: 1, Area: 1, Kind: senses.EvRoamFail, Text: "Roam leg failed"}}}
+	w := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+	golden(t, "senses-failures", w.Body.String())
+	if !strings.Contains(w.Body.String(), `"k":"ignore","t":"Ignoring Fallen (unreachable)","s":90`) {
+		t.Fatal(w.Body.String())
+	}
+}
