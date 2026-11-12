@@ -153,7 +153,7 @@ type Fun struct {
 	GoldFarm *GoldFarmAPI
 	// Onboarding is the welcome card, first-30-minutes checklist and reconnect data (onboarding.go); always set by NewFun.
 	Onboarding *Onboarding
-	Campaign *CampaignAPI // the guided journey (campaign.go); nil: no routes
+	Campaign   *CampaignAPI // the guided journey (campaign.go); nil: no routes
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 

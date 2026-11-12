@@ -5,7 +5,7 @@
   "title": "Getting started",
   "band": "side",
   "size": "l",
-  "priority": 8,
+  "priority": 9,
   "tab": "hero",
   "defaultOpen": true,
   "endpoint": "/api/onboarding",
