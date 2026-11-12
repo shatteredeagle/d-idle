@@ -452,7 +452,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 
 `releases/`
 
-- [0.1.0.md](releases/0.1.0.md): d.idle friends release 0.1.0 (status: BUILT AND VERIFIED on the worker host 2026-11-11 (TASK-356, branch agent/cut010); NOT published, NOT sent...)
+- [0.1.0.md](releases/0.1.0.md): d.idle friends release 0.1.0 (status: RE-CUT 2026-11-12 (TASK-359, agent/cut010b) from main 0f049a66 with the lock-ordering fix (TASK-358); the...)
 - [repair.md](repair.md): Manual repair (TASK-226, repairmanual) and the repair trip (TASK-303, repairtrip) (status: since 2026-11-11 "Repair now" is a TRIP, not a wait for the next town visit (user decision, section "The...)
 - [resource.md](resource.md): Resource policy: internal/resource (agent RESOURCE)
 - [restloop.md](restloop.md): restloop (archived)

@@ -169,6 +169,7 @@ docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
+docs/friend-checklist-0.1.0.md  credit-runner  cut010b
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-ui.md  credit-runner  nopins
@@ -195,6 +196,7 @@ docs/process/queuespeed.md  credit-runner  queuespeed
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
 docs/quest-hints.md  live-agent  questdrill
+docs/releases/0.1.0.md  credit-runner  cut010b
 docs/repair.md  credit-runner  repairtrip
 docs/research/README.md  credit-runner  dietarchive
 docs/research/design-brief-v1.md  credit-runner  designbrief
@@ -396,6 +398,7 @@ tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
+tools/friendpack/checklist.sh  credit-runner  cut010b
 tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maphistory
