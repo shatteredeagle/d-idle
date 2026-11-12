@@ -1,10 +1,11 @@
 ---
 id: TASK-341
 title: 'campaign3: journey questions, top band chip, chapter events, knobs, Rogue'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:57:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - bot
   - feature
