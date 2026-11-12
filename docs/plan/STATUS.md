@@ -125,6 +125,7 @@
 | goldprio | proposed | - | `internal/loot`<br>`internal/bot/goldprio.go`<br>`internal/bot/goldprio_test.go`<br>`docs/goldprio.md`<br>`cmd/d2bot/adapters.go`<br>`cmd/d2bot/looteradapter_test.go`<br>`internal/combat/interlude_test.go`<br>`internal/combat/fight.go`<br>`internal/combat/types.go`<br>`internal/bot/goal.go`<br>`internal/bot/contracts.go`<br>`internal/bot/runner.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
+| mapfog | proposed | - | `docs/mapfog.md`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/web/panels/map`<br>`internal/watch/testdata/map_panel.js`<br>`tools/uishots` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
@@ -177,14 +178,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
+- 0b34934f 11-12 15:39 `Merge branch 'main' into TASK-382` (-)
 - dc24856b 11-12 15:35 `Merge agent/prverify4: warp-arrival r2 second verification: PASS` (prverify4)
 - 5da9f5e2 11-12 15:35 `Merge branch 'main' into prverify4` (-)
 - 1780ed9f 11-12 15:28 `Merge agent/hourfix2: hourfix2: Den-mouth shuttle (cached Den pick, far priming click)` (hourfix2)
+- 50cce588 11-12 15:28 `Merge origin/main into agent/mapfog` (-)
 - 51904ea2 11-12 15:27 `Merge branch 'main' into TASK-374` (-)
 - 5271cbca 11-12 15:23 `Merge agent/wiring: Merge branch 'main' into TASK-379` (wiring)
 - 13aa1292 11-12 15:21 `Merge branch 'main' into TASK-379` (-)
 - 719f2761 11-12 15:16 `Merge origin/main into wiring` (-)
-- e15f3fcb 11-12 15:13 `Merge agent/bounce3: bounce3 TASK-378: priming click outside d2d warp radius; breaker skips deeper side; bouncesPer100` (bounce3)
-- c4feda32 11-12 15:12 `Merge branch 'main' into bounce3` (-)
-- 68384b47 11-12 15:00 `Merge agent/goldprio: goldprio: doc, knobs table, task card` (goldprio)
 <!-- statusgen:end -->
