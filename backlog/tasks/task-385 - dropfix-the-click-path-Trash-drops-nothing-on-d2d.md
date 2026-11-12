@@ -1,10 +1,11 @@
 ---
 id: TASK-385
 title: 'dropfix: the click-path Trash drops nothing on d2d'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T22:22:00Z'
+updated_date: '2026-11-12T22:41:00Z'
 labels:
   - bot
   - bug
