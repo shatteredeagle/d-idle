@@ -276,6 +276,7 @@ type ChoreReport struct {
 	Earned     int
 	Sold       int
 	Stashed    int
+	Tidied     int // stash and drop actions of the Tidy chore (docs/tidy.md)
 	Identified int
 	Healed     bool
 	Repaired   bool
