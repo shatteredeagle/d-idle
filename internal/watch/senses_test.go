@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"d2lod-bot/internal/buildinfo"
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/senses"
 )
@@ -183,5 +184,97 @@ func TestSensesCoveragePayload(t *testing.T) {
 	c.Explored = true
 	if !strings.Contains(get(coverSrc{SensesSource: base, c: c, ok: true}, 1), `"state":"explored"`) {
 		t.Fatal("explored state")
+	}
+}
+
+type histSrc struct {
+	SensesSource
+	s   []senses.Sample
+	now time.Time
+}
+
+func (h histSrc) HeatOf() ([]senses.HeatPoint, int) {
+	return []senses.HeatPoint{{X: 0, Y: 0, Kills: 3, DwellS: 12, Dmg: 40}, {X: 7, Y: 0, DwellS: 2}}, 1
+}
+
+func (h histSrc) SamplesOf() ([]senses.Sample, time.Time) { return h.s, h.now }
+
+func TestSensesHistoryEndpoint(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	src := histSrc{SensesSource: sensesFixture(t), now: now, s: []senses.Sample{
+		{At: now.Add(-10 * time.Second), Life: 100, Mana: 80, Area: 1, Act: senses.ActWalk, Why: "walk", Level: 5, XP: 900},
+		{At: now.Add(-2 * time.Second), Life: 62, Mana: 40, Area: 1, Act: senses.ActCombat, Why: "fight", Level: 5, XP: 960}}}
+	get := func(tier int) string {
+		w := httptest.NewRecorder()
+		(&Senses{Src: src, Lock: FixedTier(tier)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/history", nil))
+		return w.Body.String()
+	}
+	golden(t, "history", get(1))
+	hw := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(hw, httptest.NewRequest("GET", "/api/history?heat=1", nil))
+	golden(t, "history-heat", hw.Body.String())
+	if strings.Contains(get(1), "heat") {
+		t.Fatal("heat is only sent on request")
+	}
+	if strings.Contains(get(0), `"l":`) {
+		t.Fatal("a closed tier must not leak samples")
+	}
+	if g := get(1); !strings.Contains(g, `"samples":[{`) {
+		t.Fatal(g)
+	}
+	// the panel gets the ring through the senses poll, only when it asks
+	sw := func(q string) string {
+		w := httptest.NewRecorder()
+		(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses"+q, nil))
+		return w.Body.String()
+	}
+	if strings.Contains(sw(""), `"history"`) || !strings.Contains(sw("?hist=1"), `"history":{"schema":"watch.history/1"`) {
+		t.Fatal("history rides /api/senses only with ?hist=1")
+	}
+}
+
+func TestSensesFailureEventPayload(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	src := trailSrc{SensesSource: sensesFixture(t), now: now, pts: []senses.TrailPoint{{At: now, X: 1, Y: 1, Area: 1, Entry: true}},
+		evs: []senses.Event{{At: now.Add(-30 * time.Second), X: 3, Y: 1, Area: 1, Kind: senses.EvIgnore, Text: "Ignoring Fallen (unreachable)", Secs: 90},
+			{At: now.Add(-5 * time.Second), X: 2, Y: 1, Area: 1, Kind: senses.EvRoamFail, Text: "Roam leg failed"}}}
+	w := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/senses", nil))
+	golden(t, "senses-failures", w.Body.String())
+	if !strings.Contains(w.Body.String(), `"k":"ignore","t":"Ignoring Fallen (unreachable)","s":90`) {
+		t.Fatal(w.Body.String())
+	}
+}
+
+type fullSrc struct {
+	trailSrc
+	h histSrc
+}
+
+func (f fullSrc) SamplesOf() ([]senses.Sample, time.Time) { return f.h.SamplesOf() }
+func (f fullSrc) HeatOf() ([]senses.HeatPoint, int)       { return f.h.HeatOf() }
+
+func TestSensesExport(t *testing.T) {
+	now := time.Date(2026, 1, 1, 0, 1, 0, 0, time.UTC)
+	base := sensesFixture(t)
+	src := fullSrc{
+		trailSrc: trailSrc{SensesSource: base, now: now, pts: []senses.TrailPoint{{At: now.Add(-3 * time.Second), X: 1, Y: 1, Area: 1, Entry: true}, {At: now, X: 3, Y: 1, Area: 1, Act: senses.ActCombat}},
+			evs: []senses.Event{{At: now.Add(-1 * time.Second), X: 3, Y: 1, Area: 1, Kind: senses.EvFight, Text: "Fight", Fight: &senses.FightInfo{End: "clear", Kills: 2, Sec: 2.5, MinLife: 80, Life: 90}}}},
+		h: histSrc{SensesSource: base, now: now, s: []senses.Sample{{At: now.Add(-2 * time.Second), Life: 90, Mana: 70, Area: 1, Act: senses.ActCombat, Why: "fight", Level: 5}}},
+	}
+	w := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(w, httptest.NewRequest("GET", "/api/history/export?t=SECRETTOKEN", nil))
+	if w.Code != 200 || !strings.Contains(w.Header().Get("Content-Disposition"), "attachment") {
+		t.Fatalf("%d %v", w.Code, w.Header())
+	}
+	body := strings.Replace(w.Body.String(), `"build":"`+buildinfo.Current()+`"`, `"build":"B"`, 1)
+	golden(t, "history-export", body)
+	for _, bad := range []string{"SECRETTOKEN", "token", "passphrase", ".lan.", "/home/"} {
+		if strings.Contains(strings.ToLower(w.Body.String()), strings.ToLower(bad)) {
+			t.Fatalf("export leaks %q", bad)
+		}
+	}
+	if strings.Contains(w.Body.String(), `"neighbours"`) {
+		t.Fatal("neighbours are left out")
 	}
 }

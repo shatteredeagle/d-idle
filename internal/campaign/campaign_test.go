@@ -37,6 +37,7 @@ func prog(class string, lvl int, merc bool, done ...string) campaign.Progress {
 	p := campaign.Progress{Hero: campaign.Hero{Class: class, Level: lvl, Merc: merc}, Quests: map[string]bool{}, Waypoints: map[int]bool{3: lvl >= 3}}
 	for _, q := range done {
 		p.Quests[q] = true
+		p.MercOwned = p.MercOwned || q == task.QBurial // the Rogue was claimed (alive or dead) unless a test says otherwise
 	}
 	return p
 }
@@ -55,7 +56,7 @@ func next(t *testing.T, s *campaign.Spine, p campaign.Progress, st *campaign.Her
 
 func TestShippedChapters(t *testing.T) {
 	s := shipped(t)
-	want := []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "find_cain", "countess", "tools_of_the_trade", "andariel"}
+	want := []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "countess", "tools_of_the_trade", "andariel"}
 	if len(s.Chapters) != len(want) {
 		t.Fatalf("chapters %d, want %d", len(s.Chapters), len(want))
 	}
@@ -136,8 +137,8 @@ func TestLadderPaladinAndSorceress(t *testing.T) {
 		class string
 		want  []string // chapter ids in the order the decision sends the hero
 	}{
-		{"paladin", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "find_cain", "tools_of_the_trade", "countess", "andariel"}},
-		{"sorceress", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "find_cain", "countess", "andariel"}},
+		{"paladin", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "tools_of_the_trade", "countess", "andariel"}},
+		{"sorceress", []string{"start", "cold_plains_wp", "den_of_evil", "blood_raven", "rogue", "find_cain", "countess", "andariel"}},
 	} {
 		st := campaign.NewHeroState()
 		p := prog(tc.class, 1, false)
@@ -157,11 +158,12 @@ func TestLadderPaladinAndSorceress(t *testing.T) {
 					p.Quests[c.Done.Quest] = true
 				case c.Done.Waypoint > 0:
 					p.Waypoints[c.Done.Waypoint] = true
+				case c.Done.Merc:
 				default:
 					p.Level = max(p.Level, c.Done.Level)
 				}
-				if d.Chapter == "blood_raven" {
-					p.Merc = true
+				if d.Chapter == "rogue" {
+					p.Merc, p.MercOwned = true, true
 				}
 			case campaign.ActFarm:
 				if d.Level <= p.Level || d.Farm == nil {
@@ -336,5 +338,19 @@ func TestStorePersists(t *testing.T) {
 	}
 	if other := back.Hero("Sorci"); other.Mode != campaign.Guided || len(other.Intents) != 0 {
 		t.Errorf("new hero %+v", other)
+	}
+}
+
+// Blood Raven done and no merc ever claimed: the Rogue chapter comes first; a claimed Rogue that died does not repeat it.
+func TestRogueChapterAfterBloodRaven(t *testing.T) {
+	s := shipped(t)
+	p := prog("paladin", 12, false, task.QDen, task.QBurial)
+	p.MercOwned = false
+	if d := next(t, s, p, campaign.NewHeroState(), campaign.Opts{}); d.Action != campaign.ActGo || d.Chapter != "rogue" || d.Quest != task.QBurialMerc {
+		t.Fatalf("%+v", d)
+	}
+	p.MercOwned = true // claimed, dead now
+	if d := next(t, s, p, campaign.NewHeroState(), campaign.Opts{}); d.Chapter != "find_cain" {
+		t.Fatalf("dead Rogue: %+v", d)
 	}
 }
