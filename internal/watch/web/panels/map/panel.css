@@ -8,6 +8,7 @@
   [data-panel="map"] .timeline[hidden] { display: none; }
   [data-panel="map"] .ribbon { inline-size: 100%; block-size: 14px; border-radius: var(--d-r-1); background: var(--d-bg); }
   [data-panel="map"] .scrub { inline-size: 100%; accent-color: var(--d-accent); }
+  [data-panel="map"] .heat-line[hidden] { display: none; }
   [data-panel="map"] .trail-tip:empty { display: none; }
   [data-panel="map"] [aria-pressed="true"] { background: var(--d-accent); color: var(--d-accent-text); }
 }

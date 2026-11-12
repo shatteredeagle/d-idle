@@ -192,6 +192,10 @@ type histSrc struct {
 	now time.Time
 }
 
+func (h histSrc) HeatOf() ([]senses.HeatPoint, int) {
+	return []senses.HeatPoint{{X: 0, Y: 0, Kills: 3, DwellS: 12, Dmg: 40}, {X: 7, Y: 0, DwellS: 2}}, 1
+}
+
 func (h histSrc) SamplesOf() ([]senses.Sample, time.Time) { return h.s, h.now }
 
 func TestSensesHistoryEndpoint(t *testing.T) {
@@ -205,6 +209,12 @@ func TestSensesHistoryEndpoint(t *testing.T) {
 		return w.Body.String()
 	}
 	golden(t, "history", get(1))
+	hw := httptest.NewRecorder()
+	(&Senses{Src: src, Lock: FixedTier(1)}).Handler().ServeHTTP(hw, httptest.NewRequest("GET", "/api/history?heat=1", nil))
+	golden(t, "history-heat", hw.Body.String())
+	if strings.Contains(get(1), "heat") {
+		t.Fatal("heat is only sent on request")
+	}
 	if strings.Contains(get(0), `"l":`) {
 		t.Fatal("a closed tier must not leak samples")
 	}

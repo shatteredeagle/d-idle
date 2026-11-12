@@ -1,6 +1,6 @@
 {
   "schema": "watch.panel/1",
-  "version": 4,
+  "version": 5,
   "id": "map",
   "title": "Map",
   "band": "side",

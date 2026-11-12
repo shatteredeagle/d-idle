@@ -196,3 +196,41 @@ func TestSamplesEveryAndCap(t *testing.T) {
 		t.Fatalf("cap keeps the newest: %d", len(r.s))
 	}
 }
+
+func TestHeatKillsDwellDamageAndReset(t *testing.T) {
+	clock := t0
+	p := &Publisher{now: func() time.Time { return clock }}
+	grid := func() *d2map.LevelMap {
+		return &d2map.LevelMap{No: 1, Grid: d2map.ParseASCII(0, 0, "#####", "#...#", "#####")}
+	}
+	lm := grid()
+	for i := 0; i < 5; i++ { // 5 observations 500 ms apart on one cell
+		clock = t0.Add(time.Duration(i) * 500 * time.Millisecond)
+		p.Observe(lm, "T", d2map.Point{X: 2, Y: 1})
+	}
+	p.AddEvent(EvKill, "x killed", false, nil)
+	p.AddDamage(20, "hurt")
+	pts, area := p.HeatOf()
+	if area != 1 || len(pts) != 1 || pts[0].Kills != 1 || pts[0].Dmg != 20 || pts[0].DwellS != 2 {
+		t.Fatalf("%+v", pts)
+	}
+	if pts[0].X != 0 || pts[0].Y != 0 {
+		t.Fatalf("cells are HeatCell-aligned: %+v", pts[0])
+	}
+	p.Observe(grid(), "T", d2map.Point{X: 2, Y: 1}) // a new level object is a new game
+	if pts, _ := p.HeatOf(); len(pts) != 0 {
+		t.Fatalf("heat of the area resets with its level object: %+v", pts)
+	}
+}
+
+func TestHeatCap(t *testing.T) {
+	var h Heat
+	for i := 0; i < MaxHeatCells+50; i++ {
+		h.cell(1, (i%100)*HeatCell, (i/100)*HeatCell).kills = 1
+	}
+	h.cell(1, 0, 0).kills = 99
+	got := h.Area(1)
+	if len(got) != MaxHeatCells || got[0].Kills != 99 {
+		t.Fatalf("the busiest cells survive the cap: %d", len(got))
+	}
+}
