@@ -40,7 +40,7 @@ func TestViewSchema5Golden(t *testing.T) {
 		if _, err := d.RequestEquip(good, "rhand"); err != nil {
 			t.Fatal(err)
 		}
-		b, err := json.MarshalIndent(d.View(), "", " ")
+		b, err := json.MarshalIndent(asSchema5(d.View()), "", " ")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -95,3 +95,7 @@ func TestOldStateFileLoads(t *testing.T) {
 		t.Fatalf("old file: %v", err)
 	}
 }
+
+// asSchema5 pins the old goldens: the schema 5 files stay as they were (the new fields are all omitempty), only the
+// version number moved on to 6.
+func asSchema5(v View) View { v.Schema = 5; return v }

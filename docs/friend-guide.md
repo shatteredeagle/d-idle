@@ -16,6 +16,8 @@ This is a private beta for a few friends. The pack is a single file, `didle-frie
 
 The pack carries the GPL-3.0 program d2d and the bot that drives it, with their source (`src/`) and licences (`licenses/`). It contains nothing from Blizzard Entertainment: no game files, no art, no keys. Art shown on the watch page is read from your own game folder on your own machine at run time; never post screenshots of it or share the data volume. Diablo II is a trademark of Blizzard Entertainment; this project is not affiliated with it. If you pass the pack on, the source and notices go with it. The installer shows `licenses/licence-note.txt` and asks for a `y` once per version. This is a plain description, not legal advice.
 
+**In short:** not affiliated with or endorsed by Blizzard Entertainment; bring your own legally owned Diablo II 1.14d game files; offline only (no Battle.net); GPL-3.0-or-later; no warranty.
+
 ## Install
 
 ```

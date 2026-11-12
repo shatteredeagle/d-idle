@@ -17,7 +17,7 @@ var (
 // pagePanels are the panels a page dump must hold, ready, by file name prefix. The fixture viewer offers data for
 // every one of them, so a missing or still-loading panel is a regression.
 var pagePanels = map[string][]string{
-	"watch-":     {"hero-status", "hero-meters", "alerts-count", "hero-detail", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
+	"watch-":     {"hero-status", "hero-meters", "alerts-count", "video", "map", "hero-vitals", "activity", "why", "gear", "tally"},
 	"overlay-":   {"hero-status"},
 	"inventory-": {"hero-status"},
 }

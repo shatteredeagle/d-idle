@@ -283,6 +283,9 @@ func newHarness(t testing.TB, mods ...func(*env.Tuning)) *harness {
 	s := newSim()
 	h := &harness{s: s}
 	tune := env.DefaultTuning()
+	// The simulator heals a potion at once, so the over-time effect rule (potioneffect.go) would only starve it:
+	// 100 turns the rule off; potioneffect_test.go uses withEffectRule.
+	tune.Combat.PotionEmergencyPct = 100
 	for _, m := range mods {
 		m(&tune)
 	}
