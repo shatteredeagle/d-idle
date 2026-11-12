@@ -530,6 +530,17 @@ func (r *Runner) State() State {
 	return r.st
 }
 
+// IdleSafe reports whether an update may restart the process now: the hero stands in town or the bot is not playing
+// (no goal, paused, error). Travelling, clearing, a town trip and recovery are not safe (a fight or a chore would be
+// cut). It reads the cached state only (cmd/d2bot/update.go gives it to selfupdate.Config.IdleSafe).
+func (r *Runner) IdleSafe() bool {
+	switch r.State() {
+	case StateIdle, StateInTown, StatePaused, StateError:
+		return true
+	}
+	return false
+}
+
 func (r *Runner) setLocked(st State, activity string) {
 	now := r.e.Clock.Now()
 	if st != r.st || r.stateSince.IsZero() {
