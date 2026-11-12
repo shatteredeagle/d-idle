@@ -50,6 +50,9 @@ type AuraPref struct {
 	// RestLifePct > 0 makes this a resting aura (Prayer): wanted only while resting with life below this percent and
 	// no monster adjacent; in a fight it is the last resort when no other aura is known.
 	RestLifePct int `json:"restLifePct"`
+	// NeedsCrowd marks an area aura that only pays against a pack (Holy Fire, 1.75 dps per monster at level 4 against
+	// Might's +40 percent on every swing): wanted only with combat.holyFireMinMonsters hostiles close.
+	NeedsCrowd bool `json:"needsCrowd"`
 }
 
 // Band is a level band of a profile: the first band that is reached and whose Requires skill is known wins.
@@ -78,10 +81,13 @@ type Profile struct {
 	Aura  []AuraPref `json:"aura"`
 	// Avoid names attack skills the profile never ranks even when learned (a skill known broken on the d2d build in
 	// use, docs/capabilities.md); the bands stay as the game plays them, so removing the entry restores the order.
-	Avoid  []string          `json:"avoid"`
-	Buffs  [][]string        `json:"buffs"`
-	Layout map[string]string `json:"layout"`
-	Melee  *MeleeParams      `json:"melee"`
+	Avoid []string `json:"avoid"`
+	// LifePrice names attack skills that cost life (Sacrifice: 8 percent of the damage dealt). They are offered only
+	// while the life, potion and merc rules of Fighter.lifePriceOK allow it (combat.sacrifice*).
+	LifePrice []string          `json:"lifePrice"`
+	Buffs     [][]string        `json:"buffs"`
+	Layout    map[string]string `json:"layout"`
+	Melee     *MeleeParams      `json:"melee"`
 }
 
 type classData struct {
