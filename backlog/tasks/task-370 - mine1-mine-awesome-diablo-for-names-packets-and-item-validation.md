@@ -1,10 +1,11 @@
 ---
 id: TASK-370
 title: 'mine1: mine awesome-diablo for names, packets and item validation'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:52:00Z'
+updated_date: '2026-11-12T17:14:00Z'
 labels:
   - docs
   - research
