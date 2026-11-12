@@ -274,3 +274,60 @@ func BenchmarkFramePath(b *testing.B) {
 		report(b, buf.Len())
 	})
 }
+
+// The viewer asks for frames without the game's pointer (`cursor off`, a draw-only verb of the fork). The verb passes
+// the read-only viewer socket, is sent once and then only now and then, and a d2d that does not know it (the fake, like
+// every binary before the fork commit) is left alone without an error and without being asked again.
+func TestHideCursorVerb(t *testing.T) {
+	for line, want := range map[string]bool{"cursor off": true, "cursor on": true, "cursor": false, "cursor off now": false, "cursor hide": false, "click 1 1": false} {
+		if cursorVerb(line) != want {
+			t.Errorf("cursorVerb(%q) = %v", line, !want)
+		}
+	}
+	mux, fs, _, view := rig(t)
+	fr, err := NewFrames(view, mux, "/tmp/shots", 5)
+	if err != nil {
+		t.Fatal(err)
+	}
+	count := func() (n int) {
+		for _, l := range fs.Lines() {
+			if l == "cursor off" {
+				n++
+			}
+		}
+		return n
+	}
+	ctx := context.Background()
+	fr.hideCursor(ctx) // off by default in the type: nothing is sent unless the viewer asks
+	if count() != 0 {
+		t.Fatal("cursor off sent without HideCursor")
+	}
+	fr.HideCursor = true
+	fr.hideCursor(ctx)
+	if count() != 1 || !fr.cursorOld {
+		t.Fatalf("the verb must reach d2d through the viewer socket once (got %d) and an unknown verb marks an old d2d (%v)", count(), fr.cursorOld)
+	}
+	fr.hideCursor(ctx)
+	fr.cursorAt = time.Time{}
+	fr.hideCursor(ctx)
+	if count() != 1 {
+		t.Errorf("an old d2d was asked again: %d", count())
+	}
+	// a d2d that knows the verb is asked again only after cursorEvery (a restart draws the pointer again)
+	fr.cursorOld = false
+	fr.cursorAt = time.Now()
+	fr.hideCursor(ctx)
+	if count() != 1 {
+		t.Errorf("asked again inside the interval: %d", count())
+	}
+	fr.cursorAt = time.Now().Add(-cursorEvery - time.Second)
+	fr.hideCursor(ctx)
+	if count() != 2 {
+		t.Errorf("not asked again after the interval: %d", count())
+	}
+	// the sampler still delivers frames whatever the verb says
+	fr.cursorOld = false
+	if _, err := fr.sample(ctx); err != nil {
+		t.Logf("sample: %v (the fake has no picture; the cursor verb must not be the cause)", err)
+	}
+}

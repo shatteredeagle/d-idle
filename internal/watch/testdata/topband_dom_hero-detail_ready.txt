@@ -18,6 +18,7 @@
         <span class="lbl"> "stash"
         <span class="val"> "5 300"
         <span class="delta"> "in the stash"
+    <p class="d-hint xp"> "XP 15,000 / 18,000 (50%) · 12,345 xp/h"
     <div class="d-strip res" aria-label="Resistances">
       <span class="d-chip" data-key="fire">
         "fire "

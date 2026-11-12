@@ -230,3 +230,51 @@ Deploy check (coordinator): dev-update the sandbox (d2bot and d2dview change, th
 
 Next (not done): a canvas player with a 2-3 frame jitter buffer on the watch page (only if the browser's `<img>`
 multipart display still looks uneven after this), and per-client half size for phones (stage 3 in section 4).
+
+## 8. No game pointer in the picture (card nocursor, 2026-11-11)
+
+The user saw a white blade-shaped sprite next to the hero in the watch video: the game's own mouse pointer. d2d draws it into the frame itself (the OS pointer is hidden in the game window), at the mouse position, right before the frame is presented; the frame feed and the `screenshot` verb copy that same frame, so the pointer is in every picture the viewer gets, resting where the bot last put it (V: read in the fork's `apps/d2d/main.cpp`, the block "D2's own cursor, drawn into the frame", and by the test below; S that the second, smaller shape in the user's picture is the same sprite a frame later, not looked into).
+
+- **Fork:** verb `cursor off` / `cursor on` (default on). Off skips that one blit: the pointer, the item in hand and the identify pointer are not drawn. The mouse position, the held item, clicks and the game state are untouched, so determinism is not affected. Branch `d2d.lab3-nocursor`, commit `c418e235` on the private fork remote, on top of the frame feed commit `80cc7adc`. V: built on the worker host; the fork test `tests/cursor_verb_d2d.py` (a headless d2d on a throwaway profile with `--no-save`, no character) shows that a frame differs with the pointer off, that a moved pointer does not show in an off frame, and that `cursor on` gives the earlier frame back byte for byte.
+- **Viewer:** `d2dview -hide-cursor` (default true) sends `cursor off` when it starts sampling and again every 10 s (the switch lives in the d2d process, so a restarted d2d draws its pointer for at most that long). The verb passes the read-only viewer socket (`cursorVerb` in `mux.go`: exactly `cursor on` or `cursor off`). A d2d without the verb answers "unknown verb": the viewer notes that once, says nothing and never asks again, so older binaries keep working with the pointer drawn. V: `go test ./cmd/d2dview -run TestHideCursorVerb`. U: the two halves together on the sandbox (needs the image below).
+- **To ship** (not done by this card; the sandbox was not touched): rebuild the sandbox image from the fork commit, as section 6 did for the frame feed: `FORK_URL=<fork checkout> sh deploy/d2d-container/context.sh <absolute ctx dir> c418e235`, `docker build --cpu-shares 2 --build-arg DEV=1 -t d2dbot:devp3 <ctx>`, point the compose at `d2dbot:devp3` and recreate the container, then one dev update so the container runs a `d2dview` that sends the verb. Roll back by going back to the previous image tag: nothing else depends on the verb.
+- The pointer is also gone from the bot's own screenshots while the viewer runs. Nothing reads the pointer from a picture (the bot reads state through the dump verb), so that is harmless; `d2dview -hide-cursor=false` keeps it drawn.
+
+## 8. The picture freezes after a while (card videoresume, TASK-336, 2026-11-11)
+
+User: "hitches now and then, not bad; the video freezes if it sits too long, maybe the tab sleeping".
+
+Likely causes, in order (no live reproduction by this card):
+1. NOT a server timeout (V by code): neither watch server (`internal/watch/serve.go`, view and answer listeners) nor
+   d2dview sets `ReadTimeout`/`WriteTimeout`/`IdleTimeout`, so nothing cuts a long MJPEG stream after N minutes.
+2. The page could not see a dead stream (S by code, the likely freeze): the old panel was a plain `<img src=/stream>`
+   that reconnected only on `error`. A multipart stream that ends or stops sending (the relay ends after 15 s without
+   a frame, e.g. during a d2d restart; a capture restart; a proxy or Wi-Fi drop that leaves the TCP connection open)
+   leaves the last frame on screen with no event, so it froze until a reload.
+3. A viewer that vanished without closing (a sleeping phone or laptop, a dropped link) held its slot forever (V:
+   `TestVideoDropsAViewerThatStoppedReading` fails without the fix: the handler blocked in Write). Three such and the
+   next viewer got 429 and waited in the backoff loop.
+4. Hidden tabs: browsers throttle them; on return the old `<img>` sometimes kept a stale frame (U, browser-dependent).
+
+Fixes:
+- The panel reads the stream with `fetch` and splits the parts itself (`partParser`), so each frame is an event. A
+  watchdog tears the stream down after 3 s without a frame while the tab is visible and reconnects after 1, 2, 4, 8,
+  10 s; a badge says "reconnecting..." over the last picture, and after five failures in a row "stream down" with a
+  Retry button (it still retries every 10 s). A tab hidden for 10 s closes the stream ("paused"); visibilitychange to
+  visible reopens it at once; focus and online revive a stream that has gone quiet; pageshow from the back-forward
+  cache reconnects. `window.d2video.reconnect()` (also `state()`, `fps()`, set by `web/mjpeg.js`: a long-lived stream is not a poll, so the reader lives in a page module next to the shell, not in the panel, which may not fetch under the panel contract) is the hook for the desktop app. With
+  `?debug` in the page address the card head shows `stream: N fps`. Browsers without streaming fetch keep the plain
+  `<img>` (backoff now 1, 2, 4, 8, 10 s). The `/stream` and `/stream.mjpg` endpoints are unchanged.
+- The watch video writes each part under a per-part deadline (`VideoOptions.WriteTimeout`, 10 s): a viewer that stops
+  reading is dropped and frees its slot, and the capture stops after the linger; a live stream renews the deadline at
+  every part, so it lives as long as it is read (`TestVideoStreamOutlivesTheWriteDeadline`).
+- The page CSP allows `blob:` images (each streamed frame is an object URL); frames that never decode fall back to the plain `<img>` after three errors.
+- Tests: node `testdata/video_panel.js` (fake clock: stall, backoff, down and Retry, hidden then closed, visible then
+  reopened, wake on a stale stream, the part parser on 7-byte chunks), Go `videoresume_test.go`.
+
+Desktop app (not changed here, apps/desktop-electron is another card's): call the hook on resume, e.g. in main.js
+`powerMonitor.on('resume', () => gameView.webContents.executeJavaScript('window.d2video && window.d2video.reconnect()').catch(() => {}))`
+and the same on the window's `show` and `restore`. The page's own visibility handling already covers most of it.
+
+Deploy check: dev-update (d2bot only). Open the watch page, leave it 20 min, hide the tab 1 min and come back, sleep
+the laptop: the picture resumes by itself within a few seconds, the badge shows while it does.

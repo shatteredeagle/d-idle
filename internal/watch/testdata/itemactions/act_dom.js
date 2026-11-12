@@ -58,7 +58,7 @@ const views = JSON.parse(fs.readFileSync(path.join(dir, 'act_view.json'), 'utf8'
 const src = fs.readFileSync(process.argv[2], 'utf8');
 let bad = 0;
 const check = (name, got) => {
-  const file = path.join(dir, 'act_dom_' + name + '.txt');
+  const file = path.join(dir, 'act_dom_' + name + '.nopin.txt');
   if (process.env.UPDATE) { fs.writeFileSync(file, got); return; }
   if (!fs.existsSync(file)) { console.error('missing golden ' + file); bad++; return; }
   if (fs.readFileSync(file, 'utf8') !== got) { console.error('menu differs from ' + file + '\n' + got); bad++; }
@@ -95,6 +95,20 @@ for (const cls of ['paladin', 'sorceress']) {
   const p = page(src); p.h.init(); p.h.onView(idViews[cls]); p.h.renderErrands(); p.h.renderQueue();
   check('errands_' + cls, ser(p.boxes.errands, 0));
   check('queue_card_identify_' + cls, ser(p.boxes.queue, 0));
+}
+
+// ---- stash actions (schema 6): menu of a pack item, a refused pack item, a stash item, refused/identifiable stash items,
+// the gold strip, the queue card and the pending badges; own fixture act_view_stash.json
+const stViews = JSON.parse(fs.readFileSync(path.join(dir, 'act_view_stash.json'), 'utf8'));
+for (const cls of ['paladin', 'sorceress']) {
+  for (const [name, key] of Object.entries({ pack: 'item-1', packfull: 'item-7', take: 'item-3', takefull: 'item-5', notool: 'item-6' })) {
+    const p = page(src); p.h.init(); p.h.onView(stViews[cls]); p.h.open(key);
+    check('stash_' + cls + '_' + name, ser(p.h.state().node, 0));
+  }
+  const p = page(src); p.h.init(); p.h.onView(stViews[cls]); p.h.renderGold(); p.h.renderErrands(); p.h.renderQueue();
+  check('stash_gold_' + cls, ser(p.boxes.stashgold, 0));
+  check('stash_errands_' + cls, ser(p.boxes.errands, 0));
+  check('stash_queue_card_' + cls, ser(p.boxes.queue, 0));
 }
 
 // ---- behaviour
@@ -191,6 +205,30 @@ const flush = () => new Promise((r) => setImmediate(r));
     assert.strictEqual(e.count.value, '7'); assert.strictEqual(e.box.children.length, kids);
     // no identify block (an older bot): the strip stays hidden
     const old = JSON.parse(JSON.stringify(idViews[cls])); delete old.identify; p.h.onView(old); p.h.renderErrands(); assert.strictEqual(e.box.hidden, true);
+  }
+  { // stash behaviour: one click queues the move; the gold boxes validate and send op and count; pending badges follow the queue
+    cur = 'paladin';
+    const p = page(src); p.h.init(); p.h.onView(stViews.paladin);
+    assert.strictEqual(p.getA('item-3').dataset.pending, 'identify'); assert.strictEqual(p.getA('item-1').dataset.pending, 'stash');
+    p.h.open('item-7'); const off = p.h.state().node.querySelectorAll().find((b) => b.dataset.act === 'stash');
+    assert.strictEqual(off.attrs['aria-disabled'], 'true'); off.listeners.click[0]();
+    assert.strictEqual(p.fetched.filter((f) => /inventory\/(stash|take)$/.test(f.u)).length, 0, 'a refused move sends nothing');
+    p.h.close();
+    const q = JSON.parse(JSON.stringify(stViews.paladin)); q.queue = [];
+    p.h.onView(q); assert.ok(!('pending' in p.getA('item-3').dataset), 'badge cleared once settled');
+    p.h.open('item-3'); const tk = p.h.state().node.querySelectorAll().find((b) => b.dataset.act === 'take'); tk.listeners.click[0]();
+    await flush(); await flush();
+    assert.ok(p.fetched.some((f) => /inventory\/take$/.test(f.u) && JSON.parse(f.body).id === 3), 'take-out queued');
+    p.h.onView(q); p.h.open('item-3'); const idb = p.h.state().node.querySelectorAll().find((b) => b.dataset.act === 'identify'); assert.ok(idb && !idb.attrs['aria-disabled'], 'identify in place is offered on the stash item');
+    p.h.onView(JSON.parse(JSON.stringify(stViews.paladin))); await flush(); p.h.renderGold(); const g = p.h.goldBox();
+    g.amt.value = '0'; g.dep.listeners.click[0](); g.amt.value = '99999'; g.wd.listeners.click[0]();
+    assert.strictEqual(p.fetched.filter((f) => /inventory\/gold$/.test(f.u)).length, 0, 'bad amounts send nothing');
+    g.amt.value = '1500'; g.dep.listeners.click[0](); await flush(); await flush();
+    const gf = p.fetched.filter((f) => /inventory\/gold$/.test(f.u)); assert.strictEqual(gf.length, 1);
+    assert.deepStrictEqual(JSON.parse(gf[0].body), { op: 'deposit', count: 1500 });
+    g.amt.value = '77'; g.amt.listeners.input[0](); p.h.onView(JSON.parse(JSON.stringify(stViews.paladin))); await flush(); p.h.renderGold();
+    assert.strictEqual(g.amt.value, '77', 'a typed amount survives the poll');
+    const noBackend = JSON.parse(JSON.stringify(stViews.paladin)); delete noBackend.stashOps; p.h.onView(noBackend); p.h.renderGold(); assert.strictEqual(g.box.hidden, true);
   }
   // placement stays inside the viewport
   const pl = page(src).h.place;

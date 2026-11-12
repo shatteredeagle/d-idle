@@ -28,7 +28,7 @@ const invPage = `<!DOCTYPE html>
  <section class="d-card inv-equip" aria-labelledby="t-equip">
   <div class="d-card-head"><h2 id="t-equip">Equipped</h2><span class="meta" id="equipmeta"></span></div>
   <div class="inv-doll-wrap"><div class="d-doll" id="equip" role="group" aria-label="Paper doll"></div><div class="inv-detail" id="detail"></div></div>
-  <div class="d-legend" aria-label="Legend"><span><b class="lg-pin">PIN</b>player-equipped, the bot leaves the slot alone</span><span><b class="lg-sell">S</b>sell at the next vendor</span><span><b class="lg-keep">K</b>keep, never sold</span><span>pips: durability, amber under 30 percent, red and BROKEN at 0</span></div>
+  <div class="d-legend" aria-label="Legend"><span><b class="lg-sell">S</b>sell at the next vendor</span><span><b class="lg-keep">K</b>keep, never sold</span><span>pips: durability, amber under 30 percent, red and BROKEN at 0</span></div>
   <div class="inv-merc" id="merc-doll" hidden></div>
  </section>
  <section class="d-card inv-pack" aria-labelledby="t-pack">
@@ -51,6 +51,7 @@ const invPage = `<!DOCTYPE html>
  <section class="d-card inv-queue" aria-labelledby="t-queue">
   <div class="d-card-head"><h2 id="t-queue">Item actions</h2></div>
   <div class="inv-errands" id="errands" hidden></div>
+  <div class="inv-errands inv-stashgold" id="stashgold" hidden></div>
   <div id="queue"></div>
  </section>
 </main>

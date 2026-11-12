@@ -42,6 +42,10 @@ type Fighter struct {
 	// OnFight, when set, gets one FightEnd per finished fight that took damage or lasted FightMinSec (passive: the
 	// policy preview's feed, card previewfeed). It runs on the fight goroutine and must not block.
 	OnFight func(FightEnd)
+	// OnSummary, when set, gets a FightSummary for every finished fight (the watch minimap's fight cards). Passive.
+	OnSummary func(FightSummary)
+	// OnNote, when set, hears of target ignores, melee target fallbacks and nav yields (failure markers of the minimap). Passive.
+	OnNote func(Note)
 
 	mercSt mercFieldState
 

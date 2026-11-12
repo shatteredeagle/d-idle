@@ -108,7 +108,19 @@
 | fid-repair-wear | in-progress | - | `docs/probes/fid/fid-repair-wear.md` | - |
 | fid-pal-attack | in-progress | - | `docs/probes/fid/fid-pal-attack.md` | - |
 | fid-batch5 | in-progress | - | `docs/probes/fid/batch5.md`<br>`tools/emu/d9_*` | - |
-| lootmemory | proposed | - | `internal/loot/memory.go`<br>`internal/loot/memory_test.go`<br>`internal/loot/export_test.go`<br>`internal/loot/loot.go`<br>`internal/loot/pickup.go`<br>`internal/env/tuning_loot.go`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`docs/lootmemory.md`<br>`docs/knobs.md` | - |
+| xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
+| maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
+| nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
+| maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
+| runstate | proposed | - | `internal/d2dinput/run.go` | - |
+| zealdiff | proposed | - | `tools/emu/zd_*` | - |
+| maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
+| maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
+| campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
+| campaign2 | proposed | - | `internal/watch/campaign.go`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/`<br>`internal/watch/web/panels/journey/` | - |
+| stashactions | proposed | - | `internal/invdesk`<br>`internal/town/playerstash.go`<br>`internal/town/playerstash_test.go`<br>`internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-actions.css`<br>`internal/watch/testdata/itemactions`<br>`docs/inventory-actions.md`<br>`docs/whyline.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -165,14 +177,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- 39d2d512 11-11 14:09 `Merge agent/lootmemory: TASK-320 lootmemory: remember drops beyond the pickup radius and walk back for worthwhile ones` (lootmemory)
-- 770941f7 11-11 14:07 `Merge branch 'main' into lootmemory` (-)
-- 3ba8ecde 11-11 14:04 `Merge agent/decomp9: decomp batch 5: fid-revive-mode (TASK-316), fid-repair-wear (TASK-317), fid-pal-attack (TASK-318), batch summary + d9 tools (TASK-319); docs and tools/emu only, offline` (decomp9)
-- 9ce60add 11-11 14:03 `Merge branch 'main' into decomp9` (-)
-- a2948d73 11-11 13:58 `Merge agent/uifit: uifit: watch panels fit their content: rows measured from the rendered card, the Game card is its picture plus the head at every width (TASK-315)` (uifit)
-- 6c772689 11-11 13:51 `Merge origin/main into agent/uifit` (-)
-- 020dddf8 11-11 13:38 `Merge agent/uifix: uifix: watch cards no longer stick in the loading state: /api/hero never waits for the inventory view, one request per address in the shell, one event stream per page (TASK-314)` (uifix)
-- 3aec63e5 11-11 13:11 `Merge agent/queuespeed: TASK-312 queuespeed: self-healing red hold, judge main by ci workflow, auto-Done head in flight` (queuespeed)
-- 2226b208 11-11 13:10 `Merge branch 'main' into queuespeed` (-)
-- 2c9b051e 11-11 12:58 `Merge agent/identify2: TASK-307 identify2: identify at the next safe moment anywhere, batched, priority; errands trigger a trip home` (identify2)
+- 429fd1d2 11-11 19:34 `Merge agent/stashactions: TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold` (stashactions)
+- d6c186b0 11-11 19:33 `Merge branch 'main' into stashactions` (-)
+- 9bdfdf5c 11-11 19:27 `Merge agent/campaign1: TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0)` (campaign1)
+- 1f588b61 11-11 19:26 `Merge branch 'main' into campaign1` (-)
+- b54ba019 11-11 19:21 `Merge agent/maphistoryD: TASK-334 maphistoryD: map session export as PNG and JSON (/api/history/export)` (maphistoryD)
+- 5eb2988e 11-11 19:21 `Merge branch 'main' into maphistoryD` (-)
+- 7aa2f4d7 11-11 19:15 `Merge agent/maphistoryC: TASK-333 maphistoryC: map fight cards and failure markers` (maphistoryC)
+- f7d625ae 11-11 19:14 `Merge branch 'main' into maphistoryC` (-)
+- ea07a993 11-11 19:09 `Merge agent/maphistoryB: TASK-331 maphistoryB: map heat layers for kills, time spent and damage` (maphistoryB)
+- 844549be 11-11 19:08 `Merge branch 'main' into maphistoryB` (-)
 <!-- statusgen:end -->

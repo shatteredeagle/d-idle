@@ -7,12 +7,13 @@ import (
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/buildinfo"
 	"d2lod-bot/internal/senses"
 )
 
 // SensesRoutes are the GET routes of the side-panel minimap (docs/senses-map.md). Mount them on the viewer behind the
 // same gate as /api/return (serve.go does when ServeOptions.Senses is set).
-var SensesRoutes = []string{"/api/senses", "/watch/senses_units.js"}
+var SensesRoutes = []string{"/api/senses", "/api/history", "/api/history/export", "/watch/senses_units.js"}
 
 // Unlocker says which senses tiers the watcher has earned. FixedTier is the plain knob; LadderUnlocker (sensesunlock.go)
 // reads the unlock ladder. Tier 1 is the map and the hero marker, tier 2 the unit dots.
@@ -73,6 +74,25 @@ type SenseTrailPoint struct {
 	X     int   `json:"x"`
 	Y     int   `json:"y"`
 	E     bool  `json:"e,omitempty"`
+	A     uint8 `json:"a,omitempty"` // activity code (TrailLegend), 0 is walking
+}
+
+// SenseEvent is one history event on the trail: Ago ms before Ts, K the kind, T the text, Big for a boss or unique kill,
+// F the summary of the fight it belonged to when known.
+type SenseEvent struct {
+	AgoMS int64             `json:"ago"`
+	X     int               `json:"x"`
+	Y     int               `json:"y"`
+	K     string            `json:"k"`
+	T     string            `json:"t,omitempty"`
+	Big   bool              `json:"big,omitempty"`
+	S     int               `json:"s,omitempty"` // seconds the event window lasts (an ignore); the panel counts it down
+	F     *senses.FightInfo `json:"f,omitempty"`
+}
+
+// EventSource is an optional part of a SensesSource: the history events of the current area.
+type EventSource interface {
+	EventsOf() []senses.Event
 }
 
 // Senses serves GET /api/senses. It only reads the source; nothing it does reaches the bot.
@@ -97,6 +117,14 @@ type SensesReply struct {
 	Trail     []SenseTrailPoint `json:"trail,omitempty"`
 	TrailArea int               `json:"trail_area,omitempty"`
 	Ts        int64             `json:"ts,omitempty"`
+	// TrailWindowS is the longest window the ring holds, TrailLegend names the activity codes of the points (index =
+	// code), Events are the history markers of the current area.
+	TrailWindowS int          `json:"trail_window_s,omitempty"`
+	TrailLegend  []string     `json:"trail_legend,omitempty"`
+	Events       []SenseEvent `json:"events,omitempty"`
+	// History is the timeline sample ring, only when the caller asks (?hist=1: the panel sends it while its timeline is
+	// open, every few polls), so the 2 Hz poll stays small.
+	History *HistoryReply `json:"history,omitempty"`
 	// Coverage is the roam coverage grid of the current area (tier 1, additive), absent when the bot is not roaming.
 	Coverage *SenseCoverage `json:"coverage,omitempty"`
 	Waiting  bool           `json:"waiting,omitempty"`
@@ -104,6 +132,92 @@ type SensesReply struct {
 	// when the Unlocker is a Teaser. A locked tier's data keys stay absent.
 	Locked []SenseLock `json:"locked,omitempty"`
 	Next   *SenseLock  `json:"next,omitempty"`
+}
+
+// HistorySource is an optional part of a SensesSource: the sample ring of the timeline.
+type HistorySource interface {
+	SamplesOf() ([]senses.Sample, time.Time)
+}
+
+// HeatSource is an optional part of a SensesSource: the density cells of the current area.
+type HeatSource interface {
+	HeatOf() ([]senses.HeatPoint, int)
+}
+
+// HeatBlock is the `heat` key of /api/history?heat=1: Cells are [x, y, kills, dwell seconds, damage points] of the
+// current area, Cell the side in subtiles.
+type HeatBlock struct {
+	Area  int      `json:"area"`
+	Cell  int      `json:"cell"`
+	Kinds []string `json:"kinds"`
+	Cells [][5]int `json:"cells"`
+}
+
+// HistoryReply is /api/history (watch.history/1): the timeline samples, newest last, ages in ms before Ts. It is
+// fetched by the map panel when its scrubber is open, not on every poll.
+type HistoryReply struct {
+	Schema  string          `json:"schema"`
+	Ts      int64           `json:"ts"`
+	Legend  []string        `json:"legend"`
+	Samples []HistorySample `json:"samples"`
+	Heat    *HeatBlock      `json:"heat,omitempty"`
+}
+
+// HistorySample: l and m are life and mana percent, a the activity code, w the whyline code, ar the area id.
+type HistorySample struct {
+	AgoMS int64  `json:"ago"`
+	L     int    `json:"l"`
+	M     int    `json:"m"`
+	A     uint8  `json:"a,omitempty"`
+	W     string `json:"w,omitempty"`
+	Lv    int    `json:"lv,omitempty"`
+	XP    int64  `json:"xp,omitempty"`
+	Ar    int    `json:"ar"`
+}
+
+const historySchema = "watch.history/1"
+
+// ExportReply is GET /api/history/export (watch.history.export/1): what a bug report or the report subcommand needs to
+// see where the hero went and what it did: the map and hero, the trail with its activity codes, the events (fights
+// are the events of kind fight), the coverage grid, the sample ring and the heat cells, plus the build. It holds no
+// credentials, tokens or host names: positions, counts and the build stamp only.
+type ExportReply struct {
+	Schema  string       `json:"schema"`
+	Build   string       `json:"build"`
+	Senses  SensesReply  `json:"senses"`
+	History HistoryReply `json:"history"`
+}
+
+// Export builds the export; a closed tier gives empty parts like the other routes.
+func (s *Senses) Export() ExportReply {
+	r := s.ReplyNb(0, nil)
+	r.Neighbours = nil // the stitched neighbours are large and the report only needs the current area
+	return ExportReply{Schema: "watch.history.export/1", Build: buildinfo.Current(), Senses: r, History: s.History(true)}
+}
+
+// History builds the reply; Lock gates it like the map (tier 1).
+func (s *Senses) History(withHeat bool) HistoryReply {
+	r := HistoryReply{Schema: historySchema, Legend: senses.ActivityNames[:], Samples: []HistorySample{}}
+	if s.Lock == nil || !s.Lock.Allowed(1) {
+		return r
+	}
+	hs, ok := s.Src.(HistorySource)
+	if !ok {
+		return r
+	}
+	if hb, ok := s.Src.(HeatSource); ok && withHeat {
+		pts, area := hb.HeatOf()
+		r.Heat = &HeatBlock{Area: area, Cell: senses.HeatCell, Kinds: []string{"kills", "time", "damage"}, Cells: [][5]int{}}
+		for _, p := range pts {
+			r.Heat.Cells = append(r.Heat.Cells, [5]int{p.X, p.Y, p.Kills, p.DwellS, p.Dmg})
+		}
+	}
+	smp, now := hs.SamplesOf()
+	r.Ts = now.UnixMilli()
+	for _, v := range smp {
+		r.Samples = append(r.Samples, HistorySample{AgoMS: now.Sub(v.At).Milliseconds(), L: v.Life, M: v.Mana, A: v.Act, W: v.Why, Lv: v.Level, XP: v.XP, Ar: v.Area})
+	}
+	return r
 }
 
 // SenseNeighbour is a neighbour area in the current area's coordinate space: add DX, DY to its subtile coordinates.
@@ -186,8 +300,14 @@ func (s *Senses) ReplyNb(have uint64, haveNb map[int]uint64) SensesReply {
 		if ts, ok := s.Src.(TrailSource); ok {
 			if pts, area, now, ok := ts.TrailOf(); ok && len(pts) > 0 {
 				r.TrailArea, r.Ts = area, now.UnixMilli()
+				r.TrailWindowS, r.TrailLegend = int(senses.TrailRetention.Seconds()), senses.ActivityNames[:]
+				if es, ok := s.Src.(EventSource); ok {
+					for _, e := range es.EventsOf() {
+						r.Events = append(r.Events, SenseEvent{AgoMS: now.Sub(e.At).Milliseconds(), X: e.X, Y: e.Y, K: e.Kind, T: e.Text, Big: e.Big, S: e.Secs, F: e.Fight})
+					}
+				}
 				for _, p := range pts {
-					r.Trail = append(r.Trail, SenseTrailPoint{AgoMS: now.Sub(p.At).Milliseconds(), X: p.X, Y: p.Y, E: p.Entry})
+					r.Trail = append(r.Trail, SenseTrailPoint{AgoMS: now.Sub(p.At).Milliseconds(), X: p.X, Y: p.Y, E: p.Entry, A: p.Act})
 				}
 			}
 		}
@@ -215,7 +335,27 @@ func (s *Senses) Handler() http.Handler {
 			return
 		}
 		have, _ := strconv.ParseUint(r.URL.Query().Get("v"), 10, 64)
-		writeJSON(w, 200, s.ReplyNb(have, parseHave(r.URL.Query().Get("nb"))))
+		rep := s.ReplyNb(have, parseHave(r.URL.Query().Get("nb")))
+		if r.URL.Query().Get("hist") == "1" && len(rep.Tiers) > 0 && !rep.Waiting {
+			h := s.History(r.URL.Query().Get("heat") == "1")
+			rep.History = &h
+		}
+		writeJSON(w, 200, rep)
+	})
+	m.HandleFunc("/api/history/export", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		w.Header().Set("Content-Disposition", `attachment; filename="didle-map-history.json"`)
+		writeJSON(w, 200, s.Export())
+	})
+	m.HandleFunc("/api/history", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodGet && r.Method != http.MethodHead {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		writeJSON(w, 200, s.History(r.URL.Query().Get("heat") == "1"))
 	})
 	for route, file := range map[string]string{"/watch/senses_units.js": "web/senses_units.js"} {
 		m.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {

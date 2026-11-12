@@ -149,6 +149,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	disp.run = runner
 	ref.p.Store(runner)
 	wireGoldFarm(ref, runner)
+	wireJourney(ip.State(), ref, runner, log.Info)
 	m, err := goals.New(goals.Options{Runner: runner, Path: ip.Goals(), Chain: taskChain(runner.LastSnapshot),
 		Logf: func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }})
 	if err != nil {
@@ -185,6 +186,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	useFightFeed(lrig, bh.combat, ldir, log)
 	useSenses(lrig, e, bh.combat, log)
 	useSensesCoverage(lrig, e, bh.Mover)
+	useSensesHistory(ctx, lrig, e, bh.combat, m, runner.Status, runner.LootWalking, bh.Mover)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err

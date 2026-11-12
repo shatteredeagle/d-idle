@@ -1,0 +1,85 @@
+== equipmeta
+div []
+== equip
+div [data-art=]
+  img.art-panel [alt= src=/watch/art/panel-inv.png]
+  button.d-slot2 [aria-label=helm: empty data-key=slot-head data-shown= data-slot=head] title="helm: empty"
+    img.ghost [alt= src=/watch/art/slot-helm.png]
+    span.sil [] "helm"
+  button.d-slot2 [aria-label=amulet: empty data-key=slot-neck data-shown= data-slot=neck] title="amulet: empty"
+    img.ghost [alt= src=/watch/art/slot-amulet.png]
+    span.sil [] "amulet"
+  button.d-slot2 [aria-label=armour: empty data-key=slot-torso data-shown= data-slot=torso] title="armour: empty"
+    img.ghost [alt= src=/watch/art/slot-armor.png]
+    span.sil [] "armour"
+  button.d-slot2 [aria-label=weapon: empty data-key=slot-rhand data-shown= data-slot=rhand] title="weapon: empty"
+    img.ghost [alt= src=/watch/art/slot-weapon.png]
+    span.sil [] "weapon"
+  button.d-slot2 [aria-label=shield: empty data-key=slot-lhand data-shown= data-slot=lhand] title="shield: empty"
+    img.ghost [alt= src=/watch/art/slot-weapon.png]
+    span.sil [] "shield"
+  button.d-slot2 [aria-label=ring: empty data-key=slot-rring data-shown= data-slot=rring] title="ring: empty"
+    img.ghost [alt= src=/watch/art/slot-ring.png]
+    span.sil [] "ring"
+  button.d-slot2 [aria-label=ring: empty data-key=slot-lring data-shown= data-slot=lring] title="ring: empty"
+    img.ghost [alt= src=/watch/art/slot-ring.png]
+    span.sil [] "ring"
+  button.d-slot2 [aria-label=belt: empty data-key=slot-belt data-shown= data-slot=belt] title="belt: empty"
+    img.ghost [alt= src=/watch/art/slot-belt.png]
+    span.sil [] "belt"
+  button.d-slot2 [aria-label=boots: empty data-key=slot-feet data-shown= data-slot=feet] title="boots: empty"
+    img.ghost [alt= src=/watch/art/slot-boots.png]
+    span.sil [] "boots"
+  button.d-slot2 [aria-label=gloves: empty data-key=slot-gloves data-shown= data-slot=gloves] title="gloves: empty"
+    img.ghost [alt= src=/watch/art/slot-gloves.png]
+    span.sil [] "gloves"
+== pack
+div [data-cols=10]
+  div.cell [gridArea:1 / 1]
+  div.cell [gridArea:1 / 2]
+  div.cell [gridArea:1 / 3]
+  div.cell [gridArea:1 / 4]
+  div.cell [gridArea:1 / 5]
+  div.cell [gridArea:1 / 6]
+  div.cell [gridArea:1 / 7]
+  div.cell [gridArea:1 / 8]
+  div.cell [gridArea:1 / 9]
+  div.cell [gridArea:1 / 10]
+  div.cell [gridArea:2 / 1]
+  div.cell [gridArea:2 / 2]
+  div.cell [gridArea:2 / 3]
+  div.cell [gridArea:2 / 4]
+  div.cell [gridArea:2 / 5]
+  div.cell [gridArea:2 / 6]
+  div.cell [gridArea:2 / 7]
+  div.cell [gridArea:2 / 8]
+  div.cell [gridArea:2 / 9]
+  div.cell [gridArea:2 / 10]
+  div.cell [gridArea:3 / 1]
+  div.cell [gridArea:3 / 2]
+  div.cell [gridArea:3 / 3]
+  div.cell [gridArea:3 / 4]
+  div.cell [gridArea:3 / 5]
+  div.cell [gridArea:3 / 6]
+  div.cell [gridArea:3 / 7]
+  div.cell [gridArea:3 / 8]
+  div.cell [gridArea:3 / 9]
+  div.cell [gridArea:3 / 10]
+  div.cell [gridArea:4 / 1]
+  div.cell [gridArea:4 / 2]
+  div.cell [gridArea:4 / 3]
+  div.cell [gridArea:4 / 4]
+  div.cell [gridArea:4 / 5]
+  div.cell [gridArea:4 / 6]
+  div.cell [gridArea:4 / 7]
+  div.cell [gridArea:4 / 8]
+  div.cell [gridArea:4 / 9]
+  div.cell [gridArea:4 / 10]
+== belt
+div [data-cols=4]
+  div.cell [gridArea:1 / 1]
+  div.cell [gridArea:1 / 2]
+  div.cell [gridArea:1 / 3]
+  div.cell [gridArea:1 / 4]
+== msg
+div []

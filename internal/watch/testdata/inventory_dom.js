@@ -92,7 +92,7 @@ for (const [name, run] of Object.entries(states)) {
   if (name === 'error' && !page(src).h.say) continue; // old pages have no say() hook: the error state only exists once the hook does
   const p = page(src);
   run(p);
-  const got = dump(p.els), file = path.join(dir, 'inventory_dom_' + name + '.txt');
+  const got = dump(p.els), file = path.join(dir, 'inventory_dom_' + name + '.nopin.txt');
   if (process.env.UPDATE) { fs.writeFileSync(file, got); continue; }
   if (!fs.existsSync(file)) { console.error('missing golden ' + file); bad++; continue; }
   if (fs.readFileSync(file, 'utf8') !== got) { console.error('DOM differs from ' + file + '\n' + got); bad++; }
