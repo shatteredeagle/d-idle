@@ -1,10 +1,11 @@
 ---
 id: TASK-373
 title: 'archify: Go import-graph diagrams of d.idle (tools/arch)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T18:08:00Z'
+updated_date: '2026-11-12T18:18:00Z'
 labels:
   - ops
   - chore
