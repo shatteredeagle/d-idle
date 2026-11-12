@@ -42,5 +42,5 @@ Private-fork item verbs (user decision 2026-11-12): design doc plus one vertical
 - [x] #1 docs/design/item-verbs.md written (verbs, rules, errors, conformance plan, draft ADR text)
 - [x] #2 Fork branch fork-only/itemverbs: equip/unequip/caps with a d2d unit test, pushed to the private forge
 - [x] #3 Bot: verb-first equip with click fallback behind knob invdesk.verbs (default off), tests with fakes for two classes
-- [ ] #4 Gate: per-package tests, whole-repo labrun gate, contracts and backlog checks, leakcheck
+- [x] #4 Gate: per-package tests, whole-repo labrun gate, contracts and backlog checks, leakcheck
 <!-- AC:END -->
