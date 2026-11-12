@@ -121,6 +121,7 @@
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
+| warpsandbox | in-progress | - | `docs/probes/warp-sandbox-2026-11-12.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -174,6 +175,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b707e894 11-12 14:20 `Merge agent/warpsandbox: Merge branch 'main' into warpsandbox` (warpsandbox)
+- 491f9a98 11-12 14:20 `Merge branch 'main' into warpsandbox` (-)
 - dfd4d8a0 11-12 13:52 `Merge agent/prwarp: Merge branch 'main' into TASK-372` (prwarp)
 - 078ebedf 11-12 13:51 `Merge branch 'main' into TASK-372` (-)
 - cd482ec4 11-12 13:11 `Merge agent/archify: TASK-373 archify: tools/arch import-graph diagrams (overview, packages, drift) + docs/arch.md` (archify)
@@ -182,6 +185,4 @@
 - da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
 - 116de9a0 11-12 12:14 `Merge branch 'main' into TASK-371` (-)
 - d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
-- 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
-- 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
 <!-- statusgen:end -->
