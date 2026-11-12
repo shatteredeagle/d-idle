@@ -386,3 +386,7 @@ func (g *Game) HoldClick(b Button, x, y int, d time.Duration) error {
 	g.gap()
 	return err
 }
+
+// WorldDropper is implemented by controllers whose ClickWorld is not a mouse press (the d2d controller walks with
+// "cmd move"): DropClick presses the left button on the screen spot of w so that a held item drops there.
+type WorldDropper interface{ DropClick(w Point) error }

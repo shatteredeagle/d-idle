@@ -42,7 +42,12 @@ func (h *Hand) DropCursor(ctx context.Context) error {
 	tries := min(max(h.E.Tune.Town.DropTries, 1), len(dropOffsets))
 	for try := 1; try <= tries; try++ {
 		off := dropOffsets[try-1]
-		if err := h.E.In.ClickWorld(input.Point{X: s.Player.X + off[0], Y: s.Player.Y + off[1]}); err != nil {
+		at := input.Point{X: s.Player.X + off[0], Y: s.Player.Y + off[1]}
+		click := h.E.In.ClickWorld
+		if wd, ok := h.E.In.(input.WorldDropper); ok {
+			click = wd.DropClick // d2d: ClickWorld is a walk order and drops nothing
+		}
+		if err := click(at); err != nil {
 			return err
 		}
 		ns, ok, err := h.Wait(ctx, h.uiTimeout(), func(s *d2.Snapshot) bool { return s.Inventory.Cursor == nil })
