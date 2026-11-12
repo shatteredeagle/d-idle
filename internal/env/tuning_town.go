@@ -58,6 +58,9 @@ type TownTuning struct {
 	MPCapEarly       int // goldfloor: mana potions bought per visit below MPCapLevel
 	MPCapLevel       int // goldfloor: clvl below which MPCapEarly applies and a low mana belt raises no trip (0 = off, old behaviour)
 	EquipKindFails   int // g2g E1: failed equips of one item kind (base class) into one slot, across games, before that kind is skipped until the character gains a level
+	TidyEnabled      int // tidy: 1 = the Tidy chore stashes by the tidy policy and drops pure junk from a full pack (docs/tidy.md); 0 = off
+	TidyMaxActions   int // tidy: most stash and drop actions of one pass (the safety valve)
+	TidyMinPackPct   int // tidy: a pass runs only when the backpack is at least this full, or something is waiting for the stash
 	FutileGoldStep   int // after a visit that could not fix a trip reason (cannot afford, not sold), NeedsTrip stays quiet about it until gold grew by this
 }
 
@@ -70,6 +73,7 @@ func DefaultTownTuning() TownTuning {
 		NPCStopDist: 4, NPCOpenTries: 3, UITimeoutMs: 2500, ClickSettleMs: 150, MoveTries: 3, DropTries: 6, CursorStuckMax: 3,
 		RebuyGearTier: 1, RebuyPotionPct: 40, RebuyItemMaxPct: 60, PortalSettle: 4500, ChoreBudgetS: 150, SellMaxS: 60, FutileGoldStep: 100, TripMinSpend: 0, TripEmptyHPBelt: 1, MPCapEarly: 0, MPCapLevel: 0, FutileMinutes: 10, SpareKeep: 4, GreetingWaitS: 90, GreetingSkip: 0, PortalReuseDist: 40, PortalClickFails: 2,
 		PotionsFirst: 1, TPFirstLevel: 0, TPScrollPotions: 2, SellLowGems: 1, IDScrollNeed: 1, BankFirst: 1, RepairLatch: 1, EquipKindFails: 2,
+		TidyEnabled: 1, TidyMaxActions: 12, TidyMinPackPct: 60,
 	}
 }
 
@@ -119,6 +123,9 @@ func townKnobs() []Knob {
 		townK("greetingSkip", "NPC greeting skip", "mode", "How the first-contact greeting is skipped when the menu is not open 1 s after the click: 0 wait it out (greetingWaitS), 1 click the NPC again, 2 Esc then click again, 3 left click on the NPC tile without hover. docs/npc-skip.md.", d.GreetingSkip, 0, 3, false),
 		townK("futileGoldStep", "Futile trip back-off", "gold", "After a town visit could not fix a trip reason, do not ask again until gold grew by this.", d.FutileGoldStep, 0, 5000, false),
 		townK("futileMinutes", "Futile trip quiet time", "min", "A trip reason a visit left unfixed is not raised again for this long.", d.FutileMinutes, 0, 120, false),
+		townK("tidyEnabled", "Tidy: on", "0/1", "1: the Tidy chore stashes by the tidy policy table and drops pure junk from a full pack; it never touches equipment or marked items (docs/tidy.md).", d.TidyEnabled, 0, 1, false),
+		townK("tidyMaxActions", "Tidy: actions per pass", "count", "Most stash and drop actions of one tidy pass (safety valve).", d.TidyMaxActions, 1, 40, false),
+		townK("tidyMinPackPct", "Tidy: pack full", "%", "A tidy pass drops junk only when the backpack is at least this full.", d.TidyMinPackPct, 20, 100, false),
 		townK("spareKeep", "Spare supplies kept", "count", "A full pack sells spare potions and identify scrolls beyond this many per kind (they fill the pack but are never belted).", d.SpareKeep, 0, 30, true),
 		townK("sellMaxS", "Sell chore cap", "s", "Time the sell chore alone may take before it is cut off.", d.SellMaxS, 15, 300, true),
 		townK("potionsFirst", "Potions before first scroll", "bool", "1 buys the kit potions before the first town portal scroll, which then needs gold for the scroll plus tpScrollPotions potions (d2-sme order, decision D3). 0 = scroll first (old).", d.PotionsFirst, 0, 1, true),

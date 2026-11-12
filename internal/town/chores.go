@@ -432,6 +432,8 @@ func (t *Town) Chores(ctx context.Context, plan ChorePlan) (rep ChoreReport, _ e
 		{"heal", plan.Heal, t.needHeal, func() error { return t.heal(ctx, a, &rep) }},
 		{"cube", plan.Cube, func(s *d2.Snapshot) bool { return t.needCube(s, plan) }, func() error { return t.cubeJobs(ctx, a, plan, &rep) }},
 		{"stash", plan.Stash || plan.Gold, func(s *d2.Snapshot) bool { return t.needStash(s, plan) }, func() error { return t.doStash(ctx, a, plan, &rep) }},
+		// last: what the pickit chores left in the pack, by the tidy policy table (docs/tidy.md); never equipment or marked items
+		{"tidy", plan.Stash || plan.Sell, t.needTidy, func() error { return t.tidyPass(ctx, a, &rep) }},
 	}
 	// A requested repair is paid before the supplies: it moves up behind the sale, so the potions and portal scroll
 	// cannot spend its gold first (repairmanual fix, user report 2026-11-09).
