@@ -17,6 +17,16 @@ owns:
   - "internal/bot/exploredpct.go"
   - "internal/bot/exploredpct_test.go"
   - "internal/watch/heroexplored_test.go"
+  - "cmd/d2bot/d2dbackend.go"
+  - "cmd/d2bot/ladder.go"
+  - "cmd/d2bot/live.go"
+  - "docs/knobs.md"
+  - "internal/bot/goal.go"
+  - "internal/bot/observe.go"
+  - "internal/env/tuning_bot.go"
+  - "internal/watch/hero.go"
+  - "internal/watch/hub.go"
+  - "internal/watch/web/panels/activity/panel.js"
 exclusive: []
 contracts: []
 result: "bot.exploredPct (default 100, 30..100) ends a clear roam early via exploredEnough in sweepPass; /api/hero explored block, activity panel header, minute line; unit-tested, NOT verified live. Decision: nav roam() ErrExplored -> bot sweepPass cleared[area]."
