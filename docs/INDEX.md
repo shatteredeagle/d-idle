@@ -132,7 +132,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [forknext.md](forknext.md): FORKNEXT: the private fork carries the NextHit fix (card forknext, 2026-11-01) (status: current. Branch `lab-nexthit` of the private d2d fork, lab binary `bin/d2d.lab-nexthit` on the worker...)
 - [forkrebase.md](forkrebase.md): FORKREBASE: the private fork stack rebuilt on upstream main 52362d52 (card forkrebase, 2026-11-01) (status: current. Branches `lab2-debug-skills`, `lab2-armorhit`, `lab2-freezeresume` of the private d2d fork...)
 - [hastpdump.md](hastpdump.md): inv-tp-dump: why HasTP differs per area
-- [inventory-actions.md](inventory-actions.md): Inventory item actions (TASK-282, itemactions; identify commands TASK-298)
+- [inventory-actions.md](inventory-actions.md): Inventory item actions (TASK-282, itemactions; identify commands TASK-298; stash actions TASK-339)
 - [inventory-tooltip.md](inventory-tooltip.md): Item tooltip on the inventory page (TASK-269, itemtip)
 - [inventory-ui.md](inventory-ui.md): Inventory page on the watch screen (TASK-212, invui) (status: the item action menu (equip, sell mark, trash, queue states, field equips) is in inventory-actions.md;...)
 - [inventory.md](inventory.md): Inventory and stash policy (INVSTASH audit, 2026-10-30)

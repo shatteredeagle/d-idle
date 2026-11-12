@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold <!--sg:agent/stashactions-->
 - TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0) <!--sg:agent/campaign1-->
 - Watch minimap: export the map as a PNG and the history as JSON <!--sg:agent/maphistoryD-->
 - Watch minimap: fight cards and failure markers <!--sg:agent/maphistoryC-->

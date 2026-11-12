@@ -143,6 +143,7 @@ cmd/d2bot/d2dbackend.go  credit-runner  maptrail
 cmd/d2bot/funwire.go  credit-runner  maphistoryA
 cmd/d2bot/goldfarmwire_test.go  credit-runner  repairtrip
 cmd/d2bot/invwire.go  credit-runner  artspeed
+cmd/d2bot/invwire.go  credit-runner  stashactions
 cmd/d2bot/journeywire.go  credit-runner  campaign1
 cmd/d2bot/ladder.go  live-agent  recoverypace
 cmd/d2bot/live.go  credit-runner  artspeed
@@ -183,6 +184,7 @@ docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
+docs/inventory-actions.md  credit-runner  stashactions
 docs/inventory-ui.md  credit-runner  nopins
 docs/knobs.md  credit-runner  freshstart
 docs/knobs.md  credit-runner  pursuers
@@ -232,6 +234,7 @@ docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  nopins
 docs/ui-design-system.md  credit-runner  uifit
+docs/whyline.md  credit-runner  stashactions
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  maphistoryA
@@ -241,6 +244,8 @@ internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided_test.go  credit-runner  campaign1
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
+internal/bot/playeraction.go  credit-runner  stashactions
+internal/bot/playeraction_test.go  credit-runner  stashactions
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
@@ -276,6 +281,7 @@ internal/env/tuning_resource.go  live-agent  recoverypace
 internal/fidvendor  live-agent  fidprobe-vendor
 internal/goldfarm  credit-runner  repairtrip
 internal/invdesk  credit-runner  standstill
+internal/invdesk  credit-runner  stashactions
 internal/invdesk/desk.go  credit-runner  artspeed
 internal/invdesk/desk_test.go  credit-runner  artspeed
 internal/loot  credit-runner  lootskip
@@ -316,6 +322,8 @@ internal/task/campaign.go  credit-runner  campaign1
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/town/chores.go  credit-runner  repairtrip
+internal/town/playerstash.go  credit-runner  stashactions
+internal/town/playerstash_test.go  credit-runner  stashactions
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
 internal/watch  credit-runner  firstminutes
@@ -329,8 +337,11 @@ internal/watch/campaign_test.go  credit-runner  campaign2
 internal/watch/hero.go  credit-runner  xpreadout
 internal/watch/hub.go  credit-runner  xpreadout
 internal/watch/invapi.go  credit-runner  artspeed
+internal/watch/invapi.go  credit-runner  stashactions
 internal/watch/invapi_test.go  credit-runner  artspeed
+internal/watch/invapi_test.go  credit-runner  stashactions
 internal/watch/invui.go  credit-runner  nopins
+internal/watch/invui.go  credit-runner  stashactions
 internal/watch/layout.go  credit-runner  uifit
 internal/watch/layout_test.go  credit-runner  uifit
 internal/watch/mapview.go  credit-runner  xpreadout
@@ -366,6 +377,7 @@ internal/watch/testdata/history-heat.json  credit-runner  maphistoryB
 internal/watch/testdata/history.json  credit-runner  maphistoryA
 internal/watch/testdata/inventory_dom.js  credit-runner  artspeed2
 internal/watch/testdata/inventory_dom.js  credit-runner  nopins
+internal/watch/testdata/itemactions  credit-runner  stashactions
 internal/watch/testdata/itemactions/act_dom.js  credit-runner  nopins
 internal/watch/testdata/itemtip/tip_dom.js  credit-runner  nopins
 internal/watch/testdata/map_panel.js  credit-runner  maphistory
@@ -384,7 +396,9 @@ internal/watch/testdata/senses-trail.json  credit-runner  maptrail
 internal/watch/testdata/topband_dom.js  credit-runner  xpreadout
 internal/watch/testdata/topband_dom_hero-detail_*.txt  credit-runner  xpreadout
 internal/watch/web/gear.js  credit-runner  repairtrip
+internal/watch/web/inventory-actions.css  credit-runner  stashactions
 internal/watch/web/inventory-actions.js  credit-runner  nopins
+internal/watch/web/inventory-actions.js  credit-runner  stashactions
 internal/watch/web/inventory-tip.css  credit-runner  nopins
 internal/watch/web/inventory-tip.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  artspeed
