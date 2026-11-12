@@ -156,6 +156,14 @@ func (t *Town) moveOne(ctx context.Context, id uint32, toStash bool) error {
 	if !ok {
 		return errors.New("the item is not in the inventory any more")
 	}
+	if t.mover != nil { // the stash is open at the chest here: the verb moves it to the first free spot
+		if done, verr := t.mover.Move(ctx, id, toStash); done {
+			if verr == nil {
+				t.e.Log.Info("player stash move", "item", t.nameOf(u), "toStash", toStash, "how", "verb")
+			}
+			return verr
+		}
+	}
 	lay, err := t.layout(s)
 	if err != nil {
 		return err
@@ -183,6 +191,17 @@ func (t *Town) moveGold(ctx context.Context, amount int, deposit bool) (string, 
 		return "", err
 	}
 	g0, b0 := s.Player.Gold, s.Player.StashGold
+	if t.mover != nil {
+		n := min(amount, b0, max(0, s.Player.Level*invdesk.WithdrawPerLevel-g0))
+		if deposit {
+			n = min(amount, g0, max(0, 2500000-b0)) // the stash cap (FUN_00623460)
+		}
+		if n > 0 {
+			if sentence, done, verr := t.mover.Gold(ctx, n, deposit); done {
+				return sentence, verr
+			}
+		}
+	}
 	if deposit {
 		err = t.depositCapped(ctx, s, amount)
 	} else {
@@ -235,6 +254,11 @@ func (t *Town) withdrawOpen(ctx context.Context, s *d2.Snapshot, amount int) err
 // backpack beside it (the tool is right-clicked there, the identify cursor then clicks the item's stash cell).
 // U live: that the game accepts the identify cursor on stash cells (S: it does in the single-player game).
 func (t *Town) identifyInStash(ctx context.Context, id uint32) error {
+	if t.mover != nil {
+		if done, verr := t.mover.Identify(ctx, id); done {
+			return verr
+		}
+	}
 	for try := 0; try < t.tune().MoveTries; try++ {
 		if err := ctx.Err(); err != nil {
 			return err

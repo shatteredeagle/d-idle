@@ -135,3 +135,83 @@ func (v ItemVerbs) ItemEquip(ctx context.Context, id uint32, slot int) (bool, er
 	r, err := v.C.ItemEquip(ctx, id, slot)
 	return r.Noop, err
 }
+
+// Capability names of the stage 2 verbs.
+const (
+	CapItemMove     = "item.move"
+	CapItemIdentify = "item.identify"
+	CapItemDrop     = "item.drop"
+	CapGoldStash    = "gold.stash"
+)
+
+// Further refusal codes: the stash and its gold only work at the chest.
+const (
+	ItemErrFar     = "far"    // not at the chest
+	ItemErrBounds  = "bounds" // outside the grid
+	ItemErrOverlap = "overlap"
+	ItemErrNoTool  = "notool"
+	ItemErrDead    = "dead"
+	ItemErrGold    = "gold"  // not that much gold
+	ItemErrLimit   = "limit" // would carry more than level x 10,000
+	ItemErrFull    = "full"  // the stash holds 2,500,000
+)
+
+// ItemMove puts item id at (col, row) of panel ("inv", "cube", "stash"); col and row -1 pick the first free spot.
+// The stash needs the hero at the chest (the fork answers "far" otherwise).
+func (c *Client) ItemMove(ctx context.Context, id uint32, panel string, col, row int) (ItemResult, error) {
+	return c.itemVerb(ctx, fmt.Sprintf("item move %d %s %d %d", id, panel, col, row))
+}
+
+// ItemIdentify identifies item id with tool (0: the fork picks a tome with charges, else a scroll).
+func (c *Client) ItemIdentify(ctx context.Context, id, tool uint32) (ItemResult, error) {
+	if tool == 0 {
+		return c.itemVerb(ctx, fmt.Sprintf("item identify %d", id))
+	}
+	return c.itemVerb(ctx, fmt.Sprintf("item identify %d %d", id, tool))
+}
+
+// ItemDrop drops backpack item id at the hero's feet.
+func (c *Client) ItemDrop(ctx context.Context, id uint32) (ItemResult, error) {
+	return c.itemVerb(ctx, fmt.Sprintf("item drop %d", id))
+}
+
+// GoldStash moves gold between the purse and the stash (at the chest). It returns the balances the fork predicts.
+func (c *Client) GoldStash(ctx context.Context, amount int, deposit bool) (bank, carried int, err error) {
+	dir := "withdraw"
+	if deposit {
+		dir = "deposit"
+	}
+	r, err := c.Do(ctx, fmt.Sprintf("gold %s %d", dir, amount))
+	if err != nil {
+		var ce *CmdError
+		if errors.As(err, &ce) && !errors.Is(err, ErrBusy) && !errors.Is(err, ErrLineTooLong) &&
+			!strings.HasPrefix(ce.Msg, "lab verbs off") && !strings.HasPrefix(ce.Msg, "unknown") && !strings.HasPrefix(ce.Msg, "not in a game") {
+			code, why, _ := strings.Cut(ce.Msg, " ")
+			return 0, 0, &ItemRefused{Code: code, Why: why}
+		}
+		return 0, 0, err
+	}
+	kv := ParseKV(strings.Join(r.Lines, " "))
+	bank, _ = kv.Int("bank")
+	carried, _ = kv.Int("carried")
+	return bank, carried, nil
+}
+
+func (v ItemVerbs) ItemMove(ctx context.Context, id uint32, panel string, col, row int) (bool, error) {
+	r, err := v.C.ItemMove(ctx, id, panel, col, row)
+	return r.Noop, err
+}
+
+func (v ItemVerbs) ItemIdentify(ctx context.Context, id uint32) (bool, error) {
+	r, err := v.C.ItemIdentify(ctx, id, 0)
+	return r.Noop, err
+}
+
+func (v ItemVerbs) ItemDrop(ctx context.Context, id uint32) error {
+	_, err := v.C.ItemDrop(ctx, id)
+	return err
+}
+
+func (v ItemVerbs) GoldStash(ctx context.Context, amount int, deposit bool) (int, int, error) {
+	return v.C.GoldStash(ctx, amount, deposit)
+}

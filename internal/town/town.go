@@ -17,6 +17,7 @@ import (
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/env"
 	"d2lod-bot/internal/input"
+	"d2lod-bot/internal/invdesk"
 	"d2lod-bot/internal/loot"
 	"d2lod-bot/internal/mem"
 	"d2lod-bot/internal/repair"
@@ -48,6 +49,7 @@ var (
 
 // Town is the Townsman implementation.
 type Town struct {
+	mover invdesk.Mover // verb-first item actions (nil: clicks only)
 	e     *env.Env
 	mv    Mover
 	judge Judge
@@ -204,6 +206,10 @@ type RepairGate interface {
 func (t *Town) SetRepairGate(g RepairGate) { t.repairGate = g }
 
 // SetPinned installs the player's slot pins: a pinned body slot is never filled or replaced by the town's own gear logic.
+// SetMover installs the verb-first item actions (invdesk.VerbMover). Without one, or when it answers "not handled",
+// every action uses the click path. The stash verbs are only asked while the stash is open at the chest.
+func (t *Town) SetMover(m invdesk.Mover) { t.mover = m }
+
 func (t *Town) SetPinned(f func(body int) bool) { t.pinned = f }
 
 func (t *Town) isPinned(body int) bool { return t.pinned != nil && t.pinned(body) }

@@ -81,12 +81,13 @@ type Config struct {
 
 // Desk holds the player's decisions. All methods are safe for concurrent use.
 type Desk struct {
-	c  Config
-	mu sync.Mutex
-	eq Equipper
-	tr Trasher
-	sv Services
-	st state
+	c   Config
+	mu  sync.Mutex
+	eq  Equipper
+	tr  Trasher
+	how HowSource
+	sv  Services
+	st  state
 }
 
 type markRec struct {
@@ -300,6 +301,21 @@ func (d *Desk) SetTrashBlock(f func(u d2.Unit) string) {
 	d.mu.Lock()
 	d.c.TrashBlock = f
 	d.mu.Unlock()
+}
+
+// SetHowSource installs the reader of how verb-capable actions were done (VerbMover); nil: only equips say.
+func (d *Desk) SetHowSource(h HowSource) { d.mu.Lock(); d.how = h; d.mu.Unlock() }
+
+// howFor reads and consumes how request r was done; call with d.mu held.
+func (d *Desk) howFor(r Request) string {
+	if d.how == nil {
+		return ""
+	}
+	id := r.ID
+	if r.kind() == KindGold {
+		id = 0
+	}
+	return d.how.HowOf(r.kind(), id)
 }
 
 // SetEquipper installs the click path; until then equip requests are refused.
@@ -777,6 +793,9 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			out = append(out, fmt.Sprintf("%s %s failed: %v", r.kind(), r.Name, err))
 		} else {
 			r.State, r.Result = StateDone, result
+			if r.kind() == KindTrash {
+				r.How = d.howFor(r)
+			}
 			switch r.kind() {
 			case KindTrash:
 				d.noteTrashedLocked(r, hx, hy)

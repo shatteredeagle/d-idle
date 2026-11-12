@@ -1,6 +1,6 @@
 # Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367)
 
-> status: DESIGN plus one built slice (equip, unequip, `caps`), 2026-11-12. User decision 2026-11-12 (popup): go for item verbs. Nothing here ran against a live game; the fork slice is tested headless. Tags: V = verified (how is said), S = secondary (read in code or docs), U = unverified. Author: agent itemverbs (Claude).
+> status: DESIGN plus the built verbs (equip, unequip, move, identify, drop, gold, `caps`), 2026-11-12; stage 2 and the bot wiring built in TASK-371 (user go 2026-11-12), knob still off. User decision 2026-11-12 (popup): go for item verbs. Nothing here ran against a live game; the fork slice is tested headless. Tags: V = verified (how is said), S = secondary (read in code or docs), U = unverified. Author: agent itemverbs (Claude).
 
 ## 1. Idea in four lines
 
@@ -21,7 +21,8 @@ Scope (user): inventory, stash, equip, identify, drop, gold. NOT combat, movemen
 | Go client | `internal/d2dctl/item_verbs.go` (`Caps`, `ItemEquip`, `ItemUnequip`, `ItemRefused`, adapter `ItemVerbs`) | V: `go test ./internal/d2dctl` with a stub server |
 | Bot executor | `internal/invdesk/verbs.go` (`VerbEquipper`: verb first, click fallback, `LastHow`) and `Request.How` | V: `go test ./internal/invdesk` (fakes, Paladin and Sorceress) |
 | Knob | `invdesk.verbs`, default 0 (`internal/env/tuning_invdesk.go`, `docs/knobs.md`) | V: knob tests |
-| Not built | wiring `VerbEquipper` into `cmd/d2bot/invwire.go` (needs the d2dctl client at `wireInv`), the other verbs of section 3, the click-path differential live | stage 2 and 3 of section 11 |
+| Stage 2 (TASK-371) | fork commit `59ae7810` (branch `fork-only/itemverbs`, private forge): `plan_move/identify/drop/gold`, `cmd drop/idwith/stashgold`, headless differential extended; bot `internal/invdesk/mover.go` (`VerbMover`, `VerbTrasher`, `HowSource`), town hooks (`Town.SetMover`, stash visit, identify batch), `cmd/d2bot/invverbs.go` wiring on the d2d backend only, `Request.How` for equip, trash, identify, stash and gold | V offline: fork unit test (2 classes), headless e2e 3 of 3 runs, `go test` of invdesk/d2dctl/town; NOT live |
+| Not built | the live click-vs-verb differential (recipe and tools in section 9a), merc items, relaxing the safe moment for verbs | section 12 |
 
 ## 3. Verb set
 
@@ -32,10 +33,10 @@ Wire form: one devctl line, reply `<first line>\nok\n` or `err <code> <why>\n` (
 | `caps` | `caps=state.caps,item.equip,item.unequip` | none | 1 (built) |
 | `item equip <id> [slot]` | `equip id=<id> slot=<s> displaced=<id or -1> at=<c>,<r>` or `noop slot=<s> at=-1,-1` | `ToCursor`, `ToBody`, and `ToGrid` for the item that came off | 1 (built) |
 | `item unequip <id>` | `unequip id=<id> slot=<s> displaced=-1 at=<c>,<r>` or `noop ...` | `ToCursor`, `ToGrid` | 1 (built) |
-| `item move <id> <panel> <col> <row>` (panel inventory/stash/cube) | like unequip | `ToCursor`, `ToGrid` | 2 |
-| `item identify <id> [with <scroll-id>]` | `identify id=.. with=..` | `IdentifyWith{scroll,item}` (C to S 0x27, `FUN_0054b280`) | 2 |
-| `item drop <id>` | `drop id=..` | `ToCursor`, `Drop` (0x17, `FUN_0054ab40`) | 2 |
-| `gold deposit <n>` / `gold withdraw <n>` | `gold stash=<n> carried=<n>` | `StashGold{amount,deposit}` (0x4f 0x13/0x14, `FUN_00564d50`) | 3 |
+| `item move <id> <inv\|stash\|cube> <col> <row>` (-1 -1: first free spot) | `move id=.. at=c,r` / `noop` | `ToCursor`, `ToGrid` | 2 (built) |
+| `item identify <id> [<tool-id>]` | `identify id=.. slot=0 displaced=<tool id>` | `IdentifyWith{scroll,item}` (C to S 0x27, `FUN_0054b280`) | 2 (built) |
+| `item drop <id>` | `drop id=..` | `ToCursor`, `Drop` (0x17, `FUN_0054ab40`) | 2 (built) |
+| `gold deposit <n>` / `gold withdraw <n>` | `gold bank=<n> carried=<n>` (the predicted balances) | `StashGold{amount,deposit}` (0x4f 0x13/0x14, `FUN_00564d50`) | 2 (built) |
 | `item belt <id> [box]` | existing `cmd belt put` | exists today (`BeltPut` in `internal/d2dctl`) | done |
 
 Capability names are exactly the verb names (`item.equip`, `item.unequip`, later `item.move`, `item.identify`, `item.drop`, `gold.stash`). `caps` is a flat comma list in one `caps=` field; a build that does not know the verb answers an error, which the Go client reads as "no capabilities" (V: `TestCapsOnForkAndStock`). A new capability never changes an old verb's reply (additive).
@@ -69,11 +70,11 @@ Item must be worn (`place` otherwise; a backpack item is `noop`), hand empty (`c
 
 ### Move (stage 2)
 
-`ToGrid` rules: `put_in_grid` (bounds by `inv_layout` / `stash_layout` / `cube_layout`, overlap with at most one item which is swapped to the hand, cube never into itself). The verb adds the same "never leave an item in the hand" rule: a swap target means `nospace`-or-`overlap` refusal before moving. Stash precondition: the server code does not check that the stash panel is open or the hero is near the chest (`ToGrid` with panel 5 just uses the layout, V read in `commands.cpp`); the stash UI opens only near the chest (`tick.cpp`, "Close enough to the stash", 2 cells, a `ponytail`). So a stash move verb must itself require "in town and within the stash object's operate range" or the bot would gain a power the player lacks. Rule: the verb refuses with `far` unless the chest is within the same 2 cell test. U (the original's exact range is not decomposed).
+`ToGrid` rules: `put_in_grid` (bounds by `inv_layout` / `stash_layout` / `cube_layout`, overlap with at most one item which is swapped to the hand, cube never into itself). The verb adds the same "never leave an item in the hand" rule: a swap target means `nospace`-or-`overlap` refusal before moving. Stash precondition: the server code does not check that the stash panel is open or the hero is near the chest (`ToGrid` with panel 5 just uses the layout, V read in `commands.cpp`); the stash UI opens only near the chest (`tick.cpp`, "Close enough to the stash", 2 cells, a `ponytail`). So a stash move verb must itself require "in town and within the stash object's operate range" or the bot would gain a power the player lacks. Rule (user go 2026-11-12: strict): the verb refuses with `far` unless the chest is the hero's current interaction target and within the same 2 cell test; the click path walks there as before. The codex cross-check agrees in kind: 0x19 (take out of a grid) lets an idle player lift only inventory-page items unless a stash or cube interaction is open (S, section 15). The numeric range stays U.
 
 ### Identify (stage 2)
 
-Server handler: `IdentifyWith` (`FUN_00561ed0`): a Scroll of Identify (`isc`) is used up; a Tome (`ibk`) loses one charge (stat 0x46); the item must exist and be unidentified; anything else is silently ignored. The verb checks these four and answers `identified` / `notool` / `item`; it does not choose the tool unless asked (`with` omitted: prefer the tome with charges, else a loose scroll, the click path's rule `identifyOne`). Cain's identify-all (0x34, `FUN_00578460`, 100 gold an item, free once the quest is done) is an NPC dialog command (`cmd::Identify`), not an item verb: the bot reaches it through the dialog and keeps doing so. Gold and quest state are the server's.
+Server handler: `IdentifyWith` (`FUN_00561ed0`): a Scroll of Identify (`isc`) is used up; a Tome (`ibk`) loses one charge (stat 0x46); the item must exist and be unidentified; anything else is silently ignored. The verb checks these four and answers `identified` / `notool` / `item`; it does not choose the tool unless asked (`with` omitted: prefer the tome with charges, else a loose scroll, the click path's rule `identifyOne`). **Packet order V (disassembly read 2026-11-12, game.exe 1.14d, offline):** `FUN_0054b280` loads `ecx = [packet+1]` and `ebx = [packet+5]`, looks both up as items on the player (`FUN_00549220`), then calls `FUN_00561ed0(player, [packet+1], [packet+5], &out)`; inside, the first id is the target item and the second is checked with `FUN_00629bb0(item, 0x16)` (item type 0x16 = the scroll family, which includes the tome), i.e. 0x27 is `{target item u32@1, tool u32@5}`. That agrees with the two outside sources and contradicts the note in `docs/probes/fid/fid-identify.md` (scroll first); that note should be corrected by its owner. d2d's `IdentifyWith{scroll,item}` is a struct, not a wire layout; no raw 0x27 path exists in d2d (`components/net/d2gs` only names it), so a future raw packet must write the item first. Cain's identify-all (0x34, `FUN_00578460`, 100 gold an item, free once the quest is done) is an NPC dialog command (`cmd::Identify`), not an item verb: the bot reaches it through the dialog and keeps doing so. Gold and quest state are the server's.
 
 ### Drop (stage 2)
 
@@ -143,6 +144,15 @@ Goal: for every verb the verb path and the click path leave identical game state
 
 All of 3 and 4 need the game or the oracle: ready-to-run checklist, not run here.
 
+## 9a. Live click-vs-verb differential: recipe and tools (prepared, not run live)
+
+NOT the sandbox container and no deployment: use a throwaway hero on a hidden instance or a separate throwaway container and volume.
+
+1. Offline, already runnable: `python3 -I tools/itemverbs/diff_d2d.py <fork d2d> [--report FILE]` on the worker host with `D2_MPQ_DIR` set (a throwaway headless d2d pair, own HOME and socket). V: 3 of 3 runs matched (equip into an empty slot, swap with the starting weapon, unequip, pack move, identify with a scroll, drop, nine refusals that move nothing).
+2. Click path vs verb (hidden instance, throwaway hero, same `--seed`, lockstep, `d2cheat`-free setup by `debug give` only, declared in `docs/probes/test-characters.md`): run the bot's own click executor with `invdesk.verbs=0` for the sequence in section 9 item 3, `d2dctl.Items` dump after each action into `click-N.items`; restart the same hero state, run with `invdesk.verbs=1`, dump into `verb-N.items`; then `python3 -I tools/itemverbs/compare_items.py click-N.items verb-N.items` per step (exit 0 = same item code, location, slot, panel and cell). Run both orders. Gold and scroll counts are read from the `state` line pasted into the dump.
+3. Stash and gold steps need the hero at the chest: the click run walks there itself; the verb run runs the same visit (the town opens the stash first, then asks the mover), so the visit and the hero position are the same in both.
+4. Record the result in `docs/probes/` with `writes after start: 0` (no gameplay write after the start; the verbs are not memory writes).
+
 ## 10. Crutch rule and decision text (DRAFT for the user; not written to `docs/adr` or `docs/decisions.md`)
 
 Why this is not a memory write: an item verb writes no game memory and no gameplay state outside the server's handlers; it submits the commands a client would submit. ADR 0014's crutch rule is about memory writes. Two things still need saying: the bot may use a verb in a measured run (the result is what a real client packet produces, with the same rules), and the verb must never offer an action the player cannot do (no free identify, no gold beyond limits, no stash from afar).
@@ -181,7 +191,7 @@ Also for `docs/cheats.md` (owner's call): one line that item verbs are not cheat
 | Stage | Content | Estimate |
 |---|---|---|
 | 1 (done) | `caps`, `item equip`, `item unequip`, unit and e2e tests, Go client, executor with fakes, knob, doc | this task |
-| 2 | wire `VerbEquipper` in `cmd/d2bot` with `Verify`; `item identify`, `item drop`, `item move` (backpack and stash with the range rule); matching `VerbTrasher`/identify wrappers; fork tests | 1 to 1.5 days |
+| 2 (done, TASK-371) | wire `VerbEquipper` in `cmd/d2bot` with `Verify`; `item identify`, `item drop`, `item move` (backpack and stash with the range rule); matching `VerbTrasher`/identify wrappers; fork tests | 1 to 1.5 days |
 | 3 | `gold deposit/withdraw`, per-action `how` counters on the Why page, relax the safe moment for verbs, conformance runs 3 (live, both directions) | 1 day plus live time |
 | 4 | oracle runs for the `ponytail` rules, decision on the default of the knob, merc items | 1 day plus the user's decision |
 
@@ -197,3 +207,8 @@ Also for `docs/cheats.md` (owner's call): one line that item verbs are not cheat
 - A new `cmd::EquipItem` command in the protocol variant would make the move atomic on the server, but it touches the wire codec, replication and the net game (`protocol.hpp` wire section); sequencing the three existing commands in one `town.send` batch gives the same atomicity (one tick) without a protocol change. Revisit only if a tick boundary ever splits a batch.
 - Applying the plan directly to `actor->character.items` from the verb handler would be synchronous but would bypass the handler's sounds, class voice and (later) replication; rejected.
 - The `cmd belt put` verb is the precedent (V in the fork docs, `BeltPut`): a verb that sends `ToCursor` and `ToBelt`. Item verbs generalise it with a plan step so that a refusal leaves the item where it was (`belt put` onto an occupied box leaves the displaced item on the cursor).
+
+## 15. References (read-only cross-checks, nothing copied)
+
+- Codex specs of the 1.14d client-to-server item packets (MIT for specs; summarised, with licence tags, in `docs/research/item-packets-2026-11-12.md` on branch agent/mine1, queued #630): used only to cross-check the rule list: 0x17 drop needs a cursor item and drops at the feet; 0x18 page rules and the grid fit test; 0x19 an idle player may lift only inventory-page items unless a stash or cube interaction is open (supports the strict stash rule); 0x1A bodyloc 1..10 and a silent refusal on level/strength/dexterity (matches `can_wear`); 0x4F buttons 0x13/0x14 stash gold (`FUN_00564d50`, 2.5M stash cap, partial deposit, carry cap clvl x 10,000: matches `plan_gold`); 0x50 drop gold (not built). Tag S until a probe confirms.
+- The 0x27 field order is settled V by disassembly (section 4, Identify).
