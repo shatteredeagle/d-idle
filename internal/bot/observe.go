@@ -188,6 +188,9 @@ func (r *Runner) pollWith(reuse bool) *d2.Snapshot {
 		snap, err = r.d.Snapshot()
 	}
 	now := r.e.Clock.Now()
+	// The monitor probes the game (a control-socket ping on the d2d backend, up to seconds): never under obMu.
+	hev, hran := r.healthProbe(now)
+	var fresh *d2.Snapshot // handed to Deps.OnSnapshot once obMu is released
 	r.obMu.Lock()
 	o := &r.ob
 	defer func() {
@@ -199,8 +202,13 @@ func (r *Runner) pollWith(reuse bool) *d2.Snapshot {
 		if note != nil {
 			note()
 		}
+		if fresh != nil && r.d.OnSnapshot != nil {
+			r.d.OnSnapshot(fresh)
+		}
 	}()
-	r.healthLocked(now)
+	if hran {
+		r.healthApplyLocked(hev)
+	}
 	if err != nil {
 		if o.errSince.IsZero() {
 			o.errSince = now
@@ -216,19 +224,33 @@ func (r *Runner) pollWith(reuse bool) *d2.Snapshot {
 	if snap.State != d2.StateInGame || snap.Player == nil {
 		return nil
 	}
-	if r.d.OnSnapshot != nil {
-		r.d.OnSnapshot(snap)
-	}
+	fresh = snap
 	return snap
 }
 
-func (r *Runner) healthLocked(now time.Time) {
-	o := &r.ob
-	if r.d.Health == nil || now.Sub(o.lastHealth) < time.Second {
-		return
+// healthProbe steps the launch monitor at most once a second, outside obMu. healthMu keeps Step single-threaded now
+// that obMu no longer does it.
+func (r *Runner) healthProbe(now time.Time) (launch.Event, bool) {
+	if r.d.Health == nil {
+		return launch.EventNone, false
 	}
-	o.lastHealth = now
-	switch ev := r.d.Health.Step(now); ev {
+	r.obMu.Lock()
+	due := now.Sub(r.ob.lastHealth) >= time.Second
+	if due {
+		r.ob.lastHealth = now
+	}
+	r.obMu.Unlock()
+	if !due {
+		return launch.EventNone, false
+	}
+	r.healthMu.Lock()
+	defer r.healthMu.Unlock()
+	return r.d.Health.Step(now), true
+}
+
+func (r *Runner) healthApplyLocked(ev launch.Event) {
+	o := &r.ob
+	switch ev {
 	case launch.EventExited, launch.EventCrashed, launch.EventHung:
 		if o.gone == nil && !o.expectExit {
 			o.gone = &gameGone{Event: ev}
