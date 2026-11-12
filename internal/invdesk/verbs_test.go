@@ -28,7 +28,7 @@ func (f *fakeVerbs) ItemEquip(_ context.Context, id uint32, _ int) (bool, error)
 
 type refusal struct{ code string }
 
-func (r refusal) Error() string      { return "item verb refused (" + r.code + ")" }
+func (r refusal) Error() string     { return "item verb refused (" + r.code + ")" }
 func (r refusal) RuleRefusal() bool { return true }
 
 func on() bool  { return true }
