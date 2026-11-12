@@ -77,6 +77,9 @@ type BotTuning struct {
 	Rung3WindowMin int
 	DroughtMin     int
 	EmptyFieldSec  int
+	// ClearIdleMin: a leveling slice that killed nothing for that many minutes calls its area cleared, so the planner
+	// moves on (docs/hourfix.md: Blood Moor held 6 min past exhaustion). 0 = off; Config.EmptyAreaSec still wins when set.
+	ClearIdleMin int
 
 	// g2e fixes (docs/research/g2e-diagnosis.md, addendum "F2-F5 fixes"). NoPortalWaitSec: seconds after the first heal
 	// trip that failed for lack of a town portal before the hero leaves the game (240 or more = never, the old wait).
@@ -117,7 +120,7 @@ func DefaultBotTuning() BotTuning {
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
-		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, NoPortalWaitSec: 20, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180, RecoveryDryMin: 5, RecoveryDryKills: 5, RecoveryDrySkipMin: 15,
+		Rung3WindowMax: 3, Rung3WindowMin: 20, DroughtMin: 8, EmptyFieldSec: 150, ClearIdleMin: 3, NoPortalWaitSec: 20, DroughtStage2Min: 2, DroughtSlowMin: 10, DroughtSlowKills: 3, DroughtSlowMaxLevel: 10, FreshAfterRecoverySec: 180, RecoveryDryMin: 5, RecoveryDryKills: 5, RecoveryDrySkipMin: 15,
 		MercRetryMin: 10, MercHireMinGold: 400, CubeMaxJobs: 6, CubeRuneCap: 10, CubeGemCap: 2,
 	}
 }
@@ -240,6 +243,8 @@ func botKnobs() []Knob {
 			Desc: "No unplanned fresh game (no target left, drought) this long after a lost-game recovery, unless life is below the resume line. A second restart right after the recovery fails the Gate 2 fault criterion. 0 is off."},
 		{Key: "bot.emptyFieldSec", Label: "Empty quest field", Unit: "s", Default: 150, Min: 0, Max: 900, NoHandicap: true,
 			Desc: "A quest-run area with no hostile in sight and no kill for this long counts as cleared, so the route moves on. Other areas follow the sweep setting. 0 is off."},
+		{Key: "bot.clearIdleMin", Label: "Idle leveling field", Unit: "min", Default: 3, Min: 0, Max: 30, NoHandicap: true,
+			Desc: "A leveling area where the hero has killed nothing for this long counts as cleared, so the planner moves on to the next area (a human leaves an emptied field). 0 is off."},
 		{Key: "bot.failsafePauseMaxSec", Label: "Failsafe pause cap", Unit: "s", Default: 3600, Min: 300, Max: 14400, NoHandicap: true,
 			Desc: "Longest failsafe self pause. The pause starts at 5 minutes and doubles with every consecutive pause without real progress."},
 		// Merc and cube chores: switches and policy, not skill, so no handicap profile moves them (NoHandicap).

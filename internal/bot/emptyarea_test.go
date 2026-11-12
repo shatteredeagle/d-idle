@@ -173,3 +173,31 @@ func TestPingPongRate(t *testing.T) {
 		}
 	}
 }
+
+// bot.clearIdleMin (docs/hourfix.md): a leveling slice calls an area cleared after that many idle minutes, other
+// sweeps and the value 0 are left alone. Class independent (no class or area data involved).
+func TestClearIdleMinLeavesALevelingField(t *testing.T) {
+	g := newRig(t)
+	r := g.r
+	r.loop.cleared = map[int]bool{}
+	run := func(levelSlice bool, min int) bool {
+		r.e.Tune.Bot.ClearIdleMin = min
+		r.loop.levelSlice, r.loop.cleared, r.loop.emptySince = levelSlice, map[int]bool{}, time.Time{}
+		r.emptyAreaLeave(2)
+		g.clock.Sleep(80 * time.Second)
+		r.emptyAreaLeave(2)
+		g.clock.Sleep(80 * time.Second)
+		r.emptyAreaLeave(2)
+		g.clock.Sleep(30 * time.Second) // 190 s idle in all, no gap over 90 s
+		return r.emptyAreaLeave(2)
+	}
+	if !run(true, 3) {
+		t.Fatal("190 s idle in a leveling slice with clearIdleMin 3 must clear the area")
+	}
+	if run(true, 0) {
+		t.Fatal("clearIdleMin 0 is off")
+	}
+	if run(false, 3) {
+		t.Fatal("a non-leveling sweep keeps roaming")
+	}
+}

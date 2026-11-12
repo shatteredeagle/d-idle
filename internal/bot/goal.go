@@ -955,6 +955,9 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 		r.guardedAreasNoFarm(s, ex)
 		t := r.e.Tune.Bot
 		diff := difficultyName(p.Difficulty)
+		if diff == "normal" && r.questClaimed("den_of_evil") {
+			ex[areaDenOfEvil] = true // the reward is taken: the Den is no quest run any more (hourfix)
+		}
 		if r.denKitShort(s) && diff == "normal" {
 			ex[areaDenOfEvil] = true // a dungeon quest needs a potion buffer; farm the open field first
 		}
@@ -981,6 +984,15 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				delete(ex, areaDenOfEvil)
 				r.e.Log.Info("den: floor waived, nothing else to level in", "level", p.Level)
 				step, ok = pick()
+			}
+		}
+		if ok && step.Area != areaDenOfEvil && diff == "normal" && !ex[areaDenOfEvil] && !r.questClaimed("den_of_evil") {
+			// The Den is always taken before the fields behind it (a melee class enters Cold Plains at clvl 4, the Den
+			// leaves at 6): data order alone would pick the later step in the overlap (hourfix).
+			for _, ds := range r.d.Plan.Steps[diff] {
+				if ds.Area == areaDenOfEvil && ds.enter(MeleeTank(p.Class))+t.LevelMargin <= p.Level && p.Level <= ds.LeaveLvl+t.LeaveSlack {
+					step = ds
+				}
 			}
 		}
 		for ok {
@@ -1450,6 +1462,9 @@ func (r *Runner) noteArea(area int) {
 func (r *Runner) emptyAreaLeave(area int) bool {
 	l := &r.loop
 	limit := r.cfg.EmptyAreaSec
+	if limit == 0 && l.levelSlice {
+		limit = r.e.Tune.Bot.ClearIdleMin * 60
+	}
 	if l.run != nil && l.run.Area == area {
 		// A quest area keeps roaming for its targets, but a sweep that sees no hostile at all for bot.emptyFieldSec is
 		// an emptied field, not a quest in progress (g2d seed 17: 12 minutes in Stony Field after a resupply trip).

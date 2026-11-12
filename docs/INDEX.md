@@ -290,6 +290,10 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [deathautopsy.md](deathautopsy.md): deathautopsy (archived)
 - [deathspiral.md](deathspiral.md): Death spiral guards (G1 attempt 1, 2026-10-29)
 - [denshuttle.md](denshuttle.md): Den of Evil <-> Blood Moor shuttle (TASK-295) (status: cause V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Follows docs/areathrash.md (same d2d...)
+
+`design/`
+
+- [item-verbs.md](design/item-verbs.md): Item verbs: inventory, stash and equipment actions through d2d's own item handlers (TASK-367) (status: DESIGN plus one built slice (equip, unequip, `caps`), 2026-11-12. User decision 2026-11-12 (popup): go for...)
 - [desktop-app.md](desktop-app.md): Desktop app: d2idle-watch (status: the Go launcher is the FALLBACK; the main desktop app is now `apps/desktop-electron`...)
 - [desktop-electron.md](desktop-electron.md): Desktop app on Electron: d2idle-watch (status: built, not yet run on real desktops (TASK-289 skeleton, TASK-290 tray, autostart, hide-to-tray, update...)
 - [dev-reset.md](dev-reset.md): Reset the play sandbox to a fresh hero (status: CURRENT. Task: TASK-263 (devreset). Dev tooling for a DEV container such as `d2play-20261108`...)
@@ -372,6 +376,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [hall-of-fame.md](hall-of-fame.md): Hall of Fame and the retire question (TASK-135) (status: built offline (fixtures and fakes). Nothing here is verified against a live game. Ledger and UI only: no...)
 - [heldlog.md](heldlog.md): Held-for-Andariel log line
 - [hirefixlive.md](hirefixlive.md): hirefixlive: PaidHire follows the real menu flow (offline, 2026-11-04) (status: current. Tags: V = verified, S = secondary, U = unverified. Not run live: this change is offline only.)
+- [hourfix.md](hourfix.md): hourfix: first-hour time sinks (TASK-368)
 - [input.md](input.md): Input: helper, client, transform (agent INPUT)
 - [items.md](items.md): Items, economy and runewords for the offline bot (agent ITEMRESEARCH)
 - [killcredit.md](killcredit.md): Kill credit and hits per cast (change killcredit)
@@ -385,6 +390,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
+- [locks.md](locks.md): Lock order and rules (status: current (lock audit, 2026-11-12, after the sandbox freeze of 2026-11-12: nav.roam called done() under...)
 - [logfields.md](logfields.md): Log fields for the per-skill soak report (change logfields)
 - [loot-charms.md](loot-charms.md): Charms, runes and gems on a sell visit (status: current (card m1-loot, agent m1loot, 2026-10-31). Rule source: user decision D4 and the d2-sme; shared...)
 - [lootmemory.md](lootmemory.md): Loot memory (status: current (TASK-320). Code: `internal/loot/memory.go`; hooks in `internal/bot/observe.go` and `goal.go`...)

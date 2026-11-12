@@ -92,3 +92,31 @@ func TestAreaChoiceHasHysteresis(t *testing.T) {
 		t.Fatalf("level change ignored: %d", a)
 	}
 }
+
+// A reward taken by the task layer (quest word Done) is no pending claim and takes the Den out of the planner's picks,
+// also in a fresh game (docs/hourfix.md; the runner's own questDone map only knew its own claims).
+func TestClaimedDenIsNotARunAgain(t *testing.T) {
+	q := &fakeQuests{}
+	g := denRig(t, q)
+	g.r.poll()
+	run := &LevelRun{Key: "den_of_evil", Kind: RunQuest, Area: areaDenOfEvil, Quest: "den_of_evil"}
+	g.r.runFinished(run)
+	if !g.r.loop.questPending["den_of_evil"] {
+		t.Fatal("an unclaimed Den must become pending")
+	}
+	g.r.loop.questPending = nil
+	q.set(task.QDen, task.QuestState{Stage: task.StageDone, Ev: task.EvMemory})
+	if !g.r.questClaimed("den_of_evil") {
+		t.Fatal("quest word Done must count as claimed")
+	}
+	g.r.runFinished(run)
+	if len(g.r.loop.questPending) != 0 {
+		t.Fatalf("a claimed quest went pending: %v", g.r.loop.questPending)
+	}
+	g.w.set(func(w *world) { w.level = 4 })
+	g.r.poll()
+	s := g.r.latest()
+	if a, ok := g.r.target0(s, levelGoalControl()); ok && a == areaDenOfEvil {
+		t.Fatalf("the claimed Den was picked again")
+	}
+}
