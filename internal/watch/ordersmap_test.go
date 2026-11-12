@@ -84,7 +84,7 @@ func TestOrdersMapScenarioA(t *testing.T) {
 	if !camp.Status.Here || camp.Status.Order || !v.Hero.Known || v.Hero.Level != 6 {
 		t.Errorf("camp: %+v hero %+v", camp.Status, v.Hero)
 	}
-	for _, id := range []string{"line", "cell", "up", "mg", "oc"} {
+	for _, id := range []string{"line", "cell"} {
 		if nodeOf(t, v, id).Orderable {
 			t.Errorf("%s must not be orderable yet", id)
 		}

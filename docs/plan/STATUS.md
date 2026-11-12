@@ -109,6 +109,7 @@
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | arrivalsettle | proposed | - | `internal/d2dctl/verbs.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dinput/run_test.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`docs/passagebounce.md` | - |
 | prpost | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r4`<br>`fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
+| mapnodes | proposed | - | `internal/watch/mapdata.go`<br>`internal/watch/mapnodes_test.go`<br>`internal/watch/ordersmap_test.go`<br>`internal/watch/testdata` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -164,6 +165,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 55514cbc 11-11 22:11 `Merge agent/mapnodes: mapnodes: Underground Pass, Monastery Gate, Outer Cloister orderable on the watch map` (mapnodes)
 - 6c5e3df3 11-11 21:02 `Merge agent/prpost: TASK-352 prpost: posted PRs 444 and 445, bodies, queue` (prpost)
 - 39f58c84 11-11 21:01 `Merge branch 'main' into prpost` (-)
 - 3ce70260 11-11 20:55 `Merge agent/arrivalsettle: TASK-351 arrivalsettle: priming click no longer lands on the return warp (kick toward move target), arrival/bounce counters; stacked on passagebounce` (arrivalsettle)
@@ -173,5 +175,4 @@
 - b2dc041e 11-11 20:42 `Merge agent/decomp12: TASK-350 decomp: warp arrival position and exit trigger arming (d2d arrival bounce)` (decomp12)
 - 26a166b9 11-11 20:41 `Merge branch 'main' into decomp12` (-)
 - debde062 11-11 20:40 `Merge agent/driftfix: driftfix: backlog true-up of drift rows A/B/D` (driftfix)
-- f21d133b 11-11 20:40 `Merge branch 'main' into driftfix` (-)
 <!-- statusgen:end -->

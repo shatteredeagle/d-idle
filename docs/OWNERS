@@ -292,11 +292,14 @@ internal/town/chores.go  credit-runner  repairtrip
 internal/town/repairtrip_test.go  credit-runner  repairtrip
 internal/town/town.go  credit-runner  repairtrip
 internal/watch/invui.go  credit-runner  nopins
+internal/watch/mapdata.go  credit-runner  mapnodes
+internal/watch/mapnodes_test.go  credit-runner  mapnodes
 internal/watch/minimapfix_test.go  credit-runner  minimapfix
 internal/watch/nopins_test.go  credit-runner  nopins
 internal/watch/onboarding.go  credit-runner  firstminutes
 internal/watch/onboarding.go  credit-runner  reconnectux
 internal/watch/onboarding_test.go  credit-runner  firstminutes
+internal/watch/ordersmap_test.go  credit-runner  mapnodes
 internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
 internal/watch/senses.go  credit-runner  maphistory
@@ -314,6 +317,7 @@ internal/watch/senses_test.go  credit-runner  maphistoryC
 internal/watch/senses_test.go  credit-runner  maphistoryD
 internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
+internal/watch/testdata  credit-runner  mapnodes
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
 internal/watch/testdata/gear_repairtrip_dom.js  credit-runner  repairtrip
