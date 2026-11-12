@@ -164,6 +164,9 @@ func ValidKey(key string) bool {
 	if itemKey.MatchString(key) {
 		return true
 	}
+	if validSkillKey(key) {
+		return true
+	}
 	if name, ok := strings.CutPrefix(key, "slot-"); ok {
 		_, ok = slotFiles[name]
 		return ok
@@ -221,6 +224,8 @@ func (s *Store) render(key string) (image.Image, error) {
 	switch {
 	case key == "panel-inv":
 		return s.panelInv()
+	case validSkillKey(key):
+		return s.renderSkill(key)
 	case strings.HasPrefix(key, "slot-"):
 		sf := slotFiles[strings.TrimPrefix(key, "slot-")]
 		fr, err := s.frames(panelDir + sf.file)
