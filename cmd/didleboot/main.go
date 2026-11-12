@@ -105,6 +105,10 @@ func realMain(args []string) int {
 	if devOn() {
 		b.Policy = DevPolicy()
 		os.MkdirAll(layout.Root, 0o755)
+		if pid, ok := otherShimRunning(layout, os.Getpid(), func(p int) ([]byte, error) { return os.ReadFile(fmt.Sprintf("/proc/%d/cmdline", p)) }); ok {
+			fmt.Fprintf(os.Stderr, "didleboot: another boot shim is already running (pid %d); not starting a second one. Use `boot check-now` or `boot rollback-now` to talk to it.\n", pid)
+			return 1
+		}
 		os.WriteFile(pidFile(layout), []byte(strconv.Itoa(os.Getpid())+"\n"), 0o644)
 	}
 	var reload atomic.Bool

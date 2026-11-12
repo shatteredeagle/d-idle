@@ -37,7 +37,9 @@ start) docker compose up -d ;;
 stop) echo "stopping (the hero is saved first, up to 45 s)"; docker compose stop ;;
 update)
 	[ -n "$(wtok)" ] || { echo "STOP: the container is not running (./didle start)" >&2; exit 1; }
-	answer /api/update/check >/dev/null
+	# drill D3 (docs/friend-drills.md): before the setup page is finished only the setup server runs, curl fails and set -e ended the
+	# command with exit 56 and no words
+	answer /api/update/check >/dev/null || { echo "STOP: the bot's update service does not answer. If the setup page is not finished, finish it first (./didle status shows the address); otherwise run ./didle report." >&2; exit 1; }
 	st=$(viewer /api/update/status)
 	ver=$(echo "$st" | sed -n 's/.*"available":{"version":"\([^"]*\)".*/\1/p')
 	err=$(echo "$st" | jfield last_error)

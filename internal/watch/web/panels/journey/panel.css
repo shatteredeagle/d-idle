@@ -1,0 +1,18 @@
+@layer panels {
+  [data-panel="journey"] .path { display: flex; flex-wrap: wrap; gap: var(--d-sp-1); margin: 0; padding: 0; list-style: none; }
+  [data-panel="journey"] .step { display: flex; flex-direction: column; align-items: center; min-width: 0; flex: 1 1 0; }
+  [data-panel="journey"] .pip { width: 2em; height: 2em; border-radius: 50%; border: 1px solid var(--d-line); background: var(--d-surface-2); color: var(--d-text-2); font-size: var(--d-fs-1); cursor: pointer; }
+  [data-panel="journey"] .step .lbl { font-size: var(--d-fs-1); color: var(--d-text-2); text-align: center; overflow: hidden; text-overflow: ellipsis; max-width: 100%; white-space: nowrap; }
+  [data-panel="journey"] .step[data-state="done"] .pip { background: var(--d-good); color: var(--d-on-good); border-color: var(--d-good); }
+  [data-panel="journey"] .step[data-state="current"] .pip,
+  [data-panel="journey"] .step[data-state="next"] .pip { border-width: 2px; border-color: var(--d-accent); color: var(--d-text); }
+  [data-panel="journey"] .step[data-state="skipped"] .pip,
+  [data-panel="journey"] .step[data-state="held"] .pip { opacity: 0.5; border-style: dashed; }
+  [data-panel="journey"] .step[data-band="too_early"]:not([data-state="done"]) .pip { color: var(--d-bad); }
+  [data-panel="journey"] .step[data-sel="1"] .lbl { color: var(--d-text); }
+  [data-panel="journey"] .up, [data-panel="journey"] .det { margin-top: var(--d-sp-2); }
+  [data-panel="journey"] .ttl { margin: 0; color: var(--d-text); }
+  [data-panel="journey"] .sub { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-1); }
+  [data-panel="journey"] .d-hint { margin: 0; color: var(--d-text-2); font-size: var(--d-fs-1); }
+  [data-panel="journey"] .btns { display: flex; flex-wrap: wrap; gap: var(--d-sp-1); margin-top: var(--d-sp-1); }
+}

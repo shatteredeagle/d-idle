@@ -46,7 +46,7 @@ func TestShippedLayoutsAreValid(t *testing.T) {
 	}
 	ms, _ := Manifests()
 	for _, m := range ms {
-		if m.Band != "status" && !placed[m.ID] {
+		if m.Band != "status" && m.MergedInto == "" && !placed[m.ID] {
 			t.Errorf("web/layout.json does not place the panel %s", m.ID)
 		}
 	}

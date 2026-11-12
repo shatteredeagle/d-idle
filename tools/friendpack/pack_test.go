@@ -54,7 +54,9 @@ func build(t *testing.T, out string, d2dFiles map[string]string, extra ...string
 	img := tgz(t, in, "image.tar.gz", map[string]string{"manifest.json": "[]"})
 	args := append([]string{"build.sh", "--version", "0.1.0", "--image", "didle-friends:0.1.0", "--image-tar", img,
 		"--d2d-src", d2d, "--d2d-commit", d2dCommit, "--out", out, "--bot-ref", "HEAD"}, extra...)
-	b, err := exec.Command("bash", args...).CombinedOutput()
+	c := exec.Command("bash", args...)
+	c.Env = append(os.Environ(), "CHECKLIST_FLAGS=--no-leakcheck") // leakcheck compiles Go; it has its own run below
+	b, err := c.CombinedOutput()
 	return string(b), err
 }
 
@@ -222,4 +224,51 @@ func mustRead(t *testing.T, p string) []byte {
 		t.Fatal(err)
 	}
 	return b
+}
+
+func TestChecklistPassesOnBuiltPackAndFailsOnBadOne(t *testing.T) {
+	need(t)
+	out := t.TempDir()
+	if o, err := build(t, out, map[string]string{"d2d/README": "x"}, "--force"); err != nil {
+		t.Fatalf("%v\n%s", err, o)
+	}
+	pack := filepath.Join(out, "didle-friends-0.1.0.tar.gz")
+	rec := t.TempDir()
+	b, err := exec.Command("bash", "checklist.sh", "--pack", pack, "--record-dir", rec, "--no-leakcheck").CombinedOutput()
+	if err != nil {
+		t.Fatalf("checklist on a fresh pack: %v\n%s", err, b)
+	}
+	for i := 1; i <= 7; i++ {
+		if !strings.Contains(string(b), "PASS  item "+string(rune('0'+i))+" ") {
+			t.Errorf("item %d not PASS:\n%s", i, b)
+		}
+	}
+	if _, e := os.Stat(filepath.Join(rec, "friend-checklist-0.1.0.md")); e != nil {
+		t.Error("record not written")
+	}
+
+	// a pack with a Freepik icon in the d2d tree and no attribution would fail item 3; the builder writes it, so it passes
+	out2 := t.TempDir()
+	if o, err := build(t, out2, map[string]string{"d2d/assets/icon/d2d.svg": "<!-- Designed by dgim-studio / Freepik -->"}); err != nil {
+		t.Fatalf("%v\n%s", err, o)
+	}
+	n, _ := os.ReadFile(filepath.Join(unpack(t, filepath.Join(out2, "didle-friends-0.1.0.tar.gz")), "licenses", "NOTICE"))
+	if !strings.Contains(string(n), "Freepik") {
+		t.Error("Freepik attribution not written while the icon is in the tree")
+	}
+
+	// tamper: NOT FOR DISTRIBUTION in SOURCE.txt and no disclaimer -> FAIL, exit 1
+	root := unpack(t, pack)
+	src := filepath.Join(root, "licenses", "SOURCE.txt")
+	sb, _ := os.ReadFile(src)
+	os.WriteFile(src, append(sb, []byte("NOT FOR DISTRIBUTION\n")...), 0o644)
+	os.WriteFile(filepath.Join(root, "README.txt"), []byte("hi\n"), 0o644)
+	bad := filepath.Join(t.TempDir(), "bad.tar.gz")
+	if o, err := exec.Command("bash", "-c", "tar -C \"$(dirname "+root+")\" -czf "+bad+" "+filepath.Base(root)).CombinedOutput(); err != nil {
+		t.Fatalf("%v %s", err, o)
+	}
+	b, err = exec.Command("bash", "checklist.sh", "--pack", bad, "--record-dir", t.TempDir(), "--no-leakcheck").CombinedOutput()
+	if err == nil || !strings.Contains(string(b), "FAIL  item 2") || !strings.Contains(string(b), "FAIL  item 6") {
+		t.Fatalf("tampered pack should FAIL items 2 and 6: %v\n%s", err, b)
+	}
 }
