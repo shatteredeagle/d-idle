@@ -349,6 +349,26 @@ func (r *Runner) questObjectiveMet(q string) (met, known bool) {
 	return has && st.Stage >= task.StageCleared, true
 }
 
+// questClaimed says the reward of quest q was taken: this runner claimed it, or the live quest word is Done (the task
+// layer's claim does not go through claimStep). The word survives a fresh game; the runner's own map does not need to.
+// docs/hourfix.md: the Den was claimed at 02:38 and farmed as a quest run again until a failed claim trip at 03:03.
+func (r *Runner) questClaimed(q string) bool {
+	if r.loop.questDone[q] {
+		return true
+	}
+	td := r.d.Task
+	s := r.latest()
+	if td == nil || td.Quests == nil || !td.QuestsLive || s == nil || s.Player == nil {
+		return false
+	}
+	v, ok := td.Quests.Read(int(s.Player.Difficulty))
+	if !ok {
+		return false
+	}
+	st, has := v.Quests[q]
+	return has && st.Stage >= task.StageDone
+}
+
 // sweepEndsQuest decides whether an exhausted sweep of the run's area really completes the run. A quest run needs the
 // quest word (Den of Evil: "all monsters dead") when a live reader exists: otherwise the bot walks to a leftover monster
 // (the fighter sets some aside) a few times and then gives the area up without claiming (ended true, complete false).
@@ -387,7 +407,7 @@ func (r *Runner) runFinished(run *LevelRun) {
 	}
 	l := &r.loop
 	r.e.Log.Info("run finished", "run", run.Key, "kind", run.Kind, "area", run.Area)
-	if run.Kind == RunQuest && !l.questDone[run.Quest] {
+	if run.Kind == RunQuest && !r.questClaimed(run.Quest) {
 		if l.questPending == nil {
 			l.questPending = map[string]bool{}
 		}
