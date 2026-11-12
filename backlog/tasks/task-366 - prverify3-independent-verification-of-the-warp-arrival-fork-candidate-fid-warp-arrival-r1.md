@@ -1,10 +1,13 @@
 ---
 id: TASK-366
-title: 'prverify3: independent verification of the warp-arrival fork candidate (fid/warp-arrival-r1)'
-status: In Progress
+title: >-
+  prverify3: independent verification of the warp-arrival fork candidate
+  (fid/warp-arrival-r1)
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T16:22:00Z'
+updated_date: '2026-11-12T17:52:00Z'
 labels:
   - d2d
   - research
