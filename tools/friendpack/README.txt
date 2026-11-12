@@ -10,3 +10,6 @@ You need: Linux x86-64, Docker with the compose plugin (v2), your own Diablo II 
 
 Full guide: guide/friend-guide.md. Source code and licences: src/ and licenses/. Check this download with
 `sha256sum -c SHA256SUMS`.
+
+Not affiliated with or endorsed by Blizzard Entertainment. Bring your own legally owned Diablo II 1.14d game files.
+Offline only (no Battle.net). GPL-3.0-or-later (licenses/GPL-3.0.txt, source in src/). No warranty.
