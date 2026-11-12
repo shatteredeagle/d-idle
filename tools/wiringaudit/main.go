@@ -1,6 +1,7 @@
 // Command wiringaudit lists the places where production wiring can silently turn a feature off.
 //
 //	go run ./tools/wiringaudit asserts   # comma-ok type assertions x.(T) outside tests (optional interfaces)
+//	go run ./tools/wiringaudit knobs     # tuning struct fields (internal/env/tuning*.go) never selected outside them, non-test
 //	go run ./tools/wiringaudit orphans   # funcs and methods whose name is never referenced from non-test code
 //
 // It is syntactic (name based, no type information): a method name shared with another type counts as used, so
@@ -46,6 +47,8 @@ func main() {
 	switch os.Args[1] {
 	case "asserts":
 		asserts(fset, files)
+	case "knobs":
+		knobs(fset, files, tests)
 	case "orphans":
 		orphans(fset, files, tests)
 	}
@@ -157,5 +160,72 @@ func orphans(fset *token.FileSet, files, tests []*ast.File) {
 	sort.Slice(out, func(i, j int) bool { return out[i].pos < out[j].pos })
 	for _, d := range out {
 		fmt.Printf("%s: %s\n", d.pos, d.name)
+	}
+}
+
+// knobs lists the fields of every struct declared in internal/env/tuning*.go whose name is never selected (x.Field)
+// in non-test code outside those files. A knob that only tests or the table of knobs touch changes nothing.
+func knobs(fset *token.FileSet, files, tests []*ast.File) {
+	isTuning := func(f *ast.File) bool {
+		n := filepath.ToSlash(fset.Position(f.Pos()).Filename)
+		return strings.HasPrefix(n, "internal/env/tuning")
+	}
+	fields := map[string]string{} // field -> struct.pos
+	used := map[string]bool{}
+	for _, f := range files {
+		if isTuning(f) {
+			for _, d := range f.Decls {
+				gd, ok := d.(*ast.GenDecl)
+				if !ok {
+					continue
+				}
+				for _, sp := range gd.Specs {
+					ts, ok := sp.(*ast.TypeSpec)
+					if !ok {
+						continue
+					}
+					st, isStruct := ts.Type.(*ast.StructType)
+					if !isStruct {
+						continue
+					}
+					for _, fl := range st.Fields.List {
+						for _, nm := range fl.Names {
+							fields[nm.Name] = ts.Name.Name + " " + fset.Position(nm.Pos()).String()
+						}
+					}
+				}
+			}
+			continue
+		}
+		ast.Inspect(f, func(n ast.Node) bool {
+			if se, ok := n.(*ast.SelectorExpr); ok {
+				used[se.Sel.Name] = true
+			}
+			return true
+		})
+	}
+	// the tuning files' own methods and accessors count as reads too when called from elsewhere
+	var out []string
+	inTest := map[string]bool{}
+	for _, f := range tests {
+		ast.Inspect(f, func(n ast.Node) bool {
+			if se, ok := n.(*ast.SelectorExpr); ok {
+				inTest[se.Sel.Name] = true
+			}
+			return true
+		})
+	}
+	for name, where := range fields {
+		if !used[name] {
+			tag := ""
+			if inTest[name] {
+				tag = " [tests only]"
+			}
+			out = append(out, where+": "+name+tag)
+		}
+	}
+	sort.Strings(out)
+	for _, l := range out {
+		fmt.Println(l)
 	}
 }
