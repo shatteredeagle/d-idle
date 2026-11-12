@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons <!--sg:agent/branding-->
 - TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers <!--sg:agent/legalfollow-->
 - TASK-346 herounify: one Hero tile (stats merged into the Hero card) <!--sg:agent/herounify-->
 - TASK-344 frienddrills2: live drills D3/D4/D7 with real game files pass (docs/friend-drills.md), shim refuses a second boot.pid owner (gate on worker host exit 0; stacked on agent/frienddrills #603) <!--sg:agent/frienddrills2-->

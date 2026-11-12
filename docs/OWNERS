@@ -127,10 +127,15 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/desktop-electron.yml  credit-runner  electronapp
+README.md  credit-runner  branding
 README.md  credit-runner  legalfollow
 THIRD_PARTY.md  credit-runner  legalfollow
 apps/desktop-electron/  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronmac2
+apps/desktop-electron/build/  credit-runner  branding
+apps/desktop-electron/package.json  credit-runner  branding
+apps/desktop-electron/scripts/make-icons.js  credit-runner  branding
+assets/branding/  credit-runner  branding
 backlog/merge-lines/agent-uifit.txt  credit-runner  uifit
 cmd/d2bot/artcmd.go  credit-runner  artspeed
 cmd/d2bot/artcmd_test.go  credit-runner  artspeed
@@ -178,9 +183,11 @@ docs/aggression.md  credit-runner  aggression2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
+docs/branding.md  credit-runner  branding
 docs/campaign.md  credit-runner  campaign1
 docs/campaign.md  credit-runner  campaign3
 docs/desktop-app.md  credit-runner  electronapp
+docs/desktop-electron.md  credit-runner  branding
 docs/desktop-electron.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronmac2
 docs/dev-update.md  credit-runner  artspeed
@@ -190,6 +197,7 @@ docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/friend-assets.md  credit-runner  legalfollow
 docs/friend-drills.md  credit-runner  frienddrills
+docs/friend-guide.md  credit-runner  branding
 docs/friend-guide.md  credit-runner  legalfollow
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
@@ -463,10 +471,12 @@ internal/watch/web/shell.js  credit-runner  uifit
 internal/watch/web/shell.json  credit-runner  campaign3
 internal/watch/web/shell.json  credit-runner  herounify
 internal/watch/web/shell.json  credit-runner  uifit
+internal/watch/web/watch.html  credit-runner  branding
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  campaign3
 internal/watch/whyline_test.go  credit-runner  repairtrip
 internal/watch/xpreadout_test.go  credit-runner  xpreadout
+tools/branding/  credit-runner  branding
 tools/emu/d9_*  credit-runner  fid-batch5
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff

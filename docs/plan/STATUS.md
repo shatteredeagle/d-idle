@@ -125,6 +125,7 @@
 | campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
 | frienddrills | proposed | - | `docs/friend-drills.md`<br>`tools/friendpack/didle` | - |
 | herounify | proposed | - | `internal/watch/web/panels/hero-vitals`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/web/layout.json`<br>`internal/watch/web/shell.json` | - |
+| branding | proposed | - | `assets/branding/`<br>`tools/branding/`<br>`docs/branding.md`<br>`apps/desktop-electron/build/`<br>`apps/desktop-electron/scripts/make-icons.js`<br>`apps/desktop-electron/package.json`<br>`internal/watch/web/watch.html`<br>`README.md`<br>`docs/friend-guide.md`<br>`docs/desktop-electron.md` | - |
 | legalfollow | in-progress | - | `tools/friendpack`<br>`THIRD_PARTY.md`<br>`docs/friend-assets.md`<br>`docs/friend-guide.md`<br>`docs/research/legal-decisions-2026-11-11.md`<br>`docs/paperdoll-art-build.md`<br>`README.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
@@ -181,6 +182,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a71be511 11-11 20:31 `Merge agent/branding: TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons` (branding)
+- 4913eeac 11-11 20:30 `Merge branch 'main' into branding` (-)
 - b9d88065 11-11 20:26 `Merge agent/legalfollow: TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers` (legalfollow)
 - 36c31d1c 11-11 20:26 `Merge branch 'main' into legalfollow` (-)
 - 78090ba8 11-11 20:18 `Merge agent/herounify: TASK-346 herounify: one Hero tile (stats merged into the Hero card)` (herounify)
@@ -189,6 +192,4 @@
 - 29520e11 11-11 20:13 `Merge branch 'main' into frienddrills2` (-)
 - a5e4aa14 11-11 20:12 `Merge agent/prprep2: TASK-332 round 2: Lightning r3 and Cold r4 drafts, queue, scripts` (prprep2)
 - c2211424 11-11 20:11 `Merge branch 'main' into prprep2` (-)
-- e9c488c4 11-11 20:10 `Merge agent/frienddrills: TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix` (frienddrills)
-- 45e40c4a 11-11 20:09 `Merge branch 'main' into frienddrills` (-)
 <!-- statusgen:end -->
