@@ -337,6 +337,7 @@ func (w *World) autoPlace(u d2.Unit) bool {
 				}
 				if !used {
 					u.Item.Where, u.Mode, u.X, u.Y = d2.ContBelt, d2.ItemModeBelt, s, 0
+					u.Item.GX, u.Item.GY = s, 0 // the real reader copies the cell here
 					w.Items = append(w.Items, u)
 					return true
 				}
@@ -349,6 +350,7 @@ func (w *World) autoPlace(u d2.Unit) bool {
 		for c := 0; c+ww <= w.Lay.Inventory.Cols; c++ {
 			if fits(occ, w.Lay.Inventory, c, r, ww, hh) {
 				u.Item.Where, u.Mode, u.X, u.Y = d2.ContInventory, d2.ItemModeStored, c, r
+				u.Item.GX, u.Item.GY = c, r
 				w.Items = append(w.Items, u)
 				return true
 			}

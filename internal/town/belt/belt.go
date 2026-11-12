@@ -449,7 +449,7 @@ func columnHeld(slots int, items []Placed, c int) bool {
 }
 
 // Surplus finds the belt column to empty so that a potion of the starved kind k gets a column: among the columns of the
-// OTHER kinds that hold more columns than the band plans for them, the one with the fewest potions (ties: the right-most).
+// OTHER kinds (mana only) that hold more columns than the band plans for them, the one with the fewest potions (ties: the right-most).
 // It returns that column's boxes top first (a column is emptied from the top) and its kind. ok is false when k already
 // fits (PlaceFor says yes) or no kind has a column to spare, so a plan the player set on purpose (all mana) is never
 // "repaired" and a belt with nothing to give is left alone. Hysteresis: only columns above the plan are offered, and
@@ -472,7 +472,8 @@ func Surplus(slots int, items []Placed, k Kind, b Band) (boxes []int, from Kind,
 				bottom, kind = p.Box, p.Kind
 			}
 		}
-		if n == 0 || kind == k || kind == None || held[kind] <= b.planCols(kind) {
+		// only mana is ever taken out: a healing or rejuvenation column is survival stock, a repair never gives it up
+		if n == 0 || kind != MP || kind == k || held[kind] <= b.planCols(kind) {
 			continue
 		}
 		if n < bestN {

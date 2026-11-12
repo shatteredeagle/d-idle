@@ -103,25 +103,29 @@ func (t *Town) NeedsBeltFill(s *d2.Snapshot) bool {
 // hostile near, in the field. The returned error is the last move failure, if any move failed.
 func (t *Town) FillBelt(ctx context.Context) (BeltFillReport, error) {
 	rep, err := t.fillBelt(ctx)
-	if err != nil || rep.Moved == 0 {
-		return rep, err
-	}
-	// BELTFIX: the first pass may have taken the last free column; if a planned kind still has pack potions and no column,
-	// free a surplus one and fill again (once: the second pass does not loop back).
-	if s, e := t.current(); e == nil {
-		if _, _, _, ok := t.beltRepair(s); ok {
-			r2, err2 := t.fillBelt(ctx)
-			rep.Moved += r2.Moved
-			rep.Dragged += r2.Dragged
-			rep.Failed += r2.Failed
-			rep.Repaired += r2.Repaired
-			rep.Attempts += r2.Attempts
-			rep.After = r2.After
-			return rep, err2
+	// BELTFIX: a pass may take the last free column; while a planned kind still has pack potions and no column, free a
+	// surplus mana column and fill again (at most maxFillPasses in all, so a stuck belt cannot loop).
+	for pass := 1; pass < maxFillPasses && err == nil && rep.Moved > 0; pass++ {
+		s, e := t.current()
+		if e != nil {
+			break
 		}
+		if _, _, _, ok := t.beltRepair(s); !ok {
+			break
+		}
+		r2, err2 := t.fillBelt(ctx)
+		rep.Moved += r2.Moved
+		rep.Dragged += r2.Dragged
+		rep.Failed += r2.Failed
+		rep.Repaired += r2.Repaired
+		rep.Attempts += r2.Attempts
+		rep.After, err = r2.After, err2
 	}
 	return rep, err
 }
+
+// maxFillPasses bounds the repair-and-fill passes of one FillBelt call (a four-column belt needs at most three).
+const maxFillPasses = 4
 
 func (t *Town) fillBelt(ctx context.Context) (BeltFillReport, error) {
 	var rep BeltFillReport
