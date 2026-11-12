@@ -2,7 +2,9 @@
    style under style-src 'self'), prerequisite arrows in an SVG drawn by skills.js. Tokens only. */
 @layer shell {
   .sk-page { display: grid; gap: var(--d-gap); padding: 0 var(--d-gap) var(--d-gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
-  .sk-trees { display: grid; gap: var(--d-gap); grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); }
+  .sk-trees { display: grid; gap: var(--d-gap); grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 56rem) { .sk-trees { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (min-width: 36rem) and (max-width: 55.99rem) { .sk-trees { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   .sk-trees > .d-card { min-inline-size: 0; }
   .sk-lg[data-state="locked"] { border-style: dashed; --sk-edge: var(--d-line); }
   .sk-lg[data-state="learned"] { --sk-edge: var(--d-accent); }
