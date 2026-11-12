@@ -1450,6 +1450,9 @@ func (r *Runner) noteArea(area int) {
 func (r *Runner) emptyAreaLeave(area int) bool {
 	l := &r.loop
 	limit := r.cfg.EmptyAreaSec
+	if limit == 0 && l.levelSlice {
+		limit = r.e.Tune.Bot.ClearIdleMin * 60
+	}
 	if l.run != nil && l.run.Area == area {
 		// A quest area keeps roaming for its targets, but a sweep that sees no hostile at all for bot.emptyFieldSec is
 		// an emptied field, not a quest in progress (g2d seed 17: 12 minutes in Stony Field after a resupply trip).
