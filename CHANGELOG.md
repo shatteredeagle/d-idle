@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-351 arrivalsettle: priming click no longer lands on the return warp (kick toward move target), arrival/bounce counters; stacked on passagebounce <!--sg:agent/arrivalsettle-->
 - TASK-247 TASK-249 onboarding: welcome card, first-30-minutes checklist, reconnect banner <!--sg:agent/onboarding-->
 - Research: warp arrival spot trace and differential (d2d lands a subtile off game.exe on blocked warp units); no PR yet. <!--sg:agent/decomp12-->
 - driftfix: backlog true-up of drift rows A/B/D <!--sg:agent/driftfix-->

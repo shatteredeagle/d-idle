@@ -107,6 +107,7 @@
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | passagebounce | proposed | - | `internal/bot/loop.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/areaskip_test.go`<br>`docs/passagebounce.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
+| arrivalsettle | proposed | - | `internal/d2dctl/verbs.go`<br>`internal/d2dinput/controller.go`<br>`internal/d2dinput/controller_test.go`<br>`internal/d2dinput/run_test.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`docs/passagebounce.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -162,6 +163,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 3ce70260 11-11 20:55 `Merge agent/arrivalsettle: TASK-351 arrivalsettle: priming click no longer lands on the return warp (kick toward move target), arrival/bounce counters; stacked on passagebounce` (arrivalsettle)
+- 695a2ff9 11-11 20:55 `Merge branch 'main' into arrivalsettle` (-)
 - 221266fa 11-11 20:47 `Merge agent/onboarding: TASK-247 TASK-249 onboarding: welcome card, first-30-minutes checklist, reconnect banner` (onboarding)
 - 0644eac5 11-11 20:46 `Merge branch 'main' into onboarding` (-)
 - b2dc041e 11-11 20:42 `Merge agent/decomp12: TASK-350 decomp: warp arrival position and exit trigger arming (d2d arrival bounce)` (decomp12)
@@ -170,6 +173,4 @@
 - f21d133b 11-11 20:40 `Merge branch 'main' into driftfix` (-)
 - 8ae0ac19 11-11 20:38 `Merge agent/onboarding: sync main` (onboarding)
 - 7b780252 11-11 20:38 `Merge agent/driftfix: sync main` (driftfix)
-- 27c1d008 11-11 20:33 `Merge agent/passagebounce: TASK-349 passagebounce: per-area arrival-bounce counter trips the escalating skip (Passage, Crypt, caves), arrival/bounce log lines` (passagebounce)
-- 45b69024 11-11 20:32 `Merge branch 'main' into passagebounce` (-)
 <!-- statusgen:end -->
