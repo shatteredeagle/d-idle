@@ -112,13 +112,16 @@ type RunInfo struct {
 	Cur, Max        int
 	Presses, Resets int
 	Walking         string
+	Observed        string // last stamina step classified from the V run arithmetic: "run", "walk", "" (none yet)
+	Fixes           int    // times the belief was corrected from the numbers
 }
 
 // RunInfo returns the run observables; safe to call from another goroutine.
 func (c *Controller) RunInfo() RunInfo {
 	c.runMu.Lock()
 	defer c.runMu.Unlock()
-	return RunInfo{Believed: c.running, Cur: c.stCur, Max: c.stMax, Presses: c.runPresses, Resets: c.runResets, Walking: c.walkRaw}
+	return RunInfo{Believed: c.running, Cur: c.stCur, Max: c.stMax, Presses: c.runPresses, Resets: c.runResets, Walking: c.walkRaw,
+		Observed: c.stam.last.String(), Fixes: c.stam.fixes}
 }
 
 // LogKV is RunInfo as slog key/value pairs for the bot's minute line (the bot asks its input for this through an
@@ -126,7 +129,7 @@ func (c *Controller) RunInfo() RunInfo {
 // runBelieved over the minute lines.
 func (c *Controller) LogKV() []any {
 	i := c.RunInfo()
-	return []any{"runBelieved", i.Believed, "stam", i.Cur, "stamMax", i.Max, "runKeys", i.Presses, "runResets", i.Resets, "walkingRaw", i.Walking}
+	return []any{"runBelieved", i.Believed, "stam", i.Cur, "stamMax", i.Max, "runKeys", i.Presses, "runResets", i.Resets, "walkingRaw", i.Walking, "runObs", i.Observed, "runFix", i.Fixes}
 }
 
 // manageRun is called before every move command. Errors are not fatal: a failed read leaves the run as it is.
@@ -151,6 +154,13 @@ func (c *Controller) manageRun() {
 	c.stCur, c.stMax = cur, max
 	c.walkRaw, _ = st.Get("walking")
 	running := c.running
+	if obs := c.stam.observe(c.clk().Now(), cur, max, data.IsTown(c.lastLevel)); obs != stepUnknown {
+		// Exact correction (fid-stamina.md Q2/Q4, V run): the belief flips only when a step contradicts it.
+		if truth := obs == stepRun; truth != running {
+			c.running, running = truth, truth
+			c.stam.fixes++
+		}
+	}
 	c.runMu.Unlock()
 	if running && c.noDrain(cur, max) {
 		// WALKSMOOTH: believed running, moving for seconds outside town, and stamina never left the maximum: the
@@ -172,4 +182,79 @@ func (c *Controller) manageRun() {
 			c.runMu.Unlock()
 		}
 	}
+}
+
+// ---- exact run state from stamina steps -------------------------------------------------------------------------
+//
+// d2d's stamina rules equal game.exe's (docs/probes/fid/fid-stamina.md, V run, 80,000 cases), so two samples taken
+// while the hero is moving outside town tell run from walk:
+//   - running drains: RunDrain x 2 (20, or 15 for the Assassin) times the armor factor (1 or 2), in 256ths per tick
+//     (30, 40, 60 or 80), and nothing else lowers stamina (Q2); it never regenerates, except with a stamina potion;
+//   - walking regenerates max>>9 per tick and only from 1.0 (256 raw) up; standing max>>8 (Q4);
+//   - at the cap, at 0 and in town a step shows nothing (no drain in town, a walk from 0 never recovers).
+// A step with no change therefore proves nothing and never flips the belief.
+
+type stepKind int
+
+const (
+	stepUnknown stepKind = iota
+	stepRun
+	stepWalk
+)
+
+func (k stepKind) String() string {
+	switch k {
+	case stepRun:
+		return "run"
+	case stepWalk:
+		return "walk"
+	}
+	return ""
+}
+
+// staminaTick is the game tick the per-tick figures refer to (40 ms, fid-stamina.md Q1).
+const staminaTick = 40 * time.Millisecond
+
+// stamTrack is the previous sample of the move chain.
+type stamTrack struct {
+	at    time.Time
+	cur   int
+	valid bool
+	last  stepKind
+	fixes int
+}
+
+// classifyStep names what the stamina did between two samples `ticks` game ticks apart while the hero kept moving
+// outside town: a fall is running, a rise at the walking rate (max>>9 per tick, well below the standing rate max>>8)
+// is walking. A rise at the standing rate means the hero stood part of the time: not a statement about the toggle.
+func classifyStep(prev, cur, max, ticks int) stepKind {
+	if max <= 0 || ticks < 1 {
+		return stepUnknown
+	}
+	switch d := cur - prev; {
+	case d < 0:
+		return stepRun
+	case d > 0:
+		walk, stand := max>>9, max>>8
+		if d <= ticks*(walk+stand)/2 { // below the midpoint of the two rates: walking-like
+			return stepWalk
+		}
+	}
+	return stepUnknown
+}
+
+// observe records the sample and, when it continues a chain of moves (the previous sample is less than driftChain
+// old), classifies the step. Not outside town: nothing drains there.
+func (s *stamTrack) observe(now time.Time, cur, max int, town bool) stepKind {
+	prev, at, ok := s.cur, s.at, s.valid
+	s.cur, s.at, s.valid = cur, now, true
+	if town || !ok || now.Sub(at) > driftChain || now.Before(at) {
+		s.last = stepUnknown
+		return stepUnknown
+	}
+	k := classifyStep(prev, cur, max, int(now.Sub(at)/staminaTick))
+	if k != stepUnknown {
+		s.last = k
+	}
+	return k
 }

@@ -24,12 +24,14 @@ type MercClaimer interface {
 func init() { handlers[QBurialMerc] = claimNodes }
 
 // ClaimNeeded is the precondition of the claim step: Blood Raven is dead (the quest word is at least Cleared; the reward
-// talk makes it Done), the character is in Act 1 and has no living merc. An unknown merc state (no reader) proceeds.
+// talk makes it Done), the character is in Act 1 and employs no merc. An unknown merc state (no reader) proceeds.
 func ClaimNeeded(w World) bool {
 	if w.Quest(QBurial).Stage < StageCleared || w.Act > 1 || !normalDiff(w) {
 		return false
 	}
-	return !w.HasMerc && !(w.MercKnown && w.MercAlive)
+	// MercKnown is set only for an employed merc (merc.AliveHook): a claimed Rogue that died is revived, never claimed
+	// again (the live play hero walked home to claim every half hour, 2026-11-11, "claim skipped (merc owned)").
+	return !w.HasMerc && !w.MercKnown
 }
 
 // KashyaHireAllowed is the soft rule that no gold goes to a Kashya hire before Blood Raven is done: afterwards the

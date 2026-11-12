@@ -1,0 +1,4 @@
+@layer panels {
+  [data-panel="journey-chip"] { display: flex; justify-content: end; }
+  [data-panel="journey-chip"] .d-badge { text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+}

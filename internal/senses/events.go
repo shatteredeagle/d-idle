@@ -10,13 +10,21 @@ const (
 
 // Event kinds.
 const (
-	EvKill    = "kill"
-	EvDamage  = "damage"
-	EvPotion  = "potion"
-	EvLoot    = "loot"
-	EvLevelUp = "levelup"
-	EvDeath   = "death"
-	EvFight   = "fight"
+	EvKill     = "kill"
+	EvDamage   = "damage"
+	EvPotion   = "potion"
+	EvLoot     = "loot"
+	EvLevelUp  = "levelup"
+	EvDeath    = "death"
+	EvFight    = "fight"
+	EvChicken  = "chicken"
+	EvRoamFail = "roamfail"
+	EvGateHold = "gatehold"
+	EvIgnore   = "ignore"
+	EvFallback = "fallback"
+	EvYield    = "yield"
+	EvPortal   = "portal"
+	EvWaypoint = "waypoint"
 )
 
 // FightInfo is the compact fight summary an event may carry (combat.FightSummary, copied by the wiring).
@@ -31,6 +39,8 @@ type FightInfo struct {
 	Casts    int     `json:"casts,omitempty"`
 	Approach int     `json:"approach,omitempty"`
 	Left     string  `json:"left,omitempty"`
+	Kites    int     `json:"kites,omitempty"`
+	Dodges   int     `json:"dodges,omitempty"`
 }
 
 // Event is one thing the bot did or suffered, at the hero's position.
@@ -41,6 +51,7 @@ type Event struct {
 	Kind  string
 	Text  string
 	Big   bool // boss or unique kill: drawn larger
+	Secs  int  // length of the window the event opens (an ignore), 0 for none
 	Fight *FightInfo
 }
 
@@ -98,6 +109,9 @@ func (p *Publisher) AddEvent(kind, text string, big bool, f *FightInfo) {
 	if !p.have {
 		return
 	}
+	if kind == EvKill {
+		p.heat.cell(p.areaNo, p.snap.Hero.X, p.snap.Hero.Y).kills++
+	}
 	p.events.Add(Event{At: p.clock(), X: p.snap.Hero.X, Y: p.snap.Hero.Y, Area: p.areaNo, Kind: kind, Text: text, Big: big, Fight: f})
 }
 
@@ -106,4 +120,21 @@ func (p *Publisher) EventsOf() []Event {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	return p.events.Area(p.clock(), p.areaNo)
+}
+
+// AddEventAt is AddEvent at a given place instead of the hero's (a failed roam target, an ignored monster). Events
+// of one kind and place within 5 s are merged so a retrying loop does not fill the ring.
+func (p *Publisher) AddEventAt(kind, text string, x, y, secs int) {
+	p.mu.Lock()
+	defer p.mu.Unlock()
+	if !p.have {
+		return
+	}
+	now := p.clock()
+	if n := len(p.events.evs); n > 0 {
+		if l := p.events.evs[n-1]; l.Kind == kind && l.X == x && l.Y == y && now.Sub(l.At) < 5*time.Second {
+			return
+		}
+	}
+	p.events.Add(Event{At: now, X: x, Y: y, Area: p.areaNo, Kind: kind, Text: text, Secs: secs})
 }

@@ -140,10 +140,7 @@ func (s *Store) Hero(name string) *HeroState {
 	if h.Mode == "" {
 		h.Mode = Guided
 	}
-	if h.GoAt == "" {
-		h.GoAt = GoRecommended
-	}
-	return h
+	return h // GoAt "" = the controller's default policy (the knob), see Controller.State
 }
 
 // LoadStore reads path; a missing file is an empty store.
