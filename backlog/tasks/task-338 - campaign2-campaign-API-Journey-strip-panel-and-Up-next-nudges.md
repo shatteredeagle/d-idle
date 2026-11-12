@@ -1,10 +1,11 @@
 ---
 id: TASK-338
 title: 'campaign2: campaign API, Journey strip panel and Up next nudges'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:15:00Z'
+updated_date: '2026-11-12T00:58:00Z'
 labels:
   - watch
   - feature

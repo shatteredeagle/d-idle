@@ -136,7 +136,6 @@ cmd/d2bot/artwire.go  credit-runner  artspeed
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  artspeed
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
-cmd/d2bot/d2dbackend.go  credit-runner  campaign2
 cmd/d2bot/d2dbackend.go  credit-runner  maphistory
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryA
 cmd/d2bot/d2dbackend.go  credit-runner  maphistoryC
@@ -147,14 +146,10 @@ cmd/d2bot/invwire.go  credit-runner  artspeed
 cmd/d2bot/invwire.go  credit-runner  campaign3
 cmd/d2bot/invwire.go  credit-runner  stashactions
 cmd/d2bot/journeywire.go  credit-runner  campaign1
-cmd/d2bot/journeywire.go  credit-runner  campaign2
 cmd/d2bot/journeywire.go  credit-runner  campaign3
-cmd/d2bot/journeywire_test.go  credit-runner  campaign2
-cmd/d2bot/ladder.go  credit-runner  campaign2
 cmd/d2bot/ladder.go  live-agent  recoverypace
 cmd/d2bot/live.go  credit-runner  artspeed
 cmd/d2bot/live.go  credit-runner  campaign1
-cmd/d2bot/live.go  credit-runner  campaign2
 cmd/d2bot/live.go  credit-runner  maphistory
 cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
@@ -182,7 +177,6 @@ docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
 docs/campaign.md  credit-runner  campaign1
-docs/campaign.md  credit-runner  campaign2
 docs/campaign.md  credit-runner  campaign3
 docs/desktop-app.md  credit-runner  electronapp
 docs/desktop-electron.md  credit-runner  electronapp
@@ -354,13 +348,10 @@ internal/watch/artapi.go  credit-runner  artspeed
 internal/watch/artapi_test.go  credit-runner  artspeed
 internal/watch/artembed_test.go  credit-runner  artspeed
 internal/watch/bridge.go  credit-runner  xpreadout
-internal/watch/campaign.go  credit-runner  campaign2
 internal/watch/campaign.go  credit-runner  campaign3
-internal/watch/campaign_test.go  credit-runner  campaign2
 internal/watch/campaign_test.go  credit-runner  campaign3
 internal/watch/cardtext.go  credit-runner  campaign3
 internal/watch/cardtext_test.go  credit-runner  campaign3
-internal/watch/funwire.go  credit-runner  campaign2
 internal/watch/hero.go  credit-runner  xpreadout
 internal/watch/hub.go  credit-runner  xpreadout
 internal/watch/humanize.go  credit-runner  campaign3
@@ -376,7 +367,6 @@ internal/watch/mapview.go  credit-runner  xpreadout
 internal/watch/minimapfix_test.go  credit-runner  minimapfix
 internal/watch/nopins_test.go  credit-runner  nopins
 internal/watch/panels.go  credit-runner  uifit
-internal/watch/panels_test.go  credit-runner  campaign2
 internal/watch/repairapi.go  credit-runner  repairtrip
 internal/watch/repairapi_test.go  credit-runner  repairtrip
 internal/watch/senses.go  credit-runner  maphistory
@@ -396,7 +386,6 @@ internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
 internal/watch/sim.go  credit-runner  xpreadout
 internal/watch/testdata  credit-runner  uifit
-internal/watch/testdata/campaign/  credit-runner  campaign2
 internal/watch/testdata/campaign/  credit-runner  campaign3
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
@@ -436,7 +425,6 @@ internal/watch/web/inventory.js  credit-runner  artspeed2
 internal/watch/web/inventory.js  credit-runner  nopins
 internal/watch/web/inventory.js  credit-runner  repairtrip
 internal/watch/web/layout.js  credit-runner  uifit
-internal/watch/web/layout.json  credit-runner  campaign2
 internal/watch/web/layoutedit.js  credit-runner  uifit
 internal/watch/web/onboarding.css  credit-runner  onboardtour
 internal/watch/web/onboarding.js  credit-runner  onboardtour
@@ -444,7 +432,6 @@ internal/watch/web/panels  credit-runner  uifit
 internal/watch/web/panels/gear  credit-runner  repairtrip
 internal/watch/web/panels/hero-detail  credit-runner  xpreadout
 internal/watch/web/panels/journey-chip/  credit-runner  campaign3
-internal/watch/web/panels/journey/  credit-runner  campaign2
 internal/watch/web/panels/journey/  credit-runner  campaign3
 internal/watch/web/panels/map  credit-runner  maphistory
 internal/watch/web/panels/map  credit-runner  maphistoryA
@@ -468,7 +455,6 @@ tools/firsthour.sh  live-agent  firsthour
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint  credit-runner  uifit
 tools/uishots  credit-runner  uifit
-tools/uishots/layout-rows.json  credit-runner  campaign2
 tools/uishots/serve.go  credit-runner  maphistory
 tools/uishots/serve.go  credit-runner  maptrail
 # END GENERATED OWNERS
