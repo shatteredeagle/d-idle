@@ -241,7 +241,7 @@ func TestViewSchema6StashGolden(t *testing.T) {
 		if _, err := d.RequestStash(1); err != nil {
 			t.Fatal(err)
 		}
-		b, err := json.MarshalIndent(d.View(), "", " ")
+		b, err := json.MarshalIndent(asSchema6(d.View()), "", " ")
 		if err != nil {
 			t.Fatal(err)
 		}
