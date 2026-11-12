@@ -124,7 +124,6 @@
 | hourfix2 | proposed | - | `docs/hourfix2.md`<br>`internal/bot/goal.go` | - |
 | goldprio | proposed | - | `internal/loot`<br>`internal/bot/goldprio.go`<br>`internal/bot/goldprio_test.go`<br>`docs/goldprio.md`<br>`cmd/d2bot/adapters.go`<br>`cmd/d2bot/looteradapter_test.go`<br>`internal/combat/interlude_test.go`<br>`internal/combat/fight.go`<br>`internal/combat/types.go`<br>`internal/bot/goal.go`<br>`internal/bot/contracts.go`<br>`internal/bot/runner.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | bounce3 | in-progress | - | `internal/d2dinput`<br>`internal/bot/loop.go`<br>`internal/bot/observe.go`<br>`internal/bot/areaskip_test.go`<br>`tools/bounce3`<br>`docs/bounce3.md` | - |
-| wiring | in-progress | - | `cmd/d2bot/wiring_test.go`<br>`cmd/d2bot/townforward.go`<br>`tools/wiringaudit`<br>`docs/wiring.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |

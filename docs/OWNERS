@@ -161,8 +161,6 @@ cmd/d2bot/senseshistory_test.go  credit-runner  maphistory
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryA
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryC
 cmd/d2bot/skillswire.go  credit-runner  skilltrees
-cmd/d2bot/townforward.go  credit-runner  wiring
-cmd/d2bot/wiring_test.go  credit-runner  wiring
 cmd/d2firsthour/  live-agent  firsthour
 data/onboarding  credit-runner  firstminutes
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
@@ -241,7 +239,6 @@ docs/ui-design-system.md  credit-runner  nopins
 docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prprep
-docs/wiring.md  credit-runner  wiring
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
 internal/bot/areaskip_test.go  credit-runner  passagebounce
@@ -465,5 +462,4 @@ tools/play-session.sh  credit-runner  playsession
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uishots/serve.go  credit-runner  maphistory
 tools/uishots/serve.go  credit-runner  maptrail
-tools/wiringaudit  credit-runner  wiring
 # END GENERATED OWNERS
