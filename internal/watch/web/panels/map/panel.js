@@ -193,13 +193,13 @@ export function trailAlpha(ago, win) {
 
 // The coverage status line: 'roam: 41/118 points seen, 3 failed, leg 17'. cov is the /api/senses coverage block.
 export function coverSummary(cov) {
-  if (!cov || !cov.cells || !cov.cells.length) return '';
+  if (!cov || !cov.cells || (!cov.cells.length && !cov.total)) return '';
   let seen = cov.seen, failed = cov.failed; // counted by the server over every point, not only the drawn ones
   if (seen === undefined) { seen = 0; failed = 0; cov.cells.forEach((c) => { if (c[2] === 1) seen++; else if (c[2] === 2) failed++; }); }
   const n = cov.total || cov.cells.length;
   return (cov.state === 'explored' ? 'explored: ' : 'roam: ') + seen + '/' + n + ' points seen, ' + failed + ' failed, leg ' + (cov.legs || 0) +
-    (cov.held ? ', held ' + cov.held : '') +
-    (cov.drawn && cov.drawn < n ? ', drawing ' + cov.drawn + ' of ' + n : '');
+    (cov.held ? ', held ' + cov.held : '') + (cov.hidden ? ', ' + cov.hidden + ' not explored yet' : '') +
+    (cov.drawn && cov.drawn + (cov.hidden || 0) < n ? ', drawing ' + cov.drawn + ' of ' + n : '');
 }
 
 export function mount(root, ctx) {

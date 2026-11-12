@@ -23,6 +23,7 @@ func main() {
 		fs := flag.NewFlagSet("serve", flag.ExitOnError)
 		addr := fs.String("addr", "127.0.0.1:18941", "listen address (loopback)")
 		class := fs.String("class", "sorceress", "simulated build: sorceress or paladin")
+		fs.StringVar(&fogStage, "fog", "", "serve the real senses publisher over a cave instead of the fixture: start or walked (docs/mapfog.md)")
 		fs.Parse(os.Args[2:])
 		if err := serve(*addr, *class); err != nil {
 			fmt.Fprintln(os.Stderr, "uishots:", err)
