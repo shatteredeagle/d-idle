@@ -107,7 +107,6 @@
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | passagebounce | proposed | - | `internal/bot/loop.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/areaskip_test.go`<br>`docs/passagebounce.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
-| decomp12 | proposed | - | `docs/probes/fid/fid-warp-arrival.md`<br>`tools/emu/d12_arrive_probe.cpp`<br>`tools/emu/d12_build.sh`<br>`tools/emu/d12_fix.py`<br>`tools/emu/d12_fixrun.sh`<br>`tools/emu/d12_run.sh`<br>`tools/emu/d12_setup.sh`<br>`tools/emu/d12_commitmsg.txt` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |

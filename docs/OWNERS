@@ -177,7 +177,6 @@ docs/onboarding.md  credit-runner  reconnectux
 docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/play-session.md  credit-runner  playsession
-docs/probes/fid/fid-warp-arrival.md  credit-runner  decomp12
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
@@ -352,13 +351,6 @@ internal/watch/web/panels/onboarding  credit-runner  reconnectux
 internal/watch/web/shell.js  credit-runner  minimapfix
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
-tools/emu/d12_arrive_probe.cpp  credit-runner  decomp12
-tools/emu/d12_build.sh  credit-runner  decomp12
-tools/emu/d12_commitmsg.txt  credit-runner  decomp12
-tools/emu/d12_fix.py  credit-runner  decomp12
-tools/emu/d12_fixrun.sh  credit-runner  decomp12
-tools/emu/d12_run.sh  credit-runner  decomp12
-tools/emu/d12_setup.sh  credit-runner  decomp12
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour

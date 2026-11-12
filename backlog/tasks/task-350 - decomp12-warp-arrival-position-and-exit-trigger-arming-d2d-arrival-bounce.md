@@ -1,10 +1,11 @@
 ---
 id: TASK-350
 title: 'decomp12: warp arrival position and exit trigger arming (d2d arrival bounce)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T23:29:00Z'
+updated_date: '2026-11-12T01:51:00Z'
 labels:
   - d2d
   - research
