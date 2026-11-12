@@ -320,6 +320,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	if err == nil {
 		ref.p.Store(runner)
 		wireGoldFarm(ref, runner)
+		wireJourney(ip.State(), ref, runner, log.Info)
 		emit.bind(e.Emit)
 		e.Emit = emit.send
 	}
@@ -344,7 +345,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.knobs = knobSetter(tuner)
 	o.ladder.inv = invAPI(ref.inv)
 	o.ladder.art = artSource(o.gameDir, o.data, db)
-	o.ladder.repair, o.ladder.farm = ref.rep, ref.gf
+	o.ladder.repair, o.ladder.farm, o.ladder.journey = ref.rep, ref.gf, ref.jc
 	o.ladder.sensesTier = tune.Senses.Tier
 	o.ladder.proposalFacts = runner.ProposalFacts
 	o.ladder.riskFacts = runner.RiskFacts
@@ -363,7 +364,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	useFightFeed(lrig, feedFighter, ldir, log)
 	useSenses(lrig, be.Env, feedFighter, log)
 	useSensesCoverage(lrig, be.Env, nv)
-	useSensesHistory(ctx, lrig, be.Env, feedFighter, m, runner.Status)
+	useSensesHistory(ctx, lrig, be.Env, feedFighter, m, runner.Status, runner.LootWalking, nv)
 	logLadder(log, o.ladder, lrig, ldir)
 	if err := enqueueGoals(m, o.goalSpec); err != nil {
 		return err

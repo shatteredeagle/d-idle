@@ -44,6 +44,8 @@ type Fighter struct {
 	OnFight func(FightEnd)
 	// OnSummary, when set, gets a FightSummary for every finished fight (the watch minimap's fight cards). Passive.
 	OnSummary func(FightSummary)
+	// OnNote, when set, hears of target ignores, melee target fallbacks and nav yields (failure markers of the minimap). Passive.
+	OnNote func(Note)
 
 	mercSt mercFieldState
 

@@ -143,7 +143,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | town.stashGoldBase | 300 | 0..2e+04 | gold | 2e+04 | 3 | Deposit inventory gold above this plus level times stashGoldPerLvl. Death takes ALL carried gold (LIVE G1 attempt 12: 1125 to 0), so keep little. |
 | town.stashGoldPerLvl | 50 | 0..2e+04 | gold/lvl | 2e+04 | 3 | Deposit inventory gold above stashGoldBase plus level times this. |
 | town.beltBuyLevel | 10 | 0..40 | clvl | 0 | 4 | From this level on a town visit buys the cheapest belt with more potion slots than the worn one (after the potion kit, never below the gold reserve plus a minimal kit). 0 = never. docs/sme/potion-policy.md. |
-| town.sellJunk | 1 | 0..1 | bool | 0 | 1 | 1 sells items the pickit rates as sell; 0 keeps them. |
+| town.sellJunk | 1 | 0..1 | bool | 0 | 2 | 1 sells items the pickit rates as sell; 0 keeps them. |
 | town.rebuyGearTier | 1 | 0..3 | tier | 0 | 1 | After a death: 0 potions only, 1 weapon and body armor, 2 also helm/boots/gloves/belt, 3 also shield. |
 | town.rebuyPotionPct | 40 | 0..100 | % | 0 | 1 | Share of the rebuy budget potions may use before gear. |
 | town.rebuyItemMaxPct | 60 | 10..100 | % | 10 | 1 | One rebuy item may cost at most this share of the budget. |
@@ -180,8 +180,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
-| loot.pickRadius | 30 | 5..60 | subtiles | 5 | 1 | Ground items within this distance are considered. |
-| loot.pickStrictness | 1 | 0..3 | level | 3 | 2 | 0 loose (also items worth selling), 1 normal, 2 keepers only, 3 gold/runes/gems/uniques only. |
+| loot.pickRadius | 30 | 5..60 | subtiles | 5 | 2 | Ground items within this distance are considered. |
+| loot.pickStrictness | 1 | 0..3 | level | 3 | 3 | 0 loose (also items worth selling), 1 normal, 2 keepers only, 3 gold/runes/gems/uniques only. |
 | loot.pickTries | 3 | 1..6 | count | 1 | 1 | Click attempts per item. |
 | loot.walkDist | 4 | 2..8 | subtiles | 8 | 1 | Walk to within this distance before clicking an item. |
 | loot.confirmMs | 1500 | 400..4000 | ms | 400 | 1 | Wait after a click for the item to leave the ground. |
@@ -191,10 +191,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | loot.freeCellsKeep | 2 | 0..12 | cells | 0 | 1 | Inventory cells that must stay free after a pickup. |
 | loot.potionBuffer | 2 | 0..10 | count | 0 | 2 | Extra needed-type potions carried in the pack beyond the belt. |
 | loot.rejuvSpare | 3 | 0..6 | count | 0 | 4 | Rejuvenation potions carried in total (belt plus pack); more are left on the ground or sold, Full Rejuvenation preferred over regular. Pack ones are moved to a free belt slot in town so the belt hotkey can drink them. |
-| loot.lowGoldBelow | 2000 | 0..1e+05 | gold | 1e+05 | 1 | Below this gold, also pick items worth selling. |
+| loot.lowGoldBelow | 2000 | 0..1e+05 | gold | 1e+05 | 2 | Below this gold, also pick items worth selling. |
 | loot.minValuePerCell | 100 | 0..5000 | gold | 5000 | 1 | Sell value per cell an item needs to be picked in low-gold mode. |
-| loot.valuableMinGold | 1500 | 100..1e+05 | gold | 1e+05 | 2 | Unequipped items worth at least this are valuables (stash before dangerous trips). |
-| loot.valuableMinPrio | 70 | 1..100 | prio | 100 | 4 | Items whose pickit rule prio is at least this are valuables. |
+| loot.valuableMinGold | 1500 | 100..1e+05 | gold | 1e+05 | 4 | Unequipped items worth at least this are valuables (stash before dangerous trips). |
+| loot.valuableMinPrio | 70 | 1..100 | prio | 100 | 5 | Items whose pickit rule prio is at least this are valuables. |
 | loot.carryValuables | 0 | 0..20 | count | 0 | 1 | Valuables allowed in the pack outside town (insurance: the rest stay in the stash). |
 | loot.poorGoldBelow | 300 | 0..1e+04 | gold | 1e+04 | 1 | Below this gold every gold pile and junk weapon or armor worth selling is picked. |
 | loot.poorMinSell | 6 | 0..500 | gold | 500 | 2 | Estimated sell value a junk item needs to be picked in poor mode. |
@@ -218,7 +218,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | bot.leaveSlack | 0 | 0..6 | levels | 6 | 6 | Levels past a step's leave level before moving to the next area. Higher wastes time in easy areas. |
 | bot.corpseRetries | 1 | 0..1 | count | 0 | 1 | Max attempts to recover the corpse after a softcore death. 0 abandons the gear. |
 | bot.portalSettleMs | 600 | 600..4500 | ms | 4500 | 1 | Pause in town after chores before going back out. |
-| bot.clearRadius | 30 | 12..45 | subtiles | 12 | 14 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
+| bot.clearRadius | 30 | 12..45 | subtiles | 12 | 21 | Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival). |
 | bot.corpseValueMin | 1000 | 1..2e+04 | gold | 2e+04 | 4 | Estimated value of the gear on the corpse below which it is abandoned. Higher abandons more. |
 | bot.spiralDeaths | 4 | 3..8 | deaths | 8 | 4 | Deaths in one area within the spiral window that make the bot avoid that area (one fewer when the area is clearly too high for the level or the character died with no potions and no gold). Dying is normal: the default allows three deaths on the same goal. Higher tolerates more. |
 | bot.dangerBanMin | 20 | 5..120 | min | 120 | 1 | How long the spiral breaker keeps the character out of an area. Longer stalls the goal more. |
@@ -323,6 +323,9 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | campaign.imbueNeedsMerc | 1 | 0..1 | bool | 1 | 2 | 1: the Imbue quest is also skipped while no mercenary is alive (an unknown merc counts as none). 0: the level floor alone decides. |
 | campaign.denMinLevelCaster | 5 | 1..12 | levels | 5 | 1 | Sorceress, Necromancer, Druid and a bow-less Amazon enter the Den of Evil (always the first quest) only from this clvl; below it they level in Blood Moor (log: den: waiting for clvl N in Blood Moor). SME: a ~40 life caster dies to Fallen packs on floor 1; 5 is the safe end of clvl 4-5. |
 | campaign.denMinLevelMelee | 3 | 1..12 | levels | 3 | 1 | Same for Barbarian, Paladin, Assassin and a bowed Amazon. |
+| campaign.journeyAskWaitMin | 10 | 0..240 | minutes | 10 | 0 | Guided journey (docs/campaign.md): a 'go to the next chapter at the floor?' question with no answer counts as yes after this many minutes; 0 = never by default (the hero keeps farming until answered). U: judgment. |
+| campaign.journeyFarmBudgetMin | 30 | 0..600 | minutes | 30 | 0 | After this many minutes in a level step for a chapter that is ready at its floor (but under its recommended level) the hero asks whether to go at the floor; 0 = never asks. U: judgment, one level step budget. |
+| campaign.journeyGoAtFloor | 0 | 0..1 | bool | 0 | 0 | 0: Auto chapters go at the recommended level (comfortable); 1: at the floor (ready). The default for a hero that never set the policy row on the Journey panel; the hero's own choice wins. |
 
 ### route.*
 

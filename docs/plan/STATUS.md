@@ -111,14 +111,17 @@
 | xpreadout | proposed | - | `internal/watch/hero.go`<br>`internal/watch/bridge.go`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/hub.go`<br>`internal/watch/mapview.go`<br>`internal/watch/sim.go`<br>`internal/watch/xpreadout_test.go`<br>`internal/watch/testdata/topband_dom.js`<br>`internal/watch/testdata/topband_dom_hero-detail_*.txt`<br>`cmd/d2bot/play.go` | - |
 | maphistory | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/combat/fightend.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fight.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`tools/uishots/serve.go`<br>`docs/senses-map.md` | - |
 | nopins | proposed | - | `internal/watch/web/inventory.js`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-tip.js`<br>`internal/watch/nopins_test.go`<br>`docs/inventory-ui.md`<br>`docs/gear-policy.md`<br>`docs/ui-design-system.md`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-tip.css`<br>`internal/watch/testdata/inventory_dom.js`<br>`internal/watch/testdata/itemactions/act_dom.js`<br>`internal/watch/testdata/itemtip/tip_dom.js` | - |
+| maphistoryA | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history.json`<br>`internal/watch/testdata/senses-trail.json`<br>`internal/bot/runner.go`<br>`internal/bot/goal.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/funwire.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
 | potiondrink | proposed | - | `internal/combat/fighter.go`<br>`internal/resource/potion.go` | - |
 | runstate | proposed | - | `internal/d2dinput/run.go` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
-| campaign0 | in-progress | - | `docs/campaign.md`<br>`data/campaign/`<br>`internal/campaign/` | - |
-| videoresume | proposed | - | `internal/watch/web/panels/video`<br>`internal/watch/testdata/video_panel.js`<br>`internal/watch/video.go`<br>`internal/watch/web/mjpeg.js`<br>`internal/watch/http_view.go`<br>`internal/watch/testdata/panel_harness.js`<br>`internal/watch/videoresume_test.go`<br>`docs/viewer-fps.md` | - |
-| campaign1 | proposed | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/` | - |
-| campaign2 | proposed | - | `internal/watch/campaign.go`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/`<br>`internal/watch/web/panels/journey/` | - |
+| maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
+| maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
+| maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
+| campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
+| stashactions | proposed | - | `internal/invdesk`<br>`internal/town/playerstash.go`<br>`internal/town/playerstash_test.go`<br>`internal/bot/playeraction.go`<br>`internal/bot/playeraction_test.go`<br>`cmd/d2bot/invwire.go`<br>`internal/watch/invapi.go`<br>`internal/watch/invapi_test.go`<br>`internal/watch/invui.go`<br>`internal/watch/web/inventory-actions.js`<br>`internal/watch/web/inventory-actions.css`<br>`internal/watch/testdata/itemactions`<br>`docs/inventory-actions.md`<br>`docs/whyline.md` | - |
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
+| campaign3 | in-progress | - | `data/campaign/`<br>`internal/campaign/`<br>`internal/task/claim.go`<br>`internal/task/guided.go`<br>`internal/bot/guided.go`<br>`internal/decide/catalogue.json`<br>`internal/watch/campaign.go`<br>`internal/watch/web/panels/journey/`<br>`internal/watch/web/panels/journey-chip/`<br>`internal/env/tuning_route.go`<br>`docs/knobs.md`<br>`docs/campaign.md`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/invwire.go`<br>`internal/task/claim_test.go`<br>`internal/task/guided_test.go`<br>`internal/decide/default_rules.json`<br>`internal/decide/build_test.go`<br>`internal/decide/parity_test.go`<br>`internal/watch/cardtext.go`<br>`internal/watch/humanize.go`<br>`internal/watch/cardtext_test.go`<br>`internal/watch/whyline_test.go`<br>`internal/watch/web/shell.json`<br>`internal/watch/campaign_test.go`<br>`internal/watch/testdata/campaign/` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -174,14 +177,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- cb630bdc 11-11 15:30 `Merge agent/campaign0: TASK-335 campaign0: campaign spine data (data/campaign/normal.json), internal/campaign loader, readiness bands, next-chapter decision, docs/campaign.md (gate on worker host exit 0)` (campaign0)
-- 4aec356a 11-11 15:29 `Merge branch 'main' into campaign0` (-)
-- 88a8bd9a 11-11 15:25 `Merge agent/videoresume: TASK-336 videoresume: watch video recovers by itself (stall watchdog, backoff, hidden-tab pause, Retry, d2video hook), dead viewers freed by a per-part write deadline` (videoresume)
-- 69394eea 11-11 15:24 `Merge branch 'main' into videoresume` (-)
-- 201c990d 11-11 14:58 `Merge agent/decomp10: TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed)` (decomp10)
-- e4be4021 11-11 14:57 `Merge branch 'main' into decomp10` (-)
-- a9c8502d 11-11 14:49 `Merge agent/nopins: TASK-325 nopins: remove the obsolete Pin display from the paper doll and inventory` (nopins)
-- 2b66ad4a 11-11 14:48 `Merge branch 'main' into nopins` (-)
-- e75a9384 11-11 14:42 `Merge agent/playerprio: TASK-321 playerprio: player commands interrupt walks at a safe moment, behind safety` (playerprio)
-- 6530d54d 11-11 14:41 `Merge branch 'main' into playerprio` (-)
+- 1cb99ab3 11-11 19:51 `Merge agent/campaign3: TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0)` (campaign3)
+- ef854395 11-11 19:51 `Merge branch 'main' into campaign3` (-)
+- 13ecd224 11-11 19:45 `Merge agent/campaign2: TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0)` (campaign2)
+- 36e7e2a3 11-11 19:45 `Merge branch 'main' into campaign2` (-)
+- 3c3dabbf 11-11 19:41 `Merge agent/decomp11: decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block` (decomp11)
+- f9da730e 11-11 19:40 `Merge branch 'main' into decomp11` (-)
+- 429fd1d2 11-11 19:34 `Merge agent/stashactions: TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold` (stashactions)
+- d6c186b0 11-11 19:33 `Merge branch 'main' into stashactions` (-)
+- 9bdfdf5c 11-11 19:27 `Merge agent/campaign1: TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0)` (campaign1)
+- 1f588b61 11-11 19:26 `Merge branch 'main' into campaign1` (-)
 <!-- statusgen:end -->
