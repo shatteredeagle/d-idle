@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- 0.1.0 re-cut on the art-clean fork commit (not uploaded) <!--sg:agent/cut010d-->
 - 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361) <!--sg:agent/cut010c-->
 - friends release 0.1.0 re-cut after the lock fix: new pack, checklist record, UPDATE_FEED set (TASK-359) <!--sg:agent/cut010b-->
 - first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356) <!--sg:agent/cut010-->
