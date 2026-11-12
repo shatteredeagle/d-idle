@@ -127,6 +127,7 @@
 | herounify | proposed | - | `internal/watch/web/panels/hero-vitals`<br>`internal/watch/web/panels/hero-detail`<br>`internal/watch/web/layout.json`<br>`internal/watch/web/shell.json` | - |
 | branding | proposed | - | `assets/branding/`<br>`tools/branding/`<br>`docs/branding.md`<br>`apps/desktop-electron/build/`<br>`apps/desktop-electron/scripts/make-icons.js`<br>`apps/desktop-electron/package.json`<br>`internal/watch/web/watch.html`<br>`README.md`<br>`docs/friend-guide.md`<br>`docs/desktop-electron.md` | - |
 | legalfollow | in-progress | - | `tools/friendpack`<br>`THIRD_PARTY.md`<br>`docs/friend-assets.md`<br>`docs/friend-guide.md`<br>`docs/research/legal-decisions-2026-11-11.md`<br>`docs/paperdoll-art-build.md`<br>`README.md` | - |
+| passagebounce | proposed | - | `internal/bot/loop.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/areaskip_test.go`<br>`docs/passagebounce.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
@@ -182,6 +183,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 27c1d008 11-11 20:33 `Merge agent/passagebounce: TASK-349 passagebounce: per-area arrival-bounce counter trips the escalating skip (Passage, Crypt, caves), arrival/bounce log lines` (passagebounce)
+- 45b69024 11-11 20:32 `Merge branch 'main' into passagebounce` (-)
 - a71be511 11-11 20:31 `Merge agent/branding: TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons` (branding)
 - 4913eeac 11-11 20:30 `Merge branch 'main' into branding` (-)
 - b9d88065 11-11 20:26 `Merge agent/legalfollow: TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers` (legalfollow)
@@ -190,6 +193,4 @@
 - 25e3d70f 11-11 20:17 `Merge branch 'main' into herounify` (-)
 - 71de8e00 11-11 20:14 `Merge agent/frienddrills2: TASK-344 frienddrills2: live drills D3/D4/D7 with real game files pass (docs/friend-drills.md), shim refuses a second boot.pid owner (gate on worker host exit 0; stacked on agent/frienddrills #603)` (frienddrills2)
 - 29520e11 11-11 20:13 `Merge branch 'main' into frienddrills2` (-)
-- a5e4aa14 11-11 20:12 `Merge agent/prprep2: TASK-332 round 2: Lightning r3 and Cold r4 drafts, queue, scripts` (prprep2)
-- c2211424 11-11 20:11 `Merge branch 'main' into prprep2` (-)
 <!-- statusgen:end -->

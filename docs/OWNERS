@@ -213,6 +213,7 @@ docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
 docs/paperdoll-art-build.md  credit-runner  legalfollow
+docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/potions.md  pro-runner  potiondrink
 docs/probes/fid/batch5.md  credit-runner  fid-batch5
@@ -259,6 +260,7 @@ docs/ui-design-system.md  credit-runner  uifit
 docs/upstream/  credit-runner  prprep
 docs/whyline.md  credit-runner  stashactions
 internal/art  credit-runner  artspeed
+internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/drought.go  credit-runner  freshstart
 internal/bot/goal.go  credit-runner  maphistoryA
 internal/bot/goal.go  credit-runner  repairtrip
@@ -266,14 +268,18 @@ internal/bot/goldfarm.go  credit-runner  repairtrip
 internal/bot/guided.go  credit-runner  campaign1
 internal/bot/guided.go  credit-runner  campaign3
 internal/bot/guided_test.go  credit-runner  campaign1
+internal/bot/lifelog.go  credit-runner  passagebounce
+internal/bot/loop.go  credit-runner  passagebounce
 internal/bot/nokill_test.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  freshstart
+internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/playeraction.go  credit-runner  stashactions
 internal/bot/playeraction_test.go  credit-runner  stashactions
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
 internal/bot/runner.go  credit-runner  maphistoryA
+internal/bot/runner.go  credit-runner  passagebounce
 internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/bot/yield.go  credit-runner  aggression2

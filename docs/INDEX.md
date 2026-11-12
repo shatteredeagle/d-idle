@@ -417,6 +417,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [palready.md](palready.md): palready: Might aura once per fight, recovery leaves a dry field (TASK-180) (status: aura fixed and verified live 2026-11-08 (EST); dry-recovery rule proven offline only (it did not fire in...)
 - [palsme.md](palsme.md): PALSME: SME review of the Paladin tables
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
+- [passagebounce.md](passagebounce.md): Arrival bounce: Underground Passage, Crypt and every cave (TASK passagebounce)
 - [policy-preview.md](policy-preview.md): Policy preview (card policydryrun, TASK-205) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Source:...)
 - [policy-sheet.md](policy-sheet.md): The chores policy sheet (TASK-128) (status: built and tested offline on fixtures; NOT run against a live bot or in a browser. Design:...)
 - [potions.md](potions.md): Potions: how the bot drinks (card potiondrink, TASK-328)
