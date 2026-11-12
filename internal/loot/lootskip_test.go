@@ -23,10 +23,15 @@ func TestPaladinSashHealingOnGroundWanted(t *testing.T) {
 	w.Add("hp1", d2.ContBelt, 0, 0)
 	w.Add("mp1", d2.ContBelt, 3, 0)
 	w.Add("mp1", d2.ContBelt, 3, 1)
-	for _, c := range []string{"hp2", "hp3", "mp2"} {
+	for _, c := range []string{"hp2", "hp3"} {
 		if !wanted(l, w.NewItem(c, 2)) {
 			t.Errorf("%s with room in the belt was skipped", c)
 		}
+	}
+	// BELTFIX layout rule: the Paladin plans one mana column and it is full (two boxes), so the game would open a second
+	// mana column; a mana potion is left on the ground rather than take a column healing may still need.
+	if wanted(l, w.NewItem("mp2", 2)) {
+		t.Error("mp2 wanted although the planned mana column is full")
 	}
 	if wanted(l, w.NewItem("hp1", 2)) {
 		t.Error("hp1 wanted below the clvl 14 tier floor")
