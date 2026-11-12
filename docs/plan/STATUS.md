@@ -171,6 +171,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 77f18d46 11-12 11:21 `Merge agent/hour1: hour1: first-hour analysis of the fresh Paladin (TASK-364)` (hour1)
 - c45203f5 11-12 10:11 `Merge agent/prpost2: TASK-363 prpost2: CodeRabbit round on PR 445` (prpost2)
 - 81388b05 11-12 10:10 `Merge branch 'main' into prpost2` (-)
 - 8671d3fb 11-12 10:09 `Merge agent/cut010d: 0.1.0 re-cut on the art-clean fork commit (not uploaded)` (cut010d)
@@ -180,5 +181,4 @@
 - fe4d3f6a 11-11 23:47 `Merge agent/cut010: first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356)` (cut010)
 - 664ac37b 11-11 23:47 `Merge branch 'main' into cut010` (-)
 - 96a6eed4 11-11 23:33 `Merge agent/lockfix: lockfix: deadlock covMu/obMu (TASK-358)` (lockfix)
-- 8925fad2 11-11 23:15 `Merge agent/skilltrees2: Skills page: layout and lines from grid constants, no measuring (TASK-357)` (skilltrees2)
 <!-- statusgen:end -->
