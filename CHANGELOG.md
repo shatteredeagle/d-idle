@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- hour1: first-hour analysis of the fresh Paladin (TASK-364) <!--sg:agent/hour1-->
 - TASK-363 prpost2: CodeRabbit round on PR 445 <!--sg:agent/prpost2-->
 - 0.1.0 re-cut on the art-clean fork commit (not uploaded) <!--sg:agent/cut010d-->
 - 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361) <!--sg:agent/cut010c-->
