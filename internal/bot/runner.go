@@ -256,6 +256,7 @@ type loopState struct {
 	futile          bool
 	futilePos       input.Point
 	futileUntil     time.Time
+	goldIdleUntil   time.Time // gold stop/grab that took nothing: no gold stop until then (goldprio.go)
 	// empty-area leave (emptyArea): the area watched, its kill count and the time it last changed
 	emptyArea  int
 	emptyKills int

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"math"
 	"strings"
 	"time"
 
@@ -17,12 +18,13 @@ import (
 const engageDist = 18
 
 type fightSpec struct {
-	only     uint32 // 0 = clear everything, else just this unit
-	origin   input.Point
-	radius   int
-	deadline time.Time
-	perUnit  time.Duration
-	yield    bool // called by a stalled walk: fight what blocks it, whatever was ignored earlier
+	only      uint32 // 0 = clear everything, else just this unit
+	origin    input.Point
+	radius    int
+	deadline  time.Time
+	perUnit   time.Duration
+	yield     bool // called by a stalled walk: fight what blocks it, whatever was ignored earlier
+	interlude func(ctx context.Context, snap *d2.Snapshot, nearest float64, danger int) bool
 }
 
 // track is the per-target book keeping. Times accumulate only while the unit is the active target, so a monster
@@ -115,7 +117,7 @@ func (f *Fighter) Clear(ctx context.Context, o ClearOpts) (ClearResult, error) {
 	if err != nil {
 		return ClearResult{}, err
 	}
-	spec := fightSpec{radius: o.Radius, perUnit: time.Duration(t.MaxTargetSec) * time.Second, yield: o.Yield}
+	spec := fightSpec{radius: o.Radius, perUnit: time.Duration(t.MaxTargetSec) * time.Second, yield: o.Yield, interlude: o.Interlude}
 	if spec.radius <= 0 {
 		spec.radius = t.ClearRadius
 	}
@@ -311,6 +313,18 @@ func (f *Fighter) fight(ctx context.Context, sp fightSpec, snap *d2.Snapshot) (r
 		} else if cast {
 			snap = nil
 			continue
+		}
+
+		// 1d. an interlude of the caller (the gold grab): below survival, above the next target
+		if sp.interlude != nil && sp.only == 0 {
+			nearest := math.MaxFloat64
+			for _, h := range hs {
+				nearest = min(nearest, h.Dist)
+			}
+			if sp.interlude(ctx, snap, nearest, ft.Danger) {
+				snap = nil
+				continue
+			}
 		}
 
 		// 2. the targets of this fight
