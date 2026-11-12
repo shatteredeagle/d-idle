@@ -30,6 +30,8 @@ type PickOpts struct {
 	Names []string
 	// Abort is polled before each item and while waiting; true stops the call (an enemy came close).
 	Abort func() bool
+	// GoldOnly takes gold piles and nothing else (the mid-fight grab, docs/goldprio.md).
+	GoldOnly bool
 }
 
 // Picked is one confirmed pickup.
@@ -189,6 +191,7 @@ func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 			}
 			rep.Picked = append(rep.Picked, Picked{ID: c.u.ID, Class: c.u.Class, Name: c.name, Verdict: c.v, Gold: g})
 			l.forget(c.u.ID)
+			l.notePicked(c.u, g)
 			l.emitDrop(c)
 			l.e.Clock.Sleep(time.Duration(t.GapMs) * time.Millisecond)
 		case errors.Is(err, context.Canceled), errors.Is(err, context.DeadlineExceeded):
@@ -201,7 +204,9 @@ func (l *Looter) pickUp(ctx context.Context, o PickOpts) (PickReport, error) {
 			l.e.Log.Debug("pickup failed", "item", c.name, "id", c.u.ID, "err", err)
 			if failed[c.u.ID] >= 2 { // pickOne already retried PickTries times; a second round is the limit
 				rep.Failed = append(rep.Failed, Skipped{ID: c.u.ID, Name: c.name, Why: err.Error()})
-				l.forget(c.u.ID)
+				if !l.goldFailed(c.u) { // a gold pile stays remembered until GoldRetries calls failed
+					l.forget(c.u.ID)
+				}
 			}
 		}
 	}
@@ -384,7 +389,7 @@ func (l *Looter) candidates(s *d2.Snapshot, o PickOpts, failed map[uint32]int) (
 		}
 		name := l.itemName(u)
 		skip := func(why string) { skipped = append(skipped, Skipped{ID: u.ID, Name: name, Why: why}) }
-		if failed[u.ID] >= 2 {
+		if failed[u.ID] >= 2 || l.goldGivenUp(u) {
 			skip("failed before")
 			continue
 		}
@@ -393,6 +398,9 @@ func (l *Looter) candidates(s *d2.Snapshot, o PickOpts, failed map[uint32]int) (
 			continue // out of range is not worth a report line
 		}
 		b := l.base(u.Class)
+		if o.GoldOnly && (b == nil || b.Type != "gold") {
+			continue
+		}
 		c := ctx
 		if l.stats != nil && (b == nil || b.Type == "gold") {
 			if st, err := l.stats(u.Addr); err == nil {

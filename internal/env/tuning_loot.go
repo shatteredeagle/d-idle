@@ -26,6 +26,12 @@ type LootTuning struct {
 	MemMaxDist      int // remembered drops farther than this (subtiles, straight line) are left
 	MemMaxTrips     int // walk-back trips per visit of an area
 	MemCap          int // remembered drops kept at most (lowest value evicted)
+	GoldPriority    int // 1: gold piles are fetched right below survival (mid-fight when safe, before roaming on, before leaving an area; docs/goldprio.md)
+	GoldGrabDist    int // subtiles: a pile this close is taken in the middle of a fight when the fight allows
+	GoldSafeDist    int // subtiles: no hostile closer than this to the hero for a mid-fight grab
+	GoldMaxDanger   int // highest pack danger (combat.Danger*) at which a mid-fight grab is still allowed
+	GoldMinLifePct  int // life percent under which gold is ignored (survival first)
+	GoldRetries     int // failed pickups of one pile (over all calls) before it is given up
 }
 
 func DefaultLootTuning() LootTuning {
@@ -34,6 +40,7 @@ func DefaultLootTuning() LootTuning {
 		GoldMinStack: 10, GoldPileShare: 50, FreeCellsKeep: 2, PotionBuffer: 2, RejuvSpare: 3, LowGoldBelow: 2000, MinValuePerCell: 100, ValuableMinGold: 1500, ValuableMinPrio: 70, CarryValuables: 0, MaxPerCall: 30,
 		PoorGoldBelow: 300, PoorMinSell: 20,
 		MemEnabled: 1, MemMinGold: 20, MemMaxDist: 120, MemMaxTrips: 6, MemCap: 64,
+		GoldPriority: 1, GoldGrabDist: 20, GoldSafeDist: 8, GoldMaxDanger: 0, GoldMinLifePct: 60, GoldRetries: 4,
 	}
 }
 
@@ -68,6 +75,12 @@ func lootKnobs() []Knob {
 		lootK("memMinGold", "Loot memory: min gold", "gold", "Smallest remembered gold pile worth a walk-back at clvl 1; the bar grows by 10 percent per character level.", d.MemMinGold, 0, 5000, false),
 		lootK("memMaxDist", "Loot memory: max distance", "subtiles", "Remembered drops farther away than this are not fetched.", d.MemMaxDist, 20, 400, true),
 		lootK("memMaxTrips", "Loot memory: trips per area", "count", "Walk-back trips per visit of an area.", d.MemMaxTrips, 0, 30, true),
+		lootK("goldPriority", "Gold priority", "0/1", "1: gold piles are fetched right below survival: mid-fight when safe, before the next roam leg, and before an area is left (walk-back also for small piles, no trip cap). 0: old behaviour.", d.GoldPriority, 0, 1, true),
+		lootK("goldGrabDist", "Gold: mid-fight grab distance", "subtiles", "A pile this close is picked up during a fight when no hostile is near.", d.GoldGrabDist, 5, 40, true),
+		lootK("goldSafeDist", "Gold: hostile-free distance", "subtiles", "A mid-fight grab needs every hostile at least this far from the hero.", d.GoldSafeDist, 2, 30, true),
+		lootK("goldMaxDanger", "Gold: max pack danger", "level", "Highest pack danger (0 none, 1 champions or shamans, 2 elite, 3 deadly) at which a mid-fight grab is still made.", d.GoldMaxDanger, 0, 3, true),
+		lootK("goldMinLifePct", "Gold: min life", "percent", "Below this life percent gold is ignored (survival comes first).", d.GoldMinLifePct, 0, 100, false),
+		lootK("goldRetries", "Gold: pickup retries", "count", "Failed pickups of one pile, over all calls, before it is given up.", d.GoldRetries, 1, 10, true),
 		lootK("memCap", "Loot memory: size", "count", "Remembered drops kept at most; the lowest value is evicted.", d.MemCap, 4, 512, true),
 	}
 }
