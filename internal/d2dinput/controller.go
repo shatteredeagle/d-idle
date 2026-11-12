@@ -162,7 +162,30 @@ func (c *Controller) Pos() (input.Point, error) {
 // the first one after the level id changed (V quirk after a load or goto; the client itself also kicks after
 // its own Goto/Warp/Enter). U whether a change of level through a walk needs it too: stall handling in MoveTo
 // covers that.
-func (c *Controller) prime() error {
+func (c *Controller) prime() error { return c.primeToward(nil) }
+
+// kickReach is how far from the player's feet (client pixels) the priming click lands when the move target is known.
+const kickReach = 110
+
+// kickToward is the client pixel for the priming click: kickReach pixels from the player in the direction of the move
+// target (cells, the same frame as the player cell), so it never lands on the player's own feet where the return warp
+// unit of a fresh arrival stands. ok is false when the target is on top of the player.
+func (c *Controller) kickToward(px, py, tx, ty float64) (int, int, bool) {
+	t := c.X
+	sx, sy := t.WorldToScreenF([2]float64{px * 5, py * 5}, tx*5, ty*5)
+	dx, dy := sx-t.PlayerX, sy-t.PlayerY
+	d := math.Hypot(dx, dy)
+	if d < 1 {
+		return 0, 0, false
+	}
+	x, y := t.PlayerX+dx/d*kickReach, t.PlayerY+dy/d*kickReach
+	x = math.Min(math.Max(x, float64(t.MarginX)+1), float64(t.ViewW-t.MarginX)-2)
+	y = math.Min(math.Max(y, float64(t.MarginTop)+1), float64(t.PanelTop)-2)
+	return int(x), int(y), true
+}
+
+// primeToward is prime with the cell the following move walks to (nil: unknown, the default click).
+func (c *Controller) primeToward(to *[2]float64) error {
 	l, err := c.C.Level(c.ctx())
 	if err != nil {
 		return err
@@ -170,7 +193,16 @@ func (c *Controller) prime() error {
 	if c.primed && l.ID == c.lastLevel {
 		return nil
 	}
-	if err := c.C.Kick(c.ctx()); err != nil {
+	kick := func() error { return c.C.Kick(c.ctx()) }
+	if to != nil {
+		if x, y, ok := c.kickToward(l.X, l.Y, to[0], to[1]); ok {
+			kick = func() error { return c.C.KickAt(c.ctx(), x, y) }
+			if c.Trace != nil {
+				c.Trace("nav.trace kick", "level", l.ID, "x", x, "y", y, "playerCell", [2]float64{l.X, l.Y}, "toCell", *to)
+			}
+		}
+	}
+	if err := kick(); err != nil {
 		return err
 	}
 	// The kick is a click: d2d turns it into a fresh walk on its next frame, which drops an interaction queued in the
@@ -187,7 +219,8 @@ func (c *Controller) ClickWorld(w input.Point) error { return c.Move(w) }
 // Move is ClickWorld by its semantic name.
 func (c *Controller) Move(w input.Point) error {
 	t0 := c.clk().Now()
-	if err := c.prime(); err != nil {
+	cx, cy := c.cell(w)
+	if err := c.primeToward(&[2]float64{cx, cy}); err != nil {
 		return err
 	}
 	t1 := c.clk().Now()

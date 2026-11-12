@@ -1,0 +1,51 @@
+{
+  "schema": "watch.onboarding.texts/1",
+  "welcome": {
+    "title": "Welcome. Your hero plays by itself.",
+    "lines": [
+      "d.idle plays your Diablo II hero for you: it fights, loots, heals and walks town. You watch, and you decide what matters.",
+      "It does not touch your gear or your gold. You equip what you find and you decide what to buy; selling junk is yours to mark.",
+      "Worn gear is repaired with one button, and you can order any area on the map when you want the hero somewhere else.",
+      "The Journey strip shows the path ahead. You never have to follow it.",
+      "Policies are the rules the hero lives by: open the policy sheet and pick how careful it should be."
+    ],
+    "buttons": [
+      {"id": "inventory", "label": "Open Inventory", "href": "/watch/inventory"},
+      {"id": "policy", "label": "Open Policy", "href": "/watch/policy"},
+      {"id": "journey", "label": "Show the Journey", "href": "#p-journey-title"}
+    ],
+    "dismiss": "Got it, hide this"
+  },
+  "help": {
+    "label": "Help",
+    "showWelcome": "Show the welcome card again",
+    "showChecklist": "Show the first 30 minutes list again"
+  },
+  "checklist": {
+    "title": "Your first 30 minutes",
+    "progress": "{done} of {total} done",
+    "collapse": "Hide the list",
+    "expand": "Show the list",
+    "done": "All done. The list is gone; Help brings it back.",
+    "manual": "Mark done"
+  },
+  "steps": [
+    {"id": "equip", "label": "Equip your starter gear", "hint": "The hero never equips for you. The inventory page tells you what is worth wearing.", "href": "/watch/inventory"},
+    {"id": "policy", "label": "Check the policy sheet", "hint": "Each row is a rule the hero follows. The defaults are safe.", "href": "/watch/policy"},
+    {"id": "fight", "label": "Watch your first fight", "hint": "It ticks by itself after the first kill. Watch the video or the Thoughts feed.", "href": "#p-video-title"},
+    {"id": "journey", "label": "Open the Journey strip", "hint": "The path through the game, one chapter at a time.", "href": "#p-journey-title", "tickOnOpen": true},
+    {"id": "junk", "label": "Mark junk for sale", "hint": "Mark an item in the inventory and the hero sells it on the next town visit.", "href": "/watch/inventory"}
+  ],
+  "reconnect": {
+    "down": "Reconnecting to your hero...",
+    "downHint": "The page lost the bot. It keeps trying; nothing you did is lost.",
+    "restarted": "The bot restarted. Your hero is picking up where it stopped.",
+    "away": "Your hero was away for {duration}: see the Return screen",
+    "awayLink": "Return screen",
+    "stream": "The video stream is {state}. It retries by itself.",
+    "streamLink": "Retry now"
+  },
+  "art": {
+    "preparing": "Preparing the item pictures from your own game files ({done} of {total}). The inventory shows plain boxes until it is done; nothing to do."
+  }
+}

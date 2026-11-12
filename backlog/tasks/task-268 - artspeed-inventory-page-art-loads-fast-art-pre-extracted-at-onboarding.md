@@ -1,10 +1,11 @@
 ---
 id: TASK-268
 title: 'artspeed: inventory page art loads fast, art pre-extracted at onboarding'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-10T21:01:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - watch
   - feature

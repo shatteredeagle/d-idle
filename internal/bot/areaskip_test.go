@@ -200,3 +200,51 @@ func TestBorderLoopSkipEscalates(t *testing.T) {
 		t.Fatalf("after the memory: %v", got)
 	}
 }
+
+// Arrival bounces (docs/passagebounce.md): three stays under bounceMaxStay that go straight back skip the bounced area,
+// whichever side is the walk's target; the skip escalates; a long stay or a town hop counts as nothing.
+func TestArrivalBounceSkipsTheBouncedArea(t *testing.T) {
+	g := soakyRig(t, 4)
+	hop := func(area int, stay time.Duration) {
+		g.clock.Sleep(stay)
+		g.w.set(func(w *world) { w.area = area })
+		g.r.poll()
+	}
+	bounce := func() { // Stony Field -> Underground Passage 1 -> Stony Field in 1.2 s
+		hop(10, 3*time.Second)
+		hop(4, 1200*time.Millisecond)
+	}
+	bounce()
+	bounce()
+	if _, ok := g.r.avoid[10]; ok {
+		t.Fatal("two bounces tripped the breaker")
+	}
+	bounce()
+	if got := g.r.avoid[10].Sub(g.clock.Now()); got <= 0 || got > borderLoopSkip {
+		t.Fatalf("skip after 3 bounces: %v, want within %v", got, borderLoopSkip)
+	}
+	if g.r.avoidWhy[10] != "border-loop" {
+		t.Fatalf("reason %q", g.r.avoidWhy[10])
+	}
+	// the second trip within the memory doubles it
+	g.clock.Sleep(borderLoopSkip + time.Second)
+	bounce()
+	bounce()
+	bounce()
+	if got := g.r.avoid[10].Sub(g.clock.Now()); got <= borderLoopSkip || got > 2*borderLoopSkip {
+		t.Fatalf("second trip: %v, want within (%v, %v]", got, borderLoopSkip, 2*borderLoopSkip)
+	}
+	// a long stay is not a bounce
+	g2 := soakyRig(t, 4)
+	for i := 0; i < 6; i++ {
+		g2.clock.Sleep(10 * time.Second)
+		g2.w.set(func(w *world) { w.area = 10 })
+		g2.r.poll()
+		g2.clock.Sleep(30 * time.Second)
+		g2.w.set(func(w *world) { w.area = 4 })
+		g2.r.poll()
+	}
+	if len(g2.r.avoid) != 0 {
+		t.Fatalf("long stays tripped: %v", g2.r.avoid)
+	}
+}

@@ -1,10 +1,11 @@
 ---
 id: TASK-318
 title: 'fid-pal-attack: oracle: Paladin Attack and Zeal speed, mana and profile bands'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T18:51:00Z'
+updated_date: '2026-11-11T21:25:00Z'
 labels:
   - d2d
   - oracle

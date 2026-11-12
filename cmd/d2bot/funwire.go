@@ -79,6 +79,7 @@ func newFun(l ladderOptions, stateDir string, hub *watch.Hub, wallet *currency.W
 	if stateDir != "" {
 		hub.SetLayoutPath(filepath.Join(stateDir, "layout-"+l.storeProfile()+".json"))
 		cfg.Visit = watch.NewVisit(filepath.Join(stateDir, "visit.json"), nil)
+		cfg.OnboardingPath = filepath.Join(stateDir, "onboarding.json")
 	}
 	if wallet != nil && wallet.Ledger != nil {
 		tally, err := currency.NewTally(wallet.Ledger, currency.DefaultTallyRows(), l.storeProfile(), run)

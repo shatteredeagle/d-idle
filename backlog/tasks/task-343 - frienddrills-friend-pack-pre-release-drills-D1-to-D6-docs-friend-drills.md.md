@@ -1,10 +1,11 @@
 ---
 id: TASK-343
 title: 'frienddrills: friend pack pre-release drills D1 to D6 (docs/friend-drills.md)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T21:42:00Z'
+updated_date: '2026-11-12T01:38:00Z'
 labels:
   - container
   - drill
