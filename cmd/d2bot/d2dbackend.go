@@ -352,6 +352,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 	o.ladder.riskFacts = runner.RiskFacts
 	o.ladder.readiness = wireReadiness(runner, db)
 	o.ladder.heroStats = heroStats(runner)
+	o.ladder.explored = runner.Explored
 	if db != nil {
 		o.ladder.monsters = db
 	}

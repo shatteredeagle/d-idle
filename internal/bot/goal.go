@@ -1306,7 +1306,7 @@ func (r *Runner) sweepPass(ctx context.Context, area int) error {
 			return nil
 		}
 		// Explore (a roam) runs for minutes until a hostile shows: the empty-area check must run inside it.
-		if err := r.d.Mover.Explore(ctx, func() bool { return hostile() || r.emptyAreaLeave(area) }); err != nil {
+		if err := r.d.Mover.Explore(ctx, func() bool { return hostile() || r.emptyAreaLeave(area) || r.exploredEnough(area) }); err != nil {
 			if r.exploreGaveUp(ctx, area, err) {
 				return nil
 			}
@@ -1489,7 +1489,7 @@ func (r *Runner) logSweep(area int, cleared bool) {
 	if c, ok := r.d.Mover.(interface{ Coverage() (int, int) }); ok {
 		v, m = c.Coverage()
 	}
-	r.e.Log.Info(fmt.Sprintf("sweep: coverage %d/%d points, kills %d, cleared=%t", v, m, r.loop.sweepKills[area], cleared), "area", area)
+	r.e.Log.Info(fmt.Sprintf("sweep: coverage %d/%d points, kills %d, cleared=%t", v, m, r.loop.sweepKills[area], cleared), "area", area, "exploredPct", ExploredPercent(v, m))
 }
 
 func (r *Runner) getLastTrip() time.Time {

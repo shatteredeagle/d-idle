@@ -1,10 +1,13 @@
 ---
 id: TASK-353
-title: 'mapnodes: Underground Pass, Monastery Gate and Outer Cloister orderable on the watch map'
-status: Proposed
+title: >-
+  mapnodes: Underground Pass, Monastery Gate and Outer Cloister orderable on the
+  watch map
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T03:04:00Z'
+updated_date: '2026-11-12T03:23:00Z'
 labels:
   - watch
   - bug
