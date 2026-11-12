@@ -198,7 +198,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | loot.valuableMinPrio | 70 | 1..100 | prio | 100 | 5 | Items whose pickit rule prio is at least this are valuables. |
 | loot.carryValuables | 0 | 0..20 | count | 0 | 1 | Valuables allowed in the pack outside town (insurance: the rest stay in the stash). |
 | loot.poorGoldBelow | 300 | 0..1e+04 | gold | 1e+04 | 1 | Below this gold every gold pile and junk weapon or armor worth selling is picked. |
-| loot.poorMinSell | 6 | 0..500 | gold | 500 | 2 | Estimated sell value a junk item needs to be picked in poor mode. |
+| loot.poorMinSell | 20 | 0..500 | gold | 500 | 2 | Estimated sell value a junk item needs to be picked in poor mode. |
 | loot.maxPerCall | 30 | 1..100 | count | 1 | 1 | Upper bound on pickups in one PickUp call. |
 | loot.memEnabled | 1 | 0..1 | 0/1 | 0 | 2 | 1: remember wanted drops beyond the pickup radius and walk back for them at quiet moments. |
 | loot.memMinGold | 20 | 0..5000 | gold | 5000 | 1 | Smallest remembered gold pile worth a walk-back at clvl 1; the bar grows by 10 percent per character level. |
