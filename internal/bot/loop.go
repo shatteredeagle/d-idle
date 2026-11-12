@@ -1327,35 +1327,67 @@ const (
 	bounceWindow  = 2 * time.Minute
 )
 
-// noteBounce runs from observe, which holds obMu.
+// noteBounce runs from observe, which holds obMu. A bounce counts for the PAIR of areas (the culprit side is chosen
+// the same way every time, so both directions of one cave mouth add up); the skip goes to the deeper side, never to
+// the side the way back to the town needs.
 func (r *Runner) noteBounceLocked(area, back int, now time.Time) {
-	area = r.bounceCulprit(area, back)
+	culprit, why := r.bounceCulprit(area, back)
 	keep := r.bounceLog[:0]
 	same := 1
 	for _, c := range r.bounceLog {
 		if now.Sub(c.at) < bounceWindow {
 			keep = append(keep, c)
-			if c.target == area {
+			if c.target == culprit {
 				same++
 			}
 		}
 	}
-	r.bounceLog = append(keep, crossStamp{now, area})
+	r.bounceLog = append(keep, crossStamp{now, culprit})
 	if same >= bounceTrips {
 		r.bounceLog = nil
-		r.tripLoopLocked(area, now)
+		r.e.Log.Warn("bounce breaker", "pair", [2]int{area, back}, "skip", culprit, "name", r.areaName(culprit), "why", why,
+			"bounces", same, "windowSec", int(bounceWindow/time.Second))
+		r.tripLoopLocked(culprit, now)
 	}
 }
 
-// bounceCulprit picks the side of a bounce to count and skip. A transit area (the walk from a town to some plan area
-// crosses it: Blood Moor on the way to Cold Plains) must not be banned for a bounce at a cave mouth beside it: that
-// banned the way out of the town for every route and cost a 13 minute forced re-clear (docs/hourfix.md, V log
-// 2026-11-12T02:49Z). When exactly one of the two areas is a transit the other one (the cave) takes the skip.
-func (r *Runner) bounceCulprit(area, back int) int {
-	if back != 0 && r.isTransit(area) && !r.isTransit(back) && !r.d.Plan.IsTown(back) {
-		return back
+// bounceCulprit picks the side of a bounce to count and skip, and says why. The deeper side (more hops from its act's
+// town) takes it: the shallower one is the way out for every route through the mouth, and banning it took out the
+// whole of Cold Plains for a Cave Level 1 bounce (V log 2026-11-12T19:47Z, docs/bounce3.md) and Blood Moor for the
+// Den (docs/hourfix.md). Without depths (no route) the old transit rule decides: a transit area never takes it.
+func (r *Runner) bounceCulprit(area, back int) (int, string) {
+	if back == 0 || r.d.Plan == nil || r.d.Plan.IsTown(back) {
+		return area, "bounced area"
 	}
-	return area
+	da, db := r.townDepth(area), r.townDepth(back)
+	switch {
+	case da >= 0 && db >= 0 && db > da:
+		return back, "deeper side"
+	case da >= 0 && db >= 0 && da > db:
+		return area, "deeper side"
+	case r.isTransit(area) && !r.isTransit(back):
+		return back, "transit kept"
+	}
+	return area, "bounced area"
+}
+
+// townDepth is the number of hops from the town of area's act to area, -1 when unknown.
+func (r *Runner) townDepth(area int) int {
+	if r.d.Mover == nil || r.d.Plan == nil {
+		return -1
+	}
+	town := r.d.Plan.Towns[r.d.Plan.Act(area)]
+	if town == 0 {
+		return -1
+	}
+	if town == area {
+		return 0
+	}
+	hops, err := r.d.Mover.Route(town, area)
+	if err != nil || len(hops) == 0 {
+		return -1
+	}
+	return len(hops)
 }
 
 // isTransit says a walk from the act's town to another plan step area passes through area. Data comes from the plan

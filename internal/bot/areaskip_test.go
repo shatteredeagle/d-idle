@@ -275,3 +275,54 @@ func TestBounceAtACaveMouthSkipsTheCaveNotTheTransit(t *testing.T) {
 		t.Fatalf("route to Cold Plains blocked by area %d", b)
 	}
 }
+
+// bounce3 (V log 2026-11-12T19:47Z): Cold Plains and Cave Level 1 bounced both ways and the breaker skipped Cold Plains,
+// the area every route past the Blood Moor needs. The pair now counts as one and the deeper side (the cave) takes the
+// skip, whichever direction the bounces run and whether or not the plan makes Cold Plains a transit.
+func TestBounceBetweenAPlainAndItsCaveSkipsTheCave(t *testing.T) {
+	for _, start := range []int{3, 9} {
+		for _, transit := range []bool{true, false} {
+			g := soakyRig(t, start)
+			if !transit {
+				g.r.d.Plan.Steps = nil // no plan step beyond: isTransit(3) is false, as in the live log
+			}
+			other := 12 - start // 3 <-> 9
+			hop := func(area int, stay time.Duration) {
+				g.clock.Sleep(stay)
+				g.w.set(func(w *world) { w.area = area })
+				g.r.poll()
+			}
+			hop(other, 30*time.Second)
+			for i := 0; i < 3; i++ {
+				hop(start, 1500*time.Millisecond)
+				hop(other, 700*time.Millisecond)
+			}
+			if g.r.banned(3) {
+				t.Fatalf("start %d transit %v: Cold Plains banned (%v)", start, transit, g.r.avoidWhy)
+			}
+			if !g.r.banned(9) || g.r.avoidWhy[9] != "border-loop" {
+				t.Fatalf("start %d transit %v: the cave was not skipped: %v", start, transit, g.r.avoid)
+			}
+		}
+	}
+}
+
+func TestTownDepth(t *testing.T) {
+	g := soakyRig(t, 1)
+	for area, want := range map[int]int{1: 0, 2: 1, 3: 2, 9: 3, 8: 2, 5: 4} {
+		if got := g.r.townDepth(area); got != want {
+			t.Fatalf("depth of %d: %d, want %d", area, got, want)
+		}
+	}
+}
+
+func TestBouncesPer100(t *testing.T) {
+	for _, c := range []struct {
+		b, a int
+		want float64
+	}{{0, 0, 0}, {34, 99, 34.3}, {48, 105, 45.7}, {0, 12, 0}} {
+		if got := bouncesPer100(c.b, c.a); got != c.want {
+			t.Fatalf("%d/%d: %v, want %v", c.b, c.a, got, c.want)
+		}
+	}
+}
