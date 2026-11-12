@@ -8,6 +8,8 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- lockfix: deadlock covMu/obMu (TASK-358) <!--sg:agent/lockfix-->
+- Skills page: layout and lines from grid constants, no measuring (TASK-357) <!--sg:agent/skilltrees2-->
 - Skills page: read-only class skill trees, tooltips, points, 501 allocate stub (TASK-355) <!--sg:agent/skilltrees-->
 - bot.exploredPct knob + explored share in watch UI (TASK-354) <!--sg:agent/exploredpct-->
 - mapnodes: Underground Pass, Monastery Gate, Outer Cloister orderable on the watch map <!--sg:agent/mapnodes-->

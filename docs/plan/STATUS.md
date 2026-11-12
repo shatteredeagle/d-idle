@@ -111,6 +111,7 @@
 | prpost | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r4`<br>`fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
 | exploredpct | proposed | - | `docs/exploredpct.md`<br>`internal/bot/exploredpct.go`<br>`internal/bot/exploredpct_test.go`<br>`internal/watch/heroexplored_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/ladder.go`<br>`cmd/d2bot/live.go`<br>`docs/knobs.md`<br>`internal/bot/goal.go`<br>`internal/bot/observe.go`<br>`internal/env/tuning_bot.go`<br>`internal/watch/hero.go`<br>`internal/watch/hub.go`<br>`internal/watch/web/panels/activity/panel.js` | - |
 | skilltrees | proposed | - | `internal/skilltree`<br>`internal/watch/skillsapi.go`<br>`internal/watch/skillsapi_test.go`<br>`internal/watch/web/skills.js`<br>`internal/watch/web/skills.css`<br>`internal/watch/skillsui.go`<br>`docs/skilltrees.md`<br>`cmd/d2bot/skillswire.go`<br>`internal/art/skillicons.go`<br>`internal/art/skillicons_test.go`<br>`internal/watch/testdata/skills_paladin.json`<br>`internal/watch/testdata/skills_sorceress.json` | - |
+| skilltrees2 | proposed | - | `internal/skilltree`<br>`internal/watch/web/skills.js`<br>`internal/watch/web/skills.css`<br>`internal/watch/skillsapi_test.go`<br>`internal/watch/testdata/skills_paladin.json`<br>`internal/watch/testdata/skills_sorceress.json`<br>`docs/skilltrees.md` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -166,6 +167,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 96a6eed4 11-11 23:33 `Merge agent/lockfix: lockfix: deadlock covMu/obMu (TASK-358)` (lockfix)
+- 8925fad2 11-11 23:15 `Merge agent/skilltrees2: Skills page: layout and lines from grid constants, no measuring (TASK-357)` (skilltrees2)
 - a2564e6e 11-11 22:28 `Merge agent/skilltrees: Skills page: read-only class skill trees, tooltips, points, 501 allocate stub (TASK-355)` (skilltrees)
 - e1282ce2 11-11 22:27 `Merge branch 'main' into skilltrees` (-)
 - 483ab935 11-11 22:22 `Merge origin/main into skilltrees` (-)
@@ -174,6 +177,4 @@
 - 55514cbc 11-11 22:11 `Merge agent/mapnodes: mapnodes: Underground Pass, Monastery Gate, Outer Cloister orderable on the watch map` (mapnodes)
 - 6c5e3df3 11-11 21:02 `Merge agent/prpost: TASK-352 prpost: posted PRs 444 and 445, bodies, queue` (prpost)
 - 39f58c84 11-11 21:01 `Merge branch 'main' into prpost` (-)
-- 3ce70260 11-11 20:55 `Merge agent/arrivalsettle: TASK-351 arrivalsettle: priming click no longer lands on the return warp (kick toward move target), arrival/bounce counters; stacked on passagebounce` (arrivalsettle)
-- 695a2ff9 11-11 20:55 `Merge branch 'main' into arrivalsettle` (-)
 <!-- statusgen:end -->

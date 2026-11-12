@@ -213,6 +213,7 @@ docs/senses-map.md  credit-runner  maptrail
 docs/senses-map.md  credit-runner  maptrail2
 docs/session-record.md  live-agent  sessions
 docs/skilltrees.md  credit-runner  skilltrees
+docs/skilltrees.md  credit-runner  skilltrees2
 docs/soaks/recoverypace.md  live-agent  recoverypace
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
@@ -300,6 +301,7 @@ internal/senses  credit-runner  maptrail
 internal/senses/coverage.go  credit-runner  maptrail2
 internal/senses/trail_test.go  credit-runner  maptrail2
 internal/skilltree  credit-runner  skilltrees
+internal/skilltree  credit-runner  skilltrees2
 internal/task/campaign.go  credit-runner  campaign1
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
@@ -334,6 +336,7 @@ internal/watch/senses_test.go  credit-runner  maptrail
 internal/watch/senses_test.go  credit-runner  maptrail2
 internal/watch/skillsapi.go  credit-runner  skilltrees
 internal/watch/skillsapi_test.go  credit-runner  skilltrees
+internal/watch/skillsapi_test.go  credit-runner  skilltrees2
 internal/watch/skillsui.go  credit-runner  skilltrees
 internal/watch/testdata/compat  credit-runner  repairtrip
 internal/watch/testdata/gear_farm_dom.txt  credit-runner  repairtrip
@@ -360,7 +363,9 @@ internal/watch/testdata/senses-trail.json  credit-runner  maphistory
 internal/watch/testdata/senses-trail.json  credit-runner  maphistoryA
 internal/watch/testdata/senses-trail.json  credit-runner  maptrail
 internal/watch/testdata/skills_paladin.json  credit-runner  skilltrees
+internal/watch/testdata/skills_paladin.json  credit-runner  skilltrees2
 internal/watch/testdata/skills_sorceress.json  credit-runner  skilltrees
+internal/watch/testdata/skills_sorceress.json  credit-runner  skilltrees2
 internal/watch/web/gear.js  credit-runner  repairtrip
 internal/watch/web/inventory-actions.js  credit-runner  nopins
 internal/watch/web/inventory-tip.css  credit-runner  nopins
@@ -382,7 +387,9 @@ internal/watch/web/panels/onboarding  credit-runner  firstminutes
 internal/watch/web/panels/onboarding  credit-runner  reconnectux
 internal/watch/web/shell.js  credit-runner  minimapfix
 internal/watch/web/skills.css  credit-runner  skilltrees
+internal/watch/web/skills.css  credit-runner  skilltrees2
 internal/watch/web/skills.js  credit-runner  skilltrees
+internal/watch/web/skills.js  credit-runner  skilltrees2
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
 tools/emu/pp_*  credit-runner  prpost

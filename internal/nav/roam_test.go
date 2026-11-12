@@ -6,6 +6,7 @@ import (
 	"math"
 	"strings"
 	"testing"
+	"time"
 
 	"d2lod-bot/internal/d2map"
 	"d2lod-bot/internal/input"
@@ -287,5 +288,33 @@ func TestRoamMemoryPerLevelAndGame(t *testing.T) {
 	}
 	if n.covs[3] == nil {
 		t.Fatal("level B memory dropped by A's reset")
+	}
+}
+
+// Lock order: covMu is a leaf. The roam's done callback (the bot's, which takes the bot's obMu while the observer
+// holds obMu and calls NotePosition, which takes covMu) must never run with covMu held, or the two goroutines deadlock
+// (sandbox hang 2026-11-11). done() probes the mutex: TryLock fails if the roam still holds it.
+func TestRoamNeverCallsDoneUnderCovMu(t *testing.T) {
+	s, n := newKnown(t, openField(2000, 2000, 120, 120), input.Point{X: 2010, Y: 2010}, true)
+	calls := 0
+	finished := make(chan error, 1)
+	go func() {
+		finished <- n.Explore(ctxT(t), func() bool {
+			calls++
+			if !n.covMu.TryLock() {
+				t.Error("done() ran with covMu held")
+				return true
+			}
+			n.covMu.Unlock()
+			return calls > 400 || len(s.clicks) > 200
+		})
+	}()
+	select {
+	case <-finished:
+	case <-time.After(60 * time.Second):
+		t.Fatal("roam did not finish: lock inversion?")
+	}
+	if calls == 0 {
+		t.Fatal("done() was never called")
 	}
 }
