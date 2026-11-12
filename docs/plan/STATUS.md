@@ -115,7 +115,6 @@
 | cut010b | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md`<br>`tools/friendpack/checklist.sh` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
-| cut010c | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md`<br>`tools/release/app-assets.sh` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |

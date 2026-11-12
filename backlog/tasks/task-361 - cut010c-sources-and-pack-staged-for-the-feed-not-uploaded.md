@@ -1,10 +1,11 @@
 ---
 id: TASK-361
 title: 'cut010c: sources and pack staged for the feed (not uploaded)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T14:39:00Z'
+updated_date: '2026-11-12T14:55:00Z'
 labels:
   - container
   - chore
