@@ -164,27 +164,112 @@ func (c *Controller) Pos() (input.Point, error) {
 // covers that.
 func (c *Controller) prime() error { return c.primeToward(nil) }
 
-// kickReach is how far from the player's feet (client pixels) the priming click lands when the move target is known.
+// kickReach is how far from the player's feet (client pixels) the priming click lands at the least.
 const kickReach = 110
 
-// kickToward is the client pixel for the priming click: kickReach pixels from the player in the direction of the move
-// target (cells, the same frame as the player cell), so it never lands on the player's own feet where the return warp
-// unit of a fresh arrival stands. ok is false when the target is on top of the player.
+// warpTakeR is d2d's warp-click radius in cells: a fresh move (a click or "cmd move") whose target lies within it of a
+// warp's centre (warp cell + 0.5) marks that warp as taken, and the warp fires as soon as the player stands within the
+// same radius (V source: walk_to in components/game/world/commands.cpp and World::use_warp in travel.cpp of the fork
+// at sandbox-warp f8ea366c; V repro: tools/bounce3/repro.sh, docs/bounce3.md). A fresh arrival stands 0.6 to 1.7 cells
+// from the return warp, so any priming click closer than this to it sends the hero straight back.
+const warpTakeR = 2.0
+
+// kickWarpMargin keeps the priming click this far outside warpTakeR (cell rounding, a sub-cell camera offset).
+const kickWarpMargin = 1.0
+
+// kickToward is the client pixel for the priming click: at least kickReach pixels from the player, in the direction
+// of the move target (cells, the same frame as the player cell), never on the player's own feet. ok is false when the
+// target is on top of the player.
 func (c *Controller) kickToward(px, py, tx, ty float64) (int, int, bool) {
-	t := c.X
-	sx, sy := t.WorldToScreenF([2]float64{px * 5, py * 5}, tx*5, ty*5)
-	dx, dy := sx-t.PlayerX, sy-t.PlayerY
-	d := math.Hypot(dx, dy)
-	if d < 1 {
-		return 0, 0, false
-	}
-	x, y := t.PlayerX+dx/d*kickReach, t.PlayerY+dy/d*kickReach
-	x = math.Min(math.Max(x, float64(t.MarginX)+1), float64(t.ViewW-t.MarginX)-2)
-	y = math.Min(math.Max(y, float64(t.MarginTop)+1), float64(t.PanelTop)-2)
-	return int(x), int(y), true
+	x, y, _, ok := c.kickSafe(px, py, &[2]float64{tx, ty}, nil)
+	return x, y, ok
 }
 
-// primeToward is prime with the cell the following move walks to (nil: unknown, the default click).
+// kickSafe places the priming click so that the cell it walks to is at least warpTakeR+kickWarpMargin from every warp
+// of the level: first along the direction to the target (nil: straight away from the nearest warp), pushed out from
+// kickReach to the edge of the play area, then rotated in 15 degree steps either way. It returns the pixel, the
+// distance in cells from its cell to the nearest warp centre (-1 without warps) and ok=false only when there is no
+// direction at all (no target and no warp, or a target on the player).
+func (c *Controller) kickSafe(px, py float64, to *[2]float64, warps []d2dctl.Warp) (int, int, float64, bool) {
+	t := c.X
+	nearest := func(cx, cy float64) float64 {
+		best := -1.0
+		for _, w := range warps {
+			if d := math.Hypot(w.X+0.5-cx, w.Y+0.5-cy); best < 0 || d < best {
+				best = d
+			}
+		}
+		return best
+	}
+	var dx, dy float64
+	switch {
+	case to != nil:
+		sx, sy := t.WorldToScreenF([2]float64{px * 5, py * 5}, to[0]*5, to[1]*5)
+		dx, dy = sx-t.PlayerX, sy-t.PlayerY
+	case len(warps) > 0:
+		w := warps[0]
+		for _, o := range warps[1:] {
+			if math.Hypot(o.X+0.5-px, o.Y+0.5-py) < math.Hypot(w.X+0.5-px, w.Y+0.5-py) {
+				w = o
+			}
+		}
+		ax, ay := px-(w.X+0.5), py-(w.Y+0.5)
+		if math.Hypot(ax, ay) < 1e-6 {
+			ax = 1
+		}
+		sx, sy := t.WorldToScreenF([2]float64{px * 5, py * 5}, (px+ax)*5, (py+ay)*5)
+		dx, dy = sx-t.PlayerX, sy-t.PlayerY
+	}
+	if math.Hypot(dx, dy) < 1 {
+		return 0, 0, -1, false
+	}
+	base := math.Atan2(dy, dx)
+	minX, maxX := float64(t.MarginX)+1, float64(t.ViewW-t.MarginX)-2
+	minY, maxY := float64(t.MarginTop)+1, float64(t.PanelTop)-2
+	cellOf := func(x, y float64) (float64, float64) {
+		wx, wy := t.ScreenToWorldF([2]float64{px * 5, py * 5}, x, y)
+		return wx / 5, wy / 5
+	}
+	bx, by, bestD := 0, 0, -2.0
+	for turn := 0; turn <= 12; turn++ {
+		for _, sign := range []float64{1, -1} {
+			if turn == 0 && sign < 0 || turn == 12 && sign < 0 {
+				continue
+			}
+			a := base + sign*float64(turn)*math.Pi/12
+			for r := float64(kickReach); ; r += 20 {
+				x, y := t.PlayerX+math.Cos(a)*r, t.PlayerY+math.Sin(a)*r
+				out := x < minX || x > maxX || y < minY || y > maxY
+				x, y = math.Min(math.Max(x, minX), maxX), math.Min(math.Max(y, minY), maxY)
+				d := nearest(cellOf(x, y))
+				if d < 0 || d >= warpTakeR+kickWarpMargin {
+					return int(x), int(y), d, true
+				}
+				if d > bestD {
+					bx, by, bestD = int(x), int(y), d
+				}
+				if out {
+					break
+				}
+			}
+		}
+	}
+	return bx, by, bestD, true // every direction is close to some warp: the farthest point found
+}
+
+// feetSafe reports whether the default priming click (d2dctl.KickX, KickY) lands outside every warp's take radius.
+func (c *Controller) feetSafe(px, py float64, warps []d2dctl.Warp) bool {
+	wx, wy := c.X.ScreenToWorldF([2]float64{px * 5, py * 5}, d2dctl.KickX, d2dctl.KickY)
+	for _, w := range warps {
+		if math.Hypot(w.X+0.5-wx/5, w.Y+0.5-wy/5) < warpTakeR+kickWarpMargin {
+			return false
+		}
+	}
+	return true
+}
+
+// primeToward is prime with the cell the following move walks to (nil: unknown; the click then goes away from the
+// nearest warp, or on the default spot when the level lists none).
 func (c *Controller) primeToward(to *[2]float64) error {
 	l, err := c.C.Level(c.ctx())
 	if err != nil {
@@ -193,12 +278,22 @@ func (c *Controller) primeToward(to *[2]float64) error {
 	if c.primed && l.ID == c.lastLevel {
 		return nil
 	}
+	// Outside town a level without a warp listing is unusual; a failed listing still primes (as before), only blind.
+	var warps []d2dctl.Warp
+	if ws, err := c.C.Warps(c.ctx()); err == nil {
+		warps = ws.Items
+	}
 	kick := func() error { return c.C.Kick(c.ctx()) }
-	if to != nil {
-		if x, y, ok := c.kickToward(l.X, l.Y, to[0], to[1]); ok {
+	// Without a target the default click on the feet stays where no warp is near (town NPCs, portals): it walks nowhere.
+	if to != nil || !c.feetSafe(l.X, l.Y, warps) {
+		if x, y, wd, ok := c.kickSafe(l.X, l.Y, to, warps); ok {
 			kick = func() error { return c.C.KickAt(c.ctx(), x, y) }
 			if c.Trace != nil {
-				c.Trace("nav.trace kick", "level", l.ID, "x", x, "y", y, "playerCell", [2]float64{l.X, l.Y}, "toCell", *to)
+				kv := []any{"level", l.ID, "x", x, "y", y, "playerCell", [2]float64{l.X, l.Y}, "warpDist", math.Round(wd*100) / 100}
+				if to != nil {
+					kv = append(kv, "toCell", *to)
+				}
+				c.Trace("nav.trace kick", kv...)
 			}
 		}
 	}
