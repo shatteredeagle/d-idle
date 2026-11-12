@@ -1,0 +1,43 @@
+<section hidden>
+  <span class="meta">
+  <div class="d-card-body">
+    <p class="who">
+    <div class="bars">
+      <div class="d-meter" data-kind="life" aria-label="life" role="meter">
+        <span class="lbl"> "life"
+        <span class="track">
+        <span class="num">
+      <div class="d-meter" data-kind="mana" aria-label="mana" role="meter">
+        <span class="lbl"> "mana"
+        <span class="track">
+        <span class="num">
+      <div class="d-meter" data-kind="xp" aria-label="xp" role="meter">
+        <span class="lbl"> "xp"
+        <span class="track">
+        <span class="num">
+    <p class="d-hint rate">
+    <div class="d-stats">
+      <div class="d-stat">
+        <span class="lbl"> "gold"
+        <span class="val">
+        <span class="delta">
+      <div class="d-stat">
+        <span class="lbl"> "stash"
+        <span class="val">
+        <span class="delta">
+    <div class="d-strip res" aria-label="Resistances">
+      <span class="d-chip" data-key="fire">
+        "fire "
+        <b>
+      <span class="d-chip" data-key="cold">
+        "cold "
+        <b>
+      <span class="d-chip" data-key="light">
+        "light "
+        <b>
+      <span class="d-chip" data-key="poison">
+        "poison "
+        <b>
+    <p class="ready">
+      <span class="d-chip" data-key="readiness">
+      <span class="d-hint">

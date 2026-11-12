@@ -1,0 +1,12 @@
+div.inv-act [aria-label=Actions for Strange Amulet role=menu data-mode=pop]
+  div.act-title.q-magic [] "Strange Amulet"
+  button.act [aria-disabled=true role=menuitem data-act=identify data-off=] "Identify"
+  div.act-why [data-for=identify] "no Scroll or Tome of Identify in the backpack: use Buy identify scrolls or Identify all (Cain)"
+  button.act [aria-disabled=true role=menuitem data-act=equip data-off=] "Equip"
+  div.act-why [data-for=equip] "move it to the backpack first"
+  button.act [role=menuitem data-act=take] "Take out"
+  button.act [aria-disabled=true role=menuitem data-act=sell data-off=] "Mark for sale"
+  div.act-why [data-for=sell] "only backpack items are sold"
+  button.act [role=menuitem data-act=keep] "Keep"
+  button.act [role=menuitem data-act=trash data-danger=] "Trash"
+  div.act-note [role=status]

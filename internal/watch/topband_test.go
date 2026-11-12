@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"os"
 	"regexp"
+	"strings"
 	"testing"
 )
 
@@ -78,5 +79,44 @@ func TestTopBandPanelsFollowTheContract(t *testing.T) {
 		if a.Band != b.Band || a.Endpoint != b.Endpoint || a.Title != b.Title {
 			t.Errorf("%s changed its band, endpoint or title", id)
 		}
+	}
+}
+
+// The Hero stats tile (hero-detail) is merged into the Hero tile (hero-vitals): its manifest says so, the layout
+// alias maps the old id onto the merged panel, and the default layout no longer places it.
+func TestHeroDetailIsMergedIntoHeroVitals(t *testing.T) {
+	ms, err := Manifests()
+	if err != nil {
+		t.Fatal(err)
+	}
+	var seen bool
+	for _, m := range ms {
+		if m.ID == "hero-detail" {
+			seen = true
+			if m.MergedInto != "hero-vitals" {
+				t.Errorf("hero-detail mergedInto = %q", m.MergedInto)
+			}
+		}
+		if m.MergedInto != "" && m.MergedInto == m.ID {
+			t.Errorf("%s merged into itself", m.ID)
+		}
+	}
+	if !seen {
+		t.Fatal("hero-detail manifest must stay (compat promise)")
+	}
+	lc, err := shellLayoutConf()
+	if err != nil {
+		t.Fatal(err)
+	}
+	if lc.Aliases["hero-detail"] != "hero-vitals" {
+		t.Errorf("alias hero-detail = %q", lc.Aliases["hero-detail"])
+	}
+	known, err := LayoutKnownIDs()
+	if err != nil || !known("hero-detail") {
+		t.Errorf("hero-detail must still resolve in a layout: %v", err)
+	}
+	b, _ := webFS.ReadFile("web/layout.json")
+	if strings.Contains(string(b), `"hero-detail"`) {
+		t.Error("the default layout still places hero-detail")
 	}
 }

@@ -346,7 +346,7 @@ func TestViewSchema5IdentifyGolden(t *testing.T) {
 			}
 		}
 		_ = sv
-		b, err := json.MarshalIndent(d.View(), "", " ")
+		b, err := json.MarshalIndent(asSchema5(d.View()), "", " ")
 		if err != nil {
 			t.Fatal(err)
 		}
