@@ -223,6 +223,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [builder.md](builder.md): Linux builder (build host for fork binaries) (status: current. Specifics (container name, template, limits, host) are in the private ops repo,...)
 - [builds-endgame.md](builds-endgame.md): Endgame builds (clvl 2-90, Normal -> Nightmare -> Hell), one per class (agent BUILDS80)
 - [buildv3.md](buildv3.md): BUILDV3: the fresh Sorceress skill table, rewritten to the order the leveler follows (status: table shipped OPT-IN by name (`fallback-lightning-v3`); the default of a fresh Sorceress stays...)
+- [campaign.md](campaign.md): Campaign: the guided journey (status: current (TASK-335 stage 0: spine, loader, bands, decision, state; stage 1 planner: TASK-337; stage 2 API...)
 - [capabilities.md](capabilities.md): What the current build can and cannot do (status: refreshed 2026-11-01 (card capdocs, docs only; first written by card readmedocs; nothing here was run...)
 - [champions.md](champions.md): Champions are elite, not bosses (status: the "G1/G2 check" obligation for shared code is retired (ADR 0013, amended by ADR 0015); verify on d2d...)
 - [chargedbolt.md](chargedbolt.md): Charged Bolt per-bolt damage on d2d (card chargedbolt, 2026-11-04) (status: current. Evidence: docs/probes/sksmoke/2026-11-04-SK-cb.txt, .json, -raw.txt. Tag: compared to table on...)
