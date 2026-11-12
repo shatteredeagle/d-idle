@@ -450,6 +450,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | key | default | range | unit | worst (rookie) | readers | what it changes |
 |---|---|---|---|---|---|---|
 | invdesk.verbs | 0 | 0..1 | bool | 0 | 1 | 1: a player's equip command goes through the private fork's item verbs (the server's own item handlers) when the connected d2d advertises them in caps; the click path stays the fallback and the oracle. 0 (default): always the click path. Off until the user has seen it work live (docs/design/item-verbs.md). |
+| invdesk.maxSets | 8 | 1..20 | sets | 8 | 1 | How many named gear sets the player may save per hero on the inventory page (docs/gearsets.md). A set is applied only when the player clicks Apply; the bot never chooses one. |
 <!-- knobdump:end -->
 
 ### Fields without a Knob entry (V)

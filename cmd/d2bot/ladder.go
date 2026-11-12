@@ -263,6 +263,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 		rig.Pacts = registerPactSection(rig.Fun, os.Getenv)
 		rig.Fun.Inventory = l.inv
+		bindSetsGate(l.inv, rig.Fun)
 		rig.Fun.Skills = l.skills
 		rig.Fun.Art = artAPI(l.art)
 		rig.Fun.Readiness = l.readiness

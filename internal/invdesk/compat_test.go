@@ -98,4 +98,24 @@ func TestOldStateFileLoads(t *testing.T) {
 
 // asSchema5 pins the old goldens: the schema 5 files stay as they were (the new fields are all omitempty), only the
 // version number moved on to 6.
-func asSchema5(v View) View { v.Schema = 5; return v }
+func asSchema5(v View) View { v = strip7(v); v.Schema = 5; return v }
+
+// asSchema6 pins the schema 6 goldens the same way: schema 7 only added optional fields (docs/gearsets.md).
+func asSchema6(v View) View { v = strip7(v); v.Schema = 6; return v }
+
+// strip7 clears what schema 7 added to the view, so the older goldens keep proving that nothing else moved.
+func strip7(v View) View {
+	v.Sets = nil
+	if v.Merc != nil {
+		v.Merc.ActWhy = ""
+	}
+	for _, l := range [][]ItemView{v.Backpack, v.Stash, v.Belt, v.Cube} {
+		for i := range l {
+			l[i].NoWearSlot, l[i].NoUnequip = nil, ""
+		}
+	}
+	for _, it := range v.Equipment {
+		it.NoWearSlot, it.NoUnequip = nil, ""
+	}
+	return v
+}

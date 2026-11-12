@@ -119,7 +119,13 @@ func (p *Publisher) AddEvent(kind, text string, big bool, f *FightInfo) {
 func (p *Publisher) EventsOf() []Event {
 	p.mu.Lock()
 	defer p.mu.Unlock()
-	return p.events.Area(p.clock(), p.areaNo)
+	var out []Event
+	for _, e := range p.events.Area(p.clock(), p.areaNo) {
+		if p.revealedLocked(p.areaNo, e.X, e.Y) { // a failed roam target or ignored monster can lie in the fog
+			out = append(out, e)
+		}
+	}
+	return out
 }
 
 // AddEventAt is AddEvent at a given place instead of the hero's (a failed roam target, an ignored monster). Events
