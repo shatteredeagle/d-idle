@@ -1,10 +1,11 @@
 ---
 id: TASK-375
 title: 'warpsandbox: test the d2d warp-arrival fix on the sandbox (devp4)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T18:39:00Z'
+updated_date: '2026-11-12T19:24:00Z'
 labels:
   - d2d
   - research
