@@ -1,10 +1,13 @@
 ---
 id: TASK-340
-title: 'prverify: independent verification of upstream PR candidates Lightning last unit and Cold Enchanted length'
-status: Proposed
+title: >-
+  prverify: independent verification of upstream PR candidates Lightning last
+  unit and Cold Enchanted length
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T20:50:00Z'
+updated_date: '2026-11-12T01:06:00Z'
 labels:
   - d2d
   - readonly
