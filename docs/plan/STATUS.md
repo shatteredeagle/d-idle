@@ -121,6 +121,7 @@
 | hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
+| prwarp | in-progress | - | `docs/upstream/drafts/warp-arrival.md`<br>`docs/upstream/pr-queue.md`<br>`tools/emu/pw` | `fork-branch:fid/warp-arrival-r2` |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -174,6 +175,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- dfd4d8a0 11-12 13:52 `Merge agent/prwarp: Merge branch 'main' into TASK-372` (prwarp)
+- 078ebedf 11-12 13:51 `Merge branch 'main' into TASK-372` (-)
 - cd482ec4 11-12 13:11 `Merge agent/archify: TASK-373 archify: tools/arch import-graph diagrams (overview, packages, drift) + docs/arch.md` (archify)
 - ee48fcff 11-12 12:49 `Merge agent/prverify3: TASK-366 prverify3: warp-arrival candidate verification, NEEDS-WORK (docs only)` (prverify3)
 - c97dd79f 11-12 12:48 `Merge branch 'main' into prverify3` (-)
@@ -182,6 +185,4 @@
 - d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
 - 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
 - 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
-- 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
-- b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
 <!-- statusgen:end -->
