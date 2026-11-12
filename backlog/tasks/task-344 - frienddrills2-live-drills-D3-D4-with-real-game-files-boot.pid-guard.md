@@ -1,10 +1,11 @@
 ---
 id: TASK-344
 title: 'frienddrills2: live drills D3/D4 with real game files, boot.pid guard'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T22:14:00Z'
+updated_date: '2026-11-12T01:22:00Z'
 labels:
   - container
   - drill
