@@ -131,11 +131,10 @@ const (
 	ExitTown                 // ToTown
 )
 
-// Hooks are optional callbacks for the integration (events, buffs, logging).
+// Hooks are optional callbacks for the integration. OnPhase and OnKill were removed (wiring2): nothing set them, and
+// the run's phases and kill already come back in Result (Phases, Killed) where cmd/d2bot logs them.
 type Hooks struct {
-	OnPhase      func(name string)
 	BeforeAttack func(ctx context.Context, v View, b Mon) error // buffs (no script opens with Static Field: fixstatic)
-	OnKill       func(b Mon)
 }
 
 // Script is one boss as data plus the shared runner (Run).
