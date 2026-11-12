@@ -26,7 +26,7 @@ Scope (user): inventory, stash, equip, identify, drop, gold. NOT combat, movemen
 
 ## 3. Verb set
 
-Wire form: one devctl line, reply `<first line>\nok\n` or `err <code> <why>\n` (the devctl convention, `docs/control_channel.md` in the fork). All item verbs need `--lab-verbs` (same gate as `debug`: lab tooling, off in the friends release, which the legal checklist item 1 requires); without it `item ...` answers `err lab verbs off: ...` and `caps` does not list them.
+Wire form: one devctl line, reply `<first line>\nok\n` or `err <code> <why>\n` (the devctl convention, `docs/control_channel.md` in the fork). All item verbs need the d2d flag `--item-verbs` (own gate since TASK-383; `--lab-verbs` implies it, but `--item-verbs` alone does not enable the cheat `debug` verbs). The friends release starts d2d with neither, which the legal checklist item 1 requires; without the flag `item ...` answers `err lab verbs off: ...` and `caps` does not list them.
 
 | Verb | Reply | Server commands it sends | Stage |
 |---|---|---|---|
@@ -157,14 +157,14 @@ NOT the sandbox container and no deployment: use a throwaway hero on a hidden in
 
 Why this is not a memory write: an item verb writes no game memory and no gameplay state outside the server's handlers; it submits the commands a client would submit. ADR 0014's crutch rule is about memory writes. Two things still need saying: the bot may use a verb in a measured run (the result is what a real client packet produces, with the same rules), and the verb must never offer an action the player cannot do (no free identify, no gold beyond limits, no stash from afar).
 
-DRAFT ADR 0026 (for the user's grill session):
+FINAL DRAFT ADR 0026 (for the user's grill session; the user's go of 2026-11-12 to turn the verbs on for the sandbox hero is the decision it records):
 
-> **0026: Item verbs (private fork)**
-> Status: proposed. Date: 2026-11-12. Decision-makers: user.
+> **0026: Item verbs (d.idle fork)**
+> Status: accepted for the sandbox hero (knob default stays off). Date: 2026-11-12. Decision-makers: user.
 > Context: inventory, stash, equip, identify and drop are driven by cursor clicks; timing and geometry cause failures (items left on the cursor, panels not open).
-> Decision: the d.idle fork may offer `item.*` and `gold.*` devctl verbs behind `--lab-verbs`. A verb plans on a copy with the server's own rule functions and then submits the same server commands a client packet produces. A verb enforces every rule the original enforces and adds none; where the original needs a precondition (stash range, tool, identified, hands) the verb refuses with a named code. Verbs write no memory. The bot uses a verb only when the backend lists it in `caps` and the knob `invdesk.verbs` is on; the click path stays as fallback, as oracle for the conformance suite, and as the only path on Game.exe. Per action the bot records `how=verb|click`.
+> Decision: the d.idle fork may offer `item.*` and `gold.*` devctl verbs behind the d2d flag `--item-verbs` (off by default; not a cheat gate). A verb plans on a copy with the server's own rule functions and then submits the same server commands a client packet produces. A verb enforces every rule the original enforces and adds none; where the original needs a precondition (stash range, tool, identified, hands) the verb refuses with a named code. Verbs write no memory. The bot uses a verb only when the backend lists it in `caps` and the knob `invdesk.verbs` is on; the click path stays as fallback, as oracle for the conformance suite, and as the only path on Game.exe. Per action the bot records `how=verb|click`.
 > Scope: inventory, stash, equipment, identify, drop, gold. Not combat, movement, skills, portals, shopping.
-> Consequences: two code paths must agree (differential suite of `docs/design/item-verbs.md` section 9 is required before the knob defaults on); the friends release keeps lab verbs off, so it keeps the click path; a measured run may use verbs (they are not writes), and its record carries the `how` split.
+> Consequences: two code paths must agree (differential suite of `docs/design/item-verbs.md` section 9 is required before the knob defaults on); the friends release starts d2d without `--item-verbs`, so it keeps the click path; the sandbox hero runs with the flag and the knob `invdesk.verbs` on by a local override only; a measured run may use verbs (they are not writes), and its record carries the `how` split.
 
 DRAFT `docs/decisions.md` lines:
 - "Item verbs (user, 2026-11-12, popup): the fork gets `item.*` / `gold.*` devctl verbs that run the server's own item handlers; bot uses them behind `invdesk.verbs` (default off) with the click path as fallback and oracle. Scope inventory, stash, equip, identify, drop, gold. ADR 0026 (draft in docs/design/item-verbs.md)."

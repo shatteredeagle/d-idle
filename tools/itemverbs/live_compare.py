@@ -110,8 +110,12 @@ def start_bot(work, name, verbs):
 
 
 def view():
-    st, v = api("GET", "/api/inventory")
-    return v if st == 200 and isinstance(v, dict) else {}
+    for _ in range(8):
+        st, v = api("GET", "/api/inventory")
+        if st == 200 and isinstance(v, dict):
+            return v
+        time.sleep(1)
+    return {}
 
 
 def norm(v):
@@ -168,7 +172,7 @@ def scenario():
         out.append(step(name, path, body))
     out.append({"step": "start", "state": norm(view())})
     do("equip cap -> head (empty slot)", "/api/inventory/equip", lambda v: find(v, "Cap", ident=True, nth=0), {"slot": "head"})
-    do("equip full plate -> torso (strength too low)", "/api/inventory/equip", lambda v: find(v, "Full Plate Mail"), {"slot": "torso"})
+    do("equip full plate -> torso (strength too low)", "/api/inventory/equip", lambda v: find(v, "Plate Mail"), {"slot": "torso"})
     do("equip hand axe -> rhand (swap)", "/api/inventory/equip", lambda v: find(v, "Hand Axe", ident=True, nth=0), {"slot": "rhand"})
     do("equip short staff -> rhand (two-hander)", "/api/inventory/equip", lambda v: find(v, "Short Staff"), {"slot": "rhand"})
     do("identify hand axe 1 (scroll)", "/api/inventory/identify", lambda v: find(v, "Hand Axe", ident=False, nth=0))
@@ -177,8 +181,8 @@ def scenario():
     do("drop hand axe (trash)", "/api/inventory/trash", lambda v: find(v, "Hand Axe", ident=True, nth=0), {"confirm": True})
     do("stash cap (pack -> stash)", "/api/inventory/stash", lambda v: find(v, "Cap", ident=True, nth=0))
     do("take cap (stash -> pack)", "/api/inventory/take", lambda v: find(v, "Cap", where="stash"))
-    out.append(step("gold deposit 3000", "/api/inventory/gold", {"op": "deposit", "count": 3000}))
-    out.append(step("gold withdraw 1000", "/api/inventory/gold", {"op": "withdraw", "count": 1000}))
+    out.append(step("gold deposit 300", "/api/inventory/gold", {"op": "deposit", "count": 300}))
+    out.append(step("gold withdraw 100", "/api/inventory/gold", {"op": "withdraw", "count": 100}))
     return out
 
 
@@ -196,7 +200,7 @@ def run_mode(root, cls, mode):
     stage_a(work, cls, "Ivp")
     p = start_bot(work, "Ivp", mode == "verb")
     try:
-        print("goal", ctl("POST", "/api/v1/goals", {"type": "idle", "params": {"minutes": 60}}), ctl("POST", "/api/v1/control/start"), flush=True)
+        print("goal", ctl("POST", "/api/v1/goals", {"type": "farm_area", "params": {"area": "Blood Moor"}}), ctl("POST", "/api/v1/control/start"), flush=True)
         time.sleep(3)
         res = scenario()
     finally:
