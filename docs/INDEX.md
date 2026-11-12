@@ -357,6 +357,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [PUBLISHED.md](fork-publication/PUBLISHED.md): d.idle fork: published (phase 2b)
 - [fresh-character.md](fresh-character.md): Fresh-character soak path (plan-v2 M1)
 - [fresh-start-pace.md](fresh-start-pace.md): Fresh start pace: why the tester hero crawled in Blood Moor (TASK-138) (status: diagnosis and fix 2026-11-07. Tags: V verified live (how stated), S read in code, U unverified. Evidence...)
+- [friend-assets.md](friend-assets.md): Friend pack: inventory of non-original assets (status: current 2026-11-11 (TASK-348). Rule (user, 2026-11-11): prefer replacing a third-party or unverifiable...)
 - [friend-drills.md](friend-drills.md): Friend pack pre-release drills (D1 to D6) (status: RUN 2026-11-11 (D1 to D6 with fake game files; second run the same day with the real game folder: D3 and...)
 - [friend-feed.md](friend-feed.md): Friend feed: D2BOT_UPDATE_FEED (status: BUILT offline (TASK-272, 2026-11-10); never run against a real feed. Design: docs/research/friend-build.md...)
 - [friend-guide.md](friend-guide.md): d.idle friends pack: install guide (Linux) (status: BUILT offline (TASK-274, 2026-11-10); the install script was run once on the worker host in a scratch...)

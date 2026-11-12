@@ -127,6 +127,8 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
 .github/workflows/desktop-electron.yml  credit-runner  electronapp
+README.md  credit-runner  legalfollow
+THIRD_PARTY.md  credit-runner  legalfollow
 apps/desktop-electron/  credit-runner  electronapp
 apps/desktop-electron/  credit-runner  electronmac2
 backlog/merge-lines/agent-uifit.txt  credit-runner  uifit
@@ -186,7 +188,9 @@ docs/first-hour.md  live-agent  firsthour
 docs/first-minutes.md  credit-runner  firstminutes
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
+docs/friend-assets.md  credit-runner  legalfollow
 docs/friend-drills.md  credit-runner  frienddrills
+docs/friend-guide.md  credit-runner  legalfollow
 docs/gear-policy.md  credit-runner  nopins
 docs/inventory-actions.md  credit-runner  campaign1
 docs/inventory-actions.md  credit-runner  stashactions
@@ -200,6 +204,7 @@ docs/live-checks.md  credit-runner  repairtrip
 docs/lootskip.md  credit-runner  lootskip
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/paperdoll-art-build.md  credit-runner  artspeed
+docs/paperdoll-art-build.md  credit-runner  legalfollow
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/potions.md  pro-runner  potiondrink
 docs/probes/fid/batch5.md  credit-runner  fid-batch5
@@ -224,6 +229,7 @@ docs/research/design-brief-v1.md  credit-runner  designbrief
 docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
+docs/research/legal-decisions-2026-11-11.md  credit-runner  legalfollow
 docs/research/merc-gear.md  credit-runner  mercgear
 docs/research/mocks/return.html  credit-runner  returnmock
 docs/research/return-screen.md  credit-runner  returnmock
@@ -465,6 +471,7 @@ tools/emu/d9_*  credit-runner  fid-batch5
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
+tools/friendpack  credit-runner  legalfollow
 tools/friendpack/didle  credit-runner  frienddrills
 tools/tester-pack.sh  credit-runner  testerpack
 tools/uilint  credit-runner  uifit
