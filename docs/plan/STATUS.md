@@ -117,6 +117,7 @@
 | cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
+| lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
 | itemverbs | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/verbs.go`<br>`internal/invdesk/verbs_test.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/env/tuning_invdesk.go`<br>`internal/env/tuning.go`<br>`internal/invdesk/desk.go`<br>`internal/d2dctl/fake/fake.go`<br>`docs/knobs.md` | `fork-branch:fork-only/itemverbs` |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -172,14 +173,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0ddb833c 11-12 11:55 `Merge agent/lockscan: lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365)` (lockscan)
+- 5803c6df 11-12 11:54 `Merge branch 'main' into lockscan` (-)
 - 913089d8 11-12 11:50 `Merge agent/itemverbs: Merge branch 'main' into TASK-367` (itemverbs)
 - 4893add4 11-12 11:49 `Merge branch 'main' into TASK-367` (-)
+- 3634c7ba 11-12 11:29 `Merge branch 'main' into lockscan` (-)
 - 77f18d46 11-12 11:21 `Merge agent/hour1: hour1: first-hour analysis of the fresh Paladin (TASK-364)` (hour1)
 - c45203f5 11-12 10:11 `Merge agent/prpost2: TASK-363 prpost2: CodeRabbit round on PR 445` (prpost2)
 - 81388b05 11-12 10:10 `Merge branch 'main' into prpost2` (-)
 - 8671d3fb 11-12 10:09 `Merge agent/cut010d: 0.1.0 re-cut on the art-clean fork commit (not uploaded)` (cut010d)
 - ae36367f 11-12 09:48 `Merge agent/cut010c: 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361)` (cut010c)
-- af6a4753 11-12 09:45 `Merge origin/main into cut010c` (-)
-- f196438a 11-12 09:22 `Merge agent/cut010b: friends release 0.1.0 re-cut after the lock fix: new pack, checklist record, UPDATE_FEED set (TASK-359)` (cut010b)
-- fe4d3f6a 11-11 23:47 `Merge agent/cut010: first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356)` (cut010)
 <!-- statusgen:end -->
