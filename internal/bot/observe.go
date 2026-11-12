@@ -109,7 +109,8 @@ type observer struct {
 	packFullUntil time.Time         // a trip left the pack full: the full-pack reason is quiet until then
 	lastStat      time.Time
 	lastMinute    time.Time
-	kills         int // counters for the "minute" summary line (since the bot process started, see counters.go)
+	pendNote      func() // NotePosition call deferred until obMu is released (trackAlive)
+	kills         int    // counters for the "minute" summary line (since the bot process started, see counters.go)
 	cInit         bool
 	cName         string
 	cBase, cSaved int64 // per-character kill total from the counters file, and the last value written
@@ -188,8 +189,17 @@ func (r *Runner) pollWith(reuse bool) *d2.Snapshot {
 	}
 	now := r.e.Clock.Now()
 	r.obMu.Lock()
-	defer r.obMu.Unlock()
 	o := &r.ob
+	defer func() {
+		// Lock order: obMu and the navigator's covMu are never nested. NotePosition (covMu, then the onCover callback)
+		// runs only after obMu is released; the roam's done() callback takes obMu, so nesting either way deadlocks.
+		note := o.pendNote
+		o.pendNote = nil
+		r.obMu.Unlock()
+		if note != nil {
+			note()
+		}
+	}()
 	r.healthLocked(now)
 	if err != nil {
 		if o.errSince.IsZero() {
@@ -819,7 +829,9 @@ func (r *Runner) trackAlive(s *d2.Snapshot, now time.Time) {
 	}
 	r.noteTrail(s, now)
 	if m, ok := r.d.Mover.(interface{ NotePosition(int, input.Point) }); ok && !p.InTown() {
-		m.NotePosition(p.Area, input.Point{X: p.X, Y: p.Y}) // roam coverage: ground passed on any detour counts as seen
+		area, pos := p.Area, input.Point{X: p.X, Y: p.Y}
+		// roam coverage: ground passed on any detour counts as seen; run after obMu is released (see observe's caller)
+		o.pendNote = func() { m.NotePosition(area, pos) }
 	}
 	if lm, ok := r.d.Loot.(lootMemory); ok {
 		lm.ObserveGround(s)
