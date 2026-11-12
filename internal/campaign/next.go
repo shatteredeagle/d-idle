@@ -57,6 +57,12 @@ type Opts struct {
 	FarmBudget time.Duration
 	// Checks gives the readiness checks for a chapter's area (nil = none).
 	Checks func(c *Chapter) []Check
+	// Wall gives the safety floor of a chapter from the live knobs (the route and tower guards, the Blood Raven wait
+	// level, the Andariel hold; 0 = none). A wall raises the band's floor and recommended level: bands never send the
+	// hero into a walk the safety rules refuse.
+	Wall func(c *Chapter) int
+	// Zone names the area the bot's own level planner farms in ("" = use the spine's farm table).
+	Zone func() string
 }
 
 // Next is the guided-journey decision for p in state st. Pure: it reads st and never changes it (Observe does).
@@ -71,6 +77,17 @@ func (s *Spine) Next(p Progress, st *HeroState, o Opts) (Decision, error) {
 		c := s.Chapter(id)
 		return c.IsDone(p) || st.Intent(c, p.Class) == Skip
 	}
+	if c := s.Chapter(st.GoNow); c != nil && !c.IsDone(p) {
+		r, err := s.rate(c, p, o)
+		if err != nil {
+			return Decision{}, err
+		}
+		d := Decision{Action: ActGo, Chapter: c.ID, Title: c.Title, Quest: c.Quest, Readiness: r, Why: "your order: " + c.Title + " now"}
+		if r.Band != Comfortable {
+			d.Warn = fmt.Sprintf("going in %s (clvl %d, floor %d, recommended %d)", r.Band, p.Level, r.Floor, r.Recommended)
+		}
+		return d, nil
+	}
 	var ask, target *Decision
 	targetNeed := 0
 	for i := range s.Chapters {
@@ -83,25 +100,14 @@ func (s *Spine) Next(p Progress, st *HeroState, o Opts) (Decision, error) {
 		for _, r := range c.Requires {
 			ok = ok && satisfied(r)
 		}
-		if !ok && st.GoNow != c.ID {
+		if !ok {
 			continue
 		}
-		var checks []Check
-		if o.Checks != nil {
-			checks = o.Checks(c)
-		}
-		r, err := Rate(c, p.Hero, checks)
+		r, err := s.rate(c, p, o)
 		if err != nil {
 			return Decision{}, err
 		}
 		d := Decision{Chapter: c.ID, Title: c.Title, Quest: c.Quest, Readiness: r}
-		if st.GoNow == c.ID {
-			d.Action, d.Why = ActGo, "your order: "+c.Title+" now"
-			if r.Band != Comfortable {
-				d.Warn = fmt.Sprintf("going in %s (clvl %d, floor %d, recommended %d)", r.Band, p.Level, r.Floor, r.Recommended)
-			}
-			return d, nil
-		}
 		atFloor := r.Band == Ready
 		goable := st.GoAt.enough(r.Band)
 		offer := atFloor && !goable && o.FarmBudget > 0 && st.Farm != nil && st.Farm.Chapter == c.ID && o.Now.Sub(st.Farm.Since) >= o.FarmBudget
@@ -149,6 +155,11 @@ func (s *Spine) Next(p Progress, st *HeroState, o Opts) (Decision, error) {
 		target, targetNeed = ask, p.Level+1
 	}
 	z := s.FarmFor(p, satisfied)
+	if o.Zone != nil {
+		if n := o.Zone(); n != "" {
+			z = &FarmZone{Area: n}
+		}
+	}
 	d := *target
 	if ask != nil {
 		d = *ask
@@ -161,6 +172,19 @@ func (s *Spine) Next(p Progress, st *HeroState, o Opts) (Decision, error) {
 	}
 	d.Farm, d.Level = z, targetNeed
 	return d, nil
+}
+
+// rate is Rate with the readiness checks and the safety wall of o.
+func (s *Spine) rate(c *Chapter, p Progress, o Opts) (Readiness, error) {
+	var checks []Check
+	if o.Checks != nil {
+		checks = o.Checks(c)
+	}
+	r, err := Rate(c, p.Hero, checks)
+	if err != nil || o.Wall == nil {
+		return r, err
+	}
+	return r.withWall(o.Wall(c), p.Level), nil
 }
 
 // FarmFor picks the farm zone for p: the lowest open zone with mlvl >= clvl-5 (efficient XP, docs/sme/pace-and-formulas.md

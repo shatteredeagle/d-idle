@@ -1,6 +1,9 @@
 package campaign
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 // Band is how ready the hero is for a chapter. Never a lock: a too-early chapter can still be started with Go now.
 type Band string
@@ -68,6 +71,30 @@ func Rate(c *Chapter, h Hero, checks []Check) (Readiness, error) {
 		}
 	}
 	return r, nil
+}
+
+// withWall raises the floor (and the recommended level) to a safety wall and recomputes the level part of the band.
+func (r Readiness) withWall(wall, lvl int) Readiness {
+	if wall <= r.Floor {
+		return r
+	}
+	r.Floor, r.Recommended = wall, max(r.Recommended, wall)
+	reasons := []string{fmt.Sprintf("safety wall: clvl %d", wall)}
+	for _, s := range r.Reasons {
+		if !strings.HasPrefix(s, "clvl ") {
+			reasons = append(reasons, s)
+		}
+	}
+	switch {
+	case lvl < r.Floor:
+		r.Band = TooEarly
+	case lvl < r.Recommended:
+		r.Band = Ready
+	case r.Band == TooEarly:
+		r.Band = Comfortable
+	}
+	r.Reasons = reasons
+	return r
 }
 
 // GoAt is the player's policy row: the band from which Auto goes.

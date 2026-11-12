@@ -149,6 +149,7 @@ func runLive(ctx context.Context, o options, log *slog.Logger) error {
 	disp.run = runner
 	ref.p.Store(runner)
 	wireGoldFarm(ref, runner)
+	wireJourney(ip.State(), ref, runner, log.Info)
 	m, err := goals.New(goals.Options{Runner: runner, Path: ip.Goals(), Chain: taskChain(runner.LastSnapshot),
 		Logf: func(f string, a ...any) { log.Info("goals", "msg", sprintf(f, a...)) }})
 	if err != nil {
