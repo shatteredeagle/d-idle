@@ -28,11 +28,11 @@ NOT touched, on purpose: Pierce rows (arrows, javelins, Blessed Hammer: their ch
 
 ## Counted differentials (V run, the worker host, tree = upstream `62732598` plus the branch)
 
-`tools/emu/light_pierce.py` runs game.exe's real filter and hit (FUN_005a8730, FUN_005adf10, FUN_005adb00, FUN_0064a470, FUN_0064a400; owner, hostility, stat getters and the damage roll hooked) on the contacts d2d's own Lightning flight produced. `test_light_pierce --light-hit SEED 400` runs d2d's real `Fight::fire` / `Fight::world` / `skill_missile_hits` on packs of 1..6 standing monsters, sizes 1..3, 8 headings, levels 1..20; each seed is 1,192 casts. A cast that differs prints one T line from each side, so casts = T lines / 2.
+`tools/emu/light_pierce.py` runs game.exe's real filter and hit (FUN_005a8730, FUN_005adf10, FUN_005adb00, FUN_0064a470, FUN_0064a400; owner, hostility, stat getters and the damage roll hooked) on the contacts d2d's own Lightning flight produced. `test_light_pierce --light-hit SEED 400` runs d2d's real `Fight::fire` / `Fight::world` / `skill_missile_hits` on packs of 1..6 standing monsters, sizes 1..3, 8 headings, levels 1..20; each seed is 1,192 casts.
 
 | Tree | seed 1 | seed 7 | seed 13 |
 |---|---|---|---|
-| parent (oracle commit only): casts that differ of 1,192 | 44 | 43 | 47 |
+| parent (oracle commit only): casts whose hit totals differ, of 1,192 | 44 | 43 | 47 |
 | with the claim | 0 | 0 | 0 |
 
 Neighbour: `test_next_hit --next-hit 1 400` against `next_hit.py` (NextHit rows, #158): 0 of 598. `test_game_missiles` (the #225 pierce test), `test_game`, `test_monsters`, `test_combat`: rc 0 on the claim.
