@@ -242,6 +242,7 @@ docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
 docs/ui-design-system.md  credit-runner  nopins
 docs/ui-design-system.md  credit-runner  uifit
+docs/upstream/  credit-runner  prprep
 docs/whyline.md  credit-runner  stashactions
 internal/art  credit-runner  artspeed
 internal/bot/drought.go  credit-runner  freshstart
@@ -457,6 +458,7 @@ internal/watch/whyline_test.go  credit-runner  campaign3
 internal/watch/whyline_test.go  credit-runner  repairtrip
 internal/watch/xpreadout_test.go  credit-runner  xpreadout
 tools/emu/d9_*  credit-runner  fid-batch5
+tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/didle  credit-runner  frienddrills

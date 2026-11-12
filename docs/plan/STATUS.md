@@ -116,6 +116,7 @@
 | runstate | proposed | - | `internal/d2dinput/run.go`<br>`internal/d2dinput/controller.go` | - |
 | zealdiff | proposed | - | `tools/emu/zd_*` | - |
 | maphistoryB | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-heat.json`<br>`cmd/d2bot/senseshistory.go`<br>`docs/senses-map.md` | - |
+| prprep | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/missile-last-unit-r3`<br>`fork-branch:fid/cold-enchanted-length-r4`<br>`upstream-pr:lightning-last-unit`<br>`upstream-pr:cold-enchanted-length` |
 | maphistoryC | proposed | - | `internal/watch/web/panels/map`<br>`internal/senses`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/senses-failures.json`<br>`internal/nav/roam.go`<br>`internal/nav/nav.go`<br>`internal/nav/covview_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/fightend.go`<br>`internal/combat/reach.go`<br>`internal/combat/fight.go`<br>`internal/combat/castfirst.go`<br>`cmd/d2bot/senseshistory.go`<br>`cmd/d2bot/senseshistory_test.go`<br>`cmd/d2bot/d2dbackend.go`<br>`cmd/d2bot/live.go`<br>`docs/senses-map.md` | - |
 | maphistoryD | proposed | - | `internal/watch/web/panels/map`<br>`internal/watch/senses.go`<br>`internal/watch/senses_test.go`<br>`internal/watch/testdata/map_panel.js`<br>`internal/watch/testdata/history-export.json`<br>`docs/senses-map.md` | - |
 | campaign1 | in-progress | - | `internal/task/guided.go`<br>`internal/task/guided_test.go`<br>`internal/bot/guided.go`<br>`internal/bot/guided_test.go`<br>`internal/campaign/`<br>`internal/task/campaign.go`<br>`internal/bot/runner.go`<br>`cmd/d2bot/journeywire.go`<br>`cmd/d2bot/behaviors.go`<br>`cmd/d2bot/live.go`<br>`cmd/d2bot/d2dbackend.go`<br>`docs/campaign.md`<br>`docs/inventory-actions.md`<br>`docs/quest-givers.md` | - |
@@ -178,6 +179,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- a5e4aa14 11-11 20:12 `Merge agent/prprep2: TASK-332 round 2: Lightning r3 and Cold r4 drafts, queue, scripts` (prprep2)
+- c2211424 11-11 20:11 `Merge branch 'main' into prprep2` (-)
 - e9c488c4 11-11 20:10 `Merge agent/frienddrills: TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix` (frienddrills)
 - 45e40c4a 11-11 20:09 `Merge branch 'main' into frienddrills` (-)
 - 12450fd1 11-11 20:02 `Merge agent/potionfix: TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state` (potionfix)
@@ -186,6 +189,4 @@
 - fb4f84dc 11-11 20:00 `Merge agent/grillqueue: TASK-342 grill queue: paste-ready decisions and glossary text` (grillqueue)
 - 689873e3 11-11 20:00 `Merge agent/prverify: TASK-340 upstream PR verification: candidates 1 and 2` (prverify)
 - 95423563 11-11 19:58 `Merge branch 'main' into prverify2` (-)
-- ccb33fa2 11-11 19:58 `Merge branch 'main' into grillqueue` (-)
-- b8ffe229 11-11 19:58 `Merge branch 'main' into prverify` (-)
 <!-- statusgen:end -->
