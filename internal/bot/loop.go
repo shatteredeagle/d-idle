@@ -1294,18 +1294,56 @@ func (r *Runner) noteCrossing(target int) {
 	r.crossLog = append(keep, crossStamp{now, target})
 	if same >= borderLoopCrossings {
 		r.crossLog = nil
-		if r.loopTrips == nil {
-			r.loopTrips = map[int]loopStamp{}
-		}
-		l := r.loopTrips[target]
-		if now.Sub(l.at) > borderLoopMemory {
-			l.n = 0
-		}
-		d := borderLoopSkip << min(l.n, borderLoopDoublings)
-		r.loopTrips[target] = loopStamp{n: l.n + 1, at: now}
-		r.skipAreaLocked(target, d, "border-loop")
+		r.tripLoopLocked(target, now)
 	}
 	r.obMu.Unlock()
+}
+
+// tripLoopLocked skips area for the escalating border-loop time (3, 6, 12, 24, 48 min). obMu is held.
+func (r *Runner) tripLoopLocked(area int, now time.Time) {
+	if r.loopTrips == nil {
+		r.loopTrips = map[int]loopStamp{}
+	}
+	l := r.loopTrips[area]
+	if now.Sub(l.at) > borderLoopMemory {
+		l.n = 0
+	}
+	d := borderLoopSkip << min(l.n, borderLoopDoublings)
+	r.loopTrips[area] = loopStamp{n: l.n + 1, at: now}
+	r.skipAreaLocked(area, d, "border-loop")
+}
+
+// Arrival bounce (docs/passagebounce.md): d2d fires the return exit of a cave or passage about 0.2 s after the first move
+// order, whatever its direction (V: 160 of 166 arrivals in Underground Passage 1 in one sandbox window, from both
+// Stony Field and Dark Wood, clicks 2 to 20 subtiles away or toward the exit alike). No click avoids it, so the
+// walk-level step-away cannot help and the planner must stop routing through that area for a while. noteBounce
+// counts stays in an area that ended within bounceMaxStay by going straight back where the character came from, and
+// skips that AREA (not the walk's target: a route that crosses a skipped area is banned, goal.go routeBan) after
+// bounceTrips of them within bounceWindow. It is keyed by the bounced area, so it needs neither side to be the
+// target, works in travel as well as in clearing, and the escalation survives the character changing area.
+const (
+	bounceMaxStay = 4 * time.Second
+	bounceTrips   = 3
+	bounceWindow  = 2 * time.Minute
+)
+
+// noteBounce runs from observe, which holds obMu.
+func (r *Runner) noteBounceLocked(area int, now time.Time) {
+	keep := r.bounceLog[:0]
+	same := 1
+	for _, c := range r.bounceLog {
+		if now.Sub(c.at) < bounceWindow {
+			keep = append(keep, c)
+			if c.target == area {
+				same++
+			}
+		}
+	}
+	r.bounceLog = append(keep, crossStamp{now, area})
+	if same >= bounceTrips {
+		r.bounceLog = nil
+		r.tripLoopLocked(area, now)
+	}
 }
 
 func potionName(a SafetyAction) string {

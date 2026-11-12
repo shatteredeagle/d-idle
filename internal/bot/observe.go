@@ -51,7 +51,8 @@ type observer struct {
 	// goldPickupMin is the field gold picked up since the last minute line.
 	goldPickupMin int64
 	dead          bool
-	portalFrom    int // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
+	arrived       arrival // how the character came into the current area (noteArrival, loop.go noteBounce)
+	portalFrom    int     // the field area the character last went to town from alive: where a town portal read there leads back (0: unknown)
 	lastGood      struct {
 		area int
 		pos  input.Point
@@ -463,6 +464,7 @@ func (r *Runner) observe(s *d2.Snapshot, now time.Time) {
 		if o.area != 0 && !o.dead && r.d.Plan.IsTown(p.Area) && !r.d.Plan.IsTown(o.area) {
 			o.portalFrom = o.area
 		}
+		r.noteArrival(o, p, now)
 		o.area = p.Area
 		o.noteRoute(p.Area)
 		o.mons = map[uint32]monTrack{}
