@@ -221,6 +221,8 @@ type Request struct {
 	// town); Op is "deposit" or "withdraw" on a gold request.
 	Place string `json:"place,omitempty"`
 	Op    string `json:"op,omitempty"`
+	// How an equip was done: "verb" (the backend's item verb) or "click" (the click path); empty for other kinds and old files.
+	How string `json:"how,omitempty"`
 }
 
 func (r Request) kind() string {
@@ -753,6 +755,9 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 			result, err = sv.CainIdentify(ctx)
 		default:
 			err = eq.PlayerEquip(ctx, r.ID, SlotBody[r.Slot])
+			if h, ok := eq.(Howser); ok {
+				r.How = h.LastHow()
+			}
 		}
 
 		d.mu.Lock()
@@ -780,7 +785,7 @@ func (d *Desk) RunPending(ctx context.Context) []string {
 				out = append(out, fmt.Sprintf("%s done: %s", r.kind(), result))
 			default:
 				d.pinLocked(Pin{Slot: r.Slot, ID: r.ID, Name: r.Name, Since: d.c.Now().Unix()})
-				out = append(out, fmt.Sprintf("equip %s -> %s done, slot pinned", r.Name, r.Slot))
+				out = append(out, fmt.Sprintf("equip %s -> %s done, slot pinned%s", r.Name, r.Slot, howSuffix(r.How)))
 			}
 		}
 		d.recentLocked(r)
@@ -1088,4 +1093,12 @@ func mercView(m *status.MercInv, decorate func(status.Item, string) ItemView) *M
 		v.State = MercReady
 	}
 	return v
+}
+
+// howSuffix is " (how=verb)" for the log line, nothing when unknown.
+func howSuffix(how string) string {
+	if how == "" {
+		return ""
+	}
+	return " (how=" + how + ")"
 }
