@@ -70,16 +70,6 @@
           "order": 5
         },
         {
-          "id": "hero-detail",
-          "col": 1,
-          "row": 35,
-          "colSpan": 12,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 6
-        },
-        {
           "id": "gear",
           "col": 1,
           "row": 40,
@@ -258,6 +248,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 24
+        },
+        {
+          "id": "journey",
+          "col": 1,
+          "row": 120,
+          "colSpan": 12,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 25
         }
       ]
     },
@@ -324,16 +324,6 @@
           "band": "stage",
           "collapsed": false,
           "order": 5
-        },
-        {
-          "id": "hero-detail",
-          "col": 7,
-          "row": 22,
-          "colSpan": 6,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 6
         },
         {
           "id": "gear",
@@ -507,13 +497,23 @@
         },
         {
           "id": "alerts",
-          "col": 1,
-          "row": 73,
-          "colSpan": 12,
+          "col": 7,
+          "row": 70,
+          "colSpan": 6,
           "rowSpan": 5,
           "band": "grid",
           "collapsed": false,
           "order": 24
+        },
+        {
+          "id": "journey",
+          "col": 1,
+          "row": 73,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 25
         }
       ]
     },
@@ -580,16 +580,6 @@
           "band": "stage",
           "collapsed": false,
           "order": 5
-        },
-        {
-          "id": "hero-detail",
-          "col": 10,
-          "row": 9,
-          "colSpan": 3,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 6
         },
         {
           "id": "gear",
@@ -770,6 +760,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 24
+        },
+        {
+          "id": "journey",
+          "col": 7,
+          "row": 45,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 25
         }
       ]
     },
@@ -836,16 +836,6 @@
           "band": "stage",
           "collapsed": false,
           "order": 5
-        },
-        {
-          "id": "hero-detail",
-          "col": 10,
-          "row": 9,
-          "colSpan": 3,
-          "rowSpan": 5,
-          "band": "stage",
-          "collapsed": false,
-          "order": 6
         },
         {
           "id": "gear",
@@ -1026,6 +1016,16 @@
           "band": "grid",
           "collapsed": false,
           "order": 24
+        },
+        {
+          "id": "journey",
+          "col": 7,
+          "row": 49,
+          "colSpan": 6,
+          "rowSpan": 5,
+          "band": "side",
+          "collapsed": false,
+          "order": 25
         }
       ]
     },

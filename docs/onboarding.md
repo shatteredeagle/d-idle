@@ -52,5 +52,4 @@ All words are in `data/onboarding/en.json` (`watch.onboarding.texts/1`), embedde
 ## Not done / not proven
 
 - Not looked at in a browser or on a phone; no live bot; the real "was away" case needs a visit older than `AwayAfter`.
-- The Journey step has no strip to open yet (TASK-338): the link is `#journey` and does nothing on a page without it; the step still ticks, and "Mark done" is there.
 - The welcome copy is a first draft in the d.idle voice for the owner to edit.

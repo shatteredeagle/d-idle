@@ -1,0 +1,24 @@
+div []
+  ul.d-list []
+    li [data-state=queued data-trip=home]
+      span.t [] "queued"
+      span.txt [] "Identify Rare Sword in the stash"
+      span.sub [] "waits until the hero is in town"
+      span.sub [] "waiting for a trip home"
+      button.act.act-cancel [data-key=cancel-identify-3] "Cancel"
+    li [data-state=queued data-trip=home]
+      span.t [] "queued"
+      span.txt [] "Move Magic Ring to the stash"
+      span.sub [] "waits until the hero is in town"
+      span.sub [] "waiting for a trip home"
+      button.act.act-cancel [data-key=cancel-stash-1] "Cancel"
+    li [data-state=doing]
+      span.t [] "doing"
+      span.txt [] "Deposit 1000 gold"
+    li [data-state=done]
+      span.t [] "done"
+      span.txt [] "Take Great Helm out of the stash"
+    li [data-state=failed]
+      span.t [] "failed"
+      span.txt [] "Withdraw 50 gold"
+      span.sub [] "no gold mover"

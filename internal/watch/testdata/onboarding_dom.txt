@@ -12,7 +12,7 @@
       div.btnrow
         a.d-btn [welcome-inventory] href=/watch/inventory "Open Inventory"
         a.d-btn [welcome-policy] href=/watch/policy "Open Policy"
-        a.d-btn [welcome-journey] href=#journey "Show the Journey"
+        a.d-btn [welcome-journey] href=#p-journey-title "Show the Journey"
         button.d-btn [welcome-dismiss] "Got it, hide this"
   div.help (hidden)
   div.art (hidden)
@@ -35,12 +35,12 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
           button.d-btn [tick-fight] "Mark done"
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -72,12 +72,12 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
           button.d-btn [tick-fight] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
         li.step done=0
           span.tick "to do"
@@ -118,11 +118,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -164,11 +164,11 @@
           span.hint "Each row is a rule the hero follows. The defaults are safe."
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
         li.step done=1
           span.tick "done"
@@ -199,11 +199,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -238,11 +238,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -277,11 +277,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -313,11 +313,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -360,11 +360,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -396,11 +396,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -436,11 +436,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -476,11 +476,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -512,11 +512,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -551,11 +551,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -587,11 +587,11 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=1
           span.tick "done"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0
@@ -624,12 +624,12 @@
           button.d-btn [tick-policy] "Mark done"
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-fight] href=#video "Watch your first fight"
+          a.d-btn name [step-fight] href=#p-video-title "Watch your first fight"
           span.hint "It ticks by itself after the first kill. Watch the video or the Thoughts feed."
           button.d-btn [tick-fight] "Mark done"
         li.step done=0
           span.tick "to do"
-          a.d-btn name [step-journey] href=#journey "Open the Journey strip"
+          a.d-btn name [step-journey] href=#p-journey-title "Open the Journey strip"
           span.hint "The path through the game, one chapter at a time."
           button.d-btn [tick-journey] "Mark done"
         li.step done=0

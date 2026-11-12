@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/branding/final/header-1280x640.png" alt="d.idle" width="640"></p>
+<p align="center"><img src="assets/branding/out/banner-1280x320.png" alt="d.idle" width="640"></p>
 
 # d2lod-bot (d.idle)
 
@@ -133,3 +133,5 @@ Start with [docs/START-HERE.md](docs/START-HERE.md) (one page: what this is, whe
 
 GPL-3.0-or-later, same as d2d (ADR 0010); see `LICENSE`. Third-party code and provenance: `THIRD_PARTY.md`.
 Diablo II is a trademark of Blizzard Entertainment; this project is not affiliated with or endorsed by Blizzard.
+
+Not affiliated with or endorsed by Blizzard Entertainment. Bring your own legally owned Diablo II 1.14d game files. Offline only (no Battle.net). GPL-3.0-or-later. No warranty.

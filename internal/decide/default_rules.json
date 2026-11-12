@@ -54,6 +54,7 @@
     {"point": "t1.potions.buy", "when": {}, "answer": "best", "knobs": "none for the tier (proposed: town.potionTier); BuyKit buys the plan's preferred tier", "vs": "match"},
     {"point": "t1.quest.imbue", "when": {}, "answer": "weapon", "knobs": "none; no code path reads the answer (TASK-197)", "vs": "match"},
     {"point": "t1.quest.cain", "when": {}, "answer": "do", "knobs": "none; the campaign plan does the chain today (TASK-197)", "vs": "match"},
+    {"point": "t1.journey.floor", "when": {}, "answer": "go", "knobs": "campaign.journeyAskWaitMin: no answer counts as go after the veto window (docs/campaign.md)", "vs": "match"},
     {"point": "t1.gamble", "when": {}, "answer": "save", "knobs": "none (proposed: town.gambleAbove); no gamble code path", "vs": "match"},
 
     {"point": "t2.repeat", "when": {}, "answer": "again", "knobs": "the goal order count (internal/goals/runs.go) decides, not a knob", "vs": "match"},

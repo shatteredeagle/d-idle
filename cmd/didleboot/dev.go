@@ -42,6 +42,25 @@ func signalShim(layout selfupdate.Layout) error {
 	return sendHUP(pid)
 }
 
+// otherShimRunning reports the pid of another running shim named by boot.pid. Drill finding (docs/friend-drills.md):
+// a second `boot` started by hand in a running container overwrote boot.pid, after which check-now answered "pid N is not
+// the boot shim" and the next update was rolled back. cmdline reads /proc/<pid>/cmdline (a parameter for the test).
+func otherShimRunning(layout selfupdate.Layout, self int, cmdline func(pid int) ([]byte, error)) (int, bool) {
+	raw, err := os.ReadFile(pidFile(layout))
+	if err != nil {
+		return 0, false
+	}
+	pid, err := strconv.Atoi(strings.TrimSpace(string(raw)))
+	if err != nil || pid <= 1 || pid == self {
+		return 0, false
+	}
+	c, err := cmdline(pid)
+	if err != nil || !strings.Contains(string(c), "boot") {
+		return 0, false
+	}
+	return pid, true
+}
+
 func devEngine(img Image, layout selfupdate.Layout) (*selfupdate.Engine, string, error) {
 	src, err := selfupdate.DevFromEnv(os.Getenv)
 	if err != nil {

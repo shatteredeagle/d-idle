@@ -153,6 +153,7 @@ type Fun struct {
 	GoldFarm *GoldFarmAPI
 	// Onboarding is the welcome card, first-30-minutes checklist and reconnect data (onboarding.go); always set by NewFun.
 	Onboarding *Onboarding
+	Campaign *CampaignAPI // the guided journey (campaign.go); nil: no routes
 	// OnView is called for every request that passed the viewer's gate (the presence signal for away safety); nil: none.
 	OnView func()
 
@@ -683,6 +684,9 @@ func (f *Fun) mountView(m *http.ServeMux, live http.Handler) {
 	if f.GoldFarm != nil {
 		m.Handle(GoldFarmRoute, f.GoldFarm.Handler())
 	}
+	if f.Campaign != nil {
+		m.Handle(CampaignRoute, f.Campaign.Handler())
+	}
 	if f.Policy != nil {
 		ph := f.Policy.PolicyHandler()
 		for _, p := range PolicyRoutes {
@@ -742,6 +746,9 @@ func (f *Fun) wrapAnswer(base http.Handler, o AnswerOptions) http.Handler {
 	}
 	if f.GoldFarm != nil {
 		m.Handle(GoldFarmRoute, f.GoldFarm.PostHandler(o))
+	}
+	if f.Campaign != nil {
+		m.Handle(CampaignIntentRoute, f.Campaign.PostHandler(o))
 	}
 	if f.Policy != nil {
 		m.Handle(PolicyPostRoute, f.Policy.PolicyAnswerHandler(o))

@@ -40,10 +40,46 @@ assert.strictEqual(P.coverSummary(null), '');
 assert.strictEqual(P.trailWindow('1800000'), 1800000, 'the 30 min window is remembered');
 {
   const hist = [{ ago: 20000, x: 1, y: 1, a: 0 }, { ago: 10000, x: 2, y: 1, a: 1 }, { ago: 8000, x: 3, y: 1, a: 1 }, { ago: 6000, x: 4, y: 1, a: 2 }, { ago: 0, x: 5, y: 1, a: 2 }];
-  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest'];
+  const names = ['walk', 'combat', 'town', 'farm', 'flee', 'rest', 'loot'];
   assert.strictEqual(P.activityShare(P.trailPlan(hist, 60000), names), 'stall 80% \u00b7 combat 20%', 'gaps over 3 s count as stall, the rest by activity');
   assert.strictEqual(P.activityShare(P.trailPlan(hist.map((p, i) => Object.assign({}, p, { ago: 4000 - i * 1000 })), 60000), names), 'combat 50% \u00b7 walk 25% \u00b7 town 25%');
 }
+{
+  const pts = [{ ago: 10000, x: 0, y: 0, a: 0 }, { ago: 6000, x: 4, y: 0, a: 1 }, { ago: 2000, x: 8, y: 0, a: 1 }, { ago: 0, x: 8, y: 2, a: 0 }];
+  assert.strictEqual(JSON.stringify(P.ribbonSegs(pts)), JSON.stringify([{ a: 0, t0: 10000, t1: 6000 }, { a: 1, t0: 6000, t1: 0 }]), 'ribbon: walk, then the two combat samples merged');
+  assert.strictEqual(JSON.stringify(P.posAt(pts, 8000)), JSON.stringify({ x: 2, y: 0 }), 'interpolated between samples');
+  assert.strictEqual(P.posAt(pts, 20000), null, 'before the trail there is no position');
+  assert.strictEqual(P.posAt(pts, 0).y, 2);
+  const smp = [{ ago: 9000, l: 100, m: 80, a: 0, w: 'walk', lv: 5 }, { ago: 3000, l: 62, m: 40, a: 1, w: 'fight', lv: 5, xp: 960 }];
+  assert.strictEqual(P.sampleAt(smp, 1000, 1000, 3200).l, 62, 'nearest sample, same clock');
+  assert.strictEqual(P.sampleAt(smp, 1000, 1000, 40000), null, 'too far from any sample');
+  assert.strictEqual(P.sampleAt(smp, 5000, 1000, 3200).l, 100, 'history fetched later: ages are rebased through the server clocks');
+  assert.strictEqual(P.scrubText(smp[1], ['walk', 'combat'], 3000), '3.0 s ago: combat (fight), life 62%, mana 40%, level 5, xp 960');
+  assert.strictEqual(P.scrubText(null, [], 0), 'now: no sample');
+}
+assert.strictEqual(P.heatMax([[0, 0, 3, 12, 40], [7, 0, 0, 2, 0]], 'time'), 12);
+assert.strictEqual(P.heatMax([[0, 0, 3, 12, 40]], 'off'), 0);
+assert.strictEqual(P.heatAlpha(0, 10), 0, 'empty cells draw nothing');
+assert.ok(P.heatAlpha(10, 10) > P.heatAlpha(1, 10) && P.heatAlpha(10, 10) <= 0.7 + 1e-9, 'brighter where more happened');
+assert.strictEqual(P.heatLegend('kills', 3), 'Heat kills: from 1 to 3 kills per cell (dark to bright).');
+assert.strictEqual(P.heatLegend('off', 3), '');
+{
+  const fe = { k: 'fight', ago: 12000, x: 1, y: 1, f: { sec: 2.1, end: 'clear', kills: 3, damage: 14, min: 88, life: 92, potions: 1, casts: 20, kites: 2, approach: 4 } };
+  const lines = P.fightCardLines(fe);
+  assert.strictEqual(lines[0], 'Fight ended 12 s ago, lasted 2.1 s');
+  assert.strictEqual(lines[1], 'End: clear');
+  assert.strictEqual(lines[2], '3 kills, damage 14 life points, lowest life 88% (ended at 92%)');
+  assert.strictEqual(lines[3], '1 potions, 20 casts, 2 kites, 4 approaches');
+  assert.strictEqual(P.fightCardLines({ k: 'kill' }).length, 0, 'no summary, no card');
+  assert.strictEqual(P.fightAt([fe], 13500), fe, 'a combat sample inside the fight finds it');
+  assert.strictEqual(P.fightAt([fe], 40000), null, 'one far away does not');
+  assert.strictEqual(P.eventText({ k: 'ignore', t: 'Ignoring Fallen', s: 90, ago: 30000 }), 'Ignoring Fallen, 60 s of 90 s left');
+  assert.strictEqual(P.eventShown({ k: 'ignore' }, 'key'), true, 'failures are key events');
+  assert.strictEqual(P.eventShown({ k: 'yield' }, 'key'), false);
+  assert.strictEqual(P.eventShown({ k: 'yield' }, 'all'), true);
+}
+assert.strictEqual(P.exportHref('a b'), '/api/history/export?t=a%20b');
+assert.strictEqual(P.exportHref(''), '/api/history/export');
 assert.strictEqual(P.activityShare({ pts: [] }, []), '', 'no points, no line');
 assert.strictEqual(P.eventShown({ k: 'kill' }, 'key'), true);
 assert.strictEqual(P.eventShown({ k: 'potion' }, 'key'), false, 'potions only in all');
@@ -58,7 +94,7 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   c2.store = (k) => ({ get: () => (k in store ? store[k] : null), set: (v) => { store[k] = v; } });
   const a2 = P.mount(r2, c2);
   const btn = (key) => c2.actions.children.find((b) => b.dataset.key === key);
-  assert.ok(btn('events') && btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
+  assert.ok(btn('heat') && btn('events') && btn('coverage') && btn('trail-30000') && btn('trail-60000') && btn('trail-300000'), 'selector buttons are there');
   a2.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail: tr,
     coverage: { area: 2, cell: 8, cover: 5, total: 2, state: 'roaming', legs: 3, target: [12, 1], cells: [[12, 1, 0], [14, 1, 1]] } });
   assert.strictEqual(btn('coverage').attrs['aria-pressed'], 'false', 'coverage is off by default');
@@ -70,6 +106,24 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   assert.strictEqual(btn('events').textContent, 'Events: all');
   a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, trail_area: 2, ts: 1, trail_legend: ['walk', 'combat'], trail: [{ ago: 5000, x: 9, y: 1 }, { ago: 3000, x: 10, y: 1, a: 1 }, { ago: 0, x: 11, y: 1, a: 1 }], events: [{ ago: 1000, x: 10, y: 1, k: 'kill', t: 'Fallen killed' }] });
   assert.ok(/combat/.test(c2.body.children[4].textContent), 'the share line names combat: ' + c2.body.children[4].textContent);
+  assert.strictEqual(btn('export-json').href, '/api/history/export?t=tok', 'the JSON export is a link to the export route');
+  assert.strictEqual(btn('export-json').download, 'didle-map-history.json');
+  btn('export-png').fire('click'); // a stub canvas has no toBlob: nothing happens, no throw
+  btn('heat').fire('click');
+  assert.strictEqual(store.heat, 'kills', 'the heat layer cycles and is remembered');
+  assert.ok(/hist=1&heat=1/.test(a2.query()), 'the heat cells ride the next poll: ' + a2.query());
+  a2.update({ tiers_unlocked: [1], version: 2, hero: { x: 18, y: 1 }, history: { samples: [], heat: { area: 2, cell: 7, cells: [[14, 0, 3, 5, 0]] } } });
+  assert.ok(/Heat kills: from 1 to 3/.test(c2.body.children[3].textContent), c2.body.children[3].textContent);
+  btn('timeline').fire('click');
+  assert.strictEqual(btn('timeline').attrs['aria-pressed'], 'true', 'the timeline opens');
+  const tlEl = c2.body.children[c2.body.children.length - 1], rng = tlEl.children[1];
+  rng.value = '500'; rng.fire('input');
+  assert.ok(/ago|now/.test(tlEl.children[4].textContent), 'scrubbing writes the readout: ' + tlEl.children[4].textContent);
+  tlEl.children[2].fire('click');
+  assert.strictEqual(tlEl.children[2].textContent, 'Pause');
+  tlEl.children[2].fire('click');
+  btn('timeline').fire('click');
+  assert.strictEqual(tlEl.hidden, true);
   btn('trail-300000').fire('click');
   assert.strictEqual(store.trailwin, '300000', 'the window is remembered');
   assert.strictEqual(btn('trail-300000').attrs['aria-pressed'], 'true');
