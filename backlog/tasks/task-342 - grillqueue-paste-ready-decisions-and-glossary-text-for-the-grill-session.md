@@ -1,11 +1,11 @@
 ---
 id: TASK-342
 title: 'grillqueue: paste-ready decisions and glossary text for the grill session'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-11T21:25:00Z'
-updated_date: '2026-11-11T21:26:00Z'
+updated_date: '2026-11-12T01:06:00Z'
 labels:
   - docs
   - research
