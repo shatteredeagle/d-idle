@@ -1,7 +1,7 @@
 ---
 id: TASK-375
 title: 'warpsandbox: test the d2d warp-arrival fix on the sandbox (devp4)'
-status: Proposed
+status: In Progress
 assignee:
   - credit-runner
 created_date: '2026-11-12T18:39:00Z'
@@ -16,6 +16,7 @@ owns:
   - "docs/probes/warp-sandbox-2026-11-12.md"
 exclusive: []
 contracts: []
+result: "devp4 (c418e235 + warp-arrival fix, fork-only/sandbox-warp f8ea366c) deployed on the play sandbox; 30 min: 2 of 24 arrivals bounced (was 48 of 105); Blood Moor from the Den 1 of 2 (was 27 of 28), N too small; verified on the sandbox, not a gate run"
 ---
 
 ## Description
@@ -28,5 +29,5 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Sandbox runs devp4; bounce rate before/after recorded
+- [x] #1 Sandbox runs devp4; bounce rate before/after recorded
 <!-- AC:END -->
