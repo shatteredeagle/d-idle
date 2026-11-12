@@ -17,6 +17,7 @@ type BotTuning struct {
 	CorpseRetries   int // corpse retrievals attempted per death (softcore); 0 abandons the corpse
 	PortalSettleMs  int // wait in town after chores before returning to the field
 	ClearRadius     int // radius of one clear sweep
+	ExploredPct     int // percent of a level's roam coverage points that must be visited before a clear run counts the area as explored (100 = all, docs/exploredpct.md)
 
 	// Death policy (PLAN.md "Death is normal"; docs/bot.md "Death").
 	CorpseValueMin      int // estimated gold value of the lost gear below which the corpse is abandoned
@@ -112,7 +113,7 @@ type BotTuning struct {
 func DefaultBotTuning() BotTuning {
 	return BotTuning{
 		TickMs: 100, WatchMs: 50, ReactionMs: 0, ResupplyPotions: 2, InvFullPct: 85,
-		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 1, PortalSettleMs: 600, ClearRadius: 30,
+		LevelMargin: 0, LeaveSlack: 0, CorpseRetries: 1, PortalSettleMs: 600, ClearRadius: 30, ExploredPct: 100,
 		CorpseValueMin: 1000, SpiralDeaths: 4, SpiralMinutes: 15, DangerBanMin: 20, StarterBanMin: 3, RepeatSiteBanMin: 30, RepeatSiteEscalate: 1, RepeatSiteWindowMin: 30, RepeatSiteGapSec: 180, CorpseMinValue: 50, NavSkipSec: 150, AreaIdleSec: 60, StallWarnMin: 30, StallExitMin: 30, PauseDeathsPerHour: 8, StalePackHostiles: 4, StalePackMinutes: 10, StalePackMinHP: 5, StalePackMinTier: 2, PotionBurstN: 5, PotionBurstSec: 20, PotionBurstHostiles: 3, PovertyTier: 0, GoldFloor: 2000,
 		PointsRetrySec: 30, GearCheckSec: 60, GearMinGold: 150, GearBudgetPct: 70, GearReserve: 100,
 		SellMinItems: 4, DifficultyBanMin: 60, SavePointMin: 20, HeapLimitMB: 4096, FailsafeRung3Max: 6, FailsafePauseMaxSec: 3600,
@@ -143,6 +144,8 @@ func botKnobs() []Knob {
 			Desc: "Pause in town after chores before going back out."},
 		{Key: "bot.clearRadius", Label: "Clear radius", Unit: "subtiles", Default: 30, Min: 12, Max: 45, HigherIsBetter: true,
 			Desc: "Reach of one clear sweep: how far away a monster is noticed and fought. Smaller means more walking between sweeps; above 30 is the Aggressive stance (UNVERIFIED survival)."},
+		{Key: "bot.exploredPct", Label: "Explored share to move on", Unit: "%", Default: 100, Min: 30, Max: 100, HigherIsBetter: false, NoHandicap: true,
+			Desc: "Share of a zone's roam coverage points the hero must have visited before a clear run calls the zone explored and moves on (the planner then takes the next area or a fresh game). 100 visits every point (the old behaviour). Quest and boss runs always explore everything. Needs a roaming (fully known map) backend; others ignore it. docs/exploredpct.md."},
 		{Key: "bot.corpseValueMin", Label: "Corpse value threshold", Unit: "gold", Default: 1000, Min: 1, Max: 20000,
 			Desc: "Estimated value of the gear on the corpse below which it is abandoned. Higher abandons more."},
 		{Key: "bot.spiralDeaths", Label: "Spiral breaker deaths", Unit: "deaths", Default: 4, Min: 3, Max: 8,
