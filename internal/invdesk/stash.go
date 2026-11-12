@@ -294,7 +294,8 @@ func (d *Desk) runStashBatch(ctx context.Context, out *[]string) (stop bool) {
 			*out = append(*out, fmt.Sprintf("%s %s failed: %v", r.kind(), r.Name, err))
 		} else {
 			r.State, r.Result = StateDone, result
-			*out = append(*out, fmt.Sprintf("%s %s done", r.kind(), r.Name))
+			r.How = d.howFor(r)
+			*out = append(*out, fmt.Sprintf("%s %s done%s", r.kind(), r.Name, howSuffix(r.How)))
 		}
 		d.recentLocked(r)
 	}

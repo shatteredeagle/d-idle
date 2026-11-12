@@ -211,7 +211,7 @@ func TestArrivalBounceSkipsTheBouncedArea(t *testing.T) {
 		g.r.poll()
 	}
 	bounce := func() { // Stony Field -> Underground Passage 1 -> Stony Field in 1.2 s
-		hop(10, 3*time.Second)
+		hop(10, 5*time.Second)
 		hop(4, 1200*time.Millisecond)
 	}
 	bounce()
@@ -246,5 +246,32 @@ func TestArrivalBounceSkipsTheBouncedArea(t *testing.T) {
 	}
 	if len(g2.r.avoid) != 0 {
 		t.Fatalf("long stays tripped: %v", g2.r.avoid)
+	}
+}
+
+// A bounce between a cave mouth and the transit area beside it (Den of Evil and Blood Moor, V log 2026-11-12) skips the
+// cave, never the transit area every route out of the town crosses (docs/hourfix.md).
+func TestBounceAtACaveMouthSkipsTheCaveNotTheTransit(t *testing.T) {
+	g := soakyRig(t, 8)
+	hop := func(area int, stay time.Duration) {
+		g.clock.Sleep(stay)
+		g.w.set(func(w *world) { w.area = area })
+		g.r.poll()
+	}
+	if !g.r.isTransit(2) || g.r.isTransit(8) {
+		t.Fatalf("transit: area 2 %v (want true), area 8 %v (want false)", g.r.isTransit(2), g.r.isTransit(8))
+	}
+	for i := 0; i < 3; i++ { // Den -> Blood Moor -> Den in 1.8 s
+		hop(2, 5*time.Second)
+		hop(8, 1800*time.Millisecond)
+	}
+	if g.r.banned(2) {
+		t.Fatal("the transit area Blood Moor was banned")
+	}
+	if !g.r.banned(8) || g.r.avoidWhy[8] != "border-loop" {
+		t.Fatalf("the cave was not skipped: avoid %v", g.r.avoid)
+	}
+	if b, _ := g.r.routeBan(g.r.latest(), 3); b != 0 {
+		t.Fatalf("route to Cold Plains blocked by area %d", b)
 	}
 }

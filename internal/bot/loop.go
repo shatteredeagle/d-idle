@@ -1328,7 +1328,8 @@ const (
 )
 
 // noteBounce runs from observe, which holds obMu.
-func (r *Runner) noteBounceLocked(area int, now time.Time) {
+func (r *Runner) noteBounceLocked(area, back int, now time.Time) {
+	area = r.bounceCulprit(area, back)
 	keep := r.bounceLog[:0]
 	same := 1
 	for _, c := range r.bounceLog {
@@ -1344,6 +1345,43 @@ func (r *Runner) noteBounceLocked(area int, now time.Time) {
 		r.bounceLog = nil
 		r.tripLoopLocked(area, now)
 	}
+}
+
+// bounceCulprit picks the side of a bounce to count and skip. A transit area (the walk from a town to some plan area
+// crosses it: Blood Moor on the way to Cold Plains) must not be banned for a bounce at a cave mouth beside it: that
+// banned the way out of the town for every route and cost a 13 minute forced re-clear (docs/hourfix.md, V log
+// 2026-11-12T02:49Z). When exactly one of the two areas is a transit the other one (the cave) takes the skip.
+func (r *Runner) bounceCulprit(area, back int) int {
+	if back != 0 && r.isTransit(area) && !r.isTransit(back) && !r.d.Plan.IsTown(back) {
+		return back
+	}
+	return area
+}
+
+// isTransit says a walk from the act's town to another plan step area passes through area. Data comes from the plan
+// steps and the mover's exit graph, no area ids in code.
+func (r *Runner) isTransit(area int) bool {
+	if r.d.Mover == nil || r.d.Plan == nil || r.d.Plan.IsTown(area) {
+		return false
+	}
+	for _, steps := range r.d.Plan.Steps {
+		for _, st := range steps {
+			town := r.d.Plan.Towns[r.d.Plan.Act(st.Area)]
+			if st.Area == area || town == 0 || r.d.Plan.IsTown(st.Area) {
+				continue
+			}
+			hops, err := r.d.Mover.Route(town, st.Area)
+			if err != nil || len(hops) < 2 {
+				continue
+			}
+			for _, h := range hops[:len(hops)-1] {
+				if h == area {
+					return true
+				}
+			}
+		}
+	}
+	return false
 }
 
 func potionName(a SafetyAction) string {

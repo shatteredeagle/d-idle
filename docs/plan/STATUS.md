@@ -117,7 +117,10 @@
 | cutfix | proposed | - | `tools/friendpack/checklist.sh` | - |
 | cut010d | proposed | - | `docs/releases/0.1.0.md`<br>`docs/friend-checklist-0.1.0.md` | - |
 | prpost2 | proposed | - | `docs/upstream/`<br>`tools/emu/pp_*` | `fork-branch:fid/cold-enchanted-length-r5`<br>`upstream-pr:cold-enchanted-length` |
+| lockscan | proposed | - | `docs/locks.md`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/lockorder_test.go`<br>`internal/bot/lockguard_test.go` | - |
+| hourfix | proposed | - | `docs/hourfix.md`<br>`internal/bot/loop.go`<br>`internal/bot/goal.go`<br>`internal/bot/leveling.go`<br>`internal/bot/task.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/runner.go`<br>`internal/plandata/progression-normal.json`<br>`docs/plan/data/progression-normal.json`<br>`internal/env/tuning_bot.go`<br>`internal/env/tuning_loot.go`<br>`docs/knobs.md` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
+| itemverbs2 | proposed | - | `docs/design/item-verbs.md`<br>`internal/invdesk/mover.go`<br>`internal/invdesk/mover_test.go`<br>`internal/invdesk/desk.go`<br>`internal/invdesk/stash.go`<br>`internal/invdesk/identify.go`<br>`internal/d2dctl/item_verbs.go`<br>`internal/d2dctl/item_verbs_test.go`<br>`internal/town/town.go`<br>`internal/town/playerid.go`<br>`internal/town/playerstash.go`<br>`cmd/d2bot/invverbs.go`<br>`cmd/d2bot/d2dwire.go`<br>`tools/itemverbs/diff_d2d.py`<br>`tools/itemverbs/compare_items.py` | `fork-branch:fork-only/itemverbs` |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
@@ -171,14 +174,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
-- c45203f5 11-12 10:11 `Merge agent/prpost2: TASK-363 prpost2: CodeRabbit round on PR 445` (prpost2)
-- 81388b05 11-12 10:10 `Merge branch 'main' into prpost2` (-)
-- 8671d3fb 11-12 10:09 `Merge agent/cut010d: 0.1.0 re-cut on the art-clean fork commit (not uploaded)` (cut010d)
-- ae36367f 11-12 09:48 `Merge agent/cut010c: 0.1.0: feed SOURCE.txt hosts source tarballs, app-assets --source-text (TASK-361)` (cut010c)
-- af6a4753 11-12 09:45 `Merge origin/main into cut010c` (-)
-- f196438a 11-12 09:22 `Merge agent/cut010b: friends release 0.1.0 re-cut after the lock fix: new pack, checklist record, UPDATE_FEED set (TASK-359)` (cut010b)
-- fe4d3f6a 11-11 23:47 `Merge agent/cut010: first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356)` (cut010)
-- 664ac37b 11-11 23:47 `Merge branch 'main' into cut010` (-)
-- 96a6eed4 11-11 23:33 `Merge agent/lockfix: lockfix: deadlock covMu/obMu (TASK-358)` (lockfix)
-- 8925fad2 11-11 23:15 `Merge agent/skilltrees2: Skills page: layout and lines from grid constants, no measuring (TASK-357)` (skilltrees2)
+- da2a6565 11-12 12:15 `Merge agent/itemverbs2: Merge branch 'main' into TASK-371` (itemverbs2)
+- 116de9a0 11-12 12:14 `Merge branch 'main' into TASK-371` (-)
+- d5378727 11-12 12:10 `Merge agent/mine1: Merge branch 'main' into TASK-370` (mine1)
+- 42bf841c 11-12 12:10 `Merge agent/mine2: Merge branch 'main' into TASK-369` (mine2)
+- 6a56420b 11-12 12:08 `Merge branch 'main' into TASK-370` (-)
+- 886c3e17 11-12 12:08 `Merge branch 'main' into TASK-369` (-)
+- b3ad7479 11-12 12:02 `Merge agent/hourfix: hourfix: first-hour time sinks (bounce ban scope, idle clear knob, claimed Den, melee Cold Plains at clvl 4, poorMinSell 20)` (hourfix)
+- f11b1a65 11-12 12:01 `Merge branch 'main' into TASK-368` (-)
+- 0ddb833c 11-12 11:55 `Merge agent/lockscan: lock audit: obMu freed from Health.Step and OnSnapshot, docs/locks.md, guard test (TASK-365)` (lockscan)
+- 5803c6df 11-12 11:54 `Merge branch 'main' into lockscan` (-)
 <!-- statusgen:end -->

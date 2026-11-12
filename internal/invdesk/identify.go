@@ -354,7 +354,8 @@ func (d *Desk) runIdentifyBatch(ctx context.Context, sv Services, out *[]string)
 			*out = append(*out, fmt.Sprintf("identify %s failed: %v", r.Name, err))
 		} else {
 			r.State = StateDone
-			*out = append(*out, fmt.Sprintf("identify %s done", r.Name))
+			r.How = d.howFor(r)
+			*out = append(*out, fmt.Sprintf("identify %s done%s", r.Name, howSuffix(r.How)))
 		}
 		d.recentLocked(r)
 	}

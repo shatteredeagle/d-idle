@@ -357,16 +357,20 @@ func TestFallbackTableLevels(t *testing.T) {
 	}
 }
 
-// TASK-39: with Blood Moor held back and the Den under its caster floor, a clvl 4 character (caster or melee, whatever
-// the kit) is not sent to Cold Plains (enter 5, early_gap 1); clvl 5 may go.
+// TASK-39: with Blood Moor held back and the Den under its caster floor, a clvl 4 caster (whatever the kit) is not sent
+// to Cold Plains (enter 5, early_gap 1); a melee class is (melee_enter_clvl 4, hourfix); clvl 5 may go.
 func TestPickColdPlainsNotBelowEntryWhenBloodMoorHeld(t *testing.T) {
 	p, _ := LoadPlan("")
 	act1 := map[int]bool{1: true}
 	held := map[int]bool{2: true, 8: true}
 	for _, melee := range []bool{false, true} {
 		for _, kit := range []bool{false, true} {
-			if s, ok := p.Pick("normal", 4, PickOptions{Acts: act1, Exclude: held, FullKit: kit, Melee: melee, Floor: 4}); ok {
-				t.Errorf("melee %v kit %v clvl 4: got %+v, want nothing eligible", melee, kit, s)
+			s4, ok4 := p.Pick("normal", 4, PickOptions{Acts: act1, Exclude: held, FullKit: kit, Melee: melee, Floor: 4})
+			if melee && (!ok4 || s4.Area != 3) { // hourfix: melee_enter_clvl 4 for Cold Plains
+				t.Errorf("melee kit %v clvl 4: got %+v %v, want Cold Plains", kit, s4, ok4)
+			}
+			if !melee && ok4 {
+				t.Errorf("caster kit %v clvl 4: got %+v, want nothing eligible", kit, s4)
 			}
 			if s, ok := p.Pick("normal", 5, PickOptions{Acts: act1, Exclude: held, FullKit: kit, Melee: melee, Floor: 4}); !ok || s.Area != 3 {
 				t.Errorf("melee %v kit %v clvl 5: got %+v %v, want Cold Plains", melee, kit, s, ok)
@@ -376,5 +380,28 @@ func TestPickColdPlainsNotBelowEntryWhenBloodMoorHeld(t *testing.T) {
 	// held only by a bounded avoid (Cleared set without Blood Moor) still counts for a step with its own gap
 	if s, ok := p.Pick("normal", 4, PickOptions{Acts: act1, Exclude: held, Cleared: map[int]bool{}, FullKit: true, Floor: 4}); ok {
 		t.Errorf("clvl 4 with Blood Moor avoided: got %+v", s)
+	}
+}
+
+// docs/hourfix.md: a melee class (Paladin, Barbarian) moves on to Cold Plains at clvl 4 once the Den is done or held; a
+// caster keeps entering it at clvl 5 (the Den floors of the casters are 5 and 6, so they reach it anyway).
+func TestPickColdPlainsAtClvl4ForMeleeAfterTheDen(t *testing.T) {
+	p, _ := LoadPlan("")
+	act1 := map[int]bool{1: true}
+	denDone := map[int]bool{8: true}
+	for _, c := range []struct {
+		class string
+		level int
+		melee bool
+		want  int
+	}{
+		{"paladin", 4, true, 3}, {"barbarian", 4, true, 3},
+		{"sorceress", 4, false, 2}, {"sorceress", 5, false, 3},
+		{"paladin", 3, true, 2},
+	} {
+		s, ok := p.Pick("normal", c.level, PickOptions{Acts: act1, Exclude: denDone, FullKit: true, Melee: c.melee})
+		if !ok || s.Area != c.want {
+			t.Errorf("%s clvl %d: got %+v %v, want %d", c.class, c.level, s, ok, c.want)
+		}
 	}
 }

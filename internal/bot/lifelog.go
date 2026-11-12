@@ -54,7 +54,7 @@ func (r *Runner) noteArrival(o *observer, p *d2.Player, now time.Time) {
 			r.e.Log.Info("arrival bounce", "area", o.area, "name", r.areaName(o.area), "back", p.Area,
 				"stayMs", stay.Milliseconds(), "arrivedAt", prev.pos, "leftFrom", o.pos)
 			o.bounces++
-			r.noteBounceLocked(o.area, now)
+			r.noteBounceLocked(o.area, p.Area, now)
 		}
 	}
 	o.arrivals++
