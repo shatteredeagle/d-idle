@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- first friends release 0.1.0 built and verified (not published): pack, signed set, checklist record, release doc, image version stamp and nav-trace fixes (TASK-356) <!--sg:agent/cut010-->
 - lockfix: deadlock covMu/obMu (TASK-358) <!--sg:agent/lockfix-->
 - Skills page: layout and lines from grid constants, no measuring (TASK-357) <!--sg:agent/skilltrees2-->
 - Skills page: read-only class skill trees, tooltips, points, 501 allocate stub (TASK-355) <!--sg:agent/skilltrees-->
