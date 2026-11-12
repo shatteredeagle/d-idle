@@ -937,6 +937,9 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 				return a, true
 			}
 		}
+		if l.stepArea == areaDenOfEvil && p.Difficulty == d2.Normal && r.questClaimed("den_of_evil") {
+			l.stepArea = 0 // the cached Den pick outlived its claim: 2026-11-12 17:34 walked back into the Den after the reward (hourfix2)
+		}
 		if l.stepArea != 0 && l.stepLevel == p.Level && !l.cleared[l.stepArea] && !r.banned(l.stepArea) {
 			return l.stepArea, true
 		}

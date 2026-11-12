@@ -1,10 +1,11 @@
 ---
 id: TASK-379
 title: 'wiring: audit that every shipped feature is reachable in the production wiring'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T20:13:00Z'
+updated_date: '2026-11-12T20:34:00Z'
 labels:
   - bot
   - bug
