@@ -233,8 +233,6 @@ docs/ui-design-system.md  credit-runner  nopins
 docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prprep
-docs/upstream/drafts/warp-arrival.md  credit-runner  prwarp
-docs/upstream/pr-queue.md  credit-runner  prwarp
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
 internal/bot/areaskip_test.go  credit-runner  passagebounce
@@ -432,7 +430,6 @@ internal/watch/whyline_test.go  credit-runner  repairtrip
 tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2
 tools/emu/pp_*  credit-runner  prprep
-tools/emu/pw  credit-runner  prwarp
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/checklist.sh  credit-runner  cut010b

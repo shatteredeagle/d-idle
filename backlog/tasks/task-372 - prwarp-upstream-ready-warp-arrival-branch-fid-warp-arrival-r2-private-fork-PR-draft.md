@@ -1,10 +1,13 @@
 ---
 id: TASK-372
-title: 'prwarp: upstream-ready warp arrival branch fid/warp-arrival-r2 (private fork), PR draft'
-status: In Progress
+title: >-
+  prwarp: upstream-ready warp arrival branch fid/warp-arrival-r2 (private fork),
+  PR draft
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T18:07:00Z'
+updated_date: '2026-11-12T18:59:00Z'
 labels:
   - d2d
   - upstream-pr
