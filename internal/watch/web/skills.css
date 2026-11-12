@@ -28,7 +28,7 @@
   .sk-tile[data-state="locked"] img { opacity: .35; filter: grayscale(1); }
   /* The allocation affordance: only when the page was told allocation is on (never today). */
   .sk-tile[data-act="1"] { cursor: pointer; }
-  .sk-tile[data-act="1"]:hover::before, .sk-tile[data-act="1"]:focus-visible::before { content: "+"; position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: rgb(0 0 0 / .55); color: var(--d-good); font: 700 1.6rem/1 var(--d-font-body); }
+  .sk-tile[data-act="1"]:hover::before, .sk-tile[data-act="1"]:focus-visible::before { content: "+"; position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: var(--d-tip-bg); color: var(--d-good); font: 700 1.6rem/1 var(--d-font-body); }
   .sk-tip { text-align: start; }
   .sk-tip .tip-name { text-align: center; }
   .sk-tip .tip-line[data-k="bad"] { color: var(--d-tip-bad); }
