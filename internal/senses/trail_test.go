@@ -113,6 +113,11 @@ func TestCoverageSpansWholeZone(t *testing.T) {
 	if err := p.Observe(lm, "T", d2map.Point{X: 1, Y: 1}); err != nil {
 		t.Fatal(err)
 	}
+	for x := 0; x < 900; x += fogBlock { // the whole zone explored: this test is about the extent, not the fog
+		for y := 0; y < 300; y += fogBlock {
+			p.seen[1][block{int32(floorDiv(x)), int32(floorDiv(y))}] = struct{}{}
+		}
+	}
 	build := func(n int) [][3]int { // a 40-column synthetic level, points sorted by x then y like nav.samplePoints
 		var cs [][3]int
 		for i := 0; i < n; i++ {

@@ -136,4 +136,6 @@ assert.strictEqual(P.eventText({ k: 'potion' }), 'potion');
   const a3 = P.mount(bad.root, bad.c);
   a3.update({ tiers_unlocked: [1], version: 2, map: cur, hero: { x: 18, y: 1 }, trail: tr });
 }
+assert.strictEqual(P.coverSummary({ state: 'roaming', total: 100, drawn: 10, hidden: 90, seen: 3, failed: 0, legs: 2, cells: [[0, 0, 0]] }), 'roam: 3/100 points seen, 0 failed, leg 2, 90 not explored yet');
+assert.strictEqual(P.coverSummary({ state: 'roaming', total: 100, drawn: 0, hidden: 100, seen: 0, failed: 0, legs: 0, cells: [] }), 'roam: 0/100 points seen, 0 failed, leg 0, 100 not explored yet');
 console.log('ok');
