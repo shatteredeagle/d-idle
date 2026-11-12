@@ -107,6 +107,7 @@
 | ordersux2 | deferred | - | `internal/watch/orders.go`<br>`internal/watch/mapview.go`<br>`internal/watch/ordersmap_test.go`<br>`docs/orders-slice2.md` | - |
 | passagebounce | proposed | - | `internal/bot/loop.go`<br>`internal/bot/lifelog.go`<br>`internal/bot/observe.go`<br>`internal/bot/runner.go`<br>`internal/bot/areaskip_test.go`<br>`docs/passagebounce.md` | - |
 | dpwire | deferred | - | `docs/dp-wiring.md` | - |
+| decomp12 | proposed | - | `docs/probes/fid/fid-warp-arrival.md`<br>`tools/emu/d12_arrive_probe.cpp`<br>`tools/emu/d12_build.sh`<br>`tools/emu/d12_fix.py`<br>`tools/emu/d12_fixrun.sh`<br>`tools/emu/d12_run.sh`<br>`tools/emu/d12_setup.sh`<br>`tools/emu/d12_commitmsg.txt` | - |
 | t0fight | deferred | - | `docs/probes/t0fight.md`<br>`internal/drill/t0fight.go`<br>`internal/drill/t0fight_test.go`<br>`cmd/d2drill/t0fight_lab.go` | - |
 | ladder-t1 | deferred | - | `docs/ladder-t1.md` | - |
 | ladder-t2 | deferred | - | `docs/ladder-t2.md` | - |
@@ -162,6 +163,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- b2dc041e 11-11 20:42 `Merge agent/decomp12: TASK-350 decomp: warp arrival position and exit trigger arming (d2d arrival bounce)` (decomp12)
+- 26a166b9 11-11 20:41 `Merge branch 'main' into decomp12` (-)
 - debde062 11-11 20:40 `Merge agent/driftfix: driftfix: backlog true-up of drift rows A/B/D` (driftfix)
 - f21d133b 11-11 20:40 `Merge branch 'main' into driftfix` (-)
 - 7b780252 11-11 20:38 `Merge agent/driftfix: sync main` (driftfix)
@@ -170,6 +173,4 @@
 - a71be511 11-11 20:31 `Merge agent/branding: TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons` (branding)
 - 4913eeac 11-11 20:30 `Merge branch 'main' into branding` (-)
 - b9d88065 11-11 20:26 `Merge agent/legalfollow: TASK-348 legal follow-ups: licence checks, pack checklist tool, disclaimers` (legalfollow)
-- 36c31d1c 11-11 20:26 `Merge branch 'main' into legalfollow` (-)
-- 78090ba8 11-11 20:18 `Merge agent/herounify: TASK-346 herounify: one Hero tile (stats merged into the Hero card)` (herounify)
 <!-- statusgen:end -->

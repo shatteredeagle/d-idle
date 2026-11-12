@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Research: warp arrival spot trace and differential (d2d lands a subtile off game.exe on blocked warp units); no PR yet. <!--sg:agent/decomp12-->
 - driftfix: backlog true-up of drift rows A/B/D <!--sg:agent/driftfix-->
 - TASK-349 passagebounce: per-area arrival-bounce counter trips the escalating skip (Passage, Crypt, caves), arrival/bounce log lines <!--sg:agent/passagebounce-->
 - TASK-347 branding: original pixel-art brand assets made with Aseprite, replacing third-party icons <!--sg:agent/branding-->

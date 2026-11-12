@@ -1,3 +1,0 @@
-BACKLOG: TASK-350 decomp12: warp arrival spot differs from game.exe (nearest_free vs FUN_0064dea0, V run), fix candidate on the private fork; arrival bounce cause still U (docs/probes/fid/fid-warp-arrival.md)
-INDEX: docs/probes/fid/fid-warp-arrival.md: warp arrival position and exit trigger arming, d2d against game.exe (decomp12)
-CHANGELOG: Research: warp arrival spot trace and differential (d2d lands a subtile off game.exe on blocked warp units); no PR yet.
