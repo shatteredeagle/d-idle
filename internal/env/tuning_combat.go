@@ -22,10 +22,11 @@ type CombatTuning struct {
 	CrowdAbandonN  int // hostiles within 8 subtiles on a walk: abandon the walk, retreat 20+ subtiles, then portal
 
 	// Potion timing.
-	PotionGapMs int // minimum gap between healing/mana potions (the game's own recovery lasts about a second)
-	RejuvGapMs  int // minimum gap between rejuvenation potions
-	ReactionMs  int // delay between noticing a survival event and acting on it
-	PollMs      int // loop tick: how often the fight loop re-reads the game
+	PotionGapMs        int // minimum gap between healing/mana potions (a potion heals over 5 to 10 s, see PotionEmergencyPct)
+	PotionEmergencyPct int // below this life % a healing potion is drunk even while one is still working (a same-tier drink only extends the effect, docs/potions.md)
+	RejuvGapMs         int // minimum gap between rejuvenation potions
+	ReactionMs         int // delay between noticing a survival event and acting on it
+	PollMs             int // loop tick: how often the fight loop re-reads the game
 
 	// Targeting and aim.
 	TargetQuality int // 100 = always the best target; lower = more often the nearest one, and occasional lost ticks
@@ -84,7 +85,7 @@ func DefaultCombatTuning() CombatTuning {
 	return CombatTuning{
 		DrinkLifePct: 55, DrinkRejuvPct: 35, DrinkRejuvBossPct: 50, ChampionEarlyPct: 10, ChickenPct: 25, ChickenHellPct: 30, DrinkManaPct: 25, TownPotionMin: 2,
 		CrowdN: 8, CrowdAdjacent: 8, CrowdPortalPct: 70, CrowdDrinkPct: 65, CrowdAbandonN: 15,
-		PotionGapMs: 1000, RejuvGapMs: 300, ReactionMs: 120, PollMs: 60,
+		PotionGapMs: 1000, PotionEmergencyPct: 30, RejuvGapMs: 300, ReactionMs: 120, PollMs: 60,
 		TargetQuality: 100, RangeMargin: 3, ClearRadius: 40, FightRadius: 22, MaxTargetSec: 45, NoProgressSec: 12, ClearMaxSec: 180,
 		CastGapMs: 650, CastPerSkill: 1, CastMarginMs: 90, CastFCR: 0, LowManaWaitMs: 700, StaticCasts: 4, StaticCastsBR: 0, StaticFloorNorm: 25, StaticFloorNM: 33, StaticFloorHell: 50, NovaManaFloor: 25,
 		KiteEnabled: 1, KiteDistance: 10, KiteLifePct: 70, KiteMaxSteps: 6, KiteRetreat: 12, DodgeRadius: 4, MissileDodge: 0, ThreatDodge: 0, DodgeReactMs: 400, ShooterKillMin: 0, RunnerGuard: 1, StandOK: 0, CurseRetreatPct: 60, MaxApproaches: 12, ReachSec: 15, IgnoreMemorySec: 90,
@@ -112,6 +113,7 @@ func combatKnobs() []Knob {
 		k("crowdAdjacent", "Melee reach for adjacent", "subtiles", "A hostile within this distance (centre to centre) is in melee reach and counts as adjacent: three or more make a town portal cast a non-escape (potion, else leave the game) and a crowd 'surrounded'. Default 8 from the live zombie reads (drills11), UNVERIFIED for other monsters.", float64(d.CrowdAdjacent), 3, 12, false),
 		k("crowdAbandonN", "Crowd abandon size", "count", "Hostiles within 8 subtiles on a travel or quest walk that make the bot abandon the walk at once, retreat 20+ subtiles and open a portal. 0 turns it off.", float64(d.CrowdAbandonN), 0, 30, false),
 		k("potionGapMs", "Potion gap", "ms", "Minimum time between healing or mana potions.", float64(d.PotionGapMs), 900, 3000, false),
+		k("potionEmergencyPct", "Potion emergency line", "%", "Below this life percent a healing potion is drunk even while an earlier one is still working. Above it the bot drinks again only for a higher tier: the game adds a same-tier drink to the running effect (longer, not faster; fid-potions.md Q5).", float64(d.PotionEmergencyPct), 10, 50, true),
 		k("rejuvGapMs", "Rejuvenation gap", "ms", "Minimum time between rejuvenation potions.", float64(d.RejuvGapMs), 250, 1500, false),
 		k("reactionMs", "Reaction time", "ms", "Delay before the bot acts on a survival event.", float64(d.ReactionMs), 40, 700, false),
 		k("pollMs", "Fight loop tick", "ms", "How often the fight loop looks at the game.", float64(d.PollMs), 30, 400, false),

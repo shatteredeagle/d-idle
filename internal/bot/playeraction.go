@@ -100,8 +100,11 @@ func (r *Runner) noteDelayed(now time.Time, why string) {
 // playerKinds is the optional part of PlayerGear the Why line and the errand trip read.
 type playerKinds interface {
 	NextKind() string    // kind of the request that runs first ("identify", "equip", ...)
-	ErrandsWaiting() int // queued town errands (buy scrolls, Cain)
+	ErrandsWaiting() int // queued town errands (buy scrolls, Cain, stash jobs)
 }
+
+// errandKinder is the optional part that names the waiting errand for the Why line (stash jobs say "stash").
+type errandKinder interface{ ErrandKind() string }
 
 func nextKind(pg PlayerGear) string {
 	if k, ok := pg.(playerKinds); ok {
@@ -116,7 +119,7 @@ func nextKind(pg PlayerGear) string {
 const errandBackoff = 5 * time.Minute
 
 // errandTripStep takes the hero home at the next safe moment when the player queued a town errand (buy identify scrolls,
-// Cain) and the hero is in the field. It comes right after the player's own actions in runGoal, so it outranks the routine
+// Cain, stash moves and the identify of stash items) and the hero is in the field. It comes right after the player's own actions in runGoal, so it outranks the routine
 // chores. Once in town the same playerActionStep runs the errand. The walk home is Town.ToTown, as the claim trip's.
 func (r *Runner) errandTripStep(ctx context.Context, snap *d2.Snapshot, c control) bool {
 	k, ok := r.d.PlayerGear.(playerKinds)
@@ -130,7 +133,11 @@ func (r *Runner) errandTripStep(ctx context.Context, snap *d2.Snapshot, c contro
 	if _, ok, _ := r.safeMoment(snap); !ok {
 		return false
 	}
-	r.setWhy(WhyPlayerItems, "what", "errand")
+	what := "errand"
+	if ek, ok := r.d.PlayerGear.(errandKinder); ok && ek.ErrandKind() != "" {
+		what = ek.ErrandKind()
+	}
+	r.setWhy(WhyPlayerItems, "what", what)
 	if r.do(ctx, c, StateResupplying, "Going to town for the errand you asked for", sec(r.cfg.TownTimeoutSec), "errand trip", r.d.Town.ToTown) {
 		return true
 	}

@@ -1,0 +1,44 @@
+# Upstream PR queue (d2d fidelity fixes against game.exe 1.14d)
+
+> status: current, 2026-11-11 (card TASK-332, agent prprep). Audit of every local candidate against upstream main `b6b59ae9` (2026-11-11). Nothing in this file has been posted. Standing rules: memory d2-pr-proof-standard (differential against the original code, reproducible commands, independent Opus verifier BEFORE posting), at most 3 open upstream PRs, one subsystem per batch, CodeRabbit inline replies only, never answer humans.
+
+Open upstream PRs of ours today: none (the last ones, #242 load life and mana and #245 respawn refill, merged 2026-11-08; the palimpsest trace PRs are not tracked here). So all 3 slots are free. Open PRs by others that touch our files: #426 (`fight/missiles.cpp`, Holy Bolt heals a pet), #371 (`rules/uniques.hpp`), #401 (`game/ai.cpp`), #301 (`fight/tick.cpp`); rebase on whichever merges first.
+
+## 1. Ranked queue
+
+| Rank | Candidate | Branch (private fork remote) | Tag | Readiness | What is still missing |
+|---|---|---|---|---|---|
+| 1 | Lightning (and the other srvdofunc 1 rows with LastCollide, no NextHit, no Pierce: Lightning Fury, Inferno, Bone Spear, Arctic Blast) one unit a frame, skips the last unit (FUN_005ae1f0, FUN_005a8730) | `fid/missile-last-unit-r3` head `5effaf98` on upstream `62732598` | V run: parent 44 / 43 / 47 of 1,192 casts differ (seeds 1 / 7 / 13), claim 0 on all; `test_next_hit` 0 of 598; Bone Spear 12 T lines before, 0 after (verifier) | READY FOR THE VERIFIER'S SECOND PASS (r2 was NEEDS-WORK: scope, applied). Draft: [drafts/lightning-last-unit.md](drafts/lightning-last-unit.md) | residual: unit order across the subtiles of one frame (claim 18 T lines vs 37 on the parent, seed 1); Pierce and srvdofunc 3 rows untouched; presubmit on r3 before posting |
+| 2 | Cold Enchanted chills for level x 5 + 100 frames (FUN_005a1c70; level clamp [1, 110] = MonLvl rows) | `fid/cold-enchanted-length-r4` head `30713b60` on upstream `62732598` | V run: Cold-only cases 7,869 mismatches before, 0 after (seed 1, 157,618 cases); 4,745 before, 0 after (seed 9); `test_boss_cold_length` (real `make_boss`) fails on the parent | READY FOR THE VERIFIER'S SECOND PASS (r3: the oracle commit did not build alone, fixed). Draft: [drafts/cold-enchanted-length.md](drafts/cold-enchanted-length.md) | presubmit on r4 before posting; two-element uniques and minions differ separately |
+| 3 | A saved purse or stash over its cap is 0 on entering a game (FUN_0056b180, FUN_0053ff00) | `fid/load-gold-clamp-r1` head `5db6a582` (one commit on `b6b59ae9`; the older `local/fid-load-gold-clamp` 42d40b09 is the same change on 1453f853) | V run, re-run 2026-11-11 on current main: 363 of 539 differ before, 0 after; `test_game` fails on the parent (assertion at `test_game.cpp:1367`), rc 0 with the claim; pr_guard 0 FAIL / 0 WARN | CLOSE TO READY. Draft: [../research/pr-load-gold-draft.md](../research/pr-load-gold-draft.md) (numbers there are the 2026-11-08 ones; same counts today). Low value: needs an edited or imported save (U) | independent verifier; presubmit `--quick` and the combined single-commit shape (oracle and claim in one commit here, upstream wants the oracle commit first, so split it); ask whether the maintainer wants a clamp that zeroes a player's gold |
+| 4 | A raised monster gets MonStats2 `ResurrectMode` (S1 for Fallen and Mummy, SQ for skeletons), d2d sets NU (FUN_005ccb10, FUN_005fd7b0) | none (no d2d-side test) | game side V run (703 rows, 0 disagree with the column); d2d side V read (`ai.cpp` around the raise) | NOT READY. Report: `fid-revive-mode.md` of TASK-316 (on its own branch, not merged to main at this audit) | build a `test_game` scenario (a Fallen Shaman, a Fallen corpse in mode 12 within aip4, step until the corpse moves, read `mode`), oracle = `d9_revive.py` `M` lines; effect is about 24 ticks of S1, small |
+| 5 | Pierce rows follow the last-unit rule too (arrows, javelins, Blessed Hammer) | none | S (same filter FUN_005a8730); no oracle | NOT READY | extend `light_pierce.py` to rows with ToHit / hit / damage functions; reconcile with #225's pierce charges |
+| 6 | Hire list made once per NPC in game.exe, regenerated on every open in d2d (FUN_00578b30 flag at +1, FUN_00576070) | none | V read both (`fid-stock-oracle.md` D1) | NOT READY | an emulator run of FUN_00576070 twice with the flag handling, `OpenHire` twice in `test_game` with a level change between; open question whether the list differs at all (U) |
+| 7 | Teleport mana on a refused hop (SKTELE D3 / D4) | none | U (`sk-teleport-trace.md`) | NOT READY | lab drill with the fork verbs (a refused hop and the mana before and after), then an emulator run of FUN_005ca360 |
+| 8 | Timed-state put rule: curses, Taunt, Inner Sight, Attract (covstates2 D1 to D5) | none | V run: 54,685 of 100,000 sequences differ | NOT READY; a missing-rule change, needs a new differential on the fix | scope it as one rule at a time; low value for the early Sorceress or Paladin |
+
+## 2. Dropped (checked, no longer a candidate)
+
+| Item | Why |
+|---|---|
+| Load life and mana, respawn refill, noshield order, Energy Shield order, Blessed Hammer undead share, batch 2 A / B / C (#185, #187, #189), fidelity bundle 1 (#177), Blizzard offsets (#163), curse-immune (#160), freeze rules (#159) | merged upstream |
+| `local/smite-block-v1-final`, `local/missilepoison-skillrows`, `local/ground-burst-v1`, `local/skmelee3-d1-final` / `d2-final`, `local/vendor-repair-gate-v4`, `local/nmlevel-v5`, `local/freeze-rules-v5`, `local/monsterpace-b-v2` | their subjects are in upstream main (found by subject in `git log upstream/main`) |
+| `fid/missile-last-unit`, `fid/cold-enchanted-length` (old heads, base a5b970d5) | replaced by the `-r3` / `-r4` branches above. Stale pushes on the private remote, superseded (no force-push is allowed here, so each fix got a new branch name): `fid/missile-last-unit-r1` (b7954bd0), `-r2` (89059e2d); `fid/cold-enchanted-length-r1` (98e10ccf), `-r2` (05d5d754), `-r3` (1b4036a3) (rebased, scope fixed, glue test) |
+| `local/sorc-lightning-seq`, `fix/lightning-sequence`, `fix/skills-doc-cast`, `fix/cast-ticks`, `local/sorc-bolts`, `local/sorc-mana-timing` | old pre-split branches; upstream now has `rules/sequences.hpp` and SQ cast lengths (`fight/strike.cpp`); whether Lightning's seqtrans length is covered was not re-checked (I) |
+| `fix/waypoint-hostile-window` | merged as #153 |
+
+## 3. Bundle plan under the 3-open-PR rule
+
+- Slot A: Lightning (rank 1). One subsystem (player missiles), two commits (oracle, claim). Follow-up PR for the Pierce rows only after the oracle exists.
+- Slot B: Cold Enchanted (rank 2). One subsystem (monster mods), two commits.
+- Slot C (free): gold clamp (rank 3) once split into oracle and claim commits and cleared by the verifier, or resurrect mode (rank 4) once its test exists; they are different subsystems (world load, monster AI), so each is its own PR. Do not open a third PR before one of A / B merges unless the user says so.
+- Order of posting: verifier clears the branch first (d2-reviewer, singly, own harness, not given this file's conclusions), then the user's push go for the batch, then `gh pr create --body-file` from the draft. CodeRabbit threads are answered inline only.
+- Each branch is pushed to the private fork remote only (done 2026-11-11: `fid/missile-last-unit-r3`, `fid/cold-enchanted-length-r4`). Posting needs the GitHub fork copy (`ghfork`) pushed and the verifier clearance.
+
+## 3b. Test suite note
+
+On the worker host `ctest -j8` (with `D2_MPQ_DIR` and the 1.14d patch installer set) has 4 failures that also fail on the parent, because the video MPQs are missing there: `test_mpq`, `smoke_d2d`, `quests_act1`, `quests_act4` (verifier on r2 / r1; re-checked 2026-11-11 on clean builds of r3 and r4: 235 of 239 and 236 of 240 pass or skip, the same 4 fail, nothing else).
+
+## 4. Reproduce on the worker host
+
+Scripts of this prep (tools/emu, prefix `pp_`): `pp_setup.sh` (worktrees from upstream main plus cherry-picks), `pp_build.sh light|cold TARGET...`, `pp_light.sh before|after SEED N`, `pp_light_all.sh`, `pp_cold.sh before|after SEED N`, `pp_cold_count.py`, `pp_cold_test.sh`, `pp_cold_check.sh`, `pp_cold_guard.sh`, `pp_cold_fix.sh`, `pp_cold_push.sh`; second round (prprep2): `pp_r3_light.sh`, `pp_light3.sh`, `pp_r4_cold.sh`, `pp_cold4.sh`, `pp_ctest.sh`, `pp_skills.sh`. Fork checkout `~/d2d-lab/fork/src`; worktrees `~/d2d-lab/wt-pp-light`, `~/d2d-lab/wt-pp-cold`; data `D2_MPQ_DIR=/tmp/ug-emu` with the 1.14d patch installer.

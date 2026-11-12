@@ -115,6 +115,11 @@ var cardTexts = map[string]cardText{
 		Generic:  "The Search for Cain is available.",
 		Does:     map[string]string{"do": "plan the whole chain", "later": "leave it for later"},
 	},
+	"t1.journey.floor": {
+		Headline: "{chapter:chapter} is ready at its floor but under the recommended level.",
+		Generic:  "The next chapter of the journey is ready at its floor.",
+		Does:     map[string]string{"go": "go now, at the floor", "level": "level first, to the recommended level"},
+	},
 	"t1.gamble": {
 		Headline: "The hero holds {gold} gold and could gamble some of it.",
 		Generic:  "The hero could gamble some gold.",
@@ -157,6 +162,8 @@ var factWords = map[string]map[string]string{
 	"kit":  {"OK": "in order", "THIN": "thin (potions or a portal are missing)", "NONE": "missing (no potions and no portal)"},
 	"merc": {"alive": "alive", "dead": "dead", "none": "not hired yet"},
 	"run":  {"farm": "farming", "quest": "quest", "level": "levelling"},
+	"chapter": {"start": "A new hero", "cold_plains_wp": "The Cold Plains waypoint", "den_of_evil": "The Den of Evil", "blood_raven": "Blood Raven",
+		"rogue": "Claiming the Rogue", "find_cain": "Finding Deckard Cain", "countess": "The Countess", "tools_of_the_trade": "Charsi's hammer", "andariel": "Andariel"},
 }
 
 var placeholder = regexp.MustCompile(`\{([a-z]+)(?:#([^|}]+)\|([^}]+)|:([a-z]+))?\}`)

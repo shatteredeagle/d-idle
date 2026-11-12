@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/rand"
+	"d2lod-bot/internal/campaign"
 	"encoding/base64"
 	"errors"
 	"flag"
@@ -75,6 +76,7 @@ type ladderOptions struct {
 	art           watch.ArtSource      // the game art of the install (artwire.go); nil: /api/art says available:false
 	repair        *repair.Controller   // the repair policy (repairwire.go); nil: none
 	farm          *goldfarm.Controller // the Farm gold order (repairwire.go); nil: none
+	journey       *campaign.Controller // the guided journey (journeywire.go); nil: none
 	// riskFacts is the hero risk meter's reader (bot.Runner.RiskFacts); nil: no meter. monsters is the monster table
 	// for the bestiary; nil (no game tables): flavour-only cards.
 	riskFacts                              func(zone string) watch.RiskFacts
@@ -263,6 +265,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		rig.Fun.Readiness = l.readiness
 		hub.SetHeroStatsSource(l.heroStats)
 		bindRepair(rig.Fun, l.repair, l.farm)
+		bindJourney(rig.Fun, l.journey)
 		if src == nil {
 			src = hub // a person answers: the Hub never answers by itself
 		}

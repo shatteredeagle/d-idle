@@ -8,6 +8,21 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- TASK-332 round 2: Lightning r3 and Cold r4 drafts, queue, scripts <!--sg:agent/prprep2-->
+- TASK-343 frienddrills: friend pack drills D1-D6 results (docs/friend-drills.md), ./didle update message fix <!--sg:agent/frienddrills-->
+- TASK-328 TASK-329 potionfix: no same-tier re-drink while an effect is active; exact run state <!--sg:agent/potionfix-->
+- TASK-345 upstream PR verification second pass <!--sg:agent/prverify2-->
+- TASK-342 grill queue: paste-ready decisions and glossary text <!--sg:agent/grillqueue-->
+- TASK-340 upstream PR verification: candidates 1 and 2 <!--sg:agent/prverify-->
+- TASK-341 campaign3: Rogue re-claim fix + Claim the Rogue chapter, t1.journey.floor question, journey-chip, chapter done events, Cain unlock, journey knobs; stacked on agent/campaign2 (gate on worker host exit 0, race 0) <!--sg:agent/campaign3-->
+- TASK-338 campaign2: GET /api/campaign + POST /api/campaign/intent, journey panel v1, XP level meter; stacked on agent/campaign1 (gate on worker host exit 0, race 0) <!--sg:agent/campaign2-->
+- decomp batch 7 (API runner): Chain Lightning hop, poison/stun, path stuck cases, monster block <!--sg:agent/decomp11-->
+- TASK-339 stashactions: move items between pack and stash, identify in place, deposit/withdraw gold <!--sg:agent/stashactions-->
+- TASK-337 campaign1: guided planner (WithGuide), journey controller with state/campaign.json, d2bot wiring off in named runs; stacked on agent/campaign0 (gate on worker host exit 0, race 0) <!--sg:agent/campaign1-->
+- Watch minimap: export the map as a PNG and the history as JSON <!--sg:agent/maphistoryD-->
+- Watch minimap: fight cards and failure markers <!--sg:agent/maphistoryC-->
+- Watch minimap: heat layers for kills, time spent and damage taken <!--sg:agent/maphistoryB-->
+- Watch minimap: timeline scrubber and replay <!--sg:agent/maphistoryA-->
 - TASK-335 campaign0: campaign spine data (data/campaign/normal.json), internal/campaign loader, readiness bands, next-chapter decision, docs/campaign.md (gate on worker host exit 0) <!--sg:agent/campaign0-->
 - watch: the game video no longer freezes: it reconnects after 3 s without a frame, pauses in a hidden tab and resumes on return, shows reconnecting or stream down with Retry; a vanished viewer frees its slot <!--sg:agent/videoresume-->
 - TASK-327 decomp batch 6: potions, stamina, identify, gold, Zeal (docs and tools/emu d10_*, cards TASK-328..330 Proposed) <!--sg:agent/decomp10-->

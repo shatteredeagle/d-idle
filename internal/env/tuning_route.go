@@ -6,6 +6,11 @@ type CampaignTuning struct {
 	DenMinLevelCaster int // clvl at which a caster (or a bow-less Amazon) enters the Den of Evil
 	DenMinLevelMelee  int // same for melee classes and a bowed Amazon
 	ImbueNeedsMerc    int // 1: the Imbue quest also needs a living merc (the Barracks walk is the Soaky death road)
+	// Guided journey (docs/campaign.md): the veto window of a floor question, the level-step time before the hero offers
+	// to go at the floor, and the default go-at policy of a hero that never chose one.
+	JourneyAskWaitMin    int
+	JourneyFarmBudgetMin int
+	JourneyGoAtFloor     int
 }
 
 // RouteTuning holds the route guard knob (internal/task/route.go).
@@ -25,7 +30,8 @@ type RouteTuning struct {
 }
 
 func DefaultCampaignTuning() CampaignTuning {
-	return CampaignTuning{ImbueMinLevel: 20, ImbueNeedsMerc: 1, DenMinLevelCaster: 5, DenMinLevelMelee: 3}
+	return CampaignTuning{ImbueMinLevel: 20, ImbueNeedsMerc: 1, DenMinLevelCaster: 5, DenMinLevelMelee: 3,
+		JourneyAskWaitMin: 10, JourneyFarmBudgetMin: 30}
 }
 func DefaultRouteTuning() RouteTuning {
 	return RouteTuning{MonasteryMinLevel: 14, MonasteryMinLevelMerc: 14, TowerMinLevel: 15, TowerMinLevelMerc: 14, TowerNeedsMerc: 0,
@@ -43,6 +49,12 @@ func routeKnobs() []Knob {
 			Desc: "Sorceress, Necromancer, Druid and a bow-less Amazon enter the Den of Evil (always the first quest) only from this clvl; below it they level in Blood Moor (log: den: waiting for clvl N in Blood Moor). SME: a ~40 life caster dies to Fallen packs on floor 1; 5 is the safe end of clvl 4-5."},
 		{Key: "campaign.denMinLevelMelee", Label: "Den of Evil level floor (melee)", Unit: "levels", Default: 3, Min: 1, Max: 12, HigherIsBetter: true, NoHandicap: true,
 			Desc: "Same for Barbarian, Paladin, Assassin and a bowed Amazon."},
+		{Key: "campaign.journeyAskWaitMin", Label: "Journey: question veto window", Unit: "minutes", Default: 10, Min: 0, Max: 240, NoHandicap: true,
+			Desc: "Guided journey (docs/campaign.md): a 'go to the next chapter at the floor?' question with no answer counts as yes after this many minutes; 0 = never by default (the hero keeps farming until answered). U: judgment."},
+		{Key: "campaign.journeyFarmBudgetMin", Label: "Journey: level step before the floor offer", Unit: "minutes", Default: 30, Min: 0, Max: 600, NoHandicap: true,
+			Desc: "After this many minutes in a level step for a chapter that is ready at its floor (but under its recommended level) the hero asks whether to go at the floor; 0 = never asks. U: judgment, one level step budget."},
+		{Key: "campaign.journeyGoAtFloor", Label: "Journey: go at the floor by default", Unit: "bool", Default: 0, Min: 0, Max: 1, NoHandicap: true,
+			Desc: "0: Auto chapters go at the recommended level (comfortable); 1: at the floor (ready). The default for a hero that never set the policy row on the Journey panel; the hero's own choice wins."},
 		{Key: "route.monasteryMinLevel", Label: "Monastery road level floor (no merc)", Unit: "levels", Default: 14, Min: 10, Max: 40, HigherIsBetter: true, NoHandicap: true,
 			Desc: "The Monastery road (Tamoe Highland, Monastery Gate, Cloisters, Barracks, Jail, Cathedral, Catacombs, so Andariel too) is entered without a living merc only from this clvl, and always with the supply kit (4 healing, 2 portals, mana for casters). Otherwise the bot levels in Cold Plains to Black Marsh and the caves. Interim (ADR 0011, grill 0003; merc decision 2026-11-02): 14 with a full kit, was 16 and 20, so a dead or missing merc does not block the road (the living-merc floors rate a 140-HP Rogue too high). If road deaths fail the death rule at 14 in the act1run soak raise it to 16 or 18 and re-grill. 20 restores the old number."},
 		{Key: "route.monasteryMinLevelMerc", Label: "Monastery road level floor (living merc)", Unit: "levels", Default: 14, Min: 0, Max: 40, HigherIsBetter: true, NoHandicap: true,
