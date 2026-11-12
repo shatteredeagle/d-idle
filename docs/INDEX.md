@@ -209,6 +209,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [andarielplan.md](andarielplan.md): Plan for card m3-andariel: the throwaway Andariel fight (status: plan, offline, nothing verified live. Tags: V = read in this tree or counted from a recorded log (file...)
 - [andarielsme.md](andarielsme.md): Andariel fight: the SME version and the user decisions (2026-11-04) (status: decisions recorded offline, nothing verified live. Tags: experience = SME judgement from play, V =...)
 - [api.md](api.md): Goal manager, Runner contract and HTTP API
+- [arch.md](arch.md): Architecture diagrams (Archify) (status: current (TASK-373). One command draws the project as clickable HTML; nothing generated is committed.)
 - [areametrics.md](areametrics.md): Per-area gold and XP log (change areametrics)
 - [areathrash.md](areathrash.md): Area thrash, cave-mouth holds and the Dark Wood exit (fun killer 5) (status: analysis V (sandbox log), fix OFFLINE ONLY (unit tests, not run live). Source:...)
 - [armorcut.md](armorcut.md): armorcut: a Frozen Armor recast cut in a fight (card armorcut) (status: current, offline fix, awaits the live proof. Tags: V = verified (read in a log or test), S = read in code...)

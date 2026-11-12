@@ -162,6 +162,7 @@ cmd/d2bot/skillswire.go  credit-runner  skilltrees
 cmd/d2firsthour/  live-agent  firsthour
 data/onboarding  credit-runner  firstminutes
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
+docs/arch.md  credit-runner  archify
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
@@ -427,6 +428,7 @@ internal/watch/web/skills.js  credit-runner  skilltrees
 internal/watch/web/skills.js  credit-runner  skilltrees2
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
+tools/arch  credit-runner  archify
 tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2
 tools/emu/pp_*  credit-runner  prprep
