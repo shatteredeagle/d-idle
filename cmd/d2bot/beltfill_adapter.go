@@ -11,7 +11,7 @@ func (a townAdapter) NeedsBeltFill(s *d2.Snapshot) bool { return a.t.NeedsBeltFi
 
 func (a townAdapter) FillBelt(ctx context.Context) (int, error) {
 	rep, err := a.t.FillBelt(ctx)
-	return rep.Moved, err
+	return rep.Moved + rep.Repaired, err // a repair alone changed the belt too: the runner takes a fresh snapshot
 }
 
 // TPCount and TakeTPBought make townAdapter (and so d2dTown) a bot.TPDiag: the adapter holds the Town in a named field,

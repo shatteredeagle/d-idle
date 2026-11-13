@@ -585,6 +585,7 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		}
 	}
 	pr := f.profileFor(p)
+	f.auraCrowd, _ = Crowd(p, Hostiles(snap, f.hostileCtx(p)), 0)
 	if _, err := f.KeepAura(ctx, snap, &tg, false); err != nil {
 		return err
 	}
@@ -593,6 +594,7 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 		return err
 	}
 	f.noteGear(snap)
+	f.noteLifePrice(snap)
 	order := f.attackSkills(p)
 	pick := PickAttack
 	if hard {

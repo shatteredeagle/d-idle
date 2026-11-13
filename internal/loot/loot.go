@@ -564,7 +564,7 @@ func (n needsOf) Want(kind string, b *data.ItemBase) bool {
 			return n.wantRejuv(b, st)
 		}
 		have := belt.PackCount(db, inv, k)
-		want := have < n.l.e.Tune.Loot.PotionBuffer
+		want := have < n.l.potionBuffer(b)
 		if !want {
 			n.l.logPotionSkip(b, have, st.Free())
 		}
@@ -655,6 +655,14 @@ func (l *Looter) UseSource(snap func() (*d2.Snapshot, error), stats func(addr ui
 // logPotionSkip is the diagnostic line of a potion left on the ground because the pack already holds the buffer
 // (primitives-review "what to log" 5). One line per potion code every 30 virtual seconds, so a long walk past the same
 // potion does not flood the log.
+// potionBuffer is the pack buffer of the potion's kind: mana potions have their own knob (loot.potionBufferMana).
+func (l *Looter) potionBuffer(b *data.ItemBase) int {
+	if belt.PotionKind(b) == belt.MP {
+		return l.e.Tune.Loot.PotionBufferMana
+	}
+	return l.e.Tune.Loot.PotionBuffer
+}
+
 func (l *Looter) logPotionSkip(b *data.ItemBase, packHave, beltFree int) {
 	l.potionSkipMu.Lock()
 	defer l.potionSkipMu.Unlock()
@@ -666,5 +674,5 @@ func (l *Looter) logPotionSkip(b *data.ItemBase, packHave, beltFree int) {
 		l.potionSkipAt = map[string]time.Time{}
 	}
 	l.potionSkipAt[b.Code] = now
-	l.e.Log.Info(fmt.Sprintf("loot: potion skip code=%s beltWant=0 packHave=%d buffer=%d beltFree=%d", b.Code, packHave, l.e.Tune.Loot.PotionBuffer, beltFree))
+	l.e.Log.Info(fmt.Sprintf("loot: potion skip code=%s beltWant=0 packHave=%d buffer=%d beltFree=%d", b.Code, packHave, l.potionBuffer(b), beltFree))
 }
