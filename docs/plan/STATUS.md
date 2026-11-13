@@ -180,6 +180,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- fcb53e36 11-12 19:05 `Merge agent/bglimit: unblock the merge queue: allow the generated BACKLOG.md over 256 KB in the gamecode guard` (bglimit)
 - 313b4aaf 11-12 17:32 `Merge agent/dropfix: dropfix: probe doc note, owns` (dropfix)
 - b745c240 11-12 16:06 `Merge agent/itemverbs3: Merge branch 'main' into TASK-383` (itemverbs3)
 - 251fed97 11-12 16:05 `Merge branch 'main' into TASK-383` (-)
@@ -189,5 +190,4 @@
 - e058c15d 11-12 15:52 `Merge branch 'main' into TASK-381` (-)
 - d27166d9 11-12 15:47 `Merge agent/gearsets: gearsets: drag gear onto the paper doll and player-defined gear sets` (gearsets)
 - 47a8676b 11-12 15:46 `Merge branch 'main' into TASK-380` (-)
-- da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
 <!-- statusgen:end -->
