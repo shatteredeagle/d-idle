@@ -7,12 +7,12 @@
 | point | value | tag |
 |---|---|---|
 | clvl at 60 min | 6 (xp 17032 at minute 60) | V `minute` |
-| level-ups | clvl 2 at 02:20, 3 at 02:23, 4 at 02:36, 5 at 02:45, 6 at 03:11 | V `minute` (matches the D2 normal XP table 500 / 1500 / 3750 / 7500 / 14000, S) |
+| level-ups | clvl 2 at 02:20, 3 at 02:23, 4 at 02:36, 5 at 02:45, 6 at 03:11 | V `minute` (matches the D2 normal XP table 500 / 1500 / 3750 / 7875 / 14175, D: Experience.txt via docs/research/xp-gold-trace.md Q6, corrected 2026-11-13; the levels above are unchanged) |
 | kills | 528 (`minute` counter); 634 `combat kill` lines in the window (not explained, U; the repeat-suppressed lines go the other way) | V |
 | xp per kill / per minute | 32 / 284 over the hour | V (derived) |
 | earlier baseline | 2026-11-07 Sorceress, first realtime hour: 128 kills, clvl 3 (docs/fresh-start-pace.md) | V (doc) |
 
-Against that baseline the hour is 4x the kills and 3 levels more (improvement, V). Against a human (S, not asked of the d2-sme, ask it to confirm): a competent player reaches clvl 6 in about 25 to 30 minutes (Den of Evil plus Blood Moor and Cold Plains) and is clvl 9 to 11 after an hour of Cold Plains / Burial Grounds / Cave. U: no d2-sme benchmark was fetched; the questions to put to it are at the end.
+Against that baseline the hour is 4x the kills and 3 levels more (improvement, V). Against a human (S, not asked of the d2-sme, ask it to confirm): a competent player reaches clvl 6 in about 25 to 30 minutes (Den of Evil plus Blood Moor and Cold Plains) and is clvl 9 to 11 after an hour of Cold Plains / Burial Grounds / Cave. CORRECTION 2026-11-13: clvl 9 to 11 in an hour is at the edge of the model (25 kills/min with Stony Field gives clvl 9 to 10), and the SME's clvl 13 to 15 is unreachable from Act 1 Normal kills (V run, xp-gold-trace sections 5 and 6); the calibrated tiers are in docs/first-hour.md "Targets". U: no d2-sme benchmark was fetched; the questions to put to it are at the end.
 
 ## 2. Time budget of the hour (V unless noted)
 
