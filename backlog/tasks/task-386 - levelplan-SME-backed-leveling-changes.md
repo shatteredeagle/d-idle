@@ -1,10 +1,11 @@
 ---
 id: TASK-386
 title: 'levelplan: SME-backed leveling changes'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T23:32:00Z'
+updated_date: '2026-11-13T00:35:00Z'
 labels:
   - bot
   - feature
