@@ -231,6 +231,7 @@ func TestProductionTypesSatisfyTheInnerOptionalInterfaces(t *testing.T) {
 		{"town.Town.e.In (d2d)", "beltPutter", rt(d2dtown.Input(nil, nil)), []string{"BeltPut"}},
 		{"town.Town.e.In (d2d)", "goldMover", rt(d2dtown.Input(nil, nil)), []string{"MoveGold"}},
 		{"town.Town.e.In (d2d)", "WalkingInteractor", rt(d2dtown.Input(nil, nil)), []string{"InteractWalks"}},
+		{"bot.Runner.beltFillStep (BELTFIX)", "BeltFiller (fill and layout repair)", rt(townAdapter{}), []string{"NeedsBeltFill", "FillBelt"}},
 		{"boss.Run.a", "Teleporter", rt(bossActs{}), []string{"TeleportTo"}},
 		{"goals.Manager.Runner", "Configurer + ProgressReporter", rt(&bot.Runner{}), []string{"Configure", "Progress"}},
 	}

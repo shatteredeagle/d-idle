@@ -122,3 +122,25 @@ func TestHealingNotWantedWhenItWouldTakeTheLastManaColumn(t *testing.T) {
 		t.Fatal("mana potion with the empty column free was skipped")
 	}
 }
+
+// BELTFIX (docs/beltfix.md): the sandbox state, mana in three of four columns and no healing. A ground mana potion that the
+// game would put in the last empty column is left (it would take the column healing needs); a healing potion is wanted.
+// Paladin (three healing columns) and Sorceress (two).
+func TestBeltLayoutKeepsTheLastColumnForHealing(t *testing.T) {
+	for _, class := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		l, w := potionRig(t)
+		w.Player.Class = class
+		w.Player.Level = 5
+		for c := 0; c < 3; c++ {
+			w.Add("mp1", d2.ContBelt, c, 0)
+		}
+		w.Add("mp1", d2.ContInventory, 0, 0)
+		w.Add("mp1", d2.ContInventory, 1, 0)
+		if wanted(l, w.NewItem("mp1", 2)) {
+			t.Errorf("%v: a mana potion was wanted although it would take the last column", class)
+		}
+		if !wanted(l, w.NewItem("hp1", 2)) {
+			t.Errorf("%v: a healing potion was not wanted with no healing column", class)
+		}
+	}
+}

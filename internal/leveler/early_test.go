@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -417,15 +418,24 @@ func TestBuildV2PaladinSequence(t *testing.T) {
 		t.Errorf("Zeal 0 at 11 and 4 at 15, got %d / %d", skillAt(snaps, 11, "Zeal"), skillAt(snaps, 15, "Zeal"))
 	}
 	kit := startKit("paladin")
+	// palprofile2: Sacrifice (a plain attack with a life price, gated at run time) leads once learned at clvl 3
 	for lv := 1; lv <= 9; lv++ {
 		att := usableAttack("paladin", d2.Paladin, lv, snaps[lv].skills, kit)
-		if len(att) != 1 || att[0] != "Attack" {
-			t.Errorf("clvl %d attack order %v, want plain Attack", lv, att)
+		want := []string{"Sacrifice", "Attack"}
+		if lv < 3 {
+			want = []string{"Attack"}
+		}
+		if !slices.Equal(att, want) {
+			t.Errorf("clvl %d attack order %v, want %v", lv, att, want)
 		}
 	}
 	att := usableAttack("paladin", d2.Paladin, 13, snaps[13].skills, kit)
-	if len(att) != 2 || att[0] != "Zeal" || att[1] != "Attack" {
-		t.Errorf("clvl 13 order %v, want Zeal, Attack (palprofile: Smite not ranked)", att)
+	if !slices.Equal(att, []string{"Sacrifice", "Zeal", "Attack"}) {
+		t.Errorf("clvl 13 order %v, want Sacrifice, Zeal, Attack (Smite not ranked)", att)
+	}
+	att = usableAttack("paladin", d2.Paladin, 15, snaps[15].skills, kit)
+	if !slices.Equal(att, []string{"Zeal", "Sacrifice", "Attack"}) {
+		t.Errorf("clvl 15 order %v, want Zeal, Sacrifice, Attack", att)
 	}
 }
 
