@@ -19,6 +19,8 @@ owns:
   - "tools/emu/zg_game.py"
   - "tools/emu/zg_grid.py"
   - "tools/emu/zg_zeal_test.cpp"
+  - "tools/emu/zg_sandbox.sh"
+  - "docs/upstream/zeal-gap/"
   - "docs/upstream/drafts/zeal-gap.md"
   - "docs/upstream/pr-queue.md"
 exclusive:
@@ -32,7 +34,7 @@ contracts: []
 <!-- SECTION:DESCRIPTION:BEGIN -->
 Size: M
 
-Why: TODO. Done when: TODO.
+Why: decomp13 found Zeal strikes 15 ticks apart in d2d against 7 in game.exe (TASK-330). Done when: the rule is re-derived, an upstream-ready fix is built or shown to be unneeded, and a fork-only sandbox branch carries it.
 <!-- SECTION:DESCRIPTION:END -->
 
 ## Acceptance Criteria
