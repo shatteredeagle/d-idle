@@ -97,7 +97,9 @@ type Fighter struct {
 	auraRetryAt time.Time // a failed apply waits until here
 	lastRight   int       // right skill read after the last apply try (diagnosis)
 	auraArea    int
-	auraDirty   bool // death or area change: the aura must be applied again
+	auraDirty   bool           // death or area change: the aura must be applied again
+	auraCrowd   int            // hostiles close, set by the fight loop before KeepAura (AuraPref.NeedsCrowd)
+	lifePrice   lifePriceState // noteLifePrice, read by attackSkills
 	necro       necroState
 	trap        trapMem
 
@@ -809,7 +811,7 @@ func (f *Fighter) attackSkills(p *d2.Player) []SkillSpec {
 			// and is the only attack left when gear rules out the build's skill (Smite needs a shield).
 			sp, ok = meleeSpec(), true
 		}
-		if !ok {
+		if !ok || (pr.costsLife(name) && !f.lifePriceOK()) {
 			continue
 		}
 		if sp.Hand == HandLeft {
