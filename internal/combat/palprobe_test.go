@@ -122,9 +122,15 @@ func TestPalProbeAuraSelection(t *testing.T) {
 	if n, ok := pick(skillsOf(98), nil); !ok || n != "Might" {
 		t.Errorf("Might only: %q %v", n, ok)
 	}
-	if n, ok := pick(skillsOf(98, 102), nil); !ok || n != "Holy Fire" {
-		t.Errorf("Might + Holy Fire: %q %v", n, ok)
+	h.f.auraCrowd = 3
+	if n, ok := pick(skillsOf(98, 102), &Target{}); !ok || n != "Holy Fire" {
+		t.Errorf("Might + Holy Fire in a pack: %q %v", n, ok)
 	}
+	h.f.auraCrowd = 2
+	if n, ok := pick(skillsOf(98, 102), &Target{}); !ok || n != "Might" {
+		t.Errorf("Might + Holy Fire, 2 monsters: %q %v", n, ok)
+	}
+	h.f.auraCrowd = 3
 	fi := &Target{HasRes: true, Res: fireImm()}
 	if n, ok := pick(skillsOf(98, 102), fi); !ok || n != "Might" {
 		t.Errorf("fire immune: %q %v", n, ok)

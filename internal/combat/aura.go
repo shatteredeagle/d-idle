@@ -77,7 +77,8 @@ func (f *Fighter) auraActive(p *d2.Player, id int) bool {
 }
 
 // wantAura chooses the aura to keep up against target tg (nil: no target): the first ladder entry that is learned,
-// reachable (hotkey bound or already selected) and whose element the target is not immune to.
+// reachable (hotkey bound or already selected), whose element the target is not immune to and, for a needsCrowd
+// entry, with enough hostiles close (combat.holyFireMinMonsters; Might otherwise).
 //
 // Resting auras (RestLifePct, Prayer) are skipped in a fight and while resting at healthy life; with resting true and
 // life below their percent they come first. In a fight they are tried last, so Prayer still beats no aura.
@@ -99,6 +100,15 @@ func (f *Fighter) wantAura(p *d2.Player, pr *Profile, tg *Target, resting bool) 
 				return sp, true
 			}
 			continue
+		}
+		if a.NeedsCrowd {
+			need := f.tune().HolyFireMinMonsters
+			if f.auraActive(p, sp.ID) {
+				need-- // already on: leave it only when the pack is clearly gone, so the aura does not flip each tick
+			}
+			if tg == nil || f.auraCrowd < max(need, 1) { // no fight: no pack
+				continue
+			}
 		}
 		if tg != nil && a.Elem != "" && tg.Immune(elemOf(a.Elem)) {
 			continue

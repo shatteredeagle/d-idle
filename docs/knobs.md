@@ -117,6 +117,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.ignoreMemorySec | 90 | 20..300 | s | 20 | 1 | How long an ignored target is left alone (the memory doubles with every repeat). |
 | combat.auraCheckMs | 1500 | 500..5000 | ms | 5000 | 1 | How often the fight loop re-reads the active aura and re-applies it. |
 | combat.leftFailSec | 60 | 10..300 | s | 10 | 1 | After a left skill could not be selected, wait this long before trying it again. |
+| combat.sacrifice | 1 | 0..1 | bool | 0 | 1 | 1 lets a profile attack with Sacrifice (about x1.9 damage over Attack, costs 8 percent of the damage dealt in life, docs/palprofile.md); 0 keeps plain Attack. |
+| combat.sacrificeMinLifePct | 70 | 40..100 | % | 40 | 2 | Sacrifice only at or above this life percent; below it plain Attack until life is 10 points above the floor again. |
+| combat.sacrificeMinPotions | 1 | 0..8 | count | 0 | 1 | Sacrifice only with at least this many healing or rejuvenation potions in the belt (and no dead merc). |
+| combat.holyFireMinMonsters | 3 | 1..10 | count | 10 | 1 | A needsCrowd aura (Holy Fire) is wanted only with at least this many hostiles within 8 subtiles; fewer and Might is used (Might wins below about 3 monsters, docs/palprofile.md). |
 | combat.buffRecastSec | 150 | 60..300 | s | 300 | 1 | Upper bound and fallback: recast armors and shields this long after the last cast. An armor whose real duration is known (Frozen Armor 120 s at level 1) is recast earlier, see buffMarginSec. |
 | combat.buffMarginSec | 6 | 0..30 | s | 30 | 1 | Recast an armor or shield this many seconds before its real duration (Skills.txt auralencalc at the skill's level) runs out. |
 
