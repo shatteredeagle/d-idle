@@ -207,6 +207,7 @@ docs/locks.md  credit-runner  lockscan
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  firstminutes
 docs/onboarding.md  credit-runner  reconnectux
+docs/palprofile.md  credit-runner  palprofile2
 docs/passagebounce.md  credit-runner  arrivalsettle
 docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
@@ -302,6 +303,7 @@ internal/bot/task.go  credit-runner  hourfix
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/campaign/  credit-runner  campaign1
 internal/combat/castfirst.go  credit-runner  maphistoryC
+internal/combat/classdata  credit-runner  palprofile2
 internal/combat/fight.go  credit-runner  goldprio
 internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
@@ -310,6 +312,7 @@ internal/combat/fightend.go  credit-runner  maphistoryC
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
 internal/combat/interlude_test.go  credit-runner  goldprio
+internal/combat/lifeprice.go  credit-runner  palprofile2
 internal/combat/reach.go  credit-runner  maphistoryC
 internal/combat/types.go  credit-runner  goldprio
 internal/d2dctl/item_verbs.go  credit-runner  itemverbs2

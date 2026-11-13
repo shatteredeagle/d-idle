@@ -428,7 +428,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [palfix.md](palfix.md): PALFIX: the Paladin fix cards
 - [palmelee.md](palmelee.md): palmelee: why the Paladin never hit (TASK-175) and what is left of the pace (TASK-177) (status: fixed and measured 2026-11-08 (EST). Tags: V verified live (how stated), S read in code, U unverified....)
 - [palpace.md](palpace.md): palpace: realtime Paladin pace (TASK-177) (status: see docs/palmelee.md (the melee fix, the realtime run and the corrected expectation); this file is the...)
-- [palprofile.md](palprofile.md): palprofile: Paladin attack order as data (2026-11-10)
+- [palprofile.md](palprofile.md): palprofile: Paladin attack order as data (2026-11-10) (status: the attack bands below were superseded on 2026-11-12 by the section "Round 2" at the end (Sacrifice band,...)
 - [palready.md](palready.md): palready: Might aura once per fight, recovery leaves a dry field (TASK-180) (status: aura fixed and verified live 2026-11-08 (EST); dry-recovery rule proven offline only (it did not fire in...)
 - [palsme.md](palsme.md): PALSME: SME review of the Paladin tables
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
