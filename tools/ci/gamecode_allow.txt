@@ -2,3 +2,4 @@
 # Every entry needs a reason; the guard reads the first field only.
 docs/probes/drills/2026-11-01-drills10-m.txt   # d2drill run log of our own bot (telemetry lines), 376 KB, under the 512 KB probe cap
 docs/probes/drills/2026-11-01-drills10-m2.txt  # same, second run
+docs/BACKLOG.md   # generated board index (tools/sharedgen at merge): one line per card, no game data; 262 KB and growing with the card count, rotate/archive done rows later
