@@ -805,6 +805,7 @@ Why this first: the SME read the poverty loop (about 54 % of time farming gold) 
 - agent/decomp13: decomp13: merge main, keep both decomp-queue lines (merged 2026-11-12) <!--sg:agent/decomp13-->
 - cut011: friends release 0.1.1 built, verified and staged (not published) (TASK-393, merged 2026-11-12, acceptance 3 of 3): Friends beta 0.1.1 built, verified and staged, NOT published or sent. Cut from main edc25c56bc32 (CI green). Pack sha256 7e56b482703c8db09ad350478dcd9ccf424f782ae554f70c7ef64dc303a91567, checklist 7/7, signed beta set app-v0.1.1 seq 2, update 0.1.0 to 0.1.1 ... <!--sg:agent/cut011-->
 - target: recalibrate the first-hour headline target (TASK-394, merged 2026-11-13, acceptance 2 of 2): Docs only, not verified live: floor clvl 5 / target 7 / stretch 8-9 at 60 min, SME 13-15 retired, XP thresholds fixed (7875/14175). <!--sg:agent/target-->
+- forkrebase: rebase the d2d fork onto upstream main (2026-11-13) (TASK-395, merged 2026-11-13, acceptance 6 of 6): Fork branch didle/rebase-20261113 dd70428d on upstream 73bf565b (private forge): 27 commits; dropped as upstream: Frozen Armor/freeze resume (#159), warp arrival (#490), Zeal (276f85c0), lab ctrl-click sell ... <!--sg:agent/forkrebase-->
 
 ## 3. Needs the user (also the board's Waiting-on-you panel, `tools/needs-you.sh list`)
 - The five decisions in [plan/STATUS.md](plan/STATUS.md): licence/GPL review, public character names, grill 0003 (merc and Act 2), upstream PR follow-ups (post the Lut Gholein PR; cast follow-ups wait for the maintainer), stream and ports.

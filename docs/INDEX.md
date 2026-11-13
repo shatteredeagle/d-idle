@@ -125,6 +125,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 `digest/`
 
 - [d2d-fork-lab.md](digest/d2d-fork-lab.md): Digest: d2d fork and lab (status: current (TASK-310 digest; the area doc is the authority).)
+- [fork-rebase-2026-11-13.md](fork-rebase-2026-11-13.md): Fork rebase 2026-11-13: the d.idle d2d fork on current upstream main (TASK-395) (status: current. Branch `didle/rebase-20261113` of the private fork replaces the 52362d52-based lineages...)
 - [forkarmor.md](forkarmor.md): FORKARMOR: the private fork carries the Frozen Armor freeze-rule fix (card forkarmor, 2026-11-01) (status: current. Branch `lab-armorhit` of the private d2d fork, lab binary `bin/d2d.lab-armorhit` on the worker...)
 - [forkcheats.md](forkcheats.md): FORKCHEATS: test cheats added to the lab binary (card forkcheats, 2026-10-31) (status: current. The verbs exist in the lab d2d binary as of 2026-10-31 (the patches live in the private fork, not...)
 - [forkdbg.md](forkdbg.md): FORKDBG: lab-only debug verbs for the live skill drills (card forkdbg, 2026-11-01) (status: current. The verbs exist in the lab d2d binary built from the private fork branch `lab-debug-skills`...)

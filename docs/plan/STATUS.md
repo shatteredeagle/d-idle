@@ -134,6 +134,7 @@
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
 | cut011 | proposed | - | `docs/releases/0.1.1.md`<br>`docs/friend-checklist-0.1.1.md` | - |
+| forkrebase | in-progress | - | `docs/fork-rebase-2026-11-13.md`<br>`docs/probes/test-characters.md` | `fork-branch:didle/rebase-20261113` |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
@@ -185,6 +186,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 68a0cd99 11-13 11:37 `Merge agent/forkrebase: Merge branch 'main' into TASK-395` (forkrebase)
+- 2d55f677 11-13 11:36 `Merge branch 'main' into TASK-395` (-)
 - 8f9cc34e 11-13 10:19 `Merge agent/target: target: recalibrate first-hour headline target (floor 5 / target 7 / stretch 8-9); SME 13-15 retired` (target)
 - 0a2bbedd 11-12 22:22 `Merge agent/cut011: friends release 0.1.1 built, verified, staged (not published)` (cut011)
 - a2b32a5b 11-12 22:21 `Merge branch 'main' into TASK-393` (-)
@@ -193,6 +196,4 @@
 - 0410f449 11-12 19:39 `Merge agent/przeal: Merge branch 'main' into TASK-392` (przeal)
 - 2e6959dc 11-12 19:38 `Merge branch 'main' into TASK-392` (-)
 - c9acafb4 11-12 19:28 `Merge agent/wiring2: Merge branch 'main' into TASK-388` (wiring2)
-- 18f126bb 11-12 19:27 `Merge branch 'main' into TASK-388` (-)
-- d18e3f6c 11-12 19:21 `Merge agent/levelplan: Merge branch 'main' into TASK-386` (levelplan)
 <!-- statusgen:end -->
