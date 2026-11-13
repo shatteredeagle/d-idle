@@ -129,6 +129,8 @@
 | tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
 | prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
+| palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
+| beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
@@ -180,14 +182,14 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 14ede0c1 11-12 19:13 `Merge agent/beltfix: Merge branch 'main' into TASK-391` (beltfix)
+- f9d4f3df 11-12 19:12 `Merge branch 'main' into TASK-391` (-)
+- a3f97547 11-12 19:07 `Merge agent/palprofile: Merge branch 'main' into TASK-390` (palprofile)
+- b8317f8b 11-12 19:06 `Merge branch 'main' into TASK-390` (-)
+- fcb53e36 11-12 19:05 `Merge agent/bglimit: unblock the merge queue: allow the generated BACKLOG.md over 256 KB in the gamecode guard` (bglimit)
 - 313b4aaf 11-12 17:32 `Merge agent/dropfix: dropfix: probe doc note, owns` (dropfix)
 - b745c240 11-12 16:06 `Merge agent/itemverbs3: Merge branch 'main' into TASK-383` (itemverbs3)
 - 251fed97 11-12 16:05 `Merge branch 'main' into TASK-383` (-)
 - 5e88d93d 11-12 16:01 `Merge agent/prpost3: Merge branch 'main' into TASK-384` (prpost3)
 - c3c10a43 11-12 16:00 `Merge branch 'main' into TASK-384` (-)
-- e4368829 11-12 15:53 `Merge agent/tidy: Merge branch 'main' into TASK-381` (tidy)
-- e058c15d 11-12 15:52 `Merge branch 'main' into TASK-381` (-)
-- d27166d9 11-12 15:47 `Merge agent/gearsets: gearsets: drag gear onto the paper doll and player-defined gear sets` (gearsets)
-- 47a8676b 11-12 15:46 `Merge branch 'main' into TASK-380` (-)
-- da134826 11-12 15:40 `Merge agent/mapfog: Merge branch 'main' into TASK-382` (mapfog)
 <!-- statusgen:end -->

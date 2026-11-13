@@ -3,6 +3,7 @@ package combat
 import (
 	"context"
 	"os"
+	"slices"
 	"testing"
 	"time"
 
@@ -172,30 +173,31 @@ func TestPaladinBands(t *testing.T) {
 			return false
 		}
 	}
-	// palprofile: before Zeal the free plain Attack is the whole order; Sacrifice (life cost) and Smite are never
-	// ranked (SME 2026-11-10: prerequisites only)
-	if o := pr.AttackNames(10, has("Zeal")); len(o) != 1 || o[0] != "Attack" {
-		t.Fatalf("below clvl 12: %v", o)
+	// palprofile: Sacrifice (a life-price plain attack, x1.9 damage) leads from clvl 2 once learned, behind Zeal from
+	// clvl 15 (Zeal 4); Smite is never ranked (SME 2026-11-10: prerequisite only). Attack is always the last entry.
+	eq := func(got []string, want ...string) {
+		t.Helper()
+		if !slices.Equal(got, want) {
+			t.Fatalf("got %v, want %v", got, want)
+		}
 	}
-	if o := pr.AttackNames(13, has("Zeal")); o[0] != "Zeal" || o[len(o)-1] != "Attack" {
-		t.Fatalf("%v", o)
-	}
-	if o := pr.AttackNames(30, has("Zeal", "Blessed Hammer")); o[0] != "Blessed Hammer" {
-		t.Fatalf("%v", o)
-	}
-	if o := pr.AttackNames(13, has()); o[0] != "Attack" {
-		t.Fatalf("Zeal not learned: %v", o)
-	}
+	eq(pr.AttackNames(1, has("Sacrifice")), "Attack")
+	eq(pr.AttackNames(2, has()), "Attack")
+	eq(pr.AttackNames(3, has("Sacrifice")), "Sacrifice", "Attack")
+	eq(pr.AttackNames(10, has("Zeal")), "Attack") // Zeal known without Sacrifice cannot happen; no band applies
+	eq(pr.AttackNames(13, has("Zeal", "Sacrifice")), "Sacrifice", "Zeal", "Attack")
+	eq(pr.AttackNames(15, has("Zeal", "Sacrifice")), "Zeal", "Sacrifice", "Attack")
+	eq(pr.AttackNames(30, has("Zeal", "Sacrifice", "Blessed Hammer")), "Blessed Hammer", "Zeal", "Sacrifice", "Attack")
+	eq(pr.AttackNames(13, has()), "Attack")
 	for _, lv := range []int{1, 10, 13, 30} {
-		for _, n := range pr.AttackNames(lv, has("Zeal", "Blessed Hammer", "Sacrifice")) {
-			if n == "Smite" || n == "Sacrifice" {
-				t.Errorf("clvl %d: %s ranked: %v", lv, n, pr.AttackNames(lv, has("Zeal", "Blessed Hammer")))
+		for _, n := range pr.AttackNames(lv, has("Zeal", "Blessed Hammer", "Sacrifice", "Smite")) {
+			if n == "Smite" {
+				t.Errorf("clvl %d: Smite ranked", lv)
 			}
 		}
 	}
-	// the Zeal band is Zeal then Attack
-	if o := pr.AttackNames(13, has("Zeal")); o[len(o)-1] != "Attack" || o[0] != "Zeal" || len(o) != 2 {
-		t.Fatalf("%v", o)
+	if !slices.Contains(pr.LifePrice, "Sacrifice") {
+		t.Errorf("Sacrifice must be a life-price skill: %v", pr.LifePrice)
 	}
 	// the Sorceress is unchanged: Blizzard band first, Attack never ranked above a spell
 	sor := ProfileFor(d2.Sorceress, BuildBlizzard)
@@ -382,11 +384,12 @@ func TestKeepAuraAppliesAndSwitches(t *testing.T) {
 	s, _ := g.snap()
 	g.p.RightSkill = 98
 	g.aura = 0
-	ok, err := h.f.KeepAura(ctx, s, nil, true)
+	h.f.auraCrowd = 3 // Holy Fire is wanted only in a pack (combat.holyFireMinMonsters)
+	ok, err := h.f.KeepAura(ctx, s, &Target{}, true)
 	if err != nil || !ok || g.aura != 102 || g.rightHits != 1 {
 		t.Fatalf("holy fire should be cast: ok=%v err=%v aura=%d hits=%d", ok, err, g.aura, g.rightHits)
 	}
-	if ok, _ := h.f.KeepAura(ctx, s, nil, true); ok || g.rightHits != 1 {
+	if ok, _ := h.f.KeepAura(ctx, s, &Target{}, true); ok || g.rightHits != 1 {
 		t.Fatal("an active aura is left alone")
 	}
 }
@@ -397,17 +400,18 @@ func TestKeepAuraAfterDeathAndAreaChange(t *testing.T) {
 	s, _ := g.snap()
 	g.aura = 102
 	g.p.RightSkill = 102
-	if ok, _ := h.f.KeepAura(ctx, s, nil, false); ok { // first call: area unknown counts as changed, aura is up
+	h.f.auraCrowd = 3
+	if ok, _ := h.f.KeepAura(ctx, s, &Target{}, false); ok { // first call: area unknown counts as changed, aura is up
 		t.Fatal("aura already up")
 	}
 	g.aura = 0 // respawn: the aura is gone, the selected skill stays
 	h.f.auraDirty = true
-	if ok, _ := h.f.KeepAura(ctx, s, nil, false); !ok || g.aura != 102 {
+	if ok, _ := h.f.KeepAura(ctx, s, &Target{}, false); !ok || g.aura != 102 {
 		t.Fatalf("respawn must re-apply: aura %d", g.aura)
 	}
 	g.aura = 0
 	s.Player.Area = 3 // new area
-	if ok, _ := h.f.KeepAura(ctx, s, nil, false); !ok || g.aura != 102 {
+	if ok, _ := h.f.KeepAura(ctx, s, &Target{}, false); !ok || g.aura != 102 {
 		t.Fatal("area change must re-apply")
 	}
 }
@@ -417,7 +421,8 @@ func TestWantAuraSkipsImmuneElement(t *testing.T) {
 	p := palPlayer()
 	pr := h.f.profileFor(p)
 	fireImmune := Target{HasRes: true, Res: fireImm()}
-	if sp, ok := h.f.wantAura(p, pr, nil, false); !ok || sp.Name != "Holy Fire" {
+	h.f.auraCrowd = 3
+	if sp, ok := h.f.wantAura(p, pr, &Target{}, false); !ok || sp.Name != "Holy Fire" {
 		t.Fatalf("%v", sp)
 	}
 	sp, ok := h.f.wantAura(p, pr, &fireImmune, false)
@@ -430,6 +435,7 @@ func TestWantAuraSkipsImmuneElement(t *testing.T) {
 
 func TestPaladinFightsWithLeftHand(t *testing.T) {
 	h, g := newHandGame(t)
+	g.p.Level = 15      // Zeal 4 band: Zeal leads (clvl 12 to 14 prefers Sacrifice, TestPaladinSacrificeBand)
 	g.p.LeftSkill = 107 // Sacrifice selected after the char creation: Zeal must be picked by the profile
 	g.aura = 0
 	h.s.stock(itHP1, 0, 2)
@@ -450,7 +456,7 @@ func TestPaladinFightsWithLeftHand(t *testing.T) {
 	if g.holds == 0 {
 		t.Fatal("Zeal is held, not clicked")
 	}
-	if g.aura != 102 || g.p.RightSkill != 102 {
+	if g.aura != 98 || g.p.RightSkill != 98 { // one monster in reach at a time: Might, not Holy Fire (palprofile B2)
 		t.Fatalf("aura %d right %d", g.aura, g.p.RightSkill)
 	}
 	if h.s.casts != 0 {
@@ -639,6 +645,7 @@ func (g *d2dAura) Click(b input.Button, x, y int, m ...input.Mod) error {
 func TestAuraComesUpOnceOnD2D(t *testing.T) {
 	for _, tc := range []struct{ level, want int }{{1, 98}, {13, 102}} {
 		h, g := newHandGame(t)
+		h.f.auraCrowd = 3
 		g.p.Level = tc.level
 		if tc.level < 13 { // a fresh Paladin knows the basic attack and Might only
 			g.p.Skills = []d2.Skill{{ID: 0, Level: 1}, {ID: 98, Level: 1}}
@@ -648,7 +655,7 @@ func TestAuraComesUpOnceOnD2D(t *testing.T) {
 		g.aura, g.p.RightSkill = 0, 0
 		s, _ := g.snap()
 		for i := 0; i < 5; i++ {
-			h.f.KeepAura(context.Background(), s, nil, i == 0)
+			h.f.KeepAura(context.Background(), s, &Target{}, i == 0)
 			s, _ = g.snap()
 		}
 		if d.popups != 1 || g.aura != tc.want {
