@@ -122,7 +122,7 @@ These agree in shape with `docs/research/class-early-game.md` (EXP): plain attac
 - Maxroll Paladin leveling (`https://maxroll.gg/d2/guides/paladin-leveling`, V, D2R Season 14 page, skill mechanics match 1.14d): Might at 2, Sacrifice 3, Resist Fire at Den and 4-5, Holy Fire 6-9 and 13, Smite 10, Charge + Zeal 12; main attack "Holy Fire aura with Zeal"; Countess for runes (Tal, Eth), then Andariel; Radament in Act 2 at 14-19; respec to Blessed Hammer at 19. No xp/h figures, no Blood Raven.
 - Maxroll general leveling (`https://maxroll.gg/d2/resources/general-leveling`, V): Den to clvl 3-5 (full party), then Tristram runs or Countess runs to 13-15, Tomb runs to 20, cows or Travincal to 25. Solo: same areas; `/players` raises xp but also life and damage.
 - Almar (`https://almarsguides.com/Computer/Games/Diablo2/Leveling/`, V, old): beginner route Den + Cain at 1-4, Tristram repeated 4-15, Andariel 15-17, Radament and Tomb of Tal Rasha 17-25; fastest route Tristram 1-15, Tomb 15-24.
-- Expected xp/hour: none of the sources gives a number (also `docs/sme/pace-tables.md` honest summary). kolbot has no tracker of xp/h either (Tools/Tracker.js tracks run data, S: not read). So the SME estimate (clvl 13-15 in an hour) stays U.
+- Expected xp/hour: none of the sources gives a number (also `docs/sme/pace-tables.md` honest summary). kolbot has no tracker of xp/h either (Tools/Tracker.js tracks run data, S: not read). So the SME estimate (clvl 13-15 in an hour) stays U. Update 2026-11-13: it is WRONG for Act 1 Normal kills (needs 112,725 XP; docs/research/xp-gold-trace.md) and retired; see docs/first-hour.md "Targets".
 
 ### 3.6 Area levels (fabd, V, 1.13 data)
 
