@@ -6,7 +6,7 @@
    "farm": true,
    "name": "Blood Moor",
    "enter_clvl": 1,
-   "leave_clvl": 6,
+   "leave_clvl": 4,
    "purpose": "Blood Moor"
   },
   {
@@ -25,7 +25,7 @@
    "melee_enter_clvl": 4,
    "kit_clvl": 4,
    "early_gap": 1,
-   "leave_clvl": 10,
+   "leave_clvl": 8,
    "purpose": "Cold Plains WP; Burial Grounds 17 for Blood Raven"
   },
   {
@@ -33,6 +33,7 @@
    "farm": true,
    "name": "Burial Grounds",
    "enter_clvl": 6,
+   "melee_min_clvl": 8,
    "xp_fallback_full_kit": true,
    "leave_clvl": 10,
    "purpose": "Burial Grounds: Blood Raven (Rogue quest, good XP)"
@@ -42,7 +43,7 @@
    "farm": true,
    "name": "Cave Level 1",
    "enter_clvl": 6,
-   "leave_clvl": 10,
+   "leave_clvl": 9,
    "purpose": "Cave 1 (+Cave2 13, WP not needed)"
   },
   {

@@ -17,6 +17,7 @@ import (
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
 	"d2lod-bot/internal/launch"
+	"d2lod-bot/internal/resource"
 	"d2lod-bot/internal/task"
 )
 
@@ -917,7 +918,14 @@ func (r *Runner) fullChores(reason string) ChorePlan {
 // her floor in Normal and has not killed her (the gate itself re-checks the stock, task.BossGate).
 func (r *Runner) antidotesWanted() int {
 	s := r.latest()
-	if s == nil || s.Player == nil || s.Player.Difficulty != d2.Normal || s.Player.Level < r.andarielLow(s.Player.Class)-2 || r.killedBoss(task.BossAndy) {
+	if s == nil || s.Player == nil {
+		return 0
+	}
+	if p := s.Player; p.Difficulty == d2.Hell { // docs/difficulty.md item 25: keep antidotes while poison resist is low
+		pr := combat.PlayerResists{Fire: p.Resist.Fire, Cold: p.Resist.Cold, Lightning: p.Resist.Lightning, Poison: p.Resist.Poison}
+		return resource.AntidotesToCarry(p.Difficulty, pr.Effective(p.Difficulty).Poison)
+	}
+	if s.Player.Difficulty != d2.Normal || s.Player.Level < r.andarielLow(s.Player.Class)-2 || r.killedBoss(task.BossAndy) {
 		return 0
 	}
 	return 2

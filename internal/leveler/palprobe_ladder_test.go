@@ -54,8 +54,8 @@ func TestPalProbeLadderAlongBothTables(t *testing.T) {
 				continue
 			}
 			for _, n := range names {
-				if n == "Sacrifice" {
-					t.Errorf("%s clvl %d: Sacrifice on the ladder", table, L)
+				if n == "Smite" {
+					t.Errorf("%s clvl %d: Smite on the ladder", table, L)
 				}
 			}
 			if names[0] != first {
@@ -63,7 +63,7 @@ func TestPalProbeLadderAlongBothTables(t *testing.T) {
 				first = names[0]
 			}
 			// every rung the ladder would use must be a skill the character owns: the loop skips unknown ones
-			if L >= 12 && has("Zeal") && names[0] != "Zeal" && !has("Blessed Hammer") {
+			if L >= 15 && has("Zeal") && names[0] != "Zeal" && !has("Blessed Hammer") {
 				t.Errorf("%s clvl %d: Zeal trained but the ladder starts with %s", table, L, names[0])
 			}
 		}

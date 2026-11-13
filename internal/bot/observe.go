@@ -966,6 +966,7 @@ func (r *Runner) recordDeath(p *d2.Player, now time.Time) {
 	if a.killer != nil {
 		di.Distance = float64(max(abs(a.killer.X-p.X), abs(a.killer.Y-p.Y)))
 	}
+	r.noteDeathWeights(di, a.killer)
 	r.e.Log.Warn(di.Line() + " build=" + r.buildName(p)) // key=value, parsed by cmd/d2soak ParseDeathLines (docs/difficulty.md P2, W10)
 	r.emit(goals.Event{Type: goals.EvDeath, Message: msg, Monster: rec.Killer, Area: rec.AreaName, AreaID: rec.Area})
 }

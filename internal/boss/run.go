@@ -98,9 +98,6 @@ func (r *runner) phase(name string) {
 	}
 	r.cur = name
 	r.res.Phases = append(r.res.Phases, name)
-	if r.o.Hooks.OnPhase != nil {
-		r.o.Hooks.OnPhase(name)
-	}
 }
 
 func (r *runner) note(f string, args ...any) {
@@ -731,9 +728,6 @@ func (r *runner) finish(ctx context.Context) error {
 	s := r.s
 	r.res.Killed = true
 	r.phase("loot")
-	if f := r.o.Hooks.OnKill; f != nil {
-		f(r.st.Last)
-	}
 	if s.PostKillWait > 0 {
 		if err := r.w.Sleep(ctx, s.PostKillWait); err != nil {
 			return err

@@ -97,17 +97,20 @@ type Fighter struct {
 	auraRetryAt time.Time // a failed apply waits until here
 	lastRight   int       // right skill read after the last apply try (diagnosis)
 	auraArea    int
-	auraDirty   bool // death or area change: the aura must be applied again
+	auraDirty   bool           // death or area change: the aura must be applied again
+	auraCrowd   int            // hostiles close, set by the fight loop before KeepAura (AuraPref.NeedsCrowd)
+	lifePrice   lifePriceState // noteLifePrice, read by attackSkills
 	necro       necroState
 	trap        trapMem
 
-	eq            *gear.Equipped // last noted gear, nil when unknown
-	weaponProblem string
-	weaponLogged  string
-	statsFn       func(uint32) (d2.Stats, error) // test seam; nil = e.Read.UnitStats
-	skipWhy       string                         // last skipped-drink reason logged (noteDrinkSkip)
-	skipAt        time.Time
-	portalBackoff time.Time // no TownPortal safety action before this (diagMu)
+	eq               *gear.Equipped // last noted gear, nil when unknown
+	weaponProblem    string
+	weaponLogged     string
+	statsFn          func(uint32) (d2.Stats, error) // test seam; nil = e.Read.UnitStats
+	skipWhy          string                         // last skipped-drink reason logged (noteDrinkSkip)
+	skipAt           time.Time
+	portalBackoff    time.Time // no TownPortal safety action before this (diagMu)
+	packDrinkBackoff time.Time // no pack drink before this (packdrink.go, diagMu)
 }
 
 type resEntry struct {
@@ -215,7 +218,7 @@ func (f *Fighter) read(ctx context.Context) (*d2.Snapshot, error) {
 func isDead(p *d2.Player) bool { return IsDead(p) }
 
 func (f *Fighter) hostileCtx(p *d2.Player) HostileCtx {
-	hc := HostileCtx{Cat: f.cat, Diff: p.Difficulty, ClassLvl: p.Level, Weights: f.weights}
+	hc := HostileCtx{Cat: f.cat, Diff: p.Difficulty, ClassLvl: p.Level, Weights: f.deathWeights()}
 	t := f.tune()
 	if t.ThreatDodge != 0 {
 		hc.ThreatReactSec = float64(t.DodgeReactMs) / 1000
@@ -264,6 +267,9 @@ func (f *Fighter) Safety(snap *d2.Snapshot) SafetyAction {
 		in.HasPortal = f.portalItem(snap) != nil
 	}
 	a := Decide(in)
+	if a == SafetyNone && f.packDrinkWanted(snap, in) {
+		a = DrinkLife // the belt is empty: drink() falls back to the pack (packdrink.go)
+	}
 	if why := drinkSkipReason(in, a); why != "" {
 		f.noteDrinkSkip(why, in)
 	}
@@ -338,6 +344,11 @@ func (f *Fighter) drink(ctx context.Context, a SafetyAction) error {
 		}
 	}
 	if !ok {
+		if kind == PotionHealing || kind == PotionRejuv {
+			if pct(snap.Player.Life, snap.Player.MaxLife) < f.tune().DrinkRejuvPct {
+				return f.drinkFromPack(ctx, snap, kind)
+			}
+		}
 		return ErrNoPotion
 	}
 	if err := f.e.In.Key(strconv.Itoa(col + 1)); err != nil {
@@ -459,7 +470,14 @@ func (f *Fighter) drinkIfDue(ctx context.Context) {
 		return
 	}
 	p, t := snap.Player, f.tune()
-	if pct(p.Life, p.MaxLife) >= t.DrinkLifePct || BeltOf(snap.Inventory, f.cat).Count(PotionHealing) == 0 {
+	if pct(p.Life, p.MaxLife) >= t.DrinkLifePct {
+		return
+	}
+	if BeltOf(snap.Inventory, f.cat).Count(PotionHealing) == 0 {
+		// BELTFIX: an empty belt but a pack potion at critical life is drunk from the pack before the cast
+		if pct(p.Life, p.MaxLife) < t.DrinkRejuvPct && f.packPotion(snap, PotionHealing) != nil && f.drink(ctx, DrinkLife) != nil {
+			f.info("potion: pack drink before the portal cast failed")
+		}
 		return
 	}
 	if at, ok := f.lastDrink[PotionHealing]; ok && f.now().Sub(at) < ms(t.PotionGapMs) {
@@ -809,7 +827,7 @@ func (f *Fighter) attackSkills(p *d2.Player) []SkillSpec {
 			// and is the only attack left when gear rules out the build's skill (Smite needs a shield).
 			sp, ok = meleeSpec(), true
 		}
-		if !ok {
+		if !ok || (pr.costsLife(name) && !f.lifePriceOK()) {
 			continue
 		}
 		if sp.Hand == HandLeft {

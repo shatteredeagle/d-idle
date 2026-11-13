@@ -101,7 +101,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.novaManaFloor | 25 | 0..60 | mana | 60 | 1 | Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts. |
 | combat.kiteEnabled | 1 | 0..1 | bool | 0 | 2 | 1 backs away from melee monsters that get close. |
 | combat.kiteDistance | 10 | 4..20 | subtiles | 4 | 3 | Back away when a melee monster is closer than this. |
-| combat.kiteLifePct | 70 | 40..100 | % | 40 | 0 | Kite normal monsters only below this life percent. |
+| combat.kiteLifePct | 60 | 40..100 | % | 40 | 0 | Step back from a single melee monster only below this life percent (and falling). |
 | combat.kiteMaxSteps | 6 | 0..12 | count | 0 | 4 | Retreat steps per target before standing to fight. |
 | combat.kiteRetreat | 12 | 6..20 | subtiles | 6 | 10 | Length of one retreat step. |
 | combat.dodgeRadius | 4 | 0..8 | subtiles | 0 | 7 | Step away from hostile missiles closer than this. |
@@ -117,6 +117,10 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.ignoreMemorySec | 90 | 20..300 | s | 20 | 1 | How long an ignored target is left alone (the memory doubles with every repeat). |
 | combat.auraCheckMs | 1500 | 500..5000 | ms | 5000 | 1 | How often the fight loop re-reads the active aura and re-applies it. |
 | combat.leftFailSec | 60 | 10..300 | s | 10 | 1 | After a left skill could not be selected, wait this long before trying it again. |
+| combat.sacrifice | 1 | 0..1 | bool | 0 | 1 | 1 lets a profile attack with Sacrifice (about x1.9 damage over Attack, costs 8 percent of the damage dealt in life, docs/palprofile.md); 0 keeps plain Attack. |
+| combat.sacrificeMinLifePct | 70 | 40..100 | % | 40 | 2 | Sacrifice only at or above this life percent; below it plain Attack until life is 10 points above the floor again. |
+| combat.sacrificeMinPotions | 1 | 0..8 | count | 0 | 1 | Sacrifice only with at least this many healing or rejuvenation potions in the belt (and no dead merc). |
+| combat.holyFireMinMonsters | 3 | 1..10 | count | 10 | 1 | A needsCrowd aura (Holy Fire) is wanted only with at least this many hostiles within 8 subtiles; fewer and Might is used (Might wins below about 3 monsters, docs/palprofile.md). |
 | combat.buffRecastSec | 150 | 60..300 | s | 300 | 1 | Upper bound and fallback: recast armors and shields this long after the last cast. An armor whose real duration is known (Frozen Armor 120 s at level 1) is recast earlier, see buffMarginSec. |
 | combat.buffMarginSec | 6 | 0..30 | s | 30 | 1 | Recast an armor or shield this many seconds before its real duration (Skills.txt auralencalc at the skill's level) runs out. |
 
@@ -193,7 +197,8 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | loot.goldMinStack | 10 | 0..2000 | gold | 2000 | 4 | Ignore gold piles smaller than this (a ceiling: see goldPileShare). |
 | loot.goldPileShare | 50 | 0..100 | percent | 100 | 2 | The min-pile bar never skips more than this share of the area's piles: pile size is ilvl to 6 ilvl - 1 coins (treasure-trace section 4), so Blood Moor piles (1..5) would all fall under 10. 0 keeps the flat bar. |
 | loot.freeCellsKeep | 2 | 0..12 | cells | 0 | 1 | Inventory cells that must stay free after a pickup. |
-| loot.potionBuffer | 2 | 0..10 | count | 0 | 2 | Extra needed-type potions carried in the pack beyond the belt. |
+| loot.potionBuffer | 4 | 0..10 | count | 0 | 1 | Extra healing potions carried in the pack beyond the belt (SME EXP, docs/levelplan.md: 4). |
+| loot.potionBufferMana | 2 | 0..10 | count | 0 | 1 | Extra mana potions carried in the pack beyond the belt. |
 | loot.rejuvSpare | 3 | 0..6 | count | 0 | 4 | Rejuvenation potions carried in total (belt plus pack); more are left on the ground or sold, Full Rejuvenation preferred over regular. Pack ones are moved to a free belt slot in town so the belt hotkey can drink them. |
 | loot.lowGoldBelow | 2000 | 0..1e+05 | gold | 1e+05 | 3 | Below this gold, also pick items worth selling. |
 | loot.minValuePerCell | 100 | 0..5000 | gold | 5000 | 1 | Sell value per cell an item needs to be picked in low-gold mode. |

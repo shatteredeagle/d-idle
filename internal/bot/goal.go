@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/goals"
 	"d2lod-bot/internal/input"
@@ -1001,6 +1002,11 @@ func (r *Runner) target0(s *d2.Snapshot, c control) (int, bool) {
 		for ok {
 			d := r.d.Plan.EntryAllowed(diff, p.Level, step.Area, nil)
 			if d.OK {
+				if why := levelGapRefusal(diff, p.Level, r.areaMLvl(step.Area, d2.Difficulty(rank(diff)))); why != "" {
+					d = combat.EntryDecision{Why: why}
+				}
+			}
+			if d.OK {
 				break
 			}
 			r.e.Log.Info("planner: entry gate refused area", "area", step.Area, "why", d.Why)
@@ -1814,4 +1820,17 @@ func (r *Runner) walkBackLoot(ctx context.Context, area int, hostile func() bool
 	if err != nil && ctx.Err() == nil {
 		r.e.Log.Warn("loot_memory: walk back failed", "err", err)
 	}
+}
+
+// levelGapRefusal is combat.LevelGapOK (docs/difficulty.md item 23) for the planner's pick: Nightmare and Hell refuse
+// an area whose monster level is too far above the character; Normal is never asked (its margin and the death
+// spiral breaker are the older rules), so a Normal run is byte-for-byte the same. "" means allowed.
+func levelGapRefusal(diff string, level, mlvl int) string {
+	if diff == "normal" {
+		return ""
+	}
+	if combat.LevelGapOK(d2.Difficulty(rank(diff)), level, mlvl) {
+		return ""
+	}
+	return fmt.Sprintf("clvl %d too far below monster level %d", level, mlvl)
 }

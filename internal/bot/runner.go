@@ -2,6 +2,7 @@ package bot
 
 import (
 	"context"
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/goldfarm"
 	"d2lod-bot/internal/readiness"
 	"d2lod-bot/internal/repair"
@@ -138,6 +139,7 @@ type Runner struct {
 	healthMu       sync.Mutex // serialises Health.Step, which runs outside obMu (see healthProbe)
 	tpBuyMin       int        // scrolls bought this minute, set by tpDiag under obMu for failsafeKV
 	ob             observer
+	deathW         combat.DeathWeights     // lessons of Nightmare/Hell deaths, guarded by obMu (deathweights.go)
 	dlog           *deathLog               // guarded by obMu
 	avoid          map[int]time.Time       // areas out of play (death spiral, nav faults), guarded by obMu
 	noMLvlSeen     map[int]bool            // xp rank warnings already logged (area*4+difficulty), guarded by obMu
@@ -528,6 +530,17 @@ func (r *Runner) State() State {
 	r.mu.Lock()
 	defer r.mu.Unlock()
 	return r.st
+}
+
+// IdleSafe reports whether an update may restart the process now: the hero stands in town or the bot is not playing
+// (no goal, paused, error). Travelling, clearing, a town trip and recovery are not safe (a fight or a chore would be
+// cut). It reads the cached state only (cmd/d2bot/update.go gives it to selfupdate.Config.IdleSafe).
+func (r *Runner) IdleSafe() bool {
+	switch r.State() {
+	case StateIdle, StateInTown, StatePaused, StateError:
+		return true
+	}
+	return false
 }
 
 func (r *Runner) setLocked(st State, activity string) {

@@ -3,10 +3,13 @@ package main
 import (
 	"context"
 	"crypto/ed25519"
+	"fmt"
 	"log/slog"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 
 	"d2lod-bot/internal/selfupdate"
@@ -30,7 +33,7 @@ func updateCheckMode() selfupdate.CheckMode {
 }
 
 // newUpdater builds the engine, or returns nil when this is not an updatable install.
-func newUpdater(shutdown func() error) *selfupdate.Engine {
+func newUpdater(shutdown func() error, idleSafe func() bool) *selfupdate.Engine {
 	root := envOr("D2BOT_UPDATE_DIR", defaultUpdateDir)
 	if st, err := os.Stat(root); err != nil || !st.IsDir() {
 		return nil
@@ -54,7 +57,7 @@ func newUpdater(shutdown func() error) *selfupdate.Engine {
 		return nil
 	}
 	abi, _ := strconv.Atoi(os.Getenv("D2BOT_IMAGE_ABI"))
-	return selfupdate.New(selfupdate.Config{
+	return selfupdate.New(updaterCfg{
 		Layout:       selfupdate.Layout{Root: root},
 		Client:       client,
 		Keys:         keys,
@@ -63,7 +66,40 @@ func newUpdater(shutdown func() error) *selfupdate.Engine {
 		Local:        selfupdate.BuildCompat,
 		CheckEnabled: updateCheckMode() != selfupdate.CheckOff,
 		Shutdown:     shutdown,
-	})
+	}.withGuards(root, idleSafe))
+}
+
+// updaterGuards are the three safety hooks of the engine; nil in any of them silently skips that check
+// (docs/wiring.md finding 6), so TestUpdaterGuardsAreSet pins them.
+type updaterCfg selfupdate.Config
+
+func (c updaterCfg) withGuards(root string, idleSafe func() bool) selfupdate.Config {
+	c.IdleSafe, c.SelfTest = idleSafe, releaseSelfTest
+	c.DiskFree = func() (uint64, error) { return diskFreeBytes(root) }
+	return selfupdate.Config(c)
+}
+
+// releaseSelfTest runs the unpacked release's own d2bot with --version before it can become current, so a binary that
+// does not start on this image (wrong arch, missing library, truncated file) is refused while the old release still
+// runs. A release without bin/d2bot (data-only) has nothing to run. The boot shim's crash rollback stays the second net.
+func releaseSelfTest(dir string) error {
+	bin := filepath.Join(dir, "bin", "d2bot")
+	if _, err := os.Stat(bin); err != nil {
+		if os.IsNotExist(err) {
+			return nil
+		}
+		return err
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	out, err := exec.CommandContext(ctx, bin, "--version").Output()
+	if err != nil {
+		return fmt.Errorf("d2bot --version: %w", err)
+	}
+	if !strings.HasPrefix(string(out), "d2bot ") {
+		return fmt.Errorf("d2bot --version printed %q", strings.TrimSpace(string(out)))
+	}
+	return nil
 }
 
 func loadPubKeys(dir string) []ed25519.PublicKey {
@@ -84,8 +120,8 @@ func loadPubKeys(dir string) []ed25519.PublicKey {
 // startUpdater returns the Updater for the watch screen (nil: none) and starts the daily version check. Apply asks
 // the process to stop with SIGTERM, the same path `docker stop` takes (hero saved, d2d quit in managed mode); the
 // container's restart policy then brings the new release up.
-func startUpdater(ctx context.Context) watch.Updater {
-	e := newUpdater(signalSelfTerm)
+func startUpdater(ctx context.Context, idleSafe func() bool) watch.Updater {
+	e := newUpdater(signalSelfTerm, idleSafe)
 	if e == nil {
 		return nil
 	}

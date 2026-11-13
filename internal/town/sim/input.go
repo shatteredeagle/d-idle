@@ -324,6 +324,24 @@ func (c *Input) left(p panel.Pt) error {
 		return nil
 	}
 	if w.Cursor == nil && w.packVisible() {
+		// a left click on a belt box lifts its potion (game.exe; U for d2d): the box is read from the belt slot rectangle
+		if r, ok := w.Lay.Slots["belt"]; ok && r.Contains(p) {
+			rows := max(w.BeltRows, 1)
+			cw, ch := (r.R-r.L)/4, (r.B-r.T)/rows
+			if cw > 0 && ch > 0 {
+				box := (r.B-1-p.Y)/ch*4 + (p.X-r.L)/cw
+				for i, u := range w.Items {
+					if u.Item.Where == d2.ContBelt && u.Item.GY*4+u.Item.GX == box {
+						cu := u
+						w.Cursor = &cu
+						w.Items = append(w.Items[:i], w.Items[i+1:]...)
+						return nil
+					}
+				}
+			}
+		}
+	}
+	if w.Cursor == nil && w.packVisible() {
 		body := map[string]int{"rArm": d2.BodyRHand, "lArm": d2.BodyLHand, "neck": d2.BodyNeck, "torso": d2.BodyTorso, "head": d2.BodyHead,
 			"rHand": d2.BodyRRing, "lHand": d2.BodyLRing, "belt": d2.BodyBelt, "feet": d2.BodyFeet, "gloves": d2.BodyGloves}
 		for name, b := range body {

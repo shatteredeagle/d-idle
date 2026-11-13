@@ -23,10 +23,15 @@ func TestPaladinSashHealingOnGroundWanted(t *testing.T) {
 	w.Add("hp1", d2.ContBelt, 0, 0)
 	w.Add("mp1", d2.ContBelt, 3, 0)
 	w.Add("mp1", d2.ContBelt, 3, 1)
-	for _, c := range []string{"hp2", "hp3", "mp2"} {
+	for _, c := range []string{"hp2", "hp3"} {
 		if !wanted(l, w.NewItem(c, 2)) {
 			t.Errorf("%s with room in the belt was skipped", c)
 		}
+	}
+	// BELTFIX layout rule: the Paladin plans one mana column and it is full (two boxes), so the game would open a second
+	// mana column; a mana potion is left on the ground rather than take a column healing may still need.
+	if wanted(l, w.NewItem("mp2", 2)) {
+		t.Error("mp2 wanted although the planned mana column is full")
 	}
 	if wanted(l, w.NewItem("hp1", 2)) {
 		t.Error("hp1 wanted below the clvl 14 tier floor")
@@ -38,10 +43,13 @@ func TestPaladinSashHealingOnGroundWanted(t *testing.T) {
 	}
 }
 
-// SME advice (docs/lootskip.md): a small pack buffer beyond a full belt; the default is 2 per kind.
+// SME advice (docs/lootskip.md): a small pack buffer beyond a full belt; the default is 4 healing and 2 mana (docs/levelplan.md).
 func TestDefaultPackBuffer(t *testing.T) {
-	if got := env.DefaultLootTuning().PotionBuffer; got != 2 {
-		t.Fatalf("PotionBuffer default = %d, want 2", got)
+	if got := env.DefaultLootTuning().PotionBuffer; got != 4 {
+		t.Fatalf("PotionBuffer default = %d, want 4 (SME: 4 healing in the pack)", got)
+	}
+	if got := env.DefaultLootTuning().PotionBufferMana; got != 2 {
+		t.Fatalf("PotionBufferMana default = %d, want 2", got)
 	}
 	for _, cls := range []d2.Class{d2.Paladin, d2.Sorceress} {
 		l, w := potionRig(t) // buffer 1 in the rig
@@ -131,6 +139,36 @@ func TestScrollsOnlyUntilTomeFull(t *testing.T) {
 			if l.EvaluateUnit(w.NewItem(c.scroll, 2)).Rule != "town scrolls" {
 				t.Errorf("%v %s: empty tome refused a scroll", cls, c.scroll)
 			}
+		}
+	}
+}
+
+// The healing buffer is its own knob: a pack that holds 2 spare potions is full for mana (2) and not for healing (4).
+func TestPackBufferHealingAndManaApart(t *testing.T) {
+	for _, cls := range []d2.Class{d2.Paladin, d2.Barbarian, d2.Sorceress} {
+		l, w := potionRig(t)
+		w.Player.Class = cls
+		w.Player.Level = 14
+		l.Env().Tune.Loot.PotionBuffer = 4
+		l.Env().Tune.Loot.PotionBufferMana = 2
+		w.Add("lbl", d2.ContEquipment, 0, 0)
+		for i := range w.Items {
+			if w.Items[i].Item.Where == d2.ContEquipment {
+				w.Items[i].Item.Body = d2.BodyBelt
+			}
+		}
+		for b := 0; b < 8; b++ {
+			w.Add("hp1", d2.ContBelt, b%4, b/4)
+		}
+		w.Add("hp1", d2.ContInventory, 0, 0)
+		w.Add("hp1", d2.ContInventory, 1, 0)
+		w.Add("mp1", d2.ContInventory, 2, 0)
+		w.Add("mp1", d2.ContInventory, 3, 0)
+		if !wanted(l, w.NewItem("hp2", 2)) {
+			t.Errorf("%v: healing not wanted with 2 of 4 in the pack", cls)
+		}
+		if wanted(l, w.NewItem("mp2", 2)) {
+			t.Errorf("%v: mana wanted with 2 of 2 in the pack", cls)
 		}
 	}
 }

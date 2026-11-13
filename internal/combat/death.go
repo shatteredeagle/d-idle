@@ -126,4 +126,15 @@ func (w DeathWeights) of(monKey string, a Affix) float64 {
 }
 
 // SetDeathWeights installs the death-history weights used by targeting.
-func (f *Fighter) SetDeathWeights(w DeathWeights) { f.weights = w }
+// It is called from the bot's observer while the fight loop reads the weights, so both go through povMu.
+func (f *Fighter) SetDeathWeights(w DeathWeights) {
+	f.povMu.Lock()
+	f.weights = w
+	f.povMu.Unlock()
+}
+
+func (f *Fighter) deathWeights() DeathWeights {
+	f.povMu.Lock()
+	defer f.povMu.Unlock()
+	return f.weights
+}
