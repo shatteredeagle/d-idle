@@ -357,6 +357,7 @@ func runD2D(ctx context.Context, o options, log *slog.Logger) error {
 		o.ladder.monsters = db
 	}
 	o.ladder.awayMin, o.ladder.repeatCooldownMin, o.ladder.quietAfter = tune.Ladder.AwayMin, tune.Ladder.RepeatCooldownMin, tune.Ladder.QuietAfter
+	o.ladder.idleSafe = runner.IdleSafe
 	lrig, err := startLadder(ctx, o.ladder, o.token, ldir, runner.EnableLadderWith, m, runner.Status, hereFunc(runner), runner.OrderGuardWhy)
 	if err != nil {
 		return err

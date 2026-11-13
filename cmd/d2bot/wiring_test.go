@@ -13,12 +13,14 @@ import (
 	"go/parser"
 	"go/token"
 	"io/fs"
+	"os"
 	"reflect"
 	"sort"
 	"strings"
 	"testing"
 
 	"d2lod-bot/internal/bot"
+	"d2lod-bot/internal/combat"
 	"d2lod-bot/internal/d2"
 	"d2lod-bot/internal/d2denv"
 	"d2lod-bot/internal/d2dtown"
@@ -304,4 +306,36 @@ var (
 	_ watch.Teaser          = watch.LadderUnlocker{}
 	_ watch.UnitGate        = watch.LadderUnlocker{}
 	_ invdesk.StashServices = (*town.Town)(nil)
+)
+
+// wiring2: production call sites that a unit test of the feature cannot see. Each line below was a function with no
+// caller or a Config field nobody set (docs/wiring.md findings 6 and 8).
+func TestProductionCallSitesStayWired(t *testing.T) {
+	read := func(rel string) string {
+		b, err := os.ReadFile(rel)
+		if err != nil {
+			t.Fatal(err)
+		}
+		return string(b)
+	}
+	for _, c := range []struct{ file, want, why string }{
+		{"d2dbackend.go", "o.ladder.idleSafe = runner.IdleSafe", "updater IdleSafe (d2d path)"},
+		{"live.go", "o.ladder.idleSafe = runner.IdleSafe", "updater IdleSafe (game.exe path)"},
+		{"ladder.go", "startUpdater(ctx, l.idleSafe)", "ladder hands IdleSafe to the updater"},
+		{"update.go", "}.withGuards(root, idleSafe)", "newUpdater sets IdleSafe, SelfTest and DiskFree"},
+		{"../../internal/bot/goal.go", "levelGapRefusal(", "planner applies combat.LevelGapOK in Nightmare/Hell"},
+		{"../../internal/bot/loop.go", "resource.AntidotesToCarry(", "town visit buys Hell antidotes"},
+		{"../../internal/bot/observe.go", "r.noteDeathWeights(", "death feeds combat.DeathWeights"},
+		{"../../internal/combat/fight.go", "t.KiteLifePct", "kite rule reads combat.kiteLifePct"},
+	} {
+		if !strings.Contains(read(c.file), c.want) {
+			t.Errorf("%s no longer contains %q: %s", c.file, c.want, c.why)
+		}
+	}
+}
+
+// Compile-time: the bot's runner offers the updater predicate and the fighter adapter takes death weights.
+var (
+	_ func() bool                                         = (*bot.Runner)(nil).IdleSafe
+	_ interface{ SetDeathWeights(w combat.DeathWeights) } = fighterAdapter{}
 )

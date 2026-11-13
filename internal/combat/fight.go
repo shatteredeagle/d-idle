@@ -684,21 +684,21 @@ func (f *Fighter) engage(ctx context.Context, snap *d2.Snapshot, tg Target, sp f
 	}
 
 	// Step back from ONE melee monster that is hurting us, never from a pack (G1 attempt 13, V: at 52-67% life with 15
-	// Fallen around, every tick below KiteLifePct was a retreat step: 55 s and no kill; at 85% life it killed 11 in 2 s).
-	// SME rule: single melee within stepBackDist, life below stepBackLife and falling, at most stepBackSteps in a burst,
+	// Fallen around, every tick below the kite line was a retreat step: 55 s and no kill; at 85% life it killed 11 in 2 s).
+	// SME rule: single melee within stepBackDist, life below Tune.KiteLifePct (stance and aggression move it) and falling, at most stepBackSteps in a burst,
 	// then a cast or a drink. Anything else is a cast.
 	if now.Sub(st.lastKite) > 10*time.Second {
 		st.kites = 0
 	}
 	if t.KiteEnabled != 0 && f.mv != nil && f.mayEvade() && st.kites < stepBackSteps && !f.runnerClose(snap, p, stepBackDist+1) && (!hard || plan.Kite) && spec.Kind != KindSelf && spec.Kind != KindMelee {
 		if th := f.kiteThreats(snap, p, stepBackDist+1); len(th) == 1 && th[0].Dist <= stepBackDist &&
-			pct(p.Life, p.MaxLife) < stepBackLife && st.lifeDropping(now, p.Life) {
+			pct(p.Life, p.MaxLife) < t.KiteLifePct && st.lifeDropping(now, p.Life) {
 			pts := []input.Point{{X: th[0].Unit.X, Y: th[0].Unit.Y}}
 			if pt, ok := awayPoint(me, pts, hostileMissiles(snap), t.KiteRetreat, f.valid); ok {
 				st.kites++
 				st.kitesAll++
 				st.lastKite = now
-				f.decision(st, "kite", "single melee within 3, life < 60% and falling", "life", pct(p.Life, p.MaxLife))
+				f.decision(st, "kite", "single melee within 3, life under the kite line and falling", "life", pct(p.Life, p.MaxLife))
 				f.info("kiting", "from", pts[0], "to", pt)
 				return f.evade(ctx, me, pt)
 			}

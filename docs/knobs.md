@@ -101,7 +101,7 @@ Notes on defaults that are switches: `combat.missileDodge` default 0 (U, off unt
 | combat.novaManaFloor | 25 | 0..60 | mana | 60 | 1 | Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts. |
 | combat.kiteEnabled | 1 | 0..1 | bool | 0 | 2 | 1 backs away from melee monsters that get close. |
 | combat.kiteDistance | 10 | 4..20 | subtiles | 4 | 3 | Back away when a melee monster is closer than this. |
-| combat.kiteLifePct | 70 | 40..100 | % | 40 | 0 | Kite normal monsters only below this life percent. |
+| combat.kiteLifePct | 60 | 40..100 | % | 40 | 0 | Step back from a single melee monster only below this life percent (and falling). |
 | combat.kiteMaxSteps | 6 | 0..12 | count | 0 | 4 | Retreat steps per target before standing to fight. |
 | combat.kiteRetreat | 12 | 6..20 | subtiles | 6 | 10 | Length of one retreat step. |
 | combat.dodgeRadius | 4 | 0..8 | subtiles | 0 | 7 | Step away from hostile missiles closer than this. |

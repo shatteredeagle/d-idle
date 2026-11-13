@@ -22,7 +22,7 @@ Row `stance` ("How boldly the hero fights") on the policy sheet (`internal/decid
 | `combat.championEarlyPct` | 10 | 20 / 20 | 8 / 5 |
 | `combat.townPotionMin` | 2 | 3 / 3 | 1 / 1 |
 | `combat.maxApproaches` (chase length) | 12 | 8 / 8 | 18 / 16 |
-| `combat.kiteLifePct` (casters back away below this) | 70 | 85 / 85 | 70 / 55 |
+| `combat.kiteLifePct` (casters back away below this; read by the fight loop since agent/wiring2, before only the constant 60 ruled) | 60 | 85 / 85 | 70 / 55 |
 | `combat.crowdAbandonN` | 15 | 10 / 10 | 18 / 20 |
 
 `bot.clearRadius` max raised from 30 to 45 (Aggressive; survival at 40 U). Not in the table: how far to roam to hunt (internal/nav, other agent). The Paladin starts on Aggressive (`plandata/chores-defaults.json` `start`, also `docs/plan/data/`); the Sorceress on Balanced. A named run (`D2BOT_RUN`) starts nobody on a stance (`PolicySheet.SetStarts`), so gates and soaks keep today's knobs. The start is applied when the hero's class becomes known (`Hub.OnClass` -> `PolicySheet.EnsureStart`), not when the page is first opened. The choice is a `policy` line of the session record and a "Policy changes" card on the return screen with the plain words of the option (`says`). A Pact may set the row later through `SetByPact` (note only, nothing added).
