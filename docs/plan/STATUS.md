@@ -134,7 +134,6 @@
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
 | cut011 | proposed | - | `docs/releases/0.1.1.md`<br>`docs/friend-checklist-0.1.1.md` | - |
-| target | proposed | - | `docs/first-hour.md`<br>`docs/probes/firsthour.md`<br>`docs/probes/hour1-analysis-2026-11-12.md`<br>`docs/research/awesome-diablo-mining-2-2026-11-12.md`<br>`docs/decisions.md`<br>`cmd/d2firsthour/firsthour.go` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |

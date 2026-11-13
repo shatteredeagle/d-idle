@@ -172,7 +172,6 @@ cmd/d2bot/skillswire.go  credit-runner  skilltrees
 cmd/d2bot/tidywire_test.go  credit-runner  tidy
 cmd/d2bot/wiring_test.go  credit-runner  beltfix
 cmd/d2firsthour/  live-agent  firsthour
-cmd/d2firsthour/firsthour.go  credit-runner  target
 data/onboarding  credit-runner  firstminutes
 data/unlocks/ladder.json  credit-runner  gearsets
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
@@ -184,10 +183,8 @@ docs/beltfix.md  credit-runner  beltfix
 docs/bounce3.md  pro-runner  bounce3
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
-docs/decisions.md  credit-runner  target
 docs/design/item-verbs.md  credit-runner  itemverbs2
 docs/exploredpct.md  credit-runner  exploredpct
-docs/first-hour.md  credit-runner  target
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
 docs/fresh-start-pace.md  credit-runner  freshstart
@@ -223,11 +220,9 @@ docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/plan/data/progression-normal.json  credit-runner  hourfix
 docs/play-session.md  credit-runner  playsession
-docs/probes/firsthour.md  credit-runner  target
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
-docs/probes/hour1-analysis-2026-11-12.md  credit-runner  target
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
 docs/probes/test-characters.md  live-agent  fid-fixtures
@@ -241,7 +236,6 @@ docs/releases/0.1.0.md  credit-runner  cut010d
 docs/releases/0.1.1.md  credit-runner  cut011
 docs/repair.md  credit-runner  repairtrip
 docs/research/README.md  credit-runner  dietarchive
-docs/research/awesome-diablo-mining-2-2026-11-12.md  credit-runner  target
 docs/research/design-brief-v1.md  credit-runner  designbrief
 docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag

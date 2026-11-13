@@ -1,10 +1,11 @@
 ---
 id: TASK-394
 title: 'target: recalibrate the first-hour headline target'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-13T15:16:00Z'
+updated_date: '2026-11-13T15:29:00Z'
 labels:
   - docs
   - chore
