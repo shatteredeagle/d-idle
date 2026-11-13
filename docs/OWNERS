@@ -174,6 +174,7 @@ cmd/d2bot/wiring_test.go  credit-runner  beltfix
 cmd/d2firsthour/  live-agent  firsthour
 data/onboarding  credit-runner  firstminutes
 data/unlocks/ladder.json  credit-runner  gearsets
+deploy/d2d-container/context.sh  credit-runner  botadapt
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/aggression.md  credit-runner  wiring2
 docs/archive  credit-runner  dietarchive
@@ -223,8 +224,10 @@ docs/play-session.md  credit-runner  playsession
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
+docs/probes/killdrop-2026-11-13.md  credit-runner  botadapt
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
+docs/probes/test-characters.md  credit-runner  botadapt
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/process/queuespeed.md  credit-runner  queuespeed
@@ -336,6 +339,8 @@ internal/combat/safety.go  credit-runner  beltfix
 internal/combat/types.go  credit-runner  goldprio
 internal/d2dctl/item_verbs.go  credit-runner  itemverbs2
 internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs2
+internal/d2dctl/parse.go  credit-runner  botadapt
+internal/d2dctl/parse_test.go  credit-runner  botadapt
 internal/d2dctl/verbs.go  credit-runner  arrivalsettle
 internal/d2dinput  pro-runner  bounce3
 internal/d2dinput/controller.go  credit-runner  arrivalsettle

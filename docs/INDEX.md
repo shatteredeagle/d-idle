@@ -754,6 +754,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [firsthour.md](probes/firsthour.md): First hour: fresh hero, 60 realtime minutes at 1x
 - [hour1-analysis-2026-11-12.md](probes/hour1-analysis-2026-11-12.md): Fresh Paladin first hour: where the 60 minutes went (2026-11-12) (status: analysis, no code changed. Source: the sandbox bot log from the reset (build 0.0.261112021709), window...)
 - [itemverbs-live-2026-11-12.md](probes/itemverbs-live-2026-11-12.md): Item verbs: live click-vs-verb comparison (TASK-383, 2026-11-12) (status: result record. Tags: V = run and seen on the worker host. Driver: `tools/itemverbs/live_compare.py`;...)
+- [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
 
 `probes/navsoak/`
