@@ -187,7 +187,6 @@ docs/design/item-verbs.md  credit-runner  itemverbs2
 docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
 docs/first-session.md  credit-runner  testerreport
-docs/fork-rebase-2026-11-13.md  credit-runner  forkrebase
 docs/fresh-start-pace.md  credit-runner  freshstart
 docs/friend-checklist-0.1.0.md  credit-runner  cut010b
 docs/friend-checklist-0.1.0.md  credit-runner  cut010d
@@ -226,7 +225,6 @@ docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
-docs/probes/test-characters.md  credit-runner  forkrebase
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
 docs/process/queuespeed.md  credit-runner  queuespeed
