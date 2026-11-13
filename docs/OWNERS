@@ -129,6 +129,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate
 cmd/d2bot/adapters.go  credit-runner  goldprio
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/behaviors.go  credit-runner  gearsets
+cmd/d2bot/beltfill_adapter.go  credit-runner  beltfix
 cmd/d2bot/d2dbackend.go  credit-runner  campaign1
 cmd/d2bot/d2dbackend.go  credit-runner  exploredpct
 cmd/d2bot/d2dbackend.go  credit-runner  maphistory
@@ -168,6 +169,7 @@ cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryA
 cmd/d2bot/senseshistory_test.go  credit-runner  maphistoryC
 cmd/d2bot/skillswire.go  credit-runner  skilltrees
 cmd/d2bot/tidywire_test.go  credit-runner  tidy
+cmd/d2bot/wiring_test.go  credit-runner  beltfix
 cmd/d2firsthour/  live-agent  firsthour
 data/onboarding  credit-runner  firstminutes
 data/unlocks/ladder.json  credit-runner  gearsets
@@ -175,6 +177,7 @@ deploy/d2d-container/tester-report.sh  credit-runner  testerreport
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
+docs/beltfix.md  credit-runner  beltfix
 docs/bounce3.md  pro-runner  bounce3
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
@@ -309,11 +312,15 @@ internal/combat/fight.go  credit-runner  maphistory
 internal/combat/fight.go  credit-runner  maphistoryC
 internal/combat/fightend.go  credit-runner  maphistory
 internal/combat/fightend.go  credit-runner  maphistoryC
+internal/combat/fighter.go  credit-runner  beltfix
 internal/combat/fighter.go  credit-runner  maphistory
 internal/combat/fighter.go  credit-runner  maphistoryC
 internal/combat/interlude_test.go  credit-runner  goldprio
 internal/combat/lifeprice.go  credit-runner  palprofile2
+internal/combat/packdrink.go  credit-runner  beltfix
+internal/combat/packdrink_test.go  credit-runner  beltfix
 internal/combat/reach.go  credit-runner  maphistoryC
+internal/combat/safety.go  credit-runner  beltfix
 internal/combat/types.go  credit-runner  goldprio
 internal/d2dctl/item_verbs.go  credit-runner  itemverbs2
 internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs2
@@ -348,7 +355,9 @@ internal/invdesk/stash.go  credit-runner  itemverbs2
 internal/leveler/playerequip_test.go  credit-runner  gearsets
 internal/leveler/playerunequip.go  credit-runner  gearsets
 internal/loot  credit-runner  goldprio
+internal/loot/fixpickup_test.go  credit-runner  beltfix
 internal/loot/ignore_test.go  credit-runner  tidy
+internal/loot/lootskip_test.go  credit-runner  beltfix
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
@@ -384,11 +393,17 @@ internal/task/campaign.go  credit-runner  campaign1
 internal/task/guided.go  credit-runner  campaign1
 internal/task/guided_test.go  credit-runner  campaign1
 internal/tidy  credit-runner  tidy
+internal/town/belt  credit-runner  beltfix
+internal/town/beltfill.go  credit-runner  beltfix
+internal/town/beltfix6_test.go  credit-runner  beltfix
+internal/town/beltfix_test.go  credit-runner  beltfix
+internal/town/beltrepair.go  credit-runner  beltfix
 internal/town/chores.go  credit-runner  repairtrip
 internal/town/chores.go  credit-runner  tidy
 internal/town/playerid.go  credit-runner  itemverbs2
 internal/town/playerstash.go  credit-runner  itemverbs2
 internal/town/repairtrip_test.go  credit-runner  repairtrip
+internal/town/sim  credit-runner  beltfix
 internal/town/tidy.go  credit-runner  tidy
 internal/town/tidy_test.go  credit-runner  tidy
 internal/town/town.go  credit-runner  itemverbs2

@@ -217,6 +217,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [basics-audit.md](basics-audit.md): Basics audit: town and inventory scenarios against the code (agent BASICSAUDIT, 2026-10-31) (status: current. Offline audit for the milestone in BACKLOG.md section 0. Read-only on production code; no game,...)
 - [belt-plan.md](belt-plan.md): Belt plan knob (TASK-164) (status: built and tested offline; the live drill is below. Tags: V = proven by a test in this tree, S = from a...)
 - [beltfill.md](beltfill.md): Belt fill (BELTFILL)
+- [beltfix.md](beltfix.md): beltfix: healing columns, belt repair, pack drink (SURVIVAL bug) (status: built and tested offline; nothing ran live. Tags: V = verified (how is said), S = secondary, U =...)
 - [boss.md](boss.md): Boss scripts: internal/boss (agent BOSSRUNS) (status: partly stale (2026-10-30). Andariel's level floor is the knob `boss.andarielMinLevel` (docs/knobs.md,...)
 - [bot-small.md](bot-small.md): Bot small fixes (change botsmall) (status: notes of one small change card; offline only, nothing here is verified live.)
 - [bot.md](bot.md): bot: the core that ties the layers together (agent BOT)
