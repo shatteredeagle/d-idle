@@ -129,6 +129,7 @@
 | tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
 | prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
 | levelplan | proposed | - | `docs/levelplan.md`<br>`internal/plandata`<br>`docs/plan/data/progression-normal.json`<br>`internal/loot`<br>`internal/env/tuning_loot.go`<br>`internal/bot/plan.go`<br>`internal/bot/plan_test.go` | - |
+| wiring2 | proposed | - | `cmd/d2bot`<br>`internal/bot`<br>`internal/combat`<br>`internal/boss`<br>`internal/env`<br>`docs/wiring.md`<br>`docs/knobs.md`<br>`docs/stance.md`<br>`docs/aggression.md` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
@@ -183,6 +184,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- c9acafb4 11-12 19:28 `Merge agent/wiring2: Merge branch 'main' into TASK-388` (wiring2)
+- 18f126bb 11-12 19:27 `Merge branch 'main' into TASK-388` (-)
 - d18e3f6c 11-12 19:21 `Merge agent/levelplan: Merge branch 'main' into TASK-386` (levelplan)
 - 66ea1d1b 11-12 19:20 `Merge branch 'main' into TASK-386` (-)
 - 01e1e52d 11-12 19:19 `Merge agent/decomp14: Merge branch 'main' into TASK-387` (decomp14)
@@ -191,6 +194,4 @@
 - f9d4f3df 11-12 19:12 `Merge branch 'main' into TASK-391` (-)
 - a3f97547 11-12 19:07 `Merge agent/palprofile: Merge branch 'main' into TASK-390` (palprofile)
 - b8317f8b 11-12 19:06 `Merge branch 'main' into TASK-390` (-)
-- fcb53e36 11-12 19:05 `Merge agent/bglimit: unblock the merge queue: allow the generated BACKLOG.md over 256 KB in the gamecode guard` (bglimit)
-- 313b4aaf 11-12 17:32 `Merge agent/dropfix: dropfix: probe doc note, owns` (dropfix)
 <!-- statusgen:end -->

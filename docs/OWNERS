@@ -126,6 +126,7 @@ docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-minutes.jsonl.gz  gaterun  gat
 docs/probes/soak-logs/gate2-s17-20261107-1008-g2h-extras.jsonl.gz  gaterun  gate2multi-20261107-1811-g2h
 
 # BEGIN GENERATED OWNERS (tools/sharedgen/sharedgen.py from the owns: keys of open tasks; do not edit between the markers)
+cmd/d2bot  credit-runner  wiring2
 cmd/d2bot/adapters.go  credit-runner  goldprio
 cmd/d2bot/behaviors.go  credit-runner  campaign1
 cmd/d2bot/behaviors.go  credit-runner  gearsets
@@ -174,6 +175,7 @@ cmd/d2firsthour/  live-agent  firsthour
 data/onboarding  credit-runner  firstminutes
 data/unlocks/ladder.json  credit-runner  gearsets
 deploy/d2d-container/tester-report.sh  credit-runner  testerreport
+docs/aggression.md  credit-runner  wiring2
 docs/archive  credit-runner  dietarchive
 docs/away-drill.md  live-agent  awaydrill
 docs/backlog-howto.md  credit-runner  dietrule
@@ -204,6 +206,7 @@ docs/knobs.md  credit-runner  goldprio
 docs/knobs.md  credit-runner  hourfix
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  credit-runner  tidy
+docs/knobs.md  credit-runner  wiring2
 docs/knobs.md  live-agent  recoverypace
 docs/levelplan.md  credit-runner  levelplan
 docs/live-checks.md  credit-runner  repairtrip
@@ -251,6 +254,7 @@ docs/session-record.md  live-agent  sessions
 docs/skilltrees.md  credit-runner  skilltrees
 docs/skilltrees.md  credit-runner  skilltrees2
 docs/soaks/recoverypace.md  live-agent  recoverypace
+docs/stance.md  credit-runner  wiring2
 docs/t0-variants.md  credit-runner  qdensity
 docs/tester-guide.md  credit-runner  testerpack
 docs/tester-licence.md  credit-runner  testerlicence
@@ -260,8 +264,11 @@ docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prpost3
 docs/upstream/  credit-runner  prprep
+docs/wiring.md  credit-runner  wiring2
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
+internal/boss  credit-runner  wiring2
+internal/bot  credit-runner  wiring2
 internal/bot/areaskip_test.go  credit-runner  passagebounce
 internal/bot/areaskip_test.go  pro-runner  bounce3
 internal/bot/contracts.go  credit-runner  goldprio
@@ -309,6 +316,7 @@ internal/bot/runner.go  credit-runner  repairtrip
 internal/bot/task.go  credit-runner  hourfix
 internal/bot/whyline.go  credit-runner  repairtrip
 internal/campaign/  credit-runner  campaign1
+internal/combat  credit-runner  wiring2
 internal/combat/castfirst.go  credit-runner  maphistoryC
 internal/combat/classdata  credit-runner  palprofile2
 internal/combat/fight.go  credit-runner  goldprio
@@ -337,6 +345,7 @@ internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
 internal/decide/variants_test.go  credit-runner  qdensity
+internal/env  credit-runner  wiring2
 internal/env/tuning_bot.go  credit-runner  exploredpct
 internal/env/tuning_bot.go  credit-runner  freshstart
 internal/env/tuning_bot.go  credit-runner  hourfix
