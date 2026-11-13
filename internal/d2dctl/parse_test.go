@@ -88,3 +88,27 @@ func TestParseBuffs(t *testing.T) {
 		t.Fatalf("%v", got)
 	}
 }
+
+func TestParsePlayerColumns(t *testing.T) {
+	cases := []struct {
+		line  string
+		want  Player
+		level int
+	}{
+		{"1\tSpike\t28.00\t48.00\t-1\t-1\t0", Player{ID: 1, Name: "Spike", X: 28, Y: 48, Seat: -1, PMode: -1}, -1},
+		// upstream 4307d9c8 appends the level id; the old end-anchored rule read y as x and the level as the ghost flag
+		{"1\tSpike\t28.00\t48.00\t-1\t-1\t0\t2", Player{ID: 1, Name: "Spike", X: 28, Y: 48, Seat: -1, PMode: -1}, 2},
+		{"1\tSpike\t28.00\t48.00\t-1\t-1\t1\t2\t0x0001", Player{ID: 1, Name: "Spike", X: 28, Y: 48, Seat: -1, PMode: -1, Ghost: true}, 2},
+		{"2 Two Words 1.50 2.50 0 3 0", Player{ID: 2, Name: "Two Words", X: 1.5, Y: 2.5, Seat: 0, PMode: 3}, -1},
+	}
+	for _, c := range cases {
+		p, err := ParsePlayer(c.line)
+		if err != nil {
+			t.Fatalf("%q: %v", c.line, err)
+		}
+		c.want.Raw, c.want.Level = c.line, c.level
+		if p != c.want {
+			t.Errorf("%q: got %+v, want %+v", c.line, p, c.want)
+		}
+	}
+}

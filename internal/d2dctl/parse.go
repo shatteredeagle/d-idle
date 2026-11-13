@@ -328,17 +328,24 @@ type Player struct {
 	X, Y        float64
 	Seat, PMode int // seat -1: the first player; pmode -1: none
 	Ghost       bool
+	Level       int // the player's level id; -1 when the reply has no level column (d2d before upstream 4307d9c8)
 }
 
-// ParsePlayer parses <id> <name> <x> <y> <seat> <pmode> <ghost>; the last five fields are fixed.
+// ParsePlayer parses <id> <name> <x> <y> <seat> <pmode> <ghost> [<level> [<quest bits>]]. d2d writes the fields
+// tab-separated, so they are read from the front; upstream 4307d9c8 (2026-11-11) appended the level id, and counting
+// from the end then read y as x and the level as the ghost flag (TASK-396). A space-separated line (old fixtures)
+// keeps the old rule: the last five fields are fixed and the name may hold spaces.
 func ParsePlayer(line string) (Player, error) {
-	p := Player{Raw: line}
+	p := Player{Raw: line, Level: -1}
 	f := fields(line)
 	if len(f) < 7 {
 		return p, fmt.Errorf("player: want 7 fields, got %d", len(f))
 	}
-	k := len(f) - 5
-	var e [6]error
+	k := 2 // first field after the name
+	if !strings.Contains(line, "\t") {
+		k = len(f) - 5
+	}
+	var e [7]error
 	p.ID, e[0] = atoi(f[0])
 	p.Name = strings.Join(f[1:k], " ")
 	p.X, e[1] = atof(f[k])
@@ -348,6 +355,9 @@ func ParsePlayer(line string) (Player, error) {
 	var g int
 	g, e[5] = atoi(f[k+4])
 	p.Ghost = g != 0
+	if len(f) > k+5 {
+		p.Level, e[6] = atoi(f[k+5])
+	}
 	return p, firstErr(e[:]...)
 }
 
