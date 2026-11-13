@@ -1,11 +1,11 @@
 ---
 id: TASK-396
 title: 'botadapt: debug players parse on rebased d2d (kill drop)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-13T16:48:00Z'
-updated_date: '2026-11-13T16:59:00Z'
+updated_date: '2026-11-13T17:14:00Z'
 labels:
   - bot
   - bug
