@@ -1,10 +1,11 @@
 ---
 id: TASK-392
 title: 'przeal: Zeal strike gap, fork build on current main, upstream fix check'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-12T23:58:00Z'
+updated_date: '2026-11-13T00:45:00Z'
 labels:
   - d2d
   - upstream-pr

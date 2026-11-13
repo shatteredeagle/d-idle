@@ -262,9 +262,6 @@ docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prpost3
 docs/upstream/  credit-runner  prprep
-docs/upstream/drafts/zeal-gap.md  credit-runner  przeal
-docs/upstream/pr-queue.md  credit-runner  przeal
-docs/upstream/zeal-gap/  credit-runner  przeal
 docs/wiring.md  credit-runner  wiring2
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
@@ -521,13 +518,6 @@ tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2
 tools/emu/pp_*  credit-runner  prprep
 tools/emu/zd_*  credit-runner  zealdiff
-tools/emu/zg_build.sh  credit-runner  przeal
-tools/emu/zg_game.py  credit-runner  przeal
-tools/emu/zg_grid.py  credit-runner  przeal
-tools/emu/zg_run.sh  credit-runner  przeal
-tools/emu/zg_sandbox.sh  credit-runner  przeal
-tools/emu/zg_tree.sh  credit-runner  przeal
-tools/emu/zg_zeal_test.cpp  credit-runner  przeal
 tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/checklist.sh  credit-runner  cut010b
 tools/friendpack/checklist.sh  credit-runner  cutfix

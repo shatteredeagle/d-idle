@@ -132,7 +132,6 @@
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
-| przeal | proposed | - | `tools/emu/zg_build.sh`<br>`tools/emu/zg_tree.sh`<br>`tools/emu/zg_run.sh`<br>`tools/emu/zg_game.py`<br>`tools/emu/zg_grid.py`<br>`tools/emu/zg_zeal_test.cpp`<br>`tools/emu/zg_sandbox.sh`<br>`docs/upstream/zeal-gap/`<br>`docs/upstream/drafts/zeal-gap.md`<br>`docs/upstream/pr-queue.md` | `fork-branch:fid/zeal-gap-r1`<br>`fork-branch:fork-only/sandbox-zeal` |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
