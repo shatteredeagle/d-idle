@@ -27,6 +27,7 @@ exclusive:
   - "fork-branch:fid/zeal-gap-r1"
   - "fork-branch:fork-only/sandbox-zeal"
 contracts: []
+result: "Not a PR: upstream 276f85c0 (Dravis, 2026-11-12) already fixes the Zeal gap with the same rule (FUN_005dbc60 -> FUN_0056e210 Param2 -> FUN_00553b10 restarts the swing; next strike ceil(256 x action / rate) later). Grid on one animation record: parent 600 of 600 gaps differ (+4..+10 ticks), upstream main 200 of 600 (+1 tick, d2d action_ms scaling, not Zeal-specific). Sandbox branch fork-only/sandbox-zeal 90ac00ab pushed to the private fork, image not swapped. Verified offline on the worker host, no live game."
 ---
 
 ## Description
@@ -39,8 +40,8 @@ Why: decomp13 found Zeal strikes 15 ticks apart in d2d against 7 in game.exe (TA
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 Re-derive the Zeal strike gap rule from FUN_00553b10 / FUN_0056e210 / FUN_005dbc60
-- [ ] #2 Differential grid (weapons x IAS x WSM) on current upstream main and its parent
-- [ ] #3 Sandbox test branch fork-only/sandbox-zeal pushed, image not swapped
-- [ ] #4 Draft recorded in the PR queue
+- [x] #1 Re-derive the Zeal strike gap rule from FUN_00553b10 / FUN_0056e210 / FUN_005dbc60
+- [x] #2 Differential grid (weapons x IAS x WSM) on current upstream main and its parent
+- [x] #3 Sandbox test branch fork-only/sandbox-zeal pushed, image not swapped
+- [x] #4 Draft recorded in the PR queue
 <!-- AC:END -->

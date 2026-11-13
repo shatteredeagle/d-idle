@@ -34,7 +34,7 @@ The 50 cells are those where the swing length in whole ticks is shorter than the
 
 ## Fork-only sandbox
 
-Branch `fork-only/sandbox-zeal` on the private fork remote: `a42dba25` (sandbox-itemverbs, the lineage of image `d2dbot:iv1`) plus upstream `276f85c0` cherry-picked (conflict in `strike.cpp`: this lineage has no `start_delay` call after the strike; resolved by keeping the lineage's lines). The image was NOT swapped.
+Branch `fork-only/sandbox-zeal` on the private fork remote: `a42dba25` (sandbox-itemverbs, the lineage of image `d2dbot:iv1`) plus upstream `276f85c0` cherry-picked as `44ed27f6` and `90ac00ab` (head; the test reads the action time from the animation, this lineage has no `action_ms` member; `test_zeal_chain` and `test_game` rc 0 on the worker host) (conflict in `strike.cpp`: this lineage has no `start_delay` call after the strike; resolved by keeping the lineage's lines). The image was NOT swapped.
 
 ## Re-run
 
