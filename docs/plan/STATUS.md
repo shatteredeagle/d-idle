@@ -129,6 +129,7 @@
 | tidy | proposed | - | `internal/tidy`<br>`internal/town/tidy.go`<br>`internal/town/tidy_test.go`<br>`docs/tidy.md`<br>`cmd/d2bot/tidywire_test.go`<br>`internal/env/tuning_town.go`<br>`internal/invdesk/desk.go`<br>`cmd/d2bot/invwire.go`<br>`internal/town/chores.go`<br>`internal/town/town.go`<br>`docs/knobs.md`<br>`internal/loot/ignore_test.go` | - |
 | prpost3 | proposed | - | `docs/upstream/` | `fork-branch:fid/warp-arrival-r2`<br>`upstream-pr:warp-arrival` |
 | wiring2 | proposed | - | `cmd/d2bot`<br>`internal/bot`<br>`internal/combat`<br>`internal/boss`<br>`internal/env`<br>`docs/wiring.md`<br>`docs/knobs.md`<br>`docs/stance.md`<br>`docs/aggression.md` | - |
+| palskill-matrix | proposed | - | `docs/research/pal-skill-matrix.md`<br>`docs/research/pal-zeal-trace.md`<br>`tools/emu/zd_*`<br>`tools/emu/pm_*` | - |
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
@@ -183,6 +184,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 52b63449 11-12 22:17 `Merge agent/decomp13: decomp13: merge main, keep both decomp-queue lines` (decomp13)
+- b4cfdc0d 11-12 21:11 `decomp13: merge main, keep both decomp-queue lines` (-)
 - 0410f449 11-12 19:39 `Merge agent/przeal: Merge branch 'main' into TASK-392` (przeal)
 - 2e6959dc 11-12 19:38 `Merge branch 'main' into TASK-392` (-)
 - c9acafb4 11-12 19:28 `Merge agent/wiring2: Merge branch 'main' into TASK-388` (wiring2)
@@ -191,6 +194,4 @@
 - 66ea1d1b 11-12 19:20 `Merge branch 'main' into TASK-386` (-)
 - 01e1e52d 11-12 19:19 `Merge agent/decomp14: Merge branch 'main' into TASK-387` (decomp14)
 - 72d1c82c 11-12 19:18 `Merge branch 'main' into TASK-387` (-)
-- 14ede0c1 11-12 19:13 `Merge agent/beltfix: Merge branch 'main' into TASK-391` (beltfix)
-- f9d4f3df 11-12 19:12 `Merge branch 'main' into TASK-391` (-)
 <!-- statusgen:end -->
