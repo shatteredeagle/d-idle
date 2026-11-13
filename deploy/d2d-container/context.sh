@@ -6,6 +6,8 @@
 # Every input is public: the d2d source is the tag didle-gate2-lab3 of the published fork, the vendored inputs are release
 # archives pinned by sha256 below. Nothing comes from a local build directory.
 # Env: FORK_URL=https://github.com/shatteredeagle/d2d-didle  (default) git URL or local path to take the d2d source from
+#      SOURCE_URL=URL  where recipients get the source, named in SOURCE.txt (default: FORK_URL when it is a URL, else the
+#                      published fork; a local path never goes into the image)
 #      VENDOR_CACHE=dir  keep the downloaded archives between runs (default $TMPDIR/d2d-vendor-cache); every file is re-hashed
 #      APP_VERSION=x.y.z  stamp the Go binaries with that version (release builds; also pass --build-arg APP_VERSION to docker build)
 #      PREBUILT=path to a d2d binary: skip the source stage (build with --build-arg D2D_SRC=prebuilt)
@@ -20,6 +22,8 @@ pin_commit=f75816c616c8253930d88277b90936e3eabe3bc8
 ref=${2:-$pin_commit}
 fork_url=${FORK_URL:-https://github.com/shatteredeagle/d2d-didle}
 pin_tag=didle-gate2-lab3
+src_url=${SOURCE_URL:-https://github.com/shatteredeagle/d2d-didle}
+case $fork_url in *://* | *@*:*) [ -n "${SOURCE_URL:-}" ] || src_url=$fork_url ;; esac
 repo=$(cd "$(dirname "$0")/../.." && pwd)
 # Vendored inputs (versions are what the fork pins in its CMake files: CLI11 GIT_TAG v2.6.2, sentry-native GIT_TAG 0.17.3,
 # D2D_FFMPEG_VERSION/D2D_FFMPEG_SHA256). The archives are fetched here, hash-checked, and unpacked into vendor/.
@@ -61,15 +65,16 @@ else
 	trap 'rm -rf "$srcrepo"' EXIT
 	git init -q "$srcrepo"
 	if [ "$ref" = "$pin_commit" ]; then
+		label="tag $pin_tag ($pin_ref)"
 		git -C "$srcrepo" fetch -q --depth 1 "$fork_url" "refs/tags/$pin_tag"
 		ref=FETCH_HEAD
 	else
+		label="ref $ref (not the pinned build)"
 		git -C "$srcrepo" fetch -q --tags "$fork_url" "+refs/heads/*:refs/remotes/o/*"
 	fi
 	commit=$(git -C "$srcrepo" rev-parse "$ref^{commit}")
 	[ "$ref" != FETCH_HEAD ] || [ "$commit" = "$pin_commit" ] || { echo "context.sh: tag $pin_tag is $commit, not the pin $pin_commit" >&2; exit 1; }
 	git -C "$srcrepo" archive --prefix=src/ "$commit" | tar x -C "$ctx"
-	[ "$ref" != FETCH_HEAD ] || ref="$pin_ref"
 	echo "$commit" | cut -c1-8 > "$ctx/src/VERSION"
 	mkdir -p "$ctx/vendor-archives" "$ctx/vendor/cli11" "$ctx/vendor/sentry-native"
 	a=$(fetch "$cli11_url" "$cli11_sha"); cp "$a" "$ctx/vendor-archives/"
@@ -82,7 +87,7 @@ else
 	cp "$ctx/src/LEGAL.md" "$ctx/licenses/d2d-LEGAL.md"
 	cat > "$ctx/licenses/SOURCE.txt" <<EOT
 This image contains d2d, a GPL-3.0-or-later program (upstream https://github.com/psi29a/d2decomped) with local patches.
-Fork: $fork_url, tag $pin_tag ($ref), commit $commit.
+Fork: $src_url, $label, commit $commit.
 Vendored build inputs (public release archives, sha256 checked by the build):
   CLI11 2.6.2 (BSD-3-Clause)        $cli11_url  sha256 $cli11_sha
   sentry-native 0.17.3 with submodules, crashpad (MIT, Apache-2.0, see licenses in the d2d install tree; crash reporting is OFF: no DSN, no --send-crash-reports)
@@ -97,4 +102,5 @@ if find "$ctx" \( -iname '*.mpq' -o -iname 'game.exe' \) | grep -q .; then
 	echo "context.sh: game data found in $ctx, abort" >&2
 	exit 1
 fi
+[ "$src_url" = "$fork_url" ] || [ -n "${PREBUILT:-}" ] || echo "context.sh: SOURCE.txt names $src_url: commit ${commit:-?} must be published there before the image is given to anyone" >&2
 echo "context ready: $ctx ($(du -sh "$ctx" | cut -f1))"
