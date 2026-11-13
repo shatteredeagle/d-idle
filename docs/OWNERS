@@ -205,6 +205,7 @@ docs/knobs.md  credit-runner  hourfix
 docs/knobs.md  credit-runner  pursuers
 docs/knobs.md  credit-runner  tidy
 docs/knobs.md  live-agent  recoverypace
+docs/levelplan.md  credit-runner  levelplan
 docs/live-checks.md  credit-runner  repairtrip
 docs/locks.md  credit-runner  lockscan
 docs/onboarding-tour.md  credit-runner  onboardtour
@@ -215,6 +216,7 @@ docs/passagebounce.md  credit-runner  arrivalsettle
 docs/passagebounce.md  credit-runner  passagebounce
 docs/plan/STATUS.md  credit-runner  statusrefresh
 docs/plan/data/progression-normal.json  credit-runner  hourfix
+docs/plan/data/progression-normal.json  credit-runner  levelplan
 docs/play-session.md  credit-runner  playsession
 docs/probes/firsthour.md  live-agent  firsthour
 docs/probes/h1-baseline.md  user  h1baseline
@@ -293,6 +295,8 @@ internal/bot/observe.go  credit-runner  freshstart
 internal/bot/observe.go  credit-runner  lockscan
 internal/bot/observe.go  credit-runner  passagebounce
 internal/bot/observe.go  pro-runner  bounce3
+internal/bot/plan.go  credit-runner  levelplan
+internal/bot/plan_test.go  credit-runner  levelplan
 internal/bot/repairtrip.go  credit-runner  repairtrip
 internal/bot/repairtrip_test.go  credit-runner  repairtrip
 internal/bot/runner.go  credit-runner  campaign1
@@ -339,6 +343,7 @@ internal/env/tuning_bot.go  credit-runner  hourfix
 internal/env/tuning_invdesk.go  credit-runner  gearsets
 internal/env/tuning_loot.go  credit-runner  goldprio
 internal/env/tuning_loot.go  credit-runner  hourfix
+internal/env/tuning_loot.go  credit-runner  levelplan
 internal/env/tuning_nav.go  credit-runner  pursuers
 internal/env/tuning_resource.go  credit-runner  freshstart
 internal/env/tuning_resource.go  live-agent  recoverypace
@@ -355,6 +360,7 @@ internal/invdesk/stash.go  credit-runner  itemverbs2
 internal/leveler/playerequip_test.go  credit-runner  gearsets
 internal/leveler/playerunequip.go  credit-runner  gearsets
 internal/loot  credit-runner  goldprio
+internal/loot  credit-runner  levelplan
 internal/loot/fixpickup_test.go  credit-runner  beltfix
 internal/loot/ignore_test.go  credit-runner  tidy
 internal/loot/lootskip_test.go  credit-runner  beltfix
@@ -371,6 +377,7 @@ internal/nav/roam.go  credit-runner  maphistoryC
 internal/nav/roam.go  credit-runner  maptrail
 internal/nav/roam.go  credit-runner  pursuers
 internal/nav/walk.go  credit-runner  pursuers
+internal/plandata  credit-runner  levelplan
 internal/plandata/progression-normal.json  credit-runner  hourfix
 internal/readiness/  credit-runner  ready-model
 internal/readiness/areatable.go  credit-runner  ready-area-table

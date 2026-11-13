@@ -394,6 +394,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lab-verbs.md](lab-verbs.md): Lab verbs: the `--lab-verbs` gate of the private d2d fork (status: current (TASK-42, 2026-11-06). Tags: V = read in the fork commit or run on the worker host, U = unverified.)
 - [leakhunt.md](leakhunt.md): fd growth hunt (agent LEAKHUNT, VERIFIED LIVE on the worker host i3, 2026-10-28)
 - [leveler.md](leveler.md): leveler: points, gear and the leveling loop (agent LEVELER)
+- [levelplan.md](levelplan.md): levelplan: SME-backed leveling changes (2026-11-12)
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
