@@ -17,6 +17,7 @@ func potionRig(t *testing.T) (*loot.Looter, *sim.World) {
 	w.Player.Level = 40
 	w.Player.Difficulty = d2.Normal
 	r.Env.Tune.Loot.PotionBuffer = 1
+	r.Env.Tune.Loot.PotionBufferMana = 1
 	return l, w
 }
 

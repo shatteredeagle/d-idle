@@ -15,6 +15,7 @@ import (
 func newLooter(t *testing.T) (*loot.Looter, *sim.Rig) {
 	r := sim.NewRig(t)
 	r.Env.Tune.Loot.PotionBuffer = 0 // the tests below were written for no pack buffer; TestDefaultPackBuffer covers the default
+	r.Env.Tune.Loot.PotionBufferMana = 0
 	l := loot.New(r.Env, r.Mv)
 	l.UseSource(r.W.Snapshot, r.W.UnitStats)
 	return l, r
@@ -393,6 +394,7 @@ func TestPotionWantByBuildAndDifficulty(t *testing.T) {
 	l, r := newLooter(t)
 	w := r.W
 	r.Env.Tune.Loot.PotionBuffer = 0
+	r.Env.Tune.Loot.PotionBufferMana = 0
 	w.Player.Class = d2.Barbarian
 	w.Player.Level = 40
 	w.Add("hp1", d2.ContBelt, 0, 0) // room left on the belt, so only the plan's columns decide
@@ -435,6 +437,7 @@ func TestPotionWantNormalIgnoresBuild(t *testing.T) {
 	l, r := newLooter(t)
 	w := r.W
 	r.Env.Tune.Loot.PotionBuffer = 0
+	r.Env.Tune.Loot.PotionBufferMana = 0
 	w.Add("hp1", d2.ContBelt, 0, 0)
 	w.Player.Difficulty = d2.Normal
 	items := []d2.Unit{w.NewItem("hp3", 2), w.NewItem("mp3", 2), w.NewItem("rvl", 2)}
@@ -536,6 +539,7 @@ func TestRejuvIsCapped(t *testing.T) {
 	l, r := newLooter(t)
 	w := r.W
 	r.Env.Tune.Loot.PotionBuffer = 0
+	r.Env.Tune.Loot.PotionBufferMana = 0
 	r.Env.Tune.Loot.RejuvSpare = 3
 	w.Player.Class = d2.Barbarian
 	w.Player.Difficulty = d2.Normal
