@@ -133,6 +133,7 @@
 | earlydeath13 | proposed | - | `docs/research/earlydeath13.md` | - |
 | palprofile2 | proposed | - | `internal/combat/classdata`<br>`internal/combat/lifeprice.go`<br>`docs/palprofile.md` | - |
 | beltfix | in-progress | - | `internal/town/belt`<br>`internal/town/beltfill.go`<br>`internal/town/beltrepair.go`<br>`internal/town/sim`<br>`internal/combat/packdrink.go`<br>`internal/combat/packdrink_test.go`<br>`docs/beltfix.md`<br>`internal/town/beltfix6_test.go`<br>`internal/combat/fighter.go`<br>`internal/combat/safety.go`<br>`internal/loot/fixpickup_test.go`<br>`internal/loot/lootskip_test.go`<br>`internal/town/beltfix_test.go`<br>`cmd/d2bot/beltfill_adapter.go`<br>`cmd/d2bot/wiring_test.go` | - |
+| cut011 | proposed | - | `docs/releases/0.1.1.md`<br>`docs/friend-checklist-0.1.1.md` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
@@ -184,6 +185,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 0a2bbedd 11-12 22:22 `Merge agent/cut011: friends release 0.1.1 built, verified, staged (not published)` (cut011)
+- a2b32a5b 11-12 22:21 `Merge branch 'main' into TASK-393` (-)
 - 52b63449 11-12 22:17 `Merge agent/decomp13: decomp13: merge main, keep both decomp-queue lines` (decomp13)
 - b4cfdc0d 11-12 21:11 `decomp13: merge main, keep both decomp-queue lines` (-)
 - 0410f449 11-12 19:39 `Merge agent/przeal: Merge branch 'main' into TASK-392` (przeal)
@@ -192,6 +195,4 @@
 - 18f126bb 11-12 19:27 `Merge branch 'main' into TASK-388` (-)
 - d18e3f6c 11-12 19:21 `Merge agent/levelplan: Merge branch 'main' into TASK-386` (levelplan)
 - 66ea1d1b 11-12 19:20 `Merge branch 'main' into TASK-386` (-)
-- 01e1e52d 11-12 19:19 `Merge agent/decomp14: Merge branch 'main' into TASK-387` (decomp14)
-- 72d1c82c 11-12 19:18 `Merge branch 'main' into TASK-387` (-)
 <!-- statusgen:end -->
