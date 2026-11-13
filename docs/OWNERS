@@ -239,6 +239,8 @@ docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/fid-poisonres-trace.md  credit-runner  fid-poison-res-diag
 docs/research/fidelity-vendor-probe.md  live-agent  fidprobe-vendor
 docs/research/mocks/return.html  credit-runner  returnmock
+docs/research/pal-skill-matrix.md  credit-runner  palskill-matrix
+docs/research/pal-zeal-trace.md  credit-runner  palskill-matrix
 docs/research/return-screen.md  credit-runner  returnmock
 docs/research/upstream-next.md  credit-runner  upstream-next
 docs/senses-map.md  credit-runner  maphistory
@@ -514,9 +516,11 @@ internal/watch/web/skills.js  credit-runner  skilltrees2
 internal/watch/whyline.json  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  repairtrip
 tools/bounce3  pro-runner  bounce3
+tools/emu/pm_*  credit-runner  palskill-matrix
 tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2
 tools/emu/pp_*  credit-runner  prprep
+tools/emu/zd_*  credit-runner  palskill-matrix
 tools/emu/zd_*  credit-runner  zealdiff
 tools/firsthour.sh  live-agent  firsthour
 tools/friendpack/checklist.sh  credit-runner  cut010b
