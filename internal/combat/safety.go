@@ -66,6 +66,15 @@ func BeltCapacity(inv *d2.Inventory, db *data.DB) int {
 			slots = b.Slots
 		}
 	}
+	// never fewer than the boxes in use (same floor as town/belt.Slots, docs/beltfix.md)
+	for _, u := range inv.Container(d2.ContBelt) {
+		if u.Item == nil {
+			continue
+		}
+		if box := u.Item.GY*beltCols + u.Item.GX; box >= slots && box < 4*beltCols {
+			slots = (box/beltCols + 1) * beltCols
+		}
+	}
 	return slots
 }
 

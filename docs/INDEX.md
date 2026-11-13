@@ -217,6 +217,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [basics-audit.md](basics-audit.md): Basics audit: town and inventory scenarios against the code (agent BASICSAUDIT, 2026-10-31) (status: current. Offline audit for the milestone in BACKLOG.md section 0. Read-only on production code; no game,...)
 - [belt-plan.md](belt-plan.md): Belt plan knob (TASK-164) (status: built and tested offline; the live drill is below. Tags: V = proven by a test in this tree, S = from a...)
 - [beltfill.md](beltfill.md): Belt fill (BELTFILL)
+- [beltfix.md](beltfix.md): beltfix: healing columns, belt repair, pack drink (SURVIVAL bug) (status: built and tested offline; nothing ran live. Tags: V = verified (how is said), S = secondary, U =...)
 - [boss.md](boss.md): Boss scripts: internal/boss (agent BOSSRUNS) (status: partly stale (2026-10-30). Andariel's level floor is the knob `boss.andarielMinLevel` (docs/knobs.md,...)
 - [bot-small.md](bot-small.md): Bot small fixes (change botsmall) (status: notes of one small change card; offline only, nothing here is verified live.)
 - [bot.md](bot.md): bot: the core that ties the layers together (agent BOT)
@@ -393,6 +394,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lab-verbs.md](lab-verbs.md): Lab verbs: the `--lab-verbs` gate of the private d2d fork (status: current (TASK-42, 2026-11-06). Tags: V = read in the fork commit or run on the worker host, U = unverified.)
 - [leakhunt.md](leakhunt.md): fd growth hunt (agent LEAKHUNT, VERIFIED LIVE on the worker host i3, 2026-10-28)
 - [leveler.md](leveler.md): leveler: points, gear and the leveling loop (agent LEVELER)
+- [levelplan.md](levelplan.md): levelplan: SME-backed leveling changes (2026-11-12)
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
@@ -428,7 +430,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [palfix.md](palfix.md): PALFIX: the Paladin fix cards
 - [palmelee.md](palmelee.md): palmelee: why the Paladin never hit (TASK-175) and what is left of the pace (TASK-177) (status: fixed and measured 2026-11-08 (EST). Tags: V verified live (how stated), S read in code, U unverified....)
 - [palpace.md](palpace.md): palpace: realtime Paladin pace (TASK-177) (status: see docs/palmelee.md (the melee fix, the realtime run and the corrected expectation); this file is the...)
-- [palprofile.md](palprofile.md): palprofile: Paladin attack order as data (2026-11-10)
+- [palprofile.md](palprofile.md): palprofile: Paladin attack order as data (2026-11-10) (status: the attack bands below were superseded on 2026-11-12 by the section "Round 2" at the end (Sacrifice band,...)
 - [palready.md](palready.md): palready: Might aura once per fight, recovery leaves a dry field (TASK-180) (status: aura fixed and verified live 2026-11-08 (EST); dry-recovery rule proven offline only (it did not fire in...)
 - [palsme.md](palsme.md): PALSME: SME review of the Paladin tables
 - [paperdoll-art-build.md](paperdoll-art-build.md): Paper doll game art: what is built (status: in progress (TASK-244). Plan and licence reasoning: research/paperdoll-art.md. Tags: V verified (command...)
@@ -537,6 +539,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [cold-enchanted-length.md](upstream/drafts/cold-enchanted-length.md): Draft (local, NOT posted): "Cold Enchanted chills for its level x 5 + 100 frames (FUN_005a1c70)" (status: r4, ready for the verifier's second pass (prprep2, 2026-11-11). Branch `fid/cold-enchanted-length-r4` on...)
 - [lightning-last-unit.md](upstream/drafts/lightning-last-unit.md): Draft (local, NOT posted): "Lightning hits one unit a frame and skips the last (FUN_005ae1f0)" (status: r3, ready for the verifier's second pass (prprep2, 2026-11-11). Branch `fid/missile-last-unit-r3` on the...)
 - [warp-arrival.md](upstream/drafts/warp-arrival.md): Draft (local, NOT posted): "A warp lands on the free subtile nearest its unit, as FUN_005550b0" (status: r2, ready for the second verifier pass (prwarp, TASK-372, 2026-11-12). Branch `fid/warp-arrival-r2` on the...)
+- [zeal-gap.md](upstream/drafts/zeal-gap.md): Draft (local, NOT posted): Zeal strike gap, FUN_00553b10 (SUPERSEDED upstream, one residual) (status: 2026-11-12 (TASK-392, agent przeal). **The PR this card was to build is not needed: upstream main...)
 
 `upstream/`
 

@@ -21,9 +21,8 @@ const (
 	novaCrowd     = 3               // hostiles within novaRadius that make Frost Nova worth a cast
 	novaRadius    = 4               // subtiles
 	novaGap       = 2500 * time.Millisecond
-	stepBackDist  = 3  // single melee monster this close ...
-	stepBackLife  = 60 // ... and life below this percent and falling
-	stepBackSteps = 2  // steps per burst, then a cast or a drink
+	stepBackDist  = 3 // single melee monster this close ...
+	stepBackSteps = 2 // steps per burst, then a cast or a drink
 	healthEvery   = time.Minute
 )
 

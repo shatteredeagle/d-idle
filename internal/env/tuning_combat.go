@@ -57,7 +57,7 @@ type CombatTuning struct {
 	// Positioning.
 	KiteEnabled     int // 1 = back away from melee monsters that get too close
 	KiteDistance    int // back away when a melee monster is closer than this
-	KiteLifePct     int // kite only below this life % (elites trigger it at any life)
+	KiteLifePct     int // step back from a single melee monster only below this life % and falling (60 = the rule's old constant)
 	KiteMaxSteps    int // retreat steps per target before standing and fighting
 	KiteRetreat     int // how far one retreat step goes
 	DodgeRadius     int // step away from hostile missiles closer than this
@@ -79,6 +79,12 @@ type CombatTuning struct {
 	// Class profiles (docs/combat.md).
 	AuraCheckMs int // re-read the active aura this often during a fight (the read is a few memory words)
 	LeftFailSec int // after a left skill could not be selected, do not try it again for this long
+
+	// Paladin early profile (docs/palprofile.md): Sacrifice costs life, Holy Fire only pays in a pack.
+	Sacrifice           int // 1 = a profile may attack with Sacrifice (its band lists it); 0 = never, plain Attack instead
+	SacrificeMinLifePct int // Sacrifice only at or above this life %; below it plain Attack until life is back 10 points above
+	SacrificeMinPotions int // Sacrifice only with at least this many healing/rejuvenation potions in the belt
+	HolyFireMinMonsters int // an aura marked needsCrowd (Holy Fire) is wanted only with this many hostiles within 8 subtiles
 }
 
 func DefaultCombatTuning() CombatTuning {
@@ -88,8 +94,9 @@ func DefaultCombatTuning() CombatTuning {
 		PotionGapMs: 1000, PotionEmergencyPct: 30, RejuvGapMs: 300, ReactionMs: 120, PollMs: 60,
 		TargetQuality: 100, RangeMargin: 3, ClearRadius: 40, FightRadius: 22, MaxTargetSec: 45, NoProgressSec: 12, ClearMaxSec: 180,
 		CastGapMs: 650, CastPerSkill: 1, CastMarginMs: 90, CastFCR: 0, LowManaWaitMs: 700, StaticCasts: 4, StaticCastsBR: 0, StaticFloorNorm: 25, StaticFloorNM: 33, StaticFloorHell: 50, NovaManaFloor: 25,
-		KiteEnabled: 1, KiteDistance: 10, KiteLifePct: 70, KiteMaxSteps: 6, KiteRetreat: 12, DodgeRadius: 4, MissileDodge: 0, ThreatDodge: 0, DodgeReactMs: 400, ShooterKillMin: 0, RunnerGuard: 1, StandOK: 0, CurseRetreatPct: 60, MaxApproaches: 12, ReachSec: 15, IgnoreMemorySec: 90,
+		KiteEnabled: 1, KiteDistance: 10, KiteLifePct: 60, KiteMaxSteps: 6, KiteRetreat: 12, DodgeRadius: 4, MissileDodge: 0, ThreatDodge: 0, DodgeReactMs: 400, ShooterKillMin: 0, RunnerGuard: 1, StandOK: 0, CurseRetreatPct: 60, MaxApproaches: 12, ReachSec: 15, IgnoreMemorySec: 90,
 		BuffRecastSec: 150, BuffMarginSec: 6, AuraCheckMs: 1500, LeftFailSec: 60,
+		Sacrifice: 1, SacrificeMinLifePct: 70, SacrificeMinPotions: 1, HolyFireMinMonsters: 3,
 	}
 }
 
@@ -137,7 +144,7 @@ func combatKnobs() []Knob {
 		k("novaManaFloor", "Frost Nova mana floor", "mana", "Frost Nova on a crowd of 3 or more is not cast with less mana than this, so the mana stays for the bolts.", float64(d.NovaManaFloor), 0, 60, false),
 		k("kiteEnabled", "Kite melee monsters", "bool", "1 backs away from melee monsters that get close.", float64(d.KiteEnabled), 0, 1, true),
 		k("kiteDistance", "Kite distance", "subtiles", "Back away when a melee monster is closer than this.", float64(d.KiteDistance), 4, 20, true),
-		k("kiteLifePct", "Kite below life", "%", "Kite normal monsters only below this life percent.", float64(d.KiteLifePct), 40, 100, true),
+		k("kiteLifePct", "Kite below life", "%", "Step back from a single melee monster only below this life percent (and falling).", float64(d.KiteLifePct), 40, 100, true),
 		k("kiteMaxSteps", "Kite steps per target", "count", "Retreat steps per target before standing to fight.", float64(d.KiteMaxSteps), 0, 12, true),
 		k("kiteRetreat", "Kite step length", "subtiles", "Length of one retreat step.", float64(d.KiteRetreat), 6, 20, true),
 		k("dodgeRadius", "Missile dodge radius", "subtiles", "Step away from hostile missiles closer than this.", float64(d.DodgeRadius), 0, 8, true),
@@ -153,6 +160,10 @@ func combatKnobs() []Knob {
 		k("ignoreMemorySec", "Ignore memory", "s", "How long an ignored target is left alone (the memory doubles with every repeat).", float64(d.IgnoreMemorySec), 20, 300, true),
 		k("auraCheckMs", "Aura check", "ms", "How often the fight loop re-reads the active aura and re-applies it.", float64(d.AuraCheckMs), 500, 5000, false),
 		k("leftFailSec", "Left skill retry", "s", "After a left skill could not be selected, wait this long before trying it again.", float64(d.LeftFailSec), 10, 300, true),
+		k("sacrifice", "Paladin Sacrifice attack", "bool", "1 lets a profile attack with Sacrifice (about x1.9 damage over Attack, costs 8 percent of the damage dealt in life, docs/palprofile.md); 0 keeps plain Attack.", float64(d.Sacrifice), 0, 1, true),
+		k("sacrificeMinLifePct", "Sacrifice life floor", "%", "Sacrifice only at or above this life percent; below it plain Attack until life is 10 points above the floor again.", float64(d.SacrificeMinLifePct), 40, 100, true),
+		k("sacrificeMinPotions", "Sacrifice potion floor", "count", "Sacrifice only with at least this many healing or rejuvenation potions in the belt (and no dead merc).", float64(d.SacrificeMinPotions), 0, 8, true),
+		k("holyFireMinMonsters", "Holy Fire crowd size", "count", "A needsCrowd aura (Holy Fire) is wanted only with at least this many hostiles within 8 subtiles; fewer and Might is used (Might wins below about 3 monsters, docs/palprofile.md).", float64(d.HolyFireMinMonsters), 1, 10, false),
 		k("buffRecastSec", "Buff recast", "s", "Upper bound and fallback: recast armors and shields this long after the last cast. An armor whose real duration is known (Frozen Armor 120 s at level 1) is recast earlier, see buffMarginSec.", float64(d.BuffRecastSec), 60, 300, false),
 		k("buffMarginSec", "Buff recast margin", "s", "Recast an armor or shield this many seconds before its real duration (Skills.txt auralencalc at the skill's level) runs out.", float64(d.BuffMarginSec), 0, 30, false),
 	}

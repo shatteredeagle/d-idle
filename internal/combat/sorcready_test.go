@@ -60,7 +60,7 @@ func TestColdProfileBands(t *testing.T) {
 	if o := cold.AttackNames(8, learned("Charged Bolt")); len(o) == 0 || o[0] != "Charged Bolt" {
 		t.Errorf("before Ice Blast: %v", o)
 	}
-	if o := ProfileFor(d2.Paladin, BuildBlizzard).AttackNames(13, learned("Zeal")); o[0] != "Zeal" {
+	if o := ProfileFor(d2.Paladin, BuildBlizzard).AttackNames(15, learned("Zeal")); o[0] != "Zeal" {
 		t.Errorf("paladin %v", o)
 	}
 }

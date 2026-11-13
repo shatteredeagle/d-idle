@@ -33,6 +33,9 @@ type Step struct {
 	// MeleeEnter (progression "melee_enter_clvl") is a lower entry level for the strong melee classes (Barbarian,
 	// Paladin: PickOptions.Melee); 0 = same as EnterLvl. BUILDV2, SME: Stony Field at 7 for them, 8 for casters (U).
 	MeleeEnter int
+	// MeleeMin (progression "melee_min_clvl") is a HIGHER entry level for the melee classes: Blood Raven's Burial Grounds
+	// at 8 (SME EXP 2026-11-12, docs/levelplan.md: she shreds a melee hero below that; casters kite her). 0 = none.
+	MeleeMin int
 	// FallbackKit (progression "xp_fallback_full_kit") keeps the step out of the XP fallback of Pick unless the character
 	// has a full kit: Burial Grounds (Blood Raven) and its dead-end dungeons are no place for a thin kit (codereview2 R5).
 	// The plan's own order is not affected.
@@ -57,6 +60,9 @@ func (s Step) earlyGap() int {
 func (s Step) enter(melee bool) int {
 	if melee && s.MeleeEnter > 0 && s.MeleeEnter < s.EnterLvl {
 		return s.MeleeEnter
+	}
+	if melee && s.MeleeMin > s.EnterLvl {
+		return s.MeleeMin
 	}
 	return s.EnterLvl
 }
@@ -267,6 +273,7 @@ func (p *Plan) parseSteps(diff string, b []byte) error {
 		s.EnterLvl, _ = e.num("enter_clvl", "min_clvl", "enter")
 		s.KitLvl, _ = e.num("kit_clvl")
 		s.MeleeEnter, _ = e.num("melee_enter_clvl")
+		s.MeleeMin, _ = e.num("melee_min_clvl")
 		s.FallbackKit = e.boolean("xp_fallback_full_kit")
 		s.Farm = e.boolean("farm")
 		s.EarlyGap, _ = e.num("early_gap")

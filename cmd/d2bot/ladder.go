@@ -38,6 +38,9 @@ import (
 // without -ladder nothing in this file runs, no directory is made and no port is opened.
 
 type ladderOptions struct {
+	// idleSafe gates the in-app updater's Apply (bot.Runner.IdleSafe); nil: always safe (tests, no runner).
+	idleSafe func() bool
+
 	// The overlay directory (d.idle mode, set by the d2d backend from --overlay-dir, never a flag of its own; empty =
 	// vanilla) and the profile directory of the currency ledger (set by every backend; the tally runs without the overlay).
 	overlayDir, currencyDir string
@@ -308,7 +311,7 @@ func startLadder(ctx context.Context, l ladderOptions, apiToken, stateDir string
 		}
 		so.Senses = &watch.Senses{Src: rig.Senses, Lock: watch.NewSensesLock(eng, l.sensesTier)}
 	}
-	so.Update = startUpdater(ctx)
+	so.Update = startUpdater(ctx, l.idleSafe)
 	if l.watchAccessFile != "" {
 		so.Access = &watch.Access{Store: access.NewStore(l.watchAccessFile), Limiter: access.NewLimiter()}
 	}

@@ -405,3 +405,33 @@ func TestPickColdPlainsAtClvl4ForMeleeAfterTheDen(t *testing.T) {
 		}
 	}
 }
+
+// SME EXP 2026-11-12 (docs/levelplan.md): Blood Raven's Burial Grounds opens at clvl 8 for the melee classes
+// (progression "melee_min_clvl"), the casters keep the plan entry 6.
+func TestBurialGroundsMeleeEntryIsHigher(t *testing.T) {
+	p, _ := LoadPlan("")
+	var bg Step
+	for _, s := range p.Steps["normal"] {
+		if s.Area == 17 {
+			bg = s
+		}
+	}
+	if bg.Area != 17 || bg.MeleeMin != 8 {
+		t.Fatalf("Burial Grounds row = %+v, want melee_min_clvl 8", bg)
+	}
+	for _, c := range []struct {
+		class string
+		melee bool
+		want  int
+	}{{"paladin", true, 8}, {"barbarian", true, 8}, {"sorceress", false, 6}} {
+		if got := bg.enter(c.melee); got != c.want {
+			t.Errorf("%s: Burial Grounds entry = %d, want %d", c.class, got, c.want)
+		}
+	}
+	// A row without the key is untouched (Cold Plains melee 4, caster 5).
+	for _, s := range p.Steps["normal"] {
+		if s.Area == 3 && (s.enter(true) != 4 || s.enter(false) != 5) {
+			t.Errorf("Cold Plains entry changed: %+v", s)
+		}
+	}
+}

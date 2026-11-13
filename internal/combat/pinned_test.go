@@ -55,3 +55,21 @@ func TestCursedBacksOff(t *testing.T) {
 		t.Fatal("a cursed character under the line must step away")
 	}
 }
+
+// combat.kiteLifePct is the step-back line of the single-melee rule (docs/wiring.md finding 7: it had no reader).
+// One Fallen close and life falling: a 40 line fights on, a 100 line steps back.
+func TestKiteLifePctMovesTheStepBackLine(t *testing.T) {
+	kites := func(line int) int {
+		h := newHarness(t, func(tn *env.Tuning) { tn.Combat.KiteLifePct = line })
+		h.s.life = 65
+		h.s.addMon(10, clsFallen, 102, 100, 400, 3, 3)
+		h.f.mv = h.s
+		h.f.Clear(context.Background(), ClearOpts{Timeout: 3 * time.Second})
+		return len(h.s.moves)
+	}
+	lo, hi := kites(40), kites(100)
+	t.Logf("moves at line 40: %d, at 100: %d", lo, hi)
+	if hi <= lo {
+		t.Fatalf("raising the kite line from 40 to 100 did not add a step back: %d vs %d", lo, hi)
+	}
+}

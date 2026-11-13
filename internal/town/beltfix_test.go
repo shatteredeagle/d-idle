@@ -109,11 +109,10 @@ func TestBeltPutRespectsColumnKind(t *testing.T) {
 	if _, err := r.T.FillBelt(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	for _, b := range pi.boxes {
-		if b%4 != 0 {
-			t.Errorf("healing potion put in box %d (column %d), not above the healing column", b, b%4)
-		}
-	}
+	// BELTFIX layout rule: a Sorceress plans two mana columns, so one of the three mana columns may be emptied for healing;
+	// what must hold is that no column mixes kinds (a healing potion never sits above a mana potion)
+	assertColumnsPure(t, r)
+	_ = pi
 	// a belt whose only free boxes are above mana columns takes no healing potion
 	r, pi = d2dRig(t)
 	r.W.Add("hp1", d2.ContBelt, 0, 0)
@@ -125,11 +124,8 @@ func TestBeltPutRespectsColumnKind(t *testing.T) {
 	}
 	addPack(r, "hp1", 1)
 	_, _ = r.T.FillBelt(context.Background())
-	for _, b := range pi.boxes {
-		if b%4 != 0 {
-			t.Errorf("healing potion put in box %d above a mana column", b)
-		}
-	}
+	assertColumnsPure(t, r)
+	_ = pi
 }
 
 // BELTFIX F3 + the empty-belt visit: a visit that starts with an empty belt and potions in the pack ends with a full
@@ -213,5 +209,22 @@ func TestHealingDoesNotTakeTheManaColumns(t *testing.T) {
 	}
 	if mp < 2 {
 		t.Fatalf("belt holds %d mana potions of 4 in the pack (boxes %v)", mp, pi.boxes)
+	}
+}
+
+// assertColumnsPure fails when a belt column holds both kinds.
+func assertColumnsPure(t *testing.T, r *rig) {
+	t.Helper()
+	kind := map[int]string{}
+	for _, u := range r.W.Items {
+		if u.Item.Where != d2.ContBelt {
+			continue
+		}
+		c := (u.Item.GY*4 + u.Item.GX) % 4
+		k := r.W.DB.Items[u.Class].Code[:2]
+		if prev, ok := kind[c]; ok && prev != k {
+			t.Errorf("column %d mixes %s and %s", c, prev, k)
+		}
+		kind[c] = k
 	}
 }
