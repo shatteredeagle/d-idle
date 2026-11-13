@@ -97,8 +97,8 @@ Between runs.
 - Goals, quests and levelling (working)
 - Building this public status page (working)
 - Improving the dashboard (working)
-- Town chores: shopping, stashing and loot (working)
 - Running the bot on the d2d engine (working)
+- Town chores: shopping, stashing and loot (working)
 - Fighting and staying alive (working)
 - Long unattended test runs (working)
 
@@ -109,7 +109,7 @@ Nothing merged in this window.
 
 [Chat and help: the d.idle Discord](https://discord.gg/U2v9q4h5UH)
 
-Last updated: 2026-11-13 15:05 UTC
+Last updated: 2026-11-13 15:20 UTC
 
 _Numbers are conservative._  
 _A check only counts as done once it has been verified for real: a live run in the game, or automated tests when that is what the check asks for._  
