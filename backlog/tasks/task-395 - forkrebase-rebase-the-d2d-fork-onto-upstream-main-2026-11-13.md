@@ -1,11 +1,11 @@
 ---
 id: TASK-395
 title: 'forkrebase: rebase the d2d fork onto upstream main (2026-11-13)'
-status: In Progress
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-13T15:29:00Z'
-updated_date: '2026-11-13T16:34:00Z'
+updated_date: '2026-11-13T16:41:00Z'
 labels:
   - d2d
   - chore
