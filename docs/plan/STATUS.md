@@ -185,6 +185,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 8f9cc34e 11-13 10:19 `Merge agent/target: target: recalibrate first-hour headline target (floor 5 / target 7 / stretch 8-9); SME 13-15 retired` (target)
 - 0a2bbedd 11-12 22:22 `Merge agent/cut011: friends release 0.1.1 built, verified, staged (not published)` (cut011)
 - a2b32a5b 11-12 22:21 `Merge branch 'main' into TASK-393` (-)
 - 52b63449 11-12 22:17 `Merge agent/decomp13: decomp13: merge main, keep both decomp-queue lines` (decomp13)
@@ -194,5 +195,4 @@
 - c9acafb4 11-12 19:28 `Merge agent/wiring2: Merge branch 'main' into TASK-388` (wiring2)
 - 18f126bb 11-12 19:27 `Merge branch 'main' into TASK-388` (-)
 - d18e3f6c 11-12 19:21 `Merge agent/levelplan: Merge branch 'main' into TASK-386` (levelplan)
-- 66ea1d1b 11-12 19:20 `Merge branch 'main' into TASK-386` (-)
 <!-- statusgen:end -->

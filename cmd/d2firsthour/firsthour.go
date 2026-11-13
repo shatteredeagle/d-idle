@@ -1,6 +1,6 @@
 // Command d2firsthour computes the headline "fresh hero, first 60 realtime minutes" numbers from a bot log (slog text
 // or JSON, as `docker logs` of the sandbox prints it) and appends one row to docs/probes/firsthour.md (TASK-245,
-// docs/first-hour.md). Read-only on the log; it fails instead of guessing when the log does not cover the window.
+// docs/first-hour.md; floor, target and stretch tiers: docs/first-hour.md "Targets"). Read-only on the log; it fails instead of guessing when the log does not cover the window.
 package main
 
 import (
