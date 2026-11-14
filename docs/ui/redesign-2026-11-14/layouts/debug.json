@@ -1,0 +1,1278 @@
+{
+ "schema": "watch.layout/1",
+ "cols": 12,
+ "rowHeight": 48,
+ "density": "dense",
+ "theme": "dark",
+ "status": [
+  "statusline",
+  "hero-meters",
+  "needs-count"
+ ],
+ "breakpoints": {
+  "phone": {
+   "width": 390,
+   "cols": 12,
+   "panels": [
+    {
+     "id": "onboarding",
+     "band": "side",
+     "col": 1,
+     "row": 1,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 0
+    },
+    {
+     "id": "video",
+     "band": "stage",
+     "col": 1,
+     "row": 4,
+     "colSpan": 12,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 1
+    },
+    {
+     "id": "map",
+     "band": "side",
+     "col": 1,
+     "row": 15,
+     "colSpan": 12,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 2
+    },
+    {
+     "id": "needs-you",
+     "band": "side",
+     "col": 1,
+     "row": 26,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 3
+    },
+    {
+     "id": "orders",
+     "band": "side",
+     "col": 1,
+     "row": 29,
+     "colSpan": 12,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 4
+    },
+    {
+     "id": "zone-map",
+     "band": "grid",
+     "col": 1,
+     "row": 36,
+     "colSpan": 12,
+     "rowSpan": 12,
+     "collapsed": false,
+     "order": 5
+    },
+    {
+     "id": "log",
+     "band": "grid",
+     "col": 1,
+     "row": 48,
+     "colSpan": 12,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 6
+    },
+    {
+     "id": "health",
+     "band": "side",
+     "col": 1,
+     "row": 55,
+     "colSpan": 12,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 7
+    },
+    {
+     "id": "progress",
+     "band": "side",
+     "col": 1,
+     "row": 57,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 8
+    },
+    {
+     "id": "journey",
+     "band": "side",
+     "col": 1,
+     "row": 60,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 9
+    },
+    {
+     "id": "hero-vitals",
+     "band": "side",
+     "col": 1,
+     "row": 65,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 10
+    },
+    {
+     "id": "why",
+     "band": "side",
+     "col": 1,
+     "row": 69,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 11
+    },
+    {
+     "id": "activity",
+     "band": "side",
+     "col": 1,
+     "row": 73,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 12
+    },
+    {
+     "id": "gear",
+     "band": "side",
+     "col": 1,
+     "row": 77,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 13
+    },
+    {
+     "id": "tally",
+     "band": "side",
+     "col": 1,
+     "row": 81,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 14
+    },
+    {
+     "id": "currency",
+     "band": "side",
+     "col": 1,
+     "row": 85,
+     "colSpan": 12,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 15
+    },
+    {
+     "id": "now",
+     "band": "grid",
+     "col": 1,
+     "row": 87,
+     "colSpan": 12,
+     "rowSpan": 6,
+     "collapsed": false,
+     "order": 16
+    },
+    {
+     "id": "orders-map",
+     "band": "grid",
+     "col": 1,
+     "row": 93,
+     "colSpan": 12,
+     "rowSpan": 10,
+     "collapsed": false,
+     "order": 17
+    },
+    {
+     "id": "queue",
+     "band": "grid",
+     "col": 1,
+     "row": 103,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 18
+    },
+    {
+     "id": "thoughts",
+     "band": "grid",
+     "col": 1,
+     "row": 106,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 19
+    },
+    {
+     "id": "journal",
+     "band": "grid",
+     "col": 1,
+     "row": 110,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 20
+    },
+    {
+     "id": "chronicle",
+     "band": "grid",
+     "col": 1,
+     "row": 115,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 21
+    },
+    {
+     "id": "quests",
+     "band": "grid",
+     "col": 1,
+     "row": 120,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 22
+    },
+    {
+     "id": "cards",
+     "band": "grid",
+     "col": 1,
+     "row": 125,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 23
+    },
+    {
+     "id": "bestiary",
+     "band": "grid",
+     "col": 1,
+     "row": 128,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 24
+    },
+    {
+     "id": "atlas",
+     "band": "grid",
+     "col": 1,
+     "row": 133,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 25
+    },
+    {
+     "id": "locked",
+     "band": "grid",
+     "col": 1,
+     "row": 137,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 26
+    },
+    {
+     "id": "rules",
+     "band": "grid",
+     "col": 1,
+     "row": 141,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 27
+    },
+    {
+     "id": "diary",
+     "band": "grid",
+     "col": 1,
+     "row": 145,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 28
+    },
+    {
+     "id": "alerts",
+     "band": "grid",
+     "col": 1,
+     "row": 149,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 29
+    },
+    {
+     "id": "spend",
+     "band": "grid",
+     "col": 1,
+     "row": 154,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 30
+    }
+   ]
+  },
+  "tablet": {
+   "width": 768,
+   "cols": 12,
+   "panels": [
+    {
+     "id": "onboarding",
+     "band": "side",
+     "col": 1,
+     "row": 1,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 0
+    },
+    {
+     "id": "video",
+     "band": "stage",
+     "col": 1,
+     "row": 4,
+     "colSpan": 12,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 1
+    },
+    {
+     "id": "map",
+     "band": "side",
+     "col": 1,
+     "row": 15,
+     "colSpan": 12,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 2
+    },
+    {
+     "id": "needs-you",
+     "band": "side",
+     "col": 1,
+     "row": 26,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 3
+    },
+    {
+     "id": "orders",
+     "band": "side",
+     "col": 1,
+     "row": 29,
+     "colSpan": 12,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 4
+    },
+    {
+     "id": "zone-map",
+     "band": "grid",
+     "col": 1,
+     "row": 36,
+     "colSpan": 12,
+     "rowSpan": 12,
+     "collapsed": false,
+     "order": 5
+    },
+    {
+     "id": "log",
+     "band": "grid",
+     "col": 1,
+     "row": 48,
+     "colSpan": 12,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 6
+    },
+    {
+     "id": "health",
+     "band": "side",
+     "col": 1,
+     "row": 55,
+     "colSpan": 12,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 7
+    },
+    {
+     "id": "progress",
+     "band": "side",
+     "col": 1,
+     "row": 57,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 8
+    },
+    {
+     "id": "journey",
+     "band": "side",
+     "col": 1,
+     "row": 60,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 9
+    },
+    {
+     "id": "hero-vitals",
+     "band": "side",
+     "col": 1,
+     "row": 65,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 10
+    },
+    {
+     "id": "why",
+     "band": "side",
+     "col": 1,
+     "row": 69,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 11
+    },
+    {
+     "id": "activity",
+     "band": "side",
+     "col": 1,
+     "row": 73,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 12
+    },
+    {
+     "id": "gear",
+     "band": "side",
+     "col": 1,
+     "row": 77,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 13
+    },
+    {
+     "id": "tally",
+     "band": "side",
+     "col": 1,
+     "row": 81,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 14
+    },
+    {
+     "id": "currency",
+     "band": "side",
+     "col": 1,
+     "row": 85,
+     "colSpan": 12,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 15
+    },
+    {
+     "id": "now",
+     "band": "grid",
+     "col": 1,
+     "row": 87,
+     "colSpan": 12,
+     "rowSpan": 6,
+     "collapsed": false,
+     "order": 16
+    },
+    {
+     "id": "orders-map",
+     "band": "grid",
+     "col": 1,
+     "row": 93,
+     "colSpan": 12,
+     "rowSpan": 10,
+     "collapsed": false,
+     "order": 17
+    },
+    {
+     "id": "queue",
+     "band": "grid",
+     "col": 1,
+     "row": 103,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 18
+    },
+    {
+     "id": "thoughts",
+     "band": "grid",
+     "col": 1,
+     "row": 106,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 19
+    },
+    {
+     "id": "journal",
+     "band": "grid",
+     "col": 1,
+     "row": 110,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 20
+    },
+    {
+     "id": "chronicle",
+     "band": "grid",
+     "col": 1,
+     "row": 115,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 21
+    },
+    {
+     "id": "quests",
+     "band": "grid",
+     "col": 1,
+     "row": 120,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 22
+    },
+    {
+     "id": "cards",
+     "band": "grid",
+     "col": 1,
+     "row": 125,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 23
+    },
+    {
+     "id": "bestiary",
+     "band": "grid",
+     "col": 1,
+     "row": 128,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 24
+    },
+    {
+     "id": "atlas",
+     "band": "grid",
+     "col": 1,
+     "row": 133,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 25
+    },
+    {
+     "id": "locked",
+     "band": "grid",
+     "col": 1,
+     "row": 137,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 26
+    },
+    {
+     "id": "rules",
+     "band": "grid",
+     "col": 1,
+     "row": 141,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 27
+    },
+    {
+     "id": "diary",
+     "band": "grid",
+     "col": 1,
+     "row": 145,
+     "colSpan": 12,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 28
+    },
+    {
+     "id": "alerts",
+     "band": "grid",
+     "col": 1,
+     "row": 149,
+     "colSpan": 12,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 29
+    },
+    {
+     "id": "spend",
+     "band": "grid",
+     "col": 1,
+     "row": 154,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 30
+    }
+   ]
+  },
+  "laptop": {
+   "width": 1280,
+   "cols": 12,
+   "panels": [
+    {
+     "id": "onboarding",
+     "band": "side",
+     "col": 1,
+     "row": 1,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 0
+    },
+    {
+     "id": "video",
+     "band": "stage",
+     "col": 1,
+     "row": 4,
+     "colSpan": 6,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 1
+    },
+    {
+     "id": "map",
+     "band": "side",
+     "col": 7,
+     "row": 4,
+     "colSpan": 6,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 2
+    },
+    {
+     "id": "needs-you",
+     "band": "side",
+     "col": 1,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 3
+    },
+    {
+     "id": "orders",
+     "band": "side",
+     "col": 4,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 4
+    },
+    {
+     "id": "zone-map",
+     "band": "grid",
+     "col": 7,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 12,
+     "collapsed": false,
+     "order": 5
+    },
+    {
+     "id": "log",
+     "band": "grid",
+     "col": 10,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 6
+    },
+    {
+     "id": "health",
+     "band": "side",
+     "col": 1,
+     "row": 18,
+     "colSpan": 3,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 7
+    },
+    {
+     "id": "progress",
+     "band": "side",
+     "col": 1,
+     "row": 20,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 8
+    },
+    {
+     "id": "journey",
+     "band": "side",
+     "col": 1,
+     "row": 27,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 9
+    },
+    {
+     "id": "hero-vitals",
+     "band": "side",
+     "col": 7,
+     "row": 27,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 10
+    },
+    {
+     "id": "why",
+     "band": "side",
+     "col": 10,
+     "row": 27,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 11
+    },
+    {
+     "id": "activity",
+     "band": "side",
+     "col": 1,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 12
+    },
+    {
+     "id": "gear",
+     "band": "side",
+     "col": 4,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 13
+    },
+    {
+     "id": "tally",
+     "band": "side",
+     "col": 7,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 14
+    },
+    {
+     "id": "currency",
+     "band": "side",
+     "col": 10,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 15
+    },
+    {
+     "id": "now",
+     "band": "grid",
+     "col": 1,
+     "row": 36,
+     "colSpan": 6,
+     "rowSpan": 6,
+     "collapsed": false,
+     "order": 16
+    },
+    {
+     "id": "orders-map",
+     "band": "grid",
+     "col": 7,
+     "row": 36,
+     "colSpan": 6,
+     "rowSpan": 10,
+     "collapsed": false,
+     "order": 17
+    },
+    {
+     "id": "queue",
+     "band": "grid",
+     "col": 1,
+     "row": 42,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 18
+    },
+    {
+     "id": "thoughts",
+     "band": "grid",
+     "col": 4,
+     "row": 42,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 19
+    },
+    {
+     "id": "journal",
+     "band": "grid",
+     "col": 1,
+     "row": 46,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 20
+    },
+    {
+     "id": "chronicle",
+     "band": "grid",
+     "col": 7,
+     "row": 46,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 21
+    },
+    {
+     "id": "quests",
+     "band": "grid",
+     "col": 1,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 22
+    },
+    {
+     "id": "cards",
+     "band": "grid",
+     "col": 4,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 23
+    },
+    {
+     "id": "bestiary",
+     "band": "grid",
+     "col": 7,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 24
+    },
+    {
+     "id": "atlas",
+     "band": "grid",
+     "col": 10,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 25
+    },
+    {
+     "id": "locked",
+     "band": "grid",
+     "col": 1,
+     "row": 56,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 26
+    },
+    {
+     "id": "rules",
+     "band": "grid",
+     "col": 4,
+     "row": 56,
+     "colSpan": 6,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 27
+    },
+    {
+     "id": "diary",
+     "band": "grid",
+     "col": 10,
+     "row": 56,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 28
+    },
+    {
+     "id": "alerts",
+     "band": "grid",
+     "col": 1,
+     "row": 60,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 29
+    },
+    {
+     "id": "spend",
+     "band": "grid",
+     "col": 7,
+     "row": 60,
+     "colSpan": 6,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 30
+    }
+   ]
+  },
+  "wide": {
+   "width": 1920,
+   "cols": 12,
+   "panels": [
+    {
+     "id": "onboarding",
+     "band": "side",
+     "col": 1,
+     "row": 1,
+     "colSpan": 12,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 0
+    },
+    {
+     "id": "video",
+     "band": "stage",
+     "col": 1,
+     "row": 4,
+     "colSpan": 6,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 1
+    },
+    {
+     "id": "map",
+     "band": "side",
+     "col": 7,
+     "row": 4,
+     "colSpan": 6,
+     "rowSpan": 11,
+     "collapsed": false,
+     "order": 2
+    },
+    {
+     "id": "needs-you",
+     "band": "side",
+     "col": 1,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 3
+    },
+    {
+     "id": "orders",
+     "band": "side",
+     "col": 4,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 4
+    },
+    {
+     "id": "zone-map",
+     "band": "grid",
+     "col": 7,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 12,
+     "collapsed": false,
+     "order": 5
+    },
+    {
+     "id": "log",
+     "band": "grid",
+     "col": 10,
+     "row": 15,
+     "colSpan": 3,
+     "rowSpan": 7,
+     "collapsed": false,
+     "order": 6
+    },
+    {
+     "id": "health",
+     "band": "side",
+     "col": 1,
+     "row": 18,
+     "colSpan": 3,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 7
+    },
+    {
+     "id": "progress",
+     "band": "side",
+     "col": 1,
+     "row": 20,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 8
+    },
+    {
+     "id": "journey",
+     "band": "side",
+     "col": 1,
+     "row": 27,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 9
+    },
+    {
+     "id": "hero-vitals",
+     "band": "side",
+     "col": 7,
+     "row": 27,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 10
+    },
+    {
+     "id": "why",
+     "band": "side",
+     "col": 10,
+     "row": 27,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 11
+    },
+    {
+     "id": "activity",
+     "band": "side",
+     "col": 1,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 12
+    },
+    {
+     "id": "gear",
+     "band": "side",
+     "col": 4,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 13
+    },
+    {
+     "id": "tally",
+     "band": "side",
+     "col": 7,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 14
+    },
+    {
+     "id": "currency",
+     "band": "side",
+     "col": 10,
+     "row": 32,
+     "colSpan": 3,
+     "rowSpan": 2,
+     "collapsed": false,
+     "order": 15
+    },
+    {
+     "id": "now",
+     "band": "grid",
+     "col": 1,
+     "row": 36,
+     "colSpan": 6,
+     "rowSpan": 6,
+     "collapsed": false,
+     "order": 16
+    },
+    {
+     "id": "orders-map",
+     "band": "grid",
+     "col": 7,
+     "row": 36,
+     "colSpan": 6,
+     "rowSpan": 10,
+     "collapsed": false,
+     "order": 17
+    },
+    {
+     "id": "queue",
+     "band": "grid",
+     "col": 1,
+     "row": 42,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 18
+    },
+    {
+     "id": "thoughts",
+     "band": "grid",
+     "col": 4,
+     "row": 42,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 19
+    },
+    {
+     "id": "journal",
+     "band": "grid",
+     "col": 1,
+     "row": 46,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 20
+    },
+    {
+     "id": "chronicle",
+     "band": "grid",
+     "col": 7,
+     "row": 46,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 21
+    },
+    {
+     "id": "quests",
+     "band": "grid",
+     "col": 1,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 22
+    },
+    {
+     "id": "cards",
+     "band": "grid",
+     "col": 4,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 23
+    },
+    {
+     "id": "bestiary",
+     "band": "grid",
+     "col": 7,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 24
+    },
+    {
+     "id": "atlas",
+     "band": "grid",
+     "col": 10,
+     "row": 51,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 25
+    },
+    {
+     "id": "locked",
+     "band": "grid",
+     "col": 1,
+     "row": 56,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 26
+    },
+    {
+     "id": "rules",
+     "band": "grid",
+     "col": 4,
+     "row": 56,
+     "colSpan": 6,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 27
+    },
+    {
+     "id": "diary",
+     "band": "grid",
+     "col": 10,
+     "row": 56,
+     "colSpan": 3,
+     "rowSpan": 4,
+     "collapsed": false,
+     "order": 28
+    },
+    {
+     "id": "alerts",
+     "band": "grid",
+     "col": 1,
+     "row": 60,
+     "colSpan": 6,
+     "rowSpan": 5,
+     "collapsed": false,
+     "order": 29
+    },
+    {
+     "id": "spend",
+     "band": "grid",
+     "col": 7,
+     "row": 60,
+     "colSpan": 6,
+     "rowSpan": 3,
+     "collapsed": false,
+     "order": 30
+    }
+   ]
+  }
+ }
+}
