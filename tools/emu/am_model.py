@@ -11,7 +11,8 @@ xpg_model.py (verified on 119,790 of 119,790 game lines in xp-gold-trace.md).
   python3 am_model.py POP.txt bands      # best area per clvl at the given rates
 Time model (I, calibrated on the logged hours; see docs/research/areamon-trace.md section 4):
   overworld (lid 2..7): kills/min = 14.6 * units / units(Cold Plains), clamped to 6..19   (Cold Plains 14-19 and Blood Moor 7.5 in hour 4)
-  other levels:         9.5 kills/min flat (Den of Evil first pass, hour 1)
+  other levels:         minutes = T0 + units / 9.5, T0 = 4 min for the 200 x 200 Levels.txt sizes (the stairs walk), 1.5 min otherwise
+                        (Den of Evil: 4 + 77 / 9.5 = 12 min against 14 min logged in hour 1)
   area change overhead: 1.0 min
 """
 import os
@@ -31,6 +32,7 @@ NAMES = {2: "Blood Moor", 3: "Cold Plains", 4: "Stony Field", 5: "Dark Wood", 6:
 CLVLS = [1, 3, 5, 8, 12, 16]
 OVERWORLD = range(2, 8)
 OVERHEAD_MIN = 1.0
+BIG = {8, 9, 10, 11, 12, 18, 19, 21, 22, 23, 24, 28, 29, 30, 31, 34, 35, 36}   # SizeX = SizeY = 200 in Levels.txt
 
 
 def load(path):
@@ -84,7 +86,8 @@ def stats(pop):
                         mlvl=statistics_mean([l for _, _, l in allr]), mlvl_min=min(l for _, _, l in allr),
                         mlvl_max=max(l for _, _, l in allr), kinds={k: n / len(seeds) for k, n in kinds.items()},
                         clear=clear, perkill=perkill, plain=plain_perkill,
-                        minutes=mean_u / rate)
+                        minutes=mean_u / rate if lid in OVERWORLD else (4.0 if lid in BIG else 1.5) + mean_u / rate)
+        res[lid]["rate"] = mean_u / res[lid]["minutes"]
     return res
 
 
@@ -93,11 +96,70 @@ def statistics_mean(x):
 
 
 def xp_per_min(r, c):
-    return r["perkill"][c] * r["rate"]
+    return r["clear"][c][0] / r["minutes"]
+
+
+def nearest(c):
+    return min(CLVLS, key=lambda x: abs(x - c))
+
+
+def xp_per_min_at(r, c):
+    return r["clear"][nearest(c)][0] / r["minutes"]
 
 
 def xp_per_hour_repeat(r, c):
     return 60 * r["clear"][c][0] / (r["minutes"] + OVERHEAD_MIN)
+
+
+# the farm rows of internal/plandata/progression-normal.json for the Paladin (melee entry where the row has one): (lid, enter, leave)
+PLAN_ROWS = [(2, 1, 4), (8, 2, 6), (3, 4, 8), (17, 8, 10), (9, 6, 9), (4, 7, 12), (5, 9, 13), (6, 10, 14), (13, 10, 15), (18, 10, 17)]
+LEVEL_XP = [500, 1500, 3750, 7875, 14175, 22680, 32886, 44396, 57715, 72144, 90180, 112725, 140906, 176132, 220165]
+
+
+def clvl_of(xp):
+    return 1 + sum(1 for n in LEVEL_XP if xp >= n)
+
+
+def sim(pop, res, horizon):
+    def pk(lid, c):
+        units = [x for v in pop[lid].values() for x in v]
+        return sum(award(e, c, l) for _, e, l in units) / len(units)
+
+    def run(name, choose):
+        xp, t, cur, spent = 0.0, 0.0, None, {}
+        marks = {}
+        while t < horizon:
+            c = clvl_of(xp)
+            lid = choose(c, spent)
+            if lid is None:
+                break
+            if lid != cur:
+                cur = lid
+                t += OVERHEAD_MIN
+                continue
+            r = res[lid]
+            xp += pk(lid, c) * r["rate"] * (1.0 if spent.get(lid, 0) < r["minutes"] else 0.5)   # re-clear: half (hour 1: 171 vs 337 XP/min)
+            spent[lid] = spent.get(lid, 0) + 1
+            t += 1
+            if int(t) % 10 == 0:
+                marks[int(t)] = (clvl_of(xp), int(xp), NAMES[lid])
+        print(f"{name}: {int(xp)} XP, clvl {clvl_of(xp)} after {horizon} min; at 10/20/30/40/50/60: " + ", ".join(f"{m}:{v[0]}({v[2]})" for m, v in sorted(marks.items())))
+
+    def plan(c, spent):
+        el = [lid for lid, a, b in PLAN_ROWS if a <= c < b]
+        fresh = [l for l in el if spent.get(l, 0) < res[l]["minutes"]]
+        return (fresh or el or [None])[0]
+
+    def best(slack):
+        def f(c, spent):
+            cands = [(res[l]["clear"][nearest(c)][0] / res[l]["minutes"], l) for l in res
+                     if res[l]["mlvl"] <= c + slack and l not in (38, 17)]
+            fresh = [t for t in cands if spent.get(t[1], 0) < res[t[1]]["minutes"]]
+            return max(fresh or cands)[1] if cands else None
+        return f
+    run("plan rows (first eligible, each area once)", plan)
+    run("best xp/min, mean mlvl <= clvl+2", best(2))
+    run("best xp/min, mean mlvl <= clvl+1", best(1))
 
 
 def main():
@@ -132,6 +194,15 @@ def main():
             print(f"| {lid} | {NAMES.get(lid, lid)} | " + " / ".join(f"{r['perkill'][c]:.0f}" for c in CLVLS) + " | "
                   + " / ".join(f"{xp_per_min(r, c):.0f}" for c in CLVLS) + " | "
                   + " / ".join(f"{xp_per_hour_repeat(r, c):,.0f}" for c in CLVLS) + " |")
+    elif mode == "safe":
+        # candidates: mean monster level <= clvl + slack (U: the safety proxy; the plan enters at about mlvl + 1..3), no town, no Tristram
+        slack = int(sys.argv[3]) if len(sys.argv) > 3 else 2
+        for c in range(1, 19):
+            cands = [(xp_per_min_at(r, c), l, r) for l, r in res.items() if r["mlvl"] <= c + slack and l != 38]
+            cands.sort(key=lambda t: -t[0])
+            print(f"clvl {c}: " + ", ".join(f"{NAMES[l]} {v:.0f}/min ({r['minutes']:.0f} min, {r['clear'][nearest(c)][0]:.0f}/clear)" for v, l, r in cands[:4]))
+    elif mode == "sim":
+        sim(pop, res, int(sys.argv[3]) if len(sys.argv) > 3 else 60)
     elif mode == "bands":
         for c in (1, 3, 5, 8, 12, 16):
             rk = sorted(res.items(), key=lambda kv: -xp_per_min(kv[1], c))[:6]
