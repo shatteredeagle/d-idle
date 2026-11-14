@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -37,6 +38,7 @@ func main() {
 		runs      = flag.String("runs", "", "extra runs.json to add to the embedded runs")
 		useFit    = flag.Bool("fitted", false, "use freshly fitted supply parameters instead of the defaults")
 		denRefarm = flag.Bool("den-refarm", false, "allow farming the Den again after the quest")
+		jsonOut   = flag.Bool("json", false, "print the JSON summary on stdout (tables go to stderr)")
 	)
 	flag.Parse()
 	d, err := levelsim.Load()
@@ -89,31 +91,39 @@ func main() {
 			}
 		}
 	}
+	var tables io.Writer = os.Stdout
+	if *jsonOut {
+		tables = os.Stderr
+	}
 	modes := []levelsim.Mode{levelsim.Mode(*modeF)}
 	if *modeF == "all" {
 		modes = []levelsim.Mode{levelsim.ModePlan, levelsim.ModeStrict, levelsim.ModeBold}
 	}
 	sum := levelsim.Summary{Schema: "levelsim summary/1", Params: p,
 		Note: "xp and clvl are model predictions (docs/levelsim.md); danger floors are U; plan_today is the intended plan with no bot failure modes"}
-	if *optimise || *out != "" {
+	if *optimise || *out != "" || *jsonOut {
 		for _, m := range modes {
 			ms := levelsim.Summarise(d, p, m, hs, *width, *reachH, *width/2, *denRefarm)
 			sum.Modes = append(sum.Modes, ms)
-			fmt.Print(levelsim.FormatMode(levelsim.NewEnv(d, p, m), ms))
+			fmt.Fprint(tables, levelsim.FormatMode(levelsim.NewEnv(d, p, m), ms))
 		}
 	}
 	if *sens {
 		m := modes[0]
 		rows := levelsim.Sensitivity(d, p, m, hs, *width)
 		sum.Sens = rows
-		fmt.Printf("sensitivity, danger mode %s\n%s", m, levelsim.FormatSens(rows, hs))
+		fmt.Fprintf(tables, "sensitivity, danger mode %s\n%s", m, levelsim.FormatSens(rows, hs))
+	}
+	if *jsonOut {
+		b, _ := json.MarshalIndent(sum, "", " ")
+		fmt.Println(string(b))
 	}
 	if *out != "" {
 		die(os.MkdirAll(*out, 0o755))
 		b, _ := json.MarshalIndent(sum, "", " ")
 		die(os.WriteFile(filepath.Join(*out, "best-strategies.json"), append(b, '\n'), 0o644))
 	}
-	if !*calibrate && !*optimise && !*sens && *strategy == "" && *out == "" {
+	if !*calibrate && !*optimise && !*sens && *strategy == "" && *out == "" && !*jsonOut {
 		flag.Usage()
 	}
 }

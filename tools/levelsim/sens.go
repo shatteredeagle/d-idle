@@ -52,8 +52,8 @@ func Sensitivity(d *Data, base Params, mode Mode, horizons []float64, width int)
 		e.AllowDenRefarm = flags.AllowDenRefarm
 		r := SensRow{Name: sc.Name, Opt: map[string]float64{}, Plan: map[string]float64{}, Gain: map[string]float64{}, Sig: map[string]string{}}
 		for _, h := range horizons {
-			b := e.Optimise(h, width)
 			pl := e.RunPolicy(PlanToday(d), h)
+			b := e.OptimiseSeeded(h, width, PlanToday(d))
 			k := hkey(h)
 			r.Opt[k], r.Plan[k] = b.XP, pl.End.XP
 			if pl.End.XP > 0 {

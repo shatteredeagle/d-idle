@@ -63,7 +63,7 @@ func Summarise(d *Data, p Params, mode Mode, horizons []float64, width int, reac
 	for _, h := range horizons {
 		pl := e.RunPolicy(PlanToday(d), h)
 		ms.Plan = append(ms.Plan, PlanRow{H: h, XP: pl.End.XP, Clvl: pl.Clvl(), Violations: pl.Violations, Bands: e.Bands(pl.Steps), Trajectory: Trajectory(pl.Steps, h, 10)})
-		b := e.Optimise(h, width)
+		b := e.OptimiseSeeded(h, width, PlanToday(d))
 		ms.Best = append(ms.Best, BestRow{H: h, XP: b.XP, Clvl: b.Clvl, AreaOrder: e.Names(b.Signature()), Bands: e.Bands(b.Steps),
 			Trajectory: Trajectory(b.Steps, h, 10), Restarts: restarts(b.Steps)})
 		if pl.End.XP > 0 {

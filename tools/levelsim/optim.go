@@ -25,6 +25,7 @@ type Best struct {
 	DenOK  bool
 	BROK   bool
 	Reason string
+	Seeded bool   // the policy seed beat the beam
 	Top    []Best // the best distinct alternatives (different area orders), best first
 }
 
@@ -230,3 +231,16 @@ func topDistinct(finals []*node, k int) []Best {
 
 // Signature of a Best (the farm order), for tables.
 func (b Best) Signature() string { return signature(b.Steps) }
+
+// OptimiseSeeded is Optimise, but a feasible policy (today's plan: it breaks no floor and does the Den quest)
+// that beats the beam's answer replaces it: the beam is approximate, a known strategy is a lower bound.
+func (e *Env) OptimiseSeeded(H float64, width int, pol Policy) Best {
+	b := e.Optimise(H, width)
+	r := e.RunPolicy(pol, H)
+	ok := len(r.Violations) == 0 && (r.End.Den || e.NoDenRequired) && (r.End.Clvl() < 9 || r.End.BR || e.NoDenRequired)
+	if ok && r.End.XP > b.XP {
+		b.XP, b.Clvl, b.Steps, b.End, b.DenOK, b.BROK = r.End.XP, r.End.Clvl(), r.Steps, r.End, r.End.Den, r.End.BR
+		b.Seeded = true
+	}
+	return b
+}
