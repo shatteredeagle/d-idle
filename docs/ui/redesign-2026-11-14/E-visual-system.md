@@ -14,10 +14,10 @@ Fewer boxes and fewer weights. Today every tile is a bordered card with a serif 
 |---|---|---|---|
 | `--d-ok` | `var(--d-good)` #7cc47e | healthy, done | 8.5:1 |
 | `--d-warn` (exists) | #e3a93a | look when you can; waiting; amber band | 8.4:1 |
-| `--d-danger` | `var(--d-bad)` #ec7d6c | act now; failed; broken | 6.6:1 |
-| `--d-info` (exists) | #7ab0e8 | information, links in text, focus family | 7.6:1 |
-| `--d-muted` | `var(--d-text-3)` #8c7b67 | done rows, the plan row, hints | 4.2:1: large or secondary text only; body hints use `--d-text-2` (#b9aa94, 7.6:1) |
-| `--d-accent` (exists) | #c7a44a | brand mark, primary button, current target ring, selected | 7.3:1 |
+| `--d-danger` | `var(--d-bad)` #ec7d6c | act now; failed; broken | 6.5:1 |
+| `--d-info` (exists) | #7ab0e8 | information, links in text, focus family | 7.7:1 |
+| `--d-muted` | `var(--d-text-3)` #8c7b67 | done rows, the plan row, hints | 4.3:1: large or secondary text only; body hints use `--d-text-2` (#b9aa94, 7.8:1) |
+| `--d-accent` (exists) | #c7a44a | brand mark, primary button, current target ring, selected | 7.4:1 |
 | `--d-state-bg-ok`, `-warn`, `-danger`, `-info` | the colour at 14% over the surface | chip and row tint | text stays `--d-text` |
 
 `--d-good` and `--d-bad` keep working (they are the values); the new names are what new panels use, so the meaning is in the name.
