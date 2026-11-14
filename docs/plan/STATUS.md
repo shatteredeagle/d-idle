@@ -137,7 +137,6 @@
 | staletarget | proposed | - | `internal/bot/staletarget.go`<br>`internal/bot/staletarget_test.go`<br>`internal/bot/loop.go`<br>`internal/bot/task.go`<br>`internal/bot/geargate.go`<br>`internal/bot/goal.go`<br>`internal/bot/whyline.go`<br>`internal/task/executor.go`<br>`internal/watch/whyline.json`<br>`internal/env/tuning_bot.go`<br>`docs/staletarget.md`<br>`docs/knobs.md`<br>`internal/bot/areaskip_test.go`<br>`internal/bot/runner.go`<br>`internal/bot/observe.go`<br>`internal/bot/ordersguard.go`<br>`internal/goals/runner.go`<br>`internal/watch/whyline_test.go`<br>`internal/task/executor_unpark_test.go` | - |
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
-| decomp16 | proposed | - | `docs/research/merc2-trace.md`<br>`tools/emu/mc2_setup.sh`<br>`tools/emu/mc2_dis.sh`<br>`tools/emu/mc2_grep.sh`<br>`tools/emu/mc2_fn.py`<br>`tools/emu/mc2_run.sh`<br>`tools/emu/mc2_tab.sh` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |

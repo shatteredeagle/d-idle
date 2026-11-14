@@ -1,10 +1,11 @@
 ---
 id: TASK-400
 title: 'decomp16: MERC2 trace, hire, revive, free Rogue and merc economics'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T10:39:00Z'
+updated_date: '2026-11-14T10:53:00Z'
 labels:
   - docs
   - research
