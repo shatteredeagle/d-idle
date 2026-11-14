@@ -19,7 +19,6 @@ const (
 	// ReasonGearWorn: the player decides equipment, so a replacing hire waits until the merc is bare.
 	ReasonGearWorn      = "merc wears gear: unequip your merc first"
 	ReasonGold          = "gold"
-	ReasonKit           = "kit"
 	ReasonCap           = "revive cap"
 	ReasonStopped       = "stopped by deaths"
 	ReasonNotFirstVisit = "not first visit"
@@ -209,7 +208,7 @@ func hasGear(s MercState) bool {
 	return false
 }
 
-// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the revive reserve, with a TP and potions,
+// ShouldRevive: the dead merc is revived in town with gold >= reviveGoldMult x price plus the revive reserve (the game wants gold only, no portal or potions: V read, docs/mercrevive.md),
 // at most reviveMaxPerHour times an hour; more than stopDeathsPerHour merc deaths in the hour raises the gold bar to
 // stopGoldMult x price. price is the quote read from the dialog, or 0 to use the formula (needs the merc level).
 func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
@@ -230,8 +229,6 @@ func ShouldRevive(s MercState, c Ctx, price int) (Decision, int) {
 	switch {
 	case c.RevivesLastHour >= c.Knobs.ReviveMaxPerHour:
 		return no(ReasonCap), price
-	case !c.HaveTP || !c.HavePotions:
-		return no(ReasonKit), price
 	}
 	why := ReasonGold
 	if c.DeathsLastHour > c.Knobs.StopDeathsPerHour {
