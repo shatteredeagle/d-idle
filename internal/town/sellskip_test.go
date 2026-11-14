@@ -1,0 +1,35 @@
+package town_test
+
+import (
+	"context"
+	"testing"
+
+	"d2lod-bot/internal/d2"
+	"d2lod-bot/internal/town"
+)
+
+// sellskip (hero14 finding 4): with the player deciding gear nothing wears the "better" armor the looter keeps below
+// clvl 15, so the sell chore skipped 157 of 158 visits while 9 items sat in the pack. A poor character with plain
+// armor in the pack and a vendor visit must sell it.
+func TestPoorPackOfPlainArmorIsSoldWhenThePlayerDecidesGear(t *testing.T) {
+	for _, cls := range []d2.Class{d2.Paladin, d2.Sorceress} {
+		r := earlyRig(t, cls, 14)
+		r.Env.Tune.Resource.GearDecisions = 0
+		w := r.W
+		w.Player.Gold = 40
+		dressed(w) // worn: dagger and quilted armor; helm, belt and boots slots are empty
+		for i, code := range []string{"cap", "lbt", "qui", "qui"} {
+			w.Add(code, d2.ContInventory, i*2, 0)
+		}
+		rep, err := r.T.Chores(context.Background(), town.ChorePlan{Sell: true})
+		if err != nil {
+			t.Fatal(err)
+		}
+		if n := count(w, d2.ContInventory); n != 0 {
+			t.Errorf("%v: %d items left in the pack, steps %+v", cls, n, rep.Steps)
+		}
+		if w.Player.Gold <= 40 {
+			t.Errorf("%v: gold %d, nothing sold", cls, w.Player.Gold)
+		}
+	}
+}
