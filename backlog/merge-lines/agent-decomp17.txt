@@ -1,0 +1,2 @@
+BACKLOG: TASK-402 decomp17 SHRINE trace (docs/research/shrine-trace.md): shrine spawn counts per Act 1 level, effect numbers, interaction; game.exe side S only (emulator image gone), no PR candidate; build small version later
+CHANGELOG: Research: shrine trace for Act 1 (about 4.4 shrines per wilderness level, Experience shrine worth 1 to 4 percent of hour 1, bot has no shrine logic)
