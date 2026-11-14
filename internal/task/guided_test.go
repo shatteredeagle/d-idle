@@ -54,7 +54,7 @@ func TestGuidedPaladinClvl12(t *testing.T) {
 	if p.Group == task.QCain || len(st.Intents) != 0 {
 		t.Fatalf("blocked Cain: %q, intents %v", p.ID, st.Intents)
 	}
-	if p.ID != "level.13" || !strings.Contains(p.Nodes[0].Step.Title, "for Charsi's hammer") {
+	if p.ID != "level.14" || !strings.Contains(p.Nodes[0].Step.Title, "for The Countess") { // Charsi's hammer is 16 now (boss1-trace B2)
 		t.Errorf("after Cain: %q %q", p.ID, p.Nodes[0].Step.Title)
 	}
 }

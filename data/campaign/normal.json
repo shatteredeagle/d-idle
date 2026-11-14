@@ -131,7 +131,7 @@
    "done": {"quest": "tools_of_the_trade"},
    "reward": "Charsi imbues one item with magic properties",
    "why": "Bringing the Horadric Malus back to Charsi earns a free imbue.",
-   "levels": {"default": {"floor": 10, "recommended": 13, "floorMerc": 9, "recommendedMerc": 12}},
+   "levels": {"default": {"floor": 14, "recommended": 16}},
    "checks": ["level", "potions", "life", "repair"],
    "classIntent": {"sorceress": "skip", "necromancer": "skip", "druid": "skip", "amazon": "skip"}
   },
