@@ -8,7 +8,7 @@ import capstone
 import pefile
 from capstone import x86
 
-EXE = "/tmp/casttrace/game.exe"
+EXE = __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 pe = pefile.PE(EXE)
 base = pe.OPTIONAL_HEADER.ImageBase
 t = [s for s in pe.sections if s.Name.rstrip(b"\0") == b".text"][0]

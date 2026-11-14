@@ -57,6 +57,23 @@ func TestAndarielFullRunPoisonAndKite(t *testing.T) {
 	}
 }
 
+// TestAndarielMeleeHeroDoesNotKite (boss1-trace B1): the same fight with a melee hero never takes the kite step.
+func TestAndarielMeleeHeroDoesNotKite(t *testing.T) {
+	f := newFake()
+	f.antidotes, f.level, f.melee = 2, 24, true
+	b := f.addBoss(Mon{Class: ClassAndariel, Name: "Andariel", Pos: Pt{22549, 9514}, UniqueNo: -1}, AreaCatacombs4, 150)
+	b.approach, b.dmg = 3, 5
+	f.pos = Pt{22549, 9520}
+	f.arriveFn = func(f *fake, a int) { f.pos = Pt{22549, 9500} }
+	res, err := run(t, NameAndariel, f, Opts{})
+	if err != nil || !res.Killed {
+		t.Fatalf("res %+v err %v", res, err)
+	}
+	if has(res, "kite") || !has(res, "attack") {
+		t.Fatalf("phases %v", res.Phases)
+	}
+}
+
 func TestAndarielPoisonCloudStepsAway(t *testing.T) {
 	f := newFake()
 	f.area = AreaCatacombs4

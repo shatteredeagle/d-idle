@@ -7,10 +7,10 @@ HERE=$(cd "$(dirname "$0")" && pwd)
 OUT=${D2_SCRATCH:-/tmp/d2agent-pa-verifyskdruid}/vsd
 mkdir -p "$OUT"
 D2=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 export PYTHONPATH=$HERE:$D2/tools/emu
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 if [ "$1" = ptrs ]; then cd "$D2/tools/emu"; exec nice $PY "$HERE/vsd_calc.py" ptrs; fi
 N=${1:-3000}; SEED=${2:-101}; MODE=${3:-game}   # MODE game-noflag: negative control (blvl = base + bonus)
 SRC=$HOME/d2d-lab/pr/sorcrest-d2d

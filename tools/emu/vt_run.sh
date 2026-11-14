@@ -4,10 +4,10 @@
 #   tools/emu/run-on-worker.sh vt_run.sh N SEED
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
-UP=${UP:-$HOME/d2d-lab/src}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 S=${D2_SCRATCH:-/tmp}
 N=${1:-20000}; SEED=${2:-4242}
 cd "$UP/tools/emu"

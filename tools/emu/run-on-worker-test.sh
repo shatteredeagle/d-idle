@@ -29,7 +29,7 @@ accepts() { local d=$1; shift; : > "$TESTLOG"; "$R" "$@" >/dev/null 2>&1 && ok "
 refuses() { local d=$1; shift; : > "$TESTLOG"; "$R" "$@" >/dev/null 2>&1; [ $? = 2 ] && [ ! -s "$TESTLOG" ] && ok "$d" || bad "$d"; }
 
 accepts "sh script with args" ok.sh 1-3 "Act 1 H2H A" -v /tmp/d2agent-tj/out.txt /tmp/ug-emu
-grep -q 'AGENTRUN tj --ttl 930 -- ' "$TESTLOG" && grep -q 'LABRUN testhost -- env D2_SCRATCH=/tmp/d2agent-tj D2_MPQ_DIR=/tmp/ug-emu sh -c .* sh timeout 900 bash tools/emu/ok.sh 1-3 Act 1 H2H A -v' "$TESTLOG" && ok "command line shape (agentrun ttl+30, timeout 900)" || { bad "command line shape"; cat "$TESTLOG"; }
+grep -q 'AGENTRUN tj --ttl 930 -- ' "$TESTLOG" && grep -q 'LABRUN testhost -- env D2_SCRATCH=/tmp/d2agent-tj sh -c .* sh timeout 900 bash tools/emu/ok.sh 1-3 Act 1 H2H A -v' "$TESTLOG" && ok "command line shape (agentrun ttl+30, timeout 900)" || { bad "command line shape"; cat "$TESTLOG"; }
 accepts "py script via run-py.sh" ok.py x
 grep -q 'bash tools/emu/run-py.sh ok.py x' "$TESTLOG" && ok "py uses run-py.sh" || bad "py uses run-py.sh"
 accepts "custom ttl" --ttl 60 ok.sh; grep -q -- '--ttl 90 ' "$TESTLOG" && grep -q 'timeout 60 ' "$TESTLOG" && ok "ttl 60 -> agentrun 90" || bad "ttl mapping"

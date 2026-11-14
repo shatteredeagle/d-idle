@@ -14,7 +14,7 @@ for t in base head; do
 	done
 done
 clang-tidy --version | head -2
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 for t in base head; do
 	B=$S/$t/build3
 	for x in test_combat test_energy_shield test_game; do

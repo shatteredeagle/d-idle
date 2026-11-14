@@ -1,7 +1,7 @@
 #!/bin/bash
 # prprep (worker host): Lightning one-unit-a-frame differential on the rebased candidate, after (HEAD) and before (HEAD~1).
 #   pp_light.sh after|before SEED N
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 T=$HOME/d2d-lab/wt-pp-light; B=$HOME/d2d-lab/build-pp-light; O=$HOME/d2d-lab/pp-light; mkdir -p $O
 HERE=$(cd "$(dirname "$0")" && pwd)
 mode=$1; seed=${2:-1}; n=${3:-400}

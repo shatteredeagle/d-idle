@@ -10,10 +10,10 @@ S=${D2_SCRATCH:-/tmp/d2agent-monsterai2}
 AIS=${1:-all}; N=${2:-1500}; SEED=${3:-1}; CMD=${4:--}
 [ "$CMD" = "-" ] && CMD=
 LESS=${5:-}      # "less": replay the Blood Raven's home distance with FUN_005dc480's size term (game.exe) instead of ai.cpp's ai_distance
-UP=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 mkdir -p "$S/run"
-( cd "$UP/tools/emu" && MAI2_CMD=$CMD PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=/tmp/ug-emu nice "$PY" "$here/mai2_ais.py" "$AIS" "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
+( cd "$UP/tools/emu" && MAI2_CMD=$CMD PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq nice "$PY" "$here/mai2_ais.py" "$AIS" "$N" "$SEED" --dump "$S/run" ) > "$S/run/acts.txt" 2>&1 || { tail -20 "$S/run/acts.txt"; exit 1; }
 tail -1 "$S/run/acts.txt"
 python3 "$here/mai2_patch.py" "$SRC" "$S/run"
 IN="-I$S/run"

@@ -8,8 +8,8 @@ n=${2:-20000}
 seed=${3:-20261102}
 here=$(cd "$(dirname "$0")" && pwd)
 S=${D2_SCRATCH:-/tmp/d2agent-covstates}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
 bash "$here/run-py.sh" cs_state.py gen "$which" "$n" "$seed" > "$S/${which}_cases.tsv"
 echo "cases: $(wc -l < "$S/${which}_cases.tsv")"
 bash "$here/run-py.sh" cs_state.py game "$which" "$S/${which}_cases.tsv" > "$S/${which}_game.tsv"

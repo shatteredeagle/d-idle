@@ -5,9 +5,9 @@ set -e
 here=$(cd "$(dirname "$0")" && pwd)
 N=${1:-20000}; SEED=${2:-1}
 O=${D2_SCRATCH:?run through tools/emu/run-on-worker.sh}
-export D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
-UP=$HOME/d2d-lab/src/tools/emu
+export D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/tools/emu
 export PYTHONPATH=$here:$UP
 cd $here
 $PY pal_wear.py gen $N $SEED > $O/pal_cases.tsv

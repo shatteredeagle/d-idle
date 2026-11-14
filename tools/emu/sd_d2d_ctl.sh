@@ -1,8 +1,8 @@
 #!/bin/bash
 # seeddist (the worker host): the d2d side of the seed-for-seed control, on the seed states sd_game.py ctl wrote.
 #   tools/emu/run-on-worker.sh --ttl 1500 sd_d2d_ctl.sh > $D2_SCRATCH/d2d_ctl.txt 2>&1
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 S=${D2_SCRATCH:-/tmp/d2agent-seeddist}
 BIN=$S/sd_d2d_test
 OUT=$S/sd

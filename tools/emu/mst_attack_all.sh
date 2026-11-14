@@ -5,12 +5,12 @@
 # cases; mst_cmp.py counts the lines that differ. Needs mst_build.sh first.
 set -e
 here=$(cd "$(dirname "$0")" && pwd)
-UP=${UP:-$HOME/d2d-lab/src}
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
 S=${D2_SCRATCH:-/tmp/d2agent-mercstats}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 export PYTHONPATH=$here:$UP/tools/emu:${PYTHONPATH:-}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 cases=$1; shift
 for seed in "$@"; do
   (cd "$UP/tools/emu" && nice "$PY" "$here/mst_attack.py" "$cases" "$seed" "$S/atk_g$seed.txt")

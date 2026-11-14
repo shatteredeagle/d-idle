@@ -7,8 +7,8 @@ S=${D2_SCRATCH:-/tmp/d2agent-skground}
 mkdir -p $S
 SEED=${1:-1}
 N=${2:-40000}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 bash $here/skg_build.sh
 bash $here/run-py.sh skg_blast_diff.py gen $SEED $N $S/blast.cases
 bash $here/run-py.sh skg_blast_diff.py game $S/blast.cases $S/blast.game

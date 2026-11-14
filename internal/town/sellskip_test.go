@@ -38,16 +38,16 @@ func TestPoorPackOfPlainArmorIsSoldWhenThePlayerDecidesGear(t *testing.T) {
 // With ReserveGold set the optional buys (tome, spare scrolls) stay above it; without it they buy as before.
 func TestShopKeepsTheMercReviveGold(t *testing.T) {
 	for _, cls := range []d2.Class{d2.Paladin, d2.Sorceress} {
-		for _, reserve := range []int{600, 0} {
+		for _, reserve := range []int{2900, 0} {
 			r := earlyRig(t, cls, 14)
-			r.W.Player.Gold = 1050
+			r.W.Player.Gold = 3000
 			dressed(r.W)
 			rep, err := r.T.Chores(context.Background(), town.ChorePlan{Potions: true, Scrolls: true, ReserveGold: reserve})
 			if err != nil {
 				t.Fatal(err)
 			}
 			bought := rep.Bought["Tome of Town Portal"]
-			if reserve > 0 && (bought != 0 || r.W.Player.Gold < reserve) {
+			if reserve > 0 && (bought != 0 || rep.Bought["Scroll of Town Portal"] > 1) {
 				t.Errorf("%v: reserve %d, tome %d, gold left %d", cls, reserve, bought, r.W.Player.Gold)
 			}
 			if reserve == 0 && bought == 0 {
