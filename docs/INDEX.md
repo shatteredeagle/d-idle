@@ -527,6 +527,17 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [townwedge.md](townwedge.md): townwedge: the permanent town-exit wedge (status: fix merged with card townwedge. Tags: VERIFIED = log line or test, INFERRED = reading. Evidence:...)
 - [ui-design-system.md](ui-design-system.md): d.idle watch UI design system (TASK-228, uidesign) (status: accepted design (user decisions 2026-11-09 in section 13), being implemented in small PRs (section 15)....)
 - [ui-regression-plan.md](ui-regression-plan.md): Watch UI regression tests and migration plan (TASK-228, uidesign) (status: proposal (2026-11-09); built so far: see ui-design-system.md section 15 (row 14 `uilayout` is section...)
+
+`ui/redesign-2026-11-14/`
+
+- [A-audit.md](ui/redesign-2026-11-14/A-audit.md): A. Audit: what /watch shows and how the player commands the bot today (status: design input (TASK-416, 2026-11-14). Read from the code on `origin/main` at 883770a9 and from pictures of...)
+- [B-principles-ia.md](ui/redesign-2026-11-14/B-principles-ia.md): B. Principles and information architecture (status: design proposal (TASK-416, 2026-11-14). It builds on `docs/ui-design-system.md` (the shell, tokens, panel...)
+- [C-orders.md](ui/redesign-2026-11-14/C-orders.md): C. Orders: one control surface (status: design proposal (TASK-416, 2026-11-14), not built. Tags per line: V = the backend exists and was read in...)
+- [D-layouts.md](ui/redesign-2026-11-14/D-layouts.md): D. Layout presets, migration and rollout (status: design proposal (TASK-416, 2026-11-14). The drafts in layouts/ are `watch.layout/1` files written and...)
+- [E-visual-system.md](ui/redesign-2026-11-14/E-visual-system.md): E. Visual system (status: design proposal (TASK-416, 2026-11-14). The identity stays: near-black warm stone, gold accent, serif...)
+- [G-build-plan.md](ui/redesign-2026-11-14/G-build-plan.md): G. Build plan: slices for Sonnet workers (status: proposal (TASK-416, 2026-11-14). No slice starts before the user has reviewed the design and answered the...)
+- [H-open-questions.md](ui/redesign-2026-11-14/H-open-questions.md): H. Open questions for the user (status: waiting for answers (TASK-416, 2026-11-14). Each can be answered in a word. The recommendation is what the...)
+- [redesign-2026-11-14/README.md](ui/redesign-2026-11-14/README.md): Watch UI redesign, design phase (2026-11-14) (status: design proposal for the user's review (TASK-416, branch `agent/uidesign`). Nothing is built; no file under...)
 - [unlock-alerts.md](unlock-alerts.md): Alerts and pings (TASK-162, unlockalerts)
 - [unlock-atlas.md](unlock-atlas.md): Waypoint atlas (TASK-160, unlockatlas)
 - [unlock-bestiary.md](unlock-bestiary.md): Cain's notes, the bestiary (TASK-158, unlockbestiary)
