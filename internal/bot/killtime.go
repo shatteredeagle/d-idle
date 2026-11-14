@@ -36,7 +36,7 @@ func modeBucket(mode int) int {
 	switch mode {
 	case 2, 3, 6:
 		return 0
-	case 7, 8, 10, 11, 13, 14, 15, 16:
+	case 7, 8, 10, 11, 12, 13, 14, 15, 16: // 12 = KK, a kick (swing1-trace.md B3)
 		return 1
 	}
 	return 2

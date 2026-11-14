@@ -112,3 +112,18 @@ func TestParsePlayerColumns(t *testing.T) {
 		}
 	}
 }
+
+func TestParseWarpClickColumns(t *testing.T) {
+	w, err := ParseWarp("0\t19.0\t68.0\t8")
+	if err != nil || w.To != 8 || w.HasClick {
+		t.Fatalf("4 columns: %+v %v", w, err)
+	}
+	w, err = ParseWarp("0\t19.0\t68.0\t8\t18.90\t68.30\t18.50\t68.10")
+	if err != nil || !w.HasClick || w.ClickX != 18.5 || w.ClickY != 68.1 || w.UnitX != 18.9 || w.X != 19 {
+		t.Fatalf("8 columns: %+v %v", w, err)
+	}
+	w, err = ParseWarp("1\t5.0\t35.0\t10\t5.30\t34.90\t-1.00\t-1.00")
+	if err != nil || w.HasClick {
+		t.Fatalf("no click point: %+v %v", w, err)
+	}
+}
