@@ -1,0 +1,71 @@
+{
+ "schema": "levelplan/3",
+ "doc": "docs/levelplan3.md",
+ "difficulty": "normal",
+ "note": "Level plan v3 (TASK-414). Per class, an ordered list of slices. A farm slice is a band [entry, exit] in which the bot farms its areas; exit is inclusive and is the level from which a later slice pays more XP per minute (AREAMON table, internal/levelplan/areaxp.csv). A quest slice names a chapter of data/campaign/normal.json and carries no levels: the journey decides when it goes (its floor and recommended rows), the plan only farms between quests. Gates of a farm slice: clvl >= entry (+ no_merc_add without a living merc), and below kit_clvl only with a full kit. They choose where to farm; they never wall a chapter. active=false: the bot keeps progression-normal.json for that class and the rows are for the simulation and review only.",
+ "classes": {
+  "paladin": {
+   "active": true,
+   "build": "paladin_normal30_v2",
+   "tag": "entries: survival I (docs/research/boss1-trace.md superunique floors, areamon mean mlvl <= clvl + 1) plus live S (hour4: Cold Plains cleared at clvl 4-5, 0 deaths); exits: XP per minute I (areamon). Nothing of v3 ran live.",
+   "slices": [
+    {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 3, "way_in": "walk", "why": "the only field of clvl 1-2; 156 XP/min against Cold Plains 436 from clvl 3"},
+    {"id": "den", "kind": "quest", "chapter": "den_of_evil", "why": "once, for Akara's skill point; 235 XP/min is no farm (kolbot agrees)"},
+    {"id": "cold_plains", "kind": "farm", "areas": [3], "entry": 3, "exit": 6, "kit_clvl": 4, "way_in": "waypoint", "via_wp": 3, "why": "436 XP/min at clvl 1-7; Bishibosh floor 5 (I), cleared live at clvl 4-5 with 0 deaths (S hour4); clvl 3 only with a full kit"},
+    {"id": "stony_field", "kind": "farm", "areas": [4], "entry": 5, "exit": 8, "kit_clvl": 6, "way_in": "waypoint", "via_wp": 4, "why": "627 XP/min; Rakanishu floor 6 (I): one level early, only with a full kit at clvl 5, because clvl 5 has no other fresh field (the hour4 gap)"},
+    {"id": "caves", "kind": "farm", "areas": [9, 13], "entry": 6, "exit": 9, "way_in": "walk", "via_wp": 3, "why": "filler when Stony Field is cleared: Cave 1 385 and Cave 2 488 XP/min; Coldcrow floor 6 (I)"},
+    {"id": "blood_raven", "kind": "quest", "chapter": "blood_raven", "why": "the free Rogue; Blood Raven floor 8 (I, boss1) equals the journey floor"},
+    {"id": "black_marsh", "kind": "farm", "areas": [6], "entry": 7, "exit": 11, "way_in": "waypoint", "via_wp": 6, "why": "961-980 XP/min; mean mlvl 5.7, no superunique (I): fills clvl 7, where v3 has no other fresh field; the first visit walks through Dark Wood without clearing it (U)"},
+    {"id": "dark_wood", "kind": "farm", "areas": [5], "entry": 8, "exit": 11, "way_in": "waypoint", "via_wp": 5, "why": "1,022 XP/min; Treehead WoodFist floor 8 (I)"},
+    {"id": "tamoe", "kind": "farm", "areas": [7], "entry": 9, "exit": 13, "no_merc_add": 2, "way_in": "walk", "via_wp": 6, "why": "1,212 XP/min at clvl 8, 1,188 at 12; mean mlvl 7.7, no superunique; walk from the Black Marsh waypoint"},
+    {"id": "find_cain", "kind": "quest", "chapter": "find_cain", "why": "optional; Tristram pays 953 XP/min at clvl 8, under Dark Wood and Tamoe, and Griswold's floor is 10 (I): a quest stop, not kolbot's clvl 6-12 farm"},
+    {"id": "countess", "kind": "quest", "chapter": "countess", "why": "optional rune errand; the cellars decide (11-13, I)"},
+    {"id": "jail", "kind": "farm", "areas": [29], "entry": 11, "exit": 14, "no_merc_add": 2, "way_in": "waypoint", "via_wp": 29, "why": "911-920 XP/min, filler on the way to the Catacombs; first reach walks the Barracks (the Smith's level, U)"},
+    {"id": "tools_of_the_trade", "kind": "quest", "chapter": "tools_of_the_trade", "why": "optional; the Smith's floor is 16, 14 with block (I)"},
+    {"id": "catacombs", "kind": "farm", "areas": [35, 36], "entry": 12, "exit": 18, "no_merc_add": 2, "way_in": "waypoint", "via_wp": 35, "why": "Catacombs 2 1,268 and Catacombs 3 1,629 XP/min at clvl 12, the best Act 1 fields to Andariel (plan v2 entered at 13 / 14)"},
+    {"id": "andariel", "kind": "quest", "chapter": "andariel", "why": "Act 1 done; 18 with a merc, 20 alone (I, boss1)"}
+   ]
+  },
+  "barbarian": {
+   "active": false,
+   "build": "barbarian_melee_normal30",
+   "tag": "U: entries are today's melee rows of progression-normal.json (no Barbarian survival model); only the XP-table changes are applied (Tamoe and the Catacombs farmed, Burial Grounds, Crypt and Mausoleum dropped as farms).",
+   "slices": [
+    {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 4, "way_in": "walk", "why": "today's row"},
+    {"id": "den", "kind": "quest", "chapter": "den_of_evil", "why": "once"},
+    {"id": "cold_plains", "kind": "farm", "areas": [3], "entry": 4, "exit": 8, "kit_clvl": 4, "way_in": "waypoint", "via_wp": 3, "why": "today's melee row"},
+    {"id": "caves", "kind": "farm", "areas": [9, 13], "entry": 6, "exit": 9, "way_in": "walk", "via_wp": 3, "why": "today's Cave 1 row"},
+    {"id": "stony_field", "kind": "farm", "areas": [4], "entry": 7, "exit": 12, "way_in": "waypoint", "via_wp": 4, "why": "today's melee row"},
+    {"id": "blood_raven", "kind": "quest", "chapter": "blood_raven", "why": "the free Rogue"},
+    {"id": "woods", "kind": "farm", "areas": [5, 6], "entry": 9, "exit": 13, "way_in": "waypoint", "via_wp": 5, "why": "today's Dark Wood row (Black Marsh 10)"},
+    {"id": "tamoe", "kind": "farm", "areas": [7], "entry": 10, "exit": 14, "way_in": "walk", "via_wp": 6, "why": "today's row, now farmed (XP table)"},
+    {"id": "find_cain", "kind": "quest", "chapter": "find_cain", "why": "optional"},
+    {"id": "countess", "kind": "quest", "chapter": "countess", "why": "optional"},
+    {"id": "tools_of_the_trade", "kind": "quest", "chapter": "tools_of_the_trade", "why": "optional"},
+    {"id": "jail", "kind": "farm", "areas": [29], "entry": 13, "exit": 16, "way_in": "waypoint", "via_wp": 29, "why": "today's row"},
+    {"id": "catacombs", "kind": "farm", "areas": [35, 36], "entry": 13, "exit": 18, "way_in": "waypoint", "via_wp": 35, "why": "today's Catacombs 2 row"},
+    {"id": "andariel", "kind": "quest", "chapter": "andariel", "why": "Act 1 done"}
+   ]
+  },
+  "sorceress": {
+   "active": false,
+   "build": "sorceress_normal30",
+   "tag": "U: entries are today's caster rows of progression-normal.json (the caster survival model is not traced); only the XP-table changes are applied.",
+   "slices": [
+    {"id": "blood_moor", "kind": "farm", "areas": [2], "entry": 1, "exit": 4, "way_in": "walk", "why": "today's row"},
+    {"id": "cold_plains", "kind": "farm", "areas": [3], "entry": 5, "exit": 8, "kit_clvl": 4, "way_in": "waypoint", "via_wp": 3, "why": "today's caster row"},
+    {"id": "den", "kind": "quest", "chapter": "den_of_evil", "why": "once; the journey's caster row is 5 / 6"},
+    {"id": "caves", "kind": "farm", "areas": [9, 13], "entry": 6, "exit": 9, "way_in": "walk", "via_wp": 3, "why": "today's Cave 1 row"},
+    {"id": "stony_field", "kind": "farm", "areas": [4], "entry": 8, "exit": 12, "way_in": "waypoint", "via_wp": 4, "why": "today's caster row"},
+    {"id": "woods", "kind": "farm", "areas": [5, 6], "entry": 9, "exit": 13, "way_in": "waypoint", "via_wp": 5, "why": "today's Dark Wood row"},
+    {"id": "blood_raven", "kind": "quest", "chapter": "blood_raven", "why": "the free Rogue (journey caster row 9 / 10)"},
+    {"id": "tamoe", "kind": "farm", "areas": [7], "entry": 10, "exit": 14, "way_in": "walk", "via_wp": 6, "why": "today's row, now farmed"},
+    {"id": "find_cain", "kind": "quest", "chapter": "find_cain", "why": "optional"},
+    {"id": "countess", "kind": "quest", "chapter": "countess", "why": "optional"},
+    {"id": "jail", "kind": "farm", "areas": [29], "entry": 13, "exit": 16, "way_in": "waypoint", "via_wp": 29, "why": "today's row"},
+    {"id": "catacombs", "kind": "farm", "areas": [35, 36], "entry": 13, "exit": 18, "way_in": "waypoint", "via_wp": 35, "why": "today's Catacombs 2 row"},
+    {"id": "andariel", "kind": "quest", "chapter": "andariel", "why": "Act 1 done"}
+   ]
+  }
+ }
+}
