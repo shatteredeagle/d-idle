@@ -188,6 +188,7 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 97d14b90 11-14 06:28 `Merge agent/sellskip: sellskip: restore the WearBetter fix lost in a revert, tests pass with game tables` (sellskip)
 - 92e5503d 11-14 06:18 `Merge agent/decomp17: Merge branch 'main' into TASK-402` (decomp17)
 - ab383e8c 11-14 06:18 `Merge branch 'main' into TASK-402` (-)
 - 7738a296 11-14 06:09 `Merge origin/main into agent/decomp17` (-)
@@ -197,5 +198,4 @@
 - 2f609b4c 11-14 05:44 `Merge agent/towntests: Merge origin/main into agent/towntests` (towntests)
 - 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
 - a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
-- 591b26fc 11-14 05:33 `Merge branch 'main' into TASK-398` (-)
 <!-- statusgen:end -->
