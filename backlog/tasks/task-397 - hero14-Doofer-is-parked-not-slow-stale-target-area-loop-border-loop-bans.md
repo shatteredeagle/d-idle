@@ -1,10 +1,11 @@
 ---
 id: TASK-397
 title: 'hero14: Doofer is parked, not slow (stale target-area loop, border-loop bans)'
-status: Proposed
+status: Done
 assignee:
   - credit-runner
 created_date: '2026-11-14T10:00:00Z'
+updated_date: '2026-11-14T10:12:00Z'
 labels:
   - bot
   - research
