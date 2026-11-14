@@ -90,10 +90,15 @@ do_verify() {
 	[ "$(md5sum "$E/mpq/bin/game.exe" | cut -c1-8)" = 2b3600c1 ] || { echo "verify FAIL: game.exe is not the 1.14d build (md5 2b3600c1...)"; exit 1; }
 	. "$E/env.sh"
 	"$PY" -c 'import unicorn,pefile,capstone; print("python imports ok, unicorn", unicorn.__version__)'
+	here=$(cd "$(dirname "$0")" && pwd)
 	cd "$EMU"
-	out=$(nice "$PY" diff_drlg.py 1-3 2 2>&1 | tail -3)
-	echo "$out"
-	case $out in *"3/3 seeds match"*) echo "verify OK" ;; *) echo "verify FAIL: drlg oracle"; exit 1 ;; esac
+	# oracle 1: game.exe's XP level-gap step over the full grid, against our port (docs/research/xp-gold-trace.md): 119,790 lines, 0 differ
+	PYTHONPATH="$here:$EMU" nice "$PY" "$here/xp_award.py" grid > "$E/.verify-grid.txt"
+	n=$(wc -l < "$E/.verify-grid.txt")
+	d=$(PYTHONPATH="$here:$EMU" "$PY" "$here/xpg_model.py" check "$E/.verify-grid.txt" | tail -1)
+	rm -f "$E/.verify-grid.txt"
+	echo "xp grid lines: $n; xpg_model check: $d"
+	[ "$n" = 119790 ] && case $d in *" 0"*|*"0 "*|*"0") echo "verify OK" ;; *) echo "verify FAIL: grid differs"; exit 1 ;; esac
 }
 
 case ${1:-} in
