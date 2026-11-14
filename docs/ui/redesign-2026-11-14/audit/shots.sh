@@ -16,7 +16,7 @@ sp=$!
 timeout 500 Xvfb $disp -screen 0 1920x1200x24 -nolisten tcp >/dev/null 2>&1 &
 xp=$!
 sleep 2
-mkdir -p "$out" && rm -f "$out"/*.png
+mkdir -p "$out" && rm -f "$out"/*.png "$out"/*.jpg
 shots="watch-1440-fold 1440 900 watch?theme=dark
 watch-1440-full 1440 3400 watch?theme=dark
 watch-900-fold 900 900 watch?theme=dark

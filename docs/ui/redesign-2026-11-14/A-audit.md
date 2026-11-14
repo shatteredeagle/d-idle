@@ -7,10 +7,10 @@ How the pictures were made (V): `labrun <worker> --pull docs/ui/redesign-2026-11
 | Picture | Width | What it proves |
 |---|---|---|
 | [shots/watch-1440-fold.png](audit/shots/watch-1440-fold.png) | 1440 x 900 | the first screen |
-| [shots/watch-1440-full.png](audit/shots/watch-1440-full.png) | 1440, whole page | the page is about 2.5 screens of content |
+| [shots/watch-1440-full.jpg](audit/shots/watch-1440-full.jpg) | 1440, whole page | the page is about 2.5 screens of content |
 | [shots/watch-900-fold.png](audit/shots/watch-900-fold.png) | 900 x 900 | the game picture is below the first screen |
 | [shots/watch-390-fold.png](audit/shots/watch-390-fold.png) | 390 x 844 | a phone's first screen has no game picture and no order |
-| [shots/watch-390-full.png](audit/shots/watch-390-full.png) | 390, whole page | about six phone screens of stacked cards |
+| [shots/watch-390-full.jpg](audit/shots/watch-390-full.jpg) | 390, whole page | about six phone screens of stacked cards |
 
 Not in the fixture (U how they look next to the rest): the `journey` panel (its route is off in the fixture viewer, so the panel hides), the onboarding card's text (the card renders as an empty titled box in the picture, V), and the nine unlock-gated cards.
 
