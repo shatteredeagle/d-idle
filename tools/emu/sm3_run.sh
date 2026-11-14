@@ -12,7 +12,7 @@ UREPS=${3:-1700}
 S=${D2_SCRATCH:-/tmp/sm3}
 OUT=${OUT:-$HOME/d2d-lab/pr/skmelee3-out}
 mkdir -p "$S"
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
 python3 "$here/sk_melee2.py" gen "$CASES" "$SEED" "$UREPS" > "$S/c$SEED.tsv"
 [ -s "$S/g$SEED.tsv" ] && [ "$(wc -l < "$S/g$SEED.tsv")" = "$(wc -l < "$S/c$SEED.tsv")" ] || bash "$here/run-py.sh" sk_melee2.py game "$S/c$SEED.tsv" > "$S/g$SEED.tsv"
 md5sum "$S/c$SEED.tsv" "$S/g$SEED.tsv" | cut -c1-8

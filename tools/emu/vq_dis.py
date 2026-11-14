@@ -3,5 +3,5 @@
 import os, runpy, sys
 src = os.path.expanduser("~/d2d-lab/src/tools/emu")
 sys.path.insert(0, src)
-sys.argv = ["disasm.py", "--exe", "/tmp/casttrace/game.exe"] + sys.argv[1:]
+sys.argv = ["disasm.py", "--exe", __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")] + sys.argv[1:]
 runpy.run_path(os.path.join(src, "disasm.py"), run_name="__main__")

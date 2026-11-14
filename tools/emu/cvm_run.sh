@@ -8,12 +8,12 @@ here=$(cd "$(dirname "$0")" && pwd)
 SRC=${SRC:-$HOME/d2d-lab/pr/monsterai-src}
 S=${D2_SCRATCH:-/tmp/d2agent-covmonai}
 AIS=${1:?ai list}; N=${2:-1500}; SEED=${3:-1}
-UP=$HOME/d2d-lab/src
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+UP=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 OUTD=$S/run-$SEED${4:+-foe2}
 mkdir -p "$OUTD"
 export CVM_FOE2=${4:-}      # optional 4th argument: AIs whose second-target label is written as the primary
-( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=/tmp/ug-emu nice "$PY" "$here/cvm_ais.py" "$AIS" "$N" "$SEED" --dump "$OUTD" ) > "$OUTD/acts.txt" 2>&1 || { tail -20 "$OUTD/acts.txt"; exit 1; }
+( cd "$UP/tools/emu" && PYTHONPATH=$here:$UP/tools/emu D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq nice "$PY" "$here/cvm_ais.py" "$AIS" "$N" "$SEED" --dump "$OUTD" ) > "$OUTD/acts.txt" 2>&1 || { tail -20 "$OUTD/acts.txt"; exit 1; }
 cat "$OUTD/acts.txt"
 python3 "$here/mai2_patch.py" "$SRC" "$OUTD"
 python3 "$here/cvm_fix.py" "$OUTD"

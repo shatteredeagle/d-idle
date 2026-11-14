@@ -15,7 +15,7 @@ import capstone
 import pefile
 from capstone import x86
 
-EXE = sys.argv[1] if len(sys.argv) > 1 else "/tmp/casttrace/game.exe"
+EXE = sys.argv[1] if len(sys.argv) > 1 else __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 OFF = int(sys.argv[2], 16) if len(sys.argv) > 2 else 0x160
 pe = pefile.PE(EXE)
 base = pe.OPTIONAL_HEADER.ImageBase

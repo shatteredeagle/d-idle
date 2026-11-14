@@ -7,8 +7,8 @@ N=${1:-50000}; SEED=${2:-11}
 OUT=${D2_SCRATCH:?}/chp
 mkdir -p "$OUT"
 SRC=${SRC:-$HOME/d2d-lab/pr/sorcrest-d2d}
-UP=${UP:-$HOME/d2d-lab/src}
-PY=$HOME/d2d-lab/pr/walk2-venv/bin/python
+UP=${UP:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream}
+PY=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python
 export PYTHONPATH=$HERE:$UP/tools/emu
 IN=""
 for d in components/game components/game/character components/game/gamedata components/game/npc components/game/fight components/game/world components/log components/mpq components/d2s components/txt components/rules components/drlg components/ds1 components/userdir components/install components/cof components/compcode components/dt1 components/tbl; do IN="$IN -I$SRC/$d"; done

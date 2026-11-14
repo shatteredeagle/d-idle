@@ -435,7 +435,7 @@ func (l *Looter) ctxFrom(s *d2.Snapshot) Ctx {
 		c.Str, c.Dex = s.Player.Strength, s.Player.Dexterity
 		// Only when the bot wears what it keeps: with the player deciding gear (the default) nothing would ever equip
 		// the "better" piece, so keeping it only filled the pack and the sell chore skipped it (sellskip, docs/sellskip.md).
-		c.WearBetter = resource.Early(s.Player.Level, l.e.Tune.Resource.EarlyGearMax)
+		c.WearBetter = l.e.Tune.Resource.BotDecidesGear() && resource.Early(s.Player.Level, l.e.Tune.Resource.EarlyGearMax)
 		if c.WearBetter {
 			c.Worn = map[int]int{}
 			for _, u := range inv.Container(d2.ContEquipment) {

@@ -1,5 +1,7 @@
 # levelplan: SME-backed leveling changes (2026-11-12)
 
+> status: band table superseded by [levelplan3.md](levelplan3.md) (level plan v3, TASK-414) for the Paladin; items 1 to 5 stand.
+
 Source: d2-sme answers of 2026-11-12 (EXP, medium confidence; docs/research/awesome-diablo-mining-2-2026-11-12.md), hour analysis docs/probes/hour1-analysis-2026-11-12.md, docs/hourfix.md. Tags: V read from code or a test in this branch, S secondary (SME), U unverified live. Nothing here ran against the game.
 
 ## Changes

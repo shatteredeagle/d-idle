@@ -223,7 +223,11 @@ func (n *Navigator) gateCands(o *obs, levelNo int) []gate {
 	var cands []gate
 	for _, e := range o.lm.Exits {
 		if e.Dest == levelNo {
-			cands = append(cands, gate{at: input.Point{X: e.Pos.X, Y: e.Pos.Y}, push: input.Point{X: e.Pos.X, Y: e.Pos.Y}})
+			g := gate{at: input.Point{X: e.Pos.X, Y: e.Pos.Y}, push: input.Point{X: e.Pos.X, Y: e.Pos.Y}}
+			if e.HasClick { // the push click must land in the warp's Select box (d2dctl.Warp)
+				g.push = input.Point{X: e.Click.X, Y: e.Click.Y}
+			}
+			cands = append(cands, g)
 		}
 	}
 	cands = append(cands, n.borderGates(o.lm, levelNo)...)

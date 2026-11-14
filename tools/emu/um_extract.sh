@@ -8,5 +8,5 @@ set -e
 S=$(mktemp -d)
 for f in "$HOME"/d2d-lab/data/*; do ln -s "$f" "$S/$(basename "$f")"; done
 ln -s "$HOME/d2d-lab/data/Patch_D2.mpq" "$S/patch_d2.mpq"
-"$HOME/d2d-lab/src/build/tools/mpq-cat/mpq-cat" "$S" "data\\global\\excel\\$1.txt"
+"${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/build/tools/mpq-cat/mpq-cat" "$S" "data\\global\\excel\\$1.txt"
 rm -rf "$S"

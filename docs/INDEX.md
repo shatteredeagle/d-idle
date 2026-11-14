@@ -315,6 +315,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [watch-ui.md](digest/watch-ui.md): Digest: watch, viewer and player UI (status: current (TASK-310 digest; the area doc is the authority).)
 - [drillsfix.md](drillsfix.md): drillsfix: stash (DS) and tome (TM) drill repairs
 - [earlygame.md](earlygame.md): Early game: a fresh character, clvl 1 to 12 (agent EARLYGAME, 2026-10-30)
+- [emu-image.md](emu-image.md): The game.exe emulator image (status: current (2026-11-14, TASK-406). Rebuilt after the worker-host cleanup of 2026-11-13 removed the volatile...)
 - [exploredpct.md](exploredpct.md): Explored share: when a zone counts as explored (bot.exploredPct) (status: CURRENT. Tags: V = read from the code in this worktree and covered by a unit test, U = not run in a live game.)
 - [farm.md](farm.md): Farm runs (FARMRUNS, 2026-10-29)
 - [farmfallback.md](farmfallback.md): farmfallback: the gold farm as data, with a fallback
@@ -396,7 +397,9 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [lab-verbs.md](lab-verbs.md): Lab verbs: the `--lab-verbs` gate of the private d2d fork (status: current (TASK-42, 2026-11-06). Tags: V = read in the fork commit or run on the worker host, U = unverified.)
 - [leakhunt.md](leakhunt.md): fd growth hunt (agent LEAKHUNT, VERIFIED LIVE on the worker host i3, 2026-10-28)
 - [leveler.md](leveler.md): leveler: points, gear and the leveling loop (agent LEVELER)
-- [levelplan.md](levelplan.md): levelplan: SME-backed leveling changes (2026-11-12)
+- [levelplan.md](levelplan.md): levelplan: SME-backed leveling changes (2026-11-12) (status: band table superseded by levelplan3.md (level plan v3, TASK-414) for the Paladin; items 1 to 5 stand.)
+- [levelplan3.md](levelplan3.md): Level plan v3: where the hero farms between quests (TASK-414) (status: current (2026-11-14, agent levelplan3). Data `internal/plandata/levelplan-normal.json` (copy in...)
+- [levelsim.md](levelsim.md): levelsim: a simulator for Act 1 Normal leveling strategies (status: current (2026-11-14, TASK-413, agent levelsim). Offline: no game, no d2d slot, nothing posted. Code:...)
 - [lifecycle.md](lifecycle.md): Game lifecycle in Go (agent LIFECYCLE)
 - [lifelog.md](lifelog.md): Life log fields
 - [live-checks.md](live-checks.md): Live checks still open
@@ -503,6 +506,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [staletarget.md](staletarget.md): Stale target area, border-loop bans and blocked journey steps (TASK-398) (status: fix landed on branch agent/staletarget (not deployed; no live run). Tags: V verified (how is said), S...)
 - [stance.md](stance.md): Fight stance (cards stancefix, stancelever) (status: built and tested offline; NOT run in a live game. Tags: V = proven by a test in this tree or by a log...)
 - [summon.md](summon.md): Necromancer upkeep (internal/combat/necro.go)
+- [swingmodel.md](swingmodel.md): Swing model of the resource simulator (TASK-404)
 - [t0-slice.md](t0-slice.md): T0 slice (TASK-21, phase A3: offline) (status: phase A3 is code and tests only (A3 wires the four T0 fight-time points on top of the five T1 points of...)
 - [tally-strip.md](tally-strip.md): Tally strip: credits from events, the strip, the charter sink (status: built offline 2026-11-07 and wired into the bot by TASK-140 (see Wiring), TASK-129 (fun loop, ADR 0018,...)
 - [task.md](task.md): Task layer (internal/task) and how the bot wires it (agent TASKLAYER)
@@ -757,6 +761,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [firsthour.md](probes/firsthour.md): First hour: fresh hero, 60 realtime minutes at 1x
 - [hero14-analysis-2026-11-14.md](probes/hero14-analysis-2026-11-14.md): Hero Doofer (Paladin clvl 14 to 15): why it is poor and slow (2026-11-14) (status: analysis, docs only (task hero14). Tags: V verified (how is said), S secondary, U unverified. No code, no...)
 - [hour1-analysis-2026-11-12.md](probes/hour1-analysis-2026-11-12.md): Fresh Paladin first hour: where the 60 minutes went (2026-11-12) (status: analysis, no code changed. Source: the sandbox bot log from the reset (build 0.0.261112021709), window...)
+- [hour4-analysis-2026-11-14.md](probes/hour4-analysis-2026-11-14.md): Fresh Paladin first hour 4: where the 60 minutes went (2026-11-14) (status: analysis, no code changed. Source: the sandbox bot log, build 0.0.261113174258 on d2d devp6 (rebased...)
 - [itemverbs-live-2026-11-12.md](probes/itemverbs-live-2026-11-12.md): Item verbs: live click-vs-verb comparison (TASK-383, 2026-11-12) (status: result record. Tags: V = run and seen on the worker host. Driver: `tools/itemverbs/live_compare.py`;...)
 - [killdrop-2026-11-13.md](probes/killdrop-2026-11-13.md): Kill drop on the rebased fork: `debug players` gained a column (TASK-396, 2026-11-13) (status: result record. Tags: V = run and seen on the worker host; S = read in source. Follows...)
 - [navsoak-compare.md](probes/navsoak-compare.md): navsoak vs navsoak2: paired soak comparison (2026-10-31) (status: analysis of two hidden d2d soaks, read-only. Handoffs: branches agent/navsoak, agent/navsoak2...)
@@ -791,6 +796,7 @@ Research records (about 330 files, by topic): [research/README.md](research/READ
 - [test-characters.md](probes/test-characters.md): Test characters created by agents (provenance log) (status: current. One line per character an agent created on a lab slot or in a container (PROVENANCE RULE of the...)
 - [waits-audit.md](probes/waits-audit.md): Waits audit: wall-clock waits for the game (card waits-audit) (status: current. Offline audit of every wait in the bot, the d2d wiring and the d2d backends; fixes in the same...)
 - [warp-sandbox-2026-11-12.md](probes/warp-sandbox-2026-11-12.md): Warp-arrival fix on the play sandbox (devp4), 2026-11-12
+- [warpclick-2026-11-14.md](probes/warpclick-2026-11-14.md): Warps on the rebased d2d need a Select-box click (TASK-412, 2026-11-14) (status: result record. Tags: V = run and seen on the worker host (headless throwaway heroes, seed 7 unless said);...)
 - [sentinel.md](sentinel.md): Sentinel: layer 2 failsafes (agent SENTINEL)
 - [soak-analysis.md](soak-analysis.md): Soaky soak analysis (SOAKANALYSIS, 2026-10-29) (status: SUPERSEDED in part: pre-fix baseline; the approved death rule is plan-v2 section 10.2 and...)
 - [soak-hosts.md](soak-hosts.md): Soak hosts (status: moved to the private ops repo (d2lod-ops, `docs/soak-hosts.md`). Not part of the public tree.)

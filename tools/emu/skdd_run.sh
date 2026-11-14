@@ -8,9 +8,9 @@ S=${D2_SCRATCH:?run through tools/emu/run-on-worker.sh}
 N=${1:-2000}
 SEED=${2:-1}
 if [ "$3" != "skipgame" ]; then bash "$here/skdef_run.sh" "$N" "$SEED"; fi
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu}
-export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-PY=${PY:-$HOME/d2d-lab/pr/walk2-venv/bin/python}
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq}
+export D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+PY=${PY:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python}
 "$S/skdd_test" --defend "$S/c$SEED.tsv" --keep > "$S/r$SEED.tsv" 2> "$S/r$SEED.err"
 wc -l "$S/r$SEED.tsv"
 head -3 "$S/r$SEED.err"

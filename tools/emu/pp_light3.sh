@@ -1,6 +1,6 @@
 #!/bin/bash
 # prprep2 (worker host): Lightning r3: the differential on three seeds with the claim and on the parent (oracle commit), then the neighbours.
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-light3; B=$HOME/d2d-lab/build-pp-light3; O=$HOME/d2d-lab/pp-light3; mkdir -p $O
 run() { # label seed

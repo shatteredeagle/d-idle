@@ -3,7 +3,7 @@
 # usage: fo_diff.sh [N random cases] ; BASE=1 swaps setup.cpp for the parent's and rebuilds first
 set -u
 T=${FO_TREE:?set FO_TREE to the synced scratch checkout of the fork branch}; B=${FO_BUILD:-$HOME/d2d-lab/build-fidoracle}
-export D2_BUILD=${FO_MPQCAT_BUILD:-$HOME/d2d-lab/src/build} D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe D2_MPQ_DIR=/tmp/ug-emu
+export D2_BUILD=${FO_MPQCAT_BUILD:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/build} D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq
 O=/tmp/fo_out; mkdir -p $O
 cd $T/tools/emu
 [ -f $O/cases.tsv ] || nice -n 19 uv run python fl_load.py gen ${1:-400} > $O/cases.tsv

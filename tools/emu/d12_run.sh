@@ -4,7 +4,7 @@
 #   d12_run.sh levels SEED       real Act 1 warps of one seed: windows of the level's collision, same comparison + trigger measure
 here=$(cd "$(dirname "$0")" && pwd)
 S=${D2_SCRATCH:-/tmp/d2agent-decomp12}; P=${D12_PROBE:-$HOME/d2d-lab/d12/d12_arrive_probe}
-export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu} D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq} D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 mkdir -p $S
 case $1 in
 synth)

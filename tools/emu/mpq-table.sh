@@ -8,7 +8,7 @@ t=${1:?table name, e.g. monstats}
 case $t in *[!A-Za-z0-9_]*) echo "bad table name" >&2; exit 2 ;; esac
 D=${D2_DATA:-$HOME/d2d-lab/data}
 S=${D2_SCRATCH:-/tmp/d2agent-$USER}/mpqlink
-M=${MPQCAT:-$HOME/d2d-lab/src/build/tools/mpq-cat/mpq-cat}
+M=${MPQCAT:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/upstream/build/tools/mpq-cat/mpq-cat}
 mkdir -p "$S"
 for f in "$D"/*; do ln -sf "$f" "$S/$(basename "$f")"; done
 ln -sf "$D/Patch_D2.mpq" "$S/patch_d2.mpq"

@@ -809,6 +809,11 @@ func (f *Fighter) holdFor(p *d2.Player) time.Duration {
 // profileFor is the combat profile of the character (classdata.go).
 func (f *Fighter) profileFor(p *d2.Player) *Profile { return SelectProfile(p, f.cat, f.Build) }
 
+// MeleeClass reports whether p fights with a melee profile (the profile's melee block, data, not a class check).
+func (f *Fighter) MeleeClass(p *d2.Player) bool {
+	return f != nil && p != nil && f.profileFor(p).MeleeClass()
+}
+
 // attackSkills lists the usable attack skills in preference order. A right-hand skill must be bound to a key or
 // already selected; a left-hand skill needs the left popup (SetListRows) or to be selected already, and a left skill
 // that is not selected costs the profile's mana reserve on top, so the choice does not flip at the cost line.

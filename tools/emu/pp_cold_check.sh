@@ -1,6 +1,6 @@
 #!/bin/bash
 # prprep (worker host): re-run the Cold Enchanted candidate's gates and print one summary (the finish script's stdout was lost).
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 T=$HOME/d2d-lab/wt-pp-cold; B=$HOME/d2d-lab/build-pp-cold; O=$HOME/d2d-lab/pp-cold
 cd $T; git log --oneline -1
 for t in test_boss_cold_length test_monsters test_game; do timeout 900 $B/tests/$t >/tmp/pp_$t.out 2>&1; echo "$t rc=$?"; done

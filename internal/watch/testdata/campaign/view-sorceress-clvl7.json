@@ -145,10 +145,10 @@
    "why": "Bringing the Horadric Malus back to Charsi earns a free imbue.",
    "state": "skipped",
    "band": "too_early",
-   "floor": 10,
-   "recommended": 13,
+   "floor": 14,
+   "recommended": 16,
    "reasons": [
-    "clvl 7 \u003c floor 10"
+    "clvl 7 \u003c floor 14"
    ],
    "intent": "skip"
   },

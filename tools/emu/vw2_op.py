@@ -9,7 +9,7 @@ import struct
 
 import pefile
 
-pe = pefile.PE("/tmp/casttrace/game.exe")
+pe = pefile.PE(__import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe"))
 base = pe.OPTIONAL_HEADER.ImageBase
 secs = {s.Name.rstrip(b"\0").decode(): (base + s.VirtualAddress, s.get_data()) for s in pe.sections}
 tlo = secs[".text"][0]

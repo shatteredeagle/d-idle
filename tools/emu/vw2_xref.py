@@ -16,7 +16,7 @@ import capstone
 import pefile
 from capstone import x86
 
-EXE = "/tmp/casttrace/game.exe"
+EXE = __import__("os").path.join(__import__("os").environ.get("D2_EMU_DIR", __import__("os").path.expanduser("~/d2d-lab/emu")), "casttrace", "game.exe")
 TARGETS = {0x55b720: "setter FUN_0055b720", 0x5a5e50: "hostile FUN_005a5e50", 0x55b6c0: "reader FUN_0055b6c0",
            0x584870: "TP operate FUN_00584870", 0x6221a0: "pcdata getter FUN_006221a0"}
 pe = pefile.PE(EXE)

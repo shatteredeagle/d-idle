@@ -1,6 +1,6 @@
 #!/bin/bash
 # prprep (worker host): restore the gold clamp claim (the first script applied it from a subdirectory) and run test_game with it.
-export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=/tmp/ug-emu D2_PATCH_INSTALLER=$HOME/Downloads/LODPatch_114d.exe
+export PATH=$HOME/.local/bin:$PATH D2_MPQ_DIR=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq D2_PATCH_INSTALLER=${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe
 HERE=$(cd "$(dirname "$0")" && pwd)
 T=$HOME/d2d-lab/wt-pp-gold; B=$HOME/d2d-lab/build-pp-gold; O=$HOME/d2d-lab/pp-gold
 cd $T && git apply $O/claim.patch && git status --short | head -3

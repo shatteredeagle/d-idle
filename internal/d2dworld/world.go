@@ -304,7 +304,11 @@ func (w *World) fetch(ctx context.Context, l *lvl, rect d2map.Rect, pos d2map.Po
 	if ws, err := w.v.Warps(ctx); err == nil {
 		l.m.Exits = nil
 		for _, x := range ws.Items {
-			l.m.Exits = append(l.m.Exits, d2map.Exit{Dest: x.To, Pos: sub(x.X, x.Y)})
+			e := d2map.Exit{Dest: x.To, Pos: sub(x.X, x.Y)}
+			if x.HasClick {
+				e.Click, e.HasClick = sub(x.ClickX, x.ClickY), true
+			}
+			l.m.Exits = append(l.m.Exits, e)
 		}
 	}
 	if ps, err := w.v.Presets(ctx); err == nil {

@@ -7,8 +7,8 @@
 OUT=${D2_SCRATCH:-/tmp/d2agent-skamazon}/game.asm
 case "$1" in
 build) cd ~/d2d-lab/pr/skmiss/tools/emu || exit 1
-  export D2_MPQ_DIR=${D2_MPQ_DIR:-/tmp/ug-emu} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-$HOME/Downloads/LODPatch_114d.exe}
-  nice $HOME/d2d-lab/pr/walk2-venv/bin/python disasm.py --all "$OUT"; wc -l "$OUT" ;;
+  export D2_MPQ_DIR=${D2_MPQ_DIR:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/mpq} D2_PATCH_INSTALLER=${D2_PATCH_INSTALLER:-${D2_EMU_DIR:-$HOME/d2d-lab/emu}/patch/LODPatch_114d.exe}
+  nice ${D2_EMU_DIR:-$HOME/d2d-lab/emu}/venv/bin/python disasm.py --all "$OUT"; wc -l "$OUT" ;;
 grep) shift; grep -n -E "$1" "$OUT" | head -${2:-60} ;;
 at) shift; sh "$(dirname "$0")/sorcrest_dis.sh" "$@" ;;
 esac

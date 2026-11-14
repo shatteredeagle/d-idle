@@ -8,6 +8,13 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into TASK-408 <!--sg:agent/decomp18-->
+- Merge branch 'main' into TASK-404 <!--sg:agent/swingmodel-->
+- Merge branch 'main' into TASK-412 <!--sg:agent/warpclick-->
+- Merge branch 'main' into TASK-413 <!--sg:agent/levelsim-->
+- levelplan3: watch campaign goldens for the new Smith and Andariel rows <!--sg:agent/levelplan3-->
+- Merge branch 'main' into TASK-407 <!--sg:agent/hour4-->
+- Merge branch 'main' into TASK-406 <!--sg:agent/emurebuild-->
 - Research: shrine trace for Act 1 (about 4.4 shrines per wilderness level, Experience shrine worth 1 to 4 percent of hour 1, bot has no shrine logic) <!--sg:agent/decomp17-->
 - mercrevive2: revive on gold alone, empty belt shops first, failure backoff <!--sg:agent/mercrevive-->
 - Merge branch 'main' into TASK-400 <!--sg:agent/decomp16-->
