@@ -193,6 +193,8 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 8d267964 11-14 08:41 `Merge agent/prswing: Merge branch 'main' into TASK-411` (prswing)
+- e598cb20 11-14 08:41 `Merge branch 'main' into TASK-411` (-)
 - 59be438e 11-14 07:58 `Merge agent/decomp18: Merge branch 'main' into TASK-408` (decomp18)
 - 600bb6e5 11-14 07:57 `Merge branch 'main' into TASK-408` (-)
 - 1ebfc147 11-14 07:50 `Merge agent/swingmodel: Merge branch 'main' into TASK-404` (swingmodel)
@@ -201,6 +203,4 @@
 - bf3e5bbf 11-14 07:42 `decomp18: merge main, re-add AREAMON queue line` (-)
 - d46e059f 11-14 07:42 `Merge branch 'main' into TASK-412` (-)
 - 7bcf98fa 11-14 07:32 `Merge agent/levelsim: Merge branch 'main' into TASK-413` (levelsim)
-- 6e4a55df 11-14 07:31 `Merge branch 'main' into TASK-413` (-)
-- 3793d7fc 11-14 07:24 `Merge agent/levelplan3: levelplan3: watch campaign goldens for the new Smith and Andariel rows` (levelplan3)
 <!-- statusgen:end -->
