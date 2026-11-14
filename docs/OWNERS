@@ -156,6 +156,8 @@ cmd/d2bot/live.go  credit-runner  maphistoryA
 cmd/d2bot/live.go  credit-runner  maphistoryC
 cmd/d2bot/live.go  credit-runner  maptrail
 cmd/d2bot/looteradapter_test.go  credit-runner  goldprio
+cmd/d2bot/mercwire.go  credit-runner  mercrevive2
+cmd/d2bot/mercwire_test.go  credit-runner  mercrevive2
 cmd/d2bot/playertuning_test.go  live-agent  recoverypace
 cmd/d2bot/repairwire.go  credit-runner  repairtrip
 cmd/d2bot/resource_test.go  credit-runner  freshstart
@@ -183,6 +185,7 @@ docs/beltfix.md  credit-runner  beltfix
 docs/bounce3.md  pro-runner  bounce3
 docs/campaign.md  credit-runner  campaign1
 docs/contracts/decision-queue.md  credit-runner  qqueue
+docs/contracts/merc-policy.md  credit-runner  mercrevive2
 docs/design/item-verbs.md  credit-runner  itemverbs2
 docs/exploredpct.md  credit-runner  exploredpct
 docs/first-hour.md  live-agent  firsthour
@@ -212,6 +215,7 @@ docs/knobs.md  credit-runner  wiring2
 docs/knobs.md  live-agent  recoverypace
 docs/live-checks.md  credit-runner  repairtrip
 docs/locks.md  credit-runner  lockscan
+docs/mercrevive.md  credit-runner  mercrevive2
 docs/onboarding-tour.md  credit-runner  onboardtour
 docs/onboarding.md  credit-runner  firstminutes
 docs/onboarding.md  credit-runner  reconnectux
@@ -387,6 +391,7 @@ internal/loot  credit-runner  goldprio
 internal/loot/fixpickup_test.go  credit-runner  beltfix
 internal/loot/ignore_test.go  credit-runner  tidy
 internal/loot/lootskip_test.go  credit-runner  beltfix
+internal/merc  credit-runner  mercrevive2
 internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
