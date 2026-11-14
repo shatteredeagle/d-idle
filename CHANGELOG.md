@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Merge branch 'main' into TASK-412 <!--sg:agent/warpclick-->
 - Merge branch 'main' into TASK-413 <!--sg:agent/levelsim-->
 - levelplan3: watch campaign goldens for the new Smith and Andariel rows <!--sg:agent/levelplan3-->
 - Merge branch 'main' into TASK-407 <!--sg:agent/hour4-->

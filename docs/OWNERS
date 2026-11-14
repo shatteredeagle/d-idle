@@ -238,8 +238,10 @@ docs/probes/h1-baseline.md  user  h1baseline
 docs/probes/h3-verdict.md  user  h3verdict
 docs/probes/ready-audit.md  live-agent  ready-audit
 docs/probes/recoverypace/  live-agent  recoverypace
+docs/probes/test-characters.md  credit-runner  warpclick
 docs/probes/test-characters.md  live-agent  fid-fixtures
 docs/probes/tpreserve.md  live-agent  tpreserve-live
+docs/probes/warpclick-2026-11-14.md  credit-runner  warpclick
 docs/process/queuespeed.md  credit-runner  queuespeed
 docs/pursuers.md  credit-runner  pursuers
 docs/quest-givers.md  credit-runner  campaign1
@@ -282,6 +284,7 @@ docs/upstream/  credit-runner  prpost
 docs/upstream/  credit-runner  prpost2
 docs/upstream/  credit-runner  prpost3
 docs/upstream/  credit-runner  prprep
+docs/upstream/pr-queue.md  credit-runner  warpclick
 docs/wiring.md  credit-runner  wiring2
 internal/art/skillicons.go  credit-runner  skilltrees
 internal/art/skillicons_test.go  credit-runner  skilltrees
@@ -373,11 +376,15 @@ internal/combat/safety.go  credit-runner  beltfix
 internal/combat/types.go  credit-runner  goldprio
 internal/d2dctl/item_verbs.go  credit-runner  itemverbs2
 internal/d2dctl/item_verbs_test.go  credit-runner  itemverbs2
+internal/d2dctl/parse.go  credit-runner  warpclick
+internal/d2dctl/parse_test.go  credit-runner  warpclick
 internal/d2dctl/verbs.go  credit-runner  arrivalsettle
 internal/d2dinput  pro-runner  bounce3
 internal/d2dinput/controller.go  credit-runner  arrivalsettle
 internal/d2dinput/controller_test.go  credit-runner  arrivalsettle
 internal/d2dinput/run_test.go  credit-runner  arrivalsettle
+internal/d2dworld/world.go  credit-runner  warpclick
+internal/d2map/static.go  credit-runner  warpclick
 internal/decide/queue.go  credit-runner  qqueue
 internal/decide/queue_test.go  credit-runner  qqueue
 internal/decide/variants.go  credit-runner  qdensity
@@ -416,6 +423,7 @@ internal/nav/covview.go  credit-runner  maptrail
 internal/nav/covview_test.go  credit-runner  maphistoryC
 internal/nav/covview_test.go  credit-runner  maptrail
 internal/nav/exit.go  credit-runner  pursuers
+internal/nav/exit.go  credit-runner  warpclick
 internal/nav/explore.go  credit-runner  pursuers
 internal/nav/nav.go  credit-runner  maphistoryC
 internal/nav/nav.go  credit-runner  pursuers
@@ -425,6 +433,7 @@ internal/nav/roam.go  credit-runner  maphistoryC
 internal/nav/roam.go  credit-runner  maptrail
 internal/nav/roam.go  credit-runner  pursuers
 internal/nav/walk.go  credit-runner  pursuers
+internal/nav/warpclick_test.go  credit-runner  warpclick
 internal/plandata/boss_levels.go  pro-runner  levelplan3
 internal/plandata/boss_levels_test.go  pro-runner  levelplan3
 internal/plandata/levelplan-normal.json  pro-runner  levelplan3
