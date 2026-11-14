@@ -41,3 +41,9 @@ func TestKillClockDisplacementIsWalk(t *testing.T) {
 		t.Fatalf("%+v", s)
 	}
 }
+
+func TestModeBucketKick(t *testing.T) {
+	if modeBucket(12) != 1 || modeBucket(1) != 2 || modeBucket(2) != 0 {
+		t.Error("mode 12 (KK) must count as casting")
+	}
+}

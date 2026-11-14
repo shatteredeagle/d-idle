@@ -130,7 +130,7 @@ func BloodMoorSorc() Scenario {
 		Name: "Blood Moor, clvl 8 Sorceress", Seconds: 300, Class: d2.Sorceress, Level: 8, MaxLife: 60, MaxMana: 45, StartMana: 45,
 		Gold: 120, HP: 3, MP: 0, TravelSec: 9, PackMin: 1, PackMax: 4, MonsterHP: BloodMoorLife,
 		MonsterDps: 1.6, Exposure: 0.35, SpellCost: 3, SpellDmg: 8, CastSec: 0.45,
-		MeleeDmg: 3, MeleeSec: 1.0, TripSec: 75, Seed: 7, HasMelee: true, Belt: 1,
+		MeleeDmg: 3, MeleeSec: mustSwing(d2.Sorceress), TripSec: 75, Seed: 7, HasMelee: true, Belt: 1,
 		// A clvl 8 Sorceress at 25 Dex and 10 Str with a 1-5 staff (StrBonus 100): trace sk-melee-trace.md B1. The
 		// to-hit factor 5, the Blood Moor foe (defense 15, level 3) and the staff range are U, nearest defaults.
 		Blow: &Blow{AR: AttackRating(0, 25, 5), Level: 8, Weapon: true, Min: 1, Max: 5, Str: 10, DmgPct: StatDmgPct(0, 10, 25, 100, 0, 0), Blunt: true},
@@ -147,7 +147,7 @@ func BloodMoorPaladin() Scenario {
 		Name: "Blood Moor, clvl 12 Paladin", Seconds: 300, Class: d2.Paladin, Level: 12, MaxLife: 190, MaxMana: 40, StartMana: 40,
 		Gold: 120, HP: 3, MP: 0, TravelSec: 9, PackMin: 1, PackMax: 4, MonsterHP: BloodMoorLife,
 		MonsterDps: 1.6, Exposure: 1, SpellCost: 2, SpellDmg: 12, CastSec: 0.7,
-		MeleeDmg: 9, MeleeSec: 0.6, TripSec: 75, Seed: 7, HasMelee: true, Belt: 1,
+		MeleeDmg: 9, MeleeSec: mustSwing(d2.Paladin), TripSec: 75, Seed: 7, HasMelee: true, Belt: 1,
 		MainAttack: "Zeal", WeaponSkill: "Attack",
 	}
 }
