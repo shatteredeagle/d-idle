@@ -5,7 +5,7 @@
 #   tools/emu/emu_setup.sh verify    sha256 list + python imports + one cheap oracle (drlg seeds), exit 0 = good
 #   tools/emu/emu_setup.sh env       print the exports (the same text as $D2_EMU_DIR/env.sh)
 # Run it on the worker host:  labrun <host> -- bash tools/emu/emu_setup.sh setup   (from inside the worktree)
-# Image dir: $D2_EMU_DIR, default ~/d2d-lab/emu. NEVER under /tmp. The Orion cleanup must keep it (docs/process/cleanup-keep-list.md).
+# Image dir: $D2_EMU_DIR, default ~/d2d-lab/emu. NEVER under /tmp. The worker-host cleanup must keep it (docs/process/cleanup-keep-list.md).
 # Sources (all only READ, never modified; the image holds copies / hard links):
 #   D2_GAME_DIR   the user's own installed 1.14d game folder (Game.exe + MPQs)
 #   D2_DATA       the MPQ folder d2d uses (default ~/d2d-lab/data)

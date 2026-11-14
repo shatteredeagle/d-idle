@@ -18,6 +18,7 @@ owns:
   - "docs/research/emu-reverify-2026-11-14.md"
 exclusive: []
 contracts: []
+result: "Image rebuilt at ~/d2d-lab/emu on the worker host (1.6 GB, 1.4 GB hard links), tools/emu reads D2_EMU_DIR; warp arrival (26/26/25 of 52) and XP grid (119,790, 0 differ) reproduced, run on the worker host not in a live game. docs/emu-image.md, docs/research/emu-reverify-2026-11-14.md"
 ---
 
 ## Description
@@ -30,8 +31,8 @@ Why: TODO. Done when: TODO.
 
 ## Acceptance Criteria
 <!-- AC:BEGIN -->
-- [ ] #1 tools/emu/emu_setup.sh builds and verifies the image at ~/d2d-lab/emu
-- [ ] #2 tools/emu scripts read D2_EMU_DIR instead of /tmp paths
-- [ ] #3 two oracles reproduce the recorded numbers
-- [ ] #4 docs/emu-image.md and the reverify doc written
+- [x] #1 tools/emu/emu_setup.sh builds and verifies the image at ~/d2d-lab/emu
+- [x] #2 tools/emu scripts read D2_EMU_DIR instead of /tmp paths
+- [x] #3 two oracles reproduce the recorded numbers
+- [x] #4 docs/emu-image.md and the reverify doc written
 <!-- AC:END -->

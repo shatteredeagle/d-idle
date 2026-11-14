@@ -1,6 +1,6 @@
 # The game.exe emulator image
 
-> status: current (2026-11-14, TASK-406). Rebuilt after the Orion cleanup of 2026-11-13 removed the volatile scratch copies. Tags: V = run or checked on the worker host this session.
+> status: current (2026-11-14, TASK-406). Rebuilt after the worker-host cleanup of 2026-11-13 removed the volatile scratch copies. Tags: V = run or checked on the worker host this session.
 
 ## What it is
 
@@ -10,7 +10,7 @@ The image holds NO game data in this repo; it lives only on the worker host and 
 
 ## Where (persistent, NOT /tmp)
 
-`$D2_EMU_DIR`, default `~/d2d-lab/emu` on the worker host. About 1.6 GB, of which about 1.4 GB are hard links of the MPQs in `~/d2d-lab/data` (no extra bytes while both names exist); the rest is 174 MB (venv, upstream checkout, `.cache` of extracted tables, mpq-cat). **The Orion cleanup must keep this directory** (and `~/d2d-lab/data`, `~/d2d-lab/src`, `~/d2d-lab/build-decomp12`, `~/d2d-lab/d12`). There was no keep-list in docs/process; this section is it.
+`$D2_EMU_DIR`, default `~/d2d-lab/emu` on the worker host. About 1.6 GB, of which about 1.4 GB are hard links of the MPQs in `~/d2d-lab/data` (no extra bytes while both names exist); the rest is 174 MB (venv, upstream checkout, `.cache` of extracted tables, mpq-cat). **The worker-host cleanup must keep this directory** (and `~/d2d-lab/data`, `~/d2d-lab/src`, `~/d2d-lab/build-decomp12`, `~/d2d-lab/d12`). There was no keep-list in docs/process; this section is it.
 
 | Path in the image | What | Source (read only) |
 |---|---|---|
