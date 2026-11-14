@@ -19,7 +19,7 @@ func TestPlayerStashMovesAndRefusals(t *testing.T) {
 	w := r.W
 	pack := w.Add("hp1", d2.ContInventory, 0, 0)
 	stashed := w.Add("gpv", d2.ContStash, 0, 0)
-	s, err := r.Env.Snapshot()
+	s, err := r.W.Snapshot()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -57,7 +57,7 @@ func TestPlayerStashNoRoomInThePack(t *testing.T) {
 			w.Add("hp1", d2.ContInventory, col, row)
 		}
 	}
-	s, err := r.Env.Snapshot()
+	s, err := r.W.Snapshot()
 	if err != nil {
 		t.Fatal(err)
 	}

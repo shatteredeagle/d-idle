@@ -41,7 +41,7 @@ func TestTidyStashesByPolicyAndNeverTouchesEquipmentOrMarks(t *testing.T) {
 		r.W.Add("r07", d2.ContInventory, 0, 0)
 		marked := r.W.Add("r07", d2.ContInventory, 1, 0)
 		r.T.SetItemMarks(fakeMarks{marked.ID: "keep"})
-		rep, err := r.T.Chores(context.Background(), town.ChorePlan{Stash: true})
+		rep, err := r.T.Chores(context.Background(), town.ChorePlan{Sell: true}) // not Stash: the pickit stash chore runs before tidy and would bank both runes
 		if err != nil {
 			t.Fatal(err)
 		}
