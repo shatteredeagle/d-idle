@@ -29,7 +29,7 @@ owns:
   - "internal/env/tuning_town.go"
 exclusive: []
 contracts: []
-result: "root cause V (log+code): loot kept plain armor for an empty slot below clvl 15 though the player decides gear, so nothing wore or sold it. Fixed; no-portal recovery picks the level band via waypoints; shop keeps the revive gold; town budget line. Offline only: the town and loot tests need game tables and skip here (not verified live)."
+result: "root cause V (log+code): loot kept plain armor for an empty slot below clvl 15 though the player decides gear, so nothing wore or sold it. Fixed; no-portal recovery picks the level band via waypoints; shop keeps the revive gold; town budget line. Offline only: regression tests pass with the game tables on the worker host; not verified live."
 ---
 
 ## Description
