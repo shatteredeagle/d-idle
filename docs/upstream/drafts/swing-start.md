@@ -51,6 +51,19 @@ Zeal side effect (V run, `zg_grid.py`, the przeal harness against game.exe's FUN
 - A hit-recovery or a cast does not change (SC, GH, BL take the unchanged branches). Whirlwind's gap reads `attack_ticks` of the Barbarian's A1: start 0, same value.
 - Not changed, U or out of scope: TH and A2 modes (a throw plays the A1 record in d2d), the S3 and S4 start of a dual wielder (table entries are 0), what the client draws for the skipped start frames (d2d still draws the whole animation over the shorter swing; drill S1 of the trace), the idle tick between held swings.
 
+## Effect on the bot's own scenario (internal, not for the PR body; V run, worker host)
+
+Ten-minute throwaway-hero runs (`rb/botrun.sh` recipe of `docs/fork-rebase-2026-11-13.md`: bot mode, no network, own volume, realtime, seed 7, `campaign:normal_act1`, one run a cell) on the same bot and the same rebased lineage, parent `d2dbot:devp6` (d2d `dd70428d`) against `d2dbot:devsw` (`fork-only/sandbox-swing`, `20a10eda`):
+
+| hero | image | clvl | xp | kills | mean kill time (the bot's `killtime` log) | arrivals, bounces, restarts |
+|---|---|---|---|---|---|---|
+| Sorceress | devp6 | 3 | 1,545 | 71 | 8.4 s | 2, 0, 0 |
+| Sorceress | devsw | 3 | 1,527 | 71 | 7.0 s | 2, 0, 0 |
+| Paladin (control: swing length unchanged, strike up to a tick earlier) | devp6 | 3 | 1,929 | 91 | 6.0 s | 2, 0, 0 |
+| Paladin | devsw | 3 | 1,785 | 87 | 6.1 s | 2, 0, 0 |
+
+Reading (one pair a hero, so run-to-run noise of 4 to 8 percent in kills is not excluded; the Paladin control moved by that much): no kill-rate change is measurable at this size for either class. The Sorceress's mean kill time fell 17 percent while her kills stayed 71 against 71; the bot's Sorceress hero is in its first levels here and spends part of the ten minutes on spells, so the melee share is small (U). The change is not a risk to the bot: no crash, restart, bounce or unreachable target on either image. The user-facing consequence is the opposite of a regression: the Sorceress and Amazon melee swing is shorter in d2d by the same ticks as game.exe's.
+
 ## Limits
 
 - The rate itself is not re-run here (`player_attack_rate.py` covers it); the Amazon and Sorceress cells use the animation record d2d chose (COF name from the worn weapon), the game's record choice for the same weapon is I.
