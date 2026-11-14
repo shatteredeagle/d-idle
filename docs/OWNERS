@@ -249,6 +249,8 @@ docs/releases/0.1.0.md  credit-runner  cut010d
 docs/releases/0.1.1.md  credit-runner  cut011
 docs/repair.md  credit-runner  repairtrip
 docs/research/README.md  credit-runner  dietarchive
+docs/research/areamon-table.csv  credit-runner  areamon
+docs/research/areamon-trace.md  credit-runner  areamon
 docs/research/design-brief-v1.md  credit-runner  designbrief
 docs/research/earlydeath13.md  pro-runner  earlydeath13
 docs/research/emu-reverify-2026-11-14.md  credit-runner  emurebuild
@@ -579,6 +581,9 @@ internal/watch/whyline_test.go  credit-runner  repairtrip
 internal/watch/whyline_test.go  credit-runner  staletarget
 tools/bounce3  pro-runner  bounce3
 tools/emu  credit-runner  emurebuild
+tools/emu/am_batch.sh  credit-runner  areamon
+tools/emu/am_env.sh  credit-runner  areamon
+tools/emu/am_model.py  credit-runner  areamon
 tools/emu/pm_*  credit-runner  palskill-matrix
 tools/emu/pp_*  credit-runner  prpost
 tools/emu/pp_*  credit-runner  prpost2
