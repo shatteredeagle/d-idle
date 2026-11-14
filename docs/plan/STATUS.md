@@ -138,6 +138,7 @@
 | gameexe-retire-soak | deferred | gameexe-retire-soak | `docs/gameexe-retire.md` | - |
 | tpreserve-live | proposed | - | `docs/probes/tpreserve.md` | - |
 | towntests | proposed | - | `docs/towntests.md`<br>`internal/town/playerstash_test.go`<br>`internal/town/tidy_test.go`<br>`internal/town/invstash_test.go` | - |
+| decomp17 | proposed | - | `docs/research/shrine-trace.md`<br>`tools/emu/shr_*` | - |
 | mercrevive2 | proposed | - | `docs/mercrevive.md`<br>`internal/merc`<br>`cmd/d2bot/mercwire.go`<br>`cmd/d2bot/mercwire_test.go`<br>`docs/contracts/merc-policy.md` | - |
 | playsession | proposed | - | `tools/play-session.sh`<br>`docs/play-session.md` | - |
 | upstream-next | proposed | - | `docs/research/upstream-next.md` | - |
@@ -188,6 +189,9 @@
 - contract [upstream-pr](../contracts/upstream-pr.md): 14 requirements
 
 ### Recent merges
+- 92e5503d 11-14 06:18 `Merge agent/decomp17: Merge branch 'main' into TASK-402` (decomp17)
+- ab383e8c 11-14 06:18 `Merge branch 'main' into TASK-402` (-)
+- 7738a296 11-14 06:09 `Merge origin/main into agent/decomp17` (-)
 - ae29419b 11-14 06:08 `Merge agent/mercrevive: mercrevive2: revive on gold alone, empty belt shops first, failure backoff` (mercrevive)
 - c971e292 11-14 05:49 `Merge agent/decomp16: Merge branch 'main' into TASK-400` (decomp16)
 - df8497de 11-14 05:48 `Merge branch 'main' into TASK-400` (-)
@@ -195,7 +199,4 @@
 - 72276621 11-14 05:41 `Merge origin/main into agent/towntests` (-)
 - a8522afa 11-14 05:33 `Merge agent/staletarget: Merge branch 'main' into TASK-398` (staletarget)
 - 591b26fc 11-14 05:33 `Merge branch 'main' into TASK-398` (-)
-- efcd0568 11-14 05:26 `Merge agent/sellskip: Merge origin/main into agent/sellskip` (sellskip)
-- 89d7741d 11-14 05:21 `Merge origin/main into agent/staletarget` (-)
-- 490d309e 11-14 05:18 `Merge origin/main into agent/sellskip` (-)
 <!-- statusgen:end -->

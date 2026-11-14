@@ -8,6 +8,7 @@ section 1); **offline** = unit tests, simulation or fake memory only; **research
 else, it is offline-tested. This file was written from merge subjects and `docs/INDEX.md`; it does not claim more than they do.
 
 ## Unreleased / known issues
+- Research: shrine trace for Act 1 (about 4.4 shrines per wilderness level, Experience shrine worth 1 to 4 percent of hour 1, bot has no shrine logic) <!--sg:agent/decomp17-->
 - mercrevive2: revive on gold alone, empty belt shops first, failure backoff <!--sg:agent/mercrevive-->
 - Merge branch 'main' into TASK-400 <!--sg:agent/decomp16-->
 - Merge origin/main into agent/towntests <!--sg:agent/towntests-->
